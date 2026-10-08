@@ -1,5 +1,5 @@
 /* Westside editorial system — one shell, one typographic hierarchy. */
-:root{--ww-paper:#f3eee3;--ww-ink:#252525;--ww-gold:#a2872a;--ww-night:#102a43;--ww-zh:"Noto Sans TC","PingFang TC","Microsoft JhengHei",serif;--ww-en:"Cormorant Garamond",Georgia,serif}
+:root{--ww-paper:#f3eee3;--ww-ink:#252525;--ww-gold:#a2872a;--ww-night:#102a43;--ww-zh:"Noto Sans TC","PingFang TC","Microsoft JhengHei",serif;--ww-en:"Bodoni Moda",Georgia,serif}
 html{font-synthesis:none}body{font-family:var(--ww-zh);font-weight:300}
 html[data-westside-nav=true] body:after{content:"";position:fixed;z-index:90;inset:0;pointer-events:none;opacity:.42;background:var(--section-etch,repeating-linear-gradient(164deg,transparent 0 10px,rgba(37,37,37,.045) 10px 11px));mix-blend-mode:multiply}
 html[data-westside-section=one]{--section-etch:repeating-linear-gradient(76deg,transparent 0 9px,rgba(37,37,37,.05) 9px 10px),repeating-linear-gradient(104deg,transparent 0 31px,rgba(162,135,42,.028) 31px 32px)}
