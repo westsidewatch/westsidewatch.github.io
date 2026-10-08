@@ -34,15 +34,14 @@ for (const position of [8, 8.9, 9, 9.25, 9.5, 9.9, 10, 9.5, 9, 8]) {
   const phase = time.sample(position).phase.id;
   assert.equal(phase, phases[Math.floor(position)].id);
   projection.apply({ phaseId: phase, ruin: ruin.sample(position).ruin });
-  assert.equal(projection.diagnostics().visibleBuildings, 1);
+  assert.equal(projection.diagnostics().visibleBuildings, position === 10 ? 0 : 1);
   assert.equal(mesh.userData.cityObject.buildingId, 'parcel-1:building');
   assert.equal(mesh.position.x, 10);
   assert.equal(mesh.position.z, 20);
   assert.ok(mesh.position.y >= 100);
   if (position === 9.5)
     assert.equal(mesh.userData.cityObject.lifecycleState, 'destruction');
-  if (position === 10)
-    assert.equal(mesh.userData.cityObject.lifecycleState, 'ruin');
+  if (position === 10) assert.equal(group.visible, false, 'Aelia must not display a standing Herodian city');
 }
 assert.equal(
   JSON.stringify({ position: mesh.position, scale: mesh.scale }),
