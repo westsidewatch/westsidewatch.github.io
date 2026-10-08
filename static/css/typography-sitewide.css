@@ -1,0 +1,21 @@
+/* Standalone pages and iframes: shared fonts and role sizes.
+   Keep independent from Hugo templates; no homepage composition rules. */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
+:root{
+ --ws-size-hero:clamp(3rem,7vw + 1rem,9rem);
+ --ws-size-cover:clamp(2.25rem,5vw + .5rem,6rem);
+ --ws-size-h1:clamp(2rem,3.6vw + .5rem,4.5rem);
+ --ws-size-h2:clamp(1.625rem,2.2vw + .5rem,2.75rem);
+ --ws-size-h3:clamp(1.375rem,1.3vw + .5rem,1.875rem);
+ --ws-size-nav:clamp(1rem,.4vw + .875rem,1.1875rem);
+ --ws-size-card:clamp(1.25rem,1vw + .75rem,1.75rem);
+ --ws-size-reading:clamp(1.0625rem,.5vw + 1rem,1.25rem);
+ --ws-size-body:clamp(1rem,.35vw + .875rem,1.125rem);
+ --ws-size-meta:clamp(.8125rem,.2vw + .75rem,.9375rem);
+ --ws-size-control:clamp(1rem,.35vw + .875rem,1.125rem);
+ --ws-size-library-title:var(--ws-size-card);
+ --ws-type-display-en:"Bodoni Moda",Georgia,serif;
+ --ws-type-display-zh:"Chiron Hei HK WS","PingFang TC",sans-serif;
+}
+html{font-synthesis:none}
