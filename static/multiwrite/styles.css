@@ -63,7 +63,7 @@ main{width:min(88vw,1500px);margin:auto;padding-bottom:8vw}
 
 .library-section{width:min(74vw,1120px);margin:0 auto 0;padding-top:1vw}
 .library-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:3vw;padding-bottom:1.3vw;border-bottom:1px solid rgba(82,62,20,.24)}
-.library-heading h2,h2{margin:0;color:#8f6815;font:400 clamp(1.8rem,2.5vw,3rem) var(--ws-type-display-en,"Bodoni Moda",Georgia,serif)}
+.library-heading h2,h2{margin:0;color:#8f6815;font:400 clamp(1.8rem,2.5vw,3rem) var(--ws-type-display-en)}
 .library-description{max-width:620px;margin:.8vw 0 0;line-height:1.9;font-size:clamp(.74rem,.78vw,.86rem);color:#5d5547}
 .hero-actions{display:flex;gap:.7vw;flex-wrap:wrap}
 .button{min-height:42px;padding:9px 18px;border:1px solid rgba(116,85,20,.42);background:rgba(255,253,246,.72);color:#765619;transition:.18s}
