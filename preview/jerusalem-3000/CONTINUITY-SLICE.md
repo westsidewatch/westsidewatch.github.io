@@ -18,8 +18,18 @@ With Playwright installed, serve the repository and run `node scripts/verify_jer
 
 ## Current rendering boundary (2026-10-08)
 
-The shared non-Herodian parcel renderer is disabled by the startup-freeze rollback. Its startup audit remains non-mutating and labels those eras `deferred-render-check`. Preserve that boundary until generation can run without blocking interaction and period-specific geometry is reviewed.
+The former all-era synchronous parcel renderer was disabled by the startup-freeze rollback. A bounded first-temple/Babylonian slice now uses the shared parcel pipeline on demand. Its startup audit remains non-mutating and labels those eras `deferred-render-check`. The other non-Herodian eras retain that boundary pending bounded generation and period-specific geometry review.
 
 The browser gate now checks `production.ok` for the canonical slice and verifies that `productionReady` still requires the complete phase audit. It must not turn the full-timeline readiness flag on merely to pass CI. It renders all 18 phases individually, records visible urban component counts and switching times, and saves each phase screenshot. This catches runtime failures and empty urban layers; it does not certify historical geometry, pixel quality or lifecycle continuity across all periods.
 
 On the current production build, all 18 desktop phase checks pass without console/page errors. The Herodian city contains 1,067 buildings. Screenshot inspection shows the other eras still rely largely on schematic masses. Next implementation work needs bounded non-Herodian generation and reviewed continuity, rather than another global readiness claim.
+
+## Bounded shared first-temple slice
+
+`shared-era-runtime.js` generates late-first-temple architecture only when that phase or Babylonian destruction is requested. Architecture generation yields after at most four parcels or an 8 ms elapsed batch budget; a single parcel remains synchronous. Cancellation occurs when leaving the slice, releases staging geometry, and never attaches a partial city. The ready city is retained for exact return visits.
+
+Both phases use the same building IDs, meshes and footprints. Babylonian destruction samples its own time boundary rather than the Roman destruction boundary. Standing structures collapse towards their terrain anchors; roads remain as infrastructure. The prior independent inheritance model and temporal boxes are disabled in this slice. This is schematic object inheritance, not sourced burial/reuse depths or simulated individual debris.
+
+The registration transforms the existing provisional road/district scaffold using the legacy first-temple envelope. Every generated building remains inferred. The caption explicitly discloses that roads, parcels and residences are not archaeologically registered. No full-timeline readiness claim is made, and the startup phase audit still defers historical validation.
+
+`node scripts/verify_jerusalem_3000_shared_era.mjs` compares batched geometry with the synchronous builder, checks deterministic IDs and inherited phase membership, cancellation cleanup, surfaced errors and independent destruction boundaries. The browser test adds rapid cancellation, shared-identity and reverse-transform checks, legacy-layer exclusion, desktop/mobile shared screenshots and the existing all-18-phase smoke test.

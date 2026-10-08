@@ -99,6 +99,50 @@ try {
       window.__JERUSALEM3000__.renderDiagnostics?.cityProjection
         ?.visibleBuildings > 0,
   );
+  // Leave immediately while generation is pending: switching must not wait
+  // for thousands of architectural components, and stale work must be cancelled.
+  await page.locator('.j3k-scrubber').evaluate(el => {
+    for (const value of [4, 17]) {
+      el.value = String(value); el.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+  await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics?.phase === 'modern');
+  const sharedReports = [];
+  for (const value of [4.9, 5, 5.5, 5.9, 4.9]) {
+    await page.locator('.j3k-scrubber').evaluate((el, value) => {
+      el.value = String(value); el.dispatchEvent(new Event('input', { bubbles: true }));
+    }, value);
+    await page.waitForFunction(value => {
+      const s = window.__JERUSALEM3000__;
+      return s?.historicalTime?.position === value &&
+        s.renderDiagnostics?.sharedEra?.status === 'ready' &&
+        s.renderDiagnostics.sharedEra.projection.phaseId === s.historicalTime.phase &&
+        s.renderDiagnostics.sharedEra.projection.ruin === s.historicalTime.ruin;
+    }, value, { timeout: 60000 });
+    const sample = await page.evaluate(() => ({
+      time: window.__JERUSALEM3000__.historicalTime,
+      shared: window.__JERUSALEM3000__.renderDiagnostics.sharedEra,
+      fabric: window.__JERUSALEM3000__.renderDiagnostics.urbanFabric,
+      legacy: window.__JERUSALEM3000__.renderDiagnostics.visibleLegacyTemporalMeshes,
+      inheritance: window.__JERUSALEM3000__.inheritanceState,
+    }));
+    assert.ok(sample.shared.projection.visibleBuildings > 0);
+    assert.equal(sample.fabric.phase2Components, 0, 'legacy fabric must be removed after shared generation');
+    assert.equal(sample.inheritance.active, false, 'do not rebuild a second inherited city');
+    assert.equal(sample.legacy, 0, 'legacy temporal boxes must not overlap the shared city');
+    assert.equal(sample.shared.historicalRegistrationVerified, false);
+    assert.ok(sample.shared.yields > 0);
+    sharedReports.push({ value, ...sample });
+    await page.screenshot({ path: `${output}/shared-${value}.png`, fullPage: true });
+  }
+  assert.equal(new Set(sharedReports.map(r => r.shared.projection.identityFingerprint)).size, 1);
+  assert.equal(sharedReports[0].shared.projection.transformFingerprint, sharedReports.at(-1).shared.projection.transformFingerprint);
+  assert.notEqual(sharedReports[0].shared.projection.transformFingerprint, sharedReports[2].shared.projection.transformFingerprint);
+  await page.getByRole('button', { name: '實證', exact: true }).click();
+  await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings === 0);
+  await page.getByRole('button', { name: '全部', exact: true }).click();
+  await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings > 0);
+  await writeFile(`${output}/shared-report.json`, JSON.stringify({ sharedReports }, null, 2));
   // Render every era separately. Startup metadata is not proof of a visible city.
   const phaseReports = [];
   for (let phase = 0; phase < runtime.phaseAudit.records.length; phase++) {
@@ -119,7 +163,8 @@ try {
     }));
     assert.ok(sample.render.webgl && sample.render.frames > 0);
     const visible = sample.render.visibleCoreMeshes +
-      sample.render.urbanFabric.phase2Components + sample.render.visibleLegacyTemporalMeshes;
+      sample.render.urbanFabric.phase2Components + sample.render.visibleLegacyTemporalMeshes +
+      (sample.render.sharedEra?.projection?.visibleBuildings || 0);
     assert.ok(visible > 0, `No urban geometry rendered for ${sample.time.phase}`);
     if (phase === 10) assert.equal(sample.render.visibleCoreMeshes, 0,
       'Aelia must not reuse standing Herodian architecture');
@@ -155,6 +200,13 @@ try {
     path: `${output}/city-mobile.png`,
     fullPage: true,
   });
+  await mobile.locator('.j3k-scrubber').evaluate(el => {
+    el.value = '4.9'; el.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await mobile.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics?.sharedEra?.status === 'ready', null, {timeout:60000});
+  const mobileShared = await mobile.evaluate(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra);
+  assert.ok(mobileShared.projection.visibleBuildings > 0);
+  await mobile.screenshot({path:`${output}/shared-mobile.png`,fullPage:true});
   await mobile.close();
   const broken = await browser.newPage();
   await broken.route('**/data/urban/herodian-30ce.registration.json', (route) =>
@@ -171,7 +223,7 @@ try {
   await writeFile(
     `${output}/report.json`,
     JSON.stringify(
-      { ok: true, core: runtime.evidenceObjects.cityCoreAB, phaseReports, reports, errors },
+      { ok: true, core: runtime.evidenceObjects.cityCoreAB, phaseReports, sharedReports, reports, errors },
       null,
       2,
     ),
