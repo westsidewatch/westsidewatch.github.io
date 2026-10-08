@@ -323,14 +323,22 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const roads = buildHerodianRoadGeometry(group, registration.roads, temporalMaterials, terrainRuntime);
     const result = { group, parcels, architecture, roads, phaseId };
     eraCities.set(phaseId, result);
+    group.visible = false;
+    if (!parcels.blockCount || !parcels.count || !architecture.buildings)
+      console.warn('[Jerusalem 3000 shared era city empty]', phaseId, {
+        blocks: parcels.blockCount, parcels: parcels.count, buildings: architecture.buildings,
+      });
     return result;
   }
   function updateCityCoreVisibility() {
     for (const [phaseId, city] of eraCities) {
       city.group.visible = phaseId === currentPhaseId && currentEvidenceMode !== 'disputed';
       if (city.group.visible) {
-        const ruined = currentPhaseId.includes('destruction');
-        for (const mesh of city.architecture.meshes) mesh.visible = !ruined || currentRuin < 1;
+        const ruin = currentPhaseId.includes('destruction') ? Math.max(currentRuin, 1) : 0;
+        for (const mesh of city.architecture.meshes) {
+          mesh.visible = evidenceAllowed(mesh.userData.cityObject?.confidence || 'inferred');
+          mesh.scale.y = ruin ? 0.2 : 1;
+        }
       }
     }
     if (cityProjection)
@@ -413,6 +421,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const sharedCity = ensureEraCity(phaseId);
     if (sharedCity?.architecture.buildings > 0) {
       eraFabricLayer.visible = false;
+      updateCityCoreVisibility();
+      needsFrame = true;
       return;
     }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
@@ -701,6 +711,19 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
               coreVisible: cityCoreLayer.visible,
               fabricVisible: eraFabricLayer.visible,
               phase2Components: fabricMeshes.filter((mesh) => mesh.visible).length,
+              sharedEra: (() => {
+                const city = eraCities.get(currentPhaseId);
+                return city ? {
+                  phase: city.phaseId,
+                  groupVisible: city.group.visible,
+                  blocks: city.parcels.blockCount,
+                  parcels: city.parcels.count,
+                  buildings: city.architecture.buildings,
+                  meshes: city.architecture.meshes.length,
+                  visibleMeshes: city.architecture.meshes.filter(mesh => mesh.visible).length,
+                  roads: city.roads.length,
+                } : null;
+              })(),
               blocks: cityCoreRuntime?.parcels?.blockCount || 0,
               parcels: cityCoreRuntime?.parcels?.count || 0,
               buildings: cityCoreRuntime?.architecture?.buildings || 0,
