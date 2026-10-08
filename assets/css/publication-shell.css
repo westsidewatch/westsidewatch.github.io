@@ -1,3 +1,4 @@
+@import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
 /* Immersive publication shell — derived from the existing Westside Watch cover system. */
 :root {
   --shell-gutter: clamp(1rem, 3vw, 3rem);
@@ -11,8 +12,8 @@
   --living-paper: #e8dbb8;
   --ink: #30291d;
   --ink-black: #30291d;
-  --font-display: "Bodoni Moda", "Noto Sans TC", serif;
-  --font-text: "Noto Sans TC", sans-serif;
+  --font-display: "Bodoni Moda", "Chiron Hei HK WS", serif;
+  --font-text: "Chiron Hei HK WS", sans-serif;
   min-height: 100%;
   background-color: var(--paper);
   background-image:
@@ -28,7 +29,7 @@
   font-family: var(--font-display);
   font-weight: 500;
 }
-:where(p,li,blockquote,button,input) { font-family: "Bodoni Moda", "Noto Sans TC", serif; }
+:where(p,li,blockquote,button,input) { font-family: "Bodoni Moda", "Chiron Hei HK WS", serif; }
 .primary-nav, .section-nav { font-family: var(--font-display); }
 .hero__watchword, .hero__scripture p:nth-child(2), .hero__scripture cite { font-family:var(--font-display); }
 .hero__scripture p[lang], .proclamation__lead, [lang="zh-Hant"] { font-family:var(--font-text); }
