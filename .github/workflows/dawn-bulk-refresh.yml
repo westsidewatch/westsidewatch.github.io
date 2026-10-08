@@ -39,6 +39,8 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Test Dawn refresh validation
+        run: python3 -m unittest discover -s tests -p 'test_dawn_bulk_refresh.py' -v
       - name: Refresh Dawn pre-canonical corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
 
