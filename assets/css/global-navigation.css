@@ -57,7 +57,7 @@ h1,h2,h3,h4,.wordmark,.primary-nav,.utility-nav{font-family:var(--ww-en);font-we
 @media(max-width:700px){.site-header__primary,.home .site-header__primary{width:92vw}.site-header .wordmark span{font-size:.7rem}.site-header .utility-nav{display:none}.living-screen__head>span{min-width:0;white-space:normal;text-wrap:balance}.realm__description{max-width:90vw}.westside-global-nav{display:block}.westside-global-nav__brand{display:block;margin-bottom:.7rem}.westside-global-nav__routes{justify-content:flex-start}.westside-route-footer{grid-template-columns:1fr}.westside-route-footer nav{justify-content:flex-start}}
 
 /* Brand material v3: temple stone, first-light gold and one Chinese voice. */
-:root{--ww-temple:#f2ede1;--ww-temple-shadow:#d9cfb9;--ww-first-light:#cebd74;--ww-aged-gold:#a2872a;--ww-ink:#292722;--ww-night:#193247;--ww-olive:#69755b;--ww-zh:var(--type-zh),"Source Han Serif TC","PingFang TC",serif}
+:root{--ww-temple:#f2ede1;--ww-temple-shadow:#d9cfb9;--ww-first-light:#cebd74;--ww-aged-gold:#a2872a;--ww-ink:#292722;--ww-night:#193247;--ww-olive:#69755b;--ww-zh:var(--type-zh)}
 html,body{background:var(--ww-temple);color:var(--ww-ink)}
 :lang(zh-Hant),[lang=zh-Hant],.issue-cover__zh,.issue-dispatch__body,.movement-spread__statement,.story-card h3,.story-card__name small,.story-card__deck,.story-card__source,.issue-coda__zh,.issue-coda__routes a,.mc-zh,.mc-copy,.mc-list em,.mc-paths span{font-family:var(--ww-zh)!important;font-synthesis:none;word-break:keep-all;line-break:strict;overflow-wrap:normal;text-wrap:pretty}
 .issue-cover__zh,.realm__zh,.mc-zh{font-weight:600!important}.issue-dispatch__body,.movement-spread__statement,.story-card__deck,.mc-copy,.mc-paths span{font-weight:300!important}
