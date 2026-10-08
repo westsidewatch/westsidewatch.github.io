@@ -1,4 +1,4 @@
-body{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif}
+body{font-family:var(--ws-type-display-zh)}
 .opening{display:block;min-height:100svh;padding:clamp(2rem,5vw,5rem) 0}
 .opening__inner{position:relative;display:grid;grid-template-columns:minmax(17rem,5fr) minmax(20rem,7fr);gap:clamp(3rem,8vw,9rem);align-items:center;min-height:calc(100svh - clamp(4rem,10vw,10rem));padding:clamp(2rem,5vw,4.5rem);border:1px solid var(--gold)}
 .opening__inner:before{position:absolute;inset:9px;border:1px solid rgba(162,135,42,.38);content:"";pointer-events:none}
