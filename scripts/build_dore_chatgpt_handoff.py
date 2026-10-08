@@ -25,7 +25,7 @@ def brief(spec,has_reference):
 Project: Westside Watch / Olive Mountain
 Subject: {name}
 Status: design proof only; NOT approved for publication
-Deliverable: ONE finished 3:4 portrait magazine cover, ideally 1440 × 1920 pixels or higher.
+Deliverable: ONE text-free 3:4 editorial ILLUSTRATION ASSET, ideally 1440 × 1920 pixels or higher. The website renders all typography via HTML/CSS.
 
 ## 1. Creative authority
 You are executing a finished art-director specification, not inventing a new brand. Produce an actual high-quality image, not SVG placeholder geometry, a mockup photographed on a desk, or an explanation of what you would generate. The target is a credible Italian editorial magazine cover with the physical sophistication of a carefully printed engraved illustration.
@@ -38,10 +38,10 @@ Subject matter is Christian sermon editorial content. No unrelated religious ico
 
 ## 3. Art direction and spatial composition
 Canvas 3:4, upright. Use a confident asymmetrical editorial composition, not centered clip art. Establish a clear foreground, secondary midground and restrained background. One strong focal point visible even as a small thumbnail. Preserve a clean title zone with enough actual negative space for type. Allow the illustration to breathe; do not place a rectangular photo in a generic card. At least 48px-equivalent edge safety on a 720px design width.
-Top 10%: quiet masthead with generous breathing room.
+Top 10%: quiet image detail or negative space; the masthead is rendered later by CSS.
 Middle 12–72%: principal illustration; vary line density to guide attention.
-Bottom 75–95%: integrated typographic title area, composed as part of the cover rather than a white bar pasted across the picture.
-Bottom 5%: unobtrusive edition line.
+Bottom 75–95%: preserve natural image negative space suitable for an HTML/CSS title overlay, not a baked-in blank rectangle.
+Bottom 5%: image continuation or paper white; the edition line is rendered later by CSS.
 No overlapping text, no clipped characters, no arbitrary dividers.
 
 ## 4. Engraving and physical printing
@@ -50,25 +50,24 @@ Use detailed etched/copperplate engraving language: precise contour lines, short
 ## 5. Strict palette
 White paper #FFFFFF, deep olive ink #174B35; optional supporting olive #47735E only if needed. No gold, black-gold, sepia, tan, beige, ochre, orange, blue, magenta or default blue hyperlinks. The final picture should read as green ink on clean white paper, including any rendered face.
 
-## 6. Typography — final cover, not an overlay proof
-Main name: 「{name}」 exactly, in one coherent Chinese text group. Do not split characters across lines unless a deliberate, legible editorial break is approved. Ensure sufficient glyph spacing and no collision with English.
-Masthead: OLIVE MOUNTAIN
-Small edition line: SERMONS / PEOPLE
-Use a refined Chinese serif compatible with the site's approved typography and restrained Bodoni Moda Regular-like Latin letterforms; no faux bold, no decorative swashes. Prefer typographic clarity over ornament. Do not invent any additional headings, numbers, logos or quotations. If precise Chinese rendering is unreliable, keep a clear reserved title area and return the artwork for a separate typography pass rather than generating broken Chinese characters.
+## 6. Strict separation: image asset versus HTML/CSS typography
+Generate NO typography of any kind: NO Chinese characters, NO Latin letters, NO numerals, NO headings, NO logo, NO captions, NO dividers, NO watermark. All text, including the Chinese speaker name, English name, masthead, labels and decorative rules, belongs to the website's HTML/CSS overlay. The image must remain useful with no lettering at all.
+Site typography authority for the separate CSS layer: English Bodoni Moda Regular 400; Chinese display Chiron Hei (昭源黑體); Chinese long-form reading Noto Serif TC. Do not draw, imitate or rasterize any of these fonts into the image.
+Do not produce a poster with an empty white title card glued onto the lower portion. Keep a coherent full-frame illustration with intentional natural negative space that can support responsive text placement.
 
 ## 7. Negative constraints
-No anonymous fake speaker portraits, no identity swapping, no face melting, no distorted eyes or hands, no blurry faces, no low-resolution painting, no orange flesh-tone image, no cheap poster templates, no blocky geometry, no noisy AI text, no illegible Chinese, no random religious symbols, no watermark.
+No anonymous fake speaker portraits, no identity swapping, no face melting, no distorted eyes or hands, no blurry faces, no low-resolution painting, no orange flesh-tone image, no cheap poster templates, no blocky geometry, no generated writing of any language, no random religious symbols, no watermark.
 
 ## 8. Acceptance criteria
 A. Recognizable likeness ONLY when a verified reference is actually supplied; otherwise no claimed portrait identity.
 B. Crisp linework and coherent materials at full resolution and thumbnail size.
 C. Olive-and-white print palette throughout.
-D. Chinese title legible, correctly grouped, without overlap.
+D. Zero text or typographic marks in the generated image; all lettering is delegated to HTML/CSS.
 E. Visually convincing editorial hierarchy and no hard white paste-over strip.
 F. This is a design proof; do not publish or silently substitute assets.
 
 ## 9. Output instruction
-Generate the image now. Make one deliberate, finished composition. If a supplied portrait reference is absent, execute the still-life alternative without asking the user to fabricate a likeness. Return the image for visual review.
+Generate only the text-free illustration now. Make one deliberate, finished composition. If a supplied portrait reference is absent, execute the still-life alternative without asking the user to fabricate a likeness. Return the image for visual review.
 """
 def main():
  p=argparse.ArgumentParser()
