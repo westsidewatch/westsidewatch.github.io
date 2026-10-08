@@ -1,5 +1,5 @@
 .home-study-workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);gap:24px;align-items:start}
-.home-study-label,.home-study-note-head label{display:block;margin:0 0 10px;color:#8A681E;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+.home-study-label,.home-study-note-head label{display:block;margin:0 0 10px;color:#8A681E;font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
 .home-study-notes{min-width:0;padding:18px;border:1px solid rgba(85,65,24,.14);background:rgba(255,255,255,.28)}
 .home-study-note-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
 .home-study-note-head span{font-size:.72rem;color:#786b54}
