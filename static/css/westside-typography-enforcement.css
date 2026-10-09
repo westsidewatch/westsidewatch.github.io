@@ -10,7 +10,7 @@ body[data-ws-scope] :is(
  h1,h2,h3,h4,h5,h6,.sites-layer-title,.sites-layer-section-title,
  .section-atlas__title,.atlas-entry__title,.sites-church-title,
  .sites-church-heading,.sites-surface-title,.sites-editorial-title
-):not([data-ws-typography-lock]):not([data-ws-designable] *):not([data-ws-designable]){
+):not([data-ws-typography-lock]):not(:where([data-ws-designable] *)):not([data-ws-designable]){
  font-family:var(--ws-type-zh)!important;
  font-weight:var(--ws-weight-air,200)!important;
  font-synthesis:none;
@@ -19,7 +19,7 @@ body[data-ws-scope] :is(
  h1,h2,h3,h4,h5,h6,.sites-layer-title,.sites-layer-section-title,
  .section-atlas__title,.atlas-entry__title,.sites-church-title,
  .sites-church-heading,.sites-surface-title,.sites-editorial-title
-):not([data-ws-designable] *) :is([lang="en"],[lang^="en-"],.ws-type-pair-en,.sites-layer-en,.editorial-en){
+):not(:where([data-ws-designable] *)) :is([lang="en"],[lang^="en-"],.ws-type-pair-en,.sites-layer-en,.editorial-en){
  font-family:var(--ws-type-en)!important;
  font-weight:400!important;font-synthesis:none;
 }
@@ -27,9 +27,9 @@ body[data-ws-scope] :is(
  h1,h2,h3,h4,h5,h6,.sites-layer-title,.sites-layer-section-title,
  .section-atlas__title,.atlas-entry__title,.sites-church-title,
  .sites-church-heading,.sites-surface-title,.sites-editorial-title
-):not([data-ws-designable] *) :is([lang="zh"],[lang^="zh-"],.ws-type-pair-zh,.sites-layer-zh,.editorial-zh){
+):not(:where([data-ws-designable] *)) :is([lang="zh"],[lang^="zh-"],.ws-type-pair-zh,.sites-layer-zh,.editorial-zh){
  font-family:var(--ws-type-zh)!important;
- font-weight:200!important;font-synthesis:none;
+ font-weight:var(--ws-weight-air,200)!important;font-synthesis:none;
 }
 body[data-ws-scope] :is(
  .sites-layer-kicker,.sites-layer-eyebrow,.section-atlas__eyebrow,
@@ -42,4 +42,12 @@ body[data-ws-scope] :is(
  .article-body,.prose,.reading-body,.sites-article-body
 ) :is(p,li,blockquote){
  font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif);
+}
+
+/* The language attribute on the heading itself must win over the page language. */
+body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6)[lang="en"]:not(:where([data-ws-designable] *)){
+ font-family:var(--ws-type-en)!important;font-weight:var(--ws-weight-standard,400)!important;
+}
+body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6)[lang="zh-Hant"]:not(:where([data-ws-designable] *)){
+ font-family:var(--ws-type-zh)!important;
 }

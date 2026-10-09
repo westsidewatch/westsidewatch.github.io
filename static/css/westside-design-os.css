@@ -687,3 +687,9 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
  --ws-designable-type-en-size:var(--ws-type-scale-display-xl);
  --ws-designable-type-zh-size:var(--ws-type-scale-title-sm);
 }
+
+/* Designable artwork is exempt from type-scale normalization, not from
+   the site's font-family contract. Never target controls inside artwork. */
+[data-ws-designable="olive-poster"] :is(.olive-speaker-english,.olive-speaker-chinese,.olive-speaker-typegroup){
+ font-synthesis:none;
+}
