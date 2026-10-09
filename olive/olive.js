@@ -106,6 +106,8 @@
           a.style.setProperty('--poster-x',layout.x+'%');
           a.style.setProperty('--poster-width',layout.width+'%');
           a.style.setProperty('--poster-size',layout.size+'cqw');
+          // Fixed optical axis preserves the approved glyph shape at every card width.
+          a.style.setProperty('--poster-optical-size',String(layout.opticalSize));
           a.style.setProperty('--poster-thickness',String(layout.thickness||1));
         }
         label.textContent=english;
