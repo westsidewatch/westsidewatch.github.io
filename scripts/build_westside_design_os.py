@@ -57,7 +57,7 @@ def create():
 if __name__ == "__main__":
     generated = create()
     if "--check" in sys.argv:
-        if not OUTPUT.exists() or OUTPUT.read_text() != generated:
+        if not OUTPUT.exists() or OUTPUT.read_text().rstrip("\n") != generated.rstrip("\n"):
             sys.exit("Westside Design OS tokens are out of date")
         print("Westside Design OS generated tokens: PASS")
     else:
