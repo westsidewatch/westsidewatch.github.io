@@ -25,6 +25,23 @@ const fs=require('node:fs');
     }));
    });
    for(const item of imageReport)if(!item.loaded)errors.push('editorial image failed to load '+item.speaker+': '+item.src);
+   // Image decoding alone does not prove the editorial poster is visually visible.
+   // Verify stacking, dimensions and actual hit-tested paint at the card center.
+   const visibility=await page.evaluate(() => [...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')].map(card => {
+    const img=card.querySelector('.olive-speaker-card__editorial');
+    if(!img)return {speaker:card.dataset.person,error:'missing editorial image'};
+    const cardBox=card.getBoundingClientRect(),box=img.getBoundingClientRect(),style=getComputedStyle(img);
+    const x=Math.max(0,Math.min(innerWidth-1,cardBox.left+cardBox.width/2));
+    const y=Math.max(0,Math.min(innerHeight-1,cardBox.top+cardBox.height/2));
+    const visibleInViewport=cardBox.right>0&&cardBox.left<innerWidth&&cardBox.bottom>0&&cardBox.top<innerHeight;
+    const top=visibleInViewport?document.elementFromPoint(x,y):null;
+    const hit=top===img||img.contains(top)||card.contains(top);
+    return {speaker:card.dataset.person,visibleInViewport,hit,opacity:style.opacity,visibility:style.visibility,display:style.display,width:box.width,height:box.height,loaded:img.complete&&img.naturalWidth>0};
+   }));
+   for(const item of visibility){
+    if(item.visibleInViewport&&(!item.loaded||item.display==='none'||item.visibility==='hidden'||Number(item.opacity)===0||item.width<1||item.height<1||!item.hit))
+     errors.push('poster visually obscured '+JSON.stringify(item));
+   }
    await page.screenshot({path:'/tmp/olive-visual/'+size.name+'.png',fullPage:true});
    const issues=await page.evaluate(()=>{
     const errors=[];
