@@ -17,6 +17,7 @@
         <div class="olive-feature__caption">
           <small>FEATURED CHANNEL · 01</small>
           <button type="button" class="olive-feature__next" data-feature-next aria-label="切換下一位精選講員">NEXT FEATURE →</button>
+          <a class="olive-feature__source" data-feature-source href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">WATCH ON YOUTUBE ↗</a>
           <h2>大衛鮑森</h2>
           <p><span data-pawson-title>系列講座</span> <i>ENTER →</i></p>
         </div>
@@ -103,6 +104,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
 .olive-speaker-channel__eyebrow{margin:0 0 .25rem;font:400 .68rem/1.2 var(--ws-type-display-zh);letter-spacing:.18em}.olive-speaker-channel h2{margin:0 0 .7rem;font-family:var(--ws-type-display-zh);font-size:clamp(1.35rem,2.2vw,2rem);font-weight:var(--ws-olive-speaker-name-weight)}
 .olive-speaker-channel__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}.olive-speaker-channel__entry{display:flex;justify-content:space-between;gap:.8rem;padding:.62rem .7rem;border-top:1px solid color-mix(in oklab,var(--ws-olive) 24%,transparent);color:inherit;text-decoration:none}.olive-speaker-channel__entry strong{font-family:var(--ws-type-display-zh);font-weight:var(--ws-olive-speaker-name-weight)}.olive-speaker-channel__entry span{white-space:nowrap;font-size:.72rem;opacity:.68}
 @media(max-width:680px){.olive-speaker-channel{bottom:8.5rem}.olive-speaker-channel__list{grid-template-columns:1fr}}
+ .olive-feature__source{position:relative;z-index:5;display:inline-block;margin:.65rem 0 .65rem .75rem;padding:.5rem .75rem;color:inherit;font:400 11px/1.3 var(--ws-type-display-en);letter-spacing:.1em;text-decoration:underline;text-underline-offset:.25em}
  .olive-feature__next{position:relative;z-index:5;display:inline-block;margin:.65rem 0;padding:.5rem .75rem;border:1px solid currentColor;background:transparent;color:inherit;font:400 11px/1.3 var(--ws-type-display-en);letter-spacing:.12em;cursor:pointer}
 </style>
 <link rel="stylesheet" href="/css/olive-ui-scale.css?v=20261009-authority-v1">
@@ -125,6 +127,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   const title=document.querySelector('[data-pawson-title]');
   const caption=feature?.querySelector('.olive-feature__caption h2');
   const next=document.querySelector('[data-feature-next]');
+  const source=document.querySelector('[data-feature-source]');
   const fallbackBase='/images/olive/';
   let index=0,previewGeneration=0;
   const imageExists=(url,callback)=>{
@@ -144,6 +147,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     frame.title=item.speaker+' · '+item.title;
     if(title)title.textContent=item.title;
     if(caption)caption.textContent=item.speaker;
+    if(source){source.href='https://www.youtube.com/watch?v='+item.id;source.setAttribute('aria-label','在 YouTube 觀看'+item.speaker+' · '+item.title);}
     play.setAttribute('aria-label','播放'+item.speaker+' · '+item.title);
     const fallback=fallbackBase+item.slug+'-editorial.png';
     poster.style.backgroundImage='url('+JSON.stringify(fallback)+')';
