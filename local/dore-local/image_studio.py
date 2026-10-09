@@ -3,6 +3,7 @@
 import base64,json,secrets,threading
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from urllib.request import Request,urlopen
+from urllib.error import HTTPError
 from urllib.parse import urlparse
 HOST="127.0.0.1";PORT=4313;MODEL="http://127.0.0.1:8790"
 TOKEN=secrets.token_urlsafe(24);LOCK=threading.Lock()
@@ -48,7 +49,9 @@ class Handler(BaseHTTPRequestHandler):
     if not raw or len(raw)>12*1024*1024:raise ValueError("Invalid photo size")
     signatures={"image/png":raw.startswith(b"\x89PNG\r\n\x1a\n"),"image/jpeg":raw.startswith(b"\xff\xd8\xff"),"image/webp":raw.startswith(b"RIFF") and raw[8:12]==b"WEBP"}
     if not signatures[photo["mime_type"]]:raise ValueError("Invalid photo bytes")
-   else:payload.pop("reference_image",None)
+   else:
+    payload.pop("reference_image",None)
+    payload.pop("mode",None)
    req=Request(MODEL+"/generate",data=json.dumps(payload).encode(),headers={"Content-Type":"application/json","X-Dore-Origin":"dore-search"})
    with urlopen(req,timeout=1500) as r:result=json.load(r)
    if result.get("ok") is not True or result.get("model_backed") is not True:raise ValueError("Model did not generate an image")
@@ -58,6 +61,13 @@ class Handler(BaseHTTPRequestHandler):
    with urlopen(asset.geturl(),timeout=40) as r:png=r.read(32*1024*1024+1)
    if len(png)>32*1024*1024 or not png.startswith(b"\x89PNG\r\n\x1a\n"):raise ValueError("Invalid PNG")
    self.reply(200,{"ok":True,"image_base64":base64.b64encode(png).decode(),"published":False})
+  except HTTPError as exc:
+   detail=exc.read(8192).decode("utf-8","replace")
+   try:
+    parsed=json.loads(detail)
+    detail=parsed.get("error") or parsed.get("message") or detail
+   except ValueError:pass
+   self.reply(422,{"error":f"Local model HTTP {exc.code}: {str(detail)[:1200]}"})
   except Exception as exc:self.reply(422,{"error":str(exc)})
   finally:LOCK.release()
 if __name__=="__main__":
