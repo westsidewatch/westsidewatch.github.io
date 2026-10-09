@@ -33,3 +33,33 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
 @media (prefers-reduced-motion: reduce) {
   .olive-archive .olive-speaker-rail { scroll-behavior: auto; }
 }
+
+/* Existing approved posters are immutable images in the original horizontal rail.
+   Do not recreate their lettering, crop them or change their inner geometry. */
+.olive-archive .olive-speaker-card:has(> .olive-speaker-card__editorial) {
+  padding: 0;
+  aspect-ratio: 3 / 4;
+  height: auto;
+  min-height: 0;
+  align-self: stretch;
+}
+.olive-archive .olive-speaker-card__editorial {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"] > span,
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"] > strong,
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"] > small {
+  /* The approved image already contains its editorial composition. */
+  opacity: 0;
+}
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"]:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
