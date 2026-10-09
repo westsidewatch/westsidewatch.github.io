@@ -23,7 +23,7 @@
         {{ with .sermons }}
         <ol class="olive-editorial__sermon-list">
           {{ range . }}
-          <li><span>{{ .title }}</span>{{ with .url }}<a href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">觀看／來源 ↗</a>{{ end }}</li>
+          <li><span>{{ .title }}{{ with .date }} <small>{{ . }}</small>{{ end }}{{ with .source }} <small>· {{ . }}</small>{{ end }}</span>{{ with .url }}<a href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">觀看／來源 ↗</a>{{ end }}</li>
           {{ end }}
         </ol>
         {{ end }}
