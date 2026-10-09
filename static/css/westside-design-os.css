@@ -595,26 +595,23 @@ body.sites-surface>main{overflow:visible!important;min-height:100svh}
 [data-ws-scope="search"],[data-ws-scope="tool"]{--ws-scope-identity:var(--ws-ink)}
 [data-ws-scope]{--ws-identity:var(--ws-scope-identity,var(--ws-branch))}
 
-/* One bilingual typography contract. Explicit roles, never blanket element overrides. */
-:root{
- --ws-type-pair-en-size:clamp(54px,8vw,142px);
- --ws-type-pair-zh-size:clamp(18px,2.1vw,34px);
- --ws-type-pair-gap:clamp(8px,1.4vw,22px);
+/* Unified typography authority for non-Olive surfaces.
+   Scoped to interface roles; the Olive Mountain poster system is untouched. */
+:where(body[data-ws-scope]:not([data-ws-scope="olive"])){
+ --ws-type-pair-en-size:var(--ws-type-scale-display-xl);
+ --ws-type-pair-zh-size:var(--ws-type-scale-title-md);
+ --ws-type-pair-gap:clamp(10px,1.3vw,22px);
 }
-[data-ws-scope] :is(.ws-type-pair-en,.sites-layer-en,.section-atlas__english,.editorial-en,.olive-speaker-en,.sites-church-en,.sites-english-title){
+:where(body[data-ws-scope]:not([data-ws-scope="olive"])) :is(.ws-type-pair-en,.sites-layer-en,.section-atlas__english,.editorial-en,.sites-church-en,.sites-english-title){
  font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
- font-size:var(--ws-type-pair-en-size);
- font-weight:400!important;font-synthesis:none;
- line-height:.96;letter-spacing:-.035em;
+ font-size:var(--ws-type-pair-en-size);font-weight:400!important;
+ line-height:.94;letter-spacing:-.035em;font-synthesis:none;
 }
-[data-ws-scope] :is(.ws-type-pair-zh,.sites-layer-zh,.section-atlas__chinese,.editorial-zh,.sites-church-zh,.sites-chinese-title){
+:where(body[data-ws-scope]:not([data-ws-scope="olive"])) :is(.ws-type-pair-zh,.sites-layer-zh,.section-atlas__chinese,.editorial-zh,.sites-church-zh,.sites-chinese-title){
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
- font-size:var(--ws-type-pair-zh-size);
- font-weight:200!important;font-synthesis:none;
- line-height:1.35;letter-spacing:.08em;
+ font-size:var(--ws-type-pair-zh-size);font-weight:200!important;
+ line-height:1.3;letter-spacing:.08em;font-synthesis:none;
 }
-[data-ws-scope] .ws-type-pair{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ws-type-pair-gap)}
-[data-ws-scope] .ws-type-pair > :is(.ws-type-pair-en,.ws-type-pair-zh){margin:0}
-[data-ws-scope] :is(.article-body,.reading-body,.longform,.prose,[data-reading="longform"]) :is(p,li,blockquote){
- font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif);font-weight:400;
+:where(body[data-ws-scope]:not([data-ws-scope="olive"])) .ws-type-pair{
+ display:flex;flex-direction:column;align-items:flex-start;gap:var(--ws-type-pair-gap);
 }
