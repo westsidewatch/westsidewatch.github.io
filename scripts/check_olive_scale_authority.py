@@ -41,8 +41,13 @@ require('olive-editorial-rail.js' in hugo and 'olive-journey.js' in hugo, "singl
 require(all(x in journey for x in ('The Speakers', 'The Sermons', 'The Archive')), "journey layers missing")
 require('olive-editorial-covers.v1.json' in rail, "approved poster source missing")
 require(manifest.count('"speaker":') == 12, "expected twelve editorial poster assets")
+config = (ROOT / "hugo.toml").read_text(encoding="utf-8")
+olive_mount = config.split('source = "olive"', 1)[1].split('[[module.mounts]]', 1)[0] if 'source = "olive"' in config else ''
+require('excludeFiles = ["index.html"]' in olive_mount, "static Olive homepage still conflicts with Hugo homepage")
+require('layout: "surface-carrier"' in (ROOT / "content/olive/_index.md").read_text(encoding="utf-8"), "canonical Olive Hugo route missing")
+require('/olive/#olive-series' not in journey, "obsolete standalone series anchor still linked")
 if errors:
     for error in errors:
         print("FAIL:", error)
     sys.exit(1)
-print("PASS: Olive Mountain poster scale authority checks (17 assertions)")
+print("PASS: Olive Mountain poster scale authority checks (20 assertions)")
