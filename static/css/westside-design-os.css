@@ -661,3 +661,13 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
   --ws-portal-zh-size:clamp(1.2rem,5vw,2rem);
  }
 }
+
+/* Section identities use the heaviest Chinese weight; editorial text stays airy.
+   Explicit role only: never force Olive speaker artwork. */
+body[data-ws-scope]:not([data-ws-scope="olive"]) :is(.ws-section-name-zh,[data-ws-type-role="section-name"]){
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
+ font-weight:var(--ws-weight-section,900)!important;font-synthesis:none;
+}
+body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
+ font-weight:var(--ws-weight-section,900)!important;
+}

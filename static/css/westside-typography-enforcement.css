@@ -11,7 +11,7 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) :is(
  .sites-church-heading,.sites-surface-title,.sites-editorial-title
 ):not([data-ws-typography-lock]):not([data-ws-scope="olive"] *){
  font-family:var(--ws-type-zh)!important;
- font-weight:200!important;
+ font-weight:var(--ws-weight-air,200)!important;
  font-synthesis:none;
 }
 body[data-ws-scope]:not([data-ws-scope="olive"]) :is(
