@@ -3,6 +3,12 @@ on:
   pull_request:
     paths:
       - 'olive/**'
+      - 'layouts/olive/**'
+      - 'content/olive/**'
+      - 'static/js/olive-*.js'
+      - 'static/css/olive-*.css'
+      - 'static/dore-design/runtime/olive-*'
+      - 'hugo.toml'
       - 'scripts/check_olive_visual_regression.cjs'
       - '.github/workflows/olive-visual-regression.yml'
   workflow_dispatch:
@@ -14,10 +20,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install Hugo
+        run: |
+          wget -q -O "${{ runner.temp }}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v0.164.0/hugo_extended_0.164.0_linux-amd64.deb"
+          sudo dpkg -i "${{ runner.temp }}/hugo.deb"
+      - name: Normalize legacy front matter
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          for path in Path('content').rglob('*.md'):
+              original=path.read_text(encoding='utf-8')
+              updated=re.sub(r'(?m)^([ \\t]*)_build([ \\t]*:)',r'\\1build\\2',original)
+              if updated!=original: path.write_text(updated,encoding='utf-8')
+          PY
+      - name: Build canonical Hugo site
+        run: hugo --minify --baseURL /
       - run: npm install --no-save --package-lock=false playwright
       - run: npx playwright install --with-deps chromium
       - name: Serve site
-        run: python3 -m http.server 8765 --directory . > /tmp/olive-server.log 2>&1 &
+        run: python3 -m http.server 8765 --directory public > /tmp/olive-server.log 2>&1 &
       - name: Check responsive layout and capture screenshots
         run: node scripts/check_olive_visual_regression.cjs
       - uses: actions/upload-artifact@v4
