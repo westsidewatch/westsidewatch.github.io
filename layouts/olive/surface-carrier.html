@@ -168,7 +168,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       poster.dataset.previewSource='video';
     };
     poster.dataset.previewSource='fallback';
-    imageExists(fallback,available=>{if(generation===previewGeneration&&!available&&poster.dataset.previewSource==='fallback'){poster.style.backgroundImage='none';poster.dataset.previewSource='gradient';}});
+    imageExists(fallback,available=>{if(generation===previewGeneration&&!available&&poster.dataset.previewSource==='fallback'){poster.style.removeProperty('background-image');poster.dataset.previewSource='gradient';}});
     imageExists(max,ok=>{
       if(generation!==previewGeneration)return;
       if(ok)applyThumbnail(max);
