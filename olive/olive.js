@@ -122,7 +122,7 @@
     for(const [slug,name] of people){
       let p={}; try{if(window.WestsideResources) p=await window.WestsideResources.index('by-speaker','speaker:'+slug)}catch(_){}
       const n=recordsOf(p).length||p.itemCount||0;
-      speakerStage.append(linkCard('speaker-card',name,n?n+' 篇':'進入',['watchman-nee','jiang-xiuqin','derek-prince','tong-liu','huang-shuhua','jerry-lai','stephen-tong','kang-lai-chang','yu-hong-jie','rick-warren','kou-shao-en'].includes(slug)?'/olive/'+slug+'/':'/olive/?person='+slug));
+      speakerStage.append(linkCard('speaker-card',name,n?n+' 篇':'進入',['david-pawson','watchman-nee','jiang-xiuqin','derek-prince','tong-liu','huang-shuhua','jerry-lai','stephen-tong','kang-lai-chang','yu-hong-jie','rick-warren','kou-shao-en'].includes(slug)?'/olive/'+slug+'/':'/olive/?person='+slug));
     }
   }
   async function renderJiangTopics(){
