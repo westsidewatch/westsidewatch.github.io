@@ -313,3 +313,12 @@ body.sites-cinema{background:var(--cinema-paper)}
 .sites-cinema-week{background-color:color-mix(in oklab,var(--ws-crimson) 16%,#FAF9F5)}
 .sites-cinema-archive{background:var(--cinema-paper-light)}
 .sites-cinema-source a,.archive-index a,.archive-source-list__links a{border-color:color-mix(in oklab,var(--ws-crimson) 52%,transparent)}
+
+/* 2026-10-09 — Cinema hero typography: actual standalone page, not Hugo shell. */
+body.sites-cinema .sites-cinema-hall .sites-cinema-brand{left:clamp(24px,7vw,150px);bottom:clamp(85px,14vh,170px);max-width:min(84vw,900px);z-index:8}
+body.sites-cinema .sites-cinema-hall .sites-cinema-brand h1{font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-size:clamp(84px,10vw,178px);font-weight:400;line-height:.78;letter-spacing:-.055em;font-synthesis:none}
+body.sites-cinema .sites-cinema-hall .sites-cinema-brand h1 em{display:block;font:italic 400 1em/.78 var(--ws-type-display-en,"Bodoni Moda",serif)}
+body.sites-cinema .sites-cinema-hall .sites-cinema-brand h1 span{display:block;margin-top:clamp(20px,3vh,38px);font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);font-size:clamp(23px,2.5vw,42px);font-weight:200;line-height:1.3;letter-spacing:.14em;font-synthesis:none}
+body.sites-cinema .sites-cinema-hall .sites-cinema-brand>p{font-size:clamp(12px,.9vw,16px);font-weight:400;letter-spacing:.18em;margin-bottom:clamp(20px,3vh,35px)}
+body.sites-cinema .sites-cinema-hall .sites-cinema-enter{font-size:clamp(13px,.95vw,17px);bottom:clamp(45px,9vh,110px)}
+@media(max-width:760px){body.sites-cinema .sites-cinema-hall .sites-cinema-brand{left:6vw;bottom:17vh;max-width:88vw}body.sites-cinema .sites-cinema-hall .sites-cinema-brand h1{font-size:clamp(56px,15vw,104px)}body.sites-cinema .sites-cinema-hall .sites-cinema-brand h1 span{font-size:clamp(19px,5vw,28px)}}
