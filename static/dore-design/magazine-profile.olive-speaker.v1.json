@@ -1,16 +1,121 @@
 {
-  "schema":"dore.magazine-profile.v1",
-  "id":"olive-speaker-cover",
-  "consumer":"westside-watch",
-  "surface":"OliveMountain",
-  "artifactType":"speaker-cover",
-  "status":"experimental",
-  "identity":{"palette":"olive-white","portraitPolicy":"real-source-only","generatedIdentityPortraits":false},
-  "brief":{"publicationLogic":"editorial","contentType":"person","tone":["serious","quiet","cultured"],"avoid":["generic-pastor-poster","gold-on-green","template-repetition"]},
-  "candidateFamilies":["full-bleed","asymmetric-split","negative-space","portrait-inset","extreme-crop","typographic-no-portrait"],
-  "assetIntelligence":{"requireProvenance":true,"requireRightsState":true,"focalPoint":true,"responsiveCrop":true,"manualOverride":true},
-  "score":{"hard":["overflow","overlap","minimum-type","contrast","crop-safety","responsive-fit"],"editorial":["hierarchy","negative-space","image-type-relation","lineage-fidelity","distinctiveness","publication-coherence"]},
-  "render":["web-hero","speaker-card","mobile","preview-image"],
-  "feedback":{"recordPreference":true,"recordCorrections":true},
-  "preflight":{"failClosed":true}
+  "schema": "dore.magazine-profile.v1",
+  "id": "olive-speaker-cover",
+  "consumer": "westside-watch",
+  "surface": "OliveMountain",
+  "artifactType": "speaker-cover",
+  "status": "experimental",
+  "identity": {
+    "palette": "olive-white",
+    "portraitPolicy": "real-source-only",
+    "generatedIdentityPortraits": false
+  },
+  "brief": {
+    "publicationLogic": "editorial",
+    "contentType": "person",
+    "tone": [
+      "serious",
+      "quiet",
+      "cultured"
+    ],
+    "avoid": [
+      "generic-pastor-poster",
+      "gold-on-green",
+      "template-repetition"
+    ]
+  },
+  "candidateFamilies": [
+    "full-bleed",
+    "asymmetric-split",
+    "negative-space",
+    "portrait-inset",
+    "extreme-crop",
+    "typographic-no-portrait"
+  ],
+  "assetIntelligence": {
+    "requireProvenance": true,
+    "requireRightsState": true,
+    "focalPoint": true,
+    "responsiveCrop": true,
+    "manualOverride": true
+  },
+  "score": {
+    "hard": [
+      "overflow",
+      "overlap",
+      "minimum-type",
+      "contrast",
+      "crop-safety",
+      "responsive-fit"
+    ],
+    "editorial": [
+      "hierarchy",
+      "negative-space",
+      "image-type-relation",
+      "lineage-fidelity",
+      "distinctiveness",
+      "publication-coherence"
+    ]
+  },
+  "render": [
+    "web-hero",
+    "speaker-card",
+    "mobile",
+    "preview-image"
+  ],
+  "feedback": {
+    "recordPreference": true,
+    "recordCorrections": true
+  },
+  "preflight": {
+    "failClosed": true
+  },
+  "portraitEngraving": {
+    "version": "1.0",
+    "authority": "docs/OLIVE-MOUNTAIN-PORTRAIT-ENGRAVING-SYSTEM.md",
+    "assetType": "reference-derived-editorial-illustration",
+    "requiresConfirmedReferencePhoto": true,
+    "unreferencedIdentityGeneration": false,
+    "sourcePortraitVerificationInherited": false,
+    "seriesReference": "/images/olive/david-pawson-editorial.png",
+    "seriesReferenceRole": "visual-language-only",
+    "printing": {
+      "mode": "one-ink",
+      "inkToken": "--ws-olive",
+      "paperToken": "--ws-paper",
+      "ink": "#738A5A",
+      "paper": "#FAF9F5",
+      "cssTextOnly": "#252525"
+    },
+    "composition": {
+      "aspectRatio": "3:4",
+      "subjectRegion": [
+        "left",
+        "lower-left"
+      ],
+      "quietPaperFraction": [
+        0.35,
+        0.45
+      ],
+      "typographySafeRegion": "right",
+      "embeddedTypography": false,
+      "mobileTypography": "stack-permitted"
+    },
+    "variables": [
+      "PERSON NAME",
+      "REFERENCE PHOTO",
+      "POSE / EXPRESSION",
+      "ENVIRONMENTAL MOTIF"
+    ],
+    "acceptance": [
+      "likeness",
+      "single-ink-consistency",
+      "engraving-hierarchy",
+      "css-safe-space",
+      "subject-distinctiveness"
+    ],
+    "onFailure": "regenerate",
+    "firstTestSubject": "jiang-xiuqin",
+    "visualValidationStatus": "pending"
+  }
 }
