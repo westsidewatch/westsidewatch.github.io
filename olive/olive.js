@@ -30,8 +30,8 @@
   // Huang Shuhua remains row 2, column 2.
   const editorialOrder = [
     'david-pawson', 'jiang-xiuqin', 'derek-prince',
-    'watchman-nee', 'huang-shuhua', 'stephen-tong',
-    'jerry-lai', 'yu-hong-jie', 'tong-liu',
+    'watchman-nee', 'huang-shuhua', 'tong-liu',
+    'jerry-lai', 'yu-hong-jie', 'stephen-tong',
     'rick-warren', 'kang-lai-chang', 'kou-shao-en'
   ];
   people.sort(([a],[b]) => editorialOrder.indexOf(a)-editorialOrder.indexOf(b));
