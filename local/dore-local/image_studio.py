@@ -23,7 +23,8 @@ class Handler(BaseHTTPRequestHandler):
   self.send_response(code);self.send_header("Content-Type",kind);self.send_header("Cache-Control","no-store");self.send_header("X-Content-Type-Options","nosniff");self.send_header("Content-Length",str(len(raw)));self.end_headers();self.wfile.write(raw)
  def reply(self,code,data):self.send(code,json.dumps(data,ensure_ascii=False))
  def do_GET(self):
-  if self.path=="/":return self.send(200,PAGE.replace("__TOKEN__",json.dumps(TOKEN)),"text/html; charset=utf-8")
+  if self.path in ("/","/**"):return self.send(200,PAGE.replace("__TOKEN__",json.dumps(TOKEN)),"text/html; charset=utf-8")
+  if self.path=="/favicon.ico":return self.send(204,b"","image/x-icon")
   if self.path=="/health":return self.reply(200,{"ok":True,"service":"dore-image-studio"})
   self.reply(404,{"error":"Not found"})
  def do_POST(self):
