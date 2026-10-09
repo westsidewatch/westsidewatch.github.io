@@ -3,12 +3,12 @@
   <header class="olive-editorial__folio"><span>WESTSIDE WATCH / OLIVE MOUNTAIN</span><span>人物 / PORTRAIT</span></header>
   <div class="olive-editorial__spread">
     <figure class="olive-editorial__portrait">
-      {{ with .Params.portrait_image }}<img src="{{ . | relURL }}" alt="David Pawson editorial portrait" loading="eager">{{ else }}<div class="olive-editorial__asset-pending" role="status">Portrait artwork pending repository asset</div>{{ end }}
+      {{ with .Params.portrait_image }}<img src="{{ . | relURL }}" alt="{{ .Params.portrait_alt | default "David Pawson editorial portrait" }}" loading="eager">{{ else }}<div class="olive-editorial__asset-pending" role="status">Portrait artwork pending repository asset</div>{{ end }}
     </figure>
     <div class="olive-editorial__type">
       <p class="olive-editorial__eyebrow">OLIVE MOUNTAIN / PEOPLE</p>
-      <h1 id="olive-editorial-title"><span>DAVID</span><span>PAWSON</span></h1>
-      <p class="olive-editorial__zh" lang="zh-Hant">大衛鮑森</p>
+      <h1 id="olive-editorial-title">{{ range (.Params.portrait_title | default (slice "DAVID" "PAWSON")) }}<span>{{ . }}</span>{{ end }}</h1>
+      <p class="olive-editorial__zh" lang="zh-Hant">{{ .Params.portrait_name | default "大衛鮑森" }}</p>
       <p class="olive-editorial__sub">TEACHING · SCRIPTURE · FAITH</p>
     </div>
   </div>
