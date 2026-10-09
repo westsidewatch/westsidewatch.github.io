@@ -671,3 +671,19 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) :is(.ws-section-name-zh,[data-w
 body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
  font-weight:var(--ws-weight-section,900)!important;
 }
+
+/* DESIGNABLE ZONE CONTRACT (one OS, scoped exceptions).
+   Mark custom artwork with data-ws-designable. Only typography geometry
+   inside these marked regions may be independently art-directed.
+   Functional navigation, controls and links remain under OS authority.
+   Supported initial regions: olive-poster, home-brand.
+   Never stretch glyphs with transform:scaleX/scaleY. */
+:root{--ws-designable-zone-version:1}
+[data-ws-designable="olive-poster"]{
+ --ws-designable-type-en-size:inherit;
+ --ws-designable-type-zh-size:inherit;
+}
+[data-ws-designable="home-brand"]{
+ --ws-designable-type-en-size:var(--ws-type-scale-display-xl);
+ --ws-designable-type-zh-size:var(--ws-type-scale-title-sm);
+}
