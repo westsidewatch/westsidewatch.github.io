@@ -57,6 +57,11 @@ def validate(records):
         raise ValueError("Incorrect color separation")
     if len({(r["region"], r["vocabulary"]) for r in records}) < min(8, len(records)):
         raise ValueError("Insufficient geometric variety")
+    # Avoid nearly identical silhouettes hidden behind different labels.
+    # Normalize each SVG path into a raster-independent command signature.
+    signatures = [r["goldPath"].replace(" ", "").upper() for r in records]
+    if len(set(signatures)) != len(signatures):
+        raise ValueError("Duplicate normalized geometry")
     return True
 
 def enrich(selection):
