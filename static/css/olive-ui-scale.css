@@ -124,3 +124,59 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
   box-sizing:border-box;
  }
 }
+
+/* Olive editorial revision: one large, legible poster rail OVER the hero media.
+   Keep the active video's speaker/title separate from the other speaker posters. */
+.olive-archive .olive-home-stage .olive-feature{inset:0}
+.olive-archive .olive-home-stage .olive-speaker-rail{
+ left:clamp(390px,34vw,630px);
+ right:clamp(16px,2vw,36px);
+ bottom:clamp(16px,2.5vh,32px);
+ height:clamp(240px,32vh,350px);
+ padding:0 24px 0 0;
+ align-items:stretch;
+ z-index:8;
+}
+.olive-archive .olive-home-stage .olive-speaker-card:has(> .olive-speaker-card__editorial){
+ flex:0 0 auto;width:auto;height:100%;aspect-ratio:3/4;box-sizing:border-box;
+}
+.olive-archive .olive-home-stage .olive-feature__caption{
+ left:clamp(28px,3vw,56px);
+ bottom:clamp(30px,5vh,64px);
+ max-width:clamp(310px,29vw,500px);
+ z-index:6;
+}
+.olive-archive .olive-home-stage .olive-feature__caption h2{font-size:clamp(36px,3.7vw,64px)}
+.olive-archive .olive-gallery-intro{font-family:var(--ws-type-display-zh);font-size:clamp(15px,1.35vw,20px);margin:0 0 clamp(22px,3vw,42px)}
+.olive-archive .olive-poster-gallery{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,32px);
+}
+.olive-archive .olive-gallery-card{
+ display:block;aspect-ratio:3/4;overflow:hidden;position:relative;
+ background:color-mix(in oklab,var(--ws-olive) 12%,#fff);color:var(--ws-text);
+ text-decoration:none;border:1px solid color-mix(in oklab,var(--ws-text) 14%,transparent);
+}
+.olive-archive .olive-gallery-card img{display:block;width:100%;height:100%;object-fit:contain}
+.olive-archive .olive-gallery-card span{display:grid;place-items:center;height:100%;font-family:var(--ws-type-display-zh);font-size:clamp(22px,3vw,40px)}
+.olive-archive .olive-gallery-card:focus-visible{outline:3px solid currentColor;outline-offset:4px}
+@media(max-width:1100px){
+ .olive-archive .olive-home-stage .olive-speaker-rail{left:38%;height:clamp(200px,27vh,280px)}
+ .olive-archive .olive-poster-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:760px) and (orientation:portrait){
+ .olive-archive .olive-home-stage{min-height:760px}
+ .olive-archive .olive-home-stage .olive-speaker-rail{
+  left:var(--ws-olive-ui-gutter);right:0;bottom:12px;height:236px;
+  padding:0 var(--ws-olive-ui-gutter) 0 0;
+ }
+ .olive-archive .olive-home-stage .olive-speaker-card:has(> .olive-speaker-card__editorial){height:232px;width:174px;flex:0 0 174px}
+ .olive-archive .olive-home-stage .olive-feature__caption{bottom:270px;max-width:calc(100% - 2 * var(--ws-olive-ui-gutter))}
+ .olive-archive .olive-home-stage .olive-feature__caption h2{font-size:clamp(32px,9vw,48px)}
+ .olive-archive .olive-poster-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:900px) and (orientation:landscape) and (max-height:500px){
+ .olive-archive .olive-home-stage .olive-speaker-rail{left:40%;right:0;bottom:8px;height:136px}
+ .olive-archive .olive-home-stage .olive-speaker-card:has(> .olive-speaker-card__editorial){height:128px;width:96px;flex:0 0 96px}
+ .olive-archive .olive-home-stage .olive-feature__caption{bottom:22px;max-width:36%}
+ .olive-archive .olive-home-stage .olive-feature__caption h2{font-size:28px}
+}
