@@ -4,6 +4,9 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
 .speaker-card[data-dore-speaker="kou-shao-en"] .dore-editorial-cover,
 .speaker-card[data-dore-speaker="kou-shao-en"] .dore-verified-portrait,
 .speaker-card[data-dore-speaker="kou-shao-en"] .dore-generated-cover{transform:scaleX(-1);transform-origin:center center}
+/* Westside Design OS: Chinese entry labels use the global air-weight face and meta scale. */
+.speaker-card p,.series-card p,.speaker-card[data-dore-geometry="runtime"] p,.speaker-card[data-dore-image="verified"] p,.speaker-card[data-dore-cover="editorial"] p{font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air);font-size:var(--ws-type-scale-meta);line-height:var(--ws-type-leading-ui);font-synthesis:none}
+.speaker-card p b,.series-card p b{font-family:var(--ws-type-display-en);font-weight:400}
 .speaker-card .dore-editorial-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;z-index:1}
 .speaker-card[data-dore-cover="editorial"]{aspect-ratio:3/4;min-height:0;background:#fff}
 .speaker-card[data-dore-cover="editorial"]:before,.speaker-card[data-dore-cover="editorial"]:after{display:none!important}
