@@ -117,3 +117,10 @@ Awwwards、Webby Awards、FWA 是**品質參照／案例搜尋來源**，不是�
 已建立第一個自動檢查：`scripts/check_olive_scale_authority.py`，檢查 3:4、container query、poster-relative English typography、字體合成、reduced motion、海報來源與既定圖層；此階段**尚未改動正式頁面視覺**。檢查腳本需要 CI 執行確認，不能宣稱已 PASS。
 
 工程分支：`design/olive-responsive-authority-20261009`。下一步在此分支統一兩個 surface 的 UI Scale 權威，先保護十二張海報，再做橫向長廊與系列／播放整合。合併前必須跑 CI、視覺與播放驗收。
+
+## 十、第二階段進度｜共用 UI Scale 已接線（2026-10-09）
+
+- 新增 `static/css/olive-ui-scale.css`：單一橄欖山**外層**比例 Token，包括 gutter、gap、canvas 與 Hugo 橫向 rail 卡片寬度；以響應式斷點管理桌面／平板／手機。
+- `olive/index.html` 和 `layouts/olive/surface-carrier.html` 均已引入同一份 CSS，避免兩套 surface 各自設定外層 Scale。
+- **保護邊界**：未改動十二張講員海報內部的 `--poster-*`、3:4 比例、英文相對字號、個別遮擋、JS registry、播放內容或 URL。
+- 此輪**不是**完整視覺重構；兩個舊 stylesheet 的重複宣告仍需審計與移除。待 CI、瀏覽器截圖、播放驗收後才能合併。
