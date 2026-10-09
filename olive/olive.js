@@ -77,7 +77,7 @@
       if(editorial && /^\/images\/olive\/[a-z0-9-]+\.png$/.test(editorial.url)){
         const img=document.createElement('img');
         img.className='dore-editorial-cover'; img.src=editorial.url;
-        img.alt=editorial.alt||''; img.loading='lazy'; img.decoding='async';
+        img.alt=editorial.alt||''; img.loading='eager'; img.decoding='async';
         img.addEventListener('load',()=>{
           a.querySelector('.dore-generated-cover')?.remove();
           a.dataset.doreCover='editorial'; a.dataset.doreImage='editorial';
