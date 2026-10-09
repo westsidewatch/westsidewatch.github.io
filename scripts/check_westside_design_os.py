@@ -24,9 +24,9 @@ if 'css/typography-sitewide.css" | relURL' in base or 'css/westside-color-author
  print("Design OS guard failed: legacy authorities loaded beside Design OS");sys.exit(1)
 
 runtime=(root/"static/css/westside-design-os.css").read_text()
-for legacy in ["/css/typography-sitewide.css","/css/westside-color-authority.css"]:
+for legacy in ["/* Visual type-scale normalization", "/* === Color Operating System"]:
  if legacy not in runtime:
-  print("Design OS guard failed: compatibility runtime missing",legacy);sys.exit(1)
+  print("Design OS guard failed: migrated visual declarations missing",legacy);sys.exit(1)
 
 import subprocess
 result=subprocess.run([sys.executable,str(root/"scripts/build_westside_design_os.py"),"--check"],cwd=root)
