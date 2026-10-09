@@ -35,12 +35,12 @@ body[data-ws-scope] :is(
  .sites-layer-kicker,.sites-layer-eyebrow,.section-atlas__eyebrow,
  .editorial-kicker,.sites-layer-section-nav,.sites-layer-section-nav a,
  .sites-layer-header,.sites-layer-footer,.sites-editorial-meta
-){
+):not(:where([data-ws-designable], [data-ws-designable] *)) {
  font-family:var(--ws-type-zh);font-weight:var(--ws-weight-air,200);font-synthesis:none;
 }
 body[data-ws-scope] :is(
  .article-body,.prose,.reading-body,.sites-article-body
-) :is(p,li,blockquote){
+):not(:where([data-ws-designable], [data-ws-designable] *)) :is(p,li,blockquote):not(:where([data-ws-designable], [data-ws-designable] *)){
  font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif);
 }
 
@@ -60,4 +60,12 @@ body[data-ws-scope] [data-ws-designable] :is(nav,nav *,button:not(.olive-speaker
 }
 body[data-ws-scope] [data-ws-designable] :is(nav,button:not(.olive-speaker-card):not([data-ws-designable]),[role="button"]:not(.olive-speaker-card):not([data-ws-designable]))[lang="en"]{
  font-family:var(--ws-type-en);
+}
+
+/* Explicit section identities are the heaviest Chinese display role.
+   Never infer this from h1/h2: editorial headings remain independent. */
+body[data-ws-scope] :is(.ws-section-name-zh,[data-ws-type-role="section-name"],.ws-surface-heading__zh):not(:where([data-ws-designable], [data-ws-designable] *)){
+ font-family:var(--ws-type-zh)!important;
+ font-weight:var(--ws-weight-section,900)!important;
+ font-synthesis:none;
 }
