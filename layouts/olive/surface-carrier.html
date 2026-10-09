@@ -138,7 +138,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     const slug=speakerRoutes[card.dataset.person];
     if(!slug) return;
     card.dataset.doreSurface='speaker-card'; card.dataset.doreSpeaker=slug; card.dataset.doreIdentitySynthesis='false';
-    card.addEventListener('click',()=>location.assign(['watchman-nee','jiang-xiuqin','derek-prince','tong-liu','huang-shuhua','jerry-lai'].includes(slug)?'/olive/'+slug+'/':'/olive/?person='+encodeURIComponent(slug)));
+    card.addEventListener('click',()=>location.assign(['watchman-nee','jiang-xiuqin','derek-prince','tong-liu','huang-shuhua','jerry-lai','stephen-tong'].includes(slug)?'/olive/'+slug+'/':'/olive/?person='+encodeURIComponent(slug)));
   });
 
   const speakerRail=document.querySelector('.olive-speaker-rail');
