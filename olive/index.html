@@ -218,4 +218,52 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
   }
   .speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-english{bottom:36px!important}
 }
+
+/* Doré Magazine Engine composition integration — per-speaker editorial geometry.
+   Hard gate: original portrait field ends above the reserved typography field.
+   All text placements derive from magazine layout roles, not arbitrary overlays. */
+.speaker-card[data-dore-speaker]{
+  --olive-magazine-image-ratio:.70;
+  --olive-magazine-copy-pad:5%;
+  --olive-magazine-en-bottom:38px;
+  --olive-magazine-en-scale:clamp(28px,3vw,49px);
+  --olive-poster-band:30%!important;
+  aspect-ratio:3/4!important;
+  display:block!important;
+  overflow:hidden!important;
+  isolation:isolate;
+}
+.speaker-card[data-dore-speaker] .dore-editorial-cover,
+.speaker-card[data-dore-speaker] .dore-generated-cover{
+  height:70%!important;object-fit:contain!important;object-position:center center!important;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-english{
+  left:var(--olive-magazine-copy-pad)!important;
+  right:var(--olive-magazine-copy-pad)!important;
+  bottom:var(--olive-magazine-en-bottom)!important;
+  width:90%!important;
+  font-size:var(--olive-magazine-en-scale)!important;
+  letter-spacing:-.055em!important;
+  line-height:.94!important;
+  text-wrap:balance;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-entry{
+  bottom:10px!important;
+}
+.speaker-card[data-dore-speaker="david-pawson"]{--olive-magazine-en-scale:clamp(33px,3.6vw,58px)}
+.speaker-card[data-dore-speaker="jiang-xiuqin"]{--olive-magazine-en-scale:clamp(30px,3.4vw,54px)}
+.speaker-card[data-dore-speaker="derek-prince"]{--olive-magazine-en-scale:clamp(34px,3.7vw,60px)}
+.speaker-card[data-dore-speaker="watchman-nee"]{--olive-magazine-en-scale:clamp(30px,3.4vw,56px)}
+.speaker-card[data-dore-speaker="huang-shuhua"]{--olive-magazine-en-scale:clamp(28px,3.1vw,51px)}
+.speaker-card[data-dore-speaker="tong-liu"]{--olive-magazine-en-scale:clamp(41px,4.8vw,74px)}
+.speaker-card[data-dore-speaker="jerry-lai"]{--olive-magazine-en-scale:clamp(38px,4.2vw,66px)}
+.speaker-card[data-dore-speaker="yu-hong-jie"]{--olive-magazine-en-scale:clamp(31px,3.4vw,55px)}
+.speaker-card[data-dore-speaker="stephen-tong"]{--olive-magazine-en-scale:clamp(29px,3.2vw,53px)}
+.speaker-card[data-dore-speaker="rick-warren"]{--olive-magazine-en-scale:clamp(33px,3.6vw,58px)}
+.speaker-card[data-dore-speaker="kang-lai-chang"]{--olive-magazine-en-scale:clamp(26px,2.9vw,47px)}
+.speaker-card[data-dore-speaker="kou-shao-en"]{--olive-magazine-en-scale:clamp(32px,3.5vw,56px)}
+@media(max-width:720px){
+  .speaker-card[data-dore-speaker]{--olive-magazine-en-scale:clamp(34px,8vw,56px)}
+  .speaker-card[data-dore-speaker="tong-liu"]{--olive-magazine-en-scale:clamp(45px,11vw,76px)}
+}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
