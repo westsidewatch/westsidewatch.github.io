@@ -1,7 +1,7 @@
 /* Designable typography islands: scoped opt-out for artwork, not controls. */
-/* Westside Design OS: one non-Olive typography enforcement entrypoint.
+/* Westside Design OS: one typography enforcement entrypoint.
    Scope by language of each text run, not the document's inherited language.
-   Olive Mountain and its descendants remain outside this contract. */
+   Artwork inside marked designable zones is exempt; controls remain governed. */
 :root{
  --ws-type-en:var(--ws-type-display-en,"Bodoni Moda",serif);
  --ws-type-zh:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
