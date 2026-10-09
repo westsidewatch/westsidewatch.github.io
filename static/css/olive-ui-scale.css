@@ -112,3 +112,15 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
  .olive-archive .olive-feature__caption [data-feature-prev],
  .olive-archive .olive-feature__caption [data-feature-next]{position:relative;z-index:6}
 }
+
+/* Poster geometry must follow the available rail height, not a viewport-width card token.
+   This overrides the legacy flex-basis while keeping every source image unmodified. */
+@media (min-width:761px) {
+ .olive-archive .olive-speaker-card:has(> .olive-speaker-card__editorial){
+  flex:0 0 auto;
+  width:auto;
+  height:100%;
+  aspect-ratio:3/4;
+  box-sizing:border-box;
+ }
+}
