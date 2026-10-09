@@ -270,3 +270,12 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
 @media(max-width:760px){
  .olive-archive .olive-topic-index__links{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+/* Brand is the only 900-weight Chinese label on the hero.
+   Keep the existing English/Chinese editorial speaker treatment intact. */
+.olive-archive .olive-brand>.olive-section-brand{
+ display:block;font-family:var(--ws-olive-brand-zh-family)!important;
+ font-weight:900!important;font-synthesis:none!important;
+ font-size:clamp(20px,2.7vw,44px)!important;line-height:1.12!important;
+ letter-spacing:-.04em!important
+}
