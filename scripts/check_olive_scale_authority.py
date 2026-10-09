@@ -46,6 +46,10 @@ olive_mount = config.split('source = "olive"', 1)[1].split('[[module.mounts]]', 
 require('excludeFiles = ["index.html"]' in olive_mount, "static Olive homepage still conflicts with Hugo homepage")
 require('layout: "surface-carrier"' in (ROOT / "content/olive/_index.md").read_text(encoding="utf-8"), "canonical Olive Hugo route missing")
 require('/olive/#olive-series' not in journey, "obsolete standalone series anchor still linked")
+require("'/olive/?person='" not in hugo, "Hugo homepage still routes speakers to removed query page")
+require("hero.style.backgroundSize = 'contain'" in rail, "Pawson poster must not be cropped")
+require("hero.style.backgroundRepeat = 'no-repeat'" in rail, "Pawson poster must not tile")
+require("'/olive/'+slug+'/'" in hugo, "canonical speaker routes missing")
 if errors:
     for error in errors:
         print("FAIL:", error)
