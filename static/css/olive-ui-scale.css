@@ -63,3 +63,22 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
   outline: 3px solid currentColor;
   outline-offset: 3px;
 }
+
+/* One editorial journey: three sections, not three competing page designs. */
+.olive-archive .olive-journey-nav{display:flex;flex-wrap:wrap;gap:clamp(12px,3vw,48px);padding:18px var(--ws-olive-ui-gutter);border-block:1px solid currentColor}
+.olive-archive .olive-journey-nav a{display:flex;gap:.65em;align-items:baseline;color:inherit;text-decoration:none;font:400 clamp(12px,1vw,16px)/1.4 var(--ws-type-display-en)}
+.olive-archive .olive-journey-nav a small{font-family:var(--ws-type-display-zh);font-size:.85em;font-weight:var(--ws-olive-layer-zh-weight)}
+.olive-archive .olive-journey-nav a:hover,.olive-archive .olive-journey-nav a:focus-visible{text-decoration:underline;text-underline-offset:.35em}
+.olive-archive .olive-journey-section{padding:clamp(54px,8vw,124px) var(--ws-olive-ui-gutter);border-top:1px solid currentColor;scroll-margin-top:5rem}
+.olive-archive .olive-journey-heading{display:flex;align-items:baseline;justify-content:space-between;gap:20px;border-bottom:1px solid currentColor;margin-bottom:clamp(20px,3vw,46px)}
+.olive-archive .olive-journey-heading p,.olive-archive .olive-journey-aside>p,.olive-archive .olive-journey-screen>p:first-child{font:400 12px/1.4 var(--ws-type-display-en);letter-spacing:.14em}
+.olive-archive .olive-journey-heading h2{font:var(--ws-olive-layer-zh-weight) clamp(32px,5vw,76px)/1.2 var(--ws-type-display-zh);margin:.2em 0}
+.olive-archive .olive-journey-theater-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(230px,1fr);gap:var(--ws-olive-ui-gap)}
+.olive-archive .olive-journey-screen{aspect-ratio:16/9;background:var(--ws-olive);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(18px,3vw,48px);box-sizing:border-box}
+.olive-archive .olive-journey-screen h3{font:400 clamp(32px,4vw,68px)/1.1 var(--ws-type-display-zh);margin:.3em 0}
+.olive-archive .olive-journey-screen a{color:inherit;text-underline-offset:.3em}
+.olive-archive .olive-journey-aside{padding:clamp(12px,2vw,30px);border:1px solid currentColor}
+.olive-archive .olive-journey-speaker-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.olive-archive .olive-journey-speaker-links a{padding:10px 0;border-bottom:1px solid currentColor;color:inherit;text-decoration:none;font-family:var(--ws-type-display-zh)}
+.olive-archive .olive-journey-archive-link{display:inline-block;padding:16px 0;border-bottom:1px solid currentColor;color:inherit;text-decoration:none}
+@media(max-width:760px){.olive-archive .olive-journey-theater-grid{grid-template-columns:1fr}.olive-archive .olive-journey-nav{gap:14px}.olive-archive .olive-journey-heading{display:block}.olive-archive .olive-journey-screen{min-height:250px}}
