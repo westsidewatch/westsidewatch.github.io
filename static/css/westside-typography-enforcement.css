@@ -10,7 +10,7 @@ body[data-ws-scope] :is(
  h1,h2,h3,h4,h5,h6,.sites-layer-title,.sites-layer-section-title,
  .section-atlas__title,.atlas-entry__title,.sites-church-title,
  .sites-church-heading,.sites-surface-title,.sites-editorial-title
-):not([data-ws-typography-lock]):not(:where([data-ws-designable] *)):not([data-ws-designable]){
+):not([data-ws-typography-lock]):not(:where([data-ws-designable], [data-ws-designable] *)){
  font-family:var(--ws-type-zh)!important;
  font-weight:var(--ws-weight-air,200)!important;
  font-synthesis:none;
@@ -19,7 +19,7 @@ body[data-ws-scope] :is(
  h1,h2,h3,h4,h5,h6,.sites-layer-title,.sites-layer-section-title,
  .section-atlas__title,.atlas-entry__title,.sites-church-title,
  .sites-church-heading,.sites-surface-title,.sites-editorial-title
-):not(:where([data-ws-designable] *)) :is([lang="en"],[lang^="en-"],.ws-type-pair-en,.sites-layer-en,.editorial-en){
+):not(:where([data-ws-designable], [data-ws-designable] *)) :is([lang="en"],[lang^="en-"],.ws-type-pair-en,.sites-layer-en,.editorial-en){
  font-family:var(--ws-type-en)!important;
  font-weight:400!important;font-synthesis:none;
 }
@@ -27,7 +27,7 @@ body[data-ws-scope] :is(
  h1,h2,h3,h4,h5,h6,.sites-layer-title,.sites-layer-section-title,
  .section-atlas__title,.atlas-entry__title,.sites-church-title,
  .sites-church-heading,.sites-surface-title,.sites-editorial-title
-):not(:where([data-ws-designable] *)) :is([lang="zh"],[lang^="zh-"],.ws-type-pair-zh,.sites-layer-zh,.editorial-zh){
+):not(:where([data-ws-designable], [data-ws-designable] *)) :is([lang="zh"],[lang^="zh-"],.ws-type-pair-zh,.sites-layer-zh,.editorial-zh){
  font-family:var(--ws-type-zh)!important;
  font-weight:var(--ws-weight-air,200)!important;font-synthesis:none;
 }
@@ -36,7 +36,7 @@ body[data-ws-scope] :is(
  .editorial-kicker,.sites-layer-section-nav,.sites-layer-section-nav a,
  .sites-layer-header,.sites-layer-footer,.sites-editorial-meta
 ){
- font-family:var(--ws-type-zh);font-weight:200;font-synthesis:none;
+ font-family:var(--ws-type-zh);font-weight:var(--ws-weight-air,200);font-synthesis:none;
 }
 body[data-ws-scope] :is(
  .article-body,.prose,.reading-body,.sites-article-body
@@ -45,9 +45,19 @@ body[data-ws-scope] :is(
 }
 
 /* The language attribute on the heading itself must win over the page language. */
-body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6)[lang="en"]:not(:where([data-ws-designable] *)){
+body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6)[lang="en"]:not(:where([data-ws-designable], [data-ws-designable] *)){
  font-family:var(--ws-type-en)!important;font-weight:var(--ws-weight-standard,400)!important;
 }
-body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6)[lang="zh-Hant"]:not(:where([data-ws-designable] *)){
+body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6)[lang="zh-Hant"]:not(:where([data-ws-designable], [data-ws-designable] *)){
  font-family:var(--ws-type-zh)!important;
+}
+
+/* Functional controls never inherit art-directed sizes, including when
+   embedded in a designable composition. Preserve their own UI-scale sizing. */
+body[data-ws-scope] [data-ws-designable] :is(nav,nav *,button,button *,[role="button"],[role="button"] *){
+ font-family:var(--ws-type-zh);
+ font-synthesis:none;
+}
+body[data-ws-scope] [data-ws-designable] :is(nav,nav *,button,button *,[role="button"],[role="button"] *)[lang="en"]{
+ font-family:var(--ws-type-en);
 }
