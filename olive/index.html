@@ -323,4 +323,47 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
     font-size:clamp(20px,5vw,32px)!important;
   }
 }
+
+/* mono-color-skill catalog translation: compositions.json + typography.json +
+   rhythm.json. Poster-local, deterministic layouts; typography stays IN image.
+   Existing portrait asset and speaker metadata remain untouched. */
+.speaker-card[data-dore-speaker]{
+ --mono-type-x:7%;--mono-type-y:47%;--mono-type-w:36%;
+ --mono-type-size:clamp(28px,3.1vw,54px);--mono-type-rotation:0deg;
+ --mono-type-align:left;--mono-entry-y:78%;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-english{
+ left:var(--mono-type-x)!important;top:var(--mono-type-y)!important;
+ width:var(--mono-type-w)!important;max-width:var(--mono-type-w)!important;
+ max-height:31%!important;overflow:visible!important;
+ font-size:var(--mono-type-size)!important;
+ transform:rotate(var(--mono-type-rotation))!important;
+ transform-origin:top left!important;text-align:var(--mono-type-align)!important;
+ white-space:normal!important;line-height:.89!important;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-entry{
+ left:var(--mono-type-x)!important;top:var(--mono-entry-y)!important;
+ width:var(--mono-type-w)!important;
+}
+/* Each subject receives a different compositional family rather than a
+   universal bottom caption: editorial-cover / rotated-display / type-declaration
+   / image-field / editorial-journal / specimen-annotation. */
+.speaker-card[data-dore-speaker="david-pawson"]{--mono-type-x:7%;--mono-type-y:44%;--mono-type-w:38%;--mono-type-size:clamp(31px,3.2vw,55px);--mono-entry-y:75%}
+.speaker-card[data-dore-speaker="jiang-xiuqin"]{--mono-type-x:7%;--mono-type-y:54%;--mono-type-w:39%;--mono-type-size:clamp(27px,2.8vw,47px);--mono-entry-y:77%}
+.speaker-card[data-dore-speaker="derek-prince"]{--mono-type-x:6%;--mono-type-y:41%;--mono-type-w:39%;--mono-type-size:clamp(30px,3.2vw,54px);--mono-entry-y:74%}
+.speaker-card[data-dore-speaker="watchman-nee"]{--mono-type-x:8%;--mono-type-y:51%;--mono-type-w:36%;--mono-type-size:clamp(27px,2.9vw,48px);--mono-entry-y:78%}
+.speaker-card[data-dore-speaker="huang-shuhua"]{--mono-type-x:6%;--mono-type-y:45%;--mono-type-w:39%;--mono-type-size:clamp(26px,2.7vw,45px);--mono-entry-y:76%}
+.speaker-card[data-dore-speaker="tong-liu"]{--mono-type-x:7%;--mono-type-y:53%;--mono-type-w:36%;--mono-type-size:clamp(40px,4.2vw,69px);--mono-entry-y:77%}
+.speaker-card[data-dore-speaker="jerry-lai"]{--mono-type-x:7%;--mono-type-y:43%;--mono-type-w:35%;--mono-type-size:clamp(35px,3.7vw,61px);--mono-entry-y:76%}
+.speaker-card[data-dore-speaker="yu-hong-jie"]{--mono-type-x:7%;--mono-type-y:56%;--mono-type-w:38%;--mono-type-size:clamp(29px,3vw,50px);--mono-entry-y:79%}
+.speaker-card[data-dore-speaker="stephen-tong"]{--mono-type-x:7%;--mono-type-y:45%;--mono-type-w:38%;--mono-type-size:clamp(27px,2.9vw,48px);--mono-entry-y:77%}
+.speaker-card[data-dore-speaker="rick-warren"]{--mono-type-x:7%;--mono-type-y:53%;--mono-type-w:38%;--mono-type-size:clamp(30px,3.1vw,52px);--mono-entry-y:79%}
+.speaker-card[data-dore-speaker="kang-lai-chang"]{--mono-type-x:7%;--mono-type-y:46%;--mono-type-w:40%;--mono-type-size:clamp(23px,2.4vw,40px);--mono-entry-y:78%}
+.speaker-card[data-dore-speaker="kou-shao-en"]{--mono-type-x:7%;--mono-type-y:55%;--mono-type-w:37%;--mono-type-size:clamp(29px,3vw,50px);--mono-entry-y:78%}
+@media(max-width:720px){
+ .speaker-card[data-dore-speaker]{--mono-type-size:clamp(27px,6.6vw,43px)}
+ .speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-english{
+  font-size:min(var(--mono-type-size),7vw)!important;
+ }
+}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
