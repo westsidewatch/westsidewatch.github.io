@@ -56,6 +56,7 @@ require('const featured=[' in hugo and 'featured[index]' in hugo, 'video and pre
 require("selectFeatured(index-1)" in hugo and "selectFeatured(index+1)" in hugo, 'bidirectional feature navigation missing')
 require("event.key==='ArrowRight'" in hugo and "event.key==='ArrowLeft'" in hugo, 'keyboard navigation missing')
 require('data-feature-source' in hugo and "source.href='https://www.youtube.com/watch?v='+item.id" in hugo, 'video-specific external playback fallback missing')
+require("poster.style.removeProperty('background-image')" in hugo, 'fallback must restore authored gradient')
 if errors:
     for error in errors:
         print("FAIL:", error)
