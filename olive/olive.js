@@ -106,6 +106,7 @@
           a.style.setProperty('--poster-x',layout.x+'%');
           a.style.setProperty('--poster-width',layout.width+'%');
           a.style.setProperty('--poster-size',layout.size+'cqw');
+          a.style.setProperty('--poster-thickness',String(layout.thickness||1));
         }
         label.textContent=english;
         group.append(label);
