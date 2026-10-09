@@ -16,6 +16,18 @@
         typeof record.speaker === 'string' &&
         /^\/images\/olive\/[a-z0-9-]+\.png$/.test(record.url)
       ).map(record => [record.speaker, record]));
+      const pawson = covers.get('david-pawson');
+      const hero = document.querySelector('.olive-feature__poster[data-pawson-poster]');
+      if (pawson && hero) {
+        const preload = new Image();
+        preload.onload = () => {
+          hero.style.backgroundImage = 'url(' + JSON.stringify(pawson.url) + ')';
+          hero.style.backgroundPosition = 'center';
+          hero.style.backgroundSize = 'cover';
+          hero.dataset.editorialAsset = 'ready';
+        };
+        preload.src = pawson.url;
+      }
       rail.querySelectorAll('.olive-speaker-card').forEach(card => {
         const record = covers.get(slugs[card.dataset.person]);
         if (!record || card.querySelector('.olive-speaker-card__editorial')) return;
