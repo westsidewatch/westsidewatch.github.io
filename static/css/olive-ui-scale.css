@@ -1,0 +1,35 @@
+/* Olive Mountain / one shared outer-layout scale authority.
+   Applies to both /olive/ and Hugo Olive surface; never touches poster inner layers.
+   The sitewide typography/color authority remains unchanged. */
+:root {
+  --ws-olive-ui-gutter: clamp(16px, 3.6vw, 64px);
+  --ws-olive-ui-gap: clamp(12px, 1.35vw, 22px);
+  --ws-olive-ui-canvas: 1440px;
+  --ws-olive-ui-rail-card: clamp(240px, 19vw, 340px);
+  --ws-olive-ui-rail-gap: clamp(10px, 1vw, 16px);
+}
+/* Independent Olive route: spacing only, not poster geometry or typography. */
+body:has(#olive-speakers) main {
+  max-width: var(--ws-olive-ui-canvas);
+  padding-inline: var(--ws-olive-ui-gutter);
+}
+body:has(#olive-speakers) .speaker-grid { gap: var(--ws-olive-ui-gap); }
+body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter); }
+/* Hugo editorial surface: same scale source, independent local layout. */
+.olive-archive .olive-speaker-rail { gap: var(--ws-olive-ui-rail-gap); }
+.olive-archive .olive-speaker-card { flex-basis: var(--ws-olive-ui-rail-card); }
+@media (max-width: 760px) {
+  :root {
+    --ws-olive-ui-gutter: clamp(16px, 4.5vw, 28px);
+    --ws-olive-ui-gap: 12px;
+    --ws-olive-ui-rail-card: 58vw;
+  }
+}
+@media (max-width: 480px) {
+  :root { --ws-olive-ui-rail-card: min(72vw, 320px); }
+}
+/* Keep the horizontal rail usable with touch, keyboard and reduced motion. */
+.olive-archive .olive-speaker-rail { -webkit-overflow-scrolling: touch; }
+@media (prefers-reduced-motion: reduce) {
+  .olive-archive .olive-speaker-rail { scroll-behavior: auto; }
+}
