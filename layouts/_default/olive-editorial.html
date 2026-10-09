@@ -21,9 +21,10 @@
         <h2>{{ .title }}</h2>
         {{ with .description }}<p>{{ . }}</p>{{ end }}
         {{ with .sermons }}
+        <div class="olive-editorial__goodtv-screen" data-goodtv-screen hidden aria-label="講道影片播放器"></div>
         <ol class="olive-editorial__sermon-list">
           {{ range . }}
-          <li><span>{{ .title }}{{ with .date }} <small>{{ . }}</small>{{ end }}{{ with .source }} <small>· {{ . }}</small>{{ end }}</span>{{ with .url }}<a href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">觀看／來源 ↗</a>{{ end }}</li>
+          <li><span>{{ .title }}{{ with .date }} <small>{{ . }}</small>{{ end }}{{ with .source }} <small>· {{ . }}</small>{{ end }}</span>{{ with .url }}<span class="olive-editorial__actions"><button type="button" class="olive-editorial__goodtv-play" data-olive-video-url="{{ . }}" hidden>本站播放 ▶</button><a href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">官方來源 ↗</a></span>{{ end }}</li>
           {{ end }}
         </ol>
         {{ end }}
@@ -96,6 +97,33 @@
 .olive-editorial__goodtv-screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 </style>
 <script>
-(()=>{const root=document.querySelector('.olive-editorial');if(!root)return;root.addEventListener('click',event=>{const button=event.target.closest('[data-goodtv-embed]');if(!button)return;const section=button.closest('.olive-editorial__series'),screen=section?.querySelector('[data-goodtv-screen]');if(!screen)return;let url;try{url=new URL(button.dataset.goodtvEmbed,location.origin)}catch{return}if(url.protocol!=='https:'||url.hostname!=='www.youtube.com'||!/^\\/embed\\/[A-Za-z0-9_-]{11}$/.test(url.pathname))return;const frame=document.createElement('iframe');frame.src='https://www.youtube-nocookie.com'+url.pathname+'?autoplay=1';frame.title=button.closest('li')?.querySelector('span')?.textContent?.trim()||'GOOD TV 講道';frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';frame.allowFullscreen=true;screen.replaceChildren(frame);screen.hidden=false;screen.scrollIntoView({behavior:'smooth',block:'center'});});})();
+(()=>{
+const root=document.querySelector('.olive-editorial');if(!root)return;
+function youtubeId(value){
+  try{
+    const u=new URL(value,location.origin);
+    if(u.protocol!=='https:')return null;
+    let id=null;
+    if(['www.youtube.com','youtube.com','m.youtube.com','www.youtube-nocookie.com'].includes(u.hostname)){
+      if(u.pathname==='/watch')id=u.searchParams.get('v');
+      else if(/^\\/(embed|shorts|live)\\//.test(u.pathname))id=u.pathname.split('/')[2];
+    }else if(u.hostname==='youtu.be')id=u.pathname.slice(1);
+    return /^[A-Za-z0-9_-]{11}$/.test(id||'')?id:null;
+  }catch{return null}
+}
+root.querySelectorAll('[data-olive-video-url]').forEach(button=>{if(youtubeId(button.dataset.oliveVideoUrl))button.hidden=false});
+root.addEventListener('click',event=>{
+ const button=event.target.closest('[data-goodtv-embed],[data-olive-video-url]');if(!button)return;
+ const section=button.closest('.olive-editorial__series'),screen=section?.querySelector('[data-goodtv-screen]');if(!screen)return;
+ const id=youtubeId(button.dataset.goodtvEmbed||button.dataset.oliveVideoUrl);if(!id)return;
+ const frame=document.createElement('iframe');
+ frame.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1';
+ frame.title=button.closest('li')?.querySelector('span')?.textContent?.trim()||'講道影片';
+ frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';
+ frame.allowFullscreen=true;
+ screen.replaceChildren(frame);screen.hidden=false;
+ screen.scrollIntoView({behavior:'smooth',block:'center'});
+});
+})();
 </script>
 {{ end }}
