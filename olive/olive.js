@@ -25,6 +25,16 @@
     if(first.year!==second.year) return first.year-second.year;
     return first.date && second.date ? first.date.localeCompare(second.date) : 0;
   });
+  // Editorial grid order approved for the existing twelve images (row-major).
+  // Do not alter the shared speaker entity registry or image files.
+  // Huang Shuhua remains row 2, column 2.
+  const editorialOrder = [
+    'david-pawson', 'yu-hong-jie', 'derek-prince',
+    'watchman-nee', 'huang-shuhua', 'stephen-tong',
+    'jerry-lai', 'jiang-xiuqin', 'tong-liu',
+    'rick-warren', 'kang-lai-chang', 'kou-shao-en'
+  ];
+  people.sort(([a],[b]) => editorialOrder.indexOf(a)-editorialOrder.indexOf(b));
   const jiangTopics=[
     ['內在生活','jiang-xiuqin-inner-life-45','45 篇'],
     ['讚美','jiang-xiuqin-goodtv-praise',''],
