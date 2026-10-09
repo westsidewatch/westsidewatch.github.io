@@ -198,3 +198,33 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
  .olive-archive .olive-feature__channel{max-height:62px}
  .olive-archive .olive-feature__episode{padding:5px 7px}
 }
+
+/* Restored bilingual identities: Bodoni Moda English above ultra-light Chinese.
+   Live text stays independent of the immutable artwork and never stretches. */
+.olive-archive .olive-speaker-card .olive-speaker-card__identity{
+ position:absolute;inset:auto 0 0;z-index:3;display:flex;flex-direction:column;
+ justify-content:flex-end;align-items:flex-start;gap:3px;
+ padding:clamp(10px,1.1vw,20px);box-sizing:border-box;
+ color:#fff;text-align:left;pointer-events:none;
+ background:linear-gradient(to top,rgba(12,17,12,.88),rgba(12,17,12,.4) 58%,transparent);
+ opacity:1!important;height:auto;width:100%;
+}
+.olive-archive .olive-speaker-card .olive-speaker-card__identity-en{
+ position:static!important;display:block!important;width:auto!important;height:auto!important;
+ font-family:"Bodoni Moda",var(--ws-type-display-en),serif!important;
+ font-weight:400!important;font-synthesis:none;letter-spacing:-.035em;
+ font-size:clamp(19px,2vw,36px);line-height:.98;opacity:1!important;
+ white-space:normal;overflow-wrap:normal;
+}
+.olive-archive .olive-speaker-card .olive-speaker-card__identity-zh{
+ position:static!important;display:block!important;width:auto!important;height:auto!important;
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:var(--ws-olive-layer-zh-weight,100)!important;
+ font-size:clamp(13px,1.15vw,19px);line-height:1.3;opacity:1!important;
+}
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"]>.olive-speaker-card__identity{opacity:1!important}
+@media(max-width:760px){
+ .olive-archive .olive-speaker-card .olive-speaker-card__identity{padding:9px}
+ .olive-archive .olive-speaker-card .olive-speaker-card__identity-en{font-size:clamp(17px,5vw,25px)}
+ .olive-archive .olive-speaker-card .olive-speaker-card__identity-zh{font-size:13px}
+}
