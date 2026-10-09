@@ -95,6 +95,8 @@
 .olive-editorial__goodtv-play:hover,.olive-editorial__goodtv-play:focus-visible{background:color-mix(in srgb,currentColor 9%,transparent)}
 .olive-editorial__goodtv-screen:not([hidden]){display:block;position:relative;aspect-ratio:16/9;width:min(100%,1000px);margin:20px 0 30px;background:#111}
 .olive-editorial__goodtv-screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.olive-editorial__player-close{position:absolute;right:0;top:0;z-index:2;font:inherit;background:var(--paper);color:var(--olive);border:1px solid currentColor;padding:8px 12px;cursor:pointer}
+.olive-editorial__goodtv-play[hidden]{display:none!important}
 </style>
 <script>
 (()=>{
@@ -121,7 +123,7 @@ root.addEventListener('click',event=>{
  frame.title=button.closest('li')?.querySelector('span')?.textContent?.trim()||'講道影片';
  frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';
  frame.allowFullscreen=true;
- screen.replaceChildren(frame);screen.hidden=false;
+ const close=document.createElement('button');close.type='button';close.textContent='關閉播放器 ×';close.className='olive-editorial__player-close';close.onclick=()=>{screen.replaceChildren();screen.hidden=true;button.focus()};screen.replaceChildren(frame,close);screen.hidden=false;
  screen.scrollIntoView({behavior:'smooth',block:'center'});
 });
 })();
