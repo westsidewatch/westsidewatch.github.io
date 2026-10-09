@@ -6,7 +6,7 @@ export function isCorePhase(phaseId) {
 }
 
 export function createCityProjection(group, meshes, {
-  phaseIds = [...CORE_PHASES], standingPhase = 'herodian-jesus',
+  phaseIds = [...CORE_PHASES], standingPhase = 'herodian-jesus', phaseStates = {},
 } = {}) {
   const activePhases = new Set(phaseIds);
   const snapshots = meshes.map((mesh) => ({
@@ -23,30 +23,36 @@ export function createCityProjection(group, meshes, {
   }));
   let state = { phaseId: '', ruin: 0, visibleBuildings: 0 };
   return {
-    apply({ phaseId, ruin = 0, evidenceAllowed = () => true }) {
+    apply({ phaseId, ruin = 0, evidenceAllowed = () => true, retainedVisible = false }) {
       const active = activePhases.has(phaseId);
+      const policy = phaseStates[phaseId];
+      const retained = policy?.state === 'retained-ruin';
       const amount =
-        phaseId === standingPhase ? 0 : Math.max(0, Math.min(1, ruin));
+        phaseId === standingPhase ? 0 : Math.max(0, Math.min(1, policy?.ruin ?? ruin));
       const scale = 1 - 0.82 * amount;
-      group.visible = active;
+      group.visible = active && (!retained || retainedVisible);
       const visible = new Set();
       for (const item of snapshots) {
         const { mesh, position, ground } = item;
         const objectScale = item.infrastructure ? 1 : scale;
-        mesh.visible = active && evidenceAllowed(item.confidence);
+        mesh.visible = group.visible && evidenceAllowed(item.confidence) &&
+          !(retained && item.infrastructure);
         mesh.position.x = position.x;
         mesh.position.z = position.z;
         mesh.position.y = ground + (position.y - ground) * objectScale;
         mesh.scale.y = item.scaleY * objectScale;
         mesh.userData.cityObject.buildingId = item.id;
         mesh.userData.cityObject.lifecycleState =
-          item.infrastructure
+          retained ? 'retained-ruin' : item.infrastructure
             ? 'street-continuity'
             : amount === 0 ? 'standing' : amount === 1 ? 'ruin' : 'destruction';
         if (mesh.visible && mesh.userData.cityObject.parcelId)
           visible.add(item.id);
       }
-      state = { phaseId, ruin: amount, visibleBuildings: visible.size };
+      state = { phaseId, ruin: amount, visibleBuildings: visible.size,
+        layerState: retained ? 'retained-ruin' : 'active-city',
+        retainedVisible: retained && retainedVisible,
+        burialDepthVerified: false, reuseLinksVerified: false };
     },
     diagnostics() {
       const fingerprint = (fields) => {

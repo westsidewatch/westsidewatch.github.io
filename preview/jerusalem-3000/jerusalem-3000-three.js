@@ -1,4 +1,4 @@
-import { isSharedSlicePhase } from './shared-era-runtime.js';
+import { isSharedSlicePhase, RETAINED_PHASE } from './shared-era-runtime.js';
 import { isCorePhase } from './city-lifecycle-projection.js';
 import { mountJerusalemThreeScene } from './three-scene.js';
 import { HistoricalTimeEngine } from './historical-time-engine.js';
@@ -63,6 +63,12 @@ try {
     },
   });
   await three.ready;
+  const retainedToggle = document.querySelector('.j3k-retained-toggle');
+  retainedToggle.addEventListener('click', () => {
+    const enabled = retainedToggle.getAttribute('aria-pressed') !== 'true';
+    retainedToggle.setAttribute('aria-pressed', String(enabled));
+    three.setRetainedLayerVisible(enabled);
+  });
   let inheritance = null,
     inheritedPhase = '';
   try {
@@ -134,7 +140,10 @@ try {
     date.textContent = p.dateLabel;
     eraEn.textContent = (p.state || '').toUpperCase() + ' · ' + p.dateLabel;
     eraZh.textContent = p.label;
-    note.textContent = isSharedSlicePhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
+    retainedToggle.hidden = p.id !== RETAINED_PHASE;
+    note.textContent = p.id === RETAINED_PHASE
+      ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建層仍為獨立示意。`
+      : isSharedSlicePhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
     ticks.forEach((x, i) => {
       x.classList.toggle('is-past', i < state.index);
       x.classList.toggle('is-current', i === state.index);

@@ -4,6 +4,7 @@ import { TemporalCityCore } from '../preview/jerusalem-3000/temporal-city-core.j
 import { buildEraParcelArchitecture, buildEraParcelArchitectureAsync } from '../preview/jerusalem-3000/herodian-typology-grammar.js';
 import { createSharedEraRuntime } from '../preview/jerusalem-3000/shared-era-runtime.js';
 import { RuinTransformationEngine } from '../preview/jerusalem-3000/ruin-transformation-engine.js';
+import { createCityProjection } from '../preview/jerusalem-3000/city-lifecycle-projection.js';
 import { readFileSync } from 'node:fs';
 const phases = [{id:'late-first-temple'}, {id:'babylonian-destruction'}];
 const makeCore = () => {
@@ -47,6 +48,35 @@ failed.request(phases[0].id);
 await new Promise(resolve=>setTimeout(resolve,20));
 assert.equal(failed.diagnostics().status,'error','generation failures must not masquerade as success');
 failed.dispose();
+// A successor inherits ruins, never restores them or silently certifies roads.
+const projectionGroup = new THREE.Group();
+const retainedMesh = new THREE.Mesh(new THREE.BoxGeometry(), material);
+retainedMesh.position.set(2, 110, 3);
+retainedMesh.userData.cityObject = { objectId:'stable-house', parcelId:'parcel', terrainGround:100, confidence:'inferred' };
+const roadMesh = retainedMesh.clone();
+roadMesh.userData.cityObject = { objectId:'stable-road', terrainGround:100, confidence:'inferred', infrastructure:true };
+projectionGroup.add(retainedMesh, roadMesh);
+const projection = createCityProjection(projectionGroup, [retainedMesh, roadMesh], {
+  phaseIds:[...phases.map(p=>p.id),'persian-nehemiah'], standingPhase:phases[0].id,
+  phaseStates:{'persian-nehemiah':{state:'retained-ruin',ruin:1}},
+});
+projection.apply({phaseId:phases[0].id});
+const original = projection.diagnostics();
+projection.apply({phaseId:'persian-nehemiah'});
+assert.equal(projectionGroup.visible,false,'retained layer requires an explicit request');
+projection.apply({phaseId:'persian-nehemiah',retainedVisible:true});
+assert.equal(projection.diagnostics().ruin,1,'successor must not reset ruins to standing');
+assert.equal(projection.diagnostics().visibleBuildings,1);
+assert.equal(roadMesh.visible,false,'unverified road continuity must not be projected');
+assert.equal(retainedMesh.userData.cityObject.lifecycleState,'retained-ruin');
+assert.equal(projection.diagnostics().identityFingerprint,original.identityFingerprint);
+projection.apply({phaseId:'persian-nehemiah',retainedVisible:true,evidenceAllowed:()=>false});
+assert.equal(projection.diagnostics().visibleBuildings,0);
+projection.apply({phaseId:'modern',retainedVisible:true});
+assert.equal(projectionGroup.visible,false);
+projection.apply({phaseId:phases[0].id});
+assert.equal(projection.diagnostics().transformFingerprint,original.transformFingerprint);
+retainedMesh.geometry.dispose();
 const timeline=JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/data/continuous-build-timeline.json',import.meta.url))).phases;
 const ruin=new RuinTransformationEngine(timeline);
 assert.equal(ruin.sample(5.5,'babylonian-destruction').ruin,.5);
