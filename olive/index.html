@@ -392,4 +392,23 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
  transform:rotate(-90deg) translateY(-100%)!important;
  transform-origin:top right!important;
 }
+
+/* Top-anchored vertical English on three requested original posters.
+   Clockwise 90-degree rotation lets the text START at the top edge and
+   extend downward within the image, instead of anchoring at its bottom. */
+.speaker-card[data-dore-speaker="derek-prince"],
+.speaker-card[data-dore-speaker="tong-liu"],
+.speaker-card[data-dore-speaker="huang-shuhua"]{
+ --olive-top-english:3%;
+ --olive-top-english-x:19%;
+}
+.speaker-card[data-dore-speaker="derek-prince"] .olive-speaker-english,
+.speaker-card[data-dore-speaker="tong-liu"] .olive-speaker-english,
+.speaker-card[data-dore-speaker="huang-shuhua"] .olive-speaker-english{
+ top:var(--olive-top-english)!important;
+ left:var(--olive-top-english-x)!important;
+ right:auto!important;bottom:auto!important;
+ transform:rotate(90deg)!important;
+ transform-origin:top left!important;
+}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
