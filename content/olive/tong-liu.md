@@ -9,10 +9,6 @@ portrait_alt: "劉彤人物版畫插圖"
 portrait_title: ["TONG", "LIU"]
 portrait_name: "劉彤"
 channel_url: "/olive/?person=tong-liu"
-portrait_align: "left"
-portrait_text_x: 5
-portrait_text_width: 47
-portrait_text_size: 10
 ---
 
 劉彤人物介紹。

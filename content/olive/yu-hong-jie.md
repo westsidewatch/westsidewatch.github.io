@@ -9,10 +9,6 @@ portrait_alt: "于宏潔人物版畫插圖"
 portrait_title: ["YU", "HONG JIE"]
 portrait_name: "于宏潔"
 channel_url: "/olive/?person=yu-hong-jie"
-portrait_align: "right"
-portrait_text_x: 60
-portrait_text_width: 35
-portrait_text_size: 8
 ---
 
 于宏潔人物介紹。
