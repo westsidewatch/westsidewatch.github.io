@@ -105,7 +105,7 @@
       }
       const cue=document.createElement('p');
       cue.className='olive-speaker-entry';
-      cue.append(document.createTextNode(meta||'進入'));
+      cue.append(document.createTextNode('進入'));
       const arrow=document.createElement('b');
       arrow.setAttribute('aria-hidden','true');
       arrow.textContent='↗';
