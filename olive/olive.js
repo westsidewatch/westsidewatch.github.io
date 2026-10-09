@@ -107,9 +107,7 @@
           a.style.setProperty('--poster-width',layout.width+'%');
           a.style.setProperty('--poster-size',layout.size+'cqw');
         }
-        for(const line of layout?.lines||[english]){
-          const row=document.createElement('span');row.textContent=line;label.append(row);
-        }
+        label.textContent=english;
         group.append(label);
       }
       const cue=document.createElement('p');
