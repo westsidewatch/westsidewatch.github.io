@@ -50,8 +50,9 @@ require("'/olive/?person='" not in hugo, "Hugo homepage still routes speakers to
 require("'/olive/'+slug+'/'" in hugo, "canonical speaker routes missing")
 require("poster.style.backgroundSize='contain'" in hugo, 'fallback poster must not crop')
 require("poster.style.backgroundRepeat='no-repeat'" in hugo, 'fallback poster must not tile')
-require('data-feature-next' in hugo and 'maxresdefault.jpg' in hugo and 'hqdefault.jpg' in hugo, 'video thumbnail rotation missing')
+require('data-feature-next' in hugo and 'data-feature-prev' in hugo and 'maxresdefault.jpg' in hugo and 'hqdefault.jpg' in hugo, 'video thumbnail navigation missing')
 require('const featured=[' in hugo and 'featured[index]' in hugo, 'video and preview must share selection')
+require("selectFeatured(index-1)" in hugo and "selectFeatured(index+1)" in hugo, 'bidirectional feature navigation missing')
 require('data-feature-source' in hugo and "source.href='https://www.youtube.com/watch?v='+item.id" in hugo, 'video-specific external playback fallback missing')
 if errors:
     for error in errors:
