@@ -52,6 +52,7 @@ require("poster.style.backgroundSize='contain'" in hugo, 'fallback poster must n
 require("poster.style.backgroundRepeat='no-repeat'" in hugo, 'fallback poster must not tile')
 require('data-feature-next' in hugo and 'maxresdefault.jpg' in hugo and 'hqdefault.jpg' in hugo, 'video thumbnail rotation missing')
 require('const featured=[' in hugo and 'featured[index]' in hugo, 'video and preview must share selection')
+require('data-feature-source' in hugo and "source.href='https://www.youtube.com/watch?v='+item.id" in hugo, 'video-specific external playback fallback missing')
 if errors:
     for error in errors:
         print("FAIL:", error)
