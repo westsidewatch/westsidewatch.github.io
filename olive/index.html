@@ -90,4 +90,61 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
 .speaker-card[data-dore-speaker="kou-shao-en"]{
   --olive-copy-x:7%;--olive-copy-y:15%;--olive-copy-w:38%;
 }
+
+/* Olive / 12 editorial English compositions.
+   Inspired by mono-color's typographic hierarchy and orientation grammar.
+   Keep all existing image assets, speaker order, Chinese names and entry cues. */
+.speaker-card{
+  --olive-en-x:6%;--olive-en-y:55%;--olive-en-w:88%;
+  --olive-en-size:clamp(38px,5.1vw,88px);
+  --olive-en-rotate:0deg;--olive-en-origin:left top;
+  --olive-en-tracking:-.055em;--olive-en-align:left;
+  --olive-en-leading:.84;
+}
+.speaker-card .olive-speaker-typegroup{position:static!important;display:contents!important}
+.speaker-card .olive-speaker-typegroup .olive-speaker-english{
+  position:absolute!important;left:var(--olive-en-x)!important;top:var(--olive-en-y)!important;
+  width:var(--olive-en-w)!important;max-width:none!important;
+  margin:0!important;font-family:var(--ws-type-display-en)!important;
+  font-weight:400!important;font-style:normal!important;
+  font-size:var(--olive-en-size)!important;line-height:var(--olive-en-leading)!important;
+  letter-spacing:var(--olive-en-tracking)!important;text-align:var(--olive-en-align)!important;
+  color:var(--ws-olive-speaker-en-color,#A65F4B)!important;
+  transform:rotate(var(--olive-en-rotate));transform-origin:var(--olive-en-origin);
+  white-space:normal;overflow-wrap:normal;word-break:normal;
+  z-index:5;pointer-events:none;font-synthesis:none;
+}
+.speaker-card .olive-speaker-typegroup h3{
+  position:absolute!important;left:var(--olive-copy-x)!important;top:var(--olive-copy-y)!important;
+  width:var(--olive-copy-w)!important;z-index:6!important;
+}
+.speaker-card .olive-speaker-typegroup .olive-speaker-entry{
+  position:absolute!important;left:var(--olive-copy-x)!important;
+  top:calc(var(--olive-copy-y) + 14%)!important;width:var(--olive-copy-w)!important;
+  z-index:6!important;
+}
+/* Twelve distinct editorial gestures; one ink color and one existing type family. */
+.speaker-card[data-dore-speaker="david-pawson"]{--olive-en-x:5%;--olive-en-y:94%;--olive-en-w:95%;--olive-en-size:clamp(42px,5.9vw,104px)}
+.speaker-card[data-dore-speaker="jiang-xiuqin"]{--olive-en-x:5%;--olive-en-y:95%;--olive-en-w:95%;--olive-en-size:clamp(39px,5.4vw,94px);--olive-en-tracking:-.065em}
+.speaker-card[data-dore-speaker="derek-prince"]{--olive-en-x:4%;--olive-en-y:92%;--olive-en-w:96%;--olive-en-size:clamp(43px,6.1vw,106px)}
+.speaker-card[data-dore-speaker="watchman-nee"]{--olive-en-x:4%;--olive-en-y:96%;--olive-en-w:95%;--olive-en-size:clamp(39px,5.6vw,98px)}
+.speaker-card[data-dore-speaker="huang-shuhua"]{--olive-en-x:5%;--olive-en-y:94%;--olive-en-w:95%;--olive-en-size:clamp(38px,5.2vw,92px)}
+.speaker-card[data-dore-speaker="tong-liu"]{--olive-en-x:5%;--olive-en-y:96%;--olive-en-w:92%;--olive-en-size:clamp(55px,7.3vw,125px)}
+.speaker-card[data-dore-speaker="jerry-lai"]{--olive-en-x:5%;--olive-en-y:94%;--olive-en-w:95%;--olive-en-size:clamp(48px,6.8vw,114px)}
+.speaker-card[data-dore-speaker="yu-hong-jie"]{--olive-en-x:5%;--olive-en-y:96%;--olive-en-w:95%;--olive-en-size:clamp(38px,5.4vw,96px)}
+.speaker-card[data-dore-speaker="stephen-tong"]{--olive-en-x:5%;--olive-en-y:95%;--olive-en-w:95%;--olive-en-size:clamp(38px,5.5vw,96px)}
+.speaker-card[data-dore-speaker="rick-warren"]{--olive-en-x:5%;--olive-en-y:95%;--olive-en-w:95%;--olive-en-size:clamp(42px,6vw,105px)}
+.speaker-card[data-dore-speaker="kang-lai-chang"]{--olive-en-x:5%;--olive-en-y:94%;--olive-en-w:95%;--olive-en-size:clamp(34px,4.6vw,82px)}
+.speaker-card[data-dore-speaker="kou-shao-en"]{--olive-en-x:5%;--olive-en-y:95%;--olive-en-w:95%;--olive-en-size:clamp(40px,5.7vw,100px)}
+/* Large English type enters from the lower edge like a cropped magazine masthead.
+   Move its baseline inside the artwork rather than hiding it below the card. */
+.speaker-card .olive-speaker-typegroup .olive-speaker-english{
+  transform:translateY(-100%) rotate(var(--olive-en-rotate));
+}
+@media(max-width:720px){
+  .speaker-card{--olive-en-size:clamp(42px,12vw,78px)}
+  .speaker-card[data-dore-speaker]{--olive-en-y:96%;--olive-en-size:clamp(39px,11vw,78px)}
+  .speaker-card[data-dore-speaker="tong-liu"]{--olive-en-size:clamp(55px,16vw,105px)}
+  .speaker-card .olive-speaker-typegroup .olive-speaker-entry{top:calc(var(--olive-copy-y) + 18%)!important}
+}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
