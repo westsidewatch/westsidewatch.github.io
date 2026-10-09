@@ -32,6 +32,30 @@
     {{ else }}
       <p class="olive-editorial__catalog-status">講道系列索引整理中。現有資料不會被當作已核實的完整館藏。</p>
     {{ end }}
+  {{/* Reuse the existing canonical GOOD TV index; do not duplicate its records. */}}
+  {{ if eq .File.ContentBaseName "jiang-xiuqin" }}
+    {{ $goodtv := (readFile "data/westside-index/by-series/jiang-xiuqin-goodtv.json" | transform.Unmarshal) }}
+    {{ with $goodtv.resources }}
+    <section class="olive-editorial__series" aria-label="GOOD TV 講道">
+      <h2>GOOD TV · 講道系列</h2>
+      <ol class="olive-editorial__sermon-list">
+        {{ range . }}
+        <li><span>{{ .title }}{{ with .series }} <small>· {{ . }}</small>{{ end }}</span><a href="{{ .url | safeURL }}" target="_blank" rel="noopener noreferrer">觀看／來源 ↗</a></li>
+        {{ end }}
+      </ol>
+    </section>
+    {{ end }}
+    {{ with $goodtv.seriesFamilies }}
+    <section class="olive-editorial__series" aria-label="GOOD TV 系列索引">
+      <h2>系列索引</h2>
+      <ol class="olive-editorial__sermon-list">
+        {{ range . }}
+        <li><span>{{ .displayName }}</span>{{ with .verifiedItems }}<small>{{ len . }} 條已索引</small>{{ end }}</li>
+        {{ end }}
+      </ol>
+    </section>
+    {{ end }}
+  {{ end }}
     <a class="olive-editorial__back" href="/olive/#olive-adullam">返回亞杜蘭洞 ↗</a>
   </section>
   <footer class="olive-editorial__foot"><span>WESTSIDE WATCH</span><span>THE OLIVE MOUNTAIN</span></footer>
