@@ -101,3 +101,19 @@ Awwwards、Webby Awards、FWA 是**品質參照／案例搜尋來源**，不是�
 - 本文件僅保存探索結論及工程規範，**未宣稱完成任何代碼修復、PR 合併或網站部署**。
 - 後續每一輪工程必須更新本文件中的實際改動、commit／PR、驗收結果與剩餘問題。
 - 原始第三個參考網站仍須追溯資料庫中的歷史圖片及當次多雷探索記錄；找到後補入此處，不可猜測。
+
+## 九、2026-10-09｜第一階段實際啟動：Authority Audit
+
+已直接讀取正式 `main` 的 `olive/index.html`、`olive/olive.js`、`layouts/olive/surface-carrier.html`。確認目前**同時存在兩個不同的橄欖山介面實作**：
+
+- `olive/index.html`：獨立 `/olive/` 頁，內聯 CSS（大量累積覆寫）、三欄 speaker-grid、十二張 editorial poster，海報已採 `container-type:inline-size`、`aspect-ratio:3/4`、`font-size:var(--poster-size)`，另有黃淑華與賴若瀚的前景遮擋規則。
+- `layouts/olive/surface-carrier.html`：Hugo 橄欖山 surface，首屏大衛鮑森 feature 與橫向講員 rail，與 `/olive/` 的獨立頁並非同一個渲染模板。
+- `olive/olive.js`：保留十二講員 registry、獨立 editorialOrder、海報載入與系列導航。注意：JS 同時定義 birth chronology 和獨立 editorialOrder，**不可未經確認直接覆寫排序**。
+
+**第一個核心風險：兩個 UI surface 的樣式與行為可能分叉；不得把修正其中一個誤報為整個橄欖山已修復。**
+
+**第二個核心風險：現有 `olive/index.html` 在單一 inline stylesheet 內累積大量重複／`!important` 規則。後續須先建立樣式權威表，再集中清理，不應再補一層盲目覆蓋。**
+
+已建立第一個自動檢查：`scripts/check_olive_scale_authority.py`，檢查 3:4、container query、poster-relative English typography、字體合成、reduced motion、海報來源與既定圖層；此階段**尚未改動正式頁面視覺**。檢查腳本需要 CI 執行確認，不能宣稱已 PASS。
+
+工程分支：`design/olive-responsive-authority-20261009`。下一步在此分支統一兩個 surface 的 UI Scale 權威，先保護十二張海報，再做橫向長廊與系列／播放整合。合併前必須跑 CI、視覺與播放驗收。
