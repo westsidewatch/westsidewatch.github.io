@@ -631,3 +631,8 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-bilingual-heading__zh{
  font-size:var(--ws-type-scale-title-sm,clamp(20px,1.5vw,30px));
  font-weight:200!important;line-height:1.35;font-synthesis:none;
 }
+
+/* Bilingual heading on shared second-layer surfaces. */
+body[data-ws-scope]:not([data-ws-scope="olive"]) .sites-journal-head .ws-bilingual-heading{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(8px,1vw,18px)}
+body[data-ws-scope]:not([data-ws-scope="olive"]) .sites-journal-head .ws-bilingual-heading__en{font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;font-size:var(--ws-type-scale-display-xl);font-weight:400!important;line-height:.94}
+body[data-ws-scope]:not([data-ws-scope="olive"]) .sites-journal-head .ws-bilingual-heading__zh{font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;font-size:var(--ws-type-scale-title-md);font-weight:200!important;line-height:1.3}
