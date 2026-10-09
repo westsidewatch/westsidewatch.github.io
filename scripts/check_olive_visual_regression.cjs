@@ -25,6 +25,7 @@ const fs=require('node:fs');
     }));
    });
    for(const item of imageReport)if(!item.loaded)errors.push('editorial image failed to load '+item.speaker+': '+item.src);
+   await page.waitForFunction(() => document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length===12,null,{timeout:15000});
    // Image decoding alone does not prove the editorial poster is visually visible.
    // Verify stacking, dimensions and actual hit-tested paint at the card center.
    const visibility=await page.evaluate(() => [...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')].map(card => {
