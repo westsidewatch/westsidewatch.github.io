@@ -11,7 +11,7 @@
     'kang-lai-chang': {year:1949, date:null, source:'https://www.lynchburgconference.org/bio_kang_laichang'},
     'rick-warren': {year:1954, date:'1954-01-28', source:'https://en.wikipedia.org/wiki/Rick_Warren'},
     'kou-shao-en': {year:1957, date:'1957-08-19', source:'https://rockpedia.org/pastors/kou-shaoen'},
-    'jiang-xiuqin': {year:null, date:null, source:null},
+    'jiang-xiuqin': {year:1954, date:null, precision:'year', source:'user-provided', label:'1954年'},
     'tong-liu': {year:1952, date:null, birthRange:[1952,1954], precision:'approximate-range', source:'user-provided', label:'約1952–1954年'},
     'jerry-lai': {year:1951, date:null, birthRange:[1951,1952], precision:'approximate-range', source:'user-provided', label:'1951或1952年，香港'},
     'yu-hong-jie': {year:1955, date:null, precision:'approximate-year', source:'user-provided', label:'約1955年'},
