@@ -58,7 +58,16 @@ if __name__ == "__main__":
     generated = create()
     if "--check" in sys.argv:
         if not OUTPUT.exists() or OUTPUT.read_text().rstrip("\n") != generated.rstrip("\n"):
-            sys.exit("Westside Design OS tokens are out of date")
+            import difflib
+            existing = OUTPUT.read_text() if OUTPUT.exists() else ''
+            print('Westside Design OS tokens are out of date', file=sys.stderr)
+            print(''.join(difflib.unified_diff(
+                existing.splitlines(keepends=True),
+                generated.splitlines(keepends=True),
+                fromfile='committed design tokens',
+                tofile='generated design tokens',
+            )), file=sys.stderr)
+            sys.exit(1)
         print("Westside Design OS generated tokens: PASS")
     else:
         OUTPUT.write_text(generated)
