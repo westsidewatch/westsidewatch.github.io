@@ -129,7 +129,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   let index=0,previewGeneration=0;
   const imageExists=(url,callback)=>{
     const img=new Image();
-    img.onload=()=>callback(img.naturalWidth>120);
+    img.onload=()=>callback(img.naturalWidth>=480 && img.naturalHeight>=270);
     img.onerror=()=>callback(false);
     img.src=url;
   };
@@ -150,6 +150,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     poster.style.backgroundSize='contain';
     poster.style.backgroundPosition='center';
     poster.style.backgroundRepeat='no-repeat';
+    // YouTube sometimes serves a tiny 120×90 placeholder with HTTP 200. Reject it.
     const max='https://i.ytimg.com/vi/'+item.id+'/maxresdefault.jpg';
     const hq='https://i.ytimg.com/vi/'+item.id+'/hqdefault.jpg';
     const applyThumbnail=url=>{
@@ -174,6 +175,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       feature.classList.add('is-playing');
     });
     next?.addEventListener('click',()=>selectFeatured(index+1));
+    document.addEventListener('visibilitychange',()=>{if(document.hidden && !frame.hidden){frame.removeAttribute('src');frame.hidden=true;feature.classList.remove('is-playing');}});
   }
 
   const speakerRoutes={
