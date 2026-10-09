@@ -73,4 +73,19 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
   .speaker-card .olive-speaker-typegroup .olive-speaker-english{font-size:clamp(12px,3.4vw,16px)}
   .speaker-card .olive-speaker-typegroup .olive-speaker-entry{margin-top:10px}
 }
+/* Westside Design OS / Olive scoped composition corrections.
+   Move the whole Chinese + English + entry group into the artwork's left-side whitespace.
+   These per-speaker CSS variables are the only placement overrides. */
+.speaker-card[data-dore-speaker="derek-prince"]{
+  --olive-copy-x:7%;--olive-copy-y:12%;--olive-copy-w:38%;
+}
+.speaker-card[data-dore-speaker="tong-liu"]{
+  --olive-copy-x:7%;--olive-copy-y:13%;--olive-copy-w:38%;
+}
+.speaker-card[data-dore-speaker="huang-shuhua"]{
+  --olive-copy-x:7%;--olive-copy-y:16%;--olive-copy-w:38%;
+}
+.speaker-card[data-dore-speaker="kou-shao-en"]{
+  --olive-copy-x:7%;--olive-copy-y:15%;--olive-copy-w:38%;
+}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
