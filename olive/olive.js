@@ -35,6 +35,21 @@
     'rick-warren', 'kang-lai-chang', 'kou-shao-en'
   ];
   people.sort(([a],[b]) => editorialOrder.indexOf(a)-editorialOrder.indexOf(b));
+  // English display names belong to the editorial presentation layer, not image assets.
+  const speakerEnglish = {
+    'david-pawson': 'David Pawson',
+    'jiang-xiuqin': 'Grace Chiang',
+    'derek-prince': 'Derek Prince',
+    'watchman-nee': 'Watchman Nee',
+    'huang-shuhua': 'Huang Shuhua',
+    'tong-liu': 'Tong Liu',
+    'jerry-lai': 'Jerry Lai',
+    'yu-hong-jie': 'Yu Hongjie',
+    'stephen-tong': 'Stephen Tong',
+    'rick-warren': 'Rick Warren',
+    'kang-lai-chang': 'Kang Lai-chang',
+    'kou-shao-en': 'Kou Shao-en'
+  };
   const jiangTopics=[
     ['內在生活','jiang-xiuqin-inner-life-45','45 篇'],
     ['讚美','jiang-xiuqin-goodtv-praise',''],
@@ -72,7 +87,12 @@
         a.append(img);
       }
     }
-    a.insertAdjacentHTML('beforeend',`<h3>${title}</h3><p>${meta||'進入'} <b aria-hidden="true">↗</b></p>`); return a;
+    a.insertAdjacentHTML('beforeend',`<h3>${title}</h3><p>${meta||'進入'} <b aria-hidden="true">↗</b></p>`);
+    if(cls==='speaker-card'){
+      const english=speakerEnglish[a.dataset.doreSpeaker];
+      if(english){const label=document.createElement('span');label.className='olive-speaker-english';label.lang='en';label.textContent=english;a.append(label);}
+    }
+    return a;
   }
   async function renderPeople(){
     speakerStage.replaceChildren();
