@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Fixed localhost model adapter. Never accepts a remote URL or SVG fallback."""
 import argparse
+import base64
+import mimetypes
 import json
 import sys
 from pathlib import Path
@@ -13,21 +15,35 @@ BASE = 'http://127.0.0.1:8790'
 def generate(prompt_file, output_file):
     prompt_path = Path(prompt_file)
     quality_path = prompt_path.with_name('editorial-quality.json')
-    if quality_path.exists():
-        quality = json.loads(quality_path.read_text(encoding='utf-8'))
-        if quality.get('requiresReferenceConditioning'):
-            raise RuntimeError('REFERENCE_CONDITIONING_UNSUPPORTED: the resident /generate adapter only sends text. Refusing to fake an identity-grounded portrait. Install and verify a reference-image capable local adapter before rendering.')
+    quality = json.loads(quality_path.read_text(encoding='utf-8')) if quality_path.exists() else None
+    reference = None
+    if quality and quality.get('requiresReferenceConditioning'):
+        reference = Path(quality['referenceImage']).resolve()
+        if not reference.is_file() or reference.stat().st_size > 12 * 1024 * 1024:
+            raise ValueError('Missing or oversized reference image (12 MB limit)')
+        mime = mimetypes.guess_type(reference.name)[0]
+        if mime not in ('image/png', 'image/jpeg', 'image/webp'):
+            raise ValueError('Unsupported reference image format')
     with urlopen(BASE + '/health', timeout=15) as response:
         health = json.load(response)
     if health.get('model_backed') is not True:
         raise RuntimeError('Local image model is not ready; SVG fallback refused')
     prompt = prompt_path.read_text(encoding='utf-8')
-    request = Request(BASE + '/generate', data=json.dumps({'message': 'Generate image: ' + prompt}).encode(),
+    payload = {'message': 'Generate image: ' + prompt}
+    if reference:
+        capabilities = health.get('capabilities', {})
+        if not isinstance(capabilities, dict) or capabilities.get('reference_image') is not True:
+            raise RuntimeError('REFERENCE_CONDITIONING_UNSUPPORTED: local model has not advertised reference_image support')
+        payload['reference_image'] = {'mime_type': mime, 'data_base64': base64.b64encode(reference.read_bytes()).decode('ascii')}
+        payload['mode'] = 'image_to_image'
+    request = Request(BASE + '/generate', data=json.dumps(payload).encode(),
                       headers={'Content-Type': 'application/json', 'X-Dore-Origin': 'dore-search'})
     with urlopen(request, timeout=1500) as response:
         result = json.load(response)
     if result.get('ok') is not True or result.get('model_backed') is not True:
         raise RuntimeError('Backend did not return model-backed imagery')
+    if reference and result.get('reference_conditioned') is not True:
+        raise RuntimeError('Local backend did not confirm reference-conditioned generation')
     asset = urlparse(result.get('asset_url', ''))
     if asset.scheme != 'http' or asset.hostname != '127.0.0.1' or asset.port != 8790 or asset.path != '/asset':
         raise RuntimeError('Invalid local asset URL')
@@ -39,7 +55,7 @@ def generate(prompt_file, output_file):
         output.write(raw)
     Path(str(output_file) + '.provenance.json').write_text(json.dumps({
         'modelBacked': True, 'renderer': result.get('renderer'),
-        'artifact': result.get('artifact'), 'published': False,
+        'artifact': result.get('artifact'), 'referenceConditioned': bool(reference), 'published': False,
     }, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
