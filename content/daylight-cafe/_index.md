@@ -1,7 +1,7 @@
 ---
 title: "白晝咖啡館"
 subtitle: "Daylight Café"
-description: "A common room for Christian life, family, work, city life, culture, conversation, and the ordinary daylight hours."
+description: "基督徒生活、家庭、工作、城市、文化與日常交流的公共空間。"
 layout: "portal"
 aliases:
   - "/website/daylight-cafe/"
@@ -10,39 +10,39 @@ aliases:
 
 白晝咖啡館是 Westside Watch 的基督徒生活空間。
 
-## Life Topics
+## 生活主題
 
 信仰如何進入每天實際生活的主題入口。內容可以從家庭、工作、城市生活、文化與日常選擇自然生長，不需要先建立一個龐大的分類百科。
 
-## Practical Guides
+## 實用指南
 
 面向具體生活問題的實用內容，連結教會、講道、書籍與日常生活。
 
-## Conversations
+## 生活對話
 
 適合交流、訪談、問答與生活經驗的空間。未來社群與討論能力也從這裡生長，而不是重新建立 Forum、Podcast 或 Website 之類的一級欄目。
 
-## Family
+## 家庭
 
 家庭、婚姻、親子、照顧與代際生活的內容入口。
 
-## Work
+## 工作
 
 工作、職場、召命、技能與日常勞作的內容入口。
 
-## City
+## 城市
 
 城市生活、社區、公共空間、本地活動與人在城市中的日常關係。
 
-## Culture
+## 文化
 
 閱讀、藝術、電影之外的文化生活，以及信仰與當代文化之間的日常接觸。電影與劇集本體仍屬天堂電影院，書與出版物本體仍屬黎明書局。
 
-## Events
+## 活動
 
 與生活、交流和社區相關的活動集合。教會正式聚會仍由 LivingWaterWest 持有，這裡只建立相關生活入口。
 
-## From the Rest of Westside Watch
+## 來自西區守望的內容
 
 白晝咖啡館也會呈現與生活主題相關的 LivingWaterWest、Magazine、Book 與 Sermon 內容。
 

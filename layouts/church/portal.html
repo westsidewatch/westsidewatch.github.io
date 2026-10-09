@@ -12,20 +12,20 @@
   </section>
 
   <section class="sites-church-gather" aria-labelledby="church-gather-title">
-    <p>01 / GATHER</p>
+    <p>01 / 聚集</p>
     <h2 id="church-gather-title">活水</h2>
     <p>不是一個地方。</p>
-    <p>The church is a gathered people.<br>敬拜 · 讀經 · 禱告 · 同行</p>
+    <p>教會是被主召聚的群體。<br>敬拜 · 讀經 · 禱告 · 同行</p>
   </section>
 
   <section class="sites-church-water" aria-labelledby="church-water-title">
-    <p>02 / LIVING WATER</p>
-    <h2 id="church-water-title">COME · DRINK · FLOW</h2>
+    <p>02 / 活水</p>
+    <h2 id="church-water-title">來 · 喝 · 活水湧流</h2>
     <blockquote>「我所賜的水，要在他裡頭成為泉源，直湧到永生。」<cite>JOHN 4:14</cite></blockquote>
   </section>
 
   <section class="sites-church-life" aria-labelledby="church-life-title">
-    <p>03 / THE GATHERED LIFE</p>
+    <p>03 / 教會生活</p>
     <h2 id="church-life-title">一起生活<br>在福音裡。</h2>
     <p>主日敬拜不是節目。查經不是課程。禱告不是儀式。<br>我們在基督裡被召聚，也在日常裡彼此成全。</p>
     <p>WATCH FOR THE DAWN · ROMANS 13:12</p>
@@ -54,16 +54,16 @@
   {{ end }}
 
   <section class="sites-church-scripture" aria-labelledby="church-scripture-title">
-    <p>MATTHEW 3:13–17 · JORDAN · BAPTISM</p>
+    <p>馬太福音 3:13–17 · 約旦河 · 受洗</p>
     <h2 id="church-scripture-title">耶穌受洗 <span>BAPTISM OF JESUS</span></h2>
     <p>太 3:13–17 · MATTHEW 3:13–17</p>
     <p>經文不是資料卡，而是空間的座標。影像、地方、歷史與見證在這裡進入同一段經文。</p>
-    <a href="{{ $filmHref }}" rel="noopener"><small>IMAGE / FILM</small><strong>{{ $filmLabel }}</strong><span>{{ $filmProvider }}</span></a>
-    <p>PLACE / HISTORY · JORDAN</p>
-    <p>SERMON / WITNESS · VOICE</p>
+    <a href="{{ $filmHref }}" rel="noopener"><small>影像／電影</small><strong>{{ $filmLabel }}</strong><span>{{ $filmProvider }}</span></a>
+    <p>地點／歷史 · 約旦河</p>
+    <p>講道／見證 · 聲音</p>
   </section>
 
-  <nav class="sites-church-entries" aria-label="Church life">
+  <nav class="sites-church-entries" aria-label="教會生活">
     {{ range .Pages.ByWeight }}
       {{ $entryHref := .Params.entry_url | default .RelPermalink }}
       <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<em>{{ . }}</em>{{ end }}<b>↗</b></a>
