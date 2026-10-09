@@ -9,8 +9,10 @@ ROOT=Path(__file__).resolve().parents[1]
 def run(job_dir,backend_command,dry_run=False,font=None):
  job_dir=Path(job_dir).resolve()
  job=json.loads((job_dir/'job.json').read_text(encoding='utf-8'))
- if job.get('schema')!='dore.local-image-job.v0' or job.get('constraints',{}).get('portraitSynthesis') is not False:
-  raise ValueError('Unsafe or unsupported job')
+ if job.get('schema')!='dore.local-image-job.v0':raise ValueError('Unsupported job schema')
+ portrait=job.get('constraints',{}).get('portraitSynthesis')
+ if not isinstance(portrait,bool):raise ValueError('Invalid portrait mode')
+ if portrait and not (job_dir/'editorial-quality.json').is_file():raise ValueError('Portrait mode requires editorial quality and reference contract')
  prompt=(job_dir/job['imagePromptFile']).resolve()
  output=(job_dir/job['expectedOutput']).resolve()
  if prompt.parent!=job_dir or output.parent!=job_dir:raise ValueError('Job path escape')
