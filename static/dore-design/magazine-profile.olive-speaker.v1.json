@@ -71,7 +71,7 @@
     "failClosed": true
   },
   "portraitEngraving": {
-    "version": "1.0",
+    "version": "1.1",
     "authority": "docs/OLIVE-MOUNTAIN-PORTRAIT-ENGRAVING-SYSTEM.md",
     "assetType": "reference-derived-editorial-illustration",
     "requiresConfirmedReferencePhoto": true,
@@ -80,12 +80,28 @@
     "seriesReference": "/images/olive/david-pawson-editorial.png",
     "seriesReferenceRole": "visual-language-only",
     "printing": {
-      "mode": "one-ink",
+      "mode": "monochrome-portrait-with-background-gold",
       "inkToken": "--ws-olive",
       "paperToken": "--ws-paper",
       "ink": "#738A5A",
       "paper": "#FAF9F5",
-      "cssTextOnly": "#252525"
+      "cssTextOnly": "#252525",
+      "backgroundAccent": {
+        "token": "--ws-pale-gold",
+        "hex": "#CEBD74",
+        "placement": "background-geometry-only",
+        "finish": "matte-printed",
+        "targetCanvasFraction": [
+          0.1,
+          0.15
+        ],
+        "exclude": [
+          "portrait",
+          "face",
+          "hands",
+          "right-typography-safe-region"
+        ]
+      }
     },
     "composition": {
       "aspectRatio": "3:4",
@@ -109,10 +125,11 @@
     ],
     "acceptance": [
       "likeness",
-      "single-ink-consistency",
+      "monochrome-portrait-and-background-only-gold",
       "engraving-hierarchy",
       "css-safe-space",
-      "subject-distinctiveness"
+      "subject-distinctiveness",
+      "unique-geometric-family-across-all-twelve"
     ],
     "onFailure": "regenerate",
     "firstTestSubject": "jiang-xiuqin",
@@ -129,6 +146,86 @@
         "quiet-visual-hierarchy",
         "css-typography-relationship"
       ]
+    },
+    "geometryAssignments": [
+      {
+        "speaker": "david-pawson",
+        "family": "cropped-disk-and-vertical-band",
+        "description": "偏置裁切圓面＋直條（既有圖）",
+        "status": "existing-reference"
+      },
+      {
+        "speaker": "watchman-nee",
+        "family": "lattice-and-translucent-panel",
+        "description": "窗格格網＋透光直面（既有圖）",
+        "status": "existing-reference"
+      },
+      {
+        "speaker": "jiang-xiuqin",
+        "family": "offset-rectangles-and-stepped-rule",
+        "description": "偏置矩形＋階梯折線",
+        "status": "generated-candidate"
+      },
+      {
+        "speaker": "derek-prince",
+        "family": "cropped-triangle-and-diagonal-rule",
+        "description": "裁切三角面＋單一斜線",
+        "status": "assigned-not-generated"
+      },
+      {
+        "speaker": "kang-lai-chang",
+        "family": "staggered-horizontal-bars",
+        "description": "錯層水平長條",
+        "status": "assigned-not-generated"
+      },
+      {
+        "speaker": "stephen-tong",
+        "family": "offset-trapezoid-planes",
+        "description": "偏置梯形疊面",
+        "status": "assigned-not-generated"
+      },
+      {
+        "speaker": "kou-shao-en",
+        "family": "open-square-and-corner-block",
+        "description": "開口方框＋角部色塊",
+        "status": "assigned-not-generated"
+      },
+      {
+        "speaker": "rick-warren",
+        "family": "cropped-ellipse-and-tangent",
+        "description": "裁切橢圓＋切線",
+        "status": "assigned-not-generated"
+      },
+      {
+        "speaker": "tong-liu",
+        "family": "parallel-diagonal-ribbons",
+        "description": "平行斜帶",
+        "status": "assigned-not-generated"
+      },
+      {
+        "speaker": "jerry-lai",
+        "family": "diamond-and-short-rules",
+        "description": "偏置菱形＋短橫線",
+        "status": "assigned-not-generated"
+      },
+      {
+        "speaker": "yu-hong-jie",
+        "family": "off-axis-arc-and-baseline",
+        "description": "離軸弧線＋底部水平線",
+        "status": "assigned-not-generated"
+      },
+      {
+        "speaker": "huang-shuhua",
+        "family": "unequal-polygon-facets",
+        "description": "不等多邊形折面",
+        "status": "assigned-not-generated"
+      }
+    ],
+    "geometryPolicy": {
+      "uniqueFamilies": true,
+      "recoloringDoesNotCountAsDifference": true,
+      "noHeadCenteredHalo": true,
+      "deriveFrom": "Italian magazine editorial grids, print-plate offsets, cropping and controlled overlaps"
     }
   }
 }
