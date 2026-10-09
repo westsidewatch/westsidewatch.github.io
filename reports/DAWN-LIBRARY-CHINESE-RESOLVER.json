@@ -1,14 +1,17 @@
 {
   "schema": "dawn.library.chinese-resolver.report.v1",
-  "generatedAt": "2026-10-09T11:00:52.060174+00:00",
+  "generatedAt": "2026-10-09T14:55:24.412869+00:00",
   "qualifiedInput": 13,
   "results": {
-    "verified": 1,
-    "needs-review": 3,
+    "verified": 4,
+    "needs-review": 0,
     "blocked": 9
   },
   "verifiedTitles": [
-    "聖經 (和合本)"
+    "聖經 (和合本)",
+    "聖經 (文理和合)",
+    "重繙官話舊約聖經序",
+    "新約全書 (淺文理和合)"
   ],
   "invariant": "Verification reads metadata and root-page rights evidence only; no book full text is stored."
 }
