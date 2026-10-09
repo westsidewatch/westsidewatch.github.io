@@ -143,7 +143,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   const selectFeatured=(newIndex)=>{
     if(!feature||!poster||!frame||!play)return;
     index=(newIndex+featured.length)%featured.length;
-    const item=featured[index],generation=++previewGeneration;
+    const item=featured[index],generation=++previewGeneration;\n    play.hidden=false;
     feature.dataset.person=item.speaker;
     feature.classList.remove('is-playing');
     frame.hidden=true;
@@ -183,28 +183,87 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       frame.hidden=false;
       feature.classList.add('is-playing');
     });
-    next?.addEventListener('click',()=>selectFeatured(index+1));
-    prev?.addEventListener('click',()=>selectFeatured(index-1));
+    next?.addEventListener('click',()=>{selectFeatured(index+1);activeSpeaker=featured[index].speaker;updateChannel();});
+    prev?.addEventListener('click',()=>{selectFeatured(index-1);activeSpeaker=featured[index].speaker;updateChannel();});
     feature.addEventListener('keydown',event=>{
       if(event.target?.tagName==='IFRAME')return;
-      if(event.key==='ArrowRight'){event.preventDefault();selectFeatured(index+1);}
-      if(event.key==='ArrowLeft'){event.preventDefault();selectFeatured(index-1);}
+      if(event.key==='ArrowRight'){event.preventDefault();selectFeatured(index+1);activeSpeaker=featured[index].speaker;updateChannel();}
+      if(event.key==='ArrowLeft'){event.preventDefault();selectFeatured(index-1);activeSpeaker=featured[index].speaker;updateChannel();}
     });
     document.addEventListener('visibilitychange',()=>{if(document.hidden && !frame.hidden){frame.removeAttribute('src');frame.hidden=true;feature.classList.remove('is-playing');}});
   }
 
-  const speakerRoutes={
+  const speakerRoutes={\n    '大衛鮑森':'david-pawson',
     '江秀琴':'jiang-xiuqin','賴若瀚':'jerry-lai','劉彤':'tong-liu','葉光明':'derek-prince',
     '倪柝聲':'watchman-nee','康來昌':'kang-lai-chang','唐崇榮':'stephen-tong','寇紹恩':'kou-shao-en',
     '華理克':'rick-warren','于宏潔':'yu-hong-jie','黃淑華':'huang-shuhua'
   };
+  // Speaker selection stays on the home stage: video identity, thumbnail and
+  // the flowing rail change together. A separate route is never required for first reading.
+  const channelItems={
+    '大衛鮑森':featured.filter(item=>item.speaker==='大衛鮑森'),
+    '江秀琴':featured.filter(item=>item.speaker==='江秀琴'),
+    '劉彤':featured.filter(item=>item.speaker==='劉彤')
+  };
+  const activeSpeakerVideos=new Map(Object.entries(channelItems));
+  const channelNav=document.createElement('nav');
+  channelNav.className='olive-feature__channel';
+  channelNav.setAttribute('aria-label','目前講員的講道系列');
+  feature?.querySelector('.olive-feature__caption')?.append(channelNav);
+  let activeSpeaker='大衛鮑森';
+  const updateChannel=()=>{
+    if(!channelNav)return;
+    channelNav.replaceChildren();
+    const items=activeSpeakerVideos.get(activeSpeaker)||[];
+    for(const item of items){
+      const button=document.createElement('button');
+      button.type='button';button.textContent=item.title;
+      button.className='olive-feature__episode';
+      button.setAttribute('aria-label','選擇'+activeSpeaker+'：'+item.title);
+      button.addEventListener('click',()=>selectFeatured(featured.indexOf(item)));
+      channelNav.append(button);
+    }
+    if(!items.length){
+      const a=document.createElement('a');
+      a.href='/olive/'+(speakerRoutes[activeSpeaker]||'david-pawson')+'/';
+      a.textContent='瀏覽'+activeSpeaker+'講道資料 ↗';
+      channelNav.append(a);
+    }
+  };
+  const originalSelectFeatured=selectFeatured;
+  const selectSpeaker=name=>{
+    activeSpeaker=name;
+    const items=activeSpeakerVideos.get(name)||[];
+    if(items.length)originalSelectFeatured(featured.indexOf(items[0]));
+    else{
+      ++previewGeneration;
+      feature.dataset.person=name;
+      feature.classList.remove('is-playing');
+      frame.hidden=true;frame.removeAttribute('src');
+      const slug=speakerRoutes[name];
+      poster.style.backgroundImage='url('+JSON.stringify('/images/olive/'+slug+'-editorial.png')+')';
+      poster.style.backgroundSize='contain';
+      poster.style.backgroundPosition='center';
+      poster.dataset.previewSource='speaker';
+      if(caption)caption.textContent=name;
+      if(title)title.textContent='講員頻道 · 講道資料';
+      if(source){source.href='/olive/'+slug+'/';source.textContent='講員檔案 ↗';}
+      play.hidden=true;
+    }
+    if(items.length){play.hidden=false;if(source)source.textContent='WATCH ON YOUTUBE ↗';}
+    updateChannel();
+    document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)').forEach(card=>{
+      card.setAttribute('aria-pressed',String(card.dataset.person===name));
+    });
+  };
+  updateChannel();
   document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)').forEach(card=>{
     const slug=speakerRoutes[card.dataset.person];
     if(!slug)return;
     card.dataset.doreSurface='speaker-card';
     card.dataset.doreSpeaker=slug;
     card.dataset.doreIdentitySynthesis='false';
-    card.addEventListener('click',()=>location.assign('/olive/'+slug+'/'));
+    card.addEventListener('click',()=>selectSpeaker(card.dataset.person));
   });
 
   const speakerRail=document.querySelector('.olive-speaker-rail');
