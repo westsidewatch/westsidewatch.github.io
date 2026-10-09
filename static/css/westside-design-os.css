@@ -595,20 +595,26 @@ body.sites-surface>main{overflow:visible!important;min-height:100svh}
 [data-ws-scope="search"],[data-ws-scope="tool"]{--ws-scope-identity:var(--ws-ink)}
 [data-ws-scope]{--ws-identity:var(--ws-scope-identity,var(--ws-branch))}
 
-/* Unified CJK font correction: Bodoni supplies Latin glyphs; Chiron supplies
-   Chinese glyphs. Never rely on :lang(zh) on each nested element. */
-[data-ws-scope]{
-  --ws-cjk-interface-stack:"Bodoni Moda","Chiron Hei HK WS","PingFang TC","Microsoft JhengHei",sans-serif;
-  font-family:var(--ws-cjk-interface-stack);
+/* One bilingual typography contract. Explicit roles, never blanket element overrides. */
+:root{
+ --ws-type-pair-en-size:clamp(54px,8vw,142px);
+ --ws-type-pair-zh-size:clamp(18px,2.1vw,34px);
+ --ws-type-pair-gap:clamp(8px,1.4vw,22px);
 }
-[data-ws-scope] :is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,button,a,span,strong,small,em,cite){
-  font-family:var(--ws-cjk-interface-stack);
-  font-synthesis:none;
+[data-ws-scope] :is(.ws-type-pair-en,.sites-layer-en,.section-atlas__english,.editorial-en,.olive-speaker-en,.sites-church-en,.sites-english-title){
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
+ font-size:var(--ws-type-pair-en-size);
+ font-weight:400!important;font-synthesis:none;
+ line-height:.96;letter-spacing:-.035em;
 }
-[data-ws-scope] :is(h1,h2,h3,h4,h5,h6,[class*="title"],[class*="heading"]){
-  font-weight:200;
+[data-ws-scope] :is(.ws-type-pair-zh,.sites-layer-zh,.section-atlas__chinese,.editorial-zh,.sites-church-zh,.sites-chinese-title){
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
+ font-size:var(--ws-type-pair-zh-size);
+ font-weight:200!important;font-synthesis:none;
+ line-height:1.35;letter-spacing:.08em;
 }
+[data-ws-scope] .ws-type-pair{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ws-type-pair-gap)}
+[data-ws-scope] .ws-type-pair > :is(.ws-type-pair-en,.ws-type-pair-zh){margin:0}
 [data-ws-scope] :is(.article-body,.reading-body,.longform,.prose,[data-reading="longform"]) :is(p,li,blockquote){
-  font-family:"Noto Serif TC",serif;
-  font-weight:400;
+ font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif);font-weight:400;
 }
