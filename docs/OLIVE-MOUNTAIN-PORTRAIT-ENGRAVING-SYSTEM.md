@@ -38,6 +38,9 @@ Pose / expression: [POSE / EXPRESSION]
 
 Use the attached real portrait photograph to preserve recognizable facial features, age, hairstyle, expression, and personal likeness. Use the existing David Pawson editorial portrait from Olive Mountain as a reference for the publication's visual language, engraving refinement, paper atmosphere, and overall editorial quality. Do not reproduce its exact composition.
 
+ITALIAN MAGAZINE EDITORIAL STYLE
+Italian magazine editorial style: refined Italian cultural magazine art direction, confident asymmetric composition, deliberate portrait cropping, generous negative space, quiet visual hierarchy, and an elegant relationship between image and future typography. Express this through composition and spatial rhythm, not added ornament or luxury advertising clichés. Keep all typography outside the artwork for CSS layout. Preserve the single olive-green ink, Doré engraving technique, recognizable likeness, and right-side typography-safe paper area.
+
 VISUAL TECHNIQUE
 Render the entire scene as a highly sophisticated nineteenth-century wood engraving, informed by the technical language of Gustave Doré's original engravings and the controlled ink-separation principles of contemporary monocolor editorial printmaking.
 Use fine burin-like parallel hatching, precise cross-hatching, tapered engraved strokes, variable line spacing, stippling, and restrained halftone screening.
@@ -88,6 +91,9 @@ Use understated botanical linework and soft architectural shadows as the distinc
 Do not add any text or religious emblems.
 ```
 上述姿勢、服裝等須與實際提供的真人照一致；缺少參考照時不執行身份生成。
+
+## 義大利雜誌風格
+固定關鍵詞：Italian magazine editorial style / refined Italian cultural magazine art direction。以有意識的人物裁切、非對稱構圖、大面積留白及安靜的視覺層級表達；遵守既有單色印刷、刻線與右側安全區，不添加奢華廣告裝飾或圖內文字。
 
 ## 網站排版
 桌面右側留白供既有 Design OS 的 Bodoni Moda 英文、中文姓名和資料排版。手機允許圖像與文字上下重排。文字安全區刻線降至接近零，不以半透明遮罩補救失敗原圖。不得把姓名、標題或資料烘焙進圖像。
