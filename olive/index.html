@@ -340,4 +340,28 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
  }
 }
 
+
+/* 2026-10-09 / source-poster blank-space placement.
+   Keep the original portrait at full bleed. Per-poster values follow the
+   left-hand negative-space strips visible in the supplied twelve-card screenshot.
+   NO image width, crop, scale, padding or new background rules here. */
+.speaker-card[data-dore-speaker]{
+ --olive-type-baseline:93%;
+ --olive-type-x:3%;
+ --olive-type-size:15cqw;
+ --olive-zh-x:22%;
+ --olive-connector-x:21%;
+}
+.speaker-card[data-dore-speaker="david-pawson"]{--olive-type-x:2.5%;--olive-type-size:16.4cqw;--olive-type-baseline:94%}
+.speaker-card[data-dore-speaker="jiang-xiuqin"]{--olive-type-x:3.2%;--olive-type-size:15.1cqw;--olive-type-baseline:92%}
+.speaker-card[data-dore-speaker="derek-prince"]{--olive-type-x:3%;--olive-type-size:15.8cqw;--olive-type-baseline:93%}
+.speaker-card[data-dore-speaker="watchman-nee"]{--olive-type-x:2.4%;--olive-type-size:15.6cqw;--olive-type-baseline:94%}
+.speaker-card[data-dore-speaker="huang-shuhua"]{--olive-type-x:3%;--olive-type-size:14.8cqw;--olive-type-baseline:93%}
+.speaker-card[data-dore-speaker="tong-liu"]{--olive-type-x:3.5%;--olive-type-size:16.2cqw;--olive-type-baseline:92%}
+.speaker-card[data-dore-speaker="jerry-lai"]{--olive-type-x:2.5%;--olive-type-size:17cqw;--olive-type-baseline:94%}
+.speaker-card[data-dore-speaker="yu-hong-jie"]{--olive-type-x:3%;--olive-type-size:15.6cqw;--olive-type-baseline:92%}
+.speaker-card[data-dore-speaker="stephen-tong"]{--olive-type-x:2.5%;--olive-type-size:15.1cqw;--olive-type-baseline:94%}
+.speaker-card[data-dore-speaker="rick-warren"]{--olive-type-x:3%;--olive-type-size:16.3cqw;--olive-type-baseline:93%}
+.speaker-card[data-dore-speaker="kang-lai-chang"]{--olive-type-x:2.7%;--olive-type-size:14.1cqw;--olive-type-baseline:93%}
+.speaker-card[data-dore-speaker="kou-shao-en"]{--olive-type-x:3%;--olive-type-size:16.5cqw;--olive-type-baseline:94%}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
