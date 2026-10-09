@@ -10,6 +10,7 @@
       <h1 id="olive-editorial-title">{{ range (.Params.portrait_title | default (slice "DAVID" "PAWSON")) }}<span>{{ . }}</span>{{ end }}</h1>
       <p class="olive-editorial__zh" lang="zh-Hant">{{ .Params.portrait_name | default "大衛鮑森" }}</p>
       <p class="olive-editorial__sub">TEACHING · SCRIPTURE · FAITH</p>
+      {{ with .Params.channel_url }}<a href="{{ . | relURL }}" style="pointer-events:auto;color:inherit">講道與系列 →</a>{{ end }}
     </div>
   </div>
   <footer class="olive-editorial__foot"><span>WESTSIDE WATCH</span><span>THE OLIVE MOUNTAIN</span></footer>
