@@ -52,12 +52,12 @@ body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6)[lang="zh-Hant"]:not(:where([data-ws-d
  font-family:var(--ws-type-zh)!important;
 }
 
-/* Functional controls never inherit art-directed sizes, including when
-   embedded in a designable composition. Preserve their own UI-scale sizing. */
-body[data-ws-scope] [data-ws-designable] :is(nav,nav *,button,button *,[role="button"],[role="button"] *){
+/* Functional UI remains in the OS. A speaker poster can itself be a
+   button: its art-directed lettering must NOT be normalized as UI. */
+body[data-ws-scope] [data-ws-designable] :is(nav,nav *,button:not(.olive-speaker-card):not([data-ws-designable]),[role="button"]:not(.olive-speaker-card):not([data-ws-designable])){
  font-family:var(--ws-type-zh);
  font-synthesis:none;
 }
-body[data-ws-scope] [data-ws-designable] :is(nav,nav *,button,button *,[role="button"],[role="button"] *)[lang="en"]{
+body[data-ws-scope] [data-ws-designable] :is(nav,button:not(.olive-speaker-card):not([data-ws-designable]),[role="button"]:not(.olive-speaker-card):not([data-ws-designable]))[lang="en"]{
  font-family:var(--ws-type-en);
 }
