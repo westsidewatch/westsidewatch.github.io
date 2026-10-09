@@ -392,4 +392,29 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
  transform:rotate(-90deg) translateY(-100%)!important;
  transform-origin:top right!important;
 }
+
+/* Entry cue is independent from name geometry. Always place it in the
+   lower corner OPPOSITE the English title, within the original poster.
+   Default: English on left -> entry bottom right. */
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-entry{
+ position:absolute!important;
+ top:auto!important;bottom:3%!important;
+ left:auto!important;right:4%!important;
+ width:auto!important;max-width:42%!important;
+ margin:0!important;padding:0!important;
+ text-align:right!important;
+ transform:none!important;
+ z-index:7!important;
+}
+/* English on right -> entry bottom left. */
+.speaker-card[data-dore-speaker="david-pawson"] .olive-speaker-entry,
+.speaker-card[data-dore-speaker="jiang-xiuqin"] .olive-speaker-entry,
+.speaker-card[data-dore-speaker="watchman-nee"] .olive-speaker-entry,
+.speaker-card[data-dore-speaker="jerry-lai"] .olive-speaker-entry,
+.speaker-card[data-dore-speaker="yu-hong-jie"] .olive-speaker-entry,
+.speaker-card[data-dore-speaker="stephen-tong"] .olive-speaker-entry,
+.speaker-card[data-dore-speaker="rick-warren"] .olive-speaker-entry,
+.speaker-card[data-dore-speaker="kang-lai-chang"] .olive-speaker-entry{
+ left:4%!important;right:auto!important;text-align:left!important;
+}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
