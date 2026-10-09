@@ -31,6 +31,6 @@
   archive.className='olive-journey-section olive-journey-archive';
   archive.id='olive-archive-experience';
   archive.setAttribute('aria-labelledby','olive-archive-title');
-  archive.innerHTML='<div class="olive-journey-heading"><p>03 / THE ARCHIVE</p><h2 id="olive-archive-title">講道檔案館</h2></div><p>按講員、系列與主題探索已收錄的講道資料。</p><a class="olive-journey-archive-link" href="/olive/#olive-series">進入系列與講道索引 ↗</a>';
+  archive.innerHTML='<div class="olive-journey-heading"><p>03 / THE ARCHIVE</p><h2 id="olive-archive-title">講道檔案館</h2></div><p>按講員、系列與主題探索已收錄的講道資料。</p><a class="olive-journey-archive-link" href="#olive-sermon-experience">瀏覽講員與系列入口 ↗</a>';
   root.append(theater,archive);
 })();
