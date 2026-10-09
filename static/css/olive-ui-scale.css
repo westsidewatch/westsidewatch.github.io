@@ -180,3 +180,21 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
  .olive-archive .olive-home-stage .olive-feature__caption{bottom:22px;max-width:36%}
  .olive-archive .olive-home-stage .olive-feature__caption h2{font-size:28px}
 }
+
+/* Channel selection is local to the home hero; rail remains a flowing horizontal carousel. */
+.olive-archive .olive-feature__play[hidden]{display:none!important}
+.olive-archive .olive-feature__channel{
+ display:flex;flex-wrap:wrap;gap:8px;max-width:100%;
+ margin-top:8px;max-height:90px;overflow-y:auto;
+}
+.olive-archive .olive-feature__episode,
+.olive-archive .olive-feature__channel a{
+ font:400 clamp(11px,.9vw,14px)/1.35 var(--ws-type-display-zh);
+ color:inherit;background:rgba(20,25,18,.45);border:1px solid rgba(255,255,255,.55);
+ padding:7px 10px;text-decoration:none;cursor:pointer;
+}
+.olive-archive .olive-speaker-card[aria-pressed="true"]{outline:2px solid var(--ws-text);outline-offset:-2px}
+@media(max-width:760px){
+ .olive-archive .olive-feature__channel{max-height:62px}
+ .olive-archive .olive-feature__episode{padding:5px 7px}
+}
