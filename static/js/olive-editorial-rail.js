@@ -23,7 +23,8 @@
         preload.onload = () => {
           hero.style.backgroundImage = 'url(' + JSON.stringify(pawson.url) + ')';
           hero.style.backgroundPosition = 'center';
-          hero.style.backgroundSize = 'cover';
+          hero.style.backgroundSize = 'contain';
+          hero.style.backgroundRepeat = 'no-repeat';
           hero.dataset.editorialAsset = 'ready';
         };
         preload.src = pawson.url;
