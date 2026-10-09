@@ -1,9 +1,9 @@
 {{ define "main" }}
   <article class="sites-surface" data-surface="{{ .Section }}">
-    <header class="sites-surface-head">
+    <header class="sites-surface-head ws-surface-heading">
       <p class="sites-surface-kicker">Westside Watch</p>
-      {{ with .Params.subtitle }}<p class="sites-surface-english-title" lang="en">{{ . }}</p>{{ end }}
-      <h1 class="sites-surface-chinese-title" lang="zh-Hant">{{ .Params.display_title | default .Title }}</h1>
+      {{ with .Params.subtitle }}<p class="sites-surface-english-title ws-surface-heading__en" lang="en">{{ . }}</p>{{ end }}
+      <h1 class="sites-surface-chinese-title ws-surface-heading__zh" lang="zh-Hant">{{ .Params.display_title | default .Title }}</h1>
       {{ with .Description }}<p>{{ . }}</p>{{ end }}
     </header>
 
