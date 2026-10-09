@@ -25,8 +25,8 @@
   --ws-leading-reading:1.85;
   --ws-leading-ui:1.5;
   --ws-reading-measure:38ch;
-  --ws-type-display-en:var(--type-en);
-  --ws-type-display-zh:var(--type-zh);
+  --ws-type-display-en:"Bodoni Moda",serif;
+  --ws-type-display-zh:"Chiron Hei HK WS",sans-serif;
   --ws-type-reading-zh:"Noto Serif TC",serif;
   /* Sitewide typography authority first; homepage composition is the final phase. */
   --ws-typography-phase:sitewide;
