@@ -47,9 +47,11 @@ require('excludeFiles = ["index.html"]' in olive_mount, "static Olive homepage s
 require('layout: "surface-carrier"' in (ROOT / "content/olive/_index.md").read_text(encoding="utf-8"), "canonical Olive Hugo route missing")
 require('/olive/#olive-series' not in journey, "obsolete standalone series anchor still linked")
 require("'/olive/?person='" not in hugo, "Hugo homepage still routes speakers to removed query page")
-require("hero.style.backgroundSize = 'contain'" in rail, "Pawson poster must not be cropped")
-require("hero.style.backgroundRepeat = 'no-repeat'" in rail, "Pawson poster must not tile")
 require("'/olive/'+slug+'/'" in hugo, "canonical speaker routes missing")
+require("poster.style.backgroundSize='contain'" in hugo, 'fallback poster must not crop')
+require("poster.style.backgroundRepeat='no-repeat'" in hugo, 'fallback poster must not tile')
+require('data-feature-next' in hugo and 'maxresdefault.jpg' in hugo and 'hqdefault.jpg' in hugo, 'video thumbnail rotation missing')
+require('const featured=[' in hugo and 'featured[index]' in hugo, 'video and preview must share selection')
 if errors:
     for error in errors:
         print("FAIL:", error)
