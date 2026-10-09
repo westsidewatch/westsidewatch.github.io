@@ -13,4 +13,24 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
 .speaker-card[data-dore-cover="editorial"] h3{left:61%;top:12%;width:35%;max-height:none;font-size:clamp(22px,2.2vw,34px);line-height:1.25}
 .speaker-card[data-dore-cover="editorial"] p{left:61%;top:28%;bottom:auto;width:35%;font-size:13px}
 @media(max-width:720px){.speaker-card[data-dore-cover="editorial"] h3{font-size:clamp(22px,6vw,34px)}}
+
+/* Olive Mountain / magazine English byline: restricted to this surface,
+   all typography sourced from the Westside Design OS. */
+.speaker-card .olive-speaker-english{
+  position:absolute;z-index:3;display:block;box-sizing:border-box;
+  left:var(--dore-type-x,7%);top:calc(var(--dore-type-y,14%) + clamp(2.5rem,3.5vw,4.25rem));
+  width:var(--dore-type-w,80%);max-width:88%;
+  font-family:var(--ws-type-display-en);
+  font-size:var(--ws-type-scale-ui);font-weight:400;font-style:normal;
+  line-height:var(--ws-type-leading-title);letter-spacing:.035em;
+  text-transform:none;font-synthesis:none;color:#164a34;
+  overflow-wrap:normal;word-break:normal;pointer-events:none;
+}
+.speaker-card[data-dore-cover="editorial"] .olive-speaker-english{
+  left:61%;top:calc(12% + clamp(2.25rem,3.1vw,3.5rem));width:35%;
+}
+@media(max-width:720px){
+  .speaker-card .olive-speaker-english{left:8%;top:calc(27% + clamp(3rem,11vw,4.5rem));width:82%}
+  .speaker-card[data-dore-cover="editorial"] .olive-speaker-english{left:61%;top:calc(12% + clamp(2.75rem,8vw,3.5rem));width:35%}
+}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
