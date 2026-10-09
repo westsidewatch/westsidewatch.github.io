@@ -156,3 +156,10 @@ Awwwards、Webby Awards、FWA 是**品質參照／案例搜尋來源**，不是�
 ### 工程狀態
 
 此節是已批准的設計決策，**不代表三層整合已完成或部署**。PR #1234 保持 Draft，待單一生產入口整合、回歸測試與視覺驗收。
+
+## 十三、第三階段實作｜原橫向長廊接入十二張海報（2026-10-09）
+
+- 新增 `static/js/olive-editorial-rail.js`，由原 `layouts/olive/surface-carrier.html` 的既有橫向講員 rail 讀取 `olive-editorial-covers.v1.json`；以既有講員名稱映射到十二張 `/images/olive/*.png`。未新增第二套頁面或第二套講員內容來源。
+- `static/css/olive-ui-scale.css` 新增海報圖像適配：原圖 `object-fit:contain`、不拉伸；海報圖片載入成功後隱藏原 rail 的重複文字；保留按鈕、講員路由、鍵盤焦點與原有動畫。
+- 原 Hugo surface 已載入 adapter；原大衛鮑森主視覺、影片互動和講員 rail 不替換。
+- **限制**：目前僅完成源碼接線，尚未取得瀏覽器視覺截圖、CI PASS 或部署結果；長廊尺寸／裁切效果需視覺驗收，且 The Sermons／The Archive 仍未完成一體化。
