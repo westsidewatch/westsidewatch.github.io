@@ -107,7 +107,7 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
 
 /* Keep the centered video play control above mobile editorial navigation. */
 @media (max-width:760px) {
- .olive-archive .olive-feature__play{z-index:12}
+ .olive-archive .olive-feature__play{z-index:12;top:34%}
  .olive-archive .olive-feature__caption{z-index:5;max-width:calc(100% - 2 * var(--ws-olive-ui-gutter))}
  .olive-archive .olive-feature__caption [data-feature-prev],
  .olive-archive .olive-feature__caption [data-feature-next]{position:relative;z-index:6}
