@@ -9,10 +9,6 @@ portrait_alt: "江秀琴人物版畫插圖"
 portrait_title: ["JIANG", "XIUQIN"]
 portrait_name: "江秀琴"
 channel_url: "/olive/?person=jiang-xiuqin"
-portrait_align: "right"
-portrait_text_x: 62
-portrait_text_width: 33
-portrait_text_size: 7
 ---
 
 江秀琴人物介紹。

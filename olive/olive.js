@@ -100,7 +100,16 @@
         const label=document.createElement('span');
         label.className='olive-speaker-english';
         label.lang='en';
-        label.textContent=english;
+        const layout=editorialCovers.get(a.dataset.doreSpeaker)?.typography;
+        if(layout){
+          a.dataset.posterAlign=layout.align;
+          a.style.setProperty('--poster-x',layout.x+'%');
+          a.style.setProperty('--poster-width',layout.width+'%');
+          a.style.setProperty('--poster-size',layout.size+'cqw');
+        }
+        for(const line of layout?.lines||[english]){
+          const row=document.createElement('span');row.textContent=line;label.append(row);
+        }
         group.append(label);
       }
       const cue=document.createElement('p');
