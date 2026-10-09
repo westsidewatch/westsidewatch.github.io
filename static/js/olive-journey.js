@@ -24,7 +24,7 @@
     const a=document.createElement('a');
     a.textContent=label+' ↗';
     const slug=card.dataset.doreSpeaker;
-    a.href=slug?'/olive/'+slug+'/':'/olive/?person='+encodeURIComponent(label);
+    a.href=slug?'/olive/'+slug+'/':'#olive-speaker-experience';
     list.append(a);
   }
   const archive=document.createElement('section');
