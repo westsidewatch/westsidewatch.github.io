@@ -31,11 +31,14 @@ const fs=require('node:fs');
     const img=card.querySelector('.olive-speaker-card__editorial');
     if(!img)return {speaker:card.dataset.person,error:'missing editorial image'};
     const cardBox=card.getBoundingClientRect(),box=img.getBoundingClientRect(),style=getComputedStyle(img);
-    const x=Math.max(0,Math.min(innerWidth-1,cardBox.left+cardBox.width/2));
-    const y=Math.max(0,Math.min(innerHeight-1,cardBox.top+cardBox.height/2));
-    const visibleInViewport=cardBox.right>0&&cardBox.left<innerWidth&&cardBox.bottom>0&&cardBox.top<innerHeight;
+    const railBoxForHit=card.closest('.olive-speaker-rail')?.getBoundingClientRect();
+    const left=Math.max(0,cardBox.left,railBoxForHit?.left??0),right=Math.min(innerWidth,cardBox.right,railBoxForHit?.right??innerWidth);
+    const topEdge=Math.max(0,cardBox.top,railBoxForHit?.top??0),bottomEdge=Math.min(innerHeight,cardBox.bottom,railBoxForHit?.bottom??innerHeight);
+    const x=(left+right)/2,y=(topEdge+bottomEdge)/2;
+    const railBox=card.closest('.olive-speaker-rail')?.getBoundingClientRect();
+    const visibleInViewport=!!railBox&&cardBox.right>railBox.left&&cardBox.left<railBox.right&&cardBox.bottom>railBox.top&&cardBox.top<railBox.bottom&&cardBox.right>0&&cardBox.left<innerWidth&&cardBox.bottom>0&&cardBox.top<innerHeight;
     const top=visibleInViewport?document.elementFromPoint(x,y):null;
-    const hit=top===img||img.contains(top)||card.contains(top);
+    const hit=right>left&&bottomEdge>topEdge&&(top===img||img.contains(top)||card.contains(top));
     return {speaker:card.dataset.person,visibleInViewport,hit,opacity:style.opacity,visibility:style.visibility,display:style.display,width:box.width,height:box.height,loaded:img.complete&&img.naturalWidth>0};
    }));
    for(const item of visibility){
