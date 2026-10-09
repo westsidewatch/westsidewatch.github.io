@@ -108,7 +108,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
  .olive-feature__source{position:relative;z-index:5;display:inline-block;margin:.65rem 0 .65rem .75rem;padding:.5rem .75rem;color:inherit;font:400 11px/1.3 var(--ws-type-display-en);letter-spacing:.1em;text-decoration:underline;text-underline-offset:.25em}
  .olive-feature__next{position:relative;z-index:5;display:inline-block;margin:.65rem 0;padding:.5rem .75rem;border:1px solid currentColor;background:transparent;color:inherit;font:400 11px/1.3 var(--ws-type-display-en);letter-spacing:.12em;cursor:pointer}
 </style>
-<link rel="stylesheet" href="/css/olive-ui-scale.css?v=20261009-authority-v1">
+<link rel="stylesheet" href="/css/olive-ui-scale.css?v=20261009-gallery-v2">
 
 <script>
 (() => {
@@ -276,10 +276,8 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       selected.setAttribute('aria-current','true');
       selected.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',inline:'center',block:'nearest'});
     }
-    const caption=document.querySelector('.olive-feature__caption h2');
-    const title=document.querySelector('[data-pawson-title]');
-    if(caption) caption.textContent=personNames[person];
-    if(title) title.textContent=verifiedSpeakerChannels[person]?'講員頻道 · 已核實系列':'講員頻道';
+    // Query-selected channels must not rename the currently playing featured video.
+    // The hero caption is exclusively controlled by selectFeatured().
     renderSpeakerChannel(person);
   }
   const detail=document.querySelector('#olive-detail');
@@ -319,5 +317,5 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
 })();
 </script>
 <script src="/js/olive-editorial-rail.js?v=20261009-v1" defer></script>
-<script src="/js/olive-journey.js?v=20261009-v1" defer></script>
+<script src="/js/olive-journey.js?v=20261009-gallery-v2" defer></script>
 {{ end }}
