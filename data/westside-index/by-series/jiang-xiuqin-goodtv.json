@@ -36,6 +36,16 @@
       "posterUrl": "https://i.ytimg.com/vi/ZWGlQkGDgMU/hqdefault.jpg",
       "official": true,
       "rehost": false
+    },
+    {
+      "id": "cinema:video:goodtv:waiting-on-god-no-minute-wasted",
+      "title": "等候神沒有一分鐘是徒然的",
+      "series": "GOOD TV 特會精選",
+      "url": "https://www.youtube.com/watch?v=kMUngZq5jss",
+      "embedUrl": "https://www.youtube.com/embed/kMUngZq5jss",
+      "posterUrl": "https://i.ytimg.com/vi/kMUngZq5jss/hqdefault.jpg",
+      "official": true,
+      "rehost": false
     }
   ],
   "rights": {
@@ -118,5 +128,12 @@
     "status": "open",
     "rule": "Only GOOD TV official/first-party verified series or items are promoted; discovery remains additive and does not imply completeness.",
     "lastScan": "2026-10-06"
+  },
+  "playbackPolicy": {
+    "goodtvWebsite": "external-source-only-until-explicit-third-party-embed-permission-and-browser-playback-verified",
+    "preferredProvider": "goodtv-official-youtube",
+    "inSitePlayback": "official-youtube-embed-only",
+    "fallback": "official-goodtv-watch-url",
+    "noStreamExtraction": true
   }
 }
