@@ -322,3 +322,8 @@ body.sites-cinema .sites-cinema-hall .sites-cinema-brand h1 span{display:block;m
 body.sites-cinema .sites-cinema-hall .sites-cinema-brand>p{font-size:clamp(12px,.9vw,16px);font-weight:400;letter-spacing:.18em;margin-bottom:clamp(20px,3vh,35px)}
 body.sites-cinema .sites-cinema-hall .sites-cinema-enter{font-size:clamp(13px,.95vw,17px);bottom:clamp(45px,9vh,110px)}
 @media(max-width:760px){body.sites-cinema .sites-cinema-hall .sites-cinema-brand{left:6vw;bottom:17vh;max-width:88vw}body.sites-cinema .sites-cinema-hall .sites-cinema-brand h1{font-size:clamp(56px,15vw,104px)}body.sites-cinema .sites-cinema-hall .sites-cinema-brand h1 span{font-size:clamp(19px,5vw,28px)}}
+
+/* Shared bilingual heading roles are defined by Design OS. */
+body.sites-cinema .ws-bilingual-heading{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ws-bilingual-gap,clamp(8px,1vw,18px));}
+body.sites-cinema .ws-bilingual-heading__en{font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-size:var(--ws-type-scale-title-lg,clamp(32px,3vw,60px));font-weight:400;line-height:1.05;font-synthesis:none;}
+body.sites-cinema .ws-bilingual-heading__zh{font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);font-size:var(--ws-type-scale-title-sm,clamp(20px,1.5vw,30px));font-weight:200;line-height:1.35;font-synthesis:none;}
