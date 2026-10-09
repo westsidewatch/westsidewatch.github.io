@@ -594,3 +594,21 @@ body.sites-surface>main{overflow:visible!important;min-height:100svh}
 [data-ws-scope="daylight-cafe"]{--ws-scope-identity:var(--ws-daylight-mauve)}
 [data-ws-scope="search"],[data-ws-scope="tool"]{--ws-scope-identity:var(--ws-ink)}
 [data-ws-scope]{--ws-identity:var(--ws-scope-identity,var(--ws-branch))}
+
+/* Unified CJK font correction: Bodoni supplies Latin glyphs; Chiron supplies
+   Chinese glyphs. Never rely on :lang(zh) on each nested element. */
+[data-ws-scope]{
+  --ws-cjk-interface-stack:"Bodoni Moda","Chiron Hei HK WS","PingFang TC","Microsoft JhengHei",sans-serif;
+  font-family:var(--ws-cjk-interface-stack);
+}
+[data-ws-scope] :is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,button,a,span,strong,small,em,cite){
+  font-family:var(--ws-cjk-interface-stack);
+  font-synthesis:none;
+}
+[data-ws-scope] :is(h1,h2,h3,h4,h5,h6,[class*="title"],[class*="heading"]){
+  font-weight:200;
+}
+[data-ws-scope] :is(.article-body,.reading-body,.longform,.prose,[data-reading="longform"]) :is(p,li,blockquote){
+  font-family:"Noto Serif TC",serif;
+  font-weight:400;
+}
