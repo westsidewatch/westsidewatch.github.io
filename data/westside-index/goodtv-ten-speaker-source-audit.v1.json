@@ -26,6 +26,35 @@
           "url": "https://www.goodtv.tv/watch?episode=86002",
           "kind": "episode"
         }
+      ],
+      "youtubeCandidates": [
+        {
+          "title": "出埃及記（一）",
+          "url": "https://www.youtube.com/watch?v=jlHOgXhkEMo",
+          "embedUrl": "https://www.youtube.com/embed/jlHOgXhkEMo",
+          "evidence": "https://ch.folcc.ca/每日靈修/",
+          "match": "same-speaker-series-title",
+          "goodtvOfficialUploadVerified": false,
+          "browserPlaybackVerified": false
+        },
+        {
+          "title": "出埃及記（二）",
+          "url": "https://www.youtube.com/watch?v=1N5OFuFiULc",
+          "embedUrl": "https://www.youtube.com/embed/1N5OFuFiULc",
+          "evidence": "https://ch.folcc.ca/每日靈修/",
+          "match": "same-speaker-series-title",
+          "goodtvOfficialUploadVerified": false,
+          "browserPlaybackVerified": false
+        },
+        {
+          "title": "使徒行傳（一）",
+          "url": "https://www.youtube.com/watch?v=YcNgHPkGj1I",
+          "embedUrl": "https://www.youtube.com/embed/YcNgHPkGj1I",
+          "evidence": "https://ch.folcc.ca/每日靈修/",
+          "match": "same-speaker-series-title",
+          "goodtvOfficialUploadVerified": false,
+          "browserPlaybackVerified": false
+        }
       ]
     },
     {
@@ -95,5 +124,22 @@
   ],
   "youtubeVerifiedEmbeds": 0,
   "goodtvWebsiteVerifiedEmbeds": 0,
-  "notes": "This is a bounded first-pass verified-source audit, not a complete channel scan. Empty arrays mean no exact episode URL confirmed in this pass, not absence of content."
+  "notes": "Verified exact Pawson YouTube IDs via third-party church listing, not verified GOOD TV uploads nor embed permission. No unsupported media promoted as browser-playable.",
+  "channels": [
+    {
+      "speaker": "大衛鮑森",
+      "url": "https://www.youtube.com/@goodtvdavidpawson",
+      "type": "goodtv-produced-authorized-channel"
+    },
+    {
+      "speaker": "華理克",
+      "url": "https://www.youtube.com/@GOODTVRickWarren",
+      "type": "goodtv-produced-authorized-channel"
+    },
+    {
+      "speaker": "GOOD TV",
+      "url": "https://www.youtube.com/@goodtv",
+      "type": "official-broadcaster-channel"
+    }
+  ]
 }
