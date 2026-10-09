@@ -364,4 +364,32 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
 .speaker-card[data-dore-speaker="rick-warren"]{--olive-type-x:3%;--olive-type-size:16.3cqw;--olive-type-baseline:93%}
 .speaker-card[data-dore-speaker="kang-lai-chang"]{--olive-type-x:2.7%;--olive-type-size:14.1cqw;--olive-type-baseline:93%}
 .speaker-card[data-dore-speaker="kou-shao-en"]{--olive-type-x:3%;--olive-type-size:16.5cqw;--olive-type-baseline:94%}
+
+/* Eight posters: move vertical English title to the original image's RIGHT
+   reserved margin. Rotated text uses a top-right anchor; no image geometry
+   is changed. Other four posters retain their left-side placement. */
+.speaker-card[data-dore-speaker="david-pawson"],
+.speaker-card[data-dore-speaker="jiang-xiuqin"],
+.speaker-card[data-dore-speaker="watchman-nee"],
+.speaker-card[data-dore-speaker="jerry-lai"],
+.speaker-card[data-dore-speaker="yu-hong-jie"],
+.speaker-card[data-dore-speaker="stephen-tong"],
+.speaker-card[data-dore-speaker="rick-warren"],
+.speaker-card[data-dore-speaker="kang-lai-chang"]{
+ --olive-right-inset:4%;
+}
+.speaker-card[data-dore-speaker="david-pawson"] .olive-speaker-english,
+.speaker-card[data-dore-speaker="jiang-xiuqin"] .olive-speaker-english,
+.speaker-card[data-dore-speaker="watchman-nee"] .olive-speaker-english,
+.speaker-card[data-dore-speaker="jerry-lai"] .olive-speaker-english,
+.speaker-card[data-dore-speaker="yu-hong-jie"] .olive-speaker-english,
+.speaker-card[data-dore-speaker="stephen-tong"] .olive-speaker-english,
+.speaker-card[data-dore-speaker="rick-warren"] .olive-speaker-english,
+.speaker-card[data-dore-speaker="kang-lai-chang"] .olive-speaker-english{
+ left:auto!important;
+ right:var(--olive-right-inset)!important;
+ top:var(--olive-type-baseline)!important;
+ transform:rotate(-90deg) translateY(-100%)!important;
+ transform-origin:top right!important;
+}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
