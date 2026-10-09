@@ -453,4 +453,28 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
  margin:1.5cqw 0 0!important;font-size:2.7cqw!important;text-align:inherit!important;order:2!important;
 }
 .speaker-card[data-dore-speaker] .olive-speaker-typegroup::after{display:none!important}
+
+/* Vertical English starts at the same image-relative top edge on every poster. */
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup{
+ inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;display:block!important;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-english{
+ position:absolute!important;left:var(--poster-x)!important;right:auto!important;top:5%!important;bottom:auto!important;
+ transform:rotate(90deg)!important;transform-origin:top left!important;
+ width:max-content!important;max-width:none!important;white-space:nowrap!important;font-size:var(--poster-size)!important;
+ line-height:.95!important;letter-spacing:-.045em!important;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup h3{
+ position:absolute!important;left:calc(var(--poster-x) + 3%)!important;top:5%!important;right:auto!important;bottom:auto!important;
+ writing-mode:vertical-rl!important;text-orientation:upright!important;width:auto!important;max-width:none!important;
+ margin:0!important;font-size:4cqw!important;letter-spacing:.15em!important;line-height:1.2!important;
+}
+.speaker-card[data-poster-align="right"] .olive-speaker-typegroup h3{
+ left:auto!important;right:calc(4% + var(--poster-size) + 3cqw)!important;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-entry{
+ position:absolute!important;left:auto!important;right:4%!important;top:auto!important;bottom:3%!important;
+ width:auto!important;margin:0!important;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup::after{display:none!important}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
