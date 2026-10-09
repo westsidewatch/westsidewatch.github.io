@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-10-08T16:36:49.834445+00:00",
+  "generatedAt": "2026-10-09T08:23:32.670396+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
@@ -8,12 +8,6 @@
   "newDiscovered": 0,
   "candidateQueue": 76,
   "catalogBooks": 1969,
-  "errors": [
-    {
-      "query": "systematic theology",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=systematic+theology",
-      "error": "RemoteDisconnected"
-    }
-  ],
+  "errors": [],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
