@@ -38,9 +38,10 @@
     {{ with $goodtv.resources }}
     <section class="olive-editorial__series" aria-label="GOOD TV 講道">
       <h2>GOOD TV · 講道系列</h2>
+      <div class="olive-editorial__goodtv-screen" data-goodtv-screen hidden aria-label="GOOD TV 官方影片播放器"></div>
       <ol class="olive-editorial__sermon-list">
         {{ range . }}
-        <li><span>{{ .title }}{{ with .series }} <small>· {{ . }}</small>{{ end }}</span><a href="{{ .url | safeURL }}" target="_blank" rel="noopener noreferrer">觀看／來源 ↗</a></li>
+        <li><span>{{ .title }}{{ with .series }} <small>· {{ . }}</small>{{ end }}</span><span class="olive-editorial__actions">{{ with .embedUrl }}<button type="button" class="olive-editorial__goodtv-play" data-goodtv-embed="{{ . }}" aria-label="在本站播放 GOOD TV 講道">本站播放 ▶</button>{{ end }}<a href="{{ .url | safeURL }}" target="_blank" rel="noopener noreferrer">官方來源 ↗</a></span></li>
         {{ end }}
       </ol>
     </section>
@@ -88,5 +89,13 @@
 .olive-editorial__catalog-status{opacity:.75;font-size:clamp(14px,1.1vw,17px)}
 .olive-editorial__back{display:inline-block;margin-top:clamp(28px,4vw,60px)}
 @media(max-width:760px){.olive-editorial__sermon-list li{flex-wrap:wrap;gap:8px}}
+.olive-editorial__actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.olive-editorial__goodtv-play{font:inherit;color:inherit;border:1px solid currentColor;background:transparent;padding:8px 12px;cursor:pointer}
+.olive-editorial__goodtv-play:hover,.olive-editorial__goodtv-play:focus-visible{background:color-mix(in srgb,currentColor 9%,transparent)}
+.olive-editorial__goodtv-screen:not([hidden]){display:block;position:relative;aspect-ratio:16/9;width:min(100%,1000px);margin:20px 0 30px;background:#111}
+.olive-editorial__goodtv-screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 </style>
+<script>
+(()=>{const root=document.querySelector('.olive-editorial');if(!root)return;root.addEventListener('click',event=>{const button=event.target.closest('[data-goodtv-embed]');if(!button)return;const section=button.closest('.olive-editorial__series'),screen=section?.querySelector('[data-goodtv-screen]');if(!screen)return;let url;try{url=new URL(button.dataset.goodtvEmbed,location.origin)}catch{return}if(url.protocol!=='https:'||url.hostname!=='www.youtube.com'||!/^\\/embed\\/[A-Za-z0-9_-]{11}$/.test(url.pathname))return;const frame=document.createElement('iframe');frame.src='https://www.youtube-nocookie.com'+url.pathname+'?autoplay=1';frame.title=button.closest('li')?.querySelector('span')?.textContent?.trim()||'GOOD TV 講道';frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';frame.allowFullscreen=true;screen.replaceChildren(frame);screen.hidden=false;screen.scrollIntoView({behavior:'smooth',block:'center'});});})();
+</script>
 {{ end }}
