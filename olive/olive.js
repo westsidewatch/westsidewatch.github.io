@@ -87,10 +87,33 @@
         a.append(img);
       }
     }
-    a.insertAdjacentHTML('beforeend',`<h3>${title}</h3><p>${meta||'進入'} <b aria-hidden="true">↗</b></p>`);
     if(cls==='speaker-card'){
+      // One typographic unit: Chinese title / English name / entry cue.
+      // Placement is handled by the Olive magazine composition layer.
+      const group=document.createElement('div');
+      group.className='olive-speaker-typegroup';
+      const chinese=document.createElement('h3');
+      chinese.textContent=title;
+      group.append(chinese);
       const english=speakerEnglish[a.dataset.doreSpeaker];
-      if(english){const label=document.createElement('span');label.className='olive-speaker-english';label.lang='en';label.textContent=english;a.append(label);}
+      if(english){
+        const label=document.createElement('span');
+        label.className='olive-speaker-english';
+        label.lang='en';
+        label.textContent=english;
+        group.append(label);
+      }
+      const cue=document.createElement('p');
+      cue.className='olive-speaker-entry';
+      cue.append(document.createTextNode(meta||'進入'));
+      const arrow=document.createElement('b');
+      arrow.setAttribute('aria-hidden','true');
+      arrow.textContent='↗';
+      cue.append(' ',arrow);
+      group.append(cue);
+      a.append(group);
+    } else {
+      a.insertAdjacentHTML('beforeend',`<h3>${title}</h3><p>${meta||'進入'} <b aria-hidden="true">↗</b></p>`);
     }
     return a;
   }
