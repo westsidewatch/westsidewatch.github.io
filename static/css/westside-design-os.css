@@ -615,3 +615,19 @@ body.sites-surface>main{overflow:visible!important;min-height:100svh}
 :where(body[data-ws-scope]:not([data-ws-scope="olive"])) .ws-type-pair{
  display:flex;flex-direction:column;align-items:flex-start;gap:var(--ws-type-pair-gap);
 }
+
+/* Canonical bilingual section heading; opt-in, excludes Olive Mountain. */
+body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-bilingual-heading{
+ display:flex;flex-direction:column;align-items:flex-start;
+ gap:var(--ws-bilingual-gap,clamp(8px,1vw,18px));
+}
+body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-bilingual-heading__en{
+ display:block;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
+ font-size:var(--ws-type-scale-title-lg,clamp(32px,3vw,60px));
+ font-weight:400!important;line-height:1.05;font-synthesis:none;
+}
+body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-bilingual-heading__zh{
+ display:block;font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
+ font-size:var(--ws-type-scale-title-sm,clamp(20px,1.5vw,30px));
+ font-weight:200!important;line-height:1.35;font-synthesis:none;
+}
