@@ -228,3 +228,45 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
  .olive-archive .olive-speaker-card .olive-speaker-card__identity-en{font-size:clamp(17px,5vw,25px)}
  .olive-archive .olive-speaker-card .olive-speaker-card__identity-zh{font-size:13px}
 }
+
+/* Olive section identity follows the existing site typography authority.
+   Only an actual section/brand title receives the heaviest Chinese sans weight.
+   Do not apply this to speaker names, bilingual poster typography or prose. */
+.olive-archive,.olive-editorial{
+ --ws-olive-brand-zh-weight:900;
+ --ws-olive-brand-zh-family:var(--ws-type-sans-zh,var(--ws-type-body-zh,"Noto Sans TC",sans-serif));
+ --ws-olive-brand-en-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+}
+.olive-archive .olive-section-brand,
+.olive-archive .olive-topic-index>h2,
+.olive-editorial .olive-section-brand{
+ font-family:var(--ws-olive-brand-zh-family)!important;
+ font-weight:var(--ws-olive-brand-zh-weight)!important;
+ font-synthesis:none;
+ font-size:clamp(32px,4.6vw,74px);
+ line-height:1.08;
+ letter-spacing:-.055em;
+}
+.olive-archive .olive-topic-index__links{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:var(--ws-olive-ui-gap);margin-top:clamp(24px,4vw,56px)
+}
+.olive-archive .olive-topic-index__links a{
+ color:inherit;text-decoration:none;border-top:1px solid currentColor;
+ padding:16px 0;font-family:var(--ws-type-display-zh);font-weight:var(--ws-olive-layer-zh-weight,200);
+ font-size:clamp(16px,1.7vw,24px)
+}
+.olive-archive .olive-issue-sermons{
+ margin-top:clamp(44px,6vw,96px);padding-top:clamp(24px,3vw,48px);
+ border-top:1px solid currentColor
+}
+.olive-archive .olive-issue-sermons h2{
+ font-family:var(--ws-olive-brand-zh-family);font-weight:700;font-synthesis:none;
+ font-size:clamp(22px,2.8vw,42px);letter-spacing:-.035em
+}
+.olive-archive .olive-issue-sermons p,.olive-archive .olive-issue-sermons a{
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-olive-layer-zh-weight,200)
+}
+@media(max-width:760px){
+ .olive-archive .olive-topic-index__links{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
