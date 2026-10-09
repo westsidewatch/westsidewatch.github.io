@@ -56,7 +56,8 @@ const fs=require('node:fs');
     if(cards.length!==11)errors.push('expected 11 rail cards plus David Pawson hero; got '+cards.length);
     if(!document.querySelector('[data-feature-next]')||!document.querySelector('[data-feature-prev]'))errors.push('rotation controls missing');
     if(!document.querySelector('[data-feature-source]'))errors.push('video source link missing');
-    if(!document.querySelector('#olive-sermon-experience')||!document.querySelector('#olive-archive-experience'))errors.push('journey sections missing');
+    if(!document.querySelector('#olive-sermon-experience'))errors.push('speaker gallery missing');
+    if(document.querySelector('#olive-archive-experience')||document.querySelector('.olive-journey-nav')||document.querySelector('.olive-journey-heading'))errors.push('internal journey taxonomy leaked into visible page');
     for(const card of cards){
       const rect=card.getBoundingClientRect();
       if(rect.width<1||rect.height<1)errors.push('invisible speaker '+card.dataset.person);
