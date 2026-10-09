@@ -1,0 +1,48 @@
+name: Olive Magazine Geometry Gate
+on:
+  pull_request:
+    paths:
+      - 'scripts/olive_gold_geometry.py'
+      - 'scripts/select_olive_series_diversity.py'
+      - 'scripts/render_olive_geometry_diversity.py'
+      - 'tests/test_olive_gold_geometry.py'
+      - 'tests/test_olive_geometry_diversity_review.py'
+      - '.github/workflows/olive-magazine-geometry-gate.yml'
+  workflow_dispatch:
+jobs:
+  geometry-diversity:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test geometry uniqueness and review page
+        run: python -m unittest discover -s tests -p 'test_olive_*geometry*.py' -v
+      - name: Build twelve-speaker review and candidate data
+        run: |
+          python scripts/select_olive_series_diversity.py
+          python scripts/render_olive_geometry_diversity.py
+      - name: Validate generated artifacts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('static/dore-design/runtime/olive-series-diversity.v1.json')
+          data=json.loads(p.read_text(encoding='utf-8'))
+          rows=data['records']
+          assert len(rows)==12, len(rows)
+          assert len({r['goldGeometry']['goldPath'] for r in rows})==12
+          assert all(r['goldGeometry']['palette']=={'paper':'#FAF9F5','portrait':'#738A5A','geometry':'#CEBD74'} for r in rows)
+          html=Path('static/dore-design/magazine-proof/olive-speakers/geometry-diversity.html').read_text(encoding='utf-8')
+          assert html.count('<figure>')==12
+          print('PASS: 12 distinct shapes; correct palette; contact sheet generated')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: olive-magazine-geometry-review
+          path: |
+            static/dore-design/runtime/olive-series-diversity.v1.json
+            static/dore-design/magazine-proof/olive-speakers/geometry-diversity.html
