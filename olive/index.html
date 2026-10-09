@@ -262,72 +262,81 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
  }
 }
 
-/* OLIVE POSTER / one typographic hierarchy: negative-space editorial rail.
-   Names remain in the poster. Container units scale with each actual card,
-   not the browser viewport. English is the visual anchor; Chinese is a
-   smaller vertical folio with a hairline connector. */
+/* Olive editorial poster / precision variables.
+   MONUMENTAL type at the scale of the supplied MONOTONE reference:
+   upright Latin glyphs rotated as one word, not a narrow sidebar caption.
+   All geometry is scoped to each poster's own 3:4 coordinate system.
+   Per-portrait offsets are exposed as variables for Design OS fine tuning. */
 .speaker-card[data-dore-speaker]{
  container-type:inline-size;
- --rail-x:8%;--rail-en-bottom:93%;--rail-size:11.5cqw;
- --rail-zh-x:25%;--rail-zh-y:12%;
- --rail-rule-x:22%;
+ --olive-type-x:5%;
+ --olive-type-baseline:94%;
+ --olive-type-size:19cqw;
+ --olive-zh-x:27%;
+ --olive-zh-y:12%;
+ --olive-connector-x:24%;
+ --olive-connector-top:12%;
+ --olive-connector-height:19%;
+ aspect-ratio:3/4!important;overflow:hidden!important;
 }
 .speaker-card[data-dore-speaker] .olive-speaker-typegroup{
  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
- z-index:4!important;pointer-events:none!important;display:block!important;
+ max-width:none!important;display:block!important;pointer-events:none!important;z-index:5!important;
 }
 .speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-english{
- position:absolute!important;left:var(--rail-x)!important;top:var(--rail-en-bottom)!important;
- bottom:auto!important;right:auto!important;
+ position:absolute!important;
+ left:var(--olive-type-x)!important;top:var(--olive-type-baseline)!important;
+ right:auto!important;bottom:auto!important;
  width:max-content!important;max-width:none!important;max-height:none!important;
- margin:0!important;padding:0!important;
- font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
- font-size:var(--rail-size)!important;font-weight:400!important;
- line-height:.9!important;letter-spacing:-.055em!important;
+ padding:0!important;margin:0!important;
  color:var(--ws-olive-speaker-en-color,#A65F4B)!important;
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
+ font-size:var(--olive-type-size)!important;
+ font-weight:400!important;font-style:normal!important;
+ line-height:.82!important;letter-spacing:-.07em!important;
  text-transform:uppercase!important;white-space:nowrap!important;
  text-wrap:nowrap!important;overflow:visible!important;
  transform:rotate(-90deg)!important;transform-origin:top left!important;
  z-index:5!important;
 }
 .speaker-card[data-dore-speaker] .olive-speaker-typegroup h3{
- position:absolute!important;left:var(--rail-zh-x)!important;top:var(--rail-zh-y)!important;
- right:auto!important;bottom:auto!important;width:auto!important;
- max-width:3em!important;margin:0!important;padding:0!important;
+ position:absolute!important;left:var(--olive-zh-x)!important;top:var(--olive-zh-y)!important;
+ bottom:auto!important;right:auto!important;width:auto!important;max-width:3em!important;
+ padding:0!important;margin:0!important;
  writing-mode:vertical-rl!important;text-orientation:upright!important;
  font-family:var(--ws-type-display-zh)!important;
  font-weight:var(--ws-weight-zh-air,200)!important;
- font-size:clamp(15px,5.3cqw,25px)!important;
- letter-spacing:.28em!important;line-height:1.1!important;
+ font-size:clamp(15px,5cqw,26px)!important;
+ letter-spacing:.3em!important;line-height:1.1!important;
  color:#174B35!important;z-index:6!important;
 }
 .speaker-card[data-dore-speaker] .olive-speaker-typegroup::after{
- content:"";position:absolute;left:var(--rail-rule-x);top:12%;
- height:23%;width:1px;background:#A65F4B;opacity:.7;pointer-events:none;
+ content:"";position:absolute;left:var(--olive-connector-x);top:var(--olive-connector-top);
+ height:var(--olive-connector-height);width:1px;background:#A65F4B;opacity:.7;
 }
 .speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-entry{
- position:absolute!important;left:var(--rail-x)!important;top:auto!important;
- bottom:3%!important;width:80%!important;margin:0!important;padding:0!important;
- font-size:clamp(9px,3cqw,13px)!important;letter-spacing:.14em!important;
- border:0!important;z-index:6!important;
+ position:absolute!important;left:var(--olive-zh-x)!important;top:38%!important;
+ bottom:auto!important;width:32%!important;border:0!important;
+ padding:0!important;margin:0!important;font-size:clamp(9px,2.7cqw,13px)!important;
+ z-index:6!important;
 }
-/* Different portraits have slightly different paper margins; keep the entire
-   hierarchy within the same image-side rail, not across the subject's face. */
-.speaker-card[data-dore-speaker="david-pawson"]{--rail-x:7%;--rail-size:11.4cqw}
-.speaker-card[data-dore-speaker="jiang-xiuqin"]{--rail-x:8%;--rail-size:10.4cqw}
-.speaker-card[data-dore-speaker="derek-prince"]{--rail-x:7%;--rail-size:11.2cqw}
-.speaker-card[data-dore-speaker="watchman-nee"]{--rail-x:8%;--rail-size:11cqw}
-.speaker-card[data-dore-speaker="huang-shuhua"]{--rail-x:7%;--rail-size:10.4cqw}
-.speaker-card[data-dore-speaker="tong-liu"]{--rail-x:8%;--rail-size:15cqw}
-.speaker-card[data-dore-speaker="jerry-lai"]{--rail-x:7%;--rail-size:14cqw}
-.speaker-card[data-dore-speaker="yu-hong-jie"]{--rail-x:8%;--rail-size:11.3cqw}
-.speaker-card[data-dore-speaker="stephen-tong"]{--rail-x:7%;--rail-size:11cqw}
-.speaker-card[data-dore-speaker="rick-warren"]{--rail-x:8%;--rail-size:11.6cqw}
-.speaker-card[data-dore-speaker="kang-lai-chang"]{--rail-x:7%;--rail-size:9.3cqw}
-.speaker-card[data-dore-speaker="kou-shao-en"]{--rail-x:8%;--rail-size:11.3cqw}
+/* Per-name fit values keep the entire enlarged vertical headline on the poster.
+   These are typography geometry, not claims about image subject-safe areas. */
+.speaker-card[data-dore-speaker="david-pawson"]{--olive-type-size:18cqw;--olive-type-x:5%}
+.speaker-card[data-dore-speaker="jiang-xiuqin"]{--olive-type-size:18cqw;--olive-type-x:6%}
+.speaker-card[data-dore-speaker="derek-prince"]{--olive-type-size:18cqw;--olive-type-x:5%}
+.speaker-card[data-dore-speaker="watchman-nee"]{--olive-type-size:17cqw;--olive-type-x:6%}
+.speaker-card[data-dore-speaker="huang-shuhua"]{--olive-type-size:17cqw;--olive-type-x:5%}
+.speaker-card[data-dore-speaker="tong-liu"]{--olive-type-size:22cqw;--olive-type-x:6%}
+.speaker-card[data-dore-speaker="jerry-lai"]{--olive-type-size:21cqw;--olive-type-x:5%}
+.speaker-card[data-dore-speaker="yu-hong-jie"]{--olive-type-size:18cqw;--olive-type-x:6%}
+.speaker-card[data-dore-speaker="stephen-tong"]{--olive-type-size:17cqw;--olive-type-x:5%}
+.speaker-card[data-dore-speaker="rick-warren"]{--olive-type-size:18cqw;--olive-type-x:6%}
+.speaker-card[data-dore-speaker="kang-lai-chang"]{--olive-type-size:15cqw;--olive-type-x:5%}
+.speaker-card[data-dore-speaker="kou-shao-en"]{--olive-type-size:18cqw;--olive-type-x:6%}
 @media(max-width:720px){
  .speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-english{
- font-size:var(--rail-size)!important;
+ font-size:var(--olive-type-size)!important;
  }
 }
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
