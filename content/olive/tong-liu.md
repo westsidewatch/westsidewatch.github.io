@@ -14,8 +14,14 @@ sermon_series:
     sermons:
       - title: "信仰的傳承"
         url: "https://www.youtube.com/watch?v=S2oKTZSziZ4"
+        source: "生命河 ROLCC Media"
+        date: "2026-06-21"
       - title: "活出最好的你"
         url: "https://www.youtube.com/watch?v=jczVDiJGC5Q"
+      - title: "得勝環境的祕訣"
+        url: "https://www.youtube.com/watch?v=50T6t47EExs"
+        source: "生命河 ROLCC Media"
+        date: "2026-04-19"
 ---
 
 劉彤人物介紹。
