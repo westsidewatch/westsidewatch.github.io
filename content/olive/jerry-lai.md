@@ -9,6 +9,10 @@ portrait_alt: "賴若瀚人物版畫插圖"
 portrait_title: ["JERRY", "LAI"]
 portrait_name: "賴若瀚"
 channel_url: "/olive/?person=jerry-lai"
+portrait_align: "right"
+portrait_text_x: 59
+portrait_text_width: 36
+portrait_text_size: 8
 ---
 
 賴若瀚人物介紹。

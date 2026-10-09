@@ -9,6 +9,10 @@ portrait_alt: "華理克人物版畫插圖"
 portrait_title: ["RICK", "WARREN"]
 portrait_name: "華理克"
 channel_url: "/olive/?person=rick-warren"
+portrait_align: "right"
+portrait_text_x: 58
+portrait_text_width: 37
+portrait_text_size: 8
 ---
 
 華理克人物介紹。

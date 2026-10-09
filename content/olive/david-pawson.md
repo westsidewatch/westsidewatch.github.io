@@ -9,6 +9,10 @@ portrait_alt: "大衛鮑森人物版畫插圖"
 portrait_title: ["DAVID", "PAWSON"]
 portrait_name: "大衛鮑森"
 channel_url: "/olive/?person=david-pawson"
+portrait_align: "right"
+portrait_text_x: 53
+portrait_text_width: 42
+portrait_text_size: 9
 ---
 
 大衛鮑森人物專題。
