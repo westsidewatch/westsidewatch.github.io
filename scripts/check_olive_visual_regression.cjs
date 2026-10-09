@@ -35,6 +35,23 @@ const fs=require('node:fs');
    if(!/^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/.test(source||''))errors.push('feature source link invalid');
    await page.locator('[data-feature-prev]').click();
    if((await page.locator('.olive-feature__caption h2').innerText())!==initial)errors.push('previous feature did not restore speaker');
+   // Exercise all eight feature selections without requiring YouTube network access.
+   const visited=new Set();
+   for(let i=0;i<8;i++){
+    const sourceUrl=await page.locator('[data-feature-source]').getAttribute('href');
+    const id=(sourceUrl||'').match(/[?&]v=([A-Za-z0-9_-]{11})/)?.[1];
+    if(!id){errors.push('invalid video source at position '+i);break;}
+    visited.add(id);
+    await page.locator('[data-pawson-play]').click();
+    const iframe=page.locator('[data-pawson-preview]');
+    const embed=await iframe.getAttribute('src');
+    if(!embed?.includes('/embed/'+id+'?'))errors.push('embed/source mismatch at position '+i);
+    if(await iframe.isHidden())errors.push('iframe hidden after play at position '+i);
+    await page.locator('[data-feature-next]').click();
+    if(await iframe.getAttribute('src'))errors.push('old video continues after feature change '+i);
+    if(!(await iframe.isHidden()))errors.push('iframe not hidden after feature change '+i);
+   }
+   if(visited.size!==8)errors.push('expected eight distinct video selections; got '+visited.size);
    console.log(size.name+': '+(errors.length?errors.join('; '):'PASS'));
    if(errors.length)process.exitCode=1;
    await page.close();
