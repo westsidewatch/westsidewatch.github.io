@@ -10,14 +10,35 @@
       <h1 id="olive-editorial-title">{{ range (.Params.portrait_title | default (slice "DAVID" "PAWSON")) }}<span>{{ . }}</span>{{ end }}</h1>
       <p class="olive-editorial__zh" lang="zh-Hant">{{ .Params.portrait_name | default "大衛鮑森" }}</p>
       <p class="olive-editorial__sub">TEACHING · SCRIPTURE · FAITH</p>
-      {{ with .Params.channel_url }}<a href="{{ . | relURL }}" style="pointer-events:auto;color:inherit">講道與系列 →</a>{{ end }}
+
     </div>
   </div>
+  <section class="olive-editorial__library" aria-label="講道與系列">
+    {{ with .Content }}<div class="olive-editorial__biography">{{ . }}</div>{{ end }}
+    {{ with .Params.sermon_series }}
+      {{ range . }}
+      <section class="olive-editorial__series">
+        <h2>{{ .title }}</h2>
+        {{ with .description }}<p>{{ . }}</p>{{ end }}
+        {{ with .sermons }}
+        <ol class="olive-editorial__sermon-list">
+          {{ range . }}
+          <li><span>{{ .title }}</span>{{ with .url }}<a href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">觀看／來源 ↗</a>{{ end }}</li>
+          {{ end }}
+        </ol>
+        {{ end }}
+      </section>
+      {{ end }}
+    {{ else }}
+      <p class="olive-editorial__catalog-status">講道系列索引整理中。現有資料不會被當作已核實的完整館藏。</p>
+    {{ end }}
+    <a class="olive-editorial__back" href="/olive/#olive-adullam">返回亞杜蘭洞 ↗</a>
+  </section>
   <footer class="olive-editorial__foot"><span>WESTSIDE WATCH</span><span>THE OLIVE MOUNTAIN</span></footer>
 </article>
 <style>
 /* Editorial portrait spread: image-led composition, not thumbnail or full-screen crop. */
-.olive-editorial{--olive:#174B35;--accent:#A65F4B;--paper:#F5F1E8;box-sizing:border-box;background:var(--paper);color:var(--olive);min-height:100svh;overflow:hidden;padding:clamp(18px,2.5vw,40px);font-family:var(--ws-type-display-zh,"Noto Serif TC",serif)}
+.olive-editorial{--olive:#174B35;--accent:#A65F4B;--paper:#F5F1E8;box-sizing:border-box;background:var(--paper);color:var(--olive);min-height:100svh;overflow:clip;padding:clamp(18px,2.5vw,40px);font-family:var(--ws-type-display-zh,serif)}
 .olive-editorial__folio,.olive-editorial__foot{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--accent);padding-top:12px;font-size:10px;letter-spacing:.18em}
 .olive-editorial__folio span:last-child,.olive-editorial__foot{color:var(--accent)}
 .olive-editorial__spread{position:relative;display:grid;grid-template-columns:minmax(0,58fr) minmax(0,42fr);align-items:center;gap:clamp(12px,2.5vw,44px);width:min(100%,1460px);margin-inline:auto;min-height:clamp(580px,68vw,790px)}
@@ -26,12 +47,22 @@
 .olive-editorial__asset-pending{display:grid;place-items:center;width:100%;height:100%;border:1px dashed var(--olive);font-size:12px;letter-spacing:.08em}
 .olive-editorial__type{position:relative;z-index:2;min-width:0;margin-left:clamp(-100px,-7vw,-32px);padding:clamp(24px,3vw,54px) 0;pointer-events:none}
 .olive-editorial__eyebrow,.olive-editorial__sub{font-size:11px;letter-spacing:.22em;color:var(--accent)}
-.olive-editorial h1{font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-weight:400;font-size:clamp(64px,8vw,142px);letter-spacing:-.07em;line-height:.84;color:var(--accent);margin:clamp(24px,4vw,64px) 0 30px;overflow-wrap:normal}
+.olive-editorial h1{font-family:var(--ws-type-display-en,serif);font-weight:400;font-size:clamp(64px,8vw,142px);letter-spacing:-.07em;line-height:.84;color:var(--accent);margin:clamp(24px,4vw,64px) 0 30px;overflow-wrap:normal}
 .olive-editorial h1 span{display:block}
-.olive-editorial__zh{font-weight:200;letter-spacing:.28em;font-size:clamp(18px,1.8vw,27px);margin:0 0 36px}
+.olive-editorial__zh{font-weight:var(--ws-olive-layer-zh-weight,200);letter-spacing:.28em;font-size:clamp(18px,1.8vw,27px);margin:0 0 36px}
 .olive-editorial__type a{pointer-events:auto}
 @media(min-width:1500px){.olive-editorial__spread{min-height:800px}}
 @media(max-width:900px){.olive-editorial__spread{grid-template-columns:minmax(0,56fr) minmax(0,44fr);min-height:570px}.olive-editorial__portrait{height:clamp(470px,66vw,620px)}.olive-editorial__type{margin-left:-24px}.olive-editorial h1{font-size:clamp(55px,8.5vw,90px)}}
 @media(max-width:760px){.olive-editorial{padding:16px}.olive-editorial__spread{display:flex;flex-direction:column;align-items:stretch;gap:0;min-height:0}.olive-editorial__portrait{width:100%;height:clamp(400px,118vw,610px);margin:20px 0 0;align-self:center}.olive-editorial__portrait img{object-fit:contain;object-position:center}.olive-editorial__type{margin:-34px 0 36px;padding:0 clamp(6px,3vw,18px);align-self:stretch}.olive-editorial h1{font-size:clamp(59px,13vw,106px);margin:24px 0 22px}.olive-editorial__zh{font-size:20px}.olive-editorial__folio,.olive-editorial__foot{font-size:9px}}
+.olive-editorial__library{width:min(100%,1200px);margin:clamp(36px,6vw,100px) auto;padding:clamp(20px,3vw,44px) 0;border-top:1px solid currentColor}
+.olive-editorial__biography{font-family:var(--ws-type-body-zh,var(--ws-type-display-zh,serif));font-size:clamp(16px,1.35vw,20px);line-height:1.9;max-width:72ch}
+.olive-editorial__series{padding:clamp(24px,4vw,56px) 0;border-bottom:1px solid currentColor}
+.olive-editorial__series h2{font-family:var(--ws-type-display-zh,serif);font-weight:var(--ws-olive-layer-zh-weight,200);font-size:clamp(26px,3vw,48px)}
+.olive-editorial__sermon-list{list-style:decimal;padding-left:1.8em}
+.olive-editorial__sermon-list li{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:15px 0;border-bottom:1px solid color-mix(in srgb,currentColor 25%,transparent);font-size:clamp(15px,1.25vw,19px)}
+.olive-editorial__sermon-list a,.olive-editorial__back{color:inherit;text-underline-offset:.3em;white-space:nowrap}
+.olive-editorial__catalog-status{opacity:.75;font-size:clamp(14px,1.1vw,17px)}
+.olive-editorial__back{display:inline-block;margin-top:clamp(28px,4vw,60px)}
+@media(max-width:760px){.olive-editorial__sermon-list li{flex-wrap:wrap;gap:8px}}
 </style>
 {{ end }}
