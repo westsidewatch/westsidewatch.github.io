@@ -1,6 +1,29 @@
 (() => {
   'use strict';
+  // Birth chronology: confirmed dates/years first; unknowns retain their prior relative order.
+  // Year-only records do not imply a known month/day. Do not infer birth years from age or graduation.
+  const speakerBirth = {
+    'watchman-nee': {year:1903, date:'1903-11-04', source:'https://en.wikipedia.org/wiki/Watchman_Nee'},
+    'derek-prince': {year:1915, date:'1915-08-14', source:'https://www.derekprince.com/en-ca/about/faq'},
+    'david-pawson': {year:1930, date:'1930-02-25', source:'https://www.wikidata.org/wiki/Q2432479'},
+    'stephen-tong': {year:1940, date:null, source:'https://goodtvnews.goodtv.tv/goodtvnews/2019taiwan10/'},
+    'kang-lai-chang': {year:1949, date:null, source:'https://www.lynchburgconference.org/bio_kang_laichang'},
+    'rick-warren': {year:1954, date:'1954-01-28', source:'https://en.wikipedia.org/wiki/Rick_Warren'},
+    'kou-shao-en': {year:1957, date:'1957-08-19', source:'https://rockpedia.org/pastors/kou-shaoen'},
+    'jiang-xiuqin': {year:null, date:null, source:null},
+    'tong-liu': {year:null, date:null, source:null},
+    'jerry-lai': {year:null, date:null, source:null},
+    'yu-hong-jie': {year:null, date:null, source:null},
+    'huang-shuhua': {year:null, date:null, source:null}
+  };
   const people=[['david-pawson','大衛鮑森'],['jiang-xiuqin','江秀琴'],['derek-prince','葉光明'],['watchman-nee','倪柝聲'],['kang-lai-chang','康來昌'],['stephen-tong','唐崇榮'],['kou-shao-en','寇紹恩'],['rick-warren','華理克'],['tong-liu','劉彤'],['jerry-lai','賴若瀚'],['yu-hong-jie','于宏潔'],['huang-shuhua','黃淑華']];
+  people.sort(([a],[b]) => {
+    const first=speakerBirth[a], second=speakerBirth[b];
+    if(first.year===null) return second.year===null ? 0 : 1;
+    if(second.year===null) return -1;
+    if(first.year!==second.year) return first.year-second.year;
+    return first.date && second.date ? first.date.localeCompare(second.date) : 0;
+  });
   const jiangTopics=[
     ['內在生活','jiang-xiuqin-inner-life-45','45 篇'],
     ['讚美','jiang-xiuqin-goodtv-praise',''],
