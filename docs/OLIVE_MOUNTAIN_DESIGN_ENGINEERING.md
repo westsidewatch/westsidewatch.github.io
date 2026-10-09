@@ -173,3 +173,11 @@ Awwwards、Webby Awards、FWA 是**品質參照／案例搜尋來源**，不是�
 - `scripts/check_olive_scale_authority.py`：增加原主視覺、三層接線、十二張海報 manifest 的靜態檢查。
 
 **仍未完成／不可宣稱：** 這輪尚未執行 CI 與瀏覽器視覺驗收；Hugo surface 和獨立 `/olive/` 的實際部署路由尚未統一，原獨立頁 CSS 去重也尚未完成；The Archive 目前是既有系列索引入口而非新建完整館藏索引；The Sermons 尚未有獨立集數播放器與播放可用性驗證。PR #1234 繼續保持 Draft，禁止在上述缺口未核實前宣稱上線。
+
+## 十五、單一首頁路由修復（2026-10-09）
+
+**定位到確切衝突：** `hugo.toml` 把 `olive/` 掛載到 `static/olive`，會把 `olive/index.html` 與 `content/olive/_index.md` + `layouts/olive/surface-carrier.html` 的 Hugo 生成首頁放在同一輸出路徑。原先兩套首頁不是純視覺問題，而是建置輸出權威衝突。
+
+**已提交修改：** 在 `hugo.toml` 的 Olive mount 設定 `excludeFiles = ["index.html"]`，保留其他 `olive/` 子頁、JS 和資產，令 `/olive/` 唯一首頁由 Hugo surface 生成；將三層導覽中指向已退出生產首頁的 `/olive/#olive-series` 錯誤錨點改為有效的本頁講道入口；回歸檢查加入 Hugo 唯一路由和舊連結防退化。
+
+**重要未驗收項目：** 需要實際 Hugo build 確認輸出 `public/olive/index.html` 包含 Pawson hero，且 `public/olive/olive.js` 與十二講員子頁仍在；需瀏覽器核實長廊及播放器。舊 `olive/index.html` 保留作未部署的來源資產，不是第二個正式首頁；後續可在完成內容遷移後清理。PR 繼續 Draft。
