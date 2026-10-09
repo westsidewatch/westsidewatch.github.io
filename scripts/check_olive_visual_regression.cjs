@@ -78,6 +78,15 @@ const fs=require('node:fs');
     return errors;
    });
    errors.push(...issues);
+   // Selecting a speaker must switch the home channel without leaving /olive/.
+   await page.locator('.olive-speaker-card:not(.olive-speaker-card--clone)[data-person="江秀琴"]').click();
+   if((await page.locator('.olive-feature__caption h2').innerText())!=='江秀琴')errors.push('speaker card did not select its home channel');
+   if(!page.url().endsWith('/olive/'))errors.push('speaker card navigated away from home');
+   if(await page.locator('.olive-feature__channel .olive-feature__episode').count()<1)errors.push('selected channel episodes missing');
+   await page.locator('.olive-speaker-card:not(.olive-speaker-card--clone)[data-person="倪柝聲"]').click();
+   if((await page.locator('.olive-feature__caption h2').innerText())!=='倪柝聲')errors.push('speaker without featured video did not switch channel');
+   if(!(await page.locator('[data-pawson-play]').isHidden()))errors.push('speaker without verified video exposes play button');
+   await page.locator('[data-feature-prev]').click();
    const initial=await page.locator('.olive-feature__caption h2').innerText();
    await page.locator('[data-feature-next]').click();
    const after=await page.locator('.olive-feature__caption h2').innerText();
