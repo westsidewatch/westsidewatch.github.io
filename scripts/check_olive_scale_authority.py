@@ -32,8 +32,17 @@ for pattern in (r'\.olive-speaker-english\s*\{[^}]*scaleX\(', r'\.olive-speaker-
     require(not re.search(pattern, css, re.S), "nonuniform glyph scaling detected")
 # Keep the existing content/URL authority untouched in this phase.
 require('id="olive-speakers"' in html and 'id="olive-series"' in html, "speaker/series anchors missing")
+hugo = (ROOT / "layouts/olive/surface-carrier.html").read_text(encoding="utf-8")
+journey = (ROOT / "static/js/olive-journey.js").read_text(encoding="utf-8")
+rail = (ROOT / "static/js/olive-editorial-rail.js").read_text(encoding="utf-8")
+manifest = (ROOT / "static/dore-design/runtime/olive-editorial-covers.v1.json").read_text(encoding="utf-8")
+require('data-pawson-play' in hugo, "approved Pawson hero missing")
+require('olive-editorial-rail.js' in hugo and 'olive-journey.js' in hugo, "single journey not wired")
+require(all(x in journey for x in ('The Speakers', 'The Sermons', 'The Archive')), "journey layers missing")
+require('olive-editorial-covers.v1.json' in rail, "approved poster source missing")
+require(manifest.count('"speaker":') == 12, "expected twelve editorial poster assets")
 if errors:
     for error in errors:
         print("FAIL:", error)
     sys.exit(1)
-print("PASS: Olive Mountain poster scale authority checks (12 assertions)")
+print("PASS: Olive Mountain poster scale authority checks (17 assertions)")
