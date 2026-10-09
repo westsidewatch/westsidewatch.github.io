@@ -1,6 +1,7 @@
 (() => {
   'use strict';
-  // Birth chronology: confirmed dates/years first; unknowns retain their prior relative order.
+  // Birth chronology: dated records first; unknowns retain prior relative order.
+  // User-provided approximate ranges use a provisional year key, not a proven exact birth order.
   // Year-only records do not imply a known month/day. Do not infer birth years from age or graduation.
   const speakerBirth = {
     'watchman-nee': {year:1903, date:'1903-11-04', source:'https://en.wikipedia.org/wiki/Watchman_Nee'},
@@ -11,10 +12,10 @@
     'rick-warren': {year:1954, date:'1954-01-28', source:'https://en.wikipedia.org/wiki/Rick_Warren'},
     'kou-shao-en': {year:1957, date:'1957-08-19', source:'https://rockpedia.org/pastors/kou-shaoen'},
     'jiang-xiuqin': {year:null, date:null, source:null},
-    'tong-liu': {year:null, date:null, source:null},
-    'jerry-lai': {year:null, date:null, source:null},
-    'yu-hong-jie': {year:null, date:null, source:null},
-    'huang-shuhua': {year:null, date:null, source:null}
+    'tong-liu': {year:1952, date:null, birthRange:[1952,1954], precision:'approximate-range', source:'user-provided', label:'約1952–1954年'},
+    'jerry-lai': {year:1951, date:null, birthRange:[1951,1952], precision:'approximate-range', source:'user-provided', label:'1951或1952年，香港'},
+    'yu-hong-jie': {year:1955, date:null, precision:'approximate-year', source:'user-provided', label:'約1955年'},
+    'huang-shuhua': {year:1944, date:null, birthRange:[1943,1944], precision:'approximate-range', source:'user-provided', label:'約1944年或1943年底'}
   };
   const people=[['david-pawson','大衛鮑森'],['jiang-xiuqin','江秀琴'],['derek-prince','葉光明'],['watchman-nee','倪柝聲'],['kang-lai-chang','康來昌'],['stephen-tong','唐崇榮'],['kou-shao-en','寇紹恩'],['rick-warren','華理克'],['tong-liu','劉彤'],['jerry-lai','賴若瀚'],['yu-hong-jie','于宏潔'],['huang-shuhua','黃淑華']];
   people.sort(([a],[b]) => {
@@ -45,7 +46,7 @@
 
   function linkCard(cls,title,meta,href){
     const a=document.createElement('a'); a.className=cls; a.href=href;
-    if(cls==='speaker-card'){const slug=/^\/olive\/(watchman-nee|jiang-xiuqin|derek-prince)\/$/.test(href)?href.split('/')[2]:new URL(href,location.origin).searchParams.get('person');const composition=doreCompositions.get(slug);a.dataset.doreSurface='speaker-card';a.dataset.doreSpeaker=slug||'';a.dataset.doreIndex=String(people.findIndex(([id])=>id===slug)+1).padStart(2,'0');if(composition?.family)a.dataset.doreFamily=composition.family;if(typeof composition?.cover==='string'&&/^\/dore-design\/runtime\/olive-covers\/[a-z0-9-]+\.svg$/.test(composition.cover)){const cover=document.createElement('img');cover.className='dore-generated-cover';cover.src=composition.cover;cover.alt='';cover.loading='lazy';cover.decoding='async';cover.addEventListener('error',()=>cover.remove(),{once:true});a.append(cover);a.dataset.doreCover='generated';}if(composition?.geometry?.type){const [x,y,w,h]=composition.geometry.type;a.style.setProperty('--dore-type-x',x+'%');a.style.setProperty('--dore-type-y',y+'%');a.style.setProperty('--dore-type-w',w+'%');a.style.setProperty('--dore-type-h',h+'%');a.dataset.doreGeometry='runtime';}if(composition?.geometry?.image){const [x,y,w,h]=composition.geometry.image;a.style.setProperty('--dore-image-x',x+'%');a.style.setProperty('--dore-image-y',y+'%');a.style.setProperty('--dore-image-w',w+'%');a.style.setProperty('--dore-image-h',h+'%');a.dataset.doreImage='unbound';const portrait=verifiedPortraits.get(slug);if(validPortrait(portrait)){const img=document.createElement('img');img.className='dore-verified-portrait';img.src=portrait.url;img.alt='';img.loading='lazy';img.decoding='async';img.addEventListener('error',()=>{img.remove();a.dataset.doreImage='unbound';},{once:true});a.append(img);a.dataset.doreImage='verified';}}a.dataset.doreIdentitySynthesis='false';if(slug===selectedPerson)a.setAttribute('aria-current','true');}
+    if(cls==='speaker-card'){const slug=/^\/olive\/(watchman-nee|jiang-xiuqin|derek-prince)\/$/.test(href)?href.split('/')[2]:new URL(href,location.origin).searchParams.get('person');const birth=speakerBirth[slug];if(birth){a.dataset.birthPrecision=birth.precision||(birth.year===null?'unknown':birth.date?'date':'year');if(birth.label)a.dataset.birthLabel=birth.label;}const composition=doreCompositions.get(slug);a.dataset.doreSurface='speaker-card';a.dataset.doreSpeaker=slug||'';a.dataset.doreIndex=String(people.findIndex(([id])=>id===slug)+1).padStart(2,'0');if(composition?.family)a.dataset.doreFamily=composition.family;if(typeof composition?.cover==='string'&&/^\/dore-design\/runtime\/olive-covers\/[a-z0-9-]+\.svg$/.test(composition.cover)){const cover=document.createElement('img');cover.className='dore-generated-cover';cover.src=composition.cover;cover.alt='';cover.loading='lazy';cover.decoding='async';cover.addEventListener('error',()=>cover.remove(),{once:true});a.append(cover);a.dataset.doreCover='generated';}if(composition?.geometry?.type){const [x,y,w,h]=composition.geometry.type;a.style.setProperty('--dore-type-x',x+'%');a.style.setProperty('--dore-type-y',y+'%');a.style.setProperty('--dore-type-w',w+'%');a.style.setProperty('--dore-type-h',h+'%');a.dataset.doreGeometry='runtime';}if(composition?.geometry?.image){const [x,y,w,h]=composition.geometry.image;a.style.setProperty('--dore-image-x',x+'%');a.style.setProperty('--dore-image-y',y+'%');a.style.setProperty('--dore-image-w',w+'%');a.style.setProperty('--dore-image-h',h+'%');a.dataset.doreImage='unbound';const portrait=verifiedPortraits.get(slug);if(validPortrait(portrait)){const img=document.createElement('img');img.className='dore-verified-portrait';img.src=portrait.url;img.alt='';img.loading='lazy';img.decoding='async';img.addEventListener('error',()=>{img.remove();a.dataset.doreImage='unbound';},{once:true});a.append(img);a.dataset.doreImage='verified';}}a.dataset.doreIdentitySynthesis='false';if(slug===selectedPerson)a.setAttribute('aria-current','true');}
     if(cls==='speaker-card'){
       const slug=a.dataset.doreSpeaker, editorial=editorialCovers.get(slug);
       if(editorial && /^\/images\/olive\/[a-z0-9-]+\.png$/.test(editorial.url)){
