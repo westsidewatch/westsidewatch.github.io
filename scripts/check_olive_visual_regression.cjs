@@ -12,7 +12,19 @@ const fs=require('node:fs');
    const response=await page.goto('http://127.0.0.1:8765/olive/',{waitUntil:'domcontentloaded'});
    if(!response?.ok())errors.push('Olive route HTTP '+response?.status());
    await page.locator('[data-pawson-play]').waitFor({timeout:12000});
-   await page.waitForFunction(() => [...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')].every(card => { const img=card.querySelector('.olive-speaker-card__editorial'); return img && img.complete && img.naturalWidth>0; }),{timeout:15000});
+   await page.waitForFunction(() => [...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')].every(card => !!card.querySelector('.olive-speaker-card__editorial')),null,{timeout:15000});
+   // Horizontal editorial rails intentionally lazy-load off-screen posters.
+   // Request their decoding for the screenshot audit without changing production behavior.
+   const imageReport=await page.evaluate(async () => {
+    const cards=[...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')];
+    return await Promise.all(cards.map(async card => {
+     const img=card.querySelector('.olive-speaker-card__editorial');
+     img.loading='eager';
+     try { await img.decode(); } catch (_) {}
+     return {speaker:card.dataset.person,src:img.currentSrc||img.src,loaded:img.complete&&img.naturalWidth>0};
+    }));
+   });
+   for(const item of imageReport)if(!item.loaded)errors.push('editorial image failed to load '+item.speaker+': '+item.src);
    await page.screenshot({path:'/tmp/olive-visual/'+size.name+'.png',fullPage:true});
    const issues=await page.evaluate(()=>{
     const errors=[];
