@@ -11,9 +11,9 @@
   // not a placeholder video rectangle or a repeated list of tiny names.
   const theater=document.createElement('section');
   theater.className='olive-journey-section olive-journey-theater';
-  theater.id='olive-sermon-experience';
-  theater.setAttribute('aria-label','十二講員全員展示');
-  theater.innerHTML='<div class="olive-poster-gallery" aria-label="十二講員海報"></div>';
+  theater.id='olive-adullam';
+  theater.setAttribute('aria-label','亞杜蘭洞 · 十二講員與當期論道');
+  theater.innerHTML='<div class="olive-poster-gallery" aria-label="十二講員海報"></div><div class="olive-issue-sermons" aria-label="當期論道推薦" data-olive-issue-sermons></div>';
   const gallery=theater.querySelector('.olive-poster-gallery');
   const speakers=[{slug:'david-pawson',name:'大衛鮑森'},...cards.map(card=>({slug:card.dataset.doreSpeaker,name:card.dataset.person}))].filter(item=>item.slug&&item.name);
   fetch('/dore-design/runtime/olive-editorial-covers.v1.json')
@@ -42,5 +42,10 @@
      a.href='/olive/'+encodeURIComponent(item.slug)+'/';a.textContent=item.name;gallery.append(a);
     }
    });
-  root.append(theater);
+  const topics=document.createElement('section');
+  topics.className='olive-journey-section olive-topic-index';
+  topics.id='olive-discourse';
+  topics.setAttribute('aria-label','橄欖山論道 · 主題索引');
+  topics.innerHTML='<h2>橄欖山論道</h2><div class="olive-topic-index__links"><a href="/olive/discourse/#scripture">聖經綜覽</a><a href="/olive/discourse/#spiritual-life">靈命成長</a><a href="/olive/discourse/#church">教會與使命</a><a href="/olive/discourse/#discipleship">門徒生活</a></div>';
+  root.append(theater,topics);
 })();
