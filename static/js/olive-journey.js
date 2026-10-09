@@ -12,21 +12,41 @@
   root.prepend(nav);
   const home=root.querySelector('.olive-home-stage');
   if(home)home.id='olive-speaker-experience';
+  // The second layer is a readable gallery of the twelve approved editorial posters,
+  // not a placeholder video rectangle or a repeated list of tiny names.
   const theater=document.createElement('section');
   theater.className='olive-journey-section olive-journey-theater';
   theater.id='olive-sermon-experience';
   theater.setAttribute('aria-labelledby','olive-theater-title');
-  theater.innerHTML='<div class="olive-journey-heading"><p>02 / THE SERMONS</p><h2 id="olive-theater-title">講道劇場</h2></div><div class="olive-journey-theater-grid"><div class="olive-journey-screen"><p>FEATURED SERMON</p><h3>大衛鮑森</h3><p>從上方主視覺播放精選講道，或選擇講員進入其系列與單集。</p><a href="#olive-speaker-experience">返回主視覺播放 ↑</a></div><div class="olive-journey-aside"><p>EXPLORE BY SPEAKER</p><div class="olive-journey-speaker-links"></div></div></div>';
-  const list=theater.querySelector('.olive-journey-speaker-links');
-  for(const card of cards){
-    const label=card.dataset.person;
-    if(!label)continue;
-    const a=document.createElement('a');
-    a.textContent=label+' ↗';
-    const slug=card.dataset.doreSpeaker;
-    a.href=slug?'/olive/'+slug+'/':'#olive-speaker-experience';
-    list.append(a);
-  }
+  theater.innerHTML='<div class="olive-journey-heading"><p>02 / THE SPEAKERS</p><h2 id="olive-theater-title">十二講員</h2></div><p class="olive-gallery-intro">選擇講員海報，進入講員頻道與系列講道。</p><div class="olive-poster-gallery" aria-label="十二講員海報"></div>';
+  const gallery=theater.querySelector('.olive-poster-gallery');
+  const speakers=[{slug:'david-pawson',name:'大衛鮑森'},...cards.map(card=>({slug:card.dataset.doreSpeaker,name:card.dataset.person}))].filter(item=>item.slug&&item.name);
+  fetch('/dore-design/runtime/olive-editorial-covers.v1.json')
+   .then(response=>{if(!response.ok)throw new Error('Poster manifest unavailable');return response.json();})
+   .then(data=>{
+    const assets=new Map((data.records||[]).filter(item=>/^\\/images\\/olive\\/[a-z0-9-]+\\.png$/.test(item.url||'')).map(item=>[item.speaker,item.url]));
+    for(const item of speakers){
+     const a=document.createElement('a');
+     a.className='olive-gallery-card';
+     a.href='/olive/'+encodeURIComponent(item.slug)+'/';
+     a.setAttribute('aria-label','進入'+item.name+'講員頻道');
+     const src=assets.get(item.slug);
+     if(src){
+      const img=document.createElement('img');
+      img.src=src;img.alt=item.name+'講員海報';img.loading='lazy';img.decoding='async';
+      a.append(img);
+     }else{
+      const label=document.createElement('span');label.textContent=item.name;a.append(label);
+     }
+     gallery.append(a);
+    }
+   })
+   .catch(()=>{
+    for(const item of speakers){
+     const a=document.createElement('a');a.className='olive-gallery-card';
+     a.href='/olive/'+encodeURIComponent(item.slug)+'/';a.textContent=item.name;gallery.append(a);
+    }
+   });
   const archive=document.createElement('section');
   archive.className='olive-journey-section olive-journey-archive';
   archive.id='olive-archive-experience';
