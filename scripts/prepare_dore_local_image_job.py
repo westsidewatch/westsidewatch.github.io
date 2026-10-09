@@ -27,9 +27,9 @@ def main():
  (out/'typography-proof.svg').write_text(svg(spec),encoding='utf-8')
  job={'schema':'dore.local-image-job.v0','device':'Mac mini M4 / 16GB unified memory',
       'status':'AWAITING_LOCAL_RENDER','speaker':r['id'],'imagePromptFile':'image-prompt.txt',
-      'imageInput':'background-only','expectedOutput':'generated-background.png',
+      'imageInput':'reference-conditioned-portrait' if quality else 'background-only','expectedOutput':'generated-background.png',
       'finalComposite':'final-cover.png','canvas':[720,960],
-      'constraints':{'portraitSynthesis':False,'palette':['#FFFFFF','#174B35'],
+      'constraints':{'portraitSynthesis':bool(quality),'palette':['#FFFFFF','#174B35'],
                      'noGeneratedText':True,'oneImageAtATime':True},
       'steps':['Render image-prompt.txt in local image model as background-only 3:4 image.',
                'Save output as generated-background.png in this directory.',
