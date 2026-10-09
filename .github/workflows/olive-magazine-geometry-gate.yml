@@ -3,9 +3,11 @@ on:
   pull_request:
     paths:
       - 'scripts/olive_gold_geometry.py'
+      - 'scripts/check_olive_geometry_similarity.py'
       - 'scripts/select_olive_series_diversity.py'
       - 'scripts/render_olive_geometry_diversity.py'
       - 'tests/test_olive_gold_geometry.py'
+      - 'tests/test_olive_geometry_similarity.py'
       - 'tests/test_olive_geometry_diversity_review.py'
       - '.github/workflows/olive-magazine-geometry-gate.yml'
   workflow_dispatch:
@@ -21,6 +23,8 @@ jobs:
           python-version: '3.11'
       - name: Test geometry uniqueness and review page
         run: python -m unittest discover -s tests -p 'test_olive_*geometry*.py' -v
+      - name: Reject visually similar geometry
+        run: python scripts/check_olive_geometry_similarity.py
       - name: Build twelve-speaker review and candidate data
         run: |
           python scripts/select_olive_series_diversity.py
