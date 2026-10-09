@@ -31,7 +31,7 @@ jobs:
           import re
           for path in Path('content').rglob('*.md'):
               original=path.read_text(encoding='utf-8')
-              updated=re.sub(r'(?m)^([ \\t]*)_build([ \\t]*:)',r'\\1build\\2',original)
+              updated=re.sub(r'(?m)^([ \t]*)_build([ \t]*:)',r'\1build\2',original)
               if updated!=original: path.write_text(updated,encoding='utf-8')
           PY
       - name: Build canonical Hugo site
