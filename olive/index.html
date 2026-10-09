@@ -160,4 +160,62 @@ html{overflow-x:clip}body{overflow-x:clip}main{box-sizing:border-box;width:min(1
   .speaker-card[data-dore-speaker="tong-liu"]{--olive-en-size:clamp(55px,16vw,105px)}
   .speaker-card .olive-speaker-typegroup .olive-speaker-entry{top:calc(var(--olive-copy-y) + 18%)!important}
 }
+
+/* Editorial correction: typography must never sit on a portrait's face.
+   The reference posters use a dedicated typographic field and untouched subject.
+   Reserve a paper band beneath every original 3:4 image, not a face overlay. */
+.speaker-card[data-dore-speaker]{
+  --olive-poster-band:clamp(100px,10vw,158px);
+  --olive-en-x:5%!important;
+  --olive-en-y:auto!important;
+  --olive-en-w:90%!important;
+  --olive-en-size:clamp(30px,3.2vw,53px)!important;
+  --olive-en-rotate:0deg!important;
+  --olive-en-tracking:-.055em!important;
+  box-sizing:border-box;
+  aspect-ratio:3/4;
+  min-height:0;
+  padding:0 0 var(--olive-poster-band)!important;
+  background:#fff!important;
+}
+.speaker-card[data-dore-speaker] .dore-editorial-cover,
+.speaker-card[data-dore-speaker] .dore-generated-cover{
+  inset:0 0 var(--olive-poster-band) 0!important;
+  width:100%!important;
+  height:calc(100% - var(--olive-poster-band))!important;
+  object-fit:contain!important;
+  background:#fff;
+}
+.speaker-card[data-dore-speaker] .dore-verified-portrait{
+  max-height:calc(100% - var(--olive-poster-band));
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-english{
+  position:absolute!important;
+  top:auto!important;bottom:clamp(32px,3.2vw,51px)!important;
+  left:5%!important;width:90%!important;
+  transform:none!important;rotate:none!important;
+  font-size:var(--olive-en-size)!important;line-height:.94!important;
+  text-align:left!important;
+  white-space:normal!important;overflow-wrap:normal!important;
+  max-width:90%!important;
+  z-index:7!important;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-entry{
+  left:5%!important;top:auto!important;bottom:9px!important;
+  width:90%!important;margin:0!important;padding-top:5px!important;
+  border-top:1px solid #d6b3a8!important;
+  z-index:7!important;
+}
+.speaker-card[data-dore-speaker] .olive-speaker-typegroup h3{
+  left:var(--olive-copy-x)!important;
+  top:var(--olive-copy-y)!important;
+  width:var(--olive-copy-w)!important;
+}
+@media(max-width:720px){
+  .speaker-card[data-dore-speaker]{
+    --olive-poster-band:clamp(105px,26vw,148px);
+    --olive-en-size:clamp(34px,8vw,53px)!important;
+  }
+  .speaker-card[data-dore-speaker] .olive-speaker-typegroup .olive-speaker-english{bottom:36px!important}
+}
 </style></head><body><main><section class="hero"><p class="eyebrow">WESTSIDE WATCH · SERMON</p><h1>Olive<br>Mountain.</h1><p class="zh">橄欖山</p><p class="intro">中文講道、教導與信息。</p></section><section class="section" aria-labelledby="speakers-title"><div class="section-head"><h2 id="speakers-title">講員</h2><p class="eyebrow">SPEAKERS</p></div><div id="olive-speakers" class="speaker-grid" aria-live="polite"></div></section><section class="section" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">系列</h2><p class="eyebrow">SERIES</p></div><div id="olive-series" class="series-stage" aria-live="polite"></div></section></main><script src="/js/westside-resource-query.js"></script><script src="/olive/olive.js"></script></body></html>
