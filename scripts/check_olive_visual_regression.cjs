@@ -66,11 +66,14 @@ const fs=require('node:fs');
         if(Math.abs(rect.width/rect.height-.75)>.04)errors.push('poster aspect ratio '+card.dataset.person+': '+(rect.width/rect.height).toFixed(2));
       }
     }
-    if(innerWidth<=760){
-      const rail=document.querySelector('.olive-speaker-rail')?.getBoundingClientRect();
-      const hero=feature?.getBoundingClientRect();
-      if(rail&&hero&&rail.top<hero.bottom-3)errors.push('mobile rail overlaps hero');
-    }
+    // The approved poster rail intentionally overlays the hero media.
+    // Verify it stays within the stage rather than rejecting the editorial overlap.
+    const rail=document.querySelector('.olive-speaker-rail')?.getBoundingClientRect();
+    const stage=document.querySelector('.olive-home-stage')?.getBoundingClientRect();
+    if(rail&&stage&&(rail.top<stage.top-3||rail.bottom>stage.bottom+3))errors.push('poster rail escapes hero stage');
+    const gallery=[...document.querySelectorAll('.olive-poster-gallery .olive-gallery-card')];
+    if(gallery.length!==12)errors.push('expected twelve gallery posters; got '+gallery.length);
+    if(document.querySelector('.olive-journey-screen'))errors.push('placeholder green theater screen remains');
     return errors;
    });
    errors.push(...issues);
