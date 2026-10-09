@@ -23,7 +23,21 @@ const fs=require('node:fs');
     if(!document.querySelector('[data-feature-next]')||!document.querySelector('[data-feature-prev]'))errors.push('rotation controls missing');
     if(!document.querySelector('[data-feature-source]'))errors.push('video source link missing');
     if(!document.querySelector('#olive-sermon-experience')||!document.querySelector('#olive-archive-experience'))errors.push('journey sections missing');
-    for(const card of cards){const rect=card.getBoundingClientRect();if(rect.width<1||rect.height<1)errors.push('invisible speaker '+card.dataset.person);}
+    for(const card of cards){
+      const rect=card.getBoundingClientRect();
+      if(rect.width<1||rect.height<1)errors.push('invisible speaker '+card.dataset.person);
+      const img=card.querySelector('.olive-speaker-card__editorial');
+      if(img){
+        const style=getComputedStyle(img);
+        if(style.objectFit!=='contain')errors.push('poster cropped '+card.dataset.person);
+        if(Math.abs(rect.width/rect.height-.75)>.04)errors.push('poster aspect ratio '+card.dataset.person+': '+(rect.width/rect.height).toFixed(2));
+      }
+    }
+    if(innerWidth<=760){
+      const rail=document.querySelector('.olive-speaker-rail')?.getBoundingClientRect();
+      const hero=feature?.getBoundingClientRect();
+      if(rail&&hero&&rail.top<hero.bottom-3)errors.push('mobile rail overlaps hero');
+    }
     return errors;
    });
    errors.push(...issues);
