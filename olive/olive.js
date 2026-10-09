@@ -29,9 +29,9 @@
   // Do not alter the shared speaker entity registry or image files.
   // Huang Shuhua remains row 2, column 2.
   const editorialOrder = [
-    'david-pawson', 'yu-hong-jie', 'derek-prince',
+    'david-pawson', 'jiang-xiuqin', 'derek-prince',
     'watchman-nee', 'huang-shuhua', 'stephen-tong',
-    'jerry-lai', 'jiang-xiuqin', 'tong-liu',
+    'jerry-lai', 'yu-hong-jie', 'tong-liu',
     'rick-warren', 'kang-lai-chang', 'kou-shao-en'
   ];
   people.sort(([a],[b]) => editorialOrder.indexOf(a)-editorialOrder.indexOf(b));
