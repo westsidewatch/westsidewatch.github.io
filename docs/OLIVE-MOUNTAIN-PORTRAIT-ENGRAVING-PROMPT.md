@@ -1,6 +1,6 @@
-# OLIVE MOUNTAIN · PORTRAIT ENGRAVING SYSTEM · V1.1
+# OLIVE MOUNTAIN · PORTRAIT ENGRAVING SYSTEM · V1.2
 
-Status: Editorial image-generation authority proposal. This document governs artwork prompts, not CSS typography or site layout. Align implementation with Westside Design OS and existing Olive Mountain profile contract.
+Status: Editorial image-generation authority. This document governs artwork prompts, not CSS typography or site layout. Align implementation with Westside Design OS and existing Olive Mountain profile contract.
 
 ## Purpose
 Create a coherent twelve-speaker portrait series: recognizable real people, Gustave Doré-inspired olive-green engravings, living-paper negative space, and individual asymmetrical gold geometry informed by Italian cultural and fashion editorial art direction. David Pawson's existing published image is a series-quality reference, never a composition template.
@@ -68,6 +68,37 @@ All five must pass:
 5. Unique biographical motif and genuinely non-repeated geometric identity.
 
 Reject and regenerate nonconforming artwork; do not hide image failures using CSS overlays. Review against the published David Pawson image and the existing speaker gallery.
+
+## Mono-color editorial print integration (V1.2, adapted)
+
+Upstream reference: [yanliudesign/mono-color-skill](https://github.com/yanliudesign/mono-color-skill) (MIT). Incorporate its *process and composition rules*, not its default palettes, poster text, or stock layouts. **Olive Mountain's fixed palette, authentic identity, Doré-style engraving, and Westside Design OS remain authoritative whenever rules differ.** This is an adaptation, not a claim that the upstream skill has been installed or its Python generator invoked.
+
+### Mandatory pre-generation recipe (per speaker)
+Record and resolve these fields **before** composing; keep stable across retries unless the brief changes:
+- Subject ID and primary authentic photograph; preserve facial identity, anatomy, age, expression, hairstyle, clothing silhouette, and recognizable gesture. Do not silently substitute another preacher. Strip/remove podiums or obstructing props only when requested; reconstruct hands and forearms convincingly.
+- Intent: one restrained, biography-grounded editorial portrait; one meaningful symbol or environment **only**, verified against that speaker's actual education, geography, or ministry. Do not illustrate every life event; reject generic olive trees, airplanes, globes, books, churches, mountains, city skylines unless individually justified.
+- Image role: dominant human engraving, not photographic collage; 3:4 canvas; no embedded text (site typography remains separate CSS).
+- Plates: **Olive Branch #738A5A** carries the entire figure and any representational etched motif, with light/dark achieved only by hatch density and paper knockout. **Dawn Gold #CEBD74** is a minor, strictly separate geometric accent plate; never color skin, suit, hands, hair, or figurative etched motifs gold. **Living Paper #FAF9F5** is an unprinted substrate, not a third ink. No other colors, no black or sepia, no photographic tinted overlays.
+- Print mechanics: fine deliberate burin/wood-engraving parallel and crossing strokes, carefully scaled stipple/halftone, clipped paper highlights, realistic continuous fingers and arms, medium contrast, legible likeness at thumbnail size. Use 0–2 restrained mechanical print imperfections, not accumulated generational texture, registration chaos, generic distress, or fake aging. Always regenerate **from the original reference**, never repeatedly transform prior generated images.
+- Space: **35–45% quiet, visibly unprinted paper** (within mono-color-skill's 25–55% general range); preserve a coherent right/top release zone for responsive CSS. Outer breathing room about 5–9% where useful, without cutting off essential limbs. Negative space is an active compositional shape, not leftover background.
+- Editorial rhythm: one strong event—the subject's expression/gesture—and one supporting asymmetrical gold intervention. Do not add multiple competing decorations. Gold should be a minor, clearly assigned background function rather than arbitrary scatter.
+- Final checks: no text, mockup, frame, logos, fake sponsor, decorative blobs, glossy gradient, centered formula, scrapbook treatment, or color-filtered photograph.
+
+### Twelve-speaker originality firewall (hard gate)
+Treat other published speaker portraits as a **visual grammar**, not a geometry template. Compare with the full existing gallery before rendering. For every new portrait, change **at least four structural variables** from every relevant reference: (1) geometric family/silhouette, (2) major axis or orientation, (3) scale relationship to the subject, (4) spatial position and anchoring, (5) overlap or cutout behavior, (6) distribution of empty paper. Cosmetic changes, rotations, or replacing the icon within the same left-vertical-bars / oversized-semicircle / diagonal-slash framework **do not count**.
+
+No repeated gold half-discs, halo circles, upright gold plates, radiating arcs, or standard diagonal cuts across multiple speakers. Do not automatically place all figures in the identical lower-left slot or repeat the same scale/crop. Each speaker gets a distinct structural recipe and only one personally meaningful motif. If geometry appears similar at thumbnail scale, reject and **redesign the geometric scaffold**, not merely a landmark or texture.
+
+### Final production gate (all mandatory)
+1. Identity corresponds to the requested person and the **original** supplied photo; one person only; no accidental substitutions.
+2. Complete convincing anatomy; requested podium/removable obstruction absent; hands, arms and watch/microphone are not mangled or involuntarily cropped.
+3. Figure and representational motif strictly olive-green engraved; gold only background geometry, paper exposed; no third ink or clothing colors.
+4. Paper silence clearly occupies 35–45%, with a usable contiguous release zone for web type.
+5. Unique **geometry skeleton** confirmed against all other speakers; at least four structural differences, not a palette/content swap.
+6. One verified, specific biographical symbol rather than a collage of generic travel, theological, or church props.
+7. Crisp intentional engraved strokes at full size and identifiable likeness at thumbnail size; do not accept distortion from repeatedly editing renders.
+
+Fail any check → regenerate from the primary photograph with a revised geometry recipe, not from the failed output.
 
 ## Related project authorities
 - `docs/WESTSIDE-COLOR-AUTHORITY.md`
