@@ -181,3 +181,12 @@ Awwwards、Webby Awards、FWA 是**品質參照／案例搜尋來源**，不是�
 **已提交修改：** 在 `hugo.toml` 的 Olive mount 設定 `excludeFiles = ["index.html"]`，保留其他 `olive/` 子頁、JS 和資產，令 `/olive/` 唯一首頁由 Hugo surface 生成；將三層導覽中指向已退出生產首頁的 `/olive/#olive-series` 錯誤錨點改為有效的本頁講道入口；回歸檢查加入 Hugo 唯一路由和舊連結防退化。
 
 **重要未驗收項目：** 需要實際 Hugo build 確認輸出 `public/olive/index.html` 包含 Pawson hero，且 `public/olive/olive.js` 與十二講員子頁仍在；需瀏覽器核實長廊及播放器。舊 `olive/index.html` 保留作未部署的來源資產，不是第二個正式首頁；後續可在完成內容遷移後清理。PR 繼續 Draft。
+
+
+## 16. 沉浸式影片首頁預覽權威（2026-10-09）
+
+- 首頁是 **video-first** 播放場景，不以講員人物海報代替影片預覽。依序載入 YouTube `maxresdefault.jpg` → `hqdefault.jpg` → 已批准的 `/images/olive/{speaker}-editorial.png` 後備。
+- 排除 YouTube 回傳的極小佔位圖；預覽圖與當前影片使用同一個 `featured[index]` 來源。點擊播放才載入 `youtube-nocookie` iframe。
+- `NEXT FEATURE` 同步切換講員、影片名稱、預覽圖、播放器來源；現有第一批為大衛鮑森四段、江秀琴一段、劉彤一段。未經核實不得宣稱所有來源均可嵌入播放。
+- 長廊的十二張已批准人物海報獨立存在，保持原始字形、構圖與比例，不以影片縮圖替換。
+- 尚待瀏覽器實測：每段影片縮圖解析度、嵌入可播放性、手機布局、鍵盤導航、輪換後播放器是否對應、fallback 是否正確。Draft PR #1234 在通過前不得合併。
