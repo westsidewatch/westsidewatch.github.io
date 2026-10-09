@@ -46,6 +46,13 @@
   topics.className='olive-journey-section olive-topic-index';
   topics.id='olive-discourse';
   topics.setAttribute('aria-label','橄欖山論道 · 主題索引');
-  topics.innerHTML='<h2>橄欖山論道</h2><div class="olive-topic-index__links"><a href="/olive/discourse/#scripture">聖經綜覽</a><a href="/olive/discourse/#spiritual-life">靈命成長</a><a href="/olive/discourse/#church">教會與使命</a><a href="/olive/discourse/#discipleship">門徒生活</a></div>';
+  topics.innerHTML='<h2>橄欖山論道</h2><div class="olive-topic-index__links"><a href="#olive-discourse">聖經綜覽</a><a href="#olive-discourse">靈命成長</a><a href="#olive-discourse">教會與使命</a><a href="#olive-discourse">門徒生活</a></div>';
+  // The issue feature is curated editorial content, independent of the twelve-person roster.
+  const issue=theater.querySelector('[data-olive-issue-sermons]');
+  if(issue){
+    const heading=document.createElement('h2');heading.textContent='本期論道';issue.append(heading);
+    const note=document.createElement('p');note.textContent='當期講道由雜誌選題策展，不限於十二位講員。';issue.append(note);
+    const entry=document.createElement('a');entry.href='/journal/';entry.textContent='閱讀當期期刊 ↗';issue.append(entry);
+  }
   root.append(theater,topics);
 })();
