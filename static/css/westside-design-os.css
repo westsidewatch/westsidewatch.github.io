@@ -1,0 +1,596 @@
+/* Westside Design OS — one visual authority for all public surfaces and tools. */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400%3B1,6..96,400&family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400%3B1,6..96,400&family=Noto+Serif+TC:wght@400%3B600&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
+@import url("/css/westside-design-tokens.css");
+/* Standalone pages and iframes: shared fonts and role sizes. */
+:root{--ws-weight-zh-air:200;--ws-weight-zh-standard:400;--ws-weight-zh-anchor:600;
+ --ws-olive-layer-zh-weight:var(--ws-weight-zh-anchor);--ws-olive-speaker-name-weight:var(--ws-weight-zh-air);--ws-olive-folio-weight:400;
+ --ws-type-display-en-sc:"Bodoni Moda SC", "Bodoni Moda", serif;
+ --ws-type-scripture-reference-size:clamp(13px,.9vw + 8px,17px);
+ --ws-type-scripture-reference-tracking:.015em;
+ --ws-type-quote-en-size:clamp(19px,1vw + 13px,27px);
+ --ws-realm-zh-size:clamp(36px,4.2vw,68px);
+ --ws-realm-en-size:clamp(72px,10vw,160px);
+ --ws-subject-zh-size:clamp(25px,2vw,38px);
+ --ws-editorial-label-size:clamp(11px,.85vw,14px);
+ --ws-editorial-label-tracking:.1em;
+ --ws-realm-en-tracking:-.04em;
+ --ws-realm-zh-tracking:.12em;
+ --ws-size-hero:clamp(3rem,7vw + 1rem,9rem);
+ --ws-size-cover:clamp(2.25rem,5vw + .5rem,6rem);
+ --ws-size-h1:clamp(2rem,3.6vw + .5rem,4.5rem);
+ --ws-size-h2:clamp(1.625rem,2.2vw + .5rem,2.75rem);
+ --ws-size-h3:clamp(1.375rem,1.3vw + .5rem,1.875rem);
+ --ws-size-nav:clamp(1rem,.4vw + .875rem,1.1875rem);
+ --ws-size-card:clamp(1.25rem,1vw + .75rem,1.75rem);
+ --ws-size-reading:clamp(1.0625rem,.5vw + 1rem,1.25rem);
+ --ws-size-body:clamp(1rem,.35vw + .875rem,1.125rem);
+ --ws-size-meta:clamp(.8125rem,.2vw + .75rem,.9375rem);
+ --ws-size-control:clamp(1rem,.35vw + .875rem,1.125rem);
+ --ws-size-library-title:var(--ws-size-card);
+ --ws-type-display-en:"Bodoni Moda",serif;
+ --ws-type-display-zh:"Chiron Hei HK WS",sans-serif;
+ --ws-type-reading-zh:"Noto Serif TC",serif;
+ --type-en:var(--ws-type-display-en);
+ --type-zh:var(--ws-type-display-zh);
+ --type-ui:var(--ws-type-display-zh);
+ --type-zh-light:200;
+ --type-zh-regular:400;
+ --type-zh-strong:600;
+}
+
+/* Visual type-scale normalization — cross-surface semantic authority.
+   Surface CSS may own geometry and placement; it must not invent a competing type scale. */
+:root{
+ --ws-type-scale-display-xl:clamp(4.5rem,8vw + 1rem,10rem);
+ --ws-type-scale-display-lg:clamp(3.25rem,5.5vw + .75rem,7rem);
+ --ws-type-scale-display-md:clamp(2.35rem,3.6vw + .65rem,4.75rem);
+ --ws-type-scale-title-lg:clamp(2rem,2.6vw + .65rem,3.75rem);
+ --ws-type-scale-title-md:clamp(1.55rem,1.7vw + .7rem,2.65rem);
+ --ws-type-scale-title-sm:clamp(1.25rem,1vw + .75rem,1.8rem);
+ --ws-type-scale-reading-lg:clamp(1.125rem,.45vw + 1rem,1.35rem);
+ --ws-type-scale-reading:clamp(1rem,.3vw + .94rem,1.18rem);
+ --ws-type-scale-ui:clamp(.875rem,.18vw + .84rem,1rem);
+ --ws-type-scale-meta:clamp(.72rem,.12vw + .7rem,.84rem);
+ --ws-type-scale-micro:clamp(.64rem,.08vw + .62rem,.75rem);
+ --ws-type-leading-display:.9;
+ --ws-type-leading-title:1.12;
+ --ws-type-leading-reading:1.82;
+ --ws-type-leading-ui:1.42;
+ --ws-type-measure-reading:40em;
+ --ws-size-hero:var(--ws-type-scale-display-xl);
+ --ws-size-cover:var(--ws-type-scale-display-lg);
+ --ws-size-h1:var(--ws-type-scale-title-lg);
+ --ws-size-h2:var(--ws-type-scale-title-md);
+ --ws-size-h3:var(--ws-type-scale-title-sm);
+ --ws-size-nav:var(--ws-type-scale-ui);
+ --ws-size-card:var(--ws-type-scale-title-sm);
+ --ws-size-reading:var(--ws-type-scale-reading-lg);
+ --ws-size-body:var(--ws-type-scale-reading);
+ --ws-size-meta:var(--ws-type-scale-meta);
+ --ws-size-control:var(--ws-type-scale-ui);
+ --ws-subject-zh-size:var(--ws-type-scale-title-md);
+ --ws-editorial-label-size:var(--ws-type-scale-meta);
+}
+:where(.ws-type-display-xl,[data-ws-type="display-xl"]){font-size:var(--ws-type-scale-display-xl);line-height:var(--ws-type-leading-display)}
+:where(.ws-type-display-lg,[data-ws-type="display-lg"]){font-size:var(--ws-type-scale-display-lg);line-height:var(--ws-type-leading-display)}
+:where(.ws-type-display-md,[data-ws-type="display-md"]){font-size:var(--ws-type-scale-display-md);line-height:.96}
+:where(.ws-type-title-lg,[data-ws-type="title-lg"]){font-size:var(--ws-type-scale-title-lg);line-height:var(--ws-type-leading-title)}
+:where(.ws-type-title-md,[data-ws-type="title-md"]){font-size:var(--ws-type-scale-title-md);line-height:var(--ws-type-leading-title)}
+:where(.ws-type-title-sm,[data-ws-type="title-sm"]){font-size:var(--ws-type-scale-title-sm);line-height:1.18}
+:where(.ws-type-reading,[data-ws-type="reading"]){font-size:var(--ws-type-scale-reading);line-height:var(--ws-type-leading-reading);max-width:var(--ws-type-measure-reading)}
+:where(.ws-type-meta,[data-ws-type="meta"]){font-size:var(--ws-type-scale-meta);line-height:var(--ws-type-leading-ui)}
+:where(.ws-type-air,[data-ws-weight="air"]){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air)!important;font-synthesis:none}
+:where(.ws-type-standard,[data-ws-weight="standard"]){font-weight:var(--ws-weight-zh-standard)!important;font-synthesis:none}
+:where(.ws-type-anchor,[data-ws-weight="anchor"]){font-weight:var(--ws-weight-zh-anchor)!important;font-synthesis:none}
+
+html{font-synthesis:none}
+
+
+/* Sites family authority: family only; geometry remains owned by each surface. */
+body.home,body.sites-surface{--serif:var(--ws-type-display-en);--zh:var(--ws-type-display-zh);--ww-en:var(--ws-type-display-en);--ww-zh:var(--ws-type-display-zh);}
+body.home :where(h1,h2,h3,h4,.sites-home-nav,.sites-home-entry,.sites-home-section-head,.sites-layer-nav,.sites-layer-wordmark),
+body.sites-surface :where(h1,h2,h3,h4,.sites-layer-nav,.sites-layer-wordmark,[class*="title-en"],[class*="label-en"],[lang^="en"]){font-family:var(--ws-type-display-en)!important;font-synthesis:none;}
+body.home :where([lang^="zh"],.realm__zh),
+body.sites-surface :where([lang^="zh"],.mersi-church,.sites-atlas-prologue){font-family:var(--ws-type-display-zh)!important;font-synthesis:none;}
+body.sites-surface :where(.article-body,.reading-body,.longform,[data-reading="longform"]):lang(zh-Hant){font-family:var(--ws-type-reading-zh)!important;}
+
+/* Editorial semantic roles: preserve source casing, never synthesize small caps. */
+.ws-type-realm-zh{font-family:var(--ws-type-display-zh);font-size:var(--ws-realm-zh-size);font-weight:var(--ws-weight-zh-anchor);letter-spacing:var(--ws-realm-zh-tracking);line-height:1.08}
+.ws-type-realm-en{font-family:var(--ws-type-display-en);font-size:var(--ws-realm-en-size);font-weight:400;letter-spacing:var(--ws-realm-en-tracking);line-height:.9}
+.ws-type-subject-zh{font-family:var(--ws-type-display-zh);font-size:var(--ws-subject-zh-size);font-weight:var(--ws-weight-zh-air);line-height:1.12}
+.ws-type-editorial-label{font-family:var(--ws-type-display-en-sc);font-size:var(--ws-editorial-label-size);font-weight:400;letter-spacing:var(--ws-editorial-label-tracking);font-variant-caps:normal;text-transform:none;font-synthesis:none}
+
+/* Editorial italics: actual italic files, not skewed roman glyphs. */
+.ws-type-italic-en,.ws-scripture-reference,.ws-scripture-reference :where(a,span,em,cite){font-family:var(--ws-type-display-en);font-style:italic;font-weight:400;font-synthesis:none}
+.ws-scripture-reference{font-size:var(--ws-type-scripture-reference-size);letter-spacing:var(--ws-type-scripture-reference-tracking);font-variant-numeric:lining-nums tabular-nums;white-space:normal}
+.ws-scripture-reference :where(sup){font:inherit;vertical-align:super;font-size:.75em}
+.ws-type-quote-en{font-family:var(--ws-type-display-en);font-size:var(--ws-type-quote-en-size);font-style:italic;font-weight:400;line-height:1.42;font-synthesis:none}
+.ws-type-editorial-label-italic{font-family:var(--ws-type-display-en-sc);font-style:italic;font-weight:400;font-synthesis:none}
+
+/* Sitewide semantic weight roles, never bound to a single content category. */
+.ws-type-air{font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air);font-synthesis:none}
+.ws-type-standard{font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-standard);font-synthesis:none}
+.ws-type-anchor{font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-anchor);font-synthesis:none}
+
+/* Westside Chromatic Field — Color Authority
+   Identity × Material × Light = Surface
+   Pages consume semantic roles; raw branch colors are authority inputs, not local themes. */
+:root{
+  /* Foundation */
+  --ws-paper:#faf9f5;--ws-ink:#252525;--ws-night:#102a43;
+  --ws-first-light:#a2872a;--ws-warm-gold:#b79838;--ws-morning-gold:#d2bc69;
+  /* Sacred / landscape anchors */
+  --ws-water:#5b8fa8;--ws-olive:#738a5a;--ws-harvest:#b8944a;--ws-crimson:#a14d57;
+  /* Bible material authority */
+  --ws-papyrus:#eee4c9;--ws-pale-gold:#cebd74;
+  /* Life: Daylight Mauve — provisional chromatic-field anchor, not an arbitrary UI purple */
+  --ws-daylight-mauve:oklch(67% .075 330);
+  /* Default semantic roles */
+  --ws-branch:var(--ws-first-light);--ws-surface:var(--ws-paper);--ws-text:var(--ws-ink);
+  --ws-line:color-mix(in oklab,var(--ws-text) 22%,transparent);
+  --ws-atmosphere:color-mix(in oklab,var(--ws-branch) 8%,var(--ws-surface));
+  --ws-raised:color-mix(in oklab,var(--ws-branch) 4%,var(--ws-surface));
+  --ws-interaction:color-mix(in oklab,var(--ws-branch) 86%,var(--ws-ink));
+  --ws-deep:color-mix(in oklab,var(--ws-branch) 68%,var(--ws-ink));
+  --ws-shadow:color-mix(in oklab,var(--ws-branch) 24%,var(--ws-ink));
+  /* Material / illumination controls */
+  --ws-engraving-opacity:.11;--ws-engraving-blend:multiply;--ws-light-x:72%;--ws-light-y:18%;
+  --ws-light-strength:10%;--ws-light-radius:42%;
+}
+/* Current information architecture → one branch identity. */
+.sites-section-church{--ws-branch:var(--ws-water);--ws-engraving-opacity:.09}
+.sites-section-journal,.sites-section-vol-00{--ws-branch:var(--ws-first-light);--ws-engraving-opacity:.10}
+.section-one,.sites-section-one{--ws-branch:var(--ws-pale-gold);--ws-surface:var(--ws-papyrus);--ws-engraving-opacity:.14}
+.sites-section-olive{--ws-branch:var(--ws-olive);--ws-engraving-opacity:.13}
+.sites-section-dawn-library{--ws-branch:var(--ws-harvest);--ws-engraving-opacity:.12}
+.sites-section-cinema{--ws-branch:var(--ws-crimson);--ws-engraving-opacity:.16;--ws-light-x:76%;--ws-light-y:12%}
+.sites-section-daylight-cafe{--ws-branch:var(--ws-daylight-mauve);--ws-engraving-opacity:.09;--ws-light-x:64%;--ws-light-y:8%}
+
+/* Shared material field. Engraving artwork is supplied by each branch's Dore corpus;
+   this layer owns density/blend/light so pages cannot invent local color effects. */
+.ws-material-field{position:relative;isolation:isolate;background:var(--ws-surface);color:var(--ws-text)}
+.ws-material-field:before,.ws-material-field:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1}
+.ws-material-field:before{background:var(--ws-engraving-image,none) center/cover no-repeat;opacity:var(--ws-engraving-opacity);mix-blend-mode:var(--ws-engraving-blend)}
+.ws-material-field:after{background:radial-gradient(circle at var(--ws-light-x) var(--ws-light-y),color-mix(in oklab,var(--ws-branch) var(--ws-light-strength),white),transparent var(--ws-light-radius));opacity:.72}
+
+/* Semantic consumption */
+.ws-color-atmosphere{background:var(--ws-atmosphere)}
+.ws-color-surface{background:var(--ws-surface);color:var(--ws-text)}
+.ws-color-raised{background:var(--ws-raised)}
+.ws-color-line{border-color:var(--ws-line)}
+.ws-color-identity{color:var(--ws-branch)}
+.ws-color-interaction{color:var(--ws-interaction)}
+.ws-color-deep{color:var(--ws-deep)}
+.ws-color-shadow{color:var(--ws-shadow)}
+
+
+/* Motion changes illumination, never branch identity. */
+[data-ws-light="dawn"]{--ws-light-x:24%;--ws-light-y:6%;--ws-light-strength:12%}
+[data-ws-light="sacred"]{--ws-light-x:50%;--ws-light-y:0%;--ws-light-strength:9%}
+[data-ws-light="scripture"]{--ws-light-x:58%;--ws-light-y:14%;--ws-light-strength:8%}
+[data-ws-light="hillside"]{--ws-light-x:78%;--ws-light-y:20%;--ws-light-strength:8%}
+[data-ws-light="reading"]{--ws-light-x:38%;--ws-light-y:12%;--ws-light-strength:7%}
+[data-ws-light="projection"]{--ws-light-x:50%;--ws-light-y:28%;--ws-light-strength:11%}
+[data-ws-light="daylight"]{--ws-light-x:62%;--ws-light-y:4%;--ws-light-strength:9%}
+
+@media (prefers-reduced-motion:reduce){.ws-material-field:after{transition:none}}
+
+
+/* === Color Operating System v1 ============================================
+   Every branch exposes the same executable roles. Components consume roles,
+   never anchors. The scale is perceptual (OKLab color-mix), so material,
+   engraving and illumination remain inside one chromatic family. */
+:root{
+  --ws-material:color-mix(in oklab,var(--ws-branch) 6%,var(--ws-surface));
+  --ws-structure:color-mix(in oklab,var(--ws-branch) 34%,var(--ws-ink));
+  --ws-identity:var(--ws-branch);
+  --ws-engraving:color-mix(in oklab,var(--ws-branch) 46%,var(--ws-ink));
+  --ws-text-muted:color-mix(in oklab,var(--ws-branch) 12%,var(--ws-ink));
+  --ws-focus:color-mix(in oklab,var(--ws-branch) 82%,var(--ws-ink));
+  --ws-selection:color-mix(in oklab,var(--ws-branch) 24%,var(--ws-paper));
+}
+
+/* Branch material territories. These are executable assignments, not page decoration. */
+.sites-section-church{
+  --ws-material:color-mix(in oklab,var(--ws-water) 7%,white);
+  --ws-engraving:color-mix(in oklab,var(--ws-water) 42%,var(--ws-ink));
+}
+.sites-section-journal,.sites-section-vol-00{
+  --ws-material:color-mix(in oklab,var(--ws-first-light) 7%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-first-light) 48%,var(--ws-ink));
+}
+.section-one,.sites-section-one{
+  --ws-material:color-mix(in oklab,var(--ws-pale-gold) 13%,var(--ws-papyrus));
+  --ws-engraving:color-mix(in oklab,var(--ws-pale-gold) 38%,#4b391a);
+}
+.sites-section-olive{
+  --ws-material:color-mix(in oklab,var(--ws-olive) 9%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-olive) 48%,var(--ws-ink));
+}
+.sites-section-dawn-library{
+  --ws-material:color-mix(in oklab,var(--ws-harvest) 9%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-harvest) 52%,#4b3822);
+}
+.sites-section-cinema{
+  --ws-material:color-mix(in oklab,var(--ws-crimson) 8%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-crimson) 54%,var(--ws-ink));
+}
+.sites-section-daylight-cafe{
+  --ws-material:color-mix(in oklab,var(--ws-daylight-mauve) 8%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-daylight-mauve) 42%,var(--ws-ink));
+}
+
+/* Functional zones */
+[data-ws-zone="atmosphere"]{background:var(--ws-atmosphere);color:var(--ws-text)}
+[data-ws-zone="material"]{background:var(--ws-material);color:var(--ws-text)}
+[data-ws-zone="surface"]{background:var(--ws-surface);color:var(--ws-text)}
+[data-ws-zone="raised"]{background:var(--ws-raised);color:var(--ws-text)}
+[data-ws-zone="identity"]{color:var(--ws-identity)}
+[data-ws-zone="deep"]{background:var(--ws-deep);color:var(--ws-paper)}
+[data-ws-zone="structure"]{border-color:var(--ws-structure)}
+[data-ws-zone="engraving"]{color:var(--ws-engraving)}
+
+/* Shared component behavior */
+.sites-surface :where(a,button,[role="button"]):focus-visible{
+  outline:2px solid var(--ws-focus);outline-offset:3px;
+}
+.sites-surface ::selection{background:var(--ws-selection);color:var(--ws-ink)}
+.sites-surface :where(hr,.ws-rule){border-color:var(--ws-structure)}
+.sites-surface :where(.ws-muted,small){color:var(--ws-text-muted)}
+
+/* Dore linework inherits branch material identity when used as mask/currentColor.
+   Raster engravings remain controlled by opacity/blend in .ws-material-field. */
+.ws-engraving{color:var(--ws-engraving)}
+.ws-engraving :where(svg,path,line,polyline,polygon,circle,ellipse){stroke:currentColor}
+.ws-engraving [fill]:not([fill="none"]){fill:currentColor}
+
+/* Shared site chrome stays neutral; current branch appears as a restrained signal. */
+.sites-surface .sites-layer-header{border-color:color-mix(in oklab,var(--ws-structure) 45%,transparent)}
+.sites-surface .sites-layer-nav a[aria-current="page"],
+.sites-surface .sites-layer-section-nav a[aria-current="page"]{color:var(--ws-identity);text-decoration-color:var(--ws-structure)}
+.sites-surface .sites-layer-footer{border-color:color-mix(in oklab,var(--ws-structure) 48%,transparent)}
+
+
+/* Material density is responsive: preserve information before texture. */
+@media(max-width:760px){
+  :root{--ws-engraving-opacity:.075;--ws-light-strength:7%}
+}
+@media(prefers-contrast:more){
+  :root{--ws-line:color-mix(in oklab,var(--ws-text) 42%,transparent);--ws-text-muted:var(--ws-text)}
+  .sites-surface :where(a,button,[role="button"]):focus-visible{outline-width:3px}
+}
+
+
+/* === Product Color Protocol ==============================================
+   The Color OS is site-wide infrastructure, not a Sites-only theme.
+   Products opt into a family + material + light context and receive the same
+   semantic runtime contract without inheriting a page layout. */
+[data-ws-product],[data-ws-color-family]{
+  --ws-product-surface:var(--ws-surface);
+  --ws-product-text:var(--ws-text);
+  --ws-product-muted:var(--ws-text-muted);
+  --ws-product-line:var(--ws-structure);
+  --ws-product-accent:var(--ws-identity);
+  --ws-product-active:var(--ws-interaction);
+  --ws-product-focus:var(--ws-focus);
+  --ws-product-selection:var(--ws-selection);
+  --ws-product-engraving:var(--ws-engraving);
+  color:var(--ws-product-text);
+}
+
+/* Reusable families for ONE, Dore Folio, Multiwrite, Gate, Reader and future tools. */
+[data-ws-color-family="bible"]{--ws-branch:var(--ws-pale-gold);--ws-surface:var(--ws-papyrus);--ws-engraving-opacity:.14}
+[data-ws-color-family="water"]{--ws-branch:var(--ws-water)}
+[data-ws-color-family="magazine"]{--ws-branch:var(--ws-first-light)}
+[data-ws-color-family="sermon"]{--ws-branch:var(--ws-olive)}
+[data-ws-color-family="book"]{--ws-branch:var(--ws-harvest)}
+[data-ws-color-family="cinema"]{--ws-branch:var(--ws-crimson)}
+[data-ws-color-family="life"]{--ws-branch:var(--ws-daylight-mauve)}
+[data-ws-color-family="neutral"]{--ws-branch:var(--ws-ink);--ws-surface:var(--ws-paper)}
+
+/* Product components consume these aliases; product UI may define geometry,
+   never a competing chromatic system. */
+[data-ws-product] :where(input,textarea,select,button){
+  border-color:var(--ws-product-line);
+  accent-color:var(--ws-product-accent);
+}
+[data-ws-product] :where(input,textarea,select,button,a):focus-visible{
+  outline:2px solid var(--ws-product-focus);outline-offset:2px;
+}
+[data-ws-product] ::selection{background:var(--ws-product-selection);color:var(--ws-ink)}
+[data-ws-product] [aria-current="true"],
+[data-ws-product] [aria-selected="true"],
+[data-ws-product] [aria-pressed="true"]{color:var(--ws-product-active)}
+[data-ws-product] :where(.ws-product-rule,hr){border-color:var(--ws-product-line)}
+[data-ws-product] .ws-product-muted{color:var(--ws-product-muted)}
+[data-ws-product] .ws-product-accent{color:var(--ws-product-accent)}
+[data-ws-product] .ws-product-surface{background:var(--ws-product-surface);color:var(--ws-product-text)}
+
+
+/* === Main Site Color Migration ===========================================
+   First-layer composition now consumes Color OS roles instead of the legacy
+   paper/night/gold mini-theme. The homepage is a convergence surface: branch
+   identity appears as restrained signals while shared material stays neutral. */
+body.home{
+  --paper:var(--ws-surface);
+  --paper-deep:var(--ws-material);
+  --ink:var(--ws-text);
+  --line:var(--ws-line);
+  background:var(--ws-surface);
+  color:var(--ws-text);
+}
+body.home .sites-home-hero{
+  --ws-home-hero-deep:color-mix(in oklab,var(--ws-night) 88%,var(--ws-water));
+  background:var(--ws-home-hero-deep);
+  color:var(--ws-paper);
+}
+body.home .sites-home-film:after{
+  background:linear-gradient(90deg,
+    color-mix(in oklab,var(--ws-home-hero-deep) 88%,transparent),
+    color-mix(in oklab,var(--ws-home-hero-deep) 16%,transparent) 58%,
+    color-mix(in oklab,var(--ws-home-hero-deep) 52%,transparent));
+}
+body.home .sites-home-water{
+  --ws-branch:var(--ws-water);
+  --ws-material:color-mix(in oklab,var(--ws-water) 9%,var(--ws-paper));
+  background:var(--ws-material);
+}
+body.home .sites-home-water .sites-home-section-head{border-color:color-mix(in oklab,var(--ws-water) 32%,transparent)}
+body.home .sites-home-water-item img{filter:saturate(.82) contrast(.96)}
+body.home .sites-home-water-item :where(span,p){color:color-mix(in oklab,var(--ws-water) 38%,var(--ws-ink))}
+
+body.home .sites-home-gather{
+  --ws-branch:var(--ws-first-light);
+  background:color-mix(in oklab,var(--ws-first-light) 3%,var(--ws-paper));
+}
+body.home .sites-home-gather-media i{
+  background:color-mix(in oklab,var(--ws-first-light) 14%,var(--ws-ink));
+  border-color:color-mix(in oklab,var(--ws-first-light) 26%,transparent);
+  box-shadow:0 25px 55px color-mix(in oklab,var(--ws-first-light) 9%,transparent);
+}
+body.home .sites-home-gather-media i img{filter:grayscale(.24) sepia(.10) saturate(.86)}
+body.home .sites-home-gather-copy{border-color:color-mix(in oklab,var(--ws-first-light) 28%,transparent)}
+
+body.home .sites-home-city{
+  --ws-branch:var(--ws-olive);
+  --ws-city-deep:color-mix(in oklab,var(--ws-olive) 42%,var(--ws-night));
+  background:var(--ws-city-deep);
+  color:var(--ws-paper);
+}
+body.home .sites-home-city .sites-home-section-head{border-color:color-mix(in oklab,var(--ws-paper) 24%,transparent)}
+body.home .sites-home-city-grid{background:color-mix(in oklab,var(--ws-olive) 38%,transparent)}
+body.home .sites-home-city-tile{background:color-mix(in oklab,var(--ws-olive) 20%,var(--ws-night))}
+body.home .sites-home-city-tile img{filter:grayscale(.48) saturate(.68) brightness(.58)}
+body.home .sites-home-city-tile:after{
+  background:linear-gradient(180deg,transparent,color-mix(in oklab,var(--ws-city-deep) 88%,transparent));
+}
+body.home .sites-home-city-tile:hover img{filter:grayscale(.08) saturate(.9) brightness(.76)}
+
+body.home .sites-home-closing{
+  --ws-branch:var(--ws-daylight-mauve);
+  background:color-mix(in oklab,var(--ws-daylight-mauve) 5%,var(--ws-paper));
+}
+body.home .sites-home-closing blockquote{color:color-mix(in oklab,var(--ws-daylight-mauve) 18%,var(--ws-ink))}
+body.home .sites-layer-footer{background:var(--ws-surface);border-color:var(--ws-line)}
+
+/* Branch pages receive material before local legacy CSS can turn identity into
+   an unrelated theme. Keep reading surfaces quiet; identity is strongest in
+   rules, current states and small structural signals. */
+.sites-surface:not(.sites-section-cinema){background:var(--ws-surface);color:var(--ws-text)}
+.sites-surface :where(.sites-second-layer,.sites-surface-inner,.sites-church,.sites-church-inner){
+  --ws-local-rule:color-mix(in oklab,var(--ws-structure) 72%,transparent);
+}
+.sites-surface :where(.sites-layer-header,.sites-layer-footer){background:color-mix(in oklab,var(--ws-branch) 2%,var(--ws-paper))}
+.sites-surface .sites-layer-section-nav{border-color:color-mix(in oklab,var(--ws-structure) 58%,transparent)}
+.sites-surface .sites-layer-section-nav>span{color:var(--ws-identity)}
+.sites-surface :where(.sites-layer-nav,.sites-layer-section-nav) a:hover{color:var(--ws-interaction)}
+
+/* Cinema uses the canonical crimson projection family. */
+.sites-section-cinema{
+  --ws-cinema-deep:color-mix(in oklab,var(--ws-crimson) 34%,var(--ws-night));
+  background:var(--ws-cinema-deep);
+}
+.sites-section-cinema :where(.sites-layer-header,.sites-layer-footer){
+  background:color-mix(in oklab,var(--ws-crimson) 10%,var(--ws-paper));
+  color:var(--ws-ink);
+}
+
+
+/* === Branch Surface Migration — seven first-level identities ==============
+   Quiet reading surfaces stay material-led. Identity concentrates in rules,
+   raised cards, current states and branch-specific light rather than floods. */
+.sites-section-church{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-water) 5%,white);
+  --ws-branch-raised:color-mix(in oklab,var(--ws-water) 9%,white);
+  --ws-branch-rule:color-mix(in oklab,var(--ws-water) 34%,transparent);
+}
+.sites-section-journal,.sites-section-vol-00{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-first-light) 4%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-first-light) 9%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-first-light) 36%,transparent);
+}
+.sites-section-olive{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-olive) 5%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-olive) 10%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-olive) 38%,transparent);
+}
+.sites-section-dawn-library{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 5%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-harvest) 10%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-harvest) 38%,transparent);
+}
+.sites-section-cinema{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-crimson) 4%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-crimson) 10%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-crimson) 40%,transparent);
+}
+.sites-section-daylight-cafe{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-daylight-mauve) 5%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-daylight-mauve) 10%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-daylight-mauve) 34%,transparent);
+}
+.sites-surface{
+  --paper:var(--ws-branch-surface,var(--ws-surface));
+  --paper2:var(--ws-branch-raised,var(--ws-material));
+  --ink:var(--ws-text);
+  --line:var(--ws-branch-rule,var(--ws-line));
+  --sites-paper:var(--ws-branch-surface,var(--ws-surface));
+  --sites-ink:var(--ws-text);
+  background:var(--ws-branch-surface,var(--ws-surface))!important;
+}
+.sites-surface :where(.sites-journal-head,.sites-volume-head,.sites-surface-head,.sites-church-intro,
+.sites-journal-current,.sites-journal-routes,.sites-surface-entries,.sites-church-entries,
+.sites-volume-movement,.sites-church-footer){border-color:var(--ws-branch-rule,var(--ws-line))}
+.sites-surface :where(.sites-journal-routes,.sites-surface-entries,.sites-church-entries) a:hover,
+.sites-surface .sites-volume-movement li:hover{background:var(--ws-branch-raised,var(--ws-raised))}
+.sites-surface :where(.sites-journal-current strong,.sites-surface-head h1,.sites-church-intro h1){
+  text-decoration-color:var(--ws-branch-rule,var(--ws-line));
+}
+
+/* LivingWaterWest — white/water-blue/gold, with blue as identity and gold as light. */
+.sites-section-church .sites-layer-header,
+.sites-section-church+.sites-layer-footer{background:color-mix(in oklab,var(--ws-water) 4%,white)}
+.sites-section-church .sites-church-gather{background:var(--ws-branch-surface)}
+.sites-section-church .sites-church-water{
+  background:linear-gradient(115deg,
+    color-mix(in oklab,var(--ws-water) 14%,white) 0%,
+    color-mix(in oklab,var(--ws-water) 5%,white) 64%,white 100%);
+}
+.sites-section-church .sites-church-life{background:color-mix(in oklab,var(--ws-water) 2%,white)}
+.sites-section-church .sites-church-scripture{background:color-mix(in oklab,var(--ws-water) 8%,white)}
+.sites-section-church .sites-church-gather:after{border-color:color-mix(in oklab,var(--ws-water) 30%,transparent)}
+.sites-section-church .sites-church-water:after{
+  background:linear-gradient(90deg,transparent,var(--ws-water),color-mix(in oklab,var(--ws-pale-gold) 55%,var(--ws-water)),transparent)
+}
+
+/* Magazine — First Light is editorial punctuation, never a gold wash. */
+.sites-section-journal .sites-journal-current,
+.sites-section-vol-00 .sites-volume-opening{background:color-mix(in oklab,var(--ws-first-light) 7%,var(--ws-paper))}
+.sites-section-journal :where(.sites-journal-current span,.sites-breadcrumb),
+.sites-section-vol-00 :where(.sites-volume-opening>p,.sites-volume-contents>header>p){color:var(--ws-deep)}
+
+/* Sermon — olive hillside material. */
+.sites-section-olive :where(.sites-surface-head,.sites-surface-entries){border-color:var(--ws-branch-rule)}
+.sites-section-olive .sites-surface-entries a:hover{background:var(--ws-branch-raised)}
+
+/* Book — harvest paper, preserving publication quiet. */
+.sites-section-dawn-library{background:var(--ws-branch-surface)!important}
+.sites-section-dawn-library :where(.sites-layer-header,.sites-layer-footer){background:color-mix(in oklab,var(--ws-harvest) 3%,var(--ws-paper))}
+
+/* Cinema — crimson projection identity; gold literals inherited from old CSS
+   are redirected through --gold to crimson rather than becoming a second voice. */
+.sites-section-cinema{
+  --gold:var(--ws-crimson);
+  --paper:var(--ws-branch-surface);
+  --line:var(--ws-branch-rule);
+}
+.sites-section-cinema :where(.sites-cinema,.cinema-shell,.cinema-archive){accent-color:var(--ws-crimson)}
+.sites-section-cinema :where(a,button,[role="button"]):focus-visible{outline-color:var(--ws-focus)}
+
+/* Life — daylight mauve remains low-chroma and airy. */
+.sites-section-daylight-cafe :where(.sites-surface-head,.sites-surface-entries){border-color:var(--ws-branch-rule)}
+.sites-section-daylight-cafe .sites-surface-entries a:hover{background:var(--ws-branch-raised)}
+
+/* Bible / ONE is a product rather than a Sites surface, but it is one of the
+   seven first-level identities and receives the same complete role contract. */
+[data-ws-product="one"][data-ws-color-family="bible"]{
+  --ws-product-surface:var(--ws-papyrus);
+  --ws-product-accent:var(--ws-pale-gold);
+  --ws-product-line:color-mix(in oklab,var(--ws-pale-gold) 42%,#4b391a);
+  --ws-product-muted:color-mix(in oklab,var(--ws-pale-gold) 18%,var(--ws-ink));
+  background:var(--ws-product-surface);
+  color:var(--ws-product-text);
+}
+[data-ws-product="one"] :where(.card,.panel,.surface,[data-surface]){
+  border-color:var(--ws-product-line);
+}
+[data-ws-product="one"] :where([aria-current="true"],[aria-selected="true"],[aria-pressed="true"]){
+  background:color-mix(in oklab,var(--ws-pale-gold) 14%,var(--ws-papyrus));
+}
+
+
+/* === Final Color Calibration ============================================== */
+:root{--ws-event:var(--ws-interaction);--ws-event-soft:color-mix(in oklab,var(--ws-branch) 14%,var(--ws-surface));--ws-chrome:color-mix(in oklab,var(--ws-branch) 2%,var(--ws-paper))}
+.sites-surface{color-scheme:light;caret-color:var(--ws-interaction)}
+.sites-surface :where(a,button,[role="button"]){text-decoration-color:color-mix(in oklab,var(--ws-identity) 46%,transparent)}
+.sites-surface :where(a,button,[role="button"]):active{color:var(--ws-event)}
+.sites-surface :where(.sites-layer-header,.sites-layer-footer){background:var(--ws-chrome)}
+.sites-surface :where(.sites-layer-nav,.sites-layer-section-nav) a[aria-current="page"]{color:var(--ws-identity);text-decoration-thickness:1px;text-underline-offset:.32em}
+.sites-surface :where(.sites-journal-routes,.sites-surface-entries,.sites-church-entries) a:hover{background:var(--ws-event-soft)}
+body.home .sites-home-hero,body.home .sites-home-city,.sites-section-cinema .ws-dark-surface{--ws-structure:color-mix(in oklab,var(--ws-paper) 30%,transparent);--ws-line:color-mix(in oklab,var(--ws-paper) 24%,transparent)}
+.sites-section-church img{--ws-image-sat:.90}.sites-section-journal img,.sites-section-vol-00 img{--ws-image-sat:.92}.sites-section-olive img{--ws-image-sat:.86}.sites-section-dawn-library img{--ws-image-sat:.88}.sites-section-cinema img{--ws-image-sat:.90}.sites-section-daylight-cafe img{--ws-image-sat:.94}
+.sites-surface img{transition:filter .45s ease}.sites-surface :where(article,a,figure):hover img{filter:saturate(var(--ws-image-sat,1)) contrast(.98)}
+@media(max-width:760px){.sites-section-church{--ws-branch-surface:color-mix(in oklab,var(--ws-water) 3%,white)}.sites-section-journal,.sites-section-vol-00{--ws-branch-surface:color-mix(in oklab,var(--ws-first-light) 2.5%,var(--ws-paper))}.sites-section-olive{--ws-branch-surface:color-mix(in oklab,var(--ws-olive) 3%,var(--ws-paper))}.sites-section-dawn-library{--ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 3%,var(--ws-paper))}.sites-section-daylight-cafe{--ws-branch-surface:color-mix(in oklab,var(--ws-daylight-mauve) 3%,var(--ws-paper))}body.home .sites-home-water{--ws-material:color-mix(in oklab,var(--ws-water) 6%,var(--ws-paper))}body.home .sites-home-gather{background:color-mix(in oklab,var(--ws-first-light) 2%,var(--ws-paper))}body.home .sites-home-closing{background:color-mix(in oklab,var(--ws-daylight-mauve) 3%,var(--ws-paper))}}
+@media(min-width:2560px){.sites-surface{--ws-branch-rule:color-mix(in oklab,var(--ws-branch) 42%,transparent)}.sites-surface .sites-layer-header{border-bottom-color:color-mix(in oklab,var(--ws-structure) 52%,transparent)}}
+@media(prefers-contrast:more){.sites-surface{--ws-branch-rule:color-mix(in oklab,var(--ws-branch) 58%,var(--ws-ink))}.sites-surface :where(.sites-layer-nav,.sites-layer-section-nav) a[aria-current="page"]{text-decoration:underline}}
+@media(prefers-reduced-motion:reduce){.sites-surface img{transition:none}}
+
+
+/* === Chromatic Coverage Pass ==============================================
+   First-layer identity must read at a glance; product internals inherit the
+   same family even when their own legacy shells still paint paper surfaces. */
+body.home .sites-home-realm{background:color-mix(in oklab,var(--realm) 18%,var(--ws-paper))}
+body.home .sites-home-realm:before{background:radial-gradient(circle at 78% 22%,color-mix(in oklab,var(--realm) 34%,transparent),transparent 38%),repeating-radial-gradient(ellipse 92% 58% at 16% 74%,transparent 0 16px,color-mix(in oklab,var(--realm) 13%,transparent) 16px 17px);opacity:.88}
+body.home .sites-home-realm>span,body.home .sites-home-realm b{color:color-mix(in oklab,var(--realm) 72%,var(--ws-ink))}
+body.home .sites-home-realm h2 em{color:color-mix(in oklab,var(--realm) 78%,var(--ws-ink))}
+
+.sites-section-church{--ws-branch-surface:color-mix(in oklab,var(--ws-water) 11%,white);--ws-branch-raised:color-mix(in oklab,var(--ws-water) 18%,white)}
+.sites-section-journal,.sites-section-vol-00{--ws-branch-surface:color-mix(in oklab,var(--ws-first-light) 10%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-first-light) 17%,var(--ws-paper))}
+.sites-section-olive{--ws-branch-surface:color-mix(in oklab,var(--ws-olive) 12%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-olive) 19%,var(--ws-paper))}
+.sites-section-dawn-library{--ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 13%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-harvest) 20%,var(--ws-paper))}
+.sites-section-cinema{--ws-branch-surface:color-mix(in oklab,var(--ws-crimson) 11%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-crimson) 19%,var(--ws-paper))}
+.sites-section-daylight-cafe{--ws-branch-surface:color-mix(in oklab,var(--ws-daylight-mauve) 11%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-daylight-mauve) 18%,var(--ws-paper))}
+
+/* Seal legacy white/paper islands inside first-level Sites pages. */
+.sites-surface :where(main,#main,.section-atlas,.section-atlas__cover,.section-atlas__index,.sites-second-layer,.sites-surface-content,.sites-atlas-prologue){background-color:var(--ws-branch-surface,var(--ws-surface))}
+.sites-surface :where(.atlas-entry,.sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,.sites-church-entries a){background-color:color-mix(in oklab,var(--ws-branch) 7%,var(--ws-branch-surface,var(--ws-surface)))}
+
+/* Dawn Library and Cinema contain product shells with their own historical
+   paper variables; bind those variables to Color OS instead of recoloring
+   individual components one by one. */
+.sites-section-dawn-library{--paper:var(--ws-branch-surface);--paper2:var(--ws-branch-raised);--bg:var(--ws-branch-surface);--background:var(--ws-branch-surface);--cream:var(--ws-branch-surface)}
+.sites-section-dawn-library :where(.sites-dawn-library,.dawn-library,.library-shell,.library-home,.reader-shell,.catalogue,.collection){background-color:var(--ws-branch-surface)!important}
+.sites-section-dawn-library :where(.card,.book-card,.collection-card,.reader-panel,.catalogue-item){background-color:var(--ws-branch-raised)!important}
+.sites-section-cinema :where(.sites-cinema,.cinema-shell,.cinema-archive,main,#main){background-color:var(--ws-branch-surface)}
+
+
+/* === Sole Color Ownership Pass ============================================
+   Branch interiors and their nested product shells consume the same branch
+   surface tokens as their first-layer realm. No child may restore white/paper. */
+.sites-surface{background-color:var(--ws-branch-surface,var(--ws-surface))}
+.sites-surface :where(main,#main,section,article,aside,header,footer,nav,div){
+ --paper:var(--ws-branch-surface,var(--ws-surface));
+ --paper2:var(--ws-branch-raised,var(--ws-material));
+ --bg:var(--ws-branch-surface,var(--ws-surface));
+ --background:var(--ws-branch-surface,var(--ws-surface));
+ --cream:var(--ws-branch-surface,var(--ws-surface))
+}
+.sites-surface :where(.sites-second-layer,.sites-surface-content,.section-atlas__cover,.section-atlas__index,.sites-atlas-prologue,.sites-church,.sites-church-intro,.sites-church-gather,.sites-church-water,.sites-church-life,.sites-church-scripture,.sites-dawn-library,.sites-cinema,.library-shell,.library-home,.reader-shell,.catalogue,.collection){
+ background-color:transparent!important;background-image:none!important
+}
+.sites-surface :where(.atlas-entry,.sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,.sites-church-entries a,.card,.book-card,.collection-card,.reader-panel,.catalogue-item){
+ background-color:color-mix(in oklab,var(--ws-branch) 7%,var(--ws-branch-surface,var(--ws-surface)))!important
+}
+
+
+/* Regression seal: Sites pages always retain document scrolling. */
+html:has(body.sites-surface),body.sites-surface{overflow-x:hidden;overflow-y:auto!important;height:auto!important;min-height:100%}
+body.sites-surface>main{overflow:visible!important;min-height:100svh}
+
+/* Product carriers: parent surface remains visibly chromatic around isolated products. */
+.sites-section-dawn-library,.sites-section-cinema{background-color:var(--ws-branch-surface)!important}
+.sites-section-dawn-library .sites-dawn-library,.sites-section-cinema .sites-cinema{background-color:transparent!important}
+.sites-section-dawn-library .sites-product-frame{background:#ead7a8}
+
+:root{--ws-design-os:"westside-v1";--ws-design-scope:"global"}
+[data-ws-scope]{--ws-design-scope:"local"}
+[data-ws-scope="church"]{--ws-scope-identity:var(--ws-water)}
+[data-ws-scope="journal"]{--ws-scope-identity:var(--ws-first-light)}
+[data-ws-scope="one"]{--ws-scope-identity:var(--ws-pale-gold)}
+[data-ws-scope="olive"]{--ws-scope-identity:var(--ws-olive)}
+[data-ws-scope="dawn-library"]{--ws-scope-identity:var(--ws-harvest)}
+[data-ws-scope="cinema"]{--ws-scope-identity:var(--ws-crimson)}
+[data-ws-scope="daylight-cafe"]{--ws-scope-identity:var(--ws-daylight-mauve)}
+[data-ws-scope="search"],[data-ws-scope="tool"]{--ws-scope-identity:var(--ws-ink)}
+[data-ws-scope]{--ws-identity:var(--ws-scope-identity,var(--ws-branch))}

@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "default": "global",
+  "rule": "global tokens are defaults; a surface/tool may override only tokens in its own scope. Changing a scoped token must never mutate :root.",
+  "scopes": {
+    "global": {
+      "selector": ":root",
+      "inherits": null
+    },
+    "home": {
+      "selector": "[data-ws-scope=\"home\"]",
+      "inherits": "global"
+    },
+    "church": {
+      "selector": "[data-ws-scope=\"church\"]",
+      "inherits": "global"
+    },
+    "journal": {
+      "selector": "[data-ws-scope=\"journal\"]",
+      "inherits": "global"
+    },
+    "one": {
+      "selector": "[data-ws-scope=\"one\"]",
+      "inherits": "global"
+    },
+    "olive": {
+      "selector": "[data-ws-scope=\"olive\"]",
+      "inherits": "global"
+    },
+    "dawn-library": {
+      "selector": "[data-ws-scope=\"dawn-library\"]",
+      "inherits": "global"
+    },
+    "cinema": {
+      "selector": "[data-ws-scope=\"cinema\"]",
+      "inherits": "global"
+    },
+    "daylight-cafe": {
+      "selector": "[data-ws-scope=\"daylight-cafe\"]",
+      "inherits": "global"
+    },
+    "search": {
+      "selector": "[data-ws-scope=\"search\"]",
+      "inherits": "global"
+    },
+    "tool": {
+      "selector": "[data-ws-scope=\"tool\"]",
+      "inherits": "global"
+    }
+  }
+}
