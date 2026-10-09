@@ -163,3 +163,13 @@ Awwwards、Webby Awards、FWA 是**品質參照／案例搜尋來源**，不是�
 - `static/css/olive-ui-scale.css` 新增海報圖像適配：原圖 `object-fit:contain`、不拉伸；海報圖片載入成功後隱藏原 rail 的重複文字；保留按鈕、講員路由、鍵盤焦點與原有動畫。
 - 原 Hugo surface 已載入 adapter；原大衛鮑森主視覺、影片互動和講員 rail 不替換。
 - **限制**：目前僅完成源碼接線，尚未取得瀏覽器視覺截圖、CI PASS 或部署結果；長廊尺寸／裁切效果需視覺驗收，且 The Sermons／The Archive 仍未完成一體化。
+
+## 十四、完整階段｜單一三層導航與資產整合（2026-10-09）
+
+本輪已實際提交：
+- `static/js/olive-journey.js`：以既有大衛鮑森主視覺與橫向長廊為 The Speakers，向同一 Hugo surface 添加 The Sermons 與 The Archive 兩個內容區塊和三層錨點導航；保留既有講員按鈕路由。
+- `static/css/olive-ui-scale.css`：統一三層的 spacing、字體 token、色彩 token、桌面與手機佈局；講道劇場目前為 16:9 的導覽／說明面板，**不是第二個影片播放器**，播放仍由原主視覺承擔。
+- `layouts/olive/surface-carrier.html`：引入 journey adapter，不重建原主視覺。
+- `scripts/check_olive_scale_authority.py`：增加原主視覺、三層接線、十二張海報 manifest 的靜態檢查。
+
+**仍未完成／不可宣稱：** 這輪尚未執行 CI 與瀏覽器視覺驗收；Hugo surface 和獨立 `/olive/` 的實際部署路由尚未統一，原獨立頁 CSS 去重也尚未完成；The Archive 目前是既有系列索引入口而非新建完整館藏索引；The Sermons 尚未有獨立集數播放器與播放可用性驗證。PR #1234 繼續保持 Draft，禁止在上述缺口未核實前宣稱上線。
