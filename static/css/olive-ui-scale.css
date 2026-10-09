@@ -1,0 +1,126 @@
+/* Olive Mountain / one shared outer-layout scale authority.
+   Applies to both /olive/ and Hugo Olive surface; never touches poster inner layers.
+   The sitewide typography/color authority remains unchanged. */
+:root {
+  --ws-olive-ui-gutter: clamp(16px, 3.6vw, 64px);
+  --ws-olive-ui-gap: clamp(12px, 1.35vw, 22px);
+  --ws-olive-ui-canvas: 1440px;
+  --ws-olive-ui-rail-card: clamp(240px, 19vw, 340px);
+  --ws-olive-ui-rail-gap: clamp(10px, 1vw, 16px);
+}
+/* Independent Olive route: spacing only, not poster geometry or typography. */
+body:has(#olive-speakers) main {
+  max-width: var(--ws-olive-ui-canvas);
+  padding-inline: var(--ws-olive-ui-gutter);
+}
+body:has(#olive-speakers) .speaker-grid { gap: var(--ws-olive-ui-gap); }
+body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter); }
+/* Hugo editorial surface: same scale source, independent local layout. */
+.olive-archive .olive-speaker-rail { gap: var(--ws-olive-ui-rail-gap); }
+.olive-archive .olive-speaker-card { flex-basis: var(--ws-olive-ui-rail-card); }
+@media (max-width: 760px) {
+  :root {
+    --ws-olive-ui-gutter: clamp(16px, 4.5vw, 28px);
+    --ws-olive-ui-gap: 12px;
+    --ws-olive-ui-rail-card: 58vw;
+  }
+}
+@media (max-width: 480px) {
+  :root { --ws-olive-ui-rail-card: min(72vw, 320px); }
+}
+/* Keep the horizontal rail usable with touch, keyboard and reduced motion. */
+.olive-archive .olive-speaker-rail { -webkit-overflow-scrolling: touch; }
+@media (prefers-reduced-motion: reduce) {
+  .olive-archive .olive-speaker-rail { scroll-behavior: auto; }
+}
+
+/* Existing approved posters are immutable images in the original horizontal rail.
+   Do not recreate their lettering, crop them or change their inner geometry. */
+.olive-archive .olive-speaker-card:has(> .olive-speaker-card__editorial) {
+  padding: 0;
+  aspect-ratio: 3 / 4;
+  height: auto;
+  min-height: 0;
+  align-self: stretch;
+}
+.olive-archive .olive-speaker-card__editorial {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"] > span,
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"] > strong,
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"] > small {
+  /* The approved image already contains its editorial composition. */
+  opacity: 0;
+}
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"]:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* One editorial journey: three sections, not three competing page designs. */
+.olive-archive .olive-journey-nav{display:flex;flex-wrap:wrap;gap:clamp(12px,3vw,48px);padding:18px var(--ws-olive-ui-gutter);border-block:1px solid currentColor}
+.olive-archive .olive-journey-nav a{display:flex;gap:.65em;align-items:baseline;color:inherit;text-decoration:none;font:400 clamp(12px,1vw,16px)/1.4 var(--ws-type-display-en)}
+.olive-archive .olive-journey-nav a small{font-family:var(--ws-type-display-zh);font-size:.85em;font-weight:var(--ws-olive-layer-zh-weight)}
+.olive-archive .olive-journey-nav a:hover,.olive-archive .olive-journey-nav a:focus-visible{text-decoration:underline;text-underline-offset:.35em}
+.olive-archive .olive-journey-section{padding:clamp(54px,8vw,124px) var(--ws-olive-ui-gutter);border-top:1px solid currentColor;scroll-margin-top:5rem}
+.olive-archive .olive-journey-heading{display:flex;align-items:baseline;justify-content:space-between;gap:20px;border-bottom:1px solid currentColor;margin-bottom:clamp(20px,3vw,46px)}
+.olive-archive .olive-journey-heading p,.olive-archive .olive-journey-aside>p,.olive-archive .olive-journey-screen>p:first-child{font:400 12px/1.4 var(--ws-type-display-en);letter-spacing:.14em}
+.olive-archive .olive-journey-heading h2{font:var(--ws-olive-layer-zh-weight) clamp(32px,5vw,76px)/1.2 var(--ws-type-display-zh);margin:.2em 0}
+.olive-archive .olive-journey-theater-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(230px,1fr);gap:var(--ws-olive-ui-gap)}
+.olive-archive .olive-journey-screen{aspect-ratio:16/9;background:var(--ws-olive);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(18px,3vw,48px);box-sizing:border-box}
+.olive-archive .olive-journey-screen h3{font:400 clamp(32px,4vw,68px)/1.1 var(--ws-type-display-zh);margin:.3em 0}
+.olive-archive .olive-journey-screen a{color:inherit;text-underline-offset:.3em}
+.olive-archive .olive-journey-aside{padding:clamp(12px,2vw,30px);border:1px solid currentColor}
+.olive-archive .olive-journey-speaker-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.olive-archive .olive-journey-speaker-links a{padding:10px 0;border-bottom:1px solid currentColor;color:inherit;text-decoration:none;font-family:var(--ws-type-display-zh)}
+.olive-archive .olive-journey-archive-link{display:inline-block;padding:16px 0;border-bottom:1px solid currentColor;color:inherit;text-decoration:none}
+@media(max-width:760px){.olive-archive .olive-journey-theater-grid{grid-template-columns:1fr}.olive-archive .olive-journey-nav{gap:14px}.olive-archive .olive-journey-heading{display:block}.olive-archive .olive-journey-screen{min-height:250px}}
+
+/* Mobile layout authority: approved editorial images stay uncropped at 3:4. */
+@media (max-width: 760px) and (orientation: portrait) {
+ .olive-archive .olive-home-stage{min-height:760px;height:max(760px,calc(100svh - var(--site-header-height,42px)));margin-right:0}
+ .olive-archive .olive-feature{inset:0 0 258px 0}
+ .olive-archive .olive-brand{left:var(--ws-olive-ui-gutter);top:26px}
+ .olive-archive .olive-brand h1{font-size:clamp(56px,15vw,86px)}
+ .olive-archive .olive-feature__caption{left:var(--ws-olive-ui-gutter);bottom:26px}
+ .olive-archive .olive-feature__caption h2{font-size:clamp(34px,10vw,54px)}
+ .olive-archive .olive-speaker-rail{left:var(--ws-olive-ui-gutter);right:0;bottom:12px;height:236px;padding:0 var(--ws-olive-ui-gutter) 0 0;align-items:stretch}
+ .olive-archive .olive-speaker-card:has(> .olive-speaker-card__editorial){flex:0 0 174px;width:174px;height:232px;aspect-ratio:3/4}
+}
+@media (max-width:900px) and (orientation:landscape) and (max-height:500px) {
+ .olive-archive .olive-home-stage{min-height:420px;height:100svh;margin-right:0}
+ .olive-archive .olive-feature{inset:0 0 150px 0}
+ .olive-archive .olive-brand{top:16px;left:20px}
+ .olive-archive .olive-brand h1{font-size:clamp(42px,7vw,68px)}
+ .olive-archive .olive-feature__caption{left:20px;bottom:14px}
+ .olive-archive .olive-feature__caption h2{font-size:32px}
+ .olive-archive .olive-speaker-rail{left:20px;right:0;bottom:8px;height:136px;padding:0 20px 0 0;align-items:stretch}
+ .olive-archive .olive-speaker-card:has(> .olive-speaker-card__editorial){flex:0 0 96px;width:96px;height:128px;aspect-ratio:3/4}
+}
+
+/* Keep the centered video play control above mobile editorial navigation. */
+@media (max-width:760px) {
+ .olive-archive .olive-feature__play{z-index:12;top:34%}
+ .olive-archive .olive-feature__caption{z-index:5;max-width:calc(100% - 2 * var(--ws-olive-ui-gutter))}
+ .olive-archive .olive-feature__caption [data-feature-prev],
+ .olive-archive .olive-feature__caption [data-feature-next]{position:relative;z-index:6}
+}
+
+/* Poster geometry must follow the available rail height, not a viewport-width card token.
+   This overrides the legacy flex-basis while keeping every source image unmodified. */
+@media (min-width:761px) {
+ .olive-archive .olive-speaker-card:has(> .olive-speaker-card__editorial){
+  flex:0 0 auto;
+  width:auto;
+  height:100%;
+  aspect-ratio:3/4;
+  box-sizing:border-box;
+ }
+}

@@ -42,6 +42,9 @@ disableKinds = ["taxonomy", "term"]
   [[module.mounts]]
     source = "olive"
     target = "static/olive"
+    # Hugo content/olive/_index.md + layouts/olive/surface-carrier.html
+    # is the sole /olive/ homepage. Preserve every other Olive asset/route.
+    excludeFiles = ["index.html"]
   [[module.mounts]]
     source = "cinema"
     target = "static/cinema"
