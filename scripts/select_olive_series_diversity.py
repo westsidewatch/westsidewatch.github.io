@@ -2,6 +2,7 @@
 """Series-level selection for Olive Mountain; use existing Doré candidate engine."""
 import importlib.util
 import json
+from olive_gold_geometry import enrich
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,4 +54,4 @@ def select():
 
 if __name__ == "__main__":
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(select(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(enrich(select()), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
