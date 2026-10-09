@@ -1,10 +1,8 @@
 /* Westside Design OS — one visual authority for all public surfaces and tools. */
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400%3B1,6..96,400&family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400%3B1,6..96,400&family=Noto+Serif+TC:wght@400%3B600&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
 @import url("/css/westside-design-tokens.css");
-/* Standalone pages and iframes: shared fonts and role sizes.
-   Keep independent from Hugo templates; no homepage composition rules. */
-1,6..96,400&family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Noto+Serif+TC:wght@400;600&display=swap');
+/* Standalone pages and iframes: shared fonts and role sizes. */
 :root{--ws-weight-zh-air:200;--ws-weight-zh-standard:400;--ws-weight-zh-anchor:600;
  --ws-olive-layer-zh-weight:var(--ws-weight-zh-anchor);--ws-olive-speaker-name-weight:var(--ws-weight-zh-air);--ws-olive-folio-weight:400;
  --ws-type-display-en-sc:"Bodoni Moda SC", "Bodoni Moda", serif;
