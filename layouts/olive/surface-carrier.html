@@ -290,27 +290,35 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       else seenSpeakers.add(key);
     });
     const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
-    let last=performance.now(), boost=0, raf=0, direction=1;
+    let raf=0,last=0,paused=false,offset=0,cycleWidth=0;
+    const originals=[...speakerRail.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')];
+    // One seamless visual loop: duplicate artwork only, never duplicate interactive speakers.
+    const track=document.createElement('div');track.className='olive-speaker-rail__track';
+    originals.forEach(card=>track.append(card));
+    const copies=originals.map(card=>{
+      const copy=card.cloneNode(true);copy.classList.add('olive-speaker-card--clone');
+      copy.removeAttribute('data-ws-designable');copy.setAttribute('aria-hidden','true');
+      copy.tabIndex=-1;copy.inert=true;track.append(copy);return copy;
+    });
+    speakerRail.append(track);
+    const measure=()=>{cycleWidth=copies[0]?.offsetLeft-originals[0]?.offsetLeft||0;};
+    const observer=new ResizeObserver(measure);observer.observe(speakerRail);
+    measure();
     const tick=now=>{
-      const dt=Math.min(40,now-last);last=now;
-      if(!reduceMotion.matches){
-        const max=Math.max(0,speakerRail.scrollWidth-speakerRail.clientWidth);
-        const next=speakerRail.scrollLeft+direction*dt*.018+boost;
-        if(next>=max){speakerRail.scrollLeft=max;direction=-1;boost=0;}
-        else if(next<=0){speakerRail.scrollLeft=0;direction=1;boost=0;}
-        else speakerRail.scrollLeft=next;
-        boost*=.88;
+      const dt=last?Math.min(50,now-last):0;last=now;
+      if(!reduceMotion.matches&&!paused&&cycleWidth>0){
+        offset=(offset+dt*.045)%cycleWidth;
+        track.style.transform='translate3d('+(-offset)+'px,0,0)';
       }
       raf=requestAnimationFrame(tick);
     };
     raf=requestAnimationFrame(tick);
-    speakerRail.addEventListener('wheel',e=>{
-      if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
-        e.preventDefault();
-        boost+=Math.max(-18,Math.min(18,e.deltaY*.11));
-      }
-    },{passive:false});
-    window.addEventListener('pagehide',()=>cancelAnimationFrame(raf),{once:true});
+    speakerRail.addEventListener('pointerenter',()=>{paused=true;});
+    speakerRail.addEventListener('pointerleave',()=>{paused=false;});
+    speakerRail.addEventListener('focusin',()=>{paused=true;});
+    speakerRail.addEventListener('focusout',()=>{paused=false;});
+    reduceMotion.addEventListener?.('change',()=>{if(reduceMotion.matches){offset=0;track.style.transform='none';}});
+    window.addEventListener('pagehide',()=>{cancelAnimationFrame(raf);observer.disconnect();},{once:true});
   }
   document.querySelectorAll('a.series-chip[href*="topic="]').forEach(link=>{
     link.addEventListener('click',e=>{
