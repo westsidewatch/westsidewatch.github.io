@@ -438,3 +438,11 @@ body:has(.olive-archive .olive-home-stage) .olive-archive{
  .olive-archive .olive-home-stage{width:calc(100vw - 24px)!important;height:calc(100svh - 24px)!important;margin-left:calc(50% - 50vw + 12px)!important;min-height:560px}
  .olive-archive .olive-home-stage .olive-feature__caption{left:22px;width:calc(100% - 44px);bottom:calc(clamp(260px,40svh,410px) + 16px)}
 }
+
+/* Use the realm palette for the cinematic surround, not generic black. */
+.olive-archive[data-ws-color-family="sermon"] .olive-home-stage{
+ background:var(--ws-realm-frame,var(--ws-olive-frame-deep,var(--ws-olive)))!important;
+}
+.olive-archive[data-ws-color-family="sermon"] .olive-home-stage .olive-feature__media{
+ background:var(--ws-realm-frame,var(--ws-olive-frame-deep,var(--ws-olive)));
+}
