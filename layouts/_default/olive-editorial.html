@@ -108,7 +108,7 @@ function youtubeId(value){
     let id=null;
     if(['www.youtube.com','youtube.com','m.youtube.com','www.youtube-nocookie.com'].includes(u.hostname)){
       if(u.pathname==='/watch')id=u.searchParams.get('v');
-      else if(/^\\/(embed|shorts|live)\\//.test(u.pathname))id=u.pathname.split('/')[2];
+      else if(['embed','shorts','live'].includes(u.pathname.split('/')[1]))id=u.pathname.split('/')[2];
     }else if(u.hostname==='youtu.be')id=u.pathname.slice(1);
     return /^[A-Za-z0-9_-]{11}$/.test(id||'')?id:null;
   }catch{return null}
