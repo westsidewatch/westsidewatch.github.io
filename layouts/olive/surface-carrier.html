@@ -38,17 +38,7 @@
       <button class="olive-speaker-card dore-magazine-card" data-dore-family="portrait-inset" type="button" data-person="于宏潔"><span>11</span><strong>于宏潔</strong><small>講道</small></button>
       <button class="olive-speaker-card dore-magazine-card" data-dore-family="typographic-no-portrait" type="button" data-person="黃淑華"><span>12</span><strong>黃淑華</strong><small>講道</small></button>
 
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="negative-space" aria-hidden="true" tabindex="-1" type="button" data-person="江秀琴"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="asymmetric-split" aria-hidden="true" tabindex="-1" type="button" data-person="賴若瀚"><span>03</span><strong>賴若瀚</strong><small>十分釋經</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="portrait-inset" aria-hidden="true" tabindex="-1" type="button" data-person="劉彤"><span>04</span><strong>劉彤</strong><small>信仰的傳承</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="extreme-crop" aria-hidden="true" tabindex="-1" type="button" data-person="葉光明"><span>05</span><strong>葉光明</strong><small>中文事工</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="full-bleed" aria-hidden="true" tabindex="-1" type="button" data-person="倪柝聲"><span>06</span><strong>倪柝聲</strong><small>講道與出版</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="typographic-no-portrait" aria-hidden="true" tabindex="-1" type="button" data-person="康來昌"><span>07</span><strong>康來昌</strong><small>中文講道</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="asymmetric-split" aria-hidden="true" tabindex="-1" type="button" data-person="唐崇榮"><span>08</span><strong>唐崇榮</strong><small>中文講道</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="negative-space" aria-hidden="true" tabindex="-1" type="button" data-person="寇紹恩"><span>09</span><strong>寇紹恩</strong><small>系列信息</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="extreme-crop" aria-hidden="true" tabindex="-1" type="button" data-person="華理克"><span>10</span><strong>華理克</strong><small>中文講道</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="portrait-inset" aria-hidden="true" tabindex="-1" type="button" data-person="于宏潔"><span>11</span><strong>于宏潔</strong><small>講道</small></button>
-      <button class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="typographic-no-portrait" aria-hidden="true" tabindex="-1" type="button" data-person="黃淑華"><span>12</span><strong>黃淑華</strong><small>講道</small></button>    </div>
+    </div>
   </section>
 </article>
 
@@ -270,21 +260,18 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   const speakerRail=document.querySelector('.olive-speaker-rail');
   if(speakerRail){
     const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
-    let last=performance.now(), boost=0, raf=0;
-    const halfWidth=()=>speakerRail.scrollWidth/2;
-    const normalize=()=>{
-      const half=halfWidth();
-      if(half>0 && speakerRail.scrollLeft>=half) speakerRail.scrollLeft-=half;
-      else if(speakerRail.scrollLeft<0) speakerRail.scrollLeft+=half;
-    };
+    let last=performance.now(), boost=0, raf=0, direction=1;
     const tick=now=>{
-      const dt=Math.min(40,now-last); last=now;
+      const dt=Math.min(40,now-last);last=now;
       if(!reduceMotion.matches){
-        speakerRail.scrollLeft+=(0.018*dt)+boost;
+        const max=Math.max(0,speakerRail.scrollWidth-speakerRail.clientWidth);
+        const next=speakerRail.scrollLeft+direction*dt*.018+boost;
+        if(next>=max){speakerRail.scrollLeft=max;direction=-1;boost=0;}
+        else if(next<=0){speakerRail.scrollLeft=0;direction=1;boost=0;}
+        else speakerRail.scrollLeft=next;
         boost*=.88;
-        normalize();
       }
-      raf=requestAnimationFrame(tick);
+    raf=requestAnimationFrame(tick);
     };
     raf=requestAnimationFrame(tick);
     speakerRail.addEventListener('wheel',e=>{
@@ -293,7 +280,6 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
         boost+=Math.max(-18,Math.min(18,e.deltaY*.11));
       }
     },{passive:false});
-    speakerRail.addEventListener('scroll',normalize,{passive:true});
     window.addEventListener('pagehide',()=>cancelAnimationFrame(raf),{once:true});
   }
   document.querySelectorAll('a.series-chip[href*="topic="]').forEach(link=>{
