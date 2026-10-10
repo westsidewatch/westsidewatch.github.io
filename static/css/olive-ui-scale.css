@@ -305,3 +305,8 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
  display:block;width:100%;height:auto;font-family:var(--ws-type-display-zh);
  font-size:clamp(13px,1.2vw,20px);font-weight:100;font-synthesis:none;line-height:1.3;
 }
+
+/* Adullam is the visible editorial title of the twelve-speaker gallery. */
+.olive-archive .olive-adullam-heading{margin:0 0 clamp(28px,4vw,64px);display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.olive-archive .olive-adullam-heading__en{font-family:"Bodoni Moda",var(--ws-type-display-en),serif;font-size:clamp(38px,6.5vw,112px);font-weight:400;font-synthesis:none;line-height:.96;letter-spacing:-.035em}
+.olive-archive .olive-adullam-heading__zh{margin:0;font-family:var(--ws-type-display-zh);font-size:clamp(23px,3vw,48px);font-weight:100;font-synthesis:none;line-height:1.25;letter-spacing:.04em}
