@@ -911,3 +911,35 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
 @media(max-width:760px){
  [data-ws-first-look] [data-ws-first-look-meta]{flex-wrap:wrap}
 }
+
+/* Gospel identity: a quiet, accessible scripture scroll shared by First Looks.
+   The strip is in normal flow, never positioned over subtitles or book text. */
+.ws-scripture-scroll{
+ --ws-scripture-speed:48s;
+ display:block;position:relative;overflow:hidden;
+ padding:clamp(12px,1.5vw,20px) 0;
+ color:var(--ws-realm-ink,var(--ws-text));
+ background:var(--ws-realm-frame,var(--ws-surface));
+ border-block:1px solid var(--ws-realm-border,var(--ws-line));
+ font-family:var(--ws-type-display-zh);font-synthesis:none;
+}
+.ws-scripture-scroll__track{
+ display:flex;align-items:center;width:max-content;
+ gap:clamp(40px,5vw,100px);
+ animation:ws-scripture-travel var(--ws-scripture-speed) linear infinite;
+}
+.ws-scripture-scroll__text{
+ white-space:nowrap;font-weight:300;
+ font-size:clamp(14px,1.3vw,21px);letter-spacing:.055em;
+}
+.ws-scripture-scroll__reference{
+ white-space:nowrap;opacity:.68;font-size:var(--ws-type-scale-meta);
+}
+.ws-scripture-scroll:hover .ws-scripture-scroll__track,
+.ws-scripture-scroll:focus-within .ws-scripture-scroll__track{animation-play-state:paused}
+@keyframes ws-scripture-travel{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){
+ .ws-scripture-scroll__track{animation:none;max-width:100%;width:auto;flex-wrap:wrap;justify-content:center}
+ .ws-scripture-scroll__text{white-space:normal;text-align:center}
+ .ws-scripture-scroll [aria-hidden="true"]{display:none}
+}
