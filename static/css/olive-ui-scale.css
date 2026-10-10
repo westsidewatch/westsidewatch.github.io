@@ -279,3 +279,6 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
  font-size:clamp(20px,2.7vw,44px)!important;line-height:1.12!important;
  letter-spacing:-.04em!important
 }
+
+/* Keep featured navigation clickable above the centered play affordance at narrow widths. */
+.olive-archive .olive-feature__next{position:relative;z-index:24}
