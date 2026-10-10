@@ -330,13 +330,8 @@ body.sites-cinema .ws-bilingual-heading__zh{font-family:var(--ws-type-display-zh
 
 /* Shared Westside immersive video homepage contract. Cinema only supplies its
    own content; framing and palette are inherited from the global Design OS. */
-.sites-cinema [data-ws-immersive-video].sites-cinema-hall{
- width:calc(100% - 2 * var(--ws-immersive-inset));
- min-height:calc(100svh - 2 * var(--ws-immersive-inset));
- margin:var(--ws-immersive-inset) auto;
- background:var(--ws-immersive-frame)!important;
- border-radius:var(--ws-immersive-radius);
-}
+/* Stage size, inset and radius are owned by Westside Design OS.
+   Cinema owns its screening content only. */
 .sites-cinema [data-ws-immersive-video] .sites-cinema-screen{
  background:var(--ws-immersive-frame);
 }
