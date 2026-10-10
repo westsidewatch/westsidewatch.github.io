@@ -857,3 +857,23 @@ body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-lay
 body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus-visible{
  outline-color:var(--ws-realm-focus);
 }
+
+/* First-layer authority: neutral Watch/Witness/Walk/Worship transitions and
+   seven branded First Look surfaces inherit the same realm color tokens.
+   The Candidate01 geometry, morph and scroll runtime are not styled here. */
+:root{
+ --ws-first-layer-paper:var(--ws-paper);
+ --ws-first-layer-ink:var(--ws-ink);
+ --ws-first-layer-engraving:color-mix(in oklab,var(--ws-water) 24%,transparent);
+ --ws-first-look-depth:color-mix(in oklab,var(--ws-realm-base) 15%,var(--ws-paper));
+ --ws-first-look-ink:var(--ws-text);
+ --ws-first-look-line:color-mix(in oklab,var(--ws-realm-base) 38%,transparent);
+ --ws-first-look-light:color-mix(in oklab,var(--ws-paper) 58%,transparent);
+}
+.sites-home-realm[data-realm=church]{--ws-realm-base:var(--ws-water)}
+.sites-home-realm[data-realm=magazine]{--ws-realm-base:var(--ws-first-light)}
+.sites-home-realm[data-realm=bible]{--ws-realm-base:var(--ws-pale-gold)}
+.sites-home-realm[data-realm=sermon]{--ws-realm-base:var(--ws-olive)}
+.sites-home-realm[data-realm=book]{--ws-realm-base:var(--ws-harvest)}
+.sites-home-realm[data-realm=cinema]{--ws-realm-base:var(--ws-crimson)}
+.sites-home-realm[data-realm=life]{--ws-realm-base:var(--ws-daylight-mauve)}
