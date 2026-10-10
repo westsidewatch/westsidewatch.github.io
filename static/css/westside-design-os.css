@@ -742,3 +742,24 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
 }
 [data-ws-color-family="sermon"]{--ws-realm-frame:var(--ws-olive-frame-deep)}
 [data-ws-color-family="cinema"]{--ws-realm-frame:var(--ws-cinema-frame-deep)}
+
+/* Shared immersive video homepage contract (all realms, one OS authority).
+   Opt in with data-ws-immersive-video on a homepage stage. The surrounding
+   color comes from the existing realm palette; media controls stay native. */
+:root{
+ --ws-immersive-inset:clamp(14px,2.6vw,52px);
+ --ws-immersive-radius:clamp(14px,1.6vw,28px);
+ --ws-immersive-frame:var(--ws-night);
+}
+[data-ws-color-family="sermon"]{--ws-immersive-frame:var(--ws-olive-frame-deep)}
+[data-ws-color-family="cinema"]{--ws-immersive-frame:var(--ws-cinema-frame-deep)}
+[data-ws-immersive-video]{
+ box-sizing:border-box;
+ border-radius:var(--ws-immersive-radius);
+ background:var(--ws-immersive-frame);
+ overflow:hidden;isolation:isolate;
+}
+[data-ws-immersive-video] [data-ws-immersive-media]{
+ background:var(--ws-immersive-frame);
+}
+@media(max-width:760px){:root{--ws-immersive-inset:12px}}
