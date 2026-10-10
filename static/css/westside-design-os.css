@@ -733,3 +733,12 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
  --type-zh:var(--ws-type-display-zh);
  --type-ui:var(--ws-type-display-zh);
 }
+
+/* Cinematic frame palette authority: derive both dark frames from their existing
+   realm colors, not independent black/gold or page-specific hardcoded values. */
+:root{
+ --ws-olive-frame-deep:color-mix(in oklab,var(--ws-olive) 30%,var(--ws-night));
+ --ws-cinema-frame-deep:color-mix(in oklab,var(--ws-crimson) 34%,var(--ws-night));
+}
+[data-ws-color-family="sermon"]{--ws-realm-frame:var(--ws-olive-frame-deep)}
+[data-ws-color-family="cinema"]{--ws-realm-frame:var(--ws-cinema-frame-deep)}
