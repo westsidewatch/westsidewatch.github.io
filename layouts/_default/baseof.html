@@ -16,6 +16,7 @@
     {{ if $sitesSurface }}<link rel="stylesheet" href="{{ "css/dawn-motion-grammar.css" | relURL }}?v=20261004-dawn-motion-grammar"><link rel="stylesheet" href="{{ "css/sites-composition-authority.css" | relURL }}?v=20261005-candidate01-exact-motion"><link rel="stylesheet" href="{{ "css/sites-layer-restoration.css" | relURL }}?v=20261005-candidate01-exact-motion">{{ if eq .Section "church" }}<link rel="stylesheet" href="{{ "css/church-mersi-motion.css" | relURL }}?v=20261005-candidate01-exact-motion">{{ end }}{{ end }}
     <link rel="stylesheet" href="{{ "css/westside-engraving-authority.css" | relURL }}?v=20261004-engraving-authority-r1">
     <link rel="stylesheet" href="{{ "css/westside-typography-enforcement.css" | relURL }}?v=20261010-first-layer-type-r1">
+    <script src="{{ "js/westside-scripture-daily.js" | relURL }}" defer></script>
   </head>
   <body data-ws-design-system="westside-v1" data-ws-scope="{{ if .IsHome }}home{{ else if eq .RelPermalink "/dore/search/" }}search{{ else if .Section }}{{ .Section }}{{ else }}tool{{ end }}"{{ if eq .Section "one" }} data-ws-product="one" data-ws-color-family="bible"{{ else if eq .RelPermalink "/dore/search/" }} data-ws-product="search" data-ws-color-family="neutral"{{ end }} class="{{ if .IsHome }}home sites-home-isolated{{ else if $sitesSurface }}sites-surface sites-section-{{ .Section }}{{ else }}publication-shell{{ if .Section }} section-{{ .Section }}{{ else if eq .RelPermalink "/about/" }} section-about{{ end }}{{ end }}">
     <a class="skip-link" href="#main">Skip to content</a>

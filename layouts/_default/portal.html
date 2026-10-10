@@ -1,13 +1,13 @@
 {{ define "main" }}
   <article class="sites-surface" data-surface="{{ .Section }}">
-    <header class="sites-surface-head ws-surface-heading">
+    <header class="sites-surface-head ws-surface-heading" data-ws-first-look="shared" data-ws-first-look-mode="editorial" data-ws-first-look-stage>
       <p class="sites-surface-kicker">Westside Watch</p>
       {{ with .Params.subtitle }}<p class="sites-surface-english-title ws-surface-heading__en" lang="en">{{ . }}</p>{{ end }}
       <h1 class="sites-surface-chinese-title ws-surface-heading__zh" lang="zh-Hant">{{ .Params.display_title | default .Title }}</h1>
       {{ with .Description }}<p>{{ . }}</p>{{ end }}
     </header>
 
-    {{ with .Content }}<div class="sites-surface-content">{{ . }}</div>{{ end }}
+    {{ with .Content }}<div class="sites-surface-content" id="surface-content">{{ . }}</div>{{ end }}
 
     {{ if .Pages }}
       <nav class="sites-surface-entries" aria-label="{{ .Title }} entries">

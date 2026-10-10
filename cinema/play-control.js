@@ -26,7 +26,13 @@
     const control=event.target.closest?.(selector);
     if(control){event.preventDefault();trigger(control);return;}
     const poster=event.target.closest?.('.living-poster__poster');
-    if(poster){event.preventDefault();const controlInPoster=poster.querySelector(selector);if(controlInPoster)trigger(controlInPoster);}
+    if(poster){
+      // The poster's own keyboard/click handler already delegates to watch.
+      // Do not intercept it here: synthetic clicks on the nested control can double-trigger playback.
+      if(poster.dataset.previewReady==='true')return;
+      const controlInPoster=poster.querySelector(selector);
+      if(controlInPoster){event.preventDefault();trigger(controlInPoster);}
+    }
   });
   document.addEventListener('keydown',event=>{
     const control=event.target.closest?.(selector);
