@@ -979,17 +979,17 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
  :root{--ws-first-look-frame-gutter:clamp(8px,2.2vw,16px)}
 }
 
-/* One still stage, real audiovisual adapters (Olive + Cinema).
-   Preserve native player, caption and poster geometry; OS owns the frame. */
+/* First Look audiovisual geometry: one static inset frame, moving content within.
+   A single outer stage boundary, not a second pseudo-frame over video controls. */
 [data-ws-first-look-stage][data-ws-immersive-video]{
- --ws-first-look-stage-inset:var(--ws-immersive-inset,var(--ws-first-look-frame-gutter));
- --ws-first-look-stage-radius:var(--ws-immersive-radius,var(--ws-first-look-frame-radius));
- position:relative;isolation:isolate;
+ box-sizing:border-box;
+ width:calc(100% - 2 * var(--ws-first-look-inset));
+ min-height:calc(100svh - 2 * var(--ws-first-look-inset));
+ margin:var(--ws-first-look-inset) auto;
+ border-radius:var(--ws-first-look-radius);
+ background:var(--ws-immersive-frame);
+ overflow:hidden;
+ isolation:isolate;
 }
-[data-ws-first-look-stage][data-ws-immersive-video]::before{
- content:"";position:absolute;pointer-events:none;z-index:0;
- inset:var(--ws-first-look-stage-inset);
- border:1px solid color-mix(in oklab,var(--ws-realm-base,var(--ws-identity)) 34%,transparent);
- border-radius:var(--ws-first-look-stage-radius);
- box-shadow:inset 0 1px 0 color-mix(in oklab,var(--ws-paper) 24%,transparent);
-}
+/* Only the stage frame is static. Native player, poster and caption layers
+   retain their existing z-index and interaction order. */
