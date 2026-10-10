@@ -310,3 +310,11 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
 .olive-archive .olive-adullam-heading{margin:0 0 clamp(28px,4vw,64px);display:flex;flex-direction:column;align-items:flex-start;gap:4px}
 .olive-archive .olive-adullam-heading__en{font-family:"Bodoni Moda",var(--ws-type-display-en),serif;font-size:clamp(38px,6.5vw,112px);font-weight:400;font-synthesis:none;line-height:.96;letter-spacing:-.035em}
 .olive-archive .olive-adullam-heading__zh{margin:0;font-family:var(--ws-type-display-zh);font-size:clamp(23px,3vw,48px);font-weight:100;font-synthesis:none;line-height:1.25;letter-spacing:.04em}
+
+/* Continuous speaker rail: one moving track, twelve originals plus inert visual copies. */
+.olive-archive .olive-speaker-rail{overflow:hidden!important;display:block!important;scroll-behavior:auto!important;}
+.olive-archive .olive-speaker-rail__track{display:flex;align-items:stretch;gap:var(--ws-olive-ui-rail-gap);width:max-content;height:100%;will-change:transform;}
+.olive-archive .olive-speaker-rail__track>.olive-speaker-card{flex:0 0 var(--ws-olive-ui-rail-card);height:100%;min-height:0;}
+.olive-archive .olive-speaker-rail__track>.olive-speaker-card--clone{pointer-events:none!important;}
+@media(max-width:760px){.olive-archive .olive-speaker-rail__track>.olive-speaker-card{flex-basis:174px;}}
+@media(prefers-reduced-motion:reduce){.olive-archive .olive-speaker-rail{overflow-x:auto!important}.olive-archive .olive-speaker-rail__track{will-change:auto;}}
