@@ -318,3 +318,38 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
 .olive-archive .olive-speaker-rail__track>.olive-speaker-card--clone{pointer-events:none!important;}
 @media(max-width:760px){.olive-archive .olive-speaker-rail__track>.olive-speaker-card{flex-basis:174px;}}
 @media(prefers-reduced-motion:reduce){.olive-archive .olive-speaker-rail{overflow-x:auto!important}.olive-archive .olive-speaker-rail__track{will-change:auto;}}
+
+/* Aparelho-inspired hero composition: portrait corridor is a major visual plane,
+   never a tiny subtitle-obscuring thumbnail strip. Playback gives the image back. */
+.olive-archive .olive-home-stage{--olive-corridor-height:clamp(300px,47vh,570px);}
+.olive-archive .olive-home-stage .olive-speaker-rail{
+ left:0!important;right:0!important;bottom:0!important;
+ height:var(--olive-corridor-height)!important;padding:18px 0 0!important;
+ z-index:12;transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1),visibility .45s;
+}
+.olive-archive .olive-home-stage .olive-speaker-rail__track{
+ height:100%;align-items:flex-end;gap:clamp(12px,1.5vw,26px);
+}
+.olive-archive .olive-home-stage .olive-speaker-rail__track>.olive-speaker-card{
+ flex:0 0 clamp(210px,21vw,380px)!important;height:calc(100% - 20px)!important;
+ transform:translateY(0);transition:transform .32s cubic-bezier(.2,.8,.2,1),filter .32s ease;
+}
+@media(hover:hover){
+ .olive-archive .olive-home-stage .olive-speaker-rail__track>.olive-speaker-card:not(.olive-speaker-card--clone):hover{
+ transform:translateY(-16px);filter:brightness(1.07);
+ }
+}
+.olive-archive .olive-home-stage:has(.olive-feature.is-playing) .olive-speaker-rail{
+ opacity:0;visibility:hidden;transform:translateY(105%);pointer-events:none;
+}
+.olive-archive .olive-home-stage:has(.olive-feature.is-playing) .olive-feature__caption{
+ opacity:0;visibility:hidden;pointer-events:none;
+}
+@media(max-width:760px){
+ .olive-archive .olive-home-stage{--olive-corridor-height:clamp(250px,40svh,390px)}
+ .olive-archive .olive-home-stage .olive-speaker-rail__track>.olive-speaker-card{flex-basis:clamp(168px,49vw,270px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-archive .olive-home-stage .olive-speaker-rail,
+ .olive-archive .olive-home-stage .olive-speaker-rail__track>.olive-speaker-card{transition:none!important}
+}
