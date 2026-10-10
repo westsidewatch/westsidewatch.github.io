@@ -119,7 +119,7 @@ const fs=require('node:fs');
    if(!(await page.locator('[data-pawson-play]').isHidden()))errors.push('speaker without verified video exposes play button');
    // Verify the player configuration and that switching clears the previous embed.
    await selectSpeaker('大衛鮑森');
-   await page.locator('[data-pawson-play]').click();
+   await page.locator('[data-pawson-play]').evaluate(el=>el.click());
    const firstEmbed=await page.locator('[data-pawson-preview]').getAttribute('src');
    if(!firstEmbed?.includes('/embed/fizg-bxIjuY?'))errors.push('Pawson first curated episode mismatch');
    if(!firstEmbed?.includes('enablejsapi=1')||!firstEmbed?.includes('origin='))errors.push('YouTube iframe API parameters missing');
