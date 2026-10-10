@@ -124,3 +124,167 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
   box-sizing:border-box;
  }
 }
+
+/* Olive editorial revision: one large, legible poster rail OVER the hero media.
+   Keep the active video's speaker/title separate from the other speaker posters. */
+.olive-archive .olive-home-stage .olive-feature{inset:0}
+.olive-archive .olive-home-stage .olive-speaker-rail{
+ left:clamp(390px,34vw,630px);
+ right:clamp(16px,2vw,36px);
+ bottom:clamp(16px,2.5vh,32px);
+ height:clamp(240px,32vh,350px);
+ padding:0 24px 0 0;
+ align-items:stretch;
+ z-index:8;
+}
+.olive-archive .olive-home-stage .olive-speaker-card:has(> .olive-speaker-card__editorial){
+ flex:0 0 auto;width:auto;height:100%;aspect-ratio:3/4;box-sizing:border-box;
+}
+.olive-archive .olive-home-stage .olive-feature__caption{
+ left:clamp(28px,3vw,56px);
+ bottom:clamp(30px,5vh,64px);
+ max-width:clamp(310px,29vw,500px);
+ z-index:6;
+}
+.olive-archive .olive-home-stage .olive-feature__caption h2{font-size:clamp(36px,3.7vw,64px)}
+.olive-archive .olive-gallery-intro{font-family:var(--ws-type-display-zh);font-size:clamp(15px,1.35vw,20px);margin:0 0 clamp(22px,3vw,42px)}
+.olive-archive .olive-poster-gallery{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,32px);
+}
+.olive-archive .olive-gallery-card{
+ display:block;aspect-ratio:3/4;overflow:hidden;position:relative;
+ background:color-mix(in oklab,var(--ws-olive) 12%,#fff);color:var(--ws-text);
+ text-decoration:none;border:1px solid color-mix(in oklab,var(--ws-text) 14%,transparent);
+}
+.olive-archive .olive-gallery-card img{display:block;width:100%;height:100%;object-fit:contain}
+.olive-archive .olive-gallery-card span{display:grid;place-items:center;height:100%;font-family:var(--ws-type-display-zh);font-size:clamp(22px,3vw,40px)}
+.olive-archive .olive-gallery-card:focus-visible{outline:3px solid currentColor;outline-offset:4px}
+@media(max-width:1100px){
+ .olive-archive .olive-home-stage .olive-speaker-rail{left:38%;height:clamp(200px,27vh,280px)}
+ .olive-archive .olive-poster-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:760px) and (orientation:portrait){
+ .olive-archive .olive-home-stage{min-height:760px}
+ .olive-archive .olive-home-stage .olive-speaker-rail{
+  left:var(--ws-olive-ui-gutter);right:0;bottom:12px;height:236px;
+  padding:0 var(--ws-olive-ui-gutter) 0 0;
+ }
+ .olive-archive .olive-home-stage .olive-speaker-card:has(> .olive-speaker-card__editorial){height:232px;width:174px;flex:0 0 174px}
+ .olive-archive .olive-home-stage .olive-feature__caption{bottom:270px;max-width:calc(100% - 2 * var(--ws-olive-ui-gutter))}
+ .olive-archive .olive-home-stage .olive-feature__caption h2{font-size:clamp(32px,9vw,48px)}
+ .olive-archive .olive-poster-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:900px) and (orientation:landscape) and (max-height:500px){
+ .olive-archive .olive-home-stage .olive-speaker-rail{left:40%;right:0;bottom:8px;height:136px}
+ .olive-archive .olive-home-stage .olive-speaker-card:has(> .olive-speaker-card__editorial){height:128px;width:96px;flex:0 0 96px}
+ .olive-archive .olive-home-stage .olive-feature__caption{bottom:22px;max-width:36%}
+ .olive-archive .olive-home-stage .olive-feature__caption h2{font-size:28px}
+}
+
+/* Channel selection is local to the home hero; rail remains a flowing horizontal carousel. */
+.olive-archive .olive-feature__play[hidden]{display:none!important}
+.olive-archive .olive-feature__channel{
+ display:flex;flex-wrap:wrap;gap:8px;max-width:100%;
+ margin-top:8px;max-height:90px;overflow-y:auto;
+}
+.olive-archive .olive-feature__episode,
+.olive-archive .olive-feature__channel a{
+ font:400 clamp(11px,.9vw,14px)/1.35 var(--ws-type-display-zh);
+ color:inherit;background:rgba(20,25,18,.45);border:1px solid rgba(255,255,255,.55);
+ padding:7px 10px;text-decoration:none;cursor:pointer;
+}
+.olive-archive .olive-speaker-card[aria-pressed="true"]{outline:2px solid var(--ws-text);outline-offset:-2px}
+@media(max-width:760px){
+ .olive-archive .olive-feature__channel{max-height:62px}
+ .olive-archive .olive-feature__episode{padding:5px 7px}
+}
+
+/* Restored bilingual identities: Bodoni Moda English above ultra-light Chinese.
+   Live text stays independent of the immutable artwork and never stretches. */
+.olive-archive .olive-speaker-card .olive-speaker-card__identity{
+ position:absolute;inset:auto 0 0;z-index:3;display:flex;flex-direction:column;
+ justify-content:flex-end;align-items:flex-start;gap:3px;
+ padding:clamp(10px,1.1vw,20px);box-sizing:border-box;
+ color:#fff;text-align:left;pointer-events:none;
+ background:linear-gradient(to top,rgba(12,17,12,.88),rgba(12,17,12,.4) 58%,transparent);
+ opacity:1!important;height:auto;width:100%;
+}
+.olive-archive .olive-speaker-card .olive-speaker-card__identity-en{
+ position:static!important;display:block!important;width:auto!important;height:auto!important;
+ font-family:"Bodoni Moda",var(--ws-type-display-en),serif!important;
+ font-weight:400!important;font-synthesis:none;letter-spacing:-.035em;
+ font-size:clamp(19px,2vw,36px);line-height:.98;opacity:1!important;
+ white-space:normal;overflow-wrap:normal;
+}
+.olive-archive .olive-speaker-card .olive-speaker-card__identity-zh{
+ position:static!important;display:block!important;width:auto!important;height:auto!important;
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:var(--ws-olive-layer-zh-weight,100)!important;
+ font-size:clamp(13px,1.15vw,19px);line-height:1.3;opacity:1!important;
+}
+.olive-archive .olive-speaker-card[data-editorial-asset="ready"]>.olive-speaker-card__identity{opacity:1!important}
+@media(max-width:760px){
+ .olive-archive .olive-speaker-card .olive-speaker-card__identity{padding:9px}
+ .olive-archive .olive-speaker-card .olive-speaker-card__identity-en{font-size:clamp(17px,5vw,25px)}
+ .olive-archive .olive-speaker-card .olive-speaker-card__identity-zh{font-size:13px}
+}
+
+/* Olive section identity follows the existing site typography authority.
+   Only an actual section/brand title receives the heaviest Chinese sans weight.
+   Do not apply this to speaker names, bilingual poster typography or prose. */
+.olive-archive,.olive-editorial{
+ --ws-olive-brand-zh-weight:900;
+ --ws-olive-brand-zh-family:var(--ws-type-sans-zh,var(--ws-type-body-zh,"Noto Sans TC",sans-serif));
+ --ws-olive-brand-en-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+}
+.olive-archive .olive-section-brand,
+.olive-archive .olive-topic-index>h2,
+.olive-editorial .olive-section-brand{
+ font-family:var(--ws-olive-brand-zh-family)!important;
+ font-weight:var(--ws-olive-brand-zh-weight)!important;
+ font-synthesis:none;
+ font-size:clamp(32px,4.6vw,74px);
+ line-height:1.08;
+ letter-spacing:-.055em;
+}
+.olive-archive .olive-topic-index__links{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:var(--ws-olive-ui-gap);margin-top:clamp(24px,4vw,56px)
+}
+.olive-archive .olive-topic-index__links a{
+ color:inherit;text-decoration:none;border-top:1px solid currentColor;
+ padding:16px 0;font-family:var(--ws-type-display-zh);font-weight:var(--ws-olive-layer-zh-weight,200);
+ font-size:clamp(16px,1.7vw,24px)
+}
+.olive-archive .olive-issue-sermons{
+ margin-top:clamp(44px,6vw,96px);padding-top:clamp(24px,3vw,48px);
+ border-top:1px solid currentColor
+}
+.olive-archive .olive-issue-sermons h2{
+ font-family:var(--ws-olive-brand-zh-family);font-weight:700;font-synthesis:none;
+ font-size:clamp(22px,2.8vw,42px);letter-spacing:-.035em
+}
+.olive-archive .olive-issue-sermons p,.olive-archive .olive-issue-sermons a{
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-olive-layer-zh-weight,200)
+}
+@media(max-width:760px){
+ .olive-archive .olive-topic-index__links{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* Brand is the only 900-weight Chinese label on the hero.
+   Keep the existing English/Chinese editorial speaker treatment intact. */
+.olive-archive .olive-brand>.olive-section-brand{
+ display:block;font-family:var(--ws-olive-brand-zh-family)!important;
+ font-weight:900!important;font-synthesis:none!important;
+ font-size:clamp(20px,2.7vw,44px)!important;line-height:1.12!important;
+ letter-spacing:-.04em!important
+}
+
+/* Keep featured navigation clickable above the centered play affordance at narrow widths. */
+.olive-archive .olive-feature__next{position:relative;z-index:24}
+
+/* Narrow-screen featured controls must not share the play button hit target. */
+@media (max-width: 480px){
+ .olive-archive .olive-feature__play{top:22%;}
+ .olive-archive .olive-feature__next{isolation:isolate;}
+}
