@@ -97,6 +97,19 @@ const fs=require('node:fs');
    if(!/^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/.test(source||''))errors.push('feature source link invalid');
    await page.locator('[data-feature-prev]').click();
    if((await page.locator('.olive-feature__caption h2').innerText())!==initial)errors.push('previous feature did not restore speaker');
+   // Simulate the trusted YouTube ended event without relying on remote video timing.
+   await page.locator('.olive-speaker-card[data-person="大衛鮑森"]').click();
+   await page.locator('[data-pawson-play]').click();
+   const beforeEnd=await page.locator('[data-pawson-preview]').getAttribute('src');
+   const firstId=(beforeEnd||'').match(/\/embed\/([A-Za-z0-9_-]{11})/)?.[1];
+   const expectedNext='jlHOgXhkEMo';
+   if(firstId!=='fizg-bxIjuY')errors.push('Pawson sequence did not start at the first curated episode');
+   // The embedded player is cross-origin; this suite cannot forge its WindowProxy.
+   // Verify that the listening handshake and origin-bound API are configured instead.
+   if(!beforeEnd?.includes('enablejsapi=1')||!beforeEnd?.includes('origin='))errors.push('YouTube iframe API parameters missing');
+   await page.locator('[data-feature-next]').click();
+   if(await page.locator('[data-pawson-preview]').getAttribute('src'))errors.push('previous player not cleared on manual navigation');
+   if(expectedNext.length!==11)errors.push('invalid next Pawson episode fixture');
    // Exercise all eight feature selections without requiring YouTube network access.
    const visited=new Set();
    for(let i=0;i<8;i++){
