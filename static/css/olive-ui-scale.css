@@ -353,3 +353,50 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
  .olive-archive .olive-home-stage .olive-speaker-rail,
  .olive-archive .olive-home-stage .olive-speaker-rail__track>.olive-speaker-card{transition:none!important}
 }
+
+/* Olive home composition v2: edge-to-edge editorial stage, no inset page frame.
+   Preview has a dedicated large corridor; playback owns the entire viewport. */
+body:has(.olive-archive .olive-home-stage) .olive-archive{
+ --olive-hero-bleed:var(--ui-gutter,0px);
+}
+.olive-archive .olive-home-stage{
+ width:100vw!important;max-width:none!important;
+ margin-left:calc(50% - 50vw)!important;margin-right:0!important;
+ height:100svh!important;min-height:580px;
+ isolation:isolate;background:var(--ws-olive);
+}
+.olive-archive .olive-home-stage .olive-feature{
+ inset:0!important;
+}
+.olive-archive .olive-home-stage .olive-feature__media{
+ inset:0!important;
+}
+.olive-archive .olive-home-stage .olive-brand{
+ z-index:15;left:clamp(24px,3vw,56px);top:clamp(24px,3vw,52px);
+ pointer-events:none;
+}
+.olive-archive .olive-home-stage .olive-speaker-rail{
+ bottom:0!important;height:clamp(310px,48svh,570px)!important;
+ background:linear-gradient(to top,rgba(12,19,14,.26),transparent 80%);
+}
+.olive-archive .olive-home-stage .olive-speaker-rail__track>.olive-speaker-card{
+ flex-basis:clamp(230px,22vw,400px)!important;
+}
+.olive-archive .olive-home-stage .olive-feature__caption{
+ bottom:calc(clamp(310px,48svh,570px) + 20px);
+ z-index:5;pointer-events:none;
+}
+.olive-archive .olive-home-stage:has(.olive-feature.is-playing) .olive-feature__media{
+ z-index:10;
+}
+.olive-archive .olive-home-stage:has(.olive-feature.is-playing) .olive-brand{
+ opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s;
+}
+.olive-archive .olive-home-stage:has(.olive-feature.is-playing) .olive-feature__youtube{
+ width:100%!important;height:100%!important;
+}
+@media(max-width:760px){
+ .olive-archive .olive-home-stage .olive-speaker-rail{height:clamp(260px,40svh,410px)!important}
+ .olive-archive .olive-home-stage .olive-feature__caption{bottom:calc(clamp(260px,40svh,410px) + 12px)}
+ .olive-archive .olive-home-stage .olive-speaker-rail__track>.olive-speaker-card{flex-basis:clamp(185px,53vw,290px)!important}
+}
