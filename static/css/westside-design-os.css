@@ -30,7 +30,7 @@
  --ws-size-library-title:var(--ws-size-card);
  --ws-type-display-en:"Bodoni Moda",serif;
  --ws-type-display-zh:"Chiron Hei HK WS",sans-serif;
- --ws-type-reading-zh:"Noto Serif TC",serif;
+ --ws-type-reading-zh:var(--ws-type-display-zh);
  --type-en:var(--ws-type-display-en);
  --type-zh:var(--ws-type-display-zh);
  --type-ui:var(--ws-type-display-zh);
@@ -720,4 +720,16 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
  font-weight:inherit;
  font-style:var(--ws-first-layer-accent-style);
  font-synthesis:none;
+}
+
+/* Unified Chinese font authority: every Chinese semantic role resolves to the
+   one approved sans family. No Song/Kai fallback for display, reading or UI. */
+:root{
+ --ws-type-display-zh:"Chiron Hei HK WS","Noto Sans TC",sans-serif;
+ --ws-type-reading-zh:var(--ws-type-display-zh);
+ --ws-type-sans-zh:var(--ws-type-display-zh);
+ --ws-type-body-zh:var(--ws-type-display-zh);
+ --ws-type-zh:var(--ws-type-display-zh);
+ --type-zh:var(--ws-type-display-zh);
+ --type-ui:var(--ws-type-display-zh);
 }
