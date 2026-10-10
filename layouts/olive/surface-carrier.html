@@ -24,7 +24,7 @@
       </div>
     </article>
 
-    <div class="olive-speaker-rail" aria-label="十二講員" tabindex="0">
+    <div class="olive-speaker-rail" data-ws-one-look-selector aria-label="十二講員" tabindex="0">
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="portrait-inset" type="button" data-person="大衛鮑森"><span>01</span><strong>大衛鮑森</strong><small>系列講座</small></button>
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="negative-space" type="button" data-person="江秀琴"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="asymmetric-split" type="button" data-person="賴若瀚"><span>03</span><strong>賴若瀚</strong><small>十分釋經</small></button>
@@ -280,9 +280,10 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     card.dataset.doreSurface='speaker-card';
     card.dataset.doreSpeaker=slug;
     card.dataset.doreIdentitySynthesis='false';
-    card.addEventListener('click',()=>selectSpeaker(card.dataset.person));
+    card.dataset.wsOneLookCard=card.dataset.person;
   });
 
+  document.querySelector('.olive-speaker-rail')?.addEventListener('ws-one-look:select',event=>selectSpeaker(event.detail.id));
   const speakerRail=document.querySelector('.olive-speaker-rail');
   if(speakerRail){
     // Defensive cleanup for stale cached markup: each speaker appears once.
@@ -300,7 +301,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     originals.forEach(card=>track.append(card));
     const copies=originals.map(card=>{
       const copy=card.cloneNode(true);copy.classList.add('olive-speaker-card--clone');
-      copy.removeAttribute('data-ws-designable');copy.setAttribute('aria-hidden','true');
+      copy.removeAttribute('data-ws-designable');copy.setAttribute('data-ws-one-look-clone','');copy.setAttribute('aria-hidden','true');
       copy.tabIndex=-1;copy.inert=true;track.append(copy);return copy;
     });
     speakerRail.append(track);
@@ -317,7 +318,9 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     };
     raf=requestAnimationFrame(tick);
     speakerRail.addEventListener('pointerenter',()=>{paused=true;});
+    speakerRail.addEventListener('mouseenter',()=>{paused=true;});
     speakerRail.addEventListener('pointerleave',()=>{paused=false;});
+    speakerRail.addEventListener('mouseleave',()=>{paused=false;});
     speakerRail.addEventListener('focusin',()=>{paused=true;});
     speakerRail.addEventListener('focusout',()=>{paused=false;});
     reduceMotion.addEventListener?.('change',()=>{if(reduceMotion.matches){offset=0;track.style.transform='none';}});
