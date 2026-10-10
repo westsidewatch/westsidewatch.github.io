@@ -15,7 +15,8 @@
   theater.setAttribute('aria-label','亞杜蘭洞 · 十二講員與當期論道');
   theater.innerHTML='<div class="olive-poster-gallery" aria-label="十二講員海報"></div><div class="olive-issue-sermons" aria-label="當期論道推薦" data-olive-issue-sermons></div>';
   const gallery=theater.querySelector('.olive-poster-gallery');
-  const speakers=[...new Map(cards.map(card=>({slug:card.dataset.doreSpeaker,name:card.dataset.person})).filter(item=>item.slug&&item.name).map(item=>[item.slug,item])).values()];
+  const speakerSlugs={'大衛鮑森':'david-pawson','江秀琴':'jiang-xiuqin','賴若瀚':'jerry-lai','劉彤':'tong-liu','葉光明':'derek-prince','倪柝聲':'watchman-nee','康來昌':'kang-lai-chang','唐崇榮':'stephen-tong','寇紹恩':'kou-shao-en','華理克':'rick-warren','于宏潔':'yu-hong-jie','黃淑華':'huang-shuhua'};
+  const speakers=[...new Map(cards.map(card=>({slug:card.dataset.doreSpeaker||speakerSlugs[card.dataset.person],name:card.dataset.person})).filter(item=>item.slug&&item.name).map(item=>[item.slug,item])).values()];
   fetch('/dore-design/runtime/olive-editorial-covers.v1.json')
    .then(response=>{if(!response.ok)throw new Error('Poster manifest unavailable');return response.json();})
    .then(data=>{
