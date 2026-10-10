@@ -877,3 +877,37 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
 .sites-home-realm[data-realm=book]{--ws-realm-base:var(--ws-harvest)}
 .sites-home-realm[data-realm=cinema]{--ws-realm-base:var(--ws-crimson)}
 .sites-home-realm[data-realm=life]{--ws-realm-base:var(--ws-daylight-mauve)}
+
+/* First Look shared composition contract: same visual shell for every realm
+   except the church's promotional door sequence. Content renderers (video,
+   publication, bible atlas, daily life) occupy the same media and metadata slots. */
+:root{
+ --ws-first-look-inset:var(--ws-immersive-inset,clamp(14px,2.6vw,52px));
+ --ws-first-look-radius:var(--ws-immersive-radius,clamp(14px,1.6vw,28px));
+ --ws-first-look-content-width:min(100%,1600px);
+ --ws-first-look-stage-min-height:clamp(560px,calc(100svh - 2 * var(--ws-first-look-inset)),1100px);
+ --ws-first-look-content-gap:clamp(16px,2.2vw,36px);
+ --ws-first-look-meta-size:var(--ws-type-scale-meta);
+}
+[data-ws-first-look]:not([data-ws-first-look="church-door"]){
+ --ws-first-look-accent:var(--ws-realm-base,var(--ws-branch));
+ --ws-first-look-surface:var(--ws-immersive-frame,var(--ws-first-look-depth));
+ --ws-first-look-border:var(--ws-realm-border);
+ box-sizing:border-box;
+}
+[data-ws-first-look] [data-ws-first-look-stage]{
+ position:relative;isolation:isolate;
+ max-width:var(--ws-first-look-content-width);
+ border-radius:var(--ws-first-look-radius);
+ overflow:hidden;
+}
+[data-ws-first-look] [data-ws-first-look-meta]{
+ display:flex;align-items:baseline;justify-content:space-between;
+ gap:var(--ws-first-look-content-gap);
+}
+[data-ws-first-look] [data-ws-first-look-media]{
+ min-width:0;max-width:100%;
+}
+@media(max-width:760px){
+ [data-ws-first-look] [data-ws-first-look-meta]{flex-wrap:wrap}
+}
