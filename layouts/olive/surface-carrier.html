@@ -195,6 +195,8 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       const position=sequence.findIndex(item=>item.id===current.id);
       if(position<0 || position===sequence.length-1)return;
       selectFeatured(featured.indexOf(sequence[position+1]));
+      activeSpeaker=current.speaker;
+      updateChannel();
       play.click();
     });
     next?.addEventListener('click',()=>{selectFeatured(index+1);activeSpeaker=featured[index].speaker;updateChannel();});
