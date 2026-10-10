@@ -70,7 +70,7 @@ const fs=require('node:fs');
     if(new Set(cards.map(card=>card.dataset.person)).size!==12)errors.push('speaker rail contains duplicate or unnamed cards');
     if(!document.querySelector('[data-feature-next]')||!document.querySelector('[data-feature-prev]'))errors.push('rotation controls missing');
     if(!document.querySelector('[data-feature-source]'))errors.push('video source link missing');
-    if(!document.querySelector('#olive-sermon-experience'))errors.push('speaker gallery missing');
+    if(document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length!==12)errors.push('twelve-speaker poster gallery missing');
     if(document.querySelector('#olive-archive-experience')||document.querySelector('.olive-journey-nav')||document.querySelector('.olive-journey-heading'))errors.push('internal journey taxonomy leaked into visible page');
     for(const card of cards){
       const rect=card.getBoundingClientRect();
