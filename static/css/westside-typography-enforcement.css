@@ -69,3 +69,17 @@ body[data-ws-scope] :is(.ws-section-name-zh,[data-ws-type-role="section-name"],.
  font-weight:var(--ws-weight-section,900)!important;
  font-synthesis:none;
 }
+
+/* First-layer identities are editorial titles, not generic UI headings.
+   Preserve the source italic emphasis and exact original font sizes. */
+body[data-ws-scope="home"] .sites-home-realms .sites-home-realm > h2[lang="en"]{
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
+ font-weight:400!important;
+ font-synthesis:none;
+}
+body[data-ws-scope="home"] .sites-home-realms .sites-home-realm > h2[lang="en"] > em{
+ font-family:inherit!important;
+ font-weight:400!important;
+ font-style:italic!important;
+ font-synthesis:none;
+}
