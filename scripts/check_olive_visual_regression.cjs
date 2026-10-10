@@ -118,7 +118,7 @@ const fs=require('node:fs');
    if((await page.locator('.olive-feature__caption h2').innerText())!=='倪柝聲')errors.push('speaker without featured video did not switch channel');
    if(!(await page.locator('[data-pawson-play]').isHidden()))errors.push('speaker without verified video exposes play button');
    // Verify the player configuration and that switching clears the previous embed.
-   await page.locator('.olive-speaker-card[data-person="大衛鮑森"]').click();
+   await selectSpeaker('大衛鮑森');
    await page.locator('[data-pawson-play]').click();
    const firstEmbed=await page.locator('[data-pawson-preview]').getAttribute('src');
    if(!firstEmbed?.includes('/embed/fizg-bxIjuY?'))errors.push('Pawson first curated episode mismatch');
