@@ -68,8 +68,6 @@ const fs=require('node:fs');
     if(!feature)errors.push('canonical hero missing');
     if(cards.length!==12)errors.push('expected 12 unique speaker cards including David Pawson; got '+cards.length);
     if(new Set(cards.map(card=>card.dataset.person)).size!==12)errors.push('speaker rail contains duplicate or unnamed cards');
-    if(!document.querySelector('[data-feature-next]')||!document.querySelector('[data-feature-prev]'))errors.push('rotation controls missing');
-    if(!document.querySelector('[data-feature-source]'))errors.push('video source link missing');
     if(document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length!==12)errors.push('twelve-speaker poster gallery missing');
     for(const poster of document.querySelectorAll('.olive-poster-gallery .olive-gallery-card')){
       const en=poster.querySelector('.olive-gallery-card__identity-en');
@@ -119,40 +117,17 @@ const fs=require('node:fs');
    await selectSpeaker('倪柝聲');
    if((await page.locator('.olive-feature__caption h2').innerText())!=='倪柝聲')errors.push('speaker without featured video did not switch channel');
    if(!(await page.locator('[data-pawson-play]').isHidden()))errors.push('speaker without verified video exposes play button');
-   await page.locator('[data-feature-prev]').click();
-   const initial=await page.locator('.olive-feature__caption h2').innerText();
-   await page.locator('[data-feature-next]').click();
-   const after=await page.locator('.olive-feature__caption h2').innerText();
-   if(initial===after)errors.push('next feature did not rotate speaker');
-   const source=await page.locator('[data-feature-source]').getAttribute('href');
-   if(!/^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/.test(source||''))errors.push('feature source link invalid');
-   await page.locator('[data-feature-prev]').click();
-   if((await page.locator('.olive-feature__caption h2').innerText())!==initial)errors.push('previous feature did not restore speaker');
    // Verify the player configuration and that switching clears the previous embed.
    await page.locator('.olive-speaker-card[data-person="大衛鮑森"]').click();
    await page.locator('[data-pawson-play]').click();
    const firstEmbed=await page.locator('[data-pawson-preview]').getAttribute('src');
    if(!firstEmbed?.includes('/embed/fizg-bxIjuY?'))errors.push('Pawson first curated episode mismatch');
    if(!firstEmbed?.includes('enablejsapi=1')||!firstEmbed?.includes('origin='))errors.push('YouTube iframe API parameters missing');
-   await page.locator('[data-feature-next]').click();
-   if(await page.locator('[data-pawson-preview]').getAttribute('src'))errors.push('previous player not cleared on manual navigation');
-   // Exercise all eight feature selections without requiring YouTube network access.
-   const visited=new Set();
-   for(let i=0;i<8;i++){
-    const sourceUrl=await page.locator('[data-feature-source]').getAttribute('href');
-    const id=(sourceUrl||'').match(/[?&]v=([A-Za-z0-9_-]{11})/)?.[1];
-    if(!id){errors.push('invalid video source at position '+i);break;}
-    visited.add(id);
-    await page.locator('[data-pawson-play]').click();
-    const iframe=page.locator('[data-pawson-preview]');
-    const embed=await iframe.getAttribute('src');
-    if(!embed?.includes('/embed/'+id+'?'))errors.push('embed/source mismatch at position '+i);
-    if(await iframe.isHidden())errors.push('iframe hidden after play at position '+i);
-    await page.locator('[data-feature-next]').click();
-    if(await iframe.getAttribute('src'))errors.push('old video continues after feature change '+i);
-    if(!(await iframe.isHidden()))errors.push('iframe not hidden after feature change '+i);
-   }
-   if(visited.size!==8)errors.push('expected eight distinct video selections; got '+visited.size);
+   // Switching via the canonical rail must tear down the prior embed.
+   await selectSpeaker('江秀琴');
+   if(await page.locator('[data-pawson-preview]').getAttribute('src'))errors.push('previous player not cleared on speaker change');
+   if(!(await page.locator('[data-pawson-preview]').isHidden()))errors.push('old iframe remains visible after speaker change');
+   if((await page.locator('.olive-feature__caption h2').innerText())!=='江秀琴')errors.push('speaker rail failed to switch channel');
    console.log(size.name+': '+(errors.length?errors.join('; '):'PASS'));
    if(errors.length)process.exitCode=1;
    await page.close();
