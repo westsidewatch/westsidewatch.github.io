@@ -4,7 +4,7 @@
   if(!root)return;
   const rail=root.querySelector('.olive-speaker-rail');
   const cards=[...(rail?.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')||[])];
-  // Internal journey IDs are implementation details, not visible editorial headings.
+  // The gallery's editorial title is visible; IDs remain internal navigation anchors.
   const home=root.querySelector('.olive-home-stage');
   if(home)home.id='olive-speaker-experience';
   // The second layer is a readable gallery of the twelve approved editorial posters,
@@ -13,7 +13,7 @@
   theater.className='olive-journey-section olive-journey-theater';
   theater.id='olive-adullam';
   theater.setAttribute('aria-label','亞杜蘭洞 · 十二講員與當期論道');
-  theater.innerHTML='<div class="olive-poster-gallery" aria-label="十二講員海報"></div><div class="olive-issue-sermons" aria-label="當期論道推薦" data-olive-issue-sermons></div>';
+  theater.innerHTML='<header class="olive-adullam-heading"><span class="olive-adullam-heading__en" lang="en">ADULLAM</span><h2 class="olive-adullam-heading__zh">亞杜蘭洞</h2></header><div class="olive-poster-gallery" aria-label="十二講員海報"></div><div class="olive-issue-sermons" aria-label="當期論道推薦" data-olive-issue-sermons></div>';
   const gallery=theater.querySelector('.olive-poster-gallery');
   const speakerSlugs={'大衛鮑森':'david-pawson','江秀琴':'jiang-xiuqin','賴若瀚':'jerry-lai','劉彤':'tong-liu','葉光明':'derek-prince','倪柝聲':'watchman-nee','康來昌':'kang-lai-chang','唐崇榮':'stephen-tong','寇紹恩':'kou-shao-en','華理克':'rick-warren','于宏潔':'yu-hong-jie','黃淑華':'huang-shuhua'};
   const englishNames={'大衛鮑森':'DAVID PAWSON','江秀琴':'GRACE CHIANG','賴若瀚':'JERRY LAI','劉彤':'TONG LIU','葉光明':'DEREK PRINCE','倪柝聲':'WATCHMAN NEE','康來昌':'KANG LAI CHANG','唐崇榮':'STEPHEN TONG','寇紹恩':'KOU SHAO EN','華理克':'RICK WARREN','于宏潔':'YU HONG JIE','黃淑華':'HUANG SHUHUA'};
