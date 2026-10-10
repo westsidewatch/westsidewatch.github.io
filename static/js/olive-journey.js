@@ -20,7 +20,7 @@
   fetch('/dore-design/runtime/olive-editorial-covers.v1.json')
    .then(response=>{if(!response.ok)throw new Error('Poster manifest unavailable');return response.json();})
    .then(data=>{
-    const assets=new Map((data.records||[]).filter(item=>/^\\/images\\/olive\\/[a-z0-9-]+\\.png$/.test(item.url||'')).map(item=>[item.speaker,item.url]));
+    const assets=new Map((data.records||[]).filter(item=>typeof item.url==='string'&&item.url.startsWith('/images/olive/')&&item.url.endsWith('.png')&&/^[a-z0-9-]+$/.test(item.url.slice('/images/olive/'.length,-4))).map(item=>[item.speaker,item.url]));
     for(const item of speakers){
      const a=document.createElement('a');
      a.className='olive-gallery-card';
