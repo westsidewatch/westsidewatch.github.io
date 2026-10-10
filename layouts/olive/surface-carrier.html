@@ -183,6 +183,20 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       frame.contentWindow?.postMessage(JSON.stringify({event:'listening',id:'olive-home'}),target);
       frame.contentWindow?.postMessage(JSON.stringify({event:'command',func:'addEventListener',args:['onStateChange']}),target);
     });
+    window.addEventListener('message',event=>{
+      if(event.origin!=='https://www.youtube-nocookie.com' && event.origin!=='https://www.youtube.com')return;
+      if(event.source!==frame.contentWindow || frame.hidden)return;
+      let message;
+      try{message=typeof event.data==='string'?JSON.parse(event.data):event.data;}catch{return;}
+      if(message?.event!=='onStateChange' || message.info!==0)return;
+      const current=featured[index];
+      if(!current || current.speaker!==feature.dataset.person)return;
+      const sequence=featured.filter(item=>item.speaker===current.speaker);
+      const position=sequence.findIndex(item=>item.id===current.id);
+      if(position<0 || position===sequence.length-1)return;
+      selectFeatured(featured.indexOf(sequence[position+1]));
+      play.click();
+    });
     next?.addEventListener('click',()=>{selectFeatured(index+1);activeSpeaker=featured[index].speaker;updateChannel();});
     prev?.addEventListener('click',()=>{selectFeatured(index-1);activeSpeaker=featured[index].speaker;updateChannel();});
     feature.addEventListener('keydown',event=>{
