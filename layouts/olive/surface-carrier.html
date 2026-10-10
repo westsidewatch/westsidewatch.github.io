@@ -185,7 +185,8 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     document.addEventListener('visibilitychange',()=>{if(document.hidden && !frame.hidden){frame.removeAttribute('src');frame.hidden=true;feature.classList.remove('is-playing');}});
   }
 
-  const speakerRoutes={\n    '大衛鮑森':'david-pawson',
+  const speakerRoutes={
+    '大衛鮑森':'david-pawson',
     '江秀琴':'jiang-xiuqin','賴若瀚':'jerry-lai','劉彤':'tong-liu','葉光明':'derek-prince',
     '倪柝聲':'watchman-nee','康來昌':'kang-lai-chang','唐崇榮':'stephen-tong','寇紹恩':'kou-shao-en',
     '華理克':'rick-warren','于宏潔':'yu-hong-jie','黃淑華':'huang-shuhua'
