@@ -71,6 +71,12 @@ const fs=require('node:fs');
     if(!document.querySelector('[data-feature-next]')||!document.querySelector('[data-feature-prev]'))errors.push('rotation controls missing');
     if(!document.querySelector('[data-feature-source]'))errors.push('video source link missing');
     if(document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length!==12)errors.push('twelve-speaker poster gallery missing');
+    for(const poster of document.querySelectorAll('.olive-poster-gallery .olive-gallery-card')){
+      const en=poster.querySelector('.olive-gallery-card__identity-en');
+      const zh=poster.querySelector('.olive-gallery-card__identity-zh');
+      if(!en?.textContent?.trim()||!zh?.textContent?.trim())errors.push('missing bilingual poster identity');
+      else if(getComputedStyle(en).display==='none'||getComputedStyle(zh).display==='none'||en.getBoundingClientRect().height<1||zh.getBoundingClientRect().height<1)errors.push('hidden bilingual poster identity');
+    }
     if(document.querySelector('#olive-archive-experience')||document.querySelector('.olive-journey-nav')||document.querySelector('.olive-journey-heading'))errors.push('internal journey taxonomy leaked into visible page');
     for(const card of cards){
       const rect=card.getBoundingClientRect();
