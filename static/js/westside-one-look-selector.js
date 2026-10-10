@@ -4,7 +4,7 @@
  for(const root of roots){
   const cards=()=>[...root.querySelectorAll('[data-ws-one-look-card]:not([data-ws-one-look-clone])')];
   const choose=(card)=>{
-   if(!card||card.hasAttribute('inert'))return;
+   if(!card||card.hasAttribute('inert')||card.hasAttribute('data-ws-one-look-clone'))return;
    for(const item of cards())item.setAttribute('aria-pressed',String(item===card));
    root.dispatchEvent(new CustomEvent('ws-one-look:select',{bubbles:true,detail:{id:card.dataset.wsOneLookCard}}));
   };
