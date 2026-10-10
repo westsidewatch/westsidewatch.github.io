@@ -177,6 +177,12 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       frame.hidden=false;
       feature.classList.add('is-playing');
     });
+    frame.addEventListener('load',()=>{
+      if(frame.hidden)return;
+      const target='https://www.youtube-nocookie.com';
+      frame.contentWindow?.postMessage(JSON.stringify({event:'listening',id:'olive-home'}),target);
+      frame.contentWindow?.postMessage(JSON.stringify({event:'command',func:'addEventListener',args:['onStateChange']}),target);
+    });
     next?.addEventListener('click',()=>{selectFeatured(index+1);activeSpeaker=featured[index].speaker;updateChannel();});
     prev?.addEventListener('click',()=>{selectFeatured(index-1);activeSpeaker=featured[index].speaker;updateChannel();});
     feature.addEventListener('keydown',event=>{
