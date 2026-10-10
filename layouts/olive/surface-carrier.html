@@ -188,7 +188,8 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       if(event.source!==frame.contentWindow || frame.hidden)return;
       let message;
       try{message=typeof event.data==='string'?JSON.parse(event.data):event.data;}catch{return;}
-      if(message?.event!=='onStateChange' || Number(message.info)!==0)return;
+      const state=typeof message?.info==='object'?message.info?.playerState:message?.info;
+      if(message?.event!=='onStateChange' || Number(state)!==0)return;
       if(!feature.classList.contains('is-playing'))return;
       const current=featured[index];
       if(!current || current.speaker!==feature.dataset.person)return;
