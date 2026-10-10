@@ -54,6 +54,7 @@
 radial-gradient(ellipse at 72% 34%,rgba(255,255,255,.16),transparent 34%),
 linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix(in oklab,var(--ws-olive) 76%,#fff) 48%,var(--ws-olive) 100%);transition:opacity .28s ease}
 .olive-feature__youtube[hidden]{display:none}
+.olive-feature__play[hidden]{display:none}
 .olive-feature__play{position:absolute;left:50%;top:50%;z-index:4;transform:translate(-50%,-50%);width:clamp(52px,4.5vw,74px);height:clamp(52px,4.5vw,74px);border:1px solid rgba(255,255,255,.72);border-radius:50%;background:color-mix(in oklab,var(--ws-olive) 78%,transparent);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(5px)}
 .olive-feature__play span{font-size:clamp(16px,1.4vw,23px);margin-left:.15em}
 .olive-feature.is-playing .olive-feature__poster,.olive-feature.is-playing .olive-feature__play,.olive-feature.is-playing .olive-feature__veil{opacity:0;pointer-events:none}
@@ -170,6 +171,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   if(feature&&frame&&poster&&play){
     selectFeatured(0);
     play.addEventListener('click',()=>{
+      if(play.hidden || !featured[index] || featured[index].speaker!==feature.dataset.person)return;
       const item=featured[index];
       frame.src='https://www.youtube-nocookie.com/embed/'+item.id+'?autoplay=1&rel=0';
       frame.hidden=false;
