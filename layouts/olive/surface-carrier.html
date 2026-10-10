@@ -173,7 +173,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     play.addEventListener('click',()=>{
       if(play.hidden || !featured[index] || featured[index].speaker!==feature.dataset.person)return;
       const item=featured[index];
-      frame.src='https://www.youtube-nocookie.com/embed/'+item.id+'?autoplay=1&rel=0&enablejsapi=1';
+      frame.src='https://www.youtube-nocookie.com/embed/'+item.id+'?autoplay=1&rel=0&enablejsapi=1&origin='+encodeURIComponent(location.origin);
       frame.hidden=false;
       feature.classList.add('is-playing');
     });
