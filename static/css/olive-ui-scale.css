@@ -400,3 +400,41 @@ body:has(.olive-archive .olive-home-stage) .olive-archive{
  .olive-archive .olive-home-stage .olive-feature__caption{bottom:calc(clamp(260px,40svh,410px) + 12px)}
  .olive-archive .olive-home-stage .olive-speaker-rail__track>.olive-speaker-card{flex-basis:clamp(185px,53vw,290px)!important}
 }
+
+/* Cinematic editorial frame: intentional negative space, not accidental page gutters. */
+.olive-archive .olive-home-stage{
+ width:calc(100vw - 2 * clamp(14px,2.6vw,52px))!important;
+ height:calc(100svh - 2 * clamp(14px,2.6vw,52px))!important;
+ min-height:560px;
+ margin-left:calc(50% - 50vw + clamp(14px,2.6vw,52px))!important;
+ border-radius:clamp(14px,1.6vw,28px);
+ background:var(--ws-olive);overflow:hidden;
+}
+.olive-archive .olive-home-stage .olive-feature__caption{
+ left:clamp(26px,4vw,76px);bottom:calc(clamp(310px,48svh,570px) + 24px);
+ width:min(52%,680px);gap:clamp(8px,1vw,16px);
+ text-shadow:0 2px 16px rgba(0,0,0,.22);
+}
+.olive-archive .olive-feature__caption-kicker{
+ font:400 clamp(10px,.75vw,13px)/1.4 var(--ws-type-display-en);
+ letter-spacing:.19em;color:rgba(255,255,255,.82);
+}
+.olive-archive .olive-feature__caption-editorial{
+ display:flex;align-items:baseline;flex-wrap:wrap;gap:clamp(10px,1.8vw,28px);
+ border-top:1px solid rgba(255,255,255,.58);
+ padding-top:clamp(12px,1.4vw,24px);
+}
+.olive-archive .olive-feature__caption-editorial h2{
+ margin:0!important;font-family:var(--ws-type-display-zh)!important;
+ font-size:clamp(30px,3vw,58px)!important;font-weight:200!important;
+ line-height:1.15;letter-spacing:.03em;
+}
+.olive-archive .olive-feature__caption-editorial p{
+ margin:0;font-family:var(--ws-type-display-zh)!important;
+ font-size:clamp(13px,1.1vw,19px);font-weight:200;
+ line-height:1.45;letter-spacing:.06em;
+}
+@media(max-width:760px){
+ .olive-archive .olive-home-stage{width:calc(100vw - 24px)!important;height:calc(100svh - 24px)!important;margin-left:calc(50% - 50vw + 12px)!important;min-height:560px}
+ .olive-archive .olive-home-stage .olive-feature__caption{left:22px;width:calc(100% - 44px);bottom:calc(clamp(260px,40svh,410px) + 16px)}
+}
