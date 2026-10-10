@@ -25,7 +25,20 @@ const fs=require('node:fs');
     }));
    });
    for(const item of imageReport)if(!item.loaded)errors.push('editorial image failed to load '+item.speaker+': '+item.src);
-   await page.waitForFunction(() => document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length===12,null,{timeout:15000});
+    try {
+     await page.waitForFunction(() => document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length===12,null,{timeout:15000});
+    } catch (error) {
+     const diagnostic=await page.evaluate(() => ({
+      railCards:document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)').length,
+      galleryCards:document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length,
+      galleryPresent:!!document.querySelector('.olive-poster-gallery'),
+      rootPresent:!!document.querySelector('.olive-archive'),
+      scripts:[...document.querySelectorAll('script[src*="olive-"]')].map(el=>el.src),
+      speakerNames:[...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')].map(el=>el.dataset.person)
+     }));
+     await page.screenshot({path:'/tmp/olive-visual/'+size.name+'-gallery-failure.png',fullPage:true});
+     throw new Error('Olive poster gallery initialization failed: '+JSON.stringify({diagnostic,errors,cause:error.message}));
+    }
    // Image decoding alone does not prove the editorial poster is visually visible.
    // Verify stacking, dimensions and actual hit-tested paint at the card center.
    const visibility=await page.evaluate(() => [...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')].map(card => {
