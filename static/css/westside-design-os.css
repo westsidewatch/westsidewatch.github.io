@@ -809,3 +809,51 @@ body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-lay
   max-width:100%;overflow-x:auto;scrollbar-width:none;
  }
 }
+
+/* Unified realm chromatic detail authority.
+   All seven branches share identical semantic roles; only immersive video
+   surfaces darken the branch palette. No black-and-gold variant. */
+:root{
+ --ws-realm-base:var(--ws-first-light);
+ --ws-realm-ink:var(--ws-text);
+ --ws-realm-muted:color-mix(in oklab,var(--ws-realm-ink) 65%,var(--ws-realm-base));
+ --ws-realm-border:color-mix(in oklab,var(--ws-realm-base) 36%,transparent);
+ --ws-realm-control:color-mix(in oklab,var(--ws-realm-base) 9%,var(--ws-paper));
+ --ws-realm-control-hover:color-mix(in oklab,var(--ws-realm-base) 17%,var(--ws-paper));
+ --ws-realm-accent:var(--ws-realm-base);
+ --ws-realm-focus:var(--ws-realm-base);
+ --ws-realm-frame:var(--ws-paper);
+}
+body.sites-section-church{--ws-realm-base:var(--ws-water)}
+body.sites-section-journal,body.sites-section-vol-00{--ws-realm-base:var(--ws-first-light)}
+body.sites-section-one,body.section-one{--ws-realm-base:var(--ws-pale-gold)}
+body.sites-section-olive{--ws-realm-base:var(--ws-olive)}
+body.sites-section-dawn-library{--ws-realm-base:var(--ws-harvest)}
+body.sites-section-cinema,body.sites-cinema{--ws-realm-base:var(--ws-crimson)}
+body.sites-section-daylight-cafe{--ws-realm-base:var(--ws-daylight-mauve)}
+body.sites-surface:has([data-ws-immersive-video]),body.sites-cinema:has([data-ws-immersive-video]){
+ --ws-realm-frame:color-mix(in oklab,var(--ws-realm-base) 32%,var(--ws-night));
+ --ws-immersive-frame:var(--ws-realm-frame);
+ --ws-realm-ink:#f7f3e8;
+ --ws-realm-muted:color-mix(in oklab,var(--ws-realm-ink) 67%,var(--ws-realm-frame));
+ --ws-realm-border:color-mix(in oklab,var(--ws-realm-ink) 22%,transparent);
+ --ws-realm-control:color-mix(in oklab,var(--ws-realm-frame) 78%,transparent);
+ --ws-realm-control-hover:color-mix(in oklab,var(--ws-realm-base) 44%,var(--ws-realm-frame));
+ --ws-realm-focus:var(--ws-realm-ink);
+}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-nav{
+ color:var(--ws-realm-ink)!important;
+ background:var(--ws-realm-control)!important;
+ border:1px solid var(--ws-realm-border)!important;
+}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-nav a{
+ color:var(--ws-realm-ink)!important;
+}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-nav a:hover,
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-nav a:focus-visible{
+ background:var(--ws-realm-control-hover)!important;
+ outline-color:var(--ws-realm-focus);
+}
+body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus-visible{
+ outline-color:var(--ws-realm-focus);
+}
