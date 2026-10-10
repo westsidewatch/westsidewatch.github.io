@@ -1,0 +1,145 @@
+{
+  "schema": "goodtv-ten-speaker-source-audit.v1",
+  "reviewedAt": "2026-10-09",
+  "policy": {
+    "goodtvWebsite": "source-link-only-until-explicit-embed-permission-and-browser-playback-verified",
+    "youtube": "official-upload-with-embed-enabled-and-browser-playback-verified",
+    "noUnverifiedEmbedIds": true
+  },
+  "speakers": [
+    {
+      "slug": "david-pawson",
+      "name": "大衛鮑森",
+      "goodtv": [
+        {
+          "title": "使徒行傳",
+          "url": "https://www.goodtv.tv/watch?series=3406&type=1",
+          "kind": "series"
+        },
+        {
+          "title": "傳道書／舊約縱覽",
+          "url": "https://www.goodtv.tv/watch?episode=86146",
+          "kind": "episode"
+        },
+        {
+          "title": "聖經中的五個約（二）",
+          "url": "https://www.goodtv.tv/watch?episode=86002",
+          "kind": "episode"
+        }
+      ],
+      "youtubeCandidates": [
+        {
+          "title": "出埃及記（一）",
+          "url": "https://www.youtube.com/watch?v=jlHOgXhkEMo",
+          "embedUrl": "https://www.youtube.com/embed/jlHOgXhkEMo",
+          "evidence": "https://ch.folcc.ca/每日靈修/",
+          "match": "same-speaker-series-title",
+          "goodtvOfficialUploadVerified": false,
+          "browserPlaybackVerified": false
+        },
+        {
+          "title": "出埃及記（二）",
+          "url": "https://www.youtube.com/watch?v=1N5OFuFiULc",
+          "embedUrl": "https://www.youtube.com/embed/1N5OFuFiULc",
+          "evidence": "https://ch.folcc.ca/每日靈修/",
+          "match": "same-speaker-series-title",
+          "goodtvOfficialUploadVerified": false,
+          "browserPlaybackVerified": false
+        },
+        {
+          "title": "使徒行傳（一）",
+          "url": "https://www.youtube.com/watch?v=YcNgHPkGj1I",
+          "embedUrl": "https://www.youtube.com/embed/YcNgHPkGj1I",
+          "evidence": "https://ch.folcc.ca/每日靈修/",
+          "match": "same-speaker-series-title",
+          "goodtvOfficialUploadVerified": false,
+          "browserPlaybackVerified": false
+        }
+      ]
+    },
+    {
+      "slug": "derek-prince",
+      "name": "葉光明",
+      "goodtv": []
+    },
+    {
+      "slug": "kang-lai-chang",
+      "name": "康來昌",
+      "goodtv": []
+    },
+    {
+      "slug": "stephen-tong",
+      "name": "唐崇榮",
+      "goodtv": []
+    },
+    {
+      "slug": "jerry-lai",
+      "name": "賴若瀚",
+      "goodtv": []
+    },
+    {
+      "slug": "kou-shao-en",
+      "name": "寇紹恩",
+      "goodtv": [
+        {
+          "title": "愛的交換",
+          "url": "https://www.goodtv.tv/watch?episode=95027&series=126&type=3",
+          "kind": "episode"
+        }
+      ]
+    },
+    {
+      "slug": "rick-warren",
+      "name": "華理克",
+      "goodtv": [
+        {
+          "title": "奔向標竿（官方節目介紹）",
+          "url": "https://magazine.goodtv.tv/article/?w=c219967214cf",
+          "kind": "editorial"
+        }
+      ]
+    },
+    {
+      "slug": "jiang-xiuqin",
+      "name": "江秀琴",
+      "goodtv": [],
+      "youtubeCanonical": "data/westside-index/by-series/jiang-xiuqin-goodtv.json"
+    },
+    {
+      "slug": "tong-liu",
+      "name": "劉彤",
+      "goodtv": []
+    },
+    {
+      "slug": "yu-hong-jie",
+      "name": "于宏潔",
+      "goodtv": [
+        {
+          "title": "成為神手中的傑作（官方節目介紹）",
+          "url": "https://upload.goodtv.tv/file/magazine/357/GOODTV_2024_09_357_JXH36k0nGU.pdf",
+          "kind": "editorial"
+        }
+      ]
+    }
+  ],
+  "youtubeVerifiedEmbeds": 0,
+  "goodtvWebsiteVerifiedEmbeds": 0,
+  "notes": "Verified exact Pawson YouTube IDs via third-party church listing, not verified GOOD TV uploads nor embed permission. No unsupported media promoted as browser-playable.",
+  "channels": [
+    {
+      "speaker": "大衛鮑森",
+      "url": "https://www.youtube.com/@goodtvdavidpawson",
+      "type": "goodtv-produced-authorized-channel"
+    },
+    {
+      "speaker": "華理克",
+      "url": "https://www.youtube.com/@GOODTVRickWarren",
+      "type": "goodtv-produced-authorized-channel"
+    },
+    {
+      "speaker": "GOOD TV",
+      "url": "https://www.youtube.com/@goodtv",
+      "type": "official-broadcaster-channel"
+    }
+  ]
+}
