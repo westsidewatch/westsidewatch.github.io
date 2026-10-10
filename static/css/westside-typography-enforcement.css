@@ -7,7 +7,7 @@
  --ws-type-zh:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
 }
 body[data-ws-scope] :is(
- h1,h2,h3,h4,h5,h6,.sites-layer-title,.sites-layer-section-title,
+ h1:not([data-ws-type-role="first-layer-title"]),h2:not([data-ws-type-role="first-layer-title"]),h3,h4,h5,h6,.sites-layer-title,.sites-layer-section-title,
  .section-atlas__title,.atlas-entry__title,.sites-church-title,
  .sites-church-heading,.sites-surface-title,.sites-editorial-title
 ):not([data-ws-typography-lock]):not(:where([data-ws-designable], [data-ws-designable] *)){

@@ -694,3 +694,30 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
  font-synthesis:none;
 }
 
+
+/* FIRST-LAYER EDITORIAL IDENTITY — canonical typography role.
+   Applies to section entry titles and their destination mastheads.
+   Unlike poster/home-brand designable artwork, this is an OS-managed role.
+   The second line is a real Bodoni italic, never synthetic or stretched. */
+:root{
+ --ws-first-layer-title-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ --ws-first-layer-title-weight:400;
+ --ws-first-layer-title-style:normal;
+ --ws-first-layer-accent-style:italic;
+}
+:where(.sites-home-realms .sites-home-realm > h2[lang="en"],
+       .sites-church-intro h1,
+       .sites-cinema-intro h1){
+ font-family:var(--ws-first-layer-title-family);
+ font-weight:var(--ws-first-layer-title-weight);
+ font-style:var(--ws-first-layer-title-style);
+ font-synthesis:none;
+}
+:where(.sites-home-realms .sites-home-realm > h2[lang="en"],
+       .sites-church-intro h1,
+       .sites-cinema-intro h1) em{
+ font-family:inherit;
+ font-weight:inherit;
+ font-style:var(--ws-first-layer-accent-style);
+ font-synthesis:none;
+}
