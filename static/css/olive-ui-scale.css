@@ -282,3 +282,9 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
 
 /* Keep featured navigation clickable above the centered play affordance at narrow widths. */
 .olive-archive .olive-feature__next{position:relative;z-index:24}
+
+/* Narrow-screen featured controls must not share the play button hit target. */
+@media (max-width: 480px){
+ .olive-archive .olive-feature__play{top:22%;}
+ .olive-archive .olive-feature__next{isolation:isolate;}
+}
