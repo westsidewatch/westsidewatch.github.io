@@ -763,3 +763,49 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
  background:var(--ws-immersive-frame);
 }
 @media(max-width:760px){:root{--ws-immersive-inset:12px}}
+
+/* Immersive shell: the global navigation belongs to the cinematic composition,
+   not a separate white band. Applied only where a shared immersive stage exists. */
+body.sites-surface:has([data-ws-immersive-video]){
+ --ws-immersive-nav-height:clamp(40px,4.5vw,62px);
+}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header{
+ position:absolute;inset:var(--ws-immersive-inset) var(--ws-immersive-inset) auto;
+ z-index:60;width:auto;margin:0;border:0!important;
+ background:transparent!important;color:#f7f3e8!important;
+ pointer-events:none;
+}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-primary{
+ display:flex;align-items:center;justify-content:space-between;
+ min-height:var(--ws-immersive-nav-height);gap:clamp(14px,2vw,32px);
+ padding:0 clamp(16px,2vw,34px);
+ border:0!important;background:transparent!important;
+}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header :is(a,nav){pointer-events:auto}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-nav{
+ display:flex;align-items:center;gap:clamp(8px,1.1vw,18px);
+ padding:8px 12px;border-radius:999px;
+ background:color-mix(in oklab,var(--ws-immersive-frame) 72%,transparent);
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-nav a{
+ color:#f7f3e8!important;text-decoration:none;
+}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-nav a[aria-current="page"]{
+ text-decoration:underline;text-underline-offset:5px;
+}
+body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-wordmark img{
+ max-height:clamp(24px,2.4vw,38px);
+ filter:grayscale(1) brightness(0) invert(1);
+}
+@media(max-width:760px){
+ body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header{
+  inset:var(--ws-immersive-inset) var(--ws-immersive-inset) auto;
+ }
+ body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-primary{
+  flex-wrap:wrap;gap:6px;padding:8px 12px;
+ }
+ body.sites-surface:has([data-ws-immersive-video])>.sites-layer-header .sites-layer-nav{
+  max-width:100%;overflow-x:auto;scrollbar-width:none;
+ }
+}
