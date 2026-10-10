@@ -17,7 +17,8 @@ sermon_series:
       - title: "深處的生活"
         source: "每日靈修 · 倪柝聲文集精選（截圖確認，影片網址待核實）"
       - title: "如何知道神的旨意"
-        source: "每日靈修 · 倪柝聲文集精選（截圖確認，影片網址待核實）"
+        url: "https://www.youtube.com/watch?v=rwrjmlRs-qw"
+        source: "每日靈修 · 倪柝聲文集精選（YouTube 發布頁已查得；嵌入播放待驗收）"
       - title: "如何自知與神的光"
         source: "每日靈修 · 倪柝聲文集精選（截圖確認，影片網址待核實）"
 ---
