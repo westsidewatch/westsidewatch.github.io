@@ -15,7 +15,7 @@
   theater.setAttribute('aria-label','亞杜蘭洞 · 十二講員與當期論道');
   theater.innerHTML='<div class="olive-poster-gallery" aria-label="十二講員海報"></div><div class="olive-issue-sermons" aria-label="當期論道推薦" data-olive-issue-sermons></div>';
   const gallery=theater.querySelector('.olive-poster-gallery');
-  const speakers=[{slug:'david-pawson',name:'大衛鮑森'},...cards.map(card=>({slug:card.dataset.doreSpeaker,name:card.dataset.person}))].filter(item=>item.slug&&item.name);
+  const speakers=[...new Map(cards.map(card=>({slug:card.dataset.doreSpeaker,name:card.dataset.person})).filter(item=>item.slug&&item.name).map(item=>[item.slug,item])).values()];
   fetch('/dore-design/runtime/olive-editorial-covers.v1.json')
    .then(response=>{if(!response.ok)throw new Error('Poster manifest unavailable');return response.json();})
    .then(data=>{
