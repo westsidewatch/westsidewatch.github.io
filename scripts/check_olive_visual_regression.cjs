@@ -100,11 +100,23 @@ const fs=require('node:fs');
    });
    errors.push(...issues);
    // Selecting a speaker must switch the home channel without leaving /olive/.
-   await page.locator('.olive-speaker-card:not(.olive-speaker-card--clone)[data-person="江秀琴"]').click();
+   // The speaker rail moves continuously by design: Playwright's default
+   // stable-element click cannot target a moving card. Pause only for the
+   // test's pointer selection, without disabling the production animation.
+   const selectSpeaker=async name=>{
+    const selector='.olive-speaker-card:not(.olive-speaker-card--clone)[data-person="'+name+'"]';
+    await page.locator(selector).evaluate(el=>{
+     const rail=el.closest('.olive-speaker-rail');
+     if(rail)rail.style.setProperty('animation-play-state','paused','important');
+     for(const node of rail?.querySelectorAll('*')||[])node.style.setProperty('animation-play-state','paused','important');
+    });
+    await page.locator(selector).click({force:true,timeout:5000});
+   };
+   await selectSpeaker('江秀琴');
    if((await page.locator('.olive-feature__caption h2').innerText())!=='江秀琴')errors.push('speaker card did not select its home channel');
    if(!page.url().endsWith('/olive/'))errors.push('speaker card navigated away from home');
    if(await page.locator('.olive-feature__channel .olive-feature__episode').count()<1)errors.push('selected channel episodes missing');
-   await page.locator('.olive-speaker-card:not(.olive-speaker-card--clone)[data-person="倪柝聲"]').click();
+   await selectSpeaker('倪柝聲');
    if((await page.locator('.olive-feature__caption h2').innerText())!=='倪柝聲')errors.push('speaker without featured video did not switch channel');
    if(!(await page.locator('[data-pawson-play]').isHidden()))errors.push('speaker without verified video exposes play button');
    await page.locator('[data-feature-prev]').click();
