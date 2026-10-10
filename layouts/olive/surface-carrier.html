@@ -181,7 +181,6 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       if(frame.hidden)return;
       const target='https://www.youtube-nocookie.com';
       frame.contentWindow?.postMessage(JSON.stringify({event:'listening',id:'olive-home'}),target);
-      frame.contentWindow?.postMessage(JSON.stringify({event:'command',func:'addEventListener',args:['onStateChange']}),target);
     });
     window.addEventListener('message',event=>{
       if(event.origin!=='https://www.youtube-nocookie.com' && event.origin!=='https://www.youtube.com')return;
