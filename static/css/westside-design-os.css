@@ -946,3 +946,35 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
 
 .ws-scripture-scroll__group{display:inline-flex;align-items:baseline;gap:clamp(18px,2.5vw,46px);padding-right:clamp(40px,5vw,100px)}
 @media(prefers-reduced-motion:reduce){.ws-scripture-scroll__group{flex-wrap:wrap;justify-content:center;padding:0}}
+
+/* First Look v1 — 一靜 / 一動. Seven realms share one stationary inset frame.
+   The content and realm-specific interaction move inside it. The church door
+   is an OS-supported reveal mode, NOT a second visual design system. */
+:root{
+ --ws-first-look-frame-gutter:clamp(12px,2.7vw,48px);
+ --ws-first-look-frame-line:1px solid var(--ws-first-look-line,var(--ws-line));
+ --ws-first-look-frame-radius:clamp(12px,1.5vw,24px);
+ --ws-first-look-frame-light:color-mix(in oklab,var(--ws-paper) 22%,transparent);
+}
+.sites-home-realms [data-ws-first-look]{
+ --ws-first-look-line:color-mix(in oklab,var(--ws-realm-base) 40%,transparent);
+ --ws-engraving-line:color-mix(in oklab,var(--ws-realm-base) 42%,transparent);
+ --ws-engraving-fine:color-mix(in oklab,var(--ws-realm-base) 22%,transparent);
+}
+.sites-home-realms [data-ws-first-look]::after{
+ /* Shared inset frame; pointer events pass to the realm content. */
+ content:"";position:absolute;
+ inset:var(--ws-first-look-frame-gutter);
+ border:var(--ws-first-look-frame-line);
+ border-radius:var(--ws-first-look-frame-radius);
+ box-shadow:inset 0 1px 0 var(--ws-first-look-frame-light);
+ pointer-events:none;z-index:0;
+}
+.sites-home-realms [data-ws-first-look]>:where(span,h2,p,b){position:relative;z-index:1}
+.sites-home-realms [data-ws-first-look-mode="reveal"]{
+ /* The church uses the same still frame; only its internal narrative differs. */
+ --ws-first-look-interaction:door-reveal;
+}
+@media(max-width:760px){
+ :root{--ws-first-look-frame-gutter:clamp(8px,2.2vw,16px)}
+}
