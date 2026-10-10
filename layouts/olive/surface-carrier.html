@@ -259,6 +259,13 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
 
   const speakerRail=document.querySelector('.olive-speaker-rail');
   if(speakerRail){
+    // Defensive cleanup for stale cached markup: each speaker appears once.
+    const seenSpeakers=new Set();
+    speakerRail.querySelectorAll('.olive-speaker-card').forEach(card=>{
+      const key=card.dataset.person;
+      if(!key || seenSpeakers.has(key))card.remove();
+      else seenSpeakers.add(key);
+    });
     const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
     let last=performance.now(), boost=0, raf=0, direction=1;
     const tick=now=>{
