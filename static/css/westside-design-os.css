@@ -943,3 +943,6 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
  .ws-scripture-scroll__text{white-space:normal;text-align:center}
  .ws-scripture-scroll [aria-hidden="true"]{display:none}
 }
+
+.ws-scripture-scroll__group{display:inline-flex;align-items:baseline;gap:clamp(18px,2.5vw,46px);padding-right:clamp(40px,5vw,100px)}
+@media(prefers-reduced-motion:reduce){.ws-scripture-scroll__group{flex-wrap:wrap;justify-content:center;padding:0}}
