@@ -1,5 +1,8 @@
 name: Olive Visual Regression
 on:
+  push:
+    branches:
+      - 'design/olive-hero-rail-poster-gallery-20261009'
   pull_request:
     paths:
       - 'olive/**'
