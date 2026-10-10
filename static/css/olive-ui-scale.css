@@ -288,3 +288,20 @@ body:has(#olive-speakers) .section { scroll-margin-top: var(--ws-olive-ui-gutter
  .olive-archive .olive-feature__play{top:22%;}
  .olive-archive .olive-feature__next{isolation:isolate;}
 }
+
+/* Twelve speaker gallery: independent, accessible bilingual typography over poster assets. */
+.olive-archive .olive-gallery-card__identity{
+ position:absolute;z-index:5;inset:auto 0 0;display:flex;flex-direction:column;
+ align-items:flex-start;justify-content:flex-end;gap:3px;box-sizing:border-box;
+ width:100%;height:auto;padding:clamp(12px,1.4vw,24px);pointer-events:none;
+ color:#fff;background:linear-gradient(to top,rgba(17,27,19,.92),rgba(17,27,19,.45) 55%,transparent);
+}
+.olive-archive .olive-gallery-card .olive-gallery-card__identity-en{
+ display:block;width:100%;height:auto;font-family:"Bodoni Moda",var(--ws-type-display-en),serif;
+ font-size:clamp(18px,2vw,36px);font-weight:400;font-synthesis:none;
+ line-height:1;letter-spacing:-.035em;overflow-wrap:normal;white-space:normal;
+}
+.olive-archive .olive-gallery-card .olive-gallery-card__identity-zh{
+ display:block;width:100%;height:auto;font-family:var(--ws-type-display-zh);
+ font-size:clamp(13px,1.2vw,20px);font-weight:100;font-synthesis:none;line-height:1.3;
+}
