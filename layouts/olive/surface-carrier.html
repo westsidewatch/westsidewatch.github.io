@@ -12,7 +12,7 @@
         <div class="olive-brand" data-ws-designable="olive-poster">
           <small>WESTSIDE WATCH · SERMON ARCHIVE</small>
           <h1>Olive<br>Mountain.</h1>
-          <span>橄欖山</span>
+          <span class="olive-section-brand">橄欖山</span>
         </div>
         <div class="olive-feature__caption">
           <small>FEATURED CHANNEL · 01</small>
@@ -25,7 +25,8 @@
       </div>
     </article>
 
-    <div class="olive-speaker-rail" aria-label="其他講員" tabindex="0">
+    <div class="olive-speaker-rail" aria-label="十二講員" tabindex="0">
+      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="portrait-inset" type="button" data-person="大衛鮑森"><span>01</span><strong>大衛鮑森</strong><small>系列講座</small></button>
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="negative-space" type="button" data-person="江秀琴"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="asymmetric-split" type="button" data-person="賴若瀚"><span>03</span><strong>賴若瀚</strong><small>十分釋經</small></button>
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="portrait-inset" type="button" data-person="劉彤"><span>04</span><strong>劉彤</strong><small>信仰的傳承</small></button>
@@ -38,17 +39,7 @@
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="portrait-inset" type="button" data-person="于宏潔"><span>11</span><strong>于宏潔</strong><small>講道</small></button>
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="typographic-no-portrait" type="button" data-person="黃淑華"><span>12</span><strong>黃淑華</strong><small>講道</small></button>
 
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="negative-space" aria-hidden="true" tabindex="-1" type="button" data-person="江秀琴"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="asymmetric-split" aria-hidden="true" tabindex="-1" type="button" data-person="賴若瀚"><span>03</span><strong>賴若瀚</strong><small>十分釋經</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="portrait-inset" aria-hidden="true" tabindex="-1" type="button" data-person="劉彤"><span>04</span><strong>劉彤</strong><small>信仰的傳承</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="extreme-crop" aria-hidden="true" tabindex="-1" type="button" data-person="葉光明"><span>05</span><strong>葉光明</strong><small>中文事工</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="full-bleed" aria-hidden="true" tabindex="-1" type="button" data-person="倪柝聲"><span>06</span><strong>倪柝聲</strong><small>講道與出版</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="typographic-no-portrait" aria-hidden="true" tabindex="-1" type="button" data-person="康來昌"><span>07</span><strong>康來昌</strong><small>中文講道</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="asymmetric-split" aria-hidden="true" tabindex="-1" type="button" data-person="唐崇榮"><span>08</span><strong>唐崇榮</strong><small>中文講道</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="negative-space" aria-hidden="true" tabindex="-1" type="button" data-person="寇紹恩"><span>09</span><strong>寇紹恩</strong><small>系列信息</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="extreme-crop" aria-hidden="true" tabindex="-1" type="button" data-person="華理克"><span>10</span><strong>華理克</strong><small>中文講道</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="portrait-inset" aria-hidden="true" tabindex="-1" type="button" data-person="于宏潔"><span>11</span><strong>于宏潔</strong><small>講道</small></button>
-      <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card olive-speaker-card--clone" data-dore-family="typographic-no-portrait" aria-hidden="true" tabindex="-1" type="button" data-person="黃淑華"><span>12</span><strong>黃淑華</strong><small>講道</small></button>    </div>
+    </div>
   </section>
 </article>
 
@@ -63,6 +54,7 @@
 radial-gradient(ellipse at 72% 34%,rgba(255,255,255,.16),transparent 34%),
 linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix(in oklab,var(--ws-olive) 76%,#fff) 48%,var(--ws-olive) 100%);transition:opacity .28s ease}
 .olive-feature__youtube[hidden]{display:none}
+.olive-feature__play[hidden]{display:none}
 .olive-feature__play{position:absolute;left:50%;top:50%;z-index:4;transform:translate(-50%,-50%);width:clamp(52px,4.5vw,74px);height:clamp(52px,4.5vw,74px);border:1px solid rgba(255,255,255,.72);border-radius:50%;background:color-mix(in oklab,var(--ws-olive) 78%,transparent);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(5px)}
 .olive-feature__play span{font-size:clamp(16px,1.4vw,23px);margin-left:.15em}
 .olive-feature.is-playing .olive-feature__poster,.olive-feature.is-playing .olive-feature__play,.olive-feature.is-playing .olive-feature__veil{opacity:0;pointer-events:none}
@@ -108,7 +100,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
  .olive-feature__source{position:relative;z-index:5;display:inline-block;margin:.65rem 0 .65rem .75rem;padding:.5rem .75rem;color:inherit;font:400 11px/1.3 var(--ws-type-display-en);letter-spacing:.1em;text-decoration:underline;text-underline-offset:.25em}
  .olive-feature__next{position:relative;z-index:5;display:inline-block;margin:.65rem 0;padding:.5rem .75rem;border:1px solid currentColor;background:transparent;color:inherit;font:400 11px/1.3 var(--ws-type-display-en);letter-spacing:.12em;cursor:pointer}
 </style>
-<link rel="stylesheet" href="/css/olive-ui-scale.css?v=20261009-authority-v1">
+<link rel="stylesheet" href="/css/olive-ui-scale.css?v=20261009-bilingual-v3">
 
 <script>
 (() => {
@@ -144,6 +136,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     if(!feature||!poster||!frame||!play)return;
     index=(newIndex+featured.length)%featured.length;
     const item=featured[index],generation=++previewGeneration;
+    play.hidden=false;
     feature.dataset.person=item.speaker;
     feature.classList.remove('is-playing');
     frame.hidden=true;
@@ -178,51 +171,139 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   if(feature&&frame&&poster&&play){
     selectFeatured(0);
     play.addEventListener('click',()=>{
+      if(play.hidden || !featured[index] || featured[index].speaker!==feature.dataset.person)return;
       const item=featured[index];
-      frame.src='https://www.youtube-nocookie.com/embed/'+item.id+'?autoplay=1&rel=0';
+      frame.src='https://www.youtube-nocookie.com/embed/'+item.id+'?autoplay=1&rel=0&enablejsapi=1&origin='+encodeURIComponent(location.origin);
       frame.hidden=false;
       feature.classList.add('is-playing');
     });
-    next?.addEventListener('click',()=>selectFeatured(index+1));
-    prev?.addEventListener('click',()=>selectFeatured(index-1));
+    frame.addEventListener('load',()=>{
+      if(frame.hidden)return;
+      const target='https://www.youtube-nocookie.com';
+      frame.contentWindow?.postMessage(JSON.stringify({event:'listening',id:'olive-home'}),target);
+    });
+    window.addEventListener('message',event=>{
+      if(event.origin!=='https://www.youtube-nocookie.com' && event.origin!=='https://www.youtube.com')return;
+      if(event.source!==frame.contentWindow || frame.hidden)return;
+      let message;
+      try{message=typeof event.data==='string'?JSON.parse(event.data):event.data;}catch{return;}
+      const state=typeof message?.info==='object'?message.info?.playerState:message?.info;
+      if(message?.event!=='onStateChange' || Number(state)!==0)return;
+      if(!feature.classList.contains('is-playing'))return;
+      const current=featured[index];
+      if(!current || current.speaker!==feature.dataset.person)return;
+      const sequence=featured.filter(item=>item.speaker===current.speaker);
+      const position=sequence.findIndex(item=>item.id===current.id);
+      if(position<0 || position===sequence.length-1)return;
+      selectFeatured(featured.indexOf(sequence[position+1]));
+      activeSpeaker=current.speaker;
+      updateChannel();
+      play.click();
+    });
+    next?.addEventListener('click',()=>{selectFeatured(index+1);activeSpeaker=featured[index].speaker;updateChannel();});
+    prev?.addEventListener('click',()=>{selectFeatured(index-1);activeSpeaker=featured[index].speaker;updateChannel();});
     feature.addEventListener('keydown',event=>{
       if(event.target?.tagName==='IFRAME')return;
-      if(event.key==='ArrowRight'){event.preventDefault();selectFeatured(index+1);}
-      if(event.key==='ArrowLeft'){event.preventDefault();selectFeatured(index-1);}
+      if(event.key==='ArrowRight'){event.preventDefault();selectFeatured(index+1);activeSpeaker=featured[index].speaker;updateChannel();}
+      if(event.key==='ArrowLeft'){event.preventDefault();selectFeatured(index-1);activeSpeaker=featured[index].speaker;updateChannel();}
     });
     document.addEventListener('visibilitychange',()=>{if(document.hidden && !frame.hidden){frame.removeAttribute('src');frame.hidden=true;feature.classList.remove('is-playing');}});
   }
 
   const speakerRoutes={
+    '大衛鮑森':'david-pawson',
     '江秀琴':'jiang-xiuqin','賴若瀚':'jerry-lai','劉彤':'tong-liu','葉光明':'derek-prince',
     '倪柝聲':'watchman-nee','康來昌':'kang-lai-chang','唐崇榮':'stephen-tong','寇紹恩':'kou-shao-en',
     '華理克':'rick-warren','于宏潔':'yu-hong-jie','黃淑華':'huang-shuhua'
   };
+  // Speaker selection stays on the home stage: video identity, thumbnail and
+  // the flowing rail change together. A separate route is never required for first reading.
+  const channelItems={
+    '大衛鮑森':featured.filter(item=>item.speaker==='大衛鮑森'),
+    '江秀琴':featured.filter(item=>item.speaker==='江秀琴'),
+    '劉彤':featured.filter(item=>item.speaker==='劉彤')
+  };
+  const activeSpeakerVideos=new Map(Object.entries(channelItems));
+  const channelNav=document.createElement('nav');
+  channelNav.className='olive-feature__channel';
+  channelNav.setAttribute('aria-label','目前講員的講道系列');
+  feature?.querySelector('.olive-feature__caption')?.append(channelNav);
+  let activeSpeaker='大衛鮑森';
+  const updateChannel=()=>{
+    if(!channelNav)return;
+    channelNav.replaceChildren();
+    const items=activeSpeakerVideos.get(activeSpeaker)||[];
+    for(const item of items){
+      const button=document.createElement('button');
+      button.type='button';button.textContent=item.title;
+      button.className='olive-feature__episode';
+      button.setAttribute('aria-label','選擇'+activeSpeaker+'：'+item.title);
+      button.addEventListener('click',()=>selectFeatured(featured.indexOf(item)));
+      channelNav.append(button);
+    }
+    if(!items.length){
+      const a=document.createElement('a');
+      a.href='/olive/'+(speakerRoutes[activeSpeaker]||'david-pawson')+'/';
+      a.textContent='瀏覽'+activeSpeaker+'講道資料 ↗';
+      channelNav.append(a);
+    }
+  };
+  const originalSelectFeatured=selectFeatured;
+  const selectSpeaker=name=>{
+    activeSpeaker=name;
+    const items=activeSpeakerVideos.get(name)||[];
+    if(items.length)originalSelectFeatured(featured.indexOf(items[0]));
+    else{
+      ++previewGeneration;
+      feature.dataset.person=name;
+      feature.classList.remove('is-playing');
+      frame.hidden=true;frame.removeAttribute('src');
+      const slug=speakerRoutes[name];
+      poster.style.backgroundImage='url('+JSON.stringify('/images/olive/'+slug+'-editorial.png')+')';
+      poster.style.backgroundSize='contain';
+      poster.style.backgroundPosition='center';
+      poster.dataset.previewSource='speaker';
+      if(caption)caption.textContent=name;
+      if(title)title.textContent='講員頻道 · 講道資料';
+      if(source){source.href='/olive/'+slug+'/';source.textContent='講員檔案 ↗';}
+      play.hidden=true;
+    }
+    if(items.length){play.hidden=false;if(source)source.textContent='WATCH ON YOUTUBE ↗';}
+    updateChannel();
+    document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)').forEach(card=>{
+      card.setAttribute('aria-pressed',String(card.dataset.person===name));
+    });
+  };
+  updateChannel();
   document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)').forEach(card=>{
     const slug=speakerRoutes[card.dataset.person];
     if(!slug)return;
     card.dataset.doreSurface='speaker-card';
     card.dataset.doreSpeaker=slug;
     card.dataset.doreIdentitySynthesis='false';
-    card.addEventListener('click',()=>location.assign('/olive/'+slug+'/'));
+    card.addEventListener('click',()=>selectSpeaker(card.dataset.person));
   });
 
   const speakerRail=document.querySelector('.olive-speaker-rail');
   if(speakerRail){
+    // Defensive cleanup for stale cached markup: each speaker appears once.
+    const seenSpeakers=new Set();
+    speakerRail.querySelectorAll('.olive-speaker-card').forEach(card=>{
+      const key=card.dataset.person;
+      if(!key || seenSpeakers.has(key))card.remove();
+      else seenSpeakers.add(key);
+    });
     const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
-    let last=performance.now(), boost=0, raf=0;
-    const halfWidth=()=>speakerRail.scrollWidth/2;
-    const normalize=()=>{
-      const half=halfWidth();
-      if(half>0 && speakerRail.scrollLeft>=half) speakerRail.scrollLeft-=half;
-      else if(speakerRail.scrollLeft<0) speakerRail.scrollLeft+=half;
-    };
+    let last=performance.now(), boost=0, raf=0, direction=1;
     const tick=now=>{
-      const dt=Math.min(40,now-last); last=now;
+      const dt=Math.min(40,now-last);last=now;
       if(!reduceMotion.matches){
-        speakerRail.scrollLeft+=(0.018*dt)+boost;
+        const max=Math.max(0,speakerRail.scrollWidth-speakerRail.clientWidth);
+        const next=speakerRail.scrollLeft+direction*dt*.018+boost;
+        if(next>=max){speakerRail.scrollLeft=max;direction=-1;boost=0;}
+        else if(next<=0){speakerRail.scrollLeft=0;direction=1;boost=0;}
+        else speakerRail.scrollLeft=next;
         boost*=.88;
-        normalize();
       }
       raf=requestAnimationFrame(tick);
     };
@@ -233,7 +314,6 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
         boost+=Math.max(-18,Math.min(18,e.deltaY*.11));
       }
     },{passive:false});
-    speakerRail.addEventListener('scroll',normalize,{passive:true});
     window.addEventListener('pagehide',()=>cancelAnimationFrame(raf),{once:true});
   }
   document.querySelectorAll('a.series-chip[href*="topic="]').forEach(link=>{
@@ -276,10 +356,8 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       selected.setAttribute('aria-current','true');
       selected.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',inline:'center',block:'nearest'});
     }
-    const caption=document.querySelector('.olive-feature__caption h2');
-    const title=document.querySelector('[data-pawson-title]');
-    if(caption) caption.textContent=personNames[person];
-    if(title) title.textContent=verifiedSpeakerChannels[person]?'講員頻道 · 已核實系列':'講員頻道';
+    // Query-selected channels must not rename the currently playing featured video.
+    // The hero caption is exclusively controlled by selectFeatured().
     renderSpeakerChannel(person);
   }
   const detail=document.querySelector('#olive-detail');
@@ -318,6 +396,6 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   }
 })();
 </script>
-<script src="/js/olive-editorial-rail.js?v=20261009-v1" defer></script>
-<script src="/js/olive-journey.js?v=20261009-v1" defer></script>
+<script src="/js/olive-editorial-rail.js?v=20261009-bilingual-v3" defer></script>
+<script src="/js/olive-journey.js?v=20261009-gallery-v2" defer></script>
 {{ end }}

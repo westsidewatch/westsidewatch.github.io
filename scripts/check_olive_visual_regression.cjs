@@ -25,6 +25,20 @@ const fs=require('node:fs');
     }));
    });
    for(const item of imageReport)if(!item.loaded)errors.push('editorial image failed to load '+item.speaker+': '+item.src);
+    try {
+     await page.waitForFunction(() => document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length===12,null,{timeout:15000});
+    } catch (error) {
+     const diagnostic=await page.evaluate(() => ({
+      railCards:document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)').length,
+      galleryCards:document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length,
+      galleryPresent:!!document.querySelector('.olive-poster-gallery'),
+      rootPresent:!!document.querySelector('.olive-archive'),
+      scripts:[...document.querySelectorAll('script[src*="olive-"]')].map(el=>el.src),
+      speakerNames:[...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')].map(el=>el.dataset.person)
+     }));
+     await page.screenshot({path:'/tmp/olive-visual/'+size.name+'-gallery-failure.png',fullPage:true});
+     throw new Error('Olive poster gallery initialization failed: '+JSON.stringify({diagnostic,errors,cause:error.message}));
+    }
    // Image decoding alone does not prove the editorial poster is visually visible.
    // Verify stacking, dimensions and actual hit-tested paint at the card center.
    const visibility=await page.evaluate(() => [...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')].map(card => {
@@ -52,10 +66,12 @@ const fs=require('node:fs');
     const feature=document.querySelector('.olive-feature');
     const cards=[...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')];
     if(!feature)errors.push('canonical hero missing');
-    if(cards.length!==11)errors.push('expected 11 rail cards plus David Pawson hero; got '+cards.length);
+    if(cards.length!==12)errors.push('expected 12 unique speaker cards including David Pawson; got '+cards.length);
+    if(new Set(cards.map(card=>card.dataset.person)).size!==12)errors.push('speaker rail contains duplicate or unnamed cards');
     if(!document.querySelector('[data-feature-next]')||!document.querySelector('[data-feature-prev]'))errors.push('rotation controls missing');
     if(!document.querySelector('[data-feature-source]'))errors.push('video source link missing');
-    if(!document.querySelector('#olive-sermon-experience')||!document.querySelector('#olive-archive-experience'))errors.push('journey sections missing');
+    if(document.querySelectorAll('.olive-poster-gallery .olive-gallery-card').length!==12)errors.push('twelve-speaker poster gallery missing');
+    if(document.querySelector('#olive-archive-experience')||document.querySelector('.olive-journey-nav')||document.querySelector('.olive-journey-heading'))errors.push('internal journey taxonomy leaked into visible page');
     for(const card of cards){
       const rect=card.getBoundingClientRect();
       if(rect.width<1||rect.height<1)errors.push('invisible speaker '+card.dataset.person);
@@ -66,14 +82,26 @@ const fs=require('node:fs');
         if(Math.abs(rect.width/rect.height-.75)>.04)errors.push('poster aspect ratio '+card.dataset.person+': '+(rect.width/rect.height).toFixed(2));
       }
     }
-    if(innerWidth<=760){
-      const rail=document.querySelector('.olive-speaker-rail')?.getBoundingClientRect();
-      const hero=feature?.getBoundingClientRect();
-      if(rail&&hero&&rail.top<hero.bottom-3)errors.push('mobile rail overlaps hero');
-    }
+    // The approved poster rail intentionally overlays the hero media.
+    // Verify it stays within the stage rather than rejecting the editorial overlap.
+    const rail=document.querySelector('.olive-speaker-rail')?.getBoundingClientRect();
+    const stage=document.querySelector('.olive-home-stage')?.getBoundingClientRect();
+    if(rail&&stage&&(rail.top<stage.top-3||rail.bottom>stage.bottom+3))errors.push('poster rail escapes hero stage');
+    const gallery=[...document.querySelectorAll('.olive-poster-gallery .olive-gallery-card')];
+    if(gallery.length!==12)errors.push('expected twelve gallery posters; got '+gallery.length);
+    if(document.querySelector('.olive-journey-screen'))errors.push('placeholder green theater screen remains');
     return errors;
    });
    errors.push(...issues);
+   // Selecting a speaker must switch the home channel without leaving /olive/.
+   await page.locator('.olive-speaker-card:not(.olive-speaker-card--clone)[data-person="江秀琴"]').click();
+   if((await page.locator('.olive-feature__caption h2').innerText())!=='江秀琴')errors.push('speaker card did not select its home channel');
+   if(!page.url().endsWith('/olive/'))errors.push('speaker card navigated away from home');
+   if(await page.locator('.olive-feature__channel .olive-feature__episode').count()<1)errors.push('selected channel episodes missing');
+   await page.locator('.olive-speaker-card:not(.olive-speaker-card--clone)[data-person="倪柝聲"]').click();
+   if((await page.locator('.olive-feature__caption h2').innerText())!=='倪柝聲')errors.push('speaker without featured video did not switch channel');
+   if(!(await page.locator('[data-pawson-play]').isHidden()))errors.push('speaker without verified video exposes play button');
+   await page.locator('[data-feature-prev]').click();
    const initial=await page.locator('.olive-feature__caption h2').innerText();
    await page.locator('[data-feature-next]').click();
    const after=await page.locator('.olive-feature__caption h2').innerText();
@@ -82,6 +110,14 @@ const fs=require('node:fs');
    if(!/^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/.test(source||''))errors.push('feature source link invalid');
    await page.locator('[data-feature-prev]').click();
    if((await page.locator('.olive-feature__caption h2').innerText())!==initial)errors.push('previous feature did not restore speaker');
+   // Verify the player configuration and that switching clears the previous embed.
+   await page.locator('.olive-speaker-card[data-person="大衛鮑森"]').click();
+   await page.locator('[data-pawson-play]').click();
+   const firstEmbed=await page.locator('[data-pawson-preview]').getAttribute('src');
+   if(!firstEmbed?.includes('/embed/fizg-bxIjuY?'))errors.push('Pawson first curated episode mismatch');
+   if(!firstEmbed?.includes('enablejsapi=1')||!firstEmbed?.includes('origin='))errors.push('YouTube iframe API parameters missing');
+   await page.locator('[data-feature-next]').click();
+   if(await page.locator('[data-pawson-preview]').getAttribute('src'))errors.push('previous player not cleared on manual navigation');
    // Exercise all eight feature selections without requiring YouTube network access.
    const visited=new Set();
    for(let i=0;i<8;i++){

@@ -8,6 +8,19 @@ portrait_image: "/images/olive/watchman-nee-editorial.png"
 portrait_alt: "倪柝聲人物版畫插圖"
 portrait_title: ["WATCHMAN", "NEE"]
 portrait_name: "倪柝聲"
+sermon_series:
+  - title: "有聲書與著作朗讀"
+    description: "本版塊只收錄可觀看的 YouTube 視頻：倪柝聲著作的中文有聲書朗讀視頻、完整朗讀視頻及分章朗讀視頻；以書名、章節為索引，保留朗讀者、發布頻道及原著資訊。純音檔、書目與電子書歸黎明書局。此類視頻是後人朗讀，並非倪柝聲本人錄影；逐條核實影片網址及嵌入播放能力，不收錄後人評論或解說。"
+  - title: "文章精選與主題朗讀"
+    description: "「每日靈修」《倪柝聲文集精選》系列全系列列為收錄範圍，逐集以朗讀主題為標題，保留系列及發布者資訊；已確認條目先列於下方，其餘集數待取得原始影片網址後續補齊。不收錄後人評論或解說，未核實網址不預填。"
+    sermons:
+      - title: "深處的生活"
+        source: "每日靈修 · 倪柝聲文集精選（截圖確認，影片網址待核實）"
+      - title: "如何知道神的旨意"
+        url: "https://www.youtube.com/watch?v=rwrjmlRs-qw"
+        source: "每日靈修 · 倪柝聲文集精選（YouTube 發布頁已查得；嵌入播放待驗收）"
+      - title: "如何自知與神的光"
+        source: "每日靈修 · 倪柝聲文集精選（截圖確認，影片網址待核實）"
 ---
 
 倪柝聲人物介紹。
