@@ -41,7 +41,7 @@ body[data-ws-scope] :is(
 body[data-ws-scope] :is(
  .article-body,.prose,.reading-body,.sites-article-body
 ):not(:where([data-ws-designable], [data-ws-designable] *)) :is(p,li,blockquote):not(:where([data-ws-designable], [data-ws-designable] *)){
- font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif);
+ font-family:var(--ws-type-reading-zh,var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif));
 }
 
 /* The language attribute on the heading itself must win over the page language. */
@@ -100,4 +100,11 @@ body[data-ws-scope] :is(.olive-archive,.olive-editorial) :is(
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
  font-weight:var(--ws-olive-layer-zh-weight,100)!important;
  font-synthesis:none!important;font-stretch:normal!important;
+}
+
+/* Global Chinese text runs: normalize their font family without flattening
+   font sizes, weights, spacing or art-directed English typography. */
+body[data-ws-scope] :is([lang="zh"],[lang^="zh-"],[data-ws-type-role="section-name"]):not(:where([data-ws-designable] [lang="en"],[data-ws-designable] [lang^="en-"])){
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS","Noto Sans TC",sans-serif)!important;
+ font-synthesis:none;
 }
