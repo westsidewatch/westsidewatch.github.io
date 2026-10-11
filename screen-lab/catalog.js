@@ -60,6 +60,7 @@
     host.append(box);dialog.showModal();
   }
   document.getElementById('detail-close').onclick=()=>dialog.close();
+  document.querySelectorAll('[data-screen-filter]').forEach(button => button.addEventListener('click', () => setFilter(button.dataset.screenFilter)));
   search.addEventListener('input',render);
   document.getElementById('catalog-file').addEventListener('change',async e=>{
     const file=e.target.files?.[0];if(!file)return;
