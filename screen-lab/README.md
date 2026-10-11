@@ -51,3 +51,7 @@ A valid HTTPS URL is not proof that its poster is available, that its video is p
 GitHub Actions workflow `.github/workflows/screen-lab-smoke.yml` runs `node --test screen-lab/tests/catalog.test.mjs` for changes to this experiment. This verifies structural and catalog contracts only. It does **not** prove browser rendering, external poster availability, video licensing, network access, or successful HLS playback.
 
 Current curated film records are verified as Blender film titles from the official Blender Studio film index. Their official source pages are linked, but actual poster files and embeddable player URLs have not been verified. Do not label them as playable until browser QA confirms it.
+
+## First verified-pedigree poster
+
+Big Buck Bunny poster: Wikimedia Commons file `Big_buck_bunny_poster_big.jpg`; Blender Foundation; CC BY 3.0. The catalog stores attribution, source, and license URL alongside the poster. Browser rendering of the remote image still requires QA. Other films intentionally keep abstract fallback artwork until provenance and image access are checked. The main site is unchanged.
