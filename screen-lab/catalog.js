@@ -15,6 +15,16 @@
   let films=demo,active='全部';
   const https = v => {try {const u=new URL(v);return u.protocol==='https:'?u.href:null;}catch{return null;}};
   const mediaUrl=v=>{const u=https(v);return u && /\.(m3u8|mp4|m4v|webm|ogv|ogg)$/i.test(new URL(u).pathname)?u:null;};
+  function youtubeId(value) {
+    const url=https(value);if(!url)return null;
+    const u=new URL(url),host=u.hostname.toLowerCase().replace(/^www\./,'');
+    let id=null;
+    if(host==='youtu.be')id=u.pathname.split('/')[1];
+    if(host==='youtube.com'||host==='m.youtube.com'||host==='youtube-nocookie.com'){
+      id=u.pathname==='/watch'?u.searchParams.get('v'):u.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/)?.[1];
+    }
+    return /^[A-Za-z0-9_-]{11}$/.test(id||'')?id:null;
+  }
   function normalize(raw) {
     if (!Array.isArray(raw)) throw Error('片庫必須是 JSON 陣列');
     if (raw.length>500) throw Error('一次最多載入 500 部作品');
@@ -22,7 +32,7 @@
       if (!f || typeof f!=='object' || typeof f.title!=='string' || !f.title.trim()) throw Error('第 '+(i+1)+' 筆缺少片名');
       const type=categories.includes(f.type)&&f.type!=='全部'?f.type:'電影';
       return {title:f.title.trim().slice(0,160),type,year:String(f.year||'').slice(0,30),description:String(f.description||'').slice(0,1000),
-        poster:https(f.poster),stream:mediaUrl(f.stream),source:https(f.source),verified:false,a:'#4d555b',b:'#b6a58b',demo:false};
+        poster:https(f.poster)||(youtubeId(f.source)?'https://i.ytimg.com/vi/'+youtubeId(f.source)+'/hqdefault.jpg':null),stream:mediaUrl(f.stream),youtube:youtubeId(f.source),source:https(f.source),verified:false,a:'#4d555b',b:'#b6a58b',demo:false};
     });
   }
   function setFilter(v){active=v;render();}
@@ -40,7 +50,7 @@
       if(f.poster){const img=document.createElement('img');img.src=f.poster;img.alt='';img.loading='lazy';img.referrerPolicy='no-referrer';img.className='poster-image';img.onerror=()=>img.remove();poster.append(img);}
       poster.append(label);
       const name=document.createElement('strong');name.textContent=f.title;
-      const meta=document.createElement('small');meta.textContent=[f.year,f.type,f.stream?'待驗證片源':f.demo?'示意封面':'來源待驗證'].filter(Boolean).join(' · ');
+      const meta=document.createElement('small');meta.textContent=[f.year,f.type,f.stream?'待驗證片源':f.youtube?'YouTube 官方播放器':f.demo?'示意封面':'來源待驗證'].filter(Boolean).join(' · ');
       b.append(poster,name,meta);b.onclick=()=>openDetail(f);grid.append(b);
     }
   }
@@ -53,13 +63,26 @@
     const info=document.createElement('p');info.textContent=f.stream?'已提供直接媒體連結，但尚未確認可播放。':'沒有可直接播放的媒體來源。';
     box.append(info);
     if(f.stream){const btn=document.createElement('button');btn.textContent='前往線上試映 ↗';btn.onclick=()=>{
-      dialog.close();urlInput.value=f.stream;document.querySelector('#stream-title').scrollIntoView({behavior:'smooth'});
+      closeDetail();urlInput.value=f.stream;document.querySelector('#stream-title').scrollIntoView({behavior:'smooth'});
       playForm.requestSubmit();
     };box.append(btn);}
+    if(f.youtube){
+      const btn=document.createElement('button');btn.type='button';btn.textContent='使用 YouTube 官方播放器 ↗';
+      btn.onclick=()=>{
+        const frame=document.createElement('iframe');
+        frame.src='https://www.youtube-nocookie.com/embed/'+f.youtube+'?autoplay=1';
+        frame.title=f.title+' — YouTube 播放器';frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';
+        frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
+        frame.style.cssText='width:100%;aspect-ratio:16/9;border:0';
+        host.replaceChildren(frame);
+      };box.append(btn);
+    }
     if(f.source){const link=document.createElement('a');link.href=f.source;link.target='_blank';link.rel='noopener noreferrer';link.textContent='查看來源網站 ↗';box.append(link);}
     host.append(box);dialog.showModal();
   }
-  document.getElementById('detail-close').onclick=()=>dialog.close();
+  function closeDetail(){dialog.close();document.getElementById('player').replaceChildren();}
+  document.getElementById('detail-close').onclick=closeDetail;
+  dialog.addEventListener('close',()=>document.getElementById('player').replaceChildren());
   document.querySelectorAll('[data-screen-filter]').forEach(button => button.addEventListener('click', () => setFilter(button.dataset.screenFilter)));
   search.addEventListener('input',render);
   document.getElementById('catalog-file').addEventListener('change',async e=>{
