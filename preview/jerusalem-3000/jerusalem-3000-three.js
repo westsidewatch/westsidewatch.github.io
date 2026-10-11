@@ -138,6 +138,10 @@ try {
       active: !isCorePhase(p.id) && !isSharedGenerationPhase(p.id) && !isEarliestPhase(p.id) && !!inheritance?.runtime,
       progress: localProgress,
     };
+    const productionInfo=window.__JERUSALEM3000__.production;
+    badge.textContent=isEarliestPhase(p.id)
+      ? '最早聚落 · 現代地形 · 推定住居／步徑'
+      : `JERUSALEM 3000 · TEMPORAL CITY · ${productionInfo?.evidenceObjects || 0} EVIDENCE OBJECTS · ${productionInfo?.constructionPieces || 0} PIECES`;
     date.textContent = p.dateLabel;
     eraEn.textContent = (p.state || '').toUpperCase() + ' · ' + p.dateLabel;
     eraZh.textContent = p.label;
@@ -255,7 +259,7 @@ try {
   window.__JERUSALEM3000__.completion = completion;
   window.__JERUSALEM3000__.complete = completion.ok && phaseAudit.complete;
   stage.dataset.complete = String(window.__JERUSALEM3000__.complete);
-  badge.textContent = `JERUSALEM 3000 · TEMPORAL CITY · ${production.evidenceObjects || 0} EVIDENCE OBJECTS · ${production.constructionPieces || 0} PIECES`;
+  if(!isEarliestPhase(window.__JERUSALEM3000__.historicalTime.phase)) badge.textContent = `JERUSALEM 3000 · TEMPORAL CITY · ${production.evidenceObjects || 0} EVIDENCE OBJECTS · ${production.constructionPieces || 0} PIECES`;
   window.addEventListener(
     'pagehide',
     () => {

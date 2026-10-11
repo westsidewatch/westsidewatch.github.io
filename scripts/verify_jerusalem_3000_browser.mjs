@@ -103,6 +103,7 @@ try {
   // scaled Herodian street/parcel city.
   await page.locator('.j3k-scrubber').evaluate(el=>{el.value='0.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
   await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement?.visibleHouses===14);
+  assert.match(await page.locator('.j3k-terrain-badge').textContent(),/推定/);
   const early=await page.evaluate(()=>({render:window.__JERUSALEM3000__.renderDiagnostics,inheritance:window.__JERUSALEM3000__.inheritanceState}));
   assert.equal(early.render.urbanFabric.phase2Components,0);
   assert.equal(early.render.visibleLegacyTemporalMeshes,0);
