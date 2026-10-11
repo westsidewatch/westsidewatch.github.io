@@ -145,9 +145,12 @@ try {
   await writeFile(`${output}/shared-report.json`, JSON.stringify({ sharedReports }, null, 2));
   // Persian rebuilding retains the same earlier fabric as an opt-in ruin layer.
   await page.locator('.j3k-scrubber').evaluate(el => {
+    for(const value of [6,17,6.5]) {el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));}
+  });
+  await page.locator('.j3k-scrubber').evaluate(el => {
     el.value = '6.5'; el.dispatchEvent(new Event('input', { bubbles: true }));
   });
-  await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.phaseId === 'persian-nehemiah');
+  await page.waitForFunction(() => {const s=window.__JERUSALEM3000__.renderDiagnostics.sharedEra;return s.status==='ready'&&s.successor.projection?.visibleBuildings>0;},null,{timeout:60000});
   const retainedButton = page.getByRole('button', {name:'前代遺存 · 推定', exact:true});
   assert.equal(await retainedButton.getAttribute('aria-pressed'),'false');
   await retainedButton.click();
@@ -157,7 +160,13 @@ try {
   assert.equal(retained.sharedEra.projection.ruin,1);
   assert.equal(retained.sharedEra.projection.layerState,'retained-ruin');
   assert.equal(retained.sharedEra.retainedObjects, retained.sharedEra.projection.visibleBuildings);
-  assert.ok(retained.urbanFabric.phase2Components > 0, 'retained ruins must coexist with successor morphology');
+  assert.equal(retained.urbanFabric.phase2Components,0,'legacy Persian morphology must be removed');
+  assert.equal(retained.visibleLegacyTemporalMeshes,0);
+  assert.ok(retained.sharedEra.successor.projection.visibleBuildings>0);
+  assert.notEqual(retained.sharedEra.successor.projection.identityFingerprint,retained.sharedEra.projection.identityFingerprint);
+  assert.equal(retained.sharedEra.successor.projection.ruin,0);
+  assert.ok(retained.sharedEra.successor.yields>0);
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.active),false);
   assert.equal(retained.sharedEra.projection.burialDepthVerified,false);
   assert.equal(retained.sharedEra.projection.reuseLinksVerified,false);
   await page.screenshot({path:`${output}/persian-retained.png`,fullPage:true});
@@ -167,6 +176,13 @@ try {
   await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings > 0);
   await retainedButton.click();
   await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings === 0);
+  const successorFingerprint=retained.sharedEra.successor.projection.transformFingerprint;
+  for(const value of [4.9,6.5]) {
+    await page.locator('.j3k-scrubber').evaluate((el,value)=>{el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));},value);
+    await page.waitForFunction(value=>window.__JERUSALEM3000__.historicalTime.position===value&&window.__JERUSALEM3000__.renderDiagnostics.sharedEra.status==='ready',value);
+  }
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.successor.projection.transformFingerprint),successorFingerprint);
+  await page.screenshot({path:`${output}/persian-city.png`,fullPage:true});
   await writeFile(`${output}/persian-retained-report.json`,JSON.stringify(retained,null,2));
   // Render every era separately. Startup metadata is not proof of a visible city.
   const phaseReports = [];
@@ -189,7 +205,8 @@ try {
     assert.ok(sample.render.webgl && sample.render.frames > 0);
     const visible = sample.render.visibleCoreMeshes +
       sample.render.urbanFabric.phase2Components + sample.render.visibleLegacyTemporalMeshes +
-      (sample.render.sharedEra?.projection?.visibleBuildings || 0);
+      (sample.render.sharedEra?.projection?.visibleBuildings || 0) +
+      (sample.render.sharedEra?.successor?.projection?.visibleBuildings || 0);
     assert.ok(visible > 0, `No urban geometry rendered for ${sample.time.phase}`);
     if (phase === 10) assert.equal(sample.render.visibleCoreMeshes, 0,
       'Aelia must not reuse standing Herodian architecture');
@@ -234,6 +251,7 @@ try {
   assert.ok(mobileShared.projection.visibleBuildings > 0);
   assert.equal(mobileShared.projection.layerState,'retained-ruin');
   assert.equal(mobileShared.retainedObjects,mobileShared.projection.visibleBuildings);
+  assert.ok(mobileShared.successor.projection.visibleBuildings>0);
   await mobile.screenshot({path:`${output}/shared-mobile.png`,fullPage:true});
   await mobile.close();
   const broken = await browser.newPage();

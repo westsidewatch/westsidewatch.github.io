@@ -396,7 +396,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     // Request only this bounded slice; other eras retain their established morphology.
     sharedEraRuntime?.request(phaseId);
     if (isCorePhase(phaseId)) return;
-    if (sharedEraRuntime?.status === 'ready' && isSharedSlicePhase(phaseId)) {
+    if (sharedEraRuntime?.status === 'ready' && isSharedGenerationPhase(phaseId)) {
       eraFabricLayer.visible = false;
       return;
     }
@@ -459,7 +459,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       if (
         !(object.visible || object.ruined) ||
         !legacyTemporalAllowed(object, phaseId) ||
-        (isSharedSlicePhase(phaseId) && sharedEraRuntime?.status === 'ready')
+        (isSharedGenerationPhase(phaseId) && sharedEraRuntime?.status === 'ready')
       )
         return;
       activeIds.add(object.id);
@@ -607,6 +607,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       cityCoreRuntime.projection = cityProjection;
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
+        successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],
         terrain: terrainRuntime, materials: temporalMaterials,
         onChange: () => { applyTemporalState(); needsFrame = true; },
         onProgress: ({ completed, total }) => {

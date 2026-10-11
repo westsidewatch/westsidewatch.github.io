@@ -41,3 +41,9 @@ The first-temple shared runtime also accepts direct entry into `persian-nehemiah
 The Persian morphology remains a separate provisional reconstruction. The “前代遺存 · 推定” button enables comparison with earlier ruins; it is off by default and remains subject to evidence filtering. Roads are withheld in this successor layer because their Persian continuity has not been established. Buildings retain their terrain anchors without invented burial depths. The layer does not identify which ruins actually survived, which buildings were reused, or the sourced Persian settlement envelope.
 
 Browser validation checks identity preservation, ruin state, coexistence with successor morphology, evidence filtering, hiding the overlay, and direct Persian entry on mobile. This advances the lifecycle interface; Persian replacement architecture and sourced burial/reuse links remain unfinished. Full-timeline readiness remains false.
+
+## Bounded Persian replacement (2026-10-10)
+
+Persian residential fabric now uses the same bounded parcel/architecture generator as the first-temple city, with the existing smaller provisional Persian envelope. On completion it replaces legacy era morphology, temporal boxes and the separate inherited city model. Partial batches remain hidden and cancel when leaving the phase; cached meshes and IDs are restored on return. Direct Persian entry builds both the successor and earlier retained layer without requiring a prior visit.
+
+Persian objects have distinct phase-specific IDs. No proximity-based predecessor/reuse links are invented. The optional earlier ruin layer still uses the original first-temple IDs and full collapse. Both layers are inferred and hidden by the observed evidence filter. The transformed road/district scaffold is still not a sourced Persian survey; the historical settlement envelope, Nehemiah wall variants and burial/reuse records remain unfinished. Full timeline readiness stays false.

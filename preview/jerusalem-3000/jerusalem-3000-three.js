@@ -1,4 +1,4 @@
-import { isSharedSlicePhase, RETAINED_PHASE } from './shared-era-runtime.js';
+import { isSharedSlicePhase, isSharedGenerationPhase, RETAINED_PHASE } from './shared-era-runtime.js';
 import { isCorePhase } from './city-lifecycle-projection.js';
 import { mountJerusalemThreeScene } from './three-scene.js';
 import { HistoricalTimeEngine } from './historical-time-engine.js';
@@ -97,8 +97,8 @@ try {
     three.setTemporalCityState?.(cityObjects, state.position, p.id);
     if (inheritance) {
       try {
-        inheritance.setVisible(!isCorePhase(p.id) && !isSharedSlicePhase(p.id));
-        if (!isCorePhase(p.id) && !isSharedSlicePhase(p.id)) {
+        inheritance.setVisible(!isCorePhase(p.id) && !isSharedGenerationPhase(p.id));
+        if (!isCorePhase(p.id) && !isSharedGenerationPhase(p.id)) {
           if (inheritedPhase !== p.id) {
             inheritance.setPhase(p.id, localProgress);
             inheritedPhase = p.id;
@@ -134,7 +134,7 @@ try {
     };
     window.__JERUSALEM3000__.inheritanceState = {
       phase: p.id,
-      active: !isCorePhase(p.id) && !isSharedSlicePhase(p.id) && !!inheritance?.runtime,
+      active: !isCorePhase(p.id) && !isSharedGenerationPhase(p.id) && !!inheritance?.runtime,
       progress: localProgress,
     };
     date.textContent = p.dateLabel;
@@ -142,7 +142,7 @@ try {
     eraZh.textContent = p.label;
     retainedToggle.hidden = p.id !== RETAINED_PHASE;
     note.textContent = p.id === RETAINED_PHASE
-      ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建層仍為獨立示意。`
+      ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建住宅由共享地塊生成器產生，範圍與道路仍屬推定。`
       : isSharedSlicePhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
     ticks.forEach((x, i) => {
       x.classList.toggle('is-past', i < state.index);
@@ -158,7 +158,7 @@ try {
       cityObjects.filter((object) => object.visible || object.ruined).length,
     );
     stage.dataset.inheritance =
-      !isCorePhase(p.id) && !isSharedSlicePhase(p.id) && inheritance?.runtime
+      !isCorePhase(p.id) && !isSharedGenerationPhase(p.id) && inheritance?.runtime
         ? 'active'
         : window.__JERUSALEM3000__.inheritance
           ? 'ready'
