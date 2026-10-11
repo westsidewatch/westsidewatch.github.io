@@ -14,7 +14,7 @@ test('curated catalog uses real metadata and no pretend playable links',()=>{
    assert.ok(!seen.has(film.title));seen.add(film.title);
    assert.match(film.source,/^https:\/\//);
    assert.ok(!film.stream,'No unverified stream should be shipped');
-   assert.ok(!film.poster,'No unverified poster should be shipped');
+   if(film.poster){assert.match(film.poster,/^https:\/\//);assert.ok(film.posterCredit && film.posterLicense && film.posterSource,'Posters require attribution, license and provenance');}
  }
 });
 test('standalone page does not link back into Paradise Cinema UI',()=>{
