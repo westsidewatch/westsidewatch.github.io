@@ -1,3 +1,4 @@
+import { trimCityCache } from '../preview/jerusalem-3000/city-runtime-cache.js';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { TemporalCityCore } from '../preview/jerusalem-3000/temporal-city-core.js';
@@ -100,3 +101,11 @@ assert.throws(()=>ruin.sample(4,'late-first-temple'),/Unknown destruction/);
 for(const group of [syncGroup,asyncGroup]) group.traverse(o=>o.geometry?.dispose());
 material.dispose();
 console.log('PASS: deterministic batched geometry, inherited identities, cancellation cleanup, independent destruction boundary');
+
+const evictedIds=[];
+const cacheEntries=['oldest','active-city','active-ruins','recent'].map(id=>({id,runtime:{status:'ready',evict(){this.status='idle';evictedIds.push(id)}}}));
+assert.deepEqual(trimCityCache(cacheEntries,{limit:3,protectedIds:new Set(['active-city','active-ruins']),lastUsed:new Map([['oldest',1],['recent',2]])}),['oldest']);
+assert.deepEqual(trimCityCache(cacheEntries,{limit:2,protectedIds:new Set(['active-city','active-ruins']),lastUsed:new Map()}),['recent']);
+assert.equal(cacheEntries.find(e=>e.id==='active-ruins').runtime.status,'ready');
+assert.throws(()=>trimCityCache(cacheEntries,{limit:1,protectedIds:new Set(),lastUsed:new Map()}),/two slots/);
+console.log('PASS: bounded LRU eviction protects active city and ruin layers');

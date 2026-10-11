@@ -609,6 +609,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
         successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],
         expansionFootprint: ERA_FOOTPRINTS['hellenistic-hasmonean'],
+        replacementFootprint: ERA_FOOTPRINTS.aelia,
         terrain: terrainRuntime, materials: temporalMaterials,
         onChange: () => { applyTemporalState(); needsFrame = true; },
         onProgress: ({ completed, total }) => {

@@ -1,3 +1,4 @@
+import { trimCityCache } from './city-runtime-cache.js';
 import * as THREE from 'three';
 import { TemporalCityCore } from './temporal-city-core.js';
 import { deriveEraRegistration } from './era-registration-adapter.js';
@@ -10,7 +11,8 @@ export const SHARED_SLICE_PHASES = ['late-first-temple', 'babylonian-destruction
 export const isSharedSlicePhase = id => SHARED_SLICE_PHASES.includes(id);
 export const RETAINED_PHASE = 'persian-nehemiah';
 export const EXPANSION_PHASE = 'hellenistic-hasmonean';
-export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || id === RETAINED_PHASE || id === EXPANSION_PHASE;
+export const REPLACEMENT_PHASE = 'aelia';
+export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || [RETAINED_PHASE, EXPANSION_PHASE, REPLACEMENT_PHASE].includes(id);
 
 // One provisional first-temple fabric, inherited by destruction in place.
 // Reuse is a schematic lifecycle, not evidence of surveyed period-specific parcels.
@@ -71,7 +73,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
           phaseIds, standingPhase: phaseId,
           phaseStates: retainedPhase ? { [retainedPhase]: { state: 'retained-ruin', ruin: 1 } } : {},
         });
-        city = { group, core, parcels, architecture, projection };
+        city = { group, core, parcels, architecture, projection, components: architecture.meshes.length + roads.length };
         state = { status: 'ready', completed: architecture.buildings, total: architecture.buildings,
           yields: architecture.yields, maxBatchMs: architecture.maxBatchMs, elapsedMs: architecture.elapsedMs, authority: registration.authority };
       } catch (error) {
@@ -90,6 +92,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
   return {
     request,
     get status() { return state.status; },
+    get cachedComponents() { return city?.components ?? 0; },
     apply({ phaseId, ruin, evidenceAllowed, retainedVisible }) {
       city?.projection.apply({ phaseId, ruin, evidenceAllowed, retainedVisible });
       return Boolean(city && phaseIds.includes(phaseId) && phaseId !== retainedPhase);
@@ -98,6 +101,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
       retainedObjects: city?.core.phase(retainedPhase).filter(object => object.type === 'building').length ?? 0,
       identityPolicy: retainedPhase ? 'same-first-temple-objects-through-destruction-and-persian-retention' : 'distinct-period-objects-without-unverified-reuse-links',
       historicalRegistrationVerified: false }; },
+    evict() { if (city) { release(city.group); city = null; state = { status: 'idle', completed: 0, total: 0 }; } },
     dispose() { disposed = true; if (!materials.facadeOpening) openingMaterial.dispose(); pending?.controller.abort(); if (city) release(city.group); city = null; },
   };
 }
@@ -105,18 +109,34 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
 // Both periods use the same bounded generator. The successor has distinct IDs;
 // proximity does not create unsupported reuse links to the earlier ruins.
 export function createSharedEraRuntime(parent, options) {
-  const first = createParcelRuntime(parent, { ...options,
+  const limit = options.maxCachedCities ?? 3;
+  if (!Number.isInteger(limit) || limit < 2) throw new Error('City cache requires at least two slots');
+  let current = '', entries = [], clock = 0, evictions = 0;
+  const lastUsed = new Map();
+  const protectedIds = () => new Set(current === RETAINED_PHASE
+    ? [SHARED_SLICE_PHASES[0], RETAINED_PHASE]
+    : isSharedSlicePhase(current) ? [SHARED_SLICE_PHASES[0]] : [current]);
+  function trimCache() { evictions += trimCityCache(entries,{limit,protectedIds:protectedIds(),lastUsed}).length; }
+  const callbacks = { ...options, onChange: () => { trimCache(); options.onChange?.(); } };
+  const first = createParcelRuntime(parent, { ...callbacks,
     generationPhase: SHARED_SLICE_PHASES[0], destroyedPhase: SHARED_SLICE_PHASES[1],
     phaseIds: [...SHARED_SLICE_PHASES, RETAINED_PHASE], retainedPhase: RETAINED_PHASE });
-  const successor = createParcelRuntime(parent, { ...options, footprint: options.successorFootprint,
+  const successor = createParcelRuntime(parent, { ...callbacks, footprint: options.successorFootprint,
     generationPhase: RETAINED_PHASE, phaseIds: [RETAINED_PHASE] });
-  const expansion = createParcelRuntime(parent, { ...options, footprint: options.expansionFootprint,
+  const expansion = createParcelRuntime(parent, { ...callbacks, footprint: options.expansionFootprint,
     generationPhase: EXPANSION_PHASE, phaseIds: [EXPANSION_PHASE] });
-  const runtimes = [first, successor, expansion];
-  let current = '';
-  const active = () => current === EXPANSION_PHASE ? expansion : current === RETAINED_PHASE ? successor : first;
+  const replacement = createParcelRuntime(parent, { ...callbacks, footprint: options.replacementFootprint,
+    generationPhase: REPLACEMENT_PHASE, phaseIds: [REPLACEMENT_PHASE] });
+  entries = [{id:SHARED_SLICE_PHASES[0],runtime:first},{id:RETAINED_PHASE,runtime:successor},
+    {id:EXPANSION_PHASE,runtime:expansion},{id:REPLACEMENT_PHASE,runtime:replacement}];
+  const runtimes = entries.map(entry=>entry.runtime);
+  const active = () => current === REPLACEMENT_PHASE ? replacement : current === EXPANSION_PHASE ? expansion : current === RETAINED_PHASE ? successor : first;
   return {
-    request(phaseId) { current = phaseId; for (const runtime of runtimes) runtime.request(phaseId); },
+    request(phaseId) {
+      current = phaseId; for (const id of protectedIds()) lastUsed.set(id,++clock);
+      for (const runtime of runtimes) runtime.request(phaseId);
+      trimCache();
+    },
     get status() {
       if (current === RETAINED_PHASE && first.status === 'error') return 'error';
       if (current === RETAINED_PHASE && successor.status === 'ready' && first.status !== 'ready') return first.status;
@@ -125,11 +145,17 @@ export function createSharedEraRuntime(parent, options) {
     apply(args) { let owned = false; for (const runtime of runtimes) owned = runtime.apply(args) || owned; return owned; },
     diagnostics() {
       const earlier = first.diagnostics(), later = successor.diagnostics();
+      const expanded = expansion.diagnostics(), replaced = replacement.diagnostics();
+      const primary = current === REPLACEMENT_PHASE ? replaced : current === EXPANSION_PHASE ? expanded : current === RETAINED_PHASE ? later : earlier;
       return { ...earlier, status: this.status,
-        completed: active().diagnostics().completed, total: active().diagnostics().total,
-        error: active().diagnostics().error || (current === RETAINED_PHASE ? earlier.error : undefined),
+        completed: primary.completed, total: primary.total,
+        error: primary.error || (current === RETAINED_PHASE ? earlier.error : undefined),
         successor: later,
-        expansion: expansion.diagnostics(),
+        expansion: expanded,
+        replacement: replaced,
+        cache: { limit, evictions, residentCities: entries.filter(e=>e.runtime.status==='ready').length,
+          residentComponents: entries.reduce((sum,e)=>sum+e.runtime.cachedComponents,0),
+          stagingCities: entries.filter(e=>e.runtime.status==='generating').length },
         historicalRegistrationVerified: false };
     },
     dispose() { for (const runtime of runtimes) runtime.dispose(); },
