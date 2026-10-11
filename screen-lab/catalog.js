@@ -121,11 +121,11 @@
       if(!response.ok)throw Error('HTTP '+response.status);
       const curated=normalize(await response.json());
       films=curated;active='全部';render();
-      status.textContent='已載入 '+curated.length+' 部真實開放電影作品的官方資料。海報與站內播放尚待核實，請使用官方來源連結觀看。';
+      status.textContent='已載入 '+curated.length+' 部真實開放電影作品。未驗證的海報或播放來源不會標示為可播放。';
     }catch(err){
       status.textContent='真實片庫載入失敗；暫時顯示示意海報。'+err.message;
     }
   }
-  document.getElementById('catalog-reset').onclick=loadCurated;
+  document.getElementById('catalog-reset').onclick=()=>{search.value='';loadCurated();};
   render();loadCurated();
 })();
