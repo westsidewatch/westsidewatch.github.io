@@ -28,6 +28,9 @@
     video.preload = 'metadata';
     video.setAttribute('aria-label', 'Screen Lab 線上播放器');
     video.addEventListener('error', () => say('播放失敗。可能是來源失效、跨域限制或格式不支援。'));
+    video.addEventListener('playing', () => say('影片正在播放。此結果僅證明當前瀏覽器能讀取來源，不代表播放授權已核實。'));
+    video.addEventListener('waiting', () => say('正在緩衝影片…'));
+    video.addEventListener('ended', () => say('影片播放結束。'));
     host.replaceChildren(video);
     if (isHls && window.Hls?.isSupported()) {
       hls = new window.Hls({ enableWorker: true });
@@ -41,7 +44,7 @@
       cleanup();
       return;
     }
-    say('已載入線上媒體來源；不儲存影片檔案。');
+    say('正在嘗試連接媒體來源，尚未確認可播放。');
     video.play().catch(() => say('媒體已載入。請按播放鍵開始觀看。'));
   });
   document.querySelector('#stream-stop')?.addEventListener('click', () => { cleanup(); say('已停止播放並釋放播放器。'); });
