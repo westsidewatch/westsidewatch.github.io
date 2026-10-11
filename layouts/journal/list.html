@@ -8,10 +8,10 @@
   </header>
   {{/* The Vol.00 data owns the permanent magazine column identities. */}}
   {{ $volume := index hugo.Data.volumes "vol-00" }}
-  <nav class="sites-journal-columns" aria-label="西望雜誌十二個固定欄目" data-ws-one-look-selector id="magazine-column-selector">
+  <nav class="sites-journal-columns" aria-label="西望雜誌十二個固定欄目">
     {{ range $movement := $volume.movements }}
       {{ range $column := $movement.columns }}
-        <a class="sites-journal-column" data-ws-one-look-card data-ws-one-look-id="{{ $column.number }}" href="{{ printf "/vol-00/#column-%s" $column.number | relURL }}" aria-label="{{ $column.name }} · {{ $column.section_zh }}">
+        <a class="sites-journal-column" href="{{ printf "/vol-00/#column-%s" $column.number | relURL }}" aria-label="{{ $column.name }} · {{ $column.section_zh }}">
           <span class="sites-journal-column__number">{{ $column.number }}</span>
           <strong lang="zh-Hant">{{ $column.name }}</strong>
           <span lang="en">{{ $column.name_en }}</span>
