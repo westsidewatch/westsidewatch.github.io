@@ -7,7 +7,7 @@ This slice owns the Herodian and Roman destruction display. It is an integration
 - Reserve the currently rendered Temple platform and Antonia footprints before generating residential parcels. These exclusion bounds constrain the reconstruction; they are not archaeological surveys.
 - Disable the legacy temporal boxes, calibration city and independently regenerated inheritance models in this slice.
 - Ruin is a reversible vertical collapse towards each object's terrain anchor. It is a schematic transformation, not a sourced simulation of individual collapse or debris.
-- At Aelia, canonical Herodian architecture is hidden. The established era morphology renders a separate provisional layer. Roman replacement architecture, burial depths and reuse links still require sourced object records; this is not verified object continuity.
+- At Aelia, canonical Herodian architecture is hidden. A bounded shared parcel runtime renders a distinct provisional replacement layer. Roman replacement architecture, burial depths and reuse links still require sourced object records; this is not verified object continuity.
 - Other periods still use the prior morphology paths. Full-timeline completion must remain false until their object continuity is verified.
 
 ## Validation
@@ -55,3 +55,11 @@ The next expansion phase uses the same bounded generator and existing provisiona
 Persian and expansion buildings have distinct phase-specific IDs. No spatially guessed reuse links or historical parcel continuity are asserted. Evidence filtering keeps both provisional cities out of the observed-only view. Roads and district extents still require sourced period-specific registration. This step replaces the runtime rendering path, not historical certification or full-timeline completion.
 
 The browser gate checks Persian/expansion round trips, phase isolation, cancellation/retry, identity/transform preservation, observed filtering, and direct mobile expansion entry without eagerly building earlier cities.
+
+## Aelia replacement and bounded cache (2026-10-11)
+
+Aelia now requests the shared bounded parcel generator with its provisional footprint. It replaces the legacy residential morphology once complete and has distinct IDs from the canonical Herodian city. Roads and parcels are still a transformed scaffold, not a sourced reconstruction of the Roman street plan. No Roman burial/reuse links or monument certification are implied.
+
+The shared runtime caps completed cities at three. Least recently requested inactive geometry is disposed; active Persian architecture and its first-temple retained layer are protected together. Hidden staging and the canonical Herodian/evidence layers are outside this count. This caps resident city count, not total memory bytes or a hard frame time. Returning after eviction deterministically regenerates the same IDs/geometry, rather than claiming the same mesh instances survived disposal.
+
+Browser validation triggers real eviction, checks that the inactive first-temple projection is released, verifies exact IDs/transforms after regeneration, and tests Aelia/Persian isolation, evidence filtering, cancellation, mobile direct entry and all 18 phase renders.

@@ -215,6 +215,37 @@ try {
   await page.getByRole('button',{name:'全部',exact:true}).click();
   await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.expansion.projection.visibleBuildings>0);
   await writeFile(`${output}/hellenistic-report.json`,JSON.stringify({expansionReports},null,2));
+  // Aelia replacement must not borrow standing Herodian identity or retain
+  // an unlimited number of completed shared cities.
+  await page.locator('.j3k-scrubber').evaluate(el=>{
+    for(const value of [10,17,10.5]) {el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));}
+  });
+  await page.waitForFunction(()=>{const d=window.__JERUSALEM3000__.renderDiagnostics;return d.sharedEra.status==='ready'&&d.sharedEra.replacement.projection?.visibleBuildings>0;},null,{timeout:60000});
+  const aelia=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics);
+  assert.equal(aelia.visibleCoreMeshes,0);
+  assert.equal(aelia.urbanFabric.phase2Components,0);
+  assert.equal(aelia.visibleLegacyTemporalMeshes,0);
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.active),false);
+  assert.equal(aelia.sharedEra.cache.limit,3);
+  assert.ok(aelia.sharedEra.cache.residentCities<=3);
+  assert.ok(aelia.sharedEra.cache.evictions>0);
+  assert.equal(aelia.sharedEra.projection,null,'oldest inactive first-temple geometry must be released');
+  assert.notEqual(aelia.sharedEra.replacement.projection.identityFingerprint,expansionReports[0].projection.identityFingerprint);
+  await page.screenshot({path:`${output}/aelia-city.png`,fullPage:true});
+  await page.locator('.j3k-scrubber').evaluate(el=>{el.value='4.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await page.waitForFunction(()=>{const d=window.__JERUSALEM3000__.renderDiagnostics.sharedEra;return d.status==='ready'&&d.projection?.visibleBuildings>0;},null,{timeout:60000});
+  const regenerated=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra);
+  assert.equal(regenerated.projection.identityFingerprint,sharedReports[0].shared.projection.identityFingerprint);
+  assert.equal(regenerated.projection.transformFingerprint,sharedReports[0].shared.projection.transformFingerprint);
+  assert.ok(regenerated.cache.residentCities<=3);
+  await page.locator('.j3k-scrubber').evaluate(el=>{el.value='10.5';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.replacement.projection?.visibleBuildings>0);
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.replacement.projection.transformFingerprint),aelia.sharedEra.replacement.projection.transformFingerprint);
+  await page.getByRole('button',{name:'實證',exact:true}).click();
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.replacement.projection.visibleBuildings===0);
+  await page.getByRole('button',{name:'全部',exact:true}).click();
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.replacement.projection.visibleBuildings>0);
+  await writeFile(`${output}/aelia-cache-report.json`,JSON.stringify({aelia,regenerated},null,2));
   // Render every era separately. Startup metadata is not proof of a visible city.
   const phaseReports = [];
   for (let phase = 0; phase < runtime.phaseAudit.records.length; phase++) {
@@ -238,7 +269,8 @@ try {
       sample.render.urbanFabric.phase2Components + sample.render.visibleLegacyTemporalMeshes +
       (sample.render.sharedEra?.projection?.visibleBuildings || 0) +
       (sample.render.sharedEra?.successor?.projection?.visibleBuildings || 0) +
-      (sample.render.sharedEra?.expansion?.projection?.visibleBuildings || 0);
+      (sample.render.sharedEra?.expansion?.projection?.visibleBuildings || 0) +
+      (sample.render.sharedEra?.replacement?.projection?.visibleBuildings || 0);
     assert.ok(visible > 0, `No urban geometry rendered for ${sample.time.phase}`);
     if (phase === 10) assert.equal(sample.render.visibleCoreMeshes, 0,
       'Aelia must not reuse standing Herodian architecture');
@@ -274,6 +306,13 @@ try {
     path: `${output}/city-mobile.png`,
     fullPage: true,
   });
+  await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='10.5';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.replacement.projection?.visibleBuildings>0,null,{timeout:60000});
+  const mobileAelia=await mobile.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra);
+  assert.equal(mobileAelia.projection,null);
+  assert.equal(mobileAelia.expansion.status,'idle');
+  assert.equal(mobileAelia.successor.status,'idle');
+  await mobile.screenshot({path:`${output}/aelia-mobile.png`,fullPage:true});
   await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='7.5';el.dispatchEvent(new Event('input',{bubbles:true}));});
   await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.expansion.projection?.visibleBuildings>0,null,{timeout:60000});
   const mobileExpansion=await mobile.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra);
