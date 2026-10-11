@@ -1,0 +1,10 @@
+{
+  "schema": "j3k.earliest-settlement.v1",
+  "phase": "chalcolithic-early-bronze",
+  "authority": "ridge/spring landscape constrained illustrative settlement; not excavated footprints",
+  "spring": {"lat":31.7732350,"lon":35.2368303,"accuracy":"approximate-modern-map-point-not-ancient-survey","source":"https://api.openstreetmap.org/api/0.6/node/1608094098","attribution":"© OpenStreetMap contributors, ODbL"},
+  "historicalSource": "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf",
+  "limitations": ["House count, shape and placement are illustrative, not archaeological or population measurements.","Modern DEM does not reconstruct ancient ground elevations.","The modern spring point does not establish ancient access geometry.","Fortifications, monumental architecture and excavated house identities remain withheld."],
+  "houseOffsets": [[-70,-18],[-83,-8],[-93,-23],[-107,-12],[-115,3],[-95,12],[-75,17],[-87,34],[-109,33],[-124,24],[-137,9],[-132,-16],[-117,-33],[-99,-42]],
+  "pathOffsets": [[0,0],[-18,4],[-38,11],[-59,8],[-78,2],[-104,8],[-126,19]]
+}
