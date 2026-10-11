@@ -1043,3 +1043,8 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
 .sites-portal-topics #TableOfContents a:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 .sites-surface-content :is(h2,h3)[id]{scroll-margin-top:clamp(5rem,9vw,8rem)}
 @media(prefers-reduced-motion:reduce){.sites-portal-topics #TableOfContents a{transition:none}}
+
+/* Publication First Look keeps the embedded bookstore and an independent route. */
+.sites-dawn-library__fallback{margin:0;padding:.65rem clamp(1rem,3vw,2rem);text-align:end}
+.sites-dawn-library__fallback a{color:inherit;text-decoration:underline;text-underline-offset:.22em}
+.sites-dawn-library__fallback a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
