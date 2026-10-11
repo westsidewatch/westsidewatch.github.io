@@ -6,6 +6,7 @@
   const host = document.querySelector('#stream-stage');
   if (!form || !input || !host || !status) return;
   let hls = null;
+  let playbackAttempt = 0;
   function cleanup() {
     if (hls) { hls.destroy(); hls = null; }
     const old = host.querySelector('video');
@@ -15,6 +16,7 @@
   form.addEventListener('submit', event => {
     event.preventDefault();
     cleanup();
+    const attempt=++playbackAttempt;
     let url;
     try { url = new URL(input.value.trim()); } catch { say('請輸入完整的 HTTPS 影片串流網址。'); return; }
     if (url.protocol !== 'https:') { say('只接受 HTTPS 媒體網址。'); return; }
@@ -31,10 +33,11 @@
     video.addEventListener('playing', () => say('影片正在播放。此結果僅證明當前瀏覽器能讀取來源，不代表播放授權已核實。'));
     video.addEventListener('waiting', () => say('正在緩衝影片…'));
     video.addEventListener('ended', () => say('影片播放結束。'));
+    video.addEventListener('canplay', () => { if(attempt!==playbackAttempt)return; say('媒體已準備好。請按播放鍵開始觀看。'); });
     host.replaceChildren(video);
     if (isHls && window.Hls?.isSupported()) {
       hls = new window.Hls({ enableWorker: true });
-      hls.on(window.Hls.Events.ERROR, (_, data) => { if (data.fatal) say('HLS 串流無法播放：' + data.type); });
+      hls.on(window.Hls.Events.ERROR, (_, data) => { if (data.fatal && attempt===playbackAttempt) say('HLS 串流無法播放：' + data.type); });
       hls.loadSource(url.href);
       hls.attachMedia(video);
     } else if (!isHls || video.canPlayType('application/vnd.apple.mpegurl')) {
@@ -45,8 +48,8 @@
       return;
     }
     say('正在嘗試連接媒體來源，尚未確認可播放。');
-    video.play().catch(() => say('媒體已載入。請按播放鍵開始觀看。'));
+    video.play().catch(() => { if(attempt===playbackAttempt && video.paused) say('瀏覽器未自動播放。請按影片上的播放鍵開始觀看。'); });
   });
-  document.querySelector('#stream-stop')?.addEventListener('click', () => { cleanup(); say('已停止播放並釋放播放器。'); });
+  document.querySelector('#stream-stop')?.addEventListener('click', () => { ++playbackAttempt; cleanup(); say('已停止播放並釋放播放器。'); });
   window.addEventListener('pagehide', cleanup);
 })();
