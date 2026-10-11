@@ -14,5 +14,3 @@ build:
 
 [進入 ONE · 一卷](/one/)
 
-[進入 Doré Folio](/dore/)
-
