@@ -69,6 +69,29 @@
     catch(err){status.textContent='片庫格式錯誤：'+err.message;}
     e.target.value='';
   });
+  document.getElementById('film-add-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const form=e.currentTarget, raw=Object.fromEntries(new FormData(form));
+    if(!raw.title?.trim()){status.textContent='請輸入片名。';return;}
+    for(const key of ['poster','stream','source']){
+      if(raw[key]?.trim() && !https(raw[key].trim())){status.textContent=key+' 必須是 HTTPS 網址。';return;}
+    }
+    if(raw.stream?.trim() && !mediaUrl(raw.stream.trim())){status.textContent='影片來源須為直接 HTTPS 媒體網址（MP4、WebM、Ogg 或 HLS）。';return;}
+    try {
+      const film=normalize([raw])[0];
+      if(films.length>=500)throw Error('片庫已達 500 筆上限');
+      films=[film,...films];active='全部';search.value='';form.reset();render();
+      status.textContent='已加入「'+film.title+'」，只保留在本次頁面。';
+    }catch(err){status.textContent='無法加入：'+err.message;}
+  });
+  document.getElementById('catalog-export').addEventListener('click',()=>{
+    const payload=films.filter(f=>!f.demo).map(({title,type,year,description,poster,stream,source})=>({title,type,year,description,poster,stream,source}));
+    if(!payload.length){status.textContent='目前沒有可匯出的正式片庫項目；請先新增或匯入影片。';return;}
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const href=URL.createObjectURL(blob),a=document.createElement('a');a.href=href;a.download='screen-lab-catalog.json';
+    document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(href),1000);
+    status.textContent='已匯出 '+payload.length+' 筆片庫資料。這是 JSON 資料檔，不包含影片。';
+  });
   document.getElementById('catalog-reset').onclick=()=>{films=demo;active='全部';search.value='';status.textContent='已恢復概念示意資料。';render();};
   render();
 })();
