@@ -1033,3 +1033,13 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
 .sites-journal-column small{font-size:.8rem;letter-spacing:.08em}
 @media(max-width:760px){.sites-journal-column{flex-basis:min(65vw,15rem);min-height:18rem}}
 @media(prefers-reduced-motion:reduce){.sites-journal-column{transition:none}}
+
+/* Life First Look: Hugo's actual content headings become an accessible topic index. */
+.sites-portal-topics{max-width:100%;padding:clamp(1rem,2vw,2rem);border-block:1px solid var(--ws-line,rgba(37,37,37,.2))}
+.sites-portal-topics #TableOfContents>ul{display:flex;flex-wrap:wrap;gap:.7rem 1.2rem;margin:0;padding:0;list-style:none}
+.sites-portal-topics #TableOfContents li{margin:0;padding:0;list-style:none}
+.sites-portal-topics #TableOfContents a{display:inline-block;padding:.6rem .85rem;border:1px solid var(--ws-line,rgba(37,37,37,.2));color:inherit;text-decoration:none;transition:border-color .2s ease}
+.sites-portal-topics #TableOfContents a:hover{border-color:var(--ws-identity,#cebd74)}
+.sites-portal-topics #TableOfContents a:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.sites-surface-content :is(h2,h3)[id]{scroll-margin-top:clamp(5rem,9vw,8rem)}
+@media(prefers-reduced-motion:reduce){.sites-portal-topics #TableOfContents a{transition:none}}
