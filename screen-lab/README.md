@@ -45,3 +45,9 @@ A valid HTTPS URL is not proof that its poster is available, that its video is p
 - Check cross-origin poster loading and real HLS/MP4 playback against an authorized test source.
 - Replace concept entries only with genuine, permissioned titles and poster sources.
 - Confirm the existing site remains unlinked to this experiment.
+
+## Automated checks
+
+GitHub Actions workflow `.github/workflows/screen-lab-smoke.yml` runs `node --test screen-lab/tests/catalog.test.mjs` for changes to this experiment. This verifies structural and catalog contracts only. It does **not** prove browser rendering, external poster availability, video licensing, network access, or successful HLS playback.
+
+Current curated film records are verified as Blender film titles from the official Blender Studio film index. Their official source pages are linked, but actual poster files and embeddable player URLs have not been verified. Do not label them as playable until browser QA confirms it.
