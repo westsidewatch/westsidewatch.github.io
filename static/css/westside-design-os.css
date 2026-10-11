@@ -1004,3 +1004,20 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
 .ws-one-look-cinema-card[aria-pressed=true]{outline:2px solid var(--ws-identity,#cebd74);outline-offset:-3px}
 .ws-one-look-cinema-card:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){.ws-one-look-cinema-card{transition:none}[data-ws-one-look-selector]{scroll-behavior:auto}}
+
+/* Phase III: one frame authority, distinct editorial/atlas/publication/door realms. */
+[data-ws-first-look-stage]:not([data-ws-immersive-video]){box-sizing:border-box;isolation:isolate;min-width:0}
+[data-ws-first-look-mode="editorial"],
+[data-ws-first-look-mode="atlas"],
+[data-ws-first-look-mode="publication"],
+[data-ws-first-look-mode="door"]{scroll-margin-top:var(--site-header-height,42px)}
+/* Editorial and atlas surfaces must never inherit the full-bleed video height. */
+[data-ws-first-look-mode="editorial"]:not([data-ws-immersive-video]),
+[data-ws-first-look-mode="atlas"]:not([data-ws-immersive-video]){height:auto;min-height:0;max-width:100%}
+/* Preserve each realm's native poster, book surface and church-door interaction. */
+[data-ws-first-look-mode="publication"] .sites-product-frame{display:block;max-width:100%;width:100%;border:0}
+@media(max-width:760px){
+ [data-ws-first-look-mode="editorial"]:not([data-ws-immersive-video]),
+ [data-ws-first-look-mode="atlas"]:not([data-ws-immersive-video]){overflow-wrap:break-word}
+ [data-ws-first-look-mode="publication"] .sites-product-frame{min-width:0}
+}
