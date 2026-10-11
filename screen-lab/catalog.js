@@ -22,7 +22,7 @@
       if (!f || typeof f!=='object' || typeof f.title!=='string' || !f.title.trim()) throw Error('第 '+(i+1)+' 筆缺少片名');
       const type=categories.includes(f.type)&&f.type!=='全部'?f.type:'電影';
       return {title:f.title.trim().slice(0,160),type,year:String(f.year||'').slice(0,30),description:String(f.description||'').slice(0,1000),
-        poster:https(f.poster),stream:mediaUrl(f.stream),source:https(f.source),a:'#4d555b',b:'#b6a58b',demo:false};
+        poster:https(f.poster),stream:mediaUrl(f.stream),source:https(f.source),verified:false,a:'#4d555b',b:'#b6a58b',demo:false};
     });
   }
   function setFilter(v){active=v;render();}
@@ -40,7 +40,7 @@
       if(f.poster){const img=document.createElement('img');img.src=f.poster;img.alt='';img.loading='lazy';img.referrerPolicy='no-referrer';img.className='poster-image';img.onerror=()=>img.remove();poster.append(img);}
       poster.append(label);
       const name=document.createElement('strong');name.textContent=f.title;
-      const meta=document.createElement('small');meta.textContent=[f.year,f.type,f.stream?'可試播':f.demo?'示意封面':'來源待驗證'].filter(Boolean).join(' · ');
+      const meta=document.createElement('small');meta.textContent=[f.year,f.type,f.stream?'待驗證片源':f.demo?'示意封面':'來源待驗證'].filter(Boolean).join(' · ');
       b.append(poster,name,meta);b.onclick=()=>openDetail(f);grid.append(b);
     }
   }
@@ -50,7 +50,7 @@
     document.getElementById('description').textContent=f.description||'尚無介紹';
     const host=document.getElementById('player');host.replaceChildren();
     const box=document.createElement('div');box.className='detail-actions';
-    const info=document.createElement('p');info.textContent=f.stream?'已提供直接媒體連結，尚未經瀏覽器驗證。':'沒有可直接播放的媒體來源。';
+    const info=document.createElement('p');info.textContent=f.stream?'已提供直接媒體連結，但尚未確認可播放。':'沒有可直接播放的媒體來源。';
     box.append(info);
     if(f.stream){const btn=document.createElement('button');btn.textContent='前往線上試映 ↗';btn.onclick=()=>{
       dialog.close();urlInput.value=f.stream;document.querySelector('#stream-title').scrollIntoView({behavior:'smooth'});
