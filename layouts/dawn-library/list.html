@@ -1,5 +1,6 @@
 {{ define "main" }}
 <section class="sites-second-layer sites-dawn-library" aria-label="黎明書局" data-ws-first-look="shared" data-ws-first-look-mode="publication" data-ws-first-look-stage>
+  <p class="sites-dawn-library__fallback"><a href="{{ "dawn-library/product/?surface=bookstore-20260930c" | relURL }}">獨立開啟黎明書局 ↗</a></p>
   <iframe id="dawn-library-product-surface" class="sites-product-frame" src="{{ "dawn-library/product/?surface=bookstore-20260930c" | relURL }}" title="黎明書局" loading="eager"></iframe>
 </section>
 <script>
@@ -7,19 +8,23 @@
   const frame = document.getElementById('dawn-library-product-surface');
   if (!frame) return;
   let observer;
+  let onResize;
   frame.addEventListener('load', () => {
+    if (onResize) window.removeEventListener('resize', onResize);
     observer?.disconnect();
     let stage;
     try { stage = frame.contentDocument?.querySelector('.stage'); } catch (_) { return; }
     if (!stage) return;
     const resize = () => {
-      const height = Math.ceil(stage.getBoundingClientRect().height);
+      const height = Math.ceil(Math.max(stage.getBoundingClientRect().height, stage.scrollHeight));
       if (height && frame.style.height !== `${height}px`) frame.style.height = `${height}px`;
     };
     if (typeof ResizeObserver === 'function') {
       observer = new ResizeObserver(resize);
       observer.observe(stage);
     }
+    onResize = resize;
+    window.addEventListener('resize', onResize, { passive: true });
     resize();
   });
 })();
