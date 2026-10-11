@@ -184,6 +184,37 @@ try {
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.successor.projection.transformFingerprint),successorFingerprint);
   await page.screenshot({path:`${output}/persian-city.png`,fullPage:true});
   await writeFile(`${output}/persian-retained-report.json`,JSON.stringify(retained,null,2));
+  // Hellenistic expansion uses the same generator and preserves cached identity.
+  const expansionReports=[];
+  await page.locator('.j3k-scrubber').evaluate(el=>{
+    for(const value of [7,17,7.5]) {el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));}
+  });
+  for(const value of [7.5,6.5,7.5]) {
+    await page.locator('.j3k-scrubber').evaluate((el,value)=>{el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));},value);
+    await page.waitForFunction(value=>{
+      const s=window.__JERUSALEM3000__; const d=s.renderDiagnostics;
+      const city=value===7.5?d.sharedEra.expansion:d.sharedEra.successor;
+      return s.historicalTime.position===value&&d.sharedEra.status==='ready'&&city.projection?.visibleBuildings>0;
+    },value,{timeout:60000});
+    const d=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics);
+    assert.equal(d.urbanFabric.phase2Components,0);
+    assert.equal(d.visibleLegacyTemporalMeshes,0);
+    assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.active),false);
+    if(value===7.5) {
+      assert.equal(d.sharedEra.successor.projection.visibleBuildings,0);
+      assert.equal(d.sharedEra.expansion.historicalRegistrationVerified,false);
+      expansionReports.push(d.sharedEra.expansion);
+    } else assert.equal(d.sharedEra.expansion.projection.visibleBuildings,0);
+  }
+  assert.equal(expansionReports[0].projection.identityFingerprint,expansionReports[1].projection.identityFingerprint);
+  assert.equal(expansionReports[0].projection.transformFingerprint,expansionReports[1].projection.transformFingerprint);
+  assert.notEqual(expansionReports[0].projection.identityFingerprint,retained.sharedEra.successor.projection.identityFingerprint);
+  await page.screenshot({path:`${output}/hellenistic-city.png`,fullPage:true});
+  await page.getByRole('button',{name:'實證',exact:true}).click();
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.expansion.projection.visibleBuildings===0);
+  await page.getByRole('button',{name:'全部',exact:true}).click();
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.expansion.projection.visibleBuildings>0);
+  await writeFile(`${output}/hellenistic-report.json`,JSON.stringify({expansionReports},null,2));
   // Render every era separately. Startup metadata is not proof of a visible city.
   const phaseReports = [];
   for (let phase = 0; phase < runtime.phaseAudit.records.length; phase++) {
@@ -206,7 +237,8 @@ try {
     const visible = sample.render.visibleCoreMeshes +
       sample.render.urbanFabric.phase2Components + sample.render.visibleLegacyTemporalMeshes +
       (sample.render.sharedEra?.projection?.visibleBuildings || 0) +
-      (sample.render.sharedEra?.successor?.projection?.visibleBuildings || 0);
+      (sample.render.sharedEra?.successor?.projection?.visibleBuildings || 0) +
+      (sample.render.sharedEra?.expansion?.projection?.visibleBuildings || 0);
     assert.ok(visible > 0, `No urban geometry rendered for ${sample.time.phase}`);
     if (phase === 10) assert.equal(sample.render.visibleCoreMeshes, 0,
       'Aelia must not reuse standing Herodian architecture');
@@ -242,6 +274,12 @@ try {
     path: `${output}/city-mobile.png`,
     fullPage: true,
   });
+  await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='7.5';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.expansion.projection?.visibleBuildings>0,null,{timeout:60000});
+  const mobileExpansion=await mobile.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra);
+  assert.equal(mobileExpansion.successor.status,'idle','direct expansion entry must not generate Persian architecture');
+  assert.equal(mobileExpansion.projection,null,'direct expansion entry must not generate first-temple architecture');
+  await mobile.screenshot({path:`${output}/hellenistic-mobile.png`,fullPage:true});
   await mobile.locator('.j3k-scrubber').evaluate(el => {
     el.value = '6.5'; el.dispatchEvent(new Event('input', { bubbles: true }));
   });

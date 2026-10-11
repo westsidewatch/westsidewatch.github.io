@@ -47,3 +47,11 @@ Browser validation checks identity preservation, ruin state, coexistence with su
 Persian residential fabric now uses the same bounded parcel/architecture generator as the first-temple city, with the existing smaller provisional Persian envelope. On completion it replaces legacy era morphology, temporal boxes and the separate inherited city model. Partial batches remain hidden and cancel when leaving the phase; cached meshes and IDs are restored on return. Direct Persian entry builds both the successor and earlier retained layer without requiring a prior visit.
 
 Persian objects have distinct phase-specific IDs. No proximity-based predecessor/reuse links are invented. The optional earlier ruin layer still uses the original first-temple IDs and full collapse. Both layers are inferred and hidden by the observed evidence filter. The transformed road/district scaffold is still not a sourced Persian survey; the historical settlement envelope, Nehemiah wall variants and burial/reuse records remain unfinished. Full timeline readiness stays false.
+
+## Bounded Hellenistic–Hasmonean expansion (2026-10-11)
+
+The next expansion phase uses the same bounded generator and existing provisional Hellenistic footprint. Completed architecture replaces legacy morphology, temporal boxes and the independent inheritance model. Direct entry builds only the requested expansion city; it does not eagerly generate first-temple/Persian geometry. Leaving cancels staging, and returning reuses completed IDs and meshes.
+
+Persian and expansion buildings have distinct phase-specific IDs. No spatially guessed reuse links or historical parcel continuity are asserted. Evidence filtering keeps both provisional cities out of the observed-only view. Roads and district extents still require sourced period-specific registration. This step replaces the runtime rendering path, not historical certification or full-timeline completion.
+
+The browser gate checks Persian/expansion round trips, phase isolation, cancellation/retry, identity/transform preservation, observed filtering, and direct mobile expansion entry without eagerly building earlier cities.

@@ -608,6 +608,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
         successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],
+        expansionFootprint: ERA_FOOTPRINTS['hellenistic-hasmonean'],
         terrain: terrainRuntime, materials: temporalMaterials,
         onChange: () => { applyTemporalState(); needsFrame = true; },
         onProgress: ({ completed, total }) => {

@@ -9,7 +9,8 @@ import { createCityProjection } from './city-lifecycle-projection.js';
 export const SHARED_SLICE_PHASES = ['late-first-temple', 'babylonian-destruction'];
 export const isSharedSlicePhase = id => SHARED_SLICE_PHASES.includes(id);
 export const RETAINED_PHASE = 'persian-nehemiah';
-export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || id === RETAINED_PHASE;
+export const EXPANSION_PHASE = 'hellenistic-hasmonean';
+export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || id === RETAINED_PHASE || id === EXPANSION_PHASE;
 
 // One provisional first-temple fabric, inherited by destruction in place.
 // Reuse is a schematic lifecycle, not evidence of surveyed period-specific parcels.
@@ -95,7 +96,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
     },
     diagnostics() { return { ...state, phase: current, projection: city?.projection.diagnostics() ?? null,
       retainedObjects: city?.core.phase(retainedPhase).filter(object => object.type === 'building').length ?? 0,
-      identityPolicy: 'same-first-temple-objects-through-destruction-and-persian-retention',
+      identityPolicy: retainedPhase ? 'same-first-temple-objects-through-destruction-and-persian-retention' : 'distinct-period-objects-without-unverified-reuse-links',
       historicalRegistrationVerified: false }; },
     dispose() { disposed = true; if (!materials.facadeOpening) openingMaterial.dispose(); pending?.controller.abort(); if (city) release(city.group); city = null; },
   };
@@ -109,24 +110,28 @@ export function createSharedEraRuntime(parent, options) {
     phaseIds: [...SHARED_SLICE_PHASES, RETAINED_PHASE], retainedPhase: RETAINED_PHASE });
   const successor = createParcelRuntime(parent, { ...options, footprint: options.successorFootprint,
     generationPhase: RETAINED_PHASE, phaseIds: [RETAINED_PHASE] });
+  const expansion = createParcelRuntime(parent, { ...options, footprint: options.expansionFootprint,
+    generationPhase: EXPANSION_PHASE, phaseIds: [EXPANSION_PHASE] });
+  const runtimes = [first, successor, expansion];
   let current = '';
-  const active = () => current === RETAINED_PHASE ? successor : first;
+  const active = () => current === EXPANSION_PHASE ? expansion : current === RETAINED_PHASE ? successor : first;
   return {
-    request(phaseId) { current = phaseId; first.request(phaseId); successor.request(phaseId); },
+    request(phaseId) { current = phaseId; for (const runtime of runtimes) runtime.request(phaseId); },
     get status() {
       if (current === RETAINED_PHASE && first.status === 'error') return 'error';
       if (current === RETAINED_PHASE && successor.status === 'ready' && first.status !== 'ready') return first.status;
       return active().status;
     },
-    apply(args) { const earlierActive = first.apply(args); return successor.apply(args) || earlierActive; },
+    apply(args) { let owned = false; for (const runtime of runtimes) owned = runtime.apply(args) || owned; return owned; },
     diagnostics() {
       const earlier = first.diagnostics(), later = successor.diagnostics();
       return { ...earlier, status: this.status,
         completed: active().diagnostics().completed, total: active().diagnostics().total,
         error: active().diagnostics().error || (current === RETAINED_PHASE ? earlier.error : undefined),
-        successor: { ...later, identityPolicy: 'distinct-period-objects-without-unverified-reuse-links' },
+        successor: later,
+        expansion: expansion.diagnostics(),
         historicalRegistrationVerified: false };
     },
-    dispose() { first.dispose(); successor.dispose(); },
+    dispose() { for (const runtime of runtimes) runtime.dispose(); },
   };
 }

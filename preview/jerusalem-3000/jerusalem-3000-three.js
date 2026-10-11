@@ -143,7 +143,7 @@ try {
     retainedToggle.hidden = p.id !== RETAINED_PHASE;
     note.textContent = p.id === RETAINED_PHASE
       ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建住宅由共享地塊生成器產生，範圍與道路仍屬推定。`
-      : isSharedSlicePhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
+      : isSharedGenerationPhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
     ticks.forEach((x, i) => {
       x.classList.toggle('is-past', i < state.index);
       x.classList.toggle('is-current', i === state.index);
