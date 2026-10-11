@@ -32,7 +32,7 @@
       if (!f || typeof f!=='object' || typeof f.title!=='string' || !f.title.trim()) throw Error('第 '+(i+1)+' 筆缺少片名');
       const type=categories.includes(f.type)&&f.type!=='全部'?f.type:'電影';
       return {title:f.title.trim().slice(0,160),type,year:String(f.year||'').slice(0,30),description:String(f.description||'').slice(0,1000),
-        poster:https(f.poster)||(youtubeId(f.source)?'https://i.ytimg.com/vi/'+youtubeId(f.source)+'/hqdefault.jpg':null),stream:mediaUrl(f.stream),youtube:youtubeId(f.source),source:https(f.source),verified:false,a:'#4d555b',b:'#b6a58b',demo:false};
+        poster:https(f.poster)||(youtubeId(f.source)?'https://i.ytimg.com/vi/'+youtubeId(f.source)+'/hqdefault.jpg':null),stream:mediaUrl(f.stream),youtube:youtubeId(f.source),source:https(f.source),posterCredit:String(f.posterCredit||'').slice(0,180),posterLicense:https(f.posterLicense),posterSource:https(f.posterSource),verified:false,a:'#4d555b',b:'#b6a58b',demo:false};
     });
   }
   function setFilter(v){active=v;render();}
@@ -66,6 +66,11 @@
       closeDetail();urlInput.value=f.stream;document.querySelector('#stream-title').scrollIntoView({behavior:'smooth'});
       playForm.requestSubmit();
     };box.append(btn);}
+    if(f.posterCredit){
+      const credit=document.createElement('p');credit.textContent='海報：'+f.posterCredit;box.append(credit);
+      if(f.posterSource){const a=document.createElement('a');a.href=f.posterSource;a.target='_blank';a.rel='noopener noreferrer';a.textContent='海報來源 ↗';box.append(a);}
+      if(f.posterLicense){const a=document.createElement('a');a.href=f.posterLicense;a.target='_blank';a.rel='noopener noreferrer';a.textContent='授權條款 ↗';box.append(a);}
+    }
     if(f.youtube){
       const btn=document.createElement('button');btn.type='button';btn.textContent='使用 YouTube 官方播放器 ↗';
       btn.onclick=()=>{
@@ -108,7 +113,7 @@
     }catch(err){status.textContent='無法加入：'+err.message;}
   });
   document.getElementById('catalog-export').addEventListener('click',()=>{
-    const payload=films.filter(f=>!f.demo).map(({title,type,year,description,poster,stream,source})=>({title,type,year,description,poster,stream,source}));
+    const payload=films.filter(f=>!f.demo).map(({title,type,year,description,poster,stream,source,posterCredit,posterLicense,posterSource})=>({title,type,year,description,poster,stream,source,posterCredit,posterLicense,posterSource}));
     if(!payload.length){status.textContent='目前沒有可匯出的正式片庫項目；請先新增或匯入影片。';return;}
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
     const href=URL.createObjectURL(blob),a=document.createElement('a');a.href=href;a.download='screen-lab-catalog.json';
