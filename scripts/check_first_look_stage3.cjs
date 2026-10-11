@@ -2,7 +2,7 @@ const {chromium}=require('playwright');
 const fs=require('node:fs');
 const routes=[
  {path:'/journal/',mode:'editorial',extra:async(page,errors)=>{const cards=page.locator('.sites-journal-column');if(await cards.count()!==12)errors.push('journal must show twelve canonical columns');const hrefs=await cards.evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));if(new Set(hrefs).size!==12||hrefs.some(h=>!h.includes('/vol-00/#column-')))errors.push('journal column links must be distinct Vol.00 anchors');}},
- {path:'/one/',mode:'atlas'},
+ {path:'/emmaus/',mode:'atlas',extra:async(page,errors)=>{const link=page.locator('a[href="/one/"]');if(await link.count()<1)errors.push('Emmaus must link to the existing ONE tool');}},
  {path:'/church/',mode:'door'},
  {path:'/dawn-library/',mode:'publication',extra:async(page,errors)=>{const frame=page.locator('#dawn-library-product-surface');if(await frame.count()!==1)errors.push('bookstore iframe missing');if(await page.locator('.sites-dawn-library__fallback a').count()!==1)errors.push('bookstore direct route missing');}},
  {path:'/daylight-cafe/',mode:'editorial',extra:async(page,errors)=>{if(await page.locator('.sites-portal-topics a').count()<8)errors.push('life topic index incomplete');}}
