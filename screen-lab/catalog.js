@@ -47,10 +47,10 @@
       const b=document.createElement('button');b.type='button';b.className='tile';
       const poster=document.createElement('div');poster.className='poster';poster.style.setProperty('--a',f.a);poster.style.setProperty('--b',f.b);
       const label=document.createElement('span');label.textContent=f.title;
-      if(f.poster){const img=document.createElement('img');img.src=f.poster;img.alt='';img.loading='lazy';img.referrerPolicy='no-referrer';img.className='poster-image';img.onerror=()=>img.remove();poster.append(img);}
+      if(f.poster){const img=document.createElement('img');img.src=f.poster;img.alt='';img.loading='lazy';img.referrerPolicy='no-referrer';img.className='poster-image';img.onerror=()=>{img.remove();poster.classList.add('poster-fallback');};poster.append(img);}
       poster.append(label);
       const name=document.createElement('strong');name.textContent=f.title;
-      const meta=document.createElement('small');meta.textContent=[f.year,f.type,f.stream?'待驗證片源':f.youtube?'YouTube 官方播放器':f.demo?'示意封面':'來源待驗證'].filter(Boolean).join(' · ');
+      const meta=document.createElement('small');meta.textContent=[f.year,f.type,f.stream?'待驗證片源':f.youtube?'YouTube 嵌入待驗證':f.demo?'示意封面':'來源待驗證'].filter(Boolean).join(' · ');
       b.append(poster,name,meta);b.onclick=()=>openDetail(f);grid.append(b);
     }
   }
@@ -60,7 +60,7 @@
     document.getElementById('description').textContent=f.description||'尚無介紹';
     const host=document.getElementById('player');host.replaceChildren();
     const box=document.createElement('div');box.className='detail-actions';
-    const info=document.createElement('p');info.textContent=f.stream?'已提供直接媒體連結，但尚未確認可播放。':'沒有可直接播放的媒體來源。';
+    const info=document.createElement('p');info.textContent=f.stream?'已提供直接媒體連結，但尚未確認可播放。':f.youtube?'可嘗試官方 YouTube 嵌入，但尚未確認影片允許嵌入。':'沒有已確認可直接播放的媒體來源；可前往官方來源網站觀看。';
     box.append(info);
     if(f.stream){const btn=document.createElement('button');btn.textContent='前往線上試映 ↗';btn.onclick=()=>{
       closeDetail();urlInput.value=f.stream;document.querySelector('#stream-title').scrollIntoView({behavior:'smooth'});
