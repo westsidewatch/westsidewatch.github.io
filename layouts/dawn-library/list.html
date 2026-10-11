@@ -1,5 +1,5 @@
 {{ define "main" }}
-<section class="sites-second-layer sites-dawn-library" aria-label="黎明書局">
+<section class="sites-second-layer sites-dawn-library" aria-label="黎明書局" data-ws-first-look="shared" data-ws-first-look-mode="publication" data-ws-first-look-stage>
   <iframe id="dawn-library-product-surface" class="sites-product-frame" src="{{ "dawn-library/product/?surface=bookstore-20260930c" | relURL }}" title="黎明書局" loading="eager"></iframe>
 </section>
 <script>
@@ -9,14 +9,17 @@
   let observer;
   frame.addEventListener('load', () => {
     observer?.disconnect();
-    const stage = frame.contentDocument?.querySelector('.stage');
+    let stage;
+    try { stage = frame.contentDocument?.querySelector('.stage'); } catch (_) { return; }
     if (!stage) return;
     const resize = () => {
       const height = Math.ceil(stage.getBoundingClientRect().height);
       if (height && frame.style.height !== `${height}px`) frame.style.height = `${height}px`;
     };
-    observer = new ResizeObserver(resize);
-    observer.observe(stage);
+    if (typeof ResizeObserver === 'function') {
+      observer = new ResizeObserver(resize);
+      observer.observe(stage);
+    }
     resize();
   });
 })();
