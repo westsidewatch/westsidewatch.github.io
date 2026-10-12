@@ -51,3 +51,23 @@ middle.apply({phaseId:'middle-bronze',evidenceAllowed:()=>false});assert.equal(m
 middle.apply({phaseId:EARLIEST_PHASE,evidenceAllowed:()=>true});assert.equal(middleParent.children[0].visible,false);
 middle.dispose();
 console.log('PASS: source-sized water defense, disputed tower filter, phase isolation and distinct house identity');
+
+const lateData=JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/data/settlement/late-bronze-iron1.v1.json',import.meta.url)));
+const lateParent=new THREE.Group(),late=createEarliestSettlement(lateParent,{data:lateData,terrain});
+late.apply({phaseId:lateData.phase,evidenceAllowed:()=>true});
+assert.equal(late.diagnostics().houses,middleData.houseOffsets.length,'no house-count growth story');
+assert.equal(late.diagnostics().visibleDefenseComponents,0,'do not silently project earlier fortification');
+assert.equal(late.diagnostics().visibleSupportComponents,8);
+assert.equal(late.diagnostics().populationComparisonVerified,false);
+assert.notEqual(late.diagnostics().identityFingerprint,middle.diagnostics().identityFingerprint);
+lateParent.traverse(m=>{if(m.userData.cityObject?.kind==='stepped-support-hypothesis'){
+ assert.equal(m.userData.cityObject.confidence,'disputed');
+ const p=m.geometry.attributes.position;
+ for(let i=0;i<p.count;i++)assert.ok(m.position.y+p.getY(i)>=terrain.heightAtWorld(m.position.x+p.getX(i),m.position.z+p.getZ(i))-1e-4);
+}});
+late.apply({phaseId:lateData.phase,evidenceAllowed:c=>c==='disputed'});
+assert.equal(late.diagnostics().visibleHouses,0);assert.equal(late.diagnostics().visibleSupportComponents,8);
+late.apply({phaseId:lateData.phase,evidenceAllowed:c=>c!=='disputed'});assert.equal(late.diagnostics().visibleSupportComponents,0);
+late.apply({phaseId:'middle-bronze',evidenceAllowed:()=>true});assert.equal(lateParent.children[0].visible,false);
+late.dispose();
+console.log('PASS: disputed stepped support, terrain contact, independent chronology and no population/survival inference');

@@ -71,3 +71,11 @@ The next early phase uses the same terrain-grounded landscape renderer with a di
 No full city-wall circuit or water-filled rectangular reservoir is invented. The rock-cut installation is represented only by an outline on modern terrain; no terrain excavation or actual water depth is modeled. Dwelling count remains a visual design choice, and earlier houses are not claimed to survive into this phase. The early close camera persists across the two landscape phases and restores the previous city-wide view on leaving.
 
 Sources and limitations are stored with `data/settlement/middle-bronze.v1.json`. Browser/Node validation checks sourced tower size, disputed vs inferred filtering, earliest/bronze exclusivity, mobile views and the existing full-era regression suite.
+
+## Late Bronze / early Iron: uncertainty-aware landscape
+
+The next phase now uses the early landscape renderer rather than a mature-city morphology. It includes a schematic stepped supporting mass as a disputed chronology/function hypothesis. The City of David guide describes competing early and later assignments; tier count, dimensions, placement and height are not surveyed. No palace superstructure is invented. The earlier water-defense model is not automatically carried forward; hiding it does not claim a destruction event.
+
+Dwelling count/layout is held constant as an illustration, with distinct phase IDs. It does not express population growth/decline or excavated house continuity. Excavation observations for a specific eastern-slope area must not be generalized into whole-city emptiness across this broad combined period. Full urban extent remains withheld. Modern terrain and the approximate mapped spring continue to provide a common frame.
+
+Node/browser gates check grounded disputed support, evidence filtering, phase isolation, absence of legacy-city overlap, first/second/third-phase return visits and desktop/mobile views. Historical city geometry and full-timeline readiness remain unverified.

@@ -135,6 +135,28 @@ try {
   await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement.visibleHouses===14);
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement.visibleDefenseComponents),0);
   await writeFile(`${output}/middle-bronze-report.json`,JSON.stringify(bronze,null,2));
+  await page.locator('.j3k-scrubber').evaluate(el=>{el.value='2.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.lateBronzeSettlement?.visibleSupportComponents===8);
+  const late=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics);
+  assert.equal(late.earliestSettlement.visibleHouses,0);
+  assert.equal(late.middleBronzeSettlement.visibleDefenseComponents,0);
+  assert.equal(late.urbanFabric.phase2Components,0);
+  assert.equal(late.visibleLegacyTemporalMeshes,0);
+  assert.equal(late.lateBronzeSettlement.populationComparisonVerified,false);
+  assert.equal(late.lateBronzeSettlement.houses,bronze.middleBronzeSettlement.houses);
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.active),false);
+  await page.screenshot({path:`${output}/late-bronze.png`,fullPage:true});
+  await page.getByRole('button',{name:'爭議',exact:true}).click();
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.lateBronzeSettlement.visibleHouses===0);
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.lateBronzeSettlement.visibleSupportComponents),8);
+  await page.getByRole('button',{name:'推定',exact:true}).click();
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.lateBronzeSettlement.visibleSupportComponents===0);
+  await page.getByRole('button',{name:'全部',exact:true}).click();
+  await page.locator('.j3k-scrubber').evaluate(el=>{el.value='1.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement.visibleTowerComponents>0);
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.lateBronzeSettlement.visibleSupportComponents),0);
+  await writeFile(`${output}/late-bronze-report.json`,JSON.stringify(late,null,2));
+
   // Leave immediately while generation is pending: switching must not wait
   // for thousands of architectural components, and stale work must be cancelled.
   await page.locator('.j3k-scrubber').evaluate(el => {
@@ -276,7 +298,8 @@ try {
       (sample.render.sharedEra?.successor?.projection?.visibleBuildings || 0) +
       (sample.render.sharedEra?.expansion?.projection?.visibleBuildings || 0) +
       (sample.render.earliestSettlement?.visibleHouses || 0) +
-      (sample.render.middleBronzeSettlement?.visibleHouses || 0);
+      (sample.render.middleBronzeSettlement?.visibleHouses || 0) +
+      (sample.render.lateBronzeSettlement?.visibleHouses || 0);
     assert.ok(visible > 0, `No urban geometry rendered for ${sample.time.phase}`);
     if (phase === 10) assert.equal(sample.render.visibleCoreMeshes, 0,
       'Aelia must not reuse standing Herodian architecture');
@@ -303,6 +326,9 @@ try {
   await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='1.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
   await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement?.visibleHouses===24);
   await mobile.screenshot({path:`${output}/middle-bronze-mobile.png`,fullPage:true});
+  await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='2.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.lateBronzeSettlement?.visibleSupportComponents===8);
+  await mobile.screenshot({path:`${output}/late-bronze-mobile.png`,fullPage:true});
   await mobile.getByRole('button', { name: '耶穌時代', exact: false }).click();
   await mobile.waitForFunction(
     () =>
