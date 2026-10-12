@@ -1,8 +1,8 @@
 {{ define "main" }}
 <article class="olive-archive" data-ws-color-family="sermon">
-  <section class="olive-index olive-home-stage" aria-label="橄欖山講道首頁">
+  <section data-ws-first-look="shared" data-ws-first-look-mode="video" data-ws-first-look-stage data-ws-immersive-video class="olive-index olive-home-stage" aria-label="橄欖山講道首頁">
     <article class="olive-feature" data-person="大衛鮑森">
-      <div class="olive-feature__media" aria-label="點擊播放大衛鮑森系列講座">
+      <div data-ws-immersive-media class="olive-feature__media" aria-label="點擊播放大衛鮑森系列講座">
         <div class="olive-feature__art">
           <div data-ws-designable="olive-poster" class="olive-feature__poster" data-pawson-poster aria-hidden="true"></div>
           <iframe class="olive-feature__youtube" data-pawson-preview title="大衛鮑森系列講座" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen tabindex="-1" hidden></iframe>
@@ -14,18 +14,17 @@
           <h1>Olive<br>Mountain.</h1>
           <span class="olive-section-brand">橄欖山</span>
         </div>
-        <div class="olive-feature__caption">
-          <small>FEATURED CHANNEL · 01</small>
-          <button type="button" class="olive-feature__next" data-feature-prev aria-label="上一段精選講道">← PREVIOUS</button>
-          <button type="button" class="olive-feature__next" data-feature-next aria-label="切換下一段精選講道">NEXT FEATURE →</button>
-          <a class="olive-feature__source" data-feature-source href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">WATCH ON YOUTUBE ↗</a>
-          <h2>大衛鮑森</h2>
-          <p><span data-pawson-title>系列講座</span> <i>ENTER →</i></p>
+        <div class="olive-feature__caption" aria-live="polite">
+          <span class="olive-feature__caption-kicker">OLIVE MOUNTAIN <span aria-hidden="true">/</span> FEATURED SERMON</span>
+          <div class="olive-feature__caption-editorial">
+            <h2>大衛鮑森</h2>
+            <p><span data-pawson-title>系列講座</span></p>
+          </div>
         </div>
       </div>
     </article>
 
-    <div class="olive-speaker-rail" aria-label="十二講員" tabindex="0">
+    <div class="olive-speaker-rail" data-ws-one-look-selector aria-label="十二講員" tabindex="0">
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="portrait-inset" type="button" data-person="大衛鮑森"><span>01</span><strong>大衛鮑森</strong><small>系列講座</small></button>
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="negative-space" type="button" data-person="江秀琴"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
       <button data-ws-designable="olive-poster" class="olive-speaker-card dore-magazine-card" data-dore-family="asymmetric-split" type="button" data-person="賴若瀚"><span>03</span><strong>賴若瀚</strong><small>十分釋經</small></button>
@@ -281,9 +280,10 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     card.dataset.doreSurface='speaker-card';
     card.dataset.doreSpeaker=slug;
     card.dataset.doreIdentitySynthesis='false';
-    card.addEventListener('click',()=>selectSpeaker(card.dataset.person));
+    card.dataset.wsOneLookCard=card.dataset.person;
   });
 
+  document.querySelector('.olive-speaker-rail')?.addEventListener('ws-one-look:select',event=>selectSpeaker(event.detail.id));
   const speakerRail=document.querySelector('.olive-speaker-rail');
   if(speakerRail){
     // Defensive cleanup for stale cached markup: each speaker appears once.
@@ -294,27 +294,37 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
       else seenSpeakers.add(key);
     });
     const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
-    let last=performance.now(), boost=0, raf=0, direction=1;
+    let raf=0,last=0,paused=false,offset=0,cycleWidth=0;
+    const originals=[...speakerRail.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')];
+    // One seamless visual loop: duplicate artwork only, never duplicate interactive speakers.
+    const track=document.createElement('div');track.className='olive-speaker-rail__track';
+    originals.forEach(card=>track.append(card));
+    const copies=originals.map(card=>{
+      const copy=card.cloneNode(true);copy.classList.add('olive-speaker-card--clone');
+      copy.removeAttribute('data-ws-designable');copy.setAttribute('data-ws-one-look-clone','');copy.setAttribute('aria-hidden','true');
+      copy.tabIndex=-1;copy.inert=true;track.append(copy);return copy;
+    });
+    speakerRail.append(track);
+    const measure=()=>{cycleWidth=copies[0]?.offsetLeft-originals[0]?.offsetLeft||0;};
+    const observer=new ResizeObserver(measure);observer.observe(speakerRail);
+    measure();
     const tick=now=>{
-      const dt=Math.min(40,now-last);last=now;
-      if(!reduceMotion.matches){
-        const max=Math.max(0,speakerRail.scrollWidth-speakerRail.clientWidth);
-        const next=speakerRail.scrollLeft+direction*dt*.018+boost;
-        if(next>=max){speakerRail.scrollLeft=max;direction=-1;boost=0;}
-        else if(next<=0){speakerRail.scrollLeft=0;direction=1;boost=0;}
-        else speakerRail.scrollLeft=next;
-        boost*=.88;
+      const dt=last?Math.min(50,now-last):0;last=now;
+      if(!reduceMotion.matches&&!paused&&cycleWidth>0){
+        offset=(offset+dt*.045)%cycleWidth;
+        track.style.transform='translate3d('+(-offset)+'px,0,0)';
       }
       raf=requestAnimationFrame(tick);
     };
     raf=requestAnimationFrame(tick);
-    speakerRail.addEventListener('wheel',e=>{
-      if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
-        e.preventDefault();
-        boost+=Math.max(-18,Math.min(18,e.deltaY*.11));
-      }
-    },{passive:false});
-    window.addEventListener('pagehide',()=>cancelAnimationFrame(raf),{once:true});
+    speakerRail.addEventListener('pointerenter',()=>{paused=true;});
+    speakerRail.addEventListener('mouseenter',()=>{paused=true;});
+    speakerRail.addEventListener('pointerleave',()=>{paused=false;});
+    speakerRail.addEventListener('mouseleave',()=>{paused=false;});
+    speakerRail.addEventListener('focusin',()=>{paused=true;});
+    speakerRail.addEventListener('focusout',()=>{paused=false;});
+    reduceMotion.addEventListener?.('change',()=>{if(reduceMotion.matches){offset=0;track.style.transform='none';}});
+    window.addEventListener('pagehide',()=>{cancelAnimationFrame(raf);observer.disconnect();},{once:true});
   }
   document.querySelectorAll('a.series-chip[href*="topic="]').forEach(link=>{
     link.addEventListener('click',e=>{
@@ -396,6 +406,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   }
 })();
 </script>
+<script src="/js/westside-one-look-selector.js?v=20261010-one-look" defer></script>
 <script src="/js/olive-editorial-rail.js?v=20261009-bilingual-v3" defer></script>
 <script src="/js/olive-journey.js?v=20261009-gallery-v2" defer></script>
 {{ end }}
