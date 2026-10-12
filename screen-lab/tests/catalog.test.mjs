@@ -35,3 +35,11 @@ test('filters are module-bound, not missing globals',()=>{
  assert.ok(!html.includes('onclick="setFilter('));
  assert.match(catalog,/data-screen-filter/);
 });
+
+test('external iframe is click-initiated and disposed when detail closes',()=>{
+ assert.match(catalog,/btn\.onclick=\(\)=>\{/);
+ assert.match(catalog,/host\.replaceChildren\(frame\)/);
+ assert.match(catalog,/dialog\.addEventListener\('close',\(\)=>document\.getElementById\('player'\)\.replaceChildren\(\)\)/);
+ assert.match(catalog,/video\.blender\.org/);
+ assert.match(catalog,/是否能播放請以播放器畫面為準/);
+});
