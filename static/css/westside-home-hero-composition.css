@@ -122,3 +122,61 @@ body.home .sites-home-hero .sites-home-entry span{
  body.home .sites-home-hero .sites-home-masthead{top:12vh}
  body.home .sites-home-hero .sites-home-intro{bottom:12vh}
 }
+
+/* Phase II — responsive collision contract.
+   On narrow screens use document flow, not three independently positioned
+   overlays. This preserves brand hierarchy under text zoom and translation. */
+@media(max-width:900px){
+ body.home .sites-home-hero{
+  min-height:100svh;height:auto;
+  display:grid;grid-template-columns:minmax(0,1fr);
+  grid-template-rows:auto auto minmax(0,1fr) auto;
+  align-content:start;row-gap:clamp(28px,5vh,68px);
+  padding:clamp(20px,3vh,36px) var(--home-edge) clamp(22px,4vh,42px);
+ }
+ body.home .sites-home-hero .sites-home-film{position:absolute;inset:0}
+ body.home .sites-home-hero .sites-home-nav{
+  position:relative;top:auto;left:auto;right:auto;
+  grid-row:1;z-index:4;max-width:100%;
+  justify-content:flex-start;
+ }
+ body.home .sites-home-hero .sites-home-masthead{
+  position:relative;top:auto;left:auto;right:auto;
+  grid-row:2;z-index:2;
+  width:min(72vw,360px);max-width:100%;
+ }
+ body.home .sites-home-hero .sites-home-intro{
+  position:relative;left:auto;right:auto;bottom:auto;
+  grid-row:3;z-index:2;width:100%;max-width:100%;
+  align-self:end;min-width:0;
+ }
+ body.home .sites-home-hero .sites-home-entry{
+  position:relative;left:auto;right:auto;bottom:auto;
+  grid-row:4;z-index:3;width:100%;
+ }
+}
+@media(max-width:520px){
+ body.home .sites-home-hero{row-gap:clamp(22px,4vh,42px)}
+ body.home .sites-home-hero .sites-home-masthead{width:min(82vw,340px)}
+ body.home .sites-home-hero .sites-home-intro h1{
+  font-size:clamp(46px,13vw,72px);overflow-wrap:normal;
+ }
+ body.home .sites-home-hero .sites-home-entry{
+  flex-wrap:wrap;align-items:start;gap:12px 22px;
+ }
+ body.home .sites-home-hero .sites-home-entry a{
+  flex:1 1 145px;max-width:100%;
+ }
+}
+@media(max-height:620px) and (min-width:901px){
+ body.home .sites-home-hero{min-height:720px}
+}
+@media(prefers-reduced-motion:reduce){
+ body.home .sites-home-hero :is(.sites-home-masthead,.sites-home-intro,.sites-home-entry){
+  animation:none!important;opacity:1!important;transform:none!important;
+ }
+}
+/* Keep controls legible and keyboard-reachable over moving footage. */
+body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visible{
+ outline:2px solid currentColor;outline-offset:5px;
+}
