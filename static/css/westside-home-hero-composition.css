@@ -4,7 +4,7 @@
    Screenshot-driven desktop proportions; no glyph stretching or black/gold palette. */
 body.home .sites-home-hero{
  --home-edge:clamp(24px,4vw,86px);
- --home-title-size:clamp(104px,8.7vw,172px);
+ --home-title-size:clamp(66px,5.5vw,110px);
  --home-ui-size:clamp(16px,1.02vw,21px);
  --home-chinese-size:clamp(21px,1.38vw,28px);
  --home-verse-size:clamp(19px,1.18vw,25px);
@@ -19,8 +19,8 @@ body.home .sites-home-hero .sites-home-film:after{
  linear-gradient(0deg,rgba(10,17,17,.76) 0%,rgba(10,17,17,.12) 37%,transparent 66%,rgba(10,17,17,.32) 100%);
 }
 body.home .sites-home-hero .sites-home-masthead{
- position:absolute;z-index:2;top:clamp(105px,12.5vh,180px);
- left:var(--home-edge);width:clamp(440px,34vw,710px);max-width:none;padding:0;
+ position:absolute;z-index:2;top:clamp(108px,14vh,205px);
+ left:var(--home-edge);width:clamp(610px,51vw,1100px);max-width:none;padding:0;
 }
 body.home .sites-home-hero .sites-home-masthead img{
  display:block;width:100%;height:auto;object-fit:contain;opacity:1;
@@ -42,7 +42,7 @@ body.home .sites-home-hero .sites-home-nav a:hover,
 body.home .sites-home-hero .sites-home-nav a:focus-visible{border-color:currentColor}
 body.home .sites-home-hero .sites-home-intro{
  position:absolute;z-index:2;left:auto;right:var(--home-edge);
- bottom:clamp(155px,18vh,245px);width:min(55vw,880px);max-width:none;
+ bottom:clamp(182px,23vh,290px);width:min(41vw,720px);max-width:none;
  display:grid;grid-template-columns:minmax(0,1fr);align-items:end;
 }
 body.home .sites-home-hero .sites-home-star{
@@ -53,7 +53,7 @@ body.home .sites-home-hero .sites-home-intro h1{
  grid-column:1;grid-row:2;min-width:0;max-width:none;margin:0;
  font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
  font-size:var(--home-title-size);font-weight:400;line-height:.89;
- letter-spacing:-.047em;text-wrap:nowrap;overflow-wrap:normal;font-synthesis:none;
+ letter-spacing:-.035em;text-wrap:nowrap;overflow-wrap:normal;font-synthesis:none;
 }
 body.home .sites-home-hero .sites-home-intro h1 em{
  font-family:inherit;font-style:italic;font-weight:400;font-synthesis:none;
@@ -61,7 +61,7 @@ body.home .sites-home-hero .sites-home-intro h1 em{
 }
 body.home .sites-home-hero .sites-home-scripture-pair{
  grid-column:1;grid-row:3;display:flex;flex-direction:column;align-items:flex-start;
- gap:clamp(6px,.8vh,11px);min-width:0;margin-top:clamp(22px,2.7vh,38px);
+ gap:clamp(3px,.5vh,7px);min-width:0;margin-top:clamp(16px,1.7vh,24px);
 }
 body.home .sites-home-hero .sites-home-scripture-pair .sites-home-slogan-zh,
 body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
@@ -70,11 +70,11 @@ body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
 }
 body.home .sites-home-hero .sites-home-scripture-pair .sites-home-slogan-zh{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- font-size:var(--home-chinese-size);font-weight:200;letter-spacing:.1em;
+ font-size:clamp(18px,1.12vw,23px);font-weight:200;letter-spacing:.1em;
 }
 body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
  font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
- font-size:clamp(20px,1.45vw,26px);font-weight:400;letter-spacing:.01em;line-height:1.45;
+ font-size:clamp(16px,1.05vw,21px);font-weight:400;letter-spacing:.01em;line-height:1.45;
 }
 body.home .sites-home-hero .sites-home-scripture-pair cite{
  font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
@@ -82,12 +82,12 @@ body.home .sites-home-hero .sites-home-scripture-pair cite{
  letter-spacing:.01em;
  line-height:1.45;
  display:block;margin-top:clamp(8px,1.3vh,17px);
- font-size:clamp(15px,.95vw,19px);font-weight:400;opacity:.88;
+ font-size:clamp(13px,.78vw,16px);font-weight:400;opacity:.75;
 }
 body.home .sites-home-hero .sites-home-entry{
  position:absolute;z-index:5;right:var(--home-edge);left:auto;
- bottom:clamp(28px,5vh,62px);display:flex;align-items:flex-end;
- gap:clamp(25px,3vw,55px);
+ bottom:clamp(24px,4vh,50px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;
+ gap:clamp(20px,3vw,55px);
  font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
  font-size:var(--home-ui-size);letter-spacing:.02em;
 }
@@ -95,7 +95,7 @@ body.home .sites-home-hero .sites-home-entry a{
  font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
  white-space:nowrap;
  display:flex;align-items:center;justify-content:space-between;gap:15px;
- min-width:clamp(180px,13vw,260px);min-height:46px;padding:8px 0;
+ min-width:0;min-height:54px;padding:10px 0;
  border-bottom:1px solid rgba(255,255,255,.72);opacity:1;
 }
 body.home .sites-home-hero .sites-home-entry span{
@@ -139,14 +139,14 @@ body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visi
  }
  body.home .sites-home-hero .sites-home-entry{
   position:relative;grid-row:4;left:auto;right:auto;bottom:auto;
-  width:100%;flex-wrap:wrap;gap:12px 22px;
+  width:100%;display:flex;flex-wrap:wrap;gap:12px 22px;
  }
  body.home .sites-home-hero .sites-home-entry a{flex:1 1 170px;min-width:0}
 }
 @media(max-width:520px){
  body.home .sites-home-hero{--home-title-size:clamp(54px,13vw,74px)}
  body.home .sites-home-hero .sites-home-masthead{width:min(82vw,360px)}
- body.home .sites-home-hero .sites-home-scripture-pair{margin-top:24px}
+ body.home .sites-home-hero .sites-home-scripture-pair{margin-top:18px}
 }
 @media(prefers-reduced-motion:reduce){
  body.home .sites-home-hero :is(.sites-home-masthead,.sites-home-intro,.sites-home-entry){
@@ -166,7 +166,7 @@ body.home .sites-home-hero .sites-home-star{filter:brightness(0) invert(1)}
 
 /* Three equal editorial entry points on desktop; mobile keeps wrapping. */
 @media(min-width:901px){
- body.home .sites-home-hero .sites-home-entry{left:var(--home-edge);right:var(--home-edge);justify-content:flex-end;gap:clamp(20px,2vw,38px)}
- body.home .sites-home-hero .sites-home-entry a{flex:0 1 auto;min-width:0}
+ body.home .sites-home-hero .sites-home-entry{left:var(--home-edge);right:var(--home-edge);gap:clamp(20px,2vw,38px)}
+ body.home .sites-home-hero .sites-home-entry a{min-width:0}
 }
 
