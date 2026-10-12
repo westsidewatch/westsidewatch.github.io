@@ -14,7 +14,7 @@
 
   {{/* The worship schedule is first-layer church content, not a link-only subpage. */}}
   {{ with index site.Data.church.bulletins "2026-10-11" }}
-  <section class="church-front-schedule" data-mersi-panel aria-labelledby="church-front-schedule-title">
+  <section class="church-front-schedule" id="church-front-schedule" data-mersi-panel aria-labelledby="church-front-schedule-title">
     <div class="church-front-schedule__heading">
       <p>主日崇拜 · {{ .date_label }} · {{ .time_label }}</p>
       <h2 id="church-front-schedule-title">主日敬拜日程</h2>
