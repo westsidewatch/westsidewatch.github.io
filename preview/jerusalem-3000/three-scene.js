@@ -1,3 +1,9 @@
+import {fitCityOverview} from './city-overview.js';
+import {createPersianSanctuary} from './persian-sanctuary.js';
+import {bindPeriodSpatialCore} from './period-spatial-ledger.js';
+import { compilePeriodRegistration } from './period-spatial-registration.js';
+import {createRoyalCity} from './royal-city.js';
+import {loadCityData} from './city-data-loader.js';
 import { createEarliestSettlement, isEarliestPhase, isEarlyLandscapePhase } from './earliest-settlement.js';
 import { createSharedEraRuntime, isSharedSlicePhase, isSharedGenerationPhase } from './shared-era-runtime.js';
 import * as THREE from 'three';
@@ -218,9 +224,9 @@ function addEraFabric(
   return meshes;
 }
 function legacyTemporalAllowed(object, phaseId) {
-  return !isCorePhase(phaseId) && !isEarlyLandscapePhase(phaseId);
+  return object.rendererBinding!=='ledger-only-pending-adapter' && !isCorePhase(phaseId) && !isEarlyLandscapePhase(phaseId) && !isSharedGenerationPhase(phaseId);
 }
-export function mountJerusalemThreeScene(mount, { onReady } = {}) {
+export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance } = {}) {
   const scene = new THREE.Scene(),
     camera = new THREE.PerspectiveCamera(34, 1, 0.1, 18000),
     renderer = new THREE.WebGLRenderer({
@@ -292,7 +298,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
-  let retainedVisible = false;
+  let retainedVisible = false, royalCity=null, persianSanctuary=null, periodSpatialData=null, periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
   generationStatus.setAttribute('role', 'status');
@@ -319,6 +325,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     middleBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     lateBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     davidSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
+    royalCity?.apply({position:timelinePosition,ruin:currentRuin,evidenceAllowed});
+    persianSanctuary?.apply({position:timelinePosition,evidenceAllowed});
     const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
@@ -354,6 +362,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     if (phase2Morphology && currentPhaseId === 'babylonian-destruction')
       setEraMorphologyProgress(phase2Morphology, 1, { ruined: true });
     updateCityCoreVisibility();
+    onDistrictAcceptance?.(sharedEraRuntime?.acceptance()??null);
     needsFrame = true;
   }
   function setBuildProgress(v) {
@@ -402,7 +411,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     // Request only this bounded slice; other eras retain their established morphology.
     sharedEraRuntime?.request(phaseId);
     if (isCorePhase(phaseId) || isEarlyLandscapePhase(phaseId)) return;
-    if (sharedEraRuntime?.status === 'ready' && isSharedGenerationPhase(phaseId)) {
+    if (isSharedGenerationPhase(phaseId)) {
       eraFabricLayer.visible = false;
       return;
     }
@@ -451,10 +460,25 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       terrainRuntime,
     );
   }
+  function updatePeriodOverview(phaseId,force=false){
+    const framePhase=phaseId==='babylonian-destruction'?'late-first-temple':phaseId;
+    const includesEarlier=phaseId==='persian-nehemiah'&&retainedVisible;
+    const frameKey=framePhase+(includesEarlier?':retained':'');
+    if(!periodRegistrations.has(framePhase)||(!force&&overviewFrame===frameKey))return;
+    if(!overviewPriorCamera)overviewPriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
+    const registrations=[periodRegistrations.get(framePhase),...(includesEarlier?[periodRegistrations.get('late-first-temple')]:[])];
+    const points=registrations.flatMap(r=>r.districts.flatMap(d=>d.geometry.polygon.flatMap(p=>{const y=terrainRuntime.heightAtWorld(p.x,p.z);return[new THREE.Vector3(p.x,y,p.z),new THREE.Vector3(p.x,y+32,p.z)];})));
+    const framing=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov});
+    controls.minDistance=35;controls.target.copy(framing.target);camera.position.copy(framing.position);controls.update();overviewFrame=frameKey;
+    overviewInfo={framePhase,includesEarlier,distance:framing.distance,bounds:framing.bounds,authority:framing.authority};
+  }
   function setTemporalCityState(objects = [], position = 0, phaseId = '') {
     const previousPhase = currentPhaseId,
       phaseChanged = previousPhase !== phaseId;
     currentPhaseId = phaseId;
+    timelinePosition=position;
+    if(phaseChanged&&templePriorCamera){camera.position.copy(templePriorCamera.position);controls.target.copy(templePriorCamera.target);controls.minDistance=templePriorCamera.minDistance;templePriorCamera=null;controls.update();}
+    if(phaseChanged&&overviewPriorCamera&&!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(phaseId)){camera.position.copy(overviewPriorCamera.position);controls.target.copy(overviewPriorCamera.target);controls.minDistance=overviewPriorCamera.minDistance;overviewPriorCamera=null;overviewFrame='';overviewInfo=null;controls.update();}
     if(phaseChanged && earliestSettlement) {
       if(isEarlyLandscapePhase(phaseId)) {
         if(!isEarlyLandscapePhase(previousPhase)) priorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
@@ -467,6 +491,13 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         camera.position.copy(priorCamera.position);controls.target.copy(priorCamera.target);controls.minDistance=priorCamera.minDistance;priorCamera=null;controls.update();
       }
     }
+    if(phaseId==='david-solomon'&&royalCity){
+      const stage=objects.find(o=>o.id==='j3k:object:first-temple')?.state==='absent'?'david':'solomon';
+      if(stage!==royalCameraStage||phaseChanged){royalCameraStage=stage;
+        const focus=stage==='solomon'?royalCity.focus:davidSettlement.focus;controls.target.copy(focus);
+        camera.position.copy(focus).add(stage==='solomon'?(camera.aspect<1?new THREE.Vector3(680,650,980):new THREE.Vector3(400,380,620)):new THREE.Vector3(240,230,340));controls.update();}
+    }
+    if(phaseChanged)updatePeriodOverview(phaseId);
     applyTemporalState();
     if (phaseChanged && terrainRuntime) {
       rebuildUrbanFabric(phaseId);
@@ -519,12 +550,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     needsFrame = true;
   }
   const ready = Promise.all([
-    fetch('./data/objects/herodian-30ce.json', { cache: 'no-store' }).then(
-      (r) => {
-        if (!r.ok) throw new Error(`Herodian ledger unavailable (${r.status})`);
-        return r.json();
-      },
-    ),
+    loadCityData('./data/objects/herodian-30ce.json'),
     loadTerrainAuthority(),
   ]).then(async ([ledger, { manifest }]) => {
     evidenceResolution = new EvidenceResolutionEngine(ledger.objects);
@@ -591,9 +617,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         terrain: terrainRuntime,
       });
       await registerHerodianUrbanCore(loaded.core);
-      const eraRegistrationResponse = await fetch('./data/urban/herodian-30ce.registration.json', { cache: 'no-store' });
-      if (!eraRegistrationResponse.ok) throw new Error(`Era registration unavailable: ${eraRegistrationResponse.status}`);
-      eraRegistrationReference = await eraRegistrationResponse.json();
+      eraRegistrationReference = await loadCityData('./data/urban/herodian-30ce.registration.json');
       const parcels = await buildHerodianParcelCore(
         loaded.core,
         terrainRuntime,
@@ -623,7 +647,12 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       );
       cityProjection = createCityProjection(cityCoreLayer, architecture.meshes);
       cityCoreRuntime.projection = cityProjection;
+      periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
+      for(const phase of ['late-first-temple','persian-nehemiah']){const registration=compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin);periodRegistrations.set(phase,registration);bindPeriodSpatialCore(loaded.core,registration);}
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
+        ledgerCore:loaded.core,
+        getRegistration:phase => periodRegistrations.get(phase) ?? null,
+        getExclusions:phase=>royalCity?.exclusionsFor(phase)||[],
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
         successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],
         expansionFootprint: ERA_FOOTPRINTS['hellenistic-hasmonean'],
@@ -648,9 +677,10 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const lateResponse=await fetch('./data/settlement/late-bronze-iron1.v1.json',{cache:'no-store'});
     if(!lateResponse.ok) throw new Error('Late Bronze landscape data unavailable');
     lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime});
-    const davidResponse=await fetch('./data/settlement/david-solomon.v1.json',{cache:'no-store'});
-    if(!davidResponse.ok) throw new Error('David landscape data unavailable');
-    davidSettlement=createEarliestSettlement(root,{data:await davidResponse.json(),terrain:terrainRuntime});
+    const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');
+    davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime});
+    royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
+    persianSanctuary=createPersianSanctuary(root,{data:periodSpatialData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     const bounds = new THREE.Box3()
       .setFromObject(cityCoreLayer)
       .union(new THREE.Box3().setFromObject(historical));
@@ -734,6 +764,9 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             middleBronzeSettlement: middleBronzeSettlement?.diagnostics(),
             lateBronzeSettlement: lateBronzeSettlement?.diagnostics(),
             davidSettlement: davidSettlement?.diagnostics(),
+            royalCity:royalCity?.diagnostics(),
+            persianSanctuary:persianSanctuary?.diagnostics(),
+            cityOverview:overviewInfo,
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -788,15 +821,27 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         references:['https://www.israelexplorationsociety.com/','https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf'],
         limitations:[
           '寬牆等城防遺構支持研究西南山丘的城市發展；本畫面尚未加入經定位的寬牆平面。',
-          '目前街網與地塊由後期參考配置轉換而來，住宅形制、數量和城區範圍均為示意，不能視為第一聖殿城市復原。',
+          '目前山脊、北部聖區與西丘使用獨立推定配置；地塊、住宅形制、數量和具體區界未經考古定位。',
           '毀壞階段沿用相同模型呈現變化；倒塌方式、留存比例與埋藏深度尚未考古核定。',
           '現代 DEM 不代表古代地表；完整城牆、王宮與第一聖殿形制尚未核定。'
         ]
       };
+      if(phaseId==='persian-nehemiah')return {
+        source:periodSpatialData.phases['persian-nehemiah'].sanctuary.sources[0],references:[],
+        limitations:[...periodSpatialData.phases['persian-nehemiah'].sanctuary.limitations,'第一聖殿遺存、王室區與特定前代牆段的後續狀態尚未核定。']
+      };
       return runtime?.evidence();
+    },
+    inspectCityObject(id){const record=cityCoreRuntime?.core.get(id);return record?structuredClone(record):null;},
+    focusRoyalTemple(){
+      const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:royalCity;
+      if(!templeRuntime?.diagnostics().visibleTemple)return;
+      if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
+      controls.minDistance=35;controls.target.copy(templeRuntime.templeFocus||templeRuntime.focus);camera.position.copy(templeRuntime.templeFocus||templeRuntime.focus).add(new THREE.Vector3(65,60,90));controls.update();needsFrame=true;
     },
     setRetainedLayerVisible(visible) {
       retainedVisible = Boolean(visible);
+      updatePeriodOverview(currentPhaseId,true);
       applyTemporalState();
       needsFrame = true;
     },
@@ -841,6 +886,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       middleBronzeSettlement?.dispose();
       lateBronzeSettlement?.dispose();
       davidSettlement?.dispose();
+      royalCity?.dispose();
+      persianSanctuary?.dispose();
       generationStatus.remove();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])

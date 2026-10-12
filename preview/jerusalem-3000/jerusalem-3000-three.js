@@ -54,7 +54,24 @@ try {
     strip = document.querySelector('.j3k-phase-strip');
   phases.forEach(() => strip.append(document.createElement('i')));
   const ticks = [...strip.children];
+  let districtAcceptance=null;
+  function renderDistrictAcceptance(){
+    const panel=document.querySelector('.j3k-evidence-panel');if(!panel)return;
+    let section=panel.querySelector('[data-district-acceptance]');
+    if(!districtAcceptance||districtAcceptance.phase!==stage.dataset.phase){section?.remove();return;}
+    const key=JSON.stringify(districtAcceptance);if(section?.dataset.key===key)return;
+    if(!section){section=document.createElement('section');section.dataset.districtAcceptance='';panel.append(section);}
+    section.dataset.key=key;section.replaceChildren();
+    const title=document.createElement('h4');title.textContent='住宅分區 · 推定示意';section.append(title);
+    const note=document.createElement('p');note.textContent='以下是畫面模型數量，不代表古代人口或實際建築數；前代遺存與再利用關係仍未核定。';section.append(note);
+    if(districtAcceptance.status!=='ready'){const pending=document.createElement('p');pending.textContent=districtAcceptance.status==='error'?'本期住宅生成失敗，尚無完整分區結果。':'本期住宅生成中，完成後顯示分區結果。';section.append(pending);return;}
+    const labels={'eastern-ridge':'東南山脊','northern-precinct':'北部聖區周邊','western-hill':'西丘','ridge-rebuilding':'山脊重建區','northern-rebuilding':'北部重建區'};
+    const table=document.createElement('table'),head=document.createElement('tr');
+    for(const text of ['地區','街區','住宅','顯示']){const th=document.createElement('th');th.textContent=text;head.append(th);}table.append(head);
+    for(const d of districtAcceptance.districts){const row=document.createElement('tr');row.dataset.residentialDistrict=d.id;row.dataset.buildings=String(d.buildings);row.dataset.visibleBuildings=String(d.visibleBuildings);const name=(labels[d.id.split(':').at(-1)]||'推定地區')+(d.layerState==='retained-ruin'?' · 前代遺存':districtAcceptance.phase==='babylonian-destruction'?' · 毀城示意':'');for(const value of [name,d.blocks,d.buildings,d.visibleBuildings]){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}table.append(row);}section.append(table);
+  }
   const three = mountJerusalemThreeScene(mount, {
+    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();},
     onReady(info) {
       window.__JERUSALEM3000__.three = true;
       window.__JERUSALEM3000__.evidence = true;
@@ -64,6 +81,7 @@ try {
     },
   });
   await three.ready;
+  window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
   const retainedToggle = document.querySelector('.j3k-retained-toggle');
   retainedToggle.addEventListener('click', () => {
     const enabled = retainedToggle.getAttribute('aria-pressed') !== 'true';
@@ -86,6 +104,9 @@ try {
   const earlyEvidencePanel=document.querySelector('.j3k-evidence-panel');
   const routeEvidenceNodes=[...earlyEvidencePanel.childNodes].map(n=>n.cloneNode(true));
   let evidencePanelPhase='';
+  const templeFocusButton=document.createElement('button');templeFocusButton.textContent='聖殿近看';templeFocusButton.hidden=true;
+  document.querySelector('.j3k-event-controls').append(templeFocusButton);
+  templeFocusButton.addEventListener('click',()=>three.focusRoyalTemple());
   function update(v) {
     const state = time.sample(v),
       p = state.phase,
@@ -150,11 +171,13 @@ try {
       : `JERUSALEM 3000 · TEMPORAL CITY · ${productionInfo?.evidenceObjects || 0} EVIDENCE OBJECTS · ${productionInfo?.constructionPieces || 0} PIECES`;
     date.textContent = p.dateLabel;
     eraEn.textContent = (p.state || '').toUpperCase() + ' · ' + p.dateLabel;
-    eraZh.textContent = p.label;
+    const temple=cityObjects.find(o=>o.id===(p.id===RETAINED_PHASE?'j3k:object:second-temple-early':'j3k:object:first-temple'));
+    templeFocusButton.hidden=!['david-solomon','late-first-temple','babylonian-destruction',RETAINED_PHASE].includes(p.id)||!(temple?.visible||temple?.ruined);
+    eraZh.textContent=p.id==='david-solomon'?(temple?.state==='absent'?'大衛城 · 城防與王室':'所羅門城 · 第一聖殿'):p.label;
     retainedToggle.hidden = p.id !== RETAINED_PHASE;
-    note.textContent = isEarliestPhase(p.id) ? '東南山脊與基訓泉周邊的小規模聚落。住居數量、位置、屋頂與步徑均為推定示意；地形使用現代 DEM。可拖動旋轉、滾輪縮放。' : p.id==='middle-bronze' ? '中青銅取水設施與防護通道示意。泉塔年代有爭議，粉褐色標示為爭議層；住居、位置與高度仍屬推定。鑿岩設施只顯示輪廓，完整城牆範圍尚未核定。' : p.id==='late-bronze-iron1' ? '此期城區範圍未核定；住居僅為示意，不代表人口增減或前代房屋留存。粉褐色階梯支撐體為年代與功能爭議層，不能直接認定為王宮基礎。前期防禦未預設延續，隱藏不表示毀壞。' : p.id==='david-solomon' ? '住居改為沿山脊配置的四室住宅類比，中央開放、兩側與後室覆頂；其來源為較晚鐵器時代，不是前十世紀已核定平面。圓環與階梯體仍屬爭議；所羅門北向聖殿、王宮與完整城牆尚未復原。' : p.id === RETAINED_PHASE
-      ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建住宅由共享地塊生成器產生，範圍與道路仍屬推定。`
-      : isSharedGenerationPhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
+    note.textContent = isEarliestPhase(p.id) ? '東南山脊與基訓泉周邊的小規模聚落。住居數量、位置、屋頂與步徑均為推定示意；地形使用現代 DEM。可拖動旋轉、滾輪縮放。' : p.id==='middle-bronze' ? '中青銅取水設施與防護通道示意。泉塔年代有爭議，粉褐色標示為爭議層；住居、位置與高度仍屬推定。鑿岩設施只顯示輪廓，完整城牆範圍尚未核定。' : p.id==='late-bronze-iron1' ? '此期城區範圍未核定；住居僅為示意，不代表人口增減或前代房屋留存。粉褐色階梯支撐體為年代與功能爭議層，不能直接認定為王宮基礎。前期防禦未預設延續，隱藏不表示毀壞。' : p.id==='david-solomon' ? '城防、王室院落與第一聖殿為推定復原，由共同帳本分段出現。聖殿主體採經文比例，牆線、位置與外觀未核定；可點「聖殿近看」。住宅仍為較晚鐵器時代類比。' : p.id === RETAINED_PHASE
+      ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建住宅採獨立山脊／北部配置；早期第二聖殿主體、院落及入口為獨立推定示意，可點「聖殿近看」。城界、街網與人口未核定。`
+      : isSharedSlicePhase(p.id) ? `${p.note} 東南山脊、北部聖區與西丘採獨立配置；西向擴張方向有文獻依據，具體邊界與道路仍為推定。毀城沿用同一批示意住居。` : isSharedGenerationPhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
     if(evidencePanelPhase!==p.id) {
       evidencePanelPhase=p.id;
       const evidence=three.earlyLandscapeEvidence(p.id);
@@ -175,6 +198,18 @@ try {
         }
       } else earlyEvidencePanel.replaceChildren(...routeEvidenceNodes.map(n=>n.cloneNode(true)));
     }
+    let continuity=earlyEvidencePanel.querySelector('[data-city-continuity]');
+    if(['david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah'].includes(p.id)) {
+      if(!continuity){continuity=document.createElement('section');continuity.dataset.cityContinuity='';earlyEvidencePanel.append(continuity);}
+      continuity.replaceChildren();
+      const title=document.createElement('h4');title.textContent='主體去向 · 資料狀態';continuity.append(title);
+      const caveat=document.createElement('p');caveat.textContent='聖區承接不等於同一建築或地基。未知不表示已毀壞；資料狀態不等於已有復原幾何。';continuity.append(caveat);
+      const states={absent:'尚未建造',withheld:'未核定',build:'建造',transform:'延續／改變',ruin:'毀壞',rebuild:'重新建造',unresolved:'去向未核定',buried:'埋藏',expand:'擴展',settlement:'聚落'};
+      const list=document.createElement('ul');continuity.append(list);
+      for(const object of cityObjects.filter(o=>['j3k:object:first-temple','j3k:object:second-temple-early','j3k:object:royal-city-wall-hypothesis','j3k:object:royal-monumental-zone-10c'].includes(o.id))) {
+        const item=document.createElement('li');item.dataset.continuityObject=object.id;item.dataset.state=object.state;item.textContent=`${object.label}：${states[object.state]||object.state}`;list.append(item);
+      }
+    } else continuity?.remove();
     ticks.forEach((x, i) => {
       x.classList.toggle('is-past', i < state.index);
       x.classList.toggle('is-current', i === state.index);
@@ -184,6 +219,7 @@ try {
     );
     stage.dataset.operation = p.state;
     stage.dataset.phase = p.id;
+    renderDistrictAcceptance();
     stage.dataset.transformation = transformation.phase;
     stage.dataset.temporalObjects = String(
       cityObjects.filter((object) => object.visible || object.ruined).length,

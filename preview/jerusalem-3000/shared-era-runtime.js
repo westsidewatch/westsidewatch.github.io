@@ -1,3 +1,4 @@
+import {publishGeneratedResidentialLedger,residentialOwner} from './generated-residential-ledger.js';
 import * as THREE from 'three';
 import { TemporalCityCore } from './temporal-city-core.js';
 import { deriveEraRegistration } from './era-registration-adapter.js';
@@ -15,11 +16,12 @@ export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || id === RE
 // One provisional first-temple fabric, inherited by destruction in place.
 // Reuse is a schematic lifecycle, not evidence of surveyed period-specific parcels.
 function createParcelRuntime(parent, { reference, footprint, terrain, materials,
-  generationPhase, phaseIds, destroyedPhase = null, retainedPhase = null,
+  generationPhase, phaseIds, destroyedPhase = null, retainedPhase = null, getExclusions=()=>[], getRegistration=null, ledgerCore=null,
   onChange = () => {}, onProgress = () => {} }) {
   const openingMaterial = materials.facadeOpening || new THREE.MeshStandardMaterial({ color: 0x3d3327, roughness: .94, metalness: 0 });
   const sharedMaterials = { ...materials, facadeOpening: openingMaterial };
   let current = '', pending = null, city = null, disposed = false;
+  const owner=residentialOwner(generationPhase);
   let state = { status: 'idle', completed: 0, total: 0 };
   function release(group) {
     group.traverse(object => object.geometry?.dispose?.());
@@ -38,7 +40,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
     group.visible = false; // Never show a partially assembled replacement.
     parent.add(group);
     const controller = new AbortController();
-    const task = { controller, group };
+    const task = { controller, group, publication:null };
     pending = task;
     state = { status: 'generating', completed: 0, total: 0 };
     task.promise = (async () => {
@@ -48,11 +50,17 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
         if (controller.signal.aborted) throw new DOMException('Cancelled', 'AbortError');
         const phaseId = generationPhase;
         const core = new TemporalCityCore({ phases: phaseIds.map(id => ({ id })), terrain });
-        const registration = deriveEraRegistration(reference, phaseId, footprint);
-        const parcels = buildEraParcelCore(core, terrain, {
-          phaseId, registration, districtId: registration.districts[0].id,
-          dataset: `provisional-${generationPhase}-footprint-not-surveyed`,
-        });
+        const registration = getRegistration?.(phaseId) ?? deriveEraRegistration(reference, phaseId, footprint);
+        const roadExclusions=getExclusions(phaseId);
+        // The whole sanctuary reserves housing space; authored approach roads end at its edge.
+        // Treating that envelope as a road obstacle would cut the final approach segment.
+        const exclusions=[...roadExclusions, ...(registration.reservations || [])];
+        const districtResults = registration.districts.map(district => buildEraParcelCore(core, terrain, {
+          exclusions, phaseId, registration, districtId: district.id,
+          dataset: registration.independentLayout ? 'first-temple-persian.spatial.v1' : `provisional-${generationPhase}-footprint-not-surveyed`,
+        }));
+        const parcels = {parcels:districtResults.flatMap(r=>r.parcels), blocks:districtResults.flatMap(r=>r.blocks),
+          count:districtResults.reduce((n,r)=>n+r.count,0), blockCount:districtResults.reduce((n,r)=>n+r.blockCount,0)};
         const architecture = await buildEraParcelArchitectureAsync(group, core, sharedMaterials, terrain, {
           phaseId, destroyedPhase, signal: controller.signal,
           onProgress: progress => { state = { status: 'generating', ...progress }; onProgress(progress); },
@@ -66,15 +74,21 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
             metadata: { ...record.metadata, retainedPhase,
               retentionAuthority: 'schematic-not-surveyed', burialDepthVerified: false, reuseLinksVerified: false } });
         }
-        const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain);
+        const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain,{exclusions:roadExclusions});
+        if(ledgerCore&&registration.independentLayout)task.publication=publishGeneratedResidentialLedger(ledgerCore,core,{registration,architecture,generationPhase,destroyedPhase,retainedPhase,owner});
         const projection = createCityProjection(group, [...architecture.meshes, ...roads], {
           phaseIds, standingPhase: phaseId,
+          stateForObject:task.publication?((id,phase)=>task.publication.stateFor(id,phase)):null,
           phaseStates: retainedPhase ? { [retainedPhase]: { state: 'retained-ruin', ruin: 1 } } : {},
         });
-        city = { group, core, parcels, architecture, projection };
+        city = { group, core, parcels, architecture, projection, publication:task.publication };
         state = { status: 'ready', completed: architecture.buildings, total: architecture.buildings,
-          yields: architecture.yields, maxBatchMs: architecture.maxBatchMs, elapsedMs: architecture.elapsedMs, authority: registration.authority };
+          yields: architecture.yields, maxBatchMs: architecture.maxBatchMs, elapsedMs: architecture.elapsedMs, authority: registration.authority, independentLayout: registration.independentLayout === true,
+          infillMode:registration.generation.infillMode||'street-front-scaffold',
+          districtCounts:districtResults.map((r,i)=>({id:registration.districts[i].id,blocks:r.blockCount,parcels:r.count})),
+          districtIds:registration.districts.map(d=>d.id), roadIds:registration.roads.map(r=>r.id), reservationIds:(registration.reservations||[]).map(r=>r.id) };
       } catch (error) {
+        task.publication?.dispose();
         release(group);
         state = { status: error.name === 'AbortError' ? 'cancelled' : 'error', error: String(error) };
       } finally {
@@ -94,11 +108,13 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
       city?.projection.apply({ phaseId, ruin, evidenceAllowed, retainedVisible });
       return Boolean(city && phaseIds.includes(phaseId) && phaseId !== retainedPhase);
     },
+    acceptance(){return {status:state.status,summary:city?.publication?.summary??null,visibility:city?.projection.visibility()??null};},
     diagnostics() { return { ...state, phase: current, projection: city?.projection.diagnostics() ?? null,
+      residentialLedger:city?.publication?.summary??{published:false},
       retainedObjects: city?.core.phase(retainedPhase).filter(object => object.type === 'building').length ?? 0,
       identityPolicy: retainedPhase ? 'same-first-temple-objects-through-destruction-and-persian-retention' : 'distinct-period-objects-without-unverified-reuse-links',
       historicalRegistrationVerified: false }; },
-    dispose() { disposed = true; if (!materials.facadeOpening) openingMaterial.dispose(); pending?.controller.abort(); if (city) release(city.group); city = null; },
+    dispose() { disposed = true; if (!materials.facadeOpening) openingMaterial.dispose(); pending?.controller.abort(); if (city) {city.publication?.dispose();release(city.group);} city = null; },
   };
 }
 
@@ -123,11 +139,18 @@ export function createSharedEraRuntime(parent, options) {
       return active().status;
     },
     apply(args) { let owned = false; for (const runtime of runtimes) owned = runtime.apply(args) || owned; return owned; },
+    acceptance(){
+      if(!isSharedSlicePhase(current)&&current!==RETAINED_PHASE)return null;
+      const activeResult=active().acceptance(),earlier=first.acceptance();
+      const entries=[activeResult,...(current===RETAINED_PHASE&&earlier.visibility?.retainedVisible?[earlier]:[])];
+      return {phase:current,status:this.status,published:activeResult.summary?.published||false,districts:entries.flatMap(entry=>(entry.summary?.districts||[]).map(d=>({...d,generationPhase:entry.summary.generationPhase,layerState:entry.visibility?.layerState,visibleBuildings:entry.visibility?.districtVisible?.[d.id]||0}))),historicalCountVerified:false};
+    },
     diagnostics() {
       const earlier = first.diagnostics(), later = successor.diagnostics();
       return { ...earlier, status: this.status,
         completed: active().diagnostics().completed, total: active().diagnostics().total,
         error: active().diagnostics().error || (current === RETAINED_PHASE ? earlier.error : undefined),
+        activeResidential:active().diagnostics().residentialLedger,
         successor: later,
         expansion: expansion.diagnostics(),
         historicalRegistrationVerified: false };

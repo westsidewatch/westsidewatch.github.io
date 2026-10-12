@@ -1,7 +1,7 @@
 {
   "schema": "j3k.david-solomon-landscape.v1",
   "phase": "david-solomon",
-  "authority": "disputed royal identification and illustrative ridge settlement; building geometry withheld",
+  "authority": "literary and interpretive royal city reconstruction; wall circuit and monumental footprints unverified",
   "spring": {
     "lat": 31.773235,
     "lon": 35.2368303,
@@ -15,8 +15,9 @@
     "四室住宅採鐵器時代形制類比。所引大衛城住宅報告年代為前八至六世紀，不能證明前十世紀已使用本畫面布局。",
     "開放中間空間、屋頂、高度與柱列均為設計假說。",
     "圓環是大型石構候選位置符號，不是已發掘王宮平面。階梯支撐體年代與功能仍有爭議。",
-    "此幕尚未復原所羅門向北發展的聖殿與王宮區；完整城牆形制亦未核定。",
-    "現代 DEM 與泉的近似地圖位置不代表古代地表。"
+    "現代 DEM 與泉的近似地圖位置不代表古代地表。",
+    "城防、王室院落與聖殿位置為推定幾何；跨代延續與毀壞由共同帳本控制，倒塌形態並未核定。",
+    "道路與門洞是共同配置的連接示意，並非古代街網或出土城門定位；與牆段一樣不預設後代延續。"
   ],
   "houseOffsets": [
     [
@@ -36,7 +37,7 @@
       -105
     ],
     [
-      -96,
+      -85,
       -89
     ],
     [
@@ -44,7 +45,7 @@
       -76
     ],
     [
-      -101,
+      -111,
       -46
     ],
     [
@@ -61,11 +62,11 @@
     ],
     [
       -71,
-      2
+      -6
     ],
     [
-      -94,
-      23
+      -85,
+      28
     ],
     [
       -126,
@@ -100,7 +101,7 @@
       115
     ],
     [
-      -94,
+      -85,
       131
     ],
     [
@@ -152,7 +153,9 @@
   ],
   "contextSources": [
     "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf",
-    "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all"
+    "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all",
+    "https://www.biblegateway.com/passage/?search=1+Kings+6%3A1-7&version=KJV",
+    "https://timeline.cityofdavid.org.il/event/king-davids-palace-2/"
   ],
   "steppedSupport": {
     "offset": [
@@ -182,5 +185,378 @@
   "focusOffset": [
     -100,
     -7
+  ],
+  "royalCity": {
+    "davidWall": [
+      [
+        -190,
+        -190
+      ],
+      [
+        -30,
+        -180
+      ],
+      [
+        -35,
+        135
+      ],
+      [
+        -110,
+        215
+      ],
+      [
+        -180,
+        145
+      ],
+      [
+        -205,
+        -20
+      ],
+      [
+        -190,
+        -190
+      ]
+    ],
+    "northernWall": [
+      [
+        -190,
+        -190
+      ],
+      [
+        -185,
+        -535
+      ],
+      [
+        -30,
+        -540
+      ],
+      [
+        -30,
+        -180
+      ]
+    ],
+    "temple": {
+      "offset": [
+        -100,
+        -470
+      ],
+      "lengthCubits": 60,
+      "widthCubits": 20,
+      "heightCubits": 30,
+      "cubitMetres": 0.45,
+      "placementAuthority": "schematic northern sacred precinct, not excavated footprint"
+    },
+    "courtyards": [
+      {
+        "id": "david-palace",
+        "offset": [
+          -150,
+          -115
+        ],
+        "stage": "david"
+      },
+      {
+        "id": "solomon-palace",
+        "offset": [
+          -110,
+          -285
+        ],
+        "stage": "solomon"
+      }
+    ],
+    "spatial": {
+      "schema": "j3k.royal-spatial-layout.v1",
+      "frame": "spring-relative-east-x-south-z-metres",
+      "authority": "illustrative-connectivity-not-surveyed-roads-or-gates",
+      "sources": [
+        "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+      ],
+      "gates": [
+        {
+          "id": "david-east",
+          "wall": "david-wall",
+          "segment": 2,
+          "t": 0.6,
+          "width": 6,
+          "stage": "david"
+        },
+        {
+          "id": "david-north",
+          "wall": "david-wall",
+          "segment": 1,
+          "t": 0.5625,
+          "width": 6,
+          "stage": "david"
+        },
+        {
+          "id": "solomon-north",
+          "wall": "north-wall",
+          "segment": 2,
+          "t": 0.5,
+          "width": 6,
+          "stage": "solomon"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "spring",
+          "offset": [
+            0,
+            0
+          ],
+          "stage": "david"
+        },
+        {
+          "id": "east-gate",
+          "gateId": "david-east",
+          "stage": "david"
+        },
+        {
+          "id": "ridge-junction",
+          "offset": [
+            -98,
+            9
+          ],
+          "stage": "david"
+        },
+        {
+          "id": "ridge-south",
+          "offset": [
+            -98,
+            145
+          ],
+          "stage": "david"
+        },
+        {
+          "id": "ridge-plaza",
+          "offset": [
+            -98,
+            -95
+          ],
+          "stage": "david"
+        },
+        {
+          "id": "north-link",
+          "gateId": "david-north",
+          "stage": "david"
+        },
+        {
+          "id": "david-court-entry",
+          "stage": "david",
+          "courtId": "david-palace",
+          "courtPoint": "entry"
+        },
+        {
+          "id": "david-court",
+          "stage": "david",
+          "courtId": "david-palace",
+          "courtPoint": "inner"
+        },
+        {
+          "id": "ophel-junction",
+          "offset": [
+            -62,
+            -260
+          ],
+          "stage": "solomon"
+        },
+        {
+          "id": "solomon-court-entry",
+          "stage": "solomon",
+          "courtId": "solomon-palace",
+          "courtPoint": "entry"
+        },
+        {
+          "id": "solomon-court",
+          "stage": "solomon",
+          "courtId": "solomon-palace",
+          "courtPoint": "inner"
+        },
+        {
+          "id": "temple-approach",
+          "offset": [
+            -54,
+            -451
+          ],
+          "stage": "solomon"
+        },
+        {
+          "id": "temple-entry",
+          "stage": "solomon",
+          "templePoint": "entry"
+        },
+        {
+          "id": "northern-gate",
+          "gateId": "solomon-north",
+          "stage": "solomon"
+        }
+      ],
+      "edges": [
+        {
+          "id": "spring-access",
+          "from": "spring",
+          "to": "east-gate",
+          "via": [
+            [
+              -20,
+              9
+            ]
+          ],
+          "stage": "david"
+        },
+        {
+          "id": "gate-to-ridge",
+          "from": "east-gate",
+          "to": "ridge-junction",
+          "stage": "david"
+        },
+        {
+          "id": "ridge-south",
+          "from": "ridge-junction",
+          "to": "ridge-south",
+          "stage": "david"
+        },
+        {
+          "id": "ridge-plaza",
+          "from": "ridge-junction",
+          "to": "ridge-plaza",
+          "stage": "david"
+        },
+        {
+          "id": "ridge-north",
+          "from": "ridge-plaza",
+          "to": "north-link",
+          "via": [
+            [
+              -98,
+              -165
+            ]
+          ],
+          "stage": "david"
+        },
+        {
+          "id": "david-court-access",
+          "from": "ridge-plaza",
+          "to": "david-court-entry",
+          "via": [
+            [
+              -150,
+              -95
+            ]
+          ],
+          "stage": "david"
+        },
+        {
+          "id": "david-court-door",
+          "from": "david-court-entry",
+          "to": "david-court",
+          "stage": "david"
+        },
+        {
+          "id": "ophel-spine",
+          "from": "north-link",
+          "to": "ophel-junction",
+          "via": [
+            [
+              -62,
+              -220
+            ]
+          ],
+          "stage": "solomon"
+        },
+        {
+          "id": "solomon-court-access",
+          "from": "ophel-junction",
+          "to": "solomon-court-entry",
+          "via": [
+            [
+              -110,
+              -260
+            ]
+          ],
+          "stage": "solomon"
+        },
+        {
+          "id": "solomon-court-door",
+          "from": "solomon-court-entry",
+          "to": "solomon-court",
+          "stage": "solomon"
+        },
+        {
+          "id": "temple-spine",
+          "from": "ophel-junction",
+          "to": "temple-approach",
+          "stage": "solomon"
+        },
+        {
+          "id": "temple-entry",
+          "from": "temple-approach",
+          "to": "temple-entry",
+          "via": [
+            [
+              -76,
+              -451
+            ],
+            [
+              -76,
+              -470
+            ]
+          ],
+          "stage": "solomon"
+        },
+        {
+          "id": "northern-gate",
+          "from": "temple-approach",
+          "to": "northern-gate",
+          "via": [
+            [
+              -54,
+              -510
+            ],
+            [
+              -107.5,
+              -510
+            ]
+          ],
+          "stage": "solomon"
+        }
+      ],
+      "requiredDestinations": {
+        "david": [
+          "east-gate",
+          "ridge-south",
+          "north-link",
+          "david-court"
+        ],
+        "solomon": [
+          "solomon-court",
+          "temple-entry",
+          "northern-gate"
+        ]
+      },
+      "regions": [
+        {
+          "id": "ridge",
+          "label": "東南山脊住區（範圍推定）",
+          "boundary": "david-wall",
+          "stage": "david"
+        },
+        {
+          "id": "northern",
+          "label": "北向王室與聖區（範圍推定）",
+          "boundary": "north-wall",
+          "stage": "solomon"
+        }
+      ],
+      "lifecycleTemplates": {
+        "david": "j3k:object:royal-city-wall-hypothesis",
+        "solomon": "j3k:object:solomon-northern-wall-hypothesis"
+      },
+      "roadWidth": 1.6
+    }
+  },
+  "houseDimensions": [
+    10,
+    13
   ]
 }

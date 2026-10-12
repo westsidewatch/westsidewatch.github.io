@@ -1,4 +1,4 @@
-export const CONSTRUCTION_STATES=new Set(['settlement','build','expand','transform','ruin','buried','rebuild']);
+export const CONSTRUCTION_STATES=new Set(['settlement','build','expand','transform','ruin','buried','rebuild','unresolved']);
 
 export function phaseIndex(timeline,phaseId){
   const i=timeline.phases.findIndex(p=>p.id===phaseId);
@@ -6,16 +6,19 @@ export function phaseIndex(timeline,phaseId){
   return i;
 }
 
-export function lifecycleStateAt(object,timeline,phaseId){
-  const now=phaseIndex(timeline,phaseId);
-  const events=(object.lifecycleEvents||[]).slice().sort((a,b)=>phaseIndex(timeline,a.phase)-phaseIndex(timeline,b.phase));
+export function lifecycleStateAtPosition(object,timeline,position){
+  if(!Number.isFinite(position)||position<0||position>=timeline.phases.length)throw new Error('invalid lifecycle timeline position');
+  const events=(object.lifecycleEvents||[]).slice().sort((a,b)=>(phaseIndex(timeline,a.phase)+(a.offset||0))-(phaseIndex(timeline,b.phase)+(b.offset||0)));
   let state='absent';
   for(const event of events){
-    if(phaseIndex(timeline,event.phase)>now) break;
-    if(!CONSTRUCTION_STATES.has(event.state)) throw new Error(`invalid construction state: ${event.state}`);
-    state=event.state;
+    if(!CONSTRUCTION_STATES.has(event.state))throw new Error(`invalid construction state: ${event.state}`);
+    const offset=event.offset??0;if(!Number.isFinite(offset)||offset<0||offset>=1)throw new Error('invalid lifecycle event offset');
+    if(phaseIndex(timeline,event.phase)+offset<=position)state=event.state;
   }
   return state;
+}
+export function lifecycleStateAt(object,timeline,phaseId){
+  return lifecycleStateAtPosition(object,timeline,phaseIndex(timeline,phaseId)+.999999);
 }
 
 export function materializeCityState(objects,timeline,phaseId){

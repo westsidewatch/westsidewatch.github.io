@@ -6,7 +6,7 @@ export function isCorePhase(phaseId) {
 }
 
 export function createCityProjection(group, meshes, {
-  phaseIds = [...CORE_PHASES], standingPhase = 'herodian-jesus', phaseStates = {},
+  phaseIds = [...CORE_PHASES], standingPhase = 'herodian-jesus', phaseStates = {}, stateForObject = null,
 } = {}) {
   const activePhases = new Set(phaseIds);
   const snapshots = meshes.map((mesh) => ({
@@ -20,6 +20,7 @@ export function createCityProjection(group, meshes, {
       mesh.userData.cityObject.terrainGround ?? mesh.userData.phase2?.groundY,
     confidence: mesh.userData.cityObject.confidence,
     infrastructure: Boolean(mesh.userData.cityObject.infrastructure),
+    districtId:mesh.userData.cityObject.districtId||null,
   }));
   let state = { phaseId: '', ruin: 0, visibleBuildings: 0 };
   return {
@@ -31,12 +32,14 @@ export function createCityProjection(group, meshes, {
         phaseId === standingPhase ? 0 : Math.max(0, Math.min(1, policy?.ruin ?? ruin));
       const scale = 1 - 0.82 * amount;
       group.visible = active && (!retained || retainedVisible);
-      const visible = new Set();
+      const visible = new Set(),districtVisible=new Map(),lifecycleStates=new Map();
       for (const item of snapshots) {
         const { mesh, position, ground } = item;
+        if(stateForObject&&!item.infrastructure&&!lifecycleStates.has(item.id))lifecycleStates.set(item.id,stateForObject(item.id,phaseId));
+        const ledgerState=lifecycleStates.get(item.id);
         const objectScale = item.infrastructure ? 1 : scale;
         mesh.visible = group.visible && evidenceAllowed(item.confidence) &&
-          !(retained && item.infrastructure);
+          !(retained && item.infrastructure) && (!stateForObject||item.infrastructure||['build','rebuild','transform','ruin','expand'].includes(ledgerState));
         mesh.position.x = position.x;
         mesh.position.z = position.z;
         mesh.position.y = ground + (position.y - ground) * objectScale;
@@ -47,13 +50,16 @@ export function createCityProjection(group, meshes, {
             ? 'street-continuity'
             : amount === 0 ? 'standing' : amount === 1 ? 'ruin' : 'destruction';
         if (mesh.visible && mesh.userData.cityObject.parcelId)
-          visible.add(item.id);
+          {visible.add(item.id);if(item.districtId){if(!districtVisible.has(item.districtId))districtVisible.set(item.districtId,new Set());districtVisible.get(item.districtId).add(item.id);}}
+        mesh.userData.cityObject.ledgerState=ledgerState||null;
       }
       state = { phaseId, ruin: amount, visibleBuildings: visible.size,
+        districtVisible:Object.fromEntries([...districtVisible].map(([id,values])=>[id,values.size])),
         layerState: retained ? 'retained-ruin' : 'active-city',
         retainedVisible: retained && retainedVisible,
         burialDepthVerified: false, reuseLinksVerified: false };
     },
+    visibility(){return {...state};},
     diagnostics() {
       const fingerprint = (fields) => {
         let hash = 2166136261;

@@ -39,7 +39,7 @@ export function createLandscapeSettlement(parent,{data,terrain}) {
     group.add(mesh);meshes.push(mesh);return mesh;
   }
   for(const [i,[dx,dz]] of data.houseOffsets.entries()) {
-    const x=spring.x+dx,z=spring.z+dz,w=data.houseTypology==='four-room-analogy'?10:5+(i%3)*.6,d=data.houseTypology==='four-room-analogy'?13:6+(i%2)*.8,h=data.houseTypology==='four-room-analogy'?3:2.3+(i%3)*.15;
+    const x=spring.x+dx,z=spring.z+dz,w=data.houseTypology==='four-room-analogy'?(data.houseDimensions?.[0]||10):5+(i%3)*.6,d=data.houseTypology==='four-room-analogy'?(data.houseDimensions?.[1]||13):6+(i%2)*.8,h=data.houseTypology==='four-room-analogy'?3:2.3+(i%3)*.15;
     const samples=[[-w/2,-d/2],[w/2,-d/2],[-w/2,d/2],[w/2,d/2]].map(([a,b])=>surface(x+a,z+b));
     if(samples.some(v=>!Number.isFinite(v))) throw new Error('Settlement outside canonical terrain');
     const ground=Math.max(...samples)+.08,id=`j3k:${namespace}:house:${i+1}`;houseIds.push(id);
@@ -68,7 +68,7 @@ export function createLandscapeSettlement(parent,{data,terrain}) {
     add(new THREE.BoxGeometry(w+.4,.18,d+.4),earth,x,ground+h+.3,z,id,'earthen-roof');
     for(let j=0;j<4;j++) add(new THREE.CylinderGeometry(.08,.08,d+.3,6),timber,x+(j-1.5)*w/4,ground+h+.17,z,id,'roof-beam').rotation.x=Math.PI/2;
   }
-  const points=data.pathOffsets.map(([dx,dz])=>({x:spring.x+dx,z:spring.z+dz}));
+  const points=(data.phase===ROYAL_PHASE&&data.royalCity?.spatial?[]:data.pathOffsets).map(([dx,dz])=>({x:spring.x+dx,z:spring.z+dz}));
   for(let i=1;i<points.length;i++) {
     const a=points[i-1],b=points[i],length=Math.hypot(b.x-a.x,b.z-a.z),nx=-(b.z-a.z)/length*.45,nz=(b.x-a.x)/length*.45;
     const vertices=[];
