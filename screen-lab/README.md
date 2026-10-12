@@ -55,3 +55,7 @@ Current curated film records are verified as Blender film titles from the offici
 ## First verified-pedigree poster
 
 Big Buck Bunny poster: Wikimedia Commons file `Big_buck_bunny_poster_big.jpg`; Blender Foundation; CC BY 3.0. The catalog stores attribution, source, and license URL alongside the poster. Browser rendering of the remote image still requires QA. Other films intentionally keep abstract fallback artwork until provenance and image access are checked. The main site is unchanged.
+
+## Official embedded playback candidate
+
+Big Buck Bunny now links to Blender's public PeerTube video and provides an iframe candidate at `https://video.blender.org/videos/embed/bf1f3fb5-b119-4f9f-9930-8e20e892b898`. PeerTube documents the `/videos/embed/<uuid>` route. The player is loaded only when the user clicks to play, and removed when the detail dialog closes. Embed URLs are restricted to `video.blender.org` and UUID-form paths. **Actual iframe playback and permission to embed must still be confirmed in a browser.** This is not a direct .mp4/.m3u8 stream and does not offer downloading.
