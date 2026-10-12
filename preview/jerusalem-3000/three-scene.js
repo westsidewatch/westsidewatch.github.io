@@ -219,7 +219,7 @@ function addEraFabric(
   return meshes;
 }
 function legacyTemporalAllowed(object, phaseId) {
-  return !isCorePhase(phaseId) && !isEarlyLandscapePhase(phaseId);
+  return object.rendererBinding!=='ledger-only-pending-adapter' && !isCorePhase(phaseId) && !isEarlyLandscapePhase(phaseId);
 }
 export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   const scene = new THREE.Scene(),
@@ -786,6 +786,10 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
           '毀壞階段沿用相同模型呈現變化；倒塌方式、留存比例與埋藏深度尚未考古核定。',
           '現代 DEM 不代表古代地表；完整城牆、王宮與第一聖殿形制尚未核定。'
         ]
+      };
+      if(phaseId==='persian-nehemiah')return {
+        source:'https://www.biblegateway.com/passage/?search=Ezra+6%3A14-15&version=KJV',references:[],
+        limitations:['早期第二聖殿是另一次建造；此處只記聖區承接，不證明沿用第一聖殿幾何或地基。','第一聖殿遺存、王室區與特定前代牆段的後續狀態尚未核定。']
       };
       return runtime?.evidence();
     },

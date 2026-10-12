@@ -4,3 +4,5 @@
 
 .j3k-retained-toggle[aria-pressed="true"]{background:var(--gold);color:var(--ink)}
 @media(max-width:720px){.j3k-event-controls{flex-wrap:wrap;max-width:calc(100% - 20px);justify-content:flex-end}}
+
+.j3k-evidence-panel{max-height:calc(100% - 90px);overflow-y:auto}

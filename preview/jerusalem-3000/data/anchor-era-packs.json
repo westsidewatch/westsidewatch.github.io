@@ -1,51 +1,197 @@
 {
-  "schema":"j3k.anchor-era-packs.v1",
-  "principle":"Anchor eras are reading coordinates inside one continuous city. They are not isolated city models. Geometry remains withheld until sourced; evidence status travels with every object.",
-  "packs":[
+  "schema": "j3k.anchor-era-packs.v1",
+  "principle": "Anchor eras are reading coordinates inside one continuous city. They are not isolated city models. Geometry remains withheld until sourced; evidence status travels with every object.",
+  "packs": [
     {
-      "phase":"david-solomon",
-      "label":"大衛—所羅門",
-      "objects":[
-        {"id":"j3k:object:southeastern-ridge-iron-age","label":"東南山脊聚落／城區","kind":"urban-envelope","evidence":"observed-plus-reconstructed","confidence":"medium","geometry":"withheld-pending-sourced-envelope"},
-        {"id":"j3k:object:gihon-system-iron-age","label":"基訓泉與供水防禦系統","kind":"water-fortification","evidence":"archaeological","confidence":"high-elements","geometry":"withheld-pending-sourced-linework"},
-        {"id":"j3k:object:royal-monumental-zone-10c","label":"王室／大型建築爭議區","kind":"monumental-zone","evidence":"disputed","confidence":"low-specific-identification","geometry":"withheld"}
+      "phase": "david-solomon",
+      "label": "大衛—所羅門",
+      "objects": [
+        {
+          "id": "j3k:object:southeastern-ridge-iron-age",
+          "label": "東南山脊聚落／城區",
+          "kind": "urban-envelope",
+          "evidence": "observed-plus-reconstructed",
+          "confidence": "medium",
+          "geometry": "withheld-pending-sourced-envelope"
+        },
+        {
+          "id": "j3k:object:gihon-system-iron-age",
+          "label": "基訓泉與供水防禦系統",
+          "kind": "water-fortification",
+          "evidence": "archaeological",
+          "confidence": "high-elements",
+          "geometry": "withheld-pending-sourced-linework"
+        },
+        {
+          "id": "j3k:object:royal-monumental-zone-10c",
+          "label": "王室／大型建築爭議區",
+          "kind": "monumental-zone",
+          "evidence": "disputed",
+          "confidence": "low-specific-identification",
+          "geometry": "withheld",
+          "sources": [
+            "https://cityofdavid.org.il/en/king-davids-palace-eng/"
+          ],
+          "limitations": [
+            "Identification and dating remain disputed. Specific burial or reuse of this candidate has not been verified."
+          ]
+        },
+        {
+          "id": "j3k:object:first-temple",
+          "label": "第一聖殿（所羅門階段）",
+          "kind": "sanctuary",
+          "evidence": "textual-reconstruction",
+          "confidence": "inferred",
+          "geometry": "withheld-pending-shared-monument-adapter",
+          "sources": [
+            "https://www.biblegateway.com/passage/?search=1+Kings+6%3A1-7&version=KJV",
+            "https://www.biblegateway.com/passage/?search=2+Kings+25%3A8-10&version=KJV"
+          ],
+          "relatedObjects": [
+            {
+              "id": "j3k:object:second-temple-early",
+              "relation": "sanctuary-succession",
+              "geometryReuseVerified": false
+            }
+          ],
+          "limitations": [
+            "Literary building/destruction events do not certify a footprint or ruin depth.",
+            "The within-phase offset is narrative staging, not an exact building date."
+          ],
+          "rendererBinding": "ledger-only-pending-adapter"
+        },
+        {
+          "id": "j3k:object:royal-city-wall-hypothesis",
+          "label": "大衛城防體系（牆線推定）",
+          "kind": "fortification",
+          "evidence": "inferred",
+          "confidence": "inferred",
+          "geometry": "withheld-pending-shared-wall-adapter",
+          "sources": [
+            "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+          ],
+          "limitations": [
+            "No exact wall circuit or later reuse is verified; unknown fate is not destruction."
+          ],
+          "rendererBinding": "ledger-only-pending-adapter"
+        }
       ]
     },
     {
-      "phase":"persian-nehemiah",
-      "label":"波斯—尼希米",
-      "objects":[
-        {"id":"j3k:object:persian-settlement-envelope","label":"波斯期聚落範圍","kind":"urban-envelope","evidence":"reconstructed","confidence":"medium-low","geometry":"withheld-pending-sourced-envelope"},
-        {"id":"j3k:object:nehemiah-wall","label":"尼希米城牆","kind":"fortification","evidence":"text-plus-archaeological-constraints","confidence":"medium / disputed-segments","geometry":"variant-required"},
-        {"id":"j3k:object:second-temple-early","label":"早期第二聖殿","kind":"sanctuary","evidence":"textual-reconstruction","confidence":"medium-location / low-form","geometry":"platform-constrained-only"}
+      "phase": "persian-nehemiah",
+      "label": "波斯—尼希米",
+      "objects": [
+        {
+          "id": "j3k:object:persian-settlement-envelope",
+          "label": "波斯期聚落範圍",
+          "kind": "urban-envelope",
+          "evidence": "reconstructed",
+          "confidence": "medium-low",
+          "geometry": "withheld-pending-sourced-envelope"
+        },
+        {
+          "id": "j3k:object:nehemiah-wall",
+          "label": "尼希米城牆",
+          "kind": "fortification",
+          "evidence": "text-plus-archaeological-constraints",
+          "confidence": "medium / disputed-segments",
+          "geometry": "variant-required"
+        },
+        {
+          "id": "j3k:object:second-temple-early",
+          "label": "早期第二聖殿",
+          "kind": "sanctuary",
+          "evidence": "textual-reconstruction",
+          "confidence": "medium-location / low-form",
+          "geometry": "platform-constrained-only",
+          "sources": [
+            "https://www.biblegateway.com/passage/?search=Ezra+6%3A14-15&version=KJV"
+          ],
+          "relatedObjects": [
+            {
+              "id": "j3k:object:first-temple",
+              "relation": "sanctuary-predecessor",
+              "geometryReuseVerified": false
+            }
+          ]
+        }
       ]
     },
     {
-      "phase":"herodian-jesus",
-      "label":"大希律—耶穌",
-      "objectPack":"./objects/herodian-30ce.json",
-      "geometryPack":"./geometry/herodian-30ce.registry.json",
-      "lifecyclePack":"./lifecycle/herodian-30ce.lifecycle.json"
+      "phase": "herodian-jesus",
+      "label": "大希律—耶穌",
+      "objectPack": "./objects/herodian-30ce.json",
+      "geometryPack": "./geometry/herodian-30ce.registry.json",
+      "lifecyclePack": "./lifecycle/herodian-30ce.lifecycle.json"
     },
     {
-      "phase":"ottoman",
-      "label":"奧斯曼",
-      "objects":[
-        {"id":"j3k:object:ottoman-wall","label":"蘇萊曼城牆","kind":"fortification","evidence":"observed","confidence":"high","geometry":"survey-linework-required"},
-        {"id":"j3k:object:jaffa-gate-ottoman","label":"雅法門","kind":"gate","evidence":"observed","confidence":"high","geometry":"survey-footprint-required"},
-        {"id":"j3k:object:damascus-gate-ottoman","label":"大馬士革門","kind":"gate","evidence":"observed","confidence":"high","geometry":"survey-footprint-required"},
-        {"id":"j3k:object:old-city-fabric-ottoman","label":"奧斯曼舊城肌理","kind":"urban-fabric","evidence":"observed-plus-historical-mapping","confidence":"high-envelope / variable-buildings","geometry":"historical-map-registration-required"}
+      "phase": "ottoman",
+      "label": "奧斯曼",
+      "objects": [
+        {
+          "id": "j3k:object:ottoman-wall",
+          "label": "蘇萊曼城牆",
+          "kind": "fortification",
+          "evidence": "observed",
+          "confidence": "high",
+          "geometry": "survey-linework-required"
+        },
+        {
+          "id": "j3k:object:jaffa-gate-ottoman",
+          "label": "雅法門",
+          "kind": "gate",
+          "evidence": "observed",
+          "confidence": "high",
+          "geometry": "survey-footprint-required"
+        },
+        {
+          "id": "j3k:object:damascus-gate-ottoman",
+          "label": "大馬士革門",
+          "kind": "gate",
+          "evidence": "observed",
+          "confidence": "high",
+          "geometry": "survey-footprint-required"
+        },
+        {
+          "id": "j3k:object:old-city-fabric-ottoman",
+          "label": "奧斯曼舊城肌理",
+          "kind": "urban-fabric",
+          "evidence": "observed-plus-historical-mapping",
+          "confidence": "high-envelope / variable-buildings",
+          "geometry": "historical-map-registration-required"
+        }
       ]
     },
     {
-      "phase":"modern",
-      "label":"現代耶路撒冷",
-      "objects":[
-        {"id":"j3k:object:modern-old-city-preserved","label":"舊城保存層","kind":"urban-fabric","evidence":"observed","confidence":"high","geometry":"current-survey-required"},
-        {"id":"j3k:object:modern-metropolitan-envelope","label":"現代都市擴張","kind":"urban-envelope","evidence":"observed","confidence":"high","geometry":"current-geodata-required"},
-        {"id":"j3k:object:modern-road-fabric","label":"現代道路網","kind":"transport-network","evidence":"observed","confidence":"high","geometry":"current-geodata-required"}
+      "phase": "modern",
+      "label": "現代耶路撒冷",
+      "objects": [
+        {
+          "id": "j3k:object:modern-old-city-preserved",
+          "label": "舊城保存層",
+          "kind": "urban-fabric",
+          "evidence": "observed",
+          "confidence": "high",
+          "geometry": "current-survey-required"
+        },
+        {
+          "id": "j3k:object:modern-metropolitan-envelope",
+          "label": "現代都市擴張",
+          "kind": "urban-envelope",
+          "evidence": "observed",
+          "confidence": "high",
+          "geometry": "current-geodata-required"
+        },
+        {
+          "id": "j3k:object:modern-road-fabric",
+          "label": "現代道路網",
+          "kind": "transport-network",
+          "evidence": "observed",
+          "confidence": "high",
+          "geometry": "current-geodata-required"
+        }
       ]
     }
   ],
-  "politicalBoundaryPolicy":"Modern political boundaries are outside the historical-city geometry authority and must not be silently encoded as archaeological certainty."
+  "politicalBoundaryPolicy": "Modern political boundaries are outside the historical-city geometry authority and must not be silently encoded as archaeological certainty."
 }

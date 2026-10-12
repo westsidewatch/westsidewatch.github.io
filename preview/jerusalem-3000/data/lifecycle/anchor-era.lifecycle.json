@@ -3,7 +3,7 @@
   "objects":[
     {"id":"j3k:object:southeastern-ridge-iron-age","lifecycleEvents":[{"phase":"david-solomon","state":"build"},{"phase":"late-first-temple","state":"expand"},{"phase":"babylonian-destruction","state":"ruin"},{"phase":"persian-nehemiah","state":"rebuild"}]},
     {"id":"j3k:object:gihon-system-iron-age","lifecycleEvents":[{"phase":"david-solomon","state":"build"},{"phase":"late-first-temple","state":"transform"},{"phase":"babylonian-destruction","state":"ruin"},{"phase":"persian-nehemiah","state":"transform"}]},
-    {"id":"j3k:object:royal-monumental-zone-10c","lifecycleEvents":[{"phase":"david-solomon","state":"build"},{"phase":"babylonian-destruction","state":"ruin"},{"phase":"persian-nehemiah","state":"buried"}]},
+    {"id":"j3k:object:royal-monumental-zone-10c","lifecycleEvents":[{"phase":"david-solomon","state":"build","authority":"disputed-identification"},{"phase":"late-first-temple","state":"unresolved","authority":"specific-candidate-continuity-unverified"},{"phase":"babylonian-destruction","state":"unresolved","authority":"specific-remains-fate-unverified"},{"phase":"persian-nehemiah","state":"unresolved","authority":"burial-and-reuse-unverified"}]},
     {"id":"j3k:object:persian-settlement-envelope","lifecycleEvents":[{"phase":"persian-nehemiah","state":"rebuild"},{"phase":"hellenistic-hasmonean","state":"expand"},{"phase":"herodian-jesus","state":"transform"}]},
     {"id":"j3k:object:nehemiah-wall","lifecycleEvents":[{"phase":"persian-nehemiah","state":"rebuild"},{"phase":"hellenistic-hasmonean","state":"transform"},{"phase":"herodian-jesus","state":"buried"}]},
     {"id":"j3k:object:second-temple-early","lifecycleEvents":[{"phase":"persian-nehemiah","state":"rebuild"},{"phase":"hellenistic-hasmonean","state":"transform"},{"phase":"herodian-jesus","state":"transform"},{"phase":"roman-destruction","state":"ruin"}]},
@@ -13,6 +13,8 @@
     {"id":"j3k:object:old-city-fabric-ottoman","lifecycleEvents":[{"phase":"ottoman","state":"build"},{"phase":"outside-walls","state":"transform"},{"phase":"modern","state":"transform"}]},
     {"id":"j3k:object:modern-old-city-preserved","lifecycleEvents":[{"phase":"modern","state":"build"}]},
     {"id":"j3k:object:modern-metropolitan-envelope","lifecycleEvents":[{"phase":"outside-walls","state":"settlement"},{"phase":"modern","state":"expand"}]},
-    {"id":"j3k:object:modern-road-fabric","lifecycleEvents":[{"phase":"outside-walls","state":"build"},{"phase":"modern","state":"expand"}]}
+    {"id":"j3k:object:modern-road-fabric","lifecycleEvents":[{"phase":"outside-walls","state":"build"},{"phase":"modern","state":"expand"}]},
+    {"id":"j3k:object:first-temple","lifecycleEvents":[{"phase":"david-solomon","offset":0.45,"state":"build","authority":"literary","source":"1 Kings 6:1–3","timing":"narrative-offset-not-calendar-date"},{"phase":"late-first-temple","state":"transform","authority":"institutional-continuity-not-unchanged-building"},{"phase":"babylonian-destruction","state":"ruin","authority":"literary","source":"2 Kings 25:8–10"},{"phase":"persian-nehemiah","state":"unresolved","authority":"ruin-disposition-and-geometry-reuse-unverified"}]},
+    {"id":"j3k:object:royal-city-wall-hypothesis","lifecycleEvents":[{"phase":"david-solomon","state":"transform","authority":"illustrative-fortification-system"},{"phase":"late-first-temple","state":"unresolved","authority":"segment-continuity-unverified"}]}
   ]
 }

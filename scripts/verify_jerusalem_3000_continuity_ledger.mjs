@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {TemporalCityIntegration} from '../preview/jerusalem-3000/temporal-city-integration.js';
+import {loadTemporalCityCore} from '../preview/jerusalem-3000/temporal-city-core-adapter.js';
+import {lifecycleStateAtPosition} from '../preview/jerusalem-3000/construction-engine.js';
+import {invalidateCityData} from '../preview/jerusalem-3000/city-data-loader.js';
+const base=new URL('../preview/jerusalem-3000/',import.meta.url);
+const json=async path=>JSON.parse(await readFile(new URL(path,base)));
+const timeline=await json('data/continuous-build-timeline.json'),packs=await json('data/anchor-era-packs.json'),life=await json('data/lifecycle/anchor-era.lifecycle.json');
+const integration=new TemporalCityIntegration(timeline.phases,packs,life);
+const state=(id,p)=>integration.sample(p).find(o=>o.id===`j3k:object:${id}`);
+assert.equal(state('first-temple',3.2).state,'absent');assert.equal(state('first-temple',3.9).state,'build');
+assert.equal(state('first-temple',4.9).state,'transform');assert.equal(state('first-temple',5.5).state,'ruin');
+assert.equal(state('first-temple',6.5).state,'unresolved');assert.equal(state('second-temple-early',6.5).state,'rebuild');
+assert.equal(state('first-temple',3.2).visible,false);assert.equal(state('first-temple',6.5).ruined,false);
+assert.equal(state('royal-monumental-zone-10c',4.5).state,'unresolved');
+assert.equal(state('royal-monumental-zone-10c',6.5).state,'unresolved');assert.equal(state('royal-city-wall-hypothesis',4.5).state,'unresolved');
+const first=state('first-temple',3.9);assert.equal(first.rendererBinding,'ledger-only-pending-adapter');
+assert.equal(first.relatedObjects[0].geometryReuseVerified,false);
+assert.throws(()=>lifecycleStateAtPosition({lifecycleEvents:[{phase:'david-solomon',state:'build',offset:1}]},timeline,3.9),/offset/);
+assert.throws(()=>lifecycleStateAtPosition({lifecycleEvents:[{phase:'missing',state:'build'}]},timeline,3.9),/unknown/);
+const original=globalThis.fetch;
+try {
+ globalThis.fetch=async url=>({ok:true,json:()=>json(new URL(url).href)});invalidateCityData();
+ const {core,validation}=await loadTemporalCityCore(timeline.phases);assert.equal(validation.ok,true);
+ const record=core.get('j3k:object:first-temple');assert.equal(record.confidence,'inferred');
+ assert.equal(record.lifecycle.events[0].offset,.45);assert.equal(record.lifecycle.events[0].source,'1 Kings 6:1–3');
+ assert.equal(record.lifecycle.reused,false);assert.equal(core.get('j3k:object:second-temple-early').lifecycle.reused,false);
+ assert.ok(core.phase('babylonian-destruction').some(o=>o.id===record.id));
+ assert.ok(Object.isFrozen(record.lifecycle.events[0]));assert.ok(record.source.urls.length>0);
+ assert.deepEqual(core.lineage(record.id),{predecessors:[],successors:[]},'institutional succession must not become a geometry-reuse link');
+} finally {globalThis.fetch=original;invalidateCityData();}
+console.log('PASS: substage timing, stable IDs, distinct temples, unresolved fate, source retention and no invented reuse links');

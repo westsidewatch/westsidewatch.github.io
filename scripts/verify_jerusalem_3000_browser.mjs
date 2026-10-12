@@ -199,6 +199,18 @@ try {
   assert.ok((await page.locator('.j3k-evidence-panel').textContent()).includes('後期參考配置'));
   await page.screenshot({path:`${output}/first-temple-evidence.png`,fullPage:true});
   await page.getByRole('button',{name:'Evidence',exact:true}).click();
+  for(const [value,expected] of [[3.2,'absent'],[3.9,'build'],[4.9,'transform'],[5.5,'ruin'],[6.5,'unresolved'],[3.2,'absent']]) {
+    await page.locator('.j3k-scrubber').evaluate((el,v)=>{el.value=String(v);el.dispatchEvent(new Event('input',{bubbles:true}));},value);
+    assert.equal(await page.locator('[data-continuity-object="j3k:object:first-temple"]').getAttribute('data-state'),expected);
+    const objects=await page.evaluate(()=>window.__JERUSALEM3000__.temporalCityState.objects);
+    assert.equal(objects.find(o=>o.id==='j3k:object:first-temple').state,expected);
+    if(value===6.5)assert.equal(objects.find(o=>o.id==='j3k:object:second-temple-early').state,'rebuild');
+  }
+  await page.locator('.j3k-scrubber').evaluate(el=>{el.value='6.5';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra?.successor?.status==='ready'&&window.__JERUSALEM3000__.renderDiagnostics.sharedEra?.status==='ready');
+  await page.screenshot({path:`${output}/continuity-evidence.png`,fullPage:true});
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
   for (const value of [4.9, 5, 5.5, 5.9, 4.9]) {
     await page.locator('.j3k-scrubber').evaluate((el, value) => {
       el.value = String(value); el.dispatchEvent(new Event('input', { bubbles: true }));

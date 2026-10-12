@@ -175,6 +175,18 @@ try {
         }
       } else earlyEvidencePanel.replaceChildren(...routeEvidenceNodes.map(n=>n.cloneNode(true)));
     }
+    let continuity=earlyEvidencePanel.querySelector('[data-city-continuity]');
+    if(['david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah'].includes(p.id)) {
+      if(!continuity){continuity=document.createElement('section');continuity.dataset.cityContinuity='';earlyEvidencePanel.append(continuity);}
+      continuity.replaceChildren();
+      const title=document.createElement('h4');title.textContent='主體去向 · 資料狀態';continuity.append(title);
+      const caveat=document.createElement('p');caveat.textContent='聖區承接不等於同一建築或地基。未知不表示已毀壞；資料狀態不等於已有復原幾何。';continuity.append(caveat);
+      const states={absent:'尚未建造',withheld:'未核定',build:'建造',transform:'延續／改變',ruin:'毀壞',rebuild:'重新建造',unresolved:'去向未核定',buried:'埋藏',expand:'擴展',settlement:'聚落'};
+      const list=document.createElement('ul');continuity.append(list);
+      for(const object of cityObjects.filter(o=>['j3k:object:first-temple','j3k:object:second-temple-early','j3k:object:royal-city-wall-hypothesis','j3k:object:royal-monumental-zone-10c'].includes(o.id))) {
+        const item=document.createElement('li');item.dataset.continuityObject=object.id;item.dataset.state=object.state;item.textContent=`${object.label}：${states[object.state]||object.state}`;list.append(item);
+      }
+    } else continuity?.remove();
     ticks.forEach((x, i) => {
       x.classList.toggle('is-past', i < state.index);
       x.classList.toggle('is-current', i === state.index);

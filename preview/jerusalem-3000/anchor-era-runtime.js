@@ -40,6 +40,6 @@ export function updateAnchorEraObjects(objects,timeline,phaseId){
     const state=lifecycleStateAt(object,timeline,phaseId);
     object.el.dataset.lifecycle=state;
     object.el.style.setProperty('--life-opacity',opacity[state]||'0');
-    object.el.hidden=state==='absent';
+    object.el.hidden=state==='absent'||state==='unresolved';
   }
 }

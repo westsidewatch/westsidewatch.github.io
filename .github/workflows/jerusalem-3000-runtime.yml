@@ -21,6 +21,7 @@ jobs:
           for file in preview/jerusalem-3000/*.js; do node --check "$file"; done
           node scripts/verify_jerusalem_3000_city_lifecycle.mjs
           node scripts/verify_jerusalem_3000_data_loader.mjs
+          node scripts/verify_jerusalem_3000_continuity_ledger.mjs
       - name: Install browser
         run: |
           npm install --no-save playwright@1.55.0 three@0.180.0
