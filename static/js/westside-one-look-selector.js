@@ -20,7 +20,7 @@
    all[next].focus();choose(all[next]);
   });
   // Existing realm controllers may own selection; do not overwrite their state on boot.
-  if(cards().length){const initial=cards().find(card=>card.getAttribute('aria-pressed')==='true')||cards()[0];if(initial)choose(initial);}
+  if(cards().length){const initial=cards().find(card=>card.getAttribute('aria-pressed')==='true')||cards()[0];if(initial){for(const card of cards()){const selected=card===initial;card.setAttribute('aria-pressed',String(selected));card.toggleAttribute('data-ws-one-look-selected',selected);}}}
   const pause=()=>root.classList.add('ws-one-look-paused');
   const resume=()=>root.classList.remove('ws-one-look-paused');
   root.addEventListener('mouseenter',pause);root.addEventListener('mouseleave',resume);
