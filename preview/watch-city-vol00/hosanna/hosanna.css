@@ -1,3 +1,4 @@
+@import url("/css/westside-design-tokens.css");
 :root{--ink:#f3eddf;--gold:#CEBD74;--night:#090908;--ease:cubic-bezier(.2,.7,.1,1)}
 *{box-sizing:border-box}html,body{margin:0;background:var(--night);color:var(--ink);font-family:"Noto Serif TC","Songti TC",serif}body{overflow:hidden}
 button{font:inherit}.hosanna{position:relative;width:100vw;height:100svh;overflow:hidden;background:#080807;isolation:isolate}
@@ -41,3 +42,10 @@ html.entering .city-entry{visibility:visible}html.entering .threshold-line{anima
 
 html.cover-embed .issue-mark,html.cover-embed .arrival,html.cover-embed .enter,html.cover-embed .sound-note,html.cover-embed .city-entry{display:none}
 html.cover-embed .vignette{opacity:.25}
+
+/* Homepage cover must paint the actual opening engraving before JS/media load. */
+html.cover-embed{--ink:var(--ws-paper,#faf9f5);--gold:var(--ws-paper,#faf9f5);--night:var(--ws-paper,#faf9f5)}
+html.cover-embed,html.cover-embed body,html.cover-embed .hosanna{background:var(--ws-paper,#faf9f5)}
+html.cover-embed .master-fallback{background:linear-gradient(180deg,rgba(8,8,7,.08),rgba(8,8,7,.42)),url("/images/home-opening-engraving.jpg") center/cover no-repeat}
+html.cover-embed .film-frame:after,html.cover-embed .double-exposure:before,html.cover-embed .art-card:before{background:none}
+html.cover-embed .art-card{border-color:var(--ws-paper,#faf9f5);box-shadow:none}
