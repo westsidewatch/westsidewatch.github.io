@@ -18,5 +18,9 @@ function render(){
  journey.style.setProperty('--journey-p',String(progress));
 }
 function schedule(){if(!frame)frame=requestAnimationFrame(render)}
-addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener('change',schedule);render();
+function measureGallery(){if(!gallery||!track)return;const mobile=matchMedia('(max-width: 850px)').matches;if(reduced.matches||mobile){gallery.style.height='';track.style.transform='';return}const distance=Math.max(0,track.scrollWidth-gallery.clientWidth);gallery.style.height=(innerHeight+distance+innerHeight*.15)+'px';schedule()}
+addEventListener('scroll',schedule,{passive:true});addEventListener('resize',()=>{measureGallery();schedule()},{passive:true});reduced.addEventListener('change',()=>{measureGallery();schedule()});
+if(document.fonts?.ready)document.fonts.ready.then(measureGallery);
+const observer=new ResizeObserver(()=>{if(!reduced.matches)measureGallery()});if(track)observer.observe(track);
+measureGallery();render();
 })();
