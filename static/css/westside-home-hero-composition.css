@@ -294,3 +294,30 @@ body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a){
  body.home .sites-home-hero{--home-title-size:clamp(56px,13vw,72px)}
  body.home .sites-home-hero .sites-home-intro h1{font-size:var(--home-title-size)}
 }
+
+/* Scripture is one bilingual quotation, not two independent grid items. */
+body.home .sites-home-hero .sites-home-scripture-pair{
+ grid-column:1/-1;grid-row:3;
+ display:flex;flex-direction:column;align-items:flex-start;
+ gap:clamp(6px,.9vh,12px);min-width:0;
+ margin-top:clamp(22px,3vh,42px);
+}
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-slogan-zh,
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
+ display:block;position:static;grid-column:auto;grid-row:auto;
+ align-self:auto;margin:0;max-width:60ch;
+}
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-slogan-zh{
+ font-size:var(--home-chinese-size);
+}
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
+ font-size:var(--home-verse-size);
+}
+body.home .sites-home-hero .sites-home-scripture-pair cite{
+ margin-top:clamp(8px,1.2vh,15px);
+}
+@media(max-width:900px){
+ body.home .sites-home-hero .sites-home-scripture-pair{
+  grid-column:1;grid-row:3;gap:8px;margin-top:22px;
+ }
+}
