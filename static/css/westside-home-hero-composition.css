@@ -162,6 +162,43 @@ body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visi
  }
 }
 
+/* Living Sequence: film-led exit into existing WATCH/WITNESS and WALK/WORSHIP scenes.
+   No scroll trapping, no iframe replacement, and no layout shift. */
+@media (min-width:901px) and (prefers-reduced-motion:no-preference){
+ body.home .sites-home-hero .sites-home-masthead{
+  opacity:calc(1 - var(--home-hero-exit,0) * .82);
+  transform:translate3d(0,calc(var(--home-hero-exit,0) * -5vh),0);
+ }
+ body.home .sites-home-hero .sites-home-intro{
+  opacity:calc(1 - var(--home-hero-exit,0));
+  transform:translate3d(0,calc(var(--home-hero-exit,0) * -9vh),0);
+ }
+ body.home .sites-home-hero .sites-home-film{
+  filter:brightness(calc(1 - var(--home-hero-exit,0) * .2));
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ body.home .sites-home-hero .sites-home-masthead,
+ body.home .sites-home-hero .sites-home-intro{opacity:1!important;transform:none!important}
+}
+/* Continuous scene handoff: fade the outgoing film into the next screen's
+   warm editorial surface. Progress is authored by dawn-interaction-layer.js.
+   This layer never intercepts links, scrolling or Candidate 01 hover cards. */
+@media(min-width:901px) and (prefers-reduced-motion:no-preference){
+ body.home .sites-home-hero::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:#eee8da;
+  opacity:calc(var(--home-hero-exit,0) * .68);
+ }
+ /* Keep interactive iframe content fully visible. An opacity animation on
+    the entire iframe hides the live cards and can make a scene look blank. */
+ body.home .candidate-focus-screen{
+  position:relative;
+ }
+ body.home .candidate-focus-screen iframe{
+  opacity:1;
+ }
+}
 /* Hero structural foundation — migrated from deleted sites-home.css. */
 body.home{margin:0;color:var(--ws-text);font-family:var(--ws-type-display-en,"Bodoni Moda",serif);line-height:1.35}
 body.home *{box-sizing:border-box}

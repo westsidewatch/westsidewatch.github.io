@@ -146,4 +146,24 @@ html,body{height:100%;overflow:hidden!important}
   if(window.visualViewport)window.visualViewport.addEventListener('resize',sync,{passive:true});
 })();
 </script>
+<script id="westside-scene-bridge">
+/* Receives the parent homepage scene clock without interfering with card motion. */
+(()=>{
+  if(window.parent===window)return;
+  const root=document.documentElement;
+  const clamp=v=>Math.max(0,Math.min(1,v));
+  window.addEventListener('message',event=>{
+    if(event.origin!==location.origin||event.source!==window.parent)return;
+    const data=event.data;
+    if(!data||data.type!=='westside-scene')return;
+    const progress=Number(data.progress);
+    if(!Number.isFinite(progress))return;
+    const phase=['upcoming','active','passed'].includes(data.phase)?data.phase:'upcoming';
+    root.style.setProperty('--westside-scene-progress',String(clamp(progress)));
+    root.dataset.westsideScenePhase=phase;
+    root.dataset.westsideScene=String(data.scene||'');
+    root.dataset.westsideReducedMotion=data.reducedMotion?'true':'false';
+  },{passive:true});
+})();
+</script>
 </body></html>

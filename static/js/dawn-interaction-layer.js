@@ -20,12 +20,57 @@ if(!reduced&&matchMedia("(pointer:fine)").matches){
 }
 const sections=[...document.querySelectorAll("main > section, main > article, .sites-home-realm, .sites-home-closing")];
 const focusScreens=[...document.querySelectorAll(".candidate-focus-screen")];
+/* Homepage scene coordinator: one normalized timeline for the existing hero and two film screens. */
+const homeHero=document.querySelector("body.home .sites-home-hero");
+const homeScenes=homeHero?[homeHero,...focusScreens]:[];
+let sceneTick=false;
+const clamp01=v=>Math.max(0,Math.min(1,v));
+const sceneFrames=focusScreens.map(scene=>scene.querySelector("iframe"));
+const sendSceneState=(frame,payload)=>{
+  if(!frame||!frame.contentWindow)return;
+  try{frame.contentWindow.postMessage(payload,location.origin)}catch(_){}
+};
+sceneFrames.forEach((frame,i)=>{
+  if(frame)frame.addEventListener("load",()=>{
+    const scene=focusScreens[i];
+    const progress=Number(scene.style.getPropertyValue("--home-scene-progress"))||0;
+    sendSceneState(frame,{type:"westside-scene",scene:i+2,progress,phase:scene.dataset.scenePhase||"upcoming",reducedMotion:reduced});
+  });
+});
+const updateHomeSequence=()=>{
+  sceneTick=false;
+  if(!homeScenes.length)return;
+  const center=innerHeight*.5;
+  let nearest=0, distance=Infinity;
+  homeScenes.forEach((scene,i)=>{
+    const r=scene.getBoundingClientRect();
+    const d=Math.abs((r.top+r.bottom)/2-center);
+    if(d<distance){distance=d;nearest=i}
+    const progress=clamp01((center-r.top)/Math.max(1,r.height));
+    scene.style.setProperty("--home-scene-progress",progress.toFixed(4));
+    scene.dataset.scenePhase=r.top>center?"upcoming":r.bottom<center?"passed":"active";
+    if(i>0&&r.bottom>0&&r.top<innerHeight){
+      sendSceneState(sceneFrames[i-1],{type:"westside-scene",scene:i+1,progress,phase:scene.dataset.scenePhase,reducedMotion:reduced});
+    }
+  });
+  document.body.dataset.homeScene=String(nearest+1);
+  const heroRect=homeHero.getBoundingClientRect();
+  const exit=clamp01(-heroRect.top/Math.max(1,heroRect.height*.75));
+  homeHero.style.setProperty("--home-hero-exit",exit.toFixed(4));
+};
+const requestHomeSequence=()=>{if(!sceneTick){sceneTick=true;requestAnimationFrame(updateHomeSequence)}};
+if(homeScenes.length){
+  updateHomeSequence();
+  addEventListener("scroll",requestHomeSequence,{passive:true});
+  addEventListener("resize",requestHomeSequence,{passive:true});
+}
+
 const realms=[...document.querySelectorAll(".sites-home-realm")];
 if(!reduced&&"IntersectionObserver"in window){
   const motionIO=new IntersectionObserver(entries=>entries.forEach(e=>{
     e.target.toggleAttribute("data-motion-live",e.isIntersecting);
     const frame=e.target.querySelector("iframe");
-    if(frame&&frame.contentWindow)frame.contentWindow.postMessage({type:"westside-motion",active:e.isIntersecting},"*");
+    if(frame&&frame.contentWindow)sendSceneState(frame,{type:"westside-motion",active:e.isIntersecting});
   }),{rootMargin:"12% 0px 12% 0px",threshold:.08});
   focusScreens.forEach(s=>motionIO.observe(s));
   const realmIO=new IntersectionObserver(entries=>entries.forEach(e=>e.target.toggleAttribute("data-motion-live",e.isIntersecting)),{rootMargin:"8% 0px 8% 0px",threshold:.08});
