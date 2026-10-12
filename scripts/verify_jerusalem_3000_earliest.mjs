@@ -1,3 +1,4 @@
+import {createRoyalCity} from '../preview/jerusalem-3000/royal-city.js';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {readFileSync} from 'node:fs';
@@ -92,3 +93,30 @@ royal.apply({phaseId:royalData.phase,evidenceAllowed:c=>c!=='disputed'});assert.
 royal.apply({phaseId:'late-bronze-iron1',evidenceAllowed:()=>true});assert.equal(royalParent.children[0].visible,false);
 royal.dispose();
 console.log('PASS: source-linked royal candidate symbol, no palace geometry and dispute isolation');
+
+const cityParent=new THREE.Group(),royalCity=createRoyalCity(cityParent,{data:royalData,terrain});
+royalCity.apply({phaseId:'david-solomon',progress:.2,evidenceAllowed:()=>true});
+assert.ok(royalCity.diagnostics().visibleWalls>0);
+assert.equal(royalCity.diagnostics().visiblePalace,4);
+assert.equal(royalCity.diagnostics().visibleTemple,0,'temple must not precede Solomon');
+const davidWalls=royalCity.diagnostics().visibleWalls;
+royalCity.apply({phaseId:'david-solomon',progress:.9,evidenceAllowed:()=>true});
+assert.ok(royalCity.diagnostics().visibleWalls>davidWalls);
+assert.ok(royalCity.diagnostics().visibleTemple>0);
+assert.equal(royalCity.diagnostics().visiblePalace,8);
+assert.deepEqual(royalCity.diagnostics().templeDimensionsMetres,[27,9,13.5]);
+assert.equal(royalCity.diagnostics().wallCircuitVerified,false);
+cityParent.traverse(m=>{if(m.geometry){
+ assert.equal(m.userData.cityObject.confidence,'inferred');
+ const p=m.geometry.attributes.position;
+ for(let i=0;i<p.count;i++) {
+  assert.ok(Number.isFinite(p.getY(i)));
+  m.updateMatrix();const v=new THREE.Vector3(p.getX(i),p.getY(i),p.getZ(i)).applyMatrix4(m.matrix);
+  assert.ok(v.y>=terrain.heightAtWorld(v.x,v.z)-1e-4,'royal construction must not penetrate DEM');
+ }
+}});
+royalCity.apply({phaseId:'david-solomon',progress:.9,evidenceAllowed:()=>false});assert.equal(royalCity.diagnostics().visibleTemple,0);
+royalCity.apply({phaseId:'middle-bronze',progress:.9,evidenceAllowed:()=>true});assert.equal(royalCity.diagnostics().visibleWalls,0);
+royalCity.apply({phaseId:'david-solomon',progress:.2,evidenceAllowed:()=>true});assert.equal(royalCity.diagnostics().visibleTemple,0);
+royalCity.dispose();assert.equal(cityParent.children.length,0);
+console.log('PASS: David walls/palace, Solomon temple/northern extension, literary proportions, reverse/filter/isolation and disposal');
