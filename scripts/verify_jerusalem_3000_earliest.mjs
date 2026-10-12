@@ -71,3 +71,18 @@ late.apply({phaseId:lateData.phase,evidenceAllowed:c=>c!=='disputed'});assert.eq
 late.apply({phaseId:'middle-bronze',evidenceAllowed:()=>true});assert.equal(lateParent.children[0].visible,false);
 late.dispose();
 console.log('PASS: disputed stepped support, terrain contact, independent chronology and no population/survival inference');
+
+const royalData=JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/data/settlement/david-solomon.v1.json',import.meta.url)));
+const royalParent=new THREE.Group(),royal=createEarliestSettlement(royalParent,{data:royalData,terrain});
+royal.apply({phaseId:royalData.phase,evidenceAllowed:()=>true});
+assert.equal(royal.diagnostics().visibleRoyalMarkers,1);
+assert.equal(royal.diagnostics().royalBuildingGeometryVerified,false);
+assert.match(royal.evidence().source,/king-davids-palace/);
+royalParent.traverse(m=>{if(m.userData.cityObject?.kind==='royal-location-symbol'){
+ assert.equal(m.geometry.type,'RingGeometry','a candidate symbol must not become palace geometry');
+ assert.equal(m.userData.cityObject.confidence,'disputed');
+}});
+royal.apply({phaseId:royalData.phase,evidenceAllowed:c=>c!=='disputed'});assert.equal(royal.diagnostics().visibleRoyalMarkers,0);
+royal.apply({phaseId:'late-bronze-iron1',evidenceAllowed:()=>true});assert.equal(royalParent.children[0].visible,false);
+royal.dispose();
+console.log('PASS: source-linked royal candidate symbol, no palace geometry and dispute isolation');

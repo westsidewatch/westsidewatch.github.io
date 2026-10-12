@@ -79,3 +79,11 @@ The next phase now uses the early landscape renderer rather than a mature-city m
 Dwelling count/layout is held constant as an illustration, with distinct phase IDs. It does not express population growth/decline or excavated house continuity. Excavation observations for a specific eastern-slope area must not be generalized into whole-city emptiness across this broad combined period. Full urban extent remains withheld. Modern terrain and the approximate mapped spring continue to provide a common frame.
 
 Node/browser gates check grounded disputed support, evidence filtering, phase isolation, absence of legacy-city overlap, first/second/third-phase return visits and desktop/mobile views. Historical city geometry and full-timeline readiness remain unverified.
+
+## David–Solomon: royal geometry withheld
+
+The fourth early phase removes the former synthetic royal/sanctuary masses, city-wall circuit and duplicate inheritance layer. It uses the same modern terrain frame and an illustrative dwelling layout. A rose ring is a candidate-location symbol, not the Large Stone Structure's footprint or a reconstructed palace. Placement and symbol radius are not surveyed. Stepped support is displayed under an alternative tenth-century interpretation; this does not establish new construction or object survival. Complete palace and sanctuary geometry remain withheld.
+
+All four early phases now populate Evidence with the current phase's primary/context sources rather than showing the Jesus Entry panel. Non-early phases retain the existing event panel. Royal identity/date remain disputed, and the inferred filter hides the candidate symbol. No population or historical completion claim is made.
+
+Node/browser validation checks the non-building marker type, source link, dispute filtering, early-phase isolation, legacy exclusion, desktop/mobile and all 18 era renders.
