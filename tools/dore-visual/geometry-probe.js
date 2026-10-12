@@ -32,7 +32,8 @@ const viewports = registry.viewports;
   for(const viewport of viewports){
    for(const state of (contract.states||[{name:'default'}])){
    const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},reducedMotion:state.reducedMotion||'no-preference'});
-   await page.goto(url,{waitUntil:'networkidle'});
+   await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
+   await page.waitForTimeout(600);
    // Probe a generic Candidate card, not ONE: ONE has its own second-level
    // reading transition and would contaminate the four-card geometry contract.
    if(contract.probe==='homepage'){

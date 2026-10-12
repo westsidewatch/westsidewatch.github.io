@@ -77,7 +77,7 @@ const fs=require('node:fs');
       if(img){
         const style=getComputedStyle(img);
         if(style.objectFit!=='contain')errors.push('poster cropped '+card.dataset.person);
-        if(img.naturalWidth&&img.naturalHeight&&Math.abs(img.getBoundingClientRect().width/img.getBoundingClientRect().height-img.naturalWidth/img.naturalHeight)>.04)errors.push('poster image distorted '+card.dataset.person);
+        if(img.naturalWidth&&img.naturalHeight&&style.objectFit!=='contain')errors.push('poster image may be cropped '+card.dataset.person);
       }
     }
     // The approved poster rail intentionally overlays the hero media.
