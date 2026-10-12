@@ -291,7 +291,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     evidenceProjection = null;
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
-  let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, priorCamera = null;
+  let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
   let retainedVisible = false;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
@@ -318,6 +318,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     earliestSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     middleBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     lateBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
+    davidSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
@@ -458,7 +459,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       if(isEarlyLandscapePhase(phaseId)) {
         if(!isEarlyLandscapePhase(previousPhase)) priorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
         controls.minDistance=35;
-        const landscape=isEarliestPhase(phaseId)?earliestSettlement:phaseId==='middle-bronze'?middleBronzeSettlement:lateBronzeSettlement;
+        const landscape=isEarliestPhase(phaseId)?earliestSettlement:phaseId==='middle-bronze'?middleBronzeSettlement:phaseId==='late-bronze-iron1'?lateBronzeSettlement:davidSettlement;
         controls.target.copy(landscape.focus);
         camera.position.copy(landscape.focus).add(isEarliestPhase(phaseId)?new THREE.Vector3(120,105,160):new THREE.Vector3(150,125,190));
         controls.update();
@@ -647,6 +648,9 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const lateResponse=await fetch('./data/settlement/late-bronze-iron1.v1.json',{cache:'no-store'});
     if(!lateResponse.ok) throw new Error('Late Bronze landscape data unavailable');
     lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime});
+    const davidResponse=await fetch('./data/settlement/david-solomon.v1.json',{cache:'no-store'});
+    if(!davidResponse.ok) throw new Error('David landscape data unavailable');
+    davidSettlement=createEarliestSettlement(root,{data:await davidResponse.json(),terrain:terrainRuntime});
     const bounds = new THREE.Box3()
       .setFromObject(cityCoreLayer)
       .union(new THREE.Box3().setFromObject(historical));
@@ -729,6 +733,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             earliestSettlement: earliestSettlement?.diagnostics(),
             middleBronzeSettlement: middleBronzeSettlement?.diagnostics(),
             lateBronzeSettlement: lateBronzeSettlement?.diagnostics(),
+            davidSettlement: davidSettlement?.diagnostics(),
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -776,6 +781,20 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     setRuinProgress,
     setEvidenceMode,
     setTemporalCityState,
+    earlyLandscapeEvidence(phaseId) {
+      const runtime=phaseId==='chalcolithic-early-bronze'?earliestSettlement:phaseId==='middle-bronze'?middleBronzeSettlement:phaseId==='late-bronze-iron1'?lateBronzeSettlement:phaseId==='david-solomon'?davidSettlement:null;
+      if (['late-first-temple','babylonian-destruction'].includes(phaseId)) return {
+        source:'https://whitelevy.fas.harvard.edu/publications/jewish-quarter-excavations-old-city-jerusalem-vols-i-and-ii-finds-areas-w-and',
+        references:['https://www.israelexplorationsociety.com/','https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf'],
+        limitations:[
+          '寬牆等城防遺構支持研究西南山丘的城市發展；本畫面尚未加入經定位的寬牆平面。',
+          '目前街網與地塊由後期參考配置轉換而來，住宅形制、數量和城區範圍均為示意，不能視為第一聖殿城市復原。',
+          '毀壞階段沿用相同模型呈現變化；倒塌方式、留存比例與埋藏深度尚未考古核定。',
+          '現代 DEM 不代表古代地表；完整城牆、王宮與第一聖殿形制尚未核定。'
+        ]
+      };
+      return runtime?.evidence();
+    },
     setRetainedLayerVisible(visible) {
       retainedVisible = Boolean(visible);
       applyTemporalState();
@@ -821,6 +840,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       earliestSettlement?.dispose();
       middleBronzeSettlement?.dispose();
       lateBronzeSettlement?.dispose();
+      davidSettlement?.dispose();
       generationStatus.remove();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])

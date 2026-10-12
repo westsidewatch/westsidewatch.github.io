@@ -83,6 +83,9 @@ try {
     window.__JERUSALEM3000__.inheritanceError = String(error?.stack || error);
     stage.dataset.inheritance = 'disabled';
   }
+  const earlyEvidencePanel=document.querySelector('.j3k-evidence-panel');
+  const routeEvidenceNodes=[...earlyEvidencePanel.childNodes].map(n=>n.cloneNode(true));
+  let evidencePanelPhase='';
   function update(v) {
     const state = time.sample(v),
       p = state.phase,
@@ -143,14 +146,35 @@ try {
       ? '最早聚落 · 現代地形 · 推定住居／步徑'
       : p.id==='middle-bronze' ? '迦南城市 · 推定取水防禦 · 泉塔年代有爭議'
       : p.id==='late-bronze-iron1' ? '晚青銅—鐵器早期 · 住區推定 · 階梯石構年代有爭議'
+      : p.id==='david-solomon' ? '大衛—所羅門 · 王室識別有爭議 · 建築平面未核定'
       : `JERUSALEM 3000 · TEMPORAL CITY · ${productionInfo?.evidenceObjects || 0} EVIDENCE OBJECTS · ${productionInfo?.constructionPieces || 0} PIECES`;
     date.textContent = p.dateLabel;
     eraEn.textContent = (p.state || '').toUpperCase() + ' · ' + p.dateLabel;
     eraZh.textContent = p.label;
     retainedToggle.hidden = p.id !== RETAINED_PHASE;
-    note.textContent = isEarliestPhase(p.id) ? '東南山脊與基訓泉周邊的小規模聚落。住居數量、位置、屋頂與步徑均為推定示意；地形使用現代 DEM。可拖動旋轉、滾輪縮放。' : p.id==='middle-bronze' ? '中青銅取水設施與防護通道示意。泉塔年代有爭議，粉褐色標示為爭議層；住居、位置與高度仍屬推定。鑿岩設施只顯示輪廓，完整城牆範圍尚未核定。' : p.id==='late-bronze-iron1' ? '此期城區範圍未核定；住居僅為示意，不代表人口增減或前代房屋留存。粉褐色階梯支撐體為年代與功能爭議層，不能直接認定為王宮基礎。前期防禦未預設延續，隱藏不表示毀壞。' : p.id === RETAINED_PHASE
+    note.textContent = isEarliestPhase(p.id) ? '東南山脊與基訓泉周邊的小規模聚落。住居數量、位置、屋頂與步徑均為推定示意；地形使用現代 DEM。可拖動旋轉、滾輪縮放。' : p.id==='middle-bronze' ? '中青銅取水設施與防護通道示意。泉塔年代有爭議，粉褐色標示為爭議層；住居、位置與高度仍屬推定。鑿岩設施只顯示輪廓，完整城牆範圍尚未核定。' : p.id==='late-bronze-iron1' ? '此期城區範圍未核定；住居僅為示意，不代表人口增減或前代房屋留存。粉褐色階梯支撐體為年代與功能爭議層，不能直接認定為王宮基礎。前期防禦未預設延續，隱藏不表示毀壞。' : p.id==='david-solomon' ? '圓環是大型石構候選區符號，不是王宮平面。階梯支撐體以十世紀假說觀看，不表示此時新建。完整王宮、聖殿與城牆未核定，住居仍為推定；可開啟 Evidence 查看來源。' : p.id === RETAINED_PHASE
       ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建住宅由共享地塊生成器產生，範圍與道路仍屬推定。`
       : isSharedGenerationPhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
+    if(evidencePanelPhase!==p.id) {
+      evidencePanelPhase=p.id;
+      const evidence=three.earlyLandscapeEvidence(p.id);
+      if(evidence) {
+        earlyEvidencePanel.replaceChildren();
+        for(const [tag,text] of [['p','城市場景 · 資料來源'],['h3',p.label],['p',isEarlyLandscapePhase(p.id)?'住居與構件位置、形制仍為示意。現代 DEM 不等於古地表；粉褐色構件為爭議假說，沒有核定為完整建築。':'本期街區仍為推定示意。下列研究提供歷史背景，尚未核定畫面中的街網、建築平面與毀壞形態。']]) {
+          const el=document.createElement(tag);el.textContent=text;earlyEvidencePanel.append(el);
+        }
+        const limits=document.createElement('ul');
+        for(const text of evidence.limitations||[]) {
+          const item=document.createElement('li');item.textContent=text;limits.append(item);
+        }
+        earlyEvidencePanel.append(limits);
+        for(const [i,url] of [evidence.source,...evidence.references].entries()) {
+          if(new URL(url).protocol!=='https:')continue;
+          const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=i===0?'主要資料來源':`參考研究 ${i}`;
+          const row=document.createElement('p');row.append(link);earlyEvidencePanel.append(row);
+        }
+      } else earlyEvidencePanel.replaceChildren(...routeEvidenceNodes.map(n=>n.cloneNode(true)));
+    }
     ticks.forEach((x, i) => {
       x.classList.toggle('is-past', i < state.index);
       x.classList.toggle('is-current', i === state.index);

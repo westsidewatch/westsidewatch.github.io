@@ -1,0 +1,175 @@
+{
+  "schema": "j3k.david-solomon-landscape.v1",
+  "phase": "david-solomon",
+  "authority": "disputed royal identification and illustrative ridge settlement; building geometry withheld",
+  "spring": {
+    "lat": 31.773235,
+    "lon": 35.2368303,
+    "accuracy": "approximate-modern-map-point-not-ancient-survey",
+    "source": "https://api.openstreetmap.org/api/0.6/node/1608094098",
+    "attribution": "© OpenStreetMap contributors, ODbL"
+  },
+  "historicalSource": "https://cityofdavid.org.il/en/king-davids-palace-eng/",
+  "limitations": [
+    "The royal marker is symbolic, not an excavated building footprint or certified palace identification.",
+    "Stepped support is shown under an alternative 10th-century interpretation, not a new building or verified continuity.",
+    "Full palace, sanctuary and city-wall geometry remain withheld.",
+    "Dwelling layout/count is illustrative and not population/survival evidence.",
+    "Modern DEM and approximate spring map point do not reconstruct ancient ground."
+  ],
+  "houseOffsets": [
+    [
+      -70,
+      -18
+    ],
+    [
+      -83,
+      -8
+    ],
+    [
+      -93,
+      -23
+    ],
+    [
+      -107,
+      -12
+    ],
+    [
+      -115,
+      3
+    ],
+    [
+      -95,
+      12
+    ],
+    [
+      -75,
+      17
+    ],
+    [
+      -87,
+      34
+    ],
+    [
+      -109,
+      33
+    ],
+    [
+      -124,
+      24
+    ],
+    [
+      -137,
+      9
+    ],
+    [
+      -132,
+      -16
+    ],
+    [
+      -117,
+      -33
+    ],
+    [
+      -99,
+      -42
+    ],
+    [
+      -148,
+      -9
+    ],
+    [
+      -141,
+      -35
+    ],
+    [
+      -122,
+      -51
+    ],
+    [
+      -99,
+      -61
+    ],
+    [
+      -79,
+      -48
+    ],
+    [
+      -62,
+      -32
+    ],
+    [
+      -65,
+      37
+    ],
+    [
+      -80,
+      53
+    ],
+    [
+      -108,
+      54
+    ],
+    [
+      -135,
+      44
+    ]
+  ],
+  "pathOffsets": [
+    [
+      0,
+      0
+    ],
+    [
+      -18,
+      4
+    ],
+    [
+      -38,
+      11
+    ],
+    [
+      -59,
+      8
+    ],
+    [
+      -78,
+      2
+    ],
+    [
+      -104,
+      8
+    ],
+    [
+      -126,
+      19
+    ]
+  ],
+  "contextSources": [
+    "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+  ],
+  "steppedSupport": {
+    "offset": [
+      -140,
+      -62
+    ],
+    "tiers": 8,
+    "tierDepth": 2.4,
+    "width": 22,
+    "confidence": "disputed",
+    "dimensionsVerified": false,
+    "placementVerified": false,
+    "dating": "10th-century interpretation shown as an alternative hypothesis, not a construction event",
+    "function": "retaining/support structure; not certified palace foundation"
+  },
+  "royalMarker": {
+    "offset": [
+      -163,
+      -78
+    ],
+    "symbolRadius": 7,
+    "confidence": "disputed",
+    "representation": "candidate-location-symbol-not-footprint",
+    "placementVerified": false
+  }
+}
