@@ -72,6 +72,7 @@ test('Blender PeerTube playback readiness is independently reported', async ({ p
   } catch (err) { playback = 'NOT_CONFIRMED ' + String(err.message).slice(0,180); }
   console.log('PEERTUBE_REAL_PLAYBACK=' + playback);
   await testInfo.attach('peertube-real-playback', { body: playback, contentType: 'text/plain' });
+  if (process.env.SCREEN_LAB_REQUIRE_PLAYBACK === '1') expect(playback, 'Real playback must advance video.currentTime').toBe('PLAYING_CONFIRMED');
   await page.screenshot({ path: testInfo.outputPath('peertube-embed.png') });
   await page.getByRole('button', { name: '關閉 ×' }).click();
   await expect(iframe).toHaveCount(0);
