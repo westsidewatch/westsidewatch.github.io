@@ -86,3 +86,26 @@
 .mersi-church .church-front-index a span{font-size:.7em;opacity:.65}
 .mersi-church .church-front-index a:focus-visible{outline:2px solid #776c49;outline-offset:-3px}
 @media(max-width:850px){.mersi-church .church-front-index{grid-template-columns:repeat(2,minmax(0,1fr));width:94%}}
+
+/* Canonical MERSI church surface: layout and typography authority for live markup. */
+.mersi-church .mc-hero{background-color:#eee7da;background-image:radial-gradient(ellipse at 74% 20%,rgba(255,255,255,.85),transparent 46%),repeating-radial-gradient(ellipse 110% 75% at 75% 65%,transparent 0 17px,rgba(98,81,50,.075) 18px 19px);text-align:center;align-items:center}
+.mersi-church .mc-hero>p{font-family:var(--ws-type-display-en,serif);font-size:clamp(.68rem,.85vw,.9rem);font-weight:400;letter-spacing:.17em}
+.mersi-church .mc-hero h1{font-family:var(--ws-type-display-zh,serif);font-size:clamp(1.3rem,2.4vw,2.5rem);font-weight:300;line-height:1.5;letter-spacing:.12em}
+.mersi-church .mc-hero blockquote{max-width:50rem;margin:0 auto;font-size:clamp(1rem,1.7vw,1.5rem);font-weight:300;line-height:2}
+.mersi-church .mc-hero blockquote cite{display:block;margin-top:1rem;font-family:var(--ws-type-display-en,serif);font-size:.75rem;letter-spacing:.2em;font-style:normal}
+.mersi-church .mc-hero img{max-height:30svh;object-fit:contain}
+.mersi-church .mc-journey .mc-scene{overflow:hidden;background-image:radial-gradient(ellipse at 80% 22%,rgba(255,255,255,.48),transparent 45%),repeating-radial-gradient(ellipse 90% 65% at 72% 70%,transparent 0 18px,rgba(70,57,40,.075) 19px 20px)}
+.mersi-church .mc-scene .ws-bilingual-heading{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(1rem,3vw,3rem);max-width:100%;margin:0 0 2rem}
+.mersi-church .mc-scene .ws-bilingual-heading__en{display:block;font-family:var(--ws-type-display-en,serif);font-size:clamp(3rem,8vw,9rem);font-weight:400;letter-spacing:-.045em;line-height:.95}
+.mersi-church .mc-scene .ws-bilingual-heading__zh{display:block;font-family:var(--ws-type-display-zh,serif);font-size:clamp(1.3rem,2.8vw,3rem);font-weight:300;letter-spacing:.08em;line-height:1.45}
+.mersi-church .mc-scene>p:first-child{font-family:var(--ws-type-display-en,serif);font-size:.75rem;letter-spacing:.16em}
+.mersi-church .mc-scene>p,.mersi-church .mc-scene blockquote{font-size:clamp(1rem,1.45vw,1.4rem);font-weight:300}
+.mersi-church .sites-church-scripture{min-height:85svh;padding:clamp(3rem,10vw,10rem);display:flex;flex-direction:column;justify-content:center;gap:1rem;background:#f1ede3}
+.mersi-church .sites-church-scripture h2{font-family:var(--ws-type-display-zh,serif);font-size:clamp(2.6rem,6vw,7rem);font-weight:300;line-height:1.2}
+.mersi-church .sites-church-scripture h2 span{display:block;font-family:var(--ws-type-display-en,serif);font-size:clamp(1rem,2vw,2rem);font-weight:400;letter-spacing:.06em}
+.mersi-church .sites-church-scripture>a{display:flex;flex-direction:column;gap:.5rem;width:min(100%,40rem);padding:2rem 0;border-top:1px solid #a99d88;border-bottom:1px solid #a99d88;color:inherit;text-decoration:none}
+.mersi-church .sites-church-scripture>a strong{font-family:var(--ws-type-display-en,serif);font-size:clamp(1.5rem,3vw,3rem);font-weight:400}
+.mersi-church .sites-church-footer{min-height:35svh;padding:clamp(2rem,6vw,6rem);display:flex;flex-direction:column;justify-content:end;gap:.75rem;background:#ddd0b8}
+.mersi-church .sites-church-footer strong{font-weight:300;font-size:clamp(1.3rem,2.5vw,2.5rem)}
+@media(max-width:850px){.mersi-church .mc-hero{padding:clamp(2rem,6vw,4rem)}.mersi-church .mc-hero img{max-width:90vw}.mersi-church .mc-scene .ws-bilingual-heading__en{font-size:clamp(2.7rem,11vw,5rem)}.mersi-church .mc-scene .ws-bilingual-heading__zh{font-size:clamp(1.2rem,5vw,2rem)}.mersi-church .sites-church-scripture{padding:12vw 7vw}}
+@media(prefers-reduced-motion:reduce){.mersi-church .mc-journey .mc-scene{opacity:1!important;visibility:visible!important}.mersi-church .mc-scene .ws-bilingual-heading{transform:none!important}}
