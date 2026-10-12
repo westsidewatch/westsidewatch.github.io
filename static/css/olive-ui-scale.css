@@ -446,3 +446,29 @@ body:has(.olive-archive .olive-home-stage) .olive-archive{
 .olive-archive[data-ws-color-family="sermon"] .olive-home-stage .olive-feature__media{
  background:var(--ws-realm-frame,var(--ws-olive-frame-deep,var(--ws-olive)));
 }
+
+/* Keep the brand and selected speaker in separate readable zones. */
+.olive-archive .olive-home-stage .olive-feature__caption{
+ left:auto;right:clamp(26px,3vw,52px);top:clamp(110px,18svh,190px);bottom:auto;
+ width:32%;max-width:440px;
+}
+@media(max-width:760px){
+ .olive-archive .olive-home-stage .olive-brand{top:24px;left:22px;max-width:calc(100% - 44px)}
+ .olive-archive .olive-home-stage .olive-brand h1{font-size:clamp(46px,13vw,72px);line-height:.9}
+ .olive-archive .olive-home-stage .olive-feature__caption{left:22px;right:22px;top:190px;bottom:auto;width:auto;max-width:none}
+ .olive-archive .olive-home-stage .olive-feature__caption-editorial h2{font-size:clamp(24px,7vw,32px)!important}
+}
+.olive-archive .olive-home-stage .olive-feature__caption-editorial,
+.olive-archive .olive-home-stage .olive-feature__caption-editorial h2,
+.olive-archive .olive-home-stage .olive-feature__caption-kicker{color:var(--ws-text)!important;text-shadow:none}
+@media(max-width:760px){
+ .olive-archive .olive-home-stage{min-height:740px!important}
+ .olive-archive .olive-home-stage .olive-brand{top:110px}
+ .olive-archive .olive-home-stage .olive-feature__caption{top:280px}
+}
+.olive-archive .olive-home-stage .olive-feature__caption{
+ box-sizing:border-box;padding:12px;
+ background:color-mix(in oklab,var(--ws-surface) 94%,transparent);
+ text-shadow:none;
+}
+.olive-archive .olive-home-stage .olive-feature__caption-editorial{border-top-color:var(--ws-line)}
