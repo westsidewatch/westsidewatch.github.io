@@ -1,3 +1,4 @@
+import {appendWaterDefenseLedger} from './water-defense-registration.js';
 import {appendPeriodSpatialLedger} from './period-spatial-ledger.js';
 import {loadCityData} from './city-data-loader.js';
 import {compileRoyalSpatialLayout} from './royal-spatial-layout.js';
@@ -18,5 +19,6 @@ export async function loadAnchorCityLedger(){
   }
  }
  for(const path of new Set(packs.packs.map(p=>p.periodSpatialObjectPack).filter(Boolean)))appendPeriodSpatialLedger(packs,lifecycle,await loadCityData(path));
+ for(const path of new Set(packs.packs.map(p=>p.waterDefenseObjectPack).filter(Boolean)))appendWaterDefenseLedger(packs,lifecycle,await loadCityData(path));
  return {packs,lifecycle};
 }

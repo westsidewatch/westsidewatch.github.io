@@ -35,6 +35,9 @@ jobs:
           node scripts/verify_jerusalem_3000_period_spatial.mjs
           node scripts/verify_jerusalem_3000_district_infill.mjs
           node scripts/verify_jerusalem_3000_residential_ledger.mjs
+          node scripts/verify_jerusalem_3000_water_defense.mjs
+          node scripts/verify_jerusalem_3000_water_defense_adapter.mjs
+          node scripts/verify_jerusalem_3000_local_plan.mjs
           node scripts/verify_jerusalem_3000_persian_sanctuary.mjs
           node scripts/verify_jerusalem_3000_earliest.mjs
       - name: Render the proposed city and scrub through destruction

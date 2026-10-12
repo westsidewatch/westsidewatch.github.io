@@ -16,11 +16,35 @@
         },
         {
           "id": "j3k:object:gihon-system-iron-age",
-          "label": "基訓泉與供水防禦系統",
+          "label": "基訓供水體系（彙總，需按構件核對）",
           "kind": "water-fortification",
           "evidence": "archaeological",
-          "confidence": "high-elements",
-          "geometry": "withheld-pending-sourced-linework"
+          "confidence": "inferred",
+          "geometry": "withheld-pending-sourced-linework",
+          "sources": [
+            "https://weizmann.elsevierpure.com/en/publications/absolute-dating-of-the-gihon-spring-fortifications-jerusalem/",
+            "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+          ],
+          "limitations": [
+            "彙總記錄不代表同一建築；泉、塔與地下水道分開核對年代與去向。"
+          ],
+          "relatedObjects": [
+            {
+              "id": "j3k:object:gihon-spring",
+              "relation": "component-context-not-verified-physical-reuse",
+              "geometryReuseVerified": false
+            },
+            {
+              "id": "j3k:object:gihon-spring-tower",
+              "relation": "component-context-not-verified-physical-reuse",
+              "geometryReuseVerified": false
+            },
+            {
+              "id": "j3k:object:siloam-water-tunnel",
+              "relation": "component-context-not-verified-physical-reuse",
+              "geometryReuseVerified": false
+            }
+          ]
         },
         {
           "id": "j3k:object:royal-monumental-zone-10c",
@@ -121,7 +145,8 @@
           ]
         }
       ],
-      "spatialObjectPack": "./data/settlement/david-solomon.v1.json"
+      "spatialObjectPack": "./data/settlement/david-solomon.v1.json",
+      "waterDefenseObjectPack": "./data/urban/water-defense.registration.v1.json"
     },
     {
       "phase": "persian-nehemiah",

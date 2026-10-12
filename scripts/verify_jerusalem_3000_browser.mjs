@@ -28,7 +28,7 @@ try {
   );
   const runtime = await page.evaluate(() => window.__JERUSALEM3000__);
   assert.equal(runtime.status, 'ready', JSON.stringify(runtime));
-  for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json','settlement/david-solomon.v1.json','urban/first-temple-persian.spatial.v1.json']) {
+  for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json','settlement/david-solomon.v1.json','urban/first-temple-persian.spatial.v1.json','urban/water-defense.registration.v1.json','urban/water-defense.local-plans.v1.json']) {
     assert.equal(dataRequests.get(`/preview/jerusalem-3000/data/${path}`),1,`one shared request for ${path}`);
   }
   assert.equal(
@@ -129,6 +129,16 @@ try {
   assert.ok(bronze.middleBronzeSettlement.visibleTowerComponents>0);
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.active),false);
   await page.screenshot({path:`${output}/middle-bronze.png`,fullPage:true});
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
+  const towerSelect=page.getByLabel('泉塔年代方案',{exact:true});
+  await towerSelect.selectOption('iron-age-dating');
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.waterDefenseModel.visibleTowerComponents===0);
+  await towerSelect.selectOption('middle-bronze-hypothesis');
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.waterDefenseModel.visibleTowerComponents>0);
+  await page.locator('[data-water-defense]').evaluate(el=>el.scrollIntoView({block:'start'}));
+  await page.screenshot({path:`${output}/water-defense-variant.png`,fullPage:true});
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
+
   await page.getByRole('button',{name:'推定',exact:true}).click();
   await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement.visibleTowerComponents===0);
   assert.ok(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement.visibleDefenseComponents>0));
@@ -287,6 +297,10 @@ try {
   await page.screenshot({path:`${output}/district-ledger.png`,fullPage:true});
   await page.locator('.j3k-evidence-panel').evaluate(el=>{el.scrollTop=0;});
   await page.getByRole('button',{name:'Evidence',exact:true}).click();
+  assert.equal(await page.locator('[data-water-defense-object]').count(),6);
+  assert.equal(await page.locator('[data-water-defense-object="j3k:object:gihon-spring"]').getAttribute('data-state'),'transform');
+  assert.ok(retained.localPlanAudit.every(entry=>entry.renderable===false));
+  assert.equal(await page.locator('[data-local-plan-admission]').count(),1);
   assert.equal(retained.cityOverview.framePhase,'persian-nehemiah');
   assert.equal(retained.cityOverview.includesEarlier,true,'retained ruins must be included in overview framing');
   assert.ok(retained.persianSanctuary.visibleTemple>0);
