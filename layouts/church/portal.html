@@ -1,6 +1,6 @@
 {{ define "main" }}
-<div class="sites-church" id="church">
-  <section class="sites-church-intro" aria-labelledby="church-title">
+<div class="sites-church mersi-church" id="church">
+  <section class="mc-hero sites-church-intro" data-mersi-panel aria-labelledby="church-title">
     <p>P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p>
     {{ with .Params.display_logo }}
       <img src="{{ . | relURL }}" alt="神召會活水堂西區教會">
@@ -13,7 +13,7 @@
 
   {{/* The worship schedule is first-layer church content, not a link-only subpage. */}}
   {{ with index site.Data.church.bulletins "2026-10-11" }}
-  <section class="church-front-schedule" aria-labelledby="church-front-schedule-title">
+  <section class="church-front-schedule" data-mersi-panel aria-labelledby="church-front-schedule-title">
     <div class="church-front-schedule__heading">
       <p>主日崇拜 · {{ .date_label }} · {{ .time_label }}</p>
       <h2 id="church-front-schedule-title">主日敬拜日程</h2>
@@ -42,25 +42,28 @@
   </section>
   {{ end }}
 
-  <section class="sites-church-gather" aria-labelledby="church-gather-title">
+  <div class="mc-journey" id="church-journey"><div class="mc-stage"><div class="mc-scenes">
+  <section class="mc-scene is-current sites-church-gather" style="--scene-tone:#e9e1d3" aria-labelledby="church-gather-title">
     <p>01 / 聚集</p>
     <h2 id="church-gather-title" class="ws-bilingual-heading"><span class="ws-bilingual-heading__en" lang="en">Living Water</span><span class="ws-bilingual-heading__zh" lang="zh-Hant">活水</span></h2>
     <p>不是一個地方。</p>
     <p>教會是被主召聚的群體。<br>敬拜 · 讀經 · 禱告 · 同行</p>
   </section>
 
-  <section class="sites-church-water" aria-labelledby="church-water-title">
+  <section class="mc-scene sites-church-water" style="--scene-tone:#e5dfd1" aria-labelledby="church-water-title">
     <p>02 / 活水</p>
     <h2 id="church-water-title" class="ws-bilingual-heading"><span class="ws-bilingual-heading__en" lang="en">Come · Drink · Flow</span><span class="ws-bilingual-heading__zh" lang="zh-Hant">來 · 喝 · 活水湧流</span></h2>
     <blockquote>「我所賜的水，要在他裡頭成為泉源，直湧到永生。」<cite>JOHN 4:14</cite></blockquote>
   </section>
 
-  <section class="sites-church-life" aria-labelledby="church-life-title">
+  <section class="mc-scene sites-church-life" style="--scene-tone:#ddd2bc" aria-labelledby="church-life-title">
     <p>03 / 教會生活</p>
     <h2 id="church-life-title" class="ws-bilingual-heading"><span class="ws-bilingual-heading__en" lang="en">Life Together</span><span class="ws-bilingual-heading__zh" lang="zh-Hant">一起生活，在福音裡。</span></h2>
     <p>主日敬拜不是節目。查經不是課程。禱告不是儀式。<br>我們在基督裡被召聚，也在日常裡彼此成全。</p>
     <p>WATCH FOR THE DAWN · ROMANS 13:12</p>
   </section>
+
+  </div><div class="mc-progress" aria-hidden="true"><span></span><ol><li class="is-current">LIVING WATER</li><li>COME DRINK FLOW</li><li>LIFE TOGETHER</li></ol></div></div></div>
 
   {{/* Scripture Environment consumer: preserve canonical Cinema data and fail-soft defaults. */}}
   {{ $filmHref := "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-3-1-4-25/english.html" }}
@@ -84,7 +87,7 @@
     {{ end }}
   {{ end }}
 
-  <section class="sites-church-scripture" aria-labelledby="church-scripture-title">
+  <section class="sites-church-scripture" data-mersi-panel aria-labelledby="church-scripture-title">
     <p>馬太福音 3:13–17 · 約旦河 · 受洗</p>
     <h2 id="church-scripture-title">耶穌受洗 <span>BAPTISM OF JESUS</span></h2>
     <p>太 3:13–17 · MATTHEW 3:13–17</p>
@@ -94,7 +97,7 @@
     <p>講道／見證 · 聲音</p>
   </section>
 
-  <nav class="sites-church-entries" aria-label="教會生活">
+  <nav class="sites-church-entries" data-mersi-panel aria-label="教會生活">
     {{ range .Pages.ByWeight }}
       {{ $entryHref := .Params.entry_url | default .RelPermalink }}
       <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<em>{{ . }}</em>{{ end }}<b>↗</b></a>
@@ -107,4 +110,5 @@
     <small>Watch for the Dawn · Romans 13:12</small>
   </footer>
 </div>
+<script src="{{ "js/church-mersi-journey.js" | relURL }}" defer></script>
 {{ end }}
