@@ -228,3 +228,20 @@ body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite
  font-style:italic;
  font-weight:400;
 }
+
+/* Scripture legibility: readable small caps, restrained tracking; citation stays italic. */
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
+ font-size:clamp(18px,1.22vw,23px);
+ letter-spacing:0;
+ line-height:1.5;
+}
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite{
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-style:italic;
+ font-variant-caps:normal;
+ font-feature-settings:normal;
+ text-transform:none;
+ font-size:clamp(15px,.95vw,19px);
+ letter-spacing:.01em;
+ line-height:1.45;
+}
