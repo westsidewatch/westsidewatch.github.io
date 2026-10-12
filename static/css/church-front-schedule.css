@@ -79,3 +79,10 @@
 .mersi-church .mc-scene.is-current,.mersi-church .mc-scene.is-adjacent{opacity:var(--scene-opacity,1)!important;visibility:visible!important;animation:none!important}
 .mersi-church .mc-scene.is-adjacent{pointer-events:none}
 }
+
+/* First-layer church index: all main chapters remain directly reachable. */
+.mersi-church .church-front-index{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;width:min(94%,1100px);margin:clamp(1.5rem,4vh,3rem) auto 0;background:rgba(55,50,40,.18)}
+.mersi-church .church-front-index a{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:clamp(.9rem,1.8vw,1.6rem);background:#f4f0e8;color:#252525;text-decoration:none;font-size:clamp(.8rem,1.1vw,1rem);min-width:0}
+.mersi-church .church-front-index a span{font-size:.7em;opacity:.65}
+.mersi-church .church-front-index a:focus-visible{outline:2px solid #776c49;outline-offset:-3px}
+@media(max-width:850px){.mersi-church .church-front-index{grid-template-columns:repeat(2,minmax(0,1fr));width:94%}}
