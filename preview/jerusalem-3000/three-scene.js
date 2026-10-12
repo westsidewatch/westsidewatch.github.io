@@ -1,3 +1,4 @@
+import {compileWaterDefenseRegistration,bindWaterDefenseCore,waterDefenseState} from './water-defense-registration.js';
 import {fitCityOverview} from './city-overview.js';
 import {createPersianSanctuary} from './persian-sanctuary.js';
 import {bindPeriodSpatialCore} from './period-spatial-ledger.js';
@@ -298,7 +299,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
-  let retainedVisible = false, royalCity=null, persianSanctuary=null, periodSpatialData=null, periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
+  let retainedVisible = false, royalCity=null, persianSanctuary=null, periodSpatialData=null, waterDefense=null, periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
   generationStatus.setAttribute('role', 'status');
@@ -677,6 +678,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     const lateResponse=await fetch('./data/settlement/late-bronze-iron1.v1.json',{cache:'no-store'});
     if(!lateResponse.ok) throw new Error('Late Bronze landscape data unavailable');
     lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime});
+    const waterDefenseData=await loadCityData('./data/urban/water-defense.registration.v1.json');
+    waterDefense=compileWaterDefenseRegistration(waterDefenseData,terrainRuntime.grid.origin);bindWaterDefenseCore(cityCoreRuntime.core,waterDefense);
     const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');
     davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime});
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
@@ -832,6 +835,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       };
       return runtime?.evidence();
     },
+    waterDefenseEvidence(position){return waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);},
     inspectCityObject(id){const record=cityCoreRuntime?.core.get(id);return record?structuredClone(record):null;},
     focusRoyalTemple(){
       const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:royalCity;

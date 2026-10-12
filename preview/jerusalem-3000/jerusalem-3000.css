@@ -7,3 +7,5 @@
 
 .j3k-evidence-panel{max-height:calc(100% - 90px);overflow-y:auto}
 [data-district-acceptance] table{width:100%;border-collapse:collapse;font-size:11px}[data-district-acceptance] th,[data-district-acceptance] td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}[data-district-acceptance] th:not(:first-child),[data-district-acceptance] td:not(:first-child){text-align:right;white-space:nowrap}
+
+[data-water-defense] svg{width:100%;height:auto;border:1px solid var(--line);margin:8px 0;font:11px Arial,sans-serif}[data-water-defense] h5{margin:16px 0 4px;font-size:12px}[data-water-defense] a{font-size:11px}

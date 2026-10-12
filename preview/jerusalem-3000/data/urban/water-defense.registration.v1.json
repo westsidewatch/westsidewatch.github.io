@@ -1,0 +1,136 @@
+{
+  "schema": "j3k.water-defense.registration.v1",
+  "authority": "source registration and geometry gaps; not complete water/defense reconstruction",
+  "scope": [
+    "david-solomon",
+    "late-first-temple",
+    "babylonian-destruction",
+    "persian-nehemiah"
+  ],
+  "objects": [
+    {
+      "id": "j3k:object:gihon-spring",
+      "label": "基訓泉",
+      "kind": "water-fortification",
+      "confidence": "reconstructed",
+      "sources": [
+        "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+      ],
+      "reference": {
+        "lat": 31.773235,
+        "lon": 35.2368303,
+        "source": "https://api.openstreetmap.org/api/0.6/node/1608094098",
+        "accuracy": "approximate-modern-map-point-not-ancient-survey",
+        "attribution": "© OpenStreetMap contributors, ODbL"
+      },
+      "geometryStatus": "modern-reference-point-only",
+      "gap": "現代泉點已定位；古代取水口、流量與地表未核定。",
+      "lifecycleEvents": [
+        {
+          "phase": "david-solomon",
+          "state": "transform",
+          "authority": "natural-source-reference-not-construction-or-flow-certification"
+        },
+        {
+          "phase": "late-first-temple",
+          "state": "transform",
+          "authority": "natural-source-reference-not-construction-or-flow-certification"
+        },
+        {
+          "phase": "babylonian-destruction",
+          "state": "transform",
+          "authority": "natural-source-reference-not-construction-or-flow-certification"
+        },
+        {
+          "phase": "persian-nehemiah",
+          "state": "transform",
+          "authority": "natural-source-reference-not-construction-or-flow-certification"
+        },
+        {
+          "phase": "hellenistic-hasmonean",
+          "state": "unresolved",
+          "authority": "outside-current-registration-scope"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:broad-wall-remains",
+      "label": "西丘寬牆",
+      "kind": "fortification",
+      "confidence": "observed",
+      "sources": [
+        "https://timeline.cityofdavid.org.il/event/the-broad-wall-an-archaeological-revolution/"
+      ],
+      "reference": {
+        "lat": 31.7759381,
+        "lon": 35.2316493,
+        "source": "https://api.openstreetmap.org/api/0.6/node/4542880989",
+        "accuracy": "approximate-modern-map-point-not-ancient-survey",
+        "attribution": "© OpenStreetMap contributors, ODbL"
+      },
+      "geometryStatus": "modern-reference-point-only",
+      "gap": "遺構存在有考古來源；只有現代位置點，缺經定位的牆段平面、高度與完整城防路線。",
+      "lifecycleEvents": [
+        {
+          "phase": "late-first-temple",
+          "state": "build",
+          "authority": "heritage-period-assignment-not-exact-building-year"
+        },
+        {
+          "phase": "babylonian-destruction",
+          "state": "unresolved",
+          "authority": "specific-wall-segment-fate-unverified"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:gihon-spring-tower",
+      "label": "基訓泉防禦塔",
+      "kind": "water-fortification",
+      "confidence": "disputed",
+      "sources": [
+        "https://weizmann.elsevierpure.com/en/publications/absolute-dating-of-the-gihon-spring-fortifications-jerusalem/",
+        "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+      ],
+      "geometryStatus": "withheld-pending-dating-and-registered-footprint",
+      "gap": "中青銅／鐵器時代定年有不同方案；不可把前期草模直接當作後代原樣留存。",
+      "lifecycleEvents": [
+        {
+          "phase": "david-solomon",
+          "state": "unresolved",
+          "authority": "dating-variant-not-resolved"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:siloam-water-tunnel",
+      "label": "西羅亞地下水道",
+      "kind": "water-fortification",
+      "confidence": "reconstructed",
+      "sources": [
+        "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+      ],
+      "geometryStatus": "withheld-pending-registered-underground-linework",
+      "gap": "來源記錄供水功能；工程仍缺可配準中心線、地下高程與出口定位，不畫直線代替隧道。",
+      "lifecycleEvents": [
+        {
+          "phase": "late-first-temple",
+          "state": "build",
+          "authority": "heritage-chronology-not-surveyed-linework"
+        },
+        {
+          "phase": "babylonian-destruction",
+          "state": "unresolved",
+          "authority": "specific-waterwork-fate-unverified"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "定位圖只顯示現代近似位置點，沒有古代城界、牆線、塔基或水道線。",
+    "基訓泉是自然水源，不能和防禦塔／地下水道一起判定建造或毀壞。",
+    "史料中的整體毀城不證明每段寬牆或地下水道同時消失。",
+    "晚期聖殿城市的八世紀西向擴張是目前敘事切片；更早擴張與東側牆段定年需依新研究分別核對，不能全歸給希西家。"
+  ],
+  "chronologyReviewSource": "https://pubmed.ncbi.nlm.nih.gov/38683984/"
+}
