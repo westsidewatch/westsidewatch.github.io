@@ -11,6 +11,37 @@
     <blockquote>「信我的人，就如經上所說：從他腹中要流出活水的江河來。」<cite>JOHN 7:38</cite></blockquote>
   </section>
 
+  {{/* The worship schedule is first-layer church content, not a link-only subpage. */}}
+  {{ with index site.Data.church.bulletins "2026-10-11" }}
+  <section class="church-front-schedule" aria-labelledby="church-front-schedule-title">
+    <div class="church-front-schedule__heading">
+      <p>主日崇拜 · {{ .date_label }} · {{ .time_label }}</p>
+      <h2 id="church-front-schedule-title">主日敬拜日程</h2>
+      <p>{{ .sermon_title }} · {{ .sermon_speaker }}</p>
+      <p>{{ .address }}</p>
+    </div>
+    <div class="church-front-schedule__stages">
+      {{ range $i, $stage := .schedule }}
+      <article class="church-front-schedule__stage">
+        <span class="church-front-schedule__number">{{ printf "%02d" (add $i 1) }}</span>
+        <time>{{ $stage.time }}</time>
+        <div><h3>{{ $stage.title }}</h3>
+          {{ range $stage.actions }}<p>{{ .text }}{{ with .person }} <span>· {{ . }}</span>{{ end }}</p>{{ end }}
+        </div>
+      </article>
+      {{ end }}
+    </div>
+    <div class="church-front-schedule__scripture">
+      <blockquote>「{{ .opening_verse }}」<cite>{{ .opening_reference }}</cite></blockquote>
+      {{ range .scriptures }}<p>「{{ .text }}」 <small>{{ .reference }}</small></p>{{ end }}
+    </div>
+    <div class="church-front-schedule__team">
+      {{ range .team }}<p><small>{{ .role }}</small> {{ .name }}</p>{{ end }}
+    </div>
+    <p class="church-front-schedule__more"><a href="/church/bulletin-2026-10-11/">完整週報及下週事奉安排 →</a></p>
+  </section>
+  {{ end }}
+
   <section class="sites-church-gather" aria-labelledby="church-gather-title">
     <p>01 / 聚集</p>
     <h2 id="church-gather-title" class="ws-bilingual-heading"><span class="ws-bilingual-heading__en" lang="en">Living Water</span><span class="ws-bilingual-heading__zh" lang="zh-Hant">活水</span></h2>
