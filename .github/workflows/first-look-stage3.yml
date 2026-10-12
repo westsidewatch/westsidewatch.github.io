@@ -4,6 +4,10 @@ on:
     paths:
       - 'layouts/journal/**'
       - 'layouts/church/**'
+      - 'content/church/bulletin-*.md'
+      - 'data/church/bulletins/**'
+      - 'static/css/church-bulletin.css'
+      - 'scripts/check_church_bulletin_browser.cjs'
       - 'layouts/dawn-library/**'
       - 'layouts/_default/portal.html'
       - 'layouts/_default/surface-carrier.html'
@@ -47,8 +51,12 @@ jobs:
         run: python3 -m http.server 8765 --directory public > /tmp/first-look-server.log 2>&1 &
       - name: Verify five content realms
         run: node scripts/check_first_look_stage3.cjs
+      - name: Verify dated church bulletin across three viewports
+        run: node scripts/check_church_bulletin_browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: first-look-stage3-screenshots
-          path: /tmp/first-look-stage3/*.png
+          path: |
+            /tmp/first-look-stage3/*.png
+            /tmp/church-bulletin/*.png
