@@ -91,6 +91,15 @@ jobs:
           assert len(records)==12, f'Expected 12 speaker covers, got {len(records)}'
           print('Olive Pages artifact verified: Hugo carrier HTML, JS, 12 Doré compositions')
           PY
+      - name: Verify editorial candidate in Pages artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          file=public/experiments/obys-editorial-home/index.html
+          test -s "$file"
+          grep -q 'Westside Watch — Editorial Candidate' "$file"
+          grep -q 'chapter-inner' "$file"
+          echo "Editorial candidate included in published artifact"
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -123,4 +132,22 @@ jobs:
             sleep 15
           done
           echo "::error::Olive HTML/JS changes absent from published Pages site"
+          exit 1
+
+      - name: Verify published editorial candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="${{ steps.deployment.outputs.page_url }}"
+          base="${base%/}"
+          for attempt in $(seq 1 12); do
+            html="$(curl --fail --location --silent --show-error --max-time 20 "${base}/experiments/obys-editorial-home/?verify=${GITHUB_SHA}" || true)"
+            if [[ "${html}" == *'Westside Watch — Editorial Candidate'* && "${html}" == *'chapter-inner'* ]]; then
+              echo "Published editorial candidate verified: ${base}/experiments/obys-editorial-home/"
+              exit 0
+            fi
+            echo "Waiting for editorial candidate to propagate (attempt ${attempt}/12)"
+            sleep 15
+          done
+          echo "::error::Editorial candidate absent from published Pages site"
           exit 1
