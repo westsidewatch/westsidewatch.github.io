@@ -3,7 +3,8 @@ import { geographicToENU } from './terrain-runtime.js';
 export const EARLIEST_PHASE='chalcolithic-early-bronze';
 export const isEarliestPhase=id=>id===EARLIEST_PHASE;
 export const MIDDLE_BRONZE_PHASE='middle-bronze';
-export const isEarlyLandscapePhase=id=>isEarliestPhase(id)||id===MIDDLE_BRONZE_PHASE;
+export const LATE_BRONZE_PHASE='late-bronze-iron1';
+export const isEarlyLandscapePhase=id=>isEarliestPhase(id)||[MIDDLE_BRONZE_PHASE,LATE_BRONZE_PHASE].includes(id);
 // Sample the rendered DEM triangles, avoiding bilinear heights that can hide
 // narrow footpaths beneath the triangulated terrain surface.
 export function settlementSurfaceHeight(terrain,x,z) {
@@ -98,12 +99,26 @@ export function createLandscapeSettlement(parent,{data,terrain}) {
     const pit=data.defense.carvedInstallation,[x,z]=pit.offset,w=pit.width/2,d=pit.depth/2;
     for(const [a,b] of [[[x-w,z-d],[x+w,z-d]],[[x+w,z-d],[x+w,z+d]],[[x+w,z+d],[x-w,z+d]],[[x-w,z+d],[x-w,z-d]]])wall(a,b,.5,.25,'carved-installation-outline',pit.confidence);
   }
+  if(data.steppedSupport) {
+    const t=data.steppedSupport;
+    for(let i=0;i<t.tiers;i++) {
+      const x=spring.x+t.offset[0]-i*t.tierDepth,z=spring.z+t.offset[1];
+      const w=t.tierDepth*.97,d=t.width-i*.5;
+      const ground=Math.max(...[[-w/2,-d/2],[w/2,-d/2],[-w/2,d/2],[w/2,d/2]].map(([a,b])=>surface(x+a,z+b)));
+      const h=.8+i*.22,geometry=new THREE.BoxGeometry(w,h,d);
+      const p=geometry.attributes.position;
+      // A low stepped supporting mass, with its underside draped on the DEM.
+      for(let j=0;j<p.count;j++)if(p.getY(j)<0)p.setY(j,surface(x+p.getX(j),z+p.getZ(j))-ground-h/2);
+      geometry.computeVertexNormals();
+      add(geometry,disputedStone,x,ground+h/2,z,`j3k:${namespace}:stepped-support:${i}`,'stepped-support-hypothesis',t.confidence);
+    }
+  }
   const focus=new THREE.Vector3(spring.x-78,surface(spring.x-78,spring.z)+5,spring.z);
   let phase='',visibleHouses=0;
   return {
     focus,
     apply({phaseId,evidenceAllowed}) {phase=phaseId;group.visible=phaseId===data.phase;for(const m of meshes)m.visible=group.visible&&evidenceAllowed(m.userData.cityObject.confidence);visibleHouses=group.visible&&evidenceAllowed('inferred')?houseIds.length:0;},
-    diagnostics(){return {phase,houses:houseIds.length,visibleHouses,components:meshes.length,identityFingerprint:houseIds.join('|'),spring,source:data.historicalSource,historicalFootprintsVerified:false,modernTerrain:true,visibleDefenseComponents:meshes.filter(m=>m.visible&&['spring-tower','protected-access','carved-installation-outline'].includes(m.userData.cityObject.kind)).length,visibleTowerComponents:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='spring-tower').length,towerDatingDisputed:Boolean(data.defense),terrainSampling:'rendered-dem-triangles'};},
+    diagnostics(){return {phase,houses:houseIds.length,visibleHouses,components:meshes.length,identityFingerprint:houseIds.join('|'),spring,source:data.historicalSource,historicalFootprintsVerified:false,modernTerrain:true,visibleDefenseComponents:meshes.filter(m=>m.visible&&['spring-tower','protected-access','carved-installation-outline'].includes(m.userData.cityObject.kind)).length,visibleTowerComponents:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='spring-tower').length,visibleSupportComponents:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='stepped-support-hypothesis').length,supportDatingDisputed:Boolean(data.steppedSupport),populationComparisonVerified:false,towerDatingDisputed:Boolean(data.defense),terrainSampling:'rendered-dem-triangles'};},
     dispose(){meshes.forEach(m=>m.geometry.dispose());[stone,timber,earth,water,pathMaterial,disputedStone].forEach(m=>m.dispose());group.removeFromParent();}
   };
 }

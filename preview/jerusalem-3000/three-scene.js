@@ -291,7 +291,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     evidenceProjection = null;
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
-  let earliestSettlement = null, middleBronzeSettlement = null, priorCamera = null;
+  let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, priorCamera = null;
   let retainedVisible = false;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
@@ -317,6 +317,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   function updateCityCoreVisibility() {
     earliestSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     middleBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
+    lateBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
@@ -457,7 +458,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       if(isEarlyLandscapePhase(phaseId)) {
         if(!isEarlyLandscapePhase(previousPhase)) priorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
         controls.minDistance=35;
-        const landscape=isEarliestPhase(phaseId)?earliestSettlement:middleBronzeSettlement;
+        const landscape=isEarliestPhase(phaseId)?earliestSettlement:phaseId==='middle-bronze'?middleBronzeSettlement:lateBronzeSettlement;
         controls.target.copy(landscape.focus);
         camera.position.copy(landscape.focus).add(isEarliestPhase(phaseId)?new THREE.Vector3(120,105,160):new THREE.Vector3(150,125,190));
         controls.update();
@@ -643,6 +644,9 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const middleResponse=await fetch('./data/settlement/middle-bronze.v1.json',{cache:'no-store'});
     if(!middleResponse.ok) throw new Error('Middle Bronze settlement data unavailable');
     middleBronzeSettlement=createEarliestSettlement(root,{data:await middleResponse.json(),terrain:terrainRuntime});
+    const lateResponse=await fetch('./data/settlement/late-bronze-iron1.v1.json',{cache:'no-store'});
+    if(!lateResponse.ok) throw new Error('Late Bronze landscape data unavailable');
+    lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime});
     const bounds = new THREE.Box3()
       .setFromObject(cityCoreLayer)
       .union(new THREE.Box3().setFromObject(historical));
@@ -724,6 +728,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             sharedEra: sharedState,
             earliestSettlement: earliestSettlement?.diagnostics(),
             middleBronzeSettlement: middleBronzeSettlement?.diagnostics(),
+            lateBronzeSettlement: lateBronzeSettlement?.diagnostics(),
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -815,6 +820,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       sharedEraRuntime?.dispose();
       earliestSettlement?.dispose();
       middleBronzeSettlement?.dispose();
+      lateBronzeSettlement?.dispose();
       generationStatus.remove();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])
