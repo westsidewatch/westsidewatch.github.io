@@ -88,3 +88,20 @@ test('official Blender YouTube fallback is user-initiated and cleaned up', async
   await page.getByRole('button', { name: '關閉 ×' }).click();
   await expect(frame).toHaveCount(0);
 });
+
+test('YouTube official player endpoint and player UI are observed independently', async ({ page }, testInfo) => {
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  await page.locator('#grid .tile').filter({ hasText: 'Big Buck Bunny' }).click();
+  await page.getByRole('button', { name: /使用 YouTube 官方播放器/ }).click();
+  const frame = page.locator('#detail iframe');
+  await expect(frame).toBeVisible();
+  const src = await frame.getAttribute('src');
+  let status = 'NOT_CONFIRMED';
+  try {
+    const response = await page.request.get(src, { timeout: 12000 });
+    status = response.ok() ? 'EMBED_ENDPOINT_OK_NOT_PLAYBACK' : 'HTTP_' + response.status();
+  } catch (err) { status = 'REQUEST_ERROR'; }
+  console.log('YOUTUBE_EMBED_STATUS=' + status);
+  await testInfo.attach('youtube-embed-status', { body: status, contentType: 'text/plain' });
+  await page.screenshot({ path: testInfo.outputPath('youtube-player.png') });
+});
