@@ -212,3 +212,13 @@ body.home .sites-home-hero .sites-home-entry a{
 body.home .sites-home-hero .sites-home-entry a span{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
 }
+
+/* English scripture and reference use the same genuine small-cap face. */
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture,
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite{
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ font-variant-caps:normal;
+ font-feature-settings:normal;
+ text-transform:none;
+ font-synthesis:none;
+}
