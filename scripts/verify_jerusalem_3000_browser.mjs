@@ -164,7 +164,19 @@ try {
   assert.equal(royal.lateBronzeSettlement.visibleHouses,0);
   assert.equal(royal.davidSettlement.royalBuildingGeometryVerified,false);
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.active),false);
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity?.visibleTemple>0);
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.stage),'solomon');
   await page.screenshot({path:`${output}/david-landscape.png`,fullPage:true});
+  await page.getByRole('button',{name:'聖殿近看',exact:true}).click();
+  await page.screenshot({path:`${output}/solomon-temple.png`,fullPage:true});
+  await page.locator('.j3k-scrubber').evaluate(el=>{el.value='3.2';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.stage==='david');
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.visibleTemple),0);
+  assert.ok(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.visibleWalls)>0);
+  await page.screenshot({path:`${output}/david-walled-city.png`,fullPage:true});
+  await page.locator('.j3k-scrubber').evaluate(el=>{el.value='3.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.visibleTemple>0);
+
   await page.getByRole('button',{name:'Evidence',exact:true}).click();
   assert.equal(await page.locator('.j3k-evidence-panel a').first().getAttribute('href'),'https://cityofdavid.org.il/en/king-davids-palace-eng/');
   assert.ok(await page.locator('.j3k-evidence-panel li').count()>0,'scene-specific limitations are visible');

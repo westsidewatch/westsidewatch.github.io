@@ -1,7 +1,7 @@
 {
   "schema": "j3k.david-solomon-landscape.v1",
   "phase": "david-solomon",
-  "authority": "disputed royal identification and illustrative ridge settlement; building geometry withheld",
+  "authority": "literary and interpretive royal city reconstruction; wall circuit and monumental footprints unverified",
   "spring": {
     "lat": 31.773235,
     "lon": 35.2368303,
@@ -15,8 +15,10 @@
     "四室住宅採鐵器時代形制類比。所引大衛城住宅報告年代為前八至六世紀，不能證明前十世紀已使用本畫面布局。",
     "開放中間空間、屋頂、高度與柱列均為設計假說。",
     "圓環是大型石構候選位置符號，不是已發掘王宮平面。階梯支撐體年代與功能仍有爭議。",
-    "此幕尚未復原所羅門向北發展的聖殿與王宮區；完整城牆形制亦未核定。",
-    "現代 DEM 與泉的近似地圖位置不代表古代地表。"
+    "現代 DEM 與泉的近似地圖位置不代表古代地表。",
+    "城防路線、缺口位置、兩處王室院落與高度為推定復原，並非已發掘平面。",
+    "第一聖殿主體採列王紀上 6:2–3 的 60×20×30 肘比例；每肘 0.45 米是模型換算選擇，位置、附屬空間與外觀仍屬推定。",
+    "時間滑桿先顯示大衛城，再顯示所羅門北向建設；切換位置是敘事分段，不代表精確建造年份。"
   ],
   "houseOffsets": [
     [
@@ -152,7 +154,9 @@
   ],
   "contextSources": [
     "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf",
-    "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all"
+    "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all",
+    "https://www.biblegateway.com/passage/?search=1+Kings+6%3A1-7&version=KJV",
+    "https://timeline.cityofdavid.org.il/event/king-davids-palace-2/"
   ],
   "steppedSupport": {
     "offset": [
@@ -182,5 +186,66 @@
   "focusOffset": [
     -100,
     -7
-  ]
+  ],
+  "royalCity": {
+    "davidWall": [
+      [
+        -190,
+        -190
+      ],
+      [
+        -30,
+        -180
+      ],
+      [
+        -35,
+        135
+      ],
+      [
+        -110,
+        215
+      ],
+      [
+        -180,
+        145
+      ],
+      [
+        -205,
+        -20
+      ],
+      [
+        -190,
+        -190
+      ]
+    ],
+    "northernWall": [
+      [
+        -190,
+        -190
+      ],
+      [
+        -185,
+        -535
+      ],
+      [
+        -30,
+        -540
+      ],
+      [
+        -30,
+        -180
+      ]
+    ],
+    "temple": {
+      "offset": [
+        -100,
+        -470
+      ],
+      "lengthCubits": 60,
+      "widthCubits": 20,
+      "heightCubits": 30,
+      "cubitMetres": 0.45,
+      "placementAuthority": "schematic northern sacred precinct, not excavated footprint"
+    }
+  }
 }
