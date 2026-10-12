@@ -1,0 +1,124 @@
+/* Westside Watch / first-screen editorial composition
+   Canonical home-brand designable zone; UI controls remain Design OS owned.
+   Never distort glyphs. Keep original video and existing routes. */
+body.home .sites-home-hero{
+ --home-edge:clamp(24px,4.25vw,96px);
+ --home-nav-top:clamp(20px,3.4vh,46px);
+ --home-logo-width:clamp(250px,27vw,520px);
+ --home-title-size:clamp(68px,8.2vw,150px);
+ --home-chinese-size:clamp(16px,1.22vw,22px);
+ --home-verse-size:clamp(15px,1.06vw,19px);
+ --home-ui-size:clamp(11px,.82vw,14px);
+ isolation:isolate;
+}
+body.home .sites-home-hero .sites-home-film{z-index:-1}
+body.home .sites-home-hero .sites-home-film:after{
+ background:linear-gradient(90deg,rgba(10,13,13,.66) 0%,rgba(10,13,13,.34) 42%,rgba(10,13,13,.10) 73%,rgba(10,13,13,.42) 100%),
+ linear-gradient(0deg,rgba(8,12,12,.48),transparent 34%);
+}
+body.home .sites-home-hero .sites-home-masthead{
+ top:clamp(100px,15vh,190px);left:var(--home-edge);
+ width:var(--home-logo-width);max-width:none;padding:0;
+}
+body.home .sites-home-hero .sites-home-masthead img{
+ width:100%;height:auto;object-fit:contain;opacity:1;
+}
+body.home .sites-home-hero .sites-home-intro{
+ left:var(--home-edge);right:auto;bottom:clamp(120px,15vh,210px);
+ width:min(70vw,1050px);max-width:none;
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,.52fr);
+ align-items:end;column-gap:clamp(28px,5vw,105px);
+}
+body.home .sites-home-hero .sites-home-star{
+ grid-column:1/-1;width:clamp(15px,1.3vw,22px);height:auto;
+ margin:0 0 clamp(16px,2.2vh,32px);
+}
+body.home .sites-home-hero .sites-home-intro h1{
+ grid-column:1;grid-row:2;margin:0;
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-size:var(--home-title-size);font-weight:400;line-height:.82;
+ letter-spacing:-.052em;font-synthesis:none;
+}
+body.home .sites-home-hero .sites-home-intro h1 em{
+ font-family:inherit;font-weight:400;font-style:italic;font-synthesis:none;
+}
+body.home .sites-home-hero .sites-home-slogan-zh{
+ grid-column:1;grid-row:3;margin:clamp(22px,3vh,42px) 0 0;
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ font-size:var(--home-chinese-size);font-weight:200;line-height:1.55;
+ letter-spacing:.12em;font-synthesis:none;
+}
+body.home .sites-home-hero .sites-home-scripture{
+ grid-column:2;grid-row:2/4;align-self:end;margin:0 0 3px;
+ max-width:31ch;font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-size:var(--home-verse-size);font-weight:400;line-height:1.55;
+ letter-spacing:.012em;font-synthesis:none;
+}
+body.home .sites-home-hero .sites-home-scripture cite{
+ display:block;margin-top:clamp(14px,2vh,26px);
+ font-size:clamp(12px,.88vw,16px);letter-spacing:.045em;
+}
+body.home .sites-home-hero .sites-home-nav{
+ top:var(--home-nav-top);right:var(--home-edge);left:auto;
+ max-width:calc(100vw - 2 * var(--home-edge));
+ display:flex;flex-wrap:wrap;justify-content:flex-end;
+ gap:clamp(12px,1.45vw,28px);
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-size:var(--home-ui-size);font-weight:400;letter-spacing:.035em;
+ line-height:1.4;mix-blend-mode:normal;
+}
+body.home .sites-home-hero .sites-home-entry{
+ right:var(--home-edge);bottom:clamp(26px,4.5vh,64px);
+ left:auto;display:flex;gap:clamp(24px,3vw,60px);
+ align-items:flex-end;font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-size:var(--home-ui-size);letter-spacing:.035em;
+}
+body.home .sites-home-hero .sites-home-entry a{
+ min-width:clamp(150px,12vw,220px);padding-bottom:10px;
+}
+body.home .sites-home-hero .sites-home-entry span{
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ font-size:clamp(11px,.75vw,14px);font-weight:400;
+}
+@media(max-width:900px){
+ body.home .sites-home-hero{
+  --home-edge:clamp(18px,5vw,36px);
+  --home-logo-width:min(72vw,360px);
+  --home-title-size:clamp(58px,12vw,110px);
+  --home-chinese-size:clamp(15px,2.4vw,20px);
+  --home-verse-size:clamp(14px,1.8vw,18px);
+ }
+ body.home .sites-home-hero .sites-home-nav{
+  top:18px;left:var(--home-edge);right:var(--home-edge);
+  justify-content:flex-start;gap:10px 17px;
+ }
+ body.home .sites-home-hero .sites-home-masthead{top:clamp(105px,19vh,190px)}
+ body.home .sites-home-hero .sites-home-intro{
+  width:calc(100% - 2 * var(--home-edge));right:var(--home-edge);
+  bottom:clamp(135px,19vh,210px);grid-template-columns:1fr;
+ }
+ body.home .sites-home-hero .sites-home-intro h1{grid-column:1;grid-row:2}
+ body.home .sites-home-hero .sites-home-slogan-zh{grid-column:1;grid-row:3}
+ body.home .sites-home-hero .sites-home-scripture{
+  grid-column:1;grid-row:4;margin-top:clamp(15px,3vh,28px);
+ }
+ body.home .sites-home-hero .sites-home-entry{
+  left:var(--home-edge);right:var(--home-edge);bottom:24px;
+  justify-content:space-between;gap:16px;
+ }
+ body.home .sites-home-hero .sites-home-entry a{min-width:0;flex:1}
+}
+@media(max-width:520px){
+ body.home .sites-home-hero{--home-title-size:clamp(52px,14.5vw,78px)}
+ body.home .sites-home-hero .sites-home-masthead{top:clamp(105px,16vh,145px)}
+ body.home .sites-home-hero .sites-home-intro{bottom:clamp(120px,15vh,160px)}
+ body.home .sites-home-hero .sites-home-star{margin-bottom:14px}
+ body.home .sites-home-hero .sites-home-slogan-zh{margin-top:18px}
+ body.home .sites-home-hero .sites-home-scripture{margin-top:16px}
+ body.home .sites-home-hero .sites-home-scripture cite{margin-top:8px}
+ body.home .sites-home-hero .sites-home-entry{gap:12px}
+}
+@media(max-height:680px) and (min-width:901px){
+ body.home .sites-home-hero .sites-home-masthead{top:12vh}
+ body.home .sites-home-hero .sites-home-intro{bottom:12vh}
+}
