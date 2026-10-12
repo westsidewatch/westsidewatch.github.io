@@ -1,8 +1,27 @@
 ---
 title: "主日崇拜"
 subtitle: "Sunday Worship"
-description: "The weekly gathering of the church in Word, prayer, fellowship, and praise."
+description: "主日聚會時間與敬拜生活。"
 weight: 2
 ---
 
-The complete service information will be added here.
+## 主日崇拜
+
+每週日 10:30–13:30
+
+地址：205 Wilmington Ave., North York, ON M3H 6B3
+
+2026 年 7 月起，主日聚會改為團契模式，重新開始內在生活的操練。
+
+## 2026 年主題：效法基督
+
+羅馬書 15:5–6
+
+- 1–2 月：效法基督的謙卑
+- 3–4 月：效法基督的順服
+- 5–6 月：效法基督的愛
+- 7–8 月：效法基督的忍耐
+- 9–10 月：效法基督的死
+- 11–12 月：效法基督的復活
+
+資料來源：2026 年 10 月 11 日《活水家訊》。
