@@ -59,3 +59,7 @@ Big Buck Bunny poster: Wikimedia Commons file `Big_buck_bunny_poster_big.jpg`; B
 ## Official embedded playback candidate
 
 Big Buck Bunny now links to Blender's public PeerTube video and provides an iframe candidate at `https://video.blender.org/videos/embed/bf1f3fb5-b119-4f9f-9930-8e20e892b898`. PeerTube documents the `/videos/embed/<uuid>` route. The player is loaded only when the user clicks to play, and removed when the detail dialog closes. Embed URLs are restricted to `video.blender.org` and UUID-form paths. **Actual iframe playback and permission to embed must still be confirmed in a browser.** This is not a direct .mp4/.m3u8 stream and does not offer downloading.
+
+## Browser evidence and release gate (2026-10-12)
+
+Chromium desktop/mobile tests and the Big Buck Bunny poster load passed. The Blender PeerTube embed endpoint responded, **but real playback was not confirmed** (`paused=true`, `readyState=0`). The ordinary smoke suite remains a UI/endpoint smoke suite and must not be represented as playback certification. Run `SCREEN_LAB_REQUIRE_PLAYBACK=1 npx playwright test screen-lab/tests/browser.spec.cjs` to turn the real-playback observation into a hard failure until actual `video.currentTime` progression is confirmed. Do not merge this experimental PR on the assumption that its film playback works.
