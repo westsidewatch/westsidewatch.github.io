@@ -20,3 +20,17 @@
 .church-front-schedule__team p{margin:0}.church-front-schedule__team small{display:block;color:#666}
 .church-front-schedule__more{margin:20px 0 0}.church-front-schedule__more a{color:inherit;text-decoration:underline;text-underline-offset:5px}
 @media(max-width:640px){.church-front-schedule{width:calc(100% - 24px);padding:24px 18px}.church-front-schedule__stage{grid-template-columns:30px minmax(0,1fr);gap:6px 12px}.church-front-schedule__stage time{grid-column:2}.church-front-schedule__stage>div{grid-column:2}.church-front-schedule__team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Reconnect existing MERSI scene grammar to the canonical church content. */
+.mersi-church .mc-hero{display:flex;flex-direction:column;justify-content:center;min-height:100svh;padding:clamp(36px,8vw,120px);gap:1.5rem}
+.mersi-church .mc-hero img{max-width:min(80vw,650px);height:auto}
+.mersi-church .mc-journey{height:330svh}
+.mersi-church .mc-scene{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(40px,10vw,160px);color:#292722}
+.mersi-church .mc-scene h2{font-size:clamp(42px,7vw,110px);line-height:1.06;margin:1rem 0 2rem}
+.mersi-church .mc-scene p,.mersi-church .mc-scene blockquote{max-width:48rem;line-height:1.9}
+.mersi-church .mc-scene:not(.is-current){pointer-events:none}
+.mersi-church .mc-scene.is-current{animation:church-scene-reveal .65s ease both}
+@keyframes church-scene-reveal{from{opacity:.3;transform:translateY(2vh)}to{opacity:1;transform:none}}
+.mersi-church .church-front-schedule{margin-top:clamp(20px,4vw,70px)}
+@media(max-width:850px){.mersi-church .mc-journey{height:330svh}.mersi-church .mc-scene{padding:8vw}.mersi-church .mc-scene h2{font-size:clamp(32px,10vw,62px)}}
+@media(prefers-reduced-motion:reduce){.mersi-church .mc-journey{height:auto}.mersi-church .mc-stage{height:auto;position:relative}.mersi-church .mc-scenes{position:relative}.mersi-church .mc-scene{position:relative;visibility:visible;min-height:65svh;animation:none!important}.mersi-church .mc-progress{display:none}}
