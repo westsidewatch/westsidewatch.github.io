@@ -14,7 +14,8 @@ function render(){
  const progress=Math.max(0,Math.min(1,-journey.getBoundingClientRect().top/max));
  const scaled=progress*(scenes.length-1+0.999);
  const current=Math.min(scenes.length-1,Math.floor(scaled));
- scenes.forEach((s,i)=>{const local=Math.max(0,Math.min(1,scaled-i));s.classList.toggle('is-current',i===current);s.classList.toggle('is-adjacent',i===current+1);s.style.setProperty('--scene-p',String(local));s.style.setProperty('--scene-out',String(Math.max(0,Math.min(1,scaled-i-0.72))/0.28))});
+ const seam=0.24;const fraction=scaled-Math.floor(scaled);const blend=Math.max(0,Math.min(1,(fraction-(1-seam))/seam));
+ scenes.forEach((s,i)=>{const local=Math.max(0,Math.min(1,scaled-i));s.classList.toggle('is-current',i===current);s.classList.toggle('is-adjacent',i===current+1);s.style.setProperty('--scene-opacity',String(i===current?1-blend:i===current+1?blend:0));s.style.setProperty('--scene-p',String(local));s.style.setProperty('--scene-out',String(Math.max(0,Math.min(1,scaled-i-0.72))/0.28))});
  steps.forEach((s,i)=>s.classList.toggle('is-current',i===current));
  journey.style.setProperty('--journey-p',String(progress));
 }
