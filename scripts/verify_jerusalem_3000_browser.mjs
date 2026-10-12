@@ -215,7 +215,7 @@ try {
     assert.equal(geometry.componentIdentity,royalIdentity,'cross-era projection retains component identities');
     assert.equal(geometry.visibleTemple>0,['build','transform','ruin'].includes(expected));
     if(value===4.9)assert.equal(geometry.visibleWalls,0,'do not invent wall-segment continuity');
-    if(value===5.5){await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra?.status==='ready');await page.getByRole('button',{name:'聖殿近看',exact:true}).click();await page.screenshot({path:`${output}/temple-ruin.png`,fullPage:true});}
+    if(value===5.5){assert.ok(geometry.templeCompressionFactor<1&&geometry.templeCompressionFactor>0);await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra?.status==='ready');await page.getByRole('button',{name:'聖殿近看',exact:true}).click();await page.screenshot({path:`${output}/temple-ruin.png`,fullPage:true});}
 
   }
   await page.locator('.j3k-scrubber').evaluate(el=>{el.value='6.5';el.dispatchEvent(new Event('input',{bubbles:true}));});

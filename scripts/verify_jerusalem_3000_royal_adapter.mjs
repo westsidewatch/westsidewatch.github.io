@@ -19,7 +19,8 @@ try {
  const snapshots=parent.children[0].children.map(m=>Array.from(m.geometry.attributes.position.array));
  apply(4.9);assert.equal(runtime.diagnostics().templeState,'transform');assert.ok(runtime.diagnostics().visibleTemple>0);assert.equal(runtime.diagnostics().visibleWalls,0,'unverified wall continuity must not be projected');
  assert.ok(runtime.exclusionsFor('late-first-temple').length>0);
- apply(5.5);assert.equal(runtime.diagnostics().templeState,'ruin');
+ apply(5.5);assert.equal(runtime.diagnostics().templeState,'ruin');assert.ok(runtime.diagnostics().templeCompressionFactor<1);
+ assert.ok(parent.children[0].children.some((m,i)=>m.geometry.attributes.position.array.some((v,j)=>Math.abs(v-snapshots[i][j])>1)),'ruin must actually change vertices');
  for(const m of parent.children[0].children){const p=m.geometry.attributes.position;m.updateMatrix();for(let i=0;i<p.count;i++){const v=new THREE.Vector3(p.getX(i),p.getY(i),p.getZ(i)).applyMatrix4(m.matrix);assert.ok(v.y>=terrain.heightAtWorld(v.x,v.z)-1e-4);}}
  apply(6.5);assert.equal(runtime.diagnostics().visibleTemple,0);assert.equal(runtime.diagnostics().visiblePalace,0);
  apply(3.9);assert.equal(runtime.diagnostics().componentIdentity,identity);
