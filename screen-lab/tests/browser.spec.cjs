@@ -58,6 +58,7 @@ test('Blender PeerTube playback readiness is independently reported', async ({ p
     status = response.ok() ? 'EMBED_ENDPOINT_OK_NOT_PLAYBACK' : 'EMBED_HTTP_' + response.status();
   } catch (err) { status = 'EMBED_REQUEST_ERROR'; }
   console.log('PEERTUBE_PLAYBACK_STATUS=' + status);
+  await testInfo.attach('peertube-endpoint-status', { body: status + '\\n', contentType: 'text/plain' });
   await page.screenshot({ path: testInfo.outputPath('peertube-embed.png') });
   await page.getByRole('button', { name: '關閉 ×' }).click();
   await expect(iframe).toHaveCount(0);
