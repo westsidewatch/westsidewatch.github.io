@@ -1,3 +1,4 @@
+import { createEarliestSettlement, isEarliestPhase } from './earliest-settlement.js';
 import { createSharedEraRuntime, isSharedSlicePhase, isSharedGenerationPhase } from './shared-era-runtime.js';
 import * as THREE from 'three';
 import { buildHerodianRoadGeometry } from './herodian-road-geometry.js';
@@ -217,7 +218,7 @@ function addEraFabric(
   return meshes;
 }
 function legacyTemporalAllowed(object, phaseId) {
-  return !isCorePhase(phaseId);
+  return !isCorePhase(phaseId) && !isEarliestPhase(phaseId);
 }
 export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   const scene = new THREE.Scene(),
@@ -290,6 +291,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     evidenceProjection = null;
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
+  let earliestSettlement = null, priorCamera = null;
   let retainedVisible = false;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
@@ -313,6 +315,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     );
   }
   function updateCityCoreVisibility() {
+    earliestSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
@@ -395,7 +398,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     clearFabric();
     // Request only this bounded slice; other eras retain their established morphology.
     sharedEraRuntime?.request(phaseId);
-    if (isCorePhase(phaseId)) return;
+    if (isCorePhase(phaseId) || isEarliestPhase(phaseId)) return;
     if (sharedEraRuntime?.status === 'ready' && isSharedGenerationPhase(phaseId)) {
       eraFabricLayer.visible = false;
       return;
@@ -449,6 +452,17 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const previousPhase = currentPhaseId,
       phaseChanged = previousPhase !== phaseId;
     currentPhaseId = phaseId;
+    if(phaseChanged && earliestSettlement) {
+      if(isEarliestPhase(phaseId)) {
+        priorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
+        controls.minDistance=35;
+        controls.target.copy(earliestSettlement.focus);
+        camera.position.copy(earliestSettlement.focus).add(new THREE.Vector3(120,105,160));
+        controls.update();
+      } else if(priorCamera) {
+        camera.position.copy(priorCamera.position);controls.target.copy(priorCamera.target);controls.minDistance=priorCamera.minDistance;priorCamera=null;controls.update();
+      }
+    }
     applyTemporalState();
     if (phaseChanged && terrainRuntime) {
       rebuildUrbanFabric(phaseId);
@@ -621,6 +635,9 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         cause: error,
       });
     }
+    const settlementResponse=await fetch('./data/settlement/earliest.v1.json',{cache:'no-store'});
+    if(!settlementResponse.ok) throw new Error('Earliest settlement data unavailable');
+    earliestSettlement=createEarliestSettlement(root,{data:await settlementResponse.json(),terrain:terrainRuntime});
     const bounds = new THREE.Box3()
       .setFromObject(cityCoreLayer)
       .union(new THREE.Box3().setFromObject(historical));
@@ -700,6 +717,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             sceneChildren: scene.children.length,
             cityProjection: cityProjection?.diagnostics(),
             sharedEra: sharedState,
+            earliestSettlement: earliestSettlement?.diagnostics(),
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -789,6 +807,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       controls.dispose();
       builder.dispose();
       sharedEraRuntime?.dispose();
+      earliestSettlement?.dispose();
       generationStatus.remove();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])

@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import * as THREE from 'three';
+import {readFileSync} from 'node:fs';
+import {createEarliestSettlement,settlementSurfaceHeight,EARLIEST_PHASE} from '../preview/jerusalem-3000/earliest-settlement.js';
+const geometry=new THREE.PlaneGeometry(2,2,1,1);geometry.rotateX(-Math.PI/2);
+[0,0,0,10].forEach((y,i)=>geometry.attributes.position.setY(i,y));
+const mesh=new THREE.Mesh(geometry);
+assert.equal(settlementSurfaceHeight({mesh,grid:{width:2,height:2}},0,0),0,'sample rendered triangles, not bilinear midpoint');
+assert.equal(settlementSurfaceHeight({mesh,grid:{width:2,height:2}},.5,.5),5);
+assert.ok(Number.isNaN(settlementSurfaceHeight({mesh,grid:{width:2,height:2}},9,9)));
+const data=JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/data/settlement/earliest.v1.json',import.meta.url)));
+const terrain={grid:{origin:{lat:data.spring.lat,lon:data.spring.lon}},heightAtWorld:(x,z)=>50+x*.15+z*.1};
+const parent=new THREE.Group();const runtime=createEarliestSettlement(parent,{data,terrain});
+runtime.apply({phaseId:EARLIEST_PHASE,evidenceAllowed:()=>true});
+assert.equal(runtime.diagnostics().visibleHouses,14);
+assert.equal(runtime.diagnostics().spring.x,0);assert.equal(Math.abs(runtime.diagnostics().spring.z),0);
+const identity=runtime.diagnostics().identityFingerprint;
+let components=0,disposed=0;
+parent.traverse(m=>{if(!m.geometry)return;components++;m.geometry.addEventListener('dispose',()=>disposed++);
+ assert.equal(m.userData.cityObject.confidence,'inferred');
+ for(const n of m.geometry.attributes.position.array)assert.ok(Number.isFinite(n));
+ if(m.userData.cityObject.kind==='inferred-footpath')assert.ok(m.geometry.attributes.normal.getY(0)>0,'path surface must face upwards');
+ if(m.userData.cityObject.kind==='footing'){
+  const p=m.geometry.attributes.position;
+  for(let i=0;i<p.count;i++)if(p.getY(i)<.2-1e-5)assert.ok(Math.abs(m.position.y+p.getY(i)-terrain.heightAtWorld(m.position.x+p.getX(i),m.position.z+p.getZ(i)))<1e-4);
+ }
+});
+runtime.apply({phaseId:EARLIEST_PHASE,evidenceAllowed:()=>false});assert.equal(runtime.diagnostics().visibleHouses,0);
+runtime.apply({phaseId:'herodian-jesus',evidenceAllowed:()=>true});assert.equal(parent.children[0].visible,false);
+runtime.apply({phaseId:EARLIEST_PHASE,evidenceAllowed:()=>true});assert.equal(runtime.diagnostics().identityFingerprint,identity);
+runtime.dispose();assert.equal(parent.children.length,0);assert.equal(disposed,components);geometry.dispose();
+console.log('PASS: early-only small settlement, mapped anchor, rendered surface sampling, grounded footings, evidence filtering, identity and disposal');

@@ -55,3 +55,11 @@ The next expansion phase uses the same bounded generator and existing provisiona
 Persian and expansion buildings have distinct phase-specific IDs. No spatially guessed reuse links or historical parcel continuity are asserted. Evidence filtering keeps both provisional cities out of the observed-only view. Roads and district extents still require sourced period-specific registration. This step replaces the runtime rendering path, not historical certification or full-timeline completion.
 
 The browser gate checks Persian/expansion round trips, phase isolation, cancellation/retry, identity/transform preservation, observed filtering, and direct mobile expansion entry without eagerly building earlier cities.
+
+## Begin with the earliest settlement
+
+The earliest phase has its own small ridge/spring scene instead of scaled Herodian roads and parcels. A mapped modern Gihon spring point anchors illustrative dwellings upslope; modern DEM triangles ground the footings and narrow footpath. Fourteen dwellings is a scene design choice, not a historical house count. Their shapes, roofs and positions remain inferred. No fortification or monumental footprints are supplied for this stage.
+
+A close camera makes the small settlement readable. Leaving restores the prior broad-city camera and minimum orbit distance. Legacy residential and temporal/inheritance layers are disabled only for this early phase. Observed-only mode hides the illustrative settlement. Source context and limitations are stored in `data/settlement/earliest.v1.json`; neither the modern map point nor DEM proves ancient ground levels or excavated house locations.
+
+Node validation checks rendered triangle sampling, footings, phase/evidence isolation and disposal. Browser validation checks desktop/mobile initial views, no legacy overlap and all 18 era renders. The earliest scene remains a landscape-constrained illustration requiring archaeological footprint work.

@@ -25,7 +25,9 @@ jobs:
           npm install --no-save playwright@1.55.0 three@0.180.0
           npx playwright install --with-deps chromium
       - name: Verify bounded shared generation
-        run: node scripts/verify_jerusalem_3000_shared_era.mjs
+        run: |
+          node scripts/verify_jerusalem_3000_shared_era.mjs
+          node scripts/verify_jerusalem_3000_earliest.mjs
       - name: Render the proposed city and scrub through destruction
         run: |
           python3 -m http.server 8765 > /tmp/j3k-server.log 2>&1 &
