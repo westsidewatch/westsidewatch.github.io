@@ -1,0 +1,51 @@
+/* Stage IV — Church-only scroll-reveal adapter. Shared Design OS owns all tokens. */
+@supports (animation-timeline: view()) {
+  .sites-section-church .sites-church-intro {
+    position:relative;
+    isolation:isolate;
+    overflow:clip;
+    min-height:clamp(32rem,90svh,70rem);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .sites-section-church .sites-church-intro::before,
+  .sites-section-church .sites-church-intro::after {
+    content:"";
+    position:absolute;
+    z-index:2;
+    top:0;
+    bottom:0;
+    width:50%;
+    pointer-events:none;
+    background:linear-gradient(110deg,
+      color-mix(in oklab,var(--ws-water) 9%,var(--ws-branch-surface)) 0%,
+      var(--ws-branch-surface) 65%,
+      color-mix(in oklab,var(--ws-pale-gold) 17%,var(--ws-branch-surface)) 100%);
+    box-shadow:inset 0 0 0 1px var(--ws-branch-rule,var(--ws-line));
+    animation-duration:1ms;
+    animation-timing-function:linear;
+    animation-fill-mode:both;
+    animation-timeline:view(block);
+    animation-range:entry 0% cover 65%;
+  }
+  .sites-section-church .sites-church-intro::before {
+    left:0;
+    transform-origin:left center;
+    animation-name:ws-church-door-left;
+  }
+  .sites-section-church .sites-church-intro::after {
+    right:0;
+    transform-origin:right center;
+    animation-name:ws-church-door-right;
+  }
+  @keyframes ws-church-door-left {from{transform:translateX(0)}to{transform:translateX(-101%)}}
+  @keyframes ws-church-door-right {from{transform:translateX(0)}to{transform:translateX(101%)}}
+}
+@media (prefers-reduced-motion:reduce) {
+  .sites-section-church .sites-church-intro::before,
+  .sites-section-church .sites-church-intro::after {
+    animation:none!important;
+    display:none!important;
+  }
+}
