@@ -190,12 +190,13 @@ body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visi
   background:#eee8da;
   opacity:calc(var(--home-hero-exit,0) * .68);
  }
+ /* Keep interactive iframe content fully visible. An opacity animation on
+    the entire iframe hides the live cards and can make a scene look blank. */
  body.home .candidate-focus-screen{
   position:relative;
  }
  body.home .candidate-focus-screen iframe{
-  opacity:clamp(.12,calc(var(--home-scene-progress,0) * 2.4),1);
-  transition:opacity .12s linear;
+  opacity:1;
  }
 }
 /* Hero structural foundation — migrated from deleted sites-home.css. */
