@@ -39,7 +39,7 @@ export function createLandscapeSettlement(parent,{data,terrain}) {
     group.add(mesh);meshes.push(mesh);return mesh;
   }
   for(const [i,[dx,dz]] of data.houseOffsets.entries()) {
-    const x=spring.x+dx,z=spring.z+dz,w=5+(i%3)*.6,d=6+(i%2)*.8,h=2.3+(i%3)*.15;
+    const x=spring.x+dx,z=spring.z+dz,w=data.houseTypology==='four-room-analogy'?10:5+(i%3)*.6,d=data.houseTypology==='four-room-analogy'?13:6+(i%2)*.8,h=data.houseTypology==='four-room-analogy'?3:2.3+(i%3)*.15;
     const samples=[[-w/2,-d/2],[w/2,-d/2],[-w/2,d/2],[w/2,d/2]].map(([a,b])=>surface(x+a,z+b));
     if(samples.some(v=>!Number.isFinite(v))) throw new Error('Settlement outside canonical terrain');
     const ground=Math.max(...samples)+.08,id=`j3k:${namespace}:house:${i+1}`;houseIds.push(id);
@@ -48,6 +48,20 @@ export function createLandscapeSettlement(parent,{data,terrain}) {
     for(let j=0;j<fp.count;j++) fp.setY(j,fp.getY(j)>0?.2:surface(x+fp.getX(j),z+fp.getZ(j))-ground);
     footing.computeVertexNormals();
     add(footing,stone,x,ground,z,id,'footing');
+    if(data.houseTypology==='four-room-analogy') {
+      // A later Iron Age typological analogy, not a surveyed tenth-century house.
+      const wall=(w,d,dx,dz)=>add(new THREE.BoxGeometry(w,h,d),stone,x+dx,ground+h/2+.2,z+dz,id,'four-room-wall');
+      wall(w,.45,0,-d/2);
+      for(const side of [-1,1]) {
+        wall(.45,d,side*w/2,0);
+        wall((w-1.3)/2,.45,side*(w+1.3)/4,d/2);
+        add(new THREE.BoxGeometry(3.3,.22,d-3.3),earth,x+side*3.35,ground+h+.3,z+1.65,id,'four-room-side-roof');
+        for(const dz of [-1.6,1.4,4.4])add(new THREE.BoxGeometry(.45,h,.45),stone,x+side*1.7,ground+h/2+.2,z+dz,id,'four-room-pillar');
+      }
+      wall(w,.4,0,-d/2+3.3);
+      add(new THREE.BoxGeometry(w+.3,.22,3.5),earth,x,ground+h+.3,z-d/2+1.6,id,'four-room-rear-roof');
+      continue;
+    }
     add(new THREE.BoxGeometry(w,h,.4),stone,x,ground+h/2+.2,z-d/2,id,'wall');
     for(const side of [-1,1]) add(new THREE.BoxGeometry(.4,h,d),stone,x+side*w/2,ground+h/2+.2,z,id,'wall');
     for(const side of [-1,1]) add(new THREE.BoxGeometry((w-1)/2,h,.4),stone,x+side*(w+1)/4,ground+h/2+.2,z+d/2,id,'door-wall');
@@ -120,13 +134,14 @@ export function createLandscapeSettlement(parent,{data,terrain}) {
     const ground=Math.max(...[[r,0],[-r,0],[0,r],[0,-r]].map(([a,b])=>surface(x+a,z+b)));
     add(geometry,disputedStone,x,ground+1,z,`j3k:${namespace}:royal-location-symbol`,'royal-location-symbol',m.confidence);
   }
-  const focus=new THREE.Vector3(spring.x-78,surface(spring.x-78,spring.z)+5,spring.z);
+  const [fx,fz]=data.focusOffset||[-78,0];
+  const focus=new THREE.Vector3(spring.x+fx,surface(spring.x+fx,spring.z+fz)+5,spring.z+fz);
   let phase='',visibleHouses=0;
   return {
     focus,
     evidence(){return {source:data.historicalSource,references:data.datingSources||data.contextSources||[],limitations:data.limitations};},
     apply({phaseId,evidenceAllowed}) {phase=phaseId;group.visible=phaseId===data.phase;for(const m of meshes)m.visible=group.visible&&evidenceAllowed(m.userData.cityObject.confidence);visibleHouses=group.visible&&evidenceAllowed('inferred')?houseIds.length:0;},
-    diagnostics(){return {phase,houses:houseIds.length,visibleHouses,components:meshes.length,identityFingerprint:houseIds.join('|'),spring,source:data.historicalSource,historicalFootprintsVerified:false,modernTerrain:true,visibleDefenseComponents:meshes.filter(m=>m.visible&&['spring-tower','protected-access','carved-installation-outline'].includes(m.userData.cityObject.kind)).length,visibleTowerComponents:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='spring-tower').length,visibleSupportComponents:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='stepped-support-hypothesis').length,supportDatingDisputed:Boolean(data.steppedSupport),visibleRoyalMarkers:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='royal-location-symbol').length,royalBuildingGeometryVerified:false,populationComparisonVerified:false,towerDatingDisputed:Boolean(data.defense),terrainSampling:'rendered-dem-triangles'};},
+    diagnostics(){return {phase,houses:houseIds.length,visibleHouses,components:meshes.length,identityFingerprint:houseIds.join('|'),spring,source:data.historicalSource,historicalFootprintsVerified:false,houseTypology:data.houseTypology||'single-room-illustration',layoutFingerprint:JSON.stringify(data.houseOffsets),typologyDatingVerified:false,modernTerrain:true,visibleDefenseComponents:meshes.filter(m=>m.visible&&['spring-tower','protected-access','carved-installation-outline'].includes(m.userData.cityObject.kind)).length,visibleTowerComponents:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='spring-tower').length,visibleSupportComponents:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='stepped-support-hypothesis').length,supportDatingDisputed:Boolean(data.steppedSupport),visibleRoyalMarkers:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='royal-location-symbol').length,royalBuildingGeometryVerified:false,populationComparisonVerified:false,towerDatingDisputed:Boolean(data.defense),terrainSampling:'rendered-dem-triangles'};},
     dispose(){meshes.forEach(m=>m.geometry.dispose());[stone,timber,earth,water,pathMaterial,disputedStone].forEach(m=>m.dispose());group.removeFromParent();}
   };
 }

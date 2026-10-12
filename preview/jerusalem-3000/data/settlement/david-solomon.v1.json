@@ -11,108 +11,109 @@
   },
   "historicalSource": "https://cityofdavid.org.il/en/king-davids-palace-eng/",
   "limitations": [
-    "The royal marker is symbolic, not an excavated building footprint or certified palace identification.",
-    "Stepped support is shown under an alternative 10th-century interpretation, not a new building or verified continuity.",
-    "Full palace, sanctuary and city-wall geometry remain withheld.",
-    "Dwelling layout/count is illustrative and not population/survival evidence.",
-    "Modern DEM and approximate spring map point do not reconstruct ancient ground."
+    "山脊住居配置為獨立設計的示意，並非考古定位；24 棟不代表人口、規模或前代留存。",
+    "四室住宅採鐵器時代形制類比。所引大衛城住宅報告年代為前八至六世紀，不能證明前十世紀已使用本畫面布局。",
+    "開放中間空間、屋頂、高度與柱列均為設計假說。",
+    "圓環是大型石構候選位置符號，不是已發掘王宮平面。階梯支撐體年代與功能仍有爭議。",
+    "此幕尚未復原所羅門向北發展的聖殿與王宮區；完整城牆形制亦未核定。",
+    "現代 DEM 與泉的近似地圖位置不代表古代地表。"
   ],
   "houseOffsets": [
     [
-      -70,
-      -18
+      -85,
+      -145
     ],
     [
-      -83,
-      -8
+      -111,
+      -132
     ],
     [
-      -93,
+      -77,
+      -115
+    ],
+    [
+      -119,
+      -105
+    ],
+    [
+      -96,
+      -89
+    ],
+    [
+      -67,
+      -76
+    ],
+    [
+      -101,
+      -46
+    ],
+    [
+      -78,
+      -27
+    ],
+    [
+      -126,
       -23
     ],
     [
-      -107,
-      -12
+      -111,
+      -4
     ],
     [
-      -115,
-      3
+      -71,
+      2
     ],
     [
-      -95,
-      12
+      -94,
+      23
     ],
     [
-      -75,
-      17
+      -126,
+      31
     ],
     [
-      -87,
-      34
+      -69,
+      43
     ],
     [
-      -109,
-      33
-    ],
-    [
-      -124,
-      24
-    ],
-    [
-      -137,
-      9
-    ],
-    [
-      -132,
-      -16
-    ],
-    [
-      -117,
-      -33
-    ],
-    [
-      -99,
-      -42
-    ],
-    [
-      -148,
-      -9
-    ],
-    [
-      -141,
-      -35
-    ],
-    [
-      -122,
-      -51
-    ],
-    [
-      -99,
-      -61
-    ],
-    [
-      -79,
-      -48
-    ],
-    [
-      -62,
-      -32
-    ],
-    [
-      -65,
-      37
-    ],
-    [
-      -80,
-      53
-    ],
-    [
-      -108,
+      -110,
       54
     ],
     [
+      -88,
+      68
+    ],
+    [
       -135,
-      44
+      74
+    ],
+    [
+      -108,
+      91
+    ],
+    [
+      -76,
+      100
+    ],
+    [
+      -121,
+      115
+    ],
+    [
+      -94,
+      131
+    ],
+    [
+      -63,
+      119
+    ],
+    [
+      -143,
+      106
+    ],
+    [
+      -141,
+      47
     ]
   ],
   "pathOffsets": [
@@ -121,32 +122,37 @@
       0
     ],
     [
-      -18,
-      4
-    ],
-    [
-      -38,
-      11
+      -30,
+      8
     ],
     [
       -59,
+      15
+    ],
+    [
+      -91,
       8
     ],
     [
-      -78,
-      2
+      -93,
+      -33
     ],
     [
-      -104,
-      8
+      -101,
+      -67
     ],
     [
-      -126,
-      19
+      -95,
+      -110
+    ],
+    [
+      -96,
+      -157
     ]
   ],
   "contextSources": [
-    "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+    "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf",
+    "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all"
   ],
   "steppedSupport": {
     "offset": [
@@ -171,5 +177,10 @@
     "confidence": "disputed",
     "representation": "candidate-location-symbol-not-footprint",
     "placementVerified": false
-  }
+  },
+  "houseTypology": "four-room-analogy",
+  "focusOffset": [
+    -100,
+    -7
+  ]
 }
