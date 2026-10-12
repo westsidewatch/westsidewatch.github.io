@@ -163,31 +163,21 @@ body.home .sites-home-hero .sites-home-star{filter:brightness(0) invert(1)}
  body.home .sites-home-hero .sites-home-entry a{flex:0 1 clamp(190px,17vw,290px);min-width:0}
 }
 
-/* Single homepage small-caps authority. No uppercase transform or simulated scaling. */
+/* Bodoni Moda SC provides its own small-cap glyphs; no caps simulation. */
 body.home .sites-home-hero .sites-home-nav a,
-body.home .sites-home-hero .sites-home-entry a{
+body.home .sites-home-hero .sites-home-entry a,
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
  font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
- font-variant-caps:normal;
- font-feature-settings:normal;
- text-transform:none;
- font-synthesis:none;
- font-size:var(--home-ui-size);
- letter-spacing:.035em;
 }
 body.home .sites-home-hero .sites-home-entry a{white-space:nowrap;gap:12px}
 body.home .sites-home-hero .sites-home-entry a span{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- text-transform:none;letter-spacing:normal;white-space:nowrap;
+ white-space:nowrap;
 }
 @media(min-width:901px){
  body.home .sites-home-hero .sites-home-entry a{flex:0 1 auto;min-width:0}
 }
 body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
- font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
- font-variant-caps:normal;
- font-feature-settings:normal;
- text-transform:none;
- font-synthesis:none;
  font-size:clamp(20px,1.45vw,26px);
  letter-spacing:.01em;
  line-height:1.45;
@@ -197,9 +187,6 @@ body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite
  font-size:clamp(15px,.95vw,19px);
  font-style:italic;
  font-weight:400;
- font-variant-caps:normal;
- font-feature-settings:normal;
  letter-spacing:.01em;
- text-transform:none;
  line-height:1.45;
 }
