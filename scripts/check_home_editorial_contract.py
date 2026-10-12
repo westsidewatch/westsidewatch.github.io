@@ -21,7 +21,7 @@ check('sites-home-nav' in html and 'sites-home-entry' in html, "functional navig
 check('westside-home-hero-composition.css' in base, "single homepage composition stylesheet is loaded")
 check('home-composition-r4' in base, "composition CSS cache version refreshed")
 check('sites-home-film{z-index:0;pointer-events:none}' in css, "film stays visible within hero stacking context")
-check(bool(re.search(r'\\.sites-home-nav\\s*\\{[^}]*z-index\\s*:\\s*5\\s*;', css, re.S)) and bool(re.search(r'\\.sites-home-entry\\s*\\{[^}]*z-index\\s*:\\s*5\\s*;', css, re.S)), "functional controls stay above film")
+check(bool(re.search(r'\.sites-home-nav\s*\{[^}]*z-index\s*:\s*5\s*;', css, re.S)) and bool(re.search(r'\.sites-home-entry\s*\{[^}]*z-index\s*:\s*5\s*;', css, re.S)), "functional controls stay above film")
 check('@media(max-width:900px)' in css and '@media(max-width:520px)' in css, "tablet and phone layouts exist")
 check('@media(prefers-reduced-motion:reduce)' in css, "reduced-motion support exists")
 check(not re.search(r'(?:scaleX|scaleY)\s*\(', css), "font geometry is not stretched")
