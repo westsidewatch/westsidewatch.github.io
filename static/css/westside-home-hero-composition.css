@@ -3,10 +3,10 @@
    Screenshot-driven desktop proportions; no glyph stretching or black/gold palette. */
 body.home .sites-home-hero{
  --home-edge:clamp(24px,4vw,86px);
- --home-title-size:clamp(84px,7.4vw,144px);
- --home-ui-size:clamp(14px,.9vw,17px);
- --home-chinese-size:clamp(18px,1.18vw,23px);
- --home-verse-size:clamp(17px,1.08vw,21px);
+ --home-title-size:clamp(112px,10vw,210px);
+ --home-ui-size:clamp(18px,1.25vw,26px);
+ --home-chinese-size:clamp(24px,1.7vw,34px);
+ --home-verse-size:clamp(22px,1.5vw,30px);
  position:relative;isolation:isolate;min-height:100svh;overflow:hidden;
  color:#fff;
 }
@@ -18,8 +18,8 @@ body.home .sites-home-hero .sites-home-film:after{
  linear-gradient(0deg,rgba(10,17,17,.76) 0%,rgba(10,17,17,.12) 37%,transparent 66%,rgba(10,17,17,.32) 100%);
 }
 body.home .sites-home-hero .sites-home-masthead{
- position:absolute;z-index:2;top:clamp(80px,10vh,150px);
- left:var(--home-edge);width:clamp(340px,30vw,560px);max-width:none;padding:0;
+ position:absolute;z-index:2;top:clamp(100px,13vh,190px);
+ left:var(--home-edge);width:clamp(560px,42vw,900px);max-width:none;padding:0;
 }
 body.home .sites-home-hero .sites-home-masthead img{
  display:block;width:100%;height:auto;object-fit:contain;opacity:1;
@@ -40,7 +40,7 @@ body.home .sites-home-hero .sites-home-nav a:hover,
 body.home .sites-home-hero .sites-home-nav a:focus-visible{border-color:currentColor}
 body.home .sites-home-hero .sites-home-intro{
  position:absolute;z-index:2;left:var(--home-edge);right:auto;
- bottom:clamp(124px,16vh,215px);width:min(80vw,1250px);max-width:none;
+ bottom:clamp(160px,20vh,265px);width:min(80vw,1250px);max-width:none;
  display:grid;grid-template-columns:minmax(0,1fr);align-items:end;
 }
 body.home .sites-home-hero .sites-home-star{
@@ -76,7 +76,7 @@ body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
 }
 body.home .sites-home-hero .sites-home-scripture-pair cite{
  display:block;margin-top:clamp(8px,1.3vh,17px);
- font-size:clamp(14px,.84vw,17px);font-weight:400;opacity:.95;
+ font-size:clamp(18px,1.05vw,22px);font-weight:400;opacity:.95;
 }
 body.home .sites-home-hero .sites-home-entry{
  position:absolute;z-index:5;right:var(--home-edge);left:auto;
@@ -92,7 +92,7 @@ body.home .sites-home-hero .sites-home-entry a{
 }
 body.home .sites-home-hero .sites-home-entry span{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- font-size:clamp(13px,.85vw,17px);font-weight:400;
+ font-size:clamp(17px,1.05vw,22px);font-weight:400;
 }
 body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visible{
  outline:2px solid currentColor;outline-offset:5px;
