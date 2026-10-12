@@ -248,6 +248,12 @@ try {
     assert.equal(sample.inheritance.active, false, 'do not rebuild a second inherited city');
     assert.equal(sample.legacy, 0, 'legacy temporal boxes must not overlap the shared city');
     assert.equal(sample.shared.historicalRegistrationVerified, false);
+    assert.equal(sample.shared.residentialLedger.published,true);
+    const chain=await page.evaluate(id=>{const inspect=window.__JERUSALEM3000__.inspectCityObject,building=inspect(id),parcel=inspect(building.source.parcelId),block=inspect(parcel.source.blockId),district=inspect(block.source.districtId);return {building,parcel,block,district};},sample.shared.residentialLedger.sampleBuildingIds[0]);
+    assert.equal(chain.parcel.type,'parcel');assert.equal(chain.block.type,'block');assert.equal(chain.district.type,'district');
+    assert.equal(chain.building.metadata.geometryVerified,false);
+    assert.ok(chain.building.lifecycle.events.some(e=>e.phase==='babylonian-destruction'&&e.state==='ruin'));
+    assert.equal(sample.shared.projection.visibleBuildings,Object.values(sample.shared.projection.districtVisible).reduce((s,n)=>s+n,0));
     assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.cityOverview.framePhase),'late-first-temple');
     assert.ok(sample.shared.yields > 0);
     sharedReports.push({ value, ...sample });
@@ -274,6 +280,13 @@ try {
   await retainedButton.click();
   await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings > 0);
   const retained = await page.evaluate(() => window.__JERUSALEM3000__.renderDiagnostics);
+  assert.equal(retained.sharedEra.successor.residentialLedger.published,true);
+  assert.equal(await page.locator('[data-district-acceptance] [data-residential-district]').count(),5);
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
+  await page.locator('.j3k-evidence-panel').evaluate(el=>{el.scrollTop=el.scrollHeight;});
+  await page.screenshot({path:`${output}/district-ledger.png`,fullPage:true});
+  await page.locator('.j3k-evidence-panel').evaluate(el=>{el.scrollTop=0;});
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
   assert.equal(retained.cityOverview.framePhase,'persian-nehemiah');
   assert.equal(retained.cityOverview.includesEarlier,true,'retained ruins must be included in overview framing');
   assert.ok(retained.persianSanctuary.visibleTemple>0);

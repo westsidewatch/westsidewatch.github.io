@@ -1,0 +1,39 @@
+import assert from 'node:assert/strict';
+import * as THREE from 'three';
+import {readFile} from 'node:fs/promises';
+import {loadTemporalCityCore} from '../preview/jerusalem-3000/temporal-city-core-adapter.js';
+import {invalidateCityData} from '../preview/jerusalem-3000/city-data-loader.js';
+import {compilePeriodRegistration} from '../preview/jerusalem-3000/period-spatial-registration.js';
+import {bindPeriodSpatialCore} from '../preview/jerusalem-3000/period-spatial-ledger.js';
+import {createSharedEraRuntime} from '../preview/jerusalem-3000/shared-era-runtime.js';
+import {lifecycleStateAtPosition} from '../preview/jerusalem-3000/construction-engine.js';
+const base=new URL('../preview/jerusalem-3000/',import.meta.url),json=async path=>JSON.parse(await readFile(new URL(path,base))),timeline=await json('data/continuous-build-timeline.json'),data=await json('data/urban/first-temple-persian.spatial.v1.json');
+const original=globalThis.fetch,material=new THREE.MeshStandardMaterial();
+try{
+ globalThis.fetch=async url=>({ok:true,json:()=>json(url)});invalidateCityData();
+ const terrain={grid:{origin:data.anchor},heightAtWorld:()=>40},{core}=await loadTemporalCityCore(timeline.phases,{terrain});
+ const registrations=new Map(['late-first-temple','persian-nehemiah'].map(phase=>[phase,compilePeriodRegistration(data,phase,data.anchor)]));
+ for(const r of registrations.values())bindPeriodSpatialCore(core,r);
+ const initial=[...core.objects.keys()],options={terrain,ledgerCore:core,materials:{inferred:material,facadeOpening:material},getRegistration:phase=>registrations.get(phase)};
+ const cancelled=createSharedEraRuntime(new THREE.Group(),options);cancelled.request('late-first-temple');cancelled.request('modern');await new Promise(r=>setTimeout(r,20));assert.deepEqual([...core.objects.keys()],initial,'cancelled staging must publish no objects');cancelled.dispose();
+ const midParent=new THREE.Group();let midCancelled;midCancelled=createSharedEraRuntime(midParent,{...options,onProgress:progress=>{if(progress.completed===5)midCancelled.request('modern');}});midCancelled.request('late-first-temple');for(let i=0;i<1000&&midCancelled.status==='generating';i++)await new Promise(r=>setTimeout(r,5));assert.equal(midCancelled.status,'cancelled');assert.deepEqual([...core.objects.keys()],initial,'partially assembled cancellation must publish no records');assert.equal(midParent.children.length,0);midCancelled.dispose();
+ const parent=new THREE.Group(),runtime=createSharedEraRuntime(parent,options);
+ async function ready(phase){runtime.request(phase);for(let i=0;i<1500&&runtime.status==='generating';i++)await new Promise(r=>setTimeout(r,5));assert.equal(runtime.status,'ready');}
+ await ready('late-first-temple');runtime.apply({phaseId:'late-first-temple'});
+ const summary=runtime.diagnostics().residentialLedger;assert.equal(summary.published,true);assert.ok(summary.buildings>0);
+ const id=summary.sampleBuildingIds[0],record=core.get(id),parcel=core.get(record.source.parcelId),block=core.get(parcel.source.blockId),district=core.get(block.source.districtId);
+ assert.equal(parcel.type,'parcel');assert.equal(block.type,'block');assert.equal(district.type,'district');assert.equal(record.source.districtId,district.id);assert.equal(record.metadata.geometryVerified,false);assert.equal(record.lifecycle.reused,false);assert.deepEqual(core.lineage(id),{predecessors:[],successors:[]});
+ const state=position=>lifecycleStateAtPosition({lifecycleEvents:core.get(id).lifecycle.events},timeline,position);
+ assert.equal(state(4.9),'build');assert.equal(state(5.5),'ruin');assert.equal(state(6.5),'ruin');assert.equal(state(7.5),'unresolved');
+ const meshes=parent.children.find(g=>g.name==='shared-late-first-temple-city').children.filter(m=>m.userData.cityObject?.objectId===id);assert.ok(meshes.length>0);assert.ok(meshes.every(m=>m.userData.cityObject.districtId===district.id));assert.equal(new Set(meshes.map(m=>m.userData.cityObject.componentId)).size,meshes.length);
+ const events=record.lifecycle.events;core.register({...record,lifecycle:{...record.lifecycle,events:[{phase:'late-first-temple',state:'unresolved'}]}});runtime.apply({phaseId:'late-first-temple'});assert.ok(meshes.every(m=>!m.visible),'shared ledger fate must control published residential projection');core.register({...record,lifecycle:{...record.lifecycle,events}});runtime.apply({phaseId:'late-first-temple'});assert.ok(meshes.every(m=>m.visible));
+ const rows=runtime.acceptance().districts;assert.equal(rows.reduce((sum,d)=>sum+d.visibleBuildings,0),summary.buildings);
+ await ready('babylonian-destruction');runtime.apply({phaseId:'babylonian-destruction',ruin:.8});assert.strictEqual(core.get(id).id,id);
+ await ready('persian-nehemiah');runtime.apply({phaseId:'persian-nehemiah',retainedVisible:true});const later=runtime.diagnostics().successor.residentialLedger;assert.ok(later.buildings>0);assert.notEqual(later.sampleBuildingIds[0],id);assert.equal(runtime.acceptance().districts.length,5);
+ runtime.apply({phaseId:'persian-nehemiah',retainedVisible:true,evidenceAllowed:()=>false});assert.equal(runtime.acceptance().districts.reduce((sum,d)=>sum+d.visibleBuildings,0),0);
+ assert.equal(core.validate().ok,true);const total=core.objects.size;
+ await ready('late-first-temple');runtime.apply({phaseId:'late-first-temple'});assert.equal(core.objects.size,total,'return must not republish or duplicate records');
+ const conflicting=createSharedEraRuntime(new THREE.Group(),options);conflicting.request('late-first-temple');for(let i=0;i<1500&&conflicting.status==='generating';i++)await new Promise(r=>setTimeout(r,5));assert.equal(conflicting.status,'error');assert.equal(core.objects.size,total,'collision failure must leave existing ledger unchanged');conflicting.dispose();
+ runtime.dispose();assert.equal(parent.children.length,0);assert.deepEqual([...core.objects.keys()],initial,'dispose must remove only owned generated records');assert.ok(core.validate().ok);
+ console.log('PASS: atomic residential publication, canonical parent chain, shared fate projection, district visible counts, distinct rebuilding, no duplicates, collision rollback and owned cleanup');
+}finally{globalThis.fetch=original;invalidateCityData();material.dispose();}

@@ -54,7 +54,24 @@ try {
     strip = document.querySelector('.j3k-phase-strip');
   phases.forEach(() => strip.append(document.createElement('i')));
   const ticks = [...strip.children];
+  let districtAcceptance=null;
+  function renderDistrictAcceptance(){
+    const panel=document.querySelector('.j3k-evidence-panel');if(!panel)return;
+    let section=panel.querySelector('[data-district-acceptance]');
+    if(!districtAcceptance||districtAcceptance.phase!==stage.dataset.phase){section?.remove();return;}
+    const key=JSON.stringify(districtAcceptance);if(section?.dataset.key===key)return;
+    if(!section){section=document.createElement('section');section.dataset.districtAcceptance='';panel.append(section);}
+    section.dataset.key=key;section.replaceChildren();
+    const title=document.createElement('h4');title.textContent='住宅分區 · 推定示意';section.append(title);
+    const note=document.createElement('p');note.textContent='以下是畫面模型數量，不代表古代人口或實際建築數；前代遺存與再利用關係仍未核定。';section.append(note);
+    if(districtAcceptance.status!=='ready'){const pending=document.createElement('p');pending.textContent=districtAcceptance.status==='error'?'本期住宅生成失敗，尚無完整分區結果。':'本期住宅生成中，完成後顯示分區結果。';section.append(pending);return;}
+    const labels={'eastern-ridge':'東南山脊','northern-precinct':'北部聖區周邊','western-hill':'西丘','ridge-rebuilding':'山脊重建區','northern-rebuilding':'北部重建區'};
+    const table=document.createElement('table'),head=document.createElement('tr');
+    for(const text of ['地區','街區','住宅','顯示']){const th=document.createElement('th');th.textContent=text;head.append(th);}table.append(head);
+    for(const d of districtAcceptance.districts){const row=document.createElement('tr');row.dataset.residentialDistrict=d.id;row.dataset.buildings=String(d.buildings);row.dataset.visibleBuildings=String(d.visibleBuildings);const name=(labels[d.id.split(':').at(-1)]||'推定地區')+(d.layerState==='retained-ruin'?' · 前代遺存':districtAcceptance.phase==='babylonian-destruction'?' · 毀城示意':'');for(const value of [name,d.blocks,d.buildings,d.visibleBuildings]){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}table.append(row);}section.append(table);
+  }
   const three = mountJerusalemThreeScene(mount, {
+    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();},
     onReady(info) {
       window.__JERUSALEM3000__.three = true;
       window.__JERUSALEM3000__.evidence = true;
@@ -64,6 +81,7 @@ try {
     },
   });
   await three.ready;
+  window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
   const retainedToggle = document.querySelector('.j3k-retained-toggle');
   retainedToggle.addEventListener('click', () => {
     const enabled = retainedToggle.getAttribute('aria-pressed') !== 'true';
@@ -201,6 +219,7 @@ try {
     );
     stage.dataset.operation = p.state;
     stage.dataset.phase = p.id;
+    renderDistrictAcceptance();
     stage.dataset.transformation = transformation.phase;
     stage.dataset.temporalObjects = String(
       cityObjects.filter((object) => object.visible || object.ruined).length,

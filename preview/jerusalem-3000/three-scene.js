@@ -226,7 +226,7 @@ function addEraFabric(
 function legacyTemporalAllowed(object, phaseId) {
   return object.rendererBinding!=='ledger-only-pending-adapter' && !isCorePhase(phaseId) && !isEarlyLandscapePhase(phaseId) && !isSharedGenerationPhase(phaseId);
 }
-export function mountJerusalemThreeScene(mount, { onReady } = {}) {
+export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance } = {}) {
   const scene = new THREE.Scene(),
     camera = new THREE.PerspectiveCamera(34, 1, 0.1, 18000),
     renderer = new THREE.WebGLRenderer({
@@ -362,6 +362,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     if (phase2Morphology && currentPhaseId === 'babylonian-destruction')
       setEraMorphologyProgress(phase2Morphology, 1, { ruined: true });
     updateCityCoreVisibility();
+    onDistrictAcceptance?.(sharedEraRuntime?.acceptance()??null);
     needsFrame = true;
   }
   function setBuildProgress(v) {
@@ -649,6 +650,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
       for(const phase of ['late-first-temple','persian-nehemiah']){const registration=compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin);periodRegistrations.set(phase,registration);bindPeriodSpatialCore(loaded.core,registration);}
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
+        ledgerCore:loaded.core,
         getRegistration:phase => periodRegistrations.get(phase) ?? null,
         getExclusions:phase=>royalCity?.exclusionsFor(phase)||[],
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
@@ -830,6 +832,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       };
       return runtime?.evidence();
     },
+    inspectCityObject(id){const record=cityCoreRuntime?.core.get(id);return record?structuredClone(record):null;},
     focusRoyalTemple(){
       const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:royalCity;
       if(!templeRuntime?.diagnostics().visibleTemple)return;
