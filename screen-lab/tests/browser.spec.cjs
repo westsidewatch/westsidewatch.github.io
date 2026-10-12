@@ -44,3 +44,21 @@ test('remote poster load is observed but does not masquerade as a passing playba
   console.log('REMOTE_POSTER_LOAD=' + (loaded ? 'PASS' : 'UNVERIFIED_OR_FAILED'));
   await page.screenshot({ path: testInfo.outputPath('poster-status.png') });
 });
+
+test('Blender PeerTube playback readiness is independently reported', async ({ page }, testInfo) => {
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#grid .tile')).toHaveCount(6);
+  await page.locator('#grid .tile').filter({ hasText: 'Big Buck Bunny' }).click();
+  await page.getByRole('button', { name: /試播 Blender 官方影片/ }).click();
+  const iframe = page.locator('#detail iframe');
+  await expect(iframe).toBeVisible();
+  let status = 'UNVERIFIED';
+  try {
+    const response = await page.request.get(await iframe.getAttribute('src'), { timeout: 12000 });
+    status = response.ok() ? 'EMBED_ENDPOINT_OK_NOT_PLAYBACK' : 'EMBED_HTTP_' + response.status();
+  } catch (err) { status = 'EMBED_REQUEST_ERROR'; }
+  console.log('PEERTUBE_PLAYBACK_STATUS=' + status);
+  await page.screenshot({ path: testInfo.outputPath('peertube-embed.png') });
+  await page.getByRole('button', { name: '關閉 ×' }).click();
+  await expect(iframe).toHaveCount(0);
+});
