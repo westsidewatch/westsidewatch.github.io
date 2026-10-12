@@ -1,3 +1,4 @@
+import {loadCityData} from './city-data-loader.js';
 import {createTemporalCityCore,EVIDENCE_CONFIDENCE,CITY_OBJECT_TYPES} from './temporal-city-core.js';
 
 const TYPE_MAP={
@@ -13,7 +14,7 @@ const TYPE_MAP={
 function evidenceConfidence(object){const e=String(object.evidence||'').toLowerCase(),c=String(object.confidence||'').toLowerCase();if(e.includes('disputed')||c.includes('disputed')||c.startsWith('low'))return EVIDENCE_CONFIDENCE.DISPUTED;if(e.includes('archaeological')||e==='observed'||c==='high'||c.startsWith('high-'))return EVIDENCE_CONFIDENCE.OBSERVED;if(e.includes('reconstructed')||e.includes('text')||e.includes('historical-mapping'))return EVIDENCE_CONFIDENCE.RECONSTRUCTED;return EVIDENCE_CONFIDENCE.INFERRED;}
 function geometryDescriptor(object){const raw=object.geometry;if(raw&&typeof raw==='object')return raw;const value=String(raw||'withheld');return{status:value.includes('withheld')?'withheld':'declared',authority:value,primitive:null};}
 function lifecycleFor(id,lifecycleMap,phaseId){const events=lifecycleMap.get(id)||[];let built=phaseId,destroyed=null,ruined=false,reused=false;for(const event of events){if(['build','rebuild','settlement','expand','transform'].includes(event.state)&&!built)built=event.phase;if(['ruin','buried'].includes(event.state)){destroyed=event.phase;ruined=true}if(event.state==='rebuild'||event.state==='transform')reused=true}return{built,destroyed,ruined,reused,events};}
-async function json(url){const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error(`${url} unavailable (${response.status})`);return response.json();}
+const json=loadCityData;
 export async function loadTemporalCityCore(phases,{terrain=null}={}){
  const [packs,lifecycle]=await Promise.all([json('./data/anchor-era-packs.json'),json('./data/lifecycle/anchor-era.lifecycle.json')]);
  const core=createTemporalCityCore({phases,terrain});

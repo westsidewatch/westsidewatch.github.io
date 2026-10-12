@@ -1,3 +1,4 @@
+import {loadCityData} from './city-data-loader.js';
 import { createEarliestSettlement, isEarliestPhase, isEarlyLandscapePhase } from './earliest-settlement.js';
 import { createSharedEraRuntime, isSharedSlicePhase, isSharedGenerationPhase } from './shared-era-runtime.js';
 import * as THREE from 'three';
@@ -519,12 +520,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     needsFrame = true;
   }
   const ready = Promise.all([
-    fetch('./data/objects/herodian-30ce.json', { cache: 'no-store' }).then(
-      (r) => {
-        if (!r.ok) throw new Error(`Herodian ledger unavailable (${r.status})`);
-        return r.json();
-      },
-    ),
+    loadCityData('./data/objects/herodian-30ce.json'),
     loadTerrainAuthority(),
   ]).then(async ([ledger, { manifest }]) => {
     evidenceResolution = new EvidenceResolutionEngine(ledger.objects);
@@ -591,9 +587,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         terrain: terrainRuntime,
       });
       await registerHerodianUrbanCore(loaded.core);
-      const eraRegistrationResponse = await fetch('./data/urban/herodian-30ce.registration.json', { cache: 'no-store' });
-      if (!eraRegistrationResponse.ok) throw new Error(`Era registration unavailable: ${eraRegistrationResponse.status}`);
-      eraRegistrationReference = await eraRegistrationResponse.json();
+      eraRegistrationReference = await loadCityData('./data/urban/herodian-30ce.registration.json');
       const parcels = await buildHerodianParcelCore(
         loaded.core,
         terrainRuntime,

@@ -1,3 +1,4 @@
+import {loadCityData} from './city-data-loader.js';
 import {lifecycleStateAt} from './construction-engine.js';
 
 const PACKS_URL='./data/anchor-era-packs.json';
@@ -12,8 +13,8 @@ function syntheticPlacement(index,total,phaseIndex){
 
 export async function loadAnchorEraObjects(timeline,layer){
   const [packs,life]=await Promise.all([
-    fetch(PACKS_URL).then(r=>{if(!r.ok)throw new Error('anchor era packs unavailable');return r.json()}),
-    fetch(LIFE_URL).then(r=>{if(!r.ok)throw new Error('anchor lifecycle unavailable');return r.json()})
+    loadCityData(PACKS_URL),
+    loadCityData(LIFE_URL)
   ]);
   const lifeById=new Map(life.objects.map(o=>[o.id,o.lifecycleEvents]));
   const phaseIndex=new Map(timeline.phases.map((p,i)=>[p.id,i]));

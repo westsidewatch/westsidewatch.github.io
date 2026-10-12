@@ -1,3 +1,4 @@
+import {loadCityData} from './city-data-loader.js';
 const ACTIVE_STATES=new Set(['build','rebuild','settlement','expand','transform']);
 const RUIN_STATES=new Set(['ruin','buried']);
 const PHASE_FALLBACKS={
@@ -19,4 +20,4 @@ export class TemporalCityIntegration{
  sample(position){const objects=[];for(const object of this.objects.values())objects.push({...object,...this.stateFor(object.id,position,object)});return objects}
  summary(position){const sampled=this.sample(position);return sampled.reduce((out,item)=>{out[item.state]=(out[item.state]||0)+1;return out},{total:sampled.length})}
 }
-export async function loadTemporalCityIntegration(phases){const[packsResponse,lifecycleResponse]=await Promise.all([fetch('./data/anchor-era-packs.json',{cache:'no-store'}),fetch('./data/lifecycle/anchor-era.lifecycle.json',{cache:'no-store'})]);if(!packsResponse.ok)throw new Error(`anchor era packs unavailable (${packsResponse.status})`);if(!lifecycleResponse.ok)throw new Error(`anchor lifecycle unavailable (${lifecycleResponse.status})`);const[packs,lifecycle]=await Promise.all([packsResponse.json(),lifecycleResponse.json()]);return new TemporalCityIntegration(phases,packs,lifecycle)}
+export async function loadTemporalCityIntegration(phases){const[packs,lifecycle]=await Promise.all([loadCityData('./data/anchor-era-packs.json'),loadCityData('./data/lifecycle/anchor-era.lifecycle.json')]);return new TemporalCityIntegration(phases,packs,lifecycle)}

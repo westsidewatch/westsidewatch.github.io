@@ -59,3 +59,24 @@
 4. 在固定硬體與網路測 shared first-generation、GPU 資源趨勢與真實手機；模型成本需可觀測的既有入口，現在不填虛構值。
 
 M0 仍在進行：Jev 舊部署、模型成本與真實手機基線尚未完成。本輪的可用成果是候選審查、渲染層矩陣、可重跑量測工具與第一份線上數據。
+
+## 共同資料入口：第二批
+
+新增 city-data-loader.js，將 anchor 包、anchor 生命週期、Herodian ledger 與地塊配置的五個消費入口接入同一 document-lifetime loader。等價 URL 合併在途與已完成請求；structuredClone 隔離消費者修改；HTTP／JSON 失敗移除快取，可重試；可指定資產或全部失效。新頁面用 HTTP no-cache 重新驗證，不建立永久不更新的跨頁記憶快取。
+
+同一電腦、同一 headless Chromium／Python 本機伺服器的改動前後 probe（各一次，非統計基準）：
+
+| Profile | 項目 | 改動前 | 改動後 |
+|---|---|---:|---:|
+| desktop | cold CDP bytes | 702443 | 685058 |
+| desktop | warm CDP bytes | 99462 | 64588 |
+| desktop | 首屏請求 | 60 | 57 |
+| mobile-viewport | cold CDP bytes | 702444 | 685068 |
+| mobile-viewport | warm CDP bytes | 99462 | 64588 |
+| mobile-viewport | 首屏請求 | 60 | 57 |
+
+改動後四份共用資料均只請求一次；多出 loader 模組的一次請求計入總數。已載入時代往返仍沒有新增請求。CDN／正式站有壓縮與不同快取，不能把本機 bytes 直接當正式網站節省比例。這批沒有量測或宣稱模型 token、FPS、GPU 記憶體節省。
+
+驗證：loader 單元測試覆蓋 URL 同一性、並行合併、消費者隔離、失效與 HTTP／JSON 重試；完整桌面／手機 viewport、18 期、原有缺資料處理通過。瀏覽器驗收加入四份資料各一次請求的檢查，CI 新增 loader 測試。
+
+下一步仍是 M1 的物件來源／生命週期 adapter 與主體去向矩陣；本批只完成共同載入入口，沒有把所有 renderer 收斂或完成跨代繼承。

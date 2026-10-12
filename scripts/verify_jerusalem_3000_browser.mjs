@@ -9,6 +9,8 @@ const page = await browser.newPage({
   reducedMotion: 'reduce',
 });
 const errors = [];
+const dataRequests=new Map();
+page.on('request',r=>{const path=new URL(r.url()).pathname;dataRequests.set(path,(dataRequests.get(path)||0)+1);});
 page.on('pageerror', (e) => errors.push(String(e)));
 page.on('console', (m) => {
   if (m.type() === 'error') errors.push(m.text());
@@ -26,6 +28,9 @@ try {
   );
   const runtime = await page.evaluate(() => window.__JERUSALEM3000__);
   assert.equal(runtime.status, 'ready', JSON.stringify(runtime));
+  for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json']) {
+    assert.equal(dataRequests.get(`/preview/jerusalem-3000/data/${path}`),1,`one shared request for ${path}`);
+  }
   assert.equal(
     runtime.production.ok,
     true,
