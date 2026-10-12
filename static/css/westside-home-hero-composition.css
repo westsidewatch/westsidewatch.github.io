@@ -199,3 +199,16 @@ body.home .sites-home-hero .sites-home-entry a span{
 @media(min-width:901px){
  body.home .sites-home-hero .sites-home-entry a{flex:0 1 auto;min-width:0}
 }
+
+/* Genuine Bodoni Moda SC glyphs: preserve mixed-case source, never uppercase-transform. */
+body.home .sites-home-hero .sites-home-nav a,
+body.home .sites-home-hero .sites-home-entry a{
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ text-transform:none;
+ font-variant-caps:normal;
+ font-feature-settings:normal;
+ font-synthesis:none;
+}
+body.home .sites-home-hero .sites-home-entry a span{
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+}
