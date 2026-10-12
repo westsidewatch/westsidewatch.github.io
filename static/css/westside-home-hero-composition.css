@@ -29,11 +29,12 @@ body.home .sites-home-hero .sites-home-nav{
  position:absolute;z-index:5;top:clamp(25px,3.5vh,48px);right:var(--home-edge);left:auto;
  max-width:calc(100% - 2 * var(--home-edge));display:flex;flex-wrap:wrap;
  justify-content:flex-end;align-items:center;gap:clamp(12px,1.3vw,25px);
- font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
  font-size:var(--home-ui-size);font-weight:400;letter-spacing:.015em;line-height:1.5;
  mix-blend-mode:normal;
 }
 body.home .sites-home-hero .sites-home-nav a{
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
  display:inline-flex;align-items:center;min-height:40px;opacity:1;
  border-bottom:1px solid transparent;text-decoration:none;
 }
@@ -72,28 +73,34 @@ body.home .sites-home-hero .sites-home-scripture-pair .sites-home-slogan-zh{
  font-size:var(--home-chinese-size);font-weight:200;letter-spacing:.1em;
 }
 body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
- font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
- font-size:var(--home-verse-size);font-weight:400;letter-spacing:.01em;
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ font-size:clamp(20px,1.45vw,26px);font-weight:400;letter-spacing:.01em;line-height:1.45;
 }
 body.home .sites-home-hero .sites-home-scripture-pair cite{
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-style:italic;
+ letter-spacing:.01em;
+ line-height:1.45;
  display:block;margin-top:clamp(8px,1.3vh,17px);
- font-size:clamp(15px,.9vw,19px);font-weight:400;opacity:.88;
+ font-size:clamp(15px,.95vw,19px);font-weight:400;opacity:.88;
 }
 body.home .sites-home-hero .sites-home-entry{
  position:absolute;z-index:5;right:var(--home-edge);left:auto;
  bottom:clamp(28px,5vh,62px);display:flex;align-items:flex-end;
  gap:clamp(25px,3vw,55px);
- font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
  font-size:var(--home-ui-size);letter-spacing:.02em;
 }
 body.home .sites-home-hero .sites-home-entry a{
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ white-space:nowrap;
  display:flex;align-items:center;justify-content:space-between;gap:15px;
  min-width:clamp(180px,13vw,260px);min-height:46px;padding:8px 0;
  border-bottom:1px solid rgba(255,255,255,.72);opacity:1;
 }
 body.home .sites-home-hero .sites-home-entry span{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- font-size:clamp(15px,.9vw,19px);font-weight:400;
+ font-size:clamp(15px,.9vw,19px);font-weight:400;white-space:nowrap;
 }
 body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visible{
  outline:2px solid currentColor;outline-offset:5px;
@@ -160,33 +167,6 @@ body.home .sites-home-hero .sites-home-star{filter:brightness(0) invert(1)}
 /* Three equal editorial entry points on desktop; mobile keeps wrapping. */
 @media(min-width:901px){
  body.home .sites-home-hero .sites-home-entry{left:var(--home-edge);right:var(--home-edge);justify-content:flex-end;gap:clamp(20px,2vw,38px)}
- body.home .sites-home-hero .sites-home-entry a{flex:0 1 clamp(190px,17vw,290px);min-width:0}
-}
-
-/* Bodoni Moda SC provides its own small-cap glyphs; no caps simulation. */
-body.home .sites-home-hero .sites-home-nav a,
-body.home .sites-home-hero .sites-home-entry a,
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
- font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
-}
-body.home .sites-home-hero .sites-home-entry a{white-space:nowrap;gap:12px}
-body.home .sites-home-hero .sites-home-entry a span{
- font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- white-space:nowrap;
-}
-@media(min-width:901px){
  body.home .sites-home-hero .sites-home-entry a{flex:0 1 auto;min-width:0}
 }
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
- font-size:clamp(20px,1.45vw,26px);
- letter-spacing:.01em;
- line-height:1.45;
-}
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite{
- font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
- font-size:clamp(15px,.95vw,19px);
- font-style:italic;
- font-weight:400;
- letter-spacing:.01em;
- line-height:1.45;
-}
+
