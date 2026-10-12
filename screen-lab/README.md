@@ -63,3 +63,7 @@ Big Buck Bunny now links to Blender's public PeerTube video and provides an ifra
 ## Browser evidence and release gate (2026-10-12)
 
 Chromium desktop/mobile tests and the Big Buck Bunny poster load passed. The Blender PeerTube embed endpoint responded, **but real playback was not confirmed** (`paused=true`, `readyState=0`). The ordinary smoke suite remains a UI/endpoint smoke suite and must not be represented as playback certification. Run `SCREEN_LAB_REQUIRE_PLAYBACK=1 npx playwright test screen-lab/tests/browser.spec.cjs` to turn the real-playback observation into a hard failure until actual `video.currentTime` progression is confirmed. Do not merge this experimental PR on the assumption that its film playback works.
+
+### CI split
+
+The workflow now has a distinct `playback-gate` job which sets `SCREEN_LAB_REQUIRE_PLAYBACK=1`. Unlike the informational smoke test, this job fails if Chromium cannot observe real video time progression. A failed gate is an honest blocker, not a reason to mark the title as playable. The PR stays draft until a reproducible, legal browser playback path is demonstrated.
