@@ -34,3 +34,15 @@
 .mersi-church .church-front-schedule{margin-top:clamp(20px,4vw,70px)}
 @media(max-width:850px){.mersi-church .mc-journey{height:330svh}.mersi-church .mc-scene{padding:8vw}.mersi-church .mc-scene h2{font-size:clamp(32px,10vw,62px)}}
 @media(prefers-reduced-motion:reduce){.mersi-church .mc-journey{height:auto}.mersi-church .mc-stage{height:auto;position:relative}.mersi-church .mc-scenes{position:relative}.mersi-church .mc-scene{position:relative;visibility:visible;min-height:65svh;animation:none!important}.mersi-church .mc-progress{display:none}}
+
+/* Continuous scene transitions: both outgoing and incoming pages remain visible during the seam. */
+.mersi-church .mc-scene{opacity:0;transition:opacity .24s linear;visibility:hidden}
+.mersi-church .mc-scene.is-current{opacity:1;visibility:visible}
+.mersi-church .mc-scene.is-adjacent{opacity:0;visibility:visible}
+.mersi-church .mc-hero{position:relative}
+.mersi-church .mc-hero::before,.mersi-church .mc-hero::after{content:"";position:absolute;z-index:5;top:0;bottom:0;width:50%;pointer-events:none;background:repeating-radial-gradient(ellipse 95% 60% at 50% 65%,#e7ddc8 0 13px,#d7c9ad 14px);animation-duration:1.8s;animation-timing-function:cubic-bezier(.77,0,.18,1);animation-fill-mode:forwards}
+.mersi-church .mc-hero::before{left:0;animation-name:church-door-left}
+.mersi-church .mc-hero::after{right:0;animation-name:church-door-right}
+@keyframes church-door-left{to{transform:translateX(-102%)}}
+@keyframes church-door-right{to{transform:translateX(102%)}}
+@media(prefers-reduced-motion:reduce){.mersi-church .mc-hero::before,.mersi-church .mc-hero::after{display:none}.mersi-church .mc-scene{opacity:1;visibility:visible;transition:none}}
