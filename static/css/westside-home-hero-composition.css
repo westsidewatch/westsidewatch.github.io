@@ -171,3 +171,9 @@ body.home .sites-home-hero .sites-home-intro h1 em{
  font-variant-caps:normal;
  font-feature-settings:normal;
 }
+
+/* Three equal editorial entry points on desktop; mobile keeps wrapping. */
+@media(min-width:901px){
+ body.home .sites-home-hero .sites-home-entry{left:var(--home-edge);right:var(--home-edge);justify-content:flex-end;gap:clamp(20px,2vw,38px)}
+ body.home .sites-home-hero .sites-home-entry a{flex:0 1 clamp(190px,17vw,290px);min-width:0}
+}
