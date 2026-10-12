@@ -85,7 +85,9 @@
         frame.allow='autoplay; fullscreen; picture-in-picture';frame.allowFullscreen=true;
         frame.referrerPolicy='strict-origin-when-cross-origin';
         frame.style.cssText='width:100%;aspect-ratio:16/9;border:0';
+        frame.loading='eager';
         host.replaceChildren(frame);
+        const notice=document.createElement('p');notice.textContent='官方播放器已嵌入，是否能播放請以播放器畫面為準。';host.append(notice);
       };box.append(btn);
     }
     if(f.youtube){
