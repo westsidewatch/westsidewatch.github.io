@@ -248,6 +248,7 @@ try {
     assert.equal(sample.inheritance.active, false, 'do not rebuild a second inherited city');
     assert.equal(sample.legacy, 0, 'legacy temporal boxes must not overlap the shared city');
     assert.equal(sample.shared.historicalRegistrationVerified, false);
+    assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.cityOverview.framePhase),'late-first-temple');
     assert.ok(sample.shared.yields > 0);
     sharedReports.push({ value, ...sample });
     await page.screenshot({ path: `${output}/shared-${value}.png`, fullPage: true });
@@ -273,6 +274,8 @@ try {
   await retainedButton.click();
   await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings > 0);
   const retained = await page.evaluate(() => window.__JERUSALEM3000__.renderDiagnostics);
+  assert.equal(retained.cityOverview.framePhase,'persian-nehemiah');
+  assert.equal(retained.cityOverview.includesEarlier,true,'retained ruins must be included in overview framing');
   assert.ok(retained.persianSanctuary.visibleTemple>0);
   assert.equal(retained.persianSanctuary.visibleGate,2);
   assert.equal(retained.persianSanctuary.visibleAccess,true);
@@ -305,6 +308,7 @@ try {
     await page.waitForFunction(value=>window.__JERUSALEM3000__.historicalTime.position===value&&window.__JERUSALEM3000__.renderDiagnostics.sharedEra.status==='ready',value);
   }
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra.successor.projection.transformFingerprint),successorFingerprint);
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.cityOverview.includesEarlier),false);
   await page.screenshot({path:`${output}/persian-city.png`,fullPage:true});
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.persianSanctuary.componentIdentity),retained.persianSanctuary.componentIdentity);
   await page.getByRole('button',{name:'聖殿近看',exact:true}).click();
@@ -328,6 +332,7 @@ try {
     assert.equal(d.visibleLegacyTemporalMeshes,0);
     assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.active),false);
     if(value===7.5) {
+      assert.equal(d.cityOverview,null,'leaving period overview must release camera state');
       assert.equal(d.persianSanctuary.visibleTemple,0,'later institutional continuity must not retain Persian geometry');
       assert.equal(d.sharedEra.successor.projection.visibleBuildings,0);
       assert.equal(d.sharedEra.expansion.historicalRegistrationVerified,false);

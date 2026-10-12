@@ -80,6 +80,8 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
         city = { group, core, parcels, architecture, projection };
         state = { status: 'ready', completed: architecture.buildings, total: architecture.buildings,
           yields: architecture.yields, maxBatchMs: architecture.maxBatchMs, elapsedMs: architecture.elapsedMs, authority: registration.authority, independentLayout: registration.independentLayout === true,
+          infillMode:registration.generation.infillMode||'street-front-scaffold',
+          districtCounts:districtResults.map((r,i)=>({id:registration.districts[i].id,blocks:r.blockCount,parcels:r.count})),
           districtIds:registration.districts.map(d=>d.id), roadIds:registration.roads.map(r=>r.id), reservationIds:(registration.reservations||[]).map(r=>r.id) };
       } catch (error) {
         release(group);

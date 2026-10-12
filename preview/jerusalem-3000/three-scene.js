@@ -1,3 +1,4 @@
+import {fitCityOverview} from './city-overview.js';
 import {createPersianSanctuary} from './persian-sanctuary.js';
 import {bindPeriodSpatialCore} from './period-spatial-ledger.js';
 import { compilePeriodRegistration } from './period-spatial-registration.js';
@@ -297,7 +298,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
-  let retainedVisible = false, royalCity=null, persianSanctuary=null, periodSpatialData=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
+  let retainedVisible = false, royalCity=null, persianSanctuary=null, periodSpatialData=null, periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
   generationStatus.setAttribute('role', 'status');
@@ -458,12 +459,25 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       terrainRuntime,
     );
   }
+  function updatePeriodOverview(phaseId,force=false){
+    const framePhase=phaseId==='babylonian-destruction'?'late-first-temple':phaseId;
+    const includesEarlier=phaseId==='persian-nehemiah'&&retainedVisible;
+    const frameKey=framePhase+(includesEarlier?':retained':'');
+    if(!periodRegistrations.has(framePhase)||(!force&&overviewFrame===frameKey))return;
+    if(!overviewPriorCamera)overviewPriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
+    const registrations=[periodRegistrations.get(framePhase),...(includesEarlier?[periodRegistrations.get('late-first-temple')]:[])];
+    const points=registrations.flatMap(r=>r.districts.flatMap(d=>d.geometry.polygon.flatMap(p=>{const y=terrainRuntime.heightAtWorld(p.x,p.z);return[new THREE.Vector3(p.x,y,p.z),new THREE.Vector3(p.x,y+32,p.z)];})));
+    const framing=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov});
+    controls.minDistance=35;controls.target.copy(framing.target);camera.position.copy(framing.position);controls.update();overviewFrame=frameKey;
+    overviewInfo={framePhase,includesEarlier,distance:framing.distance,bounds:framing.bounds,authority:framing.authority};
+  }
   function setTemporalCityState(objects = [], position = 0, phaseId = '') {
     const previousPhase = currentPhaseId,
       phaseChanged = previousPhase !== phaseId;
     currentPhaseId = phaseId;
     timelinePosition=position;
     if(phaseChanged&&templePriorCamera){camera.position.copy(templePriorCamera.position);controls.target.copy(templePriorCamera.target);controls.minDistance=templePriorCamera.minDistance;templePriorCamera=null;controls.update();}
+    if(phaseChanged&&overviewPriorCamera&&!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(phaseId)){camera.position.copy(overviewPriorCamera.position);controls.target.copy(overviewPriorCamera.target);controls.minDistance=overviewPriorCamera.minDistance;overviewPriorCamera=null;overviewFrame='';overviewInfo=null;controls.update();}
     if(phaseChanged && earliestSettlement) {
       if(isEarlyLandscapePhase(phaseId)) {
         if(!isEarlyLandscapePhase(previousPhase)) priorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
@@ -482,6 +496,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         const focus=stage==='solomon'?royalCity.focus:davidSettlement.focus;controls.target.copy(focus);
         camera.position.copy(focus).add(stage==='solomon'?(camera.aspect<1?new THREE.Vector3(680,650,980):new THREE.Vector3(400,380,620)):new THREE.Vector3(240,230,340));controls.update();}
     }
+    if(phaseChanged)updatePeriodOverview(phaseId);
     applyTemporalState();
     if (phaseChanged && terrainRuntime) {
       rebuildUrbanFabric(phaseId);
@@ -632,10 +647,9 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       cityProjection = createCityProjection(cityCoreLayer, architecture.meshes);
       cityCoreRuntime.projection = cityProjection;
       periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
-      for(const phase of ['late-first-temple','persian-nehemiah'])bindPeriodSpatialCore(loaded.core,compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin));
+      for(const phase of ['late-first-temple','persian-nehemiah']){const registration=compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin);periodRegistrations.set(phase,registration);bindPeriodSpatialCore(loaded.core,registration);}
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
-        getRegistration:phase => ['late-first-temple','persian-nehemiah'].includes(phase)
-          ? compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin) : null,
+        getRegistration:phase => periodRegistrations.get(phase) ?? null,
         getExclusions:phase=>royalCity?.exclusionsFor(phase)||[],
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
         successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],
@@ -750,6 +764,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             davidSettlement: davidSettlement?.diagnostics(),
             royalCity:royalCity?.diagnostics(),
             persianSanctuary:persianSanctuary?.diagnostics(),
+            cityOverview:overviewInfo,
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -823,6 +838,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     },
     setRetainedLayerVisible(visible) {
       retainedVisible = Boolean(visible);
+      updatePeriodOverview(currentPhaseId,true);
       applyTemporalState();
       needsFrame = true;
     },
