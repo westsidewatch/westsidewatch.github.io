@@ -461,7 +461,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         controls.minDistance=35;
         const landscape=isEarliestPhase(phaseId)?earliestSettlement:phaseId==='middle-bronze'?middleBronzeSettlement:phaseId==='late-bronze-iron1'?lateBronzeSettlement:davidSettlement;
         controls.target.copy(landscape.focus);
-        camera.position.copy(landscape.focus).add(isEarliestPhase(phaseId)?new THREE.Vector3(120,105,160):new THREE.Vector3(150,125,190));
+        camera.position.copy(landscape.focus).add(isEarliestPhase(phaseId)?new THREE.Vector3(120,105,160):phaseId==='david-solomon'?(camera.aspect<1?new THREE.Vector3(275,285,400):new THREE.Vector3(180,190,270)):new THREE.Vector3(150,125,190));
         controls.update();
       } else if(priorCamera) {
         camera.position.copy(priorCamera.position);controls.target.copy(priorCamera.target);controls.minDistance=priorCamera.minDistance;priorCamera=null;controls.update();

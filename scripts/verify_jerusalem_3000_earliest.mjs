@@ -76,6 +76,12 @@ const royalData=JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/data/
 const royalParent=new THREE.Group(),royal=createEarliestSettlement(royalParent,{data:royalData,terrain});
 royal.apply({phaseId:royalData.phase,evidenceAllowed:()=>true});
 assert.equal(royal.diagnostics().visibleRoyalMarkers,1);
+assert.equal(royal.diagnostics().houseTypology,'four-room-analogy');
+assert.notEqual(royal.diagnostics().layoutFingerprint,late.diagnostics().layoutFingerprint,'royal phase must not copy the Bronze Age house layout');
+assert.equal(royal.diagnostics().typologyDatingVerified,false);
+let pillars=0;royalParent.traverse(m=>{if(m.userData.cityObject?.kind==='four-room-pillar')pillars++;});
+assert.equal(pillars,royalData.houseOffsets.length*6);
+
 assert.equal(royal.diagnostics().royalBuildingGeometryVerified,false);
 assert.match(royal.evidence().source,/king-davids-palace/);
 royalParent.traverse(m=>{if(m.userData.cityObject?.kind==='royal-location-symbol'){
