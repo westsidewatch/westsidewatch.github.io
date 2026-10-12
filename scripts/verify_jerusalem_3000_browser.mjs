@@ -169,7 +169,12 @@ try {
   assert.equal(royal.lateBronzeSettlement.visibleHouses,0);
   assert.equal(royal.davidSettlement.royalBuildingGeometryVerified,false);
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.active),false);
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity?.visibleTemple>0);
+  const royalIdentity=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.componentIdentity);
   await page.screenshot({path:`${output}/david-landscape.png`,fullPage:true});
+  await page.getByRole('button',{name:'聖殿近看',exact:true}).click();
+  await page.screenshot({path:`${output}/solomon-temple.png`,fullPage:true});
+
   await page.getByRole('button',{name:'Evidence',exact:true}).click();
   assert.equal(await page.locator('.j3k-evidence-panel a').first().getAttribute('href'),'https://cityofdavid.org.il/en/king-davids-palace-eng/');
   assert.ok(await page.locator('.j3k-evidence-panel li').count()>0,'scene-specific limitations are visible');
@@ -205,6 +210,13 @@ try {
     const objects=await page.evaluate(()=>window.__JERUSALEM3000__.temporalCityState.objects);
     assert.equal(objects.find(o=>o.id==='j3k:object:first-temple').state,expected);
     if(value===6.5)assert.equal(objects.find(o=>o.id==='j3k:object:second-temple-early').state,'rebuild');
+    await page.waitForFunction(expected=>window.__JERUSALEM3000__.renderDiagnostics.royalCity?.templeState===expected,expected);
+    const geometry=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity);
+    assert.equal(geometry.componentIdentity,royalIdentity,'cross-era projection retains component identities');
+    assert.equal(geometry.visibleTemple>0,['build','transform','ruin'].includes(expected));
+    if(value===4.9)assert.equal(geometry.visibleWalls,0,'do not invent wall-segment continuity');
+    if(value===5.5){await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra?.status==='ready');await page.getByRole('button',{name:'聖殿近看',exact:true}).click();await page.screenshot({path:`${output}/temple-ruin.png`,fullPage:true});}
+
   }
   await page.locator('.j3k-scrubber').evaluate(el=>{el.value='6.5';el.dispatchEvent(new Event('input',{bubbles:true}));});
   await page.getByRole('button',{name:'Evidence',exact:true}).click();

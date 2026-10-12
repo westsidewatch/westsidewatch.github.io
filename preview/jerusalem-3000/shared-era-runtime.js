@@ -15,7 +15,7 @@ export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || id === RE
 // One provisional first-temple fabric, inherited by destruction in place.
 // Reuse is a schematic lifecycle, not evidence of surveyed period-specific parcels.
 function createParcelRuntime(parent, { reference, footprint, terrain, materials,
-  generationPhase, phaseIds, destroyedPhase = null, retainedPhase = null,
+  generationPhase, phaseIds, destroyedPhase = null, retainedPhase = null, getExclusions=()=>[],
   onChange = () => {}, onProgress = () => {} }) {
   const openingMaterial = materials.facadeOpening || new THREE.MeshStandardMaterial({ color: 0x3d3327, roughness: .94, metalness: 0 });
   const sharedMaterials = { ...materials, facadeOpening: openingMaterial };
@@ -49,7 +49,8 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
         const phaseId = generationPhase;
         const core = new TemporalCityCore({ phases: phaseIds.map(id => ({ id })), terrain });
         const registration = deriveEraRegistration(reference, phaseId, footprint);
-        const parcels = buildEraParcelCore(core, terrain, {
+        const exclusions=getExclusions(phaseId);
+        const parcels = buildEraParcelCore(core, terrain, { exclusions,
           phaseId, registration, districtId: registration.districts[0].id,
           dataset: `provisional-${generationPhase}-footprint-not-surveyed`,
         });
@@ -66,7 +67,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
             metadata: { ...record.metadata, retainedPhase,
               retentionAuthority: 'schematic-not-surveyed', burialDepthVerified: false, reuseLinksVerified: false } });
         }
-        const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain);
+        const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain,{exclusions});
         const projection = createCityProjection(group, [...architecture.meshes, ...roads], {
           phaseIds, standingPhase: phaseId,
           phaseStates: retainedPhase ? { [retainedPhase]: { state: 'retained-ruin', ruin: 1 } } : {},

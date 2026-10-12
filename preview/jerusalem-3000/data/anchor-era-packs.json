@@ -74,6 +74,51 @@
             "No exact wall circuit or later reuse is verified; unknown fate is not destruction."
           ],
           "rendererBinding": "ledger-only-pending-adapter"
+        },
+        {
+          "id": "j3k:object:david-royal-courtyard-hypothesis",
+          "label": "大衛王室院落（推定）",
+          "kind": "monumental-zone",
+          "confidence": "inferred",
+          "evidence": "inferred",
+          "geometry": "withheld-pending-shared-royal-adapter",
+          "rendererBinding": "ledger-only-pending-adapter",
+          "sources": [
+            "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+          ],
+          "limitations": [
+            "Illustrative placement and form, not excavated footprint or verified survival."
+          ]
+        },
+        {
+          "id": "j3k:object:solomon-royal-courtyard-hypothesis",
+          "label": "所羅門王室院落（推定）",
+          "kind": "monumental-zone",
+          "confidence": "inferred",
+          "evidence": "inferred",
+          "geometry": "withheld-pending-shared-royal-adapter",
+          "rendererBinding": "ledger-only-pending-adapter",
+          "sources": [
+            "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+          ],
+          "limitations": [
+            "Illustrative placement and form, not excavated footprint or verified survival."
+          ]
+        },
+        {
+          "id": "j3k:object:solomon-northern-wall-hypothesis",
+          "label": "所羅門北向城防（牆線推定）",
+          "kind": "fortification",
+          "confidence": "inferred",
+          "evidence": "inferred",
+          "geometry": "withheld-pending-shared-royal-adapter",
+          "rendererBinding": "ledger-only-pending-adapter",
+          "sources": [
+            "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+          ],
+          "limitations": [
+            "Illustrative placement and form, not excavated footprint or verified survival."
+          ]
         }
       ]
     },

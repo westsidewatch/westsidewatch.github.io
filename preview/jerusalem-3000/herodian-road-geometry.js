@@ -1,6 +1,7 @@
+import {polygonsOverlap} from './urban-exclusion.js';
 import * as THREE from 'three';
 // The road linework is the same provisional registration used to subdivide blocks.
-export function buildHerodianRoadGeometry(group,roads,materials,terrain){
+export function buildHerodianRoadGeometry(group,roads,materials,terrain,{exclusions=[]}={}){
   const meshes=[];
   for(const road of roads){
     const points=road.geometry?.points||[];
@@ -11,6 +12,8 @@ export function buildHerodianRoadGeometry(group,roads,materials,terrain){
         const t0=j/steps,t1=(j+1)/steps,x0=a.x+dx*t0,z0=a.z+dz*t0,x1=a.x+dx*t1,z1=a.z+dz*t1;
         const y0=terrain.heightAtWorld(x0,z0)+.35,y1=terrain.heightAtWorld(x1,z1)+.35;
         const nx=-dz/length*2.5,nz=dx/length*2.5;
+        const polygon=[{x:x0+nx,z:z0+nz},{x:x1+nx,z:z1+nz},{x:x1-nx,z:z1-nz},{x:x0-nx,z:z0-nz}];
+        if(exclusions.some(zone=>polygonsOverlap(polygon,zone.polygon)))continue;
         const geometry=new THREE.BufferGeometry();
         geometry.setAttribute('position',new THREE.Float32BufferAttribute([x0+nx,y0,z0+nz,x0-nx,y0,z0-nz,x1+nx,y1,z1+nz,x1-nx,y1,z1-nz],3));
         geometry.setIndex([0,2,1,1,2,3]);geometry.computeVertexNormals();

@@ -1,3 +1,4 @@
+import {createRoyalCity} from './royal-city.js';
 import {loadCityData} from './city-data-loader.js';
 import { createEarliestSettlement, isEarliestPhase, isEarlyLandscapePhase } from './earliest-settlement.js';
 import { createSharedEraRuntime, isSharedSlicePhase, isSharedGenerationPhase } from './shared-era-runtime.js';
@@ -219,7 +220,7 @@ function addEraFabric(
   return meshes;
 }
 function legacyTemporalAllowed(object, phaseId) {
-  return object.rendererBinding!=='ledger-only-pending-adapter' && !isCorePhase(phaseId) && !isEarlyLandscapePhase(phaseId);
+  return object.rendererBinding!=='ledger-only-pending-adapter' && !isCorePhase(phaseId) && !isEarlyLandscapePhase(phaseId) && !isSharedGenerationPhase(phaseId);
 }
 export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   const scene = new THREE.Scene(),
@@ -293,7 +294,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
-  let retainedVisible = false;
+  let retainedVisible = false, royalCity=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
   generationStatus.setAttribute('role', 'status');
@@ -320,6 +321,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     middleBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     lateBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     davidSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
+    royalCity?.apply({position:timelinePosition,ruin:currentRuin,evidenceAllowed});
     const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
@@ -403,7 +405,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     // Request only this bounded slice; other eras retain their established morphology.
     sharedEraRuntime?.request(phaseId);
     if (isCorePhase(phaseId) || isEarlyLandscapePhase(phaseId)) return;
-    if (sharedEraRuntime?.status === 'ready' && isSharedGenerationPhase(phaseId)) {
+    if (isSharedGenerationPhase(phaseId)) {
       eraFabricLayer.visible = false;
       return;
     }
@@ -456,6 +458,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const previousPhase = currentPhaseId,
       phaseChanged = previousPhase !== phaseId;
     currentPhaseId = phaseId;
+    timelinePosition=position;
+    if(phaseChanged&&templePriorCamera){camera.position.copy(templePriorCamera.position);controls.target.copy(templePriorCamera.target);controls.minDistance=templePriorCamera.minDistance;templePriorCamera=null;controls.update();}
     if(phaseChanged && earliestSettlement) {
       if(isEarlyLandscapePhase(phaseId)) {
         if(!isEarlyLandscapePhase(previousPhase)) priorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
@@ -467,6 +471,12 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       } else if(priorCamera) {
         camera.position.copy(priorCamera.position);controls.target.copy(priorCamera.target);controls.minDistance=priorCamera.minDistance;priorCamera=null;controls.update();
       }
+    }
+    if(phaseId==='david-solomon'&&royalCity){
+      const stage=objects.find(o=>o.id==='j3k:object:first-temple')?.state==='absent'?'david':'solomon';
+      if(stage!==royalCameraStage||phaseChanged){royalCameraStage=stage;
+        const focus=stage==='solomon'?royalCity.focus:davidSettlement.focus;controls.target.copy(focus);
+        camera.position.copy(focus).add(stage==='solomon'?(camera.aspect<1?new THREE.Vector3(680,650,980):new THREE.Vector3(400,380,620)):new THREE.Vector3(240,230,340));controls.update();}
     }
     applyTemporalState();
     if (phaseChanged && terrainRuntime) {
@@ -618,6 +628,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       cityProjection = createCityProjection(cityCoreLayer, architecture.meshes);
       cityCoreRuntime.projection = cityProjection;
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
+        getExclusions:phase=>royalCity?.exclusionsFor(phase)||[],
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
         successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],
         expansionFootprint: ERA_FOOTPRINTS['hellenistic-hasmonean'],
@@ -644,7 +655,9 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime});
     const davidResponse=await fetch('./data/settlement/david-solomon.v1.json',{cache:'no-store'});
     if(!davidResponse.ok) throw new Error('David landscape data unavailable');
-    davidSettlement=createEarliestSettlement(root,{data:await davidResponse.json(),terrain:terrainRuntime});
+    const davidData=await davidResponse.json();
+    davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime});
+    royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     const bounds = new THREE.Box3()
       .setFromObject(cityCoreLayer)
       .union(new THREE.Box3().setFromObject(historical));
@@ -728,6 +741,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             middleBronzeSettlement: middleBronzeSettlement?.diagnostics(),
             lateBronzeSettlement: lateBronzeSettlement?.diagnostics(),
             davidSettlement: davidSettlement?.diagnostics(),
+            royalCity:royalCity?.diagnostics(),
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -793,6 +807,11 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       };
       return runtime?.evidence();
     },
+    focusRoyalTemple(){
+      if(!royalCity?.diagnostics().visibleTemple)return;
+      if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
+      controls.minDistance=35;controls.target.copy(royalCity.templeFocus);camera.position.copy(royalCity.templeFocus).add(new THREE.Vector3(65,60,90));controls.update();needsFrame=true;
+    },
     setRetainedLayerVisible(visible) {
       retainedVisible = Boolean(visible);
       applyTemporalState();
@@ -839,6 +858,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       middleBronzeSettlement?.dispose();
       lateBronzeSettlement?.dispose();
       davidSettlement?.dispose();
+      royalCity?.dispose();
       generationStatus.remove();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])
