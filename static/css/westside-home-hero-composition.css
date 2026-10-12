@@ -156,3 +156,18 @@ body.home .sites-home-hero .sites-home-film{position:absolute;inset:0}
 body.home .sites-home-hero .sites-home-film iframe{width:100%;height:100%;border:0;object-fit:cover}
 body.home .sites-home-hero .sites-home-masthead img{filter:brightness(0) invert(1)}
 body.home .sites-home-hero .sites-home-star{filter:brightness(0) invert(1)}
+
+/* Editorial small caps: navigation and English scripture only.
+   The main slogan remains full-size Bodoni Roman/Italic. */
+body.home .sites-home-hero .sites-home-nav a,
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture,
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite,
+body.home .sites-home-hero .sites-home-entry a{
+ font-variant-caps:all-small-caps;
+ font-feature-settings:"smcp" 1,"c2sc" 1;
+}
+body.home .sites-home-hero .sites-home-intro h1,
+body.home .sites-home-hero .sites-home-intro h1 em{
+ font-variant-caps:normal;
+ font-feature-settings:normal;
+}
