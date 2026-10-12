@@ -321,8 +321,9 @@ body.home{
   color:var(--ws-text);
 }
 body.home .sites-home-hero{
-  --ws-home-hero-deep:color-mix(in oklab,var(--ws-night) 88%,var(--ws-water));
-  background:var(--ws-home-hero-deep);
+  /* First paint matches the warm editorial film fallback; never the old night/gold skin. */
+  --ws-home-hero-deep:#eee8da;
+  background:#eee8da;
   color:var(--ws-paper);
 }
 body.home .sites-home-film:after{
