@@ -59,6 +59,19 @@ test('Blender PeerTube playback readiness is independently reported', async ({ p
   } catch (err) { status = 'EMBED_REQUEST_ERROR'; }
   console.log('PEERTUBE_PLAYBACK_STATUS=' + status);
   await testInfo.attach('peertube-endpoint-status', { body: status + '\\n', contentType: 'text/plain' });
+  let playback = 'NOT_CONFIRMED';
+  try {
+    const video = page.frameLocator('#detail iframe').locator('video').first();
+    await video.waitFor({ state: 'attached', timeout: 8000 });
+    const before = await video.evaluate(v => v.currentTime);
+    await video.evaluate(v => v.play().catch(() => {}));
+    await page.waitForTimeout(4500);
+    const after = await video.evaluate(v => ({ time: v.currentTime, paused: v.paused, ready: v.readyState }));
+    if (!after.paused && after.ready >= 2 && after.time > before + 0.5) playback = 'PLAYING_CONFIRMED';
+    else playback = 'NOT_CONFIRMED paused=' + after.paused + ' ready=' + after.ready;
+  } catch (err) { playback = 'NOT_CONFIRMED ' + String(err.message).slice(0,180); }
+  console.log('PEERTUBE_REAL_PLAYBACK=' + playback);
+  await testInfo.attach('peertube-real-playback', { body: playback, contentType: 'text/plain' });
   await page.screenshot({ path: testInfo.outputPath('peertube-embed.png') });
   await page.getByRole('button', { name: '關閉 ×' }).click();
   await expect(iframe).toHaveCount(0);
