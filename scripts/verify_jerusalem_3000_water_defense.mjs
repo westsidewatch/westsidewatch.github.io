@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';import{readFile}from'node:fs/promises';
 import{compileWaterDefenseRegistration,appendWaterDefenseLedger,bindWaterDefenseCore,waterDefenseState}from'../preview/jerusalem-3000/water-defense-registration.js';
 import{loadTemporalCityCore}from'../preview/jerusalem-3000/temporal-city-core-adapter.js';import{loadAnchorCityLedger}from'../preview/jerusalem-3000/anchor-ledger-loader.js';import{invalidateCityData}from'../preview/jerusalem-3000/city-data-loader.js';
 const base=new URL('../preview/jerusalem-3000/',import.meta.url),json=async p=>JSON.parse(await readFile(new URL(p,base))),data=await json('data/urban/water-defense.registration.v1.json'),timeline=await json('data/continuous-build-timeline.json'),origin={lat:31.773235,lon:35.2368303},compiled=compileWaterDefenseRegistration(data,origin);
-assert.equal(compiled.objects.length,4);assert.equal(compiled.objects.filter(o=>o.point).length,2);
+assert.equal(compiled.objects.length,6);assert.equal(compiled.objects.filter(o=>o.point).length,2);
 assert.deepEqual(compiled.objects[0].point,{x:0,z:-0});assert.ok(compiled.objects[1].point.x< -450&&compiled.objects[1].point.z< -280);
 assert.ok(compiled.objects.every(o=>!o.geometryVerified&&o.geometry.primitive!=='polygon'&&o.geometry.primitive!=='polyline'));
 const fabricated=structuredClone(data);fabricated.objects[1].footprint=[[0,0],[10,10]];assert.throws(()=>compileWaterDefenseRegistration(fabricated,origin),/Unreviewed/);

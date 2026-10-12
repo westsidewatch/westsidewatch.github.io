@@ -2,6 +2,7 @@
   "schema": "j3k.water-defense.registration.v1",
   "authority": "source registration and geometry gaps; not complete water/defense reconstruction",
   "scope": [
+    "middle-bronze",
     "david-solomon",
     "late-first-temple",
     "babylonian-destruction",
@@ -26,6 +27,11 @@
       "geometryStatus": "modern-reference-point-only",
       "gap": "現代泉點已定位；古代取水口、流量與地表未核定。",
       "lifecycleEvents": [
+        {
+          "phase": "middle-bronze",
+          "state": "transform",
+          "authority": "natural-source-reference-not-construction-or-flow-certification"
+        },
         {
           "phase": "david-solomon",
           "state": "transform",
@@ -96,6 +102,11 @@
       "gap": "中青銅／鐵器時代定年有不同方案；不可把前期草模直接當作後代原樣留存。",
       "lifecycleEvents": [
         {
+          "phase": "middle-bronze",
+          "state": "unresolved",
+          "authority": "competing-tower-dating-variants"
+        },
+        {
           "phase": "david-solomon",
           "state": "unresolved",
           "authority": "dating-variant-not-resolved"
@@ -124,6 +135,52 @@
           "authority": "specific-waterwork-fate-unverified"
         }
       ]
+    },
+    {
+      "id": "j3k:object:gihon-protected-access-hypothesis",
+      "label": "取水防護通道（推定）",
+      "kind": "water-fortification",
+      "confidence": "inferred",
+      "sources": [
+        "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+      ],
+      "geometryStatus": "withheld-pending-shared-middle-bronze-adapter",
+      "gap": "既有模型僅為中青銅期示意；平面、高度、方位與後續留存未核定。",
+      "lifecycleEvents": [
+        {
+          "phase": "middle-bronze",
+          "state": "build",
+          "authority": "illustrative-access-not-excavated-plan"
+        },
+        {
+          "phase": "late-bronze-iron1",
+          "state": "unresolved",
+          "authority": "specific-component-continuity-unverified"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:gihon-carved-installation-hypothesis",
+      "label": "鑿岩取水設施輪廓（推定）",
+      "kind": "water-fortification",
+      "confidence": "inferred",
+      "sources": [
+        "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+      ],
+      "geometryStatus": "withheld-pending-shared-middle-bronze-adapter",
+      "gap": "既有模型僅為中青銅期示意；平面、高度、方位與後續留存未核定。",
+      "lifecycleEvents": [
+        {
+          "phase": "middle-bronze",
+          "state": "build",
+          "authority": "illustrative-access-not-excavated-plan"
+        },
+        {
+          "phase": "late-bronze-iron1",
+          "state": "unresolved",
+          "authority": "specific-component-continuity-unverified"
+        }
+      ]
     }
   ],
   "limitations": [
@@ -132,5 +189,21 @@
     "史料中的整體毀城不證明每段寬牆或地下水道同時消失。",
     "晚期聖殿城市的八世紀西向擴張是目前敘事切片；更早擴張與東側牆段定年需依新研究分別核對，不能全歸給希西家。"
   ],
-  "chronologyReviewSource": "https://pubmed.ncbi.nlm.nih.gov/38683984/"
+  "chronologyReviewSource": "https://pubmed.ncbi.nlm.nih.gov/38683984/",
+  "towerVariants": [
+    {
+      "id": "middle-bronze-hypothesis",
+      "label": "中青銅假說：顯示推定泉塔",
+      "displayPhase": "middle-bronze",
+      "source": "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf",
+      "authority": "illustrative-middle-bronze-variant-not-dating-certification"
+    },
+    {
+      "id": "iron-age-dating",
+      "label": "鐵器定年方案：本期不顯示泉塔",
+      "displayPhase": null,
+      "source": "https://weizmann.elsevierpure.com/en/publications/absolute-dating-of-the-gihon-spring-fortifications-jerusalem/",
+      "authority": "alternative-dating-no-registered-later-footprint"
+    }
+  ]
 }

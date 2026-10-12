@@ -1,3 +1,4 @@
+import {createWaterDefenseModelAdapter} from './water-defense-model-adapter.js';
 import {compileWaterDefenseRegistration,bindWaterDefenseCore,waterDefenseState} from './water-defense-registration.js';
 import {fitCityOverview} from './city-overview.js';
 import {createPersianSanctuary} from './persian-sanctuary.js';
@@ -299,7 +300,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
-  let retainedVisible = false, royalCity=null, persianSanctuary=null, periodSpatialData=null, waterDefense=null, periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
+  let retainedVisible = false, royalCity=null, persianSanctuary=null, periodSpatialData=null, waterDefense=null, waterDefenseModel=null, periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
   generationStatus.setAttribute('role', 'status');
@@ -324,6 +325,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   function updateCityCoreVisibility() {
     earliestSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     middleBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
+    waterDefenseModel?.apply({position:timelinePosition,evidenceAllowed});
     lateBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     davidSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     royalCity?.apply({position:timelinePosition,ruin:currentRuin,evidenceAllowed});
@@ -680,6 +682,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime});
     const waterDefenseData=await loadCityData('./data/urban/water-defense.registration.v1.json');
     waterDefense=compileWaterDefenseRegistration(waterDefenseData,terrainRuntime.grid.origin);bindWaterDefenseCore(cityCoreRuntime.core,waterDefense);
+    waterDefenseModel=createWaterDefenseModelAdapter({runtime:middleBronzeSettlement,core:cityCoreRuntime.core,registration:waterDefense});
     const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');
     davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime});
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
@@ -765,6 +768,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             sharedEra: sharedState,
             earliestSettlement: earliestSettlement?.diagnostics(),
             middleBronzeSettlement: middleBronzeSettlement?.diagnostics(),
+            waterDefenseModel:waterDefenseModel?.diagnostics(),
             lateBronzeSettlement: lateBronzeSettlement?.diagnostics(),
             davidSettlement: davidSettlement?.diagnostics(),
             royalCity:royalCity?.diagnostics(),
@@ -835,7 +839,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       };
       return runtime?.evidence();
     },
-    waterDefenseEvidence(position){return waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);},
+    setWaterDefenseVariant(id){waterDefenseModel.setVariant(id);applyTemporalState();},
+    waterDefenseEvidence(position){const state=waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);return state?{...state,selectedVariant:waterDefenseModel.selectedVariant,variants:waterDefense.towerVariants}:null;},
     inspectCityObject(id){const record=cityCoreRuntime?.core.get(id);return record?structuredClone(record):null;},
     focusRoyalTemple(){
       const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:royalCity;

@@ -104,9 +104,10 @@ try {
   function renderWaterDefense(position){
     const info=three.waterDefenseEvidence(position),panel=document.querySelector('.j3k-evidence-panel');let section=panel.querySelector('[data-water-defense]');
     if(!info){section?.remove();return;}
-    const key=JSON.stringify([info.phase,info.objects.map(o=>o.state)]);if(section?.dataset.key===key)return;
+    const key=JSON.stringify([info.phase,info.selectedVariant,info.objects.map(o=>o.state)]);if(section?.dataset.key===key)return;
     if(!section){section=document.createElement('section');section.dataset.waterDefense='';panel.append(section);}section.dataset.key=key;section.replaceChildren();
     const title=document.createElement('h4');title.textContent='城防／取水 · 定位與缺口';section.append(title);
+    if(info.phase==='middle-bronze'){const label=document.createElement('label');label.textContent='泉塔年代方案 ';const select=document.createElement('select');select.setAttribute('aria-label','泉塔年代方案');for(const v of info.variants){const option=document.createElement('option');option.value=v.id;option.textContent=v.label;select.append(option);}select.value=info.selectedVariant;select.addEventListener('change',()=>{three.setWaterDefenseVariant(select.value);renderWaterDefense(position);});label.append(select);section.append(label);}
     const note=document.createElement('p');note.textContent='定位圖使用現代近似位置點，不是古代城界、牆段平面或地下水道線。';section.append(note);
     const points=info.objects.filter(o=>o.point),ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 320 190');svg.setAttribute('role','img');svg.setAttribute('aria-label','基訓泉與西丘寬牆的現代參考位置，沒有繪製古代牆線或水道');
     const xs=points.map(o=>o.point.x),zs=points.map(o=>o.point.z),xmin=Math.min(...xs)-80,xmax=Math.max(...xs)+80,zmin=Math.min(...zs)-70,zmax=Math.max(...zs)+70,scale=Math.min(300/(xmax-xmin),170/(zmax-zmin));
