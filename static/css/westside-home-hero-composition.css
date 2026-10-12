@@ -162,6 +162,25 @@ body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visi
  }
 }
 
+/* Living Sequence: film-led exit into existing WATCH/WITNESS and WALK/WORSHIP scenes.
+   No scroll trapping, no iframe replacement, and no layout shift. */
+@media (min-width:901px) and (prefers-reduced-motion:no-preference){
+ body.home .sites-home-hero .sites-home-masthead{
+  opacity:calc(1 - var(--home-hero-exit,0) * .82);
+  transform:translate3d(0,calc(var(--home-hero-exit,0) * -5vh),0);
+ }
+ body.home .sites-home-hero .sites-home-intro{
+  opacity:calc(1 - var(--home-hero-exit,0));
+  transform:translate3d(0,calc(var(--home-hero-exit,0) * -9vh),0);
+ }
+ body.home .sites-home-hero .sites-home-film{
+  filter:brightness(calc(1 - var(--home-hero-exit,0) * .2));
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ body.home .sites-home-hero .sites-home-masthead,
+ body.home .sites-home-hero .sites-home-intro{opacity:1!important;transform:none!important}
+}
 /* Hero structural foundation — migrated from deleted sites-home.css. */
 body.home{margin:0;color:var(--ws-text);font-family:var(--ws-type-display-en,"Bodoni Moda",serif);line-height:1.35}
 body.home *{box-sizing:border-box}
