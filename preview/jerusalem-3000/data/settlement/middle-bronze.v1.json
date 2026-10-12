@@ -1,0 +1,199 @@
+{
+  "schema": "j3k.middle-bronze-landscape.v1",
+  "phase": "middle-bronze",
+  "authority": "source-constrained water-defense illustration; full urban envelope withheld",
+  "spring": {
+    "lat": 31.773235,
+    "lon": 35.2368303,
+    "accuracy": "approximate-modern-map-point-not-ancient-survey",
+    "source": "https://api.openstreetmap.org/api/0.6/node/1608094098",
+    "attribution": "© OpenStreetMap contributors, ODbL"
+  },
+  "historicalSource": "https://cityofdavid.org.il/bronze-area/",
+  "limitations": [
+    "House counts/footprints and corridor positions are illustrative, not excavated plans.",
+    "Spring tower dating is disputed; geometry height, orientation and position are unverified.",
+    "Carved installation is outline-only; terrain is not excavated and it is not depicted as a full water pool.",
+    "Whole city-wall circuit remains withheld.",
+    "Modern DEM/spring map point do not reconstruct ancient ground levels."
+  ],
+  "houseOffsets": [
+    [
+      -70,
+      -18
+    ],
+    [
+      -83,
+      -8
+    ],
+    [
+      -93,
+      -23
+    ],
+    [
+      -107,
+      -12
+    ],
+    [
+      -115,
+      3
+    ],
+    [
+      -95,
+      12
+    ],
+    [
+      -75,
+      17
+    ],
+    [
+      -87,
+      34
+    ],
+    [
+      -109,
+      33
+    ],
+    [
+      -124,
+      24
+    ],
+    [
+      -137,
+      9
+    ],
+    [
+      -132,
+      -16
+    ],
+    [
+      -117,
+      -33
+    ],
+    [
+      -99,
+      -42
+    ],
+    [
+      -148,
+      -9
+    ],
+    [
+      -141,
+      -35
+    ],
+    [
+      -122,
+      -51
+    ],
+    [
+      -99,
+      -61
+    ],
+    [
+      -79,
+      -48
+    ],
+    [
+      -62,
+      -32
+    ],
+    [
+      -65,
+      37
+    ],
+    [
+      -80,
+      53
+    ],
+    [
+      -108,
+      54
+    ],
+    [
+      -135,
+      44
+    ]
+  ],
+  "pathOffsets": [
+    [
+      0,
+      0
+    ],
+    [
+      -18,
+      4
+    ],
+    [
+      -38,
+      11
+    ],
+    [
+      -59,
+      8
+    ],
+    [
+      -78,
+      2
+    ],
+    [
+      -104,
+      8
+    ],
+    [
+      -126,
+      19
+    ]
+  ],
+  "datingSources": [
+    "https://weizmann.elsevierpure.com/en/publications/absolute-dating-of-the-gihon-spring-fortifications-jerusalem/",
+    "https://www.tandfonline.com/doi/abs/10.1080/03344355.2018.1412056"
+  ],
+  "defense": {
+    "tower": {
+      "outerSize": 16,
+      "wallWidth": 5.5,
+      "confidence": "disputed",
+      "height": 3.3,
+      "heightVerified": false,
+      "positionVerified": false
+    },
+    "corridor": {
+      "wallWidth": 3,
+      "height": 2.2,
+      "lines": [
+        [
+          [
+            -11,
+            -9
+          ],
+          [
+            -52,
+            -3
+          ]
+        ],
+        [
+          [
+            -11,
+            9
+          ],
+          [
+            -52,
+            15
+          ]
+        ]
+      ],
+      "confidence": "inferred"
+    },
+    "carvedInstallation": {
+      "offset": [
+        -24,
+        24
+      ],
+      "width": 15,
+      "depth": 10,
+      "confidence": "inferred",
+      "representation": "outline-only"
+    }
+  }
+}

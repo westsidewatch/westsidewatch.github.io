@@ -30,3 +30,24 @@ runtime.apply({phaseId:'herodian-jesus',evidenceAllowed:()=>true});assert.equal(
 runtime.apply({phaseId:EARLIEST_PHASE,evidenceAllowed:()=>true});assert.equal(runtime.diagnostics().identityFingerprint,identity);
 runtime.dispose();assert.equal(parent.children.length,0);assert.equal(disposed,components);geometry.dispose();
 console.log('PASS: early-only small settlement, mapped anchor, rendered surface sampling, grounded footings, evidence filtering, identity and disposal');
+
+const middleData=JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/data/settlement/middle-bronze.v1.json',import.meta.url)));
+const middleParent=new THREE.Group(),middle=createEarliestSettlement(middleParent,{data:middleData,terrain});
+middle.apply({phaseId:'middle-bronze',evidenceAllowed:()=>true});
+assert.equal(middle.diagnostics().visibleHouses,24);
+assert.ok(middle.diagnostics().visibleDefenseComponents>0);
+assert.notEqual(middle.diagnostics().identityFingerprint,identity,'no unsupported house survival links');
+assert.equal(middle.diagnostics().towerDatingDisputed,true);
+const tower=new THREE.Group();
+middleParent.traverse(m=>{if(m.userData.cityObject?.kind==='spring-tower'){
+ assert.equal(m.userData.cityObject.confidence,'disputed');
+ tower.add(m.clone());
+}});
+const size=new THREE.Box3().setFromObject(tower).getSize(new THREE.Vector3());
+assert.ok(Math.abs(size.x-16)<.2&&Math.abs(size.z-16)<.2,'preserve sourced tower plan dimensions');
+middle.apply({phaseId:'middle-bronze',evidenceAllowed:c=>c!=='disputed'});
+assert.ok([...middleParent.children[0].children].filter(m=>m.userData.cityObject.kind==='spring-tower').every(m=>!m.visible));
+middle.apply({phaseId:'middle-bronze',evidenceAllowed:()=>false});assert.equal(middle.diagnostics().visibleDefenseComponents,0);
+middle.apply({phaseId:EARLIEST_PHASE,evidenceAllowed:()=>true});assert.equal(middleParent.children[0].visible,false);
+middle.dispose();
+console.log('PASS: source-sized water defense, disputed tower filter, phase isolation and distinct house identity');
