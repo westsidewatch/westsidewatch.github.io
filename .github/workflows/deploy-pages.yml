@@ -115,7 +115,7 @@ jobs:
           for attempt in $(seq 1 12); do
             html="$(curl --fail --location --silent --show-error --max-time 20 "${base}/olive/?verify=${GITHUB_SHA}" || true)"
             js="$(curl --fail --location --silent --show-error --max-time 20 "${base}/olive/olive.js?verify=${GITHUB_SHA}" || true)"
-            if [[ "${html}" == *'data-dore-index'* && "${js}" == *'doreIndex'* ]]; then
+            if [[ "${html}" == *'olive-home-stage'* && "${html}" == *'olive-speaker-rail'* && "${html}" == *'olive-editorial-rail.js'* && "${js}" == *'doreIndex'* ]]; then
               echo "Published Olive verified: ${base}/olive/ at commit ${GITHUB_SHA}"
               exit 0
             fi
