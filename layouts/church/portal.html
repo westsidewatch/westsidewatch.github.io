@@ -97,12 +97,17 @@
     <p>講道／見證 · 聲音</p>
   </section>
 
-  <nav class="sites-church-entries" data-mersi-panel aria-label="教會生活">
+  <section class="church-horizontal" id="church-horizontal" aria-labelledby="church-horizontal-title">
+  <div class="church-horizontal__track">
+    <header class="church-horizontal__intro"><p>04 / LIFE TOGETHER</p><h2 id="church-horizontal-title">教會生活</h2><p>向下捲動，繼續探索教會生活。</p></header>
+    <nav class="sites-church-entries church-horizontal__entries" aria-label="教會生活">
     {{ range .Pages.ByWeight }}
       {{ $entryHref := .Params.entry_url | default .RelPermalink }}
       <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<em>{{ . }}</em>{{ end }}<b>↗</b></a>
     {{ end }}
-  </nav>
+    </nav>
+  </div>
+</section>
 
   <footer class="sites-church-footer">
     <span>P.A.O.C. Living Water Assembly West</span>
