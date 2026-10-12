@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import * as THREE from 'three';
+import { compilePeriodRegistration } from '../preview/jerusalem-3000/period-spatial-registration.js';
+import { buildEraParcelCore } from '../preview/jerusalem-3000/herodian-parcel-core.js';
+import { TemporalCityCore } from '../preview/jerusalem-3000/temporal-city-core.js';
+import { polygonsOverlap } from '../preview/jerusalem-3000/urban-exclusion.js';
+import { createSharedEraRuntime } from '../preview/jerusalem-3000/shared-era-runtime.js';
+const data=JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/data/urban/first-temple-persian.spatial.v1.json',import.meta.url)));
+const origin={lat:31.773235,lon:35.2368303},terrain={heightAtWorld:()=>100};
+const first=compilePeriodRegistration(data,'late-first-temple',origin),later=compilePeriodRegistration(data,'persian-nehemiah',origin);
+assert.equal(first.districts.length,3);assert.equal(later.districts.length,2);
+assert.ok(first.districts.some(d=>d.id.endsWith('western-hill')));
+assert.ok(!later.districts.some(d=>d.id.endsWith('western-hill')));
+assert.ok(first.roads.every(r=>!later.roads.some(s=>s.id===r.id)));
+const shifted=compilePeriodRegistration(data,'late-first-temple',{lat:origin.lat+.001,lon:origin.lon+.001});
+assert.notEqual(shifted.roads[0].geometry.points[0].x,first.roads[0].geometry.points[0].x);
+assert.throws(()=>compilePeriodRegistration({...data,frame:'wrong'},'late-first-temple',origin));
+assert.throws(()=>compilePeriodRegistration(data,'missing',origin));
+const bad=structuredClone(data);bad.phases['late-first-temple'].roads[0].points[0]=[NaN,0];
+assert.throws(()=>compilePeriodRegistration(bad,'late-first-temple',origin));
+for(const registration of [first,later]) {
+ const core=new TemporalCityCore({phases:[{id:registration.phase}],terrain});
+ const results=registration.districts.map(d=>buildEraParcelCore(core,terrain,{phaseId:registration.phase,registration,districtId:d.id,exclusions:registration.reservations}));
+ for(const result of results)assert.ok(result.count>0,'each inhabited district must generate parcels');
+ const parcels=results.flatMap(r=>r.parcels);
+ assert.equal(new Set(parcels.map(p=>p.id)).size,parcels.length);
+ assert.ok(parcels.every(p=>registration.reservations.every(r=>!polygonsOverlap(p.geometry.polygon,r.polygon))),'sanctuary reservation must remain clear');
+ assert.ok(core.validate().ok);
+}
+const material=new THREE.MeshStandardMaterial(),parent=new THREE.Group();
+const runtime=createSharedEraRuntime(parent,{reference:{},terrain,materials:{inferred:material,facadeOpening:material},getRegistration:phase=>compilePeriodRegistration(data,phase,origin)});
+async function ready(phase){runtime.request(phase);for(let i=0;i<1000&&runtime.status==='generating';i++)await new Promise(r=>setTimeout(r,5));assert.equal(runtime.status,'ready');}
+await ready('late-first-temple');runtime.apply({phaseId:'late-first-temple',ruin:0});
+const before=runtime.diagnostics();assert.equal(before.independentLayout,true);assert.equal(before.districtIds.length,3);
+await ready('babylonian-destruction');runtime.apply({phaseId:'babylonian-destruction',ruin:.8});
+assert.equal(runtime.diagnostics().projection.identityFingerprint,before.projection.identityFingerprint);
+await ready('persian-nehemiah');runtime.apply({phaseId:'persian-nehemiah',retainedVisible:true});
+assert.equal(runtime.diagnostics().successor.independentLayout,true);
+assert.equal(runtime.diagnostics().successor.districtIds.length,2);
+runtime.dispose();assert.equal(parent.children.length,0);material.dispose();
+console.log('PASS: independent period layouts, geographic registration, all districts populated, sanctuary exclusions, destruction identity and distinct Persian layout');

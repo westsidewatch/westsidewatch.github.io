@@ -15,7 +15,7 @@ export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || id === RE
 // One provisional first-temple fabric, inherited by destruction in place.
 // Reuse is a schematic lifecycle, not evidence of surveyed period-specific parcels.
 function createParcelRuntime(parent, { reference, footprint, terrain, materials,
-  generationPhase, phaseIds, destroyedPhase = null, retainedPhase = null, getExclusions=()=>[],
+  generationPhase, phaseIds, destroyedPhase = null, retainedPhase = null, getExclusions=()=>[], getRegistration=null,
   onChange = () => {}, onProgress = () => {} }) {
   const openingMaterial = materials.facadeOpening || new THREE.MeshStandardMaterial({ color: 0x3d3327, roughness: .94, metalness: 0 });
   const sharedMaterials = { ...materials, facadeOpening: openingMaterial };
@@ -48,12 +48,14 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
         if (controller.signal.aborted) throw new DOMException('Cancelled', 'AbortError');
         const phaseId = generationPhase;
         const core = new TemporalCityCore({ phases: phaseIds.map(id => ({ id })), terrain });
-        const registration = deriveEraRegistration(reference, phaseId, footprint);
-        const exclusions=getExclusions(phaseId);
-        const parcels = buildEraParcelCore(core, terrain, { exclusions,
-          phaseId, registration, districtId: registration.districts[0].id,
-          dataset: `provisional-${generationPhase}-footprint-not-surveyed`,
-        });
+        const registration = getRegistration?.(phaseId) ?? deriveEraRegistration(reference, phaseId, footprint);
+        const exclusions=[...getExclusions(phaseId), ...(registration.reservations || [])];
+        const districtResults = registration.districts.map(district => buildEraParcelCore(core, terrain, {
+          exclusions, phaseId, registration, districtId: district.id,
+          dataset: registration.independentLayout ? 'first-temple-persian.spatial.v1' : `provisional-${generationPhase}-footprint-not-surveyed`,
+        }));
+        const parcels = {parcels:districtResults.flatMap(r=>r.parcels), blocks:districtResults.flatMap(r=>r.blocks),
+          count:districtResults.reduce((n,r)=>n+r.count,0), blockCount:districtResults.reduce((n,r)=>n+r.blockCount,0)};
         const architecture = await buildEraParcelArchitectureAsync(group, core, sharedMaterials, terrain, {
           phaseId, destroyedPhase, signal: controller.signal,
           onProgress: progress => { state = { status: 'generating', ...progress }; onProgress(progress); },
@@ -74,7 +76,8 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
         });
         city = { group, core, parcels, architecture, projection };
         state = { status: 'ready', completed: architecture.buildings, total: architecture.buildings,
-          yields: architecture.yields, maxBatchMs: architecture.maxBatchMs, elapsedMs: architecture.elapsedMs, authority: registration.authority };
+          yields: architecture.yields, maxBatchMs: architecture.maxBatchMs, elapsedMs: architecture.elapsedMs, authority: registration.authority, independentLayout: registration.independentLayout === true,
+          districtIds:registration.districts.map(d=>d.id), roadIds:registration.roads.map(r=>r.id), reservationIds:(registration.reservations||[]).map(r=>r.id) };
       } catch (error) {
         release(group);
         state = { status: error.name === 'AbortError' ? 'cancelled' : 'error', error: String(error) };

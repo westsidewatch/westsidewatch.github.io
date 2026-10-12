@@ -1,3 +1,4 @@
+import { compilePeriodRegistration } from './period-spatial-registration.js';
 import {createRoyalCity} from './royal-city.js';
 import {loadCityData} from './city-data-loader.js';
 import { createEarliestSettlement, isEarliestPhase, isEarlyLandscapePhase } from './earliest-settlement.js';
@@ -627,7 +628,10 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       );
       cityProjection = createCityProjection(cityCoreLayer, architecture.meshes);
       cityCoreRuntime.projection = cityProjection;
+      const periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
+        getRegistration:phase => ['late-first-temple','persian-nehemiah'].includes(phase)
+          ? compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin) : null,
         getExclusions:phase=>royalCity?.exclusionsFor(phase)||[],
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
         successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],

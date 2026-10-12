@@ -1,0 +1,386 @@
+{
+  "schema": "j3k.period-spatial-layout.v1",
+  "frame": "spring-relative-east-x-south-z-metres",
+  "anchor": {
+    "lat": 31.773235,
+    "lon": 35.2368303,
+    "source": "https://api.openstreetmap.org/api/0.6/node/1608094098",
+    "attribution": "© OpenStreetMap contributors, ODbL"
+  },
+  "authority": "independent illustrative period layout; not surveyed ancient districts or streets",
+  "sources": [
+    "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf"
+  ],
+  "limitations": [
+    "西向擴張方向有導覽文獻支持；以下區域邊界與街道為設計示意，並非考古測繪。",
+    "波斯期較小的示意住居區不代表已核定人口、完整城界或西丘無人居住。",
+    "聖域只保留空間，不以第一聖殿模型冒充第二聖殿；城牆路線仍未核定。",
+    "跨代保留的住居遺跡是示意生命週期，未核定埋深與物理復用。"
+  ],
+  "phases": {
+    "late-first-temple": {
+      "districts": [
+        {
+          "id": "eastern-ridge",
+          "polygon": [
+            [
+              -205,
+              -180
+            ],
+            [
+              -30,
+              -180
+            ],
+            [
+              -30,
+              135
+            ],
+            [
+              -110,
+              215
+            ],
+            [
+              -180,
+              145
+            ],
+            [
+              -205,
+              -20
+            ]
+          ]
+        },
+        {
+          "id": "northern-precinct",
+          "polygon": [
+            [
+              -205,
+              -535
+            ],
+            [
+              -30,
+              -535
+            ],
+            [
+              -30,
+              -180
+            ],
+            [
+              -205,
+              -180
+            ]
+          ]
+        },
+        {
+          "id": "western-hill",
+          "polygon": [
+            [
+              -620,
+              -400
+            ],
+            [
+              -390,
+              -475
+            ],
+            [
+              -205,
+              -400
+            ],
+            [
+              -205,
+              -20
+            ],
+            [
+              -180,
+              145
+            ],
+            [
+              -110,
+              215
+            ],
+            [
+              -350,
+              300
+            ],
+            [
+              -600,
+              180
+            ]
+          ]
+        }
+      ],
+      "roads": [
+        {
+          "id": "ridge-spine",
+          "points": [
+            [
+              -112,
+              -360
+            ],
+            [
+              -112,
+              -190
+            ],
+            [
+              -105,
+              -70
+            ],
+            [
+              -105,
+              155
+            ]
+          ]
+        },
+        {
+          "id": "spring-access",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              -105,
+              0
+            ],
+            [
+              -250,
+              0
+            ],
+            [
+              -460,
+              40
+            ]
+          ]
+        },
+        {
+          "id": "ophel-west-link",
+          "points": [
+            [
+              -60,
+              -260
+            ],
+            [
+              -112,
+              -260
+            ],
+            [
+              -320,
+              -260
+            ],
+            [
+              -540,
+              -230
+            ]
+          ]
+        },
+        {
+          "id": "western-spine",
+          "points": [
+            [
+              -460,
+              -370
+            ],
+            [
+              -440,
+              -160
+            ],
+            [
+              -420,
+              70
+            ],
+            [
+              -400,
+              220
+            ]
+          ]
+        },
+        {
+          "id": "western-south",
+          "points": [
+            [
+              -560,
+              120
+            ],
+            [
+              -400,
+              120
+            ],
+            [
+              -250,
+              120
+            ],
+            [
+              -140,
+              130
+            ]
+          ]
+        },
+        {
+          "id": "northern-approach",
+          "points": [
+            [
+              -112,
+              -360
+            ],
+            [
+              -54,
+              -360
+            ],
+            [
+              -54,
+              -390
+            ]
+          ]
+        }
+      ],
+      "reservations": [
+        {
+          "id": "sacred-precinct",
+          "polygon": [
+            [
+              -175,
+              -530
+            ],
+            [
+              -30,
+              -530
+            ],
+            [
+              -30,
+              -390
+            ],
+            [
+              -175,
+              -390
+            ]
+          ]
+        }
+      ]
+    },
+    "persian-nehemiah": {
+      "districts": [
+        {
+          "id": "ridge-rebuilding",
+          "polygon": [
+            [
+              -170,
+              -180
+            ],
+            [
+              -55,
+              -180
+            ],
+            [
+              -55,
+              125
+            ],
+            [
+              -115,
+              185
+            ],
+            [
+              -175,
+              90
+            ]
+          ]
+        },
+        {
+          "id": "northern-rebuilding",
+          "polygon": [
+            [
+              -170,
+              -535
+            ],
+            [
+              -40,
+              -535
+            ],
+            [
+              -40,
+              -180
+            ],
+            [
+              -170,
+              -180
+            ]
+          ]
+        }
+      ],
+      "roads": [
+        {
+          "id": "rebuilding-spine",
+          "points": [
+            [
+              -90,
+              -365
+            ],
+            [
+              -100,
+              -230
+            ],
+            [
+              -115,
+              -60
+            ],
+            [
+              -115,
+              130
+            ]
+          ]
+        },
+        {
+          "id": "spring-rebuilding-access",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              -115,
+              0
+            ]
+          ]
+        },
+        {
+          "id": "northern-rebuilding-access",
+          "points": [
+            [
+              -90,
+              -365
+            ],
+            [
+              -54,
+              -365
+            ],
+            [
+              -54,
+              -390
+            ]
+          ]
+        }
+      ],
+      "reservations": [
+        {
+          "id": "second-temple-location-reservation",
+          "polygon": [
+            [
+              -175,
+              -530
+            ],
+            [
+              -30,
+              -530
+            ],
+            [
+              -30,
+              -390
+            ],
+            [
+              -175,
+              -390
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

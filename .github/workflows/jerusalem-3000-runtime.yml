@@ -31,6 +31,7 @@ jobs:
       - name: Verify bounded shared generation
         run: |
           node scripts/verify_jerusalem_3000_shared_era.mjs
+          node scripts/verify_jerusalem_3000_period_spatial.mjs
           node scripts/verify_jerusalem_3000_earliest.mjs
       - name: Render the proposed city and scrub through destruction
         run: |
