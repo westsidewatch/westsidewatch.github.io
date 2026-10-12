@@ -65,3 +65,11 @@
 .mersi-church .church-horizontal__entries{width:max-content}
 .mersi-church .church-horizontal__entries a{width:min(70vw,660px);flex:0 0 min(70vw,660px)}
 @media(max-width:850px),(prefers-reduced-motion:reduce){.mersi-church .church-horizontal__track,.mersi-church .church-horizontal__entries{width:100%;min-width:0}.mersi-church .church-horizontal__entries a{width:auto}}
+
+/* The three story panels must remain legible throughout the transition. */
+.mersi-church .mc-scene.is-current{opacity:1!important;visibility:visible!important}
+.mersi-church .mc-scene.is-adjacent{visibility:visible}
+.mersi-church .mc-scene:focus-within{visibility:visible;opacity:1}
+.mersi-church .mc-hero{isolation:isolate}
+.mersi-church .mc-hero::before,.mersi-church .mc-hero::after{will-change:transform}
+@media(prefers-reduced-motion:reduce){.mersi-church .mc-scene,.mersi-church .mc-scene.is-current{opacity:1!important;visibility:visible!important;transform:none!important}}
