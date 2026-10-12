@@ -40,8 +40,8 @@ body.home .sites-home-hero .sites-home-nav a{
 body.home .sites-home-hero .sites-home-nav a:hover,
 body.home .sites-home-hero .sites-home-nav a:focus-visible{border-color:currentColor}
 body.home .sites-home-hero .sites-home-intro{
- position:absolute;z-index:2;left:var(--home-edge);right:auto;
- bottom:clamp(145px,17vh,225px);width:min(76vw,1150px);max-width:none;
+ position:absolute;z-index:2;left:auto;right:var(--home-edge);
+ bottom:clamp(155px,18vh,245px);width:min(55vw,880px);max-width:none;
  display:grid;grid-template-columns:minmax(0,1fr);align-items:end;
 }
 body.home .sites-home-hero .sites-home-star{
