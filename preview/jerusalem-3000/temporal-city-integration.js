@@ -1,5 +1,5 @@
 import {lifecycleStateAtPosition} from './construction-engine.js';
-import {loadCityData} from './city-data-loader.js';
+import {loadAnchorCityLedger} from './anchor-ledger-loader.js';
 const ACTIVE_STATES=new Set(['build','rebuild','settlement','expand','transform']);
 const RUIN_STATES=new Set(['ruin','buried']);
 const PHASE_FALLBACKS={
@@ -21,4 +21,4 @@ export class TemporalCityIntegration{
  sample(position){const objects=[];for(const object of this.objects.values())objects.push({...object,...this.stateFor(object.id,position,object)});return objects}
  summary(position){const sampled=this.sample(position);return sampled.reduce((out,item)=>{out[item.state]=(out[item.state]||0)+1;return out},{total:sampled.length})}
 }
-export async function loadTemporalCityIntegration(phases){const[packs,lifecycle]=await Promise.all([loadCityData('./data/anchor-era-packs.json'),loadCityData('./data/lifecycle/anchor-era.lifecycle.json')]);return new TemporalCityIntegration(phases,packs,lifecycle)}
+export async function loadTemporalCityIntegration(phases){const{packs,lifecycle}=await loadAnchorCityLedger();return new TemporalCityIntegration(phases,packs,lifecycle)}

@@ -1,3 +1,4 @@
+import {loadAnchorCityLedger} from './anchor-ledger-loader.js';
 import {loadCityData} from './city-data-loader.js';
 import {createTemporalCityCore,EVIDENCE_CONFIDENCE,CITY_OBJECT_TYPES} from './temporal-city-core.js';
 
@@ -16,7 +17,7 @@ function geometryDescriptor(object){const raw=object.geometry;if(raw&&typeof raw
 function lifecycleFor(id,lifecycleMap,phaseId){const events=lifecycleMap.get(id)||[];let built=null,destroyed=null,ruined=false,reused=false;for(const event of events){if(['build','rebuild','settlement','expand','transform'].includes(event.state)&&!built)built=event.phase;if(['ruin','buried'].includes(event.state)){destroyed=event.phase;ruined=true}if(event.reuseVerified===true)reused=true}return{built:built||phaseId,destroyed,ruined,reused,events};}
 const json=loadCityData;
 export async function loadTemporalCityCore(phases,{terrain=null}={}){
- const [packs,lifecycle]=await Promise.all([json('./data/anchor-era-packs.json'),json('./data/lifecycle/anchor-era.lifecycle.json')]);
+ const {packs,lifecycle}=await loadAnchorCityLedger();
  const core=createTemporalCityCore({phases,terrain});
  const lifecycleMap=new Map((lifecycle.objects||[]).map(item=>[item.id,item.lifecycleEvents||[]]));
  for(const pack of packs.packs||[]){
@@ -24,7 +25,7 @@ export async function loadTemporalCityCore(phases,{terrain=null}={}){
   if(pack.objectPack){try{const external=await json(`./data/${String(pack.objectPack).replace(/^\.\//,'')}`);objects=external.objects||external.features||[]}catch(error){console.warn('[J3K core adapter] object pack withheld',pack.objectPack,error)}}
   for(const object of objects){
    const id=object.id||object.properties?.id;if(!id)continue;const source=object.properties?{...object.properties,...object}:object;
-   core.register({id,type:TYPE_MAP[source.kind]||CITY_OBJECT_TYPES.BUILDING,phaseIds:[...new Set([pack.phase,...(lifecycleMap.get(id)||[]).map(event=>event.phase)])],geometry:geometryDescriptor(source),typology:source.kind||null,source:{evidence:source.evidence||null,label:source.label||null,anchorPack:pack.phase,urls:source.sources||[],limitations:source.limitations||[]},confidence:evidenceConfidence(source),lifecycle:lifecycleFor(id,lifecycleMap,pack.phase),metadata:{label:source.label||id,legacyConfidence:source.confidence||null,adapter:'anchor-era-packs-v1',relatedObjects:source.relatedObjects||[],rendererBinding:source.rendererBinding||null}});
+   core.register({id,type:TYPE_MAP[source.kind]||CITY_OBJECT_TYPES.BUILDING,phaseIds:[...new Set([pack.phase,...(lifecycleMap.get(id)||[]).map(event=>event.phase)])],geometry:geometryDescriptor(source),typology:source.kind||null,source:{evidence:source.evidence||null,label:source.label||null,anchorPack:pack.phase,urls:source.sources||[],limitations:source.limitations||[]},confidence:evidenceConfidence(source),lifecycle:lifecycleFor(id,lifecycleMap,pack.phase),metadata:{label:source.label||id,legacyConfidence:source.confidence||null,adapter:'anchor-era-packs-v1',relatedObjects:source.relatedObjects||[],rendererBinding:source.rendererBinding||null,lifecycleTemplate:source.lifecycleTemplate||null}});
   }
  }
  const validation=core.validate();

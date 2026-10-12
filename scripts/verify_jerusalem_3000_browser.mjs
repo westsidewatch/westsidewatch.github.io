@@ -28,7 +28,7 @@ try {
   );
   const runtime = await page.evaluate(() => window.__JERUSALEM3000__);
   assert.equal(runtime.status, 'ready', JSON.stringify(runtime));
-  for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json']) {
+  for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json','settlement/david-solomon.v1.json']) {
     assert.equal(dataRequests.get(`/preview/jerusalem-3000/data/${path}`),1,`one shared request for ${path}`);
   }
   assert.equal(
@@ -170,6 +170,8 @@ try {
   assert.equal(royal.davidSettlement.royalBuildingGeometryVerified,false);
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.active),false);
   await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity?.visibleTemple>0);
+  assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.visibleGates),9);
+  assert.ok((await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.reachableDestinations)).includes('temple-entry'));
   const royalIdentity=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.componentIdentity);
   await page.screenshot({path:`${output}/david-landscape.png`,fullPage:true});
   await page.getByRole('button',{name:'聖殿近看',exact:true}).click();

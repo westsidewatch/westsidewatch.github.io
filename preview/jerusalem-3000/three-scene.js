@@ -653,9 +653,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const lateResponse=await fetch('./data/settlement/late-bronze-iron1.v1.json',{cache:'no-store'});
     if(!lateResponse.ok) throw new Error('Late Bronze landscape data unavailable');
     lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime});
-    const davidResponse=await fetch('./data/settlement/david-solomon.v1.json',{cache:'no-store'});
-    if(!davidResponse.ok) throw new Error('David landscape data unavailable');
-    const davidData=await davidResponse.json();
+    const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');
     davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime});
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     const bounds = new THREE.Box3()
