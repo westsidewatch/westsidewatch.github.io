@@ -28,6 +28,7 @@
     animation-fill-mode:both;
     animation-timeline:view(block);
     animation-range:entry 0% cover 65%;
+    opacity:.92;
   }
   .sites-section-church .sites-church-intro::before {
     left:0;
@@ -42,6 +43,8 @@
   @keyframes ws-church-door-left {from{transform:translateX(0)}to{transform:translateX(-101%)}}
   @keyframes ws-church-door-right {from{transform:translateX(0)}to{transform:translateX(101%)}}
 }
+/* The title and scripture remain readable and keyboard reachable throughout the reveal. */
+.sites-section-church .sites-church-intro > * {position:relative;z-index:3}
 @media (prefers-reduced-motion:reduce) {
   .sites-section-church .sites-church-intro::before,
   .sites-section-church .sites-church-intro::after {
