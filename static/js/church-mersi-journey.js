@@ -3,9 +3,11 @@
 const journey=document.getElementById('church-journey');if(!journey)return;
 const scenes=[...journey.querySelectorAll('.mc-scene')],steps=[...journey.querySelectorAll('.mc-progress li')];
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+const gallery=document.getElementById('church-horizontal');const track=gallery?.querySelector('.church-horizontal__track');
+function galleryUpdate(){if(!gallery||!track)return;const mobile=matchMedia('(max-width: 850px)').matches;if(reduced.matches||mobile){track.style.transform='';return}const distance=Math.max(0,track.scrollWidth-gallery.clientWidth);const length=Math.max(1,gallery.offsetHeight-innerHeight);const p=Math.max(0,Math.min(1,-gallery.getBoundingClientRect().top/length));track.style.transform='translate3d('+(-distance*p)+'px,0,0)'}
 let frame=0;
 function render(){
- frame=0;
+ frame=0;galleryUpdate();
  if(reduced.matches){scenes.forEach(s=>{s.classList.add('is-current');s.style.removeProperty('--scene-p');s.style.removeProperty('--scene-out')});return}
  const max=Math.max(1,journey.offsetHeight-window.innerHeight);
  const progress=Math.max(0,Math.min(1,-journey.getBoundingClientRect().top/max));
