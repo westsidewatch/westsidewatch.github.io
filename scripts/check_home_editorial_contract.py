@@ -19,7 +19,7 @@ check('sites-home-slogan-zh' in html and 'sites-home-scripture' in html, "biling
 check('Romans 13:12' in html, "scripture reference preserved")
 check('sites-home-nav' in html and 'sites-home-entry' in html, "functional navigation preserved")
 check('westside-home-hero-composition.css' in base, "single homepage composition stylesheet is loaded")
-check('home-composition-r3' in base, "composition CSS cache version refreshed")
+check('home-composition-r4' in base, "composition CSS cache version refreshed")
 check('sites-home-film{z-index:0;pointer-events:none}' in css, "film stays visible within hero stacking context")
 check('sites-home-nav{z-index:5}' in css and 'sites-home-entry{z-index:5}' in css, "functional controls stay above film")
 check('@media(max-width:900px)' in css and '@media(max-width:520px)' in css, "tablet and phone layouts exist")
