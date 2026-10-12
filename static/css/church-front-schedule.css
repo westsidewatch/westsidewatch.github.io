@@ -46,3 +46,15 @@
 @keyframes church-door-left{to{transform:translateX(-102%)}}
 @keyframes church-door-right{to{transform:translateX(102%)}}
 @media(prefers-reduced-motion:reduce){.mersi-church .mc-hero::before,.mersi-church .mc-hero::after{display:none}.mersi-church .mc-scene{opacity:1;visibility:visible;transition:none}}
+
+/* Horizontal editorial gallery, driven by vertical scrolling; no wheel interception. */
+.mersi-church .church-horizontal{position:relative;height:230svh;background:#e9e1d3}
+.mersi-church .church-horizontal__track{position:sticky;top:0;height:100svh;display:flex;align-items:stretch;will-change:transform}
+.mersi-church .church-horizontal__intro{flex:0 0 min(78vw,900px);padding:clamp(36px,7vw,110px);display:flex;flex-direction:column;justify-content:center;background:#e6dbc0}
+.mersi-church .church-horizontal__intro h2{font-size:clamp(48px,8vw,128px);font-weight:400}
+.mersi-church .church-horizontal__entries{flex:none;display:flex;align-items:stretch;gap:0;padding:0;background:#ece4d4}
+.mersi-church .church-horizontal__entries a{flex:0 0 min(70vw,660px);min-height:100svh;padding:clamp(28px,5vw,90px);display:flex;flex-direction:column;justify-content:center;gap:2rem;border-right:1px solid #bcb09c;color:#292722}
+.mersi-church .church-horizontal__entries a strong{font-size:clamp(30px,4vw,68px);font-weight:400}
+.mersi-church .church-horizontal__entries a em{font-size:clamp(14px,1.3vw,18px)}
+@media(max-width:850px){.mersi-church .church-horizontal{height:auto}.mersi-church .church-horizontal__track{position:relative;height:auto;transform:none!important;display:block}.mersi-church .church-horizontal__intro{min-height:55svh}.mersi-church .church-horizontal__entries{display:block}.mersi-church .church-horizontal__entries a{min-height:28svh;padding:8vw}}
+@media(prefers-reduced-motion:reduce){.mersi-church .church-horizontal{height:auto}.mersi-church .church-horizontal__track{position:relative;height:auto;transform:none!important;display:block}.mersi-church .church-horizontal__entries{display:block}.mersi-church .church-horizontal__entries a{min-height:20svh}}
