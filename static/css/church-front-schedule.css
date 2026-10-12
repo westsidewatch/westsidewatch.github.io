@@ -73,3 +73,9 @@
 .mersi-church .mc-hero{isolation:isolate}
 .mersi-church .mc-hero::before,.mersi-church .mc-hero::after{will-change:transform}
 @media(prefers-reduced-motion:reduce){.mersi-church .mc-scene,.mersi-church .mc-scene.is-current{opacity:1!important;visibility:visible!important;transform:none!important}}
+
+/* Crossfade is scroll-driven, not a discrete display swap. */
+@media(prefers-reduced-motion:no-preference){
+.mersi-church .mc-scene.is-current,.mersi-church .mc-scene.is-adjacent{opacity:var(--scene-opacity,1)!important;visibility:visible!important;animation:none!important}
+.mersi-church .mc-scene.is-adjacent{pointer-events:none}
+}
