@@ -32,7 +32,8 @@ const viewports = registry.viewports;
   for(const viewport of viewports){
    for(const state of (contract.states||[{name:'default'}])){
    const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},reducedMotion:state.reducedMotion||'no-preference'});
-   await page.goto(url,{waitUntil:'networkidle'});
+   await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
+   await page.waitForTimeout(600);
    // Probe a generic Candidate card, not ONE: ONE has its own second-level
    // reading transition and would contaminate the four-card geometry contract.
    if(contract.probe==='homepage'){
@@ -51,7 +52,8 @@ const viewports = registry.viewports;
      const mobile=viewport.width<=900;
      const titleReadable=!!report.title&&report.title.width<=report.hero.width*(mobile?.98:.58);
      const reduced=state.reducedMotion==='reduce';
-     const motionOk=reduced?report.animations.every(x=>!x||x==='none'):report.animations.some(x=>x&&x!=='none');
+     const expectedMotion=reduced?(contract.rules?.motion?.reduced??'none'):(contract.rules?.motion?.normal??'present');
+     const motionOk=expectedMotion==='none'?report.animations.every(x=>!x||x==='none'):report.animations.some(x=>x&&x!=='none');
      const ok=inside&&collisionFree&&titleReadable&&motionOk;
      const artifactDir=path.join(artifactRoot,contract.id); fs.mkdirSync(artifactDir,{recursive:true});
      const stem=(viewport.name+'--'+state.name).replace(/[^a-z0-9_-]/gi,'-');

@@ -1,7 +1,7 @@
 {{ define "main" }}
 <section class="sites-second-layer sites-magazine" aria-labelledby="magazine-title">
   <nav class="sites-breadcrumb" aria-label="Breadcrumb"><a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Magazine</span></nav>
-  <header class="sites-journal-head">
+  <header class="sites-journal-head" data-ws-first-look="shared" data-ws-first-look-mode="editorial" data-ws-first-look-stage>
     <img src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="LivingWater — Westside Watch, Vol.00, 西望">
     <h1 id="magazine-title" class="ws-bilingual-heading"><span class="ws-bilingual-heading__en" lang="en">Magazine</span><span class="ws-bilingual-heading__zh" lang="zh-Hant">西望雜誌</span></h1>
     {{ with .Description }}<p>{{ . }}</p>{{ end }}
