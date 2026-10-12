@@ -180,3 +180,30 @@ body.home .sites-home-hero .sites-home-entry span{
 body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visible{
  outline:2px solid currentColor;outline-offset:5px;
 }
+
+/* Phase III — optical grid and media layering.
+   Keep the video in the hero stacking context, never behind the body. */
+body.home .sites-home-hero .sites-home-film{z-index:0;pointer-events:none}
+body.home .sites-home-hero .sites-home-film iframe{pointer-events:none}
+body.home .sites-home-hero .sites-home-nav{z-index:5}
+body.home .sites-home-hero .sites-home-masthead,
+body.home .sites-home-hero .sites-home-intro{z-index:2}
+body.home .sites-home-hero .sites-home-entry{z-index:5}
+@media(min-width:901px){
+ body.home .sites-home-hero .sites-home-intro{
+  width:min(calc(100vw - 2 * var(--home-edge)),1050px);
+  grid-template-columns:minmax(0,1fr) minmax(220px,.52fr);
+ }
+ body.home .sites-home-hero .sites-home-intro h1{min-width:0}
+ body.home .sites-home-hero .sites-home-scripture{min-width:0}
+}
+@media(min-width:901px) and (max-width:1250px){
+ body.home .sites-home-hero{--home-title-size:clamp(68px,7.4vw,110px)}
+ body.home .sites-home-hero .sites-home-intro{column-gap:clamp(24px,3vw,50px)}
+}
+@media(max-width:900px){
+ body.home .sites-home-hero .sites-home-film{z-index:0}
+ body.home .sites-home-hero .sites-home-nav{align-self:start}
+ body.home .sites-home-hero .sites-home-intro{align-self:end}
+ body.home .sites-home-hero .sites-home-entry{align-self:end}
+}

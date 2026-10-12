@@ -1,0 +1,26 @@
+name: Home Editorial Composition Contract
+on:
+  push:
+    paths:
+      - 'layouts/partials/watch-home.html'
+      - 'layouts/_default/baseof.html'
+      - 'static/css/westside-home-hero-composition.css'
+      - 'scripts/check_home_editorial_contract.py'
+      - '.github/workflows/home-editorial-contract.yml'
+  pull_request:
+    paths:
+      - 'layouts/partials/watch-home.html'
+      - 'layouts/_default/baseof.html'
+      - 'static/css/westside-home-hero-composition.css'
+      - 'scripts/check_home_editorial_contract.py'
+      - '.github/workflows/home-editorial-contract.yml'
+  workflow_dispatch:
+jobs:
+  static-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/check_home_editorial_contract.py
