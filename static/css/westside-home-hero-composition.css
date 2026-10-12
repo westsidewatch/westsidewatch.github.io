@@ -222,3 +222,9 @@ body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite
  text-transform:none;
  font-synthesis:none;
 }
+
+/* Keep the scripture reference in genuine Bodoni Moda SC italic. */
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite{
+ font-style:italic;
+ font-weight:400;
+}
