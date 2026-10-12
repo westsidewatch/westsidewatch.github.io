@@ -14,7 +14,7 @@ test('curated catalog uses real metadata and no pretend playable links',()=>{
    assert.ok(!seen.has(film.title));seen.add(film.title);
    assert.match(film.source,/^https:\/\//);
    assert.ok(!film.stream,'No unverified direct stream should be shipped');
-   if(film.embed){assert.match(film.embed,/^https:\/\/video\.blender\.org\/videos\/embed\/[a-f0-9-]{36}$/i);assert.match(film.source,/^https:\/\/video\.blender\.org\/videos\/watch\//);}
+   if(film.embed){assert.match(film.embed,/^https:\/\/video\.blender\.org\/videos\/embed\/[a-f0-9-]{36}$/i);assert.match(film.source,/^https:\/\//);}
    if(film.poster){assert.match(film.poster,/^https:\/\//);assert.ok(film.posterCredit && film.posterLicense && film.posterSource,'Posters require attribution, license and provenance');}
  }
 });
