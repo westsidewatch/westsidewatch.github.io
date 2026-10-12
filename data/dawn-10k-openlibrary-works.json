@@ -28,11 +28,11 @@
     ]
   },
   "metrics": {
-    "works": 30847,
-    "existingWorks": 30748,
-    "newWorks": 99,
+    "works": 30899,
+    "existingWorks": 30847,
+    "newWorks": 52,
     "chineseMatchedWorksAdded": 0,
-    "englishMatchedWorksAdded": 99,
+    "englishMatchedWorksAdded": 52,
     "requests": 46,
     "scannedRecords": 3823
   },
@@ -12979,6 +12979,33 @@
       "workPointer": "https://openlibrary.org/works/OL1079116W",
       "editionPointer": "https://openlibrary.org/books/OL1378680M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL108030W",
+      "title": "Soon",
+      "authors": [
+        "Jerry B. Jenkins"
+      ],
+      "languages": [
+        "spa",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2003,
+      "authorityIds": {
+        "openLibraryWork": "OL108030W",
+        "isbn": "0842357440",
+        "oclc": "52757395",
+        "lccn": "2004030173"
+      },
+      "preferredEdition": "OL8875768M",
+      "coverId": 1472780,
+      "workPointer": "https://openlibrary.org/works/OL108030W",
+      "editionPointer": "https://openlibrary.org/books/OL8875768M",
+      "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -50972,6 +50999,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL1296929W",
+      "title": "Documents from Old Testament times",
+      "authors": [
+        "Society for Old Testament Study."
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1958,
+      "authorityIds": {
+        "openLibraryWork": "OL1296929W",
+        "oclc": "648075",
+        "lccn": "61019233"
+      },
+      "preferredEdition": "OL23315916M",
+      "coverId": 9303388,
+      "workPointer": "https://openlibrary.org/works/OL1296929W",
+      "editionPointer": "https://openlibrary.org/books/OL23315916M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL1296933W",
       "title": "The Old Testament and modern study",
       "authors": [
@@ -79470,6 +79522,32 @@
       "coverId": 5834471,
       "workPointer": "https://openlibrary.org/works/OL1499072W",
       "editionPointer": "https://openlibrary.org/books/OL6587063M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL1499076W",
+      "title": "The wisest fool",
+      "authors": [
+        "Clarence Edward Noble McCartney"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1949,
+      "authorityIds": {
+        "openLibraryWork": "OL1499076W",
+        "isbn": "9780825432842",
+        "oclc": "16793546",
+        "lccn": "96010320"
+      },
+      "preferredEdition": "OL973417M",
+      "coverId": 1569053,
+      "workPointer": "https://openlibrary.org/works/OL1499076W",
+      "editionPointer": "https://openlibrary.org/books/OL973417M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -146698,6 +146776,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL16636954W",
+      "title": "Out of context",
+      "authors": [
+        "Richard L. Schultz"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL16636954W",
+        "isbn": "9780801072284",
+        "oclc": "775419996",
+        "lccn": "2012013686"
+      },
+      "preferredEdition": "OL25316396M",
+      "coverId": 7258894,
+      "workPointer": "https://openlibrary.org/works/OL16636954W",
+      "editionPointer": "https://openlibrary.org/books/OL25316396M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL16637038W",
       "title": "From God to us",
       "authors": [
@@ -191653,6 +191757,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL18207911W",
+      "title": "Milk and honey",
+      "authors": [
+        "David Miano"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2007,
+      "authorityIds": {
+        "openLibraryWork": "OL18207911W",
+        "isbn": "9781575061276",
+        "oclc": "77270817",
+        "lccn": "2006101554"
+      },
+      "preferredEdition": "OL12233535M",
+      "coverId": 5372123,
+      "workPointer": "https://openlibrary.org/works/OL18207911W",
+      "editionPointer": "https://openlibrary.org/books/OL12233535M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL18208092W",
       "title": "The Wycliffe New Testament (1388)",
       "authors": [
@@ -193094,6 +193224,32 @@
       "coverId": 868453,
       "workPointer": "https://openlibrary.org/works/OL1824704W",
       "editionPointer": "https://openlibrary.org/books/OL3697068M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL1824777W",
+      "title": "Readings in the canon of Scripture",
+      "authors": [
+        "David Jasper"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1995,
+      "authorityIds": {
+        "openLibraryWork": "OL1824777W",
+        "isbn": "9780333593073",
+        "oclc": "32167810",
+        "lccn": "95005576"
+      },
+      "preferredEdition": "OL1274077M",
+      "coverId": 10700513,
+      "workPointer": "https://openlibrary.org/works/OL1824777W",
+      "editionPointer": "https://openlibrary.org/books/OL1274077M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -209004,6 +209160,34 @@
       "admission": "none"
     },
     {
+      "workId": "OL18648382W",
+      "title": "Thus says the Lord",
+      "authors": [
+        "Wilson, Robert R.",
+        "John J. Ahn",
+        "Stephen L. Cook"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2009,
+      "authorityIds": {
+        "openLibraryWork": "OL18648382W",
+        "isbn": "9780567178046",
+        "oclc": "277204275",
+        "lccn": "2009282290"
+      },
+      "preferredEdition": "OL23972782M",
+      "coverId": 13496488,
+      "workPointer": "https://openlibrary.org/works/OL18648382W",
+      "editionPointer": "https://openlibrary.org/books/OL23972782M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL18648604W",
       "title": "The peoples' companion to the Bible",
       "authors": [
@@ -217570,6 +217754,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL1887648W",
+      "title": "Israel",
+      "authors": [
+        "Ellen Gould Harmon White"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1988,
+      "authorityIds": {
+        "openLibraryWork": "OL1887648W",
+        "isbn": "9780962166105",
+        "oclc": "25400953",
+        "lccn": "2001277513"
+      },
+      "preferredEdition": "OL8518451M",
+      "coverId": 9770118,
+      "workPointer": "https://openlibrary.org/works/OL1887648W",
+      "editionPointer": "https://openlibrary.org/books/OL8518451M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL1887654W",
       "title": "Nehemiah",
       "authors": [
@@ -224267,6 +224477,32 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL19042162W",
       "editionPointer": "https://openlibrary.org/books/OL21212784M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL19043466W",
+      "title": "The positive Bible",
+      "authors": [
+        "K. Winston Caine"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1998,
+      "authorityIds": {
+        "openLibraryWork": "OL19043466W",
+        "isbn": "0380974711",
+        "oclc": "37475122",
+        "lccn": "97031179"
+      },
+      "preferredEdition": "OL684375M",
+      "coverId": 1189833,
+      "workPointer": "https://openlibrary.org/works/OL19043466W",
+      "editionPointer": "https://openlibrary.org/books/OL684375M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -233411,6 +233647,32 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL19298732W",
       "editionPointer": "https://openlibrary.org/books/OL22276750M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL1929898W",
+      "title": "For They Shall Be Fed",
+      "authors": [
+        "Ronald J. Sider"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1997,
+      "authorityIds": {
+        "openLibraryWork": "OL1929898W",
+        "isbn": "0849953146",
+        "oclc": "36225403",
+        "lccn": "97004951"
+      },
+      "preferredEdition": "OL659634M",
+      "coverId": 646551,
+      "workPointer": "https://openlibrary.org/works/OL1929898W",
+      "editionPointer": "https://openlibrary.org/books/OL659634M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -265926,6 +266188,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL20325652W",
+      "title": "The Practice of the Body of Christ",
+      "authors": [
+        "Colin D. Miller"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2014,
+      "authorityIds": {
+        "openLibraryWork": "OL20325652W",
+        "isbn": "0227174607",
+        "oclc": "891854462",
+        "lccn": "2014466374"
+      },
+      "preferredEdition": "OL27531777M",
+      "coverId": 8987650,
+      "workPointer": "https://openlibrary.org/works/OL20325652W",
+      "editionPointer": "https://openlibrary.org/books/OL27531777M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL20326362W",
       "title": "Praying The Psalms Changes Things",
       "authors": [
@@ -267019,6 +267307,32 @@
       "coverId": 9031055,
       "workPointer": "https://openlibrary.org/works/OL20364482W",
       "editionPointer": "https://openlibrary.org/books/OL27576711M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL20364794W",
+      "title": "Preaching and the Personal",
+      "authors": [
+        "J. Dwayne Howell"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2013,
+      "authorityIds": {
+        "openLibraryWork": "OL20364794W",
+        "isbn": "1621898326",
+        "oclc": "861208909",
+        "lccn": "2013387746"
+      },
+      "preferredEdition": "OL34170765M",
+      "coverId": 9031346,
+      "workPointer": "https://openlibrary.org/works/OL20364794W",
+      "editionPointer": "https://openlibrary.org/books/OL34170765M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -275010,6 +275324,30 @@
       "admission": "none"
     },
     {
+      "workId": "OL20750250W",
+      "title": "Rule of Peshat",
+      "authors": [
+        "Mordechai Z. Cohen"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2020,
+      "authorityIds": {
+        "openLibraryWork": "OL20750250W",
+        "isbn": "9780812297010"
+      },
+      "preferredEdition": "OL34185878M",
+      "coverId": 13285187,
+      "workPointer": "https://openlibrary.org/works/OL20750250W",
+      "editionPointer": "https://openlibrary.org/books/OL34185878M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL20750513W",
       "title": "Telling Terror in Judges 19",
       "authors": [
@@ -278463,6 +278801,32 @@
       "coverId": 10305281,
       "workPointer": "https://openlibrary.org/works/OL20936886W",
       "editionPointer": "https://openlibrary.org/books/OL28366170M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL20938065W",
+      "title": "Jonah and the Whale",
+      "authors": [
+        "Brendan Powell Smith"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2014,
+      "authorityIds": {
+        "openLibraryWork": "OL20938065W",
+        "isbn": "1634500555",
+        "oclc": "854612571",
+        "lccn": "2013035880"
+      },
+      "preferredEdition": "OL34024866M",
+      "coverId": 10307087,
+      "workPointer": "https://openlibrary.org/works/OL20938065W",
+      "editionPointer": "https://openlibrary.org/books/OL34024866M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -294931,6 +295295,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL21088875W",
+      "title": "Verbal Aspect Theory and the Prohibitions in the Greek New Testament",
+      "authors": [
+        "Douglas S. Huffman"
+      ],
+      "languages": [
+        "grc",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2014,
+      "authorityIds": {
+        "openLibraryWork": "OL21088875W",
+        "isbn": "9781454195856",
+        "oclc": "876900681",
+        "lccn": "2014002011"
+      },
+      "preferredEdition": "OL28546052M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL21088875W",
+      "editionPointer": "https://openlibrary.org/books/OL28546052M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL21088980W",
       "title": "Genesis",
       "authors": [
@@ -304896,6 +305287,34 @@
       "coverId": 634003,
       "workPointer": "https://openlibrary.org/works/OL21175712W",
       "editionPointer": "https://openlibrary.org/books/OL44268897M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL21175729W",
+      "title": "All the people and places of the Bible",
+      "authors": [
+        "J. I. Packer",
+        "Merrill Chapin Tenney",
+        "William White Jr."
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1982,
+      "authorityIds": {
+        "openLibraryWork": "OL21175729W",
+        "isbn": "9780840758194",
+        "oclc": "8628827",
+        "lccn": "82012564"
+      },
+      "preferredEdition": "OL3492698M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL21175729W",
+      "editionPointer": "https://openlibrary.org/books/OL3492698M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -322310,6 +322729,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL2178618W",
+      "title": "The Old Testament in the Book of Revelation",
+      "authors": [
+        "Steve Moyise"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1995,
+      "authorityIds": {
+        "openLibraryWork": "OL2178618W",
+        "isbn": "1283200937",
+        "oclc": "33967535",
+        "lccn": "95201547"
+      },
+      "preferredEdition": "OL48638561M",
+      "coverId": 12771995,
+      "workPointer": "https://openlibrary.org/works/OL2178618W",
+      "editionPointer": "https://openlibrary.org/books/OL48638561M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL2178621W",
       "title": "Introduction to biblical studies",
       "authors": [
@@ -335393,6 +335838,33 @@
       "coverId": 10780594,
       "workPointer": "https://openlibrary.org/works/OL22431217W",
       "editionPointer": "https://openlibrary.org/books/OL6226221M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL2243123W",
+      "title": "Messiaserwartung im Alten Testament",
+      "authors": [
+        "Becker, Joachim"
+      ],
+      "languages": [
+        "eng",
+        "ger"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1977,
+      "authorityIds": {
+        "openLibraryWork": "OL2243123W",
+        "isbn": "0567093026",
+        "oclc": "5892496",
+        "lccn": "77560030"
+      },
+      "preferredEdition": "OL21061588M",
+      "coverId": 11679407,
+      "workPointer": "https://openlibrary.org/works/OL2243123W",
+      "editionPointer": "https://openlibrary.org/books/OL21061588M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -352248,6 +352720,31 @@
       "coverId": 6246542,
       "workPointer": "https://openlibrary.org/works/OL235935W",
       "editionPointer": "https://openlibrary.org/books/OL44835829M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL235962W",
+      "title": "The spirit world",
+      "authors": [
+        "Hamilton, Joseph"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1906,
+      "authorityIds": {
+        "openLibraryWork": "OL235962W",
+        "oclc": "4680132",
+        "lccn": "06036932"
+      },
+      "preferredEdition": "OL6975885M",
+      "coverId": 5720610,
+      "workPointer": "https://openlibrary.org/works/OL235962W",
+      "editionPointer": "https://openlibrary.org/books/OL6975885M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -371323,6 +371820,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL24849082W",
+      "title": "The rich farmer",
+      "authors": [
+        "Nick Butterworth",
+        "Mick Inkpen",
+        "Nick Inkpen"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1995,
+      "authorityIds": {
+        "openLibraryWork": "OL24849082W",
+        "isbn": "0551028807"
+      },
+      "preferredEdition": "OL10589273M",
+      "coverId": 2518981,
+      "workPointer": "https://openlibrary.org/works/OL24849082W",
+      "editionPointer": "https://openlibrary.org/books/OL10589273M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL24849178W",
       "title": "As Though We Were Dreaming",
       "authors": [
@@ -375969,6 +376492,30 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL25103198W",
       "editionPointer": "https://openlibrary.org/books/OL34583518M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL25103240W",
+      "title": "God Loves Me",
+      "authors": [
+        "Susan Elizabeth Beck"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1995,
+      "authorityIds": {
+        "openLibraryWork": "OL25103240W",
+        "isbn": "1859850499"
+      },
+      "preferredEdition": "OL33378639M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL25103240W",
+      "editionPointer": "https://openlibrary.org/books/OL33378639M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -384144,6 +384691,31 @@
       "workPointer": "https://openlibrary.org/works/OL25367140W",
       "editionPointer": "https://openlibrary.org/books/OL33991527M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL25367145W",
+      "title": "HCSB - Bible Translation",
+      "authors": [
+        "E. Ray Clendenen",
+        "David K. Stabnow"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2013,
+      "authorityIds": {
+        "openLibraryWork": "OL25367145W",
+        "isbn": "1433614766"
+      },
+      "preferredEdition": "OL33991533M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL25367145W",
+      "editionPointer": "https://openlibrary.org/books/OL33991533M",
+      "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -395968,6 +396540,34 @@
       "workPointer": "https://openlibrary.org/works/OL25787698W",
       "editionPointer": "https://openlibrary.org/books/OL36021558M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL25789590W",
+      "title": "Jesus, the New Testament, and Christian Origins",
+      "authors": [
+        "Dieter Mitternacht",
+        "Anders Runesson",
+        "David E. Aune"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2020,
+      "authorityIds": {
+        "openLibraryWork": "OL25789590W",
+        "isbn": "9780802868923",
+        "oclc": "1178869487",
+        "lccn": "2020028360"
+      },
+      "preferredEdition": "OL48805856M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL25789590W",
+      "editionPointer": "https://openlibrary.org/books/OL48805856M",
+      "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -438359,6 +438959,30 @@
       "admission": "none"
     },
     {
+      "workId": "OL27783351W",
+      "title": "Welsh Bible",
+      "authors": [
+        "Eryn M. White"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2006,
+      "authorityIds": {
+        "openLibraryWork": "OL27783351W",
+        "isbn": "9780752436937"
+      },
+      "preferredEdition": "OL37942323M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL27783351W",
+      "editionPointer": "https://openlibrary.org/books/OL37942323M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL27784786W",
       "title": "Matthew's Bible",
       "authors": [
@@ -449640,6 +450264,30 @@
       "admission": "none"
     },
     {
+      "workId": "OL28810413W",
+      "title": "International Children's Bible",
+      "authors": [
+        "Nelson Bibles Staff"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2002,
+      "authorityIds": {
+        "openLibraryWork": "OL28810413W",
+        "isbn": "9780718001001"
+      },
+      "preferredEdition": "OL9392869M",
+      "coverId": 4971112,
+      "workPointer": "https://openlibrary.org/works/OL28810413W",
+      "editionPointer": "https://openlibrary.org/books/OL9392869M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL28810515W",
       "title": "Under Cover",
       "authors": [
@@ -449931,6 +450579,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL28814539W",
+      "title": "International Children's Bible",
+      "authors": [
+        "Thomas Nelson Publishing Staff"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1990,
+      "authorityIds": {
+        "openLibraryWork": "OL28814539W",
+        "isbn": "9780849908491",
+        "oclc": "46995899"
+      },
+      "preferredEdition": "OL8262121M",
+      "coverId": 645418,
+      "workPointer": "https://openlibrary.org/works/OL28814539W",
+      "editionPointer": "https://openlibrary.org/books/OL8262121M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL28815090W",
       "title": "New Open Study Bible",
       "authors": [
@@ -449999,6 +450672,30 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL28815439W",
       "editionPointer": "https://openlibrary.org/books/OL39578916M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL28815663W",
+      "title": "International Children's Bible",
+      "authors": [
+        "Thomas Nelson Publishing Staff"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1989,
+      "authorityIds": {
+        "openLibraryWork": "OL28815663W",
+        "isbn": "9780849908033"
+      },
+      "preferredEdition": "OL8262105M",
+      "coverId": 645400,
+      "workPointer": "https://openlibrary.org/works/OL28815663W",
+      "editionPointer": "https://openlibrary.org/books/OL8262105M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -464096,6 +464793,33 @@
       "workPointer": "https://openlibrary.org/works/OL2976410W",
       "editionPointer": "https://openlibrary.org/books/OL28391314M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL2976432W",
+      "title": "Reading the fractures of Genesis",
+      "authors": [
+        "David McLain Carr",
+        "David McClain Carr"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1996,
+      "authorityIds": {
+        "openLibraryWork": "OL2976432W",
+        "isbn": "0664256295",
+        "oclc": "33664323",
+        "lccn": "95046693"
+      },
+      "preferredEdition": "OL7628705M",
+      "coverId": 398610,
+      "workPointer": "https://openlibrary.org/works/OL2976432W",
+      "editionPointer": "https://openlibrary.org/books/OL7628705M",
+      "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -483234,6 +483958,30 @@
       "admission": "none"
     },
     {
+      "workId": "OL3273437W",
+      "title": "Paradise",
+      "authors": [
+        "Fiona French"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2004,
+      "authorityIds": {
+        "openLibraryWork": "OL3273437W",
+        "isbn": "1845070070"
+      },
+      "preferredEdition": "OL9318390M",
+      "coverId": 895909,
+      "workPointer": "https://openlibrary.org/works/OL3273437W",
+      "editionPointer": "https://openlibrary.org/books/OL9318390M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3273442W",
       "title": "Bethlehem",
       "authors": [
@@ -484336,6 +485084,32 @@
       "coverId": 399217,
       "workPointer": "https://openlibrary.org/works/OL3277512W",
       "editionPointer": "https://openlibrary.org/books/OL21127648M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL3277513W",
+      "title": "The beginning of the Gospel",
+      "authors": [
+        "Adela Yarbro Collins"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1992,
+      "authorityIds": {
+        "openLibraryWork": "OL3277513W",
+        "isbn": "9780800626228",
+        "oclc": "26632372",
+        "lccn": "92032115"
+      },
+      "preferredEdition": "OL8756186M",
+      "coverId": 1935891,
+      "workPointer": "https://openlibrary.org/works/OL3277513W",
+      "editionPointer": "https://openlibrary.org/books/OL8756186M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -499649,6 +500423,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL3353487W",
+      "title": "The Sea of Galilee boat",
+      "authors": [
+        "Shelley Wachsmann"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1995,
+      "authorityIds": {
+        "openLibraryWork": "OL3353487W",
+        "isbn": "0306449501",
+        "oclc": "32087320",
+        "lccn": "2008046288"
+      },
+      "preferredEdition": "OL37213861M",
+      "coverId": 1369937,
+      "workPointer": "https://openlibrary.org/works/OL3353487W",
+      "editionPointer": "https://openlibrary.org/books/OL37213861M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3354169W",
       "title": "The Karaite tradition of Arabic Bible translation",
       "authors": [
@@ -513950,6 +514750,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL3515203W",
+      "title": "Original sin",
+      "authors": [
+        "Henri Blocher"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1997,
+      "authorityIds": {
+        "openLibraryWork": "OL3515203W",
+        "isbn": "9780830826056",
+        "oclc": "40444112",
+        "lccn": "98053406"
+      },
+      "preferredEdition": "OL6788542M",
+      "coverId": 633918,
+      "workPointer": "https://openlibrary.org/works/OL3515203W",
+      "editionPointer": "https://openlibrary.org/books/OL6788542M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3515345W",
       "title": "Text und Interpretation als Kategorien theologischen Denkens",
       "authors": [
@@ -517298,6 +518124,31 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL35704256W",
       "editionPointer": "https://openlibrary.org/books/OL48161249M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL35705806W",
+      "title": "Guardians of Ancora Treasure Seekers",
+      "authors": [
+        "Alex Taylor",
+        "Tim Charnick"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2016,
+      "authorityIds": {
+        "openLibraryWork": "OL35705806W",
+        "isbn": "9781785065552"
+      },
+      "preferredEdition": "OL48164148M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL35705806W",
+      "editionPointer": "https://openlibrary.org/books/OL48164148M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -542321,6 +543172,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL3900902W",
+      "title": "Perspectives on New Testament textual criticism",
+      "authors": [
+        "Eldon Jay Epp"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2005,
+      "authorityIds": {
+        "openLibraryWork": "OL3900902W",
+        "isbn": "9004438777",
+        "oclc": "1223496349",
+        "lccn": "2008040687"
+      },
+      "preferredEdition": "OL44048419M",
+      "coverId": 1050284,
+      "workPointer": "https://openlibrary.org/works/OL3900902W",
+      "editionPointer": "https://openlibrary.org/books/OL44048419M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3900903W",
       "title": "The Theological Tendency of Codex Bezae Cantebrigiensis in Acts",
       "authors": [
@@ -546572,6 +547449,32 @@
       "coverId": 11511257,
       "workPointer": "https://openlibrary.org/works/OL3929947W",
       "editionPointer": "https://openlibrary.org/books/OL17627274M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL3929948W",
+      "title": "Galatians through the centuries",
+      "authors": [
+        "John Kenneth Riches"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2007,
+      "authorityIds": {
+        "openLibraryWork": "OL3929948W",
+        "isbn": "1118472667",
+        "oclc": "132681442",
+        "lccn": "2013409945"
+      },
+      "preferredEdition": "OL17932601M",
+      "coverId": 12926354,
+      "workPointer": "https://openlibrary.org/works/OL3929948W",
+      "editionPointer": "https://openlibrary.org/books/OL17932601M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -570687,6 +571590,54 @@
       "admission": "none"
     },
     {
+      "workId": "OL42761406W",
+      "title": "A curious hieroglyphick Bible; or, Select passages in the Old and New Testaments, represented with emblematical figures, for the amusement of youth",
+      "authors": [
+        "Théodore de Bèze"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1788,
+      "authorityIds": {
+        "openLibraryWork": "OL42761406W",
+        "oclc": "55831783"
+      },
+      "preferredEdition": "OL58211895M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42761406W",
+      "editionPointer": "https://openlibrary.org/books/OL58211895M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL42761407W",
+      "title": "A new hieroglyphical Bible for the amusement & instruction of children",
+      "authors": [
+        "Théodore de Bèze"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1796,
+      "authorityIds": {
+        "openLibraryWork": "OL42761407W",
+        "oclc": "55831819"
+      },
+      "preferredEdition": "OL58211896M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42761407W",
+      "editionPointer": "https://openlibrary.org/books/OL58211896M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL4276144W",
       "title": "Felt and magnet crafts",
       "authors": [
@@ -587235,6 +588186,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL4474127W",
+      "title": "The new English Bible, companion to the New Testament",
+      "authors": [
+        "A. E. Harvey"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1970,
+      "authorityIds": {
+        "openLibraryWork": "OL4474127W",
+        "isbn": "9780521077057",
+        "oclc": "16538526",
+        "lccn": "73141049"
+      },
+      "preferredEdition": "OL5447456M",
+      "coverId": 9450782,
+      "workPointer": "https://openlibrary.org/works/OL4474127W",
+      "editionPointer": "https://openlibrary.org/books/OL5447456M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL4474480W",
       "title": "Struggle to be the sun again",
       "authors": [
@@ -600521,6 +601498,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL4625092W",
+      "title": "Crystals, gems & minerals of the Bible",
+      "authors": [
+        "Ruth V. Wright",
+        "R. V. S. Wright",
+        "Robert L. Chadbourne"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1988,
+      "authorityIds": {
+        "openLibraryWork": "OL4625092W",
+        "isbn": "9780879834692",
+        "lccn": "88013660"
+      },
+      "preferredEdition": "OL8131318M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL4625092W",
+      "editionPointer": "https://openlibrary.org/books/OL8131318M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL4625093W",
       "title": "Gems and minerals of the Bible",
       "authors": [
@@ -603018,6 +604022,32 @@
       "coverId": 8517974,
       "workPointer": "https://openlibrary.org/works/OL4644199W",
       "editionPointer": "https://openlibrary.org/books/OL2858038M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL4644284W",
+      "title": "Linguistics & biblical interpretation",
+      "authors": [
+        "Peter Cotterell"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1989,
+      "authorityIds": {
+        "openLibraryWork": "OL4644284W",
+        "isbn": "0830817514",
+        "oclc": "18960862",
+        "lccn": "88032868"
+      },
+      "preferredEdition": "OL16589796M",
+      "coverId": 5343953,
+      "workPointer": "https://openlibrary.org/works/OL4644284W",
+      "editionPointer": "https://openlibrary.org/books/OL16589796M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -627961,6 +628991,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL5147268W",
+      "title": "Die Pastoralbriefe",
+      "authors": [
+        "Gottfried Holtz"
+      ],
+      "languages": [
+        "eng",
+        "ger"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1965,
+      "authorityIds": {
+        "openLibraryWork": "OL5147268W",
+        "oclc": "15601766",
+        "lccn": "68075286"
+      },
+      "preferredEdition": "OL21204731M",
+      "coverId": 10699924,
+      "workPointer": "https://openlibrary.org/works/OL5147268W",
+      "editionPointer": "https://openlibrary.org/books/OL21204731M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL5152955W",
       "title": "Dictionary of the Holy Bible",
       "authors": [
@@ -631719,6 +632775,31 @@
       "coverId": 13505386,
       "workPointer": "https://openlibrary.org/works/OL5273161W",
       "editionPointer": "https://openlibrary.org/books/OL2731465M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL5274127W",
+      "title": "All things in the Bible",
+      "authors": [
+        "Nancy Marie Patterson Tischler"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2006,
+      "authorityIds": {
+        "openLibraryWork": "OL5274127W",
+        "isbn": "0313330824",
+        "lccn": "2005034355"
+      },
+      "preferredEdition": "OL3418029M",
+      "coverId": 2377414,
+      "workPointer": "https://openlibrary.org/works/OL5274127W",
+      "editionPointer": "https://openlibrary.org/books/OL3418029M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -648010,6 +649091,34 @@
       "admission": "none"
     },
     {
+      "workId": "OL5723725W",
+      "title": "Diodori Tarsensis Commentarii in Psalmos",
+      "authors": [
+        "Diodore of Tarsus, Bishop of Tarsus"
+      ],
+      "languages": [
+        "eng",
+        "grc",
+        "fre"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1980,
+      "authorityIds": {
+        "openLibraryWork": "OL5723725W",
+        "isbn": "9781589830943",
+        "oclc": "7281263",
+        "lccn": "80142159"
+      },
+      "preferredEdition": "OL19521845M",
+      "coverId": 1967894,
+      "workPointer": "https://openlibrary.org/works/OL5723725W",
+      "editionPointer": "https://openlibrary.org/books/OL19521845M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL572459W",
       "title": "The Book of Romans",
       "authors": [
@@ -655187,6 +656296,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL5842907W",
+      "title": "First steps in the Bible",
+      "authors": [
+        "Ruth Graham"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1980,
+      "authorityIds": {
+        "openLibraryWork": "OL5842907W",
+        "isbn": "0849901472",
+        "oclc": "7595988",
+        "lccn": "79063939"
+      },
+      "preferredEdition": "OL4430798M",
+      "coverId": 9739201,
+      "workPointer": "https://openlibrary.org/works/OL5842907W",
+      "editionPointer": "https://openlibrary.org/books/OL4430798M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL5842929W",
       "title": "Culture making",
       "authors": [
@@ -660607,6 +661742,32 @@
       "coverId": 621724,
       "workPointer": "https://openlibrary.org/works/OL5973860W",
       "editionPointer": "https://openlibrary.org/books/OL3584665M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL5974319W",
+      "title": "\"As it is written\" and other citation formulae in the Old Testament",
+      "authors": [
+        "Kevin L. Spawn"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2001,
+      "authorityIds": {
+        "openLibraryWork": "OL5974319W",
+        "isbn": "3110171619",
+        "oclc": "48386076",
+        "lccn": "2002283303"
+      },
+      "preferredEdition": "OL3584981M",
+      "coverId": 2194609,
+      "workPointer": "https://openlibrary.org/works/OL5974319W",
+      "editionPointer": "https://openlibrary.org/books/OL3584981M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -680492,6 +681653,31 @@
       "coverId": 9922158,
       "workPointer": "https://openlibrary.org/works/OL6693944W",
       "editionPointer": "https://openlibrary.org/books/OL4571957M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL6693945W",
+      "title": "My 1st Bible/Catholic Edition",
+      "authors": [
+        "Ruth Hannon"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1990,
+      "authorityIds": {
+        "openLibraryWork": "OL6693945W",
+        "isbn": "9780882712505",
+        "oclc": "28951275"
+      },
+      "preferredEdition": "OL8178375M",
+      "coverId": 680350,
+      "workPointer": "https://openlibrary.org/works/OL6693945W",
+      "editionPointer": "https://openlibrary.org/books/OL8178375M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -743092,6 +744278,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL8399772W",
+      "title": "The New Bible in Pictures for Little Eyes Gift Edition",
+      "authors": [
+        "Kenneth Taylor"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2004,
+      "authorityIds": {
+        "openLibraryWork": "OL8399772W",
+        "isbn": "9780802430786",
+        "oclc": "144532130"
+      },
+      "preferredEdition": "OL7875895M",
+      "coverId": 570092,
+      "workPointer": "https://openlibrary.org/works/OL8399772W",
+      "editionPointer": "https://openlibrary.org/books/OL7875895M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL8399810W",
       "title": "The Inspiration and Authority of Scripture",
       "authors": [
@@ -745058,6 +746269,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL8417299W",
+      "title": "Where is boasting?",
+      "authors": [
+        "Simon J. Gathercole"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2002,
+      "authorityIds": {
+        "openLibraryWork": "OL8417299W",
+        "isbn": "1467410748",
+        "oclc": "50270358",
+        "lccn": "2002029680"
+      },
+      "preferredEdition": "OL48805551M",
+      "coverId": 572562,
+      "workPointer": "https://openlibrary.org/works/OL8417299W",
+      "editionPointer": "https://openlibrary.org/books/OL48805551M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL8417320W",
       "title": "Expositions of Bible Doctrines Taking the Epistle to the Romans As a Point of Departure [4 Volumes]",
       "authors": [
@@ -745999,6 +747236,30 @@
       "coverId": 8364919,
       "workPointer": "https://openlibrary.org/works/OL8446316W",
       "editionPointer": "https://openlibrary.org/books/OL7934814M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL8446355W",
+      "title": "The Graphic Bible",
+      "authors": [
+        "Mike Maddox"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1998,
+      "authorityIds": {
+        "openLibraryWork": "OL8446355W",
+        "isbn": "080541813X"
+      },
+      "preferredEdition": "OL7934892M",
+      "coverId": 582405,
+      "workPointer": "https://openlibrary.org/works/OL8446355W",
+      "editionPointer": "https://openlibrary.org/books/OL7934892M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -752012,6 +753273,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL8586179W",
+      "title": "Megillat Esther",
+      "authors": [
+        "J. T. Waldman"
+      ],
+      "languages": [
+        "heb",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2005,
+      "authorityIds": {
+        "openLibraryWork": "OL8586179W",
+        "isbn": "0827607881",
+        "oclc": "62498973",
+        "lccn": "2006271363"
+      },
+      "preferredEdition": "OL20024755M",
+      "coverId": 631624,
+      "workPointer": "https://openlibrary.org/works/OL8586179W",
+      "editionPointer": "https://openlibrary.org/books/OL20024755M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL8586265W",
       "title": "Ecclesiastes",
       "authors": [
@@ -754472,6 +755760,32 @@
       "workPointer": "https://openlibrary.org/works/OL8594859W",
       "editionPointer": "https://openlibrary.org/books/OL9720068M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL8594894W",
+      "title": "Empowered for witness",
+      "authors": [
+        "Robert P. Menzies"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1995,
+      "authorityIds": {
+        "openLibraryWork": "OL8594894W",
+        "isbn": "1850757216",
+        "oclc": "32070271",
+        "lccn": "2005276522"
+      },
+      "preferredEdition": "OL18594214M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL8594894W",
+      "editionPointer": "https://openlibrary.org/books/OL18594214M",
+      "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -778380,6 +779694,32 @@
       "workPointer": "https://openlibrary.org/works/OL962172W",
       "editionPointer": "https://openlibrary.org/books/OL6244043M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL9621890W",
+      "title": "Literary and Empirical Readings of the Books of Esther (Studies in Biblical Literature, V. 43)",
+      "authors": [
+        "A. Kay Fountain"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2002,
+      "authorityIds": {
+        "openLibraryWork": "OL9621890W",
+        "isbn": "9780820455709",
+        "oclc": "49356031",
+        "lccn": "2002016254"
+      },
+      "preferredEdition": "OL11396746M",
+      "coverId": 5130054,
+      "workPointer": "https://openlibrary.org/works/OL9621890W",
+      "editionPointer": "https://openlibrary.org/books/OL11396746M",
+      "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
