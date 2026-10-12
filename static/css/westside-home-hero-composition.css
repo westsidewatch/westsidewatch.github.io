@@ -177,3 +177,25 @@ body.home .sites-home-hero .sites-home-intro h1 em{
  body.home .sites-home-hero .sites-home-entry{left:var(--home-edge);right:var(--home-edge);justify-content:flex-end;gap:clamp(20px,2vw,38px)}
  body.home .sites-home-hero .sites-home-entry a{flex:0 1 clamp(190px,17vw,290px);min-width:0}
 }
+
+/* Reliable visual small caps even when the loaded font lacks OpenType smcp glyphs. */
+body.home .sites-home-hero .sites-home-nav a,
+body.home .sites-home-hero .sites-home-entry a{
+ font-variant-caps:all-small-caps;
+ font-feature-settings:normal;
+ text-transform:uppercase;
+ font-size:calc(var(--home-ui-size) * .86);
+ letter-spacing:.075em;
+}
+body.home .sites-home-hero .sites-home-entry a{
+ white-space:nowrap;
+ gap:12px;
+}
+body.home .sites-home-hero .sites-home-entry a span{
+ text-transform:none;
+ letter-spacing:normal;
+ white-space:nowrap;
+}
+@media(min-width:901px){
+ body.home .sites-home-hero .sites-home-entry a{flex:0 1 auto;min-width:0}
+}
