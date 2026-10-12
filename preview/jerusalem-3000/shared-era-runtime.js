@@ -49,7 +49,10 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
         const phaseId = generationPhase;
         const core = new TemporalCityCore({ phases: phaseIds.map(id => ({ id })), terrain });
         const registration = getRegistration?.(phaseId) ?? deriveEraRegistration(reference, phaseId, footprint);
-        const exclusions=[...getExclusions(phaseId), ...(registration.reservations || [])];
+        const roadExclusions=getExclusions(phaseId);
+        // The whole sanctuary reserves housing space; authored approach roads end at its edge.
+        // Treating that envelope as a road obstacle would cut the final approach segment.
+        const exclusions=[...roadExclusions, ...(registration.reservations || [])];
         const districtResults = registration.districts.map(district => buildEraParcelCore(core, terrain, {
           exclusions, phaseId, registration, districtId: district.id,
           dataset: registration.independentLayout ? 'first-temple-persian.spatial.v1' : `provisional-${generationPhase}-footprint-not-surveyed`,
@@ -69,7 +72,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
             metadata: { ...record.metadata, retainedPhase,
               retentionAuthority: 'schematic-not-surveyed', burialDepthVerified: false, reuseLinksVerified: false } });
         }
-        const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain,{exclusions});
+        const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain,{exclusions:roadExclusions});
         const projection = createCityProjection(group, [...architecture.meshes, ...roads], {
           phaseIds, standingPhase: phaseId,
           phaseStates: retainedPhase ? { [retainedPhase]: { state: 'retained-ruin', ruin: 1 } } : {},

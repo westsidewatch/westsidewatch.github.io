@@ -38,5 +38,7 @@ assert.equal(runtime.diagnostics().projection.identityFingerprint,before.project
 await ready('persian-nehemiah');runtime.apply({phaseId:'persian-nehemiah',retainedVisible:true});
 assert.equal(runtime.diagnostics().successor.independentLayout,true);
 assert.equal(runtime.diagnostics().successor.districtIds.length,2);
+const approach=parent.children.find(g=>g.name==='shared-persian-nehemiah-city').children.filter(m=>m.userData.cityObject?.objectId==='j3k:persian-nehemiah:road:northern-rebuilding-access');
+assert.ok(approach.some(m=>{const p=m.geometry.attributes.position;for(let i=0;i<p.count;i++)if(Math.abs(p.getZ(i)+390)<1e-4&&Math.abs(p.getX(i)+54)<=2.51)return true;return false;}),'runtime road must reach the reserved precinct edge without an exclusion gap');
 runtime.dispose();assert.equal(parent.children.length,0);material.dispose();
 console.log('PASS: independent period layouts, geographic registration, all districts populated, sanctuary exclusions, destruction identity and distinct Persian layout');

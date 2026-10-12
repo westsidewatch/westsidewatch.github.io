@@ -8,6 +8,7 @@ import {bindPeriodSpatialCore} from '../preview/jerusalem-3000/period-spatial-le
 import {loadTemporalCityCore} from '../preview/jerusalem-3000/temporal-city-core-adapter.js';
 import {loadAnchorCityLedger} from '../preview/jerusalem-3000/anchor-ledger-loader.js';
 import {invalidateCityData} from '../preview/jerusalem-3000/city-data-loader.js';
+import {buildHerodianRoadGeometry} from '../preview/jerusalem-3000/herodian-road-geometry.js';
 import {polygonsOverlap} from '../preview/jerusalem-3000/urban-exclusion.js';
 const base=new URL('../preview/jerusalem-3000/',import.meta.url),json=async p=>JSON.parse(await readFile(new URL(p,base)));
 const data=await json('data/urban/first-temple-persian.spatial.v1.json'),timeline=await json('data/continuous-build-timeline.json'),layout=compilePersianSanctuary(data);
@@ -37,6 +38,12 @@ try{
  assert.ok(access.geometry.attributes.normal.getY(0)>0);
  for(let i=0;i<p.count;i+=3){const triangle=[0,1,2].map(k=>({x:p.getX(i+k),z:p.getZ(i+k)}));for(const obstacle of parts.filter(m=>!['access','roof'].includes(m.userData.cityObject.role)&&!m.userData.cityObject.componentId.includes('lintel'))){const b=new THREE.Box3().setFromObject(obstacle);assert.ok(!polygonsOverlap(triangle,[{x:b.min.x,z:b.min.z},{x:b.max.x,z:b.min.z},{x:b.max.x,z:b.max.z},{x:b.min.x,z:b.max.z}]),`actual road crosses ${obstacle.userData.cityObject.componentId}`);}}
  for(const m of parts){m.updateMatrix();const p=m.geometry.attributes.position;for(let i=0;i<p.count;i++){const v=new THREE.Vector3(p.getX(i),p.getY(i),p.getZ(i)).applyMatrix4(m.matrix);assert.ok(v.y>=terrain.heightAtWorld(v.x,v.z)-1e-4,'all sanctuary vertices must remain above the DEM');}}
+ const streetGroup=new THREE.Group(),streetMaterial=new THREE.MeshStandardMaterial();
+ const registration=compilePeriodRegistration(data,'persian-nehemiah',data.anchor);
+ const streetMeshes=buildHerodianRoadGeometry(streetGroup,registration.roads,{inferred:streetMaterial},terrain);
+ const arrival=layout.access.points[0];
+ assert.ok(streetMeshes.filter(m=>m.userData.cityObject.objectId===layout.access.from).some(m=>{const p=m.geometry.attributes.position;for(let i=0;i<p.count;i++)if(Math.abs(p.getZ(i)-arrival[1])<1e-4&&Math.abs(p.getX(i)-arrival[0])<=2.51)return true;return false;}),'actual Persian approach must reach the sanctuary access start');
+ streetMeshes.forEach(m=>m.geometry.dispose());streetMaterial.dispose();
  assert.ok(core.get(core.get(layout.access.id).metadata.spatialTopology.from),'access must reference the shared Persian approach road');
  assert.equal(core.get(layout.objectId).metadata.geometryReuseVerified,false);assert.deepEqual(core.lineage(layout.objectId),{predecessors:[],successors:[]});
  assert.equal(core.get(layout.objectId).confidence,'inferred');assert.equal(core.validate().ok,true);
