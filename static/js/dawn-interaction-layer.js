@@ -20,6 +20,35 @@ if(!reduced&&matchMedia("(pointer:fine)").matches){
 }
 const sections=[...document.querySelectorAll("main > section, main > article, .sites-home-realm, .sites-home-closing")];
 const focusScreens=[...document.querySelectorAll(".candidate-focus-screen")];
+/* Homepage scene coordinator: one normalized timeline for the existing hero and two film screens. */
+const homeHero=document.querySelector("body.home .sites-home-hero");
+const homeScenes=homeHero?[homeHero,...focusScreens]:[];
+let sceneTick=false;
+const updateHomeSequence=()=>{
+  sceneTick=false;
+  if(!homeScenes.length)return;
+  const center=innerHeight*.5;
+  let nearest=0, distance=Infinity;
+  homeScenes.forEach((scene,i)=>{
+    const r=scene.getBoundingClientRect();
+    const d=Math.abs((r.top+r.bottom)/2-center);
+    if(d<distance){distance=d;nearest=i}
+    const progress=Math.max(0,Math.min(1,(center-r.top)/Math.max(1,r.height)));
+    scene.style.setProperty("--home-scene-progress",progress.toFixed(4));
+    scene.dataset.scenePhase=r.top>center?"upcoming":r.bottom<center?"passed":"active";
+  });
+  document.body.dataset.homeScene=String(nearest+1);
+  const heroRect=homeHero.getBoundingClientRect();
+  const exit=Math.max(0,Math.min(1,-heroRect.top/Math.max(1,heroRect.height*.75)));
+  homeHero.style.setProperty("--home-hero-exit",exit.toFixed(4));
+};
+const requestHomeSequence=()=>{if(!sceneTick){sceneTick=true;requestAnimationFrame(updateHomeSequence)}};
+if(homeScenes.length){
+  updateHomeSequence();
+  addEventListener("scroll",requestHomeSequence,{passive:true});
+  addEventListener("resize",requestHomeSequence,{passive:true});
+}
+
 const realms=[...document.querySelectorAll(".sites-home-realm")];
 if(!reduced&&"IntersectionObserver"in window){
   const motionIO=new IntersectionObserver(entries=>entries.forEach(e=>{
