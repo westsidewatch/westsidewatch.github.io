@@ -1,323 +1,147 @@
-/* Westside Watch / first-screen editorial composition
-   Canonical home-brand designable zone; UI controls remain Design OS owned.
-   Never distort glyphs. Keep original video and existing routes. */
+/* Westside Watch — canonical first-screen editorial composition.
+   Single authority for home hero. Other page typography stays with Design OS.
+   Screenshot-driven desktop proportions; no glyph stretching or black/gold palette. */
 body.home .sites-home-hero{
- --home-edge:clamp(24px,4.25vw,96px);
- --home-nav-top:clamp(20px,3.4vh,46px);
- --home-logo-width:clamp(250px,27vw,520px);
- --home-title-size:clamp(68px,8.2vw,150px);
- --home-chinese-size:clamp(16px,1.22vw,22px);
- --home-verse-size:clamp(15px,1.06vw,19px);
- --home-ui-size:clamp(11px,.82vw,14px);
- isolation:isolate;
+ --home-edge:clamp(24px,4vw,86px);
+ --home-title-size:clamp(84px,7.4vw,144px);
+ --home-ui-size:clamp(14px,.9vw,17px);
+ --home-chinese-size:clamp(18px,1.18vw,23px);
+ --home-verse-size:clamp(17px,1.08vw,21px);
+ position:relative;isolation:isolate;min-height:100svh;overflow:hidden;
+ color:#fff;
 }
-body.home .sites-home-hero .sites-home-film{z-index:-1}
+body.home .sites-home-hero .sites-home-film{z-index:0;pointer-events:none}
+body.home .sites-home-hero .sites-home-film iframe{pointer-events:none;transform:none!important}
 body.home .sites-home-hero .sites-home-film:after{
- background:linear-gradient(90deg,rgba(10,13,13,.66) 0%,rgba(10,13,13,.34) 42%,rgba(10,13,13,.10) 73%,rgba(10,13,13,.42) 100%),
- linear-gradient(0deg,rgba(8,12,12,.48),transparent 34%);
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(90deg,rgba(12,20,19,.58) 0%,rgba(12,20,19,.18) 46%,rgba(12,20,19,.08) 75%,rgba(12,20,19,.30) 100%),
+ linear-gradient(0deg,rgba(10,17,17,.76) 0%,rgba(10,17,17,.12) 37%,transparent 66%,rgba(10,17,17,.32) 100%);
 }
 body.home .sites-home-hero .sites-home-masthead{
- top:clamp(100px,15vh,190px);left:var(--home-edge);
- width:var(--home-logo-width);max-width:none;padding:0;
+ position:absolute;z-index:2;top:clamp(80px,10vh,150px);
+ left:var(--home-edge);width:clamp(340px,30vw,560px);max-width:none;padding:0;
 }
 body.home .sites-home-hero .sites-home-masthead img{
- width:100%;height:auto;object-fit:contain;opacity:1;
-}
-body.home .sites-home-hero .sites-home-intro{
- left:var(--home-edge);right:auto;bottom:clamp(120px,15vh,210px);
- width:min(70vw,1050px);max-width:none;
- display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,.52fr);
- align-items:end;column-gap:clamp(28px,5vw,105px);
-}
-body.home .sites-home-hero .sites-home-star{
- grid-column:1/-1;width:clamp(15px,1.3vw,22px);height:auto;
- margin:0 0 clamp(16px,2.2vh,32px);
-}
-body.home .sites-home-hero .sites-home-intro h1{
- grid-column:1;grid-row:2;margin:0;
- font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
- font-size:var(--home-title-size);font-weight:400;line-height:.82;
- letter-spacing:-.052em;font-synthesis:none;
-}
-body.home .sites-home-hero .sites-home-intro h1 em{
- font-family:inherit;font-weight:400;font-style:italic;font-synthesis:none;
-}
-body.home .sites-home-hero .sites-home-slogan-zh{
- grid-column:1;grid-row:3;margin:clamp(22px,3vh,42px) 0 0;
- font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- font-size:var(--home-chinese-size);font-weight:200;line-height:1.55;
- letter-spacing:.12em;font-synthesis:none;
-}
-body.home .sites-home-hero .sites-home-scripture{
- grid-column:2;grid-row:2/4;align-self:end;margin:0 0 3px;
- max-width:31ch;font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
- font-size:var(--home-verse-size);font-weight:400;line-height:1.55;
- letter-spacing:.012em;font-synthesis:none;
-}
-body.home .sites-home-hero .sites-home-scripture cite{
- display:block;margin-top:clamp(14px,2vh,26px);
- font-size:clamp(12px,.88vw,16px);letter-spacing:.045em;
+ display:block;width:100%;height:auto;object-fit:contain;opacity:1;
 }
 body.home .sites-home-hero .sites-home-nav{
- top:var(--home-nav-top);right:var(--home-edge);left:auto;
- max-width:calc(100vw - 2 * var(--home-edge));
- display:flex;flex-wrap:wrap;justify-content:flex-end;
- gap:clamp(12px,1.45vw,28px);
+ position:absolute;z-index:5;top:clamp(25px,3.5vh,48px);right:var(--home-edge);left:auto;
+ max-width:calc(100% - 2 * var(--home-edge));display:flex;flex-wrap:wrap;
+ justify-content:flex-end;align-items:center;gap:clamp(12px,1.3vw,25px);
  font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
- font-size:var(--home-ui-size);font-weight:400;letter-spacing:.035em;
- line-height:1.4;mix-blend-mode:normal;
+ font-size:var(--home-ui-size);font-weight:400;letter-spacing:.015em;line-height:1.5;
+ mix-blend-mode:normal;
+}
+body.home .sites-home-hero .sites-home-nav a{
+ display:inline-flex;align-items:center;min-height:40px;opacity:1;
+ border-bottom:1px solid transparent;text-decoration:none;
+}
+body.home .sites-home-hero .sites-home-nav a:hover,
+body.home .sites-home-hero .sites-home-nav a:focus-visible{border-color:currentColor}
+body.home .sites-home-hero .sites-home-intro{
+ position:absolute;z-index:2;left:var(--home-edge);right:auto;
+ bottom:clamp(124px,16vh,215px);width:min(80vw,1250px);max-width:none;
+ display:grid;grid-template-columns:minmax(0,1fr);align-items:end;
+}
+body.home .sites-home-hero .sites-home-star{
+ grid-column:1;grid-row:1;width:clamp(16px,1.2vw,23px);height:auto;
+ margin:0 0 clamp(16px,2vh,26px);
+}
+body.home .sites-home-hero .sites-home-intro h1{
+ grid-column:1;grid-row:2;min-width:0;max-width:none;margin:0;
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-size:var(--home-title-size);font-weight:400;line-height:.89;
+ letter-spacing:-.047em;text-wrap:nowrap;overflow-wrap:normal;font-synthesis:none;
+}
+body.home .sites-home-hero .sites-home-intro h1 em{
+ font-family:inherit;font-style:italic;font-weight:400;font-synthesis:none;
+ white-space:nowrap;
+}
+body.home .sites-home-hero .sites-home-scripture-pair{
+ grid-column:1;grid-row:3;display:flex;flex-direction:column;align-items:flex-start;
+ gap:clamp(7px,1vh,13px);min-width:0;margin-top:clamp(27px,3.4vh,48px);
+}
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-slogan-zh,
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
+ position:static;display:block;grid-column:auto;grid-row:auto;align-self:auto;
+ max-width:60ch;margin:0;opacity:1;line-height:1.55;font-synthesis:none;
+}
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-slogan-zh{
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ font-size:var(--home-chinese-size);font-weight:200;letter-spacing:.1em;
+}
+body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-size:var(--home-verse-size);font-weight:400;letter-spacing:.01em;
+}
+body.home .sites-home-hero .sites-home-scripture-pair cite{
+ display:block;margin-top:clamp(8px,1.3vh,17px);
+ font-size:clamp(14px,.84vw,17px);font-weight:400;opacity:.95;
 }
 body.home .sites-home-hero .sites-home-entry{
- right:var(--home-edge);bottom:clamp(26px,4.5vh,64px);
- left:auto;display:flex;gap:clamp(24px,3vw,60px);
- align-items:flex-end;font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
- font-size:var(--home-ui-size);letter-spacing:.035em;
+ position:absolute;z-index:5;right:var(--home-edge);left:auto;
+ bottom:clamp(28px,5vh,62px);display:flex;align-items:flex-end;
+ gap:clamp(25px,3vw,55px);
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-size:var(--home-ui-size);letter-spacing:.02em;
 }
 body.home .sites-home-hero .sites-home-entry a{
- min-width:clamp(150px,12vw,220px);padding-bottom:10px;
+ display:flex;align-items:center;justify-content:space-between;gap:15px;
+ min-width:clamp(180px,13vw,260px);min-height:46px;padding:8px 0;
+ border-bottom:1px solid rgba(255,255,255,.72);opacity:1;
 }
 body.home .sites-home-hero .sites-home-entry span{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- font-size:clamp(11px,.75vw,14px);font-weight:400;
+ font-size:clamp(13px,.85vw,17px);font-weight:400;
+}
+body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visible{
+ outline:2px solid currentColor;outline-offset:5px;
+}
+@media(min-width:901px) and (max-height:740px){
+ body.home .sites-home-hero{min-height:740px}
 }
 @media(max-width:900px){
  body.home .sites-home-hero{
-  --home-edge:clamp(18px,5vw,36px);
-  --home-logo-width:min(72vw,360px);
-  --home-title-size:clamp(58px,12vw,110px);
-  --home-chinese-size:clamp(15px,2.4vw,20px);
-  --home-verse-size:clamp(14px,1.8vw,18px);
- }
- body.home .sites-home-hero .sites-home-nav{
-  top:18px;left:var(--home-edge);right:var(--home-edge);
-  justify-content:flex-start;gap:10px 17px;
- }
- body.home .sites-home-hero .sites-home-masthead{top:clamp(105px,19vh,190px)}
- body.home .sites-home-hero .sites-home-intro{
-  width:calc(100% - 2 * var(--home-edge));right:var(--home-edge);
-  bottom:clamp(135px,19vh,210px);grid-template-columns:1fr;
- }
- body.home .sites-home-hero .sites-home-intro h1{grid-column:1;grid-row:2}
- body.home .sites-home-hero .sites-home-slogan-zh{grid-column:1;grid-row:3}
- body.home .sites-home-hero .sites-home-scripture{
-  grid-column:1;grid-row:4;margin-top:clamp(15px,3vh,28px);
- }
- body.home .sites-home-hero .sites-home-entry{
-  left:var(--home-edge);right:var(--home-edge);bottom:24px;
-  justify-content:space-between;gap:16px;
- }
- body.home .sites-home-hero .sites-home-entry a{min-width:0;flex:1}
-}
-@media(max-width:520px){
- body.home .sites-home-hero{--home-title-size:clamp(52px,14.5vw,78px)}
- body.home .sites-home-hero .sites-home-masthead{top:clamp(105px,16vh,145px)}
- body.home .sites-home-hero .sites-home-intro{bottom:clamp(120px,15vh,160px)}
- body.home .sites-home-hero .sites-home-star{margin-bottom:14px}
- body.home .sites-home-hero .sites-home-slogan-zh{margin-top:18px}
- body.home .sites-home-hero .sites-home-scripture{margin-top:16px}
- body.home .sites-home-hero .sites-home-scripture cite{margin-top:8px}
- body.home .sites-home-hero .sites-home-entry{gap:12px}
-}
-@media(max-height:680px) and (min-width:901px){
- body.home .sites-home-hero .sites-home-masthead{top:12vh}
- body.home .sites-home-hero .sites-home-intro{bottom:12vh}
-}
-
-/* Phase II — responsive collision contract.
-   On narrow screens use document flow, not three independently positioned
-   overlays. This preserves brand hierarchy under text zoom and translation. */
-@media(max-width:900px){
- body.home .sites-home-hero{
-  min-height:100svh;height:auto;
-  display:grid;grid-template-columns:minmax(0,1fr);
+  --home-edge:clamp(20px,5vw,40px);
+  --home-title-size:clamp(64px,12vw,108px);
+  --home-ui-size:clamp(14px,1.8vw,17px);
+  --home-chinese-size:clamp(17px,2.5vw,22px);
+  --home-verse-size:clamp(16px,2vw,20px);
+  min-height:100svh;height:auto;display:grid;
+  grid-template-columns:minmax(0,1fr);
   grid-template-rows:auto auto minmax(0,1fr) auto;
-  align-content:start;row-gap:clamp(28px,5vh,68px);
-  padding:clamp(20px,3vh,36px) var(--home-edge) clamp(22px,4vh,42px);
+  row-gap:clamp(26px,5vh,60px);align-content:start;
+  padding:clamp(18px,3vh,32px) var(--home-edge) clamp(22px,4vh,40px);
  }
- body.home .sites-home-hero .sites-home-film{position:absolute;inset:0}
+ body.home .sites-home-hero .sites-home-film{position:absolute;inset:0;z-index:0}
  body.home .sites-home-hero .sites-home-nav{
-  position:relative;top:auto;left:auto;right:auto;
-  grid-row:1;z-index:4;max-width:100%;
-  justify-content:flex-start;
+  position:relative;grid-row:1;top:auto;left:auto;right:auto;
+  max-width:100%;justify-content:flex-start;gap:6px 18px;
  }
  body.home .sites-home-hero .sites-home-masthead{
-  position:relative;top:auto;left:auto;right:auto;
-  grid-row:2;z-index:2;
-  width:min(72vw,360px);max-width:100%;
+  position:relative;grid-row:2;top:auto;left:auto;right:auto;
+  width:min(78vw,430px);max-width:100%;
  }
  body.home .sites-home-hero .sites-home-intro{
-  position:relative;left:auto;right:auto;bottom:auto;
-  grid-row:3;z-index:2;width:100%;max-width:100%;
-  align-self:end;min-width:0;
+  position:relative;grid-row:3;left:auto;right:auto;bottom:auto;
+  width:100%;max-width:100%;align-self:end;
+ }
+ body.home .sites-home-hero .sites-home-intro h1{
+  font-size:var(--home-title-size);max-width:100%;
  }
  body.home .sites-home-hero .sites-home-entry{
-  position:relative;left:auto;right:auto;bottom:auto;
-  grid-row:4;z-index:3;width:100%;
+  position:relative;grid-row:4;left:auto;right:auto;bottom:auto;
+  width:100%;flex-wrap:wrap;gap:12px 22px;
  }
+ body.home .sites-home-hero .sites-home-entry a{flex:1 1 170px;min-width:0}
 }
 @media(max-width:520px){
- body.home .sites-home-hero{row-gap:clamp(22px,4vh,42px)}
- body.home .sites-home-hero .sites-home-masthead{width:min(82vw,340px)}
- body.home .sites-home-hero .sites-home-intro h1{
-  font-size:clamp(46px,13vw,72px);overflow-wrap:normal;
- }
- body.home .sites-home-hero .sites-home-entry{
-  flex-wrap:wrap;align-items:start;gap:12px 22px;
- }
- body.home .sites-home-hero .sites-home-entry a{
-  flex:1 1 145px;max-width:100%;
- }
-}
-@media(max-height:620px) and (min-width:901px){
- body.home .sites-home-hero{min-height:720px}
+ body.home .sites-home-hero{--home-title-size:clamp(54px,13vw,74px)}
+ body.home .sites-home-hero .sites-home-masthead{width:min(82vw,360px)}
+ body.home .sites-home-hero .sites-home-scripture-pair{margin-top:24px}
 }
 @media(prefers-reduced-motion:reduce){
  body.home .sites-home-hero :is(.sites-home-masthead,.sites-home-intro,.sites-home-entry){
   animation:none!important;opacity:1!important;transform:none!important;
- }
-}
-/* Keep controls legible and keyboard-reachable over moving footage. */
-body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a):focus-visible{
- outline:2px solid currentColor;outline-offset:5px;
-}
-
-/* Phase III — optical grid and media layering.
-   Keep the video in the hero stacking context, never behind the body. */
-body.home .sites-home-hero .sites-home-film{z-index:0;pointer-events:none}
-body.home .sites-home-hero .sites-home-film iframe{pointer-events:none}
-body.home .sites-home-hero .sites-home-nav{z-index:5}
-body.home .sites-home-hero .sites-home-masthead,
-body.home .sites-home-hero .sites-home-intro{z-index:2}
-body.home .sites-home-hero .sites-home-entry{z-index:5}
-@media(min-width:901px){
- body.home .sites-home-hero .sites-home-intro{
-  width:min(calc(100vw - 2 * var(--home-edge)),1050px);
-  grid-template-columns:minmax(0,1fr) minmax(220px,.52fr);
- }
- body.home .sites-home-hero .sites-home-intro h1{min-width:0}
- body.home .sites-home-hero .sites-home-scripture{min-width:0}
-}
-@media(min-width:901px) and (max-width:1250px){
- body.home .sites-home-hero{--home-title-size:clamp(68px,7.4vw,110px)}
- body.home .sites-home-hero .sites-home-intro{column-gap:clamp(24px,3vw,50px)}
-}
-@media(max-width:900px){
- body.home .sites-home-hero .sites-home-film{z-index:0}
- body.home .sites-home-hero .sites-home-nav{align-self:start}
- body.home .sites-home-hero .sites-home-intro{align-self:end}
- body.home .sites-home-hero .sites-home-entry{align-self:end}
-}
-
-/* Phase IV — real 4K screenshot correction.
-   Restore readable editorial scale and remove the legacy 5.2ch headline cap. */
-body.home .sites-home-hero{
- --home-edge:clamp(28px,4.5vw,104px);
- --home-logo-width:clamp(340px,30vw,650px);
- --home-title-size:clamp(94px,9.2vw,174px);
- --home-chinese-size:clamp(18px,1.15vw,26px);
- --home-verse-size:clamp(17px,1.05vw,23px);
- --home-ui-size:clamp(15px,.92vw,19px);
-}
-body.home .sites-home-hero .sites-home-masthead{
- top:clamp(65px,9vh,132px);
- width:var(--home-logo-width);max-width:none;
-}
-body.home .sites-home-hero .sites-home-intro{
- bottom:clamp(125px,14vh,210px);
- width:min(79vw,1390px);max-width:none;
- grid-template-columns:minmax(0,1.6fr) minmax(280px,.75fr);
- column-gap:clamp(48px,5vw,115px);
-}
-body.home .sites-home-hero .sites-home-intro h1{
- max-width:none;text-wrap:nowrap;overflow-wrap:normal;
- font-size:var(--home-title-size);line-height:.9;
- letter-spacing:-.045em;
-}
-body.home .sites-home-hero .sites-home-intro h1 em{white-space:nowrap}
-body.home .sites-home-hero .sites-home-slogan-zh{
- font-size:var(--home-chinese-size);opacity:1;
-}
-body.home .sites-home-hero .sites-home-scripture{
- font-size:var(--home-verse-size);opacity:1;max-width:36ch;
-}
-body.home .sites-home-hero .sites-home-scripture cite{
- font-size:clamp(14px,.85vw,18px);opacity:1;
-}
-body.home .sites-home-hero .sites-home-nav{
- font-size:var(--home-ui-size);gap:clamp(14px,1.35vw,30px);
-}
-body.home .sites-home-hero .sites-home-entry{
- font-size:var(--home-ui-size);
-}
-body.home .sites-home-hero .sites-home-entry span{
- font-size:clamp(13px,.85vw,17px);
-}
-body.home .sites-home-hero :is(.sites-home-nav a,.sites-home-entry a){
- opacity:1;min-height:32px;
-}
-@media(min-width:901px) and (max-width:1350px){
- body.home .sites-home-hero{
-  --home-logo-width:clamp(300px,30vw,430px);
-  --home-title-size:clamp(78px,8vw,118px);
- }
- body.home .sites-home-hero .sites-home-intro{
-  width:calc(100vw - 2 * var(--home-edge));
-  grid-template-columns:minmax(0,1.45fr) minmax(225px,.8fr);
-  column-gap:clamp(24px,3vw,45px);
- }
-}
-@media(max-width:900px){
- body.home .sites-home-hero{
-  --home-logo-width:min(78vw,410px);
-  --home-title-size:clamp(62px,12vw,108px);
-  --home-chinese-size:clamp(17px,2.5vw,22px);
-  --home-verse-size:clamp(16px,2vw,20px);
-  --home-ui-size:clamp(14px,1.9vw,17px);
- }
- body.home .sites-home-hero .sites-home-masthead{
-  width:var(--home-logo-width);top:auto;
- }
- body.home .sites-home-hero .sites-home-intro{
-  width:100%;bottom:auto;grid-template-columns:minmax(0,1fr);
- }
- body.home .sites-home-hero .sites-home-intro h1{
-  max-width:100%;font-size:var(--home-title-size);white-space:normal;
- }
- body.home .sites-home-hero .sites-home-nav{
-  font-size:var(--home-ui-size);
- }
- body.home .sites-home-hero .sites-home-entry{
-  font-size:var(--home-ui-size);
- }
-}
-@media(max-width:520px){
- body.home .sites-home-hero{--home-title-size:clamp(56px,13vw,72px)}
- body.home .sites-home-hero .sites-home-intro h1{font-size:var(--home-title-size)}
-}
-
-/* Scripture is one bilingual quotation, not two independent grid items. */
-body.home .sites-home-hero .sites-home-scripture-pair{
- grid-column:1/-1;grid-row:3;
- display:flex;flex-direction:column;align-items:flex-start;
- gap:clamp(6px,.9vh,12px);min-width:0;
- margin-top:clamp(22px,3vh,42px);
-}
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-slogan-zh,
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
- display:block;position:static;grid-column:auto;grid-row:auto;
- align-self:auto;margin:0;max-width:60ch;
-}
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-slogan-zh{
- font-size:var(--home-chinese-size);
-}
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
- font-size:var(--home-verse-size);
-}
-body.home .sites-home-hero .sites-home-scripture-pair cite{
- margin-top:clamp(8px,1.2vh,15px);
-}
-@media(max-width:900px){
- body.home .sites-home-hero .sites-home-scripture-pair{
-  grid-column:1;grid-row:3;gap:8px;margin-top:22px;
  }
 }
