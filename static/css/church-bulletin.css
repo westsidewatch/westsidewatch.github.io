@@ -1,0 +1,30 @@
+/* Church bulletin: editorial two-column treatment inspired by the supplied Sunday order. */
+.sites-section-church .church-bulletin{--cb-gold:#9b8542;--cb-ink:#252525;--cb-paper:#faf9f5;max-width:1240px;margin:0 auto;padding:clamp(20px,5vw,76px);color:var(--cb-ink);background:var(--cb-paper);font-family:var(--ws-font-zh-serif,"Noto Serif TC",serif);line-height:1.8}
+.church-bulletin__masthead{text-align:center;padding:clamp(30px,7vw,85px) 18px;border:1px solid color-mix(in srgb,var(--cb-gold),transparent 50%);position:relative}
+.church-bulletin__masthead:before{content:"";position:absolute;inset:10px;border:1px solid color-mix(in srgb,var(--cb-gold),transparent 70%);pointer-events:none}
+.church-bulletin__eyebrow{font:400 .7rem/1.5 var(--ws-font-en,"Bodoni Moda",serif);letter-spacing:.19em;color:var(--cb-gold)}
+.church-bulletin__church{font-size:clamp(1.15rem,2.5vw,1.8rem);letter-spacing:.12em}
+.church-bulletin__address{font-size:.82rem}
+.church-bulletin__ornament{display:block;color:var(--cb-gold);font-size:1.4rem;margin:1.2rem}
+.church-bulletin__masthead h1{font-size:clamp(2.4rem,5.5vw,5rem);font-weight:400;line-height:1.3;margin:.5em 0}
+.church-bulletin__masthead h1 span{display:block;font:400 clamp(1rem,2vw,1.65rem)/1.7 var(--ws-font-en,"Bodoni Moda",serif);letter-spacing:.07em}
+.church-bulletin__date{letter-spacing:.08em}
+.church-bulletin blockquote{margin:1.5rem 0;padding:0;border:0;font-size:1rem;line-height:2}
+.church-bulletin blockquote cite{display:block;font-size:.8rem;font-style:normal;color:var(--cb-gold)}
+.church-bulletin__body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:clamp(26px,5vw,70px);padding:clamp(40px,6vw,80px) 0}
+.church-bulletin__body h2{font-weight:400;font-size:clamp(2rem,4vw,3.6rem);line-height:1.4;margin:.2em 0 .8em}
+.church-bulletin__body h3{font-size:1.05rem;font-weight:400;color:var(--cb-gold);margin:1.7em 0 .5em}
+.church-bulletin__sermon{border-right:1px solid color-mix(in srgb,var(--cb-gold),transparent 55%);padding-right:clamp(16px,3vw,50px)}
+.church-bulletin__speaker,.church-bulletin__team p,.church-bulletin__timeline p{font-size:.9rem}
+.church-bulletin__notes{height:330px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 38px,color-mix(in srgb,var(--cb-gold),transparent 68%) 39px,transparent 40px)}
+.church-bulletin__team{padding-bottom:1.4rem;border-bottom:1px solid color-mix(in srgb,var(--cb-gold),transparent 55%)}
+.church-bulletin__timeline{padding:0;margin:1.6rem 0;list-style:none}
+.church-bulletin__timeline li{display:grid;grid-template-columns:minmax(98px,28%) minmax(0,1fr);gap:16px;padding:1.1rem 0;border-bottom:1px solid color-mix(in srgb,var(--cb-gold),transparent 78%)}
+.church-bulletin__timeline time{font:400 .9rem/1.8 var(--ws-font-en,"Bodoni Moda",serif);color:var(--cb-gold);font-variant-numeric:tabular-nums}
+.church-bulletin__timeline h3{margin:0 0 .4em;font-size:1.03rem}
+.church-bulletin__timeline p{margin:.2em 0}
+.church-bulletin__next{padding:1rem 1.3rem;border:1px solid color-mix(in srgb,var(--cb-gold),transparent 55%)}
+.church-bulletin__footer{border-top:1px solid var(--cb-gold);display:flex;justify-content:space-between;gap:1rem;padding-top:1.5rem;font-size:.8rem}
+.church-bulletin__footer a{color:inherit;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:760px){.church-bulletin__body{grid-template-columns:1fr}.church-bulletin__sermon{border-right:0;border-bottom:1px solid var(--cb-gold);padding-right:0;padding-bottom:2rem}.church-bulletin__timeline li{grid-template-columns:90px minmax(0,1fr)}}
+@media print{.church-bulletin{max-width:none!important;padding:0!important}.church-bulletin__footer a{display:none}.church-bulletin__body{gap:25px}.church-bulletin__notes{height:160px}}

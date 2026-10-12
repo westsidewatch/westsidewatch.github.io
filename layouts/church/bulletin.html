@@ -1,0 +1,44 @@
+{{ define "main" }}
+{{ $key := .Date.Format "2006-01-02" }}
+{{ $data := index (index site.Data.church.bulletins $key) }}
+<article class="church-bulletin" aria-labelledby="bulletin-title">
+  <header class="church-bulletin__masthead">
+    <p class="church-bulletin__eyebrow">{{ $data.church_en }}</p>
+    <p class="church-bulletin__church">{{ $data.church }}</p>
+    <p class="church-bulletin__address">{{ $data.address }}</p>
+    <span class="church-bulletin__ornament" aria-hidden="true">✦</span>
+    <h1 id="bulletin-title">主日崇拜 <span lang="en">Sunday Worship</span></h1>
+    <p class="church-bulletin__date">{{ $data.date_label }} · {{ $data.time_label }}</p>
+    <blockquote>{{ $data.opening_verse }}<cite>{{ $data.opening_reference }}</cite></blockquote>
+  </header>
+  <div class="church-bulletin__body">
+    <section class="church-bulletin__sermon" aria-labelledby="sermon-title">
+      <p class="church-bulletin__eyebrow">THE WORD · 講道</p>
+      <h2 id="sermon-title">{{ $data.sermon_title }}</h2>
+      <p class="church-bulletin__speaker">今日證道 · {{ $data.sermon_speaker }}</p>
+      <h3>主題經文</h3>
+      {{ range $data.scriptures }}<blockquote>{{ .text }}<cite>{{ .reference }}</cite></blockquote>{{ end }}
+      <h3>我的聆聽筆記</h3>
+      <div class="church-bulletin__notes" aria-label="聆聽筆記空白區"></div>
+    </section>
+    <section class="church-bulletin__schedule" aria-labelledby="schedule-title">
+      <p class="church-bulletin__eyebrow">ORDER OF WORSHIP · {{ $data.date }}</p>
+      <h2 id="schedule-title">日程表</h2>
+      <div class="church-bulletin__team"><h3>今日事奉</h3>
+        {{ range $data.team }}<p>{{ .role }}：{{ .name }}</p>{{ end }}
+      </div>
+      <ol class="church-bulletin__timeline">
+        {{ range $data.schedule }}
+        <li><time>{{ .time }}</time><div><h3>{{ .title }}</h3>
+          {{ range .actions }}<p>{{ .text }}{{ with .person }} · {{ . }}{{ end }}</p>{{ end }}
+        </div></li>
+        {{ end }}
+      </ol>
+      <aside class="church-bulletin__next"><h3>下一主日 · {{ $data.next.date_label }}</h3>
+        {{ range $data.next.team }}<p>{{ .role }}：{{ .name }}</p>{{ end }}
+      </aside>
+    </section>
+  </div>
+  <footer class="church-bulletin__footer"><a href="{{ "church/" | relURL }}">返回教會</a><span>{{ $data.date_label }} · 主日週報</span></footer>
+</article>
+{{ end }}
