@@ -1,3 +1,4 @@
+import {appendPeriodSpatialLedger} from './period-spatial-ledger.js';
 import {loadCityData} from './city-data-loader.js';
 import {compileRoyalSpatialLayout} from './royal-spatial-layout.js';
 // Spatial records are a derived projection, not a second editable ledger.
@@ -16,5 +17,6 @@ export async function loadAnchorCityLedger(){
    lifecycle.objects.push({id,lifecycleEvents:template.lifecycleEvents.map(event=>({...event,authority:'inferred-display-follows-spatial-template',templateId}))});
   }
  }
+ for(const path of new Set(packs.packs.map(p=>p.periodSpatialObjectPack).filter(Boolean)))appendPeriodSpatialLedger(packs,lifecycle,await loadCityData(path));
  return {packs,lifecycle};
 }

@@ -148,10 +148,10 @@
           "label": "早期第二聖殿",
           "kind": "sanctuary",
           "evidence": "textual-reconstruction",
-          "confidence": "medium-location / low-form",
-          "geometry": "platform-constrained-only",
+          "confidence": "inferred",
+          "geometry": "withheld-pending-independent-sanctuary-adapter",
           "sources": [
-            "https://www.biblegateway.com/passage/?search=Ezra+6%3A14-15&version=KJV"
+            "https://search.biblegateway.com/passage/?search=Ezra+6&version=KJV"
           ],
           "relatedObjects": [
             {
@@ -159,9 +159,16 @@
               "relation": "sanctuary-predecessor",
               "geometryReuseVerified": false
             }
+          ],
+          "rendererBinding": "ledger-only-pending-adapter",
+          "limitations": [
+            "重建事件有經文依據；主殿、廊、院牆、祭壇、屋頂、位置與尺寸都是獨立設計示意，並非出土復原。",
+            "沒有把以斯拉記六章詔令的六十肘當作已建成平面，也沒有採用希律時期聖殿形制。",
+            "此幾何僅用於波斯期；後期制度延續不證明建築與地基原樣留存。"
           ]
         }
-      ]
+      ],
+      "periodSpatialObjectPack": "./data/urban/first-temple-persian.spatial.v1.json"
     },
     {
       "phase": "herodian-jesus",

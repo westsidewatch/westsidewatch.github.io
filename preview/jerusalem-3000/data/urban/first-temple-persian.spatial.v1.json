@@ -14,8 +14,8 @@
   "limitations": [
     "西向擴張方向有導覽文獻支持；以下區域邊界與街道為設計示意，並非考古測繪。",
     "波斯期較小的示意住居區不代表已核定人口、完整城界或西丘無人居住。",
-    "聖域只保留空間，不以第一聖殿模型冒充第二聖殿；城牆路線仍未核定。",
-    "跨代保留的住居遺跡是示意生命週期，未核定埋深與物理復用。"
+    "跨代保留的住居遺跡是示意生命週期，未核定埋深與物理復用。",
+    "聖區及早期第二聖殿為推定配置，不沿用第一聖殿地基或模型；城牆路線仍未核定。"
   ],
   "phases": {
     "late-first-temple": {
@@ -380,7 +380,80 @@
             ]
           ]
         }
-      ]
+      ],
+      "sanctuary": {
+        "objectId": "j3k:object:second-temple-early",
+        "authority": "illustrative Persian sanctuary, not excavated plan or decree dimensions",
+        "geometryValidityPhases": [
+          "persian-nehemiah"
+        ],
+        "hall": {
+          "offset": [
+            -114,
+            -470
+          ],
+          "length": 30,
+          "width": 15,
+          "height": 12,
+          "wallThickness": 1.2,
+          "doorWidth": 2.8,
+          "doorHeight": 4.5
+        },
+        "porch": {
+          "depth": 7,
+          "height": 8
+        },
+        "court": {
+          "bounds": [
+            -158,
+            -517,
+            -40,
+            -413
+          ],
+          "wallHeight": 2.5,
+          "wallThickness": 1.2,
+          "gateX": -54,
+          "gateWidth": 5
+        },
+        "altar": {
+          "offset": [
+            -70,
+            -482
+          ],
+          "width": 5,
+          "depth": 5,
+          "height": 2
+        },
+        "access": {
+          "width": 1.6,
+          "waypoints": [
+            [
+              -54,
+              -438
+            ],
+            [
+              -86,
+              -438
+            ],
+            [
+              -86,
+              -455
+            ],
+            [
+              -86,
+              -470
+            ]
+          ]
+        },
+        "sources": [
+          "https://search.biblegateway.com/passage/?search=Ezra+6&version=KJV"
+        ],
+        "limitations": [
+          "重建事件有經文依據；主殿、廊、院牆、祭壇、屋頂、位置與尺寸都是獨立設計示意，並非出土復原。",
+          "沒有把以斯拉記六章詔令的六十肘當作已建成平面，也沒有採用希律時期聖殿形制。",
+          "此幾何僅用於波斯期；後期制度延續不證明建築與地基原樣留存。"
+        ]
+      }
     }
   }
 }

@@ -1,0 +1,48 @@
+import assert from 'node:assert/strict';
+import * as THREE from 'three';
+import {readFile} from 'node:fs/promises';
+import {compilePersianSanctuary} from '../preview/jerusalem-3000/persian-sanctuary-layout.js';
+import {createPersianSanctuary} from '../preview/jerusalem-3000/persian-sanctuary.js';
+import {compilePeriodRegistration} from '../preview/jerusalem-3000/period-spatial-registration.js';
+import {bindPeriodSpatialCore} from '../preview/jerusalem-3000/period-spatial-ledger.js';
+import {loadTemporalCityCore} from '../preview/jerusalem-3000/temporal-city-core-adapter.js';
+import {loadAnchorCityLedger} from '../preview/jerusalem-3000/anchor-ledger-loader.js';
+import {invalidateCityData} from '../preview/jerusalem-3000/city-data-loader.js';
+import {polygonsOverlap} from '../preview/jerusalem-3000/urban-exclusion.js';
+const base=new URL('../preview/jerusalem-3000/',import.meta.url),json=async p=>JSON.parse(await readFile(new URL(p,base)));
+const data=await json('data/urban/first-temple-persian.spatial.v1.json'),timeline=await json('data/continuous-build-timeline.json'),layout=compilePersianSanctuary(data);
+const moved=structuredClone(data);moved.phases['persian-nehemiah'].sanctuary.hall.offset[0]-=2;
+assert.notDeepEqual(compilePersianSanctuary(moved).access.points.at(-1),layout.access.points.at(-1),'access endpoint follows independent sanctuary entrance');
+const blocked=structuredClone(data);blocked.phases['persian-nehemiah'].sanctuary.altar.offset=[-86,-455];assert.throws(()=>compilePersianSanctuary(blocked),/access crosses/);
+const noGate=structuredClone(data);noGate.phases['persian-nehemiah'].sanctuary.court.gateWidth=1000;assert.throws(()=>compilePersianSanctuary(noGate),/gate/);
+const mismatch=structuredClone(data);mismatch.phases['persian-nehemiah'].roads.find(r=>r.id==='northern-rebuilding-access').points.at(-1)[0]-=4;assert.throws(()=>compilePersianSanctuary(mismatch),/approach/);
+const noReserve=structuredClone(data);noReserve.phases['persian-nehemiah'].reservations=[];assert.throws(()=>compilePersianSanctuary(noReserve),/reservation/);
+const original=globalThis.fetch,requests=new Map();
+try{
+ globalThis.fetch=async url=>{const path=new URL(url).pathname;requests.set(path,(requests.get(path)||0)+1);return {ok:true,json:()=>json(url)};};invalidateCityData();
+ const terrain={grid:{origin:data.anchor},heightAtWorld:(x,z)=>40+x*.02+z*.01};
+ const [{core},a,b]=await Promise.all([loadTemporalCityCore(timeline.phases,{terrain}),loadAnchorCityLedger(),loadAnchorCityLedger()]);
+ assert.equal(a.lifecycle.objects.length,b.lifecycle.objects.length);
+ const ids=a.packs.packs.flatMap(p=>(p.objects||[]).map(o=>o.id));assert.equal(new Set(ids).size,ids.length,'derived spatial records must be unique');
+ assert.equal(requests.get(new URL('data/urban/first-temple-persian.spatial.v1.json',base).pathname),1,'all ledger consumers must share one spatial request');
+ for(const phase of ['late-first-temple','persian-nehemiah'])bindPeriodSpatialCore(core,compilePeriodRegistration(data,phase,data.anchor));
+ assert.equal(core.get('j3k:late-first-temple:district:western-hill').metadata.rendererBinding,'period-spatial-adapter-v1');
+ const parent=new THREE.Group(),runtime=createPersianSanctuary(parent,{data,terrain,core}),apply=position=>runtime.apply({position});
+ apply(5.9);assert.equal(runtime.diagnostics().visibleTemple,0);
+ apply(6.5);const diag=runtime.diagnostics();assert.ok(diag.visibleTemple>0);assert.equal(diag.visibleGate,2);assert.equal(diag.visibleAccess,true);
+ const identity=diag.componentIdentity,parts=parent.children[0].children;
+ const snapshots=parts.map(m=>Array.from(m.geometry.attributes.position.array));
+ assert.ok(!identity.includes('j3k:royal:'),'component IDs must not reuse First Temple assembly');
+ const access=parts.find(m=>m.userData.cityObject.role==='access'),p=access.geometry.attributes.position;
+ assert.ok(access.geometry.attributes.normal.getY(0)>0);
+ for(let i=0;i<p.count;i+=3){const triangle=[0,1,2].map(k=>({x:p.getX(i+k),z:p.getZ(i+k)}));for(const obstacle of parts.filter(m=>!['access','roof'].includes(m.userData.cityObject.role)&&!m.userData.cityObject.componentId.includes('lintel'))){const b=new THREE.Box3().setFromObject(obstacle);assert.ok(!polygonsOverlap(triangle,[{x:b.min.x,z:b.min.z},{x:b.max.x,z:b.min.z},{x:b.max.x,z:b.max.z},{x:b.min.x,z:b.max.z}]),`actual road crosses ${obstacle.userData.cityObject.componentId}`);}}
+ for(const m of parts){m.updateMatrix();const p=m.geometry.attributes.position;for(let i=0;i<p.count;i++){const v=new THREE.Vector3(p.getX(i),p.getY(i),p.getZ(i)).applyMatrix4(m.matrix);assert.ok(v.y>=terrain.heightAtWorld(v.x,v.z)-1e-4,'all sanctuary vertices must remain above the DEM');}}
+ assert.ok(core.get(core.get(layout.access.id).metadata.spatialTopology.from),'access must reference the shared Persian approach road');
+ assert.equal(core.get(layout.objectId).metadata.geometryReuseVerified,false);assert.deepEqual(core.lineage(layout.objectId),{predecessors:[],successors:[]});
+ assert.equal(core.get(layout.objectId).confidence,'inferred');assert.equal(core.validate().ok,true);
+ apply(7.5);assert.equal(runtime.diagnostics().templeState,'transform');assert.equal(runtime.diagnostics().visibleTemple,0,'institutional continuity must not project unchanged Persian geometry into later periods');
+ apply(6.5);assert.equal(runtime.diagnostics().componentIdentity,identity);parts.forEach((m,i)=>assert.deepEqual(Array.from(m.geometry.attributes.position.array),snapshots[i]));
+ runtime.apply({position:6.5,evidenceAllowed:()=>false});assert.equal(runtime.diagnostics().visibleTemple,0);assert.equal(runtime.diagnostics().visibleAccess,false);
+ let disposals=0;parts.forEach(m=>m.geometry.addEventListener('dispose',()=>disposals++));runtime.dispose();assert.equal(disposals,parts.length);assert.equal(parent.children.length,0);
+ console.log('PASS: independent Second Temple assembly, common spatial IDs, gated approach clearance, source confidence, later geometry withheld, return identity and resource disposal');
+}finally{globalThis.fetch=original;invalidateCityData();}

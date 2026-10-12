@@ -1,3 +1,5 @@
+import {createPersianSanctuary} from './persian-sanctuary.js';
+import {bindPeriodSpatialCore} from './period-spatial-ledger.js';
 import { compilePeriodRegistration } from './period-spatial-registration.js';
 import {createRoyalCity} from './royal-city.js';
 import {loadCityData} from './city-data-loader.js';
@@ -295,7 +297,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
-  let retainedVisible = false, royalCity=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
+  let retainedVisible = false, royalCity=null, persianSanctuary=null, periodSpatialData=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
   generationStatus.setAttribute('role', 'status');
@@ -323,6 +325,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     lateBronzeSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     davidSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     royalCity?.apply({position:timelinePosition,ruin:currentRuin,evidenceAllowed});
+    persianSanctuary?.apply({position:timelinePosition,evidenceAllowed});
     const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
@@ -628,7 +631,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       );
       cityProjection = createCityProjection(cityCoreLayer, architecture.meshes);
       cityCoreRuntime.projection = cityProjection;
-      const periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
+      periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
+      for(const phase of ['late-first-temple','persian-nehemiah'])bindPeriodSpatialCore(loaded.core,compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin));
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
         getRegistration:phase => ['late-first-temple','persian-nehemiah'].includes(phase)
           ? compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin) : null,
@@ -660,6 +664,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');
     davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime});
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
+    persianSanctuary=createPersianSanctuary(root,{data:periodSpatialData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     const bounds = new THREE.Box3()
       .setFromObject(cityCoreLayer)
       .union(new THREE.Box3().setFromObject(historical));
@@ -744,6 +749,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             lateBronzeSettlement: lateBronzeSettlement?.diagnostics(),
             davidSettlement: davidSettlement?.diagnostics(),
             royalCity:royalCity?.diagnostics(),
+            persianSanctuary:persianSanctuary?.diagnostics(),
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -798,21 +804,22 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         references:['https://www.israelexplorationsociety.com/','https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf'],
         limitations:[
           '寬牆等城防遺構支持研究西南山丘的城市發展；本畫面尚未加入經定位的寬牆平面。',
-          '目前街網與地塊由後期參考配置轉換而來，住宅形制、數量和城區範圍均為示意，不能視為第一聖殿城市復原。',
+          '目前山脊、北部聖區與西丘使用獨立推定配置；地塊、住宅形制、數量和具體區界未經考古定位。',
           '毀壞階段沿用相同模型呈現變化；倒塌方式、留存比例與埋藏深度尚未考古核定。',
           '現代 DEM 不代表古代地表；完整城牆、王宮與第一聖殿形制尚未核定。'
         ]
       };
       if(phaseId==='persian-nehemiah')return {
-        source:'https://www.biblegateway.com/passage/?search=Ezra+6%3A14-15&version=KJV',references:[],
-        limitations:['早期第二聖殿是另一次建造；此處只記聖區承接，不證明沿用第一聖殿幾何或地基。','第一聖殿遺存、王室區與特定前代牆段的後續狀態尚未核定。']
+        source:periodSpatialData.phases['persian-nehemiah'].sanctuary.sources[0],references:[],
+        limitations:[...periodSpatialData.phases['persian-nehemiah'].sanctuary.limitations,'第一聖殿遺存、王室區與特定前代牆段的後續狀態尚未核定。']
       };
       return runtime?.evidence();
     },
     focusRoyalTemple(){
-      if(!royalCity?.diagnostics().visibleTemple)return;
+      const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:royalCity;
+      if(!templeRuntime?.diagnostics().visibleTemple)return;
       if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
-      controls.minDistance=35;controls.target.copy(royalCity.templeFocus);camera.position.copy(royalCity.templeFocus).add(new THREE.Vector3(65,60,90));controls.update();needsFrame=true;
+      controls.minDistance=35;controls.target.copy(templeRuntime.templeFocus||templeRuntime.focus);camera.position.copy(templeRuntime.templeFocus||templeRuntime.focus).add(new THREE.Vector3(65,60,90));controls.update();needsFrame=true;
     },
     setRetainedLayerVisible(visible) {
       retainedVisible = Boolean(visible);
@@ -861,6 +868,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       lateBronzeSettlement?.dispose();
       davidSettlement?.dispose();
       royalCity?.dispose();
+      persianSanctuary?.dispose();
       generationStatus.remove();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])
