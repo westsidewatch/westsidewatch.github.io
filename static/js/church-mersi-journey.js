@@ -8,10 +8,10 @@ function galleryUpdate(){if(!gallery||!track)return;const mobile=matchMedia('(ma
 let frame=0;
 function render(){
  frame=0;galleryUpdate();
- if(reduced.matches){scenes.forEach(s=>{s.classList.add('is-current');s.style.removeProperty('--scene-p');s.style.removeProperty('--scene-out')});return}
+ if(reduced.matches){scenes.forEach(s=>{s.classList.add('is-current');s.classList.remove('is-adjacent');s.style.removeProperty('--scene-p');s.style.removeProperty('--scene-out')});return}
  const max=Math.max(1,journey.offsetHeight-window.innerHeight);
  const progress=Math.max(0,Math.min(1,-journey.getBoundingClientRect().top/max));
- const scaled=progress*scenes.length;
+ const scaled=progress*(scenes.length-1+0.999);
  const current=Math.min(scenes.length-1,Math.floor(scaled));
  scenes.forEach((s,i)=>{const local=Math.max(0,Math.min(1,scaled-i));s.classList.toggle('is-current',i===current);s.classList.toggle('is-adjacent',i===current+1);s.style.setProperty('--scene-p',String(local));s.style.setProperty('--scene-out',String(Math.max(0,Math.min(1,scaled-i-0.72))/0.28))});
  steps.forEach((s,i)=>s.classList.toggle('is-current',i===current));
@@ -21,6 +21,6 @@ function schedule(){if(!frame)frame=requestAnimationFrame(render)}
 function measureGallery(){if(!gallery||!track)return;const mobile=matchMedia('(max-width: 850px)').matches;if(reduced.matches||mobile){gallery.style.height='';track.style.transform='';return}const distance=Math.max(0,track.scrollWidth-gallery.clientWidth);gallery.style.height=(innerHeight+distance+innerHeight*.15)+'px';schedule()}
 addEventListener('scroll',schedule,{passive:true});addEventListener('resize',()=>{measureGallery();schedule()},{passive:true});reduced.addEventListener('change',()=>{measureGallery();schedule()});
 if(document.fonts?.ready)document.fonts.ready.then(measureGallery);
-const observer=new ResizeObserver(()=>{if(!reduced.matches)measureGallery()});if(track)observer.observe(track);
+if(typeof ResizeObserver!=='undefined'&&track){const observer=new ResizeObserver(()=>{if(!reduced.matches)measureGallery()});observer.observe(track)}
 measureGallery();render();
 })();
