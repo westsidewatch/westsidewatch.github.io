@@ -1,8 +1,25 @@
 ---
 title: "聚會與聯絡"
 subtitle: "Visit & Contact"
-description: "Service times, location, pastoral contacts, and ways to join the life of the church."
+description: "活水堂西區教會的聚會地點與時間。"
 weight: 5
 ---
 
-Verified contact and gathering information will be added here.
+## 神召會活水堂西區教會
+
+P.A.O.C. Living Water Assembly West
+
+地址：205 Wilmington Ave., North York, ON M3H 6B3
+
+## 聚會時間
+
+| 聚會 | 時間 |
+| --- | --- |
+| 主日崇拜 | 週日 10:30–13:30 |
+| 守望禱告會 | 週三 20:00–21:00 |
+| 午間線上查經 | 週二 12:00–13:00 |
+| 西區的夜晚 | 週五 19:00–21:00 |
+
+以上為 2026 年 10 月 11 日《活水家訊》公布的安排；參加前請確認有無更新。
+
+線上聚會資訊請直接向教會查詢。

@@ -1,0 +1,20 @@
+name: Church Bulletin Contract
+on:
+  pull_request:
+    paths:
+      - 'data/church/bulletins/**'
+      - 'layouts/church/bulletin.html'
+      - 'content/church/bulletin-*.md'
+      - 'scripts/check_church_bulletin.cjs'
+      - '.github/workflows/church-bulletin-contract.yml'
+  workflow_dispatch:
+jobs:
+  church-bulletin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate bulletin content contract
+        run: node scripts/check_church_bulletin.cjs

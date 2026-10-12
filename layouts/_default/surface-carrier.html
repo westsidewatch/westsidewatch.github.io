@@ -2,7 +2,7 @@
   {{/* First-level routes are atlas surfaces: the cover establishes a world,
        the index provides the usable route map. */}}
   <article class="section-atlas sites-surface" data-surface="{{ .Section }}">
-    <header class="section-atlas__cover">
+    <header class="section-atlas__cover" data-ws-first-look="shared" data-ws-first-look-mode="atlas" data-ws-first-look-stage>
       <div class="section-atlas__folio"><span>WESTSIDE WATCH / {{ upper .Section }}</span><span>{{ now.Format "2006" }}</span></div>
       <div class="section-atlas__title">
         <p>01 / {{ upper .Section }}</p>

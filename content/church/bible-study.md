@@ -1,11 +1,24 @@
 ---
 title: "Bible Study"
 subtitle: "西區的夜晚"
-description: "教會查經聚會與以馬忤斯共用同一套聖經、地圖、背景、串珠、ONE 與 Doré Folio。"
+description: "週五西區的夜晚與週二午間線上查經。"
 weight: 3
-entry_url: "/one/"
 aliases:
   - "/church/westside-nights/"
 ---
 
-LivingWaterWest 的 Bible Study 不再維護另一套查經資源頁。教會聚會身份留在 LivingWaterWest；進入查經時直接進入 Bible / Emmaus，共用 ONE、Doré Folio、經文、地圖、歷史背景、串珠與其他共享查經資料。
+## 西區的夜晚
+
+每週五 19:00–21:00
+
+## 午間線上查經
+
+每週二 12:00–13:00（已由週四調整至週二）。
+
+以上安排來自 2026 年 10 月 11 日《活水家訊》。
+
+[進入以馬忤斯](/emmaus/)
+
+[使用 ONE 查經工具](/one/)
+
+線上參與資訊請向教會查詢。
