@@ -77,3 +77,14 @@ test('Blender PeerTube playback readiness is independently reported', async ({ p
   await page.getByRole('button', { name: '關閉 ×' }).click();
   await expect(iframe).toHaveCount(0);
 });
+
+test('official Blender YouTube fallback is user-initiated and cleaned up', async ({ page }) => {
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#grid .tile')).toHaveCount(6);
+  await page.locator('#grid .tile').filter({ hasText: 'Big Buck Bunny' }).click();
+  await page.getByRole('button', { name: /使用 YouTube 官方播放器/ }).click();
+  const frame = page.locator('#detail iframe');
+  await expect(frame).toHaveAttribute('src', /^https:\/\/www\.youtube-nocookie\.com\/embed\/aqz-KE-bpKQ/);
+  await page.getByRole('button', { name: '關閉 ×' }).click();
+  await expect(frame).toHaveCount(0);
+});
