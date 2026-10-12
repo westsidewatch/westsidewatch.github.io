@@ -61,6 +61,20 @@ jobs:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: Stage standalone Olive Mountain into Pages artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Hugo does not copy repository-root standalone HTML/JS to public/.
+          # Preserve the dedicated Olive surface as a complete pair.
+          test -s olive/index.html
+          test -s olive/olive.js
+          mkdir -p public/olive
+          cp olive/index.html public/olive/index.html
+          cp olive/olive.js public/olive/olive.js
+          test -s static/dore-design/runtime/olive-speaker-compositions.v1.json
+          mkdir -p public/dore-design/runtime
+          cp static/dore-design/runtime/olive-speaker-compositions.v1.json public/dore-design/runtime/olive-speaker-compositions.v1.json
       - name: Verify Olive Mountain in Pages artifact
         shell: bash
         run: |
