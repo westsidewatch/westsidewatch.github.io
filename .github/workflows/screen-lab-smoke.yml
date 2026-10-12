@@ -20,3 +20,22 @@ jobs:
           node-version: '22'
       - name: Validate standalone catalog and UI contracts
         run: node --test screen-lab/tests/catalog.test.mjs
+      - name: Install browser test runner
+        run: npm install --no-save @playwright/test@1.56.1
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start local preview server
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/screen-lab-http.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8765/screen-lab/ >/dev/null && break; sleep 1; done
+      - name: Desktop and mobile browser checks
+        run: npx playwright test screen-lab/tests/browser.spec.cjs --reporter=line --workers=1 --output=screen-lab/browser-results
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screen-lab-browser-evidence
+          path: |
+            screen-lab/browser-results/
+            /tmp/screen-lab-http.log
+          if-no-files-found: ignore
