@@ -63,3 +63,11 @@ The earliest phase has its own small ridge/spring scene instead of scaled Herodi
 A close camera makes the small settlement readable. Leaving restores the prior broad-city camera and minimum orbit distance. Legacy residential and temporal/inheritance layers are disabled only for this early phase. Observed-only mode hides the illustrative settlement. Source context and limitations are stored in `data/settlement/earliest.v1.json`; neither the modern map point nor DEM proves ancient ground levels or excavated house locations.
 
 Node validation checks rendered triangle sampling, footings, phase/evidence isolation and disposal. Browser validation checks desktop/mobile initial views, no legacy overlap and all 18 era renders. The earliest scene remains a landscape-constrained illustration requiring archaeological footprint work.
+
+## Middle Bronze water-defense landscape
+
+The next early phase uses the same terrain-grounded landscape renderer with a distinct illustrative dwelling layout. It adds a defended access corridor, a rock-cut installation outline and a disputed spring-tower layer. The tower's approximate 16×16 m plan and wall thickness come from the excavators' published summary; orientation, location, access opening and reconstructed height remain illustrative. The tower's Middle Bronze assignment is disputed by radiocarbon work and defended in a later response.
+
+No full city-wall circuit or water-filled rectangular reservoir is invented. The rock-cut installation is represented only by an outline on modern terrain; no terrain excavation or actual water depth is modeled. Dwelling count remains a visual design choice, and earlier houses are not claimed to survive into this phase. The early close camera persists across the two landscape phases and restores the previous city-wide view on leaving.
+
+Sources and limitations are stored with `data/settlement/middle-bronze.v1.json`. Browser/Node validation checks sourced tower size, disputed vs inferred filtering, earliest/bronze exclusivity, mobile views and the existing full-era regression suite.
