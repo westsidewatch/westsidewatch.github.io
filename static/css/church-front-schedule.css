@@ -58,3 +58,10 @@
 .mersi-church .church-horizontal__entries a em{font-size:clamp(14px,1.3vw,18px)}
 @media(max-width:850px){.mersi-church .church-horizontal{height:auto}.mersi-church .church-horizontal__track{position:relative;height:auto;transform:none!important;display:block}.mersi-church .church-horizontal__intro{min-height:55svh}.mersi-church .church-horizontal__entries{display:block}.mersi-church .church-horizontal__entries a{min-height:28svh;padding:8vw}}
 @media(prefers-reduced-motion:reduce){.mersi-church .church-horizontal{height:auto}.mersi-church .church-horizontal__track{position:relative;height:auto;transform:none!important;display:block}.mersi-church .church-horizontal__entries{display:block}.mersi-church .church-horizontal__entries a{min-height:20svh}}
+
+/* Keep the long corridor inside the viewport without creating a new scroll container. */
+.mersi-church .church-horizontal{overflow-x:clip}
+.mersi-church .church-horizontal__track{width:max-content;min-width:100%;max-width:none}
+.mersi-church .church-horizontal__entries{width:max-content}
+.mersi-church .church-horizontal__entries a{width:min(70vw,660px);flex:0 0 min(70vw,660px)}
+@media(max-width:850px),(prefers-reduced-motion:reduce){.mersi-church .church-horizontal__track,.mersi-church .church-horizontal__entries{width:100%;min-width:0}.mersi-church .church-horizontal__entries a{width:auto}}
