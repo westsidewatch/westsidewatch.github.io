@@ -157,91 +157,49 @@ body.home .sites-home-hero .sites-home-film iframe{width:100%;height:100%;border
 body.home .sites-home-hero .sites-home-masthead img{filter:brightness(0) invert(1)}
 body.home .sites-home-hero .sites-home-star{filter:brightness(0) invert(1)}
 
-/* Editorial small caps: navigation and English scripture only.
-   The main slogan remains full-size Bodoni Roman/Italic. */
-body.home .sites-home-hero .sites-home-nav a,
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture,
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite,
-body.home .sites-home-hero .sites-home-entry a{
- font-variant-caps:all-small-caps;
- font-feature-settings:"smcp" 1,"c2sc" 1;
-}
-body.home .sites-home-hero .sites-home-intro h1,
-body.home .sites-home-hero .sites-home-intro h1 em{
- font-variant-caps:normal;
- font-feature-settings:normal;
-}
-
 /* Three equal editorial entry points on desktop; mobile keeps wrapping. */
 @media(min-width:901px){
  body.home .sites-home-hero .sites-home-entry{left:var(--home-edge);right:var(--home-edge);justify-content:flex-end;gap:clamp(20px,2vw,38px)}
  body.home .sites-home-hero .sites-home-entry a{flex:0 1 clamp(190px,17vw,290px);min-width:0}
 }
 
-/* Reliable visual small caps even when the loaded font lacks OpenType smcp glyphs. */
+/* Single homepage small-caps authority. No uppercase transform or simulated scaling. */
 body.home .sites-home-hero .sites-home-nav a,
 body.home .sites-home-hero .sites-home-entry a{
- font-variant-caps:all-small-caps;
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ font-variant-caps:normal;
  font-feature-settings:normal;
- text-transform:uppercase;
- font-size:calc(var(--home-ui-size) * .86);
- letter-spacing:.075em;
-}
-body.home .sites-home-hero .sites-home-entry a{
- white-space:nowrap;
- gap:12px;
-}
-body.home .sites-home-hero .sites-home-entry a span{
  text-transform:none;
- letter-spacing:normal;
- white-space:nowrap;
+ font-synthesis:none;
+ font-size:var(--home-ui-size);
+ letter-spacing:.035em;
+}
+body.home .sites-home-hero .sites-home-entry a{white-space:nowrap;gap:12px}
+body.home .sites-home-hero .sites-home-entry a span{
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ text-transform:none;letter-spacing:normal;white-space:nowrap;
 }
 @media(min-width:901px){
  body.home .sites-home-hero .sites-home-entry a{flex:0 1 auto;min-width:0}
 }
-
-/* Genuine Bodoni Moda SC glyphs: preserve mixed-case source, never uppercase-transform. */
-body.home .sites-home-hero .sites-home-nav a,
-body.home .sites-home-hero .sites-home-entry a{
- font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
- text-transform:none;
- font-variant-caps:normal;
- font-feature-settings:normal;
- font-synthesis:none;
-}
-body.home .sites-home-hero .sites-home-entry a span{
- font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
-}
-
-/* English scripture and reference use the same genuine small-cap face. */
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture,
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite{
- font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
- font-variant-caps:normal;
- font-feature-settings:normal;
- text-transform:none;
- font-synthesis:none;
-}
-
-/* Keep the scripture reference in genuine Bodoni Moda SC italic. */
-body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite{
- font-style:italic;
- font-weight:400;
-}
-
-/* Scripture legibility: readable small caps, restrained tracking; citation stays italic. */
 body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture{
- font-size:clamp(18px,1.22vw,23px);
- letter-spacing:0;
- line-height:1.5;
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ font-variant-caps:normal;
+ font-feature-settings:normal;
+ text-transform:none;
+ font-synthesis:none;
+ font-size:clamp(20px,1.45vw,26px);
+ letter-spacing:.01em;
+ line-height:1.45;
 }
 body.home .sites-home-hero .sites-home-scripture-pair .sites-home-scripture cite{
  font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-size:clamp(15px,.95vw,19px);
  font-style:italic;
+ font-weight:400;
  font-variant-caps:normal;
  font-feature-settings:normal;
- text-transform:none;
- font-size:clamp(15px,.95vw,19px);
  letter-spacing:.01em;
+ text-transform:none;
  line-height:1.45;
 }
