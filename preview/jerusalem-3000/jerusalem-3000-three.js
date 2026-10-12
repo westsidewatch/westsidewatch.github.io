@@ -160,9 +160,14 @@ try {
       const evidence=three.earlyLandscapeEvidence(p.id);
       if(evidence) {
         earlyEvidencePanel.replaceChildren();
-        for(const [tag,text] of [['p','早期城市 · 資料來源'],['h3',p.label],['p','住居與構件位置、形制仍為示意。現代 DEM 不等於古地表；粉褐色構件為爭議假說，沒有核定為完整建築。']]) {
+        for(const [tag,text] of [['p','城市場景 · 資料來源'],['h3',p.label],['p',isEarlyLandscapePhase(p.id)?'住居與構件位置、形制仍為示意。現代 DEM 不等於古地表；粉褐色構件為爭議假說，沒有核定為完整建築。':'本期街區仍為推定示意。下列研究提供歷史背景，尚未核定畫面中的街網、建築平面與毀壞形態。']]) {
           const el=document.createElement(tag);el.textContent=text;earlyEvidencePanel.append(el);
         }
+        const limits=document.createElement('ul');
+        for(const text of evidence.limitations||[]) {
+          const item=document.createElement('li');item.textContent=text;limits.append(item);
+        }
+        earlyEvidencePanel.append(limits);
         for(const [i,url] of [evidence.source,...evidence.references].entries()) {
           if(new URL(url).protocol!=='https:')continue;
           const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=i===0?'主要資料來源':`參考研究 ${i}`;

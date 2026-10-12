@@ -783,6 +783,16 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     setTemporalCityState,
     earlyLandscapeEvidence(phaseId) {
       const runtime=phaseId==='chalcolithic-early-bronze'?earliestSettlement:phaseId==='middle-bronze'?middleBronzeSettlement:phaseId==='late-bronze-iron1'?lateBronzeSettlement:phaseId==='david-solomon'?davidSettlement:null;
+      if (['late-first-temple','babylonian-destruction'].includes(phaseId)) return {
+        source:'https://whitelevy.fas.harvard.edu/publications/jewish-quarter-excavations-old-city-jerusalem-vols-i-and-ii-finds-areas-w-and',
+        references:['https://www.israelexplorationsociety.com/','https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf'],
+        limitations:[
+          '寬牆等城防遺構支持研究西南山丘的城市發展；本畫面尚未加入經定位的寬牆平面。',
+          '目前街網與地塊由後期參考配置轉換而來，住宅形制、數量和城區範圍均為示意，不能視為第一聖殿城市復原。',
+          '毀壞階段沿用相同模型呈現變化；倒塌方式、留存比例與埋藏深度尚未考古核定。',
+          '現代 DEM 不代表古代地表；完整城牆、王宮與第一聖殿形制尚未核定。'
+        ]
+      };
       return runtime?.evidence();
     },
     setRetainedLayerVisible(visible) {

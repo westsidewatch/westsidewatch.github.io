@@ -167,6 +167,7 @@ try {
   await page.screenshot({path:`${output}/david-landscape.png`,fullPage:true});
   await page.getByRole('button',{name:'Evidence',exact:true}).click();
   assert.equal(await page.locator('.j3k-evidence-panel a').first().getAttribute('href'),'https://cityofdavid.org.il/en/king-davids-palace-eng/');
+  assert.ok(await page.locator('.j3k-evidence-panel li').count()>0,'scene-specific limitations are visible');
   await page.screenshot({path:`${output}/david-evidence.png`,fullPage:true});
   await page.getByRole('button',{name:'Evidence',exact:true}).click();
   await page.getByRole('button',{name:'推定',exact:true}).click();
@@ -187,6 +188,12 @@ try {
   });
   await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics?.phase === 'modern');
   const sharedReports = [];
+  await page.locator('.j3k-scrubber').evaluate(el=>{el.value='4.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
+  assert.ok((await page.locator('.j3k-evidence-panel a').first().getAttribute('href')).includes('whitelevy.fas.harvard.edu'));
+  assert.ok((await page.locator('.j3k-evidence-panel').textContent()).includes('後期參考配置'));
+  await page.screenshot({path:`${output}/first-temple-evidence.png`,fullPage:true});
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
   for (const value of [4.9, 5, 5.5, 5.9, 4.9]) {
     await page.locator('.j3k-scrubber').evaluate((el, value) => {
       el.value = String(value); el.dispatchEvent(new Event('input', { bubbles: true }));
