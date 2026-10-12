@@ -9,7 +9,7 @@ body.home .sites-home-hero{
  --home-chinese-size:clamp(21px,1.38vw,28px);
  --home-verse-size:clamp(19px,1.18vw,25px);
  position:relative;isolation:isolate;min-height:100svh;overflow:hidden;
- background:#eee8da;color:#fff;
+ background:var(--ws-surface,#faf9f5) url("/images/home-opening-engraving.jpg") center/cover no-repeat;color:#fff;
 }
 body.home .sites-home-hero .sites-home-film{z-index:0;pointer-events:none}
 body.home .sites-home-hero .sites-home-film iframe{pointer-events:none;transform:none!important}

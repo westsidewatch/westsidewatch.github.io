@@ -16,8 +16,9 @@ async function loadManifest(){
   const r=await fetch('./sequence.json',{cache:'no-store'});
   if(!r.ok) throw new Error('Hosanna sequence unavailable');
   manifest=await r.json();
-  if(manifest.master?.image){
-    master.querySelector('.master-fallback').style.backgroundImage=`linear-gradient(180deg,rgba(8,8,7,.08),rgba(8,8,7,.42)),url("${manifest.master.image}")`;
+  const openingImage=document.documentElement.classList.contains("cover-embed") ? "/images/home-opening-engraving.jpg" : manifest.master?.image;
+  if(openingImage){
+    master.querySelector('.master-fallback').style.backgroundImage=`linear-gradient(180deg,rgba(8,8,7,.08),rgba(8,8,7,.42)),url("${openingImage}")`;
     master.classList.add('has-image');
   }
   preloadMoments();
