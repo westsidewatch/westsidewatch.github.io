@@ -25,6 +25,12 @@
     }
     return /^[A-Za-z0-9_-]{11}$/.test(id||'')?id:null;
   }
+  function peertubeEmbed(value) {
+    const url=https(value);if(!url)return null;
+    const u=new URL(url);
+    if(u.hostname!=='video.blender.org')return null;
+    return /^\/videos\/embed\/[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(u.pathname)?u.origin+u.pathname:null;
+  }
   function normalize(raw) {
     if (!Array.isArray(raw)) throw Error('片庫必須是 JSON 陣列');
     if (raw.length>500) throw Error('一次最多載入 500 部作品');
@@ -32,7 +38,7 @@
       if (!f || typeof f!=='object' || typeof f.title!=='string' || !f.title.trim()) throw Error('第 '+(i+1)+' 筆缺少片名');
       const type=categories.includes(f.type)&&f.type!=='全部'?f.type:'電影';
       return {title:f.title.trim().slice(0,160),type,year:String(f.year||'').slice(0,30),description:String(f.description||'').slice(0,1000),
-        poster:https(f.poster)||(youtubeId(f.source)?'https://i.ytimg.com/vi/'+youtubeId(f.source)+'/hqdefault.jpg':null),stream:mediaUrl(f.stream),youtube:youtubeId(f.source),source:https(f.source),posterCredit:String(f.posterCredit||'').slice(0,180),posterLicense:https(f.posterLicense),posterSource:https(f.posterSource),verified:false,a:'#4d555b',b:'#b6a58b',demo:false};
+        poster:https(f.poster)||(youtubeId(f.source)?'https://i.ytimg.com/vi/'+youtubeId(f.source)+'/hqdefault.jpg':null),stream:mediaUrl(f.stream),embed:peertubeEmbed(f.embed),youtube:youtubeId(f.source),source:https(f.source),posterCredit:String(f.posterCredit||'').slice(0,180),posterLicense:https(f.posterLicense),posterSource:https(f.posterSource),verified:false,a:'#4d555b',b:'#b6a58b',demo:false};
     });
   }
   function setFilter(v){active=v;render();}
@@ -50,7 +56,7 @@
       if(f.poster){const img=document.createElement('img');img.src=f.poster;img.alt='';img.loading='lazy';img.referrerPolicy='no-referrer';img.className='poster-image';img.onerror=()=>{img.remove();poster.classList.add('poster-fallback');};poster.append(img);}
       poster.append(label);
       const name=document.createElement('strong');name.textContent=f.title;
-      const meta=document.createElement('small');meta.textContent=[f.year,f.type,f.stream?'待驗證片源':f.youtube?'YouTube 嵌入待驗證':f.demo?'示意封面':'來源待驗證'].filter(Boolean).join(' · ');
+      const meta=document.createElement('small');meta.textContent=[f.year,f.type,f.stream?'待驗證片源':f.embed?'官方嵌入待驗證':f.youtube?'YouTube 嵌入待驗證':f.demo?'示意封面':'來源待驗證'].filter(Boolean).join(' · ');
       b.append(poster,name,meta);b.onclick=()=>openDetail(f);grid.append(b);
     }
   }
@@ -60,7 +66,7 @@
     document.getElementById('description').textContent=f.description||'尚無介紹';
     const host=document.getElementById('player');host.replaceChildren();
     const box=document.createElement('div');box.className='detail-actions';
-    const info=document.createElement('p');info.textContent=f.stream?'已提供直接媒體連結，但尚未確認可播放。':f.youtube?'可嘗試官方 YouTube 嵌入，但尚未確認影片允許嵌入。':'沒有已確認可直接播放的媒體來源；可前往官方來源網站觀看。';
+    const info=document.createElement('p');info.textContent=f.stream?'已提供直接媒體連結，但尚未確認可播放。':f.embed?'可嘗試 Blender 官方 PeerTube 嵌入，瀏覽器實際播放尚待驗證。':f.youtube?'可嘗試官方 YouTube 嵌入，但尚未確認影片允許嵌入。':'沒有已確認可直接播放的媒體來源；可前往官方來源網站觀看。';
     box.append(info);
     if(f.stream){const btn=document.createElement('button');btn.textContent='前往線上試映 ↗';btn.onclick=()=>{
       closeDetail();urlInput.value=f.stream;document.querySelector('#stream-title').scrollIntoView({behavior:'smooth'});
@@ -70,6 +76,17 @@
       const credit=document.createElement('p');credit.textContent='海報：'+f.posterCredit;box.append(credit);
       if(f.posterSource){const a=document.createElement('a');a.href=f.posterSource;a.target='_blank';a.rel='noopener noreferrer';a.textContent='海報來源 ↗';box.append(a);}
       if(f.posterLicense){const a=document.createElement('a');a.href=f.posterLicense;a.target='_blank';a.rel='noopener noreferrer';a.textContent='授權條款 ↗';box.append(a);}
+    }
+    if(f.embed){
+      const btn=document.createElement('button');btn.type='button';btn.textContent='試播 Blender 官方影片 ↗';
+      btn.onclick=()=>{
+        const frame=document.createElement('iframe');frame.src=f.embed;
+        frame.title=f.title+' — Blender 官方 PeerTube 播放器';
+        frame.allow='autoplay; fullscreen; picture-in-picture';frame.allowFullscreen=true;
+        frame.referrerPolicy='strict-origin-when-cross-origin';
+        frame.style.cssText='width:100%;aspect-ratio:16/9;border:0';
+        host.replaceChildren(frame);
+      };box.append(btn);
     }
     if(f.youtube){
       const btn=document.createElement('button');btn.type='button';btn.textContent='使用 YouTube 官方播放器 ↗';
@@ -113,7 +130,7 @@
     }catch(err){status.textContent='無法加入：'+err.message;}
   });
   document.getElementById('catalog-export').addEventListener('click',()=>{
-    const payload=films.filter(f=>!f.demo).map(({title,type,year,description,poster,stream,source,posterCredit,posterLicense,posterSource})=>({title,type,year,description,poster,stream,source,posterCredit,posterLicense,posterSource}));
+    const payload=films.filter(f=>!f.demo).map(({title,type,year,description,poster,stream,embed,source,posterCredit,posterLicense,posterSource})=>({title,type,year,description,poster,stream,embed,source,posterCredit,posterLicense,posterSource}));
     if(!payload.length){status.textContent='目前沒有可匯出的正式片庫項目；請先新增或匯入影片。';return;}
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
     const href=URL.createObjectURL(blob),a=document.createElement('a');a.href=href;a.download='screen-lab-catalog.json';
