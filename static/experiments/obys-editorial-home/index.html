@@ -30,6 +30,18 @@ nav{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:clamp(9px,1.3vw,22p
 .chapter-inner>a{grid-column:2;justify-self:start;border-top:1px solid #252525;padding-top:14px;font-size:clamp(15px,1.2vw,21px)}
 @media(min-width:851px) and (prefers-reduced-motion:no-preference){.chapter-inner>*{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1)}.chapter-inner.is-visible>*{opacity:1;transform:none}.chapter-inner>*:nth-child(2){transition-delay:.12s}.chapter-inner>*:nth-child(3){transition-delay:.22s}.chapter-inner>*:nth-child(4){transition-delay:.32s}.chapter-inner>*:nth-child(5){transition-delay:.42s}}
 @media(max-width:850px){.chapter-inner{grid-template-columns:1fr}.chapter-inner img{width:100%}.chapter h2{font-size:clamp(64px,13vw,110px)}.chapter-inner>a{grid-column:1}}
+
+/* Candidate polish: a visible editorial chapter marker, consistent type treatment,
+   keyboard focus and a clear bridge between the two scenes. */
+.hero{--candidate-edge:clamp(20px,3.5vw,64px)}
+.hero:after{content:"01 / 02";position:absolute;right:var(--candidate-edge);top:50%;transform:translateY(-50%);writing-mode:vertical-rl;letter-spacing:.18em;font-size:12px;opacity:.72;pointer-events:none}
+.center{position:relative}
+.center:before{content:"";position:absolute;left:-1.5vw;top:0;bottom:0;width:1px;background:rgba(255,255,255,.4);pointer-events:none}
+.chapter{position:relative}
+.chapter:before{content:"02 / 02";position:absolute;right:clamp(20px,3.5vw,64px);top:clamp(24px,4vw,60px);font-size:13px;letter-spacing:.12em}
+.chapter-inner img{max-width:780px}
+nav a:focus-visible,.entries a:focus-visible,.chapter a:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+@media(max-width:850px){.hero:after{display:none}.center:before{left:-10px}.chapter:before{top:15px}}
 </style></head><body><main class="hero"><div class="film"><iframe src="/preview/watch-city-vol00/hosanna/?cover=1" title="王進城：完整混剪" tabindex="-1" allow="autoplay"></iframe></div>
 <nav aria-label="Primary navigation"><a href="/church/">LivingWaterWest</a><a href="/journal/">Magazine</a><a href="/one/">Bible</a><a href="/olive/">Sermon</a><a href="/dawn-library/">Book</a><a href="/cinema/">Cinema</a><a href="/daylight-cafe/">Life</a><a href="/dore/search/">Search</a></nav>
 <div class="center"><img class="logo" src="/images/westside-watch-masthead-landscape.svg" alt="Westside Watch 西望"><h1 class="title">Watch for<br><em>the Dawn.</em></h1><div class="verse"><p>黑夜已深，白晝將近。</p><p>The night is far spent. The day is at hand.<cite>Romans 13:12 · KJV</cite></p></div></div>
