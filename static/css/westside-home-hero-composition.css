@@ -318,3 +318,24 @@ body.home :is(.sites-home-realm,.candidate-focus-screen)>iframe{display:block;wi
 /* Preserve the frozen hero navigation markup for contract verification; the
    new floating Contents control is the sole visible first-layer navigation. */
 body.home .sites-home-hero > .sites-home-nav{display:none!important}
+
+/* Phase 02: cinematic handoff, applied to the host only.
+   The frozen film and Candidate 01 iframe documents remain untouched. */
+@media (min-width:901px) and (prefers-reduced-motion:no-preference){
+ body.home .candidate-focus-screen{
+  isolation:isolate;
+  background:var(--ws-surface,#faf9f5);
+ }
+ body.home .candidate-focus-screen::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(238,232,218,.72),rgba(238,232,218,0) 25%);
+  opacity:calc(1 - var(--home-chapter-enter,1));
+ }
+ body.home .candidate-focus-screen iframe{
+  transform:none!important;
+  opacity:1!important;
+ }
+}
+@media (prefers-reduced-motion:reduce){
+ body.home .candidate-focus-screen::before{display:none!important}
+}
