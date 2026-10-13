@@ -4,6 +4,7 @@ translationKey: "olive-yu-hong-jie-editorial"
 layout: "olive-editorial"
 url: "/olive/yu-hong-jie/"
 description: "于宏潔｜橄欖山人物介紹"
+portrait_profile_image: "/images/olive/people-transparent-v1/yu-hong-jie.png"
 portrait_image: "/images/olive/yu-hong-jie-editorial.png"
 portrait_alt: "于宏潔人物版畫插圖"
 portrait_title: ["YU","HONGJIE"]

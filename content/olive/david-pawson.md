@@ -4,6 +4,7 @@ translationKey: "olive-david-pawson-editorial"
 layout: "olive-editorial"
 url: "/olive/david-pawson/"
 description: "大衛鮑森｜橄欖山人物專題"
+portrait_profile_image: "/images/olive/people-transparent-v1/david-pawson.png"
 portrait_image: "/images/olive/david-pawson-editorial.png"
 portrait_alt: "大衛鮑森人物版畫插圖"
 portrait_title: ["DAVID", "PAWSON"]

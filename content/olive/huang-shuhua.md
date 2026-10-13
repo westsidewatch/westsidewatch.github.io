@@ -4,6 +4,7 @@ translationKey: "olive-huang-shuhua-editorial"
 layout: "olive-editorial"
 url: "/olive/huang-shuhua/"
 description: "黃淑華｜橄欖山人物介紹"
+portrait_profile_image: "/images/olive/people-transparent-v1/huang-shuhua.png"
 portrait_image: "/images/olive/huang-shuhua-editorial.png"
 portrait_alt: "黃淑華人物版畫插圖"
 portrait_title: ["HUANG", "SHUHUA"]
