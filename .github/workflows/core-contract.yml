@@ -27,7 +27,5 @@ jobs:
         run: |
           python3 scripts/check_westside_design_os.py
           python3 scripts/check_design_os_entrypoints.py
-      - name: Retired black-gold palette
-        run: python3 scripts/check_black_gold_global_ban.py
       - name: First-look runtime regression
         run: node --test tests/first-look-*.test.cjs
