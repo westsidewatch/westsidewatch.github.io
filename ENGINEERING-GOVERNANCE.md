@@ -41,3 +41,16 @@ The dominant **dark/black + gold** visual theme is permanently retired across th
 The human explicitly required on 2026-10-12 that the twelve-speaker red-English / upright-Chinese vertical composition be restored and protected. `static/olive/components/speaker-baseline-v1/` is the canonical immutable baseline, including per-speaker geometry, spelling, colors, original source snapshots and portrait hashes. It is a composed website asset, not only a set of PNGs.
 
 Do not overwrite, cover with competing name overlays, delete, flatten into images, or replace it during layout work. Rail and Adullam gallery consume the shared baseline. Global/page CSS must not restyle its internal typography. A changed composition requires explicit human authorization and a separately versioned variant; preserve v1. Do not change its integrity manifest or weaken its guard to bypass failures. Run `python scripts/check_olive_speaker_baseline.py` and the Olive browser regressions before release.
+
+## Fast, consolidated engineering workflow (2026-10-13)
+
+This is the default operating cadence for every current and future Westside Watch project and tool, unless the human explicitly requests a different one.
+
+1. **Execute the complete stage in one continuous work turn.** Group related fixes into coherent changes; do not split one-line edits into separate PRs, commits, approvals or status reports.
+2. **Run existing automated checks to completion.** Do not report partial CI counts or ask the human to say “繼續” to resume polling. Reuse existing evidence and avoid duplicate validation gates.
+3. **Fix only actual failures.** When checks pass, do not invent repairs, add speculative polishing, or expand scope. If a check fails, diagnose and correct it within the same stage, then rerun the relevant checks.
+4. **Merge promptly once the stage's required checks and acceptance are satisfied and the human has authorized merging.** Do not create additional handoff stages or redundant reporting gates.
+5. **Report once, at completion:** a short, verifiable outcome with PR/merge reference and only information useful to the human. No intermediate progress bulletins, generic caveats, self-protective disclaimers or speculative deployment statements.
+6. **Hard blockers are the sole exception:** report only a specific blocker that genuinely requires human action or is impossible to resolve with available access. Never present unfinished work as complete.
+
+The human's “繼續” means *continue executing through the stage*, not *check once and report partial progress*. This workflow complements, and does not remove, substantive safety, visual, functional, or release requirements.
