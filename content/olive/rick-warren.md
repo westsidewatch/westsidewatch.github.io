@@ -4,6 +4,7 @@ translationKey: "olive-rick-warren-editorial"
 layout: "olive-editorial"
 url: "/olive/rick-warren/"
 description: "華理克｜橄欖山人物介紹"
+portrait_profile_image: "/images/olive/people-transparent-v1/rick-warren.png"
 portrait_image: "/images/olive/rick-warren-editorial.png"
 portrait_alt: "華理克人物版畫插圖"
 portrait_title: ["RICK", "WARREN"]

@@ -4,6 +4,7 @@ translationKey: "olive-tong-liu-editorial"
 layout: "olive-editorial"
 url: "/olive/tong-liu/"
 description: "劉彤｜橄欖山人物介紹"
+portrait_profile_image: "/images/olive/people-transparent-v1/tong-liu.png"
 portrait_image: "/images/olive/tong-liu-editorial.png"
 portrait_alt: "劉彤人物版畫插圖"
 portrait_title: ["TONG", "LIU"]

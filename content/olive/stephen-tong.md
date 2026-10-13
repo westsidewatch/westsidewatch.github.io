@@ -4,6 +4,7 @@ translationKey: "olive-stephen-tong-editorial"
 layout: "olive-editorial"
 url: "/olive/stephen-tong/"
 description: "唐崇榮｜橄欖山人物介紹"
+portrait_profile_image: "/images/olive/people-transparent-v1/stephen-tong.png"
 portrait_image: "/images/olive/stephen-tong-editorial.png"
 portrait_alt: "唐崇榮人物版畫插圖"
 portrait_title: ["STEPHEN", "TONG"]

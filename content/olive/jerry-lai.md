@@ -4,6 +4,7 @@ translationKey: "olive-jerry-lai-editorial"
 layout: "olive-editorial"
 url: "/olive/jerry-lai/"
 description: "賴若瀚｜橄欖山人物介紹"
+portrait_profile_image: "/images/olive/people-transparent-v1/jerry-lai.png"
 portrait_image: "/images/olive/jerry-lai-editorial.png"
 portrait_alt: "賴若瀚人物版畫插圖"
 portrait_title: ["JERRY", "LAI"]
