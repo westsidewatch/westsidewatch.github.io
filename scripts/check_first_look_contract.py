@@ -8,7 +8,11 @@ def require(ok,message):
  if not ok: raise SystemExit('FAIL: '+message)
 freeze=json.loads(read('static/first-look/home-freeze.v1.json'))['sha256']
 for path,digest in freeze.items():
- content=read('layouts/partials/watch-home.html').split('<div class="sites-home-realms"')[0].encode() if path=='home_first_three_screens' else (root/path).read_bytes()
+ content=read('layouts/partials/watch-home.html').split('<section class="sites-home-hero"',1)[1] if path=='home_first_three_screens' else None
+ if path=='home_first_three_screens':
+  content=('<section class="sites-home-hero"'+content).split('<div class="sites-home-realms"')[0].encode()
+ else:
+  content=(root/path).read_bytes()
  require(hashlib.sha256(content).hexdigest()==digest,'frozen homepage composition changed: '+path)
 home=read('layouts/partials/watch-home.html')
 require(len(re.findall('data-fl-realm-frame=',home))==7,'seven actual realm stages required')
