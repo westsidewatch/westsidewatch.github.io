@@ -8,3 +8,30 @@
  for(const event of ['wheel','touchstart','pointerdown','keydown'])window.addEventListener(event,()=>{anchor=null},{passive:true});
  window.addEventListener('hashchange',requested);window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);frames.forEach(f=>f.addEventListener('load',schedule));requested();
 })();
+
+/* First-layer floating navigation: native scrolling, no scroll lock or snap. */
+(()=>{
+ const nav=document.querySelector('.sites-home-nav--floating');
+ if(!nav)return;
+ const menu=nav.querySelector('details');
+ let previousY=window.scrollY,scheduled=false;
+ const update=()=>{
+  const y=Math.max(0,window.scrollY),delta=y-previousY;
+  const expanded=Boolean(menu?.open);
+  if(Math.abs(delta)>5&&!expanded){
+   nav.dataset.navHidden=String(y>120&&delta>0);
+  }
+  if(y<90||expanded)nav.dataset.navHidden='false';
+  const film=document.querySelector('.sites-home-hero');
+  const inFilm=film&&film.getBoundingClientRect().bottom>Math.min(120,window.innerHeight*.2);
+  nav.dataset.navTone=inFilm?'dark':'light';
+  previousY=y;scheduled=false;
+ };
+ window.addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update)}},{passive:true});
+ window.addEventListener('resize',update,{passive:true});
+ menu?.addEventListener('toggle',()=>{if(menu.open)nav.dataset.navHidden='false';update()});
+ menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.open=false;nav.dataset.navHidden='false'}));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu?.open){menu.open=false;menu.querySelector('summary')?.focus()}});
+ document.addEventListener('pointerdown',e=>{if(menu?.open&&!menu.contains(e.target))menu.open=false});
+ update();
+})();
