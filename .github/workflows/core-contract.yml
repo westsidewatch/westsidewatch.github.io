@@ -12,11 +12,17 @@ jobs:
   core:
     name: Core Contract
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
-      - name: First-layer and protected assets
-        run: python3 scripts/check_first_look_contract.py
+      - name: First-layer and protected speaker assets
+        run: |
+          python3 scripts/check_first_look_contract.py
+          python3 scripts/check_olive_speaker_baseline.py
+      - name: Home editorial composition
+        run: python3 scripts/check_home_editorial_contract.py
+      - name: Italian editorial grammar
+        run: python3 scripts/validate_italian_editorial_grammar_promotion.py
       - name: Design OS authority
         run: |
           python3 scripts/check_westside_design_os.py
