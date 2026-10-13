@@ -1,0 +1,27 @@
+name: Core Contract
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: core-contract-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  core:
+    name: Core Contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: First-layer and protected assets
+        run: python3 scripts/check_first_look_contract.py
+      - name: Design OS authority
+        run: |
+          python3 scripts/check_westside_design_os.py
+          python3 scripts/check_design_os_entrypoints.py
+      - name: Retired black-gold palette
+        run: python3 scripts/check_black_gold_global_ban.py
+      - name: First-look runtime regression
+        run: node --test tests/first-look-*.test.cjs
