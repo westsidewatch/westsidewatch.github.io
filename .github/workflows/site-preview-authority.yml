@@ -67,10 +67,12 @@ jobs:
           path: public
           retention-days: 7
       - name: Install Chromium
+        if: github.event_name == 'workflow_dispatch'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y chromium-browser || sudo apt-get install -y chromium
       - name: Render preview at QA viewports
+        if: github.event_name == 'workflow_dispatch'
         run: |
           python3 -m http.server 4173 --directory public >/tmp/site-preview.log 2>&1 &
           echo $! > /tmp/site-preview.pid
@@ -85,6 +87,7 @@ jobs:
           test -s visual-qa/home-2560.png
           test -s visual-qa/home-3840.png
       - name: Upload rendered visual QA
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: site-visual-qa-${{ github.event.pull_request.number || github.run_id }}
