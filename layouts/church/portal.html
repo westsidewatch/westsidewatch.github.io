@@ -1,6 +1,7 @@
 {{ define "main" }}
 <div class="sites-church mersi-church" id="church">
-  <section class="mc-hero sites-church-intro" data-mersi-panel aria-labelledby="church-title">
+  <section data-ws-first-look="shared" data-ws-first-look-mode="door" data-ws-first-look-stage class="mc-hero sites-church-intro" data-mersi-panel aria-labelledby="church-title">
+    <div class="fl-door-leaf fl-door-leaf--left" aria-hidden="true"><span class="fl-door-label">Living<br>Water.</span></div><div class="fl-door-leaf fl-door-leaf--right" aria-hidden="true"><span class="fl-door-label">向下滑動<br>看見活水</span></div>
     <p>P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p>
     {{ with .Params.display_logo }}
       <img src="{{ . | relURL }}" alt="神召會活水堂西區教會">
@@ -9,6 +10,7 @@
       <h1 id="church-title">{{ .Params.display_title }}</h1>
     {{ end }}
     <blockquote>「信我的人，就如經上所說：從他腹中要流出活水的江河來。」<cite>JOHN 7:38</cite></blockquote>
+    <a class="fl-door-entry" href="#church-front-schedule">進入教會生活 ↓</a>
     <nav class="church-front-index" aria-label="教會首頁導覽"><a href="#church-front-schedule">主日敬拜 <span>01</span></a><a href="#church-journey">認識活水 <span>02</span></a><a href="#church-scripture-title">聖經與見證 <span>03</span></a><a href="#church-horizontal">教會生活 <span>04</span></a></nav>
   </section>
 

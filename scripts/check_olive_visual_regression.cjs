@@ -1,5 +1,6 @@
 const {chromium}=require('playwright');
 const fs=require('node:fs');
+const expectedNames=JSON.parse(fs.readFileSync('static/olive/components/speaker-baseline-v1/names.json','utf8'));
 (async()=>{
  const browser=await chromium.launch({headless:true});
  const sizes=[{name:'mobile-narrow',width:320,height:640},{name:'mobile',width:390,height:844},{name:'mobile-landscape',width:844,height:390},{name:'tablet',width:768,height:1024},{name:'tablet-landscape',width:1024,height:768},{name:'desktop',width:1440,height:900},{name:'desktop-wide',width:1920,height:1080}];
@@ -39,6 +40,24 @@ const fs=require('node:fs');
      await page.screenshot({path:'/tmp/olive-visual/'+size.name+'-gallery-failure.png',fullPage:true});
      throw new Error('Olive poster gallery initialization failed: '+JSON.stringify({diagnostic,errors,cause:error.message}));
     }
+   // The artwork includes frozen name geometry, not only the portrait PNGs.
+   await page.waitForFunction(()=>{
+    const gallery=document.querySelectorAll('.olive-gallery-card olive-speaker-baseline');
+    const all=document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone) olive-speaker-baseline,.olive-gallery-card olive-speaker-baseline');
+    return gallery.length===12&&all.length===24&&[...all].every(e=>{const n=e.shadowRoot?.querySelector('.olive-speaker-english');return n&&getComputedStyle(n).color==='rgb(166, 95, 75)'&&getComputedStyle(n).transform==='matrix(0, 1, -1, 0, 0, 0)'});
+   },null,{timeout:15000});
+   const typographyErrors=await page.evaluate(expected=>{
+    const failures=[],bySlug=new Map(expected.map(n=>[n.slug,n]));
+    for(const component of document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone) olive-speaker-baseline,.olive-gallery-card olive-speaker-baseline')){
+     const item=bySlug.get(component.dataset.speaker),frame=component.shadowRoot.querySelector('.speaker-card'),en=component.shadowRoot.querySelector('.olive-speaker-english'),zh=component.shadowRoot.querySelector('h3'),rect=component.getBoundingClientRect();
+     if(!item||en.textContent!==item.en||en.children.length||zh.textContent!==item.zh)failures.push('approved name or line composition changed '+component.dataset.speaker);
+     if(getComputedStyle(zh).writingMode!=='vertical-rl')failures.push('Chinese no longer upright vertical '+component.dataset.speaker);
+     if(Math.abs(rect.width/rect.height-.75)>.01)failures.push('name coordinates no longer fit original 3:4 portrait '+component.dataset.speaker);
+     if(item&&(parseFloat(frame.style.getPropertyValue('--poster-x'))!==item.typography.x||parseFloat(frame.style.getPropertyValue('--poster-size'))!==item.typography.size||parseFloat(frame.style.getPropertyValue('--poster-optical-size'))!==item.typography.opticalSize))failures.push('per-speaker white-space geometry changed '+item.slug);
+    }
+    return failures;
+   },expectedNames);
+   errors.push(...typographyErrors);
    // Image decoding alone does not prove the editorial poster is visually visible.
    // Verify stacking, dimensions and actual hit-tested paint at the card center.
    const visibility=await page.evaluate(() => [...document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)')].map(card => {

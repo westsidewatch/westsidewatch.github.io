@@ -1,32 +1,13 @@
 {{ define "main" }}
-<section class="sites-second-layer sites-dawn-library" aria-label="黎明書局" data-ws-first-look="shared" data-ws-first-look-mode="publication" data-ws-first-look-stage>
-  <p class="sites-dawn-library__fallback"><a href="{{ "dawn-library/product/?surface=bookstore-20260930c" | relURL }}">獨立開啟黎明書局 ↗</a></p>
-  <iframe id="dawn-library-product-surface" class="sites-product-frame" src="{{ "dawn-library/product/?surface=bookstore-20260930c" | relURL }}" title="黎明書局" loading="eager"></iframe>
+{{ $sample := readFile "static/dawn-library/reading-packs/holy-war-sample.json" | transform.Unmarshal }}
+<section data-ws-first-look="shared" data-ws-first-look-mode="publication" data-ws-first-look-stage data-fl-book class="ws-first-look-stage sites-dawn-library">
+ <header class="fl-header"><h1><span lang="en">Dawn Library</span> <span lang="zh-Hant">黎明書局</span></h1><p>書籍、出版物與閱讀。</p></header>
+ <nav id="fl-book-selector" class="fl-tabs" data-ws-one-look-selector aria-label="選書"><button type="button" data-ws-one-look-card="{{ $sample.workId }}" aria-pressed="true">{{ $sample.title }} · 繁中試讀</button></nav>
+ <div class="fl-reading-modes" aria-label="閱讀語言"><button type="button" data-fl-book-mode="bilingual" aria-pressed="true">對照</button><button type="button" data-fl-book-mode="source" aria-pressed="false">原文</button><button type="button" data-fl-book-mode="zh-Hant" aria-pressed="false">繁中</button></div>
+ <article class="fl-reader" aria-live="polite"><h2 data-fl-book-title>{{ $sample.title }}</h2><p data-fl-book-notice>{{ $sample.translationLabel }} · 試讀節選</p><div data-fl-book-reading>{{ range $sample.segments }}<p lang="en">{{ .source }}</p><p lang="zh-Hant">{{ .translation }}</p>{{ end }}</div><a data-fl-book-source href="{{ $sample.source.url }}" target="_blank" rel="noopener noreferrer">閱讀完整原文 ↗</a></article>
+ <form class="fl-day-controls" data-fl-book-search><label>搜尋馆藏 <input type="search" name="query" aria-label="搜尋書名與作者" required></label><button type="submit">搜尋</button></form>
+ <p data-fl-book-status role="status"></p><div class="fl-tabs" data-fl-book-results aria-label="館藏搜尋結果"></div>
+ <p><a href="/dawn-library/product/">完整館藏索引 ↗</a></p>
 </section>
-<script>
-(() => {
-  const frame = document.getElementById('dawn-library-product-surface');
-  if (!frame) return;
-  let observer;
-  let onResize;
-  frame.addEventListener('load', () => {
-    if (onResize) window.removeEventListener('resize', onResize);
-    observer?.disconnect();
-    let stage;
-    try { stage = frame.contentDocument?.querySelector('.stage'); } catch (_) { return; }
-    if (!stage) return;
-    const resize = () => {
-      const height = Math.ceil(Math.max(stage.getBoundingClientRect().height, stage.scrollHeight));
-      if (height && frame.style.height !== `${height}px`) frame.style.height = `${height}px`;
-    };
-    if (typeof ResizeObserver === 'function') {
-      observer = new ResizeObserver(resize);
-      observer.observe(stage);
-    }
-    onResize = resize;
-    window.addEventListener('resize', onResize, { passive: true });
-    resize();
-  });
-})();
-</script>
+<script type="module" src="/js/first-look-book.mjs?v=20261012-stage-v6"></script>
 {{ end }}
