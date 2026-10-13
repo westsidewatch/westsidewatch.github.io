@@ -1,0 +1,73 @@
+/* Westside editorial navigation authority.
+   Replaces the opaque white top bar with a quiet overlaid masthead.
+   Does not touch Olive speaker poster assets, carousel, or iframe behavior. */
+body.sites-surface{--ws-editorial-nav-edge:clamp(20px,3.5vw,76px)}
+body.sites-surface > .sites-layer-header{
+ position:absolute;inset:0 0 auto;z-index:90;width:100%;
+ margin:0;padding:clamp(16px,2.2vw,34px) var(--ws-editorial-nav-edge) 0;
+ background:transparent!important;border:0!important;
+ box-shadow:none!important;backdrop-filter:none!important;
+ -webkit-backdrop-filter:none!important;
+ color:var(--ws-text,#252525);
+}
+body.sites-surface > .sites-layer-header::before{
+ content:"";position:absolute;inset:0 0 auto;height:100%;
+ background:linear-gradient(to bottom,color-mix(in srgb,var(--ws-paper,#faf9f5) 90%,transparent),color-mix(in srgb,var(--ws-paper,#faf9f5) 48%,transparent) 66%,transparent);
+ pointer-events:none;z-index:-1;
+}
+body.sites-surface > .sites-layer-header .sites-layer-primary{
+ display:flex;align-items:center;gap:clamp(16px,3vw,48px);
+ padding:0!important;min-height:40px;
+}
+body.sites-surface > .sites-layer-header .sites-layer-wordmark{
+ width:clamp(125px,15vw,225px);flex:0 0 auto;
+}
+body.sites-surface > .sites-layer-header .sites-layer-nav{
+ margin-left:auto;display:flex;align-items:center;justify-content:flex-end;
+ flex-wrap:wrap;gap:clamp(12px,1.6vw,30px);
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ font-weight:400;letter-spacing:.035em;
+}
+body.sites-surface > .sites-layer-header .sites-layer-nav a{
+ display:inline-flex;align-items:center;min-height:36px;
+ border:0;text-decoration:none;
+}
+body.sites-surface > .sites-layer-header .sites-layer-section-nav{
+ margin:clamp(10px,1.2vw,18px) 0 0;
+ padding:8px 0 0;border:0!important;
+ display:flex;flex-wrap:wrap;gap:clamp(12px,1.7vw,30px);
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ background:transparent!important;
+}
+body.sites-surface > main{position:relative;min-width:0}
+body.sites-surface > .sites-layer-header a:focus-visible{
+ outline:2px solid currentColor;outline-offset:4px;
+}
+@media(max-width:900px){
+ body.sites-surface > .sites-layer-header{padding:14px 20px 0}
+ body.sites-surface > .sites-layer-header .sites-layer-primary{display:flex;flex-wrap:wrap;gap:8px 18px}
+ body.sites-surface > .sites-layer-header .sites-layer-wordmark{width:clamp(120px,32vw,190px)}
+ body.sites-surface > .sites-layer-header .sites-layer-nav{
+  margin:0;flex:1 1 100%;justify-content:flex-start;
+  overflow-x:auto;flex-wrap:nowrap;white-space:nowrap;
+  gap:18px;padding:0 0 4px;scrollbar-width:thin;
+ }
+ body.sites-surface > .sites-layer-header .sites-layer-section-nav{
+  overflow-x:auto;flex-wrap:nowrap;white-space:nowrap;
+  scrollbar-width:thin;gap:18px;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ body.sites-surface > .sites-layer-header *,
+ body.sites-surface > .sites-layer-header *::after{transition:none!important}
+}
+/* On immersive sections preserve legibility without restoring a white bar. */
+body.sites-surface:has([data-ws-immersive-video]) > .sites-layer-header{
+ color:#fff;
+}
+body.sites-surface:has([data-ws-immersive-video]) > .sites-layer-header::before{
+ background:linear-gradient(to bottom,rgba(10,17,17,.56),rgba(10,17,17,.18) 72%,transparent);
+}
+body.sites-surface:has([data-ws-immersive-video]) > .sites-layer-header .sites-layer-wordmark img{
+ filter:brightness(0) invert(1);
+}
