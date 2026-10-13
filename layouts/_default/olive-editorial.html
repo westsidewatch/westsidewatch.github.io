@@ -70,8 +70,8 @@
 .olive-editorial__spread{position:relative;display:grid;grid-template-columns:minmax(0,58fr) minmax(0,42fr);align-items:center;gap:clamp(12px,2.5vw,44px);width:min(100%,1460px);margin-inline:auto;min-height:clamp(580px,68vw,790px)}
 .olive-editorial__portrait{position:relative;box-sizing:border-box;margin:0;min-width:0;align-self:center;height:clamp(550px,65vw,770px);overflow:hidden;display:grid;place-items:center}
 .olive-editorial__portrait img{display:block;width:100%;height:100%;object-fit:contain;object-position:center center;mix-blend-mode:normal}
-/* Integrate the portrait's pale paper with the page stock without altering the source artwork. */
-.olive-editorial__portrait{background:var(--paper);isolation:isolate}
+/* Transparent profile artwork reveals the article paper; no branch-colored rectangular backing. */
+.olive-editorial__portrait{background:transparent;isolation:isolate}
 /* Olive person pages: English navigation must not inherit the Chinese UI override. */
 body:has(.olive-editorial) .sites-layer-nav,
 body:has(.olive-editorial) .sites-layer-nav a,
