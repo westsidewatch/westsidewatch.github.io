@@ -3,11 +3,8 @@ name: Dore Visual Engineer
 on:
   pull_request:
     paths:
-      - 'static/**'
-      - 'assets/**'
-      - 'layouts/**'
-      - 'content/**'
-      - 'dore-design/**'
+      - 'static/candidate01/**'
+      - 'static/css/sites-home-sections.css'
       - 'tools/dore-visual/**'
       - '.github/workflows/dore-visual-engineer.yml'
   workflow_dispatch:
