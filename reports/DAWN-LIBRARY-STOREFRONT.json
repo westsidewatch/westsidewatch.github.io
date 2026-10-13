@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-10-12T19:08:35.385013+00:00",
+  "generatedAt": "2026-10-13T17:05:25.300279+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -25,52 +25,22 @@
       "title": "聖經與基督教",
       "books": 25,
       "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-early-church-fathers",
-      "title": "早期教會與教父",
-      "books": 10,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-jewish-history-josephus",
-      "title": "猶太與第二聖殿世界",
-      "books": 2,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-ancient-history-archaeology",
-      "title": "古代世界與考古",
-      "books": 25,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-philosophy-classics",
-      "title": "哲學與思想",
-      "books": 25,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-biography-memoir",
-      "title": "傳記與回憶",
-      "books": 25,
-      "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 167,
-  "sourceCovers": 116,
+  "mappedBooks": 80,
+  "sourceCovers": 68,
   "directPublications": 15,
   "providers": {
     "Standard Ebooks": 15,
     "Internet Archive": 40,
-    "Project Gutenberg": 112
+    "Project Gutenberg": 25
   },
   "identity": {
-    "queriedThisRun": 3,
-    "resolved": 105,
-    "coversAdded": 61,
-    "internetArchiveLinks": 47,
-    "cacheEntries": 228
+    "queriedThisRun": 1,
+    "resolved": 36,
+    "coversAdded": 13,
+    "internetArchiveLinks": 16,
+    "cacheEntries": 229
   },
   "errors": [
     {
@@ -84,6 +54,31 @@
     {
       "source": "DOAB archaeology",
       "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "early church fathers",
+      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "jewish history josephus",
+      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "ancient history archaeology",
+      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "philosophy classics",
+      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "biography memoir",
+      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
     }
   ],
   "contentDownloaded": false

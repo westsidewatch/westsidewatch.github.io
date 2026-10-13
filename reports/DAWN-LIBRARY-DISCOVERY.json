@@ -1,13 +1,189 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-10-12T19:08:15.907893+00:00",
+  "generatedAt": "2026-10-13T17:00:21.175699+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 73,
+  "pagesChecked": 29,
   "newDiscovered": 0,
   "candidateQueue": 76,
   "catalogBooks": 1969,
-  "errors": [],
+  "errors": [
+    {
+      "query": "Josephus",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Josephus&start_index=26",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Augustine",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Augustine&start_index=76",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Athanasius",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Athanasius",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Chrysostom",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Chrysostom",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Jerome",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Jerome&start_index=51",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Origen",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Origen",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Irenaeus",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Irenaeus",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Clement of Alexandria",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Clement+of+Alexandria",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Martin Luther",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Martin+Luther&start_index=51",
+      "error": "HTTPError"
+    },
+    {
+      "query": "John Knox",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Knox",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Richard Baxter",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Richard+Baxter",
+      "error": "HTTPError"
+    },
+    {
+      "query": "John Owen",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Owen",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Thomas Watson",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Thomas+Watson",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Jonathan Edwards",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Jonathan+Edwards",
+      "error": "HTTPError"
+    },
+    {
+      "query": "George Whitefield",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=George+Whitefield",
+      "error": "HTTPError"
+    },
+    {
+      "query": "John Wesley",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Wesley&start_index=51",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Charles Wesley",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Charles+Wesley",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Andrew Murray",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Andrew+Murray",
+      "error": "HTTPError"
+    },
+    {
+      "query": "F. B. Meyer",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=F.+B.+Meyer",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Oswald Chambers",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Oswald+Chambers",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Bible dictionary",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+dictionary",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Bible concordance",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+concordance",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Christian doctrine",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+doctrine",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Christian prayer",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+prayer&start_index=26",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Christian missions",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+missions&start_index=51",
+      "error": "HTTPError"
+    },
+    {
+      "query": "sermons Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=sermons+Christianity&start_index=51",
+      "error": "HTTPError"
+    },
+    {
+      "query": "hymns Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=hymns+Christianity",
+      "error": "HTTPError"
+    },
+    {
+      "query": "church fathers",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=church+fathers",
+      "error": "HTTPError"
+    },
+    {
+      "query": "church history Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=church+history+Christianity&start_index=26",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Reformation Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Reformation+Christianity",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Hebrew Bible",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Hebrew+Bible",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Greek New Testament",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Greek+New+Testament",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Bible archaeology",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+archaeology&start_index=26",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Bible geography",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+geography",
+      "error": "HTTPError"
+    },
+    {
+      "query": "early church Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=early+church+Christianity&start_index=51",
+      "error": "HTTPError"
+    }
+  ],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
