@@ -11,7 +11,7 @@
 
 /* First-layer floating navigation: native scrolling, no scroll lock or snap. */
 (()=>{
- const nav=document.querySelector('.sites-home-nav--floating');
+ const nav=typeof document.querySelector==='function'?document.querySelector('.sites-home-nav--floating'):null;
  if(!nav)return;
  const menu=nav.querySelector('details');
  let previousY=window.scrollY,scheduled=false;
