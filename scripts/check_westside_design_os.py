@@ -29,6 +29,9 @@ for legacy in ["/* Visual type-scale normalization", "/* === Color Operating Sys
   print("Design OS guard failed: migrated visual declarations missing",legacy);sys.exit(1)
 
 import subprocess
+# The retired black/gold palette is a Design OS invariant, not a separate CI gate.
+palette_guard=subprocess.run([sys.executable,str(root/"scripts/check_black_gold_global_ban.py")],cwd=root)
+if palette_guard.returncode: sys.exit(palette_guard.returncode)
 result=subprocess.run([sys.executable,str(root/"scripts/build_westside_design_os.py"),"--check"],cwd=root)
 if result.returncode: sys.exit(result.returncode)
 if '/css/westside-design-tokens.css' not in runtime:

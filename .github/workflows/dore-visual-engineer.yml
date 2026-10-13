@@ -1,15 +1,7 @@
 name: Dore Visual Engineer
 
+# Heavy browser regression is opt-in; PRs retain lightweight content/asset guards.
 on:
-  pull_request:
-    paths:
-      - 'static/**'
-      - 'assets/**'
-      - 'layouts/**'
-      - 'content/**'
-      - 'dore-design/**'
-      - 'tools/dore-visual/**'
-      - '.github/workflows/dore-visual-engineer.yml'
   workflow_dispatch:
     inputs:
       url:

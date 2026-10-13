@@ -265,3 +265,56 @@ body.home .sites-home-hero .sites-home-star{filter:brightness(0) invert(1)}
  body.home .sites-home-hero .sites-home-masthead{width:min(80vw,430px)}
  body.home .sites-home-hero .sites-home-entry a{border-top:1px solid rgba(255,255,255,.5);border-bottom:0}
 }
+
+/* First-layer foundation: one floating navigation across all ten scenes.
+   Design OS supplies fonts and color tokens; realm iframe styles remain isolated. */
+body.home .sites-home-nav--floating{
+ position:fixed;z-index:1000;top:0;left:0;right:0;
+ width:100%;max-width:none;display:flex;justify-content:space-between;align-items:center;
+ padding:clamp(16px,2.2vw,30px) clamp(20px,4vw,88px);
+ background:transparent;color:#fff;
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ font-size:clamp(12px,.95vw,17px);font-weight:400;
+ letter-spacing:.04em;line-height:1.4;
+ mix-blend-mode:normal;pointer-events:none;
+ transition:transform .32s ease,color .2s ease;
+}
+body.home .sites-home-nav--floating[data-nav-hidden="true"]{transform:translateY(-110%)}
+body.home .sites-home-nav--floating[data-nav-tone="light"]{color:var(--ws-text,#252525)}
+body.home .sites-home-nav--floating :is(a,summary){pointer-events:auto;color:inherit;text-decoration:none}
+body.home .sites-home-nav--floating .sites-home-nav__brand{font-family:inherit;white-space:nowrap}
+body.home .sites-home-nav__details{position:relative;pointer-events:auto}
+body.home .sites-home-nav__details summary{display:flex;gap:1.4em;align-items:center;cursor:pointer;list-style:none;min-height:44px}
+body.home .sites-home-nav__details summary::-webkit-details-marker{display:none}
+body.home .sites-home-nav__details[open] summary span{transform:rotate(45deg)}
+body.home .sites-home-nav__panel{
+ position:fixed;top:0;left:0;right:0;height:100dvh;overflow-y:auto;
+ display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+ gap:clamp(8px,1.4vh,20px);padding:clamp(70px,10vh,120px) clamp(22px,8vw,140px);
+ background:var(--ws-surface,#faf9f5);color:var(--ws-text,#252525);
+ z-index:-1;pointer-events:auto;
+}
+body.home .sites-home-nav__details[open]{color:var(--ws-text,#252525)}
+body.home .sites-home-nav__details[open] summary{position:relative;z-index:2}
+body.home .sites-home-nav__panel a{
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
+ font-size:clamp(28px,4vw,64px);font-weight:400;line-height:1.08;
+}
+body.home .sites-home-nav__panel a:last-child{font-size:clamp(16px,1.5vw,22px);margin-top:1em}
+body.home .sites-home-nav--floating :is(a,summary):focus-visible{outline:2px solid currentColor;outline-offset:5px}
+body.home .sites-home-realms,
+body.home .sites-home-realm,
+body.home .candidate-focus-screen{min-width:0}
+body.home :is(.sites-home-realm,.candidate-focus-screen)>iframe{display:block;width:100%;border:0}
+@media(max-width:900px){
+ body.home .sites-home-nav--floating{padding:12px 20px;font-size:13px}
+ body.home .sites-home-nav__panel{padding:80px 24px 40px}
+ body.home .sites-home-nav__panel a{font-size:clamp(26px,7vw,44px)}
+}
+@media(prefers-reduced-motion:reduce){
+ body.home .sites-home-nav--floating{transition:none}
+}
+
+/* Preserve the frozen hero navigation markup for contract verification; the
+   new floating Contents control is the sole visible first-layer navigation. */
+body.home .sites-home-hero > .sites-home-nav{display:none!important}

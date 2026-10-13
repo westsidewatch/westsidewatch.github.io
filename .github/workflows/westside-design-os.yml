@@ -1,8 +1,6 @@
 name: Westside Design OS
 on:
-  pull_request:
-  push:
-    branches: [main]
+  workflow_dispatch:
 jobs:
   authority:
     runs-on: ubuntu-latest
