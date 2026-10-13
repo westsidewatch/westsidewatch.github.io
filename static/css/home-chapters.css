@@ -27,3 +27,13 @@ html,body{height:100%;overflow:hidden}
  .lw-movement-label{position:relative;left:auto;right:auto;top:auto;height:auto;min-height:2.2rem;grid-column:1/-1;padding:.45rem .7rem;margin:.15rem 0;font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){.products__grid .product{animation:none}}
+
+/* Home chapters typography: Design OS is the only font and scale authority. */
+html,body{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-ui)}
+.brand-copy small,.brand-copy span,.product-preview__details small,.product-preview__details span,.one-live-copy small,.one-live-passage,.one-live-route b,.one-live-cta{font-family:var(--ws-type-display-en);font-size:var(--ws-type-scale-micro);font-weight:400}
+.brand-copy strong{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-title-sm);font-weight:var(--ws-weight-zh-air);line-height:var(--ws-type-leading-title)}
+.product-preview__details p{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-title-md);font-weight:var(--ws-weight-zh-air);line-height:var(--ws-type-leading-title)}
+.one-live-copy h2{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-title-lg);font-weight:var(--ws-weight-zh-air);line-height:var(--ws-type-leading-title)}
+.one-live-story{font-family:var(--ws-type-reading-zh);font-size:var(--ws-type-scale-reading);line-height:var(--ws-type-leading-reading)}
+.one-live-route li{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-meta);line-height:var(--ws-type-leading-ui)}
+.lw-movement-label{font-family:var(--ws-type-display-en-sc);font-size:var(--ws-type-scale-meta);font-weight:400}
