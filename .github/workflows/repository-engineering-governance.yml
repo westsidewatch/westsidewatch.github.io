@@ -3,8 +3,10 @@ name: Repository Engineering Governance
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [main]
+    paths:
+      - 'ENGINEERING-GOVERNANCE.md'
+      - '.github/workflows/repository-engineering-governance.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
