@@ -1,11 +1,12 @@
 {{ define "main" }}
-<section class="sites-second-layer sites-magazine" aria-labelledby="magazine-title">
+<section data-ws-first-look="shared" data-ws-first-look-mode="editorial" data-ws-first-look-stage class="ws-first-look-stage sites-second-layer sites-magazine" aria-labelledby="magazine-title">
   <nav class="sites-breadcrumb" aria-label="Breadcrumb"><a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Magazine</span></nav>
-  <header class="sites-journal-head" data-ws-first-look="shared" data-ws-first-look-mode="editorial" data-ws-first-look-stage>
+  <header class="sites-journal-head">
     <img src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="LivingWater — Westside Watch, Vol.00, 西望">
     <h1 id="magazine-title" class="ws-bilingual-heading"><span class="ws-bilingual-heading__en" lang="en">Magazine</span><span class="ws-bilingual-heading__zh" lang="zh-Hant">西望雜誌</span></h1>
     {{ with .Description }}<p>{{ . }}</p>{{ end }}
   </header>
+  <div class="fl-reader"><article><p>創刊號 · Vol.00</p><h2>{{ site.Params.volumeTitle }}</h2><blockquote lang="en">For he looked for a city which hath foundations, whose builder and maker is God.<cite>Hebrews 11:10 · KJV</cite></blockquote><p lang="zh-Hant">那座有根基的城，就是神所經營、所建造的。</p></article></div>
   <a class="sites-journal-current" href="{{ "vol-00/" | relURL }}" aria-label="Open Vol.00: The Foundations of a Watchful City" data-dore-surface-product="journal" data-editorial-role="primary" data-editorial-weight="2">
     <span>Current volume · Vol.00</span><strong>The Foundations<br>of a Watchful City</strong><p>A founding volume in four movements, twelve permanent columns, and three watches of the night.</p><b>Open the volume →</b>
   </a>

@@ -1,0 +1,14 @@
+{{ define "main" }}
+<section class="ws-first-look-stage fl-daily-home" data-ws-first-look="shared" data-ws-first-look-mode="daily" data-ws-first-look-stage data-fl-daily-home>
+ <header class="fl-header"><h1><span lang="en">Daylight Café</span> <span lang="zh-Hant">白晝咖啡館</span></h1><p><time data-fl-date></time> · 每日生活</p></header>
+ <blockquote>一天的難處一天當就夠了。<cite>馬太福音 6:34</cite></blockquote>
+ <div class="fl-day-controls"><button type="button" data-fl-date-step="-1" aria-label="前一天">←</button><label>日期 <input type="date" data-fl-date-input aria-label="選擇每日首頁日期"></label><button type="button" data-fl-date-step="1" aria-label="後一天">→</button><button type="button" data-fl-today>今天</button></div>
+ <p data-fl-daily-verse lang="en"></p>
+ <section class="fl-resource-context" aria-label="生活工具"><h2>生活工具</h2>
+  <div class="fl-tool-entries">
+   <article><h3>拾字 <span lang="en">GLEAN</span></h3><p>選字、書寫與成卷。</p><a href="/calligraphy/remote-probe.html">開啟拾字 →</a></article>
+   <article><h3><span lang="en">Habakkuk</span> 字幕工具</h3><p>本機字幕製作工具。</p><a href="https://github.com/westsidewatch/Westside-Stories" target="_blank" rel="noopener noreferrer">專案與使用說明 ↗</a></article>
+  </div>
+ </section>
+</section>
+{{ end }}

@@ -16,13 +16,7 @@
   theater.innerHTML='<header class="olive-adullam-heading"><span class="olive-adullam-heading__en" lang="en">ADULLAM</span><h2 class="olive-adullam-heading__zh">亞杜蘭洞</h2></header><div class="olive-poster-gallery" aria-label="十二講員海報"></div><div class="olive-issue-sermons" aria-label="當期論道推薦" data-olive-issue-sermons></div>';
   const gallery=theater.querySelector('.olive-poster-gallery');
   const speakerSlugs={'大衛鮑森':'david-pawson','江秀琴':'jiang-xiuqin','賴若瀚':'jerry-lai','劉彤':'tong-liu','葉光明':'derek-prince','倪柝聲':'watchman-nee','康來昌':'kang-lai-chang','唐崇榮':'stephen-tong','寇紹恩':'kou-shao-en','華理克':'rick-warren','于宏潔':'yu-hong-jie','黃淑華':'huang-shuhua'};
-  const englishNames={'大衛鮑森':'DAVID PAWSON','江秀琴':'GRACE CHIANG','賴若瀚':'JERRY LAI','劉彤':'TONG LIU','葉光明':'DEREK PRINCE','倪柝聲':'WATCHMAN NEE','康來昌':'KANG LAI CHANG','唐崇榮':'STEPHEN TONG','寇紹恩':'KOU SHAO EN','華理克':'RICK WARREN','于宏潔':'YU HONG JIE','黃淑華':'HUANG SHUHUA'};
-  const addIdentity=(card,item)=>{
-    const identity=document.createElement('span');identity.className='olive-gallery-card__identity';
-    const en=document.createElement('span');en.className='olive-gallery-card__identity-en';en.lang='en';en.textContent=englishNames[item.name]||item.slug.replace(/-/g,' ').toUpperCase();
-    const zh=document.createElement('span');zh.className='olive-gallery-card__identity-zh';zh.lang='zh-Hant';zh.textContent=item.name;
-    identity.append(en,zh);card.append(identity);
-  };
+  const addIdentity=(card,item)=>window.OliveSpeakerBaseline.mount(card,item.slug);
   const speakers=[...new Map(cards.map(card=>({slug:card.dataset.doreSpeaker||speakerSlugs[card.dataset.person],name:card.dataset.person})).filter(item=>item.slug&&item.name).map(item=>[item.slug,item])).values()];
   fetch('/dore-design/runtime/olive-editorial-covers.v1.json')
    .then(response=>{if(!response.ok)throw new Error('Poster manifest unavailable');return response.json();})

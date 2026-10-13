@@ -35,3 +35,9 @@ The dominant **dark/black + gold** visual theme is permanently retired across th
 - Page and product code must consume Color OS semantic roles instead of locally declaring a competing dark/gold palette.
 - Project-local design work may be stricter but may not opt out of this prohibition.
 - The repository-wide `Global Black Gold Ban` gate is the executable enforcement of this rule and must run on every pull request to `main`.
+
+## Protected Olive speaker website asset
+
+The human explicitly required on 2026-10-12 that the twelve-speaker red-English / upright-Chinese vertical composition be restored and protected. `static/olive/components/speaker-baseline-v1/` is the canonical immutable baseline, including per-speaker geometry, spelling, colors, original source snapshots and portrait hashes. It is a composed website asset, not only a set of PNGs.
+
+Do not overwrite, cover with competing name overlays, delete, flatten into images, or replace it during layout work. Rail and Adullam gallery consume the shared baseline. Global/page CSS must not restyle its internal typography. A changed composition requires explicit human authorization and a separately versioned variant; preserve v1. Do not change its integrity manifest or weaken its guard to bypass failures. Run `python scripts/check_olive_speaker_baseline.py` and the Olive browser regressions before release.
