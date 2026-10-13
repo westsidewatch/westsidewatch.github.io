@@ -1,0 +1,17 @@
+/* Westside Design OS — sitewide rectilinear geometry.
+   A single final-stage authority for all site pages and tools.
+   Exclude circles that convey meaning (loading indicators, avatars, charts,
+   radio controls and custom illustrations), rather than distorting them. */
+:where(html body) :is(
+  a, button, input, select, textarea, fieldset, dialog,
+  article, aside, section, nav, header, footer,
+  figure, figcaption, blockquote, pre, code,
+  img, video, iframe, canvas, table,
+  [class*="card"], [class*="panel"], [class*="tile"],
+  [class*="chip"], [class*="pill"], [class*="badge"],
+  [class*="button"], [class*="btn"], [class*="frame"],
+  [class*="modal"], [class*="dialog"], [class*="search"],
+  [class*="input"], [class*="control"], [class*="preview"]
+):not([role="radio"]):not([type="radio"]):not([class*="avatar"]):not([class*="spinner"]):not([class*="loader"]):not([class*="progress"]):not([class*="chart"]):not([class*="circle"]):not([class*="orb"]):not([class*="sun"]):not([class*="moon"]) {
+  border-radius: 0 !important;
+}
