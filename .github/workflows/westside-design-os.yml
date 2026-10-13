@@ -1,13 +1,5 @@
 name: Westside Design OS
 on:
-  pull_request:
-    paths:
-      - 'static/css/**'
-      - 'assets/css/**'
-      - 'layouts/**'
-      - 'scripts/check_westside_design_os.py'
-      - 'scripts/check_design_os_entrypoints.py'
-      - '.github/workflows/westside-design-os.yml'
   workflow_dispatch:
 jobs:
   authority:
