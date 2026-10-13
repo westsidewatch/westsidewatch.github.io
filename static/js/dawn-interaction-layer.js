@@ -26,6 +26,13 @@ const homeScenes=homeHero?[homeHero,...focusScreens]:[];
 let sceneTick=false;
 const clamp01=v=>Math.max(0,Math.min(1,v));
 const sceneFrames=focusScreens.map(scene=>scene.querySelector("iframe"));
+/* Phase 02 pages are independent; frozen Candidate 01 assets remain archived and unmodified. */
+if(homeHero){
+  const chapterRoutes=["/home-chapters/watch-witness.html","/home-chapters/walk-worship.html"];
+  sceneFrames.forEach((frame,i)=>{
+    if(frame&&chapterRoutes[i])frame.setAttribute("src",chapterRoutes[i]);
+  });
+}
 const sendSceneState=(frame,payload)=>{
   if(!frame||!frame.contentWindow)return;
   try{frame.contentWindow.postMessage(payload,location.origin)}catch(_){}
