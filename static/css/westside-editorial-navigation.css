@@ -81,3 +81,25 @@ body.sites-surface > .sites-layer-header :is(.sites-layer-primary,.sites-layer-s
 body.sites-surface:has([data-ws-immersive-video]) > .sites-layer-header :is(a,span){
  text-shadow:0 1px 8px rgba(0,0,0,.48);
 }
+
+/* First-look chapters are embedded pages, not separate websites.
+   Their internal header must never occupy a white band. */
+html.fl-embedded body.sites-surface > .sites-layer-header{display:none!important}
+html.fl-embedded body.sites-surface > main{margin:0;padding:0}
+html.fl-embedded .fl-realm-nav{
+ position:absolute;z-index:25;top:clamp(16px,2.4vw,36px);
+ left:clamp(18px,3.5vw,72px);right:clamp(18px,3.5vw,72px);
+ display:flex;flex-wrap:wrap;align-items:center;
+ gap:clamp(12px,1.5vw,28px);margin:0;padding:0;
+ background:transparent!important;border:0!important;
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ font-weight:400;letter-spacing:.025em;
+}
+html.fl-embedded .fl-realm-nav a{background:transparent;border:0;text-decoration:none}
+html.fl-embedded .fl-realm-nav a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+@media(max-width:760px){
+ html.fl-embedded .fl-realm-nav{
+  flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;
+  scrollbar-width:thin;gap:18px;
+ }
+}
