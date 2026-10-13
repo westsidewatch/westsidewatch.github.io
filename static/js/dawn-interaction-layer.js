@@ -41,12 +41,13 @@ const updateHomeSequence=()=>{
   sceneTick=false;
   if(!homeScenes.length)return;
   const center=innerHeight*.5;
+  const viewportHeight=Math.max(1,innerHeight);
   let nearest=0, distance=Infinity;
   homeScenes.forEach((scene,i)=>{
     const r=scene.getBoundingClientRect();
     const d=Math.abs((r.top+r.bottom)/2-center);
     if(d<distance){distance=d;nearest=i}
-    const progress=clamp01((center-r.top)/Math.max(1,r.height));
+    const progress=clamp01((viewportHeight-r.top)/Math.max(1,r.height+viewportHeight));
     scene.style.setProperty("--home-scene-progress",progress.toFixed(4));
     scene.dataset.scenePhase=r.top>center?"upcoming":r.bottom<center?"passed":"active";
     if(i>0&&r.bottom>0&&r.top<innerHeight){
@@ -54,9 +55,19 @@ const updateHomeSequence=()=>{
     }
   });
   document.body.dataset.homeScene=String(nearest+1);
+  // Publish the current chapter to the host without trapping native scroll.
+  root.style.setProperty("--home-chapter-index",String(nearest+1));
   const heroRect=homeHero.getBoundingClientRect();
   const exit=clamp01(-heroRect.top/Math.max(1,heroRect.height*.75));
   homeHero.style.setProperty("--home-hero-exit",exit.toFixed(4));
+  focusScreens.forEach((scene,i)=>{
+    const r=scene.getBoundingClientRect();
+    const enter=clamp01((viewportHeight-r.top)/Math.max(1,viewportHeight*.65));
+    const leave=clamp01(-r.top/Math.max(1,r.height*.8));
+    scene.style.setProperty("--home-chapter-enter",enter.toFixed(4));
+    scene.style.setProperty("--home-chapter-leave",leave.toFixed(4));
+    scene.toggleAttribute("data-chapter-current",nearest===i+1);
+  });
 };
 const requestHomeSequence=()=>{if(!sceneTick){sceneTick=true;requestAnimationFrame(updateHomeSequence)}};
 if(homeScenes.length){
