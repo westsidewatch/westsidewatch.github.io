@@ -1,14 +1,5 @@
 name: Global Black Gold Ban
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - 'static/css/**'
-      - 'assets/css/**'
-      - 'layouts/**'
-      - 'data/dore_global_design_*.json'
-      - 'scripts/check_black_gold_global_ban.py'
-      - '.github/workflows/global-black-gold-ban.yml'
   workflow_dispatch:
 permissions:
   contents: read
