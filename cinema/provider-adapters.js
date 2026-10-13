@@ -44,7 +44,8 @@ window.HolyLightProviders={
     }
     return this.resolve(item,Math.max(0,Math.floor((moment.startMs||0)/1000)));
   },
-  mount(target,item,startSeconds=0){
+  mount(target,item,startSeconds=0,options={}){
+    const autoplay=options.autoplay!==false;
     const resolved=this.resolve(item,startSeconds);
     if(!resolved)return null;
     target.replaceChildren();
@@ -53,7 +54,7 @@ window.HolyLightProviders={
       video.className='cinema-feature__player';
       video.controls=true;
       video.playsInline=true;
-      video.autoplay=true;
+      video.autoplay=autoplay;
       video.muted=true;
       video.preload='metadata';
       video.crossOrigin='anonymous';
@@ -70,7 +71,7 @@ window.HolyLightProviders={
       }else if(window.Hls?.isSupported?.()){
         const hls=new window.Hls({enableWorker:true});
         hls.loadSource(resolved.url);hls.attachMedia(video);
-        hls.on(window.Hls.Events.MANIFEST_PARSED,()=>{if(start)video.currentTime=start;video.play().catch(()=>{});});
+        hls.on(window.Hls.Events.MANIFEST_PARSED,()=>{if(start)video.currentTime=start;if(autoplay)video.play().catch(()=>{});});
         hls.on(window.Hls.Events.ERROR,(_event,data)=>{if(data.fatal)video.dataset.playbackError='true';});
         video._hls=hls;
       }else{return null;}
@@ -80,7 +81,9 @@ window.HolyLightProviders={
     }
     if(resolved.kind!=='embed')return null;
     const frame=document.createElement('iframe');
-    frame.src=resolved.url;
+    const embedUrl=new URL(resolved.url);
+    if(!autoplay&&resolved.provider==='youtube')embedUrl.searchParams.set('autoplay','0');
+    frame.src=embedUrl.toString();
     frame.title=`${item.title} — official embedded player`;
     frame.loading='eager';
     frame.referrerPolicy='strict-origin-when-cross-origin';
