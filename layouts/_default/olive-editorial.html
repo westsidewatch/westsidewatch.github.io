@@ -69,7 +69,22 @@
 .olive-editorial__foot{color:var(--accent)}
 .olive-editorial__spread{position:relative;display:grid;grid-template-columns:minmax(0,58fr) minmax(0,42fr);align-items:center;gap:clamp(12px,2.5vw,44px);width:min(100%,1460px);margin-inline:auto;min-height:clamp(580px,68vw,790px)}
 .olive-editorial__portrait{position:relative;box-sizing:border-box;margin:0;min-width:0;align-self:center;height:clamp(550px,65vw,770px);overflow:hidden;display:grid;place-items:center}
-.olive-editorial__portrait img{display:block;width:100%;height:100%;object-fit:contain;object-position:center center}
+.olive-editorial__portrait img{display:block;width:100%;height:100%;object-fit:contain;object-position:center center;mix-blend-mode:multiply}
+/* Integrate the portrait's pale paper with the page stock without altering the source artwork. */
+.olive-editorial__portrait{background:var(--paper);isolation:isolate}
+/* Olive person pages: English navigation must not inherit the Chinese UI override. */
+body:has(.olive-editorial) .sites-layer-nav,
+body:has(.olive-editorial) .sites-layer-nav a,
+body:has(.olive-editorial) .sites-layer-wordmark,
+body:has(.olive-editorial) .sites-layer-primary,
+body:has(.olive-editorial) .sites-layer-section-nav,
+body:has(.olive-editorial) .sites-layer-section-nav a,
+body:has(.olive-editorial) .sites-layer-footer,
+body:has(.olive-editorial) .sites-layer-footer a{
+ font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
+ font-weight:400!important;
+ font-synthesis:none;
+}
 .olive-editorial__asset-pending{display:grid;place-items:center;width:100%;height:100%;border:1px dashed var(--olive);font-size:12px;letter-spacing:.08em}
 .olive-editorial__type{position:relative;z-index:2;min-width:0;margin-left:clamp(-100px,-7vw,-32px);padding:clamp(24px,3vw,54px) 0;pointer-events:none}
 .olive-editorial__eyebrow,.olive-editorial__sub{font-size:11px;letter-spacing:.22em;color:var(--accent)}
