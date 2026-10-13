@@ -14,3 +14,9 @@ function runtime(){
 test('Lazy frame resize keeps the requested realm at the viewport top',()=>{const {state,frame,emit,location}=runtime();emit('message',{origin:location.origin,source:frame.contentWindow,data:{type:'ws-first-look:height',height:1200}});assert.equal(state.top,0);assert.equal(state.alignments,2)});
 test('Ordinary scrolling never pulls the user back to a realm anchor',()=>{const {state,frame,emit,location}=runtime();state.top=-360;emit('scroll');assert.equal(state.top,-360);assert.equal(state.alignments,1);emit('message',{origin:location.origin,source:frame.contentWindow,data:{type:'ws-first-look:height',height:1200}});assert.equal(state.alignments,1)});
 test('Foreign frame messages cannot resize a First Look',()=>{const {state,frame,emit}=runtime();emit('message',{origin:'https://unrelated.example',source:frame.contentWindow,data:{type:'ws-first-look:height',height:1200}});assert.equal(state.heights,0)});
+
+test('Short mobile viewports are not forced to desktop minimum heights',()=>{
+ const css=fs.readFileSync('static/css/westside-design-os.css','utf8');
+ assert.match(css,/\.fl-first-look-host iframe\{[^}]*min-height:min\(740px,100svh\)/);
+ assert.match(css,/\.fl-embedded body \[data-ws-first-look-stage\]\[data-ws-immersive-video\]\{[^}]*min-height:min\(560px,100svh\)/);
+});
