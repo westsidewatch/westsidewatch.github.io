@@ -38,31 +38,73 @@
  const summary=menu?.querySelector('summary');
  const panel=menu?.querySelector('.sites-home-nav__panel');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
- let activeReveal=null;
- const revealShape=()=>{const r=summary?.getBoundingClientRect();const x=r?Math.round(r.left+r.width/2):window.innerWidth-65;const y=r?Math.round(r.top+r.height/2):35;return {small:'circle(0px at '+x+'px '+y+'px)',large:'circle(150vmax at '+x+'px '+y+'px)'};};
- const animateReveal=(opening)=>{
-  if(!panel)return Promise.resolve();
-  activeReveal?.cancel();activeReveal=null;
-  if(reduced.matches||!panel.animate)return Promise.resolve();
-  const shape=revealShape();
-  const frames=opening?[{clipPath:shape.small,opacity:1},{clipPath:shape.large,opacity:1}]:[{clipPath:shape.large,opacity:1},{clipPath:shape.small,opacity:1}];
-  const anim=panel.animate(frames,{duration:opening?850:650,easing:'cubic-bezier(.76,0,.24,1)',fill:'forwards'});
-  activeReveal=anim;
-  return anim.finished.catch(()=>{}).then(()=>{if(activeReveal===anim){anim.cancel();activeReveal=null}});
+ /* Multi-layer editorial transition: cover sheets, page reveal, staggered typography,
+    and reversible exit. The existing seven hover-preview handlers remain below. */
+ const links=[...menu.querySelectorAll('.sites-home-nav__panel-links>a')];
+ const entries=[...menu.querySelectorAll('.sites-home-nav__panel a')].filter(a=>!links.includes(a));
+ const previewStage=menu.querySelector('.ws-nav-hover-preview');
+ let running=[],transitionToken=0;
+ const stop=()=>{running.forEach(a=>a.cancel());running=[];};
+ const play=(element,keyframes,options)=>{
+  if(!element||reduced.matches||!element.animate)return null;
+  const a=element.animate(keyframes,{fill:'both',...options});
+  running.push(a);return a;
+ };
+ const layers=()=>{
+  if(!panel)return[];
+  let sheets=panel.querySelector('.ws-contents-transition-sheets');
+  if(!sheets){
+   sheets=document.createElement('div');sheets.className='ws-contents-transition-sheets';
+   sheets.setAttribute('aria-hidden','true');
+   for(let i=0;i<3;i++){const layer=document.createElement('span');layer.className='ws-contents-transition-sheet ws-contents-transition-sheet--'+(i+1);sheets.append(layer);}
+   panel.prepend(sheets);
+  }
+  return [...sheets.children];
+ };
+ const transition=async(opening)=>{
+  if(!panel)return;
+  const token=++transitionToken;
+  stop();
+  const sheets=layers();
+  if(reduced.matches){panel.classList.toggle('ws-contents-ready',opening);return;}
+  const ease='cubic-bezier(.76,0,.24,1)';
+  const duration=opening?1100:880;
+  const direction=opening?1:-1;
+  const sheetAnimations=sheets.map((sheet,i)=>play(sheet,[
+   {transform:opening?'translate3d(0,-105%,0)':'translate3d(0,0,0)'},
+   {transform:opening?'translate3d(0,0,0)':'translate3d(0,-105%,0)'}
+  ],{duration:duration*.68,delay:opening?i*105:(2-i)*80,easing:ease}));
+  const panelAnimation=play(panel,[
+   {clipPath:opening?'inset(0 0 100% 0)':'inset(0 0 0 0)'},
+   {clipPath:opening?'inset(0 0 0 0)':'inset(0 0 100% 0)'}
+  ],{duration,delay:opening?150:0,easing:ease});
+  links.forEach((link,i)=>play(link,[
+   {opacity:opening?0:1,transform:opening?'translate3d(0,42px,0)':'translate3d(0,0,0)'},
+   {opacity:opening?1:0,transform:opening?'translate3d(0,0,0)':'translate3d(0,-25px,0)'}
+  ],{duration:opening?600:300,delay:opening?430+i*62:i*28,easing:'cubic-bezier(.2,.8,.2,1)'}));
+  entries.forEach((link,i)=>play(link,[
+   {opacity:opening?0:1,transform:opening?'translate3d(0,35px,0)':'translate3d(0,0,0)'},
+   {opacity:opening?1:0,transform:opening?'translate3d(0,0,0)':'translate3d(0,-20px,0)'}
+  ],{duration:opening?580:260,delay:opening?660+i*85:i*30,easing:'ease-out'}));
+  play(previewStage,[
+   {opacity:opening?0:1,transform:opening?'translate3d(5%,0,0)':'translate3d(0,0,0)'},
+   {opacity:opening?1:0,transform:opening?'translate3d(0,0,0)':'translate3d(4%,0,0)'}
+  ],{duration:opening?650:320,delay:opening?500:0,easing:'ease-out'});
+  await Promise.all([panelAnimation,...sheetAnimations].filter(Boolean).map(a=>a.finished.catch(()=>{})));
+  if(token!==transitionToken)return;
+  stop();panel.classList.toggle('ws-contents-ready',opening);
  };
  const closeCurtain=async()=>{
   if(!menu?.open||menu.classList.contains('is-closing'))return;
   menu.classList.add('is-closing');
-  await animateReveal(false);
-  menu.open=false;
-  menu.classList.remove('is-closing');
+  await transition(false);
+  if(menu.classList.contains('is-closing')){menu.open=false;menu.classList.remove('is-closing');}
  };
  summary?.addEventListener('click',event=>{
   event.preventDefault();
   if(menu.open){closeCurtain();return;}
-  menu.open=true;
-  menu.classList.remove('is-closing');
-  requestAnimationFrame(()=>animateReveal(true));
+  menu.open=true;menu.classList.remove('is-closing');
+  requestAnimationFrame(()=>transition(true));
  });
  const showPreview=(link)=>{const match=link.getAttribute('href')?.match(/^#first-look-(church|magazine|bible|sermon|book|cinema|life)$/);if(!match||!previewFrame)return;const key=match[1];if(key!==previewKey){previewKey=key;previewFrame.src=previewSources[key];}if(previewCaption)previewCaption.textContent=link.textContent.trim();preview?.classList.add('is-visible');};
  const clearPreview=()=>{preview?.classList.remove('is-visible')};
