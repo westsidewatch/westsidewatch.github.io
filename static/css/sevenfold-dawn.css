@@ -32,8 +32,8 @@ body.home .ws-dawn-fold{position:absolute;inset:0;background:var(--fold-color);t
 body.home .sites-home-nav--floating .sites-home-nav__panel-links{position:absolute!important;z-index:2;left:6vw;top:15dvh;width:48vw!important;max-height:37dvh!important;overflow:auto!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:1vh 2vw!important}
 body.home .sites-home-nav--floating .sites-home-nav__panel-links>a{font-size:clamp(17px,2vw,34px)!important;line-height:1.08!important;opacity:0;transform:translateY(20px);transition:none!important}
 body.home .sites-home-nav--floating .ws-nav-hover-preview{position:absolute!important;right:6vw;top:8vh;width:32vw;max-height:31dvh;z-index:2}
-html.ws-dawn-active body.home .ws-dawn-scripture{color:var(--ws-ink,#252525);text-shadow:none}
-@media(max-width:700px),(max-height:570px){body.home .sites-home-nav--floating .sites-home-nav__panel{height:100dvh!important}body.home .sites-home-nav--floating .sites-home-nav__panel-links{top:22dvh;left:7vw;width:86vw!important;max-height:70dvh!important;grid-template-columns:1fr!important}body.home .sites-home-nav--floating .ws-nav-hover-preview{display:none!important}body.home .ws-dawn-scripture{right:6vw;top:46dvh;max-width:55vw}html.ws-dawn-active body.home .ws-dawn-scripture{color:var(--ws-ink,#252525)}body.home .ws-dawn-large-logo{width:75vw}body.home .ws-dawn-panel-slogan{top:8dvh;left:7vw;font-size:clamp(24px,6vw,40px)}}
+
+@media(max-width:700px),(max-height:570px){body.home .sites-home-nav--floating .sites-home-nav__panel{height:100dvh!important}body.home .sites-home-nav--floating .sites-home-nav__panel-links{top:22dvh;left:7vw;width:86vw!important;max-height:70dvh!important;grid-template-columns:1fr!important}body.home .sites-home-nav--floating .ws-nav-hover-preview{display:none!important}body.home .ws-dawn-scripture{right:6vw;top:46dvh;max-width:55vw}body.home .ws-dawn-large-logo{width:75vw}body.home .ws-dawn-panel-slogan{top:8dvh;left:7vw;font-size:clamp(24px,6vw,40px)}}
 @media(prefers-reduced-motion:reduce){body.home .ws-dawn-brand-plane,body.home .ws-dawn-fold{will-change:auto}}
 
 /* Sevenfold layer repair: the menu toggle must remain above the full viewport plane. */
@@ -51,27 +51,24 @@ body.home .ws-dawn-brand-plane .sites-home-star{display:block!important;position
 html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-intro{color:var(--ws-ink,#252525)!important}
 html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-star{filter:brightness(0)!important}
 html.ws-dawn-active body.home .ws-dawn-brand-plane{z-index:2147483300!important}
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{z-index:2147483400!important;color:var(--ws-ink,#252525)!important}
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{color:inherit!important}
+
+
 body.home .sites-home-nav--floating .ws-dawn-icon line{stroke-width:1!important}
 
 /* Half-screen correction: place the SAME slogan above the fold, with its Design OS typography intact. */
 html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-intro{opacity:1!important;visibility:visible!important;z-index:4!important}
 html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-intro h1{color:var(--ws-ink,#252525)!important}
 html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-star{filter:brightness(0)!important}
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{right:6vw!important;max-width:30vw!important}
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{padding:0!important;gap:4px!important}
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh{font-size:clamp(13px,1vw,18px)!important}
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{font-size:clamp(12px,.9vw,16px)!important}
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture cite{margin-top:3px!important;font-size:clamp(11px,.75vw,13px)!important}
+
+
+
+
+
 html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-icon line{stroke:var(--ws-ink,#252525)!important}
 
 /* Romans 13:12: one viewport anchor in BOTH menu states; no position animation. */
 body.home .sites-home-nav--floating .ws-dawn-scripture,
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{
- position:fixed!important;top:30dvh!important;right:6vw!important;bottom:auto!important;left:auto!important;
- transform:none!important;transition:color .3s ease!important;max-width:30vw!important;
-}
+
 
 /* Menu typography must never intersect the original animated slogan. Reserve
    the top-left brand region; keep the scripture's shared viewport anchor. */
@@ -88,10 +85,7 @@ html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{
 
 /* Sevenfold geometry consumer — all adjustable values originate in Design OS. */
 body.home .sites-home-nav--floating .ws-dawn-scripture,
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{
- top:var(--ws-dawn-scripture-top,39dvh)!important;
- right:var(--ws-dawn-scripture-right,6vw)!important;
-}
+
 @media(min-width:901px){
  body.home .sites-home-nav--floating .sites-home-nav__panel-links{
   top:var(--ws-dawn-links-top,var(--ws-dawn-menu-min-top,25dvh))!important;
@@ -107,32 +101,35 @@ html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{
  body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(8){grid-column:2!important;grid-row:4!important}
 }
 
-/* One original Romans 13:12 element in both views: fixed right-hand diagonal.
-   No menu-specific font, color or layout changes; white is constant. */
-body.home .sites-home-nav--floating .ws-dawn-scripture,
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{
- top:var(--ws-dawn-scripture-open-top,39dvh)!important;
+
+/* Canonical Romans 13:12: one node, one type scale, one viewport anchor.
+   Open/closed states do not appear in any scripture selector. */
+body.home .sites-home-nav--floating .ws-dawn-scripture{
+ position:fixed!important;
+ top:var(--ws-dawn-scripture-top,39dvh)!important;
  right:var(--ws-dawn-scripture-right,6vw)!important;
- color:#fff!important;
- text-shadow:0 1px 12px rgba(0,0,0,.45)!important;
- max-width:37vw!important;
+ left:auto!important;bottom:auto!important;
+ width:max-content!important;max-width:37vw!important;
+ transform:none!important;transition:none!important;
+ color:#fff!important;text-shadow:0 1px 12px rgba(0,0,0,.45)!important;
+ z-index:2147483400!important;opacity:1!important;visibility:visible!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair,
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
- padding:0!important;gap:3px!important;
- color:inherit!important;
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ gap:3px!important;padding:0!important;margin:0!important;color:inherit!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh,
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh{
- font-size:clamp(19px,1.24vw,26px)!important;
- font-weight:200!important;letter-spacing:.1em!important;
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh{
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
+ font-size:clamp(19px,1.24vw,26px)!important;font-weight:200!important;
+ line-height:1.35!important;letter-spacing:.1em!important;color:inherit!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture,
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
- font-size:clamp(17px,1.1vw,23px)!important;
- font-weight:400!important;line-height:1.45!important;
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)!important;
+ font-size:clamp(17px,1.1vw,23px)!important;font-weight:400!important;
+ line-height:1.45!important;letter-spacing:.01em!important;color:inherit!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture cite,
-html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture cite{
- font-size:inherit!important;margin-top:clamp(8px,1.3vh,17px)!important;
+body.home .sites-home-nav--floating .ws-dawn-scripture cite{
+ display:block!important;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
+ font-size:inherit!important;font-style:italic!important;
+ margin-top:clamp(8px,1.3vh,17px)!important;color:inherit!important;
 }
