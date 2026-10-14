@@ -39,9 +39,9 @@ body.home .sites-home-nav--floating .ws-nav-hover-preview{position:absolute!impo
 /* Sevenfold layer repair: the menu toggle must remain above the full viewport plane. */
 html.ws-dawn-active body.home .sites-home-nav--floating .sites-home-nav__details>summary,body.home .sites-home-nav--floating .sites-home-nav__details>summary{position:fixed!important;top:clamp(12px,2vh,28px)!important;right:clamp(20px,3vw,52px)!important;left:auto!important;z-index:2147483640!important;opacity:1!important;visibility:visible!important;display:grid!important;place-items:center!important;transform:none!important}
 body.home .sites-home-nav--floating .ws-dawn-icon{display:block!important;visibility:visible!important;opacity:1!important}
-body.home .sites-home-nav--floating .ws-dawn-scripture{position:fixed!important;right:6vw!important;top:45dvh!important;bottom:auto!important;left:auto!important;z-index:2147483500!important;display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;max-width:37vw!important}
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{display:flex!important;flex-direction:column!important;opacity:1!important;visibility:visible!important}
-body.home .sites-home-nav--floating .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture){display:block!important;opacity:1!important;visibility:visible!important}
+body.home .ws-dawn-scripture{position:fixed!important;right:6vw!important;top:45dvh!important;bottom:auto!important;left:auto!important;z-index:2147483500!important;display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;max-width:37vw!important}
+body.home .ws-dawn-scripture .sites-home-scripture-pair{display:flex!important;flex-direction:column!important;opacity:1!important;visibility:visible!important}
+body.home .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture){display:block!important;opacity:1!important;visibility:visible!important}
 
 /* Single-plane layout: restore the original two-line editorial lockup. */
 body.home .ws-dawn-brand-plane .sites-home-intro{width:min(53vw,850px)!important;overflow:visible!important}
@@ -99,7 +99,7 @@ html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-icon line{strok
 
 /* Canonical Romans 13:12: one node, one type scale, one viewport anchor.
    Open/closed states do not appear in any scripture selector. */
-body.home .sites-home-nav--floating .ws-dawn-scripture{
+body.home .ws-dawn-scripture{
  position:fixed!important;
  top:var(--ws-dawn-scripture-top,39dvh)!important;
  right:var(--ws-dawn-scripture-right,6vw)!important;
@@ -109,26 +109,26 @@ body.home .sites-home-nav--floating .ws-dawn-scripture{
  color:#fff!important;text-shadow:0 1px 12px rgba(0,0,0,.45)!important;
  z-index:2147483400!important;opacity:1!important;visibility:visible!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
+body.home .ws-dawn-scripture .sites-home-scripture-pair{
  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
  gap:var(--ws-dawn-scripture-bilingual-gap,0px)!important;padding:0!important;margin:0!important;color:inherit!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh,
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
+body.home .ws-dawn-scripture .sites-home-slogan-zh,
+body.home .ws-dawn-scripture .sites-home-scripture{
  margin-block:0!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh{
+body.home .ws-dawn-scripture .sites-home-slogan-zh{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
  font-size:clamp(19px,1.24vw,26px)!important;font-weight:200!important;
  line-height:var(--ws-dawn-scripture-zh-line-height,1)!important;letter-spacing:.1em!important;color:inherit!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
+body.home .ws-dawn-scripture .sites-home-scripture{
  font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)!important;
  font-size:clamp(17px,1.1vw,23px)!important;font-weight:400!important;
  line-height:var(--ws-dawn-scripture-en-line-height,1.08)!important;letter-spacing:.01em!important;color:inherit!important;
  margin-top:calc(-1 * var(--ws-dawn-scripture-en-pullup,10px))!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture cite{
+body.home .ws-dawn-scripture cite{
  display:block!important;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
  font-size:inherit!important;font-style:italic!important;
  margin-top:var(--ws-dawn-scripture-cite-gap,3px)!important;margin-left:0!important;padding-left:var(--ws-dawn-scripture-cite-indent,2.5em)!important;box-sizing:border-box!important;color:inherit!important;
@@ -171,48 +171,74 @@ body.home .sites-home-nav--floating .ws-dawn-scripture cite{
 
 /* Design OS precision geometry: lock original scripture at accepted half-screen
    lower-right anchor; change only optical distance between language lines. */
-body.home .sites-home-nav--floating .ws-dawn-scripture{
+body.home .ws-dawn-scripture{
  top:var(--ws-dawn-scripture-top,39dvh)!important;
  right:var(--ws-dawn-scripture-right,6vw)!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
+body.home .ws-dawn-scripture .sites-home-scripture-pair{
  row-gap:var(--ws-dawn-scripture-bilingual-gap,5px)!important;gap:var(--ws-dawn-scripture-bilingual-gap,5px)!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture p.sites-home-slogan-zh{
+body.home .ws-dawn-scripture p.sites-home-slogan-zh{
  margin:0!important;padding:0!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture p.sites-home-scripture{
+body.home .ws-dawn-scripture p.sites-home-scripture{
  margin:0!important;
  padding:0!important;
 }
 
 /* Shared verse is positioned from the half-screen boundary, not its top.
    This leaves a stable OS-controlled inset even when type metrics change. */
-body.home .sites-home-nav--floating .ws-dawn-scripture{
+body.home .ws-dawn-scripture{
  top:auto!important;
  bottom:calc(50dvh + var(--ws-dawn-scripture-bottom-gap,3dvh))!important;
 }
 
 /* Shared scripture / centered editorial axis. One unchanged node in both views.
    Align Chinese, English and citation independently on the large logo center. */
-body.home .sites-home-nav--floating .ws-dawn-scripture{
+body.home .ws-dawn-scripture{
  left:50%!important;right:auto!important;
  width:var(--ws-dawn-scripture-center-width,min(90vw,850px))!important;
  max-width:90vw!important;
  transform:translateX(-50%)!important;
  text-align:center!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
+body.home .ws-dawn-scripture .sites-home-scripture-pair{
  display:flex!important;flex-direction:column!important;
  align-items:center!important;justify-content:center!important;
  width:100%!important;text-align:center!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture p.sites-home-slogan-zh,
-body.home .sites-home-nav--floating .ws-dawn-scripture p.sites-home-scripture{
+body.home .ws-dawn-scripture p.sites-home-slogan-zh,
+body.home .ws-dawn-scripture p.sites-home-scripture{
  width:100%!important;text-align:center!important;
 }
-body.home .sites-home-nav--floating .ws-dawn-scripture cite.ws-scripture-reference{
+body.home .ws-dawn-scripture cite.ws-scripture-reference{
  display:block!important;width:100%!important;
  margin-left:0!important;padding-left:0!important;
+ text-align:center!important;
+}
+
+/* Viewport-owned scripture: independent of nav transform, width and stacking. */
+body.home > .ws-dawn-scripture{
+ position:fixed!important;
+ left:50vw!important;right:auto!important;
+ top:auto!important;
+ bottom:calc(50dvh + var(--ws-dawn-scripture-bottom-gap,3dvh))!important;
+ width:var(--ws-dawn-scripture-center-width,min(90vw,850px))!important;
+ max-width:90vw!important;
+ transform:translate3d(-50%,0,0)!important;
+ text-align:center!important;
+ z-index:2147483500!important;
+}
+body.home > .ws-dawn-scripture .sites-home-scripture-pair{
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;
+ gap:var(--ws-dawn-scripture-bilingual-gap,12px)!important;
+ width:100%!important;padding:0!important;text-align:center!important;
+}
+body.home > .ws-dawn-scripture .sites-home-scripture-pair > p,
+body.home > .ws-dawn-scripture .sites-home-scripture-pair > p > cite{
+ display:block!important;width:100%!important;
+ box-sizing:border-box!important;
+ margin-left:0!important;margin-right:0!important;
+ padding-left:0!important;padding-right:0!important;
  text-align:center!important;
 }
