@@ -20,7 +20,7 @@ const output = [];
 try {
   for (const spec of config.pages) {
     for (const viewport of (spec.viewports || [{ width: 1440, height: 900 }])) {
-      const page = await browser.newPage({ viewport, deviceScaleFactor: 1, reducedMotion: 'reduce' });
+      const page = await browser.newPage({ viewport, deviceScaleFactor: 1, reducedMotion: spec.sevenfoldDawn ? 'no-preference' : 'reduce' });
       try {
         await page.goto(spec.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
         await page.evaluate(() => document.fonts.ready);
@@ -45,6 +45,7 @@ try {
           };
           const closed = await capture('closed');
           await summary.click();
+          for (const [label, delay] of [['opening-25',220],['opening-50',260],['opening-75',280]]) { await page.waitForTimeout(delay); await capture(label); }
           await page.waitForFunction(() => document.documentElement.classList.contains('ws-dawn-open'), null, {timeout:7000});
           const opened = await capture('open');
           if (opened.folds !== 7) { failures++; items.push({error:'sevenfold layers: expected 7, got '+opened.folds}); }
@@ -56,6 +57,8 @@ try {
           }
           if (await film.getAttribute('src') !== filmSrc) { failures++; items.push({error:'Film source changed during opening'}); }
           await summary.click();
+          await page.waitForTimeout(250);
+          await capture('closing');
           await page.waitForFunction(() => !document.documentElement.classList.contains('ws-dawn-active'), null, {timeout:7000});
           await capture('reversed');
           output.push({url:spec.url,viewport,sevenfoldFrames:frames});
