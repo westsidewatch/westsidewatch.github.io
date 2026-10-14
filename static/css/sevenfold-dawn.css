@@ -223,7 +223,7 @@ body.home > .ws-dawn-scripture{
  position:fixed!important;
  left:50vw!important;right:auto!important;
  top:auto!important;
- bottom:calc(50dvh + var(--ws-dawn-scripture-bottom-gap,3dvh))!important;
+ bottom:calc(50dvh + var(--ws-dawn-scripture-bottom-gap,0px) - var(--ws-dawn-scripture-downshift,38px))!important;
  width:var(--ws-dawn-scripture-center-width,min(90vw,850px))!important;
  max-width:90vw!important;
  transform:translate3d(-50%,0,0)!important;
