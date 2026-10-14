@@ -353,3 +353,10 @@ html.ws-dawn-active body.home .sites-home-nav--floating .sites-home-nav__panel-l
   color:inherit!important;
  }
 }
+
+/* Dawn Gold is the scripture color in both full-screen and half-screen states.
+   This changes color only; existing geometry and mobile menu flow are untouched. */
+body.home .ws-dawn-scripture,
+body.home .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture,.ws-scripture-reference){
+ color:var(--ws-first-light,#CEBD74)!important;
+}
