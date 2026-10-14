@@ -9,7 +9,7 @@ body.home .ws-dawn-brand-plane .sites-home-intro .sites-home-star{grid-column:1;
 body.home .ws-dawn-brand-plane .sites-home-intro h1{grid-column:1;grid-row:2;min-width:0;max-width:none;margin:0;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;font-size:var(--home-title-size,clamp(65px,6vw,124px))!important;font-weight:400!important;line-height:.89!important;letter-spacing:-.04em!important;text-wrap:nowrap!important;white-space:normal!important;font-synthesis:none!important}
 body.home .ws-dawn-brand-plane .sites-home-intro h1 em{font-family:inherit!important;font-weight:400!important;font-style:italic!important;white-space:nowrap!important;display:inline-block!important;padding-left:clamp(22px,2.5vw,55px)!important}
 body.home .ws-dawn-brand-plane .sites-home-intro .sites-home-scripture-pair{display:none!important}
-body.home .ws-dawn-large-logo{position:absolute;left:50%;top:var(--ws-dawn-large-top,127dvh);width:min(58vw,760px);transform:translateX(-50%);height:auto}
+body.home .ws-dawn-large-logo{position:absolute;left:50%;top:var(--ws-dawn-large-top,127dvh);width:var(--ws-dawn-large-logo-width,min(72vw,960px));transform:translateX(-50%);height:auto}
 body.home .ws-dawn-large-logo img{display:block;width:100%;height:auto;object-fit:contain}
 body.home .ws-dawn-scripture{position:fixed;right:6vw;top:45dvh;z-index:10030;max-width:37vw;pointer-events:none;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 body.home .ws-dawn-scripture .sites-home-scripture-pair{position:static!important;transform:none!important;margin:0!important;opacity:1!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:3px!important;padding:0 0 0 clamp(20px,2.5vw,55px)!important;border:0!important}
@@ -111,22 +111,22 @@ body.home .sites-home-nav--floating .ws-dawn-scripture{
 }
 body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
- gap:0!important;padding:0!important;margin:0!important;color:inherit!important;
+ gap:var(--ws-dawn-scripture-bilingual-gap,0px)!important;padding:0!important;margin:0!important;color:inherit!important;
 }
 body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
  font-size:clamp(19px,1.24vw,26px)!important;font-weight:200!important;
- line-height:1.1!important;letter-spacing:.1em!important;color:inherit!important;
+ line-height:var(--ws-dawn-scripture-zh-line-height,1)!important;letter-spacing:.1em!important;color:inherit!important;
 }
 body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
  font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)!important;
  font-size:clamp(17px,1.1vw,23px)!important;font-weight:400!important;
- line-height:1.15!important;letter-spacing:.01em!important;color:inherit!important;
+ line-height:var(--ws-dawn-scripture-en-line-height,1.08)!important;letter-spacing:.01em!important;color:inherit!important;
 }
 body.home .sites-home-nav--floating .ws-dawn-scripture cite{
  display:block!important;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
  font-size:inherit!important;font-style:italic!important;
- margin-top:3px!important;color:inherit!important;
+ margin-top:var(--ws-dawn-scripture-cite-gap,2px)!important;color:inherit!important;
 }
 
 /* Navigation row 4: SEARCH and 07 share an identical grid baseline. */
