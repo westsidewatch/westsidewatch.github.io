@@ -133,3 +133,20 @@ body.home .sites-home-nav--floating .ws-dawn-scripture cite{
  font-size:inherit!important;font-style:italic!important;
  margin-top:clamp(8px,1.3vh,17px)!important;color:inherit!important;
 }
+
+/* Navigation row 4: SEARCH and 07 share an identical grid baseline. */
+@media(min-width:901px){
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links{
+  grid-template-rows:repeat(4,minmax(0,var(--ws-dawn-menu-row-height,42px)))!important;
+  align-items:start!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(7),
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(8){
+  grid-row:4!important;
+  align-self:start!important;
+  margin:0!important;
+  padding:0!important;
+  line-height:1.1!important;
+  transform:translateY(0)!important;
+ }
+}
