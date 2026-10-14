@@ -1212,3 +1212,50 @@ body:has(> .chapter){margin:0;color:var(--ws-text,#252525);background:var(--ws-s
 .ws-editorial-brand-star{display:block;flex:none;width:clamp(20px,2vw,32px);height:clamp(20px,2vw,32px);object-fit:contain;align-self:center;opacity:.78}
 .editorial__meta .ws-editorial-brand-star,.chapter__masthead .ws-editorial-brand-star{margin-inline:auto}
 @media(max-width:600px){.ws-editorial-brand-star{width:20px;height:20px}}
+
+
+/* Seven distinct editorial compositions; shared tokens, distinct spatial grammar. */
+@media(min-width:901px){
+.editorial--church .editorial__spread{grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:1fr .34fr}
+.editorial--church .editorial__art{grid-column:1/span 7;grid-row:1/3}
+.editorial--church .editorial__headline{grid-column:8/span 5;grid-row:1;justify-content:center}
+.editorial--church .editorial__line{grid-column:8/span 2;grid-row:2}
+.editorial--church .editorial__panel{grid-column:10/span 3;grid-row:2;display:flex;flex-direction:column;align-items:start}
+.editorial--church .editorial__side{display:none}
+.editorial--magazine .editorial__spread{grid-template-rows:.3fr 1fr .24fr}
+.editorial--magazine .editorial__headline{grid-column:1/-1;grid-row:1;justify-content:end}
+.editorial--magazine .editorial__art{grid-column:4/span 6;grid-row:2}
+.editorial--magazine .editorial__line{grid-column:1/span 3;grid-row:2}
+.editorial--magazine .editorial__panel{grid-column:10/span 3;grid-row:2;flex-direction:column;align-items:start}
+.editorial--magazine .editorial__side{grid-column:1/-1;grid-row:3;flex-direction:row}
+.editorial--bible .editorial__spread{grid-template-rows:1fr .22fr}
+.editorial--bible .editorial__headline{grid-column:1/span 5;grid-row:1;justify-content:center}
+.editorial--bible .editorial__art{grid-column:6/span 7;grid-row:1/3}
+.editorial--bible .editorial__line{grid-column:1/span 2;grid-row:2}
+.editorial--bible .editorial__panel{grid-column:3/span 3;grid-row:2;flex-direction:column;align-items:start}
+.editorial--bible .editorial__side{display:none}
+.editorial--sermon .editorial__spread{grid-template-rows:1fr .18fr}
+.editorial--sermon .editorial__art{grid-column:1/-1;grid-row:1/3}
+.editorial--sermon .editorial__headline{grid-column:1/span 8;grid-row:1;z-index:1;padding:clamp(20px,3vw,48px);border:0;align-self:end}
+.editorial--sermon .editorial__line{grid-column:9/span 4;grid-row:1;z-index:1;padding:clamp(20px,3vw,48px);border:0}
+.editorial--sermon .editorial__panel{grid-column:1/span 9;grid-row:2;z-index:1;padding:12px 24px}
+.editorial--sermon .editorial__side{grid-column:10/span 3;grid-row:2;z-index:1;padding:12px}
+.editorial--book .editorial__spread{grid-template-rows:1fr .25fr}
+.editorial--book .editorial__art{grid-column:1/span 5;grid-row:1/3}
+.editorial--book .editorial__headline{grid-column:6/span 7;grid-row:1;justify-content:center}
+.editorial--book .editorial__line{grid-column:6/span 2;grid-row:2}
+.editorial--book .editorial__panel{grid-column:8/span 4;grid-row:2}
+.editorial--book .editorial__side{grid-column:12/span 1;grid-row:2;writing-mode:vertical-rl}
+.editorial--cinema .editorial__spread{grid-template-rows:.26fr 1fr .22fr}
+.editorial--cinema .editorial__headline{grid-column:1/span 9;grid-row:1}
+.editorial--cinema .editorial__art{grid-column:1/-1;grid-row:2;aspect-ratio:21/9}
+.editorial--cinema .editorial__line{grid-column:10/span 3;grid-row:1}
+.editorial--cinema .editorial__panel{grid-column:1/span 9;grid-row:3}
+.editorial--cinema .editorial__side{grid-column:10/span 3;grid-row:3}
+.editorial--life .editorial__spread{grid-template-rows:1fr .3fr}
+.editorial--life .editorial__headline{grid-column:1/span 6;grid-row:1;align-self:center;justify-content:center}
+.editorial--life .editorial__art{grid-column:7/span 6;grid-row:1;align-self:center;aspect-ratio:1}
+.editorial--life .editorial__line{grid-column:1/span 3;grid-row:2}
+.editorial--life .editorial__panel{grid-column:4/span 6;grid-row:2}
+.editorial--life .editorial__side{grid-column:10/span 3;grid-row:2}
+}
