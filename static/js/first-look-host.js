@@ -63,6 +63,15 @@
  menu?.addEventListener('toggle',syncScripturePlacement);
  window.addEventListener('resize',syncScripturePlacement,{passive:true});
  syncScripturePlacement();
+ // Align the slogan's top edge with the scripture's measured top edge on desktop.
+ const syncEditorialRow=()=>{
+  if(!plane||!scripture||mobileScriptureMedia.matches)return;
+  const top=scripture.getBoundingClientRect().top;
+  if(Number.isFinite(top))plane.style.setProperty('--ws-dawn-editorial-row-top',top+'px');
+ };
+ window.addEventListener('resize',syncEditorialRow,{passive:true});
+ document.fonts?.ready?.then(syncEditorialRow);
+ requestAnimationFrame(syncEditorialRow);
  const folds=panel?.querySelector('.ws-dawn-folds');
  const icon=summary?.querySelectorAll('.ws-dawn-stroke');
  const links=[...menu.querySelectorAll('.sites-home-nav__panel-links>a')];
