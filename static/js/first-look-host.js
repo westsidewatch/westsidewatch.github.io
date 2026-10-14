@@ -38,61 +38,33 @@
  const summary=menu?.querySelector('summary');
  const panel=menu?.querySelector('.sites-home-nav__panel');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
- /* Theodore (Codrops, MIT): adapted SVG Q-curve double wipe, GSAP timeline,
-    infinite background tiles and staggered menu reveal. Source:
-    https://github.com/codrops/Theodore/blob/main/src/js/index.js */
- const path=nav.querySelector('.ws-theodore-overlay__path');
- const overlay=nav.querySelector('.ws-theodore-overlay');
+ /* Scale Down Reveal: clicking CONTENTS shrinks the homepage and exposes the
+    full-screen editorial directory; closing restores the homepage in reverse. */
  const links=[...menu.querySelectorAll('.sites-home-nav__panel-links>a')];
  const entries=[...menu.querySelectorAll('.sites-home-nav__panel-entries>a')];
- const previewStage=menu.querySelector('.ws-nav-hover-preview');
- const gsap=window.gsap;
- let animating=false,activeTimeline=null;
- const shapes={
-  closedBottom:'M 0 100 V 100 Q 50 100 100 100 V 100 z',
-  bowUp:'M 0 100 V 50 Q 50 0 100 50 V 100 z',
-  fullBottom:'M 0 100 V 0 Q 50 0 100 0 V 100 z',
-  fullTop:'M 0 0 V 100 Q 50 100 100 100 V 0 z',
-  bowDown:'M 0 0 V 50 Q 50 0 100 50 V 0 z',
-  closedTop:'M 0 0 V 0 Q 50 0 100 0 V 0 z',
-  closeBow:'M 0 0 V 50 Q 50 100 100 50 V 0 z',
-  closeFull:'M 0 0 V 100 Q 50 100 100 100 V 0 z',
-  reverseFull:'M 0 100 V 0 Q 50 0 100 0 V 100 z',
-  reverseBow:'M 0 100 V 50 Q 50 100 100 50 V 100 z'
- };
- const setOverlay=(d)=>path?.setAttribute('d',d);
+ let animating=false,finishTimer=null;
+ const root=document.documentElement;
+ const finish=()=>{clearTimeout(finishTimer);finishTimer=null;animating=false;};
  const openCurtain=()=>{
   if(animating||menu.open)return;
-  if(reduced.matches||!gsap||!path){menu.open=true;return;}
-  animating=true;nav.classList.add('is-theodore-transition');overlay.classList.add('is-animating');
-  activeTimeline=gsap.timeline({onComplete:()=>{animating=false;overlay.classList.remove('is-animating');nav.classList.remove('is-theodore-transition');activeTimeline=null;}});
-  activeTimeline
-   .set(path,{attr:{d:shapes.closedBottom}})
-   .to(path,{duration:.8,ease:'power4.in',attr:{d:shapes.bowUp}},0)
-   .to(path,{duration:.3,ease:'power2',attr:{d:shapes.fullBottom},onComplete:()=>{menu.open=true;}},.8)
-   .set([...links,...entries,previewStage],{opacity:0})
-   .set(path,{attr:{d:shapes.fullTop}})
-   .to(path,{duration:.3,ease:'power2.in',attr:{d:shapes.bowDown}})
-   .to(path,{duration:.8,ease:'power4',attr:{d:shapes.closedTop}})
-   .fromTo(links,{y:150,opacity:0},{duration:1.1,ease:'power4.out',y:0,opacity:1,stagger:.05},'>-=1.1')
-   .fromTo(entries,{y:80,opacity:0},{duration:.85,ease:'power4.out',y:0,opacity:1,stagger:.06},'<+.15')
-   .fromTo(previewStage,{x:60,opacity:0},{duration:.85,ease:'power3.out',x:0,opacity:1},'<');
+  animating=true;
+  menu.open=true;
+  root.classList.add('ws-scale-reveal-active');
+  nav.dataset.navHidden='false';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   root.classList.add('ws-scale-reveal-open');
+   finishTimer=setTimeout(finish,reduced.matches?0:1050);
+  }));
  };
  const closeCurtain=()=>{
   if(animating||!menu.open)return;
-  if(reduced.matches||!gsap||!path){menu.open=false;return;}
-  animating=true;nav.classList.add('is-theodore-transition');overlay.classList.add('is-animating');
-  activeTimeline=gsap.timeline({onComplete:()=>{animating=false;overlay.classList.remove('is-animating');nav.classList.remove('is-theodore-transition');activeTimeline=null;}});
-  activeTimeline
-   .set(path,{attr:{d:shapes.closedTop}})
-   .to(path,{duration:.8,ease:'power4.in',attr:{d:shapes.closeBow}},0)
-   .to(path,{duration:.3,ease:'power2',attr:{d:shapes.closeFull},onComplete:()=>{menu.open=false;}},.8)
-   .to(links,{duration:.8,ease:'power2.in',y:100,opacity:0,stagger:-.05},0)
-   .to(entries,{duration:.6,ease:'power2.in',y:70,opacity:0,stagger:-.05},0)
-   .to(previewStage,{duration:.5,ease:'power2.in',x:60,opacity:0},0)
-   .set(path,{attr:{d:shapes.reverseFull}})
-   .to(path,{duration:.3,ease:'power2.in',attr:{d:shapes.reverseBow}})
-   .to(path,{duration:.8,ease:'power4.out',attr:{d:shapes.closedBottom}});
+  animating=true;
+  root.classList.remove('ws-scale-reveal-open');
+  finishTimer=setTimeout(()=>{
+   menu.open=false;
+   root.classList.remove('ws-scale-reveal-active');
+   finish();
+  },reduced.matches?0:900);
  };
  summary?.addEventListener('click',event=>{
   event.preventDefault();
@@ -106,7 +78,7 @@
  });
  menu?.addEventListener('pointerleave',clearPreview);
  menu?.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))clearPreview()});
- menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',event=>{const hash=a.getAttribute('href');menu.open=false;nav.dataset.navHidden='false';if(hash?.startsWith('#')){const target=document.getElementById(hash.slice(1));if(target){event.preventDefault();history.pushState(null,'',hash);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}}}));
+ menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',event=>{const hash=a.getAttribute('href');menu.open=false;root.classList.remove('ws-scale-reveal-active','ws-scale-reveal-open');finish();nav.dataset.navHidden='false';if(hash?.startsWith('#')){const target=document.getElementById(hash.slice(1));if(target){event.preventDefault();history.pushState(null,'',hash);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}}}));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu?.open){closeCurtain();menu.querySelector('summary')?.focus()}});
  document.addEventListener('pointerdown',e=>{if(menu?.open&&!menu.contains(e.target))closeCurtain()});
  update();
