@@ -54,3 +54,14 @@ html.ws-dawn-active body.home .ws-dawn-brand-plane{z-index:2147483300!important}
 html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{top:27dvh!important;z-index:2147483400!important;color:var(--ws-ink,#252525)!important}
 html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{color:inherit!important}
 body.home .sites-home-nav--floating .ws-dawn-icon line{stroke-width:1!important}
+
+/* Half-screen correction: place the SAME slogan above the fold, with its Design OS typography intact. */
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-intro{opacity:1!important;visibility:visible!important;z-index:4!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-intro h1{color:var(--ws-ink,#252525)!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-star{filter:brightness(0)!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{top:33dvh!important;right:6vw!important;max-width:30vw!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{padding:0!important;gap:4px!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh{font-size:clamp(13px,1vw,18px)!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{font-size:clamp(12px,.9vw,16px)!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture cite{margin-top:3px!important;font-size:clamp(11px,.75vw,13px)!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-icon line{stroke:var(--ws-ink,#252525)!important}
