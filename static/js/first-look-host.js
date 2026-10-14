@@ -64,6 +64,7 @@
   // Align slogan top-left in open state; large-logo alignment is verified separately.
   const rect=slogan.getBoundingClientRect();
   const current=Number(window.gsap?.getProperty(plane,'y'))||0;
+  // Keep the slogan visible in the upper half after the menu reveals.
   const shift=Math.min(0,window.innerHeight*.07-(rect.top-current));
   // Align the large logo to the centre of the visible lower Film half after translation.
   // This is one static plane geometry variable, not an independent animated transform.
@@ -87,8 +88,8 @@
   timeline.to(links,{opacity:1,y:0,duration:.4,stagger:.04,ease:'power2.out'},.6);
   if(icon?.length===3){
    timeline.to(icon[0],{attr:{x1:15,y1:3,x2:15,y2:27},duration:.5},.18);
-   timeline.to(icon[1],{attr:{x1:6,y1:11,x2:24,y2:11},duration:.5},.18);
-   timeline.to(icon[2],{attr:{x1:15,y1:11,x2:15,y2:11},opacity:0,duration:.3},.18);
+   timeline.to(icon[1],{attr:{x1:3,y1:15,x2:27,y2:15},duration:.5},.18);
+   timeline.to(icon[2],{attr:{x1:15,y1:15,x2:15,y2:15},opacity:0,duration:.3},.18);
   }
   return true;
  };
