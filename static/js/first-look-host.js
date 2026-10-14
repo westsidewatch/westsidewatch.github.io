@@ -54,6 +54,8 @@
  const icon=summary?.querySelectorAll('.ws-dawn-stroke');
  const links=[...menu.querySelectorAll('.sites-home-nav__panel-links>a')];
  const colors=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'];
+ const logoImage=largeLogo?.querySelector('img');
+ const logoNames=['water','first-light','pale-gold','olive','harvest','crimson','daylight-mauve'];
  let timeline=null,opened=false,lastColor=-1,closing=false;
  const makeFolds=()=>{
   folds.replaceChildren();
@@ -61,6 +63,8 @@
   for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
   if(order[order.length-1]===lastColor){const j=order.findIndex(n=>n!==lastColor);[order[j],order[order.length-1]]=[order[order.length-1],order[j]];}
   lastColor=order[order.length-1];
+  // The final curtain color selects the matching canonical SVG variant.
+  if(logoImage)logoImage.src='/images/sevenfold/westside-watch-logo-'+logoNames[lastColor]+'.svg';
   order.forEach(i=>{const layer=document.createElement('div');layer.className='ws-dawn-fold';layer.style.setProperty('--fold-color','var('+colors[i]+')');folds.append(layer)});
  };
  const layout=()=>{
