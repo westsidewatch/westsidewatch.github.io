@@ -72,3 +72,16 @@ html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{
  position:fixed!important;top:30dvh!important;right:6vw!important;bottom:auto!important;left:auto!important;
  transform:none!important;transition:color .3s ease!important;max-width:30vw!important;
 }
+
+/* Menu typography must never intersect the original animated slogan. Reserve
+   the top-left brand region; keep the scripture's shared viewport anchor. */
+@media(min-width:901px){
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links{
+  top:24dvh!important;left:6vw!important;
+  max-height:24dvh!important;row-gap:0!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a{
+  font-size:clamp(16px,1.65vw,28px)!important;
+  line-height:1.1!important;padding:0!important;
+ }
+}
