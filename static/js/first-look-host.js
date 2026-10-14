@@ -36,15 +36,34 @@
  const previewSources={church:'/first-look-editorial/church.html',magazine:'/first-look-editorial/magazine.html',bible:'/first-look-editorial/bible.html',sermon:'/first-look-editorial/sermon.html',book:'/first-look-editorial/book.html',cinema:'/first-look-editorial/cinema.html',life:'/first-look-editorial/life.html'};
  let previewKey='';
  const summary=menu?.querySelector('summary');
- let closeTimer=null;
- const closeCurtain=()=>{
+ const panel=menu?.querySelector('.sites-home-nav__panel');
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+ let activeReveal=null;
+ const revealShape=()=>{const r=summary?.getBoundingClientRect();const x=r?Math.round(r.left+r.width/2):window.innerWidth-65;const y=r?Math.round(r.top+r.height/2):35;return {small:'circle(0px at '+x+'px '+y+'px)',large:'circle(150vmax at '+x+'px '+y+'px)'};};
+ const animateReveal=(opening)=>{
+  if(!panel)return Promise.resolve();
+  activeReveal?.cancel();activeReveal=null;
+  if(reduced.matches||!panel.animate)return Promise.resolve();
+  const shape=revealShape();
+  const frames=opening?[{clipPath:shape.small,opacity:1},{clipPath:shape.large,opacity:1}]:[{clipPath:shape.large,opacity:1},{clipPath:shape.small,opacity:1}];
+  const anim=panel.animate(frames,{duration:opening?850:650,easing:'cubic-bezier(.76,0,.24,1)',fill:'forwards'});
+  activeReveal=anim;
+  return anim.finished.catch(()=>{}).then(()=>{if(activeReveal===anim){anim.cancel();activeReveal=null}});
+ };
+ const closeCurtain=async()=>{
   if(!menu?.open||menu.classList.contains('is-closing'))return;
   menu.classList.add('is-closing');
-  const finish=()=>{menu.open=false;menu.classList.remove('is-closing');closeTimer=null};
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)finish();
-  else closeTimer=window.setTimeout(finish,680);
+  await animateReveal(false);
+  menu.open=false;
+  menu.classList.remove('is-closing');
  };
- summary?.addEventListener('click',event=>{if(menu.open){event.preventDefault();closeCurtain()}else if(closeTimer){clearTimeout(closeTimer);closeTimer=null;menu.classList.remove('is-closing')}});
+ summary?.addEventListener('click',event=>{
+  event.preventDefault();
+  if(menu.open){closeCurtain();return;}
+  menu.open=true;
+  menu.classList.remove('is-closing');
+  requestAnimationFrame(()=>animateReveal(true));
+ });
  const showPreview=(link)=>{const match=link.getAttribute('href')?.match(/^#first-look-(church|magazine|bible|sermon|book|cinema|life)$/);if(!match||!previewFrame)return;const key=match[1];if(key!==previewKey){previewKey=key;previewFrame.src=previewSources[key];}if(previewCaption)previewCaption.textContent=link.textContent.trim();preview?.classList.add('is-visible');};
  const clearPreview=()=>{preview?.classList.remove('is-visible')};
  menu?.querySelectorAll('.sites-home-nav__panel-links>a').forEach(link=>{
