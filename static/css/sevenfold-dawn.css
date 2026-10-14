@@ -192,3 +192,27 @@ body.home .sites-home-nav--floating .ws-dawn-scripture{
  top:auto!important;
  bottom:calc(50dvh + var(--ws-dawn-scripture-bottom-gap,3dvh))!important;
 }
+
+/* Shared scripture / centered editorial axis. One unchanged node in both views.
+   Align Chinese, English and citation independently on the large logo center. */
+body.home .sites-home-nav--floating .ws-dawn-scripture{
+ left:50%!important;right:auto!important;
+ width:var(--ws-dawn-scripture-center-width,min(90vw,850px))!important;
+ max-width:90vw!important;
+ transform:translateX(-50%)!important;
+ text-align:center!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
+ display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;
+ width:100%!important;text-align:center!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture p.sites-home-slogan-zh,
+body.home .sites-home-nav--floating .ws-dawn-scripture p.sites-home-scripture{
+ width:100%!important;text-align:center!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture cite.ws-scripture-reference{
+ display:block!important;width:100%!important;
+ margin-left:0!important;padding-left:0!important;
+ text-align:center!important;
+}
