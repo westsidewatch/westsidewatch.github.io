@@ -1207,3 +1207,8 @@ body:has(> .chapter){margin:0;color:var(--ws-text,#252525);background:var(--ws-s
 .tile__placeholder{position:absolute;inset:0;display:block;background:linear-gradient(135deg,var(--ws-material,#eee4c9),var(--ws-surface,#faf9f5));}
 .tile__placeholder::after{content:"";position:absolute;inset:12%;border:1px solid currentColor;opacity:.13}
 .chapter--watch .tile:nth-child(2n) .tile__placeholder,.chapter--walk .tile:nth-child(2n+1) .tile__placeholder{background:linear-gradient(30deg,var(--ws-surface,#faf9f5),var(--ws-material,#eee4c9))}
+
+/* Phase 03 — verified Westside Watch brand asset, shared by all nine First Look spreads. */
+.ws-editorial-brand-star{display:block;flex:none;width:clamp(20px,2vw,32px);height:clamp(20px,2vw,32px);object-fit:contain;align-self:center;opacity:.78}
+.editorial__meta .ws-editorial-brand-star,.chapter__masthead .ws-editorial-brand-star{margin-inline:auto}
+@media(max-width:600px){.ws-editorial-brand-star{width:20px;height:20px}}
