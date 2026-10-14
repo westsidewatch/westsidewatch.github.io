@@ -38,36 +38,66 @@
  const summary=menu?.querySelector('summary');
  const panel=menu?.querySelector('.sites-home-nav__panel');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
- /* Scale Down Reveal: clicking CONTENTS shrinks the homepage and exposes the
-    full-screen editorial directory; closing restores the homepage in reverse. */
- const links=[...menu.querySelectorAll('.sites-home-nav__panel-links>a')];
- const entries=[...menu.querySelectorAll('.sites-home-nav__panel-entries>a')];
- let animating=false,finishTimer=null;
+ /* Joby study: one reversible WAAPI timeline coordinates four planes,
+    panel clip reveal and staggered lines. Independent implementation; upstream
+    source and assets are not copied. Production backup stays on main. */
  const root=document.documentElement;
- const finish=()=>{clearTimeout(finishTimer);finishTimer=null;animating=false;};
+ const planes=[...nav.querySelectorAll('.ws-joby-layers i')];
+ const intro=panel?.querySelector('.sites-home-nav__panel-intro');
+ const links=[...panel.querySelectorAll('.sites-home-nav__panel-links>a')];
+ const entries=[...panel.querySelectorAll('.sites-home-nav__panel-entries>a')];
+ let sequence=null,animating=false;
+ const timing={duration:1850,easing:'linear',fill:'both'};
+ const frames=(from,to,start,end)=>[
+  {offset:0,transform:from},{offset:start,transform:from},
+  {offset:end,transform:to},{offset:1,transform:to}
+ ];
+ const makeTimeline=()=>{
+  const anim=[];
+  const add=(el,keyframes)=>{if(el)anim.push(el.animate(keyframes,{...timing}));};
+  planes.forEach((el,i)=>add(el,frames('scaleY(0)','scaleY(1)',i*.065,.43+i*.065)));
+  if(panel)add(panel,[
+   {offset:0,clipPath:'inset(0 0 100% 0)',opacity:1},
+   {offset:.18,clipPath:'inset(0 0 100% 0)',opacity:1},
+   {offset:.66,clipPath:'inset(0 0 0% 0)',opacity:1},
+   {offset:1,clipPath:'inset(0 0 0% 0)',opacity:1}
+  ]);
+  const textElements=[intro,...links,...entries].filter(Boolean);
+  textElements.forEach((el,i)=>{
+   const start=Math.min(.48+i*.028,.77),end=Math.min(start+.16,.97);
+   add(el,[
+    {offset:0,transform:'translateY(110%)',opacity:0},
+    {offset:start,transform:'translateY(110%)',opacity:0},
+    {offset:end,transform:'translateY(0%)',opacity:1},
+    {offset:1,transform:'translateY(0%)',opacity:1}
+   ]);
+  });
+  anim.forEach(a=>a.pause());
+  return anim;
+ };
+ const reset=()=>{sequence?.forEach(a=>a.cancel());sequence=null;animating=false;};
+ const settleClosed=()=>{menu.open=false;root.classList.remove('ws-joby-active','ws-joby-open');reset();};
  const openCurtain=()=>{
   if(animating||menu.open)return;
-  animating=true;
-  menu.open=true;
-  root.classList.add('ws-scale-reveal-active');
-  nav.dataset.navHidden='false';
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-   root.classList.add('ws-scale-reveal-open');
-   finishTimer=setTimeout(finish,reduced.matches?0:1050);
-  }));
+  menu.open=true;nav.dataset.navHidden='false';root.classList.add('ws-joby-active');
+  if(reduced.matches||!Element.prototype.animate){root.classList.add('ws-joby-open');return;}
+  animating=true;sequence=makeTimeline();
+  root.classList.add('ws-joby-open');
+  sequence.forEach(a=>a.play());
+  Promise.all(sequence.map(a=>a.finished.catch(()=>null))).then(()=>{animating=false;});
  };
  const closeCurtain=()=>{
-  if(animating||!menu.open)return;
+  if(!menu.open)return;
+  if(reduced.matches||!sequence){settleClosed();return;}
   animating=true;
-  root.classList.remove('ws-scale-reveal-open');
-  finishTimer=setTimeout(()=>{
-   menu.open=false;
-   root.classList.remove('ws-scale-reveal-active');
-   finish();
-  },reduced.matches?0:900);
+  sequence.forEach(a=>{a.reverse();});
+  Promise.all(sequence.map(a=>a.finished.catch(()=>null))).then(()=>{
+   if(!menu.open)return;settleClosed();
+  });
  };
  summary?.addEventListener('click',event=>{
   event.preventDefault();
+  if(animating)return;
   if(menu.open)closeCurtain();else openCurtain();
  });
  const showPreview=(link)=>{const match=link.getAttribute('href')?.match(/^#first-look-(church|magazine|bible|sermon|book|cinema|life)$/);if(!match||!previewFrame)return;const key=match[1];if(key!==previewKey){previewKey=key;previewFrame.src=previewSources[key];}if(previewCaption)previewCaption.textContent=link.textContent.trim();preview?.classList.add('is-visible');};
@@ -78,7 +108,7 @@
  });
  menu?.addEventListener('pointerleave',clearPreview);
  menu?.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))clearPreview()});
- menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',event=>{const hash=a.getAttribute('href');menu.open=false;root.classList.remove('ws-scale-reveal-active','ws-scale-reveal-open');finish();nav.dataset.navHidden='false';if(hash?.startsWith('#')){const target=document.getElementById(hash.slice(1));if(target){event.preventDefault();history.pushState(null,'',hash);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}}}));
+ menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',event=>{const hash=a.getAttribute('href');menu.open=false;root.classList.remove('ws-joby-active','ws-joby-open');reset();nav.dataset.navHidden='false';if(hash?.startsWith('#')){const target=document.getElementById(hash.slice(1));if(target){event.preventDefault();history.pushState(null,'',hash);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}}}));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu?.open){closeCurtain();menu.querySelector('summary')?.focus()}});
  document.addEventListener('pointerdown',e=>{if(menu?.open&&!menu.contains(e.target))closeCurtain()});
  update();
