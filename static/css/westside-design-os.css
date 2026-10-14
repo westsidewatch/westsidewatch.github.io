@@ -1172,7 +1172,7 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
 @media(max-width:900px){.chapter{min-height:100svh;padding:22px 20px}.chapter__spread{max-height:none;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:auto}.chapter--watch .tile,.chapter--walk .tile{grid-column:auto;grid-row:auto}.tile__media{aspect-ratio:4/3}.tile:nth-child(1),.tile:nth-child(8){grid-column:1/-1}.tile:nth-child(1) .tile__media,.tile:nth-child(8) .tile__media{aspect-ratio:16/9}.chapter__heading{align-items:start;flex-direction:column}.chapter__title{font-size:var(--ws-type-scale-title-md)}}
 @media(min-width:901px) and (max-height:680px){.chapter{gap:12px;padding-top:14px;padding-bottom:14px}.chapter__spread{max-height:calc(100svh - 155px)}.tile__caption{padding-top:4px}.tile__title{font-size:var(--ws-type-scale-ui)}}
 
-/* First Look editorial signature — visible magazine composition, not uniform product cards. */
+/* First Look chapter editorial signature */
 .chapter{position:relative;isolation:isolate;background:var(--ws-surface,#faf9f5)}
 .chapter::before{content:"";position:absolute;inset:0 0 auto;height:clamp(7px,1vw,15px);background:var(--ws-text,#252525);opacity:.9}
 .chapter__masthead{border-bottom:1px solid currentColor;padding-top:clamp(12px,1.2vw,22px);text-transform:uppercase}
