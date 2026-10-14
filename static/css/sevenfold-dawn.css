@@ -42,3 +42,15 @@ body.home .sites-home-nav--floating .ws-dawn-icon{display:block!important;visibi
 body.home .sites-home-nav--floating .ws-dawn-scripture{position:fixed!important;right:6vw!important;top:45dvh!important;bottom:auto!important;left:auto!important;z-index:2147483500!important;display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;max-width:37vw!important}
 body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{display:flex!important;flex-direction:column!important;opacity:1!important;visibility:visible!important}
 body.home .sites-home-nav--floating .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture){display:block!important;opacity:1!important;visibility:visible!important}
+
+/* Single-plane layout: restore the original two-line editorial lockup. */
+body.home .ws-dawn-brand-plane .sites-home-intro{width:min(53vw,850px)!important;overflow:visible!important}
+body.home .ws-dawn-brand-plane .sites-home-intro h1{display:block!important;width:max-content!important;max-width:none!important;min-width:0!important;white-space:nowrap!important;overflow-wrap:normal!important;word-break:normal!important;text-wrap:nowrap!important}
+body.home .ws-dawn-brand-plane .sites-home-intro h1 em{display:inline-block!important;white-space:nowrap!important}
+body.home .ws-dawn-brand-plane .sites-home-star{display:block!important;position:static!important;grid-column:1!important;grid-row:1!important;width:clamp(16px,1.2vw,23px)!important;max-width:23px!important;height:auto!important;max-height:30px!important;min-width:0!important;min-height:0!important;transform:none!important;object-fit:contain!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-intro{color:var(--ws-ink,#252525)!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-star{filter:brightness(0)!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane{z-index:2147483300!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{top:27dvh!important;z-index:2147483400!important;color:var(--ws-ink,#252525)!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{color:inherit!important}
+body.home .sites-home-nav--floating .ws-dawn-icon line{stroke-width:1!important}
