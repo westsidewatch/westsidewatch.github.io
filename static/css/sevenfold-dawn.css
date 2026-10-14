@@ -360,3 +360,12 @@ body.home .ws-dawn-scripture,
 body.home .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture,.ws-scripture-reference){
  color:var(--ws-first-light,#CEBD74)!important;
 }
+
+/* Full-screen four-corner composition: the slogan bottom shares the
+   scripture citation baseline. Half-screen keeps its existing measured row. */
+@media(min-width:701px) and (min-height:571px){
+ html:not(.ws-dawn-active) body.home .ws-dawn-brand-plane .sites-home-intro{
+  top:auto!important;
+  bottom:clamp(28px,5dvh,72px)!important;
+ }
+}
