@@ -253,3 +253,36 @@ body.home > .ws-dawn-scripture .sites-home-scripture{
 body.home > .ws-dawn-scripture cite.ws-scripture-reference{
  font-size:var(--ws-type-scripture-reference-size)!important;
 }
+
+/* Mobile menu: scripture participates in the scrollable single-column navigation
+   rather than covering the links at the desktop viewport anchor. */
+@media(max-width:700px),(max-height:570px){
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links{
+  overflow-y:auto!important;
+  align-content:start!important;
+  padding-bottom:8dvh!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links > .ws-dawn-scripture{
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  width:100%!important;max-width:100%!important;
+  margin:clamp(28px,5dvh,60px) 0 0!important;
+  padding:0!important;transform:none!important;
+  z-index:auto!important;grid-column:1/-1!important;
+  color:var(--ws-ink,#252525)!important;
+  text-shadow:none!important;
+  pointer-events:none!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links > .ws-dawn-scripture .sites-home-scripture-pair{
+  align-items:center!important;gap:12px!important;padding:0!important;text-align:center!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links > .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture){
+  font-size:var(--ws-type-scale-reading-lg)!important;
+  width:100%!important;text-align:center!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links > .ws-dawn-scripture cite.ws-scripture-reference{
+  font-size:var(--ws-type-scripture-reference-size)!important;
+  width:100%!important;padding:0!important;text-align:center!important;
+ }
+}
