@@ -1455,6 +1455,21 @@ html.ws-scale-reveal-open .sites-home-nav__panel-entries>a{transition-delay:.65s
  }
 }
 
+/* Joby: JS owns the reversible animation timeline, avoiding competing CSS
+   transitions and CSS !important overrides of clip-path / text movement. */
+html.ws-joby-active .ws-joby-layers i{transition:none!important}
+html.ws-joby-active .sites-home-nav--floating details[open] .sites-home-nav__panel{
+ clip-path:inset(0 0 100% 0)!important;transition:none!important;
+ opacity:1!important;transform:none!important;pointer-events:none!important}
+html.ws-joby-open .sites-home-nav--floating details[open] .sites-home-nav__panel{
+ clip-path:inset(0 0 0 0)!important;opacity:1!important;pointer-events:auto!important}
+html.ws-joby-active .sites-home-nav__panel-links>a,
+html.ws-joby-active .sites-home-nav__panel-entries>a{
+ transition:none!important}
+html.ws-joby-open .sites-home-nav__panel-links>a,
+html.ws-joby-open .sites-home-nav__panel-entries>a{
+ transition:none!important;transition-delay:0s!important}
+html.ws-joby-open .sites-home-nav__panel-intro{animation:none!important}
 /* Joby-inspired menu experiment — independent implementation, no upstream code
    copied. Four editorial planes with staggered growth and reversible timing.
    Production Scale Down Reveal remains unchanged on main as fallback. */
