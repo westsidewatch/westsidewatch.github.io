@@ -286,3 +286,11 @@ body.home > .ws-dawn-scripture cite.ws-scripture-reference{
   width:100%!important;padding:0!important;text-align:center!important;
  }
 }
+
+/* Portal containment: homepage brand and scripture must not bleed into later pages. */
+body.home.ws-dawn-hero-outside .ws-dawn-brand-plane,
+body.home.ws-dawn-hero-outside > .ws-dawn-scripture{
+ visibility:hidden!important;
+ opacity:0!important;
+ pointer-events:none!important;
+}
