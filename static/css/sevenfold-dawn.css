@@ -1,0 +1,27 @@
+/* Sevenfold Dawn: homepage-only authority; loaded after Design OS. */
+body.home .sites-home-hero{position:relative;isolation:isolate;overflow:hidden}
+body.home .sites-home-hero>.sites-home-nav,body.home .sites-home-entry{display:none!important}
+body.home .sites-home-film{z-index:0!important}
+body.home .ws-dawn-brand-plane{position:absolute;inset:0;z-index:5;pointer-events:none;will-change:transform}
+body.home .ws-dawn-brand-plane .sites-home-masthead{position:absolute!important;left:5vw!important;top:16vh!important;width:clamp(180px,28vw,480px)!important;transform:none!important}
+body.home .ws-dawn-brand-plane .sites-home-intro{position:absolute!important;left:6vw!important;top:42vh!important;transform:none!important}
+body.home .ws-dawn-brand-plane .sites-home-intro .sites-home-scripture-pair{display:none!important}
+body.home .ws-dawn-large-logo{position:absolute;left:50%;top:calc(100dvh + 27dvh);width:min(58vw,760px);transform:translateX(-50%);height:auto}
+body.home .ws-dawn-large-logo img{display:block;width:100%;height:auto;object-fit:contain}
+body.home .ws-dawn-scripture{position:fixed;right:6vw;top:45dvh;z-index:10015;max-width:37vw;pointer-events:none;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+body.home .ws-dawn-scripture .sites-home-scripture-pair{position:static!important;transform:none!important;margin:0!important;opacity:1!important}
+body.home .sites-home-nav--floating .sites-home-nav__brand,body.home .sites-home-nav--floating .sites-home-nav__menu-label,body.home .sites-home-nav__panel-intro,body.home .sites-home-nav__panel-entries{display:none!important}
+body.home .sites-home-nav--floating{z-index:10020!important}
+body.home .sites-home-nav--floating summary{position:relative;z-index:10025!important;display:grid!important;place-items:center!important;width:50px;height:50px;cursor:pointer}
+body.home .ws-dawn-icon{display:block;width:30px;height:30px;overflow:visible}
+body.home .ws-dawn-icon line{stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke}
+body.home .sites-home-nav--floating .sites-home-nav__panel{inset:0 0 auto 0!important;height:50dvh!important;min-height:0!important;max-height:none!important;overflow:hidden!important;padding:5vh 6vw!important;display:block!important;clip-path:none!important;transition:none!important;visibility:hidden;opacity:1!important;background:transparent!important;pointer-events:none!important;color:var(--ws-ink,#252525)!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .sites-home-nav__panel{visibility:visible!important;pointer-events:auto!important}
+body.home .ws-dawn-folds{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+body.home .ws-dawn-fold{position:absolute;inset:0;background:var(--fold-color);transform:scaleY(0);transform-origin:top}
+body.home .sites-home-nav--floating .sites-home-nav__panel-links{position:absolute!important;z-index:2;left:6vw;top:9vh;width:48vw!important;max-height:37dvh!important;overflow:auto!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:1vh 2vw!important}
+body.home .sites-home-nav--floating .sites-home-nav__panel-links>a{font-size:clamp(17px,2vw,34px)!important;line-height:1.08!important;opacity:0;transform:translateY(20px);transition:none!important}
+body.home .sites-home-nav--floating .ws-nav-hover-preview{position:absolute!important;right:6vw;top:8vh;width:32vw;max-height:31dvh;z-index:2}
+html.ws-dawn-open body.home .ws-dawn-scripture{color:var(--ws-ink,#252525);text-shadow:none}
+@media(max-width:700px),(max-height:570px){body.home .sites-home-nav--floating .sites-home-nav__panel{height:100dvh!important}body.home .sites-home-nav--floating .sites-home-nav__panel-links{top:14vh;left:7vw;width:86vw!important;max-height:70dvh!important;grid-template-columns:1fr!important}body.home .sites-home-nav--floating .ws-nav-hover-preview{display:none!important}body.home .ws-dawn-scripture{right:6vw;top:46dvh;max-width:55vw}body.home .ws-dawn-large-logo{width:75vw}}
+@media(prefers-reduced-motion:reduce){body.home .ws-dawn-brand-plane,body.home .ws-dawn-fold{will-change:auto}}
