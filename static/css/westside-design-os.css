@@ -1344,3 +1344,48 @@ body:has(> .chapter){margin:0;color:var(--ws-text,#252525);background:var(--ws-s
  .editorial--church .editorial__en,.editorial--sermon .editorial__en,.editorial--cinema .editorial__en{font-size:clamp(38px,7.5vw,70px)}
  .editorial__chapter{font-size:clamp(48px,12vw,95px)}
 }
+
+
+/* Phase 03 editorial correction: etching is an image-led tonal substrate, not
+   a grid of mechanically repeated strokes. Branch colors remain OS-owned.
+   The corpus engraving is optional until a verified artwork is available. */
+.editorial{background:var(--ws-surface);isolation:isolate}
+.editorial::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background-image:var(--ws-engraving-image,none),radial-gradient(ellipse at var(--ws-light-x,72%) var(--ws-light-y,18%),color-mix(in oklab,var(--ws-branch) 7%,transparent),transparent 64%);
+ background-size:cover,cover;background-position:center;opacity:var(--ws-engraving-opacity,.11);mix-blend-mode:multiply}
+.editorial>*{position:relative;z-index:1}
+.editorial__art{background:color-mix(in oklab,var(--ws-branch) 5%,var(--ws-surface))}
+.editorial__art::before,.editorial__art::after{content:none!important;display:none!important}
+.chapter{--ws-branch:var(--ws-first-light);background:var(--ws-surface);isolation:isolate}
+.chapter--walk{--ws-branch:var(--ws-water)}
+.chapter::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+ background-image:var(--ws-engraving-image,none),radial-gradient(ellipse at 72% 24%,color-mix(in oklab,var(--ws-branch) 9%,transparent),transparent 68%);
+ background-position:center;background-size:cover;opacity:var(--ws-engraving-opacity,.10);mix-blend-mode:multiply}
+.chapter>*{position:relative;z-index:1}
+.chapter__heading::before{pointer-events:none}
+/* Content hierarchy: one lead story, one supporting feature, six readable
+   departments. No arbitrary per-card padding or overlapping rectangles. */
+@media(min-width:901px){
+ .chapter__spread{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:minmax(0,1fr) minmax(0,1fr);gap:clamp(14px,1.7vw,30px);max-height:calc(100svh - 270px);min-height:350px}
+ .chapter--watch .tile:nth-child(1){grid-column:1/span 6;grid-row:1}
+ .chapter--watch .tile:nth-child(2){grid-column:7/span 3;grid-row:1}
+ .chapter--watch .tile:nth-child(3){grid-column:10/span 3;grid-row:1}
+ .chapter--watch .tile:nth-child(4){grid-column:1/span 2;grid-row:2}
+ .chapter--watch .tile:nth-child(5){grid-column:3/span 2;grid-row:2}
+ .chapter--watch .tile:nth-child(6){grid-column:5/span 2;grid-row:2}
+ .chapter--watch .tile:nth-child(7){grid-column:7/span 3;grid-row:2}
+ .chapter--watch .tile:nth-child(8){grid-column:10/span 3;grid-row:2}
+ .chapter--walk .tile:nth-child(1){grid-column:1/span 6;grid-row:1}
+ .chapter--walk .tile:nth-child(2){grid-column:7/span 3;grid-row:1}
+ .chapter--walk .tile:nth-child(3){grid-column:10/span 3;grid-row:1}
+ .chapter--walk .tile:nth-child(4){grid-column:1/span 2;grid-row:2}
+ .chapter--walk .tile:nth-child(5){grid-column:3/span 4;grid-row:2}
+ .chapter--walk .tile:nth-child(6){grid-column:7/span 2;grid-row:2}
+ .chapter--walk .tile:nth-child(7){grid-column:9/span 2;grid-row:2}
+ .chapter--walk .tile:nth-child(8){grid-column:11/span 2;grid-row:2}
+ .chapter--watch .tile:nth-child(4),.chapter--watch .tile:nth-child(6),.chapter--walk .tile:nth-child(3),.chapter--walk .tile:nth-child(5){padding:0}
+ .chapter--watch .tile:nth-child(1) .tile__media,.chapter--walk .tile:nth-child(1) .tile__media{outline:1px solid var(--ws-line);outline-offset:5px}
+ .chapter--watch .tile:nth-child(1) .tile__title,.chapter--walk .tile:nth-child(1) .tile__title{font-size:var(--ws-type-scale-title-md)}
+}
+.tile__placeholder{background:color-mix(in oklab,var(--ws-branch) 5%,var(--ws-surface))}
+.tile__placeholder::before,.tile__placeholder::after{content:none!important;display:none!important}
