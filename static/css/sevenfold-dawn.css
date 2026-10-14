@@ -4,8 +4,9 @@ body.home .sites-home-hero>.sites-home-nav,body.home .sites-home-entry{display:n
 body.home .sites-home-film{z-index:0!important}
 body.home .ws-dawn-brand-plane{position:fixed;inset:0;z-index:10031;pointer-events:none;will-change:transform}
 body.home .ws-dawn-brand-plane .sites-home-masthead{position:absolute!important;left:5vw!important;top:3dvh!important;width:clamp(180px,28vw,480px)!important;transform:none!important}
-body.home .ws-dawn-brand-plane .sites-home-intro{position:absolute!important;left:6vw!important;top:42vh!important;width:auto!important;max-width:none!important;transform:none!important}
-body.home .ws-dawn-brand-plane .sites-home-intro h1{width:max-content!important;max-width:none!important;white-space:normal!important;writing-mode:horizontal-tb!important;overflow:visible!important}
+body.home .ws-dawn-brand-plane .sites-home-intro{position:absolute!important;left:var(--home-edge,4vw)!important;right:auto!important;top:auto!important;bottom:clamp(170px,22vh,235px)!important;width:min(53vw,850px)!important;max-width:none!important;transform:none!important}
+body.home .ws-dawn-brand-plane .sites-home-intro h1{font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;font-size:var(--home-title-size,clamp(65px,6vw,124px))!important;font-weight:400!important;line-height:.89!important;letter-spacing:-.04em!important;text-wrap:nowrap!important;white-space:normal!important;font-synthesis:none!important}
+body.home .ws-dawn-brand-plane .sites-home-intro h1 em{font-family:inherit!important;font-weight:400!important;font-style:italic!important}
 body.home .ws-dawn-brand-plane .sites-home-intro .sites-home-scripture-pair{display:none!important}
 body.home .ws-dawn-large-logo{position:absolute;left:50%;top:var(--ws-dawn-large-top,127dvh);width:min(58vw,760px);transform:translateX(-50%);height:auto}
 body.home .ws-dawn-large-logo img{display:block;width:100%;height:auto;object-fit:contain}
@@ -30,3 +31,10 @@ body.home .sites-home-nav--floating .ws-nav-hover-preview{position:absolute!impo
 html.ws-dawn-active body.home .ws-dawn-scripture{color:var(--ws-ink,#252525);text-shadow:none}
 @media(max-width:700px),(max-height:570px){body.home .sites-home-nav--floating .sites-home-nav__panel{height:100dvh!important}body.home .sites-home-nav--floating .sites-home-nav__panel-links{top:22dvh;left:7vw;width:86vw!important;max-height:70dvh!important;grid-template-columns:1fr!important}body.home .sites-home-nav--floating .ws-nav-hover-preview{display:none!important}body.home .ws-dawn-scripture{right:6vw;top:46dvh;max-width:55vw}html.ws-dawn-active body.home .ws-dawn-scripture{color:var(--ws-ink,#252525)}body.home .ws-dawn-large-logo{width:75vw}body.home .ws-dawn-panel-slogan{top:8dvh;left:7vw;font-size:clamp(24px,6vw,40px)}}
 @media(prefers-reduced-motion:reduce){body.home .ws-dawn-brand-plane,body.home .ws-dawn-fold{will-change:auto}}
+
+/* Sevenfold layer repair: the menu toggle must remain above the full viewport plane. */
+html.ws-dawn-active body.home .sites-home-nav--floating .sites-home-nav__details>summary,body.home .sites-home-nav--floating .sites-home-nav__details>summary{position:fixed!important;top:clamp(12px,2vh,28px)!important;right:clamp(20px,3vw,52px)!important;left:auto!important;z-index:2147483640!important;opacity:1!important;visibility:visible!important;display:grid!important;place-items:center!important;transform:none!important}
+body.home .sites-home-nav--floating .ws-dawn-icon{display:block!important;visibility:visible!important;opacity:1!important}
+body.home .sites-home-nav--floating .ws-dawn-scripture{position:fixed!important;right:6vw!important;top:45dvh!important;bottom:auto!important;left:auto!important;z-index:2147483500!important;display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;max-width:37vw!important}
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{display:flex!important;flex-direction:column!important;opacity:1!important;visibility:visible!important}
+body.home .sites-home-nav--floating .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture){display:block!important;opacity:1!important;visibility:visible!important}
