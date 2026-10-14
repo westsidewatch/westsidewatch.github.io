@@ -1413,7 +1413,7 @@ html.ws-home-menu-open{overflow:hidden}
  z-index:2147483003!important;pointer-events:none!important;visibility:hidden;opacity:0}
 .ws-theodore-overlay.is-animating{visibility:visible;opacity:1}
 .ws-theodore-overlay__path{fill:var(--ws-surface,#faf9f5)}
-.ws-theodore-tiles{position:absolute;inset:-20vh -20vw;overflow:hidden;z-index:-1;opacity:.13;
+.ws-theodore-tiles{position:absolute;inset:-20vh -20vw;overflow:hidden;z-index:0;opacity:.13;
  transform:rotate(-12deg);pointer-events:none}
 .ws-theodore-tiles__line{display:flex;width:max-content;gap:3vw;margin:3vw 0;
  animation:ws-theodore-runner 22s linear infinite alternate}
@@ -1425,3 +1425,8 @@ html.ws-home-menu-open{overflow:hidden}
 .ws-theodore-tiles__line i:nth-child(3n+2){background-image:url('/images/westside-watch-morning-star.svg')}
 @keyframes ws-theodore-runner{from{transform:translateX(10vw)}to{transform:translateX(-45vw)}}
 @media(prefers-reduced-motion:reduce){.ws-theodore-tiles__line{animation:none!important}}
+
+.sites-home-nav__panel>.sites-home-nav__panel-intro,
+.sites-home-nav__panel>.sites-home-nav__panel-links,
+.sites-home-nav__panel>.ws-nav-hover-preview,
+.sites-home-nav__panel>.sites-home-nav__panel-entries{position:relative;z-index:1}
