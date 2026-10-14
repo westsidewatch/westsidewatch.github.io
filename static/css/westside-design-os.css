@@ -1372,3 +1372,17 @@ body:has(> .chapter){margin:0;color:var(--ws-text,#252525);background:var(--ws-s
 
 html.ws-home-menu-open{overflow:hidden}
 .sites-home-nav--floating details[open] .sites-home-nav__panel{pointer-events:auto}
+
+
+/* In-place edition stage: reveal the selected realm over the current hero,
+   never scroll the page or navigate to a separate realm route. */
+html.ws-home-stage-open{overflow:hidden}
+.ws-home-stage{position:fixed;inset:0;z-index:10010;background:var(--ws-surface,#faf9f5);color:var(--ws-text,#252525);display:flex;flex-direction:column;visibility:hidden;pointer-events:none;clip-path:inset(100% 0 0 0);transition:clip-path .75s cubic-bezier(.77,0,.18,1),visibility 0s .75s}
+.ws-home-stage.is-active{visibility:visible;pointer-events:auto;clip-path:inset(0);transition:clip-path .75s cubic-bezier(.77,0,.18,1)}
+.ws-home-stage__top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:clamp(14px,2vw,30px) clamp(20px,4vw,65px);border-bottom:1px solid color-mix(in oklab,var(--ws-text) 22%,transparent)}
+.ws-home-stage__brand,.ws-home-stage__close{font-family:var(--ws-type-display-en-sc);font-weight:400;letter-spacing:.14em;font-size:clamp(12px,1vw,16px)}
+.ws-home-stage__close{appearance:none;border:0;background:none;color:inherit;cursor:pointer;padding:12px}
+.ws-home-stage__close:focus-visible{outline:2px solid currentColor}
+.ws-home-stage__body{flex:1;min-height:0}
+.ws-home-stage__frame{display:block;width:100%;height:100%;border:0;background:var(--ws-surface,#faf9f5)}
+@media(prefers-reduced-motion:reduce){.ws-home-stage{transition:none!important}}
