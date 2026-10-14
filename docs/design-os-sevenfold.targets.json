@@ -1,0 +1,35 @@
+{
+  "report": "design-os-sevenfold-report.json",
+  "pages": [
+    {
+      "url": "https://feature-sevenfold-dawn-navig.westsidewatch-github-io.pages.dev/",
+      "sevenfoldDawn": true,
+      "screenshotDir": "design-os-screenshots",
+      "viewports": [
+        {
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "width": 390,
+          "height": 844
+        },
+        {
+          "width": 3840,
+          "height": 2160
+        }
+      ],
+      "targets": [
+        {
+          "selector": ".sites-home-hero"
+        },
+        {
+          "selector": ".ws-dawn-brand-plane"
+        },
+        {
+          "selector": ".ws-dawn-scripture"
+        }
+      ]
+    }
+  ]
+}

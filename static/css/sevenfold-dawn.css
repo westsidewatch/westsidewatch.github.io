@@ -1,0 +1,245 @@
+/* Sevenfold Dawn: homepage-only authority; loaded after Design OS. */
+body.home .sites-home-hero{position:relative;isolation:isolate;overflow:hidden}
+body.home .sites-home-hero>.sites-home-nav,body.home .sites-home-entry{display:none!important}
+body.home .sites-home-film{z-index:0!important}
+body.home .ws-dawn-brand-plane{position:fixed;inset:0;z-index:10031;pointer-events:none;will-change:transform;--home-title-size:clamp(65px,6vw,124px);--home-edge:clamp(30px,4vw,88px)}
+body.home .ws-dawn-brand-plane .sites-home-masthead{position:absolute!important;left:5vw!important;top:3dvh!important;width:clamp(180px,28vw,480px)!important;transform:none!important}
+body.home .ws-dawn-brand-plane .sites-home-intro{position:absolute!important;left:var(--home-edge,4vw)!important;right:auto!important;top:auto!important;bottom:clamp(170px,22vh,235px)!important;width:min(53vw,850px)!important;max-width:none!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;align-items:end!important;justify-items:start!important;text-align:left!important;transform:none!important}
+body.home .ws-dawn-brand-plane .sites-home-intro .sites-home-star{grid-column:1;grid-row:1;width:clamp(16px,1.2vw,23px);height:auto;margin:0 0 clamp(12px,1.5vh,21px)}
+body.home .ws-dawn-brand-plane .sites-home-intro h1{grid-column:1;grid-row:2;min-width:0;max-width:none;margin:0;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;font-size:var(--home-title-size,clamp(65px,6vw,124px))!important;font-weight:400!important;line-height:.89!important;letter-spacing:-.04em!important;text-wrap:nowrap!important;white-space:normal!important;font-synthesis:none!important}
+body.home .ws-dawn-brand-plane .sites-home-intro h1 em{font-family:inherit!important;font-weight:400!important;font-style:italic!important;white-space:nowrap!important;display:inline-block!important;padding-left:clamp(22px,2.5vw,55px)!important}
+body.home .ws-dawn-brand-plane .sites-home-intro .sites-home-scripture-pair{display:none!important}
+body.home .ws-dawn-large-logo{position:absolute;left:50%;top:var(--ws-dawn-large-top,127dvh);width:var(--ws-dawn-large-logo-width,min(72vw,960px));transform:translateX(-50%);height:auto}
+body.home .ws-dawn-large-logo img{display:block;width:100%;height:auto;object-fit:contain}
+body.home .ws-dawn-scripture{position:fixed;right:6vw;top:45dvh;z-index:10030;max-width:37vw;pointer-events:none;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+body.home .ws-dawn-scripture .sites-home-scripture-pair{position:static!important;transform:none!important;margin:0!important;opacity:1!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:3px!important;padding:0 0 0 clamp(20px,2.5vw,55px)!important;border:0!important}
+body.home .ws-dawn-scripture .sites-home-slogan-zh{font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;font-size:clamp(19px,1.24vw,26px)!important;font-weight:200!important;letter-spacing:.1em!important}
+body.home .ws-dawn-scripture .sites-home-scripture{font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)!important;font-size:clamp(17px,1.1vw,23px)!important;font-weight:400!important;letter-spacing:.01em!important;line-height:1.45!important}
+body.home .ws-dawn-scripture cite{font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;font-style:italic!important;display:block!important;margin-top:clamp(8px,1.3vh,17px)!important}
+body.home .sites-home-nav--floating .sites-home-nav__brand,body.home .sites-home-nav--floating .sites-home-nav__menu-label,body.home .sites-home-nav__panel-intro,body.home .sites-home-nav__panel-entries{display:none!important}
+body.home .sites-home-nav--floating{z-index:2147483000!important}
+body.home .sites-home-nav--floating summary{position:relative;z-index:10025!important;display:grid!important;place-items:center!important;width:50px;height:50px;cursor:pointer}
+body.home .ws-dawn-icon{display:block;width:30px;height:30px;overflow:visible}
+body.home .ws-dawn-icon line{stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke}
+/* Half-screen menu is pale: force the cross above its curtain, not white on white. */
+html.ws-dawn-active body.home .sites-home-nav--floating{color:var(--ws-ink,#252525)!important;visibility:visible!important;opacity:1!important;transform:none!important}
+html.ws-dawn-active body.home .sites-home-nav--floating summary{color:var(--ws-ink,#252525)!important;z-index:10040!important}
+html.ws-dawn-active body.home .ws-dawn-icon line{stroke:var(--ws-ink,#252525)!important}
+body.home .sites-home-nav--floating .sites-home-nav__panel{inset:0 0 auto 0!important;height:50dvh!important;min-height:0!important;max-height:none!important;overflow:hidden!important;padding:5vh 6vw!important;display:block!important;clip-path:none!important;transition:none!important;visibility:hidden;opacity:1!important;background:transparent!important;pointer-events:none!important;color:var(--ws-ink,#252525)!important}
+html.ws-dawn-active body.home .sites-home-nav--floating .sites-home-nav__panel{visibility:visible!important;pointer-events:auto!important}
+body.home .ws-dawn-folds{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+body.home .ws-dawn-fold{position:absolute;inset:0;background:var(--fold-color);transform:scaleY(0);transform-origin:top}
+body.home .sites-home-nav--floating .sites-home-nav__panel-links{position:absolute!important;z-index:2;left:6vw;top:15dvh;width:48vw!important;max-height:37dvh!important;overflow:auto!important;display:grid!important;grid-template-columns:var(--ws-dawn-menu-first-column,16vw) minmax(0,1fr)!important;gap:1vh 2vw!important}
+body.home .sites-home-nav--floating .sites-home-nav__panel-links>a{font-size:clamp(17px,2vw,34px)!important;line-height:1.08!important;opacity:0;transform:translateY(20px);transition:none!important}
+body.home .sites-home-nav--floating .ws-nav-hover-preview{position:absolute!important;right:6vw;top:8vh;width:32vw;max-height:31dvh;z-index:2}
+
+@media(max-width:700px),(max-height:570px){body.home .sites-home-nav--floating .sites-home-nav__panel{height:100dvh!important}body.home .sites-home-nav--floating .sites-home-nav__panel-links{top:22dvh;left:7vw;width:86vw!important;max-height:70dvh!important;grid-template-columns:1fr!important}body.home .sites-home-nav--floating .ws-nav-hover-preview{display:none!important}body.home .ws-dawn-scripture{right:6vw;top:46dvh;max-width:55vw}body.home .ws-dawn-large-logo{width:75vw}body.home .ws-dawn-panel-slogan{top:8dvh;left:7vw;font-size:clamp(24px,6vw,40px)}}
+@media(prefers-reduced-motion:reduce){body.home .ws-dawn-brand-plane,body.home .ws-dawn-fold{will-change:auto}}
+
+/* Sevenfold layer repair: the menu toggle must remain above the full viewport plane. */
+html.ws-dawn-active body.home .sites-home-nav--floating .sites-home-nav__details>summary,body.home .sites-home-nav--floating .sites-home-nav__details>summary{position:fixed!important;top:clamp(12px,2vh,28px)!important;right:clamp(20px,3vw,52px)!important;left:auto!important;z-index:2147483640!important;opacity:1!important;visibility:visible!important;display:grid!important;place-items:center!important;transform:none!important}
+body.home .sites-home-nav--floating .ws-dawn-icon{display:block!important;visibility:visible!important;opacity:1!important}
+body.home .ws-dawn-scripture{position:fixed!important;right:6vw!important;top:45dvh!important;bottom:auto!important;left:auto!important;z-index:2147483500!important;display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;max-width:37vw!important}
+body.home .ws-dawn-scripture .sites-home-scripture-pair{display:flex!important;flex-direction:column!important;opacity:1!important;visibility:visible!important}
+body.home .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture){display:block!important;opacity:1!important;visibility:visible!important}
+
+/* Single-plane layout: restore the original two-line editorial lockup. */
+body.home .ws-dawn-brand-plane .sites-home-intro{width:min(53vw,850px)!important;overflow:visible!important}
+body.home .ws-dawn-brand-plane .sites-home-intro h1{display:block!important;width:max-content!important;max-width:none!important;min-width:0!important;white-space:nowrap!important;overflow-wrap:normal!important;word-break:normal!important;text-wrap:nowrap!important}
+body.home .ws-dawn-brand-plane .sites-home-intro h1 em{display:inline-block!important;white-space:nowrap!important}
+body.home .ws-dawn-brand-plane .sites-home-star{display:block!important;position:static!important;grid-column:1!important;grid-row:1!important;width:clamp(16px,1.2vw,23px)!important;max-width:23px!important;height:auto!important;max-height:30px!important;min-width:0!important;min-height:0!important;transform:none!important;object-fit:contain!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-intro{color:var(--ws-ink,#252525)!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-star{filter:brightness(0)!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane{z-index:2147483300!important}
+
+
+body.home .sites-home-nav--floating .ws-dawn-icon line{stroke-width:1!important}
+
+/* Half-screen correction: place the SAME slogan above the fold, with its Design OS typography intact. */
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-intro{opacity:1!important;visibility:visible!important;z-index:4!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-intro h1{color:var(--ws-ink,#252525)!important}
+html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-star{filter:brightness(0)!important}
+
+
+
+
+
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-icon line{stroke:var(--ws-ink,#252525)!important}
+
+/* Romans 13:12: one viewport anchor in BOTH menu states; no position animation. */
+/* Menu typography must never intersect the original animated slogan. Reserve
+   the top-left brand region; keep the scripture's shared viewport anchor. */
+@media(min-width:901px){
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links{
+  top:24dvh!important;left:6vw!important;
+  max-height:24dvh!important;row-gap:0!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a{
+  font-size:clamp(16px,1.65vw,28px)!important;
+  line-height:1.1!important;padding:0!important;
+ }
+}
+
+/* Sevenfold geometry consumer — all adjustable values originate in Design OS. */
+@media(min-width:901px){
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links{
+  top:var(--ws-dawn-links-top,var(--ws-dawn-menu-min-top,25dvh))!important;
+  width:var(--ws-dawn-menu-grid-width,40vw)!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-template-rows:repeat(4,var(--ws-dawn-menu-row-height,42px))!important;
+  grid-auto-flow:row!important;
+  align-content:start!important;
+  row-gap:0!important;
+  overflow:visible!important;
+  max-height:none!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(7){grid-column:1!important;grid-row:4!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(8){grid-column:2!important;grid-row:4!important}
+}
+
+
+/* Canonical Romans 13:12: one node, one type scale, one viewport anchor.
+   Open/closed states do not appear in any scripture selector. */
+body.home .ws-dawn-scripture{
+ position:fixed!important;
+ top:var(--ws-dawn-scripture-top,39dvh)!important;
+ right:var(--ws-dawn-scripture-right,6vw)!important;
+ left:auto!important;bottom:auto!important;
+ width:max-content!important;max-width:37vw!important;
+ transform:none!important;transition:none!important;
+ color:#fff!important;text-shadow:0 1px 12px rgba(0,0,0,.45)!important;
+ z-index:2147483400!important;opacity:1!important;visibility:visible!important;
+}
+body.home .ws-dawn-scripture .sites-home-scripture-pair{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ gap:var(--ws-dawn-scripture-bilingual-gap,0px)!important;padding:0!important;margin:0!important;color:inherit!important;
+}
+body.home .ws-dawn-scripture .sites-home-slogan-zh,
+body.home .ws-dawn-scripture .sites-home-scripture{
+ margin-block:0!important;
+}
+body.home .ws-dawn-scripture .sites-home-slogan-zh{
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
+ font-size:clamp(19px,1.24vw,26px)!important;font-weight:200!important;
+ line-height:var(--ws-dawn-scripture-zh-line-height,1)!important;letter-spacing:.1em!important;color:inherit!important;
+}
+body.home .ws-dawn-scripture .sites-home-scripture{
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)!important;
+ font-size:clamp(17px,1.1vw,23px)!important;font-weight:400!important;
+ line-height:var(--ws-dawn-scripture-en-line-height,1.08)!important;letter-spacing:.01em!important;color:inherit!important;
+ margin-top:calc(-1 * var(--ws-dawn-scripture-en-pullup,10px))!important;
+}
+body.home .ws-dawn-scripture cite{
+ display:block!important;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
+ font-size:inherit!important;font-style:italic!important;
+ margin-top:var(--ws-dawn-scripture-cite-gap,3px)!important;margin-left:0!important;padding-left:var(--ws-dawn-scripture-cite-indent,2.5em)!important;box-sizing:border-box!important;color:inherit!important;
+}
+
+/* Navigation row 4: SEARCH and 07 share an identical grid baseline. */
+@media(min-width:901px){
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links{
+  grid-template-rows:repeat(4,minmax(0,var(--ws-dawn-menu-row-height,42px)))!important;
+  align-items:start!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(7),
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(8){
+  grid-row:4!important;
+  align-self:start!important;
+  margin:0!important;
+  padding:0!important;
+  line-height:1.1!important;
+  transform:translateY(0)!important;
+ }
+}
+
+/* OS-governed fixed row placement: both columns use identical baselines. */
+@media(min-width:901px){
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-template-rows:repeat(4,var(--ws-dawn-menu-row-height,42px))!important;
+  grid-auto-flow:row!important;align-items:start!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(1){grid-area:1/1!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(2){grid-area:1/2!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(3){grid-area:2/1!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(4){grid-area:2/2!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(5){grid-area:3/1!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(6){grid-area:3/2!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(7){grid-area:4/1!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(8){grid-area:4/2!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a{margin:0!important;padding:0!important;align-self:start!important;line-height:1.1!important;font-size:clamp(16px,1.65vw,28px)!important}
+}
+
+/* Design OS precision geometry: lock original scripture at accepted half-screen
+   lower-right anchor; change only optical distance between language lines. */
+body.home .ws-dawn-scripture{
+ top:var(--ws-dawn-scripture-top,39dvh)!important;
+ right:var(--ws-dawn-scripture-right,6vw)!important;
+}
+body.home .ws-dawn-scripture .sites-home-scripture-pair{
+ row-gap:var(--ws-dawn-scripture-bilingual-gap,5px)!important;gap:var(--ws-dawn-scripture-bilingual-gap,5px)!important;
+}
+body.home .ws-dawn-scripture p.sites-home-slogan-zh{
+ margin:0!important;padding:0!important;
+}
+body.home .ws-dawn-scripture p.sites-home-scripture{
+ margin:0!important;
+ padding:0!important;
+}
+
+/* Shared verse is positioned from the half-screen boundary, not its top.
+   This leaves a stable OS-controlled inset even when type metrics change. */
+body.home .ws-dawn-scripture{
+ top:auto!important;
+ bottom:calc(50dvh + var(--ws-dawn-scripture-bottom-gap,3dvh))!important;
+}
+
+/* Shared scripture / centered editorial axis. One unchanged node in both views.
+   Align Chinese, English and citation independently on the large logo center. */
+body.home .ws-dawn-scripture{
+ left:50%!important;right:auto!important;
+ width:var(--ws-dawn-scripture-center-width,min(90vw,850px))!important;
+ max-width:90vw!important;
+ transform:translateX(-50%)!important;
+ text-align:center!important;
+}
+body.home .ws-dawn-scripture .sites-home-scripture-pair{
+ display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;
+ width:100%!important;text-align:center!important;
+}
+body.home .ws-dawn-scripture p.sites-home-slogan-zh,
+body.home .ws-dawn-scripture p.sites-home-scripture{
+ width:100%!important;text-align:center!important;
+}
+body.home .ws-dawn-scripture cite.ws-scripture-reference{
+ display:block!important;width:100%!important;
+ margin-left:0!important;padding-left:0!important;
+ text-align:center!important;
+}
+
+/* Viewport-owned scripture: independent of nav transform, width and stacking. */
+body.home > .ws-dawn-scripture{
+ position:fixed!important;
+ left:50vw!important;right:auto!important;
+ top:auto!important;
+ bottom:calc(50dvh + var(--ws-dawn-scripture-bottom-gap,0px))!important;
+ width:var(--ws-dawn-scripture-center-width,min(90vw,850px))!important;
+ max-width:90vw!important;
+ transform:translate3d(-50%,0,0)!important;
+ text-align:center!important;
+ z-index:2147483500!important;
+}
+body.home > .ws-dawn-scripture .sites-home-scripture-pair{
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;
+ gap:var(--ws-dawn-scripture-bilingual-gap,12px)!important;
+ width:100%!important;padding:0!important;text-align:center!important;
+}
+body.home > .ws-dawn-scripture .sites-home-scripture-pair > p,
+body.home > .ws-dawn-scripture .sites-home-scripture-pair > p > cite{
+ display:block!important;width:100%!important;
+ box-sizing:border-box!important;
+ margin-left:0!important;margin-right:0!important;
+ padding-left:0!important;padding-right:0!important;
+ text-align:center!important;
+}

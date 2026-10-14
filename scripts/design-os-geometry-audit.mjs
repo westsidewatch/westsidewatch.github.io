@@ -7,6 +7,7 @@
  */
 import fs from 'node:fs/promises';
 import process from 'node:process';
+import path from 'node:path';
 
 const file = process.argv[2];
 if (!file) { console.error('Usage: node scripts/design-os-geometry-audit.mjs <targets.json>'); process.exit(2); }
@@ -19,12 +20,50 @@ const output = [];
 try {
   for (const spec of config.pages) {
     for (const viewport of (spec.viewports || [{ width: 1440, height: 900 }])) {
-      const page = await browser.newPage({ viewport, deviceScaleFactor: 1, reducedMotion: 'reduce' });
+      const page = await browser.newPage({ viewport, deviceScaleFactor: 1, reducedMotion: spec.sevenfoldDawn ? 'no-preference' : 'reduce' });
       try {
         await page.goto(spec.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
         await page.evaluate(() => document.fonts.ready);
         if (spec.waitFor) await page.locator(spec.waitFor).waitFor({ state: 'visible' });
         const items = [];
+        if (spec.sevenfoldDawn) {
+          const summary = page.locator('.sites-home-nav--floating summary');
+          const film = page.locator('.sites-home-film iframe');
+          const filmSrc = await film.getAttribute('src');
+          await film.evaluate(el => { el.dataset.wsAuditIdentity = 'original-film-node'; });
+          const frames = [];
+          const screenshotDir = spec.screenshotDir || 'design-os-screenshots';
+          await fs.mkdir(screenshotDir, { recursive: true });
+          const capture = async (state) => {
+            const sample = await page.evaluate(() => {
+              const box = selector => { const el = document.querySelector(selector); if (!el) return null; const r = el.getBoundingClientRect(); return { x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom }; };
+              return { logo:box('.ws-dawn-large-logo'), scripture:box('.ws-dawn-scripture'), panel:box('.sites-home-nav--floating .sites-home-nav__panel'), folds:document.querySelectorAll('.ws-dawn-fold').length, open:document.documentElement.classList.contains('ws-dawn-open') };
+            });
+            const name = `dawn-${viewport.width}x${viewport.height}-${state}.png`;
+            await page.screenshot({ path:path.join(screenshotDir,name), fullPage:false });
+            frames.push({state,...sample,screenshot:name});
+            return sample;
+          };
+          const closed = await capture('closed');
+          await summary.click();
+          for (const [label, delay] of [['opening-25',220],['opening-50',260],['opening-75',280]]) { await page.waitForTimeout(delay); await capture(label); }
+          await page.waitForFunction(() => document.documentElement.classList.contains('ws-dawn-open'), null, {timeout:7000});
+          const opened = await capture('open');
+          if (opened.folds !== 7) { failures++; items.push({error:'sevenfold layers: expected 7, got '+opened.folds}); }
+          if (!opened.logo || !opened.scripture || !opened.panel) { failures++; items.push({error:'missing dawn geometry'}); }
+          else {
+            const center = opened.logo.y + opened.logo.height/2;
+            if (Math.abs(center - viewport.height*.75) > 18) { failures++; items.push({error:'logo lower-half center mismatch',center,expected:viewport.height*.75}); }
+            if (Math.abs(opened.scripture.y-closed.scripture.y)>3) { failures++; items.push({error:'scripture moved on menu open'}); }
+          }
+          if (await film.getAttribute('src') !== filmSrc || await film.getAttribute('data-ws-audit-identity') !== 'original-film-node') { failures++; items.push({error:'Film source or iframe node changed during opening'}); }
+          await summary.click();
+          await page.waitForTimeout(250);
+          await capture('closing');
+          await page.waitForFunction(() => !document.documentElement.classList.contains('ws-dawn-active'), null, {timeout:7000});
+          await capture('reversed');
+          output.push({url:spec.url,viewport,sevenfoldFrames:frames});
+        }
         for (const target of spec.targets || []) {
           const locator = page.locator(target.selector);
           const count = await locator.count();

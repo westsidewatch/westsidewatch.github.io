@@ -1456,3 +1456,27 @@ html.ws-scale-reveal-open .sites-home-nav__panel-entries>a{transition-delay:.65s
  transition:none!important;
  }
 }
+
+/* Design OS / Sevenfold geometry authority.
+   Adjust these scoped tokens rather than patching individual page selectors. */
+body.home{
+ --ws-dawn-slogan-open-top:4.5dvh;
+ --ws-dawn-slogan-menu-clearance:38px;
+ --ws-dawn-menu-min-top:29dvh;
+ --ws-dawn-menu-row-height:42px;
+ --ws-dawn-menu-grid-width:40vw;
+ --ws-dawn-menu-first-column:16vw;
+ --ws-dawn-scripture-top:43dvh;
+ --ws-dawn-scripture-bottom-gap:3dvh;
+ --ws-dawn-scripture-fixed-top:44dvh;
+ --ws-dawn-scripture-open-top:43dvh;
+ --ws-dawn-scripture-right:50vw;
+ --ws-dawn-scripture-center-width:min(90vw,850px);
+ --ws-dawn-scripture-bilingual-gap:12px;
+ --ws-dawn-scripture-en-pullup:0px;
+ --ws-dawn-scripture-zh-line-height:1;
+ --ws-dawn-scripture-en-line-height:1.08;
+ --ws-dawn-scripture-cite-gap:3px;
+ --ws-dawn-scripture-cite-indent:2.5em;
+ --ws-dawn-large-logo-width:min(72vw,960px);
+}
