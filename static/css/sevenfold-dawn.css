@@ -84,6 +84,7 @@ html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-icon line{strok
 @media(min-width:901px){
  body.home .sites-home-nav--floating .sites-home-nav__panel-links{
   top:var(--ws-dawn-links-top,var(--ws-dawn-menu-min-top,25dvh))!important;
+  width:var(--ws-dawn-menu-grid-width,40vw)!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   grid-template-rows:repeat(4,var(--ws-dawn-menu-row-height,42px))!important;
   grid-auto-flow:row!important;
