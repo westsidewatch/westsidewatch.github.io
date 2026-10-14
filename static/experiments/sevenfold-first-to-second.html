@@ -27,8 +27,8 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)');const clamp=(x,a,b)
 function render(){raf=0;const rect=root.getBoundingClientRect(),travel=Math.max(1,root.offsetHeight-innerHeight),p=reduced.matches?1:clamp(-rect.top/travel,0,1);
 // Curtain handoff happens ONCE during the first 14% of the pinned second-screen travel.
 const reveal=clamp(p/.14,0,1);
-planes.forEach((el,i)=>{const start=i*.075,phase=clamp((reveal-start)/.48,0,1);const opened=smooth(phase);el.style.setProperty('transform','scale3d(1,'+opened+',1)','important');el.style.zIndex=String(i+1);el.style.visibility=reveal>=.99?'hidden':'visible'});
-root.querySelector('.planes').style.opacity=reveal>.83?String(1-smooth(clamp((reveal-.83)/.17,0,1))):'1';
+planes.forEach((el,i)=>{const start=i*.075,phase=clamp((reveal-start)/.48,0,1);const opened=smooth(phase);el.style.setProperty('transform','scale3d(1,'+opened+',1)','important');el.style.zIndex=String(i+1);el.style.visibility='visible'});
+root.querySelector('.planes').style.opacity='1';
 // Editorial content is never a background to a moving multi-colour flag.
 const q=clamp((p-.14)/.86,0,.999999),scene=Math.min(6,Math.floor(q*7)),local=q*7-scene;
 editions.forEach((el,i)=>{const active=i===scene;el.classList.toggle('is-current',active);el.style.visibility=active?'visible':'hidden';el.style.opacity=active?String(clamp(reveal*2,0,1)):0;el.setAttribute('aria-hidden',active?'false':'true');el.querySelectorAll('a').forEach(a=>a.tabIndex=active?0:-1)});
