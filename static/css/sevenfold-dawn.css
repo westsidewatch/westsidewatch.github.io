@@ -6,7 +6,7 @@ body.home .ws-dawn-brand-plane{position:absolute;inset:0;z-index:5;pointer-event
 body.home .ws-dawn-brand-plane .sites-home-masthead{position:absolute!important;left:5vw!important;top:16vh!important;width:clamp(180px,28vw,480px)!important;transform:none!important}
 body.home .ws-dawn-brand-plane .sites-home-intro{position:absolute!important;left:6vw!important;top:42vh!important;transform:none!important}
 body.home .ws-dawn-brand-plane .sites-home-intro .sites-home-scripture-pair{display:none!important}
-body.home .ws-dawn-large-logo{position:absolute;left:50%;top:calc(100dvh + 27dvh);width:min(58vw,760px);transform:translateX(-50%);height:auto}
+body.home .ws-dawn-large-logo{position:absolute;left:50%;top:var(--ws-dawn-large-top,127dvh);width:min(58vw,760px);transform:translateX(-50%);height:auto}
 body.home .ws-dawn-large-logo img{display:block;width:100%;height:auto;object-fit:contain}
 body.home .ws-dawn-scripture{position:fixed;right:6vw;top:45dvh;z-index:10015;max-width:37vw;pointer-events:none;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 body.home .ws-dawn-scripture .sites-home-scripture-pair{position:static!important;transform:none!important;margin:0!important;opacity:1!important}
