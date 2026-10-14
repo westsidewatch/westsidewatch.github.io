@@ -50,6 +50,16 @@
  // A fixed element inside the clipped Film hero may disappear behind the menu.
  // Keep the single canonical scripture node in the top-level navigation layer.
  if(scripture&&scripture.parentElement!==document.body)document.body.appendChild(scripture);
+ const mobileScriptureMedia=window.matchMedia('(max-width:700px), (max-height:570px)');
+ const syncScripturePlacement=()=>{
+  if(!scripture)return;
+  const mobileOpen=mobileScriptureMedia.matches&&Boolean(menu?.open);
+  const destination=mobileOpen?panel?.querySelector('.sites-home-nav__panel-links'):document.body;
+  if(destination&&scripture.parentElement!==destination)destination.appendChild(scripture);
+ };
+ menu?.addEventListener('toggle',syncScripturePlacement);
+ window.addEventListener('resize',syncScripturePlacement,{passive:true});
+ syncScripturePlacement();
  const folds=panel?.querySelector('.ws-dawn-folds');
  const icon=summary?.querySelectorAll('.ws-dawn-stroke');
  const links=[...menu.querySelectorAll('.sites-home-nav__panel-links>a')];
