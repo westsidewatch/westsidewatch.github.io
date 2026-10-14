@@ -222,8 +222,8 @@ body.home .ws-dawn-scripture cite.ws-scripture-reference{
 body.home > .ws-dawn-scripture{
  position:fixed!important;
  left:50vw!important;right:auto!important;
- top:var(--ws-dawn-scripture-fixed-top,44dvh)!important;
- bottom:auto!important;
+ top:auto!important;
+ bottom:calc(50dvh + var(--ws-dawn-scripture-bottom-gap,0px))!important;
  width:var(--ws-dawn-scripture-center-width,min(90vw,850px))!important;
  max-width:90vw!important;
  transform:translate3d(-50%,0,0)!important;
