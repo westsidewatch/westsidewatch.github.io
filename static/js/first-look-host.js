@@ -64,10 +64,17 @@
   // Align slogan top-left in open state; large-logo alignment is verified separately.
   const rect=slogan.getBoundingClientRect();
   const current=Number(gsap.getProperty(plane,'y'))||0;
-  return Math.min(0,window.innerHeight*.07-(rect.top-current));
+  const shift=Math.min(0,window.innerHeight*.07-(rect.top-current));
+  // Align the large logo to the centre of the visible lower Film half after translation.
+  // This is one static plane geometry variable, not an independent animated transform.
+  const logoHeight=largeLogo.getBoundingClientRect().height;
+  const targetTop=window.innerHeight*.75-logoHeight*.5;
+  plane.style.setProperty('--ws-dawn-large-top',Math.round(targetTop-shift)+'px');
+  return shift;
  };
  const prepare=()=>{
   if(!window.gsap||!plane||!panel||!folds)return false;
+  timeline?.kill();
   makeFolds();
   const gs=window.gsap;
   gs.set(plane,{y:0});
@@ -88,7 +95,7 @@
   if(menu.open&&!closing)return;
   if(closing&&timeline){closing=false;timeline.play();return;}
   menu.open=true;root.classList.add('ws-dawn-active');nav.dataset.navHidden='false';
-  if(!prepare()){root.classList.add('ws-dawn-open');opened=true;return;}
+  if(!prepare()){menu.open=false;root.classList.remove('ws-dawn-active');summary?.setAttribute('aria-label','Open site contents');return;}
   if(reduced.matches){timeline.progress(1);timeline.pause();root.classList.add('ws-dawn-open');opened=true;}
   else timeline.play(0);
  };
