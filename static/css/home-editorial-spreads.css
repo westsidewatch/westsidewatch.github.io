@@ -1,0 +1,35 @@
+/* Westside editorial chapters — static composition, phase 02 layout authority. No legacy Candidate 01 dependency or motion. */
+*{box-sizing:border-box}html{background:var(--ws-surface,#faf9f5)}body{margin:0;color:var(--ws-text,#252525);background:var(--ws-surface,#faf9f5);font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200)}
+.chapter{width:100%;min-height:100svh;padding:clamp(22px,3vw,52px) clamp(24px,4vw,76px);display:flex;flex-direction:column;gap:clamp(20px,2.5vh,32px)}
+.chapter__masthead{display:flex;align-items:baseline;justify-content:space-between;gap:24px;border-bottom:1px solid currentColor;padding-bottom:clamp(12px,1.6vh,20px)}
+.chapter__eyebrow,.chapter__folio,.tile__kind,.tile__number{font-family:var(--ws-type-display-en-sc);font-size:var(--ws-type-scale-meta);font-weight:400;letter-spacing:.09em}
+.chapter__heading{display:flex;justify-content:space-between;align-items:end;gap:16px}
+.chapter__title{font-size:var(--ws-type-scale-title-lg);font-weight:var(--ws-weight-zh-air,200);line-height:var(--ws-type-leading-title);margin:0;letter-spacing:.08em}
+.chapter__subtitle{font-family:var(--ws-type-display-en-sc);font-size:var(--ws-type-scale-meta);letter-spacing:.1em;font-weight:400}
+.chapter__spread{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:clamp(12px,1.45vw,28px);flex:1;min-height:0;max-height:calc(100svh - 220px)}
+.tile{position:relative;min-width:0;min-height:0;display:flex;flex-direction:column;text-decoration:none;color:inherit;overflow:hidden}
+.tile__image{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.72) contrast(.96)}
+.tile__media{position:relative;flex:1;min-height:0;overflow:hidden;background:var(--ws-material,#eee4c9)}
+.tile__caption{display:flex;justify-content:space-between;gap:8px;align-items:baseline;padding:7px 0 0}
+.tile__title{font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);font-size:var(--ws-type-scale-title-sm);line-height:var(--ws-type-leading-title);margin:0}
+.tile__kind{white-space:nowrap;font-size:var(--ws-type-scale-micro)}
+.tile__number{position:absolute;top:10px;left:10px;color:#fff;text-shadow:0 1px 6px #252525}
+.chapter--watch .tile:nth-child(1){grid-column:1/span 5;grid-row:1}
+.chapter--watch .tile:nth-child(2){grid-column:6/span 3;grid-row:1}
+.chapter--watch .tile:nth-child(3){grid-column:9/span 2;grid-row:1}
+.chapter--watch .tile:nth-child(4){grid-column:11/span 2;grid-row:1}
+.chapter--watch .tile:nth-child(5){grid-column:1/span 2;grid-row:2}
+.chapter--watch .tile:nth-child(6){grid-column:3/span 3;grid-row:2}
+.chapter--watch .tile:nth-child(7){grid-column:6/span 3;grid-row:2}
+.chapter--watch .tile:nth-child(8){grid-column:9/span 4;grid-row:2}
+.chapter--walk .tile:nth-child(1){grid-column:1/span 4;grid-row:1}
+.chapter--walk .tile:nth-child(2){grid-column:5/span 2;grid-row:1}
+.chapter--walk .tile:nth-child(3){grid-column:7/span 3;grid-row:1}
+.chapter--walk .tile:nth-child(4){grid-column:10/span 3;grid-row:1}
+.chapter--walk .tile:nth-child(5){grid-column:1/span 3;grid-row:2}
+.chapter--walk .tile:nth-child(6){grid-column:4/span 2;grid-row:2}
+.chapter--walk .tile:nth-child(7){grid-column:6/span 2;grid-row:2}
+.chapter--walk .tile:nth-child(8){grid-column:8/span 5;grid-row:2}
+.tile:focus-visible{outline:2px solid var(--ws-text,#252525);outline-offset:4px}
+@media(max-width:900px){.chapter{min-height:100svh;padding:22px 20px}.chapter__spread{max-height:none;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:auto}.chapter--watch .tile,.chapter--walk .tile{grid-column:auto;grid-row:auto}.tile__media{aspect-ratio:4/3}.tile:nth-child(1),.tile:nth-child(8){grid-column:1/-1}.tile:nth-child(1) .tile__media,.tile:nth-child(8) .tile__media{aspect-ratio:16/9}.chapter__heading{align-items:start;flex-direction:column}.chapter__title{font-size:var(--ws-type-scale-title-md)}}
+@media(min-width:901px) and (max-height:680px){.chapter{gap:12px;padding-top:14px;padding-bottom:14px}.chapter__spread{max-height:calc(100svh - 155px)}.tile__caption{padding-top:4px}.tile__title{font-size:var(--ws-type-scale-ui)}}
