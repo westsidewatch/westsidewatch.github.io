@@ -38,74 +38,65 @@
  const summary=menu?.querySelector('summary');
  const panel=menu?.querySelector('.sites-home-nav__panel');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
- /* Multi-layer editorial transition: cover sheets, page reveal, staggered typography,
-    and reversible exit. The existing seven hover-preview handlers remain below. */
+ /* Theodore (Codrops, MIT): adapted SVG Q-curve double wipe, GSAP timeline,
+    infinite background tiles and staggered menu reveal. Source:
+    https://github.com/codrops/Theodore/blob/main/src/js/index.js */
+ const path=nav.querySelector('.ws-theodore-overlay__path');
+ const overlay=nav.querySelector('.ws-theodore-overlay');
  const links=[...menu.querySelectorAll('.sites-home-nav__panel-links>a')];
- const entries=[...menu.querySelectorAll('.sites-home-nav__panel a')].filter(a=>!links.includes(a));
+ const entries=[...menu.querySelectorAll('.sites-home-nav__panel-entries>a')];
  const previewStage=menu.querySelector('.ws-nav-hover-preview');
- let running=[],transitionToken=0;
- const stop=()=>{running.forEach(a=>a.cancel());running=[];};
- const play=(element,keyframes,options)=>{
-  if(!element||reduced.matches||!element.animate)return null;
-  const a=element.animate(keyframes,{fill:'both',...options});
-  running.push(a);return a;
+ const gsap=window.gsap;
+ let animating=false,activeTimeline=null;
+ const shapes={
+  closedBottom:'M 0 100 V 100 Q 50 100 100 100 V 100 z',
+  bowUp:'M 0 100 V 50 Q 50 0 100 50 V 100 z',
+  fullBottom:'M 0 100 V 0 Q 50 0 100 0 V 100 z',
+  fullTop:'M 0 0 V 100 Q 50 100 100 100 V 0 z',
+  bowDown:'M 0 0 V 50 Q 50 0 100 50 V 0 z',
+  closedTop:'M 0 0 V 0 Q 50 0 100 0 V 0 z',
+  closeBow:'M 0 0 V 50 Q 50 100 100 50 V 0 z',
+  closeFull:'M 0 0 V 100 Q 50 100 100 100 V 0 z',
+  reverseFull:'M 0 100 V 0 Q 50 0 100 0 V 100 z',
+  reverseBow:'M 0 100 V 50 Q 50 100 100 50 V 100 z'
  };
- const layers=()=>{
-  if(!panel)return[];
-  let sheets=panel.querySelector('.ws-contents-transition-sheets');
-  if(!sheets){
-   sheets=document.createElement('div');sheets.className='ws-contents-transition-sheets';
-   sheets.setAttribute('aria-hidden','true');
-   for(let i=0;i<3;i++){const layer=document.createElement('span');layer.className='ws-contents-transition-sheet ws-contents-transition-sheet--'+(i+1);sheets.append(layer);}
-   panel.prepend(sheets);
-  }
-  return [...sheets.children];
+ const setOverlay=(d)=>path?.setAttribute('d',d);
+ const openCurtain=()=>{
+  if(animating||menu.open)return;
+  if(reduced.matches||!gsap||!path){menu.open=true;return;}
+  animating=true;nav.classList.add('is-theodore-transition');overlay.classList.add('is-animating');
+  activeTimeline=gsap.timeline({onComplete:()=>{animating=false;overlay.classList.remove('is-animating');nav.classList.remove('is-theodore-transition');activeTimeline=null;}});
+  activeTimeline
+   .set(path,{attr:{d:shapes.closedBottom}})
+   .to(path,{duration:.8,ease:'power4.in',attr:{d:shapes.bowUp}},0)
+   .to(path,{duration:.3,ease:'power2',attr:{d:shapes.fullBottom},onComplete:()=>{menu.open=true;}},.8)
+   .set([...links,...entries,previewStage],{opacity:0})
+   .set(path,{attr:{d:shapes.fullTop}})
+   .to(path,{duration:.3,ease:'power2.in',attr:{d:shapes.bowDown}})
+   .to(path,{duration:.8,ease:'power4',attr:{d:shapes.closedTop}})
+   .fromTo(links,{y:150,opacity:0},{duration:1.1,ease:'power4.out',y:0,opacity:1,stagger:.05},'>-=1.1')
+   .fromTo(entries,{y:80,opacity:0},{duration:.85,ease:'power4.out',y:0,opacity:1,stagger:.06},'<+.15')
+   .fromTo(previewStage,{x:60,opacity:0},{duration:.85,ease:'power3.out',x:0,opacity:1},'<');
  };
- const transition=async(opening)=>{
-  if(!panel)return;
-  const token=++transitionToken;
-  stop();
-  const sheets=layers();
-  if(reduced.matches){panel.classList.toggle('ws-contents-ready',opening);return;}
-  const ease='cubic-bezier(.76,0,.24,1)';
-  const duration=opening?1100:880;
-  const direction=opening?1:-1;
-  const sheetAnimations=sheets.map((sheet,i)=>play(sheet,[
-   {transform:opening?'translate3d(0,-105%,0)':'translate3d(0,105%,0)',offset:0},
-   {transform:'translate3d(0,0,0)',offset:.5},
-   {transform:opening?'translate3d(0,105%,0)':'translate3d(0,-105%,0)',offset:1}
-  ],{duration:duration*.68,delay:opening?i*105:(2-i)*80,easing:ease}));
-  const panelAnimation=play(panel,[
-   {clipPath:opening?'inset(0 0 100% 0)':'inset(0 0 0 0)'},
-   {clipPath:opening?'inset(0 0 0 0)':'inset(0 0 100% 0)'}
-  ],{duration,delay:opening?150:0,easing:ease});
-  links.forEach((link,i)=>play(link,[
-   {opacity:opening?0:1,transform:opening?'translate3d(0,42px,0)':'translate3d(0,0,0)'},
-   {opacity:opening?1:0,transform:opening?'translate3d(0,0,0)':'translate3d(0,-25px,0)'}
-  ],{duration:opening?600:300,delay:opening?430+i*62:i*28,easing:'cubic-bezier(.2,.8,.2,1)'}));
-  entries.forEach((link,i)=>play(link,[
-   {opacity:opening?0:1,transform:opening?'translate3d(0,35px,0)':'translate3d(0,0,0)'},
-   {opacity:opening?1:0,transform:opening?'translate3d(0,0,0)':'translate3d(0,-20px,0)'}
-  ],{duration:opening?580:260,delay:opening?660+i*85:i*30,easing:'ease-out'}));
-  play(previewStage,[
-   {opacity:opening?0:1,transform:opening?'translate3d(5%,0,0)':'translate3d(0,0,0)'},
-   {opacity:opening?1:0,transform:opening?'translate3d(0,0,0)':'translate3d(4%,0,0)'}
-  ],{duration:opening?650:320,delay:opening?500:0,easing:'ease-out'});
-  await Promise.all([panelAnimation,...sheetAnimations].filter(Boolean).map(a=>a.finished.catch(()=>{})));
-  if(token!==transitionToken)return;
-  stop();panel.classList.toggle('ws-contents-ready',opening);
- };
- const closeCurtain=async()=>{
-  if(!menu?.open||menu.classList.contains('is-closing'))return;
-  menu.classList.add('is-closing');
-  await transition(false);
-  if(menu.classList.contains('is-closing')){menu.open=false;menu.classList.remove('is-closing');}
+ const closeCurtain=()=>{
+  if(animating||!menu.open)return;
+  if(reduced.matches||!gsap||!path){menu.open=false;return;}
+  animating=true;nav.classList.add('is-theodore-transition');overlay.classList.add('is-animating');
+  activeTimeline=gsap.timeline({onComplete:()=>{animating=false;overlay.classList.remove('is-animating');nav.classList.remove('is-theodore-transition');activeTimeline=null;}});
+  activeTimeline
+   .set(path,{attr:{d:shapes.closedTop}})
+   .to(path,{duration:.8,ease:'power4.in',attr:{d:shapes.closeBow}},0)
+   .to(path,{duration:.3,ease:'power2',attr:{d:shapes.closeFull},onComplete:()=>{menu.open=false;}},.8)
+   .to(links,{duration:.8,ease:'power2.in',y:100,opacity:0,stagger:-.05},0)
+   .to(entries,{duration:.6,ease:'power2.in',y:70,opacity:0,stagger:-.05},0)
+   .to(previewStage,{duration:.5,ease:'power2.in',x:60,opacity:0},0)
+   .set(path,{attr:{d:shapes.reverseFull}})
+   .to(path,{duration:.3,ease:'power2.in',attr:{d:shapes.reverseBow}})
+   .to(path,{duration:.8,ease:'power4.out',attr:{d:shapes.closedBottom}});
  };
  summary?.addEventListener('click',event=>{
   event.preventDefault();
-  if(menu.open){closeCurtain();return;}
-  menu.open=true;menu.classList.remove('is-closing');
-  requestAnimationFrame(()=>transition(true));
+  if(menu.open)closeCurtain();else openCurtain();
  });
  const showPreview=(link)=>{const match=link.getAttribute('href')?.match(/^#first-look-(church|magazine|bible|sermon|book|cinema|life)$/);if(!match||!previewFrame)return;const key=match[1];if(key!==previewKey){previewKey=key;previewFrame.src=previewSources[key];}if(previewCaption)previewCaption.textContent=link.textContent.trim();preview?.classList.add('is-visible');};
  const clearPreview=()=>{preview?.classList.remove('is-visible')};
