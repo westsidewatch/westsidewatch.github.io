@@ -79,7 +79,11 @@
   const shift=Math.min(0,target-(rect.top-current));
   const clearance=parseFloat(os.getPropertyValue('--ws-dawn-slogan-menu-clearance'))||28;
   const minTop=window.innerHeight*(parseFloat(os.getPropertyValue('--ws-dawn-menu-min-top'))||25)/100;
-  nav.style.setProperty('--ws-dawn-links-top',Math.ceil(Math.max(minTop,rect.bottom-current+shift+clearance))+'px');
+  const linksTop=Math.ceil(Math.max(minTop,rect.bottom-current+shift+clearance));
+  nav.style.setProperty('--ws-dawn-links-top',linksTop+'px');
+  // Apply measured OS geometry to the actual grid; legacy CSS selectors must not win.
+  const linkGrid=panel?.querySelector('.sites-home-nav__panel-links');
+  if(linkGrid)linkGrid.style.setProperty('top',linksTop+'px','important');
   // Align the large logo to the centre of the visible lower Film half after translation.
   // This is one static plane geometry variable, not an independent animated transform.
   const image=largeLogo.querySelector('img');
