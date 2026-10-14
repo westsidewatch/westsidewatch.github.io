@@ -337,3 +337,19 @@ html.ws-dawn-active body.home .sites-home-nav--floating .sites-home-nav__panel-l
 html.ws-dawn-active body.home .sites-home-nav--floating .sites-home-nav__panel-links > a.ws-dawn-color-selected{
  color:#fff!important;
 }
+
+/* Full-screen film only: scripture at lower-right in Dawn Gold.
+   Half-screen curtain retains its existing right-aligned scripture layout. */
+@media(min-width:701px) and (min-height:571px){
+ html:not(.ws-dawn-active) body.home > .ws-dawn-scripture{
+  top:auto!important;
+  bottom:clamp(28px,5dvh,72px)!important;
+  right:calc(clamp(20px,3vw,52px) + 14px)!important;
+  left:auto!important;
+  transform:none!important;
+  color:var(--ws-first-light,#CEBD74)!important;
+ }
+ html:not(.ws-dawn-active) body.home > .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture,.ws-scripture-reference){
+  color:inherit!important;
+ }
+}
