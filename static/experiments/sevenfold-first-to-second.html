@@ -52,7 +52,8 @@ const gate=root.querySelector('.church-gate'),leaves=[...gate.children],church=r
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));const smooth=x=>x*x*(3-2*x);let raf=0,previous=-1;
 function render(){raf=0;const rect=root.getBoundingClientRect(),travel=Math.max(1,root.offsetHeight-innerHeight),p=reduced.matches?1:clamp(-rect.top/travel,0,1);
 // Curtain handoff happens ONCE during the first 14% of the pinned second-screen travel.
-// Sevenfold finishes after exactly half a viewport of scroll, not 14% of a multi-screen timeline.\nconst reveal=reduced.matches?1:clamp((-rect.top)/(innerHeight*.5),0,1);
+// Sevenfold finishes after exactly half a viewport of scroll, not 14% of a multi-screen timeline.
+const reveal=reduced.matches?1:clamp((-rect.top)/(innerHeight*.5),0,1);
 planes.forEach((el,i)=>{const start=i*.075,phase=clamp((reveal-start)/.48,0,1);const opened=smooth(phase);el.style.setProperty('transform','scale3d(1,'+opened+',1)','important');el.style.zIndex=String(i+1);el.style.visibility='visible'});
 root.querySelector('.planes').style.opacity='1';
 // Editorial content is never a background to a moving multi-colour flag.
