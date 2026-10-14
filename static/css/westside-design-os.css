@@ -1388,20 +1388,23 @@ html.ws-home-menu-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.ws-nav-hover-preview{transition:none!important}}
 
 
-/* Homepage CONTENTS: click-triggered full-page curtain. Preserve existing
-   interior menu hover previews and editorial layout unchanged. */
-.sites-home-nav--floating .sites-home-nav__details[open]:not(.is-closing) .sites-home-nav__panel{
- animation:ws-contents-reveal .8s cubic-bezier(.77,0,.18,1) both;
+/* Full-page circular reveal inspired by open-source expanding-menu patterns.
+   The existing editorial menu, hover previews and entry links remain intact. */
+.sites-home-nav--floating:has(.sites-home-nav__details[open]){
+ position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
+ z-index:2147483000!important;transform:none!important;opacity:1!important;
+ visibility:visible!important;overflow:visible!important;pointer-events:none!important;
 }
-.sites-home-nav--floating .sites-home-nav__details.is-closing .sites-home-nav__panel{
- visibility:visible!important;opacity:1!important;pointer-events:none!important;
- animation:ws-contents-dismiss .68s cubic-bezier(.77,0,.18,1) both;
+.sites-home-nav--floating:has(.sites-home-nav__details[open]) .sites-home-nav__details{position:static!important}
+.sites-home-nav--floating:has(.sites-home-nav__details[open]) .sites-home-nav__details>summary{
+ position:fixed!important;right:clamp(20px,4vw,65px)!important;top:clamp(14px,2vw,30px)!important;
+ z-index:2147483002!important;pointer-events:auto!important;
 }
-.sites-home-nav--floating .sites-home-nav__details.is-closing .sites-home-nav__panel-links>a{
- opacity:0!important;transform:translateY(-16px)!important;transition:opacity .24s,transform .35s!important;
+.sites-home-nav--floating:has(.sites-home-nav__details[open]) .sites-home-nav__panel{
+ position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
+ z-index:2147483001!important;pointer-events:auto!important;
+ clip-path:circle(150vmax at 90% 4%)!important;
+ animation:none!important;transition:none!important;visibility:visible!important;opacity:1!important;
 }
-@keyframes ws-contents-reveal{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
-@keyframes ws-contents-dismiss{from{clip-path:inset(0 0 0 0)}to{clip-path:inset(0 0 100% 0)}}
-@media(prefers-reduced-motion:reduce){
- .sites-home-nav--floating .sites-home-nav__details .sites-home-nav__panel{animation:none!important}
-}
+.sites-home-nav--floating .sites-home-nav__details.is-closing .sites-home-nav__panel{pointer-events:none!important}
+@media(prefers-reduced-motion:reduce){.sites-home-nav--floating .sites-home-nav__panel{animation:none!important}}
