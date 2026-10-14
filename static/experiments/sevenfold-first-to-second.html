@@ -12,6 +12,17 @@
 /* Homepage navigation fold parity: seven full-width, overlapping half-screen panels. */
 .showcase .planes{inset:0 0 auto 0!important;height:50svh!important;overflow:hidden!important;z-index:30!important;transform-origin:top center}
 .showcase .planes .plane{inset:0!important;width:100%!important;height:100%!important;transform-origin:top center!important;clip-path:none!important;transform:scale3d(1,0,1)!important;will-change:transform!important}
+
+/* Second-screen split: the sevenfold navigation occupies exactly the upper half. */
+.showcase .planes{top:0!important;bottom:auto!important;height:50svh!important;overflow:hidden!important}
+.showcase .planes .plane{height:50svh!important;min-height:0!important}
+.showcase .composition{top:50svh!important;bottom:0!important;height:50svh!important;overflow:hidden!important}
+.showcase .composition .edition{inset:0!important;padding:clamp(18px,3vw,42px) clamp(24px,5vw,90px)!important;align-items:center!important}
+.showcase .composition .edition h2{font-size:clamp(42px,7vw,108px)!important}
+.showcase .composition .edition .description{font-size:clamp(13px,1vw,17px)!important;line-height:1.5!important}
+.showcase .stage-head{top:calc(50svh + 14px)!important}
+.showcase .index{bottom:14px!important}
+@media(max-width:700px){.showcase .composition .edition{align-content:center!important;gap:8px!important}.showcase .composition .edition h2{font-size:clamp(40px,12vw,75px)!important}.showcase .composition .edition .description{font-size:12px!important}}
 </style></head><body data-ws-scope="global"><section class="first" aria-label="首頁第一屏"><div class="head"><span>WESTSIDE WATCH</span><span>01 / SEVENFOLD DAWN</span></div><div><h1>Watch for<br><i>the Dawn.</i></h1><p>黑夜已深，白晝將近。<br>The night is far spent. The day is at hand.</p></div></section><section class="showcase" aria-label="七重編輯展示"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"></div></div><div class="stage-head"><span>WESTSIDE WATCH · EDITORIAL SHOWCASE</span><span>SCROLL / SEVEN SPATIAL STUDIES</span></div><div class="composition">
 <article class="edition" data-variant="0"><div class="headline"><span class="category">01 / Living Water West</span><h2>Living<br><i>Water.</i></h2><div class="cn">活水西區 · 教會</div></div><div class="detail"><p class="description">從光線、建築與敬拜開始。讓教會的生命在一個安靜而敞開的編輯空間中被看見。</p><a href="/church/">ENTER LIVING WATER ↗</a></div></article>
 <article class="edition" data-variant="1"><div class="headline"><span class="category">02 / Magazine</span><h2>Watch<br><i>for Dawn.</i></h2><div class="cn">西望 · 獨立網絡雜誌</div></div><div class="detail"><p class="description">以文字、影像與編輯的秩序，重新理解我們所生活的世界。</p><a href="/journal/">READ THE JOURNAL ↗</a></div></article>
