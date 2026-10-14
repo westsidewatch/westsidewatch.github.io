@@ -2,6 +2,9 @@
 
 **Authority:** one Design OS verification tool; page-specific stylesheets remain the sole owners of static geometry. This is NOT a second positioning CSS system.
 
+## Integration with existing Design OS
+This is an internal Design OS geometry diagnostic, not a separate CI workflow. The existing Design OS acceptance process invokes it for geometry-related changes. No separate required status check is created.
+
 ## Standard workflow (required for geometry changes)
 1. Identify the exact DOM selector, owning stylesheet and breakpoint. Inspect the winning computed style and overridden declarations in browser DevTools; do not add another CSS override as a blind fix.
 2. Run `node scripts/design-os-geometry-audit.mjs docs/design-os-geometry.targets.json` against the preview URL. The JSON report records actual CSS-pixel viewport bounding boxes, computed position/transform/size/font, and any violations.
