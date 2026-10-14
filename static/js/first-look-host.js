@@ -30,6 +30,19 @@
  window.addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update)}},{passive:true});
  window.addEventListener('resize',update,{passive:true});
  menu?.addEventListener('toggle',()=>{if(menu.open)nav.dataset.navHidden='false';document.documentElement.classList.toggle('ws-home-menu-open',Boolean(menu.open));update()});
+ const preview=nav.querySelector('.ws-nav-hover-preview');
+ const previewFrame=preview?.querySelector('iframe');
+ const previewCaption=preview?.querySelector('.ws-nav-hover-preview__caption');
+ const previewSources={church:'/first-look-editorial/church.html',magazine:'/first-look-editorial/magazine.html',bible:'/first-look-editorial/bible.html',sermon:'/first-look-editorial/sermon.html',book:'/first-look-editorial/book.html',cinema:'/first-look-editorial/cinema.html',life:'/first-look-editorial/life.html'};
+ let previewKey='';
+ const showPreview=(link)=>{const match=link.getAttribute('href')?.match(/^#first-look-(church|magazine|bible|sermon|book|cinema|life)$/);if(!match||!previewFrame)return;const key=match[1];if(key!==previewKey){previewKey=key;previewFrame.src=previewSources[key];}if(previewCaption)previewCaption.textContent=link.textContent.trim();preview?.classList.add('is-visible');};
+ const clearPreview=()=>{preview?.classList.remove('is-visible')};
+ menu?.querySelectorAll('.sites-home-nav__panel-links>a').forEach(link=>{
+  link.addEventListener('pointerenter',()=>showPreview(link));
+  link.addEventListener('focus',()=>showPreview(link));
+ });
+ menu?.addEventListener('pointerleave',clearPreview);
+ menu?.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))clearPreview()});
  menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',event=>{const hash=a.getAttribute('href');menu.open=false;nav.dataset.navHidden='false';if(hash?.startsWith('#')){const target=document.getElementById(hash.slice(1));if(target){event.preventDefault();history.pushState(null,'',hash);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}}}));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu?.open){menu.open=false;menu.querySelector('summary')?.focus()}});
  document.addEventListener('pointerdown',e=>{if(menu?.open&&!menu.contains(e.target))menu.open=false});
