@@ -168,3 +168,20 @@ body.home .sites-home-nav--floating .ws-dawn-scripture cite{
  body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(8){grid-area:4/2!important}
  body.home .sites-home-nav--floating .sites-home-nav__panel-links>a{margin:0!important;padding:0!important;align-self:start!important;line-height:1.1!important;font-size:clamp(16px,1.65vw,28px)!important}
 }
+
+/* Design OS precision geometry: lock original scripture at accepted half-screen
+   lower-right anchor; change only optical distance between language lines. */
+body.home .sites-home-nav--floating .ws-dawn-scripture{
+ top:var(--ws-dawn-scripture-top,39dvh)!important;
+ right:var(--ws-dawn-scripture-right,6vw)!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
+ row-gap:0!important;gap:0!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture p.sites-home-slogan-zh{
+ margin:0!important;padding:0!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture p.sites-home-scripture{
+ margin:calc(-1 * var(--ws-dawn-scripture-en-pullup,14px)) 0 0!important;
+ padding:0!important;
+}
