@@ -30,8 +30,23 @@
  window.addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update)}},{passive:true});
  window.addEventListener('resize',update,{passive:true});
  menu?.addEventListener('toggle',()=>{if(menu.open)nav.dataset.navHidden='false';document.documentElement.classList.toggle('ws-home-menu-open',Boolean(menu.open));update()});
- menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',event=>{const hash=a.getAttribute('href');menu.open=false;nav.dataset.navHidden='false';if(hash?.startsWith('#')){const target=document.getElementById(hash.slice(1));if(target){event.preventDefault();history.pushState(null,'',hash);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}}}));
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu?.open){menu.open=false;menu.querySelector('summary')?.focus()}});
+ const stage=document.getElementById('ws-home-stage');
+ const stageFrame=stage?.querySelector('.ws-home-stage__frame');
+ const stageClose=stage?.querySelector('.ws-home-stage__close');
+ const chapters={church:'/first-look-editorial/church.html',magazine:'/first-look-editorial/magazine.html',bible:'/first-look-editorial/bible.html',sermon:'/first-look-editorial/sermon.html',book:'/first-look-editorial/book.html',cinema:'/first-look-editorial/cinema.html',life:'/first-look-editorial/life.html'};
+ let stageReturnFocus=null;
+ const closeStage=()=>{if(!stage?.classList.contains('is-active'))return;stage.classList.remove('is-active');stage.setAttribute('aria-hidden','true');document.documentElement.classList.remove('ws-home-stage-open');stageFrame?.removeAttribute('src');stageReturnFocus?.focus?.();};
+ const openStage=(key)=>{if(!stage||!chapters[key])return;stageReturnFocus=document.activeElement;menu.open=false;nav.dataset.navHidden='false';stageFrame.src=chapters[key];stageFrame.title=key+' — Westside Watch';stage.setAttribute('aria-hidden','false');stage.classList.add('is-active');document.documentElement.classList.add('ws-home-stage-open');stageClose?.focus();};
+ menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',event=>{
+  const hash=a.getAttribute('href'),match=hash?.match(/^#first-look-(church|magazine|bible|sermon|book|cinema|life)$/);
+  if(match){event.preventDefault();openStage(match[1]);return;}
+  if(hash==='#sites-first-layer'){event.preventDefault();openStage('magazine');return;}
+  menu.open=false;nav.dataset.navHidden='false';
+ }));
+ stageClose?.addEventListener('click',closeStage);
+ stage?.addEventListener('keydown',event=>{if(event.key==='Tab'){const controls=[stageClose,stageFrame].filter(Boolean);const idx=controls.indexOf(document.activeElement);if(event.shiftKey&&idx===0){event.preventDefault();controls.at(-1)?.focus()}else if(!event.shiftKey&&idx===controls.length-1){event.preventDefault();controls[0]?.focus()}}});
+
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&stage?.classList.contains('is-active')){closeStage();return}if(e.key==='Escape'&&menu?.open){menu.open=false;menu.querySelector('summary')?.focus()}});
  document.addEventListener('pointerdown',e=>{if(menu?.open&&!menu.contains(e.target))menu.open=false});
  update();
 })();
