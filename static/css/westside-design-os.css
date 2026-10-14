@@ -1202,3 +1202,8 @@ body.sites-surface:not(:has([data-ws-immersive-video])) .sites-layer-nav a:focus
 .chapter--walk .tile:nth-child(5){padding-bottom:clamp(18px,3vh,45px)}
 @media(min-width:901px){.chapter{gap:clamp(16px,2.5vh,34px)}.chapter__spread{flex:1;grid-template-rows:minmax(0,1.08fr) minmax(0,.92fr);max-height:calc(100svh - 290px);min-height:350px}}
 @media(max-width:900px){.chapter__heading{min-height:90px}.chapter__title{font-size:clamp(40px,9vw,74px);white-space:normal}.chapter__subtitle{writing-mode:horizontal-tb;align-self:flex-start;margin:0}.chapter__spread{min-height:0;max-height:none}.chapter--watch .tile:nth-child(4),.chapter--watch .tile:nth-child(6),.chapter--walk .tile:nth-child(3),.chapter--walk .tile:nth-child(5){padding:0}.tile__caption{min-height:2.5em}.tile__title{font-size:var(--ws-type-scale-ui)}}
+
+/* Asset-free editorial proof: imagery is integrated only after spread geometry approval. */
+.tile__placeholder{position:absolute;inset:0;display:block;background:linear-gradient(135deg,var(--ws-material,#eee4c9),var(--ws-surface,#faf9f5));}
+.tile__placeholder::after{content:"";position:absolute;inset:12%;border:1px solid currentColor;opacity:.13}
+.chapter--watch .tile:nth-child(2n) .tile__placeholder,.chapter--walk .tile:nth-child(2n+1) .tile__placeholder{background:linear-gradient(30deg,var(--ws-surface,#faf9f5),var(--ws-material,#eee4c9))}
