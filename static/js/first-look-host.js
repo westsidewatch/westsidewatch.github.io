@@ -35,6 +35,10 @@
  const previewCaption=preview?.querySelector('.ws-nav-hover-preview__caption');
  const previewSources={church:'/first-look-editorial/church.html',magazine:'/first-look-editorial/magazine.html',bible:'/first-look-editorial/bible.html',sermon:'/first-look-editorial/sermon.html',book:'/first-look-editorial/book.html',cinema:'/first-look-editorial/cinema.html',life:'/first-look-editorial/life.html'};
  let previewKey='';
+ const hoverCapable=window.matchMedia('(hover: hover) and (pointer: fine)');
+ const summary=menu?.querySelector('summary');
+ summary?.addEventListener('pointerenter',()=>{if(hoverCapable.matches&&!menu.open)menu.open=true});
+ nav.addEventListener('pointerleave',()=>{if(hoverCapable.matches&&menu?.open){clearPreview();menu.open=false}});
  const showPreview=(link)=>{const match=link.getAttribute('href')?.match(/^#first-look-(church|magazine|bible|sermon|book|cinema|life)$/);if(!match||!previewFrame)return;const key=match[1];if(key!==previewKey){previewKey=key;previewFrame.src=previewSources[key];}if(previewCaption)previewCaption.textContent=link.textContent.trim();preview?.classList.add('is-visible');};
  const clearPreview=()=>{preview?.classList.remove('is-visible')};
  menu?.querySelectorAll('.sites-home-nav__panel-links>a').forEach(link=>{
