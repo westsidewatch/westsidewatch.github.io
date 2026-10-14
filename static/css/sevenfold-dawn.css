@@ -15,6 +15,10 @@ body.home .sites-home-nav--floating{z-index:10020!important}
 body.home .sites-home-nav--floating summary{position:relative;z-index:10025!important;display:grid!important;place-items:center!important;width:50px;height:50px;cursor:pointer}
 body.home .ws-dawn-icon{display:block;width:30px;height:30px;overflow:visible}
 body.home .ws-dawn-icon line{stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke}
+/* Half-screen menu is pale: force the cross above its curtain, not white on white. */
+html.ws-dawn-active body.home .sites-home-nav--floating{color:var(--ws-ink,#252525)!important;visibility:visible!important;opacity:1!important;transform:none!important}
+html.ws-dawn-active body.home .sites-home-nav--floating summary{color:var(--ws-ink,#252525)!important;z-index:10040!important}
+html.ws-dawn-active body.home .ws-dawn-icon line{stroke:var(--ws-ink,#252525)!important}
 body.home .sites-home-nav--floating .sites-home-nav__panel{inset:0 0 auto 0!important;height:50dvh!important;min-height:0!important;max-height:none!important;overflow:hidden!important;padding:5vh 6vw!important;display:block!important;clip-path:none!important;transition:none!important;visibility:hidden;opacity:1!important;background:transparent!important;pointer-events:none!important;color:var(--ws-ink,#252525)!important}
 html.ws-dawn-active body.home .sites-home-nav--floating .sites-home-nav__panel{visibility:visible!important;pointer-events:auto!important}
 body.home .ws-dawn-panel-slogan{position:absolute;z-index:3;top:2.5dvh;left:6vw;font-family:var(--ws-font-display,\"Bodoni Moda\",serif);font-size:clamp(26px,3.2vw,58px);font-weight:400;line-height:1.05;white-space:nowrap;pointer-events:none;color:var(--ws-ink,#252525)}
