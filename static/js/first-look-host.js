@@ -23,7 +23,10 @@
   }
   if(y<90||expanded)nav.dataset.navHidden='false';
   const film=document.querySelector('.sites-home-hero');
-  const inFilm=film&&film.getBoundingClientRect().bottom>Math.min(120,window.innerHeight*.2);
+  const filmRect=film?.getBoundingClientRect();
+  const inFilm=Boolean(filmRect&&filmRect.bottom>Math.min(120,window.innerHeight*.2));
+  // Brand plane and scripture are portaled outside the hero; never leak into later sections.
+  document.body.classList.toggle('ws-dawn-hero-outside',!filmRect||filmRect.bottom<=0||filmRect.top>=window.innerHeight);
   nav.dataset.navTone=inFilm?'dark':'light';
   previousY=y;scheduled=false;
  };
