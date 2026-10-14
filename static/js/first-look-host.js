@@ -66,8 +66,12 @@
  // Align the slogan's top edge with the scripture's measured top edge on desktop.
  const syncEditorialRow=()=>{
   if(!plane||!scripture||mobileScriptureMedia.matches)return;
-  const top=scripture.getBoundingClientRect().top;
-  if(Number.isFinite(top))plane.style.setProperty('--ws-dawn-editorial-row-top',top+'px');
+  // Match the slogan's visible bottom to the citation's bottom, not their top edges.
+  const citation=scripture.querySelector('cite.ws-scripture-reference');
+  const citationBottom=(citation||scripture).getBoundingClientRect().bottom;
+  const sloganHeight=slogan.getBoundingClientRect().height;
+  if(Number.isFinite(citationBottom)&&Number.isFinite(sloganHeight))
+   plane.style.setProperty('--ws-dawn-editorial-row-top',(citationBottom-sloganHeight)+'px');
  };
  window.addEventListener('resize',syncEditorialRow,{passive:true});
  document.fonts?.ready?.then(syncEditorialRow);
