@@ -1207,3 +1207,100 @@ body:has(> .chapter){margin:0;color:var(--ws-text,#252525);background:var(--ws-s
 .tile__placeholder{position:absolute;inset:0;display:block;background:linear-gradient(135deg,var(--ws-material,#eee4c9),var(--ws-surface,#faf9f5));}
 .tile__placeholder::after{content:"";position:absolute;inset:12%;border:1px solid currentColor;opacity:.13}
 .chapter--watch .tile:nth-child(2n) .tile__placeholder,.chapter--walk .tile:nth-child(2n+1) .tile__placeholder{background:linear-gradient(30deg,var(--ws-surface,#faf9f5),var(--ws-material,#eee4c9))}
+
+/* Phase 03 — verified Westside Watch brand asset, shared by all nine First Look spreads. */
+.ws-editorial-brand-star{display:block;flex:none;width:clamp(20px,2vw,32px);height:clamp(20px,2vw,32px);object-fit:contain;align-self:center;opacity:.78}
+.editorial__meta .ws-editorial-brand-star,.chapter__masthead .ws-editorial-brand-star{margin-inline:auto}
+@media(max-width:600px){.ws-editorial-brand-star{width:20px;height:20px}}
+
+
+/* Seven distinct editorial compositions; shared tokens, distinct spatial grammar. */
+@media(min-width:901px){
+.editorial--church .editorial__spread{grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:1fr .34fr}
+.editorial--church .editorial__art{grid-column:1/span 7;grid-row:1/3}
+.editorial--church .editorial__headline{grid-column:8/span 5;grid-row:1;justify-content:center}
+.editorial--church .editorial__line{grid-column:8/span 2;grid-row:2}
+.editorial--church .editorial__panel{grid-column:10/span 3;grid-row:2;display:flex;flex-direction:column;align-items:start}
+.editorial--church .editorial__side{display:none}
+.editorial--magazine .editorial__spread{grid-template-rows:.3fr 1fr .24fr}
+.editorial--magazine .editorial__headline{grid-column:1/-1;grid-row:1;justify-content:end}
+.editorial--magazine .editorial__art{grid-column:4/span 6;grid-row:2}
+.editorial--magazine .editorial__line{grid-column:1/span 3;grid-row:2}
+.editorial--magazine .editorial__panel{grid-column:10/span 3;grid-row:2;flex-direction:column;align-items:start}
+.editorial--magazine .editorial__side{grid-column:1/-1;grid-row:3;flex-direction:row}
+.editorial--bible .editorial__spread{grid-template-rows:1fr .22fr}
+.editorial--bible .editorial__headline{grid-column:1/span 5;grid-row:1;justify-content:center}
+.editorial--bible .editorial__art{grid-column:6/span 7;grid-row:1/3}
+.editorial--bible .editorial__line{grid-column:1/span 2;grid-row:2}
+.editorial--bible .editorial__panel{grid-column:3/span 3;grid-row:2;flex-direction:column;align-items:start}
+.editorial--bible .editorial__side{display:none}
+.editorial--sermon .editorial__spread{grid-template-rows:1fr .18fr}
+.editorial--sermon .editorial__art{grid-column:1/-1;grid-row:1/3}
+.editorial--sermon .editorial__headline{grid-column:1/span 8;grid-row:1;z-index:1;padding:clamp(20px,3vw,48px);border:0;align-self:end}
+.editorial--sermon .editorial__line{grid-column:9/span 4;grid-row:1;z-index:1;padding:clamp(20px,3vw,48px);border:0}
+.editorial--sermon .editorial__panel{grid-column:1/span 9;grid-row:2;z-index:1;padding:12px 24px}
+.editorial--sermon .editorial__side{grid-column:10/span 3;grid-row:2;z-index:1;padding:12px}
+.editorial--book .editorial__spread{grid-template-rows:1fr .25fr}
+.editorial--book .editorial__art{grid-column:1/span 5;grid-row:1/3}
+.editorial--book .editorial__headline{grid-column:6/span 7;grid-row:1;justify-content:center}
+.editorial--book .editorial__line{grid-column:6/span 2;grid-row:2}
+.editorial--book .editorial__panel{grid-column:8/span 4;grid-row:2}
+.editorial--book .editorial__side{grid-column:12/span 1;grid-row:2;writing-mode:vertical-rl}
+.editorial--cinema .editorial__spread{grid-template-rows:.26fr 1fr .22fr}
+.editorial--cinema .editorial__headline{grid-column:1/span 9;grid-row:1}
+.editorial--cinema .editorial__art{grid-column:1/-1;grid-row:2;aspect-ratio:21/9}
+.editorial--cinema .editorial__line{grid-column:10/span 3;grid-row:1}
+.editorial--cinema .editorial__panel{grid-column:1/span 9;grid-row:3}
+.editorial--cinema .editorial__side{grid-column:10/span 3;grid-row:3}
+.editorial--life .editorial__spread{grid-template-rows:1fr .3fr}
+.editorial--life .editorial__headline{grid-column:1/span 6;grid-row:1;align-self:center;justify-content:center}
+.editorial--life .editorial__art{grid-column:7/span 6;grid-row:1;align-self:center;aspect-ratio:1}
+.editorial--life .editorial__line{grid-column:1/span 3;grid-row:2}
+.editorial--life .editorial__panel{grid-column:4/span 6;grid-row:2}
+.editorial--life .editorial__side{grid-column:10/span 3;grid-row:2}
+}
+
+
+/* WestWatch Vol.00 — editorial cover, using the existing canonical masthead SVG. */
+.editorial--magazine .editorial__en--lead{font-size:clamp(58px,7.2vw,142px);line-height:.92;letter-spacing:-.05em;max-width:100%;overflow-wrap:normal}
+.editorial--magazine .editorial__title{font-size:clamp(28px,3.5vw,68px);letter-spacing:.12em;line-height:1.2}
+.editorial--magazine .editorial__art--cover{background:transparent;overflow:visible;display:flex;justify-content:center;align-items:center;min-height:0}
+.editorial--magazine .editorial__art--cover::before,.editorial--magazine .editorial__art--cover::after{display:none}
+.ws-magazine-cover{width:min(100%,430px);height:100%;min-height:330px;aspect-ratio:3/4;position:relative;display:flex;flex-direction:column;overflow:hidden;background:var(--ws-material,#eee4c9);color:var(--ws-text,#252525);border:1px solid currentColor;padding:clamp(16px,2vw,30px);box-shadow:12px 14px 0 color-mix(in srgb,var(--ws-text,#252525) 12%,transparent)}
+.ws-magazine-cover::before{content:"";position:absolute;inset:23% -15% 12% 24%;background:repeating-linear-gradient(110deg,transparent 0 6px,color-mix(in srgb,var(--ws-text,#252525) 11%,transparent) 7px 8px);transform:rotate(-8deg);pointer-events:none}
+.ws-magazine-cover__masthead{position:relative;z-index:1;border-bottom:1px solid currentColor;padding-bottom:12px}
+.ws-magazine-cover__masthead img{width:100%;height:auto;display:block}
+.ws-magazine-cover__folio,.ws-magazine-cover__bottom{position:relative;z-index:1;display:flex;justify-content:space-between;gap:10px;font-family:var(--ws-type-display-en-sc);font-size:var(--ws-type-scale-micro);letter-spacing:.1em}
+.ws-magazine-cover__folio{padding-top:12px}
+.ws-magazine-cover__feature{position:relative;z-index:1;display:flex;flex:1;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:25px 0}
+.ws-magazine-cover__feature>span{font-family:var(--ws-type-display-en);font-size:clamp(24px,3vw,52px);line-height:.94;max-width:8ch}
+.ws-magazine-cover__feature>strong{font-family:var(--ws-type-display-zh);font-size:clamp(22px,2.3vw,40px);font-weight:var(--ws-weight-zh-air,200);letter-spacing:.18em;margin-top:16px}
+.ws-magazine-cover__feature>small{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-meta);margin-top:8px}
+.ws-magazine-cover__bottom{border-top:1px solid currentColor;padding-top:10px}
+@media(max-width:900px){.editorial--magazine .editorial__en--lead{font-size:clamp(42px,10vw,90px)}.editorial--magazine .editorial__title{font-size:clamp(24px,5vw,48px)}.editorial--magazine .editorial__art--cover{aspect-ratio:auto;min-height:470px}.ws-magazine-cover{height:460px;width:min(100%,345px);min-height:0}}
+
+
+/* Phase 03: editorial realms consume the EXISTING Chromatic Field authority.
+   Etching compositions are semantic linework, not replacements for Dore corpus art. */
+.editorial--church{--ws-branch:var(--ws-water);--ws-engraving-opacity:.09;--ws-etch-angle:90deg;--ws-etch-density:14px;--ws-etch-cross:36deg;--ws-light-x:72%;--ws-light-y:18%}
+.editorial--magazine{--ws-branch:var(--ws-first-light);--ws-engraving-opacity:.10;--ws-etch-angle:113deg;--ws-etch-density:8px;--ws-etch-cross:26deg}
+.editorial--bible{--ws-branch:var(--ws-pale-gold);--ws-surface:var(--ws-papyrus);--ws-engraving-opacity:.14;--ws-etch-angle:18deg;--ws-etch-density:11px;--ws-etch-cross:162deg}
+.editorial--sermon{--ws-branch:var(--ws-olive);--ws-engraving-opacity:.13;--ws-etch-angle:68deg;--ws-etch-density:10px;--ws-etch-cross:138deg}
+.editorial--book{--ws-branch:var(--ws-harvest);--ws-engraving-opacity:.12;--ws-etch-angle:0deg;--ws-etch-density:7px;--ws-etch-cross:90deg}
+.editorial--cinema{--ws-branch:var(--ws-crimson);--ws-engraving-opacity:.16;--ws-etch-angle:0deg;--ws-etch-density:20px;--ws-etch-cross:90deg;--ws-light-x:76%;--ws-light-y:12%}
+.editorial--life{--ws-branch:var(--ws-daylight-mauve);--ws-engraving-opacity:.09;--ws-etch-angle:32deg;--ws-etch-density:15px;--ws-etch-cross:146deg;--ws-light-x:64%;--ws-light-y:8%}
+.editorial{background:var(--ws-surface);color:var(--ws-text)}
+.editorial__art{background:color-mix(in oklab,var(--ws-branch) 18%,var(--ws-surface))}
+.editorial__art::before{inset:0;border:0;opacity:1;z-index:0;background:
+ radial-gradient(ellipse at 66% 31%,color-mix(in oklab,var(--ws-branch) 22%,transparent),transparent 54%),
+ repeating-linear-gradient(var(--ws-etch-angle),transparent 0 calc(var(--ws-etch-density) - 1px),color-mix(in oklab,var(--ws-branch) 32%,transparent) calc(var(--ws-etch-density) - 1px) var(--ws-etch-density)),
+ repeating-linear-gradient(var(--ws-etch-cross),transparent 0 calc(var(--ws-etch-density) * 2.5),color-mix(in oklab,var(--ws-text) 12%,transparent) calc(var(--ws-etch-density) * 2.5) calc(var(--ws-etch-density) * 2.5 + 1px));mask-image:radial-gradient(ellipse at 50% 50%,#000 12%,transparent 88%);pointer-events:none}
+.editorial__art::after{z-index:1}
+.editorial--church .editorial__art::before{background:repeating-linear-gradient(90deg,transparent 0 24px,color-mix(in oklab,var(--ws-water) 25%,transparent) 25px 26px),linear-gradient(155deg,transparent 30%,color-mix(in oklab,var(--ws-water) 18%,transparent) 60%,transparent 82%);mask-image:linear-gradient(180deg,transparent,#000 30%,#000 85%,transparent)}
+.editorial--bible .editorial__art::before{background:repeating-radial-gradient(ellipse at 75% 120%,transparent 0 11px,color-mix(in oklab,var(--ws-pale-gold) 45%,transparent) 12px 13px,transparent 14px 25px),repeating-linear-gradient(18deg,transparent 0 13px,color-mix(in oklab,var(--ws-text) 10%,transparent) 14px 15px)}
+.editorial--sermon .editorial__art::before{background:repeating-radial-gradient(ellipse at 48% 55%,transparent 0 24px,color-mix(in oklab,var(--ws-olive) 35%,transparent) 25px 26px,transparent 27px 46px),repeating-linear-gradient(68deg,transparent 0 8px,color-mix(in oklab,var(--ws-text) 10%,transparent) 9px 10px)}
+.editorial--book .editorial__art::before{background:repeating-linear-gradient(0deg,transparent 0 5px,color-mix(in oklab,var(--ws-harvest) 28%,transparent) 6px 7px,transparent 8px 17px),linear-gradient(90deg,transparent 42%,color-mix(in oklab,var(--ws-harvest) 28%,transparent) 48%,transparent 54%)}
+.editorial--cinema .editorial__art::before{background:repeating-linear-gradient(0deg,transparent 0 30px,color-mix(in oklab,var(--ws-crimson) 28%,transparent) 31px 32px),repeating-linear-gradient(90deg,transparent 0 58px,color-mix(in oklab,var(--ws-text) 13%,transparent) 59px 60px);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+.editorial--life .editorial__art::before{background:repeating-radial-gradient(circle at 67% 25%,transparent 0 13px,color-mix(in oklab,var(--ws-daylight-mauve) 24%,transparent) 14px 15px,transparent 16px 32px)}
+/* Cover inherits the magazine branch ink and light; no black/gold local palette. */
+.ws-magazine-cover{background:color-mix(in oklab,var(--ws-branch) 17%,var(--ws-surface))}
