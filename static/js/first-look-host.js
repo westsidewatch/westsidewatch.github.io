@@ -71,8 +71,9 @@
   const duration=opening?1100:880;
   const direction=opening?1:-1;
   const sheetAnimations=sheets.map((sheet,i)=>play(sheet,[
-   {transform:opening?'translate3d(0,-105%,0)':'translate3d(0,0,0)'},
-   {transform:opening?'translate3d(0,0,0)':'translate3d(0,-105%,0)'}
+   {transform:opening?'translate3d(0,-105%,0)':'translate3d(0,105%,0)',offset:0},
+   {transform:'translate3d(0,0,0)',offset:.5},
+   {transform:opening?'translate3d(0,105%,0)':'translate3d(0,-105%,0)',offset:1}
   ],{duration:duration*.68,delay:opening?i*105:(2-i)*80,easing:ease}));
   const panelAnimation=play(panel,[
    {clipPath:opening?'inset(0 0 100% 0)':'inset(0 0 0 0)'},
