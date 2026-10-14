@@ -126,6 +126,7 @@ body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
  font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)!important;
  font-size:clamp(17px,1.1vw,23px)!important;font-weight:400!important;
  line-height:var(--ws-dawn-scripture-en-line-height,1.08)!important;letter-spacing:.01em!important;color:inherit!important;
+ margin-top:calc(-1 * var(--ws-dawn-scripture-en-pullup,10px))!important;
 }
 body.home .sites-home-nav--floating .ws-dawn-scripture cite{
  display:block!important;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
