@@ -1405,3 +1405,23 @@ html.ws-home-menu-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
  .sites-home-nav--floating .sites-home-nav__details .sites-home-nav__panel{animation:none!important}
 }
+
+
+/* Ensure the full-screen CONTENTS curtain is anchored to the viewport,
+   above the hero iframe and all home layers, regardless of parent transforms. */
+body:has(.sites-home-nav__details[open]) .sites-home-nav--floating{
+ position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
+ transform:none!important;opacity:1!important;visibility:visible!important;
+ pointer-events:none!important;z-index:2147483000!important;
+}
+body:has(.sites-home-nav__details[open]) .sites-home-nav--floating .sites-home-nav__details{
+ position:static!important;pointer-events:none!important;
+}
+body:has(.sites-home-nav__details[open]) .sites-home-nav--floating .sites-home-nav__details>summary{
+ position:fixed!important;top:clamp(14px,2vw,30px)!important;right:clamp(20px,4vw,65px)!important;
+ z-index:2147483002!important;pointer-events:auto!important;
+}
+body:has(.sites-home-nav__details[open]) .sites-home-nav--floating .sites-home-nav__panel{
+ position:fixed!important;inset:0!important;z-index:2147483001!important;
+ pointer-events:auto!important;transform:none!important;
+}
