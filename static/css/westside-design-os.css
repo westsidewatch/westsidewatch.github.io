@@ -1304,3 +1304,43 @@ body:has(> .chapter){margin:0;color:var(--ws-text,#252525);background:var(--ws-s
 .editorial--life .editorial__art::before{background:repeating-radial-gradient(circle at 67% 25%,transparent 0 13px,color-mix(in oklab,var(--ws-daylight-mauve) 24%,transparent) 14px 15px,transparent 16px 32px)}
 /* Cover inherits the magazine branch ink and light; no black/gold local palette. */
 .ws-magazine-cover{background:color-mix(in oklab,var(--ws-branch) 17%,var(--ws-surface))}
+
+
+/* Phase 03 correction: etching belongs to the FULL page material, never the image slot.
+   Keep art wells clear for the verified photography and Dore illustrations to come. */
+.editorial{isolation:isolate;--ws-etch-opacity:var(--ws-engraving-opacity);background:
+ radial-gradient(ellipse at var(--ws-light-x,72%) var(--ws-light-y,18%),color-mix(in oklab,var(--ws-branch) 13%,transparent),transparent 62%),
+ repeating-linear-gradient(var(--ws-etch-angle,113deg),transparent 0 calc(var(--ws-etch-density,12px) - 1px),color-mix(in oklab,var(--ws-branch) 19%,transparent) calc(var(--ws-etch-density,12px) - 1px) var(--ws-etch-density,12px)),
+ repeating-linear-gradient(var(--ws-etch-cross,26deg),transparent 0 29px,color-mix(in oklab,var(--ws-text) 7%,transparent) 30px 31px),
+ var(--ws-surface)}
+.editorial__art{background:color-mix(in oklab,var(--ws-branch) 6%,var(--ws-surface));isolation:isolate}
+.editorial__art::before,.editorial__art::after{content:none!important;display:none!important}
+.editorial--church .editorial__art{background:var(--ws-surface)}
+.editorial--magazine .editorial__art--cover{background:transparent}
+.ws-magazine-cover{box-sizing:border-box;aspect-ratio:210/297;width:auto;height:auto;min-height:0;max-width:100%;max-height:100%;flex:none;box-shadow:10px 12px 0 color-mix(in srgb,var(--ws-text) 10%,transparent)}
+@media(min-width:901px){.editorial--magazine .editorial__art--cover{min-height:0;align-self:stretch;overflow:visible}.editorial--magazine .ws-magazine-cover{height:100%;width:auto;max-width:100%;max-height:100%}}
+@media(max-width:900px){.editorial--magazine .editorial__art--cover{min-height:0;aspect-ratio:auto;padding:18px 0}.editorial--magazine .ws-magazine-cover{width:min(100%,330px);height:auto;max-height:none;aspect-ratio:210/297}}
+
+
+/* Editorial typography hierarchy: English is the dominant title, Chinese is the
+   secondary editorial caption. Optical rhythm is set per composition, not by
+   stretching glyphs or using oversized duplicate headlines. */
+.editorial__headline{min-width:0;gap:clamp(10px,1.6vw,24px);align-items:flex-start}
+.editorial__en{order:1;font-family:var(--ws-type-display-en);font-weight:400;font-synthesis:none;font-size:clamp(58px,6.5vw,118px);line-height:.92;letter-spacing:-.045em;margin:0;max-width:100%;overflow-wrap:normal;hyphens:none;text-wrap:balance}
+.editorial__title{order:2;font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);font-synthesis:none;font-size:clamp(25px,2.5vw,44px);line-height:1.4;letter-spacing:.13em;margin:0}
+.editorial__chapter{font-size:clamp(56px,8vw,128px);opacity:.075;top:0;right:0;line-height:1;z-index:0}
+.editorial__statement{font-size:clamp(25px,2.5vw,44px);line-height:1.06;letter-spacing:-.025em;text-wrap:balance}
+.editorial__keywords{font-size:clamp(16px,1.5vw,25px);letter-spacing:.1em;line-height:1.5}
+.editorial--magazine .editorial__en--lead{font-size:clamp(48px,5.2vw,98px);line-height:.96;max-width:100%;text-wrap:balance}
+.editorial--magazine .editorial__title{font-size:clamp(25px,2.5vw,44px)}
+/* Long English names need an editorial measure; do not distort or compress type. */
+.editorial--church .editorial__en,.editorial--sermon .editorial__en,.editorial--cinema .editorial__en{font-size:clamp(46px,5vw,90px)}
+.editorial--magazine .editorial__headline{justify-content:center}
+@media(max-width:900px){
+ .editorial__en{font-size:clamp(42px,9vw,82px)}
+ .editorial__title{font-size:clamp(22px,4vw,35px)}
+ .editorial--magazine .editorial__en--lead{font-size:clamp(40px,8vw,74px)}
+ .editorial--magazine .editorial__title{font-size:clamp(22px,4vw,35px)}
+ .editorial--church .editorial__en,.editorial--sermon .editorial__en,.editorial--cinema .editorial__en{font-size:clamp(38px,7.5vw,70px)}
+ .editorial__chapter{font-size:clamp(48px,12vw,95px)}
+}
