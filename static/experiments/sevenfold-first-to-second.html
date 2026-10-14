@@ -58,16 +58,17 @@ root.querySelector('.planes').style.opacity='1';
 // Editorial content is never a background to a moving multi-colour flag.
 const gateProgress=reduced.matches?1:clamp(((-rect.top)-innerHeight*.9)/(innerHeight*1.1),0,1);
 const door=smooth(clamp((gateProgress-.22)/.56,0,1));
-church.style.visibility=gateProgress>0?'visible':'hidden';
+const churchHold=(-rect.top)<innerHeight*2.65;
+church.style.visibility=gateProgress>0&&churchHold?'visible':'hidden';
 church.style.opacity=String(smooth(clamp(gateProgress/.25,0,1)));
-church.setAttribute('aria-hidden',gateProgress>0?'false':'true');
-gate.style.visibility=gateProgress>0&&gateProgress<1?'visible':'hidden';
+church.setAttribute('aria-hidden',gateProgress>0&&churchHold?'false':'true');
+gate.style.visibility=gateProgress>0&&gateProgress<1&&churchHold?'visible':'hidden';
 gate.style.opacity=String(smooth(clamp(gateProgress/.18,0,1)));
 leaves[0].style.transform='translate3d('+(-door*101)+'%,0,0)';
 leaves[1].style.transform='translate3d('+(door*101)+'%,0,0)';
 root.querySelector('.planes').style.visibility=gateProgress>0?'hidden':'visible';
-const q=clamp(((-rect.top)-(innerHeight*.5))/Math.max(1,travel-innerHeight*.5),0,.999999),scene=Math.min(6,Math.floor(q*7)),local=q*7-scene;
-editions.forEach((el,i)=>{const active=i===scene&&gateProgress===0;el.classList.toggle('is-current',active);el.style.visibility=active?'visible':'hidden';el.style.opacity=active?String(clamp(reveal*2,0,1)):0;el.setAttribute('aria-hidden',active?'false':'true');el.querySelectorAll('a').forEach(a=>a.tabIndex=active?0:-1)});
+const q=clamp(((-rect.top)-(innerHeight*2.65))/Math.max(1,travel-innerHeight*2.65),0,.999999),scene=Math.min(6,Math.floor(q*7)),local=q*7-scene;
+editions.forEach((el,i)=>{const active=i===scene&&(!churchHold||gateProgress===0);el.classList.toggle('is-current',active);el.style.visibility=active?'visible':'hidden';el.style.opacity=active?String(clamp(reveal*2,0,1)):0;el.setAttribute('aria-hidden',active?'false':'true');el.querySelectorAll('a').forEach(a=>a.tabIndex=active?0:-1)});
 if(previous!==scene){index.textContent=String(scene+1).padStart(2,'0')+' / 07';previous=scene}}
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener('change',schedule);render()})();
 </script></body></html>
