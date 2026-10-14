@@ -74,7 +74,12 @@
   const rect=slogan.getBoundingClientRect();
   const current=Number(window.gsap?.getProperty(plane,'y'))||0;
   // Keep the slogan visible in the upper half after the menu reveals.
-  const shift=Math.min(0,window.innerHeight*.045-(rect.top-current));
+  const os=getComputedStyle(document.body);
+  const target=window.innerHeight*(parseFloat(os.getPropertyValue('--ws-dawn-slogan-open-top'))||4.5)/100;
+  const shift=Math.min(0,target-(rect.top-current));
+  const clearance=parseFloat(os.getPropertyValue('--ws-dawn-slogan-menu-clearance'))||28;
+  const minTop=window.innerHeight*(parseFloat(os.getPropertyValue('--ws-dawn-menu-min-top'))||25)/100;
+  nav.style.setProperty('--ws-dawn-links-top',Math.ceil(Math.max(minTop,rect.bottom-current+shift+clearance))+'px');
   // Align the large logo to the centre of the visible lower Film half after translation.
   // This is one static plane geometry variable, not an independent animated transform.
   const image=largeLogo.querySelector('img');
