@@ -304,7 +304,7 @@ body.home.ws-dawn-hero-outside > .ws-dawn-scripture{
  }
  body.home > .ws-dawn-scripture{
   left:auto!important;
-  right:clamp(30px,4vw,88px)!important;
+  right:calc(clamp(20px,3vw,52px) + 12px)!important;
   width:min(36vw,540px)!important;
   max-width:calc(100vw - 2 * clamp(30px,4vw,88px))!important;
   transform:none!important;
