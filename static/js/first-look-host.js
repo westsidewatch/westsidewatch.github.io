@@ -42,6 +42,8 @@
  const root=document.documentElement;
  const hero=document.querySelector('.sites-home-hero');
  const plane=hero?.querySelector('.ws-dawn-brand-plane');
+ // Keep the original slogan and both logos on ONE plane above the folds.
+ if(plane&&nav&&!nav.contains(plane))nav.appendChild(plane);
  const slogan=plane?.querySelector('#sites-home-title');
  const largeLogo=plane?.querySelector('.ws-dawn-large-logo');
  const scripture=hero?.querySelector('.ws-dawn-scripture');
