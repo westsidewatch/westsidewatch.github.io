@@ -45,7 +45,7 @@ try {
           };
           const closed = await capture('closed');
           await summary.click();
-          await page.waitForFunction(() => document.documentElement.classList.contains('ws-dawn-open'), {timeout:7000});
+          await page.waitForFunction(() => document.documentElement.classList.contains('ws-dawn-open'), null, {timeout:7000});
           const opened = await capture('open');
           if (opened.folds !== 7) { failures++; items.push({error:'sevenfold layers: expected 7, got '+opened.folds}); }
           if (!opened.logo || !opened.scripture || !opened.panel) { failures++; items.push({error:'missing dawn geometry'}); }
@@ -56,7 +56,7 @@ try {
           }
           if (await film.getAttribute('src') !== filmSrc) { failures++; items.push({error:'Film source changed during opening'}); }
           await summary.click();
-          await page.waitForFunction(() => !document.documentElement.classList.contains('ws-dawn-active'), {timeout:7000});
+          await page.waitForFunction(() => !document.documentElement.classList.contains('ws-dawn-active'), null, {timeout:7000});
           await capture('reversed');
           output.push({url:spec.url,viewport,sevenfoldFrames:frames});
         }
