@@ -1372,3 +1372,17 @@ body:has(> .chapter){margin:0;color:var(--ws-text,#252525);background:var(--ws-s
 
 html.ws-home-menu-open{overflow:hidden}
 .sites-home-nav--floating details[open] .sites-home-nav__panel{pointer-events:auto}
+
+
+/* Nava-inspired hover-to-preview: no navigation on pointer movement. */
+@media(min-width:901px) and (hover:hover){
+ .sites-home-nav--floating .sites-home-nav__panel-links{position:relative;z-index:2;grid-template-columns:minmax(0,1fr);width:51%;max-height:58vh;overflow-y:auto;align-content:center}
+ .sites-home-nav--floating .sites-home-nav__panel-links>a{font-size:clamp(25px,3vw,55px)!important}
+ .ws-nav-hover-preview{position:absolute;z-index:1;right:clamp(28px,8vw,150px);top:19%;bottom:20%;width:35%;display:flex;flex-direction:column;gap:12px;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .32s ease,transform .55s cubic-bezier(.2,.75,.2,1)}
+ .ws-nav-hover-preview.is-visible{opacity:1;transform:translateY(0)}
+ .ws-nav-hover-preview__visual{flex:1;min-height:0;overflow:hidden;background:var(--ws-material,#eee4c9);box-shadow:0 18px 55px rgba(0,0,0,.07)}
+ .ws-nav-hover-preview__visual iframe{width:100%;height:100%;border:0;pointer-events:none}
+ .ws-nav-hover-preview__caption{font-family:var(--ws-type-display-en-sc);font-size:12px;letter-spacing:.15em}
+}
+@media(max-width:900px),(hover:none){.ws-nav-hover-preview{display:none}}
+@media(prefers-reduced-motion:reduce){.ws-nav-hover-preview{transition:none!important}}
