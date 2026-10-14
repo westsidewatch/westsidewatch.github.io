@@ -1278,3 +1278,29 @@ body:has(> .chapter){margin:0;color:var(--ws-text,#252525);background:var(--ws-s
 .ws-magazine-cover__feature>small{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-meta);margin-top:8px}
 .ws-magazine-cover__bottom{border-top:1px solid currentColor;padding-top:10px}
 @media(max-width:900px){.editorial--magazine .editorial__en--lead{font-size:clamp(42px,10vw,90px)}.editorial--magazine .editorial__title{font-size:clamp(24px,5vw,48px)}.editorial--magazine .editorial__art--cover{aspect-ratio:auto;min-height:470px}.ws-magazine-cover{height:460px;width:min(100%,345px);min-height:0}}
+
+
+/* Phase 03: editorial realms consume the EXISTING Chromatic Field authority.
+   Etching compositions are semantic linework, not replacements for Dore corpus art. */
+.editorial--church{--ws-branch:var(--ws-water);--ws-engraving-opacity:.09;--ws-etch-angle:90deg;--ws-etch-density:14px;--ws-etch-cross:36deg;--ws-light-x:72%;--ws-light-y:18%}
+.editorial--magazine{--ws-branch:var(--ws-first-light);--ws-engraving-opacity:.10;--ws-etch-angle:113deg;--ws-etch-density:8px;--ws-etch-cross:26deg}
+.editorial--bible{--ws-branch:var(--ws-pale-gold);--ws-surface:var(--ws-papyrus);--ws-engraving-opacity:.14;--ws-etch-angle:18deg;--ws-etch-density:11px;--ws-etch-cross:162deg}
+.editorial--sermon{--ws-branch:var(--ws-olive);--ws-engraving-opacity:.13;--ws-etch-angle:68deg;--ws-etch-density:10px;--ws-etch-cross:138deg}
+.editorial--book{--ws-branch:var(--ws-harvest);--ws-engraving-opacity:.12;--ws-etch-angle:0deg;--ws-etch-density:7px;--ws-etch-cross:90deg}
+.editorial--cinema{--ws-branch:var(--ws-crimson);--ws-engraving-opacity:.16;--ws-etch-angle:0deg;--ws-etch-density:20px;--ws-etch-cross:90deg;--ws-light-x:76%;--ws-light-y:12%}
+.editorial--life{--ws-branch:var(--ws-daylight-mauve);--ws-engraving-opacity:.09;--ws-etch-angle:32deg;--ws-etch-density:15px;--ws-etch-cross:146deg;--ws-light-x:64%;--ws-light-y:8%}
+.editorial{background:var(--ws-surface);color:var(--ws-text)}
+.editorial__art{background:color-mix(in oklab,var(--ws-branch) 18%,var(--ws-surface))}
+.editorial__art::before{inset:0;border:0;opacity:1;z-index:0;background:
+ radial-gradient(ellipse at 66% 31%,color-mix(in oklab,var(--ws-branch) 22%,transparent),transparent 54%),
+ repeating-linear-gradient(var(--ws-etch-angle),transparent 0 calc(var(--ws-etch-density) - 1px),color-mix(in oklab,var(--ws-branch) 32%,transparent) calc(var(--ws-etch-density) - 1px) var(--ws-etch-density)),
+ repeating-linear-gradient(var(--ws-etch-cross),transparent 0 calc(var(--ws-etch-density) * 2.5),color-mix(in oklab,var(--ws-text) 12%,transparent) calc(var(--ws-etch-density) * 2.5) calc(var(--ws-etch-density) * 2.5 + 1px));mask-image:radial-gradient(ellipse at 50% 50%,#000 12%,transparent 88%);pointer-events:none}
+.editorial__art::after{z-index:1}
+.editorial--church .editorial__art::before{background:repeating-linear-gradient(90deg,transparent 0 24px,color-mix(in oklab,var(--ws-water) 25%,transparent) 25px 26px),linear-gradient(155deg,transparent 30%,color-mix(in oklab,var(--ws-water) 18%,transparent) 60%,transparent 82%);mask-image:linear-gradient(180deg,transparent,#000 30%,#000 85%,transparent)}
+.editorial--bible .editorial__art::before{background:repeating-radial-gradient(ellipse at 75% 120%,transparent 0 11px,color-mix(in oklab,var(--ws-pale-gold) 45%,transparent) 12px 13px,transparent 14px 25px),repeating-linear-gradient(18deg,transparent 0 13px,color-mix(in oklab,var(--ws-text) 10%,transparent) 14px 15px)}
+.editorial--sermon .editorial__art::before{background:repeating-radial-gradient(ellipse at 48% 55%,transparent 0 24px,color-mix(in oklab,var(--ws-olive) 35%,transparent) 25px 26px,transparent 27px 46px),repeating-linear-gradient(68deg,transparent 0 8px,color-mix(in oklab,var(--ws-text) 10%,transparent) 9px 10px)}
+.editorial--book .editorial__art::before{background:repeating-linear-gradient(0deg,transparent 0 5px,color-mix(in oklab,var(--ws-harvest) 28%,transparent) 6px 7px,transparent 8px 17px),linear-gradient(90deg,transparent 42%,color-mix(in oklab,var(--ws-harvest) 28%,transparent) 48%,transparent 54%)}
+.editorial--cinema .editorial__art::before{background:repeating-linear-gradient(0deg,transparent 0 30px,color-mix(in oklab,var(--ws-crimson) 28%,transparent) 31px 32px),repeating-linear-gradient(90deg,transparent 0 58px,color-mix(in oklab,var(--ws-text) 13%,transparent) 59px 60px);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+.editorial--life .editorial__art::before{background:repeating-radial-gradient(circle at 67% 25%,transparent 0 13px,color-mix(in oklab,var(--ws-daylight-mauve) 24%,transparent) 14px 15px,transparent 16px 32px)}
+/* Cover inherits the magazine branch ink and light; no black/gold local palette. */
+.ws-magazine-cover{background:color-mix(in oklab,var(--ws-branch) 17%,var(--ws-surface))}
