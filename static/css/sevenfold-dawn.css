@@ -113,6 +113,10 @@ body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pai
  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
  gap:var(--ws-dawn-scripture-bilingual-gap,0px)!important;padding:0!important;margin:0!important;color:inherit!important;
 }
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh,
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
+ margin-block:0!important;
+}
 body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
  font-size:clamp(19px,1.24vw,26px)!important;font-weight:200!important;
