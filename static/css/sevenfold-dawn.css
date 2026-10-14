@@ -243,3 +243,13 @@ body.home > .ws-dawn-scripture .sites-home-scripture-pair > p > cite{
  padding-left:0!important;padding-right:0!important;
  text-align:center!important;
 }
+
+/* Design OS scripture type hierarchy: same semantic size for both languages,
+   smaller independent citation. No geometry or spacing changes. */
+body.home > .ws-dawn-scripture .sites-home-slogan-zh,
+body.home > .ws-dawn-scripture .sites-home-scripture{
+ font-size:var(--ws-type-scale-reading-lg)!important;
+}
+body.home > .ws-dawn-scripture cite.ws-scripture-reference{
+ font-size:var(--ws-type-scripture-reference-size)!important;
+}
