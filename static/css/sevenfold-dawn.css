@@ -369,3 +369,10 @@ body.home .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture,.ws
   bottom:clamp(28px,5dvh,72px)!important;
  }
 }
+
+/* Half-screen curtain: restore white scripture for contrast against all seven colors.
+   Full-screen film retains Dawn Gold; no layout changes. */
+html.ws-dawn-active body.home .ws-dawn-scripture,
+html.ws-dawn-active body.home .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture,.ws-scripture-reference){
+ color:#fff!important;
+}
