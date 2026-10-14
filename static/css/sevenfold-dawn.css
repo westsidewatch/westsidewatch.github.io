@@ -294,3 +294,19 @@ body.home.ws-dawn-hero-outside > .ws-dawn-scripture{
  opacity:0!important;
  pointer-events:none!important;
 }
+
+/* Desktop editorial row: slogan and scripture share a measured top line.
+   Scripture right edge mirrors the masthead's --home-edge left inset. */
+@media(min-width:701px) and (min-height:571px){
+ body.home .ws-dawn-brand-plane .sites-home-intro{
+  top:var(--ws-dawn-editorial-row-top,40dvh)!important;
+  bottom:auto!important;
+ }
+ body.home > .ws-dawn-scripture{
+  left:auto!important;
+  right:clamp(30px,4vw,88px)!important;
+  width:min(36vw,540px)!important;
+  max-width:calc(100vw - 2 * clamp(30px,4vw,88px))!important;
+  transform:none!important;
+ }
+}
