@@ -131,7 +131,7 @@ body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
 body.home .sites-home-nav--floating .ws-dawn-scripture cite{
  display:block!important;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
  font-size:inherit!important;font-style:italic!important;
- margin-top:var(--ws-dawn-scripture-cite-gap,3px)!important;margin-left:var(--ws-dawn-scripture-cite-indent,1.4em)!important;color:inherit!important;
+ margin-top:var(--ws-dawn-scripture-cite-gap,3px)!important;margin-left:0!important;padding-left:var(--ws-dawn-scripture-cite-indent,2.5em)!important;box-sizing:border-box!important;color:inherit!important;
 }
 
 /* Navigation row 4: SEARCH and 07 share an identical grid baseline. */
