@@ -1403,7 +1403,7 @@ html.ws-home-menu-open{overflow:hidden}
 .sites-home-nav--floating:has(.sites-home-nav__details[open]) .sites-home-nav__panel{
  position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
  z-index:2147483001!important;pointer-events:auto!important;
- clip-path:circle(150vmax at 90% 4%)!important;
+ clip-path:circle(150vmax at 90% 4%);
  animation:none!important;transition:none!important;visibility:visible!important;opacity:1!important;
 }
 .sites-home-nav--floating .sites-home-nav__details.is-closing .sites-home-nav__panel{pointer-events:none!important}
