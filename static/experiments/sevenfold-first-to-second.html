@@ -23,6 +23,20 @@
 .showcase .stage-head{top:calc(50svh + 14px)!important}
 .showcase .index{bottom:14px!important}
 @media(max-width:700px){.showcase .composition .edition{align-content:center!important;gap:8px!important}.showcase .composition .edition h2{font-size:clamp(40px,12vw,75px)!important}.showcase .composition .edition .description{font-size:12px!important}}
+
+/* Church-only editorial gate: the first settled horizontal split becomes a vertical pair of doors. */
+.showcase .church-gate{position:absolute;inset:0;z-index:35;pointer-events:none;visibility:hidden;overflow:hidden}
+.showcase .church-gate__leaf{position:absolute;top:0;bottom:0;width:50%;background:#e5dcca;will-change:transform,clip-path;box-shadow:inset 0 0 0 1px rgba(90,75,55,.1)}
+.showcase .church-gate__leaf:first-child{left:0;transform-origin:left center}
+.showcase .church-gate__leaf:last-child{right:0;transform-origin:right center}
+.showcase .church-editorial{position:absolute;inset:0;z-index:11;background:#eeeae1;visibility:hidden;display:grid;grid-template-columns:1.08fr .92fr;overflow:hidden}
+.showcase .church-editorial__visual{background:radial-gradient(ellipse at 70% 24%,#f9f3e7 0,transparent 50%),repeating-radial-gradient(ellipse at 60% 60%,transparent 0 14px,rgba(95,76,43,.13) 15px 16px),#d6c9b2;min-width:0}
+.showcase .church-editorial__copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(30px,5vw,90px);gap:1.2rem}
+.showcase .church-editorial__copy small{font:400 12px var(--ws-type-display-en-sc,serif);letter-spacing:.2em}
+.showcase .church-editorial__copy h2{font:400 clamp(58px,8vw,150px)/.84 var(--ws-type-display-en,serif);letter-spacing:-.055em;margin:0}
+.showcase .church-editorial__copy p{font-weight:200;line-height:1.9;max-width:27ch}
+.showcase .church-editorial__copy a{color:inherit;text-decoration:none;border-bottom:1px solid;width:max-content;padding-bottom:6px}
+@media(max-width:700px){.showcase .church-editorial{grid-template-columns:1fr 1fr}.showcase .church-editorial__copy{padding:5vw;gap:.6rem}.showcase .church-editorial__copy h2{font-size:clamp(30px,7vw,60px)}.showcase .church-editorial__copy p{font-size:12px}}
 </style></head><body data-ws-scope="global"><section class="first" aria-label="首頁第一屏"><div class="head"><span>WESTSIDE WATCH</span><span>01 / SEVENFOLD DAWN</span></div><div><h1>Watch for<br><i>the Dawn.</i></h1><p>黑夜已深，白晝將近。<br>The night is far spent. The day is at hand.</p></div></section><section class="showcase" aria-label="七重編輯展示"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"></div></div><div class="stage-head"><span>WESTSIDE WATCH · EDITORIAL SHOWCASE</span><span>SCROLL / SEVEN SPATIAL STUDIES</span></div><div class="composition">
 <article class="edition" data-variant="0"><div class="headline"><span class="category">01 / Living Water West</span><h2>Living<br><i>Water.</i></h2><div class="cn">活水西區 · 教會</div></div><div class="detail"><p class="description">從光線、建築與敬拜開始。讓教會的生命在一個安靜而敞開的編輯空間中被看見。</p><a href="/church/">ENTER LIVING WATER ↗</a></div></article>
 <article class="edition" data-variant="1"><div class="headline"><span class="category">02 / Magazine</span><h2>Watch<br><i>for Dawn.</i></h2><div class="cn">西望 · 獨立網絡雜誌</div></div><div class="detail"><p class="description">以文字、影像與編輯的秩序，重新理解我們所生活的世界。</p><a href="/journal/">READ THE JOURNAL ↗</a></div></article>
@@ -31,9 +45,10 @@
 <article class="edition" data-variant="4"><div class="headline"><span class="category">05 / Dawn Library</span><h2>Pages<br><i>of Light.</i></h2><div class="cn">黎明書局 · 閱讀與研究</div></div><div class="detail"><p class="description">書封、文字與內頁，在四分之一的空間裡打開另一個閱讀世界。</p><a href="/dawn-library/">OPEN THE LIBRARY ↗</a></div></article>
 <article class="edition" data-variant="5"><div class="headline"><span class="category">06 / Paradise Cinema</span><h2>Moving<br><i>Images.</i></h2><div class="cn">天堂電影院 · 影像</div></div><div class="detail"><p class="description">銀幕不只播放故事，也讓影像、標題與時間共同構成電影雜誌的語言。</p><a href="/cinema/">ENTER CINEMA ↗</a></div></article>
 <article class="edition" data-variant="6"><div class="headline"><span class="category">07 / Daylight Café</span><h2>Everyday<br><i>Light.</i></h2><div class="cn">日光咖啡館 · 生活</div></div><div class="detail"><p class="description">在日常生活的細節裡，留下一個讓光進來的位置。</p><a href="/daylight-cafe/">ENTER DAYLIGHT ↗</a></div></article>
-</div><div class="index" aria-live="off">01 / 07</div></div></section><script>
+</div><div class="church-editorial" aria-hidden="true"><div class="church-editorial__visual"></div><div class="church-editorial__copy"><small>01 / LIVING WATER WEST</small><h2>Living<br><i>Water.</i></h2><p>活水西區 · 教會</p><p>從光線、建築與敬拜開始。讓教會的生命在安靜敞開的編輯空間中被看見。</p><a href="/church/">ENTER LIVING WATER ↗</a></div></div><div class="church-gate" aria-hidden="true"><div class="church-gate__leaf"></div><div class="church-gate__leaf"></div></div><div class="index" aria-live="off">01 / 07</div></div></section><script>
 (()=>{'use strict';const root=document.querySelector('.showcase');if(!root)return;
 const planes=[...root.querySelectorAll('.plane')],editions=[...root.querySelectorAll('.edition')],index=root.querySelector('.index');
+const gate=root.querySelector('.church-gate'),leaves=[...gate.children],church=root.querySelector('.church-editorial');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));const smooth=x=>x*x*(3-2*x);let raf=0,previous=-1;
 function render(){raf=0;const rect=root.getBoundingClientRect(),travel=Math.max(1,root.offsetHeight-innerHeight),p=reduced.matches?1:clamp(-rect.top/travel,0,1);
 // Curtain handoff happens ONCE during the first 14% of the pinned second-screen travel.
@@ -41,8 +56,18 @@ function render(){raf=0;const rect=root.getBoundingClientRect(),travel=Math.max(
 planes.forEach((el,i)=>{const start=i*.075,phase=clamp((reveal-start)/.48,0,1);const opened=smooth(phase);el.style.setProperty('transform','scale3d(1,'+opened+',1)','important');el.style.zIndex=String(i+1);el.style.visibility='visible'});
 root.querySelector('.planes').style.opacity='1';
 // Editorial content is never a background to a moving multi-colour flag.
+const gateProgress=reduced.matches?1:clamp(((-rect.top)-innerHeight*.9)/(innerHeight*1.1),0,1);
+const door=smooth(clamp((gateProgress-.22)/.56,0,1));
+church.style.visibility=gateProgress>0?'visible':'hidden';
+church.style.opacity=String(smooth(clamp(gateProgress/.25,0,1)));
+church.setAttribute('aria-hidden',gateProgress>0?'false':'true');
+gate.style.visibility=gateProgress>0&&gateProgress<1?'visible':'hidden';
+gate.style.opacity=String(smooth(clamp(gateProgress/.18,0,1)));
+leaves[0].style.transform='translate3d('+(-door*101)+'%,0,0)';
+leaves[1].style.transform='translate3d('+(door*101)+'%,0,0)';
+root.querySelector('.planes').style.visibility=gateProgress>0?'hidden':'visible';
 const q=clamp(((-rect.top)-(innerHeight*.5))/Math.max(1,travel-innerHeight*.5),0,.999999),scene=Math.min(6,Math.floor(q*7)),local=q*7-scene;
-editions.forEach((el,i)=>{const active=i===scene;el.classList.toggle('is-current',active);el.style.visibility=active?'visible':'hidden';el.style.opacity=active?String(clamp(reveal*2,0,1)):0;el.setAttribute('aria-hidden',active?'false':'true');el.querySelectorAll('a').forEach(a=>a.tabIndex=active?0:-1)});
+editions.forEach((el,i)=>{const active=i===scene&&gateProgress===0;el.classList.toggle('is-current',active);el.style.visibility=active?'visible':'hidden';el.style.opacity=active?String(clamp(reveal*2,0,1)):0;el.setAttribute('aria-hidden',active?'false':'true');el.querySelectorAll('a').forEach(a=>a.tabIndex=active?0:-1)});
 if(previous!==scene){index.textContent=String(scene+1).padStart(2,'0')+' / 07';previous=scene}}
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener('change',schedule);render()})();
 </script></body></html>
