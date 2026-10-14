@@ -1456,3 +1456,14 @@ html.ws-scale-reveal-open .sites-home-nav__panel-entries>a{transition-delay:.65s
  transition:none!important;
  }
 }
+
+/* Design OS / Sevenfold geometry authority.
+   Adjust these scoped tokens rather than patching individual page selectors. */
+body.home{
+ --ws-dawn-slogan-open-top:4.5dvh;
+ --ws-dawn-slogan-menu-clearance:28px;
+ --ws-dawn-menu-min-top:25dvh;
+ --ws-dawn-menu-row-height:42px;
+ --ws-dawn-scripture-top:39dvh;
+ --ws-dawn-scripture-right:6vw;
+}
