@@ -49,7 +49,7 @@
  const scripture=hero?.querySelector('.ws-dawn-scripture');
  // A fixed element inside the clipped Film hero may disappear behind the menu.
  // Keep the single canonical scripture node in the top-level navigation layer.
- if(scripture&&nav&&!nav.contains(scripture))nav.appendChild(scripture);
+ if(scripture&&scripture.parentElement!==document.body)document.body.appendChild(scripture);
  const folds=panel?.querySelector('.ws-dawn-folds');
  const icon=summary?.querySelectorAll('.ws-dawn-stroke');
  const links=[...menu.querySelectorAll('.sites-home-nav__panel-links>a')];
