@@ -310,3 +310,21 @@ body.home.ws-dawn-hero-outside > .ws-dawn-scripture{
   transform:none!important;
  }
 }
+
+/* Desktop: align actual scripture text right edges to the menu glyph's right edge.
+   Summary right inset is clamp(20px,3vw,52px); its 50px box centers a 30px SVG,
+   whose rightmost stroke is at x=26/30 => 14px inside the summary right edge. */
+@media(min-width:701px) and (min-height:571px){
+ body.home > .ws-dawn-scripture{
+  right:calc(clamp(20px,3vw,52px) + 14px)!important;
+  text-align:right!important;
+ }
+ body.home > .ws-dawn-scripture .sites-home-scripture-pair{
+  align-items:flex-end!important;
+  text-align:right!important;
+ }
+ body.home > .ws-dawn-scripture .sites-home-scripture-pair > p,
+ body.home > .ws-dawn-scripture .sites-home-scripture-pair > p > cite{
+  text-align:right!important;
+ }
+}
