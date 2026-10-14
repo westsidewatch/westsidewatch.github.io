@@ -38,33 +38,29 @@
  const summary=menu?.querySelector('summary');
  const panel=menu?.querySelector('.sites-home-nav__panel');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
- /* Scale Down Reveal: clicking CONTENTS shrinks the homepage and exposes the
-    full-screen editorial directory; closing restores the homepage in reverse. */
- const links=[...menu.querySelectorAll('.sites-home-nav__panel-links>a')];
- const entries=[...menu.querySelectorAll('.sites-home-nav__panel-entries>a')];
- let animating=false,finishTimer=null;
+ /* Joby-inspired independent implementation: four consecutive reveal layers,
+    editorial links in staggered groups, reverse on close. The merged Scale Down
+    Reveal stays untouched on main as the production backup.
+    Reference: https://github.com/Thakuma07/JobyAviation-MenuAnimation
+    Upstream has no declared license; no source code is copied. */
  const root=document.documentElement;
+ let animating=false,finishTimer=null;
  const finish=()=>{clearTimeout(finishTimer);finishTimer=null;animating=false;};
  const openCurtain=()=>{
   if(animating||menu.open)return;
-  animating=true;
-  menu.open=true;
-  root.classList.add('ws-scale-reveal-active');
-  nav.dataset.navHidden='false';
+  finish();animating=true;menu.open=true;nav.dataset.navHidden='false';
+  root.classList.add('ws-joby-active');
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-   root.classList.add('ws-scale-reveal-open');
-   finishTimer=setTimeout(finish,reduced.matches?0:1050);
+   root.classList.add('ws-joby-open');
+   finishTimer=setTimeout(finish,reduced.matches?0:1600);
   }));
  };
  const closeCurtain=()=>{
   if(animating||!menu.open)return;
-  animating=true;
-  root.classList.remove('ws-scale-reveal-open');
+  animating=true;root.classList.remove('ws-joby-open');
   finishTimer=setTimeout(()=>{
-   menu.open=false;
-   root.classList.remove('ws-scale-reveal-active');
-   finish();
-  },reduced.matches?0:900);
+   menu.open=false;root.classList.remove('ws-joby-active');finish();
+  },reduced.matches?0:1250);
  };
  summary?.addEventListener('click',event=>{
   event.preventDefault();
@@ -78,7 +74,7 @@
  });
  menu?.addEventListener('pointerleave',clearPreview);
  menu?.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))clearPreview()});
- menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',event=>{const hash=a.getAttribute('href');menu.open=false;root.classList.remove('ws-scale-reveal-active','ws-scale-reveal-open');finish();nav.dataset.navHidden='false';if(hash?.startsWith('#')){const target=document.getElementById(hash.slice(1));if(target){event.preventDefault();history.pushState(null,'',hash);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}}}));
+ menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',event=>{const hash=a.getAttribute('href');menu.open=false;root.classList.remove('ws-joby-active','ws-joby-open');finish();nav.dataset.navHidden='false';if(hash?.startsWith('#')){const target=document.getElementById(hash.slice(1));if(target){event.preventDefault();history.pushState(null,'',hash);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}}}));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu?.open){closeCurtain();menu.querySelector('summary')?.focus()}});
  document.addEventListener('pointerdown',e=>{if(menu?.open&&!menu.contains(e.target))closeCurtain()});
  update();
