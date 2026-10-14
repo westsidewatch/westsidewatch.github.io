@@ -67,9 +67,6 @@ html.ws-dawn-active body.home .ws-dawn-brand-plane .sites-home-star{filter:brigh
 html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-icon line{stroke:var(--ws-ink,#252525)!important}
 
 /* Romans 13:12: one viewport anchor in BOTH menu states; no position animation. */
-body.home .sites-home-nav--floating .ws-dawn-scripture,
-
-
 /* Menu typography must never intersect the original animated slogan. Reserve
    the top-left brand region; keep the scripture's shared viewport anchor. */
 @media(min-width:901px){
@@ -84,8 +81,6 @@ body.home .sites-home-nav--floating .ws-dawn-scripture,
 }
 
 /* Sevenfold geometry consumer — all adjustable values originate in Design OS. */
-body.home .sites-home-nav--floating .ws-dawn-scripture,
-
 @media(min-width:901px){
  body.home .sites-home-nav--floating .sites-home-nav__panel-links{
   top:var(--ws-dawn-links-top,var(--ws-dawn-menu-min-top,25dvh))!important;
@@ -116,22 +111,22 @@ body.home .sites-home-nav--floating .ws-dawn-scripture{
 }
 body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
- gap:3px!important;padding:0!important;margin:0!important;color:inherit!important;
+ gap:0!important;padding:0!important;margin:0!important;color:inherit!important;
 }
 body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh{
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
  font-size:clamp(19px,1.24vw,26px)!important;font-weight:200!important;
- line-height:1.35!important;letter-spacing:.1em!important;color:inherit!important;
+ line-height:1.1!important;letter-spacing:.1em!important;color:inherit!important;
 }
 body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
  font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)!important;
  font-size:clamp(17px,1.1vw,23px)!important;font-weight:400!important;
- line-height:1.45!important;letter-spacing:.01em!important;color:inherit!important;
+ line-height:1.15!important;letter-spacing:.01em!important;color:inherit!important;
 }
 body.home .sites-home-nav--floating .ws-dawn-scripture cite{
  display:block!important;font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
  font-size:inherit!important;font-style:italic!important;
- margin-top:clamp(8px,1.3vh,17px)!important;color:inherit!important;
+ margin-top:3px!important;color:inherit!important;
 }
 
 /* Navigation row 4: SEARCH and 07 share an identical grid baseline. */
@@ -149,4 +144,22 @@ body.home .sites-home-nav--floating .ws-dawn-scripture cite{
   line-height:1.1!important;
   transform:translateY(0)!important;
  }
+}
+
+/* OS-governed fixed row placement: both columns use identical baselines. */
+@media(min-width:901px){
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-template-rows:repeat(4,var(--ws-dawn-menu-row-height,42px))!important;
+  grid-auto-flow:row!important;align-items:start!important;
+ }
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(1){grid-area:1/1!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(2){grid-area:1/2!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(3){grid-area:2/1!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(4){grid-area:2/2!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(5){grid-area:3/1!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(6){grid-area:3/2!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(7){grid-area:4/1!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(8){grid-area:4/2!important}
+ body.home .sites-home-nav--floating .sites-home-nav__panel-links>a{margin:0!important;padding:0!important;align-self:start!important;line-height:1.1!important;font-size:clamp(16px,1.65vw,28px)!important}
 }
