@@ -89,6 +89,9 @@
   for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
   if(order[order.length-1]===lastColor){const j=order.findIndex(n=>n!==lastColor);[order[j],order[order.length-1]]=[order[order.length-1],order[j]];}
   lastColor=order[order.length-1];
+  // Sevenfold palette maps deterministically to the seven editorial entries.
+  // Search remains ink; reset selection when the curtain changes or closes.
+  links.forEach((link,index)=>link.classList.toggle('ws-dawn-color-selected',index===lastColor));
   // The final curtain color selects the matching canonical SVG variant.
   if(logoImage)logoImage.src='/images/sevenfold/westside-watch-logo-'+logoNames[lastColor]+'.svg';
   order.forEach(i=>{const layer=document.createElement('div');layer.className='ws-dawn-fold';layer.style.setProperty('--fold-color','var('+colors[i]+')');folds.append(layer)});
