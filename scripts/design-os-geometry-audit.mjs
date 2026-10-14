@@ -30,6 +30,7 @@ try {
           const summary = page.locator('.sites-home-nav--floating summary');
           const film = page.locator('.sites-home-film iframe');
           const filmSrc = await film.getAttribute('src');
+          await film.evaluate(el => { el.dataset.wsAuditIdentity = 'original-film-node'; });
           const frames = [];
           const screenshotDir = spec.screenshotDir || 'design-os-screenshots';
           await fs.mkdir(screenshotDir, { recursive: true });
@@ -55,7 +56,7 @@ try {
             if (Math.abs(center - viewport.height*.75) > 18) { failures++; items.push({error:'logo lower-half center mismatch',center,expected:viewport.height*.75}); }
             if (Math.abs(opened.scripture.y-closed.scripture.y)>3) { failures++; items.push({error:'scripture moved on menu open'}); }
           }
-          if (await film.getAttribute('src') !== filmSrc) { failures++; items.push({error:'Film source changed during opening'}); }
+          if (await film.getAttribute('src') !== filmSrc || await film.getAttribute('data-ws-audit-identity') !== 'original-film-node') { failures++; items.push({error:'Film source or iframe node changed during opening'}); }
           await summary.click();
           await page.waitForTimeout(250);
           await capture('closing');
