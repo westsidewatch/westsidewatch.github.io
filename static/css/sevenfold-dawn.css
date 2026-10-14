@@ -8,7 +8,7 @@ body.home .ws-dawn-brand-plane .sites-home-intro{position:absolute!important;lef
 body.home .ws-dawn-brand-plane .sites-home-intro .sites-home-scripture-pair{display:none!important}
 body.home .ws-dawn-large-logo{position:absolute;left:50%;top:var(--ws-dawn-large-top,127dvh);width:min(58vw,760px);transform:translateX(-50%);height:auto}
 body.home .ws-dawn-large-logo img{display:block;width:100%;height:auto;object-fit:contain}
-body.home .ws-dawn-scripture{position:fixed;right:6vw;top:45dvh;z-index:10015;max-width:37vw;pointer-events:none;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+body.home .ws-dawn-scripture{position:fixed;right:6vw;top:45dvh;z-index:10030;max-width:37vw;pointer-events:none;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 body.home .ws-dawn-scripture .sites-home-scripture-pair{position:static!important;transform:none!important;margin:0!important;opacity:1!important}
 body.home .sites-home-nav--floating .sites-home-nav__brand,body.home .sites-home-nav--floating .sites-home-nav__menu-label,body.home .sites-home-nav__panel-intro,body.home .sites-home-nav__panel-entries{display:none!important}
 body.home .sites-home-nav--floating{z-index:10020!important}
@@ -24,6 +24,6 @@ body.home .ws-dawn-fold{position:absolute;inset:0;background:var(--fold-color);t
 body.home .sites-home-nav--floating .sites-home-nav__panel-links{position:absolute!important;z-index:2;left:6vw;top:15dvh;width:48vw!important;max-height:37dvh!important;overflow:auto!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:1vh 2vw!important}
 body.home .sites-home-nav--floating .sites-home-nav__panel-links>a{font-size:clamp(17px,2vw,34px)!important;line-height:1.08!important;opacity:0;transform:translateY(20px);transition:none!important}
 body.home .sites-home-nav--floating .ws-nav-hover-preview{position:absolute!important;right:6vw;top:8vh;width:32vw;max-height:31dvh;z-index:2}
-html.ws-dawn-open body.home .ws-dawn-scripture{color:var(--ws-ink,#252525);text-shadow:none}
-@media(max-width:700px),(max-height:570px){body.home .sites-home-nav--floating .sites-home-nav__panel{height:100dvh!important}body.home .sites-home-nav--floating .sites-home-nav__panel-links{top:22dvh;left:7vw;width:86vw!important;max-height:70dvh!important;grid-template-columns:1fr!important}body.home .sites-home-nav--floating .ws-nav-hover-preview{display:none!important}body.home .ws-dawn-scripture{right:6vw;top:46dvh;max-width:55vw}body.home .ws-dawn-large-logo{width:75vw}body.home .ws-dawn-panel-slogan{top:8dvh;left:7vw;font-size:clamp(24px,6vw,40px)}}
+html.ws-dawn-active body.home .ws-dawn-scripture{top:15dvh;color:var(--ws-ink,#252525);text-shadow:none;max-width:32vw}
+@media(max-width:700px),(max-height:570px){body.home .sites-home-nav--floating .sites-home-nav__panel{height:100dvh!important}body.home .sites-home-nav--floating .sites-home-nav__panel-links{top:22dvh;left:7vw;width:86vw!important;max-height:70dvh!important;grid-template-columns:1fr!important}body.home .sites-home-nav--floating .ws-nav-hover-preview{display:none!important}body.home .ws-dawn-scripture{right:6vw;top:46dvh;max-width:55vw}html.ws-dawn-active body.home .ws-dawn-scripture{top:auto;bottom:9dvh;left:7vw;right:7vw;max-width:86vw}body.home .ws-dawn-large-logo{width:75vw}body.home .ws-dawn-panel-slogan{top:8dvh;left:7vw;font-size:clamp(24px,6vw,40px)}}
 @media(prefers-reduced-motion:reduce){body.home .ws-dawn-brand-plane,body.home .ws-dawn-fold{will-change:auto}}
