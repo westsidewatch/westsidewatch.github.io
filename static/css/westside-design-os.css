@@ -1259,3 +1259,22 @@ body:has(> .chapter){margin:0;color:var(--ws-text,#252525);background:var(--ws-s
 .editorial--life .editorial__panel{grid-column:4/span 6;grid-row:2}
 .editorial--life .editorial__side{grid-column:10/span 3;grid-row:2}
 }
+
+
+/* WestWatch Vol.00 — editorial cover, using the existing canonical masthead SVG. */
+.editorial--magazine .editorial__en--lead{font-size:clamp(58px,7.2vw,142px);line-height:.92;letter-spacing:-.05em;max-width:100%;overflow-wrap:normal}
+.editorial--magazine .editorial__title{font-size:clamp(28px,3.5vw,68px);letter-spacing:.12em;line-height:1.2}
+.editorial--magazine .editorial__art--cover{background:transparent;overflow:visible;display:flex;justify-content:center;align-items:center;min-height:0}
+.editorial--magazine .editorial__art--cover::before,.editorial--magazine .editorial__art--cover::after{display:none}
+.ws-magazine-cover{width:min(100%,430px);height:100%;min-height:330px;aspect-ratio:3/4;position:relative;display:flex;flex-direction:column;overflow:hidden;background:var(--ws-material,#eee4c9);color:var(--ws-text,#252525);border:1px solid currentColor;padding:clamp(16px,2vw,30px);box-shadow:12px 14px 0 color-mix(in srgb,var(--ws-text,#252525) 12%,transparent)}
+.ws-magazine-cover::before{content:"";position:absolute;inset:23% -15% 12% 24%;background:repeating-linear-gradient(110deg,transparent 0 6px,color-mix(in srgb,var(--ws-text,#252525) 11%,transparent) 7px 8px);transform:rotate(-8deg);pointer-events:none}
+.ws-magazine-cover__masthead{position:relative;z-index:1;border-bottom:1px solid currentColor;padding-bottom:12px}
+.ws-magazine-cover__masthead img{width:100%;height:auto;display:block}
+.ws-magazine-cover__folio,.ws-magazine-cover__bottom{position:relative;z-index:1;display:flex;justify-content:space-between;gap:10px;font-family:var(--ws-type-display-en-sc);font-size:var(--ws-type-scale-micro);letter-spacing:.1em}
+.ws-magazine-cover__folio{padding-top:12px}
+.ws-magazine-cover__feature{position:relative;z-index:1;display:flex;flex:1;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:25px 0}
+.ws-magazine-cover__feature>span{font-family:var(--ws-type-display-en);font-size:clamp(24px,3vw,52px);line-height:.94;max-width:8ch}
+.ws-magazine-cover__feature>strong{font-family:var(--ws-type-display-zh);font-size:clamp(22px,2.3vw,40px);font-weight:var(--ws-weight-zh-air,200);letter-spacing:.18em;margin-top:16px}
+.ws-magazine-cover__feature>small{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-meta);margin-top:8px}
+.ws-magazine-cover__bottom{border-top:1px solid currentColor;padding-top:10px}
+@media(max-width:900px){.editorial--magazine .editorial__en--lead{font-size:clamp(42px,10vw,90px)}.editorial--magazine .editorial__title{font-size:clamp(24px,5vw,48px)}.editorial--magazine .editorial__art--cover{aspect-ratio:auto;min-height:470px}.ws-magazine-cover{height:460px;width:min(100%,345px);min-height:0}}
