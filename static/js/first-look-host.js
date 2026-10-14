@@ -67,7 +67,7 @@
   const shift=Math.min(0,window.innerHeight*.07-(rect.top-current));
   // Align the large logo to the centre of the visible lower Film half after translation.
   // This is one static plane geometry variable, not an independent animated transform.
-  const logoHeight=largeLogo.getBoundingClientRect().height;
+  const logoHeight=largeLogo.getBoundingClientRect().height || largeLogo.querySelector('img')?.getBoundingClientRect().height || 0;
   const targetTop=window.innerHeight*.75-logoHeight*.5;
   plane.style.setProperty('--ws-dawn-large-top',Math.round(targetTop-shift)+'px');
   return shift;
