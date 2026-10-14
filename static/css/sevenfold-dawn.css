@@ -106,3 +106,33 @@ html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{
  body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(7){grid-column:1!important;grid-row:4!important}
  body.home .sites-home-nav--floating .sites-home-nav__panel-links>a:nth-child(8){grid-column:2!important;grid-row:4!important}
 }
+
+/* One original Romans 13:12 element in both views: fixed right-hand diagonal.
+   No menu-specific font, color or layout changes; white is constant. */
+body.home .sites-home-nav--floating .ws-dawn-scripture,
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture{
+ top:var(--ws-dawn-scripture-open-top,39dvh)!important;
+ right:var(--ws-dawn-scripture-right,6vw)!important;
+ color:#fff!important;
+ text-shadow:0 1px 12px rgba(0,0,0,.45)!important;
+ max-width:37vw!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair,
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture-pair{
+ padding:0!important;gap:3px!important;
+ color:inherit!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh,
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-slogan-zh{
+ font-size:clamp(19px,1.24vw,26px)!important;
+ font-weight:200!important;letter-spacing:.1em!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture,
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture .sites-home-scripture{
+ font-size:clamp(17px,1.1vw,23px)!important;
+ font-weight:400!important;line-height:1.45!important;
+}
+body.home .sites-home-nav--floating .ws-dawn-scripture cite,
+html.ws-dawn-active body.home .sites-home-nav--floating .ws-dawn-scripture cite{
+ font-size:inherit!important;margin-top:clamp(8px,1.3vh,17px)!important;
+}
