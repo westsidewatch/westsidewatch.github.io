@@ -64,8 +64,8 @@
  const openCurtain=()=>{
   if(animating||menu.open)return;
   if(reduced.matches||!gsap||!path){menu.open=true;return;}
-  animating=true;overlay.classList.add('is-animating');
-  activeTimeline=gsap.timeline({onComplete:()=>{animating=false;overlay.classList.remove('is-animating');activeTimeline=null;}});
+  animating=true;nav.classList.add('is-theodore-transition');overlay.classList.add('is-animating');
+  activeTimeline=gsap.timeline({onComplete:()=>{animating=false;overlay.classList.remove('is-animating');nav.classList.remove('is-theodore-transition');activeTimeline=null;}});
   activeTimeline
    .set(path,{attr:{d:shapes.closedBottom}})
    .to(path,{duration:.8,ease:'power4.in',attr:{d:shapes.bowUp}},0)
@@ -81,8 +81,8 @@
  const closeCurtain=()=>{
   if(animating||!menu.open)return;
   if(reduced.matches||!gsap||!path){menu.open=false;return;}
-  animating=true;overlay.classList.add('is-animating');
-  activeTimeline=gsap.timeline({onComplete:()=>{animating=false;overlay.classList.remove('is-animating');activeTimeline=null;}});
+  animating=true;nav.classList.add('is-theodore-transition');overlay.classList.add('is-animating');
+  activeTimeline=gsap.timeline({onComplete:()=>{animating=false;overlay.classList.remove('is-animating');nav.classList.remove('is-theodore-transition');activeTimeline=null;}});
   activeTimeline
    .set(path,{attr:{d:shapes.closedTop}})
    .to(path,{duration:.8,ease:'power4.in',attr:{d:shapes.closeBow}},0)
