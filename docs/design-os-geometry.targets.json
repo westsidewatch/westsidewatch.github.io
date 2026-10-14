@@ -1,0 +1,37 @@
+{
+  "report": "design-os-geometry-report.json",
+  "pages": [
+    {
+      "url": "http://127.0.0.1:1313/",
+      "viewports": [
+        {
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "width": 390,
+          "height": 844
+        },
+        {
+          "width": 3840,
+          "height": 2160
+        }
+      ],
+      "targets": [
+        {
+          "selector": ".sites-home-hero",
+          "withinViewport": false
+        },
+        {
+          "selector": ".sites-home-masthead",
+          "withinViewport": false
+        },
+        {
+          "selector": ".sites-home-intro",
+          "withinViewport": false
+        }
+      ],
+      "noOverlap": []
+    }
+  ]
+}
