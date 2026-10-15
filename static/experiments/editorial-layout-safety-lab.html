@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Design OS · Editorial Safety Lab</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+:root{color-scheme:light}*{box-sizing:border-box}body{margin:0;background:#f5f3ee;color:#252525;font-family:system-ui,sans-serif}header,main,footer{max-width:1200px;margin:auto;padding:22px}header{border-bottom:1px solid #aaa}h1{font-weight:400;font-size:clamp(25px,4vw,46px);margin:8px 0}p{line-height:1.55}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:18px 0}select,button,input{font:inherit;padding:9px;border:1px solid #777;border-radius:0;background:white}button{cursor:pointer}button[aria-pressed=true]{background:#252525;color:white}.workspace{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:20px}.stage{position:relative;aspect-ratio:16/10;background:#ddd;overflow:hidden;touch-action:none}.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}.region{position:absolute;border:2px solid #bd3232;background:rgba(189,50,50,.14);pointer-events:none}.region:after{content:attr(data-label);position:absolute;top:0;left:0;background:#fff;padding:2px 5px;font:12px system-ui}.slot{position:absolute;border:2px dashed #2b6771;background:rgba(255,255,255,.75);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:8px;pointer-events:none}.slot span{font-family:'Bodoni Moda',Georgia,serif;font-weight:400;font-size:clamp(18px,2.6vw,40px);line-height:1;text-align:center;overflow-wrap:anywhere}.slot.bad{border-color:#b32c2c;background:rgba(255,230,230,.85)}.drawing{cursor:crosshair}.results{min-width:0}.results table{width:100%;border-collapse:collapse;font-size:13px}.results th,.results td{border-bottom:1px solid #aaa;padding:8px;text-align:left}.results tr[data-ok=true]{background:#e8efe9}.notes{font-size:13px}.sr{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}@media(max-width:800px){.workspace{grid-template-columns:1fr}.stage{aspect-ratio:4/5}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><small>WESTSIDE DESIGN OS / EXPERIMENT / NOT PUBLISHED</small><h1>Editorial Layout Safety Lab</h1><p>真實人物圖片 · 人工保護區 · 五種英文標題版位。此工具不會自動識別臉部、手部或計算真實文字對比度；結果僅供編輯審核。</p></header>
+<main>
+<div class="controls">
+<label>人物資產 <select id="asset"><option value="david-pawson-editorial.png">David Pawson</option><option value="jiang-xiuqin-editorial.png">Jiang Xiuqin</option><option value="watchman-nee-editorial.png">Watchman Nee</option></select></label>
+<label>標題 <input id="headline" value="LIVING WATER" maxlength="100"></label>
+<label>標註類別 <select id="kind"><option value="face">Face</option><option value="hands">Hands</option><option value="subject">Subject</option><option value="story">Story</option></select></label>
+<button id="draw" aria-pressed="false">標記保護區</button><button id="undo">撤銷標註</button><button id="clear">清空標註</button>
+</div>
+<div class="workspace">
+<div><div class="stage" id="stage" aria-label="人物圖片與安全區預覽"><img id="photo" alt="編輯研究中的人物海報"><div id="layers"></div></div><p class="notes">按「標記保護區」，在圖片上拖曳矩形。紅框為人工禁入區；藍框為候選標題。人物圖保持 contain，不拉伸。窄屏自動重新評估。</p></div>
+<div class="results"><h2>候選評估</h2><p id="status" aria-live="polite"></p><table><thead><tr><th>版位</th><th>硬性檢查</th><th>原因</th></tr></thead><tbody id="scores"></tbody></table><p class="notes">沒有人工標註時，所有覆圖候選都標為「未驗證」，不可判定安全。圖外標題是保守回退。未加入色彩對比、語義孤字、CTA 與人臉模型檢查。</p><h3>標註 JSON</h3><button id="copy">複製標註資料</button><pre id="json" style="white-space:pre-wrap;word-break:break-word;font-size:12px"></pre></div>
+</div>
+</main><footer><small>Independent scoped experiment. Does not modify existing Olive posters or Design OS runtime.</small></footer>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id), stage=$('stage'), layers=$('layers');
+const assets=['david-pawson-editorial.png','jiang-xiuqin-editorial.png','watchman-nee-editorial.png'];
+const regionsByAsset=Object.fromEntries(assets.map(a=>[a,[]]));
+let drawing=false, start=null, ghost=null, chosen='outside';
+const slots={
+'left-half':[.025,.08,.43,.84],
+'right-half':[.545,.08,.43,.84],
+'top-band':[.05,.02,.90,.28],
+'bottom-band':[.05,.70,.90,.28],
+'outside-image':null
+};
+function box(rect,w,h){return {left:rect[0]*w,top:rect[1]*h,right:(rect[0]+rect[2])*w,bottom:(rect[1]+rect[3])*h}}
+function overlap(a,b){return Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top))}
+function pxRect(el,r){el.style.left=(r[0]*100)+'%';el.style.top=(r[1]*100)+'%';el.style.width=(r[2]*100)+'%';el.style.height=(r[3]*100)+'%'}
+function current(){return regionsByAsset[$('asset').value]}
+function render(){
+const w=stage.clientWidth,h=stage.clientHeight;layers.replaceChildren();
+for(const item of current()){const el=document.createElement('div');el.className='region';el.dataset.label=item.kind;pxRect(el,item.box);layers.append(el)}
+const tbody=$('scores');tbody.replaceChildren();let eligible=[];
+for(const [id,r] of Object.entries(slots)){
+const collision=r&&current().some(x=>overlap(box(r,w,h),box(x.box,w,h))>0);
+const unverified=r&&current().length===0;
+const reason=id==='outside-image'?'需圖外布局驗收':collision?'碰撞保護區':unverified?'未標註主體':'未檢查對比及文字行框';
+const ok=id==='outside-image'&&!collision;
+if(r){const el=document.createElement('div');el.className='slot'+(collision?' bad':'');pxRect(el,r);const span=document.createElement('span');span.textContent=$('headline').value;el.append(span);if(id===chosen)layers.append(el)}
+const tr=document.createElement('tr');tr.dataset.ok=String(ok);for(const v of [id,collision?'淘汰':unverified?'未驗證':'待人工驗收',reason]){const td=document.createElement('td');td.textContent=v;tr.append(td)}tr.style.cursor='pointer';tr.title='點擊預覽此版位';tr.addEventListener('click',()=>{chosen=id;render()});tbody.append(tr);
+}
+$('status').textContent='當前預覽：'+chosen+'。本工具不產生 PASS 結論。';
+$('json').textContent=JSON.stringify({asset:$('asset').value,coordinateSpace:'displayed-stage-normalized',protectedRegions:current()},null,2);
+}
+function point(e){const r=stage.getBoundingClientRect();return [Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))]}
+$('draw').onclick=()=>{drawing=!drawing;$('draw').setAttribute('aria-pressed',String(drawing));stage.classList.toggle('drawing',drawing)};
+stage.addEventListener('pointerdown',e=>{if(!drawing)return;start=point(e);stage.setPointerCapture(e.pointerId);ghost=document.createElement('div');ghost.className='region';layers.append(ghost)});
+stage.addEventListener('pointermove',e=>{if(!start||!ghost)return;const p=point(e),r=[Math.min(start[0],p[0]),Math.min(start[1],p[1]),Math.abs(start[0]-p[0]),Math.abs(start[1]-p[1])];pxRect(ghost,r)});
+stage.addEventListener('pointerup',e=>{if(!start)return;const p=point(e),r=[Math.min(start[0],p[0]),Math.min(start[1],p[1]),Math.abs(start[0]-p[0]),Math.abs(start[1]-p[1])];if(r[2]>.01&&r[3]>.01)current().push({kind:$('kind').value,box:r,source:'manual'});start=null;ghost=null;render()});
+$('undo').onclick=()=>{current().pop();render()};$('clear').onclick=()=>{current().length=0;render()};
+$('asset').onchange=()=>{$('photo').src='/images/olive/'+$('asset').value;render()};
+$('headline').oninput=render;
+$('copy').onclick=()=>{if(navigator.clipboard)navigator.clipboard.writeText($('json').textContent).catch(()=>{});else $('json').focus()};
+if('ResizeObserver' in window)new ResizeObserver(render).observe(stage);else window.addEventListener('resize',render);
+$('photo').src='/images/olive/'+$('asset').value;render();
+})();
+</script>
+</body></html>
