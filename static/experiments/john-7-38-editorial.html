@@ -44,6 +44,34 @@
 .composition .initial-w{font-size:clamp(210px,48vw,380px)}
 .composition .water-rest{font-size:clamp(75px,15vw,118px)}
 }
+
+/* Exact screenshot composition override: use canonical water blue regardless of cascade branch. */
+body[data-ws-color-family="water"]{--ws-branch:var(--ws-water)!important;--blue:var(--ws-water)!important}
+body[data-ws-color-family="water"] .composition .rivers,
+body[data-ws-color-family="water"] .composition .water{color:var(--ws-water)!important}
+.page{padding:clamp(24px,3vw,44px) clamp(25px,6vw,100px)}
+.composition{min-height:1020px;flex:1;position:relative;margin:0}
+.composition .intro{top:2%;left:2%;font-size:clamp(19px,2.2vw,34px);line-height:1.55}
+.composition .rivers{top:8%;left:45%;font-size:clamp(70px,9vw,145px)}
+.composition .of{top:8%;right:0;left:auto;font-size:clamp(70px,8vw,135px)}
+.composition .living{top:25%;left:0;align-items:baseline}
+.composition .initial-l{font-size:clamp(280px,42vw,620px);line-height:.85}
+.composition .living-rest{font-size:clamp(100px,13vw,190px);line-height:.85}
+.composition .water{top:66%;left:0;align-items:baseline}
+.composition .initial-w{font-size:clamp(280px,42vw,620px);line-height:.85}
+.composition .water-rest{font-size:clamp(100px,13vw,190px);line-height:.85}
+@media(max-width:750px){
+.composition{min-height:690px}
+.composition .intro{top:2%;left:0;font-size:clamp(14px,3.2vw,22px)}
+.composition .rivers{top:10%;left:44%;font-size:clamp(43px,9vw,70px)}
+.composition .of{top:12%;right:0;font-size:clamp(40px,8vw,65px)}
+.composition .living{top:31%}
+.composition .initial-l{font-size:clamp(205px,47vw,370px)}
+.composition .living-rest{font-size:clamp(68px,14vw,110px)}
+.composition .water{top:68%}
+.composition .initial-w{font-size:clamp(205px,47vw,370px)}
+.composition .water-rest{font-size:clamp(68px,14vw,110px)}
+}
 </style></head>
 <body data-ws-scope="global" data-ws-color-family="water" class="sites-section-church"><main class="page">
 <header class="mast"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></header>
