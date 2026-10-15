@@ -168,8 +168,48 @@
   .showcase .edition[data-variant="0"] .scripture-en{width:72%;font-size:clamp(13px,3.3vw,17px)}
   .showcase .edition[data-variant="0"] .scripture-en .scripture-phrase--display{font-size:clamp(14px,3.6vw,19px)}
 }
+
+/* John 7:38 / Italian editorial proof — single scoped composition; Bodoni from Design OS. */
+.showcase .composition .edition.editorial-john{display:block!important;padding:clamp(24px,3vw,54px) clamp(26px,5.2vw,96px)!important;background:#eeeae1;color:#252525;overflow:hidden;font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-synthesis:none}
+.showcase .composition .edition.editorial-john::after{opacity:.075!important;z-index:0!important}
+.editorial-john .ej-mast{position:absolute!important;z-index:3!important;top:4.5%;left:6%;right:6%;display:flex;justify-content:space-between;gap:1em;border-bottom:1px solid #88867f;padding-bottom:.8em;font:400 clamp(10px,.88vw,14px)/1.2 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);letter-spacing:.09em}
+.editorial-john .ej-full{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.editorial-john .ej-layout{position:absolute!important;inset:13% 6% 21%;z-index:2!important;overflow:visible;isolation:isolate;font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-weight:400;font-synthesis:none}
+.editorial-john .ej-layout>div{position:absolute;white-space:nowrap;font-weight:400}
+.editorial-john .ej-intro{top:0;left:0;font-size:clamp(17px,1.75vw,30px);line-height:1.43;letter-spacing:-.018em}
+.editorial-john .ej-rivers{top:31%;left:3%;font-size:clamp(70px,12.5vw,220px);line-height:.82;font-style:italic;color:#315b79;letter-spacing:-.065em}
+.editorial-john .ej-of{top:24%;left:48%;font-size:clamp(100px,20vw,370px);line-height:.82;font-style:italic;letter-spacing:-.105em;color:#252525;transform:rotate(-10deg);transform-origin:35% 60%;z-index:3}
+.editorial-john .ej-living{bottom:2%;left:0;font-size:clamp(72px,13vw,240px);line-height:.78;letter-spacing:-.07em;color:#252525}
+.editorial-john .ej-water{bottom:-4%;right:0;font-size:clamp(75px,14vw,255px);line-height:.78;letter-spacing:-.075em;color:#315b79;font-style:italic}
+.editorial-john .ej-period{color:#252525}
+.showcase .edition.editorial-john .ej-zh{position:absolute!important;z-index:4!important;bottom:10%!important;left:6%!important;right:6%!important;top:auto!important;grid-column:auto!important;grid-row:auto!important;width:auto!important;max-width:none!important;margin:0!important;font-size:clamp(12px,1vw,17px)!important;line-height:1.6!important;text-align:left}
+.showcase .edition.editorial-john .ej-footer{position:absolute!important;z-index:4!important;bottom:4%!important;left:6%!important;right:6%!important;top:auto!important;grid-column:auto!important;grid-row:auto!important;font-size:clamp(10px,.9vw,14px)!important}
+@media(max-width:700px){
+.showcase .composition .edition.editorial-john{padding:0!important}
+.editorial-john .ej-mast{top:5%;font-size:9px;letter-spacing:.025em}
+.editorial-john .ej-layout{inset:15% 6% 24%}
+.editorial-john .ej-intro{font-size:clamp(15px,3.8vw,21px);line-height:1.5}
+.editorial-john .ej-rivers{top:30%;left:0;font-size:clamp(62px,15vw,105px)}
+.editorial-john .ej-of{top:39%;left:45%;font-size:clamp(90px,25vw,180px)}
+.editorial-john .ej-living{bottom:17%;font-size:clamp(60px,16vw,105px)}
+.editorial-john .ej-water{bottom:0;right:0;font-size:clamp(64px,17vw,115px)}
+.showcase .edition.editorial-john .ej-zh{bottom:13%!important;font-size:12px!important}
+.showcase .edition.editorial-john .ej-footer{bottom:5%!important;gap:8px!important}
+}
 </style></head><body data-ws-scope="global"><section class="first" aria-label="首頁第一屏"><div class="head"><span>WESTSIDE WATCH</span><span>01 / SEVENFOLD DAWN</span></div><div><h1>Watch for<br><i>the Dawn.</i></h1><p>黑夜已深，白晝將近。<br>The night is far spent. The day is at hand.</p></div></section><section class="showcase" aria-label="七重編輯展示"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
-<article class="edition sites-section-church" data-variant="0" aria-label="約翰福音 7:38 經文專題"><div class="scripture-kicker"><span>THE LIVING WORD / 01</span><span>JOHN 7:38 · KJV</span></div><div class="lw-art" aria-hidden="true"><span class="lw-art__l">L</span><span class="lw-art__w">W</span></div><p class="scripture-en" lang="en"><span class="scripture-phrase">He that believeth on me,</span><span class="scripture-phrase scripture-phrase--support">as the scripture hath said,</span><span class="scripture-phrase scripture-phrase--support">out of his belly shall flow</span><span class="scripture-phrase scripture-phrase--display">rivers of <em>living water.</em></span></p><p class="scripture-zh ws-lineguard--short" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江⁠河⁠來⁠。</p><div class="scripture-footer"><span class="ws-scripture-reference"><span lang="zh-Hant">約翰福音 7:38</span><span class="ws-scripture-reference-divider" aria-hidden="true">/</span><span lang="en">JOHN 7:38</span></span><a href="/church/">ENTER LIVING WATER ↗</a></div></article>
+<article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
+<div class="ej-mast"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></div>
+<p class="ej-full" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
+<div class="ej-layout" aria-hidden="true">
+<div class="ej-intro">He that believeth on me,<br>as the scripture hath said,<br>out of his belly shall flow</div>
+<div class="ej-rivers">rivers</div>
+<div class="ej-of">of</div>
+<div class="ej-living">living</div>
+<div class="ej-water">water<span class="ej-period">.</span></div>
+</div>
+<p class="scripture-zh ej-zh ws-lineguard--short" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江⁠河⁠來⁠。</p>
+<div class="scripture-footer ej-footer"><span class="ws-scripture-reference"><span lang="zh-Hant">約翰福音 7:38</span><span class="ws-scripture-reference-divider" aria-hidden="true">/</span><span lang="en">JOHN 7:38 · KJV</span></span><a href="/church/">ENTER LIVING WATER ↗</a></div>
+</article>
 <article class="edition" data-variant="1"><div class="headline"><span class="category">02 / Magazine</span><h2>Watch<br><i>for Dawn.</i></h2><div class="cn">西望 · 獨立網絡雜誌</div></div><div class="detail"><p class="description">以文字、影像與編輯的秩序，重新理解我們所生活的世界。</p><a href="/journal/">READ THE JOURNAL ↗</a></div></article>
 <article class="edition" data-variant="2"><div class="headline"><span class="category">03 / Emmaus</span><h2>The<br><i>Word.</i></h2><div class="cn">以馬忤斯 · 查經</div></div><div class="detail"><p class="description">從經文到版畫，從歷史到敘事。查經本身也可以成為一篇完整的視覺專題。</p><a href="/one/">EXPLORE EMMAUS ↗</a></div></article>
 <article class="edition" data-variant="3"><div class="headline"><span class="category">04 / Olive Mountain</span><h2>Voices<br><i>of Faith.</i></h2><div class="cn">橄欖山 · 人物與講道</div></div><div class="detail"><p class="description">人物、聲音與思想，透過肖像與編輯式人物專題重新相遇。</p><a href="/olive/">MEET THE VOICES ↗</a></div></article>
