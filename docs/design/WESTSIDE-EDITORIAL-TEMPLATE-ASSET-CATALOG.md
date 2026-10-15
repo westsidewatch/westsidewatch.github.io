@@ -396,3 +396,33 @@ A candidate becomes `approved` only after same-page visual comparison at relevan
 5. **Promotion gate:** only after screenshot comparison and explicit approval mark the material `approved`; until then `experimental`.
 
 **Do not lose the assets:** future work must start from this project ID, the source table and the existing [Folio adoption contract](./WESTSIDE-FOLIO-LAYOUT-ADOPTION.md), not restart research or invent another catalog.
+
+
+## Temple Objects Engraving — church fixed material and biblical visual theology (2026-10-15)
+
+**Part of project:** `WS-OS-EDITORIAL-ENGRAVING-01`. **Authority:** existing Westside Design OS. **Status:** editorial / theological design plan; not yet visually approved or implemented as a fixed site material.
+
+### Core distinction
+- **Church fixed engraving material:** derived from identifiable **biblical sanctuary/temple objects**, not generic landscapes, arbitrary abstract ornament or secular scenery. Select one scripturally grounded object per section; extract micro-details for subtle banknote/intaglio-style hatching. Reuse as that section's stable identity.
+- **Second-screen narrative SVG:** the user's Moses crossing the Red Sea poster is the **specific reference for that second-screen feature**: sparse flowing contour lines, parted negative space and minimal silhouettes. Do not replace the church's fixed object-based material with the narrative SVG.
+- Both are expressions of one existing OS engraving grammar, not two design systems. Source text, historical interpretation and artistic license must remain distinguishable.
+
+### Initial biblical object registry
+
+| Section candidate | Object / engraving detail | Scriptural anchor | Theological reading (editorial interpretation, not automatic literal symbolism) |
+| --- | --- | --- | --- |
+| Church home | Solomon's temple pillar pomegranates / networked capitals | 1 Kings 7:18–20, 42 | Fruitfulness / temple beauty |
+| Bible study / ONE | Golden lampstand: branches, almond-blossom cups | Exodus 25:31–40; Revelation 1:20 | Light / witness |
+| Prayer / worship | Sanctuary veil: woven folds and cherubim motifs | Exodus 26:31–33; Hebrews 10:19–20 | Holiness / access |
+| Testimony / mercy | Mercy seat and cherubim: wing-feather details | Exodus 25:17–22 | Presence / mercy |
+| Baptism / church life | Bronze Sea: vessel rim, lily form and water | 1 Kings 7:23–26; 2 Chronicles 4:2–5 | Cleansing / preparation |
+
+### Source and design constraints
+1. Read and cite the biblical object passage **before** drawing; distinguish tabernacle objects from Solomon's temple objects and later temple periods. Never present a speculative reconstruction as exact biblical appearance.
+2. Each section gets **one dominant object**, with only a close-up fragment rendered as engraving material: seed lattice, bronze curves, textile weave, feather contour, carved rim, etc. The motif should be recognizable when explained, but remain low-contrast beneath text.
+3. Engraving geometry should be object-derived, with directional hatch, tonal hierarchy and local negative space. Avoid wallpaper repetition, guilloché-for-its-own-sake, unrelated scenery, black-gold palettes or busy religious clip art.
+4. Keep the existing OS typography, color tokens, contrast, responsive behavior and single CSS authority; no new parallel manager or compulsory CI.
+5. First prototype: **pillar pomegranate** for the church fixed material, **Moses crossing** as the independent second-screen narrative SVG. Validate both separately against the existing live PR preview and user-provided visual reference.
+6. Record artwork provenance, object/scripture mapping, reuse rights, actual preview URL, and screenshot approval here before promoting any motif from `candidate` to `approved`.
+
+**Spiritual design intent:** an atmosphere rooted in biblical objects and the language of worship rather than worldly landscape decoration. This is an art-direction principle, not a claim that an ornamental image itself possesses spiritual power.
