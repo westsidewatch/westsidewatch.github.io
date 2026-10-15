@@ -1096,3 +1096,106 @@ function evaluateLayout(candidate, protectedRegions) {
 **限制**：此工具處理的是未旋轉、未變形且採 `contain` 的圖片。依 §16.5，`cover` 必須再納入裁切與 `object-position`，不能混用。本次未實際人工逐張審閱像素、未取得真實瀏覽器截圖，故三張圖片尚無已批准安全區座標和勝出版位；不改動正式人物海報。
 
 **後續正式驗收**：必須以三張人物圖分別框選臉、手、軀幹及敘事重點；五版位逐一比對實際截圖；在 390／700／820／1024／1440px、100／125／150% 縮放下檢查原圖和標題比例、中文、CTA 及可讀性。只有人工批准的結果才可升格為 Design OS 生產參考案例。
+
+
+## 19. 第九輪：Optical Composition Validation — 真實字形、圖文安全與可解釋的版位比較（2026-10-14）
+
+本輪研究直接接續 §18，沿用既有 Design OS，不新增平行字體、色彩管理系統或獨立 CI。**研究結論與已部署能力必須分開**：本章為 [STUDY] + [EXPERIMENT] 技術設計，未取得三張圖片的實際瀏覽器截圖與人工標註前，不宣稱任何版位 PASS。
+
+### 19.1 研究來源及證據邊界
+
+- MDN TextMetrics：https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics 。`actualBoundingBoxLeft/Right/Ascent/Descent` 描述相對基線的墨跡外包框；`width` 是排版前進寬度，斜體可能超出它。
+- MDN measureText：https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/measureText 。
+- W3C WCAG 2.2 1.4.3：https://www.w3.org/TR/WCAG22/#contrast-minimum 。一般文字至少 4.5:1；符合大字定義者至少 3:1。這是基本可讀性門檻，不是高對比 Bodoni 細筆畫必然清晰的證明。
+- W3C G145：https://www.w3.org/WAI/WCAG22/Techniques/general/G145 。對比測試應針對文字背後的實際背景。
+
+[STUDY] Canvas 指標比僅測 `Range.getClientRects()` 更接近真實字形，但仍是**墨跡矩形**，不是逐像素輪廓或完整瀏覽器合成結果。CSS `letter-spacing`、font features、fallback、文字換行、text-shadow、transform、可變字軸及瀏覽器抗鋸齒可能造成 Canvas 與 DOM 不一致。不能把 Canvas 數值直接當作最終畫面。
+
+### 19.2 三層字形幾何：advance → ink bounds → painted pixels
+
+| 層級 | 測量方式 | 作用 | 不足 |
+| --- | --- | --- | --- |
+| Layout advance | DOM Range、`getClientRects()`、Canvas `width` | 行框、換行、可點擊布局 | 不一定涵蓋字形外伸 |
+| Ink bounds | `actualBoundingBox*` | Bodoni 字形左右及上下外伸風險 | 仍是外接矩形，不是實際輪廓 |
+| Painted pixels | 離屏 canvas alpha mask / 真實瀏覽器截圖 | 精細像素佔用及局部對比 | Canvas 重繪與 CSS 合成可能不同，仍需截圖驗證 |
+
+[OS] 禁止以 `scaleX`、`scaleY`、skew 或合成粗體解決排版；候選必須保留 Bodoni 真字形比例。實際字形測量只用於**判斷是否安全**，不構成任意擠壓字母的授權。
+
+### 19.3 實作範例：取得英文標題的墨跡包圍框
+
+```js
+// Diagnostic prototype, not yet wired into the production layout.
+async function measureInk(text, element) {
+  await document.fonts.ready;
+  const style = getComputedStyle(element);
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.textBaseline = 'alphabetic';
+  ctx.textAlign = 'left';
+  ctx.font = [style.fontStyle, style.fontWeight, style.fontSize, style.fontFamily]
+    .filter(Boolean).join(' ');
+  const m = ctx.measureText(text);
+  return {
+    advance: m.width,
+    ink: {
+      left: -m.actualBoundingBoxLeft,
+      right: m.actualBoundingBoxRight,
+      top: -m.actualBoundingBoxAscent,
+      bottom: m.actualBoundingBoxDescent
+    },
+    font: ctx.font,
+    measuredAfterFontsReady: true
+  };
+}
+```
+
+[EXPERIMENT] 此處是以 alphabetic baseline 為原點的**相對**矩形，不是頁面絕對座標；要轉到舞台，仍需真實 baseline、對齊位置、逐行 DOM 行框。若字體尚未真正載入、Canvas 使用 fallback、字距與瀏覽器 CSS 不一致，必須標記 `measurement-mismatch`，不能給 PASS。先以 DOM 行框判斷粗略衝突，再以 ink bounds 補充外伸檢查；需要像素級精度時才測 alpha mask。
+
+### 19.4 人物與英文字母之間的 Clearance
+
+不能只檢查兩個矩形是否交疊。候選需記錄 `face`、`hands`、`subject`、`story` 與標題的最近距離；距離不足即使沒有相交也要標記警告。Clearance 不應採單一固定像素：它與標題字級、人物表情／手勢、圖片密度及不同 viewport 有關。以 §16.6 的 `max(12px, 0.25 × fontSize)` 作**待校準候選**，而非硬性全站規範。現有十二講員海報的特批前後景交錯不能被新評分器覆寫。
+
+### 19.5 聯合排版：英文、中文、CTA、導航一起保護
+
+候選不是只有英文標題：應將 `englishTitle`、`chineseSubtitle`、`cta`、`navigation`、`caption` 及 `protectedImageRegions` 全部映射到同一**顯示容器座標系**，逐一檢查硬性衝突。英文在圖外並不代表整體版面已安全：若中文或 CTA 被擠到視窗外，整體仍 FAIL。
+
+資料契約示例：
+
+```js
+const composition = {
+  image: { fit: 'contain', objectPosition: [0.5, 0.5] },
+  typography: { title: 'DAVID PAWSON', fontRole: 'display-en' },
+  blocks: ['englishTitle', 'chineseSubtitle', 'cta', 'navigation'],
+  protectedImageRegions: [],
+  review: { imageAnnotations: 'pending', screenshot: 'pending' }
+};
+```
+
+### 19.6 從硬性排除到美學排序
+
+**第一層（必須通過）**：人物禁入區、標題墨跡溢出、語義分行、中文與 CTA、圖片裁切、基本對比、字體真實載入、必要的無障礙要求。
+
+**第二層（可比較，但不自動批准）**：主體與標題視覺重量、負空間、人物視線與閱讀方向、構圖節奏、字群輪廓、圖片敘事與內容角色。每個指標必須附來源：像素測量／DOM 幾何／人工標註／編輯評審。未知項目不得用 0.5 等假分數填補。
+
+排序輸出應保留 `rejectedReasons`、`unknownChecks`、`measurements`、`editorDecision`。只有硬性條件完成且人工批准後，才可標記 `approved`；否則一律 `pending`。沒有安全覆字候選時，退回圖外正常 H1。
+
+### 19.7 三張站內圖片的實證矩陣
+
+| 真實資產 | 左 | 右 | 上 | 下 | 圖外 |
+| --- | --- | --- | --- | --- | --- |
+| david-pawson-editorial.png | pending | pending | pending | pending | pending |
+| jiang-xiuqin-editorial.png | pending | pending | pending | pending | pending |
+| watchman-nee-editorial.png | pending | pending | pending | pending | pending |
+
+每張都應記錄：原圖尺寸、人工 face/hands/subject/story 框、英文／中文／CTA 真實矩形、字體資訊、對比、候選淘汰理由，以及 390／700／820／1024／1440px 和 100／125／150% 縮放的對比截圖。**不能將同一人物的主體座標套到其他圖片。**
+
+### 19.8 第九輪反證與後續實作順序
+
+1. 若 Canvas ink bounds 與真實截圖不符，改以實際渲染像素或人工審核為準，不擅自改字體。
+2. 若某候選矩形沒有碰撞但視覺上仍壓住手勢、衣物、眼神，記錄保護區漏標，而非調高美學權重掩飾。
+3. 若圖上文字符合 3:1 卻因 Bodoni 極細筆畫不清楚，依實際可讀性淘汰，不將合規等同最佳構圖。
+4. 若英文安全但中文／CTA 溢出，整體 FAIL。
+5. 若手機端需要重新布局，改版位與語義分行，不壓縮字形、不拉伸圖片。
+6. 下一次**先實作並驗收**三張真圖的安全區、真實字形測量與截圖；未達標前不再將抽象評分器宣稱為最佳構圖系統。
+
+**本輪結論**：從「標題能否放下」提升為「真實墨跡是否安全、完整構圖是否可讀、編輯選擇是否有可核對證據」。本輪研究已寫入手冊；不代表新測量功能已部署或三張圖片已通過視覺驗收。
