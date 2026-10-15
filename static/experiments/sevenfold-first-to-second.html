@@ -60,7 +60,10 @@ repeating-linear-gradient(24deg,transparent 0 22px,var(--church-line-soft) 22.3p
 radial-gradient(ellipse 62% 42% at 50% 38%,color-mix(in srgb,var(--church-paper) 93%,transparent),transparent 95%)!important;
 background-size:100% 100%,100% 100%,100% 47%,100% 30%,100% 100%!important;
 background-position:center,center,center bottom,center bottom,center!important;
-background-repeat:no-repeat!important;mix-blend-mode:multiply!important}
+background-repeat:no-repeat!important;mix-blend-mode:multiply!important;
+-webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.12) 20%,rgba(0,0,0,.48) 47%,#000 79%,rgba(0,0,0,.5) 100%),radial-gradient(ellipse 39% 38% at 58% 52%,transparent 0%,rgba(0,0,0,.18) 70%,#000 100%);
+mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.12) 20%,rgba(0,0,0,.48) 47%,#000 79%,rgba(0,0,0,.5) 100%),radial-gradient(ellipse 39% 38% at 58% 52%,transparent 0%,rgba(0,0,0,.18) 70%,#000 100%);
+-webkit-mask-composite:source-in;mask-composite:intersect}
 .showcase .composition .edition[data-variant="0"]>*{z-index:2!important}
 .showcase .church-gate__leaf{background-color:var(--ws-water,#5b8fa8)!important;background-image:repeating-radial-gradient(ellipse 115% 54% at 12% 82%,transparent 0 14px,color-mix(in srgb,var(--paper) 38%,transparent) 14.5px 15px,transparent 15.5px 27px),repeating-linear-gradient(112deg,transparent 0 70px,color-mix(in srgb,var(--paper) 12%,transparent) 70.5px 71px,transparent 71.5px 122px)!important;background-size:100% 100%!important}
 .showcase .church-gate__leaf:first-child{border-right:1px solid color-mix(in srgb,var(--paper) 55%,transparent)}
