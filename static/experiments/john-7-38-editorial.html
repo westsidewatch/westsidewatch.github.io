@@ -2,6 +2,7 @@
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>John 7:38 — Editorial Scripture / Westside Watch</title>
 <link rel="stylesheet" href="/css/westside-design-os.css">
+<link rel="stylesheet" href="/css/westside-engraving-authority.css">
 <style>
 :root{--ink:var(--ws-ink);--blue:var(--ws-branch);--paper:var(--ws-surface)}
 *{box-sizing:border-box}html,body{margin:0}body{background:var(--paper);color:var(--ink);font-family:var(--ws-type-display-en,"Bodoni Moda",Georgia,serif);font-synthesis:none}
@@ -72,8 +73,13 @@ body[data-ws-color-family="water"] .composition .water{color:var(--ws-water)!imp
 .composition .initial-w{font-size:clamp(205px,47vw,370px)}
 .composition .water-rest{font-size:clamp(68px,14vw,110px)}
 }
+
+/* The original Living Water engraving authority owns the texture; no local replacement. */
+.page.sites-surface{isolation:isolate;--ws-engraving-opacity:.18}
+.page.sites-surface::after{z-index:0;inset:0;opacity:var(--ws-engraving-opacity);background-size:cover}
+.page.sites-surface>*{position:relative;z-index:1}
 </style></head>
-<body data-ws-scope="global" data-ws-color-family="water" class="sites-section-church"><main class="page">
+<body data-ws-scope="global" data-ws-color-family="water" class="sites-section-church sites-surface"><main class="page sites-surface sites-section-church" data-ws-color-family="water">
 <header class="mast"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></header>
 <p class="sr" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
 <section class="composition" aria-label="John 7:38 editorial artwork" aria-hidden="true">
