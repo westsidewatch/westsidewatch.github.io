@@ -80,14 +80,15 @@
 .showcase .edition[data-variant="0"] .scripture-zh{grid-column:2!important;grid-row:2!important;align-self:end!important;font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif)!important;font-size:clamp(15px,1.35vw,22px)!important;line-height:1.85!important;letter-spacing:.035em!important;max-width:20em;margin-bottom:clamp(12px,3svh,45px)}
 @media(max-width:700px){.showcase .composition .edition[data-variant="0"]{grid-template-columns:1fr!important;grid-template-rows:auto minmax(0,1fr) auto auto!important}.showcase .edition[data-variant="0"] .scripture-en{grid-column:1!important;grid-row:2!important;align-self:center!important;font-size:clamp(19px,4.7vw,31px)!important;gap:3px!important}.showcase .edition[data-variant="0"] .scripture-en strong{font-size:clamp(29px,7.4vw,49px)!important}.showcase .edition[data-variant="0"] .scripture-zh{grid-column:1!important;grid-row:3!important;align-self:end!important;font-size:clamp(12px,2.6vw,16px)!important;line-height:1.5!important;margin:0!important}.showcase .edition[data-variant="0"] .scripture-footer{grid-row:4!important}}
 
-/* John 7:38 — single scripture layout authority. Earlier exploratory rules
-   remain as historical declarations but are overridden here in one place. */
+/* John 7:38 — editorial composition authority: English proclamation + Chinese at water-source focal point. */
 .showcase .composition .edition[data-variant="0"]{
   grid-template-rows:auto minmax(0,1fr) auto!important;
+  position:relative!important;
   column-gap:clamp(20px,3.5vw,58px)!important;
 }
 .showcase .composition .edition[data-variant="0"] .scripture-en{
   grid-column:1!important;grid-row:2!important;align-self:center!important;
+  position:relative!important;z-index:2!important;
   min-width:0!important;width:100%!important;max-width:none!important;
   margin:0!important;padding:0!important;transform:none!important;
   display:flex!important;flex-direction:column!important;
@@ -96,7 +97,7 @@
   font-weight:400!important;font-style:normal!important;font-synthesis:none!important;
 }
 .showcase .composition .edition[data-variant="0"] .scripture-en-lead{
-  display:block;font-size:clamp(28px,3.7vw,62px)!important;
+  display:block;font-size:clamp(27px,3.3vw,56px)!important;
   line-height:1.03!important;letter-spacing:-.035em!important;
   max-width:16ch!important;text-wrap:balance;
 }
@@ -107,8 +108,8 @@
 }
 .showcase .composition .edition[data-variant="0"] .scripture-en strong{
   display:block;font-weight:400!important;font-synthesis:none!important;
-  font-size:clamp(42px,5.5vw,94px)!important;line-height:.96!important;
-  letter-spacing:-.05em!important;max-width:15ch!important;
+  font-size:clamp(48px,6.1vw,104px)!important;line-height:.96!important;
+  letter-spacing:-.05em!important;max-width:12ch!important;
   white-space:normal!important;text-wrap:balance;
 }
 .showcase .composition .edition[data-variant="0"] .scripture-en strong i{
@@ -116,17 +117,20 @@
 }
 .showcase .composition .edition[data-variant="0"] .scripture-zh{
   grid-column:2!important;grid-row:2!important;align-self:center!important;
-  justify-self:end!important;min-width:0!important;width:100%!important;
-  max-width:22em!important;margin:0!important;
+  justify-self:center!important;min-width:0!important;width:100%!important;
+  max-width:15em!important;margin:0!important;
+  position:relative!important;z-index:3!important;
+  text-align:center!important;
   font-family:var(--ws-type-display-zh)!important;
   font-weight:var(--ws-weight-zh-air,200)!important;font-synthesis:none!important;
-  font-size:clamp(15px,1.25vw,21px)!important;line-height:1.8!important;
+  font-size:clamp(17px,1.35vw,22px)!important;line-height:1.7!important;
   text-wrap:balance;word-break:normal;overflow-wrap:normal;
 }
 @media(min-width:701px){
   .showcase .composition .edition[data-variant="0"]{
-    grid-template-columns:minmax(0,1.55fr) minmax(0,.45fr)!important;
+    grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr)!important;
     padding:clamp(22px,3vw,46px) clamp(36px,5.5vw,96px)!important;
+    isolation:isolate!important;
   }
 }
 @media(max-width:700px){
@@ -150,12 +154,29 @@
     font-size:clamp(31px,8vw,52px)!important;max-width:100%!important;
   }
   .showcase .composition .edition[data-variant="0"] .scripture-zh{
-    grid-column:1!important;grid-row:3!important;justify-self:start!important;
-    max-width:100%!important;font-size:clamp(12px,2.7vw,16px)!important;
+    grid-column:1!important;grid-row:3!important;justify-self:center!important;
+    max-width:23em!important;font-size:clamp(13px,3vw,17px)!important;
+    text-align:center!important;
     line-height:1.5!important;
   }
 }
 
+@media(min-width:701px){
+  /* Place the Chinese verse on the engraving's lower-right spring focal point.
+     A subtle paper halo keeps the scripture legible without a separate panel. */
+  .showcase .composition .edition[data-variant="0"] .scripture-zh{
+    transform:translate(0,clamp(36px,7svh,90px))!important;
+    padding:clamp(12px,1.6vw,24px)!important;
+    background:radial-gradient(ellipse at center,color-mix(in srgb,var(--paper,#eeeae1) 91%,transparent) 0%,color-mix(in srgb,var(--paper,#eeeae1) 62%,transparent) 52%,transparent 78%)!important;
+  }
+}
+@media(max-width:700px){
+  .showcase .composition .edition[data-variant="0"] .scripture-zh{
+    transform:none!important;
+    padding:6px 10px!important;
+    background:none!important;
+  }
+}
 /* Handbook practical exercise: editorial titles, scoped to second-screen scenes only.
    Preserve sevenfold motion, church scripture and existing Design OS tokens. */
 .showcase .edition:not([data-variant="0"]) .headline{min-width:0;max-width:100%}
