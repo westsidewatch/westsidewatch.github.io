@@ -455,3 +455,141 @@ Butterick 的標題建議偏向克制與清楚，而 Lubalin、Brody 的案例�
 以 John 7:38 現有內容建立 **Block / Hinge / Counterpoint** 三個草圖，並保留中文、刻線、頁腳不變。先對比文字群組形狀與孤字，再決定一種，不能同時引入三套生產 CSS。將最終版寫成一個 scoped composition，通過實際部署截圖與縮放驗收後，才把它升格為 [OS] 的成功案例。
 
 本輪只補充研究、HTML/CSS 示範與驗收方法；沒有改動 PR #1325 的預覽頁，也沒有新增獨立管理工程。
+
+
+## 14. 第四輪：Bodoni 大型英文字母的光學排版（研究與實戰）
+
+本章屬於現有 Design OS 英文大標手冊，不建立第二套字體管理或獨立 CI。區分 **[OS] 本站採納規則**、**[STUDY] 待進一步驗證的來源觀察**、**[EXPERIMENT] 待實測的技術候選**。本輪未取得所有印刷專書全文，不能冒稱逐頁閱讀。
+
+### 14.1 參考資料與核查事項
+
+- Bodoni Moda 字體資料：https://fonts.google.com/specimen/Bodoni+Moda ；原始碼與版本：https://github.com/indestructible-type/Bodoni 。研究 Didone 字形的高對比筆畫、字偶與不同大小的顯示效果。實際網站所載字體檔、italic 和可變軸須另行核實。[STUDY]
+- Matthew Butterick, *Practical Typography*：https://practicaltypography.com/kerning.html 、https://practicaltypography.com/letterspacing.html 、https://practicaltypography.com/line-spacing.html 。區分字偶距、整體字距與行距。[STUDY]
+- Ellen Lupton, *Thinking with Type*：https://ellenlupton.com/Thinking-with-Type 。研究字形、視覺群組與字體層級。[STUDY]
+- MDN：font-kerning https://developer.mozilla.org/en-US/docs/Web/CSS/font-kerning ；font-optical-sizing https://developer.mozilla.org/en-US/docs/Web/CSS/font-optical-sizing ；font-synthesis https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis ；hanging-punctuation https://developer.mozilla.org/en-US/docs/Web/CSS/hanging-punctuation 。研究瀏覽器實作與相容性。[STUDY]
+- W3C CSS Fonts Level 4：https://www.w3.org/TR/css-fonts-4/ 。用於檢查字體特性及相關規範。[STUDY]
+
+### 14.2 五個不能混淆的決策
+
+| 技術 | 目的 | 本站規則 |
+| --- | --- | --- |
+| Kerning | 修正 AV、To、Wa 等字偶的視覺間距 | [OS] 先用真字體 kerning，再考慮人工調整 |
+| Tracking | 調整整行字母疏密 | [OS] 不用單一負 letter-spacing 套全部字級 |
+| Optical sizing | 依字體支援的光學尺寸調整字形 | [EXPERIMENT] 先核實 font face 是否含 opsz |
+| Line spacing | 調整多行大標基線與呼吸 | [OS] 按版位與字形測量，不照搬封面行高到正文 |
+| Optical alignment | 標點、圓形字母與欄邊的視覺齊整 | [OS] 原文標點保留；調整須局部驗證 |
+
+**操作次序 [OS]：** 核對字體 → 確認原文與語義分行 → 決定欄位和字級 → 設行距 → 檢查 kerning → 微調 tracking → 校正邊緣 → 多尺寸驗收。不能用壓縮字形、變形或無限縮小字體修復版面錯誤。
+
+### 14.3 字體正體、斜體和大小寫
+
+[OS] 英文大標採現有 Design OS Bodoni Moda、正常 400 字重。斜體只在確實載入真 italic font face 時使用；不得用 skew 製造斜體。不得合成粗體或 small caps。標題採用的 Title Case、sentence case、真 small caps 必須依內容角色選擇，不可全站強制大寫。經文大小寫和標點不得為視覺效果任意改寫。
+
+[OS] 正斜體的切換必須有語義焦點，如強調 “living water.”；不能每個詞隨機切換。特別檢查斜體尾端與標點、相鄰字母是否碰撞。
+
+### 14.4 四種版位的光學優先順序
+
+| 版位 | 先檢查 | 再調整 |
+| --- | --- | --- |
+| 全屏巨字 | 語義分行、整體字群外形、留白 | 字級、字偶、邊緣光學對齊 |
+| 左右半版 | 真實容器欄寬、中文與人物安全區 | 分行、字級、局部字距 |
+| 正常文章 H1 | 易讀性、行數、標題階層 | 行高、必要時 balance |
+| Small caps 標籤 | 真字體是否存在、資訊可辨識 | 合理 tracking、基線對齊 |
+
+### 14.5 CSS 範例 A：光學排版的安全起點
+
+以下為**尚未部署的 scoped 實驗示例**；共享字體與顏色仍以 Design OS token 為準。
+
+```css
+.ws-display-optical {
+  font-family: var(--ws-type-display-en);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-variant-ligatures: common-ligatures;
+  letter-spacing: normal;
+  line-height: 1.02;
+}
+.ws-display-optical--monumental { line-height: .98; }
+.ws-display-optical--standard { line-height: 1.12; }
+.ws-display-optical em { font-style: italic; }
+```
+
+`font-optical-sizing:auto` 只在實際字體具備相應光學軸時生效。不能因為 CSS 屬性存在就宣稱視覺改善。[EXPERIMENT]
+
+### 14.6 CSS 範例 B：標點懸掛及回退
+
+```css
+.ws-display-punctuation { hanging-punctuation: last allow-end; }
+@supports not (hanging-punctuation: last allow-end) {
+  .ws-display-punctuation { hanging-punctuation: none; }
+}
+```
+
+[EXPERIMENT] 此屬性需要實際目標瀏覽器支援驗證。不得用偽元素重建經文標點，亦不可在全站套用負 margin 假裝已完成光學對齊。
+
+### 14.7 CSS 範例 C：依容器重組大標
+
+```css
+.ws-optical-region { container: ws-optical / inline-size; }
+.ws-optical-region .ws-optical-title {
+  font-family: var(--ws-type-display-en);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-size: clamp(2rem, 6cqi, 6rem);
+  line-height: 1.04;
+  min-width: 0;
+}
+@container ws-optical (max-width: 38rem) {
+  .ws-optical-region .ws-optical-title {
+    font-size: clamp(1.6rem, 7cqi, 3.4rem);
+    line-height: 1.08;
+  }
+}
+```
+
+[OS] 這些數值只是實驗起點，不可直接升格為全站硬性字級。容器變窄時先重組版位與語義分行，不使用 scaleX/scaleY 拉伸或壓扁字形。
+
+### 14.8 測量與驗收
+
+[OS] 每個大型英文字母案例都記錄：實際 font family、字重、字體樣式、是否有真 italic／opsz；原文及批准斷點；容器寬度；標題實際邊界和溢出；各行字寬與孤字；中文、圖片、刻線、CTA 安全區；同尺寸前後截圖；最終 PASS/FAIL。
+
+```js
+// DevTools diagnostic example, not production runtime.
+const title = document.querySelector('.ws-optical-title');
+if (title) {
+  const box = title.getBoundingClientRect();
+  const css = getComputedStyle(title);
+  console.table({
+    font: css.fontFamily,
+    weight: css.fontWeight,
+    style: css.fontStyle,
+    kerning: css.fontKerning,
+    opticalSizing: css.fontOpticalSizing,
+    width: box.width,
+    scrollWidth: title.scrollWidth,
+    lineHeight: css.lineHeight,
+    letterSpacing: css.letterSpacing
+  });
+}
+```
+
+`scrollWidth` 可檢查溢出，**不能單靠它偵測孤字**；仍須用 Range 行框、截圖或人工審核。驗收至少覆蓋約 390、700、820、1440px 的實際容器，以及 100%、125%、150% 縮放。CI PASS 不是視覺 PASS。
+
+### 14.9 四項常駐練習
+
+1. 同一句 “living water.” 比較正常字距、人工 tracking 與真斜體，逐一核對字形、空白與標點。
+2. 在半版測 “He that believeth on me,”，禁止 “on” 或 “flow” 意外獨佔一行。
+3. 對比 “rivers of / living water.” 的兩行巨字與一行正常 H1，說明版位與內容角色差異。
+4. 以同一真實頁面測 125% 和 150% 縮放，記錄何時必須從 monumental 切換為 editorial 或 reading。
+
+**反證：** 字體沒有 opsz 時不能聲稱 optical sizing 有效；瀏覽器不支援 hanging-punctuation 時不能聲稱標點已校正；若縮字距造成字母碰撞或增加孤字風險，該版本 FAIL。
+
+### 14.10 本輪結論與下一步
+
+[OS] **先確保字形真實、語義正確、版位合理，再進行光學微調。** Bodoni 的高對比字形可以成為本刊視覺特色，但字體工程不可替代編輯判斷。下輪應以實際載入字體、半版寬度與對照截圖驗證以上候選，再將成功數值或行為提升為可復用的 OS 規則。
+
+本輪只補充手冊，不修改未獲批准的 PR #1325 視覺頁面，也不建立第二套系統。
