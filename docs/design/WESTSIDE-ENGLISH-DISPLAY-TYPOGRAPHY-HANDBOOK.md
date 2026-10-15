@@ -190,3 +190,102 @@ Owner: Westside Design OS. This document is a handbook within the existing OS, *
 - 唯一 runtime 入口：`static/css/westside-design-os.css`。
 - Canonical token 資料：`design-system/tokens/westside.tokens.json`。
 - 首個實戰：PR #1325 的約翰福音 7:38 半屏版面；**尚未通過英文孤字與完整視覺驗收，不可當成成功案例。**
+
+
+## 12. 第二輪研究（2026-10-14）：編輯節奏、跨頁構圖與響應式字母
+
+### 12.1 證據層級
+
+本輪閱讀了下列**公開文章、作者原文及出版商介紹**；沒有取得或通讀全部付費書籍，因此只記錄有來源可核查的內容。書籍尚待逐頁閱讀的規則繼續標記 [STUDY]；本站據此制定的操作政策標記 [OS]；數值及新版型標記 [EXPERIMENT]。
+
+| 來源 | 已核實觀察 | 對本刊的可操作轉化 |
+| --- | --- | --- |
+| Ellen Lupton, *Thinking with Type*, 3rd ed., 2024（作者介紹） https://ellenlupton.com/Thinking-with-Type | 研究 kerning、tracking、balance、grid、alignment、Gestalt | 對大字母先做字形、留白、群組關係檢查；不把字級當唯一尺度 |
+| Ellen Lupton, *White Space*（作者原文） https://ellenlupton.com/White-Space | 網格支撐非對稱與留白；留白是有意安排的構圖要素 | 主標佔半版時，另一半必須有明確的安靜功能，不強行填滿 |
+| Cath Caldwell & Yolanda Zappaterra, *Editorial Design: Digital and Print*（出版商及章節目錄） https://www.laurenceking.com/products/editorial-design ; https://www.oreilly.com/library/view/editorial-design/9781780676265/ | 封面、出版物內頁、建立版面、編輯技能是不同研究對象 | 不以一套 hero 字級覆蓋封面、文章、目錄及工具頁 |
+| Andy Clarke, *Art Direction for the Web*（出版社章節介紹） https://www.smashingmagazine.com/2019/04/art-direction-release/ | 包含網格、字體、圖片、CSS 排版與多裝置藝術指導 | 把「何時／為何使用巨字」寫入版位決策，不只記錄技術 |
+| Andy Clarke on Bea Feitler（有原作案例的研究文章） https://www.smashingmagazine.com/2019/10/inspired-design-decisions-bea-feitler/ | 單頁需精心構造，同時要有前後頁節奏；文中提供《Harper's Bazaar》案例 | 新增連續屏節奏審核：巨字後不必仍是巨字 |
+| Andy Clarke on Otto Storch（有《McCall's》案例） https://www.smashingmagazine.com/2020/03/inspired-design-decisions-otto-storch/ | 大標與圖片可統一跨頁；中縫與跨欄成為設計要素 | 網頁半版要考慮欄間距與跨欄，而非只按 50/50 切割 |
+| Andy Clarke on Herb Lubalin（含作品案例） https://www.smashingmagazine.com/2020/04/inspired-design-decisions-herb-lubalin/ | 字母排列、字距與行距能形成可辨認的圖像構圖 | 設立 phrase-as-shape 版型，先定語義，再定字群形狀 |
+| Andy Clarke on Neville Brody / *The Face* https://www.smashingmagazine.com/2020/03/inspired-design-decisions-neville-brody/ | 有網格作結構，局部可打破；文字出血及縱向標題屬特定藝術指導 | 只有非關鍵裝飾性文字可經批准出血；不變形字形 |
+| Andy Clarke on *Avaunt* magazine https://www.smashingmagazine.com/2019/06/inspired-design-decisions-avaunt-magazine/ | 模組網格可支持多樣化標題與圖像比例 | 同一 OS 的不同欄位布局不等於新增設計系統 |
+| Andy Clarke on *Pressing Matters* https://www.smashingmagazine.com/2019/07/inspired-design-decisions-pressing-matters/ | 複合網格和不同大小的區塊形成快慢節奏 | 封面、長文、索引的字母密度應有對比 |
+| Matthew Butterick, *Practical Typography*, headings / hard line breaks https://practicaltypography.com/headings.html ; https://practicaltypography.com/hard-line-breaks.html | 標題層級宜精簡；有意義的斷行可避免不合邏輯的最後一行 | 正常標題優先清楚；巨字需人工批准換行點 |
+| Butterick, kerning / letterspacing https://practicaltypography.com/public/kerning.html ; https://practicaltypography.com/letterspacing.html | kerning 與整體 tracking 不同；小型大寫字母可適當加 tracking | Bodoni 大寫與小寫分別處理，不能所有尺寸共用一個負字距 |
+| MDN, text-wrap / container queries https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-wrap ; https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries | balance 有行數限制，容器查詢按容器尺寸而非 viewport | 禁止只靠 balance 防孤字；半屏需基於實際容器重排 |
+| Andy Clarke, Benton Modern responsive case https://www.smashingmagazine.com/2015/05/benton-modern-typography-case-study/ | 同一 HTML 可做形式化與表現性兩種響應式排版 | 語義內容不因布局切換而複製、刪改或失序 |
+
+### 12.2 本刊新增：Editorial Rhythm（連續頁面節奏）
+
+[OS] 編輯設計單位是**相鄰的 3–5 個畫面**，不是一張截圖。設計一個巨字首屏時，必須同時檢查上一屏和下一屏的文字重量、留白、圖片與行為。用以下角色編排，不是用固定模板重複：
+
+- **Accent**：巨字主視覺；使讀者停留，只有一個強焦點。
+- **Bridge**：中等標題或短導語；建立語義過渡。
+- **Reading**：正常文章標題、正文與圖片；以閱讀效率為先。
+- **Quiet**：安靜留白、細標籤或獨立圖像；恢復視覺呼吸。
+- **Index**：可掃描目錄、卡片、工具導航；不使用整版巨字。
+
+[EXPERIMENT] 以 `Accent → Quiet → Reading`、`Accent → Bridge → Index`、`Reading → Accent → Reading` 作為首批節奏候選。並非強制每三屏循環；真正規則是相鄰畫面的注意力層級不得機械重複。
+
+### 12.3 新增版式判斷：文字是圖像還是標籤？
+
+[OS] 大標題可以作為**視覺主圖**，但它仍然是文字，必須有可讀的語義。使用前回答：
+
+1. 讀者先看字，還是先看人物／影片？誰是主角？
+2. 字母的整體外形（長條、方塊、階梯、斜向）是否有意設計？
+3. 哪些短語可以成行，哪些不能拆？
+4. 字母是否佔用唯一的可操作空間或人物安全區？
+5. 另一半版面是必要的輔助資訊，還是刻意的留白？
+6. 縮窄後要重新分行、降低尺度、改位置，還是退回正常標題？
+
+若無法回答第 2、3 題，先用正常標題，不得僅把字級放大。
+
+### 12.4 六個版位的具體排版動作
+
+| 版位 | 優先方法 | 可批准的戲劇性處理 | 何時退回正常字級 |
+| --- | --- | --- | --- |
+| 封面／全屏 | 以一個語義群作主圖；輔助資訊退至邊界 | 大字母跨欄、留白包圍、明確分行 | 主標過長、與主導航衝突 |
+| 左／右半版 | 用字群的真實寬度定欄，對側留出圖片／中文 | 主字群非對稱、與對角小字平衡 | 實際字群寬度不足而形成孤字 |
+| 上／下半版 | 同時測高度、行數、頁腳安全區 | 標題與上下場景呼應 | 高度不足或主標壓到頁腳 |
+| 普通文章 H1 | 清晰的 1–3 行標題，與導語成組 | 少量字距與行距調整 | 幾乎所有普通文章都應使用此角色 |
+| 人物標題 | 遵守已批准的人像與海報安全區 | 人名與人物層次交錯（資產特批） | 遮臉、手、肩，或失去姓名辨識 |
+| 引言／經文 | 將真正焦點詞放大，其餘降級但保留原文 | 片語作字母圖形，譯文形成對位 | 語義無法合理拆分、引文被截斷 |
+
+### 12.5 Responsive Art Direction：不是只縮放
+
+[OS] 大字母標題的媒體查詢不是唯一依據。**先以實際容器可用寬度測量**，再考慮裝置寬度。不同頁面同為 820px viewport，左側還有側欄、或僅佔半版時，字體可用寬度完全不同。
+
+[OS] 標題有三種**不同的排版狀態**：
+- `monumental`：寬容器，字母作主圖，編輯批准的分行。
+- `editorial`：中容器，維持焦點與對位，但可重組分行及欄位。
+- `reading`：窄容器，回到清晰標題；完整內容仍在。
+
+[OS] 過渡條件應由**文字實測寬度、行數、可用高度、其他內容安全區**決定，而非只憑固定 700px／1024px。使用 `@container`、`cqi`、`clamp()` 時仍需提供 fallback。瀏覽器 `text-wrap:balance` 可協助普通短標題，不能代替經文或巨字的語義分行審核。
+
+[OS] 禁止 `transform:scaleX/scaleY` 改變字形比例；禁止只為消除孤字而不合理地縮小整個版面。字距以字體本身 kerning 為起點，再做具體光學判斷；對不同長度標題不要盲套同一負 tracking。
+
+### 12.6 本輪反證：為什麼普通標題不能照搬巨字規則
+
+Butterick 的標題建議偏向克制與清楚，而 Lubalin、Brody 的案例鼓勵表現性排版；**兩者並不矛盾**，因為面對不同版位。[OS] 普通 H1／H2 先遵守資訊層級，巨字是編輯批准的藝術指導例外。若每個 H2 都巨大，真正的封面主標反而失去特殊性。
+
+### 12.7 John 7:38 實戰驗證卡（尚未 PASS）
+
+- 角色：下半屏 scripture editorial / asymmetric half-spread。
+- 主要焦點：`rivers of living water.`；可選擇 `rivers of / living water.` 的**批准分行**。
+- 前置句：`He that believeth on me,` 必須作為可讀的語義群；是否分為兩行須由版式批准，不得因字寬偶然換行。
+- 中間句：`as the scripture hath said, out of his belly shall flow`；保證 `shall flow` 不分離。
+- 中譯：極細，從屬但清晰，不作裝飾性填充。
+- 背景：刻線作低干擾材質，不能壓字。
+- 需驗證：全屏、約 820px 半屏、窄屏、125%／150% 縮放；保存同尺寸前後截圖。
+- 失敗標記：目前歷史截圖出現 `flow` 孤行及字群被動換行；不可以 CI PASS 宣稱設計成功。
+- 下一次實作前，先給出 `monumental / editorial / reading` 三個經批准的分行方案，再調整 CSS。
+
+### 12.8 常駐訓練的新增考題
+
+- **辨識題**：隨機挑 10 個站內英文標題，分類為封面、半版、文章 H1、section、人物、引言或 UI；寫出不使用巨字的理由。
+- **構圖題**：相同標題在左半版、右半版、下半版各排一次，必須標出安全區與字群輪廓。
+- **節奏題**：連續 5 屏只能有 1–2 個 Accent；比較讀者注意力路徑，不以漂亮截圖代替整體體驗。
+- **反證題**：用 820px 半屏及 150% 縮放測試；任何孤字、字形拉伸、中文壓字、刻線干擾即 FAIL。
+- **回寫題**：每次研究必須增加可查證來源、具體版位判斷、失敗反例及至少一個待測實戰案例。禁止只增加風格形容詞。
+
+本輪研究**只更新本手冊**，不改動尚未批准的 PR #1325 視覺版面；不新增 CSS 權威、第二套設計系統或獨立 CI。
