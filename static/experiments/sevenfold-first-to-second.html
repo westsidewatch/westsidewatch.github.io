@@ -80,25 +80,82 @@
 .showcase .edition[data-variant="0"] .scripture-zh{grid-column:2!important;grid-row:2!important;align-self:end!important;font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif)!important;font-size:clamp(15px,1.35vw,22px)!important;line-height:1.85!important;letter-spacing:.035em!important;max-width:20em;margin-bottom:clamp(12px,3svh,45px)}
 @media(max-width:700px){.showcase .composition .edition[data-variant="0"]{grid-template-columns:1fr!important;grid-template-rows:auto minmax(0,1fr) auto auto!important}.showcase .edition[data-variant="0"] .scripture-en{grid-column:1!important;grid-row:2!important;align-self:center!important;font-size:clamp(19px,4.7vw,31px)!important;gap:3px!important}.showcase .edition[data-variant="0"] .scripture-en strong{font-size:clamp(29px,7.4vw,49px)!important}.showcase .edition[data-variant="0"] .scripture-zh{grid-column:1!important;grid-row:3!important;align-self:end!important;font-size:clamp(12px,2.6vw,16px)!important;line-height:1.5!important;margin:0!important}.showcase .edition[data-variant="0"] .scripture-footer{grid-row:4!important}}
 
-/* Church editorial spread: single responsive composition authority. */
-@media(min-width:701px){
-.showcase .composition .edition[data-variant="0"]{grid-template-columns:minmax(0,1.55fr) minmax(0,.45fr)!important;grid-template-rows:auto minmax(0,1fr) auto!important;column-gap:clamp(24px,4vw,70px)!important;padding:clamp(24px,3vw,48px) clamp(36px,5.5vw,96px)!important}
-.showcase .edition[data-variant="0"] .scripture-en{grid-column:1!important;grid-row:2!important;align-self:start!important;max-width:100%!important;width:100%!important;margin:clamp(44px,7svh,104px) 0 0!important;transform:none!important;font-size:clamp(30px,3.8vw,66px)!important;line-height:1.06!important;gap:clamp(10px,1.6svh,20px)!important}
-.showcase .edition[data-variant="0"] .scripture-en-bridge{max-width:40ch!important;font-size:.53em!important;line-height:1.3!important}
-.showcase .edition[data-variant="0"] .scripture-en strong{font-size:clamp(44px,5.1vw,90px)!important;line-height:.96!important;white-space:normal!important;max-width:15ch!important;text-wrap:balance!important}
-.showcase .edition[data-variant="0"] .scripture-zh{grid-column:2!important;grid-row:2!important;align-self:center!important;justify-self:end!important;width:100%!important;max-width:22em!important;min-width:0!important;margin:clamp(85px,13svh,160px) 0 0!important;font-size:clamp(15px,1.25vw,21px)!important;line-height:1.9!important;text-wrap:balance;word-break:normal;overflow-wrap:normal}
+/* John 7:38 — single scripture layout authority. Earlier exploratory rules
+   remain as historical declarations but are overridden here in one place. */
+.showcase .composition .edition[data-variant="0"]{
+  grid-template-rows:auto minmax(0,1fr) auto!important;
+  column-gap:clamp(20px,3.5vw,58px)!important;
 }
-@media(max-width:700px){.showcase .edition[data-variant="0"] .scripture-zh{text-wrap:balance!important;word-break:normal!important;overflow-wrap:normal!important}}
-.showcase .edition[data-variant="0"] .scripture-zh{font-family:var(--ws-type-display-zh)!important;font-weight:var(--ws-weight-zh-air,200)!important;font-synthesis:none!important}
+.showcase .composition .edition[data-variant="0"] .scripture-en{
+  grid-column:1!important;grid-row:2!important;align-self:center!important;
+  min-width:0!important;width:100%!important;max-width:none!important;
+  margin:0!important;padding:0!important;transform:none!important;
+  display:flex!important;flex-direction:column!important;
+  gap:clamp(5px,.9svh,12px)!important;
+  font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;
+  font-weight:400!important;font-style:normal!important;font-synthesis:none!important;
+}
+.showcase .composition .edition[data-variant="0"] .scripture-en-lead{
+  display:block;font-size:clamp(28px,3.7vw,62px)!important;
+  line-height:1.03!important;letter-spacing:-.035em!important;
+  max-width:16ch!important;text-wrap:balance;
+}
+.showcase .composition .edition[data-variant="0"] .scripture-en-bridge{
+  display:block;font-size:clamp(15px,1.35vw,22px)!important;
+  line-height:1.25!important;letter-spacing:0!important;
+  max-width:44ch!important;font-style:normal!important;
+}
+.showcase .composition .edition[data-variant="0"] .scripture-en strong{
+  display:block;font-weight:400!important;font-synthesis:none!important;
+  font-size:clamp(42px,5.5vw,94px)!important;line-height:.96!important;
+  letter-spacing:-.05em!important;max-width:15ch!important;
+  white-space:normal!important;text-wrap:balance;
+}
+.showcase .composition .edition[data-variant="0"] .scripture-en strong i{
+  font-weight:400!important;font-synthesis:none!important;
+}
+.showcase .composition .edition[data-variant="0"] .scripture-zh{
+  grid-column:2!important;grid-row:2!important;align-self:center!important;
+  justify-self:end!important;min-width:0!important;width:100%!important;
+  max-width:22em!important;margin:0!important;
+  font-family:var(--ws-type-display-zh)!important;
+  font-weight:var(--ws-weight-zh-air,200)!important;font-synthesis:none!important;
+  font-size:clamp(15px,1.25vw,21px)!important;line-height:1.8!important;
+  text-wrap:balance;word-break:normal;overflow-wrap:normal;
+}
+@media(min-width:701px){
+  .showcase .composition .edition[data-variant="0"]{
+    grid-template-columns:minmax(0,1.55fr) minmax(0,.45fr)!important;
+    padding:clamp(22px,3vw,46px) clamp(36px,5.5vw,96px)!important;
+  }
+}
+@media(max-width:700px){
+  .showcase .composition .edition[data-variant="0"]{
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:auto minmax(0,1fr) auto auto!important;
+    gap:clamp(5px,1svh,10px)!important;
+    padding:clamp(14px,3svh,24px) 6vw!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en{
+    grid-column:1!important;grid-row:2!important;align-self:center!important;
+    gap:clamp(4px,.8svh,8px)!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en-lead{
+    font-size:clamp(25px,6.5vw,42px)!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en-bridge{
+    font-size:clamp(12px,3vw,17px)!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en strong{
+    font-size:clamp(31px,8vw,52px)!important;max-width:100%!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-zh{
+    grid-column:1!important;grid-row:3!important;justify-self:start!important;
+    max-width:100%!important;font-size:clamp(12px,2.7vw,16px)!important;
+    line-height:1.5!important;
+  }
+}
 
-/* Editorial focal treatment: intentionally visible at half-window widths. */
-@media(min-width:701px){
-.showcase .composition .edition[data-variant="0"] .scripture-en{margin-top:0!important;align-self:start!important;padding-top:clamp(16px,3svh,38px)!important;max-width:none!important}
-.showcase .composition .edition[data-variant="0"] .scripture-en-lead{font-size:clamp(39px,5.1vw,85px)!important;line-height:1.04!important;max-width:13ch!important}
-.showcase .composition .edition[data-variant="0"] .scripture-en-bridge{font-size:clamp(15px,1.8vw,28px)!important;max-width:32ch!important}
-.showcase .composition .edition[data-variant="0"] .scripture-en strong{font-size:clamp(48px,6vw,105px)!important;max-width:12ch!important;line-height:.95!important}
-.showcase .composition .edition[data-variant="0"]::after{background-image:repeating-radial-gradient(ellipse 85% 52% at 84% 81%,transparent 0 27px,color-mix(in srgb,var(--ws-water) 31%,transparent) 27.5px 28px,transparent 28.5px 45px),linear-gradient(110deg,transparent 18%,color-mix(in srgb,var(--ws-water) 7%,transparent) 100%)!important;background-size:100% 100%!important;opacity:.65!important}
-}
 /* Handbook practical exercise: editorial titles, scoped to second-screen scenes only.
    Preserve sevenfold motion, church scripture and existing Design OS tokens. */
 .showcase .edition:not([data-variant="0"]) .headline{min-width:0;max-width:100%}
@@ -125,76 +182,6 @@
   }
 }
 
-/* John 7:38 — editorial display hierarchy from the English Typography Handbook.
-   Scoped to scripture only; existing sevenfold movement is unchanged. */
-.showcase .composition .edition[data-variant="0"] .scripture-en{
-  min-width:0!important;
-  font-synthesis:none!important;
-  letter-spacing:normal!important;
-  text-wrap:pretty;
-}
-.showcase .composition .edition[data-variant="0"] .scripture-en-lead{
-  display:block;
-  font-style:normal;
-  font-weight:400;
-  letter-spacing:-.035em;
-  text-wrap:balance;
-}
-.showcase .composition .edition[data-variant="0"] .scripture-en-bridge{
-  display:block;
-  font-style:normal;
-  letter-spacing:0;
-  text-wrap:pretty;
-}
-.showcase .composition .edition[data-variant="0"] .scripture-en strong{
-  display:block;
-  font-weight:400;
-  font-synthesis:none;
-  letter-spacing:-.045em;
-  text-wrap:balance;
-}
-.showcase .composition .edition[data-variant="0"] .scripture-en strong i{
-  font-weight:400;
-  font-synthesis:none;
-}
-@media(min-width:701px){
-  .showcase .composition .edition[data-variant="0"] .scripture-en{
-    gap:clamp(4px,.8svh,12px)!important;
-    padding-top:clamp(8px,1.5svh,20px)!important;
-  }
-  .showcase .composition .edition[data-variant="0"] .scripture-en-lead{
-    font-size:clamp(32px,4.2vw,72px)!important;
-    line-height:1.03!important;
-  }
-  .showcase .composition .edition[data-variant="0"] .scripture-en-bridge{
-    font-size:clamp(15px,1.55vw,24px)!important;
-    line-height:1.22!important;
-    max-width:42ch!important;
-  }
-  .showcase .composition .edition[data-variant="0"] .scripture-en strong{
-    font-size:clamp(42px,5.4vw,92px)!important;
-    line-height:.97!important;
-    max-width:14ch!important;
-  }
-}
-@media(max-width:700px){
-  .showcase .composition .edition[data-variant="0"] .scripture-en{
-    gap:clamp(5px,1svh,10px)!important;
-  }
-  .showcase .composition .edition[data-variant="0"] .scripture-en-lead{
-    font-size:clamp(27px,7vw,45px)!important;
-    line-height:1.05!important;
-  }
-  .showcase .composition .edition[data-variant="0"] .scripture-en-bridge{
-    font-size:clamp(13px,3.2vw,18px)!important;
-    line-height:1.27!important;
-  }
-  .showcase .composition .edition[data-variant="0"] .scripture-en strong{
-    font-size:clamp(32px,8.5vw,56px)!important;
-    line-height:1!important;
-    max-width:100%!important;
-  }
-}
 </style></head><body data-ws-scope="global"><section class="first" aria-label="首頁第一屏"><div class="head"><span>WESTSIDE WATCH</span><span>01 / SEVENFOLD DAWN</span></div><div><h1>Watch for<br><i>the Dawn.</i></h1><p>黑夜已深，白晝將近。<br>The night is far spent. The day is at hand.</p></div></section><section class="showcase" aria-label="七重編輯展示"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church" data-variant="0" aria-label="約翰福音 7:38 經文專題"><div class="scripture-kicker"><span>THE LIVING WORD / 01</span><span>JOHN 7:38 · KJV</span></div><p class="scripture-en" lang="en"><span class="scripture-en-lead">He that believeth on me,</span><span class="scripture-en-bridge">as the scripture hath said, out of his belly shall flow</span><strong>rivers of <i>living water.</i></strong></p><p class="scripture-zh ws-lineguard--short" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江⁠河⁠來⁠。</p><div class="scripture-footer"><span class="ws-scripture-reference"><span lang="zh-Hant">約翰福音 7:38</span><span class="ws-scripture-reference-divider" aria-hidden="true">/</span><span lang="en">JOHN 7:38</span></span><a href="/church/">ENTER LIVING WATER ↗</a></div></article>
 <article class="edition" data-variant="1"><div class="headline"><span class="category">02 / Magazine</span><h2>Watch<br><i>for Dawn.</i></h2><div class="cn">西望 · 獨立網絡雜誌</div></div><div class="detail"><p class="description">以文字、影像與編輯的秩序，重新理解我們所生活的世界。</p><a href="/journal/">READ THE JOURNAL ↗</a></div></article>
