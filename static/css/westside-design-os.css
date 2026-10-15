@@ -1486,3 +1486,13 @@ body.home{
 .ws-scripture-reference :where([lang="zh"],[lang="zh-Hant"],[lang="zh-Hans"]){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air);font-synthesis:none}
 .ws-scripture-reference [lang="en"]{font-family:var(--ws-type-display-en-sc);font-weight:400;font-synthesis:none}
 .ws-scripture-reference-divider{font-family:var(--ws-type-display-en);opacity:.55}
+
+/* Design OS / responsive line-break authority.
+   Use .ws-lineguard--short for short editorial passages and
+   .ws-lineguard--prose for long text. Never stretch glyphs or fix viewport widths.
+   Semantic end-phrases that must remain together use Unicode WORD JOINER (U+2060)
+   between the final characters; CSS alone cannot guarantee zero CJK orphans at every width. */
+.ws-lineguard--short{text-wrap:balance;word-break:normal;overflow-wrap:normal;line-break:strict;hyphens:none}
+.ws-lineguard--prose{text-wrap:pretty;word-break:normal;overflow-wrap:normal;line-break:strict;hyphens:auto}
+.ws-lineguard--short:lang(en){hyphens:none}
+.ws-lineguard--short:lang(zh),.ws-lineguard--short:lang(zh-Hant),.ws-lineguard--short:lang(zh-Hans){hyphens:none;line-break:strict}
