@@ -1255,3 +1255,79 @@ const composition = {
 [PENDING] 圖片像素審閱、完整人工標註、字形墨跡實際畫面座標與像素級碰撞、真實圖片背景對比、中文／CTA 聯合碰撞、跨尺寸瀏覽器截圖及人工批准。
 
 **第十輪研究結論**：可執行的測量與候選比較工具已進一步建立，但「Real Image Composition Validation」尚未達成完整實證驗收。不得將此章標記為 PASS，也不應再擴充抽象評分理論；下一個工作單位必須是三張真圖的實際截圖與人工構圖判讀。
+
+
+## 21. 巨型首字母作為版面建築：Living Water 實戰研究（2026-10-15）
+
+**狀態：[EXPERIMENT]，尚未取得部署畫面的視覺 PASS。** 對應 PR #1325、`static/experiments/sevenfold-first-to-second.html`。這是原 Design OS 的藝術指導案例，不建立第二套 runtime、CI 或樣式權威。
+
+### 21.1 從排字轉向藝術指導
+
+此前 John 7:38 的「四行字級差異」只建立了文字階層，未建立獨特的編輯構圖。下一候選改以 **Living / Water 的 L、W 作為半版字母建築**：L 的垂直主筆與底座建立左側軸線，W 的斜向筆畫呼應右下方現有水波刻線。這是本站根據 Lubalin 的 phrase-as-shape、Storch 的圖文跨欄、Brodovitch 的尺度與留白所提出的實驗性轉化，**不是上述設計師原作的直接復刻**。
+
+**閱讀與語義規則：** 巨型 L/W 是視覺性縮寫，不替代 KJV 經文；完整 `He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.` 保留在正常 DOM 閱讀順序中。裝飾字母加 `aria-hidden="true"`；不可重複朗讀、改寫或遺漏經文。中文保持獨立且完整。
+
+### 21.2 版面結構，不是 CSS 特效堆疊
+
+1. **幾何骨架：** 在下半版建立一個 scoped composition，L 佔左側垂直軸，W 佔中部偏下；二者尺度不必相同，但不能壓住經文、中文、頁腳與 CTA。
+2. **閱讀骨架：** 完整英文以較小但可讀的字級安排於上方或 L/W 的負空間，中文對位於水波源頭附近。不可因巨字搶空間而將正文縮至難讀。
+3. **材質骨架：** 沿用現有刻線與 `--ws-water`、`--ws-ink`、`--ws-type-display-en`。不新增黑金配色、不以文字漸層假造光影。
+4. **光學骨架：** 使用實際 Bodoni Moda 字形與 `getBoundingClientRect()` 測量；不能用 `ch` 推定字寬、不能 `scaleX/scaleY` 拉伸。L/W 的實際墨跡邊界與 CSS box 不同，須截圖校準。
+5. **節奏骨架：** 上半屏教會名稱為莊嚴識別，下半屏 L/W 為唯一視覺 accent；其餘經文、中文、標籤與頁碼退至 reading/metadata。
+
+### 21.3 可用 CSS 起點（概念代碼，尚未合入頁面）
+
+```html
+<div class="lw-art" aria-hidden="true">
+  <span class="lw-art__l">L</span>
+  <span class="lw-art__w">W</span>
+</div>
+<!-- 完整經文仍留在原有 .scripture-en；中文仍留在 .scripture-zh -->
+```
+
+```css
+/* Scoped art direction; use only after deleting replaced old rules. */
+.edition[data-variant="0"] { container-type: inline-size; }
+.edition[data-variant="0"] .lw-art {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  font-family: var(--ws-type-display-en); font-weight: 400;
+  font-style: normal; font-synthesis: none;
+}
+.edition[data-variant="0"] .lw-art__l,
+.edition[data-variant="0"] .lw-art__w {
+  position: absolute; display: block; line-height: .72;
+  letter-spacing: -.055em; white-space: nowrap;
+}
+.edition[data-variant="0"] .lw-art__l {
+  left: 5%; top: 12%; font-size: clamp(110px, 34cqi, 470px);
+  color: var(--ws-ink);
+}
+.edition[data-variant="0"] .lw-art__w {
+  left: 32%; bottom: 10%; font-size: clamp(110px, 31cqi, 420px);
+  color: var(--ws-water);
+}
+/* The content/engraving must be positioned after measuring actual glyphs.
+   Do not paste these coordinates as production constants. */
+@container (max-width: 680px) {
+  .edition[data-variant="0"] .lw-art__l { font-size: 27cqi; }
+  .edition[data-variant="0"] .lw-art__w { font-size: 27cqi; left: 42%; }
+}
+```
+
+這段是**構圖試驗起點**，不是可直接宣告 PASS 的最終 CSS。既有 edition 已有 grid/overflow/positioning 規則，實作必須先移除衝突的舊規則，不能在檔尾疊加 `!important`。如果原元素無法成為 query container，改在其內設置專用容器，避免破壞既有定位上下文。
+
+### 21.4 進階技術的適用界線
+
+- **CSS Grid：** 決定 L/W、英文、中文、頁腳的跨欄與對位，是第一優先。https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
+- **`shape-outside`：** 只在浮動文字需要沿著明確輪廓環繞時採用；不能直接作用於絕對定位的巨字，不能當成任意字形避障引擎。https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/shape-outside
+- **`mask-image` / `clip-path`：** 可用於刻線局部退讓，但不能用來裁切必要經文。https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/mask-image
+- **`mix-blend-mode`：** 僅在實際背景對比驗證後使用；不可把可讀性寄託於不確定的混合結果。https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/mix-blend-mode
+- **`initial-letter`：** 是傳統 drop cap 的專用屬性，跨瀏覽器支援有限，不作半版 L/W 主方案。https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/initial-letter
+
+### 21.5 實戰驗收門檻
+
+在既有 PR #1325 預覽 URL 檢查 390、700、820、1440 CSS px 與 125%/150% 縮放；核對完整 KJV、中文與 CTA；L/W 不拉伸、不撞字、不被裁成難辨識的碎片；刻線中心仍可見；頁腳完整。**沒有實際截圖不得把本節從 [EXPERIMENT] 升級為 [OS]。**
+
+### 21.6 下一步
+
+先在同一實驗頁以**單一 L/W 構圖**實作並截圖，與當前四層字級版面同尺寸比較。若 L/W 只是更大的裝飾、未改善注意力路徑及中英刻線關係，判定 FAIL，回到字母幾何與負空間重新設計，而非增加 CSS 補丁。
