@@ -55,3 +55,28 @@ All paths below exist on GitHub `main`, not reconstructed substitutes:
 
 ### Preservation action
 - This pass only expands the asset register. **No existing camera, film, parity, engraving, or church preview runtime file was modified.**
+
+## Recovery pass 3 — canonical image-space / anchored-world chain (2026-10-15)
+
+### Verified existing files on main
+- `docs/dore/film/DORÉ-ANCHORED-WORLD-ROUTE-01.md` — explicit film acceptance: Doré 011 → camera enters → no plane boundary → coherent off-axis world → return → canonical Doré 011 re-lock. Route specifies A0 authority pixels, A1/A2 off-axis views, GenWarp-class warp/mask/correspondence, sparse Gaussian scaffold, frame depth and canonical composite. **This is a selected production route, not evidence that final tear metric has passed.**
+- `docs/dore/film/aw011-anchor-corridor-v1.json` — PRODUCTION_INPUT for Doré 011, original 2617×2074, A0/A1/A2 poses, enter-and-return path A0→A1→A2→A1→A0, provenance labels A_CANONICAL / B_REPROJECTED / C_RECONSTRUCTED / D_INFERRED_UNSEEN.
+- `docs/dore/film/tools/aw011-anchor-package.py` — actual provider-neutral camera matrix / adapter job compiler; explicitly no inference in this script.
+- `static/dore/film/canvas-motion-lab-01.html` — canonical canvas lab.
+- `dore-core/projects/DORÉ-FILM-CAMERA-CANVAS-EVIDENCE-LEDGER-2026-09-10.md` — historical evidence classification; Camera Spine and Canvas Placement objective milestones marked VERIFIED_COMPLETE but director-level visual acceptance withheld.
+- `.github/workflows/dore-film-projection-stage-011.yml`, `.github/workflows/dore-film-micro-011-depth.yml`, `.github/workflows/dore-film-micro-011-geometry.yml`, `.github/workflows/dore-film-micro-011-camera.yml`, `.github/workflows/dore-film-two-anchor-handoff-011-019.yml`, `.github/workflows/dore-film-experimental-film-01.yml` — historical workflow files found by commit file lists; runtime/output evidence still needs inspection.
+
+### Historical commit anchors
+- `174e17085ee3c9f4ca14b3ddebecf47b153fe7c4` selected anchored-world route.
+- `782adb48ec503ab5ae31d222e4b0199195c4e6fb` camera-conditioned anchor corridor.
+- `42b4758d30c1d8ea63f2cdb59452fe1bcdb84d31` anchor package compiler.
+- `f2c7085c56a3131d704ae77b8cf7bc2ec6933adc` real parallax experiment.
+- `06535be49d961d221ef60bd902884937b4fc9ee8` depth geometry experiment.
+- `e8b5ae12a82707d5f019541ac91bf753569ea5b4` depth/anchor handoff.
+- `5de0d4ee4569fdf8907a79343e6b4c61946b9b8a` experimental film workflow.
+
+### Crucial distinction
+The exact original known-pixel/canonical re-lock **policy and adapter contracts are recovered**. We have not yet located proof of a successful near-zero tear metric, accepted rendered frames, or actual synthesized anchor outputs. Do not confuse planned acceptance, compiler success or workflow presence with measured film quality. Continue investigating workflow scripts, artifacts and acceptance records without altering originals.
+
+### Preservation
+Documentation-only update. No runtime, motion, camera or source imagery changed.
