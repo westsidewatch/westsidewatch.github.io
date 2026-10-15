@@ -976,3 +976,74 @@ function rankCandidates(candidates, protectedBoxes) {
 **常駐訓練：** 每次新增人物／影片封面，先手動提出三個版位，再由評分器給出排序；比較人工選擇與評分差異。若評分第一名被編輯否決，記錄具體原因並修正安全區或特徵，**不得只調權重使結果看似正確**。
 
 本輪提供的是**規格、算法原型與驗收計畫**；尚未建立真實影像辨識服務、安裝模型或驗收任何站內圖片。PR #1325 的實際視覺頁面保持不變。
+
+
+## 17. 第七輪：以本站真實資產建立候選版位的第一個可驗證基準
+
+### 17.1 已核實的資產（僅查目錄，未檢視像素）
+
+在本 PR 分支的 `static/images/olive/` 確認以下真實圖檔存在：
+
+- `david-pawson-editorial.png`
+- `jiang-xiuqin-editorial.png`
+- `watchman-nee-editorial.png`
+- 同目錄另有其他講員的 editorial 圖片及 `people-transparent-v1/`。
+
+這三張作為第一輪**不同人物案例候選**；尚未根據圖片像素確認人物在左、右或中央，**不得臆測**。原海報及已批准圖文資產不可直接改寫。
+
+### 17.2 先做可重複的人工 ground truth
+
+[OS] 每張圖片記錄原圖尺寸、顯示裁切、主體／臉／手／重要物件保護框、英文標題內容與其語義分行、中文及 CTA 安全區。未經圖片檢視時，保護框為 `pending`，不得填入假座標。人工標註先於任何模型分數；若模型與人工衝突，暫以人工禁入區為準。
+
+### 17.3 第一階段驗收協定
+
+1. 保留原圖，只在獨立編輯預覽中建立左、右、上、下、圖外五種候選。
+2. 載入現有 Design OS 字體，待 `document.fonts.ready` 完成後測量真實文字盒。
+3. 根據 `object-fit` 和 `object-position` 將原圖安全框轉換成畫面座標。
+4. **硬性排除**：人臉、手、重要輪廓、CTA、中文碰撞；字形裁切；孤字；不可讀對比。
+5. 對剩餘候選按留白、對比、平衡、節奏及編輯偏好排序；每個結果列出可解釋理由。
+6. 保存 390／700／820／1024／1440px 與 100／125／150% 縮放截圖，並人工決定 PASS/FAIL。
+7. 若沒有安全覆字候選，強制回退為圖外標題。
+
+### 17.4 防止評分器自我欺騙
+
+[OS] 評分權重仍屬 [EXPERIMENT]，不得用任意輸入的 0–1 分數冒充實測。**沒有實際圖片分析、字體測量和截圖，就沒有勝出版位。** 不得以 CI 成功替代視覺驗收，也不得以模型信心分數取代人物安全審核。
+
+### 17.5 實作接口（供既有 Design OS 編輯流程使用）
+
+```js
+// Pure data contract: all geometry in displayed-container pixels.
+function evaluateLayout(candidate, protectedRegions) {
+  const intersection = (a, b) =>
+    Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) *
+    Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+
+  const collisions = protectedRegions
+    .filter(region => intersection(candidate.titleBox, region.box) > 0)
+    .map(region => region.kind);
+
+  const reasons = [
+    ...collisions.map(kind => 'protected-region:' + kind),
+    ...(candidate.overflow ? ['overflow'] : []),
+    ...(candidate.semanticWidow ? ['semantic-widow'] : []),
+    ...(candidate.contrastPass === false ? ['contrast'] : []),
+    ...(candidate.measured !== true ? ['not-measured'] : [])
+  ];
+
+  return {
+    id: candidate.id,
+    eligible: reasons.length === 0,
+    reasons
+  };
+}
+```
+
+[OS] 這個介面**只做硬性條件驗證**，尚不含真實圖片辨識、對比度採樣或最佳化搜尋。候選需先被實測並由其他流程填入 `measured`、`contrastPass` 和 `semanticWidow`，否則不能被批准。後續將這個可解釋驗證接口整合進既有 Design OS，不建立平行系統。
+
+### 17.6 目前結果與下一個實作關卡
+
+**已完成：** 確認三張真實圖片路徑、確立資料契約、硬性排除函式、驗收矩陣與回退規則。
+
+**尚未完成：** 讀取圖片像素、人工標註保護框、瀏覽器量測、實際候選預覽與截圖。不能宣稱已選出最佳構圖或通過真圖驗收。
+
+本輪僅更新手冊，不修改十二講員海報及 PR #1325 的網站視覺。
