@@ -26,3 +26,6 @@ E. Preserve transferable masks/cameras/shots for possible future film use; no fi
 
 ## Research caution
 ai-sci-computing/hatching is publicly readable but its README restricts commercial use; do not copy its code into site production without permission. Other 3D NPR implementations need separate license and capability checks.
+
+## Long-term R&D asset designation
+Doré Motion is a **strategic, long-term, cumulative research-and-development asset of Westside Watch**, not a one-off visual effect or a project that ends with a single release. Maintain it through versioned algorithms, reusable source and scene metadata, evaluated open-source dependencies and licenses, stable asset IDs, visual regression baselines, documented experiments (including failures), and production-ready presets. Each milestone must deliver independently usable site value while adding transferable capabilities. Immediate production benefits (Living Water, seven sections, ONE, Emmaus, magazine) take priority; a future Bible-film pipeline is a potential beneficiary but must not become a blocker or distort near-term acceptance criteria. Keep governance within the existing Design OS and existing project register, avoiding a competing design system.
