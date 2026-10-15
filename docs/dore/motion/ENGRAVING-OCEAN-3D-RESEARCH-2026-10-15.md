@@ -25,3 +25,11 @@ Preserve the original twisting lab. Compare a controlled crossing-angle/overlap 
 
 ## Gate
 Phase 2 begins only after Phase 1 flow is accepted and live.
+
+## Two preserved 3D-ocean reference versions (2026-10-15)
+Both experiments are now explicitly retained as distinct, valuable baselines; neither should be replaced or overwritten during subsequent experiments.
+
+1. **Continuous Field** — `static/experiments/living-water-continuous-field-lab.html`: important reference for emergent dimensional wave motion and angled line crossings. Preserve source and behavior.
+2. **Seamless Sea** — `static/experiments/engraving-surface-seamless-sea-lab.html`: user confirmed clearly legible 3D surface in the still frame, especially diagonal mid-screen ridge crossings, curved foreground volume and near/far line-density perspective. Earlier characterization as lacking 3D was incorrect: the main remaining weakness is motion coherence, not the static spatial structure. Preserve its contour geometry and crossing patterns.
+
+Next experiments should **combine Continuous Field's motion discoveries with Seamless Sea's surface structure** in a third independent lab, without altering either saved reference or the approved v2 page. The current directional-flow lab is a separate first-workstream deliverable.
