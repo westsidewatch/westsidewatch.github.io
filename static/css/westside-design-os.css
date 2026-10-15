@@ -1480,3 +1480,9 @@ body.home{
  --ws-dawn-scripture-cite-indent:2.5em;
  --ws-dawn-large-logo-width:min(72vw,960px);
 }
+
+/* Canonical bilingual scripture references: never inherit a single Latin font for mixed scripts. */
+.ws-scripture-reference{display:inline-flex;align-items:baseline;flex-wrap:wrap;gap:.5em;font-size:var(--ws-type-scripture-reference-size);letter-spacing:var(--ws-type-scripture-reference-tracking);font-weight:400;font-synthesis:none}
+.ws-scripture-reference :where([lang="zh"],[lang="zh-Hant"],[lang="zh-Hans"]){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air);font-synthesis:none}
+.ws-scripture-reference [lang="en"]{font-family:var(--ws-type-display-en-sc);font-weight:400;font-synthesis:none}
+.ws-scripture-reference-divider{font-family:var(--ws-type-display-en);opacity:.55}
