@@ -19,13 +19,40 @@
 .foot a{color:inherit;text-decoration:none}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media(max-width:750px){.page{min-height:100svh}.mast{font-size:9px;letter-spacing:0}.composition{min-height:610px}.intro{font-size:clamp(15px,3.7vw,23px);top:6%}.rivers{top:32%;font-size:clamp(65px,16vw,120px)}.of{top:40%;left:43%;font-size:clamp(95px,26vw,180px)}.living{bottom:18%;font-size:clamp(62px,16vw,125px)}.water{bottom:4%;font-size:clamp(72px,17vw,130px)}.zh{font-size:12px}.foot{font-size:10px}}
+
+/* User-approved John 7:38 reference: three text lines, rivers/of, giant Living, giant Water. */
+.page{max-width:1800px}
+.composition{min-height:1040px;margin:0;flex:1}
+.composition .intro{left:2%;top:3%;font-size:clamp(19px,2.2vw,34px);line-height:1.55;letter-spacing:-.015em;z-index:3}
+.composition .rivers{top:8%;left:49%;font-size:clamp(72px,9vw,150px);line-height:1;font-style:italic;letter-spacing:-.055em;z-index:2}
+.composition .of{top:9%;left:auto;right:0;font-size:clamp(68px,8vw,140px);line-height:1;font-style:italic;letter-spacing:-.07em;transform:none;z-index:2}
+.composition .living{left:0;top:27%;bottom:auto;right:auto;display:flex;align-items:baseline;line-height:.8;letter-spacing:-.065em;color:var(--ink);font-style:normal;z-index:1}
+.composition .initial-l{font-size:clamp(260px,42vw,650px);font-weight:400;letter-spacing:-.1em}
+.composition .living-rest{font-size:clamp(90px,13vw,205px);letter-spacing:-.07em}
+.composition .water{left:2%;right:auto;top:66%;bottom:auto;display:flex;align-items:baseline;font-style:normal;line-height:.8;letter-spacing:-.065em;color:var(--ws-branch);z-index:1}
+.composition .initial-w{font-size:clamp(270px,39vw,620px);letter-spacing:-.11em}
+.composition .water-rest{font-size:clamp(100px,13vw,205px);letter-spacing:-.07em}
+@media(max-width:750px){
+.composition{min-height:750px}
+.composition .intro{left:0;top:2%;font-size:clamp(14px,3.4vw,22px);line-height:1.55}
+.composition .rivers{left:45%;top:10%;font-size:clamp(43px,9.2vw,75px)}
+.composition .of{top:12%;right:0;font-size:clamp(39px,8.2vw,70px)}
+.composition .living{top:30%}
+.composition .initial-l{font-size:clamp(210px,48vw,380px)}
+.composition .living-rest{font-size:clamp(70px,15vw,118px)}
+.composition .water{top:66%;left:0}
+.composition .initial-w{font-size:clamp(210px,48vw,380px)}
+.composition .water-rest{font-size:clamp(75px,15vw,118px)}
+}
 </style></head>
 <body data-ws-scope="global" data-ws-color-family="water" class="sites-section-church"><main class="page">
 <header class="mast"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></header>
 <p class="sr" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
-<section class="composition" aria-label="John 7:38 typographic editorial artwork" aria-hidden="true">
+<section class="composition" aria-label="John 7:38 editorial artwork" aria-hidden="true">
 <div class="intro">He that believeth on me,<br>as the scripture hath said,<br>out of his belly shall flow</div>
-<div class="rivers">rivers</div><div class="of">of</div><div class="living">living</div><div class="water">water.</div>
+<div class="rivers">rivers</div><div class="of">of</div>
+<div class="living"><span class="initial-l">L</span><span class="living-rest">iving</span></div>
+<div class="water"><span class="initial-w">W</span><span class="water-rest">ater</span></div>
 </section>
 <p class="zh" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江河來。</p>
 <footer class="foot"><span>JOHN 7:38 · KING JAMES VERSION</span><a href="/church/">LIVING WATER ASSEMBLY WEST ↗</a></footer>
