@@ -84,6 +84,7 @@
    Handbook §§04,06,07,14: semantic phrases, asymmetric baseline, genuine Bodoni. */
 .showcase .composition .edition[data-variant="0"]{
   position:relative!important;isolation:isolate!important;
+  inset:0!important;min-height:100%!important;height:100%!important;
   grid-template-rows:auto minmax(0,1fr) auto!important;
   column-gap:clamp(20px,3vw,52px)!important;
 }
@@ -193,6 +194,18 @@
   }
 }
 
+/* Engraving is full-spread artwork, not a content-height decoration.
+   Keep the water-source origin in the lower-right, including intentional whitespace. */
+.showcase .composition .edition[data-variant="0"]::after{
+  inset:0!important;width:100%!important;height:100%!important;
+  background-image:
+    repeating-radial-gradient(ellipse 84% 58% at 83% 76%,transparent 0 17px,var(--church-line) 17.5px 18px,transparent 18.5px 30px),
+    repeating-radial-gradient(ellipse 74% 42% at 6% 0%,transparent 0 23px,var(--church-line-soft) 23.5px 24px,transparent 24.5px 41px),
+    linear-gradient(120deg,rgba(255,255,255,.68) 12%,transparent 75%)!important;
+  background-position:center center!important;
+  background-size:100% 100%!important;
+  background-repeat:no-repeat!important;
+}
 /* Handbook practical exercise: editorial titles, scoped to second-screen scenes only.
    Preserve sevenfold motion, church scripture and existing Design OS tokens. */
 .showcase .edition:not([data-variant="0"]) .headline{min-width:0;max-width:100%}
