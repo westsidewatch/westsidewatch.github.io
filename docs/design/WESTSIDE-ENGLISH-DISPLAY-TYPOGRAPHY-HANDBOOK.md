@@ -289,3 +289,169 @@ Butterick 的標題建議偏向克制與清楚，而 Lubalin、Brody 的案例�
 - **回寫題**：每次研究必須增加可查證來源、具體版位判斷、失敗反例及至少一個待測實戰案例。禁止只增加風格形容詞。
 
 本輪研究**只更新本手冊**，不改動尚未批准的 PR #1325 視覺版面；不新增 CSS 權威、第二套設計系統或獨立 CI。
+
+
+## 13. 第三輪研究：Lubalin 字母造形 × Feitler 編輯節奏 × 可實作的 CSS
+
+### 13.1 研究範圍與證據
+
+本輪專攻兩種互補能力：**把英文字群排成可辨識的視覺形狀**，以及**讓不同頁面的文字重量形成節奏**。來源採用公開案例分析，不宣稱已取得原作印刷檔、閱讀完整專書或驗證每張圖片的版權。
+
+- Herb Lubalin 研究案例與現代 CSS 解構：Andy Clarke, “Inspired Design Decisions: Herb Lubalin,” *Smashing Magazine* (2020), https://www.smashingmagazine.com/2020/04/inspired-design-decisions-herb-lubalin/ 。關注字距、連結字形、尺度對比、排版即圖像。[STUDY]
+- Bea Feitler 研究案例與響應式藝術指導：Andy Clarke, “Inspired Design Decisions: Bea Feitler,” *Smashing Magazine* (2019), https://www.smashingmagazine.com/2019/10/inspired-design-decisions-bea-feitler/ 。關注整個編輯序列的視覺節奏，以及跨頁中的圖片／文字協作。[STUDY]
+- Ellen Lupton, *Thinking with Type*, https://ellenlupton.com/Thinking-with-Type 。補足字形、群組、視覺階層與對齊的分析詞彙。[STUDY]
+- MDN `@container`: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_size_and_style_queries 。為網站的版位響應提供技術參照。[STUDY]
+- MDN `text-wrap`: https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap 。`balance` 是輔助，不是保證保留語義片語的工具。[STUDY]
+
+**轉化原則：** Lubalin 的字形實驗不等於本站可以任意變形 Bodoni；Feitler 的印刷跨頁也不能直接照搬到窄屏。以下是本站從參考案例提出的規範與實驗，不是引用作者原話。
+
+### 13.2 Lubalin 路線：Phrase as Shape
+
+[OS] 英文大標在構圖前先寫一張「文字形狀卡」：
+
+| 檢查項 | 決策問題 | 交付物 |
+| --- | --- | --- |
+| Meaning | 哪個片語承擔真正重點？ | 原文與焦點片語 |
+| Silhouette | 字群應形成矩形、階梯、楔形或垂直軸？ | 2–3 個黑白線框草圖 |
+| Optical spacing | 哪些字母組合產生過密／過鬆？ | 實際字體下的檢查截圖 |
+| Contrast | 字級差異是否真的產生層級？ | Hero／support／metadata 比例 |
+| Counterspace | 字群外的留白是否支撐內容？ | 中文／圖片／CTA 安全區 |
+| Semantics | 分行是否保留完整語義？ | 經批准的 phrase breaks |
+| Reflow | 窄容器如何改形狀？ | 三種狀態草圖 |
+
+[OS] 優先從 **字群比例、留白、字距、斜體對比、對齊方式** 建立形狀；不拉伸 glyph、不任意重疊關鍵字、不用不可訪問的 CSS 偽元素替代原文。
+
+#### 四種字群造形
+
+- **Block / Monument**：兩三行相近寬度，形成完整的文字塊；適合封面與強主題。[EXPERIMENT]
+- **Stair / Cascade**：有意識的短長交替；適合人物、專題開篇，但不得造成孤字。[EXPERIMENT]
+- **Hinge / Pivot**：一行小字引導下一行巨字；適合經文焦點與標語。[EXPERIMENT]
+- **Counterpoint**：英文字群與中文短句或人物在對角位置互相平衡；適合半版。[EXPERIMENT]
+
+### 13.3 Feitler 路線：Spread Sequence 而非重複 Hero
+
+[OS] 每個第一眼頁面必須附「前後畫面」的節奏標記：`accent`（巨字）、`bridge`（過渡）、`quiet`（留白／圖像）、`reading`（正常標題與正文）、`index`（導航／索引）。同一個 Design OS 允許不同編輯角色使用不同字體尺度。
+
+[EXPERIMENT] **五屏節奏表**（設計起點，不是固定輪播公式）：
+
+| 屏 | 角色 | 英文處理 | 中文處理 |
+| --- | --- | --- | --- |
+| 1 | Accent | 大字母作主視覺 | 少量輔助，避免雙主角 |
+| 2 | Quiet | 小型標籤或不出英文大標 | 靜謐文字或圖像 |
+| 3 | Reading | 正常 H1 + 導語 | 可讀正文 |
+| 4 | Bridge | 中型章節標題 | 短句對位 |
+| 5 | Accent / Index | 依內容價值決定是否再次巨字 | 清楚索引或輔助 |
+
+[OS] 此表不取代頁面內容決策。只有內容本身值得成為焦點，才使用 Accent；不可為湊節奏強制放大。
+
+### 13.4 技術模式 A：語義片語 + CSS grid，避免單字孤行
+
+以下是**可複用的實作範例**，不是已經部署的本站元件。用 span 控制有意識的斷行；完整文字在 DOM 中保持正確順序。若語義片語在極窄容器仍放不下，應切換更小字級或重新批准斷點。
+
+```html
+<h1 class="ws-editorial-display" lang="en">
+  <span class="ws-editorial-display__line">He that believeth</span>
+  <span class="ws-editorial-display__line">on me,</span>
+  <span class="ws-editorial-display__support">as the scripture hath said,</span>
+  <span class="ws-editorial-display__support">out of his belly shall&nbsp;flow</span>
+  <span class="ws-editorial-display__hero">rivers of</span>
+  <span class="ws-editorial-display__hero"><em>living&nbsp;water.</em></span>
+</h1>
+```
+
+```css
+/* Example only: page scope owns composition, Design OS owns typography. */
+.ws-editorial-region {
+  container: ws-editorial / inline-size;
+  min-width: 0;
+}
+.ws-editorial-display {
+  font-family: var(--ws-type-display-en);
+  font-weight: 400;
+  font-synthesis: none;
+  display: grid;
+  justify-items: start;
+  gap: .12em;
+  min-width: 0;
+}
+.ws-editorial-display__line {
+  display: block;
+  font-size: clamp(2rem, 5cqi, 5.5rem);
+  line-height: 1.04;
+}
+.ws-editorial-display__support {
+  display: block;
+  font-size: clamp(.95rem, 2cqi, 1.75rem);
+  line-height: 1.24;
+}
+.ws-editorial-display__hero {
+  display: block;
+  font-size: clamp(2.8rem, 7cqi, 7rem);
+  line-height: .98;
+}
+@container ws-editorial (max-width: 38rem) {
+  .ws-editorial-display__line { font-size: clamp(1.6rem, 6cqi, 3rem); }
+  .ws-editorial-display__hero { font-size: clamp(2.2rem, 8cqi, 4rem); }
+}
+```
+
+**注意：** 這是示意 CSS。`cqi` 依容器寬度計算，且容器查詢須在支持的瀏覽器上驗證。`&nbsp;` 避免特定片語拆開，但不能解決所有超長英文單字；對極窄屏要另訂版式。若實際來源是經文，不能把 span 換行變成有意義的標點或改寫內容。
+
+### 13.5 技術模式 B：半版字母 + 另一半留白／中文
+
+```html
+<section class="ws-editorial-region">
+  <div class="ws-editorial-half">
+    <div class="ws-editorial-half__headline"><!-- semantic English headline --></div>
+    <div class="ws-editorial-half__counter"><!-- Chinese / portrait / negative space --></div>
+  </div>
+</section>
+```
+
+```css
+.ws-editorial-half {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr);
+  gap: clamp(1rem, 3cqi, 3rem);
+  align-items: center;
+}
+.ws-editorial-half > * { min-width: 0; }
+@container ws-editorial (max-width: 42rem) {
+  .ws-editorial-half {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+```
+
+[OS] 半版不是 `50% + 50%` 的固定比例；要根據實際字形和對側內容調整。**不要**把這些範例原樣套進既有 PR 頁面，必須先移除相互衝突的局部 CSS。
+
+### 13.6 技術模式 C：編輯節奏作為內容資料，而非新增設計系統
+
+```json
+{
+  "pages": [
+    {"slug": "first-look", "editorialRole": "accent", "headlineMode": "monumental"},
+    {"slug": "church", "editorialRole": "quiet", "headlineMode": "standard"},
+    {"slug": "journal", "editorialRole": "reading", "headlineMode": "standard"},
+    {"slug": "feature", "editorialRole": "bridge", "headlineMode": "editorial"}
+  ]
+}
+```
+
+這是**內容審核資料示例**，不是要求新增 runtime JSON 或管理檔。真正使用時，頁面可用既有 scope 或 CMS 元資料表達；所有字體、顏色、尺度的共享值仍由 Design OS 控制。
+
+### 13.7 這一輪新增的驗收
+
+1. **Shape check**：字群輪廓是否在遠觀時成立？與留白、圖片是否有可解釋的關係？
+2. **Meaning check**：大字母是否仍能正確讀出完整標題？不可意外拆開 `shall flow`。
+3. **Sequence check**：同一瀏覽路徑中，相鄰 3–5 屏是否有快慢節奏，而非全部巨字？
+4. **Container check**：對 390／700／820／1440px 等實際容器做截圖；不得用 viewport 寬度冒充內容欄寬。
+5. **OS check**：沒有硬編碼新字體、新色彩、新系統；沒有堆疊 `!important` 補丁。
+6. **Evidence check**：沒有逐頁閱讀的書籍，不可寫成「書中第 X 頁指出」；技術示例未部署就必須標示為示例。
+
+### 13.8 下次實戰：同一英文標題的三個候選
+
+以 John 7:38 現有內容建立 **Block / Hinge / Counterpoint** 三個草圖，並保留中文、刻線、頁腳不變。先對比文字群組形狀與孤字，再決定一種，不能同時引入三套生產 CSS。將最終版寫成一個 scoped composition，通過實際部署截圖與縮放驗收後，才把它升格為 [OS] 的成功案例。
+
+本輪只補充研究、HTML/CSS 示範與驗收方法；沒有改動 PR #1325 的預覽頁，也沒有新增獨立管理工程。
