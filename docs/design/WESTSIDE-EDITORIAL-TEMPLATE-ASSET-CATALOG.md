@@ -357,3 +357,42 @@ Status: **experimental**. Original handbook lines 1278–1318.
 ## Acceptance gate
 
 A candidate becomes `approved` only after same-page visual comparison at relevant breakpoints, confirmed typography tokens, correct engraved background, protected Chinese scripture placement, collision checks, and an explicit PASS record.
+
+
+## Registered research project — Folio × Doré engraved editorial surfaces (2026-10-15)
+
+**Project ID:** `WS-OS-EDITORIAL-ENGRAVING-01`  
+**Owner / authority:** existing Westside Design OS. This is a research-and-asset registry, **not** a new CSS authority, component framework, CI gate, or parallel design system.  
+**Target:** PR #1325, second-screen John 7:38 first; other First Look pages only after visual approval.  
+**Live preview:** https://pr-1325.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html  
+**Status:** layout and typography selected from local experiments; engraving treatment **in progress / not visually approved**.
+
+### Source registry (retain original URLs and provenance)
+
+| Source / asset | Purpose | Adoption state / restrictions |
+| --- | --- | --- |
+| [Folio — Jorgut/folio](https://github.com/Jorgut/folio) | Layout structures, facing-page / landscape editorial compositions; original L01–L47 family inventory | Candidate reference; **no upstream Folio source template imported yet**; verify MIT license and per-image rights. [Detailed mapping](./WESTSIDE-FOLIO-LAYOUT-ADOPTION.md). |
+| [Westside English Display Typography Handbook](./WESTSIDE-ENGLISH-DISPLAY-TYPOGRAPHY-HANDBOOK.md) | Position, monumental type, optical proportions, subject-safe zones and candidate scoring | Existing Design OS handbook; typography authority remains the Design OS runtime/tokens. |
+| [Westside Editorial Template Asset Catalog](./WESTSIDE-EDITORIAL-TEMPLATE-ASSET-CATALOG.md) | Reusable structural candidate index and source-preserving snippets | This file; never claim an experimental template is a direct Folio import. |
+| [Gustave Doré — Wikimedia Commons category](https://commons.wikimedia.org/wiki/Category:Gustave_Dor%C3%A9) | Engraving study: directional hatching, tonal density, light/shadow and print grain | Visual reference only until each work's provenance and reproduction rights are verified; **no bulk download required**. |
+| [The Metropolitan Museum of Art — Open Access](https://www.metmuseum.org/hubs/open-access) | Public-domain print and engraving reference discovery with item-level rights metadata | Candidate external IIIF / online reference; no unverified work claimed as approved. |
+| [Art Institute of Chicago API](https://api.artic.edu/docs/) | Open collection metadata and IIIF image reference exploration | Candidate online research interface; verify each artwork's public-domain status before reuse. |
+| [IIIF Presentation API](https://iiif.io/api/presentation/3.0/) | Remote manifests / attribution / image metadata for research without mirroring archives | Technical standard reference, not itself an engraving collection. |
+
+### Approved local composition / locked constraints
+
+- Selected structure: **08 facing-page diptych**, locally reconstructed; **07 display pairing**: Bodoni Moda `Living` roman + `Water.` italic. Do not describe this as an imported Folio original.
+- Chinese scripture: restore template-wide bottom position; do not move it individually into the right column.
+- Keep original sevenfold motion, upper blue curtain, scripture semantics, page index, CTA and other six panels. No new preview URL.
+- Current engraving is **existing procedural curved / hatch-like CSS**, not verified as a historical Doré engraving; replace or refine **only the background layer**, not type/geometry.
+- Typography, palette, material, stroke weight, responsive rules and layering must read existing Design OS tokens; no new black-gold palette, no stretched glyphs, no duplicate global CSS.
+
+### Engraving experiment — implementation and acceptance
+
+1. **Material audit:** locate current second-screen line generation and determine whether it is CSS gradients, SVG paths or image texture; isolate the owning rule, remove only superseded line styles.
+2. **Reference extraction:** compare at least one documented Doré engraving and one historical engraving reference for line density, cross-hatching, directional light and negative-space distribution; record exact URLs and rights metadata before any image adoption.
+3. **Single-layer prototype:** implement a scoped noninteractive engraving material for the existing second-screen preview; keep lettering, English/Chinese scripture and footer above the texture with readable contrast.
+4. **Visual gate:** wide / medium / narrow, zoom and half-screen/full-screen; inspect line aliasing, moiré, readability, and motion/reduced-motion. No CI-as-visual-PASS.
+5. **Promotion gate:** only after screenshot comparison and explicit approval mark the material `approved`; until then `experimental`.
+
+**Do not lose the assets:** future work must start from this project ID, the source table and the existing [Folio adoption contract](./WESTSIDE-FOLIO-LAYOUT-ADOPTION.md), not restart research or invent another catalog.
