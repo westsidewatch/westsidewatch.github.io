@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>John 7:38 — Clean Editorial Template</title>
-<link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/westside-engraving-authority.css">
+<!-- Standalone font loading only. No shared global selectors or legacy John 7:38 CSS. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Bodoni+Moda+SC:opsz,wght@6..96,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css">
 <style>
 /* CLEAN TEMPLATE ISOLATION: no original John 7:38 classes, selectors, layout, or inline overrides.
    Editorial spread composition adapted from handbook §13.4 phrase-grid + §13.5 asymmetric grid.
-   Only Design OS typography/color tokens and existing engraving authority are shared. */
+   Standalone values mirror Design OS approved Bodoni / Chiron / water palette; no global CSS imported. */
+:root{--ws-paper:#faf9f5;--ws-ink:#252525;--ws-water:#5b8fa8;--ws-type-display-en:"Bodoni Moda",serif;--ws-type-display-en-sc:"Bodoni Moda SC","Bodoni Moda",serif;--ws-type-display-zh:"Chiron Hei HK WS",sans-serif;--ws-engraving-line:rgba(37,37,37,.12)}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--ws-paper,#faf9f5);color:var(--ws-ink,#252525);font-family:var(--ws-type-display-en,Georgia,serif);font-synthesis:none}
@@ -43,7 +45,7 @@ body{background:var(--ws-paper,#faf9f5);color:var(--ws-ink,#252525);font-family:
 </style>
 </head>
 <body>
-<main class="j7-sheet" data-ws-color-family="water">
+<main class="j7-sheet" data-ws-color-family="water" data-template="handbook-13-4-13-5" data-preview="john-7-38-clean">
 <header class="j7-running"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></header>
 <p class="j7-sr" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
 <article class="j7-spread" aria-label="John 7:38 editorial composition">
