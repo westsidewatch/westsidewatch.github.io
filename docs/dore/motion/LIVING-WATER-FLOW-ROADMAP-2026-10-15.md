@@ -28,3 +28,14 @@ Splitting at y=450 created a visible seam; dashed strokes broke engraving contin
 
 ## Next stages
 Phase 2: Engraving Ocean 3D. Phase 3: general engraved 3D surfaces. Phase 4: cinematic engine, future only. Do not expand Phase 1 scope.
+
+## Confirmed priority 3 — Doré Motion Engraving System (2026-10-15)
+The third **current work item** is a reusable motion-engraving system for all seven subsequent site sections, including animated engraved background textures and subtle motion applied to static Gustave Doré Bible illustrations. This is an active site-wide design capability, **not** the parked film production phase and **not** contingent on completing the full 3D ocean first.
+
+Current order of work:
+1. Finish and deploy approved-v2 breathing water with directional flow.
+2. Research and validate Engraving Ocean 3D as an independent lab.
+3. Build a reusable site-wide Doré Motion Engraving System for seven sections and Bible illustration motion (can be planned and developed modularly; do not confuse with cinematic engine).
+4. Long-term film production / Bible-story cinema remains future-only.
+
+Design constraints: one reusable system integrated with existing site Design OS, configurable per section without global side effects; preserve original illustration assets; distinguish ambient engraved background motion from illustration-local animation; respect reduced-motion and performance budgets; no new competing design system. First pilot should be a single background and a single Bible illustration, followed by seven-section rollout after visual acceptance.
