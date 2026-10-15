@@ -38,6 +38,7 @@ jobs:
           test -s public/experiments/assets/living-water-contour-engraving-v7.svg
           test -s public/experiments/assets/living-water-contour-engraving-v10.svg
           test -s public/experiments/living-water-motion-study.html
+          test -s public/experiments/living-water-motion-flow-v2.html
           grep -q 'living-water-contour-engraving-v10.svg' public/experiments/sevenfold-first-to-second.html
           grep -q 'living-water-contour-engraving-v10.svg' public/experiments/living-water-engraving-compare.html
           grep -q 'growth-top' public/experiments/living-water-motion-study.html
