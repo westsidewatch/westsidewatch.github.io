@@ -60,3 +60,24 @@ Acceptance: same composition at full and split viewport widths; central corridor
 ## Recommended next experiment
 
 Branch from **v6**; add a localized tonal-field / copper-burin tapered-stroke prototype first, not a wholesale redraw. Produce a separately addressable v7 candidate and compare at 25%, 100%, 200% before promotion. If any viewing-distance test regresses, keep v6.
+
+
+## Next station — volumetric water engraving (research gate)
+
+**Baseline:** v6 is approved as the comparison reference; do not overwrite its SVG or silently switch the preview. Objective: improve three-dimensional current formation while preserving delicate near-view engraving.
+
+1. **Flow ridge / crest:** define a smooth low-frequency signed-distance field along existing streamlines; `ridgePosition`, `ridgeWidth`, `ridgeHeight` control the apparent bulge. Avoid creating a solid blue mass.
+2. **Valley / hollow:** let stroke spacing expand in lit regions and compress at the concave side; `valleyDepth`, `densityFalloff` and `lightDirection` control relief. Do not use an opaque dark gradient.
+3. **Burin taper:** segment long strokes into tapered micro-strokes near local curvature extrema; `taperLength`, `widthResponse`, `strokeContinuity`. Keep long primary lines intact for far-view water movement.
+4. **Etched shadow pockets:** use sparse, tangent-aligned secondary hatching only where the tonal field predicts shade; `shadowThreshold`, `hatchCoverage`, `crossHatchLimit`. Crosshatching must not look like a grid.
+5. **Ink/brush rhythm:** controlled interruptions, slight irregularities and sparse short fibers in midtones; `breakRate`, `fiberJitter`, `localSeed`. Deterministic output, no random rerender between loads.
+
+### Constraints and scoring
+
+- Preserve the full-width continuous flow and the open central corridor.
+- No figures, animals, narrative scene, raster AI artwork or independent layered backgrounds.
+- At 25% zoom, score **flow recognizability**; at 100%, score **tonal depth**; at 200%, score **micro-engraving quality**.
+- Penalize moiré, heavy ink bands, visually noisy texture, obscured scriptures, clipping, and loss of subtlety.
+- Candidate v7 must have its own versioned SVG URL; keep v6 as the untouched fallback until full/split-width deployment screenshots pass.
+
+**Implementation order:** relief field → density modulation → localized burin taper → visual comparison. Do not bundle speculative effects before the first comparison.
