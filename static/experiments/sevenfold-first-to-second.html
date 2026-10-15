@@ -99,6 +99,31 @@
 .showcase .composition .edition[data-variant="0"] .scripture-en strong{font-size:clamp(48px,6vw,105px)!important;max-width:12ch!important;line-height:.95!important}
 .showcase .composition .edition[data-variant="0"]::after{background-image:repeating-radial-gradient(ellipse 85% 52% at 84% 81%,transparent 0 27px,color-mix(in srgb,var(--ws-water) 31%,transparent) 27.5px 28px,transparent 28.5px 45px),linear-gradient(110deg,transparent 18%,color-mix(in srgb,var(--ws-water) 7%,transparent) 100%)!important;background-size:100% 100%!important;opacity:.65!important}
 }
+/* Handbook practical exercise: editorial titles, scoped to second-screen scenes only.
+   Preserve sevenfold motion, church scripture and existing Design OS tokens. */
+.showcase .edition:not([data-variant="0"]) .headline{min-width:0;max-width:100%}
+.showcase .edition:not([data-variant="0"]) h2{
+  font-synthesis:none;
+  overflow-wrap:normal;
+  word-break:normal;
+  text-wrap:balance;
+  max-width:100%;
+}
+.showcase .edition:not([data-variant="0"]) .detail{min-width:0;max-width:100%}
+@media (min-width:701px) and (max-width:1024px){
+  .showcase .composition .edition:not([data-variant="0"]) h2{
+    font-size:clamp(42px,6vw,76px)!important;
+    line-height:.93;
+    letter-spacing:-.045em;
+  }
+}
+@media (max-width:700px){
+  .showcase .composition .edition:not([data-variant="0"]) h2{
+    font-size:clamp(42px,11vw,72px)!important;
+    line-height:.96;
+    letter-spacing:-.04em;
+  }
+}
 </style></head><body data-ws-scope="global"><section class="first" aria-label="首頁第一屏"><div class="head"><span>WESTSIDE WATCH</span><span>01 / SEVENFOLD DAWN</span></div><div><h1>Watch for<br><i>the Dawn.</i></h1><p>黑夜已深，白晝將近。<br>The night is far spent. The day is at hand.</p></div></section><section class="showcase" aria-label="七重編輯展示"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church" data-variant="0" aria-label="約翰福音 7:38 經文專題"><div class="scripture-kicker"><span>THE LIVING WORD / 01</span><span>JOHN 7:38 · KJV</span></div><p class="scripture-en" lang="en"><span class="scripture-en-lead">He that believeth on me,</span><span class="scripture-en-bridge">as the scripture hath said, out of his belly shall flow</span><strong>rivers of <i>living water.</i></strong></p><p class="scripture-zh ws-lineguard--short" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江⁠河⁠來⁠。</p><div class="scripture-footer"><span class="ws-scripture-reference"><span lang="zh-Hant">約翰福音 7:38</span><span class="ws-scripture-reference-divider" aria-hidden="true">/</span><span lang="en">JOHN 7:38</span></span><a href="/church/">ENTER LIVING WATER ↗</a></div></article>
 <article class="edition" data-variant="1"><div class="headline"><span class="category">02 / Magazine</span><h2>Watch<br><i>for Dawn.</i></h2><div class="cn">西望 · 獨立網絡雜誌</div></div><div class="detail"><p class="description">以文字、影像與編輯的秩序，重新理解我們所生活的世界。</p><a href="/journal/">READ THE JOURNAL ↗</a></div></article>
