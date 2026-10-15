@@ -55,3 +55,11 @@
 .sites-surface>*,.sites-home-realm>*{position:relative;z-index:1}
 @media(max-width:760px){:root{--ws-engraving-opacity:.1}}
 @media(prefers-contrast:more){:root{--ws-engraving-opacity:.22}}
+
+/* First Look editorial compositions: share the same branch engraving authority.
+   The texture belongs behind copy and is clipped to the paper half-screen. */
+.showcase .composition .edition.sites-section-church{position:absolute;isolation:isolate;--ws-engraving-opacity:.18}
+.showcase .composition .edition.sites-section-church::after{z-index:0;inset:0;opacity:var(--ws-engraving-opacity);pointer-events:none;background-size:cover}
+.showcase .composition .edition.sites-section-church>*{position:relative;z-index:1}
+@media(max-width:760px){.showcase .composition .edition.sites-section-church{--ws-engraving-opacity:.1}}
+@media(prefers-contrast:more){.showcase .composition .edition.sites-section-church{--ws-engraving-opacity:.08}}
