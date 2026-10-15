@@ -78,6 +78,24 @@ body[data-ws-color-family="water"] .composition .water{color:var(--ws-water)!imp
 .page.sites-surface{isolation:isolate;--ws-engraving-opacity:.18}
 .page.sites-surface::after{z-index:0;inset:0;opacity:var(--ws-engraving-opacity);background-size:cover}
 .page.sites-surface>*{position:relative;z-index:1}
+
+/* Restore the existing Living Water engraving as a visible background layer. */
+body.sites-surface::after{content:none!important}
+.page.sites-surface::after{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background-image:repeating-radial-gradient(ellipse 120% 44% at 18% 22%,transparent 0 20px,var(--ws-engraving-line) 20.5px 21px,transparent 21.5px 34px),linear-gradient(112deg,transparent 0 58%,var(--ws-engraving-fine) 58.1% 58.25%,transparent 58.35%);
+ background-repeat:no-repeat;opacity:var(--ws-engraving-opacity);mix-blend-mode:multiply;
+}
+.page.sites-surface>*{position:relative;z-index:1}
+.page .zh{
+ position:absolute;left:6%;right:6%;bottom:clamp(75px,9vh,130px);
+ margin:0;max-width:22em;
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ font-size:clamp(14px,1.25vw,21px);font-weight:var(--ws-weight-zh-air,200);
+ line-height:1.9;letter-spacing:.035em;
+}
+.page .composition{padding-bottom:clamp(120px,12vh,175px)}
+@media(max-width:750px){.page .zh{left:6%;right:6%;bottom:90px;font-size:clamp(12px,2.6vw,16px);line-height:1.6}}
 </style></head>
 <body data-ws-scope="global" data-ws-color-family="water" class="sites-section-church sites-surface"><main class="page sites-surface sites-section-church" data-ws-color-family="water">
 <header class="mast"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></header>
@@ -88,6 +106,6 @@ body[data-ws-color-family="water"] .composition .water{color:var(--ws-water)!imp
 <div class="living"><span class="initial-l">L</span><span class="living-rest">iving</span></div>
 <div class="water"><span class="initial-w">W</span><span class="water-rest">ater</span></div>
 </section>
-<p class="zh" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江河來。</p>
+<p class="zh ws-lineguard--short" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江⁠河⁠來⁠。</p>
 <footer class="foot"><span>JOHN 7:38 · KING JAMES VERSION</span><a href="/church/">LIVING WATER ASSEMBLY WEST ↗</a></footer>
 </main></body></html>
