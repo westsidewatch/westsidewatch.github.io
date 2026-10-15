@@ -593,3 +593,209 @@ if (title) {
 [OS] **先確保字形真實、語義正確、版位合理，再進行光學微調。** Bodoni 的高對比字形可以成為本刊視覺特色，但字體工程不可替代編輯判斷。下輪應以實際載入字體、半版寬度與對照截圖驗證以上候選，再將成功數值或行為提升為可復用的 OS 規則。
 
 本輪只補充手冊，不修改未獲批准的 PR #1325 視覺頁面，也不建立第二套系統。
+
+
+## 15. 第五輪：英文大標題與圖片的空間藝術指導
+
+本輪研究**圖文主從、半版留白、人物前後景、圖片裁切、文字環繞及候選位置評估**。繼續沿用既有 Design OS；下列 CSS/HTML 是實作示例，未經實際頁面驗收不得標記為已部署。
+
+### 15.1 研究來源及證據界限
+
+- Otto Storch 的跨頁圖片與字母編輯構圖案例：https://www.smashingmagazine.com/2020/03/inspired-design-decisions-otto-storch/
+- Bea Feitler 的編輯節奏與圖文關係案例：https://www.smashingmagazine.com/2019/10/inspired-design-decisions-bea-feitler/
+- Herb Lubalin 的文字圖像化案例：https://www.smashingmagazine.com/2020/04/inspired-design-decisions-herb-lubalin/
+- *Art Direction for the Web* 網頁藝術指導介紹：https://www.smashingmagazine.com/2019/04/art-direction-release/
+- MDN：shape-outside https://developer.mozilla.org/en-US/docs/Web/CSS/shape-outside ；clip-path https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path ；mask-image https://developer.mozilla.org/en-US/docs/Web/CSS/mask-image ；object-position https://developer.mozilla.org/en-US/docs/Web/CSS/object-position 。
+
+[STUDY] 上述為公開研究入口，非完整印刷專書逐頁研讀。以下的版位矩陣是本站轉化後的設計判斷，不冒稱是原作者提出的硬性規則。
+
+### 15.2 先判定圖文關係
+
+| 模式 | 主要視覺 | 適用版位 | 限制 |
+| --- | --- | --- | --- |
+| Type-led | 英文大標 | 封面、經文、宣言 | 文字仍需完整可讀 |
+| Image-led | 人物／照片 | 講員、人物專題 | 不壓臉、眼、手及重要輪廓 |
+| Counterpoint | 圖文雙主角 | 左／右半版 | 兩側視覺重量平衡 |
+| Interlock | 字母與人物交錯 | 特批人物封面 | 須有真實透明前景素材 |
+| Text wrap | 圖像形狀引導文字 | 長篇開篇 | 不用於容易產生孤字的巨字 |
+| Quiet caption | 圖片主角、英文輔助 | 文章與圖庫 | 正常字級，不強行放大 |
+
+[OS] **圖像安全區優先**：人物臉、眼、手、肩部關鍵輪廓、文字、CTA 和字幕不能因為構圖而意外遮擋。既有十二講員海報的個別已批准例外繼續有效，不得用新規則覆蓋既有資產。
+
+### 15.3 依圖片構圖選擇英文標題位置
+
+| 圖片特徵 | 首選位置 | 退回方案 |
+| --- | --- | --- |
+| 主體偏右、左側有負空間 | 左半版巨字 | 左側正常 H1 |
+| 主體偏左、右側有負空間 | 右半版巨字 | 右側正常 H1 |
+| 人物居中、畫面滿版 | 上／下安全區 | 圖外標題 |
+| 風景或建築有穩定低細節區 | 天空／牆面區 | 獨立文字欄 |
+| 高密度紀實圖片 | 圖外標題 | 文章正常 H1 |
+| 透明背景人物 | 特批人物前景遮字 | 半版不交錯布局 |
+
+[OS] 單純的亮度低、色彩均勻不代表安全；圖中仍可能有重要敘事物件。不能只靠亮度或顏色演算法決定最終標題位置。
+
+### 15.4 實作 A：安全半版 Grid
+
+```html
+<section class="ws-image-story">
+  <div class="ws-image-story__copy">
+    <h1 class="ws-image-story__title">Living Water</h1>
+  </div>
+  <figure class="ws-image-story__media">
+    <img src="/images/example-portrait.webp" alt="Portrait description">
+  </figure>
+</section>
+```
+
+```css
+.ws-image-story {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  align-items: center;
+  gap: clamp(1rem, 3vw, 4rem);
+}
+.ws-image-story > * { min-width: 0; }
+.ws-image-story__title {
+  font-family: var(--ws-type-display-en);
+  font-weight: 400;
+  font-synthesis: none;
+  font-size: clamp(2rem, 5vw, 6rem);
+  line-height: 1;
+}
+.ws-image-story__media { margin: 0; }
+.ws-image-story__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 700px) {
+  .ws-image-story { grid-template-columns: minmax(0, 1fr); }
+}
+```
+
+[EXPERIMENT] 欄位比例及字級僅是候選。若需要按組件容器響應，將 `container-type:inline-size` 設在**外層 wrapper**，由內部 Grid 接受 `@container` 規則；不能讓元素查詢自身寬度來改變自己的欄數。
+
+### 15.5 實作 B：圖片焦點與裁切
+
+```css
+.ws-portrait-window {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+.ws-portrait-window img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 30%; /* per-image candidate, not global */
+}
+@media (max-width: 700px) {
+  .ws-portrait-window img { object-position: 55% 24%; }
+}
+```
+
+[OS] `object-fit:cover` 只裁切，不得拉伸人物；每張圖片的焦點須經人工核准。不能把同一 `object-position` 套到所有講員。
+
+### 15.6 實作 C：人物在字母前景（特批）
+
+```html
+<div class="ws-portrait-cover">
+  <h1 class="ws-portrait-cover__headline">LIVING WATER</h1>
+  <img class="ws-portrait-cover__foreground"
+       src="/images/example-cutout.webp" alt="">
+</div>
+```
+
+```css
+.ws-portrait-cover {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 32rem;
+}
+.ws-portrait-cover__headline {
+  position: relative;
+  z-index: 1;
+  font-family: var(--ws-type-display-en);
+  font-weight: 400;
+  font-synthesis: none;
+}
+.ws-portrait-cover__foreground {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  max-width: 70%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+```
+
+[OS] 前景素材需真正透明並具使用權；`alt=""` 只用於已由其他內容描述的裝飾性重複圖層。重要字母被人物遮到無法辨識時，改回半版，而不是犧牲文字。
+
+### 15.7 實作 D：shape-outside 只用於適當的長文
+
+```css
+.ws-feature-portrait {
+  float: right;
+  width: min(40%, 22rem);
+  shape-outside: ellipse(48% 49% at 50% 50%);
+  shape-margin: 1.25rem;
+  margin: 0 0 1rem 1.5rem;
+}
+```
+
+[OS] `shape-outside` 控制浮動元素旁的文字流，**不是**所有大型標題的排版工具。對短巨字應優先使用 Grid 和明確語義分行，避免文字被人物輪廓切成孤字。
+
+### 15.8 實作 E：圖片遮罩與漸層
+
+```css
+.ws-editorial-image--soft-edge {
+  -webkit-mask-image: linear-gradient(
+    to right, transparent, #000 20%, #000 100%
+  );
+  mask-image: linear-gradient(
+    to right, transparent, #000 20%, #000 100%
+  );
+}
+```
+
+[EXPERIMENT] 此處黑色只是遮罩的不透明度定義，**不是新增黑金配色**。遮罩只可套在經批准的圖片層，不能裁掉人物的重要部位，亦不可套整個 section 誤傷文字與 CTA。
+
+### 15.9 候選版位的最低限度評分
+
+以下僅示範矩形交集與文字寬度，**不是**已完成的圖片辨識或 AI 自動排版系統。
+
+```js
+function eligibleHeadlineSlots(slots, subjectBox, titleWidth) {
+  return slots.filter(slot => {
+    const intersects = !(
+      slot.right <= subjectBox.left ||
+      slot.left >= subjectBox.right ||
+      slot.bottom <= subjectBox.top ||
+      slot.top >= subjectBox.bottom
+    );
+    const fits = slot.right - slot.left >= titleWidth;
+    return fits && !intersects;
+  });
+}
+```
+
+[OS] 正式選位還要檢查字群高度、臉與手的禁入區、對比、可讀性、中文與 CTA、語義分行及窄屏裁切。自動評分只能提供候選，最終由編輯驗收。
+
+### 15.10 實戰與驗收
+
+1. **主角判斷**：人物、圖片或英文大標誰先被看到？是否符合內容目的？
+2. **安全區**：不能意外遮擋臉、眼、手、重要衣物輪廓及互動入口。
+3. **裁切**：desktop、半屏、mobile 的人物比例保持正常；不能拉伸。
+4. **對比**：英文在實際圖片的明暗區均清晰；不能靠新增全站配色掩蓋問題。
+5. **語義**：標題是可選取 DOM 文字，沒有被遮到無法閱讀。
+6. **響應式**：並排不安全時改單欄或圖外標題，不縮扁字母。
+7. **節奏**：連續人物頁面不機械套用同一個巨字位置。
+
+**常駐練習**：同一張圖片分別做左半版、右半版、圖外標題；特批人像另測前景交錯。比較實際截圖與縮放結果，記錄選擇理由、失敗方案與 PASS/FAIL，再回寫 §10 案例紀錄。
+
+本輪只補充同一份手冊；未改動 PR #1325 的視覺頁面、既有十二講員海報或全站 CSS runtime。
