@@ -42,8 +42,9 @@ function imagePoint(p,v){return [Math.max(0,Math.min(1,(p[0]-v.left)/v.width)),M
 function mapped(b,v){return [v.left+b[0]*v.width,v.top+b[1]*v.height,b[2]*v.width,b[3]*v.height]}
 function current(){return regions[$('asset').value]}
 function makeRegion(b,kind){const el=document.createElement('div');el.className='region';el.dataset.label=kind;place(el,b);return el}
+function ink(el){const cs=getComputedStyle(el),ctx=document.createElement('canvas').getContext('2d');if(!ctx)return null;ctx.font=[cs.fontStyle,cs.fontWeight,cs.fontSize,cs.fontFamily].join(' ');ctx.textBaseline='alphabetic';const m=ctx.measureText(el.textContent);return {advance:m.width,inkWidth:m.actualBoundingBoxLeft+m.actualBoundingBoxRight,ascent:m.actualBoundingBoxAscent,descent:m.actualBoundingBoxDescent,font:ctx.font,letterSpacing:cs.letterSpacing,method:'canvas-estimate'};}
 function lines(el){const text=el.firstChild;if(!text||text.nodeType!==Node.TEXT_NODE)return [];const range=document.createRange(),result=[];for(let i=0;i<text.textContent.length;i++){range.setStart(text,i);range.setEnd(text,i+1);const r=range.getBoundingClientRect();if(!r.width&&!r.height)continue;let item=result.find(x=>Math.abs(x.top-r.top)<2);if(!item){item={left:r.left,right:r.right,top:r.top,bottom:r.bottom,text:''};result.push(item)}item.left=Math.min(item.left,r.left);item.right=Math.max(item.right,r.right);item.bottom=Math.max(item.bottom,r.bottom);item.text+=text.textContent[i]}return result}
-async function render(){const id=++stamp;await document.fonts.ready;if(id!==stamp)return;const {w,h}=stageSize(),v=visibleImage();layers.replaceChildren();const tb=$('scores');tb.replaceChildren();const imageReady=!!v;for(const item of current())if(v)layers.append(makeRegion(mapped(item.box,v),item.kind));
+async function render(){const id=++stamp;await document.fonts.ready;if(id!==stamp)return;const {w,h}=stageSize(),v=visibleImage();layers.replaceChildren();const tb=$('scores');tb.replaceChildren();const imageReady=!!v;const measurements={};for(const item of current())if(v)layers.append(makeRegion(mapped(item.box,v),item.kind));
 for(const [key,relative] of Object.entries(slots)){
 const box=relative?[relative[0]*w,relative[1]*h,relative[2]*w,relative[3]*h]:null;
 const el=document.createElement('div');el.className='slot';if(box)place(el,box);
@@ -54,7 +55,7 @@ if(!imageReady)reasons.push('image-not-loaded');
 if(!current().length&&box)reasons.push('regions-not-annotated');
 if(box){const cr=rect(box);for(const reg of current()){if(v&&area(cr,rect(mapped(reg.box,v)))>0)reasons.push('protected-'+reg.kind)}
 const bounds=el.getBoundingClientRect();if(span.scrollWidth>span.clientWidth+1||span.scrollHeight>span.clientHeight+1||el.scrollWidth>el.clientWidth+1||el.scrollHeight>el.clientHeight+1)reasons.push('text-overflow');
-const lr=lines(span);if(!lr.length)reasons.push('text-unmeasured');else {
+const lr=lines(span);measurements[key]={ink:ink(span),lines:lr};if(!lr.length)reasons.push('text-unmeasured');else {
 for(const line of lr){if(line.left<bounds.left-1||line.right>bounds.right+1||line.top<bounds.top-1||line.bottom>bounds.bottom+1)reasons.push('glyph-out-of-slot')}
 if(lr.some(line=>line.text.trim().length===1))reasons.push('single-character-line');
 }
@@ -68,7 +69,7 @@ for(const value of [key,status,[...new Set(reasons)].join(', ')]){const td=docum
 tr.style.cursor='pointer';tr.onclick=()=>{chosen=key;render()};tb.append(tr);
 }
 $('status').textContent='預覽 '+chosen+' | '+(v?v.naturalWidth+' × '+v.naturalHeight+' px':'圖片載入中')+' | 無版位獲得 PASS';
-$('json').textContent=JSON.stringify({asset:$('asset').value,sourceSize:v?{width:v.naturalWidth,height:v.naturalHeight}:null,coordinateSpace:'original-image-normalized',protectedRegions:current(),reviewStatus:'pending',headline:$('headline').value},null,2);
+$('json').textContent=JSON.stringify({asset:$('asset').value,sourceSize:v?{width:v.naturalWidth,height:v.naturalHeight}:null,coordinateSpace:'original-image-normalized',protectedRegions:current(),reviewStatus:'pending',measurements,headline:$('headline').value},null,2);
 }
 $('draw').onclick=()=>{drawing=!drawing;$('draw').setAttribute('aria-pressed',String(drawing));stage.classList.toggle('drawing',drawing)};
 stage.addEventListener('pointerdown',e=>{const v=visibleImage();if(!drawing||!v)return;const p=stagePoint(e);if(!inImage(p,v))return;start=imagePoint(p,v);stage.setPointerCapture(e.pointerId);ghost=makeRegion([p[0],p[1],0,0],$('kind').value);layers.append(ghost)});
