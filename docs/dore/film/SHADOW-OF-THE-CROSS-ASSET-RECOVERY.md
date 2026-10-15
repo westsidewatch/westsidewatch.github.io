@@ -31,3 +31,27 @@ Date: 2026-10-15
 2. Search commit history and branches for seam/tear and reprojection work.
 3. Recover black-and-white Italian cinema visual reference and grading specification.
 4. Build an evidence-based asset map with exact paths, commits and tests before changing runtime.
+
+## Recovery pass 2 — verified executable chain (2026-10-15)
+
+All paths below exist on GitHub `main`, not reconstructed substitutes:
+
+- `docs/dore/film/camera-spine-experiment-01.json` — authored `dore-film-camera-spine/v0.1` camera track, **20 nodes P001–P020**, Abraham → Isaac → Jacob, one camera, zero conventional cuts; noncanonical previs experiment. Each node has position `p`, look target, lens, speed, dwell and camera grammar provenance. Two authored time bridges: ABRAHAM_TO_ISAAC and ISAAC_TO_JACOB. References TARR-01 / ANGELOPOULOS-01 / ANTONIONI-01 as camera grammar sources, explicitly **not style presets**.
+- `docs/dore/film/tools/camera-spine-timeline.js` — deterministic 52-second target timing solver and sampler, distributing travel time by path distance and authored speed, preserving dwell.
+- `docs/dore/film/tools/camera-spine-parity-check.py` — 20-node, one-camera, zero-cut, duration and vector/speed validation. This validates timeline parity; **it is not a seam/tear quality metric**.
+- `docs/dore/film/tools/import-camera-spine.py` — Blender importer reading same JSON as source of truth.
+- `.github/workflows/dore-film-camera-spine-parity.yml` — existing parity CI workflow.
+- `static/dore/film/camera-motion-lab-01.html` — web motion lab, existing live-path source.
+- `docs/dore/film/camera-spine-experiment-01.html` — earlier experiment page, also present.
+- Historical commits: `bf476a11efa81a6fe3f2bffd3dbece327168efeb` JSON track; `cc177f5a7a808b7ee7f369bfcf1c5d7397d19e83` first executable page; `be9a017e7e7fb9d3a53be902689e5cf4af370696` Blender importer; `3cac5379b15699f8c170d0771c2bcb78f9801e2e` parity script; `1223476ee908317d6eb407bc144156cdd13345bc` parity workflow; `4d51f49fc630ab8a7a7efdefe3c125e7d4130407` authored web timing lab.
+
+### Historical aesthetic provenance (verified in track metadata)
+- TARR-01, ANGELOPOULOS-01 and ANTONIONI-01 appear in the camera track. These establish provenance for shot grammar, **not proof of a recovered Italian monochrome grading specification**. That original aesthetic document remains to be located.
+
+### Still unverified
+- Exact location of precomputed reprojection / tiny tear evaluation / known-pixel restoration / canonical original re-lock implementation.
+- Italian black-and-white film grading/lookbook and its precise decisions.
+- Prior referenced `SHADOW-MAP-EDITORIAL-CANON.md` and `SCRIPT-NODE-000-BERESHIT.md` are not found at those paths on main or three `dore-shadow64-*` branches checked. This does **not** establish deletion.
+
+### Preservation action
+- This pass only expands the asset register. **No existing camera, film, parity, engraving, or church preview runtime file was modified.**
