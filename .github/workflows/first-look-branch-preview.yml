@@ -33,6 +33,7 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+          test -s public/experiments/editorial-layout-safety-lab.html
       - name: Deploy Cloudflare Pages preview (never production)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -47,3 +48,4 @@ jobs:
             --commit-message="First Look isolated preview"
           echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
           echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/editorial-layout-safety-lab.html" >> "$GITHUB_STEP_SUMMARY"
