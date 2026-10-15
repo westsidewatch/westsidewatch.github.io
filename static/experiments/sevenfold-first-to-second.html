@@ -124,6 +124,77 @@
     letter-spacing:-.04em;
   }
 }
+
+/* John 7:38 — editorial display hierarchy from the English Typography Handbook.
+   Scoped to scripture only; existing sevenfold movement is unchanged. */
+.showcase .composition .edition[data-variant="0"] .scripture-en{
+  min-width:0!important;
+  font-synthesis:none!important;
+  letter-spacing:normal!important;
+  text-wrap:pretty;
+}
+.showcase .composition .edition[data-variant="0"] .scripture-en-lead{
+  display:block;
+  font-style:normal;
+  font-weight:400;
+  letter-spacing:-.035em;
+  text-wrap:balance;
+}
+.showcase .composition .edition[data-variant="0"] .scripture-en-bridge{
+  display:block;
+  font-style:normal;
+  letter-spacing:0;
+  text-wrap:pretty;
+}
+.showcase .composition .edition[data-variant="0"] .scripture-en strong{
+  display:block;
+  font-weight:400;
+  font-synthesis:none;
+  letter-spacing:-.045em;
+  text-wrap:balance;
+}
+.showcase .composition .edition[data-variant="0"] .scripture-en strong i{
+  font-weight:400;
+  font-synthesis:none;
+}
+@media(min-width:701px){
+  .showcase .composition .edition[data-variant="0"] .scripture-en{
+    gap:clamp(4px,.8svh,12px)!important;
+    padding-top:clamp(8px,1.5svh,20px)!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en-lead{
+    font-size:clamp(32px,4.2vw,72px)!important;
+    line-height:1.03!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en-bridge{
+    font-size:clamp(15px,1.55vw,24px)!important;
+    line-height:1.22!important;
+    max-width:42ch!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en strong{
+    font-size:clamp(42px,5.4vw,92px)!important;
+    line-height:.97!important;
+    max-width:14ch!important;
+  }
+}
+@media(max-width:700px){
+  .showcase .composition .edition[data-variant="0"] .scripture-en{
+    gap:clamp(5px,1svh,10px)!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en-lead{
+    font-size:clamp(27px,7vw,45px)!important;
+    line-height:1.05!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en-bridge{
+    font-size:clamp(13px,3.2vw,18px)!important;
+    line-height:1.27!important;
+  }
+  .showcase .composition .edition[data-variant="0"] .scripture-en strong{
+    font-size:clamp(32px,8.5vw,56px)!important;
+    line-height:1!important;
+    max-width:100%!important;
+  }
+}
 </style></head><body data-ws-scope="global"><section class="first" aria-label="首頁第一屏"><div class="head"><span>WESTSIDE WATCH</span><span>01 / SEVENFOLD DAWN</span></div><div><h1>Watch for<br><i>the Dawn.</i></h1><p>黑夜已深，白晝將近。<br>The night is far spent. The day is at hand.</p></div></section><section class="showcase" aria-label="七重編輯展示"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church" data-variant="0" aria-label="約翰福音 7:38 經文專題"><div class="scripture-kicker"><span>THE LIVING WORD / 01</span><span>JOHN 7:38 · KJV</span></div><p class="scripture-en" lang="en"><span class="scripture-en-lead">He that believeth on me,</span><span class="scripture-en-bridge">as the scripture hath said, out of his belly shall flow</span><strong>rivers of <i>living water.</i></strong></p><p class="scripture-zh ws-lineguard--short" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江⁠河⁠來⁠。</p><div class="scripture-footer"><span class="ws-scripture-reference"><span lang="zh-Hant">約翰福音 7:38</span><span class="ws-scripture-reference-divider" aria-hidden="true">/</span><span lang="en">JOHN 7:38</span></span><a href="/church/">ENTER LIVING WATER ↗</a></div></article>
 <article class="edition" data-variant="1"><div class="headline"><span class="category">02 / Magazine</span><h2>Watch<br><i>for Dawn.</i></h2><div class="cn">西望 · 獨立網絡雜誌</div></div><div class="detail"><p class="description">以文字、影像與編輯的秩序，重新理解我們所生活的世界。</p><a href="/journal/">READ THE JOURNAL ↗</a></div></article>
