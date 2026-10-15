@@ -47,16 +47,6 @@
 .showcase .composition .edition.sites-section-church{--ws-branch:var(--ws-water,#5b8fa8);--ws-engraving-opacity:.18;isolation:isolate}
 .showcase .composition .edition.sites-section-church::after{z-index:0!important;background-repeat:no-repeat;background-size:cover;mix-blend-mode:multiply}
 .showcase .composition .edition.sites-section-church>*{position:relative;z-index:1}
-/* John 7:38 is the editorial composition, not an ornamental ticker. */
-.showcase .composition .edition[data-variant="0"]{display:grid!important;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)!important;grid-template-rows:auto 1fr auto;align-items:start!important;column-gap:clamp(20px,4vw,75px)!important;row-gap:clamp(8px,1.4svh,20px)!important;padding:clamp(30px,4.2vw,70px) clamp(25px,5vw,90px) clamp(24px,3vw,45px)!important}
-.showcase .edition[data-variant="0"] .scripture-kicker{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:1rem;font:400 clamp(10px,.8vw,13px) var(--ws-type-display-en-sc,serif);letter-spacing:.13em;border-bottom:1px solid #a9a49b;padding-bottom:clamp(8px,1svh,16px)}
-.showcase .edition[data-variant="0"] .scripture-zh{grid-column:1;align-self:center;margin:0;max-width:14em;font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif);font-weight:400;font-size:clamp(22px,2.55vw,44px);line-height:1.6;letter-spacing:.045em}
-.showcase .edition[data-variant="0"] .scripture-zh strong{font-weight:400;font-size:1.22em}
-
-.showcase .edition[data-variant="0"] .scripture-footer{grid-column:1/-1;display:flex;justify-content:space-between;align-items:end;gap:2rem;border-top:1px solid #a9a49b;padding-top:clamp(8px,1svh,16px);font-size:var(--ws-type-scripture-reference-size);letter-spacing:var(--ws-type-scripture-reference-tracking)}
-.showcase .edition[data-variant="0"] .scripture-footer a{text-decoration:none;pointer-events:auto;white-space:nowrap}
-@media(max-width:700px){.showcase .composition .edition[data-variant="0"]{grid-template-columns:1fr!important;grid-template-rows:auto 1fr auto auto;gap:10px!important;padding:22px 6vw!important}.showcase .edition[data-variant="0"] .scripture-kicker,.showcase .edition[data-variant="0"] .scripture-footer{grid-column:1}.showcase .edition[data-variant="0"] .scripture-zh{grid-column:1;align-self:end;font-size:clamp(19px,4.5vw,30px);line-height:1.45}.showcase .edition[data-variant="0"] .scripture-footer{align-items:center}}
-
 /* One engraved material language across the church paper spread and opening doors. */
 .showcase{--church-line:color-mix(in srgb,var(--ws-water) 27%,transparent);--church-line-soft:color-mix(in srgb,var(--ws-water) 12%,transparent);--church-paper:var(--paper)}
 .showcase .composition .edition[data-variant="0"]{background:var(--church-paper)!important;color:var(--ws-ink,#252525)!important;overflow:hidden;isolation:isolate}
@@ -65,150 +55,32 @@
 .showcase .church-gate__leaf{background-color:var(--ws-water,#5b8fa8)!important;background-image:repeating-radial-gradient(ellipse 115% 54% at 12% 82%,transparent 0 14px,color-mix(in srgb,var(--paper) 38%,transparent) 14.5px 15px,transparent 15.5px 27px),repeating-linear-gradient(112deg,transparent 0 70px,color-mix(in srgb,var(--paper) 12%,transparent) 70.5px 71px,transparent 71.5px 122px)!important;background-size:100% 100%!important}
 .showcase .church-gate__leaf:first-child{border-right:1px solid color-mix(in srgb,var(--paper) 55%,transparent)}
 .showcase .church-gate__leaf:last-child{border-left:1px solid rgba(240,245,245,.55);background-position:100% 0!important}
-.showcase .edition[data-variant="0"] .scripture-zh{font-size:clamp(21px,2.2vw,38px)!important;line-height:1.48!important}
 
-@media(max-width:700px){.showcase .composition .edition[data-variant="0"]{padding:14px 5vw!important;gap:6px!important}.showcase .edition[data-variant="0"] .scripture-zh{font-size:clamp(17px,3.7vw,26px)!important;line-height:1.36!important}.showcase .edition[data-variant="0"] .scripture-footer{font-size:10px!important;gap:8px!important}}
+
+@media(max-width:700px){.showcase .composition .edition[data-variant="0"]{padding:14px 5vw!important;gap:6px!important}.showcase .edition[data-variant="0"] .scripture-footer{font-size:10px!important;gap:8px!important}}
 @media(prefers-contrast:more){.showcase .composition .edition[data-variant="0"]::after{opacity:.25!important}}
 
-/* English KJV is the magazine hero; Chinese is the secondary translation. */
-.showcase .composition .edition[data-variant="0"]{grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr)!important;column-gap:clamp(28px,5vw,92px)!important}
 
-
-
-
-
-.showcase .edition[data-variant="0"] .scripture-zh{grid-column:2!important;grid-row:2!important;align-self:end!important;font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif)!important;font-size:clamp(15px,1.35vw,22px)!important;line-height:1.85!important;letter-spacing:.035em!important;max-width:20em;margin-bottom:clamp(12px,3svh,45px)}
-@media(max-width:700px){.showcase .composition .edition[data-variant="0"]{grid-template-columns:1fr!important;grid-template-rows:auto minmax(0,1fr) auto auto!important}.showcase .edition[data-variant="0"] .scripture-zh{grid-column:1!important;grid-row:3!important;align-self:end!important;font-size:clamp(12px,2.6vw,16px)!important;line-height:1.5!important;margin:0!important}.showcase .edition[data-variant="0"] .scripture-footer{grid-row:4!important}}
-
-/* Church editorial spread: single responsive composition authority. */
-@media(min-width:701px){
-.showcase .composition .edition[data-variant="0"]{grid-template-columns:minmax(0,1.55fr) minmax(0,.45fr)!important;grid-template-rows:auto minmax(0,1fr) auto!important;column-gap:clamp(24px,4vw,70px)!important;padding:clamp(24px,3vw,48px) clamp(36px,5.5vw,96px)!important}
-
-
-
-.showcase .edition[data-variant="0"] .scripture-zh{grid-column:2!important;grid-row:2!important;align-self:center!important;justify-self:end!important;width:100%!important;max-width:22em!important;min-width:0!important;margin:clamp(85px,13svh,160px) 0 0!important;font-size:clamp(15px,1.25vw,21px)!important;line-height:1.9!important;text-wrap:balance;word-break:normal;overflow-wrap:normal}
-}
-@media(max-width:700px){.showcase .edition[data-variant="0"] .scripture-zh{text-wrap:balance!important;word-break:normal!important;overflow-wrap:normal!important}}
-.showcase .edition[data-variant="0"] .scripture-zh{font-family:var(--ws-type-display-zh)!important;font-weight:var(--ws-weight-zh-air,200)!important;font-synthesis:none!important}
-
-/* Editorial focal treatment: intentionally visible at half-window widths. */
-@media(min-width:701px){
-
-
-
-
-.showcase .composition .edition[data-variant="0"]::after{background-image:repeating-radial-gradient(ellipse 85% 52% at 84% 81%,transparent 0 27px,color-mix(in srgb,var(--ws-water) 31%,transparent) 27.5px 28px,transparent 28.5px 45px),linear-gradient(110deg,transparent 18%,color-mix(in srgb,var(--ws-water) 7%,transparent) 100%)!important;background-size:100% 100%!important;opacity:.65!important}
-}
-
-/* Living Water letterform architecture — replaces former English editorial CSS.
-   L/W are decorative glyphs, never substitutes for the full KJV. */
-.showcase .edition[data-variant="0"] .lw-art{
-  position:absolute;inset:0;z-index:1;pointer-events:none;
-  font-family:var(--ws-type-display-en,"Bodoni Moda",serif);
-  font-weight:400;font-style:normal;font-synthesis:none;
-}
-.showcase .edition[data-variant="0"] .lw-art span{
-  position:absolute;display:block;white-space:nowrap;line-height:.75;
-  letter-spacing:-.065em;
-}
-.showcase .edition[data-variant="0"] .lw-art__l{
-  top:17%;left:4.6%;font-size:clamp(180px,27vw,440px);
-  color:var(--ws-ink,#252525);
-}
-.showcase .edition[data-variant="0"] .lw-art__w{
-  left:24%;bottom:9%;font-size:clamp(165px,24vw,395px);
-  color:var(--ws-water,#5b8fa8);opacity:.87;
-}
-.showcase .edition[data-variant="0"] .scripture-en{
-  grid-column:1;grid-row:2;align-self:start;justify-self:end;
-  display:flex;flex-direction:column;align-items:flex-start;
-  gap:clamp(4px,.65svh,9px);width:58%;min-width:0;
-  margin:clamp(2px,1.4svh,18px) 0 0;padding:0;
-  font:400 clamp(17px,1.65vw,26px)/1.15 var(--ws-type-display-en,"Bodoni Moda",serif);
-  letter-spacing:-.018em;color:var(--ws-ink,#252525);
-}
-.showcase .edition[data-variant="0"] .scripture-en .scripture-phrase{
-  display:block;font:inherit;max-width:100%;white-space:normal;
-}
-.showcase .edition[data-variant="0"] .scripture-en .scripture-phrase--support{
-  font-size:.72em;line-height:1.35;letter-spacing:0;
-}
-.showcase .edition[data-variant="0"] .scripture-en .scripture-phrase--display{
-  font-size:clamp(18px,1.8vw,29px);line-height:1.2;letter-spacing:-.025em;
-  margin-top:clamp(7px,1svh,13px);font-weight:400;
-}
-.showcase .edition[data-variant="0"] .scripture-en .scripture-phrase--display em{
-  font-style:normal;color:var(--ws-water,#5b8fa8);white-space:nowrap;
-}
-@media(min-width:701px){
-  .showcase .edition[data-variant="0"] .scripture-zh{
-    align-self:end!important;margin:0 0 clamp(30px,5svh,65px)!important;
-  }
-}
-@media(max-width:700px){
-  .showcase .edition[data-variant="0"] .lw-art__l{
-    left:4%;top:20%;font-size:clamp(115px,38vw,265px);
-  }
-  .showcase .edition[data-variant="0"] .lw-art__w{
-    left:29%;bottom:18%;font-size:clamp(100px,35vw,245px);
-  }
-  .showcase .edition[data-variant="0"] .scripture-en{
-    grid-column:1;grid-row:2;align-self:start;justify-self:end;
-    width:67%;margin:clamp(4px,1svh,12px) 0 0;
-    font-size:clamp(15px,3.7vw,23px);gap:3px;
-  }
-  .showcase .edition[data-variant="0"] .scripture-en .scripture-phrase--support{font-size:.72em}
-  .showcase .edition[data-variant="0"] .scripture-en .scripture-phrase--display{
-    font-size:clamp(16px,4vw,25px);margin-top:5px;
-  }
-}
-@media(max-width:430px){
-  .showcase .edition[data-variant="0"] .lw-art__l{top:25%;font-size:35vw}
-  .showcase .edition[data-variant="0"] .lw-art__w{bottom:21%;font-size:34vw}
-  .showcase .edition[data-variant="0"] .scripture-en{width:72%;font-size:clamp(13px,3.3vw,17px)}
-  .showcase .edition[data-variant="0"] .scripture-en .scripture-phrase--display{font-size:clamp(14px,3.6vw,19px)}
-}
-
-/* John 7:38 / Italian editorial proof — single scoped composition; Bodoni from Design OS. */
-.showcase .composition .edition.editorial-john{display:block!important;padding:clamp(24px,3vw,54px) clamp(26px,5.2vw,96px)!important;background:#eeeae1;color:#252525;overflow:hidden;font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-synthesis:none}
-.showcase .composition .edition.editorial-john::after{opacity:.075!important;z-index:0!important}
-.editorial-john .ej-mast{position:absolute!important;z-index:3!important;top:4.5%;left:6%;right:6%;display:flex;justify-content:space-between;gap:1em;border-bottom:1px solid #88867f;padding-bottom:.8em;font:400 clamp(10px,.88vw,14px)/1.2 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);letter-spacing:.09em}
+/* John 7:38: selected 08 diptych structure with 07 italic Water. Scoped to second-screen edition only. */
+.showcase .composition .edition.editorial-john{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr) auto auto!important;align-items:stretch!important;column-gap:clamp(18px,3vw,55px)!important;row-gap:clamp(4px,.65svh,10px)!important;padding:clamp(15px,2.2vw,34px) clamp(24px,5vw,90px)!important;color:var(--ws-ink,#252525);font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-synthesis:none}
+.editorial-john .ej-mast{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #88867f;padding-bottom:clamp(4px,.6svh,9px);font:400 clamp(9px,.75vw,13px)/1.2 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);letter-spacing:.08em}
 .editorial-john .ej-full{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.editorial-john .ej-layout{position:absolute!important;inset:13% 6% 21%;z-index:2!important;overflow:visible;isolation:isolate;font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-weight:400;font-synthesis:none}
-.editorial-john .ej-layout>div{position:absolute;white-space:nowrap;font-weight:400}
-.editorial-john .ej-intro{top:0;left:0;font-size:clamp(17px,1.75vw,30px);line-height:1.43;letter-spacing:-.018em}
-.editorial-john .ej-rivers{top:31%;left:3%;font-size:clamp(70px,12.5vw,220px);line-height:.82;font-style:italic;color:#315b79;letter-spacing:-.065em}
-.editorial-john .ej-of{top:24%;left:48%;font-size:clamp(100px,20vw,370px);line-height:.82;font-style:italic;letter-spacing:-.105em;color:#252525;transform:rotate(-10deg);transform-origin:35% 60%;z-index:3}
-.editorial-john .ej-living{bottom:2%;left:0;font-size:clamp(72px,13vw,240px);line-height:.78;letter-spacing:-.07em;color:#252525}
-.editorial-john .ej-water{bottom:-4%;right:0;font-size:clamp(75px,14vw,255px);line-height:.78;letter-spacing:-.075em;color:#315b79;font-style:italic}
-.editorial-john .ej-period{color:#252525}
-.showcase .edition.editorial-john .ej-zh{position:absolute!important;z-index:4!important;bottom:10%!important;left:6%!important;right:6%!important;top:auto!important;grid-column:auto!important;grid-row:auto!important;width:auto!important;max-width:none!important;margin:0!important;font-size:clamp(12px,1vw,17px)!important;line-height:1.6!important;text-align:left}
-.showcase .edition.editorial-john .ej-footer{position:absolute!important;z-index:4!important;bottom:4%!important;left:6%!important;right:6%!important;top:auto!important;grid-column:auto!important;grid-row:auto!important;font-size:clamp(10px,.9vw,14px)!important}
-@media(max-width:700px){
-.showcase .composition .edition.editorial-john{padding:0!important}
-.editorial-john .ej-mast{top:5%;font-size:9px;letter-spacing:.025em}
-.editorial-john .ej-layout{inset:15% 6% 24%}
-.editorial-john .ej-intro{font-size:clamp(15px,3.8vw,21px);line-height:1.5}
-.editorial-john .ej-rivers{top:30%;left:0;font-size:clamp(62px,15vw,105px)}
-.editorial-john .ej-of{top:39%;left:45%;font-size:clamp(90px,25vw,180px)}
-.editorial-john .ej-living{bottom:17%;font-size:clamp(60px,16vw,105px)}
-.editorial-john .ej-water{bottom:0;right:0;font-size:clamp(64px,17vw,115px)}
-.showcase .edition.editorial-john .ej-zh{bottom:13%!important;font-size:12px!important}
-.showcase .edition.editorial-john .ej-footer{bottom:5%!important;gap:8px!important}
-}
+.editorial-john .ej-title{grid-column:1;grid-row:2;align-self:center;min-width:0;margin:0;font:400 clamp(46px,8.2vw,156px)/.83 var(--ws-type-display-en,"Bodoni Moda",serif);letter-spacing:-.075em;white-space:nowrap}
+.editorial-john .ej-title span,.editorial-john .ej-title em{display:block;font-weight:400}
+.editorial-john .ej-title em{font-style:italic;color:var(--ws-water,#5b8fa8)}
+.editorial-john .ej-copy{grid-column:2;grid-row:2;align-self:center;margin:0;max-width:28ch;font:400 clamp(12px,1.2vw,22px)/1.4 var(--ws-type-display-en,"Bodoni Moda",serif)}
+.showcase .edition.editorial-john .ej-zh{grid-column:1/-1;grid-row:3;align-self:end;margin:0!important;max-width:none!important;font:200 clamp(11px,.95vw,16px)/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;letter-spacing:0}
+.showcase .edition.editorial-john .ej-footer{grid-column:1/-1;grid-row:4;display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px solid #88867f;padding-top:clamp(5px,.7svh,10px);font:400 clamp(9px,.7vw,12px)/1.2 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)}
+.editorial-john .ej-footer a{pointer-events:auto;text-decoration:none;white-space:nowrap}
+@media(max-width:700px){.showcase .composition .edition.editorial-john{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto minmax(0,1fr) auto auto!important;gap:clamp(5px,1svh,12px)!important;padding:clamp(12px,3vw,24px) 6vw!important}.editorial-john .ej-mast{grid-column:1}.editorial-john .ej-title{grid-column:1;grid-row:2;font-size:clamp(52px,14vw,110px)}.editorial-john .ej-copy{grid-column:1;grid-row:3;align-self:center;font-size:clamp(11px,2.8vw,17px);max-width:34ch}.showcase .edition.editorial-john .ej-zh{grid-column:1;grid-row:4;font-size:clamp(10px,2.5vw,13px)!important}.showcase .edition.editorial-john .ej-footer{grid-column:1;grid-row:5;font-size:9px}}
 </style></head><body data-ws-scope="global"><section class="first" aria-label="首頁第一屏"><div class="head"><span>WESTSIDE WATCH</span><span>01 / SEVENFOLD DAWN</span></div><div><h1>Watch for<br><i>the Dawn.</i></h1><p>黑夜已深，白晝將近。<br>The night is far spent. The day is at hand.</p></div></section><section class="showcase" aria-label="七重編輯展示"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
 <div class="ej-mast"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></div>
 <p class="ej-full" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
-<div class="ej-layout" aria-hidden="true">
-<div class="ej-intro">He that believeth on me,<br>as the scripture hath said,<br>out of his belly shall flow</div>
-<div class="ej-rivers">rivers</div>
-<div class="ej-of">of</div>
-<div class="ej-living">living</div>
-<div class="ej-water">water<span class="ej-period">.</span></div>
-</div>
-<p class="scripture-zh ej-zh ws-lineguard--short" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江⁠河⁠來⁠。</p>
-<div class="scripture-footer ej-footer"><span class="ws-scripture-reference"><span lang="zh-Hant">約翰福音 7:38</span><span class="ws-scripture-reference-divider" aria-hidden="true">/</span><span lang="en">JOHN 7:38 · KJV</span></span><a href="/church/">ENTER LIVING WATER ↗</a></div>
+<h2 class="ej-title" aria-hidden="true"><span>Living</span><em>Water.</em></h2>
+<p class="ej-copy" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
+<p class="ej-zh ws-lineguard--short" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江⁠河⁠來⁠。</p>
+<div class="ej-footer"><span class="ws-scripture-reference"><span lang="zh-Hant">約翰福音 7:38</span><span class="ws-scripture-reference-divider" aria-hidden="true">/</span><span lang="en">JOHN 7:38 · KJV</span></span><a href="/church/">ENTER LIVING WATER ↗</a></div>
 </article>
 <article class="edition" data-variant="1"><div class="headline"><span class="category">02 / Magazine</span><h2>Watch<br><i>for Dawn.</i></h2><div class="cn">西望 · 獨立網絡雜誌</div></div><div class="detail"><p class="description">以文字、影像與編輯的秩序，重新理解我們所生活的世界。</p><a href="/journal/">READ THE JOURNAL ↗</a></div></article>
 <article class="edition" data-variant="2"><div class="headline"><span class="category">03 / Emmaus</span><h2>The<br><i>Word.</i></h2><div class="cn">以馬忤斯 · 查經</div></div><div class="detail"><p class="description">從經文到版畫，從歷史到敘事。查經本身也可以成為一篇完整的視覺專題。</p><a href="/one/">EXPLORE EMMAUS ↗</a></div></article>
