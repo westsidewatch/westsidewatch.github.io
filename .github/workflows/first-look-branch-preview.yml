@@ -36,8 +36,11 @@ jobs:
           test -s public/experiments/living-water-engraving-compare.html
           test -s public/experiments/assets/living-water-contour-engraving-v6.svg
           test -s public/experiments/assets/living-water-contour-engraving-v7.svg
-          grep -q 'living-water-contour-engraving-v6.svg' public/experiments/sevenfold-first-to-second.html
-          grep -q 'living-water-contour-engraving-v7.svg' public/experiments/living-water-engraving-compare.html
+          test -s public/experiments/assets/living-water-contour-engraving-v10.svg
+          test -s public/experiments/living-water-motion-study.html
+          grep -q 'living-water-contour-engraving-v10.svg' public/experiments/sevenfold-first-to-second.html
+          grep -q 'living-water-contour-engraving-v10.svg' public/experiments/living-water-engraving-compare.html
+          grep -q 'growth-top' public/experiments/living-water-motion-study.html
           test -s public/experiments/editorial-layout-safety-lab.html
           test -s public/experiments/john-7-38-template-clean.html
           grep -q 'data-preview="john-7-38-clean"' public/experiments/john-7-38-template-clean.html
