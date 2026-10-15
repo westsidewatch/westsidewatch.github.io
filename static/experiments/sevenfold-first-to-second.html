@@ -18,11 +18,11 @@
 .showcase .planes .plane{height:50svh!important;min-height:0!important}
 .showcase .composition{top:50svh!important;bottom:0!important;height:50svh!important;overflow:hidden!important}
 .showcase .composition .edition{inset:0!important;padding:clamp(18px,3vw,42px) clamp(24px,5vw,90px)!important;align-items:center!important}
-.showcase .composition .edition h2{font-size:clamp(42px,7vw,108px)!important}
+.showcase .composition .edition:not(.editorial-john) h2{font-size:clamp(42px,7vw,108px)!important}
 .showcase .composition .edition .description{font-size:clamp(13px,1vw,17px)!important;line-height:1.5!important}
 .showcase .stage-head{top:calc(50svh + 14px)!important}
 .showcase .index{bottom:14px!important}
-@media(max-width:700px){.showcase .composition .edition{align-content:center!important;gap:8px!important}.showcase .composition .edition h2{font-size:clamp(40px,12vw,75px)!important}.showcase .composition .edition .description{font-size:12px!important}}
+@media(max-width:700px){.showcase .composition .edition{align-content:center!important;gap:8px!important}.showcase .composition .edition:not(.editorial-john) h2{font-size:clamp(40px,12vw,75px)!important}.showcase .composition .edition .description{font-size:12px!important}}
 
 /* Church-only editorial gate: the first settled horizontal split becomes a vertical pair of doors. */
 .showcase .church-gate{position:absolute;inset:0;z-index:35;pointer-events:none;visibility:hidden;overflow:hidden}
