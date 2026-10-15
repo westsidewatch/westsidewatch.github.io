@@ -1081,3 +1081,18 @@ function evaluateLayout(candidate, protectedRegions) {
 6. 驗收通過後再決定是否需要引入可選的 MediaPipe 偵測；主站前台不得被迫下載模型。
 
 **本輪狀態：原型已提交；圖片實際視覺驗收、主體識別及最佳版位選擇尚未完成。**
+
+
+### 18.4 第八輪續篇：圖片座標與真實字形測量（提交 56fe10b）
+
+已在相同的 `static/experiments/editorial-layout-safety-lab.html` 原型中直接修正，不新增第二套管理系統：
+
+1. **原圖座標**：取得 `naturalWidth/naturalHeight`，對 `object-fit: contain` 算出實際顯示圖片矩形，禁止在留白區開始標註，指標位置換算為 **original-image-normalized** 座標，並在舞台縮放後重新投影。圖外拖動終點會被裁到圖片邊界。
+2. **字體就緒後測量**：等候 `document.fonts.ready`，以 DOM Range 收集實際文字逐字矩形並合併行框，檢查文字行是否超出候選矩形；檢查元素 scroll 寬高與單字母行。
+3. **可解釋性**：結果表明確呈現 `protected-face/hands/subject/story`、`text-overflow`、`glyph-out-of-slot` 等淘汰理由，及尚未完成的 `contrast-not-measured`、`ui-not-reviewed`、`outside-layout-not-measured`。
+4. **不虛報 PASS**：人工框選和字形測量仍不足以證明臉部／手部全數標註，也沒有逐像素覆字對比檢測、CTA 碰撞與人工簽核。因此所有結果最多為「未驗收」，不是正式安全版位。
+5. **輸出與保存**：JSON 中寫出原始像素尺寸、圖片座標系、標註來源及 `reviewStatus: pending`，仍僅保存於頁面記憶體，可手動複製，尚無 GitHub 自動寫入。
+
+**限制**：此工具處理的是未旋轉、未變形且採 `contain` 的圖片。依 §16.5，`cover` 必須再納入裁切與 `object-position`，不能混用。本次未實際人工逐張審閱像素、未取得真實瀏覽器截圖，故三張圖片尚無已批准安全區座標和勝出版位；不改動正式人物海報。
+
+**後續正式驗收**：必須以三張人物圖分別框選臉、手、軀幹及敘事重點；五版位逐一比對實際截圖；在 390／700／820／1024／1440px、100／125／150% 縮放下檢查原圖和標題比例、中文、CTA 及可讀性。只有人工批准的結果才可升格為 Design OS 生產參考案例。
