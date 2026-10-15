@@ -799,3 +799,180 @@ function eligibleHeadlineSlots(slots, subjectBox, titleWidth) {
 **常駐練習**：同一張圖片分別做左半版、右半版、圖外標題；特批人像另測前景交錯。比較實際截圖與縮放結果，記錄選擇理由、失敗方案與 PASS/FAIL，再回寫 §10 案例紀錄。
 
 本輪只補充同一份手冊；未改動 PR #1325 的視覺頁面、既有十二講員海報或全站 CSS runtime。
+
+
+## 16. 第六輪：主體識別、文字安全區與最佳版位候選評分
+
+本章讓既有 Design OS 的編輯排版手冊具備**可實作的輔助選位規格**。不新增獨立管理系統，不改動已批准的十二講員海報。研究、候選演算法與實測結果必須分開標示：[STUDY] 技術研究、[EXPERIMENT] 未驗證候選、[OS] 正式採納的規則。
+
+### 16.1 技術研究與資料來源
+
+| 研究對象 | 公開來源 | 可用能力 | 限制 |
+| --- | --- | --- | --- |
+| MediaPipe Object Detector | https://ai.google.dev/edge/mediapipe/solutions/vision/object_detector/web_js | 瀏覽器內物件偵測與 bounding box | 物件框不等於人臉、手或精確輪廓 |
+| MediaPipe Face Detector | https://ai.google.dev/edge/mediapipe/solutions/vision/face_detector/web_js | 人臉位置及關鍵點 | 不能辨認人物身分，側臉與遮擋需人工核對 |
+| MediaPipe Image Segmenter | https://ai.google.dev/edge/mediapipe/solutions/vision/image_segmenter/web_js | 依模型輸出像素分割遮罩 | 分割類別取決於模型；邊緣可能不準 |
+| MediaPipe Pose Landmarker | https://ai.google.dev/edge/mediapipe/solutions/vision/pose_landmarker/web_js | 人體姿態關鍵點 | 手勢細節不能僅靠人體關鍵點保證 |
+| OpenCV.js | https://docs.opencv.org/4.x/d5/d10/tutorial_js_root.html | 灰階、邊緣、區域紋理等影像分析 | 低紋理不代表內容上可以覆字 |
+| Canvas measureText | https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/measureText | 量測字群寬度 | 不代替 DOM 的實際行高、字體載入及 CSS 布局 |
+| CSS Font Loading API | https://developer.mozilla.org/en-US/docs/Web/API/Document/fonts | 等待字體載入後測量 | 必須使用實際生產字體 |
+| CSS object-fit/object-position | https://developer.mozilla.org/en-US/docs/Web/CSS/object-position | 圖片裁切與焦點定位 | 偵測框必須映射到裁切後座標 |
+
+[STUDY] 這些是官方技術文檔入口，不代表本站已安裝或驗證上述模型。**第一版優先使用人工標記安全區 + DOM 實測**，避免因模型下載、授權、效能或辨識錯誤拖慢主站。模型可作為未來的可選候選提供者，不能成為頁面顯示的必要依賴。
+
+### 16.2 四層決策架構
+
+1. **Observe**：輸入圖片原始尺寸、可見裁切、人物／物件框、人工指定焦點、明暗及紋理。
+2. **Protect**：產生禁入區：臉、眼、手、人物輪廓、重要物件、已批准字樣、CTA、字幕與中文。
+3. **Compose**：量測實際字體與批准的語義分行，產生左、右、上、下、圖外及特批交錯等候選。
+4. **Evaluate**：先執行硬性安全檢查，再以可解釋分數排序；最後由編輯在實際尺寸截圖中批准。
+
+[OS] **硬性禁入區優先於美學分數**。若候選遮住人臉或讓經文產生孤字，即使對比、留白得分再高也必須淘汰。所有候選失敗時，回退為**圖外正常標題**，不強行覆字。
+
+### 16.3 圖片主體識別：先以可控標記建立基準
+
+[OS] 人工標記是最初的 ground truth。每張圖片可有多個 `protectedRegions`，並區分：
+- `face`：臉及頭髮主要輪廓，最高優先。
+- `hands`：手勢及手部。
+- `subject`：肩、身體和服裝關鍵區。
+- `story`：圖片中不可遮擋的文字、物件、符號。
+- `ui`：頁面導航、CTA、字幕與譯文（以畫面座標表示）。
+
+[EXPERIMENT] 未來的模型輸出只作**建議框**，須附模型版本、置信度與人工修訂記錄。低置信度、多人像、側臉、深色刻線、手與臉重疊時，必須保守擴大安全區或停止自動覆字。不得把模型的物件類別當作人物身分識別。
+
+### 16.4 安全區資料結構：以圖片歸一化座標記錄
+
+```json
+{
+  "assetId": "example-portrait",
+  "sourceSize": {"width": 1600, "height": 2000},
+  "focalPoint": {"x": 0.58, "y": 0.27},
+  "protectedRegions": [
+    {"kind": "face", "box": [0.39, 0.08, 0.35, 0.28], "source": "manual"},
+    {"kind": "hands", "box": [0.44, 0.52, 0.31, 0.22], "source": "manual"}
+  ],
+  "editorialMode": "image-led"
+}
+```
+
+[OS] `box` 採 `[x, y, width, height]`，全部在 0–1 範圍內，相對**原始圖片**而非 viewport。這是案例資料示例，**不是要求新增第二套 runtime JSON**。已批准的人物海報可繼續用現有資產資料表達。
+
+### 16.5 關鍵幾何：裁切座標不能直接當作畫面座標
+
+對 `object-fit:cover`，假設原圖 `Iw × Ih`，顯示盒 `Bw × Bh`：
+
+```js
+const scale = Math.max(Bw / Iw, Bh / Ih);
+const renderedW = Iw * scale;
+const renderedH = Ih * scale;
+const overflowX = renderedW - Bw;
+const overflowY = renderedH - Bh;
+// px and py are object-position proportions (e.g. center => 0.5)
+const offsetX = -overflowX * px;
+const offsetY = -overflowY * py;
+const screenX = box.x * Iw * scale + offsetX;
+const screenY = box.y * Ih * scale + offsetY;
+const screenW = box.width * Iw * scale;
+const screenH = box.height * Ih * scale;
+```
+
+[OS] 上述適用於常見的百分比 `object-position`、無 transform 的 `cover` 情況；實際還要加上圖片盒的畫面原點。若使用 `contain`、非百分比位置、CSS transform、遮罩或其他裁切方法，必須另行映射，不能直接沿用。映射後應與可見盒相交，移除盒外區域。
+
+### 16.6 保護區膨脹與字群幾何
+
+[OS] 主體框不是可貼字的邊界，必須增加 **clearance**。安全距離應由字級、容器寬度和圖片用途決定；以下為可調整候選，不是全站通用數值。
+
+```js
+function expandBox(box, pad) {
+  return {
+    left: box.left - pad,
+    top: box.top - pad,
+    right: box.right + pad,
+    bottom: box.bottom + pad
+  };
+}
+function overlapArea(a, b) {
+  const w = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+  const h = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+  return w * h;
+}
+```
+
+[EXPERIMENT] 首輪可比較 `pad = max(12px, 0.25 × headlineFontSize)` 與更寬安全距離；對臉／手可另加權。不可用 padding 數值替代編輯對肩膀、衣服、手勢的判斷。
+
+[OS] 字群測量須在 `await document.fonts.ready` 後進行。標題的 bounding box **必須包含所有行與斜體外伸、標點、陰影等視覺外延**。Canvas `measureText()` 可預估單行寬度，但正式驗收須用實際 DOM、`Range.getClientRects()` 和截圖；只量 `h1` 外盒不足以證明每一行安全。
+
+### 16.7 候選生成：先排除，再評分
+
+[OS] 先產生 `left-half`、`right-half`、`top-band`、`bottom-band`、`outside-image`。`interlock` 只有特批並具真正透明前景資產時才列入候選。每個候選需附：
+- 標題的預估與實際文字盒；
+- 所有保護區重疊面積；
+- 是否有語義孤字／溢出；
+- 圖文對比與局部紋理；
+- 與中文、CTA、導航的距離；
+- 版面角色（accent、reading 等）及編輯指定偏好。
+
+```js
+function rankCandidates(candidates, protectedBoxes) {
+  return candidates.map(candidate => {
+    const collision = protectedBoxes.some(region =>
+      overlapArea(candidate.titleBox, region) > 0
+    );
+    const rejected = collision ||
+      candidate.overflow ||
+      candidate.semanticWidow ||
+      candidate.uiCollision ||
+      !candidate.readable;
+    if (rejected) {
+      return { ...candidate, eligible: false, score: null };
+    }
+    const score =
+      0.30 * candidate.contrastScore +
+      0.25 * candidate.negativeSpaceScore +
+      0.20 * candidate.balanceScore +
+      0.15 * candidate.rhythmScore +
+      0.10 * candidate.preferenceScore;
+    return { ...candidate, eligible: true, score };
+  }).sort((a, b) =>
+    Number(b.eligible) - Number(a.eligible) ||
+    (b.score ?? -1) - (a.score ?? -1)
+  );
+}
+```
+
+[EXPERIMENT] 以上五個分數必須先正規化至 0–1；權重是**待校準起點**，不是經實驗證明的最佳係數。`readable`、`semanticWidow`、`contrastScore` 等由獨立檢測或人工輸入，**此函式本身不會計算它們**。禁止用虛構分數假裝已完成自動判斷。
+
+### 16.8 對比度與圖片複雜度的界線
+
+[OS] 在圖片上覆字時，先檢查文字實際覆蓋區域，而不是全圖平均亮度。對比度需採用真實前景文字色與背景像素，並考慮透明度、漸層、圖片縮放及刻線。一般文字以 WCAG 2.x 4.5:1、大字以 3:1 作基本檢查門檻；視覺主標的高對比細筆畫即使通過數值，也須做實際可讀性驗收。
+
+參考：https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html 。
+
+[OS] 紋理／邊緣密度只是輔助指標。低紋理區可能包含人物面部或重要符號，仍屬禁入區；高紋理區也不能單憑分數就判定不可排字。**內容安全優先於影像統計。**
+
+### 16.9 第一階段落地：無模型、無新依賴
+
+1. 選三張**已有授權且可用的站內圖片**：右側人物、左側人物、居中人物各一。
+2. 人工標記 face／hands／subject／story 保護框，建立 ground truth。
+3. 以實際 Bodoni Moda 400、中文及 CTA 建立可測量的候選布局。
+4. 實測 390、700、820、1024、1440px 與 100%、125%、150% 縮放。
+5. 用硬性排除與候選排序比較左、右、上、下、圖外。
+6. 由編輯批准結果，記錄成功與失敗版位；**只把通過實測的規則寫入 OS**。
+
+[OS] 不應一開始就把 MediaPipe 或 OpenCV 打包進主站。若未來實測證明必要，優先放在既有 Design OS 的編輯／建置流程中做可選分析，前台只使用已批准的版位資料；避免瀏覽器每次開頁都下載模型、耗費資源或產生布局跳動。
+
+### 16.10 驗收與回退
+
+| 測試 | PASS 條件 | FAIL 後動作 |
+| --- | --- | --- |
+| 主體保護 | 人臉、手、重要輪廓與文字無非批准重疊 | 擴大安全區或移到圖外 |
+| 語義分行 | 無孤字、無誤拆經文、無拉伸字體 | 改分行／切換 reading |
+| 裁切映射 | 原圖保護框與畫面位置一致 | 修正 object-fit/position 轉換 |
+| 文字可讀 | 實際覆字區對比達標且細筆畫清楚 | 換位置，不先改全站配色 |
+| 跨尺寸 | 各測試尺寸與縮放下均安全 | 改單欄／圖外標題 |
+| 可解釋性 | 每個候選列出淘汰理由及評分來源 | 不批准黑箱結果 |
+| 保護現有資產 | 十二講員海報比例與特批構圖不被覆蓋 | 回退新規則 |
+
+**常駐訓練：** 每次新增人物／影片封面，先手動提出三個版位，再由評分器給出排序；比較人工選擇與評分差異。若評分第一名被編輯否決，記錄具體原因並修正安全區或特徵，**不得只調權重使結果看似正確**。
+
+本輪提供的是**規格、算法原型與驗收計畫**；尚未建立真實影像辨識服務、安裝模型或驗收任何站內圖片。PR #1325 的實際視覺頁面保持不變。
