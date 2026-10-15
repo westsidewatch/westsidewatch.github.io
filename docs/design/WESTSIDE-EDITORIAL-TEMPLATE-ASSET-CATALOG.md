@@ -441,3 +441,22 @@ A candidate becomes `approved` only after same-page visual comparison at relevan
 - Cherubim (Exodus 25:20): **a small wing-edge fragment**; feather anatomy is artistic interpretation, not textually specified.
 
 **Composition:** crop the fragment beyond the page edge; retain generous negative space, soft tonal hierarchy and delicate engraved strokes. **Never** tile complete icons or fill a page with repeated flowers, fruit or obvious religious clip art. The result may be abstract at first glance, but its precise biblical provenance must remain documented. This is a fixed section material; the second-screen Moses SVG remains a separate narrative illustration. **Status:** specification only, pending visual prototype.
+
+
+### Scripture-first First Look engraving contract (2026-10-15)
+
+**Core editorial unit:** `one section → one anchor verse → one biblical motif → one micro-engraved fragment`. The verse, headline, material and negative space must form **one composition**; do not assign a random decoration after a page is designed. The engraving shares one OS material grammar but is **semantically specific to each section**.
+
+**Important correction:** church's existing flowing-line background is already an **appropriate living-water motif** anchored to John 7:38. It need not be replaced by a temple pomegranate or lily. Temple objects are an available **motif family**, not a compulsory source for every section. The special Moses crossing the Red Sea SVG remains a distinct second-screen narrative artwork.
+
+| First Look section | Anchor scripture candidate | Engraving micro-detail candidate | Status |
+| --- | --- | --- | --- |
+| Living Water West / church | John 7:38 | One magnified current of living-water flow lines | Keep existing motif; refine engraving quality |
+| Westside Watch / journal | Romans 13:12 | Fine first-light rays at the edge of darkness | Candidate |
+| ONE / Bible study | Psalm 119:105 | Partial oil-lamp wick and radiating light | Candidate; lamp is artistic interpretation |
+| Olive Mountain | Romans 10:15 | Single olive-leaf vein | Candidate; leaf is a section-name association, not an object named in the verse |
+| Dawn Library | Revelation 5:1 | Tiny curl of a scroll edge | Candidate; apocalyptic scroll is not equivalent to ordinary books |
+| Paradise Cinema | John 1:5 | Fine rays emerging from darkness | Candidate |
+| Daylight Café | Matthew 6:11 | Part of a wheat head, awn or husk | Candidate; wheat is an interpretation of daily bread |
+
+**Design / theological gate:** quote the verse accurately in the site's approved Bible edition; examine context; explicitly distinguish (a) object actually named in the passage, (b) editorial association, and (c) speculative artistic detail. Each First Look must have one visually dominant scripture-and-motif relationship. Crop to a fragment (vein, curl, water current, light ray) and reserve type/CTA safe zones. No generic landscape, decorative religious clip art, or tiled full objects. Do not claim these seven candidates have been implemented or approved.
