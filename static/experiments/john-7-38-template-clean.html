@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>John 7:38 — Clean Editorial Template</title>
+<!-- Standalone font loading only. No shared global selectors or legacy John 7:38 CSS. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Bodoni+Moda+SC:opsz,wght@6..96,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css">
+<style>
+/* CLEAN TEMPLATE ISOLATION: no original John 7:38 classes, selectors, layout, or inline overrides.
+   Editorial spread composition adapted from handbook §13.4 phrase-grid + §13.5 asymmetric grid.
+   Standalone values mirror Design OS approved Bodoni / Chiron / water palette; no global CSS imported. */
+:root{--ws-paper:#faf9f5;--ws-ink:#252525;--ws-water:#5b8fa8;--ws-type-display-en:"Bodoni Moda",serif;--ws-type-display-en-sc:"Bodoni Moda SC","Bodoni Moda",serif;--ws-type-display-zh:"Chiron Hei HK WS",sans-serif;--ws-engraving-line:rgba(37,37,37,.12)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ws-paper,#faf9f5);color:var(--ws-ink,#252525);font-family:var(--ws-type-display-en,Georgia,serif);font-synthesis:none}
+.j7-sheet{position:relative;isolation:isolate;min-height:100svh;max-width:1800px;margin:auto;padding:clamp(22px,3vw,48px) clamp(22px,5vw,90px);display:grid;grid-template-rows:auto 1fr auto auto;gap:clamp(18px,3vw,42px);overflow:hidden}
+.j7-sheet::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;opacity:var(--ws-engraving-opacity,.14);background:repeating-radial-gradient(ellipse 85% 48% at 72% 53%,transparent 0 18px,var(--ws-engraving-line,rgba(37,37,37,.16)) 18.5px 19px,transparent 19.5px 34px)}
+.j7-running,.j7-footer{display:flex;justify-content:space-between;gap:16px;font:400 clamp(10px,.85vw,14px)/1.4 var(--ws-type-display-en-sc,var(--ws-type-display-en));letter-spacing:.08em}
+.j7-running{border-bottom:1px solid currentColor;padding-bottom:12px}
+.j7-footer{border-top:1px solid currentColor;padding-top:12px}
+.j7-footer a{color:inherit;text-decoration:none}
+.j7-spread{container:j7-spread/inline-size;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);grid-template-rows:auto 1fr;column-gap:clamp(24px,4cqi,78px);min-height:680px}
+.j7-spread>*{min-width:0}
+.j7-title{grid-column:1;grid-row:1/3;display:grid;align-content:center;gap:clamp(12px,2.2cqi,36px);margin:0;font-weight:400;font-synthesis:none;line-height:.86;letter-spacing:-.06em}
+.j7-title span{display:block}
+.j7-title .j7-rivers{font-style:italic;color:var(--ws-water,#5b8fa8);font-size:clamp(75px,17cqi,255px)}
+.j7-title .j7-living{font-size:clamp(95px,21cqi,330px)}
+.j7-title .j7-water{font-size:clamp(95px,21cqi,330px);color:var(--ws-water,#5b8fa8);font-style:italic}
+.j7-verse{grid-column:2;grid-row:1;align-self:start;margin:clamp(20px,5cqi,90px) 0 0;font-size:clamp(18px,2.4cqi,36px);line-height:1.28;letter-spacing:-.015em}
+.j7-verse span{display:block;margin-bottom:.38em}
+.j7-verse .j7-of{font-style:italic;font-size:clamp(54px,9cqi,135px);line-height:1;color:var(--ws-ink)}
+.j7-zh{grid-column:2;grid-row:2;align-self:end;margin:0 0 2rem;font:200 clamp(14px,1.7cqi,22px)/1.85 var(--ws-type-display-zh,sans-serif)}
+.j7-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@container j7-spread (max-width:760px){
+ .j7-spread{grid-template-columns:1fr;grid-template-rows:auto auto auto;gap:22px;min-height:0}
+ .j7-title{grid-column:1;grid-row:2;gap:16px}
+ .j7-verse{grid-column:1;grid-row:1;margin:0;font-size:clamp(16px,3.5cqi,26px)}
+ .j7-verse .j7-of{font-size:clamp(44px,10cqi,90px)}
+ .j7-title .j7-rivers{font-size:clamp(62px,16cqi,135px)}
+ .j7-title .j7-living,.j7-title .j7-water{font-size:clamp(80px,20cqi,170px)}
+ .j7-zh{grid-column:1;grid-row:3;margin:0}
+}
+@media(max-width:520px){.j7-sheet{gap:20px}.j7-running,.j7-footer{font-size:9px;letter-spacing:0}}
+</style>
+</head>
+<body>
+<main class="j7-sheet" data-ws-color-family="water" data-template="handbook-13-4-13-5" data-preview="john-7-38-clean">
+<header class="j7-running"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></header>
+<p class="j7-sr" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
+<article class="j7-spread" aria-label="John 7:38 editorial composition">
+<h1 class="j7-title" aria-hidden="true"><span class="j7-rivers">rivers</span><span class="j7-living">Living</span><span class="j7-water">Water.</span></h1>
+<div class="j7-verse" aria-hidden="true"><span>He that believeth on me,</span><span>as the scripture hath said,</span><span>out of his belly shall flow</span><span class="j7-of">of</span></div>
+<p class="j7-zh" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江河來。</p>
+</article>
+<footer class="j7-footer"><span>JOHN 7:38 · KING JAMES VERSION</span><a href="/church/">LIVING WATER ASSEMBLY WEST ↗</a></footer>
+</main></body></html>

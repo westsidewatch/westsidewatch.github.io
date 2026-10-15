@@ -5,7 +5,7 @@
 @import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
 @import url("/css/westside-design-tokens.css");
 /* Standalone pages and iframes: shared fonts and role sizes. */
-:root{--ws-weight-zh-air:200;--ws-weight-zh-standard:400;--ws-weight-zh-anchor:600;
+:root{--ws-weight-zh-air:200;--ws-weight-zh-standard:400;--ws-weight-zh-anchor:600;\n --ws-weight-zh-heavy:900;
  --ws-olive-layer-zh-weight:var(--ws-weight-zh-anchor);--ws-olive-speaker-name-weight:var(--ws-weight-zh-air);--ws-olive-folio-weight:400;
  --ws-type-display-en-sc:"Bodoni Moda SC", "Bodoni Moda", serif;
  --ws-type-scripture-reference-size:clamp(13px,.9vw + 8px,17px);
@@ -1486,3 +1486,22 @@ body.home{
 .ws-scripture-reference :where([lang="zh"],[lang="zh-Hant"],[lang="zh-Hans"]){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air);font-synthesis:none}
 .ws-scripture-reference [lang="en"]{font-family:var(--ws-type-display-en-sc);font-weight:400;font-synthesis:none}
 .ws-scripture-reference-divider{font-family:var(--ws-type-display-en);opacity:.55}
+
+/* Design OS / responsive line-break authority.
+   Use .ws-lineguard--short for short editorial passages and
+   .ws-lineguard--prose for long text. Never stretch glyphs or fix viewport widths.
+   Semantic end-phrases that must remain together use Unicode WORD JOINER (U+2060)
+   between the final characters; CSS alone cannot guarantee zero CJK orphans at every width. */
+.ws-lineguard--short{text-wrap:balance;word-break:normal;overflow-wrap:normal;line-break:strict;hyphens:none}
+.ws-lineguard--prose{text-wrap:pretty;word-break:normal;overflow-wrap:normal;line-break:strict;hyphens:auto}
+.ws-lineguard--short:lang(en){hyphens:none}
+.ws-lineguard--short:lang(zh),.ws-lineguard--short:lang(zh-Hant),.ws-lineguard--short:lang(zh-Hans){hyphens:none;line-break:strict}
+
+/* Design OS / Chinese editorial weight authority.
+   Chinese display titles are heavy; other Chinese UI/editorial labels are ultralight.
+   Long-form reading prose retains its own reading typography and weight.
+   Opt in by semantic role, not by indiscriminate global h1/p selectors. */
+:where([lang="zh-Hant"],[lang="zh-Hans"],[lang="zh"]).ws-type-zh-title,
+.ws-type-zh-title:lang(zh),.ws-type-zh-title:lang(zh-Hant),.ws-type-zh-title:lang(zh-Hans){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-heavy,900);font-synthesis:none}
+:where([lang="zh-Hant"],[lang="zh-Hans"],[lang="zh"]).ws-type-zh-ui,
+.ws-type-zh-ui:lang(zh),.ws-type-zh-ui:lang(zh-Hant),.ws-type-zh-ui:lang(zh-Hans){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);font-synthesis:none}

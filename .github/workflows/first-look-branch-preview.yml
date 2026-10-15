@@ -1,4 +1,4 @@
-name: First Look Branch Preview
+name: Church Editorial Branch Preview
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: first-look-preview-${{ github.event.pull_request.number || github.ref_name }}
+  group: church-editorial-preview-${{ github.event.pull_request.number || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -33,6 +33,18 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+          test -s public/experiments/living-water-engraving-compare.html
+          test -s public/experiments/assets/living-water-contour-engraving-v6.svg
+          test -s public/experiments/assets/living-water-contour-engraving-v7.svg
+          test -s public/experiments/assets/living-water-contour-engraving-v10.svg
+          test -s public/experiments/living-water-motion-study.html
+          test -s public/experiments/living-water-motion-flow-v2.html
+          grep -q 'living-water-contour-engraving-v10.svg' public/experiments/sevenfold-first-to-second.html
+          grep -q 'living-water-contour-engraving-v10.svg' public/experiments/living-water-engraving-compare.html
+          grep -q 'growth-top' public/experiments/living-water-motion-study.html
+          test -s public/experiments/editorial-layout-safety-lab.html
+          test -s public/experiments/john-7-38-template-clean.html
+          grep -q 'data-preview="john-7-38-clean"' public/experiments/john-7-38-template-clean.html
       - name: Deploy Cloudflare Pages preview (never production)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -44,6 +56,9 @@ jobs:
             --project-name=westsidewatch-github-io \
             --branch="$PREVIEW_BRANCH" \
             --commit-hash="${GITHUB_SHA}" \
-            --commit-message="First Look isolated preview"
+            --commit-message="Church Editorial isolated preview"
           echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
           echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/living-water-engraving-compare.html" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/editorial-layout-safety-lab.html" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/john-7-38-template-clean.html" >> "$GITHUB_STEP_SUMMARY"
