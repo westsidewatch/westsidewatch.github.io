@@ -426,3 +426,18 @@ A candidate becomes `approved` only after same-page visual comparison at relevan
 6. Record artwork provenance, object/scripture mapping, reuse rights, actual preview URL, and screenshot approval here before promoting any motif from `candidate` to `approved`.
 
 **Spiritual design intent:** an atmosphere rooted in biblical objects and the language of worship rather than worldly landscape decoration. This is an art-direction principle, not a claim that an ornamental image itself possesses spiritual power.
+
+
+### Micro-crop correction — banknote-scale biblical details (2026-10-15)
+
+**Supersedes the framing of the initial object registry, not its scripture mapping.** The approved art-direction *scale* is far tighter than a complete temple object or full motif:
+
+`biblical object → one decorative detail → partial micro-fragment → monumental crop → low-contrast engraved hatching`.
+
+- Pillar pomegranate (1 Kings 7:18): a **portion of the crown or skin curve**, not a full fruit, cluster or column.
+- Lampstand almond blossom (Exodus 25:33): **part of one petal**, not the seven-branched lampstand.
+- Temple lily (1 Kings 7:19): **one curling petal edge**, not the whole lily or capital.
+- Veil (Exodus 26:31): **a few interwoven threads**, not a complete hanging curtain.
+- Cherubim (Exodus 25:20): **a small wing-edge fragment**; feather anatomy is artistic interpretation, not textually specified.
+
+**Composition:** crop the fragment beyond the page edge; retain generous negative space, soft tonal hierarchy and delicate engraved strokes. **Never** tile complete icons or fill a page with repeated flowers, fruit or obvious religious clip art. The result may be abstract at first glance, but its precise biblical provenance must remain documented. This is a fixed section material; the second-screen Moses SVG remains a separate narrative illustration. **Status:** specification only, pending visual prototype.
