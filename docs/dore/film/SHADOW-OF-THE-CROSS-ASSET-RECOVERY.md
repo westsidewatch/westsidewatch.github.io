@@ -80,3 +80,15 @@ The exact original known-pixel/canonical re-lock **policy and adapter contracts 
 
 ### Preservation
 Documentation-only update. No runtime, motion, camera or source imagery changed.
+
+## Recovery pass 4 — ONE Matthew engraved-water motion (2026-10-15)
+
+**Chapter correction:** Historical implementation is **Matthew chapter 3 (Baptism)**, not verified as chapter 2. Do not relabel it as Matthew 2 without locating another original.
+
+- `static/one/one-baptism-motion.js` — existing live ONE motion runtime; conditionally enables only `?book=40&chapter=3`; injects SVG ripple paths (slow, quick, glints) and light/dove layers. Its animated water is genuine stroke-dashoffset motion, not a CSS-translated still plate.
+- `static/one/one-baptism-motion.css` — actual `ripple-slow` (5.6 s), `ripple-quick` (3.7 s), `ripple-glints` (2.8 s) keyframes; grayscale source image and layered light/dove motion; reduced-motion safeguard.
+- `dore-core/cloudflare/ASSET-MIGRATION-BATCH-001.json` — governed final asset registry lists `ONE-MAT-03-BAPTISM-COVER-MOTION`, r5-mobile GIF `static/one/share/matthew-03-baptism-motion-r5-mobile.gif`, GitHub blob SHA `8716328e69e194ff314803d0af4ea61aad238555`, expected 7,819,362 bytes. **Registry evidence is not proof that the binary is currently accessible via the file API**; direct fetch returned 404, so storage availability remains to be checked.
+- Original implementation commit `29f882e22` (feat(one): animate Matthew 3 cover and share GIF); consolidation commit `afae59f0e` records final r5 and obsolete r2–r4 removal.
+
+### Reuse policy
+Recover and test existing ONE ripple code as a reference for the Living Water web animation. Do not transplant the Matthew baptism artwork, bird, chapter-specific imagery, or overwrite the approved v10. Do not duplicate a motion engine until original runtime behavior is verified. ONE chapter 3 remains the canonical owner of this motion asset.
