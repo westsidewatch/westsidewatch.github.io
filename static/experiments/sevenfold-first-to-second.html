@@ -51,7 +51,7 @@
 .showcase{--church-line:color-mix(in srgb,var(--ws-water) 27%,transparent);--church-line-soft:color-mix(in srgb,var(--ws-water) 12%,transparent);--church-paper:var(--paper)}
 .showcase .composition .edition[data-variant="0"]{background:var(--church-paper)!important;color:var(--ws-ink,#252525)!important;overflow:hidden;isolation:isolate}
 /* Red Sea SVG: preserve the engraving; no intersecting masks that erase it. */
-.showcase .composition .edition[data-variant="0"]::after{content:"";position:absolute!important;inset:0!important;z-index:0!important;display:block!important;opacity:.9!important;pointer-events:none;background-image:url("/experiments/assets/red-sea-passage-engraving.svg")!important;background-position:center center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;mix-blend-mode:multiply!important;-webkit-mask-image:none!important;mask-image:none!important}
+.showcase .composition .edition[data-variant="0"]::after{content:"";position:absolute!important;inset:0!important;z-index:0!important;display:block!important;opacity:.9!important;pointer-events:none;background-image:url("/experiments/assets/red-sea-passage-engraving.svg?v=edfa41e-20261015-no-figures")!important;background-position:center center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;mix-blend-mode:multiply!important;-webkit-mask-image:none!important;mask-image:none!important}
 @media(max-width:700px){.showcase .composition .edition[data-variant="0"]::after{opacity:.9!important;background-size:100% 100%!important;background-position:center!important}}
 
 .showcase .composition .edition[data-variant="0"]>*{z-index:2!important}
