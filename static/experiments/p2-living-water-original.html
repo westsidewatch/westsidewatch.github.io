@@ -1,48 +1,58 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water / Original Flow Drawing</title><style>*{box-sizing:border-box}html,body{margin:0;background:#e5ecec;color:#304a52;font:14px/1.5 Georgia,serif}header{display:flex;align-items:center;justify-content:space-between;padding:15px 3vw}h1{font-size:clamp(19px,3vw,29px);font-weight:400;margin:0}button{background:transparent;border:1px solid #89a7ac;padding:7px 13px;color:inherit}main{height:350svh}.stage{position:sticky;top:0;height:100svh;background:#d9e8ea;overflow:hidden}canvas{width:100%;height:100%;display:block}aside{position:absolute;bottom:20px;left:3vw;right:3vw;display:flex;justify-content:space-between;pointer-events:none}footer{padding:20px 3vw}</style></head><body><header><h1>Living Water / Original Flow Drawing</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><canvas id="water"></canvas><aside><span id="phase">01 / THE CURRENT</span><span id="growth-state">INK GROWTH 0%</span><span>SVG-025 · continuous ink births</span></aside></div></main><footer>以 v10 的 620 條真實曲線保留上下洋流構圖，SVG-025：新刻線持續出生，沿 v10 的局部方向場積分生長；每條線的終點由流場決定，舊線自然淡出。畫面顯示即時刻線數和累積出生數。</footer><script>(()=>{'use strict';const canvas=document.querySelector('#water'),ctx=canvas.getContext('2d',{alpha:false}),root=document.querySelector('#scroll'),phase=document.querySelector('#phase'),pause=document.querySelector('#pause');let W=1,H=1,dpr=1,clock=0,last=0,halt=false,progress=0;const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),smooth=v=>{v=clamp(v);return v*v*(3-2*v)},rand=n=>{const x=Math.sin(n*127.1+78.233)*43758.5453;return x-Math.floor(x)};function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}new ResizeObserver(resize).observe(canvas);resize();function scroll(){const r=root.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));phase.textContent=progress<.36?'01 / THE CURRENT':progress<.74?'02 / RISING WATER':'03 / PARTING SEA'}addEventListener('scroll',scroll,{passive:true});scroll();pause.onclick=()=>{halt=!halt;pause.textContent=halt?'Resume':'Pause'};
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water / Original Flow Drawing</title><style>*{box-sizing:border-box}html,body{margin:0;background:#e5ecec;color:#304a52;font:14px/1.5 Georgia,serif}header{display:flex;align-items:center;justify-content:space-between;padding:15px 3vw}h1{font-size:clamp(19px,3vw,29px);font-weight:400;margin:0}button{background:transparent;border:1px solid #89a7ac;padding:7px 13px;color:inherit}main{height:350svh}.stage{position:sticky;top:0;height:100svh;background:#d9e8ea;overflow:hidden}canvas{width:100%;height:100%;display:block}aside{position:absolute;bottom:20px;left:3vw;right:3vw;display:flex;justify-content:space-between;pointer-events:none}footer{padding:20px 3vw}</style></head><body><header><h1>Living Water / Original Flow Drawing</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><canvas id="water"></canvas><aside><span id="phase">01 / THE CURRENT</span><span id="growth-state">INK GROWTH 0%</span><span>SVG-026 · dual-stratum flow</span></aside></div></main><footer>以 v10 的 620 條真實曲線保留上下洋流構圖，SVG-026：新線從 v10 全畫面各處出生；上下兩層各自取真實曲線的最近切線，不再混合交界處的相反方向，也不再只從左側生長。</footer><script>(()=>{'use strict';const canvas=document.querySelector('#water'),ctx=canvas.getContext('2d',{alpha:false}),root=document.querySelector('#scroll'),phase=document.querySelector('#phase'),pause=document.querySelector('#pause');let W=1,H=1,dpr=1,clock=0,last=0,halt=false,progress=0;const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),smooth=v=>{v=clamp(v);return v*v*(3-2*v)},rand=n=>{const x=Math.sin(n*127.1+78.233)*43758.5453;return x-Math.floor(x)};function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}new ResizeObserver(resize).observe(canvas);resize();function scroll(){const r=root.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));phase.textContent=progress<.36?'01 / THE CURRENT':progress<.74?'02 / RISING WATER':'03 / PARTING SEA'}addEventListener('scroll',scroll,{passive:true});scroll();pause.onclick=()=>{halt=!halt;pause.textContent=halt?'Resume':'Pause'};
 // The v10 curves are used only as a *spatial orientation field*.
 // New ink strokes have no predetermined endpoint and are born continuously.
 let sourceLines=[],agents=[],spawnDebt=0,spawnId=0;
 const MAX_AGENTS=1250,SPAWN_RATE=34;
-function field(x,y,t){
- let sumX=0,sumY=0,sumW=0;
- // Follow the nearby v10 tangent, never copy its geometry.
- for(let i=0;i<sourceLines.length;i+=3){
-  const line=sourceLines[i];if(Math.abs(line.y-y)>90)continue;
-  const j=Math.max(0,Math.min(line.pts.length-2,Math.floor((x+120)/1840*(line.pts.length-1))));
-  const p=line.pts[j],q=line.pts[j+1],dy=y-p[1],dx=x-p[0];
-  const w=1/(80+dx*dx*.02+dy*dy);
-  const vx=q[0]-p[0],vy=q[1]-p[1],len=Math.hypot(vx,vy)||1;
-  sumX+=w*vx/len;sumY+=w*vy/len;sumW+=w;
+// Two coherent, locally sampled v10 strata. Each stroke keeps its stratum;
+// no global averaging of upper and lower tangents at their intersection.
+function field(x,y,t,stratum){
+ let vx=0,vy=0,total=0;
+ const guides=stratum===0?upperGuides:lowerGuides;
+ for(let i=0;i<guides.length;i+=2){
+  const line=guides[i],pts=line.pts;
+  // Find the nearest segment in actual geometry, never guess its array
+  // index from the canvas x coordinate.
+  let best=Infinity,dx=1,dy=0;
+  for(let j=0;j<pts.length-1;j++){
+   const p=pts[j],q=pts[j+1],sx=q[0]-p[0],sy=q[1]-p[1],den=sx*sx+sy*sy||1;
+   const u=clamp(((x-p[0])*sx+(y-p[1])*sy)/den);
+   const d=(x-p[0]-u*sx)**2+(y-p[1]-u*sy)**2;
+   if(d<best){best=d;dx=sx;dy=sy}
+  }
+  if(best>110*110)continue;
+  const w=1/(120+best),len=Math.hypot(dx,dy)||1,sign=dx<0?-1:1;
+  vx+=w*dx/len*sign;vy+=w*dy/len*sign;total+=w;
  }
- const baseAngle=sumW?Math.atan2(sumY,sumX):0;
- const shear=0.12*Math.sin(y*.012+t*.22)+.08*Math.sin(x*.006-t*.18);
- return baseAngle+shear;
+ const base=total?Math.atan2(vy,vx):0;
+ return base+.035*Math.sin(y*.013+t*.12)+.022*Math.sin(x*.008-t*.11);
 }
+let upperGuides=[],lowerGuides=[];
 function spawn(){
- const id=++spawnId,seed=rand(id+19);
- // Use the two strata of the original, not a uniform line grid.
- const y=seed<.49?35+rand(id+31)*485:375+rand(id+47)*500;
- const x=-50-rand(id+53)*140;
- agents.push({x,y,pts:[[x,y]],age:0,life:170+rand(id+61)*250,
- speed:1.15+rand(id+67)*1.65,width:.18+rand(id+73)*.48,
- alpha:.13+rand(id+79)*.19,seed,fade:1});
+ const id=++spawnId,seed=rand(id+19),stratum=seed<.5?0:1;
+ const guides=stratum===0?upperGuides:lowerGuides;
+ if(!guides.length)return;
+ const g=guides[Math.floor(rand(id+31)*guides.length)];
+ const p=g.pts[Math.floor(rand(id+47)*(g.pts.length-1))];
+ // Distributed births across the entire v10 surface prevent a right-hand
+ // desert and remove the old left-edge-only source.
+ const x=p[0],y=p[1]+(rand(id+53)-.5)*11;
+ agents.push({x,y,pts:[[x,y]],age:0,life:85+rand(id+61)*115,
+ speed:.6+rand(id+67)*.8,width:.18+rand(id+73)*.35,
+ alpha:.16+rand(id+79)*.15,seed,stratum,fade:1});
 }
 function advance(dt){
  spawnDebt+=SPAWN_RATE*dt;
  while(spawnDebt>=1){spawn();spawnDebt--}
  for(const a of agents){
   if(a.age<a.life){
-   // Arc-length integration: new positions are computed from the current
-   // field, not read from any finite source path.
-   const steps=Math.max(1,Math.round(dt*35));
+   const steps=Math.max(1,Math.round(dt*32));
    for(let k=0;k<steps;k++){
-    const angle=field(a.x,a.y,clock);
-    a.x+=Math.cos(angle)*a.speed*dt*36/steps;
-    a.y+=Math.sin(angle)*a.speed*dt*36/steps;
+    const angle=field(a.x,a.y,clock,a.stratum),step=a.speed*dt*28/steps;
+    a.x+=Math.cos(angle)*step;a.y+=Math.sin(angle)*step;
     a.pts.push([a.x,a.y]);a.age++;
-    if(a.x>1680||a.y< -100||a.y>1000){a.age=a.life;break}
+    if(a.x>1660||a.y< -80||a.y>980){a.age=a.life;break}
    }
-  }else a.fade-=dt*.17;
+  }else a.fade-=dt*.22;
  }
  agents=agents.filter(a=>a.fade>0);
  if(agents.length>MAX_AGENTS)agents.splice(0,agents.length-MAX_AGENTS);
@@ -79,6 +89,6 @@ fetch('/experiments/assets/living-water-contour-engraving-v10.svg').then(r=>{if(
  const hidden=document.createElementNS('http://www.w3.org/2000/svg','svg');
  hidden.style.cssText='position:absolute;width:0;height:0;overflow:hidden';document.body.appendChild(hidden);
  paths.forEach((original,i)=>{const p=original.cloneNode(true);hidden.appendChild(p);let len=0;try{len=p.getTotalLength()}catch{}if(len>0){const n=Math.max(12,Math.min(48,Math.ceil(len/45))),pts=[];for(let j=0;j<=n;j++){const q=p.getPointAtLength(len*j/n);pts.push([q.x,q.y])}sourceLines.push({pts,y:pts[Math.floor(n/2)][1],width:Number(p.getAttribute('stroke-width')||'.7'),opacity:Number(p.getAttribute('opacity')||'.3'),seed:rand(i+71)})}hidden.removeChild(p)});
- hidden.remove();draw();
+ upperGuides=sourceLines.filter(g=>g.y<485);lowerGuides=sourceLines.filter(g=>g.y>=485);hidden.remove();draw();
 }).catch(err=>console.error('v10 guide unavailable',err));
 function frame(now){if(!last)last=now;if(now-last>=30){const dt=Math.min(.06,(now-last)/1000);last=now;if(!halt){clock+=dt;if(sourceLines.length)advance(dt)}draw()}requestAnimationFrame(frame)}requestAnimationFrame(frame)})();</script></body></html>
