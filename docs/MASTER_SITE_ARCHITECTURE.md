@@ -388,3 +388,12 @@ It covers Journal, Mount of Olives, Church, About, global functions such as 多�
 ```
 
 因此，「多雷探索」是 Doré 面对工程、知识、工具或系统问题时的**全面外部学习／方案发现程序**。它本身不改变主站结构；任何涉及主站结构的修改仍必须由用户决定。
+
+## 10. External design reference — Shipper `epstein.md` (2026-10-16)
+
+- Source attribution: Shipper (@shipper_now), X announcement titled “Introducing epstein.md”. User-supplied screenshot cites a Markdown design-guidance file of approximately 927,400 characters, intended to discourage generic “AI slop” UI patterns.
+- **Retrieval status: original Markdown not yet verified or obtained.** Do not claim that the full document is archived, and do not invent or reconstruct its contents from the social-media summary.
+- Preservation task: locate the original public canonical `epstein.md` and its version/commit, verify license and integrity, then preserve a verbatim reference copy or immutable source link in engineering documentation. Avoid overwriting existing Design OS authority.
+- Integration policy: research/reference only. Existing Design OS remains the sole governing design system for the entire site and tools; review any imported principles for compatibility before adoption.
+- Screenshot summary (not verified as original file content): avoid excessive card shadows, emoji-driven interface decoration, repetitive generic UI layouts and other template-like AI design conventions.
+- Source context: https://x.com/shipper_now ; https://shipper.now/ . Exact post and original Markdown URLs remain unverified.
