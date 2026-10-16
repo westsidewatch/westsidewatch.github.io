@@ -125,6 +125,9 @@
    The sea backing stays stationary and the actual line coordinates travel upward. */
 .showcase .ocean-rise{transform:none!important;clip-path:none!important;background:transparent!important}
 .showcase .ocean-rise__leaf{background:transparent!important}
+.showcase .ocean-rise__motion{mix-blend-mode:normal!important}
+.showcase .ocean-rise__lines{stroke:#426c7b;stroke-opacity:.82}
+.showcase .ocean-rise__motion path{vector-effect:none}
 .showcase .ocean-rise__motion{mix-blend-mode:multiply}
  /* Preview authority: the standalone scroll host, never the production iframe. */
 html,body{min-height:100%;scroll-behavior:auto}
@@ -186,18 +189,91 @@ function render(){
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener('change',schedule);render()})();
 </script>
 <script>
-(()=>{'use strict';const NS='http://www.w3.org/2000/svg',root=document.querySelector('.showcase'),group=document.getElementById('lines'),seaGroups=[...document.querySelectorAll('.ocean-rise__lines')],edition=document.querySelector('.editorial-john');let paths=[],t=0,last=0,ready=false;const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};
-fetch('/experiments/assets/living-water-contour-engraving-v10.svg').then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(raw=>{const doc=new DOMParser().parseFromString(raw,'image/svg+xml');if(doc.querySelector('parsererror'))throw Error('SVG parse');const source=document.importNode(doc.documentElement,true);source.style.cssText='position:fixed;left:-99999px;top:0;width:1600px;height:900px;visibility:hidden;pointer-events:none';document.body.appendChild(source);const originals=[...source.querySelectorAll('path')];for(const original of originals){const len=original.getTotalLength();if(len<1)continue;const steps=clamp(Math.ceil(len/22),28,110),points=[];for(let j=0;j<=steps;j++){const q=original.getPointAtLength(len*j/steps);points.push([q.x,q.y])}const out=document.createElementNS(NS,'path');for(const attr of ['opacity','stroke-width','stroke','stroke-linecap'])if(original.hasAttribute(attr))out.setAttribute(attr,original.getAttribute(attr));group.appendChild(out);const seaOut=seaGroups.map(g=>{const p=out.cloneNode(false);g.appendChild(p);return p});paths.push({points,out,seaOut,baseOpacity:Number(original.getAttribute('opacity')||1)})}source.remove();ready=true;edition.classList.add('p2-motion-ready')}).catch(e=>console.warn('P2 ocean SVG unavailable',e));
-function frame(now){requestAnimationFrame(frame);if(!last)last=now;const dt=Math.min(.05,(now-last)/1000);last=now;if(!ready)return;t+=dt;const travel=1.5,contrast=2,amp=6,breath=21*Math.sin(t*Math.PI/7)+5*Math.sin(t*Math.PI/13);
-// A single continuous phase field governs every engraving point; y only modulates speed smoothly.
-const field=(x,y)=>{const layer=smooth((y-180)/610),speed=.78+contrast*.25*layer,warp=18*Math.sin(y*.0065+x*.0018),phase=.012*(x+warp)-t*.9*travel*speed;return {layer,phase}};
-for(const {points,out,seaOut,baseOpacity} of paths){let d='';for(let i=0;i<points.length;i++){const [x,y]=points[i],{layer,phase}=field(x,y),envelope=.72+.28*layer;const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);const densityStrength=2.5,verticalMask=Math.sin(Math.PI*clamp(y/900,0,1)),stationaryRidges=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002),spacingShift=densityStrength*1.8*verticalMask*stationaryRidges*Math.sin(y*.046);const yy=y+breath*.18+amp*envelope*(.82*carrier+.12*secondary)+spacingShift;const xx=x+amp*(.35*carrier+.10*secondary);d+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)}out.setAttribute('d',d);out.setAttribute('opacity',baseOpacity.toFixed(3));
- const rise=Number(root.style.getPropertyValue('--p2-ocean-rise'))||0;
- // Each stroke originates in the lower sea and is advected upward, with the
- // identical wave phase as the P2 paths. No rising rectangle or polygon mask.
- const upward=rise*460;
- let bridge='';for(let i=0;i<points.length;i++){const [x,y]=points[i],{layer,phase}=field(x,y),carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);const yy=y+breath*.18+amp*(.72+.28*layer)*(.82*carrier+.12*secondary)+upward*(-1)+6*rise*Math.sin(x*.009+t*1.4)+2.5*Math.sin(y*.046);const xx=x+amp*(.35*carrier+.10*secondary);bridge+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)}
- for(const p of seaOut){p.setAttribute('d',bridge);p.setAttribute('opacity',(baseOpacity*Math.min(1,rise*4)).toFixed(3))}}}requestAnimationFrame(frame);
+/* Unified engraved-water geometry: water grows within a stationary viewport.
+   The same moving v10 contours remain visible as the sea parts. */
+(()=>{
+'use strict';
+const NS='http://www.w3.org/2000/svg',root=document.querySelector('.showcase');
+const scripture=document.querySelector('.editorial-john'),scriptureLines=document.getElementById('lines');
+const seaSvgs=[...document.querySelectorAll('.ocean-rise__motion')];
+const seaGroups=[...document.querySelectorAll('.ocean-rise__lines')];
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};
+let paths=[],ready=false,last=0,time=0;
+const surfaces=seaSvgs.map((svg,i)=>{
+  const id='p2-water-volume-'+i;
+  const defs=document.createElementNS(NS,'defs'),clip=document.createElementNS(NS,'clipPath');
+  clip.id=id;clip.setAttribute('clipPathUnits','userSpaceOnUse');
+  const edge=document.createElementNS(NS,'path');clip.appendChild(edge);defs.appendChild(clip);
+  const fill=document.createElementNS(NS,'path');fill.setAttribute('fill','#9ebbc1');fill.setAttribute('stroke','none');
+  svg.insertBefore(defs,svg.firstChild);svg.insertBefore(fill,seaGroups[i]);
+  seaGroups[i].setAttribute('clip-path','url(#'+id+')');
+  return {edge,fill};
+});
+function waterShape(rise,t){
+  // The actual waterline travels from 50% to the top of the same SVG.
+  const top=450*(1-rise),wave=5+7*(1-rise),n=40;
+  let d='M 0 '+(top+wave*Math.sin(t*.75)).toFixed(2);
+  for(let j=1;j<=n;j++){
+    const x=1600*j/n;
+    const y=top+wave*(.65*Math.sin(x*.011-t*1.3)+.35*Math.sin(x*.024+t*.7));
+    d+=' L '+x.toFixed(1)+' '+y.toFixed(2);
+  }
+  return d+' L 1600 900 L 0 900 Z';
+}
+function samplePaths(){
+  return fetch('/experiments/assets/living-water-contour-engraving-v10.svg')
+  .then(r=>{if(!r.ok)throw Error('SVG HTTP '+r.status);return r.text()})
+  .then(raw=>{
+    const doc=new DOMParser().parseFromString(raw,'image/svg+xml');
+    if(doc.querySelector('parsererror'))throw Error('Invalid SVG');
+    const source=document.importNode(doc.documentElement,true);
+    source.style.cssText='position:fixed;left:-99999px;top:0;width:1600px;height:900px;visibility:hidden;pointer-events:none';
+    document.body.appendChild(source);
+    try{
+      for(const original of source.querySelectorAll('path')){
+        const len=original.getTotalLength();if(len<1)continue;
+        const steps=clamp(Math.ceil(len/24),24,100),points=[];
+        for(let j=0;j<=steps;j++){const p=original.getPointAtLength(len*j/steps);points.push([p.x,p.y])}
+        const out=document.createElementNS(NS,'path');
+        for(const attr of ['opacity','stroke-width','stroke','stroke-linecap'])if(original.hasAttribute(attr))out.setAttribute(attr,original.getAttribute(attr));
+        scriptureLines.appendChild(out);
+        const seaOut=seaGroups.map(g=>{const p=out.cloneNode(false);g.appendChild(p);return p});
+        paths.push({points,out,seaOut,opacity:Number(original.getAttribute('opacity')||1)});
+      }
+    }finally{source.remove()}
+    if(!paths.length)throw Error('No contour paths');
+    ready=true;scripture.classList.add('p2-motion-ready');
+  }).catch(e=>{console.warn('P2 engraved-water source unavailable',e)});
+}
+samplePaths();
+function frame(now){
+  requestAnimationFrame(frame);
+  if(!last)last=now;time+=Math.min(.05,(now-last)/1000);last=now;
+  const rise=clamp(Number(root.style.getPropertyValue('--p2-ocean-rise'))||0,0,1);
+  const water=waterShape(rise,time);
+  for(const {edge,fill} of surfaces){edge.setAttribute('d',water);fill.setAttribute('d',water)}
+  if(!ready||reduced.matches)return;
+  const amp=6,breath=21*Math.sin(time*Math.PI/7)+5*Math.sin(time*Math.PI/13);
+  for(const item of paths){
+    let d='';
+    for(let j=0;j<item.points.length;j++){
+      const [x,y]=item.points[j],layer=smooth((y-180)/610);
+      const speed=.78+.5*layer,phase=.012*(x+18*Math.sin(y*.0065+x*.0018))-time*1.35*speed;
+      const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);
+      const mask=Math.sin(Math.PI*clamp(y/900,0,1));
+      const ridge=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002);
+      const yy=y+breath*.18+amp*(.72+.28*layer)*(.82*carrier+.12*secondary)+4.5*mask*ridge*Math.sin(y*.046);
+      const xx=x+amp*(.35*carrier+.10*secondary);
+      d+=(j?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1);
+    }
+    item.out.setAttribute('d',d);
+    item.out.setAttribute('opacity',item.opacity.toFixed(3));
+    for(const p of item.seaOut){p.setAttribute('d',d);p.setAttribute('opacity',item.opacity.toFixed(3))}
+  }
+}
+requestAnimationFrame(frame);
 })();
 </script>
 </body></html>
