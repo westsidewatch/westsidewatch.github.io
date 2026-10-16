@@ -1,0 +1,99 @@
+{
+  "schema": "dore.engraving-lab.v0",
+  "status": "experimental",
+  "productionEnabled": false,
+  "baseline": "mono-color-skill",
+  "techniques": [
+    {
+      "id": "parallel-hatching",
+      "status": "candidate",
+      "inputs": [
+        "luminance",
+        "mask"
+      ],
+      "parameters": [
+        "angle",
+        "spacing",
+        "strokeWidth"
+      ]
+    },
+    {
+      "id": "cross-hatching",
+      "status": "candidate",
+      "inputs": [
+        "luminance",
+        "mask"
+      ],
+      "parameters": [
+        "angles",
+        "thresholds",
+        "spacing"
+      ]
+    },
+    {
+      "id": "contour-hatching",
+      "status": "research",
+      "inputs": [
+        "luminance",
+        "gradientField",
+        "semanticMask"
+      ],
+      "parameters": [
+        "orientation",
+        "curvature",
+        "density"
+      ]
+    },
+    {
+      "id": "wood-engraving-white-line",
+      "status": "research",
+      "inputs": [
+        "luminance",
+        "lightMask",
+        "semanticMask"
+      ],
+      "parameters": [
+        "knockoutWidth",
+        "shadowDensity"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "sphere-side-light",
+    "draped-fabric",
+    "stepped-architecture",
+    "cloud-rays"
+  ],
+  "evaluation": [
+    "determinism",
+    "tonal-range",
+    "directional-coherence",
+    "light-continuity",
+    "thumbnail-legibility",
+    "moire",
+    "render-time",
+    "human-comparison"
+  ],
+  "candidates": [
+    {
+      "name": "hatched",
+      "url": "https://github.com/plottertools/hatched",
+      "decision": "benchmark"
+    },
+    {
+      "name": "ScribbleTrace",
+      "url": "https://github.com/kylberg/ScribbleTrace",
+      "decision": "benchmark"
+    },
+    {
+      "name": "vpype",
+      "url": "https://github.com/abey79/vpype",
+      "decision": "vector-backend-candidate"
+    },
+    {
+      "name": "hatchsvg",
+      "url": "https://github.com/Veedubin/hatchsvg",
+      "decision": "secondary-benchmark"
+    }
+  ]
+}
