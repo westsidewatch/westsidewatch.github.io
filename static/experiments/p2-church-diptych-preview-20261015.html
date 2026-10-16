@@ -217,6 +217,14 @@ html,body{min-height:100%;scroll-behavior:auto}
 .showcase .planes{z-index:38!important}
 .showcase .church-editorial{z-index:18!important}
 .showcase .church-editorial__visual{background-image:none!important}
+
+/* Phase isolation: church identity and John 7:38 editorial must never overlap. */
+.showcase .planes{visibility:hidden}
+.showcase[data-p2-phase="identity"] .planes{visibility:visible}
+.showcase .composition .edition.editorial-john{visibility:hidden}
+.showcase[data-p2-phase="ocean-rise"] .composition .edition.editorial-john,
+.showcase[data-p2-phase="identity"] .composition .edition.editorial-john.is-current{visibility:visible}
+.showcase .planes .plane{pointer-events:none}
 </style></head><body data-ws-scope="global"><section class="showcase" aria-label="P2 教會左右半屏動效預覽"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
 
@@ -246,7 +254,7 @@ function render(){
  const reveal=still?1:clamp(vh/.5,0,1),rise=still?1:smooth(clamp((vh-.68)/.42,0,1)),opening=still?1:smooth(clamp((vh-1.14)/.78,0,1));
  const planesWrap=root.querySelector('.planes');
  planes.forEach((el,i)=>{const phase=clamp((reveal-i*.075)/.48,0,1);el.style.setProperty('transform','scale3d(1,'+smooth(phase)+',1)','important');el.style.zIndex=String(i+1)});
- planesWrap.style.visibility=still||vh>=.59?'hidden':'visible';
+ planesWrap.style.visibility=still||vh>=.48?'hidden':'visible';
  planesWrap.style.opacity=String(1-smooth(clamp((vh-.48)/.11,0,1)));
  sea.style.visibility=!still&&vh<1.93?'visible':'hidden';
  // Only the engraved water geometry rises; the container remains stationary.
@@ -273,7 +281,7 @@ function render(){
  church.setAttribute('aria-hidden',still||vh>=1.1?'false':'true');
  const enter=church.querySelector('a');if(enter)enter.tabIndex=still||vh>=1.92?0:-1;
  editions.forEach(el=>{el.classList.remove('is-current');el.style.visibility='hidden';el.style.opacity='0';el.setAttribute('aria-hidden','true');el.querySelectorAll('a').forEach(a=>a.tabIndex=-1)});
- if(!still&&vh<.7){const scripture=editions[0];scripture.classList.add('is-current');scripture.style.visibility='visible';scripture.style.opacity=String(1-smooth(clamp((vh-.59)/.11,0,1)));scripture.setAttribute('aria-hidden','false')}
+ if(!still&&vh>=.48&&vh<.7){const scripture=editions[0];scripture.classList.add('is-current');scripture.style.visibility='visible';scripture.style.opacity=String(1-smooth(clamp((vh-.59)/.11,0,1)));scripture.setAttribute('aria-hidden','false')}
  index.textContent='01 / 07';
  root.dataset.p2Phase=vh<.59?'identity':vh<1.1?'ocean-rise':vh<1.93?'red-sea':'church';
 }
