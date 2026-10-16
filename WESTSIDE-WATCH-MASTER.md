@@ -30,6 +30,8 @@
 
 **No unsupported claims:** Distinguish researched candidates, tested implementations, and browser-verified outcomes. Searching alone does not constitute validation, and CI alone does not prove motion or visual correctness.
 
+**Doré Exploration research archive:** [DORE-EXPLORATION-INDEX.md](./DORE-EXPLORATION-INDEX.md) — the single categorized index for every exploration, cross-referenced by owning project. Group all SVG research under category `SVG`, with project tags (e.g. P2 / CHURCH); do not duplicate findings across project MDs. Record sources, license, trade-offs, verification status and reusable conclusions. Update this index whenever a Doré exploration produces a durable result.
+
 ## Source of truth and change rules
 
 - Canonical seven-realm order comes from the **live homepage source**, `layouts/partials/watch-home-editorial.html`, including its numbered floating Contents menu and First Look anchors. Do not reorder from conversation memory.
