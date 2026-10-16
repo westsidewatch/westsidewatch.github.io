@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#d9e8ea}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-049 · V10 UPPER COMPLETION</div><script>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-050 · PAPER / UPPER CONTOURS</div><script>
 (()=>{'use strict';
 const holder=document.getElementById('v10');
 holder.addEventListener('load',()=>{
@@ -18,33 +18,34 @@ holder.addEventListener('load',()=>{
 
  // Upper completion is a separate SVG. The original lower-half v10 object
  // keeps precisely its approved dimensions, coordinates and original motion.
+
+ // Complete the upper water with the SOURCE v10 uppermost contour geometry.
+ // Preserve the approved lower-half object and its animation untouched.
  const upperGroup=document.getElementById('upper-lines'),upperPaths=[];
- const guides=paths.filter(p=>p.points.some(q=>q[1]>=-110&&q[1]<=110));
- const edge=[];
- for(let j=0;j<=110;j++){
-  const x=1600*j/110;let best=null;
-  for(const guide of guides){
-   const a=guide.points;
-   for(let k=1;k<a.length;k++){
-    const p=a[k-1],q=a[k],dx=q[0]-p[0];
-    if(Math.abs(dx)<.0001||x<Math.min(p[0],q[0])||x>Math.max(p[0],q[0]))continue;
-    const y=p[1]+(q[1]-p[1])*(x-p[0])/dx;
-    if(y< -110||y>110)continue;
-    if(best===null||y<best)best=y;
-   }
+ const upperCandidates=paths.map(p=>({...p,mid:p.points[Math.floor(p.points.length/2)][1]}))
+   .filter(p=>p.mid>-100&&p.mid<110).sort((a,b)=>a.mid-b.mid);
+ const source=upperCandidates[Math.floor(upperCandidates.length*.3)]||paths[0];
+ const topPts=source.points;
+ const sample=x=>{
+  for(let i=1;i<topPts.length;i++){
+   const p=topPts[i-1],q=topPts[i],dx=q[0]-p[0];
+   if(Math.abs(dx)<.001||x<Math.min(p[0],q[0])||x>Math.max(p[0],q[0]))continue;
+   return p[1]+(q[1]-p[1])*(x-p[0])/dx;
   }
-  edge.push([x,best===null?0:best]);
- }
- for(let k=0;k<195;k++){
-  const v=(k+.5)/195,points=edge.map(([x,y])=>{
-   const u=x/1600,fade=Math.pow(1-v,1.5);
-   const curvature=fade*(y*.32+22*Math.sin(u*5.3+v*.9)+9*Math.sin(u*10.1-v*1.2));
-   return [x,-900*v+curvature];
-  });
+  return topPts[Math.min(topPts.length-1,Math.floor(x/1600*(topPts.length-1)))][1];
+ };
+ const profile=[];
+ for(let j=0;j<=100;j++){const x=1600*j/100;profile.push([x,sample(x)])}
+ const mean=profile.reduce((sum,p)=>sum+p[1],0)/profile.length;
+ // One continuous upper-current surface, using the original upper contour
+ // curvature; no radial fan, artificial travelling crest or duplicated path.
+ for(let k=0;k<118;k++){
+  const v=(k+.5)/118,fade=Math.pow(1-v,1.25);
+  const points=profile.map(([x,y])=>[x,-900*v+(y-mean)*fade*.8]);
   const out=document.createElementNS(NS,'path');
-  out.setAttribute('stroke-width',(.42-.20*v).toFixed(3));
+  out.setAttribute('stroke-width',(.52-.12*v).toFixed(3));
   upperGroup.appendChild(out);
-  upperPaths.push({points,out,baseOpacity:.15+.11*(1-v)});
+  upperPaths.push({points,out,baseOpacity:.20+.12*(1-v)});
  }
  const originalGroup=root.querySelector('g');if(originalGroup)originalGroup.replaceWith(group);else root.appendChild(group);
  let t=0,last=0,ready=true;
