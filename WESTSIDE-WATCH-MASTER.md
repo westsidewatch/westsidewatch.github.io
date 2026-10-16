@@ -2,6 +2,20 @@
 
 > Status: consolidated engineering decision index; 2026-10-15. This is an index and decision log, **not** a replacement for Design OS or existing specialist Markdown documents. Preserve existing specialist MDs unchanged. Never claim an asset has been located without verifying its actual path.
 
+## Site-wide engineering workflow — binding rule for every project
+
+**Scope:** All Westside Watch projects and subprojects, including homepage, P2/First Look, church, Olive Mountain, ONE, Doré Folio, Cinema, Dawn Library, Design OS, tools and experiments. Apply this workflow by default without asking the user to repeat it.
+
+1. Work in an existing project PR/branch and its **Cloudflare Pages PR preview**. When starting a genuinely new project, create one PR and provide its actual Cloudflare preview URL immediately after deployment is confirmed. The PR's GitHub page is not the visual preview.
+2. For subsequent revisions, commit to **the same PR** and keep **the same Cloudflare preview URL**. Cloudflare automatically redeploys that PR; inspect the updated preview rather than creating duplicate branches, previews or competing implementations.
+3. Make a coherent batch of changes, clean up CSS/JS authority and remove conflicting obsolete rules instead of piling on overrides or submitting one-line micro-commits. Run relevant checks and inspect the actual preview, including motion, responsive layouts and regressions. CI passing alone does not constitute visual acceptance.
+4. Continue fixing identified failures within the same engineering phase, without repeatedly stopping for an unnecessary “continue” message. Report concise, verified results, the **clickable Cloudflare preview URL**, and genuine blockers only.
+5. **Do not merge into `main` unless the user explicitly requests a merge.** Preview deployment and PR commits are not merges; do not make merge approval a prerequisite for preview work, and do not repeatedly raise merging when the user is reviewing a preview.
+6. Preserve the last approved visual and functional baseline, its original assets and the user's design decisions. When a new preview is unavoidable, explain why and give the new working preview URL; never silently move the user to a different preview.
+7. Distinguish confirmed working preview URLs from URLs inferred from naming conventions. Verify deployment before claiming a URL is live; if verification is pending, state that plainly.
+
+**Default reporting format:** completed changes + verified checks + current Cloudflare preview link; omit repetitive PR/merge discussion unless requested or materially relevant.
+
 ## Source of truth and change rules
 
 - Canonical seven-realm order comes from the **live homepage source**, `layouts/partials/watch-home-editorial.html`, including its numbered floating Contents menu and First Look anchors. Do not reorder from conversation memory.
