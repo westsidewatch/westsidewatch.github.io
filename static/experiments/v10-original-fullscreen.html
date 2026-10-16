@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-054 · V10 UPPER GEOMETRY + TONE</div><script>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-055 · SOURCE-CONTOUR GROWTH FIELD</div><script>
 (()=>{'use strict';
 const holder=document.getElementById('v10');
 holder.addEventListener('load',()=>{
@@ -35,50 +35,63 @@ holder.addEventListener('load',()=>{
  // Original v10 upper stratum: extend its path-index sequence backwards.
  // Fit each x column to the first original contour family, retaining
  // local curvature, natural line spacing and varying engraved stroke tone.
+
+ // SVG-055: use the original V10 multi-contour displacement field,
+ // rather than copying a single line or synthesizing parallel strokes.
  const upperGroup=document.getElementById('upper-lines'),upperPaths=[];
- const sampleAt=(points,x)=>{
-  for(let i=1;i<points.length;i++){
-   const p=points[i-1],q=points[i],dx=q[0]-p[0];
-   if(Math.abs(dx)<.0001||x<Math.min(p[0],q[0])||x>Math.max(p[0],q[0]))continue;
-   return p[1]+(q[1]-p[1])*(x-p[0])/dx;
+ const xs=Array.from({length:141},(_,j)=>1600*j/140);
+ const at=(pts,x)=>{
+  for(let i=1;i<pts.length;i++){
+   const a=pts[i-1],b=pts[i],dx=b[0]-a[0];
+   if(Math.abs(dx)<1e-5||x<Math.min(a[0],b[0])||x>Math.max(a[0],b[0]))continue;
+   return a[1]+(b[1]-a[1])*(x-a[0])/dx;
   }
-  const p=points[0],q=points[points.length-1];
-  return x<p[0]?p[1]:q[1];
+  return x<pts[0][0]?pts[0][1]:pts[pts.length-1][1];
  };
- const family=paths.slice(0,Math.min(34,paths.length));
- const xs=Array.from({length:151},(_,i)=>1600*i/150);
- const profiles=family.map(p=>xs.map(x=>sampleAt(p.points,x)));
- const top=profiles[0];
- const mid=profiles[16];
- const far=profiles[32];
- const column=xs.map((x,j)=>{
-  const step=Math.max(2.8,Math.min(6.5,(far[j]-top[j])/32));
-  const bend=(mid[j]-(top[j]+far[j])*.5);
-  return {step,bend};
+ // Recover original line families across the entire v10 water surface.
+ const contours=paths.map(p=>({p,ys:xs.map(x=>at(p.points,x))}));
+ const middle=Math.floor(xs.length/2);
+ contours.sort((a,b)=>a.ys[middle]-b.ys[middle]);
+ const upperOriginal=contours.slice(0,Math.min(28,contours.length));
+ const surface=contours.slice(0,Math.min(380,contours.length));
+ const avg=arr=>arr.reduce((a,b)=>a+b,0)/arr.length;
+ // Derive the upstream boundary from several original upper lines.
+ const boundary=xs.map((x,j)=>avg(upperOriginal.slice(0,6).map(c=>c.ys[j])));
+ const edgeCenter=avg(boundary);
+ // A v10-derived curvature field: sample a moving band of original water
+ // contours, subtract each contour's centerline, and retain its local bends.
+ const bands=surface.filter((c,i)=>i%7===0).map(c=>{
+  const cy=avg(c.ys);
+  const bends=c.ys.map(y=>y-cy);
+  const meanBend=avg(bends);
+  return bends.map(y=>y-meanBend);
  });
- const topMid=top[Math.floor(top.length/2)];
- const count=225;
- for(let k=1;k<=count;k++){
-  const depth=k*4.35;
-  const progress=Math.min(1,depth/900);
+ const smoothBand=(band,j)=>{
+  const a=Math.max(0,j-2),b=Math.min(band.length-1,j+2);
+  let total=0;for(let i=a;i<=b;i++)total+=band[i];
+  return total/(b-a+1);
+ };
+ const count=235;
+ for(let k=0;k<count;k++){
+  const progress=(k+.5)/count,depth=progress*940;
+  const bandPos=progress*(bands.length-1);
+  const i=Math.floor(bandPos),mix=bandPos-i;
+  const bandA=bands[i],bandB=bands[Math.min(i+1,bands.length-1)];
   const points=xs.map((x,j)=>{
-   const {step,bend}=column[j];
-   const curvature=top[j]-topMid;
-   // Continue original x-wise contour slope and measured family bending.
-   // Source curvature is not flattened; it becomes more legible upstream.
-   const wave=curvature*(1+.48*progress)+bend*progress*2.5;
-   const y=topMid-depth*(step/4.35)+wave;
+   const sourceBend=(1-mix)*smoothBand(bandA,j)+mix*smoothBand(bandB,j);
+   const boundaryBend=boundary[j]-edgeCenter;
+   const blend=Math.min(1,depth/210);
+   // Join the upper v10 family at the seam; gradually grow the original
+   // water's nonlinear bending, ridges and cross-current into the full top.
+   const y=edgeCenter-depth+boundaryBend*(1-blend*.55)+sourceBend*blend*.92;
    return [x,y];
   });
+  const original=surface[Math.min(surface.length-1,Math.floor(progress*(surface.length-1)))].p;
   const out=document.createElementNS(NS,'path');
-  const source=family[(k-1)%family.length];
-  const sourceWidth=Number(source.out.getAttribute('stroke-width')||.5);
-  out.setAttribute('stroke-width',String(Math.max(.35,sourceWidth)));
+  out.setAttribute('stroke-width',original.out.getAttribute('stroke-width')||'.6');
   upperGroup.appendChild(out);
-  // Preserve varied original v10 engraving opacity instead of one flat tone.
-  const tonal=source.baseOpacity;
-  const shade=.72+.28*Math.cos(progress*Math.PI*.75);
-  upperPaths.push({points,out,baseOpacity:Math.min(.55,Math.max(.13,tonal*shade+(.10+.07*Math.sin(k*.13))*shade))});
+  const opacity=original.baseOpacity;
+  upperPaths.push({points,out,baseOpacity:Math.max(.12,Math.min(.8,opacity))});
  }
  const originalGroup=root.querySelector('g');if(originalGroup)originalGroup.replaceWith(group);else root.appendChild(group);
  let t=0,last=0,ready=true;
