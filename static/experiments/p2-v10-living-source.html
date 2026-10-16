@@ -1,0 +1,60 @@
+<!doctype html><html lang="zh-Hant"><head><link rel="stylesheet" href="/css/westside-design-os.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water / Continuous Source</title><style>*{box-sizing:border-box}html,body{margin:0;background:#e3e9e8;color:#28424b;font:14px/1.4 Georgia,serif}header{display:flex;align-items:center;justify-content:space-between;padding:15px 3vw}h1{font-weight:400;font-size:clamp(18px,3vw,30px);margin:0}button{background:transparent;border:1px solid #8da9b0;padding:7px 13px;color:inherit}main{height:350svh}.stage{height:100svh;position:sticky;top:0;overflow:hidden;background:#d8e7e9}canvas{display:block;width:100%;height:100%}aside{position:absolute;bottom:20px;left:3vw;right:3vw;display:flex;justify-content:space-between;pointer-events:none}#status{position:absolute;top:18px;left:3vw;background:#e3e9e8d9;padding:5px 8px}footer{padding:22px 3vw}</style></head><body data-ws-scope="p2"><header><h1>Living Water / Continuous Source</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><canvas id="water"></canvas><div id="status">Loading v10 source geometry…</div><aside><span id="phase">01 / LIVING CURRENT</span><span>SVG-016 · anchored living contours</span></aside></div></main><footer>v10 原曲線固定作為流場導軌，刻線沿原稿曲率持續生長、流出與補充；取消整條曲線平移及重複複製，避免斜線交叉。</footer>
+<script>(()=>{'use strict';
+const root=document.querySelector('#scroll'),canvas=document.querySelector('#water'),ctx=canvas.getContext('2d',{alpha:false}),phase=document.querySelector('#phase'),status=document.querySelector('#status'),pause=document.querySelector('#pause'),reduced=matchMedia('(prefers-reduced-motion:reduce)');
+let lines=[],clock=0,last=0,halt=false,progress=0,W=1,H=1,dpr=1;
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),smooth=x=>{x=clamp(x);return x*x*(3-2*x)},rand=i=>{const v=Math.sin(i*127.1+78.233)*43758.5453;return v-Math.floor(v)};
+function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}
+new ResizeObserver(resize).observe(canvas);resize();
+function scroll(){const r=root.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));phase.textContent=progress<.36?'01 / CONTINUOUS CURRENT':progress<.74?'02 / RISING CURRENT':'03 / PARTING SEA'}addEventListener('scroll',scroll,{passive:true});scroll();
+pause.addEventListener('click',()=>{halt=!halt;pause.textContent=halt?'Resume':'Pause'});
+// Source geometry stays anchored in its v10 contour band. Flow advances
+// through each curve as a material coordinate; no full-path translation,
+// no periodic copies, and no intersecting shifted contours.
+function render(){
+ctx.fillStyle='#d8e7e9';ctx.fillRect(0,0,W,H);
+if(!lines.length)return;
+const time=reduced.matches?0:clock,rise=smooth((progress-.32)/.4),part=smooth((progress-.73)/.24);
+const breath=21*Math.sin(time*Math.PI/7)+5*Math.sin(time*Math.PI/13);
+ctx.save();ctx.scale(W/1600,H/900);ctx.beginPath();ctx.rect(0,0,1600,900);ctx.clip();
+for(const line of lines){
+ const layer=smooth((line.y-180)/610);
+ const velocity=(18+16*layer)*(.7+.6*line.seed);
+ const riseY=rise*(190+600*line.rise);
+ const split=part*(line.side<0?-1:1)*(180+150*line.rise);
+ const n=line.pts.length;
+ // Maintain a constant population of marks. Individual marks travel
+ // through a v10 guide and are reborn at its upstream endpoint.
+ const markLength=.22+.13*line.seed,period=markLength+.08;
+ const advance=(time*velocity/Math.max(180,line.length)+line.seed)%period;
+ ctx.strokeStyle='rgba(65,108,123,'+line.opacity+')';ctx.lineWidth=line.width;ctx.lineCap='round';
+ const count=Math.ceil(1/period)+2;
+ for(let mark=0;mark<count;mark++){
+  const start=mark*period+advance-period;
+  const end=start+markLength;
+  if(end<=0||start>=1)continue;
+  ctx.beginPath();let active=false;
+  const j0=Math.max(0,Math.floor(start*(n-1))),j1=Math.min(n-1,Math.ceil(end*(n-1)));
+  for(let j=j0;j<=j1;j++){
+   const t=j/(n-1);if(t<start||t>end)continue;
+   const p=line.pts[j],x=p[0],y=p[1],speed=.78+.5*layer,warp=18*Math.sin(y*.0065+x*.0018);
+   const wave=.012*(x+warp)-time*.9*1.05*speed;
+   const carrier=Math.sin(wave),secondary=Math.sin(wave*2-.6);
+   const ridge=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002);
+   const spacing=4.5*Math.sin(Math.PI*clamp(y/900))*ridge*Math.sin(y*.046);
+   const yy=y+breath*.18+6*(.72+.28*layer)*(.82*carrier+.12*secondary)+spacing-riseY;
+   const xx=x+6*(.35*carrier+.1*secondary)+split;
+   if(!active){ctx.moveTo(xx,yy);active=true}else ctx.lineTo(xx,yy);
+  }
+  if(active)ctx.stroke();
+ }
+}
+ctx.restore();
+}
+function frame(now){if(!last)last=now;const dt=Math.min(.06,(now-last)/1000);if(now-last>=30){last=now;if(!halt)clock+=dt;render()}requestAnimationFrame(frame)}
+fetch('/experiments/assets/living-water-contour-engraving-v10.svg').then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(xml=>{
+const doc=new DOMParser().parseFromString(xml,'image/svg+xml');if(doc.querySelector('parsererror'))throw Error('Invalid SVG');
+const paths=[...doc.querySelectorAll('path')],hidden=document.createElementNS('http://www.w3.org/2000/svg','svg');hidden.setAttribute('viewBox','0 0 1600 900');hidden.style.cssText='position:absolute;width:0;height:0;overflow:hidden';document.body.appendChild(hidden);
+for(let i=0;i<paths.length;i++){const p=paths[i].cloneNode(true);hidden.appendChild(p);let length=0;try{length=p.getTotalLength()}catch{}if(length<1)continue;const n=Math.max(12,Math.min(58,Math.ceil(length/30))),pts=[];for(let j=0;j<=n;j++){const q=p.getPointAtLength(length*j/n);pts.push([q.x,q.y])}const raw=Number(p.getAttribute('stroke-width')||'.7');const width=Math.max(.18,raw*(raw<=.5?.72:raw<=.9?.66:.57));lines.push({pts,length,width:width,y:pts[Math.floor(n/2)][1],width,opacity:Number(p.getAttribute('opacity')||'.3')*.82,seed:rand(i+1),rise:rand(i+71),side:rand(i+99)>.5?1:-1});hidden.removeChild(p)}
+hidden.remove();status.textContent='v10 curves: '+paths.length+' / continuous streamlines: '+lines.length;render()
+}).catch(e=>{status.textContent='Source unavailable: '+e.message});requestAnimationFrame(frame);
+})();</script></body></html>

@@ -1,0 +1,335 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P2 Church Diptych — Preview Only</title><link rel="stylesheet" href="/css/westside-design-os.css"><link rel="stylesheet" href="/css/westside-engraving-authority.css"><style>
+:root{--ink:#252525;--paper:#eeeae1}*{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)}a{color:inherit}button{font:inherit}.intro{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(22px,3vw,48px);background:#eae6dc}.eyebrow{display:flex;justify-content:space-between;gap:20px;font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);font-size:clamp(12px,1vw,16px);letter-spacing:.14em}.intro h1{font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-weight:400;letter-spacing:-.065em;font-size:clamp(70px,12vw,205px);line-height:.81;margin:auto 0}.intro h1 i{font-weight:400}.intro-foot{display:flex;justify-content:space-between;align-items:end;gap:20px;font-size:clamp(12px,1vw,16px)}.intro-foot p{max-width:28ch;line-height:1.7}.showcase{height:900svh;position:relative}.stage{height:100svh;position:sticky;top:0;overflow:hidden;background:var(--paper);isolation:isolate}.plane{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;transform-origin:top left;will-change:transform;contain:paint;background:var(--color);transition:none}.plane::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 45%,rgba(255,255,255,.11));pointer-events:none}.p0{--color:var(--ws-water,#a1a994)}.p1{--color:var(--ws-first-light,#d6c7a5)}.p2{--color:var(--ws-pale-gold,var(--ws-first-light,#d6c7a5))}.p3{--color:var(--ws-olive,#899783)}.p4{--color:var(--ws-harvest,#c6a889)}.p5{--color:var(--ws-crimson,#a06d78)}.p6{--color:var(--ws-water,#a1a994)}.composition{position:absolute;inset:0;z-index:10;pointer-events:none}.edition{position:absolute;inset:0;display:grid;grid-template-columns:1.25fr .75fr;align-items:end;gap:5vw;padding:clamp(28px,6vw,110px);opacity:0;transform:translateY(14px);pointer-events:none;will-change:opacity,transform}.edition.is-current{pointer-events:auto}.edition .category{font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);font-size:clamp(13px,1.3vw,20px);letter-spacing:.16em;text-transform:uppercase}.edition h2{font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-weight:400;font-size:clamp(66px,11vw,188px);line-height:.83;letter-spacing:-.06em;margin:.18em 0}.edition .cn{font-size:clamp(18px,2vw,34px);font-weight:200;letter-spacing:.12em}.edition .description{max-width:26ch;font-size:clamp(15px,1.2vw,20px);line-height:1.9;font-weight:200}.edition .detail{display:flex;flex-direction:column;align-items:start;gap:20px}.edition a{pointer-events:auto;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:6px;font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);letter-spacing:.12em}.edition[data-variant="1"]{grid-template-columns:.7fr 1.3fr}.edition[data-variant="1"] .detail{grid-column:1;grid-row:1}.edition[data-variant="1"] .headline{grid-column:2;grid-row:1}.edition[data-variant="2"]{align-items:center}.edition[data-variant="3"]{grid-template-columns:1fr 1fr}.edition[data-variant="4"]{align-items:start;padding-top:16vh}.edition[data-variant="5"]{grid-template-columns:1fr 1fr}.edition[data-variant="6"]{align-items:center}.stage-head{position:absolute;top:clamp(18px,3vw,45px);left:clamp(24px,5vw,90px);right:clamp(24px,5vw,90px);z-index:20;display:flex;justify-content:space-between;gap:20px;font:400 clamp(12px,1vw,16px) var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);letter-spacing:.1em;pointer-events:none}.index{position:absolute;right:clamp(24px,5vw,90px);bottom:25px;z-index:20;font:400 14px var(--ws-type-display-en,"Bodoni Moda",serif)}.outro{min-height:85svh;display:flex;flex-direction:column;justify-content:center;padding:7vw;background:#eae6dc}.outro h2{font:400 clamp(55px,9vw,140px)/.92 var(--ws-type-display-en,"Bodoni Moda",serif);letter-spacing:-.05em;margin:0 0 30px}.outro p{font-size:clamp(17px,2vw,26px);font-weight:200}.outro a{align-self:start;margin-top:30px;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:8px}@media(max-width:700px){.intro h1{font-size:clamp(62px,17vw,110px)}.edition,.edition[data-variant]{grid-template-columns:1fr;align-content:end;align-items:end;gap:16px;padding:80px 7vw 13vh}.edition[data-variant="1"] .detail,.edition[data-variant="1"] .headline{grid-column:auto;grid-row:auto}.edition[data-variant="1"] .headline{grid-row:1}.edition h2{font-size:clamp(58px,15vw,108px)}.edition .description{max-width:34ch}.stage-head{font-size:11px}.intro-foot{align-items:start}}@media(prefers-reduced-motion:reduce){.showcase{height:auto}.stage{height:auto;position:relative;overflow:visible}.plane{display:none}.composition{position:relative}.edition,.edition[data-variant]{position:relative;opacity:1!important;transform:none!important;min-height:75svh;pointer-events:auto;background:var(--paper);border-bottom:1px solid #bcb6aa}.stage-head,.index{display:none}}
+/* P2 preview stage authority: one sticky viewport, one folding layer system. */
+.showcase{height:390svh;min-height:390svh;position:relative}
+.showcase .stage{position:sticky;top:0;height:100svh;overflow:hidden;contain:layout paint}
+.showcase .planes{position:absolute;inset:0;z-index:30;pointer-events:none}
+.showcase .planes .plane{position:absolute;inset:0;width:100%;height:100%;transform-origin:top center;backface-visibility:hidden;will-change:transform}
+.showcase .composition{z-index:12}
+.showcase .composition .edition{transform:none;transition:none;visibility:hidden;opacity:0}
+.showcase .composition .edition.is-current{visibility:visible;opacity:1}
+.showcase .stage-head,.showcase .index{z-index:21}
+@media(prefers-reduced-motion:reduce){.showcase{height:auto;min-height:100svh}.showcase .stage{position:relative;height:auto;min-height:100svh;overflow:visible}.showcase .planes{display:none}}
+
+/* Homepage navigation fold parity: seven full-width, overlapping half-screen panels. */
+.showcase .planes{inset:0 0 auto 0!important;height:50svh!important;overflow:hidden!important;z-index:30!important;transform-origin:top center}
+.showcase .planes .plane{inset:0!important;width:100%!important;height:100%!important;transform-origin:top center!important;clip-path:none!important;transform:scale3d(1,0,1)!important;will-change:transform!important}
+
+/* Second-screen split: the sevenfold navigation occupies exactly the upper half. */
+.showcase .planes{top:0!important;bottom:auto!important;height:50svh!important;overflow:hidden!important}
+.showcase .planes .plane{height:50svh!important;min-height:0!important}
+.showcase .composition{top:50svh!important;bottom:0!important;height:50svh!important;overflow:hidden!important}
+.showcase .composition .edition{inset:0!important;padding:clamp(18px,3vw,42px) clamp(24px,5vw,90px)!important;align-items:center!important}
+.showcase .composition .edition:not(.editorial-john) h2{font-size:clamp(42px,7vw,108px)!important}
+.showcase .composition .edition .description{font-size:clamp(13px,1vw,17px)!important;line-height:1.5!important}
+.showcase .stage-head{top:calc(50svh + 14px)!important}
+.showcase .index{bottom:14px!important}
+@media(max-width:700px){.showcase .composition .edition{align-content:center!important;gap:8px!important}.showcase .composition .edition:not(.editorial-john) h2{font-size:clamp(40px,12vw,75px)!important}.showcase .composition .edition .description{font-size:12px!important}}
+
+/* Church-only editorial gate: the first settled horizontal split becomes a vertical pair of doors. */
+.showcase .church-gate{position:absolute;inset:0;z-index:35;pointer-events:none;visibility:hidden;overflow:hidden}
+.showcase .church-gate__leaf{position:absolute;top:0;bottom:0;width:50%;background:var(--ws-water,#a1a994);will-change:transform,clip-path;box-shadow:inset 0 0 0 1px rgba(90,75,55,.1)}
+.showcase .church-gate__leaf:first-child{left:0;transform-origin:left center}
+.showcase .church-gate__leaf:last-child{right:0;transform-origin:right center}
+.showcase .church-editorial{position:absolute;inset:0;z-index:11;background:#eeeae1;visibility:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden}
+.showcase .church-editorial__visual{background:#d6c9b2 none center/cover no-repeat;min-width:0}
+.showcase .church-editorial__copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(30px,5vw,90px);gap:1.2rem}
+.showcase .church-editorial__copy small{font:400 12px var(--ws-type-display-en-sc,serif);letter-spacing:.2em}
+.showcase .church-editorial__copy h2{font:400 clamp(58px,8vw,150px)/.84 var(--ws-type-display-en,serif);letter-spacing:-.055em;margin:0}
+.showcase .church-editorial__copy p{font-weight:200;line-height:1.9;max-width:27ch}
+.showcase .church-editorial__copy a{color:inherit;text-decoration:none;border-bottom:1px solid;width:max-content;padding-bottom:6px}
+@media(max-width:700px){.showcase .church-editorial{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.showcase .church-editorial__copy{padding:5vw;gap:.6rem}.showcase .church-editorial__copy h2{font-size:clamp(30px,7vw,60px)}.showcase .church-editorial__copy p{font-size:12px}}
+
+/* Church name is mounted on the final water-blue curtain and unfolds with it. */
+.showcase .planes .p6{position:absolute!important;overflow:hidden!important}
+.showcase .fold-church-identity{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(3px,.6svh,8px);padding:2svh 5vw;color:#f2efe6;text-align:center;pointer-events:none}.showcase .fold-church-name{display:block;width:min(78vw,980px);aspect-ratio:1800/193;flex:none;background:currentColor;-webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;mask:url("/images/living-water-west-church-name.png") center/contain no-repeat}.showcase .fold-church-english{font-family:"Bodoni Moda",Georgia,serif;font-size:clamp(16px,2.55vw,38px);font-weight:400;line-height:1.1;letter-spacing:-.025em;white-space:nowrap}.showcase .fold-church-address{font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-size:clamp(12px,1.8vw,26px);font-weight:400;line-height:1.2;white-space:nowrap}
+@media(max-width:700px){.showcase .fold-church-identity{padding-inline:3vw;gap:5px}.showcase .fold-church-name{width:94vw}.showcase .fold-church-english{font-size:clamp(12px,3.4vw,22px);letter-spacing:-.04em}.showcase .fold-church-address{font-size:clamp(10px,2.65vw,17px);white-space:normal}}
+
+/* Church engraving grammar is shared with the site engraving authority. */
+.showcase .composition .edition.sites-section-church{--ws-branch:var(--ws-water,#5b8fa8);--ws-engraving-opacity:.18;isolation:isolate}
+.showcase .composition .edition.sites-section-church::after{z-index:0!important;background-repeat:no-repeat;background-size:cover;mix-blend-mode:multiply}
+.showcase .composition .edition.sites-section-church>*{position:relative;z-index:1}
+/* One engraved material language across the church paper spread and opening doors. */
+.showcase{--church-line:color-mix(in srgb,var(--ws-water) 27%,transparent);--church-line-soft:color-mix(in srgb,var(--ws-water) 12%,transparent);--church-paper:var(--paper)}
+.showcase .composition .edition[data-variant="0"]{background:var(--church-paper)!important;color:var(--ws-ink,#252525)!important;overflow:hidden;isolation:isolate}
+/* Red Sea SVG: preserve the engraving; no intersecting masks that erase it. */
+.showcase .composition .edition[data-variant="0"]::after{content:"";position:absolute!important;inset:0!important;z-index:0!important;display:block!important;opacity:.9!important;pointer-events:none;background-image:none!important;background-position:center center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;mix-blend-mode:multiply!important;-webkit-mask-image:none!important;mask-image:none!important}
+@media(max-width:700px){.showcase .composition .edition[data-variant="0"]::after{opacity:.9!important;background-size:100% 100%!important;background-position:center!important}}
+
+.showcase .composition .edition[data-variant="0"]>*{z-index:2!important}
+/* Church door material: reuse the verified v10 engraving, not legacy radial-line texture. */
+.showcase .church-gate__leaf{background-color:var(--ws-water,#5b8fa8)!important;background-image:linear-gradient(90deg,rgba(255,255,255,.06),rgba(20,43,55,.05)),none!important;background-repeat:no-repeat!important;background-size:100% 100%,200% 100%!important}
+.showcase .church-gate__leaf:first-child{background-position:center,0 0!important}
+.showcase .church-gate__leaf:last-child{background-position:center,100% 0!important}
+.showcase .church-gate__leaf:first-child{border-right:1px solid color-mix(in srgb,var(--paper) 55%,transparent)}
+.showcase .church-gate__leaf:last-child{border-left:1px solid rgba(240,245,245,.55);background-position:100% 0!important}
+
+
+@media(max-width:700px){.showcase .composition .edition[data-variant="0"]{padding:14px 5vw!important;gap:6px!important}.showcase .edition[data-variant="0"] .scripture-footer{font-size:10px!important;gap:8px!important}}
+@media(prefers-contrast:more){.showcase .composition .edition[data-variant="0"]::after{opacity:.25!important}}
+
+
+/* John 7:38: selected 08 diptych structure with 07 italic Water. Scoped to second-screen edition only. */
+.showcase .composition .edition.editorial-john{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr) auto auto!important;align-items:stretch!important;column-gap:clamp(18px,3vw,55px)!important;row-gap:clamp(4px,.65svh,10px)!important;padding:clamp(15px,2.2vw,34px) clamp(24px,5vw,90px)!important;color:var(--ws-ink,#252525);font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-synthesis:none}
+.editorial-john .ej-mast{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #88867f;padding-bottom:clamp(4px,.6svh,9px);font:400 var(--ws-type-scale-meta,clamp(11px,.85vw,14px))/1.2 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);letter-spacing:.08em}
+.editorial-john .ej-full{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.editorial-john .ej-title{grid-column:1;grid-row:2;align-self:center;min-width:0;margin:0;font:400 clamp(110px,17vw,300px)/.83 var(--ws-type-display-en,"Bodoni Moda",serif);letter-spacing:-.075em;white-space:nowrap}
+.editorial-john .ej-title span,.editorial-john .ej-title em{display:block;font-weight:400}
+.editorial-john .ej-title em{font-style:italic;color:var(--ws-water,#5b8fa8)}
+.editorial-john .ej-copy{grid-column:2;grid-row:2;align-self:center;margin:0;max-width:28ch;font:400 var(--ws-type-quote-en-size,clamp(19px,1vw + 13px,27px))/1.42 var(--ws-type-display-en,"Bodoni Moda",serif)}
+.showcase .edition.editorial-john .ej-zh{grid-column:1/-1;grid-row:3;align-self:end;margin:0!important;max-width:none!important;font:200 var(--ws-type-scale-reading-lg,clamp(18px,.45vw + 16px,22px))/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;letter-spacing:0}
+.showcase .edition.editorial-john .ej-footer{grid-column:1/-1;grid-row:4;display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px solid #88867f;padding-top:clamp(5px,.7svh,10px);font:400 var(--ws-type-scale-meta,clamp(11px,.85vw,14px))/1.2 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)}
+.editorial-john .ej-footer a{pointer-events:auto;text-decoration:none;white-space:nowrap;border:0!important;padding:0!important;letter-spacing:inherit}.showcase .composition .edition.editorial-john .ej-footer{padding-right:clamp(48px,5vw,90px)}
+@media(max-width:700px){.showcase .composition .edition.editorial-john{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto minmax(0,1fr) auto auto!important;gap:clamp(5px,1svh,12px)!important;padding:clamp(12px,3vw,24px) 6vw!important}.editorial-john .ej-mast{grid-column:1}.editorial-john .ej-title{grid-column:1;grid-row:2;font-size:clamp(58px,15vw,116px)}.editorial-john .ej-copy{grid-column:1;grid-row:3;align-self:center;font-size:clamp(16px,3.2vw,21px);max-width:34ch}.showcase .edition.editorial-john .ej-zh{grid-column:1;grid-row:4;font-size:clamp(14px,2.8vw,18px)!important}.showcase .edition.editorial-john .ej-footer{grid-column:1;grid-row:5;font-size:clamp(10px,2vw,12px)}}
+
+/* Living Water v2: whole-surface subtle motion with quiet growth accents. */
+/* Move the approved v10 plate itself: whole water rises and falls together.
+   Overscan prevents exposed blank edges; no filtered duplicate or white band. */
+.showcase .composition .edition[data-variant="0"]::after{inset:-5% -1%!important;transform:translate3d(0,var(--living-water-rise,0px),0) scale(1.012);transform-origin:center center;will-change:transform}
+/* Living Water v2: transparent animated engraving over the unchanged v10 plate. */
+.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay{position:absolute!important;inset:0!important;width:100%;height:100%;z-index:3!important;pointer-events:none;overflow:hidden;mix-blend-mode:multiply;transform:translate3d(0,var(--living-water-rise,0px),0);will-change:transform;grid-column:1/-1;grid-row:1/-1;align-self:stretch;justify-self:stretch}
+.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay path{fill:none;stroke:#547989;stroke-linecap:round}
+@media(prefers-reduced-motion:reduce){.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay{display:none!important}}
+.showcase{height:100svh!important;min-height:100svh!important}.showcase .stage{position:relative!important;top:0!important;height:100svh!important}.showcase .composition .edition[data-variant="0"].p2-motion-ready::after{opacity:.35!important}.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay{transform:none!important;z-index:1!important}.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay path{stroke:#557b8c}
+
+/* Seamless ocean: retain a quiet full-bleed v10 underlay beneath the moving contours.
+   The moving 620-path field must never expose a hard blank strip when it breathes. */
+.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay{
+ inset:-3% -2%!important;width:104%!important;height:106%!important;
+ overflow:visible!important;transform:none!important;
+}
+.showcase .composition .edition[data-variant="0"]::after{
+ inset:-6% -3%!important;background-size:cover!important;
+ background-position:center!important;background-repeat:no-repeat!important;
+}
+
+.showcase .church-editorial{pointer-events:none}.showcase[data-p2-phase="church"] .church-editorial{pointer-events:auto}.showcase .church-editorial__copy{overflow:hidden}.showcase .church-editorial__copy h2{font-size:clamp(42px,6.2vw,112px)}@media(max-width:700px){.showcase .church-editorial__copy{padding:clamp(12px,3.5vw,26px);gap:clamp(5px,1.4svh,12px)}.showcase .church-editorial__copy h2{font-size:clamp(24px,6.7vw,52px)}.showcase .church-editorial__copy p{font-size:clamp(10px,2.3vw,14px);line-height:1.55}.showcase .church-editorial__copy small{font-size:clamp(8px,1.7vw,11px);letter-spacing:.06em}.showcase .church-editorial__copy a{font-size:clamp(8px,1.8vw,12px)}}@media(prefers-reduced-motion:reduce){.showcase .church-gate,.showcase .planes,.showcase .composition{display:none!important}.showcase .church-editorial{position:relative;min-height:100svh;visibility:visible!important;opacity:1!important;pointer-events:auto!important}}
+/* Same v10 engraved sea: lower half rises to full-screen, then splits into two leaves. */
+.showcase .ocean-rise{position:absolute;inset:0;z-index:34;overflow:hidden;visibility:hidden;pointer-events:none;clip-path:inset(50% 0 0 0);will-change:clip-path,opacity}
+.showcase .ocean-rise__surface{position:absolute;inset:0;background:var(--ws-water,#5b8fa8) none center/100% 100% no-repeat}
+.showcase .church-gate__leaf{background-color:var(--ws-water,#5b8fa8)!important;background-image:none!important;background-repeat:no-repeat!important;background-size:200% 100%!important}
+.showcase .church-gate__leaf:first-child{background-position:left center!important}
+.showcase .church-gate__leaf:last-child{background-position:right center!important}
+@media(prefers-reduced-motion:reduce){.showcase .ocean-rise{display:none!important}}
+/* Single continuous moving sea: duplicate rendered paths and synchronize their d every frame. Cross-SVG <use> references were not reliable. */
+.showcase .ocean-rise{z-index:35;clip-path:none;background:transparent;transform:translate3d(0,50%,0);will-change:transform,opacity}
+.showcase .ocean-rise__leaf{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;background:#e0edf0 none center/200% 100% no-repeat;will-change:transform}
+.showcase .ocean-rise__leaf--left{left:0;background-position:left center}
+.showcase .ocean-rise__leaf--right{right:0;background-position:right center}
+.showcase .ocean-rise__motion{position:absolute;top:0;bottom:0;width:200%;height:100%;overflow:visible;fill:none;stroke:#557b8c;stroke-linecap:round;pointer-events:none}
+.showcase .ocean-rise__leaf--left .ocean-rise__motion{left:0}
+.showcase .ocean-rise__leaf--right .ocean-rise__motion{right:0}
+@media(prefers-reduced-motion:reduce){.showcase .ocean-rise{display:none!important}}
+/* Continuous P2 water: full-height SVG wave field, not a rising page or clip mask.
+   Water paths are advected from their original positions through a vertical flow field.
+   The sea backing stays stationary and the actual line coordinates travel upward. */
+.showcase .ocean-rise{transform:none!important;clip-path:none!important;background:transparent!important}
+.showcase .ocean-rise__leaf{background:transparent!important}
+.showcase .ocean-rise__motion{mix-blend-mode:normal!important}
+.showcase .ocean-rise__lines{stroke:#426c7b;stroke-opacity:.82}
+.showcase .ocean-rise__motion path{vector-effect:none}
+.showcase .ocean-rise__motion{mix-blend-mode:multiply}
+ /* Preview authority: the standalone scroll host, never the production iframe. */
+html,body{min-height:100%;scroll-behavior:auto}
+.showcase{height:390svh!important;min-height:390svh!important}
+.showcase .stage{position:sticky!important;top:0!important;height:100svh!important}
+.showcase .church-editorial{z-index:18;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.showcase .church-editorial__visual{min-height:0}
+.showcase .church-editorial__copy{min-width:0}
+.showcase .church-gate__leaf{background-blend-mode:normal,multiply}
+@media(prefers-reduced-motion:reduce){.showcase{height:auto!important;min-height:100svh!important}.showcase .stage{position:relative!important;height:auto!important;min-height:100svh!important}}
+
+/* SVG-075 is the sole animated water source in this P2 preview.
+   V10 remains an immutable source asset, not a second rendered water layer. */
+.showcase .composition .edition[data-variant="0"]::after{display:none!important}
+.showcase .editorial-john{isolation:isolate}
+.showcase .v75-scripture-water{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;z-index:0;clip-path:inset(50% 0 0 0)}
+.showcase .editorial-john > :not(.v75-scripture-water){position:relative;z-index:2}
+.showcase .ocean-rise__leaf{background:#eeeae1!important}
+.showcase .v75-sea-water{position:absolute;top:0;width:200%;height:100%;border:0;pointer-events:none;max-width:none;clip-path:inset(var(--p2-water-clip,50%) 0 0 0)}
+.showcase .ocean-rise__leaf--left .v75-sea-water{left:0}
+.showcase .ocean-rise__leaf--right .v75-sea-water{right:0}
+.showcase .ocean-rise{background:transparent!important}
+
+/* SVG-075 embedding correction: the iframe is one viewport-sized engraving,
+   clipped by the sea's two 50% leaves, never stretched per leaf. */
+.showcase .ocean-rise__leaf{overflow:hidden!important;background:transparent!important}
+.showcase .v75-sea-water{display:block!important;position:absolute!important;top:0!important;width:200%!important;height:100%!important;max-width:none!important;min-width:0!important;border:0!important;transform:none!important;object-fit:fill!important}
+.showcase .ocean-rise__leaf--left .v75-sea-water{left:0!important;right:auto!important}
+.showcase .ocean-rise__leaf--right .v75-sea-water{left:auto!important;right:0!important}
+.showcase .church-editorial__visual{background-color:var(--paper)!important;background-image:none!important}
+.showcase .v75-scripture-water{display:block!important;position:absolute!important;top:0!important;left:0!important;width:100%!important;height:100%!important;border:0!important;transform:none!important;pointer-events:none!important;clip-path:inset(50% 0 0 0)!important}
+
+/* Final authority: the complete SVG-075 engraving fills the viewport before parting.
+   Clip the entire two-leaf water stage at one shared rising waterline, never
+   the individual iframe; each iframe remains a full-height image. */
+.showcase .ocean-rise{clip-path:var(--p2-water-shape,inset(50% 0 0 0))!important;overflow:hidden!important}
+.showcase .v75-sea-water{clip-path:none!important;height:100%!important;top:0!important}
+.showcase .ocean-rise__leaf{height:100%!important;top:0!important;bottom:0!important}
+
+/* P2 SVG-075 asset authority: legacy V10 may exist in archive only.
+   Neutralize every historical V10 painted layer in this preview. */
+.showcase .church-editorial__visual,
+.showcase .ocean-rise__surface,
+.showcase .church-gate__leaf,
+.showcase .ocean-rise__leaf{background-image:none!important}
+.showcase .composition .edition[data-variant="0"]::after{content:none!important;display:none!important;background-image:none!important}
+.showcase .church-gate{display:none!important}
+
+/* PR-1335 phase-1 composition: one water artwork, one right-hand schedule spread. */
+.showcase .church-editorial{display:grid!important;grid-template-columns:1fr 1fr!important;inset:0!important;background:#eeeae1!important;overflow:hidden!important}
+.showcase .church-editorial__visual{position:relative!important;overflow:hidden!important;background:#eeeae1!important}
+.showcase .v75-left-page{position:absolute;top:0;left:0;width:200%;height:100%;border:0;pointer-events:none}
+.showcase .church-editorial__copy{background:#eeeae1!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;gap:clamp(8px,1.5vh,20px)!important;padding:clamp(20px,3.4vw,62px)!important;overflow:hidden!important}
+.showcase .church-editorial__copy .schedule-heading{font-size:clamp(48px,6vw,105px)!important;line-height:.83!important;flex:none}
+.showcase .church-editorial__copy .schedule-kicker{margin:0!important;max-width:none!important}
+.showcase .church-schedule-source{position:relative;flex:1;min-height:130px;width:100%;border-top:1px solid #8b8b81;border-bottom:1px solid #8b8b81;overflow:hidden}
+.showcase .church-schedule-source iframe{width:100%;height:100%;border:0;background:#eeeae1}
+.showcase .church-editorial__copy>a{flex:none;align-self:flex-start}
+
+/* SVG-075 native viewport correction: scripture is a full-stage page.
+   The original bottom-half composition constraints must not resize the water.
+   Only the first state shows the lower 50% of a native full-screen V75. */
+.showcase .composition{top:0!important;bottom:0!important;height:100svh!important;min-height:100svh!important;overflow:hidden!important}
+.showcase .composition .edition.editorial-john{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important}
+.showcase .composition .edition.editorial-john .v75-scripture-water{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;clip-path:inset(50% 0 0 0)!important;z-index:0!important}
+.showcase .composition .edition.editorial-john > :not(.v75-scripture-water){z-index:2!important}
+
+/* P2 schedule: actual content only; no embedded site, navbar, or foreign page CSS. */
+.showcase .church-schedule-source{overflow:auto!important;min-height:0!important;background:#eeeae1!important}
+.showcase .sunday-schedule{display:flex;flex-direction:column;gap:clamp(10px,2vh,28px);padding:clamp(14px,2vw,30px) 0;color:#252525;min-height:100%}
+.showcase .sunday-schedule__top{display:flex;justify-content:space-between;gap:10px;font-family:var(--ws-type-display-en-sc,"Bodoni Moda",serif);font-size:clamp(9px,.7vw,12px);letter-spacing:.11em;border-bottom:1px solid #aaa69b;padding-bottom:10px}
+.showcase .sunday-schedule h3{margin:0;font-size:clamp(24px,2.5vw,48px);font-weight:400;line-height:1.1}
+.showcase .sunday-schedule h3 span{display:block;font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-size:.42em;font-weight:400;font-style:italic;margin-top:.5em}
+.showcase .sunday-schedule__time{display:flex;align-items:baseline;gap:clamp(5px,1vw,16px);font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-size:clamp(32px,4vw,76px);line-height:1;white-space:nowrap;font-variant-numeric:lining-nums}
+.showcase .sunday-schedule__dash{font-size:.5em}
+.showcase .sunday-schedule__time small{font-size:clamp(9px,.7vw,12px);letter-spacing:.12em}
+.showcase .sunday-schedule__place{border-top:1px solid #aaa69b;padding-top:14px;display:grid;grid-template-columns:30% 1fr;gap:12px}
+.showcase .sunday-schedule__place>span{font-size:10px;letter-spacing:.12em}
+.showcase .sunday-schedule__place p{margin:0;font-size:clamp(11px,.9vw,15px);line-height:1.5}
+.showcase .sunday-schedule__note{margin-top:auto;font-size:11px;opacity:.7}
+
+/* One SVG-075 sea source across the scripture, rise and opening phases.
+   No fourth heavyweight animated iframe beneath the scripture. */
+.showcase .composition{z-index:36!important;pointer-events:none!important}
+.showcase .composition .edition.editorial-john{background:transparent!important}
+.showcase .ocean-rise{z-index:35!important}
+.showcase .planes{z-index:38!important}
+.showcase .church-editorial{z-index:18!important}
+.showcase .church-editorial__visual{background-image:none!important}
+
+/* Scripture visibility is controlled by the scroll phase, not forced globally. */
+.showcase .planes .plane{pointer-events:none}
+
+/* Source: church bulletin PDF dated 2026-10-11, page 2. Full order of worship. */
+.showcase .church-editorial__copy{gap:clamp(5px,.8vh,12px)!important;padding:clamp(15px,2.4vw,42px)!important}
+.showcase .church-editorial__copy .schedule-heading{font-size:clamp(35px,4.2vw,76px)!important}
+.showcase .church-schedule-source{flex:1!important;min-height:0!important;overflow-y:auto!important;scrollbar-width:thin!important}
+.showcase .sunday-schedule{gap:clamp(8px,1.2vh,17px)!important;padding:clamp(8px,1.2vh,17px) 0!important}
+.showcase .sunday-schedule h3{font-size:clamp(24px,2vw,38px)!important}
+.showcase .worship-ministry{display:grid;grid-template-columns:24% 1fr;gap:10px;border-bottom:1px solid #aaa69b;padding-bottom:12px;font-size:clamp(10px,.8vw,13px);line-height:1.65}
+.showcase .worship-ministry p,.showcase .worship-row p,.showcase .worship-next p{margin:0}
+.showcase .worship-program{display:flex;flex-direction:column}
+.showcase .worship-row{display:grid;grid-template-columns:30% 1fr;gap:12px;padding:clamp(8px,1.2vh,14px) 0;border-bottom:1px solid #c8c4b9;font-size:clamp(10px,.82vw,14px);line-height:1.5}
+.showcase .worship-row time{font-family:var(--ws-type-display-en,"Bodoni Moda",serif);font-size:clamp(13px,1.05vw,18px);font-variant-numeric:lining-nums;white-space:nowrap}
+.showcase .worship-row strong{font-weight:500;display:block;margin-bottom:3px}
+.showcase .worship-next{border-top:1px solid #8b8b81;padding-top:10px;font-size:clamp(10px,.75vw,12px);line-height:1.6}
+.showcase .worship-next span{font-size:10px;letter-spacing:.09em}
+
+/* P2 diptych: remove the legacy framed-page look and prevent schedule cutoff. */
+.showcase .church-editorial__copy{overflow:hidden!important;justify-content:flex-start!important;gap:clamp(6px,.7vh,12px)!important}
+.showcase .church-editorial__copy .schedule-heading{font-size:clamp(30px,3.2vw,58px)!important;line-height:.85!important}
+.showcase .church-editorial__copy .schedule-kicker{font-size:11px!important;line-height:1.2!important}
+.showcase .church-schedule-source{border:0!important;background:transparent!important;overflow-y:auto!important;overscroll-behavior:contain!important;scrollbar-width:thin!important}
+.showcase .sunday-schedule{min-height:0!important;gap:clamp(6px,.7vh,12px)!important;padding:0!important}
+.showcase .worship-row{padding:clamp(5px,.65vh,9px) 0!important}
+.showcase .church-editorial__copy>a{display:none!important}
+
+/* Restore existing seven-scene folio above animated water and editorial layers. */
+.showcase .stage>.index{display:block!important;visibility:visible!important;opacity:1!important;position:absolute!important;right:clamp(20px,3vw,48px)!important;bottom:14px!important;z-index:80!important;color:#252525!important;pointer-events:none!important;font-variant-numeric:lining-nums!important}
+/* ONE lower-half scripture scene. Never expand it into a separate full-screen slide. */
+.showcase .composition{top:50svh!important;bottom:0!important;height:50svh!important;min-height:0!important;overflow:visible!important;z-index:36!important}
+.showcase .composition .edition.editorial-john{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;box-sizing:border-box!important;overflow:hidden!important;visibility:hidden;padding:clamp(10px,1.4vh,20px) clamp(20px,3vw,50px)!important;grid-template-rows:auto minmax(0,1fr) auto auto!important;row-gap:clamp(2px,.5vh,7px)!important}
+.showcase .composition .edition.editorial-john.is-current{visibility:visible!important}
+.showcase .composition .edition.editorial-john .ej-title{font-size:clamp(56px,10vw,170px)!important;line-height:.75!important;align-self:center!important}
+.showcase .composition .edition.editorial-john .ej-copy{font-size:clamp(12px,1.15vw,20px)!important;align-self:center!important}
+.showcase .composition .edition.editorial-john .ej-zh{font-size:clamp(10px,.85vw,14px)!important}
+.showcase .composition .edition.editorial-john .ej-mast{font-size:clamp(8px,.65vw,11px)!important}
+.showcase .composition .edition.editorial-john .ej-footer{font-size:clamp(8px,.65vw,11px)!important}
+</style><style id="p2-single-v75-authority">
+.showcase .stage{isolation:isolate!important}
+.showcase .planes{z-index:45!important;top:0!important;height:50svh!important;overflow:hidden!important}
+.showcase .planes .plane{height:100%!important;transform-origin:top center!important}
+.showcase .composition{position:absolute!important;top:50svh!important;bottom:0!important;height:50svh!important;min-height:0!important;overflow:hidden!important;z-index:40!important;pointer-events:none!important}
+.showcase .composition .edition.editorial-john{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;visibility:hidden;box-sizing:border-box!important;overflow:hidden!important;background:transparent!important;padding:clamp(9px,1.2vh,18px) clamp(20px,3vw,48px)!important;grid-template-rows:auto minmax(0,1fr) auto auto!important}
+.showcase .composition .edition.editorial-john.is-current{visibility:visible!important}
+.showcase .composition .edition.editorial-john .ej-title{font-size:clamp(54px,9vw,165px)!important;line-height:.75!important}
+.showcase .composition .edition.editorial-john .ej-copy{font-size:clamp(12px,1.15vw,19px)!important}
+.showcase .ocean-rise{display:block!important;position:absolute!important;inset:0!important;z-index:30!important;transform:none!important;overflow:hidden!important;background:#eeeae1!important;opacity:1!important;visibility:visible!important}
+.showcase .ocean-rise .v75-sea-water{position:absolute!important;inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;border:0!important;max-width:none!important;clip-path:none!important;transform:none!important}
+.showcase .church-editorial{position:absolute!important;inset:0!important;z-index:35!important;display:grid!important;grid-template-columns:1fr 1fr!important;background:transparent!important;overflow:hidden!important;pointer-events:none!important}
+.showcase .church-editorial__visual{background:transparent!important;background-image:none!important;pointer-events:none!important}
+.showcase .church-editorial__copy{grid-column:2!important;background:#eeeae1!important;transform:translateX(calc((1 - var(--p2-door-open,0))*102%))!important;transition:none!important;pointer-events:auto!important;min-height:0!important}
+.showcase .church-schedule-source{overflow-y:auto!important;min-height:0!important;flex:1!important}
+.showcase .stage>.index{display:block!important;visibility:visible!important;opacity:1!important;z-index:90!important;position:absolute!important;right:clamp(20px,3vw,48px)!important;bottom:14px!important}
+</style><style id="p2-seven-fold-water-authority">
+/* Legacy V10 background artwork is forbidden in P2. Only the V75 iframe paints water. */
+.showcase .ocean-rise__leaf,.showcase .church-editorial__visual,.showcase .ocean-rise__surface{background-image:none!important}
+.showcase .planes{display:block!important;visibility:visible;z-index:50!important}
+.showcase .planes .plane{position:absolute!important;top:0!important;left:0!important;width:100%!important;height:100%!important;transform-origin:top center!important;will-change:transform}
+.showcase .composition{z-index:40!important}
+.showcase .ocean-rise{z-index:30!important}
+</style><style id="p2-water-door-authority">
+/* The water itself is the two doors. The schedule remains fixed behind them. */
+.showcase .church-editorial{z-index:34!important;visibility:visible}
+.showcase .church-editorial__copy{transform:none!important;transition:none!important}
+.showcase .water-doors{position:absolute;inset:0;z-index:37;pointer-events:none;overflow:hidden;visibility:hidden}
+.showcase[data-p2-phase="red-sea"] .water-doors,.showcase[data-p2-phase="church"] .water-doors{visibility:visible}
+.showcase .water-door{position:absolute;top:0;bottom:0;width:50%;background:#eeeae1;will-change:transform;box-shadow:0 0 0 1px rgba(37,37,37,.06)}
+.showcase .water-door--left{left:0;transform:translateX(calc(var(--p2-door-open,0)*-101%))}
+.showcase .water-door--right{right:0;transform:translateX(calc(var(--p2-door-open,0)*101%))}
+.showcase .ocean-rise{z-index:30!important}
+.showcase .composition{z-index:40!important}
+.showcase .planes{z-index:50!important}
+</style><style id="p2-visible-rise-motion">
+/* The approved V75 animation translates upward with the advancing waterline. */
+.showcase .ocean-rise .v75-sea-water{transform:translate3d(0,var(--p2-rise-shift,50svh),0)!important;will-change:transform!important}
+</style><style id="p2-geometry-correction">
+/* Explicitly override historical iframe 200%-width rules and clipping. */
+.showcase .ocean-rise{display:block!important;inset:0!important;width:100%!important;height:100%!important;clip-path:none}
+.showcase .ocean-rise iframe.v75-sea-water{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;min-width:0!important;object-fit:fill!important;clip-path:none!important}
+.showcase .planes{display:block!important;position:absolute!important;inset:0 0 auto!important;height:50svh!important;visibility:visible}
+.showcase .planes .plane{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;transform-origin:top center!important}
+.showcase .church-editorial{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+.showcase .church-editorial__visual{grid-column:1!important;width:100%!important;min-width:0!important}
+.showcase .church-editorial__copy{grid-column:2!important;width:100%!important;min-width:0!important}
+</style><style id="p2-v75-door-surface">
+/* The ONE live V75 is the water door surface; never cover it with opaque beige leaves. */
+.showcase .water-doors{display:none!important}
+.showcase .ocean-rise{z-index:37!important;pointer-events:none!important}
+.showcase .ocean-rise iframe.v75-sea-water{width:100%!important;height:100%!important}
+.showcase[data-p2-phase="red-sea"] .ocean-rise,
+.showcase[data-p2-phase="church"] .ocean-rise{
+ -webkit-mask-image:linear-gradient(to right,#000 0%,#000 50%,transparent 50%,transparent calc(50% + 50% * var(--p2-door-open,0)),#000 calc(50% + 50% * var(--p2-door-open,0)),#000 100%);
+ mask-image:linear-gradient(to right,#000 0%,#000 50%,transparent 50%,transparent calc(50% + 50% * var(--p2-door-open,0)),#000 calc(50% + 50% * var(--p2-door-open,0)),#000 100%);
+}
+.showcase .church-editorial{z-index:34!important}
+</style></head><body data-ws-scope="global"><section class="showcase" aria-label="P2 教會左右半屏動效預覽"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
+<article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
+
+<div class="ej-mast"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></div>
+<p class="ej-full" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
+<h2 class="ej-title" aria-hidden="true"><span>Living</span><em>Water.</em></h2>
+<p class="ej-copy" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
+<p class="ej-zh ws-lineguard--short" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江⁠河⁠來⁠。</p>
+<div class="ej-footer"><span class="ws-scripture-reference"><span lang="zh-Hant">約翰福音 7:38</span><span class="ws-scripture-reference-divider" aria-hidden="true">/</span><span lang="en">JOHN 7:38 · KJV</span></span><a href="/church/">ENTER LIVING WATER</a></div>
+</article>
+<article class="edition" data-variant="1"><div class="headline"><span class="category">02 / Magazine</span><h2>Watch<br><i>for Dawn.</i></h2><div class="cn">西望 · 獨立網絡雜誌</div></div><div class="detail"><p class="description">以文字、影像與編輯的秩序，重新理解我們所生活的世界。</p><a href="/journal/">READ THE JOURNAL</a></div></article>
+<article class="edition" data-variant="2"><div class="headline"><span class="category">03 / Emmaus</span><h2>The<br><i>Word.</i></h2><div class="cn">以馬忤斯 · 查經</div></div><div class="detail"><p class="description">從經文到版畫，從歷史到敘事。查經本身也可以成為一篇完整的視覺專題。</p><a href="/one/">EXPLORE EMMAUS</a></div></article>
+<article class="edition" data-variant="3"><div class="headline"><span class="category">04 / Olive Mountain</span><h2>Voices<br><i>of Faith.</i></h2><div class="cn">橄欖山 · 人物與講道</div></div><div class="detail"><p class="description">人物、聲音與思想，透過肖像與編輯式人物專題重新相遇。</p><a href="/olive/">MEET THE VOICES</a></div></article>
+<article class="edition" data-variant="4"><div class="headline"><span class="category">05 / Dawn Library</span><h2>Pages<br><i>of Light.</i></h2><div class="cn">黎明書局 · 閱讀與研究</div></div><div class="detail"><p class="description">書封、文字與內頁，在四分之一的空間裡打開另一個閱讀世界。</p><a href="/dawn-library/">OPEN THE LIBRARY</a></div></article>
+<article class="edition" data-variant="5"><div class="headline"><span class="category">06 / Paradise Cinema</span><h2>Moving<br><i>Images.</i></h2><div class="cn">天堂電影院 · 影像</div></div><div class="detail"><p class="description">銀幕不只播放故事，也讓影像、標題與時間共同構成電影雜誌的語言。</p><a href="/cinema/">ENTER CINEMA</a></div></article>
+<article class="edition" data-variant="6"><div class="headline"><span class="category">07 / Daylight Café</span><h2>Everyday<br><i>Light.</i></h2><div class="cn">日光咖啡館 · 生活</div></div><div class="detail"><p class="description">在日常生活的細節裡，留下一個讓光進來的位置。</p><a href="/daylight-cafe/">ENTER DAYLIGHT</a></div></article>
+</div><div class="church-editorial" aria-hidden="true"><div class="church-editorial__visual"></div><div class="church-editorial__copy"><small>THE CHURCH / WEEKLY LIFE</small><h2 class="schedule-heading">Living<br><i>Water.</i></h2><p class="schedule-kicker">活水堂西區 · 聚會日程</p><section class="church-schedule-source" aria-label="2026年10月11日主日敬拜完整日程"><div class="sunday-schedule"><div class="sunday-schedule__top"><span>SUNDAY WORSHIP / 11 OCT 2026</span><span>10:30—13:30</span></div><h3>主日敬拜<span>Sunday Worship · 凡事謝恩</span></h3><div class="worship-ministry"><span>今日事奉</span><p>主任牧師：高梓良牧師<br>司會主席：馬勝龍弟兄　敬拜主領：張華弟兄<br>今日證道：鄭輝牧師</p></div><div class="worship-program"><div class="worship-row"><time>10:30–11:00</time><div><strong>以等候宣告敬拜神</strong><p>安靜等候主 · 會眾</p></div></div><div class="worship-row"><time>11:00–11:30</time><div><strong>以揚聲讚美敬拜神</strong><p>讚美敬拜 · 張華弟兄／詩歌 · 會眾（立）</p></div></div><div class="worship-row"><time>11:30–12:20</time><div><strong>以聆聽信息敬拜神</strong><p>證道：凡事謝恩 · 鄭輝牧師</p></div></div><div class="worship-row"><time>12:20–12:40</time><div><strong>以回應奉獻敬拜神</strong><p>回應分享、自由敬拜 · 會眾／奉獻禱告 · 馬勝龍弟兄</p></div></div><div class="worship-row"><time>12:40</time><div><strong>以領受祝福敬拜神</strong><p>三一頌 · 會眾（立）／祝福 · 鄭輝牧師</p></div></div><div class="worship-row"><time>12:45–13:00</time><div><strong>以關懷相交敬拜神</strong><p>宣教關懷 · 會眾／歡迎來賓、自由交通、彼此問安</p></div></div><div class="worship-row"><time>13:00–13:30</time><div><strong>以合一禱告敬拜神</strong><p>謝飯禱告、愛宴 · 會眾</p></div></div></div><div class="worship-next"><span>NEXT SUNDAY / 18 OCT</span><p>證道：陳璟煜傳道　主席：張華弟兄　敬拜：鄭輝牧師</p></div><div class="sunday-schedule__place"><span>LOCATION</span><p>205 Wilmington Ave., North York, ON M3H 6B3</p></div></div></section></div></div><div class="ocean-rise" aria-hidden="true"><iframe class="v75-sea-water" src="/experiments/p2-living-water-v75.html" title="SVG-075 continuous water" tabindex="-1" aria-hidden="true"></iframe></div><div class="water-doors" aria-hidden="true"><div class="water-door water-door--left"></div><div class="water-door water-door--right"></div></div><div class="index" aria-live="off">01 / 07</div></div></section><script>(()=>{'use strict';const root=document.querySelector('.showcase'),planes=[...root.querySelectorAll('.plane')],wrap=root.querySelector('.planes'),scripture=root.querySelector('.editorial-john'),editions=[...root.querySelectorAll('.edition')],sea=root.querySelector('.ocean-rise'),church=root.querySelector('.church-editorial'),index=root.querySelector('.index');const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};let raf=0,externalProgress=0;const previewMode=location.pathname.includes('/experiments/');function render(){raf=0;const vh=(previewMode?-root.getBoundingClientRect().top:externalProgress*innerHeight*2.9)/Math.max(1,innerHeight);const reveal=clamp(vh/.67,0,1),rise=smooth((vh-.75)/.43),opening=smooth((vh-1.27)/.65),showChurch=vh>=1.27;const waterTop=(1-rise)*50,wave=[];for(let j=0;j<=48;j++){const x=j*100/48;const ripple=(rise>0&&rise<1?Math.sin(Math.PI*rise):0)*(1.5*Math.sin(x*.18+performance.now()*.0011)+.65*Math.sin(x*.47-performance.now()*.0007));wave.push(x.toFixed(2)+'% '+Math.max(0,waterTop+ripple).toFixed(2)+'%')}sea.style.setProperty('clip-path','polygon('+wave.join(',')+',100% 100%,0% 100%)','important');sea.style.setProperty('--p2-rise-shift',((1-rise)*50).toFixed(3)+'svh');sea.style.setProperty('--p2-door-open',opening.toFixed(5));sea.style.visibility='visible';sea.style.opacity='1';planes.forEach((el,i)=>{el.style.setProperty('transform','scaleY('+smooth((reveal-i*.095)/.43)+')','important')});wrap.style.visibility=vh<.73?'visible':'hidden';wrap.style.opacity=String(1-smooth((vh-.68)/.05));scripture.classList.toggle('is-current',vh<.75);scripture.style.visibility=vh<.68?'visible':'hidden';scripture.style.opacity=String(1-smooth((vh-.69)/.06));scripture.setAttribute('aria-hidden',vh<.68?'false':'true');for(const el of editions)if(el!==scripture){el.classList.remove('is-current');el.style.visibility='hidden';el.style.opacity='0'}church.style.visibility=showChurch?'visible':'hidden';church.style.opacity=String(smooth((vh-1.27)/.12));root.style.setProperty('--p2-door-open',opening.toFixed(5));church.setAttribute('aria-hidden',showChurch?'false':'true');root.dataset.p2Phase=vh<.73?'identity':vh<1.27?'ocean-rise':vh<1.92?'red-sea':'church';index.textContent='01 / 07'}function schedule(){if(!raf)raf=requestAnimationFrame(render)}function animateWater(){if(document.visibilityState==='visible'&&root.dataset.p2Phase==='ocean-rise')schedule();requestAnimationFrame(animateWater)}requestAnimationFrame(animateWater);addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||e.data.type!=='westside-p2-scroll')return;externalProgress=clamp(Number(e.data.progress)||0,0,1);schedule()});render()})();</script>
+
+</body></html>

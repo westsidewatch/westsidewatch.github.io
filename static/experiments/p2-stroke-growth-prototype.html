@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-Hant"><head><link rel="stylesheet" href="/css/westside-design-os.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>P2 SVG-002 — Engraved Stroke Growth Prototype</title>
+<style>
+:root{color-scheme:light;--paper:#eae6dc;--ink:#355a66}*{box-sizing:border-box}body{margin:0;background:var(--paper);font:14px/1.5 system-ui,sans-serif;color:#252525}
+main{height:350svh}.stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--paper)}
+svg{width:100%;height:100%;display:block}path{fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round}
+header{position:absolute;top:16px;left:20px;z-index:3;max-width:36ch;pointer-events:none}
+header h1{font:400 clamp(25px,4vw,50px)/1.1 Georgia,serif;margin:0 0 10px}header p{margin:0}
+footer{position:absolute;bottom:20px;left:20px;right:20px;display:flex;justify-content:space-between;z-index:3;pointer-events:none}
+@media(prefers-reduced-motion:reduce){main{height:100svh}.stage{position:relative}}
+</style></head><body data-ws-scope="p2"><main><div class="stage"><header><h1>Living Water / Stroke Growth</h1><p>SVG-002 isolated prototype · Scroll to grow engraved lines, then part them. No water fill, mask or translated SVG plate.</p></header><svg id="field" viewBox="0 0 1600 900" preserveAspectRatio="none" role="img" aria-label="刻線從下方生長、湧升、最後向左右分開的技術原型"><g id="strokes"></g></svg><footer><span id="phase">01 / GROWTH</span><span>Research prototype · Not production</span></footer></div></main>
+<script>
+(()=>{
+'use strict';
+const NS='http://www.w3.org/2000/svg',main=document.querySelector('main'),group=document.querySelector('#strokes'),phase=document.querySelector('#phase');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)'),count=138,segments=32,lines=[],clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),smooth=x=>{x=clamp(x,0,1);return x*x*(3-2*x)};
+let tick=0,scroll=0,scheduled=false;
+const random=(i,k)=>{let x=Math.sin(i*127.1+k*311.7)*43758.5453;return x-Math.floor(x)};
+for(let i=0;i<count;i++){
+ const path=document.createElementNS(NS,'path');path.setAttribute('stroke-width',(0.55+random(i,2)*1.45).toFixed(2));path.setAttribute('opacity',(0.24+random(i,3)*.48).toFixed(2));group.appendChild(path);
+ lines.push({path,x:20+(i+.5)*1560/count+(random(i,1)-.5)*13,seed:random(i,4),sway:random(i,5)*Math.PI*2});
+}
+function render(){
+ scheduled=false;
+ const range=Math.max(1,main.offsetHeight-innerHeight);
+ scroll=reduced.matches?1:clamp(-main.getBoundingClientRect().top/range,0,1);
+ const growth=smooth(scroll/.7),part=smooth((scroll-.7)/.3);
+ const time=performance.now()/1000;
+ for(let i=0;i<count;i++){
+  const line=lines[i],extent=900*growth,stagger=(line.seed-.5)*65;
+  // A real tip starts at the bottom and advances upward. Every point in
+  // this path is generated behind that tip, not revealed by a clip/mask.
+  const tip=900-extent+stagger*(1-growth),tail=Math.min(900,tip+230+line.seed*180);
+  let d='';
+  for(let j=0;j<=segments;j++){
+   const y=tip+(tail-tip)*j/segments;
+   const upward=smooth((900-y)/900),wave=Math.sin(y*.018-time*1.9+line.sway)*12+Math.sin(y*.043+time*1.2+line.sway)*4;
+   const x0=line.x+wave*(.3+.7*upward)+Math.sin(y*.006+line.sway)*16;
+   const direction=line.x<800?-1:1;
+   const seam=1-Math.min(1,Math.abs(line.x-800)/800);
+   const x=x0+part*direction*(880+180*seam)*smooth((900-y)/900);
+   d+=(j?'L':'M')+x.toFixed(2)+' '+y.toFixed(2);
+  }
+  line.path.setAttribute('d',d);
+ }
+ phase.textContent=part>.05?'03 / PARTING':growth>.03?'02 / STROKES GROW':'01 / INITIAL SEA';
+}
+function frame(){tick=requestAnimationFrame(frame);render()}
+if(reduced.matches){render()}else{tick=requestAnimationFrame(frame)}
+reduced.addEventListener('change',()=>{if(reduced.matches){cancelAnimationFrame(tick);render()}else if(!tick)tick=requestAnimationFrame(frame)});
+})();
+</script></body></html>
