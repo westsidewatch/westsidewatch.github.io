@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#d9e8ea}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-048 · ORIGINAL P2 V10 MOTION</div><script>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#d9e8ea}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-049 · V10 UPPER COMPLETION</div><script>
 (()=>{'use strict';
 const holder=document.getElementById('v10');
 holder.addEventListener('load',()=>{
@@ -15,12 +15,43 @@ holder.addEventListener('load',()=>{
   for(const attr of ['opacity','stroke-width','stroke','stroke-linecap'])if(original.hasAttribute(attr))out.setAttribute(attr,original.getAttribute(attr));
   group.appendChild(out);paths.push({points,out,baseOpacity:Number(original.getAttribute('opacity')||1)});
  }
+
+ // Upper completion is a separate SVG. The original lower-half v10 object
+ // keeps precisely its approved dimensions, coordinates and original motion.
+ const upperGroup=document.getElementById('upper-lines'),upperPaths=[];
+ const guides=paths.filter(p=>p.points.some(q=>q[1]>=-110&&q[1]<=110));
+ const edge=[];
+ for(let j=0;j<=110;j++){
+  const x=1600*j/110;let best=null;
+  for(const guide of guides){
+   const a=guide.points;
+   for(let k=1;k<a.length;k++){
+    const p=a[k-1],q=a[k],dx=q[0]-p[0];
+    if(Math.abs(dx)<.0001||x<Math.min(p[0],q[0])||x>Math.max(p[0],q[0]))continue;
+    const y=p[1]+(q[1]-p[1])*(x-p[0])/dx;
+    if(y< -110||y>110)continue;
+    if(best===null||y<best)best=y;
+   }
+  }
+  edge.push([x,best===null?0:best]);
+ }
+ for(let k=0;k<195;k++){
+  const v=(k+.5)/195,points=edge.map(([x,y])=>{
+   const u=x/1600,fade=Math.pow(1-v,1.5);
+   const curvature=fade*(y*.32+22*Math.sin(u*5.3+v*.9)+9*Math.sin(u*10.1-v*1.2));
+   return [x,-900*v+curvature];
+  });
+  const out=document.createElementNS(NS,'path');
+  out.setAttribute('stroke-width',(.42-.20*v).toFixed(3));
+  upperGroup.appendChild(out);
+  upperPaths.push({points,out,baseOpacity:.15+.11*(1-v)});
+ }
  const originalGroup=root.querySelector('g');if(originalGroup)originalGroup.replaceWith(group);else root.appendChild(group);
  let t=0,last=0,ready=true;
  function frame(now){requestAnimationFrame(frame);if(!last)last=now;const dt=Math.min(.05,(now-last)/1000);last=now;if(!ready)return;t+=dt;const travel=1.5,contrast=2,amp=6,breath=21*Math.sin(t*Math.PI/7)+5*Math.sin(t*Math.PI/13);
 // A single continuous phase field governs every engraving point; y only modulates speed smoothly.
 const field=(x,y)=>{const layer=smooth((y-180)/610),speed=.78+contrast*.25*layer,warp=18*Math.sin(y*.0065+x*.0018),phase=.012*(x+warp)-t*.9*travel*speed;return {layer,phase}};
-for(const {points,out,baseOpacity} of paths){let d='';for(let i=0;i<points.length;i++){const [x,y]=points[i],{layer,phase}=field(x,y),envelope=.72+.28*layer;const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);const densityStrength=2.5,verticalMask=Math.sin(Math.PI*clamp(y/900,0,1)),stationaryRidges=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002),spacingShift=densityStrength*1.8*verticalMask*stationaryRidges*Math.sin(y*.046);const yy=y+breath*.18+amp*envelope*(.82*carrier+.12*secondary)+spacingShift;const xx=x+amp*(.35*carrier+.10*secondary);d+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)}out.setAttribute('d',d);out.setAttribute('opacity',baseOpacity.toFixed(3))}}requestAnimationFrame(frame);
+for(const {points,out,baseOpacity} of [...paths,...upperPaths]){let d='';for(let i=0;i<points.length;i++){const [x,y]=points[i],{layer,phase}=field(x,y),envelope=.72+.28*layer;const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);const densityStrength=2.5,verticalMask=Math.sin(Math.PI*clamp(y/900,0,1)),stationaryRidges=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002),spacingShift=densityStrength*1.8*verticalMask*stationaryRidges*Math.sin(y*.046);const yy=y+breath*.18+amp*envelope*(.82*carrier+.12*secondary)+spacingShift;const xx=x+amp*(.35*carrier+.10*secondary);d+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)}out.setAttribute('d',d);out.setAttribute('opacity',baseOpacity.toFixed(3))}}requestAnimationFrame(frame);
 });
 })();
 </script></body></html>
