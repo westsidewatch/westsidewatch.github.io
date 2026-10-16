@@ -34,6 +34,8 @@ Every 「多雷探索」 should be findable by **technical category** and **owni
 | SVG-001 | 2026-10-16 | SVG, MOTION | P2, CHURCH | Continuous engraved-ocean rise and Red Sea opening: retain Fixed Ocean 2.5 SVG; evaluate unified water-height field and shared clock, instead of moving a page/clip alone | Candidate; not implemented or browser-verified | [simplex-noise.js](https://github.com/jwagner/simplex-noise.js), [noisejs](https://github.com/josephg/noisejs), [polymorph](https://github.com/notoriousb1t/polymorph), [flubber](https://github.com/veltman/flubber) |
 | MOTION-001 | 2026-10-16 | MOTION, SVG | P2, CHURCH | Separate time-driven flowing motion from scroll-driven water level / parting; calculate in one animation loop; ensure reversible scroll | Proposed architecture; no visual acceptance | [MDN requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame), [MDN clip-path](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path) |
 
+| SVG-002 | 2026-10-16 | SVG, MOTION | P2, CHURCH | Self-propagating engraved strokes: growing tips advected through an upward vector field, continuous tail motion, new streamline seeding | Research; not implemented | [Vivus](https://github.com/maxwellito/vivus), [raster-streamlines example](https://gist.github.com/rveciana/edb1dd43f3edc5d16ecaf4839c032dec) |
+
 ## Category: SVG — vector research / 向量技術
 
 ### SVG-001 — Engraved ocean: continuous rise → parting
@@ -47,6 +49,18 @@ Every 「多雷探索」 should be findable by **technical category** and **owni
 - **License and footprint:** Check exact versions and current licenses before importing; no package selected or installed yet.
 - **Acceptance pending:** Water itself visibly rises; engraved lines continue flowing during the rise; no static frame or seam; full-screen ocean then parts; reverse scroll restores prior state; real Cloudflare preview tested on desktop/mobile, including reduced motion.
 - **Status:** Explored / proposed, **not implemented**, **not validated**.
+
+### SVG-002 — Self-growing engraved-water streamlines (preferred target)
+
+- **Projects:** P2 / CHURCH. **Status:** Research only; not implemented, not browser-verified.
+- **Requirement:** The engraved lines themselves emerge from the lower half, propagate upward, curl and replenish as moving water; no translated SVG plate, flat rising panel, or waterline mask as the principal illusion.
+- **Open-source evidence:** [Vivus](https://github.com/maxwellito/vivus) demonstrates lightweight dependency-free SVG stroke growth via dash offset. [raster-streamlines example](https://gist.github.com/rveciana/edb1dd43f3edc5d16ecaf4839c032dec) demonstrates integrating streamlines through a vector field. Neither is a drop-in rising-water effect.
+- **Architecture candidate:** Seed streamlines at/near the existing water surface; advance line heads through an upward time-dependent flow field, retain animated tails, spawn lines to replenish coverage, and transition the same vector field into lateral parting. Preserve the v10 engraving's stroke character and approved motion parameters.
+- **Performance requirement:** Avoid recomputing SVG path lengths and re-creating DOM elements per frame; cap path and point counts, sample/update on a shared clock, test CPU and reduced-motion.
+- **Comparison:** Vivus-style progressive drawing alone produces illustration reveal, not surging fluid; streamline advection better models actual line propagation but needs a custom minimal integrator.
+- **Fallback:** Existing PR #1335 wavefront/volume implementation is explicitly **fallback only**, not final accepted design.
+- **Acceptance pending:** Viewers can identify actual line-tip propagation upward without relying on an expanding filled area; continuous motion; reversible scroll; no gaps or stutter; same field parts to left and right.
+- **Licenses:** Verify specific library versions and license texts before incorporating code. No new dependency imported.
 
 ## Category: MOTION — animation architecture
 
