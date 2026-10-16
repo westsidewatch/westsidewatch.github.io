@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water — v10 Redrawn With Living Strokes</title><style>
 *{box-sizing:border-box}html,body{margin:0;background:#e4e9e7;color:#263f48;font:14px/1.5 Georgia,serif}header{padding:16px 3vw;display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:clamp(19px,3vw,30px);font-weight:400;margin:0}button{border:1px solid #72909a;background:transparent;color:inherit;padding:8px 13px;cursor:pointer}main{height:350svh}.stage{height:100svh;position:sticky;top:0;overflow:hidden;background:#d8e7e9}svg{display:block;width:100%;height:100%}path{fill:none;stroke-linecap:round;stroke-linejoin:round}aside{position:absolute;bottom:20px;left:3vw;right:3vw;display:flex;justify-content:space-between;pointer-events:none}#status{position:absolute;top:18px;left:3vw;background:#e4e9e7c9;padding:5px 9px}footer{padding:25px 3vw;height:18svh}@media(prefers-reduced-motion:reduce){main{height:100svh}.stage{position:relative}}</style></head><body>
-<header><h1>Living Water / v10 Living Engraving</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-label="以 v10 原稿路徑重繪並生長的活水刻線"><g id="lines"></g></svg><div id="status">Loading v10 geometry…</div><aside><span id="phase">01 / HORIZONTAL FLOW</span><span>SVG-006 · v10 breathing field</span></aside></div></main><footer>單層 v10 全刻線：引入正式 P2 的共享波浪相位、呼吸、層差與刻線起伏；保留原始形態，不再疊加風紋。</footer>
+<header><h1>Living Water / v10 Living Engraving</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-label="以 v10 原稿路徑重繪並生長的活水刻線"><g id="lines"></g></svg><div id="status">Loading v10 geometry…</div><aside><span id="phase">01 / HORIZONTAL FLOW</span><span>SVG-007 · synchronized slow growth</span></aside></div></main><footer>v10 全刻線共用慢速呼吸流場；局部生長前緣以 18–26 秒週期沿同一曲線推進，避免高速風紋。</footer>
 <script>(()=>{'use strict';const NS='http://www.w3.org/2000/svg',root=document.querySelector('#scroll'),out=document.querySelector('#lines'),phase=document.querySelector('#phase'),status=document.querySelector('#status'),pause=document.querySelector('#pause');let strokes=[],clock=0,last=0,halt=false,progress=0,ready=false;const reduced=matchMedia('(prefers-reduced-motion: reduce)'),clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),smooth=x=>{x=clamp(x);return x*x*(3-2*x)},rand=i=>{const n=Math.sin(i*127.1+78.233)*43758.5453;return n-Math.floor(n)};
 function scroll(){const r=root.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));phase.textContent=progress<.36?'01 / HORIZONTAL FLOW':progress<.74?'02 / RISING WATER':'03 / PARTING SEA'}addEventListener('scroll',scroll,{passive:true});scroll();
 pause.addEventListener('click',()=>{halt=!halt;pause.textContent=halt?'Resume':'Pause'});
@@ -8,9 +8,9 @@ function sample(p){let len;try{len=p.getTotalLength()}catch{return null}if(!len|
 function paint(){
 if(!ready)return;
 const rise=smooth((progress-.32)/.4),part=smooth((progress-.73)/.24),time=reduced.matches?0:clock;
-const travel=1.5,contrast=2,amp=6,breath=21*Math.sin(time*Math.PI/7)+5*Math.sin(time*Math.PI/13);
+const travel=.62,contrast=2,amp=6,breath=21*Math.sin(time*Math.PI/7)+5*Math.sin(time*Math.PI/13);
 for(const s of strokes){
-const pts=s.pts,N=pts.length-1,cycle=(time*s.speed+s.seed)%1;
+const pts=s.pts,N=pts.length-1;
 // Keep the full engraved structure visible; a moving growth front is a tonal
 // emphasis on the SAME breathing geometry, never a separate windy overlay.
 let d='';
@@ -27,16 +27,21 @@ for(let j=0;j<=N;j++){
  d+=(j?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)+' ';
 }
 s.el.setAttribute('d',d);
-// Breathing structure is continuous; the growth tip travels along its
-// source curve and softly illuminates nearby strokes, without gaps.
-const tip=cycle,glow=.5+.5*Math.sin(time*1.2+s.seed*6);
-s.el.setAttribute('stroke-opacity',String(Math.min(1,s.opacity*(.78+.22*glow))));
-s.el.setAttribute('stroke-dasharray','none');
+s.el.setAttribute('stroke-opacity',String(s.opacity));
+// Growth front follows the same breathing geometry. One complete advance
+// takes 18–26 seconds; no rapid independent particle-like sweep.
+if(s.growth){
+ s.growth.setAttribute('d',d);
+ const cycle=(time/s.growthPeriod+s.seed)%1;
+ const head=cycle*1000,tail=Math.max(0,head-225);
+ s.growth.setAttribute('stroke-dasharray',Math.max(1,head-tail).toFixed(1)+' 1000');
+ s.growth.setAttribute('stroke-dashoffset',(-tail).toFixed(1));
+}
 }
 }
 function frame(now){const dt=Math.min(.05,(now-last)/1000||0);if(now-last>=30||!last){last=now;if(!halt)clock+=dt;paint()}requestAnimationFrame(frame)}
 fetch('/experiments/assets/living-water-contour-engraving-v10.svg').then(r=>{if(!r.ok)throw Error('v10 HTTP '+r.status);return r.text()}).then(xml=>{
 const doc=new DOMParser().parseFromString(xml,'image/svg+xml');if(doc.querySelector('parsererror'))throw Error('SVG parse');const source=Array.from(doc.querySelectorAll('path'));const geometry=document.createElementNS(NS,'svg');geometry.setAttribute('viewBox','0 0 1600 900');geometry.style.cssText='position:absolute;width:0;height:0;overflow:hidden;pointer-events:none';geometry.innerHTML='<g>'+source.map(p=>p.outerHTML).join('')+'</g>';document.body.appendChild(geometry);
-const candidates=Array.from(geometry.querySelectorAll('path'));const frag=document.createDocumentFragment();for(let i=0;i<candidates.length;i++){const p=candidates[i],pts=sample(p);if(!pts)continue;const el=document.createElementNS(NS,'path');el.setAttribute('stroke',p.getAttribute('stroke')||'#557b8c');el.setAttribute('stroke-opacity',p.getAttribute('opacity')||'.3');el.setAttribute('stroke-width',p.getAttribute('stroke-width')||'.7');frag.appendChild(el);strokes.push({el,pts,seed:rand(i+1),rise:rand(i+71),speed:.11+rand(i+201)*.15,opacity:Number(p.getAttribute('opacity')||'.3')})}geometry.remove();out.appendChild(frag);ready=true;status.textContent='v10 source paths: '+source.length+' · living strokes: '+strokes.length;setTimeout(()=>{status.style.opacity='.55'},2500);paint()
+const candidates=Array.from(geometry.querySelectorAll('path'));const frag=document.createDocumentFragment();for(let i=0;i<candidates.length;i++){const p=candidates[i],pts=sample(p);if(!pts)continue;const el=document.createElementNS(NS,'path');el.setAttribute('stroke',p.getAttribute('stroke')||'#557b8c');el.setAttribute('stroke-opacity',p.getAttribute('opacity')||'.3');el.setAttribute('stroke-width',p.getAttribute('stroke-width')||'.7');frag.appendChild(el);let growth=null;if(i%3===0){growth=document.createElementNS(NS,'path');growth.setAttribute('stroke',p.getAttribute('stroke')||'#557b8c');growth.setAttribute('stroke-opacity',String(Math.min(.55,Number(p.getAttribute('opacity')||'.3')*1.65)));growth.setAttribute('stroke-width',String(Math.max(.65,Number(p.getAttribute('stroke-width')||'.7')*1.45)));growth.setAttribute('pathLength','1000');frag.appendChild(growth)}strokes.push({el,growth,pts,seed:rand(i+1),rise:rand(i+71),growthPeriod:18+rand(i+201)*8,opacity:Number(p.getAttribute('opacity')||'.3')})}geometry.remove();out.appendChild(frag);ready=true;status.textContent='v10 source paths: '+source.length+' · living strokes: '+strokes.length;setTimeout(()=>{status.style.opacity='.55'},2500);paint()
 }).catch(err=>{status.textContent='Cannot load v10: '+err.message;const fallback=document.createElementNS(NS,'image');fallback.setAttribute('href','/experiments/assets/living-water-contour-engraving-v10.svg');fallback.setAttribute('width','1600');fallback.setAttribute('height','900');out.appendChild(fallback)});requestAnimationFrame(frame);
 })();</script></body></html>
