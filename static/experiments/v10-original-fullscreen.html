@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-059 · CURVATURE-GUIDED HATCHES</div><script>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-060 · NATIVE V10 QUADRATIC HATCHES</div><script>
 (()=>{'use strict';
 const holder=document.getElementById('v10');
 holder.addEventListener('load',()=>{
@@ -109,45 +109,35 @@ holder.addEventListener('load',()=>{
  }
 
 
- // SVG-059: curve-conditioned hatching, no random or modulo distribution.
- // Identify coherent back-facing slopes and local troughs on the ORIGINAL
- // v10-derived upper water geometry. Group short marks along the flow.
+
+ // SVG-060: inherit the ACTUAL short quadratic engravings from v10.
+ // V10 uses short M ... q ... paths, not detached straight M/L dashes.
  const hatchGroup=document.createElementNS(NS,'g');
  hatchGroup.setAttribute('fill','none');
- hatchGroup.setAttribute('stroke','#3c6172');
+ hatchGroup.setAttribute('stroke','#557b8c');
  hatchGroup.setAttribute('stroke-linecap','round');
  upperGroup.appendChild(hatchGroup);
  const hatches=[];
- const eligible=[];
- for(let li=3;li<upperPaths.length-3;li+=2){
-  const p=upperPaths[li].points,above=upperPaths[li-2].points,below=upperPaths[li+2].points;
-  for(let j=4;j<p.length-5;j+=2){
-   const slope=(p[j+2][1]-p[j-2][1])/(p[j+2][0]-p[j-2][0]);
-   const curvature=(p[j+3][1]-2*p[j][1]+p[j-3][1]);
-   const spacing=(below[j][1]-above[j][1])/4;
-   // Back-facing descending water and concave troughs receive hatching;
-   // lit crests remain paper-white. Avoid crossing or dark continuous bands.
-   const shade=Math.max(0,Math.min(1,
-     .40*Math.max(0,slope*9)+.40*Math.max(0,curvature/16)+
-     .20*Math.max(0,(4-spacing)/4)));
-   if(shade>.30)eligible.push({li,j,shade,curvature});
-  }
- }
- // Rank by curvature/occlusion, then suppress nearby candidates so the
- // marks form deliberate localized clusters rather than screen-wide noise.
- eligible.sort((a,b)=>b.shade-a.shade);
- const accepted=[];
- for(const e of eligible){
-  if(accepted.length>=135)break;
-  const x=upperPaths[e.li].points[e.j][0],y=upperPaths[e.li].points[e.j][1];
-  if(accepted.some(v=>Math.abs(v.x-x)<48&&Math.abs(v.y-y)<16))continue;
-  accepted.push({x,y});
+ const sourceHatches=originals.map(o=>{
+  const d=o.getAttribute('d')||'';
+  const m=d.match(/^M\s*([\d.-]+)[ ,]+([\d.-]+)\s*q\s*([\d.-]+)[ ,]+([\d.-]+)[ ,]+([\d.-]+)[ ,]+([\d.-]+)/i);
+  return m?{x:+m[1],y:+m[2],cx:+m[3],cy:+m[4],dx:+m[5],dy:+m[6],
+    opacity:Number(o.getAttribute('opacity')||.15),
+    width:Number(o.getAttribute('stroke-width')||.36)}:null;
+ }).filter(Boolean);
+ // Replicate v10's measured distribution of short quadratic curves in the
+ // upper extension. Each mark is anchored to a host upper streamline.
+ for(let n=0;n<sourceHatches.length;n++){
+  const src=sourceHatches[n];
+  const li=Math.min(upperPaths.length-3,Math.max(2,
+   Math.floor((n+.5)/sourceHatches.length*(upperPaths.length-4))));
+  const line=upperPaths[li],pts=line.points;
+  let j=3;
+  for(let q=4;q<pts.length-4;q++)if(Math.abs(pts[q][0]-src.x)<Math.abs(pts[j][0]-src.x))j=q;
   const out=document.createElementNS(NS,'path');
-  const growing=e.shade>.53&&accepted.length%4===0;
-  out.setAttribute('stroke-width',(0.55+.38*e.shade).toFixed(2));
+  out.setAttribute('stroke-width',String(src.width));
   hatchGroup.appendChild(out);
-  hatches.push({line:upperPaths[e.li],j:e.j,shade:e.shade,growing,out,
-   phase:e.li*.037+e.j*.11,length:8+18*e.shade});
+  hatches.push({src,line,j,out,growing:n%5===0,phase:n*.17});
  }
  const originalGroup=root.querySelector('g');if(originalGroup)originalGroup.replaceWith(group);else root.appendChild(group);
  let t=0,last=0,ready=true;
@@ -156,24 +146,25 @@ holder.addEventListener('load',()=>{
 const field=(x,y)=>{const layer=smooth((y-180)/610),speed=.78+contrast*.25*layer,warp=18*Math.sin(y*.0065+x*.0018),phase=.012*(x+warp)-t*.9*travel*speed;return {layer,phase}};
 for(const {points,out,baseOpacity} of [...paths,...upperPaths]){let d='';for(let i=0;i<points.length;i++){const [x,y]=points[i],{layer,phase}=field(x,y),envelope=.72+.28*layer;const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);const densityStrength=2.5,verticalMask=Math.sin(Math.PI*clamp(y/900,0,1)),stationaryRidges=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002),spacingShift=densityStrength*1.8*verticalMask*stationaryRidges*Math.sin(y*.046);const yy=y+breath*.29+amp*envelope*(.82*carrier+.12*secondary)+spacingShift;const xx=x+amp*(.35*carrier+.10*secondary);d+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)}out.setAttribute('d',d);out.setAttribute('opacity',baseOpacity.toFixed(3))}
 
- // Each mark follows the SAME displacement field as its parent contour.
- // Selected marks grow along the local tangent, never float independently.
+
+ // Animate the source quadratic mark as a deforming part of its host flow.
  for(const h of hatches){
   const p=h.line.points;
-  const shift=h.growing?Math.floor(3*Math.sin(t*.52+h.phase)):0;
-  const idx=Math.max(2,Math.min(p.length-3,h.j+shift));
+  const slide=h.growing?Math.floor(2.5*Math.sin(t*.43+h.phase)):0;
+  const idx=Math.max(2,Math.min(p.length-3,h.j+slide));
   const [x,y]=p[idx],dx=p[idx+1][0]-p[idx-1][0],dy=p[idx+1][1]-p[idx-1][1];
-  const theta=Math.atan2(dy,dx);
+  const angle=Math.atan2(dy,dx);
+  const growth=h.growing?(.7+.3*(.5+.5*Math.sin(t*.72+h.phase))):1;
   const {layer,phase}=field(x,y),envelope=.72+.28*layer;
   const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);
   const xx=x+amp*(.35*carrier+.10*secondary);
   const yy=y+breath*.29+amp*envelope*(.82*carrier+.12*secondary);
-  const growth=h.growing?(.55+.45*(.5+.5*Math.sin(t*.85+h.phase))):1;
-  const len=h.length*growth;
-  const x0=xx-len*.5*Math.cos(theta),y0=yy-len*.5*Math.sin(theta);
-  const x1=xx+len*.5*Math.cos(theta),y1=yy+len*.5*Math.sin(theta);
-  h.out.setAttribute('d','M'+x0.toFixed(1)+' '+y0.toFixed(1)+'L'+x1.toFixed(1)+' '+y1.toFixed(1));
-  h.out.setAttribute('opacity',(.20+.17*h.shade).toFixed(3));
+  const cs=Math.cos(angle),sn=Math.sin(angle),src=h.src;
+  const rot=(u,v)=>[(u*cs-v*sn)*growth,(u*sn+v*cs)*growth];
+  const [cx,cy]=rot(src.cx,src.cy),[ex,ey]=rot(src.dx,src.dy);
+  h.out.setAttribute('d','M'+xx.toFixed(1)+' '+yy.toFixed(1)+
+    'q'+cx.toFixed(1)+' '+cy.toFixed(1)+' '+ex.toFixed(1)+' '+ey.toFixed(1));
+  h.out.setAttribute('opacity',Math.min(.28,src.opacity).toFixed(3));
  }
  }requestAnimationFrame(frame);
 });
