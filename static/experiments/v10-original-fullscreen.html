@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-073 · SELECTIVE RIGHT-SIDE LINE SPACING</div><script>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-074 · SELECTIVE RIGHT-SIDE LINE SPACING</div><script>
 (()=>{'use strict';
 const holder=document.getElementById('v10');
 holder.addEventListener('load',()=>{
@@ -157,7 +157,7 @@ holder.addEventListener('load',()=>{
          (3.2*Math.sin(family+u*1.3)+1.6*Math.sin(family*1.65-u));
        return bend+density;
      })();
-   // SVG-073: alter the contour-index spacing rhythm in ONE of the four
+   // SVG-074: alter the contour-index spacing rhythm in ONE of the four
    // right-side dark families.  A smooth index-space redistribution shifts
    // neighbouring contours in opposite directions; this changes the actual
    // interline distances (and therefore tone) rather than stroke darkness.
@@ -169,7 +169,7 @@ holder.addEventListener('load',()=>{
    // A weaker offset to prevent the downstream fan from opening uniformly.
    const fanV=(progress-.545)/.065;
    const fanRedistribution=rightSpacingWindow*3.0*fanV*Math.exp(-.5*fanV*fanV);
-   // SVG-073: turn the local streamline tangents, rather than shifting the
+   // SVG-074: turn the local streamline tangents, rather than shifting the
    // entire shadow band vertically. The lateral S-curve is strongest at the
    // upper-right convergence and fades to zero on all four sides.
    // Its phase varies with contour depth so adjacent lines do not march in
@@ -189,9 +189,12 @@ holder.addEventListener('load',()=>{
   // upper extension. These are contour-family intervals, not two guessed
   // individual paths: dense neighbours are responsible for the dark bands.
   // Only upper geometry is affected; the original v10 object is untouched.
-  const removeDarkCorridor=(progress>.323&&progress<.367)||
-    (progress>.382&&progress<.429);
-  if(removeDarkCorridor)continue;
+  // SVG-074: fill only the two deletion gaps with a sparse subset of
+  // original-family contours. Keep the dark clusters removed and avoid
+  // a conspicuous blank stripe. No changes to geometry or the lower v10.
+  const inFirstGap=progress>.323&&progress<.367;
+  const inSecondGap=progress>.382&&progress<.429;
+  if((inFirstGap||inSecondGap)&&k%5!==0)continue;
   upperGroup.appendChild(out);
   const opacity=original.baseOpacity;
   const shadow=.90+.10*Math.cos(progress*12*Math.PI);
