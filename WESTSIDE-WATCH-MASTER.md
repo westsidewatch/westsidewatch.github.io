@@ -94,3 +94,24 @@ This order applies to P2, navigation, documentation and later First Look alignme
 ## Next engineering stage
 
 P2 seven-realm storyboard and shared motion architecture, in homepage 01–07 order. Preserve the approved church identity reveal, seven-layer folding, Fixed Ocean 2.5, and build the distinct church opening before extending the other six. Browser-verify transitions, responsive behavior, reduced-motion and exact asset continuity before claiming completion.
+
+## Proposed project — automatic engineering context recovery (backlog only)
+
+**Status:** Proposed / not started. **Priority:** Deferred until the user explicitly asks to initiate this project. Do not let this proposal interrupt current website work.
+
+**Problem:** AI assistants can lose reliable continuity across long conversations and sessions, requiring the user to repeat settled decisions, preview URLs, branch/PR state and unfinished work.
+
+**Goal:** On resuming a Westside Watch task, automatically read the canonical engineering memory and relevant project-specific Markdown, reconcile it against current GitHub/PR/Cloudflare state, and then continue the established workflow with minimal user repetition.
+
+**Proposed scope:**
+- Discover `WESTSIDE-WATCH-MASTER.md` as the master index, then load only the relevant specialist MDs for the requested project.
+- Recover approved design constraints, known assets, current PR/branch, confirmed Cloudflare Pages preview URL, outstanding issues, acceptance checks and the most recent verified state.
+- Check actual repository and deployment status before making claims; label stale, unverified or contradictory entries for correction rather than silently treating them as fact.
+- Preserve a concise project handoff/decision log in Markdown so future sessions and different agents can resume the same project.
+- Enforce the site-wide Cloudflare PR-preview workflow: same project → same PR/preview; no merge without explicit user instruction.
+- Prefer an existing open-source or built-in mechanism; avoid creating a second competing Design OS, memory service, or unnecessary background infrastructure.
+
+**Possible later acceptance criteria:** A new conversation can resume an existing project by reading its MD and current GitHub state, correctly identify the working Cloudflare preview, preserve approved decisions, and proceed without asking the user to restate the workflow.
+
+**Non-goals for now:** No implementation, automation, CI, deployment, new PR, new tool installation, or changes to production as part of this proposed project. Revisit only on request.
+
