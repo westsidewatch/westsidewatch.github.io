@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-067 · RIGHT CONTOUR FAMILY REFINEMENT</div><script>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-068 · TWO V10 QUADRATIC ACCENTS</div><script>
 (()=>{'use strict';
 const holder=document.getElementById('v10');
 holder.addEventListener('load',()=>{
@@ -201,6 +201,19 @@ holder.addEventListener('load',()=>{
   hatchGroup.appendChild(out);
   hatches.push({src,line,j,out,growing:n%5===0,phase:n*.17});
  }
+ // Two restrained, v10-derived short quadratic shadow cuts, placed only
+ // in the upper-right parallel corridor; never full-width dark ridges.
+ const accents=[];
+ for(const [li,xpos] of [[Math.floor(upperPaths.length*.31),1380],[Math.floor(upperPaths.length*.48),1490]]){
+  const line=upperPaths[Math.max(2,Math.min(upperPaths.length-3,li))];
+  const j=Math.max(4,Math.min(line.points.length-5,Math.round(xpos/1600*140)));
+  const src=sourceHatches.length?sourceHatches[(j+li)%sourceHatches.length]:null;
+  if(!src)continue;
+  const out=document.createElementNS(NS,'path');
+  out.setAttribute('stroke-width',String(Math.min(.85,Math.max(.45,src.width*1.25))));
+  hatchGroup.appendChild(out);
+  accents.push({line,j,out,src});
+ }
  const originalGroup=root.querySelector('g');if(originalGroup)originalGroup.replaceWith(group);else root.appendChild(group);
  let t=0,last=0,ready=true;
  function frame(now){requestAnimationFrame(frame);if(!last)last=now;const dt=Math.min(.05,(now-last)/1000);last=now;if(!ready)return;t+=dt;const travel=1.85,contrast=2.15,amp=10.5,breath=31*Math.sin(t*Math.PI/7)+9*Math.sin(t*Math.PI/13);
@@ -209,6 +222,22 @@ const field=(x,y)=>{const layer=smooth((y-180)/610),speed=.78+contrast*.25*layer
 for(const {points,out,baseOpacity} of [...paths,...upperPaths]){let d='';for(let i=0;i<points.length;i++){const [x,y]=points[i],{layer,phase}=field(x,y),envelope=.72+.28*layer;const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);const densityStrength=2.5,verticalMask=Math.sin(Math.PI*clamp(y/900,0,1)),stationaryRidges=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002),spacingShift=densityStrength*1.8*verticalMask*stationaryRidges*Math.sin(y*.046);const yy=y+breath*.29+amp*envelope*(.82*carrier+.12*secondary)+spacingShift;const xx=x+amp*(.35*carrier+.10*secondary);d+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)}out.setAttribute('d',d);out.setAttribute('opacity',baseOpacity.toFixed(3))}
 
 
+ // Accents share the exact flow deformation and tangent of their host.
+ for(const h of accents){
+  const p=h.line.points,[x,y]=p[h.j];
+  const dx=p[h.j+1][0]-p[h.j-1][0],dy=p[h.j+1][1]-p[h.j-1][1];
+  const a=Math.atan2(dy,dx),cs=Math.cos(a),sn=Math.sin(a);
+  const {layer,phase}=field(x,y),env=.72+.28*layer;
+  const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);
+  const xx=x+amp*(.35*carrier+.10*secondary);
+  const yy=y+breath*.29+amp*env*(.82*carrier+.12*secondary);
+  const src=h.src,scale=1.15;
+  const rot=(u,v)=>[(u*cs-v*sn)*scale,(u*sn+v*cs)*scale];
+  const [cx,cy]=rot(src.cx,src.cy),[ex,ey]=rot(src.dx,src.dy);
+  h.out.setAttribute('d','M'+xx.toFixed(1)+' '+yy.toFixed(1)+
+    'q'+cx.toFixed(1)+' '+cy.toFixed(1)+' '+ex.toFixed(1)+' '+ey.toFixed(1));
+  h.out.setAttribute('opacity',Math.min(.34,Math.max(.23,src.opacity*1.3)).toFixed(3));
+ }
  // Animate the source quadratic mark as a deforming part of its host flow.
  for(const h of hatches){
   const p=h.line.points;
