@@ -218,8 +218,7 @@ html,body{min-height:100%;scroll-behavior:auto}
 .showcase .church-editorial{z-index:18!important}
 .showcase .church-editorial__visual{background-image:none!important}
 
-/* Restore John 7:38 text in the lower half; the identity plane is layered separately. */
-.showcase .composition .edition.editorial-john{visibility:visible!important}
+/* Scripture visibility is controlled by the scroll phase, not forced globally. */
 .showcase .planes .plane{pointer-events:none}
 
 /* Source: church bulletin PDF dated 2026-10-11, page 2. Full order of worship. */
@@ -245,6 +244,16 @@ html,body{min-height:100%;scroll-behavior:auto}
 .showcase .sunday-schedule{min-height:0!important;gap:clamp(6px,.7vh,12px)!important;padding:0!important}
 .showcase .worship-row{padding:clamp(5px,.65vh,9px) 0!important}
 .showcase .church-editorial__copy>a{display:none!important}
+
+/* ONE lower-half scripture scene. Never expand it into a separate full-screen slide. */
+.showcase .composition{top:50svh!important;bottom:0!important;height:50svh!important;min-height:0!important;overflow:visible!important;z-index:36!important}
+.showcase .composition .edition.editorial-john{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;box-sizing:border-box!important;overflow:hidden!important;visibility:hidden;padding:clamp(10px,1.4vh,20px) clamp(20px,3vw,50px)!important;grid-template-rows:auto minmax(0,1fr) auto auto!important;row-gap:clamp(2px,.5vh,7px)!important}
+.showcase .composition .edition.editorial-john.is-current{visibility:visible!important}
+.showcase .composition .edition.editorial-john .ej-title{font-size:clamp(56px,10vw,170px)!important;line-height:.75!important;align-self:center!important}
+.showcase .composition .edition.editorial-john .ej-copy{font-size:clamp(12px,1.15vw,20px)!important;align-self:center!important}
+.showcase .composition .edition.editorial-john .ej-zh{font-size:clamp(10px,.85vw,14px)!important}
+.showcase .composition .edition.editorial-john .ej-mast{font-size:clamp(8px,.65vw,11px)!important}
+.showcase .composition .edition.editorial-john .ej-footer{font-size:clamp(8px,.65vw,11px)!important}
 </style></head><body data-ws-scope="global"><section class="showcase" aria-label="P2 教會左右半屏動效預覽"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
 
@@ -301,7 +310,7 @@ function render(){
  church.setAttribute('aria-hidden',still||vh>=1.1?'false':'true');
  const enter=church.querySelector('a');if(enter)enter.tabIndex=still||vh>=1.92?0:-1;
  editions.forEach(el=>{el.classList.remove('is-current');el.style.visibility='hidden';el.style.opacity='0';el.setAttribute('aria-hidden','true');el.querySelectorAll('a').forEach(a=>a.tabIndex=-1)});
- if(!still&&vh>=.48&&vh<.7){const scripture=editions[0];scripture.classList.add('is-current');scripture.style.visibility='visible';scripture.style.opacity=String(1-smooth(clamp((vh-.59)/.11,0,1)));scripture.setAttribute('aria-hidden','false')}
+ if(!still&&vh<.70){const scripture=editions[0];scripture.classList.add('is-current');scripture.style.visibility='visible';scripture.style.opacity=String(1-smooth(clamp((vh-.59)/.11,0,1)));scripture.setAttribute('aria-hidden','false')}
  index.textContent='01 / 07';
  root.dataset.p2Phase=vh<.59?'identity':vh<1.1?'ocean-rise':vh<1.93?'red-sea':'church';
 }
