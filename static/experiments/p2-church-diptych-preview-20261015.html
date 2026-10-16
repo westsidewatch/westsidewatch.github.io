@@ -189,6 +189,12 @@ function render(){
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener('change',schedule);render()})();
 </script>
 <script>
+/* SVG-002 integration trial: no water fill or rising mask; engraved strokes grow from the lower sea. */
+.showcase .ocean-rise__motion{mix-blend-mode:multiply!important}
+.showcase .ocean-rise__motion > path{display:none!important}
+.showcase .ocean-rise__lines{clip-path:none!important}
+.showcase .ocean-rise__lines path{stroke:#426c7b;stroke-opacity:.9}
+.showcase .ocean-rise__leaf{background:none!important}
 /* FALLBACK CANDIDATE ONLY (2026-10-16): animated waterline + filled volume + moving contours.\n   User's primary target is self-propagating engraved strokes that surge upward;\n   preserve this implementation as a reversible backup, not the accepted final design. */\n/* Unified engraved-water geometry: water grows within a stationary viewport.
    The same moving v10 contours remain visible as the sea parts. */
 (()=>{
@@ -248,12 +254,13 @@ function samplePaths(){
   }).catch(e=>{console.warn('P2 engraved-water source unavailable',e)});
 }
 samplePaths();
+const growthPrototype=true;
 function frame(now){
   requestAnimationFrame(frame);
   if(!last)last=now;time+=Math.min(.05,(now-last)/1000);last=now;
   const rise=clamp(Number(root.style.getPropertyValue('--p2-ocean-rise'))||0,0,1);
   const water=waterShape(rise,time);
-  for(const {edge,fill} of surfaces){edge.setAttribute('d',water);fill.setAttribute('d',water)}
+  for(const {edge,fill} of surfaces){edge.setAttribute('d',growthPrototype?'':water);fill.setAttribute('d',growthPrototype?'':water)}
   if(!ready||reduced.matches)return;
   const amp=6,breath=21*Math.sin(time*Math.PI/7)+5*Math.sin(time*Math.PI/13);
   for(const item of paths){
@@ -271,7 +278,21 @@ function frame(now){
     }
     item.out.setAttribute('d',d);
     item.out.setAttribute('opacity',item.opacity.toFixed(3));
-    for(const p of item.seaOut){p.setAttribute('d',d);p.setAttribute('opacity',item.opacity.toFixed(3))}
+    // SVG-002: advance a tip upward along the original v10 stroke's point sequence.
+    // No translated plate, volume fill, or clip mask. Tail remains animated.
+    const grow=clamp((rise*1.22-.10),0,1),maxIndex=item.points.length-1;
+    const tipY=900-900*grow;
+    let started=false,stroke='';
+    for(let j=maxIndex;j>=0;j--){
+      const [x,y]=item.points[j];
+      if(y<tipY)continue;
+      const layer=smooth((y-180)/610);
+      const phase=.012*(x+18*Math.sin(y*.0065+x*.0018))-time*1.35*(.78+.5*layer);
+      const xx=x+6*(.35*Math.sin(phase)+.10*Math.sin(phase*2-.6))+grow*12*Math.sin(time*1.4+y*.013);
+      const yy=y+6*(.72+.28*layer)*Math.sin(phase)+grow*17*Math.sin(time*1.7+x*.008+y*.003);
+      stroke+=(started?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1);started=true;
+    }
+    for(const p of item.seaOut){p.setAttribute('d',stroke);p.setAttribute('opacity',item.opacity.toFixed(3))}
   }
 }
 requestAnimationFrame(frame);
