@@ -186,6 +186,14 @@ html,body{min-height:100%;scroll-behavior:auto}
 .showcase .church-schedule-source{position:relative;flex:1;min-height:130px;width:100%;border-top:1px solid #8b8b81;border-bottom:1px solid #8b8b81;overflow:hidden}
 .showcase .church-schedule-source iframe{width:100%;height:100%;border:0;background:#eeeae1}
 .showcase .church-editorial__copy>a{flex:none;align-self:flex-start}
+
+/* SVG-075 native viewport correction: scripture is a full-stage page.
+   The original bottom-half composition constraints must not resize the water.
+   Only the first state shows the lower 50% of a native full-screen V75. */
+.showcase .composition{top:0!important;bottom:0!important;height:100svh!important;min-height:100svh!important;overflow:hidden!important}
+.showcase .composition .edition.editorial-john{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important}
+.showcase .composition .edition.editorial-john .v75-scripture-water{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;clip-path:inset(50% 0 0 0)!important;z-index:0!important}
+.showcase .composition .edition.editorial-john > :not(.v75-scripture-water){z-index:2!important}
 </style></head><body data-ws-scope="global"><section class="showcase" aria-label="P2 教會左右半屏動效預覽"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
 <iframe class="v75-scripture-water" src="/experiments/p2-living-water-v75.html" title="SVG-075 engraved living water" tabindex="-1" aria-hidden="true"></iframe>
