@@ -16,6 +16,20 @@
 
 **Default reporting format:** completed changes + verified checks + current Cloudflare preview link; omit repetitive PR/merge discussion unless requested or materially relevant.
 
+## Doré Exploration — fixed site-wide discovery criteria
+
+**Binding terminology:** 「多雷探索」 is a named Westside Watch / Doré engineering practice. Do not reinterpret it as generic brainstorming, an independent Loop, or a predetermined technology choice. Apply these criteria to research and solution selection across **every project**, including P2, Design OS, Doré Folio, tools and experiments.
+
+**Eleven canonical keywords (preserve verbatim):** **免費、小巧、簡單、不耗能、安全、穩定、長久、好維護、現代、成熟、開源**。
+
+**Condensed form:** **免費、小巧、低耗能、安全、穩定、長久、好維護、成熟可吸收**。
+
+**Discovery sequence:** 搜索 → 比較 → 驗證 → 吸收 → 能力化。Before choosing a solution, examine existing implementation and proven external/open-source alternatives; compare against the eleven criteria, validate source credibility, integration and maintenance cost, then absorb the smallest reliable reusable capability. Avoid inventing a heavy new subsystem when a mature lightweight solution suffices.
+
+**Working maxim:** 「搜索以前已經開始搜索」 — *Continuous Awareness + Selective Retrieval*. Doré Exploration is a continuous cross-Loop habit, not a separate project or a one-off report. Preserve findings in the relevant engineering context and update this master index when a durable rule or verified source emerges.
+
+**No unsupported claims:** Distinguish researched candidates, tested implementations, and browser-verified outcomes. Searching alone does not constitute validation, and CI alone does not prove motion or visual correctness.
+
 ## Source of truth and change rules
 
 - Canonical seven-realm order comes from the **live homepage source**, `layouts/partials/watch-home-editorial.html`, including its numbered floating Contents menu and First Look anchors. Do not reorder from conversation memory.
