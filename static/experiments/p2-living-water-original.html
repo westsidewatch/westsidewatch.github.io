@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water / Original Flow Drawing</title><style>*{box-sizing:border-box}html,body{margin:0;background:#e5ecec;color:#304a52;font:14px/1.5 Georgia,serif}header{display:flex;align-items:center;justify-content:space-between;padding:15px 3vw}h1{font-size:clamp(19px,3vw,29px);font-weight:400;margin:0}button{background:transparent;border:1px solid #89a7ac;padding:7px 13px;color:inherit}main{height:350svh}.stage{position:sticky;top:0;height:100svh;background:#d9e8ea;overflow:hidden}canvas{width:100%;height:100%;display:block}aside{position:absolute;bottom:20px;left:3vw;right:3vw;display:flex;justify-content:space-between;pointer-events:none}footer{padding:20px 3vw}</style></head><body><header><h1>Living Water / Original Flow Drawing</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><canvas id="water"></canvas><aside><span id="phase">01 / THE CURRENT</span><span id="growth-state">INK GROWTH 0%</span><span>SVG-036 · retracting paper mask</span></aside></div></main><footer>以 v10 的 620 條真實曲線保留上下洋流構圖，直接使用既有 v10 SVG 資產與原有刻線代理流動；只在外層增加向上顯露，不改寫刻線幾何。</footer><script>(()=>{'use strict';const canvas=document.querySelector('#water'),ctx=canvas.getContext('2d',{alpha:false}),root=document.querySelector('#scroll'),phase=document.querySelector('#phase'),pause=document.querySelector('#pause');let W=1,H=1,dpr=1,clock=0,last=0,halt=false,progress=0;const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),smooth=v=>{v=clamp(v);return v*v*(3-2*v)},rand=n=>{const x=Math.sin(n*127.1+78.233)*43758.5453;return x-Math.floor(x)};function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}new ResizeObserver(resize).observe(canvas);resize();function scroll(){const r=root.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));phase.textContent=progress<.36?'01 / THE CURRENT':progress<.74?'02 / RISING WATER':'03 / PARTING SEA'}addEventListener('scroll',scroll,{passive:true});scroll();pause.onclick=()=>{halt=!halt;pause.textContent=halt?'Resume':'Pause'};
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water / Original Flow Drawing</title><style>*{box-sizing:border-box}html,body{margin:0;background:#e5ecec;color:#304a52;font:14px/1.5 Georgia,serif}header{display:flex;align-items:center;justify-content:space-between;padding:15px 3vw}h1{font-size:clamp(19px,3vw,29px);font-weight:400;margin:0}button{background:transparent;border:1px solid #89a7ac;padding:7px 13px;color:inherit}main{height:350svh}.stage{position:sticky;top:0;height:100svh;background:#d9e8ea;overflow:hidden}canvas{width:100%;height:100%;display:block}aside{position:absolute;bottom:20px;left:3vw;right:3vw;display:flex;justify-content:space-between;pointer-events:none}footer{padding:20px 3vw}</style></head><body><header><h1>Living Water / Original Flow Drawing</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><canvas id="water"></canvas><aside><span id="phase">01 / THE CURRENT</span><span id="growth-state">INK GROWTH 0%</span><span>SVG-037 · travelling swell</span></aside></div></main><footer>以 v10 的 620 條真實曲線保留上下洋流構圖，直接使用既有 v10 SVG 資產與原有刻線代理流動；只在外層增加向上顯露，不改寫刻線幾何。</footer><script>(()=>{'use strict';const canvas=document.querySelector('#water'),ctx=canvas.getContext('2d',{alpha:false}),root=document.querySelector('#scroll'),phase=document.querySelector('#phase'),pause=document.querySelector('#pause');let W=1,H=1,dpr=1,clock=0,last=0,halt=false,progress=0;const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),smooth=v=>{v=clamp(v);return v*v*(3-2*v)},rand=n=>{const x=Math.sin(n*127.1+78.233)*43758.5453;return x-Math.floor(x)};function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}new ResizeObserver(resize).observe(canvas);resize();function scroll(){const r=root.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));phase.textContent=progress<.36?'01 / THE CURRENT':progress<.74?'02 / RISING WATER':'03 / PARTING SEA'}addEventListener('scroll',scroll,{passive:true});scroll();pause.onclick=()=>{halt=!halt;pause.textContent=halt?'Resume':'Pause'};
 // The v10 curves are used only as a *spatial orientation field*.
 // New ink strokes have no predetermined endpoint and are born continuously.
 let sourceLines=[],agents=[],spawnDebt=0,spawnId=0;
@@ -61,20 +61,31 @@ function advance(dt){
 // only its visible region rises with scrolling.
 // Direct v10 asset: retain every original sampled path and its own ink agents.
 // No full-screen warping, resampling into another composition, or replacement sea.
+// Travelling swell shared by original v10 contours, upper extension and ink.
+// Spatially varying phases change the SHAPE of the current over time;
+// unlike the previous constant offset, the water visibly undulates.
+function livingWave(p){
+ const x=p[0],y=p[1],u=x/1600;
+ const envelope=.55+.45*Math.sin(Math.PI*clamp(y/900));
+ const long=18*Math.sin(clock*.95-u*7.5+y*.0015);
+ const cross=8*Math.sin(clock*1.45+u*12-y*.004);
+ const drift=4*Math.sin(clock*.62-u*3.5);
+ return [x,y+(long+cross+drift)*envelope];
+}
 function draw(){
  ctx.fillStyle='#d9e8ea';ctx.fillRect(0,0,W,H);ctx.save();ctx.scale(W/1600,H/900);
- const rise=smooth(progress/.74),breath=21*Math.sin(clock*Math.PI/7)+5*Math.sin(clock*Math.PI/13);
+ const rise=smooth(progress/.74);
  ctx.lineCap='round';ctx.lineJoin='round';
  // Draw the full moving engraving FIRST. Then withdraw the paper mask.
  for(const g of [...sourceLines,...upperExtension]){
   ctx.strokeStyle='rgba(55,99,119,'+Math.min(.75,Math.max(.26,g.opacity*2.4)).toFixed(3)+')';
   ctx.lineWidth=Math.max(.65,g.width*1.05);ctx.beginPath();
-  g.pts.forEach((p,j)=>{const y=p[1]+breath*.18;if(j)ctx.lineTo(p[0],y);else ctx.moveTo(p[0],y)});ctx.stroke();
+  g.pts.forEach((p,j)=>{const q=livingWave(p);if(j)ctx.lineTo(q[0],q[1]);else ctx.moveTo(q[0],q[1])});ctx.stroke();
  }
  for(const a of agents){
   if(a.pts.length<2)continue;
   ctx.strokeStyle='rgba(54,97,113,'+(a.alpha*a.fade).toFixed(3)+')';ctx.lineWidth=a.width;ctx.beginPath();
-  a.pts.forEach((p,j)=>{const y=p[1]+breath*.18;if(j)ctx.lineTo(p[0],y);else ctx.moveTo(p[0],y)});ctx.stroke();
+  a.pts.forEach((p,j)=>{const q=livingWave(p);if(j)ctx.lineTo(q[0],q[1]);else ctx.moveTo(q[0],q[1])});ctx.stroke();
  }
  // White paper retracts from the existing half-screen boundary to top.
  const maskBottom=450*(1-rise);
