@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water — v10 Redrawn With Living Strokes</title><style>
 *{box-sizing:border-box}html,body{margin:0;background:#e4e9e7;color:#263f48;font:14px/1.5 Georgia,serif}header{padding:16px 3vw;display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:clamp(19px,3vw,30px);font-weight:400;margin:0}button{border:1px solid #72909a;background:transparent;color:inherit;padding:8px 13px;cursor:pointer}main{height:350svh}.stage{height:100svh;position:sticky;top:0;overflow:hidden;background:#d8e7e9}svg{display:block;width:100%;height:100%}path{fill:none;stroke-linecap:round;stroke-linejoin:round}aside{position:absolute;bottom:20px;left:3vw;right:3vw;display:flex;justify-content:space-between;pointer-events:none}#status{position:absolute;top:18px;left:3vw;background:#e4e9e7c9;padding:5px 9px}footer{padding:25px 3vw;height:18svh}@media(prefers-reduced-motion:reduce){main{height:100svh}.stage{position:relative}}</style></head><body>
-<header><h1>Living Water / v10 Living Engraving</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-label="以 v10 原稿路徑重繪並生長的活水刻線"><g id="lines"></g></svg><div id="status">Loading v10 geometry…</div><aside><span id="phase">01 / HORIZONTAL FLOW</span><span>SVG-012 · contour-weight balance</span></aside></div></main><footer>620 條原刻線依原稿線寬分級：主輪廓刻線收細比例較大，微刻線保留細節；生長與波浪呼吸節奏不變。</footer>
+<header><h1>Living Water / v10 Living Engraving</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-label="以 v10 原稿路徑重繪並生長的活水刻線"><g id="lines"></g></svg><div id="status">Loading v10 geometry…</div><aside><span id="phase">01 / HORIZONTAL FLOW</span><span>SVG-013 · persistent growing strokes</span></aside></div></main><footer>620 條刻線只生長一次，完成後保留並繼續呼吸，不再週期性清零；保留線寬分級及生長速度差。</footer>
 <script>(()=>{'use strict';const NS='http://www.w3.org/2000/svg',root=document.querySelector('#scroll'),out=document.querySelector('#lines'),phase=document.querySelector('#phase'),status=document.querySelector('#status'),pause=document.querySelector('#pause');let strokes=[],clock=0,last=0,halt=false,progress=0,ready=false;const reduced=matchMedia('(prefers-reduced-motion: reduce)'),clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),smooth=x=>{x=clamp(x);return x*x*(3-2*x)},rand=i=>{const n=Math.sin(i*127.1+78.233)*43758.5453;return n-Math.floor(n)};
 function scroll(){const r=root.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));phase.textContent=progress<.36?'01 / HORIZONTAL FLOW':progress<.74?'02 / RISING WATER':'03 / PARTING SEA'}addEventListener('scroll',scroll,{passive:true});scroll();
 pause.addEventListener('click',()=>{halt=!halt;pause.textContent=halt?'Resume':'Pause'});
@@ -31,13 +31,14 @@ for(let j=0;j<=N;j++){
 // Each engraved line follows the shared v10 breathing field, but has its
 // own stable pace and a gentle acceleration/deceleration within each cycle.
 const pulse=.84+.16*Math.sin(time*.46+s.seed*6.283);
-const cycle=(time/(s.growthPeriod/pulse)+s.seed)%1;
-const front=smooth(clamp(cycle*1.14));
+// A path reaches full length once and remains part of the water body.
+// Thereafter its breathing geometry continues to evolve, with a small
+// travelling tonal pulse rather than erasing the entire stroke.
+const advance=Math.max(0,time)*pulse/s.growthPeriod+s.seed;
+const front=smooth(clamp(advance));
 const count=Math.max(2,Math.min(N,Math.round(N*front)));
-let grown='';
 const pieces=d.trim().split(/ (?=[LM])/);
-for(let k=0;k<=count&&k<pieces.length;k++)grown+=pieces[k]+' ';
-s.el.setAttribute('d',grown);
+s.el.setAttribute('d',pieces.slice(0,count+1).join(' '));
 s.el.setAttribute('stroke-opacity',String(s.opacity));
 
 }
