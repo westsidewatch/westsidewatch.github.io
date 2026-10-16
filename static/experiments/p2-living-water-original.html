@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water / Original Flow Drawing</title><style>*{box-sizing:border-box}html,body{margin:0;background:#e5ecec;color:#304a52;font:14px/1.5 Georgia,serif}header{display:flex;align-items:center;justify-content:space-between;padding:15px 3vw}h1{font-size:clamp(19px,3vw,29px);font-weight:400;margin:0}button{background:transparent;border:1px solid #89a7ac;padding:7px 13px;color:inherit}main{height:350svh}.stage{position:sticky;top:0;height:100svh;background:#d9e8ea;overflow:hidden}canvas{width:100%;height:100%;display:block}aside{position:absolute;bottom:20px;left:3vw;right:3vw;display:flex;justify-content:space-between;pointer-events:none}footer{padding:20px 3vw}</style></head><body><header><h1>Living Water / Original Flow Drawing</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><canvas id="water"></canvas><aside><span id="phase">01 / THE CURRENT</span><span>SVG-023 · visible deposited ink</span></aside></div></main><footer>以 v10 的 620 條真實曲線保留上下洋流構圖，SVG-023：v10 以淡底稿保留雙層洋流，真正的墨線由 SVG-002 筆尖逐步落下，完成後保留；每條曲線錯開開始時間。重新整理畫面可觀察從空白底稿逐步繪製。</footer><script>(()=>{'use strict';const canvas=document.querySelector('#water'),ctx=canvas.getContext('2d',{alpha:false}),root=document.querySelector('#scroll'),phase=document.querySelector('#phase'),pause=document.querySelector('#pause');let W=1,H=1,dpr=1,clock=0,last=0,halt=false,progress=0;const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),smooth=v=>{v=clamp(v);return v*v*(3-2*v)},rand=n=>{const x=Math.sin(n*127.1+78.233)*43758.5453;return x-Math.floor(x)};function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}new ResizeObserver(resize).observe(canvas);resize();function scroll(){const r=root.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));phase.textContent=progress<.36?'01 / THE CURRENT':progress<.74?'02 / RISING WATER':'03 / PARTING SEA'}addEventListener('scroll',scroll,{passive:true});scroll();pause.onclick=()=>{halt=!halt;pause.textContent=halt?'Resume':'Pause'};
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water / Original Flow Drawing</title><style>*{box-sizing:border-box}html,body{margin:0;background:#e5ecec;color:#304a52;font:14px/1.5 Georgia,serif}header{display:flex;align-items:center;justify-content:space-between;padding:15px 3vw}h1{font-size:clamp(19px,3vw,29px);font-weight:400;margin:0}button{background:transparent;border:1px solid #89a7ac;padding:7px 13px;color:inherit}main{height:350svh}.stage{position:sticky;top:0;height:100svh;background:#d9e8ea;overflow:hidden}canvas{width:100%;height:100%;display:block}aside{position:absolute;bottom:20px;left:3vw;right:3vw;display:flex;justify-content:space-between;pointer-events:none}footer{padding:20px 3vw}</style></head><body><header><h1>Living Water / Original Flow Drawing</h1><button id="pause">Pause</button></header><main id="scroll"><div class="stage"><canvas id="water"></canvas><aside><span id="phase">01 / THE CURRENT</span><span id="growth-state">INK GROWTH 0%</span><span>SVG-024 · live growth 00%</span></aside></div></main><footer>以 v10 的 620 條真實曲線保留上下洋流構圖，SVG-024：持續可見的生長測試。每 12 秒重新開始一輪墨線繪製；上方顯示進度。v10 原稿仍保留。</footer><script>(()=>{'use strict';const canvas=document.querySelector('#water'),ctx=canvas.getContext('2d',{alpha:false}),root=document.querySelector('#scroll'),phase=document.querySelector('#phase'),pause=document.querySelector('#pause');let W=1,H=1,dpr=1,clock=0,last=0,halt=false,progress=0;const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),smooth=v=>{v=clamp(v);return v*v*(3-2*v)},rand=n=>{const x=Math.sin(n*127.1+78.233)*43758.5453;return x-Math.floor(x)};function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}new ResizeObserver(resize).observe(canvas);resize();function scroll(){const r=root.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));phase.textContent=progress<.36?'01 / THE CURRENT':progress<.74?'02 / RISING WATER':'03 / PARTING SEA'}addEventListener('scroll',scroll,{passive:true});scroll();pause.onclick=()=>{halt=!halt;pause.textContent=halt?'Resume':'Pause'};
 // SVG-020: restore v10 as the actual geometry and composition authority.
 // Preserve all 620 original paths, opacity tiers, spatial layering and spacing.
 // Motion deforms the source points gently; never regenerate a guessed ocean.
@@ -24,29 +24,30 @@ function draw(){
    moved.push([x+6*(.35*carrier+.1*secondary)+part*(x<800?-1:1)*(150+220*g.seed),y+breath*.18+6*envelope*(.82*carrier+.12*secondary)+spacing-rise*(200+650*g.seed)]);
   }
   // Stable fine underdrawing protects v10's layered sea composition.
-  ctx.strokeStyle='rgba(85,123,140,'+(g.opacity*.28).toFixed(3)+')';
+  ctx.strokeStyle='rgba(85,123,140,'+(g.opacity*.12).toFixed(3)+')';
   ctx.lineWidth=Math.max(.12,g.width*.48);ctx.lineCap='round';ctx.lineJoin='round';
   ctx.beginPath();moved.forEach((p,j)=>j?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();
 
   // Visible SVG-002 growth: progressive deposited ink, not a travelling
   // highlight. A completed contour stays fully inked, with new contour
   // passes following a staggered schedule. No periodic clearing.
-  const elapsed=Math.max(0,t);
-  const delay=g.seed*6;
-  const duration=5+8*g.seed;
+  const elapsed=Math.max(0,t%12);
+  const delay=g.seed*2;
+  const duration=9;
   const growth=smooth((elapsed-delay)/duration);
   const deposited=Math.min(N-1,Math.floor(growth*(N-1)));
   for(let j=0;j<deposited;j++){
    const u=(j+.5)/(N-1);
    const tip=smooth(clamp((growth-u)*N/7));
    const pressure=(.76+.24*Math.sin(u*9+g.seed*6)**2)*(.35+.65*tip);
-   ctx.strokeStyle='rgba(49,92,110,'+(Math.min(.8,g.opacity*1.9)*pressure).toFixed(3)+')';
-   ctx.lineWidth=Math.max(.18,g.width*(.78+.38*pressure));
+   ctx.strokeStyle='rgba(49,92,110,'+(Math.min(.95,g.opacity*3.4)*pressure).toFixed(3)+')';
+   ctx.lineWidth=Math.max(.28,g.width*(1.1+.6*pressure));
    ctx.beginPath();ctx.moveTo(moved[j][0],moved[j][1]);ctx.lineTo(moved[j+1][0],moved[j+1][1]);ctx.stroke();
   }
 
  }
  ctx.restore();
+ const label=document.querySelector('#growth-state');if(label)label.textContent='INK GROWTH '+Math.round(smooth((t%12)/11)*100)+'% · cycle '+(Math.floor(t/12)+1);
 }
 fetch('/experiments/assets/living-water-contour-engraving-v10.svg').then(r=>{if(!r.ok)throw Error('v10 HTTP '+r.status);return r.text()}).then(xml=>{
  const doc=new DOMParser().parseFromString(xml,'image/svg+xml');
