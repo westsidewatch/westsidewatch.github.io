@@ -159,6 +159,13 @@ html,body{min-height:100%;scroll-behavior:auto}
 .showcase .ocean-rise__leaf--right .v75-sea-water{left:auto!important;right:0!important}
 .showcase .church-editorial__visual{background-color:var(--paper)!important;background-image:none!important}
 .showcase .v75-scripture-water{display:block!important;position:absolute!important;top:0!important;left:0!important;width:100%!important;height:100%!important;border:0!important;transform:none!important;pointer-events:none!important;clip-path:inset(50% 0 0 0)!important}
+
+/* Final authority: the complete SVG-075 engraving fills the viewport before parting.
+   Clip the entire two-leaf water stage at one shared rising waterline, never
+   the individual iframe; each iframe remains a full-height image. */
+.showcase .ocean-rise{clip-path:var(--p2-water-shape,inset(50% 0 0 0))!important;overflow:hidden!important}
+.showcase .v75-sea-water{clip-path:none!important;height:100%!important;top:0!important}
+.showcase .ocean-rise__leaf{height:100%!important;top:0!important;bottom:0!important}
 </style></head><body data-ws-scope="global"><section class="showcase" aria-label="P2 教會左右半屏動效預覽"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
 <iframe class="v75-scripture-water" src="/experiments/p2-living-water-v75.html" title="SVG-075 engraved living water" tabindex="-1" aria-hidden="true"></iframe>
@@ -192,11 +199,21 @@ function render(){
  planesWrap.style.opacity=String(1-smooth(clamp((vh-.59)/.1,0,1)));
  sea.style.visibility=!still&&vh>=.59&&vh<1.93?'visible':'hidden';
  // Only the engraved water geometry rises; the container remains stationary.
- sea.style.clipPath='none';
+ // Waterline clip is controlled by --p2-water-shape below.
  sea.style.transform='none';
  root.style.setProperty('--p2-ocean-rise',rise.toFixed(5));
  sea.style.setProperty('--p2-ocean-rise',rise.toFixed(5));
- sea.style.setProperty('--p2-water-clip',((1-rise)*50).toFixed(3)+'%');
+ // A travelling, slightly undulating waterline reveals the approved full-height
+ // SVG-075 field. At rise=1 the clip is the entire viewport before doors part.
+ const top=(1-rise)*50,edge=[];
+ const steps=32;
+ for(let i=0;i<=steps;i++){
+   const x=i*100/steps;
+   const wave=(1-rise)*rise*(1.6*Math.sin(x*.13+performance.now()*.0006)+.7*Math.sin(x*.35-performance.now()*.0009));
+   edge.push(x.toFixed(2)+'% '+Math.max(0,top+wave).toFixed(2)+'%');
+ }
+ sea.style.setProperty('--p2-water-shape','polygon('+edge.join(',')+',100% 100%,0% 100%)');
+ sea.style.setProperty('--p2-water-clip',top.toFixed(3)+'%');
  sea.style.opacity=String(1-smooth(clamp((vh-1.88)/.05,0,1)));
  leaves[0].style.transform='translate3d('+(-opening*101)+'%,0,0)';
  leaves[1].style.transform='translate3d('+(opening*101)+'%,0,0)';
