@@ -189,7 +189,7 @@ function render(){
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener('change',schedule);render()})();
 </script>
 <script>
-/* Unified engraved-water geometry: water grows within a stationary viewport.
+/* FALLBACK CANDIDATE ONLY (2026-10-16): animated waterline + filled volume + moving contours.\n   User's primary target is self-propagating engraved strokes that surge upward;\n   preserve this implementation as a reversible backup, not the accepted final design. */\n/* Unified engraved-water geometry: water grows within a stationary viewport.
    The same moving v10 contours remain visible as the sea parts. */
 (()=>{
 'use strict';
