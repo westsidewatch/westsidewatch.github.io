@@ -62,6 +62,13 @@ Every 「多雷探索」 should be findable by **technical category** and **owni
 - **Acceptance pending:** Viewers can identify actual line-tip propagation upward without relying on an expanding filled area; continuous motion; reversible scroll; no gaps or stutter; same field parts to left and right.
 - **Licenses:** Verify specific library versions and license texts before incorporating code. No new dependency imported.
 
+### SVG-002 — Supplement: flow-field research (2026-10-16)
+
+- **New candidate:** [ToledoEM/field_generation](https://github.com/ToledoEM/field_generation) demonstrates flow-field tracing, adjustable step size/path count, repulsion, and SVG output. Research reference only; check its license before any code reuse.
+- **Ruled out as core:** [flubber](https://github.com/veltman/flubber) and [polymorph](https://github.com/notoriousb1t/polymorph) morph existing shapes; they do not create continually growing water streamlines. Both may remain optional transition helpers.
+- **Missing technical proof:** match the original v10 stroke-spacing distribution and engraving aesthetic while seeding/advecting tips; enforce local line separation and bound path count; maintain stable scroll reversal and hand off the same streamlines to the lateral Red Sea flow.
+- **Decision:** Continue research and a minimal isolated prototype before replacing the existing fallback. No implementation or visual acceptance claimed.
+
 ## Category: MOTION — animation architecture
 
 ### MOTION-001 — Unified clock and scroll-driven geometry
