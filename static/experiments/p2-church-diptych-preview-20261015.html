@@ -218,12 +218,8 @@ html,body{min-height:100%;scroll-behavior:auto}
 .showcase .church-editorial{z-index:18!important}
 .showcase .church-editorial__visual{background-image:none!important}
 
-/* Phase isolation: church identity and John 7:38 editorial must never overlap. */
-.showcase .planes{visibility:hidden}
-.showcase[data-p2-phase="identity"] .planes{visibility:visible}
-.showcase .composition .edition.editorial-john{visibility:hidden}
-.showcase[data-p2-phase="ocean-rise"] .composition .edition.editorial-john,
-.showcase[data-p2-phase="identity"] .composition .edition.editorial-john.is-current{visibility:visible}
+/* Restore John 7:38 text in the lower half; the identity plane is layered separately. */
+.showcase .composition .edition.editorial-john{visibility:visible!important}
 .showcase .planes .plane{pointer-events:none}
 
 /* Source: church bulletin PDF dated 2026-10-11, page 2. Full order of worship. */
