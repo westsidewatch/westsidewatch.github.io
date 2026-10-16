@@ -120,7 +120,12 @@
 .showcase .ocean-rise__leaf--left .ocean-rise__motion{left:0}
 .showcase .ocean-rise__leaf--right .ocean-rise__motion{right:0}
 @media(prefers-reduced-motion:reduce){.showcase .ocean-rise{display:none!important}}
-/* Preview authority: the standalone scroll host, never the production iframe. */
+/* Ocean bridge: the P2 engraving and rising sea are one continuous phase field.
+   The moving wavefront grows from the existing lower-half water; it is not a translated panel. */
+.showcase .ocean-rise{transform:none!important;clip-path:inset(50% 0 0 0);will-change:clip-path}
+.showcase .ocean-rise__leaf{background-color:var(--church-paper)!important;background-image:url("/experiments/assets/living-water-contour-engraving-v10.svg")!important}
+.showcase .ocean-rise__motion{mix-blend-mode:multiply}
+ /* Preview authority: the standalone scroll host, never the production iframe. */
 html,body{min-height:100%;scroll-behavior:auto}
 .showcase{height:390svh!important;min-height:390svh!important}
 .showcase .stage{position:sticky!important;top:0!important;height:100svh!important}
@@ -161,8 +166,12 @@ function render(){
  planesWrap.style.visibility=still||vh>=.69?'hidden':'visible';
  planesWrap.style.opacity=String(1-smooth(clamp((vh-.59)/.1,0,1)));
  sea.style.visibility=!still&&vh>=.59&&vh<1.93?'visible':'hidden';
- sea.style.clipPath='none';
- sea.style.transform='translate3d(0,'+(50*(1-rise)).toFixed(3)+'%,0)';
+ // Grow a wavefront upward out of the existing animated lower-half ocean.
+ // The original P2 and both bridge leaves share identical SVG path geometry and time.
+ const front=50*(1-rise),undulation=rise*(1-rise)*2.5;
+ const edge=Array.from({length:17},(_,i)=>{const x=i*100/16;const y=front+undulation*Math.sin(i*.85+performance.now()*.001);return x.toFixed(2)+'% '+y.toFixed(2)+'%'}).join(',');
+ sea.style.clipPath='polygon('+edge+',100% 100%,0% 100%)';
+ sea.style.transform='none';
  sea.style.opacity=String(1-smooth(clamp((vh-1.88)/.05,0,1)));
  leaves[0].style.transform='translate3d('+(-opening*101)+'%,0,0)';
  leaves[1].style.transform='translate3d('+(opening*101)+'%,0,0)';
