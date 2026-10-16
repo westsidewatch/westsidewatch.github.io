@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-051 · UPPER STRATUM CONTINUATION</div><script>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-052 · CONTINUOUS UPPER WATER FIELD</div><script>
 (()=>{'use strict';
 const holder=document.getElementById('v10');
 holder.addEventListener('load',()=>{
@@ -24,41 +24,41 @@ holder.addEventListener('load',()=>{
 
  // Extend the actual upper stratum from each original v10 contour,
  // following its individual curvature and tangent, not a separate pattern.
+
+ // Fill the entire missing upper water surface by continuing the upper
+ // v10 contour family in its native x direction, with the original cadence.
+ // This is a NEW upper-only geometry field; lower SVG remains untouched.
  const upperGroup=document.getElementById('upper-lines'),upperPaths=[];
- const candidates=paths.filter(p=>{
-  const ys=p.points.map(q=>q[1]);
-  return Math.min(...ys)<80 && Math.max(...ys)>-100;
- });
- const sorted=candidates.sort((a,b)=>{
-  const avg=p=>p.points.reduce((z,q)=>z+q[1],0)/p.points.length;
-  return avg(a)-avg(b);
- });
- const upperSources=sorted.slice(0,Math.min(155,sorted.length));
- for(const source of upperSources){
-  const original=source.points;
-  // Use the contour's own x-wise curvature, without creating a new crest.
-  const profile=[];
-  for(let j=0;j<=110;j++){
-   const x=-120+j*1860/110;
-   let y=null;
-   for(let k=1;k<original.length;k++){
-    const p=original[k-1],q=original[k],dx=q[0]-p[0];
-    if(Math.abs(dx)<.0001||x<Math.min(p[0],q[0])||x>Math.max(p[0],q[0]))continue;
-    y=p[1]+(q[1]-p[1])*(x-p[0])/dx;break;
-   }
-   if(y===null)continue;
-   profile.push([x,y]);
+ const sampleAt=(points,x)=>{
+  for(let i=1;i<points.length;i++){
+   const p=points[i-1],q=points[i],dx=q[0]-p[0];
+   if(Math.abs(dx)<.0001||x<Math.min(p[0],q[0])||x>Math.max(p[0],q[0]))continue;
+   return p[1]+(q[1]-p[1])*(x-p[0])/dx;
   }
-  if(profile.length<10)continue;
-  const near=profile.reduce((sum,p)=>sum+p[1],0)/profile.length;
-  // Continue the very same contour into the missing region by extrapolating
-  // its original vertical spacing from the upper boundary, never moving it.
-  const extensionDepth=900;
-  const points=profile.map(([x,y])=>[x,y-extensionDepth]);
+  return null;
+ };
+ // The original upper-current contour profile is evaluated across x,
+ // then continued as a tightly spaced surface, not translated as a block.
+ const candidate=paths.map(p=>({p,y:sampleAt(p.points,800)}))
+  .filter(o=>o.y!==null&&o.y>=-90&&o.y<=130)
+  .sort((a,b)=>a.y-b.y);
+ const guide=candidate[0]?.p||paths[0];
+ const baseline=[];
+ for(let j=0;j<=130;j++){
+  const x=1600*j/130;
+  baseline.push([x,sampleAt(guide.points,x)??0]);
+ }
+ const center=baseline.reduce((a,p)=>a+p[1],0)/baseline.length;
+ // Uniform contour density from the original seam up to the screen top.
+ // Per-line geometry follows the same upper-current profile at every height.
+ for(let k=0;k<240;k++){
+  const depth=(k+.5)*900/240;
+  const decay=1-.22*(depth/900);
+  const points=baseline.map(([x,y])=>[x,-depth+(y-center)*decay]);
   const out=document.createElementNS(NS,'path');
-  out.setAttribute('stroke-width',source.out.getAttribute('stroke-width')||'.5');
+  out.setAttribute('stroke-width','.46');
   upperGroup.appendChild(out);
-  upperPaths.push({points,out,baseOpacity:source.baseOpacity});
+  upperPaths.push({points,out,baseOpacity:.20});
  }
  const originalGroup=root.querySelector('g');if(originalGroup)originalGroup.replaceWith(group);else root.appendChild(group);
  let t=0,last=0,ready=true;
