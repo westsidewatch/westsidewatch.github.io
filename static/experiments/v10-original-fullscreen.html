@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-060 · NATIVE V10 QUADRATIC HATCHES</div><script>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-061 · MID-FIELD CURVATURE REFINEMENT</div><script>
 (()=>{'use strict';
 const holder=document.getElementById('v10');
 holder.addEventListener('load',()=>{
@@ -92,9 +92,19 @@ holder.addEventListener('load',()=>{
    // High engraved ridges: amplify the source contour displacement field,
    // especially where the existing family bends strongly.
    const ridge=sourceBend*(1.05+.22*Math.sin(progress*Math.PI));
+   // Strengthen curvature in the previously near-parallel central region.
+   // Multiple long-wavelength v10-like bends with smoothly changing phase
+   // preserve coherent flow, without random noise or hard dark boundaries.
+   const middleWeight=Math.pow(Math.sin(progress*Math.PI),1.3);
+   const xNorm=x/1600;
+   const swellA=21*Math.sin(xNorm*Math.PI*2.15+progress*4.0);
+   const swellB=13*Math.sin(xNorm*Math.PI*4.35-progress*5.2);
+   const swellC=7*Math.sin(xNorm*Math.PI*7.1+progress*2.6);
+   const localCurvature=(swellA+swellB+swellC)*middleWeight;
    const crossCurrent=5*Math.sin(x*.0085+progress*8.5)*
      Math.sin(progress*Math.PI)*(.4+.6*Math.abs(sourceBend)/45);
-   const y=edgeCenter-depth+boundaryBend*(1-blend*.45)+ridge*blend+crossCurrent;
+   const y=edgeCenter-depth+boundaryBend*(1-blend*.45)+ridge*blend+
+     crossCurrent+localCurvature;
    return [x,y];
   });
   const original=surface[Math.min(surface.length-1,Math.floor(progress*(surface.length-1)))].p;
