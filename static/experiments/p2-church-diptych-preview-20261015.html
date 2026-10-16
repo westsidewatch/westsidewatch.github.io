@@ -138,9 +138,21 @@ html,body{min-height:100%;scroll-behavior:auto}
 .showcase .church-editorial__copy{min-width:0}
 .showcase .church-gate__leaf{background-blend-mode:normal,multiply}
 @media(prefers-reduced-motion:reduce){.showcase{height:auto!important;min-height:100svh!important}.showcase .stage{position:relative!important;height:auto!important;min-height:100svh!important}}
+
+/* SVG-075 is the sole animated water source in this P2 preview.
+   V10 remains an immutable source asset, not a second rendered water layer. */
+.showcase .composition .edition[data-variant="0"]::after{display:none!important}
+.showcase .editorial-john{isolation:isolate}
+.showcase .v75-scripture-water{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;z-index:0;clip-path:inset(50% 0 0 0)}
+.showcase .editorial-john > :not(.v75-scripture-water){position:relative;z-index:2}
+.showcase .ocean-rise__leaf{background:#eeeae1!important}
+.showcase .v75-sea-water{position:absolute;top:0;width:200%;height:100%;border:0;pointer-events:none;max-width:none;clip-path:inset(calc(50% * (1 - var(--p2-ocean-rise,0))) 0 0 0)}
+.showcase .ocean-rise__leaf--left .v75-sea-water{left:0}
+.showcase .ocean-rise__leaf--right .v75-sea-water{right:0}
+.showcase .ocean-rise{background:transparent!important}
 </style></head><body data-ws-scope="global"><section class="showcase" aria-label="P2 教會左右半屏動效預覽"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
-<svg class="living-water-v2-overlay" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true"><g id="lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg>
+<iframe class="v75-scripture-water" src="/experiments/p2-living-water-v75.html" title="SVG-075 engraved living water" tabindex="-1" aria-hidden="true"></iframe>
 <div class="ej-mast"><span>THE GOSPEL ACCORDING TO JOHN</span><span>CHAPTER VII / VERSE 38</span></div>
 <p class="ej-full" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p>
 <h2 class="ej-title" aria-hidden="true"><span>Living</span><em>Water.</em></h2>
@@ -154,7 +166,7 @@ html,body{min-height:100%;scroll-behavior:auto}
 <article class="edition" data-variant="4"><div class="headline"><span class="category">05 / Dawn Library</span><h2>Pages<br><i>of Light.</i></h2><div class="cn">黎明書局 · 閱讀與研究</div></div><div class="detail"><p class="description">書封、文字與內頁，在四分之一的空間裡打開另一個閱讀世界。</p><a href="/dawn-library/">OPEN THE LIBRARY</a></div></article>
 <article class="edition" data-variant="5"><div class="headline"><span class="category">06 / Paradise Cinema</span><h2>Moving<br><i>Images.</i></h2><div class="cn">天堂電影院 · 影像</div></div><div class="detail"><p class="description">銀幕不只播放故事，也讓影像、標題與時間共同構成電影雜誌的語言。</p><a href="/cinema/">ENTER CINEMA</a></div></article>
 <article class="edition" data-variant="6"><div class="headline"><span class="category">07 / Daylight Café</span><h2>Everyday<br><i>Light.</i></h2><div class="cn">日光咖啡館 · 生活</div></div><div class="detail"><p class="description">在日常生活的細節裡，留下一個讓光進來的位置。</p><a href="/daylight-cafe/">ENTER DAYLIGHT</a></div></article>
-</div><div class="church-editorial" aria-hidden="true"><div class="church-editorial__visual"></div><div class="church-editorial__copy"><small>01 / LIVING WATER WEST</small><h2>Living<br><i>Water.</i></h2><p>活水西區 · 教會</p><p>從光線、建築與敬拜開始。讓教會的生命在安靜敞開的編輯空間中被看見。</p><a href="/church/">ENTER LIVING WATER</a></div></div><div class="ocean-rise" aria-hidden="true"><div class="ocean-rise__leaf ocean-rise__leaf--left"><svg class="ocean-rise__motion" viewBox="0 0 1600 900" preserveAspectRatio="none"><g class="ocean-rise__lines"></g></svg></div><div class="ocean-rise__leaf ocean-rise__leaf--right"><svg class="ocean-rise__motion" viewBox="0 0 1600 900" preserveAspectRatio="none"><g class="ocean-rise__lines"></g></svg></div></div><div class="index" aria-live="off">01 / 07</div></div></section><script>
+</div><div class="church-editorial" aria-hidden="true"><div class="church-editorial__visual"></div><div class="church-editorial__copy"><small>01 / LIVING WATER WEST</small><h2>Living<br><i>Water.</i></h2><p>活水西區 · 教會</p><p>從光線、建築與敬拜開始。讓教會的生命在安靜敞開的編輯空間中被看見。</p><a href="/church/">ENTER LIVING WATER</a></div></div><div class="ocean-rise" aria-hidden="true"><div class="ocean-rise__leaf ocean-rise__leaf--left"><iframe class="v75-sea-water" src="/experiments/p2-living-water-v75.html" title="SVG-075 water left" tabindex="-1" aria-hidden="true"></iframe></div><div class="ocean-rise__leaf ocean-rise__leaf--right"><iframe class="v75-sea-water" src="/experiments/p2-living-water-v75.html" title="SVG-075 water right" tabindex="-1" aria-hidden="true"></iframe></div></div><div class="index" aria-live="off">01 / 07</div></div></section><script>
 (()=>{'use strict';const root=document.querySelector('.showcase');if(!root)return;
 const planes=[...root.querySelectorAll('.plane')],editions=[...root.querySelectorAll('.edition')],index=root.querySelector('.index');
 const sea=root.querySelector('.ocean-rise'),leaves=[...sea.querySelectorAll('.ocean-rise__leaf')],church=root.querySelector('.church-editorial');
@@ -174,6 +186,7 @@ function render(){
  sea.style.clipPath='none';
  sea.style.transform='none';
  root.style.setProperty('--p2-ocean-rise',rise.toFixed(5));
+ sea.style.setProperty('--p2-ocean-rise',rise.toFixed(5));
  sea.style.opacity=String(1-smooth(clamp((vh-1.88)/.05,0,1)));
  leaves[0].style.transform='translate3d('+(-opening*101)+'%,0,0)';
  leaves[1].style.transform='translate3d('+(opening*101)+'%,0,0)';
@@ -188,93 +201,5 @@ function render(){
 }
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener('change',schedule);render()})();
 </script>
-<script>
-/* Unified engraved-water geometry: water grows within a stationary viewport.
-   The same moving v10 contours remain visible as the sea parts. */
-(()=>{
-'use strict';
-const NS='http://www.w3.org/2000/svg',root=document.querySelector('.showcase');
-const scripture=document.querySelector('.editorial-john'),scriptureLines=document.getElementById('lines');
-const seaSvgs=[...document.querySelectorAll('.ocean-rise__motion')];
-const seaGroups=[...document.querySelectorAll('.ocean-rise__lines')];
-const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};
-let paths=[],ready=false,last=0,time=0;
-const surfaces=seaSvgs.map((svg,i)=>{
-  const id='p2-water-volume-'+i;
-  const defs=document.createElementNS(NS,'defs'),clip=document.createElementNS(NS,'clipPath');
-  clip.id=id;clip.setAttribute('clipPathUnits','userSpaceOnUse');
-  const edge=document.createElementNS(NS,'path');clip.appendChild(edge);defs.appendChild(clip);
-  const fill=document.createElementNS(NS,'path');fill.setAttribute('fill','var(--ws-water,#a1a994)');fill.setAttribute('stroke','none');
-  svg.insertBefore(defs,svg.firstChild);svg.insertBefore(fill,seaGroups[i]);
-  seaGroups[i].setAttribute('clip-path','url(#'+id+')');
-  return {edge,fill};
-});
-function waterShape(rise,t){
-  // The actual waterline travels from 50% to the top of the same SVG.
-  const top=450*(1-rise),wave=(7+22*rise)*(1-.42*rise),n=80;
-  let d='M 0 '+(top+wave*Math.sin(t*.75)).toFixed(2);
-  for(let j=1;j<=n;j++){
-    const x=1600*j/n;
-    const y=top+wave*(.45*Math.sin(x*.007-t*2.1)+.3*Math.sin(x*.019+t*1.4)+.25*Math.sin(x*.035-t*2.7));
-    d+=' L '+x.toFixed(1)+' '+y.toFixed(2);
-  }
-  return d+' L 1600 900 L 0 900 Z';
-}
-function samplePaths(){
-  return fetch('/experiments/assets/living-water-contour-engraving-v10.svg')
-  .then(r=>{if(!r.ok)throw Error('SVG HTTP '+r.status);return r.text()})
-  .then(raw=>{
-    const doc=new DOMParser().parseFromString(raw,'image/svg+xml');
-    if(doc.querySelector('parsererror'))throw Error('Invalid SVG');
-    const source=document.importNode(doc.documentElement,true);
-    source.style.cssText='position:fixed;left:-99999px;top:0;width:1600px;height:900px;visibility:hidden;pointer-events:none';
-    document.body.appendChild(source);
-    try{
-      for(const original of source.querySelectorAll('path')){
-        const len=original.getTotalLength();if(len<1)continue;
-        const steps=clamp(Math.ceil(len/24),24,100),points=[];
-        for(let j=0;j<=steps;j++){const p=original.getPointAtLength(len*j/steps);points.push([p.x,p.y])}
-        const out=document.createElementNS(NS,'path');
-        for(const attr of ['opacity','stroke-width','stroke','stroke-linecap'])if(original.hasAttribute(attr))out.setAttribute(attr,original.getAttribute(attr));
-        scriptureLines.appendChild(out);
-        const seaOut=seaGroups.map(g=>{const p=out.cloneNode(false);g.appendChild(p);return p});
-        paths.push({points,out,seaOut,opacity:Number(original.getAttribute('opacity')||1)});
-      }
-    }finally{source.remove()}
-    if(!paths.length)throw Error('No contour paths');
-    ready=true;scripture.classList.add('p2-motion-ready');
-  }).catch(e=>{console.warn('P2 engraved-water source unavailable',e)});
-}
-samplePaths();
-function frame(now){
-  requestAnimationFrame(frame);
-  if(!last)last=now;time+=Math.min(.05,(now-last)/1000);last=now;
-  const rise=clamp(Number(root.style.getPropertyValue('--p2-ocean-rise'))||0,0,1);
-  const water=waterShape(rise,time);
-  for(const {edge,fill} of surfaces){edge.setAttribute('d',water);fill.setAttribute('d',water)}
-  if(!ready||reduced.matches)return;
-  const amp=6,breath=21*Math.sin(time*Math.PI/7)+5*Math.sin(time*Math.PI/13);
-  for(const item of paths){
-    let d='';
-    for(let j=0;j<item.points.length;j++){
-      const [x,y]=item.points[j],layer=smooth((y-180)/610);
-      const speed=.78+.5*layer,phase=.012*(x+18*Math.sin(y*.0065+x*.0018))-time*1.35*speed;
-      const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);
-      const mask=Math.sin(Math.PI*clamp(y/900,0,1));
-      const ridge=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002);
-      const surge=rise*(24*Math.sin(time*1.9+x*.006+y*.003)+15*Math.sin(time*2.8-x*.011+y*.008));
-      const yy=y+breath*.18+amp*(.72+.28*layer)*(.82*carrier+.12*secondary)+4.5*mask*ridge*Math.sin(y*.046)+surge;
-      const xx=x+amp*(.35*carrier+.10*secondary)+rise*11*Math.sin(time*1.5+y*.012);
-      d+=(j?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1);
-    }
-    item.out.setAttribute('d',d);
-    item.out.setAttribute('opacity',item.opacity.toFixed(3));
-    for(const p of item.seaOut){p.setAttribute('d',d);p.setAttribute('opacity',item.opacity.toFixed(3))}
-  }
-}
-requestAnimationFrame(frame);
-})();
-</script>
+
 </body></html>
