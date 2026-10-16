@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-055 · SOURCE-CONTOUR GROWTH FIELD</div><script>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Original v10 — Lower Half Preview</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">V10 ORIGINAL · LOWER HALF · SVG-056 · RAISED RIDGES + DENSITY LIGHT</div><script>
 (()=>{'use strict';
 const holder=document.getElementById('v10');
 holder.addEventListener('load',()=>{
@@ -71,27 +71,41 @@ holder.addEventListener('load',()=>{
   let total=0;for(let i=a;i<=b;i++)total+=band[i];
   return total/(b-a+1);
  };
- const count=235;
+
+ // SVG-056: engrave with nonuniform spacing and source-derived raised ridges.
+ // Each streamline receives a monotone density warp so that close-set lines
+ // form shadow and open-set lines form highlights, without crossing.
+ const count=320;
+ const densityCDF=u=>u+.045*Math.sin(u*6*Math.PI)+.018*Math.sin(u*13*Math.PI);
+ const norm0=densityCDF(0),norm1=densityCDF(1);
  for(let k=0;k<count;k++){
-  const progress=(k+.5)/count,depth=progress*940;
+  const u=(k+.5)/count;
+  const progress=(densityCDF(u)-norm0)/(norm1-norm0);
+  const depth=progress*940;
   const bandPos=progress*(bands.length-1);
   const i=Math.floor(bandPos),mix=bandPos-i;
   const bandA=bands[i],bandB=bands[Math.min(i+1,bands.length-1)];
   const points=xs.map((x,j)=>{
    const sourceBend=(1-mix)*smoothBand(bandA,j)+mix*smoothBand(bandB,j);
    const boundaryBend=boundary[j]-edgeCenter;
-   const blend=Math.min(1,depth/210);
-   // Join the upper v10 family at the seam; gradually grow the original
-   // water's nonlinear bending, ridges and cross-current into the full top.
-   const y=edgeCenter-depth+boundaryBend*(1-blend*.55)+sourceBend*blend*.92;
+   const blend=Math.min(1,depth/170);
+   // High engraved ridges: amplify the source contour displacement field,
+   // especially where the existing family bends strongly.
+   const ridge=sourceBend*(1.16+.55*Math.sin(progress*Math.PI));
+   const crossCurrent=8*Math.sin(x*.0085+progress*8.5)*
+     Math.sin(progress*Math.PI)*(.4+.6*Math.abs(sourceBend)/45);
+   const y=edgeCenter-depth+boundaryBend*(1-blend*.45)+ridge*blend+crossCurrent;
    return [x,y];
   });
   const original=surface[Math.min(surface.length-1,Math.floor(progress*(surface.length-1)))].p;
   const out=document.createElementNS(NS,'path');
-  out.setAttribute('stroke-width',original.out.getAttribute('stroke-width')||'.6');
+  const sourceWidth=Number(original.out.getAttribute('stroke-width')||.6);
+  const ridgeWeight=.86+.36*Math.pow(Math.sin(progress*8*Math.PI),2);
+  out.setAttribute('stroke-width',(sourceWidth*ridgeWeight).toFixed(3));
   upperGroup.appendChild(out);
   const opacity=original.baseOpacity;
-  upperPaths.push({points,out,baseOpacity:Math.max(.12,Math.min(.8,opacity))});
+  const shadow=.78+.22*Math.cos(progress*12*Math.PI);
+  upperPaths.push({points,out,baseOpacity:Math.max(.13,Math.min(.85,opacity*shadow))});
  }
  const originalGroup=root.querySelector('g');if(originalGroup)originalGroup.replaceWith(group);else root.appendChild(group);
  let t=0,last=0,ready=true;
