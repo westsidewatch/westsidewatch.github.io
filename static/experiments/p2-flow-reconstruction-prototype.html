@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Living Water — Flow Reconstruction</title>
+<style>
+:root{color-scheme:light}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#e4e9e7;color:#263e44;font-family:Georgia,serif}header{padding:24px 5vw 14px;display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap}h1{font-weight:400;letter-spacing:.04em;font-size:clamp(22px,3vw,38px);margin:0}small{letter-spacing:.15em}main{height:400svh;position:relative}.stage{position:sticky;top:0;height:100svh;overflow:hidden;background:linear-gradient(#eef1eb 0%,#d5e3e3 42%,#9dbec8 100%)}canvas{display:block;width:100%;height:100%}.guide{position:absolute;top:3%;left:5%;pointer-events:none;font-size:12px;letter-spacing:.14em;text-transform:uppercase}.meter{position:absolute;bottom:20px;left:5%;right:5%;height:1px;background:#6b8989}.meter span{display:block;background:#293d40;height:3px;width:0}.end{height:20svh;padding:3vw 5vw}button{background:transparent;border:1px solid #819a9c;padding:8px 12px;cursor:pointer;color:inherit}
+@media(prefers-reduced-motion:reduce){.meter{display:none}}
+</style>
+<header><div><small>SVG-003 / INDEPENDENT EXPERIMENT</small><h1>Living Water — Flow Reconstruction</h1></div><button id="toggle">Pause motion</button></header>
+<main id="host"><div class="stage"><canvas id="water" aria-label="Living Water animated engraving study"></canvas><div class="guide" id="phase">01 / Horizontal flow</div><div class="meter"><span id="meter"></span></div></div></main>
+<div class="end">Horizontal current → rising current → parting water. Experimental reconstruction; P2 unchanged.</div>
+<script>
+(()=>{
+'use strict';
+const canvas=document.querySelector('#water'),ctx=canvas.getContext('2d',{alpha:false}),host=document.querySelector('#host'),phase=document.querySelector('#phase'),meter=document.querySelector('#meter'),toggle=document.querySelector('#toggle');
+let w=0,h=0,dpr=1,paused=false,t=0,last=0,progress=0;
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),smooth=v=>{v=clamp(v);return v*v*(3-2*v)};
+const seed=n=>{let v=Math.sin(n*127.1+71.7)*43758.5453;return v-Math.floor(v)};
+const strands=Array.from({length:215},(_,i)=>({id:i,u:seed(i+2),offset:seed(i+201),speed:.45+seed(i+401)*.85,width:.45+seed(i+601)*1.15,alpha:.13+seed(i+801)*.31,side:seed(i+1001)>.5?1:-1}));
+function resize(){const r=canvas.getBoundingClientRect();w=Math.max(1,r.width);h=Math.max(1,r.height);dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}
+new ResizeObserver(resize).observe(canvas);resize();
+function readScroll(){const r=host.getBoundingClientRect();progress=clamp(-r.top/Math.max(1,r.height-innerHeight));meter.style.width=(progress*100).toFixed(1)+'%';phase.textContent=progress<.35?'01 / Horizontal flow':progress<.73?'02 / Rising current':'03 / Parting water'}
+addEventListener('scroll',readScroll,{passive:true});readScroll();
+function draw(now){
+ if(!last)last=now;const dt=Math.min(.05,(now-last)/1000);last=now;if(!paused)t+=dt;
+ const rise=smooth((progress-.29)/.43),part=smooth((progress-.69)/.27),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ ctx.fillStyle='#d8e5e5';ctx.fillRect(0,0,w,h);
+ const bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#e8efeb');bg.addColorStop(.42,'#c4d9dc');bg.addColorStop(1,'#91b7c1');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+ const time=reduced?0:t;
+ for(const s of strands){
+   const band=s.u,baseY=h*(.52+.47*band),spread=h*(.17+.16*seed(s.id+121));
+   const phase=(time*s.speed*.16+s.offset)%1;
+   const headX=w*(phase*1.42-.21),tailX=headX-w*(.22+.32*seed(s.id+303));
+   const vertical=h*rise*(.16+.82*seed(s.id+511));
+   const lineY=baseY-vertical;
+   const side=s.side;
+   const split=part*side*w*(.23+.09*seed(s.id+91));
+   const x0=tailX+split,x1=headX+split;
+   if(x1< -w*.2||x0>w*1.2)continue;
+   const wave=(x,k)=>Math.sin(x/w*13+time*(.6+s.speed)+s.id*.31)*spread*.075 + Math.sin(x/w*31-time*.9+s.id*.73)*spread*.018;
+   const curling=(x)=>rise*Math.sin((x/w*5)+(time*.6)+s.id*.12)*h*.028;
+   ctx.beginPath();
+   const steps=25;
+   for(let j=0;j<=steps;j++){
+      const f=j/steps,x=x0+(x1-x0)*f;
+      const y=lineY+wave(x,0)+curling(x)+part*Math.sin(f*Math.PI)*h*.018;
+      if(j===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+   }
+   const fade=Math.sin(Math.PI*clamp(phase))*.65+.35;
+   ctx.lineWidth=s.width*(w/1400+.38);ctx.strokeStyle='rgba(41,88,107,'+(s.alpha*fade)+')';ctx.stroke();
+   if(s.id%4===0){ctx.save();ctx.translate(0,2.2);ctx.lineWidth=.45;ctx.strokeStyle='rgba(255,255,245,.19)';ctx.stroke();ctx.restore()}
+ }
+ requestAnimationFrame(draw);
+}
+toggle.addEventListener('click',()=>{paused=!paused;toggle.textContent=paused?'Resume motion':'Pause motion'});requestAnimationFrame(draw);
+})();
+</script></html>
