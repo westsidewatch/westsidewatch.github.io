@@ -85,7 +85,18 @@
 .showcase .composition .edition[data-variant="0"] .living-water-v2-overlay{position:absolute!important;inset:0!important;width:100%;height:100%;z-index:3!important;pointer-events:none;overflow:hidden;mix-blend-mode:multiply;transform:translate3d(0,var(--living-water-rise,0px),0);will-change:transform;grid-column:1/-1;grid-row:1/-1;align-self:stretch;justify-self:stretch}
 .showcase .composition .edition[data-variant="0"] .living-water-v2-overlay path{fill:none;stroke:#547989;stroke-linecap:round}
 @media(prefers-reduced-motion:reduce){.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay{display:none!important}}
-.showcase{height:100svh!important;min-height:100svh!important}.showcase .stage{position:relative!important;top:0!important;height:100svh!important}.showcase .composition .edition[data-variant="0"].p2-motion-ready::after{opacity:0!important}.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay{transform:none!important;z-index:1!important}.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay path{stroke:#557b8c}
+.showcase{height:100svh!important;min-height:100svh!important}.showcase .stage{position:relative!important;top:0!important;height:100svh!important}.showcase .composition .edition[data-variant="0"].p2-motion-ready::after{opacity:.35!important}.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay{transform:none!important;z-index:1!important}.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay path{stroke:#557b8c}
+
+/* Seamless ocean: retain a quiet full-bleed v10 underlay beneath the moving contours.
+   The moving 620-path field must never expose a hard blank strip when it breathes. */
+.showcase .composition .edition[data-variant="0"] .living-water-v2-overlay{
+ inset:-3% -2%!important;width:104%!important;height:106%!important;
+ overflow:visible!important;transform:none!important;
+}
+.showcase .composition .edition[data-variant="0"]::after{
+ inset:-6% -3%!important;background-size:cover!important;
+ background-position:center!important;background-repeat:no-repeat!important;
+}
 </style></head><body data-ws-scope="global"><section class="showcase" aria-label="七重編輯展示"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
 <svg class="living-water-v2-overlay" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true"><g id="lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg>
@@ -136,7 +147,7 @@ fetch('/experiments/assets/living-water-contour-engraving-v10.svg').then(r=>{if(
 function frame(now){requestAnimationFrame(frame);if(!last)last=now;const dt=Math.min(.05,(now-last)/1000);last=now;if(!ready)return;t+=dt;const travel=1.5,contrast=2,amp=6,breath=21*Math.sin(t*Math.PI/7)+5*Math.sin(t*Math.PI/13);
 // A single continuous phase field governs every engraving point; y only modulates speed smoothly.
 const field=(x,y)=>{const layer=smooth((y-180)/610),speed=.78+contrast*.25*layer,warp=18*Math.sin(y*.0065+x*.0018),phase=.012*(x+warp)-t*.9*travel*speed;return {layer,phase}};
-for(const {points,out,baseOpacity} of paths){let d='';for(let i=0;i<points.length;i++){const [x,y]=points[i],{layer,phase}=field(x,y),envelope=.72+.28*layer;const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);const densityStrength=2.5,verticalMask=Math.sin(Math.PI*clamp(y/900,0,1)),stationaryRidges=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002),spacingShift=densityStrength*1.8*verticalMask*stationaryRidges*Math.sin(y*.046);const yy=y+breath*.65+amp*envelope*(.82*carrier+.12*secondary)+spacingShift;const xx=x+amp*(.35*carrier+.10*secondary);d+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)}out.setAttribute('d',d);out.setAttribute('opacity',baseOpacity.toFixed(3))}}requestAnimationFrame(frame);
+for(const {points,out,baseOpacity} of paths){let d='';for(let i=0;i<points.length;i++){const [x,y]=points[i],{layer,phase}=field(x,y),envelope=.72+.28*layer;const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);const densityStrength=2.5,verticalMask=Math.sin(Math.PI*clamp(y/900,0,1)),stationaryRidges=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002),spacingShift=densityStrength*1.8*verticalMask*stationaryRidges*Math.sin(y*.046);const yy=y+breath*.18+amp*envelope*(.82*carrier+.12*secondary)+spacingShift;const xx=x+amp*(.35*carrier+.10*secondary);d+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)}out.setAttribute('d',d);out.setAttribute('opacity',baseOpacity.toFixed(3))}}requestAnimationFrame(frame);
 })();
 </script>
 </body></html>
