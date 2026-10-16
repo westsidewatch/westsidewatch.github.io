@@ -150,6 +150,15 @@ html,body{min-height:100%;scroll-behavior:auto}
 .showcase .ocean-rise__leaf--left .v75-sea-water{left:0}
 .showcase .ocean-rise__leaf--right .v75-sea-water{right:0}
 .showcase .ocean-rise{background:transparent!important}
+
+/* SVG-075 embedding correction: the iframe is one viewport-sized engraving,
+   clipped by the sea's two 50% leaves, never stretched per leaf. */
+.showcase .ocean-rise__leaf{overflow:hidden!important;background:transparent!important}
+.showcase .v75-sea-water{display:block!important;position:absolute!important;top:0!important;width:200%!important;height:100%!important;max-width:none!important;min-width:0!important;border:0!important;transform:none!important;object-fit:fill!important}
+.showcase .ocean-rise__leaf--left .v75-sea-water{left:0!important;right:auto!important}
+.showcase .ocean-rise__leaf--right .v75-sea-water{left:auto!important;right:0!important}
+.showcase .church-editorial__visual{background-color:var(--paper)!important;background-image:none!important}
+.showcase .v75-scripture-water{display:block!important;position:absolute!important;top:0!important;left:0!important;width:100%!important;height:100%!important;border:0!important;transform:none!important;pointer-events:none!important;clip-path:inset(50% 0 0 0)!important}
 </style></head><body data-ws-scope="global"><section class="showcase" aria-label="P2 教會左右半屏動效預覽"><div class="stage"><div class="planes" aria-hidden="true"><div class="plane p0"></div><div class="plane p1"></div><div class="plane p2"></div><div class="plane p3"></div><div class="plane p4"></div><div class="plane p5"></div><div class="plane p6"><div class="fold-church-identity"><span class="fold-church-name" role="img" aria-label="神召會活水堂西區教會"></span><span class="fold-church-english">P.A.O.C. Living Water Assembly West</span><span class="fold-church-address">205 Wilmington Ave., North York, ON M3H 6B3</span></div></div></div><div class="composition">
 <article class="edition sites-section-church editorial-john" data-variant="0" aria-label="約翰福音 7:38 經文專題">
 <iframe class="v75-scripture-water" src="/experiments/p2-living-water-v75.html" title="SVG-075 engraved living water" tabindex="-1" aria-hidden="true"></iframe>
