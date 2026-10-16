@@ -1,0 +1,298 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water — Fullscreen SVG-075 (V10-derived)</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eeeae1}#upper{position:absolute;top:0;left:0;width:100vw;height:50vh;display:block;pointer-events:none}object{display:block;position:absolute;left:0;bottom:0;width:100vw;height:50vh;object-fit:fill} .version-label{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;background:#f2eee6;color:#253b43;border:1px solid #547e89;padding:7px 15px;font:12px/1.3 Georgia,serif;letter-spacing:.08em;white-space:nowrap;pointer-events:none}</style></head><body><svg id="upper" xmlns="http://www.w3.org/2000/svg" viewBox="0 -900 1600 900" preserveAspectRatio="none"><g id="upper-lines" fill="none" stroke="#557b8c" stroke-linecap="round"></g></svg><object id="v10" type="image/svg+xml" data="/experiments/assets/living-water-contour-engraving-v10.svg" aria-label="Original v10 animated engraving in lower half"></object><div class="version-label">LIVING WATER · SVG-075 · FULLSCREEN · V10 SOURCE PRESERVED</div><script>
+(()=>{'use strict';
+const holder=document.getElementById('v10');
+holder.addEventListener('load',()=>{
+ const doc=holder.contentDocument;if(!doc)return;
+ const NS='http://www.w3.org/2000/svg',root=doc.documentElement;
+ const group=doc.createElementNS(NS,'g');group.setAttribute('fill','none');group.setAttribute('stroke','#557b8c');group.setAttribute('stroke-linecap','round');
+ const originals=[...doc.querySelectorAll('path')],paths=[];
+ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};
+ for(const original of originals){
+  const len=original.getTotalLength();if(len<1)continue;
+  const steps=clamp(Math.ceil(len/22),28,110),points=[];
+  for(let j=0;j<=steps;j++){const q=original.getPointAtLength(len*j/steps);points.push([q.x,q.y])}
+  const out=doc.createElementNS(NS,'path');
+  for(const attr of ['opacity','stroke-width','stroke','stroke-linecap'])if(original.hasAttribute(attr))out.setAttribute(attr,original.getAttribute(attr));
+  group.appendChild(out);paths.push({points,out,baseOpacity:Number(original.getAttribute('opacity')||1)});
+ }
+
+ // Upper completion is a separate SVG. The original lower-half v10 object
+ // keeps precisely its approved dimensions, coordinates and original motion.
+
+ // Complete the upper water with the SOURCE v10 uppermost contour geometry.
+ // Preserve the approved lower-half object and its animation untouched.
+
+ // Extend the actual upper stratum from each original v10 contour,
+ // following its individual curvature and tangent, not a separate pattern.
+
+ // Fill the entire missing upper water surface by continuing the upper
+ // v10 contour family in its native x direction, with the original cadence.
+ // This is a NEW upper-only geometry field; lower SVG remains untouched.
+
+ // Extend the actual v10 upper contour FAMILY from its upper boundary.
+ // Do not move, crop, rescale or edit the lower-half SVG.
+
+ // Original v10 upper stratum: extend its path-index sequence backwards.
+ // Fit each x column to the first original contour family, retaining
+ // local curvature, natural line spacing and varying engraved stroke tone.
+
+ // SVG-055: use the original V10 multi-contour displacement field,
+ // rather than copying a single line or synthesizing parallel strokes.
+ const upperGroup=document.getElementById('upper-lines'),upperPaths=[];
+ const xs=Array.from({length:141},(_,j)=>1600*j/140);
+ const at=(pts,x)=>{
+  for(let i=1;i<pts.length;i++){
+   const a=pts[i-1],b=pts[i],dx=b[0]-a[0];
+   if(Math.abs(dx)<1e-5||x<Math.min(a[0],b[0])||x>Math.max(a[0],b[0]))continue;
+   return a[1]+(b[1]-a[1])*(x-a[0])/dx;
+  }
+  return x<pts[0][0]?pts[0][1]:pts[pts.length-1][1];
+ };
+ // Recover original line families across the entire v10 water surface.
+ const contours=paths.map(p=>({p,ys:xs.map(x=>at(p.points,x))}));
+ const middle=Math.floor(xs.length/2);
+ contours.sort((a,b)=>a.ys[middle]-b.ys[middle]);
+ const upperOriginal=contours.slice(0,Math.min(28,contours.length));
+ const surface=contours.slice(0,Math.min(380,contours.length));
+ const avg=arr=>arr.reduce((a,b)=>a+b,0)/arr.length;
+ // Derive the upstream boundary from several original upper lines.
+ const boundary=xs.map((x,j)=>avg(upperOriginal.slice(0,6).map(c=>c.ys[j])));
+ const edgeCenter=avg(boundary);
+ // A v10-derived curvature field: sample a moving band of original water
+ // contours, subtract each contour's centerline, and retain its local bends.
+ const bands=surface.filter((c,i)=>i%7===0).map(c=>{
+  const cy=avg(c.ys);
+  const bends=c.ys.map(y=>y-cy);
+  const meanBend=avg(bends);
+  return bends.map(y=>y-meanBend);
+ });
+ const smoothBand=(band,j)=>{
+  const a=Math.max(0,j-2),b=Math.min(band.length-1,j+2);
+  let total=0;for(let i=a;i<=b;i++)total+=band[i];
+  return total/(b-a+1);
+ };
+
+ // SVG-056: engrave with nonuniform spacing and source-derived raised ridges.
+ // Each streamline receives a monotone density warp so that close-set lines
+ // form shadow and open-set lines form highlights, without crossing.
+ const count=320;
+ const densityCDF=u=>u+.018*Math.sin(u*6*Math.PI)+.006*Math.sin(u*13*Math.PI);
+ const norm0=densityCDF(0),norm1=densityCDF(1);
+ for(let k=0;k<count;k++){
+  const u=(k+.5)/count;
+  const progress=(densityCDF(u)-norm0)/(norm1-norm0);
+  const depth=progress*940;
+  const bandPos=progress*(bands.length-1);
+  const i=Math.floor(bandPos),mix=bandPos-i;
+  const bandA=bands[i],bandB=bands[Math.min(i+1,bands.length-1)];
+  const points=xs.map((x,j)=>{
+   const sourceBend=(1-mix)*smoothBand(bandA,j)+mix*smoothBand(bandB,j);
+   const boundaryBend=boundary[j]-edgeCenter;
+   const blend=Math.min(1,depth/170);
+   // High engraved ridges: amplify the source contour displacement field,
+   // especially where the existing family bends strongly.
+   const ridge=sourceBend*(1.05+.22*Math.sin(progress*Math.PI));
+   // Strengthen curvature in the previously near-parallel central region.
+   // Multiple long-wavelength v10-like bends with smoothly changing phase
+   // preserve coherent flow, without random noise or hard dark boundaries.
+   const middleWeight=Math.pow(Math.sin(progress*Math.PI),1.3);
+   const xNorm=x/1600;
+   const swellA=21*Math.sin(xNorm*Math.PI*2.15+progress*4.0);
+   const swellB=13*Math.sin(xNorm*Math.PI*4.35-progress*5.2);
+   const swellC=7*Math.sin(xNorm*Math.PI*7.1+progress*2.6);
+   const localCurvature=(swellA+swellB+swellC)*middleWeight;
+   const crossCurrent=5*Math.sin(x*.0085+progress*8.5)*
+     Math.sin(progress*Math.PI)*(.4+.6*Math.abs(sourceBend)/45);
+   // Local relief: curved, migrating crest/trough pockets. Amplitude
+   // changes smoothly across both x and depth, creating convex and concave
+   // volumes rather than adding another screen-wide parallel wave.
+   const pocketA=Math.exp(-Math.pow((xNorm-(.24+.07*Math.sin(progress*5.1)))/.14,2));
+   const pocketB=Math.exp(-Math.pow((xNorm-(.72-.09*Math.cos(progress*4.2)))/.18,2));
+   const depthA=Math.exp(-Math.pow((progress-.39)/.22,2));
+   const depthB=Math.exp(-Math.pow((progress-.70)/.19,2));
+   const relief=19*pocketA*depthA*Math.sin(xNorm*19+progress*12.5)
+     -16*pocketB*depthB*Math.sin(xNorm*16-progress*10.5);
+   // Three localized, smooth line-spacing and direction adjustments in
+   // the upper-middle water. No global waveform replacement.
+   // Gaussian windows confine the change to three specific pockets.
+   const pockets=[
+     [.22,.36,.105,.090, 1],
+     [.53,.43,.115,.085,-1],
+     [.80,.34,.095,.095, 1]
+   ];
+   let spacingShift=0,turnShift=0;
+   for(const [cx,cy,wx,wy,sign] of pockets){
+     const xx=(xNorm-cx)/wx, yy=(progress-cy)/wy;
+     const window=Math.exp(-.5*(xx*xx+yy*yy));
+     // Adjacent lines draw together on one side and open on the other.
+     // Bound displacement to avoid folds, dark ridges and discontinuity.
+     spacingShift+=sign*5.2*window*Math.sin((progress-cy)*Math.PI/(wy*2));
+     // Vary local tangent with a low-amplitude x-dependent S-bend.
+     turnShift+=sign*6.5*window*Math.sin((xNorm-cx)*Math.PI/(wx*2));
+   }
+   const fanX=(xNorm-.78)/.145,fanY=(progress-.37)/.125;
+   const fanWindow=Math.exp(-.5*(fanX*fanX+fanY*fanY));
+   const familyPhase=(progress-.37)*Math.PI/.125;
+   const spacingRelief=3.8*fanWindow*Math.sin(familyPhase*1.25)*
+     Math.sin((xNorm-.78)*Math.PI/.145);
+   const bendRelief=7.2*fanWindow*
+     Math.sin((xNorm-.78)*Math.PI/.145+familyPhase*.65);
+   const y=edgeCenter-depth+boundaryBend*(1-blend*.45)+ridge*blend+
+     crossCurrent+localCurvature+relief+spacingShift+turnShift+
+     spacingRelief+bendRelief+
+     // Right-hand contour-family refinement. A broad, soft spatial envelope
+     // bends neighbouring contours by different amounts without moving the
+     // untouched lower layer or introducing a separate line system.
+     (()=>{
+       const u=(xNorm-.885)/.14;
+       const envelope=Math.exp(-.5*u*u);
+       const ridgeA=Math.exp(-.5*Math.pow((progress-.30)/.095,2));
+       const ridgeB=Math.exp(-.5*Math.pow((progress-.51)/.10,2));
+       // Different contour-index phases prevent a long parallel fan.
+       // The x-dependent phase yields a curved S-transition, not a tilt.
+       const family=progress*31;
+       const bend=envelope*(ridgeA*8.5*Math.sin(2.7*u+family*.37)
+          -ridgeB*7.0*Math.sin(2.2*u-family*.29));
+       const density=envelope*(ridgeA+ridgeB*.8)*
+         (3.2*Math.sin(family+u*1.3)+1.6*Math.sin(family*1.65-u));
+       return bend+density;
+     })();
+   // SVG-075: alter the contour-index spacing rhythm in ONE of the four
+   // right-side dark families.  A smooth index-space redistribution shifts
+   // neighbouring contours in opposite directions; this changes the actual
+   // interline distances (and therefore tone) rather than stroke darkness.
+   // The right-side envelope tapers continuously, protecting the rest of v10.
+   const rightSpacingWindow=Math.exp(-.5*Math.pow((xNorm-.87)/.15,2));
+   const bandCentre=.405,bandWidth=.080;
+   const v=(progress-bandCentre)/bandWidth;
+   const redistribution=rightSpacingWindow*10.5*v*Math.exp(-.5*v*v);
+   // A weaker offset to prevent the downstream fan from opening uniformly.
+   const fanV=(progress-.545)/.065;
+   const fanRedistribution=rightSpacingWindow*3.0*fanV*Math.exp(-.5*fanV*fanV);
+   // SVG-075: turn the local streamline tangents, rather than shifting the
+   // entire shadow band vertically. The lateral S-curve is strongest at the
+   // upper-right convergence and fades to zero on all four sides.
+   // Its phase varies with contour depth so adjacent lines do not march in
+   // parallel. Both lobes have opposite signs to avoid a global tilt.
+   const turnX=(xNorm-.79)/.19;
+   const turnDepth=(progress-.405)/.105;
+   const turnEnvelope=Math.exp(-.5*(turnX*turnX+turnDepth*turnDepth));
+   const tangentTurn=12.0*turnEnvelope*Math.sin(2.3*turnX+1.15*turnDepth);
+   return [x,y+redistribution+fanRedistribution+tangentTurn];
+  });
+  const original=surface[Math.min(surface.length-1,Math.floor(progress*(surface.length-1)))].p;
+  const out=document.createElementNS(NS,'path');
+  const sourceWidth=Number(original.out.getAttribute('stroke-width')||.6);
+  const ridgeWeight=.82+.18*Math.pow(Math.sin(progress*8*Math.PI),2);
+  out.setAttribute('stroke-width',(sourceWidth*ridgeWeight).toFixed(3));
+  // Remove the two redundant dark contour corridors entirely from the
+  // upper extension. These are contour-family intervals, not two guessed
+  // individual paths: dense neighbours are responsible for the dark bands.
+  // Only upper geometry is affected; the original v10 object is untouched.
+  // SVG-075: fill only the two deletion gaps with a sparse subset of
+  // original-family contours. Keep the dark clusters removed and avoid
+  // a conspicuous blank stripe. No changes to geometry or the lower v10.
+  const inFirstGap=progress>.323&&progress<.367;
+  const inSecondGap=progress>.382&&progress<.429;
+  // SVG-075: the final parallel shadow corridor receives the same sparse
+  // delete-and-refill treatment as the two successfully softened bands.
+  // Retain one contour in five so the engraved surface stays continuous.
+  const inFinalParallelGap=progress>.465&&progress<.493;
+  if((inFirstGap||inSecondGap||inFinalParallelGap)&&k%5!==0)continue;
+  upperGroup.appendChild(out);
+  const opacity=original.baseOpacity;
+  const shadow=.90+.10*Math.cos(progress*12*Math.PI);
+  upperPaths.push({points,out,baseOpacity:Math.max(.12,Math.min(.53,opacity*shadow))});
+ }
+
+
+
+ // SVG-060: inherit the ACTUAL short quadratic engravings from v10.
+ // V10 uses short M ... q ... paths, not detached straight M/L dashes.
+ const hatchGroup=document.createElementNS(NS,'g');
+ hatchGroup.setAttribute('fill','none');
+ hatchGroup.setAttribute('stroke','#557b8c');
+ hatchGroup.setAttribute('stroke-linecap','round');
+ upperGroup.appendChild(hatchGroup);
+ const hatches=[];
+ const sourceHatches=originals.map(o=>{
+  const d=o.getAttribute('d')||'';
+  const m=d.match(/^M\s*([\d.-]+)[ ,]+([\d.-]+)\s*q\s*([\d.-]+)[ ,]+([\d.-]+)[ ,]+([\d.-]+)[ ,]+([\d.-]+)/i);
+  return m?{x:+m[1],y:+m[2],cx:+m[3],cy:+m[4],dx:+m[5],dy:+m[6],
+    opacity:Number(o.getAttribute('opacity')||.15),
+    width:Number(o.getAttribute('stroke-width')||.36)}:null;
+ }).filter(Boolean);
+ // Replicate v10's measured distribution of short quadratic curves in the
+ // upper extension. Each mark is anchored to a host upper streamline.
+ for(let n=0;n<sourceHatches.length;n++){
+  const src=sourceHatches[n];
+  const li=Math.min(upperPaths.length-3,Math.max(2,
+   Math.floor((n+.5)/sourceHatches.length*(upperPaths.length-4))));
+  const line=upperPaths[li],pts=line.points;
+  let j=3;
+  for(let q=4;q<pts.length-4;q++)if(Math.abs(pts[q][0]-src.x)<Math.abs(pts[j][0]-src.x))j=q;
+  const out=document.createElementNS(NS,'path');
+  out.setAttribute('stroke-width',String(src.width));
+  hatchGroup.appendChild(out);
+  hatches.push({src,line,j,out,growing:n%5===0,phase:n*.17});
+ }
+ // Two restrained, v10-derived short quadratic shadow cuts, placed only
+ // in the upper-right parallel corridor; never full-width dark ridges.
+ const accents=[];
+ for(const [li,xpos] of [[Math.floor(upperPaths.length*.31),1380],[Math.floor(upperPaths.length*.48),1490]]){
+  const line=upperPaths[Math.max(2,Math.min(upperPaths.length-3,li))];
+  const j=Math.max(4,Math.min(line.points.length-5,Math.round(xpos/1600*140)));
+  const src=sourceHatches.length?sourceHatches[(j+li)%sourceHatches.length]:null;
+  if(!src)continue;
+  const out=document.createElementNS(NS,'path');
+  out.setAttribute('stroke-width',String(Math.min(.85,Math.max(.45,src.width*1.25))));
+  hatchGroup.appendChild(out);
+  accents.push({line,j,out,src});
+ }
+ const originalGroup=root.querySelector('g');if(originalGroup)originalGroup.replaceWith(group);else root.appendChild(group);
+ let t=0,last=0,ready=true;
+ function frame(now){requestAnimationFrame(frame);if(!last)last=now;const dt=Math.min(.05,(now-last)/1000);last=now;if(!ready)return;t+=dt;const travel=1.85,contrast=2.15,amp=10.5,breath=31*Math.sin(t*Math.PI/7)+9*Math.sin(t*Math.PI/13);
+// A single continuous phase field governs every engraving point; y only modulates speed smoothly.
+const field=(x,y)=>{const layer=smooth((y-180)/610),speed=.78+contrast*.25*layer,warp=18*Math.sin(y*.0065+x*.0018),phase=.012*(x+warp)-t*.9*travel*speed;return {layer,phase}};
+for(const {points,out,baseOpacity} of [...paths,...upperPaths]){let d='';for(let i=0;i<points.length;i++){const [x,y]=points[i],{layer,phase}=field(x,y),envelope=.72+.28*layer;const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);const densityStrength=2.5,verticalMask=Math.sin(Math.PI*clamp(y/900,0,1)),stationaryRidges=.68*Math.sin(x*.008-y*.004)+.32*Math.sin(x*.014+y*.002),spacingShift=densityStrength*1.8*verticalMask*stationaryRidges*Math.sin(y*.046);const yy=y+breath*.29+amp*envelope*(.82*carrier+.12*secondary)+spacingShift;const xx=x+amp*(.35*carrier+.10*secondary);d+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1)}out.setAttribute('d',d);out.setAttribute('opacity',baseOpacity.toFixed(3))}
+
+
+ // Accents share the exact flow deformation and tangent of their host.
+ for(const h of accents){
+  const p=h.line.points,[x,y]=p[h.j];
+  const dx=p[h.j+1][0]-p[h.j-1][0],dy=p[h.j+1][1]-p[h.j-1][1];
+  const a=Math.atan2(dy,dx),cs=Math.cos(a),sn=Math.sin(a);
+  const {layer,phase}=field(x,y),env=.72+.28*layer;
+  const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);
+  const xx=x+amp*(.35*carrier+.10*secondary);
+  const yy=y+breath*.29+amp*env*(.82*carrier+.12*secondary);
+  const src=h.src,scale=1.15;
+  const rot=(u,v)=>[(u*cs-v*sn)*scale,(u*sn+v*cs)*scale];
+  const [cx,cy]=rot(src.cx,src.cy),[ex,ey]=rot(src.dx,src.dy);
+  h.out.setAttribute('d','M'+xx.toFixed(1)+' '+yy.toFixed(1)+
+    'q'+cx.toFixed(1)+' '+cy.toFixed(1)+' '+ex.toFixed(1)+' '+ey.toFixed(1));
+  h.out.setAttribute('opacity',Math.min(.34,Math.max(.23,src.opacity*1.3)).toFixed(3));
+ }
+ // Animate the source quadratic mark as a deforming part of its host flow.
+ for(const h of hatches){
+  const p=h.line.points;
+  const slide=h.growing?Math.floor(2.5*Math.sin(t*.43+h.phase)):0;
+  const idx=Math.max(2,Math.min(p.length-3,h.j+slide));
+  const [x,y]=p[idx],dx=p[idx+1][0]-p[idx-1][0],dy=p[idx+1][1]-p[idx-1][1];
+  const angle=Math.atan2(dy,dx);
+  const growth=h.growing?(.7+.3*(.5+.5*Math.sin(t*.72+h.phase))):1;
+  const {layer,phase}=field(x,y),envelope=.72+.28*layer;
+  const carrier=Math.sin(phase),secondary=Math.sin(phase*2-.6);
+  const xx=x+amp*(.35*carrier+.10*secondary);
+  const yy=y+breath*.29+amp*envelope*(.82*carrier+.12*secondary);
+  const cs=Math.cos(angle),sn=Math.sin(angle),src=h.src;
+  const rot=(u,v)=>[(u*cs-v*sn)*growth,(u*sn+v*cs)*growth];
+  const [cx,cy]=rot(src.cx,src.cy),[ex,ey]=rot(src.dx,src.dy);
+  h.out.setAttribute('d','M'+xx.toFixed(1)+' '+yy.toFixed(1)+
+    'q'+cx.toFixed(1)+' '+cy.toFixed(1)+' '+ex.toFixed(1)+' '+ey.toFixed(1));
+  h.out.setAttribute('opacity',Math.min(.28,src.opacity).toFixed(3));
+ }
+ }requestAnimationFrame(frame);
+});
+})();
+</script></body></html>
