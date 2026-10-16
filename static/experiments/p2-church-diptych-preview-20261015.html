@@ -103,6 +103,7 @@
  background-position:center!important;background-repeat:no-repeat!important;
 }
 
+.showcase .church-editorial{pointer-events:none}.showcase[data-p2-phase="church"] .church-editorial{pointer-events:auto}.showcase .church-editorial__copy{overflow:hidden}.showcase .church-editorial__copy h2{font-size:clamp(42px,6.2vw,112px)}@media(max-width:700px){.showcase .church-editorial__copy{padding:clamp(12px,3.5vw,26px);gap:clamp(5px,1.4svh,12px)}.showcase .church-editorial__copy h2{font-size:clamp(24px,6.7vw,52px)}.showcase .church-editorial__copy p{font-size:clamp(10px,2.3vw,14px);line-height:1.55}.showcase .church-editorial__copy small{font-size:clamp(8px,1.7vw,11px);letter-spacing:.06em}.showcase .church-editorial__copy a{font-size:clamp(8px,1.8vw,12px)}}@media(prefers-reduced-motion:reduce){.showcase .church-gate,.showcase .planes,.showcase .composition{display:none!important}.showcase .church-editorial{position:relative;min-height:100svh;visibility:visible!important;opacity:1!important;pointer-events:auto!important}}
 /* Preview authority: the standalone scroll host, never the production iframe. */
 html,body{min-height:100%;scroll-behavior:auto}
 .showcase{height:390svh!important;min-height:390svh!important}
@@ -133,27 +134,7 @@ html,body{min-height:100%;scroll-behavior:auto}
 const planes=[...root.querySelectorAll('.plane')],editions=[...root.querySelectorAll('.edition')],index=root.querySelector('.index');
 const gate=root.querySelector('.church-gate'),leaves=[...gate.children],church=root.querySelector('.church-editorial');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));const smooth=x=>x*x*(3-2*x);let raf=0,previous=-1,externalProgress=0;const previewMode=location.pathname.includes("/experiments/");addEventListener("message",event=>{if(event.origin!==location.origin||event.data?.type!=="westside-p2-scroll")return;externalProgress=clamp(Number(event.data.progress)||0,0,1);schedule()});
-function render(){raf=0;const travel=Math.max(1,innerHeight*2.9),scrollDistance=previewMode?-root.getBoundingClientRect().top:externalProgress*travel,rect={top:-scrollDistance},p=reduced.matches?1:clamp(scrollDistance/travel,0,1);
-// Curtain handoff happens ONCE during the first 14% of the pinned second-screen travel.
-// Sevenfold finishes after exactly half a viewport of scroll, not 14% of a multi-screen timeline.
-const reveal=reduced.matches?1:clamp((-rect.top)/(innerHeight*.5),0,1);
-planes.forEach((el,i)=>{const start=i*.075,phase=clamp((reveal-start)/.48,0,1);const opened=smooth(phase);el.style.setProperty('transform','scale3d(1,'+opened+',1)','important');el.style.zIndex=String(i+1);el.style.visibility='visible'});
-root.querySelector('.planes').style.opacity='1';
-// Editorial content is never a background to a moving multi-colour flag.
-const gateProgress=reduced.matches?1:clamp(((-rect.top)-innerHeight*.72)/(innerHeight*.85),0,1);
-const door=smooth(clamp((gateProgress-.22)/.56,0,1));
-const churchHold=(-rect.top)<innerHeight*2.65;
-church.style.visibility=gateProgress>0&&churchHold?'visible':'hidden';
-church.style.opacity=String(smooth(clamp(gateProgress/.25,0,1)));
-church.setAttribute('aria-hidden',gateProgress>0&&churchHold?'false':'true');
-gate.style.visibility=gateProgress>0&&gateProgress<1&&churchHold?'visible':'hidden';
-gate.style.opacity='1';
-leaves[0].style.transform='translate3d('+(-door*101)+'%,0,0)';
-leaves[1].style.transform='translate3d('+(door*101)+'%,0,0)';
-root.querySelector('.planes').style.visibility=gateProgress>.18?'hidden':'visible';
-const q=clamp(((-rect.top)-(innerHeight*2.65))/Math.max(1,travel-innerHeight*2.65),0,.999999),scene=Math.min(6,Math.floor(q*7)),local=q*7-scene;
-editions.forEach((el,i)=>{const active=i===scene&&(!churchHold||gateProgress<.18);el.classList.toggle('is-current',active);el.style.visibility=active?'visible':'hidden';el.style.opacity=active?String(clamp(reveal*2,0,1)):0;el.setAttribute('aria-hidden',active?'false':'true');el.querySelectorAll('a').forEach(a=>a.tabIndex=active?0:-1)});
-if(previous!==scene){index.textContent=String(scene+1).padStart(2,'0')+' / 07';previous=scene}}
+function render(){raf=0;const travel=Math.max(1,innerHeight*2.9),distance=previewMode?-root.getBoundingClientRect().top:externalProgress*travel,vh=distance/Math.max(1,innerHeight),still=reduced.matches;const reveal=still?1:clamp(vh/.5,0,1),handoff=still?1:smooth(clamp((vh-.68)/.16,0,1)),opening=still?1:smooth(clamp((vh-.84)/.88,0,1)),settled=still?1:smooth(clamp((vh-1.64)/.12,0,1));const planesWrap=root.querySelector('.planes');planes.forEach((el,i)=>{const phase=clamp((reveal-i*.075)/.48,0,1);el.style.setProperty('transform','scale3d(1,'+smooth(phase)+',1)','important');el.style.zIndex=String(i+1)});planesWrap.style.visibility=still||vh>=.84?'hidden':'visible';planesWrap.style.opacity=String(1-handoff);church.style.visibility=handoff>0||still?'visible':'hidden';church.style.opacity=String(handoff);church.setAttribute('aria-hidden',handoff>0||still?'false':'true');const enter=church.querySelector('a');if(enter)enter.tabIndex=handoff>.95?0:-1;gate.style.visibility=!still&&handoff>0&&settled<1?'visible':'hidden';gate.style.opacity=String(1-settled);leaves[0].style.transform='translate3d('+(-opening*101)+'%,0,0)';leaves[1].style.transform='translate3d('+(opening*101)+'%,0,0)';editions.forEach(el=>{el.classList.remove('is-current');el.style.visibility='hidden';el.style.opacity='0';el.setAttribute('aria-hidden','true');el.querySelectorAll('a').forEach(a=>a.tabIndex=-1)});if(!still&&vh<.84){const scripture=editions[0];scripture.classList.add('is-current');scripture.style.visibility='visible';scripture.style.opacity=String(1-handoff);scripture.setAttribute('aria-hidden','false')}index.textContent='01 / 07';root.dataset.p2Phase=vh<.68?'identity':vh<.84?'handoff':vh<1.72?'doors':'church'}
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener('change',schedule);render()})();
 </script>
 <script>
