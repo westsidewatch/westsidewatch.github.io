@@ -164,27 +164,27 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)');const clamp=(x,a,b)
 function render(){
  raf=0;
  const travel=Math.max(1,innerHeight*2.9),distance=previewMode?-root.getBoundingClientRect().top:externalProgress*travel,vh=distance/Math.max(1,innerHeight),still=reduced.matches;
- const reveal=still?1:clamp(vh/.5,0,1),rise=still?1:smooth(clamp((vh-.68)/.42,0,1)),opening=still?1:smooth(clamp((vh-1.14)/.78,0,1));
+ const reveal=still?1:clamp(vh/.5,0,1),rise=still?1:smooth(clamp((vh-.45)/1.15,0,1)),opening=still?1:smooth(clamp((vh-1.65)/.95,0,1));
  const planesWrap=root.querySelector('.planes');
  planes.forEach((el,i)=>{const phase=clamp((reveal-i*.075)/.48,0,1);el.style.setProperty('transform','scale3d(1,'+smooth(phase)+',1)','important');el.style.zIndex=String(i+1)});
  planesWrap.style.visibility=still||vh>=.69?'hidden':'visible';
  planesWrap.style.opacity=String(1-smooth(clamp((vh-.59)/.1,0,1)));
- sea.style.visibility=!still&&vh>=.59&&vh<1.93?'visible':'hidden';
+ sea.style.visibility=!still&&vh>=.45&&vh<2.65?'visible':'hidden';
  // Only the engraved water geometry rises; the container remains stationary.
  sea.style.clipPath='none';
  sea.style.transform='none';
  root.style.setProperty('--p2-ocean-rise',rise.toFixed(5));
- sea.style.opacity=String(1-smooth(clamp((vh-1.88)/.05,0,1)));
+ sea.style.opacity=String(1-smooth(clamp((vh-2.58)/.07,0,1)));
  leaves[0].style.transform='translate3d('+(-opening*101)+'%,0,0)';
  leaves[1].style.transform='translate3d('+(opening*101)+'%,0,0)';
- church.style.visibility=still||vh>=1.1?'visible':'hidden';
- church.style.opacity=String(still?1:smooth(clamp((vh-1.1)/.08,0,1)));
- church.setAttribute('aria-hidden',still||vh>=1.1?'false':'true');
- const enter=church.querySelector('a');if(enter)enter.tabIndex=still||vh>=1.92?0:-1;
+ church.style.visibility=still||vh>=1.62?'visible':'hidden';
+ church.style.opacity=String(still?1:smooth(clamp((vh-1.62)/.12,0,1)));
+ church.setAttribute('aria-hidden',still||vh>=1.62?'false':'true');
+ const enter=church.querySelector('a');if(enter)enter.tabIndex=still||vh>=2.62?0:-1;
  editions.forEach(el=>{el.classList.remove('is-current');el.style.visibility='hidden';el.style.opacity='0';el.setAttribute('aria-hidden','true');el.querySelectorAll('a').forEach(a=>a.tabIndex=-1)});
  if(!still&&vh<.7){const scripture=editions[0];scripture.classList.add('is-current');scripture.style.visibility='visible';scripture.style.opacity=String(1-smooth(clamp((vh-.59)/.11,0,1)));scripture.setAttribute('aria-hidden','false')}
  index.textContent='01 / 07';
- root.dataset.p2Phase=vh<.59?'identity':vh<1.1?'ocean-rise':vh<1.93?'red-sea':'church';
+ root.dataset.p2Phase=vh<.45?'identity':vh<1.65?'ocean-rise':vh<2.65?'red-sea':'church';
 }
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener('change',schedule);render()})();
 </script>
@@ -193,7 +193,7 @@ function schedule(){if(!raf)raf=requestAnimationFrame(render)}addEventListener('
 .showcase .ocean-rise__motion{mix-blend-mode:multiply!important}
 .showcase .ocean-rise__motion > path{display:none!important}
 .showcase .ocean-rise__lines{clip-path:none!important}
-.showcase .ocean-rise__lines path{stroke:#426c7b;stroke-opacity:.9}
+.showcase .ocean-rise__lines path{stroke:#426c7b!important;stroke-opacity:1!important;fill:none!important}
 .showcase .ocean-rise__leaf{background:none!important}
 /* FALLBACK CANDIDATE ONLY (2026-10-16): animated waterline + filled volume + moving contours.\n   User's primary target is self-propagating engraved strokes that surge upward;\n   preserve this implementation as a reversible backup, not the accepted final design. */\n/* Unified engraved-water geometry: water grows within a stationary viewport.
    The same moving v10 contours remain visible as the sea parts. */
@@ -280,8 +280,8 @@ function frame(now){
     item.out.setAttribute('opacity',item.opacity.toFixed(3));
     // SVG-002: advance a tip upward along the original v10 stroke's point sequence.
     // No translated plate, volume fill, or clip mask. Tail remains animated.
-    const grow=clamp((rise*1.22-.10),0,1),maxIndex=item.points.length-1;
-    const tipY=900-900*grow;
+    const grow=clamp((rise*1.35),0,1),maxIndex=item.points.length-1;
+    const tipY=900-1100*grow;
     let started=false,stroke='';
     for(let j=maxIndex;j>=0;j--){
       const [x,y]=item.points[j];
