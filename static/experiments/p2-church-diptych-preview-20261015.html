@@ -129,6 +129,17 @@
 .showcase .ocean-rise__lines{stroke:#426c7b;stroke-opacity:.82}
 .showcase .ocean-rise__motion path{vector-effect:none}
 .showcase .ocean-rise__motion{mix-blend-mode:multiply}
+/* White-screen containment: the previous transparent !important leaves erased
+   the engraved sea precisely when the navigation planes were hidden.
+   Restore a guaranteed v10 textured fallback until SVG-002 is verified. */
+.showcase .ocean-rise__leaf{
+  background-color:var(--ws-water,#a1a994)!important;
+  background-image:url("/experiments/assets/living-water-contour-engraving-v10.svg")!important;
+  background-size:200% 100%!important;
+  background-repeat:no-repeat!important;
+}
+.showcase .ocean-rise__leaf--left{background-position:left center!important}
+.showcase .ocean-rise__leaf--right{background-position:right center!important}
  /* Preview authority: the standalone scroll host, never the production iframe. */
 html,body{min-height:100%;scroll-behavior:auto}
 .showcase{height:390svh!important;min-height:390svh!important}
