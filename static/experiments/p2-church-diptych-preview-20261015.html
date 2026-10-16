@@ -111,6 +111,15 @@
 .showcase .church-gate__leaf:first-child{background-position:left center!important}
 .showcase .church-gate__leaf:last-child{background-position:right center!important}
 @media(prefers-reduced-motion:reduce){.showcase .ocean-rise{display:none!important}}
+/* Single continuous moving sea, split by two clipping windows; <use> shares Fixed Ocean's live path geometry. */
+.showcase .ocean-rise{z-index:35;clip-path:inset(50% 0 0 0);background:transparent}
+.showcase .ocean-rise__leaf{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;background:var(--ws-water,#5b8fa8);will-change:transform}
+.showcase .ocean-rise__leaf--left{left:0}
+.showcase .ocean-rise__leaf--right{right:0}
+.showcase .ocean-rise__motion{position:absolute;top:0;bottom:0;width:200%;height:100%;overflow:visible;fill:none;stroke:#557b8c;stroke-linecap:round;pointer-events:none}
+.showcase .ocean-rise__leaf--left .ocean-rise__motion{left:0}
+.showcase .ocean-rise__leaf--right .ocean-rise__motion{right:0}
+@media(prefers-reduced-motion:reduce){.showcase .ocean-rise{display:none!important}}
 /* Preview authority: the standalone scroll host, never the production iframe. */
 html,body{min-height:100%;scroll-behavior:auto}
 .showcase{height:390svh!important;min-height:390svh!important}
@@ -136,33 +145,30 @@ html,body{min-height:100%;scroll-behavior:auto}
 <article class="edition" data-variant="4"><div class="headline"><span class="category">05 / Dawn Library</span><h2>Pages<br><i>of Light.</i></h2><div class="cn">黎明書局 · 閱讀與研究</div></div><div class="detail"><p class="description">書封、文字與內頁，在四分之一的空間裡打開另一個閱讀世界。</p><a href="/dawn-library/">OPEN THE LIBRARY</a></div></article>
 <article class="edition" data-variant="5"><div class="headline"><span class="category">06 / Paradise Cinema</span><h2>Moving<br><i>Images.</i></h2><div class="cn">天堂電影院 · 影像</div></div><div class="detail"><p class="description">銀幕不只播放故事，也讓影像、標題與時間共同構成電影雜誌的語言。</p><a href="/cinema/">ENTER CINEMA</a></div></article>
 <article class="edition" data-variant="6"><div class="headline"><span class="category">07 / Daylight Café</span><h2>Everyday<br><i>Light.</i></h2><div class="cn">日光咖啡館 · 生活</div></div><div class="detail"><p class="description">在日常生活的細節裡，留下一個讓光進來的位置。</p><a href="/daylight-cafe/">ENTER DAYLIGHT</a></div></article>
-</div><div class="church-editorial" aria-hidden="true"><div class="church-editorial__visual"></div><div class="church-editorial__copy"><small>01 / LIVING WATER WEST</small><h2>Living<br><i>Water.</i></h2><p>活水西區 · 教會</p><p>從光線、建築與敬拜開始。讓教會的生命在安靜敞開的編輯空間中被看見。</p><a href="/church/">ENTER LIVING WATER</a></div></div><div class="ocean-rise" aria-hidden="true"><div class="ocean-rise__surface"></div></div><div class="church-gate" aria-hidden="true"><div class="church-gate__leaf"></div><div class="church-gate__leaf"></div></div><div class="index" aria-live="off">01 / 07</div></div></section><script>
+</div><div class="church-editorial" aria-hidden="true"><div class="church-editorial__visual"></div><div class="church-editorial__copy"><small>01 / LIVING WATER WEST</small><h2>Living<br><i>Water.</i></h2><p>活水西區 · 教會</p><p>從光線、建築與敬拜開始。讓教會的生命在安靜敞開的編輯空間中被看見。</p><a href="/church/">ENTER LIVING WATER</a></div></div><div class="ocean-rise" aria-hidden="true"><div class="ocean-rise__leaf ocean-rise__leaf--left"><svg class="ocean-rise__motion" viewBox="0 0 1600 900" preserveAspectRatio="none"><use href="#lines"></use></svg></div><div class="ocean-rise__leaf ocean-rise__leaf--right"><svg class="ocean-rise__motion" viewBox="0 0 1600 900" preserveAspectRatio="none"><use href="#lines"></use></svg></div></div><div class="index" aria-live="off">01 / 07</div></div></section><script>
 (()=>{'use strict';const root=document.querySelector('.showcase');if(!root)return;
 const planes=[...root.querySelectorAll('.plane')],editions=[...root.querySelectorAll('.edition')],index=root.querySelector('.index');
-const gate=root.querySelector('.church-gate'),leaves=[...gate.children],church=root.querySelector('.church-editorial');
+const sea=root.querySelector('.ocean-rise'),leaves=[...sea.querySelectorAll('.ocean-rise__leaf')],church=root.querySelector('.church-editorial');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));const smooth=x=>x*x*(3-2*x);let raf=0,previous=-1,externalProgress=0;const previewMode=location.pathname.includes("/experiments/");addEventListener("message",event=>{if(event.origin!==location.origin||event.data?.type!=="westside-p2-scroll")return;externalProgress=clamp(Number(event.data.progress)||0,0,1);schedule()});
 /* One continuous scroll sequence: sevenfold, half-screen ocean, rising sea, parted sea, church diptych. */
+/* The animated ocean itself is the door: no second static gate or texture swap. */
 function render(){
  raf=0;
  const travel=Math.max(1,innerHeight*2.9),distance=previewMode?-root.getBoundingClientRect().top:externalProgress*travel,vh=distance/Math.max(1,innerHeight),still=reduced.matches;
- const reveal=still?1:clamp(vh/.5,0,1);
- const rise=still?1:smooth(clamp((vh-.68)/.42,0,1));
- const opening=still?1:smooth(clamp((vh-1.14)/.78,0,1));
- const sea=root.querySelector('.ocean-rise'),planesWrap=root.querySelector('.planes');
+ const reveal=still?1:clamp(vh/.5,0,1),rise=still?1:smooth(clamp((vh-.68)/.42,0,1)),opening=still?1:smooth(clamp((vh-1.14)/.78,0,1));
+ const planesWrap=root.querySelector('.planes');
  planes.forEach((el,i)=>{const phase=clamp((reveal-i*.075)/.48,0,1);el.style.setProperty('transform','scale3d(1,'+smooth(phase)+',1)','important');el.style.zIndex=String(i+1)});
  planesWrap.style.visibility=still||vh>=.69?'hidden':'visible';
  planesWrap.style.opacity=String(1-smooth(clamp((vh-.59)/.1,0,1)));
- sea.style.visibility=!still&&vh>=.59&&vh<1.16?'visible':'hidden';
+ sea.style.visibility=!still&&vh>=.59&&vh<1.93?'visible':'hidden';
  sea.style.clipPath='inset('+(50*(1-rise)).toFixed(3)+'% 0 0 0)';
- sea.style.opacity=String(1-smooth(clamp((vh-1.1)/.06,0,1)));
+ sea.style.opacity=String(1-smooth(clamp((vh-1.88)/.05,0,1)));
+ leaves[0].style.transform='translate3d('+(-opening*101)+'%,0,0)';
+ leaves[1].style.transform='translate3d('+(opening*101)+'%,0,0)';
  church.style.visibility=still||vh>=1.1?'visible':'hidden';
  church.style.opacity=String(still?1:smooth(clamp((vh-1.1)/.08,0,1)));
  church.setAttribute('aria-hidden',still||vh>=1.1?'false':'true');
  const enter=church.querySelector('a');if(enter)enter.tabIndex=still||vh>=1.92?0:-1;
- gate.style.visibility=!still&&vh>=1.1&&vh<1.93?'visible':'hidden';
- gate.style.opacity=String(1-smooth(clamp((vh-1.88)/.05,0,1)));
- leaves[0].style.transform='translate3d('+(-opening*101)+'%,0,0)';
- leaves[1].style.transform='translate3d('+(opening*101)+'%,0,0)';
  editions.forEach(el=>{el.classList.remove('is-current');el.style.visibility='hidden';el.style.opacity='0';el.setAttribute('aria-hidden','true');el.querySelectorAll('a').forEach(a=>a.tabIndex=-1)});
  if(!still&&vh<.7){const scripture=editions[0];scripture.classList.add('is-current');scripture.style.visibility='visible';scripture.style.opacity=String(1-smooth(clamp((vh-.59)/.11,0,1)));scripture.setAttribute('aria-hidden','false')}
  index.textContent='01 / 07';
