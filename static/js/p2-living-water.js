@@ -11,7 +11,7 @@ function render(now=performance.now()){
  if(displayVh===null||reduced.matches||document.visibilityState!=='visible')displayVh=target;
  else displayVh+=(target-displayVh)*(1-Math.exp(-dt/85));
  if(Math.abs(target-displayVh)<.0005)displayVh=target;
- const rect=root.getBoundingClientRect();
+ const rect=embedded?null:root.getBoundingClientRect();
  const visible=document.visibilityState==='visible'&&(embedded?active:rect.bottom>0&&rect.top<innerHeight);
  if(!visible)displayVh=target;
  // One clock paints the original V75 geometry and every shared SVG view.
