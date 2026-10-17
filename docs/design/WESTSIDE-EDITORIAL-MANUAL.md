@@ -1,0 +1,125 @@
+# Westside Design OS — Editorial Manual
+
+Status: **operational chapter of the single Westside Design OS**, not a parallel visual authority.  
+Audience: Church, First Look, Journal, Olive Mountain, ONE, Dawn Library, Cinema, Search, tools, and Doré Design agents.  
+Source of truth: [WESTSIDE-DESIGN-OS.md](WESTSIDE-DESIGN-OS.md) → `design-system/tokens/westside.tokens.json` → `static/css/westside-design-os.css` → approved `data-ws-scope` overrides.
+
+## 1. Authority, layers and safe integration
+
+This manual merges design **judgment, editing and verification** into the existing OS. It is a Markdown reference, **not loaded by public pages**. Nothing in it authorizes an extra CSS entry point, a new global palette, a competing type scale, a second CI pipeline or a site-wide geometry patch.
+
+| Layer | Existing authority | Editorial manual action |
+|---|---|---|
+| Normative tokens: font, color, weight, spacing, motion | `design-system/tokens/westside.tokens.json`; `design-system/scopes.json` | **Refer to**, never redefine |
+| Loaded runtime | `static/css/westside-design-os.css` | Preserve existing stylesheet links/import order |
+| Surface geometry and transitions | Existing owning CSS/JS files; `data-ws-scope` | Review locally; no universal overrides |
+| Editorial font detail | `docs/design/WESTSIDE-EDITORIAL-TYPOGRAPHY.md` | Keep as detailed reference; defer to OS on conflict |
+| Award precedents and UI Skills | Research documents in `dore-design/` | Interpret into review criteria and exercises |
+| Acceptance | Existing OS, first-look, build and deployment checks + actual browser visual inspection | Do not replace visual QA with CI status |
+
+**Integration verified 2026-10-17:** The OS runtime already defines Bodoni Moda, genuine Bodoni Moda SC, Chiron Hei HK WS, Noto Serif TC, Chinese 200/400/600 weights and responsive `--ws-type-scale-*` semantics. Hence the old typography document's `typography-sitewide.css` authority statement is **superseded** by the OS umbrella and compatibility-runtime contract. It is not grounds to migrate or change working entry points.
+
+**Entrypoint rules.** Hugo templates load OS through `layouts/_default/baseof.html`; standalone P2 loads `/css/westside-design-os.css` followed by its own `/css/p2-living-water.css`. Other standalone HTML is guarded by `scripts/check_design_os_entrypoints.py`: the OS stylesheet and `body[data-ws-scope]` must both exist. A manual consolidation **must not touch those references, their sequence, or any HTML/CSS/JS**.
+
+## 2. Editorial hierarchy and real reading
+
+Typography is architecture for reading, not decorative text. Decide the reader's sequence before choosing font sizes.
+
+1. **Identity:** ecclesial/realm name, issue or section identity; usually one visual anchor.
+2. **Primary heading:** one clear top-level editorial proposition.
+3. **Section headings:** lower scale/weight than the primary title unless an explicit art-directed composition justifies parity.
+4. **Body/metadata:** sufficiently legible at the actual viewport; time, author, source and captions must remain discoverable.
+5. **Citation/folio:** distinct semantic typography and stable positioning; never compete with the content.
+
+Select from the OS semantic scale; surface owners may bind scope-specific roles. Do not make a new `--root` type system and do not stretch fonts. Chinese 200 is for airy, sufficiently large editorial display; not tiny administrative descriptions. Chinese anchor 600 is for short structural titles, not whole paragraphs. English Roman/Italic Bodoni and real Small Caps retain distinct semantic roles.
+
+Composition is measured by *text length, optical alignment, baseline, measure, contrast and breathing room*. A technically right-aligned row may still have a broken time-to-event association when the two columns are visually detached. Negative space needs a function, not merely width.
+
+## 3. Award-calibre precedent method
+
+The award corpus is a **research evidence bank**, not a list of winners to imitate or a claim of affiliation with Awwwards, Webby, FWA, Red Dot or D&AD. The internal phrase “Red Dot-level or reject” describes a design ambition, not an official certification.
+
+For every candidate, document:
+
+`reference → concept → spatial/narrative mechanism → typography/hierarchy → IA/reading path → transferable primitive → constraint → failure mode → OS-scope application → experiment`.
+
+Transfer useful mechanisms, not surface styling:
+
+| Precedent from award corpus | Transferable editorial insight | Guardrail |
+|---|---|---|
+| **The Boat** | Scroll, illustration and prose can form a single authored reading sequence | Motion must follow reading, not obscure it |
+| **We Choose the Moon** | Canonical chronology can itself become information architecture | Provide clear wayfinding and overview |
+| **Museum of the World** | Time and semantic relationships can spatialise a large collection | Maintain legibility and access to details |
+| **Bear 71** | A linear story and an explorable information system can coexist | Avoid burying core actions behind immersion |
+| **Species in Pieces** | Signature interaction comes from subject-specific metaphor | Reject ornamental effect without meaning |
+| **Bascule / Microdot** | Scroll or timeline can become expressive navigation | Novelty does not excuse scroll lock or exclusion |
+| **KUUM / Communication through the Ages** | Subject geometry and visual invariants can drive transitions | Preserve spatial continuity and orientation |
+
+For Westside, engraving line, paper, dawn, water and scripture chronology may define transitions. They must **not** be used to justify content invisibility, long empty scroll bands or read-blocking animation.
+
+## 4. UI Skills routing and acceptance
+
+Load only the skills needed for the present defect. Imported Skills are **inspiration and decision aids**, not an installed guarantee or a replacement for Westside's OS.
+
+| Task | Capability bundle derived from Doré research | Expected artifact |
+|---|---|---|
+| Layout and typography | `ui.visual-hierarchy`, `ui.design-system`, `ui.taste-anti-slop` | Type-role map, grid and optical alignment measurements |
+| Motion and transitions | `ui.motion-system`, `ui.motion-forensics`, `ui.performance` | Purpose/timeline/interruption/return/reduced-motion review |
+| Usability and accessibility | `ui.interaction-quality`, `ui.accessibility` | Reading order, focus/keyboard, contrast and small-screen test |
+| Final polish and release | `ui.critique`, `ui.visual-verification` | Severity-tagged review and before/after screenshots |
+| Variant exploration | `variant` / `prototype` / pairwise Taste Memory | A/B comparison on **one meaningful axis**, including rejection reason |
+
+This incorporates UI Skills explorations R1–R4: route the minimum capability, test motion separately from motion authoring, deliberately break at edge states, compare against the current version, and record contextual outcomes and uncertainty. Do not generate cosmetic alternatives solely to accumulate screenshots; do not compress all user tastes into one global score.
+
+For code and motion, make the change-level critique concrete: **block / important / polish / approve**, with a reproducible defect, owning file, anticipated visual delta and evidence.
+
+## 5. Editorial composition and motion grammar
+
+Follow the experimental Italian editorial grammar as a **method**, not a second visual system:
+
+- Begin with a one-sentence visual proposition and dominant reader task.
+- Map composition grid, content priority, focal point, text-safe zone, cropping, paper/ink roles and deliberate blank regions.
+- Keep live text in semantic HTML/CSS; image-generation prompts describe text-free artwork.
+- Compare supported composition families (quiet field, overscale tension, two-scale encounter) within the same approved OS palette and fonts.
+- Motion must explain state, route, hierarchy or narrative passage; prefer existing OS motion primitives and surface-owned implementation.
+- Static composition must read correctly **before** motion begins and after it settles.
+- Never add a new global cascade override to patch a single screen; use the owning `data-ws-scope` and stylesheet.
+
+Review at desktop, tablet and phone widths; normal and reduced motion; initial, mid-scroll, end, interruption and return. Browser measurements and screenshots are distinct from build-status success.
+
+## 6. Unified editorial review / promotion gate
+
+Record one **evidence-led** review per change, using the project skill's existing directional rubric (0–2 each across **meaning, subject, composition distinction, typography, two-ink discipline, hierarchy, interaction meaning, mobile, accessibility, editability**; 20 possible). Its original exploratory threshold is **15/20** with no zero for meaning, distinction, accessibility or editability. This is a **local creative-review screen, not an official award score or a substitute for acceptance tests**. Surface-specific feasibility, reading and performance are independent release gates.
+
+1. **Brief:** reader goal, real copy, current viewports, locked assets and immutable sections.
+2. **Before:** fetch the actual current file and prior approved screenshot; record measured DOM and type metrics.
+3. **Candidate:** smallest coherent scoped change, with OS-approved tokens; preserve all source content.
+4. **Evidence:** before/after and desktop/mobile screenshots; accessibility, keyboard, zoom, scroll and reduced-motion behavior.
+5. **Judgment:** rubric + blocking issues + any A/B winner/loser reasoning in context.
+6. **Promotion:** existing OS contract and build/CI, Cloudflare preview and **actual browser visual check**. Green CI cannot override a known visual defect.
+7. **Learning:** record what worked, what failed and where; keep source research linked rather than creating a second authority.
+
+## 7. P2 Church / Sunday schedule — concrete application
+
+The current Church visual concept (moving engraving water on the left, warm paper and Sunday service schedule on the right, approved church name and seven dawn-gold worship headings) is a protected base.
+
+- **Locked:** sevenfold opening, final logo, water engravings and door physics, event times/names/order, scripture, right-aligned gold headings and approved identity palette.
+- **Issue:** tiny details, long visual distance between left-hand times and right-hand program headings, potentially dense information and uneven group spacing.
+- **Proposed approach:** preserve the user's right-alignment decision; adjust only *within the schedule-owned CSS* using existing OS scale roles and minimum readability checks. Compare alternatives that change one axis (time-column geometry or description readability), never silently shrink/overwrite title semantics.
+- **Measurements:** bounding boxes for time/heading row, min body font, line wrapping of the longest service row, total group height and available top/bottom whitespace at 1648×928 desktop, 768px tablet and 390px phone. Test 200% zoom and keyboard reading order.
+- **No automatic approval:** this manual documents the review method. The current P2 readability PR remains a separate code change, subject to visual acceptance.
+
+## 8. Research retained as source-of-evidence
+
+These files remain archived intact; they do not operate as independent OS authorities:
+
+- [Westside Editorial Typography](WESTSIDE-EDITORIAL-TYPOGRAPHY.md)
+- [Doré Award-Calibre Digital Art Direction Corpus](../../dore-design/AWARD-CALIBRE-DIGITAL-ART-DIRECTION-CORPUS-2026-09-09.md)
+- [UI Skills Exploration R1](../../dore-design/UI-SKILLS-EXPLORATION-2026-09-12.md), [R2](../../dore-design/UI-SKILLS-EXPLORATION-R2-2026-09-12.md), [R3](../../dore-design/UI-SKILLS-EXPLORATION-R3-2026-09-12.md), [R4](../../dore-design/UI-SKILLS-EXPLORATION-R4-2026-09-12.md)
+- [Executable Italian Editorial Grammar](../dore/italian-editorial-executable-grammar.v1.md)
+- [Magazine Kinetic Typography Reference](WESTSIDE_MAGAZINE_KINETIC_TYPOGRAPHY_REFERENCE.md)
+- [New Westside Editorial Web Skill](../../dore-design/knowledge-lab/skills/new-westside-editorial-web/SKILL.md) and [Visual Grammar / Creative Rubric](../../dore-design/knowledge-lab/skills/new-westside-editorial-web/references/visual-grammar.md)
+- [Editorial Web Maturity Study](../../dore-design/knowledge-lab/research/editorial-web-maturity-study-20260901.md)
+- [Camera and Attention Grammar](../../dore-design/DORE-EXPLORATION-CAMERA-ATTENTION-GRAMMAR-2026-09-09.md)
+
+**Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
