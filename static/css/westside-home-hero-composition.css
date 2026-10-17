@@ -326,7 +326,7 @@ body.home .sites-home-hero > .sites-home-nav{display:none!important}
   isolation:isolate;
   background:var(--ws-surface,#faf9f5);
  }
- body.home .candidate-focus-screen::before{
+ body.home .candidate-focus-screen:not(.ws-p2-sevenfold-host)::before{
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(180deg,rgba(238,232,218,.72),rgba(238,232,218,0) 25%);
   opacity:calc(1 - var(--home-chapter-enter,1));
@@ -337,5 +337,5 @@ body.home .sites-home-hero > .sites-home-nav{display:none!important}
  }
 }
 @media (prefers-reduced-motion:reduce){
- body.home .candidate-focus-screen::before{display:none!important}
+ body.home .candidate-focus-screen:not(.ws-p2-sevenfold-host)::before{display:none!important}
 }
