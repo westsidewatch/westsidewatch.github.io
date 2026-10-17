@@ -24,6 +24,13 @@
   if(y<90||expanded)nav.dataset.navHidden='false';
   const film=document.querySelector('.sites-home-hero');
   const filmRect=film?.getBoundingClientRect();
+  // Release offscreen video decoding; prewarm it before the hero re-enters.
+  const coverFrame=film?.querySelector?.('iframe');
+  const pauseCover=document.visibilityState==='hidden'||!filmRect||filmRect.bottom<=-window.innerHeight*.4;
+  if(coverFrame?.contentWindow&&coverFrame.dataset.playbackPaused!==String(pauseCover)){
+   coverFrame.dataset.playbackPaused=String(pauseCover);
+   coverFrame.contentWindow.postMessage({type:'watch-cover-playback',paused:pauseCover},location.origin);
+  }
   const inFilm=Boolean(filmRect&&filmRect.bottom>Math.min(120,window.innerHeight*.2));
   // Brand plane and scripture are portaled outside the hero; never leak into later sections.
   document.body.classList.toggle('ws-dawn-hero-outside',!expanded&&(!filmRect||filmRect.bottom<=0||filmRect.top>=window.innerHeight));
@@ -40,6 +47,8 @@
  };
  window.addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update)}},{passive:true});
  window.addEventListener('resize',update,{passive:true});
+ document.addEventListener('visibilitychange',update);
+ document.querySelector('.sites-home-film iframe')?.addEventListener('load',()=>{const frame=document.querySelector('.sites-home-film iframe');if(frame)delete frame.dataset.playbackPaused;update()});
  menu?.addEventListener('toggle',()=>{if(menu.open)nav.dataset.navHidden='false';document.documentElement.classList.toggle('ws-home-menu-open',Boolean(menu.open));update()});
  const preview=nav.querySelector('.ws-nav-hover-preview');
  const previewFrame=preview?.querySelector('iframe');
