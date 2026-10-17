@@ -2,7 +2,7 @@
 body.home .sites-home-hero{position:relative;isolation:isolate;overflow:hidden}
 body.home .sites-home-hero>.sites-home-nav,body.home .sites-home-entry{display:none!important}
 body.home .sites-home-film{z-index:0!important}
-body.home .ws-dawn-brand-plane{position:fixed;inset:0;z-index:10031;pointer-events:none;will-change:transform;--home-title-size:clamp(65px,6vw,124px);--home-edge:clamp(30px,4vw,88px)}
+body.home .ws-dawn-brand-plane{color:#fff;position:fixed;inset:0;z-index:10031;pointer-events:none;will-change:transform;--home-title-size:clamp(65px,6vw,124px);--home-edge:clamp(30px,4vw,88px)}
 body.home .ws-dawn-brand-plane .sites-home-masthead{position:absolute!important;left:var(--home-edge,4vw)!important;top:3dvh!important;width:clamp(180px,28vw,480px)!important;transform:none!important}
 body.home .ws-dawn-brand-plane .sites-home-intro{position:absolute!important;left:var(--home-edge,4vw)!important;right:auto!important;top:auto!important;bottom:clamp(170px,22vh,235px)!important;width:min(53vw,850px)!important;max-width:none!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;align-items:end!important;justify-items:start!important;text-align:left!important;transform:none!important}
 body.home .ws-dawn-brand-plane .sites-home-intro .sites-home-star{grid-column:1;grid-row:1;width:clamp(16px,1.2vw,23px);height:auto;margin:0 0 clamp(12px,1.5vh,21px)}

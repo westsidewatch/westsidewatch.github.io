@@ -26,7 +26,15 @@
   const filmRect=film?.getBoundingClientRect();
   const inFilm=Boolean(filmRect&&filmRect.bottom>Math.min(120,window.innerHeight*.2));
   // Brand plane and scripture are portaled outside the hero; never leak into later sections.
-  document.body.classList.toggle('ws-dawn-hero-outside',!filmRect||filmRect.bottom<=0||filmRect.top>=window.innerHeight);
+  document.body.classList.toggle('ws-dawn-hero-outside',!expanded&&(!filmRect||filmRect.bottom<=0||filmRect.top>=window.innerHeight));
+  // Portaled fixed artwork must keep the original hero's visible boundary.
+  // Let the contents curtain use the full viewport while it is open.
+  for(const artwork of [plane,scripture]){
+   if(!artwork)continue;
+   const bounds=artwork.getBoundingClientRect();
+   const clipped=expanded||!filmRect?0:Math.max(0,bounds.bottom-Math.max(0,filmRect.bottom));
+   artwork.style.clipPath=clipped>0?`inset(0 0 ${clipped}px 0)`:'none';
+  }
   nav.dataset.navTone=inFilm?'dark':'light';
   previousY=y;scheduled=false;
  };
@@ -46,7 +54,8 @@
  const hero=document.querySelector('.sites-home-hero');
  const plane=hero?.querySelector('.ws-dawn-brand-plane');
  // Keep the original slogan and both logos on ONE plane above the folds.
- if(plane&&nav&&!nav.contains(plane))nav.appendChild(plane);
+ // The floating nav transforms when scrolling; it cannot contain fixed artwork.
+ if(plane&&plane.parentElement!==document.body)document.body.appendChild(plane);
  const slogan=plane?.querySelector('#sites-home-title');
  const largeLogo=plane?.querySelector('.ws-dawn-large-logo');
  const scripture=hero?.querySelector('.ws-dawn-scripture');
