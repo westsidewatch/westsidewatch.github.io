@@ -44,6 +44,8 @@ body{font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)}
 .church-schedule-source{font-size:var(--ws-type-scale-meta)}
 .sunday-schedule__top,.worship-row{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid #bbb;padding:8px 0}
 .worship-row time{flex:0 0 35%}
+.worship-row>div{flex:1;min-width:0;text-align:right}
+.worship-row strong,.worship-row p{text-align:right}
 .worship-row strong{display:block;font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-title-sm);font-weight:var(--ws-weight-zh-anchor);font-synthesis:none;line-height:1.18;color:var(--ws-first-light,#a2872a)}
 .worship-row p{margin:4px 0}
 .sunday-schedule h3{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-title-sm);font-weight:var(--ws-weight-zh-anchor);font-synthesis:none}
