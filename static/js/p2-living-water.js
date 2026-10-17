@@ -1,16 +1,13 @@
 (()=>{'use strict';
 const root=document.querySelector('.showcase'),planes=[...root.querySelectorAll('.plane')],wrap=root.querySelector('.planes'),scripture=root.querySelector('.editorial-john'),editions=[...root.querySelectorAll('.edition')],sea=root.querySelector('.ocean-rise'),cover=root.querySelector('.water-cover'),doors=root.querySelector('.water-doors'),leftDoor=root.querySelector('.water-door--left'),rightDoor=root.querySelector('.water-door--right'),church=root.querySelector('.church-editorial'),index=root.querySelector('.index'),tint=root.querySelector('.water-rise-tint'),waterline=root.querySelector('.water-rise-line path');
-const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)},power3=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};
 const embedded=document.documentElement.dataset.p2Embedded==='true',reduced=typeof matchMedia==='function'?matchMedia('(prefers-reduced-motion: reduce)'): {matches:false};
-let raf=0,externalProgress=0,hasExternalProgress=embedded,displayVh=null,lastFrame=performance.now(),sceneVh=null,active=!embedded;
+let raf=0,externalProgress=0,hasExternalProgress=embedded,displayVh=null,sceneVh=null,active=!embedded;
 function render(now=performance.now()){
  raf=0;
  const target=hasExternalProgress?externalProgress*2.9:-root.getBoundingClientRect().top/Math.max(1,innerHeight);
- const dt=Math.min(64,Math.max(1,now-lastFrame));lastFrame=now;
- // An 85ms time constant absorbs discrete wheel steps without a long scroll tail.
- if(displayVh===null||reduced.matches||document.visibilityState!=='visible')displayVh=target;
- else displayVh+=(target-displayVh)*(1-Math.exp(-dt/85));
- if(Math.abs(target-displayVh)<.0005)displayVh=target;
+ // Scroll position is the only choreography clock: no catch-up or timed easing.
+ displayVh=target;
  const rect=embedded?null:root.getBoundingClientRect();
  const visible=document.visibilityState==='visible'&&(embedded?active:rect.bottom>0&&rect.top<innerHeight);
  if(!visible)displayVh=target;
@@ -37,8 +34,8 @@ function drawScene(vh,now){
  sea.style.visibility='visible';sea.style.clipPath=showChurch?'inset(0 50% 0 0)':'none';sea.style.opacity='1';
  doors.style.visibility=showChurch?'visible':'hidden';leftDoor.style.transform='none';rightDoor.style.transform='translate3d('+(50*opening).toFixed(3)+'vw,0,0)';
  planes.forEach((el,i)=>{
-  // Same .72s layer duration, .065s stagger and power3.inOut as the navigation.
-  const phase=clamp((reveal*1.11-i*.065)/.72,0,1),opened=i===0&&!embedded?1:power3(phase);
+  // Linear stagger: each layer follows scroll distance, including immediate reversal.
+  const phase=clamp((reveal*1.11-i*.065)/.72,0,1),opened=i===0&&!embedded?1:phase;
   el.style.setProperty('transform','scale3d(1,'+opened.toFixed(6)+',1)');el.style.zIndex=String(i+1);el.style.visibility='visible';
  });
  wrap.style.visibility=vh<.85?'visible':'hidden';wrap.style.opacity=String(1-smooth((vh-.65)/.2));
@@ -52,10 +49,14 @@ function drawScene(vh,now){
 
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}
 function visibilityWater(){
- cancelAnimationFrame(raf);raf=0;lastFrame=performance.now();schedule();
+ cancelAnimationFrame(raf);raf=0;schedule();
 }
 addEventListener('visibilitychange',visibilityWater);
 addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});
-addEventListener('message',e=>{if(!embedded||e.source!==window.parent||e.origin!==location.origin||!e.data||e.data.type!=='westside-p2-scroll')return;externalProgress=clamp(Number(e.data.progress)||0,0,1);hasExternalProgress=true;active=e.data.active!==false;schedule()});
+addEventListener('message',e=>{if(!embedded||e.source!==window.parent||e.origin!==location.origin||!e.data||e.data.type!=='westside-p2-scroll')return;externalProgress=clamp(Number(e.data.progress)||0,0,1);hasExternalProgress=true;active=e.data.active!==false;
+ // Apply incoming scroll geometry immediately; RAF is reserved for live water.
+ const next=externalProgress*2.9;
+ if(next!==sceneVh){displayVh=next;drawScene(next,performance.now());sceneVh=next}
+ schedule()});
 render();
 })();
