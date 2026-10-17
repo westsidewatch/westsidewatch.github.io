@@ -46,6 +46,10 @@
     "tool": {
       "selector": "[data-ws-scope=\"tool\"]",
       "inherits": "global"
+    },
+    "p2": {
+      "selector": "[data-ws-scope=\"p2\"]",
+      "inherits": "global"
     }
   }
 }
