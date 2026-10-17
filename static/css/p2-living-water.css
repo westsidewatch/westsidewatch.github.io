@@ -199,3 +199,28 @@ body[data-ws-scope="p2"] .schedule-scripture footer{text-align:left}
   body[data-ws-scope="p2"] .worship-row>div{grid-column:2}
   body[data-ws-scope="p2"] .worship-ministry{grid-template-columns:1fr;gap:3px}
 }
+
+/* Sunday theme scripture: editorial reading block, separate from Acts 4:12. */
+body[data-ws-scope="p2"] .schedule-theme-scripture{
+  margin-top:clamp(14px,2vh,26px);padding-top:clamp(12px,1.6vh,20px);
+  border-top:1px solid color-mix(in srgb,currentColor 25%,transparent);
+  font-family:var(--ws-type-reading-zh);
+}
+body[data-ws-scope="p2"] .schedule-theme-scripture h3{
+  margin:0 0 .6em;font-family:var(--ws-type-display-zh);
+  font-size:var(--ws-type-scale-title-sm);line-height:1.25;
+  font-weight:var(--ws-weight-zh-standard);
+}
+body[data-ws-scope="p2"] .schedule-theme-scripture p{
+  margin:0 0 .85em;max-width:64ch;
+  font-size:var(--ws-type-scale-ui);line-height:1.75;
+}
+body[data-ws-scope="p2"] .schedule-theme-scripture__lead{
+  font-weight:var(--ws-weight-zh-standard);
+}
+body[data-ws-scope="p2"] .schedule-theme-scripture__ref{
+  display:block;margin-top:.2em;
+  font-family:var(--ws-type-display-zh);
+  font-size:var(--ws-type-scale-meta);
+  font-weight:var(--ws-weight-zh-air);
+}
