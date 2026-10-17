@@ -54,7 +54,7 @@ test('Scroll progress lands on the input position in one frame and stays there',
   }
  }
 });
-test('Curtain distance is linear and reversible within each layer',()=>{
+test('Curtains retain navigation-like overlap and reverse to the same geometry',()=>{
  const r=runtime(true,true);
  const transforms=[];
  for(const reveal of [.1,.2,.3,.2,.1]){
@@ -62,8 +62,17 @@ test('Curtain distance is linear and reversible within each layer',()=>{
   transforms.push(r.planes[0].style.transform);
  }
  assert.equal(transforms[0],transforms[4]);assert.equal(transforms[1],transforms[3]);
- const scale=s=>Number(s.match(/scale3d\(1,([^,]+)/)[1]);
- assert.ok(Math.abs((scale(transforms[2])-scale(transforms[1]))-(scale(transforms[1])-scale(transforms[0])))<.00001);
+ const scalesAt=reveal=>{
+  r.send(r.parent,'https://example.test',reveal*.5/2.9);
+  return r.planes.map(p=>Number(p.style.transform.match(/scale3d\(1,([^,]+)/)[1]));
+ };
+ const layers=scalesAt(.5);
+ assert.equal(layers.length,7);
+ for(let i=1;i<7;i++)assert.ok(layers[i-1]>layers[i], 'each later curtain must expose the preceding colour');
+ assert.ok(layers[0]-layers[6]>.8,'overlap must span most of the upper half rather than a flat band');
+ assert.ok(layers[0]-layers[1]!==layers[3]-layers[4],'fold edges need the navigation’s shaped progression');
+ assert.deepEqual(scalesAt(1),Array(7).fill(1));
+ assert.deepEqual(scalesAt(0),Array(7).fill(0));
 });
 test('Water travels from the bottom through mid-screen to the top before doors open',()=>{
  const r=runtime(true);
@@ -114,4 +123,16 @@ test('Forward and reverse door handoff always cover the right half',()=>{
    assert.equal(r.nodes.get('.church-editorial').style.visibility,'visible');
   }else assert.equal(sea.style.clipPath,'none','full surface must cover both halves outside the door phase');
  }
+});
+
+test('Completed curtains remain until the rising water covers them, without a blank fade gap',()=>{
+ const r=runtime(true);
+ for(const vh of [.5,.95,1.125]){
+  r.send(r.parent,'https://example.test',vh/2.9);
+  const wrap=r.nodes.get('.planes');
+  assert.equal(wrap.style.visibility,'visible');assert.equal(wrap.style.opacity,'1');
+  assert.match(wrap.style.clipPath,/polygon/);
+ }
+ r.send(r.parent,'https://example.test',1.6/2.9);
+ assert.equal(r.nodes.get('.planes').style.visibility,'hidden');
 });
