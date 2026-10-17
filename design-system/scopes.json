@@ -50,6 +50,14 @@
     "p2": {
       "selector": "[data-ws-scope=\"p2\"]",
       "inherits": "global"
+    },
+    "home-experiment": {
+      "selector": "[data-ws-scope=\"home-experiment\"]",
+      "inherits": "home"
+    },
+    "olive-baseline": {
+      "selector": "[data-ws-scope=\"olive-baseline\"]",
+      "inherits": "olive"
     }
   }
 }
