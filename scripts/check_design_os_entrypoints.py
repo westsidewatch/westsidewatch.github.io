@@ -21,7 +21,7 @@ for p in paths:
         continue
     if not re.search(r'<link\b[^>]*href=["\'][^"\']*westside-design-os\.css', html, re.I):
         errors.append(f"{rel}: missing Design OS stylesheet")
-    scope = re.search(r"<body\b[^>]*\bdata-ws-scope=\u0022([^\u0022]+)\u0022", html, re.I)
+    scope = re.search(r'<body\b[^>]*\bdata-ws-scope="([^"]+)"', html, re.I)
     if not scope:
         errors.append(f"{rel}: missing data-ws-scope")
     elif scope.group(1) not in registered_scopes:
