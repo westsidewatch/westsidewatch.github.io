@@ -27,7 +27,7 @@ let sceneTick=false;
 const clamp01=v=>Math.max(0,Math.min(1,v));
 const sceneFrames=focusScreens.map(scene=>scene.querySelector("iframe"));
 const sendSceneState=(frame,payload)=>{
-  if(!frame||!frame.contentWindow)return;
+  if(!frame||!frame.contentWindow||frame.parentElement?.classList?.contains("ws-p2-sevenfold-host"))return;
   try{frame.contentWindow.postMessage(payload,location.origin)}catch(_){}
 };
 sceneFrames.forEach((frame,i)=>{

@@ -16,7 +16,7 @@
   <nav class="sites-home-entry" aria-label="Homepage entry points"><a href="/preview/watch-city-vol00/hosanna/">Enter the film <span lang="zh-Hant">進城 ↗</span></a><a href="#sites-first-layer">Enter Westside Watch <span lang="zh-Hant">進入西望 ↓</span></a><a href="/church/">LivingWaterWest <span lang="zh-Hant">進入教會 ↗</span></a></nav>
 </section>
 
-<section class="candidate-focus-screen ws-p2-sevenfold-host" data-current="focus" data-layer="first" data-screen="2" aria-label="Living Water — Sevenfold P2"><iframe title="Living Water · Sevenfold and John 7:38" loading="eager" src="/p2/living-water.html?embed=1&amp;v=p2-smooth-rise-20261017"></iframe></section>
+<section class="candidate-focus-screen ws-p2-sevenfold-host" data-current="focus" data-layer="first" data-screen="2" aria-label="Living Water — Sevenfold P2"><iframe title="Living Water · Sevenfold and John 7:38" loading="eager" src="/p2/living-water.html?embed=1&amp;v=p2-single-runtime-20261017"></iframe></section>
 <section class="candidate-focus-screen" data-current="focus" data-layer="first" data-screen="3"><iframe title="Westside Watch · 行走與敬拜" loading="eager" src="/home-chapters/walk-worship.html?v=editorial-v1"></iframe></section>
 
 <div class="sites-home-realms" id="sites-first-layer">
@@ -30,13 +30,13 @@
 </div>
 <style>
 /* P2 scroll host: isolate approved preview CSS in its iframe; no new global CSS authority. */
-body.home .ws-p2-sevenfold-host{position:relative!important;height:390svh!important;min-height:390svh!important;overflow:clip!important;animation:none!important;clip-path:none!important}
-body.home .ws-p2-sevenfold-host>iframe{position:sticky!important;top:0!important;display:block!important;width:100%!important;height:100svh!important;min-height:100svh!important;border:0!important;transform:none!important;opacity:1!important}
+body.home .ws-p2-sevenfold-host{position:relative!important;height:390svh!important;min-height:390svh!important;overflow:clip!important}
+body.home .ws-p2-sevenfold-host>iframe{position:sticky!important;top:0!important;display:block!important;width:100%!important;height:100svh!important;min-height:100svh!important;border:0!important}
 </style>
 <script>
 /* Spend the first 0.5 animation viewport during entry, not after pinning.
    Preserve the 2.9 endpoint with 2.4 remaining animation viewports while pinned. */
-(()=>{'use strict';const host=document.querySelector('.ws-p2-sevenfold-host');if(!host)return;const frame=host.querySelector('iframe');let queued=false;function sync(){queued=false;const rect=host.getBoundingClientRect(),travel=Math.max(1,host.offsetHeight-innerHeight),entry=Math.min(1,Math.max(0,(innerHeight-rect.top)/Math.max(1,innerHeight*.5))),pinned=Math.min(1,Math.max(0,-rect.top/travel)),progress=(entry*.5+pinned*2.4)/2.9;if(frame.contentWindow)frame.contentWindow.postMessage({type:'westside-p2-scroll',progress},location.origin)}function schedule(){if(!queued){queued=true;requestAnimationFrame(sync)}}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});frame.addEventListener('load',schedule);schedule()})();
+(()=>{'use strict';const host=document.querySelector('.ws-p2-sevenfold-host');if(!host)return;const frame=host.querySelector('iframe');let queued=false;function sync(){queued=false;const rect=host.getBoundingClientRect(),travel=Math.max(1,host.offsetHeight-innerHeight),entry=Math.min(1,Math.max(0,(innerHeight-rect.top)/Math.max(1,innerHeight*.5))),pinned=Math.min(1,Math.max(0,-rect.top/travel)),progress=(entry*.5+pinned*2.4)/2.9;if(frame.contentWindow)frame.contentWindow.postMessage({type:'westside-p2-scroll',progress,active:rect.bottom>0&&rect.top<innerHeight},location.origin)}function schedule(){if(!queued){queued=true;requestAnimationFrame(sync)}}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});frame.addEventListener('load',schedule);schedule()})();
 </script>
 <link rel="stylesheet" href="/css/sevenfold-dawn.css?v=20261016-handoff-r7"><script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" defer></script><script src="/js/first-look-host.js?v=20261016-hero-clip-r6" defer></script>
 

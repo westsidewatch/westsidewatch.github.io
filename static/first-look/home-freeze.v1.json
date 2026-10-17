@@ -3,9 +3,16 @@
   "sha256": {
     "static/candidate01/watch-witness.html": "bb4733c3a7921a33880ecc539a645d53377224f07722bfbe704d0c4a04776aa5",
     "static/candidate01/walk-worship.html": "bb4733c3a7921a33880ecc539a645d53377224f07722bfbe704d0c4a04776aa5",
-    "static/css/sites-home-sections.css": "18f33670697dd12de395c3e2496efcb65c3d0cc5bf2e8ff472b0efd261054d8e",
+    "static/css/sites-home-sections.css": "45a85084e83c6111ae433c00dc1423a59cff696afbcba9147fc32a5d1c8d6de6",
     "static/images/westside-watch-masthead-landscape.svg": "8bd5da80eaa9db8c74b84f81e81dfb599f8823f683eb88754dcaaecd91881b13",
     "static/images/westside-watch-morning-star.svg": "1cf370422d75b297ba4cdc1d51a1173127d79f7247dd996e25ac245ac86b60e2",
     "home_first_three_screens": "05e120823231685c92eaee2c8b8b5e815e3b531833625dba924bfc01bd29849e"
-  }
+  },
+  "amendments": [
+    {
+      "date": "2026-10-17",
+      "path": "static/css/sites-home-sections.css",
+      "reason": "Exclude the dedicated P2 scroll host from generic scene-entry animation; all original candidate screens retain the frozen selectors and behavior."
+    }
+  ]
 }
