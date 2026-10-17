@@ -268,3 +268,61 @@ body[data-ws-scope="p2"] .schedule-scripture p{
     column-gap:9px;
   }
 }
+
+/* P2 editorial folio v2: proportional inner measure in the right-hand page.
+   Identity artwork is outside this grid; never transform/stretch type. */
+body[data-ws-scope="p2"] .church-editorial__copy{
+  container-type:inline-size;
+  padding-inline:clamp(18px,3.3%,54px);
+}
+body[data-ws-scope="p2"] .church-schedule-source,
+body[data-ws-scope="p2"] .schedule-theme-scripture,
+body[data-ws-scope="p2"] .schedule-scripture{
+  width:100%;
+  min-width:0;
+  margin-inline:auto;
+}
+body[data-ws-scope="p2"] .worship-row{
+  grid-template-columns:clamp(20px,4cqi,32px) minmax(0,19%) minmax(0,1fr);
+  column-gap:clamp(10px,2.3cqi,22px);
+}
+body[data-ws-scope="p2"] .worship-row time{
+  font-size:clamp(12px,1.75cqi,16px);
+}
+body[data-ws-scope="p2"] .worship-row strong{
+  font-size:clamp(16px,2.65cqi,23px);
+  line-height:1.35;
+}
+body[data-ws-scope="p2"] .worship-row p{
+  font-size:clamp(12px,1.75cqi,15px);
+  line-height:1.55;
+}
+body[data-ws-scope="p2"] .schedule-theme-scripture p{
+  font-size:clamp(13px,1.95cqi,17px);
+  max-width:66ch;
+}
+body[data-ws-scope="p2"] .schedule-scripture{
+  text-align:center;
+  border-top:1px solid color-mix(in srgb,currentColor 45%,transparent);
+}
+body[data-ws-scope="p2"] .schedule-scripture p{
+  text-align:center;
+  margin-inline:auto;
+  max-width:52ch;
+  font-size:clamp(13px,1.9cqi,17px);
+}
+body[data-ws-scope="p2"] .schedule-scripture footer{
+  text-align:center;
+}
+@container (max-width:480px){
+  body[data-ws-scope="p2"] .worship-row{
+    grid-template-columns:20px minmax(0,1fr);
+    column-gap:10px;
+  }
+  body[data-ws-scope="p2"] .worship-row time{
+    grid-column:2;
+  }
+  body[data-ws-scope="p2"] .worship-row>div{
+    grid-column:2;
+  }
+}
