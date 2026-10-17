@@ -110,15 +110,6 @@ body[data-ws-scope="p2"] .church-editorial__copy>small{
 body[data-ws-scope="p2"] .schedule-content-group{
   width:100%;margin-block:auto;gap:clamp(5px,.75vh,10px);
 }
-body[data-ws-scope="p2"] .schedule-church-logo{
-  width:min(64%,370px);margin-inline:auto;
-}
-body[data-ws-scope="p2"] .schedule-church-english{
-  font-size:var(--ws-type-scale-ui);
-}
-body[data-ws-scope="p2"] .schedule-church-address{
-  margin-bottom:clamp(6px,1vh,12px);
-}
 body[data-ws-scope="p2"] .schedule-kicker{
   font-size:var(--ws-type-scale-meta);
   letter-spacing:.12em;
