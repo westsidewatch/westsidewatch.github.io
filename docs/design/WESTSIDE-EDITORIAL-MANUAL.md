@@ -99,15 +99,16 @@ Record one **evidence-led** review per change, using the project skill's existin
 6. **Promotion:** existing OS contract and build/CI, Cloudflare preview and **actual browser visual check**. Green CI cannot override a known visual defect.
 7. **Learning:** record what worked, what failed and where; keep source research linked rather than creating a second authority.
 
-## 7. P2 Church / Sunday schedule — concrete application
+## 7. P2 Church / Sunday schedule — Italian editorial folio
 
-The current Church visual concept (moving engraving water on the left, warm paper and Sunday service schedule on the right, approved church name and seven dawn-gold worship headings) is a protected base.
+The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
 
-- **Locked:** sevenfold opening, final logo, water engravings and door physics, event times/names/order, scripture, right-aligned gold headings and approved identity palette.
-- **Issue:** tiny details, long visual distance between left-hand times and right-hand program headings, potentially dense information and uneven group spacing.
-- **Proposed approach:** preserve the user's right-alignment decision; adjust only *within the schedule-owned CSS* using existing OS scale roles and minimum readability checks. Compare alternatives that change one axis (time-column geometry or description readability), never silently shrink/overwrite title semantics.
-- **Measurements:** bounding boxes for time/heading row, min body font, line wrapping of the longest service row, total group height and available top/bottom whitespace at 1648×928 desktop, 768px tablet and 390px phone. Test 200% zoom and keyboard reading order.
-- **No automatic approval:** this manual documents the review method. The current P2 readability PR remains a separate code change, subject to visual acceptance.
+- **Protected:** original service times, seven worship texts and their order, ministry copy, scripture, church-name artwork, left water and door mechanics, existing OS tokens and palette.
+- **Reading hierarchy:** compact church identity → issue/date folio → one Chinese main title → ministry context → seven numbered programme rows → next-service details → scripture.
+- **Italian editorial grammar:** use a three-column folio (01–07 / tabular time / left-aligned programme), restrained hairlines, editorial whitespace and optical left alignment. English Bodoni for metadata and times; Chiron Hei HK WS for Chinese heading and reading; avoid artificially stretched type.
+- **Color:** ink is the programme text; the approved palette remains available for subtle accents. The old repeated gold right-aligned headline treatment is not mandatory.
+- **Implementation:** owning `static/css/p2-living-water.css` only; do not create another runtime, modify OS globals, replace engraving artwork or interfere with scroll/door choreography. CSS counters supply numbers without altering source copy.
+- **Acceptance:** actual 1648×928, 768px and 390px previews, 200% zoom, longest-row wrapping, keyboard and reduced-motion review, plus existing CI. A green CI alone does not certify editorial quality.
 
 ## 8. Research retained as source-of-evidence
 
