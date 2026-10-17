@@ -397,3 +397,17 @@ It covers Journal, Mount of Olives, Church, About, global functions such as 多�
 - Integration policy: research/reference only. Existing Design OS remains the sole governing design system for the entire site and tools; review any imported principles for compatibility before adoption.
 - Screenshot summary (not verified as original file content): avoid excessive card shadows, emoji-driven interface decoration, repetitive generic UI layouts and other template-like AI design conventions.
 - Source context: https://x.com/shipper_now ; https://shipper.now/ . Exact post and original Markdown URLs remain unverified.
+
+## 11. Global engineering principle — scroll motion follows input (2026-10-17)
+
+User directive: **滾動跟著手走**. This applies across the main site and future scroll-driven effects, including P2's seven overlapping layers.
+
+- Scroll position determines visual progress directly: 滾多少走多少、停手即停、反向即回. Returning to the same scroll position must restore the same layer geometry. Browser-native gesture inertia remains intact; “stop” means the actual scroll position has stopped.
+- Do not turn a scroll threshold into an independently timed autoplay transition. Do not add acceleration easing, position interpolation, CSS transition delays, or a second animation clock that makes layers run ahead of or lag behind the current position. One progress owner drives all synchronized layers.
+- Click-triggered navigation may use timed easing. Its timing must not be copied into gesture-controlled reveals.
+- Autonomous living-water texture may keep flowing when scrolling stops. Its clock must remain separate from scroll-controlled layer geometry and water-rise position; restoring the texture means live motion, not a static texture.
+- Acceptance: small scroll increments update geometry immediately; stationary input leaves geometry unchanged; reversing restores the corresponding geometry immediately. Check slow movement, rapid reversal, and mouse/trackpad input; investigate rendering cost or competing styles instead of masking them with extra lag.
+
+Reference: [MERSI's own production team's technical account](https://tympanus.net/codrops/2026/07/27/between-print-and-digital-the-making-of-mersis-website/). Its home/project split-screen sliders drive image and label clipping from one scroll-progress value, alongside Lenis smooth scrolling. Other interactions, including grid rearrangement and click transitions, use timed animations; they are not the model for P2's direct scroll tracking.
+
+Implementation scope recorded here: P2 removes its 85 ms follow delay and layer acceleration curve, applies incoming progress immediately, and retains independent live-water motion. This entry establishes the site-wide rule; it does not assert that every existing page has already been audited.

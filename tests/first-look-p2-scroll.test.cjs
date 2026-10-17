@@ -10,12 +10,13 @@ function runtime(embedded,visible=false){
  let now=0,waterPaints=0;
  const events={},queue=[],parent={},nodes=new Map();
  const node=()=>({style:{setProperty(){}},dataset:{},classList:{toggle(){},remove(){}},setAttribute(){},getAttribute(){return null},querySelector(){return null}});
+ const planes=Array.from({length:7},()=>{const n=node();n.style.setProperty=(name,value)=>n.style[name]=value;return n});
  const root=node();root.getBoundingClientRect=()=>({top:0});
  root.querySelector=s=>{if(!nodes.has(s)){const n=node();if(s==='.index')n.querySelector=()=>({textContent:''});nodes.set(s,n)}return nodes.get(s)};
- root.querySelectorAll=()=>[];
+ root.querySelectorAll=selector=>selector==='.plane'?planes:[];
  const document={documentElement:{dataset:embedded?{p2Embedded:'true'}:{}},visibilityState:visible?'visible':'hidden',querySelector:()=>root};
  vm.runInNewContext(scripts[1],{document,window:{parent,wsP2Water:{paint(){waterPaints++}}},location:{origin:'https://example.test'},innerHeight:800,performance:{now:()=>now},addEventListener:(name,fn)=>events[name]=fn,requestAnimationFrame:fn=>{queue.push(fn);return queue.length},cancelAnimationFrame(){}});
- return {root,parent,nodes,get waterPaints(){return waterPaints},step(ms){now+=ms;const batch=queue.splice(0);for(const callback of batch)callback(now)},send(source,origin,progress,active=true){events.message({source,origin,data:{type:'westside-p2-scroll',progress,active}});if(!visible)while(queue.length)queue.shift()()}};
+ return {root,parent,nodes,planes,get waterPaints(){return waterPaints},step(ms){now+=ms;const batch=queue.splice(0);for(const callback of batch)callback(now)},send(source,origin,progress,active=true){events.message({source,origin,data:{type:'westside-p2-scroll',progress,active}});if(!visible)while(queue.length)queue.shift()()}};
 }
 test('Embedded P2 follows only the hosting parent progress and reverses',()=>{
  const r=runtime(true);
@@ -40,17 +41,29 @@ test('Only explicit iframe embedding disables the second scroll surface',()=>{
  assert.match(css,/html\[data-p2-embedded="true"\] body\{height:100%;overflow:clip\}/);
 });
 
-test('Discrete wheel jumps converge smoothly at both 60Hz and 120Hz',()=>{
+test('Scroll progress lands on the input position in one frame and stays there',()=>{
  for(const step of [1000/60,1000/120]){
-  const r=runtime(true,true);r.send(r.parent,'https://example.test',1);
-  r.step(step);const first=Number(r.root.dataset.p2Progress);
-  assert.ok(first>0&&first<1,'first frame must not jump to the scroll target');
-  let previous=first;
-  for(let time=step;time<600;time+=step){r.step(step);const next=Number(r.root.dataset.p2Progress);assert.ok(next>=previous);previous=next;}
-  assert.ok(previous>2.89,'wheel smoothing must not add a long lag');
-  r.send(r.parent,'https://example.test',0);r.step(step);
-  assert.ok(Number(r.root.dataset.p2Progress)<previous,'reversal starts on the next frame');
+  const r=runtime(true,true);
+  for(const progress of [.05,.09,.15,.1,.02]){
+   r.send(r.parent,'https://example.test',progress);
+   assert.ok(Math.abs(Number(r.root.dataset.p2Progress)-progress*2.9)<.0001,'input must apply without an extra child-frame wait');r.step(step);
+   assert.ok(Math.abs(Number(r.root.dataset.p2Progress)-progress*2.9)<.0001);
+   const held=r.planes.map(p=>p.style.transform);
+   for(let i=0;i<20;i++)r.step(step);
+   assert.deepEqual(r.planes.map(p=>p.style.transform),held,'stopping input must stop every curtain');
+  }
  }
+});
+test('Curtain distance is linear and reversible within each layer',()=>{
+ const r=runtime(true,true);
+ const transforms=[];
+ for(const reveal of [.1,.2,.3,.2,.1]){
+  r.send(r.parent,'https://example.test',reveal*.5/2.9);r.step(17);
+  transforms.push(r.planes[0].style.transform);
+ }
+ assert.equal(transforms[0],transforms[4]);assert.equal(transforms[1],transforms[3]);
+ const scale=s=>Number(s.match(/scale3d\(1,([^,]+)/)[1]);
+ assert.ok(Math.abs((scale(transforms[2])-scale(transforms[1]))-(scale(transforms[1])-scale(transforms[0])))<.00001);
 });
 test('Water travels from the bottom through mid-screen to the top before doors open',()=>{
  const r=runtime(true);
