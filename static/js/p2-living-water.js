@@ -55,6 +55,9 @@ function drawScene(vh,now){
  magazine.style.visibility=magazineProgress>0?'visible':'hidden';
  magazine.style.clipPath='inset(0 '+(100-100*magazineProgress).toFixed(3)+'% 0 0)';
  magazine.style.setProperty('--magazine-reveal',magazineProgress.toFixed(5));
+ magazine.style.setProperty('--magazine-shift-up',(-13*(1-magazineProgress)).toFixed(3)+'svh');
+ magazine.style.setProperty('--magazine-shift-down',(13*(1-magazineProgress)).toFixed(3)+'svh');
+ magazine.style.setProperty('--magazine-shift-third',(-9*(1-magazineProgress)).toFixed(3)+'svh');
  magazine.setAttribute('aria-hidden',magazineProgress>=.999?'false':'true');
  church.style.pointerEvents=magazineProgress>0?'none':'';
  root.dataset.p2Phase=vh<.65?'identity':vh<1.72?'ocean-rise':vh<2.37?'red-sea':magazineProgress>=.999?'magazine':magazineProgress>0?'church-to-magazine':'church';root.dataset.p2Progress=vh.toFixed(4);root.dataset.p2WaterLevel=rise.toFixed(4);
