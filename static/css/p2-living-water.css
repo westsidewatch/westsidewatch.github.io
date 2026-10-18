@@ -500,3 +500,41 @@ body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row strong,
 body[data-ws-scope="p2"] .schedule-theme-scripture h3{
   color:var(--ws-first-light);
 }
+
+/* P2 footer visibility across browser zoom and short viewport heights.
+   Preserve Acts 4:12 typography/color; reclaim vertical space upstream. */
+body[data-ws-scope="p2"] .church-editorial__copy{
+  scroll-padding-block-end:clamp(18px,2.5svh,32px);
+  padding-bottom:clamp(22px,3svh,40px);
+}
+body[data-ws-scope="p2"] .schedule-content-group{
+  flex-shrink:0;
+}
+@media (max-height:950px){
+  body[data-ws-scope="p2"] .schedule-content-group{
+    gap:clamp(3px,.45svh,7px);
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row{
+    padding-block:clamp(7px,1.05svh,11px);
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture{
+    margin-top:clamp(9px,1.1svh,15px);
+    padding-top:clamp(8px,.9svh,12px);
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture p{
+    margin-bottom:.58em;
+    line-height:1.65;
+  }
+  body[data-ws-scope="p2"] .schedule-scripture{
+    margin-top:clamp(9px,1.1svh,14px);
+    padding-top:clamp(8px,.9svh,12px);
+  }
+}
+@media (max-height:720px){
+  body[data-ws-scope="p2"] .church-editorial__copy{
+    justify-content:flex-start;
+  }
+  body[data-ws-scope="p2"] .schedule-content-group{
+    margin-block:0;
+  }
+}
