@@ -419,3 +419,28 @@ Implementation scope recorded here: P2 removes its 85 ms follow delay, applies i
 - Rejected regression: completing the entire reveal during the first half-screen of P2 entry means its overlap is spent before the stage reaches the viewport top. Replacing the shaped curve with identical linear layer speeds further flattens its appearance.
 - Entry now consumes only 0.1 scene units; sevenfold completes after another 1.8 pinned viewport heights. The next 2.4 viewport heights retain the established water-rise and door sequence. Host height is 520svh. This distance budget must be checked together with the layer curve, not inferred from isolated transform tests.
 - Acceptance requires visible intermediate overlapping layers on the actual homepage, slow forward and reverse scrubbing, stationary geometry with live water, and a completed upper-half identity before water rises. A single screenshot or unit test alone cannot establish perceived smoothness. The completed identity stays visible until the rising water physically clips it away; an early opacity fade must not leave an empty upper half.
+
+
+## 12. P2 Sevenfold editorial stage — seven distinct compositions (2026-10-18)
+
+**Scope and navigation authority.** P2 is a continuous MERSI-inspired editorial stage for the **seven homepage navigation entries**, not a Church-only page. Follow the homepage order exactly: **01 Church → 02 Magazine → 03 Bible / Emmaus → 04 Sermon / Olive Mountain → 05 Book / Dawn Library → 06 Cinema → 07 Life / Daylight Café**. Church's water-rise and Red Sea opening are the first scene, not the whole P2.
+
+**Two layers of the concept, not seven repeated entrances.**
+1. **Shared sevenfold entrance:** seven independently overlapping, top-anchored color curtains, corresponding to the seven navigation identities. Their staggered overlap is one unified entrance and spatial prelude.
+2. **Seven differentiated editorial scenes:** after the entrance, each realm adopts its own layout and content language. The curtains must not be replayed as a fresh entrance for every realm. Progress and transitions remain reversible and scroll-position-driven, with one owner of progress. Preserve the approved P2 water/door mechanics.
+
+| Order | Realm | Agreed composition direction | Content / visual mechanism |
+| --- | --- | --- | --- |
+| 01 | Church / Living Water | **Left/right 1/2 + 1/2** after water fills the screen and Red Sea doors open | Left: living-water engraving and motion; right: warm-paper Sunday schedule. On narrow phones, the finished scene may use a separately scoped full-width reading layout, without changing the desktop split or the opening choreography. |
+| 02 | Magazine / Journal | **Three-column editorial composition** | Magazine cover, overscale English headline, editorial columns and reading hierarchy; next scene after Church. |
+| 03 | Bible / Emmaus | **Asymmetric left/right 1/3 + 2/3** | Scripture, engraving, history and study narrative; give the main visual/reading material the larger field. |
+| 04 | Sermon / Olive Mountain | **Upper/lower split**, incorporating **main portrait + smaller window** | Speaker portrait, voice/video and sermon editorial framing; retain approved speaker visual assets. |
+| 05 | Book / Dawn Library | **One-quarter-space window** | Book cover, text and inner pages opening into a reading world; do not turn this into a generic full-screen card. |
+| 06 | Cinema / Paradise Cinema | **Upper/lower split**, with a 16:9 film area | Moving image, editorial film title and description; honor playable/previewable media policy. |
+| 07 | Life / Daylight Café | **Asymmetric multilayer collage** | Everyday-life imagery, editorial text and layered spatial arrangement. |
+
+**Transition contract.** These are distinct composition families within one continuous P2 experience. Use MERSI-inspired split-screen, clipping/masks, reveals and spatial continuity as appropriate to each scene, rather than seven identical templates. A scene must connect to the previous scene's geometry; do not silently replace it with an unrelated page or a timed autoplay sequence. Follow the global rule in §11: 滾多少走多少、停手即停、反向即回.
+
+**Authority and implementation.** This records the agreed visual plan; it does not itself claim that scenes 02–07 are implemented or visually accepted. Keep existing homepage navigation mapping and the single Westside Design OS as authorities. Surface-specific responsive layout belongs in P2-owned scoped CSS/JS; desktop and mobile may differ in composition without creating another design system. Protect typography, source content, existing approved art, the V75 water texture and the Church door sequence. For each scene: inspect current files → implement a coherent scoped change → verify actual desktop/mobile/reduced-motion and reverse-scroll behavior → run existing CI and preview inspection → merge/deploy only after acceptance.
+
+**Separate composition note.** Earlier “P2 Feature Spread” (2/3 main feature plus two stacked side windows) and “P3 Editorial Index” (left 1/3, stacked center, right 1/3) are additional page-level studies. They are **not** replacements for the seven-realm composition map above.
