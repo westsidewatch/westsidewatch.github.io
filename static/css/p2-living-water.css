@@ -707,3 +707,32 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__co
     overflow-wrap:break-word;
   }
 }
+
+/* P2 mobile blue-fold identity: override the later desktop type-scale rule.
+   Keep the actual English font proportions; wrap instead of scaling text. */
+@media (max-width:700px){
+  body[data-ws-scope="p2"] .fold-church-identity{
+    width:100%;
+    min-width:0;
+    padding-inline:clamp(12px,4vw,22px);
+  }
+  body[data-ws-scope="p2"] .fold-church-english{
+    display:block;
+    max-width:100%;
+    min-width:0;
+    font-size:clamp(14px,3.8vw,20px);
+    line-height:1.2;
+    letter-spacing:0;
+    white-space:normal;
+    overflow-wrap:normal;
+    text-wrap:balance;
+  }
+  body[data-ws-scope="p2"] .fold-church-address{
+    max-width:100%;
+    min-width:0;
+    font-size:clamp(11px,2.9vw,15px);
+    white-space:normal;
+    overflow-wrap:break-word;
+    text-wrap:balance;
+  }
+}
