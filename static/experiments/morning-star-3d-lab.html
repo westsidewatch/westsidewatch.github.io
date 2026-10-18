@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morning Star — 3D Geometry Lab</title><style>
+*{box-sizing:border-box}body{margin:0;background:#eee9df;color:#28344a;font-family:Georgia,serif}.page{max-width:1260px;margin:auto;padding:30px 24px}h1{font-weight:400;font-size:clamp(34px,6vw,74px);margin:8px 0}p{line-height:1.6}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.stage{position:relative;min-height:570px;background:#142b43;overflow:hidden}.stage canvas{display:block;width:100%;height:100%}.panel{padding:20px;background:#faf6ee;border:1px solid #c9bfae}.panel label{display:block;margin:16px 0 6px}.panel button,.panel select{padding:9px 12px;background:#fff;border:1px solid #a6a092;color:#243348;cursor:pointer}.panel button{margin:4px 4px 4px 0}.panel input{width:100%}.note{font-size:13px;color:#5b5f63}.status{position:absolute;bottom:15px;left:18px;color:#e7d4a7;font-size:12px;letter-spacing:.1em}a{color:inherit}@media(max-width:760px){.layout{grid-template-columns:1fr}.stage{min-height:390px}}
+</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V3</p><h1>Morning Star <em>— solid geometry</em></h1><p>本版使用真實厚度的八芒金屬幾何與獨立空間光束。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
+const stage=document.getElementById('stage'),status=document.getElementById('status');
+try{
+const scene=new THREE.Scene();scene.background=new THREE.Color('#142b43');
+const camera=new THREE.PerspectiveCamera(33,1,.1,100);camera.position.set(0,0,12.8);camera.lookAt(0,0,0);
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.5;stage.prepend(renderer.domElement);
+const ambient=new THREE.AmbientLight(0xffd9a0,1.2);scene.add(ambient);
+const key=new THREE.DirectionalLight(0xfff0cc,4.2);key.position.set(-3,5,7);scene.add(key);
+const rim=new THREE.DirectionalLight(0x98b9ff,3);rim.position.set(4,-2,-5);scene.add(rim);
+const root=new THREE.Group();scene.add(root);const star=new THREE.Group(),lightField=new THREE.Group();root.add(lightField,star);
+const gold=new THREE.MeshStandardMaterial({color:0xc99b4c,metalness:.91,roughness:.26,side:THREE.DoubleSide});
+const bevelGold=new THREE.MeshStandardMaterial({color:0xf0c976,metalness:.88,roughness:.22,side:THREE.DoubleSide});
+const darkGold=new THREE.MeshStandardMaterial({color:0x8c5c23,metalness:.89,roughness:.31,side:THREE.DoubleSide});
+const ink=new THREE.LineBasicMaterial({color:0xffe6aa,transparent:true,opacity:.67,depthWrite:false});
+const N=16,outer=[],inner=[];
+for(let i=0;i<N;i++){let a=-Math.PI/2+i*Math.PI/8;let r=i%2===0?(i%4===0?3.15:2.72):.83;outer.push([Math.cos(a)*r,Math.sin(a)*r]);inner.push([Math.cos(a)*r*.89,Math.sin(a)*r*.89]);}
+function addMesh(vertices,material){const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.computeVertexNormals();const mesh=new THREE.Mesh(geometry,material);star.add(mesh);return mesh;}
+const faces=[],bevel=[],walls=[];
+function tri(arr,a,b,c){arr.push(...a,...b,...c)}
+for(let i=0;i<N;i++){let j=(i+1)%N;
+for(const z of [.21,-.21]){const sign=z>0?1:-1;tri(faces,[0,0,z], [...inner[i],z],[...inner[j],z]);let a=[...inner[i],z],b=[...inner[j],z],c=[...outer[i],z-sign*.115],d=[...outer[j],z-sign*.115];tri(bevel,a,c,d);tri(bevel,a,d,b);}
+const a=[...outer[i],.095],b=[...outer[j],.095],c=[...outer[i],-.095],d=[...outer[j],-.095];tri(walls,a,b,c);tri(walls,b,d,c);
+}
+addMesh(faces,gold);addMesh(bevel,bevelGold);addMesh(walls,darkGold);
+function line(points,mat=ink,parent=star){const g=new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(...p)));parent.add(new THREE.Line(g,mat));}
+for(let i=0;i<N;i+=2){const tip=outer[i],a=-Math.PI/2+i*Math.PI/8;for(let j=1;j<=22;j++){const t=j/24,offset=(j%2===0?1:-1)*.008;const p=[Math.cos(a+.055*(1-t))*t*tip[0]/Math.max(Math.abs(Math.cos(a)),.01),Math.sin(a+.055*(1-t))*t*tip[1]/Math.max(Math.abs(Math.sin(a)),.01)]; // explicit interpolation prevents distorting source silhouette
+const start=[tip[0]*t+Math.cos(a+Math.PI/2)*offset,tip[1]*t+Math.sin(a+Math.PI/2)*offset,.226];const end=[tip[0]*(t+.035)+Math.cos(a+Math.PI/2)*(.09*(1-t)),tip[1]*(t+.035)+Math.sin(a+Math.PI/2)*(.09*(1-t)),.228];line([start,end]);}}
+const boss=new THREE.Mesh(new THREE.SphereGeometry(.26,24,16),bevelGold);boss.scale.z=.48;boss.position.z=.24;star.add(boss);
+const backBoss=boss.clone();backBoss.position.z=-.24;star.add(backBoss);
+const beamMaterial=new THREE.MeshBasicMaterial({color:0xe6bc72,transparent:true,opacity:.18,depthWrite:false,side:THREE.DoubleSide,blending:THREE.AdditiveBlending});
+for(let i=0;i<24;i++){const a=i*Math.PI/12,rad=3.2+(i%3)*.19,len=i%4===0?1.25:.67;const w=i%4===0?.055:.018;const depth=(i%5-2)*.21;const pts=[rad*Math.cos(a),rad*Math.sin(a),depth,(rad+len)*Math.cos(a), (rad+len)*Math.sin(a),depth+.12, (rad+len)*Math.cos(a)-w*Math.sin(a),(rad+len)*Math.sin(a)+w*Math.cos(a),depth-.12];const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));geo.computeVertexNormals();lightField.add(new THREE.Mesh(geo,beamMaterial));}
+let current=32,playing=false,showBeams=true;const slider=document.getElementById('angle'),play=document.getElementById('play'),beams=document.getElementById('beams');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduced){play.disabled=true;play.title='系統已啟用降低動態效果';}
+function updateAngle(deg){current=deg;slider.value=String((deg%360+360)%360);document.getElementById('degrees').textContent=Math.round(current)+'°';star.rotation.y=THREE.MathUtils.degToRad(current);lightField.rotation.y=THREE.MathUtils.degToRad(-current*.7);}
+slider.addEventListener('input',()=>{playing=false;play.checked=false;updateAngle(Number(slider.value));});play.addEventListener('change',()=>playing=play.checked&&!reduced);beams.addEventListener('change',()=>lightField.visible=beams.checked);
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{playing=false;play.checked=false;updateAngle(({front:0,three:45,side:90})[b.dataset.view]);}));
+document.getElementById('background').addEventListener('change',e=>scene.background.set(e.target.value==='paper'?'#f4eddf':'#142b43'));
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();updateAngle(32);status.textContent='REAL GEOMETRY / Y-AXIS / V3';
+let last=performance.now();function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(playing)updateAngle((current+dt*5)%360);renderer.render(scene,camera);requestAnimationFrame(tick);}requestAnimationFrame(tick);
+}catch(e){status.textContent='3D LOAD ERROR: '+e.message;console.error(e)}
+</script></body></html>
