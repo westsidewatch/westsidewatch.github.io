@@ -41,3 +41,13 @@ The P2 Living Water V75 engraved ocean, rising water and Red Sea door are protec
 ## Release boundary
 
 Research notes may be committed independently. No production animation change is authorized by this list. Do not create a separate Design OS, a new CI check, or an unrelated design system.
+
+## P2 isolation implementation (2026-10-17)
+
+Commit `6de1ac1` adds **opt-in** `?p2perf=` modes to `static/js/p2-living-water.js`:
+- `water-off`: omit `wsP2Water.paint()`; isolate animated SVG path updates.
+- `clip-off`: omit scene cover/tint/sea clip-path writes; deliberately changes the test rendering only.
+- `editorial-off`: hide editorial pane while keeping door choreography.
+- `trace`: expose `window.wsP2Perf` (frame count, frame intervals over 32 ms, maximum frame interval, accumulated water and scene JS execution time); log periodically.
+
+Use the same browser, viewport, zoom and scroll path for all four. `wsP2Perf.longFrames` counts inter-frame intervals, **not** a Chrome Performance trace or an attribution of dropped frames; use DevTools Performance for scripting/paint/composite evidence. `water-off` and `clip-off` are diagnostic only and are not approved visual alternatives. Default mode remains unchanged. Results not yet captured; no root cause or fix claimed.
