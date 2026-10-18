@@ -497,9 +497,9 @@ body[data-ws-scope="p2"] .sunday-schedule .schedule-theme-scripture__ref{
 /* P2 color proof: use the Design OS dawn/first-light gold for
    worship headings and the theme scripture only. */
 body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row strong,
-body[data-ws-scope="p2"] .sunday-schedule .schedule-theme-scripture,
-body[data-ws-scope="p2"] .sunday-schedule .schedule-theme-scripture h3,
-body[data-ws-scope="p2"] .sunday-schedule .schedule-theme-scripture p,
-body[data-ws-scope="p2"] .sunday-schedule .schedule-theme-scripture__ref{
+body[data-ws-scope="p2"] .schedule-theme-scripture,
+body[data-ws-scope="p2"] .schedule-theme-scripture h3,
+body[data-ws-scope="p2"] .schedule-theme-scripture p,
+body[data-ws-scope="p2"] .schedule-theme-scripture__ref{
   color:var(--ws-first-light);
 }
