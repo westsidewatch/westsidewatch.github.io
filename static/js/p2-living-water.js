@@ -5,13 +5,6 @@ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),smooth=v=>{v=clamp(v,0,1);return 
 const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
 const embedded=document.documentElement.dataset.p2Embedded==='true',reduced=typeof matchMedia==='function'?matchMedia('(prefers-reduced-motion: reduce)'): {matches:false};
 let raf=0,externalProgress=0,hasExternalProgress=embedded,displayVh=null,sceneVh=null,active=!embedded;
-/* Opt-in performance isolation; default page behavior and visuals are unchanged.
-   ?p2perf=water-off | clip-off | editorial-off | trace */
-const perfMode=new URLSearchParams(location.search).get('p2perf')||'';
-const perfStats={frames:0,longFrames:0,maxFrameMs:0,waterMs:0,sceneMs:0,phase:'',mode:perfMode};
-let perfPrevious=0;
-window.wsP2Perf=perfStats;
-
 function render(now=performance.now()){
  raf=0;
  const distance=embedded?0:clamp(-root.getBoundingClientRect().top/Math.max(1,innerHeight),0,4.2);
@@ -22,22 +15,9 @@ function render(now=performance.now()){
  const visible=document.visibilityState==='visible'&&(embedded?active:rect.bottom>0&&rect.top<innerHeight);
  if(!visible)displayVh=target;
  // One clock paints the original V75 geometry and every shared SVG view.
- // The dense SVG water field is hidden behind the opened right door.
- // Skip repainting it once the door is fully open; keep geometry on scroll.
- if(visible&&displayVh<2.37&&perfMode!=='water-off'){
-  const t0=performance.now();window.wsP2Water?.paint(now);
-  if(perfMode)perfStats.waterMs+=performance.now()-t0;
- }
+ if(visible)window.wsP2Water?.paint(now);
  if(displayVh!==sceneVh||(visible&&displayVh>.65&&displayVh<1.6)){
-  const t0=performance.now();drawScene(displayVh,now);sceneVh=displayVh;
-  if(perfMode)perfStats.sceneMs+=performance.now()-t0;
- }
- if(perfMode){
-  const dt=perfPrevious?now-perfPrevious:0;perfPrevious=now;
-  perfStats.frames++;if(dt>32)perfStats.longFrames++;
-  perfStats.maxFrameMs=Math.max(perfStats.maxFrameMs,dt);
-  perfStats.phase=root.dataset.p2Phase||'';
-  if(perfMode==='trace'&&perfStats.frames%120===0)console.table(perfStats);
+  drawScene(displayVh,now);sceneVh=displayVh;
  }
  root.dataset.p2Animating=String(visible&&!reduced.matches);
  if(visible&&!reduced.matches)schedule();
@@ -49,12 +29,12 @@ function drawScene(vh,now){
   const x=j*100/64,ripple=(rise>0&&rise<1?Math.sin(Math.PI*rise):0)*(1.25*Math.sin(x*.18+now*.0011)+.5*Math.sin(x*.47-now*.0007)),y=clamp(waterTop+ripple,0,100);
   wave.push(x.toFixed(2)+'% '+y.toFixed(2)+'%');foldWave.push(x.toFixed(2)+'% '+Math.min(100,y*2).toFixed(2)+'%');coverWave.push(x.toFixed(2)+'% '+Math.min(50,y).toFixed(2)+'%');line.push((j?'L':'M')+x.toFixed(2)+' '+y.toFixed(2));
  }
- if(perfMode!=='clip-off')cover.style.clipPath=rise>=1?'inset(0 0 100% 0)':'polygon(0% 0%,100% 0%,'+coverWave.slice().reverse().join(',')+')';
- if(perfMode!=='clip-off')tint.style.clipPath=showChurch?'inset(0 50% 0 0)':'polygon('+wave.join(',')+',100% 100%,0% 100%)';
+ cover.style.clipPath=rise>=1?'inset(0 0 100% 0)':'polygon(0% 0%,100% 0%,'+coverWave.slice().reverse().join(',')+')';
+ tint.style.clipPath=showChurch?'inset(0 50% 0 0)':'polygon('+wave.join(',')+',100% 100%,0% 100%)';
  tint.style.opacity=rise>0?'1':'0';
  waterline.setAttribute('d',line.join(' '));
  waterline.style.opacity=rise>0&&rise<1?'1':'0';
- sea.style.visibility='visible';if(perfMode!=='clip-off')sea.style.clipPath=showChurch?'inset(0 50% 0 0)':'none';sea.style.opacity='1';
+ sea.style.visibility='visible';sea.style.clipPath=showChurch?'inset(0 50% 0 0)':'none';sea.style.opacity='1';
  doors.style.visibility=showChurch?'visible':'hidden';leftDoor.style.transform='none';rightDoor.style.transform='translate3d('+(50*opening).toFixed(3)+'vw,0,0)';
  planes.forEach((el,i)=>{
   // Seven independent top-anchored curtains, staggered like the navigation.
@@ -65,11 +45,10 @@ function drawScene(vh,now){
  // Keep the completed identity until the rising surface physically covers it.
  wrap.style.visibility=rise<1?'visible':'hidden';wrap.style.opacity='1';
  wrap.style.clipPath='polygon(0% 0%,100% 0%,'+foldWave.slice().reverse().join(',')+')';
-
  const scriptureOpacity=1-smooth((rise-.12)/.45);
  scripture.classList.toggle('is-current',scriptureOpacity>0);scripture.style.visibility=scriptureOpacity>0?'visible':'hidden';scripture.style.opacity=String(scriptureOpacity);scripture.setAttribute('aria-hidden',scriptureOpacity>0?'false':'true');
  for(const el of editions)if(el!==scripture){el.classList.remove('is-current');el.style.visibility='hidden';el.style.opacity='0'}
- church.style.visibility=perfMode==='editorial-off'?'hidden':showChurch?'visible':'hidden';church.style.opacity='1';root.style.setProperty('--p2-door-open',opening.toFixed(5));church.setAttribute('aria-hidden',showChurch?'false':'true');
+ church.style.visibility=showChurch?'visible':'hidden';church.style.opacity='1';root.style.setProperty('--p2-door-open',opening.toFixed(5));church.setAttribute('aria-hidden',showChurch?'false':'true');
  root.dataset.p2Phase=vh<.65?'identity':vh<1.72?'ocean-rise':vh<2.37?'red-sea':'church';root.dataset.p2Progress=vh.toFixed(4);root.dataset.p2WaterLevel=rise.toFixed(4);
  index.querySelector('span').textContent='01 / 07';
 }
