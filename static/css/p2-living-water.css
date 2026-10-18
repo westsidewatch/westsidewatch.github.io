@@ -269,60 +269,65 @@ body[data-ws-scope="p2"] .schedule-scripture p{
   }
 }
 
-/* P2 editorial folio v2: proportional inner measure in the right-hand page.
-   Identity artwork is outside this grid; never transform/stretch type. */
+/* P2 folio v3: one real page measure, balanced rows, fluid gutters.
+   Church logo/name/address and water mechanics are not styled here. */
 body[data-ws-scope="p2"] .church-editorial__copy{
+  container-name:p2-paper;
   container-type:inline-size;
-  padding-inline:clamp(18px,3.3%,54px);
+  padding-inline:clamp(18px,4%,56px);
 }
 body[data-ws-scope="p2"] .church-schedule-source,
 body[data-ws-scope="p2"] .schedule-theme-scripture,
 body[data-ws-scope="p2"] .schedule-scripture{
-  width:100%;
-  min-width:0;
-  margin-inline:auto;
+  width:100%;min-width:0;max-width:none;margin-inline:auto;
 }
 body[data-ws-scope="p2"] .worship-row{
-  grid-template-columns:clamp(20px,4cqi,32px) minmax(0,19%) minmax(0,1fr);
-  column-gap:clamp(10px,2.3cqi,22px);
+  grid-template-columns:clamp(24px,4cqi,36px) minmax(112px,21%) minmax(0,1fr);
+  column-gap:clamp(14px,2.5cqi,24px);
+  align-items:center;
+  padding-block:clamp(10px,1.45cqi,16px);
+}
+body[data-ws-scope="p2"] .worship-row>div{
+  width:100%;min-width:0;text-align:left;justify-self:stretch;
 }
 body[data-ws-scope="p2"] .worship-row time{
-  font-size:clamp(12px,1.75cqi,16px);
+  font-size:clamp(13px,1.85cqi,16px);
 }
 body[data-ws-scope="p2"] .worship-row strong{
-  font-size:clamp(16px,2.65cqi,23px);
+  font-size:clamp(17px,2.75cqi,24px);
+  font-weight:var(--ws-weight-zh-standard);
   line-height:1.35;
 }
 body[data-ws-scope="p2"] .worship-row p{
-  font-size:clamp(12px,1.75cqi,15px);
-  line-height:1.55;
+  font-size:clamp(13px,1.8cqi,16px);line-height:1.55;
 }
 body[data-ws-scope="p2"] .schedule-theme-scripture p{
-  font-size:clamp(13px,1.95cqi,17px);
-  max-width:66ch;
+  font-size:clamp(14px,1.95cqi,18px);
+  line-height:1.8;max-width:70ch;
 }
 body[data-ws-scope="p2"] .schedule-scripture{
   text-align:center;
   border-top:1px solid color-mix(in srgb,currentColor 45%,transparent);
 }
 body[data-ws-scope="p2"] .schedule-scripture p{
-  text-align:center;
-  margin-inline:auto;
-  max-width:52ch;
-  font-size:clamp(13px,1.9cqi,17px);
+  text-align:center;margin-inline:auto;
+  max-width:52ch;font-size:clamp(14px,1.9cqi,18px);
 }
-body[data-ws-scope="p2"] .schedule-scripture footer{
-  text-align:center;
-}
-@container (max-width:480px){
-  body[data-ws-scope="p2"] .worship-row{
-    grid-template-columns:20px minmax(0,1fr);
+body[data-ws-scope="p2"] .schedule-scripture footer{text-align:center}
+/* Container queries target children of the named container, not its ancestor body. */
+@container p2-paper (max-width:560px){
+  .worship-row{
+    grid-template-columns:24px minmax(96px,25%) minmax(0,1fr);
     column-gap:10px;
   }
-  body[data-ws-scope="p2"] .worship-row time{
-    grid-column:2;
+  .worship-row strong{font-size:clamp(16px,3.2cqi,20px)}
+}
+@container p2-paper (max-width:390px){
+  .worship-row{
+    grid-template-columns:22px minmax(0,1fr);
+    gap:3px 10px;
   }
-  body[data-ws-scope="p2"] .worship-row>div{
-    grid-column:2;
-  }
+  .worship-row::before{grid-column:1;grid-row:1}
+  .worship-row time{grid-column:2;grid-row:1}
+  .worship-row>div{grid-column:2;grid-row:2}
 }
