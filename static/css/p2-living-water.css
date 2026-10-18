@@ -538,3 +538,30 @@ body[data-ws-scope="p2"] .schedule-content-group{
     margin-block:0;
   }
 }
+
+/* P2 viewport-height fix: never rely on the bottom of a clipped 100svh stage
+   for the Acts citation. Keep its typography and gold treatment unchanged. */
+body[data-ws-scope="p2"] .church-editorial__copy{
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+}
+body[data-ws-scope="p2"] .schedule-content-group{
+  margin-block:0;
+  flex:0 0 auto;
+}
+body[data-ws-scope="p2"] .church-editorial__copy>small{
+  flex:0 0 auto;
+}
+body[data-ws-scope="p2"] .schedule-scripture{
+  flex-shrink:0;
+  padding-bottom:clamp(16px,2.5svh,30px);
+}
+body[data-ws-scope="p2"] .schedule-scripture footer{
+  display:block;
+  position:relative;
+  visibility:visible;
+  margin-top:clamp(5px,.7svh,9px);
+  padding-bottom:3px;
+}
