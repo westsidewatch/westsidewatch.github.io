@@ -44,46 +44,17 @@ function render(now=performance.now()){
 }
 function drawScene(vh,now){
  const reveal=clamp(vh/.5,0,1),rise=smooth((vh-.65)/.95),opening=smooth((vh-1.72)/.65),showChurch=vh>=1.72;
- // Once the water has filled the viewport (vh >= 1.60), the wave geometry
- // is constant. Do not rebuild 65-point polygons or rewrite unchanged SVG d
- // on every scroll step through the critical Red Sea opening at vh=1.72.
- const waveActive=rise>0&&rise<1;
- if(waveActive){
-  const waterTop=(1-rise)*100,wave=[],coverWave=[],foldWave=[],line=[];
-  const envelope=Math.sin(Math.PI*rise);
-  for(let j=0;j<=64;j++){
-   const x=j*100/64,ripple=envelope*(1.25*Math.sin(x*.18+now*.0011)+.5*Math.sin(x*.47-now*.0007)),y=clamp(waterTop+ripple,0,100);
-   wave.push(x.toFixed(2)+'% '+y.toFixed(2)+'%');
-   foldWave.push(x.toFixed(2)+'% '+Math.min(100,y*2).toFixed(2)+'%');
-   coverWave.push(x.toFixed(2)+'% '+Math.min(50,y).toFixed(2)+'%');
-   line.push((j?'L':'M')+x.toFixed(2)+' '+y.toFixed(2));
-  }
-  if(perfMode!=='clip-off'){
-   cover.style.clipPath='polygon(0% 0%,100% 0%,'+coverWave.reverse().join(',')+')';
-   tint.style.clipPath='polygon('+wave.join(',')+',100% 100%,0% 100%)';
-   wrap.style.clipPath='polygon(0% 0%,100% 0%,'+foldWave.reverse().join(',')+')';
-  }
-  waterline.setAttribute('d',line.join(' '));
- }else if(rise>=1){
-  if(perfMode!=='clip-off'){
-   if(cover.style.clipPath!=='inset(0px 0px 100% 0px)')cover.style.clipPath='inset(0 0 100% 0)';
-   const tintClip=showChurch?'inset(0 50% 0 0)':'polygon(0% 0%,100% 0%,100% 100%,0% 100%)';
-   if(tint.style.clipPath!==tintClip)tint.style.clipPath=tintClip;
-   if(wrap.style.clipPath!=='inset(0 0 100% 0)')wrap.style.clipPath='inset(0 0 100% 0)';
-  }
- }else if(perfMode!=='clip-off'){
-  cover.style.clipPath='inset(0 0 100% 0)';
-  tint.style.clipPath='inset(0 0 100% 0)';
-  wrap.style.clipPath='inset(0 0 100% 0)';
+ const waterTop=(1-rise)*100,wave=[],coverWave=[],foldWave=[],line=[];
+ for(let j=0;j<=64;j++){
+  const x=j*100/64,ripple=(rise>0&&rise<1?Math.sin(Math.PI*rise):0)*(1.25*Math.sin(x*.18+now*.0011)+.5*Math.sin(x*.47-now*.0007)),y=clamp(waterTop+ripple,0,100);
+  wave.push(x.toFixed(2)+'% '+y.toFixed(2)+'%');foldWave.push(x.toFixed(2)+'% '+Math.min(100,y*2).toFixed(2)+'%');coverWave.push(x.toFixed(2)+'% '+Math.min(50,y).toFixed(2)+'%');line.push((j?'L':'M')+x.toFixed(2)+' '+y.toFixed(2));
  }
+ if(perfMode!=='clip-off')cover.style.clipPath=rise>=1?'inset(0 0 100% 0)':'polygon(0% 0%,100% 0%,'+coverWave.slice().reverse().join(',')+')';
+ if(perfMode!=='clip-off')tint.style.clipPath=showChurch?'inset(0 50% 0 0)':'polygon('+wave.join(',')+',100% 100%,0% 100%)';
  tint.style.opacity=rise>0?'1':'0';
- waterline.style.opacity=waveActive?'1':'0';
- sea.style.visibility='visible';
- if(perfMode!=='clip-off'){
-  const seaClip=showChurch?'inset(0 50% 0 0)':'none';
-  if(sea.style.clipPath!==seaClip)sea.style.clipPath=seaClip;
- }
- sea.style.opacity='1';
+ waterline.setAttribute('d',line.join(' '));
+ waterline.style.opacity=rise>0&&rise<1?'1':'0';
+ sea.style.visibility='visible';if(perfMode!=='clip-off')sea.style.clipPath=showChurch?'inset(0 50% 0 0)':'none';sea.style.opacity='1';
  doors.style.visibility=showChurch?'visible':'hidden';leftDoor.style.transform='none';rightDoor.style.transform='translate3d('+(50*opening).toFixed(3)+'vw,0,0)';
  planes.forEach((el,i)=>{
   // Seven independent top-anchored curtains, staggered like the navigation.
@@ -93,6 +64,7 @@ function drawScene(vh,now){
  });
  // Keep the completed identity until the rising surface physically covers it.
  wrap.style.visibility=rise<1?'visible':'hidden';wrap.style.opacity='1';
+ wrap.style.clipPath='polygon(0% 0%,100% 0%,'+foldWave.slice().reverse().join(',')+')';
 
  const scriptureOpacity=1-smooth((rise-.12)/.45);
  scripture.classList.toggle('is-current',scriptureOpacity>0);scripture.style.visibility=scriptureOpacity>0?'visible':'hidden';scripture.style.opacity=String(scriptureOpacity);scripture.setAttribute('aria-hidden',scriptureOpacity>0?'false':'true');
