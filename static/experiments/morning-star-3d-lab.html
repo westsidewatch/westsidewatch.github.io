@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morning Star — 3D Geometry Lab</title><style>
-*{box-sizing:border-box}body{margin:0;background:#eee9df;color:#28344a;font-family:Georgia,serif}.page{max-width:1260px;margin:auto;padding:30px 24px}h1{font-weight:400;font-size:clamp(34px,6vw,74px);margin:8px 0}p{line-height:1.6}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.stage{position:relative;min-height:570px;background:#142b43;overflow:hidden}.stage canvas{display:block;width:100%;height:100%}.panel{padding:20px;background:#faf6ee;border:1px solid #c9bfae}.panel label{display:block;margin:16px 0 6px}.panel button,.panel select{padding:9px 12px;background:#fff;border:1px solid #a6a092;color:#243348;cursor:pointer}.panel button{margin:4px 4px 4px 0}.panel input{width:100%}.note{font-size:13px;color:#5b5f63}.status{position:absolute;bottom:15px;left:18px;color:#e7d4a7;font-size:12px;letter-spacing:.1em}a{color:inherit}@media(max-width:760px){.layout{grid-template-columns:1fr}.stage{min-height:390px}}
-</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V3.4</p><h1>Morning Star <em>— solid geometry</em></h1><p>本輪依照 v3.3 實際截圖，清除灰藍三角碎片，重新建立纖細金色星光，並深化八條星芒的表面雕刻。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
+*{box-sizing:border-box}body{margin:0;background:#eee9df;color:#28344a;font-family:Georgia,serif}.page{max-width:1260px;margin:auto;padding:42px 24px 30px;overflow:hidden}h1{font-weight:400;font-size:clamp(34px,6vw,74px);margin:8px 0}p{line-height:1.6}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.stage{position:relative;min-height:570px;background:#142b43;overflow:hidden}.stage canvas{display:block;width:100%;height:100%}.panel{padding:20px;background:#faf6ee;border:1px solid #c9bfae}.panel label{display:block;margin:16px 0 6px}.panel button,.panel select{padding:9px 12px;background:#fff;border:1px solid #a6a092;color:#243348;cursor:pointer}.panel button{margin:4px 4px 4px 0}.panel input{width:100%}.note{font-size:13px;color:#5b5f63}.status{position:absolute;bottom:15px;left:18px;color:#e7d4a7;font-size:12px;letter-spacing:.1em}a{color:inherit}@media(max-width:760px){.page{padding:calc(34px + env(safe-area-inset-top,0px)) 18px 30px}.page h1{font-size:clamp(30px,8vw,48px);line-height:1.08;overflow-wrap:anywhere}.layout{grid-template-columns:1fr}.stage{min-height:390px}.panel{padding:18px}.status{font-size:9px;letter-spacing:.03em}}
+</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V3.5</p><h1>Morning Star <em>— solid geometry</em></h1><p>本輪依照手機實際截圖，讓金色星光從星芒附近連續向外延伸、逐段淡出，並深化金屬微雕。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 const stage=document.getElementById('stage'),status=document.getElementById('status');
@@ -71,7 +71,7 @@ for(const sign of [1,-1]){
     dot.position.set(Math.cos(a)*r,Math.sin(a)*r,sign*.431);dot.scale.z=.48;star.add(dot);
   }
 }
-// V3.4: facet-following hairlines on each of the eight long rays.
+// V3.5: facet-following hairlines on each of the eight long rays.
 // Lines are slightly lifted from the metal surface and taper towards each tip.
 for(const sign of [1,-1])for(let i=0;i<N;i+=2){
   const a=-Math.PI/2+i*Math.PI/8,rayLength=Math.hypot(...outer[i]);
@@ -87,6 +87,15 @@ for(const sign of [1,-1])for(let i=0;i<N;i+=2){
     }
     line(pts,lane%3===0?ink:etchDark);
   }
+}
+// Secondary tapering micro-lines between the existing facet grooves.
+for(const sign of [1,-1])for(let i=0;i<N;i+=2){
+ const a=-Math.PI/2+i*Math.PI/8,dir=[Math.cos(a),Math.sin(a)],normal=[-Math.sin(a),Math.cos(a)],r=Math.hypot(...outer[i]);
+ for(let lane=-8;lane<=8;lane++){if(!lane)continue;const points=[];
+  for(let j=0;j<=28;j++){const t=.31+j/28*.48,offset=lane*.007*(1-t),z=sign*(.43-(.43-.09)*t+.031);
+   points.push([dir[0]*r*t+normal[0]*offset,dir[1]*r*t+normal[1]*offset,z]);}
+  line(points,lane%3===0?ink:etchDark);
+ }
 }
 // Engraved short cross-hatches across long rays, tapered toward the tips.
 for(const sign of [1,-1])for(let i=0;i<N;i+=2){
@@ -110,19 +119,13 @@ for(const sign of [1,-1])for(let k=0;k<72;k++){
  const z=sign*.39;
  line([[Math.cos(a)*innerR,Math.sin(a)*innerR,z],[Math.cos(a)*outerR,Math.sin(a)*outerR,z]],k%4===0?ink:etchDark);
 }
-// V3.4: Fine golden light filaments, not triangular planes. The v3.3 triangles
-// produced dark clipped shards due to winding, transparency and lighting.
-const rayGold=new THREE.LineBasicMaterial({color:0xf1cc83,transparent:true,opacity:.34,depthWrite:false,blending:THREE.AdditiveBlending});
-const raySoft=new THREE.LineBasicMaterial({color:0xc99d57,transparent:true,opacity:.14,depthWrite:false,blending:THREE.AdditiveBlending});
+// V3.5: Connected light filaments, gradually fading instead of disconnected halo.
+const rayMaterials=[.54,.47,.39,.31,.24,.18,.12,.07].map((opacity,k)=>new THREE.LineBasicMaterial({color:k<3?0xf8d997:0xc9a46c,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending}));
 for(let i=0;i<48;i++){
-  const a=i*Math.PI/24,offset=(i%7-3)*.055;
-  const length=(i%6===0?.82:.18+(i%5)*.085);
-  const radius=3.07+(i%3)*.055;
-  const z=(i%9-4)*.085;
-  const start=[radius*Math.cos(a),radius*Math.sin(a),z];
-  const mid=[(radius+length*.45)*Math.cos(a+offset*.13),(radius+length*.45)*Math.sin(a+offset*.13),z+.04];
-  const end=[(radius+length)*Math.cos(a+offset*.22),(radius+length)*Math.sin(a+offset*.22),z+.10];
-  line([start,mid,end],i%3===0?rayGold:raySoft,lightField);
+ const a=i*Math.PI/24,major=i%6===0,length=major?1.62:1.06+(i%5)*.11;
+ const base=major?2.12:2.45+(i%3)*.12,depth=(i%11-5)*.07,bend=(i%7-3)*.008;
+ const point=t=>{const r=base+length*t,theta=a+bend*t*t;return [r*Math.cos(theta),r*Math.sin(theta),depth+.12*t*Math.sin(i*1.7)];};
+ for(let k=0;k<8;k++)line([point(k/8),point((k+1)/8)],rayMaterials[k],lightField);
 }
 let current=32,playing=false,showBeams=true;const slider=document.getElementById('angle'),play=document.getElementById('play'),beams=document.getElementById('beams');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduced){play.disabled=true;play.title='系統已啟用降低動態效果';}
@@ -130,7 +133,7 @@ function updateAngle(deg){current=deg;slider.value=String((deg%360+360)%360);doc
 slider.addEventListener('input',()=>{playing=false;play.checked=false;updateAngle(Number(slider.value));});play.addEventListener('change',()=>playing=play.checked&&!reduced);beams.addEventListener('change',()=>lightField.visible=beams.checked);
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{playing=false;play.checked=false;updateAngle(({front:0,three:45,side:90})[b.dataset.view]);}));
 document.getElementById('background').addEventListener('change',e=>scene.background.set(e.target.value==='paper'?'#f4eddf':'#142b43'));
-function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();updateAngle(32);status.textContent='RELIEF GEOMETRY / GOLD FILAMENTS / V3.4';
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();updateAngle(32);status.textContent='RELIEF GEOMETRY / TAPERED GOLD RAYS / V3.5';
 let last=performance.now();function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(playing)updateAngle((current+dt*5)%360);renderer.render(scene,camera);requestAnimationFrame(tick);}requestAnimationFrame(tick);
 }catch(e){status.textContent='3D LOAD ERROR: '+e.message;console.error(e)}
 </script></body></html>
