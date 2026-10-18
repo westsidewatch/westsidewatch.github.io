@@ -50,3 +50,8 @@ Precise CSS positioning is verified through the shared OS diagnostic `scripts/de
 **Sources incorporated, not discarded.** The OS editorial manual synthesizes the award-calibre precedent corpus, Doré UI Skills explorations R1–R4, Italian editorial grammar and existing magazine typography study. Original research remains in place as an evidence/archive layer. The manual identifies the selection and verification process and links to source-level findings rather than duplicating every case or importing an external visual style.
 
 **Release contract.** Editorial changes must use OS scope tokens, preserve actual copy and approved visual assets, compare relevant variants or prior screenshots, review mobile/desktop/reduced-motion/contrast, and pass existing CI plus visual inspection. Green CI alone does not prove design quality. Do not add another CI job just for the manual.
+
+
+## SVG exploration research index (2026-10-17)
+
+SVG performance, animation, path geometry, clipping and open-source references are indexed in [SVG-EXPLORATION-LIST.md](SVG-EXPLORATION-LIST.md). This is a research list inside the existing Westside Design OS authority, not a new OS, runtime, or CI. Preserve the approved P2 V75 water and door composition; require measured traces before production performance changes.
