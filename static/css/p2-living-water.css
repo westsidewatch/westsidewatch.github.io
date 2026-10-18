@@ -606,30 +606,3 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__co
   overflow-y:auto;
   overscroll-behavior:auto;
 }
-
-/* P2 mobile reading handoff: the desktop 50/50 open-door composition leaves
-   only ~180px for the Sunday programme on a 360px phone. Keep the original
-   split while the Red Sea is opening, then give the completed church scene
-   the full viewport for readable editorial content. Never scale the type or
-   change the V75 water engraving / door geometry. */
-@media (max-width:700px){
-  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial{
-    grid-template-columns:minmax(0,1fr);
-  }
-  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__visual{
-    display:none;
-  }
-  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__copy{
-    grid-column:1;
-    width:100%;
-    min-width:0;
-    padding-inline:clamp(18px,5vw,28px);
-    scrollbar-gutter:auto;
-  }
-  body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editorial__copy{
-    visibility:hidden;
-  }
-  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .sunday-schedule{
-    --p2-gap:clamp(8px,2cqi,14px);
-  }
-}
