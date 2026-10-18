@@ -565,3 +565,18 @@ body[data-ws-scope="p2"] .schedule-scripture footer{
   margin-top:clamp(5px,.7svh,9px);
   padding-bottom:3px;
 }
+
+/* P2 Red Sea scroll handoff: while the door is opening, the schedule is
+   visible but must NOT become an independent scroll target. Otherwise wheel
+   events over the newly revealed right pane scroll its own overflow container
+   instead of advancing the outer sticky scene, appearing to freeze the door.
+   Only the completed church scene may accept reading/scroll interaction. */
+body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editorial__copy{
+  pointer-events:none;
+  overflow-y:hidden;
+}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__copy{
+  pointer-events:auto;
+  overflow-y:auto;
+  overscroll-behavior:auto;
+}
