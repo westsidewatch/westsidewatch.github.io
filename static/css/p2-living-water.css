@@ -269,8 +269,8 @@ body[data-ws-scope="p2"] .schedule-scripture p{
   }
 }
 
-/* P2 folio v5 — editorial page measure and true horizontal distribution.
-   The logo, English name, address, water and door animation are untouched. */
+/* P2 folio authority: one four-track grid for all programme rows and metadata.
+   Do not edit independent church identity, ocean engraving or door animation. */
 body[data-ws-scope="p2"] .church-editorial__copy{
   container:p2-paper / inline-size;
   padding-inline:clamp(18px,4%,56px);
@@ -280,37 +280,71 @@ body[data-ws-scope="p2"] .schedule-theme-scripture,
 body[data-ws-scope="p2"] .schedule-scripture{
   width:100%;min-width:0;max-width:none;margin-inline:auto;
 }
-body[data-ws-scope="p2"] .worship-program{width:100%;counter-reset:worship}
+body[data-ws-scope="p2"] .sunday-schedule{
+  --p2-grid: [number] minmax(24px,5fr) [time] minmax(112px,20fr) [heading] minmax(0,38fr) [details] minmax(0,37fr) [end];
+  --p2-gap:clamp(12px,2cqi,22px);
+}
+body[data-ws-scope="p2"] .worship-program{
+  width:100%;counter-reset:worship;
+}
 body[data-ws-scope="p2"] .worship-program .worship-row{
+  position:relative;
   display:grid;
-  grid-template-columns:minmax(24px,5fr) minmax(112px,20fr) minmax(0,75fr);
-  column-gap:clamp(12px,2cqi,22px);
+  grid-template-columns:var(--p2-grid);
+  column-gap:var(--p2-gap);
   align-items:center;
   padding-block:clamp(11px,1.55cqi,18px);
 }
-body[data-ws-scope="p2"] .worship-program .worship-row::before{grid-column:1}
+body[data-ws-scope="p2"] .worship-program .worship-row::before{
+  grid-column:number;grid-row:1;
+}
 body[data-ws-scope="p2"] .worship-program .worship-row time{
-  grid-column:2;white-space:nowrap;
+  grid-column:time;grid-row:1;white-space:nowrap;
   font-size:clamp(13px,1.85cqi,16px);
 }
 body[data-ws-scope="p2"] .worship-program .worship-row>div{
-  grid-column:3;min-width:0;width:100%;
-  display:grid;grid-template-columns:minmax(0,48fr) minmax(0,52fr);
-  align-items:baseline;column-gap:clamp(10px,2cqi,22px);
-  text-align:left;
+  display:contents;
 }
 body[data-ws-scope="p2"] .worship-program .worship-row strong{
-  grid-column:1;display:block;min-width:0;
+  grid-column:heading;grid-row:1;
+  position:static;left:auto;width:auto;
+  display:block;text-align:center;
   font-size:clamp(17px,2.5cqi,23px);
   font-weight:var(--ws-weight-zh-standard);
   line-height:1.4;
 }
 body[data-ws-scope="p2"] .worship-program .worship-row p{
-  grid-column:2;min-width:0;margin:0;
+  grid-column:details;grid-row:1;
+  min-width:0;margin:0;text-align:left;
   font-size:clamp(13px,1.8cqi,16px);
   line-height:1.65;
 }
-body[data-ws-scope="p2"] .schedule-theme-scripture{text-align:center}
+body[data-ws-scope="p2"] .sunday-schedule .worship-ministry,
+body[data-ws-scope="p2"] .sunday-schedule .worship-next,
+body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place{
+  display:grid;grid-template-columns:var(--p2-grid);
+  column-gap:var(--p2-gap);
+  padding-left:0;
+  align-items:start;
+}
+body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>span,
+body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>p,
+body[data-ws-scope="p2"] .sunday-schedule .worship-next>span,
+body[data-ws-scope="p2"] .sunday-schedule .worship-next>p,
+body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>span,
+body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>p{
+  grid-column:details;display:block;
+  width:100%;min-width:0;
+  margin:0;text-align:left;
+}
+body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>p,
+body[data-ws-scope="p2"] .sunday-schedule .worship-next>p,
+body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>p{
+  margin-top:3px;
+}
+body[data-ws-scope="p2"] .schedule-theme-scripture{
+  text-align:center;
+}
 body[data-ws-scope="p2"] .schedule-theme-scripture h3{
   text-align:center;font-weight:var(--ws-weight-zh-air);
 }
@@ -326,7 +360,8 @@ body[data-ws-scope="p2"] .schedule-theme-scripture__ref{
   font-weight:var(--ws-weight-zh-air);text-align:center;
 }
 body[data-ws-scope="p2"] .schedule-scripture{
-  text-align:center;border-top:1px solid color-mix(in srgb,currentColor 45%,transparent);
+  text-align:center;
+  border-top:1px solid color-mix(in srgb,currentColor 45%,transparent);
 }
 body[data-ws-scope="p2"] .schedule-scripture p{
   text-align:center;margin-inline:auto;max-width:52ch;
@@ -334,146 +369,44 @@ body[data-ws-scope="p2"] .schedule-scripture p{
 }
 body[data-ws-scope="p2"] .schedule-scripture footer{text-align:center}
 @container p2-paper (max-width:660px){
-  .worship-program .worship-row>div{
-    grid-template-columns:minmax(0,1fr);
-    row-gap:3px;
+  .sunday-schedule .worship-program .worship-row{
+    grid-template-columns:24px minmax(90px,24%) minmax(0,1fr);
+    gap:3px 10px;
   }
-  .worship-program .worship-row strong,
-  .worship-program .worship-row p{grid-column:1}
-}
-@container p2-paper (max-width:390px){
-  .worship-program .worship-row{
-    grid-template-columns:22px minmax(0,1fr);gap:3px 10px;
+  .sunday-schedule .worship-program .worship-row strong{
+    grid-column:3;grid-row:1;text-align:left;
   }
-  .worship-program .worship-row::before{grid-column:1;grid-row:1}
-  .worship-program .worship-row time{grid-column:2;grid-row:1}
-  .worship-program .worship-row>div{grid-column:2;grid-row:2}
-}
-
-/* Align supporting programme metadata to the SAME third-column start as the seven rows.
-   Church identity and separate LOCATION block remain untouched. */
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next{
-  display:grid;
-  grid-template-columns:minmax(24px,5fr) minmax(112px,20fr) minmax(0,75fr);
-  column-gap:clamp(12px,2cqi,22px);
-  align-items:start;
-}
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>span,
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>p,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next>span,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next>p{
-  grid-column:3;
-  min-width:0;
-  margin-inline:0;
-  text-align:left;
-}
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>p,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next>p{
-  margin-block:3px 0;
-}
-@container p2-paper (max-width:390px){
+  .sunday-schedule .worship-program .worship-row p{
+    grid-column:3;grid-row:2;
+  }
   .sunday-schedule .worship-ministry,
-  .sunday-schedule .worship-next{
-    grid-template-columns:22px minmax(0,1fr);
-    column-gap:10px;
-  }
-  .sunday-schedule .worship-ministry>span,
-  .sunday-schedule .worship-ministry>p,
-  .sunday-schedule .worship-next>span,
-  .sunday-schedule .worship-next>p{grid-column:2}
-}
-
-/* P2 folio: align LOCATION to programme column three; center each worship
-   heading on its own editorial axis while keeping details in the right subcolumn. */
-body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place{
-  display:grid;
-  grid-template-columns:minmax(24px,5fr) minmax(112px,20fr) minmax(0,75fr);
-  column-gap:clamp(12px,2cqi,22px);
-  align-items:start;
-}
-body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>span,
-body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>p{
-  grid-column:3;
-  min-width:0;
-  margin-inline:0;
-  text-align:left;
-}
-body[data-ws-scope="p2"] .worship-program .worship-row strong{
-  text-align:center;
-  justify-self:stretch;
-}
-@container p2-paper (max-width:390px){
+  .sunday-schedule .worship-next,
   .sunday-schedule .sunday-schedule__place{
-    grid-template-columns:22px minmax(0,1fr);
-    column-gap:10px;
+    grid-template-columns:24px minmax(90px,24%) minmax(0,1fr);
+    gap:3px 10px;
   }
-  .sunday-schedule .sunday-schedule__place>span,
-  .sunday-schedule .sunday-schedule__place>p{grid-column:2}
-}
-
-/* P2 folio v6: metadata belongs to the visual fourth column.
-   Worship headings share the right-page center axis with theme scripture. */
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next,
-body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place{
-  grid-template-columns:minmax(24px,5fr) minmax(112px,20fr) minmax(0,75fr);
-}
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>span,
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>p,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next>span,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next>p,
-body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>span,
-body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>p{
-  grid-column:3;
-  margin-left:52%;
-  width:48%;
-  min-width:0;
-  box-sizing:border-box;
-}
-/* Headings are centered on the full right-paper axis, not just the third subcolumn. */
-body[data-ws-scope="p2"] .worship-program .worship-row strong{
-  position:relative;
-  left:calc(-1 * (50cqi - 50%));
-  width:calc(100% + 2 * (50cqi - 50%));
-  text-align:center;
-}
-@container p2-paper (max-width:660px){
   .sunday-schedule .worship-ministry>span,
   .sunday-schedule .worship-ministry>p,
   .sunday-schedule .worship-next>span,
   .sunday-schedule .worship-next>p,
   .sunday-schedule .sunday-schedule__place>span,
-  .sunday-schedule .sunday-schedule__place>p{
-    margin-left:0;width:100%;
-  }
-  .worship-program .worship-row strong{left:0;width:100%}
+  .sunday-schedule .sunday-schedule__place>p{grid-column:3}
 }
-
-/* Fourth visual column: one shared starting edge for ministry, row notes,
-   next Sunday and location. Avoid percentage margins that vary by parent. */
-body[data-ws-scope="p2"] .sunday-schedule{
-  --p2-folio-gap:clamp(12px,2cqi,22px);
-  --p2-fourth-column-start:calc(25% + 2 * var(--p2-folio-gap) + (75% - 2 * var(--p2-folio-gap)) * .52);
-}
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next,
-body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place{
-  display:block;
-  padding-left:var(--p2-fourth-column-start);
-  box-sizing:border-box;
-}
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>span,
-body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>p,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next>span,
-body[data-ws-scope="p2"] .sunday-schedule .worship-next>p,
-body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>span,
-body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>p{
-  display:block;width:100%;margin-left:0;grid-column:auto;
-  text-align:left;
-}
-@container p2-paper (max-width:660px){
+@container p2-paper (max-width:390px){
+  .sunday-schedule .worship-program .worship-row,
   .sunday-schedule .worship-ministry,
   .sunday-schedule .worship-next,
-  .sunday-schedule .sunday-schedule__place{padding-left:0}
+  .sunday-schedule .sunday-schedule__place{
+    grid-template-columns:22px minmax(0,1fr);
+    gap:3px 10px;
+  }
+  .sunday-schedule .worship-program .worship-row time{grid-column:2;grid-row:1}
+  .sunday-schedule .worship-program .worship-row strong{grid-column:2;grid-row:2}
+  .sunday-schedule .worship-program .worship-row p{grid-column:2;grid-row:3}
+  .sunday-schedule .worship-ministry>span,
+  .sunday-schedule .worship-ministry>p,
+  .sunday-schedule .worship-next>span,
+  .sunday-schedule .worship-next>p,
+  .sunday-schedule .sunday-schedule__place>span,
+  .sunday-schedule .sunday-schedule__place>p{grid-column:2}
 }
