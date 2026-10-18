@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morning Star — 3D Geometry Lab</title><style>
 *{box-sizing:border-box}body{margin:0;background:#eee9df;color:#28344a;font-family:Georgia,serif}.page{max-width:1260px;margin:auto;padding:42px 24px 30px;overflow:hidden}h1{font-weight:400;font-size:clamp(34px,6vw,74px);margin:8px 0}p{line-height:1.6}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.stage{position:relative;min-height:570px;background:#142b43;overflow:hidden}.stage canvas{display:block;width:100%;height:100%}.panel{padding:20px;background:#faf6ee;border:1px solid #c9bfae}.panel label{display:block;margin:16px 0 6px}.panel button,.panel select{padding:9px 12px;background:#fff;border:1px solid #a6a092;color:#243348;cursor:pointer}.panel button{margin:4px 4px 4px 0}.panel input{width:100%}.note{font-size:13px;color:#5b5f63}.status{position:absolute;bottom:15px;left:18px;color:#e7d4a7;font-size:12px;letter-spacing:.1em}a{color:inherit}@media(max-width:760px){.page{padding:calc(34px + env(safe-area-inset-top,0px)) 18px 30px}.page h1{font-size:clamp(30px,8vw,48px);line-height:1.08;overflow-wrap:anywhere}.layout{grid-template-columns:1fr}.stage{min-height:390px}.panel{padding:18px}.status{font-size:9px;letter-spacing:.03em}}
-</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V3.8</p><h1>Morning Star <em>— solid geometry</em></h1><p>本輪依照 34°／73°／108° 截圖，將星光分成附著星體的刻線延伸與獨立反向旋轉的低亮度環境光場，消除兩者必須始終對齊的矛盾。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
+</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V3.9</p><h1>Morning Star <em>— solid geometry</em></h1><p>本輪依照 v3.8 四張實際截圖，移除等距橢圓環境光弧，改為不封閉、疏密不等的微刻線；金屬切面增加貼合真實三角面幾何的雕刻排線。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 const stage=document.getElementById('stage'),status=document.getElementById('status');
@@ -71,7 +71,7 @@ for(const sign of [1,-1]){
     dot.position.set(Math.cos(a)*r,Math.sin(a)*r,sign*.431);dot.scale.z=.48;star.add(dot);
   }
 }
-// V3.8: facet-following hairlines on each of the eight long rays.
+// V3.9: facet-following hairlines on each of the eight long rays.
 // Lines are slightly lifted from the metal surface and taper towards each tip.
 for(const sign of [1,-1])for(let i=0;i<N;i+=2){
   const a=-Math.PI/2+i*Math.PI/8,rayLength=Math.hypot(...outer[i]);
@@ -118,6 +118,29 @@ for(const sign of [1,-1])for(let i=0;i<N;i+=2){
           [center[0]+tangent[0]*spread,center[1]+tangent[1]*spread,z]],j%3===0?ink:etchDark);
   }
 }
+// V3.9: Surface-fitted engraving uses actual triangular face geometry,
+// not an approximate floating z plane. Barycentric interpolation stays on each
+// metal facet at all viewing angles; a tiny normal offset avoids z-fighting.
+const facetEtch=new THREE.LineBasicMaterial({color:0x754716,transparent:true,opacity:.44,depthWrite:false});
+const facetGlint=new THREE.LineBasicMaterial({color:0xf4d58e,transparent:true,opacity:.30,depthWrite:false});
+function engraveTriangles(flat,passes){
+ for(let t=0;t<flat.length;t+=9){
+  const A=new THREE.Vector3(flat[t],flat[t+1],flat[t+2]);
+  const B=new THREE.Vector3(flat[t+3],flat[t+4],flat[t+5]);
+  const C=new THREE.Vector3(flat[t+6],flat[t+7],flat[t+8]);
+  const normal=new THREE.Vector3().subVectors(B,A).cross(new THREE.Vector3().subVectors(C,A)).normalize();
+  // Two-sided metal: displace outward, not toward the interior.
+  if(normal.z*(A.z+B.z+C.z)<0)normal.negate();
+  const sample=(u,v)=>A.clone().multiplyScalar(1-u-v).addScaledVector(B,u).addScaledVector(C,v).addScaledVector(normal,.008);
+  for(let lane=1;lane<=passes;lane++){
+   const u=lane/(passes+1),start=sample(u,.055*(1-u)),end=sample(u,.89*(1-u));
+   line([start.toArray(),end.toArray()],lane%4===0?facetGlint:facetEtch);
+  }
+ }
+}
+engraveTriangles(bevel,11);
+engraveTriangles(faces,8);
+engraveTriangles(walls,5);
 // Raised bosses project beyond the relief on both faces; old v3.2 bosses were partially buried.
 const boss=new THREE.Mesh(new THREE.SphereGeometry(.26,32,20),bevelGold);
 boss.scale.z=.40;boss.position.z=.47;star.add(boss);
@@ -128,7 +151,7 @@ for(const sign of [1,-1])for(let k=0;k<72;k++){
  const z=sign*.39;
  line([[Math.cos(a)*innerR,Math.sin(a)*innerR,z],[Math.cos(a)*outerR,Math.sin(a)*outerR,z]],k%4===0?ink:etchDark);
 }
-// V3.8: Two distinct motion layers. The metal-attached emission follows the star;
+// V3.9: Two distinct motion layers. The metal-attached emission follows the star;
 // a subdued independent field counter-rotates about the same world Y axis.
 // Do not describe the counter-rotating layer as a continuation of engraved grooves.
 const attachedLight=new THREE.Group();star.add(attachedLight);
@@ -147,22 +170,22 @@ for(let arm=0;arm<8;arm++){
   for(let k=0;k<8;k++)line([point(k/8),point((k+1)/8)],attachedMats[k],attachedLight);
  }
 }
-// Ambient light is a spatial halo, not eight extra pointed arms.
-// Its curved, low-contrast contours have no visible "root" at the star's tips.
-const ambientMats=[.11,.075,.045].map(opacity=>new THREE.LineBasicMaterial({
- color:0xe7bd77,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending
+// V3.9: Non-concentric, unequal open engraving wisps; no complete ellipse.
+// The independent light field remains free to counter-rotate around world Y.
+const ambientMats=[.09,.055,.03].map(opacity=>new THREE.LineBasicMaterial({
+ color:0xe5ba75,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending
 }));
-for(let ring=0;ring<3;ring++){
- const r=3.38+ring*.24,phase=ring*.32;
- for(let arc=0;arc<8;arc++){
-  const pts=[];
-  for(let j=0;j<=24;j++){
-   const theta=phase+arc*Math.PI/4+(j/24-.5)*.48;
-   const rr=r+.07*Math.sin(j/24*Math.PI);
-   pts.push([rr*Math.cos(theta),rr*Math.sin(theta),.18*Math.sin(theta*3+ring)]);
-  }
-  line(pts,ambientMats[ring],lightField);
+for(let i=0;i<13;i++){
+ const a=i*2.399963229728653, r=3.27+(i%5)*.135;
+ const sweep=.12+(i%4)*.075,phase=(i%3-1)*.17;
+ const pts=[];
+ for(let j=0;j<=18;j++){
+  const t=j/18,theta=a+(t-.5)*sweep;
+  const radius=r+.09*Math.sin(Math.PI*t+phase);
+  pts.push([radius*Math.cos(theta),radius*Math.sin(theta),
+   .12*Math.sin(theta*2.3+i*.4)+.05*(t-.5)]);
  }
+ line(pts,ambientMats[i%3],lightField);
 }
 let current=32,playing=false,showBeams=true;const slider=document.getElementById('angle'),play=document.getElementById('play'),beams=document.getElementById('beams');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduced){play.disabled=true;play.title='系統已啟用降低動態效果';}
@@ -170,7 +193,7 @@ function updateAngle(deg){current=deg;slider.value=String((deg%360+360)%360);doc
 slider.addEventListener('input',()=>{playing=false;play.checked=false;updateAngle(Number(slider.value));});play.addEventListener('change',()=>playing=play.checked&&!reduced);beams.addEventListener('change',()=>{lightField.visible=beams.checked;attachedLight.visible=beams.checked;});
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{playing=false;play.checked=false;updateAngle(({front:0,three:45,side:90})[b.dataset.view]);}));
 document.getElementById('background').addEventListener('change',e=>scene.background.set(e.target.value==='paper'?'#f4eddf':'#142b43'));
-function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();updateAngle(32);status.textContent='RELIEF GEOMETRY / ATTACHED LIGHT + AMBIENT FIELD / V3.8';
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();updateAngle(32);status.textContent='RELIEF GEOMETRY / FACET ENGRAVING + OPEN LIGHT FIELD / V3.9';
 let last=performance.now();function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(playing)updateAngle((current+dt*5)%360);renderer.render(scene,camera);requestAnimationFrame(tick);}requestAnimationFrame(tick);
 }catch(e){status.textContent='3D LOAD ERROR: '+e.message;console.error(e)}
 </script></body></html>
