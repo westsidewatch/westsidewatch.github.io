@@ -51,3 +51,9 @@ Commit `6de1ac1` adds **opt-in** `?p2perf=` modes to `static/js/p2-living-water.
 - `trace`: expose `window.wsP2Perf` (frame count, frame intervals over 32 ms, maximum frame interval, accumulated water and scene JS execution time); log periodically.
 
 Use the same browser, viewport, zoom and scroll path for all four. `wsP2Perf.longFrames` counts inter-frame intervals, **not** a Chrome Performance trace or an attribution of dropped frames; use DevTools Performance for scripting/paint/composite evidence. `water-off` and `clip-off` are diagnostic only and are not approved visual alternatives. Default mode remains unchanged. Results not yet captured; no root cause or fix claimed.
+
+## Four-mode browser audit page (2026-10-17)
+
+Commit `e759d2e` adds `static/p2/performance-audit.html`. Open `/p2/performance-audit.html` on the **same-origin deployed preview**, click **Run four modes**, then export JSON. It loads the existing P2 page as an embedded frame and drives the existing `westside-p2-scroll` message protocol through the opening interval (scene progress 1.30–2.45, crossing the critical 1.72 threshold). It compares `trace`, `water-off`, `clip-off` and `editorial-off` under one viewport.
+
+**Limitations:** RAF intervals and JavaScript execution times are only first-pass screening; browser painting/compositing and garbage collection require DevTools Performance trace. Results can be affected by iframe, machine load and browser throttling. The diagnostic page has not yet been run against the deployed site in this environment because the preview host was not reachable. No performance improvement is claimed. Normal page behavior remains unchanged.
