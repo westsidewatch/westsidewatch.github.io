@@ -57,3 +57,15 @@ Use the same browser, viewport, zoom and scroll path for all four. `wsP2Perf.lon
 Commit `e759d2e` adds `static/p2/performance-audit.html`. Open `/p2/performance-audit.html` on the **same-origin deployed preview**, click **Run four modes**, then export JSON. It loads the existing P2 page as an embedded frame and drives the existing `westside-p2-scroll` message protocol through the opening interval (scene progress 1.30–2.45, crossing the critical 1.72 threshold). It compares `trace`, `water-off`, `clip-off` and `editorial-off` under one viewport.
 
 **Limitations:** RAF intervals and JavaScript execution times are only first-pass screening; browser painting/compositing and garbage collection require DevTools Performance trace. Results can be affected by iframe, machine load and browser throttling. The diagnostic page has not yet been run against the deployed site in this environment because the preview host was not reachable. No performance improvement is claimed. Normal page behavior remains unchanged.
+
+## P2 Red Sea opening freeze — resolved by user visual acceptance (2026-10-17)
+
+**Symptom:** P2 engraved water continued to display, but the Red Sea door appeared to stop partway open and required multiple additional scroll gestures. A user screenshot showed the church schedule already visible over the water during the partial opening.
+
+**Root-cause hypothesis strongly supported by the successful visual retest:** The schedule's `.church-editorial__copy` was a nested `overflow-y:auto` scrolling element with `pointer-events:auto`. When revealed at `vh >= 1.72`, wheel gestures over the right pane were consumed by its own scroll container rather than moving the outer sticky-scene scroll position. This looked like a frozen SVG door even though the door was scroll-position driven. The issue was a **scroll ownership / nested overflow handoff**, not proven to be an SVG repaint bottleneck.
+
+**Fix:** In `static/css/p2-living-water.css`, scope the schedule to `pointer-events:none;overflow-y:hidden` until `.showcase[data-p2-phase="church"]`. Only once the door reaches the complete church phase enable `pointer-events:auto;overflow-y:auto;overscroll-behavior:auto`. Commit `3259de0`; stylesheet cache refresh `6d0bc97`.
+
+**Acceptance:** User explicitly confirmed “ok問題解決” after reviewing the live preview. Preserve this scroll-ownership rule and the V75 original geometry; do not reactivate speculative SVG geometry optimizations. The preceding diagnostic attempts included `428ee30` (unverified clipping optimization), rollback `c852e5c`, baseline restoration `6c46c64`, and cache refresh `12351d0`. Do not confuse these with the accepted fix.
+
+**Deferred:** SVG path-repaint profiling, reducing allocations and redundant SVG writes, and any further performance optimization are research backlog only. They are not prerequisites to this accepted scroll fix and must not be merged into this release without independent visual verification.
