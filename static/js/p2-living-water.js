@@ -15,7 +15,9 @@ function render(now=performance.now()){
  const visible=document.visibilityState==='visible'&&(embedded?active:rect.bottom>0&&rect.top<innerHeight);
  if(!visible)displayVh=target;
  // One clock paints the original V75 geometry and every shared SVG view.
- if(visible)window.wsP2Water?.paint(now);
+ // The dense SVG water field is hidden behind the opened right door.
+ // Skip repainting it once the door is fully open; keep geometry on scroll.
+ if(visible&&displayVh<2.37)window.wsP2Water?.paint(now);
  if(displayVh!==sceneVh||(visible&&displayVh>.65&&displayVh<1.6)){
   drawScene(displayVh,now);sceneVh=displayVh;
  }
