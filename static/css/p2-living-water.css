@@ -736,3 +736,36 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__co
     text-wrap:balance;
   }
 }
+
+/* P2 scene 02: MERSI-inspired continuous lateral mask handoff.
+   The left/right Church spread remains intact underneath; one scroll clock
+   reveals a three-column magazine spread, with opposing vertical panel motion. */
+body[data-ws-scope="p2"] .showcase{height:640svh}
+body[data-ws-scope="p2"] .p2-magazine{position:absolute;inset:0;z-index:65;visibility:hidden;overflow:hidden;pointer-events:none;background:var(--paper);clip-path:inset(0 100% 0 0);color:var(--ink)}
+body[data-ws-scope="p2"] .p2-magazine__grid{height:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+body[data-ws-scope="p2"] .p2-magazine__panel{min-width:0;min-height:0;overflow:hidden;padding:clamp(20px,3vw,56px);display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid currentColor;transform:translate3d(0,calc((1 - var(--magazine-reveal))*-13svh),0)}
+body[data-ws-scope="p2"] .p2-magazine__panel:nth-child(2){background:var(--ws-first-light,#d6c7a5);transform:translate3d(0,calc((1 - var(--magazine-reveal))*13svh),0)}
+body[data-ws-scope="p2"] .p2-magazine__panel:nth-child(3){transform:translate3d(0,calc((1 - var(--magazine-reveal))*-9svh),0);border-right:0}
+body[data-ws-scope="p2"] .p2-magazine__kicker{font:var(--ws-type-scale-meta) var(--ws-type-display-en);letter-spacing:.12em;text-transform:uppercase}
+body[data-ws-scope="p2"] .p2-magazine__title{font:400 clamp(56px,8vw,155px)/.85 var(--ws-type-display-en);letter-spacing:-.065em;margin:0;overflow-wrap:normal}
+body[data-ws-scope="p2"] .p2-magazine__title em{font-weight:400}
+body[data-ws-scope="p2"] .p2-magazine__cn{font-family:var(--ws-type-display-zh);font-size:clamp(24px,3.5vw,56px);font-weight:var(--ws-weight-zh-anchor)}
+body[data-ws-scope="p2"] .p2-magazine__lead{font:400 clamp(22px,3vw,48px)/1.3 var(--ws-type-display-zh);max-width:13ch}
+body[data-ws-scope="p2"] .p2-magazine__copy{font:var(--ws-type-scale-reading)/1.7 var(--ws-type-display-zh);max-width:26ch}
+body[data-ws-scope="p2"] .p2-magazine__link{color:inherit;font:var(--ws-type-scale-meta) var(--ws-type-display-en);letter-spacing:.08em;text-decoration:none;pointer-events:auto}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="magazine"] .p2-magazine{pointer-events:auto}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church-to-magazine"] .church-editorial__copy{pointer-events:none;overflow-y:hidden}
+@media(max-width:700px){
+ body[data-ws-scope="p2"] .p2-magazine__grid{grid-template-columns:42% 58%;grid-template-rows:55% 45%}
+ body[data-ws-scope="p2"] .p2-magazine__panel{padding:clamp(14px,4vw,24px)}
+ body[data-ws-scope="p2"] .p2-magazine__panel:first-child{grid-column:1;grid-row:1}
+ body[data-ws-scope="p2"] .p2-magazine__panel:nth-child(2){grid-column:2;grid-row:1 / 3}
+ body[data-ws-scope="p2"] .p2-magazine__panel:nth-child(3){grid-column:1;grid-row:2;border-top:1px solid currentColor}
+ body[data-ws-scope="p2"] .p2-magazine__title{font-size:clamp(38px,8vw,72px)}
+ body[data-ws-scope="p2"] .p2-magazine__cn{font-size:clamp(19px,5vw,34px)}
+ body[data-ws-scope="p2"] .p2-magazine__lead{font-size:clamp(18px,4.2vw,30px)}
+ body[data-ws-scope="p2"] .p2-magazine__copy{font-size:clamp(13px,3.2vw,17px)}
+}
+@media(prefers-reduced-motion:reduce){
+ body[data-ws-scope="p2"] .p2-magazine__panel{transform:none}
+}
