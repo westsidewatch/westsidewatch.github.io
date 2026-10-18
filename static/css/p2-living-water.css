@@ -452,3 +452,44 @@ body[data-ws-scope="p2"] .sunday-schedule .schedule-theme-scripture__ref{
     grid-column:2;grid-row:2;
   }
 }
+
+/* P2 editorial reading refinement: preserve validated horizontal alignment.
+   Improve hierarchy with type only, without moving the protected masthead. */
+body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row time{
+  font-size:clamp(14px,1.95cqi,17px);
+  font-variant-numeric:tabular-nums;
+  line-height:1.5;
+}
+body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row::before{
+  font-variant-numeric:tabular-nums;
+}
+body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row p{
+  font-size:clamp(15px,2.05cqi,18px);
+  line-height:1.55;
+  overflow-wrap:anywhere;
+}
+body[data-ws-scope="p2"] .sunday-schedule .worship-ministry,
+body[data-ws-scope="p2"] .sunday-schedule .worship-next,
+body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place{
+  font-size:clamp(14px,1.9cqi,17px);
+  line-height:1.6;
+}
+body[data-ws-scope="p2"] .sunday-schedule .schedule-theme-scripture p{
+  font-size:clamp(17px,2.35cqi,21px);
+  line-height:1.75;
+  text-wrap:pretty;
+}
+body[data-ws-scope="p2"] .sunday-schedule .schedule-theme-scripture__ref{
+  font-size:clamp(13px,1.65cqi,16px);
+  line-height:1.55;
+}
+@container p2-paper (max-width:660px){
+  .sunday-schedule .worship-program .worship-row p{
+    font-size:clamp(13px,2.2cqi,16px);
+  }
+  .sunday-schedule .worship-ministry,
+  .sunday-schedule .worship-next,
+  .sunday-schedule .sunday-schedule__place{
+    font-size:clamp(13px,2.1cqi,16px);
+  }
+}
