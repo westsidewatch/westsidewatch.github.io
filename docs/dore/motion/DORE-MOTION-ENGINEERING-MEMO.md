@@ -1,6 +1,7 @@
 # Doré Motion — Engineering Memo / 多雷動態版畫工程備忘錄
 
 Status: LONG-TERM CORE R&D ASSET · PLANNED / INCREMENTAL DELIVERY
+Morning Star visual status (2026-10-19): **DESIGN REFINEMENT CLOSED — v5.3 VISUAL BASELINE FROZEN**; experimental rendering remains separate from official Magazine. See closure entry below.
 Recorded: 2026-10-15
 Repository: westsidewatch/westsidewatch.github.io
 Working branch: design/church-editorial-layout-preview-20261014
@@ -391,3 +392,15 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 - **程式提交**：`ed23151c75e097b7cae2184d704fb17885b9db42`、`ec9418873379934e45a66fda400442dd06b8fd8a`；僅修改 `static/experiments/morning-star-3d-lab.html`。
 - **未完成／不得宣稱**：尚未取得 v5.3 0°、45°、60°、90° 在紙白及午夜藍背景的實際瀏覽器 WebGL 畫面，透明面更改可能影響實際疊色；亦未以真實手機和 4K 螢幕實測摩爾紋。必須對照獲認可的 v5.2 截圖，特別檢查 60° 側面、邊界排序與透明琉璃感不被破壞，再決定是否封版。
 - **後續流程**：v5.3 視覺／旋轉驗收通過 → v5.4 僅整理可重用模型與星光資產、載入及回退方案 → Magazine 星光微刻線底紋 → P2 Magazine 頁面。實驗未驗收前不替換 Magazine 正式資產；Design OS 仍是全站唯一視覺權威。
+
+
+### 晨星 v5.3 視覺精修正式結案／設計基準封存（2026-10-19）
+
+**使用者決策：結束精修。** 停止 v5.4、v5.5……無目的的外觀迭代。已獲認可的晨星以 **v5.2 透明琉璃視覺 + v5.3 透明面排序／按需渲染穩定性** 作為唯一後續視覺與實作基準；不重建第二套晨星、不再用生成圖片代替 SVG／Three.js 資產工程。此處的「結案」是**視覺設計結案**，不是宣稱所有裝置、角度與效能測試都已完成，也不是正式 Magazine 頁面已上線。
+
+- **已獲認可的外觀**：八芒立體而輕盈的透明琉璃切面、香檳金雕版細線、240 條全方向直線放射光絲、星芒附著主光束、獨立星光反向繞世界 Y 軸旋轉；紙白與午夜藍兩套背景配色；不使用蒸汽弧、圓環、風車、木紋、厚重金屬塊。不得任意改變比例、切面透明度、星體配色、線條密度與旋轉方向。
+- **視覺證據／範圍**：使用者在 v5.2 雙背景截圖明確表示喜愛透明琉璃感；v5.3 的午夜藍約 40°、紙白約 30° 截圖表明該質感在已顯示角度基本保留，使用者隨後明確要求「結束精修」。不把這等同於 0–360° 全角度或真實手機／4K 的完整驗收。
+- **唯一可編輯來源**：`static/experiments/morning-star-3d-lab.html`（對外實驗預覽 `https://westsidewatch.github.io/experiments/morning-star-3d-lab.html`）。**視覺封存參照 commit**：`ec9418873379934e45a66fda400442dd06b8fd8a`，該提交包括 v5.3 的渲染穩定性修正；現有實驗頁不再因為「精修」而修改。Git 原始提交就是可回退的封存點，不另複製一套 Lab 或再造視覺管理系統。
+- **未聲稱已通過的項目**：完整 0°／45°／60°／90°／背面繞轉、透明面排序跨瀏覽器／WebGL 驗收、手機及 4K 細線摩爾紋、正式版性能與失敗回退。這些轉為**日後接入 Magazine 前的工程整合驗收**，若發現真實缺陷可做最小限度相容性修復；不得藉此重啟視覺設計。
+- **後續唯一順序**：晨星視覺結案 → 從已鎖定的星光幾何抽取 **Magazine 專屬微觀雕刻底紋**（與主星相關而非另做風車／鐘面紋）→ 規劃 P2 Magazine 三屏轉場與版面正式整合 → 在實際頁面完成測試／驗收後才替換正式資產。避免在本步驟提前修改 P2 或 `static/images/westside-watch-morning-star.svg`；現有 Church 水流、開門及七版塊動線繼續受保護。
+- **權威範圍**：本檔是 Doré Motion 工程記錄；`docs/design/WESTSIDE-DESIGN-OS.md` 仍是唯一全站視覺管理權威，`docs/MASTER_SITE_ARCHITECTURE.md` 仍為網站結構權威。晨星為已關閉的視覺子工程，不建立另一套 Design OS。
