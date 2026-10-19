@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morning Star — 3D Geometry Lab</title><style>
 *{box-sizing:border-box}body{margin:0;background:#eee9df;color:#28344a;font-family:Georgia,serif}.page{max-width:1260px;margin:auto;padding:42px 24px 30px;overflow:hidden}h1{font-weight:400;font-size:clamp(34px,6vw,74px);margin:8px 0}p{line-height:1.6}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.stage{position:relative;min-height:570px;background:#142b43;overflow:hidden}.stage canvas{display:block;width:100%;height:100%}.panel{padding:20px;background:#faf6ee;border:1px solid #c9bfae}.panel label{display:block;margin:16px 0 6px}.panel button,.panel select{padding:9px 12px;background:#fff;border:1px solid #a6a092;color:#243348;cursor:pointer}.panel button{margin:4px 4px 4px 0}.panel input{width:100%}.note{font-size:13px;color:#5b5f63}.status{position:absolute;bottom:15px;left:18px;color:#e7d4a7;font-size:12px;letter-spacing:.1em}a{color:inherit}@media(max-width:760px){.page{padding:calc(34px + env(safe-area-inset-top,0px)) 18px 30px}.page h1{font-size:clamp(30px,8vw,48px);line-height:1.08;overflow-wrap:anywhere}.layout{grid-template-columns:1fr}.stage{min-height:390px}.panel{padding:18px}.status{font-size:9px;letter-spacing:.03em}}
-</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V4.8</p><h1>Morning Star <em>— solid geometry</em></h1><p>保留 v4.7 已確立的八芒與獨立直線放射光場，進一步降低厚重徽章感：縮小中心凸飾、減薄星體側面、淡化大面積填色，以高亮細刻線構成透光的星芒；仍保留 Y 軸反向旋轉。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
+</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V4.9</p><h1>Morning Star <em>— solid geometry</em></h1><p>v4.9 對紙白與午夜藍背景分別校準星體材質和雕刻線對比：紙白用更清楚的暖金輪廓與細刻線，午夜藍保留明亮星光。星體厚度、八芒形狀與 Y 軸反向旋轉不變。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 const stage=document.getElementById('stage'),status=document.getElementById('status');
@@ -229,6 +229,18 @@ for(let i=0;i<144;i++){
  const ray=new THREE.Line(g,material);lightField.add(ray);filaments.push(ray);
 }
 function tuneLight(paper){
+ // V4.9: background-specific relief contrast; do not darken the night treatment.
+ gold.color.setHex(paper?0xd6b36f:0xf0dca3);
+ bevelGold.color.setHex(paper?0xe3c487:0xffedc0);
+ darkGold.color.setHex(paper?0xb99353:0xe3c98e);
+ ringMetal.color.setHex(paper?0xd0ad6b:0xe8c98b);
+ pearlMetal.color.setHex(paper?0x8f6a34:0xa98345);
+ ink.color.setHex(paper?0x9c6b2e:0xffedbe);ink.opacity=paper?.68:.55;
+ etchDark.color.setHex(paper?0x91632c:0xb38b51);etchDark.opacity=paper?.40:.19;
+ facetEtch.color.setHex(paper?0x97692e:0xe2bb77);facetEtch.opacity=paper?.46:.23;
+ facetGlint.color.setHex(paper?0xfff2cb:0xfff9e6);facetGlint.opacity=paper?.85:.82;
+ crossEtch.color.setHex(paper?0x986b36:0xd8b47c);crossEtch.opacity=paper?.33:.20;
+ stippleInk.color.setHex(paper?0x9e713c:0xffebbb);stippleInk.opacity=paper?.68:.65;
  const tune=(mats,color,base,mode)=>{
   mats.forEach((m,k)=>{
    m.color.setHex(color);m.blending=mode;
@@ -236,10 +248,10 @@ function tuneLight(paper){
    m.needsUpdate=true;
   });
  };
- tune(rayMats,paper?0x815020:0xffe3a8,paper?.86:.91,paper?THREE.NormalBlending:THREE.AdditiveBlending);
+ tune(rayMats,paper?0x80501f:0xffe3a8,paper?.96:.91,paper?THREE.NormalBlending:THREE.AdditiveBlending);
  tune(haloMats,paper?0xa66c33:0xf6c883,paper?.29:.30,paper?THREE.NormalBlending:THREE.AdditiveBlending);
- tune(ambientMats,paper?0x93612d:0xf7dba8,paper?.11:.14,paper?THREE.NormalBlending:THREE.AdditiveBlending);
- filamentMats.forEach((m,i)=>{m.color.setHex(paper?0x946126:0xffdf96);m.opacity=(paper?.26:.40)*(i%9===0?1.55:i%4===0?1.15:.65);m.blending=paper?THREE.NormalBlending:THREE.AdditiveBlending;m.needsUpdate=true;});
+ tune(ambientMats,paper?0x825326:0xf7dba8,paper?.18:.14,paper?THREE.NormalBlending:THREE.AdditiveBlending);
+ filamentMats.forEach((m,i)=>{m.color.setHex(paper?0x805023:0xffdf96);m.opacity=(paper?.43:.40)*(i%9===0?1.55:i%4===0?1.15:.65);m.blending=paper?THREE.NormalBlending:THREE.AdditiveBlending;m.needsUpdate=true;});
 }
 let current=32,playing=false,showBeams=true;const slider=document.getElementById('angle'),play=document.getElementById('play'),beams=document.getElementById('beams');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduced){play.disabled=true;play.title='系統已啟用降低動態效果';}
@@ -247,7 +259,7 @@ function updateAngle(deg){current=deg;slider.value=String((deg%360+360)%360);doc
 slider.addEventListener('input',()=>{playing=false;play.checked=false;updateAngle(Number(slider.value));});play.addEventListener('change',()=>playing=play.checked&&!reduced);beams.addEventListener('change',()=>{lightField.visible=beams.checked;attachedLight.visible=beams.checked;});
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{playing=false;play.checked=false;updateAngle(({front:0,three:45,side:90})[b.dataset.view]);}));
 document.getElementById('background').addEventListener('change',e=>(scene.background.set(e.target.value==='paper'?'#f4eddf':'#142b43'),tuneLight(e.target.value==='paper')));
-function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();tuneLight(document.getElementById('background').value==='paper');updateAngle(32);status.textContent='RELIEF GEOMETRY / LUMINOUS BURIN LINES / FINE RADIAL RAYS / V4.8';
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();tuneLight(document.getElementById('background').value==='paper');updateAngle(32);status.textContent='RELIEF GEOMETRY / DUAL-BACKGROUND CONTRAST / V4.9';
 let last=performance.now();function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(playing)updateAngle((current+dt*5)%360);renderer.render(scene,camera);requestAnimationFrame(tick);}requestAnimationFrame(tick);
 }catch(e){status.textContent='3D LOAD ERROR: '+e.message;console.error(e)}
 </script></body></html>
