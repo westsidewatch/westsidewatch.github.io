@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morning Star — 3D Geometry Lab</title><style>
 *{box-sizing:border-box}body{margin:0;background:#eee9df;color:#28344a;font-family:Georgia,serif}.page{max-width:1260px;margin:auto;padding:42px 24px 30px;overflow:hidden}h1{font-weight:400;font-size:clamp(34px,6vw,74px);margin:8px 0}p{line-height:1.6}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.stage{position:relative;min-height:570px;background:#142b43;overflow:hidden}.stage canvas{display:block;width:100%;height:100%}.panel{padding:20px;background:#faf6ee;border:1px solid #c9bfae}.panel label{display:block;margin:16px 0 6px}.panel button,.panel select{padding:9px 12px;background:#fff;border:1px solid #a6a092;color:#243348;cursor:pointer}.panel button{margin:4px 4px 4px 0}.panel input{width:100%}.note{font-size:13px;color:#5b5f63}.status{position:absolute;bottom:15px;left:18px;color:#e7d4a7;font-size:12px;letter-spacing:.1em}a{color:inherit}@media(max-width:760px){.page{padding:calc(34px + env(safe-area-inset-top,0px)) 18px 30px}.page h1{font-size:clamp(30px,8vw,48px);line-height:1.08;overflow-wrap:anywhere}.layout{grid-template-columns:1fr}.stage{min-height:390px}.panel{padding:18px}.status{font-size:9px;letter-spacing:.03em}}
-</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V4.5</p><h1>Morning Star <em>— solid geometry</em></h1><p>本輪保留八芒立體幾何與 Y 軸反向旋轉，將星光改為從每個尖端連續延伸、有實際寬度的漸隱光束，分別校準紙白與午夜藍背景；不使用蒸汽狀圓弧或脫離星體的鐘面刻度。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
+</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V4.6</p><h1>Morning Star <em>— solid geometry</em></h1><p>本輪減輕金屬塊面：以明亮的香檳金底色和高密度刻線取代深棕實心金屬感，縮小中央凸起視覺重量；背後增加獨立反向旋轉的密集直線光芒。白底與午夜藍分別校準，不使用圓弧。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 const stage=document.getElementById('stage'),status=document.getElementById('status');
@@ -13,9 +13,9 @@ const ambient=new THREE.AmbientLight(0xffd9a0,1.2);scene.add(ambient);
 const key=new THREE.DirectionalLight(0xfff0cc,4.2);key.position.set(-3,5,7);scene.add(key);
 const rim=new THREE.DirectionalLight(0x98b9ff,3);rim.position.set(4,-2,-5);scene.add(rim);
 const root=new THREE.Group();scene.add(root);const star=new THREE.Group(),lightField=new THREE.Group();root.add(lightField,star);
-const gold=new THREE.MeshStandardMaterial({color:0xc99b4c,metalness:.91,roughness:.26,side:THREE.DoubleSide});
-const bevelGold=new THREE.MeshStandardMaterial({color:0xf0c976,metalness:.88,roughness:.22,side:THREE.DoubleSide});
-const darkGold=new THREE.MeshStandardMaterial({color:0x8c5c23,metalness:.89,roughness:.31,side:THREE.DoubleSide});
+const gold=new THREE.MeshStandardMaterial({color:0xe8c980,metalness:.26,roughness:.82,side:THREE.DoubleSide});
+const bevelGold=new THREE.MeshStandardMaterial({color:0xf9e3a5,metalness:.22,roughness:.85,side:THREE.DoubleSide});
+const darkGold=new THREE.MeshStandardMaterial({color:0xc8a365,metalness:.24,roughness:.78,side:THREE.DoubleSide});
 const ink=new THREE.LineBasicMaterial({color:0xffe6aa,transparent:true,opacity:.67,depthWrite:false});
 const N=16,outer=[],inner=[];
 for(let i=0;i<N;i++){let a=-Math.PI/2+i*Math.PI/8;let r=i%2===0?(i%4===0?3.15:2.72):.83;outer.push([Math.cos(a)*r,Math.sin(a)*r]);inner.push([Math.cos(a)*r*.89,Math.sin(a)*r*.89]);}
@@ -58,8 +58,8 @@ for(const sign of [1,-1]){
   }
 }
 // Concentric relief rings and dotted ornamental punch marks; physically placed on both faces.
-const ringMetal=new THREE.MeshStandardMaterial({color:0xe8bb69,metalness:.87,roughness:.22,side:THREE.DoubleSide});
-const pearlMetal=new THREE.MeshStandardMaterial({color:0x6c451f,metalness:.8,roughness:.34});
+const ringMetal=new THREE.MeshStandardMaterial({color:0xe8c98b,metalness:.28,roughness:.78,side:THREE.DoubleSide});
+const pearlMetal=new THREE.MeshStandardMaterial({color:0xa98345,metalness:.28,roughness:.72});
 for(const sign of [1,-1]){
   for(const [radius,tube] of [[.31,.024],[.45,.013],[.59,.009]]){
     const ring=new THREE.Mesh(new THREE.TorusGeometry(radius,tube,7,96),ringMetal);
@@ -71,12 +71,12 @@ for(const sign of [1,-1]){
     dot.position.set(Math.cos(a)*r,Math.sin(a)*r,sign*.431);dot.scale.z=.48;star.add(dot);
   }
 }
-// V4.5: facet-following hairlines on each of the eight long rays.
+// V4.6: facet-following hairlines on each of the eight long rays.
 // Lines are slightly lifted from the metal surface and taper towards each tip.
 for(const sign of [1,-1])for(let i=0;i<N;i+=2){
   const a=-Math.PI/2+i*Math.PI/8,rayLength=Math.hypot(...outer[i]);
   const tangent=[-Math.sin(a),Math.cos(a)];
-  for(let lane=-9;lane<=9;lane++){
+  for(let lane=-17;lane<=17;lane++){
     const pts=[];
     for(let step=0;step<=46;step++){
       const t=.23+step/46*.66;
@@ -118,11 +118,11 @@ for(const sign of [1,-1])for(let i=0;i<N;i+=2){
           [center[0]+tangent[0]*spread,center[1]+tangent[1]*spread,z]],j%3===0?ink:etchDark);
   }
 }
-// V4.5: Surface-fitted engraving uses actual triangular face geometry,
+// V4.6: Surface-fitted engraving uses actual triangular face geometry,
 // not an approximate floating z plane. Barycentric interpolation stays on each
 // metal facet at all viewing angles; a tiny normal offset avoids z-fighting.
-const facetEtch=new THREE.LineBasicMaterial({color:0x754716,transparent:true,opacity:.44,depthWrite:false});
-const facetGlint=new THREE.LineBasicMaterial({color:0xf4d58e,transparent:true,opacity:.30,depthWrite:false});
+const facetEtch=new THREE.LineBasicMaterial({color:0x9a6d30,transparent:true,opacity:.74,depthWrite:false});
+const facetGlint=new THREE.LineBasicMaterial({color:0xfff0c3,transparent:true,opacity:.72,depthWrite:false});
 function engraveTriangles(flat,passes){
  for(let t=0;t<flat.length;t+=9){
   const A=new THREE.Vector3(flat[t],flat[t+1],flat[t+2]);
@@ -138,9 +138,9 @@ function engraveTriangles(flat,passes){
   }
  }
 }
-engraveTriangles(bevel,11);
-engraveTriangles(faces,8);
-engraveTriangles(walls,5);
+engraveTriangles(bevel,23);
+engraveTriangles(faces,18);
+engraveTriangles(walls,10);
 // Raised bosses project beyond the relief on both faces; old v3.2 bosses were partially buried.
 const boss=new THREE.Mesh(new THREE.SphereGeometry(.26,32,20),bevelGold);
 boss.scale.z=.40;boss.position.z=.47;star.add(boss);
@@ -151,12 +151,12 @@ for(const sign of [1,-1])for(let k=0;k<72;k++){
  const z=sign*.39;
  line([[Math.cos(a)*innerR,Math.sin(a)*innerR,z],[Math.cos(a)*outerR,Math.sin(a)*outerR,z]],k%4===0?ink:etchDark);
 }
-// V4.5: Two distinct motion layers. The metal-attached emission follows the star;
+// V4.6: Two distinct motion layers. The metal-attached emission follows the star;
 // a subdued independent field counter-rotates about the same world Y axis.
 // Do not describe the counter-rotating layer as a continuation of engraved grooves.
-// V4.5: Each beam is anchored inside a metal point, with fine filaments
+// V4.6: Each beam is anchored inside a metal point, with fine filaments
 // tapering continuously outward. It rotates with the solid star, not the field.
-// V4.5: Actual tapered luminous surfaces rather than subpixel WebGL lines.
+// V4.6: Actual tapered luminous surfaces rather than subpixel WebGL lines.
 // Each ray has a slender triangular core and a broader translucent shoulder.
 // Geometry starts at the metal tip and fades in ten strips, avoiding detached ticks.
 const attachedLight=new THREE.Group();star.add(attachedLight);
@@ -187,7 +187,23 @@ const ambientMats=Array.from({length:12},()=>new THREE.MeshBasicMaterial({
 }));
 for(let arm=0;arm<8;arm++){
  const a=-Math.PI/2+arm*Math.PI/4;
- ribbon(lightField,a,2.30,4.03,.014,ambientMats,-.06);
+ ribbon(lightField,a,1.18,4.18,.009,ambientMats,-.06);
+}
+// V4.6 engraved radiance: many fine, irregular, straight rays with no arcs.
+// Different radial lengths, offsets and depths avoid a clock or steam pattern.
+const filaments=[],filamentMats=[];
+for(let i=0;i<144;i++){
+ const angle=i*Math.PI*2/144 + .013*Math.sin(i*2.399963229728653);
+ const inner=0.74+(i%11)*.037;
+ const outer=2.60+(i%13)*.115+(i%7===0?.72:0);
+ const depth=-.13+(i%5)*.018;
+ const material=new THREE.LineBasicMaterial({color:0xffe4a3,transparent:true,opacity:.3,depthWrite:false});
+ filamentMats.push(material);
+ const g=new THREE.BufferGeometry().setFromPoints([
+  new THREE.Vector3(Math.cos(angle)*inner,Math.sin(angle)*inner,depth),
+  new THREE.Vector3(Math.cos(angle)*outer,Math.sin(angle)*outer,depth)
+ ]);
+ const ray=new THREE.Line(g,material);lightField.add(ray);filaments.push(ray);
 }
 function tuneLight(paper){
  const tune=(mats,color,base,mode)=>{
@@ -199,7 +215,8 @@ function tuneLight(paper){
  };
  tune(rayMats,paper?0x815020:0xffe3a8,paper?.86:.91,paper?THREE.NormalBlending:THREE.AdditiveBlending);
  tune(haloMats,paper?0xa66c33:0xf6c883,paper?.29:.30,paper?THREE.NormalBlending:THREE.AdditiveBlending);
- tune(ambientMats,paper?0x93612d:0xf7dba8,paper?.16:.22,paper?THREE.NormalBlending:THREE.AdditiveBlending);
+ tune(ambientMats,paper?0x93612d:0xf7dba8,paper?.11:.14,paper?THREE.NormalBlending:THREE.AdditiveBlending);
+ filamentMats.forEach((m,i)=>{m.color.setHex(paper?0x946126:0xffdf96);m.opacity=(paper?.26:.40)*(i%9===0?1.55:i%4===0?1.15:.65);m.blending=paper?THREE.NormalBlending:THREE.AdditiveBlending;m.needsUpdate=true;});
 }
 let current=32,playing=false,showBeams=true;const slider=document.getElementById('angle'),play=document.getElementById('play'),beams=document.getElementById('beams');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduced){play.disabled=true;play.title='系統已啟用降低動態效果';}
@@ -207,7 +224,7 @@ function updateAngle(deg){current=deg;slider.value=String((deg%360+360)%360);doc
 slider.addEventListener('input',()=>{playing=false;play.checked=false;updateAngle(Number(slider.value));});play.addEventListener('change',()=>playing=play.checked&&!reduced);beams.addEventListener('change',()=>{lightField.visible=beams.checked;attachedLight.visible=beams.checked;});
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{playing=false;play.checked=false;updateAngle(({front:0,three:45,side:90})[b.dataset.view]);}));
 document.getElementById('background').addEventListener('change',e=>(scene.background.set(e.target.value==='paper'?'#f4eddf':'#142b43'),tuneLight(e.target.value==='paper')));
-function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();tuneLight(document.getElementById('background').value==='paper');updateAngle(32);status.textContent='RELIEF GEOMETRY / TIP-ANCHORED TAPERED STARLIGHT / V4.5';
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();tuneLight(document.getElementById('background').value==='paper');updateAngle(32);status.textContent='RELIEF GEOMETRY / ENGRAVED LIGHT / FINE RADIAL RAYS / V4.6';
 let last=performance.now();function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(playing)updateAngle((current+dt*5)%360);renderer.render(scene,camera);requestAnimationFrame(tick);}requestAnimationFrame(tick);
 }catch(e){status.textContent='3D LOAD ERROR: '+e.message;console.error(e)}
 </script></body></html>
