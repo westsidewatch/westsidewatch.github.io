@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morning Star — 3D Geometry Lab</title><style>
 *{box-sizing:border-box}body{margin:0;background:#eee9df;color:#28344a;font-family:Georgia,serif}.page{max-width:1260px;margin:auto;padding:42px 24px 30px;overflow:hidden}h1{font-weight:400;font-size:clamp(34px,6vw,74px);margin:8px 0}p{line-height:1.6}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.stage{position:relative;min-height:570px;background:#142b43;overflow:hidden}.stage canvas{display:block;width:100%;height:100%}.panel{padding:20px;background:#faf6ee;border:1px solid #c9bfae}.panel label{display:block;margin:16px 0 6px}.panel button,.panel select{padding:9px 12px;background:#fff;border:1px solid #a6a092;color:#243348;cursor:pointer}.panel button{margin:4px 4px 4px 0}.panel input{width:100%}.note{font-size:13px;color:#5b5f63}.status{position:absolute;bottom:15px;left:18px;color:#e7d4a7;font-size:12px;letter-spacing:.1em}a{color:inherit}@media(max-width:760px){.page{padding:calc(34px + env(safe-area-inset-top,0px)) 18px 30px}.page h1{font-size:clamp(30px,8vw,48px);line-height:1.08;overflow-wrap:anywhere}.layout{grid-template-columns:1fr}.stage{min-height:390px}.panel{padding:18px}.status{font-size:9px;letter-spacing:.03em}}
-</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V5.2</p><h1>Morning Star <em>— solid geometry</em></h1><p>v5.2 針對正面星光分布與紙白辨識度：減少實心面，改以雕版刻線顯示明暗；獨立星光場均勻環繞八芒，紙白使用較深的香檳金刻線。八芒形狀及 Y 軸反向旋轉不變。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
+</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V5.3</p><h1>Morning Star <em>— solid geometry</em></h1><p>v5.3 鎖定 v5.2 已認可的透明琉璃材質與金色放射刻線；只處理透明面前後排序、側面穩定性，以及停止／離屏時的渲染效能。八芒、顏色、透明度及星光數量均不更改。可停止動畫檢查正面、45°、60°、側面。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 const stage=document.getElementById('stage'),status=document.getElementById('status');
@@ -36,8 +36,29 @@ for(let i=0;i<N;i++){const j=(i+1)%N;
   const a=[...outer[i],.048],b=[...outer[j],.048],c=[...outer[i],-.048],d=[...outer[j],-.048];
   tri(walls,a,b,c);tri(walls,b,d,c);
 }
-const facetVeil=new THREE.MeshStandardMaterial({color:0xf5e3b8,metalness:0,roughness:1,transparent:true,opacity:.42,side:THREE.DoubleSide,depthWrite:true});
-addMesh(faces,facetVeil);addMesh(bevel,facetVeil);addMesh(walls,darkGold);addMesh(ridge,facetVeil);
+// v5.3 keep v5.2 materials; render separate transparent front/back layers.
+const facetVeil=new THREE.MeshStandardMaterial({color:0xf5e3b8,metalness:0,roughness:1,transparent:true,opacity:.42,side:THREE.DoubleSide,depthWrite:false});
+const glassLayers={front:[],back:[]};
+function trianglesOnSide(vertices,sign){
+ const result=[];
+ for(let t=0;t<vertices.length;t+=9){
+  const z=vertices[t+2]+vertices[t+5]+vertices[t+8];
+  if(sign*z>0)result.push(...vertices.slice(t,t+9));
+ }
+ return result;
+}
+for(const source of [faces,bevel,ridge]){
+ for(const sign of [-1,1]){
+  const mesh=addMesh(trianglesOnSide(source,sign),facetVeil);
+  glassLayers[sign===1?'front':'back'].push(mesh);
+ }
+}
+addMesh(walls,darkGold);
+function orderGlass(angleRadians){
+ const nearFront=Math.cos(angleRadians)>=0;
+ for(const mesh of glassLayers.front)mesh.renderOrder=nearFront?-1:-2;
+ for(const mesh of glassLayers.back)mesh.renderOrder=nearFront?-2:-1;
+}
 function line(points,mat=ink,parent=star){const g=new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(...p)));parent.add(new THREE.Line(g,mat));}
 const etchDark=new THREE.LineBasicMaterial({color:0xcba767,transparent:true,opacity:.19,depthWrite:false});
 // V5.0: remove legacy approximate-depth rings and radial grooves.
@@ -196,13 +217,66 @@ function tuneLight(paper){
  tune(ambientMats,paper?0x825326:0xf7dba8,paper?.18:.14,paper?THREE.NormalBlending:THREE.AdditiveBlending);
  filamentMats.forEach((m,i)=>{m.color.setHex(paper?0x805023:0xffdf96);m.opacity=(paper?.51:.36)*(i%11===0?1.4:i%5===0?1.08:.66);m.blending=paper?THREE.NormalBlending:THREE.AdditiveBlending;m.needsUpdate=true;});
 }
-let current=32,playing=false,showBeams=true;const slider=document.getElementById('angle'),play=document.getElementById('play'),beams=document.getElementById('beams');
-const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduced){play.disabled=true;play.title='系統已啟用降低動態效果';}
-function updateAngle(deg){current=deg;slider.value=String((deg%360+360)%360);document.getElementById('degrees').textContent=Math.round(current)+'°';star.rotation.y=THREE.MathUtils.degToRad(current);lightField.rotation.y=THREE.MathUtils.degToRad(-current*.7);}
-slider.addEventListener('input',()=>{playing=false;play.checked=false;updateAngle(Number(slider.value));});play.addEventListener('change',()=>playing=play.checked&&!reduced);beams.addEventListener('change',()=>{lightField.visible=beams.checked;attachedLight.visible=beams.checked;primaryLight.visible=beams.checked;});
-document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{playing=false;play.checked=false;updateAngle(({front:0,three:45,side:90})[b.dataset.view]);}));
-document.getElementById('background').addEventListener('change',e=>(scene.background.set(e.target.value==='paper'?'#f4eddf':'#142b43'),tuneLight(e.target.value==='paper')));
-function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();tuneLight(document.getElementById('background').value==='paper');updateAngle(32);status.textContent='RELIEF GEOMETRY / RADIAL ENGRAVING / V5.2';
-let last=performance.now();function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(playing)updateAngle((current+dt*5)%360);renderer.render(scene,camera);requestAnimationFrame(tick);}requestAnimationFrame(tick);
+// v5.3 render only while animating or after a change; stop offscreen GPU use.
+let current=32,playing=false,frame=0,last=0,visible=!document.hidden,onScreen=true;
+const slider=document.getElementById('angle'),play=document.getElementById('play'),beams=document.getElementById('beams');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduced){play.disabled=true;play.title='系統已啟用降低動態效果';}
+function requestFrame(){if(!frame&&visible&&onScreen)frame=requestAnimationFrame(draw);}
+function updateAngle(deg,redraw=true){
+ current=((deg%360)+360)%360;
+ slider.value=String(current);
+ document.getElementById('degrees').textContent=Math.round(current)+'°';
+ const radians=THREE.MathUtils.degToRad(current);
+ star.rotation.y=radians;
+ lightField.rotation.y=-radians*.7;
+ orderGlass(radians);
+ if(redraw)requestFrame();
+}
+function draw(now){
+ frame=0;
+ if(!visible||!onScreen)return;
+ if(playing&&!reduced){
+  const dt=last?Math.min((now-last)/1000,.05):0;
+  last=now;updateAngle(current+dt*5,false);
+ }
+ renderer.render(scene,camera);
+ if(playing&&!reduced)requestFrame();
+}
+function setPlaying(value){playing=Boolean(value)&&!reduced;play.checked=playing;last=0;requestFrame();}
+slider.addEventListener('input',()=>{setPlaying(false);updateAngle(Number(slider.value));});
+play.addEventListener('change',()=>setPlaying(play.checked));
+beams.addEventListener('change',()=>{lightField.visible=beams.checked;attachedLight.visible=beams.checked;primaryLight.visible=beams.checked;requestFrame();});
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{setPlaying(false);updateAngle(({front:0,three:45,side:90})[b.dataset.view]);}));
+document.getElementById('background').addEventListener('change',e=>{
+ const paper=e.target.value==='paper';
+ scene.background.set(paper?'#f4eddf':'#142b43');
+ tuneLight(paper);requestFrame();
+});
+function resize(){
+ const w=stage.clientWidth,h=stage.clientHeight;
+ if(!w||!h)return;
+ camera.aspect=w/h;camera.updateProjectionMatrix();
+ renderer.setSize(w,h,false);requestFrame();
+}
+new ResizeObserver(resize).observe(stage);
+document.addEventListener('visibilitychange',()=>{visible=!document.hidden;last=0;if(visible)requestFrame();});
+if('IntersectionObserver' in window){
+ const observer=new IntersectionObserver(entries=>{
+  onScreen=entries[0]?.isIntersecting??true;last=0;
+  if(onScreen)requestFrame();
+ },{threshold:0});
+ observer.observe(stage);
+}
+const approvedStatus='RELIEF GEOMETRY / V5.2 VISUAL BASELINE / V5.3 STABILITY';
+renderer.domElement.addEventListener('webglcontextlost',e=>{
+ e.preventDefault();setPlaying(false);visible=false;
+ status.textContent='WEBGL CONTEXT LOST — WAITING FOR RESTORE';
+});
+renderer.domElement.addEventListener('webglcontextrestored',()=>{
+ visible=!document.hidden;last=0;status.textContent=approvedStatus;requestFrame();
+});
+tuneLight(document.getElementById('background').value==='paper');
+updateAngle(32,false);resize();status.textContent=approvedStatus;requestFrame();
 }catch(e){status.textContent='3D LOAD ERROR: '+e.message;console.error(e)}
 </script></body></html>
