@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morning Star — Magazine Engraving Field / Independent Lab v1</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+*{box-sizing:border-box}
+:root{color-scheme:light}
+body[data-ws-scope="journal"]{margin:0;background:#eee9df;color:#263244;font-family:var(--ws-type-display-zh,"Noto Sans TC",sans-serif)}
+.page{width:min(1380px,100%);margin:0 auto;padding:clamp(20px,3vw,52px)}
+.topline{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;border-bottom:1px solid #7b796c;padding-bottom:12px;font:12px/1.5 var(--ws-type-display-en,Georgia,serif);letter-spacing:.12em}
+h1{font:400 clamp(40px,6.3vw,92px)/.95 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.045em;margin:26px 0 10px}
+h1 em{font-weight:400}
+.explain{max-width:76ch;line-height:1.8;font-size:clamp(13px,1.1vw,17px);margin:0 0 26px}
+.labbar{display:flex;align-items:end;gap:18px;flex-wrap:wrap;margin:0 0 14px;padding:16px;border:1px solid #c2b9a8;background:#f6f1e8}
+.labbar label{display:flex;flex-direction:column;gap:8px;font-size:13px}
+.labbar select,.labbar input[type=range],.labbar button{font:inherit}
+.labbar select,.labbar button{border:1px solid #aa9e8a;background:#fffdf7;color:#263244;padding:9px 12px;border-radius:0;min-height:40px}
+.labbar button[aria-pressed=true]{background:#263244;color:#fffdf7}
+.labbar .buttons{display:flex;gap:4px;flex-wrap:wrap}
+.labbar .inlinecheck{display:flex;flex-direction:row;align-items:center;gap:8px;margin-bottom:10px}
+.labbar [type=range]{width:150px;accent-color:#996c32}
+.preview-outer{display:flex;justify-content:center}
+.sheet{--ink:#805023;--sheet-bg:#f4eddf;--field-alpha:.82;position:relative;overflow:hidden;width:100%;aspect-ratio:16/9;isolation:isolate;background:var(--sheet-bg);color:#243044;border:1px solid #c4b9a9}
+.sheet.night{--ink:#ffdf96;--sheet-bg:#142b43;color:#f6eee0;border-color:#496176}
+.field{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:var(--field-alpha);pointer-events:none;user-select:none}
+.reading{position:absolute;inset:0;display:grid;grid-template-columns:57% 43%;padding:clamp(22px,3.8vw,58px);pointer-events:none}
+.reading .left{align-self:center;max-width:640px}
+.eyebrow{font:12px var(--ws-type-display-en,Georgia,serif);letter-spacing:.17em;text-transform:uppercase}
+.reading h2{font:400 clamp(56px,9.5vw,150px)/.78 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.068em;margin:clamp(14px,3vw,35px) 0}
+.reading h2 em{display:block;font-weight:400;color:var(--ink);padding-left:.32em}
+.reading .lead{font-size:clamp(13px,1.4vw,23px);max-width:19ch;line-height:1.7}
+.reading .folio{align-self:end;grid-column:1/3;display:flex;align-items:center;justify-content:space-between;font:11px var(--ws-type-display-en,Georgia,serif);letter-spacing:.10em}
+.sheet.paper .reading h2{color:#263244}
+.sheet.night .reading h2{color:#f8f1e4}
+.sheet.raw .reading{display:none}
+.safe-guide{display:none;position:absolute;inset:15% 43% 14% 3%;border:1px dashed #b36e27;background:rgba(255,244,187,.12);pointer-events:none;z-index:4}
+.sheet.guides .safe-guide{display:block}
+.sheet.mobile{width:min(410px,100%);aspect-ratio:9/16}
+.sheet.mobile .field{object-position:94% center}
+.sheet.mobile .reading{display:block;padding:26px 20px}
+.sheet.mobile .reading .left{padding-top:12px}
+.sheet.mobile .reading h2{font-size:clamp(50px,16vw,90px);margin:36px 0}
+.sheet.mobile .reading .folio{position:absolute;bottom:22px;left:20px;right:20px}
+.sheet.mobile .reading .lead{max-width:16ch}
+.sheet.mobile .safe-guide{inset:4% 12% 48% 4%}
+.sheet.mobile:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--sheet-bg) 0%,transparent 48%);pointer-events:none;opacity:.20}
+.caption{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:9px;font:12px/1.7 var(--ws-type-display-en,Georgia,serif)}
+.asset-links{margin-top:18px;display:flex;flex-wrap:wrap;gap:12px 24px;font-size:13px}
+.asset-links a{color:inherit;text-underline-offset:3px}
+.note{border-top:1px solid #bbb1a0;margin-top:24px;padding-top:14px;line-height:1.75;font-size:13px}
+@media(max-width:700px){.page{padding:20px 14px}.sheet:not(.mobile){aspect-ratio:4/5}.sheet:not(.mobile) .field{object-position:86% center}.sheet:not(.mobile) .reading{padding:22px;display:block}.sheet:not(.mobile) .reading h2{font-size:clamp(50px,16vw,82px)}.sheet:not(.mobile) .reading .folio{position:absolute;bottom:18px;left:20px;right:20px}.labbar{gap:12px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style></head>
+<body data-ws-scope="journal">
+<main class="page">
+<header>
+ <div class="topline"><span>DORÉ MOTION / MAGAZINE / TEXTURE LAB — 01</span><span>STAR-SOURCED VECTOR / EXPERIMENT ONLY</span></div>
+ <h1>Morning Star — <em>engraving field</em></h1>
+ <p class="explain">以已封版的 v5.3 晨星為唯一來源：八條主星芒方向與 240 條光絲轉化為可裁切的純向量微觀雕刻底紋。近星區保留發光的方向，外圍逐漸成為安靜的編輯刻線。此為獨立驗收頁，未接入 P2 或正式 Magazine。</p>
+</header>
+<section class="labbar" aria-label="底紋檢視設定">
+ <label for="theme">紙色 / 夜藍
+  <select id="theme"><option value="paper">紙白 · Dawn paper</option><option value="night">午夜藍 · Night blue</option></select>
+ </label>
+ <label for="density">底紋顯示強度 <output id="amount" for="density">82%</output>
+  <input id="density" type="range" min="30" max="100" value="82" step="1">
+ </label>
+ <div class="buttons" role="group" aria-label="檢視比例"><button id="desktop" type="button" aria-pressed="true">Desktop 16:9</button><button id="mobile" type="button" aria-pressed="false">Mobile 9:16</button></div>
+ <label class="inlinecheck"><input id="raw" type="checkbox"> 僅看刻線</label>
+ <label class="inlinecheck"><input id="guides" type="checkbox"> 顯示文字安全區</label>
+</section>
+<section class="preview-outer" aria-label="Magazine 底紋實際 SVG 預覽">
+ <div class="sheet paper" id="sheet">
+  <img class="field" id="texture" src="/experiments/assets/magazine-starfield-engraving-paper-v1.svg" alt="" draggable="false">
+  <div class="safe-guide" aria-hidden="true"></div>
+  <div class="reading" aria-label="示意文字，只用於驗證標題可讀性">
+   <div class="left">
+    <span class="eyebrow">WESTSIDE WATCH / EDITORIAL STUDY</span>
+    <h2>Morning <em>Light.</em></h2>
+    <p class="lead">微光沿著晨星的刻線延伸，成為紙面與夜色之間的視覺秩序。</p>
+   </div>
+   <div class="folio"><span>ENGRAVED FROM THE MORNING STAR</span><span>02 / 07 — TEXTURE STUDY</span></div>
+  </div>
+ </div>
+</section>
+<div class="caption"><span id="captionTheme">PAPER / WARM BURIN INK / SOURCE v5.3</span><span>SVG 1600 × 900 · 240 RADIAL FILAMENTS · 8 PRINCIPAL AXES · NO ANIMATION</span></div>
+<nav class="asset-links" aria-label="原始素材">
+ <a href="/experiments/assets/magazine-starfield-engraving-paper-v1.svg" target="_blank" rel="noopener">紙白底紋 SVG ↗</a>
+ <a href="/experiments/assets/magazine-starfield-engraving-night-v1.svg" target="_blank" rel="noopener">午夜藍底紋 SVG ↗</a>
+ <a href="/experiments/morning-star-3d-lab.html" target="_blank" rel="noopener">封版晨星 v5.3 ↗</a>
+</nav>
+<p class="note">驗收邊界：本頁只評估刻線來源、局部裁切、紙白／夜藍對比及文字安全區；無自動旋轉、沒有新的時間軸。日後與 P2 整合時，近星光場仍由原 3D 模型負責；本底紋保持靜態，轉場必須由同一條 scroll progress 可逆控制。正式頁面與教會洋流資產目前完全不受影響。</p>
+</main>
+<script>
+(()=>{'use strict';
+ const sheet=document.getElementById('sheet'),img=document.getElementById('texture'),theme=document.getElementById('theme');
+ const range=document.getElementById('density'),amount=document.getElementById('amount');
+ const raw=document.getElementById('raw'),guides=document.getElementById('guides');
+ const desktop=document.getElementById('desktop'),mobile=document.getElementById('mobile');
+ const caption=document.getElementById('captionTheme');
+ const files={paper:'/experiments/assets/magazine-starfield-engraving-paper-v1.svg',night:'/experiments/assets/magazine-starfield-engraving-night-v1.svg'};
+ theme.addEventListener('change',()=>{
+  const night=theme.value==='night';
+  sheet.classList.toggle('night',night);sheet.classList.toggle('paper',!night);
+  img.src=files[theme.value];
+  caption.textContent=night?'MIDNIGHT BLUE / CHAMPAGNE BURIN LIGHT / SOURCE v5.3':'PAPER / WARM BURIN INK / SOURCE v5.3';
+ });
+ range.addEventListener('input',()=>{const v=Number(range.value);sheet.style.setProperty('--field-alpha',String(v/100));amount.textContent=v+'%';});
+ raw.addEventListener('change',()=>sheet.classList.toggle('raw',raw.checked));
+ guides.addEventListener('change',()=>sheet.classList.toggle('guides',guides.checked));
+ function viewport(isMobile){
+  sheet.classList.toggle('mobile',isMobile);
+  mobile.setAttribute('aria-pressed',String(isMobile));desktop.setAttribute('aria-pressed',String(!isMobile));
+ }
+ mobile.addEventListener('click',()=>viewport(true));
+ desktop.addEventListener('click',()=>viewport(false));
+ img.addEventListener('error',()=>{caption.textContent='SVG ASSET LOAD ERROR — CHECK THE TWO LINKS BELOW';});
+})();
+</script>
+</body></html>
