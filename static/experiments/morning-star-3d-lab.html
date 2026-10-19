@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morning Star — 3D Geometry Lab</title><style>
 *{box-sizing:border-box}body{margin:0;background:#eee9df;color:#28344a;font-family:Georgia,serif}.page{max-width:1260px;margin:auto;padding:42px 24px 30px;overflow:hidden}h1{font-weight:400;font-size:clamp(34px,6vw,74px);margin:8px 0}p{line-height:1.6}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.stage{position:relative;min-height:570px;background:#142b43;overflow:hidden}.stage canvas{display:block;width:100%;height:100%}.panel{padding:20px;background:#faf6ee;border:1px solid #c9bfae}.panel label{display:block;margin:16px 0 6px}.panel button,.panel select{padding:9px 12px;background:#fff;border:1px solid #a6a092;color:#243348;cursor:pointer}.panel button{margin:4px 4px 4px 0}.panel input{width:100%}.note{font-size:13px;color:#5b5f63}.status{position:absolute;bottom:15px;left:18px;color:#e7d4a7;font-size:12px;letter-spacing:.1em}a{color:inherit}@media(max-width:760px){.page{padding:calc(34px + env(safe-area-inset-top,0px)) 18px 30px}.page h1{font-size:clamp(30px,8vw,48px);line-height:1.08;overflow-wrap:anywhere}.layout{grid-template-columns:1fr}.stage{min-height:390px}.panel{padding:18px}.status{font-size:9px;letter-spacing:.03em}}
-</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V5.0</p><h1>Morning Star <em>— solid geometry</em></h1><p>v5.0 清理斜側面懸浮的舊刻線，只保留貼合真實三角切面的雕版排線；增加少量有層次的主光束，紙白與午夜藍分別調校。八芒形狀及 Y 軸反向旋轉不變。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
+</style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V5.1</p><h1>Morning Star <em>— solid geometry</em></h1><p>v5.1 針對 60° 斜側面的大塊實心切面：降低平面色塊對比，讓刻線密度依面積分配，並將中心裝飾收斂成輕薄刻線；保留 v5.0 星光層與雙背景校準。八芒形狀及 Y 軸反向旋轉不變。可停止動畫並查看正面、45°、側面。這是結構驗證，不是最終雕刻品質驗收。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 const stage=document.getElementById('stage'),status=document.getElementById('status');
@@ -13,9 +13,9 @@ const ambient=new THREE.AmbientLight(0xffd9a0,1.2);scene.add(ambient);
 const key=new THREE.DirectionalLight(0xfff0cc,4.2);key.position.set(-3,5,7);scene.add(key);
 const rim=new THREE.DirectionalLight(0x98b9ff,3);rim.position.set(4,-2,-5);scene.add(rim);
 const root=new THREE.Group();scene.add(root);const star=new THREE.Group(),lightField=new THREE.Group();root.add(lightField,star);
-const gold=new THREE.MeshStandardMaterial({color:0xf0dca3,metalness:.28,roughness:.64,side:THREE.DoubleSide});
-const bevelGold=new THREE.MeshStandardMaterial({color:0xffedc0,metalness:.26,roughness:.58,side:THREE.DoubleSide});
-const darkGold=new THREE.MeshStandardMaterial({color:0xe3c98e,metalness:.22,roughness:.68,side:THREE.DoubleSide});
+const gold=new THREE.MeshStandardMaterial({color:0xf0dca3,metalness:.08,roughness:.91,side:THREE.DoubleSide,flatShading:false});
+const bevelGold=new THREE.MeshStandardMaterial({color:0xffedc0,metalness:.08,roughness:.88,side:THREE.DoubleSide});
+const darkGold=new THREE.MeshStandardMaterial({color:0xe3c98e,metalness:.08,roughness:.90,side:THREE.DoubleSide});
 const ink=new THREE.LineBasicMaterial({color:0xffedbe,transparent:true,opacity:.55,depthWrite:false});
 const N=16,outer=[],inner=[];
 for(let i=0;i<N;i++){let a=-Math.PI/2+i*Math.PI/8;let r=i%2===0?(i%4===0?3.15:2.72):.83;outer.push([Math.cos(a)*r,Math.sin(a)*r]);inner.push([Math.cos(a)*r*.89,Math.sin(a)*r*.89]);}
@@ -24,7 +24,7 @@ const faces=[],bevel=[],walls=[],ridge=[];
 function tri(arr,a,b,c){arr.push(...a,...b,...c)}
 for(let i=0;i<N;i++){const j=(i+1)%N;
   for(const sign of [1,-1]){
-    const z=sign*.115,shoulder=sign*.055,crest=sign*.29;
+    const z=sign*.095,shoulder=sign*.048,crest=sign*.22;
     const a=[...inner[i],z],b=[...inner[j],z],tipA=[...outer[i],shoulder],tipB=[...outer[j],shoulder];
     // The relief peaks on radial ribs and slopes towards each bevel.
     tri(faces,[0,0,crest],a,b);
@@ -33,7 +33,7 @@ for(let i=0;i<N;i++){const j=(i+1)%N;
     const r1=[inner[j][0]*.54,inner[j][1]*.54,crest*.83];
     tri(ridge,[0,0,crest],r0,r1);
   }
-  const a=[...outer[i],.055],b=[...outer[j],.055],c=[...outer[i],-.055],d=[...outer[j],-.055];
+  const a=[...outer[i],.048],b=[...outer[j],.048],c=[...outer[i],-.048],d=[...outer[j],-.048];
   tri(walls,a,b,c);tri(walls,b,d,c);
 }
 addMesh(faces,gold);addMesh(bevel,bevelGold);addMesh(walls,darkGold);addMesh(ridge,bevelGold);
@@ -47,12 +47,12 @@ const pearlMetal=new THREE.MeshStandardMaterial({color:0xa98345,metalness:.28,ro
 for(const sign of [1,-1]){
   for(const [radius,tube] of [[.24,.011],[.37,.009],[.52,.006]]){
     const ring=new THREE.Mesh(new THREE.TorusGeometry(radius,tube,7,96),ringMetal);
-    ring.position.z=sign*(.29-radius*.08+.02);star.add(ring);
+    ring.position.z=sign*(.235-radius*.06+.015);star.add(ring);
   }
   const punchGeometry=new THREE.SphereGeometry(.021,8,6);
   for(let k=0;k<48;k++){const a=k/48*Math.PI*2,r=.50+(k%2)*.055;
     const dot=new THREE.Mesh(punchGeometry,k%4===0?ringMetal:pearlMetal);
-    dot.position.set(Math.cos(a)*r,Math.sin(a)*r,sign*.31);dot.scale.z=.48;star.add(dot);
+    dot.position.set(Math.cos(a)*r,Math.sin(a)*r,sign*.255);dot.scale.z=.30;star.add(dot);
   }
 }
 // V5.0: use only barycentric surface-fitted burin lines below.
@@ -72,7 +72,7 @@ function engraveTriangles(flat,passes){
   if(normal.z*(A.z+B.z+C.z)<0)normal.negate();
   const sample=(u,v)=>A.clone().multiplyScalar(1-u-v).addScaledVector(B,u).addScaledVector(C,v).addScaledVector(normal,.008);
   for(let lane=1;lane<=passes;lane++){
-   const u=lane/(passes+1),start=sample(u,.055*(1-u)),end=sample(u,.89*(1-u));
+   const u=lane/(passes+1),start=sample(u,.035*(1-u)),end=sample(u,.955*(1-u));
    line([start.toArray(),end.toArray()],lane%4===0?facetGlint:facetEtch);
   }
  }
@@ -99,14 +99,15 @@ function crossEngrave(flat){
  }
  if(dots.length){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(dots,3));star.add(new THREE.Points(g,stippleInk));}
 }
-engraveTriangles(bevel,36);
-engraveTriangles(faces,29);
-engraveTriangles(walls,7);
+engraveTriangles(bevel,64);
+engraveTriangles(faces,54);
+engraveTriangles(walls,12);
 crossEngrave(bevel);crossEngrave(faces);
+// Fine engraved edges soften broad solid facets at 60° without adding flat overlays.
 // Raised bosses project beyond the relief on both faces; old v3.2 bosses were partially buried.
 const boss=new THREE.Mesh(new THREE.SphereGeometry(.17,32,20),bevelGold);
-boss.scale.z=.24;boss.position.z=.325;star.add(boss);
-const backBoss=boss.clone();backBoss.position.z=-.325;star.add(backBoss);
+boss.scale.z=.15;boss.position.z=.252;star.add(boss);
+const backBoss=boss.clone();backBoss.position.z=-.252;star.add(backBoss);
 // V5.0: radial boss strokes formerly at fixed z are removed to prevent
 // intersections with the opposite relief face at oblique viewing angles.
 // V4.7: Two distinct motion layers. The metal-attached emission follows the star;
@@ -199,7 +200,7 @@ function updateAngle(deg){current=deg;slider.value=String((deg%360+360)%360);doc
 slider.addEventListener('input',()=>{playing=false;play.checked=false;updateAngle(Number(slider.value));});play.addEventListener('change',()=>playing=play.checked&&!reduced);beams.addEventListener('change',()=>{lightField.visible=beams.checked;attachedLight.visible=beams.checked;primaryLight.visible=beams.checked;});
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{playing=false;play.checked=false;updateAngle(({front:0,three:45,side:90})[b.dataset.view]);}));
 document.getElementById('background').addEventListener('change',e=>(scene.background.set(e.target.value==='paper'?'#f4eddf':'#142b43'),tuneLight(e.target.value==='paper')));
-function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();tuneLight(document.getElementById('background').value==='paper');updateAngle(32);status.textContent='RELIEF GEOMETRY / SURFACE OCCLUSION / PRIMARY RAYS / V5.0';
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}new ResizeObserver(resize).observe(stage);resize();tuneLight(document.getElementById('background').value==='paper');updateAngle(32);status.textContent='RELIEF GEOMETRY / FINE FACET ENGRAVING / V5.1';
 let last=performance.now();function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(playing)updateAngle((current+dt*5)%360);renderer.render(scene,camera);requestAnimationFrame(tick);}requestAnimationFrame(tick);
 }catch(e){status.textContent='3D LOAD ERROR: '+e.message;console.error(e)}
 </script></body></html>
