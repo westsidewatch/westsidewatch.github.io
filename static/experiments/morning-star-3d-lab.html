@@ -223,6 +223,7 @@ const slider=document.getElementById('angle'),play=document.getElementById('play
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(reduced){play.disabled=true;play.title='系統已啟用降低動態效果';}
 function requestFrame(){if(!frame&&visible&&onScreen)frame=requestAnimationFrame(draw);}
+function cancelPendingFrame(){if(frame){cancelAnimationFrame(frame);frame=0;}}
 function updateAngle(deg,redraw=true){
  current=((deg%360)+360)%360;
  slider.value=String(current);
@@ -260,17 +261,17 @@ function resize(){
  renderer.setSize(w,h,false);requestFrame();
 }
 new ResizeObserver(resize).observe(stage);
-document.addEventListener('visibilitychange',()=>{visible=!document.hidden;last=0;if(visible)requestFrame();});
+document.addEventListener('visibilitychange',()=>{visible=!document.hidden;last=0;if(!visible)cancelPendingFrame();else requestFrame();});
 if('IntersectionObserver' in window){
  const observer=new IntersectionObserver(entries=>{
   onScreen=entries[0]?.isIntersecting??true;last=0;
-  if(onScreen)requestFrame();
+  if(!onScreen)cancelPendingFrame();else requestFrame();
  },{threshold:0});
  observer.observe(stage);
 }
 const approvedStatus='RELIEF GEOMETRY / V5.2 VISUAL BASELINE / V5.3 STABILITY';
 renderer.domElement.addEventListener('webglcontextlost',e=>{
- e.preventDefault();setPlaying(false);visible=false;
+ e.preventDefault();setPlaying(false);visible=false;cancelPendingFrame();
  status.textContent='WEBGL CONTEXT LOST — WAITING FOR RESTORE';
 });
 renderer.domElement.addEventListener('webglcontextrestored',()=>{
