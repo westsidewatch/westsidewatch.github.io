@@ -2,6 +2,7 @@
 
 Status: LONG-TERM CORE R&D ASSET · PLANNED / INCREMENTAL DELIVERY
 Morning Star visual status (2026-10-19): **DESIGN REFINEMENT CLOSED — v5.3 VISUAL BASELINE FROZEN**; experimental rendering remains separate from official Magazine. See closure entry below.
+Magazine engraving field (2026-10-19): **FULL-BLEED SVG v2 / INDEPENDENT LAB READY FOR VISUAL REVIEW**; paper & midnight-blue; desktop & native portrait; P2 unchanged.
 Recorded: 2026-10-15
 Repository: westsidewatch/westsidewatch.github.io
 Working branch: design/church-editorial-layout-preview-20261014
@@ -86,7 +87,7 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 | 版塊 | 已討論方向 | 現階段決定 |
 | --- | --- | --- |
 | 01 教會 Church | 活水洋流、刻線、分水開門 | **現有洋流已建立，保護 V75 與驗收成果，不重做** |
-| 02 西望雜誌 Magazine | 金色八芒雕刻晨星、黎明與夜、目錄升起 | **晨星 v5.3 已視覺封版**；2026-10-19 已開始晨星同源 Magazine 純向量微刻線底紋 v1 Lab；未接入 P2 正式頁面 |
+| 02 西望雜誌 Magazine | 金色八芒雕刻晨星、黎明與夜、目錄升起 | **晨星 v5.3 已視覺封版**；Magazine 同源純向量微刻線底紋 v2 已改為**全底鋪滿**，提供桌面／手機及紙白／午夜藍獨立 Lab；尚未接入 P2 正式頁面 |
 | 03 Bible / Emmaus | 多雷聖經版畫、光線揭示 | SVG 微觀底紋物件未定案 |
 | 04 橄欖山 Olive Mountain | 十二講員雕刻肖像、橫向長廊 | SVG 微觀底紋物件未定案；保護十二講員既有海報 |
 | 05 黎明書局 Dawn Library | 書頁、紙張、雕刻線條 | SVG 微觀底紋物件未定案 |
@@ -427,3 +428,29 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 - **沒有宣稱**：GitHub Pages 已完成部署、Chrome/Firefox 或手機肉眼視覺驗收、摩爾紋測試、與 3D 晨星的正式疊接、三屏可逆 scroll 揭示、正式 Magazine 已上線。
 - **下一關**：取得真實 Lab 桌面／手機截圖，對比夜藍及紙白的線距、視覺深度、文字安全區與裁切；有具體問題才微調本底紋，不動封版晨星。驗收後再啟動 P2 Magazine 三屏轉場／內容接入；保護 Church V75 洋流、分水開門及現有頁面。
 - **相關提交**：生成器 `69024ea`；紙白 SVG `82f0d4f`；午夜藍 SVG `3368aa5`；Lab `84c7c9b`。
+
+
+## Magazine 晨星同源滿版微刻線底紋 v2 — 全底覆蓋工程（2026-10-19）
+
+**本次使用者確認：底紋必須鋪滿整個底。** v1 偏右側的放射束與左側接近透明的 `reading-safe` 遮罩不符合此要求。v2 的目標是**full-bleed，四邊四角與文字區均能看到雕刻線**；不再靠大塊透明挖空保護文字。早期 v1 資產保留作歷史對照，不接入正式頁面。
+
+### 生產形態與版塊責任
+- 這是已封版晨星 v5.3 星光的**靜態衍生底紋**，不是另一顆可旋轉晨星。沿用原型的 240 條光絲角度律 `i*2π/240 + .009*sin(i*2.399963229728653)`、原本的半徑／長度律，以及八條主光軸 `-π/2 + arm*π/4`，插值擴展成 **960 條從近星區射至畫幅邊界以外的全域光絲**。另有 **240 條低明度中央續接線**，避免中心留下空圓孔；原始 240 條主光絲仍獨立存在。
+- 微雕層以同源方向場在整頁網格中生成細短雕刀刻線，**桌面每幅 4,040 條、手機每幅 3,880 條**。八組主星芒方向保留局部定向強光，配合細小墨點刻印；全程線性放射，**沒有蒸汽弧、鐘面環、風車、第二顆星或全幅平均刷毛**。
+- 去除 v1 SVG 的 `text-safe-fade` 左側漸隱遮罩與 `reading-safe` mask；v2 SVG 全圖**無 mask、無嵌入點陣、無時間軸**。正式排版時，文字安全不靠擦掉底紋，而靠低對比的精細墨色與必要時**局部極淡的前景底色**處理；底紋本身必須連續存在。
+- 紙白採原晨星 `#805023` 系暖金銅雕線，午夜藍採 `#ffdf96` 系香檳金線；只作 scoped / immutable-art 顏色，不新增全局配色系統，不使用全站禁止的黑金主題。
+- **兩種比例各自生成向量**：Desktop SVG `1600×900`，Mobile SVG `900×1600`；手機不是裁切放大的桌面點陣圖。為移除端點空洞，主刻線延伸至各版畫幅以外再由 viewBox clip；純向量可以解析到不同像素密度。Lab 可切換真實素材、背景、強度、示意文字與安全區。
+
+### 唯一 v2 生成器與四款成品（與 v1 並存，不建立平行 OS）
+- `static/experiments/assets/magazine-starfield-engraving-v2.js`：唯一 deterministic pure-JS 生成器 `renderMagazineStarfield({theme,format})`；未引用其他套件，生成方式可重現。
+- `static/experiments/assets/magazine-starfield-engraving-paper-desktop-v2.svg`
+- `static/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg`
+- `static/experiments/assets/magazine-starfield-engraving-paper-mobile-v2.svg`
+- `static/experiments/assets/magazine-starfield-engraving-night-mobile-v2.svg`
+- **單一 Lab 入口仍然是** `static/experiments/magazine-starfield-engraving-lab.html`；無第二個重複 Lab。預覽網址 `https://westsidewatch.github.io/experiments/magazine-starfield-engraving-lab.html`。舊 v1 素材僅保留歷史對照。
+
+### 程式檢驗與下一階段
+- SVG 標籤結構有效，無 SVG mask、無 image/embedded bitmap、無 `NaN/Infinity/undefined`；四個 SVG 均包含 **240 原始光絲 + 960 延展光絲 + 240 低亮中央續接線**。紙白／午夜藍兩個版本的幾何完全相同，只替換刻線墨色。Lab JS 已通過純語法檢查。
+- 以 **16×9 格網**對桌面與手機版本各做幾何交集檢查：所有格均有至少一條全域主刻線，桌面格內最少 13 條、手機最少 11 條，四角均有覆蓋。這是**程式幾何覆蓋**，**不是實際螢幕像素可見度的保證**。
+- **待視覺驗收**：比較兩種背景的全畫幅密度、讀字干擾、端點線距、中央是否變成另一顆風車、低 DPI 的摩爾紋與手機裁切。只有遇到可觀察缺陷才微調 v2；不可改已封版的 v5.3 琉璃主星。
+- **現階段未更動** `static/experiments/morning-star-3d-lab.html`、`static/p2/living-water.html`、P2 CSS/JS 或正式 Magazine 3D／SVG 資產；**P2 三屏轉場與正式頁面仍須在此 Lab 視覺通過後另行整合驗收**。

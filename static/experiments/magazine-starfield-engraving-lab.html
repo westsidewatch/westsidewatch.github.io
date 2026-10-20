@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Morning Star — Magazine Engraving Field / Independent Lab v1</title>
+<title>Morning Star — Magazine Full-Bleed Engraving / Lab v2</title>
 <link rel="stylesheet" href="/css/westside-design-os.css">
 <style>
 *{box-sizing:border-box}
@@ -24,7 +24,7 @@ h1 em{font-weight:400}
 .sheet{--ink:#805023;--sheet-bg:#f4eddf;--field-alpha:.82;position:relative;overflow:hidden;width:100%;aspect-ratio:16/9;isolation:isolate;background:var(--sheet-bg);color:#243044;border:1px solid #c4b9a9}
 .sheet.night{--ink:#ffdf96;--sheet-bg:#142b43;color:#f6eee0;border-color:#496176}
 .field{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:var(--field-alpha);pointer-events:none;user-select:none}
-.reading{position:absolute;inset:0;display:grid;grid-template-columns:57% 43%;padding:clamp(22px,3.8vw,58px);pointer-events:none}
+.reading{position:absolute;inset:0;z-index:1;isolation:isolate;display:grid;grid-template-columns:57% 43%;padding:clamp(22px,3.8vw,58px);pointer-events:none}
 .reading .left{align-self:center;max-width:640px}
 .eyebrow{font:12px var(--ws-type-display-en,Georgia,serif);letter-spacing:.17em;text-transform:uppercase}
 .reading h2{font:400 clamp(56px,9.5vw,150px)/.78 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.068em;margin:clamp(14px,3vw,35px) 0}
@@ -37,27 +37,27 @@ h1 em{font-weight:400}
 .safe-guide{display:none;position:absolute;inset:15% 43% 14% 3%;border:1px dashed #b36e27;background:rgba(255,244,187,.12);pointer-events:none;z-index:4}
 .sheet.guides .safe-guide{display:block}
 .sheet.mobile{width:min(410px,100%);aspect-ratio:9/16}
-.sheet.mobile .field{object-position:94% center}
+.sheet.mobile .field{object-position:center}
 .sheet.mobile .reading{display:block;padding:26px 20px}
 .sheet.mobile .reading .left{padding-top:12px}
 .sheet.mobile .reading h2{font-size:clamp(50px,16vw,90px);margin:36px 0}
 .sheet.mobile .reading .folio{position:absolute;bottom:22px;left:20px;right:20px}
 .sheet.mobile .reading .lead{max-width:16ch}
 .sheet.mobile .safe-guide{inset:4% 12% 48% 4%}
-.sheet.mobile:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--sheet-bg) 0%,transparent 48%);pointer-events:none;opacity:.20}
+.reading:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--sheet-bg) 0%,transparent 78%);pointer-events:none;opacity:.12;z-index:-1}.reading>*{position:relative;z-index:1}.sheet.mobile .reading:before{background:linear-gradient(180deg,var(--sheet-bg),transparent 74%);opacity:.12}
 .caption{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:9px;font:12px/1.7 var(--ws-type-display-en,Georgia,serif)}
 .asset-links{margin-top:18px;display:flex;flex-wrap:wrap;gap:12px 24px;font-size:13px}
 .asset-links a{color:inherit;text-underline-offset:3px}
 .note{border-top:1px solid #bbb1a0;margin-top:24px;padding-top:14px;line-height:1.75;font-size:13px}
-@media(max-width:700px){.page{padding:20px 14px}.sheet:not(.mobile){aspect-ratio:4/5}.sheet:not(.mobile) .field{object-position:86% center}.sheet:not(.mobile) .reading{padding:22px;display:block}.sheet:not(.mobile) .reading h2{font-size:clamp(50px,16vw,82px)}.sheet:not(.mobile) .reading .folio{position:absolute;bottom:18px;left:20px;right:20px}.labbar{gap:12px}}
+@media(max-width:700px){.page{padding:20px 14px}.sheet:not(.mobile){aspect-ratio:16/9}.sheet:not(.mobile) .field{object-position:center}.sheet:not(.mobile) .reading{padding:22px;display:block}.sheet:not(.mobile) .reading h2{font-size:clamp(50px,16vw,82px)}.sheet:not(.mobile) .reading .folio{position:absolute;bottom:18px;left:20px;right:20px}.labbar{gap:12px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style></head>
 <body data-ws-scope="journal">
 <main class="page">
 <header>
- <div class="topline"><span>DORÉ MOTION / MAGAZINE / TEXTURE LAB — 01</span><span>STAR-SOURCED VECTOR / EXPERIMENT ONLY</span></div>
+ <div class="topline"><span>DORÉ MOTION / MAGAZINE / FULL-BLEED LAB — 02</span><span>STAR-SOURCED VECTOR / EXPERIMENT ONLY</span></div>
  <h1>Morning Star — <em>engraving field</em></h1>
- <p class="explain">以已封版的 v5.3 晨星為唯一來源：八條主星芒方向與 240 條光絲轉化為可裁切的純向量微觀雕刻底紋。近星區保留發光的方向，外圍逐漸成為安靜的編輯刻線。此為獨立驗收頁，未接入 P2 或正式 Magazine。</p>
+ <p class="explain">由已封版晨星 v5.3 的八條主星芒與 240 條光絲出發，衍生 960 條跨越畫面四邊的精密放射刻線與滿版微雕排線。底紋完整覆蓋四角與文字區，沒有挖空遮罩；標題仍能透過低對比、輕微紙面底色保持清晰。這是獨立實驗頁，沒有接入 P2。</p>
 </header>
 <section class="labbar" aria-label="底紋檢視設定">
  <label for="theme">紙色 / 夜藍
@@ -71,8 +71,8 @@ h1 em{font-weight:400}
  <label class="inlinecheck"><input id="guides" type="checkbox"> 顯示文字安全區</label>
 </section>
 <section class="preview-outer" aria-label="Magazine 底紋實際 SVG 預覽">
- <div class="sheet paper" id="sheet">
-  <img class="field" id="texture" src="/experiments/assets/magazine-starfield-engraving-paper-v1.svg" alt="" draggable="false">
+ <div class="sheet paper" id="sheet" data-coverage="full-bleed">
+  <img class="field" id="texture" src="/experiments/assets/magazine-starfield-engraving-paper-desktop-v2.svg" alt="" draggable="false">
   <div class="safe-guide" aria-hidden="true"></div>
   <div class="reading" aria-label="示意文字，只用於驗證標題可讀性">
    <div class="left">
@@ -84,13 +84,13 @@ h1 em{font-weight:400}
   </div>
  </div>
 </section>
-<div class="caption"><span id="captionTheme">PAPER / WARM BURIN INK / SOURCE v5.3</span><span>SVG 1600 × 900 · 240 RADIAL FILAMENTS · 8 PRINCIPAL AXES · NO ANIMATION</span></div>
+<div class="caption"><span id="captionTheme">PAPER / WARM BURIN INK / SOURCE v5.3</span><span>DESKTOP 1600 × 900 / MOBILE 900 × 1600 · 960 FULL-EDGE LINES · 240 SOURCE RAYS · NO MASK</span></div>
 <nav class="asset-links" aria-label="原始素材">
- <a href="/experiments/assets/magazine-starfield-engraving-paper-v1.svg" target="_blank" rel="noopener">紙白底紋 SVG ↗</a>
- <a href="/experiments/assets/magazine-starfield-engraving-night-v1.svg" target="_blank" rel="noopener">午夜藍底紋 SVG ↗</a>
+ <a id="paperAsset" href="/experiments/assets/magazine-starfield-engraving-paper-desktop-v2.svg" target="_blank" rel="noopener">紙白 SVG ↗</a>
+ <a id="nightAsset" href="/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg" target="_blank" rel="noopener">午夜藍 SVG ↗</a>
  <a href="/experiments/morning-star-3d-lab.html" target="_blank" rel="noopener">封版晨星 v5.3 ↗</a>
 </nav>
-<p class="note">驗收邊界：本頁只評估刻線來源、局部裁切、紙白／夜藍對比及文字安全區；無自動旋轉、沒有新的時間軸。日後與 P2 整合時，近星光場仍由原 3D 模型負責；本底紋保持靜態，轉場必須由同一條 scroll progress 可逆控制。正式頁面與教會洋流資產目前完全不受影響。</p>
+<p class="note">驗收邊界：本頁檢查整面與四角覆蓋、紙白／夜藍對比、文字安全區、16:9 與獨立 9:16 向量素材。文字區保留真實底紋，沒有透明挖空；只透過微弱的排版前景底色維持可讀性。近星區仍由封版 3D 晨星負責；未來 P2 的轉場需遵守同一 scroll progress。這不是正式 Magazine 頁面，亦未觸及 Church 洋流。</p>
 </main>
 <script>
 (()=>{'use strict';
@@ -99,22 +99,26 @@ h1 em{font-weight:400}
  const raw=document.getElementById('raw'),guides=document.getElementById('guides');
  const desktop=document.getElementById('desktop'),mobile=document.getElementById('mobile');
  const caption=document.getElementById('captionTheme');
- const files={paper:'/experiments/assets/magazine-starfield-engraving-paper-v1.svg',night:'/experiments/assets/magazine-starfield-engraving-night-v1.svg'};
- theme.addEventListener('change',()=>{
-  const night=theme.value==='night';
+ const asset=(t,m)=>'/experiments/assets/magazine-starfield-engraving-'+t+'-'+m+'-v2.svg';
+ let mode='desktop';
+ const paperAsset=document.getElementById('paperAsset'),nightAsset=document.getElementById('nightAsset');
+ function redraw(){
+  const t=theme.value;const night=t==='night';
   sheet.classList.toggle('night',night);sheet.classList.toggle('paper',!night);
-  img.src=files[theme.value];
-  caption.textContent=night?'MIDNIGHT BLUE / CHAMPAGNE BURIN LIGHT / SOURCE v5.3':'PAPER / WARM BURIN INK / SOURCE v5.3';
- });
+  sheet.classList.toggle('mobile',mode==='mobile');
+  img.src=asset(t,mode);
+  paperAsset.href=asset('paper',mode);nightAsset.href=asset('night',mode);
+  caption.textContent=(night?'MIDNIGHT BLUE / CHAMPAGNE GOLD':'PAPER / WARM BURIN INK')+' / '+(mode==='mobile'?'PORTRAIT 900×1600':'DESKTOP 1600×900')+' / FULL BLEED · SOURCE v5.3';
+  mobile.setAttribute('aria-pressed',String(mode==='mobile'));
+  desktop.setAttribute('aria-pressed',String(mode==='desktop'));
+ }
+ theme.addEventListener('change',redraw);
  range.addEventListener('input',()=>{const v=Number(range.value);sheet.style.setProperty('--field-alpha',String(v/100));amount.textContent=v+'%';});
  raw.addEventListener('change',()=>sheet.classList.toggle('raw',raw.checked));
  guides.addEventListener('change',()=>sheet.classList.toggle('guides',guides.checked));
- function viewport(isMobile){
-  sheet.classList.toggle('mobile',isMobile);
-  mobile.setAttribute('aria-pressed',String(isMobile));desktop.setAttribute('aria-pressed',String(!isMobile));
- }
- mobile.addEventListener('click',()=>viewport(true));
- desktop.addEventListener('click',()=>viewport(false));
+ mobile.addEventListener('click',()=>{mode='mobile';redraw();});
+ desktop.addEventListener('click',()=>{mode='desktop';redraw();});
+ mode=matchMedia('(max-width:700px)').matches?'mobile':'desktop';redraw();
  img.addEventListener('error',()=>{caption.textContent='SVG ASSET LOAD ERROR — CHECK THE TWO LINKS BELOW';});
 })();
 </script>
