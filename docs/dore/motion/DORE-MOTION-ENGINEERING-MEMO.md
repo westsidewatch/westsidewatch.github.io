@@ -454,3 +454,24 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 - 以 **16×9 格網**對桌面與手機版本各做幾何交集檢查：所有格均有至少一條全域主刻線，桌面格內最少 13 條、手機最少 11 條，四角均有覆蓋。這是**程式幾何覆蓋**，**不是實際螢幕像素可見度的保證**。
 - **待視覺驗收**：比較兩種背景的全畫幅密度、讀字干擾、端點線距、中央是否變成另一顆風車、低 DPI 的摩爾紋與手機裁切。只有遇到可觀察缺陷才微調 v2；不可改已封版的 v5.3 琉璃主星。
 - **現階段未更動** `static/experiments/morning-star-3d-lab.html`、`static/p2/living-water.html`、P2 CSS/JS 或正式 Magazine 3D／SVG 資產；**P2 三屏轉場與正式頁面仍須在此 Lab 視覺通過後另行整合驗收**。
+
+
+## 2026-10-20｜Magazine 底紋暫停；P2 三屏轉場工程啟動
+
+**使用者決策：「星光底紋先停在這裡吧，有了晨星做特徵，第一步夠了。往下繼續工程吧。」** 這項新決策覆蓋前面「必須等底紋精修／視覺完全通過才能進入 P2」的舊排程；不是否決 v2 或刪除底紋研究。現有 `magazine-starfield-engraving-*-v2.svg` 四套滿版 SVG、生成器、Lab **保持可回溯，但停止 v3 構圖、線距和細節迭代**；**不把 v2 當成已獲品質驗收的正式底紋**，此次 P2 轉場不載入底紋，讓 v5.3 琉璃晨星作 Magazine 唯一主視覺特徵。
+
+### P2 Magazine：三屏連續轉場，獨立安全預覽模式（第 1 輪）
+
+按本備忘錄先前 2026-10-18「P2 Church → Magazine 三屏轉場定案」與 `docs/MASTER_SITE_ARCHITECTURE.md` 的單一 scroll authority 建立真實 P2 試驗，不更動既有正式 Church 動效：
+1. **左右兩半分開變色**：右半從頂部往下覆蓋午夜藍；左半從底部往上以 **7 層限於左半屏的黎明金色幕**錯峰填滿。此幕僅屬 Magazine 的左右轉化；不是重新執行首頁全屏 Sevenfold 入場。
+2. **雙門開啟**：完成變色後，左右色面隨主 scroll 進度分別向左右移開，露出**已存在的聖殿石紋 `temple-stone-light.png`**，逐步形成左黎明金／中石紋／右午夜藍的 editorial triptych。完整過程可逆，沒有獨立 CSS transition／定時器補幀。
+3. **晨星與目錄**：中央原 `jerusalem-wall.png` 放在石紋底部；從下升起的晨星直接透過已封版的 `morning-star-3d-lab.html?asset=1&autoplay=1` 顯示相同真實 Three.js v5.3 幾何，僅新增 opt-in 素材嵌入視圖，不複製第二份模型或修改封版幾何／材質。上升只跟 scroll 走；原 Y 軸輕微環境自轉屬獨立層，尊重 reduced motion。
+4. **中央編輯目錄**：使用 Master §2 的 **WATCH(4)／Selah／WALK(3)／Jonath-elem-rechokim／WITNESS(4)／Kinneret／WORSHIP(1)**：12 欄目＋3 間奏，不新增欄目、未核實獨立路由的不臆造個別 URL。只有已知的 `/journal/` 作正式入口。手機完成開門後是**全寬一欄閱讀目錄**，不擠成三欄。
+5. **實驗隔離**：正常 `/p2/living-water.html` 完全沿用目前 Church、既有 Magazine 過渡實作。**只有**加 `?magazineProof=1` 才載入新樣式與腳本；獨立 wrapper `/experiments/p2-magazine-transition-lab.html` 使用同源 iframe `?embed=1&magazineProof=1` 與原有 `westside-p2-scroll` 訊息，提供滾輪正反向捲動、四個節點跳轉與桌面／手機畫幅比較。不可在人工驗收前把這個 proof gate 移除或直接替換正式場景。
+
+### 實作索引／驗收邊界
+- 新檔 `static/css/p2-magazine-transition-proof.css`、`static/js/p2-magazine-transition-proof.js`、`static/experiments/p2-magazine-transition-lab.html`。
+- 必須最小量調整 `static/js/p2-living-water.js`（讀取 proof flag，仍由它輸出唯一 sceneVh 時鐘）與 `static/p2/living-water.html`（僅在 proof flag 載入新 CSS/JS）；`static/experiments/morning-star-3d-lab.html` 僅加入 `asset=1` 透明 canvas 模式。非 proof 入口不觸發任何新 CSS/JS 的 DOM 行為。
+- 已核實三項原始素材路徑皆存在：`static/images/temple-stone-light.png`、`static/images/jerusalem-wall.png` 和既有的 v5.3 Lab。保持原 Church 洋流 `p2-water-surface.js`、John 7:38、主日聚會內容不變，不把已移除的 Acts 4:12 帶回。
+- **部署前靜態驗收**：核對腳本語法、DOM 與 CSS 作用範圍、旗標關閉時 P2 舊邏輯逐字保留、七層反向揭露與 12+3 命名來源。**部署後待完成**：真實桌面／手機兩種背景畫面、0–100% scroll 連續性／反向、刻線紋理尺寸、星體嵌入（第三方 Three.js 網路依賴）、影片／WebGL 過載及 Church 視覺回歸。不得把程式碼完成誤報為截圖視覺驗收通過。
+- 只有完成上述 proof 視覺驗收之後，才規劃將三屏方案以一次有意義的整合提交進入正常 P2，而不再重新設計晨星／底紋。

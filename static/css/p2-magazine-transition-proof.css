@@ -1,0 +1,219 @@
+/* P2 Magazine triptych proof: opt-in only (?magazineProof=1).
+ * All choreography is assigned by the existing scroll clock. No CSS
+ * autoplay, independent timelines or changes to the protected Church V75.
+ */
+body[data-ws-scope="p2"] .showcase[data-magazine-proof="true"] .p2-magazine{
+  background:transparent;clip-path:none;color:var(--ws-ink,#263244);
+  isolation:isolate;pointer-events:none;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__spread{
+  position:absolute;inset:0;display:grid;
+  grid-template-columns:minmax(0,28fr) minmax(0,44fr) minmax(0,28fr);
+  opacity:0;overflow:hidden;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__dawn,
+.showcase[data-magazine-proof="true"] .mag-proof__night{
+  position:relative;min-width:0;min-height:0;display:flex;
+  flex-direction:column;justify-content:space-between;
+  padding:clamp(22px,2.8vw,52px);overflow:hidden;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__dawn{
+  color:var(--ws-ink,#243449);background:var(--ws-first-light,#dbc294);
+  border-right:1px solid rgba(52,55,58,.23);
+}
+.showcase[data-magazine-proof="true"] .mag-proof__night{
+  color:#f7f0df;background:#142b43;border-left:1px solid rgba(255,244,218,.25);
+}
+.showcase[data-magazine-proof="true"] .mag-proof__mast,
+.showcase[data-magazine-proof="true"] .mag-proof__eyebrow,
+.showcase[data-magazine-proof="true"] .mag-proof__folio{
+  font:400 clamp(10px,.73vw,13px)/1.5 var(--ws-type-display-en,Georgia,serif);
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__dawn-copy h2{
+  font:400 clamp(52px,6vw,126px)/.78 var(--ws-type-display-en,Georgia,serif);
+  letter-spacing:-.065em;margin:clamp(15px,2vh,26px) 0;
+  overflow-wrap:normal;word-break:normal;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__dawn-copy h2 em{
+  display:block;font-weight:400;white-space:nowrap;
+  font-size:.70em;letter-spacing:-.05em;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__dawn-copy p{
+  font:var(--ws-weight-zh-anchor,700) clamp(22px,3vw,43px)/1.22 var(--ws-type-display-zh,sans-serif);
+  margin:clamp(14px,2vh,25px) 0 0;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__night-title{
+  font:400 clamp(58px,6vw,130px)/.82 var(--ws-type-display-en,Georgia,serif);
+  letter-spacing:-.055em;margin:auto 0;overflow-wrap:normal;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__night-title em{
+  display:block;font-weight:400;color:#f5dbaa;font-size:.78em;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__night-footer{
+  display:grid;gap:clamp(12px,3svh,32px);
+  font:400 clamp(11px,.9vw,16px)/1.7 var(--ws-type-display-en,Georgia,serif);
+}
+.showcase[data-magazine-proof="true"] .mag-proof__night-footer p{
+  font:400 clamp(16px,1.6vw,23px)/1.75 var(--ws-type-display-zh,sans-serif);
+  max-width:15ch;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__stone{
+  position:relative;min-width:0;overflow:hidden;isolation:isolate;
+  background:#e5e0d5 url('/images/temple-stone-light.png') center/cover no-repeat;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__stone:before{
+  content:"";position:absolute;inset:0;z-index:0;
+  background:rgba(244,238,226,.56);pointer-events:none;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__stone-header{
+  position:absolute;top:clamp(14px,2.1svh,26px);left:5%;right:5%;
+  display:flex;justify-content:space-between;gap:12px;z-index:5;
+  border-bottom:1px solid rgba(57,55,48,.55);padding-bottom:8px;
+  font:400 clamp(10px,.75vw,13px)/1.5 var(--ws-type-display-en,Georgia,serif);
+  letter-spacing:.12em;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__star{
+  position:absolute;top:3svh;left:50%;width:clamp(190px,23vw,350px);
+  height:clamp(150px,25svh,280px);z-index:1;
+  margin-left:calc(clamp(190px,23vw,350px)/-2);opacity:0;
+  pointer-events:none;transform:translate3d(0,33svh,0);
+}
+.showcase[data-magazine-proof="true"] .mag-proof__star iframe{
+  display:block;width:100%;height:100%;border:0;pointer-events:none;background:transparent;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__catalog{
+  position:absolute;top:clamp(165px,25svh,240px);
+  bottom:clamp(55px,9svh,102px);left:6%;right:6%;
+  z-index:4;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:rgba(90,73,52,.45) transparent;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__catalog-kicker{
+  margin:0 0 5px;font:400 11px/1.4 var(--ws-type-display-en,Georgia,serif);
+  letter-spacing:.12em;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__catalog h2{
+  font:var(--ws-weight-zh-anchor,700) clamp(23px,2.5vw,42px)/1.1 var(--ws-type-display-zh,sans-serif);
+  margin:0 0 clamp(10px,1.5svh,20px);
+}
+.showcase[data-magazine-proof="true"] .mag-proof__catalog h2 em{
+  font:italic 400 .72em var(--ws-type-display-en,Georgia,serif);
+  color:#8d723e;margin-inline-start:.45em;
+}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:6px clamp(12px,1.8vw,30px);align-content:start;
+}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__movement h3{
+  font:400 clamp(15px,1.25vw,22px)/1.13 var(--ws-type-display-en,Georgia,serif);
+  margin:7px 0 4px;border-bottom:1px solid rgba(61,57,49,.35);padding-bottom:3px;
+  letter-spacing:.06em;
+}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__movement ol{
+  list-style:none;margin:0;padding:0;
+}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__movement li{
+  font:400 clamp(11px,.95vw,16px)/1.55 var(--ws-type-display-zh,sans-serif);
+  padding:2px 0;display:flex;align-items:baseline;flex-wrap:wrap;gap:3px 7px;
+}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__movement li i,
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__interlude i{
+  font:italic 400 .84em var(--ws-type-display-en,Georgia,serif);
+  letter-spacing:0;overflow-wrap:anywhere;
+}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__interlude{
+  color:#856b42;display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px;
+  padding:4px 0 6px;margin:0;border-bottom:1px solid rgba(82,70,53,.23);
+  font:400 clamp(10px,.87vw,14px)/1.4 var(--ws-type-display-zh,sans-serif);
+}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__movement:nth-of-type(1){grid-column:1;grid-row:1}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__interlude:nth-of-type(1){grid-column:1;grid-row:2}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__movement:nth-of-type(2){grid-column:1;grid-row:3}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__interlude:nth-of-type(2){grid-column:1;grid-row:4}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__movement:nth-of-type(3){grid-column:2;grid-row:1}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__interlude:nth-of-type(3){grid-column:2;grid-row:2}
+.showcase[data-magazine-proof="true"] .p2-magazine-toc__movement:nth-of-type(4){grid-column:2;grid-row:3}
+.showcase[data-magazine-proof="true"] .mag-proof__wall{
+  position:absolute;bottom:0;left:0;width:100%;height:clamp(65px,14svh,160px);
+  object-fit:cover;object-position:center bottom;opacity:.38;z-index:2;
+  mix-blend-mode:multiply;pointer-events:none;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__stone-foot{
+  position:absolute;bottom:0;left:4%;right:4%;z-index:6;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  min-height:clamp(31px,5svh,52px);padding-block:4px;
+  border-top:1px solid rgba(54,51,44,.55);
+  font:400 clamp(9px,.68vw,12px)/1.4 var(--ws-type-display-en,Georgia,serif);
+  letter-spacing:.075em;background:rgba(244,237,223,.77);
+}
+.showcase[data-magazine-proof="true"] .mag-proof__stone-foot a{
+  color:inherit;text-decoration:none;pointer-events:auto;white-space:nowrap;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__curtains{
+  position:absolute;inset:0;z-index:7;overflow:hidden;pointer-events:none;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__curtain{
+  position:absolute;top:0;bottom:0;width:50%;overflow:hidden;will-change:transform;
+}
+.showcase[data-magazine-proof="true"] .mag-proof__curtain--left{left:0}
+.showcase[data-magazine-proof="true"] .mag-proof__curtain--right{right:0;background:#142b43;clip-path:inset(0 0 100% 0)}
+.showcase[data-magazine-proof="true"] .mag-proof__gold{
+  position:absolute;inset:0;background:var(--gold);clip-path:inset(100% 0 0 0);
+}
+@media(max-width:900px){
+ .showcase[data-magazine-proof="true"] .mag-proof__spread{grid-template-columns:minmax(0,24fr) minmax(0,52fr) minmax(0,24fr)}
+ .showcase[data-magazine-proof="true"] .mag-proof__dawn,
+ .showcase[data-magazine-proof="true"] .mag-proof__night{padding:clamp(12px,2vw,24px)}
+ .showcase[data-magazine-proof="true"] .mag-proof__dawn-copy h2{font-size:clamp(30px,4.8vw,56px)}
+ .showcase[data-magazine-proof="true"] .mag-proof__night-title{font-size:clamp(30px,4.5vw,65px)}
+}
+@media(max-width:700px){
+ /* Preserve the half-screen door choreography, but make the finished TOC
+    a full-width reading surface rather than three compressed columns. */
+ .showcase[data-magazine-proof="true"] .mag-proof__spread{
+   grid-template-columns:1fr;grid-template-rows:1fr;
+ }
+ .showcase[data-magazine-proof="true"] .mag-proof__stone{
+   grid-column:1;grid-row:1;min-height:0;
+ }
+ .showcase[data-magazine-proof="true"] .mag-proof__dawn,
+ .showcase[data-magazine-proof="true"] .mag-proof__night{
+   position:absolute;z-index:4;width:100%;height:9svh;
+   padding:8px 18px;overflow:hidden;
+   opacity:calc(1 - var(--mag-proof-open,0));pointer-events:none;
+ }
+ .showcase[data-magazine-proof="true"] .mag-proof__dawn{top:0;left:0}
+ .showcase[data-magazine-proof="true"] .mag-proof__night{bottom:0;right:0}
+ .showcase[data-magazine-proof="true"] .mag-proof__dawn-copy,
+ .showcase[data-magazine-proof="true"] .mag-proof__night-title,
+ .showcase[data-magazine-proof="true"] .mag-proof__night-footer{display:none}
+ .showcase[data-magazine-proof="true"] .mag-proof__stone-header{
+   top:11px;font-size:10px;
+ }
+ .showcase[data-magazine-proof="true"] .mag-proof__star{
+   width:200px;height:170px;left:50%;margin-left:-100px;top:2svh;
+ }
+ .showcase[data-magazine-proof="true"] .mag-proof__catalog{
+   top:clamp(142px,23svh,215px);left:6%;right:6%;
+   bottom:clamp(42px,8svh,74px);overscroll-behavior:auto;
+ }
+ .showcase[data-magazine-proof="true"] .mag-proof__catalog h2{font-size:clamp(27px,7vw,36px)}
+ .showcase[data-magazine-proof="true"] .p2-magazine-toc{
+   grid-template-columns:1fr;gap:4px;
+ }
+ .showcase[data-magazine-proof="true"] .p2-magazine-toc__movement,
+ .showcase[data-magazine-proof="true"] .p2-magazine-toc__interlude{
+   grid-column:auto!important;grid-row:auto!important;
+ }
+ .showcase[data-magazine-proof="true"] .p2-magazine-toc__movement h3{font-size:20px}
+ .showcase[data-magazine-proof="true"] .p2-magazine-toc__movement li{font-size:clamp(13px,3.7vw,17px)}
+ .showcase[data-magazine-proof="true"] .p2-magazine-toc__interlude{font-size:13px}
+ .showcase[data-magazine-proof="true"] .mag-proof__wall{height:11svh;opacity:.28}
+ .showcase[data-magazine-proof="true"] .mag-proof__stone-foot{
+   left:3%;right:3%;font-size:9px;min-height:38px;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .showcase[data-magazine-proof="true"] .mag-proof__curtain,
+ .showcase[data-magazine-proof="true"] .mag-proof__star{will-change:auto}
+}

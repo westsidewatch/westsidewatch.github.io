@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>P2 Magazine — Three-Screen Handoff Lab</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+*{box-sizing:border-box}html{scroll-behavior:auto}
+body{margin:0;background:#efeae1;color:#263244;font-family:var(--ws-type-display-zh,sans-serif)}
+header{padding:clamp(16px,3vw,36px) clamp(16px,4vw,50px);border-bottom:1px solid #c8bdae}
+header .micro{font:12px var(--ws-type-display-en,Georgia,serif);letter-spacing:.12em}
+header h1{margin:12px 0 8px;font:400 clamp(31px,4.8vw,67px)/1 var(--ws-type-display-en,Georgia,serif)}
+header h1 em{font-weight:400}
+header p{max-width:90ch;line-height:1.65;margin:0;font-size:14px}
+.proof-track{height:580svh;position:relative}
+.proof-sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;background:#d4d5d1}
+.proof-frame{width:100%;height:100%;flex:none;box-shadow:0 0 0 1px #8a8b82;overflow:hidden;background:#ede9e0}
+.proof-frame iframe{display:block;width:100%;height:100%;border:0}
+body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
+.controller{position:fixed;z-index:10;top:clamp(10px,1.6vw,20px);left:50%;transform:translateX(-50%);width:min(1040px,calc(100% - 20px));background:rgba(244,239,230,.95);color:#263244;border:1px solid #b6aa97;box-shadow:0 8px 30px rgba(27,38,42,.15);padding:10px 12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.controller .heading{font:400 11px/1.4 var(--ws-type-display-en,Georgia,serif);letter-spacing:.06em}
+.controller .buttons{display:flex;flex-wrap:wrap;gap:4px}
+.controller button{font:12px var(--ws-type-display-zh,sans-serif);padding:8px 12px;border:1px solid #ada696;border-radius:0;background:transparent;color:inherit;cursor:pointer}
+.controller button[aria-pressed=true]{background:#243449;color:white}
+.controller .range{display:flex;gap:8px;align-items:center;flex:1 1 170px;min-width:160px;font-size:12px}
+.controller input[type=range]{flex:1;width:100%;accent-color:#a3864e}
+.controller output{font:400 12px var(--ws-type-display-en,Georgia,serif);min-width:33px;text-align:right}
+.controller .switcher{margin-left:auto}
+.controller .switcher button{min-width:67px}
+.notes{max-width:980px;padding:22px 26px 60px;margin:auto;font-size:14px;line-height:1.75}
+.notes h2{font:400 32px var(--ws-type-display-en,Georgia,serif)}
+.notes a{color:inherit;text-underline-offset:4px}
+@media(max-width:700px){.controller{top:4px;padding:8px;gap:7px}.controller .heading{display:none}.controller button{font-size:11px;padding:6px 8px}.controller .switcher{margin-left:0}.controller .range{flex:1 1 160px}.notes{padding:20px 18px 50px}}
+</style></head>
+<body data-ws-scope="p2"><header><div class="micro">WESTSIDE P2 / SCENE 02 / INDEPENDENT CHOREOGRAPHY LAB</div>
+<h1>Church <em>→</em> Magazine.</h1>
+<p>以現有 P2 Church 真實洋流和開門場景作前段，接入已定案的三屏分鏡：右午夜藍由上向下、左七層黎明金由下向上；雙扇色門分開，揭示中央聖殿石紋目錄，晨星從下升起。這是受保護的預覽模式，正常 P2 與主站尚未切換。</p></header>
+<div class="controller" role="group" aria-label="P2 Magazine 進度檢視">
+ <div class="heading">SCROLL-OWNED / REVERSIBLE</div>
+ <div class="buttons"><button type="button" data-progress=".705">教會</button><button type="button" data-progress=".793">左右變色</button><button type="button" data-progress=".874">雙門開啟</button><button type="button" data-progress=".984">目錄全開</button></div>
+ <label class="range">進度 <input type="range" min="0" max="100" step=".1" value="0" id="progress"><output id="percent" for="progress">0%</output></label>
+ <div class="buttons switcher"><button type="button" id="desktop" aria-pressed="true">桌面</button><button type="button" id="mobile" aria-pressed="false">手機</button></div>
+</div>
+<div class="proof-track" id="track">
+ <div class="proof-sticky"><div class="proof-frame"><iframe id="p2scene" title="P2 Church to Magazine three-screen interactive preview" src="/p2/living-water.html?embed=1&amp;magazineProof=1" loading="eager" scrolling="no"></iframe></div></div>
+</div>
+<footer class="notes">
+ <h2>Three-screen proof / 第一輪</h2>
+ <p>使用實際滾輪往下、往上可逐格倒放；也可以按四個階段按鈕，或拖動進度條。新鏡頭由主頁的單一 scroll progress 決定，停止即停止，反向即還原。晨星只使用受保護的 v5.3 模型，星光雕刻底紋 v2 暫停，不在此階段接入。</p>
+ <p>此頁專供分鏡、文字層級和手機全寬目錄驗收。正式雜誌、教會洋流及主站的既有路徑仍然維持原狀。<a href="/experiments/morning-star-3d-lab.html">查看封版晨星 ↗</a></p>
+</footer>
+<script>
+(()=>{'use strict';
+ const frame=document.getElementById('p2scene'),track=document.getElementById('track');
+ const range=document.getElementById('progress'),out=document.getElementById('percent');
+ const desktop=document.getElementById('desktop'),mobile=document.getElementById('mobile');
+ const clamp=n=>Math.max(0,Math.min(1,n));
+ let current=0,ready=false,raf=0;
+ function send(p){
+  current=clamp(p);range.value=String(current*100);
+  out.textContent=Math.round(current*100)+'%';
+  if(ready)frame.contentWindow?.postMessage({type:'westside-p2-scroll',progress:current,active:true},location.origin);
+ }
+ function scan(){raf=0;const start=track.getBoundingClientRect().top;
+  const distance=Math.max(1,track.offsetHeight-innerHeight);
+  send(clamp(-start/distance));
+ }
+ function schedule(){if(!raf)raf=requestAnimationFrame(scan)}
+ frame.addEventListener('load',()=>{ready=true;send(current);schedule()});
+ addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});
+ range.addEventListener('input',()=>{
+  const target=clamp(Number(range.value)/100);
+  const start=scrollY+track.getBoundingClientRect().top;
+  const distance=Math.max(1,track.offsetHeight-innerHeight);
+  scrollTo({top:start+target*distance,behavior:'instant'});send(target);
+ });
+ document.querySelectorAll('[data-progress]').forEach(btn=>btn.addEventListener('click',()=>{
+  const p=Number(btn.dataset.progress);const start=scrollY+track.getBoundingClientRect().top;
+  scrollTo({top:start+p*Math.max(1,track.offsetHeight-innerHeight),behavior:'instant'});send(p);
+ }));
+ function setMobile(value){
+  document.body.classList.toggle('mobile-proof',value);
+  desktop.setAttribute('aria-pressed',String(!value));mobile.setAttribute('aria-pressed',String(value));
+  // Keep the underlying scene progress identical after changing viewport.
+  send(current);
+ }
+ desktop.addEventListener('click',()=>setMobile(false));
+ mobile.addEventListener('click',()=>setMobile(true));
+ schedule();
+})();
+</script></body></html>

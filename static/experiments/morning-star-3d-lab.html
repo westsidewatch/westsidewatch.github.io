@@ -1,14 +1,26 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morning Star — 3D Geometry Lab</title><style>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morning Star — 3D Geometry Lab</title>
+<script>
+if(new URLSearchParams(location.search).get('asset')==='1')document.documentElement.classList.add('star-asset');
+</script><style>
 *{box-sizing:border-box}body{margin:0;background:#eee9df;color:#28344a;font-family:Georgia,serif}.page{max-width:1260px;margin:auto;padding:42px 24px 30px;overflow:hidden}h1{font-weight:400;font-size:clamp(34px,6vw,74px);margin:8px 0}p{line-height:1.6}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.stage{position:relative;min-height:570px;background:#142b43;overflow:hidden}.stage canvas{display:block;width:100%;height:100%}.panel{padding:20px;background:#faf6ee;border:1px solid #c9bfae}.panel label{display:block;margin:16px 0 6px}.panel button,.panel select{padding:9px 12px;background:#fff;border:1px solid #a6a092;color:#243348;cursor:pointer}.panel button{margin:4px 4px 4px 0}.panel input{width:100%}.note{font-size:13px;color:#5b5f63}.status{position:absolute;bottom:15px;left:18px;color:#e7d4a7;font-size:12px;letter-spacing:.1em}a{color:inherit}@media(max-width:760px){.page{padding:calc(34px + env(safe-area-inset-top,0px)) 18px 30px}.page h1{font-size:clamp(30px,8vw,48px);line-height:1.08;overflow-wrap:anywhere}.layout{grid-template-columns:1fr}.stage{min-height:390px}.panel{padding:18px}.status{font-size:9px;letter-spacing:.03em}}
+/* An opt-in embed view of the approved v5.3 mesh; ordinary Lab unchanged. */
+html.star-asset,html.star-asset body{height:100%;width:100%;overflow:hidden;background:transparent}
+html.star-asset .page{position:absolute;inset:0;max-width:none;margin:0;padding:0;overflow:hidden}
+html.star-asset .page>p,html.star-asset .page>h1,html.star-asset .panel{display:none!important}
+html.star-asset .layout{display:block;position:absolute;inset:0}
+html.star-asset .stage{position:absolute;inset:0;min-height:0;background:transparent}
+html.star-asset .status{display:none}
+html.star-asset .stage canvas{width:100%;height:100%}
 </style></head><body><main class="page"><p>DORÉ MOTION / INDEPENDENT 3D LAB / V5.3</p><h1>Morning Star <em>— solid geometry</em></h1><p>v5.3 鎖定 v5.2 已認可的透明琉璃材質與金色放射刻線；只處理透明面前後排序、側面穩定性，以及停止／離屏時的渲染效能。八芒、顏色、透明度及星光數量均不更改。可停止動畫檢查正面、45°、60°、側面。</p><div class="layout"><div class="stage" id="stage"><div class="status" id="status">INITIALIZING 3D GEOMETRY</div></div><aside class="panel"><strong>GEOMETRY INSPECTION</strong><div><button data-view="front">正面 0°</button><button data-view="three">斜面 45°</button><button data-view="side">側面 90°</button></div><label for="angle">手動旋轉角度 <span id="degrees">32°</span></label><input id="angle" type="range" min="0" max="360" value="32"><label><input id="play" type="checkbox"> 自動 Y 軸反向旋轉</label><label><input id="beams" type="checkbox" checked> 顯示獨立星光場</label><label for="background">背景</label><select id="background"><option value="night">午夜藍</option><option value="paper">紙白</option></select><p class="note">主星與星光場繞同一世界 Y 軸反向旋轉。模型包含前後面、倒角環與側面；不是 CSS 旋轉的 SVG 紙片。</p><p class="note">使用 Three.js 模組，若瀏覽器無 WebGL 或網路模組載入失敗，會顯示錯誤。</p></aside></div><p><a href="/experiments/morning-star-engraving-lab.html">舊 v2（否決案例）</a> · 本頁不影響 Magazine 正式資產。</p></main>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 const stage=document.getElementById('stage'),status=document.getElementById('status');
+const assetMode=document.documentElement.classList.contains('star-asset');
 try{
-const scene=new THREE.Scene();scene.background=new THREE.Color('#142b43');
+const scene=new THREE.Scene();scene.background=assetMode?null:new THREE.Color('#142b43');
 const camera=new THREE.PerspectiveCamera(33,1,.1,100);camera.position.set(0,0,12.8);camera.lookAt(0,0,0);
-const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.5;stage.prepend(renderer.domElement);
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:assetMode});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.5;stage.prepend(renderer.domElement);
 const ambient=new THREE.AmbientLight(0xffd9a0,1.2);scene.add(ambient);
 const key=new THREE.DirectionalLight(0xfff0cc,4.2);key.position.set(-3,5,7);scene.add(key);
 const rim=new THREE.DirectionalLight(0x98b9ff,3);rim.position.set(4,-2,-5);scene.add(rim);
@@ -251,7 +263,7 @@ beams.addEventListener('change',()=>{lightField.visible=beams.checked;attachedLi
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{setPlaying(false);updateAngle(({front:0,three:45,side:90})[b.dataset.view]);}));
 document.getElementById('background').addEventListener('change',e=>{
  const paper=e.target.value==='paper';
- scene.background.set(paper?'#f4eddf':'#142b43');
+ if(!assetMode)scene.background.set(paper?'#f4eddf':'#142b43');
  tuneLight(paper);requestFrame();
 });
 function resize(){
@@ -277,7 +289,9 @@ renderer.domElement.addEventListener('webglcontextlost',e=>{
 renderer.domElement.addEventListener('webglcontextrestored',()=>{
  visible=!document.hidden;last=0;status.textContent=approvedStatus;requestFrame();
 });
+if(assetMode)document.getElementById('background').value='paper';
 tuneLight(document.getElementById('background').value==='paper');
 updateAngle(32,false);resize();status.textContent=approvedStatus;requestFrame();
+if(assetMode&&new URLSearchParams(location.search).get('autoplay')==='1'&&!reduced)setPlaying(true);
 }catch(e){status.textContent='3D LOAD ERROR: '+e.message;console.error(e)}
 </script></body></html>
