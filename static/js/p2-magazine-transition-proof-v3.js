@@ -46,13 +46,21 @@ magazine.innerHTML=
    
    '<span class="mag3__left-edition" lang="en">A WATCHFUL EDITION / 02</span>'+
   '</aside>'+
-  '<main class="mag3__center" aria-label="西望雜誌正式目錄">'+
-   '<header class="mag3__center-top"><span lang="en">WESTSIDE WATCH / VOL.00</span><span lang="en">2026 — THE EDITION</span></header>'+
-   '<div class="mag3__brand"><img src="/images/westside-watch-masthead-landscape.svg" alt="LivingWater WestWatch 西望，官方雜誌 Logo SVG" loading="eager"></div>'+
-   '<h1 class="mag3__issue-title" lang="zh-Hant">守望，一座光明的城</h1>'+
-   '<div class="mag3__contents-heading"><span class="mag3__section-marker" lang="en">CONTENTS</span><span class="mag3__contents-count" lang="zh-Hant">四樂章 · 十二欄目</span></div>'+
-   '<div class="mag3__index" role="group" aria-label="四樂章、十二欄目、三間奏">'+contents+'</div>'+
-   '<footer class="mag3__center-bottom"><div><span lang="en">FOUR MOVEMENTS</span><span lang="en">12 COLUMNS / 03 INTERLUDES</span></div><a href="/journal/" lang="en">ENTER WESTWATCH ↗</a></footer>'+
+  '<main class="mag3__center" aria-label="西望 Vol.00：封面與正式目錄">'+
+   '<section class="mag3__cover-page" aria-label="Vol.00 封面">'+
+    '<header class="mag3__center-top"><span lang="en">WESTSIDE WATCH / VOL.00</span><span lang="en">2026 — THE EDITION</span></header>'+
+    '<div class="mag3__brand"><img src="/images/westside-watch-masthead-landscape.svg" alt="WESTSIDE WATCH 西望，正式雜誌 Logo SVG" loading="eager"></div>'+
+    '<span class="mag3__cover-edition" lang="en">A CITY OF LIGHT / SPECIAL EDITION</span>'+
+    '<div class="mag3__cover-identity"><span class="mag3__cover-number" lang="en" aria-hidden="true">00</span>'+
+     '<h1 class="mag3__issue-title" lang="zh-Hant">守望，<span>一座光明的城</span></h1></div>'+
+    '<div class="mag3__cover-stories"><span class="mag3__cover-stories-label" lang="en">IN THIS ISSUE</span>'+
+      '<p lang="zh-Hant">一萬年的建城禮<span aria-hidden="true"> / </span>城門口的人</p></div>'+
+   '</section>'+
+   '<section class="mag3__contents-page" aria-label="Vol.00 正式目錄">'+
+     '<div class="mag3__contents-heading"><span class="mag3__section-marker" lang="en">CONTENTS<span>.</span></span><span class="mag3__contents-count" lang="zh-Hant">四樂章 · 十二欄目 · 三間奏</span></div>'+
+     '<div class="mag3__index" role="group" aria-label="四樂章、十二欄目、三間奏">'+contents+'</div>'+
+     '<footer class="mag3__center-bottom"><span lang="en">VOL.00 / 2026</span><a href="/journal/" lang="en">ENTER WESTSIDE WATCH ↗</a></footer>'+
+   '</section>'+
   '</main>'+
   '<aside class="mag3__right" aria-label="黑夜與羅馬書經文">' +
    '<span class="mag3__night-edition" lang="en">ROMANS / XIII:12</span>'+
@@ -129,14 +137,14 @@ function render(vh){
  star.style.top=starY.toFixed(3)+'%';
  star.style.opacity=String(phase(p,[.44,.49])*mobileCover);
  star.style.setProperty('--mag3-star-size',mobile?'min(43vw,174px)':'clamp(220px,18vw,308px)');
- glyphLift.style.left=(12.5-11.5*door).toFixed(3)+'%';
- glyphLift.style.width=(25+door).toFixed(3)+'%';
- glyphLift.style.top=(starY+16).toFixed(3)+'svh';
+ glyphLift.style.left=(12.5-8.5*door).toFixed(3)+'%';
+ glyphLift.style.width=(25-5*door).toFixed(3)+'%';
+ glyphLift.style.top=(starY+19).toFixed(3)+'svh';
  glyphLift.style.transform='none';
  glyphLift.style.opacity=String(phase(p,[.44,.49])*mobileCover);
  // The verse is already composed at its FINAL width before the leaves open.
  // Translate its block with the right leaf; never rescale / reflow its type.
- quote.style.left=mobile?'52%':(61+12*door).toFixed(3)+'%';
+ quote.style.left=mobile?'52%':(60+13*door).toFixed(3)+'%';
  quote.style.width=mobile?'46%':'26%';
  quote.style.opacity=String(phase(p,[.10,.22])*mobileCover);
  wallFinal.style.opacity=String(phase(p,[.87,.99]));

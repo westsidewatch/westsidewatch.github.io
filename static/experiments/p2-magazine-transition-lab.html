@@ -44,8 +44,8 @@ body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
 </div>
 <footer class="notes">
  <h2>Three-screen proof / Vol.00 editorial</h2>
- <p>使用滾輪正反向依次檢查右半深藍、左半窄幅七折、晨星帶著西望升起、雙頁定格、最後開門；可按七個節點定位。主轉場沒有自動補幀，晨星只引用封版 v5.3 模型。雙門展開後中央採 Vol.00 四樂章、十二欄目、三間奏與已確認文章題名的編輯目錄；城牆為單一全屏連續底景。星光底紋 v2 保持暫停。</p>
- <p>此頁專供分鏡、文字層級和手機全寬目錄驗收。正式雜誌、教會洋流及主站的既有路徑仍然維持原狀。<a href="/experiments/morning-star-3d-lab.html">查看封版晨星 ↗</a></p>
+ <p>使用滾輪正反向依次檢查右半深藍、左半窄幅七折、晨星帶著西望升起、雙頁定格、最後開門；可按七個節點定位。主轉場沒有自動補幀，晨星只引用封版 v5.3 模型。雙門展開後中央由兩個真實版面構成：上半封面約 44%、下半正式目錄約 56%。目錄維持 Vol.00 四樂章、十二欄目、三間奏與已確認的文章題名；城牆為單一全屏連續底景。星光底紋 v2 保持暫停。</p>
+ <p>此頁的最終視覺驗收以已部署的 <a href="?final=1">開門完成態 ↗</a> 為準。滾動節點僅供檢查轉場；封面、目錄、左右側欄的對比應在同一個完整畫面檢查。正式雜誌、教會洋流及主站的既有路徑仍然維持原狀。<a href="/experiments/morning-star-3d-lab.html">查看封版晨星 ↗</a></p>
 </footer>
 <script>
 (()=>{'use strict';
@@ -84,6 +84,13 @@ body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
  }
  desktop.addEventListener('click',()=>setMobile(false));
  mobile.addEventListener('click',()=>setMobile(true));
+ const finalQuery=new URLSearchParams(location.search).get('final')==='1';
+ if(finalQuery)requestAnimationFrame(()=>{
+   const distance=Math.max(1,track.offsetHeight-innerHeight);
+   const start=scrollY+track.getBoundingClientRect().top;
+   scrollTo({top:start+distance,behavior:'instant'});
+   send(1);
+ });
  schedule();
 })();
 </script></body></html>
