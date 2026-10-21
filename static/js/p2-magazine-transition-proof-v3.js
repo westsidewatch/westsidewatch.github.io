@@ -100,7 +100,8 @@ const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
 const timeline=Object.freeze({night:[0,.23],folds:[.23,.44],star:[.44,.69],hold:[.69,.75],open:[.75,.99]});
 const phase=(p,window)=>smooth((p-window[0])/(window[1]-window[0]));
 function render(vh){
- const p=clamp(vh-2.85);
+ // Start when the Church's real open-door completes, not 0.48vh later.
+ const p=clamp((vh-2.37)/(3.85-2.37));
  const night=phase(p,timeline.night);
  const fold=phase(p,timeline.folds);
  const rise=phase(p,timeline.star);
