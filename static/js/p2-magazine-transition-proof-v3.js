@@ -9,17 +9,19 @@ const root=document.querySelector('.showcase'),magazine=root?.querySelector('.p2
 if(!root||!magazine)return;
 root.dataset.magazineProof='true';
 root.dataset.magazineDesign='xiwang-v3';
-const movements=[
- {name:'WATCH',number:'I',items:[['米斯巴','Mizpah'],['伯利恆一日','Bethlehem'],['門','The Gate'],['迦密','Carmel']],interlude:['細拉','Selah']},
- {name:'WALK',number:'II',items:[['以斯帖','Esther'],['亞杜蘭洞','Adullam'],['以馬忤斯','Emmaus']],interlude:['遠方無聲鴿','Jonath-elem-rechokim']},
- {name:'WITNESS',number:'III',items:[['以琳','Elim'],['別是巴','Beersheba'],['伯特利','Bethel'],['何烈山','Horeb']],interlude:['基尼烈','Kinneret']},
- {name:'WORSHIP',number:'IV',items:[['瑪拉拿','Maranatha']],interlude:null}
-];
+// Canon: docs/projects/watch-city-vol00/EDITORIAL_MAP.md; preserve confirmed titles and 4–4–2–2.
+const movements=[{"name":"WATCH","number":"I","items":[["米斯巴","Mizpah",["守望，一座光明的城"]],["伯利恆","Bethlehem",[]],["門","The Gate",["城門口的人","耶路撒冷：在黑暗中軟弱，在光明中剛強","大希律：這個人會建造"]],["迦密","Carmel",["一萬年的建城禮"]]],"interlude":["細拉","Selah"]},{"name":"WALK","number":"II","items":[["以馬忤斯","Emmaus",["吾珥：離開一座大的城"]],["以琳","Elim",["若不是耶和華看守城池——古代攻城技術史"]],["別是巴","Beersheba",[]],["伯特利","Bethel",[]]],"interlude":["遠方無聲鴿","Jonath-elem-rechokim"]},{"name":"WITNESS","number":"III","items":[["以斯帖","Esther",["廚房裡的人｜你當像飛鳥往你的山"]],["亞杜蘭洞","Adullam",[],["黃淑華","江秀琴"]]],"interlude":["基尼烈","Kinneret"]},{"name":"WORSHIP","number":"IV","items":[["何烈山","Horeb",["房角石：整座城由此對齊"]],["瑪拉拿","Maranatha",["冠冕"]]],"interlude":null}];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let serial=0;
 const contents=movements.map(m=>{
- const entries=m.items.map(([zh,en])=>'<li class="mag3__entry"><span class="mag3__n">'+String(++serial).padStart(2,'0')+'</span><span class="mag3__zh" lang="zh-Hant">'+zh+'</span><i lang="en">'+en+'</i></li>').join('');
- const inter=m.interlude?'<p class="mag3__interlude"><b>INTERLUDE</b><span lang="zh-Hant">'+m.interlude[0]+'</span><i lang="en">'+m.interlude[1]+'</i></p>':'';
- return '<section class="mag3__movement" aria-label="'+m.name+'"><header class="mag3__movement-head"><span class="mag3__roman">'+m.number+'</span><h3 lang="en">'+m.name+'</h3></header><ol>'+entries+'</ol>'+inter+'</section>';
+ const entries=m.items.map(([zh,en,works,subjects])=>{
+  const num=String(++serial).padStart(2,'0');
+  const titles=works.map(w=>'<span class="mag3__work" lang="zh-Hant">〈'+esc(w)+'〉</span>').join('');
+  const people=subjects?.length?'<span class="mag3__subjects" lang="zh-Hant">'+subjects.map(esc).join(' · ')+'</span>':'';
+  return '<li class="mag3__entry"><span class="mag3__n">'+num+'</span><div class="mag3__entry-text"><div class="mag3__column"><span class="mag3__zh" lang="zh-Hant">'+esc(zh)+'</span><i lang="en">'+esc(en)+'</i></div>'+titles+people+'</div></li>';
+ }).join('');
+ const inter=m.interlude?'<p class="mag3__interlude"><b>INTERLUDE</b><span lang="zh-Hant">'+esc(m.interlude[0])+'</span><i lang="en">'+esc(m.interlude[1])+'</i></p>':'';
+ return '<section class="mag3__movement" aria-label="'+esc(m.name)+'"><header class="mag3__movement-head"><span class="mag3__roman">'+m.number+'</span><h3 lang="en">'+esc(m.name)+'</h3></header><ol>'+entries+'</ol>'+inter+'</section>';
 }).join('');
 // Exact official P2 Sevenfold order and finishing water blue as p6.
 // AFTER the water finish, the left spread reveals the magazine dawn gold.
@@ -33,9 +35,8 @@ const palette=[
  ['p5','var(--ws-crimson,#a14d57)'],
  ['p6','var(--ws-water,#5b8fa8)']
 ];
-const glyph='<svg class="mag3__xiwang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 255" role="img" aria-label="西望，極細豎排" preserveAspectRatio="xMidYMid meet"><title>西望</title>'+
- '<text class="mag3__svg-character" x="60" y="113" text-anchor="middle">西</text>'+
- '<text class="mag3__svg-character" x="60" y="232" text-anchor="middle">望</text></svg>';
+// The existing magazine logo's ORIGINAL Chinese outlines, not synthetic text.
+const glyph='<img class="mag3__xiwang-art" src="/images/westside-watch-xiwang-vertical.svg" alt="西望" width="210" height="430">';
 // One master scene. Text composition exists ONCE, even when moving doors
 // obscure it. The church's magazine fallback HTML is replaced only in proof.
 magazine.innerHTML=
@@ -46,9 +47,10 @@ magazine.innerHTML=
    '<span class="mag3__left-edition" lang="en">A WATCHFUL EDITION / 02</span>'+
   '</aside>'+
   '<main class="mag3__center" aria-label="西望雜誌正式目錄">'+
-   '<header class="mag3__center-top"><span lang="en">WESTSIDE / ISSUE 02</span><span lang="en">2026 — THE EDITION</span></header>'+
+   '<header class="mag3__center-top"><span lang="en">WESTSIDE WATCH / VOL.00</span><span lang="en">2026 — THE EDITION</span></header>'+
    '<div class="mag3__brand"><img src="/images/westside-watch-masthead-landscape.svg" alt="LivingWater WestWatch 西望，官方雜誌 Logo SVG" loading="eager"></div>'+
-   '<div class="mag3__contents-heading"><div><span class="mag3__section-marker" lang="en">02 / THE INDEX</span><h2 lang="en">Contents<span>.</span></h2></div><p lang="zh-Hant">目錄</p></div>'+
+   '<h1 class="mag3__issue-title" lang="zh-Hant">守望，一座光明的城</h1>'+
+   '<div class="mag3__contents-heading"><span class="mag3__section-marker" lang="en">CONTENTS</span><span class="mag3__contents-count" lang="zh-Hant">四樂章 · 十二欄目</span></div>'+
    '<div class="mag3__index" role="group" aria-label="四樂章、十二欄目、三間奏">'+contents+'</div>'+
    '<footer class="mag3__center-bottom"><div><span lang="en">FOUR MOVEMENTS</span><span lang="en">12 COLUMNS / 03 INTERLUDES</span></div><a href="/journal/" lang="en">ENTER WESTWATCH ↗</a></footer>'+
   '</main>'+
@@ -69,7 +71,7 @@ magazine.innerHTML=
   '<div class="mag3__scripture-cn" lang="zh-Hant">黑夜已深，<br>白晝將近。</div>'+
   '<cite class="mag3__cite" lang="en">ROMANS 13:12 / KJV</cite>'+
  '</div>'+
- '<div class="mag3__star" aria-hidden="true"><iframe tabindex="-1" title="晨星 v5.3／加快播放" src="/experiments/morning-star-3d-lab.html?asset=1&amp;autoplay=1&amp;speed=1.7" loading="eager"></iframe></div>'+
+ '<div class="mag3__star" aria-hidden="true"><iframe tabindex="-1" title="晨星 v5.3／加快播放" src="/experiments/morning-star-3d-lab.html?asset=1&amp;autoplay=1&amp;speed=2.1" loading="eager"></iframe></div>'+
  // Door-attached half panos above; at the final triptych, this SINGLE
  // uninterrupted backing panorama replaces them. No static fixed top strip.
  '<div class="mag3__wall-final" aria-hidden="true"></div>';
