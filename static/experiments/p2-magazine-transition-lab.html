@@ -4,18 +4,18 @@
 <link rel="stylesheet" href="/css/westside-design-os.css">
 <style>
 *{box-sizing:border-box}html{scroll-behavior:auto}
-body{margin:0;background:#efeae1;color:#263244;font-family:var(--ws-type-display-zh,sans-serif)}
+:root{--proof-dock-height:52px}body{margin:0;background:#efeae1;color:#263244;font-family:var(--ws-type-display-zh,sans-serif)}
 header{padding:clamp(16px,3vw,36px) clamp(16px,4vw,50px);border-bottom:1px solid #c8bdae}
 header .micro{font:12px var(--ws-type-display-en,Georgia,serif);letter-spacing:.12em}
 header h1{margin:12px 0 8px;font:400 clamp(31px,4.8vw,67px)/1 var(--ws-type-display-en,Georgia,serif)}
 header h1 em{font-weight:400}
 header p{max-width:90ch;line-height:1.65;margin:0;font-size:14px}
 .proof-track{height:580svh;position:relative}
-.proof-sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;background:#d4d5d1}
+.proof-sticky{position:sticky;top:var(--proof-dock-height);height:calc(100svh - var(--proof-dock-height));display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;background:#d4d5d1}
 .proof-frame{width:100%;height:100%;flex:none;box-shadow:0 0 0 1px #8a8b82;overflow:hidden;background:#ede9e0}
 .proof-frame iframe{display:block;width:100%;height:100%;border:0}
 body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
-.controller{position:fixed;z-index:10;top:clamp(10px,1.6vw,20px);left:50%;transform:translateX(-50%);width:min(1040px,calc(100% - 20px));background:rgba(244,239,230,.95);color:#263244;border:1px solid #b6aa97;box-shadow:0 8px 30px rgba(27,38,42,.15);padding:10px 12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.controller{position:fixed;z-index:10;top:0;left:0;right:0;transform:none;width:100%;min-height:var(--proof-dock-height);background:rgba(244,239,230,.98);color:#263244;border:0;border-bottom:1px solid #b6aa97;box-shadow:0 5px 18px rgba(27,38,42,.12);padding:6px 13px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
 .controller .heading{font:400 11px/1.4 var(--ws-type-display-en,Georgia,serif);letter-spacing:.06em}
 .controller .buttons{display:flex;flex-wrap:wrap;gap:4px}
 .controller button{font:12px var(--ws-type-display-zh,sans-serif);padding:8px 12px;border:1px solid #ada696;border-radius:0;background:transparent;color:inherit;cursor:pointer}
@@ -28,11 +28,11 @@ body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
 .notes{max-width:980px;padding:22px 26px 60px;margin:auto;font-size:14px;line-height:1.75}
 .notes h2{font:400 32px var(--ws-type-display-en,Georgia,serif)}
 .notes a{color:inherit;text-underline-offset:4px}
-@media(max-width:700px){.controller{top:4px;padding:8px;gap:7px}.controller .heading{display:none}.controller button{font-size:11px;padding:6px 8px}.controller .switcher{margin-left:0}.controller .range{flex:1 1 160px}.notes{padding:20px 18px 50px}}
+@media(max-width:700px){:root{--proof-dock-height:118px}.controller{top:0;padding:8px;gap:7px;align-content:center}.controller .heading{display:none}.controller button{font-size:11px;padding:6px 8px}.controller .switcher{margin-left:0}.controller .range{flex:1 1 160px}.notes{padding:20px 18px 50px}}
 </style></head>
 <body data-ws-scope="p2"><header><div class="micro">WESTSIDE P2 / SCENE 02 / INDEPENDENT CHOREOGRAPHY LAB</div>
 <h1>Church <em>→</em> Magazine.</h1>
-<p>以現有 P2 Church 真實洋流和開門場景作前段，接入已定案的三屏分鏡：右午夜藍由上向下、左七層黎明金由下向上；雙扇色門分開，揭示中央聖殿石紋目錄，晨星從下升起。這是受保護的預覽模式，正常 P2 與主站尚未切換。</p></header>
+<p>以已驗收 Church 洋流與開門場景作前段。Magazine 左半直接調用首頁七種 Design OS 色彩，以七層實際折幕由下向上展開；右半則由上向下進入午夜藍與羅馬書 13:12 的經文。晨星從黎明半屏移入石紋目錄，單一耶路撒冷城牆始終橫跨兩屏與三欄。新方案仍是獨立預覽，正常 P2 與主站未切換。</p></header>
 <div class="controller" role="group" aria-label="P2 Magazine 進度檢視">
  <div class="heading">SCROLL-OWNED / REVERSIBLE</div>
  <div class="buttons"><button type="button" data-progress=".705">教會</button><button type="button" data-progress=".793">左右變色</button><button type="button" data-progress=".874">雙門開啟</button><button type="button" data-progress=".984">目錄全開</button></div>
@@ -44,7 +44,7 @@ body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
 </div>
 <footer class="notes">
  <h2>Three-screen proof / 第一輪</h2>
- <p>使用實際滾輪往下、往上可逐格倒放；也可以按四個階段按鈕，或拖動進度條。新鏡頭由主頁的單一 scroll progress 決定，停止即停止，反向即還原。晨星只使用受保護的 v5.3 模型，星光雕刻底紋 v2 暫停，不在此階段接入。</p>
+ <p>使用滾輪正反向檢查七色折幕與晨星移位；按四個節點或拖動滑桿可定位。主轉場沒有自動補幀，晨星只引用封版 v5.3 模型。雙門展開後中央採四樂章、十二欄目與三間奏的編輯目錄；城牆為單一全屏連續底景。星光底紋 v2 保持暫停。</p>
  <p>此頁專供分鏡、文字層級和手機全寬目錄驗收。正式雜誌、教會洋流及主站的既有路徑仍然維持原狀。<a href="/experiments/morning-star-3d-lab.html">查看封版晨星 ↗</a></p>
 </footer>
 <script>

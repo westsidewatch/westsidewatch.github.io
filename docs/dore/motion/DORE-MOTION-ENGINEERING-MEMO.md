@@ -475,3 +475,19 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 - 已核實三項原始素材路徑皆存在：`static/images/temple-stone-light.png`、`static/images/jerusalem-wall.png` 和既有的 v5.3 Lab。保持原 Church 洋流 `p2-water-surface.js`、John 7:38、主日聚會內容不變，不把已移除的 Acts 4:12 帶回。
 - **部署前靜態驗收**：核對腳本語法、DOM 與 CSS 作用範圍、旗標關閉時 P2 舊邏輯逐字保留、七層反向揭露與 12+3 命名來源。**部署後待完成**：真實桌面／手機兩種背景畫面、0–100% scroll 連續性／反向、刻線紋理尺寸、星體嵌入（第三方 Three.js 網路依賴）、影片／WebGL 過載及 Church 視覺回歸。不得把程式碼完成誤報為截圖視覺驗收通過。
 - 只有完成上述 proof 視覺驗收之後，才規劃將三屏方案以一次有意義的整合提交進入正常 P2，而不再重新設計晨星／底紋。
+
+
+## 2026-10-20｜P2 Magazine 三屏設計第二輪：七色折幕、黎明／黑夜、連續城牆
+
+**視覺驗收回饋：** 第一版 Lab 的兩個半屏只有空白色塊；左邊七層錯誤地用了七種金色近似色與等分揭露，沒有重用首頁已完成的不同版塊七色重疊折幕；底部元素相互壓住；晨星位置無文字安全區與轉場角色；中央目錄像把 12+3 內容放在頁頂，下面大量空白；左右欄缺少編輯設計；最重要的是耶路撒冷城牆只在中央，左右半屏看不見，也不能在三欄打開後保持連續。
+
+**第二輪設計契約（受使用者要求及本輪工程規格約束，仍待實際畫面驗收）：**
+
+1. **七種版塊顏色／真實折幕**：重用 `static/experiments/sevenfold-first-to-second.html` 與 P2 已有的七層全幅遮幕思想、`foldEase` 的四次緩動，將色幕限制於左半屏並以 `scale3d(1,y,1)` 底部原點錯峰由下往上折展；每層覆蓋整個左半屏，絕非七條等高橫帶。色彩全部讀取既有 Westside Design OS 的七種來源 `--ws-water`、`--ws-pale-gold`、`--ws-olive`、`--ws-harvest`、`--ws-crimson`、`--ws-daylight-mauve`、`--ws-first-light`。最後一層收束為黎明金。右半同步由頂部往下轉午夜藍。
+2. **雙頁語義／開場鏡頭**：左黎明半屏以封版 v5.3 的**單顆真實琉璃晨星**和 Dawn 字體留白、星芒作象徵；右夜藍半屏以《羅馬書》13:12 原有首頁主題「黑夜已深，白晝將近」（KJV “The night is far spent, the day is at hand.”）做編輯排版。此經文**不是**在教會 John 7:38 或禮拜表上新增使徒行傳。右半空塊應成為一個有光線、標題、引用層次和引文出處的 night editorial cover。
+3. **門開／星體移位**：兩半不是白白滑走，而是打開顯露石紋目錄，晨星從左邊黎明光源、隨滾動漸次抬升／移入中央石紋右上角，縮小成中央的主視覺印記。單一 iframe 重用 `morning-star-3d-lab.html?asset=1&autoplay=1`；不可複製第二個 Star 或修改封版幾何。移動、開門與七折幕服從同一主 scroll clock；獨立 v5.3 慢速自轉仍尊重 reduced motion。
+4. **三欄成形後的編輯版面**：左欄為 Watch for Dawn／封面版次與短導語，右欄為 Romans 13:12 的夜與黎明引文，中央聖殿石紋為真正目錄排版：英文字級、中文版名、四樂章 WATCH/WALK/WITNESS/WORSHIP 各自框線與羅馬數字、12 條欄目帶編號及英文名、3 間奏、編輯小語和閱讀入口。內容與順序仍按 `docs/MASTER_SITE_ARCHITECTURE.md` §2，不新增或亂改欄目，不虛構單獨路由。桌面 28/44/28 editorial triptych；手機正式完成開門後轉為全寬單欄可捲動目錄。
+5. **整屏連續的城牆是硬性要求**：不再在每一欄各貼一次。**全畫面只放一份 `static/images/jerusalem-wall.png`，絕對定位在整個 Magazine stage 底部**，不屬於移動門板或中央列，始終跨過左右半屏及開門後的三欄，保持同一水平基線、同一縮放，不隨門移動；底部 folio／文字需留安全區，不能被城牆或舊 Church INDEX 壓住。
+6. **獨立預覽與部署隔離**：第二輪檔案為 `static/js/p2-magazine-transition-proof-v2.js`、`static/css/p2-magazine-transition-proof-v2.css`，藉原有 `?magazineProof=1` 才載入；實驗頁仍是 `static/experiments/p2-magazine-transition-lab.html`，控制器改為頂端獨立停靠區，避免遮擋頁面 masthead。普通 P2 URL、Church V75、教會右欄聚會表和全站 OS 均不變。底紋 v2 繼續凍結，不載入此輪。
+7. **驗收不得偷換概念**：工程採可逆 scroll 數值測試、7 色折幕與 12+3 自動檢查後，仍必須實際檢查桌面、手機、初始半屏、45% 開門、完全三欄，尤其看晨星是否壓到目錄、城牆是否真的完整可見、正文是否被底紋搶焦點、元件有無越界。未經使用者看圖驗收不宣稱正式完成。
+

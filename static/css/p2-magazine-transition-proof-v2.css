@@ -1,0 +1,447 @@
+/* P2 Magazine / second visual-proof stage.
+   Single-scroll-owned seven-color bottom-origin folding, a dawn/night split,
+   an editorial triptych and ONE continuous Jerusalem skyline.
+   This stylesheet is only loaded for ?magazineProof=1. */
+body[data-ws-scope="p2"] .showcase[data-magazine-proof="true"] .p2-magazine{
+ background:transparent;clip-path:none;color:var(--ws-ink,#263244);
+ isolation:isolate;visibility:hidden;overflow:hidden;pointer-events:none;
+}
+.showcase[data-magazine-proof="true"] .mag2__spread{
+ position:absolute;inset:0;z-index:1;
+ display:grid;grid-template-columns:minmax(0,28fr) minmax(0,44fr) minmax(0,28fr);
+ overflow:hidden;opacity:0;
+}
+.showcase[data-magazine-proof="true"] .mag2__dawn,
+.showcase[data-magazine-proof="true"] .mag2__night{
+ position:relative;min-height:0;min-width:0;overflow:hidden;
+ display:flex;flex-direction:column;justify-content:space-between;
+ padding:clamp(24px,2.5vw,47px);
+}
+.showcase[data-magazine-proof="true"] .mag2__dawn{
+ background:
+  radial-gradient(ellipse at 98% 47%,rgba(255,249,226,.7),transparent 52%),
+  linear-gradient(165deg,var(--ws-first-light,#d6c7a5),#e7d8b8 75%,#e0cb9c);
+ color:var(--ws-ink,#263244);
+}
+.showcase[data-magazine-proof="true"] .mag2__night{
+ color:#f6efe3;
+ background:
+  radial-gradient(ellipse at 0% 52%,rgba(165,179,191,.18),transparent 42%),
+  #142b43;
+}
+.showcase[data-magazine-proof="true"] .mag2__dawn:before{
+ content:"";position:absolute;right:9%;top:9%;bottom:25%;width:1px;
+ background:linear-gradient(to bottom,transparent,rgba(111,97,69,.48),transparent);
+ pointer-events:none;
+}
+.showcase[data-magazine-proof="true"] .mag2__side-mast,
+.showcase[data-magazine-proof="true"] .mag2__side-bottom{
+ position:relative;display:flex;align-items:center;justify-content:space-between;
+ gap:12px;letter-spacing:.12em;text-transform:uppercase;
+ font:400 clamp(10px,.73vw,13px)/1.5 var(--ws-type-display-en,Georgia,serif);
+}
+.showcase[data-magazine-proof="true"] .mag2__side-mast{
+ padding-bottom:clamp(9px,1.2svh,16px);border-bottom:1px solid currentColor;
+}
+.showcase[data-magazine-proof="true"] .mag2__side-bottom{
+ flex-wrap:wrap;padding-top:9px;border-top:1px solid currentColor;
+ margin-bottom:clamp(140px,20svh,202px);
+}
+.showcase[data-magazine-proof="true"] .mag2__dawn-body{
+ position:relative;margin-top:-1svh;margin-bottom:6svh;
+}
+.showcase[data-magazine-proof="true"] .mag2__section-mark{
+ font:400 clamp(12px,.95vw,16px) var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.1em;
+}
+.showcase[data-magazine-proof="true"] .mag2__cover-title{
+ font:400 clamp(58px,6vw,120px)/.84 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.055em;margin:clamp(20px,3svh,38px) 0 20px;
+ max-width:100%;overflow-wrap:normal;
+}
+.showcase[data-magazine-proof="true"] .mag2__cover-title em{
+ display:block;font:italic 400 .67em/.98 var(--ws-type-display-en,Georgia,serif);
+ white-space:nowrap;letter-spacing:-.07em;
+}
+.showcase[data-magazine-proof="true"] .mag2__dawn-cn{
+ display:block;font:var(--ws-weight-zh-anchor,700) clamp(24px,2.4vw,41px)/1.22 var(--ws-type-display-zh,sans-serif);
+}
+.showcase[data-magazine-proof="true"] .mag2__side-line{
+ width:min(120px,36%);height:1px;background:currentColor;
+ margin-block:clamp(13px,2.5svh,27px);
+}
+.showcase[data-magazine-proof="true"] .mag2__dawn-deck{
+ font:400 clamp(14px,1.23vw,19px)/1.7 var(--ws-type-display-zh,sans-serif);
+ max-width:15ch;letter-spacing:.035em;
+}
+.showcase[data-magazine-proof="true"] .mag2__night-body{
+ position:relative;display:flex;flex-direction:column;gap:clamp(12px,2svh,27px);
+ max-width:100%;margin-block:auto;
+}
+.showcase[data-magazine-proof="true"] .mag2__night-body>span{
+ font:400 clamp(10px,.8vw,13px)/1.5 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.12em;
+}
+.showcase[data-magazine-proof="true"] .mag2__night-type{
+ font:400 clamp(45px,4.5vw,96px)/.91 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.04em;margin:12px 0;
+}
+.showcase[data-magazine-proof="true"] .mag2__night-type em{
+ display:block;font-weight:400;font-size:.66em;color:#ecd59e;
+}
+.showcase[data-magazine-proof="true"] .mag2__night-rule{width:39%;height:1px;background:#d5c397}
+.showcase[data-magazine-proof="true"] .mag2__night-body blockquote{
+ margin:0;padding:0;display:grid;gap:clamp(8px,1.25svh,14px);
+}
+.showcase[data-magazine-proof="true"] .mag2__night-body blockquote p{
+ font:400 clamp(15px,1.3vw,20px)/1.55 var(--ws-type-display-en,Georgia,serif);
+ margin:0;max-width:24ch;
+}
+.showcase[data-magazine-proof="true"] .mag2__night-body blockquote p[lang="zh-Hant"]{
+ font:400 clamp(14px,1.15vw,18px)/1.65 var(--ws-type-display-zh,sans-serif);
+}
+.showcase[data-magazine-proof="true"] .mag2__night-body cite{
+ font:italic 400 clamp(11px,.85vw,14px)/1.5 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.06em;
+}
+/* Stone is a real repository image. The overlay tames contrast but does not
+   redraw, tile or cut the protected stone asset. */
+.showcase[data-magazine-proof="true"] .mag2__stone{
+ position:relative;min-width:0;min-height:0;isolation:isolate;
+ background:#e8e0d1 url("/images/temple-stone-light.png") center/cover no-repeat;
+}
+.showcase[data-magazine-proof="true"] .mag2__stone:before{
+ content:"";position:absolute;inset:0;z-index:0;
+ background:rgba(244,240,230,.52);pointer-events:none;
+}
+.showcase[data-magazine-proof="true"] .mag2__stone-mast{
+ position:absolute;left:5%;right:5%;top:clamp(18px,2.5svh,30px);
+ z-index:3;display:flex;justify-content:space-between;gap:14px;
+ border-bottom:1px solid rgba(54,51,46,.55);padding-bottom:clamp(9px,1svh,15px);
+ font:400 clamp(10px,.71vw,13px)/1.4 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.11em;
+}
+.showcase[data-magazine-proof="true"] .mag2__stone-title{
+ position:absolute;left:6%;top:clamp(78px,9svh,115px);z-index:3;
+ width:58%;min-width:0;
+}
+.showcase[data-magazine-proof="true"] .mag2__colophon{
+ font:400 clamp(10px,.75vw,13px)/1.5 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.11em;
+}
+.showcase[data-magazine-proof="true"] .mag2__stone-title h2{
+ font:400 clamp(45px,4.8vw,88px)/.85 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.065em;margin:clamp(11px,1.5svh,20px) 0 10px;
+ white-space:nowrap;
+}
+.showcase[data-magazine-proof="true"] .mag2__stone-title h2 em{
+ display:block;font-weight:400;font-style:italic;font-size:.78em;
+}
+.showcase[data-magazine-proof="true"] .mag2__stone-title p{
+ margin:0;font:var(--ws-weight-zh-anchor,700) clamp(21px,1.85vw,30px)/1.3 var(--ws-type-display-zh,sans-serif);
+ letter-spacing:.045em;white-space:nowrap;
+}
+.showcase[data-magazine-proof="true"] .mag2__stone-title p span{
+ font:italic 400 .78em var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:0;color:#856a49;
+}
+.showcase[data-magazine-proof="true"] .mag2__index{
+ position:absolute;z-index:3;
+ top:clamp(255px,30svh,300px);
+ bottom:clamp(201px,24svh,255px);
+ left:6%;right:6%;min-width:0;min-height:0;
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ grid-template-rows:minmax(0,1fr) minmax(0,1fr);
+ gap:clamp(12px,2.4svh,32px) clamp(17px,2.1vw,34px);
+ overflow:hidden;
+}
+.showcase[data-magazine-proof="true"] .mag2__movement{
+ display:flex;min-height:0;min-width:0;flex-direction:column;
+ gap:clamp(8px,1svh,12px);
+}
+.showcase[data-magazine-proof="true"] .mag2__mov-head{
+ display:flex;align-items:baseline;gap:clamp(8px,1vw,14px);
+ border-top:1px solid rgba(57,51,40,.66);
+ padding-top:7px;
+}
+.showcase[data-magazine-proof="true"] .mag2__roman{
+ font:italic 400 clamp(13px,1.2vw,20px) var(--ws-type-display-en,Georgia,serif);
+ color:#8d713f;flex:none;
+}
+.showcase[data-magazine-proof="true"] .mag2__mov-head h3{
+ margin:0;font:400 clamp(21px,1.85vw,31px)/1 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.02em;
+}
+.showcase[data-magazine-proof="true"] .mag2__count{
+ margin-left:auto;font:400 clamp(9px,.63vw,11px)/1.5 var(--ws-type-display-en,Georgia,serif);
+ white-space:nowrap;letter-spacing:.05em;
+}
+.showcase[data-magazine-proof="true"] .mag2__movement ol{
+ list-style:none;margin:0;padding:0;
+ display:grid;gap:clamp(5px,.75svh,9px);
+}
+.showcase[data-magazine-proof="true"] .mag2__entry{
+ display:grid;grid-template-columns:20px minmax(0,1fr);
+ gap:0 clamp(6px,.5vw,10px);align-items:baseline;min-width:0;
+ font:400 clamp(12px,1vw,17px)/1.35 var(--ws-type-display-zh,sans-serif);
+}
+.showcase[data-magazine-proof="true"] .mag2__item-num{
+ grid-column:1;font:400 clamp(9px,.67vw,12px)/1.5 var(--ws-type-display-en,Georgia,serif);
+ color:#a18a69;
+}
+.showcase[data-magazine-proof="true"] .mag2__item-zh{grid-column:2;overflow-wrap:normal}
+.showcase[data-magazine-proof="true"] .mag2__entry i{
+ grid-column:2;font:italic 400 .78em/1.3 var(--ws-type-display-en,Georgia,serif);
+ color:#775f48;overflow-wrap:anywhere;margin-top:-1px;
+}
+.showcase[data-magazine-proof="true"] .mag2__interlude{
+ display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 7px;
+ border-top:1px solid rgba(119,94,66,.4);
+ padding-top:5px;margin:auto 0 0;
+ font:400 clamp(11px,.84vw,14px)/1.3 var(--ws-type-display-zh,sans-serif);
+ color:#805f37;
+}
+.showcase[data-magazine-proof="true"] .mag2__interlude>span{
+ font:400 clamp(9px,.64vw,11px)/1.5 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.07em;white-space:nowrap;
+}
+.showcase[data-magazine-proof="true"] .mag2__interlude strong{font-weight:400}
+.showcase[data-magazine-proof="true"] .mag2__interlude i{
+ font:italic 400 clamp(9px,.76vw,13px) var(--ws-type-display-en,Georgia,serif);
+ overflow-wrap:anywhere;
+}
+.showcase[data-magazine-proof="true"] .mag2__closing{
+ font:italic 400 clamp(10px,.8vw,13px) var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.1em;color:#806540;
+}
+.showcase[data-magazine-proof="true"] .mag2__intro{
+ position:absolute;z-index:3;left:6%;right:6%;
+ bottom:clamp(155px,18.5svh,205px);
+ display:grid;grid-template-columns:1fr minmax(0,2fr) 1fr;
+ align-items:center;gap:clamp(6px,.7vw,14px);
+ border-top:1px solid rgba(56,55,49,.55);
+ border-bottom:1px solid rgba(56,55,49,.3);
+ padding:clamp(8px,1.2svh,16px) 0;
+}
+.showcase[data-magazine-proof="true"] .mag2__intro span{
+ font:400 clamp(9px,.68vw,11px)/1.4 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.08em;
+}
+.showcase[data-magazine-proof="true"] .mag2__intro span:last-child{text-align:right}
+.showcase[data-magazine-proof="true"] .mag2__intro p{
+ margin:0;text-align:center;
+ font:400 clamp(11px,.94vw,15px)/1.5 var(--ws-type-display-zh,sans-serif);
+}
+.showcase[data-magazine-proof="true"] .mag2__stone-footer{
+ position:absolute;z-index:3;left:6%;right:6%;
+ bottom:clamp(115px,14svh,166px);
+ display:flex;align-items:center;justify-content:space-between;gap:8px;
+ font:400 clamp(10px,.75vw,13px)/1.4 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.07em;
+}
+.showcase[data-magazine-proof="true"] .mag2__stone-footer a{
+ color:inherit;pointer-events:auto;text-decoration:none;border-bottom:1px solid currentColor;
+}
+/* Folded entrance is seven DIFFERENT Design OS colors. Every fold occupies
+   the left half and expands bottom-up with the same quartic positional ease
+   used by the existing sevenfold entrance. Never seven equal static bands. */
+.showcase[data-magazine-proof="true"] .mag2__curtains{
+ position:absolute;inset:0;z-index:7;pointer-events:none;overflow:hidden;
+}
+.showcase[data-magazine-proof="true"] .mag2__curtain{
+ position:absolute;top:0;bottom:0;width:50%;overflow:hidden;
+ will-change:transform;
+}
+.showcase[data-magazine-proof="true"] .mag2__curtain--dawn{
+ left:0;perspective:1000px;
+}
+.showcase[data-magazine-proof="true"] .mag2__curtain--night{
+ right:0;background:
+  radial-gradient(ellipse at 0 50%,rgba(136,165,186,.22),transparent 54%),
+  #142b43;
+ clip-path:inset(0 0 100% 0);
+}
+.showcase[data-magazine-proof="true"] .mag2__fold{
+ position:absolute;inset:0;
+ background:
+  linear-gradient(180deg,rgba(255,255,255,.24),transparent 13%,transparent 81%,rgba(27,33,41,.06) 100%),
+  var(--fold-color);
+ transform-origin:bottom center;transform:scale3d(1,0,1);
+ will-change:transform;overflow:hidden;
+}
+.showcase[data-magazine-proof="true"] .mag2__fold:before{
+ content:"";position:absolute;top:0;left:0;right:0;height:clamp(18px,5svh,48px);
+ background:linear-gradient(175deg,rgba(255,255,255,.4),rgba(255,255,255,.06) 49%,rgba(18,21,25,.14) 100%);
+ clip-path:polygon(0 0,100% 0,100% 68%,52% 98%,0 66%);
+ border-top:1px solid rgba(255,255,255,.38);
+ pointer-events:none;
+}
+.showcase[data-magazine-proof="true"] .mag2__fold:after{
+ content:"";position:absolute;top:0;left:0;right:0;height:2px;
+ background:rgba(250,246,233,.45);opacity:calc(1 - var(--fold-progress,0));
+}
+/* The fully colored left/right book-spread appears only after the folds.
+   It dissolves as the doors open; then the two endpoint editorial panels
+   survive in narrow columns beneath the moving doors. */
+.showcase[data-magazine-proof="true"] .mag2__two-page{
+ position:absolute;inset:0;z-index:9;display:grid;
+ grid-template-columns:1fr 1fr;opacity:0;pointer-events:none;
+}
+.showcase[data-magazine-proof="true"] .mag2__hero-dawn,
+.showcase[data-magazine-proof="true"] .mag2__hero-night{
+ position:relative;display:flex;flex-direction:column;
+ min-width:0;padding:clamp(22px,3vw,54px);
+ color:#243344;
+}
+.showcase[data-magazine-proof="true"] .mag2__hero-night{color:#f4eddf}
+.showcase[data-magazine-proof="true"] .mag2__hero-eyebrow,
+.showcase[data-magazine-proof="true"] .mag2__hero-foot{
+ font:400 clamp(10px,.84vw,15px)/1.5 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.14em;
+}
+.showcase[data-magazine-proof="true"] .mag2__hero-foot{margin-top:auto;margin-bottom:clamp(128px,18svh,200px)}
+.showcase[data-magazine-proof="true"] .mag2__hero-word{
+ margin:auto 0 0;line-height:.8;
+ font:italic 400 clamp(115px,14vw,270px)/.85 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.07em;opacity:.26;
+}
+.showcase[data-magazine-proof="true"] .mag2__hero-scripture{
+ margin:auto 0;max-width:32vw;
+}
+.showcase[data-magazine-proof="true"] .mag2__hero-scripture>p{
+ font:400 clamp(53px,6.5vw,125px)/.92 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.055em;margin:0;
+}
+.showcase[data-magazine-proof="true"] .mag2__hero-scripture>p em{
+ font-size:.77em;font-weight:400;color:#f1d8a2;display:block;
+}
+.showcase[data-magazine-proof="true"] .mag2__hero-rule{
+ height:1px;width:min(240px,60%);background:rgba(242,219,174,.77);
+ margin:clamp(23px,4svh,48px) 0 clamp(14px,2.4svh,29px);
+}
+.showcase[data-magazine-proof="true"] .mag2__hero-scripture strong{
+ font:400 clamp(23px,2.1vw,38px)/1.5 var(--ws-type-display-zh,sans-serif);
+ letter-spacing:.04em;
+}
+.showcase[data-magazine-proof="true"] .mag2__hero-scripture cite{
+ display:block;margin-top:clamp(10px,1.3svh,18px);
+ font:italic 400 clamp(12px,.96vw,16px)/1.4 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.08em;
+}
+/* There is only one iframe (the approved v5.3) in the DOM. It changes
+   spatial role during door opening and is NEVER cropped by either panel. */
+.showcase[data-magazine-proof="true"] .mag2__star{
+ position:absolute;z-index:13;left:25%;top:42%;
+ width:clamp(260px,28vw,480px);aspect-ratio:1/1;
+ opacity:0;pointer-events:none;
+ transform:translate3d(-50%,-50%,0);
+ will-change:transform,left,top;
+}
+.showcase[data-magazine-proof="true"] .mag2__star iframe{
+ display:block;border:0;width:100%;height:100%;background:transparent;
+ pointer-events:none;transform:scale(var(--star-scale,1));transform-origin:center;
+}
+/* The uninterrupted Jerusalem wall belongs to the whole frame rather
+   than to either curtain, cover or center stone column. */
+.showcase[data-magazine-proof="true"] .mag2__wall{
+ position:absolute;z-index:17;bottom:0;left:0;right:0;
+ height:clamp(117px,20svh,220px);overflow:hidden;
+ opacity:0;pointer-events:none;
+ -webkit-mask-image:linear-gradient(to bottom,transparent,black 35%,black);
+ mask-image:linear-gradient(to bottom,transparent,black 35%,black);
+}
+.showcase[data-magazine-proof="true"] .mag2__wall img{
+ position:absolute;bottom:0;left:0;display:block;
+ width:100%;height:auto;max-width:none;object-fit:contain;
+ filter:sepia(.18) saturate(.86) contrast(1.19);
+}
+/* The Church index must not float on top of the magazine skyline. */
+.showcase[data-magazine-proof="true"][data-p2-phase="church-to-magazine"] .index,
+.showcase[data-magazine-proof="true"][data-p2-phase="magazine"] .index{
+ visibility:hidden;pointer-events:none;
+}
+@media(max-width:1050px) and (min-width:701px){
+ .showcase[data-magazine-proof="true"] .mag2__spread{
+  grid-template-columns:minmax(0,25fr) minmax(0,50fr) minmax(0,25fr);
+ }
+ .showcase[data-magazine-proof="true"] .mag2__dawn,
+ .showcase[data-magazine-proof="true"] .mag2__night{padding:clamp(18px,2.2vw,30px)}
+ .showcase[data-magazine-proof="true"] .mag2__cover-title{font-size:clamp(48px,5.6vw,80px)}
+ .showcase[data-magazine-proof="true"] .mag2__night-type{font-size:clamp(41px,5vw,71px)}
+ .showcase[data-magazine-proof="true"] .mag2__stone-title h2{font-size:clamp(45px,5vw,67px)}
+}
+@media(max-width:700px){
+ /* The finished magazine is a real, full-width one-column publication.
+    The opening still uses the same sevenfold left half / night right half. */
+ .showcase[data-magazine-proof="true"] .mag2__spread{grid-template-columns:1fr}
+ .showcase[data-magazine-proof="true"] .mag2__dawn,
+ .showcase[data-magazine-proof="true"] .mag2__night{display:none}
+ .showcase[data-magazine-proof="true"] .mag2__stone{grid-column:1}
+ .showcase[data-magazine-proof="true"] .mag2__stone-mast{
+  left:5%;right:5%;top:clamp(13px,2.2svh,22px);font-size:10px;
+ }
+ .showcase[data-magazine-proof="true"] .mag2__stone-title{
+  top:clamp(85px,11svh,112px);left:6%;width:62%;
+ }
+ .showcase[data-magazine-proof="true"] .mag2__stone-title h2{
+  font-size:clamp(37px,9vw,52px);white-space:normal;
+ }
+ .showcase[data-magazine-proof="true"] .mag2__stone-title p{font-size:clamp(20px,5vw,28px)}
+ .showcase[data-magazine-proof="true"] .mag2__star{width:clamp(220px,70vw,320px)}
+ .showcase[data-magazine-proof="true"] .mag2__index{
+  top:clamp(250px,31svh,320px);bottom:clamp(130px,19svh,182px);
+  display:flex;flex-direction:column;gap:clamp(14px,3svh,27px);
+  overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:#aa926d transparent;
+  padding-right:4px;
+ }
+ .showcase[data-magazine-proof="true"] .mag2__movement{gap:10px;flex:none}
+ .showcase[data-magazine-proof="true"] .mag2__mov-head{gap:13px}
+ .showcase[data-magazine-proof="true"] .mag2__mov-head h3{font-size:25px}
+ .showcase[data-magazine-proof="true"] .mag2__roman{font-size:18px}
+ .showcase[data-magazine-proof="true"] .mag2__count{font-size:10px}
+ .showcase[data-magazine-proof="true"] .mag2__movement ol{gap:9px}
+ .showcase[data-magazine-proof="true"] .mag2__entry{
+  grid-template-columns:26px minmax(0,1fr);font-size:clamp(15px,4vw,19px);
+ }
+ .showcase[data-magazine-proof="true"] .mag2__entry i{font-size:.82em}
+ .showcase[data-magazine-proof="true"] .mag2__item-num{font-size:11px}
+ .showcase[data-magazine-proof="true"] .mag2__interlude{font-size:14px}
+ .showcase[data-magazine-proof="true"] .mag2__interlude i{font-size:12px}
+ .showcase[data-magazine-proof="true"] .mag2__intro{
+  left:6%;right:6%;bottom:clamp(101px,14svh,142px);
+  display:block;padding:6px 0;
+ }
+ .showcase[data-magazine-proof="true"] .mag2__intro span{display:none}
+ .showcase[data-magazine-proof="true"] .mag2__intro p{font-size:12px;text-align:left}
+ .showcase[data-magazine-proof="true"] .mag2__stone-footer{
+  left:6%;right:6%;bottom:clamp(81px,11svh,119px);font-size:10px;
+ }
+ .showcase[data-magazine-proof="true"] .mag2__hero-dawn,
+ .showcase[data-magazine-proof="true"] .mag2__hero-night{
+  padding:clamp(12px,4vw,24px);
+ }
+ .showcase[data-magazine-proof="true"] .mag2__hero-word{
+  font-size:clamp(48px,11vw,72px);
+ }
+ .showcase[data-magazine-proof="true"] .mag2__hero-scripture{max-width:none}
+ .showcase[data-magazine-proof="true"] .mag2__hero-scripture>p{
+  font-size:clamp(28px,7vw,48px);
+ }
+ .showcase[data-magazine-proof="true"] .mag2__hero-scripture strong{
+  font-size:clamp(13px,3.3vw,18px);
+ }
+ .showcase[data-magazine-proof="true"] .mag2__hero-scripture cite{
+  font-size:clamp(9px,2.4vw,11px);
+ }
+ .showcase[data-magazine-proof="true"] .mag2__hero-foot{font-size:9px}
+ .showcase[data-magazine-proof="true"] .mag2__hero-eyebrow{font-size:9px}
+ .showcase[data-magazine-proof="true"] .mag2__wall{
+  height:clamp(100px,17svh,180px);
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .showcase[data-magazine-proof="true"] .mag2__curtain,
+ .showcase[data-magazine-proof="true"] .mag2__fold,
+ .showcase[data-magazine-proof="true"] .mag2__star{will-change:auto}
+}
