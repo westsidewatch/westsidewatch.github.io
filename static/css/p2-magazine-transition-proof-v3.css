@@ -376,3 +376,10 @@
   will-change:auto;
  }
 }
+
+/* Hide the legacy P2 footer once the Magazine gates enter: the old
+   ENTER LIVING WATER / folio must not print over our moving city wall. */
+.showcase[data-magazine-design="xiwang-v3"][data-p2-phase="church-to-magazine"] .index,
+.showcase[data-magazine-design="xiwang-v3"][data-p2-phase="magazine"] .index{
+ visibility:hidden;opacity:0;pointer-events:none;
+}

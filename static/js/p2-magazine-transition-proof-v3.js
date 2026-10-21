@@ -63,7 +63,7 @@ magazine.innerHTML=
   '<div class="mag3__door mag3__door--right"><div class="mag3__door-wall mag3__door-wall--right"></div></div>'+
  '</div>'+
  '<div class="mag3__night-quote" aria-label="羅馬書第十三章十二節">'+
-  '<span class="mag3__scripture-kicker" lang="en">THE DAY IS AT HAND.</span>'+
+  '<span class="mag3__scripture-kicker" lang="en">NOCTURNE / THE COMING DAY</span>'+
   '<div class="mag3__night-type" lang="en"><span>The night</span><em>is far spent,</em></div>'+
   '<p class="mag3__dayline" lang="en">the day is at hand:</p>'+
   '<div class="mag3__scripture-cn" lang="zh-Hant">黑夜已深，<br>白晝將近。</div>'+
