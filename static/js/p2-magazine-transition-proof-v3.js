@@ -43,7 +43,7 @@ magazine.innerHTML=
  '<div class="mag3__spread">'+
   '<aside class="mag3__left" aria-label="黎明與西望">' +
    '<div class="mag3__vertical-tag" lang="en">02 / WESTSIDE WATCH</div>'+
-   '<div class="mag3__glyph-lift">'+glyph+'</div>'+
+   
    '<span class="mag3__left-edition" lang="en">A WATCHFUL EDITION / 02</span>'+
   '</aside>'+
   '<main class="mag3__center" aria-label="西望雜誌正式目錄">'+
@@ -71,6 +71,7 @@ magazine.innerHTML=
   '<div class="mag3__scripture-cn" lang="zh-Hant">黑夜已深，<br>白晝將近。</div>'+
   '<cite class="mag3__cite" lang="en">ROMANS 13:12 / KJV</cite>'+
  '</div>'+
+ '<div class="mag3__glyph-lift">'+glyph+'</div>'+
  '<div class="mag3__star" aria-hidden="true"><iframe tabindex="-1" title="晨星 v5.3／加快播放" src="/experiments/morning-star-3d-lab.html?asset=1&amp;autoplay=1&amp;speed=2.1" loading="eager"></iframe></div>'+
  // Door-attached half panos above; at the final triptych, this SINGLE
  // uninterrupted backing panorama replaces them. No static fixed top strip.
