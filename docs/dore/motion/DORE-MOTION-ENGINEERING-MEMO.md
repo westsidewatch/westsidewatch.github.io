@@ -506,5 +506,7 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 - **手機**還是以完整一欄 Contents 閱讀為優先；雙屏過渡保留、但最終右側引用層和左側大型 3D 星不蓋住閱讀目錄。與桌面分欄不同是閱讀重排，不能把三欄直接縮小。
 - **唯一工程入口**不變：此備忘錄與 Design OS，Lab 仍沿用 `static/experiments/p2-magazine-transition-lab.html`、flag `?magazineProof=1`；第三輪程式和 CSS 為 `static/js/p2-magazine-transition-proof-v3.js`、`static/css/p2-magazine-transition-proof-v3.css`。舊版留作回溯，但主站 P2 `/p2/living-water.html` 不帶 flag 的路線不變。封版星光底紋 v2 仍暫停。
 
+**首頁動效數值完全一致的最後校正：** 保留主捲動 `p`、單調線性七折幕進度 `reveal=clamp(p/.39)`（不允許預先另加 `smooth` 造成雙重緩動）；每層仍採正式 P2 `phase=clamp((reveal*1.11−i*.065)/.72)` + `foldEase`。左半幕的剪裁長度也必須跟第一層的實際折展比例同步，不能另用一般漸入裁掉七層；第七幕完全展開後才從水藍換景成黎明金（p=.39–.46），接著雙門才開（p=.46–.90）。這是修正「看似七色卻仍不是首頁的折幕」的關鍵。舊版 footer `.index` 在 Magazine 場景階段隱藏，避免與底部移動城牆重疊。
+
 **本輪程式驗收必須逐項核對**：7 層開合與反轉、官方 SVG 唯一引用、左欄 SVG 與星體 X 座標不變、8.5°/s 僅在嵌入啟用、12＋3 精確、門左右分段城牆和底層全幅城牆素材連續、巨幅字不裁切、桌面／手機中文字重 200、舊 Church 保護、滾動暫停即停止。**CI 合格不等於視覺合格**：仍待實際截圖或瀏覽器驗收和修改。
 

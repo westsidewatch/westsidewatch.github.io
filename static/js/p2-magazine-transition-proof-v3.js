@@ -89,8 +89,9 @@ const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
 // quartic foldEase and top-center scaleY on full-overlap planes.
 function render(vh){
  const p=clamp((vh-2.85)/1);
- const change=smooth(p/.39);
- const door=smooth((p-.35)/.51);
+ const reveal=clamp(p/.39); // linear positional reveal, exactly like homepage
+ const change=smooth(reveal); // only applies to the right-night surface
+ const door=smooth((p-.46)/.44); // first finish sevenfold and dawn-gold settle
  const rise=smooth((p-.11)/.69);
  const mobile=typeof matchMedia==='function'&&matchMedia('(max-width:700px)').matches;
  magazine.style.visibility=p>0.00001?'visible':'hidden';
@@ -98,17 +99,18 @@ function render(vh){
  magazine.style.pointerEvents=p>=.995?'auto':'none';
  magazine.setAttribute('aria-hidden',p>=.995?'false':'true');
  folding.forEach((el,i)=>{
-  const phase=clamp((change*1.11-i*.065)/.72);
+  const phase=clamp((reveal*1.11-i*.065)/.72);
   const opened=foldEase(phase);
   el.style.transform='scale3d(1,'+opened.toFixed(6)+',1)';
   el.style.zIndex=String(i+1);
   el.style.visibility='visible';
  });
  // Expose the *gold* under the completed seven-color water curtain.
- const gold=smooth((change-.84)/.16);
+ const gold=smooth((p-.39)/.07); // gold appears only AFTER the seventh panel finishes
  doors.style.setProperty('--mag3-gold',gold.toFixed(5));
  rightDoor.style.clipPath='inset(0 0 '+(100* (1-change)).toFixed(3)+'% 0)';
- leftDoor.style.clipPath='inset(0 0 '+(100*(1-change)).toFixed(3)+'% 0)';
+ const firstFold=foldEase(clamp((reveal*1.11)/.72));
+ leftDoor.style.clipPath='inset(0 0 '+(100*(1-firstFold)).toFixed(3)+'% 0)';
  leftDoor.style.transform='translate3d('+(-100*door).toFixed(3)+'%,0,0)';
  rightDoor.style.transform='translate3d('+(100*door).toFixed(3)+'%,0,0)';
  spread.style.opacity=String(smooth((p-.28)/.28));
