@@ -3,12 +3,17 @@ const root=document.querySelector('.showcase'),planes=[...root.querySelectorAll(
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};
 // Same positional curve and stagger as the homepage navigation; no timed playback.
 const magazineProof=new URLSearchParams(location.search).get('magazineProof')==='1';
-// Proof-only handoff: Church finishes at 2.37 vh, then Magazine starts immediately.
-// The production/non-proof mapping remains identical to its existing schedule.
+// The magazine proof eliminates all three old no-op intervals while
+// preserving each already-approved drawScene phase and their direction:
+// 1) sevenfold: vh 0..0.5; 2) water rise: .65..1.6;
+// 3) church doors: 1.72..2.37; 4) magazine: 2.37..3.85.
+// The original non-proof timeline remains unchanged.
 const handoffVh=2.37,finalVh=3.85;
-const handoffProgress=.75*handoffVh/2.9;
+const handoffProgress=.587;
 const embeddedScene=p=>magazineProof
- ? p<=handoffProgress?p/.75*2.9
+ ? p<=.14 ? p/.14*.5
+   : p<=.405 ? .65+(p-.14)/(.405-.14)*.95
+   : p<=handoffProgress ? 1.72+(p-.405)/(handoffProgress-.405)*.65
    : handoffVh+(p-handoffProgress)/(1-handoffProgress)*(finalVh-handoffVh)
  : p<=.75?p/.75*2.9:2.9+(p-.75)/.25*1.1;
 const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
