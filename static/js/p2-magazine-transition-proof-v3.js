@@ -73,10 +73,12 @@ magazine.innerHTML=
   '<div class="mag3__door mag3__door--right"><div class="mag3__door-wall mag3__door-wall--right"></div></div>'+
  '</div>'+
  '<div class="mag3__night-quote" aria-label="羅馬書第十三章十二節">'+
-  '<span class="mag3__scripture-kicker" lang="en">NOCTURNE / THE COMING DAY</span>'+
-  '<div class="mag3__night-type" lang="en"><span>The night</span><em>is far spent,</em></div>'+
-  '<p class="mag3__dayline" lang="en">the day <span>is at hand:</span></p>'+
-  '<div class="mag3__scripture-cn" lang="zh-Hant">黑夜已深，<br>白晝將近。</div>'+
+  '<div class="mag3__verse-en">'+
+    '<span class="mag3__scripture-kicker" lang="en">NOCTURNE / THE COMING DAY</span>'+
+    '<div class="mag3__night-type" lang="en"><span>The night</span><em>is far spent,</em></div>'+
+    '<p class="mag3__dayline" lang="en">the day <span>is at hand:</span></p>'+
+  '</div>'+
+  '<div class="mag3__verse-zh" lang="zh-Hant"><p class="mag3__scripture-cn">黑夜已深，<br>白晝將近。</p></div>'+
   '<cite class="mag3__cite" lang="en">ROMANS 13:12 / KJV</cite>'+
  '</div>'+
  '<div class="mag3__glyph-lift">'+glyph+'</div>'+
@@ -140,14 +142,19 @@ function render(vh){
  spread.style.opacity=String(phase(p,[.75,.95]));
  // The star and 西望 travel at the SAME time, while both doors are locked.
  // Their lateral reposition happens only during opening.
- const starX=25-11*door,starY=78-65*rise;
+ // The star lifts the un-stretched original glyph into a single vertical
+ // emblem. Its final y=18svh forms an upper focal point while the
+ // title visually crosses the cover/contents hinge.
+ const starX=25-11*door,starY=78-60*rise;
  star.style.left=starX.toFixed(3)+'%';
  star.style.top=starY.toFixed(3)+'%';
  star.style.opacity=String(phase(p,[.44,.49])*mobileCover);
  star.style.setProperty('--mag3-star-size',mobile?'min(43vw,174px)':'clamp(220px,18vw,308px)');
  glyphLift.style.left=(12.5-8.5*door).toFixed(3)+'%';
  glyphLift.style.width=(25-5*door).toFixed(3)+'%';
- glyphLift.style.top=(starY+19).toFixed(3)+'svh';
+ glyphLift.style.top=(starY+11).toFixed(3)+'svh';
+ // Tighten only when the doors open: never scale/stretch the approved SVG.
+ glyphLift.style.height=(39-5*door).toFixed(3)+'svh';
  glyphLift.style.transform='none';
  glyphLift.style.opacity=String(phase(p,[.44,.49])*mobileCover);
  // The verse is already composed at its FINAL width before the leaves open.

@@ -64,7 +64,7 @@
 .showcase[data-magazine-design="xiwang-v3"] .mag3__door-wall--left{background-position:left bottom}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__door-wall--right{background-position:right bottom}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__wall-final{position:absolute;left:0;right:0;bottom:0;z-index:19;background-size:100% auto;background-position:center bottom;opacity:0;pointer-events:none}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__night-quote{position:absolute;top:clamp(145px,18.5svh,195px);left:60%;width:26%;padding-inline:clamp(18px,1.55vw,29px);z-index:20;display:flex;flex-direction:column;color:#fbf4e8;pointer-events:none;opacity:0;will-change:left,opacity}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__night-quote{position:absolute;top:0;bottom:0;height:100%;box-sizing:border-box;left:60%;width:26%;padding-inline:clamp(18px,1.55vw,29px);z-index:20;display:grid;grid-template-rows:minmax(0,44fr) minmax(0,36fr) minmax(0,20fr);color:#fbf4e8;pointer-events:none;opacity:0;will-change:left,opacity}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__scripture-kicker{font:400 clamp(10px,.73vw,12px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.17em;color:#d7c5a4}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__night-type{display:flex;flex-direction:column;gap:5px;margin:clamp(19px,3svh,33px) 0 clamp(15px,2.7svh,27px);font:400 clamp(42px,3.7vw,66px)/.92 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.045em}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__night-type span{display:block}
@@ -113,12 +113,12 @@
 .showcase[data-magazine-design="xiwang-v3"] .mag3__entry{grid-template-columns:28px minmax(0,1fr)}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__zh{font-size:17px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__column i{font-size:13px}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__work{font-size:16px;line-height:1.4;line-height:1.42}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__work{font-size:16px;line-height:1.42}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__subjects{font-size:14px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__interlude{font-size:14px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__center-bottom{bottom:3%;font-size:10px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__glyph-lift{height:39svh}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__night-quote{top:clamp(166px,25svh,211px);padding-inline:12px}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__night-quote{padding-inline:12px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__night-type{font-size:clamp(25px,6.3vw,42px)}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__dayline{font-size:clamp(18px,4.6vw,27px);margin-bottom:23px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__scripture-cn{font-size:clamp(15px,3.8vw,22px)}
@@ -142,4 +142,42 @@
 }
 @media(prefers-reduced-motion:reduce){
  .showcase[data-magazine-design="xiwang-v3"] .mag3__index{scroll-behavior:auto}
+}
+
+/* Art direction / 44% editorial horizon. The cover–contents page edge
+   anchors both bilingual movements and the vertical star/西望 emblem. */
+.showcase[data-magazine-design="xiwang-v3"] .mag3__verse-en{
+ min-width:0;grid-row:1;align-self:end;padding-bottom:clamp(22px,3.5svh,36px);
+}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__verse-zh{
+ min-width:0;grid-row:2;align-self:start;padding-top:clamp(26px,4.8svh,53px);
+}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__scripture-cn{margin:0}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__cite{grid-row:3;align-self:center;margin-top:0}
+/* One fine edition register stays ATTACHED to both moving leaves,
+   echoing the physical 44% paper seam without another decorative texture. */
+.showcase[data-magazine-design="xiwang-v3"] .mag3__door::after{
+ content:"";position:absolute;left:5%;right:5%;top:44%;height:1px;
+ z-index:5;pointer-events:none;opacity:.36;
+}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__door--left::after{
+ background:linear-gradient(90deg,transparent,rgba(32,55,69,.37) 25%,rgba(32,55,69,.46) 70%,transparent);
+}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__door--right::after{
+ background:linear-gradient(90deg,transparent,rgba(240,219,171,.34) 27%,rgba(240,219,171,.42) 65%,transparent);
+}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__door--left{
+ background:radial-gradient(ellipse 70% 43% at 51% 22%,rgba(245,230,186,.25),transparent 85%),linear-gradient(110deg,#d5bd7c,var(--ws-first-light,#a2872a) 85%);
+}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__door--right{
+ background:radial-gradient(ellipse 105% 45% at 0% 46%,rgba(124,161,178,.12),transparent 76%),linear-gradient(115deg,#23415a,#19334c 80%);
+}
+@media(max-width:1100px) and (min-width:701px){
+ .showcase[data-magazine-design="xiwang-v3"] .mag3__verse-en{padding-bottom:clamp(12px,2svh,22px)}
+ .showcase[data-magazine-design="xiwang-v3"] .mag3__verse-zh{padding-top:clamp(22px,4svh,39px)}
+}
+@media(max-width:700px){
+ .showcase[data-magazine-design="xiwang-v3"] .mag3__night-quote{top:0;height:100%;display:grid;grid-template-rows:minmax(0,44fr) minmax(0,36fr) minmax(0,20fr)}
+ .showcase[data-magazine-design="xiwang-v3"] .mag3__verse-en{padding-bottom:clamp(12px,2svh,18px)}
+ .showcase[data-magazine-design="xiwang-v3"] .mag3__verse-zh{padding-top:clamp(14px,2.7svh,28px)}
 }

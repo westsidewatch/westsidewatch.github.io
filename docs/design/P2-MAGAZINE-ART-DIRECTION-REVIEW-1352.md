@@ -26,6 +26,19 @@ Skills: [new-westside-editorial-web](../../dore-design/knowledge-lab/skills/new-
 | **important** | Reduced motion only disabled will-change but did not stop scroll-bound transforms | Snap the five proof stages; star iframe already respects OS reduced-motion preference | Proof JS + original morning-star asset; actual reduced-motion user-agent test |
 | **important** | Real rendered browser geometry, contrast, keyboard, 200% zoom and responsive frames not independently observed | Remain unapproved rather than assume screenshots from green CI | Design OS geometry tool and visual verification |
 
+
+## Pass 3 — Negative space as a 44% editorial register
+
+**Before:** The user's 18:10 screenshot shows left gold and right navy as unstructured remainder despite the strong central paper pairing. More decorative objects would worsen the problem.
+
+**Single design direction: dawn threshold.** Above the exact 44% cover/contents fold, the morning star and English Roman text hold the attention; beneath it, the natural-aspect original 西望 SVG and Chinese scripture establish the second reading movement. The Romans source settles near the base, safely above the city wall. Both moving color-leaves share one almost invisible registration rule aligned to the real paper seam, not a repeated engraved texture.
+
+**Implementation:** The right quotation now has separate semantic English/Chinese groups in one full-height 44/36/20 editorial grid. The star ends at 18svh instead of 13svh; 西望 is lifted nearer the star and becomes 5svh shorter during opening, without horizontal or vertical distortion. Subtle local dawn/night lighting references the actual subject, not decorative filler. The middle cover and complete contents are preserved.
+
+**Acceptance pending:** Compare the 90% held two-leaf state with the 100% opened triptych at 1648×928, 768×1024, 390×844 and 200% zoom; verify no overlaps with real font metrics, reversibility, independent article scrolling, reduced motion, and keyboard focus. This is design implementation, **not** evidence of award-calibre approval until screenshots are checked.
+
+**Rejected direction:** Adding extra line engravings or metadata to fill both color fields. This would reduce editorial restraint without fixing the compositional weight.
+
 ## Award lenses and current score
 
 Internal 10-axis rubric is **NOT SCORED** until the updated preview is actually observed at desktop, tablet and phone. Earlier screenshots expose blockers; they do not support an 18/20 promotion. Awwwards score, Webby score and FWA score **are not provided or inferred**.
