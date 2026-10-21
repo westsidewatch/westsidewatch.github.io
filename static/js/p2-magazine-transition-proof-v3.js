@@ -67,7 +67,7 @@ magazine.innerHTML=
  '<div class="mag3__night-quote" aria-label="羅馬書第十三章十二節">'+
   '<span class="mag3__scripture-kicker" lang="en">NOCTURNE / THE COMING DAY</span>'+
   '<div class="mag3__night-type" lang="en"><span>The night</span><em>is far spent,</em></div>'+
-  '<p class="mag3__dayline" lang="en">the day is at hand:</p>'+
+  '<p class="mag3__dayline" lang="en">the day <span>is at hand:</span></p>'+
   '<div class="mag3__scripture-cn" lang="zh-Hant">黑夜已深，<br>白晝將近。</div>'+
   '<cite class="mag3__cite" lang="en">ROMANS 13:12 / KJV</cite>'+
  '</div>'+
@@ -87,56 +87,57 @@ const spread=magazine.querySelector('.mag3__spread');
 const clamp=x=>Math.max(0,Math.min(1,x));
 const smooth=x=>{x=clamp(x);return x*x*(3-2*x)};
 const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
-// The live homepage P2 uses exactly: reveal*1.11 - i*.065, / .72,
-// quartic foldEase and top-center scaleY on full-overlap planes.
+// Strictly sequential. A scroll reversal precisely undoes every stage.
+const timeline=Object.freeze({night:[0,.23],folds:[.23,.44],star:[.44,.69],hold:[.69,.75],open:[.75,.99]});
+const phase=(p,window)=>smooth((p-window[0])/(window[1]-window[0]));
 function render(vh){
- const p=clamp((vh-2.85)/1);
- const reveal=clamp(p/.39); // linear positional reveal, exactly like homepage
- const change=smooth(reveal); // only applies to the right-night surface
- const door=smooth((p-.46)/.44); // first finish sevenfold and dawn-gold settle
- const rise=smooth((p-.11)/.69);
+ const p=clamp(vh-2.85);
+ const night=phase(p,timeline.night);
+ const fold=phase(p,timeline.folds);
+ const rise=phase(p,timeline.star);
+ const door=phase(p,timeline.open);
  const mobile=typeof matchMedia==='function'&&matchMedia('(max-width:700px)').matches;
- magazine.style.visibility=p>0.00001?'visible':'hidden';
+ magazine.style.visibility=p>.00001?'visible':'hidden';
  magazine.style.clipPath='none';
  magazine.style.pointerEvents=p>=.995?'auto':'none';
  magazine.setAttribute('aria-hidden',p>=.995?'false':'true');
+ // Right completely descends before the left side can begin its ascent.
+ rightDoor.style.clipPath='inset(0 0 '+(100*(1-night)).toFixed(3)+'% 0)';
+ leftDoor.style.clipPath='inset('+(100*(1-fold)).toFixed(3)+'% 0 0 0)';
+ // Seven real narrow strips (8svh each), not seven full-height color slabs.
  folding.forEach((el,i)=>{
-  const phase=clamp((reveal*1.11-i*.065)/.72);
-  const opened=foldEase(phase);
-  el.style.transform='scale3d(1,'+opened.toFixed(6)+',1)';
+  const opened=foldEase(clamp((fold*1.11-i*.065)/.72));
+  el.style.transform='translate3d(0,'+(103-109*opened).toFixed(4)+'svh,0)';
+  el.style.opacity=String(1-phase(p,[.4,.45]));
   el.style.zIndex=String(i+1);
-  el.style.visibility='visible';
+  el.style.visibility=fold>0&&p<.46?'visible':'hidden';
  });
- // Expose the *gold* under the completed seven-color water curtain.
- const gold=smooth((p-.39)/.07); // gold appears only AFTER the seventh panel finishes
- doors.style.setProperty('--mag3-gold',gold.toFixed(5));
- rightDoor.style.clipPath='inset(0 0 '+(100* (1-change)).toFixed(3)+'% 0)';
- const firstFold=foldEase(clamp((reveal*1.11)/.72));
- leftDoor.style.clipPath='inset(0 0 '+(100*(1-firstFold)).toFixed(3)+'% 0)';
- leftDoor.style.transform='translate3d('+(-100*door).toFixed(3)+'%,0,0)';
- rightDoor.style.transform='translate3d('+(100*door).toFixed(3)+'%,0,0)';
- spread.style.opacity=String(smooth((p-.28)/.28));
- // The star is always at the same x; it ONLY rises vertically on the
- // LEFT, never cutting diagonally across the middle column.
- star.style.left=mobile?'17%':'14%';
- star.style.top=(78-62*rise).toFixed(3)+'%';
- star.style.opacity=String(smooth((change-.17)/.37)*(mobile?(1-smooth((door-.52)/.38)):1));
- star.style.setProperty('--mag3-star-size',mobile?'min(31vw,128px)':'clamp(152px,13vw,216px)');
- // The glyph is pulled upward by the star within the same left column.
- glyphLift.style.transform='translate3d(0,'+((1-rise)*32).toFixed(3)+'svh,0)';
- glyphLift.style.opacity=String(smooth((rise-.63)/.37));
- // Type does not animate diagonally into the center; the right paragraph
- // only compresses horizontally into its own destination column.
- quote.style.left=mobile?'52%':(52+20*door).toFixed(3)+'%';
- quote.style.width=mobile?'45%':(44-18*door).toFixed(3)+'%';
- quote.style.opacity=String(smooth((change-.4)/.38)*(mobile?(1-smooth((door-.05)/.55)):1));
- // The two physical wall halves travel with their respective doors.
- // The complete panorama becomes visible as they uncover the stone.
- wallFinal.style.opacity=String(smooth((door-.22)/.64));
+ doors.style.setProperty('--mag3-gold',phase(p,[.39,.45]).toFixed(5));
+ // 50vw leaves remain as the OUTSIDE 28vw of the final triptych.
+ // No complete exit off-screen and no floating center contents in advance.
+ leftDoor.style.transform='translate3d('+(-22*door).toFixed(3)+'vw,0,0)';
+ rightDoor.style.transform='translate3d('+(22*door).toFixed(3)+'vw,0,0)';
+ spread.style.opacity=String(phase(p,[.75,.95]));
+ // The star and 西望 travel at the SAME time, while both doors are locked.
+ // Their lateral reposition happens only during opening.
+ const starX=25-11*door,starY=78-65*rise;
+ star.style.left=starX.toFixed(3)+'%';
+ star.style.top=starY.toFixed(3)+'%';
+ star.style.opacity=String(phase(p,[.44,.49]));
+ star.style.setProperty('--mag3-star-size',mobile?'min(43vw,174px)':'clamp(220px,18vw,308px)');
+ glyphLift.style.left=(12.5-11.5*door).toFixed(3)+'%';
+ glyphLift.style.width=(25+door).toFixed(3)+'%';
+ glyphLift.style.top=(starY+16).toFixed(3)+'svh';
+ glyphLift.style.transform='none';
+ glyphLift.style.opacity=String(phase(p,[.44,.49]));
+ quote.style.left=(52+20*door).toFixed(3)+'%';
+ quote.style.width=(46-18*door).toFixed(3)+'%';
+ quote.style.opacity=String(phase(p,[.10,.22]));
+ wallFinal.style.opacity=String(phase(p,[.87,.99]));
  magazine.style.setProperty('--mag3-door',door.toFixed(5));
  magazine.style.setProperty('--mag3-rise',rise.toFixed(5));
- magazine.style.setProperty('--mag3-change',change.toFixed(5));
- magazine.dataset.magazineStage=p<.36?'sevenfold':door<.999?'open-book':'contents';
+ magazine.style.setProperty('--mag3-change',night.toFixed(5));
+ magazine.dataset.magazineStage=p<.23?'right-night':p<.44?'left-sevenfold':p<.69?'star-lifts-xiwang':p<.75?'two-page-hold':p<.99?'opening':'contents';
 }
 window.wsP2MagazineProof={render};
 render(Number(root.dataset.p2Progress)||0);
