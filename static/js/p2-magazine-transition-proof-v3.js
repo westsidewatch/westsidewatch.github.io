@@ -134,8 +134,10 @@ function render(vh){
  glyphLift.style.top=(starY+16).toFixed(3)+'svh';
  glyphLift.style.transform='none';
  glyphLift.style.opacity=String(phase(p,[.44,.49])*mobileCover);
- quote.style.left=(52+20*door).toFixed(3)+'%';
- quote.style.width=(46-18*door).toFixed(3)+'%';
+ // The verse is already composed at its FINAL width before the leaves open.
+ // Translate its block with the right leaf; never rescale / reflow its type.
+ quote.style.left=mobile?'52%':(61+12*door).toFixed(3)+'%';
+ quote.style.width=mobile?'46%':'26%';
  quote.style.opacity=String(phase(p,[.10,.22])*mobileCover);
  wallFinal.style.opacity=String(phase(p,[.87,.99]));
  magazine.style.setProperty('--mag3-door',door.toFixed(5));
