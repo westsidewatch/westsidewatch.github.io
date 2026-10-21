@@ -58,7 +58,7 @@ magazine.innerHTML=
    '</section>'+
    '<section class="mag3__contents-page" aria-label="Vol.00 正式目錄">'+
      '<div class="mag3__contents-heading"><span class="mag3__section-marker" lang="en">CONTENTS<span>.</span></span><span class="mag3__contents-count" lang="zh-Hant">四樂章 · 十二欄目 · 三間奏</span></div>'+
-     '<div class="mag3__index" role="group" aria-label="四樂章、十二欄目、三間奏">'+contents+'</div>'+
+     '<div class="mag3__index" role="region" tabindex="0" aria-label="四樂章、十二欄目、三間奏，可使用方向鍵捲動目錄">'+contents+'</div>'+
      '<footer class="mag3__center-bottom"><span lang="en">VOL.00 / 2026</span><a href="/journal/" lang="en">ENTER WESTSIDE WATCH ↗</a></footer>'+
    '</section>'+
   '</main>'+
@@ -118,6 +118,8 @@ function render(vh){
  magazine.style.visibility=p>.00001?'visible':'hidden';
  magazine.style.clipPath='none';
  magazine.style.pointerEvents=p>=.995?'auto':'none';
+ // Hidden/transitional links and the scrollable directory must NOT enter Tab order.
+ magazine.inert=p<.995;
  magazine.setAttribute('aria-hidden',p>=.995?'false':'true');
  // Right completely descends before the left side can begin its ascent.
  rightDoor.style.clipPath='inset(0 0 '+(100*(1-night)).toFixed(3)+'% 0)';

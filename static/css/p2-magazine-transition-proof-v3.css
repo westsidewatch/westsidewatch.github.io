@@ -135,3 +135,11 @@
 .showcase[data-magazine-design="xiwang-v3"] .mag3__index:focus-within{
   scrollbar-color:rgba(84,71,48,.86) transparent;
 }
+
+/* Pass 2: visible keyboard location and interior scroll, with no global override. */
+.showcase[data-magazine-design="xiwang-v3"] .mag3__index:focus-visible{
+ outline:2px solid #927443;outline-offset:-2px;
+}
+@media(prefers-reduced-motion:reduce){
+ .showcase[data-magazine-design="xiwang-v3"] .mag3__index{scroll-behavior:auto}
+}

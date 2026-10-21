@@ -35,7 +35,7 @@ Pre-release gate: internal review ≥18/20 with no zero, no unresolved block; ad
 ## Review cycles
 
 1. **Pass 1 — source code and editorial critique:** no-op scroll audited, complete Vol.00 contents preserved, typography hierarchy and two-leaf balance adjusted, keyboard focus and reduced-motion behavior improved. JS syntax check and CI still required.
-2. **Pass 2 — deployed side-by-side browser screenshots:** pending direct evidence; measure actual bounding boxes and compare 90% / 100% at 1648×928, 768px, 390px and 200% zoom. Identify clipping or nonfunctional scroll before next approval.
+2. **Pass 2 — static keyboard/reduced-motion critique:** add `inert` to unready magazine content; keep interactive contents in the Tab order only after the leaves open; make the inner Contents region keyboard-scrollable and visibly focused. These are code-level corrections, **not** a keyboard-browser PASS. Deployed side-by-side browser screenshots still pending: measure 90% / 100% at 1648×928, 768px, 390px and 200% zoom.
 3. **Pass 3 — rejection / refinement:** apply only if pass 2 supplies reproducible defects, not speculative CSS overlays; re-run the same screen and use the same rubric.
 
 **Do not merge** merely because PR is conflict-free or Cloudflare preview/Production Build succeeds.
