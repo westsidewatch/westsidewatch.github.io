@@ -491,3 +491,20 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 6. **獨立預覽與部署隔離**：第二輪檔案為 `static/js/p2-magazine-transition-proof-v2.js`、`static/css/p2-magazine-transition-proof-v2.css`，藉原有 `?magazineProof=1` 才載入；實驗頁仍是 `static/experiments/p2-magazine-transition-lab.html`，控制器改為頂端獨立停靠區，避免遮擋頁面 masthead。普通 P2 URL、Church V75、教會右欄聚會表和全站 OS 均不變。底紋 v2 繼續凍結，不載入此輪。
 7. **驗收不得偷換概念**：工程採可逆 scroll 數值測試、7 色折幕與 12+3 自動檢查後，仍必須實際檢查桌面、手機、初始半屏、45% 開門、完全三欄，尤其看晨星是否壓到目錄、城牆是否真的完整可見、正文是否被底紋搶焦點、元件有無越界。未經使用者看圖驗收不宣稱正式完成。
 
+
+
+## 2026-10-20｜P2 Magazine 第三輪：官方 Logo、極細「西望」、晨星直升、開門城牆
+
+**使用者直接驗收第二輪 `fe2e587` 截圖後的修正（本輪優先級高於第二輪排版）：**
+- 七層必須與首頁動效**完全一致**，不僅是七個 OS 顏色。P2 正式主時鐘 `static/js/p2-living-water.js` 已有 `foldEase(v)=v<.5?8v⁴:1−(−2v+2)⁴/2`、`phase=clamp((reveal*1.11−i*.065)/.72)`、**top-center `scale3d(1,y,1)`、全覆蓋重疊的真七層**。第三輪 Magazine 左半直接調用一樣的曲線、位次、色彩順序，沒有等份條帶或另加陰影；最後回到 Magazine 黎明金是七層結束後的色底換景，不是第八條幕。
+- `The Journal` **不是雜誌名稱**。中央頂部直接使用現有品牌資產 `static/images/westside-watch-masthead-landscape.svg`，不再自製字體代替 Logo，也不重複在中間排大大的「西望雜誌」；中央另有 `Contents.` / 極細「目錄」（200 字重）。
+- 左欄最終畫面是已封版的**單一透明琉璃晨星 v5.3** 在上，下面接一幅**直排佔較大版面的「西望」二字 SVG**；此 SVG 中的字體引用 Design OS 昭源黑體 `--ws-weight-zh-air:200`、不拉伸變形。取消上一輪的 `Dawn.`、`Watch for Dawn.`、重複的雜誌中文名稱、Slogan。晨星在所有畫面中都固定在左側同一個 X 座標，只隨 P2 主 scroll **直線上升**；「西望」在晨星上升至足夠高度後，與之同方向延遲出現，避免前期互相遮擋，最終留在自己的左欄，不切穿中央目錄。晨星幾何不改動。
+- 晨星轉速略慢：只針對 `morning-star-3d-lab.html?asset=1&autoplay=1&speed=1.7` 的**嵌入模式**加速倍率 1.7，從預設 5°/s 到 8.5°/s。獨立原版 v5.3 未帶參數時繼續 5°/s，符合既有封版資產保護。
+- 右欄不再僅是文字方塊：採用 `docs/design/WESTSIDE_MAGAZINE_KINETIC_TYPOGRAPHY_REFERENCE.md` 所引用的 Codrops Kinetic Type／Superfluid「文字本身是版面及空間層級」原則、`docs/design/WESTSIDE-EDITORIAL-MANUAL.md` 的 Bodoni Moda Roman/Italic 與中文 200 搭配。以羅馬書 13:12 “The night is far spent, the day is at hand:” 的一組英中經文成為主視覺，文字無重複疊印，引用字與出處只有一條必要修飾線；不引入另一套 CSS 設計管理系統、也不盲目下載 Codrops 風格整包覆蓋 OS。
+- **城牆的物理空間行為**是前輪最大錯誤之一：不是單純固定在底部的獨立 overlay。開門前分為分別附著在左右兩塊色面底部的同一全景左右半幅（各自 `background-size:200% auto`、左／右端對齊），門往兩旁分開時**城牆也跟門一起打開**；後面的 Magazine 三欄在開口處逐步顯露完整全幅 `background-size:100% auto` 的同素材全景。最終仍是一條從左到右連續的耶路撒冷城牆，不能重複或出現高低錯位，所有底部內容向上讓位。
+- 三欄的重複裝飾線過多：只保留中央 Contents 一條必要頭線與右側出處短線，移除各欄重複上下框線與無效微型 Folio。正式 Logo 控制頂部，索引四組 WATCH/WALK/WITNESS/WORSHIP 均衡佔據中段，12 條目＋3 間奏、序數及中英文細字字級；空白不再集中到版面下半。設計性中文用 **200 極細**，只把閱讀負擔較大的正文作一般字重。
+- **手機**還是以完整一欄 Contents 閱讀為優先；雙屏過渡保留、但最終右側引用層和左側大型 3D 星不蓋住閱讀目錄。與桌面分欄不同是閱讀重排，不能把三欄直接縮小。
+- **唯一工程入口**不變：此備忘錄與 Design OS，Lab 仍沿用 `static/experiments/p2-magazine-transition-lab.html`、flag `?magazineProof=1`；第三輪程式和 CSS 為 `static/js/p2-magazine-transition-proof-v3.js`、`static/css/p2-magazine-transition-proof-v3.css`。舊版留作回溯，但主站 P2 `/p2/living-water.html` 不帶 flag 的路線不變。封版星光底紋 v2 仍暫停。
+
+**本輪程式驗收必須逐項核對**：7 層開合與反轉、官方 SVG 唯一引用、左欄 SVG 與星體 X 座標不變、8.5°/s 僅在嵌入啟用、12＋3 精確、門左右分段城牆和底層全幅城牆素材連續、巨幅字不裁切、桌面／手機中文字重 200、舊 Church 保護、滾動暫停即停止。**CI 合格不等於視覺合格**：仍待實際截圖或瀏覽器驗收和修改。
+

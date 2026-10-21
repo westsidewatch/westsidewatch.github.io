@@ -246,12 +246,18 @@ function updateAngle(deg,redraw=true){
  orderGlass(radians);
  if(redraw)requestFrame();
 }
+// Embedded Magazine playback may run faster; v5.3 geometry and ordinary
+// standalone playback keep their sealed default speed.
+const magazineSpinRate=assetMode?Math.min(2.2,Math.max(.5,Number(new URLSearchParams(location.search).get('speed'))||1)):1;
 function draw(now){
  frame=0;
  if(!visible||!onScreen)return;
  if(playing&&!reduced){
   const dt=last?Math.min((now-last)/1000,.05):0;
-  last=now;updateAngle(current+dt*5,false);
+  last=now;
+  // Only the opt-in embedded Magazine instance runs faster. The standalone
+  // sealed v5.3 geometry and its default rotational tempo remain identical.
+  updateAngle(current+dt*5*magazineSpinRate,false);
  }
  renderer.render(scene,camera);
  if(playing&&!reduced)requestFrame();
