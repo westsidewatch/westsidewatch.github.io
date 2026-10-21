@@ -99,9 +99,14 @@ const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
 // Strictly sequential. A scroll reversal precisely undoes every stage.
 const timeline=Object.freeze({night:[0,.23],folds:[.23,.44],star:[.44,.69],hold:[.69,.75],open:[.75,.99]});
 const phase=(p,window)=>smooth((p-window[0])/(window[1]-window[0]));
+const reducedMotion=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+// For reduced-motion users we snap between complete editorial states,
+// never leave partially travelled door planes, enlarged glyphs or text.
+const reducedStage=p=>p<.23?0:p<.44?.23:p<.69?.44:p<.99?.69:1;
 function render(vh){
  // Start when the Church's real open-door completes, not 0.48vh later.
- const p=clamp((vh-2.37)/(3.85-2.37));
+ const inputProgress=clamp((vh-2.37)/(3.85-2.37));
+ const p=reducedMotion?reducedStage(inputProgress):inputProgress;
  const night=phase(p,timeline.night);
  const fold=phase(p,timeline.folds);
  const rise=phase(p,timeline.star);

@@ -8,7 +8,7 @@
 .showcase[data-magazine-design="xiwang-v3"] .mag3__left{background:radial-gradient(ellipse at 80% 21%,rgba(249,232,181,.22),transparent 53%),linear-gradient(110deg,#d5bd7c,var(--ws-first-light,#a2872a) 85%)}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__right{background:radial-gradient(ellipse at 0% 33%,rgba(123,165,188,.12),transparent 59%),#19334c;color:#f7efe4}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__vertical-tag, .showcase[data-magazine-design="xiwang-v3"] .mag3__left-edition, .showcase[data-magazine-design="xiwang-v3"] .mag3__night-edition{display:none}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__glyph-lift{position:absolute;left:12.5%;width:25%;height:45svh;opacity:0;z-index:20;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__glyph-lift{position:absolute;left:12.5%;width:25%;height:39svh;opacity:0;z-index:20;pointer-events:none;display:flex;align-items:center;justify-content:center}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__xiwang-art{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__star{position:absolute;z-index:21;left:25%;top:78%;width:var(--mag3-star-size,clamp(220px,18vw,308px));aspect-ratio:1/1;transform:translate3d(-50%,-50%,0);pointer-events:none;opacity:0;will-change:top,left,opacity}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__star iframe{display:block;width:100%;height:100%;border:0;background:transparent;pointer-events:none}
@@ -34,21 +34,21 @@
 .showcase[data-magazine-design="xiwang-v3"] .mag3__section-marker{font:400 clamp(22px,1.85vw,33px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.04em;color:#253249}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__section-marker span{color:#a2872a}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__contents-count{font:var(--ws-weight-zh-air,200) clamp(11px,.8vw,14px)/1.3 var(--ws-type-display-zh,sans-serif);font-synthesis:none;white-space:nowrap;color:#766d5e}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__index{position:absolute;z-index:2;top:15%;bottom:12%;left:7%;right:7%;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-rows:max-content max-content;align-content:start;column-gap:clamp(17px,1.6vw,30px);row-gap:clamp(12px,1.5svh,19px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(148,126,88,.5) transparent;overscroll-behavior:contain;padding:2px 8px 4px 0}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__index{position:absolute;z-index:2;top:16%;bottom:10%;left:7%;right:7%;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-rows:max-content max-content;align-content:start;column-gap:clamp(17px,1.6vw,30px);row-gap:clamp(17px,2.1svh,26px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(148,126,88,.5) transparent;overscroll-behavior:contain;padding:2px 8px 4px 0}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__movement{display:flex;flex-direction:column;min-height:0;min-width:0;padding:0 0 0 clamp(9px,.72vw,14px);margin:0;border-left:1px solid rgba(155,134,95,.41)}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__movement-head{display:flex;gap:8px;align-items:baseline;margin:0 0 clamp(8px,.9svh,12px)}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__roman{font:italic 400 clamp(13px,.84vw,16px)/1 var(--ws-type-display-en,Georgia,serif);color:#a18351}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__movement-head h3{margin:0;font:400 clamp(24px,1.8vw,32px)/.96 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.03em;color:#1d2e42}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__movement ol{list-style:none;display:grid;gap:clamp(6px,.62svh,9px);margin:0;padding:0}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__movement ol{list-style:none;display:grid;gap:clamp(8px,.9svh,11px);margin:0;padding:0}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__entry{display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:6px;min-width:0;line-height:1.32}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__n{grid-column:1;align-self:start;font:400 clamp(10px,.66vw,12px)/1.48 var(--ws-type-display-en,Georgia,serif);color:#947c56}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__n{grid-column:1;align-self:start;font:400 clamp(12px,.75vw,14px)/1.48 var(--ws-type-display-en,Georgia,serif);color:#947c56}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__entry-text{grid-column:2;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__column{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__zh{font:var(--ws-weight-zh-air,200) clamp(13px,.84vw,16px)/1.3 var(--ws-type-display-zh,sans-serif);letter-spacing:.012em;font-synthesis:none}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__column i{font:italic 400 clamp(10px,.64vw,12px)/1.25 var(--ws-type-display-en,Georgia,serif);color:#826a49}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__work{display:block;font:var(--ws-weight-zh-standard,400) clamp(12px,.73vw,14px)/1.31 var(--ws-type-display-zh,sans-serif);letter-spacing:0;color:#2b3746;font-synthesis:none;overflow-wrap:anywhere}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__subjects{display:block;font:var(--ws-weight-zh-air,200) clamp(12px,.7vw,14px)/1.27 var(--ws-type-display-zh,sans-serif);color:#786955;font-synthesis:none}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__interlude{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;margin:clamp(6px,.8svh,9px) 0 0;padding:0;color:#897141;font:var(--ws-weight-zh-air,200) clamp(11px,.68vw,13px)/1.3 var(--ws-type-display-zh,sans-serif);font-synthesis:none}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__zh{font:var(--ws-weight-zh-air,200) clamp(15px,.98vw,17px)/1.33 var(--ws-type-display-zh,sans-serif);letter-spacing:.012em;font-synthesis:none}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__column i{font:italic 400 clamp(12px,.77vw,14px)/1.35 var(--ws-type-display-en,Georgia,serif);color:#826a49}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__work{display:block;font:var(--ws-weight-zh-standard,400) clamp(15px,.98vw,17px)/1.36 var(--ws-type-display-zh,sans-serif);letter-spacing:0;color:#2b3746;font-synthesis:none;overflow-wrap:anywhere}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__subjects{display:block;font:var(--ws-weight-zh-air,200) clamp(14px,.88vw,16px)/1.34 var(--ws-type-display-zh,sans-serif);color:#786955;font-synthesis:none}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__interlude{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;margin:clamp(6px,.8svh,9px) 0 0;padding:0;color:#897141;font:var(--ws-weight-zh-air,200) clamp(12px,.83vw,14px)/1.4 var(--ws-type-display-zh,sans-serif);font-synthesis:none}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__interlude b{font:400 clamp(9px,.6vw,11px)/1 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.1em}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__interlude i{font:italic 400 clamp(10px,.6vw,12px)/1.2 var(--ws-type-display-en,Georgia,serif)}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__center-bottom{position:absolute;left:7%;right:7%;bottom:3.2%;display:flex;align-items:center;justify-content:space-between;gap:12px;font:400 clamp(10px,.7vw,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.075em;z-index:2;color:#776b5d}
@@ -64,14 +64,14 @@
 .showcase[data-magazine-design="xiwang-v3"] .mag3__door-wall--left{background-position:left bottom}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__door-wall--right{background-position:right bottom}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__wall-final{position:absolute;left:0;right:0;bottom:0;z-index:19;background-size:100% auto;background-position:center bottom;opacity:0;pointer-events:none}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__night-quote{position:absolute;top:clamp(195px,26svh,265px);left:60%;width:26%;padding-inline:clamp(18px,1.55vw,29px);z-index:20;display:flex;flex-direction:column;color:#fbf4e8;pointer-events:none;opacity:0;will-change:left,opacity}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__night-quote{position:absolute;top:clamp(145px,18.5svh,195px);left:60%;width:26%;padding-inline:clamp(18px,1.55vw,29px);z-index:20;display:flex;flex-direction:column;color:#fbf4e8;pointer-events:none;opacity:0;will-change:left,opacity}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__scripture-kicker{font:400 clamp(10px,.73vw,12px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.17em;color:#d7c5a4}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__night-type{display:flex;flex-direction:column;gap:5px;margin:clamp(19px,3svh,33px) 0 clamp(15px,2.7svh,27px);font:400 clamp(42px,3.7vw,66px)/.92 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.045em}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__night-type span{display:block}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__night-type em{display:block;font:italic 400 .74em/1.02 var(--ws-type-display-en,Georgia,serif);color:#eccd99}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__dayline{margin:0 0 clamp(32px,5svh,51px);font:italic 400 clamp(25px,2.5vw,40px)/1.12 var(--ws-type-display-en,Georgia,serif);color:#f9f4e9}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__dayline{margin:0 0 clamp(32px,5svh,51px);font:italic 400 clamp(27px,2.55vw,42px)/1.16 var(--ws-type-display-en,Georgia,serif);color:#f9f4e9}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__dayline span{display:block}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__scripture-cn{font:var(--ws-weight-zh-air,200) clamp(24px,2vw,33px)/1.75 var(--ws-type-display-zh,sans-serif);letter-spacing:.055em;color:#f5e9d8;font-synthesis:none}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__scripture-cn{font:var(--ws-weight-zh-air,200) clamp(26px,2.1vw,35px)/1.72 var(--ws-type-display-zh,sans-serif);letter-spacing:.055em;color:#f5e9d8;font-synthesis:none}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__cite{align-self:flex-start;margin-top:clamp(19px,3svh,32px);font:italic 400 clamp(12px,.92vw,16px)/1.4 var(--ws-type-display-en,Georgia,serif);letter-spacing:.035em;border-top:1px solid rgba(231,207,158,.58);padding-top:9px;color:#ddcbaa}
 /* Narrow desktop / constrained windows. Keep the cover+contents split physical, not a squeezed giant poster. */
 @media(max-width:1100px) and (min-width:701px){
@@ -113,11 +113,11 @@
 .showcase[data-magazine-design="xiwang-v3"] .mag3__entry{grid-template-columns:28px minmax(0,1fr)}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__zh{font-size:17px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__column i{font-size:13px}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__work{font-size:15px;line-height:1.42}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__work{font-size:16px;line-height:1.4;line-height:1.42}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__subjects{font-size:14px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__interlude{font-size:14px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__center-bottom{bottom:3%;font-size:10px}
-.showcase[data-magazine-design="xiwang-v3"] .mag3__glyph-lift{height:42svh}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__glyph-lift{height:39svh}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__night-quote{top:clamp(166px,25svh,211px);padding-inline:12px}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__night-type{font-size:clamp(25px,6.3vw,42px)}
 .showcase[data-magazine-design="xiwang-v3"] .mag3__dayline{font-size:clamp(18px,4.6vw,27px);margin-bottom:23px}
@@ -127,3 +127,11 @@
 }
 @media(prefers-reduced-motion:reduce){.showcase[data-magazine-design="xiwang-v3"] :is(.mag3__fold,.mag3__door,.mag3__star){will-change:auto}}
 .showcase[data-magazine-design="xiwang-v3"][data-p2-phase="church-to-magazine"] .index,.showcase[data-magazine-design="xiwang-v3"][data-p2-phase="magazine"] .index{visibility:hidden;opacity:0;pointer-events:none}
+
+/* Award-quality usability checkpoint — authored only in the P2 magazine owner. */
+.showcase[data-magazine-design="xiwang-v3"] .mag3__center-bottom a:focus-visible{
+  outline:2px solid currentColor;outline-offset:5px;
+}
+.showcase[data-magazine-design="xiwang-v3"] .mag3__index:focus-within{
+  scrollbar-color:rgba(84,71,48,.86) transparent;
+}

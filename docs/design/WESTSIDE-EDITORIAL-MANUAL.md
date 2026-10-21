@@ -99,6 +99,27 @@ Record one **evidence-led** review per change, using the project skill's existin
 6. **Promotion:** existing OS contract and build/CI, Cloudflare preview and **actual browser visual check**. Green CI cannot override a known visual defect.
 7. **Learning:** record what worked, what failed and where; keep source research linked rather than creating a second authority.
 
+
+## 6A. Award-calibre release objective — Awwwards / Webby Awards / FWA (2026-10-21)
+
+**User-set quality objective:** design every relevant First Look, Church, Journal, magazine and connected surface to a standard competitive for recognition by **Awwwards, The Webby Awards and FWA**, and self-critique, reject or iterate until evidence supports promoting the work. This is an **internal aspiration and release gate**, never a representation of endorsement, nomination, judging outcome or guaranteed award. A green build / deployed URL does not satisfy this objective.
+
+**External lenses, adapted to the single Westside Design OS:**
+
+- **Awwwards** [published evaluation](https://www.awwwards.com/about-evaluation/): Design 40%, UX/UI 30%, Creativity 20%, Content 10%. Apply this as a design/usability/content balance, not as a fabricated actual jury score.
+- **Webby Awards** [current judging criteria](https://www.webbyawards.com/judging-criteria/): structure/navigation, visual design, content, functionality, interactivity and the *overall experience*. Great typography without a readable route or usable interface fails.
+- **FWA:** benchmark distinctive digital interaction, original conceptual execution and expressive technical craft. Do not claim the FWA has endorsed Westside or that an internally invented numerical scale is an official award rule.
+
+**Required routed skills (from §4 and `new-westside-editorial-web/SKILL.md`):** `ui.visual-hierarchy`, `ui.design-system`, `ui.taste-anti-slop` for composition; `ui.motion-system`, `ui.motion-forensics`, `ui.performance` for the scroll and door sequence; `ui.interaction-quality`, `ui.accessibility` for use; and `ui.critique`, `ui.visual-verification` for final rejection/approval. The project skill's [visual grammar rubric](../../dore-design/knowledge-lab/skills/new-westside-editorial-web/references/visual-grammar.md) remains the internal 10 × 0–2 review across meaning, subject, distinctive composition, typography, two-ink discipline, hierarchy, purposeful interaction, mobile, accessibility and editability.
+
+**Promotion rule:** 15/20 remains the exploratory minimum in §6; for *award-calibre release review*, aim for **at least 18/20**, with no zero and no unresolved **block** finding. This tougher threshold is a **Westside internal heuristic**, not an award prediction. Independently require no known failures in meaningful scroll progression, motion reversibility, editorial readability, contrast, keyboard/focus, reduced motion, tablet/phone, and browser performance.
+
+**Iteration loop:** `actual deployed view at defined viewport → score + defect (block/important/polish) → smallest coherent owner-file change → compare before/after and static/mid/final states → reject or retain → repeat`. Prioritise the single most consequential defect per round; preserve originals, real copy, protected assets and source-of-truth. Do not inflate a score by ignoring difficult tests. An untested checkpoint must say **NOT VERIFIED**, not **PASS**.
+
+**Evidence:** baseline and new browser screenshots at approximately 1648×928, 768px and 390px, plus 200% zoom, keyboard access, contrast, long text, reduced motion, initial/mid/final scroll and return; geometry audit and Core Contract/build/preview outputs. If the execution environment cannot obtain browser screenshots, keep the result **visually unverified** and the PR unmerged. A user screenshot can establish a *before* defect but cannot substitute for an *after* screenshot.
+
+**Maintainability:** keep one design authority and existing CI only. Put acceptance notes in a review file/PR, not in a parallel OS, CSS runtime or new required workflow. The gate is about improving original art direction and usability, not merely adding effects or making award-looking visuals.
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
