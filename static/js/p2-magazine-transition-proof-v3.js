@@ -98,6 +98,9 @@ function render(vh){
  const rise=phase(p,timeline.star);
  const door=phase(p,timeline.open);
  const mobile=typeof matchMedia==='function'&&matchMedia('(max-width:700px)').matches;
+ // On phones the opened issue is one full-width scrolling page; its
+ // closing-cover artwork must clear the article text while opening.
+ const mobileCover=mobile?1-phase(p,[.76,.93]):1;
  magazine.style.visibility=p>.00001?'visible':'hidden';
  magazine.style.clipPath='none';
  magazine.style.pointerEvents=p>=.995?'auto':'none';
@@ -124,16 +127,16 @@ function render(vh){
  const starX=25-11*door,starY=78-65*rise;
  star.style.left=starX.toFixed(3)+'%';
  star.style.top=starY.toFixed(3)+'%';
- star.style.opacity=String(phase(p,[.44,.49]));
+ star.style.opacity=String(phase(p,[.44,.49])*mobileCover);
  star.style.setProperty('--mag3-star-size',mobile?'min(43vw,174px)':'clamp(220px,18vw,308px)');
  glyphLift.style.left=(12.5-11.5*door).toFixed(3)+'%';
  glyphLift.style.width=(25+door).toFixed(3)+'%';
  glyphLift.style.top=(starY+16).toFixed(3)+'svh';
  glyphLift.style.transform='none';
- glyphLift.style.opacity=String(phase(p,[.44,.49]));
+ glyphLift.style.opacity=String(phase(p,[.44,.49])*mobileCover);
  quote.style.left=(52+20*door).toFixed(3)+'%';
  quote.style.width=(46-18*door).toFixed(3)+'%';
- quote.style.opacity=String(phase(p,[.10,.22]));
+ quote.style.opacity=String(phase(p,[.10,.22])*mobileCover);
  wallFinal.style.opacity=String(phase(p,[.87,.99]));
  magazine.style.setProperty('--mag3-door',door.toFixed(5));
  magazine.style.setProperty('--mag3-rise',rise.toFixed(5));
