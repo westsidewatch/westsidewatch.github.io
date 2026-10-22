@@ -632,7 +632,7 @@ function issue(){
 /* R9: original full-issue art direction with unlike source stories, no image-crop template.
    All paragraphs below are sourced literally from the existing official manuscripts. */
 const editorialDeskTargets={'01':'id-act-watch','02':'id-act-watch','03':'id-gate','04':'id-carmel','05':'id-act-walk','06':'id-elim','07':'id-act-walk','08':'id-act-walk','09':'id-esther','10':'id-act-witness','11':'id-horeb','12':'id-maranatha'};
-const editorialDeskStatus={02:'本期內容待找回',07:'文章尚未成稿',08:'本期文章尚未成稿'};
+const editorialDeskStatus={'02':'本期內容待找回','07':'文章尚未成稿','08':'本期文章尚未成稿'};
 const identityGate=[
  '古代的城門不是城牆上挖出的一個洞。人在曠野走了很久，看見城牆之後，還要沿著道路走到牆下。路在那裡收窄，兩側的石牆忽然高起來，外面的陽光被門樓截斷，人和牲畜一起進入陰影。再往前，不是立刻看見城裡的街道，而是一段被石頭包圍的通道。守門的人在這裡看見你，坐在門室裡的人也看見你。你從哪裡來，帶著什麼，要找誰，會在城裡停留多久，都可能在真正進城以前被問清楚。',
  '考古學家在古代近東許多城市遺址都發現過這樣的門。夏瑣、米吉多、基色留下的城門尤其著名。它們不是一扇孤零零的木門，而是一整套建築：門道向城內延伸，兩側設有門室，外牆與城牆連在一起。基色出土的城門具有六個門室，中央通道兩側各三個。這些城門的年代、形制以及它們與古代以色列王國建築活動之間的關係，考古學界仍有不少討論；但今天站在遺址上，仍然能從那些留下來的石牆辨認出一個人當年進城時經過的空間。',
@@ -657,7 +657,7 @@ function identityContents(){
  return groups.map(g=>'<section class="id__index-group"><h3><small>'+g.n+'</small>'+g.name+'</h3><ol>'+g.items.map(([n,zh,en,work])=>
  '<li><span class="id__number">'+n+'</span><div><a href="#'+editorialDeskTargets[n]+'"><strong lang="zh-Hant">'+esc(zh)+'</strong> / <span lang="en">'+esc(en)+'</span></a>'+
  (work?'<small lang="zh-Hant">'+esc(work)+'</small>':'')+
- (editorialDeskStatus[+n]?'<small lang="zh-Hant">'+esc(editorialDeskStatus[+n])+'</small>':'')+'</div></li>').join('')+'</ol>'+
+ (editorialDeskStatus[n]?'<small lang="zh-Hant">'+esc(editorialDeskStatus[n])+'</small>':'')+'</div></li>').join('')+'</ol>'+
  (g.inter?'<p class="id__index-inter">INTERLUDE / VIDEO + MUSIC · '+esc(g.inter)+'</p>':'')+'</section>').join('');
 }
 function identity(){
