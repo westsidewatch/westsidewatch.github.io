@@ -32,6 +32,15 @@ def create():
             prefix = {"font": "type", "weight": "weight", "color": ""}[group]
             css_name = "--ws-" + (prefix + "-" if prefix else "") + name
             declarations.append(f"  {css_name}: {css_value(value)};")
+    # Edition-specific scale comes from the same Design OS JSON authority.
+    # Legacy display/title token sizes remain as compatibility aliases in the
+    # umbrella CSS; new editorial hierarchy must use these generated roles.
+    for name, item in tokens.get("typeScale", {}).items():
+        if not all(c.islower() or c.isdigit() or c == "-" for c in name):
+            raise ValueError("Unsafe type scale token name: " + name)
+        if item["$type"] != "dimension":
+            raise ValueError("Editorial type scale must use dimension tokens")
+        declarations.append(f"  --ws-type-scale-{name}: {css_value(item)};")
     # Existing semantic consumers keep these stable aliases during migration.
     for name in ("display-en", "display-en-sc", "display-zh", "reading-zh"):
         declarations.append(f"  --ws-os-font-{name}: var(--ws-type-{name});")

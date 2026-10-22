@@ -88,3 +88,12 @@ body[data-ws-scope="home"] .sites-home-realms .sites-home-realm > h2[lang="en"] 
  font-style:italic!important;
  font-synthesis:none;
 }
+
+/* A primary Chinese title opts into 900; this role beats the generic
+   h1–h6 200 rule while secondary editorial headings keep their 200 role. */
+body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6,[class*="title"])[lang^="zh"][data-ws-type-role="primary-title"]:not(:where([data-ws-designable], [data-ws-designable] *)),
+body[data-ws-scope] :is(.ws-editorial-hero-zh,.ws-editorial-chapter-zh,.ws-editorial-article-zh):not(:where([data-ws-designable], [data-ws-designable] *)){
+ font-family:var(--ws-type-zh)!important;
+ font-weight:var(--ws-weight-section,900)!important;
+ font-synthesis:none;
+}

@@ -284,6 +284,10 @@ The 2026-10-21 P2 typography normalization moves the **existing effective Chines
 
 **Gates:** generated tokens check, existing Design OS/First Look contracts, cross-surface actual computed family and loaded font file, long Chinese text (20k–50k test fixture plus real articles) at phone/tablet/200% zoom, English longform typesetting choice after real body-copy trials. Tests with fallback fonts do not prove the Chiron webfont loaded. Until these pass, **FONT VISUAL QA OPEN / NOT APPROVED**.
 
+### 6C.7 Full editorial headline size grammar — 2026-10-22
+
+User-approved structure: primary Chinese headlines are Chiron 900, smaller than *much larger, optically delicate English Bodoni 400*; all other non-body Chinese editorial headings and names are genuine Chiron 200, expanded in size and editorial spacing so they do not disappear into prose. Longform body / accessible functional labels remain 400. This is one Design OS source, not additional per-page CSS exceptions: twelve detailed semantic typeScale tokens are generated from the existing canonical JSON and documented with numeric ranges, layouts and migration constraints in [Editorial Typography](WESTSIDE-EDITORIAL-TYPOGRAPHY.md). The P2/Journal prototype and each edition use these semantics; a real magazine's article H2/H3, standfirst, byline, Contents and scripture must not be confused with primary titles. Existing homepage image assets are protected and all real pages must pass before/after screenshots and 200% zoom before adoption.
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.

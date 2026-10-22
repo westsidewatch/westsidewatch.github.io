@@ -15,6 +15,18 @@
   --ws-olive: rgb(115 138 90);
   --ws-harvest: rgb(184 148 74);
   --ws-crimson: rgb(161 77 87);
+  --ws-type-scale-editorial-hero-en: clamp(4.5rem,7vw + 1rem,10rem);
+  --ws-type-scale-editorial-hero-zh: clamp(2.25rem,3.5vw + .65rem,5rem);
+  --ws-type-scale-editorial-chapter-en: clamp(3.25rem,4.7vw + .85rem,7rem);
+  --ws-type-scale-editorial-chapter-zh: clamp(2rem,2.8vw + .7rem,4.25rem);
+  --ws-type-scale-editorial-article-en: clamp(3.5rem,5.2vw + .8rem,8rem);
+  --ws-type-scale-editorial-article-zh: clamp(2.5rem,3vw + .9rem,5rem);
+  --ws-type-scale-editorial-feature-en: clamp(2.375rem,3.2vw + .8rem,5rem);
+  --ws-type-scale-editorial-feature-zh: clamp(1.875rem,2vw + .75rem,3.125rem);
+  --ws-type-scale-editorial-subhead-zh: clamp(1.5rem,1.4vw + .85rem,2.5rem);
+  --ws-type-scale-editorial-standfirst-zh: clamp(1.375rem,1.05vw + .9rem,2.25rem);
+  --ws-type-scale-editorial-byline-zh: clamp(1.125rem,.6vw + .85rem,1.5625rem);
+  --ws-type-scale-editorial-contents-zh: clamp(1.25rem,.75vw + .95rem,1.875rem);
   --ws-os-font-display-en: var(--ws-type-display-en);
   --ws-os-font-display-en-sc: var(--ws-type-display-en-sc);
   --ws-os-font-display-zh: var(--ws-type-display-zh);
