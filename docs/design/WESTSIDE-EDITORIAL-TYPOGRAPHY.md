@@ -4,7 +4,7 @@
 - English display, headings, navigation and folios: Bodoni Moda, regular 400. Never synthesize bold.
 - English editorial small-cap labels: authentic Bodoni Moda SC, regular 400. No browser-synthesized small caps.
 - Chinese realm and UI: Chiron Hei HK WS. Realm headings use the strongest approved weight 600; airy editorial typography uses 200 across all surfaces; structural hierarchy uses 600.
-- Chinese long-form reading: Noto Serif TC, 400 / 600.
+- Chinese long-form reading: current Journal / Vol.00 Sites route resolves Chiron Hei HK WS (昭源黑體) at the OS reading role. Noto Serif TC still appears in the token JSON and legacy sources; treat as a source/runtime reconciliation defect, not as the active Journal reading decision.
 
 ## Semantic scale (responsive)
 | Role | Size | Weight | Case | Tracking |
@@ -34,14 +34,14 @@ The editorial system uses the genuine Bodoni Moda Italic and Bodoni Moda SC Ital
 | Editorial epigraph / pull quote | Bodoni Moda Italic 400 | context-specific heading scale | Use sparingly for quotations and editorial voice, never all body copy |
 | Small-caps italic signature / imprint | Bodoni Moda SC Italic 400 | editorial-label scale | Use only when semantically intentional |
 | Folio / issue index | Bodoni Moda Roman 400 | folio scale | Keep upright by default; not scripture |
-| Chinese scripture text | Noto Serif TC Roman 400 | reading scale | Do not synthetically slant Chinese glyphs |
-| Chinese Bible reference | Noto Serif TC Roman 400 + italic Latin digits | reading context | Split reference into semantic spans so only Latin and Arabic numeral runs italicize |
+| Chinese scripture text | Effective Journal reading role: Chiron Hei HK WS 400 | reading scale | Do not synthesize slanted Chinese characters; validate runtime |
+| Chinese Bible reference | Effective reading role Chiron 400 + true Bodoni Italic Latin digits | reading context | Split reference so only Latin and numeric runs italicize; verify runtime |
 
 ### Scripture reference composition
 - Display reference: `約翰福音 <span class="ws-scripture-reference">3:16</span>` (Chinese book name stays upright, digits use genuine Bodoni Italic).
 - English display reference: `<cite class="ws-scripture-reference">John 3:16–17</cite>` (the entire Latin reference is italic).
 - Preserve semantic text and links, avoid turning citations into images or changing source verse numbers.
-- In mixed Chinese paragraphs, the Chinese sentence remains Noto Serif TC; use inline `ws-scripture-reference` only for the numeric/Latin reference.
+- In mixed Chinese paragraphs, the Chinese sentence consumes the effective reading role (currently Chiron in Journal / Vol.00); use inline `ws-scripture-reference` only for the numeric/Latin reference. Do not force the legacy Noto family locally.
 - `3:16`, `5:17–20`, `1 Corinthians 13:4–7` must retain their punctuation and ordering. Use nonbreaking spacing where a line break would separate the book name from its chapter number; do not force whole multi-verse references to overflow mobile viewports.
 - Do not apply italic to **all** numerals: dates, prices, page numbers, timestamps, navigation counters, and data tables are upright unless assigned a separate editorial role.
 - For verse numbers inside a scripture passage, mark each verse numeral semantically and style that numeral in Bodoni Moda Italic; the scripture wording stays upright. Superscript is allowed only if the passage template uses it consistently.
@@ -59,7 +59,7 @@ The editorial system uses the genuine Bodoni Moda Italic and Bodoni Moda SC Ital
 ## Global weight grammar — weight is a visual function, not a content type
 **200 / Air** is a sitewide editorial voice, not a speaker-name style. It is appropriate for spacious Chinese display and secondary headlines, article standfirsts, people and author names, book/film titles in editorial contexts, cover typography, selected navigation identities, pull-quote attributions, and large contemplative captions. Use it where ample size, contrast and breathing room preserve readability. Do not use 200 for dense paragraphs, tiny UI controls, accessibility-critical labels or low-contrast overlays.
 
-**400 / Standard** is the working voice for Chinese interface controls, descriptive metadata, short body text, explanatory headings, form fields and neutral information hierarchy. For sustained Chinese reading, switch family to Noto Serif TC 400 rather than assuming Chiron 400.
+**400 / Standard** is the working voice for Chinese interface controls, descriptive metadata, short body text, explanatory headings, form fields and neutral information hierarchy. For sustained Chinese reading, use the OS reading role; in Journal / Vol.00 that currently resolves to Chiron 400. Reconcile the legacy Noto source token before declaring one final authority across all reading routes.
 
 **600 / Anchor** is the structural voice for realm names, major Chinese section markers, selected issue or collection headers, and short hierarchy anchors. It is not the default for every heading and must not spread into long paragraphs.
 

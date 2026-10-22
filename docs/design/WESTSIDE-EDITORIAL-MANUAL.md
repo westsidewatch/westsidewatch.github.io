@@ -17,7 +17,7 @@ This manual merges design **judgment, editing and verification** into the existi
 | Award precedents and UI Skills | Research documents in `dore-design/` | Interpret into review criteria and exercises |
 | Acceptance | Existing OS, first-look, build and deployment checks + actual browser visual inspection | Do not replace visual QA with CI status |
 
-**Integration verified 2026-10-17:** The OS runtime already defines Bodoni Moda, genuine Bodoni Moda SC, Chiron Hei HK WS, Noto Serif TC, Chinese 200/400/600 weights and responsive `--ws-type-scale-*` semantics. Hence the old typography document's `typography-sitewide.css` authority statement is **superseded** by the OS umbrella and compatibility-runtime contract. It is not grounds to migrate or change working entry points.
+**Font audit 2026-10-21:** English roles use Bodoni Moda and true Bodoni Moda SC. Chinese Journal / Vol.00 reading **currently resolves to Chiron Hei HK WS**, because the later Design OS runtime declaration overwrites the earlier Noto Serif TC reading variable. The source token JSON and legacy stylesheets still specify Noto Serif TC. This source/runtime mismatch remains open; it does not prove that Noto is the live Journal reading face. Hence the old typography document's `typography-sitewide.css` authority statement is **superseded** by the OS umbrella and compatibility-runtime contract. It is not grounds to migrate or change working entry points.
 
 **Entrypoint rules.** Hugo templates load OS through `layouts/_default/baseof.html`; standalone P2 loads `/css/westside-design-os.css` followed by its own `/css/p2-living-water.css`. Other standalone HTML is guarded by `scripts/check_design_os_entrypoints.py`: the OS stylesheet and `body[data-ws-scope]` must both exist. A manual consolidation **must not touch those references, their sequence, or any HTML/CSS/JS**.
 
@@ -144,7 +144,7 @@ Record one **evidence-led** review per change, using the project skill's existin
 
 **比例先於裝飾。** 分欄由角色、實際文字、圖像主體及安全區倒推。可探索不對稱三欄（例如左 29 / 中 45 / 右 26），但比例只是**待驗證的候選值**，不是全站固定 Token 或通用答案。左右留白要有受力、方向、節奏和跨欄呼應；禁止為填空而加沒有編輯意義的刻線、標籤、徽章或背景物件。靜止截圖首先必須是一張有主題力量的作品。
 
-**中英雙語是兩種排版聲部。** 英文的 Roman、Italic、真正 Small Caps 與中文的粗／細、題名／長文角色應產生尺度對照，不得只做逐字翻譯式對排。採用唯一 Design OS 的 Bodoni Moda／Bodoni Moda SC、昭源黑體及 Noto Serif TC、既定 semantic tokens；不得變形拉伸字體，不得以極細微字假裝精緻。先測真實標題、最長篇名、行距、孤行、英文換行、對比，再調裝飾與動效。
+**中英雙語是兩種排版聲部。** 英文的 Roman、Italic、真正 Small Caps 與中文的粗／細、題名／長文角色應產生尺度對照，不得只做逐字翻譯式對排。採用唯一 Design OS 當前有效的 Bodoni Moda／Bodoni Moda SC、昭源黑體及既定 semantic tokens；原文件列出的 Noto Serif TC 是尚未清理的來源／舊字體宣告，不得再直接稱為雜誌實際閱讀字體；不得變形拉伸字體，不得以極細微字假裝精緻。先測真實標題、最長篇名、行距、孤行、英文換行、對比，再調裝飾與動效。
 
 **把既有資產當作編輯素材庫。** 首頁影片、晨星、活水刻線、城牆、人物圖、原始 Logo SVG、經文及期刊文章都可被重新編輯成封面媒體、特寫、跨頁、導讀或時間性的 opener；不必每頁重新生成素材。但要追溯原檔與授權，保護已批准資產，控制下載成本，提供 poster／靜態替代、reduced motion、字幕／文字等，不可把重用影片等同於加滿版背景影片。
 
@@ -243,7 +243,7 @@ Use the repository's [Doré Explore Trigger](../../dore-core/evolution/DORÉ-EXP
 
 `Article → chapter/sections → paragraphs → evidence/citation → figure/caption → quote/pullquote → note/footnote/endnote → media/interlude → related items → edition imprint`.
 
-- **Screen reading:** one legible measure-controlled prose column, normally Chinese Noto Serif TC 400 per OS, real heading hierarchy and sufficient line-height. The large Bodoni display / heavy Chiron headings belong to the **opener** and section breaks, not every paragraph. Reading type must remain readable at 390px and 200% zoom. Do not make 3 fixed columns for a 50k-character phone article.
+- **Screen reading:** use one readable measure-controlled prose column. On Journal / Vol.00 the effective Chinese reading role presently resolves to Chiron Hei HK WS (昭源黑體) through the later Design OS override, normally at a readable 400 weight. Bodoni Moda / Bodoni Moda SC remain the English display and small-cap families. A dedicated English long-body family is **not yet authoritatively established** and needs testing. Do not force Noto Serif TC or a new English font from an article-local override; reconcile source token JSON, runtime and legacy CSS first. Verify actual rendered font, 390px and 200% zoom on long authentic prose. Do not make 3 fixed columns for a 50k-character phone article.
 - **CJK / bilingual detail:** apply `lang="zh-Hant"` / `lang="en"` on actual blocks, test `line-break: strict`, legal `word-break` and fallback fonts, Chinese punctuation line boundaries, brackets/quotation marks, mixed scripture verse references, italic Latin only, hanging-punctuation support *where browsers truly support it*. Never justify mixed-script paragraphs blindly or stretch glyphs.
 - **Rhythm:** opener / standfirst / body / subsection / pull quote / annotated diagram / full-width photograph / footnotes / closing. Place interruptions where they advance argument; for very long text allow quiet, efficient stretches of reading. Avoid parallax, scroll-jacking, constantly moving type behind paragraphs or huge artwork every screen.
 - **Evidence:** figures must keep caption, source and alt; maps, timelines, diagrams, Scripture variants and Greek/Hebrew snippets need stable references. Footnotes must remain linkable (backref); no citations only in mouse hover. Provide article-local TOC/anchor navigation, reading progress with a real denominator, return-to-place and keyboard navigation **only if independently tested**. Don't fabricate reference numbers/page numbers before pagination.
@@ -267,6 +267,14 @@ Use the repository's [Doré Explore Trigger](../../dore-core/evolution/DORÉ-EXP
 **Doré-fit decision as of this research:** **USE** existing OS + Hugo semantic longform web reader; **EXPERIMENT** Paged.js for professional book-like proof and Vivliostyle for full publication; **EXPERIMENT** DesignCraft as the agent-driven special spread/cover composer; **ABSORB** Folio's short-form layout selection rather than longform rendering; **WATCH** Typst and WeasyPrint as secondary print pipelines. No engine chosen as production dependency until the same real sample passes the above gates.
 
 **Workflow and scope:** The 6B publication-first workflow is extended, **not replaced**. This is one OS and one linked P2 + Journal project plan, with shared canonical manuscript and scoped output adapters. Keep any future implementation in owning layouts/CSS/CLI tasks, not new competing design management software. The research itself modifies **this Markdown manual only**, not production code or installed dependencies. Project PR evidence belongs to its existing review file and project tracker, not a new release CI.
+
+### 6C.5 Font-authority audit — 2026-10-21
+
+**Journal/Vol.00 effective path:** layouts/_default/baseof.html classifies both as Sites surfaces. They load static/css/westside-design-os.css and static/css/westside-typography-enforcement.css, without the non-Sites assets/css/typography-system.css. The OS runtime declares Noto Serif TC early, then explicitly overrides --ws-type-reading-zh to var(--ws-type-display-zh), whose later value is Chiron Hei HK WS. Enforcement consumes this resolved variable for .prose paragraphs. It is therefore incorrect to document Noto Serif TC as the active Journal Chinese reading face.
+
+**Still unresolved:** design-system/tokens/westside.tokens.json, static/css/westside-design-tokens.css and assets/css/typography-system.css retain Noto Serif TC. Non-Sites reading surfaces can differ. Existing source/runtime drift must be resolved in the single Design OS rather than in an article-specific patch. Actual browser font loading and final English long-body typographic choice have not been independently verified.
+
+**Action gate:** Before professional 20k/50k-character publishing tests, audit computed font-family and loaded fonts for Journal, Vol.00, general book reader and tools, reconcile canonical JSON with runtime intent, validate both scripts at desktop, phone and 200% zoom. This documentation-only check does not reassign runtime tokens and is NOT a visual acceptance pass.
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 

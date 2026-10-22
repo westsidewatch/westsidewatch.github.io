@@ -50,6 +50,12 @@ Skills: [new-westside-editorial-web](../../dore-design/knowledge-lab/skills/new-
 
 **Blocked until proven:** source inventory, real article lengths, Chinese paragraph/font metrics, 390px reader, keyboard/footnotes, 20k/50k stress rendering, print proof and before/after screenshots. **NOT VISUALLY APPROVED / DO NOT MERGE.**
 
+## Font authority audit (2026-10-21)
+
+**Correction:** Earlier P2 longform planning incorrectly described Noto Serif TC as the active Chinese Journal reading family. The loaded Sites OS stylesheet overrides --ws-type-reading-zh to Chiron Hei HK WS; article typography enforcement consumes that resolved variable. Canonical token JSON and some older bundles still declare Noto, so cross-surface authority is NOT RECONCILED.
+
+Documentation corrected in the Design OS overview, editorial manual and typography detail. This commit does **not** change live font CSS or font downloads. Before promotion, reconcile OS token/runtime authority and verify actual Chinese/English computed fonts at Journal, Vol.00, book and tool, including long text, phone and 200% zoom. Status: OPEN.
+
 ## Award lenses and current score
 
 Internal 10-axis rubric is **NOT SCORED** until the updated preview is actually observed at desktop, tablet and phone. Earlier screenshots expose blockers; they do not support an 18/20 promotion. Awwwards score, Webby score and FWA score **are not provided or inferred**.
