@@ -5,7 +5,7 @@
     "static/candidate01/walk-worship.html": "bb4733c3a7921a33880ecc539a645d53377224f07722bfbe704d0c4a04776aa5",
     "static/css/sites-home-sections.css": "45a85084e83c6111ae433c00dc1423a59cff696afbcba9147fc32a5d1c8d6de6",
     "static/images/westside-watch-masthead-landscape.svg": "8bd5da80eaa9db8c74b84f81e81dfb599f8823f683eb88754dcaaecd91881b13",
-    "static/images/westside-watch-morning-star.svg": "1cf370422d75b297ba4cdc1d51a1173127d79f7247dd996e25ac245ac86b60e2",
+    "static/images/westside-watch-morning-star.svg": "dd1fefbfc22446f2507bd7d059cb8954676965a72cb7cf564e79d47e6eed0d15",
     "home_first_three_screens": "05e120823231685c92eaee2c8b8b5e815e3b531833625dba924bfc01bd29849e"
   },
   "amendments": [
@@ -13,6 +13,12 @@
       "date": "2026-10-17",
       "path": "static/css/sites-home-sections.css",
       "reason": "Exclude the dedicated P2 scroll host from generic scene-entry animation; all original candidate screens retain the frozen selectors and behavior."
+    },
+    {
+      "date": "2026-10-22",
+      "path": "static/images/westside-watch-morning-star.svg",
+      "approvedReplacementCommit": "b5c6d3cc7cdfeebabc6347f43ba69586a199f762",
+      "reason": "Sync the protected asset digest with the engraved eight-point gold star already merged to main on 2026-10-18; old freeze digest still tracked the superseded 2026-10-12 star. Main and this PR use the identical SVG blob 524ffb1ad0e593c4ee5173fe8a73adf1f0eca41a. The strict SHA-256 check remains unchanged; no SVG/homepage code changes."
     }
   ]
 }
