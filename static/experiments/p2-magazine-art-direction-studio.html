@@ -126,57 +126,111 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 .c-open__toc h3{font:400 33px var(--os-en);margin:0 0 10px}
 
 
-/* 2026-10-22 Geometry lab. Same editorial source; only shape/crop/hero geometry varies. */
+/* 2026-10-22 / EDITORIAL STUDY 02 / square as an editorial accent, not a template.
+   One unduplicated engraving image; no wallpaper, no independent triptych, no font stretching.
+   Local experiment only. Design OS keeps authority for font families, weights and scopes. */
 .switch[hidden]{display:none!important}
-.geo{background:var(--paper);color:var(--ink)}
-.geo__mast{padding:clamp(18px,3vw,40px) clamp(22px,5vw,76px);border-bottom:1px solid #a69c86;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.geo__mast .os-logo{width:clamp(180px,28vw,360px)}
-.geo__mast-note{font:400 12px/1.5 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.15em;text-align:right}
-.geo__hero{position:relative;isolation:isolate;background:#173047;color:#f8f1e6;overflow:hidden;min-height:clamp(680px,82svh,960px)}
-.geo__ambient{position:absolute;inset:0;background:url('/images/home-opening-engraving.jpg') center/cover no-repeat;filter:grayscale(1) sepia(.24) contrast(1.25);opacity:.55}
-.geo__hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#102a40e8,#102a4038 65%),linear-gradient(0deg,#102a40bd,transparent 46%)}
-.geo__media{position:absolute;z-index:2;background:url('/images/home-opening-engraving.jpg') center/cover no-repeat;filter:grayscale(1) sepia(.14) contrast(1.35);box-shadow:0 18px 50px #07192b70}
-.geo__display{position:absolute;z-index:3;top:50%;left:6%;right:5%;transform:translateY(-42%);pointer-events:none}
-.geo__folio{font:400 12px/1.5 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.18em}
-.geo__huge{font:400 clamp(85px,15.8vw,280px)/.73 var(--os-en);letter-spacing:-.085em;margin:34px 0 28px;text-shadow:0 2px 22px #061c2a79}
+body.geometry-mode{background:#f3eee4}
+body.geometry-mode .study{width:100%;max-width:none;margin:0;box-shadow:none;overflow:visible}
+body.geometry-mode .info,body.geometry-mode .proof-footer{max-width:none;padding-inline:clamp(20px,5vw,98px)}
+.geo{background:#f3eee4;color:#193247}
+.geo__mast{display:flex;justify-content:space-between;align-items:center;gap:28px;padding:clamp(22px,2.6vw,39px) clamp(23px,6vw,108px);border-bottom:1px solid #bcb4a6}
+.geo__mast .os-logo{width:clamp(210px,26vw,390px);max-height:90px}
+.geo__mast-note{text-align:right;font:400 12px/1.6 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.16em}
+.geo__hero{isolation:isolate;position:relative;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:center;column-gap:clamp(12px,2vw,36px);padding:clamp(38px,5.5vw,95px) clamp(23px,6vw,108px);background:#f3eee4;color:#193247;min-height:clamp(670px,78svh,940px);overflow:hidden}
+.geo__media{grid-row:1;grid-column:1/span 6;position:relative;z-index:1;aspect-ratio:1;width:100%;min-width:0;overflow:hidden;margin:0;align-self:center}
+.geo__media img{display:block;width:100%;height:100%;object-fit:cover;object-position:56% 44%;filter:grayscale(1) contrast(1.14);mix-blend-mode:multiply}
+.geo__display{grid-row:1;grid-column:7/-1;position:relative;z-index:2;min-width:0;align-self:center}
+.geo__folio{display:block;font:400 12px/1.4 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.19em}
+.geo__huge{font:400 clamp(92px,11.8vw,225px)/.76 var(--os-en);letter-spacing:-.08em;margin:clamp(30px,4vw,65px) 0 clamp(23px,2.6vw,44px)}
 .geo__huge span{display:block}
-.geo__display h2{font-size:clamp(33px,4vw,67px);margin:0;text-shadow:0 2px 15px #061a2a89}
-.geo__source{position:absolute;z-index:4;right:clamp(20px,4vw,60px);bottom:clamp(22px,3vw,45px);max-width:42ch;border-top:1px solid #f1eadd99;padding-top:10px;text-align:right;font:400 12px/1.55 var(--os-zh)}
-.geo--square .geo__media{aspect-ratio:1;width:min(51vw,610px);left:58%;top:49%;transform:translate(-35%,-50%);background-position:58% 45%}
-.geo--square .geo__display{left:7%}
-.geo--square .geo__huge{font-size:clamp(91px,15vw,242px)}
-.geo--wide .geo__media{aspect-ratio:1.95/1;width:84%;top:11%;left:8%;background-position:center 42%}
-.geo--wide .geo__display{top:auto;bottom:12%;transform:none}
-.geo--wide .geo__hero::before{background:linear-gradient(0deg,#102a40f2,transparent 69%)}
-.geo--full .geo__media{inset:0;width:100%;height:100%;box-shadow:none}
-.geo--full .geo__hero{min-height:clamp(700px,92svh,1050px)}
-.geo--full .geo__hero::before{z-index:3;background:linear-gradient(90deg,#102a40e8,transparent 76%),linear-gradient(0deg,#102a40bb,transparent 55%)}
-.geo--full .geo__display,.geo--full .geo__source{z-index:4}
-.geo__reading{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(28px,5vw,82px);padding:clamp(30px,5vw,78px) clamp(22px,6vw,100px);align-items:start;background:#f3eee3}
-.geo__excerpt h3{font:400 clamp(39px,4.4vw,73px)/.95 var(--os-en);letter-spacing:-.052em;margin:18px 0 25px}
-.geo__excerpt p{font:400 clamp(17px,1.25vw,21px)/1.8 var(--ws-type-reading-zh,var(--os-zh));margin:0 0 20px}
-.geo__quote{border-top:1px solid #aca18e;padding-top:24px;margin:35px 0 0;font:italic 400 clamp(24px,2.3vw,42px)/1.1 var(--os-en)}
-.geo__toc{border-top:2px solid var(--ink);min-width:0}
-.geo__toc header{display:flex;justify-content:space-between;align-items:baseline;gap:15px;padding:14px 0;border-bottom:1px solid #aca18e}
-.geo__toc h3{font:400 clamp(34px,4vw,66px)/.93 var(--os-en);letter-spacing:-.04em;margin:0}
-.geo__toc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px clamp(16px,2vw,32px)}
+.geo__display h2{font-size:clamp(34px,4vw,70px);line-height:1.18;letter-spacing:.005em;margin:0;max-width:12ch}
+.geo__square-seal{display:none;position:absolute;z-index:3;top:clamp(22px,3vw,48px);right:clamp(22px,4vw,66px);width:clamp(86px,8vw,134px);aspect-ratio:1;background:#f3eee4;color:#193247;border:1px solid #193247;flex-direction:column;justify-content:space-between;padding:13px}
+.geo__square-seal strong{font:400 clamp(37px,4vw,65px)/.8 var(--os-en);letter-spacing:-.08em}
+.geo__square-seal small{font:400 9px/1.3 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.1em}
+.geo__source{display:flex;flex-wrap:wrap;justify-content:space-between;gap:5px 32px;border-top:1px solid #a8a08f;border-bottom:1px solid #a8a08f;background:#e9e3d6;color:#33485a;padding:13px clamp(23px,6vw,108px);font:400 clamp(12px,.88vw,14px)/1.6 var(--os-zh)}
+.geo__source em{font:italic 400 12px/1.6 var(--os-en)}
+/* 01 — framed square: the image is a witness, not a photo texture under white text. */
+.geo--square .geo__hero{background:#eee8dc}
+.geo--square .geo__media{grid-column:1/span 6}
+.geo--square .geo__display{grid-column:7/-1;padding-left:clamp(0px,1.5vw,22px)}
+.geo--square .geo__huge{font-size:clamp(94px,11.4vw,212px)}
+/* 02 — landscape: the same photograph becomes a wide evidentiary spread.
+   Type is below the photograph, not floating over densely textured figures. */
+.geo--wide .geo__hero{display:flex;flex-direction:column;align-items:stretch;gap:0;min-height:0;padding-top:clamp(31px,4vw,68px);padding-bottom:clamp(28px,3.4vw,58px)}
+.geo--wide .geo__media{width:100%;aspect-ratio:1.95/1;max-height:68svh;flex:none;grid-row:auto;grid-column:auto}
+.geo--wide .geo__media img{object-position:50% 45%}
+.geo--wide .geo__display{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:end;gap:10px clamp(30px,5vw,82px);width:100%;padding-top:clamp(25px,3vw,54px);grid-row:auto;grid-column:auto}
+.geo--wide .geo__folio{grid-column:1/-1}
+.geo--wide .geo__huge{grid-column:1;grid-row:2;font-size:clamp(90px,12.5vw,214px);line-height:.8;margin:3px 0 0;white-space:nowrap}
+.geo--wide .geo__huge span{display:inline}
+.geo--wide .geo__huge span+span::before{content:" ";white-space:pre}
+.geo--wide .geo__display h2{grid-column:2;grid-row:2;max-width:7ch;align-self:end;font-size:clamp(31px,4vw,65px);margin:0 0 4px}
+.geo--wide .geo__square-seal{display:flex}
+/* 03 — full-bleed: one uninterrupted image. Dark ink is only a legibility scrim. */
+.geo--full .geo__hero{min-height:clamp(740px,90svh,1110px);background:#173148;color:#f5eee3;align-items:end}
+.geo--full .geo__media{position:absolute;inset:0;z-index:0;width:100%;height:100%;aspect-ratio:auto}
+.geo--full .geo__media img{object-position:50% 45%;filter:grayscale(1) contrast(1.16);mix-blend-mode:normal}
+.geo--full .geo__hero::after{content:"";z-index:1;position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(15,37,54,.87),rgba(15,37,54,.14) 75%),linear-gradient(0deg,rgba(15,37,54,.83),transparent 68%)}
+.geo--full .geo__display{grid-column:1/span 8;grid-row:1;align-self:end;margin-bottom:clamp(28px,6vw,105px);color:#f5eee3}
+.geo--full .geo__huge{font-size:clamp(125px,15vw,285px)}
+.geo--full .geo__square-seal{display:flex}
+/* Consistent, spacious contents; folio grammar and provenance, not a dashboard widget. */
+.geo__reading{max-width:1660px;margin:0 auto;padding:clamp(66px,8vw,130px) clamp(23px,6vw,108px);display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(50px,7vw,126px);align-items:start}
+.geo__excerpt{max-width:60ch}
+.geo__excerpt h3{margin:clamp(23px,3.3vw,54px) 0 clamp(24px,3vw,47px);font:200 clamp(31px,3.3vw,58px)/1.33 var(--os-zh);letter-spacing:.006em}
+.geo__excerpt p{font:400 clamp(18px,1.3vw,22px)/1.88 var(--ws-type-reading-zh,var(--os-zh));margin:0 0 1.2em;letter-spacing:0}
+.geo__excerpt .entry-link{margin-top:16px}
+.geo__quote{font:italic 400 clamp(24px,2.25vw,40px)/1.18 var(--os-en);margin:clamp(45px,6vw,92px) 0 0;border-top:1px solid #a5a092;padding-top:clamp(20px,2.5vw,38px)}
+.geo__toc{min-width:0;border-top:2px solid #193247}
+.geo__toc header{display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-bottom:1px solid #9f998d;padding:clamp(18px,2vw,32px) 0}
+.geo__toc h3{font:400 clamp(45px,4.8vw,83px)/.92 var(--os-en);letter-spacing:-.055em;margin:0}
+.geo__toc header .folio{font-size:12px}
+.geo__toc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(22px,3.5vw,52px);row-gap:clamp(14px,2vw,35px)}
 .geo__toc-grid>section{min-width:0}
-.geo__toc .issue-list li{font-size:clamp(12px,.95vw,15px)}
-.geo__toc .movement-head{margin:14px 0 0}
-.geo__status{grid-column:1/-1;border-top:1px solid #a99e8a;padding-top:16px;font:400 12px/1.65 var(--os-zh);color:#415064}
-@media(max-width:950px){.geo__reading{grid-template-columns:1fr}.geo__toc-grid{grid-template-columns:1fr 1fr}}
+.geo__toc .movement-head{font-size:clamp(27px,2.1vw,36px);margin:clamp(22px,2.6vw,40px) 0 4px}
+.geo__toc .issue-list li{font-size:clamp(15px,1.05vw,19px);padding:11px 0;grid-template-columns:37px 1fr}
+.geo__toc .issue-list .issue-n{font-size:16px}
+.geo__toc .issue-list em{font-size:14px}
+.geo__toc .issue-list .work{font-size:clamp(13px,.9vw,16px);opacity:.84;line-height:1.5}
+.geo__toc .movement-note{font-size:12px;line-height:1.6}
+.geo__status{grid-column:1/-1;border-top:1px solid #a39b8d;margin-top:clamp(35px,4vw,65px);padding-top:20px;font:400 13px/1.7 var(--os-zh);color:#43576b}
+@media(max-width:1190px){
+.geo__hero{min-height:570px}
+.geo__huge,.geo--square .geo__huge{font-size:clamp(75px,10vw,130px)}
+.geo--wide .geo__display{grid-template-columns:1fr;gap:10px}
+.geo--wide .geo__folio,.geo--wide .geo__huge,.geo--wide .geo__display h2{grid-column:1;grid-row:auto}
+.geo--wide .geo__huge{font-size:clamp(85px,12vw,150px)}
+.geo--wide .geo__display h2{max-width:none}
+.geo__reading{grid-template-columns:1fr;gap:65px}
+.geo__excerpt{max-width:70ch}.geo__toc-grid{grid-template-columns:1fr 1fr}
+}
 @media(max-width:760px){
-.geo__mast{padding:18px 19px}.geo__mast .os-logo{width:clamp(170px,50vw,240px)}.geo__mast-note{font-size:10px}
-.geo__hero,.geo--full .geo__hero{display:flex;flex-direction:column;min-height:0}
-.geo__hero::before,.geo--wide .geo__hero::before,.geo--full .geo__hero::before{background:linear-gradient(0deg,#102a40f4,#102a405b)}
-.geo__media,.geo--square .geo__media,.geo--wide .geo__media,.geo--full .geo__media{position:relative;inset:auto;transform:none;z-index:2;flex:none;box-shadow:none}
-.geo--square .geo__media{width:calc(100% - 36px);aspect-ratio:1;margin:18px auto 0}
-.geo--wide .geo__media{width:100%;aspect-ratio:1.95/1}
-.geo--full .geo__media{width:100%;height:auto;aspect-ratio:4/5}
-.geo__display,.geo--square .geo__display,.geo--wide .geo__display,.geo--full .geo__display{position:relative;top:auto;left:auto;right:auto;bottom:auto;transform:none;z-index:4;padding:24px 22px 16px}
-.geo__huge,.geo--square .geo__huge{font-size:clamp(78px,21vw,149px);margin:20px 0}.geo__display h2{font-size:clamp(30px,8vw,53px)}
-.geo__source{position:relative;bottom:auto;right:auto;text-align:left;margin:0 22px 24px;z-index:4}
-.geo__reading{display:block;padding:35px 21px 55px}.geo__excerpt{margin-bottom:45px}.geo__toc-grid{grid-template-columns:1fr}.geo__status{margin-top:40px}
+body.geometry-mode .info{padding-inline:20px}
+.geo__mast{padding:22px 20px}
+.geo__mast .os-logo{width:clamp(180px,50vw,260px)}
+.geo__mast-note{font-size:9px;max-width:115px}
+.geo__hero,.geo--wide .geo__hero,.geo--full .geo__hero{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding:0;gap:0}
+.geo__media,.geo--square .geo__media,.geo--wide .geo__media,.geo--full .geo__media{position:relative;inset:auto;transform:none;grid-column:auto;grid-row:auto;aspect-ratio:1;width:calc(100% - 36px);height:auto;flex:none;margin:18px auto 0;max-height:none}
+.geo--wide .geo__media{width:100%;aspect-ratio:1.95/1;margin:0}
+.geo--full .geo__media{width:100%;aspect-ratio:4/5;margin:0}
+.geo__display,.geo--square .geo__display,.geo--wide .geo__display,.geo--full .geo__display{display:block;grid-column:auto;grid-row:auto;position:relative;align-self:auto;width:auto;padding:clamp(26px,7vw,46px) 22px clamp(34px,9vw,62px);margin:0;color:#193247}
+.geo--full .geo__hero{background:#f3eee4}
+.geo--full .geo__hero::after{display:none}
+.geo__huge,.geo--square .geo__huge,.geo--wide .geo__huge,.geo--full .geo__huge{font-size:clamp(77px,22vw,145px);line-height:.76;white-space:normal;margin:25px 0 29px}
+.geo--wide .geo__huge span{display:block}.geo--wide .geo__huge span+span::before{content:none}
+.geo__display h2,.geo--wide .geo__display h2{font-size:clamp(34px,8vw,59px);max-width:100%;margin:0}
+.geo__square-seal,.geo--wide .geo__square-seal,.geo--full .geo__square-seal{top:16px;right:16px;width:76px;padding:8px}
+.geo__square-seal strong{font-size:37px}.geo__square-seal small{font-size:8px}
+.geo__source{padding:15px 22px}
+.geo__reading{display:block;padding:52px 21px 75px}
+.geo__excerpt{margin-bottom:65px}
+.geo__toc-grid{grid-template-columns:1fr}
+.geo__toc h3{font-size:clamp(42px,12vw,70px)}
+.geo__toc header{align-items:flex-end}
+.geo__toc header .folio{max-width:100px;font-size:10px;text-align:right}
+.geo__toc .issue-list li{font-size:16px}
+.geo__status{margin-top:45px}
 }
 
 /* Real article excerpt: all candidates use authentic draft, not generated filler */
@@ -310,16 +364,17 @@ function opened(mode){
 function geometry(shape){
  return '<section class="study__stage geo geo--'+shape+'">'+
   '<header class="geo__mast">'+logo+'<span class="geo__mast-note" lang="en">WESTSIDE WATCH / VOL.00<br>THE GATE · 03</span></header>'+
-  '<div class="geo__hero"><div class="geo__ambient" aria-hidden="true"></div>'+
-  '<div class="geo__media" role="img" aria-label="西望既有古典刻線素材：三個候選皆使用相同原圖"></div>'+
+  '<div class="geo__hero">'+
+  '<figure class="geo__media"><img src="/images/home-opening-engraving.jpg" alt="西望原有古典刻線主視覺，展示古城門口與人群場景" width="1540" height="900"></figure>'+
   '<div class="geo__display"><span class="geo__folio" lang="en">03 / THE GATE · VOL.00</span>'+
   '<div class="geo__huge en" lang="en"><span>THE</span><span>GATE.</span></div>'+
   '<h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">城門口的人</h2></div>'+
-  '<div class="geo__source">同一張既有素材 /images/home-opening-engraving.jpg<br>不宣稱是某座古城的考古實拍</div></div>'+
+  '<div class="geo__square-seal" aria-hidden="true"><strong>03</strong><small>THE GATE<br>VOL.00</small></div>'+
+  '</div><div class="geo__source"><span>IMAGE / 01 — 主站既有古典刻線原圖，非考古實拍</span><em>One engraving · three image geometries · no duplicated background</em></div>'+
   '<div class="geo__reading"><section class="geo__excerpt" aria-label="城門口的人原稿節錄">'+
   '<span class="eyebrow" lang="en">ISSUE ZERO / THE GATE / 03</span>'+
-  '<h3 lang="en">Between<br>the walls.</h3>'+
-  '<p lang="zh-Hant">'+esc(excerptGate[0])+'</p><p lang="zh-Hant">'+esc(excerptGate[1])+'</p>'+
+  '<h3 lang="zh-Hant">古代的城門，<br>不是城牆上挖出的一個洞。</h3>'+
+  '<p lang="zh-Hant">'+esc(excerptGate[0].replace('古代的城門不是城牆上挖出的一個洞。',''))+'</p><p lang="zh-Hant">'+esc(excerptGate[1])+'</p>'+
   '<a class="entry-link" href="/journal/">ENTER THE MAGAZINE ↗</a>'+
   '<div class="geo__quote" lang="en">The night is far spent,<br><em>the day is at hand.</em></div></section>'+
   '<section class="geo__toc" aria-label="四樂章正式目錄"><header><h3 lang="en">Contents.</h3>'+
@@ -346,6 +401,7 @@ function refresh(){
  document.querySelectorAll('[data-shape]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shape===shape)));
  document.getElementById('shape-switch').hidden=state!=='geometry';
  document.getElementById('concept-switch').hidden=state==='geometry';
+ document.body.classList.toggle('geometry-mode',state==='geometry');
  const url=new URL(location.href);url.searchParams.set('concept',choice);url.searchParams.set('view',state);url.searchParams.set('shape',shape);
  history.replaceState(null,'',url);
 }
