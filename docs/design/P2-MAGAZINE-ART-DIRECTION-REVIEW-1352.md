@@ -39,6 +39,17 @@ Skills: [new-westside-editorial-web](../../dore-design/knowledge-lab/skills/new-
 
 **Rejected direction:** Adding extra line engravings or metadata to fill both color fields. This would reduce editorial restraint without fixing the compositional weight.
 
+
+## Integrated re-art-direction dependency — professional longform publishing (2026-10-21)
+
+**Decision:** PR #1352 remains a P2 **prototype**, not a finished magazine or standalone sufficient art direction. P2/First Look cannot be signed off independently of real Vol.00 article layout. The Design OS [Editorial Manual §6C](WESTSIDE-EDITORIAL-MANUAL.md) now defines one connected **P2 → issue → longform feature → optional paged export** project.
+
+**Doré Explore findings:** Paged.js MIT/API/CLI is the smallest practical HTML-based print proof; Vivliostyle AGPL-3.0/CLI/Viewer has strong paged magazine/book facilities but requires architecture-specific licence review; DesignCraft MIT/Apache-2.0 offers headless/MCP special spread layout but still requires testing on protected CJK manuscripts; Folio is short-form presentation-oriented and not the tens-of-thousands-of-characters composer. Native Hugo semantic article HTML with Westside OS remains the screen-reading authority. The earlier open-source research was not indexed in the actual manual before this review; it is now recorded **as a candidate selection, not an installed engine**.
+
+**Next-stage work plan:** A) locate and protect manuscript source; B) one shared editorial blueprint for P2, issue, reader; C) readable longform first, with fixture tests; D) compare isolated Paged.js/Vivliostyle proofs + agent-led DesignCraft spread; E) integrate true links and responsive state; F) evaluate actual screenshots, performance and CI. This plan is a **dependency** for the P2 re-art-direction, not an authorization to overwrite unrelated book, Doré or Dawn Library stores.
+
+**Blocked until proven:** source inventory, real article lengths, Chinese paragraph/font metrics, 390px reader, keyboard/footnotes, 20k/50k stress rendering, print proof and before/after screenshots. **NOT VISUALLY APPROVED / DO NOT MERGE.**
+
 ## Award lenses and current score
 
 Internal 10-axis rubric is **NOT SCORED** until the updated preview is actually observed at desktop, tablet and phone. Earlier screenshots expose blockers; they do not support an 18/20 promotion. Awwwards score, Webby score and FWA score **are not provided or inferred**.
