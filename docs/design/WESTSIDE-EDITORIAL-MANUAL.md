@@ -560,7 +560,7 @@ The old three equal panels failed because they made **zones** prior to making **
 
 ### 6E.4 Geometry: from story content to grid and bounded exceptions [METHOD + TRIAL]
 
-**Construct in this order**: (1) content hierarchy → (2) available inline size and safe area → (3) main content measure → (4) primary image/subject crop → (5) supporting tracks → (6) optical alignment → (7) intentional exception. A 12-track CSS grid is a convenient *layout tool*, **not** an obligation to show twelve identical cards. Geometry can be asymmetrical when actual title/photographic content motivates it.
+**Construct in this order**: (1) content hierarchy and the reader's task → (2) **choose a continuous digital spread as the wide-screen composition field where editorially justified** → (3) available inline size, safe area and imaginary compositional axes (not binding gutters) → (4) main content measure and independent image/text/object layers → (5) deliberate cross-axis shape placement and supporting tracks → (6) image/subject crop *only when a photographic frame is involved* → (7) optical alignment, layering and tested exceptions. See **§6E.29–31: Digital Spread Composition** for the governing full-canvas grammar. The R3/R4 crop forensics are a supporting image-specialist tool, **NOT a substitute for spread-level design**. A 12-track CSS grid is a convenient *layout tool*, **not** an obligation to show twelve identical cards. Geometry can be asymmetrical when actual title/photographic content motivates it.
 
 **Starting study envelope ONLY [TRIAL]**; none of these values are approved site tokens or a promise of ideal design:
 
@@ -1201,6 +1201,9 @@ These **six compositional methods are not six approved page skins**. Each must b
 
 ### 6E.28 R4 — source pixels → geometrically exact visible area → subject-safe composition (2026-10-22)
 
+**Scope correction (2026-10-22):** This R4 procedure solves the special case of *image crop safety*. It **does not define the composition of a magazine spread**. A square may be a cross-spread graphic region, a field of type, a cut-through revealing another field, a mask, or a negative-space rhythm even when there is no photographic square crop at all. See §6E.29–31 before prescribing any image ratio, safe-text rectangle or CSS box. A layout can simultaneously use a square cross-axis field, a panoramic image and full-bleed color/engraving without constituting independent panels.
+
+
 **This is a production method and a book-study chapter, NOT an approved visual direction.** The prior R3 atlas identified six Doré works and their source records; it did **not** acquire six high-resolution raster files nor annotate actual pixels. R4 bridges the gap between an image-source record and a reliable editorial layout decision.
 
 **Primary technical sources:** [CSS Images 3](https://www.w3.org/TR/css-images-3/) on replaced-object sizing, [MDN \`object-fit\`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit), [MDN \`object-position\`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-position); [W3C CLREQ](https://www.w3.org/International/clreq/) for CJK punctuation/line breaking; [WCAG 2.2](https://www.w3.org/TR/WCAG22/) on readability/resize/reflow/focus; [W3C WAI image-background contrast failure F83](https://www.w3.org/WAI/WCAG22/Techniques/failures/F83).
@@ -1403,6 +1406,235 @@ This is an **HTML contract illustration**, not fabricated article copy or an ope
 8. **Promote only an accepted composition rule** to its existing OS owner. If crop is unsafe or uniqueness fails, reject and return to the idea—not the ornament.
 
 **R4 immediate outcome:** an exact mathematical and editorial protection method can be written **now**; verified per-image polygons and photographic tonal maps cannot be fabricated while the full raster remains inaccessible. This is why this round ends with complete handbook rules and an explicit UNVERIFIED annotation queue, rather than claiming the magazine design has been approved.
+
+
+### 6E.29 Digital spread composition — a continuous editorial canvas without a physical binding seam (R5, 2026-10-22)
+
+**A new PRIMARY art-direction grammar for Westside magazine, not a new CSS/Design OS:** On a sufficiently wide screen, **begin design research from the relationship across a virtual two-page spread** rather than treating the layout as one portrait image, a centered card, or two independent column-panels. **“Spread” describes compositional scale, not two literal web pages.** There is *no sewn binding, central print loss, compulsory paper fold, even left/right page widths, fixed sheet turn, paper trim or advertising-slot allocation*. A virtual 50% mark can be a **temporary construction axis**; the viewer must not see a simulated printed gutter unless a specific content concept justifies it.
+
+**This is Westside's proposed wide-screen design approach, not a claim that every online magazine in the world is laid out this way.** Some articles are naturally a single continuous reading column. Digital editorial design has fewer *print constraints* but new obligations: scroll continuity, viewport-dependent width/height, interactive controls, keyboard/DOM reading order, responsive re-composition, real image provenance, reduced motion and actual content completion.
+
+**Why the last crop research was insufficient:** §6E.23–28 begins with source W/H and computes the scene's visible rectangle. That protects historical content **inside an image** but does not explain the editorial design of **the whole spread**: where a huge typographic field begins, how a geometric object bridges two zones, what lies behind the object, how one phrase can cross an axis, or how the reader proceeds from image → story → Contents. Crop fidelity remains compulsory when using Doré images, but **the full composition has priority over any one image ratio**.
+
+**Reference boundary:**
+- [Pentagram / Citizen](https://www.pentagram.com/work/citizen) records designing the entire magazine's logo, grid, editorial pacing and structure, with a strong **flexible** grid allowing each story a different visual approach. This is **print editorial precedent**, not evidence for its exact live web CSS.
+- [Pentagram / No Man's Land](https://www.pentagram.com/work/no-mans-land) documents an intentionally loosened **12-column grid**, asymmetrical margins and differentiated typographic material; again a *print* precedent for structured freedom, not a web implementation.
+- [MDN CSS Grid / basic concepts](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Basic_concepts) confirms multiple CSS grid items can overlap a track/area and be layered with \`z-index\`; [line-based placement](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Line-based_placement) documents crossing multiple tracks.
+- [MDN CSS translate](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/transform-function/translate) confirms percentage translations are relative to the translated element's reference box, permitting one square's 50/50 or 30/70 division to be specified **without using guessed viewport offsets**.
+- [The World of Interiors / 2022 redesign first-person interview](https://www.worldofinteriors.com/story/print-redesign-interview-hamish-bowles) exemplifies preserving publication character **while** rethinking digital editorial expression. It does not mandate a centered square or literal digital paper spread.
+- [Webby Awards judging criteria](https://www.webbyawards.com/judging-criteria/) foregrounds *overall experience*, content, navigation, visual design, functionality and interactivity—an impactful spread that blocks actual reading is not an excellent website.
+
+#### R5.1 Print-spread constraints vs digital-spread opportunities — specify the difference
+
+| Decision | Physical magazine | Digital Westside spread [METHOD] | Risk/gate |
+| --- | --- | --- | --- |
+| Midpoint | Binding fold/gutter may make central information difficult | Optional \`x=.5\` **invisible compositional axis**, never a fixed “seam” | Fake crease, disconnected halves, wrong typography |
+| Opposite pages | Printed left/right pages have physical limits | **One continuous field**; image, shape, headline or negative space may cross the center freely | Overlap cannot obscure real story/interactive actions |
+| Page proportions | Trim/print/bleed and paper dimensions chosen in advance | Width is fluid, height can follow narrative and content; no fixed sheet ratio | 90vh emptiness, artificial overflow/scroll lock |
+| Editorial grid | Column systems constrained by spread and printer | Shared container grid and independently layered objects; can use 30/70 or 50/50 **field balance**, without visible two-panel borders | Avoid a row of unrelated UI blocks |
+| Images | Print image may vanish in gutter | An unbroken panoramic image can continue from left to right; a square can overlay it without duplicating the source | One source, valid image provenance, correct focus |
+| Text flow | Text boxes/columns broken by page turn | Longform is a **continuous semantic reading stream** that can leave the dramatic spread at the correct moment | No forced magazine pagination/mobile horizontal reading |
+| Captions/folios | Book edges/spine/folio convention | Labels can move to useful image edge, scrolling reference or Contents; keyboard/focus needed if interactive | Ornamental microtext, nonworking navigational stamp |
+| Ads/material | Advertising and printer restrictions may determine spreads | No print ad quota, ink limits or binding imposition for Westside's web pages | Digital still has legibility, media, page weight and control demands |
+
+**Key distinction:** A **virtual pair of page regions is a mental aid**, never two fixed independent panels. The frame may be 30/70, 60/40, or a complex overlapping collection, and a panoramic plate may fill the entire union. The actual user reads a digital publication, not a photo of a printed magazine.
+
+#### R5.2 Two distinct 30/70 definitions — do not confuse them
+
+**A. Spread *field share*:**
+- A left-domain width of **30% of the whole canvas** and right-domain width 70%. This may establish visual weight, text/figure placement, or image tension. It is an *art-direction hypothesis*, not a required two-column layout.
+- The center between the virtual *editorial domains* need not be \`x=.5\`; with 30/70 domains their domain boundary is \`x=.3\`. Neither boundary needs a visual line.
+
+**B. A *single square's* distribution across a virtual center axis:**
+- Whole wide canvas width \`W\`; hypothetical center \`c=.5W\` or another deliberate \`c\`; square side length \`S\`; fraction \`p\` of **the square's own width** placed before that reference axis.
+- Square left edge \`x_left=c−p×S\`. Right edge \`x_right=c+(1−p)×S\`. Its true height stays \`S\`; **nothing is stretched**.
+- **Square 50/50:** \`p=.5\`; half of *the square* belongs to the left of axis, half to the right.
+- **Square 30/70:** \`p=.3\`; only 30% of the square falls left of axis, 70% right. The virtual left/right domains can still each occupy half the canvas.
+- The square can be a visual frame, a solid color/negative space, a live-text grouping, a figure container, or a **mask/portal on a single image field**. It need not represent a source-image **crop**.
+
+**Exact geometry worked example (illustrative desktop, [TRIAL]):** for \`W=1440 CSS px\`, \`c=720\`, \`S=560\`:
+
+| Distribution across \`c=720\` | Square's left edge | Square's right edge | Square aspect | Semantic effect under review |
+| --- | ---: | ---: | --- | --- |
+| 50/50 | 440px | 1000px | 560×560 | Stable deliberate center crossing, balanced visual anchor |
+| 30/70 | 552px | 1112px | 560×560 | Right-biased movement, room left of image for a large title |
+| 70/30 | 328px | 888px | 560×560 | Left-biased movement, potential right-side issue/Contents |
+| No square used | — | — | — | Panoramic/full-bleed/vertical story can own the spread |
+
+The **x coordinates are construction measurements**, not approved design values. Always account for page padding and reference axis: \`c\` may refer to a *content container* rather than full viewport. Record which. Without that information “square crosses center 30/70” is ambiguous.
+
+#### R5.3 Seven different square *roles*, beyond cropping photos [METHOD + TRIAL]
+
+| Role | How it occupies a spread | Editorial reason to consider it | Strong rejection condition |
+| --- | --- | --- | --- |
+| **S1 Portal / opening** | A single square straddles a notional center while a panoramic source continues behind | Concentrate the reader on a meaningful entrance/threshold | Portal reveals nothing or duplicates the original picture as wallpaper |
+| **S2 Type field** | Square occupied by **live typography**, with image or paper continuing across its boundaries | Turn an issue claim or authentic headline into a compositional object | Word cut, meaningless isolated letters, fake typographic rendering |
+| **S3 Negative-space square** | Square is made from a deliberately unoccupied field amidst otherwise connected visual mass | Give a visual pause or a meaningful point of rest | Empty square used only to look “designed” |
+| **S4 Composite boundary** | An actual square delineates a live **change of field**—e.g. engraving detail against original archival description or spatial diagram | Express two credible views of a subject in one spread | One scene misleadingly presented as different historical evidence |
+| **S5 Editorial focus** | 1:1 figure/detail bridges domain boundary with supporting title and metadata in separate fields | Center a real source detail while maintaining contextual source access | Essential gesture or source author cropped out |
+| **S6 Rhythm/series register** | A square appears in **one or a few** key moments, perhaps split 30/70 and later absent | Establish a recognisable publication accent through *scarcity* | Every story, Contents and tool card has a compulsory square |
+| **S7 Spatial motion** | A square can transform its editorial role (e.g. image focus → text field) during a reader-triggered state change | Clarify perspective, step or reading transition | Movement is purely decorative, traps scroll/focus, no static parity |
+
+**No “one master square” rule.** The square is a signature instrument played at chosen moments, beside portrait, panorama, full-bleed, large text-only and quiet longform sections. Cropping is relevant *only* to S4/S5 where an image detail is actively framed.
+
+#### R5.4 The five-layer spread model (one canvas, no three-panel imitation)
+
+1. **Continuity field L0:** continuous background or paper/color field, potentially **one original engraving** across full width; do not duplicate imagery for an inset just to fake depth.
+2. **Structural geometry L1:** one or more meaningful shapes (square, rectilinear plate, mask/negative space), chosen for the article's subject and permitted to cross the reference axis.
+3. **Artwork/story L2:** verified actual image or true longform story segment; preserve subject, inscriptions, caption rights. A square at L1 does not force L2's native artwork to be cropped.
+4. **Live editorial type L3:** original masthead asset, meaningful English/Chinese title, series, issue, source and caption, optically aligned to image and composition rather than placed as generic cards.
+5. **Reader continuity L4:** real Contents/article/next route, source, focus, keyboard and equivalent reduced-motion information. L4 may be visually understated but is never optional.
+
+**A continuous cross-axis object is not a third “middle panel”**. The rejected pattern was three independent colored vertical panels with disjoint images/content. In R5 the **relationship between all layers** is the composition; empty space and intentional nonuniform overlap are as important as object placement.
+
+**More contemporary, not more decoration:** An intentional square can coexist with an enormous fully legible Bodoni word and a vivid Doré plate **only when the interaction of their visual masses communicates the subject**. Do not put white letters over the busiest engraved crowds merely to prove a layer stack is technically possible.
+
+#### R5.5 A minimal CSS construction proving both square splits — local specimen only
+
+This is an **example in the manual**, NOT a new global token, live component, or production CSS. The visual DOM order remains logical. All color/type references must consume the existing Design OS. Here \`50%\` refers to **the same containing spread**, and the percentage in \`translateX()\` refers to **the square element's own width** (verified by MDN).
+
+~~~html
+<section data-ws-scope="journal" aria-label="單一數位跨頁研究示例">
+  <div class="ws-digital-spread">
+    <div class="ws-digital-spread__field" aria-hidden="true"></div>
+    <header class="ws-digital-spread__heading">
+      <p>VOL.00 · THE GATE</p>
+      <h1>城門口的人</h1>
+    </header>
+    <figure class="ws-digital-spread__square ws-digital-spread__square--30-70">
+      <img src="[approved-original-asset]" alt="[truthful image content]">
+      <figcaption>[verified source credit]</figcaption>
+    </figure>
+  </div>
+</section>
+~~~
+
+~~~css
+/* Handbook example only, scoped to an existing Journal owner; no second CSS system. */
+[data-ws-scope="journal"] .ws-digital-spread {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  min-block-size: min(88svh, 58rem);
+  gap: clamp(0.75rem, 1.6vw, 2.25rem);
+  padding-inline: clamp(1rem, 4vw, 4rem);
+  /* A virtual center is a coordinate, NOT a border or printed gutter. */
+}
+[data-ws-scope="journal"] .ws-digital-spread__field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* Use one coherent Design OS surface / image field, not 3 panels. */
+}
+[data-ws-scope="journal"] .ws-digital-spread__heading {
+  grid-column: 1 / span 7;
+  z-index: 2;
+  /* The real H1 and reading order stay live and semantic. */
+}
+[data-ws-scope="journal"] .ws-digital-spread__square {
+  position: absolute;
+  inset-inline-start: 50%;
+  inline-size: min(40%, 34rem);
+  aspect-ratio: 1;
+  translate: -50% 0; /* 50% left of reference axis, 50% right */
+  z-index: 1;
+  margin: 0;
+}
+[data-ws-scope="journal"] .ws-digital-spread__square--30-70 {
+  translate: -30% 0; /* 30% of S left, 70% of S right */
+}
+[data-ws-scope="journal"] .ws-digital-spread__square img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  max-block-size: 100%;
+  object-fit: contain; /* keep intact until an IMAGE crop is approved */
+}
+@media (max-width: 48rem) {
+  [data-ws-scope="journal"] .ws-digital-spread {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 0;
+  }
+  [data-ws-scope="journal"] .ws-digital-spread__heading {
+    order: 0;
+  }
+  [data-ws-scope="journal"] .ws-digital-spread__square {
+    position: static;
+    translate: none;
+    inline-size: 100%;
+    aspect-ratio: auto; /* mobile is a new composition, not half a print spread */
+    order: 1;
+  }
+}
+~~~
+
+**Implementation qualification:** This specimen demonstrates the coordinate relationship but is **NOT visually signed off**: without a completed actual image/content, an absolutely positioned square may collide with the live H1, a caption may extend beyond the square, and the container's \`min-block-size\` may be too short. A serious implementation must size the image/figure with actual caption content, use semantic figure height rather than clipping a caption, and verify overlaps/reading at every viewport. **Do not copy/paste into production without a source image and browser proof.** A figure with a caption cannot naively be forced into \`aspect-ratio: 1\` unless the square refers to a dedicated media sub-element while caption is arranged independently.
+
+#### R5.6 Responsive art direction: preserve the *relationship*, not the desktop geometry
+
+**Desktop 1648×928:** wide-screen spread can keep a virtual design axis, intentional S1–S7 square crossings, a full-width image or live Bodoni crossing zones. It may be asymmetrical in 30/70/50/50 field balance without ever drawing a crease.
+
+**Tablet 768×1024:** do not mechanically scale all positions by viewport ratio. Reframe a square so its semantic purpose remains (e.g. *focus* next to a caption rather than forced overlap). Allow two-column or near-full-width reorganization only if source title and figure are readable.
+
+**Phone 390×844 and 320 CSS px:** the wide spread is **recomposed as a vertical editorial story** (heading, image/detail, source, real text, Contents), not a screenshot of a two-page printed magazine. There is no requirement to preserve a square, a faux center or 30/70 distribution on phone if it damages meaning. If the square served as a meaningful story portal, its interaction/semantics survive, though its visual framing can change.
+
+**Real browser 200% zoom:** a new narrower viewport is not the same as verifying actual zoom; require no cut-off words, preserved controls/focus and no two-dimensional normal article scrolling. Reduced motion preserves static narrative state and true source/caption routes.
+
+**Two different orders must be checked:** (a) visual gaze sequence across the wide canvas, (b) semantic DOM/keyboard/screen-reader order **independent of absolute positioning**. The DOM must tell the same story in a sensible sequence when all CSS is disabled. Avoid order:2/3 as a repair for an incoherent authored DOM or hidden interactive controls.
+
+#### R5.7 Editorial decision test: is the square *necessary* to the digital spread?
+
+Before approval, the art director must produce four **same-content** comparisons, in addition to crop studies:
+1. **One clean uninterrupted spread, NO square** — baseline. Does its image, title and article identity already work?
+2. **50/50 crossing** — what did the square make possible that a wide uninterrupted picture couldn't?
+3. **30/70 crossing** — how did the shifted square change focal gravity, English/Chinese title order, negative space and the reading route?
+4. **One full-bleed / unconstrained field** — does cinematic immersion serve this particular issue better than a square?
+
+**Same manuscript, image provenance and roles must remain fixed.** Compare whole composition—not just zooming one artwork to different crops. Evaluate **spread silhouette at thumbnail, actual source at native size, empty-space intent, font word integrity, image-safe bounds, editorial hierarchy, scroll into real reading and mobile reconstruction**. If a square does not clarify the story or materially strengthen publication identity, remove it. *Sparse, meaningful use* is a design strength, not a missing template.
+
+**A real art-direction study records the layer relations too:** where the image/color passes behind the square, what the two nominal halves contribute, how the figure interacts with the title, which edge anchors the narrative, and why changing the square's distribution from 50/50 to 30/70 changes meaning—not only measured x/y.
+
+**Release criterion:** use the existing §6A award-calibre rubric (>=18/20, no zero or unresolved BLOCK), with genuine print-to-digital translation, content integrity, Webby-style reader experience, contrast and focus tests. CI/build success or a visually striking square cannot self-certify originality.
+
+### 6E.30 Cross-spread design sheets — additions to the existing 32-sheet specification inventory
+
+**The 32 S01–S32 sheets stay the same; we extend their required fields, not create S33/S34 or a second manual.** The layout design sheets gain a specifically digital composition section:
+
+| Existing sheet | Newly required R5 design data | Evidence before promotion |
+| --- | --- | --- |
+| **S04 First Look** | Whole-canvas proposition; meaningful cross-axis visual relation; what remains continuous | Desktop full viewport, actual title and navigation screenshot |
+| **S06 Master grid** | Spread container \`W,H\`, invisible reference axis \`c\`, unequal domain shares, no physical gutter | Annotated grid overlay on **one canvas**, no hard panel barriers |
+| **S07 Negative space** | Space as continuous compositional material, including a **negative-space square** | Compare with same spread with negative space removed |
+| **S08 Controlled break** | Shape/word/picture cross-axis interval and layer stack, *why it crosses* | No blocked image subject/word/controls |
+| **S09/S10 Live English/Chinese display** | Relationship to shapes **and to each other across the whole spread**, optical size/safe fields | Genuine fonts, correct semantic copy, no missing letters |
+| **S19/S20/S21 Artwork and shapes** | Distinguish **geometric 1:1 square** from **square image crop**; \`p=.5/.3\` and source subject masks when relevant | Valid source + native image + spread-wide composition |
+| **S22 Full-bleed** | Whether image is full width, truly immersive, or continuous behind other layers | No duplicate image; source and caption accessible |
+| **S29 Interaction** | If a square appears/reveals/transforms, what reader task changes and how to reverse | Begin/mid/end/reverse/focus/reduced-motion |
+| **S30 Device system** | Wide spread → tablet restaging → vertical phone manuscript | 1648/768/390/320 and real 200% zoom |
+| **S31 Quality** | Separate scores for **spread-level originality** and actual deep-reading usability | Single §6A rubric, no parallel scoring authority |
+
+**New specification vocabulary [METHOD]:** \`SpreadCanvas\`, \`CompositionalAxis\`, \`FieldBalance\`, \`CrossAxisObject\`, \`ObjectBeforeAxisShare\`, \`LayerRelationship\`, \`ImageSourceCrop\`, \`SemanticReadingOrder\`, \`ViewportRecomposition\`. These are **manual concepts**, NOT installed CSS variable names, framework APIs or new global tokens.
+
+The R3/R4 crop equations remain intact; they answer \`ImageSourceCrop\`, **one field among many**. No automatic “square image whenever there is a square graphic” rule is permitted.
+
+### 6E.31 R5 acceptance / work status — why this matters for an award-calibre magazine
+
+**What R5 actually delivers:** a strong editorial framework for cross-spread composition, precise 50/50 and 30/70 square geometry, alternate square roles, five-layer construction method, source-aware CSS example, responsive/DOM/keyboard contract and revised existing spec sheets.
+
+**What it explicitly has NOT delivered:** one artistically selected full magazine visual language; four same-content annotated 1648px spreads in production; actual approved typography overlap; device screenshots for S1–S7; Awwwards/Webby/FWA prizes; original issue approval. R5 remains **[METHOD] + [TRIAL]**, not signed-off CSS/runtime.
+
+**Negative cases to reject at the editorial review:**
+- Spreading two unrelated pages/cards next to each other and labelling them “digital spread”.
+- Using a thick printed gutter, crease, page-curl or ornamental center divider merely to imitate a physical magazine.
+- Taking a square image crop as proof that the whole spread has a thoughtful composition.
+- Forcing every 30/70 square to become a decorative logo-like widget, or repeating it in every article.
+- Making a technically valid layered composition that hides Bodoni letters, the subject's face, a source inscription, or the actual Contents action.
+- Using desktop absolute positioning as the mobile layout with smaller numbers.
+- Claiming a full-bleed cover represents a complete award-calibre magazine when longform reading and navigation remain unresolved.
+
+**Immediate next research inside THIS SAME book:** develop an evidence-backed atlas of complete digital spreads (not crops) showing cross-axis fields, structural squares, word-image alignment and responsive restaging on real magazine/editorial webpages, then translate the most meaningful **relationships** into original Westside design direction cards. No aesthetic approval until the visual atlas and real full-issue user task are examined.
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 

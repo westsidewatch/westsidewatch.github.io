@@ -275,3 +275,12 @@ Next **handbook-first** research after R3: operationalize subject-safe cropping 
 - [Method reference] CSS Images 3, MDN object-fit/object-position, W3C CLREQ and WCAG 2.2. **No artwork raster acquired through this research connector**, no falsely precise image-density zones; only documentation and skill routing changed.
 
 **Explicit scope:** 3 Markdown files, no new token authority, no production HTML/CSS/JS, film, P2 or artwork changes. Creative identity remains unselected; **DO NOT MERGE** until full verified layout and §6A gate.
+
+
+## R5 design-research correction — continuous DIGITAL SPREAD, not only picture crop (2026-10-22)
+
+**User clarification:** The magazine's proper design scale is a **whole continuous digital spread** inspired by a physical double-page layout, **freed from paper binding, mid-gutter loss, fixed trim, print advertisements or opposite-page restrictions**. A square may physically/visually straddle the two virtual editorial regions **50/50 or 30/70**, or act as a live-type/negative-space/cut-through field with no image crop at all. Another possible “30/70” means two unequal areas of the entire spread; the two meanings must not be confused. Previous R3/R4 picture-crop emphasis was necessary for faithful historical artwork but far too narrow to define publication art direction.
+
+**Documentation action:** Added **§6E.29–31** within the one existing Westside Design OS Editorial Manual; corrected priority order in §6E.4 and explicitly demoted R4 crop math to an image-only specialization. R5 documents print vs digital constraints, one continuous canvas, mathematically defined cross-axis square examples (W1440 S560; 50/50 x=440–1000, 30/70 x=552–1112), 7 square roles beyond cropping, a five-layer compositional grammar, scoped manual-only CSS specimen, desktop/tablet/mobile recomposition, same-content comparative art-direction gates and mapping to existing **S04/S06/S07/S08/S09–S10/S19–S22/S29–S31** specification sheets. Source method grounded in original WoI redesign, Pentagram Citizen/No Man's Land and MDN Grid/translate/webby criteria; we do not claim these are official Westside proportions.
+
+**Scope:** only existing Manual, new-westside-editorial-web project skill, and PR review. **NO production layout, CSS, JS, images, protected homepage film, motion or tokens edited**. The square is an occasional identity instrument, not a forced page template. The magazine's full art direction still **NOT APPROVED**, not 18/20; **DO NOT MERGE** just because documentation/CI passes.
