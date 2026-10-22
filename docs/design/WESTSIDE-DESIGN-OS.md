@@ -66,6 +66,12 @@ Twelve detailed responsive display, chapter, article, feature, subhead, standfir
 
 Release only after verifying 200/900 true Chiron font faces, main vs supporting role markup on P2 and live Journal, 390/768/1648px and 200% zoom, real multi-line headings, and unchanged body/functional readability. The old 600 selectors and some generic title 200 selectors are migration targets, NOT proof the entire site has already adopted the grammar.
 
+## The magazine production-design book within the same OS (2026-10-22)
+
+**The magazine project's first deliverable is the fully detailed, executable Westside editorial design manual, not a sequence of prematurely polished screenshots.** The single existing [WESTSIDE-EDITORIAL-MANUAL.md](WESTSIDE-EDITORIAL-MANUAL.md) now contains **§6E Magazine design-book study → Westside full-spec production handbook**. It reviews published editorial-design books, identifies source evidence by access level, maps publication anatomy, image/crop rules, grids, live bilingual type, responsive article templates, real Contents, figure/caption/source credit, motion, accessibility and award-grade review into explicit decisions and tests.
+
+**This is a study/production-handbook draft, not a newly approved artistic identity.** No extra CSS, tokens, CI, second manual or page runtime is introduced. Book study examples and numeric geometry envelopes are marked [TRIAL] until actual material is reviewed and signed off. Preserve existing homepage full-bleed movie and the frozen P2 scene while the publication identity is unresolved.
+
 ## The Westside magazine identity study — 2026-10-22
 
 A first formal source-led study of **42 verified research paths across independent magazines, literary publishing, art books and digital editorial**, including 14 deeper A/B-tier design analyses, is now incorporated directly into [WESTSIDE-EDITORIAL-MANUAL.md](WESTSIDE-EDITORIAL-MANUAL.md), **§6D. Doré exploration — Westside Watch Magazine Art Direction**. The user's intended synthesis is classical foundations (true Doré engraved line, papyrus/archival material in meaningful settings, actual Bodoni Moda serif) **expressed through** modern graphic design (Chinese 900/200, seven semantic section colors, editorial-scale motion, unequal grids). The working term **Engraved Editorial Modernism** is a creative research direction, **not** an additional visual-management system, confirmed brand slogan, or authorization to edit existing immutable assets.

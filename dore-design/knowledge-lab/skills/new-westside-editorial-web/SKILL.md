@@ -18,6 +18,10 @@ Read [references/visual-grammar.md](references/visual-grammar.md) when generatin
 Build success is not design acceptance. Editor entry requires a named direction, traceable reference families, independent DOM, primary visual asset, responsive layout, motion rationale, Storybook story and browser review.
 
 
+## Publication-design book routing — manual-first task
+
+When the brief asks for magazine identity, complete editorial design specifications or a Doré exploration of magazine design books, read **§6E of docs/design/WESTSIDE-EDITORIAL-MANUAL.md** before proposing layouts. It is part of the only Westside Design OS, not another style guide or token owner. Route the task through B01–B11 source evidence, editorial anatomy, actual manuscript/image provenance, bounded master-grid hypotheses, CJK and responsive typesetting, figure/caption/navigation and real release QA. An artistic detail such as a square image or article end mark is **not** the main deliverable while the complete brand grammar remains unapproved. Keep future research in that chapter rather than starting parallel handbook files. Preserve label distinction [BASE] / [METHOD] / [TRIAL] / [OPEN] / [BLOCK], and never imply full copyrighted books have been read when only their public contents or publisher summaries were checked.
+
 ## Award-calibre acceptance loop — use the existing Design OS §6A
 
 For Westside magazine, Journal, Church and First Look art direction, 15/20 is **exploratory minimum only**. The existing \`docs/design/WESTSIDE-EDITORIAL-MANUAL.md\` §6A is the single release authority: a *provisional internal goal* of ≥18/20 across this skill's same ten 0–2 criteria, no zero and no unresolved block, **plus independently working** navigation, Chinese/English reading, performance, focus, reduced-motion, tablet, phone and actual zoom. This is not an official Awwwards, Webby or FWA score or promise of winning.

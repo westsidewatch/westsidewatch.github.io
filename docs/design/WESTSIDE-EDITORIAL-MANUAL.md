@@ -482,6 +482,329 @@ Real screenshots reject all **independent three-panel magazine spreads**, includ
 
 **Research-derived maxim:** The magazine is recognized not by three columns, old paper, or giant type in isolation, but by **editorial sequencing and consistent authorship of visual decisions**: a distinctive opening, factual imagery, readable text, meaningful pauses and surprising scale shifts. Classicism supplies the long memory; modernism supplies a sharp editorial act.
 
+
+## 6E. Magazine design-book study → Westside Watch complete editorial specification handbook (R1, 2026-10-22)
+
+**This chapter is the PRIMARY deliverable of the magazine design project.** It is part of the **existing single Westside Design OS Editorial Manual** and must evolve into its fully detailed, reference-backed production book. It does not establish a parallel brand book, a second type scale, another CSS system, another CI, or a style preference before art-direction sign-off. **Do not build isolated page ornament before defining its editorial job and publication context.**
+
+### 6E.0 The crucial shift: from visual inspiration to a reproducible design book
+
+A capable magazine art director must be able to answer, **for every page**:
+
+1. **What is the content / reader's task?** What does the reader seek, learn, compare, navigate, or remember?
+2. **What is the proposition?** One subject-specific idea and one visual narrative—not “old illustration plus big Bodoni”.
+3. **Why this image?** Source, rights, subject, viewing distance, cropping and factual role.
+4. **Why this hierarchy?** Identify identity, main story, deck, display, body, caption, folio, navigation and sources.
+5. **How is the layout made?** Coordinates, grid, reading measure, image ratios, live type, whitespace and exceptions.
+6. **How does it move?** The answer may be **it does not**. Motion must clarify a narrative transition, state or navigation.
+7. **How is it built and edited?** Semantic HTML, existing OS tokens, scoped owner CSS, authoring and responsive flow.
+8. **How is it judged?** Actual 1648 / 768 / 390px and 200%-zoom reader evidence, crop and text testing, no unresolved block, §6A art-direction sign-off.
+
+**A finished specification is not a screenshot:** it contains a decision rule, permission/exception, measurable implementation guidance, real-data sample, regression evidence and responsible owning file. The reference/precedent gives *reasoning*; Westside produces its own *rule*; only tested rules graduate to normative status.
+
+**Status key used in this book:** **[BASE]** already approved/reused OS authority; **[METHOD]** immediately applicable decision/QA procedure that doesn't choose a style; **[TRIAL]** numeric range or composition hypothesis for local tests only; **[OPEN]** not resolved, requires actual image/content research and visual sign-off; **[BLOCK]** cannot be promoted until resolved. Never silently reclassify a [TRIAL] as a global token.
+
+### 6E.1 The researched book shelf: what has actually been verified
+
+This is **publisher/author catalogue and accessible chapter-index research**, **not** a claim that the entire copyrighted books have been acquired or read cover-to-cover. We can apply grounded mechanisms and examples; deeper chapter-specific conclusions require source passages, permitted samples or actual study pages.
+
+| Ref | Book / authority | Verified evidence | Extracted method, NOT replicated styling | Westside implementation question |
+| --- | --- | --- | --- | --- |
+| B01 | Cath Caldwell, *Editorial Design: Digital and Print*, 3rd ed., Laurence King, 2024 ([publisher](https://us.laurenceking.com/products/editorial-design-third-edition)) | [Publisher] revised case studies and exercises; independent publishing, print and digital integration | Treat issue identity, photography, text and production as one brand-editing problem | Can a reader recognize Westside without being shown its logo? |
+| B02 | Sue Apfelbaum / Juliette Cezzar, *Designing the Editorial Experience*, Rockport, 2014 ([contents](https://www.oreilly.com/library/view/designing-the-editorial/9781592538959/)) | [Accessible contents] Reader, time, identity, anatomy, typography, layout, prototype, production, cases | Design the **whole reading system**, not a heroic opening alone | What exactly happens from cover → Contents → article → end → next? |
+| B03 | Timothy Samara, *Making and Breaking the Grid*, 3rd ed., Rockport, 2023 ([publisher](https://www.quarto.com/books/9780760381939/Making-and-Breaking-the-Grid-Third-Edition)) | [Publisher] column/compound/modular grids and deliberate departures | Establish a working grid **before** making one purposeful violation | Which image/text edge, axis or hierarchy earns a break? |
+| B04 | Josef Müller-Brockmann, *Grid Systems in Graphic Design* ([publisher/catalog](https://www.typotheque.com/books/grid-systems-in-graphic-design)) | [Publisher/retailer] grid construction as a practical organisational tool | Use tracks, measure and shared alignment as stable *infrastructure* | What holds together square, wide, full-bleed and longform? |
+| B05 | Richard Rutter, *Web Typography* ([author TOC](https://book.webtypography.net/)) | [Author] chapters on paragraph measure, leading, tracking, numerals, hierarchy, responsive type and fonts | Translate print craft into **rendered** CSS and genuine font-face checks | What survives on 390px and 200% zoom without faking printed paper? |
+| B06 | Ellen Lupton, *Thinking with Type*, 3rd ed. ([author](https://ellenlupton.com/Thinking-with-Type)) | [Author/publisher description] spacing, hierarchy, grids, alignment, Gestalt | Use contrasting scales and proximity to explain relationships | Are large English titles a deliberate semantic act or visual noise? |
+| B07 | Jeremy Leslie, *The Modern Magazine*, Laurence King, 2013 ([magCulture](https://magculture.com/collections/newest/products/the-modern-magazine)) | [Publisher/studio catalogue] 750 captioned examples, essays including design × content and print × digital | A magazine identity can remain recognizable while channels and image shapes vary | Does our editorial identity survive format shifts? |
+| B08 | Graphic Thought Facility / *The World of Interiors* redesign ([first-party interview](https://www.worldofinteriors.com/story/print-redesign-interview-hamish-bowles)) | [Direct practitioner account] 1981–82 issue archive, restrained graphic tools, clarity, image prominence, Contents and digital continuity | Conserve useful heritage, reinterpret narrative **rather than cloning printed pages** | Does an occasional square image have a purpose, without suppressing landscape/full-bleed? |
+| B09 | W3C *Requirements for Chinese Text Layout* ([CLREQ](https://www.w3.org/TR/clreq/)) | [Open living technical standard] CJK spacing and punctuation/line-break requirements | Chinese typesetting has its own rules, not translated English line wrapping | Are punctuation, 讀者/引文/經文 and mixed-script lines genuinely correct? |
+| B10 | W3C WCAG 2.2 ([normative criteria](https://www.w3.org/TR/WCAG22/)) | [Open standard] text resize, reflow, contrast, focus and reading requirements | Use independent measurable accessibility floors; not a brand preference | Can a reader enlarge the page and operate Contents/CTA by keyboard? |
+| B11 | MDN *text-wrap* ([reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-wrap)) | [Open implementation doc] balanced headlines, long text, support variability | Treat balancing as progressive enhancement with tested fallback | Does a two-line Bodoni headline remain credible at each width? |
+
+**Research provenance rule:** each future book note must list precise edition, author, publisher/ISBN if available, page/chapter actually accessed, evidence type (publisher / accessible sample / author / third-party review / own observed page), mechanism learned, translation and explicit failure mode. Copyrighted page spreads are **references**, not assets to reproduce in the site.
+
+### 6E.2 How to make a style decision — eight fields in a mandatory art-direction brief [METHOD]
+
+Record for every cover, category opener, index, illustrated story and longform article:
+
+| Field | Mandatory question | Required deliverable |
+| --- | --- | --- |
+| SUBJECT | What real chapter/article/event does it illustrate? | Exact source content ID, story proposition and provenance |
+| READER | Scan / select / watch / read / compare / study? | First action, second action and reading continuation |
+| IMAGE | Evidence / narrative / portrait / cinematic / ornament? | Primary image ID, rights status, meaningful subject-safe region |
+| FRAME | Square / portrait / wide / full-bleed / none? Why? | Composition sketch with 1:1 and non-square rejection reasons |
+| LETTER | What is English doing that Chinese is not, and vice versa? | Exact title text; English and Chinese sizes/roles, alignment and line cuts |
+| FIELD | Why this paper, line, background and occupied/empty region? | Defined anchoring edges, measure, breakpoints and contrast |
+| TRANSITION | What information does the transition communicate? | Start/end/return/interruption/reduced-motion states, or “none” |
+| AFTER | What is the reader's next meaningful action? | Real Contents, reading, references, previous/next, end mark only if justified |
+
+Reject vague briefs such as “Italian magazine vibe” or “more ancient” without a subject, typographic hierarchy, action or source. Aesthetic descriptions are never sufficient instructions for implementation.
+
+### 6E.3 Master-page anatomy — a living editorial **language**, not one immutable template [METHOD]
+
+**Required publication roles**, not required visual blocks: publication masthead; issue/series identity; article/section identity; source media or its absence; lead statement; author/date/source metadata; Contents/route; article body; notes/captions/credits; references; next reading path; article end. The **same role can appear in a different relative position** depending on section. Never duplicate text/images purely to fill a three-column display.
+
+| Editorial surface | Primary object | Supporting roles | Special constraint |
+| --- | --- | --- | --- |
+| Issue First Look | One artwork/moving scene + issue claim | Official masthead, controlled CTA, real edition path | Original homepage full-bleed movie is **LOCKED**; typography proposals separate and deferred |
+| Magazine opening after P2 doors | One authentic editorial encounter | Four movements, 12 desks, 3 interludes, meaningful reading path | Do not reinstate independent coloured triptych; preserve existing P2 choreography |
+| Section opener | Section proposition + dominant image/type | Series, index, navigation | A visually different section is not another design system |
+| Table of Contents | Find and choose, quickly | Movement numbers, story title, one optional teaser | Editorial typography must improve navigation, not conceal it |
+| Photo/engraving feature | Subject image with attributable meaning | Label, source, caption, next image | Cropping must preserve historical or compositional evidence |
+| Longform (20k–50k characters) | Readable continuous paragraphs | Chapter headings, figure/caption, scripture, footnotes, index | No obligatory three columns, forced magazine pagination or scrolling hijack |
+| Archival/map page | Legible object at useful scale | Zoom/text transcription, time, location, citation | “Old map” is documented evidence, not a decorative pattern |
+| Closing | Confident conclusion + next route | Credits, references, related article; possible inherited end mark | End mark must use proven original asset; do not recreate by guesswork |
+
+The old three equal panels failed because they made **zones** prior to making **reader tasks**. A real magazine may use columns, a central square, asymmetry or no columns whenever the hierarchy requires them.
+
+### 6E.4 Geometry: from story content to grid and bounded exceptions [METHOD + TRIAL]
+
+**Construct in this order**: (1) content hierarchy → (2) available inline size and safe area → (3) main content measure → (4) primary image/subject crop → (5) supporting tracks → (6) optical alignment → (7) intentional exception. A 12-track CSS grid is a convenient *layout tool*, **not** an obligation to show twelve identical cards. Geometry can be asymmetrical when actual title/photographic content motivates it.
+
+**Starting study envelope ONLY [TRIAL]**; none of these values are approved site tokens or a promise of ideal design:
+
+| Parameter | Desktop initial candidate | Tablet initial candidate | Phone initial candidate | Rejection test |
+| --- | --- | --- | --- | --- |
+| Outer space / safe inset | 3–7vw | 4–6vw | 16–24px | Text or crop collides with viewport edge; optical imbalance |
+| Reader text measure | 30–40 **CJK ideographs** on typical body line, test against actual font | 24–34 | 17–28 | Breathing / scrolling effort / repeated eye loss; **actual rendered count matters** |
+| Body font size | Consume existing OS reading token, not a hardcoded new scale | Same semantic role | Same semantic role | Chiron loaded? comfortable paragraph at actual device/zoom? |
+| Editorial track | 6/8/12 as helpful, unequal spans allowed | 2–6 as helpful | **Single narrative flow** | Semantics force mobile into tiny side-by-side print facsimile |
+| Square plate | True 1:1 image when the image needs concentrated attention | preserve purposeful object fit | preserve picture's readable subject | Crops faces/architecture/subject; becomes every story's template |
+| Wide plate | Source-sensitive landscape, e.g. exploratory 1.5–2.2:1 | adapt based on image | full-width field if useful | Drops essential scene relationship at crop |
+| Full-bleed | Image or approved video owns a deliberate chapter moment | bounded when needed | reading navigation and caption remain discoverable | Just a stretched image, no visual subject or safe text |
+| Narrative whitespace | Express separation/anticipation/reading rhythm | shorter pauses | no empty “scroll to content” canyon | Cannot explain what the blank space accomplishes |
+
+**No numeric range above becomes production authority without** a named example, browser screenshot, optical measurements and explicit editorial sign-off. Do not equate a desktop width divided by font size with a Chinese character count: verify actual glyphs in the real paragraph and line breaks.
+
+**Alignment protocol:** start from the baseline edges of headline and prose, then try a controlled collision, inset, or offset. If headline blocks faces or disappears behind a plate, declare **BLOCK** and reject. Leaving large English letters clipped is allowed only with preserved word comprehension in each reading state; it is not “award creativity” by default.
+
+### 6E.5 Typographic roles — exact **authority**, not a new scale [BASE + METHOD]
+
+**[BASE]** Canonical OS JSON contains the 12 editorial roles; CSS is generated/loaded through the current Design OS. Use **Bodoni Moda Roman/Italic 400**, **Bodoni Moda SC genuine small caps**, **Chiron Hei HK WS 900 primary Chinese**, **Chiron 200 supporting Chinese editorial display**, **Chiron 400 sustained reading**; preserve real body font loading. The older 600 role is migration history, not a design permission to use 600 indiscriminately. Never horizontally/vertically stretch, skew or synthesize styles.
+
+**Pairing policy**:
+- English and Chinese are separate roles, not a mandatory duplicate literal translation. The English can lead as a monumental image-form, while Chinese supplies the bold semantic subject; either remains meaningful in DOM.
+- In a primary title encounter, English is often visually larger and finer; Chinese 900 is weight counterpoint. The ratio is *chosen per composition*, not a new sitewide 1.7:1 law.
+- Chinese 200 needs size and line-height to preserve readability. **200 must never be used** for 11px metadata, fine legal copy, captions or essential controls.
+- Bodoni italic is for scripture quotation, epigraph and selected English phrase—not all English, dates or tables.
+- Metadata in actual Bodoni SC is typographically distinct from body and control labels; do not make all navigation uppercase.
+- If an article title is canonically Chinese, keep a meaningful Chinese H1. Decorative outlined English may be aria-hidden only when the real title remains intact.
+- SVG mastheads remain **original assets**. Never retype the logo as a new Bodoni heading to “normalize” it.
+- At 200% zoom, allow real reflow; do not shrink or squish the type to preserve a magazine cover illusion.
+
+**Optical review**: inspect cap height vs Chiron ideograph field, punctuation proximity, title line termination, italic passage emphasis, title/subject relationship, and a 3-word vs 18-character real headline at desktop/phone. Do not approve by computed font-size alone; confirm font has loaded and glyph instance is actual.
+
+### 6E.6 Image direction — not a decorative wallpaper service [METHOD]
+
+**Image intake manifest** for every meaningful hero or article plate:
+
+| Field | Value to record |
+| --- | --- |
+| Stable source ID | Repo asset path + original file/history or authorised external asset + author |
+| Authentic subject | What is visibly shown; whether location/time depiction is historical illustration, map, photograph or reconstruction |
+| Provenance / rights | Source, attribution, license/permission, reuse condition; UNKNOWN means **BLOCK for publication**, not license guessed |
+| Focal bounds | Relative 0–1 rectangle of narrative subject and **subject exclusion zones** for live titles; manually reviewed |
+| Output frames | Whether true native square / landscape / portrait; intended crop(s); never claim a digital preview square proves original shape |
+| Color/print role | Ink/paper contrast, monochrome intent, engraving line density, optional tint; avoid black+gold pairing banned by existing Design OS |
+| Text relation | Text-safe zone; proof title against real rendered source. If no safe zone exists, move text OUTSIDE image |
+| Responsive alternate | Test separate art-directed crop **of the same source** when justified, not random CSS background-position |
+| Accessibility | Informative alt, decorative empty alt, contextual figure caption and source; avoid both duplicated verbose descriptions and absent evidence |
+
+**One source image may recur across pages** for an archival motif only when genuinely telling a connected story. **Repeating the same picture as wallpaper behind itself is a defect**, not depth. Avoid faux grain over all paragraphs, uncredited art and forced hero aspect ratio where a subject is cut.
+
+**Square rule [TRIAL]:** Use a square to concentrate a historical plate, detail, file or moment; other images remain portrait, wide, panoramic or full-bleed according to subject. A square “03” register becomes meaningful when it actually navigates to Contents; square stamps repeated on every panel are empty ornament. **Never adopt the previously rejected Folio overall direction merely because one square is effective**.
+
+**Doré translation question:** Does line density provide an editorial boundary, a depth plane, a subject-safe silhouette or a readable narrative transition? If merely “turn photo gray + apply sepia + put huge text over it,” **reject**. Never claim illustration is an archaeological photograph.
+
+### 6E.7 Publication rhythm — opening, index, feature, reading, exit [METHOD]
+
+Define the issue as a **sequence of reader intensity**, not one uniform web card template:
+
+| Register | Visual intensity | Reader task | What must be visible |
+| --- | --- | --- | --- |
+| A / Front matter | High impact permitted | Enter issue; identify its thesis | Authentic masthead, accurate issue text, real entry |
+| B / Contents | Controlled, scan-first | Find a movement and story | Four movements, 12 desks, 3 interludes, complete destination links |
+| C / Chapter opener | One dramatic accent | Understand a single proposition | One useful headline, image/source, author |
+| D / Essay | Calm repeated rhythm | Read thousands of Chinese characters | Comfortable text measure, real figure captions and notes |
+| E / Interlude | Deliberate pause | View/listen, then rejoin reading | Film fallback/controls, no autoplay obstruction or dead end |
+| F / Back matter | Quiet precision | Verify and continue | Sources, credits, previous/next, genuinely placed terminal mark if approved |
+
+**No “cover only” release:** a proposed cover cannot graduate without at least one real article opener, article middle, full-length reading continuation and ending in the same identity.
+
+**Contents can be visually bold without sacrificing navigation:** Try large movement numerals, asymmetrical white space and type counterpoint; maintain programmatic lists, honest headings and meaningful destinations. Do not fit 12 complex entries into a tiny square or freeze two text columns on a 390px phone.
+
+### 6E.8 Chinese and bilingual composition detail [METHOD + open typography QA]
+
+Ground this chapter in W3C CLREQ (Chinese punctuation and line rules), the actual Chiron font coverage, Bodoni companion metrics and semantic language spans. **Not every English typographic habit transfers to Chinese.**
+
+- Preserve real canonical character forms and accurate scripture references; do not edit a source manuscript to force a nicer last line.
+- Keep opening/closing punctuation and quotation marks sensible at line starts and ends; verify mixed-run CJK/Latin wraps, number/book-name cohesion and the real renderer's line breaking. CSS does not guarantee full professional CJK kinsoku behavior in every engine.
+- Avoid arbitrary positive tracking in dense Chinese reading. Display-grade spacing is opt-in; the CJK paragraph defaults to readable rhythm rather than “luxury typography” tracking.
+- Do not force English hyphenation rules onto Chinese. Check thin spaces, citations, italics, question marks and punctuation beside a genuine Bodoni italic run.
+- Scripture: Chinese wording in Chiron 400, Latin/numeric references in authentic Bodoni Italic per the existing typography authority; references stay semantically bound to the correct scripture.
+- For long articles, every chapter H2/H3 earns a valid hierarchy; bold 900 applies to actual primary title, not every heading. Chinese supporting display 200 is large enough to read, never a pseudo-hairline at small pixel size.
+- **Critical test strings:** 城門口的人 / 守望，一座光明的城 / The Gate / The night is far spent... / 約翰福音 3:16–17 / 一萬年的建城禮 / longest real Contents item. Verify font, punctuation, line break and no overlap at 390px and 200% zoom.
+
+### 6E.9 Longform production grammar: from a 20k–50k-character manuscript [METHOD]
+
+**Schema for a publishable article**, sourced from the existing canonical manuscript, never fabricated decorative prose:
+
+1. Article ID, canonical H1, edition, byline, date, revision/provenance.
+2. Deck/standfirst **only if genuinely present or editorially approved**; distinguish prose excerpt from copywriting.
+3. Section break hierarchy (H2/H3) and a usable optional local Contents index for long articles.
+4. True paragraphs with stable line-height, measure and natural word/character wrapping; no fixed-height text boxes.
+5. Meaningful figures as figure + img + figcaption; the image's source and illustration vs factual role are explicit.
+6. Blockquote with precise attribution and distinct from scripture reference styling.
+7. Notes/references/endnotes with backlinks and accessible anchors, plus names/links in authentic order.
+8. Article end, author/source credits, and working previous/next reading route.
+9. Loading/performance: image dimensions, progressive assets, media fallback; avoid layout shift and font flash where possible.
+10. Print/export is a **separate output mode from the same canonical content**, not a two-page GIF or page-turning web gimmick.
+
+**Representative scoped CSS sketch (example for one owning Journal article stylesheet, NOT a new OS file)**:
+
+~~~css
+/* Example only — bind this inside the existing [data-ws-scope="journal"] owner. */
+[data-ws-scope="journal"] .ws-magazine-article__reading {
+  max-inline-size: var(--ws-type-measure-reading);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+  font-family: var(--ws-type-reading-zh);
+  font-size: var(--ws-type-scale-reading);
+  line-height: var(--ws-type-leading-reading);
+  overflow-wrap: break-word;
+}
+[data-ws-scope="journal"] .ws-magazine-article__reading p {
+  margin-block: 0 1.2em;
+}
+[data-ws-scope="journal"] .ws-magazine-article__reading figure {
+  margin-block: 2.5em;
+  margin-inline: 0;
+}
+[data-ws-scope="journal"] .ws-magazine-article__reading img {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+[data-ws-scope="journal"] .ws-magazine-article__reading :is(h2, h3) {
+  scroll-margin-block-start: 5rem;
+}
+@media (max-width: 48rem) {
+  [data-ws-scope="journal"] .ws-magazine-article__reading {
+    padding-inline: 1.125rem;
+  }
+}
+~~~
+
+The code above is a **demonstration of consumption of existing roles**. It is not applied to production and needs contrast, actual mobile, source CSS selector existence and computed-font checks before implementation. No global new CSS or shadow OS.
+
+### 6E.10 A real art-direction exercise: VOL.00 / 城門口的人 [TRIAL]
+
+**Fixed authentic inputs:** The Gate / 城門口的人; canonical existing manuscript; the actual existing engraving image with honest provenance; current official WESTSIDE WATCH masthead SVG; four movements and twelve desks. The primary story is a **threshold**—the ancient gate as a physical, civic and scriptural encounter, not a square stamp.
+
+**Three different editorial questions, NOT three mandatory templates:**
+
+1. **Archival square / looking inside:** Does 1:1 isolate a meaningful threshold subject (arched entrance/human encounter) **without** cutting people? Type has its own safe field; real city/subject history supports the frame. If it looks like a gallery image alongside giant type and nothing else, reject it.
+2. **Wide evidentiary scene / seeing the street:** Does the landscape plate communicate a crowd/approach/route better than a square? Let the image own the width, and find a distinct type axis away from densely inked crowds. The title must remain legible.
+3. **Full-bleed passage / crossing:** Does an immersive scene convey entrance/scale, with accessible controls and clear scroll continuation? One image, one intentional text-safe region. The published homepage full-bleed film is protected; this test **does not modify that homepage**.
+
+For each, deliver a **direction card**: 1 sentence idea, source-asset sheet, thumbnail silhouette, 1648/768/390 rough geometry, one real article middle view, one end state, text/image collision boundaries, 200%-zoom exception handling and exact reject reason. If none wins, advance research—not ornament.
+
+### 6E.11 Motion / digital page behavior, with static parity [METHOD]
+
+A literary-magazine animation should alter **reader understanding**: ocean → church opening → edition publication, source engraving reveal, source figure annotation, Contents progression. Keep to one coherent temporal argument; **all content must remain readable as a fully static page** with reduced motion. Avoid scroll locks, video backgrounds behind dense articles, gratuitous easing or forced chapter transitions.
+
+**Motion specification tuple** to write for any transition: triggering reader action; source state; destination state; element transformations; meaning; latency/performance acceptance; keyboard and focus route; back/reverse path; interrupted mid-scroll behavior; reduced-motion/static fallback; owning file and regression screenshots. Never build a bespoke global motion library for a single page.
+
+### 6E.12 Editorial color and surface discipline [BASE + METHOD]
+
+**[BASE]** All colors come from existing Design OS tokens and semantic branches. A “warm paper” may be used only to express surface depth; it is not automatic texture wallpaper. “Classical” ≠ sepia; “modern” ≠ a dark UI.
+
+- Establish one dominant paper/surface role and no more than two major ink plates per view **as a creative starting discipline**, while allowing functional diagrams/illustrations and section colors where meaning demands.
+- Reserve section palettes for section identity; do not display all seven realm colors in every magazine image or secretly introduce an eighth style.
+- Source engravings can stay natural monochrome; any tint must preserve line meaning and contrast; source work stays unchanged.
+- Do not turn a small square 03 into black+gold luxury cliché. Existing global black+gold prohibition remains in force.
+- Captions and legal/source text must meet accessible contrast, not merely look subtle at one screenshot.
+- Before new tokens, test whether current tokens and opacity/mix support the role; if this is purely editorial composition, put it in local owner CSS only after approval.
+
+### 6E.13 The details most magazine “mood boards” fail to specify [METHOD]
+
+These are **required questions in a full-details design book**; no invented pixel authority:
+
+| Detail | Design rule | Proof |
+| --- | --- | --- |
+| Optical heading alignment | Align an actual glyph/cap edge to meaningful object/text axis, not CSS box alone | Before/after line overlay |
+| Cover crop | Record original image rectangle, focal region and exclusion region for every responsive state | Annotated subject-safe desktop/phone captures |
+| Standfirst | Declare whether true source text, edited deck or quotation, and keep it distinguishable | Editorial provenance check |
+| Byline/author | Genuine name, role, date; no microscopic 200-weight metadata | Zoom and multi-line author test |
+| Figure numbering | Canonical sequential figure IDs; alt/caption and source | Cross-reference between prose and figure |
+| Folio and issue number | Orient reader and navigate; placement stays subordinate to primary story | Keyboard/focus and “where am I?” test |
+| End mark / city-wall battlements | Historical original asset **must first be recovered** and authenticated; candidate for ending, not a global divider | Source asset audit, closing prototype after style decision |
+| Line / rule weight | Meaningful relation or interval; don't outline everything | Simplified page without line comparison |
+| Image/caption spacing | Closely associate caption with image; not adjacent story | Capture with long caption and unusual crop |
+| Heading wrap | Preserve complete content; optical balance before forced break | 3/9/18-character Chinese + Latin title captures |
+| Chapter anchors | Semantically named, stable and keyboard navigable | Keyboard jump and return |
+| Pull quote | Only from real article, attributed; not fabricated marketing copy | Search source manuscript and editorial approval |
+| Notes and references | Bi-directional accessible anchors and readable context | Navigate note → paragraph on phone |
+| Pagination / depth | Browser article is a reading stream, not imitation printed folios | Mid-article screenshot and return |
+| Read-more / next | Working destination and meaningful reader continuation | Link validation |
+| Long loading / media | No invisible article, blank scroll canyon or large shift after load | Network/cache throttling and visual compare |
+| Motion | Communicates change of state; no loss on interrupted/returned scroll | Begin/mid/end/reverse + reduced motion |
+
+### 6E.14 Engineering and accessibility proof — measurable acceptance [BASE + METHOD]
+
+Accessibility baseline: W3C WCAG 2.2 **1.4.3** ordinary text contrast ≥4.5:1 (large text ≥3:1); **1.4.4** text can resize to 200% without loss; **1.4.10** ordinary vertical content reflows at 320 CSS px without two-dimensional scrolling; **1.4.12** text spacing overrides do not clip content; **2.4.7** visible keyboard focus. These are technical standards, **not** overall proof of good art direction. Distinguish a 824px effective-width screenshot from actual browser 200% zoom.
+
+**Mandatory visual review matrix** for an actual selected candidate:
+
+| Test | Dimensions / state | Evaluate |
+| --- | --- | --- |
+| D1 | 1648×928 desktop, first screen | Publication identity, title word integrity, image subject, real CTA |
+| D2 | 1648×928 mid article and end | Actual paragraph measure, source/captions, transitions and ending |
+| T1 | 768×1024 tablet, entry + Contents | Scale shift, content order, no dead zones |
+| M1 | 390×844 phone, entry + longform | Single reading route, image legibility, active navigation, no microcopy |
+| M2 | 320 CSS px reflow | No 2D horizontal scrolling for normal article content |
+| Z1 | Real 200% browser zoom | Full text and controls without collision, clipping, lost content |
+| K1 | Keyboard-only sequence / visible focus | Logo, TOC, article, footnotes, return, no trap |
+| R1 | Reduced motion and media failure | Same reading content and source access |
+| A1 | Full text + source + alt/credits | No invented prose, wrong title, missing copyright or attribution |
+| P1 | Cache / network / font fallback | No unreadable font, image jump or hidden content |
+| C1 | Existing build/Core Contract/Design OS/preview | Green CI, but **cannot override a visual block** |
+
+**QA artifact format:** one real versioned screenshot per state, name/commit/viewport/time, measured font and box bounds, reader-task success, contrasts, image crop diagnostics and block/important/polish severity. A screenshot without a named purpose is not a QA result.
+
+### 6E.15 Honest self-review and release gate [METHOD]
+
+The user-set goal remains **award-competitive quality** with self-critique and repeat iteration, guided by Awwwards Design 40 / UX 30 / Creativity 20 / Content 10, Webby full experience and FWA originality. No award result, nomination, official juror score or guarantee is implied.
+
+- **Concept study:** 10 × 0–2 internal grammar scale from the existing project skill. Exploration minimum 15/20 only.
+- **Candidate promotion:** internal aspiration **≥18/20, zero zeros, no unresolved BLOCK**, PLUS independent browser reader-path, motion, accessibility, performance, real content, evidence and art-director approval.
+- **Reject even an attractive screenshot** if 03 index does not navigate, THE GATE loses letters, actual CJK prose wraps badly, the source image is unverifiable, a phone hides Contents, full-bleed does not truly span the viewport or the beautiful grid cannot serve a real article.
+- **Do not sign off concept by CI** or assume the release is approved when one of three ratios passes. Reject without adding five ornamental variants; return to book method or source-image study as needed.
+- **Frozen until selected:** original homepage film/full-bleed opening, known water-to-door-to-P2 motion and protected twelve-portrait assets.
+- **Do not merge** the ongoing magazine research PR solely to save prose; the documentation can be reviewed in the branch while the visual concept remains unselected.
+
+### 6E.16 How this chapter grows into the **complete** Westside magazine production book
+
+**This first round is an operational draft, NOT a claim that a complete production book or final visual brand has been delivered.** The next source-work chapters, ordered by creative dependency rather than smallest cosmetic task:
+
+| Priority | Future chapter | Source of data | Deliverable required for “done” |
+| --- | --- | --- | --- |
+| 1 | Editorial brand premise / signed artistic proposition | History/source art and real magazine reader mission | Brand thesis, three independent direction cards and one accepted silhouette with rejection evidence |
+| 2 | Original Doré-image art direction | Licensed originals, engraving line/subject/lighting studies | Subject-safe maps, figure and crop conventions, image treatment decisions, asset provenance |
+| 3 | Master grid and composition atlas | Real Contents, chapter, cover and feature data | Measured grids, exceptions, 1648/768/390 drawings with semantic hierarchy |
+| 4 | Complete type manual for 12 semantic roles | Existing Design OS typography authority, actual browser fonts | Role-by-role specimens with exact font, optical balance, CJK breaking, prohibited examples, scoped code |
+| 5 | Issue/section color and image-handling manual | Existing single-OS tokens, seven semantic realms | Functional palette usage and image-treatment/contact-sheet evidence |
+| 6 | Complete longform and scholarly apparatus | Real manuscripts, images, scripture, citations, 20k–50k-character test | Full middle/end layout with figures, caption, notes, footnotes, references and next |
+| 7 | Editorial motion and navigation grammar | P2 approved flow plus real reading tasks | Timelines/states/reduced-motion story, keyboard route, measurable performance |
+| 8 | Cross-screen / print export grammar | Rendered phone/tablet/desktop/print from canonical source | Role-consistent format system without forcing print page simulation on web |
+| 9 | Production handbook and reviewer checklist | Browser measurements, accepted prototypes, design decisions | Exact rule → owning CSS/JS/semantic DOM → screenshot regression → release acceptance |
+| 10 | Living exception and archive protocol | Approved design reviews / rejected variants | Versioned examples, reasons, rollback and next editor instructions |
+
+**The most urgent unresolved task is not an article end mark. It is to write and validate the brand's editorial premise and the Doré-art-to-modern-grid translation so that all details are decisions of one identifiable publication.** Only then may specific square-crop use rates, end marks or image proportions become normative.
+
+**Source provenance index:** B01–B11 above; [§6D The World of Interiors](#6d5b-case-study-the-world-of-interiors--square-as-a-selective-image-register-not-a-global-layout-2026-10-22), [§6A award-level gate](#6a-award-calibre-release-objective--awwwards--webby-awards--fwa-2026-10-21), existing [Westside editorial type authority](WESTSIDE-EDITORIAL-TYPOGRAPHY.md) and [single Design OS](WESTSIDE-DESIGN-OS.md). Public links prove title, contents or guidance as marked; full copyrighted text not reproduced.
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
