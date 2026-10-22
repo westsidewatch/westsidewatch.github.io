@@ -73,3 +73,7 @@ Every phase may emit one or more temporal operations:
 The viewer therefore preserves **urban memory**: moving forward never means deleting the past from the data model. Moving backward must reconstruct prior states from the same object/event ledger.
 
 The four original anchors (Today / Jesus / Nehemiah / David–Solomon) remain editorial shortcuts only. They are not the temporal data model.
+
+## Source-bound magazine visualization handoff (2026-10-22)
+
+WESTSIDE WATCH/ATLAS can consume the existing continuous city/evidence ledger for historically honest editorial graphics: same terrain/camera/coordinates, object ID, era state, source references and explicit observed/reconstructed/inferred/disputed classification. The *framing and source-to-artwork method* lives in the **single** [Westside Design OS Editorial Manual §6E.36](../../design/WESTSIDE-EDITORIAL-MANUAL.md). This links an existing product's facts to an experimental magazine art direction; it does not authorize new archaeological facts, create a second runtime/OS, claim the prototype is complete, or change fullTimelineReady:false.

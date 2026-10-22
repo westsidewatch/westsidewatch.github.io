@@ -2016,6 +2016,48 @@ No new global theme or palette. All specimens use existing OS source/rights and 
 
 **Progress verdict:** a distinctive visual **CANDIDATE** at art-direction prototype stage, but not complete issue photography, source evidence, licensed media or genuine longform publishing; **no awarded internal ≥18/20** because material release blockers and true browser zoom remain unverified. Next critical path: actual source plates for Elim, genuine image/person/media provenance, complete article/footnote reader, then 200% native browser and reread/motion audit. Stop creating new shape/style concepts.
 
+
+### 6E.36 R13 — Framing as Westside DNA, not image crop (2026-10-22)
+
+**Correction of material audit:** ONE already connects Holy Light Bible Geography maps/routes; Jerusalem 3000 already has a reversible spatial/temporal/evidence architecture; ONE has 241 source-locked Doré originals plus separately versioned ONE Studio images and detailed engraving grammar; Olive's historical/person portraits provide an editorial precedent. The isolated magazine visual candidate has not yet *integrated* those holdings into finished plates. This is an editorial design/attribution bottleneck, **not proof that upstream maps and portrait capability are lacking**. Publicly accessible images still need origin, permission, derivative and credit checks for reuse.
+
+**Verified primary reference:** [Pentagram LDF 2026 — Framing LDF](https://www.pentagram.com/work/london-design-festival-2026), Domenic Lippa/team. This year's campaign has a conceptual *invisible frame* representing the Festival as a platform; it can operate over imagery and without imagery. According to the [official creator interview](https://londondesignfestival.com/stories/framing-ldf-by-pentagram), LDF's existing masterbrand/red stay recognizable while each annual campaign reinvents its visual act. **Learn the mechanism (meaning → occlusion/field → adaptation), NOT copy LDF's red, typography, broken letters or poster silhouettes.**
+
+**Research complements:** [Giorgia Lupi / Data Humanism](https://giorgialupi.com/data-humanism-my-manifesto-for-a-new-data-wold) emphasizes context, nuance, uncertainty and densely layered data-based narrative; [Observable Plot's grammar of marks](https://observablehq.github.io/plot/features/marks) binds data values to spatial positions, geometry, marks, strokes and layers. Treat data as *an editorial material with evidence*, not a corporate dashboard or decorative statistical wallpaper. Neither introduces new runtime/visual authority.
+
+#### 36.1 Framing operator for a continuous web-native spread
+
+**Rejected baseline:** resize one source image to a square with CSS and place a large Bodoni word beside it. This is a crop tactic, not an editorial signature. Existing R5 virtual 50/50 and 30/70 across-spread principles remain; there is **no real gutter and no requirement for independent side panels**. A meaningful geometric field can cross that axis and interact with source image, typographic plane, negative space and artful transparency, **not necessarily show a drawn border**. Every square must answer one reader question: why is this framed / obscured / revealed rather than plainly shown?
+
+| Candidate operator | Contextual meaning | Design failure |
+| --- | --- | --- |
+| **Evidence aperture** | ATLAS: map/fortification/source plate crosses frame boundary; a source-true caption shows what the highlighted fragment evidences | automatic center crop that removes the source legend, walls, names or provenance |
+| **Temporal section** | Jerusalem 3000: same camera/coordinate/object IDs inside and outside one frame; build/ruin/buried/rebuild reveal genuine temporal layers | alternate eras made into four unrelated imaginary model images, inference silently called observation |
+| **Portrait foreground** | WITNESS: an attributed historical or versioned engraved person occupies foreground; oversized undistorted English type is partly occluded | stolen/unattributed photography, typographic collision that hides the actual person's name |
+| **Typographic registration** | MONUMENT: a frame interrupts unmodified Bodoni glyphs or forms from negative space; supporting text remains readable and accessible | meaningless clipped English letters for trend appearance |
+| **Cross-spread aperture** | ONE uninterrupted field across virtual 30/70, 50/50, or other justified composition weights | geometric box turns into a fixed left-card/right-card dashboard |
+| **Absent-frame pause** | SILENCE's already strong spatial restraint releases framing pressure at the conclusion | forced ornamental squares or reduced genuine prayer readability |
+
+Original 西望 SVG, the single Design OS Bodoni/SC/Chinese roles and palettes, actual engravings' line direction, genuine copy and one clear reading order remain invariant. Style/subject operations vary. **Absence is part of the grammar: do not repeat a decorative square in every page.** This is a testable technique proposal, not the final named Westside DNA.
+
+#### 36.2 ONE / Jerusalem / portrait evidence-to-artwork pipeline
+
+Relevant local anchors: [ONE map catalog](../../static/one/one-map-catalog.js), [ONE two asset libraries](../../static/one/ONE-ASSET-LIBRARIES-MASTER.md), [ONE original-inspired illustration grammar](../../static/one/ONE-DORE-VISUAL-GRAMMAR.md), [Jerusalem 3000](../projects/jerusalem-3000/README.md), [historical evidence object schema](../projects/jerusalem-3000/evidence-schema.json).
+
+**Acquisition → verification:** select already indexed source/map/portrait or city-ledger object; capture creator, exact source, reusable-license status, version, original geometry, protected labels/silhouette, chronology and sources. Holy Light route map N numbered routes must retain N matching legend entries; externally visible GIF is not a blanket license to edit or distribute. When a source is disputed, label alternatives; do not visual-code fabricated confidence percentages.
+
+**Encoding → original plate:** select a **single editorial question** (“what changed?”, “what location supports the claim?”, “who is the actual witness?”). Map source attributes to line trajectory, spatial contour, timestamp, section, typography, brightness/density, disclosure and layer; generate reproducible SVG/Canvas/vector engraving rather than generic statistic widgets. In Jerusalem 3000, take one existing fixed coordinate/camera, linked source ID, era, geometryState and evidence.status = observed / reconstructed / inferred / disputed; export a plate with those metadata rather than overwrite ledger authority. ONE Studio illustrations stay versioned and must not impersonate canonical Doré originals.
+
+**Composition → reader:** place source plate and title in **one continuous spread**; use purposeful aperture/negative space; preserve genuine caption and source expansion route. Recompose for phones, do not scale down desktop; respect visual subject masks, long Chinese titles, keyboard interaction and real browser 200% zoom.
+
+#### 36.3 Controlled test: from visual idea to proof
+
+Compare four **same-source, same-copy** treatments: A plain centered square crop as negative control; B meaningful evidence aperture with linework crossing edges; C cross-spread 30/70 framing/type/negative-space integration; D temporal change or route evidence aperture tied to actual ONE/Jerusalem records. Test a fifth no-square SILENCE to prove identity survives geometry disappearing. Explicit reject criterion: if the reader learns nothing more from B/C/D than A, it is still only styling.
+
+Observe actual 1648, 768, 390, 320px screenshots, genuine browser 200% zoom, source/legend integrity, historical uncertainty labels, human silhouette/text collision, navigation and motion reversibility. Judge *thumbnail distinction without logo* plus the complete article/longform, not just gallery screenshots. Maintain the single §6A 10 × 2 / ≥18/20 no-block rule without pretending to hold an award jury score.
+
+**Next production test:** compose ONE real, source-attributed Elim/Jerusalem evidence plate with the above pipeline, and compare crop-only versus registered editorial framing. This is RESEARCH/TRIAL, not a new OS, not an approved identity or visually finished asset. Preserve SILENCE, Olive poster assets, homepage and P2 motion.
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
