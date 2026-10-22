@@ -32,7 +32,7 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
             photoCount:document.querySelectorAll('.geo__media img').length,
             photoDecoded:!!photo?.complete&&photo.naturalWidth>0,
             logoDecoded:!!logo?.complete&&logo.naturalWidth>0,
-            image:box('.geo__media'),title:box('.geo__display'),
+            image:box('.geo__media'),hero:box('.geo__hero'),title:box('.geo__display'),
             contents:document.querySelectorAll('.geo__toc .issue-list li').length,
             movements:document.querySelectorAll('.geo__toc .movement-head').length,
             tocFontSize:li?parseFloat(getComputedStyle(li).fontSize):0,
@@ -53,6 +53,7 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
         if(shape!=='full'&&intersect(m.image,m.title)>200)defects.push('IMAGE_TYPE_COLLISION');
         if(shape==='square'&&Math.abs(m.image.width/m.image.height-1)>.08)defects.push('SQUARE_RATIO');
         if(shape==='wide'&&Math.abs(m.image.width/m.image.height-1.95)>.1)defects.push('WIDE_RATIO');
+        if(shape==='full'&&width>760&&((m.image.width/m.hero.width)<.98||(m.image.height/m.hero.height)<.98))defects.push('FULL_BLEED_NOT_FULL_WIDTH_HEIGHT');
         if(shape!=='square'&&!m.squareLink)defects.push('FOLIO_LINK');
         const screenshot=id+'.png';
         await page.screenshot({path:path.join(out,screenshot),fullPage:true,animations:'disabled'});
