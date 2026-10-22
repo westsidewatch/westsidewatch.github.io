@@ -148,3 +148,14 @@ Acceptance is not a passing build alone: photograph the actual main-title/second
 **First-pass structural review:** All three variants have real art direction, separate editorial registers and verified copy; none pretends to be a finished magazine. This phase **cannot pass visual approval on code alone**. Priority screenshots and issues: (1) A English letter crop versus adjacent image; (2) A 100% side register scrolling and its mobile transfer; (3) B number / image / text balance and four movement legibility; (4) C actual player load/poster and image-text contrast; (5) exact Chiron 900 / 200 and Bodoni genuine Roman 400 computed typography; (6) keyboard stage switches and reduced-motion; (7) 1648px/768px/390px and 200% zoom, viewport-height constraints. Avoid rating 18/20 before snapshots and factual editorial review.
 
 **Status:** FIRST COMPARATIVE COMPOSITION IMPLEMENTED / NOT VISUALLY APPROVED / DO NOT MERGE. Promote exactly **one** direction after user sees the real screenshots, then recompose existing P2 stages via the current owner JS/CSS. No alternate system or separated production route.
+
+
+## Rejection after real screenshots — no magazine triptych; homepage film protected (2026-10-22)
+
+**Binding user decisions:** Keep the **currently approved full-bleed film homepage intact**, including its film, framing, playback and scroll behavior. Only *after* selecting the Westside Watch visual identity may homepage **font size, font weight and text placement** be separately reviewed. No homepage code, assets or CSS changed here.
+
+**Reject for all P2 magazine art-direction options:** the visually independent three-column panel composition. A's 20:55:25 and B's 23:53:24 opened triptychs are withdrawn; do not restore them by changing ratios. These read as independent UI panels, not one editorial work. Functional micro-grids within a coherent Contents or a distinct Church schedule are not banned.
+
+**Revised isolated lab only:** A becomes a single engraving field + one unified paper field containing title, real four-movement Contents and CTA, with one DOM copy of Contents. B becomes one archival plate + one editorial field; Romans 13:12 is embedded *after* the actual Contents, not used as a third full-height navy panel. C remains video/image + publication field; on mobile, preserve the video/poster instead of hiding it. All actual article excerpts retain a single readable column. Existing approved original homepage and actual P2 animation are untouched.
+
+**Gate:** These are revised layout hypotheses requiring desktop/mobile screenshots, actual font, long titles, mixed-script wrapping, 200% zoom, accessibility, reduced motion, source film fallback, and design signoff. **NOT VISUALLY APPROVED / DO NOT MERGE.**

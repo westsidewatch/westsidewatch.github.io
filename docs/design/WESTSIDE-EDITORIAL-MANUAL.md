@@ -142,7 +142,7 @@ Record one **evidence-led** review per change, using the project skill's existin
 
 **版面角色比欄數重要。** Cover（封面）、Opener（卷首／主題經文）、Feature（主報導／人物）、Contents（目錄）、Folio／Imprint（期號／出處）、Archive／Desk（索引／工具）都是可選擇的編輯功能，不是每一屏都必須堆滿的清單。一個版塊應有一個主要編輯命題和一個主要視線入口。
 
-**比例先於裝飾。** 分欄由角色、實際文字、圖像主體及安全區倒推。可探索不對稱三欄（例如左 29 / 中 45 / 右 26），但比例只是**待驗證的候選值**，不是全站固定 Token 或通用答案。左右留白要有受力、方向、節奏和跨欄呼應；禁止為填空而加沒有編輯意義的刻線、標籤、徽章或背景物件。靜止截圖首先必須是一張有主題力量的作品。
+**比例先於裝飾。** 分欄由角色、實際文字、圖像主體及安全區倒推。P2 雜誌不再以獨立三欄作為候選；探索影像主場與閱讀主場的關係，但比例只是**待驗證的候選值**，不是全站固定 Token 或通用答案。左右留白要有受力、方向、節奏和跨欄呼應；禁止為填空而加沒有編輯意義的刻線、標籤、徽章或背景物件。靜止截圖首先必須是一張有主題力量的作品。
 
 **中英雙語是兩種排版聲部。** 英文的 Roman、Italic、真正 Small Caps 與中文的粗／細、題名／長文角色應產生尺度對照，不得只做逐字翻譯式對排。採用唯一 Design OS 當前有效的 Bodoni Moda／Bodoni Moda SC、昭源黑體及既定 semantic tokens；原文件列出的 Noto Serif TC 是尚未清理的來源／舊字體宣告，不得再直接稱為雜誌實際閱讀字體；不得變形拉伸字體，不得以極細微字假裝精緻。先測真實標題、最長篇名、行距、孤行、英文換行、對比，再調裝飾與動效。
 
@@ -167,13 +167,13 @@ Record one **evidence-led** review per change, using the project skill's existin
 
 **1｜編輯命題卡 — 用一句話定義畫面任務。** 寫出「讀者是誰／第一眼該懂什麼／應產生什麼情緒／下一個閱讀動作是什麼」。為每個版塊命名它的**刊物類型**，例如教會主日的 weekly folio、Westside Watch 的封面與目錄、橄欖山的人物特刊、Cinema 的放映手冊、ONE 的研經筆記。先列獨特點、內容來源及禁用的 generic 形式。
 
-**2｜編輯內容地圖 — 先決定內容，再決定三欄。** 抽取現有正式文章、標題、作者、欄目、視頻和圖片；分配 Cover／Opener／Feature／Contents／Folio／CTA 的功能。未寫好的文章可以顯示已確認的標題，但**不得虛構稿件**。標出中英文的語意角色及真實閱讀路徑，先完成紙面線框和目錄資訊架構。
+**2｜編輯內容地圖 — 先決定內容和閱讀次序，再決定圖文關係。** 抽取現有正式文章、標題、作者、欄目、視頻和圖片；分配 Cover／Opener／Feature／Contents／Folio／CTA 的功能。未寫好的文章可以顯示已確認的標題，但**不得虛構稿件**。標出中英文的語意角色及真實閱讀路徑，先完成紙面線框和目錄資訊架構。
 
 **3｜原創 Art Direction — 先做有辨識度的靜態封面／跨頁。** 最多比較 2–3 個**結構上真正不同**的構圖命題；每一個要有主視覺、字級對比、圖像裁切、留白受力、比例、光／紙／墨關係與視線順序。可嘗試 29/45/26，但必須和等權或其他候選比較而不是盲用。需要一眼能辨認的縮圖輪廓，不接受只是舊 DOM 加 CSS 變體。
 
 **4｜先確定終態，再設計轉場。** 一次完成的靜止畫面，必須本身像一份值得出版的編輯作品；之後再設計影片、滾動、折幕、頁脊、開門。為每個可停留節點命名畫面職責，例如「教會完整對開 → 晨星帶西望升起的雜誌封面雙頁 → 左右展開露出真實封面／目錄」。上一頁未完成時下一頁不得搶先開始；除有明確敘事用途的 deliberate hold 外，不准有無變化的滾動死區。滾回須可逆、過場不能打斷閱讀。
 
-**5｜桌面與手機分別編輯，不准整頁縮放。** 桌面可採有主次的非對稱多欄、帶影片的主視覺跨頁；手機在 P2 開門後**只顯示可讀的核心中欄**，封面與目錄按垂直順序閱讀，雙側識別／引言退為封面小資訊或轉場中的短暫角色，不能縮成微型三欄。斷點應改變**內容優先級與排版結構**，不是對桌面截圖做 transform:scale。必要時封面與目錄可自然滾動，不能把整期文章擠進固定一屏。
+**5｜桌面與手機分別編輯，不准整頁縮放。** 桌面可採影像主場與閱讀主場的非對稱構圖、帶影片的主視覺跨頁；手機在 P2 開門後**按閱讀順序保留圖像、主標題、目錄及內容入口**，封面與目錄按垂直順序閱讀，雙側識別／引言退為封面小資訊或轉場中的短暫角色，不能縮成微型的桌面分區。斷點應改變**內容優先級與排版結構**，不是對桌面截圖做 transform:scale。必要時封面與目錄可自然滾動，不能把整期文章擠進固定一屏。
 
 **6｜在唯一 OS 和既有 owner 檔案實作。** 語義 HTML 承載真實文字，原圖與 approved SVG 原樣引用；使用 scoped styles、semantic type/color/motion tokens；元素相對安全區和欄寬定位。首頁影片的重用需保留封面 poster、效能及使用者控制，不能自動播放有聲音。已有主日洋流、七色折幕、晨星和城牆的資產／方向規範應被尊重。只新增為實現這個 direction 所必需的程式，不加全站新入口、第二 CI 或另一套 CSS authority。
 
@@ -406,13 +406,17 @@ Three tests of **one** future magazine language, not three conflicting Design OS
 
 | Candidate | At the 87–90% held transition | At 100% open | What the experiment tries to learn |
 | --- | --- | --- | --- |
-| **A · Monumental Engraving** | One 42/58 asymmetric spread: giant fine-line serif + light/engraving/vertical 「西望」 respond to each other | ~20/56/24 editorial field: central large cover/real editorial lead; sides become marginalia/short excerpt, *not card columns* | Can classical print/image and modern giant headline produce tension without filler? |
-| **B · Living Atlas** | One dark/light historical plate rises to cover 35–45%; type becomes the other 55–65%, with a single engraved architectural axis | ~24/52/24: one illustration, one contents/editorial feature, one annotated register; no repeating city-wall strip | Can Jerusalem/Doré material become article evidence, not decoration? |
+| **A · Monumental Engraving** | One 42/58 asymmetric spread: giant fine-line serif + light/engraving/vertical 「西望」 respond to each other | one engraving field facing one unified editorial field: central large cover/real editorial lead; sides become marginalia/short excerpt, *not card columns* | Can classical print/image and modern giant headline produce tension without filler? |
+| **B · Living Atlas** | One dark/light historical plate rises to cover 35–45%; type becomes the other 55–65%, with a single engraved architectural axis | one archival image field and one contents/editorial field containing contextual notes; no third vertical register or repeating city-wall strip | Can Jerusalem/Doré material become article evidence, not decoration? |
 | **C · Cine-Folio** | Verified reused homepage video still is a *print-cover image* with an asymmetrically cropped serif title, not an auto-playing wallpaper | At 100%, source video/still becomes one chapter opener; text and contents move to differentiated page areas with working article link | Can the video-to-print translation feel like the same publication as P2/Journal? |
 
 **Common candidate invariant:** actual official WESTSIDE WATCH logo, approved text, Chiron 900 main and 200 subheads, true Bodoni 400, authentic image asset provenance, seven semantic realm colors (one major field at a time), current church water/door story, reduced-motion support. **No new font or global color OS.** Do not include all visual techniques on the same page.
 
 **Dynamic type proportions, to be derived from selected style:** A single English display letter may occupy 20–50% of screen width or nearly half the page height for an opener; this is an *art-directed exception* to the usual 72–160px display scale, requiring an opt-in and clear crop-safety logic within the existing OS, not arbitrarily increasing `--ws-type-scale-editorial-hero-en` globally. Companions must be legible. Chinese 900 can be smaller and heavier while 200 support titles rise into secondary prominence by spacing and measured size. Update numerical scale *after* picking a candidate, not before.
+
+### 6D.5a Binding composition and homepage boundary — 2026-10-22
+
+Real screenshots reject all **independent three-panel magazine spreads**, including unequal 20:55:25 and 23:53:24 examples. Those proportions above are now historical hypotheses, **not approved layouts**. Keep the current **full-bleed video homepage unchanged**: no changes to playback, framing, sequence, hero crop or motion. Only after choosing one Westside magazine grammar may its homepage *font size, weight and arrangement* be proposed as a separate scoped visual change. For A/B/C, prefer a continuous **primary image/media field paired with one editorial reading field**; place TOC, contextual quote and article entry *within* the reading field rather than inventing a third autonomous color strip. Internal Contents grids are only a text-layout aid, not a triptych. Mobile preserves visible media and content in editorial reading order. This ruling belongs to Design OS and supersedes earlier §6B/§6D tentative 3-column ratios; it does **not** change the unrelated Church service schedule's functional fields. Original homepage/P2 code stays frozen while the isolated proof is visually reviewed. **Not approved to merge.**
 
 ### 6D.6 Required next workflow — selection before implementation
 

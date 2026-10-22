@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>WESTSIDE WATCH / Magazine Art Direction / Three Candidates</title>
+<title>WESTSIDE WATCH / Magazine Art Direction / Two-Field Studies</title>
 <link rel="stylesheet" href="/css/westside-design-os.css">
 <style>
 :root{--paper:#f2eee3;--ink:#1b3043;--blue:#19344c;--light:#b99b52;--line:#aa9c80;--os-zh:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);--os-en:var(--ws-type-display-en,"Bodoni Moda",serif)}
@@ -59,7 +59,7 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 .a-hold__brand{position:absolute;z-index:2;bottom:5%;left:6%;right:6%;display:flex;align-items:end;justify-content:space-between;gap:16px}
 .a-hold__brand img{width:min(54%,380px);object-fit:contain}
 .a-hold__brand .folio{color:#fff}
-.a-open{display:grid;grid-template-columns:20% 55% 25%;min-height:760px;color:var(--ink)}
+.a-open{display:grid;grid-template-columns:44% minmax(0,1fr);min-height:760px;color:var(--ink)}
 .a-open__plate{position:relative;overflow:hidden;background:#b69a62}
 .a-open__plate .engraving{position:absolute;inset:0;filter:grayscale(1) sepia(.5) contrast(1.35)}
 .a-open__plate .vertical{position:absolute;inset:7% auto auto 10%;writing-mode:vertical-rl;text-orientation:mixed;font:400 clamp(38px,6vw,110px)/.9 var(--os-en);color:#fff8e7;text-shadow:0 1px 16px #1118;letter-spacing:-.035em}
@@ -69,12 +69,13 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 .a-open__identity .issue-en{font:400 clamp(70px,8.8vw,166px)/.75 var(--os-en);letter-spacing:-.075em;margin:12px 0;color:#1b3043}
 .a-open__identity h2{font-size:clamp(27px,3.1vw,59px);margin:10px 0 26px;max-width:14ch}
 .a-open__identity .number{position:absolute;top:-10px;right:0;font:400 clamp(85px,10vw,160px)/1 var(--os-en);color:#ab8b5127}
-.a-open__intro{padding-top:18px;display:grid;grid-template-columns:1.3fr 1fr;gap:30px}
+.a-open__intro{padding-top:22px;display:grid;grid-template-columns:1fr;gap:22px}
 .a-open__intro p{font:400 clamp(15px,1.1vw,19px)/1.62 var(--os-zh);margin:0}
 .a-open__intro blockquote{font:italic 400 clamp(24px,2.2vw,39px)/1.1 var(--os-en);margin:0}
-.a-open__index{background:#dfd6c5;padding:clamp(22px,2.2vw,39px);overflow-y:auto;max-height:85svh}
-.a-open__index h3{font:400 33px var(--os-en);margin:0 0 24px;border-bottom:1px solid #82765f;padding-bottom:13px}
-.a-open__mobile-index{display:none}
+.a-open__index{background:transparent;border-top:1px solid #927f623f;margin-top:30px;padding:22px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(22px,3vw,52px);row-gap:12px}
+.a-open__index h3{grid-column:1/-1;font:400 33px var(--os-en);margin:0 0 6px;border-bottom:1px solid #82765f;padding-bottom:13px}
+.a-open__cta{margin-top:auto;padding-top:32px}
+/* Contents remains a single real DOM copy on both desktop and phone. */
 
 /* B: an editorial archaeological atlas, not a book mock-up */
 .b-hold{display:grid;grid-template-columns:37% 63%;background:#e5ddca;min-height:760px}
@@ -88,19 +89,20 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 .b-hold__data .number b{font-weight:400;color:#a58450}
 .b-hold__data h2{font-size:clamp(31px,4vw,65px);margin:0;grid-column:1}
 .b-hold__data .foot{grid-column:2;font:400 16px/1.7 var(--os-zh);border-left:1px solid #9c8b6e;padding-left:19px}
-.b-open{display:grid;grid-template-columns:23% 53% 24%;min-height:830px;background:#e9e2d5}
+.b-open{display:grid;grid-template-columns:41% minmax(0,1fr);min-height:830px;background:#e9e2d5}
 .b-open__left{background:#ddceb2;padding:26px;display:flex;flex-direction:column}
-.b-open__left .engraving{min-height:42%;filter:grayscale(1) sepia(.35) contrast(1.4);margin:20px -26px}
+.b-open__left .engraving{flex:1;min-height:440px;filter:grayscale(1) sepia(.35) contrast(1.4);margin:20px -26px}
 .b-open__left .big{font:400 clamp(70px,9vw,150px)/.82 var(--os-en);letter-spacing:-.09em}
 .b-open__center{padding:clamp(26px,3vw,56px);min-width:0;background:#f5f0e6}
 .b-open__center .head{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #938c7e;padding-bottom:16px}
 .b-open__center h2{font:400 clamp(60px,7vw,132px)/.9 var(--os-en);letter-spacing:-.07em;margin:25px 0}
 .b-open__center .sub{font-size:clamp(27px,3vw,53px);margin:0 0 20px}
 .b-open__center .atlas-contents{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.b-open__right{background:#21394b;color:#f6ede0;padding:clamp(24px,2vw,44px)}
-.b-open__right .quote{font:italic 400 clamp(26px,3vw,54px)/1.05 var(--os-en);margin:60px 0 25px}
-.b-open__right .air{font-size:clamp(21px,2vw,33px);margin:0 0 24px}
-.b-open__right .period{color:#d4b985}
+.b-open__right{background:#21394b;color:#f6ede0;padding:clamp(26px,3vw,44px);margin-top:35px;display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;align-items:start}
+.b-open__right .quote{font:italic 400 clamp(27px,2.7vw,48px)/1.08 var(--os-en);margin:0;grid-column:1}
+.b-open__right .air{font-size:clamp(21px,2vw,33px);margin:0;grid-column:2;align-self:center}
+.b-open__right .period{color:#d4b985;grid-column:1/-1}
+.b-open__right .eyebrow{grid-column:1/-1}
 
 /* C: source homepage film acts as edition media, not a decorative backdrop */
 .c-hold{display:grid;grid-template-columns:62% 38%;min-height:760px;background:#f2efe5}
@@ -124,24 +126,25 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 .c-open__toc h3{font:400 33px var(--os-en);margin:0 0 10px}
 
 /* Real article excerpt: all candidates use authentic draft, not generated filler */
-.article{background:#f4f0e6;color:#1b3043;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,49rem) minmax(0,1fr);min-height:920px}
-.article__mast{grid-column:1/-1;padding:22px clamp(24px,4vw,60px);display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid #b7ad97}
+.article{background:#f4f0e6;color:#1b3043;display:flex;flex-direction:column;min-height:920px}
+.article__mast{padding:22px clamp(24px,4vw,60px);display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid #b7ad97}
 .article__mast img{max-width:250px;width:32vw;max-height:65px}
-.article__media{grid-column:1/-1;height:clamp(190px,29svh,340px);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#243c51;color:#f5ecde}
+.article__media{height:clamp(190px,29svh,340px);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#243c51;color:#f5ecde}
 .article__media::before{content:"";position:absolute;inset:0;background:url('/images/home-opening-engraving.jpg') center 44%/cover;filter:grayscale(1) sepia(.2) contrast(1.3);opacity:.57}
 .article__media .en{position:relative;font-size:clamp(85px,14vw,240px);line-height:.8;text-align:center}
-.article__body{grid-column:2;padding:clamp(30px,4vw,68px) clamp(18px,3vw,46px);min-width:0}
+.article__body{width:min(100%,49rem);margin:0 auto;padding:clamp(30px,4vw,68px) clamp(18px,3vw,46px);min-width:0}
 .article__body h2{font-size:clamp(35px,4vw,69px);margin:16px 0 24px}
 .article__body p{font:400 clamp(17px,1.1vw,20px)/1.84 var(--ws-type-reading-zh,var(--os-zh));margin:0 0 1.25em;letter-spacing:0}
 .article__body .standfirst{font-weight:200;font-size:clamp(22px,2vw,35px);line-height:1.53}
 .article__body .chapter{font:400 clamp(27px,3vw,50px)/1 var(--os-en);margin:30px 0 20px}
-.article__caption{grid-column:2;align-self:end;border-top:1px solid #ad9c7d;padding:0 0 30px;font:400 12px/1.6 var(--os-zh)}
+.article__caption{width:min(100%,49rem);margin:0 auto;border-top:1px solid #ad9c7d;padding:12px clamp(18px,3vw,46px) 30px;font:400 12px/1.6 var(--os-zh)}
 .article--b .article__media::before{filter:grayscale(1) sepia(.5) contrast(1.3)}
 .article--b .article__media{background:#997d54}
 .article--c .article__media{background:#263848}
 .article--c .article__media::before{opacity:.2}
 .article--c .article__media .en{font-size:clamp(90px,17vw,290px)}
-/* For mobile this is a magazine PAGE, not a shrunk three-column desktop */
+/* Mobile preserves the actual media and full contents, not hidden side panels. */
+@media(max-width:1100px){.a-open__index,.b-open__center .atlas-contents{grid-template-columns:1fr}.b-open__right{grid-template-columns:1fr}.b-open__right .quote,.b-open__right .air,.b-open__right .period,.b-open__right .eyebrow{grid-column:1}}
 @media(max-width:760px){
 .toolbar{position:static}.info{padding:19px 16px}.study{width:100%;margin:0;min-height:auto;box-shadow:none}
 .study__stage{min-height:0}
@@ -153,12 +156,14 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 .b-hold__data{display:flex;flex-direction:column}.b-hold__data .number{font-size:clamp(150px,45vw,240px)}
 .b-hold__data .foot{margin:0}
 .c-media{min-height:36svh}.c-hold__word{font-size:clamp(90px,27vw,160px)}
-.a-open__plate,.a-open__index,.b-open__left,.b-open__right,.c-open .c-media{display:none!important}
+.a-open__plate{display:block;min-height:38svh;height:38svh}.a-open__plate .vertical{font-size:clamp(43px,15vw,95px)}
+.b-open__left{display:flex;min-height:46svh;height:auto}.b-open__left .engraving{min-height:32svh;height:32svh;flex:1}
+.c-open .c-media{display:block;min-height:42svh;height:42svh}
+.a-open__index,.b-open__center .atlas-contents{grid-template-columns:1fr;gap:16px}
 .a-open__center,.b-open__center,.c-open__header{display:block;width:100%;min-height:0;padding:30px clamp(19px,5vw,40px)}
 .a-open__identity{min-height:260px}.a-open__identity .issue-en{font-size:clamp(70px,17vw,122px)}
 .a-open__intro,.b-open__center .atlas-contents{grid-template-columns:1fr;gap:20px}
-.a-open__mobile-index{display:block;border-top:1px solid #9f9179;padding-top:15px;margin-top:30px}
-.a-open__mobile-index h3{font:400 32px var(--os-en);margin:0 0 18px}
+.a-open__index h3{font-size:32px;margin:0 0 12px}
 .b-open__center h2{font-size:clamp(58px,15vw,120px)}
 .c-open{display:flex;flex-direction:column}.c-open__header .display{font-size:clamp(85px,20vw,160px);margin:35px 0 15px}
 .c-open__toc{overflow:visible}.c-open__toc .film-contents{grid-template-columns:1fr 1fr}
@@ -185,10 +190,11 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 </nav>
 <header class="info">
  <h1 id="study-title">A · Monumental Engraving</h1>
- <p id="study-note">古典刻線與巨大 Bodoni 英文共同構成一個開場；中文 900 是較小但更有重量的主題錨點。</p>
+ <p id="study-note">古典刻線與巨大 Bodoni 英文共同構成主視覺；展開不採獨立三欄，中文 900 成為重量錨點。</p>
 </header>
 <main id="study" class="study" aria-labelledby="study-title"><div class="study__stage" id="stage"></div></main>
 <footer class="proof-footer">
+ <p>設計約束：原首頁鋪滿影片完全保留；本實驗不動原首頁及正式 P2，也不採三欄雜誌展開。首頁字體字重與排列待雜誌風格獲批後再議。</p>
  <p>只用於選擇藝術指導，不是正式 P2。官方 Logo 使用原 SVG，資料來自 Vol.00 Editorial Map，文章段落直接節錄自已保存的正式稿件。畫面中的英文「A City of Light / The Gate / Dawn」屬本期主題的試驗性展示語，不代替正式文章題名。</p>
  <p><a href="/experiments/p2-magazine-transition-lab.html?final=1">對照目前 P2 完整展開 ↗</a>　·　<a href="/journal/">進入現有西望雜誌 ↗</a></p>
 </footer>
@@ -234,8 +240,8 @@ function hold(mode){
  return '<section class="study__stage c-hold">'+video().replace('</div>','</div>')+'<div class="c-hold__word en" lang="en">DAWN</div><div class="c-hold__type">'+logo+'<div><span class="eyebrow">FILM → PUBLICATION</span><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，<br>一座光明的城</h2><p class="airy-zh" lang="zh-Hant">黑夜已深，<br>白晝將近。</p></div><a href="/preview/watch-city-vol00/hosanna/" class="entry-link">VIEW THE ORIGINAL FILM ↗</a></div></section>';
 }
 function opened(mode){
- if(mode==='a')return '<section class="study__stage a-open"><aside class="a-open__plate" aria-label="古典刻線圖像場"><div class="engraving"></div><span class="vertical" lang="en">ENGRAVED<br>CITY</span></aside><main class="a-open__center"><div class="top"><span class="eyebrow">VOL.00 / THE EDITION</span><span class="period">FOUR MOVEMENTS / 2026</span></div>'+logo+'<div class="a-open__identity"><span class="number" aria-hidden="true">00</span><div class="issue-en en" lang="en">CITY<br><i>of</i> LIGHT</div><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，一座光明的城</h2></div><div class="a-open__intro"><p lang="zh-Hant">四個樂章，十二個欄目，三個視聽間奏。從守望到同行，從見證走向敬拜。</p><blockquote lang="en">The night is far spent, <em>the day is at hand.</em></blockquote></div><div class="a-open__mobile-index" aria-label="手機正式目錄"><h3>Contents.</h3>'+allContents()+'</div><div style="margin-top:auto;padding-top:30px"><a href="/journal/" class="cover-link">ENTER THE MAGAZINE ↗</a></div></main><aside class="a-open__index" aria-label="正式四樂章目錄"><h3>Contents.</h3>'+allContents()+'</aside></section>';
- if(mode==='b')return '<section class="study__stage b-open"><aside class="b-open__left"><div class="eyebrow">WESTSIDE WATCH / ARCHIVE PLATE 00</div><div class="engraving" role="img" aria-label="刻線圖像標本"></div><span class="big en" lang="en">00</span><div class="folio">CITIES / KINGDOMS / WITNESS</div></aside><main class="b-open__center"><header class="head">'+logo+'<span class="eyebrow">INDEX / VOL.00</span></header><h2 lang="en">ATLAS<br><i>of Light.</i></h2><p class="primary-zh ws-editorial-article-zh sub" lang="zh-Hant">守望，一座光明的城</p><div class="atlas-contents">'+shortContents()+'</div><a href="/journal/" class="cover-link" style="margin-top:30px">READ THE ISSUE ↗</a></main><aside class="b-open__right"><span class="eyebrow">SCRIPTURE / ROMANS XIII:12</span><blockquote class="quote" lang="en">The night<br>is far spent,<br><em>the day<br>is at hand.</em></blockquote><p class="airy-zh air" lang="zh-Hant">黑夜已深，<br>白晝將近。</p><span class="period">A CITY OF LIGHT / VOL.00</span></aside></section>';
+ if(mode==='a')return '<section class="study__stage a-open"><aside class="a-open__plate" aria-label="刻線主視覺場"><div class="engraving"></div><span class="vertical" lang="en">ENGRAVED<br>CITY</span></aside><main class="a-open__center"><div class="top"><span class="eyebrow">VOL.00 / THE EDITION</span><span class="period">FOUR MOVEMENTS / 2026</span></div>'+logo+'<div class="a-open__identity"><span class="number" aria-hidden="true">00</span><div class="issue-en en" lang="en">CITY<br><i>of</i> LIGHT</div><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，一座光明的城</h2></div><div class="a-open__intro"><p lang="zh-Hant">四個樂章，十二個欄目，三個視聽間奏。從守望到同行，從見證走向敬拜。</p><blockquote lang="en">The night is far spent, <em>the day is at hand.</em></blockquote></div><div class="a-open__index" aria-label="正式四樂章目錄"><h3>Contents.</h3>'+groups.map(g=>'<section>'+list(g)+'</section>').join('')+'</div><div class="a-open__cta"><a href="/journal/" class="cover-link">ENTER THE MAGAZINE ↗</a></div></main></section>';
+ if(mode==='b')return '<section class="study__stage b-open"><aside class="b-open__left"><div class="eyebrow">WESTSIDE WATCH / ARCHIVE PLATE 00</div><div class="engraving" role="img" aria-label="刻線圖像標本"></div><span class="big en" lang="en">00</span><div class="folio">CITIES / KINGDOMS / WITNESS</div></aside><main class="b-open__center"><header class="head">'+logo+'<span class="eyebrow">INDEX / VOL.00</span></header><h2 lang="en">ATLAS<br><i>of Light.</i></h2><p class="primary-zh ws-editorial-article-zh sub" lang="zh-Hant">守望，一座光明的城</p><div class="atlas-contents">'+shortContents()+'</div><div class="b-open__right" aria-label="羅馬書十三章十二節"><span class="eyebrow">SCRIPTURE / ROMANS XIII:12</span><blockquote class="quote" lang="en">The night<br>is far spent,<br><em>the day<br>is at hand.</em></blockquote><p class="airy-zh air" lang="zh-Hant">黑夜已深，<br>白晝將近。</p><span class="period">A CITY OF LIGHT / VOL.00</span></div><a href="/journal/" class="cover-link" style="margin-top:30px">READ THE ISSUE ↗</a></main></section>';
  return '<section class="study__stage c-open">'+video()+'<header class="c-open__header"><div class="eyebrow">WESTSIDE WATCH / ISSUE 00</div>'+logo+'<div class="display en" lang="en">THE<br>DAWN.</div><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，一座光明的城</h2><a href="/preview/watch-city-vol00/hosanna/" class="entry-link">ENTER THE FILM ↗</a></header><div class="c-open__toc"><h3>In this issue.</h3><div class="film-contents">'+groups.map(g=>'<div><strong class="en" style="font-weight:400;font-size:24px">'+g.n+'. '+g.name+'</strong><p style="margin:8px 0;font:400 14px/1.6 var(--os-zh)">'+g.items.map(x=>esc(x[1])+' · '+esc(x[3])).join(' / ')+'</p></div>').join('')+'</div><a href="/journal/" class="entry-link">READ VOL.00 ↗</a></div></section>';
 }
 let choice=['a','b','c'].includes(query.get('concept'))?query.get('concept'):'a';
