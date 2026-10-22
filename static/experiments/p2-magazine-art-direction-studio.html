@@ -125,6 +125,60 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 .c-open__toc .film-contents{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px}
 .c-open__toc h3{font:400 33px var(--os-en);margin:0 0 10px}
 
+
+/* 2026-10-22 Geometry lab. Same editorial source; only shape/crop/hero geometry varies. */
+.switch[hidden]{display:none!important}
+.geo{background:var(--paper);color:var(--ink)}
+.geo__mast{padding:clamp(18px,3vw,40px) clamp(22px,5vw,76px);border-bottom:1px solid #a69c86;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.geo__mast .os-logo{width:clamp(180px,28vw,360px)}
+.geo__mast-note{font:400 12px/1.5 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.15em;text-align:right}
+.geo__hero{position:relative;isolation:isolate;background:#173047;color:#f8f1e6;overflow:hidden;min-height:clamp(680px,82svh,960px)}
+.geo__ambient{position:absolute;inset:0;background:url('/images/home-opening-engraving.jpg') center/cover no-repeat;filter:grayscale(1) sepia(.24) contrast(1.25);opacity:.55}
+.geo__hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#102a40e8,#102a4038 65%),linear-gradient(0deg,#102a40bd,transparent 46%)}
+.geo__media{position:absolute;z-index:2;background:url('/images/home-opening-engraving.jpg') center/cover no-repeat;filter:grayscale(1) sepia(.14) contrast(1.35);box-shadow:0 18px 50px #07192b70}
+.geo__display{position:absolute;z-index:3;top:50%;left:6%;right:5%;transform:translateY(-42%);pointer-events:none}
+.geo__folio{font:400 12px/1.5 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.18em}
+.geo__huge{font:400 clamp(85px,15.8vw,280px)/.73 var(--os-en);letter-spacing:-.085em;margin:34px 0 28px;text-shadow:0 2px 22px #061c2a79}
+.geo__huge span{display:block}
+.geo__display h2{font-size:clamp(33px,4vw,67px);margin:0;text-shadow:0 2px 15px #061a2a89}
+.geo__source{position:absolute;z-index:4;right:clamp(20px,4vw,60px);bottom:clamp(22px,3vw,45px);max-width:42ch;border-top:1px solid #f1eadd99;padding-top:10px;text-align:right;font:400 12px/1.55 var(--os-zh)}
+.geo--square .geo__media{aspect-ratio:1;width:min(51vw,610px);left:58%;top:49%;transform:translate(-35%,-50%);background-position:58% 45%}
+.geo--square .geo__display{left:7%}
+.geo--square .geo__huge{font-size:clamp(91px,15vw,242px)}
+.geo--wide .geo__media{aspect-ratio:1.95/1;width:84%;top:11%;left:8%;background-position:center 42%}
+.geo--wide .geo__display{top:auto;bottom:12%;transform:none}
+.geo--wide .geo__hero::before{background:linear-gradient(0deg,#102a40f2,transparent 69%)}
+.geo--full .geo__media{inset:0;width:100%;height:100%;box-shadow:none}
+.geo--full .geo__hero{min-height:clamp(700px,92svh,1050px)}
+.geo--full .geo__hero::before{z-index:3;background:linear-gradient(90deg,#102a40e8,transparent 76%),linear-gradient(0deg,#102a40bb,transparent 55%)}
+.geo--full .geo__display,.geo--full .geo__source{z-index:4}
+.geo__reading{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(28px,5vw,82px);padding:clamp(30px,5vw,78px) clamp(22px,6vw,100px);align-items:start;background:#f3eee3}
+.geo__excerpt h3{font:400 clamp(39px,4.4vw,73px)/.95 var(--os-en);letter-spacing:-.052em;margin:18px 0 25px}
+.geo__excerpt p{font:400 clamp(17px,1.25vw,21px)/1.8 var(--ws-type-reading-zh,var(--os-zh));margin:0 0 20px}
+.geo__quote{border-top:1px solid #aca18e;padding-top:24px;margin:35px 0 0;font:italic 400 clamp(24px,2.3vw,42px)/1.1 var(--os-en)}
+.geo__toc{border-top:2px solid var(--ink);min-width:0}
+.geo__toc header{display:flex;justify-content:space-between;align-items:baseline;gap:15px;padding:14px 0;border-bottom:1px solid #aca18e}
+.geo__toc h3{font:400 clamp(34px,4vw,66px)/.93 var(--os-en);letter-spacing:-.04em;margin:0}
+.geo__toc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px clamp(16px,2vw,32px)}
+.geo__toc-grid>section{min-width:0}
+.geo__toc .issue-list li{font-size:clamp(12px,.95vw,15px)}
+.geo__toc .movement-head{margin:14px 0 0}
+.geo__status{grid-column:1/-1;border-top:1px solid #a99e8a;padding-top:16px;font:400 12px/1.65 var(--os-zh);color:#415064}
+@media(max-width:950px){.geo__reading{grid-template-columns:1fr}.geo__toc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){
+.geo__mast{padding:18px 19px}.geo__mast .os-logo{width:clamp(170px,50vw,240px)}.geo__mast-note{font-size:10px}
+.geo__hero,.geo--full .geo__hero{display:flex;flex-direction:column;min-height:0}
+.geo__hero::before,.geo--wide .geo__hero::before,.geo--full .geo__hero::before{background:linear-gradient(0deg,#102a40f4,#102a405b)}
+.geo__media,.geo--square .geo__media,.geo--wide .geo__media,.geo--full .geo__media{position:relative;inset:auto;transform:none;z-index:2;flex:none;box-shadow:none}
+.geo--square .geo__media{width:calc(100% - 36px);aspect-ratio:1;margin:18px auto 0}
+.geo--wide .geo__media{width:100%;aspect-ratio:1.95/1}
+.geo--full .geo__media{width:100%;height:auto;aspect-ratio:4/5}
+.geo__display,.geo--square .geo__display,.geo--wide .geo__display,.geo--full .geo__display{position:relative;top:auto;left:auto;right:auto;bottom:auto;transform:none;z-index:4;padding:24px 22px 16px}
+.geo__huge,.geo--square .geo__huge{font-size:clamp(78px,21vw,149px);margin:20px 0}.geo__display h2{font-size:clamp(30px,8vw,53px)}
+.geo__source{position:relative;bottom:auto;right:auto;text-align:left;margin:0 22px 24px;z-index:4}
+.geo__reading{display:block;padding:35px 21px 55px}.geo__excerpt{margin-bottom:45px}.geo__toc-grid{grid-template-columns:1fr}.geo__status{margin-top:40px}
+}
+
 /* Real article excerpt: all candidates use authentic draft, not generated filler */
 .article{background:#f4f0e6;color:#1b3043;display:flex;flex-direction:column;min-height:920px}
 .article__mast{padding:22px clamp(24px,4vw,60px);display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid #b7ad97}
@@ -175,9 +229,9 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 </style>
 </head>
 <body data-ws-scope="journal">
-<nav class="toolbar" aria-label="比較三種西望雜誌藝術指導">
+<nav class="toolbar" aria-label="西望雜誌藝術指導與三種幾何構圖比較">
  <span class="toolbar__name">WESTSIDE WATCH / DESIGN STUDY 01</span>
- <div class="switch" aria-label="構圖候選">
+ <div class="switch" id="concept-switch" aria-label="既有構圖候選">
   <button type="button" data-concept="a" aria-pressed="true">A · Monumental</button>
   <button type="button" data-concept="b" aria-pressed="false">B · Atlas</button>
   <button type="button" data-concept="c" aria-pressed="false">C · Cine-Folio</button>
@@ -186,6 +240,12 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
   <button type="button" data-view="hold" aria-pressed="true">87–90% 對開</button>
   <button type="button" data-view="open" aria-pressed="false">100% 展開</button>
   <button type="button" data-view="article" aria-pressed="false">文章開場</button>
+  <button type="button" data-view="geometry" aria-pressed="false">同一內容 · 三種幾何</button>
+ </div>
+ <div class="switch" id="shape-switch" aria-label="版面構圖形狀" hidden>
+  <button type="button" data-shape="square" aria-pressed="true">方形 · 1:1</button>
+  <button type="button" data-shape="wide" aria-pressed="false">寬幅 · 1.95:1</button>
+  <button type="button" data-shape="full" aria-pressed="false">滿版 · Full-bleed</button>
  </div>
 </nav>
 <header class="info">
@@ -195,7 +255,8 @@ button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color
 <main id="study" class="study" aria-labelledby="study-title"><div class="study__stage" id="stage"></div></main>
 <footer class="proof-footer">
  <p>設計約束：原首頁鋪滿影片完全保留；本實驗不動原首頁及正式 P2，也不採三欄雜誌展開。首頁字體字重與排列待雜誌風格獲批後再議。</p>
- <p>只用於選擇藝術指導，不是正式 P2。官方 Logo 使用原 SVG，資料來自 Vol.00 Editorial Map，文章段落直接節錄自已保存的正式稿件。畫面中的英文「A City of Light / The Gate / Dawn」屬本期主題的試驗性展示語，不代替正式文章題名。</p>
+ <p>評審依據現有 Design OS 手冊 §6A：Awwwards 的 Design 40%／UX/UI 30%／Creativity 20%／Content 10%、Webby 全體使用體驗、FWA 原創互動；Westside 10 項 × 2 分、至少 18/20 且無重大阻擋。CI 通過不等於藝術指導通過。</p>
+  <p>只用於選擇藝術指導，不是正式 P2。官方 Logo 使用原 SVG，資料來自 Vol.00 Editorial Map，文章段落直接節錄自已保存的正式稿件。畫面中的英文「A City of Light / The Gate / Dawn」屬本期主題的試驗性展示語，不代替正式文章題名。</p>
  <p><a href="/experiments/p2-magazine-transition-lab.html?final=1">對照目前 P2 完整展開 ↗</a>　·　<a href="/journal/">進入現有西望雜誌 ↗</a></p>
 </footer>
 <script>
@@ -244,25 +305,53 @@ function opened(mode){
  if(mode==='b')return '<section class="study__stage b-open"><aside class="b-open__left"><div class="eyebrow">WESTSIDE WATCH / ARCHIVE PLATE 00</div><div class="engraving" role="img" aria-label="刻線圖像標本"></div><span class="big en" lang="en">00</span><div class="folio">CITIES / KINGDOMS / WITNESS</div></aside><main class="b-open__center"><header class="head">'+logo+'<span class="eyebrow">INDEX / VOL.00</span></header><h2 lang="en">ATLAS<br><i>of Light.</i></h2><p class="primary-zh ws-editorial-article-zh sub" lang="zh-Hant">守望，一座光明的城</p><div class="atlas-contents">'+shortContents()+'</div><div class="b-open__right" aria-label="羅馬書十三章十二節"><span class="eyebrow">SCRIPTURE / ROMANS XIII:12</span><blockquote class="quote" lang="en">The night<br>is far spent,<br><em>the day<br>is at hand.</em></blockquote><p class="airy-zh air" lang="zh-Hant">黑夜已深，<br>白晝將近。</p><span class="period">A CITY OF LIGHT / VOL.00</span></div><a href="/journal/" class="cover-link" style="margin-top:30px">READ THE ISSUE ↗</a></main></section>';
  return '<section class="study__stage c-open">'+video()+'<header class="c-open__header"><div class="eyebrow">WESTSIDE WATCH / ISSUE 00</div>'+logo+'<div class="display en" lang="en">THE<br>DAWN.</div><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，一座光明的城</h2><a href="/preview/watch-city-vol00/hosanna/" class="entry-link">ENTER THE FILM ↗</a></header><div class="c-open__toc"><h3>In this issue.</h3><div class="film-contents">'+groups.map(g=>'<div><strong class="en" style="font-weight:400;font-size:24px">'+g.n+'. '+g.name+'</strong><p style="margin:8px 0;font:400 14px/1.6 var(--os-zh)">'+g.items.map(x=>esc(x[1])+' · '+esc(x[3])).join(' / ')+'</p></div>').join('')+'</div><a href="/journal/" class="entry-link">READ VOL.00 ↗</a></div></section>';
 }
+
+/* Constant editorial content; the image shape is the only tested principal variable. */
+function geometry(shape){
+ return '<section class="study__stage geo geo--'+shape+'">'+
+  '<header class="geo__mast">'+logo+'<span class="geo__mast-note" lang="en">WESTSIDE WATCH / VOL.00<br>THE GATE · 03</span></header>'+
+  '<div class="geo__hero"><div class="geo__ambient" aria-hidden="true"></div>'+
+  '<div class="geo__media" role="img" aria-label="西望既有古典刻線素材：三個候選皆使用相同原圖"></div>'+
+  '<div class="geo__display"><span class="geo__folio" lang="en">03 / THE GATE · VOL.00</span>'+
+  '<div class="geo__huge en" lang="en"><span>THE</span><span>GATE.</span></div>'+
+  '<h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">城門口的人</h2></div>'+
+  '<div class="geo__source">同一張既有素材 /images/home-opening-engraving.jpg<br>不宣稱是某座古城的考古實拍</div></div>'+
+  '<div class="geo__reading"><section class="geo__excerpt" aria-label="城門口的人原稿節錄">'+
+  '<span class="eyebrow" lang="en">ISSUE ZERO / THE GATE / 03</span>'+
+  '<h3 lang="en">Between<br>the walls.</h3>'+
+  '<p lang="zh-Hant">'+esc(excerptGate[0])+'</p><p lang="zh-Hant">'+esc(excerptGate[1])+'</p>'+
+  '<a class="entry-link" href="/journal/">ENTER THE MAGAZINE ↗</a>'+
+  '<div class="geo__quote" lang="en">The night is far spent,<br><em>the day is at hand.</em></div></section>'+
+  '<section class="geo__toc" aria-label="四樂章正式目錄"><header><h3 lang="en">Contents.</h3>'+
+  '<span class="folio">FOUR MOVEMENTS / VOL.00</span></header>'+
+  '<div class="geo__toc-grid">'+groups.map(g=>'<section>'+list(g)+'</section>').join('')+'</div></section>'+
+  '<p class="geo__status">相同來源：〈城門口的人〉已保存原稿、正式 Vol.00 四樂章／十二欄目／三個間奏、官方刊名 SVG、同一張古典刻線素材。這裡只比較形狀、裁切及視覺秩序；不改正式首頁滿版影片及 P2 動效。</p></div></section>';
+}
+
 let choice=['a','b','c'].includes(query.get('concept'))?query.get('concept'):'a';
-let state=['hold','open','article'].includes(query.get('view'))?query.get('view'):'hold';
+let state=['hold','open','article','geometry'].includes(query.get('view'))?query.get('view'):'hold';
+let shape=['square','wide','full'].includes(query.get('shape'))?query.get('shape'):'square';
 function refresh(){
  const stage=document.getElementById('stage');
- document.getElementById('study-title').textContent=modes[choice].name;
- document.getElementById('study-note').textContent=modes[choice].note;
- stage.outerHTML=(state==='article'?article(choice):state==='open'?opened(choice):hold(choice)).replace('class="study__stage','id="stage" class="study__stage');
+ document.getElementById('study-title').textContent=state==='geometry'?'One Story · Three Geometries':modes[choice].name;
+ document.getElementById('study-note').textContent=state==='geometry'?'方形、寬幅和滿版均採同一張刻線圖、〈城門口的人〉原稿及完整 Vol.00 目錄。這是構圖方法測試，不是接納原 Folio 方向。':modes[choice].note;
+ stage.outerHTML=(state==='geometry'?geometry(shape):state==='article'?article(choice):state==='open'?opened(choice):hold(choice)).replace('class="study__stage','id="stage" class="study__stage');
  // Original homepage film is mounted ONLY when Cine-Folio is active.
  const media=document.querySelector('#stage .c-media');
- if(choice==='c'&&media){
+ if(state!=='geometry'&&choice==='c'&&media){
   const iframe=document.createElement('iframe');iframe.title='王進城：首頁既有混剪，雜誌構圖來源';iframe.src='/preview/watch-city-vol00/hosanna/?cover=1&v=20261012-cover-palette-r1';iframe.loading='lazy';iframe.tabIndex=-1;iframe.setAttribute('aria-hidden','true');media.insertBefore(iframe,media.querySelector('.shade'));
  }
  document.querySelectorAll('[data-concept]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.concept===choice)));
  document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===state)));
- const url=new URL(location.href);url.searchParams.set('concept',choice);url.searchParams.set('view',state);
+ document.querySelectorAll('[data-shape]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shape===shape)));
+ document.getElementById('shape-switch').hidden=state!=='geometry';
+ document.getElementById('concept-switch').hidden=state==='geometry';
+ const url=new URL(location.href);url.searchParams.set('concept',choice);url.searchParams.set('view',state);url.searchParams.set('shape',shape);
  history.replaceState(null,'',url);
 }
 document.querySelectorAll('[data-concept]').forEach(b=>b.addEventListener('click',()=>{choice=b.dataset.concept;refresh()}));
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{state=b.dataset.view;refresh()}));
+ document.querySelectorAll('[data-shape]').forEach(b=>b.addEventListener('click',()=>{shape=b.dataset.shape;state='geometry';refresh()}));
 refresh();
 })();
 </script>
