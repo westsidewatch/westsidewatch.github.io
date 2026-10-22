@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>WESTSIDE — Editorial Hierarchy Proof</title>
+<link rel="stylesheet" href="/css/westside-design-os.css?v=20261022-editorial-scale-v1">
+<link rel="stylesheet" href="/css/westside-typography-enforcement.css?v=20261022-editorial-scale-v1">
+<style>
+*{box-sizing:border-box}html{color-scheme:light}body{margin:0;background:#f9f8f3;color:#192b3b;font-family:var(--ws-type-reading-zh,sans-serif)}
+header,.proof,.measure{width:min(100% - 36px,1400px);margin-inline:auto}header{padding:30px 0 26px;border-bottom:1px solid #bfb7ac}
+header h1{font:400 clamp(2.3rem,5vw,4.4rem)/1 var(--ws-type-display-en,serif);margin:8px 0 12px}
+.kicker{font:400 13px/1.5 var(--ws-type-display-en-sc,serif);letter-spacing:.12em}
+p{line-height:1.65}.description{max-width:78ch}
+.proof{padding:30px 0 45px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.plate{padding:26px 22px;min-width:0;border:1px solid #bcb4a7;overflow-wrap:anywhere}
+.plate h2{font:400 12px/1.5 var(--ws-type-display-en-sc,serif);letter-spacing:.08em;margin:0 0 20px}
+.sample{margin:0 0 22px;max-width:100%;overflow-wrap:anywhere}
+.sample:focus-visible{outline:2px solid #a2872a}
+.caption{font:400 13px/1.45 var(--ws-type-reading-zh,sans-serif);opacity:.78;margin:7px 0 20px}
+.plate--wide{grid-column:1/-1}.dual{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:end}
+.ws-editorial-hero-en,.ws-editorial-article-en{margin:0}
+.example-body{font-size:var(--ws-type-scale-reading,18px);font-weight:400;line-height:1.82;max-width:40em}
+.measure{padding-bottom:60px}.measure summary{cursor:pointer;font-weight:400;padding:12px 0}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.6 ui-monospace,monospace;background:#e9e5df;padding:18px}
+@media(max-width:800px){.proof{grid-template-columns:minmax(0,1fr)}.plate--wide{grid-column:auto}.dual{grid-template-columns:minmax(0,1fr)}}
+</style></head>
+<body data-ws-scope="journal">
+<header>
+<div class="kicker">WESTSIDE DESIGN OS · EDITORIAL TYPOGRAPHY · BRANCH-ONLY PROOF</div>
+<h1>900 / 200 / 400</h1>
+<p class="description">版塊與雜誌的字級權威檢查。中文主標題 900；英文 Bodoni Moda 400 以大字級形成細線條對比；其他非正文中文標題 200；長篇正文 400。這是排版規則驗證，不是正式刊物，也沒有修改原有標誌 SVG。</p>
+</header>
+<main class="proof">
+<section class="plate plate--wide" aria-label="First-layer primary comparison">
+<h2>P0 · COVER IDENTITY / PRIMARY</h2>
+<div class="dual">
+<div><div data-probe="hero-en" class="sample ws-editorial-hero-en" lang="en">WESTSIDE WATCH</div><p class="caption">Bodoni Moda Roman · real 400 · primary EN</p></div>
+<div><div data-probe="hero-zh" class="sample ws-editorial-hero-zh" lang="zh-Hant">西望</div><p class="caption">昭源黑體 · true 900 · primary ZH</p></div>
+</div>
+</section>
+<section class="plate">
+<h2>P0 · ISSUE / CHAPTER</h2>
+<div data-probe="chapter-en" class="sample ws-editorial-chapter-en" lang="en">THE EDITION</div>
+<div data-probe="chapter-zh" class="sample ws-editorial-chapter-zh" lang="zh-Hant">守望之城</div>
+<p class="caption">英文大字細線條與較小、重量感強的中文對位</p>
+</section>
+<section class="plate">
+<h2>P0 · ARTICLE / LONG-HEADING WRAP</h2>
+<div data-probe="article-en" class="sample ws-editorial-article-en" lang="en">The Coming Day</div>
+<div data-probe="article-zh" class="sample ws-editorial-article-zh" lang="zh-Hant">守望，一座光明的城與漫長的城市見證</div>
+<p class="caption">測試多行中文主題名是否自然換行、不裁切</p>
+</section>
+<section class="plate">
+<h2>S1 · NON-BODY / TRUE EXTRALIGHT 200</h2>
+<div data-probe="feature-en" class="sample ws-editorial-feature-en" lang="en">Editorial Features</div>
+<div data-probe="feature-zh" class="sample ws-editorial-feature-zh" lang="zh-Hant">城市與見證</div>
+<div data-probe="subhead-zh" class="sample ws-editorial-subhead-zh" lang="zh-Hant">長篇文章的章節與小標題</div>
+<div data-probe="standfirst-zh" class="sample ws-editorial-standfirst-zh" lang="zh-Hant">讓讀者從封面進入這一篇關於守望和城市的專題。</div>
+</section>
+<section class="plate">
+<h2>S2 / P3 · BYLINE / CONTENTS / BODY</h2>
+<div data-probe="byline-zh" class="sample ws-editorial-byline-zh" lang="zh-Hant">作者與編輯姓名</div>
+<div data-probe="contents-zh" class="sample ws-editorial-contents-zh" lang="zh-Hant">目錄：四個樂章與十二個篇章</div>
+<p data-probe="reading" class="example-body" lang="zh-Hant">這一段文字只用來確認長篇正文仍是四百字重，而不是極細字。中文段落要有足夠的行高、對比以及穩定的閱讀欄寬。數萬字的正式文章仍需要獨立內容和圖片版式驗收。</p>
+</section>
+</main>
+<section class="measure">
+<details open><summary>實際瀏覽器計算結果 / COMPUTED TYPE METRICS</summary><pre id="metrics">Measuring…</pre></details>
+</section>
+<script>
+(function(){
+ const output=document.getElementById('metrics');
+ function check(){
+  const samples=[...document.querySelectorAll('[data-probe]')].map(el=>{const cs=getComputedStyle(el),r=el.getBoundingClientRect();return {role:el.dataset.probe,lang:el.lang,family:cs.fontFamily,weight:cs.fontWeight,size:cs.fontSize,lineHeight:cs.lineHeight,width:Math.round(r.width),height:Math.round(r.height),overflow:el.scrollWidth>el.clientWidth+1}});
+  const f=[...document.fonts].filter(x=>/Chiron Hei HK WS|Bodoni Moda/i.test(x.family)).map(x=>({family:x.family,weight:x.weight,status:x.status}));
+  const issues=samples.filter(x=>x.overflow||(['hero-zh','chapter-zh','article-zh'].includes(x.role)&&x.weight!=='900')||(['feature-zh','subhead-zh','standfirst-zh','byline-zh','contents-zh'].includes(x.role)&&x.weight!=='200')||(x.role==='reading'&&x.weight!=='400'));
+  output.textContent=JSON.stringify({viewportCSSpx:window.innerWidth,documentWidth:document.documentElement.scrollWidth,horizontalOverflow:document.documentElement.scrollWidth>window.innerWidth+1,issues,computed:samples,loadedFontFaces:f.filter(x=>x.status==='loaded').length,availableFontFaces:f.length,note:'Font-face loaded status is not glyph-by-glyph proof; inspect visually at zoom and mobile.'},null,2);
+ }
+ document.fonts.ready.then(check);window.addEventListener('resize',check);
+})();
+</script></body></html>

@@ -11,9 +11,9 @@
  --ws-type-scripture-reference-size:clamp(13px,.9vw + 8px,17px);
  --ws-type-scripture-reference-tracking:.015em;
  --ws-type-quote-en-size:clamp(19px,1vw + 13px,27px);
- --ws-realm-zh-size:clamp(36px,4.2vw,68px);
- --ws-realm-en-size:clamp(72px,10vw,160px);
- --ws-subject-zh-size:clamp(25px,2vw,38px);
+ --ws-realm-zh-size:var(--ws-type-scale-editorial-hero-zh);
+ --ws-realm-en-size:var(--ws-type-scale-editorial-hero-en);
+ --ws-subject-zh-size:var(--ws-type-scale-editorial-feature-zh);
  --ws-editorial-label-size:clamp(11px,.85vw,14px);
  --ws-editorial-label-tracking:.1em;
  --ws-realm-en-tracking:-.04em;
@@ -31,8 +31,6 @@
 
  --ws-size-library-title:var(--ws-size-card);
  --ws-type-display-en:"Bodoni Moda",serif;
- --ws-type-display-zh:"Chiron Hei HK WS",sans-serif;
- --ws-type-reading-zh:"Noto Serif TC",serif;
  --type-en:var(--ws-type-display-en);
  --type-zh:var(--ws-type-display-zh);
  --type-ui:var(--ws-type-display-zh);
@@ -98,7 +96,7 @@ body.sites-surface:not(.sites-section-olive) :where([lang^="zh"],.mersi-church,.
 body.sites-surface :where(.article-body,.reading-body,.longform,[data-reading="longform"]):lang(zh-Hant){font-family:var(--ws-type-reading-zh)!important;}
 
 /* Editorial semantic roles: preserve source casing, never synthesize small caps. */
-.ws-type-realm-zh{font-family:var(--ws-type-display-zh);font-size:var(--ws-realm-zh-size);font-weight:var(--ws-weight-zh-anchor);letter-spacing:var(--ws-realm-zh-tracking);line-height:1.08}
+.ws-type-realm-zh{font-family:var(--ws-type-display-zh);font-size:var(--ws-realm-zh-size);font-weight:var(--ws-weight-section,900);letter-spacing:var(--ws-realm-zh-tracking);line-height:1.08}
 .ws-type-realm-en{font-family:var(--ws-type-display-en);font-size:var(--ws-realm-en-size);font-weight:400;letter-spacing:var(--ws-realm-en-tracking);line-height:.9}
 .ws-type-subject-zh{font-family:var(--ws-type-display-zh);font-size:var(--ws-subject-zh-size);font-weight:var(--ws-weight-zh-air);line-height:1.12}
 .ws-type-editorial-label{font-family:var(--ws-type-display-en-sc);font-size:var(--ws-editorial-label-size);font-weight:400;letter-spacing:var(--ws-editorial-label-tracking);font-variant-caps:normal;text-transform:none;font-synthesis:none}
@@ -638,7 +636,7 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-bilingual-heading__zh{
 /* Bilingual heading on shared second-layer surfaces. */
 body[data-ws-scope]:not([data-ws-scope="olive"]) .sites-journal-head .ws-bilingual-heading{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(8px,1vw,18px)}
 body[data-ws-scope]:not([data-ws-scope="olive"]) .sites-journal-head .ws-bilingual-heading__en{font-family:var(--ws-type-display-en,"Bodoni Moda",serif)!important;font-size:var(--ws-type-scale-display-xl);font-weight:400!important;line-height:.94}
-body[data-ws-scope]:not([data-ws-scope="olive"]) .sites-journal-head .ws-bilingual-heading__zh{font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;font-size:var(--ws-type-scale-title-md);font-weight:200!important;line-height:1.3}
+body[data-ws-scope]:not([data-ws-scope="olive"]) .sites-journal-head .ws-bilingual-heading__zh{font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;font-size:var(--ws-type-scale-editorial-chapter-zh);font-weight:var(--ws-weight-section,900)!important;line-height:1.12}
 
 /* Shared portal title authority: English headline / smaller Chinese title.
    Used by Daylight Cafe and other portal pages, never Olive posters. */
@@ -673,6 +671,54 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) :is(.ws-section-name-zh,[data-w
 }
 body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
  font-weight:var(--ws-weight-section,900)!important;
+}
+
+
+/* WESTSIDE editorial scale v1 — semantic role is more important than H1/H2.
+   Chinese 900 primary < English 400 optical display in actual size.
+   Other non-body Chinese headlines use real Chiron 200, enlarged enough to
+   retain editorial contrast. No font scaling, fake bold, or second type OS. */
+body[data-ws-scope] :is(.ws-editorial-hero-en,.ws-editorial-chapter-en,.ws-editorial-article-en){
+ font-family:var(--ws-type-display-en)!important;font-weight:400!important;
+ font-synthesis:none;letter-spacing:-.04em;line-height:.94;overflow-wrap:anywhere;
+}
+body[data-ws-scope] .ws-editorial-hero-en{font-size:var(--ws-type-scale-editorial-hero-en)}
+body[data-ws-scope] .ws-editorial-chapter-en{font-size:var(--ws-type-scale-editorial-chapter-en)}
+body[data-ws-scope] .ws-editorial-article-en{font-size:var(--ws-type-scale-editorial-article-en)}
+body[data-ws-scope] :is(.ws-editorial-hero-zh,.ws-editorial-chapter-zh,.ws-editorial-article-zh,[data-ws-type-role="primary-title"]):lang(zh){
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:var(--ws-weight-section,900)!important;line-height:1.12;
+ letter-spacing:.015em;font-synthesis:none;overflow-wrap:anywhere;
+}
+body[data-ws-scope] .ws-editorial-hero-zh{font-size:var(--ws-type-scale-editorial-hero-zh)}
+body[data-ws-scope] .ws-editorial-chapter-zh{font-size:var(--ws-type-scale-editorial-chapter-zh)}
+body[data-ws-scope] .ws-editorial-article-zh{font-size:var(--ws-type-scale-editorial-article-zh)}
+body[data-ws-scope] [data-ws-type-role="primary-title"]:lang(zh){font-size:var(--ws-type-scale-editorial-chapter-zh)}
+body[data-ws-scope] .ws-type-pair[data-ws-editorial-hierarchy="primary"] .ws-type-pair-zh,
+body[data-ws-scope] .ws-bilingual-heading[data-ws-editorial-hierarchy="primary"] .ws-bilingual-heading__zh{
+ font-family:var(--ws-type-display-zh)!important;
+ font-size:var(--ws-type-scale-editorial-chapter-zh)!important;
+ font-weight:var(--ws-weight-section,900)!important;line-height:1.12;letter-spacing:.015em;font-synthesis:none;
+}
+body[data-ws-scope] .ws-type-pair[data-ws-editorial-hierarchy="primary"] .ws-type-pair-en,
+body[data-ws-scope] .ws-bilingual-heading[data-ws-editorial-hierarchy="primary"] .ws-bilingual-heading__en{
+ font-size:var(--ws-type-scale-editorial-chapter-en)!important;
+ font-family:var(--ws-type-display-en)!important;font-weight:400!important;
+}
+body[data-ws-scope] :is(.ws-editorial-feature-zh,.ws-editorial-subhead-zh,.ws-editorial-standfirst-zh,.ws-editorial-byline-zh,.ws-editorial-contents-zh):lang(zh){
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:var(--ws-weight-air,200)!important;
+ font-synthesis:none;letter-spacing:.02em;line-height:1.28;
+}
+body[data-ws-scope] .ws-editorial-feature-zh{font-size:var(--ws-type-scale-editorial-feature-zh)}
+body[data-ws-scope] .ws-editorial-subhead-zh{font-size:var(--ws-type-scale-editorial-subhead-zh)}
+body[data-ws-scope] .ws-editorial-standfirst-zh{font-size:var(--ws-type-scale-editorial-standfirst-zh);line-height:1.5}
+body[data-ws-scope] .ws-editorial-byline-zh{font-size:var(--ws-type-scale-editorial-byline-zh)}
+body[data-ws-scope] .ws-editorial-contents-zh{font-size:var(--ws-type-scale-editorial-contents-zh)}
+body[data-ws-scope] .ws-editorial-feature-en{
+ font-family:var(--ws-type-display-en)!important;
+ font-size:var(--ws-type-scale-editorial-feature-en);
+ font-weight:400!important;line-height:1.05;letter-spacing:-.018em;font-synthesis:none;
 }
 
 /* DESIGNABLE ZONE CONTRACT (one OS, scoped exceptions).
@@ -725,11 +771,9 @@ body[data-ws-scope]:not([data-ws-scope="olive"]) .ws-surface-heading__zh{
  font-synthesis:none;
 }
 
-/* Unified Chinese font authority: every Chinese semantic role resolves to the
-   one approved sans family. No Song/Kai fallback for display, reading or UI. */
+/* Chinese aliases consume generated Design OS tokens; no duplicate family
+   override or Song/Kai fallback for display, reading and UI. */
 :root{
- --ws-type-display-zh:"Chiron Hei HK WS","Noto Sans TC",sans-serif;
- --ws-type-reading-zh:var(--ws-type-display-zh);
  --ws-type-sans-zh:var(--ws-type-display-zh);
  --ws-type-body-zh:var(--ws-type-display-zh);
  --ws-type-zh:var(--ws-type-display-zh);

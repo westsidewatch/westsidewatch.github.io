@@ -40,9 +40,14 @@ body[data-ws-scope] :is(
 }
 body[data-ws-scope] :is(
  .article-body,.prose,.reading-body,.sites-article-body
-):not(:where([data-ws-designable], [data-ws-designable] *)) :is(p,li,blockquote):not(:where([data-ws-designable], [data-ws-designable] *)){
- font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif);
+):not(:where([data-ws-designable], [data-ws-designable] *)) :is(p,li,blockquote):not(:where([data-ws-designable], [data-ws-designable] *)):not(:lang(en)){
+ font-family:var(--ws-type-reading-zh);
 }
+
+/* The reading role only applies to non-English paragraphs. A child element
+   inherits lang from its closest annotated ancestor, so an English article
+   does not get forcibly assigned the Chinese reading family. The English
+   longform choice remains contextual until the editorial OS approves one. */
 
 /* The language attribute on the heading itself must win over the page language. */
 body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6)[lang="en"]:not(:where([data-ws-designable], [data-ws-designable] *)){
@@ -81,5 +86,14 @@ body[data-ws-scope="home"] .sites-home-realms .sites-home-realm > h2[lang="en"] 
  font-family:inherit!important;
  font-weight:400!important;
  font-style:italic!important;
+ font-synthesis:none;
+}
+
+/* A primary Chinese title opts into 900; this role beats the generic
+   h1–h6 200 rule while secondary editorial headings keep their 200 role. */
+body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6,[class*="title"])[lang^="zh"][data-ws-type-role="primary-title"]:not(:where([data-ws-designable], [data-ws-designable] *)),
+body[data-ws-scope] :is(.ws-editorial-hero-zh,.ws-editorial-chapter-zh,.ws-editorial-article-zh):not(:where([data-ws-designable], [data-ws-designable] *)){
+ font-family:var(--ws-type-zh)!important;
+ font-weight:var(--ws-weight-section,900)!important;
  font-synthesis:none;
 }

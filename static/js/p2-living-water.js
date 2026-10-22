@@ -2,9 +2,21 @@
 const root=document.querySelector('.showcase'),planes=[...root.querySelectorAll('.plane')],wrap=root.querySelector('.planes'),scripture=root.querySelector('.editorial-john'),editions=[...root.querySelectorAll('.edition')],sea=root.querySelector('.ocean-rise'),cover=root.querySelector('.water-cover'),doors=root.querySelector('.water-doors'),leftDoor=root.querySelector('.water-door--left'),rightDoor=root.querySelector('.water-door--right'),church=root.querySelector('.church-editorial'),index=root.querySelector('.index'),tint=root.querySelector('.water-rise-tint'),waterline=root.querySelector('.water-rise-line path');
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};
 // Same positional curve and stagger as the homepage navigation; no timed playback.
-const embeddedScene=p=>p<=.75?p/.75*2.9:2.9+(p-.75)/.25*1.1;
-const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
 const magazineProof=new URLSearchParams(location.search).get('magazineProof')==='1';
+// The magazine proof eliminates all three old no-op intervals while
+// preserving each already-approved drawScene phase and their direction:
+// 1) sevenfold: vh 0..0.5; 2) water rise: .65..1.6;
+// 3) church doors: 1.72..2.37; 4) magazine: 2.37..3.85.
+// The original non-proof timeline remains unchanged.
+const handoffVh=2.37,finalVh=3.85;
+const handoffProgress=.587;
+const embeddedScene=p=>magazineProof
+ ? p<=.14 ? p/.14*.5
+   : p<=.405 ? .65+(p-.14)/(.405-.14)*.95
+   : p<=handoffProgress ? 1.72+(p-.405)/(handoffProgress-.405)*.65
+   : handoffVh+(p-handoffProgress)/(1-handoffProgress)*(finalVh-handoffVh)
+ : p<=.75?p/.75*2.9:2.9+(p-.75)/.25*1.1;
+const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
 const embedded=document.documentElement.dataset.p2Embedded==='true',reduced=typeof matchMedia==='function'?matchMedia('(prefers-reduced-motion: reduce)'): {matches:false};
 let raf=0,externalProgress=0,hasExternalProgress=embedded,displayVh=null,sceneVh=null,active=!embedded;
 function render(now=performance.now()){
@@ -26,6 +38,8 @@ function render(now=performance.now()){
 }
 function drawScene(vh,now){
  const magazineStart=2.85,magazineEnd=3.85,magazineProgress=smooth((vh-magazineStart)/(magazineEnd-magazineStart));
+ // Use the remapped progress solely in the isolated magazineProof path.
+ const handoffMagazineProgress=magazineProof?clamp((vh-handoffVh)/(finalVh-handoffVh),0,1):magazineProgress;
  const magazine=root.querySelector('.p2-magazine');
  const reveal=clamp(vh/.5,0,1),rise=smooth((vh-.65)/.95),opening=smooth((vh-1.72)/.65),showChurch=vh>=1.72;
  const waterTop=(1-rise)*100,wave=[],coverWave=[],foldWave=[],line=[];
@@ -67,10 +81,10 @@ function drawScene(vh,now){
  magazine.style.setProperty('--magazine-shift-third',(-9*(1-magazineProgress)).toFixed(3)+'svh');
  magazine.setAttribute('aria-hidden',magazineProgress>=.999?'false':'true');
  }
- church.style.pointerEvents=magazineProgress>0?'none':'';
- root.dataset.p2Phase=vh<.65?'identity':vh<1.72?'ocean-rise':vh<2.37?'red-sea':magazineProgress>=.999?'magazine':magazineProgress>0?'church-to-magazine':'church';root.dataset.p2Progress=vh.toFixed(4);root.dataset.p2WaterLevel=rise.toFixed(4);
- index.querySelector('span').textContent=magazineProgress>=.5?'02 / 07':'01 / 07';
- const entry=index.querySelector('a');entry.href=magazineProgress>=.5?'/journal/':'/church/';entry.textContent=magazineProgress>=.5?'READ THE JOURNAL':'ENTER LIVING WATER';
+ church.style.pointerEvents=handoffMagazineProgress>0?'none':'';
+ root.dataset.p2Phase=vh<.65?'identity':vh<1.72?'ocean-rise':vh<2.37?'red-sea':handoffMagazineProgress>=.999?'magazine':handoffMagazineProgress>0?'church-to-magazine':'church';root.dataset.p2Progress=vh.toFixed(4);root.dataset.p2WaterLevel=rise.toFixed(4);
+ index.querySelector('span').textContent=handoffMagazineProgress>=.5?'02 / 07':'01 / 07';
+ const entry=index.querySelector('a');entry.href=handoffMagazineProgress>=.5?'/journal/':'/church/';entry.textContent=handoffMagazineProgress>=.5?'READ THE JOURNAL':'ENTER LIVING WATER';
 }
 
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}

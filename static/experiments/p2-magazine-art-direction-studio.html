@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>WESTSIDE WATCH / Magazine Art Direction / Two-Field Studies</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+:root{--paper:#f2eee3;--ink:#1b3043;--blue:#19344c;--light:#b99b52;--line:#aa9c80;--os-zh:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);--os-en:var(--ws-type-display-en,"Bodoni Moda",serif)}
+*{box-sizing:border-box}
+html,body{margin:0}body{background:#d7d5cc;color:var(--ink);font-family:var(--os-zh)}
+button,a{touch-action:manipulation}button{border-radius:0;cursor:pointer}a{color:inherit}
+:focus-visible{outline:3px solid #9b7232;outline-offset:3px}
+.toolbar{position:sticky;top:0;z-index:50;background:rgba(245,243,237,.97);border-bottom:1px solid #c4bdaf;padding:10px clamp(12px,2.5vw,36px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.toolbar__name{font:400 14px var(--os-en);letter-spacing:.08em}
+.switch{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.switch button{background:transparent;border:1px solid #a9a395;color:inherit;padding:8px 12px;font:400 12px var(--os-zh)}
+.switch button[aria-pressed=true]{background:var(--ink);color:#f7f0e4;border-color:var(--ink)}
+.switch--view button{font-size:12px}
+.info{max-width:1320px;margin:auto;padding:18px clamp(16px,2.5vw,34px) 12px;display:flex;align-items:baseline;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.info h1{font:400 clamp(24px,3vw,43px)/1 var(--os-en);margin:0}
+.info p{max-width:72ch;font:400 13px/1.5 var(--os-zh);margin:0}
+.study{width:min(100% - 24px,1560px);margin:0 auto 18px;min-height:min(76svh,910px);background:var(--paper);box-shadow:0 6px 28px #2222;overflow:hidden;position:relative;isolation:isolate}
+.study__stage{min-height:min(76svh,910px)}.study__stage[hidden]{display:none!important}
+.folio{font:400 12px/1.35 var(--os-en);letter-spacing:.13em}.eyebrow{font:400 12px/1.3 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.14em}
+.en{font-family:var(--os-en);font-weight:400;letter-spacing:-.052em}
+.primary-zh{font-family:var(--os-zh);font-weight:900;line-height:1.14;letter-spacing:.016em}
+.airy-zh{font-family:var(--os-zh);font-weight:200;line-height:1.25}
+.os-logo{width:min(76%,450px);height:auto;max-height:86px;object-fit:contain;object-position:left}
+.engraving{background-image:url('/images/home-opening-engraving.jpg');background-size:cover;background-position:center;filter:grayscale(1) sepia(.1) contrast(1.22);min-height:100%}
+.paper{background:#f3eee1 url('/images/temple-stone-light.png') center/cover}
+.line{border-top:1px solid currentColor}
+.issue-list{list-style:none;padding:0;margin:0;counter-reset:edition}
+.issue-list li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;padding:7px 0;border-bottom:1px solid #2837462c;font:400 clamp(12px,1vw,16px)/1.38 var(--os-zh)}
+.issue-list .issue-n{font:400 13px var(--os-en);color:#977c4d}
+.issue-list strong{display:block;font-weight:400}
+.issue-list em{display:block;font:italic 400 12px/1.2 var(--os-en);color:#9c8152}
+.issue-list .work{display:block;font-size:.83em;margin-top:3px;opacity:.78}
+.issue-list--compact li{padding:4px 0}.issue-list--compact{columns:2;column-gap:22px}.issue-list--compact li{break-inside:avoid}
+.movement-head{margin:16px 0 4px;font:400 clamp(18px,2vw,29px)/1.1 var(--os-en);border-top:1px solid #a89a80;padding-top:10px}.movement-head span{font:400 12px var(--os-en);margin-right:8px;color:#917747}
+.movement-note{font:400 11px/1.4 var(--os-zh);opacity:.65;margin:6px 0 14px}
+.cover-link,.entry-link{display:inline-block;border-bottom:1px solid currentColor;text-decoration:none;padding-bottom:4px;font:400 13px var(--os-en);letter-spacing:.06em}
+.period{font:400 12px/1.4 var(--os-en);letter-spacing:.11em}
+.proof-footer{max-width:1320px;margin:auto;padding:0 clamp(16px,2.5vw,34px) 40px;color:#425163}
+.proof-footer p{font:400 13px/1.6 var(--os-zh);margin:8px 0}
+.proof-footer a{color:inherit}
+.phase-note{position:absolute;bottom:12px;right:16px;background:#f0ece0ea;color:#36475a;padding:5px 10px;font:400 10px var(--os-en);z-index:10}
+
+/* A: engraving is a composed subject, not repeating decoration */
+.a-hold{display:grid;grid-template-columns:42% 58%;background:#192e43;color:#f5ecdd}
+.a-hold__type{position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(28px,4vw,70px);overflow:hidden}
+.a-hold__word{font:400 clamp(105px,16vw,295px)/.72 var(--os-en);letter-spacing:-.075em;white-space:nowrap;transform:translateX(-.03em)}
+.a-hold__word em{font-weight:400}
+.a-hold__bottom{display:flex;align-items:end;justify-content:space-between;gap:18px;border-top:1px solid #f5ecdd77;padding-top:20px}
+.a-hold__bottom h2{font-size:clamp(32px,4vw,70px);margin:0;color:#f4e8d5}
+.a-hold__image{position:relative;min-height:680px;overflow:hidden}
+.a-hold__image .engraving{position:absolute;inset:0;filter:grayscale(1) sepia(.25) contrast(1.6)}
+.a-hold__image:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#172c3c44,transparent 35%),linear-gradient(0deg,#0d2335aa,transparent 36%)}
+.a-hold__brand{position:absolute;z-index:2;bottom:5%;left:6%;right:6%;display:flex;align-items:end;justify-content:space-between;gap:16px}
+.a-hold__brand img{width:min(54%,380px);object-fit:contain}
+.a-hold__brand .folio{color:#fff}
+.a-open{display:grid;grid-template-columns:44% minmax(0,1fr);min-height:760px;color:var(--ink)}
+.a-open__plate{position:relative;overflow:hidden;background:#b69a62}
+.a-open__plate .engraving{position:absolute;inset:0;filter:grayscale(1) sepia(.5) contrast(1.35)}
+.a-open__plate .vertical{position:absolute;inset:7% auto auto 10%;writing-mode:vertical-rl;text-orientation:mixed;font:400 clamp(38px,6vw,110px)/.9 var(--os-en);color:#fff8e7;text-shadow:0 1px 16px #1118;letter-spacing:-.035em}
+.a-open__center{background:var(--paper);padding:clamp(26px,3vw,54px);display:flex;flex-direction:column;min-width:0}
+.a-open__center .top{display:flex;justify-content:space-between;gap:10px;margin-bottom:28px}
+.a-open__identity{position:relative;min-height:300px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid #927f623f}
+.a-open__identity .issue-en{font:400 clamp(70px,8.8vw,166px)/.75 var(--os-en);letter-spacing:-.075em;margin:12px 0;color:#1b3043}
+.a-open__identity h2{font-size:clamp(27px,3.1vw,59px);margin:10px 0 26px;max-width:14ch}
+.a-open__identity .number{position:absolute;top:-10px;right:0;font:400 clamp(85px,10vw,160px)/1 var(--os-en);color:#ab8b5127}
+.a-open__intro{padding-top:22px;display:grid;grid-template-columns:1fr;gap:22px}
+.a-open__intro p{font:400 clamp(15px,1.1vw,19px)/1.62 var(--os-zh);margin:0}
+.a-open__intro blockquote{font:italic 400 clamp(24px,2.2vw,39px)/1.1 var(--os-en);margin:0}
+.a-open__index{background:transparent;border-top:1px solid #927f623f;margin-top:30px;padding:22px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(22px,3vw,52px);row-gap:12px}
+.a-open__index h3{grid-column:1/-1;font:400 33px var(--os-en);margin:0 0 6px;border-bottom:1px solid #82765f;padding-bottom:13px}
+.a-open__cta{margin-top:auto;padding-top:32px}
+/* Contents remains a single real DOM copy on both desktop and phone. */
+
+/* B: an editorial archaeological atlas, not a book mock-up */
+.b-hold{display:grid;grid-template-columns:37% 63%;background:#e5ddca;min-height:760px}
+.b-hold__image{position:relative;background:#c8bd9e;min-height:660px;overflow:hidden}
+.b-hold__image .engraving{position:absolute;inset:0;filter:grayscale(1) sepia(.26) contrast(1.4)}
+.b-hold__image .stamp{position:absolute;inset:0;background:linear-gradient(90deg,#cdbd963d,transparent);mix-blend-mode:multiply}
+.b-hold__image .label{position:absolute;bottom:30px;left:30px;right:30px;background:#e8dfcacc;font:400 12px/1.45 var(--os-zh);padding:13px}
+.b-hold__data{position:relative;display:grid;grid-template-columns:1fr minmax(0,1fr);grid-template-rows:auto 1fr auto;gap:20px;padding:clamp(25px,4vw,65px)}
+.b-hold__data .name{grid-column:1/-1;display:flex;justify-content:space-between}
+.b-hold__data .number{font:400 clamp(170px,28vw,440px)/.71 var(--os-en);letter-spacing:-.12em;color:#253a47;grid-column:1/-1;align-self:center}
+.b-hold__data .number b{font-weight:400;color:#a58450}
+.b-hold__data h2{font-size:clamp(31px,4vw,65px);margin:0;grid-column:1}
+.b-hold__data .foot{grid-column:2;font:400 16px/1.7 var(--os-zh);border-left:1px solid #9c8b6e;padding-left:19px}
+.b-open{display:grid;grid-template-columns:41% minmax(0,1fr);min-height:830px;background:#e9e2d5}
+.b-open__left{background:#ddceb2;padding:26px;display:flex;flex-direction:column}
+.b-open__left .engraving{flex:1;min-height:440px;filter:grayscale(1) sepia(.35) contrast(1.4);margin:20px -26px}
+.b-open__left .big{font:400 clamp(70px,9vw,150px)/.82 var(--os-en);letter-spacing:-.09em}
+.b-open__center{padding:clamp(26px,3vw,56px);min-width:0;background:#f5f0e6}
+.b-open__center .head{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #938c7e;padding-bottom:16px}
+.b-open__center h2{font:400 clamp(60px,7vw,132px)/.9 var(--os-en);letter-spacing:-.07em;margin:25px 0}
+.b-open__center .sub{font-size:clamp(27px,3vw,53px);margin:0 0 20px}
+.b-open__center .atlas-contents{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.b-open__right{background:#21394b;color:#f6ede0;padding:clamp(26px,3vw,44px);margin-top:35px;display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;align-items:start}
+.b-open__right .quote{font:italic 400 clamp(27px,2.7vw,48px)/1.08 var(--os-en);margin:0;grid-column:1}
+.b-open__right .air{font-size:clamp(21px,2vw,33px);margin:0;grid-column:2;align-self:center}
+.b-open__right .period{color:#d4b985;grid-column:1/-1}
+.b-open__right .eyebrow{grid-column:1/-1}
+
+/* C: source homepage film acts as edition media, not a decorative backdrop */
+.c-hold{display:grid;grid-template-columns:62% 38%;min-height:760px;background:#f2efe5}
+.c-media{position:relative;overflow:hidden;background:#142d42}
+.c-media .poster{position:absolute;inset:0;background:url('/images/home-opening-engraving.jpg') center/cover;filter:grayscale(1) contrast(1.2);opacity:.8}
+.c-media iframe{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;pointer-events:none}
+.c-media .shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#101d2907,#102a3a77),linear-gradient(0deg,#10213099,transparent 45%)}
+.c-hold__word{position:absolute;bottom:5%;left:5%;right:0;color:#fff8ef;font:400 clamp(100px,18vw,300px)/.78 var(--os-en);letter-spacing:-.07em;pointer-events:none}
+.c-hold__type{padding:clamp(24px,3.5vw,58px);display:flex;flex-direction:column;justify-content:space-between;gap:30px}
+.c-hold__type img{width:90%;object-fit:contain;max-height:95px}
+.c-hold__type h2{font-size:clamp(32px,4vw,66px);margin:0;color:#263f55}
+.c-hold__type .airy-zh{font-size:clamp(19px,2vw,33px);margin:20px 0}
+.c-hold__type .entry-link{align-self:start}
+.c-open{display:grid;grid-template-columns:60% 40%;grid-template-rows:minmax(0,62%) minmax(0,38%);min-height:790px;background:#f5efe5}
+.c-open .c-media{grid-column:1;grid-row:1/-1}
+.c-open__header{grid-column:2;grid-row:1;padding:clamp(24px,3vw,58px);display:flex;flex-direction:column;gap:22px}
+.c-open__header .display{font:400 clamp(83px,10vw,174px)/.78 var(--os-en);letter-spacing:-.06em;margin:auto 0 0}
+.c-open__header h2{font-size:clamp(26px,3vw,60px);margin:0}
+.c-open__toc{grid-column:2;grid-row:2;overflow-y:auto;padding:16px clamp(24px,3vw,58px) 27px;background:#d4c49e}
+.c-open__toc .film-contents{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px}
+.c-open__toc h3{font:400 33px var(--os-en);margin:0 0 10px}
+
+
+/* 2026-10-22 / EDITORIAL STUDY 02 / square as an editorial accent, not a template.
+   One unduplicated engraving image; no wallpaper, no independent triptych, no font stretching.
+   Local experiment only. Design OS keeps authority for font families, weights and scopes. */
+.switch[hidden]{display:none!important}
+body.geometry-mode{background:#f3eee4}
+body.geometry-mode .study{width:100%;max-width:none;margin:0;box-shadow:none;overflow:visible}
+body.geometry-mode .info,body.geometry-mode .proof-footer{max-width:none;padding-inline:clamp(20px,5vw,98px)}
+.geo{background:#f3eee4;color:#193247}
+.geo__mast{display:flex;justify-content:space-between;align-items:center;gap:28px;padding:clamp(22px,2.6vw,39px) clamp(23px,6vw,108px);border-bottom:1px solid #bcb4a6}
+.geo__mast .os-logo{width:clamp(210px,26vw,390px);max-height:90px}
+.geo__mast-note{text-align:right;font:400 12px/1.6 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.16em}
+.geo__hero{isolation:isolate;position:relative;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:center;column-gap:clamp(12px,2vw,36px);padding:clamp(38px,5.5vw,95px) clamp(23px,6vw,108px);background:#f3eee4;color:#193247;min-height:clamp(670px,78svh,940px);overflow:hidden}
+.geo__media{grid-row:1;grid-column:1/span 6;position:relative;z-index:1;aspect-ratio:1;width:100%;min-width:0;overflow:hidden;margin:0;align-self:center}
+.geo__media img{display:block;width:100%;height:100%;object-fit:cover;object-position:56% 44%;filter:grayscale(1) contrast(1.14);mix-blend-mode:multiply}
+.geo__display{grid-row:1;grid-column:7/-1;position:relative;z-index:2;min-width:0;align-self:center}
+.geo__folio{display:block;font:400 12px/1.4 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.19em}
+.geo__huge{font:400 clamp(92px,11.8vw,225px)/.76 var(--os-en);letter-spacing:-.08em;margin:clamp(30px,4vw,65px) 0 clamp(23px,2.6vw,44px)}
+.geo__huge span{display:block}
+.geo__display h2{font-size:clamp(34px,4vw,70px);line-height:1.18;letter-spacing:.005em;margin:0;max-width:12ch}
+.geo__square-seal{display:none;position:absolute;z-index:3;top:clamp(22px,3vw,48px);right:clamp(22px,4vw,66px);width:clamp(86px,8vw,134px);aspect-ratio:1;background:#f3eee4;color:#193247;border:1px solid #193247;flex-direction:column;justify-content:space-between;padding:13px}
+.geo__square-seal strong{font:400 clamp(37px,4vw,65px)/.8 var(--os-en);letter-spacing:-.08em}
+.geo__square-seal small{font:400 9px/1.3 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.1em}
+.geo__source{display:flex;flex-wrap:wrap;justify-content:space-between;gap:5px 32px;border-top:1px solid #a8a08f;border-bottom:1px solid #a8a08f;background:#e9e3d6;color:#33485a;padding:13px clamp(23px,6vw,108px);font:400 clamp(12px,.88vw,14px)/1.6 var(--os-zh)}
+.geo__source em{font:italic 400 12px/1.6 var(--os-en)}
+/* 01 — framed square: the image is a witness, not a photo texture under white text. */
+.geo--square .geo__hero{background:#eee8dc}
+.geo--square .geo__media{grid-column:1/span 6}
+.geo--square .geo__display{grid-column:7/-1;padding-left:clamp(0px,1.5vw,22px)}
+.geo--square .geo__huge{font-size:clamp(94px,11.4vw,212px)}
+/* 02 — landscape: the same photograph becomes a wide evidentiary spread.
+   Type is below the photograph, not floating over densely textured figures. */
+.geo--wide .geo__hero{display:flex;flex-direction:column;align-items:stretch;gap:0;min-height:0;padding-top:clamp(31px,4vw,68px);padding-bottom:clamp(28px,3.4vw,58px)}
+.geo--wide .geo__media{width:100%;aspect-ratio:1.95/1;flex:none;grid-row:auto;grid-column:auto}
+.geo--wide .geo__media img{object-position:50% 45%}
+.geo--wide .geo__display{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:end;gap:10px clamp(30px,5vw,82px);width:100%;padding-top:clamp(25px,3vw,54px);grid-row:auto;grid-column:auto}
+.geo--wide .geo__folio{grid-column:1/-1}
+.geo--wide .geo__huge{grid-column:1;grid-row:2;font-size:clamp(90px,12.5vw,214px);line-height:.8;margin:3px 0 0;white-space:nowrap}
+.geo--wide .geo__huge span{display:inline}
+.geo--wide .geo__huge span+span::before{content:" ";white-space:pre}
+.geo--wide .geo__display h2{grid-column:2;grid-row:2;max-width:7ch;align-self:end;font-size:clamp(31px,4vw,65px);margin:0 0 4px}
+.geo--wide .geo__square-seal{display:flex}
+/* 03 — full-bleed: one uninterrupted image. Dark ink is only a legibility scrim. */
+.geo--full .geo__hero{min-height:clamp(740px,90svh,1110px);background:#173148;color:#f5eee3;align-items:end}
+.geo--full .geo__media{position:absolute;inset:0;grid-column:auto;grid-row:auto;z-index:0;width:100%;height:100%;aspect-ratio:auto}
+.geo--full .geo__media img{object-position:50% 45%;filter:grayscale(1) contrast(1.16);mix-blend-mode:normal}
+.geo--full .geo__hero::after{content:"";z-index:1;position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(15,37,54,.87),rgba(15,37,54,.14) 75%),linear-gradient(0deg,rgba(15,37,54,.83),transparent 68%)}
+.geo--full .geo__display{grid-column:1/span 8;grid-row:1;align-self:end;margin-bottom:clamp(28px,6vw,105px);color:#f5eee3}
+.geo--full .geo__huge{font-size:clamp(125px,15vw,285px)}
+.geo--full .geo__square-seal{display:flex}
+/* Consistent, spacious contents; folio grammar and provenance, not a dashboard widget. */
+.geo__reading{max-width:1660px;margin:0 auto;padding:clamp(66px,8vw,130px) clamp(23px,6vw,108px);display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(50px,7vw,126px);align-items:start}
+.geo__excerpt{max-width:60ch}
+.geo__excerpt h3{margin:clamp(23px,3.3vw,54px) 0 clamp(24px,3vw,47px);font:200 clamp(31px,3.3vw,58px)/1.33 var(--os-zh);letter-spacing:.006em}
+.geo__excerpt p{font:400 clamp(18px,1.3vw,22px)/1.88 var(--ws-type-reading-zh,var(--os-zh));margin:0 0 1.2em;letter-spacing:0}
+.geo__excerpt .entry-link{margin-top:16px}
+.geo__quote{font:italic 400 clamp(24px,2.25vw,40px)/1.18 var(--os-en);margin:clamp(45px,6vw,92px) 0 0;border-top:1px solid #a5a092;padding-top:clamp(20px,2.5vw,38px)}
+.geo__toc{min-width:0;border-top:2px solid #193247}
+.geo__toc header{display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-bottom:1px solid #9f998d;padding:clamp(18px,2vw,32px) 0}
+.geo__toc h3{font:400 clamp(45px,4.8vw,83px)/.92 var(--os-en);letter-spacing:-.055em;margin:0}
+.geo__toc header .folio{font-size:12px}
+.geo__toc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(22px,3.5vw,52px);row-gap:clamp(14px,2vw,35px)}
+.geo__toc-grid>section{min-width:0}
+.geo__toc .movement-head{font-size:clamp(27px,2.1vw,36px);margin:clamp(22px,2.6vw,40px) 0 4px}
+.geo__toc .issue-list li{font-size:clamp(15px,1.05vw,19px);padding:11px 0;grid-template-columns:37px 1fr}
+.geo__toc .issue-list .issue-n{font-size:16px}
+.geo__toc .issue-list em{font-size:14px}
+.geo__toc .issue-list .work{font-size:clamp(13px,.9vw,16px);opacity:.84;line-height:1.5}
+.geo__toc .movement-note{font-size:12px;line-height:1.6}
+.geo__status{grid-column:1/-1;border-top:1px solid #a39b8d;margin-top:clamp(35px,4vw,65px);padding-top:20px;font:400 13px/1.7 var(--os-zh);color:#43576b}
+@media(max-width:1190px){
+.geo__hero{min-height:570px}
+.geo__huge,.geo--square .geo__huge{font-size:clamp(75px,10vw,130px)}
+.geo--wide .geo__display{grid-template-columns:1fr;gap:10px}
+.geo--wide .geo__folio,.geo--wide .geo__huge,.geo--wide .geo__display h2{grid-column:1;grid-row:auto}
+.geo--wide .geo__huge{font-size:clamp(85px,12vw,150px)}
+.geo--wide .geo__display h2{max-width:none}
+.geo__reading{grid-template-columns:1fr;gap:65px}
+.geo__excerpt{max-width:70ch}.geo__toc-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+body.geometry-mode .info{padding-inline:20px}
+.geo__mast{padding:22px 20px}
+.geo__mast .os-logo{width:clamp(180px,50vw,260px)}
+.geo__mast-note{font-size:9px;max-width:115px}
+.geo__hero,.geo--wide .geo__hero,.geo--full .geo__hero{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding:0;gap:0}
+.geo__media,.geo--square .geo__media,.geo--wide .geo__media,.geo--full .geo__media{position:relative;inset:auto;transform:none;grid-column:auto;grid-row:auto;aspect-ratio:1;width:calc(100% - 36px);height:auto;flex:none;margin:18px auto 0;max-height:none}
+.geo--wide .geo__media{width:100%;aspect-ratio:1.95/1;margin:0}
+.geo--full .geo__media{width:100%;aspect-ratio:4/5;margin:0}
+.geo__display,.geo--square .geo__display,.geo--wide .geo__display,.geo--full .geo__display{display:block;grid-column:auto;grid-row:auto;position:relative;align-self:auto;width:auto;padding:clamp(26px,7vw,46px) 22px clamp(34px,9vw,62px);margin:0;color:#193247}
+.geo--full .geo__hero{background:#f3eee4}
+.geo--full .geo__hero::after{display:none}
+.geo__huge,.geo--square .geo__huge,.geo--wide .geo__huge,.geo--full .geo__huge{font-size:clamp(77px,22vw,145px);line-height:.76;white-space:normal;margin:25px 0 29px}
+.geo--wide .geo__huge span{display:block}.geo--wide .geo__huge span+span::before{content:none}
+.geo__display h2,.geo--wide .geo__display h2{font-size:clamp(34px,8vw,59px);max-width:100%;margin:0}
+.geo__square-seal,.geo--wide .geo__square-seal,.geo--full .geo__square-seal{top:16px;right:16px;width:76px;padding:8px}
+.geo__square-seal strong{font-size:37px}.geo__square-seal small{font-size:8px}
+.geo__source{padding:15px 22px}
+.geo__reading{display:block;padding:52px 21px 75px}
+.geo__excerpt{margin-bottom:65px}
+.geo__toc-grid{grid-template-columns:1fr}
+.geo__toc h3{font-size:clamp(42px,12vw,70px)}
+.geo__toc header{align-items:flex-end}
+.geo__toc header .folio{max-width:100px;font-size:10px;text-align:right}
+.geo__toc .issue-list li{font-size:16px}
+.geo__status{margin-top:45px}
+}
+
+
+/* Square signifier = one historical image + working dossier-to-Contents link.
+   Optional clean publication view strips the studio chrome, NOT the original content. */
+body.presentation-mode{background:#f3eee4}
+body.presentation-mode .toolbar,body.presentation-mode .info,body.presentation-mode .proof-footer{display:none!important}
+body.presentation-mode .study{width:100%;max-width:none;margin:0;box-shadow:none;min-height:0}
+body.presentation-mode .geo__status,body.presentation-mode .geo__source em{display:none}
+.geo__media{isolation:isolate}
+.geo__edge{display:none}
+.geo--square .geo__edge{display:block;position:absolute;right:clamp(16px,2.4vw,45px);top:50%;writing-mode:vertical-rl;transform:translateY(-50%);font:400 11px/1.2 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.16em;color:#193247}
+.geo--square .geo__square-seal{display:flex;right:0;bottom:0;top:auto;left:auto;width:clamp(100px,9vw,140px);border-top:1px solid #193247;border-left:1px solid #193247;border-right:none;border-bottom:none}
+.geo--square .geo__square-seal strong{font-size:clamp(43px,5vw,72px)}
+.geo--square .geo__hero::before{content:"";position:absolute;inset:clamp(22px,3.5vw,65px) clamp(35px,5vw,86px) auto 50%;border-top:1px solid #19324755;pointer-events:none}
+.geo--full .geo__hero::after{display:none}
+.geo--full .geo__media::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(15,37,54,.87),rgba(15,37,54,.14) 75%),linear-gradient(0deg,rgba(15,37,54,.83),transparent 68%)}
+.geo__square-seal{z-index:3}
+@media(max-width:1190px){.geo--square .geo__edge{display:none}}
+@media(max-width:760px){.geo--square .geo__hero::before{display:none}.geo--square .geo__square-seal{width:clamp(76px,22vw,108px);padding:8px}.geo--square .geo__square-seal strong{font-size:clamp(38px,10vw,55px)}.geo--full .geo__media::after{display:none}}
+
+
+/* Independent concept: THRESHOLD / square as the city's threshold.
+   One authored hero DOM, not a CSS-only reskin of the three geometry studies. */
+body.issue-mode{background:#eee8db}
+body.issue-mode .study{width:100%;max-width:none;margin:0;box-shadow:none;overflow:visible;min-height:0}
+body.issue-mode .info,body.issue-mode .proof-footer{max-width:none;padding-inline:clamp(20px,5vw,95px)}
+body.issue-mode.presentation-mode .toolbar,body.issue-mode.presentation-mode .info,body.issue-mode.presentation-mode .proof-footer{display:none!important}
+.th{background:#f0ebdf;color:#183247}
+.th__mast{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(23px,3vw,48px) clamp(22px,6vw,108px);border-bottom:1px solid #aaa297}
+.th__mast .os-logo{width:clamp(190px,25vw,370px);max-height:85px}
+.th__edition{font:400 12px/1.6 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.16em;text-align:right}
+.th__cover{position:relative;isolation:isolate;min-height:clamp(750px,88svh,1010px);overflow:hidden;background:#eee8dc}
+.th__cover:before{content:"";position:absolute;inset:clamp(38px,6vw,103px) auto auto clamp(22px,6vw,108px);height:1px;width:34%;background:#18324770}
+.th__axis{position:absolute;z-index:3;top:clamp(55px,8vw,130px);left:clamp(22px,6vw,108px);font:400 12px/1.2 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.16em}
+.th__overscale{position:absolute;z-index:1;top:16%;left:clamp(22px,5.3vw,96px);width:65%;font:400 clamp(150px,18vw,332px)/.72 var(--os-en);letter-spacing:-.09em;margin:0;white-space:nowrap}
+.th__overscale span{display:block}
+.th__photo{position:absolute;z-index:2;right:clamp(20px,5.8vw,104px);top:10%;width:min(48vw,760px);aspect-ratio:1;margin:0;overflow:hidden}
+.th__photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:54% 43%;filter:grayscale(1) contrast(1.16)}
+.th__photo .th__folio{position:absolute;bottom:0;left:0;width:clamp(94px,9.5vw,153px);aspect-ratio:1;background:#f0ebdf;color:#183247;border-top:1px solid #183247;border-right:1px solid #183247;padding:13px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none}
+.th__folio strong{font:400 clamp(42px,5vw,79px)/.75 var(--os-en);letter-spacing:-.055em}
+.th__folio small{font:400 10px/1.1 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.09em}
+.th__folio:focus-visible{outline:3px solid #b68b42;outline-offset:-5px}
+.th__hero-title{position:absolute;z-index:4;bottom:8%;left:clamp(22px,6vw,108px);max-width:min(40vw,650px)}
+.th__hero-title .eyebrow{display:block;margin-bottom:clamp(20px,3vw,52px)}
+.th__hero-title h1{font-size:clamp(44px,4.7vw,79px);font-weight:900;line-height:1.16;letter-spacing:0;margin:0 0 20px}
+.th__hero-title a{font:400 14px/1.5 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.1em;border-bottom:1px solid currentColor;text-decoration:none;padding-bottom:5px}
+.th__imgcredit{position:absolute;right:clamp(22px,6vw,108px);bottom:clamp(21px,3vw,49px);font:400 12px/1.5 var(--os-zh);max-width:40ch;text-align:right;color:#435363}
+.th__reading{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(48px,6vw,108px);padding:clamp(65px,8vw,140px) clamp(22px,6vw,108px);max-width:1680px;margin:0 auto}
+.th__text>p{font:400 clamp(18px,1.3vw,22px)/1.9 var(--ws-type-reading-zh,var(--os-zh));margin:0 0 22px}
+.th__text h3{font:200 clamp(38px,3.2vw,58px)/1.4 var(--os-zh);margin:28px 0 38px}
+.th__quote{font:italic 400 clamp(23px,2.2vw,39px)/1.17 var(--os-en);border-top:1px solid #a99f90;margin:50px 0 0;padding-top:25px}
+.th__contents{border-top:2px solid #183247}
+.th__contents header{display:flex;justify-content:space-between;gap:20px;align-items:baseline;padding:20px 0;border-bottom:1px solid #b0a99b}
+.th__contents header h3{font:400 clamp(43px,4.4vw,80px)/1 var(--os-en);letter-spacing:-.05em;margin:0}
+.th__contents header span{font:400 12px/1.4 var(--ws-type-display-en-sc,var(--os-en));text-align:right}
+.th__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px clamp(20px,3vw,50px)}
+.th__grid .issue-list li{font-size:clamp(15px,1.05vw,18px);padding:11px 0}
+.th__grid .movement-head{font-size:clamp(28px,2.2vw,38px);margin:27px 0 7px}
+.th__grid .issue-list .work{font-size:clamp(13px,.85vw,16px)}
+@media(max-width:990px){
+.th__cover{min-height:0;padding:0 0 30px}
+.th__cover:before{display:none}
+.th__axis{position:relative;top:auto;left:auto;display:block;padding:25px 20px}
+.th__overscale{position:relative;top:auto;left:auto;width:auto;font-size:clamp(112px,16vw,200px);margin:0 20px 15px}
+.th__photo{position:relative;top:auto;right:auto;width:calc(100% - 40px);max-width:700px;margin:0 auto}
+.th__hero-title{position:relative;max-width:none;left:auto;bottom:auto;padding:32px 20px 10px}
+.th__hero-title h1{font-size:clamp(35px,7vw,61px)}
+.th__imgcredit{position:relative;bottom:auto;right:auto;max-width:none;text-align:left;padding:15px 20px;border-top:1px solid #b0a99b}
+.th__reading{grid-template-columns:1fr;gap:55px}.th__grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+.th__mast{padding:22px 20px}.th__mast .os-logo{width:clamp(165px,51vw,260px)}.th__edition{font-size:10px}
+.th__overscale{font-size:clamp(94px,25vw,175px);line-height:.75}
+.th__photo{width:100%;max-width:none}
+.th__photo .th__folio{width:88px;padding:9px}
+.th__folio strong{font-size:45px}
+.th__hero-title .eyebrow{margin-bottom:15px}
+.th__hero-title h1{font-size:clamp(35px,9vw,56px)}
+.th__reading{display:block;padding:54px 21px 85px}.th__text{margin-bottom:63px}
+.th__contents header h3{font-size:50px}.th__contents header span{max-width:90px;font-size:10px}
+.th__grid{grid-template-columns:1fr}
+}
+
+/* Real article excerpt: all candidates use authentic draft, not generated filler */
+.article{background:#f4f0e6;color:#1b3043;display:flex;flex-direction:column;min-height:920px}
+.article__mast{padding:22px clamp(24px,4vw,60px);display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid #b7ad97}
+.article__mast img{max-width:250px;width:32vw;max-height:65px}
+.article__media{height:clamp(190px,29svh,340px);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#243c51;color:#f5ecde}
+.article__media::before{content:"";position:absolute;inset:0;background:url('/images/home-opening-engraving.jpg') center 44%/cover;filter:grayscale(1) sepia(.2) contrast(1.3);opacity:.57}
+.article__media .en{position:relative;font-size:clamp(85px,14vw,240px);line-height:.8;text-align:center}
+.article__body{width:min(100%,49rem);margin:0 auto;padding:clamp(30px,4vw,68px) clamp(18px,3vw,46px);min-width:0}
+.article__body h2{font-size:clamp(35px,4vw,69px);margin:16px 0 24px}
+.article__body p{font:400 clamp(17px,1.1vw,20px)/1.84 var(--ws-type-reading-zh,var(--os-zh));margin:0 0 1.25em;letter-spacing:0}
+.article__body .standfirst{font-weight:200;font-size:clamp(22px,2vw,35px);line-height:1.53}
+.article__body .chapter{font:400 clamp(27px,3vw,50px)/1 var(--os-en);margin:30px 0 20px}
+.article__caption{width:min(100%,49rem);margin:0 auto;border-top:1px solid #ad9c7d;padding:12px clamp(18px,3vw,46px) 30px;font:400 12px/1.6 var(--os-zh)}
+.article--b .article__media::before{filter:grayscale(1) sepia(.5) contrast(1.3)}
+.article--b .article__media{background:#997d54}
+.article--c .article__media{background:#263848}
+.article--c .article__media::before{opacity:.2}
+.article--c .article__media .en{font-size:clamp(90px,17vw,290px)}
+/* Mobile preserves the actual media and full contents, not hidden side panels. */
+@media(max-width:1100px){.a-open__index,.b-open__center .atlas-contents{grid-template-columns:1fr}.b-open__right{grid-template-columns:1fr}.b-open__right .quote,.b-open__right .air,.b-open__right .period,.b-open__right .eyebrow{grid-column:1}}
+@media(max-width:760px){
+.toolbar{position:static}.info{padding:19px 16px}.study{width:100%;margin:0;min-height:auto;box-shadow:none}
+.study__stage{min-height:0}
+.a-hold,.b-hold,.c-hold,.a-open,.b-open,.c-open{display:block;min-height:auto}
+.a-hold__type,.b-hold__data,.c-hold__type{min-height:48svh}
+.a-hold__word{font-size:clamp(105px,33vw,200px)}
+.a-hold__image,.b-hold__image{height:38svh;min-height:250px}
+.a-hold__bottom h2,.b-hold__data h2,.c-hold__type h2{font-size:clamp(29px,8vw,49px)}
+.b-hold__data{display:flex;flex-direction:column}.b-hold__data .number{font-size:clamp(150px,45vw,240px)}
+.b-hold__data .foot{margin:0}
+.c-media{min-height:36svh}.c-hold__word{font-size:clamp(90px,27vw,160px)}
+.a-open__plate{display:block;min-height:38svh;height:38svh}.a-open__plate .vertical{font-size:clamp(43px,15vw,95px)}
+.b-open__left{display:flex;min-height:46svh;height:auto}.b-open__left .engraving{min-height:32svh;height:32svh;flex:1}
+.c-open .c-media{display:block;min-height:42svh;height:42svh}
+.a-open__index,.b-open__center .atlas-contents{grid-template-columns:1fr;gap:16px}
+.a-open__center,.b-open__center,.c-open__header{display:block;width:100%;min-height:0;padding:30px clamp(19px,5vw,40px)}
+.a-open__identity{min-height:260px}.a-open__identity .issue-en{font-size:clamp(70px,17vw,122px)}
+.a-open__intro,.b-open__center .atlas-contents{grid-template-columns:1fr;gap:20px}
+.a-open__index h3{font-size:32px;margin:0 0 12px}
+.b-open__center h2{font-size:clamp(58px,15vw,120px)}
+.c-open{display:flex;flex-direction:column}.c-open__header .display{font-size:clamp(85px,20vw,160px);margin:35px 0 15px}
+.c-open__toc{overflow:visible}.c-open__toc .film-contents{grid-template-columns:1fr 1fr}
+.issue-list--compact{columns:1}
+.article{display:block;min-height:0}.article__mast img{width:55vw}.article__body{padding:30px 20px}.article__caption{padding:12px 20px}
+.article__media{height:30svh}.article__media .en{font-size:clamp(80px,19vw,150px)}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* R9 / Full issue identity — one complete editorial family, independent semantic DOM.
+   Existing Design OS remains sole typography/color authority. This is an experiment ONLY. */
+body.identity-mode{background:#ece6da}
+body.identity-mode .study{max-width:none;width:100%;min-height:0;margin:0;box-shadow:none;overflow:visible}
+body.identity-mode .proof-footer{max-width:1500px}
+body.identity-mode.presentation-mode .toolbar,body.identity-mode.presentation-mode .info,body.identity-mode.presentation-mode .proof-footer{display:none!important}
+.id{color:var(--ink);background:#f1ece2;min-width:0}
+.id *{min-width:0}
+.id__meta{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:clamp(22px,2.7vw,45px) clamp(22px,5.3vw,90px);border-bottom:1px solid #20364755}
+.id__meta .os-logo{width:clamp(190px,24vw,368px)}
+.id__label{font:400 clamp(11px,.92vw,15px)/1.5 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.15em}
+.id__cover{min-height:min(900px,94svh);position:relative;isolation:isolate;overflow:hidden;padding:clamp(26px,4vw,70px) clamp(22px,5.3vw,90px) clamp(30px,4vw,66px);display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:auto 1fr auto;gap:20px;background:#eae4d8}
+.id__cover-no{grid-column:1/4;z-index:3;align-self:start;font:400 clamp(14px,1.2vw,18px)/1.3 var(--os-en);letter-spacing:.08em}
+.id__cover-word{grid-column:1/-1;grid-row:2;align-self:start;z-index:3;font:400 clamp(118px,20.5vw,372px)/.75 var(--os-en);letter-spacing:-.086em;white-space:nowrap;margin:clamp(14px,4svh,70px) 0 0;color:#1b3349;pointer-events:none}
+.id__cover-art{grid-column:6/13;grid-row:2/4;z-index:1;align-self:stretch;margin:clamp(145px,16svh,205px) 0 0;position:relative;min-height:390px;overflow:hidden;background:#b7ada0}
+.id__cover-art img{width:100%;height:100%;object-fit:cover;object-position:center 44%;filter:grayscale(1) contrast(1.12);display:block}
+.id__cover-art figcaption{position:absolute;bottom:0;left:0;right:0;padding:8px 16px;font:400 12px/1.4 var(--os-zh);background:#eae4d8ed;color:#273d52}
+.id__cover-title{grid-column:1/7;grid-row:3;align-self:end;z-index:4;padding:clamp(15px,2vw,32px) clamp(14px,2vw,30px) 0 0;background:linear-gradient(90deg,#eae4d8 77%,#eae4d800);margin-bottom:0}
+.id__cover-title h1{font:900 clamp(36px,4.6vw,78px)/1.14 var(--os-zh);letter-spacing:.008em;margin:22px 0 22px;max-width:10ch}
+.id__cover-title p{font:200 clamp(19px,1.7vw,29px)/1.5 var(--os-zh);margin:0 0 27px;max-width:17ch;text-wrap:balance}
+.id__enter{display:inline-block;text-decoration:none;border-bottom:1px solid currentColor;font:400 15px/1.4 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.09em;padding:6px 0;margin-top:4px}
+.id__movement-nav{background:#20384b;color:#f1ebe0;padding:18px clamp(22px,5.3vw,90px);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.id__movement-nav a{font:400 clamp(15px,1.6vw,24px)/1.3 var(--os-en);color:inherit;text-decoration:none}
+.id__movement-nav a span{font:400 11px/1 var(--os-en);opacity:.6;margin-right:12px}
+.id__movement-nav a:hover,.id__movement-nav a:focus-visible{text-decoration:underline;text-underline-offset:5px}
+.id__intro{background:#20384b;color:#efe8db;display:grid;grid-template-columns:1fr minmax(0,1.3fr);gap:clamp(24px,6vw,110px);padding:clamp(62px,8vw,145px) clamp(22px,8vw,140px)}
+.id__intro-label{font:400 clamp(15px,1.4vw,22px) var(--os-en);letter-spacing:.12em}
+.id__intro-statement{font:400 clamp(44px,6.1vw,105px)/.95 var(--os-en);letter-spacing:-.065em;margin:0}
+.id__intro h2{font:900 clamp(29px,3vw,55px)/1.25 var(--os-zh);margin:0 0 25px}
+.id__intro p:not(.id__intro-statement){font:400 clamp(17px,1.45vw,22px)/1.9 var(--ws-type-reading-zh,var(--os-zh));max-width:32em}
+.id__index{padding:clamp(65px,7vw,128px) clamp(22px,7vw,122px);background:#f5f1e9}
+.id__index-top{display:flex;justify-content:space-between;align-items:end;gap:25px;border-bottom:2px solid #20384b;padding-bottom:26px}
+.id__index h2{font:400 clamp(72px,11vw,185px)/.84 var(--os-en);letter-spacing:-.07em;margin:0}
+.id__index-top p{font:400 13px/1.6 var(--os-zh);max-width:22ch}
+.id__index-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(26px,4vw,75px) clamp(30px,5vw,100px);margin-top:48px}
+.id__index-group h3{font:400 clamp(38px,4.7vw,81px)/1 var(--os-en);letter-spacing:-.055em;margin:0 0 24px}
+.id__index-group h3 small{font:400 13px var(--os-en);vertical-align:top;margin-right:15px;letter-spacing:0}
+.id__index-group ol{list-style:none;margin:0;padding:0}
+.id__index-group li{border-top:1px solid #b0a695;padding:13px 0;display:grid;grid-template-columns:34px 1fr;gap:10px;font:400 16px/1.5 var(--os-zh)}
+.id__index-group li a{color:inherit;text-decoration:none}.id__index-group li a:hover{text-decoration:underline;text-underline-offset:3px}
+.id__index-group li em{font:italic 400 13px/1.4 var(--os-en);display:block}
+.id__index-group li small{display:block;font:400 13px/1.6 var(--os-zh);color:#556374;margin-top:3px}
+.id__index-group .id__number{font:400 14px var(--os-en);color:#7a663d}
+.id__index-inter{font:400 12px/1.5 var(--os-en);margin:20px 0 0;border-top:1px solid #20384b;padding-top:14px;letter-spacing:.08em}
+.id__act{padding:clamp(70px,8vw,148px) clamp(22px,7vw,122px);scroll-margin-top:22px}
+.id__act-head{display:flex;align-items:start;justify-content:space-between;gap:20px;border-top:2px solid currentColor;padding-top:16px;margin-bottom:clamp(45px,6vw,112px)}
+.id__act-head span{font:400 14px/1.45 var(--ws-type-display-en-sc,var(--os-en))}
+.id__act-head a{font:400 13px/1.5 var(--os-en);text-decoration:none;border-bottom:1px solid currentColor}
+.id__act-name{font:400 clamp(88px,15.7vw,260px)/.73 var(--os-en);letter-spacing:-.088em;margin:0 0 55px;max-width:100%}
+.id__act h3{font:900 clamp(33px,4.4vw,74px)/1.2 var(--os-zh);letter-spacing:0;margin:0}
+.id__act .id__act-sub{font:200 clamp(22px,2.5vw,42px)/1.45 var(--os-zh);margin:16px 0 24px}
+.id__eyebrow{font:400 13px/1.5 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.13em}
+.id__body{font:400 clamp(17px,1.24vw,21px)/1.94 var(--ws-type-reading-zh,var(--os-zh));max-width:37em;margin:0 auto}
+.id__body p{margin:0 0 1.25em}.id__body h4{font:200 clamp(28px,2.7vw,44px)/1.4 var(--os-zh);margin:65px 0 25px}
+.id__source{font:400 13px/1.55 var(--os-zh);border-top:1px solid #9f978b;padding-top:15px;color:#516273}
+.id__watch{background:#e9e2d5}
+.id__watch-spread{display:grid;grid-template-columns:1.25fr minmax(0,.85fr);gap:clamp(30px,7vw,120px);align-items:end}
+.id__watch-figure{border-left:clamp(7px,1.1vw,18px) solid #20384b;padding-left:clamp(17px,2vw,35px)}
+.id__watch-figure .id__big-quote{font:400 clamp(60px,8vw,132px)/.95 var(--os-en);letter-spacing:-.067em;margin:0 0 45px}
+.id__watch-figure .id__big-quote em{font-weight:400}
+.id__watch-excerpt{font:400 clamp(18px,1.42vw,25px)/1.8 var(--ws-type-reading-zh,var(--os-zh));margin:0}
+.id__feature{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,100px);margin-top:clamp(70px,9vw,150px);border-top:1px solid #a9a095;padding-top:40px;scroll-margin-top:20px}
+.id__feature .id__body{max-width:none}
+.id__feature h4{font:400 clamp(45px,5vw,92px)/.95 var(--os-en);letter-spacing:-.06em;margin:0 0 25px}
+.id__feature .id__chapter{font:900 clamp(25px,2.8vw,47px)/1.25 var(--os-zh);margin:0 0 30px}
+.id__walk{background:#f5f1e9}
+.id__walk-spread{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,8vw,145px)}
+.id__walk-figure{border-top:1px solid #a69c8c;padding-top:24px}
+.id__walk-chart{min-height:clamp(240px,26vw,350px);display:grid;grid-template-rows:repeat(3,minmax(0,1fr));margin-bottom:25px;border-top:2px solid #20384b}
+.id__walk-chart span{display:flex;justify-content:space-between;align-items:center;gap:18px;border-bottom:1px solid #81909b;position:relative;padding-inline:8px 4px}
+.id__walk-chart span::before{content:attr(data-label);font:400 clamp(40px,5vw,81px)/1 var(--os-en);letter-spacing:-.06em}
+.id__walk-chart span::after{content:attr(data-caption);font:400 clamp(15px,1.15vw,20px)/1.5 var(--os-zh);text-align:right}
+.id__walk-figure .id__walk-art{font:400 clamp(39px,4.5vw,82px)/.93 var(--os-en);letter-spacing:-.06em;margin:30px 0 22px}
+.id__walk-chart-note{font:400 13px/1.65 var(--os-zh);color:#52616d}
+.id__witness{background:#d7d4ca}
+.id__witness-spread{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:clamp(20px,7vw,125px)}
+.id__witness-type{padding-top:25px;border-top:1px solid #20384b}
+.id__witness-type p{font:400 clamp(64px,8vw,140px)/.91 var(--os-en);letter-spacing:-.065em;margin:42px 0}
+.id__witness-type p span{display:block}
+.id__witness .id__body{margin:0;max-width:37em}
+.id__interlude{background:#20384b;color:#f5ecdd;display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:clamp(45px,6vw,90px) clamp(22px,7vw,122px);align-items:center}
+.id__interlude strong{font:400 clamp(47px,6.5vw,112px)/.86 var(--os-en);letter-spacing:-.06em}
+.id__interlude p{font:400 15px/1.7 var(--os-zh);max-width:40ch}
+.id__interlude .id__eyebrow{color:#e6d9be}
+.id__worship{background:#f3eee4;min-height:95svh}
+.id__worship .id__act-name{margin:8vw 0 8vw}
+.id__worship-core{width:min(100%,720px);margin:0 auto 10vw;text-align:center;padding:0 20px}
+.id__worship-core h3{font-size:clamp(41px,6vw,103px)}
+.id__worship-core p{font:200 clamp(21px,2.6vw,41px)/1.5 var(--os-zh);margin:45px auto}
+.id__worship-line{width:1px;height:clamp(80px,14vw,180px);background:#263c4d;margin:40px auto}
+.id__worship-end{border-top:1px solid #aca295;padding:45px 0 0;display:flex;justify-content:space-between;align-items:end;gap:30px}
+.id__worship-end .os-logo{width:clamp(210px,31vw,460px)}
+.id__worship-end a{text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:6px;font:400 14px/1.5 var(--os-en)}
+.id__not-published{font:400 14px/1.7 var(--os-zh);padding:18px 0;border-top:1px solid #a7a093;margin-top:20px;max-width:45em}
+.id__quiet-note{color:#344b5d}
+@media(max-width:1000px){
+.id__cover{min-height:820px}
+.id__cover-word{font-size:clamp(125px,19vw,210px)}
+.id__cover-art{grid-column:5/13;margin-top:190px;min-height:400px}
+.id__cover-title{grid-column:1/8}
+.id__intro{grid-template-columns:1fr}
+.id__index-grid{gap:40px}
+.id__act-name{font-size:clamp(88px,17vw,164px)}
+}
+@media(max-width:760px){
+.id__meta{padding:20px}.id__meta .os-logo{width:clamp(165px,52vw,245px)}.id__label{font-size:10px}
+.id__cover{min-height:0;padding:28px 20px 40px;display:flex;flex-direction:column;gap:0}
+.id__cover-no{position:static}
+.id__cover-word{font-size:clamp(92px,22vw,164px);line-height:.8;letter-spacing:-.078em;white-space:normal;overflow-wrap:normal;margin:45px 0 0;max-width:100%}
+.id__cover-art{margin:22px 0 0;width:100%;min-height:0;height:clamp(270px,75vw,430px)}
+.id__cover-title{padding:30px 0 0;background:none}
+.id__cover-title h1{font-size:clamp(38px,9vw,57px);margin:18px 0}
+.id__cover-title p{font-size:23px}
+.id__movement-nav{padding:19px 20px;display:grid;grid-template-columns:1fr 1fr;gap:19px}
+.id__movement-nav a{font-size:21px}
+.id__intro{padding:70px 21px;gap:30px}
+.id__intro-statement{font-size:clamp(57px,13vw,88px)}
+.id__index{padding:72px 20px}
+.id__index-top{display:block}.id__index h2{font-size:clamp(76px,17vw,126px)}.id__index-top p{margin-bottom:0}
+.id__index-grid{grid-template-columns:1fr;gap:45px}
+.id__act{padding:70px 20px}
+.id__act-head{margin-bottom:65px}
+.id__act-name{font-size:clamp(89px,19vw,143px);letter-spacing:-.07em;white-space:normal;overflow-wrap:break-word;line-height:.82}
+.id__watch-spread,.id__feature,.id__walk-spread,.id__witness-spread{grid-template-columns:1fr;gap:38px}
+.id__feature{margin-top:85px}
+.id__witness-type p{font-size:clamp(64px,15vw,112px)}
+.id__interlude{grid-template-columns:1fr;padding:48px 20px}
+.id__interlude strong{font-size:clamp(58px,11vw,88px)}
+.id__worship{min-height:0}
+.id__worship-core{margin:55px auto 90px}
+.id__worship-end{display:block}
+.id__worship-end a{display:inline-block;margin-top:40px}
+}
+@media(max-width:760px){
+.id__act-name{font-size:clamp(76px,17vw,123px)}
+.id__witness .id__act-name,.id__worship .id__act-name{font-size:clamp(42px,10.8vw,83px);white-space:nowrap;overflow-wrap:normal;letter-spacing:-.073em}
+.id__intro .id__intro-statement{font-size:clamp(54px,13vw,88px);line-height:.93}
+}
+@media(max-width:350px){
+.id__cover-word{font-size:20vw}
+.id__act-name{font-size:16.6vw}
+.id__witness .id__act-name,.id__worship .id__act-name{font-size:10.2vw}
+.id__index h2{font-size:16vw}
+}
+
+</style>
+</head>
+<body data-ws-scope="journal">
+<nav class="toolbar" aria-label="西望雜誌藝術指導與三種幾何構圖比較">
+ <span class="toolbar__name">WESTSIDE WATCH / DESIGN STUDY 01</span>
+ <div class="switch" id="concept-switch" aria-label="既有構圖候選">
+  <button type="button" data-concept="a" aria-pressed="true">A · Monumental</button>
+  <button type="button" data-concept="b" aria-pressed="false">B · Atlas</button>
+  <button type="button" data-concept="c" aria-pressed="false">C · Cine-Folio</button>
+ </div>
+ <div class="switch switch--view" aria-label="檢查的雜誌版面階段">
+  <button type="button" data-view="hold" aria-pressed="true">87–90% 對開</button>
+  <button type="button" data-view="open" aria-pressed="false">100% 展開</button>
+  <button type="button" data-view="article" aria-pressed="false">文章開場</button>
+  <button type="button" data-view="geometry" aria-pressed="false">同一內容 · 三種幾何</button>
+  <button type="button" data-view="issue" aria-pressed="false">門檻 · 新刊頁概念</button>
+   <button type="button" data-view="identity" aria-pressed="false">整期視覺身份 · R9</button>
+ </div>
+ <div class="switch" id="shape-switch" aria-label="版面構圖形狀" hidden>
+  <button type="button" data-shape="square" aria-pressed="true">方形 · 1:1</button>
+  <button type="button" data-shape="wide" aria-pressed="false">寬幅 · 1.95:1</button>
+  <button type="button" data-shape="full" aria-pressed="false">滿版 · Full-bleed</button>
+ </div>
+</nav>
+<header class="info">
+ <h1 id="study-title">A · Monumental Engraving</h1>
+ <p id="study-note">古典刻線與巨大 Bodoni 英文共同構成主視覺；展開不採獨立三欄，中文 900 成為重量錨點。</p>
+</header>
+<main id="study" class="study" aria-labelledby="study-title"><div class="study__stage" id="stage"></div></main>
+<footer class="proof-footer">
+ <p>設計約束：原首頁鋪滿影片完全保留；本實驗不動原首頁及正式 P2，也不採三欄雜誌展開。首頁字體字重與排列待雜誌風格獲批後再議。</p>
+ <p>評審依據現有 Design OS 手冊 §6A：Awwwards 的 Design 40%／UX/UI 30%／Creativity 20%／Content 10%、Webby 全體使用體驗、FWA 原創互動；Westside 10 項 × 2 分、至少 18/20 且無重大阻擋。CI 通過不等於藝術指導通過。</p>
+  <p>只用於選擇藝術指導，不是正式 P2。官方 Logo 使用原 SVG，資料來自 Vol.00 Editorial Map，文章段落直接節錄自已保存的正式稿件。畫面中的英文「A City of Light / The Gate / Dawn」屬本期主題的試驗性展示語，不代替正式文章題名。</p>
+ <p><a href="/experiments/p2-magazine-transition-lab.html?final=1">對照目前 P2 完整展開 ↗</a>　·　<a href="/journal/">進入現有西望雜誌 ↗</a></p>
+</footer>
+<script>
+(()=>{'use strict';
+const query=new URLSearchParams(location.search);
+const modes={a:{name:'A · Monumental Engraving',note:'字母和刻線是主體，不是背景。英文字形可佔半版，較小的 900 中文產生視覺反重。'},b:{name:'B · Living Atlas',note:'以考古圖譜、檔案編號、資料目錄構成真正的雜誌地理；讓歷史圖片成為內容而非重複壁紙。'},c:{name:'C · Cine-Folio',note:'從首頁《王進城》影像切入期刊封面，讓已有影片和正文共享一套編輯身份，而非播放裝飾視頻。'}};
+const groups=[
+ {n:'I',name:'WATCH',items:[['01','米斯巴','Mizpah','守望，一座光明的城'],['02','伯利恆','Bethlehem',''],['03','門','The Gate','城門口的人 · 耶路撒冷：在黑暗中軟弱，在光明中剛強 · 大希律：這個人會建造'],['04','迦密','Carmel','一萬年的建城禮']],inter:'細拉 / Selah'},
+ {n:'II',name:'WALK',items:[['05','以馬忤斯','Emmaus','吾珥：離開一座大的城'],['06','以琳','Elim','若不是耶和華看守城池——古代攻城技術史'],['07','別是巴','Beersheba',''],['08','伯特利','Bethel','']],inter:'遠方無聲鴿'},
+ {n:'III',name:'WITNESS',items:[['09','以斯帖','Esther','廚房裡的人｜你當像飛鳥往你的山'],['10','亞杜蘭洞','Adullam','黃淑華 · 江秀琴']],inter:'基尼烈 / Kinneret'},
+ {n:'IV',name:'WORSHIP',items:[['11','何烈山','Horeb','房角石：整座城由此對齊'],['12','瑪拉拿','Maranatha','冠冕']],inter:''}
+];
+const esc=v=>String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function list(group,compact=false){return '<h4 class="movement-head"><span>'+group.n+'</span>'+group.name+'</h4><ol class="issue-list'+(compact?' issue-list--compact':'')+'">'+group.items.map(([n,zh,en,work])=>'<li><span class="issue-n">'+n+'</span><span><strong lang="zh-Hant">'+esc(zh)+'</strong><em lang="en">'+esc(en)+'</em>'+(work?'<span class="work" lang="zh-Hant">'+esc(work)+'</span>':'')+'</span></li>').join('')+'</ol>'+(group.inter?'<p class="movement-note">INTERLUDE · '+esc(group.inter)+'</p>':'');}
+const allContents=()=>groups.map(g=>list(g)).join('');
+const shortContents=()=>groups.map(g=>'<div>'+list(g,true)+'</div>').join('');
+const logo='<img class="os-logo" src="/images/westside-watch-masthead-landscape.svg" alt="WESTSIDE WATCH 西望正式刊名" width="450" height="120">';
+const excerptGate=[
+'古代的城門不是城牆上挖出的一個洞。人在曠野走了很久，看見城牆之後，還要沿著道路走到牆下。路在那裡收窄，兩側的石牆忽然高起來，外面的陽光被門樓截斷，人和牲畜一起進入陰影。',
+'再往前，不是立刻看見城裡的街道，而是一段被石頭包圍的通道。守門的人在這裡看見你，坐在門室裡的人也看見你。你從哪裡來，帶著什麼，要找誰，會在城裡停留多久，都可能在真正進城以前被問清楚。',
+'它們提醒我們一件已經被現代城市遺忘的事：城門曾經是一個地方。',
+'《聖經》裡的人因此常常在城門口遇見彼此。波阿斯要處理路得和田產的事，就到城門口坐下，等那位比他更近的至親經過，又請十位長老坐在那裡。'];
+const excerptCarmel=[
+'耶利哥最先有的不是城牆，是水。',
+'今天從耶路撒冷往東走，越過橄欖山，地勢很快下降。山上的地中海氣候逐漸退去，到了約旦河谷，海拔已低於海平面。夏季炎熱，雨量很少，約旦河離古城遺址還有一段距離。人在這裡長久居住，靠的不是那條大河，而是城址旁的一眼泉水。',
+'今天叫蘇丹泉，ʿAin es-Sultan。泉水旁邊就是蘇丹丘，Tell es-Sultan，古耶利哥最重要的考古遺址。泉水在這裡流了很久，久到人的城市還沒有出現。',
+'一塊土地住得夠久，就會出現過去。帳篷拔起來，昨天留在身後；房屋不動，昨天便留在腳下。'];
+const excerptCine=['羅馬人不會喜歡耶穌在這一天進城。','這是逾越節。平日的耶路撒冷究竟住著三萬、四萬，還是更多的人，今天已很難精確恢復。到了逾越節，這個數字會突然失去平日的意義。人從猶太、加利利、比利亞和更遠的地方上來，城內住不下，周圍的村莊、山坡和道路也成了節期的一部分。','這種聚集不是後來才有。希律死後不久，一次逾越節已有「不可勝數」的人從鄉間和境外來到耶路撒冷。','耶穌從加利利一路南下，身邊有十二門徒，有長期跟隨他的女人，有接受過醫治的人，也有沿途加入的人。'];
+function article(mode){
+ const isA=mode==='a',isB=mode==='b';
+ const zh=isA?'城門口的人':isB?'一萬年的建城禮':'一萬年的建城禮';
+ const en=isA?'THE GATE':isB?'JERICHO':'DAWN';
+ const paragraphs=isA?excerptGate:isB?excerptCarmel:excerptCine;
+ const label=isA?'The Gate / 03':isB?'Carmel / 04':'Carmel / Opening';
+ const source=isA?'docs/projects/watch-city-vol00/manuscripts/the-gate/城門口的人.md':isB?'docs/projects/watch-city-vol00/manuscripts/carmel/canonical/01-人為什麼要建一座城.md':'docs/projects/watch-city-vol00/manuscripts/carmel/canonical/00-王進城了.md';
+ return '<article class="study__stage article article--'+mode+'"><header class="article__mast">'+logo+'<span class="eyebrow">'+label+'</span></header><div class="article__media" aria-hidden="true"><div class="en">'+en+'</div></div><div class="article__body"><span class="eyebrow">VOL.00 / REAL MANUSCRIPT OPENING</span><h2 class="primary-zh ws-editorial-article-zh">'+zh+'</h2><div class="chapter" lang="en">'+(isA?'THE GATE':isB?'ANCIENT CITY':'THE KING ENTERS')+'</div>'+paragraphs.map((s,i)=>'<p'+(i===0?' class="standfirst"':'')+' lang="zh-Hant">'+esc(s)+'</p>').join('')+'<a class="entry-link" href="/journal/">EXPLORE THE ISSUE ↗</a></div><footer class="article__caption">真實稿件節錄｜'+esc(source)+'<br>此處只展示文章開場，不假裝已將整篇稿件上網排版；正式全文需要單獨驗收。</footer></article>';
+}
+function video(){return '<div class="c-media" aria-label="使用首頁既有王進城混剪影片作刊物主視覺"><div class="poster" aria-hidden="true"></div><div class="shade"></div></div>';}
+function hold(mode){
+ if(mode==='a')return '<section class="study__stage a-hold"><div class="a-hold__type"><div><span class="eyebrow">WESTSIDE WATCH / ISSUE 00</span><div class="a-hold__word en" lang="en">CITY<br><em>of</em><br>LIGHT</div></div><div class="a-hold__bottom"><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，<br>一座光明的城</h2><span class="folio">ROMANS 13:12</span></div></div><div class="a-hold__image"><div class="engraving" role="img" aria-label="首頁既有古典刻線圖像"></div><div class="a-hold__brand">'+logo+'<span class="folio">VOL.00 / 2026</span></div></div></section>';
+ if(mode==='b')return '<section class="study__stage b-hold"><div class="b-hold__image"><div class="engraving" role="img" aria-label="首頁既有古典刻線圖像"></div><div class="stamp"></div><div class="label">ARCHIVE FIELD / 00<br>刻線、城市、經文與史料作為刊物內容</div></div><div class="b-hold__data"><div class="name">'+logo+'<span class="eyebrow">VOLUME ZERO / 2026</span></div><div class="number" lang="en">0<b>0</b></div><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，<br>一座光明的城</h2><div class="foot"><span class="eyebrow">FOUR MOVEMENTS</span><br>WATCH / WALK / WITNESS / WORSHIP<br>十二欄目 · 三間奏</div></div></section>';
+ return '<section class="study__stage c-hold">'+video().replace('</div>','</div>')+'<div class="c-hold__word en" lang="en">DAWN</div><div class="c-hold__type">'+logo+'<div><span class="eyebrow">FILM → PUBLICATION</span><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，<br>一座光明的城</h2><p class="airy-zh" lang="zh-Hant">黑夜已深，<br>白晝將近。</p></div><a href="/preview/watch-city-vol00/hosanna/" class="entry-link">VIEW THE ORIGINAL FILM ↗</a></div></section>';
+}
+function opened(mode){
+ if(mode==='a')return '<section class="study__stage a-open"><aside class="a-open__plate" aria-label="刻線主視覺場"><div class="engraving"></div><span class="vertical" lang="en">ENGRAVED<br>CITY</span></aside><main class="a-open__center"><div class="top"><span class="eyebrow">VOL.00 / THE EDITION</span><span class="period">FOUR MOVEMENTS / 2026</span></div>'+logo+'<div class="a-open__identity"><span class="number" aria-hidden="true">00</span><div class="issue-en en" lang="en">CITY<br><i>of</i> LIGHT</div><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，一座光明的城</h2></div><div class="a-open__intro"><p lang="zh-Hant">四個樂章，十二個欄目，三個視聽間奏。從守望到同行，從見證走向敬拜。</p><blockquote lang="en">The night is far spent, <em>the day is at hand.</em></blockquote></div><div class="a-open__index" aria-label="正式四樂章目錄"><h3>Contents.</h3>'+groups.map(g=>'<section>'+list(g)+'</section>').join('')+'</div><div class="a-open__cta"><a href="/journal/" class="cover-link">ENTER THE MAGAZINE ↗</a></div></main></section>';
+ if(mode==='b')return '<section class="study__stage b-open"><aside class="b-open__left"><div class="eyebrow">WESTSIDE WATCH / ARCHIVE PLATE 00</div><div class="engraving" role="img" aria-label="刻線圖像標本"></div><span class="big en" lang="en">00</span><div class="folio">CITIES / KINGDOMS / WITNESS</div></aside><main class="b-open__center"><header class="head">'+logo+'<span class="eyebrow">INDEX / VOL.00</span></header><h2 lang="en">ATLAS<br><i>of Light.</i></h2><p class="primary-zh ws-editorial-article-zh sub" lang="zh-Hant">守望，一座光明的城</p><div class="atlas-contents">'+shortContents()+'</div><div class="b-open__right" aria-label="羅馬書十三章十二節"><span class="eyebrow">SCRIPTURE / ROMANS XIII:12</span><blockquote class="quote" lang="en">The night<br>is far spent,<br><em>the day<br>is at hand.</em></blockquote><p class="airy-zh air" lang="zh-Hant">黑夜已深，<br>白晝將近。</p><span class="period">A CITY OF LIGHT / VOL.00</span></div><a href="/journal/" class="cover-link" style="margin-top:30px">READ THE ISSUE ↗</a></main></section>';
+ return '<section class="study__stage c-open">'+video()+'<header class="c-open__header"><div class="eyebrow">WESTSIDE WATCH / ISSUE 00</div>'+logo+'<div class="display en" lang="en">THE<br>DAWN.</div><h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">守望，一座光明的城</h2><a href="/preview/watch-city-vol00/hosanna/" class="entry-link">ENTER THE FILM ↗</a></header><div class="c-open__toc"><h3>In this issue.</h3><div class="film-contents">'+groups.map(g=>'<div><strong class="en" style="font-weight:400;font-size:24px">'+g.n+'. '+g.name+'</strong><p style="margin:8px 0;font:400 14px/1.6 var(--os-zh)">'+g.items.map(x=>esc(x[1])+' · '+esc(x[3])).join(' / ')+'</p></div>').join('')+'</div><a href="/journal/" class="entry-link">READ VOL.00 ↗</a></div></section>';
+}
+
+/* Constant editorial content; the image shape is the only tested principal variable. */
+function geometry(shape){
+ return '<section class="study__stage geo geo--'+shape+'">'+
+  '<header class="geo__mast">'+logo+'<span class="geo__mast-note" lang="en">WESTSIDE WATCH / VOL.00<br>THE GATE · 03</span></header>'+
+  '<div class="geo__hero">'+
+  '<figure class="geo__media"><img src="/images/home-opening-engraving.jpg" alt="西望原有古典刻線主視覺，畫面中有人群和古典建築"><a class="geo__square-seal" href="#geo-contents" aria-label="跳至本期四樂章目錄，尋找第03欄城門口的人"><strong>03</strong><small>THE GATE<br>VOL.00</small></a></figure>'+
+  '<div class="geo__display"><span class="geo__folio" lang="en">03 / THE GATE · VOL.00</span>'+
+  '<div class="geo__huge en" lang="en"><span>THE</span><span>GATE.</span></div>'+
+  '<h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">城門口的人</h2></div>'+
+  '<span class="geo__edge" aria-hidden="true">WATCH / 03 / A CITY OF LIGHT</span>'+
+  '</div><div class="geo__source"><span>IMAGE / 01 — 主站既有古典刻線原圖，非考古實拍</span><em>One engraving · three image geometries · no duplicated background</em></div>'+
+  '<div class="geo__reading"><section class="geo__excerpt" aria-label="城門口的人原稿節錄">'+
+  '<span class="eyebrow" lang="en">ISSUE ZERO / THE GATE / 03</span>'+
+  '<h3 lang="zh-Hant">古代的城門，<br>不是城牆上挖出的一個洞。</h3>'+
+  '<p lang="zh-Hant">'+esc(excerptGate[0].replace('古代的城門不是城牆上挖出的一個洞。',''))+'</p><p lang="zh-Hant">'+esc(excerptGate[1])+'</p>'+
+  '<a class="entry-link" href="/journal/">ENTER THE MAGAZINE ↗</a>'+
+  '<div class="geo__quote" lang="en">The night is far spent,<br><em>the day is at hand.</em></div></section>'+
+  '<section class="geo__toc" id="geo-contents" aria-label="四樂章正式目錄"><header><h3 lang="en">Contents.</h3>'+
+  '<span class="folio">FOUR MOVEMENTS / VOL.00</span></header>'+
+  '<div class="geo__toc-grid">'+groups.map(g=>'<section>'+list(g)+'</section>').join('')+'</div></section>'+
+  '<p class="geo__status">相同來源：〈城門口的人〉已保存原稿、正式 Vol.00 四樂章／十二欄目／三個間奏、官方刊名 SVG、同一張古典刻線素材。這裡只比較形狀、裁切及視覺秩序；不改正式首頁滿版影片及 P2 動效。</p></div></section>';
+}
+
+
+/* Independent DOM for an actually distinct direction, per editorial skill. */
+function issue(){
+ return '<article class="study__stage th"><header class="th__mast">'+logo+
+ '<div class="th__edition" lang="en">VOL.00 / THE CITY OF LIGHT<br>WATCH / 03 · THE GATE</div></header>'+
+ '<section class="th__cover" aria-label="城門口的人刊頁封面">'+
+ '<span class="th__axis" lang="en">WATCH / THE GATE / 03</span>'+
+ '<div class="th__overscale en" aria-hidden="true"><span>THE</span><span>GATE.</span></div>'+
+ '<figure class="th__photo"><img src="/images/home-opening-engraving.jpg" alt="既有古典刻線圖，城門與人群構成歷史性的進入意象">'+
+ '<a class="th__folio" href="#th-contents" aria-label="第03欄城門口的人，前往本期目錄"><strong>03</strong><small>THE GATE<br>VOL.00</small></a></figure>'+
+ '<div class="th__hero-title"><span class="eyebrow" lang="en">VOL.00 / THE GATE · ARTICLE 03</span>'+
+ '<h1 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">城門口的人</h1>'+
+ '<a href="#th-text">READ THE ARTICLE ↗</a></div>'+
+ '<p class="th__imgcredit">本站既有古典刻線圖像；非史實攝影或特定遺址證據</p></section>'+
+ '<div class="th__reading"><section class="th__text" id="th-text">'+
+ '<span class="eyebrow" lang="en">THE GATE / FIRST MANUSCRIPT</span>'+
+ '<h3 lang="zh-Hant">古代的城門，<br>不是城牆上挖出的一個洞。</h3>'+
+ '<p lang="zh-Hant">'+esc(excerptGate[0].replace('古代的城門不是城牆上挖出的一個洞。',''))+'</p>'+
+ '<p lang="zh-Hant">'+esc(excerptGate[1])+'</p>'+
+ '<a class="entry-link" href="/journal/">ENTER THE MAGAZINE ↗</a>'+
+ '<blockquote class="th__quote" lang="en">The night is far spent,<br><em>the day is at hand.</em></blockquote></section>'+
+ '<nav class="th__contents" id="th-contents" aria-label="本期四樂章目錄"><header>'+
+ '<h3 lang="en">Contents.</h3><span>4 MOVEMENTS<br>12 DESKS / VOL.00</span></header>'+
+ '<div class="th__grid">'+groups.map(g=>'<section>'+list(g)+'</section>').join('')+'</div></nav></div></article>';
+}
+
+
+/* R9: original full-issue art direction with unlike source stories, no image-crop template.
+   All paragraphs below are sourced literally from the existing official manuscripts. */
+const editorialDeskTargets={'01':'id-act-watch','02':'id-act-watch','03':'id-gate','04':'id-carmel','05':'id-act-walk','06':'id-elim','07':'id-act-walk','08':'id-act-walk','09':'id-esther','10':'id-act-witness','11':'id-horeb','12':'id-maranatha'};
+const editorialDeskStatus={'02':'本期內容待找回','07':'文章尚未成稿','08':'本期文章尚未成稿'};
+const identityGate=[
+ '古代的城門不是城牆上挖出的一個洞。人在曠野走了很久，看見城牆之後，還要沿著道路走到牆下。路在那裡收窄，兩側的石牆忽然高起來，外面的陽光被門樓截斷，人和牲畜一起進入陰影。再往前，不是立刻看見城裡的街道，而是一段被石頭包圍的通道。守門的人在這裡看見你，坐在門室裡的人也看見你。你從哪裡來，帶著什麼，要找誰，會在城裡停留多久，都可能在真正進城以前被問清楚。',
+ '考古學家在古代近東許多城市遺址都發現過這樣的門。夏瑣、米吉多、基色留下的城門尤其著名。它們不是一扇孤零零的木門，而是一整套建築：門道向城內延伸，兩側設有門室，外牆與城牆連在一起。基色出土的城門具有六個門室，中央通道兩側各三個。這些城門的年代、形制以及它們與古代以色列王國建築活動之間的關係，考古學界仍有不少討論；但今天站在遺址上，仍然能從那些留下來的石牆辨認出一個人當年進城時經過的空間。',
+ '它們提醒我們一件已經被現代城市遺忘的事：城門曾經是一個地方。',
+ '《聖經》裡的人因此常常在城門口遇見彼此。波阿斯要處理路得和田產的事，就到城門口坐下，等那位比他更近的至親經過，又請十位長老坐在那裡。押沙龍想奪取民心，每天很早起來，站在通往城門的路旁，攔住那些進城求王判斷案件的人。',
+ '最初他並不住在所多瑪。'
+];
+const identityCarmel=[
+ '耶利哥最先有的不是城牆，是水。',
+ '今天從耶路撒冷往東走，越過橄欖山，地勢很快下降。山上的地中海氣候逐漸退去，到了約旦河谷，海拔已低於海平面。夏季炎熱，雨量很少，約旦河離古城遺址還有一段距離。人在這裡長久居住，靠的不是那條大河，而是城址旁的一眼泉水。',
+ '今天叫蘇丹泉，ʿAin es-Sultan。泉水旁邊就是蘇丹丘，Tell es-Sultan，古耶利哥最重要的考古遺址。泉水在這裡流了很久，久到人的城市還沒有出現。',
+ '一塊土地住得夠久，就會出現過去。帳篷拔起來，昨天留在身後；房屋不動，昨天便留在腳下。父親住過的房子、祖先埋葬的位置、儲存糧食的坑、修過幾次的牆，都使一個地方開始擁有人的時間。'
+];
+const identityEsther=[
+ '那時他大約十八歲。冬天，樹上的葉子已經全部掉光。Nicholas Herman 站在那裡，看著一棵光禿禿的樹，枝條伸進寒冷的天空，沒有葉子，也沒有果實。他眼睛看見的是冬天，腦子裡出現的卻是春天：再過一些時候，葉子會重新長出來，接著會有花，最後會有果實。這件每年都會發生、普通得幾乎不值得多看一眼的事，使他第一次強烈地意識到神的護理和能力。我們不知道那一天有沒有下雪，也不知道那是一棵什麼樹，留下來的記錄只有一個年輕人、一棵冬天的樹，以及一個尚未到來的季節。四十多年以後，他還記得那棵樹。',
+ '十八歲的 Nicholas Herman 還不知道自己的一生也會經過許多動盪。他只是站在冬天裡，看著一棵沒有葉子的樹。他看不見春天，正如飛鳥不知道下一頓食物在哪裡。他所看見的，是冬天並沒有取消春天。很多年以後，人們會用另一個名字認識這個年輕人：Brother Lawrence，勞倫斯弟兄。',
+ '每天的工作開始以前，他會想清楚有哪些事情要做、什麼時候做、應該怎麼做。開始以後，他照樣處理眼前的事情，只是在一件事和另一件事之間不斷把心轉向神：開始時求神幫助，完成了就感謝，發現自己做得不好就承認，再繼續下一件事。',
+ '一個曾經以為尋找神需要到某個地方去的人，在廚房裡停了下來。'
+];
+const identityParas=(items,extra='')=>items.map((p,i)=>'<p lang="zh-Hant"'+(i===0&&extra?' class="'+extra+'"':'')+'>'+esc(p)+'</p>').join('');
+function identityContents(){
+ return groups.map(g=>'<section class="id__index-group"><h3><small>'+g.n+'</small>'+g.name+'</h3><ol>'+g.items.map(([n,zh,en,work])=>
+ '<li><span class="id__number">'+n+'</span><div><a href="#'+editorialDeskTargets[n]+'"><strong lang="zh-Hant">'+esc(zh)+'</strong> / <span lang="en">'+esc(en)+'</span></a>'+
+ (work?'<small lang="zh-Hant">'+esc(work)+'</small>':'')+
+ (editorialDeskStatus[n]?'<small lang="zh-Hant">'+esc(editorialDeskStatus[n])+'</small>':'')+'</div></li>').join('')+'</ol>'+
+ (g.inter?'<p class="id__index-inter">INTERLUDE / VIDEO + MUSIC · '+esc(g.inter)+'</p>':'')+'</section>').join('');
+}
+function identity(){
+ return '<article class="study__stage id" aria-label="西望雜誌完整視覺身份研究">'+
+ '<header class="id__meta">'+logo+'<span class="id__label">VOL.00 / EDITORIAL PROOF<br>WESTSIDE WATCH · 2026</span></header>'+
+ '<section class="id__cover" id="id-cover" aria-label="守望，一座光明的城本期開場">'+
+ '<div class="id__cover-no">01 / 04 · THE WATCH<br>THRESHOLD OF THE ISSUE</div>'+
+ '<div class="id__cover-word" lang="en" aria-hidden="true">WATCH.</div>'+
+ '<figure class="id__cover-art"><img src="/images/home-opening-engraving.jpg" alt="本站既有刻線風格視覺素材，作者與原作來源尚待考證"><figcaption>本站既有刻線素材，非考古照片；原作作者待考證</figcaption></figure>'+
+ '<div class="id__cover-title"><span class="id__eyebrow">VOL.00 / THE CITY OF LIGHT</span><h1 lang="zh-Hant">守望，<br>一座光明的城</h1><p lang="zh-Hant">四個樂章，十二個欄目，三個視聽間奏。</p><a class="id__enter" href="#id-contents">OPEN THE ISSUE / 目錄 ↗</a></div></section>'+
+ '<nav class="id__movement-nav" aria-label="四樂章快速導航">'+groups.map((g,i)=>'<a href="#id-act-'+g.name.toLowerCase()+'"><span>0'+(i+1)+'</span>'+g.name+'</a>').join('')+'</nav>'+
+ '<section class="id__intro" aria-label="本期編輯命題"><div><span class="id__intro-label">WESTSIDE WATCH / THE EDITORIAL IDEA</span><p class="id__intro-statement" lang="en">A city.<br>A person.<br>A way.</p></div><div><h2 lang="zh-Hant">從一座城，<br>走向一個人。</h2><p lang="zh-Hant">WATCH／守望、WALK／同行、WITNESS／見證、WORSHIP／敬拜。這是一條閱讀的路徑：從城市與建造的歷史，進入人的生活，再走向見證、敬拜和安靜。這段文字是本實驗的編輯導覽說明，不是已發表的正式稿件。</p></div></section>'+
+ '<nav class="id__index" id="id-contents" aria-label="Vol.00 十二欄目及三個間奏"><div class="id__index-top"><h2 lang="en">Contents.</h2><p>4 MOVEMENTS<br>12 DESKS<br>3 VIDEO + MUSIC INTERLUDES<br>VOL.00</p></div><div class="id__index-grid">'+identityContents()+'</div></nav>'+
+ '<section class="id__act id__watch" id="id-act-watch" aria-label="WATCH 守望樂章"><header class="id__act-head"><span>I / WATCH · 守望<br>FOUR EDITORIAL DESKS</span><a href="#id-contents">CONTENTS ↗</a></header>'+
+ '<h2 class="id__act-name" lang="en">WATCH.</h2><div class="id__watch-spread" id="id-gate"><div class="id__watch-figure"><p class="id__big-quote" lang="en">The<br><em>Gate.</em></p><span class="id__eyebrow">03 / THE GATE · REAL ARTICLE</span><h3 lang="zh-Hant">城門口的人</h3><p class="id__act-sub" lang="zh-Hant">一個地方，也是一段人的故事。</p></div><div class="id__body">'+identityParas(identityGate)+
+ '<p class="id__source">原稿：docs/projects/watch-city-vol00/manuscripts/the-gate/城門口的人.md。此處為真實節錄，未聲稱全文完成網頁排版。</p></div></div>'+
+ '<div class="id__feature" id="id-carmel"><div><span class="id__eyebrow">04 / CARMEL · EXTENDED HISTORICAL FEATURE</span><h4 lang="en">Ten<br>Thousand<br>Years.</h4><h3 class="id__chapter" lang="zh-Hant">一萬年的建城禮</h3><div class="id__not-published">此處編排已保存正式稿件節錄；歷史影像及考古實物仍須按作品逐一核實來源。</div></div><div class="id__body">'+identityParas(identityCarmel)+
+ '<p class="id__source">原稿：docs/projects/watch-city-vol00/manuscripts/carmel/canonical/01-人為什麼要建一座城.md。</p></div></div></section>'+
+ '<div class="id__interlude" aria-label="第一間奏"><div><span class="id__eyebrow">INTERLUDE I / SELAH</span><br><strong lang="en">Selah.</strong></div><div><p>WATCH → WALK。正式規劃為 Video + Music；本研究不偽造尚未接入的影片或音樂。</p><a class="id__enter" href="#id-act-walk">CONTINUE TO WALK ↗</a></div></div>'+
+ '<section class="id__act id__walk" id="id-act-walk" aria-label="WALK 同行樂章"><header class="id__act-head"><span>II / WALK · 同行<br>FOUR EDITORIAL DESKS</span><a href="#id-contents">CONTENTS ↗</a></header>'+
+ '<h2 class="id__act-name" lang="en">WALK.</h2><div class="id__walk-spread" id="id-elim"><div><span class="id__eyebrow">06 / ELIM · TECHNICAL HISTORY / EDITORIAL BRIEF</span><h3 lang="zh-Hant">若不是耶和華看守城池——古代攻城技術史</h3><p class="id__act-sub" lang="zh-Hant">建造、保護與攻破一座城：從物質證據開始。</p><div class="id__not-published">此專題題目和研究方向已經確定，正式正文仍待核實；這裡展示視覺語法與史料標注的空間，而非虛構攻城工程數據。</div></div><aside class="id__walk-figure" aria-label="資料版面構造範例，非歷史數據"><span class="id__eyebrow">STRUCTURE / NOT HISTORICAL DATA</span><p class="id__walk-art" lang="en" aria-hidden="true">Evidence.</p><div class="id__walk-chart" aria-hidden="true"><span data-label="01" data-caption="史料文獻"></span><span data-label="02" data-caption="城防剖面"></span><span data-label="03" data-caption="地圖與圖說"></span></div><p class="id__walk-chart-note">三個待查證的資料版位，非考古測量值或已取得的文獻。正式刊出前必須填入有來源的史料、工程剖面與地圖。</p></aside></div>'+
+ '<p class="id__not-published">05 Emmaus 已確認本期〈吾珥：離開一座大的城〉；07 Beersheba 與 08 Bethel 的本期具體正文尚待成稿。遵守原有編輯次序，不提前揭示 Beersheba 的神學結論。</p></section>'+
+ '<div class="id__interlude" aria-label="第二間奏"><div><span class="id__eyebrow">INTERLUDE II / VIDEO + MUSIC</span><br><strong lang="en">WITNESS.</strong></div><div><p>遠方無聲鴿 · WALK → WITNESS。視聽內容有待接入與驗證；不以裝飾動畫代替正式作品。</p><a class="id__enter" href="#id-act-witness">MEET THE PEOPLE ↗</a></div></div>'+
+ '<section class="id__act id__witness" id="id-act-witness" aria-label="WITNESS 見證樂章"><header class="id__act-head"><span>III / WITNESS · 見證<br>TWO EDITORIAL DESKS</span><a href="#id-contents">CONTENTS ↗</a></header>'+
+ '<h2 class="id__act-name" lang="en">WITNESS.</h2><div class="id__witness-spread" id="id-esther"><div class="id__witness-type"><span class="id__eyebrow">09 / ESTHER · THE PERSON</span><p lang="en"><span>Brother</span><span>Lawrence.</span></p><h3 lang="zh-Hant">廚房裡的人</h3><p class="id__act-sub" lang="zh-Hant">你當像飛鳥往你的山</p></div><div class="id__body">'+identityParas(identityEsther)+
+ '<p class="id__source">原稿：docs/projects/watch-city-vol00/manuscripts/esther/廚房裡的人.md。真實人物見證以文字為中心；未使用臆造肖像。</p></div></div>'+
+ '<div class="id__not-published">10 Adullam：黃淑華、江秀琴牧師。正式刊物須調用其真實講道、系列、時間軸與來源證據；不得把人物海報當作歷史文件或替代可播放媒體。</div></section>'+
+ '<div class="id__interlude" aria-label="第三間奏"><div><span class="id__eyebrow">INTERLUDE III / KINNERET</span><br><strong lang="en">Kinneret.</strong></div><div><p>WITNESS → WORSHIP。正式形式為 Video + Music，等候具體可驗證資產；靜態閱讀仍可前進。</p><a class="id__enter" href="#id-act-worship">CONTINUE TO WORSHIP ↗</a></div></div>'+
+ '<section class="id__act id__worship" id="id-act-worship" aria-label="WORSHIP 敬拜樂章"><header class="id__act-head"><span>IV / WORSHIP · 敬拜<br>TWO EDITORIAL DESKS</span><a href="#id-contents">CONTENTS ↗</a></header>'+
+ '<h2 class="id__act-name" lang="en">WORSHIP.</h2><div class="id__worship-core" id="id-horeb"><span class="id__eyebrow">11 / HOREB · CORNERSTONE</span><h3 lang="zh-Hant">房角石：整座城由此對齊</h3><div class="id__worship-line" aria-hidden="true"></div><div id="id-maranatha"><span class="id__eyebrow">12 / MARANATHA · CROWN</span><p lang="zh-Hant">冠冕</p><p class="id__quiet-note">正式閉卷禱告尚待編輯核定，此處留白，不以虛構祈禱填版。</p></div></div>'+
+ '<footer class="id__worship-end">'+logo+'<div><span class="id__label">END OF THE EDITORIAL STUDY<br>NOT A PUBLISHED ISSUE</span><br><a href="#id-cover">BACK TO FIRST LOOK ↑</a> · <a href="#id-contents">CONTENTS ↑</a></div></footer></section></article>';
+}
+
+let choice=['a','b','c'].includes(query.get('concept'))?query.get('concept'):'a';
+let state=['hold','open','article','geometry','issue','identity'].includes(query.get('view'))?query.get('view'):'hold';
+let shape=['square','wide','full'].includes(query.get('shape'))?query.get('shape'):'square';
+function refresh(){
+ const stage=document.getElementById('stage');
+ document.getElementById('study-title').textContent=state==='identity'?'WESTSIDE WATCH / One Magazine Identity':state==='issue'?'THRESHOLD / An Original Issue Study':state==='geometry'?'One Story · Three Geometries':modes[choice].name;
+ document.getElementById('study-note').textContent=state==='identity'?'同一刊物身份的全卷驗證：WATCH／WALK／WITNESS／WORSHIP，真實原稿、十二欄目、三間奏；四種不同內容的數位跨頁。尚未完成藝術批准。':state==='issue'?'門：方形圖像成為歷史門檻，超大英文與原始刻線、中文標題和正式目錄建立一條閱讀軸線。此為獨立 DOM 的設計候選，尚未核准。':state==='geometry'?'方形、寬幅和滿版均採同一張刻線圖、〈城門口的人〉原稿及完整 Vol.00 目錄。這是構圖方法測試，不是接納原 Folio 方向。':modes[choice].note;
+ stage.outerHTML=(state==='identity'?identity():state==='issue'?issue():state==='geometry'?geometry(shape):state==='article'?article(choice):state==='open'?opened(choice):hold(choice)).replace('class="study__stage','id="stage" class="study__stage');
+ // Original homepage film is mounted ONLY when Cine-Folio is active.
+ const media=document.querySelector('#stage .c-media');
+ if(state!=='geometry'&&choice==='c'&&media){
+  const iframe=document.createElement('iframe');iframe.title='王進城：首頁既有混剪，雜誌構圖來源';iframe.src='/preview/watch-city-vol00/hosanna/?cover=1&v=20261012-cover-palette-r1';iframe.loading='lazy';iframe.tabIndex=-1;iframe.setAttribute('aria-hidden','true');media.insertBefore(iframe,media.querySelector('.shade'));
+ }
+ document.querySelectorAll('[data-concept]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.concept===choice)));
+ document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===state)));
+ document.querySelectorAll('[data-shape]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shape===shape)));
+ document.getElementById('shape-switch').hidden=state!=='geometry';
+ document.getElementById('concept-switch').hidden=state==='geometry'||state==='issue'||state==='identity';
+ document.body.classList.toggle('geometry-mode',state==='geometry');
+ document.body.classList.toggle('issue-mode',state==='issue');
+  document.body.classList.toggle('identity-mode',state==='identity');
+ document.body.classList.toggle('presentation-mode',(state==='geometry'||state==='issue'||state==='identity')&&query.get('presentation')==='1');
+ const url=new URL(location.href);url.searchParams.set('concept',choice);url.searchParams.set('view',state);url.searchParams.set('shape',shape);
+ history.replaceState(null,'',url);
+}
+document.querySelectorAll('[data-concept]').forEach(b=>b.addEventListener('click',()=>{choice=b.dataset.concept;refresh()}));
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{state=b.dataset.view;refresh()}));
+ document.querySelectorAll('[data-shape]').forEach(b=>b.addEventListener('click',()=>{shape=b.dataset.shape;state='geometry';refresh()}));
+refresh();
+})();
+</script>
+</body></html>

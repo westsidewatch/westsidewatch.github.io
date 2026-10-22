@@ -15,16 +15,20 @@ function runtime(embedded,visible=false){
  root.querySelector=s=>{if(!nodes.has(s)){const n=node();if(s==='.index')n.querySelector=()=>({textContent:''});nodes.set(s,n)}return nodes.get(s)};
  root.querySelectorAll=selector=>selector==='.plane'?planes:[];
  const document={documentElement:{dataset:embedded?{p2Embedded:'true'}:{}},visibilityState:visible?'visible':'hidden',querySelector:()=>root};
- vm.runInNewContext(scripts[1],{document,window:{parent,wsP2Water:{paint(){waterPaints++}}},location:{origin:'https://example.test'},innerHeight:800,performance:{now:()=>now},addEventListener:(name,fn)=>events[name]=fn,requestAnimationFrame:fn=>{queue.push(fn);return queue.length},cancelAnimationFrame(){}});
+ vm.runInNewContext(scripts[1],{document,window:{parent,wsP2Water:{paint(){waterPaints++}}},location:{origin:'https://example.test',search:''},URLSearchParams,innerHeight:800,performance:{now:()=>now},addEventListener:(name,fn)=>events[name]=fn,requestAnimationFrame:fn=>{queue.push(fn);return queue.length},cancelAnimationFrame(){}});
  return {root,parent,nodes,planes,get waterPaints(){return waterPaints},step(ms){now+=ms;const batch=queue.splice(0);for(const callback of batch)callback(now)},send(source,origin,progress,active=true){events.message({source,origin,data:{type:'westside-p2-scroll',progress,active}});if(!visible)while(queue.length)queue.shift()()}};
 }
+// Parent First Look devotes 75% of its scroll track to the first 2.9 P2 viewports.
+// Keep assertions in physical P2 viewport units, independent of the parent fraction.
+const progressAt=vh=>vh<=2.9?(vh/2.9)*.75:.75+(vh-2.9)/1.1*.25;
 test('Embedded P2 follows only the hosting parent progress and reverses',()=>{
  const r=runtime(true);
  r.send({},'https://example.test',1);assert.equal(r.root.dataset.p2Phase,'identity');
  r.send(r.parent,'https://foreign.test',1);assert.equal(r.root.dataset.p2Phase,'identity');
- r.send(r.parent,'https://example.test',.35);assert.equal(r.root.dataset.p2Phase,'ocean-rise');
- r.send(r.parent,'https://example.test',.7);assert.equal(r.root.dataset.p2Phase,'red-sea');
- r.send(r.parent,'https://example.test',1);assert.equal(r.root.dataset.p2Phase,'church');
+ r.send(r.parent,'https://example.test',progressAt(1.2));assert.equal(r.root.dataset.p2Phase,'ocean-rise');
+ r.send(r.parent,'https://example.test',progressAt(2.1));assert.equal(r.root.dataset.p2Phase,'red-sea');
+ r.send(r.parent,'https://example.test',progressAt(2.5));assert.equal(r.root.dataset.p2Phase,'church');
+ r.send(r.parent,'https://example.test',1);assert.equal(r.root.dataset.p2Phase,'magazine');
  r.send(r.parent,'https://example.test',0);assert.equal(r.root.dataset.p2Phase,'identity');
 });
 test('Standalone P2 ignores external progress',()=>{
@@ -46,8 +50,8 @@ test('Scroll progress lands on the input position in one frame and stays there',
   const r=runtime(true,true);
   for(const progress of [.05,.09,.15,.1,.02]){
    r.send(r.parent,'https://example.test',progress);
-   assert.ok(Math.abs(Number(r.root.dataset.p2Progress)-progress*2.9)<.0001,'input must apply without an extra child-frame wait');r.step(step);
-   assert.ok(Math.abs(Number(r.root.dataset.p2Progress)-progress*2.9)<.0001);
+   assert.ok(Math.abs(Number(r.root.dataset.p2Progress)-progress*2.9/.75)<.0001,'input must apply without an extra child-frame wait');r.step(step);
+   assert.ok(Math.abs(Number(r.root.dataset.p2Progress)-progress*2.9/.75)<.0001);
    const held=r.planes.map(p=>p.style.transform);
    for(let i=0;i<20;i++)r.step(step);
    assert.deepEqual(r.planes.map(p=>p.style.transform),held,'stopping input must stop every curtain');
@@ -58,12 +62,12 @@ test('Curtains retain navigation-like overlap and reverse to the same geometry',
  const r=runtime(true,true);
  const transforms=[];
  for(const reveal of [.1,.2,.3,.2,.1]){
-  r.send(r.parent,'https://example.test',reveal*.5/2.9);r.step(17);
+  r.send(r.parent,'https://example.test',progressAt(reveal*.5));r.step(17);
   transforms.push(r.planes[0].style.transform);
  }
  assert.equal(transforms[0],transforms[4]);assert.equal(transforms[1],transforms[3]);
  const scalesAt=reveal=>{
-  r.send(r.parent,'https://example.test',reveal*.5/2.9);
+  r.send(r.parent,'https://example.test',progressAt(reveal*.5));
   return r.planes.map(p=>Number(p.style.transform.match(/scale3d\(1,([^,]+)/)[1]));
  };
  const layers=scalesAt(.5);
@@ -77,15 +81,15 @@ test('Curtains retain navigation-like overlap and reverse to the same geometry',
 test('Water travels from the bottom through mid-screen to the top before doors open',()=>{
  const r=runtime(true);
  for(const [vh,level] of [[.65,0],[1.125,.5],[1.6,1]]){
-  r.send(r.parent,'https://example.test',vh/2.9);
+  r.send(r.parent,'https://example.test',progressAt(vh));
   assert.ok(Math.abs(Number(r.root.dataset.p2WaterLevel)-level)<.001);
   assert.equal(r.root.dataset.p2Phase,'ocean-rise');
  }
- r.send(r.parent,'https://example.test',1.8/2.9);assert.equal(r.root.dataset.p2Phase,'red-sea');
+ r.send(r.parent,'https://example.test',progressAt(1.8));assert.equal(r.root.dataset.p2Phase,'red-sea');
 });
 
 test('Paper cover never masks the dynamic lower half at entry',()=>{
- const r=runtime(true);r.send(r.parent,'https://example.test',.5/2.9);
+ const r=runtime(true);r.send(r.parent,'https://example.test',progressAt(.5));
  assert.match(r.nodes.get('.water-cover').style.clipPath,/50\.00%/);
  assert.doesNotMatch(r.nodes.get('.water-cover').style.clipPath,/% 100\.00%/);
 });
@@ -116,7 +120,7 @@ test('Generic entrance motion does not target the dedicated P2 scroll host',()=>
 test('Forward and reverse door handoff always cover the right half',()=>{
  const r=runtime(true);
  for(const vh of [1.70,1.7199,1.7201,1.73,2.4,1.73,1.7201,1.7199,1.70]){
-  r.send(r.parent,'https://example.test',vh/2.9);
+  r.send(r.parent,'https://example.test',progressAt(vh));
   const sea=r.nodes.get('.ocean-rise'),doors=r.nodes.get('.water-doors');
   if(sea.style.clipPath==='inset(0 50% 0 0)'){
    assert.equal(doors.style.visibility,'visible','clipping the ocean requires an opaque shared door');
@@ -128,11 +132,11 @@ test('Forward and reverse door handoff always cover the right half',()=>{
 test('Completed curtains remain until the rising water covers them, without a blank fade gap',()=>{
  const r=runtime(true);
  for(const vh of [.5,.95,1.125]){
-  r.send(r.parent,'https://example.test',vh/2.9);
+  r.send(r.parent,'https://example.test',progressAt(vh));
   const wrap=r.nodes.get('.planes');
   assert.equal(wrap.style.visibility,'visible');assert.equal(wrap.style.opacity,'1');
   assert.match(wrap.style.clipPath,/polygon/);
  }
- r.send(r.parent,'https://example.test',1.6/2.9);
+ r.send(r.parent,'https://example.test',progressAt(1.6));
  assert.equal(r.nodes.get('.planes').style.visibility,'hidden');
 });

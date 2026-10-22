@@ -1455,7 +1455,7 @@ font-family:var(--ws-type-display-en-sc);font-size:var(--ws-type-scale-meta);fon
 .article-body--editorial .prose { grid-column: 5 / 11; }
 .prose {
   max-width: var(--reading-measure);
-  font-family: var(--ws-type-display-zh);
+  font-family: var(--ws-type-reading-zh);
   font-size:var(--ws-type-scale-reading);
   line-height: 1.9;
 }
