@@ -205,6 +205,58 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
       finally{await page.close()}
     }
 
+
+    // R10 SECTION-SPECIFIC EDITORIAL EVIDENCE: screenshot what the reader
+    // actually reads, not only 12k-pixel full-page thumbnails.
+    for(const [screen,width,height] of [['desktop',1648,928],['tablet',768,1024],['phone',390,844],['small',320,720]]) {
+      const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+      const id='identity-editorial-'+screen;
+      const defects=[], sections=[];
+      try {
+        await page.goto(base+'/experiments/p2-magazine-art-direction-studio.html?view=identity&presentation=1',{waitUntil:'load',timeout:45000});
+        await page.evaluate(()=>document.fonts.ready);
+        for(const [name,selector] of [
+          ['cover','#id-cover'],['contents','#id-contents'],
+          ['city-essay','#id-gate'],['city-feature','#id-carmel'],
+          ['technical-history','#id-elim'],['human-witness','#id-esther'],
+          ['closing','#id-maranatha']]) {
+          const loc=page.locator(selector);
+          if(await loc.count()!==1){defects.push('MISSING_SECTION_'+name);continue;}
+          await loc.scrollIntoViewIfNeeded();
+          const box=await loc.boundingBox();
+          if(!box||box.width<width*.35||box.height<1)defects.push('INVALID_SECTION_BOX_'+name);
+          const filename=id+'-'+name+'.png';
+          await page.screenshot({path:path.join(out,filename),fullPage:false,animations:'disabled'});
+          sections.push({name,selector,screenshot:filename,bounds:box});
+        }
+        const metrics=await page.evaluate(()=>{
+          const root=document.documentElement;
+          const anchors=[...document.querySelectorAll('.id__index-group ol a')];
+          const buttons=[...document.querySelectorAll('#stage a')];
+          return {
+            cssWidth:innerWidth,scrollWidth:root.scrollWidth,
+            sourceSectionCount:document.querySelectorAll('#stage .id__source').length,
+            originalNarrativeHasFootnotes:document.querySelectorAll('#stage [role="doc-endnote"],#stage .footnotes').length>0,
+            resolvedTOCRoutes:anchors.filter(a=>{try{return !!document.querySelector(a.getAttribute('href'));}catch{return false;}}).length,
+            totalTOCRoutes:anchors.length,
+            emptyLinks:buttons.filter(a=>!a.getAttribute('href')||a.getAttribute('href')==='#').length,
+            hasUnreleasedInterludes:[...document.querySelectorAll('.id__interlude')].some(el=>el.textContent.includes('尚未接入')||el.textContent.includes('等候')),
+            fontsLoaded:document.fonts.status
+          };
+        });
+        if(metrics.scrollWidth>metrics.cssWidth+2)defects.push('EDITORIAL_HORIZONTAL_OVERFLOW');
+        if(metrics.resolvedTOCRoutes!==12||metrics.totalTOCRoutes!==12)defects.push('EDITORIAL_TOC_ROUTE');
+        if(metrics.emptyLinks)defects.push('EMPTY_EDITORIAL_LINK');
+        if(metrics.fontsLoaded!=='loaded')defects.push('FONT_LOAD_INCOMPLETE');
+        results.push({id,viewport:{width,height},sections,metrics,defects,
+          editorialVisualDecision:'HUMAN REVIEW REQUIRED — screenshots per section',
+          publicationAcceptance:'BLOCKED: full manuscripts/media/rights and actual browser 200% zoom open'});
+        if(defects.length)failures.push({id,defects});
+        console.log(id+' '+(defects.length?'FAIL '+defects.join(', '):'SECTION-SPECIFIC PROOF CAPTURED'));
+      }catch(e){failures.push({id,defects:[e.message]});console.error(id+' ERROR '+e.message)}
+      finally{await page.close()}
+    }
+
   }finally{await browser.close()}
   fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({
     schema:'westside.magazine.visual-evidence.v1',commit:process.env.GITHUB_SHA,
