@@ -1,10 +1,1563 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-10-21T14:32:55.851477+00:00",
+  "generatedAt": "2026-10-22T04:35:34.529174+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
   "shelves": [
+    {
+      "id": "standard-ebooks-new",
+      "title": "精品書架 · Standard Ebooks",
+      "kind": "premium-shelf",
+      "source": "Standard Ebooks",
+      "items": [
+        {
+          "id": "standard-ebooks-suspense",
+          "title": "Suspense",
+          "author": "Henry Seton Merriman",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/henry-seton-merriman/suspense",
+            "downloadUrl": "https://standardebooks.org/ebooks/henry-seton-merriman/suspense/downloads/henry-seton-merriman_suspense.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/henry-seton-merriman/suspense/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL2337691W",
+            "editionId": "OL6644416M",
+            "isbn": "9780665095313",
+            "coverId": 5853773,
+            "internetArchiveId": "cihm_09531",
+            "resolvedAt": "2026-10-22T04:35:34.529174+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL2337691W",
+            "openLibraryEdition": "OL6644416M",
+            "isbn": "9780665095313"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/cihm_09531",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "standard-ebooks-the-emperor-of-portugallia",
+          "title": "The Emperor of Portugallia",
+          "author": "Selma Lagerlöf",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/selma-lagerlof/the-emperor-of-portugallia/velma-swanston-howard",
+            "downloadUrl": "https://standardebooks.org/ebooks/selma-lagerlof/the-emperor-of-portugallia/velma-swanston-howard/downloads/selma-lagerlof_the-emperor-of-portugallia_velma-swanston-howard.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/selma-lagerlof/the-emperor-of-portugallia/velma-swanston-howard/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL15230731W",
+            "editionId": "OL14006277M",
+            "isbn": null,
+            "coverId": 5835425,
+            "internetArchiveId": "emperorofportuga00lageiala",
+            "resolvedAt": "2026-10-22T04:35:34.529174+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL15230731W",
+            "openLibraryEdition": "OL14006277M"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/emperorofportuga00lageiala",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "standard-ebooks-the-mystery-of-the-barranca",
+          "title": "The Mystery of the Barranca",
+          "author": "Herman Whitaker",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/herman-whitaker/the-mystery-of-the-barranca",
+            "downloadUrl": "https://standardebooks.org/ebooks/herman-whitaker/the-mystery-of-the-barranca/downloads/herman-whitaker_the-mystery-of-the-barranca.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/herman-whitaker/the-mystery-of-the-barranca/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL20213083W",
+            "editionId": "OL52004381M",
+            "isbn": "1697375480",
+            "coverId": 8864427,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-22T04:35:34.529174+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL20213083W",
+            "openLibraryEdition": "OL52004381M",
+            "isbn": "1697375480"
+          }
+        },
+        {
+          "id": "standard-ebooks-moral-letters-to-lucilius",
+          "title": "Moral Letters to Lucilius",
+          "author": "Seneca",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/seneca/moral-letters-to-lucilius/richard-m-gummere",
+            "downloadUrl": "https://standardebooks.org/ebooks/seneca/moral-letters-to-lucilius/richard-m-gummere/downloads/seneca_moral-letters-to-lucilius_richard-m-gummere.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/seneca/moral-letters-to-lucilius/richard-m-gummere/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL34962581W",
+            "editionId": "OL47324318M",
+            "isbn": "9781536965537",
+            "coverId": 13880770,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-17T13:02:40.479640+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL34962581W",
+            "openLibraryEdition": "OL47324318M",
+            "isbn": "9781536965537"
+          }
+        },
+        {
+          "id": "standard-ebooks-robur-the-conqueror",
+          "title": "Robur the Conqueror",
+          "author": "Jules Verne",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/jules-verne/robur-the-conqueror/sampson-low-marston-searle-rivington",
+            "downloadUrl": "https://standardebooks.org/ebooks/jules-verne/robur-the-conqueror/sampson-low-marston-searle-rivington/downloads/jules-verne_robur-the-conqueror_sampson-low-marston-searle-rivington.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/jules-verne/robur-the-conqueror/sampson-low-marston-searle-rivington/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL26699190W",
+            "editionId": "OL38196802M",
+            "isbn": "9798684813948",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-17T13:02:40.479640+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL26699190W",
+            "openLibraryEdition": "OL38196802M",
+            "isbn": "9798684813948"
+          }
+        },
+        {
+          "id": "standard-ebooks-of-one-blood",
+          "title": "Of One Blood",
+          "author": "Pauline E. Hopkins",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/pauline-e-hopkins/of-one-blood",
+            "downloadUrl": "https://standardebooks.org/ebooks/pauline-e-hopkins/of-one-blood/downloads/pauline-e-hopkins_of-one-blood.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/pauline-e-hopkins/of-one-blood/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL4973946W",
+            "editionId": "OL38794879M",
+            "isbn": "8412654110",
+            "coverId": 12509343,
+            "internetArchiveId": "ofonebloodorhidd0000hopk",
+            "resolvedAt": "2026-10-16T14:02:15.068386+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL4973946W",
+            "openLibraryEdition": "OL38794879M",
+            "isbn": "8412654110"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/ofonebloodorhidd0000hopk",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "standard-ebooks-the-sowers",
+          "title": "The Sowers",
+          "author": "Henry Seton Merriman",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/henry-seton-merriman/the-sowers",
+            "downloadUrl": "https://standardebooks.org/ebooks/henry-seton-merriman/the-sowers/downloads/henry-seton-merriman_the-sowers.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/henry-seton-merriman/the-sowers/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL240591W",
+            "editionId": "OL61885475M",
+            "isbn": "9781406903263",
+            "coverId": 5978862,
+            "internetArchiveId": "sowers00merr_0",
+            "resolvedAt": "2026-10-14T14:34:07.582227+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL240591W",
+            "openLibraryEdition": "OL61885475M",
+            "isbn": "9781406903263"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/sowers00merr_0",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "standard-ebooks-beautiful-stories-from-shakespeare",
+          "title": "Beautiful Stories from Shakespeare",
+          "author": "E. Nesbit",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/e-nesbit/beautiful-stories-from-shakespeare",
+            "downloadUrl": "https://standardebooks.org/ebooks/e-nesbit/beautiful-stories-from-shakespeare/downloads/e-nesbit_beautiful-stories-from-shakespeare.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/e-nesbit/beautiful-stories-from-shakespeare/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL7984952W",
+            "editionId": "OL56683565M",
+            "isbn": "9798471889187",
+            "coverId": 874631,
+            "internetArchiveId": "beautifulstories0000shak",
+            "resolvedAt": "2026-10-13T17:05:25.300279+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL7984952W",
+            "openLibraryEdition": "OL56683565M",
+            "isbn": "9798471889187"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/beautifulstories0000shak",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "standard-ebooks-the-storm-of-steel",
+          "title": "The Storm of Steel",
+          "author": "Ernst Jünger",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/ernst-junger/the-storm-of-steel/basil-creighton",
+            "downloadUrl": "https://standardebooks.org/ebooks/ernst-junger/the-storm-of-steel/basil-creighton/downloads/ernst-junger_the-storm-of-steel_basil-creighton.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/ernst-junger/the-storm-of-steel/basil-creighton/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL173422W",
+            "editionId": "OL18945703M",
+            "isbn": "0865273103",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-07T16:38:41.343486+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL173422W",
+            "openLibraryEdition": "OL18945703M",
+            "isbn": "0865273103"
+          }
+        },
+        {
+          "id": "standard-ebooks-on-the-making-of-man",
+          "title": "On the Making of Man",
+          "author": "Gregory of Nyssa",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/gregory-of-nyssa/on-the-making-of-man/william-moore_henry-austin-wilson",
+            "downloadUrl": "https://standardebooks.org/ebooks/gregory-of-nyssa/on-the-making-of-man/william-moore_henry-austin-wilson/downloads/gregory-of-nyssa_on-the-making-of-man_william-moore-henry-austin-wilson.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/gregory-of-nyssa/on-the-making-of-man/william-moore_henry-austin-wilson/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL27018810W",
+            "editionId": "OL36627013M",
+            "isbn": "1546588035",
+            "coverId": 12520298,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-05T18:34:38.932498+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL27018810W",
+            "openLibraryEdition": "OL36627013M",
+            "isbn": "1546588035"
+          }
+        },
+        {
+          "id": "standard-ebooks-oberland",
+          "title": "Oberland",
+          "author": "Dorothy M. Richardson",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/dorothy-m-richardson/oberland",
+            "downloadUrl": "https://standardebooks.org/ebooks/dorothy-m-richardson/oberland/downloads/dorothy-m-richardson_oberland.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/dorothy-m-richardson/oberland/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL3045981W",
+            "editionId": "OL14227829M",
+            "isbn": null,
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-02T15:53:28.184533+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL3045981W",
+            "openLibraryEdition": "OL14227829M"
+          }
+        },
+        {
+          "id": "standard-ebooks-the-house-of-the-arrow",
+          "title": "The House of the Arrow",
+          "author": "A. E. W. Mason",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/a-e-w-mason/the-house-of-the-arrow",
+            "downloadUrl": "https://standardebooks.org/ebooks/a-e-w-mason/the-house-of-the-arrow/downloads/a-e-w-mason_the-house-of-the-arrow.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/a-e-w-mason/the-house-of-the-arrow/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL532448W",
+            "editionId": "OL18456542M",
+            "isbn": "9781515442486",
+            "coverId": 1787768,
+            "internetArchiveId": "houseofarrow0000maso",
+            "resolvedAt": "2026-10-02T15:53:28.184533+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL532448W",
+            "openLibraryEdition": "OL18456542M",
+            "isbn": "9781515442486"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/houseofarrow0000maso",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "standard-ebooks-barlasch-of-the-guard",
+          "title": "Barlasch of the Guard",
+          "author": "Henry Seton Merriman",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/henry-seton-merriman/barlasch-of-the-guard",
+            "downloadUrl": "https://standardebooks.org/ebooks/henry-seton-merriman/barlasch-of-the-guard/downloads/henry-seton-merriman_barlasch-of-the-guard.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/henry-seton-merriman/barlasch-of-the-guard/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL240600W",
+            "editionId": "OL47750799M",
+            "isbn": "9780216885219",
+            "coverId": 6126145,
+            "internetArchiveId": "barlaschofguard0000hugh",
+            "resolvedAt": "2026-09-29T02:02:05.137684+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL240600W",
+            "openLibraryEdition": "OL47750799M",
+            "isbn": "9780216885219"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/barlaschofguard0000hugh",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "standard-ebooks-his-royal-nibs",
+          "title": "His Royal Nibs",
+          "author": "Winnifred Eaton Reeve",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/winnifred-eaton-reeve/his-royal-nibs",
+            "downloadUrl": "https://standardebooks.org/ebooks/winnifred-eaton-reeve/his-royal-nibs/downloads/winnifred-eaton-reeve_his-royal-nibs.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/winnifred-eaton-reeve/his-royal-nibs/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1953757W",
+            "editionId": "OL6682060M",
+            "isbn": null,
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-28T17:43:16.307276+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1953757W",
+            "openLibraryEdition": "OL6682060M"
+          }
+        },
+        {
+          "id": "standard-ebooks-the-autobiography-of-a-super-tramp",
+          "title": "The Autobiography of a Super-Tramp",
+          "author": "W. H. Davies",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/w-h-davies/the-autobiography-of-a-super-tramp",
+            "downloadUrl": "https://standardebooks.org/ebooks/w-h-davies/the-autobiography-of-a-super-tramp/downloads/w-h-davies_the-autobiography-of-a-super-tramp.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/w-h-davies/the-autobiography-of-a-super-tramp/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1092945W",
+            "editionId": "OL61604215M",
+            "isbn": "0192812939",
+            "coverId": 5914895,
+            "internetArchiveId": "autobiographyofs00davi",
+            "resolvedAt": "2026-09-23T14:17:26.679375+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1092945W",
+            "openLibraryEdition": "OL61604215M",
+            "isbn": "0192812939"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/autobiographyofs00davi",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "internet-archive-原版古籍-聖經歷史與地理",
+      "title": "原版古籍 · 聖經歷史與地理",
+      "kind": "scan-shelf",
+      "source": "Internet Archive",
+      "items": [
+        {
+          "id": "internet-archive-isbn_9781851752768",
+          "title": "Explore the Bible : a study guidebook",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/isbn_9781851752768",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/isbn_9781851752768",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-makingofenglishb0000bobr_v6g1",
+          "title": "The making of the English Bible",
+          "author": "Bobrick, Benson, 1947-",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/makingofenglishb0000bobr_v6g1",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/makingofenglishb0000bobr_v6g1",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-indiscordancewit0000thue",
+          "title": "In discordance with the Scriptures : American Protestant battles over translating the Bible",
+          "author": "Thuesen, Peter Johannes, 1971-",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/indiscordancewit0000thue",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/indiscordancewit0000thue",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-jeffersonbible0000jeff_w2y7",
+          "title": "The Jefferson Bible",
+          "author": "Jefferson, Thomas, 1743-1826",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/jeffersonbible0000jeff_w2y7",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/jeffersonbible0000jeff_w2y7",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-viewfromnebohowa0000marc",
+          "title": "The view from Nebo : how archaeology is rewriting the Bible and reshaping the Middle East",
+          "author": "Marcus, Amy Dockser",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/viewfromnebohowa0000marc",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/viewfromnebohowa0000marc",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-001TheBibleAtlas",
+          "title": "The Bible Atlas",
+          "author": "Eduardo Algeciras",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/001TheBibleAtlas",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/001TheBibleAtlas",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bookofrevelation0000lioy",
+          "title": "Studies in Biblical Literature Vol. 58, 2003 : The Book of Revelation in Christological Focus",
+          "author": "Lioy, Dan",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bookofrevelation0000lioy",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bookofrevelation0000lioy",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-labiblesanslabib02gain",
+          "title": "La Bible sans la Bible, ou, Histoire de l'Ancien et du Nouveau Testament par les seuls témoignages profanes",
+          "author": "Gainet, Jean Claude, 1805-1890",
+          "language": "fre",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/labiblesanslabib02gain",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/labiblesanslabib02gain",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-the-greater-men-and-women-of-the-bible-volume-2",
+          "title": "The Greater Men And Women of The Bible, Volume 2",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/the-greater-men-and-women-of-the-bible-volume-2",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/the-greater-men-and-women-of-the-bible-volume-2",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-the-holy-bible-volume-11-part-2-1888",
+          "title": "The Holy Bible, Volume 11, Part 2",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/the-holy-bible-volume-11-part-2-1888",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/the-holy-bible-volume-11-part-2-1888",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-the-expositors-bible-commentary-old-new-testament-12-volumes",
+          "title": "The Expositor’s Bible Commentary Old & New Testament",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/the-expositors-bible-commentary-old-new-testament-12-volumes",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/the-expositors-bible-commentary-old-new-testament-12-volumes",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-studia-biblica-essays-in-biblical-archaeology-criticism-kindred-subjects-volume-3",
+          "title": "Studia Biblica: Essays In Biblical Archaeology & Criticism & Kindred Subjects, Volume 3",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/studia-biblica-essays-in-biblical-archaeology-criticism-kindred-subjects-volume-3",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/studia-biblica-essays-in-biblical-archaeology-criticism-kindred-subjects-volume-3",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-takingwordtoworl0000robe",
+          "title": "Taking the Word to the world : 50 years of the United Bible Societies",
+          "author": "Robertson, Edwin Hanton",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/takingwordtoworl0000robe",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/takingwordtoworl0000robe",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-storyofbiblefrom00fost_0",
+          "title": "The story of the Bible from Genesis to Revelation",
+          "author": "Foster, Charles. [from old catalog]",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/storyofbiblefrom00fost_0",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/storyofbiblefrom00fost_0",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-storyofbiblepopu0000keny_l3d9",
+          "title": "The story of the Bible; a popular account of how it came to us",
+          "author": "Kenyon, Frederic G. (Frederic George), Sir, 1863-1952",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/storyofbiblepopu0000keny_l3d9",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/storyofbiblepopu0000keny_l3d9",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-loavesfishesfood0000kina_b6c6",
+          "title": "Loaves & fishes : foods from Bible times",
+          "author": "Kinard, Malvina C., author",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/loavesfishesfood0000kina_b6c6",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/loavesfishesfood0000kina_b6c6",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-supremebookofman0000mccl",
+          "title": "The supreme book of mankind : the origin and influence of the English Bible",
+          "author": "McClure, James G. K. (James Gore King), 1848-1932",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/supremebookofman0000mccl",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/supremebookofman0000mccl",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-literacybiblerea0000watk",
+          "title": "Literacy, Bible reading, and church growth through the ages",
+          "author": "Watkins, Morris G",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/literacybiblerea0000watk",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/literacybiblerea0000watk",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-templeworshipinb0000oxfo_f3c5",
+          "title": "Temple and worship in biblical Israel",
+          "author": "Oxford Old Testament Seminar",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/templeworshipinb0000oxfo_f3c5",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/templeworshipinb0000oxfo_f3c5",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-readingtextbibli0000unse",
+          "title": "Reading the text : Biblical criticism and literary theory",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/readingtextbibli0000unse",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/readingtextbibli0000unse",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        }
+      ]
+    },
+    {
+      "id": "internet-archive-原版古籍-教會歷史",
+      "title": "原版古籍 · 教會歷史",
+      "kind": "scan-shelf",
+      "source": "Internet Archive",
+      "items": [
+        {
+          "id": "internet-archive-raisingsmallchur0000stev",
+          "title": "raising small church esteem",
+          "author": "Steven E. Burt & Hazel A. Roper",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/raisingsmallchur0000stev",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/raisingsmallchur0000stev",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_Y0-DSL-038",
+          "title": "a new testament history; the story of the emerging church",
+          "author": "floyd v. filson",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_Y0-DSL-038",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_Y0-DSL-038",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_Y0-DTB-554",
+          "title": "Teachings of Presidents of the Church",
+          "author": "Joseph F. Smith",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_Y0-DTB-554",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_Y0-DTB-554",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_T5-CVH-693",
+          "title": "HISTORY OF THE UNITED MISSIONARY CHURCH",
+          "author": "EVEREK RICHARD STORMS",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_T5-CVH-693",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_T5-CVH-693",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_Y0-BTF-114",
+          "title": "The Conquering Church",
+          "author": "Gary M. Beasley",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_Y0-BTF-114",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_Y0-BTF-114",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_Y0-BVZ-862",
+          "title": "The Church of the Poor : A New Perspective on the Church, The State, and the Poor",
+          "author": "Arnel F. Lagajeros",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_Y0-BVZ-862",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_Y0-BVZ-862",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_W9-CFF-381",
+          "title": "Church Brasses",
+          "author": "A. C. Bouquet, D.D.",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_W9-CFF-381",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_W9-CFF-381",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_W9-CXA-103",
+          "title": "The Church in The ROman Empire",
+          "author": "W. M. Ramsay",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_W9-CXA-103",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_W9-CXA-103",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-BKP-375",
+          "title": "HISTORY OF CATHOLIC CHURCH MUSIC",
+          "author": "KARL GUSTAV FELLERER",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-BKP-375",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-BKP-375",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-BKV-663",
+          "title": "Great Leaders of the Christian Church",
+          "author": "Elgin S. Moyer",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-BKV-663",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-BKV-663",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-goldenbookofchri0000brin",
+          "title": "The golden book of Christmas plays, a collection of one-act plays for church and school",
+          "author": "Brings, Lawrence Martin, 1897- ed",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/goldenbookofchri0000brin",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/goldenbookofchri0000brin",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-encyclopediaforc0000gabl_y4r1",
+          "title": "Encyclopedia for church group leaders",
+          "author": "Gable, Lee J",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/encyclopediaforc0000gabl_y4r1",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/encyclopediaforc0000gabl_y4r1",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-faiththroughwork0000bill",
+          "title": "faith through works: church renewal through mission",
+          "author": "bill briggs",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/faiththroughwork0000bill",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/faiththroughwork0000bill",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-foundingofchurch0002hans_p4t1",
+          "title": "The founding of the church universal",
+          "author": "Hans Lietzmann",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/foundingofchurch0002hans_p4t1",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/foundingofchurch0002hans_p4t1",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-giantseekfind0000vari",
+          "title": "The Church Hymnary 3rd Ed.",
+          "author": "Various",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/giantseekfind0000vari",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/giantseekfind0000vari",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-yearbooklutheran0000vari",
+          "title": "YEARBOOK LUTHERAN CHURCH IN AMERICA",
+          "author": "VARIOUS",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/yearbooklutheran0000vari",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/yearbooklutheran0000vari",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-churchcontemrary0000unse",
+          "title": "The Church and Contemporary Change",
+          "author": "G. Bromley Oxnam",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/churchcontemrary0000unse",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/churchcontemrary0000unse",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-churcheceptional0000unse",
+          "title": "the church and the eceptional person",
+          "author": "charles e. palmer",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/churcheceptional0000unse",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/churcheceptional0000unse",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-solvingchurchsch0000unse_k5m4",
+          "title": "solving church school problems",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/solvingchurchsch0000unse_k5m4",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/solvingchurchsch0000unse_k5m4",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-constitutionpres0000vari",
+          "title": "The Constitution Presbyterian Church(U.S.A.)",
+          "author": "Various",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/constitutionpres0000vari",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/constitutionpres0000vari",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        }
+      ]
+    },
     {
       "id": "gutenberg-bible-christianity",
       "title": "聖經與基督教",
@@ -4030,26 +5583,24 @@
     }
   ],
   "metrics": {
-    "shelves": 6,
-    "mappedBooks": 112,
-    "sourceCovers": 62,
-    "directPublications": 0,
+    "shelves": 9,
+    "mappedBooks": 167,
+    "sourceCovers": 117,
+    "directPublications": 15,
     "providers": {
+      "Standard Ebooks": 15,
+      "Internet Archive": 40,
       "Project Gutenberg": 112
     },
     "identity": {
-      "queriedThisRun": 0,
-      "resolved": 91,
+      "queriedThisRun": 3,
+      "resolved": 106,
       "coversAdded": 62,
-      "internetArchiveLinks": 39,
-      "cacheEntries": 237
+      "internetArchiveLinks": 47,
+      "cacheEntries": 240
     }
   },
   "errors": [
-    {
-      "source": "Standard Ebooks",
-      "error": "URLError: <urlopen error [Errno 101] Network is unreachable>"
-    },
     {
       "source": "Wikisource",
       "error": "empty-shelf"
@@ -4061,14 +5612,6 @@
     {
       "source": "DOAB archaeology",
       "error": "HTTPError: HTTP Error 403: Forbidden"
-    },
-    {
-      "source": "Internet Archive Bible history",
-      "error": "URLError: <urlopen error timed out>"
-    },
-    {
-      "source": "Internet Archive church history",
-      "error": "URLError: <urlopen error timed out>"
     }
   ]
 }

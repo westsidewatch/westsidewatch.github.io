@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-10-21T14:32:23.251578+00:00",
+  "generatedAt": "2026-10-22T04:35:06.606114+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
@@ -8,6 +8,12 @@
   "newDiscovered": 0,
   "candidateQueue": 78,
   "catalogBooks": 1969,
-  "errors": [],
+  "errors": [
+    {
+      "query": "Bible archaeology",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+archaeology&start_index=26",
+      "error": "RemoteDisconnected"
+    }
+  ],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
