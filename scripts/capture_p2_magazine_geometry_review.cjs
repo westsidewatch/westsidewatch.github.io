@@ -63,6 +63,41 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
       }catch(e){console.error(id+' ERROR '+e.message);failures.push({id,defects:[e.message]})}
       finally{await page.close()}
     }
+
+    // Real clean publication renders (not the studio-toolbar comparison).
+    // This tests that the image-embedded square is an accessible link to real Contents.
+    for(const [id,width,height] of [['publication-desktop-square',1648,928],['publication-phone-square',390,844]]){
+      const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+      const defects=[];
+      try{
+        const response=await page.goto(base+'/experiments/p2-magazine-art-direction-studio.html?view=geometry&shape=square&presentation=1',{waitUntil:'load',timeout:45000});
+        await page.evaluate(()=>document.fonts.ready);
+        const visible=await page.evaluate(()=>{
+          const mast=document.querySelector('.geo__mast');
+          const photo=document.querySelector('.geo__media img');
+          const lab=document.querySelector('.toolbar');
+          return {mast:!!mast&&getComputedStyle(mast).display!=='none',
+            photo:!!photo&&photo.complete&&photo.naturalWidth>0,
+            controlsHidden:!!lab&&getComputedStyle(lab).display==='none',
+            toc:document.querySelectorAll('.geo__toc .issue-list li').length,
+            width:document.documentElement.scrollWidth,windowWidth:innerWidth};
+        });
+        if(!response||response.status()!==200)defects.push('HTTP');
+        if(!visible.mast||!visible.photo||!visible.controlsHidden)defects.push('CLEAN_PUBLICATION_STATE');
+        if(visible.toc!==12||visible.width>visible.windowWidth+2)defects.push('CONTENTS_OR_OVERFLOW');
+        const link=page.locator('.geo__square-seal');
+        await link.focus();
+        if(!(await link.evaluate(el=>el===document.activeElement)))defects.push('SQUARE_LINK_NOT_FOCUSABLE');
+        const filename=id+'.png';
+        await page.screenshot({path:path.join(out,filename),fullPage:true,animations:'disabled'});
+        await link.click();
+        if(!(await page.evaluate(()=>location.hash==='#geo-contents')))defects.push('SQUARE_LINK_NOT_NAVIGABLE');
+        results.push({id,shape:'square',presentation:1,viewport:{width,height},screenshot:filename,metrics:visible,defects});
+        if(defects.length)failures.push({id,defects});
+        console.log(id+' '+(defects.length?'FAIL: '+defects.join(', '):'PUBLICATION-UX PASS'));
+      }catch(e){failures.push({id,defects:[e.message]});console.error(id+' ERROR '+e.message)}
+      finally{await page.close()}
+    }
   }finally{await browser.close()}
   fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({
     schema:'westside.magazine.visual-evidence.v1',commit:process.env.GITHUB_SHA,
