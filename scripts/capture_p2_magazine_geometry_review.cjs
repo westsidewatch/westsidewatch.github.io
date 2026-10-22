@@ -136,6 +136,63 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
       }catch(e){failures.push({id,defects:[e.message]});console.error(id+' ERROR '+e.message)}
       finally{await page.close()}
     }
+
+    // R9 authored issue: one continuous publication, not image crop ratio permutations.
+    for(const [id,width,height] of [['identity-desktop',1648,928],['identity-tablet',768,1024],['identity-phone',390,844],['identity-small',320,720]]){
+      const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+      const defects=[];const jsErrors=[];page.on('pageerror',e=>jsErrors.push(e.message));
+      try{
+        const response=await page.goto(base+'/experiments/p2-magazine-art-direction-studio.html?view=identity&presentation=1',{waitUntil:'load',timeout:45000});
+        await page.locator('#stage.id').waitFor({state:'visible'});
+        await page.evaluate(()=>document.fonts.ready);
+        const facts=await page.evaluate(()=>{
+          const sel=s=>document.querySelector(s);
+          const art=sel('.id__cover-art img'),logo=sel('.id__meta .os-logo'),toc=sel('.id__index');
+          const tocLinks=[...document.querySelectorAll('.id__index-group ol a')];
+          return {
+            width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
+            decoded:!!art?.complete&&art.naturalWidth>0&&!!logo?.complete&&logo.naturalWidth>0,
+            title:sel('.id__cover-title h1')?.textContent.trim(),
+            tocCount:tocLinks.length,movements:document.querySelectorAll('.id__index-group').length,
+            interludes:document.querySelectorAll('.id__interlude').length,
+            chapters:['#id-gate','#id-carmel','#id-elim','#id-esther','#id-maranatha'].every(s=>!!sel(s)),
+            allTargets:tocLinks.every(a=>!!sel(a.getAttribute('href'))),
+            sourceGate:sel('#id-gate .id__body')?.textContent.includes('考古學家在古代近東'),
+            sourceEsther:sel('#id-esther .id__body')?.textContent.includes('Nicholas Herman'),
+            honestIncomplete:sel('#id-maranatha')?.textContent.includes('尚待編輯核定'),
+            officialMastheads:document.querySelectorAll('.id .os-logo').length,
+            noLinksToNonexistent:!tocLinks.some(a=>!sel(a.getAttribute('href'))),
+            presentation:document.body.classList.contains('presentation-mode'),
+            deepTextSize:parseFloat(getComputedStyle(sel('#id-gate .id__body p')).fontSize),
+            chineseWeight:getComputedStyle(sel('.id__cover-title h1')).fontWeight,
+            loadedBodoni:getComputedStyle(sel('.id__cover-word')).fontFamily
+          };
+        });
+        if(!response||response.status()!==200)defects.push('HTTP');
+        if(jsErrors.length)defects.push('JAVASCRIPT: '+jsErrors.join(';'));
+        if(facts.scrollWidth>facts.width+2)defects.push('HORIZONTAL_OVERFLOW');
+        if(!facts.decoded)defects.push('ORIGINAL_BRAND_OR_IMAGE');
+        if(facts.tocCount!==12||facts.movements!==4||facts.interludes!==3)defects.push('CANON_12_4_3');
+        if(!facts.chapters||!facts.allTargets)defects.push('DEAD_TOC_DESTINATION');
+        if(!facts.sourceGate||!facts.sourceEsther||!facts.honestIncomplete)defects.push('SOURCE_INTEGRITY');
+        if(facts.deepTextSize<16)defects.push('BODY_TOO_SMALL');
+        if(facts.chineseWeight!=='900')defects.push('PRIMARY_CHINESE_WEIGHT');
+        if(!facts.presentation)defects.push('NOT_CLEAN_PUBLICATION');
+        const screenshot=id+'.png';
+        await page.screenshot({path:path.join(out,screenshot),fullPage:true,animations:'disabled'});
+        const toc=page.locator('.id__enter[href="#id-contents"]').first();await toc.focus();
+        if(!(await toc.evaluate(el=>document.activeElement===el)))defects.push('KEYBOARD_FOCUS');
+        await toc.click();
+        if(!(await page.evaluate(()=>location.hash==='#id-contents')))defects.push('COVER_TO_CONTENTS');
+        const story=page.locator('.id__index-group a[href="#id-esther"]').first();await story.click();
+        if(!(await page.evaluate(()=>location.hash==='#id-esther')))defects.push('CONTENTS_TO_STORY');
+        results.push({id,viewport:{width,height},screenshot,metrics:facts,defects,artDirection:'SUBJECTIVE_REVIEW_PENDING',realZoom200:'NOT_VERIFIED'});
+        if(defects.length)failures.push({id,defects});
+        console.log(id+' '+(defects.length?'FAIL: '+defects.join(', '):'FULL-ISSUE BROWSER CONTRACT PASS'));
+      }catch(e){failures.push({id,defects:[e.message]});console.error(id+' ERROR '+e.message)}
+      finally{await page.close()}
+    }
+
   }finally{await browser.close()}
   fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({
     schema:'westside.magazine.visual-evidence.v1',commit:process.env.GITHUB_SHA,
