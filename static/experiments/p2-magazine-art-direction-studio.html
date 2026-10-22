@@ -252,6 +252,69 @@ body.presentation-mode .geo__status,body.presentation-mode .geo__source em{displ
 @media(max-width:1190px){.geo--square .geo__edge{display:none}}
 @media(max-width:760px){.geo--square .geo__hero::before{display:none}.geo--square .geo__square-seal{width:clamp(76px,22vw,108px);padding:8px}.geo--square .geo__square-seal strong{font-size:clamp(38px,10vw,55px)}.geo--full .geo__media::after{display:none}}
 
+
+/* Independent concept: THRESHOLD / square as the city's threshold.
+   One authored hero DOM, not a CSS-only reskin of the three geometry studies. */
+body.issue-mode{background:#eee8db}
+body.issue-mode .study{width:100%;max-width:none;margin:0;box-shadow:none;overflow:visible;min-height:0}
+body.issue-mode .info,body.issue-mode .proof-footer{max-width:none;padding-inline:clamp(20px,5vw,95px)}
+body.issue-mode.presentation-mode .toolbar,body.issue-mode.presentation-mode .info,body.issue-mode.presentation-mode .proof-footer{display:none!important}
+.th{background:#f0ebdf;color:#183247}
+.th__mast{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(23px,3vw,48px) clamp(22px,6vw,108px);border-bottom:1px solid #aaa297}
+.th__mast .os-logo{width:clamp(190px,25vw,370px);max-height:85px}
+.th__edition{font:400 12px/1.6 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.16em;text-align:right}
+.th__cover{position:relative;isolation:isolate;min-height:clamp(750px,88svh,1010px);overflow:hidden;background:#eee8dc}
+.th__cover:before{content:"";position:absolute;inset:clamp(38px,6vw,103px) auto auto clamp(22px,6vw,108px);height:1px;width:34%;background:#18324770}
+.th__axis{position:absolute;z-index:3;top:clamp(55px,8vw,130px);left:clamp(22px,6vw,108px);font:400 12px/1.2 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.16em}
+.th__overscale{position:absolute;z-index:1;top:16%;left:clamp(22px,5.3vw,96px);width:65%;font:400 clamp(150px,18vw,332px)/.72 var(--os-en);letter-spacing:-.09em;margin:0;white-space:nowrap}
+.th__overscale span{display:block}
+.th__photo{position:absolute;z-index:2;right:clamp(20px,5.8vw,104px);top:10%;width:min(48vw,760px);aspect-ratio:1;margin:0;overflow:hidden}
+.th__photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:54% 43%;filter:grayscale(1) contrast(1.16)}
+.th__photo .th__folio{position:absolute;bottom:0;left:0;width:clamp(94px,9.5vw,153px);aspect-ratio:1;background:#f0ebdf;color:#183247;border-top:1px solid #183247;border-right:1px solid #183247;padding:13px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none}
+.th__folio strong{font:400 clamp(42px,5vw,79px)/.75 var(--os-en);letter-spacing:-.055em}
+.th__folio small{font:400 10px/1.1 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.09em}
+.th__folio:focus-visible{outline:3px solid #b68b42;outline-offset:-5px}
+.th__hero-title{position:absolute;z-index:4;bottom:8%;left:clamp(22px,6vw,108px);max-width:min(40vw,650px)}
+.th__hero-title .eyebrow{display:block;margin-bottom:clamp(20px,3vw,52px)}
+.th__hero-title h2{font-size:clamp(44px,4.7vw,79px);font-weight:900;line-height:1.16;letter-spacing:0;margin:0 0 20px}
+.th__hero-title a{font:400 14px/1.5 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.1em;border-bottom:1px solid currentColor;text-decoration:none;padding-bottom:5px}
+.th__imgcredit{position:absolute;right:clamp(22px,6vw,108px);bottom:clamp(21px,3vw,49px);font:400 12px/1.5 var(--os-zh);max-width:40ch;text-align:right;color:#435363}
+.th__reading{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(48px,6vw,108px);padding:clamp(65px,8vw,140px) clamp(22px,6vw,108px);max-width:1680px;margin:0 auto}
+.th__text>p{font:400 clamp(18px,1.3vw,22px)/1.9 var(--ws-type-reading-zh,var(--os-zh));margin:0 0 22px}
+.th__text h3{font:200 clamp(38px,3.2vw,58px)/1.4 var(--os-zh);margin:28px 0 38px}
+.th__quote{font:italic 400 clamp(23px,2.2vw,39px)/1.17 var(--os-en);border-top:1px solid #a99f90;margin:50px 0 0;padding-top:25px}
+.th__contents{border-top:2px solid #183247}
+.th__contents header{display:flex;justify-content:space-between;gap:20px;align-items:baseline;padding:20px 0;border-bottom:1px solid #b0a99b}
+.th__contents header h3{font:400 clamp(43px,4.4vw,80px)/1 var(--os-en);letter-spacing:-.05em;margin:0}
+.th__contents header span{font:400 12px/1.4 var(--ws-type-display-en-sc,var(--os-en));text-align:right}
+.th__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px clamp(20px,3vw,50px)}
+.th__grid .issue-list li{font-size:clamp(15px,1.05vw,18px);padding:11px 0}
+.th__grid .movement-head{font-size:clamp(28px,2.2vw,38px);margin:27px 0 7px}
+.th__grid .issue-list .work{font-size:clamp(13px,.85vw,16px)}
+@media(max-width:990px){
+.th__cover{min-height:0;padding:0 0 30px}
+.th__cover:before{display:none}
+.th__axis{position:relative;top:auto;left:auto;display:block;padding:25px 20px}
+.th__overscale{position:relative;top:auto;left:auto;width:auto;font-size:clamp(112px,16vw,200px);margin:0 20px 15px}
+.th__photo{position:relative;top:auto;right:auto;width:calc(100% - 40px);max-width:700px;margin:0 auto}
+.th__hero-title{position:relative;max-width:none;left:auto;bottom:auto;padding:32px 20px 10px}
+.th__hero-title h2{font-size:clamp(35px,7vw,61px)}
+.th__imgcredit{position:relative;bottom:auto;right:auto;max-width:none;text-align:left;padding:15px 20px;border-top:1px solid #b0a99b}
+.th__reading{grid-template-columns:1fr;gap:55px}.th__grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+.th__mast{padding:22px 20px}.th__mast .os-logo{width:clamp(165px,51vw,260px)}.th__edition{font-size:10px}
+.th__overscale{font-size:clamp(94px,25vw,175px);line-height:.75}
+.th__photo{width:100%;max-width:none}
+.th__photo .th__folio{width:88px;padding:9px}
+.th__folio strong{font-size:45px}
+.th__hero-title .eyebrow{margin-bottom:15px}
+.th__hero-title h2{font-size:clamp(35px,9vw,56px)}
+.th__reading{display:block;padding:54px 21px 85px}.th__text{margin-bottom:63px}
+.th__contents header h3{font-size:50px}.th__contents header span{max-width:90px;font-size:10px}
+.th__grid{grid-template-columns:1fr}
+}
+
 /* Real article excerpt: all candidates use authentic draft, not generated filler */
 .article{background:#f4f0e6;color:#1b3043;display:flex;flex-direction:column;min-height:920px}
 .article__mast{padding:22px clamp(24px,4vw,60px);display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid #b7ad97}
@@ -314,6 +377,7 @@ body.presentation-mode .geo__status,body.presentation-mode .geo__source em{displ
   <button type="button" data-view="open" aria-pressed="false">100% 展開</button>
   <button type="button" data-view="article" aria-pressed="false">文章開場</button>
   <button type="button" data-view="geometry" aria-pressed="false">同一內容 · 三種幾何</button>
+  <button type="button" data-view="issue" aria-pressed="false">門檻 · 新刊頁概念</button>
  </div>
  <div class="switch" id="shape-switch" aria-label="版面構圖形狀" hidden>
   <button type="button" data-shape="square" aria-pressed="true">方形 · 1:1</button>
@@ -402,14 +466,40 @@ function geometry(shape){
   '<p class="geo__status">相同來源：〈城門口的人〉已保存原稿、正式 Vol.00 四樂章／十二欄目／三個間奏、官方刊名 SVG、同一張古典刻線素材。這裡只比較形狀、裁切及視覺秩序；不改正式首頁滿版影片及 P2 動效。</p></div></section>';
 }
 
+
+/* Independent DOM for an actually distinct direction, per editorial skill. */
+function issue(){
+ return '<article class="study__stage th"><header class="th__mast">'+logo+
+ '<div class="th__edition" lang="en">VOL.00 / THE CITY OF LIGHT<br>WATCH / 03 · THE GATE</div></header>'+
+ '<section class="th__cover" aria-label="城門口的人刊頁封面">'+
+ '<span class="th__axis" lang="en">WATCH / THE GATE / 03</span>'+
+ '<div class="th__overscale en" aria-hidden="true"><span>THE</span><span>GATE.</span></div>'+
+ '<figure class="th__photo"><img src="/images/home-opening-engraving.jpg" alt="既有古典刻線圖，城門與人群構成歷史性的進入意象">'+
+ '<a class="th__folio" href="#th-contents" aria-label="第03欄城門口的人，前往本期目錄"><strong>03</strong><small>THE GATE<br>VOL.00</small></a></figure>'+
+ '<div class="th__hero-title"><span class="eyebrow" lang="en">VOL.00 / THE GATE · ARTICLE 03</span>'+
+ '<h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">城門口的人</h2>'+
+ '<a href="#th-text">READ THE ARTICLE ↗</a></div>'+
+ '<p class="th__imgcredit">本站既有古典刻線圖像；非史實攝影或特定遺址證據</p></section>'+
+ '<div class="th__reading"><section class="th__text" id="th-text">'+
+ '<span class="eyebrow" lang="en">THE GATE / FIRST MANUSCRIPT</span>'+
+ '<h3 lang="zh-Hant">古代的城門，<br>不是城牆上挖出的一個洞。</h3>'+
+ '<p lang="zh-Hant">'+esc(excerptGate[0].replace('古代的城門不是城牆上挖出的一個洞。',''))+'</p>'+
+ '<p lang="zh-Hant">'+esc(excerptGate[1])+'</p>'+
+ '<a class="entry-link" href="/journal/">ENTER THE MAGAZINE ↗</a>'+
+ '<blockquote class="th__quote" lang="en">The night is far spent,<br><em>the day is at hand.</em></blockquote></section>'+
+ '<nav class="th__contents" id="th-contents" aria-label="本期四樂章目錄"><header>'+
+ '<h3 lang="en">Contents.</h3><span>4 MOVEMENTS<br>12 DESKS / VOL.00</span></header>'+
+ '<div class="th__grid">'+groups.map(g=>'<section>'+list(g)+'</section>').join('')+'</div></nav></div></article>';
+}
+
 let choice=['a','b','c'].includes(query.get('concept'))?query.get('concept'):'a';
-let state=['hold','open','article','geometry'].includes(query.get('view'))?query.get('view'):'hold';
+let state=['hold','open','article','geometry','issue'].includes(query.get('view'))?query.get('view'):'hold';
 let shape=['square','wide','full'].includes(query.get('shape'))?query.get('shape'):'square';
 function refresh(){
  const stage=document.getElementById('stage');
- document.getElementById('study-title').textContent=state==='geometry'?'One Story · Three Geometries':modes[choice].name;
- document.getElementById('study-note').textContent=state==='geometry'?'方形、寬幅和滿版均採同一張刻線圖、〈城門口的人〉原稿及完整 Vol.00 目錄。這是構圖方法測試，不是接納原 Folio 方向。':modes[choice].note;
- stage.outerHTML=(state==='geometry'?geometry(shape):state==='article'?article(choice):state==='open'?opened(choice):hold(choice)).replace('class="study__stage','id="stage" class="study__stage');
+ document.getElementById('study-title').textContent=state==='issue'?'THRESHOLD / An Original Issue Study':state==='geometry'?'One Story · Three Geometries':modes[choice].name;
+ document.getElementById('study-note').textContent=state==='issue'?'門：方形圖像成為歷史門檻，超大英文與原始刻線、中文標題和正式目錄建立一條閱讀軸線。此為獨立 DOM 的設計候選，尚未核准。':state==='geometry'?'方形、寬幅和滿版均採同一張刻線圖、〈城門口的人〉原稿及完整 Vol.00 目錄。這是構圖方法測試，不是接納原 Folio 方向。':modes[choice].note;
+ stage.outerHTML=(state==='issue'?issue():state==='geometry'?geometry(shape):state==='article'?article(choice):state==='open'?opened(choice):hold(choice)).replace('class="study__stage','id="stage" class="study__stage');
  // Original homepage film is mounted ONLY when Cine-Folio is active.
  const media=document.querySelector('#stage .c-media');
  if(state!=='geometry'&&choice==='c'&&media){
@@ -419,9 +509,10 @@ function refresh(){
  document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===state)));
  document.querySelectorAll('[data-shape]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shape===shape)));
  document.getElementById('shape-switch').hidden=state!=='geometry';
- document.getElementById('concept-switch').hidden=state==='geometry';
+ document.getElementById('concept-switch').hidden=state==='geometry'||state==='issue';
  document.body.classList.toggle('geometry-mode',state==='geometry');
- document.body.classList.toggle('presentation-mode',state==='geometry'&&query.get('presentation')==='1');
+ document.body.classList.toggle('issue-mode',state==='issue');
+ document.body.classList.toggle('presentation-mode',(state==='geometry'||state==='issue')&&query.get('presentation')==='1');
  const url=new URL(location.href);url.searchParams.set('concept',choice);url.searchParams.set('view',state);url.searchParams.set('shape',shape);
  history.replaceState(null,'',url);
 }
