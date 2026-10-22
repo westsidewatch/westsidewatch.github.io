@@ -17,7 +17,7 @@ export function buildLowRiseHouse(group,meshes,materials,terrain,parcel,index,pr
   const topGround=houseGround,positions=geometry.attributes.position;
   // Sloping footings meet the same rendered DEM; upper components retain clear headroom.
   if(offset===0)for(let i=0;i<positions.count;i++)if(positions.getY(i)<1e-5)positions.setY(i,surface(c.x+positions.getX(i),c.z+positions.getZ(i))-topGround);
-  geometry.computeVertexNormals();const mesh=new THREE.Mesh(geometry,materials.inferred||materials.reconstructed);mesh.position.set(c.x,topGround+offset,c.z);mesh.castShadow=true;mesh.receiveShadow=true;
+  geometry.computeVertexNormals();const mesh=new THREE.Mesh(geometry,materials.lowRise||materials.inferred||materials.reconstructed);mesh.position.set(c.x,topGround+offset,c.z);mesh.castShadow=true;mesh.receiveShadow=true;
   mesh.userData.restPositions=Float32Array.from(positions.array);mesh.userData.groundHeights=Float32Array.from(Array.from({length:positions.count},(_,i)=>surface(c.x+positions.getX(i),c.z+positions.getZ(i))-mesh.position.y));mesh.userData.cityRuinFactor=1;
   mesh.userData.phase2={stage:kind,start:.25,baseHeight:height,groundY:ground};mesh.userData.cityObject={parcelId:parcel.id,terrainGround:ground,kind,confidence:'inferred',semantic:true,architectureProfile:profile.id};group.add(mesh);meshes.push(mesh);
  }
