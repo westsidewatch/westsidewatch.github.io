@@ -1772,6 +1772,121 @@ editorial:    editorial still composition → latent spatial structure
 
 **Source preservation rule:** Keep all recovered documents intact as **source-of-evidence**. Only this single Design OS Editorial Manual can designate final editorial rules. If typography scales genuinely change later, edit the canonical OS tokens with dedicated approval and regeneration—not a new standalone “English giant-type OS”. Do not modify an existing magazine page merely because a once-exploratory CSS experiment demonstrated giant lettering.
 
+
+### 6E.33 R7 — BEGIN WITH THE EDITORIAL PREMISE, not a font / image / grid (2026-10-22)
+
+**Research question:** How does a magazine establish a recognisable visual style, what matters most, and where should an art director begin? **R7 is a priority correction to all R1–R6 technical research.** The project has acquired many valuable answers about *how to implement a spread*, but those answers cannot decide *what one publication should mean*. The first deliverable is still the **complete, actionable Westside magazine design specification book inside the single Design OS**. This chapter defines its creative foundation and order of operations—not another identity system, site redesign or set of ornaments.
+
+**One-sentence core finding:** **Editorial thesis → issue narrative → authentic subject/media language → visual identity invariants and variation rules → complete reader journey → composition + optical craft → responsive interaction / QA → accepted book specifications**.
+
+This order is grounded in public first-party observations, not a claim to have examined private brand manuals:
+
+1. [Society of Publication Designers / 1:1 art-direction interview](https://www.spd.org/1to1): an editor/designer thinks about **each story and the entire issue, the photographic and illustrative strategies, the pacing of images and stories**, before layout. **Implication:** story/issue rhythm is a first-order art-direction input, not the finishing stage after the cover.
+2. [Pentagram / Sight and Sound](https://www.pentagram.com/work/sight-and-sound): film culture and **clapperboard graphic language** produce a consistent system of strong typography, grid, pace contrasts, full-bleed/cropped/circular media and section colors. **Implication:** a magazine's *subject* can become its formal grammar, rather than style being imported from another magazine.
+3. [World of Interiors / 2022 archive-based redesign](https://www.worldofinteriors.com/story/print-redesign-interview-hamish-bowles): the archive's editorial clarity and recognizable publishing voice were studied before reshaping the current print/digital expression. **Implication:** discover Westside's own assets and historical understanding before applying old-looking filters.
+4. [Kinfolk / Alex Hunting Studio 2021](https://alexhunting.studio/blogs/projects/kinfolk): editorial brand redesign included actual issue grids, typographic text-vs-display optical cuts, complementary family metrics and image pacing. **Implication:** after identifying the publication voice, encode it through precise distinct design *roles*, not one image ratio or a generic large-serif preset.
+5. [Webby Awards official judging criteria](https://www.webbyawards.com/judging-criteria/): overall experience integrates concept, content, navigation, visual design, functionality and interaction. **Implication:** a powerful opening still image is necessary but insufficient for an award-competitive *digital publication*.
+
+**Do not misread:** The above are **research methods** and examples; Pentagram's clapperboard is not Westside's metaphor. Monocle / M09 remains **formally REJECTED** as a positive art-direction reference. AWW/WB/FWA aspirations are **internal evaluation goals**, not a claim of official scores, recognition or awards.
+
+#### R7.1 The five top-level creative decisions, in strict dependency order
+
+| Priority | The actual decision to make | **Output BEFORE visual styling** | Failing approach |
+| --- | --- | --- | --- |
+| **P1 Editorial worldview / 刊物立場** | What does Westside choose to observe and communicate, and **why is that not the same as another magazine**? | Editorial proposition (one sentence), reader's question, authentic source boundary, tone, what the publication refuses to do | “Ancient + modern,” “Italian elegance,” “Bodoni + Doré” as if those were sufficient worldview |
+| **P2 Whole-issue dramaturgy / 全卷敘事** | What does the reader encounter, accumulate, discover, question, remember, and finally do? | **Vol.00 beat map** of four movements, 12 desks, 3 interludes, with *explicit reveal constraints* | Twelve independent beautiful cover cards and no act-level progression |
+| **P3 Own visual material and point of view / 素材立場** | Which historical/art/documentary image types express the issue honestly, and what are their narrative properties? | Verified source manifest, imagery/luminance/ink vocabulary, near/far time scales, real subject/rights and counterexamples | Generic monochrome engraving, fake ruin photo, universal sepia/archival paper |
+| **P4 Invariants + variations / 身份與變奏** | What must make *every different kind of article* recognizably Westside, and which compositions may change by story? | Invariant matrix + allowed variations + conditional reuse rules for giant type, square, video and grid | All pages same square/full-bleed hero, or each story an unrelated skin |
+| **P5 Full reader experience / 閱讀體驗** | How does the reader actually move from issue → section → story → evidence → references → ending → next? | Representative complete sequence including a source-grounded opener, quiet middle, end, Contents and mobile re-composition | A beautiful top viewport followed by generic blog cards, tiny Contents or no reading route |
+
+**Decision boundary:** Typography, geometry, motion and microscopic elements are **downstream instruments** of P1–P5. They are not deleted: existing R1–R6 research remains the *technical implementation grammar to apply once the intention is chosen*. Do not turn R7 into a new order to randomly change every font, place a square everywhere or add a wall-endmark immediately.
+
+#### R7.2 Where Westside specifically must start: Vol.00's approved editorial canon
+
+**Source-of-truth:** [\`docs/projects/watch-city-vol00/EDITORIAL_MAP.md\`](../projects/watch-city-vol00/EDITORIAL_MAP.md), status ACTIVE EDITORIAL CANON, four acts **WATCH 4 / WALK 4 / WITNESS 2 / WORSHIP 2** and exactly three **Video + Music** interludes. When conflicts arise, later explicit human editorial decisions supersede this map. **Do not invent completion status or fill missing stories.**
+
+**The genuine subject is not merely “a historical city”;** the reader passes through city, being/people, path, historical material, reflection, practical discipleship, witness, worship and a closing prayer. **The editorial reader arc contains intentional information timing.** Elim must make historical fortifications and siege engineering richly intelligible *before* the theological interpretation arrives in Beersheba; Mizpah raises an editorial question while Beersheba later develops the sustained reflection. **Do not prematurely place the final theological answer in the cover, Contents, image captions or generic brand slogan.**
+
+| Beat / issue role | What the **actual source material** asks of art direction | Spatial/visual translation to test, NOT a required template | Critical failure |
+| --- | --- | --- | --- |
+| **WATCH / observe and investigate (01–04)** | Mizpah raises the question; Gate ties people to the threshold; Carmel develops construction and historical material | Large historical plates, architectural depth, archive evidence, a question/approach, contrast between city-scale and human scale | Oversize typography or a sepia city picture announces the answer without allowing encounter |
+| **INTERLUDE I / Selah** | Sensory passage WATCH → WALK, video and music, not a prose article | Change editorial tempo / a *meaningful pause*; static media fallback and return path | Intro animation with no content function or autoplay trap |
+| **WALK / lived path, interpretation (05–08)** | Abraham's leaving city, God's provision, detailed Elim siege material, then Beersheba reflection, followed by Bethel life practice | Path/depth/route, clear diagrams/maps/source notes, high-density evidence gradually relaxing into longer, quieter thought and pragmatic reading | All four stories forced into same square opener; “true watchman” verdict telegraphed before Beersheba |
+| **INTERLUDE II** | WALK → WITNESS | Let the text/reader's gaze shift from principle to actual person, with Video+Music | Decorated break that strands navigation |
+| **WITNESS / lived people (09–10)** | Brother Lawrence, Huang Shuhua and Jiang Xiuqin as **specific** past/present witnesses | Human presence, truthful archival/person sources, names legibly given at appropriate weight, contextual real sermon/media | Generic AI portrait/“historic-looking” identity or invented biographies |
+| **INTERLUDE III / Kinneret** | WITNESS → WORSHIP | An intentional tempo/attention shift that works without moving parts | Animation becomes substitute for true worship arc |
+| **WORSHIP / conclusion (11–12)** | Cornerstone, crown, prayer, silence and **official Westside logo** finale | Strong but controlled terminal shift: geometry of alignment → crown → prayer → silence, sparse type and true source | Ornamental crescendo or black/gold “prestige” imitation; invented closing text |
+
+**This is a beat-to-art-direction map, NOT a finalized visual story-board.** The exact image assets, rights, prose and states require further review. The point is that typography scale, shape, whitespace and motion should **vary with the reader's position in the narrative**, under one recognizable editorial identity.
+
+#### R7.3 A possible ORIGINAL editorial proposition — explicit [TRIAL], not signed brand copy
+
+For research review only:
+
+> **A contemporary, image-led publication where the long history of cities, gates, building, defence and human lives becomes a way of observing faith, responsibility and what it means to keep watch.** Visual craft alternates **historical scale and individual presence**, **dark engraved mass and space to read**, **monumental inscriptions and quiet inquiry**. The story may move from city-history evidence toward reflection and worship, but the opening does **not** announce the later theological answer.
+
+This is a **working art-direction proposition**, not a published slogan, new masthead, new Christian doctrinal slogan or a completed answer. It must be checked against **Mizpah, Elim, Esther and Maranatha**, because an identity that works only for *城門口的人* or a Doré source plate is NOT a magazine identity.
+
+**Two paired creative tensions that actually follow from the material:**
+- **Scale of history ↔ scale of a person.** City, wall, siege, architecture and 10,000 years versus a walker, one kitchen, an individual witness. This can direct contrast between panoramic or full-spread compositions and intentionally close editorial encounters.
+- **Witnessed mark ↔ living movement.** Historical trace and engraving stroke versus present navigation, reading, video/musical interlude and living-world action. This can guide when stillness is authoritative and when digital motion adds meaning.
+
+**Things this proposition does NOT imply:** one city illustration on all covers, square boxes everywhere, compulsory huge English across every spread, false archaeological images, conventional Monocle density, a faux parchment texture or literal flip-book spreads.
+
+#### R7.4 The publication's *recognisable identity* is a relationship system — five stable rules, five controlled freedoms
+
+**Candidate identity invariants [BASE where already approved; METHOD elsewhere]:**
+1. **One genuine official publication identity:** protected WESTSIDE WATCH / 《西望》 masthead and site-wide OS; never recreate official logo as a Bodoni title.
+2. **One actual type family authority:** Bodoni Moda Roman/Italic/true SC for English editorial roles and Chiron Hei HK WS 900 primary / 200 sufficiently large secondary / 400 readable body and functions, no stretched/generative lettering.
+3. **One source integrity rule:** artworks/captions/people/scripture/citation represent actual evidence or honestly labelled illustration; no fictitious content or source.
+4. **One reader continuity grammar:** cover/Contents/act/real article/figure+credit/notes/ending/next; the longform does not become a disconnected utilitarian template.
+5. **One recurring contrast principle for research:** historically weighty evidence or image juxtaposed with crisp contemporary type, navigability and quiet reading—**not** a universal square, blue plate or giant line of text.
+
+**Allowed variations [TRIAL until art-directed evidence]:** image native frame (portrait/square detail/wide/full), chapter density (monument vs atlas vs reading), cross-spread axis/typographic form, local color from existing OS realm palette, a few purpose-specific geometric artifacts and scene-meaningful interaction. They must all pass consistent subject, accessibility, font, content and reading gates.
+
+**The key test:** Remove the masthead from representative static screenshots. Can an editor identify a **family resemblance across a city history, a personal witness and a worship conclusion** *without* confusing them with three templates? If no, improve the underlying relation of material, type and hierarchy—not the size of the logo or number of repeated ornaments.
+
+#### R7.5 First design-study outputs — before touching full-page CSS or a new hero
+
+The *correct first three editorial-design outputs* are text/data/lightweight diagrams inside the manual, not yet polished high-fidelity illustrations:
+
+**Artifact A — The editorial proposition sheet (one page):**
+- Fixed source: Vol.00 editorial map; actual article titles/writing status and provenance.
+- Reader: What question does the issue invite, when is historical evidence encountered, what may remain unanswered until Beersheba?
+- Voice: Historical precision without museum imitation; theological integrity without slogans; contemporary design without generic tech-dashboard motifs.
+- Negative list: falsified source, repeated all-page image, decorative large letters without literary reason, three unrelated panels, Monocle as reference, forced book-turning, contentless scroll effects.
+- One **working** visual thesis as R7.3, approved/rejected with decision notes.
+
+**Artifact B — The whole-issue visual score (not yet a final layout):**
+- Every one of 12 desk entries + three interludes tagged: principal verb, reader job, real image type, evidence density, reading intensity, expected time/attention, natural entry and exit, authorized sources.
+- **No arbitrary numeric values** for absent manuscripts. Leave missing copy as OPEN and avoid implying full longform exists.
+- Draw a non-literal timeline of *intensity and pauses*, tracking two dimensions: image/interaction force and text/evidence density. The transitions should make the overall publication feel authored rather than uniformly “premium.”
+
+**Artifact C — The **identity stress test** (three different, real content tasks):**
+- **City evidence** (Elim / siege history or Carmel / ten-thousand-year city construction): image evidence, diagrams, source credibility, precise captions and a controlled editorial high-density register.
+- **Human witness** (Esther / Brother Lawrence or existing Adullam material): truthful person identity, expressive human focus, rich readable text and media provenance.
+- **End/continuation** (Horeb / cornerstone or Maranatha / crown+prayer): stillness, closing structural meaning and source/next interaction.
+- Also compare the **actual publication front-matter/Contents**. A brand grammar passes only when *all* these surfaces still feel like one magazine without sharing an identical page arrangement.
+
+The gate to detailed type/shape tuning is **not** how many references have been collected. It is the ability to describe *why each of these genuinely different stories should look different and still look like Westside*. After that, R5 cross-spread and R6 monumental English can be used intentionally.
+
+#### R7.6 Sequence and responsibility: from editorial answer to approved production handbook
+
+| Stage | Creative question | Required deliverable and acceptance | If it fails |
+| --- | --- | --- | --- |
+| **0 / Source** | What is verifiably already written/owned? | Canonical Vol.00 issue map + manuscripts / rights / current state; no fabricated text | Retrieve missing assets rather than make concept art |
+| **1 / Proposition** | What is this magazine about as an editorial worldview? | One-page promise and negative criteria in R7.5 A, editor decision | Rewrite proposition, **not** CSS |
+| **2 / Whole issue** | What does the entire publication actually *do* over time? | 12+3 beat/attention map, explicit reveal constraints, real reader paths | Reorder editorial *presentation*, preserve approved canon |
+| **3 / Visual DNA** | Which **original** imagery/shape/typography relationships carry the proposition? | Invariant/variation matrix tested across three unlike articles | Reject borrowed aesthetics and generic “modern serif” clichés |
+| **4 / Spread systems** | How do full-canvas digital spread, figures, giant type and quiet prose implement the DNA? | Three real content **jobs** in independent, meaningful compositions, with mobile transitions | Return to narrative roles; don't tweak an isolated square |
+| **5 / Complete sample issue** | Does it work beyond a magazine cover? | First look, real Contents, full sample feature middle, reference/end, interlude, next route | Finish actual reading/navigation before hero polish |
+| **6 / Production detail** | Which dimensions, tokens and authoring rules make it repeatable? | Existing S01–S32 sheets, accepted screenshots and scoped owners, not parallel OS | Mark TRIAL/OPEN; no invented global tokens |
+| **7 / Award-quality gate** | Is the *whole experience* distinctive and robust? | Existing §6A 10×2 **≥18/20**, no zero or BLOCK; actual desktop/tablet/phone, zoom, keyboard, reduced motion and real content, independent art signoff | Reject; fix original proposition/visual system/UX as the evidence dictates |
+
+**Key stop-work condition:** If stages 1–3 are unapproved, **do not** spend a round polishing a folio, article end mark, a square crop or a 300px headline as if the brand were finalized. They are optional test instruments, not the starting point.
+
+**Research conclusion / status:** R7 provides a defensible **starting logic** and real Vol.00 editorial application; it **does not prove** a finished brand or an Awwwards/Webby/FWA-calibre magazine. Award quality is assessed on the *complete, actually rendered and readable publication*, not on the number of design references, components, CI passes or iterations.
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
