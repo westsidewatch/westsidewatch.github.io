@@ -1058,6 +1058,146 @@ The user-set goal remains **award-competitive quality** with self-critique and r
 
 **下個規格任務：** 從實際保存且可合法使用的六張古典刻線原圖開始建立第一版 image-forensics atlas（城市全景、人物、建築、明暗、高密刻線、門口/河流）；之後用真實《城門口的人》及另一篇長文把 S01–S32 一項項做成實際正／反例。**本輪 17 案例是公開出版資料建成的研究級體系，不宣稱已核查每本私人內部規範書的全部字體數值，也不宣稱西望已確立最終藝術風格。**
 
+
+### 6E.23 Doré original-image forensic atlas — six authentic plates, not six generic textures (research R3, 2026-10-22)
+
+**Editorial purpose:** The six original works below are separate **evidence-backed art-direction specimens** to study an authentic relationship between 19th-century engraving and current editorial web composition. These are not six new image files committed to the site, not six fixed magazine templates and not six signed-off artworks for publication. **Do not conflate the site's modern illustrated / generated / derived visuals with verified original Gustave Doré engravings.**
+
+**Source chain:** (a) original work / original publication / artist and possible collaborating engraver; (b) actual institutional or Commons *digital scan* with documented dimensions/rights; (c) local file or remote IIIF reference; (d) proposed design crop; (e) actual browser screenshot; (f) design + editorial approval. A public-domain 1866 *artwork* doesn't by itself authorize silently copying a museum's separately licensed photographic file. Wikimedia Commons' records below provide their own public-domain statements; the **London Museum's image states a separate licensing contact**. Never extrapolate rights from another scan of the same artwork.
+
+**Important art-history nuance from primary scholarly research:** Doré's 1866 Bible plates were a collaborative published engraving process; some original drawings and their engraved descendants differ. His method used **dramatic lighting, characters immersed in landscapes and historical architectural environments**, rather than a uniform texture preset. University research distinguishes 1866 engraved plates from photographed unengraved drawings (1868), and studies *rejected* versions of particular compositions. **Do not label all Doré works as etchings or imply the hand of one artist physically cut every engraving.** See [Utpictura18 / Serge Ceruti, Genesis study](https://utpictura18.univ-amu.fr/en/rubriques/ressources/illustrer-bible/gustave-dore-and-the-book-of-genesis), [London Museum on the drawing/engraving collaboration](https://www.londonmuseum.org.uk/collections/london-stories/gustave-dores-london-pilgrimage/).
+
+#### Six image specimens: original subject → density → shape decision
+
+**D01 — Abraham's faith tested / The Testing of Abraham's Faith, Genesis 22.**
+- **Primary record:** [Wikimedia Commons 016 — 1866, original digital 2303×2904](https://commons.wikimedia.org/wiki/File:016.The_Testing_of_Abraham%27s_Faith.jpg). Already catalogued in the **existing repo** at \`static/iiif/visual-dore-gen22-testing-abraham/manifest.json\` with artist, date, PD Mark and Commons source; its IIIF canvas records **2303×2904**.
+- **Observed visual grammar from the actual original image:** dark robed Abraham **right foreground** and Isaac **left** bearing the wood, a bright horizontal far distance, palms at upper right, uneven dark vegetation at bottom. **This plate is an earlier journey/approach stage of the test**, not a picture of an angel stopping a knife; automated image descriptions claiming a sacrificial knife/ram in this specific scan must not be carried into our caption.
+- **Subject/crop:** The relationship **two travellers + their wood + bright distant axis** is the minimum semantic unit. Losing the left standing figure or the right elder changes the story. Large Bodoni title is safest on a **separate paper field**, not across garments or palms. Deep contrast belongs to the figures/ground.
+- **Candidate magazine use [TRIAL]:** a vertical illustrated encounter or a *bounded, subject-reviewed* square crop for a Genesis study; captions distinguish Doré's pictorial reading of the story from archaeology. Sample credit: “Gustave Doré, The Testing of Abraham's Faith, Bible illustration, 1866; Commons scan, Public Domain Mark.”
+- **Rejection [BLOCK]:** a square that cuts either traveller; a metadata caption depicting Isaac's binding, ram or angel if absent from this plate.
+
+**D02 — Tower of Babel / The Tower of Babel, Genesis 11.**
+- **Record:** [Wikimedia Commons 010 — 1866, 2297×2897](https://commons.wikimedia.org/wiki/File:010.The_Tower_of_Babel.jpg); [Utpictura18 thematic study](https://utpictura18.univ-amu.fr/notice/20647-tour-babel-sainte-bible-mame-1866-g-dore).
+- **Observed:** an enormous central **rising architectural mass**, cloud bands near the upper tiers, miniature workers/scaffolding below, and gesturing figures in the **foreground toward the lower centre/right**. Architecture is the spatial scale; humans provide narrative scale.
+- **Subject/crop:** A narrow square centered in the plate is likely to remove either the tower's elevation/clouds or the crowd/foreground reaction. Portrait or near-full-plate treatment better preserves *vertical aspiration*. A wide panoramic crop must be specified as **detail only**, not “the entire Tower of Babel.”
+- **Composition transfer [TRIAL]:** let vertical architecture set title alignment and narrative scale. The cloud band may offer an **apparent** low-contrast type possibility but requires actual local hatching/contrast test; safer to put a giant Bodoni title in a neighboring quiet field.
+- **Rejection:** crop retaining only a generic stone tower, stripping the human scene or giving a misleading “reconstructed original city” geographic caption.
+
+**D03 — People mourn over Jerusalem's ruins / Lamentations 1.**
+- **Record:** [Wikimedia Commons 124 — 1866, 2357×2927](https://commons.wikimedia.org/wiki/File:124.People_Mourn_over_the_Destruction_of_Jerusalem.jpg).
+- **Observed:** a towering pale, curving **stone wall on the left**, somber sky/structures **upper right**, a densely grouped set of **mourners across the lower half**. Light/dark are asymmetrical; wall can be bright but still richly textured.
+- **Subject/crop:** Preserve *wall + collective grief* if presenting the whole narrative. A 1:1 crop may become a **separate study of masonry or one grief grouping** only when explicitly labelled “detail” with an accessible full-image route. Main title should never erase figures' faces or the emotional body gestures.
+- **Westside role [TRIAL]:** best positive example of **historical city, human subject, texture and a specific architecture-dependent type-safe decision**; not evidence that the site is showing an actual photograph of ancient Jerusalem.
+- **Rejection:** mistaking a broad pale stone area for automatically safe typography; caption claiming a documentary depiction of a precise ruin.
+
+**D04 — Finding of Moses / Exodus 2.**
+- **Record:** [Wikimedia Commons 031 — 1866, 2353×2921](https://commons.wikimedia.org/wiki/File:031.The_Finding_of_Moses.jpg).
+- **Observed:** vulnerable infant and basket **low left**, figures kneeling/reaching near **left middle**, richly dressed attendants and vertical ceremonial forms across **centre/right upper region**, reeds toward left.
+- **Subject/crop:** The physically smallest object is narratively **most essential**. In square crops, a “well-balanced” selection that excludes the left/bottom basket is editorially **false** even if the adult figures look excellent. Print/image editing is subordinate to meaning.
+- **Westside role [TRIAL]:** define **subject-weighted cropping**: focal item importance is not proportional to pixel area. Preserve text/image unity with image as evidence and Chinese article meaning outside the human scene.
+- **Rejection:** crop losing infant; text overlay on faces, hands and basket; unverified Egyptian-historical costume accuracy.
+
+**D05 — The Red Sea / drowning of Pharaoh's army, Exodus 14.**
+- **Record:** [Emory University / Pitts Digital Image Archive — Red Sea](https://dia.pitts.aws.emory.edu/image_details.cfm?ID=17072), title, artist and scripture explicitly catalogued. Emory credits an additional engraving signature to **Adolphe François Pannemaker**, illustrating the difference between Doré's authorship and the engraver's craft. **High-resolution request at this archive may require payment; we have not obtained it or rights to its hosted scan.**
+- **Observed in publicly available pictured versions (not yet pixel-verified against an acquired institutional high-res):** masses and horsemen/figures in dense lower region, a wide water/sky contrast, motion against steep waves or shoreline, central atmospheric brightness.
+- **Subject/crop:** An isolated 1:1 figure crop likely destroys the **collective horizontal action**; a panoramic or full image and slow narrative widening better transmit crossing/disaster. Identify whether scene shows **drowning**, **parting** or **Israel safely on shore** before writing an exact source caption; they are not identical image moments.
+- **Westside role [TRIAL]:** link directly to the existing site's **water-to-door** idea only at the level of visual meaning (separation, depth, revealing/reversing), never replace the approved live ocean artwork nor claim its imagery is Doré's plate.
+- **Rejection:** a “Red Sea” chapter with stock sea image presented as Doré, or unlicensed museum reproduction ingested.
+
+**D06 — Over London-by Rail / urban panorama, 1872.**
+- **Records:** [Science Museum Group collection 1872](https://collection.sciencemuseumgroup.org.uk/objects/co8014229/over-london-by-rail-engraving-london-england-1872-print), [London Museum](https://www.londonmuseum.org.uk/collections/v/object-490986/over-london-by-rail/), [British Museum description](https://www.britishmuseum.org/collection/object/P_1979-0407-16-31).
+- **Observed:** an **arch / rail construction acts as a natural image frame**, dense brick chimneys and close roof-lines, many small yards/figures, receding urban depth and a smoke-inflected industrial sky. This is **Victorian London**, not biblical Jerusalem.
+- **Subject/crop:** Preserve the large structural arch and **depth corridor** for the full image; a square cut only makes sense if presenting a distinct *detail* of the domestic/urban system. Never suppress its authored location to make it pass as generic historic-city evidence.
+- **Westside role [TRIAL]:** learn how a **real architectural opening** frames layered city scale. Translate visual grammar to the *layout* of Westside historical city material, **not** transplant London roofs and railway into a Jerusalem article. A real article must use a thematically and historically correct source artwork.
+- **Rights [BLOCK for using the London Museum digital photo]:** London Museum explicitly labels **digital image © London Museum** and requests image licensing. Keep a research link; do not import their hosted scan into the site.
+
+#### Local repository asset audit — authorship is not style similarity
+
+| Actual resource in repository | Present / verifiable | Authority | Publication decision |
+| --- | --- | --- | --- |
+| \`static/iiif/visual-dore-gen22-testing-abraham/manifest.json\` | **YES**, inspected IIIF Presentation 3 metadata and 2303×2904 canvas | Doré / Commons 1866 / PD Mark specified; remote image by Commons Redirect | **[SOURCE-VERIFIED]** for original-image identity, continue actual scan/crop and proper credit |
+| \`static/images/home-opening-engraving.jpg\` | **YES**, GitHub directory lists 159048 bytes; source used by prototype | **Artist/provenance not verified** from repo metadata | **[BLOCK]** on calling it “Gustave Doré original”; treat as **existing Westside engraving-style source asset**, no invented identification |
+| \`static/images/jerusalem-wall.png\` | **YES**, directory lists 139243 bytes | Author/scene accuracy/rights unknown | **[OPEN]** existing graphic treatment, **not automatically genuine Doré** |
+| \`static/images/temple-stone-light.png\` | **YES**, directory lists 2410484 bytes | Author/scene accuracy/rights unknown | **[OPEN]** architectural/light study only until source proven |
+| \`static/images/olive/*-editorial.png\` and \`static/dore-design/runtime/olive-editorial-covers.v1.json\` | **YES**, editorial speaker art files + manifest marked \`user-supplied-editorial-artwork\` and \`identitySynthesis: true\` | User-originated designed portrait assets, not historic nineteenth-century wood engraving plates | **[ASSET-PROTECTED]** preserve all 12; **not original Doré evidence** |
+
+**Honesty gate:** Before calling a local file a “Doré original,” the artwork, image source file and bibliographic record must match. Size, grayscale and hatch look are never enough. We verified six original artworks **by outside public records**, but only **one site IIIF manifestation** of those six exists in the checked local directories. No binary images were newly uploaded/copied to the site in this research round. Images embedded in search-result thumbnails are *visual reference*, not pixel-exact crop coordinates.
+
+### 6E.24 Source dimensions and cropping math: square is a costly choice
+
+A square taken from a **portrait scan** at native width W and height H (H>W), without scale interpolation:
+- center square source rectangle = \`x=0, y=(H-W)/2, width=W, height=W\`;
+- fraction of total **vertical narrative** removed = \`1 - W/H\`;
+- each end loses \`(H-W)/(2H)\` *if* the crop is centered.
+
+| Original record | Source W×H | Top clipped by default center square | Bottom clipped | Total height lost |
+| --- | --- | --- | --- | --- |
+| D01 Abraham | 2303×2904 | 10.35% | 10.35% | **20.70%** |
+| D02 Babel | 2297×2897 | 10.36% | 10.36% | **20.71%** |
+| D03 Jerusalem mourning | 2357×2927 | 9.74% | 9.74% | **19.47%** |
+| D04 Finding Moses | 2353×2921 | 9.72% | 9.72% | **19.45%** |
+
+**[METHOD]** The percentages are *source geometry*, not visual-subject inspection scores. The 1:1 crop must be **moved according to the protected subject** and/or represented as an explicit detail plate. Even when centered, removal of 19–21% of vertical content can eliminate the child, horizon, people or tower. For 1.95:1 wide and full-bleed, compare **actual viewport/source frame geometry** rather than extrapolating the portrait crop to a desktop rectangle. Cropping cannot be approved from CSS alone; record before/after images with actual fixed source and story label.
+
+**No arbitrary “subject safe percent”:** Find semantic focal points first and mark [OPEN] normalized coordinates. Pixel-level title exclusion requires the actual source raster file, not a 500px thumbnail or a presumed “bright area.” The CSS composition system shall consume approved coordinates only after review. A score cannot be generated from invented boxes.
+
+### 6E.25 A reusable Doré-to-Westside image analysis card (mandatory for each sourced plate)
+
+Each original-image specimen becomes one **operational S19/S20/S21/S23 specification card**, not another template layer. Use the existing editor/document hierarchy:
+
+\`\`\`text
+original_id:        D01–D06 / original title & edition
+narrative_event:    What exact action / emotional change is pictured?
+authorship:         Designer/illustrator + known engraver signature if identified
+source_record:      Institutional permanent URL or Commons file revision
+rights_for_file:    PD / institution-licensed / unknown + evidence
+local_asset:        repo path / IIIF manifest / research-only, no file
+original_pixels:    W x H confirmed or UNKNOWN
+focal_subject:      people, object, architecture, light, gestures
+narrative_minimum:  elements that must remain together to tell the truth
+ink_structure:      hatch dense/light/dark by factual visible regions
+depth_axis:         front > middle > far / horizontal > vertical
+text_exclusion:     figure, face, hands, key object, signature, horizon
+proposed_frame:     portrait / square detail / landscape / full / none
+crop_candidate:     normalized x/y/w/h after actual raster inspection
+exception:          if safe crop impossible, move title outside image
+publication_caption: image is illustration, never archaeological photograph
+type_roles:         OS Bodoni Roman/Italic/SC and Chiron 900/200/400
+device_tests:       original / 1648 / 768 / 390 / 320 / true 200% zoom
+reader_test:        what was lost or learned due to this crop?
+quality_gate:       §6A 18/20 + no zero/BLOCK, rights, readability, keyboard
+visual_evidence:    actual screenshots and accepted/rejected crop pairs
+status:             SOURCE-VERIFIED / CROPPING-PENDING / BLOCKED / APPROVED
+\`\`\`
+
+### 6E.26 The first distinct magazine layout grammar produced by this atlas
+
+**A / Witness, no distortion:** Let an original engraving carry an entire historical *event* as a native portrait or large unbroken image. Deep reading begins on quiet paper with correct source attribution. This is often preferable to a dramatic but false crop.
+
+**B / Threshold, subject-based only:** If a true gate, arch or opening visibly organizes the source, position a separately authored editorial text region relative to its **architectural axis**. The article need not repeat the source image as wallpaper; overlap is allowed only when subject/title-safe areas are verified. **A small framed square may be an editorial highlight, never a mandatory template**.
+
+**C / City, depth as navigation:** In panoramic or dense city imagery, transition from an observable outer city silhouette to a human-scale detail or relevant historical map. Label changes in *view* as crop/detail, preserve return to original and accurate chronology. Never use Victorian London to illustrate historical Jerusalem.
+
+**D / Crowd, typography off the picture:** If the hatching is crowded or figures are narratively vital, move giant Bodoni and Chiron 900 **out of the image**. High-impact design comes from juxtaposed scale and negative space, not blocking human gestures. Fit Contents in its own readable register.
+
+**E / Light, restrained reveal:** For real bright/dark engravings, let graphic depth influence scene progression: focus/approach/reveal/back, with full static image parity and reduced motion. Do **not** retune the frozen actual homepage movie or the church ocean/doors until an accepted art-direction prototype exists.
+
+**F / Source and citation as editorial form:** The caption, bibliographic record, edition and optional known engraver are information, not microscopic gray decoration. Historic source identity can itself create a crisp contemporary editorial layer without vintage imitation.
+
+These **six compositional methods are not six approved page skins**. Each must be proven by one real article opening, article middle, full Contents and closing, with at least one rejected alternative image treatment. The studio's prior THRESHOLD concept remains an unapproved trial.
+
+### 6E.27 Award-level Doré image chapter acceptance
+
+- **Art-history accuracy [BLOCK]:** correct Doré image and subject/action, named engraver when attested, accurate original vs digital reproduction attribution; studio can distinguish 1866 Bible, 1872 London, and 1868 unengraved sketches.
+- **Modernity [BLOCK]:** does the composition remain recognizable at 160px **without the masthead** and without making a tired book-cover cliché? If not, return to image/content concept. Monocle / M09 remains **REJECTED**, not a positive benchmark.
+- **Visual fidelity [BLOCK]:** no figures/object signatures severed, no word occulted by busy hatch, no duplicated engraving wallpaper, no uniform sepia/grain filter on long text, no factual location invented.
+- **Digital experience [BLOCK]:** true picture dimensions and source, subject-safe desktop/tablet/phone crop, alt/caption semantics, font metrics and contrast; 320 CSS px + actual 200% zoom + keyboard/reduced-motion parity.
+- **User task [BLOCK]:** full narrative from cover → four movements / 12 desks / three interludes → 20k+ characters of genuine reading → credits/end/next. A hero-only screenshot is never a publication.
+- **Internal criterion:** the single Design OS §6A applies (10×2, ≥18/20, no zero/critical block), not a pseudo official Awwwards/Webby/FWA award forecast.
+- **Unresolved items [OPEN]:** first source raster retrieval and title-safe polygon annotations for all D01–D06, rights checks for non-Commons scans, actual thumbnail comparison, published real device screenshot; no visual acceptance yet.
+
+**This chapter turns archive scholarship into *actionable creative decisions* while maintaining the crucial honest distinction: source document inspected ≠ original image fully decoded ≠ a visually approved layout. Next work can continue in S19/S20/S23 inside this same OS. Do not open a second manual or merge a prototype before an approved publication identity.**
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
