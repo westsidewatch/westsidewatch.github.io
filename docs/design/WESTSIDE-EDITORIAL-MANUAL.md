@@ -805,7 +805,10 @@ The user-set goal remains **award-competitive quality** with self-critique and r
 
 **Source provenance index:** B01–B11 above; [§6D The World of Interiors](#6d5b-case-study-the-world-of-interiors--square-as-a-selective-image-register-not-a-global-layout-2026-10-22), [§6A award-level gate](#6a-award-calibre-release-objective--awwwards--webby-awards--fwa-2026-10-21), existing [Westside editorial type authority](WESTSIDE-EDITORIAL-TYPOGRAPHY.md) and [single Design OS](WESTSIDE-DESIGN-OS.md). Public links prove title, contents or guidance as marked; full copyrighted text not reproduced.
 
-### 6E.17 Seventeen magazine art-direction systems — documented vs reconstructed (research R2, 2026-10-22)
+### 6E.17 Seventeen magazines studied — 16 eligible art-direction references + 1 rejected visual reference (R2, 2026-10-22)
+
+**Editorial selection update (2026-10-22):** **Monocle / M09 = REJECTED for Westside aesthetic, composition and art-direction reference.** The user judged its layouts insufficiently contemporary for the magazine's intended classical × contemporary tension. Its archival interview can remain as **negative research history**, not a source of visual or typographic recommendations. Thus 17 have been researched but **only 16 remain candidates for positive comparison**; the 16 are not automatically approved either. Do not generate new Monocle-like high-density column blocks, colored index rails or info-first covers. A comprehensive production checklist may be developed **independently** of any rejected aesthetic reference.
+
 
 **研究性質與證據邊界。** 本輪研究的是 17 本具古典／現代張力的實際雜誌，其官方編輯訪談、負責設計工作室、印廠、D&AD／ADC 作品記錄、公開內頁與視覺評論。**它們並不等於 17 本已取得的內部 brand guidelines PDF。** 大部分專有字體、InDesign 主版、精確點數和品牌手冊未公開；本章不假裝讀過私人規格。逐案列出 [E] 能被公開文獻證實的做法；[F] 編輯框架的分析歸納；[D] 影響風格的微細部位；[W] 供西望驗證的轉譯；[R] 不應模仿之處或資料空缺。書刊年代另列，避免把不同改版混合成同一現行制度。所有建議是 **[METHOD]／[TRIAL]**，不能直接更改全站 Token。
 
@@ -881,14 +884,14 @@ The user-set goal remains **award-competitive quality** with self-critique and r
 - **[R] 失效條件與未知數：** 不可挪用專屬字體或把舊白條當《西望》設計；不誤稱有 Kinfolk 精確字號。
 **驗證任務：** 請在《西望》真正的一篇稿件上展示此案學到的「內容→構圖→具體細節」關係，並用一張正例／反例截圖證明不是仿製其外貌。
 
-#### M09 — Monocle · 2007–08 original web architect + 2017 redesign
+#### M09 — Monocle · REJECTED art direction / archival negative case only (2007–08 / 2017)
 **來源：** [1](https://cityofsound.com/2008/04/14/monocle-design/) · [2](https://magculture.com/blogs/journal/monocle-redesigned)。**證據等級：** 公開一手訪談／工作室或權威報導；細節不限於同一期，已標示時間。
 - **[E] 原刊證據：** 第一手網站設計筆記具體列出 Plantin、Helvetica Neue、Strasse、四色系統、網格、止字符、引句、地圖、舊式數字和刊名字樣；數位長文不硬切頁，而處理行寬、leading、相關故事和上下文。2017 改版保留識別但縮減字體、加大正文、減密度、允許 off-grid 物件。
-- **[F] 可重建的編輯框架：** 完整書面規則包括識別、字體、微型數字、地圖、引用、分節、長文、線條與數位導航；規則不是把每頁填滿。
-- **[D] 真正決定風格的細節：** 列舉本期 32 種微元件所有者；模組之間的關聯、頁碼/日期/地圖、版心長度、欄與留白。
-- **[W] 《西望》的可操作轉譯：** 以一份全細節清單管理期號／引文／經文／圖說／來源／止字符／搜尋／目錄，拿掉不能說明用途的色塊。
-- **[R] 失效條件與未知數：** 不沿襲 Monocle 的四配色或字族；2017 紙本資料不等於今天的網站 CSS。
-**驗證任務：** 請在《西望》真正的一篇稿件上展示此案學到的「內容→構圖→具體細節」關係，並用一張正例／反例截圖證明不是仿製其外貌。
+- **[F] 研究檔案（非正面風格參考）：** 其資料反映大量資訊模組／欄目／微型標記形成的出版方式，但《西望》不採用這種視覺秩序：密集、規整、以資訊管理優先的圖文框架不符合需要的現代藝術張力。
+- **[D] 否決的視覺細節：** 密集的欄格、小型資訊標籤、連續線條與規整編排不應轉化為《西望》的視覺語法。原調查中列出的字體／止字符／地圖項目只是歷史研究事實，不構成採用建議。
+- **[W] 《西望》的採用決策：** **拒絕移植** Monocle 的整體排版、字體搭配、資訊密度、網格與微型裝飾。『把每個元件寫進規範』是本工程的獨立治理要求，由 Design OS §6E.19 的 S01–S32 說明，**不是**對 Monocle 視覺的繼承。
+- **[R] 正式否決：** **MONOCLE VISUAL REFERENCE = REJECTED**。不得放入《西望》候選風格板、使用它替新稿決定版心／圖片／字體位置，亦不得以它為 18/20 品質對標。2017 紙本不等於今天網站 CSS；任何私人排版手冊仍未取得。
+**否決核對：** 後續設計方案／獲獎級自評的正面參考清單中不得出現 M09；保留此案僅便於追溯『成熟的規範仍可能擁有不符合目標的視覺』這一篩選判斷。
 
 #### M10 — Eye · 1990–2024 cover & typography practice
 **來源：** [1](https://www.designweek.co.uk/what-makes-a-great-eye-magazine-cover/) · [2](https://www.spd.org/behind-the-scenes/eye-96-and-eye-97)。**證據等級：** 公開一手訪談／工作室或權威報導；細節不限於同一期，已標示時間。
@@ -968,16 +971,16 @@ The user-set goal remains **award-competitive quality** with self-critique and r
 | --- | --- | --- | --- |
 | 古典來源的選取 | M01、M02、M14 | 先回溯自己的刻線、城牆、活水、晨星資產；只保留有敘事職能的歷史元素 | 原作來源、年份、可使用權限、描繪內容 |
 | 固定識別／變化構圖 | M03、M05、M10 | 固定正式 LOGO、Bodoni/Chiron 和出版物語氣，封面／內頁圖片形狀可變 | 每一期的可變部件批准表 |
-| 字體光學角色 | M08、M09、M15 | 正式 12-role scale 分別管理英文 display/italic/SC、中文 900/200/400、正文、目錄、caption | 真實字形載入、中文斷行、放大 200% |
-| 網格與例外 | M01、M09、M15 | 依故事和圖片選 6/8/12 工作軌，記錄偏離原因，不把軌道畫成三片色塊 | 標題與圖片避讓、caption 軌、字距尺度 |
+| 字體光學角色 | M08、M15 | 正式 12-role scale 分別管理英文 display/italic/SC、中文 900/200/400、正文、目錄、caption | 真實字形載入、中文斷行、放大 200% |
+| 網格與例外 | M01、M15 | 依故事和圖片選 6/8/12 工作軌，記錄偏離原因，不把軌道畫成三片色塊 | 標題與圖片避讓、caption 軌、字距尺度 |
 | 圖像裁切／真實性 | M06、M07、M11 | 主體識別、光線、刻線密度、可裁區及禁字區決定照片形狀 | 原畫尺寸、來源、授權、主體座標 |
-| 目錄／章節 | M01、M04、M09 | 四樂章明確分章，大號號碼只輔助選讀，正文題名／真實鏈接才是主體 | 12 條真實導覽與 3 個間奏 |
-| 文章長篇與結尾 | M03、M04、M09、M11 | 正文專心閱讀，來源／註腳／尾部鏈結／城垛止字符都要有信息角色 | 實稿、注釋、出處、原始城垛資產 |
-| 數位與紙本 | M01、M02、M09、M15、M17 | 保留出版身份，但不把紙張虛擬成網頁固定分頁 | 行寬、導覽、閱讀恢復、封面來源 |
+| 目錄／章節 | M01、M04、M15 | 四樂章明確分章，大號號碼只輔助選讀，正文題名／真實鏈接才是主體 | 12 條真實導覽與 3 個間奏 |
+| 文章長篇與結尾 | M03、M04、M11、M15 | 正文專心閱讀，來源／註腳／尾部鏈結／城垛止字符都要有信息角色 | 實稿、注釋、出處、原始城垛資產 |
+| 數位與紙本 | M01、M02、M15、M17 | 保留出版身份，但不把紙張虛擬成網頁固定分頁 | 行寬、導覽、閱讀恢復、封面來源 |
 | 留白和節奏 | M01、M07、M11、M13 | 留白用於隔章、讓史料呼吸、避免密字碰撞 | 手機空白過長及文字太小的負例 |
-| 工程治理 | M06、M09、M15、M17 | 每個規格必須有素材來源、HTML 語義、OS token、所有 CSS、手機和截圖回歸 | 實際設計／開發／驗收責任 |
+| 工程治理 | M06、M15、M17 | 每個規格必須有素材來源、HTML 語義、OS token、所有 CSS、手機和截圖回歸 | 實際設計／開發／驗收責任 |
 
-**共同判斷：** 不同刊物即便都用大襯線字、紙色或正方圖片，真正身份來自內容次序、微字體、作品選圖、圖片和引文的對位、章節節奏、分隔線用途以及數位閱讀。Monocle 的止字符、New Yorker 引文標點、Gentlewoman 章尾 References、Paris Review 書脊、NYT Magazine 的窄 caption 軌，都是**細節具體構成出版身份**的例證，而非可以任意抽換的裝飾零件。
+**共同判斷：** 不同刊物即便都用大襯線字、紙色或正方圖片，真正身份來自內容次序、微字體、作品選圖、圖片和引文的對位、章節節奏、分隔線用途以及數位閱讀。New Yorker 引文標點、Gentlewoman 章尾 References、Paris Review 書脊、NYT Magazine 的窄 caption 軌，都是**細節具體構成出版身份**的例證，而非可以任意抽換的裝飾零件。**M09 Monocle 已否決，不得由此段恢復成正面參考。**
 
 ### 6E.19 Full-detail specification book — 32 production sheets, not 32 screenshots
 
@@ -1035,11 +1038,11 @@ The user-set goal remains **award-competitive quality** with self-critique and r
 
 ### 6E.21 Five cross-publication close-up lessons — how style becomes a decision
 
-**① 一個目錄到底要怎樣有辨識度？** WoI 的巨大頁碼、Paris Review 實體書脊、Gentlewoman 的 Part 分頁、Monocle 將代碼次於具體章名，表示「索引設計」不等於一串大號數字。《西望》四樂章的 01/02/03 可以很美，但首先必須讓人找得到真正文章，並能從文章返回。
+**① 一個目錄到底要怎樣有辨識度？** WoI 的巨大頁碼、Paris Review 實體書脊與 Gentlewoman 的 Part 分頁，表示「索引設計」不等於一串大號數字。《西望》四樂章的 01/02/03 可以很美，但首先必須讓人找得到真正文章，並能從文章返回。
 
 **② 遇上繁密刻線與大字，究竟該覆蓋還是分離？** WoI 讓大型圖像呼吸；Kinfolk 則用不同字體光學角色處理展示和正文；Apartamento 先從原圖決定構圖。《西望》應以線條密度和主體安全區決定：有安靜空間才讓 Bodoni 局部進圖；沒有則將字完整置於圖片外。**不能為了構圖衝擊力遮住英文單字。**
 
-**③ 幾萬字的文章如何和封面屬於同一本雜誌？** New Yorker 的引號與語氣、NYT 的 caption 軌、Monocle 的長文導航都不是 Hero 效果。真正一致是標題、欄目、引文、圖說、出處、資料密度和結尾續讀的共同文法；正文不需要每幾段插一張方圖。
+**③ 幾萬字的文章如何和封面屬於同一本雜誌？** New Yorker 的引號與語氣、NYT 的 caption 軌、Kinfolk 的不同文字光學角色都不是 Hero 效果。真正一致是標題、欄目、引文、圖說、出處、資料密度和結尾續讀的共同文法；正文不需要每幾段插一張方圖。
 
 **④ 古典不應只是模仿舊物。** Paris Review/L'Express 從自己的檔案中抽出可用歷史，Cabana 的紙材與布封來自真實工藝。《西望》取用自己的多雷資產、史料、城垛與原始動效；不要新增假的皺紙／紡織紋理。
 
