@@ -1,0 +1,17 @@
+# Period-specific low-rise housing
+
+Architectural slice after the shared residential ledger. The late First Temple and Persian generators were still using the same 12-22m wall/upper-room/parapet forms as the Herodian grammar. Keep their existing districts, parcels, object IDs and lifecycle, but give each period a low-rise architectural profile.
+
+Late First Temple uses a four-room analogy: three longitudinal spaces and a broad rear space, modeled entry opening, open central area, side/back roof strips and supports. IAA's 2020 Area U report describes four-room arrangements and Iron Age II/III buildings. The city is not a copy of those three excavated buildings. Roof form, full standing height, house distribution and positions remain inferred. The 3.2m design wall height is not the report's preserved wall height.
+
+Persian houses use a separate low-rise courtyard analogy with roofed ranges and a modeled entrance. Local Persian typology is unverified; it is not represented as an excavated plan. Canonical Herodian grammar remains unchanged. Profiles and limitations travel through parcel/building metadata and source records.
+
+All new geometry stays inside its existing parcel. Footings use rendered DEM surface samples; roofs share a local house datum. Destruction compresses vertices toward each vertex's sampled ground instead of scaling a sloping house through the terrain. Reversal restores exact original vertices. Building IDs and district/parcel ancestry remain the same; no predecessor/reuse link is invented.
+
+Evidence district rows now provide a residential close-up action. The camera selects a representative generated building in that district, hides the panel and preserves the previous camera for departure. Unshown evidence-filtered districts disable the action. This does not make a generated block into an archaeological site.
+
+Source intake: IAA report https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all. The figure/map were downloaded and SHA-256 recorded in data/sources/area-u-2020.intake.v1.json; raw images stay outside public assets. The small plan has a scale bar/north arrow, but lacks independently verified geographic control/checkpoint correspondence in this project. No Broad Wall/tunnel entry was populated with this unrelated house plan; real local-plan admissions remain withheld.
+
+Validation: profile metadata/height bounds, modeled entrance, absence of inherited upper-room/parapet forms, actual parcel containment, standing/ruin grounding, exact reverse vertices, batched/synchronous agreement, common residential lifecycle/parent chains and full 18-era desktop/portrait browser regression. Extra source images are not fetched by website visitors. More efficient geometry has not been benchmarked as a GPU/FPS or token saving.
+
+The city remains an inferred reconstruction on modern terrain; full historical readiness is false. Next: evaluate representative blocks and fix roof/entry details against the whole district before extending historical periods. Sourced local wall/tunnel controls and elevations remain a separate outstanding registration task.

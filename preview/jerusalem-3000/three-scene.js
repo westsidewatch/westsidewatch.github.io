@@ -829,10 +829,10 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       const runtime=phaseId==='chalcolithic-early-bronze'?earliestSettlement:phaseId==='middle-bronze'?middleBronzeSettlement:phaseId==='late-bronze-iron1'?lateBronzeSettlement:phaseId==='david-solomon'?davidSettlement:null;
       if (['late-first-temple','babylonian-destruction'].includes(phaseId)) return {
         source:'https://whitelevy.fas.harvard.edu/publications/jewish-quarter-excavations-old-city-jerusalem-vols-i-and-ii-finds-areas-w-and',
-        references:['https://www.israelexplorationsociety.com/','https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf'],
+        references:['https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all','https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf'],
         limitations:[
           '寬牆等城防遺構支持研究西南山丘的城市發展；本畫面尚未加入經定位的寬牆平面。',
-          '目前山脊、北部聖區與西丘使用獨立推定配置；地塊、住宅形制、數量和具體區界未經考古定位。',
+          '目前山脊、北部聖區與西丘使用獨立推定配置；住宅改採鐵器時代四室低層類比。地塊、屋頂、高度、數量和具體區界未經考古定位。',
           '毀壞階段沿用相同模型呈現變化；倒塌方式、留存比例與埋藏深度尚未考古核定。',
           '現代 DEM 不代表古代地表；完整城牆、王宮與第一聖殿形制尚未核定。'
         ]
@@ -846,6 +846,17 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     setWaterDefenseVariant(id){waterDefenseModel.setVariant(id);applyTemporalState();},
     waterDefenseEvidence(position){const state=waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);return state?{...state,selectedVariant:waterDefenseModel.selectedVariant,variants:waterDefense.towerVariants,localPlans:localPlanAudit}:null;},
     inspectCityObject(id){const record=cityCoreRuntime?.core.get(id);return record?structuredClone(record):null;},
+    focusResidentialDistrict(id){
+      if(!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(currentPhaseId)||!evidenceAllowed('inferred'))return false;
+      const core=cityCoreRuntime.core,district=core.get(id),polygon=district?.geometry?.polygon;if(!polygon?.length)return false;
+      const cx=polygon.reduce((s,p)=>s+p.x,0)/polygon.length,cz=polygon.reduce((s,p)=>s+p.z,0)/polygon.length;
+      const records=core.phase(currentPhaseId).filter(r=>r.type==='building'&&r.source?.districtId===id&&r.metadata?.rendererBinding==='shared-residential-adapter-v1');
+      if(!records.length)return false;
+      records.sort((a,b)=>{const ca=a.geometry.bounds,cb=b.geometry.bounds;return Math.hypot((ca.min[0]+ca.max[0])/2-cx,(ca.min[2]+ca.max[2])/2-cz)-Math.hypot((cb.min[0]+cb.max[0])/2-cx,(cb.min[2]+cb.max[2])/2-cz);});
+      const r=records[0],bounds=r.geometry.bounds,x=(bounds.min[0]+bounds.max[0])/2,z=(bounds.min[2]+bounds.max[2])/2,focus=new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z)+3,z);
+      if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
+      controls.minDistance=15;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(65,60,90):new THREE.Vector3(42,40,60));controls.update();needsFrame=true;return true;
+    },
     focusRoyalTemple(){
       const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:royalCity;
       if(!templeRuntime?.diagnostics().visibleTemple)return;

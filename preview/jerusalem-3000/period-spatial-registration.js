@@ -33,5 +33,5 @@ export function compilePeriodRegistration(data, phaseId, origin) {
   const reservations = (phase.reservations || []).map(r => ({id:id('reservation',r.id), polygon:geometry(r.polygon,3,'polygon').polygon}));
   return {schema:'j3k.temporal-city.registration.v1',phase:phaseId,authority:data.authority,
     independentLayout:true,districts,roads,reservations,sources:data.sources,limitations:data.limitations,
-    generation:{scope:'independent-period-districts',blockSize:58,roadClearance:6,infillMode:'district-constrained',maxBlockArea:12000}};
+    generation:{scope:'independent-period-districts',blockSize:58,roadClearance:6,infillMode:'district-constrained',maxBlockArea:12000,architectureProfile:phase.residentialArchitecture}};
 }

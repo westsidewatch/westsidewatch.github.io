@@ -262,6 +262,8 @@ try {
     const chain=await page.evaluate(id=>{const inspect=window.__JERUSALEM3000__.inspectCityObject,building=inspect(id),parcel=inspect(building.source.parcelId),block=inspect(parcel.source.blockId),district=inspect(block.source.districtId);return {building,parcel,block,district};},sample.shared.residentialLedger.sampleBuildingIds[0]);
     assert.equal(chain.parcel.type,'parcel');assert.equal(chain.block.type,'block');assert.equal(chain.district.type,'district');
     assert.equal(chain.building.metadata.geometryVerified,false);
+    assert.equal(chain.building.typology,'iron-age-four-room-analogy');
+    assert.equal(chain.building.metadata.roofGrammar,'low-rise-open-court-flat-roof-v1');
     assert.ok(chain.building.lifecycle.events.some(e=>e.phase==='babylonian-destruction'&&e.state==='ruin'));
     assert.equal(sample.shared.projection.visibleBuildings,Object.values(sample.shared.projection.districtVisible).reduce((s,n)=>s+n,0));
     assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.cityOverview.framePhase),'late-first-temple');
@@ -277,6 +279,12 @@ try {
   await page.getByRole('button', { name: '全部', exact: true }).click();
   await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings > 0);
   await writeFile(`${output}/shared-report.json`, JSON.stringify({ sharedReports }, null, 2));
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
+  const residentialClose=page.getByRole('button',{name:'西丘住宅近看',exact:true});
+  await residentialClose.click();
+  assert.equal(await page.locator('.j3k-evidence-panel').getAttribute('hidden'),'');
+  await page.screenshot({path:`${output}/iron-age-residential-close.png`,fullPage:true});
+
   // Persian rebuilding retains the same earlier fabric as an opt-in ruin layer.
   await page.locator('.j3k-scrubber').evaluate(el => {
     for(const value of [6,17,6.5]) {el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));}

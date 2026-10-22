@@ -11,3 +11,5 @@
 [data-water-defense] svg{width:100%;height:auto;border:1px solid var(--line);margin:8px 0;font:11px Arial,sans-serif}[data-water-defense] h5{margin:16px 0 4px;font-size:12px}[data-water-defense] a{font-size:11px}
 
 [data-water-defense] select{max-width:100%;font-size:11px;padding:5px;border:1px solid var(--line);background:var(--paper)}
+
+[data-district-acceptance] button{font-size:10px;padding:4px;border:1px solid var(--line);background:var(--paper);cursor:pointer}[data-district-acceptance] button:disabled{opacity:.45;cursor:default}

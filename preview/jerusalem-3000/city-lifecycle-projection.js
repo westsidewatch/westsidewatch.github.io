@@ -42,8 +42,10 @@ export function createCityProjection(group, meshes, {
           !(retained && item.infrastructure) && (!stateForObject||item.infrastructure||['build','rebuild','transform','ruin','expand'].includes(ledgerState));
         mesh.position.x = position.x;
         mesh.position.z = position.z;
-        mesh.position.y = ground + (position.y - ground) * objectScale;
-        mesh.scale.y = item.scaleY * objectScale;
+        if(mesh.userData.restPositions&&mesh.userData.groundHeights){
+          mesh.position.y=position.y;mesh.scale.y=item.scaleY;
+          if(mesh.userData.cityRuinFactor!==objectScale){const p=mesh.geometry.attributes.position,rest=mesh.userData.restPositions,heights=mesh.userData.groundHeights;for(let i=0;i<p.count;i++)p.setY(i,objectScale===1?rest[i*3+1]:heights[i]+(rest[i*3+1]-heights[i])*objectScale);p.needsUpdate=true;mesh.geometry.computeVertexNormals();mesh.userData.cityRuinFactor=objectScale;}
+        }else{mesh.position.y = ground + (position.y - ground) * objectScale;mesh.scale.y = item.scaleY * objectScale;}
         mesh.userData.cityObject.buildingId = item.id;
         mesh.userData.cityObject.lifecycleState =
           retained ? 'retained-ruin' : item.infrastructure
@@ -82,6 +84,7 @@ export function createCityProjection(group, meshes, {
             item.mesh.position.y,
             item.mesh.position.z,
             item.mesh.scale.y,
+            item.mesh.userData.cityRuinFactor??null,
           ]),
         ),
       };
