@@ -1502,7 +1502,9 @@ This is an **example in the manual**, NOT a new global token, live component, or
       <h1>城門口的人</h1>
     </header>
     <figure class="ws-digital-spread__square ws-digital-spread__square--30-70">
-      <img src="[approved-original-asset]" alt="[truthful image content]">
+      <div class="ws-digital-spread__square-plate">
+        <img src="[approved-original-asset]" alt="[truthful image content]">
+      </div>
       <figcaption>[verified source credit]</figcaption>
     </figure>
   </div>
@@ -1536,20 +1538,27 @@ This is an **example in the manual**, NOT a new global token, live component, or
   position: absolute;
   inset-inline-start: 50%;
   inline-size: min(40%, 34rem);
-  aspect-ratio: 1;
-  translate: -50% 0; /* 50% left of reference axis, 50% right */
+  translate: -50% 0; /* 50% of square field on each side */
   z-index: 1;
   margin: 0;
+  /* Figure remains auto-height; caption is not clipped into 1:1. */
 }
 [data-ws-scope="journal"] .ws-digital-spread__square--30-70 {
   translate: -30% 0; /* 30% of S left, 70% of S right */
 }
+[data-ws-scope="journal"] .ws-digital-spread__square-plate {
+  aspect-ratio: 1; /* square media FIELD; caption is outside */
+  overflow: hidden;
+}
 [data-ws-scope="journal"] .ws-digital-spread__square img {
   display: block;
   inline-size: 100%;
-  block-size: auto;
-  max-block-size: 100%;
-  object-fit: contain; /* keep intact until an IMAGE crop is approved */
+  block-size: 100%;
+  object-fit: contain; /* preserve source until IMAGE crop approved */
+}
+[data-ws-scope="journal"] .ws-digital-spread__square figcaption {
+  margin-block-start: .75rem;
+  /* Natural height, not locked to 1:1. */
 }
 @media (max-width: 48rem) {
   [data-ws-scope="journal"] .ws-digital-spread {
@@ -1564,13 +1573,20 @@ This is an **example in the manual**, NOT a new global token, live component, or
     position: static;
     translate: none;
     inline-size: 100%;
-    aspect-ratio: auto; /* mobile is a new composition, not half a print spread */
     order: 1;
+  }
+  [data-ws-scope="journal"] .ws-digital-spread__square-plate {
+    aspect-ratio: auto; /* mobile may show the full native image */
+  }
+  [data-ws-scope="journal"] .ws-digital-spread__square img {
+    block-size: auto;
   }
 }
 ~~~
 
-**Implementation qualification:** This specimen demonstrates the coordinate relationship but is **NOT visually signed off**: without a completed actual image/content, an absolutely positioned square may collide with the live H1, a caption may extend beyond the square, and the container's \`min-block-size\` may be too short. A serious implementation must size the image/figure with actual caption content, use semantic figure height rather than clipping a caption, and verify overlaps/reading at every viewport. **Do not copy/paste into production without a source image and browser proof.** A figure with a caption cannot naively be forced into \`aspect-ratio: 1\` unless the square refers to a dedicated media sub-element while caption is arranged independently.
+**Implementation qualification:** The **square is the dedicated media field**, not the entire figure and caption. This specimen keeps original source art \`contain\` and uncropped unless an image-specific crop is later approved; its caption flows at natural height **outside** the 1:1 media plate. The figure itself can be taller than square. Without actual artwork and headlines, an absolutely positioned square may collide with live text and a long caption may exceed the stage; the actual \`min-block-size\` and layer relations must be measured in a browser. **Do not paste into production or imply visual approval.**
+
+**Non-image construction:** Exactly the same cross-axis square can be a **live-type field, a clear negative-space field, or a meaningful boundary inside a single continuous engraved scene**. These need no \`img\`, \`figure\` or \`object-fit\` at all. When a title inside a square is the *real* headline, it must be a real live \`h1/h2\` in correct DOM order; \`aria-hidden\` applies only to a decorative duplicate when the complete semantic title remains elsewhere. **The square's compositional distribution is independent of photo-cropping geometry.**
 
 #### R5.6 Responsive art direction: preserve the *relationship*, not the desktop geometry
 
