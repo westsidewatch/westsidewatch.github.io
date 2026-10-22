@@ -48,4 +48,9 @@ for rel in ("static/css/westside-design-os.css",
   print("Design OS guard failed: duplicated Chinese font authority:",rel);sys.exit(1)
 if "font-family: var(--ws-type-reading-zh)" not in (root/"assets/css/main.css").read_text():
  print("Design OS guard failed: article prose bypasses reading role");sys.exit(1)
+# English paragraphs should inherit their article's chosen reading font rather
+# than being forced to the Chinese body family, including in bilingual issues.
+type_guard=(root/"static/css/westside-typography-enforcement.css").read_text()
+if "font-family:var(--ws-type-reading-zh);" not in type_guard or ":not(:lang(en))" not in type_guard:
+ print("Design OS guard failed: English longform overrides Chinese reading role");sys.exit(1)
 print("Westside Design OS guard: PASS")

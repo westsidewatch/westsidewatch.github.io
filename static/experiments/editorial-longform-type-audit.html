@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Westside Design OS — Longform Typography Audit (Synthetic)</title>
 <link rel="stylesheet" href="/css/westside-design-os.css?v=20261021-reading-authority">
-<link rel="stylesheet" href="/css/westside-typography-enforcement.css?v=20261021-reading-authority">
+<link rel="stylesheet" href="/css/westside-typography-enforcement.css?v=20261021-language-aware">
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:auto}
@@ -20,18 +20,18 @@ body{margin:0;background:var(--ws-paper,#faf9f5);color:var(--ws-ink,#252525)}
 .audit-controls select,.audit-controls button{font:400 16px/1.3 var(--ws-type-display-zh,sans-serif);padding:10px 12px;color:inherit;border:1px solid currentColor;background:transparent;border-radius:0}
 .audit-controls :focus-visible{outline:3px solid var(--ws-first-light,#a2872a);outline-offset:3px}
 .audit-report{margin:18px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.7 ui-monospace,monospace;background:color-mix(in srgb,var(--ws-paper) 80%,#bbb);padding:16px;border-left:3px solid var(--ws-first-light,#a2872a)}
-.audit-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,40ch) minmax(0,1fr);max-width:1400px;margin:auto;padding:clamp(24px,4vw,54px) clamp(18px,3vw,48px);gap:2vw}
+.audit-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,40rem) minmax(0,1fr);max-width:1400px;margin:auto;padding:clamp(24px,4vw,54px) clamp(18px,3vw,48px);gap:2vw}
 .audit-rail{font:400 13px/1.6 var(--ws-type-display-en,Georgia,serif);position:sticky;top:15px;align-self:start;border-top:1px solid currentColor;padding-top:10px}
 .audit-prose{grid-column:2;min-width:0;font:400 var(--ws-type-scale-reading,18px)/var(--ws-type-leading-reading,1.82) var(--ws-type-reading-zh,sans-serif);line-break:strict;overflow-wrap:break-word;hyphens:auto}
 .audit-prose h2{margin:2.8em 0 .85em;font:600 1.5em/1.3 var(--ws-type-display-zh,sans-serif)}
 .audit-prose p{margin:0 0 1.2em}
 .audit-prose blockquote{margin:1.8em 0;padding-inline-start:1.1em;border-inline-start:1px solid var(--ws-first-light,#a2872a);font:italic 400 1.12em/1.65 var(--ws-type-display-en,Georgia,serif)}
 .audit-prose a:focus-visible{outline:2px solid var(--ws-first-light,#a2872a);outline-offset:3px}
-.audit-prose.is-english{font-family:"Bodoni Moda",serif;line-height:1.7}
+.audit-prose.is-english{font-family:var(--ws-type-display-en,"Bodoni Moda",serif);line-height:1.7}
 .audit-prose.is-english.is-reference{font-family:Georgia,serif}
 .audit-prose.is-english h2{font-family:inherit;font-weight:400}
 .audit-end{max-width:1400px;margin:auto;border-top:1px solid currentColor;padding:32px clamp(18px,3vw,48px)}
-@media(max-width:700px){.audit-layout{display:block}.audit-rail{position:static;margin-bottom:2rem}.audit-prose{width:100%;max-width:40ch;margin:auto}}
+@media(max-width:980px){.audit-layout{display:block}.audit-rail{position:static;max-width:40rem;margin:0 auto 2rem}.audit-prose{width:100%;max-width:40rem;margin:auto}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
@@ -39,7 +39,7 @@ body{margin:0;background:var(--ws-paper,#faf9f5);color:var(--ws-ink,#252525)}
 <header class="audit-header">
   <div class="audit-kicker">WESTSIDE DESIGN OS / READABILITY LAB / NOT PUBLIC EDITORIAL COPY</div>
   <h1>Longform Typesetting</h1>
-  <p>此頁是獨立測試，不是正式雜誌文章。以本網站實際 Design OS 字體入口測試長篇中文、英文、斷行、橫向溢出與字型載入。中文測試字數是合成資料，不得視為已完成稿件。</p>
+  <p>此頁是獨立測試，不是正式雜誌文章。使用實際 Design OS 的長篇中英文排版、斷行、橫向溢出與字型載入測試。比較的是<strong>段落實際計算字體</strong>，不是外層容器。中文測試字數是合成資料。</p>
   <div class="audit-controls">
     <label for="lang">Language / 字體對照</label>
     <select id="lang">
@@ -71,39 +71,47 @@ function render(){
  prose.lang=english?'en':'zh-Hant';
  const chunks=[];let used=0,section=0;
  while(used<count){
-  if(chunks.length%19===0){section++;chunks.push('<h2 id="section-'+section+'">'+(english?'Section '+section+' — Editorial rhythm':'第 '+section+' 節｜城市與見證')+'</h2>');}
+  if(chunks.length%19===0){section++;chunks.push('<h2 lang="'+(english?'en':'zh-Hant')+'" id="section-'+section+'">'+(english?'Section '+section+' — Editorial rhythm':'第 '+section+' 節｜城市與見證')+'</h2>');}
   if(chunks.length%47===0)chunks.push('<blockquote lang="en">The night is far spent, the day is at hand. — Romans 13:12</blockquote>');
   const part=unit.slice(0,Math.min(unit.length,count-used));
-  chunks.push('<p>'+part+'</p>');used+=part.length;
+  chunks.push('<p lang="'+(english?'en':'zh-Hant')+'">'+part+'</p>');used+=part.length;
  }
  prose.innerHTML=chunks.join('');
  requestAnimationFrame(()=>{document.fonts.ready.then(measure);});
 }
 function measure(){
-const css=getComputedStyle(prose),rect=prose.getBoundingClientRect();
-const faces=[...document.fonts].filter(f=>f.family.replaceAll('"','').includes('Chiron Hei HK WS'));
-const bodoni=[...document.fonts].filter(f=>f.family.includes('Bodoni Moda'));
-const loaded=faces.filter(f=>f.status==='loaded').length;
-const width=document.documentElement.scrollWidth,viewport=window.innerWidth;
-const data={
- status:faces.length===0?'CHIRON FONT FACE NOT DISCOVERED — cannot certify actual webfont':loaded?'CHIRON FONT FACE LOADED':'CHIRON FACE DECLARED, BUT NOT CONFIRMED LOADED',
- selectedMode:document.getElementById('lang').value,
- bodyCharacters:prose.textContent.length,
- paragraphs:prose.querySelectorAll('p').length,
- headings:prose.querySelectorAll('h2').length,
- computedFontFamily:css.fontFamily,
- loadedChironFaces:loaded,
- availableChironFaces:faces.length,
- availableBodoniFaces:bodoni.length,
- fontSize:css.fontSize,
- lineHeight:css.lineHeight,
- columnWidthPx:Math.round(rect.width),
- documentWidthPx:width,viewportWidthPx:viewport,
- horizontalOverflow:width>viewport+1,
- scrollHeightPx:document.documentElement.scrollHeight,
- reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches
-};
-report.textContent=JSON.stringify(data,null,2);
+ const wrapperCSS=getComputedStyle(prose),rect=prose.getBoundingClientRect();
+ const paragraph=prose.querySelector('p'),paraCSS=paragraph?getComputedStyle(paragraph):null;
+ const heading=prose.querySelector('h2'),headingCSS=heading?getComputedStyle(heading):null;
+ const mode=document.getElementById('lang').value,expected=mode==='zh'?'Chiron Hei HK WS':mode==='en-bodoni'?'Bodoni Moda':'Georgia';
+ const faces=[...document.fonts].filter(f=>f.family.replaceAll('"','').includes('Chiron Hei HK WS'));
+ const bodoni=[...document.fonts].filter(f=>f.family.replaceAll('"','').includes('Bodoni Moda'));
+ const loadedChiron=faces.filter(f=>f.status==='loaded').length,loadedBodoni=bodoni.filter(f=>f.status==='loaded').length;
+ const width=document.documentElement.scrollWidth,viewport=window.innerWidth;
+ const fontIsSelected=!!paraCSS&&paraCSS.fontFamily.includes(expected);
+ const status=!fontIsSelected?'FAIL — PARAGRAPH FAMILY DOES NOT MATCH SELECTED MODE':
+  mode==='zh'?(loadedChiron?'CHIRON CSS + LOADED FONT FACE VERIFIED; GLYPHS STILL REQUIRE VISUAL REVIEW':'CHIRON CSS SELECTED; WEBFONT LOADING NOT VERIFIED'):
+  mode==='en-bodoni'?(loadedBodoni?'BODONI CSS + LOADED FONT FACE VERIFIED; READABILITY NOT APPROVED':'BODONI CSS SELECTED; WEBFONT LOADING NOT VERIFIED'):
+  'GEORGIA CSS SELECTED; LOCAL RENDERED FONT STILL REQUIRES VISUAL REVIEW';
+ const textCount=[...prose.querySelectorAll('p')].reduce((sum,p)=>sum+p.textContent.length,0);
+ const data={
+  status,selectedMode:mode,expectedParagraphFamily:expected,
+  paragraphFamilyMatchesSelection:fontIsSelected,
+  targetBodyCharacters:Number(document.getElementById('length').value),
+  paragraphTextCharacters:textCount,allRenderedTextCharacters:prose.textContent.length,
+  paragraphs:prose.querySelectorAll('p').length,headings:prose.querySelectorAll('h2').length,
+  computedWrapperFamily:wrapperCSS.fontFamily,
+  computedParagraphFamily:paraCSS?.fontFamily||null,
+  computedHeadingFamily:headingCSS?.fontFamily||null,
+  loadedChironFaces:loadedChiron,availableChironFaces:faces.length,
+  loadedBodoniFaces:loadedBodoni,availableBodoniFaces:bodoni.length,
+  paragraphFontSize:paraCSS?.fontSize||null,paragraphLineHeight:paraCSS?.lineHeight||null,
+  columnWidthPx:Math.round(rect.width),
+  documentWidthPx:width,viewportWidthPx:viewport,horizontalOverflow:width>viewport+1,
+  scrollHeightPx:document.documentElement.scrollHeight,
+  reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches
+ };
+ report.textContent=JSON.stringify(data,null,2);
 }
 document.getElementById('run').addEventListener('click',render);
 window.addEventListener('resize',()=>requestAnimationFrame(measure));

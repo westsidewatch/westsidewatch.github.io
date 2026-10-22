@@ -40,9 +40,14 @@ body[data-ws-scope] :is(
 }
 body[data-ws-scope] :is(
  .article-body,.prose,.reading-body,.sites-article-body
-):not(:where([data-ws-designable], [data-ws-designable] *)) :is(p,li,blockquote):not(:where([data-ws-designable], [data-ws-designable] *)){
+):not(:where([data-ws-designable], [data-ws-designable] *)) :is(p,li,blockquote):not(:where([data-ws-designable], [data-ws-designable] *)):not(:lang(en)){
  font-family:var(--ws-type-reading-zh);
 }
+
+/* The reading role only applies to non-English paragraphs. A child element
+   inherits lang from its closest annotated ancestor, so an English article
+   does not get forcibly assigned the Chinese reading family. The English
+   longform choice remains contextual until the editorial OS approves one. */
 
 /* The language attribute on the heading itself must win over the page language. */
 body[data-ws-scope] :is(h1,h2,h3,h4,h5,h6)[lang="en"]:not(:where([data-ws-designable], [data-ws-designable] *)){
