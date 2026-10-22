@@ -1071,7 +1071,7 @@ The user-set goal remains **award-competitive quality** with self-critique and r
 
 **D01 — Abraham's faith tested / The Testing of Abraham's Faith, Genesis 22.**
 - **Primary record:** [Wikimedia Commons 016 — 1866, original digital 2303×2904](https://commons.wikimedia.org/wiki/File:016.The_Testing_of_Abraham%27s_Faith.jpg). Already catalogued in the **existing repo** at \`static/iiif/visual-dore-gen22-testing-abraham/manifest.json\` with artist, date, PD Mark and Commons source; its IIIF canvas records **2303×2904**.
-- **Observed visual grammar from the actual original image:** dark robed Abraham **right foreground** and Isaac **left** bearing the wood, a bright horizontal far distance, palms at upper right, uneven dark vegetation at bottom. **This plate is an earlier journey/approach stage of the test**, not a picture of an angel stopping a knife; automated image descriptions claiming a sacrificial knife/ram in this specific scan must not be carried into our caption.
+- **Observed visual grammar from the actual original image:** dark robed Abraham **right foreground** and Isaac **left** bearing the wood, a bright horizontal far distance, palms at upper right, uneven dark vegetation at bottom. **Visual caution:** the inspected public preview visibly shows a younger figure carrying wood and an older robed figure with a staff; the Commons image title broadly identifies Genesis 22, but that does not resolve its precise depicted verse or sequence. **Do not assert a unique moment in the Genesis narrative from the artwork alone.** The automated description claiming a knife, ram and angel in this same pictured file conflicts with the visible preview and must not enter the caption.
 - **Subject/crop:** The relationship **two travellers + their wood + bright distant axis** is the minimum semantic unit. Losing the left standing figure or the right elder changes the story. Large Bodoni title is safest on a **separate paper field**, not across garments or palms. Deep contrast belongs to the figures/ground.
 - **Candidate magazine use [TRIAL]:** a vertical illustrated encounter or a *bounded, subject-reviewed* square crop for a Genesis study; captions distinguish Doré's pictorial reading of the story from archaeology. Sample credit: “Gustave Doré, The Testing of Abraham's Faith, Bible illustration, 1866; Commons scan, Public Domain Mark.”
 - **Rejection [BLOCK]:** a square that cuts either traveller; a metadata caption depicting Isaac's binding, ram or angel if absent from this plate.
@@ -1197,6 +1197,212 @@ These **six compositional methods are not six approved page skins**. Each must b
 - **Unresolved items [OPEN]:** first source raster retrieval and title-safe polygon annotations for all D01–D06, rights checks for non-Commons scans, actual thumbnail comparison, published real device screenshot; no visual acceptance yet.
 
 **This chapter turns archive scholarship into *actionable creative decisions* while maintaining the crucial honest distinction: source document inspected ≠ original image fully decoded ≠ a visually approved layout. Next work can continue in S19/S20/S23 inside this same OS. Do not open a second manual or merge a prototype before an approved publication identity.**
+
+
+### 6E.28 R4 — source pixels → geometrically exact visible area → subject-safe composition (2026-10-22)
+
+**This is a production method and a book-study chapter, NOT an approved visual direction.** The prior R3 atlas identified six Doré works and their source records; it did **not** acquire six high-resolution raster files nor annotate actual pixels. R4 bridges the gap between an image-source record and a reliable editorial layout decision.
+
+**Primary technical sources:** [CSS Images 3](https://www.w3.org/TR/css-images-3/) on replaced-object sizing, [MDN \`object-fit\`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit), [MDN \`object-position\`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-position); [W3C CLREQ](https://www.w3.org/International/clreq/) for CJK punctuation/line breaking; [WCAG 2.2](https://www.w3.org/TR/WCAG22/) on readability/resize/reflow/focus; [W3C WAI image-background contrast failure F83](https://www.w3.org/WAI/WCAG22/Techniques/failures/F83).
+
+#### R4.1 Evidence ladder — what may and may not be inferred
+
+| Evidence available | Safe claim | NOT safe to claim | Status |
+| --- | --- | --- | --- |
+| Original publication or Commons catalog + intrinsic W/H | Work identity, attributed date as catalogued, full source aspect, mathematical crop | Exact subject bounding boxes or uniform hatch/contrast maps | **[SOURCE-VERIFIED]** |
+| Public web-preview (e.g. Commons 500×630) visually inspected | **Qualitative** position of subject/figures/bright-and-dark bands, artistic hypothesis | Sub-pixel glyph exclusion polygons, exact original-density values, target-device decoded pixels | **[VISUAL-PREVIEW / TRIAL]** |
+| 1:1 preview from an image-search UI | Thumbnail appearance **only**; source may still be portrait | That the full source was square or that important material outside the thumbnail did not exist | **[CROPPED-PREVIEW]** |
+| Licensed/full original decoded, provenance retained | Actual W/H, patch luminance/gradient, hand-annotated protected polygons, crop overlays | “This CSS passed” before real browser measurement | **[PIXEL-READY / OPEN QA]** |
+| Real browser image, title, caption and responsive screenshots | Visual subject, optical typography and contrast for that *render* | General approved rule for other engravings or legally cleared usage without review | **[RENDER-VERIFIED / review]** |
+
+**Specific R3 correction:** The *Testing of Abraham's Faith* source is listed by Wikimedia Commons broadly as Genesis 22 (file 016). A publicly inspected preview shows **wood-bearing younger figure left** and **staff-bearing older robed figure right**, not the knife/angel/ram asserted in one unreliable auto-description. The publication moment/verse cannot be assigned uniquely from title and preview alone; the R3 “earlier approach stage” assertion was too specific and is now corrected. A caption may name the work and cite Genesis 22, not invent depicted objects or a narrower verse.
+
+**Original vs preview:** The project IIIF manifest records **2303×2904** for D01; Commons itself displays a **500×630** proportional preview, and image-search UIs can crop their tiles to **512×512**. Do not use a square result tile to approve a source's aspect or crop.
+
+#### R4.2 Reproducible crop inverse — source-space geometry, independent of box pixels [METHOD]
+
+Let W,H be **natural image pixel dimensions**; Bw,Bh are the actual rendered *image element's content box* in CSS pixels; px,py are the \`object-position\` fractions (0=start, 0.5=center, 1=end). For \`object-fit: cover\` with no additional transform, clip-path, transform-origin, EXIF rotation discrepancy or CSS borders in the measured content box:
+
+\`\`\`text
+scale              s   = max(Bw/W, Bh/H)
+rendered source    Rw  = s × W
+                   Rh  = s × H
+pixel displacement dx  = (Bw - Rw) × px
+                   dy  = (Bh - Rh) × py
+
+visible source x0 = max(0, -dx / s)
+visible source y0 = max(0, -dy / s)
+visible source x1 = min(W, (Bw - dx) / s)
+visible source y1 = min(H, (Bh - dy) / s)
+visible crop      = [x0, y0, x1 - x0, y1 - y0]
+normalized crop   = [x0/W, y0/H, (x1-x0)/W, (y1-y0)/H]
+\`\`\`
+
+The formula maps CSS *cover* back to source pixels; it does not choose an artistic crop. Browser-resolved \`object-position\` may use lengths, mixed percentages, logical keywords and transformations; in those cases normalize the actual computed geometry first or measure the browser rather than blindly substituting these equations. The image's **\`object-fit\` determines the clipping**, not whether the page's frame itself is a square.
+
+**Reference implementation for a local research checker, NOT global runtime or another visual OS:**
+
+~~~js
+function coverCrop(W, H, Bw, Bh, px = 0.5, py = 0.5) {
+  if (![W, H, Bw, Bh].every(n => Number.isFinite(n) && n > 0))
+    throw new RangeError("positive source and box dimensions required");
+  if (![px, py].every(n => n >= 0 && n <= 1))
+    throw new RangeError("fractional object positions must be between 0 and 1");
+  const scale = Math.max(Bw / W, Bh / H);
+  const renderedW = scale * W, renderedH = scale * H;
+  const dx = (Bw - renderedW) * px;
+  const dy = (Bh - renderedH) * py;
+  const x0 = Math.max(0, -dx / scale);
+  const y0 = Math.max(0, -dy / scale);
+  const x1 = Math.min(W, (Bw - dx) / scale);
+  const y1 = Math.min(H, (Bh - dy) / scale);
+  return {
+    source: {x: x0, y: y0, w: x1-x0, h: y1-y0},
+    normalized: {x: x0/W, y: y0/H, w: (x1-x0)/W, h: (y1-y0)/H},
+    scale, clippedAreaFraction: 1 - ((x1-x0)*(y1-y0))/(W*H)
+  };
+}
+// The same source: D01 2303×2904 (actual source record).
+// 1000×1000 source view => y ≈ 300.5, h=2303 (20.70% vertical lost).
+// 1950×1000 source view => y ≈ 861.49, h≈1181.03 (59.33% lost).
+// This is crop arithmetic, NOT a subject-safety score.
+~~~
+
+**Crop math with actual recorded D01 size, center alignment (calculated):**
+
+| Display field | Source pixels retained (approx.) | Source normalized vertical interval | Lost source area | Review |
+| --- | --- | --- | --- | --- |
+| Natural full portrait (contain/full view) | **2303 × 2904** | 0–1 | **0%** | Narrative baseline; no automatic clipping |
+| 4:5 portrait with \`cover\` | **2303 × 2878.75** | 0.0043–0.9957 | **0.87%** | Almost whole source |
+| **1:1 square** with \`cover\` | **2303 × 2303** | **0.1035–0.8965** | **20.70%** | Verify both travellers and wood |
+| 3:2 landscape with \`cover\` | **2303 × 1535.33** | 0.2357–0.7643 | **47.13%** | May fail narrative continuity |
+| **1.95:1 landscape** with \`cover\` | **2303 × 1181.03** | **0.2967–0.7033** | **59.33%** | Detail-only hypothesis pending subject study |
+| 16:9 with \`cover\` | **2303 × 1295.44** | 0.2770–0.7230 | **55.39%** | Not a “full original” |
+ 
+**The percentages here are mathematically correct for this single *portrait source* and center crop.** A true \`full-bleed\` canvas spanning the viewport is not synonymous with uncut image: under \`cover\`, viewport ratio still crops. If keeping the full image is essential, use \`contain\` or let the image follow native aspect with text outside.
+
+#### R4.3 Protected subjects, exclusion fields and false “blank” regions [METHOD]
+
+Before placing any live type, the art director annotates the original **full-frame** image with **four semantic layers**; never infer them solely from edge density:
+
+1. **Narrative-critical subject masks P:** people and expressive gestures, eyes, face, hands, distinctive objects (Isaac's wood, Moses' infant/basket, Babel's height), historical/directional relationship; a small object may be highest priority.
+2. **Compositional-axis lines A:** horizon, vanishing point, gate/arch axis, figures' collective direction and the boundaries of architectural evidence.
+3. **Ink-density and brightness zones I:** local luminance, variance and line-edge strength at *effective displayed pixel size*. These are potential readability proxies, not reliable historical semantic labels.
+4. **Source, signature and caption material C:** inscriptions and engraver signatures are part of the authored plate; do not crop or cover unless explicitly documented as a selected **detail** view.
+
+Record protected geometry as normalized \`[0,1]\` rectangles or polygons with fields \`meaning\`, \`priority\`, \`annotator\`, \`source_revision\`. **No numeric D01 subject polygons are published in this round** because original high-res source pixels were not successfully acquired in the work container; the Commons preview permits only qualitative orientation. We will not invent precision from a thumbnail.
+
+**Two independent tests are required.**
+
+- **Subject preservation:** the selected source-space crop must contain **all mandatory P/C fields** for a full-scene claim; otherwise explicitly label the view as a detail and link to the full original. A partial face, one missing participant or missing narrative object is a **BLOCK** when pretending to show the complete scene.
+- **Text-safe fit:** for every actual displayed text run T (ink bounds or conservative DOM text rectangle with optical safety margin), map T back to image source-space using the displayed transform; do not intersect protected P/C polygons. *Also* sample the final composite background contrast across all text lines. A rectangle simply avoiding faces is not necessarily contrast-safe; a blank-looking bright wall can still have dark hatching.
+
+**Severity model:** \`BLOCK\` = wrong work/action/source, cut indispensable subject, hidden word, missing source clearance, contrast/zoom failure; \`IMPORTANT\` = reading fatigue, density jump, poor optical rhythm, distracting hatch near display; \`POLISH\` = minor alignment after all previous gates pass. Never turn these into an automatic aesthetic numeric score.
+
+#### R4.4 Image “negative space” is not typographic white space
+
+A quiet compositional field is **subjectually** quiet when it doesn't contain necessary action; it may remain **graphically** busy due to fine hatch lines. A texture's mean luminance is insufficient: test local minimum/maximum contrast and luminance variance with target text color at its real font weight and actual downsampled scale. Use grayscale line/edge-response only as a candidate ranking aid; physically inspect all finalists.
+
+**Evaluation order when there is no safe image field:**
+1. Move giant Bodoni / Chiron 900 **outside** the engraving into the existing paper/ink register. **This is often the most editorially forceful choice.**
+2. If meaningful, crop to a differently labelled **detail** image, retaining the full work alongside or behind an explicit “view original” affordance.
+3. Consider restrained, localized color treatment only if it does not erase a historically meaningful image segment and remains legible after the composite.
+4. Do **not** rescue a crowded drawing with arbitrary duplicate wallpaper, global blur, repeated sepia, edge stretching, or an opaque black slab across a person's face.
+
+**Do not mask bad typography through contrast-only filters.** The text can be W3C-contrast-compliant and still be editorially false because it hides hands, architecture or an essential object. A dynamic image needs a conservative live sample at each caption/title region after it is rendered.
+
+#### R4.5 Bilingual title placement — different optical occupations, one coherent reading order
+
+Existing authority remains **Bodoni Moda Roman/Italic 400 + genuine SC**, and **Chiron Hei HK WS 900 (main Chinese), 200 (large secondary), 400 (body)**; no font-family changes or new global typography tokens.
+
+| Role | Source relationship | Layout requirement | Optical check / rejection |
+| --- | --- | --- | --- |
+| Giant English display | Can act as a **graphic counterweight** to dark line masses | Live semantic type, typically an exterior paper region if engraving dense | Does **every letter** remain decipherable? \`GATE.\` must not lose E or stop |
+| Chinese main article title | States what the authentic story is about | 900 weight when primary; logical DOM heading remains visible | No line breaks that isolate punctuation; no resizing / stretching letters to fit square |
+| Chinese 200 supporting display | Can introduce a calm reading threshold | Large readable size and sufficient line height **outside line-busy areas** | Never tiny 200 metadata; no overlapping extenders/quotation marks |
+| Body and source | Research, read, verify | Genuine Chiron 400, open paragraph measure, figure caption adjacent to artwork | Do not set historical-source credit as near-white 10px over intricate hatch |
+| Bodoni Italic scripture | An authentic quotation *with exact text and reference* | Semantically bound to citation and visually separate from archival caption | No invented biblical line or isolated unlabelled quotation |
+| Folio / small caps | Orientation and action, not luxury decoration | Genuine SC, low hierarchy, anchor to real Contents if interactive | Legible at 390px, focus visible and not hiding artwork signature |
+
+**Collision contract:** \`ImagePlane\` and \`TextPlane\` may overlap **only when** the image contains a deliberately approved text-safe region *and* all heading segments remain optically intact. A print-like giant letter cropped at a page edge must still preserve the word's semantic reading. If source image content must remain intact, prioritize **separate adjacent planes** rather than an overlap effect. Avoid translating English \`text-wrap: balance\` expectations to Chinese automatically: Chinese punctuation and line breaks require CLREQ-informed visual review. Reflow must remain natural at 320 CSS px and actual 200% browser text resize.
+
+#### R4.6 A publisher-level image/text coordinate sheet, with an explicit DOM owner
+
+**The art-direction sheet produces data and layout decisions; the website consumes only approved instances**. A source-linked candidate record could be:
+
+~~~json
+{
+  "specimen_id": "D01",
+  "source_record": "https://commons.wikimedia.org/wiki/File:016.The_Testing_of_Abraham%27s_Faith.jpg",
+  "existing_iiif": "/iiif/visual-dore-gen22-testing-abraham/manifest.json",
+  "source_dimensions_px": [2303, 2904],
+  "work": "The Testing of Abraham's Faith",
+  "authorship_source": "Gustave Dore (1866), Commons file record",
+  "publication_rights_review": "SOURCE RECORD VERIFIED; FINAL USE APPROVAL OPEN",
+  "protected_polygons_normalized": null,
+  "artist_inscription_polygons_normalized": null,
+  "exclusion_polygons_normalized": null,
+  "image_density_zones": null,
+  "candidate_shapes": ["native", "square-detail", "landscape-detail"],
+  "crop_rect_source_px": null,
+  "title_rect_css_px": null,
+  "text_type_roles": ["display-en", "display-zh-primary"],
+  "desktop_phone_zoom_evidence": null,
+  "status": "CROP_GEOMETRY_COMPUTED; IMAGE_ANNOTATION_OPEN; NOT_APPROVED"
+}
+~~~
+
+**The \`null\` coordinates are intentional**: actual research has not resolved them. No new JSON system is installed, and this specimen is illustrative schema documentation only.
+
+**Once approved**, a scoped source-bearing component might follow this structural contract (one existing Journal owner, **not applied to production**):
+
+~~~html
+<article data-ws-scope="journal">
+  <header class="ws-editorial-opener">
+    <p class="ws-editorial-edition">VOL.00 · THE GATE</p>
+    <h1 class="ws-editorial-article-title">城門口的人</h1>
+  </header>
+  <figure class="ws-editorial-source-image">
+    <img src="[verified-image-asset]" alt="[meaningful image description]">
+    <figcaption>[actual artwork, date, author, reproducer and source]</figcaption>
+  </figure>
+  <section class="ws-editorial-reading" aria-label="文章正文">
+    [canonical manuscript paragraphs, headings and notes]
+  </section>
+</article>
+~~~
+
+This is an **HTML contract illustration**, not fabricated article copy or an operational source path; the real component must consume actual manifest/verified assets. The title may visually share a composition but stays live, selectable and correctly represented to assistive technology. Image figures keep descriptive captions and own their image metadata. No separate CSS owner created during the R4 documentation round.
+
+#### R4.7 Approval matrix: six different images, three image ratios, four screen states
+
+| Evidence ID | What to test | Must establish | Current status |
+| --- | --- | --- | --- |
+| A0 | D01–D06 original catalog check | Work/date/medium/digital-file license/author attribution | 6 source records researched; rights status varies |
+| A1 | Original full raster + source manifest | Exact decoded pixels, mark whether trim/border/EXIF change crop | **OPEN; no full six-image local acquisition** |
+| A2 | High-resolution subject polygons P/C | Subject, gesture, inscription and axis positions from original | **OPEN** |
+| A3 | 1:1, portrait, wide controlled crop images | One retained detail and one rejected full-scene candidate per source | **Arithmetic example only** |
+| A4 | 1648×928 and 768×1024 browser renders | Exact displayed clip, title-safe margins, optical body/headline | **NOT VERIFIED** |
+| A5 | 390×844 and 320px reflow | Chiron 900/200/400, Bodoni and captions legible | **NOT VERIFIED** |
+| A6 | Actual browser 200% zoom, not reduced CSS viewport proxy | Full story, safe edges, keyboard/focus, no lost copy | **NOT VERIFIED** |
+| A7 | Live background/text contrast | 4.5:1 normal and 3:1 large text where WCAG 2.2 1.4.3 applies, checked at changing image patches | **NOT VERIFIED** |
+| A8 | Original scene truthfulness and credit | Thumbnail identifies the true image, complete item and full-image path | **R3 source notes only** |
+| A9 | Entire magazine narrative | Cover, Contents, real middle paragraphs, citation, ending and next | **NOT APPROVED** |
+
+**Preconditions for §6A release:** visually unique contemporary magazine identity, true Doré authorship when claimed, artwork-preserving crop, rights/caption accuracy, native type + body readability, accessible source and Contents, all viewport/zoom conditions, then **internal 18/20, no zero, no BLOCK**. Neither crop mathematics nor build success can self-certify creative originality or imply Awwwards/Webby/FWA endorsement.
+
+#### R4.8 One-page decision instructions to use during an art-direction review
+
+1. **Find the subject** in full authentic source before talking about 1:1. Write its true action and most easily lost object in one sentence.
+2. **Choose the editorial task** (witness / approach / detail / panorama / pause / source note), then pick a candidate frame that serves it.
+3. **Calculate the visible source rectangle** using R4.2 at the actual render box and object position; document exactly what is lost, not just aspect ratio.
+4. **Mark protected masks** on the original source. If the draft crop cuts one, do not silently shift it: adjust/larger frame or retitle as a detail.
+5. **Place live type** on paper first; move it onto the image only after safe subject-and-contrast proof.
+6. **Compare three images**, not just three CSS states: full subject view, the selected crop, and a deliberately rejected crop with reason.
+7. **Prove the whole publication** from cover to true Contents to real article reading and closing; then test 1648/768/390/320, actual 200% zoom and keyboard.
+8. **Promote only an accepted composition rule** to its existing OS owner. If crop is unsafe or uniqueness fails, reject and return to the idea—not the ornament.
+
+**R4 immediate outcome:** an exact mathematical and editorial protection method can be written **now**; verified per-image polygons and photographic tonal maps cannot be fabricated while the full raster remains inaccessible. This is why this round ends with complete handbook rules and an explicit UNVERIFIED annotation queue, rather than claiming the magazine design has been approved.
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 

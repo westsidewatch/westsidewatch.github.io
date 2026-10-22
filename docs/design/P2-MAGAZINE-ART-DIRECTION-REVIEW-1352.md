@@ -263,3 +263,15 @@ The user requests 12+ classic-modern magazine standards-book research, emphasisi
 **Delivered handbook method:** per-plate subject/illumination/engraving density/depth observations, safe crop tradeoffs, facts-vs-inferences, original-raster/credit/rights checklist, exact square-crop loss of **19.45–20.71%** of height for four documented 1866 portrait image dimensions, six editorial translation grammar candidates (witness / threshold / city / crowd / light / source), and BLOCK-level award/reader/performance gates. London Museum hosted image may require a license; its object records are research references, not media import authorization. All normalized subject polygon coordinates remain OPEN until original image pixels are available and actually inspected.
 
 **Scope:** edits are to existing Manual, skill routing and PR review only, no artwork replacement, visual OS token, HTML/CSS/JS, cover, church motion or homepage movie. This is **source research and manual progression**, NOT actual completed 6-image crop review, artistically approved Westside identity, or an 18/20 production pass. **DO NOT MERGE** until creative direction approved.
+
+
+## R4 source-image geometry and bilingual type-safe design research (2026-10-22)
+
+Next **handbook-first** research after R3: operationalize subject-safe cropping / typography rather than continuing the THRESHOLD polish. The single Design OS Editorial Manual §6E.28–§6E.28 R4.8 now specifies:
+- Proof ladder separating art-record, 500×630 Commons preview, 512-square search thumbnail, acquired full raster, and genuine live-browser evidence; corrects the overconfident Genesis 22 “earlier journey” moment description by retaining actual visible wood/staff details and not inventing knife/ram/angel.
+- Reversible formula for \`object-fit:cover\` / fractional \`object-position\`, reference JS and source-space/normalized box math. D01 real source (2303×2904) center-square discards 20.70% of original image, 1.95:1 wide discards 59.33%; **math verified, artistic subject safety NOT verified**.
+- Four research masking layers (protected person/objects, compositional axes, hatch/brightness, inscriptions), mandatory subject preservation & text safe-zone tests, open normalized polygon data rather than invented precision.
+- Existing Bodoni Roman/Italic/SC and Chiron 900/200/400 role-specific title behavior, real contrast, captions, a source manifest specimen with unfilled unavailable evidence, full 1648/768/390/320/200%-zoom acceptance matrix, and step-by-step design review.
+- [Method reference] CSS Images 3, MDN object-fit/object-position, W3C CLREQ and WCAG 2.2. **No artwork raster acquired through this research connector**, no falsely precise image-density zones; only documentation and skill routing changed.
+
+**Explicit scope:** 3 Markdown files, no new token authority, no production HTML/CSS/JS, film, P2 or artwork changes. Creative identity remains unselected; **DO NOT MERGE** until full verified layout and §6A gate.
