@@ -33,6 +33,26 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+      - name: Capture magazine browser evidence (Design OS award review)
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-browser-preview.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in $(seq 1 30); do
+            curl -fsS 'http://127.0.0.1:4173/experiments/p2-magazine-art-direction-studio.html' >/dev/null && break
+            sleep 1
+          done
+          node scripts/capture_p2_magazine_geometry_review.cjs
+      - name: Preserve magazine visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-magazine-art-direction-evidence
+          path: artifacts/p2-magazine-visual/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Deploy Cloudflare Pages preview (never production)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
