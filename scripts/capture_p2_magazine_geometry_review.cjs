@@ -98,6 +98,44 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
       }catch(e){failures.push({id,defects:[e.message]});console.error(id+' ERROR '+e.message)}
       finally{await page.close()}
     }
+
+    // THRESHOLD is a distinct authored concept, not a shape override. Separate art-direction evidence.
+    for(const [id,width,height] of [['threshold-desktop',1648,928],['threshold-phone',390,844]]){
+      const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+      const defects=[];
+      try{
+        const response=await page.goto(base+'/experiments/p2-magazine-art-direction-studio.html?view=issue&presentation=1',{waitUntil:'load',timeout:45000});
+        await page.locator('#stage.th').waitFor({state:'visible'});
+        await page.evaluate(()=>document.fonts.ready);
+        const facts=await page.evaluate(()=>{
+          const img=document.querySelector('.th__photo img');
+          const r=document.querySelector('.th__photo')?.getBoundingClientRect();
+          return {photoDecoded:!!img&&img.complete&&img.naturalWidth>0,
+            originalLogo:!!document.querySelector('.th__mast .os-logo'),
+            source:!!document.querySelector('.th__imgcredit')?.textContent.includes('非史實攝影'),
+            contents:document.querySelectorAll('.th__contents .issue-list li').length,
+            width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
+            ratio:r?r.width/r.height:0,
+            clean:document.body.classList.contains('presentation-mode')&&getComputedStyle(document.querySelector('.toolbar')).display==='none'};
+        });
+        if(!response||response.status()!==200)defects.push('HTTP');
+        if(!facts.photoDecoded||!facts.originalLogo||!facts.source)defects.push('IMAGE_OR_PROVENANCE');
+        if(facts.contents!==12||facts.scrollWidth>facts.width+2)defects.push('CONTENTS_OR_OVERFLOW');
+        if(Math.abs(facts.ratio-1)>.08)defects.push('SQUARE_SUBJECT_RATIO');
+        if(!facts.clean)defects.push('PUBLICATION_NOT_CLEAN');
+        const screenshot=id+'.png';
+        await page.screenshot({path:path.join(out,screenshot),fullPage:true,animations:'disabled'});
+        const link=page.locator('.th__folio');
+        await link.focus();
+        if(!(await link.evaluate(el=>el===document.activeElement)))defects.push('FOLIO_KEYBOARD');
+        await link.click();
+        if(!(await page.evaluate(()=>location.hash==='#th-contents')))defects.push('FOLIO_CONTENTS');
+        results.push({id,shape:'independent-threshold',viewport:{width,height},metrics:facts,screenshot,defects});
+        if(defects.length)failures.push({id,defects});
+        console.log(id+' '+(defects.length?'FAIL: '+defects.join(', '):'CONCEPT-UX PASS'));
+      }catch(e){failures.push({id,defects:[e.message]});console.error(id+' ERROR '+e.message)}
+      finally{await page.close()}
+    }
   }finally{await browser.close()}
   fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({
     schema:'westside.magazine.visual-evidence.v1',commit:process.env.GITHUB_SHA,
