@@ -16,3 +16,10 @@ Read [references/visual-grammar.md](references/visual-grammar.md) when generatin
 7. Reject candidates without a unique thumbnail silhouette, meaningful graphic subject, or structural difference from the baseline.
 
 Build success is not design acceptance. Editor entry requires a named direction, traceable reference families, independent DOM, primary visual asset, responsive layout, motion rationale, Storybook story and browser review.
+
+
+## Award-calibre acceptance loop — use the existing Design OS §6A
+
+For Westside magazine, Journal, Church and First Look art direction, 15/20 is **exploratory minimum only**. The existing \`docs/design/WESTSIDE-EDITORIAL-MANUAL.md\` §6A is the single release authority: a *provisional internal goal* of ≥18/20 across this skill's same ten 0–2 criteria, no zero and no unresolved block, **plus independently working** navigation, Chinese/English reading, performance, focus, reduced-motion, tablet, phone and actual zoom. This is not an official Awwwards, Webby or FWA score or promise of winning.
+
+For every meaningful iteration: use the currently deployed render and real copy → inspect desktop/tablet/phone screenshot → note block/important/polish by owner → fix one meaningful structural defect → re-render and compare → reject/retain. If an actual viewport, user path, source asset or browser behavior wasn't checked, say **NOT VERIFIED**. Green CI and generated screenshots are not equivalent to an art-direction signoff. PR #1352's shared-content square/wide/full mode is a **controlled one-axis geometry comparison**, not three distinct authored directions; genuinely distinct concepts require independent semantic DOM.

@@ -233,6 +233,25 @@ body.geometry-mode .info{padding-inline:20px}
 .geo__status{margin-top:45px}
 }
 
+
+/* Square signifier = one historical image + working dossier-to-Contents link.
+   Optional clean publication view strips the studio chrome, NOT the original content. */
+body.presentation-mode{background:#f3eee4}
+body.presentation-mode .toolbar,body.presentation-mode .info,body.presentation-mode .proof-footer{display:none!important}
+body.presentation-mode .study{width:100%;max-width:none;margin:0;box-shadow:none;min-height:0}
+body.presentation-mode .geo__status,body.presentation-mode .geo__source em{display:none}
+.geo__media{isolation:isolate}
+.geo__edge{display:none}
+.geo--square .geo__edge{display:block;position:absolute;right:clamp(16px,2.4vw,45px);top:50%;writing-mode:vertical-rl;transform:translateY(-50%);font:400 11px/1.2 var(--ws-type-display-en-sc,var(--os-en));letter-spacing:.16em;color:#193247}
+.geo--square .geo__square-seal{display:flex;right:0;bottom:0;top:auto;left:auto;width:clamp(100px,9vw,140px);border-top:1px solid #193247;border-left:1px solid #193247;border-right:none;border-bottom:none}
+.geo--square .geo__square-seal strong{font-size:clamp(43px,5vw,72px)}
+.geo--square .geo__hero::before{content:"";position:absolute;inset:clamp(22px,3.5vw,65px) clamp(35px,5vw,86px) auto 50%;border-top:1px solid #19324755;pointer-events:none}
+.geo--full .geo__hero::after{display:none}
+.geo--full .geo__media::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(15,37,54,.87),rgba(15,37,54,.14) 75%),linear-gradient(0deg,rgba(15,37,54,.83),transparent 68%)}
+.geo__square-seal{z-index:3}
+@media(max-width:1190px){.geo--square .geo__edge{display:none}}
+@media(max-width:760px){.geo--square .geo__hero::before{display:none}.geo--square .geo__square-seal{width:clamp(76px,22vw,108px);padding:8px}.geo--square .geo__square-seal strong{font-size:clamp(38px,10vw,55px)}.geo--full .geo__media::after{display:none}}
+
 /* Real article excerpt: all candidates use authentic draft, not generated filler */
 .article{background:#f4f0e6;color:#1b3043;display:flex;flex-direction:column;min-height:920px}
 .article__mast{padding:22px clamp(24px,4vw,60px);display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid #b7ad97}
@@ -365,11 +384,11 @@ function geometry(shape){
  return '<section class="study__stage geo geo--'+shape+'">'+
   '<header class="geo__mast">'+logo+'<span class="geo__mast-note" lang="en">WESTSIDE WATCH / VOL.00<br>THE GATE · 03</span></header>'+
   '<div class="geo__hero">'+
-  '<figure class="geo__media"><img src="/images/home-opening-engraving.jpg" alt="西望原有古典刻線主視覺，畫面中有人群和古典建築"></figure>'+
+  '<figure class="geo__media"><img src="/images/home-opening-engraving.jpg" alt="西望原有古典刻線主視覺，畫面中有人群和古典建築"><a class="geo__square-seal" href="#geo-contents" aria-label="跳至本期四樂章目錄，尋找第03欄城門口的人"><strong>03</strong><small>THE GATE<br>VOL.00</small></a></figure>'+
   '<div class="geo__display"><span class="geo__folio" lang="en">03 / THE GATE · VOL.00</span>'+
   '<div class="geo__huge en" lang="en"><span>THE</span><span>GATE.</span></div>'+
   '<h2 class="primary-zh ws-editorial-article-zh" lang="zh-Hant">城門口的人</h2></div>'+
-  '<a class="geo__square-seal" href="#geo-contents" aria-label="跳至本期四樂章目錄，尋找第03欄城門口的人"><strong>03</strong><small>THE GATE<br>VOL.00</small></a>'+
+  '<span class="geo__edge" aria-hidden="true">WATCH / 03 / A CITY OF LIGHT</span>'+
   '</div><div class="geo__source"><span>IMAGE / 01 — 主站既有古典刻線原圖，非考古實拍</span><em>One engraving · three image geometries · no duplicated background</em></div>'+
   '<div class="geo__reading"><section class="geo__excerpt" aria-label="城門口的人原稿節錄">'+
   '<span class="eyebrow" lang="en">ISSUE ZERO / THE GATE / 03</span>'+
@@ -402,6 +421,7 @@ function refresh(){
  document.getElementById('shape-switch').hidden=state!=='geometry';
  document.getElementById('concept-switch').hidden=state==='geometry';
  document.body.classList.toggle('geometry-mode',state==='geometry');
+ document.body.classList.toggle('presentation-mode',state==='geometry'&&query.get('presentation')==='1');
  const url=new URL(location.href);url.searchParams.set('concept',choice);url.searchParams.set('view',state);url.searchParams.set('shape',shape);
  history.replaceState(null,'',url);
 }
