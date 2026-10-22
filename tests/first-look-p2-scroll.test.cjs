@@ -20,7 +20,7 @@ function runtime(embedded,visible=false){
 }
 // Parent First Look devotes 75% of its scroll track to the first 2.9 P2 viewports.
 // Keep assertions in physical P2 viewport units, independent of the parent fraction.
-const progressAt=vh=>vh<=2.9?progressAt(vh)*.75:.75+(vh-2.9)/1.1*.25;
+const progressAt=vh=>vh<=2.9?(vh/2.9)*.75:.75+(vh-2.9)/1.1*.25;
 test('Embedded P2 follows only the hosting parent progress and reverses',()=>{
  const r=runtime(true);
  r.send({},'https://example.test',1);assert.equal(r.root.dataset.p2Phase,'identity');
