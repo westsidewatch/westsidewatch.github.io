@@ -6,22 +6,47 @@ export function buildLowRiseHouse(group,meshes,materials,terrain,parcel,index,pr
  if(!['iron-age-four-room-analogy','persian-courtyard-analogy'].includes(profile.id))throw new Error('Unknown low-rise profile');
  const fp=parcel.geometry.polygon;if(fp.length!==4)throw new Error('Low-rise house requires a four-sided parcel');
  const before=meshes.length,centre={x:fp.reduce((s,p)=>s+p.x,0)/4,z:fp.reduce((s,p)=>s+p.z,0)/4};
- const points=fp.map(p=>({x:centre.x+(p.x-centre.x)*.89,z:centre.z+(p.z-centre.z)*.89}));
- const width=Math.hypot(points[1].x-points[0].x,points[1].z-points[0].z),depth=Math.hypot(points[3].x-points[0].x,points[3].z-points[0].z);
- const point=(u,v)=>({x:points[0].x*(1-u)*(1-v)+points[1].x*u*(1-v)+points[2].x*u*v+points[3].x*(1-u)*v,z:points[0].z*(1-u)*(1-v)+points[1].z*u*(1-v)+points[2].z*u*v+points[3].z*(1-u)*v});
  const surface=(x,z)=>{const y=settlementSurfaceHeight(terrain,x,z);if(!Number.isFinite(y))throw new Error('Low-rise house outside terrain');return y;};
- const ground=Math.min(...points.map(p=>surface(p.x,p.z))),houseGround=Math.max(...points.map(p=>surface(p.x,p.z))),h=profile.wallHeightMetres+(index%3)*.2,t=Math.min(.13,.5/Math.max(1,Math.min(width,depth))),door=Math.min(.22,1.1/Math.max(1,width));
- function add(poly,height,kind,offset=0){
+ const scale=.89,points=fp.map(p=>({x:centre.x+(p.x-centre.x)*scale,z:centre.z+(p.z-centre.z)*scale}));
+ const point=(u,v)=>({x:points[0].x*(1-u)*(1-v)+points[1].x*u*(1-v)+points[2].x*u*v+points[3].x*(1-u)*v,z:points[0].z*(1-u)*(1-v)+points[1].z*u*(1-v)+points[2].z*u*v+points[3].z*(1-u)*v});
+ const sample=(u,v)=>{const p=point(u,v);return surface(p.x,p.z);};
+ // Keep the parcel occupation. Fit connected ranges to level DEM-relative
+ // terrace cells rather than raising the entire house to its highest corner.
+ let columns=1,rows=1,cells;
+ for(let attempt=0;attempt<10;attempt++){
+  cells=[];let bad=false,uRelief=0,vRelief=0;
+  for(let row=0;row<rows;row++)for(let col=0;col<columns;col++){
+   const u0=col/columns,u1=(col+1)/columns,v0=row/rows,v1=(row+1)/rows;
+   const a=sample(u0,v0),b=sample(u1,v0),c=sample(u1,v1),d=sample(u0,v1),mid=sample((u0+u1)/2,(v0+v1)/2);
+   const low=Math.min(a,b,c,d,mid),floor=Math.max(a,b,c,d,mid);
+   cells.push({u0,u1,v0,v1,floor,relief:floor-low});
+   if(floor-low>2){bad=true;uRelief=Math.max(uRelief,Math.abs(a-b),Math.abs(c-d));vRelief=Math.max(vRelief,Math.abs(a-d),Math.abs(b-c));}
+  }
+  if(!bad)break;
+  if(uRelief>=vRelief)columns*=2;else rows*=2;
+ }
+ if(cells.some(cell=>cell.relief>2))throw new Error('Low-rise terrain terraces did not converge');
+ const ground=Math.min(...cells.map(c=>c.floor-c.relief));
+ const terrainFit={policy:'in-parcel-terraced-ranges-v1',footprintScale:scale,columns,rows,maxSampledCellReliefMetres:Math.max(...cells.map(c=>c.relief)),maxReliefMetres:2,footprint:points.map(p=>({...p})),authority:'modern-DEM-design-fit-not-ancient-terracing'};
+ const width=Math.hypot(points[1].x-points[0].x,points[1].z-points[0].z),depth=Math.hypot(points[3].x-points[0].x,points[3].z-points[0].z);
+ const h=profile.wallHeightMetres+(index%3)*.2,t=Math.min(.13,.5/Math.max(1,Math.min(width,depth))),door=Math.min(.22,1.1/Math.max(1,width));
+ function add(poly,height,kind,offset=0,floor=0){
   const c={x:poly.reduce((s,p)=>s+p.x,0)/poly.length,z:poly.reduce((s,p)=>s+p.z,0)/poly.length},shape=new THREE.Shape();poly.forEach((p,i)=>i?shape.lineTo(p.x-c.x,-(p.z-c.z)):shape.moveTo(p.x-c.x,-(p.z-c.z)));shape.closePath();
   const geometry=new THREE.ExtrudeGeometry(shape,{depth:height,bevelEnabled:false,steps:1});geometry.rotateX(-Math.PI/2);
-  const topGround=houseGround,positions=geometry.attributes.position;
+  const topGround=floor,positions=geometry.attributes.position;
   // Sloping footings meet the same rendered DEM; upper components retain clear headroom.
   if(offset===0)for(let i=0;i<positions.count;i++)if(positions.getY(i)<1e-5)positions.setY(i,surface(c.x+positions.getX(i),c.z+positions.getZ(i))-topGround);
   geometry.computeVertexNormals();const mesh=new THREE.Mesh(geometry,materials.lowRise||materials.inferred||materials.reconstructed);mesh.position.set(c.x,topGround+offset,c.z);mesh.castShadow=true;mesh.receiveShadow=true;
   mesh.userData.restPositions=Float32Array.from(positions.array);mesh.userData.groundHeights=Float32Array.from(Array.from({length:positions.count},(_,i)=>surface(c.x+positions.getX(i),c.z+positions.getZ(i))-mesh.position.y));mesh.userData.cityRuinFactor=1;
-  mesh.userData.phase2={stage:kind,start:.25,baseHeight:height,groundY:ground};mesh.userData.cityObject={parcelId:parcel.id,terrainGround:ground,kind,confidence:'inferred',semantic:true,architectureProfile:profile.id};group.add(mesh);meshes.push(mesh);
+  mesh.userData.phase2={stage:kind,start:.25,baseHeight:height,groundY:ground};mesh.userData.cityObject={parcelId:parcel.id,terrainGround:ground,kind,confidence:'inferred',semantic:true,architectureProfile:profile.id,terrainFit};group.add(mesh);meshes.push(mesh);
  }
- const rect=(u0,v0,u1,v1,height,kind,offset=0)=>add([point(u0,v0),point(u1,v0),point(u1,v1),point(u0,v1)],height,kind,offset);
+ const rect=(u0,v0,u1,v1,height,kind,offset=0)=>{
+  for(const cell of cells){
+   const a=Math.max(u0,cell.u0),b=Math.min(u1,cell.u1),c=Math.max(v0,cell.v0),d=Math.min(v1,cell.v1);
+   if(b-a<1e-8||d-c<1e-8)continue;
+   add([point(a,c),point(b,c),point(b,d),point(a,d)],height,kind,offset,cell.floor);
+  }
+ };
  rect(0,0,t,1,h,'low-rise-side-wall');rect(1-t,0,1,1,h,'low-rise-side-wall');rect(t,1-t,1-t,1,h,'low-rise-rear-wall');
  rect(t,0,.5-door/2,t,h,'low-rise-entry-jamb');rect(.5+door/2,0,1-t,t,h,'low-rise-entry-jamb');rect(.5-door/2,0,.5+door/2,t,h-2.1,'low-rise-entry-lintel',2.1);
  if(profile.id==='iron-age-four-room-analogy'){
@@ -35,5 +60,5 @@ export function buildLowRiseHouse(group,meshes,materials,terrain,parcel,index,pr
   rect(0,0,.27,1,.28,'low-rise-flat-roof',h);rect(.73,0,1,1,.28,'low-rise-flat-roof',h);rect(.27,.74,.73,1,.28,'low-rise-flat-roof',h);
   rect(t,.74,.43,.74+t,h,'courtyard-rear-partition');rect(.57,.74,1-t,.74+t,h,'courtyard-rear-partition');
  }
- return{typology:profile.id,components:meshes.length-before};
+ return{typology:profile.id,components:meshes.length-before,terrainFit};
 }
