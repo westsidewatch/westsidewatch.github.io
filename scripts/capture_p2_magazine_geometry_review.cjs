@@ -165,7 +165,17 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
             presentation:document.body.classList.contains('presentation-mode'),
             deepTextSize:parseFloat(getComputedStyle(sel('#id-gate .id__body p')).fontSize),
             chineseWeight:getComputedStyle(sel('.id__cover-title h1')).fontWeight,
-            loadedBodoni:getComputedStyle(sel('.id__cover-word')).fontFamily
+            loadedBodoni:getComputedStyle(sel('.id__cover-word')).fontFamily,
+            monumentalIntroFont:parseFloat(getComputedStyle(sel('.id__intro-statement')).fontSize),
+            monumentalIntroFamily:getComputedStyle(sel('.id__intro-statement')).fontFamily,
+            orphanPunctuation:[...document.querySelectorAll('.id__act-name')].filter(el=>{
+              const txt=el.firstChild;
+              if(!txt||txt.nodeType!==Node.TEXT_NODE||txt.length<2)return false;
+              const before=document.createRange(),dot=document.createRange();
+              before.setStart(txt,txt.length-2);before.setEnd(txt,txt.length-1);
+              dot.setStart(txt,txt.length-1);dot.setEnd(txt,txt.length);
+              return dot.getBoundingClientRect().top-before.getBoundingClientRect().top>2;
+            }).map(el=>el.textContent.trim())
           };
         });
         if(!response||response.status()!==200)defects.push('HTTP');
@@ -176,6 +186,8 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
         if(!facts.chapters||!facts.allTargets)defects.push('DEAD_TOC_DESTINATION');
         if(!facts.sourceGate||!facts.sourceEsther||!facts.honestIncomplete)defects.push('SOURCE_INTEGRITY');
         if(facts.deepTextSize<16)defects.push('BODY_TOO_SMALL');
+        if(facts.monumentalIntroFont<38||!facts.monumentalIntroFamily.includes('Bodoni'))defects.push('INTRO_MONUMENT_FONT_REGRESSED');
+        if(facts.orphanPunctuation.length)defects.push('ORPHAN_DISPLAY_PUNCTUATION: '+facts.orphanPunctuation.join(','));
         if(facts.chineseWeight!=='900')defects.push('PRIMARY_CHINESE_WEIGHT');
         if(!facts.presentation)defects.push('NOT_CLEAN_PUBLICATION');
         const screenshot=id+'.png';
