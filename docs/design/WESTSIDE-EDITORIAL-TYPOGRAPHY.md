@@ -70,3 +70,7 @@ The editorial system uses the genuine Bodoni Moda Italic and Bodoni Moda SC Ital
 - Font size uses semantic type-scale tokens, not a per-component increase to compensate for a heavy-looking fallback font.
 - Real browser verification must confirm Chiron Hei HK WS loads the 200 instance: its documented variable weight range is 200–900. A computed CSS weight of 200 does not guarantee the loaded glyphs are Chiron ExtraLight.
 - New components should choose among `ws-type-air`, `ws-type-standard`, `ws-type-anchor` or equivalent semantic tokens; never invent a content-specific global weight role.
+
+## Chinese reading source normalization (pending PR #1352, 2026-10-21)
+
+The live Sites font behavior had already selected 昭源黑體 through a late runtime override. The JSON token, generated CSS and legacy style bundles are now reconciled in the pending PR so **Chiron Hei HK WS 400** is the planned Chinese article reading role on Journal and non-Sites readers alike. The earlier Noto Serif TC declarations documented here are historical migration evidence only; do not locally force Noto or add another authority. Actual computed family, downloaded font faces, mobile/200% zoom, long Chinese and long English reading quality are **not yet browser-verified**.

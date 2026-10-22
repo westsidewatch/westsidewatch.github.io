@@ -55,3 +55,5 @@ Precise CSS positioning is verified through the shared OS diagnostic `scripts/de
 ## SVG exploration research index (2026-10-17)
 
 SVG performance, animation, path geometry, clipping and open-source references are indexed in [SVG-EXPLORATION-LIST.md](SVG-EXPLORATION-LIST.md). This is a research list inside the existing Westside Design OS authority, not a new OS, runtime, or CI. Preserve the approved P2 V75 water and door composition; require measured traces before production performance changes.
+
+**Pending PR #1352 Chinese font source normalization (2026-10-21):** The canonical JSON `font.reading-zh` and `font.display-zh` now agree on the previously effective Chiron Hei HK WS (昭源黑體), with Noto Sans TC/sans-serif fallbacks. Generated CSS is updated; the OS umbrella and typography migration bundles no longer write competing family declarations. The earlier conflict described above is historical. Real deployed font loading, non-Sites reader comparison and longform CJK/English readability **remain unverified**. Do not promote these changes merely because CI is green.

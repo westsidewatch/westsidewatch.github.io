@@ -69,3 +69,7 @@ Pre-release gate: internal review ≥18/20 with no zero, no unresolved block; ad
 3. **Pass 3 — rejection / refinement:** apply only if pass 2 supplies reproducible defects, not speculative CSS overlays; re-run the same screen and use the same rubric.
 
 **Do not merge** merely because PR is conflict-free or Cloudflare preview/Production Build succeeds.
+
+## Chinese longform typography normalization (engineering pass, 2026-10-21)
+
+Canonical Chiron reading family is generated from the existing Design OS JSON, duplicate CSS declarations are removed from both Sites and non-Sites compatibility bundles, Hugo `.prose` consumes the reading token and the existing OS contract guards future divergence. **This is one source-of-truth normalization, not a new design system or a new CI.** No English long-body font has been invented; test before choosing it. Non-Sites books/tools could change appearance as Noto falls back to Chiron. Actual font loads, 20k/50k Chinese text, 390px/768px/200% zoom, mixed English and other surfaces **remain NOT VERIFIED / DO NOT MERGE**.

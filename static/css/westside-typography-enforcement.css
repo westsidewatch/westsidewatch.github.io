@@ -41,7 +41,7 @@ body[data-ws-scope] :is(
 body[data-ws-scope] :is(
  .article-body,.prose,.reading-body,.sites-article-body
 ):not(:where([data-ws-designable], [data-ws-designable] *)) :is(p,li,blockquote):not(:where([data-ws-designable], [data-ws-designable] *)){
- font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif);
+ font-family:var(--ws-type-reading-zh);
 }
 
 /* The language attribute on the heading itself must win over the page language. */

@@ -36,4 +36,16 @@ result=subprocess.run([sys.executable,str(root/"scripts/build_westside_design_os
 if result.returncode: sys.exit(result.returncode)
 if '/css/westside-design-tokens.css' not in runtime:
  print("Design OS guard failed: generated token runtime is not loaded");sys.exit(1)
+# Chinese reading must have exactly one family authority: the generated OS.
+tokens=json.loads((root/"design-system/tokens/westside.tokens.json").read_text())
+if tokens["font"]["reading-zh"]["$value"] != tokens["font"]["display-zh"]["$value"]:
+ print("Design OS guard failed: reading font disagrees with approved Chinese family");sys.exit(1)
+for rel in ("static/css/westside-design-os.css",
+            "static/css/typography-sitewide.css",
+            "assets/css/typography-system.css"):
+ legacy_text=(root/rel).read_text()
+ if re.search(r"--ws-type-(?:reading|display)-zh\s*:",legacy_text):
+  print("Design OS guard failed: duplicated Chinese font authority:",rel);sys.exit(1)
+if "font-family: var(--ws-type-reading-zh)" not in (root/"assets/css/main.css").read_text():
+ print("Design OS guard failed: article prose bypasses reading role");sys.exit(1)
 print("Westside Design OS guard: PASS")

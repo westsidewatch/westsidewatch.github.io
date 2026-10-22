@@ -276,6 +276,14 @@ Use the repository's [Doré Explore Trigger](../../dore-core/evolution/DORÉ-EXP
 
 **Action gate:** Before professional 20k/50k-character publishing tests, audit computed font-family and loaded fonts for Journal, Vol.00, general book reader and tools, reconcile canonical JSON with runtime intent, validate both scripts at desktop, phone and 200% zoom. This documentation-only check does not reassign runtime tokens and is NOT a visual acceptance pass.
 
+### 6C.6 Chinese reading font source-of-truth repair — pending cross-surface visual QA
+
+The 2026-10-21 P2 typography normalization moves the **existing effective Chinese reading decision** (Chiron Hei HK WS / 昭源黑體, 400 for long body) into canonical `design-system/tokens/westside.tokens.json` for both display and reading family roles. The generated CSS is updated by the existing Design OS generator. The OS umbrella and legacy compatibility bundles no longer redeclare conflicting `--ws-type-reading-zh`/display family values; article `.prose` explicitly consumes the reading role and the enforcement selector consumes the same source.
+
+**Change exposure:** the Journal / Vol.00 Sites CSS resolves to the same intended Chiron family as before. Non-Sites pages could previously resolve to Noto Serif TC; they will now resolve to Chiron where using the OS token and **must be checked** in actual browser after this change. Noto webfont imports remain temporarily for explicitly authored legacy consumers, not as an approved primary reader choice. This is not authorization to replace Chinese type with Song/Kai or introduce a new English font.
+
+**Gates:** generated tokens check, existing Design OS/First Look contracts, cross-surface actual computed family and loaded font file, long Chinese text (20k–50k test fixture plus real articles) at phone/tablet/200% zoom, English longform typesetting choice after real body-copy trials. Tests with fallback fonts do not prove the Chiron webfont loaded. Until these pass, **FONT VISUAL QA OPEN / NOT APPROVED**.
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
