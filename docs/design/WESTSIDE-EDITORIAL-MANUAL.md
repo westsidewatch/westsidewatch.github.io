@@ -1414,6 +1414,8 @@ This is an **HTML contract illustration**, not fabricated article copy or an ope
 
 **This is Westside's proposed wide-screen design approach, not a claim that every online magazine in the world is laid out this way.** Some articles are naturally a single continuous reading column. Digital editorial design has fewer *print constraints* but new obligations: scroll continuity, viewport-dependent width/height, interactive controls, keyboard/DOM reading order, responsive re-composition, real image provenance, reduced motion and actual content completion.
 
+**Recovered oversized-English design research:** The repository already contains the authoritative [editorial type scale](WESTSIDE-EDITORIAL-TYPOGRAPHY.md), [magazine kinetic-typography memo](WESTSIDE_MAGAZINE_KINETIC_TYPOGRAPHY_REFERENCE.md), [Italian executable composition grammar](../dore/italian-editorial-executable-grammar.v1.md) and [real type hierarchy laboratory](../../static/experiments/editorial-type-hierarchy-lab.html). **§6E.32** reconciles their English half-spread/monumental-type methods with the digital-spread model. They are cited source assets, **not** an invitation to add another CSS system, remake the approved logo or reproduce old test styling.
+
 **Why the last crop research was insufficient:** §6E.23–28 begins with source W/H and computes the scene's visible rectangle. That protects historical content **inside an image** but does not explain the editorial design of **the whole spread**: where a huge typographic field begins, how a geometric object bridges two zones, what lies behind the object, how one phrase can cross an axis, or how the reader proceeds from image → story → Contents. Crop fidelity remains compulsory when using Doré images, but **the full composition has priority over any one image ratio**.
 
 **Reference boundary:**
@@ -1651,6 +1653,124 @@ The R3/R4 crop equations remain intact; they answer \`ImageSourceCrop\`, **one f
 - Claiming a full-bleed cover represents a complete award-calibre magazine when longform reading and navigation remain unresolved.
 
 **Immediate next research inside THIS SAME book:** develop an evidence-backed atlas of complete digital spreads (not crops) showing cross-axis fields, structural squares, word-image alignment and responsive restaging on real magazine/editorial webpages, then translate the most meaningful **relationships** into original Westside design direction cards. No aesthetic approval until the visual atlas and real full-issue user task are examined.
+
+
+### 6E.32 GitHub oversized-English typography research → current continuous-spread art direction (R6, 2026-10-22)
+
+**Purpose:** Retrieve earlier **actual Westside research** on English text occupying half a composition, monumental Bodoni letterforms, English/Chinese size relationships, and kinetic type as a spatial/interactive device, then integrate it into the R5 **one continuous digital spread** grammar. This chapter is a **cross-reference + executable editorial decision method**, NOT a second type scale and not a declaration that oversized letters by themselves constitute an award-winning visual identity. The existing official magazine logo SVG is protected; the wordmark does not become editable Bodoni by virtue of this research.
+
+#### R6.1 Recovered project sources — evidence/authority hierarchy
+
+| Exact existing repository source | What it already contains | What is authoritative now | How it informs R5 |
+| --- | --- | --- | --- |
+| [\`WESTSIDE-EDITORIAL-TYPOGRAPHY.md\`](WESTSIDE-EDITORIAL-TYPOGRAPHY.md) | Twelve real editorial type roles; English Bodoni Moda Roman/Italic/real SC; Chiron Chinese 900/200/400; actual size/leading/tracking and code-owner rules | **[BASE]** Single Design OS token values and current font-family decisions; do not override through a page-level duplicate | Select semantic roles first, then let the *composition* determine a particular oversized arrangement |
+| [\`WESTSIDE_MAGAZINE_KINETIC_TYPOGRAPHY_REFERENCE.md\`](WESTSIDE_MAGAZINE_KINETIC_TYPOGRAPHY_REFERENCE.md) | September 2026 Fond / 池底 \`01020304\` experiment; large type becomes *plane, hinge, foreground/background, page transition and navigation*; Codrops KineticTypePageTransition / SuperfluidLayout / FullscreenLayoutPageTransitions mechanics | **[METHOD]** Recovered experimental research. Not a token owner, approved homepage animation or independently accepted style | Compose a still, effective spread first; any motion reveals a meaningful latent relationship |
+| [\`italian-editorial-executable-grammar.v1.md\`](../dore/italian-editorial-executable-grammar.v1.md) | Four experimental geometries: overscale collision; quiet-field isolated fragment; monumental interruption; two-scale encounter. Separates image prompt with **no baked text** from live HTML typography; records 0–100 composition coordinates | **[TRIAL]** Example geometry families, not fixed P2 proportions or global geometry authority | Bring intentional image/letter contact and asymmetrical white space into the **full canvas**, not simply a 3:4 poster |
+| [\`editorial-type-hierarchy-lab.html\`](../../static/experiments/editorial-type-hierarchy-lab.html) | Existing Journal/Sites branch-only real-font specimen for 900/200/400 and English/Chinese cover/chapter/article hierarchy | **[EVIDENCE SURFACE]** Demonstrates typographic role and font loading, not artistic acceptance of a complete magazine | Re-use for font/weight/line-break QA; assess actual full spread separately |
+| [\`dore-design/new-westside/VISUAL-REFERENCE-SYSTEM.md\`](../../dore-design/new-westside/VISUAL-REFERENCE-SYSTEM.md) | The earlier New Classicism + Editorial Modernism + Archival Print + Doré spatial identity investigation; type as monument, marginalia, image collision | **[ARCHIVE]** Its August font suggestions **Cormorant Garamond and Noto Serif TC are superseded** for this project by Bodoni Moda and Chiron | Preserve its *visual research method and anti-fake-vintage insight*, never reinstate old font family recommendations |
+| [\`docs/DESIGN-OS-GEOMETRY.md\`](../DESIGN-OS-GEOMETRY.md) | Existing geometry-measurement workflow and Playwright inspection of winning CSS/bounding boxes | **[QA METHOD]** No extra standalone CSS authority or separate CI required | Measure actual title word boundaries/overlap at desktop/tablet/phone/zoom, rather than guessing from mockups |
+
+**Critical split:** Historical research documents can describe different font families or old styles; **the current canonical token JSON + generated Design OS CSS have precedence**. The earlier found large-type designs are *method evidence*, not licence to reintroduce styles no longer selected. No new font files, CSS root declarations, animation libraries or 12-role replacements are proposed here.
+
+#### R6.2 Monumental English text has at least six distinct EDITORIAL JOBS
+
+A giant serif is successful only if its subject/relation justifies its scale. For the **same actual issue/editorial content**, compare these role candidates:
+
+| Role | What the very large English type actually DOES across the continuous spread | Relationship to an image / square | Reject when |
+| --- | --- | --- | --- |
+| **E1 / Half-spread claim** | Occupies roughly a chosen **visual half-domain** of the whole canvas, providing scale counterpoint to a human-scale image/Chinese title across the other portion | A 1:1 cross-axis square may occupy 50/50 or 30/70 of **its own** width while the English remains live on one side, but not as fixed paired cards | It appears only as a generic left column next to a right image card; no optical alignment/narrative idea |
+| **E2 / Full-spread inscription** | Large words/letter groups span most of the **uninterrupted width**, treating language as the visual architecture | A meaningful image/negative square can cross the lettering plane or remain wholly below/above | Letterforms or the authentic word become unreadable; protected picture content disappears |
+| **E3 / Type as image-negative field** | An empty or bright geometric shape is defined by letters and surrounding visual mass; type's whitespace is intentional material | Square may be negative space **without a cropped picture**; historical engraving flows past one side | It becomes an empty decorative rectangle, synthetic clipping effect or useless “luxury” border |
+| **E4 / Axis-crossing title** | A complete English word or its line groups traverse the invisible editorial axis; Chinese primary title supplies semantic counterweight, not duplicate decoration | Square/right image may overlap a deliberately selected **nonessential** region of text only if the word is fully decipherable | Loss of a letter (e.g. final **E** in GATE), poor Chinese optical balance or collision with a face/gesture |
+| **E5 / Navigating type** | Genuine section / story wording is the **actual** selectable title, capable of linking to Contents/story; interaction follows from a still understandable layout | Can expand or shift into the next reading state, subject to keyboard and static parity | Hover-only title, duplicate nonsemantic huge words, missing destination or motion-only meaning |
+| **E6 / Chapter-level marker** | Less frequent massive typographic punctuation marks a transition between four editorial movements (not each article paragraph) | Opposes long quiet body reading and selectively framed Doré witness images | Every page ends with the same overscale word, drowning subject distinctions and body continuity |
+
+**Not all six roles need appear.** Overuse weakens identity. The actual story and its reader task choose a role; a longform reading register can (and generally should) remain quiet. The *square* and the *monumental title* are **independent design instruments**; an excellent spread may include either, both or neither.
+
+#### R6.3 A compositional measuring language: not just font-size values
+
+Separate the measurable terms:
+
+- \`canvasW\`, \`canvasH\`: actual **spread composition container** CSS-pixel dimensions (not automatically the browser window).
+- \`refAxisX\`: invisible crossing axis as a proportion of \`canvasW\`; **not** a printed gutter.
+- \`titleInkBox\`: actual rendered glyph/ink extents, approximated conservatively from browser text rectangles plus visual review. The DOM \`getBoundingClientRect\` box **includes leading and transforms** and is NOT an exact outline of Bodoni ink.
+- \`englishDomainShare\`: percent of compositional space that the English *commands*, distinct from actual measured glyph width. 50% can mean visual gravitational mass, **not** a fixed \`width:50%\` panel.
+- \`squareBeforeAxisShare\`: fraction of the *square's own width* preceding the reference axis (R5 50/50 or 30/70 examples).
+- \`overlapField\`: spatial relation of image, square and English/Chinese type; named as behind / in front / touches / interrupts / knockout / no-overlap.
+- \`safeTitleRegion\`: **all-word and original-artwork subject** safety, including source credit and interaction targets; image-lightness is not automatic safe text space.
+- \`typeScaleRole\`: one of current Design OS names, not a private pixel number in every experiment.
+- \`mobileRecomposition\`: a new vertical editorial reading composition, not a shrunk screenshot of a giant print title.
+
+**Construct in this order [METHOD]:** (1) verified real English/Chinese story copy → (2) editorial reason for the display/title roles → (3) full-canvas figure/whitespace/typography silhouette → (4) first source-image subject and safe-field check when relevant → (5) actual role-size and line-break from canonical OS → (6) square position independently (if it adds editorial meaning) → (7) real 1648/768/390/320/200% browser proof → (8) optional kinetic state transition, with no CSS-disabled content loss.
+
+#### R6.4 Pairing Bodoni and Chiron — preserve tension, not mechanically linked fonts
+
+**Current [BASE] roles from \`WESTSIDE-EDITORIAL-TYPOGRAPHY.md\`:**
+
+- English lead: genuine **Bodoni Moda Roman 400**, **Bodoni Moda Italic 400** only where semantically relevant; real **Bodoni Moda SC 400** for chosen labels. Neither font is artificially stretched or bolded.
+- Chinese primary story subject: genuine **Chiron Hei HK WS 900**, where **actual** primary title role is present; non-body secondary display Chiron **200** at legible sizes, body/functional controls **400**.
+- The current semantic scales provide **P0 English hero (72–160px)**, **chapter (52–112px)**, **article (56–128px)** and supporting feature (38–80px) ranges; these are existing OS role bounds, not the height limits of a full-spread concept. Huge 200–300px typography in earlier concept tests is **NOT** automatically an approved OS token. Treat beyond-range giant type as a **local art-direction [TRIAL]** requiring explicit later decision on whether it is scene-specific, with no silent global token expansion.
+- The earlier reference's **1.6–2.2× visual English/Chinese hierarchy** is a practical **initial pairing hypothesis**, never a law for a digital spread or a licence to manipulate \`scaleX\`/\`scaleY\` on glyphs. At a dramatic issue opener, optical relationship depends on word length, body of ink/void, actual letter shape, Chiron weight and surrounding imagery.
+- A Chinese article title can be visually *smaller yet semantically primary*; do not require an invented English translation. English may be an approved editorial display phrase and Chinese the actual H1. Preserve approved capitalization; no blanket uppercase.
+- Real Bodoni SC and ordinary Bodoni uppercase are **not interchangeable**, and an SVG masthead is not the same as a gigantic editable English editorial phrase.
+
+**Why this matters with Doré:** A monumental fine-stroke Bodoni title juxtaposed with a dark engraved scene can deliver modernity through **scale contrast and precise avoidance**, not by smearing serif glyphs across dense hatch marks. Overscale collision is a tested compositional proposal, not a default. The true narrative action of the historical image always outranks a graphic experiment.
+
+#### R6.5 Type-as-spatial-structure: tested method from Fond and Codrops, not copied styling
+
+The recovered Fond memo distinguishes:
+
+\`\`\`text
+old UI:       content → generic card → hover decoration → page
+editorial:    editorial still composition → latent spatial structure
+              → purposeful interactive depth → selected title/story becomes reading state
+\`\`\`
+
+**Before motion:** A screenshot of the exact same layout must already read as a complete **magazine composition**; compare one at thumbnail scale *without masthead* to ensure the page is differentiated from a generic portfolio. The title must already be legible; animation cannot repair poorly positioned type or a missing story.
+
+**When motion earns its place:** a genuine story/section title becomes a navigation plane, expands to an issue/section opening, then reveals the actual text and Contents path. It must have click+keyboard+focus, forward/back, interrupted scroll, reduced-motion/static parity, and predictable rendering. The Codrops [Kinetic Typography](https://github.com/codrops/KineticTypePageTransition), [Superfluid Layout](https://github.com/codrops/SuperfluidLayout) and [Fullscreen Layout Transitions](https://github.com/codrops/FullscreenLayoutPageTransitions) are **implementation mechanics only**, not a historical or visual identity source. **Do not add these packages during documentation research.**
+
+**Strong anti-pattern:** copying a Codrops demo color/letter animation and overlaying it on a stock Doré-like picture, or placing bold giant letters behind the official homepage film. Preserve the currently approved homepage full-bleed video, static poster assets and P2 motion. The original Fond prototype was experimental; it was **not** a selected magazine homepage direction.
+
+#### R6.6 Four same-copy comparative proofs — the proper next ART-DIRECTION experiment
+
+**Do not build four different magazines**. Keep the **same** authentic \`The Gate / 城門口的人\` story, official masthead, historically sourced image, complete Contents, and reader route. Change *only the arrangement of typography/image/negative space on the one continuous wide canvas*:
+
+| Proof | Graphic thesis / relation | What to record | Reject when |
+| --- | --- | --- | --- |
+| **A / Half-spread typography** | English fills a visually weighted 50% domain; Chinese headline anchors the story outside any book-like gutter | Actual Bodoni whole-word ink bounds, image focus, Chinese H1 and first reading action | It merely yields left title + right generic image card |
+| **B / Axis-crossing monument** | Full-size word / live type crosses the virtual spread axis, with figure/negative space counter-pressure | No false seam, entire word intact, protected source polygons free | A giant decorative word conceals essential picture/story |
+| **C / Type and 30/70 square dialogue** | Square straddles an invisible axis, 30% of *its own width* left and 70% right; Bodoni type and Chinese 900 sit in deliberate compositional relation | Square can be image, negative space or type field; compare against square removed | Square adds no meaning; the relationship looks like three unrelated panels |
+| **D / No-square continuous inscription** | A panorama/engraving and live English/Chinese title form a whole-spread composition without a square at all | Is the edition still recognizable? Where is the reading route? | No visual identity without repetitive square branding |
+
+**Do not compare only image ratios**. R5 already explains how square/wide/full-bleed photo frames work; the current test is at the **whole-spread typographic level**. Each proof also includes *article opening → actual mid-article body → source/footnotes → last paragraph/continuation*, so large cover lettering cannot be approved while the rest of the magazine becomes a generic blog.
+
+**QA:**
+- 1648×928 / 768×1024 / 390×844 / 320px / true browser **200% zoom**.
+- Loaded font face (real Bodoni Roman/Italic/SC 400; Chiron 900/200/400), \`lang\`, actual source copy, role mapping; no \`scaleX\`/\`scaleY\` glyph distortion.
+- English full-word integrity at screenshot + **thumbnail**; left/right cross-axis position with actual measured boxes, no source-image subject, figure-caption or interactive collision.
+- Visual and DOM reading order; keyboard-controlled title-as-link and reduced-motion static parity; **no intro-scroll trap**.
+- Internal Design OS §6A: target **≥18/20, no zeros, no unresolved BLOCK**, plus content, editorial full-issue and technical gates. A successful CI or proof page is not an art-direction award prediction.
+
+**Current conclusion [OPEN]:** This source synthesis establishes an executable **cross-spread English oversized-type vocabulary** but **does not approve any of the four compositions** or establish the Westside magazine's final look. Only documented, independently reviewed specimens can promote a [TRIAL] to an actual design rule.
+
+#### R6.7 Mapping the old research to the SAME 32 specification sheets
+
+| Existing sheet | Recovered rule, no new system | Normalized evidence required |
+| --- | --- | --- |
+| **S04 / Cover** | Massive text can define the spatial entrance, not a card header | Full-spread still screenshot, exact source, real entry link |
+| **S06 / Grid** | Text, image and square can cross a fictitious axis | Grid overlays and actual browser boxes, no paper-gutter |
+| **S07 / Negative space** | Letter counterspace and a negative square are active form | Cropped/uncropped and square/no-square comparison |
+| **S08 / Overlap** | Overscale collision is purposeful and word-safe | Glyph and face/gesture exclusion QA |
+| **S09 / English display** | Bodoni 400, genuine Roman/Italic/SC roles and existing role ranges | Real loaded web fonts; short and long title variants |
+| **S10 / Chinese primary** | Chiron 900 semantic primary; 200 non-body secondary, 400 body | Mixed-script optical spacing and real body reading |
+| **S16 / Chapter opener** | Scale contrast varies with editorial purpose across four movements | No forced giant title in every movement |
+| **S19–S22 / Image & geometry** | Square is one cross-spread object, not image crop requirement | Full source vs framed image vs non-image square |
+| **S29 / Motion** | Type becomes a meaningful transition plane if useful | Still state, activation, return, reduced-motion |
+| **S30 / Device** | Typography re-authored for a narrower reading task | 390/320 and actual zoom, no meaningless giant-word fragments |
+| **S31 / Review** | Distinctive compositional relations matter more than pixel magnitude | Existing rubric, full article + interactive reader journey |
+
+**Source preservation rule:** Keep all recovered documents intact as **source-of-evidence**. Only this single Design OS Editorial Manual can designate final editorial rules. If typography scales genuinely change later, edit the canonical OS tokens with dedicated approval and regeneration—not a new standalone “English giant-type OS”. Do not modify an existing magazine page merely because a once-exploratory CSS experiment demonstrated giant lettering.
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
