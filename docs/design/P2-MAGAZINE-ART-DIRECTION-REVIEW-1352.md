@@ -5,6 +5,10 @@ Date: 2026-10-21
 Authority: [WESTSIDE-EDITORIAL-MANUAL.md](WESTSIDE-EDITORIAL-MANUAL.md) §6A and the single [Westside Design OS](WESTSIDE-DESIGN-OS.md).  
 Skills: [new-westside-editorial-web](../../dore-design/knowledge-lab/skills/new-westside-editorial-web/SKILL.md), visual grammar rubric, `ui.visual-hierarchy`, `ui.motion-forensics`, `ui.critique`, `ui.accessibility`, `ui.visual-verification`.
 
+## R12 — primary-source art direction audit and repaired CJK phrase splitting (2026-10-22)
+
+Research embedded in single Design OS Editorial Manual §6E.35: Pentagram TNR, Sight and Sound, Emergence Magazine, official Webby criteria, W3C reflow. R11 artifact [12432813193](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/39794561051/artifacts/12432813193) includes 28 complete sections and 0 machine-detected failure but **revealed a real bug**: cover teaser `十 / 二個欄目` and `三 / 個視聽間奏` broken across lines at phone and small widths. Replaced teaser with 3 unbreakable semantic phrase spans (full original copy unchanged), kept balanced layout across phrases, strengthened existing Playwright. R12 needs new CI and actual 390/320 images before claiming FIXED. Manuscripts, copyrighted image inputs, video/music, 200% browser zoom, final prayer unresolved; no score, no merge.
+
 ## R11 — rendered 28-frame human critique and evidence correction (2026-10-22)
 
 **Checked:** R10 Actions run [39791279677](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/39791279677), artifact [12431352797](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/39791279677/artifacts/12431352797), 28 viewport images for seven issue sections at 1648 / 768 / 390 / 320. All 8 workflows succeeded on `08b3b3e`; 0 objective failures in the manifest; the art jury gate did **not** pass and must not be inferred from CI.

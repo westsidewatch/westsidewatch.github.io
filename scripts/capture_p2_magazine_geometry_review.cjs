@@ -239,18 +239,18 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
           const anchors=[...document.querySelectorAll('.id__index-group ol a')];
           const buttons=[...document.querySelectorAll('#stage a')];
           // Detect two-glyph cover teaser widows in the actual rendered lines.
-          const teaser=document.querySelector('.id__cover-title p')?.firstChild;
-          let coverTeaserLastLineGlyphs=null;
-          if(teaser?.nodeType===Node.TEXT_NODE){
-            const lines=new Map();
-            for(let i=0;i<teaser.length;i++){
-              const char=document.createRange();char.setStart(teaser,i);char.setEnd(teaser,i+1);
-              const rect=char.getBoundingClientRect();if(!rect.height)continue;
-              const top=Math.round(rect.top);
-              lines.set(top,(lines.get(top)||'')+teaser.textContent[i]);
-            }
-            coverTeaserLastLineGlyphs=[...lines.values()].at(-1)?.trim().length??null;
+          const teaser=document.querySelector('.id__cover-title p');
+          const phrases=[...teaser.querySelectorAll('.phrase')];
+          // Chinese editorial units must not tear inside 十二 or 三個.
+          const coverTeaserPhrasesIntact=phrases.length===3&&
+            phrases.every(el=>getComputedStyle(el).whiteSpace==='nowrap'&&
+              el.getBoundingClientRect().width<=teaser.getBoundingClientRect().width+1);
+          const lines=new Map();
+          for(const el of phrases){
+            const r=el.getBoundingClientRect(),line=Math.round(r.top);
+            lines.set(line,(lines.get(line)||'')+el.textContent);
           }
+          const coverTeaserLastLineGlyphs=[...lines.values()].at(-1)?.trim().length??null;
           return {
             cssWidth:innerWidth,scrollWidth:root.scrollWidth,
             sourceSectionCount:document.querySelectorAll('#stage .id__source').length,
@@ -260,13 +260,14 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
             emptyLinks:buttons.filter(a=>!a.getAttribute('href')||a.getAttribute('href')==='#').length,
             hasUnreleasedInterludes:[...document.querySelectorAll('.id__interlude')].some(el=>el.textContent.includes('尚未接入')||el.textContent.includes('等候')),
             fontsLoaded:document.fonts.status,
-            coverTeaserLastLineGlyphs
+            coverTeaserLastLineGlyphs,coverTeaserPhrasesIntact
           };
         });
         if(metrics.scrollWidth>metrics.cssWidth+2)defects.push('EDITORIAL_HORIZONTAL_OVERFLOW');
         if(metrics.resolvedTOCRoutes!==12||metrics.totalTOCRoutes!==12)defects.push('EDITORIAL_TOC_ROUTE');
         if(metrics.emptyLinks)defects.push('EMPTY_EDITORIAL_LINK');
         if(metrics.fontsLoaded!=='loaded')defects.push('FONT_LOAD_INCOMPLETE');
+        if(!metrics.coverTeaserPhrasesIntact)defects.push('COVER_TEASER_PHRASE_SPLIT');
         if(metrics.coverTeaserLastLineGlyphs!==null&&metrics.coverTeaserLastLineGlyphs<3)defects.push('COVER_TEASER_WIDOW');
         results.push({id,viewport:{width,height},sections,metrics,defects,
           editorialVisualDecision:'HUMAN REVIEW REQUIRED — screenshots per section',
