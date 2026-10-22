@@ -73,3 +73,11 @@ Pre-release gate: internal review ≥18/20 with no zero, no unresolved block; ad
 ## Chinese longform typography normalization (engineering pass, 2026-10-21)
 
 Canonical Chiron reading family is generated from the existing Design OS JSON, duplicate CSS declarations are removed from both Sites and non-Sites compatibility bundles, Hugo `.prose` consumes the reading token and the existing OS contract guards future divergence. **This is one source-of-truth normalization, not a new design system or a new CI.** No English long-body font has been invented; test before choosing it. Non-Sites books/tools could change appearance as Noto falls back to Chiron. Actual font loads, 20k/50k Chinese text, 390px/768px/200% zoom, mixed English and other surfaces **remain NOT VERIFIED / DO NOT MERGE**.
+
+## Longform typography browser fixture (2026-10-21)
+
+A read-only, non-indexed proof is available at `/experiments/editorial-longform-type-audit.html` on the PR branch preview. It loads the **real Westside Design OS and typography enforcement**; tests Chinese OS reading role with 5k/20k/50k synthetic characters and two English comparison samples (Bodoni display face versus browser Georgia reference, **not** an approved English font). It reports computed CSS family, discovered/loaded Chiron FontFaces, line-height, column geometry and horizontal overflow. It does **not** modify a real article, canonical text or production reading type.
+
+**Offline Chromium structure test:** 51,591 synthetic characters, 1,050 paragraphs and 34 headings at 1648×928, 768×1024, 390×844 and an approximate 200% text-zoom stress viewport of 195px: no page horizontal overflow. Render process about 77–183ms in this local environment for this synthetic fixture. **Zero Chiron faces loaded offline**, and local fallback fonts were used. These data verify neither production webfont loading nor real reading comfort. Browser computed font and real downloaded font must be confirmed on deployed proof.
+
+**Visual verification gate remains OPEN:** compare actual 390px/768px/1648px glyph appearance, long English passages, punctuation, kerning, line heights, fallback and CJK extents; test article-local TOC, anchors, return navigation and 200% browser zoom separately. Keep status NOT VISUALLY APPROVED; no automatic merge.

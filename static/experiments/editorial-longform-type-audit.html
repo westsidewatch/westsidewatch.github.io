@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Westside Design OS — Longform Typography Audit (Synthetic)</title>
+<link rel="stylesheet" href="/css/westside-design-os.css?v=20261021-reading-authority">
+<link rel="stylesheet" href="/css/westside-typography-enforcement.css?v=20261021-reading-authority">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--ws-paper,#faf9f5);color:var(--ws-ink,#252525)}
+.audit-header{border-bottom:1px solid currentColor;max-width:1400px;margin:auto;padding:28px clamp(18px,3vw,48px) 20px}
+.audit-kicker,.audit-meta{font:400 13px/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.08em}
+.audit-header h1{font:400 clamp(35px,6vw,76px)/1 var(--ws-type-display-en,Georgia,serif);margin:12px 0}
+.audit-header p{max-width:76ch;line-height:1.6}
+.audit-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:18px}
+.audit-controls label{font-size:16px}
+.audit-controls select,.audit-controls button{font:400 16px/1.3 var(--ws-type-display-zh,sans-serif);padding:10px 12px;color:inherit;border:1px solid currentColor;background:transparent;border-radius:0}
+.audit-controls :focus-visible{outline:3px solid var(--ws-first-light,#a2872a);outline-offset:3px}
+.audit-report{margin:18px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.7 ui-monospace,monospace;background:color-mix(in srgb,var(--ws-paper) 80%,#bbb);padding:16px;border-left:3px solid var(--ws-first-light,#a2872a)}
+.audit-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,40ch) minmax(0,1fr);max-width:1400px;margin:auto;padding:clamp(24px,4vw,54px) clamp(18px,3vw,48px);gap:2vw}
+.audit-rail{font:400 13px/1.6 var(--ws-type-display-en,Georgia,serif);position:sticky;top:15px;align-self:start;border-top:1px solid currentColor;padding-top:10px}
+.audit-prose{grid-column:2;min-width:0;font:400 var(--ws-type-scale-reading,18px)/var(--ws-type-leading-reading,1.82) var(--ws-type-reading-zh,sans-serif);line-break:strict;overflow-wrap:break-word;hyphens:auto}
+.audit-prose h2{margin:2.8em 0 .85em;font:600 1.5em/1.3 var(--ws-type-display-zh,sans-serif)}
+.audit-prose p{margin:0 0 1.2em}
+.audit-prose blockquote{margin:1.8em 0;padding-inline-start:1.1em;border-inline-start:1px solid var(--ws-first-light,#a2872a);font:italic 400 1.12em/1.65 var(--ws-type-display-en,Georgia,serif)}
+.audit-prose a:focus-visible{outline:2px solid var(--ws-first-light,#a2872a);outline-offset:3px}
+.audit-prose.is-english{font-family:"Bodoni Moda",serif;line-height:1.7}
+.audit-prose.is-english.is-reference{font-family:Georgia,serif}
+.audit-prose.is-english h2{font-family:inherit;font-weight:400}
+.audit-end{max-width:1400px;margin:auto;border-top:1px solid currentColor;padding:32px clamp(18px,3vw,48px)}
+@media(max-width:700px){.audit-layout{display:block}.audit-rail{position:static;margin-bottom:2rem}.audit-prose{width:100%;max-width:40ch;margin:auto}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body data-ws-scope="journal">
+<header class="audit-header">
+  <div class="audit-kicker">WESTSIDE DESIGN OS / READABILITY LAB / NOT PUBLIC EDITORIAL COPY</div>
+  <h1>Longform Typesetting</h1>
+  <p>此頁是獨立測試，不是正式雜誌文章。以本網站實際 Design OS 字體入口測試長篇中文、英文、斷行、橫向溢出與字型載入。中文測試字數是合成資料，不得視為已完成稿件。</p>
+  <div class="audit-controls">
+    <label for="lang">Language / 字體對照</label>
+    <select id="lang">
+      <option value="zh">中文閱讀 Token（昭源黑體）</option>
+      <option value="en-bodoni">English Bodoni Moda — display face stress test</option>
+      <option value="en-reference">English Georgia — browser reference only</option>
+    </select>
+    <label for="length">長文規模</label>
+    <select id="length"><option value="5000">5,000 字</option><option value="20000" selected>20,000 字</option><option value="50000">50,000 字</option></select>
+    <button type="button" id="run">重新排版並測量</button>
+  </div>
+  <pre class="audit-report" id="report" aria-live="polite">測量中…</pre>
+</header>
+<main class="audit-layout" id="main">
+ <aside class="audit-rail"><strong>CONTENT PROOF / VOL.00</strong><p>不是正式文章。目標：檢查閱讀尺度、長段、引文、標題、連結與鍵盤行為。</p><a href="#section-1">第一節 ↓</a></aside>
+ <article class="audit-prose article-body prose" id="prose" lang="zh-Hant" aria-label="合成長篇排版壓力測試"></article>
+</main>
+<footer class="audit-end"><a href="#main">RETURN TO TEXT ↑</a><p class="audit-meta">Westside Design OS · Offline fallback tests do not prove Chiron webfont loading</p></footer>
+<script>
+(function(){
+'use strict';
+const prose=document.getElementById('prose'), report=document.getElementById('report');
+const zh='守望一座光明的城。這一段只是用於測量繁體中文的斷行、標點、行距、章節與長文可讀性，並不是正式刊物內容。黑夜已深，白晝將近。';
+const en='Long-form editorial reading needs clear hierarchy, generous measure, stable line breaks, strong contrast, and accessible notes. This is synthetic reference copy, not a published feature. ';
+function render(){
+ const mode=document.getElementById('lang').value, count=Number(document.getElementById('length').value), english=mode!=='zh';
+ const unit=english?en:zh;
+ prose.className='audit-prose article-body prose'+(english?' is-english':'')+(mode==='en-reference'?' is-reference':'');
+ prose.lang=english?'en':'zh-Hant';
+ const chunks=[];let used=0,section=0;
+ while(used<count){
+  if(chunks.length%19===0){section++;chunks.push('<h2 id="section-'+section+'">'+(english?'Section '+section+' — Editorial rhythm':'第 '+section+' 節｜城市與見證')+'</h2>');}
+  if(chunks.length%47===0)chunks.push('<blockquote lang="en">The night is far spent, the day is at hand. — Romans 13:12</blockquote>');
+  const part=unit.slice(0,Math.min(unit.length,count-used));
+  chunks.push('<p>'+part+'</p>');used+=part.length;
+ }
+ prose.innerHTML=chunks.join('');
+ requestAnimationFrame(()=>{document.fonts.ready.then(measure);});
+}
+function measure(){
+const css=getComputedStyle(prose),rect=prose.getBoundingClientRect();
+const faces=[...document.fonts].filter(f=>f.family.replaceAll('"','').includes('Chiron Hei HK WS'));
+const bodoni=[...document.fonts].filter(f=>f.family.includes('Bodoni Moda'));
+const loaded=faces.filter(f=>f.status==='loaded').length;
+const width=document.documentElement.scrollWidth,viewport=window.innerWidth;
+const data={
+ status:faces.length===0?'CHIRON FONT FACE NOT DISCOVERED — cannot certify actual webfont':loaded?'CHIRON FONT FACE LOADED':'CHIRON FACE DECLARED, BUT NOT CONFIRMED LOADED',
+ selectedMode:document.getElementById('lang').value,
+ bodyCharacters:prose.textContent.length,
+ paragraphs:prose.querySelectorAll('p').length,
+ headings:prose.querySelectorAll('h2').length,
+ computedFontFamily:css.fontFamily,
+ loadedChironFaces:loaded,
+ availableChironFaces:faces.length,
+ availableBodoniFaces:bodoni.length,
+ fontSize:css.fontSize,
+ lineHeight:css.lineHeight,
+ columnWidthPx:Math.round(rect.width),
+ documentWidthPx:width,viewportWidthPx:viewport,
+ horizontalOverflow:width>viewport+1,
+ scrollHeightPx:document.documentElement.scrollHeight,
+ reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches
+};
+report.textContent=JSON.stringify(data,null,2);
+}
+document.getElementById('run').addEventListener('click',render);
+window.addEventListener('resize',()=>requestAnimationFrame(measure));
+render();
+})();
+</script>
+</body>
+</html>
