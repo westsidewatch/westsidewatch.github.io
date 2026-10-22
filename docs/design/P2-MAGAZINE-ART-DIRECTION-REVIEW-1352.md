@@ -5,6 +5,20 @@ Date: 2026-10-21
 Authority: [WESTSIDE-EDITORIAL-MANUAL.md](WESTSIDE-EDITORIAL-MANUAL.md) §6A and the single [Westside Design OS](WESTSIDE-DESIGN-OS.md).  
 Skills: [new-westside-editorial-web](../../dore-design/knowledge-lab/skills/new-westside-editorial-web/SKILL.md), visual grammar rubric, `ui.visual-hierarchy`, `ui.motion-forensics`, `ui.critique`, `ui.accessibility`, `ui.visual-verification`.
 
+## R11 — rendered 28-frame human critique and evidence correction (2026-10-22)
+
+**Checked:** R10 Actions run [39791279677](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/39791279677), artifact [12431352797](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/39791279677/artifacts/12431352797), 28 viewport images for seven issue sections at 1648 / 768 / 390 / 320. All 8 workflows succeeded on `08b3b3e`; 0 objective failures in the manifest; the art jury gate did **not** pass and must not be inferred from CI.
+
+**What actual pictures establish:** Cover uses a genuinely recognizable WATCH / engraved scene / heavy Chinese composition; longform The Gate and the Carmel feature differ from the Elim technical register; Esther's Brother Lawrence story uses human-scale continuous reading; the final Horeb/Maranatha deliberately quietens. Phone reflows into one reading order, not a squeezed three-column desktop. Canonical 12 desks and three *disclosed, unconnected* interludes survive.
+
+**Actual picture limitations:** The R10 `locator.scrollIntoViewIfNeeded()` screenshots are **viewport-only**: e.g. mobile Contents and The Gate start mid-section and desktop closing's headline is above the crop. They cannot prove whole-section composition. R11 preserves those contextual viewport images and adds **28 separate element-level complete-section screenshots**, with explicit manifest paths, without creating a second CI workflow. Re-examine the new artifact before marking this proof resolved.
+
+**Concrete visual issue:** 320px cover teaser stranded only the final `奏。` as its last line (also weak optical rhythm at larger breakpoints). In the isolated identity candidate only, use `text-wrap: balance` for the teaser and automated browser-level last-line glyph checks at all four widths; the manuscript and actual source image are unchanged. Verify after CI; no unobserved PASS claim.
+
+**Still release blockers:** `home-opening-engraving.jpg` is openly labelled an on-site visual asset with unresolved artist/source and rights; Elim is a source-plan rather than evidenced archaeology with licensed maps, captions and diagrams; full 20k–50k Chinese story reading has not been tested; all three Video + Music interludes await authentic licensed media; the Maranatha prayer is editorially incomplete; original browser 200% zoom (not 824px CSS-width proxy) plus real keyboard/assistive/long-scroll passage review are outstanding. The source notes are responsible disclosure, **not** a pass.
+
+**Decision:** Single Westside Design OS §6A remains authoritative. Candidate retained; no award-style internal score awarded, no final art signoff, no merge. Continue with image provenance, real manuscript/media completion and genuine 200%/longform browser proof, not more visual concepts.
+
 ## Thesis
 
 **One river becomes two doors; one editorial volume appears as cover above contents, held between the star/西望 and Romans 13:12.** Award-calibre recognition is a quality *target*, not a quality *claim*.

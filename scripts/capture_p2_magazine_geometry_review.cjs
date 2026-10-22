@@ -227,12 +227,30 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
           if(!box||box.width<width*.35||box.height<1)defects.push('INVALID_SECTION_BOX_'+name);
           const filename=id+'-'+name+'.png';
           await page.screenshot({path:path.join(out,filename),fullPage:false,animations:'disabled'});
-          sections.push({name,selector,screenshot:filename,bounds:box});
+          // The centered viewport crop is contextual, not a complete section proof.
+          // Capture the complete semantic section separately so mobile headers and
+          // closing paragraphs are not silently omitted from art-direction review.
+          const fullSectionFilename=id+'-'+name+'-section.png';
+          await loc.screenshot({path:path.join(out,fullSectionFilename),animations:'disabled',timeout:45000});
+          sections.push({name,selector,screenshot:filename,fullSectionScreenshot:fullSectionFilename,bounds:box});
         }
         const metrics=await page.evaluate(()=>{
           const root=document.documentElement;
           const anchors=[...document.querySelectorAll('.id__index-group ol a')];
           const buttons=[...document.querySelectorAll('#stage a')];
+          // Detect two-glyph cover teaser widows in the actual rendered lines.
+          const teaser=document.querySelector('.id__cover-title p')?.firstChild;
+          let coverTeaserLastLineGlyphs=null;
+          if(teaser?.nodeType===Node.TEXT_NODE){
+            const lines=new Map();
+            for(let i=0;i<teaser.length;i++){
+              const char=document.createRange();char.setStart(teaser,i);char.setEnd(teaser,i+1);
+              const rect=char.getBoundingClientRect();if(!rect.height)continue;
+              const top=Math.round(rect.top);
+              lines.set(top,(lines.get(top)||'')+teaser.textContent[i]);
+            }
+            coverTeaserLastLineGlyphs=[...lines.values()].at(-1)?.trim().length??null;
+          }
           return {
             cssWidth:innerWidth,scrollWidth:root.scrollWidth,
             sourceSectionCount:document.querySelectorAll('#stage .id__source').length,
@@ -241,13 +259,15 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
             totalTOCRoutes:anchors.length,
             emptyLinks:buttons.filter(a=>!a.getAttribute('href')||a.getAttribute('href')==='#').length,
             hasUnreleasedInterludes:[...document.querySelectorAll('.id__interlude')].some(el=>el.textContent.includes('尚未接入')||el.textContent.includes('等候')),
-            fontsLoaded:document.fonts.status
+            fontsLoaded:document.fonts.status,
+            coverTeaserLastLineGlyphs
           };
         });
         if(metrics.scrollWidth>metrics.cssWidth+2)defects.push('EDITORIAL_HORIZONTAL_OVERFLOW');
         if(metrics.resolvedTOCRoutes!==12||metrics.totalTOCRoutes!==12)defects.push('EDITORIAL_TOC_ROUTE');
         if(metrics.emptyLinks)defects.push('EMPTY_EDITORIAL_LINK');
         if(metrics.fontsLoaded!=='loaded')defects.push('FONT_LOAD_INCOMPLETE');
+        if(metrics.coverTeaserLastLineGlyphs!==null&&metrics.coverTeaserLastLineGlyphs<3)defects.push('COVER_TEASER_WIDOW');
         results.push({id,viewport:{width,height},sections,metrics,defects,
           editorialVisualDecision:'HUMAN REVIEW REQUIRED — screenshots per section',
           publicationAcceptance:'BLOCKED: full manuscripts/media/rights and actual browser 200% zoom open'});
