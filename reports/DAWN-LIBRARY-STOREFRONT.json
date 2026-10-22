@@ -1,25 +1,7 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-10-22T04:38:00.362040+00:00",
+  "generatedAt": "2026-10-21T14:32:55.851477+00:00",
   "shelves": [
-    {
-      "id": "standard-ebooks-new",
-      "title": "精品書架 · Standard Ebooks",
-      "books": 15,
-      "source": "Standard Ebooks"
-    },
-    {
-      "id": "internet-archive-原版古籍-聖經歷史與地理",
-      "title": "原版古籍 · 聖經歷史與地理",
-      "books": 20,
-      "source": "Internet Archive"
-    },
-    {
-      "id": "internet-archive-原版古籍-教會歷史",
-      "title": "原版古籍 · 教會歷史",
-      "books": 20,
-      "source": "Internet Archive"
-    },
     {
       "id": "gutenberg-bible-christianity",
       "title": "聖經與基督教",
@@ -57,22 +39,24 @@
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 167,
-  "sourceCovers": 117,
-  "directPublications": 15,
+  "mappedBooks": 112,
+  "sourceCovers": 62,
+  "directPublications": 0,
   "providers": {
-    "Standard Ebooks": 15,
-    "Internet Archive": 40,
     "Project Gutenberg": 112
   },
   "identity": {
-    "queriedThisRun": 3,
-    "resolved": 106,
+    "queriedThisRun": 0,
+    "resolved": 91,
     "coversAdded": 62,
-    "internetArchiveLinks": 47,
-    "cacheEntries": 240
+    "internetArchiveLinks": 39,
+    "cacheEntries": 237
   },
   "errors": [
+    {
+      "source": "Standard Ebooks",
+      "error": "URLError: <urlopen error [Errno 101] Network is unreachable>"
+    },
     {
       "source": "Wikisource",
       "error": "empty-shelf"
@@ -84,6 +68,14 @@
     {
       "source": "DOAB archaeology",
       "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "source": "Internet Archive Bible history",
+      "error": "URLError: <urlopen error timed out>"
+    },
+    {
+      "source": "Internet Archive church history",
+      "error": "URLError: <urlopen error timed out>"
     }
   ],
   "contentDownloaded": false
