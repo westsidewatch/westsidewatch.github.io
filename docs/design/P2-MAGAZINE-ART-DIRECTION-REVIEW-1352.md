@@ -306,3 +306,17 @@ Next **handbook-first** research after R3: operationalize subject-safe cropping 
 **Updated single OS Manual §6E.33 / R7.1–7.6**, defining strict dependency order editorial worldview → narrative beat/attention map → actual subject/art provenance → invariants/variations → complete reading → cross-spread/typography/motion → actual quality checks; issue-specific visual rhythm mapping; working **TRIAL** editorial proposition (not published slogan); invariant/variation table; initial outputs (one-page proposition, visual score, three-different-story identity stress test); production dependency gates including §6A ≥18/20/no BLOCK. Existing Design OS remains authority, the already-approved video homepage and church P2 motion are frozen.
 
 **Engineering scope:** 3 existing Markdown files only (manual, project skill and PR review); no CSS/JS/HTML, live photo, logo, assets or font/token changes. This creates a method, not an actual approved creative art direction, visual identity or award win. **DO NOT MERGE** just because documentation/CI pass.
+
+
+## R8 (2026-10-22) — full Vol.00 VISUAL SCORE and contrasting-story identity proof
+
+Continued the user's request to **research magazine style from its editorial worldview rather than prematurely polish graphic detail**. Consulted and source-linked SPD 1:1 magazine-art-direction practice; Pentagram Citizen (Matter issue sections past/present/future expressed through light/medium/bold typography, but not to imitate its licensed families or impose a 3-weight Westside pattern); Emergence Magazine's verified longform slow-reading digital+multimedia UX (Studio Airport/Webby/Communication Arts); Pentagram Sight and Sound; Pentagram The New Republic; and the 2026 Webby Magazine/Publication awards listing (actual evidence categories rather than fictitious award score). Re-read the actual canonical \`docs/projects/watch-city-vol00/EDITORIAL_MAP.md\`.
+
+**Primary real output added into single Westside Design OS Editorial Manual §6E.34 (R8.1–R8.6):**
+- Art-direction visual score for ALL **12 real desks and all 3 Video+Music interludes** in correct WATCH/WALK/WITNESS/WORSHIP sequence. Each line identifies real canon, content-completion cautions, story/reader function, scale/evidence/voice, optional visual tactics, forbidden fabricated details or premature theology.
+- Meaningful 5 key issue transition beats, but **not an artificial monotonically quieter ramp**: precise dense technical material in Elim and late contemplative Beersheba, real past/present witnesses, Horeb alignment then authentic final prayer/silence.
+- Three **story-function** identity stress briefs (technical Elim, human Esther, contemplative Maranatha), testing shared editorial DNA without identical square/image/hero layouts, plus actual TOC/deep-reading validation.
+- Three source-first art-direction output sheets: all-issue visual score, four source-verified material families, invariant-versus-variation proof matrix; five veto questions and unchanged §6A release gate.
+- False evidence, generic historic artwork, premature revelation, duplicate imagery, compulsory square, Monocle visuals and print-gutter mimicry remain rejected.
+
+**Scope:** existing manual, project skill routing and PR review Markdown only. No live app/CSS/JS/images/fonts/motion/OS tokens; prior homepage full-bleed video and P2 church/ocean/doors remain preserved. **Artistic identity is still unapproved; DO NOT MERGE only because CI is green.**

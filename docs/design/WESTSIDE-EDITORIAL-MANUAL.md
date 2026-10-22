@@ -1887,6 +1887,117 @@ The gate to detailed type/shape tuning is **not** how many references have been 
 
 **Research conclusion / status:** R7 provides a defensible **starting logic** and real Vol.00 editorial application; it **does not prove** a finished brand or an Awwwards/Webby/FWA-calibre magazine. Award quality is assessed on the *complete, actually rendered and readable publication*, not on the number of design references, components, CI passes or iterations.
 
+
+### 6E.34 R8 — Whole-issue editorial visual score: turn the 12+3 canon into art direction (2026-10-22)
+
+**Question beyond R7:** Now that we know a magazine must begin with editorial worldview, **how do we turn an entire ISSUE into a cohesive, non-repetitive visual style?** This R8 produces the missing operative material: a real 12-column / 3-interlude **editorial visual score** and a **cross-subject identity stress test**. It is **not** an approved finished art direction. R7 defines the start; R8 maps each specific story's visual obligations and exposes where a proposed shared style may fail.
+
+#### R8.1 New evidence: editorial narrative generates repeatable visual grammar
+
+The case studies show three mechanisms, each of which must be distinguished from copying a design:
+
+| Evidence / documented external practice | Design rule actually learned | Westside translation | What NOT to copy |
+| --- | --- | --- | --- |
+| [SPD, Anton Ioukhnovets art-direction interview](https://www.spd.org/1to1): consider every story's photo/illustration/data strategy, **then** entire issue image/story pacing **before starting pages** | **Sequence and subjects precede layout**; art director designs the reader's changing attention, not only front cover | Score each real WATCH/WALK/WITNESS/WORSHIP role across image scale, evidence density, text concentration and transition | A flatplan as a fixed paper page-count or advertising matrix |
+| [Pentagram / Citizen](https://www.pentagram.com/work/citizen): Matter issue “past / present / future” uses light / medium / bold typographic weights to create increasing gravity and a flexible grid where individual stories can differ | A **theme-derived** formal progression can make unlike stories belong to one issue | Use a *semantic shift* from historical city/evidence → individual lived experience → prayer/quiet closure; the exact density need not rise monotonically | **Do not** change Chiron / Bodoni weights in an invented 3-stage ladder; existing site font authority remains binding |
+| [Emergence Magazine, first-person studio + Webby feature](https://www.webbyawards.com/crafted-with-code/emergence-magazine/); [Communication Arts](https://www.commarts.com/webpicks/emergence-magazine) | Publication mission of **slow consumption** leads to restrained navigation, longform, thoughtful whitespace and restrained transitions across films/audio/words | Keep longform deep reading quiet even while issue/act opening creates visual drama; video/music interludes make real *state transitions*, not blocking experiences | Environmental/photographic aesthetic, motion plugin, faux sacred atmosphere or extra long scroll with no semantic purpose |
+| [Pentagram / Sight and Sound](https://www.pentagram.com/work/sight-and-sound): film clapperboard provides issue-specific graphic grammar and section signposting | **Editorial material supplies a formal language** | Original **city/watch/way/people/cornerstone/prayer** objects may supply direction, alignment and depth, while authentic engravings remain credited artwork | Clapperboard stripes or arbitrary category-color repetition |
+| [Pentagram / The New Republic, 2020](https://www.designweek.co.uk/issues/2-8-november/pentagram-redesigns-the-new-republic-magazine-to-match-its-forward-thinking-content/): flexible 12-column editorial grid and distinct dynamic web channel expression | Print master/grid can be **translated into web-specific** story hierarchies rather than pixel duplicated | Wide digital spread for editorial impact; vertical, measured longform for reading; avoid bound-paper imitation | Their font palette, exact 12 columns or print news-weekly density |
+| [2026 Webby *Magazine or Publication* award gallery](https://winners.webbyawards.com/winners/websites-and-mobile-sites/general-desktop-mobile-sites/magazine-or-publication) | The award category covers **fully online and companion publications**, not just one special animated article | Distinct visual language must succeed as a sustained browser publication, mobile site, reading/interaction system | Nominations falsely treated as design-system proof or a Westside award prediction |
+
+**Two key deductions:** (1) meaningful progression is **not** necessarily a uniform ramp from quiet to loud—change of attention can take multiple forms; (2) modern digital magazine quality is **not** “a printed double spread on a monitor.” R5's **continuous digital-spread** canvas is a visual design opportunity; no print gutter, no fake pages, no fixed columns; the actual article remains a responsive reading stream.
+
+#### R8.2 The visual-score notation — semantic axes, not fake precision
+
+For each source-authorised item, record four independent **qualitative** axes. These are questions for the art director, not a second evaluation rubric or scored award criteria.
+
+- **SCALE**: what is the viewer's actual subject distance? \`city/world\`, \`architecture/threshold\`, \`human\`, \`object\`, \`interior/quiet\`, or mixed. **Not** an instruction to physically zoom a picture.
+- **EVIDENCE**: narrative/media evidence demand, such as \`historical/source-dense\`, \`portrait/person-grounded\`, \`theological close reading\`, \`spiritual/reflective\`, \`not yet sourced\`. **Not** arbitrary 1–10 numeric density.
+- **VOICE**: what kind of typography is warranted: \`MONUMENT\` (selected issue/feature encounter), \`ATLAS\` (archive/maps/diagram/caption), \`READING\` (calm longform), \`WITNESS\` (accurate names/profiles/sources), \`SILENCE\` (quiet resolution). These are existing R7/§6D concepts and local editorial jobs, **not separate OS themes**.
+- **TURN**: what reader transition is necessary at the item's *entry/exit*: \`ask\`, \`investigate\`, \`enter\`, \`build\`, \`leave\`, \`consider\`, \`practice\`, \`meet\`, \`align\`, \`pray\`, \`pause/continue\`.
+
+The pattern belongs to **real editorial intent**; it never replaces manuscript and photo-source discovery. **Never invent font sizes, durations, photo regions or word counts for missing material.** Status \`CANON\` means the *editorial role* is confirmed, not article completion or artwork clearance. The source of truth is [Vol.00 EDITORIAL_MAP.md](../projects/watch-city-vol00/EDITORIAL_MAP.md).
+
+#### R8.3 The complete Vol.00 visual score — the actual 12 desks + 3 interludes
+
+The below is the **first explicit all-issue art-direction assignment**, not one screen with 15 visual cards. It maintains exact source sequence: WATCH 4, WALK 4, WITNESS 2, WORSHIP 2; interludes after 04, 08, 10.
+
+| Story | Canonical role / authenticated title from the editorial map | SCALE → EVIDENCE → VOICE | Formal *possibility* arising from the editorial task, NOT a template | What must NOT be revealed / faked |
+| --- | --- | --- | --- | --- |
+| **01 · WATCH · Mizpah** | Issue preface; 〈守望，一座光明的城〉; deliberately short. Completion **OPEN** | city → reader's question → **MONUMENT → READING** | **An unanswered visual question**: city at distance, restrained official publication title, a clear route to the full TOC. A giant English inscription is justified only if it deepens the question | **Do not state** Beersheba's later theological conclusion here; no invented body |
+| **02 · WATCH · Bethlehem** | Long-term daily-spiritual-nourishment desk; this issue's original piece **OPEN / recover**, do not fill casually | **TBD actual content** → not yet sourced → **READING provisional** | Brief moment of accessibility / a different cadence; no fabricated illustration or “daily reading” screenshot until source recovered | Do not invent a devotion or borrow generic stock Bible content |
+| **03 · WATCH · The Gate** | 〈城門口的人〉 + current Jerusalem/Herod drafts; exact approved article title per editor | architecture → historical event + people → **MONUMENT + ATLAS + READING** | One genuine historical threshold as a spatial axis across one digital spread; giant Bodoni with complete word; source art/people outside protected overlap. Square **may** cross axis 30/70, but may equally be omitted | No cropped-out essential people, false archaeology or generic Square Folio repeated later |
+| **04 · WATCH · Carmel** | Feature 〈一萬年的建城禮〉, "build", manuscript source exists | city-scale span → archaeology/time/evidence → **ATLAS → READING** | Large chronological/structural comparison and captioned evidence; one image could become wider than a spread; text diagrams and actual source dates must remain legible | Do not substitute gorgeous architectural plates for precise archaeological data |
+| **I · INTERLUDE · Selah** | Actual **Video + Music**, WATCH → WALK; not a thirteenth essay | change of attention → audiovisual → **PAUSE / CONTINUE** | Meaningful rest after broad WATCH, before beginning WALK; static fallbacks + a return path | No scroll-lock filler, no fake prose |
+| **05 · WALK · Emmaus** | 〈吾珥：離開一座大的城〉, excerpt/consumer from the separate existing book | city → one person leaving → **ATLAS → READING** | **Distance becomes route**: arrival/departure/dwelling / city boundary can influence spread depth and restrained step navigation | Never rewrite source book, invent Ur archaeology or insert a false Abraham portrait |
+| **06 · WALK · Elim** | 〈若不是耶和華看守城池——古代攻城技術史〉, detailed  fortification history before conclusion | architecture/engineering → historical/diagram/source-dense → **ATLAS + READING** | **Technical historical density on purpose**: documented walls, maps, sections, siege schematics and archaeology citations; use cross-spread as a single coherent investigation field, not scattered cards | **Do not preemptively display Psalm 127:1 as completed conclusion** before the narrative has earned it |
+| **07 · WALK · Beersheba** | Canonical late theological reflection, title/body **OPEN**; responds to Mizpah/Elim | historical accumulated evidence → extended reflection → **READING → QUIET** | Slow down deliberately; fewer graphics, wider conceptual pauses between authentic thought passages. The previous evidence must remain reachable by reference | **Do not** invent title or pretend theology already written; keep late revelation late |
+| **08 · WALK · Bethel** | Disciple formation / ordinary life; issue-specific article **OPEN** | individual → ordinary community/routine → **READING + WITNESS** | Practical legibility: life/training/working and shared practice deserve a human-scale page rhythm, sources/routes to real church/ONE resources where present | No fabricated course or article; don't fill with uplifting stock photos |
+| **II · INTERLUDE · 遠方無聲鴿** | Actual **Video + Music**, WALK → WITNESS | reflection → change to observed life → **PAUSE / CONTINUE** | Make reader shift from conceptual/communal practice toward a particular person and source | Not automatically a white dove illustration; image/music rights must be checked |
+| **09 · WITNESS · Esther** | 〈廚房裡的人｜你當像飛鳥往你的山〉, Brother Lawrence, existing completed/preserved article | interior/human → authenticated historic witness → **WITNESS + READING** | A **small human/private object** or truthful historical material can carry as much significance as a cathedral; portrait/name/source relationships lead, not oversized civic architecture | No speculative photographic portrait of a historical person; maintain actual attributed sources |
+| **10 · WITNESS · Adullam** | Present witnesses 黃淑華 and 江秀琴; linked real sermon/series/timecode/evidence material | two real people → archive/video/source → **WITNESS + ATLAS** | A contemporary evidence-rich *human editorial profile*, with readable names, playback/source passage, source time anchors and chronological context | No generic artificial identity-bearing portraits; keep protected artwork and real sermon evidence |
+| **III · INTERLUDE · Kinneret** | Actual **Video + Music**, WITNESS → WORSHIP | witnessed life → contemplative arrival → **PAUSE / CONTINUE** | Release accumulated human stories into contemplation, without losing previous/next link or static mode | No generic “dramatic heaven” transition that invents doctrine |
+| **11 · WORSHIP · Horeb** | 〈房角石：整座城由此對齊〉 | architecture/object → alignment → **MONUMENT → READING** | **One physical/conceptual alignment axis** can become a whole digital spread organizing title/structure—unlike a literal ornamental centered border | No fake historical cornerstone imagery or claim a source image proves theological meaning |
+| **12 · WORSHIP · Maranatha** | 〈冠冕〉 + closing prayer → silence → official Westside Watch logo/crown | object → prayer / quiet → **SILENCE** | **Measured removal of visual information** as the sequence closes; a real ending, credit and continued reader path, not infinite blank space | No invented closing prayer or completed text; logo remains original SVG; no black-gold luxury styling |
+
+**Five transitions matter more than fifteen identical ornaments:** (a) Q introduced **Mizpah →** historical evidence; (b) WATCH broad history **→ Selah →** WALK relational path; (c) Elim's rich material **→ Beersheba** reasoned reassessment with late theological reveal; (d) Bethel **→ Interlude II →** actual people and life; (e) human witness **→ Interlude III →** worship and silence. Never flatten these into uniform page color/box size.
+
+**Explicit temporal nonlinearity:** The issue does **not** become progressively minimalist from 01 to 12. WATCH can range from question to visually dense feature. WALK alternates journey, highly technical Elim, quiet Beersheba and everyday Bethel. WITNESS can combine intimate people with rich source media. WORSHIP may become quiet, but Horeb still calls for substantial structural weight. The score proposes *meaningful contrasts*, not one descending white-space ramp.
+
+#### R8.4 The **identity stress test** — three incompatible-looking stories, one publication DNA
+
+A style is *actually* coherent if it survives vastly different source tasks **without** repeating the same template. Use three separate story-first composition briefs:
+
+| Test | A / Elim — technical historical documentary | B / Esther — intimate witness | C / Maranatha — closing prayer |
+| --- | --- | --- | --- |
+| Reader first job | Understand how city defence, siege and human engineering really worked | Know one person and a trustworthy historical/literary witness | Follow actual closing text / prayer / silence |
+| Dominant media | Authenticated map, diagram, fortification detail, reconstructed cutaway **clearly labelled** | Attributed portrait/object/interior/source text; don't fabricate sitter | Scriptural / textual final movement; perhaps image absent entirely |
+| Main scale tension | Whole city / wall → individual soldier / human limits | Domestic object / lived interior → enduring significance | Architectural foundation / crown → near-empty quiet |
+| Type hierarchy | Bodoni English can mark a real concept, while Chinese anchors exact evidence; diagram labels require functional clarity | Chinese 900 for true title + readable actual name/attributions, selective Bodoni, no giant letters obscuring person | Possible monumental single phrase **only** if authentic and semantically earned; eventually allow silence |
+| Digital-spread opportunity | One coherent broad investigative diagram/plate across virtual axis, not two isolated poster pages | Asymmetric evidence/person/text relationship, square possible but not compulsory | Deliberate formal removal and alignment; no enforced square |
+| Reading | Technically dense captions and evidence, then actual Chiron 400 argument | Intimate longform + notes/sources, media if truly present | Short/long closing content as actually written; honest final links/credits |
+| What remains IDENTICAL | **One** official masthead, Bodoni/Chiron roles, citation/source schema, meaningful Contents/next, sound image ethics, controlled editorial contrast | **Same invariants** even though image field smaller and rhythm changes | **Same invariants** even when there is no picture |
+| Block condition | Unverified city dates, invented map labels, textbook density made unreadable at 390px, preemptive theological conclusion | Fake/hallucinated person, unsupported quote/source, oversized title overwhelms the witness | Fake closing prayer, misleading crown, lost ending/navigation, empty scroll for “atmosphere” |
+
+**This is the proper identity test, NOT** three versions of *The Gate* with square/wide/full crop ratios. It varies the STORY TASK: empirical historic evidence / human presence / concluding contemplation. A positive concept must have both:
+1. **Distinct authored visual silhouette** for each true task;
+2. **Clearly readable single-magazine family resemblance** in roles, ink/paper logic, type, source treatment, annotation and transition behaviour without the masthead.
+
+A thumbnail exercise is only one visual screening method, not sufficient evidence of quality. Test an actual **issue Contents** and 20k-character *available* article continuation as well. Where actual content is unavailable, mark **OPEN** and use a synthetic body fixture solely for UX performance, never as published prose.
+
+#### R8.5 What FIRST to draw now: three types of art-direction documents, in order
+
+**Sheet A — full-issue VISUAL SCORE**: this R8.3 mapping, with one view of all 15 items. It is *the beginning of art direction*, before cover images. Show genuine reader attention shape across the issue: scene scale, source density, text concentration, silence and transitions; no invented artist quotation, article length or numeric “emotion score.”
+
+**Sheet B — four visual-MATERIAL specimen families** (collect actual source data first):
+- **City / stone / architectural evidence:** proper building/defence artefacts, maps and chronological plans; Doré image when demonstrably relevant and credited, rather than substituting source data.
+- **Human / life / witness:** identifiable people with authentic photographs/portrait assets and reliable biographies; intimacy and privacy, not a compulsory “historical face” effect.
+- **Word / interpretation / scripture:** actual approved text and references; quiet editorial reading and honest quotation, with selective monumental English when meaningful.
+- **Transition / absence / time:** real video + music, accessible fallback/controls; silence and empty visual field count as material only when serving narrative.
+No new global theme or palette. All specimens use existing OS source/rights and typography authority.
+
+**Sheet C — invariant/variation PROOF MATRIX** across Elim, Esther, Maranatha and front-of-book: what is shared (publication identity, source, type roles, article route) vs different (image, emphasis, shape, act rhythm). Each proof needs a true page **entry, middle, ending**, not only a Hero or identical three-column layout.
+
+**Before production page styling, the art director must answer five veto questions:**
+- Is this image/style chosen because of the story, or because it's already a pretty design asset?
+- Can the whole spread work *without* the square, oversize typography or ornamental crenellation?
+- Are we designing the current issue's **whole reader passage**, or only adding unrelated homepage-style screens?
+- Will a reader of 390px and 200% zoom encounter the same sources, legible text and controls?
+- Do Elim/Esther/Maranatha feel distinct **and** related without borrowing Monocle's rejected info-grid aesthetic?
+
+#### R8.6 Explicit downstream constraints and §6A promotion gate
+
+**No style token changes before a family resemblance is observed** across at least the three contrasting briefs plus TOC. Preserve current R5 single-spread composition, R6 existing oversized-English, verified Doré image provenance and R4 crop safety as **available instruments**, not identity first principles. The older approved homepage movie and P2 water/doors remain locked. Monocle stays rejected, historic Westside battlement end mark remains deferred pending original asset recovery.
+
+**Production checklist to promote any visual grammar into S01–S32:**
+- source ID & image rights → what actual reader should learn → concept (one paragraph) → full-spread composition → calibrated typography roles → verified caption/notes → real transition into longform → exit/next;
+- four viewport/zoom checks from existing manual §6A/R4-R6, programmatic keyboard+reduced-motion and screenshot art critique;
+- single Design OS authority and page-owned scoped CSS, no new typography/color systems or styling through side-effectful JS;
+- internal ≥18/20 (10×2) and no zero / no unresolved BLOCK **for the whole publication experience**; no new invented scoring scale;
+- **If the concept fails**, revise its editorial material relationship or issue rhythm. Don't add a stamp, decorative little wall or an extra cover animation to simulate originality.
+
+**R8 status:** This is a **completed content-grounded editorial visual score and working art-direction testing book section**, **not** selected visual identity, final image atlas, completed 32-sheet production manual, accepted screenshots or an award-quality magazine. Editors must review the whole-issue score and trial proposition before implementing or merging creative layouts.
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
