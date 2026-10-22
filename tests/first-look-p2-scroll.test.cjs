@@ -15,7 +15,7 @@ function runtime(embedded,visible=false){
  root.querySelector=s=>{if(!nodes.has(s)){const n=node();if(s==='.index')n.querySelector=()=>({textContent:''});nodes.set(s,n)}return nodes.get(s)};
  root.querySelectorAll=selector=>selector==='.plane'?planes:[];
  const document={documentElement:{dataset:embedded?{p2Embedded:'true'}:{}},visibilityState:visible?'visible':'hidden',querySelector:()=>root};
- vm.runInNewContext(scripts[1],{document,window:{parent,wsP2Water:{paint(){waterPaints++}}},location:{origin:'https://example.test'},innerHeight:800,performance:{now:()=>now},addEventListener:(name,fn)=>events[name]=fn,requestAnimationFrame:fn=>{queue.push(fn);return queue.length},cancelAnimationFrame(){}});
+ vm.runInNewContext(scripts[1],{document,window:{parent,wsP2Water:{paint(){waterPaints++}}},location:{origin:'https://example.test',search:''},URLSearchParams,innerHeight:800,performance:{now:()=>now},addEventListener:(name,fn)=>events[name]=fn,requestAnimationFrame:fn=>{queue.push(fn);return queue.length},cancelAnimationFrame(){}});
  return {root,parent,nodes,planes,get waterPaints(){return waterPaints},step(ms){now+=ms;const batch=queue.splice(0);for(const callback of batch)callback(now)},send(source,origin,progress,active=true){events.message({source,origin,data:{type:'westside-p2-scroll',progress,active}});if(!visible)while(queue.length)queue.shift()()}};
 }
 test('Embedded P2 follows only the hosting parent progress and reverses',()=>{
