@@ -91,3 +91,26 @@ The user supplied **three real browser captures** from the deployed proof at 20,
 **Corrections:** The existing OS enforcement now excludes `:lang(en)` descendants from the Chinese role (respecting inherited language); the proof gives English paragraphs/headings explicit language, calculates and reports the **actual paragraph's** `font-family`, and fails its own check if the active paragraph family differs from the selected mode. A 40rem desktop column replaces 40ch; under 980px the layout becomes a full-width, capped one-column reader. The existing OS contract asserts the language guard. No English production body face was selected; Bodoni-vs-Georgia is still a visual research experiment. This does not declare award-level typography or approve the P2 PR.
 
 **Acceptance still needed:** Recheck 390px, 768px, 1648px at 100% and 200% zoom; real glyph/fallback comparison; a longer English original sample; genuine article assets and notes. The status is **PARTIALLY VERIFIED / DO NOT MERGE**.
+
+
+## Deployment-confirmed browser screenshots — typography phase 1 (2026-10-22, 00:14 Toronto)
+
+**Evidence:** User supplied three real screenshots of the rebuilt longform proof (Chinese reading token, English Bodoni Moda, English Georgia reference) using **20,000-character synthetic text**, taken after the browser test was deployed. These replace the earlier 22:36 screenshots where English modes were ineffective. The actual browser report says `viewportWidthPx: 2992`, `columnWidthPx: 640` (regardless of the dimensions of the uploaded/compressed screenshot).
+
+| Observed in the three captures | Chinese / Chiron | English / Bodoni | English / Georgia |
+| --- | --- | --- | --- |
+| `paragraphFamilyMatchesSelection` | true | true | true |
+| `computedParagraphFamily` | Chiron Hei HK WS, Noto Sans TC, sans-serif | Bodoni Moda, serif | Georgia, serif |
+| `paragraphTextCharacters` | 20,000 | 20,000 | 20,000 |
+| `loadedChironFaces` | 10 | 10 | 10 |
+| `loadedBodoniFaces` | 3 | 3 | 3 |
+| `columnWidthPx` | 640 | 640 | 640 |
+| `horizontalOverflow` | false | false | false |
+| CSS paragraph font size | approx. 18.88px | approx. 18.88px | approx. 18.88px |
+| CSS paragraph line-height | approx. 34.37px | approx. 32.1px | approx. 32.1px |
+
+**What this actually proves:** The deployed **desktop** experiment now selects the intended CSS family *on the paragraph element*, the Chiron and Bodoni webfont families have loaded faces in the document, and the synthetic long-text layout is horizontally contained at the reported viewport. English paragraph styles are no longer overridden by the Chinese reading selector. Georgia is a *local reference*, not an approved or downloaded English body font. FontFace status does not prove every displayed glyph avoided fallback.
+
+**What it does NOT prove:** Actual Chinese glyph-by-glyph family selection, multi-page professional readability, typography on `journal` / `vol-00` / ONE / Dawn Library / book routes, 390px/768px/200% browser zoom, printed folios, real manuscript and footnote behavior, or award-level composition. The screenshot visibly remains a minimal test scaffold with repeated synthetic paragraphs, not the published magazine reader. Chinese heading weights may still be overridden by `static/css/westside-typography-enforcement.css` (`font-weight:200!important` for general heading selectors), so **display hierarchy needs a separate scoped semantic-role test** rather than a local patch.
+
+**Disposition:** **PASS — phase-1 desktop language-aware font selection and 640px measurement.** **OPEN — cross-surface authority, mixed-script running text, headings, original manuscripts and complete editorial/visual QA.** The P2 PR remains **NOT VISUALLY APPROVED / DO NOT MERGE**. Next use genuine prose and verify reading roles and weights across existing site routes, not more decorative changes to the diagnostic page.
