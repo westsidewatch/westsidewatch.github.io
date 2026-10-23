@@ -33,6 +33,66 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+      - name: Capture P2 Stylebook visual study (review-only; existing preview workflow)
+        continue-on-error: true
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+          mkdir -p artifacts/p2-stylebook
+          python3 -m http.server 4173 --directory public >/tmp/p2-stylebook-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node <<'JS'
+          const {chromium}=require('playwright');
+          const fs=require('fs'),path=require('path');
+          const out='artifacts/p2-stylebook',rows=[];
+          (async()=>{
+            const b=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try{
+              for(const [name,width,height] of [['desktop',1648,928],['tablet',768,1024],['phone',390,844],['small',320,720]]){
+                for(const state of ['hold','open']){
+                  const p=await b.newPage({viewport:{width,height},reducedMotion:'reduce'});
+                  const id=name+'-'+state,problems=[];
+                  p.on('pageerror',e=>problems.push('JS: '+e.message));
+                  try{
+                    const response=await p.goto('http://127.0.0.1:4173/experiments/p2-magazine-stylebook-composition.html?state='+state,{waitUntil:'load',timeout:45000});
+                    await p.evaluate(()=>document.fonts.ready);
+                    const metrics=await p.evaluate(()=>{
+                      const el=document.querySelector('.view:not([hidden])');
+                      const imgs=[...el.querySelectorAll('img')];
+                      return {state:document.body.dataset.artDirectionScene,
+                        visibleViews:document.querySelectorAll('.view:not([hidden])').length,
+                        width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
+                        assetsLoaded:imgs.every(i=>i.complete&&i.naturalWidth>0),
+                        canonRows:document.querySelectorAll('.spread__movement li').length,
+                        heading:document.querySelector('.spread__reading h1')?.textContent||'',
+                        selected:[...document.querySelectorAll('[data-scene]')].filter(x=>x.getAttribute('aria-pressed')==='true').length,
+                        fontsReady:document.fonts.status};
+                    });
+                    if(response.status()!==200||metrics.state!==state||metrics.visibleViews!==1||metrics.selected!==1)problems.push('SCENE');
+                    if(metrics.scrollWidth>metrics.width+2)problems.push('PAGE_OVERFLOW');
+                    if(!metrics.assetsLoaded)problems.push('ASSET_LOADING');
+                    if(metrics.canonRows!==12||!metrics.heading.includes('一座光明的城'))problems.push('VOL00_CANON');
+                    await p.screenshot({path:path.join(out,id+'.png'),fullPage:true,animations:'disabled'});
+                    rows.push({id,width,height,metrics,problems});
+                    process.stdout.write(id+' : '+(problems.length?problems.join(','):'CAPTURED')+'\n');
+                  }catch(e){rows.push({id,problems:['EXCEPTION: '+e.message]});process.stderr.write(id+' '+e.message+'\n');}
+                  await p.close();
+                }
+              }
+            }finally{await b.close()}
+            fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({source:'P2 Stylebook Art Direction Experiment',sha:process.env.GITHUB_SHA,artReview:'PENDING HUMAN CRITIQUE',browserZoom200:'NOT VERIFIED',scenes:rows},null,2));
+            if(rows.some(x=>x.problems.length))process.exitCode=1;
+          })().catch(e=>{process.stderr.write(e.stack);process.exitCode=1});
+          JS
+      - name: Upload P2 Stylebook contact screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-stylebook-design-study
+          path: artifacts/p2-stylebook/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Deploy Cloudflare Pages preview (never production)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
