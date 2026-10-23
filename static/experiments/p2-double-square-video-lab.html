@@ -295,6 +295,8 @@ html.dual-embed .dual-film__credit{display:none}
   pose(gold,goldX,goldY,w,h);
   cover.style.clipPath='inset(0 0 '+((1-blue)*100).toFixed(3)+'% 0)';
   gold.style.clipPath='inset('+((1-dawn)*100).toFixed(3)+'% 0 0 0)';
+  stage.dataset.blueReveal=blue.toFixed(4);
+  stage.dataset.dawnReveal=dawn.toFixed(4);
   const lettersFade=1-ease((progress-.855)/.115);
   letters.style.opacity=String(lettersFade);
    rows.forEach((row,i)=>{
