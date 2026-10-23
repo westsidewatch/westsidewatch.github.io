@@ -150,7 +150,12 @@ jobs:
                   });
                   if(m.phase!=='magazine'||m.design!=='duo-bridge'||m.duo!=='contents-final'||!m.water||!m.doors||!m.church)errors.push('CHURCH_MOTION_NOT_PRESERVED');
                   if(m.entries!==12||!m.homeVideo)errors.push('CANON_OR_ORIGINAL_HOME_FILM');
-                  if(m.logoRatio<.78||m.logoRatio>.87)errors.push('COVER_MASTHEAD_NOT_DOMINANT');
+                  // The editor's own Vol.00 cover direction places the official
+                  // masthead across almost the full midnight-blue field.
+                  // The retired 78–87% baseline belonged to the rejected
+                  // small-label composition, and misclassified the approved
+                  // direction's actual ~90% masthead as a failure.
+                  if(m.logoRatio<.88||m.logoRatio>.95)errors.push('COVER_MASTHEAD_SCALE_OUT_OF_RANGE');
                   if(Math.abs((m.coverSize?.width||0)-(m.coverSize?.height||0))>2)errors.push('COVER_NOT_SQUARE');
                   if(m.lastRect>m.contentsRect+2&&!m.directoryScrollable)errors.push('LAST_ENTRIES_UNREACHABLE');
                   await page.screenshot({path:path.join(out,id+'.png'),animations:'disabled'});
