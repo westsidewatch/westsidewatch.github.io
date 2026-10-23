@@ -2058,6 +2058,61 @@ Observe actual 1648, 768, 390, 320px screenshots, genuine browser 200% zoom, sou
 
 **Next production test:** compose ONE real, source-attributed Elim/Jerusalem evidence plate with the above pipeline, and compare crop-only versus registered editorial framing. This is RESEARCH/TRIAL, not a new OS, not an approved identity or visually finished asset. Preserve SILENCE, Olive poster assets, homepage and P2 motion.
 
+
+### 6E.37 R14 — Data becomes composition: precise marks, evidence and spatial memory (2026-10-22)
+
+**Aim:** Move beyond R13's framing proposal. Study how the same actual source should yield three materially different editorial propositions without inventing historical geometry. A beautifully cropped square remains a low-information control, **not** an editorial system.
+
+**Four separate professional sources and their different roles:**
+1. [Pentagram / LDF 2026](https://www.pentagram.com/work/london-design-festival-2026) and [LDF's own interview](https://londondesignfestival.com/stories/framing-ldf-by-pentagram): a frame is a meaningful, adaptable editorial verb when it refers to the institution's work as a platform. The same mechanism must carry actual meaning at Westside rather than copy a red typography effect.
+2. [Jacques Bertin, original analysis of graphic variables](https://classiques.uqam.ca/collection_methodologie/bertin_jacques/representations_visuelles_info/representations_visuelles_info_texte.html): a point, line or region can be mapped through position, size, value, texture, color, orientation and shape. These are not interchangeable decorations: source relationship and reader task determine the encoding.
+3. [Observable Plot official marks](https://observablehq.github.io/plot/features/marks): data visualization can layer line, dot, area, text and rule as separate graphic marks; web-native native SVG can apply the **method** without introducing a second chart library or visual authority.
+4. [London Charter Principle 4.4](https://www.london-charter.org/documentation.html): computer-based heritage visualization must show whether its subject is surviving material, evidence-based restoration or hypothetical reconstruction, and explain its uncertainty. A gorgeous drawing does not elevate an inferred coordinate into an excavated fact.
+
+#### 37.1 Verified project datum: one real origin, not imagined Jerusalem archaeology
+
+Canonical source: [Jerusalem 3000 David–Solomon landscape](../../preview/jerusalem-3000/data/settlement/david-solomon.v1.json), project schema j3k.david-solomon-landscape.v1. It already has:
+- royalCity.davidWall: **7 point entries**, the first point repeated to close a hypothetical defensive outline. This is an internal interpreted coordinate chain in a spring-relative local frame; **NOT surveyed historical wall segments**.
+- royalCity.northernWall: **4 point entries** of an additional northern hypothetical segment, with a Solomon-stage display role; the exact ancient fortification remains disputed.
+- royalCity.spatial.nodes: **14** scheme-level entries for connectivity, including named entrances, spring, courtyard and northern connections, with many calculated from inferred gates. It is **not** a field-survey road network.
+- royalCity.spatial.edges: **13** staged connections; “13” is a code/network count, not a historical count of roads or military entrances.
+- The source warning expressly says royal circuits and monuments are unverified, the spring is an approximate modern map point, and extrapolated buildings and roads are illustrative. The whole Jerusalem 3000 project already carries observed/reconstructed/inferred/disputed status and a historical lifecycle system. Its authoritativeness is **in its honesty about what is and is not known**.
+
+This is a suitable FIRST COMPOSITION TEST because the data are accessible and provenance-coded; it is NOT sufficient to publish a finished Elim article on ancient military construction, or a definitive David/Solomon city diagram. Do not manually re-copy the data into a magazine geometry array. Use an existing URL/source adapter and record the exact source revision in any exported plate.
+
+#### 37.2 Five-stage design translation: from data attributes into editorial marks
+
+**1 / Reader question.** Ask a single clear question, e.g. “What changes when a hypothetical northern wall is added to the same source frame?” Reject the non-question “How can this map look cool?”
+
+**2 / Reference frame.** Preserve the source's local coordinate axis and equal unit scale, with one fixed orientation, stable origin, named era and source revision. Never squeeze north-south or east-west distances solely to fill a pleasing square: geometrical aesthetics do not authorize distorted measurements. Wide spreads can change crop and axis placement, but not data semantics.
+
+**3 / Map the source's evidence state to mark behavior.** The placement of an element encodes source coordinates; line continuity encodes relationships; dash/line texture encodes inferred contours; opacity can subordinate contextual alternatives; captions explicitly name status. Historical scientific uncertainty must NOT be implied solely by a pretty gold hue, arbitrary blur or percent without supporting probabilities.
+
+**4 / Editorial composition.** The historic line can cross a registered window, overlap **behind** the full-size English Bodoni type field, or be read as an annotated threshold in a continuous digital spread. The square may sit 30/70 across the virtual composition axis, but the line must keep actual spatial relationships. Do not sacrifice map labels, original legends, source statuses or subject masks to force 1:1 cropping. Chinese heading, CJK dates and real captions remain readable; type glyphs may be occluded deliberately, never stretched.
+
+**5 / Responsive edition.** Desktop treats the whole viewport as one editorial spread without a physical page spine. Tablet rebalances editorial weights; phone presents a re-composed sequence of source diagram → annotated claim → actual prose/source disclosure, rather than a tiny desktop spread. SILENCE's uncluttered conclusion remains a useful no-square identity stress test.
+
+#### 37.3 Same source, three mandatory trials — exactly what should differ
+
+| Mode | Graphic construction using the unchanged David–Solomon source | What the reader learns | Reject if |
+| --- | --- | --- | --- |
+| A / Crop (control) | Same source polyline seen through an ordinary 1:1 media viewport | Little about full wall or north extension; intentionally exposed limitation | Treated as the distinctive solution merely because image is square |
+| B / Evidence aperture | Keep every polyline segment visible; registered square region selectively highlights the relevant part while history lines continue across virtual canvas; masthead/English hierarchy builds negative-space pressure | The frame is a *focused argument* while the source remains continuous | Decoration obscures reference, distorts coordinates or makes selection seem like observed archaeological evidence |
+| C / Time section | One unchanged coordinate/camera, David hypothetical outline and Solomon hypothetical northern extension switch/reveal while the source, captions and caveat remain fixed | An explicitly modelled **difference between two interpreted stages**, not absolute archaeological proof | Two unrelated rendered city postcards, false dates/lineage, unexplained fade or irreversible state |
+
+For each output create a plate record with source URL and revision, original extent, era state, interpreted geometry classification, source terms, shown legend and changes applied for editorial composition. A fourth *no-square* control, SILENCE, verifies that the publication identity is not dependent on the presence of a geometric motif.
+
+#### 37.4 Independent proof and creative sign-off
+
+- Production only within the current PR #1352 source owner and existing studio; do not touch homepage/P2/ONE/Olive or modify Jerusalem's source model.
+- Test same copy, same source, same ink/font authority at 1648x928, 768x1024, 390x844, 320x720, PLUS native browser 200% zoom (a 824px proxy is not proof). Save full-section images, not only centred viewport crops.
+- Verify the line source and source-stated uncertainty remain accessible and correct at A/B/C; for C forward/back toggling is reversible, keyboard-accessible and respects reduced motion.
+- Independent optical critique: (a) is the composition recognizable as Westside with the masthead hidden? (b) does frame placement clarify a historical claim instead of decorating it? (c) does negative space remain intentional? (d) is the Chinese/English hierarchy distinctive without sacrificing historical legibility? (e) does the strongest frame make a later frame-free section more powerful?
+- A source-derived plot alone is NOT an award-grade feature. Full real article, archival rights, finished visuals and alternate disputed interpretations still need editor review. Keep final art gate under **one Design OS §6A ≥18/20, no block, no faux prize score**.
+
+**R14 conclusion:** The first real source for a composition experiment has been identified and audited in detail. The proposed A/B/C drawing method is now sufficiently specified to implement without gathering new historical source material. The live magazine visual has NOT changed in this research pass; this section is **DESIGN RESEARCH / READY FOR PROOF**, not an invented passing screenshot or completed interactive city atlas.
+
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
