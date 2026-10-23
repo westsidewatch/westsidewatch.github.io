@@ -53,7 +53,7 @@ jobs:
               for(const [screen,width,height] of [['desktop',1648,928],['phone',390,844],['small',320,720]]){
                 for(const [state,p,side] of states){
                   const id=screen+'-'+state,errors=[];
-                  const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+                  const page=await browser.newPage({viewport:{width,height},reducedMotion:'no-preference'});
                   page.on('pageerror',e=>errors.push('PAGE_ERROR: '+e.message));
                   try{
                     const url='http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p='+p+'&side='+side;
