@@ -70,7 +70,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__head h2{font:400 clamp(47px,5.5vw,76px)/.89 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.065em;margin:0}
 .dual-contents__head span{font:400 clamp(11px,.95vw,17px)/1.5 var(--ws-type-reading-zh,sans-serif)}
 .dual-contents__deck{font:400 clamp(11px,.9vw,16px)/1.5 var(--ws-type-reading-zh,sans-serif);margin:8px 0 15px;flex:none}
-.dual-contents__index{min-height:0;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-rows:minmax(0,1.28fr) minmax(0,.72fr);gap:clamp(15px,2.2cqi,25px) clamp(18px,2.7cqi,34px);align-content:stretch;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 4px 10px 0}
+.dual-contents__index{min-height:0;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-rows:minmax(max-content,1.28fr) minmax(max-content,.72fr);gap:clamp(15px,2.2cqi,25px) clamp(18px,2.7cqi,34px);align-content:stretch;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 4px 10px 0}
 .dual-movement{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:visible}
 .dual-movement h3{display:flex;align-items:baseline;gap:9px;margin:0 0 clamp(10px,1.7cqi,17px);border-top:1px solid rgba(35,49,67,.42);padding-top:clamp(10px,1.5cqi,15px);font:400 clamp(24px,3.9cqi,34px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.045em}
 .dual-movement h3 em{font:italic 400 .48em/1 var(--ws-type-display-en,Georgia,serif);color:#5a4932}
@@ -97,7 +97,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover__zh{font-size:clamp(23px,6.1cqi,55px)}
 .dual-contents__head h2{font-size:clamp(45px,5vw,67px)}
 .dual-contents__deck{font-size:12px}
-.dual-contents__index{gap:14px 11px;grid-template-rows:minmax(0,1.25fr) minmax(0,.75fr)}
+.dual-contents__index{gap:14px 11px;grid-template-rows:minmax(max-content,1.25fr) minmax(max-content,.75fr)}
 .dual-movement h3{font-size:24px}
 .dual-movement li{font-size:14px}
 .dual-movement li small{font-size:11px}
@@ -228,6 +228,7 @@ html.dual-embed .dual-film__credit{display:none}
 </section>
 <aside class="dual-overview">
  <p><strong>第五輪藝術修正：</strong>原教會右／左半屏依序以 clip-path 接管，拒絕整塊從畫面外砸入；新加射線已移除，保留晨星原刻線。左頁七個獨立的「西望」字標因互相覆蓋而被否決，改為一組官方原始向量字形的七道斜向印刷色版，隨滾動依序顯現，最終構成唯一巨型「西望」。封面仍使用真城牆＋原聖殿石底紋，Contents 已找回 Vol.00 確認的十項文章題名及兩位講員。</p>
+ <p><strong>第六輪回歸修正：</strong>人工截圖發現 WATCH 長篇名進入 WITNESS 樂章標題。改用內容高度下限的 grid track，先保證任何樂章不重疊，裝不下時交由既有目錄卷軸完整呈現。禁止為了填滿紙面犧牲內容完整性。</p>
  <p><strong>第六輪真實截圖修訂：</strong>恢復篇名後四樂章仍過度擠在 Contents 上半段；本輪以雙欄兩段充滿版心，調整英中標題級差和行距，形成更有內容力量的紙面。右封面略調 LIGHT 的展示比例與中文主題重量，不增圖、不改城牆、晨星或教會動效；須另看真實截圖與版面溢位。</p>
  <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
 </aside>
