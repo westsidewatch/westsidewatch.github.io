@@ -33,6 +33,78 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+      - name: Review two-square film experiment in Chromium
+        continue-on-error: true
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+          mkdir -p artifacts/p2-dual-square
+          python3 -m http.server 4173 --directory public >/tmp/p2-dual-square-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node <<'JS'
+          const {chromium}=require('playwright');
+          const fs=require('node:fs'),path=require('node:path');
+          const out='artifacts/p2-dual-square',logs=[];
+          const states=[['early',0,'cover-left'],['star',40,'cover-left'],['final-left',100,'cover-left'],['final-right',100,'cover-right']];
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try{
+              for(const [screen,width,height] of [['desktop',1648,928],['phone',390,844],['small',320,720]]){
+                for(const [state,p,side] of states){
+                  const id=screen+'-'+state,errors=[];
+                  const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+                  page.on('pageerror',e=>errors.push('PAGE_ERROR: '+e.message));
+                  try{
+                    const url='http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p='+p+'&side='+side;
+                    const res=await page.goto(url,{waitUntil:'load',timeout:45000});
+                    await page.evaluate(()=>document.fonts.ready);
+                    const m=await page.evaluate(()=>{
+                      const rect=x=>{let r=x.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}};
+                      const root=document.querySelector('#dual-stage');
+                      const a=rect(document.querySelector('#dual-cover')),b=rect(document.querySelector('#dual-contents'));
+                      const coverImg=document.querySelector('.dual-cover__mast');
+                      const video=document.querySelector('#dual-film-frame');
+                      return {
+                        scrollWidth:document.documentElement.scrollWidth,width:innerWidth,
+                        phase:root.dataset.phase,orientation:root.dataset.orientation,
+                        panels:[a,b],
+                        rows:document.querySelectorAll('.dual-movement li').length,
+                        logoLoaded:coverImg.complete&&coverImg.naturalWidth>0,
+                        videoOriginLoaded:video?.contentDocument?.querySelector('.hosanna')!=null,
+                        filmSrc:video.getAttribute('src'),
+                        aria:[...document.querySelectorAll('[data-position]')].filter(x=>x.getAttribute('aria-pressed')==='true').length
+                      };
+                    });
+                    if(res.status()!==200||m.rows!==12||!m.logoLoaded||m.aria!==1)errors.push('SOURCE_OR_UI');
+                    if(m.scrollWidth>m.width+2)errors.push('HORIZONTAL_OVERFLOW');
+                    if(p===100&&!m.videoOriginLoaded)errors.push('HOME_FILM_NOT_LOADED');
+                    if(Math.abs(m.panels[0].width-m.panels[0].height)>2&&p===100)errors.push('COVER_NOT_SQUARE');
+                    if(Math.abs(m.panels[1].width-m.panels[1].height)>2&&p===100)errors.push('CONTENTS_NOT_SQUARE');
+                    if(p===100){
+                      const gap=(width>700)?Math.abs(m.panels[0].right-m.panels[1].left):Math.abs(m.panels[0].bottom-m.panels[1].top);
+                      if(side==='cover-left'&&gap>3)errors.push('NOT_ADJACENT');
+                    }
+                    await page.screenshot({path:path.join(out,id+'.png'),fullPage:true,animations:'disabled'});
+                    logs.push({id,viewport:{width,height},metrics:m,errors});
+                    console.log(id,errors.length?errors:'CAPTURE_OK');
+                  }catch(e){logs.push({id,errors:[e.message]});console.error(id,e.stack)}
+                  finally{await page.close()}
+                }
+              }
+            }finally{await browser.close()}
+            fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({source:'Westside P2 two-square concept',commit:process.env.GITHUB_SHA,editorialApproval:'PENDING',tests:logs},null,2));
+            if(logs.some(x=>x.errors.length))process.exitCode=1;
+          })().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Upload two-square proof screenshot set
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-two-square-video-study
+          path: artifacts/p2-dual-square/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Deploy Cloudflare Pages preview (never production)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
