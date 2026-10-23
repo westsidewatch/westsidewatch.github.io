@@ -57,11 +57,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover__wall{position:absolute;z-index:4;top:100%;left:0;right:0;height:clamp(37px,9cqi,88px);transform:translate3d(0,-8%,0);background:url('/images/jerusalem-wall.png') center bottom/auto 100% no-repeat;pointer-events:none;opacity:0;filter:drop-shadow(0 7px 2px rgba(109,75,35,.34));will-change:top}
 .dual-cover__en{position:absolute;z-index:5;top:49.5%;left:7%;right:6%;margin:0;font:400 clamp(42px,12.8cqi,124px)/.77 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.075em;color:#27384a;opacity:0}
 .dual-cover__en span{display:block;white-space:nowrap}
-.dual-cover__en span:last-child{margin-left:11%;font-size:1.18em;line-height:.88}
+.dual-cover__en span:last-child{margin-left:7%;font-size:1.28em;line-height:.88}
 .dual-cover__en em{font:italic 400 .57em/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.035em;vertical-align:.06em}
 .dual-cover__vol{position:absolute;z-index:5;top:74.5%;left:10%;right:10%;display:flex;align-items:center;gap:12px;margin:0;color:#8e744e;font:400 clamp(10px,1.55cqi,15px)/1.25 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.18em;opacity:0}
 .dual-cover__vol::before{content:'';height:1px;flex:0 0 14%;background:currentColor;opacity:.6}
-.dual-cover__zh{position:absolute;z-index:5;top:79.5%;left:8%;right:7%;margin:0;text-align:left;font:900 clamp(23px,5.55cqi,51px)/1.08 var(--ws-type-display-zh,sans-serif);letter-spacing:-.035em;color:#334454;font-synthesis:none;opacity:0}
+.dual-cover__zh{position:absolute;z-index:5;top:79%;left:8%;right:7%;margin:0;text-align:left;font:900 clamp(23px,6.1cqi,55px)/1.08 var(--ws-type-display-zh,sans-serif);letter-spacing:-.035em;color:#263e53;font-synthesis:none;opacity:0}
 .dual-cover__zh span{display:block;margin-top:clamp(4px,.75cqi,10px);white-space:nowrap}
 .dual-cover__folio{position:absolute;z-index:5;left:8%;right:8%;bottom:2.5%;padding-top:clamp(8px,1.3cqi,14px);border-top:1px solid rgba(138,108,61,.45);font:400 clamp(10px,1.35cqi,15px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;text-align:center;color:#776043;opacity:0}
 .dual-cover__radiance,.dual-cover__zh,.dual-cover__folio{will-change:opacity}
@@ -70,20 +70,20 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__head h2{font:400 clamp(47px,5.5vw,76px)/.89 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.065em;margin:0}
 .dual-contents__head span{font:400 clamp(11px,.95vw,17px)/1.5 var(--ws-type-reading-zh,sans-serif)}
 .dual-contents__deck{font:400 clamp(11px,.9vw,16px)/1.5 var(--ws-type-reading-zh,sans-serif);margin:8px 0 15px;flex:none}
-.dual-contents__index{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto;gap:clamp(12px,1.4cqi,19px) clamp(13px,1.9cqi,27px);align-content:start;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 4px 10px 0}
-.dual-movement{min-width:0}
-.dual-movement h3{display:flex;align-items:baseline;gap:9px;margin:0 0 9px;border-top:1px solid rgba(35,49,67,.42);padding-top:9px;font:400 clamp(20px,1.95vw,33px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.03em}
+.dual-contents__index{min-height:0;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-rows:minmax(0,1.28fr) minmax(0,.72fr);gap:clamp(15px,2.2cqi,25px) clamp(18px,2.7cqi,34px);align-content:stretch;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 4px 10px 0}
+.dual-movement{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:visible}
+.dual-movement h3{display:flex;align-items:baseline;gap:9px;margin:0 0 clamp(10px,1.7cqi,17px);border-top:1px solid rgba(35,49,67,.42);padding-top:clamp(10px,1.5cqi,15px);font:400 clamp(24px,3.9cqi,34px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.045em}
 .dual-movement h3 em{font:italic 400 .48em/1 var(--ws-type-display-en,Georgia,serif);color:#5a4932}
 .dual-movement ol{margin:0;padding:0;list-style:none;display:grid;gap:clamp(7px,.95cqi,11px)}
-.dual-movement li{display:grid;grid-template-columns:clamp(17px,2.8cqi,23px) minmax(0,1fr);gap:4px;align-items:start;font:400 clamp(14px,2.1cqi,19px)/1.22 var(--ws-type-display-zh,sans-serif)}
-.dual-movement li b{font:400 11px/1.2 var(--ws-type-display-en,Georgia,serif);color:#544c3f}
+.dual-movement li{display:grid;grid-template-columns:clamp(22px,3.5cqi,28px) minmax(0,1fr);gap:6px;align-items:start;font:400 clamp(16px,2.65cqi,21px)/1.22 var(--ws-type-display-zh,sans-serif)}
+.dual-movement li b{font:400 clamp(11px,1.65cqi,14px)/1.3 var(--ws-type-display-en,Georgia,serif);color:#544c3f}
 .dual-movement li small{display:block;margin-top:2px;font:italic 400 clamp(9px,.95cqi,11px)/1.18 var(--ws-type-display-en,Georgia,serif)}
 .dual-entry__text{min-width:0;display:block}
 .dual-entry__column{display:block;font-weight:600}
-.dual-work{display:block;font:400 clamp(13px,1.95cqi,16px)/1.35 var(--ws-type-reading-zh,sans-serif);margin-top:4px;color:#4d4d47;overflow-wrap:anywhere;word-break:normal}
-.dual-work+.dual-work{margin-top:2px}
+.dual-work{display:block;font:400 clamp(14px,2.15cqi,17px)/1.34 var(--ws-type-reading-zh,sans-serif);margin-top:5px;color:#38434b;overflow-wrap:anywhere;word-break:normal}
+.dual-work+.dual-work{margin-top:4px}
 .dual-work--people{letter-spacing:.01em}
-.dual-movement__interlude{margin:7px 0 0;font:400 clamp(10px,.76vw,11px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.03em}
+.dual-movement__interlude{margin:auto 0 0;padding-top:clamp(6px,1cqi,11px);font:400 clamp(10px,1.3cqi,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
 .dual-contents__foot{margin-top:clamp(8px,1.2vh,14px);padding-top:7px;border-top:1px solid rgba(35,49,67,.48);display:flex;gap:12px;align-items:center;justify-content:space-between;font:400 clamp(10px,.81vw,13px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
 .dual-contents__foot a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;pointer-events:auto}
 .dual-stage[data-phase=final] .dual-tile{box-shadow:0 17px 57px rgba(0,0,0,.16)}
@@ -94,10 +94,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 @media(max-width:1000px){
 .dual-cover__mast{width:90%;max-width:90%;height:25%;max-height:25%}
 .dual-cover__en{font-size:clamp(42px,12.8cqi,124px)}
-.dual-cover__zh{font-size:clamp(23px,5.55cqi,51px)}
+.dual-cover__zh{font-size:clamp(23px,6.1cqi,55px)}
 .dual-contents__head h2{font-size:clamp(45px,5vw,67px)}
 .dual-contents__deck{font-size:12px}
-.dual-contents__index{gap:17px 13px}
+.dual-contents__index{gap:14px 11px;grid-template-rows:minmax(0,1.25fr) minmax(0,.75fr)}
 .dual-movement h3{font-size:24px}
 .dual-movement li{font-size:14px}
 .dual-movement li small{font-size:11px}
@@ -124,13 +124,13 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__head h2{font-size:clamp(37px,11vw,52px)}
 .dual-contents__head span{font-size:11px}
 .dual-contents__deck{font-size:10px;margin:5px 0 9px}
-.dual-contents__index{grid-template-columns:minmax(0,1fr);gap:14px;overflow-y:auto;scrollbar-width:thin;align-content:start}
-.dual-movement h3{font-size:clamp(17px,5.1vw,25px);margin-bottom:5px;padding-top:4px}
+.dual-contents__index{grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(4,max-content);gap:14px;overflow-y:auto;scrollbar-width:thin;align-content:start}
+.dual-movement h3{font-size:clamp(18px,5.1vw,25px);margin-bottom:7px;padding-top:5px}
 .dual-movement li{grid-template-columns:23px minmax(0,1fr);font-size:clamp(15px,4.2vw,18px);gap:5px}
 .dual-movement li small{display:block;font-size:9px}
 .dual-movement li{line-height:1.18}
 .dual-movement ol{gap:4px}
-.dual-movement__interlude{font-size:9px;margin-top:3px}
+.dual-movement__interlude{font-size:9px;margin-top:3px;padding-top:3px}
 .dual-contents__foot{margin-top:5px;padding-top:5px;font-size:9px}
 }
 @media(max-width:360px){
@@ -228,6 +228,7 @@ html.dual-embed .dual-film__credit{display:none}
 </section>
 <aside class="dual-overview">
  <p><strong>第五輪藝術修正：</strong>原教會右／左半屏依序以 clip-path 接管，拒絕整塊從畫面外砸入；新加射線已移除，保留晨星原刻線。左頁七個獨立的「西望」字標因互相覆蓋而被否決，改為一組官方原始向量字形的七道斜向印刷色版，隨滾動依序顯現，最終構成唯一巨型「西望」。封面仍使用真城牆＋原聖殿石底紋，Contents 已找回 Vol.00 確認的十項文章題名及兩位講員。</p>
+ <p><strong>第六輪真實截圖修訂：</strong>恢復篇名後四樂章仍過度擠在 Contents 上半段；本輪以雙欄兩段充滿版心，調整英中標題級差和行距，形成更有內容力量的紙面。右封面略調 LIGHT 的展示比例與中文主題重量，不增圖、不改城牆、晨星或教會動效；須另看真實截圖與版面溢位。</p>
  <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
 </aside>
 </main>
