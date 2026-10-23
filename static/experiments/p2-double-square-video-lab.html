@@ -164,7 +164,7 @@ html.dual-embed .dual-film__credit{display:none}
   <button type="button" data-position="cover-left" aria-pressed="false">封面在左</button>
   <button type="button" data-position="cover-right" aria-pressed="true">封面在右</button>
   <button type="button" data-snap="0.14">封面進場</button>
-  <button type="button" data-snap="0.46">西望逐行</button>
+  <button type="button" data-snap="0.54">西望逐行</button>
   <button type="button" data-snap="0.68">晨星升起</button>
   <button type="button" data-snap="0.82">封面＋西望</button>
   <button type="button" data-snap="1">石紋 Contents</button>
@@ -298,8 +298,9 @@ html.dual-embed .dual-film__credit{display:none}
   const lettersFade=1-ease((progress-.855)/.115);
   letters.style.opacity=String(lettersFade);
    rows.forEach((row,i)=>{
-    const entered=reduce?(progress>=.57?1:0):ease((progress-(.445+i*.024))/.115);
+    const entered=reduce?(progress>=.60?1:0):ease((progress-(.435+i*.019))/.049);
     const densities=[.32,.45,.64,1,.69,.48,.34];
+    row.dataset.entered=String(entered);
     row.style.opacity=String(entered*densities[i]);
     row.style.transform='translate3d('+((1-entered)*(i%2?-18:15)).toFixed(2)+'px,'+
       ((1-entered)*11).toFixed(2)+'px,0) rotate('+(-13+(i-3)*.42).toFixed(2)+
@@ -333,11 +334,11 @@ html.dual-embed .dual-film__credit{display:none}
   contents.inert=stone<.98;
   film.style.opacity=String(ease((progress-.70)/.24));
   film.style.visibility=progress<=.69?'hidden':'visible';
-  stage.dataset.phase=progress<.20?'cover-arrival':progress<.53?'xiwang-lines':
+  stage.dataset.phase=progress<.22?'cover-arrival':progress<.60?'xiwang-lines':
    progress<.72?'morning-star-rise':progress<.865?'cover-and-xiwang':
    progress<.995?'stone-contents-reveal':'contents-final';
   stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
-  stage.dataset.xiwangLines=String(rows.filter(row=>Number(row.style.opacity)>.95).length);
+  stage.dataset.xiwangLines=String(rows.filter(row=>Number(row.dataset.entered)>.95).length);
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
  }
