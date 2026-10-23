@@ -198,6 +198,10 @@ try {
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.visibleGates),9);
   assert.ok((await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.reachableDestinations)).includes('temple-entry'));
   const royalIdentity=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalCity.componentIdentity);
+  await page.getByRole('button',{name:'城內高差',exact:true}).click();
+  assert.equal(await page.locator('.j3k-royal-relief').getAttribute('data-stage'),'solomon');
+  const relief=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.royalRelief);
+  assert.ok(relief.deltaSouth>65&&relief.deltaMiddle>40);assert.equal(relief.verticalScale,1);assert.equal(relief.threshingFloorLocationVerified,false);
   await page.screenshot({path:`${output}/david-landscape.png`,fullPage:true});
   await page.getByRole('button',{name:'聖殿近看',exact:true}).click();
   await page.screenshot({path:`${output}/solomon-temple.png`,fullPage:true});
@@ -244,6 +248,8 @@ try {
     if(value===4.9)assert.equal(geometry.visibleWalls,0,'do not invent wall-segment continuity');
     if(value===5.5){assert.ok(geometry.templeCompressionFactor<1&&geometry.templeCompressionFactor>0);await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra?.status==='ready');await page.getByRole('button',{name:'聖殿近看',exact:true}).click();await page.screenshot({path:`${output}/temple-ruin.png`,fullPage:true});}
 
+    if(value===3.2){assert.equal(await page.locator('.j3k-royal-relief').getAttribute('data-stage'),'david');assert.ok(await page.locator('.j3k-relief-labels').textContent().then(t=>t.includes('禾場關聯區')));await page.screenshot({path:`${output}/david-threshing-floor-relief.png`,fullPage:true});}
+    if(value===4.9)assert.ok(await page.locator('.j3k-royal-relief').isHidden());
   }
   await page.locator('.j3k-scrubber').evaluate(el=>{el.value='6.5';el.dispatchEvent(new Event('input',{bubbles:true}));});
   await page.getByRole('button',{name:'Evidence',exact:true}).click();
@@ -464,6 +470,8 @@ try {
   await mobile.screenshot({path:`${output}/late-bronze-mobile.png`,fullPage:true});
   await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='3.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
   await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.davidSettlement?.visibleRoyalMarkers===1);
+  const mobileReliefLabels=await mobile.locator('.j3k-relief-labels').evaluate(el=>{const box=el.getBoundingClientRect();return [...el.children].filter(c=>!c.hidden).map(c=>{const r=c.getBoundingClientRect();return {left:r.left-box.left,right:r.right-box.left,width:box.width};});});
+  assert.equal(mobileReliefLabels.length,3);assert.ok(mobileReliefLabels.every(r=>r.left>=-1&&r.right<=r.width+1),'all royal relief labels fit portrait view');
   await mobile.screenshot({path:`${output}/david-mobile.png`,fullPage:true});
   await mobile.getByRole('button', { name: '耶穌時代', exact: false }).click();
   await mobile.waitForFunction(

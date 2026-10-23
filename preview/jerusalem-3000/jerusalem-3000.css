@@ -16,3 +16,8 @@
 
 .j3k-terrain-toggle[aria-pressed="true"]{background:var(--gold);color:var(--ink)}
 .j3k-terrain-note{font-size:11px;line-height:1.5;padding:5px 7px;background:rgba(238,233,223,.9);max-width:260px}
+
+.j3k-relief-labels{position:absolute;inset:0;pointer-events:none}.j3k-relief-labels span{position:absolute;transform:translate(-50%,-100%);font-size:11px;white-space:nowrap;background:rgba(238,233,223,.92);padding:3px 5px;color:#643a28;border-bottom:1px solid #8b422b}
+.j3k-royal-relief{border:1px solid var(--line);padding:18px 22px;margin:12px 0 20px}.j3k-royal-relief h3{font-size:17px;margin:0 0 8px}.j3k-royal-relief svg{display:block;width:100%;max-width:900px;height:auto}.j3k-royal-relief svg text{font:12px Arial,"PingFang TC",sans-serif;fill:var(--ink)}.j3k-royal-relief p,.j3k-royal-relief a{font-size:12px;line-height:1.7}.j3k-relief-caveat{color:var(--muted)}
+
+@media(max-width:720px){.j3k-royal-relief{overflow-x:auto;padding:14px}.j3k-royal-relief svg{min-width:620px}}

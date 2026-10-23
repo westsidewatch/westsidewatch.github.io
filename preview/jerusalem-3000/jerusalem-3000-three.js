@@ -128,6 +128,25 @@ try {
   function terrainOverview(enabled){const active=three.setTerrainOverview(enabled);terrainButton.setAttribute('aria-pressed',String(active));terrainNote.hidden=!active;}
   terrainButton.addEventListener('click',()=>terrainOverview(terrainButton.getAttribute('aria-pressed')!=='true'));
   templeFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusRoyalTemple();});
+  const reliefButton=document.createElement('button');reliefButton.type='button';reliefButton.textContent='城內高差';reliefButton.hidden=true;
+  document.querySelector('.j3k-event-controls').append(reliefButton);
+  reliefButton.addEventListener('click',()=>{terrainOverview(false);three.focusRoyalRelief();});
+  const reliefPanel=document.createElement('section');reliefPanel.className='j3k-royal-relief';reliefPanel.hidden=true;stage.after(reliefPanel);
+  function updateRoyalRelief(phase,templeState){
+    const active=phase==='david-solomon';reliefPanel.hidden=!active;reliefButton.hidden=!active;if(!active)return;
+    const era=templeState==='absent'?'david':'solomon';if(reliefPanel.dataset.stage===era)return;reliefPanel.dataset.stage=era;reliefPanel.replaceChildren();
+    const profile=three.royalReliefProfile();if(!profile)return;
+    const heading=document.createElement('h3');heading.textContent='大衛城 → 北部高處：沿山脊上升';reliefPanel.append(heading);
+    const names=['大衛城南段（示意點）','大衛城中段（示意點）',era==='david'?'禾場經文關聯區（位置示意）':'所羅門聖殿（位置示意）'];
+    const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 760 185');svg.setAttribute('role','img');svg.setAttribute('aria-label','大衛城南段至北部高處的現代地形剖面，水平與垂直同一比例');
+    const factor=620/profile.distance,base=profile.anchors[0].y-5,x=p=>70+p.distance*factor,y=p=>150-(p.y-base)*factor;
+    const polyline=document.createElementNS(ns,'polyline');polyline.setAttribute('points',profile.samples.map(p=>`${x(p)},${y(p)}`).join(' '));polyline.setAttribute('fill','none');polyline.setAttribute('stroke','#8b422b');polyline.setAttribute('stroke-width','3');svg.append(polyline);
+    profile.anchors.forEach((p,i)=>{const circle=document.createElementNS(ns,'circle');circle.setAttribute('cx',String(x(p)));circle.setAttribute('cy',String(y(p)));circle.setAttribute('r','4');circle.setAttribute('fill','#8b422b');svg.append(circle);const label=document.createElementNS(ns,'text');label.setAttribute('x',String(x(p)));label.setAttribute('y',String(y(p)-14));label.setAttribute('text-anchor',i===2?'end':'start');label.textContent=names[i];svg.append(label);});
+    const axis=document.createElementNS(ns,'text');axis.setAttribute('x','70');axis.setAttribute('y','178');axis.textContent=`南 → 北 · 剖面水平距離約 ${Math.round(profile.distance)}m · 高程／水平同尺度（無誇大）`;svg.append(axis);reliefPanel.append(svg);
+    const comparison=document.createElement('p');comparison.textContent=`目前示意點的現代地形：北部比南段高約 ${Math.round(profile.deltaSouth)}m，比中段高約 ${Math.round(profile.deltaMiddle)}m。`;reliefPanel.append(comparison);
+    const caveat=document.createElement('p');caveat.className='j3k-relief-caveat';caveat.textContent='紅線為地形剖面參考線，非古道路。高差取自現代約90m DEM；示意點非考古定位，不能當作大衛／所羅門時代的實測高程。禾場與建殿關聯依代下3:1，精確位置與古地表尚未核定。';reliefPanel.append(caveat);
+    const source=document.createElement('a');source.href='https://www.biblegateway.com/passage/?search=2+Chronicles+3%3A1&version=KJV';source.textContent='禾場與建殿的經文關聯：代下3:1';source.target='_blank';source.rel='noopener';reliefPanel.append(source);
+  }
   function update(v) {
     const state = time.sample(v),
       p = state.phase,
@@ -141,6 +160,7 @@ try {
     );
     three.setRuinProgress(transformation.ruin);
     three.setTemporalCityState?.(cityObjects, state.position, p.id);
+    updateRoyalRelief(p.id,cityObjects.find(o=>o.id==='j3k:object:first-temple')?.state);
     if (inheritance) {
       try {
         inheritance.setVisible(!isCorePhase(p.id) && !isSharedGenerationPhase(p.id) && !isEarlyLandscapePhase(p.id));
