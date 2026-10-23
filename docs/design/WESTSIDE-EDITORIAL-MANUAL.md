@@ -2511,6 +2511,22 @@ For each output create a plate record with source URL and revision, original ext
 
 **驗收狀態：** `8f9408b` 已取得 desktop／390／320 × 六節點，以及三張 Church→magazine 接入末態，共 **21 張真實 Chromium 截圖、21/21 無頁面錯誤**，Production Build 與 Preview PASS。但實際截圖發現「望西」和標題擠壓，證明**測試綠燈不是藝術驗收**。修正提交 `0ac47b5`／`5c0376e` 後已再次取得 **21/21 Chromium 場景零錯誤**，人工檢視桌面 1648px、390px、320px 的「西望＋封面」定格：字形順序、英中主標區隔與光線裁切已有實際修復證據；Production Build 及 First Look Branch Preview PASS。**768px、真原生 200% zoom、所有倒捲中途停駐與最後藝術簽收仍 NOT VERIFIED。** Core Contract 已知保護首頁晨星 SVG 基準不符，不能記錄為全部 CI PASS。此項**未批准為正式封面**；P2 保持 PR #1355 隔離草稿，不合併，教會既有身份／主日／V75 水／分海開門均不更改。
 
+### 6F.24 P2 第五輪修正：取消人工射線，恢復半屏與原始稿件（2026-10-23）
+
+**藝術否決：** 實際網頁截圖表明前一輪「左右跨頁人工雙道光線」過分刻意、七色「西望」孤立排列、藍金兩頁像方塊由視窗外砸入；右側城牆以下底紋過淡，封面仍像標籤式簡報；新 Contents 丟失先前已確認的篇名，留白無意義。§6F.23 的**新增光場建議正式撤回**，屬歷史記錄，不得作今後實作規範；保留晨星 v5.3 **原始刻線素材**而不是再畫人工射線。
+
+**權威恢復與修正：** 左右是原教會 P2 的 **兩個半屏**：右側日程先被午夜藍由上向下覆蓋，完成後，左側活水由黎明金從下向上覆蓋。使用現有 `p2-living-water.js` **唯一 scroll clock**，雙面片各自保持固定位置，以 `clip-path: inset()` 局部揭示內容，而非把有內容的巨大 div 從舞台外搬入。兩半屏完成並停駐後，才允許字印／晨星／石紋／後續方頁合體；反向滾動應精確退回教會場景。手機採上下對應的半屏先後順序，不能把桌面畫面壓縮為兩個難讀的小方塊。
+
+**封面空間：** 城牆頂端 SVG/PNG 真資產與其下的現有 `temple-stone-light.png` 應形成一座**完整石城主體**；首先校準肌理對比、牆緣位移和接合陰影，絕不以新增人工割線、假拼貼框或 AI 生圖冒充建築。城牆是實質分界，不是浮在白紙上的細條。午夜藍保留原晨星刻線但不得再泛濫成右側主文／跨頁裝飾射線。大 Bodoni 英文主標 `CITY OF LIGHT` 與重黑中文題須依真封面權重組織，不能退回堆字。
+
+**官方字形重新作編輯排版：** 七色仍調用原 Design OS 與正式西望 SVG，但七次顯現是**印刷密度、光學焦點、時間層次**，不是七個等大的圖標／固定七條字欄；禁止人工線條由字標延伸至晨星。對照組必須測試減輕周邊字印、強化主要字印、控制疏密，並用真截圖接受或拒絕；不用再次疊加特效。
+
+**目錄唯一內容來源：** `docs/projects/watch-city-vol00/EDITORIAL_MAP.md`，以及在更早 `p2-magazine-transition-proof-v3.js` 已存在的 confirmed titles。WATCH 01〈守望，一座光明的城〉，03〈城門口的人〉／〈耶路撒冷：在黑暗中軟弱，在光明中剛強〉／〈大希律：這個人會建造〉，04〈一萬年的建城禮〉；WALK 05〈吾珥：離開一座大的城〉，06〈若不是耶和華看守城池——古代攻城技術史〉；WITNESS 09〈廚房裡的人｜你當像飛鳥往你的山〉，10 黃淑華、江秀琴；WORSHIP 11〈房角石：整座城由此對齊〉，12〈冠冕〉。**共八個欄目十項文章題名、以及 10 欄兩位講員**；02、07、08 本期標題未定，不能猜。為長題名提供有意義的多欄標題與可使用的卷軸而非空白卡片。維持四樂章 4–4–2–2 與三個間奏。
+
+**Doré 探索方法與開源取捨：** 參照 [Codrops On-Scroll Typography](https://github.com/codrops/OnScrollTypographyAnimations)（字的 transform origin／漸進姿態），[Kinetic Type Page Transition](https://github.com/codrops/KineticTypePageTransition)（字形變成空間轉場），[On-Scroll Layout Formations](https://github.com/codrops/OnScrollLayoutFormations) 與 [ScrollBasedLayoutAnimations](https://github.com/codrops/ScrollBasedLayoutAnimations)（先有空間場再組合版式），以及 [Codrops Rotated Overlays](https://tympanus.net/codrops/2019/04/18/how-to-create-and-animate-rotated-overlays/)／[MDN clip-path inset](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/basic-shape/inset)（固定完整內容、以遮罩揭示）；相關 Codrops 代碼公開 MIT 授權，**僅借用實現原理，不能擅自複製它們的畫面**。因現有 P2 已有 scroll owner，**不新建一套 GSAP timeline / 另一個 motion framework**。
+
+**第五輪隔離候選：** PR #1355，`4910531` 半屏與石牆、`0c91b65` 恢復目錄、`d70fdd5` 調整字形時序、`1656911` 暴露動效參數、`eb47433` 新增 27 場景驗收。這些是 TRIAL 而非藝術批准，保護首頁／教會原資產；CI 與本次真實截圖應另行核實，尤其 1648／390／320 的半屏切換、Contents 最後篇名可達性、原生 200% zoom、reduced motion、回捲完整性、Core Contract 既存資產基準。絕不自動合併。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
