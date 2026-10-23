@@ -2499,6 +2499,18 @@ For each output create a plate record with source URL and revision, original ext
 
 **實景證據與阻擋項：** 第一份構圖提交 `0074e77` 的 Chromium 21 幀測試頁面錯誤為零，1648／390／320 的靜止封面具有明確地平線，但主中文仍偏弱、晨星稍穿入下方紙色；因此緊接 `b245c53` 放大中文、將晨星抬回城牆上方、讓石紙物理上移而非拉伸。**完成第三輪再驗收（PR #1355 最新測試提交 `305abd1`）：** 原生 Chromium 在 1648／390／320 三尺寸分別檢查六個封面節點並附三個教會實際接入末態，共 **21 張真實瀏覽器截圖，manifest 21/21 零場景錯誤**；三個接入末態保留教會水、開門和 Vol.00 十二個欄目，Logo 對封面比例實測桌面約 90%、手機約 92%。測試修正的是被編輯掛曆封面推翻的**舊 78–87% masthead 假設**，現明確拒絕超出 88–95% 範圍的比例，並非取消比對。Production Build、First Look Branch Preview 均通過；**Core Contract 仍因原有受保護首頁 `westside-watch-morning-star.svg` 與凍結基準不符而失敗，不是本次封面變更。** 768px、真 200% 瀏覽器 zoom、完整鍵盤與倒捲操作的藝術體驗仍 NOT VERIFIED，需人工簽收才可定稿。PR #1355 保留隔離草稿，不合併。單一 Design OS 為字體、色彩及藝術審查權威，具體幾何僅屬 P2 的局部 CSS/JS 擁有範圍。
 
+### 6F.23 P2 Vol.00 四輪藝術修正 — 官方西望字形、英文主標與跨頁光場（2026-10-23）
+
+**用戶藝術指導：** PR #1355 的黎明金左頁必須是官方 Logo SVG 的真正「西望」字形，不得以昭源黑體直接打字替代；七行不能再做生硬的滑入文字牆。右側須遵守 §6F.03–04 的**英文大幅 Bodoni 與中文重黑體**的重量對照，原 `A CITY OF LIGHT` 刪除不具編輯必要的冠詞，將 `CITY OF LIGHT` 作獨立短促的英文封面命題，不冒充「守望，一座光明的城」的逐字翻譯。中文依然是內容的語義 H1。單一期號 `VOL.00` 位於英文主標與中文 H1 之間，**不是**放在午夜藍正式 Logo 上製造重複資訊。
+
+**原始素材的保護性應用（試驗，非新管理系統）：** 現有 `westside-watch-xiwang-vertical.svg` 已載明兩個輪廓源自批准的橫向 Logo `#logo-xiwang-landscape`。隔離 PR 為 CSS mask 產生 `westside-watch-xiwang-horizontal-motion.svg`，它複用**同一對原始 path，僅改排列位置、無字體代打、無比例拉伸或 AI 生圖**。七道字幕改為七枚錯落向量字標；七個語義色沿用 Design OS，不能憑空再定新色值。首次瀏覽器真圖發現兩字被誤排列為「望西」，故 `0ac47b5` 已按人眼截圖把原始 path 調回「西望」。
+
+**一個共享光源，而非兩個動畫：** 將既有晨星 v5.3 的發散刻線與左側七枚品牌字標連為同一幕；跨頁 SVG 線段在每幀從**當前封面上的晨星實際位置**指向**當前金色頁上的字標位置**，隨相接兩頁的尺寸與手機上下重排重新計算。雙道具有間斷節奏的細線模仿蝕刻／burin，不是假雷射特效。左側字標以差異化進場時間、旋轉基線和小尺度變化逐步浮現，避免生硬匀速滑行。第一輪截圖顯示細線掃入右側紙色中文字，違背標題安全區；後續已加入雙域 clip，只允許光線在**午夜藍區與黎明金區**顯示，不遮 `CITY OF LIGHT` 和中文 H1。城牆上升、原石紋替換與教會 scroll clock 不變。
+
+**英中封面排字決定 [TRIAL]：** 右頁紙色下半部為真正標題 register；以 `CITY OF`（`OF` 使用真 Bodoni Italic）與下一行較大的 `LIGHT` 做書頁式雙行 display，中文 `守望，一座光明的城` 維持 900。臨近屏幕／小尺寸採容器相對 `cqi` 比例重編，不按桌面原大字縮放整張封面。首輪 21 張截圖再次暴露英文字佔高過多、擠壓 `VOL.00`，修訂縮小展示字的占高、增加主副標和 folio 的內在空間，不退回標籤堆疊。
+
+**驗收狀態：** `8f9408b` 已取得 desktop／390／320 × 六節點，以及三張 Church→magazine 接入末態，共 **21 張真實 Chromium 截圖、21/21 無頁面錯誤**，Production Build 與 Preview PASS。但實際截圖發現「望西」和標題擠壓，證明**測試綠燈不是藝術驗收**。修正提交 `0ac47b5`／`5c0376e` 後必須重新看完整截圖，真原生 200% zoom、768px 與動效倒捲仍需另外完成。Core Contract 已知保護首頁晨星 SVG 基準不符，不能記錄為全部 CI PASS。此項**未批准為正式封面**；P2 保持 PR #1355 隔離草稿，不合併，教會既有身份／主日／V75 水／分海開門均不更改。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
