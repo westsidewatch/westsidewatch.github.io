@@ -91,8 +91,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__index{gap:8px 9px;align-content:start}
 .dual-movement h3{font-size:clamp(17px,5.1vw,25px);margin-bottom:5px;padding-top:4px}
 .dual-movement li{grid-template-columns:18px 1fr;font-size:clamp(12px,3.7vw,16px);gap:2px}
-.dual-movement li small{font-size:10px}
-.dual-movement ol{gap:2px}
+.dual-movement li small{display:none}
+.dual-movement li{line-height:1.15}
+.dual-movement ol{gap:4px}
 .dual-movement__interlude{font-size:9px;margin-top:3px}
 .dual-contents__foot{margin-top:5px;padding-top:5px;font-size:9px}
 }
@@ -104,6 +105,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-movement li{font-size:12px}
 .dual-movement li small{font-size:9px}
 .dual-movement__interlude{font-size:8px}
+.dual-contents__deck{margin:3px 0 6px}
+.dual-contents__index{row-gap:6px}
+.dual-contents__foot{font-size:8px;margin-top:3px;padding-top:3px}
 }
 @media(prefers-reduced-motion:reduce){.dual-tile,.dual-film,.dual-cover__star{transition:none!important;animation:none!important}}
 </style>
