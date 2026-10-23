@@ -2509,7 +2509,7 @@ For each output create a plate record with source URL and revision, original ext
 
 **英中封面排字決定 [TRIAL]：** 右頁紙色下半部為真正標題 register；以 `CITY OF`（`OF` 使用真 Bodoni Italic）與下一行較大的 `LIGHT` 做書頁式雙行 display，中文 `守望，一座光明的城` 維持 900。臨近屏幕／小尺寸採容器相對 `cqi` 比例重編，不按桌面原大字縮放整張封面。首輪 21 張截圖再次暴露英文字佔高過多、擠壓 `VOL.00`，修訂縮小展示字的占高、增加主副標和 folio 的內在空間，不退回標籤堆疊。
 
-**驗收狀態：** `8f9408b` 已取得 desktop／390／320 × 六節點，以及三張 Church→magazine 接入末態，共 **21 張真實 Chromium 截圖、21/21 無頁面錯誤**，Production Build 與 Preview PASS。但實際截圖發現「望西」和標題擠壓，證明**測試綠燈不是藝術驗收**。修正提交 `0ac47b5`／`5c0376e` 後必須重新看完整截圖，真原生 200% zoom、768px 與動效倒捲仍需另外完成。Core Contract 已知保護首頁晨星 SVG 基準不符，不能記錄為全部 CI PASS。此項**未批准為正式封面**；P2 保持 PR #1355 隔離草稿，不合併，教會既有身份／主日／V75 水／分海開門均不更改。
+**驗收狀態：** `8f9408b` 已取得 desktop／390／320 × 六節點，以及三張 Church→magazine 接入末態，共 **21 張真實 Chromium 截圖、21/21 無頁面錯誤**，Production Build 與 Preview PASS。但實際截圖發現「望西」和標題擠壓，證明**測試綠燈不是藝術驗收**。修正提交 `0ac47b5`／`5c0376e` 後已再次取得 **21/21 Chromium 場景零錯誤**，人工檢視桌面 1648px、390px、320px 的「西望＋封面」定格：字形順序、英中主標區隔與光線裁切已有實際修復證據；Production Build 及 First Look Branch Preview PASS。**768px、真原生 200% zoom、所有倒捲中途停駐與最後藝術簽收仍 NOT VERIFIED。** Core Contract 已知保護首頁晨星 SVG 基準不符，不能記錄為全部 CI PASS。此項**未批准為正式封面**；P2 保持 PR #1355 隔離草稿，不合併，教會既有身份／主日／V75 水／分海開門均不更改。
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
