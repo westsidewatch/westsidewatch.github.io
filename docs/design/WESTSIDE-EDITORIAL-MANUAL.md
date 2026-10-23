@@ -2360,6 +2360,38 @@ For each output create a plate record with source URL and revision, original ext
 
 **後續維護規則：** 每次新增真正設計決定，以「原問題→刊物原則→正反案例→實際圖版→截圖→批准/拒絕」更新相關條目；不要再用 R15、R16 無限制堆積獨立研究輪次。已通過的頁面可以逐步把 [TRIAL] 升為 [STANDARD]／[APPROVED SURFACE]，但批准需留明確版本與真實截圖。**先使用這本書製作與拒絕實際頁面，才談修訂這本書。**
 
+### 6F.17 P2 — first production audit against the Stylebook (2026-10-23)
+
+**Evaluation boundary:** This is a stylebook **redline and production handoff**, not a signed new visual arrangement. Compare **main default** and **PR #1352 preview** separately; stale main is not the latest experimental design. The trusted preview is `/experiments/p2-magazine-transition-lab.html?final=1`, hosting `/p2/living-water.html?embed=1&magazineProof=1`. The default `/p2/living-water.html` still uses older triple-panel fallback until deliberately promoted.
+
+#### 17.1 Actual inspected architecture and corrections to earlier assumptions
+
+- In **main**, proof v3 has wrong 4–3–4–1 desk groupings and labels `WESTSIDE / ISSUE 02`. **Already corrected on PR #1352 branch:** now canonical **WATCH 4 / WALK 4 / WITNESS 2 / WORSHIP 2**, real draft-title metadata, `WESTSIDE WATCH / VOL.00`, and original **`/images/westside-watch-xiwang-vertical.svg`** for the ascending Chinese brand. **Do not “fix” these again.**
+- Branch v3 already has **center cover + Contents as two distinct editorial regions** (44% upper / 56% lower), official landscape masthead SVG, source-aware labels, keyboard-scrollable Contents, no fabricated links for each unpublished item, and true seven curtain/skyline/star phases keyed to the **one existing P2 clock**. These are genuine progress and must not be misrepresented as absent.
+- **Outstanding structural constraint:** despite these fixes, desktop still sets `.mag3__spread{grid-template-columns:28fr 44fr 28fr}`. Center cover/Contents is squeezed into a 44%-width column, with two outer side panels; the upper/lower 44:56 split is an **unverified visual candidate**, not a rule derived from the magazine book. Its fixed partitions contradict the available continuous digital-spread design freedom **if** their contents would work better across the full field. No new final geometry until actual screenshot before/after review.
+- **Outstanding motion discrepancy:** branch uses `.mag3__fold{height:8svh}` as seven narrow strips and positions the folds with vertical translate. Existing homepage sevenfold rule explicitly asks for **seven full-overlap planes, not seven segmented bands**. We must check the first layer source and rendered state before calling this parity or changing it; keep star+glyph rising together and real attached-wall/door identity.
+- **Outstanding contents/navigation:** even with the right 12 entries, preview uses `<li class="mag3__entry">` without specific story hrefs, plus one genuine `/journal/` entry. It is a design proof, **not yet** a functioning complete TOC. When integrating the real canonical issue, resolve source-backed article routes and truthful unpublished entries. Do NOT invent guessed article links or give every item the same false destination.
+- **Mobile:** side identity/verse are hidden after full-open (`@media(max-width:700px)`), with Contents occupying an internal scrolling region. This may be reasonable in one phase but **must be reviewed against whole issue continuity and readable Scripture/brand semantics**; don't restore tiny triptych or compress every article to fit a viewport.
+- The opening Church content/schedule is **separate**. The approved V75 water engraving, upward motion, Red Sea opening, John 7:38, church branding/address, current worship programme and protected Sunday schedule are excluded from this first magazine layout redline.
+
+#### 17.2 Editorial direction applying the existing 6F DNA — preserve vs consider changing
+
+| Scene / state | Keep intact | Art-direction decision to test | Expected screenshot proof |
+| --- | --- | --- | --- |
+| S0 · Church half water | V75 actual engraved water/water rise, church visual hierarchy, true schedule, protected text | None here: verify only regression, no church visual redesign | initial + rising + gate left/right at 1648/768/390 |
+| S1 · Magazine threshold/87–90% | Two physical **opening water doors** from Church, original vertical 西望 vector, star, Romans 13:12, real wall source (not invented), reversible current P2 scroll clock | Editorial *hold* should stand as a complete designed spread even before opening; compare block relationships, massive serif Scripture and Chinese weight, not just add decorations | 87–90% and reversals with no clipping, source/brand intact |
+| S2 · Magazine 100% open | Vol.00 masthead, publication title 守望，一座光明的城, 12 canonical desks/3 interludes, actual `/journal/` entry | Test whether **cover and contents may occupy one continuous asymmetrical 100% canvas** rather than three independent backgrounds around a cramped 44%-center card. A square/stone plane/city line should cross virtual center only for narrative cause. Keep the user's approved *cover on top / contents below* editorial relation as candidate until before/after confirms or rejects changes. | side-by-side old/new viewport screenshot and true full-state reading |
+| S3 · Small screen | Complete branded issue semantics, visible issue entry, source/citation accessibility | Recompose cover→contents and preserve reachable brand+scripture, not tiny desktop triptych; 390 and 320 must read with no lost story or dangling Chinese words | 390/320 phone screenshots, keyboard, zoom and TOC scroll |
+| S4 · Actual issue reading | Full author-protected canonical source, usable links, figure credits, navigation | The P2 surface is an **arrival**, not a substitute for the longform magazine; need source-aware direct access to actual articles or explicit issue route | real article navigation from P2, return and back behavior |
+
+**Prioritisation under Stylebook §6F:**
+- **P0** compare 87–90% static hold and 100% complete reveal in real Chrome images; reject fixed third-column visual if it has no editorial justification and evaluate 7-planes vs 7-bands mismatch.
+- **P1** compose new issue cover/Contents in one editorial space, retaining all canon and protected original resources. No automatically imposed 28/44/28 or 44/56 rules.
+- **P1** test responsive brand, Scripture, actual issue route, body/figure options and scroll reversal; classify problems as block/important/polish and preserve old screenshot as baseline.
+- **P2** refine letter fit, optical alignment, cropped subject and image/line density only **after** large-space and reading hierarchy are selected.
+
+**Engineering ownership:** `static/css/p2-magazine-transition-proof-v3.css` + `static/js/p2-magazine-transition-proof-v3.js` own isolated magazine candidate; `static/experiments/p2-magazine-transition-lab.html` owns its comparison controls. The one `static/js/p2-living-water.js` still owns scroll progress; `static/css/p2-living-water.css` still owns church/water/schedule. Do not create parallel global OS, add new motion clock or touch protected artwork in an art-direction pass. Existing PR #1352 reports **merge conflicts**, so this is **REVIEW / NOT VISUALLY APPROVED / DO NOT MERGE**. Actual contemporary deployed screenshots were not obtainable in this audit, therefore no 18/20 score is claimed.
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
