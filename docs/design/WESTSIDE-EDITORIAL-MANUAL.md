@@ -2483,6 +2483,22 @@ For each output create a plate record with source URL and revision, original ext
 
 **第二輪構圖試驗（2026-10-23，隔離 PR #1355，提交 `e2c5b92`；尚未藝術批准）：** 依 §6F.21 首輪的 21 組重複過密問題，在**同一試驗頁**把七條斜向完整「西望」改為 `2–1–2–1–2–1–2` 共十一組；每行左右起點錯落、視覺間距放寬、旋轉基準調至 `-10deg`，避免首字「西」被裁切而只剩「望」。七條仍依序使用 Design OS 現有七個語義色，不增加第八種色或第二套字體系統。調整 scroll 階段為「七行進場完成 → 晨星升起 → 雙頁縮攏停駐 → 原石紋 Contents 替換」，並對 390px / 320px 加設局部字級和距離約束。右頁正式 Logo、原晨星 v5.3、刻線、城牆與教會場景不在變更範圍。**此處只記錄候選工程決定；尚須對比本輪真實 Chrome 截圖及 200% 原生瀏覽器放大後才可藝術簽收。**
 
+
+### 6F.22 P2 Vol.00 真封面：掛曆版式的空間敘事，而不是標籤堆疊（2026-10-23）
+
+**視覺輸入：** 編輯提供的《西望》掛曆加頁／封面設計截圖是**藝術構圖參考**，不是要求生成圖片、臨摹海報或將畫面變成單一 raster 底圖。絕不以 AI 生圖代替既有原始 Logo、晨星、城牆或編輯的文字。編輯所指定的敘事是：**午夜藍承托正式金色刊名 → 城牆作為畫面可升起的地平線 → 藍金表示黑夜走向黎明 → 下半暖紙色空間讓「守望，一座光明的城」成為真正大標題。**
+
+**反對的舊封面：** 在純藍區獨立排上 WATCH.、小晨星、很小的中文與極薄城牆，縱使佈局未相撞，也只是展示元素。封面應由**空間事件和編輯主張**生成文字位置，而不是把元素安放在剩餘的百分比。
+
+**隔離網頁真實實作（PR #1355；`0074e77` → `b245c53`，不是主站部署）：**
+- 仍使用正式 `/images/westside-watch-masthead-landscape.svg`，在午夜藍上以金色顯現，不重畫其字形；原 `temple-stone-light.png` 作下半紙面；原 `jerusalem-wall.png` 長幅刻線成為金／藍和紙色分界，保持圖片縱橫比例。
+- 城牆與**固定尺寸的紙面**同時由下往上進入：紙面以 translate Y 實際位移，不能在動畫中改變 background cover 尺寸造成石紋拉伸。晨星 v5.3 的升起與金光對應城牆出現，不再成為純色空間中心的另一張獨立圖。
+- 中文標題使用 Design OS 昭源黑體 900 的巨幅 display role，在城牆下形成唯一真正主標；原獨立巨型英文 WATCH. 因與正式刊名重複且破壞讀者焦點，在隔離稿中退場。原有 `Watch for the Dawn` 以真 Italic 成為藍色刊名區的副聲部，期號只作次要資訊。
+- 舞台仍採教會 P2 單一 scroll clock：藍頁從右上接管日程，金頁從左下接管活水，七色西望逐行進場，晨星／城牆與紙色升起、雙頁停駐、最後原石紋 Contents 接替左頁。可逆／reduced motion；不改教會 V75 水、分海、主日崇拜、原首頁影片或正式雜誌稿件。
+- **版式即使沒有動畫也須先是一張可獨立成立的封面**；畫面不得被九宮格卡片或浮動註記拆散。
+
+**實景證據與阻擋項：** 第一份構圖提交 `0074e77` 的 Chromium 21 幀測試頁面錯誤為零，1648／390／320 的靜止封面具有明確地平線，但主中文仍偏弱、晨星稍穿入下方紙色；因此緊接 `b245c53` 放大中文、將晨星抬回城牆上方、讓石紙物理上移而非拉伸。**後一提交的再次截圖、768、真 200% 瀏覽器 zoom、scroll 倒退與藝術簽收必須另外核實，未經驗證不可寫 PASS。** PR #1355 為隔離草稿、不能因 Production Build 通過而自行合併。單一 Design OS 為字體、色彩及藝術審查權威，具體幾何僅屬 P2 的局部 CSS/JS 擁有範圍。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
