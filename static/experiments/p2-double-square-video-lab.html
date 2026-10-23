@@ -33,8 +33,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-tile--contents{background:linear-gradient(140deg,#ddc98f,#c6a664 52%,#b59a65);color:var(--ink)}
 /* Actual logo SVG outlines, seven differently paced editorial rays. */
 .dual-letterfield{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:1}
-.dual-letterfield__row{position:absolute;width:67%;height:10%;display:flex;align-items:center;transform-origin:34% 50%;will-change:transform,opacity}
-.dual-letterfield__glyph{display:block;flex:none;width:var(--mark-width,36cqi);aspect-ratio:432/218;background:color-mix(in srgb,var(--row-ink,#5b8fa8) 70%,#1b3046 30%);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat}
+/* ONE monumental, unaltered Westside SVG wordmark. Its seven slanted
+   editorial color plates resolve into the same two complete characters. */
+.dual-letterfield__row{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform,opacity}
+.dual-letterfield__glyph{position:absolute;display:block;left:8%;top:26%;width:84%;height:48%;background:color-mix(in srgb,var(--row-ink,#5b8fa8) 72%,#1b3046 28%);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;clip-path:var(--print-slice)}
 .dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:2;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
 /* This is the exact inherited temple-stone + overlay from the existing P2
    .mag3__contents-page. Do not synthesize or substitute another texture. */
@@ -101,7 +103,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-movement li small{font-size:11px}
 }
 @media(max-width:700px){
-.dual-letterfield__glyph{max-width:70cqi}
+.dual-letterfield__glyph{left:7%;width:86%;top:26%;height:48%}
 .dual-ui{gap:11px}.dual-ui__name{width:100%}.dual-ui__controls{gap:6px}
 .dual-ui__range{width:100%;min-width:0}.dual-ui__range input{flex:1}
 .dual-stage{min-height:calc(100svh - 135px);height:calc(100svh - 135px)}
@@ -223,7 +225,7 @@ html.dual-embed .dual-film__credit{display:none}
  </div>
 </section>
 <aside class="dual-overview">
- <p><strong>第五輪修訂：</strong>右半屏午夜藍從上方揭示日程，左半屏黎明金從下方揭示活水，保留原教會流動場景。移除人工跨頁射線，保留原晨星刻線與原始城牆—聖殿石肌理。七枚官方 Logo 字形使用疏密主次。Contents 從正式 Vol.00 Editorial Map 恢復八個欄目下十項已確認的文章題名、亞杜蘭洞兩位講員；其他三個本期題名未定的欄目不冒充成稿。</p>
+ <p><strong>第五輪藝術修正：</strong>原教會右／左半屏依序以 clip-path 接管，拒絕整塊從畫面外砸入；新加射線已移除，保留晨星原刻線。左頁七個獨立的「西望」字標因互相覆蓋而被否決，改為一組官方原始向量字形的七道斜向印刷色版，隨滾動依序顯現，最終構成唯一巨型「西望」。封面仍使用真城牆＋原聖殿石底紋，Contents 已找回 Vol.00 確認的十項文章題名及兩位講員。</p>
  <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
 </aside>
 </main>
@@ -248,16 +250,19 @@ html.dual-embed .dual-film__credit{display:none}
   'var(--ws-harvest,#b8944a)','var(--ws-crimson,#a14d57)',
   'var(--ws-daylight-mauve,oklch(67% .075 330))'];
  // Seven original marks in a weighted print hierarchy, not mechanical columns.
- const lineStarts=[12,31,20,34,16,37,23],lineHeights=[7,19,31,43,56,70,84];
- const widths=[29,35,40,50,40,34,29],densities=[.32,.45,.64,1,.69,.48,.34];
+ // Seven offset intaglio plates uncover ONE historic brand impression.
  const rows=palette.map((color,i)=>{
   const line=document.createElement('div');line.className='dual-letterfield__row';
-  line.dataset.line=String(i+1);line.style.top=lineHeights[i]+'%';
-  line.style.left=lineStarts[i]+'%';line.style.setProperty('--row-ink',color);
-  line.style.setProperty('--mark-width',widths[i]+'cqi');
+  line.dataset.line=String(i+1);line.style.setProperty('--row-ink',color);
   const glyph=document.createElement('span');glyph.className='dual-letterfield__glyph';
-  glyph.setAttribute('aria-hidden','true');line.appendChild(glyph);letters.appendChild(line);
-  return line;
+  glyph.setAttribute('aria-hidden','true');
+  // All seven regions share the same wordmark geometry; no repeated word
+  // objects, no laser paths, no new drawings.
+  const top=i*100/7,bottom=(i+1)*100/7,shear=12;
+  glyph.style.setProperty('--print-slice','polygon(0% '+top.toFixed(3)+'%,100% '+
+    (top-shear).toFixed(3)+'%,100% '+(bottom-shear).toFixed(3)+
+    '%,0% '+bottom.toFixed(3)+'%)');
+  line.appendChild(glyph);letters.appendChild(line);return line;
  });
  let progress=1,coverLeft=false;
  const pose=(el,x,y,w,h)=>{
@@ -301,12 +306,10 @@ html.dual-embed .dual-film__credit{display:none}
   letters.style.opacity=String(lettersFade);
    rows.forEach((row,i)=>{
     const entered=reduce?(progress>=.60?1:0):ease((progress-(.435+i*.019))/.049);
-    const densities=[.32,.45,.64,1,.69,.48,.34];
     row.dataset.entered=String(entered);
-    row.style.opacity=String(entered*densities[i]);
-    row.style.transform='translate3d('+((1-entered)*(i%2?-18:15)).toFixed(2)+'px,'+
-      ((1-entered)*11).toFixed(2)+'px,0) rotate('+(-13+(i-3)*.42).toFixed(2)+
-      'deg) scale('+(.96+.04*entered).toFixed(3)+')';
+    row.style.opacity=String(entered);
+    row.style.transform='translate3d(0,'+((1-entered)*11).toFixed(2)+
+      'px,0) rotate(-10deg)';
    });
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
