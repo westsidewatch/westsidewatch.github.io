@@ -61,7 +61,7 @@ jobs:
           const {chromium}=require('playwright');
           const fs=require('node:fs'),path=require('node:path');
           const out='artifacts/p2-dual-square',logs=[];
-          const states=[['cover-entry',14,'cover-right'],['xiwang-lines',46,'cover-right'],['morning-star',68,'cover-right'],['cover-xiwang-hold',82,'cover-right'],['temple-stone-transition',93,'cover-right'],['temple-stone-contents',100,'cover-right']];
+          const states=[['night-half',12,'cover-right'],['gold-half',33,'cover-right'],['gold-complete',44,'cover-right'],['xiwang-lines',54,'cover-right'],['morning-star',68,'cover-right'],['cover-xiwang-hold',82,'cover-right'],['temple-stone-transition',93,'cover-right'],['temple-stone-contents',100,'cover-right']];
           (async()=>{
             const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
             try{
@@ -86,6 +86,10 @@ jobs:
                         panels:[a,b],
                         rows:document.querySelectorAll('.dual-movement li').length,
                         lines:Number(root.dataset.xiwangLines),
+                        blueReveal:Number(root.dataset.blueReveal),
+                        dawnReveal:Number(root.dataset.dawnReveal),
+                        officialWorks:document.querySelectorAll('.dual-work').length,
+                        legacyLaser:!!document.querySelector('#dual-light-bridge'),
                         stoneVisible:document.getElementById('dual-stone-contents').getAttribute('aria-hidden')==='false',
                         stoneBg:getComputedStyle(document.getElementById('dual-stone-contents')).backgroundImage.includes('temple-stone-light.png'),
                         starOpacity:Number(getComputedStyle(document.getElementById('dual-star')).opacity),
@@ -96,10 +100,13 @@ jobs:
                       };
                     });
                     if(res.status()!==200||m.rows!==12||!m.logoLoaded||m.aria!==1)errors.push('SOURCE_OR_UI');
+                    if(m.officialWorks!==11||m.legacyLaser)errors.push('EDITORIAL_WORKS_OR_REMOVED_LASER');
                     if(m.scrollWidth>m.width+2)errors.push('HORIZONTAL_OVERFLOW');
                     if(p===100&&!m.videoOriginLoaded)errors.push('HOME_FILM_NOT_LOADED');
-                    if(p===14&&m.phase!=='cover-arrival')errors.push('COVER_NOT_FIRST');
-                    if(p===46&&(m.phase!=='xiwang-lines'||m.lines<2||m.stoneVisible))errors.push('XIWANG_NOT_BEFORE_CONTENTS');
+                    if(p===12&&(m.phase!=='cover-arrival'||m.blueReveal<=.1||m.blueReveal>=.9||m.dawnReveal!==0))errors.push('NIGHT_HALF_NOT_REVEALING_SCHEDULE_FIRST');
+                    if(p===33&&(m.blueReveal<.999||m.dawnReveal<=.1||m.dawnReveal>=.9))errors.push('GOLD_HALF_NOT_REVEALING_WATER_SECOND');
+                    if(p===44&&(m.blueReveal<.999||m.dawnReveal<.999))errors.push('HALF_PANELS_NOT_COMPLETE_BEFORE_TYPE');
+                    if(p===54&&(m.phase!=='xiwang-lines'||m.lines<2||m.stoneVisible))errors.push('XIWANG_NOT_AFTER_HALF_PANELS');
                     if(p===68&&(m.phase!=='morning-star-rise'||m.lines!==7||m.starOpacity<.1||m.stoneVisible))errors.push('STAR_NOT_AFTER_XIWANG');
                     if(p===82&&(m.phase!=='cover-and-xiwang'||m.lines!==7||m.stoneVisible))errors.push('MISSING_COVER_XIWANG_HOLD');
                     if(p===93&&(m.phase!=='stone-contents-reveal'||!m.stoneBg))errors.push('MISSING_ORIGINAL_STONE_REVEAL');
