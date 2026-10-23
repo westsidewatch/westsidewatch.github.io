@@ -42,6 +42,21 @@ try {
     false,
     'a verified slice must not claim the whole timeline is complete',
   );
+  const terrainButton=page.getByRole('button',{name:'山城地形',exact:true});
+  await terrainButton.click();
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics?.terrainPresentation?.overviewActive);
+  const terrainView=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.terrainPresentation);
+  assert.equal(terrainView.verticalScale,1);assert.ok(terrainView.contourSegments>100);
+  for(const value of [3.9,4.9,8,10,17]){
+    await page.locator('.j3k-scrubber').evaluate((el,v)=>{el.value=String(v);el.dispatchEvent(new Event('input',{bubbles:true}));},value);
+    await page.waitForFunction(v=>window.__JERUSALEM3000__.historicalTime.position===v,value);
+    await page.waitForTimeout(150);
+    const current=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.terrainPresentation);
+    assert.equal(current.overviewActive,true);current.camera.forEach((v,i)=>assert.ok(Math.abs(v-terrainView.camera[i])<.01,'terrain comparison camera must persist across phases'));
+    if(value===4.9){await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.sharedEra?.status==='ready',null,{timeout:60000});await page.screenshot({path:`${output}/mountain-city-overview.png`,fullPage:true});}
+  }
+  await terrainButton.click();
+  await page.waitForFunction(()=>!window.__JERUSALEM3000__.renderDiagnostics.terrainPresentation.overviewActive);
   for (const value of [8, 8.9, 9, 9.5, 9.9, 9.5, 8]) {
     await page.locator('.j3k-scrubber').evaluate((el, value) => {
       el.value = String(value);
@@ -434,6 +449,13 @@ try {
   );
   await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement?.visibleHouses===14);
   await mobile.screenshot({path:`${output}/earliest-mobile.png`,fullPage:true});
+  await mobile.getByRole('button',{name:'山城地形',exact:true}).click();
+  await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.terrainPresentation.overviewActive);
+  await mobile.screenshot({path:`${output}/mountain-city-mobile.png`,fullPage:true});
+  assert.equal(await mobile.getByRole('button',{name:'山城地形',exact:true}).getAttribute('aria-pressed'),'true');
+  await mobile.getByRole('button',{name:'山城地形',exact:true}).click();
+  await mobile.waitForFunction(()=>!window.__JERUSALEM3000__.renderDiagnostics.terrainPresentation.overviewActive);
+
   await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='1.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
   await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement?.visibleHouses===24);
   await mobile.screenshot({path:`${output}/middle-bronze-mobile.png`,fullPage:true});

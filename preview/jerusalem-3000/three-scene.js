@@ -1,3 +1,4 @@
+import {createTerrainPresentation} from './terrain-presentation.js';
 import {auditLocalPlanRegistry} from './local-plan-registration.js';
 import {createWaterDefenseModelAdapter} from './water-defense-model-adapter.js';
 import {compileWaterDefenseRegistration,bindWaterDefenseCore,waterDefenseState} from './water-defense-registration.js';
@@ -287,6 +288,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   let currentProgress = 0,
     currentRuin = 0,
     terrainRuntime = null,
+    terrainPresentation = null,
+    terrainView = null,
     evidenceResolution = null,
     currentEvidenceMode = 'all',
     currentPhaseId = '',
@@ -465,6 +468,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     );
   }
   function updatePeriodOverview(phaseId,force=false){
+    if(terrainView)return;
     const framePhase=phaseId==='babylonian-destruction'?'late-first-temple':phaseId;
     const includesEarlier=phaseId==='persian-nehemiah'&&retainedVisible;
     const frameKey=framePhase+(includesEarlier?':retained':'');
@@ -481,6 +485,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       phaseChanged = previousPhase !== phaseId;
     currentPhaseId = phaseId;
     timelinePosition=position;
+    if(!terrainView){
     if(phaseChanged&&templePriorCamera){camera.position.copy(templePriorCamera.position);controls.target.copy(templePriorCamera.target);controls.minDistance=templePriorCamera.minDistance;templePriorCamera=null;controls.update();}
     if(phaseChanged&&overviewPriorCamera&&!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(phaseId)){camera.position.copy(overviewPriorCamera.position);controls.target.copy(overviewPriorCamera.target);controls.minDistance=overviewPriorCamera.minDistance;overviewPriorCamera=null;overviewFrame='';overviewInfo=null;controls.update();}
     if(phaseChanged && earliestSettlement) {
@@ -502,6 +507,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         camera.position.copy(focus).add(stage==='solomon'?(camera.aspect<1?new THREE.Vector3(680,650,980):new THREE.Vector3(400,380,620)):new THREE.Vector3(240,230,340));controls.update();}
     }
     if(phaseChanged)updatePeriodOverview(phaseId);
+    }
     applyTemporalState();
     if (phaseChanged && terrainRuntime) {
       rebuildUrbanFabric(phaseId);
@@ -561,6 +567,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     terrainRuntime = await loadCanonicalTerrain(manifest, root);
     if (!terrainRuntime)
       throw new Error('Canonical Jerusalem DEM payload missing');
+    terrainPresentation=createTerrainPresentation(terrainRuntime.mesh,{datum:terrainRuntime.grid.verticalDatumOffsetMetres});
     const evidenceResolutionAudit = auditEvidenceResolution(ledger.objects),
       registrationAudit = auditSpatialRegistrations(
         ledger.objects,
@@ -778,6 +785,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             royalCity:royalCity?.diagnostics(),
             persianSanctuary:persianSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
+            terrainPresentation:{...terrainPresentation?.diagnostics,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -845,6 +853,23 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     },
     setWaterDefenseVariant(id){waterDefenseModel.setVariant(id);applyTemporalState();},
     waterDefenseEvidence(position){const state=waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);return state?{...state,selectedVariant:waterDefenseModel.selectedVariant,variants:waterDefense.towerVariants,localPlans:localPlanAudit}:null;},
+    setTerrainOverview(enabled){
+      if(!terrainRuntime)return false;
+      if(enabled&&!terrainView){
+        terrainView={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance,maxDistance:controls.maxDistance,far:camera.far,fov:camera.fov,autoRotate:controls.autoRotate};
+        // Shared urban landscape window, wide enough to keep surrounding relief
+        // in frame. This camera envelope does not define a historical city extent.
+        const points=[];
+        for(const x of [-650,900])for(const z of [-700,1050])points.push(new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z),z));
+        camera.fov=48;
+        const frame=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov});
+        camera.far=Math.max(camera.far,frame.distance*3);camera.updateProjectionMatrix();controls.maxDistance=frame.distance*2;
+        camera.position.copy(frame.position);controls.target.copy(frame.target);controls.minDistance=35;controls.autoRotate=false;
+      }else if(!enabled&&terrainView){
+        camera.position.copy(terrainView.position);controls.target.copy(terrainView.target);controls.minDistance=terrainView.minDistance;controls.maxDistance=terrainView.maxDistance;controls.autoRotate=terrainView.autoRotate;camera.far=terrainView.far;camera.fov=terrainView.fov;camera.updateProjectionMatrix();terrainView=null;
+      }
+      terrainPresentation.contours.visible=!!terrainView;controls.update();needsFrame=true;return !!terrainView;
+    },
     inspectCityObject(id){const record=cityCoreRuntime?.core.get(id);return record?structuredClone(record):null;},
     focusResidentialDistrict(id){
       if(!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(currentPhaseId)||!evidenceAllowed('inferred'))return false;
@@ -913,6 +938,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       royalCity?.dispose();
       persianSanctuary?.dispose();
       generationStatus.remove();
+      terrainPresentation?.dispose();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])
         mesh.geometry?.dispose?.();

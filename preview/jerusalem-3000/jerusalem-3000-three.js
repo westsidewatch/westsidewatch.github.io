@@ -68,7 +68,7 @@ try {
     const labels={'eastern-ridge':'東南山脊','northern-precinct':'北部聖區周邊','western-hill':'西丘','ridge-rebuilding':'山脊重建區','northern-rebuilding':'北部重建區'};
     const table=document.createElement('table'),head=document.createElement('tr');
     for(const text of ['地區','街區','住宅','顯示','查看']){const th=document.createElement('th');th.textContent=text;head.append(th);}table.append(head);
-    for(const d of districtAcceptance.districts){const row=document.createElement('tr');row.dataset.residentialDistrict=d.id;row.dataset.buildings=String(d.buildings);row.dataset.visibleBuildings=String(d.visibleBuildings);const name=(labels[d.id.split(':').at(-1)]||'推定地區')+(d.layerState==='retained-ruin'?' · 前代遺存':districtAcceptance.phase==='babylonian-destruction'?' · 毀城示意':'');for(const value of [name,d.blocks,d.buildings,d.visibleBuildings]){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}const action=document.createElement('td'),button=document.createElement('button');button.type='button';button.textContent='近看';button.setAttribute('aria-label',name+'住宅近看');button.disabled=d.visibleBuildings===0;button.addEventListener('click',()=>{if(three.focusResidentialDistrict(d.id)){panel.hidden=true;document.querySelector('.j3k-evidence-toggle').setAttribute('aria-expanded','false');}});action.append(button);row.append(action);table.append(row);}section.append(table);
+    for(const d of districtAcceptance.districts){const row=document.createElement('tr');row.dataset.residentialDistrict=d.id;row.dataset.buildings=String(d.buildings);row.dataset.visibleBuildings=String(d.visibleBuildings);const name=(labels[d.id.split(':').at(-1)]||'推定地區')+(d.layerState==='retained-ruin'?' · 前代遺存':districtAcceptance.phase==='babylonian-destruction'?' · 毀城示意':'');for(const value of [name,d.blocks,d.buildings,d.visibleBuildings]){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}const action=document.createElement('td'),button=document.createElement('button');button.type='button';button.textContent='近看';button.setAttribute('aria-label',name+'住宅近看');button.disabled=d.visibleBuildings===0;button.addEventListener('click',()=>{if((terrainOverview(false),three.focusResidentialDistrict(d.id))){panel.hidden=true;document.querySelector('.j3k-evidence-toggle').setAttribute('aria-expanded','false');}});action.append(button);row.append(action);table.append(row);}section.append(table);
   }
   const three = mountJerusalemThreeScene(mount, {
     onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();},
@@ -122,7 +122,12 @@ try {
   let evidencePanelPhase='';
   const templeFocusButton=document.createElement('button');templeFocusButton.textContent='聖殿近看';templeFocusButton.hidden=true;
   document.querySelector('.j3k-event-controls').append(templeFocusButton);
-  templeFocusButton.addEventListener('click',()=>three.focusRoyalTemple());
+  const terrainButton=document.createElement('button');terrainButton.type='button';terrainButton.className='j3k-terrain-toggle';terrainButton.textContent='山城地形';terrainButton.setAttribute('aria-pressed','false');
+  const terrainNote=document.createElement('span');terrainNote.className='j3k-terrain-note';terrainNote.hidden=true;terrainNote.textContent='現代 DEM · 原比例 · 20m 等高線 · 非古代地表';
+  document.querySelector('.j3k-event-controls').append(terrainButton,terrainNote);
+  function terrainOverview(enabled){const active=three.setTerrainOverview(enabled);terrainButton.setAttribute('aria-pressed',String(active));terrainNote.hidden=!active;}
+  terrainButton.addEventListener('click',()=>terrainOverview(terrainButton.getAttribute('aria-pressed')!=='true'));
+  templeFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusRoyalTemple();});
   function update(v) {
     const state = time.sample(v),
       p = state.phase,
