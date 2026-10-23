@@ -1,0 +1,419 @@
+{
+  "schema": "j3k.foundation-plan.v1",
+  "kind": "reviewed-engineering-inventory-not-runtime-or-historical-certification",
+  "reviewedAt": "2026-10-22",
+  "baselineCommit": "118f92c4b",
+  "domains": [
+    "districts",
+    "routes",
+    "waterDefense",
+    "sacredCivic",
+    "occupation",
+    "lifecycle"
+  ],
+  "detailWork": "paused-until-foundation-review-accepted",
+  "scopeEvidence": [
+    "three-scene.js",
+    "shared-era-runtime.js",
+    "era-registration-adapter.js",
+    "generated-residential-ledger.js",
+    "city-lifecycle-projection.js",
+    "earliest-settlement.js",
+    "royal-city.js",
+    "persian-sanctuary.js"
+  ],
+  "phases": [
+    {
+      "id": "chalcolithic-early-bronze",
+      "label": "最早聚落",
+      "rendererFamily": "early-landscape-and-royal",
+      "domains": {
+        "districts": "partial",
+        "routes": "partial",
+        "waterDefense": "partial",
+        "sacredCivic": "partial",
+        "occupation": "partial",
+        "lifecycle": "partial"
+      },
+      "gap": "Early landscape and selected royal/water IDs exist; district-wide common identity and successor fates are incomplete.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "middle-bronze",
+      "label": "迦南城市",
+      "rendererFamily": "early-landscape-and-royal",
+      "domains": {
+        "districts": "partial",
+        "routes": "partial",
+        "waterDefense": "partial",
+        "sacredCivic": "partial",
+        "occupation": "partial",
+        "lifecycle": "partial"
+      },
+      "gap": "Early landscape and selected royal/water IDs exist; district-wide common identity and successor fates are incomplete.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "late-bronze-iron1",
+      "label": "晚青銅—鐵器早期",
+      "rendererFamily": "early-landscape-and-royal",
+      "domains": {
+        "districts": "partial",
+        "routes": "partial",
+        "waterDefense": "partial",
+        "sacredCivic": "partial",
+        "occupation": "partial",
+        "lifecycle": "partial"
+      },
+      "gap": "Early landscape and selected royal/water IDs exist; district-wide common identity and successor fates are incomplete.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "david-solomon",
+      "label": "大衛—所羅門",
+      "rendererFamily": "early-landscape-and-royal",
+      "domains": {
+        "districts": "partial",
+        "routes": "partial",
+        "waterDefense": "partial",
+        "sacredCivic": "partial",
+        "occupation": "partial",
+        "lifecycle": "partial"
+      },
+      "gap": "Early landscape and selected royal/water IDs exist; district-wide common identity and successor fates are incomplete.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "late-first-temple",
+      "label": "第一聖殿晚期",
+      "rendererFamily": "shared-first-temple-persian",
+      "domains": {
+        "districts": "partial",
+        "routes": "partial",
+        "waterDefense": "partial",
+        "sacredCivic": "partial",
+        "occupation": "partial",
+        "lifecycle": "partial"
+      },
+      "gap": "Independent inferred districts and residential publication exist; routes, defenses and all predecessor/successor fates are incomplete.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "babylonian-destruction",
+      "label": "巴比倫毀城",
+      "rendererFamily": "shared-first-temple-persian",
+      "domains": {
+        "districts": "partial",
+        "routes": "partial",
+        "waterDefense": "partial",
+        "sacredCivic": "partial",
+        "occupation": "partial",
+        "lifecycle": "partial"
+      },
+      "gap": "Independent inferred districts and residential publication exist; routes, defenses and all predecessor/successor fates are incomplete.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "persian-nehemiah",
+      "label": "波斯—尼希米",
+      "rendererFamily": "shared-first-temple-persian",
+      "domains": {
+        "districts": "partial",
+        "routes": "partial",
+        "waterDefense": "partial",
+        "sacredCivic": "partial",
+        "occupation": "partial",
+        "lifecycle": "partial"
+      },
+      "gap": "Independent inferred districts and residential publication exist; routes, defenses and all predecessor/successor fates are incomplete.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "hellenistic-hasmonean",
+      "label": "希臘化—哈斯蒙尼",
+      "rendererFamily": "derived-shared-scaffold",
+      "domains": {
+        "districts": "scaffold",
+        "routes": "scaffold",
+        "waterDefense": "scaffold",
+        "sacredCivic": "scaffold",
+        "occupation": "scaffold",
+        "lifecycle": "scaffold"
+      },
+      "gap": "Layout derives from a reference footprint; independent period baseline and predecessor mapping missing.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "herodian-jesus",
+      "label": "大希律—耶穌",
+      "rendererFamily": "canonical-herodian",
+      "domains": {
+        "districts": "partial",
+        "routes": "partial",
+        "waterDefense": "partial",
+        "sacredCivic": "partial",
+        "occupation": "partial",
+        "lifecycle": "partial"
+      },
+      "gap": "Canonical city and destruction projection exist; incoming Hellenistic and outgoing Aelia changes are incomplete.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "roman-destruction",
+      "label": "羅馬毀城",
+      "rendererFamily": "canonical-herodian",
+      "domains": {
+        "districts": "partial",
+        "routes": "partial",
+        "waterDefense": "partial",
+        "sacredCivic": "partial",
+        "occupation": "partial",
+        "lifecycle": "partial"
+      },
+      "gap": "Canonical city and destruction projection exist; incoming Hellenistic and outgoing Aelia changes are incomplete.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "aelia",
+      "label": "Aelia Capitolina",
+      "rendererFamily": "legacy-era-morphology",
+      "domains": {
+        "districts": "scaffold",
+        "routes": "scaffold",
+        "waterDefense": "scaffold",
+        "sacredCivic": "scaffold",
+        "occupation": "scaffold",
+        "lifecycle": "scaffold"
+      },
+      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "byzantine",
+      "label": "拜占庭",
+      "rendererFamily": "legacy-era-morphology",
+      "domains": {
+        "districts": "scaffold",
+        "routes": "scaffold",
+        "waterDefense": "scaffold",
+        "sacredCivic": "scaffold",
+        "occupation": "scaffold",
+        "lifecycle": "scaffold"
+      },
+      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "early-islamic",
+      "label": "早期伊斯蘭",
+      "rendererFamily": "legacy-era-morphology",
+      "domains": {
+        "districts": "scaffold",
+        "routes": "scaffold",
+        "waterDefense": "scaffold",
+        "sacredCivic": "scaffold",
+        "occupation": "scaffold",
+        "lifecycle": "scaffold"
+      },
+      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "crusader",
+      "label": "十字軍",
+      "rendererFamily": "legacy-era-morphology",
+      "domains": {
+        "districts": "scaffold",
+        "routes": "scaffold",
+        "waterDefense": "scaffold",
+        "sacredCivic": "scaffold",
+        "occupation": "scaffold",
+        "lifecycle": "scaffold"
+      },
+      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "ayyubid-mamluk",
+      "label": "阿尤布—馬穆魯克",
+      "rendererFamily": "legacy-era-morphology",
+      "domains": {
+        "districts": "scaffold",
+        "routes": "scaffold",
+        "waterDefense": "scaffold",
+        "sacredCivic": "scaffold",
+        "occupation": "scaffold",
+        "lifecycle": "scaffold"
+      },
+      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "ottoman",
+      "label": "奧斯曼",
+      "rendererFamily": "legacy-era-morphology",
+      "domains": {
+        "districts": "scaffold",
+        "routes": "scaffold",
+        "waterDefense": "scaffold",
+        "sacredCivic": "scaffold",
+        "occupation": "scaffold",
+        "lifecycle": "scaffold"
+      },
+      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "outside-walls",
+      "label": "城外擴張",
+      "rendererFamily": "legacy-era-morphology",
+      "domains": {
+        "districts": "scaffold",
+        "routes": "scaffold",
+        "waterDefense": "scaffold",
+        "sacredCivic": "scaffold",
+        "occupation": "scaffold",
+        "lifecycle": "scaffold"
+      },
+      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "acceptanceEvidence": []
+    },
+    {
+      "id": "modern",
+      "label": "現代耶路撒冷",
+      "rendererFamily": "legacy-era-morphology",
+      "domains": {
+        "districts": "scaffold",
+        "routes": "scaffold",
+        "waterDefense": "scaffold",
+        "sacredCivic": "scaffold",
+        "occupation": "scaffold",
+        "lifecycle": "scaffold"
+      },
+      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "acceptanceEvidence": []
+    }
+  ],
+  "transitions": [
+    {
+      "from": "chalcolithic-early-bronze",
+      "to": "middle-bronze",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "middle-bronze",
+      "to": "late-bronze-iron1",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "late-bronze-iron1",
+      "to": "david-solomon",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "david-solomon",
+      "to": "late-first-temple",
+      "status": "partial",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "late-first-temple",
+      "to": "babylonian-destruction",
+      "status": "partial",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "babylonian-destruction",
+      "to": "persian-nehemiah",
+      "status": "partial",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "persian-nehemiah",
+      "to": "hellenistic-hasmonean",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "hellenistic-hasmonean",
+      "to": "herodian-jesus",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "herodian-jesus",
+      "to": "roman-destruction",
+      "status": "partial",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "roman-destruction",
+      "to": "aelia",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "aelia",
+      "to": "byzantine",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "byzantine",
+      "to": "early-islamic",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "early-islamic",
+      "to": "crusader",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "crusader",
+      "to": "ayyubid-mamluk",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "ayyubid-mamluk",
+      "to": "ottoman",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "ottoman",
+      "to": "outside-walls",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    },
+    {
+      "from": "outside-walls",
+      "to": "modern",
+      "status": "unresolved",
+      "policy": "Audit persistent IDs, new objects, ruins, removals, explicit unknown fates and reverse reconstruction; proximity does not establish reuse.",
+      "acceptanceEvidence": []
+    }
+  ],
+  "acceptanceRule": "All six domains per phase and every adjacent transition require accepted status with review evidence. Explicit withheld geometry can be accepted as a documented foundation decision; it is never historical certification."
+}
