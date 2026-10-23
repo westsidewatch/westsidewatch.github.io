@@ -2481,6 +2481,8 @@ For each output create a plate record with source URL and revision, original ext
 
 **藝術評分目前仍是 TRIAL / NOT APPROVED。** 實際截圖可比較來源錯誤字柱與修訂後的字陣，但任何再調整需要對照真實作品與 200% 放大，而不是重新寫一輪抽象研究。P2 的教會原始資產與已批准動效不在此次修正範圍。
 
+**第二輪構圖試驗（2026-10-23，隔離 PR #1355，提交 `e2c5b92`；尚未藝術批准）：** 依 §6F.21 首輪的 21 組重複過密問題，在**同一試驗頁**把七條斜向完整「西望」改為 `2–1–2–1–2–1–2` 共十一組；每行左右起點錯落、視覺間距放寬、旋轉基準調至 `-10deg`，避免首字「西」被裁切而只剩「望」。七條仍依序使用 Design OS 現有七個語義色，不增加第八種色或第二套字體系統。調整 scroll 階段為「七行進場完成 → 晨星升起 → 雙頁縮攏停駐 → 原石紋 Contents 替換」，並對 390px / 320px 加設局部字級和距離約束。右頁正式 Logo、原晨星 v5.3、刻線、城牆與教會場景不在變更範圍。**此處只記錄候選工程決定；尚須對比本輪真實 Chrome 截圖及 200% 原生瀏覽器放大後才可藝術簽收。**
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
