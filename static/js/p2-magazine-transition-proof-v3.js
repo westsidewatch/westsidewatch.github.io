@@ -14,6 +14,7 @@ if(new URLSearchParams(location.search).get('dualSquare')==='1'){
  root.dataset.magazineDesign='duo-bridge';
  const qs=new URLSearchParams(location.search);
  const side=qs.get('side')==='cover-right'?'cover-right':'cover-left';
+ const churchIndex=root.querySelector('.index');
  const frame=document.createElement('iframe');
  frame.title='西望 Vol.00 封面與 Contents，緊接教會活水開門';
  frame.src='/experiments/p2-double-square-video-lab.html?embed=1&p=0&side='+side;
@@ -31,6 +32,14 @@ if(new URLSearchParams(location.search).get('dualSquare')==='1'){
   magazine.inert=latest<.995;
   magazine.setAttribute('aria-hidden',latest>=.995?'false':'true');
   magazine.dataset.magazineStage=latest<.53?'blue-gold-arrival':latest<.99?'cover-contents-fold':'two-cover-tiles';
+  // The Church folio link remains while Church owns the stage, but must
+  // retire when the actual Contents square takes over. Reversible.
+  if(churchIndex){
+   const exit=Math.min(1,Math.max(0,(latest-.72)/.20));
+   churchIndex.style.opacity=String(1-exit);
+   churchIndex.style.pointerEvents=exit>.5?'none':'';
+   churchIndex.setAttribute('aria-hidden',exit>.99?'true':'false');
+  }
   if(loaded)frame.contentWindow?.postMessage({type:'westside-p2-dual-progress',progress:latest,side},location.origin);
  }
  frame.addEventListener('load',()=>{loaded=true;render(Number(root.dataset.p2Progress)||2.37)});

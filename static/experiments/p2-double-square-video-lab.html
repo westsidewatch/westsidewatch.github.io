@@ -202,7 +202,9 @@ html.dual-embed .dual-film__credit{display:none}
    // §6F cover+contents geometry: maximize the square pair within a
    // readable optical frame. Avoid arbitrary 41.5vw / 75vh and 670px cap.
    // Horizontal safety frame: >=3.5vw; vertical safety frame: >=5svh.
-   const marginX=Math.max(16,W*.035),marginY=Math.max(18,H*.052);
+   // A visible 6.7% frame on either side gives the *original home film*
+   // meaningful breathing room, while the pair still occupies ~86.6% W.
+   const marginX=Math.max(16,W*.067),marginY=Math.max(18,H*.052);
    const tile=Math.max(0,Math.min((W-2*marginX)/2,H-2*marginY));
    w=lerp(W/2,tile,t);h=lerp(H,tile,t);
    x1=(W-2*w)/2;y1=(H-h)/2;x2=x1+w;y2=y1;
