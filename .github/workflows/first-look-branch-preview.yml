@@ -107,6 +107,48 @@ jobs:
                   finally{await page.close()}
                 }
               }
+              // Also verify actual Church → Red Sea → magazine *one timeline* integration.
+              // This is NOT a second P2; the same p2-living-water.js clock drives it.
+              for(const [name,width,height] of [['church-desktop',1648,928],['church-phone',390,844],['church-small',320,720]]){
+                const page=await browser.newPage({viewport:{width,height},reducedMotion:'no-preference'});
+                const id=name+'-final',errors=[];
+                page.on('pageerror',e=>errors.push('PAGE_ERROR: '+e.message));
+                try{
+                  await page.goto('http://127.0.0.1:4173/experiments/p2-magazine-transition-lab.html?dual=1&final=1',{waitUntil:'load',timeout:45000});
+                  await page.waitForFunction(()=>{
+                    const church=document.querySelector('#p2scene')?.contentDocument;
+                    const duo=church?.querySelector('.p2-magazine iframe')?.contentDocument;
+                    return church?.querySelector('.showcase')?.dataset.p2Phase==='magazine'&&duo?.querySelector('#dual-stage')?.dataset.phase==='final';
+                  },{timeout:15000});
+                  const m=await page.evaluate(()=>{
+                    const c=document.querySelector('#p2scene')?.contentDocument;
+                    const root=c?.querySelector('.showcase'),stage=c?.querySelector('.p2-magazine iframe')?.contentDocument;
+                    const cov=stage?.querySelector('#dual-cover'),cont=stage?.querySelector('#dual-contents');
+                    const a=cov?.getBoundingClientRect(),b=cont?.getBoundingClientRect();
+                    const mast=stage?.querySelector('.dual-cover__mast')?.getBoundingClientRect();
+                    const last=stage?.querySelector('.dual-movement:last-child li:last-child');
+                    const index=stage?.querySelector('.dual-contents__index');
+                    return {phase:root?.dataset.p2Phase,design:root?.dataset.magazineDesign,
+                      water:!!c?.querySelector('.ocean-rise'),doors:!!c?.querySelector('.water-doors'),church:!!c?.querySelector('.church-editorial'),
+                      duo:stage?.querySelector('#dual-stage')?.dataset.phase,logoRatio:mast?.width/a?.width,
+                      coverSize:a&&{width:a.width,height:a.height},contentSize:b&&{width:b.width,height:b.height},
+                      entries:stage?.querySelectorAll('.dual-movement li').length,
+                      homeVideo:!!stage?.querySelector('#dual-film-frame')?.contentDocument?.querySelector('.hosanna'),
+                      lastRect:last?.getBoundingClientRect()?.bottom,contentsRect:b?.bottom,
+                      directoryScrollable:index&&index.scrollHeight>index.clientHeight
+                    };
+                  });
+                  if(m.phase!=='magazine'||m.design!=='duo-bridge'||m.duo!=='final'||!m.water||!m.doors||!m.church)errors.push('CHURCH_MOTION_NOT_PRESERVED');
+                  if(m.entries!==12||!m.homeVideo)errors.push('CANON_OR_ORIGINAL_HOME_FILM');
+                  if(m.logoRatio<.78||m.logoRatio>.87)errors.push('COVER_MASTHEAD_NOT_DOMINANT');
+                  if(Math.abs((m.coverSize?.width||0)-(m.coverSize?.height||0))>2)errors.push('COVER_NOT_SQUARE');
+                  if(m.lastRect>m.contentsRect+2&&!m.directoryScrollable)errors.push('LAST_ENTRIES_UNREACHABLE');
+                  await page.screenshot({path:path.join(out,id+'.png'),animations:'disabled'});
+                  logs.push({id,viewport:{width,height},metrics:m,errors});
+                  console.log(id,errors.length?errors:'CHURCH_TO_MAGAZINE_CAPTURE_OK');
+                }catch(e){logs.push({id,errors:[e.message]});console.error(id,e.message)}
+                finally{await page.close()}
+              }
             }finally{await browser.close()}
             fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({source:'Westside P2 two-square concept',commit:process.env.GITHUB_SHA,editorialApproval:'PENDING',tests:logs},null,2));
             if(logs.some(x=>x.errors.length))process.exitCode=1;
