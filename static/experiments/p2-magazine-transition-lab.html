@@ -54,11 +54,20 @@ body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
  const query=new URLSearchParams(location.search);
  const dual=query.get('dual')==='1';
  if(dual){
-  const side=query.get('side')==='cover-right'?'cover-right':'cover-left';
+  const side=query.get('side')==='cover-left'?'cover-left':'cover-right';
   frame.src='/p2/living-water.html?embed=1&magazineProof=1&dualSquare=1&side='+side;
   document.querySelector('header h1').textContent='Living Water → Magazine / Cover + Contents';
-  document.querySelector('header p').textContent='先保留教會活水上升、分海、主日崇拜及原始 P2 scroll 時鐘；再讓午夜藍封面與黎明金 Contents 從半屏入場，收成兩塊相接的方形；背後顯示首頁原有王進城影片。這是接續既有 P2 的獨立候選，不是另一套 P2。';
-  document.querySelector('.notes').insertAdjacentHTML('afterbegin','<p><strong>MAGAZINE COVER SIZING LAB:</strong> 兩個正方形盡量填滿可用視窗，保留 3.5vw 左右安全邊及 5svh 上下呼吸；原版 P2 對照請移除網址 dual=1。<a href="/experiments/p2-double-square-video-lab.html?p=100">單獨封面比較 ↗</a></p>');
+  document.querySelector('header p').textContent='教會主日崇拜與活水、分海原樣保留。右側午夜藍封面由上進場；左側黎明金由下接管活水，七色「西望」一行、兩行直到七行斜向滾入；之後晨星升起，「封面＋西望」先停駐；最後原版聖殿石底紋 Contents 才替換字陣。全程由教會原有單一 P2 scroll 控制。';
+  document.querySelectorAll('.controller [data-progress]').forEach((button,i)=>{
+   const checkpoints=[
+    ['教會原頁',.586],['午夜藍封面',.640],
+    ['斜向西望',.778],['晨星升起',.864],
+    ['封面＋西望',.926],['石紋替換',.968],['石紋 Contents',1]
+   ];
+   button.textContent=checkpoints[i][0];
+   button.dataset.progress=String(checkpoints[i][1]);
+  });
+  document.querySelector('.notes').insertAdjacentHTML('afterbegin','<p><strong>CHURCH→MAGAZINE CONTINUITY:</strong> 預覽節點依次為封面接管、七色西望、晨星升起、「西望＋封面」、聖殿石紋目錄。沒有新製作石紋，仍使用原 `/images/temple-stone-light.png`；原版 P2 對照請移除網址 dual=1。<a href="/experiments/p2-double-square-video-lab.html?p=100">單獨封面比較 ↗</a></p>');
  }
  const range=document.getElementById('progress'),out=document.getElementById('percent');
  const desktop=document.getElementById('desktop'),mobile=document.getElementById('mobile');

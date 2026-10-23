@@ -12,8 +12,13 @@ if(new URLSearchParams(location.search).get('dualSquare')==='1'){
  // Variant is mounted *inside the existing P2 Church scene*.
  // The source water, sermon, Sunday schedule and Red Sea gates remain untouched.
  root.dataset.magazineDesign='duo-bridge';
+ // The source P2 .p2-magazine background was opaque paper. During the
+ // *replacement* it must be transparent, preserving Church underneath.
+ const bridgeStyle=document.createElement('style');
+ bridgeStyle.textContent='.showcase[data-magazine-design="duo-bridge"] .p2-magazine{background:transparent!important;clip-path:none!important}';
+ document.head.appendChild(bridgeStyle);
  const qs=new URLSearchParams(location.search);
- const side=qs.get('side')==='cover-right'?'cover-right':'cover-left';
+ const side=qs.get('side')==='cover-left'?'cover-left':'cover-right';
  const churchIndex=root.querySelector('.index');
  const frame=document.createElement('iframe');
  frame.title='西望 Vol.00 封面與 Contents，緊接教會活水開門';
@@ -26,12 +31,13 @@ if(new URLSearchParams(location.search).get('dualSquare')==='1'){
  function render(vh){
   latest=clamp((Number(vh)-2.37)/(3.85-2.37));
   magazine.style.visibility=latest>0?'visible':'hidden';
+  magazine.style.background='transparent';
   magazine.style.clipPath='none';
   magazine.style.opacity='1';
   magazine.style.pointerEvents=latest>=.995?'auto':'none';
   magazine.inert=latest<.995;
   magazine.setAttribute('aria-hidden',latest>=.995?'false':'true');
-  magazine.dataset.magazineStage=latest<.53?'blue-gold-arrival':latest<.99?'cover-contents-fold':'two-cover-tiles';
+  magazine.dataset.magazineStage=latest<.20?'cover-arrival':latest<.53?'xiwang-scroll':latest<.72?'star-rise':latest<.865?'cover-with-xiwang':latest<.995?'temple-stone-reveal':'contents-final';
   // The Church folio link remains while Church owns the stage, but must
   // retire when the actual Contents square takes over. Reversible.
   if(churchIndex){

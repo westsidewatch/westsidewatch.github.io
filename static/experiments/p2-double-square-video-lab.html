@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>if(new URLSearchParams(location.search).get("embed")==="1")document.documentElement.classList.add("dual-embed")</script>
-<title>Westside P2 · Two Squares / Cover + Contents</title>
-<meta name="description" content="獨立 P2 編輯構圖實驗：午夜藍封面與黎明金 Contents 由半屏收成兩個方塊，露出原始首頁影片。">
+<title>Westside P2 · Cover → Seven-color 西望 → Morning Star → Temple-stone Contents</title>
+<meta name="description" content="原有教會活水動效連續銜接雜誌：封面先進、七色斜向西望逐行滾入、晨星升起、西望與封面停駐，最後原版聖殿石紋 Contents 接替。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
 <style>
 *{box-sizing:border-box}
@@ -31,6 +31,15 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-tile{position:absolute;min-width:0;min-height:0;overflow:hidden;pointer-events:auto;isolation:isolate;box-shadow:none;container-type:size}
 .dual-tile--cover{background:radial-gradient(ellipse at 56% 22%,#29425b 0%,transparent 58%),var(--blue);color:var(--paper)}
 .dual-tile--contents{background:linear-gradient(140deg,#ddc98f,#c6a664 52%,#b59a65);color:var(--ink)}
+/* Seven-color type texture derives from the real homepage Design OS
+   colors but is NOT its seven-curtain motion. Each glyph is the approved
+   unchanged Westside Chinese SVG, applied as a vector mask, not stretched. */
+.dual-letterfield{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:1;transform-origin:50% 50%}
+.dual-letterfield__row{position:absolute;left:-18%;width:145%;height:17%;display:flex;justify-content:space-around;align-items:center;gap:4%;transform:translate3d(-125%,0,0) rotate(-15deg);transform-origin:50% 50%;will-change:transform,opacity}
+.dual-letterfield__glyph{display:block;flex:none;width:clamp(38px,8.8cqi,84px);height:auto;aspect-ratio:210/430;background:var(--row-ink,var(--ws-water,#5b8fa8));-webkit-mask:url('/images/westside-watch-xiwang-vertical.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-vertical.svg') center/contain no-repeat;opacity:.91}
+.dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:2;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
+/* This is the exact inherited temple-stone + overlay from the existing P2
+   .mag3__contents-page. Do not synthesize or substitute another texture. */
 .dual-cover{position:relative;display:flex;flex-direction:column;height:100%;width:100%;padding:clamp(22px,4.4vmin,48px) clamp(22px,4vmin,47px);overflow:hidden}
 .dual-cover__mast{position:absolute;z-index:3;top:5%;left:6%;width:84%;max-width:84%;height:auto;max-height:22%;object-fit:contain;object-position:left top;filter:brightness(0) invert(1)}
 .dual-cover__series{position:absolute;z-index:3;left:6%;right:6%;top:27%;font:400 clamp(10px,1.6cqi,15px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.10em}
@@ -116,7 +125,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    scroll surface when ?embed=1. No duplicate timeline or copy of home film. */
 html.dual-embed,html.dual-embed body{width:100%;height:100%;overflow:hidden}
 html.dual-embed .dual-ui,html.dual-embed .dual-overview{display:none!important}
-html.dual-embed .dual-stage{height:100svh;min-height:0}
+html.dual-embed .dual-stage{height:100svh;min-height:0;background:transparent}
 html.dual-embed .dual-contents__index{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
 html.dual-embed .dual-film__credit{display:none}
 
@@ -124,19 +133,21 @@ html.dual-embed .dual-film__credit{display:none}
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
- <span class="dual-ui__name">WESTSIDE WATCH / P2 / TWO SQUARES / EXPERIMENT 02</span>
+ <span class="dual-ui__name">WESTSIDE WATCH / P2 / COVER → 西望 → STAR → CONTENTS</span>
  <nav class="dual-ui__controls" aria-label="實驗場景">
-  <button type="button" data-position="cover-left" aria-pressed="true">封面在左</button>
-  <button type="button" data-position="cover-right" aria-pressed="false">封面在右</button>
-  <button type="button" data-snap="0">兩個半屏</button>
-  <button type="button" data-snap="0.4">晨星升起</button>
-  <button type="button" data-snap="1">並排方塊</button>
+  <button type="button" data-position="cover-left" aria-pressed="false">封面在左</button>
+  <button type="button" data-position="cover-right" aria-pressed="true">封面在右</button>
+  <button type="button" data-snap="0.14">封面進場</button>
+  <button type="button" data-snap="0.46">西望逐行</button>
+  <button type="button" data-snap="0.68">晨星升起</button>
+  <button type="button" data-snap="0.82">封面＋西望</button>
+  <button type="button" data-snap="1">石紋 Contents</button>
   <a href="/experiments/p2-magazine-transition-lab.html?final=1">原 P2 動效 ↗</a>
  </nav>
  <label class="dual-ui__range" for="dual-progress">展開進度 <input type="range" id="dual-progress" min="0" max="100" value="100" step="1"><output id="dual-value" for="dual-progress">100%</output></label>
 </header>
 <main>
-<section class="dual-stage" id="dual-stage" data-phase="final" aria-label="P2 藍封面與金色目錄，由半屏收成兩個並排方塊">
+<section class="dual-stage" id="dual-stage" data-phase="contents-final" aria-label="P2 封面先進，七色西望滾動，晨星升起，再由聖殿石紋目錄接替">
  <div class="dual-film" id="dual-film" aria-hidden="true">
   <iframe id="dual-film-frame" title="首頁原始王進城混剪，純背景且不傳播聲音" tabindex="-1" allow="autoplay" loading="eager" data-original-src="/preview/watch-city-vol00/hosanna/?cover=1"></iframe>
  </div>
@@ -156,8 +167,9 @@ html.dual-embed .dual-film__credit{display:none}
     <span class="dual-cover__folio" lang="en">THE NIGHT IS FAR SPENT / ROMANS 13:12</span>
    </div>
   </article>
-  <section class="dual-tile dual-tile--contents" id="dual-contents" aria-labelledby="dual-contents-title">
-   <div class="dual-contents">
+  <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="黎明金先演化七色西望字陣，最後替換為聖殿石紋 Contents">
+   <div class="dual-letterfield" id="dual-letterfield" aria-hidden="true"></div>
+   <div class="dual-contents" id="dual-stone-contents" aria-hidden="true" inert>
     <header class="dual-contents__head"><h2 id="dual-contents-title" lang="en">Contents.</h2><span>目錄</span></header>
     <p class="dual-contents__deck">四樂章 · 十二欄目 · 三段視聽間奏</p>
     <div class="dual-contents__index">
@@ -180,61 +192,118 @@ html.dual-embed .dual-film__credit{display:none}
  </div>
 </section>
 <aside class="dual-overview">
- <p><strong>實驗假設：</strong>Contents 從第一個金色半屏就完整可見；午夜藍承擔真正封面，原 Logo、晨星、封面大標題與下方城牆共同組成一件作品。兩個半屏在同一進度內收成相接的正方形，身後露出首頁原版「王進城」影片。</p>
+ <p><strong>更新的唯一順序：</strong>原教會日程上方由午夜藍封面接管 → 原活水下方由黎明金接管 → 七色「西望」沿斜向一行、兩行、三行直至七行由滾輪推入 → 晨星升起 → 封面與「西望」雙方塊獨立停駐 → 最後才以現有 P2 的聖殿石底紋 Contents 取代字陣。背景沿用首頁原版「王進城」影片。</p>
  <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
 </aside>
 </main>
 <script>
 (function(){
  const stage=document.getElementById('dual-stage');
- const cover=document.getElementById('dual-cover'),contents=document.getElementById('dual-contents');
+ const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
  const film=document.getElementById('dual-film'),frame=document.getElementById('dual-film-frame'),star=document.getElementById('dual-star');
+ const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents');
  const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')];
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
- let progress=1,coverLeft=true;
  const lerp=(a,b,t)=>a+(b-a)*t;
+ // These are the seven existing Design OS editorial-page color identities.
+ // No new palette and no copied seven-overlap homepage curtain animation.
+ const palette=['var(--ws-water,#5b8fa8)','var(--ws-first-light,#a2872a)',
+  'var(--ws-pale-gold,#cebd74)','var(--ws-olive,#738a5a)',
+  'var(--ws-harvest,#b8944a)','var(--ws-crimson,#a14d57)',
+  'var(--ws-daylight-mauve,oklch(67% .075 330))'];
+ const rows=palette.map((color,i)=>{
+  const line=document.createElement('div');
+  line.className='dual-letterfield__row';line.dataset.line=String(i+1);
+  line.style.top=(i*12.15-4)+'%';
+  line.style.setProperty('--row-ink',color);
+  for(let k=0;k<4;k++){
+   const glyph=document.createElement('span');glyph.className='dual-letterfield__glyph';
+   line.appendChild(glyph);
+  }
+  letters.appendChild(line);
+  return line;
+ });
+ let progress=1,coverLeft=false;
+ const pose=(el,x,y,w,h)=>{
+  el.style.left=x.toFixed(2)+'px';el.style.top=y.toFixed(2)+'px';
+  el.style.width=w.toFixed(2)+'px';el.style.height=h.toFixed(2)+'px';
+ };
  function render(){
   const W=stage.clientWidth,H=stage.clientHeight,mobile=W<=700;
-  const t=ease((progress-.53)/.47);
-  let w,h,x1,y1,x2,y2;
+  // FIRST preserve the original two halves of the Church spreads, so these
+  // planes REPLACE the existing layout rather than drop cards upon it.
+  // LATER the same planes shrink together into adjacent square folios.
+  const fold=ease((progress-.69)/.17);
+  let w,h,leftX,leftY,rightX,rightY;
   if(!mobile){
-   // §6F cover+contents geometry: maximize the square pair within a
-   // readable optical frame. Avoid arbitrary 41.5vw / 75vh and 670px cap.
-   // Horizontal safety frame: >=3.5vw; vertical safety frame: >=5svh.
-   // A visible 6.7% frame on either side gives the *original home film*
-   // meaningful breathing room, while the pair still occupies ~86.6% W.
-   const marginX=Math.max(16,W*.067),marginY=Math.max(18,H*.052);
-   const tile=Math.max(0,Math.min((W-2*marginX)/2,H-2*marginY));
-   w=lerp(W/2,tile,t);h=lerp(H,tile,t);
-   x1=(W-2*w)/2;y1=(H-h)/2;x2=x1+w;y2=y1;
+   const mx=Math.max(16,W*.067),my=Math.max(18,H*.052);
+   const tile=Math.max(0,Math.min((W-2*mx)/2,H-2*my));
+   w=lerp(W/2,tile,fold);h=lerp(H,tile,fold);
+   leftX=(W-2*w)/2;leftY=(H-h)/2;rightX=leftX+w;rightY=leftY;
   }else{
-   // For small screens the pair is stacked, not two illegible side-by-side thumbnails.
-   const frameX=Math.max(7,W*.025),frameY=6;
-   const tile=Math.max(0,Math.min(W-2*frameX,(H-2*frameY)/2));
-   w=lerp(W,tile,t);h=lerp(H/2,tile,t);
-   x1=(W-w)/2;y1=(H-2*h)/2;x2=x1;y2=y1+h;
+   const mx=Math.max(7,W*.025),my=6;
+   const tile=Math.max(0,Math.min(W-2*mx,(H-2*my)/2));
+   w=lerp(W,tile,fold);h=lerp(H/2,tile,fold);
+   leftX=(W-w)/2;leftY=(H-2*h)/2;rightX=leftX;rightY=leftY+h;
   }
-  const pos=(el,x,y)=>{el.style.left=x.toFixed(2)+'px';el.style.top=y.toFixed(2)+'px';el.style.width=w.toFixed(2)+'px';el.style.height=h.toFixed(2)+'px'};
-  pos(cover,coverLeft?x1:x2,coverLeft?y1:y2);
-  pos(contents,coverLeft?x2:x1,coverLeft?y2:y1);
-  film.style.opacity=String(ease((progress-.59)/.39));
-  film.style.visibility=progress<=.55?'hidden':'visible';
-  const up=ease((progress-.20)/.40);
-  // Star is a cover image element, not a giant floating annotation.
-  // Keep it within the field below the masthead as the cover approaches its final size.
+  const blue=ease(progress/.20);
+  const dawn=ease((progress-.13)/.20);
+  // The accepted Church geometry is the entry surface. Right-hand schedule
+  // is taken over FROM TOP, and left-hand water FROM BOTTOM.
+  const coverOnLeft=coverLeft;
+  const coverX=coverOnLeft?leftX:rightX,coverY=coverOnLeft?leftY:rightY;
+  const goldX=coverOnLeft?rightX:leftX,goldY=coverOnLeft?rightY:leftY;
+  pose(cover,coverX,coverY-(1-blue)*H,w,h);
+  pose(gold,goldX,goldY+(1-dawn)*H,w,h);
+  const lettersFade=1-ease((progress-.855)/.115);
+  letters.style.opacity=String(lettersFade);
+  rows.forEach((row,i)=>{
+   // Exactly one new diagonal line of unchanged original 西望 outline
+   // becomes visible as the user scrolls, then remains until stone replaces it.
+   const progressRow=ease((progress-(.20+i*.043))/.12);
+   row.style.opacity=String(progressRow);
+   row.style.transform='translate3d('+(lerp(-125,0,progressRow)).toFixed(3)+'%,0,0) rotate(-15deg)';
+  });
+  const starRise=ease((progress-.53)/.18);
   const starWidth=mobile?Math.max(60,Math.min(110,w*.21)):Math.max(85,Math.min(210,w*.21));
   star.style.width=starWidth.toFixed(2)+'px';
-  star.style.left='74%';
-  star.style.top=(39-5*ease(progress)).toFixed(2)+'%';
-  star.style.transform='translate(-50%,'+(35-35*up).toFixed(2)+'%)';
-  star.style.opacity=String(ease((progress-.1)/.2));
-  stage.dataset.phase=progress<.18?'initial':progress<.53?'emergence':progress<.97?'shrinking':'final';
-  stage.dataset.orientation=coverLeft?'cover-left':'cover-right';
-  range.value=String(Math.round(progress*100));output.textContent=Math.round(progress*100)+'%';
+  star.style.left='74%';star.style.top='34%';
+  star.style.transform='translate(-50%,'+(90-90*starRise).toFixed(2)+'%)';
+  star.style.opacity=String(starRise);
+  // Only AFTER the complete "cover + 西望" hold does the canonical
+  // temple-stone Contents replace the colorful lettering.
+  const stone=ease((progress-.865)/.125);
+  contents.style.opacity=String(stone);
+  contents.style.visibility=stone>0?'visible':'hidden';
+  contents.style.pointerEvents=stone>.99?'auto':'none';
+  contents.style.transform='translate3d(0,'+(4*(1-stone)).toFixed(2)+'%,0)';
+  contents.setAttribute('aria-hidden',stone>.98?'false':'true');
+  contents.inert=stone<.98;
+  film.style.opacity=String(ease((progress-.70)/.24));
+  film.style.visibility=progress<=.69?'hidden':'visible';
+  stage.dataset.phase=progress<.20?'cover-arrival':progress<.53?'xiwang-lines':
+   progress<.72?'morning-star-rise':progress<.865?'cover-and-xiwang':
+   progress<.995?'stone-contents-reveal':'contents-final';
+  stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
+  stage.dataset.xiwangLines=String(rows.filter(row=>Number(row.style.opacity)>.95).length);
+  range.value=String(Math.round(progress*100));
+  output.textContent=Math.round(progress*100)+'%';
  }
- function setProgress(v){progress=clamp(Number(v));render();const uri=new URL(location.href);uri.searchParams.set('p',String(Math.round(progress*100)));history.replaceState(null,'',uri)}
- function setOrientation(val){coverLeft=val==='cover-left';buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.position===val)));render();const uri=new URL(location.href);uri.searchParams.set('side',val);history.replaceState(null,'',uri)}
+ function setProgress(v){
+  progress=clamp(Number(v));render();
+  if(!document.documentElement.classList.contains('dual-embed')){
+   const uri=new URL(location.href);uri.searchParams.set('p',String(Math.round(progress*100)));history.replaceState(null,'',uri);
+  }
+ }
+ function setOrientation(val){
+  coverLeft=val==='cover-left';
+  buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.position===val)));
+  render();
+  if(!document.documentElement.classList.contains('dual-embed')){
+   const uri=new URL(location.href);uri.searchParams.set('side',val);history.replaceState(null,'',uri);
+  }
+ }
  document.querySelectorAll('[data-snap]').forEach(b=>b.addEventListener('click',()=>setProgress(b.dataset.snap)));
  buttons.forEach(b=>b.addEventListener('click',()=>setOrientation(b.dataset.position)));
  range.addEventListener('input',()=>setProgress(Number(range.value)/100));
@@ -242,13 +311,16 @@ html.dual-embed .dual-film__credit{display:none}
   if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-dual-progress')return;
   progress=clamp(Number(event.data.progress)||0);
   if(event.data.side==='cover-left'||event.data.side==='cover-right')coverLeft=event.data.side==='cover-left';
-  // The Church iframe's original scroll position remains the sole clock.
+  // Only the EXISTING parent P2 scroll controls this sequence.
   render();
  });
  addEventListener('resize',render,{passive:true});
  const qs=new URLSearchParams(location.search);
- if(reduce){star.querySelector('iframe').remove();star.querySelector('.dual-cover__star-fallback').style.opacity='1'}else{frame.src=frame.dataset.originalSrc}
- setOrientation(qs.get('side')==='cover-right'?'cover-right':'cover-left');
+ if(reduce){
+  star.querySelector('iframe')?.remove();
+  star.querySelector('.dual-cover__star-fallback').style.opacity='1';
+ }else{frame.src=frame.dataset.originalSrc}
+ setOrientation(qs.get('side')==='cover-left'?'cover-left':'cover-right');
  setProgress(Number(qs.get('p')??100)/100);
 })();
 </script>
