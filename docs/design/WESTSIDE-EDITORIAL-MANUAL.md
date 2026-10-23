@@ -2531,6 +2531,14 @@ For each output create a plate record with source URL and revision, original ext
 
 **最新瀏覽器實景回歸（2026-10-23，PR #1355 `e30fd0b`）**：前一次 33 場景第一次驗收揭露 3 個 Church→Magazine 午夜藍接入失敗：單獨試驗的 clip-path 正確，但嵌入 iframe 的 body 仍有深色背景，遮住原主日崇拜與左側活水；第一個測試點也與跨雙層 iframe 的 scroll 消息競速，誤取最終幀。這是此前無法從獨立雙頁截圖看出的**真實缺陷**。已把嵌入模式 html/body 都設為 transparent，並令中途畫面測試等待兩個 iframe 都完成同一 scroll-clock 的更新，再檢查真實的水／日程是否仍可見。**重新生成的 33 張 Chromium 截圖，33/33 無測試場景錯誤：** 24 張桌面／390／320 × 8 節點，3 張 Church 最終態，加上 6 張 Church→Magazine 的右夜半屏與左金半屏中途場景；三尺寸夜半屏 `blue≈0.56,gold=0`，後續金半屏 `blue=1,gold≈0.44`，實際桌面截圖可見上半午夜藍之下的**真實主日流程**，以及黎明金下方逐漸掩蓋的**原活水刻線**。Production Build 與 First Look PASS；Core Contract 仍因首頁受保護晨星 SVG 凍結基準失敗，不是本輪修改。**網站仍為 DRAFT/TRIAL；真正封面藝術、768px／原生 200% zoom／完整手動倒捲與無障礙簽收，仍不能宣稱完成。** 正式內容未合併；原教會檔案不動。
 
+### 6F.25 P2 Vol.00 真實雙頁定格檢視：有篇名，但還沒有完整版面（2026-10-23）
+
+**原始證據：** 編輯提供 100% 最終「Contents + Vol.00」瀏覽器截圖：左側 Contents 的已確認篇名及欄目已回歸，但四樂章排在頁面上半部、大片下半部沒有被排版使用；右側金字官方 Logo 與原城牆素材保留，但英／中主標缺乏與下半石牆空間的整體重量。這是**藝術構圖失效，不是資料缺失或只有 CSS 大小問題**。
+
+**§6F 編輯法則：** 靜態雙頁首先須有「整頁的編輯命題」，而不只是元素不重疊。左側採不等寬雙欄、兩段佔滿版心的 4–4／2–2 樂章分層：上層 WATCH／WALK 突出已定標題與文章證據，下層 WITNESS／WORSHIP 以相同正式標題權限承接；不可將文本全部擠在上三分之一再用空白假裝留白，也不可虛構未定欄目的標題。英文 Bodoni 大字是節奏與跨欄幾何，中文篇名是閱讀正文而非微小註解。右封面應讓 CITY OF LIGHT 的 LIGHT 與中文重黑體真正形成展示級權重對照，城牆／石紋必須是完整建築主體而非裝飾性分割線。
+
+**實作範圍 [TRIAL]：** PR #1355 提交 `6343495` 僅調整雙頁真 CSS 的網格高度、字級、間距及英文／中文標題級差。官方 SVG、晨星 v5.3、原星光刻線、城牆與教會半屏接管均未修改；不新增 AI 圖像、裝飾文字或第二套 Design OS。正式驗收須看 1648、390、320 的真實 Chromium 截圖，確認 WATCH 長題名沒有侵犯 WITNESS 行、內部卷軸可抵達 12 瑪拉拿，及 200% 原生放大時標題不裁切。**在真圖簽收前仍為 NOT APPROVED。**
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
