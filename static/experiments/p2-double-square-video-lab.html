@@ -35,21 +35,26 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    colors but is NOT its seven-curtain motion. Each glyph is the approved
    unchanged Westside Chinese SVG, applied as a vector mask, not stretched. */
 .dual-letterfield{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:1;transform-origin:50% 50%}
-.dual-letterfield__row{position:absolute;left:-18%;width:145%;height:17%;display:flex;justify-content:space-around;align-items:center;gap:4%;transform:translate3d(-125%,0,0) rotate(-15deg);transform-origin:50% 50%;will-change:transform,opacity}
-.dual-letterfield__glyph{display:block;flex:none;width:clamp(38px,8.8cqi,84px);height:auto;aspect-ratio:210/430;background:var(--row-ink,var(--ws-water,#5b8fa8));-webkit-mask:url('/images/westside-watch-xiwang-vertical.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-vertical.svg') center/contain no-repeat;opacity:.91}
+/* Each line is a true horizontal phrase, angled as ONE editor's line.
+   The former vertical-SVG mask produced three illegible letter columns. */
+.dual-letterfield__row{position:absolute;left:-12%;width:130%;height:14.3%;display:flex;justify-content:flex-start;align-items:center;gap:clamp(25px,5.5cqi,65px);white-space:nowrap;transform:translate3d(-140%,0,0) rotate(-12deg);transform-origin:50% 50%;will-change:transform,opacity}
+.dual-letterfield__glyph{display:block;flex:none;white-space:nowrap;font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);font-size:clamp(48px,12.2cqi,116px);font-weight:900;line-height:1;letter-spacing:-.065em;font-synthesis:none;color:color-mix(in srgb,var(--row-ink,#5b8fa8) 62%,#142943 38%);opacity:.96}
 .dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:2;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
 /* This is the exact inherited temple-stone + overlay from the existing P2
    .mag3__contents-page. Do not synthesize or substitute another texture. */
-.dual-cover{position:relative;display:flex;flex-direction:column;height:100%;width:100%;padding:clamp(22px,4.4vmin,48px) clamp(22px,4vmin,47px);overflow:hidden}
+.dual-cover{position:relative;display:flex;flex-direction:column;height:100%;width:100%;padding:clamp(22px,4.4vmin,48px) clamp(22px,4vmin,47px);overflow:hidden;background:radial-gradient(ellipse 65% 48% at 50% 45%,rgba(159,127,64,.15),transparent 79%),linear-gradient(180deg,#172c46 0%,#18324d 54%,#0f253c 100%)}
+.dual-cover__engraving{position:absolute;z-index:1;inset:19% 0 15%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') right center/auto 150% no-repeat;mix-blend-mode:screen;opacity:.40;mask-image:linear-gradient(to bottom,transparent 0%,#000 13%,#000 70%,transparent 100%);pointer-events:none}
+.dual-cover__radiance{position:absolute;z-index:1;inset:0;background:radial-gradient(ellipse 37% 32% at 50% 45%,rgba(252,204,98,.30),rgba(222,173,72,.08) 52%,transparent 94%),linear-gradient(180deg,transparent 54%,rgba(226,176,87,.09) 79%,transparent 100%);opacity:0;pointer-events:none}
+.dual-cover__engraving,.dual-cover__radiance{will-change:opacity}
 .dual-cover__mast{position:absolute;z-index:3;top:5%;left:6%;width:84%;max-width:84%;height:auto;max-height:22%;object-fit:contain;object-position:left top;filter:brightness(0) invert(1)}
 .dual-cover__series{position:absolute;z-index:3;left:6%;right:6%;top:27%;font:400 clamp(10px,1.6cqi,15px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.10em}
-.dual-cover__star{position:absolute;z-index:2;left:74%;top:34%;width:clamp(78px,21cqi,210px);aspect-ratio:1;transform:translate(-50%,0);opacity:1;overflow:hidden}
-.dual-cover__star iframe{width:100%;height:100%;border:0;pointer-events:none;display:block}
-.dual-cover__star-fallback{position:absolute;inset:0;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:0;pointer-events:none}
-.dual-cover__title{position:absolute;z-index:3;left:6%;top:50%;margin:0;font:400 clamp(50px,18.5cqi,148px)/.78 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.072em;white-space:nowrap}
-.dual-cover__zh{position:absolute;z-index:3;left:6%;right:3%;top:69%;font:900 clamp(23px,5cqi,45px)/1.1 var(--ws-type-display-zh,sans-serif);letter-spacing:-.018em;margin:0}
+.dual-cover__star{position:absolute;z-index:2;left:50%;top:30%;width:clamp(110px,32cqi,250px);aspect-ratio:1;transform:translate(-50%,0);opacity:1;overflow:hidden}
+.dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
+.dual-cover__star-fallback{position:absolute;z-index:1;inset:0;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:.26;pointer-events:none}
+.dual-cover__title{position:absolute;z-index:3;left:6%;top:63%;margin:0;font:400 clamp(50px,18cqi,133px)/.78 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.072em;white-space:nowrap}
+.dual-cover__zh{position:absolute;z-index:3;left:6%;right:3%;top:77%;font:900 clamp(22px,4.6cqi,42px)/1.12 var(--ws-type-display-zh,sans-serif);letter-spacing:-.018em;margin:0}
 .dual-cover__zh span{display:block;white-space:nowrap}
-.dual-cover__wall{position:absolute;z-index:1;bottom:0;left:0;right:0;height:25%;min-height:0;background:url('/images/jerusalem-wall.png') center bottom/100% auto no-repeat;pointer-events:none;mask-image:linear-gradient(to bottom,transparent 0%,black 40%)}
+.dual-cover__wall{position:absolute;z-index:2;bottom:0;left:0;right:0;height:25%;min-height:0;background:url('/images/jerusalem-wall.png') center bottom/145% auto no-repeat;pointer-events:none;filter:drop-shadow(0 -6px 17px rgba(238,193,109,.32));mask-image:linear-gradient(to bottom,transparent 0%,black 36%)}
 .dual-cover__folio{position:absolute;left:6%;bottom:4%;z-index:3;font:400 clamp(10px,1.2cqi,13px)/1.35 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.04em;color:#f2e2c0}
 .dual-contents{position:relative;display:flex;flex-direction:column;height:100%;width:100%;padding:clamp(22px,4.5vmin,52px) clamp(19px,4vmin,45px);overflow:hidden}
 .dual-contents__head{flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:9px;border-bottom:1px solid rgba(38,50,59,.58);padding-bottom:clamp(8px,1vh,14px)}
@@ -74,8 +79,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-overview p{margin:0 0 11px}
 @media(max-width:1000px){
 .dual-cover__mast{width:84%;max-width:84%;height:auto;max-height:22%}
-.dual-cover__title{font-size:clamp(50px,18.5cqi,148px)}
-.dual-cover__zh{font-size:clamp(23px,5cqi,45px)}
+.dual-cover__title{font-size:clamp(50px,18cqi,133px)}
+.dual-cover__zh{font-size:clamp(22px,4.6cqi,42px)}
 .dual-contents__head h2{font-size:clamp(45px,5vw,67px)}
 .dual-contents__deck{font-size:12px}
 .dual-contents__index{gap:17px 13px}
@@ -90,9 +95,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-tile--cover .dual-cover,.dual-tile--contents .dual-contents{padding:12px 14px}
 .dual-cover__mast{width:84%;max-width:84%;height:auto;max-height:22%;top:5%;left:6%}
 .dual-cover__series{font-size:10px;left:6%;top:27%}
-.dual-cover__star{width:clamp(70px,21cqi,110px);top:34%}
-.dual-cover__title{font-size:clamp(50px,18cqi,80px);margin:0;top:51%;left:6%}
-.dual-cover__zh{font-size:clamp(22px,6cqi,34px);top:70%;left:6%;margin:0}
+.dual-cover__star{width:clamp(96px,31cqi,130px);top:30%}
+.dual-cover__title{font-size:clamp(48px,17.8cqi,78px);margin:0;top:62%;left:6%}
+.dual-cover__zh{font-size:clamp(21px,5.3cqi,31px);top:77%;left:6%;margin:0}
 .dual-cover__wall{min-height:0;height:23%}
 .dual-contents__head{padding-bottom:7px}
 .dual-contents__head h2{font-size:clamp(37px,11vw,52px)}
@@ -108,8 +113,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__foot{margin-top:5px;padding-top:5px;font-size:9px}
 }
 @media(max-width:360px){
-.dual-cover__zh{font-size:22px;top:68%}
-.dual-cover__title{font-size:clamp(45px,18cqi,60px)}
+.dual-cover__zh{font-size:21px;top:77%}
+.dual-cover__title{font-size:clamp(45px,17.8cqi,62px)}
 .dual-contents__index{gap:8px 6px}
 .dual-movement h3{font-size:18px}
 .dual-movement li{font-size:12px}
@@ -155,6 +160,8 @@ html.dual-embed .dual-film__credit{display:none}
  <div class="dual-panels">
   <article class="dual-tile dual-tile--cover" id="dual-cover" aria-label="西望 Vol.00 午夜藍封面">
    <div class="dual-cover">
+    <div class="dual-cover__engraving" aria-hidden="true"></div>
+    <div class="dual-cover__radiance" id="dual-radiance" aria-hidden="true"></div>
     <img class="dual-cover__mast" src="/images/westside-watch-masthead-landscape.svg" alt="西望 WESTSIDE WATCH 正式雜誌標誌" loading="eager">
     <span class="dual-cover__series" lang="en">WESTSIDE WATCH / VOL.00 / A CITY OF LIGHT</span>
     <div class="dual-cover__star" id="dual-star" aria-hidden="true">
@@ -192,7 +199,7 @@ html.dual-embed .dual-film__credit{display:none}
  </div>
 </section>
 <aside class="dual-overview">
- <p><strong>更新的唯一順序：</strong>原教會日程上方由午夜藍封面接管 → 原活水下方由黎明金接管 → 七色「西望」沿斜向一行、兩行、三行直至七行由滾輪推入 → 晨星升起 → 封面與「西望」雙方塊獨立停駐 → 最後才以現有 P2 的聖殿石底紋 Contents 取代字陣。背景沿用首頁原版「王進城」影片。</p>
+ <p><strong>藝術修改：</strong>七色「西望」由不可讀的直排字柱改為完整兩字的斜向連續排印，每次增加一行；午夜藍封面使用現有晨星 v5.3 和原有星光刻線資產形成一個光源與背景的共同主體，保留原 Logo、中文主題和城牆。順序不變：封面進入 → 西望斜向滾動 → 晨星升起 → 西望＋封面停駐 → 原石紋 Contents 替換。</p>
  <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
 </aside>
 </main>
@@ -202,6 +209,7 @@ html.dual-embed .dual-film__credit{display:none}
  const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
  const film=document.getElementById('dual-film'),frame=document.getElementById('dual-film-frame'),star=document.getElementById('dual-star');
  const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents');
+ const radiance=document.getElementById('dual-radiance');
  const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')];
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
@@ -215,10 +223,13 @@ html.dual-embed .dual-film__credit{display:none}
  const rows=palette.map((color,i)=>{
   const line=document.createElement('div');
   line.className='dual-letterfield__row';line.dataset.line=String(i+1);
-  line.style.top=(i*12.15-4)+'%';
+  line.style.top=(4+i*12.9)+'%';
   line.style.setProperty('--row-ink',color);
-  for(let k=0;k<4;k++){
-   const glyph=document.createElement('span');glyph.className='dual-letterfield__glyph';
+  for(let k=0;k<3;k++){
+   const glyph=document.createElement('span');
+   glyph.className='dual-letterfield__glyph';
+   glyph.textContent='西望';
+   glyph.lang='zh-Hant';
    line.appendChild(glyph);
   }
   letters.appendChild(line);
@@ -263,12 +274,13 @@ html.dual-embed .dual-film__credit{display:none}
    // becomes visible as the user scrolls, then remains until stone replaces it.
    const progressRow=ease((progress-(.20+i*.043))/.12);
    row.style.opacity=String(progressRow);
-   row.style.transform='translate3d('+(lerp(-125,0,progressRow)).toFixed(3)+'%,0,0) rotate(-15deg)';
+   row.style.transform='translate3d('+(lerp(-140,0,progressRow)).toFixed(3)+'%,0,0) rotate(-12deg)';
   });
   const starRise=ease((progress-.53)/.18);
-  const starWidth=mobile?Math.max(60,Math.min(110,w*.21)):Math.max(85,Math.min(210,w*.21));
+  const starWidth=Math.min(w*.32,mobile?130:250);
   star.style.width=starWidth.toFixed(2)+'px';
-  star.style.left='74%';star.style.top='34%';
+  star.style.left='50%';star.style.top='30%';
+  radiance.style.opacity=String(starRise);
   star.style.transform='translate(-50%,'+(90-90*starRise).toFixed(2)+'%)';
   star.style.opacity=String(starRise);
   // Only AFTER the complete "cover + 西望" hold does the canonical
