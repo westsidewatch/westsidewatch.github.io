@@ -66,6 +66,10 @@ Twelve detailed responsive display, chapter, article, feature, subhead, standfir
 
 Release only after verifying 200/900 true Chiron font faces, main vs supporting role markup on P2 and live Journal, 390/768/1648px and 200% zoom, real multi-line headings, and unchanged body/functional readability. The old 600 selectors and some generic title 200 selectors are migration targets, NOT proof the entire site has already adopted the grammar.
 
+## WESTSIDE WATCH Magazine Stylebook — direct production authority (2026-10-22)
+
+**Use the existing [WESTSIDE-EDITORIAL-MANUAL.md §6F](WESTSIDE-EDITORIAL-MANUAL.md) as the first page of magazine production.** This is a concrete edition-style art-direction book: publication proposition, immutable DNA, cover/Contents/longform/atlas/witness/silence, bilingual hierarchy, continuous digital spread, semantic color/image families, figure/caption/notes, motion, responsive rules, actual production cards and approval gates. Existing §6D–6E (books and 32 production-sheet index) are its archival/reference layer, not the art director's default entry. This does NOT create a second OS or permit local font/color globals. Publication-specific new ratios and concept art remain [TRIAL] until screenshots and editorial signoff; all existing tokens, canonical manuscript assets and the one §6A award rubric are unchanged. Not a visually approved final magazine edition.
+
 ## The magazine production-design book within the same OS (2026-10-22)
 
 **The magazine project's first deliverable is the fully detailed, executable Westside editorial design manual, not a sequence of prematurely polished screenshots.** The single existing [WESTSIDE-EDITORIAL-MANUAL.md](WESTSIDE-EDITORIAL-MANUAL.md) now contains **§6E Magazine design-book study → Westside full-spec production handbook**. It reviews published editorial-design books, identifies source evidence by access level, maps publication anatomy, image/crop rules, grids, live bilingual type, responsive article templates, real Contents, figure/caption/source credit, motion, accessibility and award-grade review into explicit decisions and tests.

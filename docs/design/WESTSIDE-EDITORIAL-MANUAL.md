@@ -4,6 +4,8 @@ Status: **operational chapter of the single Westside Design OS**, not a parallel
 Audience: Church, First Look, Journal, Olive Mountain, ONE, Dawn Library, Cinema, Search, tools, and Doré Design agents.  
 Source of truth: [WESTSIDE-DESIGN-OS.md](WESTSIDE-DESIGN-OS.md) → `design-system/tokens/westside.tokens.json` → `static/css/westside-design-os.css` → approved `data-ws-scope` overrides.
 
+**西望雜誌實作入口（2026-10-22）：** 直接閱讀 [§6F WESTSIDE WATCH Magazine Stylebook — Working Edition 01](#6f-westside-watch--西望雜誌視覺規範書--magazine-stylebook-working-edition-01-2026-10-22)。§6F 是規範與製作卡入口，§6E／§6D 是研究與技術證據庫；本手冊全程仍屬單一 Design OS，**未批准的藝術方案不因寫入手冊自動獲批**。
+
 ## 1. Authority, layers and safe integration
 
 This manual merges design **judgment, editing and verification** into the existing OS. It is a Markdown reference, **not loaded by public pages**. Nothing in it authorizes an extra CSS entry point, a new global palette, a competing type scale, a second CI pipeline or a site-wide geometry patch.
@@ -2112,6 +2114,238 @@ For each output create a plate record with source URL and revision, original ext
 
 **R14 conclusion:** The first real source for a composition experiment has been identified and audited in detail. The proposed A/B/C drawing method is now sufficiently specified to implement without gathering new historical source material. The live magazine visual has NOT changed in this research pass; this section is **DESIGN RESEARCH / READY FOR PROOF**, not an invented passing screenshot or completed interactive city atlas.
 
+
+
+## 6F. WESTSIDE WATCH / 西望雜誌視覺規範書 — MAGAZINE STYLEBOOK, Working Edition 01 (2026-10-22)
+
+**文件性質：[WORKING NORMATIVE BOOK / EDITORIAL ART-DIRECTION DRAFT]**。本章是西望雜誌的**製作入口**；先回答「此刊物應如何設計」，再由研究庫 §6D–6E 提供源由與驗證方法。此章是既有 **Westside Design OS Editorial Manual 的一部分**，不是第二套 Design OS、另一份獨立品牌手冊、新 CSS 權威、已簽收的藝術風格，也不是新 CI。已批准的全站 token／字重／原始 LOGO、既有稿件及出版順序皆不可由本章自行改寫。
+
+**地位判讀：** **LOCKED**＝已由現有 OS／作者決定的事實及禁止事項；**STANDARD**＝本輪訂出的編輯製作準則，可直接拿來製作和審稿，但不是已驗證的最終美術作品；**TRIAL**＝可實驗的比率、構圖或視覺語法，須有實際圖版和簽核才能升級；**BLOCKED**＝出版／併入正式網站前必須補齊。所有下方相對幾何值都是 **TRIAL**，不能暗中變成全站 token。既有 §6E 的 32 張規格單（S01–S32）保留為**製作核查清單**，但本章是設計決策入口，避免工程師在研究文庫內猜測哪一輪意見有效。
+
+### 6F.01 封面內頁 — 出版身份與一句話的設計命題 [STANDARD]
+
+**出版對象：** 為願意深讀的人製作的、以歷史、城市、聖經、人物與當代生命為題的中文主體／英語輔助的數位雜誌。**敘事承諾：** 讓讀者從可驗證的世界與人的真實生活出發，經過歷史與信仰的思考，進入見證、敬拜、禱告與安靜。不是將歷史資料當作預設答案的裝飾；Vol.00 特別遵守先陳述人的建造／保護之努力、再引出神學思想的敘事節奏。
+
+**原創設計主張（工作描述，非新刊物副標題）：** **古典的記憶，以當代的尺度與空間說話。** 古典來自真實多雷刻線的視覺語法、城牆／地圖／文獻與人類歷史；當代來自極大展示英文字、粗細有張力的中文、跨越虛擬中心的無縫雙頁、關係鮮明的負空間與精確控制的資料轉譯。若移去西望刊名，只有「淺棕底＋復古圖片＋大字」，就是失敗；西望身份必須留在圖文**關係**與整期敘事中。
+
+**西望應有的氣質：** 有思想的雄偉；克制而深刻；史料可信；現代而不時髦；靈性與人的處境相連；安靜不等於空洞。**反例：** 黑金奢侈品皮膚、均等卡片堆疊、仿古裝飾畫框、全站同一三欄、為炫技而截斷的字、虛構古蹟照片、所有段落都「史詩般」巨大、讀者找不到正文。
+
+**品牌常量：** 原始西望 SVG；Design OS 字體與既有語義色；可靠來源與圖說；本期「四樂章／12 欄目／3 個 Video + Music 間奏」；對長文的尊重。**可變量：** 開場鏡頭、是否方框、影像比例、英文字的佔比、動線、跨頁偏移、亮暗與密度。沒有任何單個方塊、版式或人物刻線可以定義整本雜誌。
+
+### 6F.02 出版物的閱讀架構與固定編輯角色 [LOCKED + STANDARD]
+
+**唯一內容權威：** [Vol.00 Editorial Map](../projects/watch-city-vol00/EDITORIAL_MAP.md)。封面（Cover）→ 編輯命題（Issue thesis）→ 可使用的真實目錄（Contents）→ 樂章／章節開頁（Movement / Opener）→ 文章入口（Article lead）→ 連續長文（Reader）→ 圖版及證據（Plate / Evidence）→ 註腳及來源（References）→ 本篇結束／下一篇 → 最終祈禱／安靜／刊物識別。這是**閱讀角色鏈**，不是每篇都必須使用全部視覺模組。
+
+**不可改的 Vol.00 拍子：** WATCH 01–04，WALK 05–08，WITNESS 09–10，WORSHIP 11–12；Selah、遠方無聲鴿、Kinneret 分別作為樂章間 Video + Music，且不計入 12 篇。不要猜補 Bethlehem、Beersheba、Bethel 的未確定稿件。不要讓 Beersheba 要回答的神學命題在卷首或 Elim 提前變成招貼口號。
+
+| 編輯角色 | 一眼必須讀出 | 主視覺行為 | 不可省略 |
+| --- | --- | --- | --- |
+| Cover / Threshold | 這是哪一期、最值得進入的命題 | 可在超大 English 及刻線／城市之間造成強烈對照 | 原 Logo、主題中文、通往目錄的真實連結 |
+| Contents / Navigator | 我要去哪裡？進入的是哪一篇？ | 清楚可掃讀的序號／篇名／四樂章分組 | 12 個真正目標、未刊狀態誠實披露 |
+| Movement opener | 下一個樂章與上一個有何差別？ | 尺度、節奏、光／材質可轉折；不必都有方框 | 樂章名稱、閱讀次序與返回路徑 |
+| Feature / Historical Atlas | 此圖／資料證明什麼？還有哪些未知？ | 圖片、建築剖面、年代／證據線能成為構圖主角 | 原件來源、證據分類、圖說、放大途徑 |
+| Person / Witness | 誰在說話？什麼是真實見證？ | 人物尺度、視線、手勢、刻線與文字共場 | 真實姓名、可信來源、可辨識的身份 |
+| Article Reader | 長文閱讀是否安靜、舒服、不走失？ | 明確的文字版心，圖版恰當打破節奏 | 原稿權威、段落、章節、註腳／引用 |
+| Interlude | 為何由此樂章進入另一樂章？ | 影片＋音樂構成一次有意義的轉場 | 控制、poster、可播放性、出處、靜態替代 |
+| Closing / SILENCE | 思考在哪裡收束，何處留給讀者？ | 留白、節制、最終原文與身份回歸 | 不虛構祈禱，不以空白補缺稿 |
+
+### 6F.03 視覺 DNA：固定六條關係，而不是固定六張畫 [STANDARD]
+
+**DNA-01｜重與輕：** 有襯線大英文（Bodoni Moda 400）與厚重中文主題（Chiron Hei HK WS 900）形成清楚的光學重量差；英文可佔大畫面，中文保留內容的決定權。中文次標採 200，必須夠大才承得住；閱讀文字 400。
+
+**DNA-02｜時間與材料：** 古典不是 Sepia 濾鏡，而是真正帶有年代、史實與圖版脈絡的材料。來自多雷的刻線須尊重構圖、交叉陰影、光源與畫面密度；來自資料庫的線段須保留真實／推定界線。
+
+**DNA-03｜一張無裝訂中縫的數位跨頁：** Desktop 可以把單一圖像／方框／巨大字體配置跨越虛擬中心 50/50、30/70 或其他必要比例。視窗左右是視覺節奏，不是固定兩張紙或三個獨立卡片；幾何能延伸或被切斷，資訊仍有連貫閱讀路徑。
+
+**DNA-04｜空白承擔敘事：** 空間用來建立時間、焦點與沉默；一個好用的空白要能回答「讀者在等待、比較還是安靜？」不為填滿畫面放裝飾小標。SILENCE 的既有空間結構是保留的正面資產。
+
+**DNA-05｜內容生成構圖：** 地圖線穿過框、人物站在字前、城牆時間層交替顯現、引用在視線盡頭收束——是由內容物件的關係產生，而不是每篇套一張 square image。任何框必須說得清「它讓讀者多看懂了什麼」。
+
+**DNA-06｜四種聲部同屬一本刊物：** MONUMENT（少量關鍵開場、英文字與刻線構成姿態），ATLAS（證據及時空圖版帶動布局），WITNESS（真實人物／人聲／姓名優先），SILENCE（安靜的結語）。另有 READING 作為所有樂章共同的長文閱讀狀態；聲部是**功能**，不是新皮膚、第二色盤、第二 OS。
+
+**反向驗證：** 封住 Logo，選同一本期刊的 The Gate／Elim／Esther／Maranatha 四頁：是否互不雷同，卻能感到一致的閱讀態度？若只換文章題名或同一幅古典圖片仍成立，身份不合格。
+
+### 6F.04 字體章：角色、大小權威與中英文張力 [LOCKED + STANDARD]
+
+只調用 [單一 OS tokens](../../design-system/tokens/westside.tokens.json)、[中文與英文十二角色版面表](WESTSIDE-EDITORIAL-TYPOGRAPHY.md)、當前 Design OS CSS。**以下變量為現存 runtime 入口，不是新定義：**
+
+| 版位角色 | 中文/英文規定 | CSS 消費方式 | 完稿檢查 |
+| --- | --- | --- | --- |
+| Cover/Issue 英文超大字 | Bodoni Moda Roman **400**；可最大至半版，字母本身參與構圖 | --ws-type-display-en + --ws-type-scale-editorial-hero-en | 字形不拉伸；完整詞仍能被辨識，手機重新編排 |
+| 主中文大標題 | 昭源黑體 Chiron **900**，內容上的主標才用此身份 | --ws-type-display-zh + --ws-type-scale-editorial-hero-zh / editorial-article-zh | 長短題與標點不得相撞；非全部 H2 都用 900 |
+| 英文章節／內頁標 | Bodoni Moda **400**，語義合宜時用 Roman/Italic | --ws-type-scale-editorial-chapter-en / editorial-article-en / editorial-feature-en | 不為平衡畫面而橫壓字體 |
+| 中文章節與支持標 | 非真正主標的中文編輯標題 **200**，應具足夠尺寸 | --ws-type-scale-editorial-chapter-zh / editorial-subhead-zh | 不使用 200 製作小注、圖說或控制 |
+| 中文引子／署名／目錄 | 對應的 standfirst、byline、contents 角色 | --ws-type-scale-editorial-standfirst-zh / editorial-byline-zh / editorial-contents-zh | 必須能和主標、正文分層識別 |
+| 中文正文 | 既定 Chiron **400**，不是標題樣式 | --ws-type-reading-zh + 現有閱讀尺寸／行距 | 真實文章長時間閱讀、標點與字距自然 |
+| 英文 Small Caps | 真正 Bodoni Moda SC，不是 CSS 假小型大寫 | --ws-type-display-en-sc | 只用在合適的刊物識別、folio、輔助標籤 |
+| 引文與經文英文 | Bodoni Moda 原生 Italic | --ws-type-display-en 的原生 italic face | 經文原文及出處可查；不可與一般 UI 相混 |
+
+**排版作業規則：** 先固定正文讀法，再處理大字；先排中文的真實篇名，再決定英文展示形；字體最大化不等於縮小內文。禁止長標題遮蓋圖例、人名、經文、可互動控制；孤行、中文不可拆分詞、英文標點與光學對齊需逐個 1648／768／390／320 實測。R11 曾發生「十二」及「三個」被斷開，此類錯誤必須作為正式拒絕案例。
+
+**規範示意（使用既有變量，局部 owner selector 範例，不准複製到全站 :root）：**
+
+~~~css
+[data-ws-scope="journal"] .edition-cover__en {
+  font-family: var(--ws-type-display-en);
+  font-size: var(--ws-type-scale-editorial-hero-en);
+  font-weight: 400;
+  font-stretch: normal;
+}
+[data-ws-scope="journal"] .edition-cover__zh {
+  font-family: var(--ws-type-display-zh);
+  font-size: var(--ws-type-scale-editorial-hero-zh);
+  font-weight: 900;
+}
+[data-ws-scope="journal"] .edition-reader {
+  font-family: var(--ws-type-reading-zh);
+  font-weight: 400;
+  max-inline-size: 38em; /* TRIAL：以實際 CJK 字數重測，不是 token */
+}
+~~~
+
+### 6F.05 色彩／材質章：一套色彩權威與受節制的用色 [LOCKED + STANDARD]
+
+只從 Design OS 使用 Paper / Ink / Water / First Light / Olive / Harvest / Crimson 等既有 token 的對應語義，不再發明「西望香檳金」「西望暖紙白」等競爭性全球值。紙面留白不是「咖啡色背景」，墨色不是只能是純黑；材質要服務刻線閱讀、圖像地位及字體對比。
+
+**建議的作品規律 [STANDARD]：** 多數長文採一種主紙面與主要墨色；必要時加入一種輔助的語義色或刻線層，優先由圖像與排版創造層次。刻線依靠明度與線性密度而不靠統一金色濾鏡。圖示中的金色不可默認代表較高歷史確定性。雜誌頁不須重現首頁七色帶；各版塊可在單一 OS 下具有不同語義色，但不是七個彩色方塊固定羅列。
+
+**禁則：** 全站黑金奢侈品風、任意透明低對比圖說、刻線／紙面重複貼滿造成懷舊壁紙、因背景深色而犧牲可讀性。正文字色須有足夠對比；材質需可退化為純色背景。
+
+### 6F.06 網格／雙頁章：以角色選比例，不以欄數選網頁 [STANDARD + TRIAL]
+
+先決定**內容主場**（圖版／文字／人物／資料）與**讀者下一眼**，再在一整張數位畫布上安排接觸、分離、遮蔽、對角與留白。編輯中心線只是一條可穿越的軸，不是印刷裝訂線；能跨 30/70 的方形，也能跨 10/90 的標題或完整滿幅城牆圖。
+
+**三種可合法使用的網格行為：**
+- **秩序場：** 目錄、長文及引文/圖說依穩定 baseline、文本 measure、索引建立可信的閱讀秩序。
+- **主題場：** 封面、樂章開頁與資料圖版可用不等寬區域、多軸網格；每處破格必須有明確內容原因。
+- **連續跨頁場：** 圖／字／方框等可以是一個橫貫兩側的物件，文字閱讀仍有正確 DOM 次序；移動裝置轉成單欄先後關係。
+
+**操作控制 [TRIAL]：** 初次構圖可用 6/8/12 個隱形工作軌，不能強迫平均；文字閱讀欄寬以真實 CJK 字數測，桌面先比較每行約 30–40 個漢字、手機約 17–28 字；邊距桌面可先考慮 3–7vw、手機 16–24px，均需依真實裝置及閱讀質量修正。這些不是批准的 CSS 全局數值。所有 grid break 必須寫下「原秩序 → 偏移行為 → 讀者收益 → 小屏的重排方式」，否則退回一般版。
+
+**版面允許：** 方框遮蔽圖片、文字站到前景、刻線穿過框、框甚至完全消失；**版面禁止：** 把整段史料或地圖圖例遮斷、三張孤立卡片假裝成跨頁、給每篇同一套不等三欄、手機按比例縮小整本紙刊。
+
+### 6F.07 五種母版：給編輯使用的「構圖規則」，不是五張模板 [STANDARD + TRIAL]
+
+| 母版（role） | 操作次序 | 桌面端空間決策 | 手機端的編輯秩序 |
+| --- | --- | --- | --- |
+| P1 封面 / Issue identity | 真主題 → 原 SVG → 一幅有權威的圖／媒體 → 大英文 → 中文主標 → 目錄入口 | 可壯觀、可跨頁；主標保持明確語義 | 刊名／主題 → 視覺作品 → 中文及目錄；不保留無效的三欄 |
+| P2 索引 / Contents | 12 個確定篇目與欄目排序 → 狀態 → 導覽 → 次要編輯資訊 | 行列、對開可靈活；第一任務是找得到篇章 | 分組單欄／必要的跨欄、完整標籤及返回 |
+| P3 敘事特寫 / MONUMENT | 一個核心命題 → 英文展示字與真實圖／刻線建立主從 → 圖說 → 正文 | 可容許大字跨中心；不得吞沒文章 | 分成有意義的前景圖、標題、引子及可讀正文 |
+| P4 資料圖版 / ATLAS | 實際來源 → 讀者問題 → 資料圖形 → 證據分類 → 取景框 → 圖說／正文 | 城牆、地圖、年代圖可作完整構圖骨架；容許一張方框跨中心 | 優先清楚圖例、縮放／替代文字、資料來源；不是縮略版 |
+| P5 人物與結語 / WITNESS → SILENCE | 真實人物／證言 → 肖像來源 → 視線及文字遮蔽；結語依內容退至空白 | 人物跨字，或全頁不出圖；留白必須有時間與主題理由 | 身份、見證、全文；結束節奏不應靠多次空滾 |
+
+**同一篇文章可先使用 P3 開篇，轉進 P4 證據，回到平靜 Reader，再在結尾使用一個小幅引文。** 每張母版是可以拼接的編輯語法，不是只准一張的固定模板；版型之間的過渡和差異才使刊物成熟。
+
+### 6F.08 圖像藝術指導章：六個可生產的圖像家族 [STANDARD]
+
+| 圖像家族 | 何時使用 | 製作與識別方法 | 確認工作 |
+| --- | --- | --- | --- |
+| Original Doré | 聖經事件、具有真實原作背景的視覺譜系 | ONE 的 241 幅多雷原作只引用已核對 ID；保留原圖／不冒充其他創作 | 原作者、圖版 ID、出處、來源完整 |
+| ONE Studio / Doré continuation | 可用原作繪畫語法改寫的指定敘事 | 使用已存在的 Studio 版本資產、hachure／明暗／主體階層；新作品另立 truthful provenance | 不得冒充原多雷；保留版本、用途和批准 |
+| Archaeology / Historical atlas | 真實的城牆、路線、建築、地理史料 | ONE 聖光地理、耶路撒冷 3000 年、合規公開資料；原圖與衍生編輯圖分別標註 | 來源、授權、座標、時間、observed/reconstructed/inferred/disputed |
+| Data-derived drawing | 來源自地形、年代、路線、事件與圖例 | 原始 ID 不變、幾何比例不虛構；位置／線型／亮度／疊層有明確資料含義 | 畫面可追溯到同一來源，不製造假的精度 |
+| Portrait engraving / witness | 歷史人物、公開講道者與見證故事 | 橄欖山驗證過的單色人物刻線方法；前景可遮大字，但人物權益與相貌可信 | 歷史照片與 AI 詮釋肖像分開標示，十二講員海報資產不動 |
+| Film + sound | 三個規定間奏、具來源的動態敘事 | poster-first、播放控制、音訊不自行響起、字幕與靜態摘要 | 有有效可播資產及權利，否則明確寫待發布 |
+
+**每張主圖都要有四個版本角色：** Archive/source（完整原件）、Plate（設計圖版）、Reader fallback（小屏或 reduced motion）、Credit（作者／日期／許可與來源）；並非必須產出四張不同圖片。**圖說最低四問：** 這是什麼？來自何處？哪一年／時代？是確證、重建還是藝術詮釋？只有「Evidence 01」或「古典圖片」的佔位符一律不能正式發表。
+
+### 6F.09 封面、主標、圖版、長文的實際排版語法 [STANDARD]
+
+**封面：** 必須有一期的「主要命題」；可以用一張或多幅圖、字母巨大、刻線與方框協同，但**不把字母放大當作命題**。原 Logo 不可重新繪製；Big English 與重中文應互相形成受力，避免像大型簡報。讀者三秒內須看出 WESTSIDE WATCH、當期主題、從何進入。
+
+**圖文組合：** 圖可以比正文寬；應標示其論述任務（補充、反駁、定位、比較、情緒轉折）。超大圖能出現一次高峰，之後必須回到可讀的正文。圖像的核心主體安全區、歷史文字、比例尺、圖例不得因藝術裁切消失。
+
+**長文：** 只有一個真實 canonical manuscript consumer；主標、引子、署名與正文之間界線清楚，正文使用連續語義段落，適當小節標、腳註、引圖、引文、經文、參考資料。長文沒有必要模仿雙頁固定分頁；讀者可以自然捲動，再在特定圖版返回視覺高峰。**不要用 20–50k 假字數聲稱文章已發布**；必須用真稿及具代表性的長文測試。
+
+**人物：** 面部、手、肩、眼神等必要特徵優先；英文大字可以部分藏在人物背後（正如橄欖山已建立的方法），但姓名與內文不得被遮至無法辨認。人物不能變成任何現代 UI 卡片的圖片頭像。
+
+**SILENCE 結尾：** 保留既有寧靜空間，不強迫套「框」。Horeb 房角石 → Maranatha 冠冕 → 經核定禱文 → 安靜留白 → Logo／Crown 的順序是 Vol.00 的編輯決策。缺正式禱文不能生成假禱文補空間。
+
+### 6F.10 聲部與整期版面節奏 [STANDARD]
+
+| 部分 | 主要閱讀動詞 | 主要聲部與密度方向 | 明確避免 |
+| --- | --- | --- | --- |
+| WATCH | 看見、尋問、進入城中 | MONUMENT 引入議題，The Gate／Carmel 可展開宏大的城市空間與歷史密度 | 提前劇透整卷最終神學結論 |
+| WALK | 出發、建造、守護、考察、思考、操練 | ATLAS 史料詳實；Emmaus／Elim/Bersheba/Bethel 功能不同，不能只換圖 | 所有文章都用同一張城牆，或用圖表代替神學思考 |
+| WITNESS | 遇見、聆聽、辨識 | 人物、第一手話語、姓名／證言，視覺可拉近距離 | 模糊的人物來源、無關的復古人像 |
+| WORSHIP | 對齊、回應、禱告、安靜 | SILENCE 不需再競逐最大標題；讓負空間與真實祈禱形成結尾 | 把留白誤當尚未製作、無意義的捲動 |
+
+三個 Video + Music 間奏各自明確標註樂章轉變，不是三次重複同款的全幅播放器。期刊的設計不是單頁漂亮程度的總和，而是**閱讀強弱與注意力的作曲**。
+
+### 6F.11 互動／動畫：有內容意義才允許 [STANDARD]
+
+- **入場／開門：** 必須守住首頁與 P2 已有資產與卷軸狀態；西望規範不是授權把流動洋流或開門動畫改成其他轉場。
+- **內容揭示：** 動效可從真實的時間、路線、城牆分層、人物前景產生；每次 motion 都必須有一個清楚的靜止閱讀狀態及退回動作。
+- **滑動讀者：** 默認原生垂直捲動，不因漂亮的版式鎖住長文；不要使用無意義的 500vh 空白過場。
+- **讀圖互動：** 地圖、圖版、來源資訊可以放大、比較、返回；時間線可正向與反向移動；有爭議的重建要能看到圖例或備選方案。
+- **可及性：** 鍵盤焦點清晰、按鈕狀態可傳達、prefers-reduced-motion 有靜態替代、影片不自動發聲、沒有必須觀看動畫才能理解的內容。
+- **性能：** 圖片以合適尺寸、poster、lazy media 加載；沒有來源或未接入的影片不能用假 spinner 冒充內容。
+
+### 6F.12 網站而不是紙刊：四個編輯尺寸與兩個自由度 [STANDARD]
+
+| 目標 | 編輯/布局規則 | 具體驗收 |
+| --- | --- | --- |
+| 1648×928 Desktop | 按完整跨頁設計；大字可跨屏，圖版可佔兩邊 | 重要讀圖與中文標題同時可辨，沒有死三欄 |
+| 768×1024 Tablet | 重排圖與引子次序、減少層疊，不只是縮小 desktop | 圖例、目錄、目標連結可達，長文 measure 不爆 |
+| 390×844 Phone | 首屏單一重點、真實文章單欄；圖版有放大路徑 | 中文數詞不拆裂、caption 緊貼圖、交互控制可用 |
+| 320×720 Small | 保持出版信息及縮放能力，即使犧牲戲劇性構圖 | 無水平 overflow、文字不遮人、來源和註腳能看 |
+| 原生瀏覽器 Zoom | 100%／200%，並確認更高倍下符合 WCAG Reflow | 不得用 viewport 824px proxy 冒充原生 zoom 測試 |
+| Reader motion states | 靜態、動作中、結束、倒退、reduced-motion | 每一狀態有完整閱讀意義，返回不殘留舊層 |
+
+這裡的手機設計**不是單純把雙頁變成單頁**，而是重新確定「先看到證據、文字還是人物」，讓同一個命題在不同視窗以不同閱讀順序呈現。對真正需要二維閱讀的地圖可以設獨立可滾動／放大圖版區域，但不能因此讓整篇文章水平捲動。參照 [W3C WCAG 2.2 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)。
+
+### 6F.13 不可取代的編輯細節：真實文字、圖說、引文、註腳、來源 [STANDARD]
+
+**語義 HTML：** 真正頁面標題為一個可讀 H1；英文字可以作具設計用途的輔助 display，但不能讓裝飾視覺替代中文實際文章題名。每個 figure 的 figcaption 描述事實或解釋，而不是僅列流水號。引用使用可回訪來源，經文有書卷與節次及所用譯本資訊；人名有權威拼寫。註腳可跳往說明並返回當前閱讀位置。目錄的連結永遠指向確實存在的文章／段落，尚未刊出則標示狀態，不製造空連結。
+
+**圖說模板：** 「【編輯編號】物件／事件及視角。年代或時期（如有）；資料來自【作者／館藏／文件ID】，紀錄／重建／推定／有爭議；此圖以【何方式】轉譯。」不必把冗長來源印在大圖上，但必須在圖說或可打開的出處裡保留全文。照片、模型與 AI 製作的詮釋刻線不可混稱。
+
+**文字 QA：** 至少用一個很短的中文主標、真實長標、混合中英人名、帶數字的年代圖說、雙語引文、完整長篇與註腳進行實排；不可只用 Lorem ipsum 或裝飾性的短句驗證。
+
+### 6F.14 從規範書到一張真正頁面：製作卡與責任分工 [STANDARD]
+
+每個被實作的頁面必須交出一張**Art Direction Production Card**，以便編輯、設計、前端與驗收在同一張契約上工作：
+
+| 欄位 | 必填內容 |
+| --- | --- |
+| Publication / Issue | 西望 / Vol.00 / 樂章 / 欄目 / 真實稿件及版本 |
+| Reader Question | 本頁唯一最重要的編輯問題／讀者要獲得的理解 |
+| Visual Voice | MONUMENT / ATLAS / WITNESS / SILENCE / READING，選一個主聲部 |
+| Layout Roles | 封面、引子、Figure、Caption、來源、正文、出口等必要角色 |
+| Hero Subject / Rights | Source ID、原件、可用許可、焦點／禁止裁切區，若沒有圖說為何 |
+| Spatial Gesture | 選用秩序／跨頁／遮蔽／負空間／時間圖形；**為何**比普通版更好 |
+| Typography & Color | 消費的現存 OS role tokens 與禁用例，不可新起本地全局字色 |
+| Responsive Storyboard | Desktop / tablet / phone / 320px + 真 zoom 的內容重排次序 |
+| Motion & Fallback | 有何情節目的；靜態仍須可理解 |
+| Source & Build Owner | 原稿位置、圖像 registry、HTML/CSS owner、既有 QA 入口 |
+| Rejection Gate | 真實截圖問題、accessibility、來源可靠性、稿件忠實度 |
+| Approval | PREVIEW / HUMAN REVIEW / APPROVED；評審人及証據 URL |
+
+**第一張已可開工的實例卡：Vol.00 / WALK / Elim / 守城與攻城技術史。** Reader Question：「城牆究竟如何阻擋攻擊，而我們怎樣區分史實與古城假說？」Voice＝ATLAS；開頁可借 MONUMENT 建立歷史張力，但正式史料版必須保留證據線、考古圖、年代與有效長文。ONE 聖光地理和 Jerusalem 3000 可作素材與資料入口；然而前述大衛–所羅門推定牆線是**設計實驗**，不得直接冒充正式攻城史考古證據。主圖、源檔和不確定性應逐一附上；再實測 1648／768／390／320與 true zoom。**這是一張生產任務卡，而非已完成／已簽收的 Elim 作品。**
+
+**第二張寧靜對照卡：Vol.00 / WORSHIP / Maranatha。** Reader Question：「讀完前面人與城的努力後，讀者應如何停留於禱告？」Voice＝SILENCE；不強制引入新幾何或圖片，保留已肯定的留白設計，待真正原稿核定才排出終章。若用相同方框填版，應被拒絕。
+
+### 6F.15 出版／設計驗收：規範不等於畫面，畫面不等於作品 [LOCKED]
+
+**一、文字與真實性：** 真實 canonical source，Vol.00 目錄 4–4–2–2、三個實際間奏、來源／權利／圖說、被標註的未知與候選。**二、藝術性：** 封住 Logo 仍能辨識特殊構圖與閱讀態度；同一書籍的不同聲部差異明確，沒有同一模板機械複製；不是從國外設計案例直接抄色彩、字形或海報。**三、閱讀性：** 長文、手機、鍵盤、註腳、可讀對比、reduced motion、真 zoom。**四、工程證據：** 既有 Design OS authority，唯一 HTML/CSS owner，瀏覽器實際 before/after 與 CI，未通過即迭代，不用新文件迴避問題。
+
+沿用 §6A 現有唯一 10×0–2 rubric：Meaning、Subject、Composition Distinction、Typography、Two-ink Discipline、Hierarchy、Interaction Meaning、Mobile、Accessibility、Editability。內部「獲獎級」晉級要求 **≥18/20、無零分、無未解決 BLOCK，並另通過出版真實性／實際閱讀**；不把這稱為任何獎項官方分數。**目前此 Stylebook 可作有組織的製作指導，但西望藝術風格尚未獲最終簽收；某張試排圖與整期作品也不會因規範完成自動晉級。**
+
+### 6F.16 成熟專著與研究材料的使用權限／版本治理 [STANDARD]
+
+本章骨架根據核對過的書目及公開目錄、作者／出版者說明所推導，**不是宣稱已通讀任何有版權書籍的全文**：
+
+| 專著 | 確認的研究用途 | 西望在本章如何落地 |
+| --- | --- | --- |
+| Cath Caldwell / Yolanda Zappaterra, [Editorial Design: Digital and Print](https://www.laurenceking.com/products/editorial-design), Laurence King, 2014 | Editorial identity / formats / cover / interior / layout / production 整個刊物的結構 | §6F.01–09 與實際 P1–P5 母版 |
+| Sue Apfelbaum / Juliette Cezzar, [Designing the Editorial Experience](https://www.oreilly.com/library/view/designing-the-editorial/9781592538959/), Rockport, 2014 | 誰閱讀、身份、解剖、版式、原型、製作，書的目錄可核實 | §6F.02／13／14 從編輯到設計的角色鏈與卡片 |
+| Jan V. White / Alex W. White, [Editing by Design, 4th ed.](https://alexanderwwhite.com/editing-by-design-4th-ed/) | 編輯與設計都須揭示內容核心，內文／圖像與可讀性先於裝飾 | 讀者問題、真實標題、負面控制組與內容忠實性 |
+| Timothy Samara, [Making and Breaking the Grid, 3rd ed.](https://www.quarto.com/books/9780760381939/making-and-breaking-the-grid-third-edition), 2023 | 秩序網格與有概念、有目的的破格；更新包含互動場景 | §6F.06 有理由的跨頁打破、而非無限自由 |
+| Jeremy Leslie, [The Modern Magazine](https://magculture.com/collections/newest/products/the-modern-magazine), 2013 | Digital x Print 轉譯、雜誌身份、設計與內容相互建構 | 「沒有實體中縫」的 Westside continuous spread＋整期節奏 |
+
+**來源與權威優先序：** 作者及現有 editorial canon → Design OS tokens / type role → 本章正式規範 → §6E 方法／32 張製作規格 → §6D 大量參考與來源紀錄。若衝突，絕不能用新的研究結論覆蓋已保護字體與原稿。本章只是一個**閱讀優先的規範入口**，不新增權限或修改 runtime precedence。
+
+**後續維護規則：** 每次新增真正設計決定，以「原問題→刊物原則→正反案例→實際圖版→截圖→批准/拒絕」更新相關條目；不要再用 R15、R16 無限制堆積獨立研究輪次。已通過的頁面可以逐步把 [TRIAL] 升為 [STANDARD]／[APPROVED SURFACE]，但批准需留明確版本與真實截圖。**先使用這本書製作與拒絕實際頁面，才談修訂這本書。**
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
