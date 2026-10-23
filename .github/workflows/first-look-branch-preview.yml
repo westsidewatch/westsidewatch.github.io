@@ -184,6 +184,34 @@ jobs:
                   await page.screenshot({path:path.join(out,id+'.png'),animations:'disabled'});
                   logs.push({id,viewport:{width,height},metrics:m,errors});
                   console.log(id,errors.length?errors:'CHURCH_TO_MAGAZINE_CAPTURE_OK');
+                  // Assert the ORIGINAL schedule/water remains visible under
+                  // the two independent half-page masks in the integrated P2.
+                  // These scenes cannot be judged from the isolated navy stage.
+                  for(const [label,p,kind] of [['schedule-night-half',.64,'night'],['water-gold-half',.72,'gold']]){
+                    const detailErrors=[];
+                    try{
+                      await page.evaluate(progress=>{
+                        const slider=document.getElementById('progress');
+                        slider.value=String(progress*100);
+                        slider.dispatchEvent(new Event('input',{bubbles:true}));
+                      },p);
+                      await page.waitForTimeout(120);
+                      const detail=await page.evaluate(()=>{
+                        const c=document.querySelector('#p2scene')?.contentDocument;
+                        const duo=c?.querySelector('.p2-magazine iframe')?.contentDocument;
+                        const st=duo?.getElementById('dual-stage'),ch=c?.querySelector('.church-editorial');
+                        return {blue:Number(st?.dataset.blueReveal),gold:Number(st?.dataset.dawnReveal),
+                          church:ch?getComputedStyle(ch).visibility:'missing',
+                          schedule:!!c?.querySelector('.sunday-schedule'),
+                          water:!!c?.querySelector('.ocean-rise')};
+                      });
+                      if(detail.church!=='visible'||!detail.schedule||!detail.water)detailErrors.push('CHURCH_UNDERLAY_MISSING');
+                      if(kind==='night'&&(detail.blue<=.05||detail.blue>=.95||detail.gold!==0))detailErrors.push('NIGHT_REVEAL_NOT_RIGHT_HALF_FIRST');
+                      if(kind==='gold'&&(detail.blue<.999||detail.gold<=.05||detail.gold>=.95))detailErrors.push('GOLD_REVEAL_NOT_LEFT_HALF_SECOND');
+                      await page.screenshot({path:path.join(out,name+'-'+label+'.png'),animations:'disabled'});
+                      logs.push({id:name+'-'+label,viewport:{width,height},metrics:detail,errors:detailErrors});
+                    }catch(e){logs.push({id:name+'-'+label,errors:[e.message]});}
+                  }
                 }catch(e){logs.push({id,errors:[e.message]});console.error(id,e.message)}
                 finally{await page.close()}
               }
