@@ -2469,6 +2469,18 @@ For each output create a plate record with source URL and revision, original ext
 
 **本章不是新設計系統；它是同一 Westside Design OS 的封面藝術指導否決門檻。封面主圖完成前，不再用微調 LOGO、改方塊 700→714px 等局部 CSS 去冒充版面進展。**
 
+### 6F.21 P2 現場視覺否決後的首次真圖修訂：西望字陣與晨星封面（2026-10-23）
+
+**原截圖否決事項：** 金頁以豎排 `westside-watch-xiwang-vertical.svg` 製成重複的窄字柱，既沒有連續橫排的「西望」也沒有清晰斜軸；藍頁刊名＋小晨星＋WATCH.＋一條極細牆，沒有單一封面主視覺。不可僅改百分比就稱完成。這一項延續 §6F.20 的藝術否決，不另建立視覺系統。
+
+**真實修訂（隔離預覽 PR #1355，提交 `213de3a`）：**
+- **七色「西望」：** 摒棄「一個豎排 SVG 重複成直欄」的實現方式；使用**完整兩字橫排**，字重 900、原中文字體 role、不拉伸，在同一 `-12deg` 基線上重複成七條斜向行。七條各調用 Design OS 已有七個語義色的 CSS role；文字顏色經墨色調和以確保黎明金的實際對比。每一行由原 P2 scroll 到達其節點後進場，前一行保持可見，達到「一行、兩行、三行……七行」。這是**連續文字場**，不是首頁七片彩色幕布。
+- **晨星有封面角色：** 官方 `/images/westside-watch-masthead-landscape.svg` 留在真正上緣識別區；既有 3D 晨星 v5.3 位於畫面中軸的主視覺位置，並調用**原本就存在**的 `/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg` 做大面積刻線場，晨星升起後才逐步顯示與其物理方向一致的金色光場。不得替換、偽稱這是新的多雷原作。大英文 WATCH. 與中文「守望，一座光明的城」退至星光主體下方；城牆仍是現有 `jerusalem-wall.png`，不得非比例拉伸。
+- **時序權威完全不改：** 教會主日崇拜／活水上升／分海開門 → 藍封面從日程上方進入 → 黎明金替換活水 → 七行西望字陣斜向滾入 → 晨星升起 → 封面＋西望雙頁停駐 → 上一版 P2 自帶 `temple-stone-light.png` 的 Contents 才替換字陣。沿用 `p2-living-water.js` 的唯一 scroll clock，首頁原影片僅在雙頁外可見。
+- **已取得現場證據：** Chromium desktop 1648、phone 390、small 320 的六個動效定格，加上同一教會 P2 末端的三個截圖；官方 Logo、原首頁影片與 Vol.00 12 欄目資產檢查通過，沒有用靜態圖代替網站。但「字陣密度過大、封面主圖與城牆的最終張力」是**視覺簽收待辦**，不是工程品質測試可以宣告完成。
+
+**藝術評分目前仍是 TRIAL / NOT APPROVED。** 實際截圖可比較來源錯誤字柱與修訂後的字陣，但任何再調整需要對照真實作品與 200% 放大，而不是重新寫一輪抽象研究。P2 的教會原始資產與已批准動效不在此次修正範圍。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
