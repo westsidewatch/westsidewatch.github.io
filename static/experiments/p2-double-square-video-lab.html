@@ -151,7 +151,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 
 /* This same composition is the P2 magazine segment inside the existing Church
    scroll surface when ?embed=1. No duplicate timeline or copy of home film. */
-html.dual-embed,html.dual-embed body{width:100%;height:100%;overflow:hidden}
+/* Embedded overlay MUST have transparent canvas and body. Otherwise the
+   default navy body blocks the real Church schedule/water under clip-path. */
+html.dual-embed,html.dual-embed body{width:100%;height:100%;overflow:hidden;background:transparent!important}
 html.dual-embed .dual-ui,html.dual-embed .dual-overview{display:none!important}
 html.dual-embed .dual-stage{height:100svh;min-height:0;background:transparent}
 html.dual-embed .dual-contents__index{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
