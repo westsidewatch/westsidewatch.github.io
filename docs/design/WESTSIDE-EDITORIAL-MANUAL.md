@@ -2409,6 +2409,27 @@ For each output create a plate record with source URL and revision, original ext
 
 **出版狀態：** EXPERIMENT / NOT APPROVED. 本案尚未實際合併進 P2 門後視覺，更沒有改動教會 V75 水、開門、講章、晨星 3D、官方 Logo。新 CSS 僅在孤立試驗頁；下一步以截圖做肉眼藝術批評與版面迭代，才決定能否套用原 P2 受控的 scroll clock。
 
+
+### 6F.19 P2 封面 Masthead 比例與「活水 → 雙頁」相接驗收（2026-10-23）
+
+**狀態：TRIAL／只可用於 P2 連續轉場候選，尚未批准為所有雜誌封面的固定比例。** 這項決定源自真實的封面試排問題：當午夜藍／黎明金 100% 定格時，兩個方塊縮成小卡片，`WESTSIDE WATCH 西望` 的官方 SVG 只佔封面很窄的一角，成為裝飾而非刊名；完整 Vol.00 Contents 在縮小方塊裡難以閱讀。反向後果：未能一眼識別刊物，也打斷教會 P2 原有的閱讀連續性。舊 41.5vw／75vh／670px 硬上限因沒有閱讀理據而**取消作為候選標準**。
+
+**成熟設計依據（僅可核對公開文章，並未宣稱通讀付費著作）：**
+- [Shumi Perhiniak, *Magazine Cover Terminology*](https://blog.yesimadesigner.com/magazine-cover-terminology/)：刊名標識（masthead/nameplate）一般在封面上三分之一，可跨越整張封面寬度，或將左上角作為紙本貨架識別點；屬描述性慣例，**沒有通行強制比率**。
+- [AIGA Magazine Cover Design teaching resource](https://teachingresource.aiga.org/project/magazine-cover-design/)：將 masthead、主視覺、主標題、刊期及 supporting cover lines 一同設計為真正封面的視覺層級。
+- [Flipsnack, Professional Magazine Cover Design](https://blog.flipsnack.com/how-to-design-professional-magazine-covers/)：刊名是穩定識別而非小裝飾；其規模、位置與可辨性和字形同等重要。
+- [Jan V. White, *Editing by Design*](https://alexanderwwhite.com/editing-by-design-4th-ed/) 以及本書 §6F.04–06：字體與網格為編輯讀者服務，不應為固定幾何犧牲主題或識別。
+
+**第一版幾何試驗（非全站 CSS token）：** 在完整原始 P2 Church 門後的雙方塊畫布，令 `W`、`H` 為實際可繪製的瀏覽器 CSS 畫布寬高，兩塊同高寬 `S`。Desktop: `Mx=max(16px,0.035W)`; `My=max(18px,0.052H)`; `S=min((W-2Mx)/2,H-2My)`。因兩塊必須相接，不能先任意決定 S 再縮至適應動畫；留白對稱分配在兩側與上下。初始為各占半幅；變成兩個平行正方形時兩邊邊界連續、沒有分割裝訂線。**比例有理由**：兩個完整方形最大化出版內容，同時留出讓影片被看見的「活場」；標題和目錄的視覺可讀性具有否決權。若客戶端可用高度過短，不強迫固定方形吞沒內容；必須改用重新編排或可捲動 Contents 的出版狀態。
+
+**Masthead Design trial:** 正式 `/images/westside-watch-masthead-landscape.svg` 使用原 SVG 的原始長寬比、不可拉伸／換字形；在藍封面寬度 `S` 中取 **約 84% 的展示寬度**作為本張封面的起始設計值（合理試驗帶：80–85%，**不是成熟雜誌界的全球定額**），於上方約 5–27% 高度構成一個真正的品牌區。晨星沿既有 v5.3 資產由下升起、降至相對排版焦點，不能與 Logo 或 `WATCH.` 重疊。主英文 `WATCH.`、中文 900 主題、底部城牆依內容關係落位；城牆是封面的下緣，並非遮字橫條。
+
+**Contents／黎明金:** 初入場就有四樂章 4–4–2–2 的索引內容，完全收成方塊後仍不可讓 WITNESS／WORSHIP 和真正雜誌入口被切走。Mobile 不強迫兩方塊在 320–390px 寬度下橫排；改上下相接，以同樣語意保留真正源目錄和可讀鍵盤捲動。必要時隱藏只是裝飾性的英文小副名，但不隱藏中文欄目與入口。
+
+**必須保護的動態連續性：** P2 = 教會身份與經文 → 活水上升 → 分海 → 左右教會主日崇拜實際空間 → 雜誌藍／金入場 → 封面與 Contents 兩方塊相接／首頁原「王進城」影片。**不是「新 P2」**。第一版接法只存在現有 PR #1355 的 `/experiments/p2-magazine-transition-lab.html?dual=1` 隔離預覽：復用 **`static/js/p2-living-water.js` 單一 scroll clock**，不更動 Church 原文與資產。單方塊構圖對照 `/experiments/p2-double-square-video-lab.html` 不可被稱為完整 P2。過渡位置實際驗收必須包括 vh 2.37 前後／雙頁正在縮合／最後定格及捲動倒退；不能只給 100% 的靜態畫面。
+
+**未批准的事項：** 正式封面字標 84% 以外的各期差異、P2 確定哪一側先入、晨星相對文字高度、雙方塊固定版心、真 zoom / reduced motion 等，均以實際瀏覽器截圖、內容不裁切與 §6A 人工審查為唯一升級前提。**純 CI 綠燈只代表工程可用，不代表藝術質量達標。**
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
