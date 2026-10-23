@@ -195,7 +195,17 @@ jobs:
                         slider.value=String(progress*100);
                         slider.dispatchEvent(new Event('input',{bubbles:true}));
                       },p);
-                      await page.waitForTimeout(120);
+                      // Wait for the posted outer-P2 scroll to traverse both
+                      // iframe levels; fixed-duration screenshot capture raced
+                      // the previous final=1 state at the first checkpoint.
+                      await page.waitForFunction(kind=>{
+                        const c=document.querySelector('#p2scene')?.contentDocument;
+                        const duo=c?.querySelector('.p2-magazine iframe')?.contentDocument;
+                        const stage=duo?.getElementById('dual-stage');
+                        const blue=Number(stage?.dataset.blueReveal),gold=Number(stage?.dataset.dawnReveal);
+                        return kind==='night'?(blue>.1&&blue<.9&&gold===0):
+                          (blue>.999&&gold>.1&&gold<.9);
+                      },kind,{timeout:12000});
                       const detail=await page.evaluate(()=>{
                         const c=document.querySelector('#p2scene')?.contentDocument;
                         const duo=c?.querySelector('.p2-magazine iframe')?.contentDocument;
