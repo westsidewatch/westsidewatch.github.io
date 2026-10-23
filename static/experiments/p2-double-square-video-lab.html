@@ -48,16 +48,16 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover{position:relative;isolation:isolate;height:100%;width:100%;overflow:hidden;background:radial-gradient(ellipse at 74% 51%,#284762 0%,transparent 42%),linear-gradient(180deg,#10263f,#18334e 72%,#152b43);color:#e9c37b}
 .dual-cover__engraving{position:absolute;z-index:0;inset:8% 0 34%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') center center/auto 135% no-repeat;mix-blend-mode:screen;opacity:.21;mask-image:linear-gradient(180deg,transparent,#000 26%,#000 70%,transparent);pointer-events:none}
 .dual-cover__radiance{position:absolute;z-index:1;inset:0;background:radial-gradient(ellipse 48% 31% at 72% 43%,rgba(233,174,69,.41),rgba(227,183,95,.14) 43%,transparent 95%);opacity:0;pointer-events:none}
-.dual-cover__paper{position:absolute;z-index:2;left:0;right:0;top:100%;bottom:0;background:linear-gradient(180deg,rgba(255,249,231,.77),rgba(245,234,209,.83)),url('/images/temple-stone-light.png') center/cover no-repeat;pointer-events:none;will-change:top}
+.dual-cover__paper{position:absolute;z-index:2;left:0;right:0;top:44%;bottom:0;transform:translate3d(0,100%,0);background:linear-gradient(180deg,rgba(255,249,231,.77),rgba(245,234,209,.83)),url('/images/temple-stone-light.png') center/cover no-repeat;pointer-events:none;will-change:transform}
 .dual-cover__mast{position:absolute;z-index:5;top:4%;left:5%;width:90%;height:25%;max-width:90%;max-height:25%;object-fit:contain;object-position:center top;filter:brightness(0) saturate(100%) invert(78%) sepia(34%) saturate(518%) hue-rotate(350deg) brightness(103%) contrast(89%)}
 .dual-cover__series{position:absolute;z-index:5;left:7%;top:30.5%;font:400 clamp(10px,1.45cqi,15px)/1.35 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.11em;white-space:nowrap;color:#e2bd79}
 .dual-cover__tagline{position:absolute;z-index:5;top:35%;left:8%;right:8%;display:flex;align-items:center;gap:clamp(7px,1.7cqi,17px);margin:0;font:italic 400 clamp(15px,3cqi,29px)/1.15 var(--ws-type-display-en,Georgia,serif);text-align:center;white-space:nowrap;color:#e2bd79}
 .dual-cover__tagline::before,.dual-cover__tagline::after{content:'';height:1px;background:currentColor;opacity:.6;flex:1}
-.dual-cover__star{position:absolute;z-index:3;left:72%;top:34%;width:clamp(73px,16cqi,144px);aspect-ratio:1;transform:translate(-50%,95%);opacity:0;overflow:hidden;pointer-events:none}
+.dual-cover__star{position:absolute;z-index:3;left:72%;top:27%;width:clamp(68px,14cqi,124px);aspect-ratio:1;transform:translate(-50%,95%);opacity:0;overflow:hidden;pointer-events:none}
 .dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
 .dual-cover__star-fallback{position:absolute;z-index:1;inset:0;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:.25;pointer-events:none}
-.dual-cover__wall{position:absolute;z-index:4;top:100%;left:0;right:0;height:clamp(37px,9cqi,88px);transform:translate3d(0,-74%,0);background:url('/images/jerusalem-wall.png') center bottom/auto 100% no-repeat;pointer-events:none;opacity:0;filter:drop-shadow(0 -4px 10px rgba(191,146,73,.15));will-change:top}
-.dual-cover__zh{position:absolute;z-index:5;top:55%;left:5%;right:5%;margin:0;text-align:center;font:900 clamp(30px,8.3cqi,79px)/1.11 var(--ws-type-display-zh,sans-serif);letter-spacing:-.035em;color:color-mix(in srgb,var(--ws-first-light,#a2872a) 72%,#213449 28%);font-synthesis:none;opacity:0;text-wrap:balance}
+.dual-cover__wall{position:absolute;z-index:4;top:100%;left:0;right:0;height:clamp(37px,9cqi,88px);transform:translate3d(0,-50%,0);background:url('/images/jerusalem-wall.png') center bottom/auto 100% no-repeat;pointer-events:none;opacity:0;filter:drop-shadow(0 -4px 10px rgba(191,146,73,.15));will-change:top}
+.dual-cover__zh{position:absolute;z-index:5;top:55%;left:5%;right:5%;margin:0;text-align:center;font:900 clamp(34px,10.4cqi,94px)/1.08 var(--ws-type-display-zh,sans-serif);letter-spacing:-.035em;color:color-mix(in srgb,var(--ws-first-light,#a2872a) 72%,#213449 28%);font-synthesis:none;opacity:0;text-wrap:balance}
 .dual-cover__zh span{display:block;margin-top:clamp(8px,2cqi,22px);font-size:1.02em;white-space:nowrap}
 .dual-cover__folio{position:absolute;z-index:5;left:8%;right:8%;bottom:6%;padding-top:clamp(8px,1.3cqi,14px);border-top:1px solid rgba(138,108,61,.45);font:400 clamp(10px,1.35cqi,15px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;text-align:center;color:#776043;opacity:0}
 .dual-cover__radiance,.dual-cover__zh,.dual-cover__folio{will-change:opacity}
@@ -84,7 +84,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-overview p{margin:0 0 11px}
 @media(max-width:1000px){
 .dual-cover__mast{width:90%;max-width:90%;height:25%;max-height:25%}
-.dual-cover__zh{font-size:clamp(30px,8.3cqi,79px)}
+.dual-cover__zh{font-size:clamp(34px,10.4cqi,94px)}
 .dual-contents__head h2{font-size:clamp(45px,5vw,67px)}
 .dual-contents__deck{font-size:12px}
 .dual-contents__index{gap:17px 13px}
@@ -103,10 +103,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-tile--cover .dual-cover,.dual-tile--contents .dual-contents{padding:12px 14px}
 .dual-cover__mast{left:4%;top:4%;width:92%;max-width:92%;height:26%;max-height:26%}
 .dual-cover__series{left:7%;top:32%;font-size:clamp(7px,1.7cqi,10px)}
-.dual-cover__tagline{top:36%;left:5%;right:5%;font-size:clamp(11px,3.1cqi,19px)}
-.dual-cover__star{left:73%;top:35%;width:clamp(51px,16cqi,89px)}
+.dual-cover__tagline{top:34%;left:5%;right:5%;font-size:clamp(11px,3.1cqi,19px)}
+.dual-cover__star{left:73%;top:26%;width:clamp(46px,14cqi,82px)}
 .dual-cover__wall{height:clamp(30px,9cqi,52px)}
-.dual-cover__zh{left:2%;right:2%;top:55%;font-size:clamp(27px,8.3cqi,44px)}
+.dual-cover__zh{left:2%;right:2%;top:55%;font-size:clamp(28px,10.4cqi,48px)}
 .dual-cover__zh span{margin-top:clamp(6px,1.8cqi,10px)}
 .dual-cover__folio{bottom:6%;font-size:clamp(8px,1.35cqi,11px)}
 .dual-contents__head{padding-bottom:7px}
@@ -123,7 +123,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__foot{margin-top:5px;padding-top:5px;font-size:9px}
 }
 @media(max-width:360px){
-.dual-cover__zh{top:55%;font-size:clamp(26px,8.3cqi,32px)}
+.dual-cover__zh{top:55%;font-size:clamp(27px,10.4cqi,35px)}
 .dual-cover__tagline{font-size:clamp(10px,3.1cqi,14px)}
 .dual-contents__index{gap:8px 6px}
 .dual-movement h3{font-size:18px}
@@ -299,7 +299,7 @@ html.dual-embed .dual-film__credit{display:none}
    const dawnRise=reduce?(progress>=.53?1:0):ease((progress-.555)/.185);
    const starRise=reduce?(progress>=.53?1:0):ease((progress-.605)/.12);
    const paperTop=100-56*dawnRise;
-   paper.style.top=paperTop.toFixed(3)+'%';
+   paper.style.transform='translate3d(0,'+(100-100*dawnRise).toFixed(3)+'%,0)';
    wall.style.top=paperTop.toFixed(3)+'%';
    wall.style.opacity=String(reduce?dawnRise:ease((progress-.57)/.08));
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.61)/.14));
