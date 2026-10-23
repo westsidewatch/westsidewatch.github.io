@@ -278,6 +278,40 @@ function intersect(a,b){return a&&b?Math.max(0,Math.min(a.right,b.right)-Math.ma
       finally{await page.close()}
     }
 
+    // §6F visual art-direction EXPERIMENT (not the approved live P2).
+    // Study screenshot in both complete static editorial states, including full phone content.
+    for(const [name,width,height] of [['desktop',1648,928],['tablet',768,1024],['phone',390,844],['small',320,720]]){
+      const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+      for(const scene of ['hold','open']){
+        const id='p2-stylebook-'+name+'-'+scene,defects=[];
+        try{
+          const response=await page.goto(base+'/experiments/p2-magazine-stylebook-composition.html?state='+scene,{waitUntil:'load',timeout:45000});
+          await page.evaluate(()=>document.fonts.ready);
+          const m=await page.evaluate(()=>{
+            const shown=document.querySelector('.view:not([hidden])');
+            const mainTitle=document.querySelector('#issue-title');
+            const contents=document.querySelectorAll('#spread .spread__movement li');
+            const imgs=[...shown.querySelectorAll('img')];
+            return {width:innerWidth,scrollWidth:document.documentElement.scrollWidth,scene:document.body.dataset.artDirectionScene,
+              visibleViews:document.querySelectorAll('.view:not([hidden])').length,
+              imagesReady:imgs.every(x=>x.complete&&x.naturalWidth>0),
+              canonicalCount:contents.length,
+              h1:(mainTitle?.textContent||'').trim(),
+              buttons:[...document.querySelectorAll('[data-scene]')].filter(x=>x.getAttribute('aria-pressed')==='true').length
+            };
+          });
+          if(response?.status()!==200||m.scene!==scene||m.visibleViews!==1||m.buttons!==1)defects.push('SCENE_OR_BUTTONS');
+          if(m.scrollWidth>m.width+2)defects.push('HORIZONTAL_OVERFLOW');
+          if(!m.imagesReady)defects.push('OFFICIAL_ASSET_NOT_LOADED');
+          if(m.canonicalCount!==12||!m.h1.includes('一座光明的城'))defects.push('ISSUE_CANON');
+          await page.screenshot({path:path.join(out,id+'.png'),fullPage:true,animations:'disabled'});
+          results.push({id,viewport:{width,height},metrics:m,defects,artDirection:'ART DIRECTION NOT YET SIGNED OFF',trueZoom200:'NOT VERIFIED'});
+          if(defects.length)failures.push({id,defects});
+        }catch(e){failures.push({id,defects:[e.message]});console.error(id+' ERROR '+e.message)}
+      }
+      await page.close();
+    }
+
   }finally{await browser.close()}
   fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({
     schema:'westside.magazine.visual-evidence.v1',commit:process.env.GITHUB_SHA,

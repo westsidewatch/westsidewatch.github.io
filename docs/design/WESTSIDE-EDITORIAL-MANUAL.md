@@ -2392,6 +2392,23 @@ For each output create a plate record with source URL and revision, original ext
 
 **Engineering ownership:** `static/css/p2-magazine-transition-proof-v3.css` + `static/js/p2-magazine-transition-proof-v3.js` own isolated magazine candidate; `static/experiments/p2-magazine-transition-lab.html` owns its comparison controls. The one `static/js/p2-living-water.js` still owns scroll progress; `static/css/p2-living-water.css` still owns church/water/schedule. Do not create parallel global OS, add new motion clock or touch protected artwork in an art-direction pass. Existing PR #1352 reports **merge conflicts**, so this is **REVIEW / NOT VISUALLY APPROVED / DO NOT MERGE**. Actual contemporary deployed screenshots were not obtainable in this audit, therefore no 18/20 score is claimed.
 
+### 6F.18 Stylebook 第一個實排：P2 兩個定格的隔離視覺實驗 (2026-10-23)
+
+**真正製作產物：** [P2 Stylebook Composition Lab](../../static/experiments/p2-magazine-stylebook-composition.html) ／ `/experiments/p2-magazine-stylebook-composition.html?state=open`，另一個定格 `?state=hold`。使用 `static/css/westside-design-os.css` 現有字體、牌匾 SVG、刻線和城牆資產，真實 Vol.00 4–4–2–2/3 間奏；各角色具有可讀語義 HTML。這是**新建立的獨立概念稿**，不是把它悄悄合併回 P2 動畫或推送首頁。
+
+**§6F Art Direction Production Card — THIS STUDY:**
+- **原本問題：** P2 雜誌門後的 28／44／28 與 44% 正文中欄是相互獨立的三個視覺區，封面與 Contents 被擠在中間。即使稿件和 logo 正確，讀起來仍像 UI 分屏，而非西望完整數位跨頁。
+- **讀者問題：** 「西望 Vol.00 為什麼是一座光明的城？我要如何由一個具有雄偉感的封面進入四樂章？」保留官方徽識、正式中文題名和真正的四樂章/12 欄位/3 間奏。
+- **出品人選用的主聲部：** MONUMENT (封面巨型 Bodoni + 刻線) 接 READING/CONTENTS (可掃讀的有序真目錄)。SILENCE 沒有義務塞入第一屏。
+- **新的空間決策 [TRIAL]：** 100% 開啟是一個**完整連續紙色畫布**；大英文、原有刻線在畫布左 58% 左右；四樂章目錄佔右側 42%，留白及城牆在底層跨過「虛擬中心」。**58/42 只是這張作品的候選，不是新 sitewide grid token**。Contents 用 2×2 有意義的編輯分組，而非另一套固定三欄。此實驗全幅無物理書脊、無 rounded panel cards。
+- **對照狀態 [TRIAL]：** 87–90% 的兩半沉靜畫面將晨星/原始直排西望與 Romans 13:12 分置黎明／夜晚，中央不出現雜誌目錄。晨星調用現有 `westside-watch-morning-star.svg` **僅作靜態替代，不表示取代已批 v5.3 3D/動效**；因此此視覺稿**不能判斷滾動中的動效是否好**。可通過頁上按鈕切換。
+- **權威素材：** 原 Logo `/images/westside-watch-masthead-landscape.svg`、`/images/westside-watch-xiwang-vertical.svg`、現有 `/images/home-opening-engraving.jpg`、`/images/jerusalem-wall.png`。最後兩者尚須確定權屬/來源後才可稱為正式考古/多雷原作。不可在此稿發明考古證據。
+- **編輯責任：** 目錄按 `docs/projects/watch-city-vol00/EDITORIAL_MAP.md`：WATCH 01–04, WALK 05–08, WITNESS 09–10, WORSHIP 11–12，三個間奏不占序號。條目沒有假網址；唯一返回正式雜誌連結 `/journal/`。
+- **技術與對照：** 原 P2 完整交接保持 `/experiments/p2-magazine-transition-lab.html?final=1`，與此靜態稿**兩個不同 URL**。一張 HTML 隔離 owner，無新 token、無多個動畫 clock。現有 `capture_p2_magazine_geometry_review.cjs` 在 1648、768、390、320 四尺寸為兩個完整定格各截一張 full-page，測真正 12 條目、原 SVG 資產、頁面 overflow。真正 200% browser zoom 仍另驗。
+- **藝術決策：** 先用實際截圖評價 58/42 版面有無一眼西望身份與大量可讀目錄；**不通過就修改作品，不改規範，不能把「已寫入 Design OS」冒充設計批准**。
+
+**出版狀態：** EXPERIMENT / NOT APPROVED. 本案尚未實際合併進 P2 門後視覺，更沒有改動教會 V75 水、開門、講章、晨星 3D、官方 Logo。新 CSS 僅在孤立試驗頁；下一步以截圖做肉眼藝術批評與版面迭代，才決定能否套用原 P2 受控的 scroll clock。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
