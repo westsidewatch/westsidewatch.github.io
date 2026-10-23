@@ -2529,6 +2529,8 @@ For each output create a plate record with source URL and revision, original ext
 
 **第五輪隔離候選：** PR #1355，`4910531` 半屏與石牆、`0c91b65` 恢復目錄、`d70fdd5` 調整字形時序、`1656911` 暴露動效參數、`eb47433` 新增 27 場景驗收。這些是 TRIAL 而非藝術批准，保護首頁／教會原資產；CI 與本次真實截圖應另行核實，尤其 1648／390／320 的半屏切換、Contents 最後篇名可達性、原生 200% zoom、reduced motion、回捲完整性、Core Contract 既存資產基準。絕不自動合併。
 
+**最新瀏覽器實景回歸（2026-10-23，PR #1355 `e30fd0b`）**：前一次 33 場景第一次驗收揭露 3 個 Church→Magazine 午夜藍接入失敗：單獨試驗的 clip-path 正確，但嵌入 iframe 的 body 仍有深色背景，遮住原主日崇拜與左側活水；第一個測試點也與跨雙層 iframe 的 scroll 消息競速，誤取最終幀。這是此前無法從獨立雙頁截圖看出的**真實缺陷**。已把嵌入模式 html/body 都設為 transparent，並令中途畫面測試等待兩個 iframe 都完成同一 scroll-clock 的更新，再檢查真實的水／日程是否仍可見。**重新生成的 33 張 Chromium 截圖，33/33 無測試場景錯誤：** 24 張桌面／390／320 × 8 節點，3 張 Church 最終態，加上 6 張 Church→Magazine 的右夜半屏與左金半屏中途場景；三尺寸夜半屏 `blue≈0.56,gold=0`，後續金半屏 `blue=1,gold≈0.44`，實際桌面截圖可見上半午夜藍之下的**真實主日流程**，以及黎明金下方逐漸掩蓋的**原活水刻線**。Production Build 與 First Look PASS；Core Contract 仍因首頁受保護晨星 SVG 凍結基準失敗，不是本輪修改。**網站仍為 DRAFT/TRIAL；真正封面藝術、768px／原生 200% zoom／完整手動倒捲與無障礙簽收，仍不能宣稱完成。** 正式內容未合併；原教會檔案不動。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
