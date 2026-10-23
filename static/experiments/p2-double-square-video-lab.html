@@ -33,11 +33,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-tile--contents{background:linear-gradient(140deg,#ddc98f,#c6a664 52%,#b59a65);color:var(--ink)}
 /* Actual logo SVG outlines, seven differently paced editorial rays. */
 .dual-letterfield{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:1}
-.dual-letterfield__row{position:absolute;left:7%;width:86%;height:10%;display:flex;align-items:center;transform-origin:left center;will-change:transform,opacity}
-.dual-letterfield__glyph{display:block;flex:none;width:clamp(90px,24cqi,240px);aspect-ratio:432/218;background:color-mix(in srgb,var(--row-ink,#5b8fa8) 62%,#1b3046 38%);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat}
-.dual-letterfield__row:nth-child(3n+2) .dual-letterfield__glyph{width:clamp(98px,26cqi,262px)}
-.dual-light-bridge{position:absolute;inset:0;z-index:5;width:100%;height:100%;pointer-events:none;opacity:0;overflow:hidden}
-.dual-light-bridge path{fill:none;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.dual-letterfield__row{position:absolute;width:67%;height:10%;display:flex;align-items:center;transform-origin:34% 50%;will-change:transform,opacity}
+.dual-letterfield__glyph{display:block;flex:none;width:var(--mark-width,36cqi);aspect-ratio:432/218;background:color-mix(in srgb,var(--row-ink,#5b8fa8) 70%,#1b3046 30%);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat}
 .dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:2;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
 /* This is the exact inherited temple-stone + overlay from the existing P2
    .mag3__contents-page. Do not synthesize or substitute another texture. */
@@ -45,9 +42,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    Only the existing official masthead, star v5.3, skyline and temple stone
    are consumed. The gold skyline is the moving seam of this composition. */
 .dual-cover{position:relative;isolation:isolate;height:100%;width:100%;overflow:hidden;background:radial-gradient(ellipse at 74% 51%,#284762 0%,transparent 42%),linear-gradient(180deg,#10263f,#18334e 72%,#152b43);color:#e9c37b}
-.dual-cover__engraving{position:absolute;z-index:0;inset:7% -8% 31%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') 72% 46%/auto 165% no-repeat;mix-blend-mode:screen;opacity:.46;mask-image:linear-gradient(180deg,transparent 0%,#000 13%,#000 84%,transparent 100%);pointer-events:none}
+.dual-cover__engraving{position:absolute;z-index:0;inset:7% -8% 31%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') 72% 46%/auto 156% no-repeat;mix-blend-mode:screen;opacity:.42;mask-image:linear-gradient(180deg,transparent 0%,#000 17%,#000 82%,transparent 100%);pointer-events:none}
 .dual-cover__radiance{position:absolute;z-index:1;inset:0;background:radial-gradient(ellipse 48% 31% at 72% 43%,rgba(233,174,69,.41),rgba(227,183,95,.14) 43%,transparent 95%);opacity:0;pointer-events:none}
-.dual-cover__paper{position:absolute;z-index:2;left:0;right:0;top:44%;bottom:0;transform:translate3d(0,100%,0);background:linear-gradient(180deg,rgba(255,249,231,.77),rgba(245,234,209,.83)),url('/images/temple-stone-light.png') center/cover no-repeat;pointer-events:none;will-change:transform}
+.dual-cover__paper{position:absolute;z-index:2;left:0;right:0;top:43.6%;bottom:0;transform:translate3d(0,100%,0);background:linear-gradient(180deg,rgba(221,191,136,.15),rgba(242,222,184,.06) 25%,rgba(250,240,217,.26)),url('/images/temple-stone-light.png') center top/cover no-repeat;background-blend-mode:multiply;box-shadow:inset 0 13px 22px rgba(89,65,36,.16),inset 0 2px 0 rgba(127,88,47,.45);pointer-events:none;will-change:transform}
 .dual-cover__mast{position:absolute;z-index:5;top:4%;left:5%;width:90%;height:25%;max-width:90%;max-height:25%;object-fit:contain;object-position:center top;filter:brightness(0) saturate(100%) invert(78%) sepia(34%) saturate(518%) hue-rotate(350deg) brightness(103%) contrast(89%)}
 .dual-cover__series{display:none}
 .dual-cover__tagline{position:absolute;z-index:5;top:35%;left:8%;right:8%;display:flex;align-items:center;gap:clamp(7px,1.7cqi,17px);margin:0;font:italic 400 clamp(15px,3cqi,29px)/1.15 var(--ws-type-display-en,Georgia,serif);text-align:center;white-space:nowrap;color:#e2bd79}
@@ -55,7 +52,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover__star{position:absolute;z-index:3;left:72%;top:27%;width:clamp(68px,14cqi,124px);aspect-ratio:1;transform:translate(-50%,95%);opacity:0;overflow:hidden;pointer-events:none}
 .dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
 .dual-cover__star-fallback{position:absolute;z-index:1;inset:0;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:.25;pointer-events:none}
-.dual-cover__wall{position:absolute;z-index:4;top:100%;left:0;right:0;height:clamp(37px,9cqi,88px);transform:translate3d(0,-50%,0);background:url('/images/jerusalem-wall.png') center bottom/auto 100% no-repeat;pointer-events:none;opacity:0;filter:drop-shadow(0 -4px 10px rgba(191,146,73,.15));will-change:top}
+.dual-cover__wall{position:absolute;z-index:4;top:100%;left:0;right:0;height:clamp(37px,9cqi,88px);transform:translate3d(0,-8%,0);background:url('/images/jerusalem-wall.png') center bottom/auto 100% no-repeat;pointer-events:none;opacity:0;filter:drop-shadow(0 7px 2px rgba(109,75,35,.34));will-change:top}
 .dual-cover__en{position:absolute;z-index:5;top:49.5%;left:7%;right:6%;margin:0;font:400 clamp(42px,12.8cqi,124px)/.77 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.075em;color:#27384a;opacity:0}
 .dual-cover__en span{display:block;white-space:nowrap}
 .dual-cover__en span:last-child{margin-left:11%;font-size:1.18em;line-height:.88}
@@ -99,8 +96,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-movement li small{font-size:11px}
 }
 @media(max-width:700px){
-.dual-letterfield__glyph{width:clamp(81px,25cqi,126px)}
-.dual-letterfield__row:nth-child(3n+2) .dual-letterfield__glyph{width:clamp(85px,26cqi,135px)}
+.dual-letterfield__glyph{max-width:70cqi}
 .dual-ui{gap:11px}.dual-ui__name{width:100%}.dual-ui__controls{gap:6px}
 .dual-ui__range{width:100%;min-width:0}.dual-ui__range input{flex:1}
 .dual-stage{min-height:calc(100svh - 135px);height:calc(100svh - 135px)}
@@ -220,15 +216,9 @@ html.dual-embed .dual-film__credit{display:none}
    </div>
   </section>
  </div>
- <svg class="dual-light-bridge" id="dual-light-bridge" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
-  <defs><clipPath id="dual-light-clip" clipPathUnits="userSpaceOnUse">
-    <rect id="dual-light-gold"></rect><rect id="dual-light-night"></rect>
-  </clipPath></defs>
-  <g id="dual-light-lines" clip-path="url(#dual-light-clip)"></g>
- </svg>
 </section>
 <aside class="dual-overview">
- <p><strong>第四輪：</strong>左頁以正式 Logo 同源 SVG 的「西望」原字形呈現七色，晨星刻線由右側跨至每枚字標，與滾動共用時鐘；右頁紙色區英文以 CITY OF LIGHT 為最大的 Bodoni Roman / Italic 展示標題，VOL.00 在英文與中文主題中間。未生成或更換原有圖像。</p>
+ <p><strong>第五輪修訂：</strong>右邊午夜藍先自上向下揭示日程半屏，再由黎明金自下向上揭示活水半屏；取消額外人工射線，原晨星 v5.3 蝕刻底紋不動。原城牆接上聖殿石肌理；官方西望字形分七色，以主次大小和安靜節奏呈現，不再做齊一字陣。</p>
  <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
 </aside>
 </main>
@@ -242,9 +232,6 @@ html.dual-embed .dual-film__credit{display:none}
   const paper=document.getElementById('dual-cover-paper'),wall=document.getElementById('dual-cover-wall');
   const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
   const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol');
-  const bridge=document.getElementById('dual-light-bridge');
-  const bridgeLines=document.getElementById('dual-light-lines');
-  const lightGold=document.getElementById('dual-light-gold'),lightNight=document.getElementById('dual-light-night');
  const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')];
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
@@ -255,21 +242,16 @@ html.dual-embed .dual-film__credit{display:none}
   'var(--ws-pale-gold,#cebd74)','var(--ws-olive,#738a5a)',
   'var(--ws-harvest,#b8944a)','var(--ws-crimson,#a14d57)',
   'var(--ws-daylight-mauve,oklch(67% .075 330))'];
- const lineStarts=[7,24,10,33,15,29,8],lineHeights=[7,20,32,44,56,69,81],rays=[];
+ // Seven original marks in a weighted print hierarchy, not mechanical columns.
+ const lineStarts=[12,31,20,34,16,37,23],lineHeights=[7,19,31,43,56,70,84];
+ const widths=[29,35,40,50,40,34,29],densities=[.32,.45,.64,1,.69,.48,.34];
  const rows=palette.map((color,i)=>{
-  const line=document.createElement('div');
-  line.className='dual-letterfield__row';line.dataset.line=String(i+1);
-  line.style.top=lineHeights[i]+'%';line.style.left=lineStarts[i]+'%';line.style.width=(100-lineStarts[i])+'%';
-  line.style.setProperty('--row-ink',color);
-  const mark=document.createElement('span');mark.className='dual-letterfield__glyph';
-  mark.setAttribute('aria-hidden','true');line.appendChild(mark);letters.appendChild(line);
-  const shade=document.createElementNS('http://www.w3.org/2000/svg','path');
-  shade.setAttribute('stroke',color);shade.setAttribute('stroke-width','1.1');
-  shade.setAttribute('stroke-dasharray','19 4 3 7');shade.setAttribute('opacity','0.48');
-  const cut=document.createElementNS('http://www.w3.org/2000/svg','path');
-  cut.setAttribute('stroke','var(--ws-pale-gold,#cebd74)');
-  cut.setAttribute('stroke-width','.65');cut.setAttribute('stroke-dasharray','4 10 23 15');cut.setAttribute('opacity','0.7');
-  bridgeLines.append(shade,cut);rays.push([shade,cut]);
+  const line=document.createElement('div');line.className='dual-letterfield__row';
+  line.dataset.line=String(i+1);line.style.top=lineHeights[i]+'%';
+  line.style.left=lineStarts[i]+'%';line.style.setProperty('--row-ink',color);
+  line.style.setProperty('--mark-width',widths[i]+'cqi');
+  const glyph=document.createElement('span');glyph.className='dual-letterfield__glyph';
+  glyph.setAttribute('aria-hidden','true');line.appendChild(glyph);letters.appendChild(line);
   return line;
  });
  let progress=1,coverLeft=false;
@@ -282,7 +264,7 @@ html.dual-embed .dual-film__credit{display:none}
   // FIRST preserve the original two halves of the Church spreads, so these
   // planes REPLACE the existing layout rather than drop cards upon it.
   // LATER the same planes shrink together into adjacent square folios.
-  const fold=ease((progress-.725)/.105);
+  const fold=ease((progress-.755)/.105);
   let w,h,leftX,leftY,rightX,rightY;
   if(!mobile){
    const mx=Math.max(16,W*.067),my=Math.max(18,H*.052);
@@ -295,31 +277,35 @@ html.dual-embed .dual-film__credit{display:none}
    w=lerp(W,tile,fold);h=lerp(H/2,tile,fold);
    leftX=(W-w)/2;leftY=(H-2*h)/2;rightX=leftX;rightY=leftY+h;
   }
-  const blue=ease(progress/.20);
-  const dawn=ease((progress-.13)/.20);
+  const blue=reduce?(progress>=.22?1:0):ease((progress-.02)/.20);
+  const dawn=reduce?(progress>=.435?1:0):ease((progress-.225)/.21);
   // The accepted Church geometry is the entry surface. Right-hand schedule
   // is taken over FROM TOP, and left-hand water FROM BOTTOM.
   const coverOnLeft=coverLeft;
   const coverX=coverOnLeft?leftX:rightX,coverY=coverOnLeft?leftY:rightY;
   const goldX=coverOnLeft?rightX:leftX,goldY=coverOnLeft?rightY:leftY;
-  pose(cover,coverX,coverY-(1-blue)*H,w,h);
-  pose(gold,goldX,goldY+(1-dawn)*H,w,h);
+  // Full content stays IN its original half of the Church spread;
+  // only the revealed portion grows with scroll, not the whole square.
+  pose(cover,coverX,coverY,w,h);
+  pose(gold,goldX,goldY,w,h);
+  cover.style.clipPath='inset(0 0 '+((1-blue)*100).toFixed(3)+'% 0)';
+  gold.style.clipPath='inset('+((1-dawn)*100).toFixed(3)+'% 0 0 0)';
   const lettersFade=1-ease((progress-.855)/.115);
   letters.style.opacity=String(lettersFade);
    rows.forEach((row,i)=>{
-    const entered=ease((progress-(.255+i*.047))/.16);
-    row.style.opacity=String(entered);
-    row.style.transform='translate3d('+(lerp(-w*.13,0,entered)).toFixed(2)+'px,'+
-      ((1-entered)*(i%2?13:-9)).toFixed(2)+'px,0) rotate('+
-      (-14+i*1.55).toFixed(2)+'deg) scale('+
-      (.94+.06*entered).toFixed(3)+')';
+    const entered=reduce?(progress>=.57?1:0):ease((progress-(.445+i*.024))/.115);
+    const densities=[.32,.45,.64,1,.69,.48,.34];
+    row.style.opacity=String(entered*densities[i]);
+    row.style.transform='translate3d('+((1-entered)*(i%2?-18:15)).toFixed(2)+'px,'+
+      ((1-entered)*11).toFixed(2)+'px,0) rotate('+(-13+(i-3)*.42).toFixed(2)+
+      'deg) scale('+(.96+.04*entered).toFixed(3)+')';
    });
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
    const dawnRise=reduce?(progress>=.53?1:0):ease((progress-.555)/.185);
    const starRise=reduce?(progress>=.53?1:0):ease((progress-.605)/.12);
-   const paperTop=100-56*dawnRise;
+   const paperTop=100-56.4*dawnRise;
    paper.style.transform='translate3d(0,'+(100-100*dawnRise).toFixed(3)+'%,0)';
    wall.style.top=paperTop.toFixed(3)+'%';
    wall.style.opacity=String(reduce?dawnRise:ease((progress-.57)/.08));
@@ -330,21 +316,7 @@ html.dual-embed .dual-film__credit{display:none}
    radiance.style.opacity=String(starRise);
    star.style.opacity=String(starRise);
    star.style.transform='translate(-50%,'+(95-95*starRise).toFixed(2)+'%)';
-   // The same origin and scroll state carry engraved light into the left SVGs.
-   bridge.setAttribute('viewBox','0 0 '+W+' '+H);
-   // No ray crosses live text in the paper-title zone.
-   lightGold.setAttribute('x',goldX);lightGold.setAttribute('y',goldY);
-   lightGold.setAttribute('width',w);lightGold.setAttribute('height',h);
-   lightNight.setAttribute('x',coverX);lightNight.setAttribute('y',coverY);
-   lightNight.setAttribute('width',w);lightNight.setAttribute('height',h*.445);
-   bridge.style.opacity=String(starRise*(1-ease((progress-.87)/.115))*.69);
-   const sx=coverX+w*.72,sy=coverY+h*.27+Math.min(w*.14,124)*.48;
-   rays.forEach(([shade,cut],i)=>{
-    const tx=goldX+w*(lineStarts[i]/100+.14),ty=goldY+h*((lineHeights[i]+5)/100);
-    const mx=(sx+tx)/2,my=(sy+ty)/2-(i-3)*h*.026;
-    shade.setAttribute('d','M'+sx.toFixed(1)+' '+sy.toFixed(1)+' Q'+mx.toFixed(1)+' '+my.toFixed(1)+' '+tx.toFixed(1)+' '+ty.toFixed(1));
-    cut.setAttribute('d','M'+(sx-1.2).toFixed(1)+' '+(sy+1.4).toFixed(1)+' Q'+(mx-1.2).toFixed(1)+' '+(my+1.4).toFixed(1)+' '+(tx-1.2).toFixed(1)+' '+(ty+1.4).toFixed(1));
-   });
+
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
   const stone=ease((progress-.865)/.125);
