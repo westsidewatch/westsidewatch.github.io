@@ -2430,6 +2430,45 @@ For each output create a plate record with source URL and revision, original ext
 
 **未批准的事項：** 正式封面字標 84% 以外的各期差異、P2 確定哪一側先入、晨星相對文字高度、雙方塊固定版心、真 zoom / reduced motion 等，均以實際瀏覽器截圖、內容不裁切與 §6A 人工審查為唯一升級前提。**純 CI 綠燈只代表工程可用，不代表藝術質量達標。**
 
+
+### 6F.20 封面是完整的視覺主張，不是排版資訊塊（2026-10-23）
+
+**當前 P2 藍色雙方塊的藝術判定：REJECTED AS A FINISHED COVER，保留其空間及動效機構待改。** 2026-10-23 截圖顯示，Logo 雖已擴大，巨大 WATCH.、晨星、中文主題與下緣極薄城牆卻互不作用；大部分午夜藍沒有明確的圖像敘事。金色 Contents 十二項集中上半部，餘下留白缺乏明確編輯意義。這是兩個資訊區域，不是一張已設計完成的雜誌封面與其索引。**不應繼續把 Logo 百分比或方塊放大當成封面藝術改進。**
+
+#### 20.1 真實雜誌案例／設計原則
+
+| 刊物與原始研究 | 封面運作機制 | 可轉譯規則 |
+| --- | --- | --- |
+| [The Gentlewoman](https://thegentlewoman.co.uk/)；[magCulture](https://magculture.com/blogs/journal/details-the-gentlewoman-12) | 高識別度刊名與一張具有不可替代視線／主體的肖像 | 刊名和主圖各有重量，空白不是零星物件之間的剩餘 |
+| [Aperture 官方設計師訪談](https://aperture.org/editorial/behind-the-scenes-of-aperture-magazines-design-refresh/) | 「更突出 masthead」與「重新構思封面圖像」是改版時**兩個不同任務** | 字標寬 84% 不能替代一幅已構成的封面圖像；出發點是原件、主題與讀者 |
+| [Eye Magazine 的封面／刊物解剖](https://www.eyemagazine.com/feature/article/anatomy-of-a-magazine)；[Eye Type Special](https://hypernormal.space/products/eye-magazine-106-type-special-issue) | 連主題文字本身也能作成一張完整封面作品，無須照片 | 但不是把 WATCH. 放大就算：字的內容、比例、位置、遮蔽和材料需要共同成為視覺命題 |
+| [The New Yorker 概念封面](https://www.newyorker.com/contributors/malika-favre) | 建築／人物／光線／時刻與色彩共同講故事 | 西望的夜色、晨星、城牆必須有真正的時空關係；絕不照抄具體畫面 |
+| [MoMA 對 George Lois《Esquire》封面的研究](https://www.moma.org/calendar/exhibitions/72) | 一個簡潔但有文化與編輯觀點的圖像超越文章配圖 | 封面先要有主張，不能以新古典符號拼貼取代概念 |
+| [AIGA Magazine Cover Design](https://teachingresource.aiga.org/project/magazine-cover-design/) | masthead、主視覺、主題、期號與 supporting lines 是封面的編輯層級 | 存在這些元素不代表封面完成：必須合成一個有主從的藝術作品 |
+
+**本刊封面最低契約**：（一）能辨識的原始刊名；（二）**單一、具有敘事的封面主體**（可以是畫、照片、資料圖，也可以是文字自身）；（三）當期真正的中文命題；（四）可辨的期號；（五）所有元素形成獨特的互相作用。封面可極簡，也可複雜；沒有任何一種固定 masthead 百分比是成熟雜誌的普遍標準。
+
+#### 20.2 西望首期真正要創作的是「守望這座城」的圖像
+
+**本次編輯視覺問題：** 不是「半屏如何縮成兩個方塊」，而是「黑夜將盡，守望中的城如何被晨星的光照見？」此為**工作命題**，不是批准新經文或改寫現存刊名／稿件。
+
+**方向 A — 夜城刻線：** 沿用已保護的午夜藍、原始 Logo、現有晨星 v5.3 和可溯源的城牆／版畫資料，讓「城」成為清晰的構圖主體。建築由夜色中的刻線與光源密度逐漸顯露，晨星運動引起光的空間變化；下方城牆不再只是一條橫線。中文版名及大英文只能排在不遮敘事主體的版面內。來源與授權須可核對；不得將新製作的多雷語法插圖假稱多雷原作。
+
+**方向 B — 字形與城市共構：** 如果真正歷史圖版不適合首期，研究巨大 Bodoni 字型的輪廓如何與城市、晨星、負空間在同一張完整圖上構成可理解的視覺命題。不壓扁字、不以單純過大英文代替封面主圖。
+
+**方向 C — 一個有意義的極簡主體：** 適量撤掉英文與圖案，只保留一個擁有夜盡／城顯露意義的視覺標記，使整個主體形成真正的畫面張力；不是目前漂浮的小星星加純藍底。
+
+#### 20.3 嚴格的生產／驗收次序
+
+1. **先做完整的獨立封面作品**，讓它沒有背景影片、沒有右側 Contents、沒有 UI 控制也能成立；再提出 A、B、C 三張真實來源／真實文字的對照候選。
+2. **反向剝除測試：** 暫時遮住 Logo、WATCH. 和外部影片，看封面仍否有夜色—城市—晨星的明確內容主體。若只是空色塊與標點，拒絕。再恢復刊名及中英文，檢查視線及字體層級。
+3. **封面先，尺寸其次。** §6F.19 中 84% masthead、雙正方形邊長及藍金比例，均屬此前工程試驗，不得用測試通過掩蓋本章未批准的核心藝術缺口。
+4. **原 P2 整個教會流程必須保留：** 教會身份／主日崇拜／活水上升／分海／開門 → 午夜藍封面及黎明金 Contents 提早入場 → 兩塊相接方塊 → 首頁原影片在背後。這是同一 P2 的後段，不是「新 P2」。
+5. **Contents 需另外編輯。** 四樂章十二欄目三間奏可讀；若下半方塊大片空白，不能用虛構文章與任意裝飾去填，要重排真實編輯資料與視覺節奏。
+6. **批准證據：** 先有三張獨立封面及對比閱讀，再有桌面／手機的「教會→封面→索引」實際連續錄製與截圖，真 zoom／倒捲／鍵盤；獲既有 §6A 評審通過後才談正式整合。當前 PR #1355 可維持隔離實驗，不可視為已驗收成品。
+
+**本章不是新設計系統；它是同一 Westside Design OS 的封面藝術指導否決門檻。封面主圖完成前，不再用微調 LOGO、改方塊 700→714px 等局部 CSS 去冒充版面進展。**
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
