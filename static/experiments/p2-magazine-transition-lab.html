@@ -51,6 +51,15 @@ body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
 <script>
 (()=>{'use strict';
  const frame=document.getElementById('p2scene'),track=document.getElementById('track');
+ const query=new URLSearchParams(location.search);
+ const dual=query.get('dual')==='1';
+ if(dual){
+  const side=query.get('side')==='cover-right'?'cover-right':'cover-left';
+  frame.src='/p2/living-water.html?embed=1&magazineProof=1&dualSquare=1&side='+side;
+  document.querySelector('header h1').textContent='Living Water → Magazine / Cover + Contents';
+  document.querySelector('header p').textContent='先保留教會活水上升、分海、主日崇拜及原始 P2 scroll 時鐘；再讓午夜藍封面與黎明金 Contents 從半屏入場，收成兩塊相接的方形；背後顯示首頁原有王進城影片。這是接續既有 P2 的獨立候選，不是另一套 P2。';
+  document.querySelector('.notes').insertAdjacentHTML('afterbegin','<p><strong>MAGAZINE COVER SIZING LAB:</strong> 兩個正方形盡量填滿可用視窗，保留 3.5vw 左右安全邊及 5svh 上下呼吸；原版 P2 對照請移除網址 dual=1。<a href="/experiments/p2-double-square-video-lab.html?p=100">單獨封面比較 ↗</a></p>');
+ }
  const range=document.getElementById('progress'),out=document.getElementById('percent');
  const desktop=document.getElementById('desktop'),mobile=document.getElementById('mobile');
  const clamp=n=>Math.max(0,Math.min(1,n));

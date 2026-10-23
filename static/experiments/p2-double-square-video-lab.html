@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(new URLSearchParams(location.search).get("embed")==="1")document.documentElement.classList.add("dual-embed")</script>
 <title>Westside P2 · Two Squares / Cover + Contents</title>
 <meta name="description" content="獨立 P2 編輯構圖實驗：午夜藍封面與黎明金 Contents 由半屏收成兩個方塊，露出原始首頁影片。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
@@ -27,20 +28,20 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-film::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(8,24,44,.60),rgba(9,30,49,.33) 50%,rgba(10,26,42,.62));pointer-events:none}
 .dual-film__credit{position:absolute;bottom:14px;left:15px;right:15px;z-index:4;color:#f2eee2;text-align:center;font:400 12px/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.07em;opacity:0;pointer-events:none}
 .dual-panels{position:absolute;inset:0;pointer-events:none}
-.dual-tile{position:absolute;min-width:0;min-height:0;overflow:hidden;pointer-events:auto;isolation:isolate;box-shadow:none}
+.dual-tile{position:absolute;min-width:0;min-height:0;overflow:hidden;pointer-events:auto;isolation:isolate;box-shadow:none;container-type:size}
 .dual-tile--cover{background:radial-gradient(ellipse at 56% 22%,#29425b 0%,transparent 58%),var(--blue);color:var(--paper)}
 .dual-tile--contents{background:linear-gradient(140deg,#ddc98f,#c6a664 52%,#b59a65);color:var(--ink)}
 .dual-cover{position:relative;display:flex;flex-direction:column;height:100%;width:100%;padding:clamp(22px,4.4vmin,48px) clamp(22px,4vmin,47px);overflow:hidden}
-.dual-cover__mast{position:relative;z-index:3;width:clamp(185px,27vw,340px);max-width:86%;height:clamp(50px,10vh,94px);object-fit:contain;object-position:left top;filter:brightness(0) invert(1);align-self:flex-start}
-.dual-cover__series{position:relative;z-index:3;font:400 clamp(11px,.87vw,15px)/1.6 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.14em;margin-top:10px}
-.dual-cover__star{position:absolute;z-index:2;left:50%;top:25%;width:clamp(150px,18vw,275px);aspect-ratio:1;transform:translate(-50%,0);opacity:1;overflow:hidden}
+.dual-cover__mast{position:absolute;z-index:3;top:5%;left:6%;width:84%;max-width:84%;height:auto;max-height:22%;object-fit:contain;object-position:left top;filter:brightness(0) invert(1)}
+.dual-cover__series{position:absolute;z-index:3;left:6%;right:6%;top:27%;font:400 clamp(10px,1.6cqi,15px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.10em}
+.dual-cover__star{position:absolute;z-index:2;left:74%;top:34%;width:clamp(78px,21cqi,210px);aspect-ratio:1;transform:translate(-50%,0);opacity:1;overflow:hidden}
 .dual-cover__star iframe{width:100%;height:100%;border:0;pointer-events:none;display:block}
 .dual-cover__star-fallback{position:absolute;inset:0;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:0;pointer-events:none}
-.dual-cover__title{position:relative;z-index:3;margin:auto 0 0;font:400 clamp(73px,9.4vw,155px)/.78 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.085em;white-space:nowrap}
-.dual-cover__zh{position:relative;z-index:3;font:900 clamp(30px,3.2vw,52px)/1.13 var(--ws-type-display-zh,sans-serif);letter-spacing:-.025em;margin:17px 0 clamp(115px,17vh,165px)}
+.dual-cover__title{position:absolute;z-index:3;left:6%;top:50%;margin:0;font:400 clamp(50px,18.5cqi,148px)/.78 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.072em;white-space:nowrap}
+.dual-cover__zh{position:absolute;z-index:3;left:6%;right:3%;top:69%;font:900 clamp(23px,5cqi,45px)/1.1 var(--ws-type-display-zh,sans-serif);letter-spacing:-.018em;margin:0}
 .dual-cover__zh span{display:block;white-space:nowrap}
-.dual-cover__wall{position:absolute;z-index:1;bottom:0;left:0;right:0;height:27%;min-height:115px;background:url('/images/jerusalem-wall.png') center bottom/160% auto no-repeat;pointer-events:none;mask-image:linear-gradient(to bottom,transparent 0%,black 55%)}
-.dual-cover__folio{position:absolute;right:5%;bottom:5%;z-index:3;font:400 clamp(10px,.9vw,15px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;color:#f2e2c0}
+.dual-cover__wall{position:absolute;z-index:1;bottom:0;left:0;right:0;height:25%;min-height:0;background:url('/images/jerusalem-wall.png') center bottom/100% auto no-repeat;pointer-events:none;mask-image:linear-gradient(to bottom,transparent 0%,black 40%)}
+.dual-cover__folio{position:absolute;left:6%;bottom:4%;z-index:3;font:400 clamp(10px,1.2cqi,13px)/1.35 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.04em;color:#f2e2c0}
 .dual-contents{position:relative;display:flex;flex-direction:column;height:100%;width:100%;padding:clamp(22px,4.5vmin,52px) clamp(19px,4vmin,45px);overflow:hidden}
 .dual-contents__head{flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:9px;border-bottom:1px solid rgba(38,50,59,.58);padding-bottom:clamp(8px,1vh,14px)}
 .dual-contents__head h2{font:400 clamp(47px,5.5vw,76px)/.89 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.065em;margin:0}
@@ -63,9 +64,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-overview strong{color:#e5d0a8}
 .dual-overview p{margin:0 0 11px}
 @media(max-width:1000px){
-.dual-cover__mast{width:clamp(175px,26vw,245px)}
-.dual-cover__title{font-size:clamp(64px,8.2vw,105px)}
-.dual-cover__zh{font-size:clamp(27px,3vw,42px)}
+.dual-cover__mast{width:84%;max-width:84%;height:auto;max-height:22%}
+.dual-cover__title{font-size:clamp(50px,18.5cqi,148px)}
+.dual-cover__zh{font-size:clamp(23px,5cqi,45px)}
 .dual-contents__head h2{font-size:clamp(45px,5vw,67px)}
 .dual-contents__deck{font-size:12px}
 .dual-contents__index{gap:17px 13px}
@@ -78,12 +79,12 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-ui__range{width:100%;min-width:0}.dual-ui__range input{flex:1}
 .dual-stage{min-height:calc(100svh - 135px);height:calc(100svh - 135px)}
 .dual-tile--cover .dual-cover,.dual-tile--contents .dual-contents{padding:12px 14px}
-.dual-cover__mast{width:54%;height:47px}
-.dual-cover__series{font-size:10px;margin-top:3px}
-.dual-cover__star{width:clamp(85px,30vw,135px);top:21%}
-.dual-cover__title{font-size:clamp(50px,14vw,83px);margin-bottom:3px}
-.dual-cover__zh{font-size:clamp(23px,7vw,36px);margin-top:6px;margin-bottom:25%}
-.dual-cover__wall{min-height:68px;height:22%}
+.dual-cover__mast{width:84%;max-width:84%;height:auto;max-height:22%;top:5%;left:6%}
+.dual-cover__series{font-size:10px;left:6%;top:27%}
+.dual-cover__star{width:clamp(70px,21cqi,110px);top:34%}
+.dual-cover__title{font-size:clamp(50px,18cqi,80px);margin:0;top:51%;left:6%}
+.dual-cover__zh{font-size:clamp(22px,6cqi,34px);top:70%;left:6%;margin:0}
+.dual-cover__wall{min-height:0;height:23%}
 .dual-contents__head{padding-bottom:7px}
 .dual-contents__head h2{font-size:clamp(37px,11vw,52px)}
 .dual-contents__head span{font-size:11px}
@@ -98,8 +99,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__foot{margin-top:5px;padding-top:5px;font-size:9px}
 }
 @media(max-width:360px){
-.dual-cover__zh{font-size:22px}
-.dual-cover__title{font-size:48px}
+.dual-cover__zh{font-size:22px;top:68%}
+.dual-cover__title{font-size:clamp(45px,18cqi,60px)}
 .dual-contents__index{gap:8px 6px}
 .dual-movement h3{font-size:18px}
 .dual-movement li{font-size:12px}
@@ -110,6 +111,15 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__foot{font-size:8px;margin-top:3px;padding-top:3px}
 }
 @media(prefers-reduced-motion:reduce){.dual-tile,.dual-film,.dual-cover__star{transition:none!important;animation:none!important}}
+
+/* This same composition is the P2 magazine segment inside the existing Church
+   scroll surface when ?embed=1. No duplicate timeline or copy of home film. */
+html.dual-embed,html.dual-embed body{width:100%;height:100%;overflow:hidden}
+html.dual-embed .dual-ui,html.dual-embed .dual-overview{display:none!important}
+html.dual-embed .dual-stage{height:100svh;min-height:0}
+html.dual-embed .dual-contents__index{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+html.dual-embed .dual-film__credit{display:none}
+
 </style>
 </head>
 <body data-ws-scope="journal">
@@ -189,11 +199,17 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
   const t=ease((progress-.53)/.47);
   let w,h,x1,y1,x2,y2;
   if(!mobile){
-   const tile=Math.min(W*.415,H*.75,670);
+   // §6F cover+contents geometry: maximize the square pair within a
+   // readable optical frame. Avoid arbitrary 41.5vw / 75vh and 670px cap.
+   // Horizontal safety frame: >=3.5vw; vertical safety frame: >=5svh.
+   const marginX=Math.max(16,W*.035),marginY=Math.max(18,H*.052);
+   const tile=Math.max(0,Math.min((W-2*marginX)/2,H-2*marginY));
    w=lerp(W/2,tile,t);h=lerp(H,tile,t);
    x1=(W-2*w)/2;y1=(H-h)/2;x2=x1+w;y2=y1;
   }else{
-   const tile=Math.min(W*.90,Math.max(220,(H-8)/2),450);
+   // For small screens the pair is stacked, not two illegible side-by-side thumbnails.
+   const frameX=Math.max(7,W*.025),frameY=6;
+   const tile=Math.max(0,Math.min(W-2*frameX,(H-2*frameY)/2));
    w=lerp(W,tile,t);h=lerp(H/2,tile,t);
    x1=(W-w)/2;y1=(H-2*h)/2;x2=x1;y2=y1+h;
   }
@@ -203,10 +219,12 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
   film.style.opacity=String(ease((progress-.59)/.39));
   film.style.visibility=progress<=.55?'hidden':'visible';
   const up=ease((progress-.20)/.40);
-  const starWidth=mobile?lerp(118,Math.min(84,w*.235),t):lerp(Math.min(270,Math.max(145,W*.17)),Math.min(135,w*.215),t);
+  // Star is a cover image element, not a giant floating annotation.
+  // Keep it within the field below the masthead as the cover approaches its final size.
+  const starWidth=mobile?Math.max(60,Math.min(110,w*.21)):Math.max(85,Math.min(210,w*.21));
   star.style.width=starWidth.toFixed(2)+'px';
-  star.style.left=(50+27*t).toFixed(2)+'%';
-  star.style.top=(25-15*t).toFixed(2)+'%';
+  star.style.left='74%';
+  star.style.top=(39-5*ease(progress)).toFixed(2)+'%';
   star.style.transform='translate(-50%,'+(35-35*up).toFixed(2)+'%)';
   star.style.opacity=String(ease((progress-.1)/.2));
   stage.dataset.phase=progress<.18?'initial':progress<.53?'emergence':progress<.97?'shrinking':'final';
@@ -218,6 +236,13 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  document.querySelectorAll('[data-snap]').forEach(b=>b.addEventListener('click',()=>setProgress(b.dataset.snap)));
  buttons.forEach(b=>b.addEventListener('click',()=>setOrientation(b.dataset.position)));
  range.addEventListener('input',()=>setProgress(Number(range.value)/100));
+ addEventListener('message',event=>{
+  if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-dual-progress')return;
+  progress=clamp(Number(event.data.progress)||0);
+  if(event.data.side==='cover-left'||event.data.side==='cover-right')coverLeft=event.data.side==='cover-left';
+  // The Church iframe's original scroll position remains the sole clock.
+  render();
+ });
  addEventListener('resize',render,{passive:true});
  const qs=new URLSearchParams(location.search);
  if(reduce){star.querySelector('iframe').remove();star.querySelector('.dual-cover__star-fallback').style.opacity='1'}else{frame.src=frame.dataset.originalSrc}

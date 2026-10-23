@@ -8,6 +8,36 @@ if(new URLSearchParams(location.search).get('magazineProof')!=='1')return;
 const root=document.querySelector('.showcase'),magazine=root?.querySelector('.p2-magazine');
 if(!root||!magazine)return;
 root.dataset.magazineProof='true';
+if(new URLSearchParams(location.search).get('dualSquare')==='1'){
+ // Variant is mounted *inside the existing P2 Church scene*.
+ // The source water, sermon, Sunday schedule and Red Sea gates remain untouched.
+ root.dataset.magazineDesign='duo-bridge';
+ const qs=new URLSearchParams(location.search);
+ const side=qs.get('side')==='cover-right'?'cover-right':'cover-left';
+ const frame=document.createElement('iframe');
+ frame.title='西望 Vol.00 封面與 Contents，緊接教會活水開門';
+ frame.src='/experiments/p2-double-square-video-lab.html?embed=1&p=0&side='+side;
+ frame.setAttribute('allow','autoplay');
+ frame.style.cssText='display:block;position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent';
+ magazine.replaceChildren(frame);
+ const clamp=n=>Math.min(1,Math.max(0,n));
+ let latest=0,loaded=false;
+ function render(vh){
+  latest=clamp((Number(vh)-2.37)/(3.85-2.37));
+  magazine.style.visibility=latest>0?'visible':'hidden';
+  magazine.style.clipPath='none';
+  magazine.style.opacity='1';
+  magazine.style.pointerEvents=latest>=.995?'auto':'none';
+  magazine.inert=latest<.995;
+  magazine.setAttribute('aria-hidden',latest>=.995?'false':'true');
+  magazine.dataset.magazineStage=latest<.53?'blue-gold-arrival':latest<.99?'cover-contents-fold':'two-cover-tiles';
+  if(loaded)frame.contentWindow?.postMessage({type:'westside-p2-dual-progress',progress:latest,side},location.origin);
+ }
+ frame.addEventListener('load',()=>{loaded=true;render(Number(root.dataset.p2Progress)||2.37)});
+ window.wsP2MagazineProof={render};
+ render(Number(root.dataset.p2Progress)||2.37);
+ return;
+}
 root.dataset.magazineDesign='xiwang-v3';
 // Canon: docs/projects/watch-city-vol00/EDITORIAL_MAP.md; preserve confirmed titles and 4–4–2–2.
 const movements=[{"name":"WATCH","number":"I","items":[["米斯巴","Mizpah",["守望，一座光明的城"]],["伯利恆","Bethlehem",[]],["門","The Gate",["城門口的人","耶路撒冷：在黑暗中軟弱，在光明中剛強","大希律：這個人會建造"]],["迦密","Carmel",["一萬年的建城禮"]]],"interlude":["細拉","Selah"]},{"name":"WALK","number":"II","items":[["以馬忤斯","Emmaus",["吾珥：離開一座大的城"]],["以琳","Elim",["若不是耶和華看守城池——古代攻城技術史"]],["別是巴","Beersheba",[]],["伯特利","Bethel",[]]],"interlude":["遠方無聲鴿","Jonath-elem-rechokim"]},{"name":"WITNESS","number":"III","items":[["以斯帖","Esther",["廚房裡的人｜你當像飛鳥往你的山"]],["亞杜蘭洞","Adullam",[],["黃淑華","江秀琴"]]],"interlude":["基尼烈","Kinneret"]},{"name":"WORSHIP","number":"IV","items":[["何烈山","Horeb",["房角石：整座城由此對齊"]],["瑪拉拿","Maranatha",["冠冕"]]],"interlude":null}];
