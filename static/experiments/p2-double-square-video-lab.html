@@ -68,16 +68,21 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__head h2{font:400 clamp(47px,5.5vw,76px)/.89 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.065em;margin:0}
 .dual-contents__head span{font:400 clamp(11px,.95vw,17px)/1.5 var(--ws-type-reading-zh,sans-serif)}
 .dual-contents__deck{font:400 clamp(11px,.9vw,16px)/1.5 var(--ws-type-reading-zh,sans-serif);margin:8px 0 15px;flex:none}
-.dual-contents__index{min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:max-content max-content;gap:clamp(15px,2vh,25px) clamp(13px,2.4vw,32px);align-content:start;flex:0 1 auto}
+.dual-contents__index{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto;gap:clamp(12px,1.4cqi,19px) clamp(13px,1.9cqi,27px);align-content:start;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 4px 10px 0}
 .dual-movement{min-width:0}
 .dual-movement h3{display:flex;align-items:baseline;gap:9px;margin:0 0 9px;border-top:1px solid rgba(35,49,67,.42);padding-top:9px;font:400 clamp(20px,1.95vw,33px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.03em}
 .dual-movement h3 em{font:italic 400 .48em/1 var(--ws-type-display-en,Georgia,serif);color:#5a4932}
-.dual-movement ol{margin:0;padding:0;list-style:none;display:grid;gap:clamp(5px,.7vh,9px)}
-.dual-movement li{display:grid;grid-template-columns:22px 1fr;gap:5px;align-items:baseline;font:400 clamp(14px,1.05vw,17px)/1.24 var(--ws-type-display-zh,sans-serif)}
+.dual-movement ol{margin:0;padding:0;list-style:none;display:grid;gap:clamp(7px,.95cqi,11px)}
+.dual-movement li{display:grid;grid-template-columns:clamp(17px,2.8cqi,23px) minmax(0,1fr);gap:4px;align-items:start;font:400 clamp(12px,1.55cqi,17px)/1.2 var(--ws-type-display-zh,sans-serif)}
 .dual-movement li b{font:400 11px/1.2 var(--ws-type-display-en,Georgia,serif);color:#544c3f}
-.dual-movement li small{display:block;margin-top:1px;font:italic 400 clamp(10px,.8vw,12px)/1.16 var(--ws-type-display-en,Georgia,serif)}
+.dual-movement li small{display:block;margin-top:2px;font:italic 400 clamp(9px,.95cqi,11px)/1.18 var(--ws-type-display-en,Georgia,serif)}
+.dual-entry__text{min-width:0;display:block}
+.dual-entry__column{display:block;font-weight:600}
+.dual-work{display:block;font:400 clamp(10px,1.16cqi,13px)/1.3 var(--ws-type-reading-zh,sans-serif);margin-top:4px;color:#4d4d47;overflow-wrap:anywhere;word-break:normal}
+.dual-work+.dual-work{margin-top:2px}
+.dual-work--people{letter-spacing:.01em}
 .dual-movement__interlude{margin:7px 0 0;font:400 clamp(10px,.76vw,11px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.03em}
-.dual-contents__foot{margin-top:clamp(10px,1.5vh,17px);padding-top:7px;border-top:1px solid rgba(35,49,67,.48);display:flex;gap:12px;align-items:center;justify-content:space-between;font:400 clamp(10px,.81vw,13px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
+.dual-contents__foot{margin-top:clamp(8px,1.2vh,14px);padding-top:7px;border-top:1px solid rgba(35,49,67,.48);display:flex;gap:12px;align-items:center;justify-content:space-between;font:400 clamp(10px,.81vw,13px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
 .dual-contents__foot a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;pointer-events:auto}
 .dual-stage[data-phase=final] .dual-tile{box-shadow:0 17px 57px rgba(0,0,0,.16)}
 .dual-stage[data-phase=initial] .dual-film{visibility:hidden}
@@ -117,11 +122,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__head h2{font-size:clamp(37px,11vw,52px)}
 .dual-contents__head span{font-size:11px}
 .dual-contents__deck{font-size:10px;margin:5px 0 9px}
-.dual-contents__index{gap:8px 9px;align-content:start}
+.dual-contents__index{gap:10px 8px;overflow-y:auto;scrollbar-width:thin;align-content:start}
 .dual-movement h3{font-size:clamp(17px,5.1vw,25px);margin-bottom:5px;padding-top:4px}
 .dual-movement li{grid-template-columns:18px 1fr;font-size:clamp(12px,3.7vw,16px);gap:2px}
-.dual-movement li small{display:none}
-.dual-movement li{line-height:1.15}
+.dual-movement li small{display:block;font-size:9px}
+.dual-movement li{line-height:1.18}
 .dual-movement ol{gap:4px}
 .dual-movement__interlude{font-size:9px;margin-top:3px}
 .dual-contents__foot{margin-top:5px;padding-top:5px;font-size:9px}
@@ -200,16 +205,16 @@ html.dual-embed .dual-film__credit{display:none}
     <p class="dual-contents__deck">四樂章 · 十二欄目 · 三段視聽間奏</p>
     <div class="dual-contents__index">
       <section class="dual-movement" aria-label="WATCH"><h3><em>I</em>WATCH</h3><ol>
-       <li><b>01</b><span>米斯巴<small>Mizpah</small></span></li><li><b>02</b><span>伯利恆<small>Bethlehem</small></span></li><li><b>03</b><span>門<small>The Gate</small></span></li><li><b>04</b><span>迦密<small>Carmel</small></span></li>
+       <li class="dual-entry"><b>01</b><span class="dual-entry__text"><span class="dual-entry__column">米斯巴<small>Mizpah</small></span><span class="dual-work" lang="zh-Hant">〈守望，一座光明的城〉</span></span></li><li class="dual-entry"><b>02</b><span class="dual-entry__text"><span class="dual-entry__column">伯利恆<small>Bethlehem</small></span></span></li><li class="dual-entry"><b>03</b><span class="dual-entry__text"><span class="dual-entry__column">門<small>The Gate</small></span><span class="dual-work" lang="zh-Hant">〈城門口的人〉</span><span class="dual-work" lang="zh-Hant">〈耶路撒冷：在黑暗中軟弱，在光明中剛強〉</span><span class="dual-work" lang="zh-Hant">〈大希律：這個人會建造〉</span></span></li><li class="dual-entry"><b>04</b><span class="dual-entry__text"><span class="dual-entry__column">迦密<small>Carmel</small></span><span class="dual-work" lang="zh-Hant">〈一萬年的建城禮〉</span></span></li>
       </ol><p class="dual-movement__interlude">INTERLUDE / SELAH</p></section>
       <section class="dual-movement" aria-label="WALK"><h3><em>II</em>WALK</h3><ol>
-       <li><b>05</b><span>以馬忤斯<small>Emmaus</small></span></li><li><b>06</b><span>以琳<small>Elim</small></span></li><li><b>07</b><span>別是巴<small>Beersheba</small></span></li><li><b>08</b><span>伯特利<small>Bethel</small></span></li>
+       <li class="dual-entry"><b>05</b><span class="dual-entry__text"><span class="dual-entry__column">以馬忤斯<small>Emmaus</small></span><span class="dual-work" lang="zh-Hant">〈吾珥：離開一座大的城〉</span></span></li><li class="dual-entry"><b>06</b><span class="dual-entry__text"><span class="dual-entry__column">以琳<small>Elim</small></span><span class="dual-work" lang="zh-Hant">〈若不是耶和華看守城池——古代攻城技術史〉</span></span></li><li class="dual-entry"><b>07</b><span class="dual-entry__text"><span class="dual-entry__column">別是巴<small>Beersheba</small></span></span></li><li class="dual-entry"><b>08</b><span class="dual-entry__text"><span class="dual-entry__column">伯特利<small>Bethel</small></span></span></li>
       </ol><p class="dual-movement__interlude">INTERLUDE / 遠方無聲鴿</p></section>
       <section class="dual-movement" aria-label="WITNESS"><h3><em>III</em>WITNESS</h3><ol>
-       <li><b>09</b><span>以斯帖<small>Esther</small></span></li><li><b>10</b><span>亞杜蘭洞<small>Adullam</small></span></li>
+       <li class="dual-entry"><b>09</b><span class="dual-entry__text"><span class="dual-entry__column">以斯帖<small>Esther</small></span><span class="dual-work" lang="zh-Hant">〈廚房裡的人｜你當像飛鳥往你的山〉</span></span></li><li class="dual-entry"><b>10</b><span class="dual-entry__text"><span class="dual-entry__column">亞杜蘭洞<small>Adullam</small></span><span class="dual-work dual-work--people" lang="zh-Hant">黃淑華 · 江秀琴</span></span></li>
       </ol><p class="dual-movement__interlude">INTERLUDE / KINNERET</p></section>
       <section class="dual-movement" aria-label="WORSHIP"><h3><em>IV</em>WORSHIP</h3><ol>
-       <li><b>11</b><span>何烈山<small>Horeb</small></span></li><li><b>12</b><span>瑪拉拿<small>Maranatha</small></span></li>
+       <li class="dual-entry"><b>11</b><span class="dual-entry__text"><span class="dual-entry__column">何烈山<small>Horeb</small></span><span class="dual-work" lang="zh-Hant">〈房角石：整座城由此對齊〉</span></span></li><li class="dual-entry"><b>12</b><span class="dual-entry__text"><span class="dual-entry__column">瑪拉拿<small>Maranatha</small></span><span class="dual-work" lang="zh-Hant">〈冠冕〉</span></span></li>
       </ol></section>
     </div>
     <div class="dual-contents__foot"><span lang="en">VOL.00 / INDEX</span><a href="/journal/">ENTER MAGAZINE ↗</a></div>
@@ -218,7 +223,7 @@ html.dual-embed .dual-film__credit{display:none}
  </div>
 </section>
 <aside class="dual-overview">
- <p><strong>第五輪修訂：</strong>右邊午夜藍先自上向下揭示日程半屏，再由黎明金自下向上揭示活水半屏；取消額外人工射線，原晨星 v5.3 蝕刻底紋不動。原城牆接上聖殿石肌理；官方西望字形分七色，以主次大小和安靜節奏呈現，不再做齊一字陣。</p>
+ <p><strong>第五輪修訂：</strong>右半屏午夜藍從上方揭示日程，左半屏黎明金從下方揭示活水，保留原教會流動場景。移除人工跨頁射線，保留原晨星刻線與原始城牆—聖殿石肌理。七枚官方 Logo 字形使用疏密主次。Contents 從正式 Vol.00 Editorial Map 恢復八個欄目下十項已確認的文章題名、亞杜蘭洞兩位講員；其他三個本期題名未定的欄目不冒充成稿。</p>
  <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
 </aside>
 </main>
