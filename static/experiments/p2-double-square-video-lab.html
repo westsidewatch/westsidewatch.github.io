@@ -34,7 +34,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 /* Actual logo SVG outlines, seven differently paced editorial rays. */
 .dual-letterfield{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:1}
 .dual-letterfield__row{position:absolute;left:7%;width:86%;height:10%;display:flex;align-items:center;transform-origin:left center;will-change:transform,opacity}
-.dual-letterfield__glyph{display:block;flex:none;width:clamp(90px,24cqi,240px);aspect-ratio:432/218;background:color-mix(in srgb,var(--row-ink,#5b8fa8) 76%,#1b3046 24%);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat}
+.dual-letterfield__glyph{display:block;flex:none;width:clamp(90px,24cqi,240px);aspect-ratio:432/218;background:color-mix(in srgb,var(--row-ink,#5b8fa8) 62%,#1b3046 38%);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat}
 .dual-letterfield__row:nth-child(3n+2) .dual-letterfield__glyph{width:clamp(98px,26cqi,262px)}
 .dual-light-bridge{position:absolute;inset:0;z-index:5;width:100%;height:100%;pointer-events:none;opacity:0;overflow:hidden}
 .dual-light-bridge path{fill:none;stroke-linecap:round;vector-effect:non-scaling-stroke}
@@ -56,15 +56,15 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
 .dual-cover__star-fallback{position:absolute;z-index:1;inset:0;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:.25;pointer-events:none}
 .dual-cover__wall{position:absolute;z-index:4;top:100%;left:0;right:0;height:clamp(37px,9cqi,88px);transform:translate3d(0,-50%,0);background:url('/images/jerusalem-wall.png') center bottom/auto 100% no-repeat;pointer-events:none;opacity:0;filter:drop-shadow(0 -4px 10px rgba(191,146,73,.15));will-change:top}
-.dual-cover__en{position:absolute;z-index:5;top:49.5%;left:7%;right:6%;margin:0;font:400 clamp(63px,15cqi,145px)/.76 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.075em;color:#27384a;opacity:0}
+.dual-cover__en{position:absolute;z-index:5;top:49.5%;left:7%;right:6%;margin:0;font:400 clamp(42px,12.8cqi,124px)/.77 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.075em;color:#27384a;opacity:0}
 .dual-cover__en span{display:block;white-space:nowrap}
 .dual-cover__en span:last-child{margin-left:11%;font-size:1.18em;line-height:.88}
 .dual-cover__en em{font:italic 400 .57em/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.035em;vertical-align:.06em}
-.dual-cover__vol{position:absolute;z-index:5;top:74%;left:10%;right:10%;display:flex;align-items:center;gap:12px;margin:0;color:#8e744e;font:400 clamp(10px,1.55cqi,15px)/1.25 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.18em;opacity:0}
+.dual-cover__vol{position:absolute;z-index:5;top:74.5%;left:10%;right:10%;display:flex;align-items:center;gap:12px;margin:0;color:#8e744e;font:400 clamp(10px,1.55cqi,15px)/1.25 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.18em;opacity:0}
 .dual-cover__vol::before{content:'';height:1px;flex:0 0 14%;background:currentColor;opacity:.6}
 .dual-cover__zh{position:absolute;z-index:5;top:79.5%;left:8%;right:7%;margin:0;text-align:left;font:900 clamp(23px,5.55cqi,51px)/1.08 var(--ws-type-display-zh,sans-serif);letter-spacing:-.035em;color:#334454;font-synthesis:none;opacity:0}
 .dual-cover__zh span{display:block;margin-top:clamp(4px,.75cqi,10px);white-space:nowrap}
-.dual-cover__folio{position:absolute;z-index:5;left:8%;right:8%;bottom:6%;padding-top:clamp(8px,1.3cqi,14px);border-top:1px solid rgba(138,108,61,.45);font:400 clamp(10px,1.35cqi,15px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;text-align:center;color:#776043;opacity:0}
+.dual-cover__folio{position:absolute;z-index:5;left:8%;right:8%;bottom:2.5%;padding-top:clamp(8px,1.3cqi,14px);border-top:1px solid rgba(138,108,61,.45);font:400 clamp(10px,1.35cqi,15px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;text-align:center;color:#776043;opacity:0}
 .dual-cover__radiance,.dual-cover__zh,.dual-cover__folio{will-change:opacity}
 .dual-contents{position:relative;display:flex;flex-direction:column;height:100%;width:100%;padding:clamp(22px,4.5vmin,52px) clamp(19px,4vmin,45px);overflow:hidden}
 .dual-contents__head{flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:9px;border-bottom:1px solid rgba(38,50,59,.58);padding-bottom:clamp(8px,1vh,14px)}
@@ -89,7 +89,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-overview p{margin:0 0 11px}
 @media(max-width:1000px){
 .dual-cover__mast{width:90%;max-width:90%;height:25%;max-height:25%}
-.dual-cover__en{font-size:clamp(63px,15cqi,145px)}
+.dual-cover__en{font-size:clamp(42px,12.8cqi,124px)}
 .dual-cover__zh{font-size:clamp(23px,5.55cqi,51px)}
 .dual-contents__head h2{font-size:clamp(45px,5vw,67px)}
 .dual-contents__deck{font-size:12px}
@@ -191,7 +191,7 @@ html.dual-embed .dual-film__credit{display:none}
        <div class="dual-cover__star-fallback"></div>
      </div>
      <div class="dual-cover__wall" id="dual-cover-wall" aria-hidden="true"></div>
-     <h2 class="dual-cover__en" id="dual-cover-en" lang="en"><span>CITY <em>OF</em></span><span>LIGHT</span></h2>
+     <p class="dual-cover__en" id="dual-cover-en" lang="en"><span>CITY <em>OF</em></span><span>LIGHT</span></p>
      <p class="dual-cover__vol" id="dual-cover-vol" lang="en">VOL.00</p>
      <h1 class="dual-cover__zh" id="dual-cover-zh" lang="zh-Hant">守望，<span>一座光明的城</span></h1>
      <span class="dual-cover__folio" id="dual-cover-folio" lang="en">THE NIGHT IS FAR SPENT / ROMANS 13:12</span>
@@ -220,7 +220,12 @@ html.dual-embed .dual-film__credit{display:none}
    </div>
   </section>
  </div>
- <svg class="dual-light-bridge" id="dual-light-bridge" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true"></svg>
+ <svg class="dual-light-bridge" id="dual-light-bridge" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+  <defs><clipPath id="dual-light-clip" clipPathUnits="userSpaceOnUse">
+    <rect id="dual-light-gold"></rect><rect id="dual-light-night"></rect>
+  </clipPath></defs>
+  <g id="dual-light-lines" clip-path="url(#dual-light-clip)"></g>
+ </svg>
 </section>
 <aside class="dual-overview">
  <p><strong>第四輪：</strong>左頁以正式 Logo 同源 SVG 的「西望」原字形呈現七色，晨星刻線由右側跨至每枚字標，與滾動共用時鐘；右頁紙色區英文以 CITY OF LIGHT 為最大的 Bodoni Roman / Italic 展示標題，VOL.00 在英文與中文主題中間。未生成或更換原有圖像。</p>
@@ -238,6 +243,8 @@ html.dual-embed .dual-film__credit{display:none}
   const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
   const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol');
   const bridge=document.getElementById('dual-light-bridge');
+  const bridgeLines=document.getElementById('dual-light-lines');
+  const lightGold=document.getElementById('dual-light-gold'),lightNight=document.getElementById('dual-light-night');
  const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')];
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
@@ -262,7 +269,7 @@ html.dual-embed .dual-film__credit{display:none}
   const cut=document.createElementNS('http://www.w3.org/2000/svg','path');
   cut.setAttribute('stroke','var(--ws-pale-gold,#cebd74)');
   cut.setAttribute('stroke-width','.65');cut.setAttribute('stroke-dasharray','4 10 23 15');cut.setAttribute('opacity','0.7');
-  bridge.append(shade,cut);rays.push([shade,cut]);
+  bridgeLines.append(shade,cut);rays.push([shade,cut]);
   return line;
  });
  let progress=1,coverLeft=false;
@@ -298,7 +305,8 @@ html.dual-embed .dual-film__credit{display:none}
   pose(cover,coverX,coverY-(1-blue)*H,w,h);
   pose(gold,goldX,goldY+(1-dawn)*H,w,h);
   const lettersFade=1-ease((progress-.855)/.115);
-  letters.style.opacity=String(lettersFade);  rows.forEach((row,i)=>{
+  letters.style.opacity=String(lettersFade);
+   rows.forEach((row,i)=>{
     const entered=ease((progress-(.255+i*.047))/.16);
     row.style.opacity=String(entered);
     row.style.transform='translate3d('+(lerp(-w*.13,0,entered)).toFixed(2)+'px,'+
@@ -324,7 +332,12 @@ html.dual-embed .dual-film__credit{display:none}
    star.style.transform='translate(-50%,'+(95-95*starRise).toFixed(2)+'%)';
    // The same origin and scroll state carry engraved light into the left SVGs.
    bridge.setAttribute('viewBox','0 0 '+W+' '+H);
-   bridge.style.opacity=String(starRise*(1-ease((progress-.87)/.115))*.82);
+   // No ray crosses live text in the paper-title zone.
+   lightGold.setAttribute('x',goldX);lightGold.setAttribute('y',goldY);
+   lightGold.setAttribute('width',w);lightGold.setAttribute('height',h);
+   lightNight.setAttribute('x',coverX);lightNight.setAttribute('y',coverY);
+   lightNight.setAttribute('width',w);lightNight.setAttribute('height',h*.445);
+   bridge.style.opacity=String(starRise*(1-ease((progress-.87)/.115))*.69);
    const sx=coverX+w*.72,sy=coverY+h*.27+Math.min(w*.14,124)*.48;
    rays.forEach(([shade,cut],i)=>{
     const tx=goldX+w*(lineStarts[i]/100+.14),ty=goldY+h*((lineHeights[i]+5)/100);
