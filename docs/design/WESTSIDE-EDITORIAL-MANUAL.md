@@ -2420,7 +2420,7 @@ For each output create a plate record with source URL and revision, original ext
 - [Flipsnack, Professional Magazine Cover Design](https://blog.flipsnack.com/how-to-design-professional-magazine-covers/)：刊名是穩定識別而非小裝飾；其規模、位置與可辨性和字形同等重要。
 - [Jan V. White, *Editing by Design*](https://alexanderwwhite.com/editing-by-design-4th-ed/) 以及本書 §6F.04–06：字體與網格為編輯讀者服務，不應為固定幾何犧牲主題或識別。
 
-**第一版幾何試驗（非全站 CSS token）：** 在完整原始 P2 Church 門後的雙方塊畫布，令 `W`、`H` 為實際可繪製的瀏覽器 CSS 畫布寬高，兩塊同高寬 `S`。Desktop: `Mx=max(16px,0.035W)`; `My=max(18px,0.052H)`; `S=min((W-2Mx)/2,H-2My)`。因兩塊必須相接，不能先任意決定 S 再縮至適應動畫；留白對稱分配在兩側與上下。初始為各占半幅；變成兩個平行正方形時兩邊邊界連續、沒有分割裝訂線。**比例有理由**：兩個完整方形最大化出版內容，同時留出讓影片被看見的「活場」；標題和目錄的視覺可讀性具有否決權。若客戶端可用高度過短，不強迫固定方形吞沒內容；必須改用重新編排或可捲動 Contents 的出版狀態。
+**第一版幾何試驗（非全站 CSS token）：** 在完整原始 P2 Church 門後的雙方塊畫布，令 `W`、`H` 為實際可繪製的瀏覽器 CSS 畫布寬高，兩塊同高寬 `S`。Desktop：經第一輪真圖比較，使用 `Mx=max(16px,0.067W)` 與 `My=max(18px,0.052H)`；`S=min((W-2Mx)/2,H-2My)`。兩塊必須相接，留白對稱分配。**這裡以可見首頁影片為第三條制約**：原先 3.5vw 左右邊雖可把封面最大化到約 766px（1648×928），卻使背景影片只剩薄邊；改以約 6.7vw 安全邊，讓兩塊依舊佔整體寬度約 86.6%，影片還有可見的舞台。數字是此片視覺比較的候選，不是所有裝置的定額，亦不應用在其他工具或教會版塊。初始為各占半幅；變成兩個平行正方形時兩邊邊界連續、沒有分割裝訂線。**比例有理由**：兩個完整方形最大化出版內容，同時留出讓影片被看見的「活場」；標題和目錄的視覺可讀性具有否決權。若客戶端可用高度過短，不強迫固定方形吞沒內容；必須改用重新編排或可捲動 Contents 的出版狀態。
 
 **Masthead Design trial:** 正式 `/images/westside-watch-masthead-landscape.svg` 使用原 SVG 的原始長寬比、不可拉伸／換字形；在藍封面寬度 `S` 中取 **約 84% 的展示寬度**作為本張封面的起始設計值（合理試驗帶：80–85%，**不是成熟雜誌界的全球定額**），於上方約 5–27% 高度構成一個真正的品牌區。晨星沿既有 v5.3 資產由下升起、降至相對排版焦點，不能與 Logo 或 `WATCH.` 重疊。主英文 `WATCH.`、中文 900 主題、底部城牆依內容關係落位；城牆是封面的下緣，並非遮字橫條。
 
