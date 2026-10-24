@@ -262,8 +262,8 @@ html.dual-embed .dual-film__credit{display:none}
  <nav class="dual-ui__controls" aria-label="實驗場景">
   <button type="button" data-position="cover-left" aria-pressed="false">封面在左</button>
   <button type="button" data-position="cover-right" aria-pressed="true">封面在右</button>
-  <button type="button" data-cover-choice="editorial" aria-pressed="true">A · 圖像敘事</button>
-  <button type="button" data-cover-choice="typographic" aria-pressed="false">B · 字體藝術</button>
+  <button type="button" data-cover-choice="editorial" aria-pressed="false">A · 圖像敘事</button>
+  <button type="button" data-cover-choice="typographic" aria-pressed="true">B · 字體藝術</button>
   <button type="button" data-snap="0.14">封面進場</button>
   <button type="button" data-snap="0.54">西望逐行</button>
   <button type="button" data-snap="0.68">晨星升起</button>
@@ -281,7 +281,7 @@ html.dual-embed .dual-film__credit{display:none}
  <span class="dual-film__credit" aria-hidden="true">WESTSIDE WATCH / THE KING ENTERS THE CITY / ORIGINAL HOME FILM</span>
  <div class="dual-panels">
   <article class="dual-tile dual-tile--cover" id="dual-cover" aria-label="西望 Vol.00 午夜藍封面">
-   <div class="dual-cover" data-cover-variant="editorial">
+   <div class="dual-cover" data-cover-variant="typographic">
      <div class="dual-cover__engraving" aria-hidden="true"></div>
      <div class="dual-cover__radiance" id="dual-radiance" aria-hidden="true"></div>
      <div class="dual-cover__city" id="dual-cover-city" aria-hidden="true">
@@ -531,7 +531,7 @@ html.dual-embed .dual-film__credit{display:none}
   }
  }
  function setCoverVariant(raw){
-  const v=raw==='typographic'?'typographic':'editorial';
+  const v=raw==='editorial'?'editorial':'typographic';
   coverArt.dataset.coverVariant=v;stage.dataset.coverVariant=v;
   coverChoices.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.coverChoice===v)));
   if(!document.documentElement.classList.contains('dual-embed')){
