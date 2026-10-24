@@ -310,6 +310,7 @@ jobs:
                         paperShadow:getComputedStyle(paperEl).boxShadow,
                         wallSeam:getComputedStyle(cityEl,'::after').display,
                         gateColour:getComputedStyle(cv.querySelector('.dual-cover__gate')).backgroundColor,
+                        gateCover:gate.height/wall.height,
                         sloganHidden:getComputedStyle(sloganEl).display==='none',
                         engravingSource:getComputedStyle(engraving).backgroundImage,
                         stories:lines.querySelectorAll('.dual-cover__coverline').length,
@@ -341,7 +342,7 @@ jobs:
                       !metrics.wallSource.includes('jerusalem-wall.png')||
                       metrics.wallShadow!=='none'||metrics.paperShadow!=='none'||metrics.wallSeam!=='none'))
                       errors.push('WALL_AND_TEMPLE_STONE_NOT_UNIFIED');
-                    if(variant==='masthead'&&metrics.gateColour!=='rgb(196, 156, 81)')
+                    if(variant==='masthead'&&(metrics.gateColour!=='rgb(196, 156, 81)'||metrics.gateCover<.95))
                       errors.push('CENTRAL_GATE_NOT_GOLD');
                     for(const key of ['mast','title','zh','coverlines']){
                       const r=metrics[key],b=metrics.view;
