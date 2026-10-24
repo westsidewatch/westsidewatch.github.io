@@ -178,18 +178,14 @@ jobs:
                             const commonY=Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top);
                             return commonX>2?Math.max(0,commonY):0;
                           };
-                          const stories=document.querySelector('.dual-cover__coverlines');
-                          const storyBox=stories?.getBoundingClientRect();
-                          const storyItems=[...document.querySelectorAll('.dual-cover__coverline')];
                           const footer=document.getElementById('dual-cover-folio');
                           const footerVisible=!!footer&&getComputedStyle(footer).display!=='none'&&Number(getComputedStyle(footer).opacity)>.1;
                           return {overlap:Math.max(intersect(x,v),intersect(v,z),intersect(x,z),
-                              storyBox?intersect(storyBox,x):999,footerVisible?intersect(z,footer.getBoundingClientRect()):0),
+                              footerVisible?intersect(z,footer.getBoundingClientRect()):0),
                             overflow:Math.max(0,x.right-page.right),
-                            storyCount:storyItems.length,
-                            mobileFooterClear:innerWidth>820||!footerVisible,
-                            storiesInside:!!storyBox&&storyBox.left>=page.left-2&&storyBox.right<=page.right+2&&storyBox.bottom<=page.bottom+2,
-                            authenticCopy:storyItems.map(el=>el.textContent).some(v=>v.includes('一萬年的建城禮'))&&storyItems.some(el=>el.textContent.includes('城門口的人'))};
+                            storyCount:document.querySelectorAll('.dual-cover__coverline').length,
+                            mobileFooterClear:!footerVisible,
+                            issueCopyConsolidated:document.querySelector('.dual-cover__editorial')?.querySelectorAll('.dual-cover__en,.dual-cover__zh').length===2};
                         })(),
                         unifiedCity:(()=>{
                           const city=document.getElementById('dual-cover-city');
@@ -256,7 +252,7 @@ jobs:
                     if(p===68&&(m.phase!=='morning-star-rise'||m.lines!==7||m.starOpacity<.1||m.stoneVisible))errors.push('STAR_NOT_AFTER_XIWANG');
                     if(p===82&&(m.phase!=='cover-and-xiwang'||m.lines!==7||m.stoneVisible))errors.push('MISSING_COVER_XIWANG_HOLD');
                     if(p===82&&(m.coverTitleLayout.overlap>8||m.coverTitleLayout.overflow>8))errors.push('COVER_DISPLAY_TITLE_COLLISION');
-                    if(p===82&&(m.coverTitleLayout.storyCount!==2||!m.coverTitleLayout.storiesInside||!m.coverTitleLayout.authenticCopy))errors.push('COVER_EDITORIAL_TEASERS_MISSING_OR_OFF_PAGE');
+                    if(p===82&&(m.coverTitleLayout.storyCount!==0||!m.coverTitleLayout.issueCopyConsolidated))errors.push('UNWANTED_COVER_TEASERS_OR_SPLIT_TITLE');
                     if(p===82&&!m.coverTitleLayout.mobileFooterClear)errors.push('MOBILE_COVER_FOOTER_CROWDS_CHINESE_TITLE');
                     if(p===82&&m.nightCaptionClearance < -3)errors.push('NIGHT_TAGLINE_CROSSES_CITY_WALL');
                     if(p===93&&(m.phase!=='stone-contents-reveal'||!m.stoneBg))errors.push('MISSING_ORIGINAL_STONE_REVEAL');
@@ -289,23 +285,23 @@ jobs:
                       const part=name=>box(cv.querySelector('.dual-cover__'+name));
                       const src=cv.querySelector('.dual-cover__mast');
                       const engraving=cv.querySelector('.dual-cover__engraving');
-                      const lines=cv.querySelector('.dual-cover__coverlines');
-                      const c=part('coverlines'),title=part('en'),zh=part('zh'),wall=part('wall');
+                      const title=part('en'),zh=part('zh'),wall=part('wall');
                       const star=part('star'),city=part('city'),gate=part('gate');
                       const paperEl=cv.querySelector('.dual-cover__paper'),wallEl=cv.querySelector('.dual-cover__wall'),cityEl=cv.querySelector('.dual-cover__city');
                       const sloganEl=cv.querySelector('.dual-cover__tagline');
                       const intersection=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top));
-                      return {variant:cv.querySelector('.dual-cover').dataset.coverVariant,view,mast:part('mast'),title,zh,coverlines:c,
-                        overlapStoryTitle:intersection(c,title),mastLoaded:src.complete&&src.naturalWidth>0,
+                      return {variant:cv.querySelector('.dual-cover').dataset.coverVariant,view,mast:part('mast'),title,zh,
+                        mastLoaded:src.complete&&src.naturalWidth>0,
                         mastRatio:part('mast').width/view.width,
                         wallClearance:title.top-wall.bottom,
                         starCentreError:Math.abs((star.left+star.right)/2-(view.left+view.right)/2),
                         starScale:star.width/view.width,
                         cityTopRatio:(city.top-view.top)/view.height,
                         wallHeightRatio:wall.height/view.height,
-                        headlineRightColumn:title.left>=view.left+view.width*(innerWidth<=820?.35:.49),
+                        headlineRightColumn:title.left>=view.left+view.width*(innerWidth<=820?.31:.38)&&
+                          title.right>=view.right-view.width*.10,
                         titleGroupUnified:!!cv.querySelector('.dual-cover__editorial')&&
-                          ['en','zh','coverlines'].every(name=>cv.querySelector('.dual-cover__'+name)?.parentElement===cv.querySelector('.dual-cover__editorial')),
+                          ['en','zh'].every(name=>cv.querySelector('.dual-cover__'+name)?.parentElement===cv.querySelector('.dual-cover__editorial')),
                         starOnStone:star.top>=city.top+5&&star.bottom<=view.bottom-8,
                         mastheadNavyOnly:part('mast').bottom<=city.top+2,
                         newWallMask:getComputedStyle(wallEl).maskImage.includes('jerusalem-wall.png'),
@@ -319,12 +315,12 @@ jobs:
                         gateCover:gate.height/wall.height,
                         sloganHidden:getComputedStyle(sloganEl).display==='none',
                         engravingSource:getComputedStyle(engraving).backgroundImage,
-                        stories:lines.querySelectorAll('.dual-cover__coverline').length,
+                        stories:cv.querySelectorAll('.dual-cover__coverline').length,
                         selected:[...document.querySelectorAll('[data-cover-choice]')].filter(x=>x.getAttribute('aria-pressed')==='true').length,
                         phase:document.getElementById('dual-stage').dataset.phase};
                     });
-                    if(metrics.variant!==variant||metrics.selected!==1||!metrics.mastLoaded||metrics.stories!==2||metrics.phase!=='cover-and-xiwang')errors.push('COVER_VARIANT_NOT_IN_REVIEW_STATE');
-                    if(metrics.overlapStoryTitle>120)errors.push('EDITORIAL_TEASERS_OVERLAP_MAIN_HEADLINE');
+                    if(metrics.variant!==variant||metrics.selected!==1||!metrics.mastLoaded||metrics.stories!==0||metrics.phase!=='cover-and-xiwang')errors.push('COVER_VARIANT_NOT_IN_REVIEW_STATE');
+                    // Two small coverlines are intentionally absent; no teaser collision to test.
                     if(variant==='masthead'&&(metrics.mastRatio<.90||metrics.mastRatio>.97))
                       errors.push('COVER_IDENTITY_MUST_BE_PRIMARY');
                     if(variant==='masthead'&&!metrics.engravingSource.includes('westside-cover-night-intaglio-v3.svg'))
@@ -340,7 +336,7 @@ jobs:
                       errors.push('JERUSALEM_WALL_OVER_MAIN_COVER_HEADING');
                     if(variant==='masthead'&&(metrics.starCentreError>3||metrics.starScale<.23))
                       errors.push('MORNING_STAR_NOT_CENTRAL_PRIMARY_IMAGE');
-                    if(variant==='masthead'&&(metrics.cityTopRatio<.28||metrics.cityTopRatio>.34||metrics.wallHeightRatio>.055))
+                    if(variant==='masthead'&&(metrics.cityTopRatio<.225||metrics.cityTopRatio>.255||metrics.wallHeightRatio>.055))
                       errors.push('JERUSALEM_CREST_TOO_LARGE_OR_LOW');
                     if(variant==='masthead'&&(!metrics.headlineRightColumn||!metrics.sloganHidden||!metrics.titleGroupUnified))
                       errors.push('LOWER_RIGHT_EDITORIAL_HEADLINE_NOT_CLEAR');
@@ -352,9 +348,9 @@ jobs:
                       !metrics.wallSource.includes('jerusalem-wall.png')||
                       metrics.wallShadow!=='none'||metrics.paperShadow!=='none'||metrics.wallSeam!=='none'))
                       errors.push('WALL_AND_TEMPLE_STONE_NOT_UNIFIED');
-                    if(variant==='masthead'&&(metrics.gateColour!=='rgb(196, 156, 81)'||metrics.gateCover<.95||metrics.gateCover>1.05))
+                    if(variant==='masthead'&&(metrics.gateColour!=='rgb(196, 156, 81)'||metrics.gateCover<.52||metrics.gateCover>.58))
                       errors.push('CENTRAL_GATE_NOT_GOLD');
-                    for(const key of ['mast','title','zh','coverlines']){
+                    for(const key of ['mast','title','zh']){
                       const r=metrics[key],b=metrics.view;
                       if(r.left<b.left-8||r.right>b.right+10||r.top<b.top-8||r.bottom>b.bottom+10)errors.push('COVER_'+key.toUpperCase()+'_OUT_OF_BOUNDS');
                     }
