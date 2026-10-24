@@ -1,3 +1,4 @@
+import {createLaterMorphologyLedger} from './later-morphology-ledger.js';
 import {lifecycleStateAtPosition} from './construction-engine.js';
 import {createCityFoundationRuntime,foundationOwnerFor} from './city-foundation-runtime.js';
 import {createRoyalRelief} from './royal-relief.js';
@@ -233,7 +234,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     cityCoreRuntime = null,
     cityProjection = null,
     evidenceProjection = null;
-  let sharedEraRuntime = null;
+  let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
   let retainedVisible = false, royalRelief=null, royalCity=null, persianSanctuary=null, periodSpatialData=null, waterDefense=null, waterDefenseModel=null, localPlanAudit=[], periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
@@ -299,6 +300,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     }
     if (phase2Morphology && currentPhaseId === 'babylonian-destruction')
       setEraMorphologyProgress(phase2Morphology, 1, { ruined: true });
+    laterMorphologyBinding?.apply(evidenceAllowed);
     updateCityCoreVisibility();
     onDistrictAcceptance?.(sharedEraRuntime?.acceptance()??null);
     needsFrame = true;
@@ -338,7 +340,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       mesh.geometry.dispose();
     }
     fabricMeshes = [];
-    phase2Morphology = null;
+    phase2Morphology = null;laterMorphologyBinding=null;
   }
   function rebuildUrbanFabric(phaseId) {
     clearFabric();
@@ -385,6 +387,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       );
     if (phase2Morphology) {
       fabricMeshes = phase2Morphology.meshes;
+      if(['crusader','ottoman'].includes(phaseId)){laterMorphologyBinding=laterMorphologyLedger.bind(phase2Morphology);laterMorphologyBinding.apply(evidenceAllowed);}
       return;
     }
     fabricMeshes = addEraFabric(
@@ -539,6 +542,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         architecture,
         validation: loaded.core.validate(),
       };
+      laterMorphologyLedger=createLaterMorphologyLedger(loaded.core);
       if (!parcels.blockCount || !parcels.count || !architecture.buildings || !cityCoreRuntime.validation.ok)
         throw new Error(`Canonical city incomplete: ${parcels.blockCount || 0} blocks, ${parcels.count || 0} parcels, ${architecture.buildings || 0} buildings`);
       architecture.meshes.push(
@@ -690,6 +694,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
               coreVisible: cityCoreLayer.visible,
               fabricVisible: eraFabricLayer.visible,
               phase2Components: fabricMeshes.filter((mesh) => mesh.visible).length,
+              sharedLedger:laterMorphologyBinding?.summary??{published:false},
               morphologyProgress:phase2Morphology?.progress??null,
               morphologyGrammar:phase2Morphology?.grammar??null,
               blocks: cityCoreRuntime?.parcels?.blockCount || 0,
@@ -834,6 +839,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       ro.disconnect();
       controls.dispose();
       builder.dispose();
+      clearFabric();laterMorphologyLedger?.dispose();
       sharedEraRuntime?.dispose();
       earliestSettlement?.dispose();
       middleBronzeSettlement?.dispose();

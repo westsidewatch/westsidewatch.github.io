@@ -60,3 +60,7 @@ Existing generated districts, roads and residences now publish atomically into t
 ## Early settlement batch registration (2026-10-24)
 
 The four early-era dwelling/footpath batches now share canonical object IDs and lifecycle events. Later fate is explicitly unresolved; source defense adapters retain ownership and disputed/location symbols remain outside this publication. No new geometry or invented district/parcel parentage. See EARLY-SETTLEMENT-LEDGER-FOUNDATION.md. Full foundation acceptance and step 1 remain incomplete.
+
+## Crusader/Ottoman batch registration (2026-10-24)
+
+Both later morphology generators now publish stable phase-scoped scaffold identities and unknown next-era fates. Renderer rebuilds rebind the same definitions and preserve ledger event edits. Anonymous masses remain blocks rather than semantic buildings; inherited layers are still provisional. See LATER-MORPHOLOGY-LEDGER-FOUNDATION.md. Step 1 and whole-foundation acceptance remain incomplete.
