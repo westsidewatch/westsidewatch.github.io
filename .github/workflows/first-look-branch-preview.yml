@@ -125,7 +125,8 @@ jobs:
                           const chinese=document.getElementById('dual-cover-zh');
                           const cover=document.getElementById('dual-cover');
                           if(!light||!folio||!chinese||!cover)return {overlap:999,overflow:999};
-                          const x=light.getBoundingClientRect(),v=folio.getBoundingClientRect(),z=chinese.getBoundingClientRect(),page=cover.getBoundingClientRect();
+                          const textBounds=el=>{const range=document.createRange();range.selectNodeContents(el);return range.getBoundingClientRect()};
+                          const x=textBounds(light),v=textBounds(folio),z=textBounds(chinese),page=cover.getBoundingClientRect();
                           const intersect=(a,b)=>{
                             const commonX=Math.min(a.right,b.right)-Math.max(a.left,b.left);
                             const commonY=Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top);
