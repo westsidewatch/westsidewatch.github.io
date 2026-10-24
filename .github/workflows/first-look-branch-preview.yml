@@ -179,7 +179,7 @@ jobs:
                     });
                     if(!loadedOK||m.rows!==12||!m.logoLoaded||m.aria!==1)errors.push('SOURCE_OR_UI');
                     if(m.officialWorks!==11||m.legacyLaser)errors.push('EDITORIAL_WORKS_OR_REMOVED_LASER');
-                    if(m.officialSvgMarks!==8||m.printRows!==7)errors.push('OFFICIAL_LOGO_MULTIPLE_PRINT_ROWS_REQUIRED');
+                    if(m.officialSvgMarks!==7||m.printRows!==7)errors.push('OFFICIAL_LOGO_MULTIPLE_PRINT_ROWS_REQUIRED');
                     if(p===82&&(m.printHierarchy.heroRatio<1.35||m.printHierarchy.heroOpacity<=m.printHierarchy.largestEchoOpacity))errors.push('NO_VISUAL_HIERARCHY_IN_XIWANG_PRINT');
                     if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.wallImg)errors.push('WALL_STONE_MUST_SHARE_ONE_CITY');
                     if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
@@ -245,12 +245,11 @@ jobs:
                   });
                   if(m.phase!=='magazine'||m.design!=='duo-bridge'||m.duo!=='contents-final'||!m.water||!m.doors||!m.church)errors.push('CHURCH_MOTION_NOT_PRESERVED');
                   if(m.entries!==12||!m.homeVideo)errors.push('CANON_OR_ORIGINAL_HOME_FILM');
-                  // The editor's own Vol.00 cover direction places the official
-                  // masthead across almost the full midnight-blue field.
-                  // The retired 78–87% baseline belonged to the rejected
-                  // small-label composition, and misclassified the approved
-                  // direction's actual ~90% masthead as a failure.
-                  if(m.logoRatio<.88||m.logoRatio>.95)errors.push('COVER_MASTHEAD_SCALE_OUT_OF_RANGE');
+                  // Ninth-round art-direction supersedes the previous 88–95% masthead
+                  // treatment, which competed with the title, star and city.
+                  // Preserve the official asset, but subordinate its footprint
+                  // to the main editorial title rather than overfill the sky.
+                  if(m.logoRatio<.75||m.logoRatio>.84)errors.push('COVER_MASTHEAD_SCALE_OUT_OF_RANGE');
                   if(Math.abs((m.coverSize?.width||0)-(m.coverSize?.height||0))>2)errors.push('COVER_NOT_SQUARE');
                   if(m.lastRect>m.contentsRect+2&&!m.directoryScrollable)errors.push('LAST_ENTRIES_UNREACHABLE');
                   await page.screenshot({path:path.join(out,id+'.png'),animations:'disabled'});
