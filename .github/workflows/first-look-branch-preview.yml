@@ -49,7 +49,6 @@ jobs:
           echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Review two-square film experiment in Chromium
-        continue-on-error: true
         run: |
           npm install --no-save --no-package-lock playwright
           npx playwright install --with-deps chromium
@@ -115,6 +114,11 @@ jobs:
                         })(),
                         officialSvgMarks:document.querySelectorAll('.dual-letterfield__glyph').length,
                         printRows:document.querySelectorAll('.dual-letterfield__row').length,
+                        nightCaptionClearance:(()=>{
+                          const wall=document.getElementById('dual-cover-wall')?.getBoundingClientRect();
+                          const caption=document.querySelector('.dual-cover__tagline')?.getBoundingClientRect();
+                          return wall&&caption?wall.top-caption.bottom:-999;
+                        })(),
                         coverTitleLayout:(()=>{
                           const light=document.querySelector('.dual-cover__en span:last-child');
                           const folio=document.getElementById('dual-cover-vol');
@@ -169,6 +173,7 @@ jobs:
                     if(p===68&&(m.phase!=='morning-star-rise'||m.lines!==7||m.starOpacity<.1||m.stoneVisible))errors.push('STAR_NOT_AFTER_XIWANG');
                     if(p===82&&(m.phase!=='cover-and-xiwang'||m.lines!==7||m.stoneVisible))errors.push('MISSING_COVER_XIWANG_HOLD');
                     if(p===82&&(m.coverTitleLayout.overlap>8||m.coverTitleLayout.overflow>8))errors.push('COVER_DISPLAY_TITLE_COLLISION');
+                    if(p===82&&m.nightCaptionClearance < -3)errors.push('NIGHT_TAGLINE_CROSSES_CITY_WALL');
                     if(p===93&&(m.phase!=='stone-contents-reveal'||!m.stoneBg))errors.push('MISSING_ORIGINAL_STONE_REVEAL');
                     if(p===100&&(!m.stoneVisible||!m.stoneBg||m.lines!==7))errors.push('FINAL_STONE_CONTENTS_INCOMPLETE');
                     if(Math.abs(m.panels[0].width-m.panels[0].height)>2&&p===100)errors.push('COVER_NOT_SQUARE');
