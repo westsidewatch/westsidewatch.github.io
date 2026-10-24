@@ -114,6 +114,13 @@ jobs:
                         })(),
                         officialSvgMarks:document.querySelectorAll('.dual-letterfield__glyph').length,
                         printRows:document.querySelectorAll('.dual-letterfield__row').length,
+                        printHierarchy:(()=>{
+                          const rows=[...document.querySelectorAll('.dual-letterfield__row')];
+                          const widths=rows.map(r=>r.querySelector('.dual-letterfield__glyph')?.getBoundingClientRect().width||0);
+                          const opacities=rows.map(r=>Number(r.style.opacity)||0);
+                          return {heroRatio:widths[3]/Math.max(...widths.filter((_,i)=>i!==3),1),
+                            heroOpacity:opacities[3],largestEchoOpacity:Math.max(...opacities.filter((_,i)=>i!==3))};
+                        })(),
                         nightCaptionClearance:(()=>{
                           const wall=document.getElementById('dual-cover-wall')?.getBoundingClientRect();
                           const caption=document.querySelector('.dual-cover__tagline')?.getBoundingClientRect();
@@ -172,7 +179,8 @@ jobs:
                     });
                     if(!loadedOK||m.rows!==12||!m.logoLoaded||m.aria!==1)errors.push('SOURCE_OR_UI');
                     if(m.officialWorks!==11||m.legacyLaser)errors.push('EDITORIAL_WORKS_OR_REMOVED_LASER');
-                    if(m.officialSvgMarks!==20||m.printRows!==7)errors.push('OFFICIAL_LOGO_MULTIPLE_PRINT_ROWS_REQUIRED');
+                    if(m.officialSvgMarks!==8||m.printRows!==7)errors.push('OFFICIAL_LOGO_MULTIPLE_PRINT_ROWS_REQUIRED');
+                    if(p===82&&(m.printHierarchy.heroRatio<1.35||m.printHierarchy.heroOpacity<=m.printHierarchy.largestEchoOpacity))errors.push('NO_VISUAL_HIERARCHY_IN_XIWANG_PRINT');
                     if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.wallImg)errors.push('WALL_STONE_MUST_SHARE_ONE_CITY');
                     if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
