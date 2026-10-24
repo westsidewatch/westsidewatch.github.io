@@ -52,3 +52,7 @@ F2/F3 可按相鄰時段分包，但每包都服從完整清單並驗證全線�
 2026-10-23 F2第一包已接入共同地表取樣、18期入口與六類只讀檢查，並修正後期進度錯接；見 FOUNDATION-RUNTIME-INTERFACE.md。這不等於所有模型已發布至共同帳本，18期與17段驗收狀態仍未完成。下一步依缺口接入穩定物件身分與未知去向，繼續暫停建築細化。
 
 2026-10-24 步驟1進度：共用物件包／事件載入、修復期別替換索引，並對齊六個希律來源模型的毀城期別。見 PHASE-REGISTRATION-FOUNDATION.md。這是共同規則與已知錯配的修正；早期／希臘化／後期未登記生成層仍需批次接入，不能視為步驟1全部完成。
+
+## Hellenistic shared registration (2026-10-24)
+
+Existing generated districts, roads and residences now publish atomically into the common ledger. All 32,754 visible components bind to stable IDs; later fate is unresolved. This is a reference-derived scaffold, not a surveyed historical layout. See HELLENISTIC-LEDGER-FOUNDATION.md. Step 1 and overall foundation acceptance remain incomplete.

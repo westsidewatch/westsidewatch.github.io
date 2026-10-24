@@ -402,6 +402,9 @@ try {
       assert.equal(d.persianSanctuary.visibleTemple,0,'later institutional continuity must not retain Persian geometry');
       assert.equal(d.sharedEra.successor.projection.visibleBuildings,0);
       assert.equal(d.sharedEra.expansion.historicalRegistrationVerified,false);
+      assert.equal(d.sharedEra.expansion.residentialLedger.published,true);
+      assert.equal(d.sharedEra.expansion.residentialLedger.referenceLayoutDerived,true);
+      assert.ok(d.sharedEra.expansion.residentialLedger.registrationObjects>0);
       expansionReports.push(d.sharedEra.expansion);
     } else assert.equal(d.sharedEra.expansion.projection.visibleBuildings,0);
   }
@@ -442,6 +445,7 @@ try {
     assert.deepEqual(foundation.renderer.outOfPhaseBindingIds,[],'visible registered objects must have a matching phase index');
     if(phase===10){const unknown=await page.evaluate(()=>window.__JERUSALEM3000__.inspectCityObject('j3k:object:inner-temple'));assert.ok(unknown.lifecycle.events.some(e=>e.phase==='aelia'&&e.state==='unresolved'));}
     assert.ok(foundation.renderer.visibleComponents>0);
+    if(phase===7){assert.ok(foundation.domains.occupation.visibleBoundObjects>0);assert.equal(foundation.renderer.unboundComponents,0,'finished Hellenistic geometry must share canonical IDs');}
     if([8,9].includes(phase))assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'canonical parcel bindings must be recognized by the common foundation interface');
     assert.equal(foundation.renderer.boundComponents+foundation.renderer.unboundComponents,foundation.renderer.visibleComponents);
 

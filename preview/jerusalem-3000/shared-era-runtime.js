@@ -81,9 +81,9 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
               retentionAuthority: 'schematic-not-surveyed', burialDepthVerified: false, reuseLinksVerified: false } });
         }
         const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain,{exclusions:roadExclusions});
-        if(ledgerCore&&registration.independentLayout)task.publication=publishGeneratedResidentialLedger(ledgerCore,core,{registration,architecture,generationPhase,destroyedPhase,retainedPhase,owner});
+        if(ledgerCore)task.publication=publishGeneratedResidentialLedger(ledgerCore,core,{registration,architecture,generationPhase,destroyedPhase,retainedPhase,includeRegistration:!registration.independentLayout,owner});
         const projection = createCityProjection(group, [...architecture.meshes, ...roads], {
-          phaseIds, standingPhase: phaseId,
+          phaseIds, standingPhase: phaseId, stateForInfrastructure:!registration.independentLayout,
           stateForObject:task.publication?((id,phase)=>task.publication.stateFor(id,phase)):null,
           phaseStates: retainedPhase ? { [retainedPhase]: { state: 'retained-ruin', ruin: 1 } } : {},
         });

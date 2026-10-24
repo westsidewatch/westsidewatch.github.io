@@ -8,7 +8,7 @@ export function isCorePhase(phaseId) {
 export function cityObjectIdForMesh(mesh){const meta=mesh.userData?.cityObject;return meta?.objectId??(meta?.parcelId?`${meta.parcelId}:building`:null);}
 
 export function createCityProjection(group, meshes, {
-  phaseIds = [...CORE_PHASES], standingPhase = 'herodian-jesus', phaseStates = {}, stateForObject = null,
+  phaseIds = [...CORE_PHASES], standingPhase = 'herodian-jesus', phaseStates = {}, stateForObject = null, stateForInfrastructure = false,
 } = {}) {
   const activePhases = new Set(phaseIds);
   const snapshots = meshes.map((mesh) => ({
@@ -35,11 +35,11 @@ export function createCityProjection(group, meshes, {
       const visible = new Set(),districtVisible=new Map(),lifecycleStates=new Map();
       for (const item of snapshots) {
         const { mesh, position, ground } = item;
-        if(stateForObject&&!item.infrastructure&&!lifecycleStates.has(item.id))lifecycleStates.set(item.id,stateForObject(item.id,phaseId));
+        if(stateForObject&&(!item.infrastructure||stateForInfrastructure)&&!lifecycleStates.has(item.id))lifecycleStates.set(item.id,stateForObject(item.id,phaseId));
         const ledgerState=lifecycleStates.get(item.id);
         const objectScale = item.infrastructure ? 1 : scale;
         mesh.visible = group.visible && evidenceAllowed(item.confidence) &&
-          !(retained && item.infrastructure) && (!stateForObject||item.infrastructure||['build','rebuild','transform','ruin','expand'].includes(ledgerState));
+          !(retained && item.infrastructure) && (!stateForObject||(item.infrastructure&&!stateForInfrastructure)||['build','rebuild','transform','ruin','expand'].includes(ledgerState));
         mesh.position.x = position.x;
         mesh.position.z = position.z;
         if(mesh.userData.restPositions&&mesh.userData.groundHeights){
