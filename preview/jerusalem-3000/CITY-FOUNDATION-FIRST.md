@@ -72,3 +72,7 @@ Six later-era footprint batches now publish 234 inferred block masses through th
 ## Legacy inheritance transition audit (2026-10-24)
 
 The 17 legacy display transitions now expose adjacent vs source phases, generator gaps and unverified retention policy. Every displayed overlay component has a separate trace ID; it remains provisional/unbound, with no fabricated source-object lineage. Scene notes disclose the illustration. See INHERITANCE-TRANSITION-AUDIT.md. This audit does not replace shared object events or certify historical transitions.
+
+## Evidence and annotation consistency (2026-10-24)
+
+Legacy inherited overlays now obey the common evidence policy as inferred content, including filter return and phase suppression. The 21 remaining early display components have explicit annotation roles and remain outside semantic city registration. Foundation counts disclose those annotations separately. See EVIDENCE-ANNOTATION-FOUNDATION.md. Historical geometry and whole-timeline acceptance remain incomplete.

@@ -432,6 +432,19 @@
     "sourceObjectIdsVerified": false,
     "reuseLinksVerified": false,
     "displayTraceIds": true,
-    "foundationAccepted": false
+    "foundationAccepted": false,
+    "evidencePolicy": "inferred-overlay-all-or-inferred-modes-only"
+  },
+  "displayAnnotationScope": {
+    "components": 21,
+    "earlyPhaseCounts": [
+      1,
+      1,
+      9,
+      10
+    ],
+    "semanticCityObjects": false,
+    "geometryVerified": false,
+    "registeredAsCanonicalObjects": false
   }
 }

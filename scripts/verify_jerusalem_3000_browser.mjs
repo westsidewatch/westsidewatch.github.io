@@ -451,6 +451,16 @@ try {
     const inheritanceAudit=await page.evaluate(()=>({index:window.__JERUSALEM3000__.inheritanceTransitionIndex,state:window.__JERUSALEM3000__.inheritanceState}));
     assert.equal(inheritanceAudit.index.length,17);assert.ok(inheritanceAudit.index.every(t=>t.survivalVerified===false&&t.historicalFate==='unresolved'));
     if(foundation.renderer.provisionalInheritedComponents>0){assert.equal(inheritanceAudit.state.audit.tracedComponents,foundation.renderer.provisionalInheritedComponents);assert.equal(inheritanceAudit.state.audit.survivalVerified,false);}
+    if([10,14,16].includes(phase)){
+      const count=foundation.renderer.provisionalInheritedComponents;
+      await page.getByRole('button',{name:'實證',exact:true}).click();
+      await page.waitForFunction(()=>window.__JERUSALEM3000__.inheritanceState.audit.visibleComponents===0);
+      assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inspectCityFoundation().renderer.provisionalInheritedComponents),0);
+      await page.getByRole('button',{name:'全部',exact:true}).click();
+      await page.waitForFunction(count=>window.__JERUSALEM3000__.inheritanceState.audit.visibleComponents===count,count);
+      assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.historicalTime.position),value);
+    }
+    if(phase<=3)assert.equal(foundation.renderer.displayAnnotationComponents,[1,1,9,10][phase]);
     if(phase<=3)assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'early houses must bind to shared identities');
     if(phase===7){assert.ok(foundation.domains.occupation.visibleBoundObjects>0);assert.equal(foundation.renderer.unboundComponents,0,'finished Hellenistic geometry must share canonical IDs');}
     if([8,9].includes(phase))assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'canonical parcel bindings must be recognized by the common foundation interface');

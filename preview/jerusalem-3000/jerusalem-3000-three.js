@@ -201,11 +201,12 @@ try {
       objects: cityObjects,
       summary: citySummary,
     };
+    const inheritanceAudit=inheritance?.diagnostics(p.id)??null;
     window.__JERUSALEM3000__.inheritanceState = {
-      audit:inheritance?.diagnostics(p.id)??null,
+      audit:inheritanceAudit,
       terrainAuthority:inheritance?.terrainAuthority??null,
       phase: p.id,
-      active: !isCorePhase(p.id) && !isSharedGenerationPhase(p.id) && !isEarlyLandscapePhase(p.id) && !!inheritance?.runtime,
+      active: !isCorePhase(p.id) && !isSharedGenerationPhase(p.id) && !isEarlyLandscapePhase(p.id) && (inheritanceAudit?.visibleComponents??0)>0,
       progress: localProgress,
     };
     const productionInfo=window.__JERUSALEM3000__.production;
@@ -335,6 +336,8 @@ try {
         item.classList.toggle('is-active', item === button),
       );
       window.__JERUSALEM3000__.evidenceMode = mode;
+      inheritance?.setEvidenceMode(mode);
+      update(Number(slider.value));
     }),
   );
   const route = document.querySelector('.j3k-route-toggle');

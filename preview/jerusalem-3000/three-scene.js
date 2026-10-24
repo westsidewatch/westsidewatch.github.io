@@ -1,3 +1,4 @@
+import {allowsEvidence} from './evidence-visibility.js';
 import {ERA_FOOTPRINTS,addEraFabric} from './legacy-era-fabric.js';
 import {createLaterMorphologyLedger} from './later-morphology-ledger.js';
 import {lifecycleStateAtPosition} from './construction-engine.js';
@@ -248,15 +249,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     currentRuin = Math.max(0, Math.min(1, v));
     applyTemporalState();
   }
-  function evidenceAllowed(level) {
-    if (currentEvidenceMode === 'all') return true;
-    if (currentEvidenceMode === 'observed') return level === 'observed';
-    if (currentEvidenceMode === 'reconstructed')
-      return level === 'observed' || level === 'reconstructed';
-    if (currentEvidenceMode === 'inferred') return level !== 'disputed';
-    return level === 'disputed';
-  }
+  function evidenceAllowed(level) {return allowsEvidence(currentEvidenceMode,level);}
   function setEvidenceMode(mode = 'all') {
+    allowsEvidence(mode,'inferred');
     currentEvidenceMode = mode;
     if (evidenceResolution)
       for (const mesh of builder.meshes) {
