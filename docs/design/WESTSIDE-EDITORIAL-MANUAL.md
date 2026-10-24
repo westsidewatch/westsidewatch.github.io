@@ -2565,7 +2565,7 @@ For each output create a plate record with source URL and revision, original ext
 
 **拒絕門檻：** 每張靜止畫面應在 1 秒建立清晰視覺重心，字與城交互形成閱讀節奏；若左頁仍像多個 Logo 的目錄、右頁仍像一條牆壓在紙上，則沒有完成。技術驗收需要 1648／768／390／320、原生 200% zoom、倒捲、reduced motion、鍵盤與內容完整性；在全部完成且經人工截圖審查前維持 **TRIAL / NOT APPROVED**。
 
-**第八輪實作提交：** `dd36ca9` 重新加權七色排印帶、調整唯一城牆石體外觀並放大 LIGHT；驗收提交 `8d51489` 加入原始 SVG 數量與標題相交判斷。保留失敗和迭代證據；CI 未通過與藝術未通過需分別記錄。
+**第八輪實際結果（PR #1355）：** `dd36ca9` 讓七條錯位印帶變為 20 枚完整正式 SVG「西望」，`15314dd` 在實際 Chromium 截圖發現桌面標語被城牆蓋住、平板與手機石城的縫隙後，重新調整原始城牆與石紋的相接高度；`82ddc02` 把 768px 的 `VOL.00` 移到巨幅 `LIGHT` 右側旁註，不壓主標，保留 CITY OF 的英 Roman／Italic 比例。**重點的 CI 血淚教訓：** 舊 Chromium 步驟有 `continue-on-error: true`，即使 41 份清單存在場景錯誤也被 workflow 整體誤報 success；`0c8078a` 正式撤銷此遮蔽。測試以實際繪製文字、合乎字體光學的 glyph bounding region，而非整塊包含字體留白的 line box 量測相交；`9a99713` 加入真實期號側欄安全距離。\n\n**可查證的最新證據：** commit `9a99713`，Production Build **PASS**；First Look Branch Preview **PASS**；`p2-two-square-video-study` artifact #12542411935 的 **41/41 Chromium 真實場景錯誤為零**（1648、768、390、320 + 原 Church 接入共 41 個）。已人工檢視桌面、平板、手機的封面／Contents，左七色印帶密度增加；右星光與上升石城結成一個建築／文字主體；平板 VOL.00 已有獨立的邊註位置；舊城牆／石體 gap 量測已通過。**Core Contract 仍因早期受保護的首頁 morning-star SVG 基準而 FAIL**；正式資產未更動。\n\n**最終限制：** 此版本是比遭否決畫面更有整版感的**藝術候選**，不能宣稱已獲獎或經編輯批准；真原生 200% zoom、長距離反向 scroll 手感、性能 profiling 與完整鍵盤／reduced-motion 操作還未完成。**TRIAL / NOT APPROVED / 不合併。**
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
