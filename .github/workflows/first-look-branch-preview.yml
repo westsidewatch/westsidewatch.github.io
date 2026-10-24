@@ -105,6 +105,14 @@ jobs:
                         blueReveal:Number(root.dataset.blueReveal),
                         dawnReveal:Number(root.dataset.dawnReveal),
                         officialWorks:document.querySelectorAll('.dual-work').length,
+                        readerReach:(()=>{
+                          const index=document.querySelector('.dual-contents__index');
+                          const last=document.querySelector('.dual-movement:last-child li:last-child');
+                          if(!index||!last)return {desktopVisible:false,keyboard:false,mobileScrollable:false};
+                          return {desktopVisible:last.getBoundingClientRect().bottom<=index.getBoundingClientRect().bottom+2,
+                            keyboard:index.tabIndex===0 && index.getAttribute('role')==='region',
+                            mobileScrollable:index.scrollHeight>index.clientHeight+4};
+                        })(),
                         officialSvgMarks:document.querySelectorAll('.dual-letterfield__glyph').length,
                         printRows:document.querySelectorAll('.dual-letterfield__row').length,
                         unifiedCity:(()=>{
@@ -140,6 +148,9 @@ jobs:
                     if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.wallImg)errors.push('WALL_STONE_MUST_SHARE_ONE_CITY');
                     if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
+                    if(p===100&&!m.readerReach.keyboard)errors.push('CONTENTS_NOT_KEYBOARD_ACCESSIBLE');
+                    if(p===100&&width>700&&!m.readerReach.desktopVisible)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_VISIBLE');
+                    if(p===100&&width<=700&&!m.readerReach.mobileScrollable)errors.push('MOBILE_CONTENTS_SCROLL_NOT_AVAILABLE');
                     if(m.scrollWidth>m.width+2)errors.push('HORIZONTAL_OVERFLOW');
                     if(p===100&&!m.videoOriginLoaded)errors.push('HOME_FILM_NOT_LOADED');
                     if(p===12&&(m.phase!=='cover-arrival'||m.blueReveal<=.1||m.blueReveal>=.9||m.dawnReveal!==0))errors.push('NIGHT_HALF_NOT_REVEALING_SCHEDULE_FIRST');
