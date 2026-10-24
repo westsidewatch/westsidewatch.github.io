@@ -2597,6 +2597,21 @@ For each output create a plate record with source URL and revision, original ext
 
 **工程／驗收：** PR #1355 `807489d` 生成真文字 441 格並用七行既有 scroll owner 驅動，`7d55f15` 新增 Chromium 441 字元／21 行／7 段／p82 可見的硬性檢查。真實 1648／768／390／320、來源完整、城市接縫、Reverse scrolling 與減少動作模式須回歸。**真實 Chromium 證據：** commit `7d55f15`，Production Build PASS、First Look Branch Preview PASS，artifact `p2-two-square-video-study` #12543506140，41/41 截圖節點無錯誤。實際人工查看桌面 1648×928、390×844、320×720 的左右／上下封面定格：左側字海填滿面積，中心西望仍可讀；右側夜空維持相對疏朗，下部石城及主標連續。Contents 仍可在結尾正確出場且原十二欄未丟失。**Core Contract 仍有保護的首頁晨星 SVG 舊基準失敗**，不能宣稱整個 PR 全綠；未完成原生 200% zoom、長距離逆向滾動和完整實際可用性評審。這是目前最符合「左滿右空」的候選，**TRIAL / NOT APPROVED / 不合併。**
 
+
+### 6F.30 西望的 SVG 立體印刷場：字形重複而非字雲（2026-10-23）
+
+**最新編輯參考：** 使用者提交一張紅底、米白色超大英文輪廓以粉色側面斜向擠壓／銜接的重複排印海報。藝術提取的是：① 同一個字形反覆建構整版、② 字與字的邊緣裁切形成密度、③ 有一致方向的厚度面及接合節奏、④ 每一行緊密銜接但不均勻齊平。**不複製**其紅／粉／奶白配色或英文字體；西望仍使用 Design OS 七色與原有正式向量路徑。
+
+**必須取代上一輪：** 第十輪 441 個 HTML 中文單字（從 Contents 抽詞）及七枚獨立西望 Logo 的搭配，被使用者三次明確限制淘汰：「應該是動效」「所有的字都應該是西望」「都用 SVG」。不再允許以 `span`、CSS 字體背景字、任意其他漢字、生成圖片代替「西望」的重複字場。
+
+**目前試作 [PR #1355／416213f]：** 只保留正式 `/images/westside-watch-xiwang-horizontal-motion.svg` 作為唯一字形來源。左側不再存在 HTML glyph field；使用一個原生 `<svg>` 舞台和共用的遮罩向量底稿，七個 scroll registers × 每段兩行 × 每行六組 = **84 枚完整「西望」**；每枚含 **4 層 native SVG `<use>`**（前三個位移的色版側面與一個正面），共 336 個可程式驅動的向量色面。所有圖案由固定的 432:218 原 SVG 比例縮放，沒有重畫、拉伸字形、重製字體。字列有微小階段性的比例與交錯，外緣可自然出血；設計將緊密印刷與斜向色彩厚度連成滿版左頁。
+
+**唯一滾動時鐘：** 七個 register 在原 Church 半屏接管後按 p≈44% 到 p≈65% 順序由水平偏移進場，p≈82% hold 時 84 枚全部落定；逆向捲動沿同一時鐘撤回，p≈100% 時整塊印刷場淡出由既有聖殿石紋 Contents 替換。不得額外接入 GSAP 或修改首頁、教會活水／日程／分海開門。`prefers-reduced-motion` 保留跳轉方案。
+
+**跨頁藝術標準：** 左側密集 SVG 造型，是讓右側午夜藍封面得以**疏朗、有留白**的主要原因。右側原刊名、晨星 v5.3、城牆與石體仍維持原狀；禁止將左側的巨型重複字貼到右側或為平衡密度而再放大右頁元素。Contents 的可閱讀文章標題與十二個欄目必須在結尾完整呈現。
+
+**驗收阻擋：** 第十輪舊 441 字測試已撤除。新測試必須有 exactly 84 SVG 字組、84 原字型面、252 SVG 厚度面、7 段進場，每個字組指向被保護的同一個原始西望路徑；沒有純文字 glyph；p44 不可已全顯示、p82 需全部已進場、p100 不得蓋住 Contents。桌面／768／390／320 和原 Church 共 41 個 Chromium 截圖節點，還須由實際截圖目視檢查字形是否真顯現、厚度與留白是否好看；僅 DOM 檢查通過不是獲獎級批准。**TRIAL／NOT APPROVED／不合併。**
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
