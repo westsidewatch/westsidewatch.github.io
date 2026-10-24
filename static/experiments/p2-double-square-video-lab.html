@@ -193,6 +193,54 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 }
 @media(prefers-reduced-motion:reduce){.dual-tile,.dual-film,.dual-cover__star{transition:none!important;animation:none!important}}
 
+
+/* The P2 cover A/B trial changes local editorial composition only.
+   The original masthead, morning-star iframe, Jerusalem wall and OS remain canonical. */
+.dual-cover[data-cover-variant="editorial"]{background:radial-gradient(ellipse at 70% 42%,#30526e,transparent 55%),#11283e}
+.dual-cover[data-cover-variant="typographic"]{background:radial-gradient(ellipse at 77% 51%,#35536a,transparent 46%),#11243a}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__mast{left:6%;top:3%;width:88%;max-width:88%;height:19%;max-height:19%}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__vol{left:7%;top:21%;font-size:clamp(10px,1.5cqi,15px)}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__tagline{left:7%;top:26%;font-size:clamp(12px,1.85cqi,18px)}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__coverlines{left:7%;top:33%;width:43%;gap:clamp(9px,1.6cqi,17px)}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__coverline{font-size:clamp(12px,1.75cqi,17px);color:#f3e8d6}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__star{left:74%;top:40%;width:clamp(87px,25cqi,182px)}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__city{top:77%}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__en{top:48%;left:7%;right:6%;font-size:clamp(34px,8.8cqi,93px);color:#f0d5a0;text-shadow:0 3px 14px #10243d}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__zh{top:86%;left:7%;right:4%;font-size:clamp(16px,3.6cqi,31px)}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__folio{left:7%;right:7%;bottom:2%}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__mast{left:6%;top:4%;width:53%;max-width:53%;height:15%;max-height:15%}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__vol{top:7%;left:auto;right:7%;font-size:clamp(10px,1.5cqi,15px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__tagline{left:7%;top:21%;font-size:clamp(12px,1.85cqi,18px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__coverlines{top:20%;left:62%;width:30%;gap:clamp(10px,1.75cqi,18px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__coverline{font-size:clamp(10px,1.5cqi,15px);color:#f3e8d6}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__star{left:81%;top:49%;width:clamp(80px,21cqi,159px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__city{top:75%}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__en{top:34%;left:6%;right:5%;font-size:clamp(44px,11.1cqi,116px);color:#f2dfbf;text-shadow:0 5px 20px #0e243b}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__zh{top:86%;left:7%;right:5%;font-size:clamp(16px,3.5cqi,31px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__folio{left:7%;right:7%;bottom:2%}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__en span:last-child{margin-left:0;font-size:1.35em;line-height:.89}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__en span:last-child{margin-left:0;font-size:1.28em;line-height:.87}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__engraving{opacity:.3;background-position:78% 40%;background-size:auto 140%}
+@media(max-width:820px){
+.dual-cover[data-cover-variant="editorial"] .dual-cover__mast{left:6%;top:3%;width:88%;max-width:88%;height:19%;max-height:19%}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__vol{top:21%;left:7%;font-size:10px}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__tagline{top:26%;font-size:clamp(10px,2.3cqi,13px)}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__coverlines{top:33%;left:7%;width:46%;gap:5px}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__coverline{font-size:clamp(10px,2.3cqi,13px)}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__star{left:76%;top:41%;width:clamp(58px,24cqi,107px)}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__en{top:48%;left:7%;font-size:clamp(30px,8.7cqi,58px)}
+.dual-cover[data-cover-variant="editorial"] .dual-cover__zh{top:86%;left:7%;font-size:clamp(15px,3.55cqi,24px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__mast{left:6%;top:4%;width:53%;max-width:53%;height:15%;max-height:15%}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__vol{top:7%;left:auto;right:7%;font-size:10px}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__tagline{top:21%;left:7%;font-size:clamp(10px,2.25cqi,13px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__coverlines{top:20%;left:62%;width:30%;gap:6px}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__coverline{font-size:clamp(9px,2.3cqi,12px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__star{left:80%;top:51%;width:clamp(60px,21cqi,100px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__en{top:34%;left:6%;font-size:clamp(40px,11cqi,72px)}
+.dual-cover[data-cover-variant="typographic"] .dual-cover__zh{top:86%;left:7%;font-size:clamp(15px,3.55cqi,24px)}
+.dual-cover[data-cover-variant] .dual-cover__folio{display:none}
+}
+
 /* This same composition is the P2 magazine segment inside the existing Church
    scroll surface when ?embed=1. No duplicate timeline or copy of home film. */
 /* Embedded overlay MUST have transparent canvas and body. Otherwise the
@@ -211,6 +259,8 @@ html.dual-embed .dual-film__credit{display:none}
  <nav class="dual-ui__controls" aria-label="實驗場景">
   <button type="button" data-position="cover-left" aria-pressed="false">封面在左</button>
   <button type="button" data-position="cover-right" aria-pressed="true">封面在右</button>
+  <button type="button" data-cover-choice="editorial" aria-pressed="true">A · 圖像敘事</button>
+  <button type="button" data-cover-choice="typographic" aria-pressed="false">B · 字體藝術</button>
   <button type="button" data-snap="0.14">封面進場</button>
   <button type="button" data-snap="0.54">西望逐行</button>
   <button type="button" data-snap="0.68">晨星升起</button>
@@ -228,7 +278,7 @@ html.dual-embed .dual-film__credit{display:none}
  <span class="dual-film__credit" aria-hidden="true">WESTSIDE WATCH / THE KING ENTERS THE CITY / ORIGINAL HOME FILM</span>
  <div class="dual-panels">
   <article class="dual-tile dual-tile--cover" id="dual-cover" aria-label="西望 Vol.00 午夜藍封面">
-   <div class="dual-cover">
+   <div class="dual-cover" data-cover-variant="editorial">
      <div class="dual-cover__engraving" aria-hidden="true"></div>
      <div class="dual-cover__radiance" id="dual-radiance" aria-hidden="true"></div>
      <div class="dual-cover__city" id="dual-cover-city" aria-hidden="true">
@@ -300,7 +350,7 @@ html.dual-embed .dual-film__credit{display:none}
  const radiance=document.getElementById('dual-radiance'),city=document.getElementById('dual-cover-city');
  const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
  const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol'),coverLines=document.getElementById('dual-cover-coverlines');
- const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')];
+ const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')],coverChoices=[...document.querySelectorAll('[data-cover-choice]')],coverArt=cover.querySelector('.dual-cover');
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
  const lerp=(a,b,t)=>a+(b-a)*t;
@@ -477,6 +527,14 @@ html.dual-embed .dual-film__credit{display:none}
    const uri=new URL(location.href);uri.searchParams.set('p',String(Math.round(progress*100)));history.replaceState(null,'',uri);
   }
  }
+ function setCoverVariant(raw){
+  const v=raw==='typographic'?'typographic':'editorial';
+  coverArt.dataset.coverVariant=v;stage.dataset.coverVariant=v;
+  coverChoices.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.coverChoice===v)));
+  if(!document.documentElement.classList.contains('dual-embed')){
+   const u=new URL(location.href);u.searchParams.set('cover',v);history.replaceState(null,'',u);
+  }
+ }
  function setOrientation(val){
   coverLeft=val==='cover-left';
   buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.position===val)));
@@ -487,6 +545,7 @@ html.dual-embed .dual-film__credit{display:none}
  }
  document.querySelectorAll('[data-snap]').forEach(b=>b.addEventListener('click',()=>setProgress(b.dataset.snap)));
  buttons.forEach(b=>b.addEventListener('click',()=>setOrientation(b.dataset.position)));
+ coverChoices.forEach(b=>b.addEventListener('click',()=>setCoverVariant(b.dataset.coverChoice)));
  range.addEventListener('input',()=>setProgress(Number(range.value)/100));
  addEventListener('message',event=>{
   if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-dual-progress')return;
@@ -501,6 +560,7 @@ html.dual-embed .dual-film__credit{display:none}
   star.querySelector('iframe')?.remove();
   star.querySelector('.dual-cover__star-fallback').style.opacity='1';
  }else{frame.src=frame.dataset.originalSrc}
+ setCoverVariant(qs.get('cover'));
  setOrientation(qs.get('side')==='cover-left'?'cover-left':'cover-right');
  setProgress(Number(qs.get('p')??100)/100);
 })();
