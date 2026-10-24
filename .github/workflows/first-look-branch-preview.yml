@@ -311,7 +311,7 @@ jobs:
                       const art=await page.request.get('http://127.0.0.1:4173/experiments/assets/westside-cover-night-intaglio-v3.svg');
                       const body=art.ok()?await art.text():'';
                       if(!art.ok()||!body.includes('data-variant="night-intaglio-v3"')||
-                         !body.includes('crosshatch')||!body.includes('clear protected star centre'))
+                         !body.includes('curvilinear bands')||!body.includes('open star centre'))
                         errors.push('COVER_ENGRAVING_ASSET_NOT_DEPLOYED');
                     }
                     if(variant==='masthead'&&metrics.wallClearance<4)
