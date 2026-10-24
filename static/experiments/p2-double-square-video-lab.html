@@ -107,8 +107,6 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-movement li small{font-size:11px}
 }
 @media(max-width:820px){
-.dual-letterfield__row{height:12.3%}
-.dual-letterfield__glyph{width:var(--mark-width,22cqi);height:auto;max-width:none}
 .dual-ui{gap:11px}.dual-ui__name{width:100%}.dual-ui__controls{gap:6px}
 .dual-ui__range{width:100%;min-width:0}.dual-ui__range input{flex:1}
 .dual-stage{min-height:calc(100svh - 135px);height:calc(100svh - 135px)}
@@ -396,7 +394,7 @@ html.dual-embed .dual-film__credit{display:none}
    progress<.72?'morning-star-rise':progress<.865?'cover-and-xiwang':
    progress<.995?'stone-contents-reveal':'contents-final';
   stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
-  stage.dataset.xiwangLines=String(rows.filter(row=>Number(row.dataset.entered)>.95).length);
+  stage.dataset.xiwangLines=String(bands.filter(({band})=>Number(band.style.opacity)>.75).length);
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
  }
