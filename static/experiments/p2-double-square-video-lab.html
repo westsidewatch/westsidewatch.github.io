@@ -234,11 +234,12 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    runs uninterrupted beneath transparent portions of the historic crest. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city{
  top:54%;bottom:0;overflow:visible;isolation:isolate;
- background:url('/images/temple-stone-light.png') center top/cover no-repeat;
+ background:none;
  box-shadow:none;filter:none;
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__paper{
- inset:0;background:none;box-shadow:none;filter:none;
+ inset:0;background:url('/images/temple-stone-light.png') center top/cover no-repeat;
+ box-shadow:none;filter:none;
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city::after{
  content:none;display:none;
@@ -307,7 +308,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
   top:25.5%;left:6%;font-size:9px;
  }
  .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
-  left:50%;top:32%;width:clamp(80px,28cqi,122px);
+  left:50%;top:32%;width:clamp(80px,28cqi,170px);
  }
  .dual-cover[data-cover-variant="masthead"] .dual-cover__city{
   top:55%;
