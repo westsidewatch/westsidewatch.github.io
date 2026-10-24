@@ -2552,7 +2552,7 @@ For each output create a plate record with source URL and revision, original ext
 
 **程式參照：** [Codrops SVG Clip-Path Text Animations](https://github.com/codrops/TextClipScroll) 為 MIT 的原始碼參考，僅吸收其把字形／mask 與卷軸幾何整合的實作思想；P2 繼續沿用現有 HTML/CSS/JS，沒有引入第二套 GSAP timeline，也沒有新增光束素材。
 
-**當前候選：** PR #1355，`c515ac3`（同一建築父節點）、`f974d1a`（七條十一組官方字形與連動升城）。Production Build、視覺 CI、人工畫面、200% 等驗收必須再核實。藝術批准狀態 **TRIAL / NOT APPROVED**，不得合併到主站。
+**截至第七輪實景回歸：** PR #1355，`c515ac3`（同一建築父節點）、`f974d1a`（七條十一組官方字形與連動升城）、`9896f8e`（Contents 十二欄全覽、可鍵盤捲動）、`6d231a0`／`2cf3991`（768px 上下雙頁及 41 場景驗收）。後者完成 **41/41 真正 Chromium 場景、無測試錯誤**，包括 1648px、768px、390px、320px 的八個獨立動效節點與原教會的九個接入場景。桌面版心所有十二欄在一張定格全部可見；平板與手機內容採可鍵盤進入的滾動目錄，明示 SCROLL。原城牆 PNG 和寺石 PNG 是一個 DOM 父節點／單一 transform，截圖下層確實無透空縫。**Production Build PASS；First Look Preview PASS；Core Contract FAIL**（歷史首頁晨星資產凍結基準，P2 未動保護檔）。\n\n**仍待藝術批准：** 41 場測試屬機械／幾何＋人工畫面複核，不保證 Awwwards 或 Webby 獲獎；真正瀏覽器 200% 放大、完整鍵盤焦點順序、持續逆向滾動手感、效能的最終簽收還未充分驗證。藝術狀態 **TRIAL / NOT APPROVED**，不得自行合併主站。
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
