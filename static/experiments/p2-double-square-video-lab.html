@@ -230,7 +230,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    darker gold material or a black baseline. The PNG files are unmodified. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
  top:calc(-1*clamp(14px,2.3cqi,29px));left:0;right:0;
- height:clamp(23px,3.4cqi,41px);
+ height:clamp(23px,4.05cqi,41px);
  background-image:url('/images/temple-stone-light.png'),url('/images/jerusalem-wall.png');
  background-position:center center,center bottom;
  background-size:cover,auto 100%;
@@ -245,7 +245,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover[data-cover-variant="masthead"] .dual-cover__wall::before{
  content:"";position:absolute;inset:0;pointer-events:none;
  background:url('/images/jerusalem-wall.png') center bottom/auto 100% repeat-x;
- filter:grayscale(1) brightness(1.13);opacity:.20
+ filter:grayscale(1) brightness(1.13);opacity:.16;
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 62%,transparent 98%);
+ mask-image:linear-gradient(to bottom,#000 0%,#000 62%,transparent 98%)
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__gate{
  position:absolute;z-index:4;left:50%;top:0;transform:translateX(-50%);
@@ -302,7 +304,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  .dual-cover[data-cover-variant="masthead"] .dual-cover__vol{top:25.4%;left:6%;font-size:9px}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__city{top:31%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
-  top:calc(-1*clamp(9px,2.35cqi,19px));height:clamp(18px,3.6cqi,28px)
+  top:calc(-1*clamp(9px,2.35cqi,19px));height:clamp(14px,4.05cqi,28px)
  }
  .dual-cover[data-cover-variant="masthead"] .dual-cover__gate{width:clamp(5px,1.2cqi,9px)}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
