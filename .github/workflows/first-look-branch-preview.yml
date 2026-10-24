@@ -105,6 +105,17 @@ jobs:
                         blueReveal:Number(root.dataset.blueReveal),
                         dawnReveal:Number(root.dataset.dawnReveal),
                         officialWorks:document.querySelectorAll('.dual-work').length,
+                        officialSvgMarks:document.querySelectorAll('.dual-letterfield__glyph').length,
+                        printRows:document.querySelectorAll('.dual-letterfield__row').length,
+                        unifiedCity:(()=>{
+                          const city=document.getElementById('dual-cover-city');
+                          const paper=city?.querySelector('.dual-cover__paper');
+                          const wall=city?.querySelector('.dual-cover__wall');
+                          return {shared:!!(city&&paper&&wall&&paper.parentElement===city&&wall.parentElement===city),
+                            gap:paper&&wall?paper.getBoundingClientRect().top-wall.getBoundingClientRect().bottom:999,
+                            texture:paper?getComputedStyle(paper).backgroundImage.includes('temple-stone-light.png'):false,
+                            wallImg:wall?getComputedStyle(wall).backgroundImage.includes('jerusalem-wall.png'):false};
+                        })(),
                         movementOverlap:(()=>{
                           if(innerWidth<=700)return 0; // mobile is a single scroll column
                           const ms=[...document.querySelectorAll('.dual-movement')];
@@ -125,6 +136,9 @@ jobs:
                     });
                     if(!loadedOK||m.rows!==12||!m.logoLoaded||m.aria!==1)errors.push('SOURCE_OR_UI');
                     if(m.officialWorks!==11||m.legacyLaser)errors.push('EDITORIAL_WORKS_OR_REMOVED_LASER');
+                    if(m.officialSvgMarks!==11||m.printRows!==7)errors.push('OFFICIAL_LOGO_MULTIPLE_PRINT_ROWS_REQUIRED');
+                    if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.wallImg)errors.push('WALL_STONE_MUST_SHARE_ONE_CITY');
+                    if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
                     if(m.scrollWidth>m.width+2)errors.push('HORIZONTAL_OVERFLOW');
                     if(p===100&&!m.videoOriginLoaded)errors.push('HOME_FILM_NOT_LOADED');
