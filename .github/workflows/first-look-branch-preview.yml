@@ -108,7 +108,10 @@ jobs:
                           const index=document.querySelector('.dual-contents__index');
                           const last=document.querySelector('.dual-movement:last-child li:last-child');
                           if(!index||!last)return {desktopVisible:false,keyboard:false,mobileScrollable:false};
-                          return {desktopVisible:last.getBoundingClientRect().bottom<=index.getBoundingClientRect().bottom+2,
+                          const items=[...document.querySelectorAll('.dual-movement li,.dual-work')];
+                          const rect=index.getBoundingClientRect();
+                          const allVisible=items.every(el=>{const r=el.getBoundingClientRect();return r.top>=rect.top-2&&r.bottom<=rect.bottom+2});
+                          return {desktopVisible:allVisible,
                             keyboard:index.tabIndex===0 && index.getAttribute('role')==='region',
                             mobileScrollable:index.scrollHeight>index.clientHeight+4};
                         })(),
@@ -120,7 +123,8 @@ jobs:
                           const source=[...document.querySelectorAll('#dual-letterfield g.ws-print-band')].slice(4);
                           const residual=[...el.querySelectorAll('g.ws-relief-band')];
                           const region=el.getBoundingClientRect();
-                          const maxItem=[...document.querySelectorAll('.dual-movement li')].at(-1)?.getBoundingClientRect();
+                          const itemRects=[...document.querySelectorAll('.dual-movement li,.dual-work')].map(el=>el.getBoundingClientRect());
+                          const maxItemBottom=Math.max(0,...itemRects.map(r=>r.bottom));
                           return {
                             marks:marks.length,
                             faces:el.querySelectorAll('use.ws-print-face').length,
@@ -132,7 +136,7 @@ jobs:
                             opacity:Number(getComputedStyle(el).opacity),
                             clipStart:region.top+region.height*.58,
                             indexBottom:index.getBoundingClientRect().bottom,
-                            lastArticleBottom:maxItem?.bottom||0,
+                            lastArticleBottom:maxItemBottom,
                             stoneOpacity:Number(getComputedStyle(contents).opacity),
                           };
                         })(),
