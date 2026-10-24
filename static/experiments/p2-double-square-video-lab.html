@@ -234,6 +234,7 @@ html.dual-embed .dual-film__credit{display:none}
 </section>
 <aside class="dual-overview">
  <p><strong>第五輪藝術修正：</strong>原教會右／左半屏依序以 clip-path 接管，拒絕整塊從畫面外砸入；新加射線已移除，保留晨星原刻線。左頁七個獨立的「西望」字標因互相覆蓋而被否決，改為一組官方原始向量字形的七道斜向印刷色版，隨滾動依序顯現，最終構成唯一巨型「西望」。封面仍使用真城牆＋原聖殿石底紋，Contents 已找回 Vol.00 確認的十項文章題名及兩位講員。</p>
+ <p><strong>第七輪實際藝術候選：</strong>官方 SVG「西望」由七條互相錯開的字形印帶組成，合計十一個完整的「西望」，不再把一個巨大字標切成七片；參考《50》的跨頁文字骨架，但保留 Westside 自己的七色印刷身份。原耶路撒冷城牆與聖殿石底紋合併到同一個 City DOM，一次升起、不再脫節。禁止額外線條／生成圖片；尚需實景驗收。</p>
  <p><strong>第六輪回歸修正：</strong>人工截圖發現 WATCH 長篇名進入 WITNESS 樂章標題。改用內容高度下限的 grid track，先保證任何樂章不重疊，裝不下時交由既有目錄卷軸完整呈現。禁止為了填滿紙面犧牲內容完整性。</p>
  <p><strong>第六輪真實截圖修訂：</strong>恢復篇名後四樂章仍過度擠在 Contents 上半段；本輪以雙欄兩段充滿版心，調整英中標題級差和行距，形成更有內容力量的紙面。右封面略調 LIGHT 的展示比例與中文主題重量，不增圖、不改城牆、晨星或教會動效；須另看真實截圖與版面溢位。</p>
  <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
@@ -245,10 +246,9 @@ html.dual-embed .dual-film__credit{display:none}
  const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
  const film=document.getElementById('dual-film'),frame=document.getElementById('dual-film-frame'),star=document.getElementById('dual-star');
  const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents');
- const radiance=document.getElementById('dual-radiance');
-  const paper=document.getElementById('dual-cover-paper'),wall=document.getElementById('dual-cover-wall');
-  const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
-  const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol');
+ const radiance=document.getElementById('dual-radiance'),city=document.getElementById('dual-cover-city');
+ const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
+ const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol');
  const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')];
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
@@ -259,20 +259,22 @@ html.dual-embed .dual-film__credit{display:none}
   'var(--ws-pale-gold,#cebd74)','var(--ws-olive,#738a5a)',
   'var(--ws-harvest,#b8944a)','var(--ws-crimson,#a14d57)',
   'var(--ws-daylight-mauve,oklch(67% .075 330))'];
- // Seven original marks in a weighted print hierarchy, not mechanical columns.
- // Seven offset intaglio plates uncover ONE historic brand impression.
+ // Seven slanted, independently printed logo registers: 11 intact marks.
+ const plateLeft=[-4,22,7,29,1,19,10],plateTop=[4.5,17,29.5,42,54.5,67,79.5];
+ const plateWidths=[19,21,22,27,23,21,20],markCounts=[2,1,2,1,2,1,2];
+ const plateAngles=[-12,-11,-10,-9,-10,-11,-12],plateOpacity=[.65,.82,.91,1,.95,.82,.69];
  const rows=palette.map((color,i)=>{
   const line=document.createElement('div');line.className='dual-letterfield__row';
-  line.dataset.line=String(i+1);line.style.setProperty('--row-ink',color);
-  const glyph=document.createElement('span');glyph.className='dual-letterfield__glyph';
-  glyph.setAttribute('aria-hidden','true');
-  // All seven regions share the same wordmark geometry; no repeated word
-  // objects, no laser paths, no new drawings.
-  const top=i*100/7,bottom=(i+1)*100/7,shear=12;
-  glyph.style.setProperty('--print-slice','polygon(0% '+top.toFixed(3)+'%,100% '+
-    (top-shear).toFixed(3)+'%,100% '+(bottom-shear).toFixed(3)+
-    '%,0% '+bottom.toFixed(3)+'%)');
-  line.appendChild(glyph);letters.appendChild(line);return line;
+  line.dataset.line=String(i+1);line.style.top=plateTop[i]+'%';
+  line.style.left=plateLeft[i]+'%';line.style.width='108%';
+  line.style.setProperty('--row-ink',color);
+  line.style.setProperty('--mark-width',plateWidths[i]+'cqi');
+  line.style.setProperty('--ink-density',i===3?'90%':'78%');
+  for(let n=0;n<markCounts[i];n++){
+   const mark=document.createElement('span');mark.className='dual-letterfield__glyph';
+   mark.setAttribute('aria-hidden','true');line.appendChild(mark);
+  }
+  letters.appendChild(line);return line;
  });
  let progress=1,coverLeft=false;
  const pose=(el,x,y,w,h)=>{
@@ -315,21 +317,20 @@ html.dual-embed .dual-film__credit{display:none}
   const lettersFade=1-ease((progress-.855)/.115);
   letters.style.opacity=String(lettersFade);
    rows.forEach((row,i)=>{
-    const entered=reduce?(progress>=.60?1:0):ease((progress-(.435+i*.019))/.049);
+    const entered=reduce?(progress>=.58?1:0):ease((progress-(.453+i*.015))/.046);
     row.dataset.entered=String(entered);
-    row.style.opacity=String(entered);
-    row.style.transform='translate3d(0,'+((1-entered)*11).toFixed(2)+
-      'px,0) rotate(-10deg)';
+    row.style.opacity=String(entered*plateOpacity[i]);
+    row.style.transform='translate3d('+((1-entered)*(i%2?-21:24)).toFixed(2)+'px,'+
+     ((1-entered)*(i%2?8:-7)).toFixed(2)+'px,0) rotate('+plateAngles[i]+'deg)';
    });
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
    const dawnRise=reduce?(progress>=.53?1:0):ease((progress-.555)/.185);
    const starRise=reduce?(progress>=.53?1:0):ease((progress-.605)/.12);
-   const paperTop=100-56.4*dawnRise;
-   paper.style.transform='translate3d(0,'+(100-100*dawnRise).toFixed(3)+'%,0)';
-   wall.style.top=paperTop.toFixed(3)+'%';
-   wall.style.opacity=String(reduce?dawnRise:ease((progress-.57)/.08));
+   // Crest and temple-stone are ONE object with one motion authority.
+   city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
+   city.style.opacity=String(reduce?dawnRise:ease((progress-.565)/.085));
    coverEnglish.style.opacity=String(reduce?dawnRise:ease((progress-.62)/.105));
    coverVol.style.opacity=String(reduce?dawnRise:ease((progress-.67)/.095));
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
