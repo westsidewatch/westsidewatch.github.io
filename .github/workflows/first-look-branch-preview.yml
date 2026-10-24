@@ -333,7 +333,7 @@ jobs:
                     const index=stage?.querySelector('.dual-contents__index');
                     return {phase:root?.dataset.p2Phase,design:root?.dataset.magazineDesign,
                       water:!!c?.querySelector('.ocean-rise'),doors:!!c?.querySelector('.water-doors'),church:!!c?.querySelector('.church-editorial'),
-                      duo:stage?.querySelector('#dual-stage')?.dataset.phase,logoRatio:mast?.width/a?.width,
+                      duo:stage?.querySelector('#dual-stage')?.dataset.phase,coverVariant:stage?.querySelector('.dual-cover')?.dataset.coverVariant,logoRatio:mast?.width/a?.width,
                       coverSize:a&&{width:a.width,height:a.height},contentSize:b&&{width:b.width,height:b.height},
                       entries:stage?.querySelectorAll('.dual-movement li').length,
                       homeVideo:!!stage?.querySelector('#dual-film-frame')?.contentDocument?.querySelector('.hosanna'),
@@ -343,11 +343,11 @@ jobs:
                   });
                   if(m.phase!=='magazine'||m.design!=='duo-bridge'||m.duo!=='contents-final'||!m.water||!m.doors||!m.church)errors.push('CHURCH_MOTION_NOT_PRESERVED');
                   if(m.entries!==12||!m.homeVideo)errors.push('CANON_OR_ORIGINAL_HOME_FILM');
-                  // Ninth-round art-direction supersedes the previous 88–95% masthead
-                  // treatment, which competed with the title, star and city.
-                  // Preserve the official asset, but subordinate its footprint
-                  // to the main editorial title rather than overfill the sky.
-                  if(m.logoRatio<.75||m.logoRatio>.84)errors.push('COVER_MASTHEAD_SCALE_OUT_OF_RANGE');
+                  // The art-reviewed B candidate places the official masthead in a restrained
+                  // 53% editorial header. This is an explicit, narrower B-specific
+                  // acceptance range, not a waiver of the earlier image test.
+                  // Both compositions are also tested above at four viewports.
+                  if(m.coverVariant!=='typographic'||m.logoRatio<.50||m.logoRatio>.57)errors.push('COVER_CANDIDATE_B_MASTHEAD_SCALE_OUT_OF_RANGE');
                   if(Math.abs((m.coverSize?.width||0)-(m.coverSize?.height||0))>2)errors.push('COVER_NOT_SQUARE');
                   if(m.lastRect>m.contentsRect+2&&!m.directoryScrollable)errors.push('LAST_ENTRIES_UNREACHABLE');
                   await page.screenshot({path:path.join(out,id+'.png'),animations:'disabled'});
