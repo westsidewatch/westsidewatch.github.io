@@ -115,6 +115,15 @@ jobs:
                         })(),
                         officialSvgMarks:document.querySelectorAll('.dual-letterfield__glyph').length,
                         printRows:document.querySelectorAll('.dual-letterfield__row').length,
+                        coverTitleLayout:(()=>{
+                          const light=document.querySelector('.dual-cover__en span:last-child');
+                          const folio=document.getElementById('dual-cover-vol');
+                          const chinese=document.getElementById('dual-cover-zh');
+                          const cover=document.getElementById('dual-cover');
+                          if(!light||!folio||!chinese||!cover)return {overlap:999,overflow:999};
+                          const x=light.getBoundingClientRect(),v=folio.getBoundingClientRect(),z=chinese.getBoundingClientRect(),page=cover.getBoundingClientRect();
+                          return {overlap:Math.max(0,x.bottom-v.top,v.bottom-z.top),overflow:Math.max(0,x.right-page.right)};
+                        })(),
                         unifiedCity:(()=>{
                           const city=document.getElementById('dual-cover-city');
                           const paper=city?.querySelector('.dual-cover__paper');
@@ -144,7 +153,7 @@ jobs:
                     });
                     if(!loadedOK||m.rows!==12||!m.logoLoaded||m.aria!==1)errors.push('SOURCE_OR_UI');
                     if(m.officialWorks!==11||m.legacyLaser)errors.push('EDITORIAL_WORKS_OR_REMOVED_LASER');
-                    if(m.officialSvgMarks!==11||m.printRows!==7)errors.push('OFFICIAL_LOGO_MULTIPLE_PRINT_ROWS_REQUIRED');
+                    if(m.officialSvgMarks!==20||m.printRows!==7)errors.push('OFFICIAL_LOGO_MULTIPLE_PRINT_ROWS_REQUIRED');
                     if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.wallImg)errors.push('WALL_STONE_MUST_SHARE_ONE_CITY');
                     if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
@@ -159,6 +168,7 @@ jobs:
                     if(p===54&&(m.phase!=='xiwang-lines'||m.lines<2||m.stoneVisible))errors.push('XIWANG_NOT_AFTER_HALF_PANELS');
                     if(p===68&&(m.phase!=='morning-star-rise'||m.lines!==7||m.starOpacity<.1||m.stoneVisible))errors.push('STAR_NOT_AFTER_XIWANG');
                     if(p===82&&(m.phase!=='cover-and-xiwang'||m.lines!==7||m.stoneVisible))errors.push('MISSING_COVER_XIWANG_HOLD');
+                    if(p===82&&(m.coverTitleLayout.overlap>8||m.coverTitleLayout.overflow>8))errors.push('COVER_DISPLAY_TITLE_COLLISION');
                     if(p===93&&(m.phase!=='stone-contents-reveal'||!m.stoneBg))errors.push('MISSING_ORIGINAL_STONE_REVEAL');
                     if(p===100&&(!m.stoneVisible||!m.stoneBg||m.lines!==7))errors.push('FINAL_STONE_CONTENTS_INCOMPLETE');
                     if(Math.abs(m.panels[0].width-m.panels[0].height)>2&&p===100)errors.push('COVER_NOT_SQUARE');
