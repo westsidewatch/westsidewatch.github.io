@@ -293,9 +293,12 @@ html.dual-embed .dual-film__credit{display:none}
    for(let depth=3;depth>=0;depth--){
     const face=makeSvg('use',depth?'ws-print-depth':'ws-print-face',mark);
     face.setAttribute('href','#ws-xiwang-original');
-    face.setAttribute('transform','translate('+(depth*13)+' '+(depth*11)+')');
-    face.style.color=depth===0?palette[ink]:depth===3?papers[register]:palette[(ink+2)%7];
-    face.style.opacity=depth===0?'1':depth===3?'.92':'.80';
+    face.setAttribute('transform','translate('+(depth*17)+' '+(depth*12)+')');
+    // Consistent dark faces bind the field together; seven original OS hues
+    // form the vector extrusion. One accent face per register is intentional.
+    const accent=(col===2&&subrow===0)||(register===3&&col===4);
+    face.style.color=depth===0?(accent?palette[ink]:'#25394c'):depth===3?papers[register]:palette[(ink+2)%7];
+    face.style.opacity=depth===0?'1':depth===3?'.93':'.89';
    }
    marks.push(mark);allMarks.push(mark);
   }
@@ -311,7 +314,7 @@ html.dual-embed .dual-film__credit{display:none}
   for(let register=0;register<7;register++)for(let n=0;n<12;n++){
    const row=register*2+Math.floor(n/6),col=n%6;
    const x=-step*(.79+(row%2)*.23)+col*step*.89+(register-3)*2;
-   const y=-h*.065+row*h/13.05;
+   const y=-h*.065+row*h/12.55;
    const emphasis=row===6||row===7?1.12:1;
    const size=scale*emphasis*(.92+((row+col)%4)*.034);
    bands[register].marks[n].setAttribute('transform','translate('+x.toFixed(2)+' '+y.toFixed(2)+') scale('+size.toFixed(5)+')');
