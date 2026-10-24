@@ -31,12 +31,12 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-tile{position:absolute;min-width:0;min-height:0;overflow:hidden;pointer-events:auto;isolation:isolate;box-shadow:none;container-type:size}
 .dual-tile--cover{background:radial-gradient(ellipse at 56% 22%,#29425b 0%,transparent 58%),var(--blue);color:var(--paper)}
 .dual-tile--contents{background:linear-gradient(140deg,#ddc98f,#c6a664 52%,#b59a65);color:var(--ink)}
-/* Actual logo SVG outlines, seven differently paced editorial rays. */
+/* Eleven official-svg pairs in seven editorial print lines.
+   Negative gold space and true wordmark outlines form the art direction. */
 .dual-letterfield{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:1}
-/* ONE monumental, unaltered Westside SVG wordmark. Its seven slanted
-   editorial color plates resolve into the same two complete characters. */
-.dual-letterfield__row{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform,opacity}
-.dual-letterfield__glyph{position:absolute;display:block;left:8%;top:26%;width:84%;height:48%;background:color-mix(in srgb,var(--row-ink,#5b8fa8) 72%,#1b3046 28%);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;clip-path:var(--print-slice)}
+.dual-letterfield__row{position:absolute;height:12.3%;display:flex;align-items:center;gap:clamp(10px,4cqi,38px);transform-origin:30% 50%;will-change:transform,opacity}
+.dual-letterfield__glyph{display:block;flex:none;width:var(--mark-width,22cqi);aspect-ratio:432/218;background:color-mix(in srgb,var(--row-ink,#5b8fa8) var(--ink-density,83%),#203b4f);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat}
+.dual-letterfield__glyph:nth-child(2){opacity:.67}
 .dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:2;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
 /* This is the exact inherited temple-stone + overlay from the existing P2
    .mag3__contents-page. Do not synthesize or substitute another texture. */
@@ -46,7 +46,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover{position:relative;isolation:isolate;height:100%;width:100%;overflow:hidden;background:radial-gradient(ellipse at 74% 51%,#284762 0%,transparent 42%),linear-gradient(180deg,#10263f,#18334e 72%,#152b43);color:#e9c37b}
 .dual-cover__engraving{position:absolute;z-index:0;inset:7% -8% 31%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') 72% 46%/auto 156% no-repeat;mix-blend-mode:screen;opacity:.42;mask-image:linear-gradient(180deg,transparent 0%,#000 17%,#000 82%,transparent 100%);pointer-events:none}
 .dual-cover__radiance{position:absolute;z-index:1;inset:0;background:radial-gradient(ellipse 48% 31% at 72% 43%,rgba(233,174,69,.41),rgba(227,183,95,.14) 43%,transparent 95%);opacity:0;pointer-events:none}
-.dual-cover__paper{position:absolute;z-index:2;left:0;right:0;top:43.6%;bottom:0;transform:translate3d(0,100%,0);background:linear-gradient(180deg,rgba(221,191,136,.15),rgba(242,222,184,.06) 25%,rgba(250,240,217,.26)),url('/images/temple-stone-light.png') center top/cover no-repeat;background-blend-mode:multiply;box-shadow:inset 0 13px 22px rgba(89,65,36,.16),inset 0 2px 0 rgba(127,88,47,.45);pointer-events:none;will-change:transform}
+/* One physical Jerusalem city: original crest and original stone move together. */
+.dual-cover__city{position:absolute;z-index:2;top:43.6%;left:0;right:0;bottom:0;transform:translate3d(0,115%,0);opacity:0;will-change:transform,opacity;isolation:isolate}
+.dual-cover__paper{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(176,127,65,.39),rgba(195,157,104,.20) 10%,rgba(240,220,180,.06) 35%,rgba(249,237,213,.10)),url('/images/temple-stone-light.png') center top/cover no-repeat;background-blend-mode:multiply;box-shadow:inset 0 21px 24px rgba(92,67,35,.29),inset 0 1px 0 rgba(89,65,36,.34);pointer-events:none}
+.dual-cover__city::after{content:'';position:absolute;z-index:1;left:0;right:0;top:0;height:clamp(14px,3.6cqi,36px);background:linear-gradient(180deg,rgba(90,58,34,.19),rgba(112,74,39,.07) 55%,transparent);pointer-events:none}
 .dual-cover__mast{position:absolute;z-index:5;top:4%;left:5%;width:90%;height:25%;max-width:90%;max-height:25%;object-fit:contain;object-position:center top;filter:brightness(0) saturate(100%) invert(78%) sepia(34%) saturate(518%) hue-rotate(350deg) brightness(103%) contrast(89%)}
 .dual-cover__series{display:none}
 .dual-cover__tagline{position:absolute;z-index:5;top:35%;left:8%;right:8%;display:flex;align-items:center;gap:clamp(7px,1.7cqi,17px);margin:0;font:italic 400 clamp(15px,3cqi,29px)/1.15 var(--ws-type-display-en,Georgia,serif);text-align:center;white-space:nowrap;color:#e2bd79}
@@ -54,10 +57,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover__star{position:absolute;z-index:3;left:72%;top:27%;width:clamp(68px,14cqi,124px);aspect-ratio:1;transform:translate(-50%,95%);opacity:0;overflow:hidden;pointer-events:none}
 .dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
 .dual-cover__star-fallback{position:absolute;z-index:1;inset:0;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:.25;pointer-events:none}
-.dual-cover__wall{position:absolute;z-index:4;top:100%;left:0;right:0;height:clamp(37px,9cqi,88px);transform:translate3d(0,-8%,0);background:url('/images/jerusalem-wall.png') center bottom/auto 100% no-repeat;pointer-events:none;opacity:0;filter:drop-shadow(0 7px 2px rgba(109,75,35,.34));will-change:top}
-.dual-cover__en{position:absolute;z-index:5;top:49.5%;left:7%;right:6%;margin:0;font:400 clamp(42px,12.8cqi,124px)/.77 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.075em;color:#27384a;opacity:0}
+.dual-cover__wall{position:absolute;z-index:2;top:calc(-1 * clamp(34px,7.6cqi,75px));left:0;right:0;height:clamp(46px,9.5cqi,92px);background:url('/images/jerusalem-wall.png') center bottom/auto 100% repeat-x;pointer-events:none;filter:drop-shadow(0 5px 3px rgba(98,68,40,.24))}
+.dual-cover__en{position:absolute;z-index:5;top:49.4%;left:6.5%;right:6%;margin:0;font:400 clamp(47px,13.4cqi,130px)/.78 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.078em;color:#25384a;opacity:0}
 .dual-cover__en span{display:block;white-space:nowrap}
-.dual-cover__en span:last-child{margin-left:7%;font-size:1.28em;line-height:.88}
+.dual-cover__en span:last-child{margin-left:8%;font-size:1.23em;line-height:.89}
 .dual-cover__en em{font:italic 400 .57em/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.035em;vertical-align:.06em}
 .dual-cover__vol{position:absolute;z-index:5;top:74.5%;left:10%;right:10%;display:flex;align-items:center;gap:12px;margin:0;color:#8e744e;font:400 clamp(10px,1.55cqi,15px)/1.25 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.18em;opacity:0}
 .dual-cover__vol::before{content:'';height:1px;flex:0 0 14%;background:currentColor;opacity:.6}
@@ -187,7 +190,10 @@ html.dual-embed .dual-film__credit{display:none}
    <div class="dual-cover">
      <div class="dual-cover__engraving" aria-hidden="true"></div>
      <div class="dual-cover__radiance" id="dual-radiance" aria-hidden="true"></div>
-     <div class="dual-cover__paper" id="dual-cover-paper" aria-hidden="true"></div>
+     <div class="dual-cover__city" id="dual-cover-city" aria-hidden="true">
+      <div class="dual-cover__paper"></div>
+      <div class="dual-cover__wall" id="dual-cover-wall"></div>
+     </div>
      <img class="dual-cover__mast" src="/images/westside-watch-masthead-landscape.svg" alt="西望 WESTSIDE WATCH 正式雜誌標誌" loading="eager">
      <span class="dual-cover__series" lang="en"></span>
      <p class="dual-cover__tagline" lang="en">Watch for the Dawn</p>
@@ -195,7 +201,7 @@ html.dual-embed .dual-film__credit{display:none}
        <iframe tabindex="-1" title="西望現有晨星 3D v5.3" src="/experiments/morning-star-3d-lab.html?asset=1&amp;autoplay=1&amp;speed=2.1" loading="eager"></iframe>
        <div class="dual-cover__star-fallback"></div>
      </div>
-     <div class="dual-cover__wall" id="dual-cover-wall" aria-hidden="true"></div>
+
      <p class="dual-cover__en" id="dual-cover-en" lang="en"><span>CITY <em>OF</em></span><span>LIGHT</span></p>
      <p class="dual-cover__vol" id="dual-cover-vol" lang="en">VOL.00</p>
      <h1 class="dual-cover__zh" id="dual-cover-zh" lang="zh-Hant">守望，<span>一座光明的城</span></h1>
