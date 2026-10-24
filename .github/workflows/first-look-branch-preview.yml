@@ -65,7 +65,7 @@ jobs:
           (async()=>{
             const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
             try{
-              for(const [screen,width,height] of [['desktop',1648,928],['phone',390,844],['small',320,720]]){
+              for(const [screen,width,height] of [['desktop',1648,928],['tablet',768,1024],['phone',390,844],['small',320,720]]){
                 // Load the heavy original star and film ONCE per viewport.
                 // Every snapshot then scrubs the SAME scroll clock, testing its
                 // real continuity and avoiding 24 pointless iframe reloads.
@@ -125,7 +125,7 @@ jobs:
                             wallImg:wall?getComputedStyle(wall).backgroundImage.includes('jerusalem-wall.png'):false};
                         })(),
                         movementOverlap:(()=>{
-                          if(innerWidth<=700)return 0; // mobile is a single scroll column
+                          if(innerWidth<=820)return 0; // stacked phone/tablet is a single scroll column
                           const ms=[...document.querySelectorAll('.dual-movement')];
                           if(ms.length!==4)return 999;
                           return Math.max(0,
@@ -149,8 +149,8 @@ jobs:
                     if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
                     if(p===100&&!m.readerReach.keyboard)errors.push('CONTENTS_NOT_KEYBOARD_ACCESSIBLE');
-                    if(p===100&&width>700&&!m.readerReach.desktopVisible)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_VISIBLE');
-                    if(p===100&&width<=700&&!m.readerReach.mobileScrollable)errors.push('MOBILE_CONTENTS_SCROLL_NOT_AVAILABLE');
+                    if(p===100&&width>1100&&!m.readerReach.desktopVisible)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_VISIBLE');
+                    if(p===100&&width<=1100&&!m.readerReach.mobileScrollable)errors.push('MOBILE_CONTENTS_SCROLL_NOT_AVAILABLE');
                     if(m.scrollWidth>m.width+2)errors.push('HORIZONTAL_OVERFLOW');
                     if(p===100&&!m.videoOriginLoaded)errors.push('HOME_FILM_NOT_LOADED');
                     if(p===12&&(m.phase!=='cover-arrival'||m.blueReveal<=.1||m.blueReveal>=.9||m.dawnReveal!==0))errors.push('NIGHT_HALF_NOT_REVEALING_SCHEDULE_FIRST');
@@ -164,7 +164,7 @@ jobs:
                     if(Math.abs(m.panels[0].width-m.panels[0].height)>2&&p===100)errors.push('COVER_NOT_SQUARE');
                     if(Math.abs(m.panels[1].width-m.panels[1].height)>2&&p===100)errors.push('CONTENTS_NOT_SQUARE');
                     if(p===100){
-                      const gap=(width>700)?Math.abs(m.panels[0].right-m.panels[1].left):Math.abs(m.panels[0].bottom-m.panels[1].top);
+                      const gap=(width>820)?Math.abs(m.panels[0].right-m.panels[1].left):Math.abs(m.panels[0].bottom-m.panels[1].top);
                       if(side==='cover-left'&&gap>3)errors.push('NOT_ADJACENT');
                     }
                     await page.screenshot({path:path.join(out,id+'.png'),fullPage:true,animations:'disabled'});
