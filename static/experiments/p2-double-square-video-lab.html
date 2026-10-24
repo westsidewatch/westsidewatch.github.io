@@ -35,6 +35,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    one compact extruded letterpress field under the same scroll authority. */
 .dual-letterfield{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:hidden;pointer-events:none;will-change:opacity}
 .dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
+/* Original Westside letterpress continues behind the lower Contents folio. */
+.dual-contents__relief{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;opacity:0;clip-path:inset(58% 0 0 0);-webkit-mask-image:linear-gradient(to bottom,transparent 53%,#000 68%,#000 96%);mask-image:linear-gradient(to bottom,transparent 53%,#000 68%,#000 96%);filter:saturate(.72);will-change:opacity}
+.dual-contents__head,.dual-contents__deck,.dual-contents__index,.dual-contents__foot{position:relative;z-index:2}
+.dual-contents__index{background:linear-gradient(180deg,rgba(249,246,239,.97),rgba(249,246,239,.85) 80%,rgba(249,246,239,.18));}
+.dual-contents__relief-folio{position:absolute;z-index:1;left:7%;bottom:5%;color:#384956;font:400 clamp(8px,1.2cqi,11px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.14em;opacity:0;pointer-events:none}
 /* This is the exact inherited temple-stone + overlay from the existing P2
    .mag3__contents-page. Do not synthesize or substitute another texture. */
 /* Cover — an editorial night→dawn THRESHOLD, not a stack of labels.
@@ -70,7 +75,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__head h2{font:400 clamp(44px,4.9vw,63px)/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.065em;margin:0}
 .dual-contents__head span{font:400 clamp(11px,.95vw,17px)/1.5 var(--ws-type-reading-zh,sans-serif)}
 .dual-contents__deck{font:400 clamp(11px,.9vw,16px)/1.4 var(--ws-type-reading-zh,sans-serif);margin:5px 0 10px;flex:none}
-.dual-contents__index{min-height:0;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-rows:minmax(max-content,1.28fr) minmax(max-content,.72fr);gap:clamp(15px,2.2cqi,25px) clamp(18px,2.7cqi,34px);align-content:stretch;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 4px 10px 0}
+.dual-contents__index{min-height:0;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-rows:repeat(2,max-content);gap:clamp(9px,1.25cqi,15px) clamp(18px,2.7cqi,34px);align-content:start;flex:0 1 auto;max-height:60%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 4px 10px 0}
 .dual-movement{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:visible}
 .dual-movement h3{display:flex;align-items:baseline;gap:8px;margin:0 0 clamp(7px,1.2cqi,12px);border-top:1px solid rgba(35,49,67,.42);padding-top:clamp(7px,1.1cqi,11px);font:400 clamp(23px,3.65cqi,32px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.045em}
 .dual-movement h3 em{font:italic 400 .48em/1 var(--ws-type-display-en,Georgia,serif);color:#5a4932}
@@ -84,7 +89,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-work+.dual-work{margin-top:2px}
 .dual-work--people{letter-spacing:.01em}
 .dual-movement__interlude{margin:auto 0 0;padding-top:clamp(6px,1cqi,11px);font:400 clamp(10px,1.3cqi,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
-.dual-contents__foot{margin-top:clamp(5px,.9vh,10px);padding-top:6px;border-top:1px solid rgba(35,49,67,.48);display:flex;gap:12px;align-items:center;justify-content:space-between;font:400 clamp(10px,.81vw,13px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
+.dual-contents__foot{margin-top:auto;padding-top:6px;border-top:1px solid rgba(35,49,67,.48);display:flex;gap:12px;align-items:center;justify-content:space-between;font:400 clamp(10px,.81vw,13px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
 .dual-contents__foot a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;pointer-events:auto}
 .dual-stage[data-phase=final] .dual-tile{box-shadow:0 17px 57px rgba(0,0,0,.16)}
 .dual-stage[data-phase=initial] .dual-film{visibility:hidden}
@@ -129,7 +134,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__head h2{font-size:clamp(37px,11vw,52px)}
 .dual-contents__head span{font-size:11px}
 .dual-contents__deck{font-size:10px;margin:5px 0 9px}
-.dual-contents__index{grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(4,max-content);gap:14px;overflow-y:auto;scrollbar-width:thin;align-content:start}
+.dual-contents__index{grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(4,max-content);max-height:60%;gap:14px;overflow-y:auto;scrollbar-width:thin;align-content:start}
+.dual-contents__relief{clip-path:inset(60% 0 0 0)}
 .dual-movement h3{font-size:clamp(18px,5.1vw,25px);margin-bottom:7px;padding-top:5px}
 .dual-movement li{grid-template-columns:23px minmax(0,1fr);font-size:clamp(15px,4.2vw,18px);gap:5px}
 .dual-movement li small{display:block;font-size:9px}
@@ -221,6 +227,8 @@ html.dual-embed .dual-film__credit{display:none}
      </defs>
     </svg>
    <div class="dual-contents" id="dual-stone-contents" aria-hidden="true" inert>
+    <svg id="dual-contents-relief" class="dual-contents__relief" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"></svg>
+    <span id="dual-relief-folio" class="dual-contents__relief-folio" aria-hidden="true">WESTSIDE WATCH / LETTERPRESS / VOL.00</span>
     <header class="dual-contents__head"><h2 id="dual-contents-title" lang="en">Contents.</h2><span>目錄</span></header>
     <p class="dual-contents__deck">四樂章 · 十二欄目 · 三段視聽間奏</p>
     <div class="dual-contents__index" tabindex="0" role="region" aria-label="Vol.00 十二欄目文章目錄，可以向下捲動閱讀完整篇名">
@@ -255,7 +263,7 @@ html.dual-embed .dual-film__credit{display:none}
  const stage=document.getElementById('dual-stage');
  const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
  const film=document.getElementById('dual-film'),frame=document.getElementById('dual-film-frame'),star=document.getElementById('dual-star');
- const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents');
+ const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents'),relief=document.getElementById('dual-contents-relief'),reliefFolio=document.getElementById('dual-relief-folio');
  const radiance=document.getElementById('dual-radiance'),city=document.getElementById('dual-cover-city');
  const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
  const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol');
@@ -304,12 +312,25 @@ html.dual-embed .dual-film__credit{display:none}
   }
   bands.push({band,marks});
  }
+ // Transfer only the existing lower three press registers, not a new motif.
+ const residualBands=bands.slice(4).map(({band,marks})=>{
+  const retained=makeSvg('g','ws-relief-band',relief);
+  retained.dataset.originalRegister=band.dataset.register;
+  const clones=marks.map(mark=>{
+   const copy=mark.cloneNode(true);
+   copy.classList.add('ws-relief-mark');
+   retained.appendChild(copy);return copy;
+  });
+  return {source:band,marks,retained,clones};
+ });
  let printW=0,printH=0;
  const layoutPrint=(w,h)=>{
   if(Math.abs(w-printW)<.5&&Math.abs(h-printH)<.5)return;
   printW=w;printH=h;
   letters.setAttribute('viewBox','0 0 '+w.toFixed(2)+' '+h.toFixed(2));
   letters.setAttribute('preserveAspectRatio','none');
+  relief.setAttribute('viewBox',letters.getAttribute('viewBox'));
+  relief.setAttribute('preserveAspectRatio','none');
   const step=w/4.55,scale=step/432;
   for(let register=0;register<7;register++)for(let n=0;n<12;n++){
    const row=register*2+Math.floor(n/6),col=n%6;
@@ -318,6 +339,7 @@ html.dual-embed .dual-film__credit{display:none}
    const emphasis=row===6||row===7?1.12:1;
    const size=scale*emphasis*(.92+((row+col)%4)*.034);
    bands[register].marks[n].setAttribute('transform','translate('+x.toFixed(2)+' '+y.toFixed(2)+') scale('+size.toFixed(5)+')');
+   if(register>=4)residualBands[register-4].clones[n].setAttribute('transform',bands[register].marks[n].getAttribute('transform'));
   }
  };
  let progress=1,coverLeft=false;
@@ -385,6 +407,14 @@ html.dual-embed .dual-film__credit{display:none}
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
   const stone=ease((progress-.865)/.125);
+  // One scroll clock. Existing impression stays as lower-paper relief.
+  const reliefOn=ease((progress-.875)/.105);
+  relief.style.opacity=String(.48*reliefOn);
+  reliefFolio.style.opacity=String(.72*reliefOn);
+  residualBands.forEach(({source,retained})=>{
+   retained.setAttribute('transform',source.getAttribute('transform')||'translate(0 0)');
+   retained.style.opacity=source.style.opacity||'1';
+  });
   contents.style.opacity=String(stone);
   contents.style.visibility=stone>0?'visible':'hidden';
   contents.style.pointerEvents=stone>.99?'auto':'none';
