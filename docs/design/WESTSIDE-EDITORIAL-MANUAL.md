@@ -2648,6 +2648,8 @@ For each output create a plate record with source URL and revision, original ext
 
 **第一輪真實截圖問題及重排（2026-10-24）：** PR #1355 的 `b830e46` Chromium Preview 執行 41 場、其中桌面 Contents p100 明確 FAIL：`ARTICLE_TITLES_COLLIDE_WITH_LOWER_LETTERPRESS` 與 `DESKTOP_TWELVE_ENTRIES_NOT_VISIBLE`。實景證明舊 2×2、兩列欄目上半過長，WITNESS/WORSHIP 被鉛字覆住；不能用 opacity 假裝不存在。實際修訂 `d05227d` 改為桌面**四樂章四欄**、較小的雜誌內文字級與收緊排距，讓所有十二欄和原已定題名靠頂部作為閱讀主體；保留下方三組／36 枚原 SVG 塊體，字面在目錄狀態降為約 0.32 opacity，頁腳有自身紙白承托、鉛字署名移至 footer 上方。`2acca7c` 限制手機上半可讀內部捲動至 34% 頁高，821–1100px（包括瀏覽器放大後的中間寬度）內部捲動高約 36%，使文章不與 58% 起的印版混在一起；內容不刪、不補假標題。`a13aede`／`4ce793c` 將測試升級為**每項文章及欄目真正落在上部閱讀窗口內**，所有尺寸的 index 下緣都不可侵入保留 SVG 區，而不僅只檢查最後一個 DOM item。這是新的藝術驗收守門，不代表此版已簽收。保留原 Church 單一 scroll clock 和全部正式字形來源。 
 
+**最終阻擋式瀏覽器回歸（2026-10-24）：** `b8fcd30` 改用真正二維元素矩形判斷四欄碰撞，並將目錄所保留凸版的透明度驗收校正至 .28–.38（實值 .32）；`99cffba` 使用同一 scroll progress 將封面 SVG 字場**上方 58% 先退場**，下方隨 original 3 registers/36 個字模交由 Contents 淡印版面接管，反方向亦可回到完整原字場；`83e5e4f` 使 p82 需完整不裁切、p93 上方 clip 到 58%、p100 全版退場但下半 retained SVG 必須存在。Production Build **PASS**、First Look Branch Preview **PASS**、真 Chromium **41／41 場景錯誤為零**（artifact `p2-two-square-video-study` #12549155287）。人工檢視 1648px p93、p100：四樂章十二欄及現有文章題名均在上方閱讀區；保留 SVG 不覆蓋文字，石紋頁腳清晰。小屏幕 index 可鍵盤進入並向下捲動；幾何檢測底緣仍在保留字模上緣之上。**Core Contract 仍是既存首頁晨星資產基準失敗**，原主站未合併。真正 200% 原生縮放、完整鍵盤焦點序列與長距離倒捲手感、獎項級美術仍待人工簽收，ART TRIAL / NOT APPROVED。
+
 **測試與界線：** 初始修改 `873782b`，視覺回歸和硬性守門 `b830e46`。要求下方 36 個原始 SVG 字模、36 個 front use +108 個 depth use、3 個來源 register、每字與主場位置一致、p82 尚未顯現、p93 漸入、p100 保留淡印；其他正式西望全版 p100 不得再蓋目錄。原 Church 活水／日程／分海開門、晨星、右封面、原石紋都不改。**ART TRIAL / NOT APPROVED / 不合併**，等待實景瀏覽器與編輯驗收。
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
