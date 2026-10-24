@@ -2554,6 +2554,19 @@ For each output create a plate record with source URL and revision, original ext
 
 **截至第七輪實景回歸：** PR #1355，`c515ac3`（同一建築父節點）、`f974d1a`（七條十一組官方字形與連動升城）、`9896f8e`（Contents 十二欄全覽、可鍵盤捲動）、`6d231a0`／`2cf3991`（768px 上下雙頁及 41 場景驗收）。後者完成 **41/41 真正 Chromium 場景、無測試錯誤**，包括 1648px、768px、390px、320px 的八個獨立動效節點與原教會的九個接入場景。桌面版心所有十二欄在一張定格全部可見；平板與手機內容採可鍵盤進入的滾動目錄，明示 SCROLL。原城牆 PNG 和寺石 PNG 是一個 DOM 父節點／單一 transform，截圖下層確實無透空縫。**Production Build PASS；First Look Preview PASS；Core Contract FAIL**（歷史首頁晨星資產凍結基準，P2 未動保護檔）。\n\n**仍待藝術批准：** 41 場測試屬機械／幾何＋人工畫面複核，不保證 Awwwards 或 Webby 獲獎；真正瀏覽器 200% 放大、完整鍵盤焦點順序、持續逆向滾動手感、效能的最終簽收還未充分驗證。藝術狀態 **TRIAL / NOT APPROVED**，不得自行合併主站。
 
+
+### 6F.27 P2 封面淘汰標準：不是七條散字，也不是石紋紙上的 LIGHT（2026-10-23）
+
+**用戶實際 82% 定格否決：** 七條彩色「西望」雖存在，仍是**分散的小標誌**，畫面密度、主次與方向都不構成一個真正的視覺場。右頁雖修了父節點，但外觀看去城牆仍細得像水平分割線；原「CITY OF LIGHT」太像排在紙上的字，夜、星、城與主標互不構成一個強有力的封面命題。因此 **§6F.26 的 41/41 CI 成功不能視為藝術定稿**。
+
+**整版新候選（唯一 P2 實驗分支 PR #1355）：** 第一層是金頁七條斜向排印帶，20 枚完整官方 SVG「西望」字形做為高低重量不同的印刷墨色，大號主行占主要視覺，頭尾字列向頁邊出血，像編輯提供的 F1《50》案例那樣**以字形成版面**，不是把七枚小標誌撒在空間裡。七色仍由 Design OS 對應 token 決定，沒有另創 palette、PNG 字圖或假刻線。第二層是午夜藍封面以原晨星 v5.3 和原星光刻線為夜的主場，原石城牆以更大的視覺高度嵌入原聖殿石體。石體必須延續牆的結構與光，不能再是一條獨立城牆 PNG 加一張泛白紙。第三層是英文 `CITY OF LIGHT` 的 Roman 與真 Italic 對照，其中 `LIGHT` 必須取得獨立的巨幅印刷主體級別，`VOL.00`、中文 900 weight 和經文依序退居支援角色；不能遮住相鄰資訊。
+
+**不可變更事項：** 首頁、P2 教會半屏原始日程與活水、分海開門、正式 logo 原始路徑、晨星原資產、十項原定篇名／12 欄／3 間奏、Design OS CSS authority，全部保留。不得用生成圖片代替真圖片，不得增加人工跨頁射線，不得把新效果混成首頁七重疊動效。這一輪仍是一個隔離 PR、一個 scroll owner。
+
+**拒絕門檻：** 每張靜止畫面應在 1 秒建立清晰視覺重心，字與城交互形成閱讀節奏；若左頁仍像多個 Logo 的目錄、右頁仍像一條牆壓在紙上，則沒有完成。技術驗收需要 1648／768／390／320、原生 200% zoom、倒捲、reduced motion、鍵盤與內容完整性；在全部完成且經人工截圖審查前維持 **TRIAL / NOT APPROVED**。
+
+**第八輪實作提交：** `dd36ca9` 重新加權七色排印帶、調整唯一城牆石體外觀並放大 LIGHT；驗收提交 `8d51489` 加入原始 SVG 數量與標題相交判斷。保留失敗和迭代證據；CI 未通過與藝術未通過需分別記錄。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
