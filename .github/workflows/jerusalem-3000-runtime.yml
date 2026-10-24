@@ -21,6 +21,11 @@ jobs:
         run: |
           set -euo pipefail
           for file in preview/jerusalem-3000/*.js; do node --check "$file"; done
+          node scripts/verify_jerusalem_3000_foundation_plan.mjs
+          node scripts/verify_jerusalem_3000_foundation_runtime.mjs
+          node scripts/verify_jerusalem_3000_phase_registration.mjs
+          node scripts/verify_jerusalem_3000_terrain_presentation.mjs
+          node scripts/verify_jerusalem_3000_royal_relief.mjs
           node scripts/verify_jerusalem_3000_city_lifecycle.mjs
           node scripts/verify_jerusalem_3000_data_loader.mjs
           node scripts/verify_jerusalem_3000_continuity_ledger.mjs
@@ -35,8 +40,15 @@ jobs:
           node scripts/verify_jerusalem_3000_period_spatial.mjs
           node scripts/verify_jerusalem_3000_district_infill.mjs
           node scripts/verify_jerusalem_3000_residential_ledger.mjs
+          node scripts/verify_jerusalem_3000_water_defense.mjs
+          node scripts/verify_jerusalem_3000_water_defense_adapter.mjs
+          node scripts/verify_jerusalem_3000_local_plan.mjs
+          node scripts/verify_jerusalem_3000_low_rise.mjs
           node scripts/verify_jerusalem_3000_persian_sanctuary.mjs
           node scripts/verify_jerusalem_3000_earliest.mjs
+          node scripts/verify_jerusalem_3000_settlement_ledger.mjs
+          node scripts/verify_jerusalem_3000_later_ledger.mjs
+          node scripts/verify_jerusalem_3000_inheritance_audit.mjs
       - name: Render the proposed city and scrub through destruction
         run: |
           python3 -m http.server 8765 > /tmp/j3k-server.log 2>&1 &

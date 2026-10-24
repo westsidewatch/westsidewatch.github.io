@@ -19,7 +19,13 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
   generationPhase, phaseIds, destroyedPhase = null, retainedPhase = null, getExclusions=()=>[], getRegistration=null, ledgerCore=null,
   onChange = () => {}, onProgress = () => {} }) {
   const openingMaterial = materials.facadeOpening || new THREE.MeshStandardMaterial({ color: 0x3d3327, roughness: .94, metalness: 0 });
-  const sharedMaterials = { ...materials, facadeOpening: openingMaterial };
+  // Confidence stays in ledger metadata and evidence filters. Transparency makes
+  // overlapping walls/roof ranges appear hollow when inspected at street scale.
+  const lowRiseMaterial = (materials.inferred || materials.reconstructed).clone();
+  lowRiseMaterial.transparent = false;
+  lowRiseMaterial.opacity = 1;
+  lowRiseMaterial.depthWrite = true;
+  const sharedMaterials = { ...materials, facadeOpening: openingMaterial, lowRise: lowRiseMaterial };
   let current = '', pending = null, city = null, disposed = false;
   const owner=residentialOwner(generationPhase);
   let state = { status: 'idle', completed: 0, total: 0 };
@@ -75,9 +81,9 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
               retentionAuthority: 'schematic-not-surveyed', burialDepthVerified: false, reuseLinksVerified: false } });
         }
         const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain,{exclusions:roadExclusions});
-        if(ledgerCore&&registration.independentLayout)task.publication=publishGeneratedResidentialLedger(ledgerCore,core,{registration,architecture,generationPhase,destroyedPhase,retainedPhase,owner});
+        if(ledgerCore)task.publication=publishGeneratedResidentialLedger(ledgerCore,core,{registration,architecture,generationPhase,destroyedPhase,retainedPhase,includeRegistration:!registration.independentLayout,owner});
         const projection = createCityProjection(group, [...architecture.meshes, ...roads], {
-          phaseIds, standingPhase: phaseId,
+          phaseIds, standingPhase: phaseId, stateForInfrastructure:!registration.independentLayout,
           stateForObject:task.publication?((id,phase)=>task.publication.stateFor(id,phase)):null,
           phaseStates: retainedPhase ? { [retainedPhase]: { state: 'retained-ruin', ruin: 1 } } : {},
         });
@@ -114,7 +120,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
       retainedObjects: city?.core.phase(retainedPhase).filter(object => object.type === 'building').length ?? 0,
       identityPolicy: retainedPhase ? 'same-first-temple-objects-through-destruction-and-persian-retention' : 'distinct-period-objects-without-unverified-reuse-links',
       historicalRegistrationVerified: false }; },
-    dispose() { disposed = true; if (!materials.facadeOpening) openingMaterial.dispose(); pending?.controller.abort(); if (city) {city.publication?.dispose();release(city.group);} city = null; },
+    dispose() { disposed = true; lowRiseMaterial.dispose(); if (!materials.facadeOpening) openingMaterial.dispose(); pending?.controller.abort(); if (city) {city.publication?.dispose();release(city.group);} city = null; },
   };
 }
 

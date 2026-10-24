@@ -1,0 +1,13 @@
+# Legacy inheritance transition audit
+
+This package exposes a 17-entry audit of the legacy overlay rules alongside the 18-era foundation. It is a display-policy audit, not a replacement for shared city-object lifecycle events or certification of historical transitions. Every entry records the adjacent phase pair, legacy source phase, whether that source skips the adjacent phase, generator availability, threshold selection and illustrative retain/ruin settings. Historical survival and reuse remain unverified.
+
+The legacy retention algorithm selects meshes by component-order threshold. Its percentages are model display settings, not archaeological survival measurements. Early/shared/canonical renderers already supersede most legacy overlays; missing source generators are reported as unavailable, never interpreted as demolition or historical absence. Aelia's legacy overlay explicitly draws from the Herodian prototype rather than the immediately preceding Roman destruction phase.
+
+Each generated overlay component receives a stable phase-scoped display trace ID, target/source phase and component index. sourceObjectId remains null: these are not surviving semantic city objects, and no canonical object IDs or lineage links are invented. IDs survive progress reversal and teardown/rebuild; they identify procedural display instructions, not excavated remains.
+
+Runtime diagnostics expose the current overlay status, visible/traced component counts, transition policy and unverified survival. The global inheritanceTransitionIndex and inheritanceState.audit are snapshots. Mutating them cannot change source rules. Foundation inspection adds provisionalTraceableComponents; traced overlays still count as provisional/unbound, not certified city objects. When a legacy overlay is shown, the scene note identifies it as a model-proportion illustration with unverified survival/reuse.
+
+No terrain, construction geometry, retention ratios or shared lifecycle events change. Tests cover all 17 adjacent audit entries, non-adjacent source disclosure, missing-generator scope, no source-object claim, complete component tracing, reverse/rebuild identity, defensive diagnostics and owned cleanup. The browser regression requires all displayed provisional inheritance to be traceable across all 18 eras. Full foundation acceptance remains false; remaining symbols, generated lifecycle gaps and complete historical transition acceptance are outstanding.
+
+No new external service, model, image or data source requests; no measured traffic/token/FPS savings are claimed. Existing local modules carry the audit metadata.
