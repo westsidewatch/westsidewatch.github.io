@@ -124,11 +124,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover__tagline{top:33%;left:9%;right:39%;font-size:clamp(10px,2.2cqi,13px)}
 .dual-cover__star{left:76%;top:26%;width:clamp(43px,11cqi,73px)}
 .dual-cover__wall{top:calc(0px - clamp(35px,6cqi,60px));height:clamp(78px,13cqi,112px)}
-.dual-cover__en{left:9%;right:5%;top:55%;font-size:clamp(27px,8.5cqi,46px)}
+.dual-cover__en{left:9%;right:5%;top:62%;font-size:clamp(22px,6.7cqi,36px)}
 .dual-cover__en span:last-child{margin-left:3%;font-size:1.39em}
 .dual-cover__vol{top:75%;left:auto;right:9%;font-size:clamp(8px,1.5cqi,11px)}
 .dual-cover__vol::before{display:none}
-.dual-cover__zh{left:9%;right:5%;top:81%;font-size:clamp(19px,5cqi,29px)}
+.dual-cover__zh{left:9%;right:5%;top:85%;font-size:clamp(17px,4.5cqi,26px)}
 .dual-cover__zh span{margin-top:3px}
 .dual-cover__folio{display:none}
 .dual-cover__folio{bottom:6%;font-size:clamp(8px,1.35cqi,11px)}
@@ -147,10 +147,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__foot span::after{content:' · SCROLL ↓';color:#765b37;font-size:8px}
 }
 @media(max-width:360px){
-.dual-cover__en{font-size:clamp(24px,8.4cqi,40px)}
-.dual-cover__vol{top:74%;left:auto;right:8%;font-size:9px}
-.dual-cover__zh{top:81%;font-size:clamp(17px,5cqi,23px)}
-.dual-cover__tagline{font-size:clamp(10px,2.2cqi,12px)}
+.dual-cover__en{font-size:clamp(20px,6.5cqi,29px)}
+.dual-cover__vol{top:76%;left:auto;right:8%;font-size:9px}
+.dual-cover__zh{top:85%;font-size:clamp(16px,4.5cqi,22px)}
+.dual-cover__tagline{top:27%;font-size:clamp(10px,2.2cqi,12px)}
 .dual-contents__index{gap:8px 6px}
 .dual-movement h3{font-size:18px}
 .dual-movement li{font-size:15px}
@@ -269,10 +269,10 @@ html.dual-embed .dual-film__credit{display:none}
   'var(--ws-pale-gold,#cebd74)','var(--ws-olive,#738a5a)',
   'var(--ws-harvest,#b8944a)','var(--ws-crimson,#a14d57)',
   'var(--ws-daylight-mauve,oklch(67% .075 330))'];
- // Seven editorial registers / eight official SVG pairs. One lead, two echoes, four ghost impressions.
- const plateLeft=[10,46,6,19,53,12,45],plateTop=[7,19,31,46,64,77,89];
- const plateWidths=[14,16,23,35,15,18,13],markCounts=[1,1,1,1,2,1,1];
- const plateAngles=[-10,-9,-9,-8,-9,-10,-11],plateOpacity=[.30,.36,.52,1,.34,.42,.26];
+ // Seven diagonal editorial registers / seven official SVG pairs. One lead, two echoes, four ghost impressions.
+ const plateLeft=[1,12,20,29,41,54,67],plateTop=[7,20,32,45,62,74,87];
+ const plateWidths=[12,16,23,35,19,15,11],markCounts=[1,1,1,1,1,1,1];
+ const plateAngles=[-11,-10,-9,-8,-9,-10,-11],plateOpacity=[.24,.34,.50,1,.34,.25,.19];
  const rows=palette.map((color,i)=>{
   const line=document.createElement('div');line.className='dual-letterfield__row';
   line.dataset.line=String(i+1);line.style.top=plateTop[i]+'%';
