@@ -1,7 +1,7 @@
 import {TemporalCityCore} from './temporal-city-core.js';
 import {lifecycleStateAt} from './construction-engine.js';
 let sequence=0;
-const PHASES=new Set(['crusader','ottoman']);
+const PHASES=new Set(['crusader','ottoman','aelia','byzantine','early-islamic','ayyubid-mamluk','outside-walls','modern']);
 // Registry survives renderer rebuilds; scene disposal removes only its own records.
 // Anonymous box masses remain blocks, never semantic buildings or named monuments.
 export function createLaterMorphologyLedger(core){
@@ -35,7 +35,7 @@ export function createLaterMorphologyLedger(core){
    // Bind only after the complete batch has passed. Rebinding preserves edited events.
    runtime.meshes.forEach((mesh,index)=>{const recipe=recipes[index];mesh.userData.cityObject={objectId:recipe.id,componentId:`${recipe.id}:component:0`,confidence:'inferred',phaseIds:[phase],kind:recipe.stage};});
    const summary={published:true,phase,objects:recipes.length,geometryVerified:false,semanticBuildings:0};
-   return {summary,apply(evidenceAllowed){for(const mesh of runtime.meshes){const record=core.get(mesh.userData.cityObject.objectId),state=record?lifecycleStateAt({lifecycleEvents:record.lifecycle.events},timeline,phase):'unresolved';mesh.visible=mesh.visible&&evidenceAllowed('inferred')&&['build','rebuild','transform','ruin','expand'].includes(state);}}};
+   return {summary,apply(evidenceAllowed){for(const mesh of runtime.meshes){const record=core.get(mesh.userData.cityObject.objectId),state=record?lifecycleStateAt({lifecycleEvents:record.lifecycle.events},timeline,phase):'unresolved';mesh.visible=(runtime.fixedVisibility||mesh.visible)&&evidenceAllowed('inferred')&&['build','rebuild','transform','ruin','expand'].includes(state);}}};
   },
   dispose(){for(const batch of batches.values())for(const id of batch.ids)if(core.get(id)?.metadata.generatedOwner===owner){core.objects.delete(id);core.links.delete(id);for(const ids of core.byPhase.values())ids.delete(id);}batches.clear();}
  };

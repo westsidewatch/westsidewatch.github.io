@@ -446,6 +446,7 @@ try {
     if(phase===10){const unknown=await page.evaluate(()=>window.__JERUSALEM3000__.inspectCityObject('j3k:object:inner-temple'));assert.ok(unknown.lifecycle.events.some(e=>e.phase==='aelia'&&e.state==='unresolved'));}
     assert.ok(foundation.renderer.visibleComponents>0);
     if([13,15].includes(phase)){assert.equal(sample.render.urbanFabric.sharedLedger.published,true);assert.ok(foundation.domains.occupation.visibleBoundObjects>0);assert.equal(sample.render.urbanFabric.sharedLedger.semanticBuildings,0);assert.equal(foundation.renderer.unboundComponents,0,'later morphology components must bind to shared IDs');}
+    if([10,11,12,14,16,17].includes(phase)){assert.equal(sample.render.urbanFabric.sharedLedger.published,true);assert.ok(foundation.domains.occupation.visibleBoundObjects>0);assert.equal(sample.render.urbanFabric.sharedLedger.semanticBuildings,0);assert.equal(foundation.renderer.unboundComponents,foundation.renderer.provisionalInheritedComponents,'only explicitly provisional inheritance may remain unbound in later footprint eras');}
     if(phase<=3)assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'early houses must bind to shared identities');
     if(phase===7){assert.ok(foundation.domains.occupation.visibleBoundObjects>0);assert.equal(foundation.renderer.unboundComponents,0,'finished Hellenistic geometry must share canonical IDs');}
     if([8,9].includes(phase))assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'canonical parcel bindings must be recognized by the common foundation interface');

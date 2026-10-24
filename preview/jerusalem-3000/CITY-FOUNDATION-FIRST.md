@@ -64,3 +64,7 @@ The four early-era dwelling/footpath batches now share canonical object IDs and 
 ## Crusader/Ottoman batch registration (2026-10-24)
 
 Both later morphology generators now publish stable phase-scoped scaffold identities and unknown next-era fates. Renderer rebuilds rebind the same definitions and preserve ledger event edits. Anonymous masses remain blocks rather than semantic buildings; inherited layers are still provisional. See LATER-MORPHOLOGY-LEDGER-FOUNDATION.md. Step 1 and whole-foundation acceptance remain incomplete.
+
+## Remaining footprint batch registration (2026-10-24)
+
+Six later-era footprint batches now publish 234 inferred block masses through the shared publisher. Existing generator definitions are extracted for direct tests, preserving geometry. Static event/evidence visibility restores on filter return; provisional inheritance remains unbound. See LEGACY-FOOTPRINT-LEDGER-FOUNDATION.md. Full adjacent-era transformations and foundation acceptance remain incomplete.
