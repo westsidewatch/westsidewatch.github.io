@@ -181,10 +181,13 @@ jobs:
                           const stories=document.querySelector('.dual-cover__coverlines');
                           const storyBox=stories?.getBoundingClientRect();
                           const storyItems=[...document.querySelectorAll('.dual-cover__coverline')];
+                          const footer=document.getElementById('dual-cover-folio');
+                          const footerVisible=!!footer&&getComputedStyle(footer).display!=='none'&&Number(getComputedStyle(footer).opacity)>.1;
                           return {overlap:Math.max(intersect(x,v),intersect(v,z),intersect(x,z),
-                              storyBox?intersect(storyBox,x):999),
+                              storyBox?intersect(storyBox,x):999,footerVisible?intersect(z,footer.getBoundingClientRect()):0),
                             overflow:Math.max(0,x.right-page.right),
                             storyCount:storyItems.length,
+                            mobileFooterClear:innerWidth>820||!footerVisible,
                             storiesInside:!!storyBox&&storyBox.left>=page.left-2&&storyBox.right<=page.right+2&&storyBox.bottom<=page.bottom+2,
                             authenticCopy:storyItems.map(el=>el.textContent).some(v=>v.includes('一萬年的建城禮'))&&storyItems.some(el=>el.textContent.includes('城門口的人'))};
                         })(),
@@ -254,6 +257,7 @@ jobs:
                     if(p===82&&(m.phase!=='cover-and-xiwang'||m.lines!==7||m.stoneVisible))errors.push('MISSING_COVER_XIWANG_HOLD');
                     if(p===82&&(m.coverTitleLayout.overlap>8||m.coverTitleLayout.overflow>8))errors.push('COVER_DISPLAY_TITLE_COLLISION');
                     if(p===82&&(m.coverTitleLayout.storyCount!==2||!m.coverTitleLayout.storiesInside||!m.coverTitleLayout.authenticCopy))errors.push('COVER_EDITORIAL_TEASERS_MISSING_OR_OFF_PAGE');
+                    if(p===82&&!m.coverTitleLayout.mobileFooterClear)errors.push('MOBILE_COVER_FOOTER_CROWDS_CHINESE_TITLE');
                     if(p===82&&m.nightCaptionClearance < -3)errors.push('NIGHT_TAGLINE_CROSSES_CITY_WALL');
                     if(p===93&&(m.phase!=='stone-contents-reveal'||!m.stoneBg))errors.push('MISSING_ORIGINAL_STONE_REVEAL');
                     if(p===100&&(!m.stoneVisible||!m.stoneBg||m.lines!==7))errors.push('FINAL_STONE_CONTENTS_INCOMPLETE');
