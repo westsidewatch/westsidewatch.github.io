@@ -31,19 +31,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-tile{position:absolute;min-width:0;min-height:0;overflow:hidden;pointer-events:auto;isolation:isolate;box-shadow:none;container-type:size}
 .dual-tile--cover{background:radial-gradient(ellipse at 56% 22%,#29425b 0%,transparent 58%),var(--blue);color:var(--paper)}
 .dual-tile--contents{background:linear-gradient(152deg,#ddc98f 0%,#c9ad70 58%,#b49a68 100%);color:var(--ink)}
-/* Design OS: LEFT dense, RIGHT spacious. Decorative Chinese printing only
-   from approved Vol.00 article titles, underneath the original SVG marks. */
-.dual-typefield{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;user-select:none;contain:layout paint}
-.dual-typefield__line{position:absolute;left:-1%;width:102%;height:5.2%;display:grid;grid-template-columns:repeat(21,minmax(0,1fr));align-items:center;justify-items:center;white-space:nowrap;transform-origin:50% 50%;will-change:opacity,transform}
-.dual-typefield__glyph{display:block;width:100%;text-align:center;color:color-mix(in srgb,var(--glyph-color,#203850) var(--glyph-strength,72%),#1c3047);font:var(--glyph-weight,550) clamp(13px,3.85cqi,33px)/1 var(--ws-type-display-zh,sans-serif);opacity:var(--glyph-alpha,.75);font-synthesis:none;transform:scale(var(--glyph-scale,1))}
-.dual-letterfield{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;opacity:1}
-.dual-letterfield__row:nth-child(4)::before{content:'';position:absolute;inset:-55% -28%;z-index:-1;background:radial-gradient(ellipse,rgba(204,170,104,.95),rgba(204,170,104,.83) 45%,rgba(204,170,104,.33) 69%,transparent 85%);pointer-events:none}
-.dual-letterfield__row:nth-child(4) .dual-letterfield__glyph{background:#1e374a}
-.dual-letterfield__row{position:absolute;height:12%;display:flex;align-items:center;gap:clamp(7px,2.2cqi,21px);transform-origin:35% 50%;will-change:transform,opacity}
-.dual-letterfield__glyph{display:block;flex:none;width:var(--mark-width,18cqi);aspect-ratio:432/218;background:color-mix(in srgb,var(--row-ink,#5b8fa8) 62%,#26384a 38%);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat}
-.dual-letterfield__glyph:nth-child(2){opacity:.44}
-.dual-letterfield__glyph:nth-child(3){display:none}
-.dual-letterfield__row:nth-child(4){z-index:2}
+/* All lettering is official SVG「西望」; seven native-SVG bands form
+   one compact extruded letterpress field under the same scroll authority. */
+.dual-letterfield{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:hidden;pointer-events:none;will-change:opacity}
 .dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
 /* This is the exact inherited temple-stone + overlay from the existing P2
    .mag3__contents-page. Do not synthesize or substitute another texture. */
@@ -224,8 +214,14 @@ html.dual-embed .dual-film__credit{display:none}
     </div>
   </article>
   <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="黎明金先演化七色西望字陣，最後替換為聖殿石紋 Contents">
-   <div class="dual-typefield" id="dual-typefield" aria-hidden="true"></div>
-    <div class="dual-letterfield" id="dual-letterfield" aria-hidden="true"></div>
+   <svg class="dual-letterfield" id="dual-letterfield" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+     <defs>
+      <mask id="ws-source-mask" x="0" y="0" width="432" height="218" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" style="mask-type:alpha">
+       <image href="/images/westside-watch-xiwang-horizontal-motion.svg" x="0" y="0" width="432" height="218"/>
+      </mask>
+      <g id="ws-xiwang-original" mask="url(#ws-source-mask)"><rect width="432" height="218" fill="currentColor"/></g>
+     </defs>
+    </svg>
    <div class="dual-contents" id="dual-stone-contents" aria-hidden="true" inert>
     <header class="dual-contents__head"><h2 id="dual-contents-title" lang="en">Contents.</h2><span>目錄</span></header>
     <p class="dual-contents__deck">四樂章 · 十二欄目 · 三段視聽間奏</p>
@@ -261,7 +257,7 @@ html.dual-embed .dual-film__credit{display:none}
  const stage=document.getElementById('dual-stage');
  const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
  const film=document.getElementById('dual-film'),frame=document.getElementById('dual-film-frame'),star=document.getElementById('dual-star');
- const letters=document.getElementById('dual-letterfield'),typefield=document.getElementById('dual-typefield'),contents=document.getElementById('dual-stone-contents');
+ const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents');
  const radiance=document.getElementById('dual-radiance'),city=document.getElementById('dual-cover-city');
  const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
  const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol');
@@ -275,46 +271,54 @@ html.dual-embed .dual-film__credit{display:none}
   'var(--ws-pale-gold,#cebd74)','var(--ws-olive,#738a5a)',
   'var(--ws-harvest,#b8944a)','var(--ws-crimson,#a14d57)',
   'var(--ws-daylight-mauve,oklch(67% .075 330))'];
- // Seven diagonal editorial registers / seven official SVG pairs. One lead, two echoes, four ghost impressions.
- const plateLeft=[3,29,14,27,47,30,54],plateTop=[6,18,31,45,60,73,87];
- const plateWidths=[12,16,21,35,19,15,11],markCounts=[1,1,1,1,1,1,1];
- const plateAngles=[-10,-9,-8,-8,-9,-10,-11],plateOpacity=[.24,.32,.44,1,.35,.27,.22];
- const rows=palette.map((color,i)=>{
-  const line=document.createElement('div');line.className='dual-letterfield__row';
-  line.dataset.line=String(i+1);line.style.top=plateTop[i]+'%';
-  line.style.left=plateLeft[i]+'%';line.style.width='84%';
-  line.style.setProperty('--row-ink',color);
-  line.style.setProperty('--mark-width',plateWidths[i]+'cqi');
-  line.style.setProperty('--ink-density',i===3?'92%':'58%');
-  for(let n=0;n<markCounts[i];n++){
-   const mark=document.createElement('span');mark.className='dual-letterfield__glyph';
-   mark.setAttribute('aria-hidden','true');line.appendChild(mark);
+
+ // 7 scroll registrations × 2 interlocking rows × 6 original SVG 西望.
+ // No HTML word cloud or invented article text. Every depth plane is SVG.
+ const svgNS='http://www.w3.org/2000/svg';
+ const makeSvg=(tag,cls,parent)=>{
+  const el=document.createElementNS(svgNS,tag);
+  if(cls)el.setAttribute('class',cls);
+  if(parent)parent.appendChild(el);
+  return el;
+ };
+ const bands=[],allMarks=[];
+ const papers=['#ead1a2','#d6b982','#cbb07a','#dec798','#d3b48c','#dcb88e','#e4cca2'];
+ for(let register=0;register<7;register++){
+  const band=makeSvg('g','ws-print-band',letters);
+  band.dataset.register=String(register+1);
+  const marks=[];
+  for(let subrow=0;subrow<2;subrow++)for(let col=0;col<6;col++){
+   const mark=makeSvg('g','ws-print-mark',band);
+   mark.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
+   mark.dataset.register=String(register+1);
+   const ink=(register+(col+subrow)%3)%7;
+   for(let depth=3;depth>=0;depth--){
+    const face=makeSvg('use',depth?'ws-print-depth':'ws-print-face',mark);
+    face.setAttribute('href','#ws-xiwang-original');
+    face.setAttribute('transform','translate('+(depth*13)+' '+(depth*11)+')');
+    face.style.color=depth===0?palette[ink]:depth===3?papers[register]:palette[(ink+2)%7];
+    face.style.opacity=depth===0?'1':depth===3?'.92':'.80';
+   }
+   marks.push(mark);allMarks.push(mark);
   }
-  letters.appendChild(line);return line;
- });
- // Derive the decorative print from real approved Contents title strings,
- // not newly invented text. A hidden pattern is never a second article index.
- const editorialText=[...document.querySelectorAll('.dual-entry__column,.dual-work')]
-  .map(el=>el.childNodes[0]?.textContent||el.textContent).join('')
-  .replace(/[〈〉《》「」｜—：·，。、\s\dA-Za-z]/g,'');
- const glyphSource=Array.from(editorialText+'西望守望黎明黑夜白晝城門光明');
- const fieldLines=Array.from({length:21},(_,r)=>{
-  const line=document.createElement('div');line.className='dual-typefield__line';
-  line.style.top=(r*100/21).toFixed(3)+'%';
-  line.dataset.printRegister=String(Math.floor(r/3)+1);
-  for(let c=0;c<21;c++){
-   const hash=(r*37+c*19+r*c*7+11)>>>0;
-   const glyph=document.createElement('span');glyph.className='dual-typefield__glyph';
-   glyph.textContent=glyphSource[(hash*13+r*5+c*3)%glyphSource.length];
-   glyph.style.setProperty('--glyph-color',palette[(r+c+hash)%7]);
-   glyph.style.setProperty('--glyph-strength',(48+(hash%39))+'%');
-   glyph.style.setProperty('--glyph-alpha',(0.48+(hash%5)*.10).toFixed(2));
-   glyph.style.setProperty('--glyph-weight',hash%12===0?'900':hash%3===0?'720':'560');
-   glyph.style.setProperty('--glyph-scale',(hash%13===0?1.36:hash%6===0?1.14:0.92+(hash%5)*.035).toFixed(3));
-   line.appendChild(glyph);
+  bands.push({band,marks});
+ }
+ let printW=0,printH=0;
+ const layoutPrint=(w,h)=>{
+  if(Math.abs(w-printW)<.5&&Math.abs(h-printH)<.5)return;
+  printW=w;printH=h;
+  letters.setAttribute('viewBox','0 0 '+w.toFixed(2)+' '+h.toFixed(2));
+  letters.setAttribute('preserveAspectRatio','none');
+  const step=w/4.55,scale=step/432;
+  for(let register=0;register<7;register++)for(let n=0;n<12;n++){
+   const row=register*2+Math.floor(n/6),col=n%6;
+   const x=-step*(.79+(row%2)*.23)+col*step*.89+(register-3)*2;
+   const y=-h*.065+row*h/13.05;
+   const emphasis=row===6||row===7?1.12:1;
+   const size=scale*emphasis*(.92+((row+col)%4)*.034);
+   bands[register].marks[n].setAttribute('transform','translate('+x.toFixed(2)+' '+y.toFixed(2)+') scale('+size.toFixed(5)+')');
   }
-  typefield.appendChild(line);return line;
- });
+ };
  let progress=1,coverLeft=false;
  const pose=(el,x,y,w,h)=>{
   el.style.left=x.toFixed(2)+'px';el.style.top=y.toFixed(2)+'px';
@@ -355,20 +359,12 @@ html.dual-embed .dual-film__credit{display:none}
   stage.dataset.dawnReveal=dawn.toFixed(4);
   const lettersFade=1-ease((progress-.855)/.115);
   letters.style.opacity=String(lettersFade);
-  typefield.style.opacity=String(lettersFade);
-  fieldLines.forEach((line,r)=>{
-   const register=Math.floor(r/3);
-   const entered=reduce?(progress>=.59?1:0):ease((progress-(.442+register*.016+r%3*.004))/.044);
-   line.style.opacity=String(entered);
-   line.style.transform='translate3d('+((1-entered)*(register%2?-13:12)).toFixed(2)+'px,0,0)';
+  layoutPrint(w,h);
+  bands.forEach(({band},register)=>{
+   const on=reduce?(progress>=.58?1:0):ease((progress-(.438+register*.025))/.064);
+   band.style.opacity=String(on*(register===3?1:.89));
+   band.setAttribute('transform','translate('+((1-on)*(register%2?-82:76)).toFixed(2)+' '+((1-on)*(-32+register*4)).toFixed(2)+')');
   });
-   rows.forEach((row,i)=>{
-    const entered=reduce?(progress>=.58?1:0):ease((progress-(.453+i*.015))/.046);
-    row.dataset.entered=String(entered);
-    row.style.opacity=String(entered*plateOpacity[i]);
-    row.style.transform='translate3d('+((1-entered)*(i%2?-16:19)).toFixed(2)+'px,'+
-     ((1-entered)*(i%2?6:-6)).toFixed(2)+'px,0) rotate('+plateAngles[i]+'deg) scale('+(.96+.04*entered).toFixed(3)+')';
-   });
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
