@@ -2582,6 +2582,21 @@ For each output create a plate record with source URL and revision, original ext
 
 **真正驗收**：保持城體單一 DOM 升起與教會半屏接管；1648／768／390／320、41 Chromium 場景必須繼續監督。在 p=82 另斷言主字標的實際矩形尺度至少為任何回聲的 1.35 倍且實際透明度更高。獲獎參考並不等於取得獎項；人工目視封面閱讀動線及放大／倒捲仍是必要決策。分支 PR #1355 提交 `fe25363`（構圖），`1cb488f`（阻擋式等級測試）；設計狀態 **TRIAL / NOT APPROVED / 不合併**。
 
+
+### 6F.29 P2 跨頁疏密法則：左密右疏，是一張畫面（2026-10-23）
+
+**藝術方向：** 編輯提供一張多色繁體漢字密排圖作參照，並明確指示「左邊滿起來，右邊才有空，疏密有致」。這個意見**推翻第九輪把西望降成七枚孤立字標的方案**：一張雙頁應由兩種不同的視覺密度共同構成節奏，不應把兩半獨立地追求簡約。左頁的稠密對照，才能令右頁午夜藍／晨星的留白獲得詩意與力量。
+
+**外部方法參考：** Des Wade《Unveil》2025 報告海報用報告文字編織出完整的視覺面，通過網格、重量、色彩和間距平衡密度與閱讀；MuirMcNeil《Visual Grammar》（UAL Research Online）把真正的策展文字變為近乎圖像的字場，保持素材真實性；W3C 中文排版需求 `clreq` 指出漢字正方字框與密排的排印特性。參考**文字自身成為材質**的方法，不挪用圖像、現成字型或新增一套 UI/CI 系統。
+
+**新候選 [TRIAL]：** 左頁保留黎明金底色，依照 P2 現有 7 種 Design OS 版面色彩建立**21 行 × 21 字 = 441 枚真正的 HTML 中文字元**，逐字從已確認的 Vol.00 Contents 正文、欄目與篇名取出，非 AI 隨機杜撰字、偽造文章或靜態新圖。字元按照網格保持密排，在字級、重量、色彩深淺、少量字元超大尺寸間產生有意的變化；外層疊 7 行原保護 SVG 西望（原版字形，沒有重畫），中央一行加強辨識而不遮住整片字海。所有字元一律為 `aria-hidden` 裝飾，不會冒充可閱讀正文。第七組色彩與七行印帶依原滾動進入、可逆向退場；不增加首頁動效或另一 GSAP scroll owner。
+
+**右頁處理：** 相對克制，保留午夜藍、大字刊名識別、真晨星 v5.3、石城一體／Original wall、英文展示標題及必要的中文題名與期號；降低原刻線和背景光暈的對比，**右疏不是資訊缺失，而是避免視覺細節和左側的密排競爭**。主標 English 比中文大，但不恢復先前所有元件同時超大的構圖。
+
+**不可破壞：** 教會右側日程先由上進夜、左側活水後由下進金的半屏遮罩，原教會活水、主日、分海開門、現有 Design OS 的字體及七色、正式 Logo、原版晨星刻線和十二欄目確定篇名，都保持原狀。Contents 出場後金色字場必須全部退隱，不蓋住文章。平板手機仍用上下雙頁。正式攝影圖、外部中文字帖或生成圖均不得混入 P2。
+
+**工程／驗收：** PR #1355 `807489d` 生成真文字 441 格並用七行既有 scroll owner 驅動，`7d55f15` 新增 Chromium 441 字元／21 行／7 段／p82 可見的硬性檢查。真實 1648／768／390／320、來源完整、城市接縫、Reverse scrolling 與減少動作模式須回歸。無人工實際構圖審閱與正常 CI 前不能稱獲獎級定稿。**TRIAL / NOT APPROVED / 不合併。**
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
