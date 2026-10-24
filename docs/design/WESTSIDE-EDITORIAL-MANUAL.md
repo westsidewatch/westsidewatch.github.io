@@ -2635,6 +2635,19 @@ For each output create a plate record with source URL and revision, original ext
 
 **驗收的實質差異**：必須在 1648px、768px、390px、320px 看清楚**連續側面**，尤其每個尖角、筆畫轉彎、孔洞及字形邊緣不能有破洞／橫條條紋／重影；不能僅用「84×4 SVG 節點存在」宣稱真正完成。研究完成不等於代碼已實裝。當前 PR #1355 保持 Draft、ART TRIAL。
 
+
+### 6F.32 封面鉛字向 Contents 下半版的同源延續（2026-10-23）
+
+**編輯意圖：** 第 6F.30 節的「西望」凸版動效不應在封面結束時全部丟棄。Contents 現有版心下方空白，可保留封面鉛字的**下半部分**，讓「左密、右疏」的跨頁性格在目錄階段轉化為**上面是資訊、下面是印刷結構**。必須延續同一物件與同一動效語義，而非 Contents 再加一張無關的新背景圖。
+
+**目前隔離試作，PR #1355：** 保留左頁全屏 84 枚官方 SVG「西望」原始印刷場；從**最下方第 5–7 組**直接複用 36 枚既有字模，每枚仍有四個 `<use>` 的正面與厚度面，生成 `#dual-contents-relief` 原生 SVG。複用時保留官方 Logo mask path、版面七色、原始 x/y/scale、逐組屬性，不新造其他字和圖片。封面的字場繼續由原 P2 scroll owner 運動，到 `progress≈.865–.990` 的 Contents 轉場，上方文章網格浮現、下方 36 枚逐漸淡為印刷底座；逆向捲動完全回到原始七組西望封面。**沒有第二個 timeline/GSAP，沒有新頁面管理 CSS。**
+
+**版面比例：** 桌面 Contents 把目錄四樂章的真實十二欄及已確認篇名維持在上方資訊區，索引最大高度約 60% 並保有可用鍵盤操作的滾動；原版字模的下部從版面約 58% 起以遮罩柔和承接，至下緣成為約 40% 高度的背景結構，透明度約 0.48，避免和正式文字爭奪焦點。小屏幕採上下頁，目錄依原來的內部可滾動區閱讀，字場維持下方約 40%，再利用頁碼與略低飽和度變成尾頁的印刷主題，而不是全版鋪字。
+
+**必須維持可讀：** 目錄從 WATCH/WALK 到 WITNESS/WORSHIP 十二欄及所有已定稿篇名不能刪改或偽造。若桌面上半欄文字與凸版印象重疊，必須重新分配網格、降低下部可見範圍或控制局部透明度，不得遮字。不允許單靠 41 張截圖自動化 PASS 取代文字實際可讀性判斷。若放大 200%、320px 橫向、reduced-motion 不能讀到底，仍視為未驗收。
+
+**測試與界線：** 初始修改 `873782b`，視覺回歸和硬性守門 `b830e46`。要求下方 36 個原始 SVG 字模、36 個 front use +108 個 depth use、3 個來源 register、每字與主場位置一致、p82 尚未顯現、p93 漸入、p100 保留淡印；其他正式西望全版 p100 不得再蓋目錄。原 Church 活水／日程／分海開門、晨星、右封面、原石紋都不改。**ART TRIAL / NOT APPROVED / 不合併**，等待實景瀏覽器與編輯驗收。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
