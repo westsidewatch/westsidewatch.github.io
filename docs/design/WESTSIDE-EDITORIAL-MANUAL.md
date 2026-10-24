@@ -124,3 +124,20 @@ These files remain archived intact; they do not operate as independent OS author
 - [Camera and Attention Grammar](../../dore-design/DORE-EXPLORATION-CAMERA-ATTENTION-GRAMMAR-2026-09-09.md)
 
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
+
+## 9. P2 Vol.00 Cover — 12-precedent editorial study and A/B candidate (2026-10-24)
+
+**Status:** Art-direction candidate B, **not approved**, not production, PR #1355 remains Draft. The single OS remains the only authority. Cover compositions are scoped to `static/experiments/p2-double-square-video-lab.html`; no new global token, type family, image or CSS entrypoint is authorized.
+
+**Twelve comparative precedents** (study the exhibited layout mechanism, not just a magazine brand's prize history): PORT (identity integrated with subject), Footnote (dense metadata with a strong image), FUKT (display type as image), INQUE (grid-based visual structure), KIBLIND (vertical spine identity), MUBI NOTEBOOK (large masthead and few coverlines), Buffalo Zine (minimal identity and image-led story), The Cut (image-safe text placement), Emergence Magazine (editorial digital opening), i-D (brand as primary visual), Apartamento (edition with typographic editorial columns), and Vogue Business × Archrival (scroll-owned typographic hierarchy). These are reference examples, **not a claim that every illustrated issue won an award**.
+
+**Non-negotiable cover hierarchy:**
+1. The approved WESTSIDE WATCH／西望 masthead SVG identifies the publication; its scale is subordinate to the *chosen* visual protagonist, never duplicated as synthetic type.
+2. A single primary editorial idea leads. `CITY OF LIGHT` is the English display proposition; `守望，一座光明的城` is the Chinese companion title, not another independent poster headline.
+3. Confirmed Vol.00 teaser articles `一萬年的建城禮` (04) and `城門口的人` (03) form one deliberately located micro-editorial zone; they may not float into the headline or star.
+4. The approved 3D morning star, existing engraving, Jerusalem wall and temple-stone backing make one coherent scene; keep the star, wall and texture asset identities untouched.
+5. Vol.00, `Watch for the Dawn`, scripture reference and feature labels are metadata and must not occupy the same hierarchy as masthead and primary headline.
+
+**Compared variants:** A = image-led, full-width masthead and narrow left-column editorial lines; B = reduced masthead, Bodoni Moda headline as primary sky graphic, consolidated right-column coverlines. The actual 1648 / 768 / 390 / 320 Chromium comparison rejected A as the lead candidate because its left-column metadata still competes with the issue's main headline at the narrowest widths. B is selected as the **current default experimental candidate**, A remains available with `?cover=editorial` for evidence. An explicit `?cover=typographic` selects B. No journal or church source content has been changed.
+
+**Blocking review:** preserve and recheck scroll reversibility, the real integrated Church handoff, 200% native zoom, `prefers-reduced-motion`, keyboard access, text-safe imagery and four viewport layout. A green build or geometric collision test cannot itself grant award-calibre art approval. Do not merge PR #1355 until visual signoff; the separate frozen-homepage-star Core Contract failure must be acknowledged, not waived.
