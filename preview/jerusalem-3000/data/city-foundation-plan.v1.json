@@ -1,8 +1,8 @@
 {
   "schema": "j3k.foundation-plan.v1",
   "kind": "reviewed-engineering-inventory-not-runtime-or-historical-certification",
-  "reviewedAt": "2026-10-22",
-  "baselineCommit": "118f92c4b",
+  "reviewedAt": "2026-10-23",
+  "baselineCommit": "fa588872d",
   "domains": [
     "districts",
     "routes",
@@ -20,7 +20,10 @@
     "city-lifecycle-projection.js",
     "earliest-settlement.js",
     "royal-city.js",
-    "persian-sanctuary.js"
+    "persian-sanctuary.js",
+    "city-foundation-runtime.js",
+    "terrain-runtime.js",
+    "phase2-inheritance-runtime.js"
   ],
   "phases": [
     {
@@ -176,7 +179,7 @@
     {
       "id": "aelia",
       "label": "Aelia Capitolina",
-      "rendererFamily": "legacy-era-morphology",
+      "rendererFamily": "legacy-footprint-scaffold",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -185,13 +188,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "gap": "Legacy footprint scaffold remains partly unregistered; hash-positioned anchor solids withdrawn. Source-specific district/road foundations and verified adjacent-period object fates are incomplete.",
       "acceptanceEvidence": []
     },
     {
       "id": "byzantine",
       "label": "拜占庭",
-      "rendererFamily": "legacy-era-morphology",
+      "rendererFamily": "legacy-footprint-scaffold",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -200,13 +203,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "gap": "Legacy footprint scaffold remains partly unregistered; hash-positioned anchor solids withdrawn. Source-specific district/road foundations and verified adjacent-period object fates are incomplete.",
       "acceptanceEvidence": []
     },
     {
       "id": "early-islamic",
       "label": "早期伊斯蘭",
-      "rendererFamily": "legacy-era-morphology",
+      "rendererFamily": "legacy-footprint-scaffold",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -215,13 +218,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "gap": "Legacy footprint scaffold remains partly unregistered; hash-positioned anchor solids withdrawn. Source-specific district/road foundations and verified adjacent-period object fates are incomplete.",
       "acceptanceEvidence": []
     },
     {
       "id": "crusader",
       "label": "十字軍",
-      "rendererFamily": "legacy-era-morphology",
+      "rendererFamily": "crusader-morphology",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -230,13 +233,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "gap": "Existing morphology now uses its own phase progress; common-core object publication and verified adjacent-period fates remain incomplete.",
       "acceptanceEvidence": []
     },
     {
       "id": "ayyubid-mamluk",
       "label": "阿尤布—馬穆魯克",
-      "rendererFamily": "legacy-era-morphology",
+      "rendererFamily": "legacy-footprint-scaffold",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -245,13 +248,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "gap": "Legacy footprint scaffold remains partly unregistered; hash-positioned anchor solids withdrawn. Source-specific district/road foundations and verified adjacent-period object fates are incomplete.",
       "acceptanceEvidence": []
     },
     {
       "id": "ottoman",
       "label": "奧斯曼",
-      "rendererFamily": "legacy-era-morphology",
+      "rendererFamily": "ottoman-morphology",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -260,13 +263,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "gap": "Existing morphology now uses its own phase progress; common-core object publication and verified adjacent-period fates remain incomplete.",
       "acceptanceEvidence": []
     },
     {
       "id": "outside-walls",
       "label": "城外擴張",
-      "rendererFamily": "legacy-era-morphology",
+      "rendererFamily": "legacy-footprint-scaffold",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -275,13 +278,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "gap": "Legacy footprint scaffold remains partly unregistered; hash-positioned anchor solids withdrawn. Source-specific district/road foundations and verified adjacent-period object fates are incomplete.",
       "acceptanceEvidence": []
     },
     {
       "id": "modern",
       "label": "現代耶路撒冷",
-      "rendererFamily": "legacy-era-morphology",
+      "rendererFamily": "legacy-footprint-scaffold",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -290,7 +293,7 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Era morphology renders, but complete common-core ownership and adjacent-period fate mapping are not established.",
+      "gap": "Legacy footprint scaffold remains partly unregistered; hash-positioned anchor solids withdrawn. Source-specific district/road foundations and verified adjacent-period object fates are incomplete.",
       "acceptanceEvidence": []
     }
   ],
@@ -415,5 +418,7 @@
       "acceptanceEvidence": []
     }
   ],
-  "acceptanceRule": "All six domains per phase and every adjacent transition require accepted status with review evidence. Explicit withheld geometry can be accepted as a documented foundation decision; it is never historical certification."
+  "acceptanceRule": "All six domains per phase and every adjacent transition require accepted status with review evidence. Explicit withheld geometry can be accepted as a documented foundation decision; it is never historical certification.",
+  "runtimeInterface": "city-foundation-runtime.js / F2-first-slice-not-full-object-publication",
+  "commonGround": "rendered-DEM-triangles-for-world-and-geographic-sampling"
 }

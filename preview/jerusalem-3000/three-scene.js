@@ -1,3 +1,4 @@
+import {createCityFoundationRuntime,foundationOwnerFor} from './city-foundation-runtime.js';
 import {createRoyalRelief} from './royal-relief.js';
 import {createTerrainPresentation} from './terrain-presentation.js';
 import {auditLocalPlanRegistry} from './local-plan-registration.js';
@@ -126,75 +127,6 @@ function temporalEvidence(object) {
     return 'reconstructed';
   return 'inferred';
 }
-function temporalShape(object, index, phaseId) {
-  const era = ERA_FOOTPRINTS[phaseId] || {
-    cx: 0,
-    cz: 0,
-    sx: 1,
-    sz: 1,
-    density: 20,
-  };
-  const seed = [...object.id].reduce(
-    (n, c) => (n * 31 + c.charCodeAt(0)) >>> 0,
-    2166136261,
-  );
-  const angle = (seed % 6283) / 1000,
-    radius = 220 + (seed % 780);
-  const x = era.cx + Math.cos(angle) * radius * era.sx,
-    z = era.cz + Math.sin(angle) * radius * era.sz,
-    kind = object.kind || '';
-  let w = 220 * era.sx,
-    d = 170 * era.sz,
-    h = 78;
-  if (kind.includes('wall') || kind.includes('fortification')) {
-    w = 760 * era.sx;
-    d = 52;
-    h = 120;
-  }
-  if (kind.includes('gate')) {
-    w = 165;
-    d = 105;
-    h = 170;
-  }
-  if (kind.includes('sanctuary')) {
-    w = 380 * era.sx;
-    d = 285 * era.sz;
-    h = 205;
-  }
-  if (kind.includes('urban-envelope')) {
-    w = 1050 * era.sx;
-    d = 780 * era.sz;
-    h = 32;
-  }
-  if (kind.includes('urban-fabric')) {
-    w = 820 * era.sx;
-    d = 650 * era.sz;
-    h = 48;
-  }
-  if (kind.includes('transport')) {
-    w = 1150 * era.sx;
-    d = 28;
-    h = 10;
-  }
-  if (kind.includes('water')) {
-    w = 340;
-    d = 65;
-    h = 55;
-  }
-  if (kind.includes('monumental')) {
-    w = 420;
-    d = 320;
-    h = 155;
-  }
-  return {
-    x: x + (index % 3) * 55,
-    z: z + ((index * 83) % 230) - 115,
-    w,
-    d,
-    h,
-    rotation: angle * 0.3,
-  };
-}
 function terrainY(terrain, x, z) {
   const y = terrain?.heightAtWorld?.(x, z);
   return Number.isFinite(y) ? y : 0;
@@ -220,6 +152,7 @@ function addEraFabric(
       d = (54 + ((i * 23) % 62)) * era.sz,
       h = ruined ? 12 + (i % 3) * 4 : 34 + ((i * 19) % 72);
     const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
+    mesh.userData.foundation={owner:'legacy-footprint',phaseId,role:'unregistered-provisional-mass',historicalGeometryVerified:false};
     mesh.position.set(x, terrainY(terrain, x, z) + h / 2 + 4, z);
     mesh.rotation.y = (((i * 13) % 17) - 8) * 0.018;
     mesh.receiveShadow = true;
@@ -227,9 +160,6 @@ function addEraFabric(
     meshes.push(mesh);
   }
   return meshes;
-}
-function legacyTemporalAllowed(object, phaseId) {
-  return object.rendererBinding!=='ledger-only-pending-adapter' && !isCorePhase(phaseId) && !isEarlyLandscapePhase(phaseId) && !isSharedGenerationPhase(phaseId);
 }
 export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance } = {}) {
   const scene = new THREE.Scene(),
@@ -269,13 +199,12 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   controls.autoRotateSpeed = 0.32;
   const root = new THREE.Group(),
     historical = new THREE.Group(),
-    temporalLayer = new THREE.Group(),
     eraFabricLayer = new THREE.Group(),
     cityCoreLayer = new THREE.Group(),
     sharedEraLayer = new THREE.Group();
   cityCoreLayer.name = 'j3k-canonical-herodian-city';
   scene.add(root);
-  root.add(historical, temporalLayer, eraFabricLayer, cityCoreLayer, sharedEraLayer);
+  root.add(historical, eraFabricLayer, cityCoreLayer, sharedEraLayer);
   const materials = makeMaterials(),
     builder = new HeritageBuilder(materials),
     temporalMaterials = {};
@@ -289,6 +218,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   let currentProgress = 0,
     currentRuin = 0,
     terrainRuntime = null,
+    foundationRuntime = null,
     terrainPresentation = null,
     terrainView = null,
     evidenceResolution = null,
@@ -302,7 +232,6 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     cityCoreRuntime = null,
     cityProjection = null,
     evidenceProjection = null;
-  const temporalMeshes = new Map();
   let sharedEraRuntime = null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
   let retainedVisible = false, royalRelief=null, royalCity=null, persianSanctuary=null, periodSpatialData=null, waterDefense=null, waterDefenseModel=null, localPlanAudit=[], periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
@@ -339,7 +268,6 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
-      for (const mesh of temporalMeshes.values()) mesh.visible = false;
     }
     if (cityProjection)
       cityProjection.apply({
@@ -399,10 +327,6 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
           herodianPhaseActive() &&
           (!object || evidenceResolution.allows(object, mode));
       }
-    for (const mesh of temporalMeshes.values())
-      mesh.visible =
-        mesh.userData.temporalActive &&
-        evidenceAllowed(mesh.userData.evidenceLevel);
     eraFabricLayer.visible = mode !== 'disputed';
     applyTemporalState();
     needsFrame = true;
@@ -419,14 +343,15 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     clearFabric();
     // Request only this bounded slice; other eras retain their established morphology.
     sharedEraRuntime?.request(phaseId);
-    if (isCorePhase(phaseId) || isEarlyLandscapePhase(phaseId)) return;
-    if (isSharedGenerationPhase(phaseId)) {
+    const foundationOwner=foundationOwnerFor(phaseId);
+    if (['canonical-city','early-landscape'].includes(foundationOwner)) return;
+    if (foundationOwner==='shared-period') {
       eraFabricLayer.visible = false;
       return;
     }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
     const ruined = phaseId.includes('destruction');
-    if (phaseId === 'ottoman')
+    if (foundationOwner === 'ottoman-morphology')
       phase2Morphology = buildOttomanUrbanMorphology(
         eraFabricLayer,
         temporalMaterials,
@@ -520,50 +445,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       rebuildUrbanFabric(phaseId);
       applyTemporalState();
     }
-    const activeIds = new Set();
-    objects.forEach((object, index) => {
-      if (
-        !(object.visible || object.ruined) ||
-        !legacyTemporalAllowed(object, phaseId) ||
-        (isSharedGenerationPhase(phaseId) && sharedEraRuntime?.status === 'ready')
-      )
-        return;
-      activeIds.add(object.id);
-      let mesh = temporalMeshes.get(object.id);
-      const shape = temporalShape(object, index, phaseId);
-      if (!mesh) {
-        const level = temporalEvidence(object);
-        mesh = new THREE.Mesh(
-          new THREE.BoxGeometry(shape.w, shape.h, shape.d),
-          temporalMaterials[level],
-        );
-        mesh.rotation.y = shape.rotation;
-        mesh.receiveShadow = true;
-        mesh.userData = {
-          evidenceLevel: level,
-          baseHeight: shape.h,
-          temporalActive: true,
-        };
-        temporalMeshes.set(object.id, mesh);
-        temporalLayer.add(mesh);
-      }
-      mesh.userData.temporalActive = true;
-      mesh.visible = evidenceAllowed(mesh.userData.evidenceLevel);
-      mesh.scale.y = object.ruined ? 0.22 : 1;
-      mesh.position.set(
-        shape.x,
-        terrainY(terrainRuntime, shape.x, shape.z) +
-          (shape.h * mesh.scale.y) / 2 +
-          5,
-        shape.z,
-      );
-      mesh.rotation.z = object.ruined ? 0.035 : 0;
-    });
-    for (const [id, mesh] of temporalMeshes)
-      if (!activeIds.has(id)) {
-        mesh.userData.temporalActive = false;
-        mesh.visible = false;
-      }
+    // Anchor metadata remains in the ledger. A source awaiting spatial
+    // registration must not become a hash-positioned box or monument slab.
     needsFrame = true;
   }
   const ready = Promise.all([
@@ -705,6 +588,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     royalRelief=createRoyalRelief(root,mount,{data:davidData,terrain:terrainRuntime});
     persianSanctuary=createPersianSanctuary(root,{data:periodSpatialData,terrain:terrainRuntime,core:cityCoreRuntime.core});
+    foundationRuntime=createCityFoundationRuntime({core:cityCoreRuntime.core,terrain:terrainRuntime,root,getCurrentPhase:()=>currentPhaseId,getPosition:()=>timelinePosition});
     const bounds = new THREE.Box3()
       .setFromObject(cityCoreLayer)
       .union(new THREE.Box3().setFromObject(historical));
@@ -795,19 +679,20 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             royalRelief:royalRelief?.profile,
             persianSanctuary:persianSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
+            foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
             terrainPresentation:{...terrainPresentation?.diagnostics,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
               fabricVisible: eraFabricLayer.visible,
               phase2Components: fabricMeshes.filter((mesh) => mesh.visible).length,
+              morphologyProgress:phase2Morphology?.progress??null,
+              morphologyGrammar:phase2Morphology?.grammar??null,
               blocks: cityCoreRuntime?.parcels?.blockCount || 0,
               parcels: cityCoreRuntime?.parcels?.count || 0,
               buildings: cityCoreRuntime?.architecture?.buildings || 0,
             },
-            visibleLegacyTemporalMeshes: [...temporalMeshes.values()].filter(
-              (m) => m.visible,
-            ).length,
+            visibleLegacyTemporalMeshes: 0,
             visibleCoreMeshes:
               cityCoreRuntime?.architecture?.meshes?.filter(
                 (m) => m.visible && cityCoreLayer.visible,
@@ -863,6 +748,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     },
     setWaterDefenseVariant(id){waterDefenseModel.setVariant(id);applyTemporalState();},
     waterDefenseEvidence(position){const state=waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);return state?{...state,selectedVariant:waterDefenseModel.selectedVariant,variants:waterDefense.towerVariants,localPlans:localPlanAudit}:null;},
+    foundationContext(){return {terrain:terrainRuntime};},
+    inspectCityFoundation(phaseId=currentPhaseId){return foundationRuntime?.snapshot(phaseId)??null;},
+    cityFoundationIndex(){return foundationRuntime?.index()??[];},
     royalReliefProfile(){return royalRelief?structuredClone(royalRelief.profile):null;},
     focusRoyalRelief(){if(currentPhaseId!=='david-solomon')return false;frameRoyalRelief();return true;},
     setTerrainOverview(enabled){

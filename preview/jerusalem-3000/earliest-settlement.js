@@ -6,18 +6,8 @@ export const MIDDLE_BRONZE_PHASE='middle-bronze';
 export const LATE_BRONZE_PHASE='late-bronze-iron1';
 export const ROYAL_PHASE='david-solomon';
 export const isEarlyLandscapePhase=id=>isEarliestPhase(id)||[MIDDLE_BRONZE_PHASE,LATE_BRONZE_PHASE,ROYAL_PHASE].includes(id);
-// Sample the rendered DEM triangles, avoiding bilinear heights that can hide
-// narrow footpaths beneath the triangulated terrain surface.
-export function settlementSurfaceHeight(terrain,x,z) {
-  const p=terrain.mesh?.geometry?.attributes?.position,g=terrain.grid;
-  if(!p||!g?.width||!g?.height) return terrain.heightAtWorld(x,z);
-  const u=(x-terrain.mesh.position.x-p.getX(0))/(p.getX(g.width-1)-p.getX(0))*(g.width-1);
-  const v=(z-terrain.mesh.position.z-p.getZ(0))/(p.getZ((g.height-1)*g.width)-p.getZ(0))*(g.height-1);
-  if(u<0||v<0||u>g.width-1||v>g.height-1) return NaN;
-  const col=Math.min(g.width-2,Math.floor(u)),row=Math.min(g.height-2,Math.floor(v)),a=u-col,b=v-row,i=row*g.width+col;
-  const h00=p.getY(i),h10=p.getY(i+1),h01=p.getY(i+g.width),h11=p.getY(i+g.width+1);
-  return (a+b<=1?h00+a*(h10-h00)+b*(h01-h00):h11+(1-a)*(h01-h11)+(1-b)*(h10-h11))+terrain.mesh.position.y;
-}
+export {sampleRenderedTerrainHeight as settlementSurfaceHeight} from './terrain-runtime.js';
+import {sampleRenderedTerrainHeight as settlementSurfaceHeight} from './terrain-runtime.js';
 export function createLandscapeSettlement(parent,{data,terrain}) {
   if(!terrain?.grid?.origin||!isEarlyLandscapePhase(data.phase)) throw new Error('Earliest settlement requires canonical DEM and its own phase data');
   const anchor=geographicToENU(data.spring.lat,data.spring.lon,terrain.grid.origin);

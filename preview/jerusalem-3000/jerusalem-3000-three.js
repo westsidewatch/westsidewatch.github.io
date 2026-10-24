@@ -82,6 +82,8 @@ try {
   });
   await three.ready;
   window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
+  window.__JERUSALEM3000__.inspectCityFoundation=phase=>three.inspectCityFoundation(phase);
+  window.__JERUSALEM3000__.cityFoundationIndex=three.cityFoundationIndex();
   const retainedToggle = document.querySelector('.j3k-retained-toggle');
   retainedToggle.addEventListener('click', () => {
     const enabled = retainedToggle.getAttribute('aria-pressed') !== 'true';
@@ -92,7 +94,7 @@ try {
     inheritedPhase = '';
   try {
     const module = await import('./phase2-inheritance-runtime.js');
-    inheritance = module.createInheritanceLayer(three.root);
+    inheritance = module.createInheritanceLayer(three.root,three.foundationContext());
     window.__JERUSALEM3000__.inheritance = true;
     stage.dataset.inheritance = 'ready';
   } catch (error) {
@@ -156,7 +158,7 @@ try {
       citySummary = temporalCity.summary(state.position),
       localProgress = Math.max(0, Math.min(1, state.position - state.index));
     three.setBuildProgress(
-      isCorePhase(p.id) ? 1 : Math.max(herodian, transformation.standing),
+      isCorePhase(p.id) ? 1 : localProgress,
     );
     three.setRuinProgress(transformation.ruin);
     three.setTemporalCityState?.(cityObjects, state.position, p.id);
@@ -199,6 +201,7 @@ try {
       summary: citySummary,
     };
     window.__JERUSALEM3000__.inheritanceState = {
+      terrainAuthority:inheritance?.terrainAuthority??null,
       phase: p.id,
       active: !isCorePhase(p.id) && !isSharedGenerationPhase(p.id) && !isEarlyLandscapePhase(p.id) && !!inheritance?.runtime,
       progress: localProgress,

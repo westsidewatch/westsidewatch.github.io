@@ -28,6 +28,11 @@ try {
   );
   const runtime = await page.evaluate(() => window.__JERUSALEM3000__);
   assert.equal(runtime.status, 'ready', JSON.stringify(runtime));
+  assert.equal(runtime.cityFoundationIndex.length,18);
+  assert.ok(runtime.cityFoundationIndex.every(p=>p.terrain.sampling==='rendered-dem-triangles'&&p.foundationAccepted===false));
+  const inactiveFoundation=await page.evaluate(()=>window.__JERUSALEM3000__.inspectCityFoundation('modern'));
+  assert.equal(inactiveFoundation.renderer.visibleComponents,null,'inactive inspection must not generate a future city');
+
   for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json','settlement/david-solomon.v1.json','urban/first-temple-persian.spatial.v1.json','urban/water-defense.registration.v1.json','urban/water-defense.local-plans.v1.json']) {
     assert.equal(dataRequests.get(`/preview/jerusalem-3000/data/${path}`),1,`one shared request for ${path}`);
   }
@@ -423,6 +428,16 @@ try {
       render: window.__JERUSALEM3000__.renderDiagnostics,
     }));
     assert.ok(sample.render.webgl && sample.render.frames > 0);
+    assert.equal(sample.render.visibleLegacyTemporalMeshes,0,'unregistered hash-positioned anchor solids must remain withdrawn in every era');
+    if([13,15].includes(phase)){assert.ok(sample.render.urbanFabric.phase2Components>0,'Crusader/Ottoman construction must use their own phase progress after the Roman destruction');assert.ok(Math.abs(sample.render.urbanFabric.morphologyProgress-.9)<1e-6);}
+    const foundation=await page.evaluate(()=>window.__JERUSALEM3000__.inspectCityFoundation());
+    assert.equal(foundation.phaseId,sample.time.phase);assert.equal(foundation.owner,sample.render.foundation.owner);
+    assert.equal(foundation.terrain.sampling,'rendered-dem-triangles');assert.equal(foundation.terrain.verticalScale,1);
+    assert.equal(foundation.foundationAccepted,false);assert.equal(Object.keys(foundation.domains).length,6);
+    assert.ok(foundation.renderer.visibleComponents>0);
+    if([8,9].includes(phase))assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'canonical parcel bindings must be recognized by the common foundation interface');
+    assert.equal(foundation.renderer.boundComponents+foundation.renderer.unboundComponents,foundation.renderer.visibleComponents);
+
     const visible = sample.render.visibleCoreMeshes +
       sample.render.urbanFabric.phase2Components + sample.render.visibleLegacyTemporalMeshes +
       (sample.render.sharedEra?.projection?.visibleBuildings || 0) +
@@ -433,9 +448,10 @@ try {
       (sample.render.lateBronzeSettlement?.visibleHouses || 0) +
       (sample.render.davidSettlement?.visibleHouses || 0);
     assert.ok(visible > 0, `No urban geometry rendered for ${sample.time.phase}`);
+    if(phase===10)assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.terrainAuthority),'canonical-dem-rendered-triangles');
     if (phase === 10) assert.equal(sample.render.visibleCoreMeshes, 0,
       'Aelia must not reuse standing Herodian architecture');
-    phaseReports.push({ value, elapsedMs: Date.now() - started, visible, ...sample });
+    phaseReports.push({ value, elapsedMs: Date.now() - started, visible, foundation, ...sample });
     await page.screenshot({ path: `${output}/phase-${phase}.png`, fullPage: true });
   }
   await writeFile(`${output}/phase-report.json`, JSON.stringify({

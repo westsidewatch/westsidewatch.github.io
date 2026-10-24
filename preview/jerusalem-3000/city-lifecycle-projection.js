@@ -5,15 +5,15 @@ export function isCorePhase(phaseId) {
   return CORE_PHASES.has(phaseId);
 }
 
+export function cityObjectIdForMesh(mesh){const meta=mesh.userData?.cityObject;return meta?.objectId??(meta?.parcelId?`${meta.parcelId}:building`:null);}
+
 export function createCityProjection(group, meshes, {
   phaseIds = [...CORE_PHASES], standingPhase = 'herodian-jesus', phaseStates = {}, stateForObject = null,
 } = {}) {
   const activePhases = new Set(phaseIds);
   const snapshots = meshes.map((mesh) => ({
     mesh,
-    id:
-      mesh.userData.cityObject.objectId ??
-      `${mesh.userData.cityObject.parcelId}:building`,
+    id:cityObjectIdForMesh(mesh),
     position: { x: mesh.position.x, y: mesh.position.y, z: mesh.position.z },
     scaleY: mesh.scale.y,
     ground:
