@@ -112,6 +112,10 @@ jobs:
                             keyboard:index.tabIndex===0 && index.getAttribute('role')==='region',
                             mobileScrollable:index.scrollHeight>index.clientHeight+4};
                         })(),
+                        mosaicGlyphs:document.querySelectorAll('.dual-typefield__glyph').length,
+                        mosaicRows:document.querySelectorAll('.dual-typefield__line').length,
+                        mosaicRegisters:new Set([...document.querySelectorAll('.dual-typefield__line')].map(el=>el.dataset.printRegister)).size,
+                        mosaicVisibility:Number(getComputedStyle(document.getElementById('dual-typefield')).opacity),
                         officialSvgMarks:document.querySelectorAll('.dual-letterfield__glyph').length,
                         printRows:document.querySelectorAll('.dual-letterfield__row').length,
                         printHierarchy:(()=>{
@@ -180,6 +184,8 @@ jobs:
                     if(!loadedOK||m.rows!==12||!m.logoLoaded||m.aria!==1)errors.push('SOURCE_OR_UI');
                     if(m.officialWorks!==11||m.legacyLaser)errors.push('EDITORIAL_WORKS_OR_REMOVED_LASER');
                     if(m.officialSvgMarks!==7||m.printRows!==7)errors.push('OFFICIAL_LOGO_MULTIPLE_PRINT_ROWS_REQUIRED');
+                    if(m.mosaicGlyphs!==441||m.mosaicRows!==21||m.mosaicRegisters!==7)errors.push('DENSE_GOLD_PRINT_FIELD_MISSING');
+                    if(p===82&&m.mosaicVisibility<.8)errors.push('LEFT_FULL_PRINT_NOT_VISIBLE');
                     if(p===82&&(m.printHierarchy.heroRatio<1.35||m.printHierarchy.heroOpacity<=m.printHierarchy.largestEchoOpacity))errors.push('NO_VISUAL_HIERARCHY_IN_XIWANG_PRINT');
                     if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.wallImg)errors.push('WALL_STONE_MUST_SHARE_ONE_CITY');
                     if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
