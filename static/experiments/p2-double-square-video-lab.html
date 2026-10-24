@@ -404,6 +404,11 @@ html.dual-embed .dual-film__credit{display:none}
   stage.dataset.blueReveal=blue.toFixed(4);
   stage.dataset.dawnReveal=dawn.toFixed(4);
   const lettersFade=1-ease((progress-.855)/.115);
+  // Clear the upper 58% of the original lead-type SVG before showing
+  // articles. Its lower registers remain as their exact copies emerge.
+  // One source progress value drives both, including reverse scroll.
+  const upperClear=ease((progress-.858)/.064);
+  letters.style.clipPath='inset('+(58*upperClear).toFixed(3)+'% 0 0 0)';
   letters.style.opacity=String(lettersFade);
   layoutPrint(w,h);
   bands.forEach(({band},register)=>{
