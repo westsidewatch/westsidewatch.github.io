@@ -56,3 +56,7 @@ F2/F3 可按相鄰時段分包，但每包都服從完整清單並驗證全線�
 ## Hellenistic shared registration (2026-10-24)
 
 Existing generated districts, roads and residences now publish atomically into the common ledger. All 32,754 visible components bind to stable IDs; later fate is unresolved. This is a reference-derived scaffold, not a surveyed historical layout. See HELLENISTIC-LEDGER-FOUNDATION.md. Step 1 and overall foundation acceptance remain incomplete.
+
+## Early settlement batch registration (2026-10-24)
+
+The four early-era dwelling/footpath batches now share canonical object IDs and lifecycle events. Later fate is explicitly unresolved; source defense adapters retain ownership and disputed/location symbols remain outside this publication. No new geometry or invented district/parcel parentage. See EARLY-SETTLEMENT-LEDGER-FOUNDATION.md. Full foundation acceptance and step 1 remain incomplete.

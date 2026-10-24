@@ -574,20 +574,20 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     }
     const settlementResponse=await fetch('./data/settlement/earliest.v1.json',{cache:'no-store'});
     if(!settlementResponse.ok) throw new Error('Earliest settlement data unavailable');
-    earliestSettlement=createEarliestSettlement(root,{data:await settlementResponse.json(),terrain:terrainRuntime});
+    earliestSettlement=createEarliestSettlement(root,{data:await settlementResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core});
     const middleResponse=await fetch('./data/settlement/middle-bronze.v1.json',{cache:'no-store'});
     if(!middleResponse.ok) throw new Error('Middle Bronze settlement data unavailable');
-    middleBronzeSettlement=createEarliestSettlement(root,{data:await middleResponse.json(),terrain:terrainRuntime});
+    middleBronzeSettlement=createEarliestSettlement(root,{data:await middleResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core});
     const lateResponse=await fetch('./data/settlement/late-bronze-iron1.v1.json',{cache:'no-store'});
     if(!lateResponse.ok) throw new Error('Late Bronze landscape data unavailable');
-    lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime});
+    lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core});
     const waterDefenseData=await loadCityData('./data/urban/water-defense.registration.v1.json');
     localPlanAudit=auditLocalPlanRegistry(await loadCityData('./data/urban/water-defense.local-plans.v1.json'),terrainRuntime.grid.origin);
     waterDefense=compileWaterDefenseRegistration(waterDefenseData,terrainRuntime.grid.origin);bindWaterDefenseCore(cityCoreRuntime.core,waterDefense);
     for(const admission of localPlanAudit){const record=cityCoreRuntime.core.get(admission.objectId);if(!record)throw new Error('Local plan target missing from shared ledger');cityCoreRuntime.core.register({...record,metadata:{...record.metadata,localPlanAdmission:admission}});}
     waterDefenseModel=createWaterDefenseModelAdapter({runtime:middleBronzeSettlement,core:cityCoreRuntime.core,registration:waterDefense});
     const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');
-    davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime});
+    davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core});
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     royalRelief=createRoyalRelief(root,mount,{data:davidData,terrain:terrainRuntime});
     persianSanctuary=createPersianSanctuary(root,{data:periodSpatialData,terrain:terrainRuntime,core:cityCoreRuntime.core});
