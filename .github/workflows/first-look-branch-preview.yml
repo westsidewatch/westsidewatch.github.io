@@ -303,7 +303,13 @@ jobs:
                         starScale:star.width/view.width,
                         cityTopRatio:(city.top-view.top)/view.height,
                         wallHeightRatio:wall.height/view.height,
-                        headlineRightColumn:title.left>=view.left+view.width*.5,
+                        headlineRightColumn:title.left>=view.left+view.width*(innerWidth<=820?.35:.49),
+                        titleGroupUnified:!!cv.querySelector('.dual-cover__editorial')&&
+                          ['en','zh','coverlines'].every(name=>cv.querySelector('.dual-cover__'+name)?.parentElement===cv.querySelector('.dual-cover__editorial')),
+                        starOnStone:star.top>=city.top+5&&star.bottom<=view.bottom-8,
+                        mastheadNavyOnly:part('mast').bottom<=city.top+2,
+                        newWallMask:getComputedStyle(wallEl).maskImage.includes('jerusalem-wall.png'),
+                        sameStoneMaterial:getComputedStyle(wallEl).backgroundImage.includes('temple-stone-light.png'),
                         stoneSource:getComputedStyle(paperEl).backgroundImage,
                         wallSource:getComputedStyle(wallEl).backgroundImage,
                         wallShadow:getComputedStyle(wallEl).filter,
@@ -334,10 +340,14 @@ jobs:
                       errors.push('JERUSALEM_WALL_OVER_MAIN_COVER_HEADING');
                     if(variant==='masthead'&&(metrics.starCentreError>3||metrics.starScale<.23))
                       errors.push('MORNING_STAR_NOT_CENTRAL_PRIMARY_IMAGE');
-                    if(variant==='masthead'&&(metrics.cityTopRatio<.49||metrics.cityTopRatio>.59||metrics.wallHeightRatio>.07))
+                    if(variant==='masthead'&&(metrics.cityTopRatio<.28||metrics.cityTopRatio>.34||metrics.wallHeightRatio>.055))
                       errors.push('JERUSALEM_CREST_TOO_LARGE_OR_LOW');
-                    if(variant==='masthead'&&(!metrics.headlineRightColumn||!metrics.sloganHidden))
+                    if(variant==='masthead'&&(!metrics.headlineRightColumn||!metrics.sloganHidden||!metrics.titleGroupUnified))
                       errors.push('LOWER_RIGHT_EDITORIAL_HEADLINE_NOT_CLEAR');
+                    if(variant==='masthead'&&(!metrics.starOnStone||!metrics.mastheadNavyOnly))
+                      errors.push('BLUE_BAND_MUST_CONTAIN_ONLY_MASTHEAD_NOT_STAR');
+                    if(variant==='masthead'&&(!metrics.newWallMask||!metrics.sameStoneMaterial))
+                      errors.push('ARCHITECTURE_MUST_USE_IDENTICAL_STONE_TEXTURE');
                     if(variant==='masthead'&&(!metrics.stoneSource.includes('temple-stone-light.png')||
                       !metrics.wallSource.includes('jerusalem-wall.png')||
                       metrics.wallShadow!=='none'||metrics.paperShadow!=='none'||metrics.wallSeam!=='none'))
