@@ -2539,6 +2539,21 @@ For each output create a plate record with source URL and revision, original ext
 
 **實作範圍 [TRIAL]：** PR #1355 提交 `6343495` 僅調整雙頁真 CSS 的網格高度、字級、間距及英文／中文標題級差。官方 SVG、晨星 v5.3、原星光刻線、城牆與教會半屏接管均未修改；不新增 AI 圖像、裝飾文字或第二套 Design OS。正式驗收須看 1648、390、320 的真實 Chromium 截圖，確認 WATCH 長題名沒有侵犯 WITNESS 行、內部卷軸可抵達 12 瑪拉拿，及 200% 原生放大時標題不裁切。**在真圖簽收前仍為 NOT APPROVED。**
 
+
+### 6F.26 P2 第七輪獲獎標準的藝術驗收：字是建築，城是主體（2026-10-23）
+
+**外部編輯參照，非複製模板：** 編輯提供的 `50` 雙頁、`ALONE` 主標、`Court side`、`YARD`、`Obit.`。它們共有的藝術方法：大字不是被放在空隙，而是從一開始便定義圖片、空白、方向、遮擋和視覺重心；一張封面在凍結時也必須有一秒可辨的命題。西望的色彩、字形和材質必須保持自己的原有身份，不照搬紅色、數字、Helvetica 或外部照片。
+
+**被否決的舊左頁：** 把正式 Logo 的單一「西望」裁成七片再依次組裝，最後仍只是一個巨型字標；它沒有「很多條完整西望斜向進來」的運動語法。不可把這個七片實驗或早前七個等大字印當作美術定稿。新候選保留官方 `westside-watch-xiwang-horizontal-motion.svg` 原始向量輪廓，使用七條斜向印帶（共十一個完整雙字字標），各行有不同位置、尺幅、留白、墨色與進場時差；不是重畫 logo，也不是人工激光效果。左頁字行在教會藍／金半屏完全接管之後才開始，能倒捲回原場景。
+
+**被否決的舊右頁：** 城牆只是細長 PNG 貼在上部，下面獨立一塊平面的聖殿紙，兩個元素分別位移與處理透明度，一眼是「貼上的牆＋另一張紙」。新候選的城牆頂緣與紙色石體為**同一個 DOM、同一個 transform、同一個顏色與陰影過渡**，禁止以第二套時間線、小裝飾線或生成圖片補洞。靜態畫面應清晰呈現夜色→城牆→城體→ CITY OF LIGHT 與「守望，一座光明的城」；晨星仍保留原 3D v5.3 和原刻線，不讓新線侵入標題區。
+
+**獎項方法只作評審標準，不作獲獎聲稱：** 綜合 Awwwards 的設計、易用性、創意、內容權重，以及 Webby 2026／2027 的視覺、功能、導航、互動、創新、整體體驗六維，核心驗收定為 ① 真實閱讀內容不能缺／假造 ② 右頁封面與左頁七行字有獨立而關聯的完整構圖 ③ 不會出現牆紙脫節／任何遮擋字樣 ④ 1648／768／390／320 與真原生 200% zoom 無裁切／閱讀困難 ⑤ 正反滾動、reduced-motion、鍵盤、Contents 最後一條可達 ⑥ 一切在單一 Design OS 的權威下，單一 P2 scroll owner 無雙軌。不得只以 Production Build 或 27／33 張自動截圖的 **PASS** 稱作獲獎級藝術簽收。
+
+**程式參照：** [Codrops SVG Clip-Path Text Animations](https://github.com/codrops/TextClipScroll) 為 MIT 的原始碼參考，僅吸收其把字形／mask 與卷軸幾何整合的實作思想；P2 繼續沿用現有 HTML/CSS/JS，沒有引入第二套 GSAP timeline，也沒有新增光束素材。
+
+**當前候選：** PR #1355，`c515ac3`（同一建築父節點）、`f974d1a`（七條十一組官方字形與連動升城）。Production Build、視覺 CI、人工畫面、200% 等驗收必須再核實。藝術批准狀態 **TRIAL / NOT APPROVED**，不得合併到主站。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
