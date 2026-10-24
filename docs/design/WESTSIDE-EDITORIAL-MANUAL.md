@@ -2616,6 +2616,25 @@ For each output create a plate record with source URL and revision, original ext
 
 **驗收阻擋：** 第十輪舊 441 字測試已撤除。新測試必須有 exactly 84 SVG 字組、84 原字型面、252 SVG 厚度面、7 段進場，每個字組指向被保護的同一個原始西望路徑；沒有純文字 glyph；p44 不可已全顯示、p82 需全部已進場、p100 不得蓋住 Contents。桌面／768／390／320 和原 Church 共 41 個 Chromium 截圖節點，還須由實際截圖目視檢查字形是否真顯現、厚度與留白是否好看；僅 DOM 檢查通過不是獲獎級批准。**TRIAL／NOT APPROVED／不合併。**
 
+
+### 6F.31 多雷探索：真正 SVG 擠出字形的開源方案（2026-10-23）
+
+**參考圖的視覺結構**：大字密集排印、米白正面、斜向粉色連續側面、鮮紅底色；字形碰觸及跨版面裁切。只借用形式和幾何，不拷貝紅粉奶白配色；P2 延用 Design OS 七色和正式「西望」SVG。當前 P2 84 組字形各由四層偏移 SVG 描繪正面和陰影色版，這是「疊影假立體」，**不等於用閉合的向量面連接前後輪廓的真擠出**，這是接下來最應突破的差別。
+
+**核實過的 MIT 開源：**
+- **dim / Masaya Ishikawa**（https://github.com/iskwmsy/dim，https://dim.cog.ooo/dim.html）：原作者聲明能匯入 2D SVG 路徑、在三維空間擠出並將結果以向量輸出；是現有官方 Logo 資產真正面向 SVG 側面幾何的最直接參考。優先研究演算法與向量輸出，並非不測試就新增整套 3D 應用。
+- **Voxtype / Railly Hugo**（https://github.com/Railly/voxtype；npm `@crafter/voxtype`）：`--mode extrude` 純 SVG 字形擠出，無 WebGL，含投影、可見面和明暗；主要輸入是文字與 TTF／OTF 字體，**不能直接替換西望官方兩字輪廓**，只借用 extrusion／光學分色思路。
+- **Pave / Baku Hashimoto**（https://github.com/baku89/pave）：處理 SVG/Path2D 貝茲曲線，提供 resample、offset、tangent、normal 等 API；最合適作為西望輪廓轉成分段可見側面的數學參考。MIT。
+- **SVG.js**（https://github.com/svgdotjs/svg.js）：純 SVG DOM 操作與動畫；若原生 SVG 的 JS 足夠則不添加依賴，參考其群組和屬性更新方式即可。MIT。
+- **Codrops / RepetitiveTypography**（https://github.com/codrops/RepetitiveTypography）：重複文字的進場節奏與錯位編排，MIT。借鑑運動方法，不在 P2 接入新 scroll owner。
+- **svgto3d.app**（https://github.com/leefanv/svgto3d）：可以從任意填充 SVG 擠出真正幾何，但產出依賴 Three.js/WebGL，是本題「整頁全部 SVG」約束的**參考／驗證工具，不是 P2 運行時方案**。MIT。
+
+**推薦單一路線**：將正式 `westside-watch-xiwang-horizontal-motion.svg` 的兩個原始 path（含 use 的變換）**預先編譯**成一個可共用的 front path、連續的側面 path／polygon，以及陰面／高光側面。先把封閉 Bézier 輪廓依受控容差 flatten，沿唯一擠出向量 `(dx,dy)` 生成每一段四點側面 `p_i,p_{i+1},p_{i+1}+d,p_i+d`，考慮孔洞方向、外輪廓與遮擋排序；先畫側面、再蓋上原始不變形的正面。這是 SVG 內的向量面，不是複製四個字標直接位移；產物置入單一 `<defs>/<symbol>` 並以 `<use>` 重複 84 次，避免每枚在滾動時重新解析 3D 幾何。
+
+**性能與動效：** 一次離線編譯幾何，運行時只讓既存七組 `<g>` 接受 P2 唯一 scroll clock 的 transform/opacity。保留半屏接管→七組立體字分批進場→晨星與石城→Contents 替換，反向捲動必須完全可逆；遵守 reduced-motion，無額外 GSAP/RAF 時鐘。方向、深度、正／側面配色都是 Design OS 調用的局部參數，不創建第二套 CSS 管理。先在現有隔離 PR #1355 運作、截圖與 200% 原生 zoom 驗證，主站不合併。
+
+**驗收的實質差異**：必須在 1648px、768px、390px、320px 看清楚**連續側面**，尤其每個尖角、筆畫轉彎、孔洞及字形邊緣不能有破洞／橫條條紋／重影；不能僅用「84×4 SVG 節點存在」宣稱真正完成。研究完成不等於代碼已實裝。當前 PR #1355 保持 Draft、ART TRIAL。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
