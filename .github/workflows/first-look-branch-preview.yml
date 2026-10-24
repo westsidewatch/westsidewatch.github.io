@@ -275,7 +275,7 @@ jobs:
 
                 // Compare BOTH authored cover systems at the SAME real p82
                 // pose. The A/B control changes cover layout, never P2 timing.
-                for(const variant of ['editorial','typographic']){
+                for(const variant of ['masthead','editorial','typographic']){
                   const errors=[],id=screen+'-art-'+variant;
                   try {
                     await page.locator('[data-cover-choice="'+variant+'"]').click();
@@ -288,17 +288,24 @@ jobs:
                       const cv=document.getElementById('dual-cover'),view=box(cv);
                       const part=name=>box(cv.querySelector('.dual-cover__'+name));
                       const src=cv.querySelector('.dual-cover__mast');
+                      const engraving=cv.querySelector('.dual-cover__engraving');
                       const lines=cv.querySelector('.dual-cover__coverlines');
                       const c=part('coverlines'),title=part('en'),zh=part('zh');
                       const intersection=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top));
                       return {variant:cv.querySelector('.dual-cover').dataset.coverVariant,view,mast:part('mast'),title,zh,coverlines:c,
                         overlapStoryTitle:intersection(c,title),mastLoaded:src.complete&&src.naturalWidth>0,
+                        mastRatio:part('mast').width/view.width,
+                        engravingSource:getComputedStyle(engraving).backgroundImage,
                         stories:lines.querySelectorAll('.dual-cover__coverline').length,
                         selected:[...document.querySelectorAll('[data-cover-choice]')].filter(x=>x.getAttribute('aria-pressed')==='true').length,
                         phase:document.getElementById('dual-stage').dataset.phase};
                     });
                     if(metrics.variant!==variant||metrics.selected!==1||!metrics.mastLoaded||metrics.stories!==2||metrics.phase!=='cover-and-xiwang')errors.push('COVER_VARIANT_NOT_IN_REVIEW_STATE');
                     if(metrics.overlapStoryTitle>120)errors.push('EDITORIAL_TEASERS_OVERLAP_MAIN_HEADLINE');
+                    if(variant==='masthead'&&(metrics.mastRatio<.90||metrics.mastRatio>.97))
+                      errors.push('COVER_IDENTITY_MUST_BE_PRIMARY');
+                    if(variant==='masthead'&&!metrics.engravingSource.includes('magazine-starfield-engraving-night-v1.svg'))
+                      errors.push('COVER_ENGRAVING_REVERTED_TO_BUSY_FULL_BLEED');
                     for(const key of ['mast','title','zh','coverlines']){
                       const r=metrics[key],b=metrics.view;
                       if(r.left<b.left-8||r.right>b.right+10||r.top<b.top-8||r.bottom>b.bottom+10)errors.push('COVER_'+key.toUpperCase()+'_OUT_OF_BOUNDS');
@@ -343,11 +350,11 @@ jobs:
                   });
                   if(m.phase!=='magazine'||m.design!=='duo-bridge'||m.duo!=='contents-final'||!m.water||!m.doors||!m.church)errors.push('CHURCH_MOTION_NOT_PRESERVED');
                   if(m.entries!==12||!m.homeVideo)errors.push('CANON_OR_ORIGINAL_HOME_FILM');
-                  // The art-reviewed B candidate places the official masthead in a restrained
-                  // 53% editorial header. This is an explicit, narrower B-specific
-                  // acceptance range, not a waiver of the earlier image test.
-                  // Both compositions are also tested above at four viewports.
-                  if(m.coverVariant!=='typographic'||m.logoRatio<.50||m.logoRatio>.57)errors.push('COVER_CANDIDATE_B_MASTHEAD_SCALE_OUT_OF_RANGE');
+                  // The old A/B presentations were declined for insufficient publication
+                  // identity. The selected art study must show the official SVG
+                  // across nearly the entire cover width, at desktop and mobile.
+                  if(m.coverVariant!=='masthead'||m.logoRatio<.90||m.logoRatio>.97)
+                    errors.push('COVER_APPROVED_MASTHEAD_IDENTITY_MISSING');
                   if(Math.abs((m.coverSize?.width||0)-(m.coverSize?.height||0))>2)errors.push('COVER_NOT_SQUARE');
                   if(m.lastRect>m.contentsRect+2&&!m.directoryScrollable)errors.push('LAST_ENTRIES_UNREACHABLE');
                   await page.screenshot({path:path.join(out,id+'.png'),animations:'disabled'});
