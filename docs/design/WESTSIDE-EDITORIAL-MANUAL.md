@@ -2567,6 +2567,19 @@ For each output create a plate record with source URL and revision, original ext
 
 **第八輪實際結果（PR #1355）：** `dd36ca9` 讓七條錯位印帶變為 20 枚完整正式 SVG「西望」，`15314dd` 在實際 Chromium 截圖發現桌面標語被城牆蓋住、平板與手機石城的縫隙後，重新調整原始城牆與石紋的相接高度；`82ddc02` 把 768px 的 `VOL.00` 移到巨幅 `LIGHT` 右側旁註，不壓主標，保留 CITY OF 的英 Roman／Italic 比例。**重點的 CI 血淚教訓：** 舊 Chromium 步驟有 `continue-on-error: true`，即使 41 份清單存在場景錯誤也被 workflow 整體誤報 success；`0c8078a` 正式撤銷此遮蔽。測試以實際繪製文字、合乎字體光學的 glyph bounding region，而非整塊包含字體留白的 line box 量測相交；`9a99713` 加入真實期號側欄安全距離。\n\n**可查證的最新證據：** commit `9a99713`，Production Build **PASS**；First Look Branch Preview **PASS**；`p2-two-square-video-study` artifact #12542411935 的 **41/41 Chromium 真實場景錯誤為零**（1648、768、390、320 + 原 Church 接入共 41 個）。已人工檢視桌面、平板、手機的封面／Contents，左七色印帶密度增加；右星光與上升石城結成一個建築／文字主體；平板 VOL.00 已有獨立的邊註位置；舊城牆／石體 gap 量測已通過。**Core Contract 仍因早期受保護的首頁 morning-star SVG 基準而 FAIL**；正式資產未更動。\n\n**最終限制：** 此版本是比遭否決畫面更有整版感的**藝術候選**，不能宣稱已獲獎或經編輯批准；真原生 200% zoom、長距離反向 scroll 手感、性能 profiling 與完整鍵盤／reduced-motion 操作還未完成。**TRIAL / NOT APPROVED / 不合併。**
 
+
+### 6F.28 P2 排印第九輪：單一焦點、尺度梯度、負空間（2026-10-23）
+
+**藝術否決來源：** 使用者截圖證實第八輪的左側 20 枚官方 SVG「西望」均處於大且接近飽和的印刷重量，形成沒有閱讀主次的字牆；右頁正式 Logo、晨星、星光底紋、城牆與 `CITY OF LIGHT` 同時放大，即使資料完整及 41 項工程驗收無錯誤，仍缺乏雜誌封面的藝術編輯節奏。這是藝術層級錯誤，不得藉追加裝飾或將整頁統一縮小敷衍解決。
+
+**Doré reference study（觀念而非圖像模仿）：** （1）《The Extreme Self》書中反覆 `NOOM` 字形的由大而小尺度梯度展示**不等量重複**才會產生速度與空間透視；（2）Red Dot 收錄的 `I Heart Huckabees` 實驗字體海報雖利用非對稱、方向斷裂與局部密集，仍透過部件關係取得節奏秩序；（3）Codrops `On-Scroll Text Repetition Animation`（2022-04-13）用錯層和留空製造局部文字回聲；（4）Codrops `Making Stagger Reveal Animations for Text`（2020-06-17）明確示範順序 reveal，而非每幀的全部文字成牆。只借鑑比例階層、負空間、transform/opacity 的技術；沿用 P2 現有唯一 scroll owner，不導入另一 GSAP 生命週期或新的管理系統。
+
+**第九輪視覺方案 [TRIAL]：** 七個原版面色 token 與七個進場節點不動，但左頁改成**一主、兩次、四幽靈**的七條字標帶，總計 **8 枚真正官方「西望」SVG**。中段主字標寬約 35cqi、最高光學權重，次級標誌約 18–23cqi，其他淡印 13–16cqi；透明度約 .26–.52，使主體在一秒內可辨，其餘形成層層印刷回聲，保留大量金色負空間。避免同尺幅 logo 列印／飽和度齊聲喧嘩，也不允許人工晨星射線。
+
+**封面右頁同時去噪：** 正式 masthead 是品牌識別，不和卷首主題爭第一視線，寬度退回約 78%；晨星及舊有原刻線變成天空的次主體（約 13.5cqi／低不透明）；`CITY OF LIGHT` 維持英文大於中文的展示級對照，但 `LIGHT` 從極端 1.85 倍縮為有空間的 1.40 倍；`VOL.00` 作側欄註腳、中文重黑體與羅馬書經文為支援層。原牆和石體不拆層、不生圖、不新增橫線。
+
+**真正驗收**：保持城體單一 DOM 升起與教會半屏接管；1648／768／390／320、41 Chromium 場景必須繼續監督。在 p=82 另斷言主字標的實際矩形尺度至少為任何回聲的 1.35 倍且實際透明度更高。獲獎參考並不等於取得獎項；人工目視封面閱讀動線及放大／倒捲仍是必要決策。分支 PR #1355 提交 `fe25363`（構圖），`1cb488f`（阻擋式等級測試）；設計狀態 **TRIAL / NOT APPROVED / 不合併**。
+
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
 The P2 split composition preserves its water engraving, rise and opening doors on the left and the warm-paper schedule on the right. **The previous requirement to keep seven gold right-aligned headings is withdrawn** by the 2026-10-17 editorial review; it must not be treated as a locked visual asset.
