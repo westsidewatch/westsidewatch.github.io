@@ -112,6 +112,30 @@ jobs:
                             keyboard:index.tabIndex===0 && index.getAttribute('role')==='region',
                             mobileScrollable:index.scrollHeight>index.clientHeight+4};
                         })(),
+                        reliefPrint:(()=>{
+                          const el=document.getElementById('dual-contents-relief');
+                          const index=document.querySelector('.dual-contents__index');
+                          const contents=document.querySelector('#dual-stone-contents');
+                          const marks=[...el.querySelectorAll('g.ws-relief-mark')];
+                          const source=[...document.querySelectorAll('#dual-letterfield g.ws-print-band')].slice(4);
+                          const residual=[...el.querySelectorAll('g.ws-relief-band')];
+                          const region=el.getBoundingClientRect();
+                          const maxItem=[...document.querySelectorAll('.dual-movement li')].at(-1)?.getBoundingClientRect();
+                          return {
+                            marks:marks.length,
+                            faces:el.querySelectorAll('use.ws-print-face').length,
+                            depths:el.querySelectorAll('use.ws-print-depth').length,
+                            registers:residual.length,
+                            sourcesEqual:residual.every((g,i)=>g.dataset.originalRegister===source[i]?.dataset.register),
+                            sameGeometry:residual.every((g,i)=>g.querySelector('g.ws-relief-mark')?.getAttribute('transform')===source[i]?.querySelector('g.ws-print-mark')?.getAttribute('transform')),
+                            noText:el.querySelectorAll('text,foreignObject').length===0,
+                            opacity:Number(getComputedStyle(el).opacity),
+                            clipStart:region.top+region.height*.58,
+                            indexBottom:index.getBoundingClientRect().bottom,
+                            lastArticleBottom:maxItem?.bottom||0,
+                            stoneOpacity:Number(getComputedStyle(contents).opacity),
+                          };
+                        })(),
                         svgPrint:{
                           marks:document.querySelectorAll('#dual-letterfield g.ws-print-mark').length,
                           faces:document.querySelectorAll('#dual-letterfield use.ws-print-face').length,
@@ -185,7 +209,12 @@ jobs:
                     if(!m.svgPrint.allOfficial||!m.svgPrint.noText||m.svgPrint.originalAsset!=='/images/westside-watch-xiwang-horizontal-motion.svg')errors.push('LEFT_FIELD_NOT_EXCLUSIVELY_ORIGINAL_SVG_XIWANG');
                     if(p===82&&(m.svgPrint.svgVisible<.8||m.svgPrint.revealOpacity.some(v=>v<.75)))errors.push('SEVEN_PRINT_REGISTERS_NOT_FULLY_VISIBLE');
                     if(p===44&&m.svgPrint.revealOpacity.every(v=>v>.5))errors.push('ANIMATION_STARTED_AS_STATIC_WALL');
-                    if(p===100&&m.svgPrint.svgVisible>.05)errors.push('SVG_PRINT_NOT_REPLACED_BY_CANONICAL_CONTENTS');
+                    if(p===100&&m.svgPrint.svgVisible>.05)errors.push('FULL_COVER_PRINT_STILL_OVER_CONTENTS');
+                    if(m.reliefPrint.marks!==36||m.reliefPrint.faces!==36||m.reliefPrint.depths!==108||m.reliefPrint.registers!==3||!m.reliefPrint.sourcesEqual||!m.reliefPrint.noText||!m.reliefPrint.sameGeometry)errors.push('CONTENTS_MUST_RETAIN_SAME_LOWER_VECTOR_LEAD_TYPE');
+                    if(p===82&&m.reliefPrint.opacity>.02)errors.push('CONTENTS_RELIEF_VISIBLE_TOO_EARLY');
+                    if(p===93&&(m.reliefPrint.opacity<.03||m.reliefPrint.opacity>=.48))errors.push('CONTENTS_RELIEF_NOT_TRANSFERRING_WITH_SCROLL');
+                    if(p===100&&(m.reliefPrint.opacity<.40||m.reliefPrint.opacity>.55))errors.push('CONTENTS_LOWER_SVG_RELIEF_NOT_RETAINED');
+                    if(p===100&&width>1100&&m.reliefPrint.lastArticleBottom>m.reliefPrint.clipStart+18)errors.push('ARTICLE_TITLES_COLLIDE_WITH_LOWER_LETTERPRESS');
                     if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.wallImg)errors.push('WALL_STONE_MUST_SHARE_ONE_CITY');
                     if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
