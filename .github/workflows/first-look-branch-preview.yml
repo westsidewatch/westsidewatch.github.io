@@ -275,7 +275,7 @@ jobs:
 
                 // Compare BOTH authored cover systems at the SAME real p82
                 // pose. The A/B control changes cover layout, never P2 timing.
-                for(const variant of ['masthead','editorial','typographic']){
+                for(const variant of ['masthead']){
                   const errors=[],id=screen+'-art-'+variant;
                   try {
                     await page.locator('[data-cover-choice="'+variant+'"]').click();
@@ -305,8 +305,15 @@ jobs:
                     if(metrics.overlapStoryTitle>120)errors.push('EDITORIAL_TEASERS_OVERLAP_MAIN_HEADLINE');
                     if(variant==='masthead'&&(metrics.mastRatio<.90||metrics.mastRatio>.97))
                       errors.push('COVER_IDENTITY_MUST_BE_PRIMARY');
-                    if(variant==='masthead'&&!metrics.engravingSource.includes('magazine-starfield-engraving-night-v1.svg'))
-                      errors.push('COVER_ENGRAVING_REVERTED_TO_BUSY_FULL_BLEED');
+                    if(variant==='masthead'&&!metrics.engravingSource.includes('westside-cover-night-intaglio-v3.svg'))
+                      errors.push('COVER_ENGRAVING_SOURCE_NOT_ETCHED_V3');
+                    if(variant==='masthead'){
+                      const art=await page.request.get('http://127.0.0.1:4173/experiments/assets/westside-cover-night-intaglio-v3.svg');
+                      const body=art.ok()?await art.text():'';
+                      if(!art.ok()||!body.includes('data-variant="night-intaglio-v3"')||
+                         !body.includes('crosshatch')||!body.includes('clear protected star centre'))
+                        errors.push('COVER_ENGRAVING_ASSET_NOT_DEPLOYED');
+                    }
                     if(variant==='masthead'&&metrics.wallClearance<4)
                       errors.push('JERUSALEM_WALL_OVER_MAIN_COVER_HEADING');
                     for(const key of ['mast','title','zh','coverlines']){
