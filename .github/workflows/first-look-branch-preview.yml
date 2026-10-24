@@ -291,11 +291,26 @@ jobs:
                       const engraving=cv.querySelector('.dual-cover__engraving');
                       const lines=cv.querySelector('.dual-cover__coverlines');
                       const c=part('coverlines'),title=part('en'),zh=part('zh'),wall=part('wall');
+                      const star=part('star'),city=part('city'),gate=part('gate');
+                      const paperEl=cv.querySelector('.dual-cover__paper'),wallEl=cv.querySelector('.dual-cover__wall'),cityEl=cv.querySelector('.dual-cover__city');
+                      const sloganEl=cv.querySelector('.dual-cover__tagline');
                       const intersection=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top));
                       return {variant:cv.querySelector('.dual-cover').dataset.coverVariant,view,mast:part('mast'),title,zh,coverlines:c,
                         overlapStoryTitle:intersection(c,title),mastLoaded:src.complete&&src.naturalWidth>0,
                         mastRatio:part('mast').width/view.width,
                         wallClearance:title.top-wall.bottom,
+                        starCentreError:Math.abs((star.left+star.right)/2-(view.left+view.right)/2),
+                        starScale:star.width/view.width,
+                        cityTopRatio:(city.top-view.top)/view.height,
+                        wallHeightRatio:wall.height/view.height,
+                        headlineRightColumn:title.left>=view.left+view.width*.5,
+                        stoneSource:getComputedStyle(cityEl).backgroundImage,
+                        wallSource:getComputedStyle(wallEl).backgroundImage,
+                        wallShadow:getComputedStyle(wallEl).filter,
+                        paperShadow:getComputedStyle(paperEl).boxShadow,
+                        wallSeam:getComputedStyle(cityEl,'::after').display,
+                        gateColour:getComputedStyle(cv.querySelector('.dual-cover__gate')).backgroundColor,
+                        sloganHidden:getComputedStyle(sloganEl).display==='none',
                         engravingSource:getComputedStyle(engraving).backgroundImage,
                         stories:lines.querySelectorAll('.dual-cover__coverline').length,
                         selected:[...document.querySelectorAll('[data-cover-choice]')].filter(x=>x.getAttribute('aria-pressed')==='true').length,
@@ -316,6 +331,18 @@ jobs:
                     }
                     if(variant==='masthead'&&metrics.wallClearance<4)
                       errors.push('JERUSALEM_WALL_OVER_MAIN_COVER_HEADING');
+                    if(variant==='masthead'&&(metrics.starCentreError>3||metrics.starScale<.23))
+                      errors.push('MORNING_STAR_NOT_CENTRAL_PRIMARY_IMAGE');
+                    if(variant==='masthead'&&(metrics.cityTopRatio<.49||metrics.cityTopRatio>.59||metrics.wallHeightRatio>.07))
+                      errors.push('JERUSALEM_CREST_TOO_LARGE_OR_LOW');
+                    if(variant==='masthead'&&(!metrics.headlineRightColumn||!metrics.sloganHidden))
+                      errors.push('LOWER_RIGHT_EDITORIAL_HEADLINE_NOT_CLEAR');
+                    if(variant==='masthead'&&(!metrics.stoneSource.includes('temple-stone-light.png')||
+                      !metrics.wallSource.includes('jerusalem-wall.png')||
+                      metrics.wallShadow!=='none'||metrics.paperShadow!=='none'||metrics.wallSeam!=='none'))
+                      errors.push('WALL_AND_TEMPLE_STONE_NOT_UNIFIED');
+                    if(variant==='masthead'&&metrics.gateColour!=='rgb(196, 156, 81)')
+                      errors.push('CENTRAL_GATE_NOT_GOLD');
                     for(const key of ['mast','title','zh','coverlines']){
                       const r=metrics[key],b=metrics.view;
                       if(r.left<b.left-8||r.right>b.right+10||r.top<b.top-8||r.bottom>b.bottom+10)errors.push('COVER_'+key.toUpperCase()+'_OUT_OF_BOUNDS');
