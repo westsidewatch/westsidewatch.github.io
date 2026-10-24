@@ -40,7 +40,7 @@ export function createCityFoundationRuntime({core,terrain,root,getCurrentPhase,g
   }
   const states={},withEvents=records.filter(r=>r.lifecycle.events.length);
   for(const record of withEvents){const state=lifecycleStateAtPosition({lifecycleEvents:record.lifecycle.events},{phases},position);states[state]=(states[state]||0)+1;}
-  domains.lifecycle={registeredObjects:withEvents.length,withoutDeclaredEvents:records.length-withEvents.length,states,scope:'existing-events-only-no-new-reuse-links'};
+  domains.lifecycle={registeredObjects:withEvents.length,withoutDeclaredEvents:records.length-withEvents.length,withoutDeclaredEventIds:records.filter(r=>!r.lifecycle.events.length).map(r=>r.id).sort(),states,scope:'existing-events-only-no-new-reuse-links'};
   return {...entry,active,position,ledgerObjects:records.length,domains,
    renderer:{status:active?'active':'not-inspected-inactive',visibleComponents:active?components:null,visibleBoundObjects:active?bound.size:null,boundComponents:active?boundComponents:null,unboundComponents:active?unbound:null,provisionalInheritedComponents:active?inherited:null,provisionalTraceableComponents:active?tracedInherited:null,displayAnnotationComponents:active?annotations:null,outOfPhaseBindingIds:active?[...outOfPhase].sort():[]},
    gapPolicy:'Visible unbound components and provisional retention are not certified city objects. Zero counts do not prove historical absence.'};

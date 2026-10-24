@@ -1,3 +1,4 @@
+import {publishHerodianGeneratedEvents} from './herodian-generated-events.js';
 import {allowsEvidence} from './evidence-visibility.js';
 import {ERA_FOOTPRINTS,addEraFabric} from './legacy-era-fabric.js';
 import {createLaterMorphologyLedger} from './later-morphology-ledger.js';
@@ -484,7 +485,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
           terrainRuntime,
         ),
       );
-      cityProjection = createCityProjection(cityCoreLayer, architecture.meshes);
+      const generatedEvents=publishHerodianGeneratedEvents(loaded.core,{registration:eraRegistrationReference,buildingIds:architecture.buildingIds,meshes:architecture.meshes});
+      cityCoreRuntime.generatedEvents=generatedEvents.summary;
+      cityProjection = createCityProjection(cityCoreLayer, architecture.meshes,{stateForObject:(id,phase)=>generatedEvents.stateFor(id,phase),stateForInfrastructure:true});
       cityCoreRuntime.projection = cityProjection;
       periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
       for(const phase of ['late-first-temple','persian-nehemiah']){const registration=compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin);periodRegistrations.set(phase,registration);bindPeriodSpatialCore(loaded.core,registration);}
@@ -625,6 +628,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
               coreVisible: cityCoreLayer.visible,
               fabricVisible: eraFabricLayer.visible,
               phase2Components: fabricMeshes.filter((mesh) => mesh.visible).length,
+              canonicalGeneratedEvents:cityCoreRuntime?.generatedEvents??null,
               sharedLedger:laterMorphologyBinding?.summary??{published:false},
               morphologyProgress:phase2Morphology?.progress??null,
               morphologyGrammar:phase2Morphology?.grammar??null,

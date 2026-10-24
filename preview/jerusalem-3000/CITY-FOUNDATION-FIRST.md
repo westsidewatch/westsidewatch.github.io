@@ -76,3 +76,7 @@ The 17 legacy display transitions now expose adjacent vs source phases, generato
 ## Evidence and annotation consistency (2026-10-24)
 
 Legacy inherited overlays now obey the common evidence policy as inferred content, including filter return and phase suppression. The 21 remaining early display components have explicit annotation roles and remain outside semantic city registration. Foundation counts disclose those annotations separately. See EVIDENCE-ANNOTATION-FOUNDATION.md. Historical geometry and whole-timeline acceptance remain incomplete.
+
+## Canonical generated event registration (2026-10-24)
+
+The Herodian generated batch now declares shared build/schematic ruin-or-transform/unknown-fate events and registers its eight provisional road IDs. Parent references are normalized; source-anchor events remain untouched. Finished meshes read shared event visibility. Foundation inspection lists remaining missing-event IDs rather than concealing gaps. See CANONICAL-GENERATED-EVENTS.md. Full foundation acceptance remains incomplete.

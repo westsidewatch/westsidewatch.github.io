@@ -463,6 +463,7 @@ try {
     if(phase<=3)assert.equal(foundation.renderer.displayAnnotationComponents,[1,1,9,10][phase]);
     if(phase<=3)assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'early houses must bind to shared identities');
     if(phase===7){assert.ok(foundation.domains.occupation.visibleBoundObjects>0);assert.equal(foundation.renderer.unboundComponents,0,'finished Hellenistic geometry must share canonical IDs');}
+    if([8,9].includes(phase)){assert.equal(foundation.renderer.unboundComponents,0,'all canonical roads and houses must bind to shared events');assert.ok(sample.render.urbanFabric.canonicalGeneratedEvents.buildings>0);}
     if([8,9].includes(phase))assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'canonical parcel bindings must be recognized by the common foundation interface');
     assert.equal(foundation.renderer.boundComponents+foundation.renderer.unboundComponents,foundation.renderer.visibleComponents);
 
