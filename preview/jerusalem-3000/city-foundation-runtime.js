@@ -22,13 +22,13 @@ export function createCityFoundationRuntime({core,terrain,root,getCurrentPhase,g
  function snapshot(phaseId=getCurrentPhase()){
   const entry=describe(phaseId),active=phaseId===getCurrentPhase(),records=core.phase(phaseId),position=active?getPosition():ids.indexOf(phaseId)+.999;
   const byId=new Map(records.map(r=>[r.id,r])),bound=new Set(),visibleBound=new Set(),outOfPhase=new Set();
-  let components=0,boundComponents=0,unbound=0,inherited=0;
+  let components=0,boundComponents=0,unbound=0,inherited=0,tracedInherited=0;
   if(active)root.traverse(mesh=>{
    if(!mesh.isMesh||!effectiveVisible(mesh))return;
    const meta=mesh.userData?.cityObject;
    if(!meta&&!mesh.userData?.phase2&&!mesh.userData?.evidenceObject&&!mesh.userData?.foundation)return;
    components++;
-   const provisional=inheritedComponent(mesh);if(provisional)inherited++;
+   const provisional=inheritedComponent(mesh);if(provisional){inherited++;if(mesh.userData.provisionalInheritance?.survivalVerified===false)tracedInherited++;}
    const id=cityObjectIdForMesh(mesh),record=id&&core.get(id);
    if(!record||provisional){unbound++;return;}
    boundComponents++;bound.add(record.id);if(byId.has(record.id))visibleBound.add(record.id);else outOfPhase.add(record.id);
@@ -42,7 +42,7 @@ export function createCityFoundationRuntime({core,terrain,root,getCurrentPhase,g
   for(const record of withEvents){const state=lifecycleStateAtPosition({lifecycleEvents:record.lifecycle.events},{phases},position);states[state]=(states[state]||0)+1;}
   domains.lifecycle={registeredObjects:withEvents.length,withoutDeclaredEvents:records.length-withEvents.length,states,scope:'existing-events-only-no-new-reuse-links'};
   return {...entry,active,position,ledgerObjects:records.length,domains,
-   renderer:{status:active?'active':'not-inspected-inactive',visibleComponents:active?components:null,visibleBoundObjects:active?bound.size:null,boundComponents:active?boundComponents:null,unboundComponents:active?unbound:null,provisionalInheritedComponents:active?inherited:null,outOfPhaseBindingIds:active?[...outOfPhase].sort():[]},
+   renderer:{status:active?'active':'not-inspected-inactive',visibleComponents:active?components:null,visibleBoundObjects:active?bound.size:null,boundComponents:active?boundComponents:null,unboundComponents:active?unbound:null,provisionalInheritedComponents:active?inherited:null,provisionalTraceableComponents:active?tracedInherited:null,outOfPhaseBindingIds:active?[...outOfPhase].sort():[]},
    gapPolicy:'Visible unbound components and provisional retention are not certified city objects. Zero counts do not prove historical absence.'};
  }
  return {describe,snapshot,index:()=>ids.map(describe)};

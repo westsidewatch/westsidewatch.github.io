@@ -68,3 +68,7 @@ Both later morphology generators now publish stable phase-scoped scaffold identi
 ## Remaining footprint batch registration (2026-10-24)
 
 Six later-era footprint batches now publish 234 inferred block masses through the shared publisher. Existing generator definitions are extracted for direct tests, preserving geometry. Static event/evidence visibility restores on filter return; provisional inheritance remains unbound. See LEGACY-FOOTPRINT-LEDGER-FOUNDATION.md. Full adjacent-era transformations and foundation acceptance remain incomplete.
+
+## Legacy inheritance transition audit (2026-10-24)
+
+The 17 legacy display transitions now expose adjacent vs source phases, generator gaps and unverified retention policy. Every displayed overlay component has a separate trace ID; it remains provisional/unbound, with no fabricated source-object lineage. Scene notes disclose the illustration. See INHERITANCE-TRANSITION-AUDIT.md. This audit does not replace shared object events or certify historical transitions.

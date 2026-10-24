@@ -447,6 +447,10 @@ try {
     assert.ok(foundation.renderer.visibleComponents>0);
     if([13,15].includes(phase)){assert.equal(sample.render.urbanFabric.sharedLedger.published,true);assert.ok(foundation.domains.occupation.visibleBoundObjects>0);assert.equal(sample.render.urbanFabric.sharedLedger.semanticBuildings,0);assert.equal(foundation.renderer.unboundComponents,0,'later morphology components must bind to shared IDs');}
     if([10,11,12,14,16,17].includes(phase)){assert.equal(sample.render.urbanFabric.sharedLedger.published,true);assert.ok(foundation.domains.occupation.visibleBoundObjects>0);assert.equal(sample.render.urbanFabric.sharedLedger.semanticBuildings,0);assert.equal(foundation.renderer.unboundComponents,foundation.renderer.provisionalInheritedComponents,'only explicitly provisional inheritance may remain unbound in later footprint eras');}
+    assert.equal(foundation.renderer.provisionalTraceableComponents,foundation.renderer.provisionalInheritedComponents,'every displayed provisional inherited component needs a separate trace');
+    const inheritanceAudit=await page.evaluate(()=>({index:window.__JERUSALEM3000__.inheritanceTransitionIndex,state:window.__JERUSALEM3000__.inheritanceState}));
+    assert.equal(inheritanceAudit.index.length,17);assert.ok(inheritanceAudit.index.every(t=>t.survivalVerified===false&&t.historicalFate==='unresolved'));
+    if(foundation.renderer.provisionalInheritedComponents>0){assert.equal(inheritanceAudit.state.audit.tracedComponents,foundation.renderer.provisionalInheritedComponents);assert.equal(inheritanceAudit.state.audit.survivalVerified,false);}
     if(phase<=3)assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'early houses must bind to shared identities');
     if(phase===7){assert.ok(foundation.domains.occupation.visibleBoundObjects>0);assert.equal(foundation.renderer.unboundComponents,0,'finished Hellenistic geometry must share canonical IDs');}
     if([8,9].includes(phase))assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'canonical parcel bindings must be recognized by the common foundation interface');
@@ -465,7 +469,7 @@ try {
     if(phase===10)assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.terrainAuthority),'canonical-dem-rendered-triangles');
     if (phase === 10) assert.equal(sample.render.visibleCoreMeshes, 0,
       'Aelia must not reuse standing Herodian architecture');
-    phaseReports.push({ value, elapsedMs: Date.now() - started, visible, foundation, ...sample });
+    phaseReports.push({ inheritanceAudit, value, elapsedMs: Date.now() - started, visible, foundation, ...sample });
     await page.screenshot({ path: `${output}/phase-${phase}.png`, fullPage: true });
   }
   await writeFile(`${output}/phase-report.json`, JSON.stringify({
