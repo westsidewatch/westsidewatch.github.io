@@ -33,7 +33,7 @@ try {
   const inactiveFoundation=await page.evaluate(()=>window.__JERUSALEM3000__.inspectCityFoundation('modern'));
   assert.equal(inactiveFoundation.renderer.visibleComponents,null,'inactive inspection must not generate a future city');
 
-  for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json','settlement/david-solomon.v1.json','urban/first-temple-persian.spatial.v1.json','urban/water-defense.registration.v1.json','urban/water-defense.local-plans.v1.json']) {
+  for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','lifecycle/herodian-30ce.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json','settlement/david-solomon.v1.json','urban/first-temple-persian.spatial.v1.json','urban/water-defense.registration.v1.json','urban/water-defense.local-plans.v1.json']) {
     assert.equal(dataRequests.get(`/preview/jerusalem-3000/data/${path}`),1,`one shared request for ${path}`);
   }
   assert.equal(
@@ -89,6 +89,9 @@ try {
     );
     assert.equal(state.render.visibleLegacyTemporalMeshes, 0);
     assert.equal(state.inheritance.active, false);
+    assert.equal(state.render.evidenceProjection.objects,6);
+    const fate=await page.evaluate(()=>window.__JERUSALEM3000__.temporalCityState.objects.find(o=>o.id==='j3k:object:inner-temple')?.state);assert.equal(fate,value<9?'build':'ruin');
+    assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.temporalCityState.objects.find(o=>o.id==='j3k:object:eastern-entry-unknown')?.state),'withheld');
     reports.push({ value, ...state });
     if ([8, 9.5, 9.9].includes(value))
       await page.screenshot({
@@ -112,6 +115,8 @@ try {
     reports[3].render.cityProjection.transformFingerprint,
     'destruction must change rendered geometry',
   );
+  assert.equal(new Set(reports.map(r=>r.render.evidenceProjection.identityFingerprint)).size,1);
+  assert.equal(reports[0].render.evidenceProjection.transformFingerprint,reports.at(-1).render.evidenceProjection.transformFingerprint);
   await page.getByRole('button', { name: '實證', exact: true }).click();
   await page.waitForFunction(
     () =>
@@ -434,6 +439,8 @@ try {
     assert.equal(foundation.phaseId,sample.time.phase);assert.equal(foundation.owner,sample.render.foundation.owner);
     assert.equal(foundation.terrain.sampling,'rendered-dem-triangles');assert.equal(foundation.terrain.verticalScale,1);
     assert.equal(foundation.foundationAccepted,false);assert.equal(Object.keys(foundation.domains).length,6);
+    assert.deepEqual(foundation.renderer.outOfPhaseBindingIds,[],'visible registered objects must have a matching phase index');
+    if(phase===10){const unknown=await page.evaluate(()=>window.__JERUSALEM3000__.inspectCityObject('j3k:object:inner-temple'));assert.ok(unknown.lifecycle.events.some(e=>e.phase==='aelia'&&e.state==='unresolved'));}
     assert.ok(foundation.renderer.visibleComponents>0);
     if([8,9].includes(phase))assert.ok(foundation.domains.occupation.visibleBoundObjects>0,'canonical parcel bindings must be recognized by the common foundation interface');
     assert.equal(foundation.renderer.boundComponents+foundation.renderer.unboundComponents,foundation.renderer.visibleComponents);

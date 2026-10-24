@@ -1,8 +1,8 @@
 {
   "schema": "j3k.foundation-plan.v1",
   "kind": "reviewed-engineering-inventory-not-runtime-or-historical-certification",
-  "reviewedAt": "2026-10-23",
-  "baselineCommit": "fa588872d",
+  "reviewedAt": "2026-10-24",
+  "baselineCommit": "d03b46cd8",
   "domains": [
     "districts",
     "routes",
@@ -23,7 +23,10 @@
     "persian-sanctuary.js",
     "city-foundation-runtime.js",
     "terrain-runtime.js",
-    "phase2-inheritance-runtime.js"
+    "phase2-inheritance-runtime.js",
+    "anchor-ledger-loader.js",
+    "temporal-city-core.js",
+    "temporal-city-core-adapter.js"
   ],
   "phases": [
     {
@@ -420,5 +423,6 @@
   ],
   "acceptanceRule": "All six domains per phase and every adjacent transition require accepted status with review evidence. Explicit withheld geometry can be accepted as a documented foundation decision; it is never historical certification.",
   "runtimeInterface": "city-foundation-runtime.js / F2-first-slice-not-full-object-publication",
-  "commonGround": "rendered-DEM-triangles-for-world-and-geographic-sampling"
+  "commonGround": "rendered-DEM-triangles-for-world-and-geographic-sampling",
+  "phaseRegistration": "shared-declared-bundles-and-atomic-event-phase-index / six Herodian source bindings aligned"
 }

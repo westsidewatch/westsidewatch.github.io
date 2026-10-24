@@ -1,3 +1,4 @@
+import {lifecycleStateAtPosition} from './construction-engine.js';
 import {createCityFoundationRuntime,foundationOwnerFor} from './city-foundation-runtime.js';
 import {createRoyalRelief} from './royal-relief.js';
 import {createTerrainPresentation} from './terrain-presentation.js';
@@ -510,7 +511,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         terrainGround: terrainRuntime.sampleElevation(anchor.lat, anchor.lon),
       };
     }
-    evidenceProjection = createCityProjection(historical, builder.meshes);
+    evidenceProjection = createCityProjection(historical, builder.meshes,{
+      stateForObject(id){const core=cityCoreRuntime?.core,record=core?.get(id);return record?.lifecycle.events.length?lifecycleStateAtPosition({lifecycleEvents:record.lifecycle.events},{phases:[...core.phases.values()]},timelinePosition):'unresolved';}
+    });
     historical.visible = false;
     const phaseSeed = Object.keys(ERA_FOOTPRINTS).map((id) => ({ id }));
     try {
@@ -668,6 +671,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             webgl: !renderer.getContext().isContextLost(),
             sceneChildren: scene.children.length,
             cityProjection: cityProjection?.diagnostics(),
+            evidenceProjection:evidenceProjection?.diagnostics(),
             sharedEra: sharedState,
             earliestSettlement: earliestSettlement?.diagnostics(),
             middleBronzeSettlement: middleBronzeSettlement?.diagnostics(),

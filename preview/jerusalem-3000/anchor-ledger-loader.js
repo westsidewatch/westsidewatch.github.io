@@ -6,6 +6,25 @@ import {compileRoyalSpatialLayout} from './royal-spatial-layout.js';
 export async function loadAnchorCityLedger(){
  const [packs,lifecycle]=await Promise.all([loadCityData('./data/anchor-era-packs.json'),loadCityData('./data/lifecycle/anchor-era.lifecycle.json')]);
  if(!Array.isArray(packs.packs)||!Array.isArray(lifecycle.objects))throw new Error('Invalid shared anchor ledger');
+ const lifecycleIds=new Set(lifecycle.objects.map(o=>o.id));if(lifecycleIds.size!==lifecycle.objects.length)throw new Error('Duplicate shared lifecycle ID');
+ // Resolve declared source bundles once for BOTH temporal integration and core.
+ for(const pack of packs.packs){
+  if(pack.objectPack){
+   const external=await loadCityData(`./data/${String(pack.objectPack).replace(/^\.\//,'')}`),objects=external.objects||external.features;
+   if(!Array.isArray(objects))throw new Error(`Invalid object pack ${pack.objectPack}`);
+   pack.objects=[...(pack.objects||[]),...objects.map(o=>o.properties?{...o.properties,...o,id:o.id||o.properties.id}:o)];
+  }
+  const ids=new Set();for(const object of pack.objects||[]){if(typeof object.id!=='string'||!object.id||ids.has(object.id))throw new Error(`Invalid/duplicate object ID in ${pack.phase}`);ids.add(object.id);}
+  if(pack.lifecyclePack){
+   const external=await loadCityData(`./data/${String(pack.lifecyclePack).replace(/^\.\//,'')}`);
+   if(!Array.isArray(external.objects))throw new Error(`Invalid lifecycle pack ${pack.lifecyclePack}`);
+   for(const object of external.objects){
+    if(!ids.has(object.id)||lifecycleIds.has(object.id)||!Array.isArray(object.lifecycleEvents))throw new Error(`Invalid/duplicate declared lifecycle ${object.id}`);
+    lifecycle.objects.push(object);lifecycleIds.add(object.id);
+   }
+  }
+ }
+
  for(const pack of packs.packs||[]){
   if(!pack.spatialObjectPack)continue;
   pack.objects ||= [];
