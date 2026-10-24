@@ -342,7 +342,7 @@ jobs:
                       !metrics.wallSource.includes('jerusalem-wall.png')||
                       metrics.wallShadow!=='none'||metrics.paperShadow!=='none'||metrics.wallSeam!=='none'))
                       errors.push('WALL_AND_TEMPLE_STONE_NOT_UNIFIED');
-                    if(variant==='masthead'&&(metrics.gateColour!=='rgb(196, 156, 81)'||metrics.gateCover<.95))
+                    if(variant==='masthead'&&(metrics.gateColour!=='rgb(196, 156, 81)'||metrics.gateCover<.95||metrics.gateCover>1.05))
                       errors.push('CENTRAL_GATE_NOT_GOLD');
                     for(const key of ['mast','title','zh','coverlines']){
                       const r=metrics[key],b=metrics.view;
