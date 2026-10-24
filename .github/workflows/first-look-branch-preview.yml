@@ -218,7 +218,8 @@ jobs:
                     if(p===82&&m.reliefPrint.opacity>.02)errors.push('CONTENTS_RELIEF_VISIBLE_TOO_EARLY');
                     if(p===93&&(m.reliefPrint.opacity<.03||m.reliefPrint.opacity>=.48))errors.push('CONTENTS_RELIEF_NOT_TRANSFERRING_WITH_SCROLL');
                     if(p===100&&(m.reliefPrint.opacity<.40||m.reliefPrint.opacity>.55))errors.push('CONTENTS_LOWER_SVG_RELIEF_NOT_RETAINED');
-                    if(p===100&&width>1100&&m.reliefPrint.lastArticleBottom>m.reliefPrint.clipStart+18)errors.push('ARTICLE_TITLES_COLLIDE_WITH_LOWER_LETTERPRESS');
+                    if(p===100&&m.reliefPrint.indexBottom>m.reliefPrint.clipStart+8)errors.push('CONTENTS_READING_ZONE_OVER_LOWER_PRINT');
+                    if(p===100&&width>1100&&m.reliefPrint.lastArticleBottom>m.reliefPrint.clipStart+8)errors.push('ARTICLE_TITLES_COLLIDE_WITH_LOWER_LETTERPRESS');
                     if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.wallImg)errors.push('WALL_STONE_MUST_SHARE_ONE_CITY');
                     if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
