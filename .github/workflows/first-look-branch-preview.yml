@@ -167,6 +167,7 @@ jobs:
                           const lightFont=parseFloat(getComputedStyle(light).fontSize)||0;
                           const chineseFont=parseFloat(getComputedStyle(chinese).fontSize)||0;
                           const rawLight=textBounds(light),v=textBounds(folio),rawZh=textBounds(chinese),page=cover.getBoundingClientRect();
+                          // The edition folio is now above the illustrated city, not forced to the right on phones.
                           // A Bodoni inked letter does not fill its line box:
                           // trim font-leading rather than treating empty ascender/
                           // descender space as an actual glyph collision.
@@ -177,9 +178,15 @@ jobs:
                             const commonY=Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top);
                             return commonX>2?Math.max(0,commonY):0;
                           };
+                          const stories=document.querySelector('.dual-cover__coverlines');
+                          const storyBox=stories?.getBoundingClientRect();
+                          const storyItems=[...document.querySelectorAll('.dual-cover__coverline')];
                           return {overlap:Math.max(intersect(x,v),intersect(v,z),intersect(x,z),
-                              window.innerWidth<=820 && v.left < x.right+8?999:0),
-                            overflow:Math.max(0,x.right-page.right)};
+                              storyBox?intersect(storyBox,x):999),
+                            overflow:Math.max(0,x.right-page.right),
+                            storyCount:storyItems.length,
+                            storiesInside:!!storyBox&&storyBox.left>=page.left-2&&storyBox.right<=page.right+2&&storyBox.bottom<=page.bottom+2,
+                            authenticCopy:storyItems.map(el=>el.textContent).some(v=>v.includes('一萬年的建城禮'))&&storyItems.some(el=>el.textContent.includes('城門口的人'))};
                         })(),
                         unifiedCity:(()=>{
                           const city=document.getElementById('dual-cover-city');
@@ -246,6 +253,7 @@ jobs:
                     if(p===68&&(m.phase!=='morning-star-rise'||m.lines!==7||m.starOpacity<.1||m.stoneVisible))errors.push('STAR_NOT_AFTER_XIWANG');
                     if(p===82&&(m.phase!=='cover-and-xiwang'||m.lines!==7||m.stoneVisible))errors.push('MISSING_COVER_XIWANG_HOLD');
                     if(p===82&&(m.coverTitleLayout.overlap>8||m.coverTitleLayout.overflow>8))errors.push('COVER_DISPLAY_TITLE_COLLISION');
+                    if(p===82&&(m.coverTitleLayout.storyCount!==2||!m.coverTitleLayout.storiesInside||!m.coverTitleLayout.authenticCopy))errors.push('COVER_EDITORIAL_TEASERS_MISSING_OR_OFF_PAGE');
                     if(p===82&&m.nightCaptionClearance < -3)errors.push('NIGHT_TAGLINE_CROSSES_CITY_WALL');
                     if(p===93&&(m.phase!=='stone-contents-reveal'||!m.stoneBg))errors.push('MISSING_ORIGINAL_STONE_REVEAL');
                     if(p===100&&(!m.stoneVisible||!m.stoneBg||m.lines!==7))errors.push('FINAL_STONE_CONTENTS_INCOMPLETE');
