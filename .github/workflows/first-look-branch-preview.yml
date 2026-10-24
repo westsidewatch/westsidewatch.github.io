@@ -290,11 +290,12 @@ jobs:
                       const src=cv.querySelector('.dual-cover__mast');
                       const engraving=cv.querySelector('.dual-cover__engraving');
                       const lines=cv.querySelector('.dual-cover__coverlines');
-                      const c=part('coverlines'),title=part('en'),zh=part('zh');
+                      const c=part('coverlines'),title=part('en'),zh=part('zh'),wall=part('wall');
                       const intersection=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top));
                       return {variant:cv.querySelector('.dual-cover').dataset.coverVariant,view,mast:part('mast'),title,zh,coverlines:c,
                         overlapStoryTitle:intersection(c,title),mastLoaded:src.complete&&src.naturalWidth>0,
                         mastRatio:part('mast').width/view.width,
+                        wallClearance:title.top-wall.bottom,
                         engravingSource:getComputedStyle(engraving).backgroundImage,
                         stories:lines.querySelectorAll('.dual-cover__coverline').length,
                         selected:[...document.querySelectorAll('[data-cover-choice]')].filter(x=>x.getAttribute('aria-pressed')==='true').length,
@@ -306,6 +307,8 @@ jobs:
                       errors.push('COVER_IDENTITY_MUST_BE_PRIMARY');
                     if(variant==='masthead'&&!metrics.engravingSource.includes('magazine-starfield-engraving-night-v1.svg'))
                       errors.push('COVER_ENGRAVING_REVERTED_TO_BUSY_FULL_BLEED');
+                    if(variant==='masthead'&&metrics.wallClearance<4)
+                      errors.push('JERUSALEM_WALL_OVER_MAIN_COVER_HEADING');
                     for(const key of ['mast','title','zh','coverlines']){
                       const r=metrics[key],b=metrics.view;
                       if(r.left<b.left-8||r.right>b.right+10||r.top<b.top-8||r.bottom>b.bottom+10)errors.push('COVER_'+key.toUpperCase()+'_OUT_OF_BOUNDS');
