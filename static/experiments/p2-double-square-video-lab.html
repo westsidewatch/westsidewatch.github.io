@@ -31,22 +31,27 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-tile{position:absolute;min-width:0;min-height:0;overflow:hidden;pointer-events:auto;isolation:isolate;box-shadow:none;container-type:size}
 .dual-tile--cover{background:radial-gradient(ellipse at 56% 22%,#29425b 0%,transparent 58%),var(--blue);color:var(--paper)}
 .dual-tile--contents{background:linear-gradient(152deg,#ddc98f 0%,#c9ad70 58%,#b49a68 100%);color:var(--ink)}
-/* Eleven official-svg pairs in seven editorial print lines.
-   Negative gold space and true wordmark outlines form the art direction. */
-.dual-letterfield{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:1}
+/* Design OS: LEFT dense, RIGHT spacious. Decorative Chinese printing only
+   from approved Vol.00 article titles, underneath the original SVG marks. */
+.dual-typefield{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;user-select:none;contain:layout paint}
+.dual-typefield__line{position:absolute;left:-1%;width:102%;height:5.2%;display:grid;grid-template-columns:repeat(21,minmax(0,1fr));align-items:center;justify-items:center;white-space:nowrap;transform-origin:50% 50%;will-change:opacity,transform}
+.dual-typefield__glyph{display:block;width:100%;text-align:center;color:color-mix(in srgb,var(--glyph-color,#203850) var(--glyph-strength,72%),#1c3047);font:var(--glyph-weight,550) clamp(13px,3.85cqi,33px)/1 var(--ws-type-display-zh,sans-serif);opacity:var(--glyph-alpha,.75);font-synthesis:none;transform:scale(var(--glyph-scale,1))}
+.dual-letterfield{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;opacity:1}
+.dual-letterfield__row:nth-child(4)::before{content:'';position:absolute;inset:-55% -28%;z-index:-1;background:radial-gradient(ellipse,rgba(204,170,104,.95),rgba(204,170,104,.83) 45%,rgba(204,170,104,.33) 69%,transparent 85%);pointer-events:none}
+.dual-letterfield__row:nth-child(4) .dual-letterfield__glyph{background:#1e374a}
 .dual-letterfield__row{position:absolute;height:12%;display:flex;align-items:center;gap:clamp(7px,2.2cqi,21px);transform-origin:35% 50%;will-change:transform,opacity}
 .dual-letterfield__glyph{display:block;flex:none;width:var(--mark-width,18cqi);aspect-ratio:432/218;background:color-mix(in srgb,var(--row-ink,#5b8fa8) 62%,#26384a 38%);-webkit-mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat;mask:url('/images/westside-watch-xiwang-horizontal-motion.svg') center/contain no-repeat}
 .dual-letterfield__glyph:nth-child(2){opacity:.44}
 .dual-letterfield__glyph:nth-child(3){display:none}
 .dual-letterfield__row:nth-child(4){z-index:2}
-.dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:2;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
+.dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
 /* This is the exact inherited temple-stone + overlay from the existing P2
    .mag3__contents-page. Do not synthesize or substitute another texture. */
 /* Cover — an editorial night→dawn THRESHOLD, not a stack of labels.
    Only the existing official masthead, star v5.3, skyline and temple stone
    are consumed. The gold skyline is the moving seam of this composition. */
 .dual-cover{position:relative;isolation:isolate;height:100%;width:100%;overflow:hidden;background:radial-gradient(ellipse at 74% 51%,#284762 0%,transparent 42%),linear-gradient(180deg,#10263f,#18334e 72%,#152b43);color:#e9c37b}
-.dual-cover__engraving{position:absolute;z-index:0;inset:6% -8% 36%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') 70% 45%/auto 158% no-repeat;mix-blend-mode:screen;opacity:.32;mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 84%,transparent 100%);pointer-events:none}
+.dual-cover__engraving{position:absolute;z-index:0;inset:6% -8% 36%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') 70% 45%/auto 158% no-repeat;mix-blend-mode:screen;opacity:.20;mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 84%,transparent 100%);pointer-events:none}
 .dual-cover__radiance{position:absolute;z-index:1;inset:0;background:radial-gradient(ellipse 42% 27% at 72% 42%,rgba(233,174,69,.24),rgba(227,183,95,.09) 43%,transparent 94%);opacity:0;pointer-events:none}
 /* One physical Jerusalem city: original crest and original stone move together. */
 .dual-cover__city{position:absolute;z-index:2;top:44.5%;left:0;right:0;bottom:0;transform:translate3d(0,115%,0);opacity:0;will-change:transform,opacity;isolation:isolate}
@@ -219,7 +224,8 @@ html.dual-embed .dual-film__credit{display:none}
     </div>
   </article>
   <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="黎明金先演化七色西望字陣，最後替換為聖殿石紋 Contents">
-   <div class="dual-letterfield" id="dual-letterfield" aria-hidden="true"></div>
+   <div class="dual-typefield" id="dual-typefield" aria-hidden="true"></div>
+    <div class="dual-letterfield" id="dual-letterfield" aria-hidden="true"></div>
    <div class="dual-contents" id="dual-stone-contents" aria-hidden="true" inert>
     <header class="dual-contents__head"><h2 id="dual-contents-title" lang="en">Contents.</h2><span>目錄</span></header>
     <p class="dual-contents__deck">四樂章 · 十二欄目 · 三段視聽間奏</p>
@@ -255,7 +261,7 @@ html.dual-embed .dual-film__credit{display:none}
  const stage=document.getElementById('dual-stage');
  const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
  const film=document.getElementById('dual-film'),frame=document.getElementById('dual-film-frame'),star=document.getElementById('dual-star');
- const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents');
+ const letters=document.getElementById('dual-letterfield'),typefield=document.getElementById('dual-typefield'),contents=document.getElementById('dual-stone-contents');
  const radiance=document.getElementById('dual-radiance'),city=document.getElementById('dual-cover-city');
  const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
  const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol');
@@ -270,9 +276,9 @@ html.dual-embed .dual-film__credit{display:none}
   'var(--ws-harvest,#b8944a)','var(--ws-crimson,#a14d57)',
   'var(--ws-daylight-mauve,oklch(67% .075 330))'];
  // Seven diagonal editorial registers / seven official SVG pairs. One lead, two echoes, four ghost impressions.
- const plateLeft=[1,12,20,29,41,54,67],plateTop=[7,20,32,45,62,74,87];
- const plateWidths=[12,16,23,35,19,15,11],markCounts=[1,1,1,1,1,1,1];
- const plateAngles=[-11,-10,-9,-8,-9,-10,-11],plateOpacity=[.24,.34,.50,1,.34,.25,.19];
+ const plateLeft=[3,29,14,27,47,30,54],plateTop=[6,18,31,45,60,73,87];
+ const plateWidths=[12,16,21,35,19,15,11],markCounts=[1,1,1,1,1,1,1];
+ const plateAngles=[-10,-9,-8,-8,-9,-10,-11],plateOpacity=[.24,.32,.44,1,.35,.27,.22];
  const rows=palette.map((color,i)=>{
   const line=document.createElement('div');line.className='dual-letterfield__row';
   line.dataset.line=String(i+1);line.style.top=plateTop[i]+'%';
@@ -285,6 +291,29 @@ html.dual-embed .dual-film__credit{display:none}
    mark.setAttribute('aria-hidden','true');line.appendChild(mark);
   }
   letters.appendChild(line);return line;
+ });
+ // Derive the decorative print from real approved Contents title strings,
+ // not newly invented text. A hidden pattern is never a second article index.
+ const editorialText=[...document.querySelectorAll('.dual-entry__column,.dual-work')]
+  .map(el=>el.childNodes[0]?.textContent||el.textContent).join('')
+  .replace(/[〈〉《》「」｜—：·，。、\s\dA-Za-z]/g,'');
+ const glyphSource=Array.from(editorialText+'西望守望黎明黑夜白晝城門光明');
+ const fieldLines=Array.from({length:21},(_,r)=>{
+  const line=document.createElement('div');line.className='dual-typefield__line';
+  line.style.top=(r*100/21).toFixed(3)+'%';
+  line.dataset.printRegister=String(Math.floor(r/3)+1);
+  for(let c=0;c<21;c++){
+   const hash=(r*37+c*19+r*c*7+11)>>>0;
+   const glyph=document.createElement('span');glyph.className='dual-typefield__glyph';
+   glyph.textContent=glyphSource[(hash*13+r*5+c*3)%glyphSource.length];
+   glyph.style.setProperty('--glyph-color',palette[(r+c+hash)%7]);
+   glyph.style.setProperty('--glyph-strength',(48+(hash%39))+'%');
+   glyph.style.setProperty('--glyph-alpha',(0.48+(hash%5)*.10).toFixed(2));
+   glyph.style.setProperty('--glyph-weight',hash%12===0?'900':hash%3===0?'720':'560');
+   glyph.style.setProperty('--glyph-scale',(hash%13===0?1.36:hash%6===0?1.14:0.92+(hash%5)*.035).toFixed(3));
+   line.appendChild(glyph);
+  }
+  typefield.appendChild(line);return line;
  });
  let progress=1,coverLeft=false;
  const pose=(el,x,y,w,h)=>{
@@ -326,6 +355,13 @@ html.dual-embed .dual-film__credit{display:none}
   stage.dataset.dawnReveal=dawn.toFixed(4);
   const lettersFade=1-ease((progress-.855)/.115);
   letters.style.opacity=String(lettersFade);
+  typefield.style.opacity=String(lettersFade);
+  fieldLines.forEach((line,r)=>{
+   const register=Math.floor(r/3);
+   const entered=reduce?(progress>=.59?1:0):ease((progress-(.442+register*.016+r%3*.004))/.044);
+   line.style.opacity=String(entered);
+   line.style.transform='translate3d('+((1-entered)*(register%2?-13:12)).toFixed(2)+'px,0,0)';
+  });
    rows.forEach((row,i)=>{
     const entered=reduce?(progress>=.58?1:0):ease((progress-(.453+i*.015))/.046);
     row.dataset.entered=String(entered);
