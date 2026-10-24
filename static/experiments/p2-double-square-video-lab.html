@@ -245,14 +245,14 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover[data-cover-variant="masthead"] .dual-cover__wall::before{
  content:"";position:absolute;inset:0;pointer-events:none;
  background:url('/images/jerusalem-wall.png') center bottom/auto 100% repeat-x;
- filter:grayscale(1) brightness(1.13);opacity:.16;
- -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 62%,transparent 98%);
- mask-image:linear-gradient(to bottom,#000 0%,#000 62%,transparent 98%)
+ filter:none;opacity:.32;mix-blend-mode:multiply;
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 52%,transparent 88%);
+ mask-image:linear-gradient(to bottom,#000 0%,#000 52%,transparent 88%)
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__gate{
- position:absolute;z-index:4;left:50%;top:45%;transform:translateX(-50%);
- width:clamp(5px,.75cqi,9px);height:55%;
- border-radius:50% 50% 0 0 / 35% 35% 0 0;
+ position:absolute;z-index:4;left:50%;top:64%;transform:translateX(-50%);
+ width:clamp(5px,.72cqi,8px);height:34%;
+ border-radius:48% 48% 0 0 / 40% 40% 0 0;
  background:#c49c51;box-shadow:none;pointer-events:none
 }
 /* The star's entire bounding box stays BELOW the architectural transition. */
