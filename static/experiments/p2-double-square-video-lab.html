@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(new URLSearchParams(location.search).get("embed")==="1")document.documentElement.classList.add("dual-embed")</script>
+<title>Westside P2 · Cover → Seven-color 西望 → Morning Star → Temple-stone Contents</title>
+<meta name="description" content="原有教會活水動效連續銜接雜誌：封面先進、七色斜向西望逐行滾入、晨星升起、西望與封面停駐，最後原版聖殿石紋 Contents 接替。">
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:#101923;color:#f5efe4;font-family:var(--ws-type-reading-zh, sans-serif)}
+button,a{font:inherit}button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c277;outline-offset:3px}
+.dual-ui{padding:11px clamp(16px,3vw,45px);background:#101923;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;position:relative;z-index:20}
+.dual-ui__name{font:400 clamp(11px,.95vw,14px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.13em}
+.dual-ui__controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.dual-ui__controls button{padding:8px 12px;background:transparent;color:inherit;border:1px solid #7c8996;font:400 12px/1.35 var(--ws-type-reading-zh,sans-serif)}
+.dual-ui__controls button[aria-pressed=true]{background:#f1e9d9;color:#17283b;border-color:#f1e9d9}
+.dual-ui a{font:400 12px/1.5 var(--ws-type-display-en-sc,Georgia,serif);color:inherit;text-underline-offset:4px}
+.dual-ui__range{display:flex;gap:11px;align-items:center;min-width:150px;font:400 12px/1.4 var(--ws-type-reading-zh,sans-serif)}
+.dual-ui__range input{width:clamp(100px,14vw,230px);accent-color:#d2b56f}
+.dual-ui__range output{min-width:35px;text-align:end;font:400 13px/1.5 var(--ws-type-display-en,Georgia,serif)}
+.dual-stage{--blue:#182f49;--gold:#c6a664;--ink:#253548;--paper:#f4ede0;position:relative;width:100%;height:calc(100svh - 64px);min-height:750px;isolation:isolate;overflow:hidden;background:#172436}
+.dual-film{position:absolute;inset:0;overflow:hidden;opacity:0;pointer-events:none;transform:scale(1.02);background:url('/images/home-opening-engraving.jpg') center/cover no-repeat}
+.dual-film iframe{position:absolute;width:100%;height:100%;inset:0;border:0;pointer-events:none}
+.dual-film::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(8,24,44,.60),rgba(9,30,49,.33) 50%,rgba(10,26,42,.62));pointer-events:none}
+.dual-film__credit{position:absolute;bottom:14px;left:15px;right:15px;z-index:4;color:#f2eee2;text-align:center;font:400 12px/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.07em;opacity:0;pointer-events:none}
+.dual-panels{position:absolute;inset:0;pointer-events:none}
+.dual-tile{position:absolute;min-width:0;min-height:0;overflow:hidden;pointer-events:auto;isolation:isolate;box-shadow:none;container-type:size}
+.dual-tile--cover{background:radial-gradient(ellipse at 56% 22%,#29425b 0%,transparent 58%),var(--blue);color:var(--paper)}
+.dual-tile--contents{background:linear-gradient(152deg,#ddc98f 0%,#c9ad70 58%,#b49a68 100%);color:var(--ink)}
+/* All lettering is official SVG「西望」; seven native-SVG bands form
+   one compact extruded letterpress field under the same scroll authority. */
+.dual-letterfield{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:hidden;pointer-events:none;will-change:opacity}
+.dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
+/* Original Westside letterpress continues behind the lower Contents folio. */
+.dual-contents__relief{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;opacity:0;clip-path:inset(58% 0 0 0);-webkit-mask-image:linear-gradient(to bottom,transparent 53%,#000 68%,#000 96%);mask-image:linear-gradient(to bottom,transparent 53%,#000 68%,#000 96%);filter:saturate(.72);will-change:opacity}
+.dual-contents__head,.dual-contents__deck,.dual-contents__index,.dual-contents__foot{position:relative;z-index:2}
+.dual-contents__index{background:linear-gradient(180deg,rgba(249,246,239,.99),rgba(249,246,239,.92) 85%,rgba(249,246,239,.82));}
+.dual-contents__relief-folio{position:absolute;z-index:1;left:7%;bottom:11%;color:#384956;font:400 clamp(8px,1.2cqi,11px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.14em;opacity:0;pointer-events:none}
+/* This is the exact inherited temple-stone + overlay from the existing P2
+   .mag3__contents-page. Do not synthesize or substitute another texture. */
+/* Cover — an editorial night→dawn THRESHOLD, not a stack of labels.
+   Only the existing official masthead, star v5.3, skyline and temple stone
+   are consumed. The gold skyline is the moving seam of this composition. */
+.dual-cover{position:relative;isolation:isolate;height:100%;width:100%;overflow:hidden;background:radial-gradient(ellipse at 69% 41%,rgba(45,80,108,.72),transparent 53%),linear-gradient(170deg,#10253c,#1d3953 65%,#172b41);color:#e9c37b}
+.dual-cover__engraving{position:absolute;z-index:0;inset:16% -13% 13%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') 62% 42%/auto 121% no-repeat;mix-blend-mode:screen;opacity:.48;mask-image:linear-gradient(180deg,transparent,#000 12%,#000 78%,transparent);pointer-events:none}
+.dual-cover__radiance{position:absolute;z-index:1;inset:0;background:radial-gradient(ellipse 34% 28% at 70% 39%,rgba(233,174,69,.21),rgba(227,183,95,.05) 58%,transparent 95%);opacity:0;pointer-events:none}
+/* One physical Jerusalem city: original crest and original stone move together. */
+.dual-cover__city{position:absolute;z-index:2;top:66%;left:0;right:0;bottom:0;transform:translate3d(0,115%,0);opacity:0;will-change:transform,opacity;isolation:isolate}
+.dual-cover__paper{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(143,96,48,.31),rgba(188,145,92,.16) 10%,rgba(219,188,137,.07) 38%,rgba(243,226,196,.06) 100%),url('/images/temple-stone-light.png') center top/cover no-repeat;background-blend-mode:multiply;box-shadow:inset 0 25px 30px rgba(91,60,32,.29),inset 0 1px 0 rgba(89,65,36,.38);pointer-events:none}
+.dual-cover__city::after{content:'';position:absolute;z-index:1;left:0;right:0;top:0;height:clamp(40px,8cqi,75px);background:linear-gradient(180deg,rgba(79,52,32,.30),rgba(134,91,47,.09) 52%,transparent);pointer-events:none}
+.dual-cover__mast{position:absolute;z-index:5;top:3.5%;left:7%;width:80%;height:23%;max-width:80%;max-height:23%;object-fit:contain;object-position:left top;filter:brightness(0) saturate(100%) invert(78%) sepia(34%) saturate(518%) hue-rotate(350deg) brightness(103%) contrast(89%)}
+.dual-cover__series{display:none}
+.dual-cover__coverlines{position:absolute;z-index:5;left:8%;top:41%;width:46%;display:grid;gap:clamp(10px,1.8cqi,19px);opacity:0;pointer-events:none}
+.dual-cover__coverline{margin:0;color:#f0e4cb;font:500 clamp(11px,1.75cqi,16px)/1.22 var(--ws-type-reading-zh,sans-serif);text-wrap:balance}
+.dual-cover__coverline small{display:block;margin-bottom:4px;font:400 clamp(9px,1.0cqi,11px)/1.15 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.17em;color:#c7ab7c}
+.dual-cover__tagline{position:absolute;z-index:5;top:31%;left:8%;right:auto;display:block;margin:0;font:italic 400 clamp(12px,1.8cqi,18px)/1.18 var(--ws-type-display-en,Georgia,serif);text-align:left;white-space:nowrap;color:#edd19a}
+.dual-cover__tagline::before,.dual-cover__tagline::after{content:none;display:none}
+.dual-cover__star{position:absolute;z-index:3;left:72%;top:32%;width:clamp(88px,21cqi,168px);aspect-ratio:1;transform:translate(-50%,95%);opacity:0;overflow:hidden;pointer-events:none}
+.dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
+.dual-cover__star-fallback{position:absolute;z-index:1;inset:0;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:.25;pointer-events:none}
+.dual-cover__wall{position:absolute;z-index:2;top:calc(0px - clamp(64px,10.5cqi,105px));left:0;right:0;height:clamp(88px,15cqi,148px);background:url('/images/jerusalem-wall.png') center bottom/auto 100% repeat-x;pointer-events:none;filter:drop-shadow(0 9px 6px rgba(88,61,36,.35))}
+.dual-cover__en{position:absolute;z-index:5;top:70%;left:8%;right:7%;margin:0;font:400 clamp(36px,7.7cqi,74px)/.85 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.057em;color:#22394f;opacity:0;text-shadow:0 1px 0 rgba(244,228,199,.18)}
+.dual-cover__en span{display:block;white-space:nowrap}
+.dual-cover__en span:last-child{margin-left:0;font-size:1.31em;line-height:.91;letter-spacing:-.069em}
+.dual-cover__en em{font:italic 400 .57em/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.035em;vertical-align:.06em}
+.dual-cover__vol{position:absolute;z-index:5;top:26%;left:8%;right:auto;display:block;margin:0;color:#e0c79d;font:400 clamp(10px,1.4cqi,13px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.18em;opacity:0}
+.dual-cover__vol::before{display:none}
+.dual-cover__zh{position:absolute;z-index:5;top:89%;left:8%;right:7%;margin:0;text-align:left;font:600 clamp(17px,3.4cqi,31px)/1.13 var(--ws-type-display-zh,sans-serif);letter-spacing:-.025em;color:#233a4d;font-synthesis:none;opacity:0}
+.dual-cover__zh span{display:inline;margin:0;white-space:nowrap}
+.dual-cover__folio{position:absolute;z-index:5;left:8%;right:8%;bottom:2.4%;padding-top:clamp(4px,.65cqi,8px);border-top:1px solid rgba(93,72,50,.35);font:400 clamp(9px,1.05cqi,12px)/1.35 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;text-align:right;color:#69563c;opacity:0}
+.dual-cover__radiance,.dual-cover__zh,.dual-cover__folio{will-change:opacity}
+.dual-contents{position:relative;display:flex;flex-direction:column;height:100%;width:100%;padding:clamp(18px,2.8vmin,32px) clamp(19px,3.2vmin,40px);overflow:hidden}
+.dual-contents__head{flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:9px;border-bottom:1px solid rgba(38,50,59,.58);padding-bottom:clamp(8px,1vh,14px)}
+.dual-contents__head h2{font:400 clamp(44px,4.9vw,63px)/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.065em;margin:0}
+.dual-contents__head span{font:400 clamp(11px,.95vw,17px)/1.5 var(--ws-type-reading-zh,sans-serif)}
+.dual-contents__deck{font:400 clamp(11px,.9vw,16px)/1.4 var(--ws-type-reading-zh,sans-serif);margin:5px 0 10px;flex:none}
+.dual-contents__index{min-height:0;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-rows:repeat(2,max-content);gap:clamp(9px,1.25cqi,15px) clamp(18px,2.7cqi,34px);align-content:start;flex:0 1 auto;max-height:60%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 4px 10px 0}
+.dual-movement{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:visible}
+.dual-movement h3{display:flex;align-items:baseline;gap:8px;margin:0 0 clamp(7px,1.2cqi,12px);border-top:1px solid rgba(35,49,67,.42);padding-top:clamp(7px,1.1cqi,11px);font:400 clamp(23px,3.65cqi,32px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.045em}
+.dual-movement h3 em{font:italic 400 .48em/1 var(--ws-type-display-en,Georgia,serif);color:#5a4932}
+.dual-movement ol{margin:0;padding:0;list-style:none;display:grid;gap:clamp(5px,.7cqi,8px)}
+.dual-movement li{display:grid;grid-template-columns:clamp(22px,3.5cqi,28px) minmax(0,1fr);gap:6px;align-items:start;font:400 clamp(16px,2.65cqi,21px)/1.22 var(--ws-type-display-zh,sans-serif)}
+.dual-movement li b{font:400 clamp(11px,1.65cqi,14px)/1.3 var(--ws-type-display-en,Georgia,serif);color:#544c3f}
+.dual-movement li small{display:block;margin-top:2px;font:italic 400 clamp(9px,.95cqi,11px)/1.18 var(--ws-type-display-en,Georgia,serif)}
+.dual-entry__text{min-width:0;display:block}
+.dual-entry__column{display:block;font-weight:600}
+.dual-work{display:block;font:400 clamp(13px,1.95cqi,16px)/1.31 var(--ws-type-reading-zh,sans-serif);margin-top:3px;color:#38434b;overflow-wrap:anywhere;word-break:normal}
+.dual-work+.dual-work{margin-top:2px}
+.dual-work--people{letter-spacing:.01em}
+.dual-movement__interlude{margin:auto 0 0;padding-top:clamp(6px,1cqi,11px);font:400 clamp(10px,1.3cqi,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
+.dual-contents__foot{margin-top:auto;padding-top:6px;border-top:1px solid rgba(35,49,67,.48);display:flex;gap:12px;align-items:center;justify-content:space-between;font:400 clamp(10px,.81vw,13px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
+/* True printed-paper lower folio / desktop Contents first 58% reading layer.
+   Four movements occupy four editorial columns, protecting all twelve desk
+   names and the known article titles from the retained lead type below. */
+@media(min-width:1101px){
+ .dual-contents__index{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:max-content;column-gap:clamp(10px,1.7cqi,17px);row-gap:0;flex:0 0 auto;height:36%;max-height:36%;overflow-y:auto;align-content:start;padding:1px 2px 3px}
+ .dual-movement h3{font-size:clamp(18px,3.0cqi,24px);padding-top:6px;margin-bottom:6px;gap:5px}
+ .dual-movement h3 em{font-size:.45em}
+ .dual-movement ol{gap:4px}
+ .dual-movement li{font-size:clamp(12px,1.9cqi,15px);line-height:1.16;grid-template-columns:19px minmax(0,1fr);gap:3px}
+ .dual-movement li b{font-size:10px;line-height:1.18}
+ .dual-movement li small{font-size:8px;margin-top:1px;line-height:1.12}
+ .dual-work{font-size:clamp(10px,1.25cqi,12px);line-height:1.15;margin-top:2px}
+ .dual-work+.dual-work{margin-top:2px}
+ .dual-movement__interlude{margin-top:4px;padding-top:3px;font-size:8px}
+}
+.dual-contents__foot{position:relative;z-index:3;background:rgba(248,244,236,.94);padding:6px 4px 2px;border-top-color:rgba(35,49,67,.32)}
+
+.dual-contents__foot a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;pointer-events:auto}
+.dual-stage[data-phase=final] .dual-tile{box-shadow:0 17px 57px rgba(0,0,0,.16)}
+.dual-stage[data-phase=initial] .dual-film{visibility:hidden}
+.dual-overview{max-width:1120px;margin:0 auto;padding:15px clamp(15px,3vw,43px) 25px;font:400 14px/1.8 var(--ws-type-reading-zh,sans-serif);color:#dce0e4}
+.dual-overview strong{color:#e5d0a8}
+.dual-overview p{margin:0 0 11px}
+.dual-overview summary{cursor:pointer;list-style:none;font:400 11px/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.12em;color:#c3ae86}
+.dual-overview summary::before{content:'+';padding-right:12px}
+.dual-overview[open] summary::before{content:'−'}
+.dual-overview__detail{padding-top:15px}
+@media(max-width:1000px){
+.dual-cover__mast{width:80%;max-width:80%;height:23%;max-height:23%}
+.dual-cover__en{font-size:clamp(32px,7.7cqi,76px)}
+.dual-cover__zh{font-size:clamp(16px,3.4cqi,31px)}
+.dual-contents__head h2{font-size:clamp(45px,5vw,67px)}
+.dual-contents__deck{font-size:12px}
+.dual-contents__index{gap:14px 11px;grid-template-rows:minmax(max-content,1.25fr) minmax(max-content,.75fr)}
+.dual-movement h3{font-size:24px}
+.dual-movement li{font-size:14px}
+.dual-movement li small{font-size:11px}
+}
+/* Native browser zoom/medium-width safety: Contents may scroll within its
+   paper zone, but cannot extend over the lower original SVG letterpress. */
+@media(min-width:821px) and (max-width:1100px){
+ .dual-contents__index{max-height:36%;flex:0 1 auto;overflow-y:auto;background:rgba(249,246,239,.96)}
+ .dual-contents__foot span::after{content:' · SCROLL ↓';color:#765b37;font-size:9px}
+}
+@media(max-width:820px){
+.dual-cover__coverlines{top:40%;left:8%;width:47%;gap:clamp(5px,1.1cqi,9px)}
+.dual-cover__coverline{font-size:clamp(9px,2.3cqi,12px)}
+.dual-cover__coverline small{font-size:clamp(8px,1.6cqi,10px)}
+.dual-ui{gap:11px}.dual-ui__name{width:100%}.dual-ui__controls{gap:6px}
+.dual-ui__range{width:100%;min-width:0}.dual-ui__range input{flex:1}
+.dual-stage{min-height:calc(100svh - 135px);height:calc(100svh - 135px)}
+.dual-tile--cover .dual-cover,.dual-tile--contents .dual-contents{padding:12px 14px}
+.dual-cover__mast{left:7%;top:3.5%;width:80%;max-width:80%;height:25%;max-height:25%}
+.dual-cover__city{top:66%}
+.dual-cover__series{left:7%;top:32%;font-size:clamp(7px,1.7cqi,10px)}
+.dual-cover__tagline{top:31%;left:8%;right:auto;font-size:clamp(10px,2.3cqi,15px)}
+.dual-cover__star{left:72%;top:32%;width:clamp(57px,20cqi,100px)}
+.dual-cover__wall{top:calc(0px - clamp(35px,6cqi,60px));height:clamp(78px,13cqi,112px)}
+.dual-cover__en{left:8%;right:7%;top:70%;font-size:clamp(25px,7.5cqi,39px)}
+.dual-cover__en span:last-child{margin-left:3%;font-size:1.39em}
+.dual-cover__vol{top:26%;left:8%;right:auto;font-size:clamp(9px,1.9cqi,11px)}
+.dual-cover__vol::before{display:none}
+.dual-cover__zh{left:8%;right:7%;top:87%;font-size:clamp(15px,4.1cqi,23px)}
+.dual-cover__zh span{display:inline;margin:0}
+.dual-cover__folio{display:none}
+.dual-cover__folio{bottom:6%;font-size:clamp(8px,1.35cqi,11px)}
+.dual-contents__head{padding-bottom:7px}
+.dual-contents__head h2{font-size:clamp(37px,11vw,52px)}
+.dual-contents__head span{font-size:11px}
+.dual-contents__deck{font-size:10px;margin:5px 0 9px}
+.dual-contents__index{grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(4,max-content);max-height:34%;gap:14px;overflow-y:auto;scrollbar-width:thin;align-content:start;background:rgba(249,246,239,.96)}
+.dual-contents__relief{clip-path:inset(60% 0 0 0);-webkit-mask-image:linear-gradient(to bottom,transparent 57%,#000 71%,#000 94%);mask-image:linear-gradient(to bottom,transparent 57%,#000 71%,#000 94%)}
+.dual-movement h3{font-size:clamp(18px,5.1vw,25px);margin-bottom:7px;padding-top:5px}
+.dual-movement li{grid-template-columns:23px minmax(0,1fr);font-size:clamp(15px,4.2vw,18px);gap:5px}
+.dual-movement li small{display:block;font-size:9px}
+.dual-movement li{line-height:1.18}
+.dual-movement ol{gap:4px}
+.dual-movement__interlude{font-size:9px;margin-top:3px;padding-top:3px}
+.dual-contents__foot{margin-top:5px;padding-top:5px;font-size:9px}
+.dual-contents__foot span::after{content:' · SCROLL ↓';color:#765b37;font-size:8px}
+}
+@media(max-width:360px){
+.dual-cover__coverlines{top:40%;gap:5px}
+.dual-cover__coverline{font-size:10px}
+.dual-cover__coverline small{font-size:8px}
+.dual-cover__en{top:70%;font-size:clamp(22px,7.25cqi,31px)}
+.dual-cover__vol{top:26%;left:8%;right:auto;font-size:9px}
+.dual-cover__zh{top:87%;font-size:clamp(14px,4cqi,19px)}
+.dual-cover__tagline{top:31%;font-size:clamp(10px,2.5cqi,12px)}
+.dual-contents__index{gap:8px 6px}
+.dual-movement h3{font-size:18px}
+.dual-movement li{font-size:15px}
+.dual-movement li small{font-size:11px}
+.dual-movement__interlude{font-size:8px}
+.dual-contents__deck{margin:3px 0 6px}
+.dual-contents__index{row-gap:6px}
+.dual-contents__foot{font-size:8px;margin-top:3px;padding-top:3px}
+}
+@media(prefers-reduced-motion:reduce){.dual-tile,.dual-film,.dual-cover__star{transition:none!important;animation:none!important}}
+
+
+
+/* P2 Cover / 2026-10-24: ONE publication name, ONE material, ONE editorial group.
+   Navy is for masthead and volume only. Original morning star sits on the
+   stone CITY, not on navy. One reversible P2 scroll source remains untouched. */
+.dual-cover[data-cover-variant="masthead"]{background:#102a43}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
+ top:1.6%;left:3%;width:94%;max-width:94%;height:27%;max-height:27%;
+ object-fit:contain;object-position:center top;filter:none;z-index:8
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__vol{
+ top:25.4%;left:6%;right:auto;font-size:clamp(9px,1.18cqi,12px);
+ color:#d4b36e;letter-spacing:.16em
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__tagline,
+.dual-cover[data-cover-variant="masthead"] .dual-cover__tagline::before,
+.dual-cover[data-cover-variant="masthead"] .dual-cover__tagline::after{display:none}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__engraving{
+ inset:30% 0 0;background:url('/experiments/assets/westside-cover-night-intaglio-v3.svg') center/100% 100% no-repeat;
+ opacity:0;pointer-events:none
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__radiance{opacity:0!important}
+/* Only one city transform, one unshaded base material, one skyline contour. */
+.dual-cover[data-cover-variant="masthead"] .dual-cover__city{
+ top:31%;bottom:0;overflow:visible;isolation:isolate;
+ background:none;box-shadow:none;filter:none
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__paper{
+ inset:0;background:url('/images/temple-stone-light.png') center top/cover no-repeat;
+ box-shadow:none;filter:none
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__city::after{display:none;content:none}
+/* The original crenel silhouette is MASKED with the same temple-stone image;
+   a restrained original-ink pass preserves mortar joints without a second
+   darker gold material or a black baseline. The PNG files are unmodified. */
+.dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
+ top:calc(-1*clamp(14px,2.3cqi,29px));left:0;right:0;
+ height:clamp(23px,4.05cqi,41px);
+ background-image:url('/images/temple-stone-light.png'),url('/images/jerusalem-wall.png');
+ background-position:center center,center bottom;
+ background-size:cover,auto 100%;
+ background-repeat:no-repeat,repeat-x;
+ -webkit-mask-image:url('/images/jerusalem-wall.png');
+ -webkit-mask-repeat:repeat-x;-webkit-mask-size:auto 100%;
+ -webkit-mask-position:center bottom;
+ mask-image:url('/images/jerusalem-wall.png');
+ mask-repeat:repeat-x;mask-size:auto 100%;mask-position:center bottom;
+ filter:none;box-shadow:none;opacity:1
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__wall::before{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:url('/images/jerusalem-wall.png') center bottom/auto 100% repeat-x;
+ filter:grayscale(1) brightness(1.13);opacity:.16;
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 62%,transparent 98%);
+ mask-image:linear-gradient(to bottom,#000 0%,#000 62%,transparent 98%)
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__gate{
+ position:absolute;z-index:4;left:50%;top:0;transform:translateX(-50%);
+ width:clamp(7px,1.12cqi,11px);height:100%;
+ border-radius:48% 48% 0 0 / 26% 26% 0 0;
+ background:#c49c51;box-shadow:none;pointer-events:none
+}
+/* The star's entire bounding box stays BELOW the architectural transition. */
+.dual-cover[data-cover-variant="masthead"] .dual-cover__star{
+ top:35%;left:50%;width:clamp(160px,31cqi,384px);
+ z-index:6;filter:saturate(1.15) contrast(1.12) brightness(.90)
+}
+/* One shared lower-right editorial system: no independent positioning. */
+.dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
+ position:absolute;z-index:7;right:6.5%;bottom:7%;width:43%;
+ display:flex;flex-direction:column;align-items:stretch;
+ gap:clamp(7px,1cqi,13px);text-align:right;pointer-events:none
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en{
+ position:static;display:block;left:auto;right:auto;top:auto;
+ width:100%;margin:0;text-align:right;
+ font:400 clamp(30px,4.35cqi,54px)/.92 var(--ws-type-display-en,Georgia,serif);
+ color:#21384a;letter-spacing:-.055em;text-shadow:none;white-space:normal
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en span,
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:last-child{
+ display:block;margin:0;white-space:nowrap;font-size:1em;line-height:.98;letter-spacing:inherit
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en em{font-size:.62em;vertical-align:.055em}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__zh{
+ position:static;left:auto;right:auto;top:auto;width:100%;margin:0;
+ text-align:right;font:600 clamp(15px,2.2cqi,23px)/1.2 var(--ws-type-display-zh,sans-serif);
+ color:#263b48;letter-spacing:0
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__zh span{display:inline;white-space:normal}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__coverlines{
+ position:static;left:auto;right:auto;top:auto;width:100%;
+ display:grid;grid-template-columns:1fr 1fr;gap:clamp(7px,1.25cqi,14px);
+ border-top:1px solid rgba(45,61,72,.35);padding-top:clamp(6px,.9cqi,10px)
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__coverline{
+ margin:0;padding:0;border:0;text-align:right;
+ font:500 clamp(9px,1.15cqi,12px)/1.15 var(--ws-type-reading-zh,sans-serif);color:#334553
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__coverline small{
+ display:block;margin:0 0 2px;font:400 clamp(7px,.87cqi,10px)/1.15 var(--ws-type-display-en-sc,Georgia,serif);
+ color:#7c6846;letter-spacing:.08em
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__folio{display:none}
+@media(max-width:820px){
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
+  top:1.6%;left:3%;width:94%;max-width:94%;height:27%;max-height:27%
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__vol{top:25.4%;left:6%;font-size:9px}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__city{top:31%}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
+  top:calc(-1*clamp(9px,2.35cqi,19px));height:clamp(14px,4.05cqi,28px)
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__gate{width:clamp(5px,1.2cqi,9px)}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
+  left:50%;top:35%;width:clamp(105px,34cqi,208px)
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
+  right:6%;bottom:6%;width:57%;gap:clamp(5px,1.2cqi,9px)
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:clamp(22px,5.55cqi,36px)}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__zh{
+  font-size:clamp(12px,3.4cqi,20px);line-height:1.16
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__coverlines{
+  gap:clamp(5px,1.2cqi,9px);padding-top:clamp(4px,.9cqi,7px)
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__coverline{font-size:clamp(8px,2.15cqi,11px)}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__coverline small{font-size:7px}
+}
+@media(max-width:360px){
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__star{width:35cqi;top:34%}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{bottom:5.5%;width:59%}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:21px}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__coverline{font-size:8px}
+}
+
+/* This same composition is the P2 magazine segment inside the existing Church
+   scroll surface when ?embed=1. No duplicate timeline or copy of home film. */
+/* Embedded overlay MUST have transparent canvas and body. Otherwise the
+   default navy body blocks the real Church schedule/water under clip-path. */
+html.dual-embed,html.dual-embed body{width:100%;height:100%;overflow:hidden;background:transparent!important}
+html.dual-embed .dual-ui,html.dual-embed .dual-overview{display:none!important}
+html.dual-embed .dual-stage{height:100svh;min-height:0;background:transparent}
+html.dual-embed .dual-contents__index{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+html.dual-embed .dual-film__credit{display:none}
+
+</style>
+</head>
+<body data-ws-scope="journal">
+<header class="dual-ui">
+ <span class="dual-ui__name">WESTSIDE WATCH / P2 / COVER → 西望 → STAR → CONTENTS</span>
+ <nav class="dual-ui__controls" aria-label="實驗場景">
+  <button type="button" data-position="cover-left" aria-pressed="false">封面在左</button>
+  <button type="button" data-position="cover-right" aria-pressed="true">封面在右</button>
+  <button type="button" data-cover-choice="masthead" aria-pressed="true">正式刊名封面</button>
+  <button type="button" data-snap="0.14">封面進場</button>
+  <button type="button" data-snap="0.54">西望逐行</button>
+  <button type="button" data-snap="0.68">晨星升起</button>
+  <button type="button" data-snap="0.82">封面＋西望</button>
+  <button type="button" data-snap="1">石紋 Contents</button>
+  <a href="/experiments/p2-magazine-transition-lab.html?final=1">原 P2 動效 ↗</a>
+ </nav>
+ <label class="dual-ui__range" for="dual-progress">展開進度 <input type="range" id="dual-progress" min="0" max="100" value="100" step="1"><output id="dual-value" for="dual-progress">100%</output></label>
+</header>
+<main>
+<section class="dual-stage" id="dual-stage" data-phase="contents-final" aria-label="P2 封面先進，七色西望滾動，晨星升起，再由聖殿石紋目錄接替">
+ <div class="dual-film" id="dual-film" aria-hidden="true">
+  <iframe id="dual-film-frame" title="首頁原始王進城混剪，純背景且不傳播聲音" tabindex="-1" allow="autoplay" loading="eager" data-original-src="/preview/watch-city-vol00/hosanna/?cover=1"></iframe>
+ </div>
+ <span class="dual-film__credit" aria-hidden="true">WESTSIDE WATCH / THE KING ENTERS THE CITY / ORIGINAL HOME FILM</span>
+ <div class="dual-panels">
+  <article class="dual-tile dual-tile--cover" id="dual-cover" aria-label="西望 Vol.00 午夜藍封面">
+   <div class="dual-cover" data-cover-variant="masthead">
+     <div class="dual-cover__engraving" aria-hidden="true"></div>
+     <div class="dual-cover__radiance" id="dual-radiance" aria-hidden="true"></div>
+     <div class="dual-cover__city" id="dual-cover-city" aria-hidden="true">
+      <div class="dual-cover__paper"></div>
+      <div class="dual-cover__wall" id="dual-cover-wall"><span class="dual-cover__gate" aria-hidden="true"></span></div>
+     </div>
+     <img class="dual-cover__mast" src="/images/westside-watch-masthead-landscape.svg" alt="西望 WESTSIDE WATCH 正式雜誌標誌" loading="eager">
+     <span class="dual-cover__series" lang="en"></span>
+     <p class="dual-cover__tagline" lang="en">Watch for the Dawn</p>
+     <div class="dual-cover__star" id="dual-star" aria-hidden="true">
+       <iframe tabindex="-1" title="西望現有晨星 3D v5.3" src="/experiments/morning-star-3d-lab.html?asset=1&amp;autoplay=1&amp;speed=2.1" loading="eager"></iframe>
+       <div class="dual-cover__star-fallback"></div>
+     </div>
+     <div class="dual-cover__editorial" aria-label="本期封面主題與導讀">
+      <p class="dual-cover__en" id="dual-cover-en" lang="en"><span>CITY <em>OF</em></span> <span>LIGHT</span></p>
+      <h1 class="dual-cover__zh" id="dual-cover-zh" lang="zh-Hant">守望，<span>一座光明的城</span></h1>
+      <div class="dual-cover__coverlines" id="dual-cover-coverlines" aria-label="本期封面文章"><p class="dual-cover__coverline"><small>FEATURE / 04</small>一萬年的建城禮</p><p class="dual-cover__coverline"><small>THE GATE / 03</small>城門口的人</p></div>
+     </div>
+     <p class="dual-cover__vol" id="dual-cover-vol" lang="en">VOL.00</p>
+     <span class="dual-cover__folio" id="dual-cover-folio" lang="en">THE NIGHT IS FAR SPENT / ROMANS 13:12</span>
+    </div>
+  </article>
+  <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="黎明金先演化七色西望字陣，最後替換為聖殿石紋 Contents">
+   <svg class="dual-letterfield" id="dual-letterfield" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+     <defs>
+      <mask id="ws-source-mask" x="0" y="0" width="432" height="218" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" style="mask-type:alpha">
+       <image href="/images/westside-watch-xiwang-horizontal-motion.svg" x="0" y="0" width="432" height="218"/>
+      </mask>
+      <g id="ws-xiwang-original" mask="url(#ws-source-mask)"><rect width="432" height="218" fill="currentColor"/></g>
+     </defs>
+    </svg>
+   <div class="dual-contents" id="dual-stone-contents" aria-hidden="true" inert>
+    <svg id="dual-contents-relief" class="dual-contents__relief" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"></svg>
+    <span id="dual-relief-folio" class="dual-contents__relief-folio" aria-hidden="true">WESTSIDE WATCH / LETTERPRESS / VOL.00</span>
+    <header class="dual-contents__head"><h2 id="dual-contents-title" lang="en">Contents.</h2><span>目錄</span></header>
+    <p class="dual-contents__deck">四樂章 · 十二欄目 · 三段視聽間奏</p>
+    <div class="dual-contents__index" tabindex="0" role="region" aria-label="Vol.00 十二欄目文章目錄，可以向下捲動閱讀完整篇名">
+      <section class="dual-movement" aria-label="WATCH"><h3><em>I</em>WATCH</h3><ol>
+       <li class="dual-entry"><b>01</b><span class="dual-entry__text"><span class="dual-entry__column">米斯巴<small>Mizpah</small></span><span class="dual-work" lang="zh-Hant">〈守望，一座光明的城〉</span></span></li><li class="dual-entry"><b>02</b><span class="dual-entry__text"><span class="dual-entry__column">伯利恆<small>Bethlehem</small></span></span></li><li class="dual-entry"><b>03</b><span class="dual-entry__text"><span class="dual-entry__column">門<small>The Gate</small></span><span class="dual-work" lang="zh-Hant">〈城門口的人〉</span><span class="dual-work" lang="zh-Hant">〈耶路撒冷：在黑暗中軟弱，在光明中剛強〉</span><span class="dual-work" lang="zh-Hant">〈大希律：這個人會建造〉</span></span></li><li class="dual-entry"><b>04</b><span class="dual-entry__text"><span class="dual-entry__column">迦密<small>Carmel</small></span><span class="dual-work" lang="zh-Hant">〈一萬年的建城禮〉</span></span></li>
+      </ol><p class="dual-movement__interlude">INTERLUDE / SELAH</p></section>
+      <section class="dual-movement" aria-label="WALK"><h3><em>II</em>WALK</h3><ol>
+       <li class="dual-entry"><b>05</b><span class="dual-entry__text"><span class="dual-entry__column">以馬忤斯<small>Emmaus</small></span><span class="dual-work" lang="zh-Hant">〈吾珥：離開一座大的城〉</span></span></li><li class="dual-entry"><b>06</b><span class="dual-entry__text"><span class="dual-entry__column">以琳<small>Elim</small></span><span class="dual-work" lang="zh-Hant">〈若不是耶和華看守城池——古代攻城技術史〉</span></span></li><li class="dual-entry"><b>07</b><span class="dual-entry__text"><span class="dual-entry__column">別是巴<small>Beersheba</small></span></span></li><li class="dual-entry"><b>08</b><span class="dual-entry__text"><span class="dual-entry__column">伯特利<small>Bethel</small></span></span></li>
+      </ol><p class="dual-movement__interlude">INTERLUDE / 遠方無聲鴿</p></section>
+      <section class="dual-movement" aria-label="WITNESS"><h3><em>III</em>WITNESS</h3><ol>
+       <li class="dual-entry"><b>09</b><span class="dual-entry__text"><span class="dual-entry__column">以斯帖<small>Esther</small></span><span class="dual-work" lang="zh-Hant">〈廚房裡的人｜你當像飛鳥往你的山〉</span></span></li><li class="dual-entry"><b>10</b><span class="dual-entry__text"><span class="dual-entry__column">亞杜蘭洞<small>Adullam</small></span><span class="dual-work dual-work--people" lang="zh-Hant">黃淑華 · 江秀琴</span></span></li>
+      </ol><p class="dual-movement__interlude">INTERLUDE / KINNERET</p></section>
+      <section class="dual-movement" aria-label="WORSHIP"><h3><em>IV</em>WORSHIP</h3><ol>
+       <li class="dual-entry"><b>11</b><span class="dual-entry__text"><span class="dual-entry__column">何烈山<small>Horeb</small></span><span class="dual-work" lang="zh-Hant">〈房角石：整座城由此對齊〉</span></span></li><li class="dual-entry"><b>12</b><span class="dual-entry__text"><span class="dual-entry__column">瑪拉拿<small>Maranatha</small></span><span class="dual-work" lang="zh-Hant">〈冠冕〉</span></span></li>
+      </ol></section>
+    </div>
+    <div class="dual-contents__foot"><span lang="en">VOL.00 / INDEX</span><a href="/journal/">ENTER MAGAZINE ↗</a></div>
+   </div>
+  </section>
+ </div>
+</section>
+<details class="dual-overview"><summary>DESIGN NOTES / EDITORIAL REVIEW</summary><div class="dual-overview__detail">
+ <p><strong>第五輪藝術修正：</strong>原教會右／左半屏依序以 clip-path 接管，拒絕整塊從畫面外砸入；新加射線已移除，保留晨星原刻線。左頁七個獨立的「西望」字標因互相覆蓋而被否決，改為一組官方原始向量字形的七道斜向印刷色版，隨滾動依序顯現，最終構成唯一巨型「西望」。封面仍使用真城牆＋原聖殿石底紋，Contents 已找回 Vol.00 確認的十項文章題名及兩位講員。</p>
+ <p><strong>第七輪實際藝術候選：</strong>官方 SVG「西望」由七條互相錯開的字形印帶組成，合計十一個完整的「西望」，不再把一個巨大字標切成七片；參考《50》的跨頁文字骨架，但保留 Westside 自己的七色印刷身份。原耶路撒冷城牆與聖殿石底紋合併到同一個 City DOM，一次升起、不再脫節。禁止額外線條／生成圖片；尚需實景驗收。</p>
+ <p><strong>第六輪回歸修正：</strong>人工截圖發現 WATCH 長篇名進入 WITNESS 樂章標題。改用內容高度下限的 grid track，先保證任何樂章不重疊，裝不下時交由既有目錄卷軸完整呈現。禁止為了填滿紙面犧牲內容完整性。</p>
+ <p><strong>第六輪真實截圖修訂：</strong>恢復篇名後四樂章仍過度擠在 Contents 上半段；本輪以雙欄兩段充滿版心，調整英中標題級差和行距，形成更有內容力量的紙面。右封面略調 LIGHT 的展示比例與中文主題重量，不增圖、不改城牆、晨星或教會動效；須另看真實截圖與版面溢位。</p>
+ <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
+</div></details>
+</main>
+<script>
+(function(){
+ const stage=document.getElementById('dual-stage');
+ const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
+ const film=document.getElementById('dual-film'),frame=document.getElementById('dual-film-frame'),star=document.getElementById('dual-star');
+ const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents'),relief=document.getElementById('dual-contents-relief'),reliefFolio=document.getElementById('dual-relief-folio');
+ const radiance=document.getElementById('dual-radiance'),city=document.getElementById('dual-cover-city');
+ const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
+ const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol'),coverLines=document.getElementById('dual-cover-coverlines');
+ const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')],coverChoices=[...document.querySelectorAll('[data-cover-choice]')],coverArt=cover.querySelector('.dual-cover');
+ const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
+ const lerp=(a,b,t)=>a+(b-a)*t;
+ // These are the seven existing Design OS editorial-page color identities.
+ // No new palette and no copied seven-overlap homepage curtain animation.
+ const palette=['var(--ws-water,#5b8fa8)','var(--ws-first-light,#a2872a)',
+  'var(--ws-pale-gold,#cebd74)','var(--ws-olive,#738a5a)',
+  'var(--ws-harvest,#b8944a)','var(--ws-crimson,#a14d57)',
+  'var(--ws-daylight-mauve,oklch(67% .075 330))'];
+
+ // 7 scroll registrations × 2 interlocking rows × 6 original SVG 西望.
+ // No HTML word cloud or invented article text. Every depth plane is SVG.
+ const svgNS='http://www.w3.org/2000/svg';
+ const makeSvg=(tag,cls,parent)=>{
+  const el=document.createElementNS(svgNS,tag);
+  if(cls)el.setAttribute('class',cls);
+  if(parent)parent.appendChild(el);
+  return el;
+ };
+ const bands=[],allMarks=[];
+ const papers=['#ead1a2','#d6b982','#cbb07a','#dec798','#d3b48c','#dcb88e','#e4cca2'];
+ for(let register=0;register<7;register++){
+  const band=makeSvg('g','ws-print-band',letters);
+  band.dataset.register=String(register+1);
+  const marks=[];
+  for(let subrow=0;subrow<2;subrow++)for(let col=0;col<6;col++){
+   const mark=makeSvg('g','ws-print-mark',band);
+   mark.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
+   mark.dataset.register=String(register+1);
+   const ink=(register+(col+subrow)%3)%7;
+   for(let depth=3;depth>=0;depth--){
+    const face=makeSvg('use',depth?'ws-print-depth':'ws-print-face',mark);
+    face.setAttribute('href','#ws-xiwang-original');
+    face.setAttribute('transform','translate('+(depth*17)+' '+(depth*12)+')');
+    // Consistent dark faces bind the field together; seven original OS hues
+    // form the vector extrusion. One accent face per register is intentional.
+    const accent=(col===2&&subrow===0)||(register===3&&col===4);
+    face.style.color=depth===0?(accent?palette[ink]:'#25394c'):depth===3?papers[register]:palette[(ink+2)%7];
+    face.style.opacity=depth===0?'1':depth===3?'.93':'.89';
+   }
+   marks.push(mark);allMarks.push(mark);
+  }
+  bands.push({band,marks});
+ }
+ // Transfer only the existing lower three press registers, not a new motif.
+ const residualBands=bands.slice(4).map(({band,marks})=>{
+  const retained=makeSvg('g','ws-relief-band',relief);
+  retained.dataset.originalRegister=band.dataset.register;
+  const clones=marks.map(mark=>{
+   const copy=mark.cloneNode(true);
+   copy.classList.add('ws-relief-mark');
+   retained.appendChild(copy);return copy;
+  });
+  return {source:band,marks,retained,clones};
+ });
+ let printW=0,printH=0;
+ const layoutPrint=(w,h)=>{
+  if(Math.abs(w-printW)<.5&&Math.abs(h-printH)<.5)return;
+  printW=w;printH=h;
+  letters.setAttribute('viewBox','0 0 '+w.toFixed(2)+' '+h.toFixed(2));
+  letters.setAttribute('preserveAspectRatio','none');
+  relief.setAttribute('viewBox',letters.getAttribute('viewBox'));
+  relief.setAttribute('preserveAspectRatio','none');
+  const step=w/4.55,scale=step/432;
+  for(let register=0;register<7;register++)for(let n=0;n<12;n++){
+   const row=register*2+Math.floor(n/6),col=n%6;
+   const x=-step*(.79+(row%2)*.23)+col*step*.89+(register-3)*2;
+   const y=-h*.065+row*h/12.55;
+   const emphasis=row===6||row===7?1.12:1;
+   const size=scale*emphasis*(.92+((row+col)%4)*.034);
+   bands[register].marks[n].setAttribute('transform','translate('+x.toFixed(2)+' '+y.toFixed(2)+') scale('+size.toFixed(5)+')');
+   if(register>=4)residualBands[register-4].clones[n].setAttribute('transform',bands[register].marks[n].getAttribute('transform'));
+  }
+ };
+ let progress=1,coverLeft=false;
+ const pose=(el,x,y,w,h)=>{
+  el.style.left=x.toFixed(2)+'px';el.style.top=y.toFixed(2)+'px';
+  el.style.width=w.toFixed(2)+'px';el.style.height=h.toFixed(2)+'px';
+ };
+ function render(){
+  const W=stage.clientWidth,H=stage.clientHeight,mobile=W<=820;
+  // FIRST preserve the original two halves of the Church spreads, so these
+  // planes REPLACE the existing layout rather than drop cards upon it.
+  // LATER the same planes shrink together into adjacent square folios.
+  const fold=ease((progress-.755)/.105);
+  let w,h,leftX,leftY,rightX,rightY;
+  if(!mobile){
+   const mx=Math.max(16,W*.067),my=Math.max(18,H*.052);
+   const tile=Math.max(0,Math.min((W-2*mx)/2,H-2*my));
+   w=lerp(W/2,tile,fold);h=lerp(H,tile,fold);
+   leftX=(W-2*w)/2;leftY=(H-h)/2;rightX=leftX+w;rightY=leftY;
+  }else{
+   const mx=Math.max(7,W*.025),my=6;
+   const tile=Math.max(0,Math.min(W-2*mx,(H-2*my)/2));
+   w=lerp(W,tile,fold);h=lerp(H/2,tile,fold);
+   leftX=(W-w)/2;leftY=(H-2*h)/2;rightX=leftX;rightY=leftY+h;
+  }
+  const blue=reduce?(progress>=.22?1:0):ease((progress-.02)/.20);
+  const dawn=reduce?(progress>=.435?1:0):ease((progress-.225)/.21);
+  // The accepted Church geometry is the entry surface. Right-hand schedule
+  // is taken over FROM TOP, and left-hand water FROM BOTTOM.
+  const coverOnLeft=coverLeft;
+  const coverX=coverOnLeft?leftX:rightX,coverY=coverOnLeft?leftY:rightY;
+  const goldX=coverOnLeft?rightX:leftX,goldY=coverOnLeft?rightY:leftY;
+  // Full content stays IN its original half of the Church spread;
+  // only the revealed portion grows with scroll, not the whole square.
+  pose(cover,coverX,coverY,w,h);
+  pose(gold,goldX,goldY,w,h);
+  cover.style.clipPath='inset(0 0 '+((1-blue)*100).toFixed(3)+'% 0)';
+  gold.style.clipPath='inset('+((1-dawn)*100).toFixed(3)+'% 0 0 0)';
+  stage.dataset.blueReveal=blue.toFixed(4);
+  stage.dataset.dawnReveal=dawn.toFixed(4);
+  const lettersFade=1-ease((progress-.855)/.115);
+  // Clear the upper 58% of the original lead-type SVG before showing
+  // articles. Its lower registers remain as their exact copies emerge.
+  // One source progress value drives both, including reverse scroll.
+  const upperClear=ease((progress-.858)/.064);
+  letters.style.clipPath='inset('+(58*upperClear).toFixed(3)+'% 0 0 0)';
+  letters.style.opacity=String(lettersFade);
+  layoutPrint(w,h);
+  bands.forEach(({band},register)=>{
+   const on=reduce?(progress>=.58?1:0):ease((progress-(.438+register*.025))/.064);
+   band.style.opacity=String(on*(register===3?1:.89));
+   band.setAttribute('transform','translate('+((1-on)*(register%2?-82:76)).toFixed(2)+' '+((1-on)*(-32+register*4)).toFixed(2)+')');
+  });
+   // One linked spatial event: dawn paper and the physical Jerusalem skyline
+   // rise together; original 3D v5.3 star illuminates their shared horizon.
+   // A reverse wheel must lower the same city and restore midnight blue.
+   const dawnRise=reduce?(progress>=.53?1:0):ease((progress-.555)/.185);
+   const starRise=reduce?(progress>=.53?1:0):ease((progress-.605)/.12);
+   // Crest and temple-stone are ONE object with one motion authority.
+   city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
+   city.style.opacity=String(reduce?dawnRise:ease((progress-.565)/.085));
+   coverEnglish.style.opacity=String(reduce?dawnRise:ease((progress-.62)/.105));
+   // Issue number and canonical story teasers enter with the blue cover.
+    coverVol.style.opacity=String(blue);
+    coverLines.style.opacity=String(blue);
+   coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
+   coverFolio.style.opacity=String(reduce?dawnRise:ease((progress-.71)/.09));
+   radiance.style.opacity=String(starRise);
+   star.style.opacity=String(starRise);
+   star.style.transform='translate(-50%,'+(95-95*starRise).toFixed(2)+'%)';
+
+  // Only AFTER the complete "cover + 西望" hold does the canonical
+  // temple-stone Contents replace the colorful lettering.
+  const stone=ease((progress-.865)/.125);
+  // One scroll clock. Existing impression stays as lower-paper relief.
+  const reliefOn=ease((progress-.875)/.105);
+  relief.style.opacity=String(.32*reliefOn);
+  reliefFolio.style.opacity=String(.64*reliefOn);
+  residualBands.forEach(({source,retained})=>{
+   retained.setAttribute('transform',source.getAttribute('transform')||'translate(0 0)');
+   retained.style.opacity=source.style.opacity||'1';
+  });
+  contents.style.opacity=String(stone);
+  contents.style.visibility=stone>0?'visible':'hidden';
+  contents.style.pointerEvents=stone>.99?'auto':'none';
+  contents.style.transform='translate3d(0,'+(4*(1-stone)).toFixed(2)+'%,0)';
+  contents.setAttribute('aria-hidden',stone>.98?'false':'true');
+  contents.inert=stone<.98;
+  film.style.opacity=String(ease((progress-.70)/.24));
+  film.style.visibility=progress<=.69?'hidden':'visible';
+  stage.dataset.phase=progress<.22?'cover-arrival':progress<.60?'xiwang-lines':
+   progress<.72?'morning-star-rise':progress<.865?'cover-and-xiwang':
+   progress<.995?'stone-contents-reveal':'contents-final';
+  stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
+  stage.dataset.xiwangLines=String(bands.filter(({band})=>Number(band.style.opacity)>.75).length);
+  range.value=String(Math.round(progress*100));
+  output.textContent=Math.round(progress*100)+'%';
+ }
+ function setProgress(v){
+  progress=clamp(Number(v));render();
+  if(!document.documentElement.classList.contains('dual-embed')){
+   const uri=new URL(location.href);uri.searchParams.set('p',String(Math.round(progress*100)));history.replaceState(null,'',uri);
+  }
+ }
+ function setCoverVariant(raw){
+  const v='masthead'; // Retired A/B variants remain in Git history, not on the active cover.
+  coverArt.dataset.coverVariant=v;stage.dataset.coverVariant=v;
+  coverChoices.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.coverChoice===v)));
+  if(!document.documentElement.classList.contains('dual-embed')){
+   const u=new URL(location.href);u.searchParams.set('cover',v);history.replaceState(null,'',u);
+  }
+ }
+ function setOrientation(val){
+  coverLeft=val==='cover-left';
+  buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.position===val)));
+  render();
+  if(!document.documentElement.classList.contains('dual-embed')){
+   const uri=new URL(location.href);uri.searchParams.set('side',val);history.replaceState(null,'',uri);
+  }
+ }
+ document.querySelectorAll('[data-snap]').forEach(b=>b.addEventListener('click',()=>setProgress(b.dataset.snap)));
+ buttons.forEach(b=>b.addEventListener('click',()=>setOrientation(b.dataset.position)));
+ coverChoices.forEach(b=>b.addEventListener('click',()=>setCoverVariant(b.dataset.coverChoice)));
+ range.addEventListener('input',()=>setProgress(Number(range.value)/100));
+ addEventListener('message',event=>{
+  if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-dual-progress')return;
+  progress=clamp(Number(event.data.progress)||0);
+  if(event.data.side==='cover-left'||event.data.side==='cover-right')coverLeft=event.data.side==='cover-left';
+  // Only the EXISTING parent P2 scroll controls this sequence.
+  render();
+ });
+ addEventListener('resize',render,{passive:true});
+ const qs=new URLSearchParams(location.search);
+ if(reduce){
+  star.querySelector('iframe')?.remove();
+  star.querySelector('.dual-cover__star-fallback').style.opacity='1';
+ }else{frame.src=frame.dataset.originalSrc}
+ setCoverVariant(qs.get('cover'));
+ setOrientation(qs.get('side')==='cover-left'?'cover-left':'cover-right');
+ setProgress(Number(qs.get('p')??100)/100);
+})();
+</script>
+</body>
+</html>

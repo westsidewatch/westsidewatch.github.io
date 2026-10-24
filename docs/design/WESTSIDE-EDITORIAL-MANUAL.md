@@ -124,3 +124,33 @@ These files remain archived intact; they do not operate as independent OS author
 - [Camera and Attention Grammar](../../dore-design/DORE-EXPLORATION-CAMERA-ATTENTION-GRAMMAR-2026-09-09.md)
 
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
+
+## 9. P2 Vol.00 Cover — masthead-first editorial correction (2026-10-24)
+
+**Status:** Third, single lead candidate — **NOT artistically approved**; PR #1355 remains Draft. The rejected A/B variants are no longer exposed in the preview; they are preserved in Git history only. This chapter belongs to Westside Design OS; it does not create an alternate design authority.
+
+**Why previous two covers were rejected:** at 1648px the officially approved `WESTSIDE WATCH／西望` SVG masthead was reduced to secondary metadata, while `CITY OF LIGHT` dominated the sky. The v2 engraving's full-bleed radial needles formed a second competing illustration and the 3D star looked disconnected. Both covers lost the publication's name and became generic posters. Technical passing screenshots were not evidence of artistic acceptance.
+
+**Twelve editorial precedents studied:** PORT, Footnote, FUKT, INQUE, KIBLIND, MUBI NOTEBOOK, Buffalo Zine, The Cut, Emergence Magazine, i-D, Apartamento, Vogue Business × Archrival. They demonstrate **distinct** systems: image-leading covers, masthead-leading covers, typography as the image, column-safe microcopy and scroll-owned cover→reader continuity. A publication's award pedigree must not be misrepresented as an award for the specific image being studied.
+
+**Revised nonnegotiable reading order:**
+1. **Publication:** show the existing `westside-watch-masthead-landscape.svg` as the principal, full-width identification. Its original path shapes must remain intact (LivingWater / WESTSIDE WATCH / 西望); no synthetic CSS title, no cropped replacement, and no fading into the engraving.
+2. **Issue:** `VOL.00` and *Watch for the Dawn* are compact below the masthead, not dispersed over the artwork.
+3. **Image:** Midnight blue remains a breathing field; the real morning star and original Jerusalem wall define one visual horizon. The v1 and full-bleed v2 straight radial starburst fields are both rejected: changing their opacity cannot repair their laser-like form. The new isolated `westside-cover-night-intaglio-v3.svg` uses four asymmetric fields of curved burin strokes, broken cross-hatching, stipple and deliberately reserved negative space around the existing v5.3 3D morning star. It is an original experimental engraving composed for this cover, **not a recovered Doré artwork**. Preserve the approved wall and star assets.
+4. **Issue proposition:** `CITY OF LIGHT` is a secondary single-line editorial heading on original temple stone, following the real masthead; `守望，一座光明的城` is the Chinese companion, visually subordinate to the masthead, not a second poster.
+5. **Teaser area:** only the existing confirmed Vol.00 `一萬年的建城禮` / `城門口的人`, set as two quiet micro-columns in the lower stone folio. No invented titles, church schedule, QR code, or more metadata.
+6. **Full-spread integration:** keep existing Church → magazine split, the original seven-color 西望 SVG lead type, and the Contents transition **untouched**. All remain controlled by the one reversible P2 scroll clock.
+
+**Acceptance method:** test viewport widths 1648/768/390/320; verify the canonical masthead has `naturalWidth>0`, occupies 90–97% of the actual cover plane, and the engraving uses `westside-cover-night-intaglio-v3.svg` without returning to the rejected straight radial fields; inspect screenshots to confirm visible ink, main/companion title, free breathing space and 3D-star focus. Then do native 200% zoom, reduced motion, keyboard and reverse-scroll checks. A passing geometric/Chromium contract is necessary, **not** sufficient for award-calibre approval. Core Contract's unrelated frozen-homepage star baseline remains an independently reported failure, not silently waived.
+
+**Experimental query:** `?cover=masthead` is the default. Old `?cover=editorial` and `?cover=typographic` no longer select a separate layout; both fall back to the single masthead-led candidate. Earlier A/B compositions remain reviewable in Git history. This reset has **no authorization to merge PR #1355**.
+
+### 2026-10-24 · P2 Cover composition, skyline revision
+
+**User-approved direction; implementation still Draft pending visual approval.** Re-centre the hierarchy on (1) the complete canonical `westside-watch-masthead-landscape.svg` at 94% cover width, (2) the original enlarged v5.3 3D Morning Star exactly aligned with the Jerusalem-wall centre, and (3) compact `CITY OF LIGHT` and `守望，一座光明的城` at the lower-right. Keep a wide, uncluttered midnight-blue sky; the star, not engraving decoration, owns the centre. The permanent `Watch for the Dawn` slogan may be omitted from this issue cover; this revision hides it but never deletes or redefines the brand slogan.
+
+**Unified city:** the original `jerusalem-wall.png` is a fine, repeated architectural crest at the top of the existing `dual-cover__city`; the canonical `temple-stone-light.png` is the full stone wall base on its child `dual-cover__paper`. Both layers share a single parent and reversible P2 transform, with **no shadow, bevel, faux gradient seam or second paper slab**. Preserve both source images; cover-only gold gate overlay addresses the black centre arch visually without changing other use sites. This overlay is not a claim to have repainted the source PNG; inspect original dark edge pixels at true browser zoom.
+
+**Cover editorial structure:** keep `VOL.00` small under the masthead; reserve the sky centre for the enlarged star; group the English and Chinese issue titles on the lower-right stone; two authentic coverlines form one restrained lower-left group. The earlier etched-night v3 field is deliberately subordinated for this compositional pass (`opacity <= .17`) and requires a separate specialist print-engraving art signoff, not a blanket approval.
+
+**Measurement gates:** four native viewports (1648, 768, 390, 320); first identification >=90% cover width, star within 3px of centre and >=23% cover width, city crest at ~54–55% with <=7% visual height, no wall or paper shadows, right-column issue heading, hidden slogan, real stone and wall image URLs, working city/stone scroll continuity. Also inspect screenshot-based optical balance, original 200% browser zoom, reduced-motion and reverse wheel before final approval. CI green is not sufficient.

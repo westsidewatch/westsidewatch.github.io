@@ -32,10 +32,10 @@ body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
 </style></head>
 <body data-ws-scope="p2"><header><div class="micro">WESTSIDE P2 / SCENE 02 / INDEPENDENT CHOREOGRAPHY LAB</div>
 <h1>Church <em>→</em> Magazine.</h1>
-<p>以已驗收 Church 洋流與開門場景作前段。Magazine 左半直接調用首頁七種 Design OS 色彩，以七層實際折幕由下向上展開；右半則由上向下進入午夜藍與羅馬書 13:12 的經文。晨星從黎明半屏移入石紋目錄，單一耶路撒冷城牆始終橫跨兩屏與三欄。新方案仍是獨立預覽，正常 P2 與主站未切換。</p></header>
+<p>以已驗收 Church 洋流與開門場景作前段。先由上向下完成右半午夜藍與羅馬書經文；完成後左半再以七條小幅色帶從下向上折疊。晨星帶動原來的「西望」一同升起，兩半頁全部定格後，左右才開門露出中央的完整雜誌目錄。城牆仍隨各門頁移動。新方案仍是獨立預覽，正常 P2 與主站未切換；色欄刻線保持純色基準版，待實景對比。</p></header>
 <div class="controller" role="group" aria-label="P2 Magazine 進度檢視">
  <div class="heading">SCROLL-OWNED / REVERSIBLE</div>
- <div class="buttons"><button type="button" data-progress=".705">教會</button><button type="button" data-progress=".793">左右變色</button><button type="button" data-progress=".874">雙門開啟</button><button type="button" data-progress=".984">目錄全開</button></div>
+ <div class="buttons"><button type="button" data-progress=".586">教會</button><button type="button" data-progress=".662">右頁深藍</button><button type="button" data-progress=".732">左頁七折</button><button type="button" data-progress=".826">晨星與西望</button><button type="button" data-progress=".884">雙頁定格</button><button type="button" data-progress=".942">開門</button><button type="button" data-progress="1.000">完整目錄</button></div>
  <label class="range">進度 <input type="range" min="0" max="100" step=".1" value="0" id="progress"><output id="percent" for="progress">0%</output></label>
  <div class="buttons switcher"><button type="button" id="desktop" aria-pressed="true">桌面</button><button type="button" id="mobile" aria-pressed="false">手機</button></div>
 </div>
@@ -43,13 +43,32 @@ body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
  <div class="proof-sticky"><div class="proof-frame"><iframe id="p2scene" title="P2 Church to Magazine three-screen interactive preview" src="/p2/living-water.html?embed=1&amp;magazineProof=1" loading="eager" scrolling="no"></iframe></div></div>
 </div>
 <footer class="notes">
- <h2>Three-screen proof / 第一輪</h2>
- <p>使用滾輪正反向檢查七色折幕與晨星移位；按四個節點或拖動滑桿可定位。主轉場沒有自動補幀，晨星只引用封版 v5.3 模型。雙門展開後中央採四樂章、十二欄目與三間奏的編輯目錄；城牆為單一全屏連續底景。星光底紋 v2 保持暫停。</p>
- <p>此頁專供分鏡、文字層級和手機全寬目錄驗收。正式雜誌、教會洋流及主站的既有路徑仍然維持原狀。<a href="/experiments/morning-star-3d-lab.html">查看封版晨星 ↗</a></p>
+ <h2>Three-screen proof / Vol.00 editorial · award-calibre review</h2>
+ <p><strong>NEW: Art Direction comparison.</strong> <a href="/experiments/p2-magazine-art-direction-studio.html?concept=a&amp;view=hold">A · Monumental Engraving ↗</a>　<a href="/experiments/p2-magazine-art-direction-studio.html?concept=b&amp;view=open">B · Living Atlas ↗</a>　<a href="/experiments/p2-magazine-art-direction-studio.html?concept=c&amp;view=open">C · Cine-Folio ↗</a>. These static candidates deliberately do not replace the current scroll animation until one visual direction is approved.</p>
+ <p>使用滾輪正反向依次檢查右半深藍、左半窄幅七折、晨星帶著西望升起、雙頁定格、最後開門；可按七個節點定位。主轉場沒有自動補幀，晨星只引用封版 v5.3 模型。雙門展開後中央由兩個真實版面構成：上半封面約 44%、下半正式目錄約 56%。目錄維持 Vol.00 四樂章、十二欄目、三間奏與已確認的文章題名；城牆為單一全屏連續底景。星光底紋 v2 保持暫停。</p>
+ <p>此頁的最終視覺驗收以已部署的 <a href="?final=1">開門完成態 ↗</a> 為準。已把舊時間軸三段無效滾動（約 13%–17%、41%–45%、61%–74%）壓縮到實際動效，教會開門後於約 59% 立即交接雜誌。滾動節點僅供檢查轉場；封面、目錄、左右側欄的對比應在同一個完整畫面檢查。正式雜誌、教會洋流及主站的既有路徑仍然維持原狀。<a href="/experiments/morning-star-3d-lab.html">查看封版晨星 ↗</a></p>
 </footer>
 <script>
 (()=>{'use strict';
  const frame=document.getElementById('p2scene'),track=document.getElementById('track');
+ const query=new URLSearchParams(location.search);
+ const dual=query.get('dual')==='1';
+ if(dual){
+  const side=query.get('side')==='cover-left'?'cover-left':'cover-right';
+  frame.src='/p2/living-water.html?embed=1&magazineProof=1&dualSquare=1&side='+side;
+  document.querySelector('header h1').textContent='Living Water → Magazine / Cover + Contents';
+  document.querySelector('header p').textContent='教會主日崇拜與活水、分海原樣保留。右側午夜藍封面由上進場；左側黎明金由下接管活水，七色「西望」一行、兩行直到七行斜向滾入；之後晨星升起，「封面＋西望」先停駐；最後原版聖殿石底紋 Contents 才替換字陣。全程由教會原有單一 P2 scroll 控制。';
+  document.querySelectorAll('.controller [data-progress]').forEach((button,i)=>{
+   const checkpoints=[
+    ['教會原頁',.586],['午夜藍封面',.640],
+    ['斜向西望',.778],['晨星升起',.864],
+    ['封面＋西望',.926],['石紋替換',.968],['石紋 Contents',1]
+   ];
+   button.textContent=checkpoints[i][0];
+   button.dataset.progress=String(checkpoints[i][1]);
+  });
+  document.querySelector('.notes').insertAdjacentHTML('afterbegin','<p><strong>CHURCH→MAGAZINE CONTINUITY:</strong> 預覽節點依次為封面接管、七色西望、晨星升起、「西望＋封面」、聖殿石紋目錄。沒有新製作石紋，仍使用原 `/images/temple-stone-light.png`；原版 P2 對照請移除網址 dual=1。<a href="/experiments/p2-double-square-video-lab.html?p=100">單獨封面比較 ↗</a></p>');
+ }
  const range=document.getElementById('progress'),out=document.getElementById('percent');
  const desktop=document.getElementById('desktop'),mobile=document.getElementById('mobile');
  const clamp=n=>Math.max(0,Math.min(1,n));
@@ -84,6 +103,13 @@ body.mobile-proof .proof-frame{width:min(390px,98vw);height:min(820px,92svh)}
  }
  desktop.addEventListener('click',()=>setMobile(false));
  mobile.addEventListener('click',()=>setMobile(true));
+ const finalQuery=new URLSearchParams(location.search).get('final')==='1';
+ if(finalQuery)requestAnimationFrame(()=>{
+   const distance=Math.max(1,track.offsetHeight-innerHeight);
+   const start=scrollY+track.getBoundingClientRect().top;
+   scrollTo({top:start+distance,behavior:'instant'});
+   send(1);
+ });
  schedule();
 })();
 </script></body></html>
