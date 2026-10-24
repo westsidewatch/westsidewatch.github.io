@@ -2595,7 +2595,7 @@ For each output create a plate record with source URL and revision, original ext
 
 **不可破壞：** 教會右側日程先由上進夜、左側活水後由下進金的半屏遮罩，原教會活水、主日、分海開門、現有 Design OS 的字體及七色、正式 Logo、原版晨星刻線和十二欄目確定篇名，都保持原狀。Contents 出場後金色字場必須全部退隱，不蓋住文章。平板手機仍用上下雙頁。正式攝影圖、外部中文字帖或生成圖均不得混入 P2。
 
-**工程／驗收：** PR #1355 `807489d` 生成真文字 441 格並用七行既有 scroll owner 驅動，`7d55f15` 新增 Chromium 441 字元／21 行／7 段／p82 可見的硬性檢查。真實 1648／768／390／320、來源完整、城市接縫、Reverse scrolling 與減少動作模式須回歸。無人工實際構圖審閱與正常 CI 前不能稱獲獎級定稿。**TRIAL / NOT APPROVED / 不合併。**
+**工程／驗收：** PR #1355 `807489d` 生成真文字 441 格並用七行既有 scroll owner 驅動，`7d55f15` 新增 Chromium 441 字元／21 行／7 段／p82 可見的硬性檢查。真實 1648／768／390／320、來源完整、城市接縫、Reverse scrolling 與減少動作模式須回歸。**真實 Chromium 證據：** commit `7d55f15`，Production Build PASS、First Look Branch Preview PASS，artifact `p2-two-square-video-study` #12543506140，41/41 截圖節點無錯誤。實際人工查看桌面 1648×928、390×844、320×720 的左右／上下封面定格：左側字海填滿面積，中心西望仍可讀；右側夜空維持相對疏朗，下部石城及主標連續。Contents 仍可在結尾正確出場且原十二欄未丟失。**Core Contract 仍有保護的首頁晨星 SVG 舊基準失敗**，不能宣稱整個 PR 全綠；未完成原生 200% zoom、長距離逆向滾動和完整實際可用性評審。這是目前最符合「左滿右空」的候選，**TRIAL / NOT APPROVED / 不合併。**
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
 
