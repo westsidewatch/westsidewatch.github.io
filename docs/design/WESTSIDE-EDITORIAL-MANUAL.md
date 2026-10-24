@@ -2646,6 +2646,8 @@ For each output create a plate record with source URL and revision, original ext
 
 **必須維持可讀：** 目錄從 WATCH/WALK 到 WITNESS/WORSHIP 十二欄及所有已定稿篇名不能刪改或偽造。若桌面上半欄文字與凸版印象重疊，必須重新分配網格、降低下部可見範圍或控制局部透明度，不得遮字。不允許單靠 41 張截圖自動化 PASS 取代文字實際可讀性判斷。若放大 200%、320px 橫向、reduced-motion 不能讀到底，仍視為未驗收。
 
+**第一輪真實截圖問題及重排（2026-10-24）：** PR #1355 的 `b830e46` Chromium Preview 執行 41 場、其中桌面 Contents p100 明確 FAIL：`ARTICLE_TITLES_COLLIDE_WITH_LOWER_LETTERPRESS` 與 `DESKTOP_TWELVE_ENTRIES_NOT_VISIBLE`。實景證明舊 2×2、兩列欄目上半過長，WITNESS/WORSHIP 被鉛字覆住；不能用 opacity 假裝不存在。實際修訂 `d05227d` 改為桌面**四樂章四欄**、較小的雜誌內文字級與收緊排距，讓所有十二欄和原已定題名靠頂部作為閱讀主體；保留下方三組／36 枚原 SVG 塊體，字面在目錄狀態降為約 0.32 opacity，頁腳有自身紙白承托、鉛字署名移至 footer 上方。`2acca7c` 限制手機上半可讀內部捲動至 34% 頁高，821–1100px（包括瀏覽器放大後的中間寬度）內部捲動高約 36%，使文章不與 58% 起的印版混在一起；內容不刪、不補假標題。`a13aede`／`4ce793c` 將測試升級為**每項文章及欄目真正落在上部閱讀窗口內**，所有尺寸的 index 下緣都不可侵入保留 SVG 區，而不僅只檢查最後一個 DOM item。這是新的藝術驗收守門，不代表此版已簽收。保留原 Church 單一 scroll clock 和全部正式字形來源。 
+
 **測試與界線：** 初始修改 `873782b`，視覺回歸和硬性守門 `b830e46`。要求下方 36 個原始 SVG 字模、36 個 front use +108 個 depth use、3 個來源 register、每字與主場位置一致、p82 尚未顯現、p93 漸入、p100 保留淡印；其他正式西望全版 p100 不得再蓋目錄。原 Church 活水／日程／分海開門、晨星、右封面、原石紋都不改。**ART TRIAL / NOT APPROVED / 不合併**，等待實景瀏覽器與編輯驗收。
 
 ## 7. P2 Church / Sunday schedule — Italian editorial folio
