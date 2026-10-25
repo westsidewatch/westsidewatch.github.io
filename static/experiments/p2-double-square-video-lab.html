@@ -215,31 +215,41 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  opacity:0;pointer-events:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__radiance{opacity:0!important}
-/* First material trial / PR #1356: one ORIGINAL, NOT-CUTOUT PNG. No
-   fake crenellation stripe, no duplicate paper overlay, no gold gate CSS.
-   The whole PNG travels with the original reversible P2 city transform. */
+/* P2 LIVE COVER / SAME MASONRY, WITH REAL ALPHA ABOVE BATTLEMENTS.
+   First 26% of the original PR1356 image uses its transparent skyline;
+   the rest uses the unaltered original image. Both are pixel-registered
+   at identical background sizes, share one city scroll transform, and
+   have no material seams or illustration-style faux shadows. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city{
  top:24%;bottom:0;overflow:visible;isolation:isolate;
  background:none;box-shadow:none;filter:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__paper{
- inset:0;background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/cover no-repeat;
- box-shadow:none;filter:none
+ inset:0;
+ background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/100% 100% no-repeat;
+ clip-path:inset(26% 0 0 0);box-shadow:none;filter:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city::after{display:none;content:none}
-/* The new original PNG already contains the complete fortress, skyline,
-   surface and doorway. The old wall and fake portal stay in DOM only for the
-   previous scroll structure, but are visually disabled. */
-.dual-cover[data-cover-variant="masthead"] .dual-cover__wall,
-.dual-cover[data-cover-variant="masthead"] .dual-cover__wall::before,
-.dual-cover[data-cover-variant="masthead"] .dual-cover__gate{
- display:none!important;background:none!important;box-shadow:none!important;
+.dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
+ display:block!important;position:absolute;z-index:2;inset:0;
+ height:100%;width:100%;top:0;left:0;right:0;
+ background:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png') center top/100% 100% no-repeat;
+ clip-path:inset(0 0 74% 0);box-shadow:none;filter:none;
+ pointer-events:none;opacity:1
 }
-/* The v5.3 star remains protected, but is a SMALL emblem within the navy
-   masthead band, as requested, rather than obscuring the PNG's central arch. */
+.dual-cover[data-cover-variant="masthead"] .dual-cover__wall::before{content:none;display:none}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__gate{display:none!important}
+/* Only the gold light has dimensional facets: flat SVG polygons,
+   zero gradients, shadows, blur, extrusions, or architectural perspective. */
+.dual-cover[data-cover-variant="masthead"] .dual-cover__fold-light{
+ position:absolute;inset:0;width:100%;height:100%;z-index:3;
+ overflow:hidden;pointer-events:none;opacity:0;
+ mix-blend-mode:multiply;will-change:opacity
+}
+/* Keep the protected original star small in the masthead's navy. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
- top:15%;left:50%;width:clamp(28px,7cqi,66px);
- z-index:6;filter:none;
+ top:19%;left:50%;width:clamp(23px,5.2cqi,52px);
+ z-index:6;filter:none
 }
 /* One shared lower-right editorial system: no independent positioning. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
@@ -272,7 +282,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  .dual-cover[data-cover-variant="masthead"] .dual-cover__vol{top:20.5%;left:6%;font-size:9px}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__city{top:24%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
-  left:50%;top:15%;width:clamp(25px,8cqi,49px)
+  left:50%;top:19%;width:clamp(21px,5.4cqi,34px)
  }
  .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
   right:6%;bottom:6%;width:62%;gap:clamp(5px,1.2cqi,9px)
@@ -284,7 +294,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 
 }
 @media(max-width:360px){
- .dual-cover[data-cover-variant="masthead"] .dual-cover__star{width:8cqi;top:15%}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__star{width:5.4cqi;top:19%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{bottom:5.5%;width:62%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:24px}
 }
@@ -331,6 +341,13 @@ html.dual-embed .dual-film__credit{display:none}
      <div class="dual-cover__city" id="dual-cover-city" aria-hidden="true">
       <div class="dual-cover__paper"></div>
       <div class="dual-cover__wall" id="dual-cover-wall"><span class="dual-cover__gate" aria-hidden="true"></span></div>
+      <svg class="dual-cover__fold-light" id="dual-cover-folded-light" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <path d="M493 300 L508 300 L766 520 L707 562 Z" fill="#f4d67c" opacity=".88"/>
+        <path d="M707 562 L766 520 L92 790 L35 722 Z" fill="#d4a44b" opacity=".86"/>
+        <path d="M35 722 L92 790 L620 1000 L740 1000 Z" fill="#efc665" opacity=".74"/>
+        <path d="M707 562 L766 520 L788 548 L723 590 Z" fill="#a97e39" opacity=".55"/>
+        <path d="M35 722 L92 790 L176 822 L132 750 Z" fill="#fae09b" opacity=".59"/>
+      </svg>
      </div>
      <img class="dual-cover__mast" src="/images/westside-watch-masthead-landscape.svg" alt="西望 WESTSIDE WATCH 正式雜誌標誌" loading="eager">
      <span class="dual-cover__series" lang="en"></span>
@@ -392,6 +409,7 @@ html.dual-embed .dual-film__credit{display:none}
 (function(){
  const stage=document.getElementById('dual-stage');
  const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
+ const foldedLight=document.getElementById('dual-cover-folded-light');
  const film=document.getElementById('dual-film'),frame=document.getElementById('dual-film-frame'),star=document.getElementById('dual-star');
  const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents'),relief=document.getElementById('dual-contents-relief'),reliefFolio=document.getElementById('dual-relief-folio');
  const radiance=document.getElementById('dual-radiance'),city=document.getElementById('dual-cover-city');
@@ -539,6 +557,7 @@ html.dual-embed .dual-film__credit{display:none}
    radiance.style.opacity=String(starRise);
    star.style.opacity=String(starRise);
    star.style.transform='translate(-50%,'+(95-95*starRise).toFixed(2)+'%)';
+   foldedLight.style.opacity=String(reduce?dawnRise:ease((progress-.655)/.13));
 
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
