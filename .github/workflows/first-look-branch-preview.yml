@@ -312,6 +312,15 @@ jobs:
                         battlementBottomClip:getComputedStyle(wallEl).clipPath,
                         foldLightPaths:cv.querySelectorAll('.dual-cover__fold-light path').length,
                         foldLightOpacity:Number(getComputedStyle(cv.querySelector('.dual-cover__fold-light')).opacity),
+                        goldAtThreshold:(()=>{
+                          const paths=[...cv.querySelectorAll('.dual-cover__fold-light path')].slice(0,3)
+                            .map(el=>((el.getAttribute('d')||'').match(/\\d+/g)||[]).map(Number));
+                          if(paths.length!==3||paths.some(p=>p.length<8))return false;
+                          const [a,b,c]=paths;
+                          return Math.abs((a[0]+a[2])/2-500)<15&&a[1]>=620&&a[1]<=710&&a[3]===a[1]&&
+                            a[4]===b[2]&&a[5]===b[3]&&a[6]===b[0]&&a[7]===b[1]&&
+                            b[4]===c[2]&&b[5]===c[3]&&b[6]===c[0]&&b[7]===c[1];
+                        })(),
                         stoneSource:getComputedStyle(paperEl).backgroundImage,
                         wallSource:getComputedStyle(wallEl).backgroundImage,
                         wallShadow:getComputedStyle(wallEl).filter,
@@ -353,6 +362,8 @@ jobs:
                       errors.push('PNG_SKYLINE_AND_FLAT_WALL_NOT_REGISTERED');
                     if(variant==='masthead'&&(metrics.foldLightPaths!==5||metrics.foldLightOpacity<.95))
                       errors.push('GEOMETRIC_LIGHT_NOT_RENDERED');
+                    if(variant==='masthead'&&!metrics.goldAtThreshold)
+                      errors.push('FOLDED_LIGHT_MUST_BEGIN_AT_GATE_THRESHOLD_AND_SHARE_EDGES');
                     if(variant==='masthead'){
                       const original=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-sandstone-wall.png');
                       const alpha=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-stone-gate-cutout.png');
