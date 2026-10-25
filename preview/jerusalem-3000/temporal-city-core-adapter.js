@@ -1,3 +1,4 @@
+import {sourceSpatialTopology} from './source-spatial-topology.js';
 import {loadAnchorCityLedger} from './anchor-ledger-loader.js';
 import {createTemporalCityCore,EVIDENCE_CONFIDENCE,CITY_OBJECT_TYPES} from './temporal-city-core.js';
 
@@ -29,7 +30,8 @@ export async function loadTemporalCityCore(phases,{terrain=null}={}){
   const objects=pack.objects||[];
   for(const object of objects){
    const id=object.id||object.properties?.id;if(!id)continue;const source=object.properties?{...object.properties,...object}:object;
-   core.register({id,type:TYPE_MAP[source.kind]||CITY_OBJECT_TYPES.BUILDING,phaseIds:[...new Set([pack.phase,...(lifecycleMap.get(id)||[]).map(event=>event.phase)])],geometry:geometryDescriptor(source),typology:source.kind||null,source:{evidence:source.evidence||null,label:source.label||null,anchorPack:pack.phase,urls:source.sources||[],limitations:source.limitations||[]},confidence:evidenceConfidence(source),lifecycle:lifecycleFor(id,lifecycleMap,pack.phase),metadata:{label:source.label||id,legacyConfidence:source.confidence||null,adapter:'anchor-era-packs-v1',lifecyclePack:pack.lifecyclePack||null,relatedObjects:source.relatedObjects||[],rendererBinding:source.rendererBinding||null,lifecycleTemplate:source.lifecycleTemplate||null}});
+   const topology=String(pack.objectPack).replace(/^\.\//,'')==='objects/herodian-30ce.json'?sourceSpatialTopology(source,terrain):null;
+   core.register({id,type:TYPE_MAP[source.kind]||CITY_OBJECT_TYPES.BUILDING,phaseIds:[...new Set([pack.phase,...(lifecycleMap.get(id)||[]).map(event=>event.phase)])],geometry:geometryDescriptor(source),typology:source.kind||null,source:{evidence:source.evidence||null,label:source.label||null,anchorPack:pack.phase,urls:source.sources||[],limitations:source.limitations||[]},confidence:evidenceConfidence(source),lifecycle:lifecycleFor(id,lifecycleMap,pack.phase),metadata:{...(topology?{spatialTopology:topology}:{}),label:source.label||id,legacyConfidence:source.confidence||null,adapter:'anchor-era-packs-v1',lifecyclePack:pack.lifecyclePack||null,relatedObjects:source.relatedObjects||[],rendererBinding:source.rendererBinding||null,lifecycleTemplate:source.lifecycleTemplate||null}});
   }
  }
  const validation=core.validate();

@@ -519,5 +519,33 @@
     "coverage": "partial-old-city-western-environs-study-window",
     "oldCityBackground": "shared-authored-envelopes-not-verified-surviving-fabric",
     "historicalFoundationAccepted": false
+  },
+  "sourceSpatialBindingReview": {
+    "status": "reviewed-with-deferred-geometry",
+    "evidence": "SOURCE-SPATIAL-BINDINGS.md",
+    "registeredSourceZoneIds": [
+      "j3k:object:temple-mount-enclosure-herodian",
+      "j3k:object:royal-stoa",
+      "j3k:object:antonia",
+      "j3k:object:southern-approach",
+      "j3k:object:western-street"
+    ],
+    "deferredGeometryIds": [
+      "j3k:district:western-lower-city",
+      "j3k:object:damascus-gate-ottoman",
+      "j3k:object:inner-temple",
+      "j3k:object:jaffa-gate-ottoman",
+      "j3k:object:modern-metropolitan-envelope",
+      "j3k:object:modern-old-city-preserved",
+      "j3k:object:modern-road-fabric",
+      "j3k:object:nehemiah-wall",
+      "j3k:object:old-city-fabric-ottoman",
+      "j3k:object:ottoman-wall",
+      "j3k:object:persian-settlement-envelope",
+      "j3k:object:royal-monumental-zone-10c",
+      "j3k:object:siloam-water-tunnel",
+      "j3k:object:southeastern-ridge-iron-age"
+    ],
+    "historicalFoundationAccepted": false
   }
 }

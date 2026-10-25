@@ -4,7 +4,7 @@ export function createSpatialSkeletonView({parent,controls,terrain,getSnapshot,g
  const button=document.createElement('button');button.type='button';button.textContent='空間骨架對照';button.setAttribute('aria-pressed','false');controls.append(button);
  const panel=document.createElement('section');panel.className='j3k-skeleton-panel';panel.id='j3k-spatial-skeleton';panel.hidden=true;button.setAttribute('aria-controls',panel.id);
  const title=document.createElement('h3');title.textContent='同一地形 · 同一比例 · 時代骨架';
- const note=document.createElement('p');note.textContent='底圖為現代 DEM（深色低、淺色高）。綠：已登記地區；橘：路徑；藍：水防位置；紫：公共核心。點只標模型中心，非實測平面。虛線為模型布局包絡，非古城界。';
+ const note=document.createElement('p');note.textContent='底圖為現代 DEM（深色低、淺色高）。綠：已登記地區；橘：路徑；藍：水防位置；紫：公共核心。點僅標示意模型中心或來源概略區位，非測繪平面。虛線為模型布局包絡，非古城界。';
  const canvas=document.createElement('canvas');canvas.width=660;canvas.height=690;canvas.setAttribute('role','img');canvas.setAttribute('aria-label','共同現代地形上的時代空間骨架');
  const summary=document.createElement('p');summary.setAttribute('aria-live','polite');panel.append(title,note,canvas,summary);parent.append(panel);
  const background=document.createElement('canvas');background.width=canvas.width;background.height=canvas.height;
