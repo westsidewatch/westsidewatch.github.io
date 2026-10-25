@@ -61,7 +61,8 @@ button{font:inherit}
  .cover__ink{display:none}.cover__ink-fallback{display:block;position:absolute;top:-12.346%;left:-.158%;width:107.425%;height:auto}
 }
 .band-rule{position:absolute;z-index:1;top:var(--band-end);left:0;right:0;height:1px;background:color-mix(in srgb,var(--band) 82%,var(--surface));opacity:.6}
-.cover__issue{position:absolute;top:16.6cqi;left:2.1%;z-index:11;color:var(--mast);font:400 clamp(9px,1.25cqi,15px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.13em}
+.cover__issue{position:absolute;top:15.1cqi;left:2.1%;z-index:14;color:var(--mast);font:400 clamp(9px,1.25cqi,15px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.13em}
+.cover[data-issue="2"][data-breach="3"] .cover__issue{color:#e6d7bc}
 .cover__wall{position:absolute;z-index:3;left:0;right:0;top:var(--wall-start);bottom:0;background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top / 100% 100% no-repeat;
  -webkit-mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
  mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
@@ -81,14 +82,14 @@ button{font:inherit}
 .cover__abstract{display:none;position:absolute;z-index:4;inset:var(--abstract-start) 0 0;background:#293f4e;overflow:hidden}
 .cover[data-issue="2"] .cover__abstract{display:block}
 .abstract__a{position:absolute;top:4%;left:-5%;font:400 clamp(170px,43cqi,650px)/.75 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.10em;color:#c24836;opacity:.91;transform:rotate(-13deg)}
-.abstract__b{position:absolute;right:2%;bottom:-6%;font:italic 400 clamp(78px,18cqi,260px)/1 var(--ws-type-display-en,Georgia,serif);color:#d7c29a;transform:rotate(-12deg)}
-.cover__theme{position:absolute;z-index:6;right:4.3%;bottom:5.6%;max-width:54%;text-align:right;color:var(--copy);text-shadow:0 1px 0 #eee0c41c}
+.abstract__b{position:absolute;left:10%;bottom:28%;font:italic 400 clamp(78px,15cqi,260px)/1 var(--ws-type-display-en,Georgia,serif);color:#d7c29a;opacity:.14;transform:rotate(-12deg)}
+.cover__theme{position:absolute;z-index:14;right:4.3%;bottom:5.6%;max-width:54%;text-align:right;color:var(--copy);text-shadow:0 1px 0 #eee0c41c}
 .cover__theme h1{font:400 clamp(31px,6.1cqi,87px)/.93 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.063em;margin:0}
 .cover__theme h1 em{font-size:.57em;vertical-align:.12em;letter-spacing:-.025em}
 .cover__theme p{font:600 clamp(12px,2.25cqi,26px)/1.22 var(--ws-type-display-zh,sans-serif);margin:12px 0 0}
 .cover[data-issue="1"] .cover__theme{max-width:38%;left:4%;right:auto;text-align:left;bottom:10%}
 .cover[data-issue="2"] .cover__theme{max-width:57%;bottom:5%;color:#f3e9d5}
-.cover__folio{position:absolute;z-index:8;left:4%;bottom:3.5%;font:400 10px/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;color:var(--copy)}
+.cover__folio{position:absolute;z-index:14;left:4%;bottom:3.5%;font:400 10px/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;color:var(--copy)}
 .cover[data-issue="1"] .cover__folio{color:#59443d}
 .cover[data-issue="2"] .cover__folio{color:#d7c29a}
 .audit{border-top:1px solid #a69e91;padding-top:15px;display:grid;gap:20px}
