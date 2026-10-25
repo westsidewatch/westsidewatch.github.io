@@ -215,10 +215,13 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  opacity:0;pointer-events:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__radiance{opacity:0!important}
-/* ONE PHOTO / PR #1356: the complete transparent PNG is the sole
-   architecture + stone surface. Its actual alpha replaces the skyline sky.
-   Never splice the original opaque image with the transparent variant:
-   their tonal/detail differences create a horizontal architectural seam. */
+/* P2: ONE continuous opaque stone source; the secondary alpha asset
+   only defines the crenellation-to-navy skyline. It is NEVER used as
+   visible masonry: its doorway is intentionally transparent and must not
+   replace the original opaque, stone-filled doorway.
+   The cutout's upper skyline ends before y=26% of the source; the
+   opaque lower mask restores the doorway and full stone surface with
+   zero visible horizontal photo joins. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city{
  top:24%;bottom:0;overflow:visible;isolation:isolate;
  background:transparent;box-shadow:none;filter:none
@@ -230,8 +233,22 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city::after{display:none;content:none}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
  display:block!important;position:absolute;z-index:2;inset:0;
- height:100%;width:100%;top:0;left:0;right:0;
- background:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png') center top/100% 100% no-repeat;
+ width:100%;height:100%;top:0;left:0;right:0;
+ background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/100% 100% no-repeat;
+ -webkit-mask-image:
+   url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),
+   linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
+ mask-image:
+   url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),
+   linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
+ -webkit-mask-position:center top,center top;
+ mask-position:center top,center top;
+ -webkit-mask-size:100% 100%,100% 100%;
+ mask-size:100% 100%,100% 100%;
+ -webkit-mask-repeat:no-repeat,no-repeat;
+ mask-repeat:no-repeat,no-repeat;
+ -webkit-mask-composite:source-over;
+ mask-composite:add;
  clip-path:none!important;box-shadow:none;filter:none;
  pointer-events:none;opacity:1
 }
