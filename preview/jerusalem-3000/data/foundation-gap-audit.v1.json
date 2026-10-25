@@ -2,10 +2,10 @@
   "schema": "j3k.foundation-gap-audit.v1",
   "scope": "engineering-spatial-inventory-not-historical-completeness",
   "provenance": {
-    "renderBaselineCommit": "36fbadb8b",
+    "renderBaselineCommit": "e5da00d04",
     "baselinePolicy": "caller-declared render revision; input-byte hashes recorded; no automatic freshness certification",
-    "reportSha256": "f289dbed6c5b122ec5e04a0d321a6d717a2b8f22748676e4c5c742b181d10b19",
-    "planSha256": "44ab9ecf60ae17aa7cf3b56f2f43ff997fbf87477792c94a22b19ee4d05edd41"
+    "reportSha256": "8d4f8c71e14883fbfe82b912ae5cd227f5097cb72fafea747592fbe02f79e955",
+    "planSha256": "c1544fa903dbf7234b60e3b64e494a92413a7395729c5eee88cee325d210d284"
   },
   "capturePolicy": "sequential-all-evidence-active-snapshots; registered counts include unresolved records and may depend on prior generation; not city size",
   "window": {
@@ -648,13 +648,10 @@
           "reviewStatus": "partial",
           "registered": 20,
           "activeMappedScope": 10,
-          "mapped": 8,
-          "activeWithoutGeometryIds": [
-            "j3k:object:southern-approach",
-            "j3k:object:western-street"
-          ],
+          "mapped": 10,
+          "activeWithoutGeometryIds": [],
           "visibleBound": 10,
-          "finding": "active-geometry-gap"
+          "finding": "mapped-partial-scope"
         },
         "waterDefense": {
           "reviewStatus": "partial",
@@ -669,12 +666,9 @@
           "reviewStatus": "partial",
           "registered": 5,
           "activeMappedScope": 4,
-          "mapped": 0,
+          "mapped": 3,
           "activeWithoutGeometryIds": [
-            "j3k:object:antonia",
-            "j3k:object:inner-temple",
-            "j3k:object:royal-stoa",
-            "j3k:object:temple-mount-enclosure-herodian"
+            "j3k:object:inner-temple"
           ],
           "visibleBound": 4,
           "finding": "active-geometry-gap"
@@ -727,13 +721,10 @@
           "reviewStatus": "partial",
           "registered": 10,
           "activeMappedScope": 10,
-          "mapped": 8,
-          "activeWithoutGeometryIds": [
-            "j3k:object:southern-approach",
-            "j3k:object:western-street"
-          ],
+          "mapped": 10,
+          "activeWithoutGeometryIds": [],
           "visibleBound": 10,
-          "finding": "active-geometry-gap"
+          "finding": "mapped-partial-scope"
         },
         "waterDefense": {
           "reviewStatus": "partial",
@@ -748,12 +739,9 @@
           "reviewStatus": "partial",
           "registered": 5,
           "activeMappedScope": 4,
-          "mapped": 0,
+          "mapped": 3,
           "activeWithoutGeometryIds": [
-            "j3k:object:antonia",
-            "j3k:object:inner-temple",
-            "j3k:object:royal-stoa",
-            "j3k:object:temple-mount-enclosure-herodian"
+            "j3k:object:inner-temple"
           ],
           "visibleBound": 4,
           "finding": "active-geometry-gap"
@@ -1702,6 +1690,11 @@
         "j3k:hellenistic-hasmonean:road:7"
       ],
       "targetOnlyMappedIds": [
+        "j3k:object:antonia",
+        "j3k:object:royal-stoa",
+        "j3k:object:southern-approach",
+        "j3k:object:temple-mount-enclosure-herodian",
+        "j3k:object:western-street",
         "j3k:road:central-valley",
         "j3k:road:eastern-slope",
         "j3k:road:lower-city-lane-a",
@@ -1726,6 +1719,11 @@
       "to": "roman-destruction",
       "reviewStatus": "partial",
       "sharedMappedIds": [
+        "j3k:object:antonia",
+        "j3k:object:royal-stoa",
+        "j3k:object:southern-approach",
+        "j3k:object:temple-mount-enclosure-herodian",
+        "j3k:object:western-street",
         "j3k:road:central-valley",
         "j3k:road:eastern-slope",
         "j3k:road:lower-city-lane-a",
@@ -1753,6 +1751,11 @@
       "reviewStatus": "unresolved",
       "sharedMappedIds": [],
       "sourceOnlyMappedIds": [
+        "j3k:object:antonia",
+        "j3k:object:royal-stoa",
+        "j3k:object:southern-approach",
+        "j3k:object:temple-mount-enclosure-herodian",
+        "j3k:object:western-street",
         "j3k:road:central-valley",
         "j3k:road:eastern-slope",
         "j3k:road:lower-city-lane-a",
@@ -2096,8 +2099,6 @@
       "middle-bronze",
       "late-bronze-iron1",
       "hellenistic-hasmonean",
-      "herodian-jesus",
-      "roman-destruction",
       "aelia",
       "byzantine",
       "early-islamic",
@@ -2218,7 +2219,35 @@
       "gate": "共同ID、外觀相似、原型保留百分比或切換測試均不能證明歷史存續。"
     }
   ],
-  "nextPackage": "existing-spatial-bindings",
+  "nextPackage": "early-period-districts",
+  "sourceSpatialBindingReview": {
+    "status": "reviewed-with-deferred-geometry",
+    "evidence": "SOURCE-SPATIAL-BINDINGS.md",
+    "registeredSourceZoneIds": [
+      "j3k:object:temple-mount-enclosure-herodian",
+      "j3k:object:royal-stoa",
+      "j3k:object:antonia",
+      "j3k:object:southern-approach",
+      "j3k:object:western-street"
+    ],
+    "deferredGeometryIds": [
+      "j3k:district:western-lower-city",
+      "j3k:object:damascus-gate-ottoman",
+      "j3k:object:inner-temple",
+      "j3k:object:jaffa-gate-ottoman",
+      "j3k:object:modern-metropolitan-envelope",
+      "j3k:object:modern-old-city-preserved",
+      "j3k:object:modern-road-fabric",
+      "j3k:object:nehemiah-wall",
+      "j3k:object:old-city-fabric-ottoman",
+      "j3k:object:ottoman-wall",
+      "j3k:object:persian-settlement-envelope",
+      "j3k:object:royal-monumental-zone-10c",
+      "j3k:object:siloam-water-tunnel",
+      "j3k:object:southeastern-ridge-iron-age"
+    ],
+    "historicalFoundationAccepted": false
+  },
   "detailWork": "paused-until-foundation-review-accepted",
   "historicalFoundationAccepted": false
 }

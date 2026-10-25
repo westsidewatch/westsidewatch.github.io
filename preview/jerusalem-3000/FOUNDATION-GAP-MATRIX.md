@@ -1,6 +1,6 @@
 # Jerusalem 3000：18期／17段空間缺口矩陣
 
-渲染基準：`36fbadb8b`。此表是工程盤點；整體歷史基礎尚未驗收，建築細雕暫停。
+渲染基準：`e5da00d04`。此表是工程盤點；整體歷史基礎尚未驗收，建築細雕暫停。
 
 數字 `登記／地圖` 表示帳本登記數／當前有效且可定位的骨架圖對象。帳本可能含前期留下的未明去向記錄，並受逐期生成順序影響，不能當作城市規模。地圖為零不代表建築不存在；公共核心欄只盤點目前 monument 分類，不能涵蓋所有建築語義。
 
@@ -18,8 +18,8 @@
 | 巴比倫毀城 | 5／4 | 6／6 | 4／1 | 4／3 | 1104 | 4 | 1 |
 | 波斯—尼希米 | 9／3 | 10／4 | 4／2 | 5／1 | 189 | 1172 | 3 |
 | 希臘化—哈斯蒙尼 | 5／1 | 12／8 | 3／0 | 1／0 | 1534 | 2660 | 2 |
-| 大希律—耶穌 | 6／0 | 20／8 | 3／0 | 5／0 | 1067 | 3235 | 8 |
-| 羅馬毀城 | 1／0 | 10／8 | 0／0 | 5／0 | 1067 | 0 | 7 |
+| 大希律—耶穌 | 6／0 | 20／10 | 3／0 | 5／3 | 1067 | 3235 | 3 |
+| 羅馬毀城 | 1／0 | 10／10 | 0／0 | 5／3 | 1067 | 0 | 2 |
 | Aelia Capitolina | 3／2 | 13／3 | 0／0 | 4／0 | 32 | 2300 | 0 |
 | 拜占庭 | 6／4 | 6／3 | 0／0 | 0／0 | 53 | 37 | 0 |
 | 早期伊斯蘭 | 8／4 | 6／3 | 0／0 | 0／0 | 56 | 60 | 0 |
@@ -40,7 +40,7 @@
 5. **現代覆蓋範圍**（modern-coverage）— 成對補足城外擴張／現代的東部及遠端地區與交通脈絡，明示各層年代範圍。 驗收門檻：西側局部窗口不算完整城市，也不代表政治邊界。
 6. **17段接續驗收**（adjacent-transition-acceptance）— 逐段審核17段接續的保留、新建、毀壞、退出與未知去向，驗證反向還原。 驗收門檻：共同ID、外觀相似、原型保留百分比或切換測試均不能證明歷史存續。
 
-下一包：先處理 **existing-spatial-bindings**，核對既有核心與水防的定位／分類；有來源才補定位，明確 withheld 的對象繼續保留缺口。
+既有區位核對已完成，來源要求暫緩的對象仍保留缺口。下一包：**early-period-districts**，早期四期分區／路徑／佔用基礎。
 
 ## 17段相鄰接續
 
@@ -55,9 +55,9 @@
 | late-first-temple → babylonian-destruction | 14 | 1 | 0 | partial |
 | babylonian-destruction → persian-nehemiah | 1 | 13 | 9 | partial |
 | persian-nehemiah → hellenistic-hasmonean | 0 | 10 | 9 | unresolved |
-| hellenistic-hasmonean → herodian-jesus | 0 | 9 | 8 | unresolved |
-| herodian-jesus → roman-destruction | 8 | 0 | 0 | partial |
-| roman-destruction → aelia | 0 | 8 | 5 | unresolved |
+| hellenistic-hasmonean → herodian-jesus | 0 | 9 | 13 | unresolved |
+| herodian-jesus → roman-destruction | 13 | 0 | 0 | partial |
+| roman-destruction → aelia | 0 | 13 | 5 | unresolved |
 | aelia → byzantine | 0 | 5 | 7 | unresolved |
 | byzantine → early-islamic | 0 | 7 | 7 | unresolved |
 | early-islamic → crusader | 0 | 7 | 9 | unresolved |
