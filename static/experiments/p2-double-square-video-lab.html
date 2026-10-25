@@ -215,26 +215,24 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  opacity:0;pointer-events:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__radiance{opacity:0!important}
-/* P2 LIVE COVER / SAME MASONRY, WITH REAL ALPHA ABOVE BATTLEMENTS.
-   First 26% of the original PR1356 image uses its transparent skyline;
-   the rest uses the unaltered original image. Both are pixel-registered
-   at identical background sizes, share one city scroll transform, and
-   have no material seams or illustration-style faux shadows. */
+/* ONE PHOTO / PR #1356: the complete transparent PNG is the sole
+   architecture + stone surface. Its actual alpha replaces the skyline sky.
+   Never splice the original opaque image with the transparent variant:
+   their tonal/detail differences create a horizontal architectural seam. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city{
  top:24%;bottom:0;overflow:visible;isolation:isolate;
- background:none;box-shadow:none;filter:none
+ background:transparent;box-shadow:none;filter:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__paper{
- inset:0;
- background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/100% 100% no-repeat;
- clip-path:inset(26% 0 0 0);box-shadow:none;filter:none
+ display:none!important;background:none!important;clip-path:none!important;
+ box-shadow:none!important;filter:none!important
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city::after{display:none;content:none}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
  display:block!important;position:absolute;z-index:2;inset:0;
  height:100%;width:100%;top:0;left:0;right:0;
  background:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png') center top/100% 100% no-repeat;
- clip-path:inset(0 0 74% 0);box-shadow:none;filter:none;
+ clip-path:none!important;box-shadow:none;filter:none;
  pointer-events:none;opacity:1
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__wall::before{content:none;display:none}
