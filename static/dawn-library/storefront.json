@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-10-24T13:24:33.474154+00:00",
+  "generatedAt": "2026-10-25T13:46:06.701856+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -974,29 +974,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-biblicalbookstra0000zimm",
-          "title": "Biblical books translated from the Aramaic",
-          "author": "Zimmermann, Frank",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/biblicalbookstra0000zimm",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/biblicalbookstra0000zimm",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-recoverybible0000wbil",
           "title": "The recovery bible",
           "author": "W., Bill",
@@ -1009,6 +986,29 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/recoverybible0000wbil",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-ManualOfBibleTruths1898",
+          "title": "Manual of Bible truths and histories adapted to the questions of the Baltimore catechism together with A life of Christ from the Four Gospels ..",
+          "author": "Baxter, James Joseph, 1865-",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/ManualOfBibleTruths1898",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/ManualOfBibleTruths1898",
             "mode": "source"
           },
           "rights": {
@@ -1066,18 +1066,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-pearlsforkingsix0000scha",
-          "title": "Pearls for a King : six short stories inspired by Bible characters",
-          "author": "Scharlemann, Dorothy Hoyer, 1912-",
+          "id": "internet-archive-greatpeopleofbib0000unse_y0g8",
+          "title": "Great people of the Bible and how they lived",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/pearlsforkingsix0000scha",
+            "url": "https://archive.org/details/greatpeopleofbib0000unse_y0g8",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/pearlsforkingsix0000scha",
+            "url": "https://archive.org/services/img/greatpeopleofbib0000unse_y0g8",
             "mode": "source"
           },
           "rights": {
@@ -1865,51 +1865,6 @@
           }
         },
         {
-          "id": "gutenberg-64488",
-          "title": "Roman Stoicism",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/64488",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/9290292-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL18539796W",
-            "editionId": "OL23763898M",
-            "isbn": "0790540126",
-            "coverId": 9290292,
-            "internetArchiveId": "romanstoicismbei0000arno_c1t2",
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL18539796W",
-            "openLibraryEdition": "OL23763898M",
-            "isbn": "0790540126"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/romanstoicismbei0000arno_c1t2",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
           "id": "gutenberg-64858",
           "title": "Toleration and other essays",
           "author": "",
@@ -1948,6 +1903,51 @@
             {
               "provider": "Internet Archive",
               "url": "https://archive.org/details/treatiseontolera00volt",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-64488",
+          "title": "Roman Stoicism",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/64488",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/9290292-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL18539796W",
+            "editionId": "OL23763898M",
+            "isbn": "0790540126",
+            "coverId": 9290292,
+            "internetArchiveId": "romanstoicismbei0000arno_c1t2",
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL18539796W",
+            "openLibraryEdition": "OL23763898M",
+            "isbn": "0790540126"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/romanstoicismbei0000arno_c1t2",
               "kind": "remote-scan",
               "reader": "Internet Archive BookReader",
               "rightsStatus": "source-rights-check"
@@ -2090,26 +2090,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "gutenberg-54949",
-          "title": "Deutschlands Geschichtsquellen im Mittelalter bis zur Mitte des dreizehnten Jahrhunderts, Erster Band (von 2) (German)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/54949",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-38162",
           "title": "Practical Religion",
           "author": "",
@@ -2141,6 +2121,26 @@
             "openLibraryWork": "/works/OL7526202W",
             "openLibraryEdition": "OL6691468M"
           }
+        },
+        {
+          "id": "gutenberg-54949",
+          "title": "Deutschlands Geschichtsquellen im Mittelalter bis zur Mitte des dreizehnten Jahrhunderts, Erster Band (von 2) (German)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/54949",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
         },
         {
           "id": "gutenberg-23038",
@@ -2266,6 +2266,39 @@
           "contentDownloaded": false
         },
         {
+          "id": "gutenberg-61883",
+          "title": "Prevailing Prayer: What Hinders It?",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/61883",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL39001736W",
+            "editionId": "OL53105992M",
+            "isbn": null,
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-02T15:53:28.184533+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL39001736W",
+            "openLibraryEdition": "OL53105992M"
+          }
+        },
+        {
           "id": "gutenberg-55743",
           "title": "How to Succeed in the Christian Life",
           "author": "",
@@ -2311,59 +2344,6 @@
           ]
         },
         {
-          "id": "gutenberg-61883",
-          "title": "Prevailing Prayer: What Hinders It?",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/61883",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL39001736W",
-            "editionId": "OL53105992M",
-            "isbn": null,
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-02T15:53:28.184533+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL39001736W",
-            "openLibraryEdition": "OL53105992M"
-          }
-        },
-        {
-          "id": "gutenberg-2100",
-          "title": "Bibeln, Gamla och Nya Testamentet (Swedish)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/2100",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-13166",
           "title": "The Psalms of David",
           "author": "",
@@ -2406,6 +2386,26 @@
               "rightsStatus": "source-rights-check"
             }
           ]
+        },
+        {
+          "id": "gutenberg-2100",
+          "title": "Bibeln, Gamla och Nya Testamentet (Swedish)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/2100",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
         },
         {
           "id": "gutenberg-64160",
@@ -2647,6 +2647,50 @@
           }
         },
         {
+          "id": "gutenberg-39744",
+          "title": "Arne; Early Tales and Sketches",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/39744",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/9698307-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1084831W",
+            "editionId": "OL20624078M",
+            "isbn": null,
+            "coverId": 9698307,
+            "internetArchiveId": "arneearlytalesa00bjgoog",
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1084831W",
+            "openLibraryEdition": "OL20624078M"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/arneearlytalesa00bjgoog",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
           "id": "gutenberg-55239",
           "title": "Italian Yesterdays, vol. 2",
           "author": "",
@@ -2698,50 +2742,6 @@
           },
           "quality": "source-edition",
           "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-39744",
-          "title": "Arne; Early Tales and Sketches",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/39744",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/9698307-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL1084831W",
-            "editionId": "OL20624078M",
-            "isbn": null,
-            "coverId": 9698307,
-            "internetArchiveId": "arneearlytalesa00bjgoog",
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL1084831W",
-            "openLibraryEdition": "OL20624078M"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/arneearlytalesa00bjgoog",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
         },
         {
           "id": "gutenberg-55240",
@@ -3046,6 +3046,42 @@
           "contentDownloaded": false
         },
         {
+          "id": "gutenberg-22153",
+          "title": "Pagan and Christian Rome",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/22153",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/1448494-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL8521156W",
+            "editionId": "OL48234932M",
+            "isbn": "9781647989651",
+            "coverId": 1448494,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-12T19:08:35.385013+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL8521156W",
+            "openLibraryEdition": "OL48234932M",
+            "isbn": "9781647989651"
+          }
+        },
+        {
           "id": "gutenberg-66116",
           "title": "Modern Greek Folklore and Ancient Greek Religion: A Study in Survivals",
           "author": "",
@@ -3099,42 +3135,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "gutenberg-22153",
-          "title": "Pagan and Christian Rome",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/22153",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/1448494-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL8521156W",
-            "editionId": "OL48234932M",
-            "isbn": "9781647989651",
-            "coverId": 1448494,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-12T19:08:35.385013+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL8521156W",
-            "openLibraryEdition": "OL48234932M",
-            "isbn": "9781647989651"
-          }
-        },
-        {
           "id": "gutenberg-2131",
           "title": "An Account of Egypt",
           "author": "",
@@ -3171,26 +3171,6 @@
           }
         },
         {
-          "id": "gutenberg-28072",
-          "title": "A history of art in Chaldæa & Assyria, Vol. 1 (of 2)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/28072",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-43491",
           "title": "An Introduction to the Study of the Maya Hieroglyphs",
           "author": "",
@@ -3225,6 +3205,26 @@
             "openLibraryEdition": "OL9585963M",
             "isbn": "9780548184356"
           }
+        },
+        {
+          "id": "gutenberg-28072",
+          "title": "A history of art in Chaldæa & Assyria, Vol. 1 (of 2)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/28072",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
         },
         {
           "id": "gutenberg-61792",
@@ -3513,26 +3513,6 @@
           }
         },
         {
-          "id": "gutenberg-44884",
-          "title": "The Geography of Strabo, Volume 1 (of 3)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/44884",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-15359",
           "title": "The Negro",
           "author": "",
@@ -3571,6 +3551,71 @@
             {
               "provider": "Internet Archive",
               "url": "https://archive.org/details/bwb_W7-CTG-021",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-44884",
+          "title": "The Geography of Strabo, Volume 1 (of 3)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/44884",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
+          "id": "gutenberg-27995",
+          "title": "The History of London",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/27995",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/11776-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL264813W",
+            "editionId": "OL9217685M",
+            "isbn": "0007166532",
+            "coverId": 11776,
+            "internetArchiveId": "timeshistoryoflo0000unse",
+            "resolvedAt": "2026-10-15T14:14:13.019001+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL264813W",
+            "openLibraryEdition": "OL9217685M",
+            "isbn": "0007166532"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/timeshistoryoflo0000unse",
               "kind": "remote-scan",
               "reader": "Internet Archive BookReader",
               "rightsStatus": "source-rights-check"
@@ -3622,71 +3667,6 @@
           ]
         },
         {
-          "id": "gutenberg-27995",
-          "title": "The History of London",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/27995",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/11776-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL264813W",
-            "editionId": "OL9217685M",
-            "isbn": "0007166532",
-            "coverId": 11776,
-            "internetArchiveId": "timeshistoryoflo0000unse",
-            "resolvedAt": "2026-10-15T14:14:13.019001+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL264813W",
-            "openLibraryEdition": "OL9217685M",
-            "isbn": "0007166532"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/timeshistoryoflo0000unse",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "gutenberg-33743",
-          "title": "The History and Antiquities of the Doric Race, Vol. 1 of 2",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/33743",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-26341",
           "title": "On The Structure of Greek Tribal Society: An Essay",
           "author": "",
@@ -3721,6 +3701,26 @@
             "openLibraryEdition": "OL8062965M",
             "isbn": "9780548010471"
           }
+        },
+        {
+          "id": "gutenberg-33743",
+          "title": "The History and Antiquities of the Doric Race, Vol. 1 of 2",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/33743",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
         },
         {
           "id": "gutenberg-71398",
@@ -4327,26 +4327,6 @@
           }
         },
         {
-          "id": "gutenberg-1636",
-          "title": "Phaedrus",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/1636",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-18269",
           "title": "Pascal's Pensées",
           "author": "",
@@ -4378,6 +4358,62 @@
             "openLibraryWork": "/works/OL1305558W",
             "openLibraryEdition": "OL20822574M",
             "isbn": "9782718116822"
+          }
+        },
+        {
+          "id": "gutenberg-1636",
+          "title": "Phaedrus",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1636",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
+          "id": "gutenberg-9662",
+          "title": "An Enquiry Concerning Human Understanding",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/9662",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/7773304-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL17535826W",
+            "editionId": "OL26125494M",
+            "isbn": "0199549907",
+            "coverId": 7773304,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-01T16:32:24.060193+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL17535826W",
+            "openLibraryEdition": "OL26125494M",
+            "isbn": "0199549907"
           }
         },
         {
@@ -4424,42 +4460,6 @@
               "rightsStatus": "source-rights-check"
             }
           ]
-        },
-        {
-          "id": "gutenberg-9662",
-          "title": "An Enquiry Concerning Human Understanding",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/9662",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/7773304-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL17535826W",
-            "editionId": "OL26125494M",
-            "isbn": "0199549907",
-            "coverId": 7773304,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-01T16:32:24.060193+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL17535826W",
-            "openLibraryEdition": "OL26125494M",
-            "isbn": "0199549907"
-          }
         },
         {
           "id": "gutenberg-15877",
@@ -4812,6 +4812,26 @@
           }
         },
         {
+          "id": "gutenberg-2981",
+          "title": "The Memoirs of Jacques Casanova de Seingalt, 1725-1798. Complete",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/2981",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
           "id": "gutenberg-3567",
           "title": "Memoirs of Napoleon Bonaparte — Complete",
           "author": "",
@@ -4844,26 +4864,6 @@
             "openLibraryEdition": "OL54235644M",
             "isbn": "1523944978"
           }
-        },
-        {
-          "id": "gutenberg-2981",
-          "title": "The Memoirs of Jacques Casanova de Seingalt, 1725-1798. Complete",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/2981",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
         },
         {
           "id": "gutenberg-3875",
@@ -5148,26 +5148,6 @@
           }
         },
         {
-          "id": "gutenberg-54879",
-          "title": "The Memoirs of François René Vicomte de Chateaubriand sometime Ambassador to England, Volume 4 (of 6)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/54879",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-4361",
           "title": "Memoirs of General William T. Sherman — Complete",
           "author": "",
@@ -5199,6 +5179,60 @@
             "openLibraryWork": "/works/OL40105211W",
             "openLibraryEdition": "OL54582118M",
             "isbn": "9781480224605"
+          }
+        },
+        {
+          "id": "gutenberg-54879",
+          "title": "The Memoirs of François René Vicomte de Chateaubriand sometime Ambassador to England, Volume 4 (of 6)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/54879",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
+          "id": "gutenberg-25700",
+          "title": "The Greville Memoirs, Part 1 (of 3), Volume 1 (of 3)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/25700",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL41555562W",
+            "editionId": "OL56432657M",
+            "isbn": "9781722636876",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-26T13:47:10.411263+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL41555562W",
+            "openLibraryEdition": "OL56432657M",
+            "isbn": "9781722636876"
           }
         },
         {
@@ -5246,73 +5280,6 @@
           ]
         },
         {
-          "id": "gutenberg-25700",
-          "title": "The Greville Memoirs, Part 1 (of 3), Volume 1 (of 3)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/25700",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL41555562W",
-            "editionId": "OL56432657M",
-            "isbn": "9781722636876",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-26T13:47:10.411263+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL41555562W",
-            "openLibraryEdition": "OL56432657M",
-            "isbn": "9781722636876"
-          }
-        },
-        {
-          "id": "gutenberg-44646",
-          "title": "Memoirs of the Duchesse de Dino (Afterwards Duchesse de Talleyrand et de Sagan), 1836-1840",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/44646",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL13222865W",
-            "editionId": "OL20785552M",
-            "isbn": null,
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL13222865W",
-            "openLibraryEdition": "OL20785552M"
-          }
-        },
-        {
           "id": "gutenberg-6031",
           "title": "Memoirs of My Life and Writings",
           "author": "",
@@ -5356,6 +5323,39 @@
               "rightsStatus": "source-rights-check"
             }
           ]
+        },
+        {
+          "id": "gutenberg-44646",
+          "title": "Memoirs of the Duchesse de Dino (Afterwards Duchesse de Talleyrand et de Sagan), 1836-1840",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/44646",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL13222865W",
+            "editionId": "OL20785552M",
+            "isbn": null,
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL13222865W",
+            "openLibraryEdition": "OL20785552M"
+          }
         },
         {
           "id": "gutenberg-27153",
@@ -5535,24 +5535,49 @@
           }
         },
         {
-          "id": "gutenberg-46407",
-          "title": "Memoirs of the Empress Catherine II.",
+          "id": "gutenberg-32475",
+          "title": "The Memoirs of the Conquistador Bernal Diaz del Castillo, Vol 2 (of 2)",
           "author": "",
           "language": "en",
           "source": {
             "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/46407",
+            "url": "https://www.gutenberg.org/ebooks/32475",
             "kind": "remote-public"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://covers.openlibrary.org/b/id/13848359-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
           },
           "rights": {
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
           "quality": "source-edition",
-          "contentDownloaded": false
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL34566173W",
+            "editionId": "OL46881015M",
+            "isbn": "9780266331742",
+            "coverId": 13848359,
+            "internetArchiveId": "memoirsofconquis0000bern",
+            "resolvedAt": "2026-10-23T14:18:07.300554+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL34566173W",
+            "openLibraryEdition": "OL46881015M",
+            "isbn": "9780266331742"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/memoirsofconquis0000bern",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
         }
       ]
     }
@@ -5560,7 +5585,7 @@
   "metrics": {
     "shelves": 9,
     "mappedBooks": 167,
-    "sourceCovers": 116,
+    "sourceCovers": 117,
     "directPublications": 15,
     "providers": {
       "Standard Ebooks": 15,
@@ -5569,9 +5594,9 @@
     },
     "identity": {
       "queriedThisRun": 0,
-      "resolved": 105,
-      "coversAdded": 61,
-      "internetArchiveLinks": 46,
+      "resolved": 106,
+      "coversAdded": 62,
+      "internetArchiveLinks": 47,
       "cacheEntries": 242
     }
   },
