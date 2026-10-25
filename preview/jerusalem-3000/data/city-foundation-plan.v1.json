@@ -26,7 +26,9 @@
     "phase2-inheritance-runtime.js",
     "anchor-ledger-loader.js",
     "temporal-city-core.js",
-    "temporal-city-core-adapter.js"
+    "temporal-city-core-adapter.js",
+    "independent-later-skeleton.js",
+    "data/urban/roman-byzantine-islamic.skeleton.v1.json"
   ],
   "phases": [
     {
@@ -182,7 +184,7 @@
     {
       "id": "aelia",
       "label": "Aelia Capitolina",
-      "rendererFamily": "legacy-footprint-scaffold",
+      "rendererFamily": "independent-later-skeleton",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -191,13 +193,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Existing footprint masses share stable inferred block IDs and explicit generation events; next-era fate unresolved where a next phase exists. Provisional inheritance stays unbound. Historical district/road foundations, ancient ground and verified adjacent-object fates remain incomplete.",
+      "gap": "Independent authored district/path skeleton and terrain-following coarse occupied cells replace the old mass grid. Geometry remains inferred, not archaeological survey; city limits, water/defense, dated subphases and public-building footprints remain incomplete.",
       "acceptanceEvidence": []
     },
     {
       "id": "byzantine",
       "label": "拜占庭",
-      "rendererFamily": "legacy-footprint-scaffold",
+      "rendererFamily": "independent-later-skeleton",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -206,13 +208,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Existing footprint masses share stable inferred block IDs and explicit generation events; next-era fate unresolved where a next phase exists. Provisional inheritance stays unbound. Historical district/road foundations, ancient ground and verified adjacent-object fates remain incomplete.",
+      "gap": "Independent authored district/path skeleton and terrain-following coarse occupied cells replace the old mass grid. Geometry remains inferred, not archaeological survey; city limits, water/defense, dated subphases and public-building footprints remain incomplete.",
       "acceptanceEvidence": []
     },
     {
       "id": "early-islamic",
       "label": "早期伊斯蘭",
-      "rendererFamily": "legacy-footprint-scaffold",
+      "rendererFamily": "independent-later-skeleton",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -221,7 +223,7 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Existing footprint masses share stable inferred block IDs and explicit generation events; next-era fate unresolved where a next phase exists. Provisional inheritance stays unbound. Historical district/road foundations, ancient ground and verified adjacent-object fates remain incomplete.",
+      "gap": "Independent authored district/path skeleton and terrain-following coarse occupied cells replace the old mass grid. Geometry remains inferred, not archaeological survey; city limits, water/defense, dated subphases and public-building footprints remain incomplete.",
       "acceptanceEvidence": []
     },
     {
@@ -481,5 +483,17 @@
     "geometrySource": "existing-shared-registration-only",
     "modelEnvelopeIsHistoricalBoundary": false,
     "historicalFoundationAccepted": false
+  },
+  "independentLaterSkeleton": {
+    "phases": [
+      "aelia",
+      "byzantine",
+      "early-islamic"
+    ],
+    "authority": "published-relationship-context-plus-explicitly-authored-illustrative-geometry",
+    "herodianFootprintReused": false,
+    "semanticBuildings": false,
+    "historicalFoundationAccepted": false,
+    "dataFile": "data/urban/roman-byzantine-islamic.skeleton.v1.json"
   }
 }

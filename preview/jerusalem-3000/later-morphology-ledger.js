@@ -9,13 +9,16 @@ export function createLaterMorphologyLedger(core){
  return {
   bind(runtime){
    const phase=runtime.phaseId;if(!PHASES.has(phase)||!runtime.meshes?.length)throw new Error('Unsupported later morphology batch');
-   const recipes=runtime.meshes.map((mesh,index)=>{
+   const recipes=runtime.ledgerRecords?runtime.ledgerRecords.map(r=>({...r,stage:r.type,start:0})):runtime.meshes.map((mesh,index)=>{
     const meta=mesh.userData.phase2;if(!meta?.stage||!Number.isFinite(meta.start))throw new Error('Missing morphology recipe');
     const id=`j3k:${phase}:scaffold:${index}`,type=meta.stage==='road'?'road':meta.stage==='wall'?'wall':meta.stage==='gate'?'gate':'block';
     const geometry={frame:'canonical-dem-enu',status:'provisional-morphology-not-surveyed',primitive:'box-mass',parameters:{...mesh.geometry.parameters},position:mesh.position.toArray(),rotation:mesh.rotation.toArray()};
     if([...mesh.position.toArray(),...mesh.rotation.toArray().slice(0,3),...Object.values(mesh.geometry.parameters)].some(v=>!Number.isFinite(v)))throw new Error('Invalid morphology geometry');
     return {id,type,geometry,stage:meta.stage,start:meta.start};
    });
+   const recipeMap=new Map(recipes.map(r=>[r.id,r]));if(recipeMap.size!==recipes.length)throw new Error('Duplicate later registration ID');
+   const bindings=runtime.bindingIds||recipes.map(r=>r.id);if(bindings.length!==runtime.meshes.length||bindings.some(id=>!recipeMap.has(id)))throw new Error('Invalid later mesh binding');
+   const componentIndices=new Map();
    const fingerprint=JSON.stringify(recipes),prior=batches.get(phase);
    if(prior&&prior.fingerprint!==fingerprint)throw new Error('Later morphology recipe changed without registration migration');
    const candidate=new TemporalCityCore({phases:timeline.phases,terrain:core.terrain});
@@ -27,13 +30,14 @@ export function createLaterMorphologyLedger(core){
     if(existing)throw new Error(`Later morphology ID collision: ${recipe.id}`);
     const events=[{phase,state:'build',authority:'illustrative-morphology-generation-not-historical-construction'},...(next?[{phase:next,state:'unresolved',authority:'later-morphology-fate-unverified'}]:[])];
     candidate.register({id:recipe.id,type:recipe.type,confidence:'inferred',geometry:recipe.geometry,phaseIds:events.map(e=>e.phase),lifecycle:{events},
-     source:{dataset:runtime.grammar,authority:'legacy-procedural-scaffold-not-historical-survey',geometryVerified:false},
-     metadata:{generatedOwner:owner,generationPhase:phase,scaffoldRole:recipe.stage,constructionStart:recipe.start,geometryVerified:false,ancientGroundVerified:false,reuseLinksVerified:false,semanticBuilding:false,rendererBinding:'later-morphology-v1'}});
+     source:{dataset:runtime.grammar,authority:runtime.registration?.authority||'legacy-procedural-scaffold-not-historical-survey',...recipe.source,geometryVerified:false},
+     metadata:{...recipe.metadata,generatedOwner:owner,generationPhase:phase,scaffoldRole:recipe.stage,constructionStart:recipe.start,geometryVerified:false,ancientGroundVerified:false,reuseLinksVerified:false,semanticBuilding:false,rendererBinding:'later-morphology-v1'}});
    }
+   if(runtime.ledgerRecords)for(const recipe of recipes){if(!['district','road','block'].includes(recipe.type))throw new Error('Invalid independent scaffold role');if(recipe.type==='block'&&candidate.get(recipe.source?.districtId)?.type!=='district')throw new Error('Independent scaffold district relation missing');}
    const validation=candidate.validate();if(!validation.ok)throw new Error(`Invalid later ledger: ${validation.errors.join('; ')}`);
    if(!prior){core.objects=candidate.objects;core.byPhase=candidate.byPhase;core.links=candidate.links;batches.set(phase,{fingerprint,ids:recipes.map(r=>r.id)});}
    // Bind only after the complete batch has passed. Rebinding preserves edited events.
-   runtime.meshes.forEach((mesh,index)=>{const recipe=recipes[index];mesh.userData.cityObject={objectId:recipe.id,componentId:`${recipe.id}:component:0`,confidence:'inferred',phaseIds:[phase],kind:recipe.stage};});
+   runtime.meshes.forEach((mesh,index)=>{const recipe=recipeMap.get(bindings[index]);mesh.userData.cityObject={objectId:recipe.id,componentId:`${recipe.id}:component:${componentIndices.get(recipe.id)||0}`,confidence:'inferred',phaseIds:[phase],kind:recipe.stage};componentIndices.set(recipe.id,(componentIndices.get(recipe.id)||0)+1);});
    const summary={published:true,phase,objects:recipes.length,geometryVerified:false,semanticBuildings:0};
    return {summary,apply(evidenceAllowed){for(const mesh of runtime.meshes){const record=core.get(mesh.userData.cityObject.objectId),state=record?lifecycleStateAt({lifecycleEvents:record.lifecycle.events},timeline,phase):'unresolved';mesh.visible=(runtime.fixedVisibility||mesh.visible)&&evidenceAllowed('inferred')&&['build','rebuild','transform','ruin','expand'].includes(state);}}};
   },

@@ -1,3 +1,4 @@
+import {compileIndependentLaterSkeleton,buildIndependentLaterSkeleton} from './independent-later-skeleton.js';
 import {collectSpatialSkeleton} from './spatial-skeleton.js';
 import {declareHerodianSourceScopes,inspectSourceLifecycleContext} from './source-lifecycle-scope.js';
 import {publishHerodianGeneratedEvents} from './herodian-generated-events.js';
@@ -173,6 +174,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     cityCoreRuntime = null,
     cityProjection = null,
     evidenceProjection = null;
+  let independentLaterRegistrations=new Map(),fabricMaterialDisposer=null;
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
   let retainedVisible = false, royalRelief=null, royalCity=null, persianSanctuary=null, periodSpatialData=null, waterDefense=null, waterDefenseModel=null, localPlanAudit=[], periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
@@ -272,6 +274,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       eraFabricLayer.remove(mesh);
       mesh.geometry.dispose();
     }
+    fabricMaterialDisposer?.();fabricMaterialDisposer=null;
     fabricMeshes = [];
     phase2Morphology = null;laterMorphologyBinding=null;
   }
@@ -286,6 +289,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       return;
     }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
+    if(foundationOwner==='independent-later-skeleton'){const runtime=buildIndependentLaterSkeleton(eraFabricLayer,independentLaterRegistrations.get(phaseId),temporalMaterials,terrainRuntime);fabricMeshes=runtime.meshes;fabricMaterialDisposer=()=>runtime.disposeMaterials();laterMorphologyBinding=laterMorphologyLedger.bind(runtime);laterMorphologyBinding.apply(evidenceAllowed);return;}
     const ruined = phaseId.includes('destruction');
     if (foundationOwner === 'ottoman-morphology')
       phase2Morphology = buildOttomanUrbanMorphology(
@@ -334,16 +338,17 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   }
   function updatePeriodOverview(phaseId,force=false){
     if(terrainView)return;
+    const independent=independentLaterRegistrations.has(phaseId);
     const framePhase=phaseId==='babylonian-destruction'?'late-first-temple':phaseId;
     const includesEarlier=phaseId==='persian-nehemiah'&&retainedVisible;
-    const frameKey=framePhase+(includesEarlier?':retained':'');
-    if(!periodRegistrations.has(framePhase)||(!force&&overviewFrame===frameKey))return;
+    const frameKey=independent?'independent-later-shared-window':framePhase+(includesEarlier?':retained':'');
+    if((!independent&&!periodRegistrations.has(framePhase))||(!force&&overviewFrame===frameKey))return;
     if(!overviewPriorCamera)overviewPriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
-    const registrations=[periodRegistrations.get(framePhase),...(includesEarlier?[periodRegistrations.get('late-first-temple')]:[])];
+    const registrations=independent?[...independentLaterRegistrations.values()]:[periodRegistrations.get(framePhase),...(includesEarlier?[periodRegistrations.get('late-first-temple')]:[])];
     const points=registrations.flatMap(r=>r.districts.flatMap(d=>d.geometry.polygon.flatMap(p=>{const y=terrainRuntime.heightAtWorld(p.x,p.z);return[new THREE.Vector3(p.x,y,p.z),new THREE.Vector3(p.x,y+32,p.z)];})));
     const framing=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov});
     controls.minDistance=35;controls.target.copy(framing.target);camera.position.copy(framing.position);controls.update();overviewFrame=frameKey;
-    overviewInfo={framePhase,includesEarlier,distance:framing.distance,bounds:framing.bounds,authority:framing.authority};
+    overviewInfo={framePhase:independent?'independent-later-shared-window':framePhase,includesEarlier,distance:framing.distance,bounds:framing.bounds,authority:framing.authority};
   }
   function frameRoyalRelief(){
     if(!royalRelief)return;
@@ -358,7 +363,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     timelinePosition=position;
     if(!terrainView){
     if(phaseChanged&&templePriorCamera){camera.position.copy(templePriorCamera.position);controls.target.copy(templePriorCamera.target);controls.minDistance=templePriorCamera.minDistance;templePriorCamera=null;controls.update();}
-    if(phaseChanged&&overviewPriorCamera&&!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(phaseId)){camera.position.copy(overviewPriorCamera.position);controls.target.copy(overviewPriorCamera.target);controls.minDistance=overviewPriorCamera.minDistance;overviewPriorCamera=null;overviewFrame='';overviewInfo=null;controls.update();}
+    if(phaseChanged&&overviewPriorCamera&&!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(phaseId)&&!independentLaterRegistrations.has(phaseId)){camera.position.copy(overviewPriorCamera.position);controls.target.copy(overviewPriorCamera.target);controls.minDistance=overviewPriorCamera.minDistance;overviewPriorCamera=null;overviewFrame='';overviewInfo=null;controls.update();}
     if(phaseChanged && earliestSettlement) {
       if(isEarlyLandscapePhase(phaseId)) {
         if(!isEarlyLandscapePhase(previousPhase)) priorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
@@ -477,6 +482,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         validation: loaded.core.validate(),
       };
       laterMorphologyLedger=createLaterMorphologyLedger(loaded.core);
+      const independentLaterData=await loadCityData('./data/urban/roman-byzantine-islamic.skeleton.v1.json');
+      for(const phase of ['aelia','byzantine','early-islamic'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(independentLaterData,phase,terrainRuntime.grid.origin));
       if (!parcels.blockCount || !parcels.count || !architecture.buildings || !cityCoreRuntime.validation.ok)
         throw new Error(`Canonical city incomplete: ${parcels.blockCount || 0} blocks, ${parcels.count || 0} parcels, ${architecture.buildings || 0} buildings`);
       architecture.meshes.push(
@@ -582,6 +589,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    if(independentLaterRegistrations.has(currentPhaseId)&&!terrainView)updatePeriodOverview(currentPhaseId,true);
     needsFrame = true;
   };
   const ro = new ResizeObserver(resize);
@@ -687,6 +695,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
           '現代 DEM 不代表古代地表；完整城牆、王宮與第一聖殿形制尚未核定。'
         ]
       };
+      if(independentLaterRegistrations.has(phaseId)){const data=independentLaterRegistrations.get(phaseId);return {source:data.sources[0],references:data.sources.slice(1),limitations:data.limitations};}
       if(phaseId==='persian-nehemiah')return {
         source:periodSpatialData.phases['persian-nehemiah'].sanctuary.sources[0],references:[],
         limitations:[...periodSpatialData.phases['persian-nehemiah'].sanctuary.limitations,'第一聖殿遺存、王室區與特定前代牆段的後續狀態尚未核定。']

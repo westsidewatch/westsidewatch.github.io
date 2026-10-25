@@ -88,3 +88,7 @@ Seven source relations/withheld entries now explicitly declare why no physical e
 ## Stage 2 begins: common spatial skeleton view (2026-10-24)
 
 The optional 空間骨架對照 panel compares all 18 eras against one modern DEM window and scale, reading existing registered district/route/water-defense/core geometry. Missing geometry remains explicit; dashed layout bounds are not historical city limits. Early path linework reuses existing endpoints. See SPATIAL-SKELETON-VIEW.md. This begins coherent spatial foundation work; it does not complete historical layouts.
+
+## Three independent later skeletons (2026-10-24)
+
+Aelia, Byzantine and early Islamic layouts now share one authored district/path/clearance/reservation authority per era, replacing their old grid masses. Low coarse cells follow the same DEM, not a scaled Herodian plan. Historical relationships supply context but exact coordinates/widths/heights remain illustrative. Aelia no longer draws the arbitrary Herodian inherited overlay. See INDEPENDENT-LATER-SKELETON.md. Complete city limits, public architecture and all-era historical acceptance remain open.
