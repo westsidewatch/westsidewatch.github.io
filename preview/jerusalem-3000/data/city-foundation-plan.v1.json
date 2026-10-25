@@ -457,5 +457,14 @@
     "laterFate": "unresolved",
     "geometryVerified": false,
     "foundationAccepted": false
+  },
+  "runtimeRegistrationAccounting": {
+    "scope": "existing-runtime-registration-and-declared-exclusions",
+    "phaseCoverage": 18,
+    "localValidation": "all-visible-scope-accounted-and-zero-unclassified-no-event-records",
+    "sourceContextOnly": 5,
+    "withheld": 2,
+    "historicalFoundationAccepted": false,
+    "next": "whole-timeline-spatial-skeleton"
   }
 }

@@ -82,6 +82,7 @@ try {
   });
   await three.ready;
   window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
+  window.__JERUSALEM3000__.inspectSourceLifecycleContext=id=>three.inspectSourceLifecycleContext(id);
   window.__JERUSALEM3000__.inspectCityFoundation=phase=>three.inspectCityFoundation(phase);
   window.__JERUSALEM3000__.cityFoundationIndex=three.cityFoundationIndex();
   const retainedToggle = document.querySelector('.j3k-retained-toggle');

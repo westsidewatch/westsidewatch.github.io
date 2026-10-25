@@ -1,3 +1,4 @@
+import {declareHerodianSourceScopes,inspectSourceLifecycleContext} from './source-lifecycle-scope.js';
 import {publishHerodianGeneratedEvents} from './herodian-generated-events.js';
 import {allowsEvidence} from './evidence-visibility.js';
 import {ERA_FOOTPRINTS,addEraFabric} from './legacy-era-fabric.js';
@@ -487,6 +488,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       );
       const generatedEvents=publishHerodianGeneratedEvents(loaded.core,{registration:eraRegistrationReference,buildingIds:architecture.buildingIds,meshes:architecture.meshes});
       cityCoreRuntime.generatedEvents=generatedEvents.summary;
+      cityCoreRuntime.sourceScopes=declareHerodianSourceScopes(loaded.core);
       cityProjection = createCityProjection(cityCoreLayer, architecture.meshes,{stateForObject:(id,phase)=>generatedEvents.stateFor(id,phase),stateForInfrastructure:true});
       cityCoreRuntime.projection = cityProjection;
       periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
@@ -714,6 +716,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       }
       terrainPresentation.contours.visible=!!terrainView;controls.update();needsFrame=true;return !!terrainView;
     },
+    inspectSourceLifecycleContext(id){return inspectSourceLifecycleContext(cityCoreRuntime.core,id,timelinePosition);},
     inspectCityObject(id){const record=cityCoreRuntime?.core.get(id);return record?structuredClone(record):null;},
     focusResidentialDistrict(id){
       if(!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(currentPhaseId)||!evidenceAllowed('inferred'))return false;

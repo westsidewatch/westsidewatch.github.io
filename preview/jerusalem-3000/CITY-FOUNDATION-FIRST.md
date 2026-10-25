@@ -80,3 +80,7 @@ Legacy inherited overlays now obey the common evidence policy as inferred conten
 ## Canonical generated event registration (2026-10-24)
 
 The Herodian generated batch now declares shared build/schematic ruin-or-transform/unknown-fate events and registers its eight provisional road IDs. Parent references are normalized; source-anchor events remain untouched. Finished meshes read shared event visibility. Foundation inspection lists remaining missing-event IDs rather than concealing gaps. See CANONICAL-GENERATED-EVENTS.md. Full foundation acceptance remains incomplete.
+
+## Source scopes and registration accounting (2026-10-24)
+
+Seven source relations/withheld entries now explicitly declare why no physical events belong to them. Live anchor context remains separate from their own history. All-era accounting distinguishes these declarations from unclassified event gaps and distinguishes annotated/provisional display components from unexplained unbound scope. See SOURCE-SCOPE-ACCOUNTING.md. This is an engineering checkpoint, not historical foundation acceptance.

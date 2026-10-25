@@ -1,3 +1,4 @@
+import {declaredEventScope} from './source-lifecycle-scope.js';
 import {cityObjectIdForMesh} from './city-lifecycle-projection.js';
 import {lifecycleStateAtPosition} from './construction-engine.js';
 const OWNERS=Object.freeze({
@@ -40,9 +41,11 @@ export function createCityFoundationRuntime({core,terrain,root,getCurrentPhase,g
   }
   const states={},withEvents=records.filter(r=>r.lifecycle.events.length);
   for(const record of withEvents){const state=lifecycleStateAtPosition({lifecycleEvents:record.lifecycle.events},{phases},position);states[state]=(states[state]||0)+1;}
-  domains.lifecycle={registeredObjects:withEvents.length,withoutDeclaredEvents:records.length-withEvents.length,withoutDeclaredEventIds:records.filter(r=>!r.lifecycle.events.length).map(r=>r.id).sort(),states,scope:'existing-events-only-no-new-reuse-links'};
+  const noEvents=records.filter(r=>!r.lifecycle.events.length),scoped=noEvents.filter(r=>declaredEventScope(r)),unclassified=noEvents.filter(r=>!declaredEventScope(r));
+  domains.lifecycle={explicitEventScopes:scoped.length,explicitEventScopeIds:scoped.map(r=>r.id).sort(),unclassifiedWithoutDeclaredEvents:unclassified.length,unclassifiedWithoutDeclaredEventIds:unclassified.map(r=>r.id).sort(),registeredObjects:withEvents.length,withoutDeclaredEvents:records.length-withEvents.length,withoutDeclaredEventIds:records.filter(r=>!r.lifecycle.events.length).map(r=>r.id).sort(),states,scope:'existing-events-only-no-new-reuse-links'};
   return {...entry,active,position,ledgerObjects:records.length,domains,
    renderer:{status:active?'active':'not-inspected-inactive',visibleComponents:active?components:null,visibleBoundObjects:active?bound.size:null,boundComponents:active?boundComponents:null,unboundComponents:active?unbound:null,provisionalInheritedComponents:active?inherited:null,provisionalTraceableComponents:active?tracedInherited:null,displayAnnotationComponents:active?annotations:null,outOfPhaseBindingIds:active?[...outOfPhase].sort():[]},
+   registrationAccounting:{visibleScopeAccounted:active?unbound===inherited+annotations:null,unclassifiedEventScopes:unclassified.length,historicalFoundationAccepted:false},
    gapPolicy:'Visible unbound components and provisional retention are not certified city objects. Zero counts do not prove historical absence.'};
  }
  return {describe,snapshot,index:()=>ids.map(describe)};
