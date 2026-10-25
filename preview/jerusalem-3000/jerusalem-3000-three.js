@@ -73,11 +73,11 @@ try {
     for(const text of ['地區','街區','住宅','顯示','查看']){const th=document.createElement('th');th.textContent=text;head.append(th);}table.append(head);
     for(const d of districtAcceptance.districts){const row=document.createElement('tr');row.dataset.residentialDistrict=d.id;row.dataset.buildings=String(d.buildings);row.dataset.visibleBuildings=String(d.visibleBuildings);const name=(labels[d.id.split(':').at(-1)]||'推定地區')+(d.layerState==='retained-ruin'?' · 前代遺存':districtAcceptance.phase==='babylonian-destruction'?' · 毀城示意':'');for(const value of [name,d.blocks,d.buildings,d.visibleBuildings]){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}const action=document.createElement('td'),button=document.createElement('button');button.type='button';button.textContent='近看';button.setAttribute('aria-label',name+'住宅近看');button.disabled=d.visibleBuildings===0;button.addEventListener('click',()=>{if((terrainOverview(false),three.focusResidentialDistrict(d.id))){panel.hidden=true;document.querySelector('.j3k-evidence-toggle').setAttribute('aria-expanded','false');}});action.append(button);row.append(action);table.append(row);}section.append(table);
   }
-  let baselineInfo=null,baselinePhase='',baselineCompare=null;
-  function refreshBaseline(force=false){if(!baselineInfo||!stage.dataset.phase||(!force&&baselinePhase===stage.dataset.phase))return;const f=three.inspectCityFoundation();if(!f)return;baselinePhase=f.phaseId;const s=three.inspectSpatialSkeleton();baselineInfo.textContent='統一概覽基準 · 住宅輪廓／院落／街巷／共同地形；模組不代表實測戶數。水防：'+(s.domains.waterDefense.spatialObjects?'已登記局部':'尚缺可定位表示')+'；宗教／公共核心：'+(s.domains.sacredCivic.spatialObjects?'已登記局部':'尚缺可定位表示')+'。缺口不表示歷史不存在。';}
+  let baselineInfo=null,baselinePhase='',baselineCompare=null,baselineGeneration='';
+  function refreshBaseline(force=false){const key=stage.dataset.phase+'|'+stage.dataset.evidenceMode+'|'+Math.floor(Number(slider.value)*10);if(!baselineInfo||!stage.dataset.phase||(!force&&baselinePhase===key))return;const s=three.inspectSpatialSkeleton();if(!s)return;baselinePhase=key;baselineInfo.textContent='統一概覽基準 · 住宅輪廓／院落／街巷／共同地形；模組不代表實測戶數。水防：'+(s.domains.waterDefense.spatialObjects?'已登記局部':'尚缺可定位表示')+'；宗教／公共核心：'+(s.domains.sacredCivic.spatialObjects?'已登記局部':'尚缺可定位表示')+'。缺口不表示歷史不存在。';}
   let skeletonView=null;
   const three = mountJerusalemThreeScene(mount, {
-    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();skeletonView?.refresh();refreshBaseline(true);},
+    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();skeletonView?.refresh();const key=(info?.phase||'')+'|'+(info?.status||'');if(key!==baselineGeneration){baselineGeneration=key;refreshBaseline(true);}},
     onReady(info) {
       window.__JERUSALEM3000__.three = true;
       window.__JERUSALEM3000__.evidence = true;
