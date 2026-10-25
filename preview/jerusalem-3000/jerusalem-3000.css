@@ -23,3 +23,4 @@
 @media(max-width:720px){.j3k-royal-relief{overflow-x:auto;padding:14px}.j3k-royal-relief svg{min-width:620px}}
 
 .j3k-skeleton-panel{margin:1rem 0;padding:1rem;border:1px solid #b9ae95;background:#f5f1e7;color:#292d24}.j3k-skeleton-panel[hidden]{display:none}.j3k-skeleton-panel canvas{display:block;width:min(100%,660px);height:auto;margin:1rem auto;border:1px solid #a99d84}.j3k-skeleton-panel p{line-height:1.7;overflow-wrap:anywhere}
+.j3k-time-head{flex-wrap:wrap;gap:12px}.j3k-playback-pace{display:flex;align-items:center;gap:8px;margin-left:auto;font-size:13px}.j3k-playback-pace select{max-width:100%;font:inherit;padding:7px;border:1px solid #b9b09e;background:#f2eee3;color:#292922}@media(max-width:600px){.j3k-playback-pace{margin-left:0;order:3;width:100%}}

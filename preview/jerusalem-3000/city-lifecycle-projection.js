@@ -22,9 +22,10 @@ export function createCityProjection(group, meshes, {
     infrastructure: Boolean(mesh.userData.cityObject.infrastructure),
     districtId:mesh.userData.cityObject.districtId||null,
   }));
+  const buildingIds=[...new Set(snapshots.filter(s=>s.mesh.userData.cityObject.parcelId).map(s=>s.id))],buildOrder=new Map(buildingIds.map((id,i)=>[id,(i+1)/buildingIds.length]));
   let state = { phaseId: '', ruin: 0, visibleBuildings: 0 };
   return {
-    apply({ phaseId, ruin = 0, evidenceAllowed = () => true, retainedVisible = false }) {
+    apply({ phaseId, ruin = 0, evidenceAllowed = () => true, retainedVisible = false, constructionProgress=1 }) {
       const active = activePhases.has(phaseId);
       const policy = phaseStates[phaseId];
       const retained = policy?.state === 'retained-ruin';
@@ -38,7 +39,7 @@ export function createCityProjection(group, meshes, {
         if(stateForObject&&(!item.infrastructure||stateForInfrastructure)&&!lifecycleStates.has(item.id))lifecycleStates.set(item.id,stateForObject(item.id,phaseId));
         const ledgerState=lifecycleStates.get(item.id);
         const objectScale = item.infrastructure ? 1 : scale;
-        mesh.visible = group.visible && evidenceAllowed(item.confidence) &&
+        mesh.visible = group.visible && evidenceAllowed(item.confidence) && (phaseId!==standingPhase||!buildOrder.has(item.id)||constructionProgress>=buildOrder.get(item.id)) &&
           !(retained && item.infrastructure) && (!stateForObject||(item.infrastructure&&!stateForInfrastructure)||['build','rebuild','transform','ruin','expand'].includes(ledgerState));
         mesh.position.x = position.x;
         mesh.position.z = position.z;
@@ -55,7 +56,7 @@ export function createCityProjection(group, meshes, {
           {visible.add(item.id);if(item.districtId){if(!districtVisible.has(item.districtId))districtVisible.set(item.districtId,new Set());districtVisible.get(item.districtId).add(item.id);}}
         mesh.userData.cityObject.ledgerState=ledgerState||null;
       }
-      state = { phaseId, ruin: amount, visibleBuildings: visible.size,
+      state = { phaseId, ruin: amount, constructionProgress, visibleBuildings: visible.size,
         districtVisible:Object.fromEntries([...districtVisible].map(([id,values])=>[id,values.size])),
         layerState: retained ? 'retained-ruin' : 'active-city',
         retainedVisible: retained && retainedVisible,

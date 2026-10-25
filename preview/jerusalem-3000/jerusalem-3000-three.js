@@ -289,8 +289,9 @@ try {
           ? 'ready'
           : 'disabled';
   }
+  const pace=document.createElement('label');pace.className='j3k-playback-pace';pace.textContent='播放速度 ';const speed=document.createElement('select');speed.setAttribute('aria-label','每期播放時間');for(const [seconds,label]of [[24,'慢速 · 24秒／期'],[12,'標準 · 12秒／期'],[6,'快速 · 6秒／期']]){const option=document.createElement('option');option.value=String(seconds);option.textContent=label;option.selected=seconds===12;speed.append(option);}pace.append(speed);play.before(pace);
   let raf = 0,
-    last = 0, waitingForCity=false;
+    last = 0, waitingForCity=false,playbackPosition=Number(slider.value);
   function stop() {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
@@ -302,7 +303,7 @@ try {
   }
   function frame(t) {
     if (!last) last = t;
-    const readiness=three.playbackReadiness(),position=Number(slider.value);
+    const readiness=three.playbackReadiness(),position=playbackPosition;
     const elapsed=(t-last)/1000;last=t;
     if(!readiness.ready){
       waitingForCity=true;
@@ -312,7 +313,8 @@ try {
       return;
     }
     const wasWaiting=waitingForCity;waitingForCity=false;play.textContent='Ⅱ 暫停';
-    let v=advancePlayback(position,wasWaiting?0:elapsed,time.max);
+    let v=advancePlayback(position,wasWaiting?0:elapsed,time.max,{rate:1/Number(speed.value)});
+    playbackPosition=v;
     window.__JERUSALEM3000__.playback={status:'playing',position:v,phase:readiness.phase};
     if (v >= time.max) {
       v = time.max;
@@ -324,18 +326,20 @@ try {
   }
   function start() {
     if (raf) return;
+    playbackPosition=Number(slider.value);
+    three.setPlaybackPresentation(true);
     play.textContent = 'Ⅱ 暫停';
     play.setAttribute('aria-pressed', 'true');
     raf = requestAnimationFrame(frame);
   }
   slider.addEventListener('input', () => {
-    stop();
+    stop();three.setPlaybackPresentation(false);
     update(Number(slider.value));
   });
   play.addEventListener('click', () => (raf ? stop() : start()));
   markers.forEach((b) =>
     b.addEventListener('click', () => {
-      stop();
+      stop();three.setPlaybackPresentation(false);
       slider.value = b.dataset.phase;
       update(Number(b.dataset.phase));
     }),

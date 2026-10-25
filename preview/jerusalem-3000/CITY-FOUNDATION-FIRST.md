@@ -102,3 +102,5 @@ Aelia, Byzantine and early Islamic layouts now share one authored district/path/
 2026-10-25 既有對象定位核對：五個希律來源概略區位接入共同骨架圖（三個公共核心點、兩個路徑區位點），均標推定，不是實測輪廓。內殿精確位置與東側入口仍不畫；其餘14個既有幾何缺口已記錄所需資料與暫緩決定。詳見 [SOURCE-SPATIAL-BINDINGS.md](SOURCE-SPATIAL-BINDINGS.md)。全18期回歸通過，下一包轉入早期四期分區／路徑／佔用基礎，細雕暫停。
 
 2026-10-25 播放／生成體驗修復：時間軸在新期起點等待必要模型完成，不追回等待時間；生成失敗停止，等待中可暫停。住宅批次減少不必要的計時器等待，直接進波斯期延後生成未啟用遺存。詳見 [GENERATION-PLAYBACK.md](GENERATION-PLAYBACK.md)。此為使用阻塞優先修復，完成後回到早期四期整體基礎工作。
+
+2026-10-25 播放可見性修正：預設12秒／期，提供6／24秒選擇；等必要模型與首幀渲染後再計時。共享住宅、希律住宅與後期區塊逐步顯示，末段保留完整場景；暫停凍結進度，手動檢視維持完整。測試抽查實際可見住宅數及真實觀看時間，不以時鐘門檻測試替代。正式站與PR預覽須分開核對。詳見 [GENERATION-PLAYBACK.md](GENERATION-PLAYBACK.md)。

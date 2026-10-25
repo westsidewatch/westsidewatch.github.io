@@ -157,6 +157,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       transparent: true,
       opacity: name === 'disputed' ? 0.5 : 0.82,
     });
+  let playbackPresentation=false,renderedPlaybackPhase=null,renderedPlaybackReady=false;
+  const presentationProgress=()=>playbackPresentation&&currentPhaseId!=='modern'?Math.min(1,Math.max(0,timelinePosition-Math.floor(timelinePosition))/.8):1;
   let currentProgress = 0,
     currentRuin = 0,
     terrainRuntime = null,
@@ -208,7 +210,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     royalCity?.apply({position:timelinePosition,ruin:currentRuin,evidenceAllowed});
     persianSanctuary?.apply({position:timelinePosition,evidenceAllowed});
     royalRelief?.apply({phaseId:currentPhaseId,stage:royalCity?.diagnostics().stage,evidenceAllowed});
-    const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible });
+    const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible,constructionProgress:presentationProgress() });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
     }
@@ -216,11 +218,12 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       cityProjection.apply({
         phaseId: currentPhaseId,
         ruin: currentRuin,
+        constructionProgress:presentationProgress(),
         evidenceAllowed,
       });
   }
   function applyTemporalState() {
-    builder.setProgress(herodianPhaseActive() ? currentProgress : 0);
+    builder.setProgress(herodianPhaseActive() ? (playbackPresentation&&currentPhaseId==='herodian-jesus'?presentationProgress():currentProgress) : 0);
     evidenceProjection?.apply({
       phaseId: currentPhaseId,
       ruin: currentRuin,
@@ -241,7 +244,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     }
     if (phase2Morphology && currentPhaseId === 'babylonian-destruction')
       setEraMorphologyProgress(phase2Morphology, 1, { ruined: true });
-    laterMorphologyBinding?.apply(evidenceAllowed);
+    laterMorphologyBinding?.apply(evidenceAllowed,{constructionProgress:presentationProgress()});
     updateCityCoreVisibility();
     onDistrictAcceptance?.(sharedEraRuntime?.acceptance()??null);
     needsFrame = true;
@@ -289,7 +292,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       return;
     }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
-    if(foundationOwner==='independent-later-skeleton'){const runtime=buildIndependentLaterSkeleton(eraFabricLayer,independentLaterRegistrations.get(phaseId),temporalMaterials,terrainRuntime);fabricMeshes=runtime.meshes;fabricMaterialDisposer=()=>runtime.disposeMaterials();laterMorphologyBinding=laterMorphologyLedger.bind(runtime);laterMorphologyBinding.apply(evidenceAllowed);return;}
+    if(foundationOwner==='independent-later-skeleton'){const runtime=buildIndependentLaterSkeleton(eraFabricLayer,independentLaterRegistrations.get(phaseId),temporalMaterials,terrainRuntime);fabricMeshes=runtime.meshes;fabricMaterialDisposer=()=>runtime.disposeMaterials();laterMorphologyBinding=laterMorphologyLedger.bind(runtime);laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:presentationProgress()});return;}
     const ruined = phaseId.includes('destruction');
     if (foundationOwner === 'ottoman-morphology')
       phase2Morphology = buildOttomanUrbanMorphology(
@@ -324,7 +327,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       );
     if (phase2Morphology) {
       fabricMeshes = phase2Morphology.meshes;
-      if(['crusader','ottoman'].includes(phaseId)){laterMorphologyBinding=laterMorphologyLedger.bind(phase2Morphology);laterMorphologyBinding.apply(evidenceAllowed);}
+      if(['crusader','ottoman'].includes(phaseId)){laterMorphologyBinding=laterMorphologyLedger.bind(phase2Morphology);laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:presentationProgress()});}
       return;
     }
     fabricMeshes = addEraFabric(
@@ -334,7 +337,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       ruined,
       terrainRuntime,
     );
-    if(fabricMeshes.length){laterMorphologyBinding=laterMorphologyLedger.bind({phaseId,meshes:fabricMeshes,grammar:'legacy-era-footprint-masses',fixedVisibility:true});laterMorphologyBinding.apply(evidenceAllowed);}
+    if(fabricMeshes.length){laterMorphologyBinding=laterMorphologyLedger.bind({phaseId,meshes:fabricMeshes,grammar:'legacy-era-footprint-masses',fixedVisibility:true});laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:presentationProgress()});}
   }
   function updatePeriodOverview(phaseId,force=false){
     if(terrainView)return;
@@ -361,6 +364,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   function setTemporalCityState(objects = [], position = 0, phaseId = '') {
     const previousPhase = currentPhaseId,
       phaseChanged = previousPhase !== phaseId;
+    if(phaseChanged)renderedPlaybackReady=false;
     currentPhaseId = phaseId;
     timelinePosition=position;
     if(!terrainView){
@@ -515,7 +519,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],
         expansionFootprint: ERA_FOOTPRINTS['hellenistic-hasmonean'],
         terrain: terrainRuntime, materials: temporalMaterials,
-        onChange: () => { applyTemporalState(); needsFrame = true; },
+        onChange: () => { renderedPlaybackReady=false;applyTemporalState(); needsFrame = true; },
         onProgress: ({ completed, total }) => {
           if (isSharedGenerationPhase(currentPhaseId) && completed % 4 === 0)
             generationStatus.textContent = `城市生成中 · ${completed}/${total}`;
@@ -612,6 +616,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         renderer.render(scene, camera);
         frameCount++;
         const sharedState = sharedEraRuntime?.diagnostics();
+        renderedPlaybackPhase=currentPhaseId;renderedPlaybackReady=!isSharedGenerationPhase(currentPhaseId)||sharedState?.status==='ready';
         const activeSharedSlice = isSharedGenerationPhase(currentPhaseId);
         generationStatus.hidden = !activeSharedSlice || !['generating', 'error'].includes(sharedState?.status);
         generationStatus.textContent = sharedState?.status === 'error'
@@ -685,7 +690,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     controls,
     root,
     ready,
-    playbackReadiness(){const status=isSharedGenerationPhase(currentPhaseId)?(sharedEraRuntime?.status||'idle'):'ready';return {phase:currentPhaseId,status,ready:status==='ready'};},
+    setPlaybackPresentation(active){playbackPresentation=Boolean(active);applyTemporalState();needsFrame=true;},
+    playbackReadiness(){let status=isSharedGenerationPhase(currentPhaseId)?(sharedEraRuntime?.status||'idle'):'ready';if(status==='ready'&&(!renderedPlaybackReady||renderedPlaybackPhase!==currentPhaseId))status='rendering';return {phase:currentPhaseId,status,ready:status==='ready'};},
     setBuildProgress,
     setRuinProgress,
     setEvidenceMode,

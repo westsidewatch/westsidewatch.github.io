@@ -38,8 +38,9 @@ export function createLaterMorphologyLedger(core){
    if(!prior){core.objects=candidate.objects;core.byPhase=candidate.byPhase;core.links=candidate.links;batches.set(phase,{fingerprint,ids:recipes.map(r=>r.id)});}
    // Bind only after the complete batch has passed. Rebinding preserves edited events.
    runtime.meshes.forEach((mesh,index)=>{const recipe=recipeMap.get(bindings[index]);mesh.userData.cityObject={objectId:recipe.id,componentId:`${recipe.id}:component:${componentIndices.get(recipe.id)||0}`,confidence:'inferred',phaseIds:[phase],kind:recipe.stage};componentIndices.set(recipe.id,(componentIndices.get(recipe.id)||0)+1);});
+   const blocks=recipes.filter(r=>r.type==='block'),revealOrder=new Map(blocks.map((r,i)=>[r.id,(i+1)/blocks.length]));
    const summary={published:true,phase,objects:recipes.length,geometryVerified:false,semanticBuildings:0};
-   return {summary,apply(evidenceAllowed){for(const mesh of runtime.meshes){const record=core.get(mesh.userData.cityObject.objectId),state=record?lifecycleStateAt({lifecycleEvents:record.lifecycle.events},timeline,phase):'unresolved';mesh.visible=(runtime.fixedVisibility||mesh.visible)&&evidenceAllowed('inferred')&&['build','rebuild','transform','ruin','expand'].includes(state);}}};
+   return {summary,apply(evidenceAllowed,{constructionProgress=1}={}){for(const mesh of runtime.meshes){const record=core.get(mesh.userData.cityObject.objectId),state=record?lifecycleStateAt({lifecycleEvents:record.lifecycle.events},timeline,phase):'unresolved';mesh.visible=(runtime.fixedVisibility||mesh.visible)&&(!revealOrder.has(record?.id)||constructionProgress>=revealOrder.get(record.id))&&evidenceAllowed('inferred')&&['build','rebuild','transform','ruin','expand'].includes(state);}}};
   },
   dispose(){for(const batch of batches.values())for(const id of batch.ids)if(core.get(id)?.metadata.generatedOwner===owner){core.objects.delete(id);core.links.delete(id);for(const ids of core.byPhase.values())ids.delete(id);}batches.clear();}
  };

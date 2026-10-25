@@ -110,8 +110,8 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
   return {
     request,
     get status() { return state.status; },
-    apply({ phaseId, ruin, evidenceAllowed, retainedVisible }) {
-      city?.projection.apply({ phaseId, ruin, evidenceAllowed, retainedVisible });
+    apply({ phaseId, ruin, evidenceAllowed, retainedVisible, constructionProgress=1 }) {
+      city?.projection.apply({ phaseId, ruin, evidenceAllowed, retainedVisible, constructionProgress });
       return Boolean(city && phaseIds.includes(phaseId) && phaseId !== retainedPhase);
     },
     acceptance(){return {status:state.status,summary:city?.publication?.summary??null,visibility:city?.projection.visibility()??null};},

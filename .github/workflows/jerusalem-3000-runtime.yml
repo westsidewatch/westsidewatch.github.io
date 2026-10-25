@@ -38,6 +38,7 @@ jobs:
       - name: Verify bounded shared generation
         run: |
           node scripts/verify_jerusalem_3000_playback.mjs
+          node scripts/verify_jerusalem_3000_construction_reveal.mjs
           node scripts/verify_jerusalem_3000_shared_era.mjs
           node scripts/verify_jerusalem_3000_period_spatial.mjs
           node scripts/verify_jerusalem_3000_district_infill.mjs
