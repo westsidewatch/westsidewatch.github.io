@@ -72,7 +72,7 @@ export function createLandscapeSettlement(parent,{data,terrain,ledgerCore=null})
       }
     }
     const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.computeVertexNormals();
-    add(g,pathMaterial,0,0,0,`j3k:${namespace}:path:${i}`,'inferred-footpath');
+    const path=add(g,pathMaterial,0,0,0,`j3k:${namespace}:path:${i}`,'inferred-footpath');path.userData.spatialPath=[a,b];
   }
   add(new THREE.CylinderGeometry(1.5,1.5,.08,24),water,spring.x,surface(spring.x,spring.z)+.12,spring.z,`j3k:${namespace}:spring-marker`,'approximate-spring-location');
   if(data.defense) {

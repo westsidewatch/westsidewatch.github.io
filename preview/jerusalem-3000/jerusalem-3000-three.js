@@ -1,3 +1,4 @@
+import {createSpatialSkeletonView} from './spatial-skeleton-view.js';
 import { isEarliestPhase, isEarlyLandscapePhase } from './earliest-settlement.js';
 import { isSharedSlicePhase, isSharedGenerationPhase, RETAINED_PHASE } from './shared-era-runtime.js';
 import { isCorePhase } from './city-lifecycle-projection.js';
@@ -70,8 +71,9 @@ try {
     for(const text of ['地區','街區','住宅','顯示','查看']){const th=document.createElement('th');th.textContent=text;head.append(th);}table.append(head);
     for(const d of districtAcceptance.districts){const row=document.createElement('tr');row.dataset.residentialDistrict=d.id;row.dataset.buildings=String(d.buildings);row.dataset.visibleBuildings=String(d.visibleBuildings);const name=(labels[d.id.split(':').at(-1)]||'推定地區')+(d.layerState==='retained-ruin'?' · 前代遺存':districtAcceptance.phase==='babylonian-destruction'?' · 毀城示意':'');for(const value of [name,d.blocks,d.buildings,d.visibleBuildings]){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}const action=document.createElement('td'),button=document.createElement('button');button.type='button';button.textContent='近看';button.setAttribute('aria-label',name+'住宅近看');button.disabled=d.visibleBuildings===0;button.addEventListener('click',()=>{if((terrainOverview(false),three.focusResidentialDistrict(d.id))){panel.hidden=true;document.querySelector('.j3k-evidence-toggle').setAttribute('aria-expanded','false');}});action.append(button);row.append(action);table.append(row);}section.append(table);
   }
+  let skeletonView=null;
   const three = mountJerusalemThreeScene(mount, {
-    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();},
+    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();skeletonView?.refresh();},
     onReady(info) {
       window.__JERUSALEM3000__.three = true;
       window.__JERUSALEM3000__.evidence = true;
@@ -85,6 +87,8 @@ try {
   window.__JERUSALEM3000__.inspectSourceLifecycleContext=id=>three.inspectSourceLifecycleContext(id);
   window.__JERUSALEM3000__.inspectCityFoundation=phase=>three.inspectCityFoundation(phase);
   window.__JERUSALEM3000__.cityFoundationIndex=three.cityFoundationIndex();
+  window.__JERUSALEM3000__.inspectSpatialSkeleton=()=>three.inspectSpatialSkeleton();
+  skeletonView=createSpatialSkeletonView({parent:document.querySelector('.j3k-shell'),controls:document.querySelector('.j3k-event-controls'),terrain:three.foundationContext().terrain,getSnapshot:()=>three.inspectSpatialSkeleton(),getPhaseLabel:id=>phases.find(p=>p.id===id)?.label||id});
   const retainedToggle = document.querySelector('.j3k-retained-toggle');
   retainedToggle.addEventListener('click', () => {
     const enabled = retainedToggle.getAttribute('aria-pressed') !== 'true';
@@ -227,6 +231,7 @@ try {
       ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建住宅採獨立山脊／北部配置；早期第二聖殿主體、院落及入口為獨立推定示意，可點「聖殿近看」。城界、街網與人口未核定。`
       : isSharedSlicePhase(p.id) ? `${p.note} 東南山脊、北部聖區與西丘採獨立配置；西向擴張方向有文獻依據，具體邊界與道路仍為推定。毀城沿用同一批示意住居。` : isSharedGenerationPhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
     if(window.__JERUSALEM3000__.inheritanceState.audit?.visibleComponents>0)note.textContent+=' 前代圖層按模型比例示意，留存構件與再利用關係尚未核定。';
+    skeletonView?.refresh();
     if(evidencePanelPhase!==p.id) {
       evidencePanelPhase=p.id;
       const evidence=three.earlyLandscapeEvidence(p.id);

@@ -419,6 +419,8 @@ try {
   await writeFile(`${output}/hellenistic-report.json`,JSON.stringify({expansionReports},null,2));
   // Render every era separately. Startup metadata is not proof of a visible city.
   const phaseReports = [];
+  await page.getByRole('button',{name:'空間骨架對照',exact:true}).click();
+  await page.locator('.j3k-skeleton-panel').waitFor({state:'visible'});
   for (let phase = 0; phase < runtime.phaseAudit.records.length; phase++) {
     const value = phase + (phase === runtime.phaseAudit.records.length - 1 ? 0 : 0.9);
     const started = Date.now();
@@ -483,7 +485,11 @@ try {
     if(phase===10)assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.inheritanceState.terrainAuthority),'canonical-dem-rendered-triangles');
     if (phase === 10) assert.equal(sample.render.visibleCoreMeshes, 0,
       'Aelia must not reuse standing Herodian architecture');
-    phaseReports.push({ inheritanceAudit, value, elapsedMs: Date.now() - started, visible, foundation, ...sample });
+    const spatialSkeleton=await page.evaluate(()=>window.__JERUSALEM3000__.inspectSpatialSkeleton());
+    assert.equal(spatialSkeleton.phaseId,sample.time.phase);assert.equal(spatialSkeleton.historicalFoundationAccepted,false);assert.equal(spatialSkeleton.terrain,'modern-dem-rendered-triangles');
+    assert.equal(await page.locator('.j3k-skeleton-panel').getAttribute('data-phase'),sample.time.phase);
+    if(phase<=2)assert.ok(spatialSkeleton.domains.routes.spatialObjects>0,'existing early footpath linework must be available');
+    phaseReports.push({ spatialSkeleton, inheritanceAudit, value, elapsedMs: Date.now() - started, visible, foundation, ...sample });
     await page.screenshot({ path: `${output}/phase-${phase}.png`, fullPage: true });
   }
   await writeFile(`${output}/phase-report.json`, JSON.stringify({
@@ -552,6 +558,10 @@ try {
   assert.equal(mobileShared.retainedObjects,mobileShared.projection.visibleBuildings);
   assert.ok(mobileShared.successor.projection.visibleBuildings>0);
   await mobile.screenshot({path:`${output}/shared-mobile.png`,fullPage:true});
+  await mobile.getByRole('button',{name:'空間骨架對照',exact:true}).click();
+  await mobile.locator('.j3k-skeleton-panel').waitFor({state:'visible'});
+  const skeletonBox=await mobile.locator('.j3k-skeleton-panel canvas').boundingBox();assert.ok(skeletonBox.x>=0&&skeletonBox.x+skeletonBox.width<=390,'skeleton map must fit portrait width');
+  await mobile.screenshot({path:`${output}/spatial-skeleton-mobile.png`,fullPage:true});
   await mobile.close();
   const broken = await browser.newPage();
   await broken.route('**/data/urban/herodian-30ce.registration.json', (route) =>

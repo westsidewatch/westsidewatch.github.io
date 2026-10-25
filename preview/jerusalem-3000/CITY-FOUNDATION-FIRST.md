@@ -84,3 +84,7 @@ The Herodian generated batch now declares shared build/schematic ruin-or-transfo
 ## Source scopes and registration accounting (2026-10-24)
 
 Seven source relations/withheld entries now explicitly declare why no physical events belong to them. Live anchor context remains separate from their own history. All-era accounting distinguishes these declarations from unclassified event gaps and distinguishes annotated/provisional display components from unexplained unbound scope. See SOURCE-SCOPE-ACCOUNTING.md. This is an engineering checkpoint, not historical foundation acceptance.
+
+## Stage 2 begins: common spatial skeleton view (2026-10-24)
+
+The optional 空間骨架對照 panel compares all 18 eras against one modern DEM window and scale, reading existing registered district/route/water-defense/core geometry. Missing geometry remains explicit; dashed layout bounds are not historical city limits. Early path linework reuses existing endpoints. See SPATIAL-SKELETON-VIEW.md. This begins coherent spatial foundation work; it does not complete historical layouts.

@@ -20,7 +20,7 @@ export function publishSettlementLedger(core,meshes,data){
   const building=id.includes(':house:'),bounds=new THREE.Box3();parts.forEach(mesh=>bounds.expandByObject(mesh));
   const events=[{phase:data.phase,state:'build',authority:'illustrative-settlement-generation-not-excavated-object'},...(phases[index+1]?[{phase:phases[index+1],state:'unresolved',authority:'later-object-fate-unverified'}]:[])];
   candidate.register({id,type:building?'building':'road',confidence:'inferred',phaseIds:events.map(e=>e.phase),
-   geometry:{frame:'canonical-dem-enu',status:'illustrative-not-surveyed',bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()}},
+   geometry:{frame:'canonical-dem-enu',status:'illustrative-not-surveyed',...(!building?{points:parts[0].userData.spatialPath}:{}),bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()}},
    source:{dataset:data.schema,authority:data.authority,contextSource:data.historicalSource,geometryVerified:false},
    typology:building?(data.houseTypology||'single-room-illustration'):null,lifecycle:{events},
    metadata:{generatedOwner:owner,generationPhase:data.phase,componentCount:parts.length,geometryVerified:false,ancientGroundVerified:false,reuseLinksVerified:false,rendererBinding:'early-settlement-v1'}});

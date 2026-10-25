@@ -466,5 +466,20 @@
     "withheld": 2,
     "historicalFoundationAccepted": false,
     "next": "whole-timeline-spatial-skeleton"
+  },
+  "spatialSkeletonView": {
+    "stage": 2,
+    "status": "common-comparison-baseline-not-complete-historical-layout",
+    "phaseCoverage": 18,
+    "windowMetres": {
+      "minX": -1100,
+      "maxX": 1100,
+      "minZ": -1000,
+      "maxZ": 1300
+    },
+    "terrain": "existing-modern-dem-rendered-triangles",
+    "geometrySource": "existing-shared-registration-only",
+    "modelEnvelopeIsHistoricalBoundary": false,
+    "historicalFoundationAccepted": false
   }
 }

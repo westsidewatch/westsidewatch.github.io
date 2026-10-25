@@ -1,3 +1,4 @@
+import {collectSpatialSkeleton} from './spatial-skeleton.js';
 import {declareHerodianSourceScopes,inspectSourceLifecycleContext} from './source-lifecycle-scope.js';
 import {publishHerodianGeneratedEvents} from './herodian-generated-events.js';
 import {allowsEvidence} from './evidence-visibility.js';
@@ -695,6 +696,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     setWaterDefenseVariant(id){waterDefenseModel.setVariant(id);applyTemporalState();},
     waterDefenseEvidence(position){const state=waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);return state?{...state,selectedVariant:waterDefenseModel.selectedVariant,variants:waterDefense.towerVariants,localPlans:localPlanAudit}:null;},
     foundationContext(){return {terrain:terrainRuntime};},
+    inspectSpatialSkeleton(){return currentPhaseId?collectSpatialSkeleton(cityCoreRuntime.core,terrainRuntime,{phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode,includeRetained:retainedVisible}):null;},
     inspectCityFoundation(phaseId=currentPhaseId){return foundationRuntime?.snapshot(phaseId)??null;},
     cityFoundationIndex(){return foundationRuntime?.index()??[];},
     royalReliefProfile(){return royalRelief?structuredClone(royalRelief.profile):null;},
