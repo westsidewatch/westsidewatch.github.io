@@ -191,10 +191,10 @@ jobs:
                           const city=document.getElementById('dual-cover-city');
                           const paper=city?.querySelector('.dual-cover__paper');
                           const wall=city?.querySelector('.dual-cover__wall');
-                          return {shared:!!(city&&paper&&wall&&paper.parentElement===city&&wall.parentElement===city),
-                            gap:paper&&wall?paper.getBoundingClientRect().top-wall.getBoundingClientRect().bottom:999,
-                            texture:paper?getComputedStyle(paper).backgroundImage.includes('temple-stone-light.png'):false,
-                            wallImg:wall?getComputedStyle(wall).backgroundImage.includes('jerusalem-wall.png'):false};
+                          return {shared:!!(city&&paper&&paper.parentElement===city),
+                            texture:!!paper&&getComputedStyle(paper).backgroundImage.includes('p2-magazine-sandstone-wall.png'),
+                            oldWallHidden:!!wall&&getComputedStyle(wall).display==='none',
+                            oldGateHidden:!!wall&&getComputedStyle(wall.querySelector('.dual-cover__gate')).display==='none'};
                         })(),
                         movementOverlap:(()=>{
                           // Works for both the original 2x2 and the new four-column
@@ -237,8 +237,7 @@ jobs:
                     if(p===100&&(m.reliefPrint.opacity<.28||m.reliefPrint.opacity>.38))errors.push('CONTENTS_LOWER_SVG_RELIEF_NOT_RETAINED');
                     if(p===100&&m.reliefPrint.indexBottom>m.reliefPrint.clipStart+8)errors.push('CONTENTS_READING_ZONE_OVER_LOWER_PRINT');
                     if(p===100&&width>1100&&m.reliefPrint.lastArticleBottom>m.reliefPrint.clipStart+8)errors.push('ARTICLE_TITLES_COLLIDE_WITH_LOWER_LETTERPRESS');
-                    if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.wallImg)errors.push('WALL_STONE_MUST_SHARE_ONE_CITY');
-                    if((p===68||p===82||p===100)&&m.unifiedCity.gap>1)errors.push('WALL_STONE_VISIBLE_DISCONNECTION');
+                    if(!m.unifiedCity.shared||!m.unifiedCity.texture||!m.unifiedCity.oldWallHidden||!m.unifiedCity.oldGateHidden)errors.push('ORIGINAL_SANDSTONE_PNG_MUST_BE_ONLY_CITY_SURFACE');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
                     if(p===100&&!m.readerReach.keyboard)errors.push('CONTENTS_NOT_KEYBOARD_ACCESSIBLE');
                     if(p===100&&width>1100&&!m.readerReach.desktopVisible)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_VISIBLE');
@@ -302,19 +301,14 @@ jobs:
                           title.right>=view.right-view.width*.10,
                         titleGroupUnified:!!cv.querySelector('.dual-cover__editorial')&&
                           ['en','zh'].every(name=>cv.querySelector('.dual-cover__'+name)?.parentElement===cv.querySelector('.dual-cover__editorial')),
-                        starOnStone:star.top>=city.top+5&&star.bottom<=view.bottom-8,
+                        starInNavy:star.top>=view.top&&star.bottom<=city.top+4,
                         mastheadNavyOnly:part('mast').bottom<=city.top+2,
-                        newWallMask:getComputedStyle(wallEl).maskImage.includes('jerusalem-wall.png'),
-                        sameStoneMaterial:getComputedStyle(wallEl).backgroundImage.includes('temple-stone-light.png'),
+                        originalCityOnly:getComputedStyle(wallEl).display==='none'&&getComputedStyle(wallEl.querySelector('.dual-cover__gate')).display==='none',
                         stoneSource:getComputedStyle(paperEl).backgroundImage,
                         wallSource:getComputedStyle(wallEl).backgroundImage,
                         wallShadow:getComputedStyle(wallEl).filter,
                         paperShadow:getComputedStyle(paperEl).boxShadow,
                         wallSeam:getComputedStyle(cityEl,'::after').display,
-                        gateColour:getComputedStyle(cv.querySelector('.dual-cover__gate')).backgroundColor,
-                        gateCover:gate.height/wall.height,
-                        gateVerticalStart:(gate.top-wall.top)/wall.height,
-                        gateBottomClearance:wall.bottom-gate.bottom,
                         sloganHidden:getComputedStyle(sloganEl).display==='none',
                         engravingSource:getComputedStyle(engraving).backgroundImage,
                         stories:cv.querySelectorAll('.dual-cover__coverline').length,
@@ -335,26 +329,25 @@ jobs:
                         errors.push('COVER_ENGRAVING_ASSET_NOT_DEPLOYED');
                     }
                     if(variant==='masthead'&&metrics.wallClearance<4)
-                      errors.push('JERUSALEM_WALL_OVER_MAIN_COVER_HEADING');
-                    if(variant==='masthead'&&(metrics.starCentreError>3||metrics.starScale<.23))
-                      errors.push('MORNING_STAR_NOT_CENTRAL_PRIMARY_IMAGE');
+                      errors.push('HIDDEN_LEGACY_CREST_GEOMETRY_OVERLAP');
+                    if(variant==='masthead'&&(metrics.starCentreError>3||metrics.starScale<.065||metrics.starScale>.13))
+                      errors.push('MORNING_STAR_NOT_SMALL_NAVY_EMBLEM');
                     if(variant==='masthead'&&(metrics.cityTopRatio<.225||metrics.cityTopRatio>.255||metrics.wallHeightRatio>.055))
                       errors.push('JERUSALEM_CREST_TOO_LARGE_OR_LOW');
                     if(variant==='masthead'&&(!metrics.headlineRightColumn||!metrics.sloganHidden||!metrics.titleGroupUnified))
                       errors.push('LOWER_RIGHT_EDITORIAL_HEADLINE_NOT_CLEAR');
-                    if(variant==='masthead'&&(!metrics.starOnStone||!metrics.mastheadNavyOnly))
-                      errors.push('BLUE_BAND_MUST_CONTAIN_ONLY_MASTHEAD_NOT_STAR');
-                    if(variant==='masthead'&&(!metrics.newWallMask||!metrics.sameStoneMaterial))
-                      errors.push('ARCHITECTURE_MUST_USE_IDENTICAL_STONE_TEXTURE');
-                    if(variant==='masthead'&&(!metrics.stoneSource.includes('temple-stone-light.png')||
-                      !metrics.wallSource.includes('jerusalem-wall.png')||
-                      metrics.wallShadow!=='none'||metrics.paperShadow!=='none'||metrics.wallSeam!=='none'))
-                      errors.push('WALL_AND_TEMPLE_STONE_NOT_UNIFIED');
-                    if(variant==='masthead'&&(metrics.gateColour!=='rgb(196, 156, 81)'||metrics.gateCover<.32||metrics.gateCover>.36||
-                      metrics.gateVerticalStart<.62||metrics.gateVerticalStart>.66||
-                      metrics.gateBottomClearance<0))
-                      errors.push('CENTRAL_GATE_NOT_GOLD');
-                    for(const key of ['mast','title','zh']){
+                    if(variant==='masthead'&&(!metrics.starInNavy||!metrics.mastheadNavyOnly))
+                      errors.push('STAR_MUST_BE_SMALL_AND_INSIDE_NAVY');
+                    if(variant==='masthead'&&(!metrics.originalCityOnly||
+                      !metrics.stoneSource.includes('p2-magazine-sandstone-wall.png')||
+                      metrics.paperShadow!=='none'||metrics.wallSeam!=='none'))
+                      errors.push('NONCUTOUT_PNG_NOT_THE_SINGLE_WALL_SURFACE');
+                    if(variant==='masthead'){
+                      const imageResponse=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-sandstone-wall.png');
+                      if(!imageResponse.ok()||!(imageResponse.headers()['content-type']||'').includes('image/png'))
+                        errors.push('PR1356_ORIGINAL_PNG_NOT_DEPLOYED');
+                    }
+                                        for(const key of ['mast','title','zh']){
                       const r=metrics[key],b=metrics.view;
                       if(r.left<b.left-8||r.right>b.right+10||r.top<b.top-8||r.bottom>b.bottom+10)errors.push('COVER_'+key.toUpperCase()+'_OUT_OF_BOUNDS');
                     }
