@@ -38,10 +38,10 @@ button{font:inherit}
 .cover[data-issue="2"]{--band:#e2d9c5;--mast:#233d4b;--surface:#293f4e;--copy:#e6d7bc;--accent:#c2a46b}
 .cover[data-ratio="4:3"]{aspect-ratio:4/3}
 .cover[data-ratio="4:5"]{aspect-ratio:4/5}
-.cover[data-breach="0"]{--wall-start:calc(var(--band-end) + 4cqi)}
-.cover[data-breach="1"]{--wall-start:calc(var(--band-end) - 4cqi)}
-.cover[data-breach="2"]{--wall-start:calc(var(--band-end) - 9cqi)}
-.cover[data-breach="3"]{--wall-start:calc(var(--band-end) - 16cqi)}
+.cover[data-breach="0"]{--wall-start:calc(var(--band-end) + 4cqi);--portrait-start:calc(var(--band-end) + 3cqi);--abstract-start:var(--band-end)}
+.cover[data-breach="1"]{--wall-start:calc(var(--band-end) - 4cqi);--portrait-start:calc(var(--band-end) - 4cqi);--abstract-start:calc(var(--band-end) - 2cqi)}
+.cover[data-breach="2"]{--wall-start:calc(var(--band-end) - 9cqi);--portrait-start:calc(var(--band-end) - 9cqi);--abstract-start:calc(var(--band-end) - 5cqi)}
+.cover[data-breach="3"]{--wall-start:calc(var(--band-end) - 16cqi);--portrait-start:calc(var(--band-end) - 14cqi);--abstract-start:calc(var(--band-end) - 9cqi)}
 .band{position:absolute;top:0;left:0;right:0;height:var(--band-end);background:var(--band);z-index:0}
 .cover__mast{
  position:absolute;left:1.45%;width:97.1%;top:1.15cqi;aspect-ratio:633/81;
@@ -70,14 +70,15 @@ button{font:inherit}
  -webkit-mask-repeat:no-repeat,no-repeat;mask-repeat:no-repeat,no-repeat;
  -webkit-mask-composite:source-over;mask-composite:add;pointer-events:none;
 }
+.cover[data-breach="3"] .cover__wall,.cover[data-breach="3"] .cover__portrait,.cover[data-breach="3"] .cover__abstract{z-index:12}
 .cover[data-issue="1"] .cover__wall,.cover[data-issue="2"] .cover__wall{display:none}
-.cover__portrait{display:none;position:absolute;top:calc(var(--band-end) - 7cqi);left:46%;right:5%;bottom:0;z-index:4;overflow:visible}
+.cover__portrait{display:none;position:absolute;top:var(--portrait-start);left:46%;right:5%;bottom:0;z-index:4;overflow:visible}
 .cover[data-issue="1"] .cover__portrait{display:block}
 .portrait__back{position:absolute;inset:14% -6% 0 -13%;background:linear-gradient(95deg,#745342,#bb886c 48%,#dfb89e);clip-path:polygon(0 19%,85% 0,100% 100%,0 100%)}
 .portrait__figure{position:absolute;inset:0;background:#292c30;clip-path:path('M 0 0');opacity:0}
 .portrait__head{position:absolute;left:17%;top:1%;width:52%;aspect-ratio:3/4;border-radius:46% 48% 45% 49%;background:radial-gradient(ellipse at 53% 40%,#dac5a7,#8e7564 62%,#504f4a 90%);box-shadow:inset 8px 0 0 #5e5350}
 .portrait__torso{position:absolute;left:0;right:-7%;top:44%;bottom:0;background:#35383a;clip-path:polygon(39% 0,59% 0,78% 17%,100% 41%,100% 100%,0 100%,0 38%,18% 16%)}
-.cover__abstract{display:none;position:absolute;z-index:4;inset:var(--band-end) 0 0;background:#293f4e;overflow:hidden}
+.cover__abstract{display:none;position:absolute;z-index:4;inset:var(--abstract-start) 0 0;background:#293f4e;overflow:hidden}
 .cover[data-issue="2"] .cover__abstract{display:block}
 .abstract__a{position:absolute;top:4%;left:-5%;font:400 clamp(170px,43cqi,650px)/.75 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.10em;color:#c24836;opacity:.91;transform:rotate(-13deg)}
 .abstract__b{position:absolute;right:2%;bottom:-6%;font:italic 400 clamp(78px,18cqi,260px)/1 var(--ws-type-display-en,Georgia,serif);color:#d7c29a;transform:rotate(-12deg)}
@@ -87,8 +88,6 @@ button{font:inherit}
 .cover__theme p{font:600 clamp(12px,2.25cqi,26px)/1.22 var(--ws-type-display-zh,sans-serif);margin:12px 0 0}
 .cover[data-issue="1"] .cover__theme{max-width:38%;left:4%;right:auto;text-align:left;bottom:10%}
 .cover[data-issue="2"] .cover__theme{max-width:57%;bottom:5%;color:#f3e9d5}
-.cover__star{position:absolute;z-index:2;top:15%;left:67%;width:6%;aspect-ratio:1;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:.48}
-.cover[data-issue="1"] .cover__star,.cover[data-issue="2"] .cover__star{display:none}
 .cover__folio{position:absolute;z-index:8;left:4%;bottom:3.5%;font:400 10px/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;color:var(--copy)}
 .cover[data-issue="1"] .cover__folio{color:#59443d}
 .cover[data-issue="2"] .cover__folio{color:#d7c29a}
@@ -146,8 +145,8 @@ function coverHTML(issue,breach,ratio){const t=themes[issue];return `<article cl
 <div class="band"></div><div class="band-rule"></div>
 <div class="cover__wall" aria-hidden="true"></div><div class="cover__portrait" aria-hidden="true"><div class="portrait__back"></div><div class="portrait__torso"></div><div class="portrait__head"></div></div>
 <div class="cover__abstract" aria-hidden="true"><span class="abstract__a">W</span><span class="abstract__b">ord.</span></div>
-<div class="cover__star" aria-hidden="true"></div><div class="cover__mast" role="img" aria-label="官方 SVG：LivingWater / WESTSIDE WATCH / 西望"><span class="cover__ink"></span><img class="cover__ink-fallback" src="/images/westside-watch-masthead-landscape.svg" alt=""></div>
-<span class="cover__issue">${t.vol} / WESTSIDE WATCH</span><div class="cover__theme"><h1 lang="en">${t.title}</h1><p>${t.zh}</p></div><span class="cover__folio">WESTSIDE WATCH / EDITORIAL STUDY</span></article>`}
+<div class="cover__mast" role="img" aria-label="官方 SVG：LivingWater / WESTSIDE WATCH / 西望"><span class="cover__ink"></span><img class="cover__ink-fallback" src="/images/westside-watch-masthead-landscape.svg" alt=""></div>
+<span class="cover__issue">${t.vol}</span><div class="cover__theme"><h1 lang="en">${t.title}</h1><p>${t.zh}</p></div><span class="cover__folio">EDITORIAL PROOF / NOT PUBLISHED</span></article>`}
 function render(){
  document.getElementById('main-cover').innerHTML=coverHTML(state.issue,state.breach,state.ratio);
  document.getElementById('proof-label').textContent=`${themes[state.issue].vol} / BREACH ${levels[state.breach][0]} / ${state.ratio}`;
@@ -159,7 +158,7 @@ function render(){
  for(const group of document.querySelectorAll('[data-control]'))for(const b of group.querySelectorAll('button'))b.setAttribute('aria-pressed',String(b.dataset.value===String(state[group.dataset.control])));
  const url=new URL(location.href);url.searchParams.set('issue',state.issue);url.searchParams.set('breach',state.breach);url.searchParams.set('ratio',state.ratio);history.replaceState(null,'',url);
 }
-for(const b of document.querySelectorAll('[data-control] button'))b.addEventListener('click',()=>{const k=b.parentElement.parentElement.dataset.control;state[k]=k==='ratio'?b.dataset.value:Number(b.dataset.value);render()});
+for(const b of document.querySelectorAll('[data-control] button'))b.addEventListener('click',()=>{const k=b.parentElement.dataset.control;state[k]=k==='ratio'?b.dataset.value:Number(b.dataset.value);render()});
 const url=new URL(location.href);const incomingIssue=Number(url.searchParams.get('issue'));const incomingBreach=Number(url.searchParams.get('breach'));const incomingRatio=url.searchParams.get('ratio');if(url.searchParams.has('issue')&&[0,1,2].includes(incomingIssue))state.issue=incomingIssue;if(url.searchParams.has('breach')&&[0,1,2,3].includes(incomingBreach))state.breach=incomingBreach;if(['8:5','4:3','4:5'].includes(incomingRatio))state.ratio=incomingRatio;render();
 </script>
 </body>
