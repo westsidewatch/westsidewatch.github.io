@@ -11,6 +11,7 @@
    680x190 official SVG: x=1..633, y=10..90, 633x81 visible pixels. */
 :root{color-scheme:light;--ui:#142235;--paper:#f1eee5;--rule:#b1aaa0}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{background:var(--paper)}
 body{margin:0;background:var(--paper);color:var(--ui);font-family:var(--ws-type-reading-zh,"Chiron Hei HK WS",sans-serif)}
 button{font:inherit}
@@ -210,19 +211,19 @@ button{font:inherit}
  </section>
  <section class="folio-comparison"><div class="series__heading"><h2>Issue marks, <em>off the masthead.</em></h2><span class="smallcaps">VOL.00 / SAME COVER / THREE HYPOTHESES</span></div><div class="folio__grid" id="folio-grid"></div><p class="folio__note">这组三联仅比较期号的出版信息层级。期号从刊头色面完全移走；所有方案不加角标色块、不改官方刊名字形。侧边竖排只是把纸刊书脊信息转译为网刊边缘信息的实验，并非照搬书脊。</p></section>
  <section class="spine-lab" id="virtual-spine-lab" aria-labelledby="spine-heading">
-  <div class="spine-lab__lead"><div><span class="smallcaps">THE DIGITAL BOOK OBJECT / RESEARCH PROOF 02</span><h2 id="spine-heading">A Spine <em>for the Screen.</em></h2></div><p>把书脊作为网刊自己的出版界面：封面关闭时，期号沿左缘成立；展开为对开后，它可以成为边缘、连接中轴，或阅读索引。这里使用真正的单封面 <strong>5:8／4:5</strong> 两种剪裁，不能把横向对开的比例误称为单张封面的比例。</p></div>
-  <div class="spine-controls" aria-label="虚拟书脊研究控制">
+  <div class="spine-lab__lead"><div><span class="smallcaps">REVISED ART DIRECTION / RESEARCH PROOF 03</span><h2 id="spine-heading">A Line <em>Through Seven Worlds.</em></h2></div><p>原先仿纸书厚度的“书脊”试验已经淘汰：它不能在网刊里形成真正的设计功能。新的七色功能带不再模仿装订，保留同一翻转动作，并通过点击进入《西望》或另外六个真实板块。<a href="/experiments/editorial-continuum-bar-lab.html" style="display:inline-block;margin-top:12px;border-bottom:1px solid currentColor;font-weight:600">进入新一轮功能色带实验 ↗</a></p></div>
+  <div class="spine-controls" aria-label="已淘汰的纸书模拟试验" hidden>
    <div class="control"><span class="smallcaps">ONE COVER / 单封面裁切</span><div class="control__buttons" data-control="spineFormat"><button data-value="5:8" aria-pressed="true">5:8 / 修长</button><button data-value="4:5" aria-pressed="false">4:5 / 宽阔</button></div></div>
    <div class="control"><span class="smallcaps">SPINE POSITION / 出版轴线</span><div class="control__buttons" data-control="spineMode"><button data-value="edge" aria-pressed="false">01 / 封面外缘</button><button data-value="hinge" aria-pressed="true">02 / 对开中轴</button><button data-value="index" aria-pressed="false">03 / 阅读边栏</button></div></div>
    <div class="control"><span class="smallcaps">BOOK STATE / 阅读状态</span><div class="control__buttons" data-control="spineView"><button data-value="cover" aria-pressed="true">封面 / COVER</button><button data-value="spread" aria-pressed="false">打开 / SPREAD</button></div></div>
   </div>
-  <div class="spine-stage" id="spine-stage" data-format="5:8" data-mode="hinge" data-view="cover" role="region" aria-label="虚拟书脊封面与对开互动实验"></div>
-  <div class="spine-verdict" id="spine-verdict">
+  <div class="spine-stage" id="spine-stage" data-format="5:8" data-mode="hinge" data-view="cover" hidden></div>
+  <div class="spine-verdict" id="spine-verdict" hidden>
    <article data-mode="edge"><span class="smallcaps">01 / OBJECT</span><h3>Bound edge.</h3><p>把出版资料放在封面侧面，主画面最干净。但如果展开后仅剩装饰性的纸本厚度，网刊自身的意义不足。</p></article>
    <article data-mode="hinge" data-active="true"><span class="smallcaps">02 / AXIS</span><h3>Editorial hinge.</h3><p>收起时沿封面左缘，打开时进入左右对页中轴。书脊成为刊名、期号和转场共用的稳定出版轴线，优先深入。</p></article>
    <article data-mode="index"><span class="smallcaps">03 / NAVIGATION</span><h3>Running index.</h3><p>对开后沿阅读区域外缘保留期号。适合继续探索章节与阅读进度，但本版尚未假装具有完整导航功能。</p></article>
   </div>
-  <p class="spine-lab__caveat">书脊本体可点击以开合；按钮可键盘操作，并尊重系统的减少动效设置。中间的 CONTENTS 与内页只用于判断开合、信息层级和书脊落点，不是 Vol.00 已核准的正式目录或内页。选项不修改 P2 的正式动效、封面或 Design OS。</p>
+  <p class="spine-lab__caveat">5:8 与 4:5 单封面裁切的几何研究仍然保留在编辑手册，但不再与仿真实体书脊绑定。此处只作历史记录及新版实验入口；不变更 P2 正式版。</p>
  </section>
  <section class="series"><div class="series__heading"><h2>Three issues, <em>one masthead.</em></h2><span class="smallcaps">TEST-ONLY / 4:5 SERIES</span></div><div class="series__grid" id="series-grid"></div><p class="smallcaps">人物轮廓与文字抽象场仅用作跨期压力测试，不是 Vol.01／02 正式封面，也不冒充已取得肖像版权。</p></section>
 </main>
