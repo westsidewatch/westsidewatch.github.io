@@ -192,10 +192,13 @@ jobs:
                           const paper=city?.querySelector('.dual-cover__paper');
                           const wall=city?.querySelector('.dual-cover__wall');
                           return {shared:!!(city&&paper&&wall&&paper.parentElement===city&&wall.parentElement===city),
-                            soleCutout:getComputedStyle(wall).backgroundImage.includes('p2-magazine-stone-gate-cutout.png') &&
+                            originalStoneDisplayed:getComputedStyle(wall).backgroundImage.includes('p2-magazine-sandstone-wall.png') &&
                                getComputedStyle(wall).clipPath==='none' &&
                                getComputedStyle(wall).display!=='none',
-                            originalHidden:getComputedStyle(paper).display==='none'&&
+                            skyMaskOnly:getComputedStyle(wall).maskImage.includes('p2-magazine-stone-gate-cutout.png') &&
+                               getComputedStyle(wall).maskImage.includes('linear-gradient') &&
+                               getComputedStyle(wall).maskComposite.includes('add'),
+                            originalSecondLayerHidden:getComputedStyle(paper).display==='none'&&
                                getComputedStyle(paper).backgroundImage==='none',
                             oldGateHidden:getComputedStyle(wall.querySelector('.dual-cover__gate')).display==='none'};
                         })(),
@@ -240,9 +243,10 @@ jobs:
                     if(p===100&&(m.reliefPrint.opacity<.28||m.reliefPrint.opacity>.38))errors.push('CONTENTS_LOWER_SVG_RELIEF_NOT_RETAINED');
                     if(p===100&&m.reliefPrint.indexBottom>m.reliefPrint.clipStart+8)errors.push('CONTENTS_READING_ZONE_OVER_LOWER_PRINT');
                     if(p===100&&width>1100&&m.reliefPrint.lastArticleBottom>m.reliefPrint.clipStart+8)errors.push('ARTICLE_TITLES_COLLIDE_WITH_LOWER_LETTERPRESS');
-                    if(!m.unifiedCity.shared||!m.unifiedCity.soleCutout||
-                       !m.unifiedCity.originalHidden||!m.unifiedCity.oldGateHidden)
-                      errors.push('FULL_ALPHA_CUTOUT_MUST_BE_SOLE_CITY_IMAGE_NO_STITCH');
+                    if(!m.unifiedCity.shared||!m.unifiedCity.originalStoneDisplayed||
+                       !m.unifiedCity.skyMaskOnly||!m.unifiedCity.originalSecondLayerHidden||
+                       !m.unifiedCity.oldGateHidden)
+                      errors.push('ORIGINAL_GATE_MUST_KEEP_STONE_DOOR_WITH_ALPHA_SKYLINE_MASK');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
                     if(p===100&&!m.readerReach.keyboard)errors.push('CONTENTS_NOT_KEYBOARD_ACCESSIBLE');
                     if(p===100&&width>1100&&!m.readerReach.desktopVisible)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_VISIBLE');
@@ -308,7 +312,10 @@ jobs:
                           ['en','zh'].every(name=>cv.querySelector('.dual-cover__'+name)?.parentElement===cv.querySelector('.dual-cover__editorial')),
                         starInNavy:star.top>=view.top&&star.bottom<=city.top+4,
                         mastheadNavyOnly:part('mast').bottom<=city.top+2,
-                        singleCutoutWithoutSplit:getComputedStyle(wallEl).backgroundImage.includes('p2-magazine-stone-gate-cutout.png')&&
+                        originalStoneWithSkyMask:getComputedStyle(wallEl).backgroundImage.includes('p2-magazine-sandstone-wall.png')&&
+                          getComputedStyle(wallEl).maskImage.includes('p2-magazine-stone-gate-cutout.png')&&
+                          getComputedStyle(wallEl).maskImage.includes('linear-gradient')&&
+                          getComputedStyle(wallEl).maskComposite.includes('add')&&
                           getComputedStyle(wallEl).clipPath==='none'&&
                           getComputedStyle(paperEl).display==='none'&&
                           getComputedStyle(wallEl.querySelector('.dual-cover__gate')).display==='none',
@@ -357,18 +364,20 @@ jobs:
                       errors.push('LOWER_RIGHT_EDITORIAL_HEADLINE_NOT_CLEAR');
                     if(variant==='masthead'&&(!metrics.starInNavy||!metrics.mastheadNavyOnly))
                       errors.push('STAR_MUST_BE_SMALL_AND_INSIDE_NAVY');
-                    if(variant==='masthead'&&(!metrics.singleCutoutWithoutSplit||
+                    if(variant==='masthead'&&(!metrics.originalStoneWithSkyMask||
                       metrics.wallShadow!=='none'||metrics.wallSeam!=='none'))
-                      errors.push('DUAL_PNG_STITCH_OR_CUTOFF_REINTRODUCED');
+                      errors.push('STONE_DOOR_TRANSPARENT_OR_DUAL_PNG_STITCH_REINTRODUCED');
                     if(variant==='masthead'&&(metrics.foldLightPaths!==5||metrics.foldLightOpacity<.95))
                       errors.push('GEOMETRIC_LIGHT_NOT_RENDERED');
                     if(variant==='masthead'&&!metrics.goldAtThreshold)
                       errors.push('FOLDED_LIGHT_MUST_BEGIN_AT_GATE_THRESHOLD_AND_SHARE_EDGES');
                     if(variant==='masthead'){
                       const alpha=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-stone-gate-cutout.png');
-                      if(!alpha.ok()||
-                         !(alpha.headers()['content-type']||'').includes('image/png'))
-                        errors.push('PR1356_WHOLE_CUTOUT_PNG_NOT_DEPLOYED');
+                      const stone=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-sandstone-wall.png');
+                      if(!alpha.ok()||!stone.ok()||
+                         !(alpha.headers()['content-type']||'').includes('image/png')||
+                         !(stone.headers()['content-type']||'').includes('image/png'))
+                        errors.push('PR1356_STONE_AND_SKY_MASK_ASSETS_NOT_DEPLOYED');
                     }
                                         for(const key of ['mast','title','zh']){
                       const r=metrics[key],b=metrics.view;
