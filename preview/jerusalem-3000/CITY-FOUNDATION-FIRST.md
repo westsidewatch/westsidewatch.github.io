@@ -92,3 +92,5 @@ The optional 空間骨架對照 panel compares all 18 eras against one modern DE
 ## Three independent later skeletons (2026-10-24)
 
 Aelia, Byzantine and early Islamic layouts now share one authored district/path/clearance/reservation authority per era, replacing their old grid masses. Low coarse cells follow the same DEM, not a scaled Herodian plan. Historical relationships supply context but exact coordinates/widths/heights remain illustrative. Aelia no longer draws the arbitrary Herodian inherited overlay. See INDEPENDENT-LATER-SKELETON.md. Complete city limits, public architecture and all-era historical acceptance remain open.
+
+2026-10-24 中世紀連續骨架：十字軍、阿尤布／馬木魯克、鄂圖曼三期接入獨立分區／路徑配置，與前面 Aelia—早期伊斯蘭共用地形、六期比較鏡頭、帳本和骨架圖。既有規則矩形圍牆退出這三期現行顯示，真實城防、核心建築與相鄰存續仍是缺口。詳見 [MEDIEVAL-SPATIAL-FOUNDATION.md](MEDIEVAL-SPATIAL-FOUNDATION.md)。下一包先做城外擴張／現代成對基礎，建築細雕繼續暫停。

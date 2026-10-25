@@ -484,6 +484,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       laterMorphologyLedger=createLaterMorphologyLedger(loaded.core);
       const independentLaterData=await loadCityData('./data/urban/roman-byzantine-islamic.skeleton.v1.json');
       for(const phase of ['aelia','byzantine','early-islamic'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(independentLaterData,phase,terrainRuntime.grid.origin));
+      const medievalData=await loadCityData('./data/urban/medieval-ottoman.skeleton.v1.json');
+      for(const phase of ['crusader','ayyubid-mamluk','ottoman'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(medievalData,phase,terrainRuntime.grid.origin));
       if (!parcels.blockCount || !parcels.count || !architecture.buildings || !cityCoreRuntime.validation.ok)
         throw new Error(`Canonical city incomplete: ${parcels.blockCount || 0} blocks, ${parcels.count || 0} parcels, ${architecture.buildings || 0} buildings`);
       architecture.meshes.push(

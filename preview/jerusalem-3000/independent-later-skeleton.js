@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {generateDistrictInfill} from './district-infill.js';
 import {polygonsOverlap} from './urban-exclusion.js';
 import {buildHerodianRoadGeometry} from './herodian-road-geometry.js';
-const PHASES=new Set(['aelia','byzantine','early-islamic']);
+const PHASES=new Set(['aelia','byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman']);
 export const isIndependentLaterPhase=id=>PHASES.has(id);
 export function compileIndependentLaterSkeleton(data,phase,origin){
  if(data?.schema!=='j3k.independent-later-skeleton.v1'||data.frame!=='canonical-origin-east-x-south-z-metres'||!PHASES.has(phase)||![origin?.lat,origin?.lon,data.origin?.lat,data.origin?.lon].every(Number.isFinite)||origin?.lat!==data.origin?.lat||origin?.lon!==data.origin?.lon)throw new Error('Independent skeleton origin/schema/phase mismatch');

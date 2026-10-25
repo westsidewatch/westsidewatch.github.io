@@ -5,7 +5,7 @@ const OWNERS=Object.freeze({
  'chalcolithic-early-bronze':'early-landscape','middle-bronze':'early-landscape','late-bronze-iron1':'early-landscape','david-solomon':'early-landscape',
  'late-first-temple':'shared-period','babylonian-destruction':'shared-period','persian-nehemiah':'shared-period','hellenistic-hasmonean':'shared-period',
  'herodian-jesus':'canonical-city','roman-destruction':'canonical-city',
- aelia:'independent-later-skeleton',byzantine:'independent-later-skeleton','early-islamic':'independent-later-skeleton',crusader:'crusader-morphology','ayyubid-mamluk':'legacy-footprint',ottoman:'ottoman-morphology','outside-walls':'legacy-footprint',modern:'legacy-footprint'
+ aelia:'independent-later-skeleton',byzantine:'independent-later-skeleton','early-islamic':'independent-later-skeleton',crusader:'independent-later-skeleton','ayyubid-mamluk':'independent-later-skeleton',ottoman:'independent-later-skeleton','outside-walls':'legacy-footprint',modern:'legacy-footprint'
 });
 export function foundationOwnerFor(phaseId){const owner=OWNERS[phaseId];if(!owner)throw new Error(`Unknown foundation phase ${phaseId}`);return owner;}
 const DOMAIN_TYPES={districts:['district'],routes:['road','route'],waterDefense:['water','wall','gate'],sacredCivic:['monument'],occupation:['block','parcel','building']};

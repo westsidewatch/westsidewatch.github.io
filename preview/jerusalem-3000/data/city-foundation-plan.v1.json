@@ -28,7 +28,8 @@
     "temporal-city-core.js",
     "temporal-city-core-adapter.js",
     "independent-later-skeleton.js",
-    "data/urban/roman-byzantine-islamic.skeleton.v1.json"
+    "data/urban/roman-byzantine-islamic.skeleton.v1.json",
+    "data/urban/medieval-ottoman.skeleton.v1.json"
   ],
   "phases": [
     {
@@ -229,7 +230,7 @@
     {
       "id": "crusader",
       "label": "十字軍",
-      "rendererFamily": "crusader-morphology",
+      "rendererFamily": "independent-later-skeleton",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -238,13 +239,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Procedural morphology batches share stable phase-scoped scaffold IDs and explicit events; next-era fate unresolved. Anonymous masses remain blocks, not verified buildings. Source-specific district/route registration, inherited layers and historical adjacent-object fates remain incomplete.",
+      "gap": "Independently authored district/path envelopes, DEM-following coarse cells and reserved cores now share scene, ledger and comparison map. Geometry remains illustrative/composite, not surveyed; actual wall/water networks, public buildings and adjacent survival are unverified.",
       "acceptanceEvidence": []
     },
     {
       "id": "ayyubid-mamluk",
       "label": "阿尤布—馬穆魯克",
-      "rendererFamily": "legacy-footprint-scaffold",
+      "rendererFamily": "independent-later-skeleton",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -253,13 +254,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Existing footprint masses share stable inferred block IDs and explicit generation events; next-era fate unresolved where a next phase exists. Provisional inheritance stays unbound. Historical district/road foundations, ancient ground and verified adjacent-object fates remain incomplete.",
+      "gap": "Independently authored district/path envelopes, DEM-following coarse cells and reserved cores now share scene, ledger and comparison map. Geometry remains illustrative/composite, not surveyed; actual wall/water networks, public buildings and adjacent survival are unverified.",
       "acceptanceEvidence": []
     },
     {
       "id": "ottoman",
       "label": "奧斯曼",
-      "rendererFamily": "ottoman-morphology",
+      "rendererFamily": "independent-later-skeleton",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -268,7 +269,7 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Procedural morphology batches share stable phase-scoped scaffold IDs and explicit events; next-era fate unresolved. Anonymous masses remain blocks, not verified buildings. Source-specific district/route registration, inherited layers and historical adjacent-object fates remain incomplete.",
+      "gap": "Independently authored district/path envelopes, DEM-following coarse cells and reserved cores now share scene, ledger and comparison map. Geometry remains illustrative/composite, not surveyed; actual wall/water networks, public buildings and adjacent survival are unverified.",
       "acceptanceEvidence": []
     },
     {
@@ -488,12 +489,18 @@
     "phases": [
       "aelia",
       "byzantine",
-      "early-islamic"
+      "early-islamic",
+      "crusader",
+      "ayyubid-mamluk",
+      "ottoman"
     ],
     "authority": "published-relationship-context-plus-explicitly-authored-illustrative-geometry",
     "herodianFootprintReused": false,
     "semanticBuildings": false,
     "historicalFoundationAccepted": false,
-    "dataFile": "data/urban/roman-byzantine-islamic.skeleton.v1.json"
+    "dataFiles": [
+      "data/urban/roman-byzantine-islamic.skeleton.v1.json",
+      "data/urban/medieval-ottoman.skeleton.v1.json"
+    ]
   }
 }
