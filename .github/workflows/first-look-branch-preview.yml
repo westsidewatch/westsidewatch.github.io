@@ -390,7 +390,7 @@ jobs:
                 }
                 // Same source artwork at THREE skyline positions: 18%, 44%, 62%.
                 // Screenshot each native viewport without reloading iframe/star.
-                for(const [position,top] of [['logo',.18],['half',.44],['third',.62]]){
+                for(const [position,top] of [['logo',.10],['half',.44],['third',.62]]){
                   const id=screen+'-wall-'+position,errors=[];
                   try{
                     await page.locator('button[data-wall-position="'+position+'"]').click();
