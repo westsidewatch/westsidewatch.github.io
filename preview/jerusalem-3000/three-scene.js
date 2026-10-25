@@ -281,7 +281,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   function rebuildUrbanFabric(phaseId) {
     clearFabric();
     // Request only this bounded slice; other eras retain their established morphology.
-    sharedEraRuntime?.request(phaseId);
+    sharedEraRuntime?.request(phaseId,{retainedVisible});
     const foundationOwner=foundationOwnerFor(phaseId);
     if (['canonical-city','early-landscape'].includes(foundationOwner)) return;
     if (foundationOwner==='shared-period') {
@@ -685,6 +685,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     controls,
     root,
     ready,
+    playbackReadiness(){const status=isSharedGenerationPhase(currentPhaseId)?(sharedEraRuntime?.status||'idle'):'ready';return {phase:currentPhaseId,status,ready:status==='ready'};},
     setBuildProgress,
     setRuinProgress,
     setEvidenceMode,
@@ -754,6 +755,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     },
     setRetainedLayerVisible(visible) {
       retainedVisible = Boolean(visible);
+      sharedEraRuntime?.request(currentPhaseId,{retainedVisible});
       updatePeriodOverview(currentPhaseId,true);
       applyTemporalState();
       needsFrame = true;

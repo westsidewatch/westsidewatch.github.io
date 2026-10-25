@@ -21,12 +21,12 @@ const noReserve=structuredClone(data);noReserve.phases['persian-nehemiah'].reser
 const original=globalThis.fetch,requests=new Map();
 try{
  globalThis.fetch=async url=>{const path=new URL(url).pathname;requests.set(path,(requests.get(path)||0)+1);return {ok:true,json:()=>json(url)};};invalidateCityData();
- const terrain={grid:{origin:data.anchor},heightAtWorld:(x,z)=>40+x*.02+z*.01};
+ const terrain={grid:{origin:{lat:31.778,lon:35.235}},heightAtWorld:(x,z)=>40+x*.02+z*.01};
  const [{core},a,b]=await Promise.all([loadTemporalCityCore(timeline.phases,{terrain}),loadAnchorCityLedger(),loadAnchorCityLedger()]);
  assert.equal(a.lifecycle.objects.length,b.lifecycle.objects.length);
  const ids=a.packs.packs.flatMap(p=>(p.objects||[]).map(o=>o.id));assert.equal(new Set(ids).size,ids.length,'derived spatial records must be unique');
  assert.equal(requests.get(new URL('data/urban/first-temple-persian.spatial.v1.json',base).pathname),1,'all ledger consumers must share one spatial request');
- for(const phase of ['late-first-temple','persian-nehemiah'])bindPeriodSpatialCore(core,compilePeriodRegistration(data,phase,data.anchor));
+ for(const phase of ['late-first-temple','persian-nehemiah'])bindPeriodSpatialCore(core,compilePeriodRegistration(data,phase,terrain.grid.origin));
  assert.equal(core.get('j3k:late-first-temple:district:western-hill').metadata.rendererBinding,'period-spatial-adapter-v1');
  const parent=new THREE.Group(),runtime=createPersianSanctuary(parent,{data,terrain,core}),apply=position=>runtime.apply({position});
  apply(5.9);assert.equal(runtime.diagnostics().visibleTemple,0);

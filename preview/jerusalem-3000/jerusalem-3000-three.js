@@ -1,3 +1,4 @@
+import {advancePlayback} from './playback-clock.js';
 import {isIndependentLaterPhase} from './independent-later-skeleton.js';
 import {createSpatialSkeletonView} from './spatial-skeleton-view.js';
 import { isEarliestPhase, isEarlyLandscapePhase } from './earliest-settlement.js';
@@ -289,18 +290,30 @@ try {
           : 'disabled';
   }
   let raf = 0,
-    last = 0;
+    last = 0, waitingForCity=false;
   function stop() {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
     last = 0;
+    waitingForCity=false;
     play.textContent = '▶ 建城';
     play.setAttribute('aria-pressed', 'false');
+    window.__JERUSALEM3000__.playback={status:'paused',position:Number(slider.value)};
   }
   function frame(t) {
     if (!last) last = t;
-    let v = Number(slider.value) + ((t - last) / 1000) * 0.65;
-    last = t;
+    const readiness=three.playbackReadiness(),position=Number(slider.value);
+    const elapsed=(t-last)/1000;last=t;
+    if(!readiness.ready){
+      waitingForCity=true;
+      window.__JERUSALEM3000__.playback={status:readiness.status==='error'?'error':'waiting',position,phase:readiness.phase};
+      if(readiness.status==='error'){stop();window.__JERUSALEM3000__.playback={status:'error',position,phase:readiness.phase};}
+      else {play.textContent='Ⅱ 等待城市 · 可暫停';if(raf)raf=requestAnimationFrame(frame);}
+      return;
+    }
+    const wasWaiting=waitingForCity;waitingForCity=false;play.textContent='Ⅱ 暫停';
+    let v=advancePlayback(position,wasWaiting?0:elapsed,time.max);
+    window.__JERUSALEM3000__.playback={status:'playing',position:v,phase:readiness.phase};
     if (v >= time.max) {
       v = time.max;
       stop();

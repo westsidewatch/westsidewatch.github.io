@@ -10,7 +10,7 @@ const timeline=await json('data/continuous-build-timeline.json'),data=await json
 const original=globalThis.fetch;
 try {
  globalThis.fetch=async url=>({ok:true,json:()=>json(url)});invalidateCityData();
- const terrain={grid:{origin:data.spring},heightAtWorld:(x,z)=>40+x*.03+z*.01};
+ const terrain={grid:{origin:{lat:31.778,lon:35.235}},heightAtWorld:(x,z)=>40+x*.03+z*.01};
  const {core}=await loadTemporalCityCore(timeline.phases,{terrain}),parent=new THREE.Group();
  const runtime=createRoyalCity(parent,{data,terrain,core});const apply=position=>runtime.apply({position,evidenceAllowed:()=>true,ruin:1});
  apply(3.2);assert.equal(runtime.diagnostics().visibleTemple,0);assert.ok(runtime.diagnostics().visibleWalls>0);

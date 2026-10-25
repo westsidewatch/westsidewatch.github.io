@@ -26,7 +26,7 @@ for(const e of layout.edges)for(let i=1;i<e.points.length;i++){
 const original=globalThis.fetch;
 try {
  globalThis.fetch=async url=>({ok:true,json:()=>json(url)});invalidateCityData();
- const terrain={grid:{origin:data.spring},heightAtWorld:()=>40},{core}=await loadTemporalCityCore(timeline.phases,{terrain}),parent=new THREE.Group();
+ const terrain={grid:{origin:{lat:31.778,lon:35.235}},heightAtWorld:()=>40},{core}=await loadTemporalCityCore(timeline.phases,{terrain}),parent=new THREE.Group();
  const rawAnchor=await json('data/anchor-era-packs.json');assert.ok(!rawAnchor.packs.flatMap(p=>p.objects||[]).some(o=>o.id==='j3k:object:royal-road:spring-access'),'spatial records must not be duplicated in editable anchor packs');
  const [a,b]=await Promise.all([loadAnchorCityLedger(),loadAnchorCityLedger()]);assert.equal(a.lifecycle.objects.length,b.lifecycle.objects.length);assert.equal(a.lifecycle.objects.filter(o=>o.id==='j3k:object:royal-road:spring-access').length,1);
  const runtime=createRoyalCity(parent,{data,terrain,core});assert.equal(core.get('j3k:object:royal-region:ridge').geometry.frame,'canonical-dem-enu');assert.equal(core.get('j3k:object:royal-road:spring-access').metadata.spatialTopology.from,'spring');runtime.apply({position:3.9,evidenceAllowed:()=>true});

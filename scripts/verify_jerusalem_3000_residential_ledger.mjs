@@ -11,8 +11,8 @@ const base=new URL('../preview/jerusalem-3000/',import.meta.url),json=async path
 const original=globalThis.fetch,material=new THREE.MeshStandardMaterial();
 try{
  globalThis.fetch=async url=>({ok:true,json:()=>json(url)});invalidateCityData();
- const terrain={grid:{origin:data.anchor},heightAtWorld:()=>40},{core}=await loadTemporalCityCore(timeline.phases,{terrain});
- const registrations=new Map(['late-first-temple','persian-nehemiah'].map(phase=>[phase,compilePeriodRegistration(data,phase,data.anchor)]));
+ const terrain={grid:{origin:{lat:31.778,lon:35.235}},heightAtWorld:()=>40},{core}=await loadTemporalCityCore(timeline.phases,{terrain});
+ const registrations=new Map(['late-first-temple','persian-nehemiah'].map(phase=>[phase,compilePeriodRegistration(data,phase,terrain.grid.origin)]));
  for(const r of registrations.values())bindPeriodSpatialCore(core,r);
  const initial=[...core.objects.keys()],reference=await json('data/urban/herodian-30ce.registration.json'),options={reference,expansionFootprint:{sx:.7,sz:.7},terrain,ledgerCore:core,materials:{inferred:material,facadeOpening:material},getRegistration:phase=>registrations.get(phase)};
  const cancelled=createSharedEraRuntime(new THREE.Group(),options);cancelled.request('late-first-temple');cancelled.request('modern');await new Promise(r=>setTimeout(r,20));assert.deepEqual([...core.objects.keys()],initial,'cancelled staging must publish no objects');cancelled.dispose();

@@ -23,7 +23,7 @@ export function buildHerodianParcelArchitecture(group,core,materials,terrain){re
 // between bounded batches. No WebGL objects are built by the startup audit.
 export async function buildEraParcelArchitectureAsync(group, core, materials, terrain, {
   phaseId, destroyedPhase = null, grammarId = 'bounded-shared-parcel-typology-v1',
-  signal, budgetMs = 8, maxBatch = 4,
+  signal, budgetMs = 8, maxBatch = 32,
   yieldControl = () => new Promise(resolve => setTimeout(resolve, 0)),
   onProgress = () => {},
 } = {}) {

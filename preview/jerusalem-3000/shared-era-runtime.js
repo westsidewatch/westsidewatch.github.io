@@ -135,13 +135,13 @@ export function createSharedEraRuntime(parent, options) {
   const expansion = createParcelRuntime(parent, { ...options, footprint: options.expansionFootprint,
     generationPhase: EXPANSION_PHASE, phaseIds: [EXPANSION_PHASE] });
   const runtimes = [first, successor, expansion];
-  let current = '';
+  let current = '',retainedRequested=false;
   const active = () => current === EXPANSION_PHASE ? expansion : current === RETAINED_PHASE ? successor : first;
   return {
-    request(phaseId) { current = phaseId; for (const runtime of runtimes) runtime.request(phaseId); },
+    request(phaseId,{retainedVisible=false}={}) { current=phaseId;retainedRequested=retainedVisible;for(const runtime of runtimes)runtime.request(phaseId===RETAINED_PHASE&&runtime===first&&!retainedRequested?'':phaseId); },
     get status() {
-      if (current === RETAINED_PHASE && first.status === 'error') return 'error';
-      if (current === RETAINED_PHASE && successor.status === 'ready' && first.status !== 'ready') return first.status;
+      if (current === RETAINED_PHASE && retainedRequested && first.status === 'error') return 'error';
+      if (current === RETAINED_PHASE && retainedRequested && successor.status === 'ready' && first.status !== 'ready') return first.status;
       return active().status;
     },
     apply(args) { let owned = false; for (const runtime of runtimes) owned = runtime.apply(args) || owned; return owned; },
