@@ -1,5 +1,5 @@
 import {compileIndependentLaterSkeleton,buildIndependentLaterSkeleton} from './independent-later-skeleton.js';
-import {collectSpatialSkeleton} from './spatial-skeleton.js';
+import {collectSpatialSkeleton,SKELETON_WINDOW} from './spatial-skeleton.js';
 import {declareHerodianSourceScopes,inspectSourceLifecycleContext} from './source-lifecycle-scope.js';
 import {publishHerodianGeneratedEvents} from './herodian-generated-events.js';
 import {allowsEvidence} from './evidence-visibility.js';
@@ -475,12 +475,14 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         terrainRuntime,
         { exclusions },
       );
+      const overviewMaterial=temporalMaterials.inferred.clone();overviewMaterial.transparent=false;overviewMaterial.opacity=1;overviewMaterial.color.setHex(0xb9a27e);
       const architecture = buildHerodianParcelArchitecture(
         cityCoreLayer,
         loaded.core,
-        temporalMaterials,
-        terrainRuntime,
+        {...temporalMaterials,lowRise:overviewMaterial},
+        terrainRuntime,{overview:true},
       );
+      architecture.overviewMaterial=overviewMaterial;
       cityCoreRuntime = {
         core: loaded.core,
         parcels,
@@ -512,7 +514,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
       for(const phase of ['late-first-temple','persian-nehemiah']){const registration=compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin);periodRegistrations.set(phase,registration);bindPeriodSpatialCore(loaded.core,registration);}
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
-        ledgerCore:loaded.core,
+        ledgerCore:loaded.core,overview:true,
         getRegistration:phase => periodRegistrations.get(phase) ?? null,
         getExclusions:phase=>royalCity?.exclusionsFor(phase)||[],
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
@@ -532,20 +534,20 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     }
     const settlementResponse=await fetch('./data/settlement/earliest.v1.json',{cache:'no-store'});
     if(!settlementResponse.ok) throw new Error('Earliest settlement data unavailable');
-    earliestSettlement=createEarliestSettlement(root,{data:await settlementResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core});
+    earliestSettlement=createEarliestSettlement(root,{data:await settlementResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
     const middleResponse=await fetch('./data/settlement/middle-bronze.v1.json',{cache:'no-store'});
     if(!middleResponse.ok) throw new Error('Middle Bronze settlement data unavailable');
-    middleBronzeSettlement=createEarliestSettlement(root,{data:await middleResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core});
+    middleBronzeSettlement=createEarliestSettlement(root,{data:await middleResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
     const lateResponse=await fetch('./data/settlement/late-bronze-iron1.v1.json',{cache:'no-store'});
     if(!lateResponse.ok) throw new Error('Late Bronze landscape data unavailable');
-    lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core});
+    lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
     const waterDefenseData=await loadCityData('./data/urban/water-defense.registration.v1.json');
     localPlanAudit=auditLocalPlanRegistry(await loadCityData('./data/urban/water-defense.local-plans.v1.json'),terrainRuntime.grid.origin);
     waterDefense=compileWaterDefenseRegistration(waterDefenseData,terrainRuntime.grid.origin);bindWaterDefenseCore(cityCoreRuntime.core,waterDefense);
     for(const admission of localPlanAudit){const record=cityCoreRuntime.core.get(admission.objectId);if(!record)throw new Error('Local plan target missing from shared ledger');cityCoreRuntime.core.register({...record,metadata:{...record.metadata,localPlanAdmission:admission}});}
     waterDefenseModel=createWaterDefenseModelAdapter({runtime:middleBronzeSettlement,core:cityCoreRuntime.core,registration:waterDefense});
     const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');
-    davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core});
+    davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     royalRelief=createRoyalRelief(root,mount,{data:davidData,terrain:terrainRuntime});
     persianSanctuary=createPersianSanctuary(root,{data:periodSpatialData,terrain:terrainRuntime,core:cityCoreRuntime.core});
@@ -718,25 +720,26 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     setWaterDefenseVariant(id){waterDefenseModel.setVariant(id);applyTemporalState();},
     waterDefenseEvidence(position){const state=waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);return state?{...state,selectedVariant:waterDefenseModel.selectedVariant,variants:waterDefense.towerVariants,localPlans:localPlanAudit}:null;},
     foundationContext(){return {terrain:terrainRuntime};},
+    inspectOverviewBaseline(){let meshes=0,modules=0;const ids=new Set();root.traverse(m=>{if(!m.isMesh||!m.userData.overview)return;for(let p=m;p;p=p.parent)if(!p.visible)return;meshes++;modules+=m.geometry.userData.visualModules||1;ids.add(m.userData.cityObject?.objectId||m.userData.cityObject?.parcelId);});return {phase:currentPhaseId,grammar:'terrain-courtyard-mass-v1',mode:'city-overview',meshes,registeredHousingObjects:ids.size,visualModules:modules,moduleCountsAreHistoricalBuildings:false,detailWork:'paused',historicalFoundationAccepted:false};},
     inspectSpatialSkeleton(){return currentPhaseId?collectSpatialSkeleton(cityCoreRuntime.core,terrainRuntime,{phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode,includeRetained:retainedVisible}):null;},
-    inspectCityFoundation(phaseId=currentPhaseId){return foundationRuntime?.snapshot(phaseId)??null;},
+    inspectCityFoundation(phaseId=currentPhaseId){return phaseId?foundationRuntime?.snapshot(phaseId)??null:null;},
     cityFoundationIndex(){return foundationRuntime?.index()??[];},
     royalReliefProfile(){return royalRelief?structuredClone(royalRelief.profile):null;},
     focusRoyalRelief(){if(currentPhaseId!=='david-solomon')return false;frameRoyalRelief();return true;},
     setTerrainOverview(enabled){
       if(!terrainRuntime)return false;
       if(enabled&&!terrainView){
-        terrainView={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance,maxDistance:controls.maxDistance,far:camera.far,fov:camera.fov,autoRotate:controls.autoRotate};
+        terrainView={phase:currentPhaseId,position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance,maxDistance:controls.maxDistance,far:camera.far,fov:camera.fov,autoRotate:controls.autoRotate};
         // Shared urban landscape window, wide enough to keep surrounding relief
         // in frame. This camera envelope does not define a historical city extent.
         const points=[];
-        for(const x of [-650,900])for(const z of [-700,1050])points.push(new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z),z));
+        for(const x of [SKELETON_WINDOW.minX,SKELETON_WINDOW.maxX])for(const z of [SKELETON_WINDOW.minZ,SKELETON_WINDOW.maxZ])points.push(new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z),z));
         camera.fov=48;
         const frame=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov});
         camera.far=Math.max(camera.far,frame.distance*3);camera.updateProjectionMatrix();controls.maxDistance=frame.distance*2;
         camera.position.copy(frame.position);controls.target.copy(frame.target);controls.minDistance=35;controls.autoRotate=false;
       }else if(!enabled&&terrainView){
-        camera.position.copy(terrainView.position);controls.target.copy(terrainView.target);controls.minDistance=terrainView.minDistance;controls.maxDistance=terrainView.maxDistance;controls.autoRotate=terrainView.autoRotate;camera.far=terrainView.far;camera.fov=terrainView.fov;camera.updateProjectionMatrix();terrainView=null;
+        camera.position.copy(terrainView.position);controls.target.copy(terrainView.target);controls.minDistance=terrainView.minDistance;controls.maxDistance=terrainView.maxDistance;controls.autoRotate=terrainView.autoRotate;camera.far=terrainView.far;camera.fov=terrainView.fov;camera.updateProjectionMatrix();const changedPhase=terrainView.phase!==currentPhaseId;terrainView=null;if(changedPhase){updatePeriodOverview(currentPhaseId,true);if(isEarlyLandscapePhase(currentPhaseId)){const landscape=isEarliestPhase(currentPhaseId)?earliestSettlement:currentPhaseId==='middle-bronze'?middleBronzeSettlement:currentPhaseId==='late-bronze-iron1'?lateBronzeSettlement:davidSettlement;controls.target.copy(landscape.focus);camera.position.copy(landscape.focus).add(new THREE.Vector3(180,190,270));}else if(isCorePhase(currentPhaseId)){const box=new THREE.Box3().setFromObject(cityCoreLayer),frame=fitCityOverview({points:[box.min,box.max],aspect:camera.aspect,fov:camera.fov});camera.position.copy(frame.position);controls.target.copy(frame.target);}}
       }
       terrainPresentation.contours.visible=!!terrainView;controls.update();needsFrame=true;return !!terrainView;
     },
@@ -816,6 +819,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])
         mesh.geometry?.dispose?.();
+      cityCoreRuntime?.architecture?.overviewMaterial?.dispose();
       renderer.dispose();
     },
   };

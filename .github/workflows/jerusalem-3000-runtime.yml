@@ -58,11 +58,13 @@ jobs:
           node scripts/verify_jerusalem_3000_source_spatial.mjs
           node scripts/verify_jerusalem_3000_spatial_skeleton.mjs
           node scripts/verify_jerusalem_3000_independent_later.mjs
+          node scripts/verify_jerusalem_3000_overview_housing.mjs
       - name: Render the proposed city and scrub through destruction
         run: |
           python3 -m http.server 8765 > /tmp/j3k-server.log 2>&1 &
           node scripts/verify_jerusalem_3000_browser.mjs
           node scripts/verify_jerusalem_3000_medieval_browser.mjs
+          node scripts/verify_jerusalem_3000_overview_browser.mjs
           node scripts/verify_jerusalem_3000_playback_browser.mjs
           node scripts/audit_jerusalem_3000_foundation_gaps.mjs --report work/j3k-validation/phase-report.json --render-commit "$GITHUB_SHA" --out work/j3k-validation/foundation-gap-audit
       - uses: actions/upload-artifact@v4

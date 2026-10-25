@@ -16,12 +16,13 @@ export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || id === RE
 // One provisional first-temple fabric, inherited by destruction in place.
 // Reuse is a schematic lifecycle, not evidence of surveyed period-specific parcels.
 function createParcelRuntime(parent, { reference, footprint, terrain, materials,
-  generationPhase, phaseIds, destroyedPhase = null, retainedPhase = null, getExclusions=()=>[], getRegistration=null, ledgerCore=null,
+  generationPhase, phaseIds,overview=false, destroyedPhase = null, retainedPhase = null, getExclusions=()=>[], getRegistration=null, ledgerCore=null,
   onChange = () => {}, onProgress = () => {} }) {
   const openingMaterial = materials.facadeOpening || new THREE.MeshStandardMaterial({ color: 0x3d3327, roughness: .94, metalness: 0 });
   // Confidence stays in ledger metadata and evidence filters. Transparency makes
   // overlapping walls/roof ranges appear hollow when inspected at street scale.
   const lowRiseMaterial = (materials.inferred || materials.reconstructed).clone();
+  if(overview)lowRiseMaterial.color.setHex(0xb9a27e);
   lowRiseMaterial.transparent = false;
   lowRiseMaterial.opacity = 1;
   lowRiseMaterial.depthWrite = true;
@@ -68,7 +69,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
         const parcels = {parcels:districtResults.flatMap(r=>r.parcels), blocks:districtResults.flatMap(r=>r.blocks),
           count:districtResults.reduce((n,r)=>n+r.count,0), blockCount:districtResults.reduce((n,r)=>n+r.blockCount,0)};
         const architecture = await buildEraParcelArchitectureAsync(group, core, sharedMaterials, terrain, {
-          phaseId, destroyedPhase, signal: controller.signal,
+          phaseId, destroyedPhase,overview, signal: controller.signal,
           onProgress: progress => { state = { status: 'generating', ...progress }; onProgress(progress); },
         });
         if (!architecture.buildings || !core.validate().ok) throw new Error('Shared era generated no valid architecture');

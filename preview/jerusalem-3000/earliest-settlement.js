@@ -1,3 +1,4 @@
+import {overviewHousingGeometry} from './overview-housing.js';
 import {publishSettlementLedger} from './settlement-ledger.js';
 import * as THREE from 'three';
 import { geographicToENU } from './terrain-runtime.js';
@@ -9,12 +10,12 @@ export const ROYAL_PHASE='david-solomon';
 export const isEarlyLandscapePhase=id=>isEarliestPhase(id)||[MIDDLE_BRONZE_PHASE,LATE_BRONZE_PHASE,ROYAL_PHASE].includes(id);
 export {sampleRenderedTerrainHeight as settlementSurfaceHeight} from './terrain-runtime.js';
 import {sampleRenderedTerrainHeight as settlementSurfaceHeight} from './terrain-runtime.js';
-export function createLandscapeSettlement(parent,{data,terrain,ledgerCore=null}) {
+export function createLandscapeSettlement(parent,{data,terrain,ledgerCore=null,overview=false}) {
   if(!terrain?.grid?.origin||!isEarlyLandscapePhase(data.phase)) throw new Error('Earliest settlement requires canonical DEM and its own phase data');
   const anchor=geographicToENU(data.spring.lat,data.spring.lon,terrain.grid.origin);
   const spring={x:anchor.east,z:-anchor.north};
   const group=new THREE.Group(); group.name=`${data.phase}-ridge-settlement`; group.visible=false; parent.add(group);
-  const stone=new THREE.MeshStandardMaterial({color:0xc4ae87,roughness:1});
+  const stone=new THREE.MeshStandardMaterial({color:overview?0xb9a27e:0xc4ae87,roughness:1});
   const timber=new THREE.MeshStandardMaterial({color:0x655743,roughness:1});
   const earth=new THREE.MeshStandardMaterial({color:0x9f8762,roughness:1});
   const pathMaterial=new THREE.MeshStandardMaterial({color:0x7d6c53,roughness:1});
@@ -35,6 +36,7 @@ export function createLandscapeSettlement(parent,{data,terrain,ledgerCore=null})
     const samples=[[-w/2,-d/2],[w/2,-d/2],[-w/2,d/2],[w/2,d/2]].map(([a,b])=>surface(x+a,z+b));
     if(samples.some(v=>!Number.isFinite(v))) throw new Error('Settlement outside canonical terrain');
     const ground=Math.max(...samples)+.08,id=`j3k:${namespace}:house:${i+1}`;houseIds.push(id);
+    if(overview){const polygon=[{x:x-w/2,z:z-d/2},{x:x+w/2,z:z-d/2},{x:x+w/2,z:z+d/2},{x:x-w/2,z:z+d/2}];const m=add(overviewHousingGeometry(polygon,terrain,h,{singleRoom:data.houseTypology!=='four-room-analogy'}),stone,0,0,0,id,'overview-dwelling');m.userData.overview={grammar:'terrain-courtyard-mass-v1'};continue;}
     // Low single-room illustrative dwellings: stone footing, mud walls and timber roof.
     const footing=new THREE.BoxGeometry(w,1,d),fp=footing.attributes.position;
     for(let j=0;j<fp.count;j++) fp.setY(j,fp.getY(j)>0?.2:surface(x+fp.getX(j),z+fp.getZ(j))-ground);

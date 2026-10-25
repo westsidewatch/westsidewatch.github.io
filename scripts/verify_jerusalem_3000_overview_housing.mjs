@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import * as THREE from 'three';
+import {overviewHousingGeometry,buildOverviewHouse,OVERVIEW_HOUSING_GRAMMAR} from '../preview/jerusalem-3000/overview-housing.js';
+const terrain={heightAtWorld:(x,z)=>100+x*.02-z*.03},p=[{x:0,z:0},{x:100,z:0},{x:100,z:80},{x:0,z:80}];
+const g=overviewHousingGeometry(p,terrain,6,{block:true});assert.ok(g.userData.visualModules>1);assert.ok(g.userData.roofRanges>g.userData.visualModules);assert.equal(g.userData.archaeologicalSubdivision,false);
+const pos=g.attributes.position;for(let i=0;i<pos.count;i++){const x=pos.getX(i),z=pos.getZ(i),h=pos.getY(i)-terrain.heightAtWorld(x,z);assert.ok(x>=0&&x<=100&&z>=0&&z<=80);assert.ok(Math.abs(h-.2)<1e-4||Math.abs(h-6)<1e-4);}
+assert.deepEqual(Array.from(overviewHousingGeometry(p,terrain,6,{block:true}).attributes.position.array),Array.from(pos.array));
+const small=[{x:0,z:0},{x:12,z:0},{x:12,z:14},{x:0,z:14}],courtyard=overviewHousingGeometry(small,terrain,3.2);assert.equal(courtyard.userData.roofRanges,4);
+for(let i=0;i<courtyard.attributes.position.count;i+=3){const a=courtyard.attributes.position,x=(a.getX(i)+a.getX(i+1)+a.getX(i+2))/3,z=(a.getZ(i)+a.getZ(i+1)+a.getZ(i+2))/3;assert.ok(!(x>4&&x<8&&z>5&&z<9),'central courtyard stays open');}
+const group=new THREE.Group(),meshes=[],material=new THREE.MeshStandardMaterial(),parcel={id:'same-parcel',geometry:{polygon:small}};const result=buildOverviewHouse(group,meshes,{inferred:material},terrain,parcel,0,{id:'iron-age-four-room-analogy',wallHeightMetres:3.2});assert.equal(result.components,1);assert.equal(meshes[0].userData.cityObject.parcelId,'same-parcel');assert.equal(meshes[0].userData.overview.grammar,OVERVIEW_HOUSING_GRAMMAR);assert.equal(meshes[0].userData.groundHeights.length,meshes[0].geometry.attributes.position.count);assert.throws(()=>overviewHousingGeometry(p,{heightAtWorld:()=>NaN},4));
+for(const geometry of [g,courtyard,...meshes.map(m=>m.geometry)])geometry.dispose();material.dispose();console.log('PASS: common courtyard/roof mass grammar, block modules within parent footprint, open courts, exact DEM fitting, stable subdivision and existing parcel identity');

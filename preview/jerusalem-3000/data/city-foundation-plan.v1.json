@@ -547,5 +547,22 @@
       "j3k:object:southeastern-ridge-iron-age"
     ],
     "historicalFoundationAccepted": false
+  },
+  "overviewBaseline": {
+    "schema": "j3k.overview-baseline.v1",
+    "phaseCoverage": 18,
+    "housingGrammar": "terrain-courtyard-mass-v1",
+    "sourceHouseIdsPreserved": true,
+    "laterRoofModules": "parent-block-visual-expression-not-historical-households",
+    "commonComparisonWindow": {
+      "minX": -2000,
+      "maxX": 1100,
+      "minZ": -1300,
+      "maxZ": 1300
+    },
+    "wallAndSacredCoreComplete": false,
+    "historicalFoundationAccepted": false,
+    "detailWork": "paused",
+    "nextPriority": "whole-timeline-defense-gates-sacred-civic-source-supported-outlines"
   }
 }

@@ -440,6 +440,7 @@ try {
     assert.ok(sample.render.webgl && sample.render.frames > 0);
     assert.equal(sample.render.visibleLegacyTemporalMeshes,0,'unregistered hash-positioned anchor solids must remain withdrawn in every era');
     if([13,14,15].includes(phase)){assert.equal(sample.render.foundation.owner,'independent-later-skeleton');assert.equal(sample.render.urbanFabric.sharedLedger.published,true);}
+    const overviewBaseline=await page.evaluate(()=>window.__JERUSALEM3000__&&document.querySelector('.j3k-overview-baseline')?.textContent);assert.ok(overviewBaseline?.includes('統一概覽基準'));const baseline=await page.evaluate(()=>window.__JERUSALEM3000__.inspectOverviewBaseline());assert.equal(baseline.grammar,'terrain-courtyard-mass-v1');assert.ok(baseline.meshes>0,'every active era must really render the common mass grammar');
     const foundation=await page.evaluate(()=>window.__JERUSALEM3000__.inspectCityFoundation());
     assert.equal(foundation.phaseId,sample.time.phase);assert.equal(foundation.owner,sample.render.foundation.owner);
     assert.equal(foundation.terrain.sampling,'rendered-dem-triangles');assert.equal(foundation.terrain.verticalScale,1);
@@ -556,7 +557,7 @@ try {
     el.value = '6.5'; el.dispatchEvent(new Event('input', { bubbles: true }));
   });
   await mobile.getByRole('button', {name:'前代遺存 · 推定',exact:true}).click();
-  await mobile.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics?.sharedEra?.status === 'ready', null, {timeout:60000});
+  await mobile.waitForFunction(() => {const s=window.__JERUSALEM3000__.renderDiagnostics;return s?.phase==='persian-nehemiah'&&s.sharedEra?.status==='ready'&&s.sharedEra.projection?.retainedVisible&&s.sharedEra.projection.visibleBuildings>0;}, null, {timeout:60000});
   const mobileShared = await mobile.evaluate(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra);
   assert.ok(mobileShared.projection.visibleBuildings > 0);
   assert.equal(mobileShared.projection.layerState,'retained-ruin');

@@ -73,9 +73,11 @@ try {
     for(const text of ['地區','街區','住宅','顯示','查看']){const th=document.createElement('th');th.textContent=text;head.append(th);}table.append(head);
     for(const d of districtAcceptance.districts){const row=document.createElement('tr');row.dataset.residentialDistrict=d.id;row.dataset.buildings=String(d.buildings);row.dataset.visibleBuildings=String(d.visibleBuildings);const name=(labels[d.id.split(':').at(-1)]||'推定地區')+(d.layerState==='retained-ruin'?' · 前代遺存':districtAcceptance.phase==='babylonian-destruction'?' · 毀城示意':'');for(const value of [name,d.blocks,d.buildings,d.visibleBuildings]){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}const action=document.createElement('td'),button=document.createElement('button');button.type='button';button.textContent='近看';button.setAttribute('aria-label',name+'住宅近看');button.disabled=d.visibleBuildings===0;button.addEventListener('click',()=>{if((terrainOverview(false),three.focusResidentialDistrict(d.id))){panel.hidden=true;document.querySelector('.j3k-evidence-toggle').setAttribute('aria-expanded','false');}});action.append(button);row.append(action);table.append(row);}section.append(table);
   }
+  let baselineInfo=null,baselinePhase='',baselineCompare=null;
+  function refreshBaseline(force=false){if(!baselineInfo||!stage.dataset.phase||(!force&&baselinePhase===stage.dataset.phase))return;const f=three.inspectCityFoundation();if(!f)return;baselinePhase=f.phaseId;const s=three.inspectSpatialSkeleton();baselineInfo.textContent='統一概覽基準 · 住宅輪廓／院落／街巷／共同地形；模組不代表實測戶數。水防：'+(s.domains.waterDefense.spatialObjects?'已登記局部':'尚缺可定位表示')+'；宗教／公共核心：'+(s.domains.sacredCivic.spatialObjects?'已登記局部':'尚缺可定位表示')+'。缺口不表示歷史不存在。';}
   let skeletonView=null;
   const three = mountJerusalemThreeScene(mount, {
-    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();skeletonView?.refresh();},
+    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();skeletonView?.refresh();refreshBaseline(true);},
     onReady(info) {
       window.__JERUSALEM3000__.three = true;
       window.__JERUSALEM3000__.evidence = true;
@@ -88,6 +90,7 @@ try {
   window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
   window.__JERUSALEM3000__.inspectSourceLifecycleContext=id=>three.inspectSourceLifecycleContext(id);
   window.__JERUSALEM3000__.inspectCityFoundation=phase=>three.inspectCityFoundation(phase);
+  window.__JERUSALEM3000__.inspectOverviewBaseline=()=>three.inspectOverviewBaseline();
   window.__JERUSALEM3000__.cityFoundationIndex=three.cityFoundationIndex();
   window.__JERUSALEM3000__.inspectSpatialSkeleton=()=>three.inspectSpatialSkeleton();
   skeletonView=createSpatialSkeletonView({parent:document.querySelector('.j3k-shell'),controls:document.querySelector('.j3k-event-controls'),terrain:three.foundationContext().terrain,getSnapshot:()=>three.inspectSpatialSkeleton(),getPhaseLabel:id=>phases.find(p=>p.id===id)?.label||id});
@@ -135,7 +138,7 @@ try {
   const terrainButton=document.createElement('button');terrainButton.type='button';terrainButton.className='j3k-terrain-toggle';terrainButton.textContent='山城地形';terrainButton.setAttribute('aria-pressed','false');
   const terrainNote=document.createElement('span');terrainNote.className='j3k-terrain-note';terrainNote.hidden=true;terrainNote.textContent='現代 DEM · 原比例 · 20m 等高線 · 非古代地表';
   document.querySelector('.j3k-event-controls').append(terrainButton,terrainNote);
-  function terrainOverview(enabled){const active=three.setTerrainOverview(enabled);terrainButton.setAttribute('aria-pressed',String(active));terrainNote.hidden=!active;}
+  function terrainOverview(enabled){const active=three.setTerrainOverview(enabled);terrainButton.setAttribute('aria-pressed',String(active));baselineCompare?.setAttribute('aria-pressed',String(active));terrainNote.hidden=!active;}
   terrainButton.addEventListener('click',()=>terrainOverview(terrainButton.getAttribute('aria-pressed')!=='true'));
   templeFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusRoyalTemple();});
   const reliefButton=document.createElement('button');reliefButton.type='button';reliefButton.textContent='城內高差';reliefButton.hidden=true;
@@ -232,7 +235,7 @@ try {
     note.textContent = isEarliestPhase(p.id) ? '東南山脊與基訓泉周邊的小規模聚落。住居數量、位置、屋頂與步徑均為推定示意；地形使用現代 DEM。可拖動旋轉、滾輪縮放。' : p.id==='middle-bronze' ? '中青銅取水設施與防護通道示意。泉塔年代有爭議，粉褐色標示為爭議層；住居、位置與高度仍屬推定。鑿岩設施只顯示輪廓，完整城牆範圍尚未核定。' : p.id==='late-bronze-iron1' ? '此期城區範圍未核定；住居僅為示意，不代表人口增減或前代房屋留存。粉褐色階梯支撐體為年代與功能爭議層，不能直接認定為王宮基礎。前期防禦未預設延續，隱藏不表示毀壞。' : p.id==='david-solomon' ? '城防、王室院落與第一聖殿為推定復原，由共同帳本分段出現。聖殿主體採經文比例，牆線、位置與外觀未核定；可點「聖殿近看」。住宅仍為較晚鐵器時代類比。' : p.id === RETAINED_PHASE
       ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建住宅採獨立山脊／北部配置；早期第二聖殿主體、院落及入口為獨立推定示意，可點「聖殿近看」。城界、街網與人口未核定。`
       : isSharedSlicePhase(p.id) ? `${p.note} 東南山脊、北部聖區與西丘採獨立配置；西向擴張方向有文獻依據，具體邊界與道路仍為推定。毀城沿用同一批示意住居。` : isSharedGenerationPhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
-    if(isIndependentLaterPhase(p.id))note.textContent+=' 本期採獨立示意地區／路網；低矮片區為布局占位，不是單棟建築。分區、道路寬度與完整城界仍未核定；此為時段內綜合布局，不表示全期同時存在。';
+    if(isIndependentLaterPhase(p.id))note.textContent+=' 本期採獨立示意地區／路網；屋頂／院落模組為街區概覽表達，不代表實測房屋或戶數。分區、道路寬度與完整城界仍未核定；此為時段內綜合布局，不表示全期同時存在。';
     if(window.__JERUSALEM3000__.inheritanceState.audit?.visibleComponents>0)note.textContent+=' 前代圖層按模型比例示意，留存構件與再利用關係尚未核定。';
     skeletonView?.refresh();
     if(evidencePanelPhase!==p.id) {
@@ -282,6 +285,7 @@ try {
     stage.dataset.temporalObjects = String(
       cityObjects.filter((object) => object.visible || object.ruined).length,
     );
+    refreshBaseline();
     stage.dataset.inheritance =
       !isCorePhase(p.id) && !isSharedGenerationPhase(p.id) && !isEarlyLandscapePhase(p.id) && !isIndependentLaterPhase(p.id) && inheritance?.runtime
         ? 'active'
@@ -290,6 +294,7 @@ try {
           : 'disabled';
   }
   const pace=document.createElement('label');pace.className='j3k-playback-pace';pace.textContent='播放速度 ';const speed=document.createElement('select');speed.setAttribute('aria-label','每期播放時間');for(const [seconds,label]of [[24,'慢速 · 24秒／期'],[12,'標準 · 12秒／期'],[6,'快速 · 6秒／期']]){const option=document.createElement('option');option.value=String(seconds);option.textContent=label;option.selected=seconds===12;speed.append(option);}pace.append(speed);play.before(pace);
+  baselineInfo=document.createElement('p');baselineInfo.className='j3k-overview-baseline';document.querySelector('.j3k-time').append(baselineInfo);const compare=document.createElement('button');baselineCompare=compare;compare.type='button';compare.textContent='統一尺度比較';compare.setAttribute('aria-pressed','false');document.querySelector('.j3k-time-head').append(compare);compare.addEventListener('click',()=>{const active=terrainButton.getAttribute('aria-pressed')!=='true';terrainOverview(active);});
   let raf = 0,
     last = 0, waitingForCity=false,playbackPosition=Number(slider.value);
   function stop() {

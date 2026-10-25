@@ -1,3 +1,4 @@
+import {overviewHousingGeometry} from './overview-housing.js';
 import * as THREE from 'three';
 import {generateDistrictInfill} from './district-infill.js';
 import {polygonsOverlap} from './urban-exclusion.js';
@@ -11,23 +12,15 @@ export function compileIndependentLaterSkeleton(data,phase,origin){
  const generation=data.generation;if(!Number.isFinite(generation?.modelHeight)||generation.modelHeight<=0||generation.modelHeight>12)throw new Error('Invalid coarse model height');
  return {phase,authority:data.authority,districts:layout.districts.map(d=>make(d,'district','polygon',3)),roads:layout.roads.map(r=>make(r,'road','points',2)),reservations:(layout.reservations||[]).map(r=>make(r,'reservation','polygon',3)),generation:{...generation},sources:[...layout.sources],limitations:[...data.limitations]};
 }
-function blockGeometry(polygon,terrain,height){
- const area=polygon.reduce((sum,p,i)=>{const q=polygon[(i+1)%polygon.length];return sum+p.x*q.z-q.x*p.z;},0);if(area<0)polygon=[...polygon].reverse();
- const vertices=[],base=polygon.map(p=>terrain.heightAtWorld(p.x,p.z));if(base.some(y=>!Number.isFinite(y)))throw new Error('Independent block outside canonical DEM');
- const push=(i,top)=>vertices.push(polygon[i].x,base[i]+(top?height:.2),polygon[i].z);
- for(const triangle of THREE.ShapeUtils.triangulateShape(polygon.map(p=>new THREE.Vector2(p.x,p.z)),[]))for(const i of [...triangle].reverse())push(i,true);
- for(let i=0;i<polygon.length;i++){const j=(i+1)%polygon.length;for(const [k,top]of [[i,false],[j,true],[j,false],[i,false],[i,true],[j,true]])push(k,top);}
- const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.computeVertexNormals();return geometry;
-}
 // Coarse terrain-following occupied cells, not architectural buildings.
 export function buildIndependentLaterSkeleton(group,registration,materials,terrain){
- const ownedMaterial=materials.inferred.clone();ownedMaterial.opacity=1;ownedMaterial.transparent=false;const ownedMaterials={...materials,inferred:ownedMaterial};
+ const ownedMaterial=materials.inferred.clone();ownedMaterial.opacity=1;ownedMaterial.transparent=false;ownedMaterial.color.setHex(0xb9a27e);const ownedMaterials={...materials,inferred:ownedMaterial};
  const meshes=[],ledgerRecords=[...registration.districts,...registration.roads],bindingIds=[];
  try{
   for(const district of registration.districts){
    const result=generateDistrictInfill({district,roads:registration.roads,maxBlockArea:registration.generation.maxBlockArea,roadClearance:registration.generation.roadClearance});
    for(const block of result.blocks){if(registration.reservations.some(r=>polygonsOverlap(block.geometry.polygon,r.geometry.polygon)))continue;
-    const geometry=blockGeometry(block.geometry.polygon,terrain,registration.generation.modelHeight),mesh=new THREE.Mesh(geometry,ownedMaterial);mesh.receiveShadow=true;mesh.castShadow=true;mesh.userData.phase2={stage:'coarse-layout-cell',start:0,baseHeight:registration.generation.modelHeight};group.add(mesh);meshes.push(mesh);bindingIds.push(block.id);
+    const geometry=overviewHousingGeometry(block.geometry.polygon,terrain,registration.generation.modelHeight,{block:true}),mesh=new THREE.Mesh(geometry,ownedMaterial);mesh.receiveShadow=true;mesh.castShadow=true;mesh.userData.overview={grammar:'terrain-courtyard-mass-v1',scope:'visual-modules-of-one-registered-block-not-individual-houses'};mesh.userData.phase2={stage:'coarse-layout-cell',start:0,baseHeight:registration.generation.modelHeight};group.add(mesh);meshes.push(mesh);bindingIds.push(block.id);
     ledgerRecords.push({id:block.id,type:'block',geometry:{...block.geometry,frame:'canonical-dem-enu',status:'independent-coarse-layout-not-buildings'},source:{districtId:district.id,authority:registration.authority,urls:registration.sources},metadata:{...block.metadata,independentSpatialSkeleton:true,modelHeight:registration.generation.modelHeight}});
    }
   }
