@@ -341,14 +341,16 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     const independent=independentLaterRegistrations.has(phaseId);
     const framePhase=phaseId==='babylonian-destruction'?'late-first-temple':phaseId;
     const includesEarlier=phaseId==='persian-nehemiah'&&retainedVisible;
-    const frameKey=independent?'independent-later-shared-window':framePhase+(includesEarlier?':retained':'');
+    const expansion=['outside-walls','modern'].includes(phaseId);
+    const independentFrame=expansion?'independent-expansion-shared-window':'independent-later-shared-window';
+    const frameKey=independent?independentFrame:framePhase+(includesEarlier?':retained':'');
     if((!independent&&!periodRegistrations.has(framePhase))||(!force&&overviewFrame===frameKey))return;
     if(!overviewPriorCamera)overviewPriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
-    const registrations=independent?[...independentLaterRegistrations.values()]:[periodRegistrations.get(framePhase),...(includesEarlier?[periodRegistrations.get('late-first-temple')]:[])];
+    const registrations=independent?[...independentLaterRegistrations.values()].filter(r=>['outside-walls','modern'].includes(r.phase)===expansion):[periodRegistrations.get(framePhase),...(includesEarlier?[periodRegistrations.get('late-first-temple')]:[])];
     const points=registrations.flatMap(r=>r.districts.flatMap(d=>d.geometry.polygon.flatMap(p=>{const y=terrainRuntime.heightAtWorld(p.x,p.z);return[new THREE.Vector3(p.x,y,p.z),new THREE.Vector3(p.x,y+32,p.z)];})));
     const framing=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov});
     controls.minDistance=35;controls.target.copy(framing.target);camera.position.copy(framing.position);controls.update();overviewFrame=frameKey;
-    overviewInfo={framePhase:independent?'independent-later-shared-window':framePhase,includesEarlier,distance:framing.distance,bounds:framing.bounds,authority:framing.authority};
+    overviewInfo={framePhase:independent?independentFrame:framePhase,includesEarlier,distance:framing.distance,bounds:framing.bounds,authority:framing.authority};
   }
   function frameRoyalRelief(){
     if(!royalRelief)return;
@@ -486,6 +488,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       for(const phase of ['aelia','byzantine','early-islamic'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(independentLaterData,phase,terrainRuntime.grid.origin));
       const medievalData=await loadCityData('./data/urban/medieval-ottoman.skeleton.v1.json');
       for(const phase of ['crusader','ayyubid-mamluk','ottoman'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(medievalData,phase,terrainRuntime.grid.origin));
+      const expansionData=await loadCityData('./data/urban/expansion-modern.skeleton.v1.json');
+      for(const phase of ['outside-walls','modern'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(expansionData,phase,terrainRuntime.grid.origin));
       if (!parcels.blockCount || !parcels.count || !architecture.buildings || !cityCoreRuntime.validation.ok)
         throw new Error(`Canonical city incomplete: ${parcels.blockCount || 0} blocks, ${parcels.count || 0} parcels, ${architecture.buildings || 0} buildings`);
       architecture.meshes.push(

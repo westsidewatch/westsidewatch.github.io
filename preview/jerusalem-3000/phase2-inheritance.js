@@ -23,7 +23,7 @@ export function applyInheritedMorphology(runtime,{retain=0,ruin=false,progress=1
 // Audit legacy display rules separately from historical object lineage.
 export function inheritanceTransitionIndex(phases){
  const ids=phases.map(p=>p.id);if(new Set(ids).size!==ids.length||ids.length!==18)throw new Error('Inheritance audit requires 18 unique ordered phases');
- const suppressed=new Set(['aelia','byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','middle-bronze','late-bronze-iron1','david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah','hellenistic-hasmonean','herodian-jesus','roman-destruction']);
+ const suppressed=new Set(['aelia','byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern','middle-bronze','late-bronze-iron1','david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah','hellenistic-hasmonean','herodian-jesus','roman-destruction']);
  return ids.slice(1).map((target,index)=>{
   const rule=INHERITANCE[target];if(!rule||!ids.slice(0,index+1).includes(rule.from))throw new Error(`Invalid inheritance source for ${target}`);
   return {id:`j3k:transition:${ids[index]}:${target}`,from:ids[index],to:target,legacySourcePhase:rule.from,sourceSkipsAdjacentPhase:rule.from!==ids[index],

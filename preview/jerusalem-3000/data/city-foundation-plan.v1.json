@@ -29,7 +29,8 @@
     "temporal-city-core-adapter.js",
     "independent-later-skeleton.js",
     "data/urban/roman-byzantine-islamic.skeleton.v1.json",
-    "data/urban/medieval-ottoman.skeleton.v1.json"
+    "data/urban/medieval-ottoman.skeleton.v1.json",
+    "data/urban/expansion-modern.skeleton.v1.json"
   ],
   "phases": [
     {
@@ -275,7 +276,7 @@
     {
       "id": "outside-walls",
       "label": "城外擴張",
-      "rendererFamily": "legacy-footprint-scaffold",
+      "rendererFamily": "independent-later-skeleton",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -284,13 +285,13 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Existing footprint masses share stable inferred block IDs and explicit generation events; next-era fate unresolved where a next phase exists. Provisional inheritance stays unbound. Historical district/road foundations, ancient ground and verified adjacent-object fates remain incomplete.",
+      "gap": "Paired inferred old-city background, extra-mural districts and connectors share DEM, ledger and comparison. Coverage is a local western-environs window, not the complete modern city; exact walls, public cores, eastern/distant districts and historical adjacent survival remain unresolved.",
       "acceptanceEvidence": []
     },
     {
       "id": "modern",
       "label": "現代耶路撒冷",
-      "rendererFamily": "legacy-footprint-scaffold",
+      "rendererFamily": "independent-later-skeleton",
       "domains": {
         "districts": "scaffold",
         "routes": "scaffold",
@@ -299,7 +300,7 @@
         "occupation": "scaffold",
         "lifecycle": "scaffold"
       },
-      "gap": "Existing footprint masses share stable inferred block IDs and explicit generation events; next-era fate unresolved where a next phase exists. Provisional inheritance stays unbound. Historical district/road foundations, ancient ground and verified adjacent-object fates remain incomplete.",
+      "gap": "Paired inferred old-city background, extra-mural districts and connectors share DEM, ledger and comparison. Coverage is a local western-environs window, not the complete modern city; exact walls, public cores, eastern/distant districts and historical adjacent survival remain unresolved.",
       "acceptanceEvidence": []
     }
   ],
@@ -475,9 +476,9 @@
     "status": "common-comparison-baseline-not-complete-historical-layout",
     "phaseCoverage": 18,
     "windowMetres": {
-      "minX": -1100,
+      "minX": -2000,
       "maxX": 1100,
-      "minZ": -1000,
+      "minZ": -1300,
       "maxZ": 1300
     },
     "terrain": "existing-modern-dem-rendered-triangles",
@@ -492,7 +493,9 @@
       "early-islamic",
       "crusader",
       "ayyubid-mamluk",
-      "ottoman"
+      "ottoman",
+      "outside-walls",
+      "modern"
     ],
     "authority": "published-relationship-context-plus-explicitly-authored-illustrative-geometry",
     "herodianFootprintReused": false,
@@ -500,7 +503,21 @@
     "historicalFoundationAccepted": false,
     "dataFiles": [
       "data/urban/roman-byzantine-islamic.skeleton.v1.json",
-      "data/urban/medieval-ottoman.skeleton.v1.json"
+      "data/urban/medieval-ottoman.skeleton.v1.json",
+      "data/urban/expansion-modern.skeleton.v1.json"
     ]
+  },
+  "expansionModernSkeleton": {
+    "districts": [
+      9,
+      11
+    ],
+    "paths": [
+      8,
+      9
+    ],
+    "coverage": "partial-old-city-western-environs-study-window",
+    "oldCityBackground": "shared-authored-envelopes-not-verified-surviving-fabric",
+    "historicalFoundationAccepted": false
   }
 }

@@ -3,7 +3,7 @@ import {allowsEvidence} from './evidence-visibility.js';
 const ACTIVE=new Set(['build','rebuild','transform','ruin','expand']);
 const FRAMES=new Set(['canonical-dem-enu','scene-local-metres']);
 const DOMAINS={districts:['district'],routes:['road','route'],waterDefense:['water','wall','gate'],sacredCivic:['monument']};
-export const SKELETON_WINDOW=Object.freeze({minX:-1100,maxX:1100,minZ:-1000,maxZ:1300});
+export const SKELETON_WINDOW=Object.freeze({minX:-2000,maxX:1100,minZ:-1300,maxZ:1300});
 const valid=p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.z);
 function planar(record){
  const g=record.geometry||{};if(!FRAMES.has(g.frame)||String(g.status).includes('withheld'))return null;

@@ -94,3 +94,5 @@ The optional 空間骨架對照 panel compares all 18 eras against one modern DE
 Aelia, Byzantine and early Islamic layouts now share one authored district/path/clearance/reservation authority per era, replacing their old grid masses. Low coarse cells follow the same DEM, not a scaled Herodian plan. Historical relationships supply context but exact coordinates/widths/heights remain illustrative. Aelia no longer draws the arbitrary Herodian inherited overlay. See INDEPENDENT-LATER-SKELETON.md. Complete city limits, public architecture and all-era historical acceptance remain open.
 
 2026-10-24 中世紀連續骨架：十字軍、阿尤布／馬木魯克、鄂圖曼三期接入獨立分區／路徑配置，與前面 Aelia—早期伊斯蘭共用地形、六期比較鏡頭、帳本和骨架圖。既有規則矩形圍牆退出這三期現行顯示，真實城防、核心建築與相鄰存續仍是缺口。詳見 [MEDIEVAL-SPATIAL-FOUNDATION.md](MEDIEVAL-SPATIAL-FOUNDATION.md)。下一包先做城外擴張／現代成對基礎，建築細雕繼續暫停。
+
+2026-10-24 城外擴張／現代成對基礎：共同舊城背景加上城外分區與連接路徑，兩期各9／11分區、8／9路徑；覆蓋僅為舊城周邊及西側局部窗口。舊城6期鏡頭保留，新增2期共用較大鏡頭，全18期骨架圖擴大同一公尺窗口。詳見 [EXPANSION-MODERN-FOUNDATION.md](EXPANSION-MODERN-FOUNDATION.md)。下一包進行18期／17段空間缺口矩陣，尚未恢復建築細雕。

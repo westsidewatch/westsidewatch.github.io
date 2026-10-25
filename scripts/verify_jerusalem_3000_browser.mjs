@@ -33,7 +33,7 @@ try {
   const inactiveFoundation=await page.evaluate(()=>window.__JERUSALEM3000__.inspectCityFoundation('modern'));
   assert.equal(inactiveFoundation.renderer.visibleComponents,null,'inactive inspection must not generate a future city');
 
-  for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','lifecycle/herodian-30ce.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json','settlement/david-solomon.v1.json','urban/first-temple-persian.spatial.v1.json','urban/water-defense.registration.v1.json','urban/water-defense.local-plans.v1.json','urban/roman-byzantine-islamic.skeleton.v1.json','urban/medieval-ottoman.skeleton.v1.json']) {
+  for(const path of ['anchor-era-packs.json','lifecycle/anchor-era.lifecycle.json','lifecycle/herodian-30ce.lifecycle.json','objects/herodian-30ce.json','urban/herodian-30ce.registration.json','settlement/david-solomon.v1.json','urban/first-temple-persian.spatial.v1.json','urban/water-defense.registration.v1.json','urban/water-defense.local-plans.v1.json','urban/roman-byzantine-islamic.skeleton.v1.json','urban/medieval-ottoman.skeleton.v1.json','urban/expansion-modern.skeleton.v1.json']) {
     assert.equal(dataRequests.get(`/preview/jerusalem-3000/data/${path}`),1,`one shared request for ${path}`);
   }
   assert.equal(
@@ -488,7 +488,7 @@ try {
     const spatialSkeleton=await page.evaluate(()=>window.__JERUSALEM3000__.inspectSpatialSkeleton());
     assert.equal(spatialSkeleton.phaseId,sample.time.phase);assert.equal(spatialSkeleton.historicalFoundationAccepted,false);assert.equal(spatialSkeleton.terrain,'modern-dem-rendered-triangles');
     assert.equal(await page.locator('.j3k-skeleton-panel').getAttribute('data-phase'),sample.time.phase);
-    if([10,11,12,13,14,15].includes(phase)){assert.ok(spatialSkeleton.domains.districts.spatialObjects>=2);assert.equal(spatialSkeleton.domains.routes.spatialObjects,({13:5,14:4,15:5})[phase]||3);assert.equal(foundation.renderer.unboundComponents,0);assert.equal(inheritanceAudit.state.active,false,'independent layouts must not retain arbitrary Herodian overlays');assert.equal(sample.render.cityOverview.framePhase,'independent-later-shared-window');}
+    if([10,11,12,13,14,15,16,17].includes(phase)){assert.ok(spatialSkeleton.domains.districts.spatialObjects>=2);assert.equal(spatialSkeleton.domains.routes.spatialObjects,({13:5,14:4,15:5,16:8,17:9})[phase]||3);assert.equal(foundation.renderer.unboundComponents,0);assert.equal(inheritanceAudit.state.active,false,'independent layouts must not retain arbitrary Herodian overlays');assert.equal(sample.render.cityOverview.framePhase,phase>=16?'independent-expansion-shared-window':'independent-later-shared-window');}
     if(phase<=2)assert.ok(spatialSkeleton.domains.routes.spatialObjects>0,'existing early footpath linework must be available');
     phaseReports.push({ spatialSkeleton, inheritanceAudit, value, elapsedMs: Date.now() - started, visible, foundation, ...sample });
     await page.screenshot({ path: `${output}/phase-${phase}.png`, fullPage: true });

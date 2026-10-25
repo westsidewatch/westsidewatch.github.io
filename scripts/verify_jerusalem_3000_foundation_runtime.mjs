@@ -26,7 +26,7 @@ const implicit=add(root,null);implicit.userData.cityObject={parcelId:'parcel'};
 add(root,'road');add(root,'not-registered');const anonymous=new THREE.Mesh(geometry,material);anonymous.userData.foundation={role:'unregistered-provisional-mass'};root.add(anonymous);const hidden=new THREE.Group();hidden.visible=false;root.add(hidden);add(hidden,'hidden-unregistered');
 const inherited=new THREE.Group();inherited.name='phase2-inherited-city';root.add(inherited);add(inherited,'road');
 let phase='aelia',position=10.9;const runtime=createCityFoundationRuntime({core,terrain,root,getCurrentPhase:()=>phase,getPosition:()=>position});
-assert.equal(runtime.index().length,18);assert.equal(foundationOwnerFor('modern'),'legacy-footprint');assert.throws(()=>foundationOwnerFor('typo'));
+assert.equal(runtime.index().length,18);assert.equal(foundationOwnerFor('modern'),'independent-later-skeleton');assert.throws(()=>foundationOwnerFor('typo'));
 const snapshot=runtime.snapshot();assert.equal(snapshot.renderer.visibleComponents,5);assert.equal(snapshot.renderer.unboundComponents,3);assert.equal(snapshot.renderer.provisionalInheritedComponents,1);
 assert.equal(snapshot.domains.routes.visibleBoundObjects,1);assert.equal(snapshot.domains.occupation.visibleBoundObjects,1,'implicit parcel-to-building binding must match the actual projection');assert.equal(snapshot.domains.lifecycle.states.rebuild,1);assert.equal(snapshot.foundationAccepted,false);
 const inactive=runtime.snapshot('byzantine');assert.equal(inactive.renderer.visibleComponents,null);assert.equal(inactive.domains.lifecycle.states.unresolved,1);

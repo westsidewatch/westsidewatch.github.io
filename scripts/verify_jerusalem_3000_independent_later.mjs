@@ -7,7 +7,7 @@ import {TemporalCityCore} from '../preview/jerusalem-3000/temporal-city-core.js'
 import {polygonsOverlap} from '../preview/jerusalem-3000/urban-exclusion.js';
 import {roadClearancePolygons} from '../preview/jerusalem-3000/district-infill.js';
 import {collectSpatialSkeleton} from '../preview/jerusalem-3000/spatial-skeleton.js';
-const root=new URL('../preview/jerusalem-3000/',import.meta.url),json=p=>JSON.parse(fs.readFileSync(new URL(p,root))),packs=['roman-byzantine-islamic','medieval-ottoman'].map(name=>json(`data/urban/${name}.skeleton.v1.json`)),data=packs[0],phases=json('data/continuous-build-timeline.json').phases;
+const root=new URL('../preview/jerusalem-3000/',import.meta.url),json=p=>JSON.parse(fs.readFileSync(new URL(p,root))),packs=['roman-byzantine-islamic','medieval-ottoman','expansion-modern'].map(name=>json(`data/urban/${name}.skeleton.v1.json`)),data=packs[0],phases=json('data/continuous-build-timeline.json').phases;
 const material=new THREE.MeshStandardMaterial({opacity:.2,transparent:true}),materials={inferred:material},terrain={grid:{origin:data.origin},heightAtWorld:(x,z)=>100+x*.03-z*.1},core=new TemporalCityCore({phases,terrain}),publisher=createLaterMorphologyLedger(core);
 const fingerprints=[],originalData=JSON.stringify(packs),release=runtime=>{runtime.meshes.forEach(m=>{m.geometry.dispose();m.removeFromParent();});runtime.disposeMaterials();};
 for(const pack of packs)for(const phase of Object.keys(pack.phases)){
@@ -23,8 +23,20 @@ for(const pack of packs)for(const phase of Object.keys(pack.phases)){
  const rebuilt=buildIndependentLaterSkeleton(new THREE.Group(),registration,materials,terrain),count=core.objects.size;publisher.bind(rebuilt);assert.equal(core.objects.size,count);assert.deepEqual(rebuilt.meshes.map(m=>m.userData.cityObject.objectId),ids);assert.deepEqual(rebuilt.meshes.map(m=>Array.from(m.geometry.attributes.position.array)),geometry);
  release(runtime);release(rebuilt);
 }
-assert.equal(new Set(fingerprints).size,6,'six eras must have distinct independently authored envelopes');
+assert.equal(new Set(fingerprints).size,8,'eight eras must have distinct independently authored envelopes');
+// The expansion pair must actually share the authored old-city background while extending outward.
+const medieval=packs[1].phases.ottoman,pair=packs[2].phases;
+for(const phase of ['outside-walls','modern']){
+ const layout=pair[phase],background=layout.districts.filter(d=>d.layoutRole==='old-city-context');
+ assert.deepEqual(background.map(d=>d.polygon),medieval.districts.map(d=>d.polygon));
+ assert.deepEqual(layout.roads.filter(d=>d.layoutRole==='old-city-route-context').map(d=>d.points),medieval.roads.map(d=>d.points));
+ assert.ok(layout.districts.some(d=>d.layoutRole==='extra-mural-expansion'));
+ const source=compileIndependentLaterSkeleton(packs[2],phase,data.origin);assert.equal(source.districts.filter(d=>d.metadata.layoutRole==='old-city-context').length,6);
+}
+const west=layout=>Math.min(...layout.districts.flatMap(d=>d.polygon.map(p=>p[0])));
+assert.ok(west(pair['outside-walls'])<west(medieval));assert.ok(west(pair.modern)<west(pair['outside-walls']));
+
 assert.throws(()=>compileIndependentLaterSkeleton(data,'aelia',{lat:0,lon:0}));
 for(const mutate of [d=>d.phases.aelia.roads[0].id='',d=>d.phases.aelia.roads[0].sources=[],d=>d.phases.aelia.roads[0].points=[[0,0],[0,0]],d=>d.phases.aelia.districts[0].polygon=[[0,0],[1,0],[2,0]]]){const bad=structuredClone(data);mutate(bad);assert.throws(()=>compileIndependentLaterSkeleton(bad,'aelia',data.origin));}
 const failed=new THREE.Group();assert.throws(()=>buildIndependentLaterSkeleton(failed,compileIndependentLaterSkeleton(data,'aelia',data.origin),materials,{heightAtWorld:()=>NaN}));assert.equal(failed.children.length,0);
-assert.equal(JSON.stringify(packs),originalData);publisher.dispose();assert.equal(core.objects.size,0);material.dispose();console.log('PASS: six independent period skeletons, shared origin, roads/reservations constrain coarse cells, DEM-following caps, distinct phase IDs, evidence return, exact rebuild, malformed source/geometry rejection and owned cleanup');
+assert.equal(JSON.stringify(packs),originalData);publisher.dispose();assert.equal(core.objects.size,0);material.dispose();console.log('PASS: eight independent period skeletons, shared origin, roads/reservations constrain coarse cells, DEM-following caps, distinct phase IDs, evidence return, exact rebuild, malformed source/geometry rejection and owned cleanup');
