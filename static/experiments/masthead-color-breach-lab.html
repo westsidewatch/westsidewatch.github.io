@@ -63,11 +63,11 @@ button{font:inherit}
 .band-rule{position:absolute;z-index:1;top:var(--band-end);left:0;right:0;height:1px;background:color-mix(in srgb,var(--band) 82%,var(--surface));opacity:.6}
 .cover__issue{position:absolute;top:15.1cqi;left:2.1%;z-index:14;color:var(--mast);font:400 clamp(9px,1.25cqi,15px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.13em}
 .cover[data-issue="2"][data-breach="3"] .cover__issue{color:#e6d7bc}
-.cover__wall{position:absolute;z-index:3;left:0;right:0;top:var(--wall-start);bottom:0;background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top / 100% 100% no-repeat;
+.cover__wall{position:absolute;z-index:3;left:0;right:0;top:var(--wall-start);bottom:0;background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top / cover no-repeat;
  -webkit-mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
  mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
  -webkit-mask-position:center top,center top;mask-position:center top,center top;
- -webkit-mask-size:100% 100%,100% 100%;mask-size:100% 100%,100% 100%;
+ -webkit-mask-size:cover,100% 100%;mask-size:cover,100% 100%;
  -webkit-mask-repeat:no-repeat,no-repeat;mask-repeat:no-repeat,no-repeat;
  -webkit-mask-composite:source-over;mask-composite:add;pointer-events:none;
 }
@@ -114,7 +114,7 @@ button{font:inherit}
 <body data-ws-scope="journal">
 <header class="head">
  <div><span class="smallcaps">WESTSIDE DESIGN OS / EDITORIAL PROOF 01 / 2026.10.25</span><div class="head__brand">The Masthead <em>Is the Magazine.</em></div></div>
- <div class="head__note">沿用官方中英文 SVG。改变的只有每期主图、期刊配色、图像突破边界的程度与候选裁切。以下均为实验，并非已批准封面。</div>
+ <div class="head__note">沿用官方中英文 SVG。改变的只有每期主图、期刊配色、图像突破边界的程度与候选裁切；墙面保持原始比例，按版型裁切。以下均为实验，并非已批准封面。</div>
 </header>
 <section class="controls" aria-label="刊头实验控制">
  <div class="control"><span class="smallcaps">ISSUE / 期数素材</span><div class="control__buttons" data-control="issue"><button data-value="0" aria-pressed="true">VOL.00 / 城墙</button><button data-value="1" aria-pressed="false">VOL.01 / 肖像占位</button><button data-value="2" aria-pressed="false">VOL.02 / 文字实验</button></div></div>
