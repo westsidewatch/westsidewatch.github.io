@@ -314,7 +314,7 @@ jobs:
                         foldLightOpacity:Number(getComputedStyle(cv.querySelector('.dual-cover__fold-light')).opacity),
                         goldAtThreshold:(()=>{
                           const paths=[...cv.querySelectorAll('.dual-cover__fold-light path')].slice(0,3)
-                            .map(el=>((el.getAttribute('d')||'').match(/\\d+/g)||[]).map(Number));
+                            .map(el=>((el.getAttribute('d')||'').match(/[0-9]+/g)||[]).map(Number));
                           if(paths.length!==3||paths.some(p=>p.length<8))return false;
                           const [a,b,c]=paths;
                           return Math.abs((a[0]+a[2])/2-500)<15&&a[1]>=620&&a[1]<=710&&a[3]===a[1]&&
