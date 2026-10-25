@@ -61,8 +61,14 @@ button{font:inherit}
  .cover__ink{display:none}.cover__ink-fallback{display:block;position:absolute;top:-12.346%;left:-.158%;width:107.425%;height:auto}
 }
 .band-rule{position:absolute;z-index:1;top:var(--band-end);left:0;right:0;height:1px;background:color-mix(in srgb,var(--band) 82%,var(--surface));opacity:.6}
-.cover__issue{position:absolute;top:15.1cqi;left:2.1%;z-index:14;color:var(--mast);font:400 clamp(9px,1.25cqi,15px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.13em}
-.cover[data-issue="2"][data-breach="3"] .cover__issue{color:#e6d7bc}
+.cover__issue{position:absolute;left:4%;bottom:4.5%;z-index:14;color:var(--copy);display:flex;align-items:baseline;gap:.29em;width:max-content;max-width:34%;white-space:nowrap;font:400 clamp(11px,1.6cqi,20px)/1 var(--ws-type-display-en-sc,Georgia,serif)}
+.issue__abbr{font-size:.78em;letter-spacing:.075em}
+.issue__num{font:400 1.43em/.86 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.07em}
+.issue__num--display{font-size:2.05em;letter-spacing:-.09em}
+.issue__abbr--stack{font-size:.60em;letter-spacing:.13em;align-self:flex-end;margin-left:.1em}
+.cover[data-folio="field"] .cover__issue{top:55%;bottom:auto;left:4%}
+.cover[data-folio="rail"] .cover__issue{top:calc(var(--band-end) + 13cqi);bottom:auto;left:1.65%;transform:rotate(180deg);writing-mode:vertical-rl;align-items:center;gap:.24em}
+.cover[data-folio="rail"] .issue__abbr--stack{margin-left:0}
 .cover__wall{position:absolute;z-index:3;left:0;right:0;top:var(--wall-start);bottom:0;background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top / cover no-repeat;
  -webkit-mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
  mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
@@ -89,9 +95,6 @@ button{font:inherit}
 .cover__theme p{font:600 clamp(12px,2.25cqi,26px)/1.22 var(--ws-type-display-zh,sans-serif);margin:12px 0 0}
 .cover[data-issue="1"] .cover__theme{max-width:38%;left:4%;right:auto;text-align:left;bottom:10%}
 .cover[data-issue="2"] .cover__theme{max-width:57%;bottom:5%;color:#f3e9d5}
-.cover__folio{position:absolute;z-index:14;left:4%;bottom:3.5%;font:400 10px/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;color:var(--copy)}
-.cover[data-issue="1"] .cover__folio{color:#59443d}
-.cover[data-issue="2"] .cover__folio{color:#d7c29a}
 .audit{border-top:1px solid #a69e91;padding-top:15px;display:grid;gap:20px}
 .audit__num{font:400 61px/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.08em}
 .audit h2{font:400 25px/1.05 var(--ws-type-display-en,Georgia,serif);margin:3px 0 10px}
@@ -106,9 +109,17 @@ button{font:inherit}
 .series__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .series__card{min-width:0}.series__card .cover{aspect-ratio:4/5}.series__card .cover__theme h1{font-size:5.1cqi}.series__card .cover__theme p{font-size:2.05cqi}
 .series__caption{font:400 11px/1.5 var(--ws-type-display-en-sc,Georgia,serif);padding:9px 0}
+.folio-comparison{border-top:1px solid #aba49b;padding:32px clamp(18px,3.8vw,62px) 36px}
+.folio-comparison .series__heading h2{font-size:clamp(29px,3.1vw,47px)}
+.folio__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.folio__card .cover{aspect-ratio:8/5}
+.folio__card .cover__theme h1{font-size:5.1cqi}
+.folio__card .cover__theme p{font-size:2.05cqi}
+.folio__card .cover__issue{font-size:clamp(9px,1.6cqi,20px)}
+.folio__note{font:400 12px/1.65 var(--ws-type-reading-zh,sans-serif);max-width:95ch;color:#45505b;margin:6px 0 0}
 .foot{padding:17px clamp(18px,3.8vw,62px);border-top:1px solid var(--rule);font:400 12px/1.65 var(--ws-type-reading-zh,sans-serif);display:flex;justify-content:space-between;gap:20px}
 @media(max-width:1060px){.workspace{grid-template-columns:minmax(0,1fr)}.audit{grid-template-columns:repeat(3,1fr);gap:22px}.audit__line{border:0;padding:0}}
-@media(max-width:680px){.head{display:block}.head__note{text-align:left;margin-top:12px}.controls{gap:17px}.workspace{padding-top:18px}.audit{display:block}.audit__line{border-top:1px solid #b1aaa0;padding:14px 0}.series__grid{grid-template-columns:1fr}.series__card .cover{max-width:490px;margin:auto}.foot{display:block}.readout{margin-left:0}.cover__theme p{font-size:2.5cqi}}
+@media(max-width:680px){.head{display:block}.head__note{text-align:left;margin-top:12px}.controls{gap:17px}.workspace{padding-top:18px}.audit{display:block}.audit__line{border-top:1px solid #b1aaa0}.audit__line{padding:14px 0}.series__grid,.folio__grid{grid-template-columns:1fr}.series__card .cover,.folio__card .cover{max-width:490px;margin:auto}.foot{display:block}.readout{margin-left:0}.cover__theme p{font-size:2.5cqi}}
 </style>
 </head>
 <body data-ws-scope="journal">
@@ -120,12 +131,15 @@ button{font:inherit}
  <div class="control"><span class="smallcaps">ISSUE / 期数素材</span><div class="control__buttons" data-control="issue"><button data-value="0" aria-pressed="true">VOL.00 / 城墙</button><button data-value="1" aria-pressed="false">VOL.01 / 肖像占位</button><button data-value="2" aria-pressed="false">VOL.02 / 文字实验</button></div></div>
  <div class="control"><span class="smallcaps">BREACH / 越界强度</span><div class="control__buttons" data-control="breach"><button data-value="0" aria-pressed="false">00 / 分区</button><button data-value="1" aria-pressed="true">01 / 微越界</button><button data-value="2" aria-pressed="false">02 / 交错</button><button data-value="3" aria-pressed="false">03 / 遮挡试验</button></div></div>
  <div class="control"><span class="smallcaps">FORMAT / 裁切</span><div class="control__buttons" data-control="ratio"><button data-value="8:5" aria-pressed="true">8:5</button><button data-value="4:3" aria-pressed="false">4:3</button><button data-value="4:5" aria-pressed="false">4:5</button></div></div>
+ <div class="control"><span class="smallcaps">ISSUE POSITION / 期号位置</span><div class="control__buttons" data-control="folio"><button data-value="foot" aria-pressed="true">下左角</button><button data-value="field" aria-pressed="false">主图左侧</button><button data-value="rail" aria-pressed="false">侧边竖排</button></div></div>
+ <div class="control"><span class="smallcaps">ISSUE NOTATION / 字样</span><div class="control__buttons" data-control="notation"><button data-value="vol" aria-pressed="true">VOL. 00</button><button data-value="no" aria-pressed="false">No. 00</button><button data-value="number" aria-pressed="false">00 / VOLUME</button></div></div>
  <div class="readout"><span>SVG 680×190</span><span>VISIBLE INK 633×81</span><span>FIXED COORDINATES</span></div>
 </section>
 <main>
  <section class="workspace"><div class="proof-shell"><div class="proof-heading"><span class="smallcaps">CURRENT ARTBOARD / EXACT SVG INK</span><span class="smallcaps" id="proof-label">VOL.00 / BREACH 01 / 8:5</span></div><div id="main-cover" aria-live="polite"></div></div>
  <aside class="audit" aria-label="设计验收逻辑"><section><div class="audit__num" id="breach-num">01</div><h2 id="breach-title">Controlled interruption.</h2><p id="breach-note">垛口越过色块与图像的分界，但不遮挡刊头字形。适合建立《西望》自己的视觉差别。</p></section><section class="audit__line"><span class="smallcaps">EDITORIAL COLOUR / 本期取色</span><div class="audit__swatch" id="swatches"></div><p>色块与刊名字色是发行期的变量。位置、光学比例与中英关系是刊物的固定资产。</p></section><section class="audit__line"><span class="smallcaps">DESIGN GATES</span><ul><li>可见字形在三期使用同一坐标。</li><li>强遮挡仅是候选，不自动批准。</li><li>从完整对开和缩略图复核比例。</li><li>城墙原始资产不重绘、不改正式 P2。</li></ul></section></aside>
  </section>
+ <section class="folio-comparison"><div class="series__heading"><h2>Issue marks, <em>off the masthead.</em></h2><span class="smallcaps">VOL.00 / SAME COVER / THREE HYPOTHESES</span></div><div class="folio__grid" id="folio-grid"></div><p class="folio__note">这组三联仅比较期号的出版信息层级。期号从刊头色面完全移走；所有方案不加角标色块、不改官方刊名字形。侧边竖排只是把纸刊书脊信息转译为网刊边缘信息的实验，并非照搬书脊。</p></section>
  <section class="series"><div class="series__heading"><h2>Three issues, <em>one masthead.</em></h2><span class="smallcaps">TEST-ONLY / 4:5 SERIES</span></div><div class="series__grid" id="series-grid"></div><p class="smallcaps">人物轮廓与文字抽象场仅用作跨期压力测试，不是 Vol.01／02 正式封面，也不冒充已取得肖像版权。</p></section>
 </main>
 <footer class="foot"><span>OFFICIAL ASSET · /images/westside-watch-masthead-landscape.svg</span><span>DESIGN OS AUTHORITY UNCHANGED · EXPERIMENT ONLY · NO P2 TIMELINE EDITS</span></footer>
@@ -141,13 +155,15 @@ const levels=[
  ['02','Architectural overlap.','局部塔楼明显进入色块；刊名字形仍完整可读，艺术轮廓与编辑信息需要重新核对安全区。'],
  ['03','Masthead tension.','艺术可能与刊头墨迹发生遮挡。仅为强度上限实验；需要逐字核对后才能决定是否允许成为少数特刊变体。']
 ];
-const state={issue:0,breach:1,ratio:'8:5'};
-function coverHTML(issue,breach,ratio){const t=themes[issue];return `<article class="cover" data-issue="${issue}" data-breach="${breach}" data-ratio="${ratio}" aria-label="${t.vol} 压顶刊头实验，越界级别 ${breach}">
+const folioStudies=[['foot','vol','01 / 下左角 · VOL. 00 · 传统资料位'],['field','no','02 / 主图左侧 · No. 00 · 文学编号'],['rail','number','03 / 侧边竖排 · 数字主导 · 书脊转译']];
+const state={issue:0,breach:2,ratio:'8:5',folio:'foot',notation:'vol'};
+function issueHTML(vol,notation){const n=vol.replace(/^VOL\./,'');if(notation==='no')return `<span class="issue__abbr">No.</span><span class="issue__num">${n}</span>`;if(notation==='number')return `<span class="issue__num issue__num--display">${n}</span><span class="issue__abbr issue__abbr--stack">VOLUME</span>`;return `<span class="issue__abbr">VOL.</span><span class="issue__num">${n}</span>`}
+function coverHTML(issue,breach,ratio,folio=state.folio,notation=state.notation){const t=themes[issue];return `<article class="cover" data-issue="${issue}" data-breach="${breach}" data-ratio="${ratio}" data-folio="${folio}" aria-label="${t.vol} 压顶刊头实验，越界级别 ${breach}，期号位 ${folio}">
 <div class="band"></div><div class="band-rule"></div>
 <div class="cover__wall" aria-hidden="true"></div><div class="cover__portrait" aria-hidden="true"><div class="portrait__back"></div><div class="portrait__torso"></div><div class="portrait__head"></div></div>
 <div class="cover__abstract" aria-hidden="true"><span class="abstract__a">W</span><span class="abstract__b">ord.</span></div>
 <div class="cover__mast" role="img" aria-label="官方 SVG：LivingWater / WESTSIDE WATCH / 西望"><span class="cover__ink"></span><img class="cover__ink-fallback" src="/images/westside-watch-masthead-landscape.svg" alt=""></div>
-<span class="cover__issue">${t.vol}</span><div class="cover__theme"><h1 lang="en">${t.title}</h1><p>${t.zh}</p></div><span class="cover__folio">EDITORIAL PROOF / NOT PUBLISHED</span></article>`}
+<span class="cover__issue" aria-label="${t.vol}">${issueHTML(t.vol,notation)}</span><div class="cover__theme"><h1 lang="en">${t.title}</h1><p>${t.zh}</p></div></article>`}
 function render(){
  document.getElementById('main-cover').innerHTML=coverHTML(state.issue,state.breach,state.ratio);
  document.getElementById('proof-label').textContent=`${themes[state.issue].vol} / BREACH ${levels[state.breach][0]} / ${state.ratio}`;
@@ -155,12 +171,13 @@ function render(){
  document.getElementById('breach-title').textContent=levels[state.breach][1];
  document.getElementById('breach-note').textContent=levels[state.breach][2];
  document.getElementById('swatches').innerHTML=[themes[state.issue].band,themes[state.issue].mast,themes[state.issue].surface].map(c=>`<span title="${c}" style="background:${c}"></span>`).join('');
+ document.getElementById('folio-grid').innerHTML=folioStudies.map(([pos,type,caption])=>`<div class="folio__card">${coverHTML(0,2,'8:5',pos,type)}<div class="series__caption">${caption}</div></div>`).join('');
  document.getElementById('series-grid').innerHTML=themes.map((t,i)=>`<div class="series__card">${coverHTML(i,state.breach,'4:5')}<div class="series__caption">${t.vol} / ${t.note}</div></div>`).join('');
  for(const group of document.querySelectorAll('[data-control]'))for(const b of group.querySelectorAll('button'))b.setAttribute('aria-pressed',String(b.dataset.value===String(state[group.dataset.control])));
- const url=new URL(location.href);url.searchParams.set('issue',state.issue);url.searchParams.set('breach',state.breach);url.searchParams.set('ratio',state.ratio);history.replaceState(null,'',url);
+ const url=new URL(location.href);url.searchParams.set('issue',state.issue);url.searchParams.set('breach',state.breach);url.searchParams.set('ratio',state.ratio);url.searchParams.set('folio',state.folio);url.searchParams.set('notation',state.notation);history.replaceState(null,'',url);
 }
-for(const b of document.querySelectorAll('[data-control] button'))b.addEventListener('click',()=>{const k=b.parentElement.dataset.control;state[k]=k==='ratio'?b.dataset.value:Number(b.dataset.value);render()});
-const url=new URL(location.href);const incomingIssue=Number(url.searchParams.get('issue'));const incomingBreach=Number(url.searchParams.get('breach'));const incomingRatio=url.searchParams.get('ratio');if(url.searchParams.has('issue')&&[0,1,2].includes(incomingIssue))state.issue=incomingIssue;if(url.searchParams.has('breach')&&[0,1,2,3].includes(incomingBreach))state.breach=incomingBreach;if(['8:5','4:3','4:5'].includes(incomingRatio))state.ratio=incomingRatio;render();
+for(const b of document.querySelectorAll('[data-control] button'))b.addEventListener('click',()=>{const k=b.parentElement.dataset.control;state[k]=['issue','breach'].includes(k)?Number(b.dataset.value):b.dataset.value;render()});
+const url=new URL(location.href);const incomingIssue=Number(url.searchParams.get('issue'));const incomingBreach=Number(url.searchParams.get('breach'));const incomingRatio=url.searchParams.get('ratio');const incomingFolio=url.searchParams.get('folio');const incomingNotation=url.searchParams.get('notation');if(url.searchParams.has('issue')&&[0,1,2].includes(incomingIssue))state.issue=incomingIssue;if(url.searchParams.has('breach')&&[0,1,2,3].includes(incomingBreach))state.breach=incomingBreach;if(['8:5','4:3','4:5'].includes(incomingRatio))state.ratio=incomingRatio;if(['foot','field','rail'].includes(incomingFolio))state.folio=incomingFolio;if(['vol','no','number'].includes(incomingNotation))state.notation=incomingNotation;render();
 </script>
 </body>
 </html>
