@@ -215,50 +215,31 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  opacity:0;pointer-events:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__radiance{opacity:0!important}
-/* Only one city transform, one unshaded base material, one skyline contour. */
+/* First material trial / PR #1356: one ORIGINAL, NOT-CUTOUT PNG. No
+   fake crenellation stripe, no duplicate paper overlay, no gold gate CSS.
+   The whole PNG travels with the original reversible P2 city transform. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city{
  top:24%;bottom:0;overflow:visible;isolation:isolate;
  background:none;box-shadow:none;filter:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__paper{
- inset:0;background:url('/images/temple-stone-light.png') center top/cover no-repeat;
+ inset:0;background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/cover no-repeat;
  box-shadow:none;filter:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city::after{display:none;content:none}
-/* The original crenel silhouette is MASKED with the same temple-stone image;
-   a restrained original-ink pass preserves mortar joints without a second
-   darker gold material or a black baseline. The PNG files are unmodified. */
-.dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
- top:calc(-1*clamp(14px,2.3cqi,29px));left:0;right:0;
- height:clamp(23px,4.05cqi,41px);
- background-image:url('/images/temple-stone-light.png'),url('/images/jerusalem-wall.png');
- background-position:center center,center bottom;
- background-size:cover,auto 100%;
- background-repeat:no-repeat,repeat-x;
- -webkit-mask-image:url('/images/jerusalem-wall.png');
- -webkit-mask-repeat:repeat-x;-webkit-mask-size:auto 100%;
- -webkit-mask-position:center bottom;
- mask-image:url('/images/jerusalem-wall.png');
- mask-repeat:repeat-x;mask-size:auto 100%;mask-position:center bottom;
- filter:none;box-shadow:none;opacity:1
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__wall::before{
- content:"";position:absolute;inset:0;pointer-events:none;
- background:url('/images/jerusalem-wall.png') center bottom/auto 100% repeat-x;
- filter:none;opacity:.32;mix-blend-mode:multiply;
- -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 52%,transparent 88%);
- mask-image:linear-gradient(to bottom,#000 0%,#000 52%,transparent 88%)
-}
+/* The new original PNG already contains the complete fortress, skyline,
+   surface and doorway. The old wall and fake portal stay in DOM only for the
+   previous scroll structure, but are visually disabled. */
+.dual-cover[data-cover-variant="masthead"] .dual-cover__wall,
+.dual-cover[data-cover-variant="masthead"] .dual-cover__wall::before,
 .dual-cover[data-cover-variant="masthead"] .dual-cover__gate{
- position:absolute;z-index:4;left:50%;top:64%;transform:translateX(-50%);
- width:clamp(5px,.72cqi,8px);height:34%;
- border-radius:48% 48% 0 0 / 40% 40% 0 0;
- background:#c49c51;box-shadow:none;pointer-events:none
+ display:none!important;background:none!important;box-shadow:none!important;
 }
-/* The star's entire bounding box stays BELOW the architectural transition. */
+/* The v5.3 star remains protected, but is a SMALL emblem within the navy
+   masthead band, as requested, rather than obscuring the PNG's central arch. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
- top:29%;left:50%;width:clamp(160px,33cqi,400px);
- z-index:6;filter:saturate(1.15) contrast(1.12) brightness(.90)
+ top:15%;left:50%;width:clamp(28px,7cqi,66px);
+ z-index:6;filter:none;
 }
 /* One shared lower-right editorial system: no independent positioning. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
@@ -290,12 +271,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  }
  .dual-cover[data-cover-variant="masthead"] .dual-cover__vol{top:20.5%;left:6%;font-size:9px}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__city{top:24%}
- .dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
-  top:calc(-1*clamp(9px,2.35cqi,19px));height:clamp(14px,4.05cqi,28px)
- }
- .dual-cover[data-cover-variant="masthead"] .dual-cover__gate{width:clamp(4px,.9cqi,7px)}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
-  left:50%;top:29%;width:clamp(108px,35cqi,220px)
+  left:50%;top:15%;width:clamp(25px,8cqi,49px)
  }
  .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
   right:6%;bottom:6%;width:62%;gap:clamp(5px,1.2cqi,9px)
@@ -307,7 +284,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 
 }
 @media(max-width:360px){
- .dual-cover[data-cover-variant="masthead"] .dual-cover__star{width:36cqi;top:29%}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__star{width:8cqi;top:15%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{bottom:5.5%;width:62%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:24px}
 }
