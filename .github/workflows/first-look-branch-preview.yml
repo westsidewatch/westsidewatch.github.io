@@ -412,6 +412,7 @@ jobs:
                         noSplit:getComputedStyle(wall).clipPath==='none',
                         titleCount:cv.querySelectorAll('.dual-cover__editorial .dual-cover__en,.dual-cover__editorial .dual-cover__zh').length,
                         lightPaths:cv.querySelectorAll('.dual-cover__fold-light path').length,
+                        mastheadOnly: ['star','vol'].every(c=>getComputedStyle(cv.querySelector('.dual-cover__'+c)).visibility==='hidden'),
                         logoInside:logo.top>=cover.top&&logo.bottom<=cover.bottom};
                     });
                     if(m.wallPosition!==position||m.stagePosition!==position||m.selected!==1||m.selectedName!==position)
@@ -419,6 +420,7 @@ jobs:
                     if(Math.abs(m.cityTopRatio-top)>.012)errors.push('WALL_POSITION_NOT_AT_EXPECTED_PERCENT');
                     if(m.progress!=='82'||!m.logoLoaded||!m.logoInside||!m.sameStone||!m.cutoutAsMask||!m.noSplit||
                        m.titleCount!==2||m.lightPaths!==5)errors.push('WALL_A_B_C_DISTURBED_LOCKED_ASSETS');
+                    if(m.mastheadOnly!==(position==='logo'))errors.push('LOGO_ONLY_TEST_MUST_HIDE_STAR_AND_FOLIO_ONLY_IN_A');
                     await page.screenshot({path:path.join(out,id+'.png'),fullPage:true,animations:'disabled'});
                     logs.push({id,viewport:{width,height},metrics:m,errors});
                     console.log(id,errors.length?errors:'WALL_VARIANT_CAPTURE_OK');
