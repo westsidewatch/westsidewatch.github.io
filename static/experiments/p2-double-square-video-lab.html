@@ -300,19 +300,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
   left:50%;top:17%;width:clamp(21px,5.4cqi,34px)
  }
- .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
-  right:6%;bottom:6%;width:62%;gap:clamp(5px,1.2cqi,9px)
- }
- .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:clamp(27px,6.6cqi,45px)}
- .dual-cover[data-cover-variant="masthead"] .dual-cover__zh{
-  font-size:clamp(13px,3.65cqi,22px);line-height:1.16
- }
 
 }
 @media(max-width:360px){
  .dual-cover[data-cover-variant="masthead"] .dual-cover__star{width:5.4cqi;top:17%}
- .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{bottom:5.5%;width:62%}
- .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:24px}
 }
 /* This same composition is the P2 magazine segment inside the existing Church
    scroll surface when ?embed=1. No duplicate timeline or copy of home film. */
@@ -403,13 +394,6 @@ html.dual-embed
  .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
   top:1.6%;left:3%;width:94%;height:21%;max-width:94%;max-height:21%;
  }
- .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
-  right:5%;bottom:8%;width:88%;
- }
- .dual-cover[data-cover-variant="masthead"] .dual-cover__en{
-  font-size:clamp(32px,11cqi,55px);
- }
- .dual-cover[data-cover-variant="masthead"] .dual-cover__zh{font-size:clamp(12px,3.6cqi,18px)}
  .dual-tile--contents .dual-cover__star{width:clamp(130px,52cqi,220px)}
  .dual-continuum__face{font-size:clamp(8px,2.7cqi,12px);padding:6px 10px}
  .dual-continuum__face span:last-child{padding-right:65px}
@@ -601,7 +585,7 @@ html.dual-embed
  .dual-work{font-size:clamp(10px,1.8cqi,13px)}
 }
 @media(max-width:820px){
- .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{left:50%;right:auto;bottom:36.5%;width:44%;transform:translateX(-50%);align-items:center;text-align:center}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{left:50%;right:auto;bottom:30.5%;width:44%;transform:translateX(-50%);align-items:center;text-align:center}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:clamp(23px,13.5cqi,52px)}
  .dual-contents__star-zone{margin-bottom:7px}
  .dual-contents__head{margin-bottom:8px;padding-bottom:5px}
@@ -622,6 +606,10 @@ html.dual-embed
  .dual-movement__interlude{margin-top:8px;padding-top:6px}
 }
 
+@media(max-width:360px){
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__zh{font-size:11.25px}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__zh span{white-space:nowrap}
+}
 </style>
 </head>
 <body data-ws-scope="journal">
