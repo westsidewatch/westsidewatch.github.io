@@ -57,6 +57,7 @@ const data=()=> {
   typeOpacity:+getComputedStyle(document.querySelector('#dual-letterfield')).opacity,
   lowerRegisterOpacity:+getComputedStyle(document.querySelector('.ws-print-band[data-register="7"]')).opacity,
   lightOpacity:+getComputedStyle(document.querySelector('#dual-cover-folded-light')).opacity,
+  cityOpacity:+getComputedStyle(document.querySelector('#dual-cover-city')).opacity,
   stoneOpacity:+getComputedStyle(document.querySelector('#dual-stone-contents')).opacity,
   starOpacity:+getComputedStyle(star).opacity,
   star:box(star),zone:box(zone),
@@ -102,9 +103,10 @@ const data=()=> {
     const faults=[];
     if(m.scrollWidth>width+2)faults.push('horizontal overflow');
     if(!m.wallBg.includes('cover')||!m.maskSize.includes('cover')||m.mastFit!=='contain')faults.push('stone/masthead must crop proportionally');
-    if(p===14&&!(m.blue>.1&&m.blue<.95&&m.gold===0))faults.push('cover must enter before paper');
+    if(p===14&&!(m.blue>.1&&m.blue<.95&&m.gold===0&&m.cityOpacity>.6))faults.push('stone cover must enter with midnight-blue ink');
     if(p===33&&!(m.gold>.1&&m.gold<.95&&m.lines>=1&&m.typeOpacity>.25&&m.lowerRegisterOpacity>.8))
       faults.push('bottom print register must be visible as gold sheet rises');
+    if(p===33&&m.cityOpacity<.98)faults.push('no empty midnight-blue block may persist after cover arrival');
     if(p===44&&!(m.lines>=6&&m.starOpacity<.05&&m.typeOpacity>.8))faults.push('西望 must precede Morning Star');
     if(p===54&&!(m.starOpacity>.1&&m.lines>=6))faults.push('Morning Star entrance missing');
     if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.8))faults.push('cover and real star must coexist with print');

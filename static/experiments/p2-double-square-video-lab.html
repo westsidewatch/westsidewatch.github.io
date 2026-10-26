@@ -300,14 +300,14 @@
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
-   const dawnRise=reduce?(progress>=.44?1:0):ease((progress-.335)/.145);
+   const dawnRise=reduce?(progress>=.22?1:0):ease((progress-.02)/.21);
    const starRise=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
    const starClearance=(.82*starRise).toFixed(3);
    letters.style.webkitMaskImage=letters.style.maskImage=starRise>0?
     'radial-gradient(ellipse 24% 22% at 51% 49%,rgba(0,0,0,'+(1-starClearance)+') 0%,#000 72%)':'none';
    // Crest and temple-stone are ONE object with one motion authority.
    city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
-   city.style.opacity=String(reduce?dawnRise:ease((progress-.325)/.12));
+   city.style.opacity=String(reduce?dawnRise:ease((progress-.03)/.12));
    coverEnglish.style.opacity=String(reduce?dawnRise:ease((progress-.62)/.105));
    // The masthead belongs to the contracted 5:8 issue, not the oversized
    // half-screen transition plane. Reveal it as its fixed frame settles.
