@@ -92,18 +92,19 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-work--people{letter-spacing:.01em}
 .dual-movement__interlude{margin:auto 0 0;padding-top:clamp(6px,1cqi,11px);font:400 clamp(10px,1.3cqi,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
 .dual-contents__foot{margin-top:auto;padding-top:6px;border-top:1px solid rgba(35,49,67,.48);display:flex;gap:12px;align-items:center;justify-content:space-between;font:400 clamp(10px,.81vw,13px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
-/* Reinstated two-column literary Contents: the retired lead-type field no longer
-   reserves blank paper. All twelve desk names remain in the real DOM. */
+/* The Contents printed-paper grid and Morning Star have separate editorial zones;
+   unlike the retired lead type, the star must not cover any article text. */
 @media(min-width:1101px){
- /* Printed editorial density: two readable columns of two movements, not the retired four-column letterpress reservation. */
- .dual-contents__index{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,max-content);column-gap:clamp(18px,3.2cqi,32px);row-gap:clamp(9px,1.45cqi,16px);flex:0 1 auto;height:auto;max-height:68%;overflow-y:auto;align-content:start;padding:2px 4px 8px 0}
- .dual-movement h3{font-size:clamp(22px,3.45cqi,30px);padding-top:8px;margin-bottom:8px;gap:7px}
- .dual-movement h3 em{font-size:.45em}
- .dual-movement ol{gap:clamp(4px,.65cqi,7px)}
- .dual-movement li{font-size:clamp(14px,2.1cqi,18px);line-height:1.2;grid-template-columns:22px minmax(0,1fr);gap:5px}
- .dual-movement li b{font-size:11px;line-height:1.3}
- .dual-movement li small{font-size:clamp(9px,1.22cqi,11px);margin-top:2px;line-height:1.18}
- .dual-work{font-size:clamp(11px,1.6cqi,14px);line-height:1.24;margin-top:3px}
+ /* Editorial index occupies the upper paper with four legible movements;
+    the lower folio is reserved for Morning Star, not shelved lead type. */
+ .dual-contents__index{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:max-content;column-gap:clamp(12px,2.1cqi,20px);row-gap:0;flex:0 0 auto;height:56%;max-height:56%;overflow-y:auto;align-content:start;padding:2px 3px 6px 0}
+ .dual-movement h3{font-size:clamp(22px,3.4cqi,28px);padding-top:7px;margin-bottom:8px;gap:5px}
+ .dual-movement h3 em{font-size:.42em}
+ .dual-movement ol{gap:clamp(5px,.75cqi,8px)}
+ .dual-movement li{font-size:clamp(13px,2.15cqi,16px);line-height:1.23;grid-template-columns:17px minmax(0,1fr);gap:4px}
+ .dual-movement li b{font-size:10px;line-height:1.3}
+ .dual-movement li small{font-size:clamp(9px,1.3cqi,11px);margin-top:2px;line-height:1.16}
+ .dual-work{font-size:clamp(11px,1.75cqi,13px);line-height:1.23;margin-top:3px}
  .dual-work+.dual-work{margin-top:3px}
  .dual-movement__interlude{margin-top:7px;padding-top:4px;font-size:9px}
 }
@@ -735,8 +736,8 @@ html.dual-embed .dual-film__credit{display:none}
   // temple-stone Contents replace the colorful lettering.
   const stone=ease((progress-.865)/.125);
    // Approved v5.3 star persists: shrink into lower Contents, no retired SVG.
-   star.style.top=(50+29*stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),Math.max(140,Math.min(280,contentsW*.40)),stone).toFixed(2)+'px';
+   star.style.top=(50+34*stone).toFixed(2)+'%';
+   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),Math.max(140,Math.min(258,contentsW*.36)),stone).toFixed(2)+'px';
   // One scroll clock. Existing impression stays as lower-paper relief.
   const reliefOn=ease((progress-.875)/.105);
   relief.style.opacity='0'; // stored print trial: not in this edition

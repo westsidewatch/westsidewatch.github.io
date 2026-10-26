@@ -69,8 +69,8 @@ jobs:
             throw Error('SEVENFOLD_NAV_MUST_MATCH_WESTSIDE_CORE_CANONICAL_FIRSTLEVEL');
           if(/活水堂|日光咖啡|data-wall-position|jerusalem-wall\.png/.test(markup))
             throw Error('RETIRED_NAMES_OR_WALL_VARIANTS_FOUND_IN_P2_SOURCE');
-          if(!markup.includes('--ws-vol00-wall-start:26%') || !markup.includes('grid-template-columns:repeat(2,minmax(0,1fr))'))
-            throw Error('FIXED_WALL_AND_TWO_COLUMN_EDITORIAL_LAYOUT_REQUIRED');
+          if(!markup.includes('--ws-vol00-wall-start:26%') || !markup.includes('grid-template-columns:repeat(4,minmax(0,1fr))') || !markup.includes('height:56%;max-height:56%'))
+            throw Error('FIXED_WALL_AND_SEPARATE_CONTENTS_READING_ZONE_REQUIRED');
 
           const states=[['night-half',12,'cover-right'],['gold-half',33,'cover-right'],['gold-complete',44,'cover-right'],['dawn-arrival',54,'cover-right'],['morning-star',68,'cover-right'],['cover-and-star',82,'cover-right'],['temple-stone-transition',93,'cover-right'],['temple-stone-contents',100,'cover-right']];
           (async()=>{
@@ -214,6 +214,17 @@ jobs:
                                getComputedStyle(paper).backgroundImage==='none',
                             oldGateHidden:getComputedStyle(wall.querySelector('.dual-cover__gate')).display==='none'};
                         })(),
+                        starTextOverlap:(()=>{
+                          const r=document.getElementById('dual-star').getBoundingClientRect();
+                          const visual={left:r.left+r.width*.18,right:r.right-r.width*.18,
+                            top:r.top+r.height*.18,bottom:r.bottom-r.height*.18};
+                          const items=[...document.querySelectorAll('.dual-movement li,.dual-work')];
+                          return items.reduce((n,el)=>{
+                            const b=el.getBoundingClientRect(),w=Math.min(visual.right,b.right)-Math.max(visual.left,b.left),
+                              h=Math.min(visual.bottom,b.bottom)-Math.max(visual.top,b.top);
+                            return Math.max(n,w>0&&h>0?Math.min(w,h):0);
+                          },0);
+                        })(),
                         movementOverlap:(()=>{
                           // Works for both the original 2x2 and the new four-column
                           // Contents editorial grid; never mistake adjacent columns
@@ -255,6 +266,7 @@ jobs:
                        !m.unifiedCity.oldGateHidden)
                       errors.push('ORIGINAL_GATE_MUST_KEEP_STONE_DOOR_WITH_ALPHA_SKYLINE_MASK');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
+                    if(p===100&&m.starTextOverlap>2)errors.push('MORNING_STAR_OVERLAPS_CONTENTS_READING');
                     if(p===100&&!m.readerReach.keyboard)errors.push('CONTENTS_NOT_KEYBOARD_ACCESSIBLE');
                     if(p===100&&width>1100&&!m.readerReach.desktopVisible)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_VISIBLE');
                     if(p===100&&width<=1100&&!m.readerReach.mobileScrollable)errors.push('MOBILE_CONTENTS_SCROLL_NOT_AVAILABLE');
