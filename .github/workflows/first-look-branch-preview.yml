@@ -69,6 +69,16 @@ jobs:
             throw Error('SEVENFOLD_NAV_MUST_MATCH_WESTSIDE_CORE_CANONICAL_FIRSTLEVEL');
           if(/活水堂|日光咖啡|data-wall-position|jerusalem-wall\.png/.test(markup))
             throw Error('RETIRED_NAMES_OR_WALL_VARIANTS_FOUND_IN_P2_SOURCE');
+          // Reader-facing publishing copy may NOT be filled with the design
+          // team's working labels. Remove source DOM/SVG strings, not only CSS-hide.
+          if(/WESTSIDE WATCH \/ SEVEN COLOURS|WESTSIDE WATCH \/ LETTERPRESS|EDITORIAL SHOWCASE|SCROLL \/ SEVEN SPATIAL STUDIES|ORIGINAL HOME FILM|四樂章 · 十二欄目 · 三段視聽間奏|WESTSIDE WATCH \/ P2/.test(markup))
+            throw Error('DESIGN_LAB_WORKING_LABEL_LEAKED_INTO_READER_FACING_P2');
+          if(/dual-contents__deck|dual-film__credit/.test(markup))
+            throw Error('RETIRED_DESIGN_COPY_COMPONENT_MUST_BE_REMOVED');
+          if(!markup.includes('masthead.style.opacity=String(reduce?(progress>=.86?1:0):ease((progress-.795)/.068))'))
+            throw Error('FINAL_5_8_MASTHEAD_MUST_NOT_EXPLODE_IN_HALFSHEET_TRANSITION');
+          if(!markup.includes('height:54%;max-height:54%')||!markup.includes('background:linear-gradient(145deg,#21394e,#152d42 80%)'))
+            throw Error('CONTENTS_NEEDS_EDITORIAL_INK_REGISTER_AND_READING_ZONE');
           if(!markup.includes('--ws-vol00-wall-start:13.125%') || !markup.includes('grid-template-columns:repeat(4,minmax(0,1fr))') || !markup.includes('height:56%;max-height:56%'))
             throw Error('FIXED_WALL_AND_SEPARATE_CONTENTS_READING_ZONE_REQUIRED');
           // A single issue canon for P2 and the actual Hugo /vol-00/ consumer.
