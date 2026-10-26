@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Westside Watch — Stylebook to Spread / P2 Editorial Art Direction</title>
+<meta name="description" content="以西望 Design OS §6F 規範實排 P2：87–90% 門檻及 100% 數位跨頁。隔離研究，非正式頁面。">
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+/* Westside §6F first authored layout. This is a scoped experiment, NOT Design OS.
+   Existing original assets and canonical Vol.00 editorial order remain unchanged. */
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body[data-ws-scope="journal"]{margin:0;background:var(--ws-paper,#f3f0e8);color:var(--ws-ink,#252525);font-family:var(--ws-type-reading-zh,"Chiron Hei HK WS",sans-serif)}
+button,a{font:inherit}
+button:focus-visible,a:focus-visible{outline:3px solid var(--ws-first-light,#ac8944);outline-offset:4px}
+.labbar{min-height:56px;padding:11px clamp(14px,3vw,48px);display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;background:var(--ws-ink,#252525);color:var(--ws-paper,#f4f0e7);position:relative;z-index:5}
+.labbar__label{font:400 12px/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.11em}
+.labbar__actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.labbar button{color:inherit;background:transparent;border:1px solid currentColor;padding:9px 15px;cursor:pointer;font:400 12px/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.07em}
+.labbar button[aria-pressed=true]{background:var(--ws-paper,#f3f0e8);color:var(--ws-ink,#252525)}
+.labbar a{color:inherit;font:400 12px/1.45 var(--ws-type-display-en-sc,Georgia,serif);text-underline-offset:4px}
+.view{min-height:calc(100svh - 56px)}
+.view[hidden]{display:none!important}
+.visually-hidden{position:absolute!important;clip:rect(0,0,0,0);clip-path:inset(50%);height:1px;width:1px;overflow:hidden;white-space:nowrap}
+.threshold{position:relative;min-height:max(790px,calc(100svh - 56px));display:grid;grid-template-columns:1fr 1fr;isolation:isolate;overflow:hidden;background:var(--ws-first-light,#b08b49)}
+.threshold__dawn{position:relative;background:linear-gradient(155deg,color-mix(in srgb,var(--ws-first-light,#af9055) 80%,white),var(--ws-first-light,#af9055));min-height:100%}
+.threshold__night{position:relative;background:color-mix(in srgb,var(--ws-water,#5c93a8) 26%,var(--ws-ink,#192d3b));color:var(--ws-paper,#f4f0e7);min-height:100%}
+.threshold__folio{position:absolute;top:5%;left:5%;font:400 clamp(12px,1.05vw,17px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.16em}
+.threshold__star{position:absolute;top:13%;left:17%;width:clamp(98px,15vw,230px);aspect-ratio:1;object-fit:contain}
+.threshold__vertical{position:absolute;width:clamp(115px,21vw,315px);height:56%;object-fit:contain;left:9%;top:32%}
+.threshold__dawn-claim{position:absolute;bottom:17%;right:7%;font:400 clamp(31px,4.4vw,86px)/.92 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.06em;text-align:right}
+.threshold__night-inner{position:absolute;top:14%;left:9%;right:9%;bottom:16%;display:flex;flex-direction:column;justify-content:center}
+.threshold__kicker{font:400 clamp(11px,1vw,16px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.18em;border-top:1px solid currentColor;padding-top:15px}
+.threshold__night-english{font:400 clamp(62px,7.2vw,138px)/.82 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.072em;margin:32px 0 22px}
+.threshold__night-english em{display:block;font-weight:400;font-style:italic;font-size:.67em;margin-left:10%}
+.threshold__night-zh{font:200 clamp(26px,2.5vw,42px)/1.53 var(--ws-type-display-zh,sans-serif);margin:0}
+.threshold__cite{font:italic 400 clamp(14px,1.1vw,20px)/1.4 var(--ws-type-display-en,Georgia,serif);margin-top:34px;align-self:flex-start}
+.threshold__wall{position:absolute;bottom:0;left:0;right:0;height:17%;background:url('/images/jerusalem-wall.png') center bottom / 100% auto no-repeat;pointer-events:none;opacity:.82;z-index:3;mask-image:linear-gradient(to bottom,transparent,#000 45%)}
+.threshold__notice{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:var(--ws-paper,#fff);background:color-mix(in srgb,var(--ws-ink,#222) 65%,transparent);z-index:4;font-size:12px;padding:6px 10px;pointer-events:none}
+.spread{--sp-paper:var(--ws-paper,#f3f0e8);position:relative;isolation:isolate;min-height:calc(100svh - 56px);background:var(--sp-paper);overflow:hidden}
+.spread__mast{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:start;gap:24px;padding:clamp(22px,2.7vw,45px) clamp(22px,3.7vw,65px) 0}
+.spread__mast img{display:block;width:clamp(260px,30vw,480px);height:auto;max-height:108px;object-fit:contain;object-position:left}
+.spread__edition{text-align:right;font:400 clamp(11px,.78vw,14px)/1.7 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;white-space:nowrap}
+.spread__composition{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,49fr) minmax(0,51fr);min-height:calc(100svh - 180px);padding:22px clamp(22px,3.7vw,65px) clamp(35px,4.5vw,78px);column-gap:clamp(45px,4.8vw,88px)}
+.spread__art{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(19px,2vh,34px);justify-content:space-between;position:relative;min-width:0;min-height:650px;padding:clamp(17px,2.7vw,39px) 0 0}
+.spread__art-head{width:100%;flex:none}
+.spread__word{font:400 clamp(108px,11.5vw,190px)/.77 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.08em;margin:0 0 18px -.03em;white-space:nowrap;color:var(--ws-ink,#24323b);pointer-events:none}
+.spread__series{font:400 clamp(12px,.8vw,15px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.13em;border-top:1px solid currentColor;padding-top:13px;max-width:75%}
+.spread__plate{margin:0;align-self:flex-start;width:94%;min-width:0}
+.spread__plate img{display:block;width:100%;aspect-ratio:1.9/1;object-fit:cover;object-position:center 42%;filter:saturate(.63) contrast(1.09)}
+.spread__plate figcaption{margin:8px 0 0;color:color-mix(in srgb,var(--ws-ink,#24323b) 74%,transparent);font:400 clamp(11px,.75vw,13px)/1.4 var(--ws-type-reading-zh,sans-serif)}
+.spread__reading{max-width:100%;position:relative;flex:none;padding:0 0 clamp(14px,2vw,30px)}
+.spread__reading h1{margin:0 0 12px;font:900 clamp(36px,3.15vw,59px)/1.16 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);letter-spacing:-.025em;word-break:keep-all;overflow-wrap:normal}
+.spread__reading h1 span{display:block;white-space:nowrap}
+.spread__lead{max-width:27em;font:400 clamp(17px,1.15vw,20px)/1.68 var(--ws-type-reading-zh,"Chiron Hei HK WS",sans-serif);margin:0}
+.spread__contents{position:relative;min-width:0;padding:clamp(16px,2.7vw,42px) 0 25px;z-index:3}
+.spread__contents-top{border-top:2px solid currentColor;padding-top:15px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.spread__contents-title{margin:0;font:400 clamp(62px,5vw,94px)/.89 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.055em}
+.spread__contents-top span{font:400 clamp(17px,1.2vw,22px)/1.3 var(--ws-type-display-zh,sans-serif)}
+.spread__contents-hint{margin:22px 0 31px;font:400 clamp(13px,.91vw,16px)/1.5 var(--ws-type-reading-zh,sans-serif)}
+.spread__index{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(29px,3.8vw,65px) clamp(29px,3.3vw,62px);align-items:start}
+.spread__movement{min-width:0;padding-top:13px;border-top:1px solid color-mix(in srgb,var(--ws-ink,#252525) 43%,transparent)}
+.spread__movement header{display:flex;align-items:baseline;gap:10px;margin-bottom:17px}
+.spread__roman{font:italic 400 clamp(14px,.97vw,18px)/1.1 var(--ws-type-display-en,Georgia,serif);color:var(--ws-first-light,#a78c59)}
+.spread__movement h3{font:400 clamp(29px,2.15vw,39px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.035em;margin:0}
+.spread__movement ol{list-style:none;margin:0;padding:0;display:grid;gap:clamp(10px,1vh,15px)}
+.spread__movement li{display:grid;grid-template-columns:29px minmax(0,1fr);gap:7px;align-items:start;font:400 clamp(17px,1.14vw,21px)/1.37 var(--ws-type-display-zh,sans-serif)}
+.spread__movement li span{font:400 clamp(12px,.8vw,15px)/1.7 var(--ws-type-display-en,Georgia,serif);color:color-mix(in srgb,var(--ws-ink,#252525) 72%,transparent)}
+.spread__movement li strong{font-weight:400;min-width:0}
+.spread__movement li i{display:block;font:italic 400 clamp(12px,.81vw,15px)/1.3 var(--ws-type-display-en,Georgia,serif);color:color-mix(in srgb,var(--ws-ink,#252525) 78%,transparent)}
+.spread__interlude{font:400 clamp(12px,.85vw,15px)/1.45 var(--ws-type-display-en-sc,Georgia,serif);margin:17px 0 0;letter-spacing:.03em;color:color-mix(in srgb,var(--ws-ink,#252525) 84%,transparent)}
+.spread__exit{position:relative;z-index:4;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;padding:18px clamp(22px,3.7vw,65px) 25px;border-top:1px solid color-mix(in srgb,var(--ws-ink,#252525) 40%,transparent);font:400 clamp(12px,.83vw,14px)/1.45 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
+.spread__exit a{text-decoration:none;color:inherit;border-bottom:1px solid currentColor;padding-bottom:4px}
+.labnote{border-top:1px solid currentColor;margin:0;padding:25px clamp(24px,4.1vw,74px) 50px;background:var(--ws-paper,#f3f0e8);font:400 14px/1.75 var(--ws-type-reading-zh,sans-serif);color:var(--ws-ink,#252525)}
+.labnote p{max-width:85ch;margin:4px 0 12px}
+@media(max-width:1240px){
+.spread__composition{grid-template-columns:minmax(0,48fr) minmax(0,52fr);column-gap:clamp(25px,3.7vw,46px)}
+.spread__word{font-size:clamp(91px,10.8vw,150px)}
+.spread__reading h1{font-size:clamp(34px,3vw,48px)}
+.spread__index{gap:32px 22px}
+.spread__movement li{font-size:17px}
+}
+@media(max-width:900px){
+.threshold{min-height:740px}
+.threshold__dawn-claim{bottom:21%}
+.spread{overflow:visible}
+.spread__composition{display:block;min-height:0;padding-bottom:37px}
+.spread__art{min-height:0;padding-top:27px;gap:23px}
+.spread__word{font-size:clamp(108px,17vw,164px)}
+.spread__plate{width:min(100%,670px)}
+.spread__reading{padding-bottom:38px;max-width:660px}
+.spread__reading h1{font-size:clamp(40px,5.6vw,55px)}
+.spread__contents{padding:15px 0 0}
+.spread__contents-title{font-size:clamp(66px,9vw,93px)}
+.spread__index{gap:34px 55px}
+}
+@media(max-width:600px){
+.labbar{align-items:start}.labbar__label{font-size:10px}.labbar button{font-size:10px;padding:8px 10px}.labbar a{font-size:10px}
+.threshold{min-height:850px;display:block;background:var(--ws-first-light,#c0a05f)}
+.threshold__dawn{height:50%;min-height:425px}
+.threshold__night{height:50%;min-height:425px}
+.threshold__folio{font-size:11px;top:16px;left:20px}
+.threshold__star{top:38px;left:20%;width:120px}
+.threshold__vertical{height:310px;top:94px;left:17%;width:150px}
+.threshold__dawn-claim{bottom:30px;right:7%;font-size:37px}
+.threshold__night-inner{top:8%;left:9%;right:9%;bottom:12%}
+.threshold__night-english{font-size:clamp(53px,15vw,78px);margin:17px 0 15px}
+.threshold__night-zh{font-size:23px}
+.threshold__cite{margin-top:14px}
+.threshold__wall{height:10%;background-size:auto 100%;opacity:.5}
+.threshold__notice{font-size:10px}
+.spread__mast{align-items:center;gap:15px;padding:20px 19px 0}
+.spread__mast img{width:min(62%,290px);max-height:76px}
+.spread__edition{font-size:10px;white-space:normal}
+.spread__composition{padding:20px 19px 26px}
+.spread__art{padding:13px 0 0;gap:21px}
+.spread__word{font-size:clamp(79px,21vw,124px);margin-bottom:17px}
+.spread__series{font-size:12px;max-width:100%}
+.spread__plate{width:100%}
+.spread__plate img{aspect-ratio:1.68/1}
+.spread__plate figcaption{font-size:11px}
+.spread__reading{max-width:100%;padding-bottom:20px}
+.spread__reading h1{font-size:clamp(36px,9.2vw,47px);margin:5px 0 12px}
+.spread__reading h1 span{white-space:normal}
+.spread__lead{font-size:16px;max-width:30ch}
+.spread__contents{padding-top:12px}
+.spread__contents-title{font-size:clamp(59px,17vw,72px)}
+.spread__contents-top span{font-size:17px}
+.spread__contents-hint{font-size:13px;margin:15px 0 25px}
+.spread__index{grid-template-columns:1fr;row-gap:32px}
+.spread__movement h3{font-size:34px}
+.spread__movement li{font-size:19px;grid-template-columns:30px minmax(0,1fr);gap:9px}
+.spread__movement li i{font-size:14px}
+.spread__movement ol{gap:11px}
+.spread__interlude{font-size:13px}
+.spread__exit{padding:17px 19px 25px}
+}
+@media(max-width:350px){
+.spread__word{font-size:20vw}
+.spread__contents-title{font-size:59px}
+.spread__movement h3{font-size:32px}
+.spread__movement li{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body data-ws-scope="journal">
+<header class="labbar" aria-label="P2 Magazine Stylebook Design Experiment Controls">
+ <span class="labbar__label">WESTSIDE WATCH / DESIGN OS §6F / EXPERIMENT 01</span>
+ <nav class="labbar__actions" aria-label="選擇藝術指導場景">
+  <button type="button" data-scene="hold" aria-pressed="false">87–90% · 門檻</button>
+  <button type="button" data-scene="open" aria-pressed="true">100% · 完整跨頁</button>
+  <a href="/experiments/p2-magazine-transition-lab.html?final=1">原 P2 動效預覽 ↗</a>
+ </nav>
+</header>
+<main>
+<section class="view threshold" id="threshold" aria-label="87–90% 靜止構圖，完整動效仍屬原 P2" hidden>
+ <div class="threshold__dawn">
+  <span class="threshold__folio" lang="en">VOL.00 / BEFORE THE DOORS</span>
+  <img class="threshold__star" src="/images/westside-watch-morning-star.svg" alt="" aria-hidden="true">
+  <img class="threshold__vertical" src="/images/westside-watch-xiwang-vertical.svg" alt="西望，原始直排 SVG">
+  <div class="threshold__dawn-claim" lang="en">Watch<br><i>for Dawn.</i></div>
+ </div>
+ <div class="threshold__night">
+  <div class="threshold__night-inner">
+    <span class="threshold__kicker" lang="en">ROMANS / XIII : 12</span>
+    <h2 class="threshold__night-english" lang="en">The night<em>is far spent,</em></h2>
+    <p class="threshold__night-zh">黑夜已深，<br>白晝將近。</p>
+    <cite class="threshold__cite" lang="en">Romans 13:12 / KJV</cite>
+  </div>
+ </div>
+ <div class="threshold__wall" aria-hidden="true"></div>
+ <p class="threshold__notice">靜態藝術構圖研究：晨星 SVG 僅作替代預覽，不更換現有 v5.3 3D 資產或卷軸動效。</p>
+</section>
+<section class="view spread" id="spread" aria-label="西望 Vol.00 數位跨頁：資料／主題／目錄的同場編輯設計">
+ 
+ <header class="spread__mast">
+  <img src="/images/westside-watch-masthead-landscape.svg" alt="西望 WESTSIDE WATCH，原版橫向雜誌刊名">
+  <div class="spread__edition" lang="en">VOL.00 / SPECIAL ISSUE<br>FOUR MOVEMENTS / TWELVE DESKS</div>
+ </header>
+ <div class="spread__composition">
+  <section class="spread__art" aria-labelledby="issue-title">
+   <div class="spread__art-head">
+    <p class="spread__word" lang="en" aria-hidden="true">WATCH.</p>
+    <div class="spread__series" lang="en">A CITY OF LIGHT / VOL.00</div>
+   </div>
+   <figure class="spread__plate">
+    <img src="/images/home-opening-engraving.jpg" alt="主站既有開場繪畫，人物與建築場景；作品來源及授權尚待核對" loading="eager">
+    <figcaption>編輯圖版研究 · 主站現有開場繪畫，來源待核。</figcaption>
+   </figure>
+   <div class="spread__reading">
+    <h1 id="issue-title">守望，<span>一座光明的城</span></h1>
+    <p class="spread__lead">從城市、歷史與人的見證出發，在建造與守望的故事中，走向同行、敬拜與安靜。</p>
+   </div>
+  </section>
+  <section class="spread__contents" aria-labelledby="contents-title">
+   <div class="spread__contents-top"><h2 class="spread__contents-title" id="contents-title" lang="en">Contents.</h2><span>目錄</span></div>
+   <p class="spread__contents-hint">四樂章 / 十二欄目 / 三段視聽間奏 · 預覽索引</p>
+   <div class="spread__index">
+    <section class="spread__movement" aria-label="WATCH 四欄">
+      <header><span class="spread__roman">I</span><h3>WATCH</h3></header>
+      <ol start="1"><li><span>01</span><strong>米斯巴<i>Mizpah</i></strong></li><li><span>02</span><strong>伯利恆<i>Bethlehem</i></strong></li><li><span>03</span><strong>門<i>The Gate</i></strong></li><li><span>04</span><strong>迦密<i>Carmel</i></strong></li></ol>
+      <p class="spread__interlude">INTERLUDE I / SELAH</p>
+    </section>
+    <section class="spread__movement" aria-label="WALK 四欄">
+      <header><span class="spread__roman">II</span><h3>WALK</h3></header>
+      <ol start="5"><li><span>05</span><strong>以馬忤斯<i>Emmaus</i></strong></li><li><span>06</span><strong>以琳<i>Elim</i></strong></li><li><span>07</span><strong>別是巴<i>Beersheba</i></strong></li><li><span>08</span><strong>伯特利<i>Bethel</i></strong></li></ol>
+      <p class="spread__interlude">INTERLUDE II / 遠方無聲鴿</p>
+    </section>
+    <section class="spread__movement" aria-label="WITNESS 二欄">
+      <header><span class="spread__roman">III</span><h3>WITNESS</h3></header>
+      <ol start="9"><li><span>09</span><strong>以斯帖<i>Esther</i></strong></li><li><span>10</span><strong>亞杜蘭洞<i>Adullam</i></strong></li></ol>
+      <p class="spread__interlude">INTERLUDE III / KINNERET</p>
+    </section>
+    <section class="spread__movement" aria-label="WORSHIP 二欄">
+      <header><span class="spread__roman">IV</span><h3>WORSHIP</h3></header>
+      <ol start="11"><li><span>11</span><strong>何烈山<i>Horeb</i></strong></li><li><span>12</span><strong>瑪拉拿<i>Maranatha</i></strong></li></ol>
+    </section>
+   </div>
+  </section>
+ </div>
+ <footer class="spread__exit"><span lang="en">WESTSIDE WATCH / ENGRAVED EDITORIAL MODERNISM / COMPOSITION TRIAL</span><a href="/journal/">進入現有西望雜誌 ↗</a></footer>
+</section>
+<aside class="labnote" aria-label="實驗說明">
+ <p><strong>製作範圍：</strong>本頁僅為《西望雜誌視覺規範書》§6F 的靜態構圖驗證，不替代 P2 原有水、開門、七層或晨星動效。</p>
+ <p><strong>來源註記：</strong>本研究調用主站既有刻線圖與城牆圖；其原始著作及再利用權限須於正式出版前完成資料盤點，本試排不宣稱為已核實的考古圖像或多雷原作。</p>
+ <p><strong>比較標準：</strong>本輪修正先刪除沒有敘事功能的金色折線，將原本瀰漫整頁的繪畫收束成可辨認的獨立圖版，並擴大目錄資訊層級；這仍是候選版面，尚未通過 §6A 的藝術驗收。</p>
+</aside>
+</main>
+<script>
+(function(){
+ const scenes=['hold','open'],buttons=[...document.querySelectorAll('[data-scene]')];
+ const setScene=function(scene){
+  if(!scenes.includes(scene))scene='open';
+  document.querySelector('#threshold').hidden=scene!=='hold';
+  document.querySelector('#spread').hidden=scene!=='open';
+  buttons.forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.scene===scene))});
+  document.body.dataset.artDirectionScene=scene;
+  const next=new URL(location.href);next.searchParams.set('state',scene);history.replaceState(null,'',next);
+ };
+ buttons.forEach(function(button){button.addEventListener('click',function(){setScene(button.dataset.scene)})});
+ setScene(new URLSearchParams(location.search).get('state')||'open');
+})();
+</script>
+</body>
+</html>
