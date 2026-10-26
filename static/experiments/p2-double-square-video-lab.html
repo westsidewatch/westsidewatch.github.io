@@ -63,7 +63,7 @@
          <path data-role="central-light-plane" d="M479 703 H554 L622 902 H401 Z" fill="#f5e3bb" opacity=".11"/>
          <path data-role="right-fold-shadow" d="M554 703 H579 L769 902 H622 Z" fill="url(#ws-stone-occlusion)"/>
         </g>
-        <path data-role="stone-cast-shadow" d="M579 703 L618 674 L802 843 L795 895 L769 902 Z" fill="url(#ws-stone-occlusion)" opacity=".52"/>
+        <path data-role="stone-cast-shadow" d="M579 703 L618 674 L802 843 L795 895 L769 902 Z" fill="url(#ws-stone-occlusion)" opacity=".26"/>
         <path data-role="threshold-lit-edge" d="M421 703 H579" fill="none" stroke="#fff4d6" stroke-width="1.2" opacity=".60"/>
         <path data-role="fold-seam" d="M479 703 L401 902" fill="none" stroke="#fff2d1" stroke-width=".6" opacity=".19"/>
        </g>
@@ -172,7 +172,7 @@
    const mark=makeSvg('g','ws-print-mark',band);
    mark.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
    mark.dataset.register=String(register+1);
-   const ink=(register+(col+subrow)%3)%7;
+   const ink=register;
    for(let depth=3;depth>=0;depth--){
     const face=makeSvg('use',depth?'ws-print-depth':'ws-print-face',mark);
     face.setAttribute('href','#ws-xiwang-original');
@@ -180,7 +180,7 @@
     // Consistent dark faces bind the field together; seven original OS hues
     // form the vector extrusion. One accent face per register is intentional.
     const accent=(col===2&&subrow===0)||(register===3&&col===4);
-    face.style.color=depth===0?(accent?palette[ink]:'#25394c'):depth===3?papers[register]:palette[(ink+2)%7];
+    face.style.color=depth===0?(accent?palette[ink]:'#25394c'):depth===3?papers[register]:palette[ink];
     face.style.opacity=depth===0?'1':depth===3?'.93':'.89';
    }
    marks.push(mark);allMarks.push(mark);
@@ -290,7 +290,10 @@
   letters.style.visibility=typeEnter>0&&typeLeave<1?'visible':'hidden';
   layoutPrint(contentsW,contentsH);
   bands.forEach(({band},register)=>{
-   const on=reduce?(progress>=.44?1:0):ease((progress-(.265+register*.021))/.052);
+   // The gold folio rises from below, so the bottom press register must
+   // print first. Otherwise the incoming lower sheet is a blank colour block.
+   const revealOrder=6-register;
+   const on=reduce?(progress>=.44?1:0):ease((progress-(.265+revealOrder*.021))/.052);
    band.style.opacity=String(on*(register===3?1:.93));
    band.setAttribute('transform','translate('+((1-on)*(register%2?-110:94)).toFixed(2)+' '+((1-on)*(-40+register*5)).toFixed(2)+')');
   });
@@ -299,6 +302,9 @@
    // A reverse wheel must lower the same city and restore midnight blue.
    const dawnRise=reduce?(progress>=.44?1:0):ease((progress-.335)/.145);
    const starRise=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
+   const starClearance=(.82*starRise).toFixed(3);
+   letters.style.webkitMaskImage=letters.style.maskImage=starRise>0?
+    'radial-gradient(ellipse 24% 22% at 51% 49%,rgba(0,0,0,'+(1-starClearance)+') 0%,#000 72%)':'none';
    // Crest and temple-stone are ONE object with one motion authority.
    city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
    city.style.opacity=String(reduce?dawnRise:ease((progress-.325)/.12));
