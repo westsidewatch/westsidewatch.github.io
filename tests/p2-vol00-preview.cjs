@@ -12,6 +12,7 @@ const out='artifacts/p2-vol00';
 fs.mkdirSync(out,{recursive:true});
 assert.match(source,/\/css\/westside-design-os\.css/);
 assert.match(source,/\/css\/p2-vol00-editorial\.css/);
+assert.match(source,/p2-vol00-editorial\.css\?v=vol00-editorial-\d{8}[a-z]/,'the standalone folio CSS must cache-bust on visual revision');
 assert.equal((source.match(/class="dual-entry"/g)||[]).length,12,'all original desks remain');
 assert.equal((source.match(/class="dual-movement"/g)||[]).length,4);
 assert.equal((source.match(/class="dual-work/g)||[]).length,11,'do not invent article titles');
