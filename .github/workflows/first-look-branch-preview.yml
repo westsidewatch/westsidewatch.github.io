@@ -305,8 +305,14 @@ jobs:
                          starInContents:document.getElementById('dual-star').parentElement.id==='dual-contents',
                         cityTopRatio:(city.top-view.top)/view.height,
                         wallHeightRatio:wall.height/view.height,
-                        headlineRightColumn:title.left>=view.left+view.width*(innerWidth<=820?.31:.38)&&
-                          title.right>=view.right-view.width*.10,
+                        headlineRightColumn:(()=>{
+                           const glyph=cv.querySelector('.dual-cover__en span:last-child');
+                           if(!glyph)return false;
+                           const range=document.createRange();range.selectNodeContents(glyph);
+                           const ink=range.getBoundingClientRect();
+                           return ink.left>=view.left+view.width*(innerWidth<=820?.30:.38)&&
+                             ink.right>=view.right-view.width*.10;
+                         })(),
                         titleGroupUnified:!!cv.querySelector('.dual-cover__editorial')&&
                           ['en','zh'].every(name=>cv.querySelector('.dual-cover__'+name)?.parentElement===cv.querySelector('.dual-cover__editorial')),
                         starInNavy:false, // retired when the star moved to Contents
