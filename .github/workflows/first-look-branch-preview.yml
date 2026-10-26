@@ -303,6 +303,7 @@ jobs:
                         starCentreError:Math.abs((star.left+star.right)/2-(starPage.left+starPage.right)/2),
                         starScale:star.width/starPage.width,
                          starInContents:document.getElementById('dual-star').parentElement.id==='dual-contents',
+                         starAboveSheet:Number(getComputedStyle(document.getElementById('dual-star')).zIndex)>Number(getComputedStyle(document.getElementById('dual-stone-contents')).zIndex),
                         cityTopRatio:(city.top-view.top)/view.height,
                         wallHeightRatio:wall.height/view.height,
                         headlineCentered:(()=>{
@@ -368,7 +369,7 @@ jobs:
                       errors.push('VOL00_SKY_AND_WALL_BALANCE_OUT_OF_RANGE');
                     if(variant==='masthead'&&(!metrics.headlineCentered||!metrics.sloganHidden||!metrics.titleGroupUnified))
                       errors.push('CENTER_LIGHT_NOT_PRIMARY_EDITORIAL_HEADLINE');
-                    if(variant==='masthead'&&(!metrics.starInContents||!metrics.mastheadNavyOnly))
+                    if(variant==='masthead'&&(!metrics.starInContents||!metrics.mastheadNavyOnly||!metrics.starAboveSheet))
                       errors.push('STAR_MUST_BE_IN_SQUARE_CONTENTS_AND_MASTHEAD_IN_NAVY');
                     if(variant==='masthead'&&(!metrics.originalStoneWithSkyMask||
                       metrics.wallShadow!=='none'||metrics.wallSeam!=='none'))
