@@ -25,7 +25,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-ui__range{display:flex;gap:11px;align-items:center;min-width:150px;font:400 12px/1.4 var(--ws-type-reading-zh,sans-serif)}
 .dual-ui__range input{width:clamp(100px,14vw,230px);accent-color:#d2b56f}
 .dual-ui__range output{min-width:35px;text-align:end;font:400 13px/1.5 var(--ws-type-display-en,Georgia,serif)}
-.dual-stage{--blue:#182f49;--gold:#c6a664;--ink:#253548;--paper:#f4ede0;position:relative;width:100%;height:calc(100svh - 64px);min-height:750px;isolation:isolate;overflow:hidden;background:#172436}
+.dual-stage{--blue:#182f49;--gold:#c6a664;--ink:#253548;--paper:#f4ede0;position:relative;width:100%;height:calc(100svh - 148px);min-height:680px;isolation:isolate;overflow:hidden;background:#172436}
 .dual-film{position:absolute;inset:0;overflow:hidden;opacity:0;pointer-events:none;transform:scale(1.02);background:url('/images/home-opening-engraving.jpg') center/cover no-repeat}
 .dual-film iframe{position:absolute;width:100%;height:100%;inset:0;border:0;pointer-events:none}
 .dual-film::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(8,24,44,.60),rgba(9,30,49,.33) 50%,rgba(10,26,42,.62));pointer-events:none}
@@ -370,14 +370,15 @@ html.dual-embed .dual-film__credit{display:none}
  mix-blend-mode:multiply;filter:none;
 }
 .dual-tile--contents .dual-cover__star{
- position:absolute;z-index:2;left:50%;top:50%;width:clamp(112px,40cqi,290px);
+ position:absolute;z-index:2;left:50%;top:50%;width:clamp(155px,48cqi,350px);
  aspect-ratio:1;opacity:0;pointer-events:none;overflow:hidden;
+ filter:brightness(.76) contrast(1.45) saturate(.92);
 }
 .dual-tile--contents .dual-contents::after{
  content:"";position:absolute;z-index:1;pointer-events:none;
- left:29%;right:29%;bottom:12%;height:29%;
+ left:26%;right:26%;bottom:10%;height:32%;
  background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;
- opacity:.075;mix-blend-mode:multiply;
+ opacity:.17;mix-blend-mode:multiply;
 }
 /* Functional seven-colour page-edge: one horizontal ribbon spanning both
    asymmetrical leaves. Its CSS 3D flip is driven by the existing P2 clock. */
@@ -434,7 +435,7 @@ html.dual-embed .dual-film__credit{display:none}
   font-size:clamp(32px,11cqi,55px);
  }
  .dual-cover[data-cover-variant="masthead"] .dual-cover__zh{font-size:clamp(12px,3.6cqi,18px)}
- .dual-tile--contents .dual-cover__star{width:clamp(112px,45cqi,205px)}
+ .dual-tile--contents .dual-cover__star{width:clamp(130px,52cqi,220px)}
  .dual-continuum__face{font-size:clamp(8px,2.7cqi,12px);padding:6px 10px}
  .dual-continuum__face span:last-child{padding-right:65px}
 }
@@ -482,7 +483,7 @@ html.dual-embed .dual-film__credit{display:none}
       <div class="dual-cover__wall" id="dual-cover-wall"><span class="dual-cover__gate" aria-hidden="true"></span></div>
       <svg class="dual-cover__fold-light" id="dual-cover-folded-light" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
         <!-- Light begins on the DOORSTEP (y=650), not inside the pointed arch.
-             Three joined geometric folds are contiguous in SVG coordinates. -->
+             Four projection facets share the same gate threshold. -->
         <path d="M491 660 L509 660 L975 969 L916 1000 Z" fill="#f4d67c" opacity=".56"/>
         <path d="M491 660 L509 660 L680 1000 L548 1000 Z" fill="#e3b854" opacity=".48"/>
         <path d="M491 660 L509 660 L105 1000 L0 975 Z" fill="#edc86c" opacity=".48"/>
@@ -721,7 +722,7 @@ html.dual-embed .dual-film__credit{display:none}
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
    coverFolio.style.opacity=String(reduce?dawnRise:ease((progress-.71)/.09));
    radiance.style.opacity=String(starRise);
-   star.style.opacity=String(starRise*(1-ease((progress-.865)/.115)));
+   star.style.opacity=String(starRise*(1-ease((progress-.895)/.105)));
    star.style.transform='translate(-50%,'+(45-95*starRise).toFixed(2)+'%)';
    foldedLight.style.opacity=String(reduce?dawnRise:ease((progress-.655)/.13));
 
