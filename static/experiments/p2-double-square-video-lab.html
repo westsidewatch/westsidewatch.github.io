@@ -198,17 +198,18 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 
 
 
-/* P2 Cover / 2026-10-24: ONE publication name, ONE material, ONE editorial group.
-   Navy is for masthead and volume only. Original morning star sits on the
-   stone CITY, not on navy. One reversible P2 scroll source remains untouched. */
+/* P2 Cover / 2026-10-25: Vol.00 masthead belongs to a continuous midnight-blue
+   sky, with the authentic stone battlements cutting into it. The issue label
+   is below on the sandstone foot, not in the masthead field. This is the
+   balanced 50/50 skyline study, with the existing reversible scroll intact. */
 .dual-cover[data-cover-variant="masthead"]{background:#102a43}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
  top:1.6%;left:3%;width:94%;max-width:94%;height:21%;max-height:21%;
  object-fit:contain;object-position:center top;filter:none;z-index:8
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__vol{
- top:20.5%;left:6%;right:auto;font-size:clamp(9px,1.18cqi,12px);
- color:#d4b36e;letter-spacing:.16em
+ top:auto;bottom:6%;left:6%;right:auto;font-size:clamp(9px,1.18cqi,12px);
+ color:#21384a;letter-spacing:.16em
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__tagline,
 .dual-cover[data-cover-variant="masthead"] .dual-cover__tagline::before,
@@ -226,7 +227,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    opaque lower mask restores the doorway and full stone surface with
    zero visible horizontal photo joins. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city{
- top:24%;bottom:0;overflow:visible;isolation:isolate;
+ top:44%;bottom:0;overflow:visible;isolation:isolate;
  background:transparent;box-shadow:none;filter:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__paper{
@@ -371,7 +372,7 @@ html.dual-embed .dual-film__credit{display:none}
  <span class="dual-film__credit" aria-hidden="true">WESTSIDE WATCH / THE KING ENTERS THE CITY / ORIGINAL HOME FILM</span>
  <div class="dual-panels">
   <article class="dual-tile dual-tile--cover" id="dual-cover" aria-label="西望 Vol.00 午夜藍封面">
-   <div class="dual-cover" data-cover-variant="masthead" data-wall-position="original">
+   <div class="dual-cover" data-cover-variant="masthead" data-wall-position="half">
      <div class="dual-cover__engraving" aria-hidden="true"></div>
      <div class="dual-cover__radiance" id="dual-radiance" aria-hidden="true"></div>
      <div class="dual-cover__city" id="dual-cover-city" aria-hidden="true">
@@ -678,7 +679,7 @@ html.dual-embed .dual-film__credit{display:none}
   star.querySelector('.dual-cover__star-fallback').style.opacity='1';
  }else{frame.src=frame.dataset.originalSrc}
  setCoverVariant(qs.get('cover'));
- setWallPosition(qs.get('wall'));
+ setWallPosition(qs.get('wall')??'half');
  setOrientation(qs.get('side')==='cover-left'?'cover-left':'cover-right');
  setProgress(Number(qs.get('p')??100)/100);
 })();
