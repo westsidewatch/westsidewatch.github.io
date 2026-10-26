@@ -358,8 +358,10 @@ jobs:
                     // bounding boxes must overlap the lower editorial title.
                     if(variant==='masthead'&&(metrics.starCentreError>3||metrics.starScale<.04||metrics.starScale>.09))
                       errors.push('MORNING_STAR_NOT_SMALL_NAVY_EMBLEM');
-                    if(variant==='masthead'&&(metrics.cityTopRatio<.225||metrics.cityTopRatio>.255||metrics.wallHeightRatio<.72))
-                      errors.push('JERUSALEM_CREST_TOO_LARGE_OR_LOW');
+                    // Vol.00 B balances 44% midnight-blue sky with the original stone silhouette;
+                    // retain a bounded design check, calibrated to this approved composition.
+                    if(variant==='masthead'&&(metrics.cityTopRatio<.42||metrics.cityTopRatio>.46||metrics.wallHeightRatio<.54))
+                      errors.push('VOL00_SKY_AND_WALL_BALANCE_OUT_OF_RANGE');
                     if(variant==='masthead'&&(!metrics.headlineRightColumn||!metrics.sloganHidden||!metrics.titleGroupUnified))
                       errors.push('LOWER_RIGHT_EDITORIAL_HEADLINE_NOT_CLEAR');
                     if(variant==='masthead'&&(!metrics.starInNavy||!metrics.mastheadNavyOnly))
