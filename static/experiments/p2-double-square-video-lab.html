@@ -137,6 +137,23 @@
  const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
  const foldedLight=document.getElementById('dual-cover-folded-light');
  const star=document.getElementById('dual-star');
+ // The cloud/CI browsers can disable WebGL completely. In that case retain
+ // the Design OS's OWN frozen Morning Star SVG, not the rejected fake-canvas
+ // geometry. Hardware-enabled browsers still run the untouched v5.3 iframe.
+ let hasWebGL=false;
+ try{
+  const probe=document.createElement('canvas');
+  hasWebGL=!!(probe.getContext('webgl2')||probe.getContext('webgl'));
+ }catch(_error){hasWebGL=false}
+ star.dataset.renderer=hasWebGL?'morning-star-v5.3-webgl':'approved-morning-star-svg';
+ if(!hasWebGL){
+  const approved=document.createElement('img');
+  approved.src='/images/westside-watch-morning-star.svg';
+  approved.className='dual-cover__approved-star';
+  approved.alt='';
+  approved.decoding='async';
+  star.querySelector('iframe')?.replaceWith(approved);
+ }
  const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents'),relief=document.getElementById('dual-contents-relief');
  const city=document.getElementById('dual-cover-city');
  const coverHeading=document.getElementById('dual-cover-zh');
@@ -285,8 +302,11 @@
   // Every step is driven by this one reversible parent scroll clock.
   const typeEnter=reduce?(progress>=.31?1:0):ease((progress-.245)/.09);
   const typeLeave=reduce?(progress>=.9?1:0):ease((progress-.865)/.11);
+  const starAttention=reduce?(progress>=.6?1:0):ease((progress-.47)/.20);
   letters.style.clipPath='none';
-  letters.style.opacity=String(typeEnter*(1-typeLeave));
+  // Once the Morning Star rises, the same ink plate remains but becomes a
+  // quieter typographic ground; the new focal anchor must actually be seen.
+  letters.style.opacity=String(typeEnter*(1-typeLeave)*(1-.45*starAttention));
   letters.style.visibility=typeEnter>0&&typeLeave<1?'visible':'hidden';
   layoutPrint(contentsW,contentsH);
   bands.forEach(({band},register)=>{
