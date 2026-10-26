@@ -611,8 +611,8 @@ html.dual-embed
  .dual-cover[data-cover-variant="masthead"] .dual-cover__zh span{white-space:nowrap}
 }
 
-/* One accepted ocean field in two ink colours: NO separate decorative overlays. */
-.dual-transition__confluence{position:absolute;inset:0;z-index:4;width:100%;height:100%;pointer-events:none;opacity:0;overflow:hidden;will-change:opacity}
+/* Journal-only engraving: clipped editorial folds from the Design OS magazine grammar. Church currents are never inherited by this page. */
+.dual-tile--contents::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.40;background:repeating-linear-gradient(118deg,transparent 0 46px,rgba(71,56,32,.19) 46.5px 47px,transparent 47.5px 92px) right center/63% 100% no-repeat;mask-image:linear-gradient(90deg,transparent 25%,#000 90%)}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__engraving{display:none!important}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__fold-light{mix-blend-mode:multiply;filter:none;opacity:0}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__fold-light path{fill:none!important;stroke-linecap:round;filter:none!important}
@@ -1008,7 +1008,7 @@ html.dual-embed
     <div class="dual-contents__foot"><span lang="en">VOL.00 / INDEX</span></div>
    </div>
   </section>
-  <svg class="dual-transition__confluence" id="dual-transition-confluence" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><defs><clipPath id="dual-ocean-clip-gold"><rect id="dual-ocean-gold-clip" x="0" y="900" width="800" height="0"/></clipPath><clipPath id="dual-ocean-clip-blue"><rect id="dual-ocean-blue-clip" x="800" y="0" width="800" height="0"/></clipPath></defs><g id="dual-ocean-gold-lines" clip-path="url(#dual-ocean-clip-gold)" fill="none" stroke="#67513b" stroke-linecap="round"/><g id="dual-ocean-blue-lines" clip-path="url(#dual-ocean-clip-blue)" fill="none" stroke="#b4c7cd" stroke-linecap="round"/></svg>
+
  </div>
  <div class="dual-continuum" id="dual-continuum" role="group" aria-label="七色書脊：選擇色帶展開，再點一次進入對應版塊">
   <span class="dual-continuum__rotor" id="dual-continuum-rotor" aria-hidden="true">
@@ -1176,7 +1176,7 @@ html.dual-embed
   gold.style.clipPath='inset('+((1-dawn)*100).toFixed(3)+'% 0 0 0)';
   stage.dataset.blueReveal=blue.toFixed(4);
   stage.dataset.dawnReveal=dawn.toFixed(4);
-  stage.dataset.transitionEngraving='shared-fixed-ocean-2.5';
+  stage.dataset.transitionEngraving='journal-editorial-folds';
   // The lead-type experiment is archived in the DOM, not published.
   // Its original vectors and registrations remain intact and reversible.
   letters.style.clipPath='none';
@@ -1191,11 +1191,11 @@ html.dual-embed
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
-   const dawnRise=reduce?(progress>=.53?1:0):ease((progress-.555)/.185);
-   const starRise=reduce?(progress>=.38?1:0):ease((progress-.325)/.19);
+   const dawnRise=reduce?(progress>=.44?1:0):ease((progress-.335)/.145);
+   const starRise=reduce?(progress>=.44?1:0):ease((progress-.30)/.16);
    // Crest and temple-stone are ONE object with one motion authority.
    city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
-   city.style.opacity=String(reduce?dawnRise:ease((progress-.565)/.085));
+   city.style.opacity=String(reduce?dawnRise:ease((progress-.325)/.12));
    coverEnglish.style.opacity=String(reduce?dawnRise:ease((progress-.62)/.105));
    // The masthead belongs to the contracted 5:8 issue, not the oversized
    // half-screen transition plane. Reveal it as its fixed frame settles.
@@ -1446,6 +1446,5 @@ html.dual-embed
  setProgress(Number(qs.get('p')??100)/100);
 })();
 </script>
-<script src="/experiments/assets/p2-approved-ocean-confluence.js" defer></script>
 </body>
 </html>

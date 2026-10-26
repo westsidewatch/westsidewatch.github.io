@@ -109,7 +109,6 @@ jobs:
                   const initial=await page.goto(url,{waitUntil:'load',timeout:45000});
                   loadedOK=initial?.status()===200;
                   await page.evaluate(()=>document.fonts.ready);
-                  await page.waitForFunction(()=>document.getElementById('dual-transition-confluence')?.dataset.sourcePaths==='620',null,{timeout:25000});
                 }catch(e){loadFailure=e.message;}
                 for(const [state,p,side] of states){
                   const id=screen+'-'+state,errors=[];
@@ -138,15 +137,13 @@ jobs:
                         blueReveal:Number(root.dataset.blueReveal),
                         dawnReveal:Number(root.dataset.dawnReveal),
                         transitionEngraving:(()=>{
-                          const ocean=document.getElementById('dual-transition-confluence');
-                          return {oceanOpacity:Number(getComputedStyle(ocean).opacity),
-                            originalPaths:Number(ocean.dataset.sourcePaths),
-                            motionPreset:ocean.dataset.motionPreset,
-                            frameReady:ocean.dataset.frameReady==='true',
-                            goldCount:ocean.querySelectorAll('#dual-ocean-gold-lines path').length,
-                            blueCount:ocean.querySelectorAll('#dual-ocean-blue-lines path').length,
+                          const tile=document.querySelector('.dual-tile--contents');
+                          const fold=getComputedStyle(tile,'::before');
+                          return {mode:root.dataset.transitionEngraving,
+                            forbiddenOcean:!!document.getElementById('dual-transition-confluence')||!!document.querySelector('script[src*="p2-approved-ocean"]'),
                             formerSeparateWater:!!document.getElementById('dual-transition-water'),
-                            formerNightSource:getComputedStyle(document.querySelector('.dual-cover__engraving')).display};
+                            foldImage:fold.backgroundImage,
+                            foldOpacity:Number(fold.opacity)};
                         })(),
                         officialWorks:document.querySelectorAll('.dual-work').length,
                         readerReach:(()=>{
@@ -341,15 +338,12 @@ jobs:
                     if(p===12&&(m.phase!=='cover-arrival'||m.blueReveal<=.1||m.blueReveal>=.9||m.dawnReveal!==0))errors.push('NIGHT_HALF_NOT_REVEALING_SCHEDULE_FIRST');
                     if(p===33&&(m.blueReveal<.999||m.dawnReveal<=.1||m.dawnReveal>=.9))errors.push('GOLD_HALF_NOT_REVEALING_WATER_SECOND');
                     if(p===44&&(m.blueReveal<.999||m.dawnReveal<.999))errors.push('HALF_PANELS_NOT_COMPLETE_BEFORE_TYPE');
-                    if(p===44&&(m.transitionEngraving.oceanOpacity<.93||
-                      m.transitionEngraving.originalPaths!==620||
-                      m.transitionEngraving.goldCount!==620||
-                      m.transitionEngraving.blueCount!==620||
-                      m.transitionEngraving.motionPreset!=='fixed-ocean-2.5'||
-                      !m.transitionEngraving.frameReady||
+                    if(p===44&&(m.transitionEngraving.mode!=='journal-editorial-folds'||
+                      m.transitionEngraving.forbiddenOcean||
                       m.transitionEngraving.formerSeparateWater||
-                      m.transitionEngraving.formerNightSource!=='none'))
-                      errors.push('P2_TRANSITION_NOT_ONE_ACCEPTED_CONTINUOUS_OCEAN');
+                      !m.transitionEngraving.foldImage.includes('118deg')||
+                      m.transitionEngraving.foldOpacity<.1))
+                      errors.push('P2_JOURNAL_ENGRAVING_SCOPE_VIOLATION');
                      if(p===54&&(m.phase!=='morning-star-rise'||m.lines!==0||m.stoneVisible))errors.push('STAR_ENTRANCE_SEQUENCE_BROKEN');
                      if(p===68&&(m.phase!=='morning-star-rise'||m.lines!==0||m.starOpacity<.85||m.starParent!=='dual-contents'||m.stoneVisible))errors.push('THREE_D_STAR_MUST_RISE_IN_CONTENTS_PANEL');
                      if(p===82&&(m.phase!=='cover-and-star'||m.lines!==0||m.starOpacity<.85||m.stoneVisible))errors.push('MISSING_COVER_AND_STAR_HOLD');
