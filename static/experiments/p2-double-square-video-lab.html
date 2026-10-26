@@ -467,7 +467,7 @@ html.dual-embed .dual-film__credit{display:none}
  .dual-continuum__spectrum button{width:clamp(9px,1.9vw,14px)}
  .dual-continuum__spectrum button.is-open{width:clamp(93px,21vw,160px)}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{left:3%;right:3%;bottom:12%;width:94%}
- .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:clamp(26px,15cqi,49px)}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:clamp(31px,18cqi,64px)}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__zh{font-size:clamp(10px,3.1cqi,17px)}
  .dual-tile--contents .dual-contents::before{inset:9px}
 }
@@ -768,7 +768,7 @@ html.dual-embed .dual-film__credit{display:none}
   const stone=ease((progress-.865)/.125);
    // Approved v5.3 star persists: shrink into lower Contents, no retired SVG.
    star.style.top=(50+23*stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.max(155,Math.min(350,contentsW*.48)),Math.max(120,Math.min(225,contentsW*.30)),stone).toFixed(2)+'px';
+   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),Math.max(120,Math.min(225,contentsW*.30)),stone).toFixed(2)+'px';
   // One scroll clock. Existing impression stays as lower-paper relief.
   const reliefOn=ease((progress-.875)/.105);
   relief.style.opacity='0'; // stored print trial: not in this edition
