@@ -656,39 +656,41 @@ html.dual-embed
              Connected, irregular paper-stone facets share the threshold seam.
              Not a ray fan, hatch wallpaper, spotlight, or decorative gradient. -->
         <defs>
-          <!-- Three hand-composed gold-foil impressions. Light emerges from the
-               gate threshold; no road-like perspective or simulated god rays. -->
-          <linearGradient id="p2-gold-lumen" x1="0" y1="0" x2=".6" y2="1">
-           <stop stop-color="#fff8dc"/><stop offset=".42" stop-color="#f4d998"/><stop offset="1" stop-color="#b88a43"/>
+          <!-- Scheme 02: golden editorial print beams leave the threshold
+               SIDEWAYS, not a set of perspective stripes toward the footer. -->
+          <linearGradient id="p2-gold-lumen" x1="0" y1="1" x2="0" y2="0">
+           <stop stop-color="#fffbe3"/><stop offset=".56" stop-color="#efd28f" stop-opacity=".88"/><stop offset="1" stop-color="#cb9d4d" stop-opacity=".19"/>
           </linearGradient>
-          <linearGradient id="p2-foil-field" x1="0" y1="0" x2="1" y2=".4">
-           <stop stop-color="#fff3cd" stop-opacity=".96"/><stop offset=".58" stop-color="#dca953" stop-opacity=".61"/><stop offset="1" stop-color="#ac7c38" stop-opacity=".12"/>
+          <linearGradient id="p2-foil-field" x1="0" y1="0" x2="1" y2=".55">
+           <stop stop-color="#fff7d8" stop-opacity=".92"/><stop offset=".55" stop-color="#e4b667" stop-opacity=".75"/><stop offset="1" stop-color="#ac7f39" stop-opacity=".20"/>
           </linearGradient>
           <pattern id="p2-foil-grain" width="17" height="19" patternUnits="userSpaceOnUse">
-           <circle cx="2.5" cy="3" r=".55" fill="#69461b" opacity=".35"/>
-           <circle cx="12" cy="14" r=".7" fill="#fff3cf" opacity=".73"/>
+           <circle cx="2.5" cy="3" r=".55" fill="#69461b" opacity=".35"/><circle cx="12" cy="14" r=".7" fill="#fff3cf" opacity=".73"/>
           </pattern>
           <clipPath id="p2-gold-ink">
-           <path d="M462 652 C445 680 407 690 383 712 C350 740 369 764 410 767 C444 770 466 755 503 775 C559 802 594 815 646 827 C701 838 746 820 746 801 C746 775 706 759 657 743 C598 725 563 680 542 652Z"/>
-           <path d="M460 650 C426 688 391 692 351 697 C320 703 305 724 331 733 C350 738 388 720 425 722Z"/>
-           <path d="M543 650 C568 673 609 685 643 684 C687 684 713 701 723 714 C725 729 699 728 655 717 C603 701 565 703 541 686Z"/>
+           <path d="M464 653 L536 653 Q565 675 605 708 L797 867 L721 855 L568 755 L505 722 L432 780 L263 858 L218 848 L399 704Z"/>
+           <path d="M458 652 L473 675 L382 699 L134 754 L106 733 L342 675Z"/>
+           <path d="M539 651 L555 675 L688 696 L912 770 L885 791 L646 738 L557 713Z"/>
           </clipPath>
          </defs>
          <g id="dual-light-threshold-architecture">
-          <path data-role="gate-lumen" d="M453 649 L453 498 Q498 422 548 499 L547 649Z" fill="url(#p2-gold-lumen)" opacity=".46"/>
-          <path data-role="gate-highlight" d="M469 647 L469 535 Q500 496 529 536 L530 647Z" fill="#fff9de" opacity=".31"/>
-          <path data-role="threshold-flash" d="M454 645 Q498 636 547 644 L550 661 Q500 672 446 661Z" fill="#fff8de" opacity=".92"/>
-          <path data-role="gold-central" d="M462 652 C445 680 407 690 383 712 C350 740 369 764 410 767 C444 770 466 755 503 775 C559 802 594 815 646 827 C701 838 746 820 746 801 C746 775 706 759 657 743 C598 725 563 680 542 652Z" fill="url(#p2-foil-field)" opacity=".83"/>
-          <path data-role="gold-left" d="M460 650 C426 688 391 692 351 697 C320 703 305 724 331 733 C350 738 388 720 425 722 L470 672Z" fill="#f2d39a" opacity=".61"/>
-          <path data-role="gold-right" d="M543 650 C568 673 609 685 643 684 C687 684 713 701 723 714 C725 729 699 728 655 717 C603 701 565 703 541 686Z" fill="#c59449" opacity=".48"/>
-          <path data-role="stone-foil-seam" d="M378 758 C431 775 459 753 504 777 C558 805 590 817 647 829 C604 843 544 809 500 789 C446 766 405 786 378 758Z" fill="#654527" opacity=".16"/>
-          <g clip-path="url(#p2-gold-ink)" opacity=".39"><rect x="300" y="650" width="470" height="205" fill="url(#p2-foil-grain)"/></g>
+          <!-- The gate remains the ORIGINAL protected stone asset. -->
+          <path data-role="gate-lumen" d="M425 648 L426 493 Q499 388 574 493 L575 648 Q500 660 425 648Z" fill="url(#p2-gold-lumen)" opacity=".64"/>
+          <path data-role="gate-highlight" d="M461 646 L461 525 Q500 471 541 525 L540 649Z" fill="#fff8da" opacity=".30"/>
+          <path data-role="threshold-flash" d="M452 645 Q500 640 548 644 L554 660 Q502 672 446 662Z" fill="#fff9e7" opacity=".94"/>
+          <!-- Unequal ends, open negative space, directional foil planes. -->
+          <path data-role="gold-central" d="M464 653 L536 653 Q565 675 605 708 L797 867 L721 855 L568 755 L505 722 L432 780 L263 858 L218 848 L399 704Z" fill="url(#p2-foil-field)" opacity=".77"/>
+          <path data-role="gold-left" d="M458 652 L473 675 L382 699 L134 754 L106 733 L342 675Z" fill="#efce88" opacity=".72"/>
+          <path data-role="gold-right" d="M539 651 L555 675 L688 696 L912 770 L885 791 L646 738 L557 713Z" fill="#e9bf6c" opacity=".67"/>
+          <path data-role="stone-foil-seam" d="M399 704 L218 848 L263 858 L432 780 L505 722 L568 755 L721 855 L797 867 L705 848 L561 759 L504 736 L440 789 L261 870 L190 854Z" fill="#775533" opacity=".19"/>
+          <g clip-path="url(#p2-gold-ink)" opacity=".39"><rect x="90" y="640" width="850" height="245" fill="url(#p2-foil-grain)"/></g>
+          <!-- Engraved crease, not an automatically repeated hatch fan. -->
           <g fill="none" stroke-linecap="round">
-           <path d="M451 659 C435 686 412 692 373 719" stroke="#fff6da" stroke-width="1.5" opacity=".78"/>
-           <path d="M549 659 C567 681 602 697 657 709" stroke="#ffeac0" stroke-width="1.25" opacity=".74"/>
-           <path d="M385 751 C427 740 472 746 525 766" stroke="#fff5d7" stroke-width="1.1" opacity=".53"/>
-           <path d="M513 785 C570 795 605 812 655 819" stroke="#795127" stroke-width="1.1" opacity=".36"/>
-           <path d="M447 662 Q498 670 552 660" stroke="#fff8e2" stroke-width="2" opacity=".91"/>
+           <path d="M448 660 L337 688 L149 740" stroke="#fff8da" stroke-width="1.75" opacity=".87"/>
+           <path d="M549 658 L684 710 L891 778" stroke="#fff6d4" stroke-width="1.55" opacity=".78"/>
+           <path d="M459 678 L384 746 L252 855" stroke="#f2dba7" stroke-width="1.2" opacity=".65"/>
+           <path d="M532 676 L586 736 L769 858" stroke="#fff6d0" stroke-width="1.2" opacity=".59"/>
+           <path d="M447 662 Q501 671 553 661" stroke="#fff9e1" stroke-width="2.4" opacity=".95"/>
           </g>
          </g>
       </svg>
