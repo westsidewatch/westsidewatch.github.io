@@ -30,7 +30,8 @@
     "independent-later-skeleton.js",
     "data/urban/roman-byzantine-islamic.skeleton.v1.json",
     "data/urban/medieval-ottoman.skeleton.v1.json",
-    "data/urban/expansion-modern.skeleton.v1.json"
+    "data/urban/expansion-modern.skeleton.v1.json",
+    "later-sacred-cores.js"
   ],
   "phases": [
     {
@@ -564,5 +565,25 @@
     "historicalFoundationAccepted": false,
     "detailWork": "paused",
     "nextPriority": "whole-timeline-defense-gates-sacred-civic-source-supported-outlines"
+  },
+  "structureRecovery": {
+    "status": "in-progress-not-accepted",
+    "reason": "Uniform roof modules do not establish historical city structure",
+    "completedPackage": "phase-scoped schematic sacred cores with housing and visible-road exclusion",
+    "sacredCoreCoverage": {
+      "aelia": 0,
+      "byzantine": 1,
+      "early-islamic": 2,
+      "crusader": 2,
+      "ayyubid-mamluk": 2,
+      "ottoman": 2,
+      "outside-walls": 2,
+      "modern": 2
+    },
+    "coordinatesAndDimensions": "authored-not-surveyed",
+    "housingGridReplacementComplete": false,
+    "wallsAndGatesComplete": false,
+    "historicalFoundationAccepted": false,
+    "nextPriority": "register-source-supported-wall-gate-outlines-and-review-core-main-street-relationships-before-residential-detail"
   }
 }

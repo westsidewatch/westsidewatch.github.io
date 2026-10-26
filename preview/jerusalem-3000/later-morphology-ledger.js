@@ -33,7 +33,7 @@ export function createLaterMorphologyLedger(core){
      source:{dataset:runtime.grammar,authority:runtime.registration?.authority||'legacy-procedural-scaffold-not-historical-survey',...recipe.source,geometryVerified:false},
      metadata:{...recipe.metadata,generatedOwner:owner,generationPhase:phase,scaffoldRole:recipe.stage,constructionStart:recipe.start,geometryVerified:false,ancientGroundVerified:false,reuseLinksVerified:false,semanticBuilding:false,rendererBinding:'later-morphology-v1'}});
    }
-   if(runtime.ledgerRecords)for(const recipe of recipes){if(!['district','road','block'].includes(recipe.type))throw new Error('Invalid independent scaffold role');if(recipe.type==='block'&&candidate.get(recipe.source?.districtId)?.type!=='district')throw new Error('Independent scaffold district relation missing');}
+   if(runtime.ledgerRecords)for(const recipe of recipes){if(!['district','road','block','monument'].includes(recipe.type))throw new Error('Invalid independent scaffold role');if(recipe.type==='block'&&candidate.get(recipe.source?.districtId)?.type!=='district')throw new Error('Independent scaffold district relation missing');}
    const validation=candidate.validate();if(!validation.ok)throw new Error(`Invalid later ledger: ${validation.errors.join('; ')}`);
    if(!prior){core.objects=candidate.objects;core.byPhase=candidate.byPhase;core.links=candidate.links;batches.set(phase,{fingerprint,ids:recipes.map(r=>r.id)});}
    // Bind only after the complete batch has passed. Rebinding preserves edited events.
