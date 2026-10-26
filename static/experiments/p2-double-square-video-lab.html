@@ -298,7 +298,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
   top:1.6%;left:3%;width:94%;max-width:94%;height:21%;max-height:21%
  }
- .dual-cover[data-cover-variant="masthead"] .dual-cover__vol{top:20.5%;left:6%;font-size:9px}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__vol{top:auto;bottom:6%;left:6%;font-size:9px}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__city{top:24%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
   left:50%;top:17%;width:clamp(21px,5.4cqi,34px)
@@ -318,8 +318,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:24px}
 }
 /* Three reversible skyline studies. Only the CITY top changes; all assets,
-   scroll motion, typography and editorial content stay constant. No wall
-   query retains original placement for embedded production P2. */
+   scroll motion, typography and editorial content stay constant. The default
+   without a wall query is the balanced navy-sky / sandstone Vol.00 layout. */
 .dual-cover[data-cover-variant="masthead"][data-wall-position="logo"] .dual-cover__city{top:10%}
 /* A is the explicitly masthead-only blue-band study: no other elements
    compete with the brand in its intentionally compressed sky.
