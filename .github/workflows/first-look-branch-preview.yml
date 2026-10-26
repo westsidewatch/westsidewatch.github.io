@@ -503,7 +503,7 @@ jobs:
                   // The old A/B presentations were declined for insufficient publication
                   // identity. The selected art study must show the official SVG
                   // across nearly the entire cover width, at desktop and mobile.
-                  if(m.coverVariant!=='masthead'||m.logoRatio<.90||m.logoRatio>.97)
+                  if(m.coverVariant!=='masthead'||m.logoRatio<1.00||m.logoRatio>1.06)
                     errors.push('COVER_APPROVED_MASTHEAD_IDENTITY_MISSING');
                   if(Math.abs((m.coverSize?.width||0)/(m.coverSize?.height||1)-5/8)>.008||Math.abs((m.contentSize?.width||0)/(m.contentSize?.height||1)-1)>.008)errors.push('CHURCH_SPREAD_NOT_5_8_PLUS_SQUARE');
                   if(m.lastRect>m.contentsRect+2&&!m.directoryScrollable)errors.push('LAST_ENTRIES_UNREACHABLE');
