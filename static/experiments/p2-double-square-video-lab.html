@@ -64,7 +64,6 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover__tagline::before,.dual-cover__tagline::after{content:none;display:none}
 .dual-cover__star{position:absolute;z-index:3;left:72%;top:32%;width:clamp(88px,21cqi,168px);aspect-ratio:1;transform:translate(-50%,95%);opacity:0;overflow:hidden;pointer-events:none}
 .dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
-.dual-cover__star-fallback{position:absolute;z-index:1;inset:0;background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;opacity:.25;pointer-events:none}
 .dual-cover__wall{position:absolute;z-index:2;top:calc(0px - clamp(64px,10.5cqi,105px));left:0;right:0;height:clamp(88px,15cqi,148px);background:url('/images/jerusalem-wall.png') center bottom/auto 100% repeat-x;pointer-events:none;filter:drop-shadow(0 9px 6px rgba(88,61,36,.35))}
 .dual-cover__en{position:absolute;z-index:5;top:70%;left:8%;right:7%;margin:0;font:400 clamp(36px,7.7cqi,74px)/.85 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.057em;color:#22394f;opacity:0;text-shadow:0 1px 0 rgba(244,228,199,.18)}
 .dual-cover__en span{display:block;white-space:nowrap}
@@ -238,7 +237,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
  display:block!important;position:absolute;z-index:2;inset:0;
  width:100%;height:100%;top:0;left:0;right:0;
- background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/100% 100% no-repeat;
+ background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/cover no-repeat;
  -webkit-mask-image:
    url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),
    linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
@@ -247,8 +246,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
  -webkit-mask-position:center top,center top;
  mask-position:center top,center top;
- -webkit-mask-size:100% 100%,100% 100%;
- mask-size:100% 100%,100% 100%;
+ -webkit-mask-size:cover,100% 100%;
+ mask-size:cover,100% 100%;
  -webkit-mask-repeat:no-repeat,no-repeat;
  mask-repeat:no-repeat,no-repeat;
  -webkit-mask-composite:source-over;
@@ -372,13 +371,7 @@ html.dual-embed .dual-film__credit{display:none}
 .dual-tile--contents .dual-cover__star{
  position:absolute;z-index:2;left:50%;top:50%;width:clamp(155px,48cqi,350px);
  aspect-ratio:1;opacity:0;pointer-events:none;overflow:hidden;
- filter:brightness(.76) contrast(1.45) saturate(.92);
-}
-.dual-tile--contents .dual-contents::after{
- content:"";position:absolute;z-index:1;pointer-events:none;
- left:26%;right:26%;bottom:10%;height:32%;
- background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;
- opacity:.17;mix-blend-mode:multiply;
+ filter:brightness(.85) contrast(1.25);
 }
 /* Functional seven-colour page-edge: one horizontal ribbon spanning both
    asymmetrical leaves. Its CSS 3D flip is driven by the existing P2 clock. */
@@ -443,6 +436,41 @@ html.dual-embed .dual-film__credit{display:none}
  .dual-continuum__rotor{will-change:auto}
 }
 
+
+/* Permanent 5:8 cover: primary stone/cutout are cropped proportionally, never stretched. */
+.dual-ui [data-position],.dual-ui [data-cover-choice],.dual-ui__wall-choices{display:none!important}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{left:3%;right:3%;width:94%;bottom:12%;align-items:center;text-align:center;gap:clamp(2px,.5cqi,6px)}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en{position:relative;width:100%;font:400 clamp(28px,15cqi,90px)/.87 var(--ws-type-display-en,Georgia,serif);text-align:center;letter-spacing:-.065em}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:first-child{position:absolute;top:-.61em;left:15%;width:auto;font-size:.29em;line-height:1;letter-spacing:.025em;text-align:left}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:last-child{font-size:1.27em;letter-spacing:-.073em;line-height:.90}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en em{font-size:.72em}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__zh{width:100%;font:700 clamp(11px,3.1cqi,19px)/1.17 var(--ws-type-display-zh,sans-serif);text-align:center}
+.dual-tile--contents .dual-contents::before{content:"";position:absolute;z-index:4;inset:clamp(9px,2cqi,16px);border:1px solid rgba(159,119,54,.64);box-shadow:inset 0 0 0 3px rgba(251,247,239,.88),inset 0 0 0 4px rgba(184,143,77,.35);pointer-events:none}
+/* Seven OS colours unfold leftward along the shared rail, then navigate on second activation. */
+.dual-continuum__spectrum{display:flex;grid-template-columns:none;align-items:stretch;justify-content:flex-end;border-left:0;right:0;left:auto;top:0;bottom:0;width:auto;z-index:6}
+.dual-continuum__spectrum button{-webkit-appearance:none;appearance:none;position:relative;flex:none;display:flex;align-items:center;justify-content:center;width:clamp(11px,1.25cqi,18px);height:100%;min-height:100%;padding:0;border:0;border-left:1px solid rgba(6,27,43,.20);border-radius:0;background:var(--c);cursor:pointer;color:#183048;overflow:hidden;white-space:nowrap;transition:width .56s cubic-bezier(.22,1,.36,1),filter .22s ease;font:600 clamp(9px,1.15cqi,13px)/1.15 var(--ws-type-display-en-sc,Georgia,serif)}
+.dual-continuum__spectrum button:nth-child(1){--c:var(--ws-water,#5b8fa8);color:#fff}
+.dual-continuum__spectrum button:nth-child(2){--c:var(--ws-first-light,#a2872a)}
+.dual-continuum__spectrum button:nth-child(3){--c:var(--ws-pale-gold,#cebd74)}
+.dual-continuum__spectrum button:nth-child(4){--c:var(--ws-olive,#738a5a);color:#fff}
+.dual-continuum__spectrum button:nth-child(5){--c:var(--ws-harvest,#b8944a)}
+.dual-continuum__spectrum button:nth-child(6){--c:var(--ws-crimson,#a14d57);color:#fff}
+.dual-continuum__spectrum button:nth-child(7){--c:var(--ws-daylight-mauve,#af809a);color:#fff}
+.dual-continuum__spectrum button.is-open{width:clamp(160px,26cqi,320px)}
+.dual-continuum__spectrum button span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 12px;opacity:0;transform:translateX(14px);transition:opacity .22s ease .08s,transform .42s cubic-bezier(.22,1,.36,1)}
+.dual-continuum__spectrum button.is-open span{opacity:1;transform:translateX(0)}
+.dual-continuum__spectrum button:hover{filter:brightness(1.10)}
+.dual-continuum__spectrum button:focus-visible{outline:2px solid #fff;outline-offset:-2px;z-index:2}
+.dual-continuum__spectrum button.is-open span::after{content:" ↗"}
+@media(max-width:820px){
+ .dual-continuum__spectrum button{width:clamp(9px,1.9vw,14px)}
+ .dual-continuum__spectrum button.is-open{width:clamp(93px,21vw,160px)}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{left:3%;right:3%;bottom:12%;width:94%}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:clamp(26px,15cqi,49px)}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__zh{font-size:clamp(10px,3.1cqi,17px)}
+ .dual-tile--contents .dual-contents::before{inset:9px}
+}
+@media(prefers-reduced-motion:reduce){.dual-continuum__spectrum button,.dual-continuum__spectrum button span{transition:none!important}}
 </style>
 </head>
 <body data-ws-scope="journal">
@@ -512,7 +540,6 @@ html.dual-embed .dual-film__credit{display:none}
     </svg>
      <div class="dual-cover__star" id="dual-star" aria-hidden="true">
        <iframe tabindex="-1" title="西望現有晨星 3D v5.3" src="/experiments/morning-star-3d-lab.html?asset=1&amp;autoplay=1&amp;speed=2.1" loading="eager"></iframe>
-       <div class="dual-cover__star-fallback"></div>
      </div>
    <div class="dual-contents" id="dual-stone-contents" aria-hidden="true" inert>
     <svg id="dual-contents-relief" class="dual-contents__relief" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"></svg>
@@ -533,20 +560,28 @@ html.dual-embed .dual-film__credit{display:none}
        <li class="dual-entry"><b>11</b><span class="dual-entry__text"><span class="dual-entry__column">何烈山<small>Horeb</small></span><span class="dual-work" lang="zh-Hant">〈房角石：整座城由此對齊〉</span></span></li><li class="dual-entry"><b>12</b><span class="dual-entry__text"><span class="dual-entry__column">瑪拉拿<small>Maranatha</small></span><span class="dual-work" lang="zh-Hant">〈冠冕〉</span></span></li>
       </ol></section>
     </div>
-    <div class="dual-contents__foot"><span lang="en">VOL.00 / INDEX</span><a href="/journal/">ENTER MAGAZINE ↗</a></div>
+    <div class="dual-contents__foot"><span lang="en">VOL.00 / INDEX</span></div>
    </div>
   </section>
  </div>
- <a class="dual-continuum" id="dual-continuum" href="/journal/" aria-label="進入西望雜誌專頁，七色功能書脊">
-  <span class="dual-continuum__rotor" id="dual-continuum-rotor">
-   <span class="dual-continuum__face dual-continuum__front"><span>WESTSIDE WATCH <em>西望</em></span><span>OPEN THE JOURNAL ↗</span></span>
-   <span class="dual-continuum__face dual-continuum__back"><span>WESTSIDE WATCH / SEVEN COLOURS</span><span>ENTER ↗</span></span>
+ <div class="dual-continuum" id="dual-continuum" role="group" aria-label="七色書脊：選擇色帶展開，再點一次進入對應版塊">
+  <span class="dual-continuum__rotor" id="dual-continuum-rotor" aria-hidden="true">
+   <span class="dual-continuum__face dual-continuum__front"><span>WESTSIDE WATCH / SEVEN COLOURS</span></span>
+   <span class="dual-continuum__face dual-continuum__back"><span>WESTSIDE WATCH / SEVEN COLOURS</span></span>
   </span>
-  <span class="dual-continuum__spectrum" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
- </a>
+  <span class="dual-continuum__spectrum" role="group" aria-label="七色版塊入口">
+   <button type="button" data-realm="church" data-href="/church/" aria-expanded="false" aria-label="展開活水堂"><span>活水堂 · LIVING WATER</span></button>
+   <button type="button" data-realm="journal" data-href="/journal/" aria-expanded="false" aria-label="展開西望雜誌"><span>西望 · MAGAZINE</span></button>
+   <button type="button" data-realm="one" data-href="/one/" aria-expanded="false" aria-label="展開 ONE 查經"><span>ONE · 查經</span></button>
+   <button type="button" data-realm="olive" data-href="/olive/" aria-expanded="false" aria-label="展開橄欖山"><span>橄欖山 · OLIVE</span></button>
+   <button type="button" data-realm="library" data-href="/dawn-library/" aria-expanded="false" aria-label="展開黎明書局"><span>黎明書局 · BOOKS</span></button>
+   <button type="button" data-realm="cinema" data-href="/cinema/" aria-expanded="false" aria-label="展開天堂電影院"><span>天堂電影院 · CINEMA</span></button>
+   <button type="button" data-realm="cafe" data-href="/daylight-cafe/" aria-expanded="false" aria-label="展開日光咖啡"><span>日光咖啡 · CAFE</span></button>
+  </span>
+ </div>
 </section>
 <details class="dual-overview"><summary>DESIGN NOTES / EDITORIAL REVIEW</summary><div class="dual-overview__detail">
-  <p><strong>5:8 × 正方形｜現行唯一候選：</strong>官方刊名 SVG 固定於 5:8 直立封面上沿，右下 CITY OF LIGHT 與城門金色投影為 Vol.00 專屬創作；Contents 為獨立正方形，晨星 3D 在此升起。七色功能書脊橫貫兩頁、沿同一時鐘翻轉，點擊直接進入雜誌專頁。曾測試的「西望」鉛字向量保留於工程但不再顯示。以下是已存檔的歷史候選記錄，不能當作現行設計要求。</p>
+  <p><strong>5:8 × 正方形｜現行唯一候選：</strong>官方刊名 SVG 固定於 5:8 直立封面上沿，居中的 LIGHT、點綴的 CITY OF 與金色投影為 Vol.00 專屬創作；Contents 為獨立正方形，晨星 3D 在此升起。七色功能書脊橫貫兩頁、沿同一時鐘翻轉；各色塊先展開再進入所屬版塊。曾測試的「西望」鉛字向量保留於工程但不再顯示。以下是已存檔的歷史候選記錄，不能當作現行設計要求。</p>
  <p><strong>第五輪藝術修正：</strong>原教會右／左半屏依序以 clip-path 接管，拒絕整塊從畫面外砸入；新加射線已移除，保留晨星原刻線。左頁七個獨立的「西望」字標因互相覆蓋而被否決，改為一組官方原始向量字形的七道斜向印刷色版，隨滾動依序顯現，最終構成唯一巨型「西望」。封面仍使用真城牆＋原聖殿石底紋，Contents 已找回 Vol.00 確認的十項文章題名及兩位講員。</p>
  <p><strong>第七輪實際藝術候選：</strong>官方 SVG「西望」由七條互相錯開的字形印帶組成，合計十一個完整的「西望」，不再把一個巨大字標切成七片；參考《50》的跨頁文字骨架，但保留 Westside 自己的七色印刷身份。原耶路撒冷城牆與聖殿石底紋合併到同一個 City DOM，一次升起、不再脫節。禁止額外線條／生成圖片；尚需實景驗收。</p>
  <p><strong>第六輪回歸修正：</strong>人工截圖發現 WATCH 長篇名進入 WITNESS 樂章標題。改用內容高度下限的 grid track，先保證任何樂章不重疊，裝不下時交由既有目錄卷軸完整呈現。禁止為了填滿紙面犧牲內容完整性。</p>
@@ -688,7 +723,7 @@ html.dual-embed .dual-film__credit{display:none}
   rail.style.opacity=String(railReveal);
   rail.style.pointerEvents=railReveal>.97?'auto':'none';
   railRotor.style.transform='rotateX('+(-180*railFlip).toFixed(3)+'deg)';
-  [...rail.querySelectorAll('.dual-continuum__spectrum i')].forEach((swatch,i)=>{
+  [...rail.querySelectorAll('.dual-continuum__spectrum button')].forEach((swatch,i)=>{
     const on=reduce?(progress>=.90?1:0):ease((progress-.82-i*.008)/.075);
     swatch.style.transform='scaleY('+(.12+.88*on).toFixed(3)+')';
   });
@@ -723,13 +758,16 @@ html.dual-embed .dual-film__credit{display:none}
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
    coverFolio.style.opacity=String(reduce?dawnRise:ease((progress-.71)/.09));
    radiance.style.opacity=String(starRise);
-   star.style.opacity=String(starRise*(1-ease((progress-.895)/.105)));
+   star.style.opacity=String(starRise);
    star.style.transform='translate(-50%,'+(45-95*starRise).toFixed(2)+'%)';
    foldedLight.style.opacity=String(reduce?dawnRise:ease((progress-.655)/.13));
 
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
   const stone=ease((progress-.865)/.125);
+   // Approved v5.3 star persists: shrink into lower Contents, no retired SVG.
+   star.style.top=(50+23*stone).toFixed(2)+'%';
+   star.style.width=lerp(Math.max(155,Math.min(350,contentsW*.48)),Math.max(120,Math.min(225,contentsW*.30)),stone).toFixed(2)+'px';
   // One scroll clock. Existing impression stays as lower-paper relief.
   const reliefOn=ease((progress-.875)/.105);
   relief.style.opacity='0'; // stored print trial: not in this edition
@@ -789,6 +827,22 @@ html.dual-embed .dual-film__credit{display:none}
    const uri=new URL(location.href);uri.searchParams.set('side',val);history.replaceState(null,'',uri);
   }
  }
+ 
+ const realms=[...rail.querySelectorAll('.dual-continuum__spectrum button[data-realm]')];
+ const collapseRealms=()=>realms.forEach(b=>{
+  b.classList.remove('is-open');b.setAttribute('aria-expanded','false');
+  b.setAttribute('aria-label','展開'+b.dataset.realmTitle);
+ });
+ realms.forEach(b=>{
+  b.dataset.realmTitle=b.getAttribute('aria-label').replace(/^展開/,'');
+  b.addEventListener('click',()=>{
+   if(b.classList.contains('is-open')){location.assign(b.dataset.href);return;}
+   collapseRealms();b.classList.add('is-open');
+   b.setAttribute('aria-expanded','true');
+   b.setAttribute('aria-label','進入'+b.dataset.realmTitle);
+  });
+ });
+ rail.addEventListener('keydown',event=>{if(event.key==='Escape')collapseRealms()});
  document.querySelectorAll('[data-snap]').forEach(b=>b.addEventListener('click',()=>setProgress(b.dataset.snap)));
  buttons.forEach(b=>b.addEventListener('click',()=>setOrientation(b.dataset.position)));
  coverChoices.forEach(b=>b.addEventListener('click',()=>setCoverVariant(b.dataset.coverChoice)));
@@ -804,8 +858,7 @@ html.dual-embed .dual-film__credit{display:none}
  addEventListener('resize',render,{passive:true});
  const qs=new URLSearchParams(location.search);
  if(reduce){
-  star.querySelector('iframe')?.remove();
-  star.querySelector('.dual-cover__star-fallback').style.opacity='1';
+  star.querySelector('iframe').src='/experiments/morning-star-3d-lab.html?asset=1&autoplay=0';
  }else{frame.src=frame.dataset.originalSrc}
  setCoverVariant(qs.get('cover'));
  setWallPosition(qs.get('wall')??'half');
