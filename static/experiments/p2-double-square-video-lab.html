@@ -655,15 +655,42 @@ html.dual-embed
         <!-- Scheme 02 / reference: one light source at the FOOT of the actual gate.
              Connected, irregular paper-stone facets share the threshold seam.
              Not a ray fan, hatch wallpaper, spotlight, or decorative gradient. -->
-        <g id="dual-light-threshold-architecture">
-         <path data-role="threshold-step" d="M456 652 L544 652 L580 716 L416 716 Z" fill="#f2dab0" opacity=".90"/>
-         <path data-role="projected-light" d="M416 716 L580 716 L792 1000 L62 1000 Z" fill="#f5e6c8" opacity=".87"/>
-         <path data-role="light-crease" d="M416 716 L457 716 L344 1000 L62 1000 Z" fill="#fff8e6" opacity=".87"/>
-         <path data-role="stone-shadow" d="M580 716 L544 652 L1000 836 L1000 1000 L792 1000 Z" fill="#6a4c37" opacity=".30"/>
-         <path data-role="threshold-edge" d="M456 652 L544 652" fill="none" stroke="#fff6dc" stroke-width="3" opacity=".88"/>
-         <path data-role="light-edge" d="M416 716 L62 1000" fill="none" stroke="#fff5d8" stroke-width="1.55" opacity=".83"/>
-         <path data-role="shadow-edge" d="M580 716 L792 1000" fill="none" stroke="#8f7049" stroke-width="1.4" opacity=".55"/>
-        </g>
+        <defs>
+          <!-- Three hand-composed gold-foil impressions. Light emerges from the
+               gate threshold; no road-like perspective or simulated god rays. -->
+          <linearGradient id="p2-gold-lumen" x1="0" y1="0" x2=".6" y2="1">
+           <stop stop-color="#fff8dc"/><stop offset=".42" stop-color="#f4d998"/><stop offset="1" stop-color="#b88a43"/>
+          </linearGradient>
+          <linearGradient id="p2-foil-field" x1="0" y1="0" x2="1" y2=".4">
+           <stop stop-color="#fff3cd" stop-opacity=".96"/><stop offset=".58" stop-color="#dca953" stop-opacity=".61"/><stop offset="1" stop-color="#ac7c38" stop-opacity=".12"/>
+          </linearGradient>
+          <pattern id="p2-foil-grain" width="17" height="19" patternUnits="userSpaceOnUse">
+           <circle cx="2.5" cy="3" r=".55" fill="#69461b" opacity=".35"/>
+           <circle cx="12" cy="14" r=".7" fill="#fff3cf" opacity=".73"/>
+          </pattern>
+          <clipPath id="p2-gold-ink">
+           <path d="M462 652 C445 680 407 690 383 712 C350 740 369 764 410 767 C444 770 466 755 503 775 C559 802 594 815 646 827 C701 838 746 820 746 801 C746 775 706 759 657 743 C598 725 563 680 542 652Z"/>
+           <path d="M460 650 C426 688 391 692 351 697 C320 703 305 724 331 733 C350 738 388 720 425 722Z"/>
+           <path d="M543 650 C568 673 609 685 643 684 C687 684 713 701 723 714 C725 729 699 728 655 717 C603 701 565 703 541 686Z"/>
+          </clipPath>
+         </defs>
+         <g id="dual-light-threshold-architecture">
+          <path data-role="gate-lumen" d="M453 649 L453 498 Q498 422 548 499 L547 649Z" fill="url(#p2-gold-lumen)" opacity=".46"/>
+          <path data-role="gate-highlight" d="M469 647 L469 535 Q500 496 529 536 L530 647Z" fill="#fff9de" opacity=".31"/>
+          <path data-role="threshold-flash" d="M454 645 Q498 636 547 644 L550 661 Q500 672 446 661Z" fill="#fff8de" opacity=".92"/>
+          <path data-role="gold-central" d="M462 652 C445 680 407 690 383 712 C350 740 369 764 410 767 C444 770 466 755 503 775 C559 802 594 815 646 827 C701 838 746 820 746 801 C746 775 706 759 657 743 C598 725 563 680 542 652Z" fill="url(#p2-foil-field)" opacity=".83"/>
+          <path data-role="gold-left" d="M460 650 C426 688 391 692 351 697 C320 703 305 724 331 733 C350 738 388 720 425 722 L470 672Z" fill="#f2d39a" opacity=".61"/>
+          <path data-role="gold-right" d="M543 650 C568 673 609 685 643 684 C687 684 713 701 723 714 C725 729 699 728 655 717 C603 701 565 703 541 686Z" fill="#c59449" opacity=".48"/>
+          <path data-role="stone-foil-seam" d="M378 758 C431 775 459 753 504 777 C558 805 590 817 647 829 C604 843 544 809 500 789 C446 766 405 786 378 758Z" fill="#654527" opacity=".16"/>
+          <g clip-path="url(#p2-gold-ink)" opacity=".39"><rect x="300" y="650" width="470" height="205" fill="url(#p2-foil-grain)"/></g>
+          <g fill="none" stroke-linecap="round">
+           <path d="M451 659 C435 686 412 692 373 719" stroke="#fff6da" stroke-width="1.5" opacity=".78"/>
+           <path d="M549 659 C567 681 602 697 657 709" stroke="#ffeac0" stroke-width="1.25" opacity=".74"/>
+           <path d="M385 751 C427 740 472 746 525 766" stroke="#fff5d7" stroke-width="1.1" opacity=".53"/>
+           <path d="M513 785 C570 795 605 812 655 819" stroke="#795127" stroke-width="1.1" opacity=".36"/>
+           <path d="M447 662 Q498 670 552 660" stroke="#fff8e2" stroke-width="2" opacity=".91"/>
+          </g>
+         </g>
       </svg>
      </div>
      <img class="dual-cover__mast" src="/images/westside-watch-masthead-landscape.svg" alt="西望 WESTSIDE WATCH 正式雜誌標誌" loading="eager">
@@ -911,7 +938,11 @@ html.dual-embed
    radiance.style.opacity=String(starRise);
    star.style.opacity=String(starRise);
    star.style.transform='translate(-50%,'+(45-95*starRise).toFixed(2)+'%)';
-   foldedLight.style.opacity=String(reduce?dawnRise:ease((progress-.655)/.13));
+   const gateGold=reduce?dawnRise:ease((progress-.655)/.13);
+   foldedLight.style.opacity=String(gateGold);
+   // Folio gold prints OUT of the gate; same reversible scroll clock.
+   const goldReveal=ease((progress-.63)/.25);
+   foldedLight.style.clipPath='ellipse('+(8+92*goldReveal).toFixed(2)+'% '+(3+97*goldReveal).toFixed(2)+'% at 50% 65%)';
 
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
