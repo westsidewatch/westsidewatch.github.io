@@ -137,7 +137,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   controls.maxDistance = 11000;
   controls.minPolarAngle = 0.35;
   controls.maxPolarAngle = Math.PI * 0.51;
-  controls.autoRotate = !reducedMotion;
+  controls.autoRotate = false;
   controls.autoRotateSpeed = 0.32;
   const root = new THREE.Group(),
     historical = new THREE.Group(),
@@ -646,7 +646,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             persianSanctuary:persianSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
-            terrainPresentation:{...terrainPresentation?.diagnostics,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
+            terrainPresentation:{...terrainPresentation?.diagnostics,surfaceId:terrainRuntime?.mesh.uuid,historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -735,13 +735,13 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         const points=[];
         for(const x of [SKELETON_WINDOW.minX,SKELETON_WINDOW.maxX])for(const z of [SKELETON_WINDOW.minZ,SKELETON_WINDOW.maxZ])points.push(new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z),z));
         camera.fov=48;
-        const frame=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov});
+        const frame=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov,landscape:true});
         camera.far=Math.max(camera.far,frame.distance*3);camera.updateProjectionMatrix();controls.maxDistance=frame.distance*2;
         camera.position.copy(frame.position);controls.target.copy(frame.target);controls.minDistance=35;controls.autoRotate=false;
       }else if(!enabled&&terrainView){
         camera.position.copy(terrainView.position);controls.target.copy(terrainView.target);controls.minDistance=terrainView.minDistance;controls.maxDistance=terrainView.maxDistance;controls.autoRotate=terrainView.autoRotate;camera.far=terrainView.far;camera.fov=terrainView.fov;camera.updateProjectionMatrix();const changedPhase=terrainView.phase!==currentPhaseId;terrainView=null;if(changedPhase){updatePeriodOverview(currentPhaseId,true);if(isEarlyLandscapePhase(currentPhaseId)){const landscape=isEarliestPhase(currentPhaseId)?earliestSettlement:currentPhaseId==='middle-bronze'?middleBronzeSettlement:currentPhaseId==='late-bronze-iron1'?lateBronzeSettlement:davidSettlement;controls.target.copy(landscape.focus);camera.position.copy(landscape.focus).add(new THREE.Vector3(180,190,270));}else if(isCorePhase(currentPhaseId)){const box=new THREE.Box3().setFromObject(cityCoreLayer),frame=fitCityOverview({points:[box.min,box.max],aspect:camera.aspect,fov:camera.fov});camera.position.copy(frame.position);controls.target.copy(frame.target);}}
       }
-      terrainPresentation.contours.visible=!!terrainView;controls.update();needsFrame=true;return !!terrainView;
+      terrainPresentation.contours.visible=true;controls.update();needsFrame=true;return !!terrainView;
     },
     inspectSourceLifecycleContext(id){return inspectSourceLifecycleContext(cityCoreRuntime.core,id,timelinePosition);},
     inspectCityObject(id){const record=cityCoreRuntime?.core.get(id);return record?structuredClone(record):null;},

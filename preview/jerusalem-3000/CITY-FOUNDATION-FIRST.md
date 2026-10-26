@@ -108,3 +108,5 @@ Aelia, Byzantine and early Islamic layouts now share one authored district/path/
 2026-10-25 統一18期概覽基準：住宅以共同粗屋頂／院落語法呈現，後八期大片占位板轉為父街區內展示模組，中段不再預設雕刻門窗；原身分、地塊與事件保留。新增18期同相機／同比例比較與每期水防／宗教核心缺口提示。實際18期共同語法與固定相機、桌面／手機／毀壞回歸通過。詳見 [UNIFIED-OVERVIEW-BASELINE.md](UNIFIED-OVERVIEW-BASELINE.md)。表示層統一不代表史實已完成；下一優先項為全線城防、城門與宗教／公共核心的來源支持主體輪廓，細雕暫停。
 
 2026-10-25 工程糾偏：共同屋頂語法不能替代城市結構，後八期方格住宅仍未完成。現改以城界／城門、核心／主街關係優先；本包先將七期宗教核心示意量體接入共同生成器、帳本及住宅／道路避讓。來源只支持形態與年代語境，坐標尺寸仍為示意。詳見 [STRUCTURE-RECOVERY.md](STRUCTURE-RECOVERY.md)。全線結構與17段變遷通過審查前，不恢復住宅細雕。
+
+2026-10-26 優先順序更正：使用者指出地貌不可讀與城市跨期斷裂。先恢復同一地景的可見起伏與穩定播放鏡頭，再處理共同場所、路網、城廓和核心的跨期變化；不能再以各期新增量體替代延續性。詳見 [LANDSCAPE-CONTINUITY-RECOVERY.md](LANDSCAPE-CONTINUITY-RECOVERY.md)。切期清除重建與後八期占位住宅仍未解決，歷史延續性驗收維持false。

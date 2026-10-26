@@ -585,5 +585,14 @@
     "wallsAndGatesComplete": false,
     "historicalFoundationAccepted": false,
     "nextPriority": "register-source-supported-wall-gate-outlines-and-review-core-main-street-relationships-before-residential-detail"
+  },
+  "landscapeContinuityRecovery": {
+    "terrainPresentation": "normal-based-hillshade-default-contours-unchanged-DEM",
+    "playbackCamera": "shared-landscape-frame",
+    "historicalObjectContinuityComplete": false,
+    "perEraFabricRebuildStillPresent": true,
+    "nextPriority": "shared-places-road-boundary-core-transformations-before-new-single-buildings",
+    "firstTransition": "roman-destruction->aelia",
+    "pairedAcceptance": "ottoman->outside-walls->modern"
   }
 }

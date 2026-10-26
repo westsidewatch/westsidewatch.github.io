@@ -333,6 +333,7 @@ try {
   function start() {
     if (raf) return;
     playbackPosition=Number(slider.value);
+    terrainOverview(true);
     three.setPlaybackPresentation(true);
     play.textContent = 'Ⅱ 暫停';
     play.setAttribute('aria-pressed', 'true');
