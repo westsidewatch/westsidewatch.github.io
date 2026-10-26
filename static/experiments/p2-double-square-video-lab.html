@@ -828,6 +828,148 @@ html.dual-embed .dual-film__credit{display:none}
   }
  }
  
+
+
+ // WebGL-disabled browsers render a perspective projection of the SAME
+ // v5.3 sixteen-point geometry, glass facets and 240 rays. This is a
+ // continuity fallback only; WebGL browsers run the sealed v5.3 scene.
+ function installV53CanvasFallback(){
+  let probe=null;
+  try{probe=document.createElement('canvas').getContext('webgl2')}catch(_){}
+  if(probe){probe.getExtension('WEBGL_lose_context')?.loseContext();return}
+  const iframe=star.querySelector('iframe');
+  iframe.removeAttribute('src');iframe.remove();
+  const canvas=document.createElement('canvas');
+  canvas.className='dual-cover__star-canvas-v53';
+  canvas.setAttribute('aria-hidden','true');
+  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
+  star.append(canvas);
+  const ctx=canvas.getContext('2d');
+  if(!ctx)return;
+  const TAU=Math.PI*2, N=16, out=[],inside=[];
+  for(let i=0;i<N;i++){
+   const a=-Math.PI/2+i*Math.PI/8;
+   const r=i%2===0?(i%4===0?3.15:2.72):.83;
+   out.push([Math.cos(a)*r,Math.sin(a)*r]);
+   inside.push([Math.cos(a)*r*.89,Math.sin(a)*r*.89]);
+  }
+  const tris=[];
+  const add=(kind,sign,A,B,C)=>tris.push({kind,sign,v:[A,B,C]});
+  for(let i=0;i<N;i++){
+   const j=(i+1)%N;
+   for(const sign of [-1,1]){
+    const z=sign*.095,shoulder=sign*.048,crest=sign*.22;
+    const a=[...inside[i],z],b=[...inside[j],z];
+    const ta=[...out[i],shoulder],tb=[...out[j],shoulder];
+    add('face',sign,[0,0,crest],a,b);
+    add('bevel',sign,a,ta,tb);add('bevel',sign,a,tb,b);
+    add('ridge',sign,[0,0,crest],[inside[i][0]*.54,inside[i][1]*.54,crest*.83],[inside[j][0]*.54,inside[j][1]*.54,crest*.83]);
+   }
+   add('side',0,[...out[i],.048],[...out[j],.048],[...out[i],-.048]);
+   add('side',0,[...out[j],.048],[...out[j],-.048],[...out[i],-.048]);
+  }
+  const dpr=Math.min(devicePixelRatio||1,2);
+  const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+  const projected=(p,theta,scale,cx,cy)=>{
+   const c=Math.cos(theta),s=Math.sin(theta);
+   const xx=p[0]*c+p[2]*s, zz=-p[0]*s+p[2]*c;
+   const f=scale/(12.8-zz);
+   return {x:cx+xx*f,y:cy-p[1]*f,z:zz};
+  };
+  const path=(points)=>{ctx.beginPath();ctx.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length;i++)ctx.lineTo(points[i].x,points[i].y)};
+  let currentSize=0,last=0;
+  function draw(time){
+   const bounds=star.getBoundingClientRect(),w=Math.max(1,Math.round(bounds.width)),h=Math.max(1,Math.round(bounds.height));
+   if(w!==currentSize){currentSize=w;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr)}
+   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+   const angle=(32+(matchMedia('(prefers-reduced-motion: reduce)').matches?0:time*.0105))*Math.PI/180;
+   const scale=Math.min(w,h)/(2*Math.tan(33*Math.PI/360));
+   const project=p=>projected(p,angle,scale,w/2,h/2);
+   const counter=p=>projected(p,-angle*.7,scale,w/2,h/2);
+   // The same 240 fine gold filaments as the v5.3 independent light field.
+   ctx.lineCap='round';
+   for(let i=0;i<240;i++){
+    const a=i*TAU/240+.009*Math.sin(i*2.399963229728653);
+    const r0=.69+(i%11)*.028,r1=2.42+(i%17)*.093+(i%11===0?.62:0),z=-.13+(i%5)*.018;
+    const P=counter([Math.cos(a)*r0,Math.sin(a)*r0,z]);
+    const Q=counter([Math.cos(a)*r1,Math.sin(a)*r1,z]);
+    const gain=i%11===0?1.4:i%5===0?1.08:.66;
+    ctx.strokeStyle='rgba(151,100,38,'+(.29*gain).toFixed(3)+')';
+    ctx.lineWidth=i%11===0?.68:.32;path([P,Q]);ctx.stroke();
+   }
+   // Attached tapered eight-direction radiance starts inside metal tips.
+   for(let arm=0;arm<8;arm++){
+    const a=-Math.PI/2+arm*Math.PI/4,tip=Math.hypot(...out[arm*2]);
+    const from=project([Math.cos(a)*tip*.97,Math.sin(a)*tip*.97,.02]);
+    const to=project([Math.cos(a)*(tip+1.5),Math.sin(a)*(tip+1.5),.02]);
+    const gradient=ctx.createLinearGradient(from.x,from.y,to.x,to.y);
+    gradient.addColorStop(0,'rgba(174,119,47,.65)');
+    gradient.addColorStop(1,'rgba(174,119,47,0)');
+    ctx.strokeStyle=gradient;ctx.lineWidth=1.5;path([from,to]);ctx.stroke();
+   }
+   const ordered=tris.map(t=>{
+    const pts=t.v.map(project);
+    return {...t,pts,z:pts.reduce((q,p)=>q+p.z,0)/3};
+   }).sort((a,b)=>a.z-b.z);
+   for(const t of ordered){
+    const A=t.v[0],B=t.v[1],C=t.v[2];
+    const ab=[B[0]-A[0],B[1]-A[1],B[2]-A[2]];
+    const ac=[C[0]-A[0],C[1]-A[1],C[2]-A[2]];
+    const nx=ab[1]*ac[2]-ab[2]*ac[1],ny=ab[2]*ac[0]-ab[0]*ac[2],nz=ab[0]*ac[1]-ab[1]*ac[0];
+    const len=Math.hypot(nx,ny,nz)||1;
+    const lit=clamp(.68+.25*(nx/len)-.15*(ny/len)+.23*Math.abs(nz/len),.46,1.2);
+    const alpha=t.kind==='side'?.92:t.kind==='ridge'?.44:t.kind==='bevel'?.45:.37;
+    const r=Math.round(clamp(202*lit,0,255)),g=Math.round(clamp(162*lit,0,255)),b=Math.round(clamp(94*lit,0,255));
+    path(t.pts);ctx.closePath();ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.fill();
+    ctx.strokeStyle='rgba(124,87,42,'+(t.kind==='side'?.33:.15)+')';
+    ctx.lineWidth=.5;ctx.stroke();
+    if(t.kind==='side')continue;
+    // Barycentric burin lines follow actual v5.3 facets, not a flat SVG star.
+    ctx.strokeStyle='rgba(130,86,37,'+(t.kind==='bevel'?.32:.22)+')';
+    ctx.lineWidth=.31;
+    for(let k=1;k<=12;k++){
+     const u=k/13;
+     const blend=(v)=>[
+      A[0]*(1-u-v)+B[0]*u+C[0]*v,
+      A[1]*(1-u-v)+B[1]*u+C[1]*v,
+      A[2]*(1-u-v)+B[2]*u+C[2]*v
+     ];
+     const p0=project(blend(.04*(1-u))),p1=project(blend(.93*(1-u)));
+     path([p0,p1]);ctx.stroke();
+    }
+   }
+   // The three engraved concentric rings, punchwork and raised centre boss.
+   for(const sign of [-1,1]){
+    for(const r of [.24,.37,.52]){
+     const points=Array.from({length:73},(_,k)=>{
+      const a=k*TAU/72;return project([Math.cos(a)*r,Math.sin(a)*r,sign*(.25-r*.06)]);
+     });
+     path(points);ctx.strokeStyle=sign>0?'rgba(124,83,36,.7)':'rgba(133,93,43,.28)';
+     ctx.lineWidth=r===.24?1:.6;ctx.stroke();
+    }
+    for(let k=0;k<48;k++){
+     const a=k*TAU/48,r=.50+(k%2)*.055;
+     const p=project([Math.cos(a)*r,Math.sin(a)*r,sign*.255]);
+     ctx.beginPath();ctx.arc(p.x,p.y,.49,0,TAU);
+     ctx.fillStyle='rgba(122,81,34,'+(sign>0?.52:.22)+')';ctx.fill();
+    }
+   }
+   const boss=project([0,0,.252]);
+   const grad=ctx.createRadialGradient(boss.x-1,boss.y-1,0,boss.x,boss.y,3.5);
+   grad.addColorStop(0,'rgba(255,244,203,.97)');
+   grad.addColorStop(.55,'rgba(204,160,87,.88)');
+   grad.addColorStop(1,'rgba(128,87,37,.22)');
+   ctx.beginPath();ctx.arc(boss.x,boss.y,3.5,0,TAU);ctx.fillStyle=grad;ctx.fill();
+  }
+  function tick(time){
+   const visible=star.isConnected&&star.getBoundingClientRect().width>0&&document.visibilityState==='visible';
+   if(visible&&(time-last>48||!last)){draw(time);last=time}
+   requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+ }
+ installV53CanvasFallback();
+
  const realms=[...rail.querySelectorAll('.dual-continuum__spectrum button[data-realm]')];
  const collapseRealms=()=>realms.forEach(b=>{
   b.classList.remove('is-open');b.setAttribute('aria-expanded','false');
@@ -858,8 +1000,8 @@ html.dual-embed .dual-film__credit{display:none}
  addEventListener('resize',render,{passive:true});
  const qs=new URLSearchParams(location.search);
  if(reduce){
-  star.querySelector('iframe').src='/experiments/morning-star-3d-lab.html?asset=1&autoplay=0';
- }else{frame.src=frame.dataset.originalSrc}
+  const fallbackFrame=star.querySelector('iframe');if(fallbackFrame)fallbackFrame.src='/experiments/morning-star-3d-lab.html?asset=1&autoplay=0';
+ }else if(frame.isConnected){frame.src=frame.dataset.originalSrc}
  setCoverVariant(qs.get('cover'));
  setWallPosition(qs.get('wall')??'half');
  setOrientation(qs.get('side')==='cover-left'?'cover-left':'cover-right');
