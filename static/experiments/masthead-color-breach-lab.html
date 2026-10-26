@@ -40,6 +40,11 @@ button{font:inherit}
 .cover[data-ratio="4:3"]{aspect-ratio:4/3}
 .cover[data-ratio="4:5"]{aspect-ratio:4/5}
 .cover[data-ratio="5:8"]{aspect-ratio:5/8}
+/* Vol.00: the navy is a continuous sky behind the ORIGINAL masked stone,
+   not a rectangle ending at a colour-block seam. Extend the negative space
+   below the masthead while keeping the SVG ink coordinates unchanged. */
+.cover[data-issue="0"]{--band-end:30cqi;background:var(--band)}
+.cover[data-issue="0"] .band-rule{display:none}
 .cover[data-breach="0"]{--wall-start:calc(var(--band-end) + 4cqi);--portrait-start:calc(var(--band-end) + 3cqi);--abstract-start:var(--band-end)}
 .cover[data-breach="1"]{--wall-start:calc(var(--band-end) - 4cqi);--portrait-start:calc(var(--band-end) - 4cqi);--abstract-start:calc(var(--band-end) - 2cqi)}
 .cover[data-breach="2"]{--wall-start:calc(var(--band-end) - 9cqi);--portrait-start:calc(var(--band-end) - 9cqi);--abstract-start:calc(var(--band-end) - 5cqi)}
