@@ -18,7 +18,8 @@ assert.equal((source.match(/class="dual-work/g)||[]).length,11,'do not invent ar
 assert.match(source,/id="ws-gate-aperture"/);
 assert.match(source,/id="ws-light-floor"/);
 assert.match(source,/data-role="gate-inner-light"/);
-assert.match(source,/data-role="stone-cast-shadow"/);
+assert.match(source,/data-role="gate-jamb-shadow"/);
+assert.doesNotMatch(source,/data-role="stone-cast-shadow"|data-role="right-fold-shadow"/);
 assert.match(source,/data-role="projected-light"/);
 assert.doesNotMatch(source,/dual-film|dual-radiance|installV53CanvasFallback|data-cover-choice|data-position|dual-transition-water/);
 assert.doesNotMatch(css,/ocean-rise|water-doors|p2-approved-ocean|repeating-linear-gradient\(118deg/);
