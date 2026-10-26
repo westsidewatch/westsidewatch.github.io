@@ -223,7 +223,7 @@ jobs:
                         stoneBg:getComputedStyle(document.getElementById('dual-stone-contents')).backgroundImage.includes('temple-stone-light.png'),
                         starOpacity:Number(getComputedStyle(document.getElementById('dual-star')).opacity),
                          starParent:document.getElementById('dual-star').parentElement.id,
-                         spine:(()=>{const bar=document.getElementById('dual-continuum');const r=bar.getBoundingClientRect();return {href:bar.getAttribute('href'),opacity:Number(getComputedStyle(bar).opacity),clickable:getComputedStyle(bar).pointerEvents==='auto',width:r.width,visibleBottom:r.bottom<=innerHeight+4,flip:Number(root.dataset.spineFlip),colorBands:bar.querySelectorAll('.dual-continuum__spectrum i').length};})(),
+                         spine:(()=>{const bar=document.getElementById('dual-continuum');const r=bar.getBoundingClientRect();return {targets:[...bar.querySelectorAll('button[data-realm]')].map(x=>x.dataset.href),opacity:Number(getComputedStyle(bar).opacity),clickable:getComputedStyle(bar).pointerEvents==='auto',width:r.width,visibleBottom:r.bottom<=innerHeight+4,flip:Number(root.dataset.spineFlip),colorBands:bar.querySelectorAll('.dual-continuum__spectrum button').length};})(),
                         logoLoaded:coverImg.complete&&coverImg.naturalWidth>0,
                         videoOriginLoaded:video?.contentDocument?.querySelector('.hosanna')!=null,
                         filmSrc:video.getAttribute('src'),
@@ -265,7 +265,7 @@ jobs:
                      if(p===100){
                        const gap=(width>820)?Math.abs(m.panels[1].right-m.panels[0].left):Math.abs(m.panels[1].bottom-m.panels[0].top);
                        if(gap>3)errors.push('ASYMMETRIC_SPREAD_NOT_ADJACENT');
-                       if(m.spine.href!=='/journal/'||m.spine.colorBands!==7||!m.spine.clickable||m.spine.opacity<.98)errors.push('SEVEN_COLOUR_FUNCTIONAL_SPINE_MISSING');
+                       if(m.spine.targets.join('|')!=='/church/|/journal/|/one/|/olive/|/dawn-library/|/cinema/|/daylight-cafe/'||m.spine.colorBands!==7||!m.spine.clickable||m.spine.opacity<.98)errors.push('SEVEN_COLOUR_FUNCTIONAL_SPINE_MISSING');
                        if(width>1100&&!m.spine.visibleBottom)errors.push('FUNCTIONAL_SPINE_BELOW_VIEWPORT');
                      }
                      if(p===82&&!(m.spine.flip>.02&&m.spine.flip<.5))errors.push('SPINE_FLIP_MUST_START_WITH_COVER');
@@ -280,7 +280,7 @@ jobs:
                 for(const variant of ['masthead']){
                   const errors=[],id=screen+'-art-'+variant;
                   try {
-                    await page.locator('[data-cover-choice="'+variant+'"]').click();
+                    // Fixed approved masthead: no public alternative cover controls.
                     await page.locator('#dual-progress').evaluate(el=>{
                       el.value='82';el.dispatchEvent(new Event('input',{bubbles:true}));
                     });
@@ -305,13 +305,12 @@ jobs:
                          starInContents:document.getElementById('dual-star').parentElement.id==='dual-contents',
                         cityTopRatio:(city.top-view.top)/view.height,
                         wallHeightRatio:wall.height/view.height,
-                        headlineRightColumn:(()=>{
+                        headlineCentered:(()=>{
                            const glyph=cv.querySelector('.dual-cover__en span:last-child');
                            if(!glyph)return false;
                            const range=document.createRange();range.selectNodeContents(glyph);
                            const ink=range.getBoundingClientRect();
-                           return ink.left>=view.left+view.width*(innerWidth<=820?.30:.38)&&
-                             ink.right>=view.right-view.width*.10;
+                           return Math.abs((ink.left+ink.right)/2-(view.left+view.right)/2)<view.width*.065&&ink.width>=view.width*.45;
                          })(),
                         titleGroupUnified:!!cv.querySelector('.dual-cover__editorial')&&
                           ['en','zh'].every(name=>cv.querySelector('.dual-cover__'+name)?.parentElement===cv.querySelector('.dual-cover__editorial')),
@@ -326,6 +325,8 @@ jobs:
                           getComputedStyle(wallEl.querySelector('.dual-cover__gate')).display==='none',
                         foldLightPaths:cv.querySelectorAll('.dual-cover__fold-light path').length,
                         foldLightOpacity:Number(getComputedStyle(cv.querySelector('.dual-cover__fold-light')).opacity),
+                         materialFit:getComputedStyle(wallEl).backgroundSize,
+                         silhouetteFit:getComputedStyle(wallEl).maskSize,
                         goldAtThreshold:(()=>{
                            const paths=[...cv.querySelectorAll('.dual-cover__fold-light path')]
                              .map(el=>((el.getAttribute('d')||'').match(/[0-9]+/g)||[]).map(Number));
@@ -365,8 +366,8 @@ jobs:
                     // retain a bounded design check, calibrated to this approved composition.
                     if(variant==='masthead'&&(metrics.cityTopRatio<.42||metrics.cityTopRatio>.46||metrics.wallHeightRatio<.54))
                       errors.push('VOL00_SKY_AND_WALL_BALANCE_OUT_OF_RANGE');
-                    if(variant==='masthead'&&(!metrics.headlineRightColumn||!metrics.sloganHidden||!metrics.titleGroupUnified))
-                      errors.push('LOWER_RIGHT_EDITORIAL_HEADLINE_NOT_CLEAR');
+                    if(variant==='masthead'&&(!metrics.headlineCentered||!metrics.sloganHidden||!metrics.titleGroupUnified))
+                      errors.push('CENTER_LIGHT_NOT_PRIMARY_EDITORIAL_HEADLINE');
                     if(variant==='masthead'&&(!metrics.starInContents||!metrics.mastheadNavyOnly))
                       errors.push('STAR_MUST_BE_IN_SQUARE_CONTENTS_AND_MASTHEAD_IN_NAVY');
                     if(variant==='masthead'&&(!metrics.originalStoneWithSkyMask||
@@ -374,7 +375,9 @@ jobs:
                       errors.push('STONE_DOOR_TRANSPARENT_OR_DUAL_PNG_STITCH_REINTRODUCED');
                     if(variant==='masthead'&&(metrics.foldLightPaths!==4||metrics.foldLightOpacity<.95))
                       errors.push('GEOMETRIC_LIGHT_NOT_RENDERED');
-                    if(variant==='masthead'&&!metrics.goldAtThreshold)
+                    if(variant==='masthead'&&(metrics.materialFit!=='cover'||!metrics.silhouetteFit.startsWith('cover')))
+                       errors.push('COVER_STONE_ASSETS_MUST_NOT_BE_STRETCHED');
+                     if(variant==='masthead'&&!metrics.goldAtThreshold)
                       errors.push('FOLDED_LIGHT_MUST_BEGIN_AT_GATE_THRESHOLD_AND_SHARE_EDGES');
                     if(variant==='masthead'){
                       const alpha=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-stone-gate-cutout.png');
@@ -393,44 +396,35 @@ jobs:
                     console.log(id,errors.length?errors:'ART_VARIANT_CAPTURE_OK');
                   }catch(e){logs.push({id,errors:[e.message]});console.error(id,e.message)}
                 }
-                // Same source artwork at THREE skyline positions: 18%, 44%, 62%.
-                // Screenshot each native viewport without reloading iframe/star.
-                for(const [position,top] of [['logo',.10],['half',.44],['third',.62]]){
-                  const id=screen+'-wall-'+position,errors=[];
-                  try{
-                    await page.locator('button[data-wall-position="'+position+'"]').click();
-                    const m=await page.evaluate(()=>{
-                      const cv=document.querySelector('.dual-cover');
-                      const cover=document.getElementById('dual-cover').getBoundingClientRect();
-                      const city=cv.querySelector('.dual-cover__city').getBoundingClientRect();
-                      const wall=cv.querySelector('.dual-cover__wall');
-                      const presses=[...document.querySelectorAll('button[data-wall-position]')];
-                      const logo=cv.querySelector('.dual-cover__mast').getBoundingClientRect();
-                      return {wallPosition:cv.dataset.wallPosition,stagePosition:document.getElementById('dual-stage').dataset.wallPosition,
-                        cityTopRatio:(city.top-cover.top)/cover.height,
-                        selected:presses.filter(x=>x.getAttribute('aria-pressed')==='true').length,
-                        selectedName:presses.find(x=>x.getAttribute('aria-pressed')==='true')?.dataset.wallPosition,
-                        progress:document.getElementById('dual-progress').value,
-                        logoLoaded:cv.querySelector('.dual-cover__mast').naturalWidth>0,
-                        sameStone:getComputedStyle(wall).backgroundImage.includes('p2-magazine-sandstone-wall.png'),
-                        cutoutAsMask:getComputedStyle(wall).maskImage.includes('p2-magazine-stone-gate-cutout.png'),
-                        noSplit:getComputedStyle(wall).clipPath==='none',
-                        titleCount:cv.querySelectorAll('.dual-cover__editorial .dual-cover__en,.dual-cover__editorial .dual-cover__zh').length,
-                        lightPaths:cv.querySelectorAll('.dual-cover__fold-light path').length,
-                        mastheadOnly:getComputedStyle(cv.querySelector('.dual-cover__vol')).visibility==='hidden'&&document.getElementById('dual-star').parentElement.id==='dual-contents',
-                        logoInside:logo.top>=cover.top&&logo.bottom<=cover.bottom};
-                    });
-                    if(m.wallPosition!==position||m.stagePosition!==position||m.selected!==1||m.selectedName!==position)
-                      errors.push('WALL_POSITION_CONTROL_NOT_ACTIVE');
-                    if(Math.abs(m.cityTopRatio-top)>.012)errors.push('WALL_POSITION_NOT_AT_EXPECTED_PERCENT');
-                    if(m.progress!=='82'||!m.logoLoaded||!m.logoInside||!m.sameStone||!m.cutoutAsMask||!m.noSplit||
-                       m.titleCount!==2||m.lightPaths!==4)errors.push('WALL_A_B_C_DISTURBED_LOCKED_ASSETS');
-                    if(m.mastheadOnly!==(position==='logo'))errors.push('LOGO_ONLY_TEST_MUST_HIDE_STAR_AND_FOLIO_ONLY_IN_A');
-                    await page.screenshot({path:path.join(out,id+'.png'),fullPage:true,animations:'disabled'});
-                    logs.push({id,viewport:{width,height},metrics:m,errors});
-                    console.log(id,errors.length?errors:'WALL_VARIANT_CAPTURE_OK');
-                  }catch(e){logs.push({id,errors:[e.message]});console.error(id,e.stack)}
+
+                // Seven independent interactive leaves: one tap opens a labelled
+                // colour panel, a second tap reaches its own site section.
+                const realmErrors=[],realmId=screen+'-seven-colour-navigation';
+                await page.locator('#dual-progress').evaluate(el=>{
+                  el.value='100';el.dispatchEvent(new Event('input',{bubbles:true}));
+                });
+                const mapping=await page.locator('#dual-continuum button[data-realm]').evaluateAll(
+                  buttons=>buttons.map(b=>b.dataset.href));
+                const expected=['/church/','/journal/','/one/','/olive/',
+                  '/dawn-library/','/cinema/','/daylight-cafe/'];
+                if(JSON.stringify(mapping)!==JSON.stringify(expected))realmErrors.push('SEVEN_PORTAL_MAPPING');
+                const journal=page.locator('#dual-continuum button[data-realm="journal"]');
+                await journal.click();
+                const opened=await journal.evaluate(b=>({
+                  expanded:b.getAttribute('aria-expanded'),
+                  width:b.getBoundingClientRect().width,
+                  others:[...document.querySelectorAll('#dual-continuum button[data-realm]')]
+                    .filter(x=>x!==b&&x.getAttribute('aria-expanded')==='true').length
+                }));
+                if(opened.expanded!=='true'||opened.others!==0||opened.width<28)
+                  realmErrors.push('COLOUR_LEAF_DID_NOT_EXPAND');
+                if(screen==='desktop'){
+                  await journal.click();
+                  await page.waitForURL('**/journal/',{timeout:10000});
+                  if(!page.url().endsWith('/journal/'))realmErrors.push('JOURNAL_SWATCH_NOT_NAVIGABLE');
                 }
+                logs.push({id:realmId,errors:realmErrors,mapping,opened});
+                console.log(realmId,realmErrors.length?realmErrors:'COLOUR_NAVIGATION_OK');
                 await page.close();
               }
               // Also verify actual Church → Red Sea → magazine *one timeline* integration.
