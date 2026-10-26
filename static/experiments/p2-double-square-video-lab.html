@@ -7,704 +7,74 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<style>
-*{box-sizing:border-box}
-html{scroll-behavior:auto}
-body{margin:0;background:#101923;color:#f5efe4;font-family:var(--ws-type-reading-zh, sans-serif)}
-button,a{font:inherit}button{cursor:pointer}
-button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c277;outline-offset:3px}
-.dual-ui{padding:11px clamp(16px,3vw,45px);background:#101923;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;position:relative;z-index:20}
-.dual-ui__name{font:400 clamp(11px,.95vw,14px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.13em}
-.dual-ui__controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.dual-ui__controls button{padding:8px 12px;background:transparent;color:inherit;border:1px solid #7c8996;font:400 12px/1.35 var(--ws-type-reading-zh,sans-serif)}
-.dual-ui__controls button[aria-pressed=true]{background:#f1e9d9;color:#17283b;border-color:#f1e9d9}
-.dual-ui a{font:400 12px/1.5 var(--ws-type-display-en-sc,Georgia,serif);color:inherit;text-underline-offset:4px}
-.dual-ui__range{display:flex;gap:11px;align-items:center;min-width:150px;font:400 12px/1.4 var(--ws-type-reading-zh,sans-serif)}
-.dual-ui__range input{width:clamp(100px,14vw,230px);accent-color:#d2b56f}
-.dual-ui__range output{min-width:35px;text-align:end;font:400 13px/1.5 var(--ws-type-display-en,Georgia,serif)}
-.dual-stage{--blue:#182f49;--gold:#c6a664;--ink:#253548;--paper:#f4ede0;position:relative;width:100%;height:calc(100svh - 148px);min-height:680px;isolation:isolate;overflow:hidden;background:#172436}
-.dual-film{position:absolute;inset:0;overflow:hidden;opacity:0;pointer-events:none;transform:scale(1.02);background:url('/images/home-opening-engraving.jpg') center/cover no-repeat}
-.dual-film iframe{position:absolute;width:100%;height:100%;inset:0;border:0;pointer-events:none}
-.dual-film::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(8,24,44,.60),rgba(9,30,49,.33) 50%,rgba(10,26,42,.62));pointer-events:none}
-.dual-panels{position:absolute;inset:0;pointer-events:none}
-.dual-tile{position:absolute;min-width:0;min-height:0;overflow:hidden;pointer-events:auto;isolation:isolate;box-shadow:none;container-type:size}
-.dual-tile--cover{background:radial-gradient(ellipse at 56% 22%,#29425b 0%,transparent 58%),var(--blue);color:var(--paper)}
-.dual-tile--contents{background:linear-gradient(152deg,#ddc98f 0%,#c9ad70 58%,#b49a68 100%);color:var(--ink)}
-/* All lettering is official SVG「西望」; seven native-SVG bands form
-   one compact extruded letterpress field under the same scroll authority. */
-.dual-letterfield{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:hidden;pointer-events:none;will-change:opacity}
-.dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,4%,0);background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
-/* Original Westside letterpress continues behind the lower Contents folio. */
-.dual-contents__relief{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;opacity:0;clip-path:inset(58% 0 0 0);-webkit-mask-image:linear-gradient(to bottom,transparent 53%,#000 68%,#000 96%);mask-image:linear-gradient(to bottom,transparent 53%,#000 68%,#000 96%);filter:saturate(.72);will-change:opacity}
-.dual-contents__head,.dual-contents__index,.dual-contents__foot{position:relative;z-index:2}
-.dual-contents__index{background:linear-gradient(180deg,rgba(249,246,239,.99),rgba(249,246,239,.92) 85%,rgba(249,246,239,.82));}
-.dual-contents__relief-folio{position:absolute;z-index:1;left:7%;bottom:11%;color:#384956;font:200 clamp(8px,1.2cqi,11px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.14em;opacity:0;pointer-events:none}
-/* This is the exact inherited temple-stone + overlay from the existing P2
-   .mag3__contents-page. Do not synthesize or substitute another texture. */
-/* Cover — an editorial night→dawn THRESHOLD, not a stack of labels.
-   Only the existing official masthead, star v5.3, skyline and temple stone
-   are consumed. The gold skyline is the moving seam of this composition. */
-.dual-cover{position:relative;isolation:isolate;height:100%;width:100%;overflow:hidden;background:radial-gradient(ellipse at 69% 41%,rgba(45,80,108,.72),transparent 53%),linear-gradient(170deg,#10253c,#1d3953 65%,#172b41);color:#e9c37b}
-.dual-cover__engraving{position:absolute;z-index:0;inset:16% -13% 13%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') 62% 42%/auto 121% no-repeat;mix-blend-mode:screen;opacity:.48;mask-image:linear-gradient(180deg,transparent,#000 12%,#000 78%,transparent);pointer-events:none}
-.dual-cover__radiance{position:absolute;z-index:1;inset:0;background:radial-gradient(ellipse 34% 28% at 70% 39%,rgba(233,174,69,.21),rgba(227,183,95,.05) 58%,transparent 95%);opacity:0;pointer-events:none}
-/* One physical Jerusalem city: original crest and original stone move together. */
-.dual-cover__city{position:absolute;z-index:2;top:26%;left:0;right:0;bottom:0;transform:translate3d(0,115%,0);opacity:0;will-change:transform,opacity;isolation:isolate}
-.dual-cover__paper{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(143,96,48,.31),rgba(188,145,92,.16) 10%,rgba(219,188,137,.07) 38%,rgba(243,226,196,.06) 100%),url('/images/temple-stone-light.png') center top/cover no-repeat;background-blend-mode:multiply;box-shadow:inset 0 25px 30px rgba(91,60,32,.29),inset 0 1px 0 rgba(89,65,36,.38);pointer-events:none}
-.dual-cover__city::after{content:'';position:absolute;z-index:1;left:0;right:0;top:0;height:clamp(40px,8cqi,75px);background:linear-gradient(180deg,rgba(79,52,32,.30),rgba(134,91,47,.09) 52%,transparent);pointer-events:none}
-.dual-cover__mast{position:absolute;z-index:5;top:3.5%;left:7%;width:80%;height:23%;max-width:80%;max-height:23%;object-fit:contain;object-position:left top;filter:brightness(0) saturate(100%) invert(78%) sepia(34%) saturate(518%) hue-rotate(350deg) brightness(103%) contrast(89%)}
-.dual-cover__series{display:none}
-.dual-cover__coverlines{position:absolute;z-index:5;left:8%;top:41%;width:46%;display:grid;gap:clamp(10px,1.8cqi,19px);opacity:0;pointer-events:none}
-.dual-cover__coverline{margin:0;color:#f0e4cb;font:500 clamp(11px,1.75cqi,16px)/1.22 var(--ws-type-reading-zh,sans-serif);text-wrap:balance}
-.dual-cover__coverline small{display:block;margin-bottom:4px;font:400 clamp(9px,1.0cqi,11px)/1.15 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.17em;color:#c7ab7c}
-.dual-cover__tagline{position:absolute;z-index:5;top:31%;left:8%;right:auto;display:block;margin:0;font:italic 400 clamp(12px,1.8cqi,18px)/1.18 var(--ws-type-display-en,Georgia,serif);text-align:left;white-space:nowrap;color:#edd19a}
-.dual-cover__tagline::before,.dual-cover__tagline::after{content:none;display:none}
-.dual-cover__star{position:absolute;z-index:3;left:72%;top:32%;width:clamp(88px,21cqi,168px);aspect-ratio:1;transform:translate(-50%,95%);opacity:0;overflow:hidden;pointer-events:none}
-.dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
-.dual-cover__wall{position:absolute;z-index:2;inset:0;pointer-events:none}
-.dual-cover__en{position:absolute;z-index:5;top:70%;left:8%;right:7%;margin:0;font:400 clamp(36px,7.7cqi,74px)/.85 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.057em;color:#22394f;opacity:0;text-shadow:0 1px 0 rgba(244,228,199,.18)}
-.dual-cover__en span{display:block;white-space:nowrap}
-.dual-cover__en span:last-child{margin-left:0;font-size:1.31em;line-height:.91;letter-spacing:-.069em}
-.dual-cover__en em{font:italic 400 .57em/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.035em;vertical-align:.06em}
-.dual-cover__vol{position:absolute;z-index:5;top:26%;left:8%;right:auto;display:block;margin:0;color:#e0c79d;font:400 clamp(10px,1.4cqi,13px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.18em;opacity:0}
-.dual-cover__vol::before{display:none}
-.dual-cover__zh{position:absolute;z-index:5;top:89%;left:8%;right:7%;margin:0;text-align:left;font:600 clamp(17px,3.4cqi,31px)/1.13 var(--ws-type-display-zh,sans-serif);letter-spacing:-.025em;color:#233a4d;font-synthesis:none;opacity:0}
-.dual-cover__zh span{display:inline;margin:0;white-space:nowrap}
-.dual-cover__folio{position:absolute;z-index:5;left:8%;right:8%;bottom:2.4%;padding-top:clamp(4px,.65cqi,8px);border-top:1px solid rgba(93,72,50,.35);font:400 clamp(9px,1.05cqi,12px)/1.35 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.09em;text-align:right;color:#69563c;opacity:0}
-.dual-cover__radiance,.dual-cover__zh,.dual-cover__folio{will-change:opacity}
-.dual-contents{position:relative;display:flex;flex-direction:column;height:100%;width:100%;padding:clamp(18px,2.8vmin,32px) clamp(19px,3.2vmin,40px);overflow:hidden}
-.dual-contents__head{flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:9px;border-bottom:1px solid rgba(38,50,59,.58);padding-bottom:clamp(8px,1vh,14px)}
-.dual-contents__head h2{font:400 clamp(44px,4.9vw,63px)/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.065em;margin:0}
-.dual-contents__head span{font:200 clamp(11px,.95vw,17px)/1.5 var(--ws-type-reading-zh,sans-serif)}
-
-.dual-contents__index{min-height:0;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-rows:repeat(2,max-content);gap:clamp(9px,1.25cqi,15px) clamp(18px,2.7cqi,34px);align-content:start;flex:0 1 auto;max-height:60%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 4px 10px 0}
-.dual-movement{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:visible}
-.dual-movement h3{display:flex;align-items:baseline;gap:8px;margin:0 0 clamp(7px,1.2cqi,12px);border-top:1px solid rgba(35,49,67,.42);padding-top:clamp(7px,1.1cqi,11px);font:200 clamp(23px,3.65cqi,32px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.045em}
-.dual-movement h3 em{font:italic 200 .48em/1 var(--ws-type-display-en,Georgia,serif);color:#5a4932}
-.dual-movement ol{margin:0;padding:0;list-style:none;display:grid;gap:clamp(5px,.7cqi,8px)}
-.dual-movement li{display:grid;grid-template-columns:clamp(22px,3.5cqi,28px) minmax(0,1fr);gap:6px;align-items:start;font:200 clamp(16px,2.65cqi,21px)/1.22 var(--ws-type-display-zh,sans-serif)}
-.dual-movement li b{font:200 clamp(11px,1.65cqi,14px)/1.3 var(--ws-type-display-en,Georgia,serif);color:#544c3f}
-.dual-movement li small{display:block;margin-top:2px;font:italic 200 clamp(9px,.95cqi,11px)/1.18 var(--ws-type-display-en,Georgia,serif)}
-.dual-entry__text{min-width:0;display:block}
-.dual-entry__column{display:block;font-weight:200}
-.dual-work{display:block;font:200 clamp(13px,1.95cqi,16px)/1.31 var(--ws-type-reading-zh,sans-serif);margin-top:3px;color:#38434b;overflow-wrap:anywhere;word-break:normal}
-.dual-work+.dual-work{margin-top:2px}
-.dual-work--people{letter-spacing:.01em}
-.dual-movement__interlude{margin:auto 0 0;padding-top:clamp(6px,1cqi,11px);font:200 clamp(10px,1.3cqi,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
-.dual-contents__foot{margin-top:auto;padding-top:6px;border-top:1px solid rgba(35,49,67,.48);display:flex;gap:12px;align-items:center;justify-content:space-between;font:200 clamp(10px,.81vw,13px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
-/* The Contents printed-paper grid and Morning Star have separate editorial zones;
-   unlike the retired lead type, the star must not cover any article text. */
-@media(min-width:1101px){
- /* Editorial index occupies the upper paper with four legible movements;
-    the lower folio is reserved for Morning Star, not shelved lead type. */
- .dual-contents__index{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:max-content;column-gap:clamp(12px,2.1cqi,20px);row-gap:0;flex:0 0 auto;height:56%;max-height:56%;overflow-y:auto;align-content:start;padding:2px 3px 6px 0}
- .dual-movement h3{font-size:clamp(22px,3.4cqi,28px);padding-top:7px;margin-bottom:8px;gap:5px}
- .dual-movement h3 em{font-size:.42em}
- .dual-movement ol{gap:clamp(5px,.75cqi,8px)}
- .dual-movement li{font-size:clamp(13px,2.15cqi,16px);line-height:1.23;grid-template-columns:17px minmax(0,1fr);gap:4px}
- .dual-movement li b{font-size:10px;line-height:1.3}
- .dual-movement li small{font-size:clamp(9px,1.3cqi,11px);margin-top:2px;line-height:1.16}
- .dual-work{font-size:clamp(11px,1.75cqi,13px);line-height:1.23;margin-top:3px}
- .dual-work+.dual-work{margin-top:3px}
- .dual-movement__interlude{margin-top:7px;padding-top:4px;font-size:9px}
-}
-.dual-contents__foot{position:relative;z-index:3;background:rgba(248,244,236,.94);padding:6px 4px 2px;border-top-color:rgba(35,49,67,.32)}
-
-.dual-contents__foot a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;pointer-events:auto}
-.dual-stage[data-phase=final] .dual-tile{box-shadow:0 17px 57px rgba(0,0,0,.16)}
-.dual-stage[data-phase=initial] .dual-film{visibility:hidden}
-.dual-overview{max-width:1120px;margin:0 auto;padding:15px clamp(15px,3vw,43px) 25px;font:400 14px/1.8 var(--ws-type-reading-zh,sans-serif);color:#dce0e4}
-.dual-overview strong{color:#e5d0a8}
-.dual-overview p{margin:0 0 11px}
-.dual-overview summary{cursor:pointer;list-style:none;font:400 11px/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.12em;color:#c3ae86}
-.dual-overview summary::before{content:'+';padding-right:12px}
-.dual-overview[open] summary::before{content:'−'}
-.dual-overview__detail{padding-top:15px}
-@media(max-width:1000px){
-.dual-cover__mast{width:80%;max-width:80%;height:23%;max-height:23%}
-.dual-cover__en{font-size:clamp(32px,7.7cqi,76px)}
-.dual-cover__zh{font-size:clamp(16px,3.4cqi,31px)}
-.dual-contents__head h2{font-size:clamp(45px,5vw,67px)}
-
-.dual-contents__index{gap:14px 11px;grid-template-rows:minmax(max-content,1.25fr) minmax(max-content,.75fr)}
-.dual-movement h3{font-size:24px}
-.dual-movement li{font-size:14px}
-.dual-movement li small{font-size:11px}
-}
-/* Native browser zoom/medium-width safety: Contents may scroll within its
-   paper zone, but cannot extend over the lower original SVG letterpress. */
-@media(min-width:821px) and (max-width:1100px){
- .dual-contents__index{max-height:36%;flex:0 1 auto;overflow-y:auto;background:rgba(249,246,239,.96)}
- .dual-contents__foot span::after{content:' · SCROLL ↓';color:#765b37;font-size:9px}
-}
-@media(max-width:820px){
-.dual-cover__coverlines{top:40%;left:8%;width:47%;gap:clamp(5px,1.1cqi,9px)}
-.dual-cover__coverline{font-size:clamp(9px,2.3cqi,12px)}
-.dual-cover__coverline small{font-size:clamp(8px,1.6cqi,10px)}
-.dual-ui{gap:11px}.dual-ui__name{width:100%}.dual-ui__controls{gap:6px}
-.dual-ui__range{width:100%;min-width:0}.dual-ui__range input{flex:1}
-.dual-stage{min-height:calc(100svh - 135px);height:calc(100svh - 135px)}
-.dual-tile--cover .dual-cover,.dual-tile--contents .dual-contents{padding:12px 14px}
-.dual-cover__mast{left:7%;top:3.5%;width:80%;max-width:80%;height:25%;max-height:25%}
-.dual-cover__series{left:7%;top:32%;font-size:clamp(7px,1.7cqi,10px)}
-.dual-cover__tagline{top:31%;left:8%;right:auto;font-size:clamp(10px,2.3cqi,15px)}
-.dual-cover__star{left:72%;top:32%;width:clamp(57px,20cqi,100px)}
-.dual-cover__en{left:8%;right:7%;top:70%;font-size:clamp(25px,7.5cqi,39px)}
-.dual-cover__en span:last-child{margin-left:3%;font-size:1.39em}
-.dual-cover__vol{top:26%;left:8%;right:auto;font-size:clamp(9px,1.9cqi,11px)}
-.dual-cover__vol::before{display:none}
-.dual-cover__zh{left:8%;right:7%;top:87%;font-size:clamp(15px,4.1cqi,23px)}
-.dual-cover__zh span{display:inline;margin:0}
-.dual-cover__folio{display:none}
-.dual-cover__folio{bottom:6%;font-size:clamp(8px,1.35cqi,11px)}
-.dual-contents__head{padding-bottom:7px}
-.dual-contents__head h2{font-size:clamp(37px,11vw,52px)}
-.dual-contents__head span{font-size:11px}
-
-.dual-contents__index{grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(4,max-content);max-height:34%;gap:14px;overflow-y:auto;scrollbar-width:thin;align-content:start;background:rgba(249,246,239,.96)}
-.dual-contents__relief{clip-path:inset(60% 0 0 0);-webkit-mask-image:linear-gradient(to bottom,transparent 57%,#000 71%,#000 94%);mask-image:linear-gradient(to bottom,transparent 57%,#000 71%,#000 94%)}
-.dual-movement h3{font-size:clamp(18px,5.1vw,25px);margin-bottom:7px;padding-top:5px}
-.dual-movement li{grid-template-columns:23px minmax(0,1fr);font-size:clamp(15px,4.2vw,18px);gap:5px}
-.dual-movement li small{display:block;font-size:9px}
-.dual-movement li{line-height:1.18}
-.dual-movement ol{gap:4px}
-.dual-movement__interlude{font-size:9px;margin-top:3px;padding-top:3px}
-.dual-contents__foot{margin-top:5px;padding-top:5px;font-size:9px}
-.dual-contents__foot span::after{content:' · SCROLL ↓';color:#765b37;font-size:8px}
-}
-@media(max-width:360px){
-.dual-cover__coverlines{top:40%;gap:5px}
-.dual-cover__coverline{font-size:10px}
-.dual-cover__coverline small{font-size:8px}
-.dual-cover__en{top:70%;font-size:clamp(22px,7.25cqi,31px)}
-.dual-cover__vol{top:26%;left:8%;right:auto;font-size:9px}
-.dual-cover__zh{top:87%;font-size:clamp(14px,4cqi,19px)}
-.dual-cover__tagline{top:31%;font-size:clamp(10px,2.5cqi,12px)}
-.dual-contents__index{gap:8px 6px}
-.dual-movement h3{font-size:18px}
-.dual-movement li{font-size:15px}
-.dual-movement li small{font-size:11px}
-.dual-movement__interlude{font-size:8px}
-
-.dual-contents__index{row-gap:6px}
-.dual-contents__foot{font-size:8px;margin-top:3px;padding-top:3px}
-}
-@media(prefers-reduced-motion:reduce){.dual-tile,.dual-film,.dual-cover__star{transition:none!important;animation:none!important}}
-
-
-
-/* P2 Cover / 2026-10-25: Vol.00 masthead belongs to a continuous midnight-blue
-   sky, with the authentic stone battlements cutting into it. The issue label
-   is below on the sandstone foot, not in the masthead field. This is the
-   Scheme 02 selected in the masthead colour-breach proof: navy band 30cqi,
-   architecture enters at 21cqi. On the fixed 5:8 portrait that is 13.125%
-   of COVER HEIGHT for the city's container origin (not the painted crest).
-   The older 2026-10-24 cover skyline metric was superseded. */
-.dual-cover[data-cover-variant="masthead"]{--ws-vol00-wall-start:13.125%;background:#102a43}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
- top:1.6%;left:3%;width:94%;max-width:94%;height:21%;max-height:21%;
- object-fit:contain;object-position:center top;filter:none;z-index:8
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__vol{
- top:auto;bottom:6%;left:6%;right:auto;font-size:clamp(9px,1.18cqi,12px);
- color:#21384a;letter-spacing:.16em
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__tagline,
-.dual-cover[data-cover-variant="masthead"] .dual-cover__tagline::before,
-.dual-cover[data-cover-variant="masthead"] .dual-cover__tagline::after{display:none}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__engraving{
- inset:30% 0 0;background:url('/experiments/assets/westside-cover-night-intaglio-v3.svg') center/100% 100% no-repeat;
- opacity:0;pointer-events:none
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__radiance{opacity:0!important}
-/* P2: ONE continuous opaque stone source; the secondary alpha asset
-   only defines the crenellation-to-navy skyline. It is NEVER used as
-   visible masonry: its doorway is intentionally transparent and must not
-   replace the original opaque, stone-filled doorway.
-   The cutout's upper skyline ends before y=26% of its source; this is
-   a source-mask coordinate, not the approved cover skyline position. The
-   opaque lower mask restores the doorway and full stone surface with
-   zero visible horizontal photo joins. */
-.dual-cover[data-cover-variant="masthead"] .dual-cover__city{
- top:var(--ws-vol00-wall-start,13.125%);bottom:0;overflow:visible;isolation:isolate;
- background:transparent;box-shadow:none;filter:none
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__paper{
- display:none!important;background:none!important;clip-path:none!important;
- box-shadow:none!important;filter:none!important
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__city::after{display:none;content:none}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__wall{
- display:block!important;position:absolute;z-index:2;inset:0;
- width:100%;height:100%;top:0;left:0;right:0;
- background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/cover no-repeat;
- -webkit-mask-image:
-   url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),
-   linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
- mask-image:
-   url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),
-   linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
- -webkit-mask-position:center top,center top;
- mask-position:center top,center top;
- -webkit-mask-size:cover,100% 100%;
- mask-size:cover,100% 100%;
- -webkit-mask-repeat:no-repeat,no-repeat;
- mask-repeat:no-repeat,no-repeat;
- -webkit-mask-composite:source-over;
- mask-composite:add;
- clip-path:none!important;box-shadow:none;filter:none;
- pointer-events:none;opacity:1
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__wall::before{content:none;display:none}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__gate{display:none!important}
-/* The approved reference works through connected stone/paper facets originating at the gate threshold; avoid decorative burin fills. */
-.dual-cover[data-cover-variant="masthead"] .dual-cover__fold-light{
- position:absolute;inset:0;width:100%;height:100%;z-index:3;
- overflow:hidden;pointer-events:none;opacity:0;
- mix-blend-mode:normal;will-change:opacity
-}
-/* Keep the protected original star small in the masthead's navy. */
-.dual-cover[data-cover-variant="masthead"] .dual-cover__star{
- top:17%;left:50%;width:clamp(23px,5.2cqi,52px);
- z-index:6;filter:none
-}
-/* One shared lower-right editorial system: no independent positioning. */
-.dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
- position:absolute;z-index:7;right:6%;bottom:7%;width:51%;
- display:flex;flex-direction:column;align-items:stretch;
- gap:clamp(7px,1cqi,13px);text-align:right;pointer-events:none
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en{
- position:static;display:block;left:auto;right:auto;top:auto;
- width:100%;margin:0;text-align:right;
- font:400 clamp(35px,5.75cqi,78px)/.91 var(--ws-type-display-en,Georgia,serif);
- color:#21384a;letter-spacing:-.055em;text-shadow:none;white-space:normal
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span,
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:last-child{
- display:block;margin:0;white-space:nowrap;font-size:1em;line-height:.98;letter-spacing:inherit
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en em{font-size:.62em;vertical-align:.055em}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__zh{
- position:static;left:auto;right:auto;top:auto;width:100%;margin:0;
- text-align:right;font:600 clamp(16px,2.65cqi,28px)/1.2 var(--ws-type-display-zh,sans-serif);
- color:#263b48;letter-spacing:0
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__zh span{display:inline;white-space:normal}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__folio{display:none}
-@media(max-width:820px){
- .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
-  top:1.6%;left:3%;width:94%;max-width:94%;height:21%;max-height:21%
- }
- .dual-cover[data-cover-variant="masthead"] .dual-cover__vol{top:auto;bottom:6%;left:6%;font-size:9px}
- .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
-  left:50%;top:17%;width:clamp(21px,5.4cqi,34px)
- }
-
-}
-@media(max-width:360px){
- .dual-cover[data-cover-variant="masthead"] .dual-cover__star{width:5.4cqi;top:17%}
-}
-/* This same composition is the P2 magazine segment inside the existing Church
-   scroll surface when ?embed=1. No duplicate timeline or copy of home film. */
-/* Embedded overlay MUST have transparent canvas and body. Otherwise the
-   default navy body blocks the real Church schedule/water under clip-path. */
-html.dual-embed,html.dual-embed body{width:100%;height:100%;overflow:hidden;background:transparent!important}
-html.dual-embed .dual-ui,html.dual-embed .dual-overview{display:none!important}
-html.dual-embed .dual-stage{height:100svh;min-height:0;background:transparent}
-html.dual-embed .dual-contents__index{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
-html.dual-embed 
-
-/* EDITORIAL PROOF 09 — approved 5:8 portrait masthead / 1:1 Contents.
-   No second Design OS: inks, typography and seven realm hues resolve through
-   the existing global tokens. The official masthead asset is not altered. */
-.dual-cover[data-cover-variant="masthead"]{
- background:linear-gradient(180deg,#10263e 0%,#102a43 47%,#24445c 100%);
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
- top:1.6%;left:3%;width:94%;height:21%;max-width:94%;max-height:21%;
- object-position:center top;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
- right:5%;bottom:8.5%;width:88%;gap:clamp(4px,.8cqi,10px);
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en{
- font-size:clamp(39px,11cqi,86px);line-height:.84;letter-spacing:-.067em;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:first-child{
- font-size:.66em;line-height:1.03;letter-spacing:-.05em;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:last-child{
- font-size:1.23em;line-height:.88;letter-spacing:-.075em;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__zh{
- font-size:clamp(13px,3.6cqi,24px);font-weight:700;line-height:1.25;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__fold-light{
- mix-blend-mode:normal;filter:none;
-}
-.dual-tile--contents .dual-cover__star{
- /* Rise ABOVE the opaque stone Contents sheet (z:3) through both phases. */
- position:absolute;z-index:5;left:50%;top:50%;width:clamp(155px,48cqi,350px);
- aspect-ratio:1;opacity:0;pointer-events:none;overflow:hidden;
- filter:brightness(.85) contrast(1.25);
-}
-/* The ORIGINAL horizontal functional ribbon is rotated as one intact
-   assembly beside Contents. Its local 3D flip and seven staggered tabs are unchanged. */
-.dual-continuum{
- --active:var(--ws-first-light,#a2872a);
- position:absolute;z-index:15;opacity:0;pointer-events:none;overflow:hidden;
- display:block;text-decoration:none;color:#fff;perspective:850px;
- transform:rotate(-90deg);transform-origin:top left;
- box-shadow:0 8px 27px rgba(4,17,31,.19);
-}
-.dual-continuum__rotor{
- position:absolute;inset:0;transform-style:preserve-3d;will-change:transform;
-}
-.dual-continuum__face{
- position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;
- gap:10px;padding:7px clamp(12px,2cqi,27px);backface-visibility:hidden;
- -webkit-backface-visibility:hidden;
- font:400 clamp(9px,1.25cqi,14px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
- letter-spacing:.07em;white-space:nowrap;
-}
-.dual-continuum__face em{font:600 .92em/1 var(--ws-type-display-zh,sans-serif);letter-spacing:0}
-.dual-continuum__front{background:var(--active);color:#13283d}
-.dual-continuum__back{
- transform:rotateX(180deg);
- background:var(--active);
- color:#101e2e;
-}
-.dual-continuum__spectrum{
- position:absolute;z-index:2;right:0;top:0;bottom:0;display:grid;
- grid-template-columns:repeat(7,clamp(7px,1.2cqi,15px));
- border-left:1px solid rgba(0,0,0,.25);
-}
-.dual-continuum__spectrum i{transform-origin:bottom;display:block;background:var(--c)}
-.dual-continuum__spectrum i:nth-child(1){--c:var(--ws-water,#5b8fa8)}
-.dual-continuum__spectrum i:nth-child(2){--c:var(--ws-first-light,#a2872a)}
-.dual-continuum__spectrum i:nth-child(3){--c:var(--ws-pale-gold,#cebd74)}
-.dual-continuum__spectrum i:nth-child(4){--c:var(--ws-olive,#738a5a)}
-.dual-continuum__spectrum i:nth-child(5){--c:var(--ws-harvest,#b8944a)}
-.dual-continuum__spectrum i:nth-child(6){--c:var(--ws-crimson,#a14d57)}
-.dual-continuum__spectrum i:nth-child(7){--c:var(--ws-daylight-mauve,#af809a)}
-.dual-continuum:hover{filter:brightness(1.09)}
-.dual-continuum:focus-visible{outline:3px solid #faf3e7;outline-offset:3px}
-@media(max-width:820px){
- .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
-  top:1.6%;left:3%;width:94%;height:21%;max-width:94%;max-height:21%;
- }
- .dual-tile--contents .dual-cover__star{width:clamp(130px,52cqi,220px)}
- .dual-continuum__face{font-size:clamp(8px,2.7cqi,12px);padding:6px 10px}
- .dual-continuum__face span:last-child{padding-right:65px}
-}
-@media(prefers-reduced-motion:reduce){
- .dual-continuum__rotor{will-change:auto}
-}
-
-
-/* Permanent 5:8 cover: primary stone/cutout are cropped proportionally, never stretched. */
-.dual-ui [data-position],.dual-ui [data-cover-choice]{display:none!important}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{left:3%;right:3%;width:94%;bottom:12%;align-items:center;text-align:center;gap:clamp(2px,.5cqi,6px)}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en{position:relative;width:100%;font:400 clamp(28px,15cqi,90px)/.87 var(--ws-type-display-en,Georgia,serif);text-align:center;letter-spacing:-.065em}
-/* CITY follows the approved three-line gate title in normal flow. */
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:last-child{font-size:1.27em;letter-spacing:-.073em;line-height:.90}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en em{font-size:.72em}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__zh{width:100%;font:700 clamp(11px,3.1cqi,19px)/1.17 var(--ws-type-display-zh,sans-serif);text-align:center}
-.dual-tile--contents .dual-contents::before{content:"";position:absolute;z-index:4;inset:clamp(9px,2cqi,16px);border:1px solid rgba(159,119,54,.64);box-shadow:inset 0 0 0 3px rgba(251,247,239,.88),inset 0 0 0 4px rgba(184,143,77,.35);pointer-events:none}
-/* Seven OS colours unfold leftward along the shared rail, then navigate on second activation. */
-.dual-continuum__spectrum{display:flex;grid-template-columns:none;align-items:stretch;justify-content:flex-end;border-left:0;right:0;left:auto;top:0;bottom:0;width:auto;z-index:6}
-.dual-continuum__spectrum button{-webkit-appearance:none;appearance:none;position:relative;flex:none;display:flex;align-items:center;justify-content:center;width:clamp(11px,1.25cqi,18px);height:100%;min-height:100%;padding:0;border:0;border-left:1px solid rgba(6,27,43,.20);border-radius:0;background:var(--c);cursor:pointer;color:#183048;overflow:hidden;white-space:nowrap;transition:width .56s cubic-bezier(.22,1,.36,1),filter .22s ease;font:600 clamp(9px,1.15cqi,13px)/1.15 var(--ws-type-display-en-sc,Georgia,serif)}
-.dual-continuum__spectrum button:nth-child(1){--c:var(--ws-water,#5b8fa8);color:#fff}
-.dual-continuum__spectrum button:nth-child(2){--c:var(--ws-first-light,#a2872a)}
-.dual-continuum__spectrum button:nth-child(3){--c:var(--ws-pale-gold,#cebd74)}
-.dual-continuum__spectrum button:nth-child(4){--c:var(--ws-olive,#738a5a);color:#fff}
-.dual-continuum__spectrum button:nth-child(5){--c:var(--ws-harvest,#b8944a)}
-.dual-continuum__spectrum button:nth-child(6){--c:var(--ws-crimson,#a14d57);color:#fff}
-.dual-continuum__spectrum button:nth-child(7){--c:var(--ws-daylight-mauve,#af809a);color:#fff}
-.dual-continuum__spectrum button.is-open{width:clamp(160px,26cqi,320px)}
-.dual-continuum__spectrum button span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 12px;opacity:0;transform:translateX(14px);transition:opacity .22s ease .08s,transform .42s cubic-bezier(.22,1,.36,1)}
-.dual-continuum__spectrum button.is-open span{opacity:1;transform:translateX(0)}
-.dual-continuum__spectrum button:hover{filter:brightness(1.10)}
-.dual-continuum__spectrum button:focus-visible{outline:2px solid #fff;outline-offset:-2px;z-index:2}
-.dual-continuum__spectrum button.is-open span::after{content:" ↗"}
-@media(max-width:820px){
- .dual-continuum__spectrum button{width:clamp(9px,1.9vw,14px)}
- .dual-continuum__spectrum button.is-open{width:clamp(93px,21vw,160px)}
- .dual-tile--contents .dual-contents::before{inset:9px}
-}
-@media(prefers-reduced-motion:reduce){.dual-continuum__spectrum button,.dual-continuum__spectrum button span{transition:none!important}}
-
-/* P2 editorial revision (2026-10-26). The unchanged official SVG has
-   unequal transparent side bearings: optical shift balances visible ink
-   without stretching the art or moving Scheme 02 crenellations. */
-.dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
- top:.55%;left:-1%;width:103%;max-width:none;height:21%;max-height:21%;
- object-fit:contain;object-position:left top;transform:translateX(2.8cqi);
-}
-/* City Of Light belongs INSIDE the original stone gate, not across its pillars.
-   Three true editorial lines; Chinese title rests above the ray threshold. */
-.dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
- left:50%;right:auto;width:42%;bottom:36.5%;
- transform:translateX(-50%);align-items:center;text-align:center;gap:3px;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en{
- width:100%;max-width:100%;display:flex;flex-direction:column;
- align-items:center;align-self:center;position:relative;margin:0;
- text-align:center;font:400 clamp(52px,12.2cqi,60px)/.96 var(--ws-type-display-en,Georgia,serif);
- letter-spacing:-.045em;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span{
- display:block;position:static;top:auto;left:auto;width:auto;white-space:nowrap
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:first-child{
- position:static;top:auto;left:auto;right:auto;width:auto;
- margin:0;font-size:.93em;line-height:1.00;letter-spacing:-.015em;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:nth-child(2){
- margin:2px 0 1px;font-size:.43em;line-height:.98;letter-spacing:.035em;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:nth-child(2) em{
- font:italic 400 1em/.98 var(--ws-type-display-en,Georgia,serif);
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:last-child{
- margin:0;font-size:1em;line-height:1.01;letter-spacing:-.065em;
-}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__zh{
- width:100%;text-align:center;font-size:clamp(13px,3.65cqi,17px);
- line-height:1.15;white-space:nowrap;
-}
-.dual-contents__head h2{font-size:clamp(36px,3.7vw,48px);line-height:.94}
-/* P2 Contents: the only headline-weight type is "Contents."; all secondary
-   movement names, desks, story titles, folios, numbers and interludes are
-   Design OS air-weight 200. Bodoni Moda glyphs are optically 400 minimum. */
-.dual-contents{--ws-p2-secondary-weight:var(--ws-weight-zh-air,200)}
-/* P2 contents / editorial folio. Single local authority for the finished
-   1:1 sheet. The preserved morning-star v5.3 is the emblem, NOT filler light.
-   The genuine stone surface, typographic hierarchy, and four reading columns
-   bear the layout; no redundant gold-radiance decoration or research labels. */
-.dual-contents__star-zone{
- position:relative;z-index:2;flex:1 1 0;min-height:0;
- margin-bottom:clamp(7px,1.1cqi,12px);
- background:linear-gradient(145deg,#21394e,#152d42 80%);
- border:1px solid rgba(202,174,115,.45);
- box-shadow:inset 0 0 0 clamp(4px,.85cqi,8px) #1b3449,inset 0 0 0 clamp(5px,1cqi,10px) rgba(202,174,115,.42);
- pointer-events:none;
-}
-.dual-contents__star-zone::after{
- content:"";position:absolute;left:50%;bottom:-1px;width:13%;
- border-bottom:3px solid #d1b36e;transform:translateX(-50%);
-}
-.dual-contents__head{
- display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
- padding-bottom:clamp(6px,.9cqi,9px);
- border-bottom:2px solid #223648;
- margin-bottom:clamp(9px,1.4cqi,14px);
-}
-.dual-contents__head h2{
- font-size:clamp(38px,6.2cqi,58px);line-height:.9;letter-spacing:-.055em;
- color:#223648;
-}
-.dual-contents__head span{
- font-size:clamp(11px,1.75cqi,15px);line-height:1.3;
- letter-spacing:.05em;font-weight:200;color:#384a59;
-}
-.dual-contents__index{
- display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
- grid-template-rows:minmax(0,1fr);align-content:stretch;
- column-gap:clamp(10px,1.85cqi,20px);row-gap:0;
- flex:0 0 auto;height:54%;max-height:54%;min-height:0;
- padding:0 2px 5px 0;overflow-y:auto;scrollbar-width:thin;
- background:rgba(248,244,236,.72);
-}
-.dual-movement{
- display:flex;flex-direction:column;min-width:0;min-height:0;
- padding-left:clamp(6px,.85cqi,11px);
- border-left:1px solid rgba(42,56,68,.31);
-}
-.dual-movement:first-child{padding-left:0;border-left:0}
-.dual-movement h3{
- flex:0 0 auto;display:flex;align-items:baseline;gap:clamp(3px,.55cqi,6px);
- border:0;border-top:3px solid #243b4d;
- padding-top:clamp(7px,1cqi,10px);
- margin:0 0 clamp(11px,1.6cqi,16px);
- font-size:clamp(22px,3.7cqi,35px);line-height:1;
- letter-spacing:-.046em;color:#263e50;
-}
-.dual-movement h3 em{
- font-size:.38em;line-height:1;color:#a17b43;letter-spacing:0;
-}
-.dual-movement ol{
- display:flex;flex:1 1 auto;flex-direction:column;
- justify-content:space-between;align-items:stretch;
- gap:clamp(7px,1cqi,11px);min-height:0;
- margin:0;padding:0;list-style:none;
-}
-.dual-movement:nth-child(n+3) ol{
- justify-content:flex-start;gap:clamp(19px,2.9cqi,27px);
-}
-.dual-movement:last-child::after{
- content:"";display:block;margin-top:auto;
- border-top:1px solid rgba(143,111,68,.5);
-}
-.dual-movement li{
- display:grid;grid-template-columns:clamp(17px,2.3cqi,23px) minmax(0,1fr);
- align-items:start;gap:clamp(4px,.7cqi,7px);
- font-size:clamp(14px,2.4cqi,19px);line-height:1.25;
-}
-.dual-movement li b{
- padding-top:2px;font:italic 200 clamp(10px,1.35cqi,12px)/1.2 var(--ws-type-display-en,Georgia,serif);
- color:#997948;font-variant-numeric:tabular-nums;
-}
-.dual-entry__column{
- font-weight:200;line-height:1.23;letter-spacing:0;color:#1b2d3e;
-}
-.dual-entry__column small{
- margin-top:4px;font-size:clamp(9px,1.3cqi,12px);
- font-weight:200;letter-spacing:0;color:#53616d;
-}
-.dual-work{
- display:block;margin-top:clamp(4px,.6cqi,6px);
- font-size:clamp(11px,1.65cqi,15px);line-height:1.38;
- font-weight:200;color:#354654;
- overflow-wrap:anywhere;
-}
-.dual-work+.dual-work{margin-top:4px}
-.dual-movement__interlude{
- flex:0 0 auto;margin:clamp(12px,1.7cqi,17px) 0 0;
- padding-top:clamp(8px,1.1cqi,11px);
- border-top:1px solid rgba(143,111,68,.5);
- font-size:clamp(9px,1.25cqi,11px);line-height:1.2;
- font-weight:200;letter-spacing:.06em;color:#775d36;
-}
-.dual-contents__foot{
- margin-top:auto;padding-top:clamp(6px,.9cqi,9px);
- border-top:2px solid #223648;justify-content:flex-end;
- color:#425568;
-}
-@media(min-width:821px) and (max-width:1100px){
- .dual-contents__index{height:54%;max-height:54%;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:minmax(0,1fr)}
- .dual-movement h3{font-size:clamp(18px,3.6cqi,29px)}
- .dual-movement li{font-size:clamp(12px,2.55cqi,16px)}
- .dual-work{font-size:clamp(10px,1.8cqi,13px)}
-}
-@media(max-width:820px){
- .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{left:50%;right:auto;bottom:30.5%;width:44%;transform:translateX(-50%);align-items:center;text-align:center}
- .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:clamp(23px,13.5cqi,52px)}
- .dual-contents__star-zone{margin-bottom:7px}
- .dual-contents__head{margin-bottom:8px;padding-bottom:5px}
- .dual-contents__head h2{font-size:clamp(30px,8cqi,44px)}
- .dual-contents__head span{font-size:clamp(10px,2.8cqi,13px)}
- .dual-contents__index{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  grid-template-rows:repeat(2,max-content);align-content:start;
-  gap:clamp(12px,2cqi,18px);height:57%;max-height:57%;overflow-y:auto;
- }
- .dual-movement{padding-left:6px}
- .dual-movement:nth-child(2n+1){padding-left:0;border-left:0}
- .dual-movement h3{font-size:clamp(18px,4.8cqi,26px);margin-bottom:7px;padding-top:6px;border-top-width:2px}
- .dual-movement li{font-size:clamp(12px,3.35cqi,16px)}
- .dual-movement ol{justify-content:flex-start;gap:6px}
- .dual-movement:nth-child(n+3) ol{gap:9px}
- .dual-work{font-size:clamp(10px,2.7cqi,13px)}
- .dual-movement__interlude{margin-top:8px;padding-top:6px}
-}
-
-@media(max-width:360px){
- .dual-cover[data-cover-variant="masthead"] .dual-cover__zh{font-size:11.25px}
- .dual-cover[data-cover-variant="masthead"] .dual-cover__zh span{white-space:nowrap}
-}
-
-/* Journal-only engraving: clipped editorial folds from the Design OS magazine grammar. Church currents are never inherited by this page. */
-.dual-tile--contents::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.40;background:repeating-linear-gradient(118deg,transparent 0 46px,rgba(71,56,32,.19) 46.5px 47px,transparent 47.5px 92px) right center/63% 100% no-repeat;mask-image:linear-gradient(90deg,transparent 25%,#000 90%)}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__engraving{display:none!important}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__fold-light{mix-blend-mode:normal;filter:none;opacity:0}
-.dual-cover[data-cover-variant="masthead"] .dual-cover__fold-light path{stroke-linejoin:bevel;filter:none!important}
-</style>
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
  <span class="dual-ui__name">WESTSIDE WATCH · VOL.00</span>
  <nav class="dual-ui__controls" aria-label="實驗場景">
-  <button type="button" data-position="cover-left" aria-pressed="false">封面在左</button>
-  <button type="button" data-position="cover-right" aria-pressed="true">封面在右</button>
-  <button type="button" data-cover-choice="masthead" aria-pressed="true">正式刊名封面</button>
   <button type="button" data-snap="0.14">封面進場</button>
+  <button type="button" data-snap="0.39">西望鉛字</button>
   <button type="button" data-snap="0.54">晨星顯現</button>
   <button type="button" data-snap="0.68">晨星升起</button>
   <button type="button" data-snap="0.82">七色書脊翻頁</button>
   <button type="button" data-snap="1">石紋 Contents</button>
-  <a href="/experiments/p2-magazine-transition-lab.html?final=1">觀看原始轉場 ↗</a>
  </nav>
  <label class="dual-ui__range" for="dual-progress">展開進度 <input type="range" id="dual-progress" min="0" max="100" value="100" step="1"><output id="dual-value" for="dual-progress">100%</output></label>
 </header>
 <main>
 <section class="dual-stage" id="dual-stage" data-phase="contents-final" aria-label="西望 Vol.00 封面與目錄">
- <div class="dual-film" id="dual-film" aria-hidden="true">
-  <iframe id="dual-film-frame" title="首頁原始王進城混剪，純背景且不傳播聲音" tabindex="-1" allow="autoplay" loading="eager" data-original-src="/preview/watch-city-vol00/hosanna/?cover=1"></iframe>
- </div>
- 
  <div class="dual-panels">
   <article class="dual-tile dual-tile--cover" id="dual-cover" aria-label="西望 Vol.00 午夜藍封面">
    <div class="dual-cover" data-cover-variant="masthead">
-     <div class="dual-cover__engraving" aria-hidden="true"></div>
-     <div class="dual-cover__radiance" id="dual-radiance" aria-hidden="true"></div>
      <div class="dual-cover__city" id="dual-cover-city" aria-hidden="true">
-      <div class="dual-cover__paper"></div>
-      <div class="dual-cover__wall" id="dual-cover-wall"><span class="dual-cover__gate" aria-hidden="true"></span></div>
+      <div class="dual-cover__wall" id="dual-cover-wall"></div>
       <svg class="dual-cover__fold-light" id="dual-cover-folded-light" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-        <!-- Scheme 02 / reference: one light source at the FOOT of the actual gate.
-             Connected, irregular paper-stone facets share the threshold seam.
-             Not a ray fan, hatch wallpaper, spotlight, or decorative gradient. -->
-        <defs>
-          <!-- Scheme 02, user-supplied 城市之光 reference: ONE diagonal
-               cream-gold sheet to lower LEFT; the adjacent limestone shadow
-               shares precisely the same crease from the original gate foot.
-               This is editorial print geometry, not a volumetric spotlight,
-               horizontal hatch, repeated ray fan, or a perspective road. -->
-          <linearGradient id="p2-gold-lumen" x1="0" y1="1" x2="0" y2="0">
-           <stop stop-color="#fffae2"/><stop offset=".62" stop-color="#f2d89d" stop-opacity=".85"/><stop offset="1" stop-color="#d4ae69" stop-opacity=".18"/>
-          </linearGradient>
-          <linearGradient id="p2-foil-field" x1="0" y1="0" x2=".85" y2=".85">
-           <stop stop-color="#fff9e6"/><stop offset=".53" stop-color="#f7e7bc"/><stop offset="1" stop-color="#ead0a2"/>
-          </linearGradient>
-          <pattern id="p2-foil-grain" width="21" height="23" patternUnits="userSpaceOnUse">
-           <circle cx="3" cy="4" r=".62" fill="#8c744d" opacity=".27"/><circle cx="14" cy="17" r=".52" fill="#fff" opacity=".51"/>
-          </pattern>
-          <clipPath id="p2-gold-ink">
-           <path d="M444 664 L552 664 L300 1000 L0 1000 L0 782Z"/>
-           <path d="M444 664 L552 664 L382 760 L0 864 L0 782Z"/>
-          </clipPath>
-         </defs>
-         <g id="dual-light-threshold-architecture">
-          <path data-role="gate-lumen" d="M430 649 L430 501 Q501 402 570 500 L570 649Z" fill="url(#p2-gold-lumen)" opacity=".70"/>
-          <path data-role="gate-highlight" d="M467 648 L467 543 Q500 490 533 543 L533 648Z" fill="#fffbea" opacity=".33"/>
-          <path data-role="threshold-flash" d="M449 647 Q502 641 552 647 L561 666 L440 666Z" fill="#fff9e5" opacity=".96"/>
-          <!-- Bright architectural fold: the lower-left light plane. -->
-          <path data-role="gold-central" d="M444 664 L552 664 L300 1000 L0 1000 L0 782Z" fill="url(#p2-foil-field)" opacity=".86"/>
-          <!-- A restrained cream inset, registering to the same stone edge. -->
-          <path data-role="gold-left" d="M444 664 L552 664 L382 760 L0 864 L0 782Z" fill="#fff9e8" opacity=".57"/>
-          <!-- Stone shadow touches the bright plane along L552 664 L300 1000,
-               keeping original sandstone cracks visible through the overlay. -->
-          <path data-role="gold-right" d="M552 664 L300 1000 L1000 832 L1000 784Z" fill="#977858" opacity=".23"/>
-          <path data-role="stone-foil-seam" d="M552 664 L300 1000 L310 1000 L559 668Z" fill="#c2a476" opacity=".27"/>
-          <g clip-path="url(#p2-gold-ink)" opacity=".22"><rect x="0" y="650" width="600" height="350" fill="url(#p2-foil-grain)"/></g>
-          <g fill="none" stroke-linecap="round">
-           <path d="M449 665 L0 783" stroke="#fffdf1" stroke-width="1.5" opacity=".77"/>
-           <path d="M550 666 L302 997" stroke="#f7ebd1" stroke-width="1.2" opacity=".58"/>
-           <path d="M440 665 L561 665" stroke="#fffdf0" stroke-width="2.4" opacity=".89"/>
-          </g>
-         </g>
+       <defs>
+        <linearGradient id="ws-gate-illumination" x1="0" y1="0" x2="0" y2="1">
+         <stop offset="0" stop-color="#a97b45" stop-opacity=".03"/>
+         <stop offset=".67" stop-color="#f0d99d" stop-opacity=".27"/>
+         <stop offset="1" stop-color="#fff4cd" stop-opacity=".68"/>
+        </linearGradient>
+        <linearGradient id="ws-architectural-light" x1="0" y1="0" x2=".22" y2="1">
+         <stop offset="0" stop-color="#fff9df" stop-opacity=".60"/>
+         <stop offset=".52" stop-color="#f4dba3" stop-opacity=".27"/>
+         <stop offset="1" stop-color="#ead3aa" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="ws-stone-occlusion" x1="0" y1="0" x2="1" y2="1">
+         <stop offset="0" stop-color="#60472f" stop-opacity=".46"/>
+         <stop offset="1" stop-color="#97754c" stop-opacity=".07"/>
+        </linearGradient>
+        <clipPath id="ws-gate-aperture" clipPathUnits="userSpaceOnUse">
+         <path d="M382 699 V421 C382 372 432 327 500 296 C568 327 618 372 618 421 V699 Z"/>
+        </clipPath>
+        <clipPath id="ws-light-floor" clipPathUnits="userSpaceOnUse">
+         <path d="M421 703 H579 L769 902 H211 Z"/>
+        </clipPath>
+       </defs>
+       <!-- Architectural plate: shade the actual doorway, then pass through its
+            threshold onto the original printed sandstone; no free-floating fan. -->
+       <g id="dual-light-threshold-architecture">
+        <rect data-role="gate-inner-light" x="375" y="292" width="250" height="408" clip-path="url(#ws-gate-aperture)" fill="url(#ws-gate-illumination)"/>
+        <path data-role="gate-jamb-shadow" d="M382 415 V697 H402 V426 Q442 341 500 308 Q421 335 382 415 Z" fill="#604a37" opacity=".15"/>
+        <g clip-path="url(#ws-light-floor)">
+         <path data-role="projected-light" d="M421 703 H579 L769 902 H211 Z" fill="url(#ws-architectural-light)"/>
+         <path data-role="inner-paper-fold" d="M421 703 H479 L401 902 H211 Z" fill="#fff5d9" opacity=".18"/>
+         <path data-role="central-light-plane" d="M479 703 H554 L622 902 H401 Z" fill="#f5e3bb" opacity=".11"/>
+         <path data-role="right-fold-shadow" d="M554 703 H579 L769 902 H622 Z" fill="url(#ws-stone-occlusion)"/>
+        </g>
+        <path data-role="stone-cast-shadow" d="M579 703 L618 674 L802 843 L795 895 L769 902 Z" fill="url(#ws-stone-occlusion)" opacity=".52"/>
+        <path data-role="threshold-lit-edge" d="M421 703 H579" fill="none" stroke="#fff4d6" stroke-width="1.2" opacity=".60"/>
+        <path data-role="fold-seam" d="M479 703 L401 902" fill="none" stroke="#fff2d1" stroke-width=".6" opacity=".19"/>
+       </g>
       </svg>
      </div>
      <img class="dual-cover__mast" src="/images/westside-watch-masthead-landscape.svg" alt="西望 WESTSIDE WATCH 正式雜誌標誌" loading="eager">
-     <span class="dual-cover__series" lang="en"></span>
-     <p class="dual-cover__tagline" lang="en">Watch for the Dawn</p>
      <div class="dual-cover__editorial" aria-label="本期封面主題與導讀">
       <p class="dual-cover__en" id="dual-cover-en" lang="en"><span>CITY</span><span><em>OF</em></span><span>LIGHT</span></p>
       <h1 class="dual-cover__zh" id="dual-cover-zh" lang="zh-Hant">守望，<span>一座光明的城</span></h1>
      </div>
      <p class="dual-cover__vol" id="dual-cover-vol" lang="en">VOL.00</p>
-     <span class="dual-cover__folio" id="dual-cover-folio" lang="en">THE NIGHT IS FAR SPENT / ROMANS 13:12</span>
     </div>
   </article>
   <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="黎明金承載晨星，最後顯示正方形聖殿石紋 Contents">
@@ -722,7 +92,6 @@ html.dual-embed
      </div>
    <div class="dual-contents" id="dual-stone-contents" aria-hidden="true" inert>
     <svg id="dual-contents-relief" class="dual-contents__relief" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"></svg>
-    <span id="dual-relief-folio" class="dual-contents__relief-folio" aria-hidden="true"></span>
     <div class="dual-contents__star-zone" id="dual-contents-star-zone" aria-hidden="true"></div>
     <header class="dual-contents__head"><h2 id="dual-contents-title" lang="en">Contents.</h2><span>目錄</span></header>
     <div class="dual-contents__index" tabindex="0" role="region" aria-label="Vol.00 十二欄目文章目錄，可以向下捲動閱讀完整篇名">
@@ -767,13 +136,13 @@ html.dual-embed
  const stage=document.getElementById('dual-stage');
  const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
  const foldedLight=document.getElementById('dual-cover-folded-light');
- const film=document.getElementById('dual-film'),frame=document.getElementById('dual-film-frame'),star=document.getElementById('dual-star');
- const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents'),relief=document.getElementById('dual-contents-relief'),reliefFolio=document.getElementById('dual-relief-folio');
- const radiance=document.getElementById('dual-radiance'),city=document.getElementById('dual-cover-city');
- const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
+ const star=document.getElementById('dual-star');
+ const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents'),relief=document.getElementById('dual-contents-relief');
+ const city=document.getElementById('dual-cover-city');
+ const coverHeading=document.getElementById('dual-cover-zh');
  const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol'),masthead=cover.querySelector('.dual-cover__mast');
  const rail=document.getElementById('dual-continuum'),railRotor=document.getElementById('dual-continuum-rotor');
- const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')],coverChoices=[...document.querySelectorAll('[data-cover-choice]')],coverArt=cover.querySelector('.dual-cover');
+ const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value');
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
  const lerp=(a,b,t)=>a+(b-a)*t;
@@ -910,23 +279,26 @@ html.dual-embed
   gold.style.clipPath='inset('+((1-dawn)*100).toFixed(3)+'% 0 0 0)';
   stage.dataset.blueReveal=blue.toFixed(4);
   stage.dataset.dawnReveal=dawn.toFixed(4);
-  stage.dataset.transitionEngraving='journal-editorial-folds';
-  // The lead-type experiment is archived in the DOM, not published.
-  // Its original vectors and registrations remain intact and reversible.
+  stage.dataset.transitionEngraving='journal-printed-folio';
+  // First the physical cover, then seven registered impressions of the
+  // official 西望 SVG, then Morning Star, then the paper Contents handoff.
+  // Every step is driven by this one reversible parent scroll clock.
+  const typeEnter=reduce?(progress>=.31?1:0):ease((progress-.245)/.09);
+  const typeLeave=reduce?(progress>=.9?1:0):ease((progress-.865)/.11);
   letters.style.clipPath='none';
-  letters.style.opacity='0';
-  letters.style.visibility='hidden';
+  letters.style.opacity=String(typeEnter*(1-typeLeave));
+  letters.style.visibility=typeEnter>0&&typeLeave<1?'visible':'hidden';
   layoutPrint(contentsW,contentsH);
   bands.forEach(({band},register)=>{
-   const on=reduce?(progress>=.58?1:0):ease((progress-(.438+register*.025))/.064);
-   band.style.opacity=String(on*(register===3?1:.89));
-   band.setAttribute('transform','translate('+((1-on)*(register%2?-82:76)).toFixed(2)+' '+((1-on)*(-32+register*4)).toFixed(2)+')');
+   const on=reduce?(progress>=.44?1:0):ease((progress-(.265+register*.021))/.052);
+   band.style.opacity=String(on*(register===3?1:.93));
+   band.setAttribute('transform','translate('+((1-on)*(register%2?-110:94)).toFixed(2)+' '+((1-on)*(-40+register*5)).toFixed(2)+')');
   });
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
    const dawnRise=reduce?(progress>=.44?1:0):ease((progress-.335)/.145);
-   const starRise=reduce?(progress>=.44?1:0):ease((progress-.30)/.16);
+   const starRise=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
    // Crest and temple-stone are ONE object with one motion authority.
    city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
    city.style.opacity=String(reduce?dawnRise:ease((progress-.325)/.12));
@@ -937,15 +309,11 @@ html.dual-embed
    // The issue number enters with the navy masthead. No cover teasers.
    coverVol.style.opacity=String(blue);
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
-   coverFolio.style.opacity=String(reduce?dawnRise:ease((progress-.71)/.09));
-   radiance.style.opacity=String(starRise);
    star.style.opacity=String(starRise);
    star.style.transform='translate(-50%,'+(45-95*starRise).toFixed(2)+'%)';
-   const gateGold=reduce?dawnRise:ease((progress-.655)/.13);
-   foldedLight.style.opacity=String(gateGold);
-   // Folio gold prints OUT of the gate; same reversible scroll clock.
-   const goldReveal=ease((progress-.63)/.25);
-   foldedLight.style.clipPath='ellipse('+(8+92*goldReveal).toFixed(2)+'% '+(3+97*goldReveal).toFixed(2)+'% at 50% 65%)';
+   const printLight=reduce?(progress>=.78?1:0):ease((progress-.645)/.15);
+   foldedLight.style.opacity=String(printLight);
+   foldedLight.style.clipPath='ellipse('+(11+96*printLight).toFixed(2)+'% '+(13+95*printLight).toFixed(2)+'% at 50% 68%)';
 
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
@@ -958,10 +326,10 @@ html.dual-embed
    const starTargetSize=Math.min(380,contentsW*.45,Math.max(0,starZone.height*.82));
    star.style.top=lerp(39,starTargetCentre,stone).toFixed(2)+'%';
    star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),starTargetSize,stone).toFixed(2)+'px';
-  // One scroll clock. Existing impression stays as lower-paper relief.
+  // The same official press plates survive as a quiet relief *beneath* the
+  // readable paper index, never as a gold light effect or replacement copy.
   const reliefOn=ease((progress-.875)/.105);
-  relief.style.opacity='0'; // stored print trial: not in this edition
-  reliefFolio.style.opacity='0';
+  relief.style.opacity=String(reliefOn*.24);
   residualBands.forEach(({source,retained})=>{
    retained.setAttribute('transform',source.getAttribute('transform')||'translate(0 0)');
    retained.style.opacity=source.style.opacity||'1';
@@ -972,13 +340,11 @@ html.dual-embed
   contents.style.transform='translate3d(0,'+(4*(1-stone)).toFixed(2)+'%,0)';
   contents.setAttribute('aria-hidden',stone>.98?'false':'true');
   contents.inert=stone<.98;
-  film.style.opacity=String(ease((progress-.70)/.24));
-  film.style.visibility=progress<=.69?'hidden':'visible';
-  stage.dataset.phase=progress<.22?'cover-arrival':progress<.48?'dawn-arrival':
+  stage.dataset.phase=progress<.235?'cover-arrival':progress<.455?'xiwang-letterpress':
    progress<.72?'morning-star-rise':progress<.865?'cover-and-star':
    progress<.995?'stone-contents-reveal':'contents-final';
   stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
-  stage.dataset.xiwangLines='0'; // archived print never renders
+  stage.dataset.xiwangLines=String(bands.filter(({band})=>Number(band.style.opacity)>.85).length);
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
  }
@@ -988,17 +354,8 @@ html.dual-embed
    const uri=new URL(location.href);uri.searchParams.set('p',String(Math.round(progress*100)));history.replaceState(null,'',uri);
   }
  }
- function setCoverVariant(raw){
-  const v='masthead'; // Retired A/B variants remain in Git history, not on the active cover.
-  coverArt.dataset.coverVariant=v;stage.dataset.coverVariant=v;
-  coverChoices.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.coverChoice===v)));
-  if(!document.documentElement.classList.contains('dual-embed')){
-   const u=new URL(location.href);u.searchParams.set('cover',v);history.replaceState(null,'',u);
-  }
- }
  function setOrientation(val){
   coverLeft=val==='cover-left';
-  buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.position===val)));
   render();
   if(!document.documentElement.classList.contains('dual-embed')){
    const uri=new URL(location.href);uri.searchParams.set('side',val);history.replaceState(null,'',uri);
@@ -1007,145 +364,6 @@ html.dual-embed
  
 
 
- // WebGL-disabled browsers render a perspective projection of the SAME
- // v5.3 sixteen-point geometry, glass facets and 240 rays. This is a
- // continuity fallback only; WebGL browsers run the sealed v5.3 scene.
- function installV53CanvasFallback(){
-  let probe=null;
-  try{probe=document.createElement('canvas').getContext('webgl2')}catch(_){}
-  if(probe){probe.getExtension('WEBGL_lose_context')?.loseContext();return}
-  const iframe=star.querySelector('iframe');
-  iframe.removeAttribute('src');iframe.remove();
-  const canvas=document.createElement('canvas');
-  canvas.className='dual-cover__star-canvas-v53';
-  canvas.setAttribute('aria-hidden','true');
-  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
-  star.append(canvas);
-  const ctx=canvas.getContext('2d');
-  if(!ctx)return;
-  const TAU=Math.PI*2, N=16, out=[],inside=[];
-  for(let i=0;i<N;i++){
-   const a=-Math.PI/2+i*Math.PI/8;
-   const r=i%2===0?(i%4===0?3.15:2.72):.83;
-   out.push([Math.cos(a)*r,Math.sin(a)*r]);
-   inside.push([Math.cos(a)*r*.89,Math.sin(a)*r*.89]);
-  }
-  const tris=[];
-  const add=(kind,sign,A,B,C)=>tris.push({kind,sign,v:[A,B,C]});
-  for(let i=0;i<N;i++){
-   const j=(i+1)%N;
-   for(const sign of [-1,1]){
-    const z=sign*.095,shoulder=sign*.048,crest=sign*.22;
-    const a=[...inside[i],z],b=[...inside[j],z];
-    const ta=[...out[i],shoulder],tb=[...out[j],shoulder];
-    add('face',sign,[0,0,crest],a,b);
-    add('bevel',sign,a,ta,tb);add('bevel',sign,a,tb,b);
-    add('ridge',sign,[0,0,crest],[inside[i][0]*.54,inside[i][1]*.54,crest*.83],[inside[j][0]*.54,inside[j][1]*.54,crest*.83]);
-   }
-   add('side',0,[...out[i],.048],[...out[j],.048],[...out[i],-.048]);
-   add('side',0,[...out[j],.048],[...out[j],-.048],[...out[i],-.048]);
-  }
-  const dpr=Math.min(devicePixelRatio||1,2);
-  const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
-  const projected=(p,theta,scale,cx,cy)=>{
-   const c=Math.cos(theta),s=Math.sin(theta);
-   const xx=p[0]*c+p[2]*s, zz=-p[0]*s+p[2]*c;
-   const f=scale/(12.8-zz);
-   return {x:cx+xx*f,y:cy-p[1]*f,z:zz};
-  };
-  const path=(points)=>{ctx.beginPath();ctx.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length;i++)ctx.lineTo(points[i].x,points[i].y)};
-  let currentSize=0,last=0;
-  function draw(time){
-   const bounds=star.getBoundingClientRect(),w=Math.max(1,Math.round(bounds.width)),h=Math.max(1,Math.round(bounds.height));
-   if(w!==currentSize){currentSize=w;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr)}
-   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
-   const angle=(32+(matchMedia('(prefers-reduced-motion: reduce)').matches?0:time*.0105))*Math.PI/180;
-   const scale=Math.min(w,h)/(2*Math.tan(33*Math.PI/360));
-   const project=p=>projected(p,angle,scale,w/2,h/2);
-   const counter=p=>projected(p,-angle*.7,scale,w/2,h/2);
-   // The same 240 fine gold filaments as the v5.3 independent light field.
-   ctx.lineCap='round';
-   for(let i=0;i<240;i++){
-    const a=i*TAU/240+.009*Math.sin(i*2.399963229728653);
-    const r0=.69+(i%11)*.028,r1=2.42+(i%17)*.093+(i%11===0?.62:0),z=-.13+(i%5)*.018;
-    const P=counter([Math.cos(a)*r0,Math.sin(a)*r0,z]);
-    const Q=counter([Math.cos(a)*r1,Math.sin(a)*r1,z]);
-    const gain=i%11===0?1.4:i%5===0?1.08:.66;
-    ctx.strokeStyle='rgba(151,100,38,'+(.29*gain).toFixed(3)+')';
-    ctx.lineWidth=i%11===0?.68:.32;path([P,Q]);ctx.stroke();
-   }
-   // Attached tapered eight-direction radiance starts inside metal tips.
-   for(let arm=0;arm<8;arm++){
-    const a=-Math.PI/2+arm*Math.PI/4,tip=Math.hypot(...out[arm*2]);
-    const from=project([Math.cos(a)*tip*.97,Math.sin(a)*tip*.97,.02]);
-    const to=project([Math.cos(a)*(tip+1.5),Math.sin(a)*(tip+1.5),.02]);
-    const gradient=ctx.createLinearGradient(from.x,from.y,to.x,to.y);
-    gradient.addColorStop(0,'rgba(174,119,47,.65)');
-    gradient.addColorStop(1,'rgba(174,119,47,0)');
-    ctx.strokeStyle=gradient;ctx.lineWidth=1.5;path([from,to]);ctx.stroke();
-   }
-   const ordered=tris.map(t=>{
-    const pts=t.v.map(project);
-    return {...t,pts,z:pts.reduce((q,p)=>q+p.z,0)/3};
-   }).sort((a,b)=>a.z-b.z);
-   for(const t of ordered){
-    const A=t.v[0],B=t.v[1],C=t.v[2];
-    const ab=[B[0]-A[0],B[1]-A[1],B[2]-A[2]];
-    const ac=[C[0]-A[0],C[1]-A[1],C[2]-A[2]];
-    const nx=ab[1]*ac[2]-ab[2]*ac[1],ny=ab[2]*ac[0]-ab[0]*ac[2],nz=ab[0]*ac[1]-ab[1]*ac[0];
-    const len=Math.hypot(nx,ny,nz)||1;
-    const lit=clamp(.68+.25*(nx/len)-.15*(ny/len)+.23*Math.abs(nz/len),.46,1.2);
-    const alpha=t.kind==='side'?.92:t.kind==='ridge'?.44:t.kind==='bevel'?.45:.37;
-    const r=Math.round(clamp(202*lit,0,255)),g=Math.round(clamp(162*lit,0,255)),b=Math.round(clamp(94*lit,0,255));
-    path(t.pts);ctx.closePath();ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.fill();
-    ctx.strokeStyle='rgba(124,87,42,'+(t.kind==='side'?.33:.15)+')';
-    ctx.lineWidth=.5;ctx.stroke();
-    if(t.kind==='side')continue;
-    // Barycentric burin lines follow actual v5.3 facets, not a flat SVG star.
-    ctx.strokeStyle='rgba(130,86,37,'+(t.kind==='bevel'?.32:.22)+')';
-    ctx.lineWidth=.31;
-    for(let k=1;k<=12;k++){
-     const u=k/13;
-     const blend=(v)=>[
-      A[0]*(1-u-v)+B[0]*u+C[0]*v,
-      A[1]*(1-u-v)+B[1]*u+C[1]*v,
-      A[2]*(1-u-v)+B[2]*u+C[2]*v
-     ];
-     const p0=project(blend(.04*(1-u))),p1=project(blend(.93*(1-u)));
-     path([p0,p1]);ctx.stroke();
-    }
-   }
-   // The three engraved concentric rings, punchwork and raised centre boss.
-   for(const sign of [-1,1]){
-    for(const r of [.24,.37,.52]){
-     const points=Array.from({length:73},(_,k)=>{
-      const a=k*TAU/72;return project([Math.cos(a)*r,Math.sin(a)*r,sign*(.25-r*.06)]);
-     });
-     path(points);ctx.strokeStyle=sign>0?'rgba(124,83,36,.7)':'rgba(133,93,43,.28)';
-     ctx.lineWidth=r===.24?1:.6;ctx.stroke();
-    }
-    for(let k=0;k<48;k++){
-     const a=k*TAU/48,r=.50+(k%2)*.055;
-     const p=project([Math.cos(a)*r,Math.sin(a)*r,sign*.255]);
-     ctx.beginPath();ctx.arc(p.x,p.y,.49,0,TAU);
-     ctx.fillStyle='rgba(122,81,34,'+(sign>0?.52:.22)+')';ctx.fill();
-    }
-   }
-   const boss=project([0,0,.252]);
-   const grad=ctx.createRadialGradient(boss.x-1,boss.y-1,0,boss.x,boss.y,3.5);
-   grad.addColorStop(0,'rgba(255,244,203,.97)');
-   grad.addColorStop(.55,'rgba(204,160,87,.88)');
-   grad.addColorStop(1,'rgba(128,87,37,.22)');
-   ctx.beginPath();ctx.arc(boss.x,boss.y,3.5,0,TAU);ctx.fillStyle=grad;ctx.fill();
-  }
-  function tick(time){
-   const visible=star.isConnected&&star.getBoundingClientRect().width>0&&document.visibilityState==='visible';
-   if(visible&&(time-last>48||!last)){draw(time);last=time}
-   requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
- }
- installV53CanvasFallback();
 
  const realms=[...rail.querySelectorAll('.dual-continuum__spectrum button[data-realm]')];
  const collapseRealms=()=>realms.forEach(b=>{
@@ -1164,8 +382,6 @@ html.dual-embed
  });
  rail.addEventListener('keydown',event=>{if(event.key==='Escape')collapseRealms()});
  document.querySelectorAll('[data-snap]').forEach(b=>b.addEventListener('click',()=>setProgress(b.dataset.snap)));
- buttons.forEach(b=>b.addEventListener('click',()=>setOrientation(b.dataset.position)));
- coverChoices.forEach(b=>b.addEventListener('click',()=>setCoverVariant(b.dataset.coverChoice)));
  range.addEventListener('input',()=>setProgress(Number(range.value)/100));
  addEventListener('message',event=>{
   if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-dual-progress')return;
@@ -1177,9 +393,8 @@ html.dual-embed
  addEventListener('resize',render,{passive:true});
  const qs=new URLSearchParams(location.search);
  if(reduce){
-  const fallbackFrame=star.querySelector('iframe');if(fallbackFrame)fallbackFrame.src='/experiments/morning-star-3d-lab.html?asset=1&autoplay=0';
- }else if(frame.isConnected){frame.src=frame.dataset.originalSrc}
- setCoverVariant(qs.get('cover'));
+  const originalStar=star.querySelector('iframe');if(originalStar)originalStar.src='/experiments/morning-star-3d-lab.html?asset=1&autoplay=0';
+ }
  setOrientation(qs.get('side')==='cover-left'?'cover-left':'cover-right');
  setProgress(Number(qs.get('p')??100)/100);
 })();
