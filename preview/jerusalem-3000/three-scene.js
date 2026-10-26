@@ -1,3 +1,4 @@
+import {createPersistentCityWorld} from './persistent-city-world.js';
 import {compileIndependentLaterSkeleton,buildIndependentLaterSkeleton} from './independent-later-skeleton.js';
 import {collectSpatialSkeleton,SKELETON_WINDOW} from './spatial-skeleton.js';
 import {declareHerodianSourceScopes,inspectSourceLifecycleContext} from './source-lifecycle-scope.js';
@@ -176,7 +177,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     cityCoreRuntime = null,
     cityProjection = null,
     evidenceProjection = null;
-  let independentLaterRegistrations=new Map(),fabricMaterialDisposer=null;
+  let independentLaterRegistrations=new Map(),fabricMaterialDisposer=null,persistentCityWorld=null,activeWorldEntry=null;
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
   let retainedVisible = false, royalRelief=null, royalCity=null, persianSanctuary=null, periodSpatialData=null, waterDefense=null, waterDefenseModel=null, localPlanAudit=[], periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
@@ -273,6 +274,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     needsFrame = true;
   }
   function clearFabric() {
+    if(activeWorldEntry){persistentCityWorld.activate(null);activeWorldEntry=null;fabricMeshes=[];phase2Morphology=null;laterMorphologyBinding=null;return;}
     for (const mesh of fabricMeshes) {
       eraFabricLayer.remove(mesh);
       mesh.geometry.dispose();
@@ -292,7 +294,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       return;
     }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
-    if(foundationOwner==='independent-later-skeleton'){const runtime=buildIndependentLaterSkeleton(eraFabricLayer,independentLaterRegistrations.get(phaseId),temporalMaterials,terrainRuntime);fabricMeshes=runtime.meshes;fabricMaterialDisposer=()=>runtime.disposeMaterials();laterMorphologyBinding=laterMorphologyLedger.bind(runtime);laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:presentationProgress()});return;}
+    if(foundationOwner==='independent-later-skeleton'){activeWorldEntry=persistentCityWorld.activate(phaseId);fabricMeshes=activeWorldEntry.runtime.meshes;laterMorphologyBinding=activeWorldEntry.binding;laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:presentationProgress()});return;}
     const ruined = phaseId.includes('destruction');
     if (foundationOwner === 'ottoman-morphology')
       phase2Morphology = buildOttomanUrbanMorphology(
@@ -496,6 +498,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       for(const phase of ['crusader','ayyubid-mamluk','ottoman'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(medievalData,phase,terrainRuntime.grid.origin));
       const expansionData=await loadCityData('./data/urban/expansion-modern.skeleton.v1.json');
       for(const phase of ['outside-walls','modern'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(expansionData,phase,terrainRuntime.grid.origin));
+      persistentCityWorld=createPersistentCityWorld({parent:eraFabricLayer,phases:[...independentLaterRegistrations.keys()],build:(group,phase)=>buildIndependentLaterSkeleton(group,independentLaterRegistrations.get(phase),temporalMaterials,terrainRuntime),publish:runtime=>laterMorphologyLedger.bind(runtime)});
       if (!parcels.blockCount || !parcels.count || !architecture.buildings || !cityCoreRuntime.validation.ok)
         throw new Error(`Canonical city incomplete: ${parcels.blockCount || 0} blocks, ${parcels.count || 0} parcels, ${architecture.buildings || 0} buildings`);
       architecture.meshes.push(
@@ -647,6 +650,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             cityOverview:overviewInfo,
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
             terrainPresentation:{...terrainPresentation?.diagnostics,surfaceId:terrainRuntime?.mesh.uuid,historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
+            cityWorld:persistentCityWorld?.diagnostics(),
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -721,6 +725,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     waterDefenseEvidence(position){const state=waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);return state?{...state,selectedVariant:waterDefenseModel.selectedVariant,variants:waterDefense.towerVariants,localPlans:localPlanAudit}:null;},
     foundationContext(){return {terrain:terrainRuntime};},
     inspectOverviewBaseline(){let meshes=0,modules=0;const ids=new Set();root.traverse(m=>{if(!m.isMesh||!m.userData.overview)return;for(let p=m;p;p=p.parent)if(!p.visible)return;meshes++;modules+=m.geometry.userData.visualModules||1;ids.add(m.userData.cityObject?.objectId||m.userData.cityObject?.parcelId);});return {phase:currentPhaseId,grammar:'terrain-courtyard-mass-v1',mode:'city-overview',meshes,registeredHousingObjects:ids.size,visualModules:modules,moduleCountsAreHistoricalBuildings:false,detailWork:'paused',historicalFoundationAccepted:false};},
+    inspectPersistentCityPhase(phase){return persistentCityWorld?.inspectPhase(phase)??null;},
     inspectSpatialSkeleton(){return currentPhaseId?collectSpatialSkeleton(cityCoreRuntime.core,terrainRuntime,{phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode,includeRetained:retainedVisible}):null;},
     inspectCityFoundation(phaseId=currentPhaseId){return phaseId?foundationRuntime?.snapshot(phaseId)??null:null;},
     cityFoundationIndex(){return foundationRuntime?.index()??[];},
@@ -805,7 +810,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       ro.disconnect();
       controls.dispose();
       builder.dispose();
-      clearFabric();laterMorphologyLedger?.dispose();
+      clearFabric();persistentCityWorld?.dispose();laterMorphologyLedger?.dispose();
       sharedEraRuntime?.dispose();
       earliestSettlement?.dispose();
       middleBronzeSettlement?.dispose();

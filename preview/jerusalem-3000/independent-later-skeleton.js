@@ -20,7 +20,8 @@ export function buildIndependentLaterSkeleton(group,registration,materials,terra
  const meshes=[],ledgerRecords=[...registration.districts,...registration.roads,...registration.cores],bindingIds=[];
  try{
   for(const district of registration.districts){
-   const result=generateDistrictInfill({district,roads:registration.roads,maxBlockArea:registration.generation.maxBlockArea,roadClearance:registration.generation.roadClearance});
+   const districtRoads=district.metadata.layoutRole==='old-city-context'?registration.roads.filter(r=>r.metadata.layoutRole==='old-city-route-context'):registration.roads;
+   const result=generateDistrictInfill({district,roads:districtRoads,maxBlockArea:registration.generation.maxBlockArea,roadClearance:registration.generation.roadClearance,partitionSeed:'geometry'});
    for(const block of result.blocks){if([...registration.reservations,...registration.cores].some(r=>polygonsOverlap(block.geometry.polygon,r.geometry.polygon)))continue;
     const geometry=overviewHousingGeometry(block.geometry.polygon,terrain,registration.generation.modelHeight,{block:true}),mesh=new THREE.Mesh(geometry,ownedMaterial);mesh.receiveShadow=true;mesh.castShadow=true;mesh.userData.overview={grammar:'terrain-courtyard-mass-v1',scope:'visual-modules-of-one-registered-block-not-individual-houses'};mesh.userData.phase2={stage:'coarse-layout-cell',start:0,baseHeight:registration.generation.modelHeight};group.add(mesh);meshes.push(mesh);bindingIds.push(block.id);
     ledgerRecords.push({id:block.id,type:'block',geometry:{...block.geometry,frame:'canonical-dem-enu',status:'independent-coarse-layout-not-buildings'},source:{districtId:district.id,authority:registration.authority,urls:registration.sources},metadata:{...block.metadata,independentSpatialSkeleton:true,modelHeight:registration.generation.modelHeight}});

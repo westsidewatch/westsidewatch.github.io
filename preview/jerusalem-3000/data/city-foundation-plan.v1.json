@@ -31,7 +31,8 @@
     "data/urban/roman-byzantine-islamic.skeleton.v1.json",
     "data/urban/medieval-ottoman.skeleton.v1.json",
     "data/urban/expansion-modern.skeleton.v1.json",
-    "later-sacred-cores.js"
+    "later-sacred-cores.js",
+    "persistent-city-world.js"
   ],
   "phases": [
     {
@@ -594,5 +595,22 @@
     "nextPriority": "shared-places-road-boundary-core-transformations-before-new-single-buildings",
     "firstTransition": "roman-destruction->aelia",
     "pairedAcceptance": "ottoman->outside-walls->modern"
+  },
+  "integratedEngineering": {
+    "executionDocument": "INTEGRATED-CITY-ENGINEERING.md",
+    "oneTerrain": true,
+    "persistentLaterPhaseCapacity": 8,
+    "generationPolicy": "lazy-once-per-phase-per-session",
+    "identicalGeometryPooling": "exact-buffer-and-metadata-equality-not-historical-reuse",
+    "explicitOldCityBackground": "geometry-seeded-with-old-city-roads-only",
+    "historicalContinuityAccepted": false,
+    "foundationAccepted": false,
+    "detailWork": "paused",
+    "sequence": [
+      "shared-place-and-adjacent-skeleton-contracts",
+      "whole-timeline-terrain-boundary-core-district-baseline",
+      "incremental-transitions-and-residential-grid-replacement",
+      "foundation-review-before-fine-detail"
+    ]
   }
 }

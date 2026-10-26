@@ -92,6 +92,7 @@ try {
   window.__JERUSALEM3000__.inspectCityFoundation=phase=>three.inspectCityFoundation(phase);
   window.__JERUSALEM3000__.inspectOverviewBaseline=()=>three.inspectOverviewBaseline();
   window.__JERUSALEM3000__.cityFoundationIndex=three.cityFoundationIndex();
+  window.__JERUSALEM3000__.inspectPersistentCityPhase=phase=>three.inspectPersistentCityPhase(phase);
   window.__JERUSALEM3000__.inspectSpatialSkeleton=()=>three.inspectSpatialSkeleton();
   skeletonView=createSpatialSkeletonView({parent:document.querySelector('.j3k-shell'),controls:document.querySelector('.j3k-event-controls'),terrain:three.foundationContext().terrain,getSnapshot:()=>three.inspectSpatialSkeleton(),getPhaseLabel:id=>phases.find(p=>p.id===id)?.label||id});
   const retainedToggle = document.querySelector('.j3k-retained-toggle');

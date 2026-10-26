@@ -9,7 +9,8 @@ function convex(poly){let sign=0;for(let i=0;i<poly.length;i++){const a=poly[i],
 function convexParts(poly){if(convex(poly))return[poly];return THREE.ShapeUtils.triangulateShape(poly.map(p=>new THREE.Vector2(p.x,p.z)),[]).map(indices=>indices.map(i=>poly[i]));}
 // Inferred subdivision of an authored district, never population/survey authority.
 // Convex clipping preserves concave district notches without bridging outside them.
-export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,roadClearance=6,maxDepth=12}={}) {
+export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,roadClearance=6,maxDepth=12,partitionSeed='identity'}={}) {
+ if(!['identity','geometry'].includes(partitionSeed))throw new Error('Invalid partition seed');
  const boundary=district?.geometry?.polygon;
  if(!boundary?.length||!roads.length)return{blocks:[],count:0,withheld:true,reason:'district-or-roads-missing'};
  if(!Number.isFinite(maxBlockArea)||maxBlockArea<1200||!Number.isFinite(roadClearance)||roadClearance<5)throw new Error('Invalid district infill budget');
@@ -32,7 +33,7 @@ export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,road
   const p=cell.polygon,A=area(p);
   if(A<=maxBlockArea||depth>=maxDepth){finished.push(cell);return;}
   const xs=p.map(v=>v.x),zs=p.map(v=>v.z),xmin=Math.min(...xs),xmax=Math.max(...xs),zmin=Math.min(...zs),zmax=Math.max(...zs),alongX=xmax-xmin>=zmax-zmin;
-  let hash=2166136261;for(const c of cell.key)hash=Math.imul(hash^c.charCodeAt(0),16777619)>>>0;
+  let hash=2166136261;for(const c of (partitionSeed==='geometry'?JSON.stringify(cell.polygon):cell.key))hash=Math.imul(hash^c.charCodeAt(0),16777619)>>>0;
   const ratio=.44+(hash%13)/100,nx=alongX?1:0,nz=alongX?0:1,limit=alongX?xmin+(xmax-xmin)*ratio:zmin+(zmax-zmin)*ratio;
   const parts=[clip(p,nx,nz,limit-1.2),clip(p,-nx,-nz,-limit-1.2)];
   if(parts.some(q=>q.length<3||area(q)<650)){finished.push(cell);return;}
