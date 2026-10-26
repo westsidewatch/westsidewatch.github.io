@@ -458,6 +458,61 @@ html.dual-embed .dual-film__credit{display:none}
  .dual-tile--contents .dual-contents::before{inset:9px}
 }
 @media(prefers-reduced-motion:reduce){.dual-continuum__spectrum button,.dual-continuum__spectrum button span{transition:none!important}}
+
+/* P2 editorial revision (2026-10-26). The unchanged official SVG has
+   unequal transparent side bearings: optical shift balances visible ink
+   without stretching the art or moving Scheme 02 crenellations. */
+.dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
+ top:.55%;left:-1%;width:103%;max-width:none;height:21%;max-height:21%;
+ object-fit:contain;object-position:left top;transform:translateX(2.8cqi);
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
+ left:3%;right:3%;width:94%;bottom:26%;align-items:center;
+ text-align:center;gap:clamp(2px,.5cqi,6px);
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en{
+ width:max-content;max-width:100%;display:flex;flex-direction:column;
+ align-items:flex-start;align-self:center;position:relative;margin:0;
+ text-align:left;font:400 clamp(28px,15cqi,90px)/1 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.063em;
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:first-child{
+ position:static;top:auto;left:auto;width:auto;margin:0 0 .09em;
+ font-size:.28em;line-height:1;letter-spacing:.01em;text-align:left;
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:last-child{
+ margin:0;font-size:1.27em;line-height:.90;letter-spacing:-.072em;
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__zh{
+ width:100%;text-align:center;font-size:clamp(11px,3.1cqi,19px);
+}
+.dual-contents__head h2{font-size:clamp(36px,3.7vw,48px);line-height:.94}
+/* Dense upper reading register + lower Morning Star register, divided by
+   one extremely fine gold engraving rule. Not arbitrary dead whitespace. */
+.dual-tile--contents .dual-contents::after{
+ content:"";position:absolute;z-index:4;left:4%;right:4%;top:51%;
+ height:1px;pointer-events:none;
+ background:linear-gradient(90deg,rgba(162,117,48,.70),rgba(162,117,48,.28) 84%,transparent);
+}
+@media(min-width:1101px){
+ .dual-contents__index{height:49%;max-height:49%;column-gap:clamp(14px,2.05cqi,22px)}
+ .dual-movement h3{font-size:clamp(25px,3.9cqi,33px);margin-bottom:10px}
+ .dual-movement li{font-size:clamp(15px,2.5cqi,18px);line-height:1.28;grid-template-columns:21px minmax(0,1fr);gap:5px}
+ .dual-movement li b{font-size:11px}
+ .dual-movement li small{font-size:clamp(10px,1.4cqi,12px)}
+ .dual-work{font-size:clamp(12px,2cqi,15px);line-height:1.32}
+ .dual-movement ol{gap:clamp(6px,.9cqi,9px)}
+}
+@media(max-width:820px){
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
+  top:.55%;left:-1%;width:103%;max-width:none;height:21%;max-height:21%;
+  transform:translateX(2.8cqi)
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{bottom:26%}
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:clamp(29px,15cqi,64px)}
+ .dual-contents__head h2{font-size:clamp(33px,8vw,44px)}
+ .dual-tile--contents .dual-contents::after{top:49%}
+}
 </style>
 </head>
 <body data-ws-scope="journal">
@@ -739,9 +794,9 @@ html.dual-embed .dual-film__credit{display:none}
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
   const stone=ease((progress-.865)/.125);
-   // Approved v5.3 star persists: shrink into lower Contents, no retired SVG.
-   star.style.top=(50+34*stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),mobile?Math.max(112,Math.min(195,contentsW*.37)):Math.max(140,Math.min(258,contentsW*.36)),stone).toFixed(2)+'px';
+   // Original v5.3 star rises into the lower engraved Contents register; no new star asset.
+   star.style.top=(50+18*stone).toFixed(2)+'%';
+   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),mobile?Math.max(125,Math.min(235,contentsW*.46)):Math.max(175,Math.min(380,contentsW*.45)),stone).toFixed(2)+'px';
   // One scroll clock. Existing impression stays as lower-paper relief.
   const reliefOn=ease((progress-.875)/.105);
   relief.style.opacity='0'; // stored print trial: not in this edition

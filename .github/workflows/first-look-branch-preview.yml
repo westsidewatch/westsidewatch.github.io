@@ -329,6 +329,8 @@ jobs:
                       return {variant:cv.querySelector('.dual-cover').dataset.coverVariant,view,mast:part('mast'),title,zh,
                         mastLoaded:src.complete&&src.naturalWidth>0,
                         mastRatio:part('mast').width/view.width,
+                        cityOfAttached:(()=>{const a=box(cv.querySelector('.dual-cover__en span:first-child'));const b=box(cv.querySelector('.dual-cover__en span:last-child'));return Math.abs(a.left-b.left)<view.width*.025&&a.bottom<b.top+view.height*.045;})(),
+                        lightAtRayOrigin:(()=>{const light=box(cv.querySelector('.dual-cover__en span:last-child'));return Math.abs(light.bottom-(view.top+view.height*.704625))<view.height*.065;})(),
                         wallClearance:title.top-wall.bottom,
                         starCentreError:Math.abs((star.left+star.right)/2-(starPage.left+starPage.right)/2),
                         starScale:star.width/starPage.width,
@@ -378,7 +380,7 @@ jobs:
                     });
                     if(metrics.variant!==variant||metrics.selected!==1||!metrics.mastLoaded||metrics.stories!==0||metrics.phase!=='cover-and-star')errors.push('COVER_VARIANT_NOT_IN_REVIEW_STATE');
                     // Two small coverlines are intentionally absent; no teaser collision to test.
-                    if(variant==='masthead'&&(metrics.mastRatio<.90||metrics.mastRatio>.97))
+                    if(variant==='masthead'&&(metrics.mastRatio<1.02||metrics.mastRatio>1.06))
                       errors.push('COVER_IDENTITY_MUST_BE_PRIMARY');
                     if(variant==='masthead'&&!metrics.engravingSource.includes('westside-cover-night-intaglio-v3.svg'))
                       errors.push('COVER_ENGRAVING_SOURCE_NOT_ETCHED_V3');
@@ -397,7 +399,7 @@ jobs:
                     // at 21cqi on the fixed 5:8 page, or 13.125% of cover height.
                     if(variant==='masthead'&&(metrics.cityTopRatio<.125||metrics.cityTopRatio>.14||metrics.wallHeightRatio<.85))
                       errors.push('VOL00_SCHEME_02_CITY_ORIGIN_AUTHORITY_DRIFT');
-                    if(variant==='masthead'&&(!metrics.headlineCentered||!metrics.sloganHidden||!metrics.titleGroupUnified))
+                    if(variant==='masthead'&&(!metrics.headlineCentered||!metrics.sloganHidden||!metrics.titleGroupUnified||!metrics.cityOfAttached||!metrics.lightAtRayOrigin))
                       errors.push('CENTER_LIGHT_NOT_PRIMARY_EDITORIAL_HEADLINE');
                     if(variant==='masthead'&&(!metrics.starInContents||!metrics.mastheadProtected||!metrics.starAboveSheet))
                       errors.push('STAR_CONTENTS_POSITION_OR_MASTHEAD_PROTECTION_DRIFT');
@@ -420,7 +422,9 @@ jobs:
                     }
                                         for(const key of ['mast','title','zh']){
                       const r=metrics[key],b=metrics.view;
-                      if(r.left<b.left-8||r.right>b.right+10||r.top<b.top-8||r.bottom>b.bottom+10)errors.push('COVER_'+key.toUpperCase()+'_OUT_OF_BOUNDS');
+                      // The SVG carries a transparent bearing; only the mast image BOX can exceed the crop slightly.
+                      const rightAllowance=key==='mast'?b.width*.07:10;
+                      if(r.left<b.left-8||r.right>b.right+rightAllowance||r.top<b.top-8||r.bottom>b.bottom+10)errors.push('COVER_'+key.toUpperCase()+'_OUT_OF_BOUNDS');
                     }
                     await page.screenshot({path:path.join(out,id+'.png'),fullPage:true,animations:'disabled'});
                     logs.push({id,viewport:{width,height},metrics,errors});
