@@ -60,6 +60,18 @@ jobs:
           const {chromium}=require('playwright');
           const fs=require('node:fs'),path=require('node:path');
           const out='artifacts/p2-dual-square',logs=[];
+          // Westside Core is the sole naming authority. Catch invented aliases
+          // before visual tests or a Cloudflare artifact can be accepted.
+          const canonical=JSON.parse(fs.readFileSync('data/westside-core/navigation-shell.v1.json','utf8')).firstLevel;
+          const markup=fs.readFileSync('static/experiments/p2-double-square-video-lab.html','utf8');
+          const folio=[...markup.matchAll(/<button type="button" data-realm="([^"]+)" data-surface-id="([^"]+)" data-href="([^"]+)" aria-expanded="false" aria-label="展開 ([^"]+)"><span>([^<]+)<\/span><\/button>/g)];
+          if(folio.length!==canonical.length || folio.some((m,i)=>m[2]!==canonical[i].id||m[3]!==canonical[i].canonicalPath||m[4]!==canonical[i].navLabel||m[5]!==canonical[i].navLabel))
+            throw Error('SEVENFOLD_NAV_MUST_MATCH_WESTSIDE_CORE_CANONICAL_FIRSTLEVEL');
+          if(/活水堂|日光咖啡|data-wall-position|jerusalem-wall\.png/.test(markup))
+            throw Error('RETIRED_NAMES_OR_WALL_VARIANTS_FOUND_IN_P2_SOURCE');
+          if(!markup.includes('--ws-vol00-wall-start:26%') || !markup.includes('grid-template-columns:repeat(2,minmax(0,1fr))'))
+            throw Error('FIXED_WALL_AND_TWO_COLUMN_EDITORIAL_LAYOUT_REQUIRED');
+
           const states=[['night-half',12,'cover-right'],['gold-half',33,'cover-right'],['gold-complete',44,'cover-right'],['dawn-arrival',54,'cover-right'],['morning-star',68,'cover-right'],['cover-and-star',82,'cover-right'],['temple-stone-transition',93,'cover-right'],['temple-stone-contents',100,'cover-right']];
           (async()=>{
             const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
