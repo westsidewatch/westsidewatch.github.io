@@ -18,9 +18,6 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-ui__controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
 .dual-ui__controls button{padding:8px 12px;background:transparent;color:inherit;border:1px solid #7c8996;font:400 12px/1.35 var(--ws-type-reading-zh,sans-serif)}
 .dual-ui__controls button[aria-pressed=true]{background:#f1e9d9;color:#17283b;border-color:#f1e9d9}
-.dual-ui__wall-choices{display:inline-flex;flex-wrap:wrap;gap:5px;align-items:center;padding-inline-start:8px;border-inline-start:1px solid #697888}
-.dual-ui__wall-choices button{white-space:nowrap}
-.dual-ui__wall-label{font:400 10px/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.08em;color:#cdbb92}
 .dual-ui a{font:400 12px/1.5 var(--ws-type-display-en-sc,Georgia,serif);color:inherit;text-underline-offset:4px}
 .dual-ui__range{display:flex;gap:11px;align-items:center;min-width:150px;font:400 12px/1.4 var(--ws-type-reading-zh,sans-serif)}
 .dual-ui__range input{width:clamp(100px,14vw,230px);accent-color:#d2b56f}
@@ -52,7 +49,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover__engraving{position:absolute;z-index:0;inset:16% -13% 13%;background:url('/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg') 62% 42%/auto 121% no-repeat;mix-blend-mode:screen;opacity:.48;mask-image:linear-gradient(180deg,transparent,#000 12%,#000 78%,transparent);pointer-events:none}
 .dual-cover__radiance{position:absolute;z-index:1;inset:0;background:radial-gradient(ellipse 34% 28% at 70% 39%,rgba(233,174,69,.21),rgba(227,183,95,.05) 58%,transparent 95%);opacity:0;pointer-events:none}
 /* One physical Jerusalem city: original crest and original stone move together. */
-.dual-cover__city{position:absolute;z-index:2;top:66%;left:0;right:0;bottom:0;transform:translate3d(0,115%,0);opacity:0;will-change:transform,opacity;isolation:isolate}
+.dual-cover__city{position:absolute;z-index:2;top:26%;left:0;right:0;bottom:0;transform:translate3d(0,115%,0);opacity:0;will-change:transform,opacity;isolation:isolate}
 .dual-cover__paper{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(143,96,48,.31),rgba(188,145,92,.16) 10%,rgba(219,188,137,.07) 38%,rgba(243,226,196,.06) 100%),url('/images/temple-stone-light.png') center top/cover no-repeat;background-blend-mode:multiply;box-shadow:inset 0 25px 30px rgba(91,60,32,.29),inset 0 1px 0 rgba(89,65,36,.38);pointer-events:none}
 .dual-cover__city::after{content:'';position:absolute;z-index:1;left:0;right:0;top:0;height:clamp(40px,8cqi,75px);background:linear-gradient(180deg,rgba(79,52,32,.30),rgba(134,91,47,.09) 52%,transparent);pointer-events:none}
 .dual-cover__mast{position:absolute;z-index:5;top:3.5%;left:7%;width:80%;height:23%;max-width:80%;max-height:23%;object-fit:contain;object-position:left top;filter:brightness(0) saturate(100%) invert(78%) sepia(34%) saturate(518%) hue-rotate(350deg) brightness(103%) contrast(89%)}
@@ -64,7 +61,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-cover__tagline::before,.dual-cover__tagline::after{content:none;display:none}
 .dual-cover__star{position:absolute;z-index:3;left:72%;top:32%;width:clamp(88px,21cqi,168px);aspect-ratio:1;transform:translate(-50%,95%);opacity:0;overflow:hidden;pointer-events:none}
 .dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
-.dual-cover__wall{position:absolute;z-index:2;top:calc(0px - clamp(64px,10.5cqi,105px));left:0;right:0;height:clamp(88px,15cqi,148px);background:url('/images/jerusalem-wall.png') center bottom/auto 100% repeat-x;pointer-events:none;filter:drop-shadow(0 9px 6px rgba(88,61,36,.35))}
+.dual-cover__wall{position:absolute;z-index:2;inset:0;pointer-events:none}
 .dual-cover__en{position:absolute;z-index:5;top:70%;left:8%;right:7%;margin:0;font:400 clamp(36px,7.7cqi,74px)/.85 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.057em;color:#22394f;opacity:0;text-shadow:0 1px 0 rgba(244,228,199,.18)}
 .dual-cover__en span{display:block;white-space:nowrap}
 .dual-cover__en span:last-child{margin-left:0;font-size:1.31em;line-height:.91;letter-spacing:-.069em}
@@ -95,20 +92,20 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-work--people{letter-spacing:.01em}
 .dual-movement__interlude{margin:auto 0 0;padding-top:clamp(6px,1cqi,11px);font:400 clamp(10px,1.3cqi,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
 .dual-contents__foot{margin-top:auto;padding-top:6px;border-top:1px solid rgba(35,49,67,.48);display:flex;gap:12px;align-items:center;justify-content:space-between;font:400 clamp(10px,.81vw,13px)/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
-/* True printed-paper lower folio / desktop Contents first 58% reading layer.
-   Four movements occupy four editorial columns, protecting all twelve desk
-   names and the known article titles from the retained lead type below. */
+/* Reinstated two-column literary Contents: the retired lead-type field no longer
+   reserves blank paper. All twelve desk names remain in the real DOM. */
 @media(min-width:1101px){
- .dual-contents__index{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:max-content;column-gap:clamp(10px,1.7cqi,17px);row-gap:0;flex:0 0 auto;height:45%;max-height:45%;overflow-y:auto;align-content:start;padding:1px 2px 3px}
- .dual-movement h3{font-size:clamp(18px,3.0cqi,24px);padding-top:6px;margin-bottom:6px;gap:5px}
+ /* Printed editorial density: two readable columns of two movements, not the retired four-column letterpress reservation. */
+ .dual-contents__index{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,max-content);column-gap:clamp(18px,3.2cqi,32px);row-gap:clamp(9px,1.45cqi,16px);flex:0 1 auto;height:auto;max-height:68%;overflow-y:auto;align-content:start;padding:2px 4px 8px 0}
+ .dual-movement h3{font-size:clamp(22px,3.45cqi,30px);padding-top:8px;margin-bottom:8px;gap:7px}
  .dual-movement h3 em{font-size:.45em}
- .dual-movement ol{gap:4px}
- .dual-movement li{font-size:clamp(12px,1.9cqi,15px);line-height:1.16;grid-template-columns:19px minmax(0,1fr);gap:3px}
- .dual-movement li b{font-size:10px;line-height:1.18}
- .dual-movement li small{font-size:8px;margin-top:1px;line-height:1.12}
- .dual-work{font-size:clamp(10px,1.25cqi,12px);line-height:1.15;margin-top:2px}
- .dual-work+.dual-work{margin-top:2px}
- .dual-movement__interlude{margin-top:4px;padding-top:3px;font-size:8px}
+ .dual-movement ol{gap:clamp(4px,.65cqi,7px)}
+ .dual-movement li{font-size:clamp(14px,2.1cqi,18px);line-height:1.2;grid-template-columns:22px minmax(0,1fr);gap:5px}
+ .dual-movement li b{font-size:11px;line-height:1.3}
+ .dual-movement li small{font-size:clamp(9px,1.22cqi,11px);margin-top:2px;line-height:1.18}
+ .dual-work{font-size:clamp(11px,1.6cqi,14px);line-height:1.24;margin-top:3px}
+ .dual-work+.dual-work{margin-top:3px}
+ .dual-movement__interlude{margin-top:7px;padding-top:4px;font-size:9px}
 }
 .dual-contents__foot{position:relative;z-index:3;background:rgba(248,244,236,.94);padding:6px 4px 2px;border-top-color:rgba(35,49,67,.32)}
 
@@ -148,11 +145,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-stage{min-height:calc(100svh - 135px);height:calc(100svh - 135px)}
 .dual-tile--cover .dual-cover,.dual-tile--contents .dual-contents{padding:12px 14px}
 .dual-cover__mast{left:7%;top:3.5%;width:80%;max-width:80%;height:25%;max-height:25%}
-.dual-cover__city{top:66%}
 .dual-cover__series{left:7%;top:32%;font-size:clamp(7px,1.7cqi,10px)}
 .dual-cover__tagline{top:31%;left:8%;right:auto;font-size:clamp(10px,2.3cqi,15px)}
 .dual-cover__star{left:72%;top:32%;width:clamp(57px,20cqi,100px)}
-.dual-cover__wall{top:calc(0px - clamp(35px,6cqi,60px));height:clamp(78px,13cqi,112px)}
 .dual-cover__en{left:8%;right:7%;top:70%;font-size:clamp(25px,7.5cqi,39px)}
 .dual-cover__en span:last-child{margin-left:3%;font-size:1.39em}
 .dual-cover__vol{top:26%;left:8%;right:auto;font-size:clamp(9px,1.9cqi,11px)}
@@ -200,8 +195,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 /* P2 Cover / 2026-10-25: Vol.00 masthead belongs to a continuous midnight-blue
    sky, with the authentic stone battlements cutting into it. The issue label
    is below on the sandstone foot, not in the masthead field. This is the
-   balanced 50/50 skyline study, with the existing reversible scroll intact. */
-.dual-cover[data-cover-variant="masthead"]{background:#102a43}
+   fixed 26% masonry origin immediately beneath the masthead; no alternate skyline presets. */
+.dual-cover[data-cover-variant="masthead"]{--ws-vol00-wall-start:26%;background:#102a43}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
  top:1.6%;left:3%;width:94%;max-width:94%;height:21%;max-height:21%;
  object-fit:contain;object-position:center top;filter:none;z-index:8
@@ -226,7 +221,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    opaque lower mask restores the doorway and full stone surface with
    zero visible horizontal photo joins. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city{
- top:44%;bottom:0;overflow:visible;isolation:isolate;
+ top:var(--ws-vol00-wall-start,26%);bottom:0;overflow:visible;isolation:isolate;
  background:transparent;box-shadow:none;filter:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__paper{
@@ -298,7 +293,6 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
   top:1.6%;left:3%;width:94%;max-width:94%;height:21%;max-height:21%
  }
  .dual-cover[data-cover-variant="masthead"] .dual-cover__vol{top:auto;bottom:6%;left:6%;font-size:9px}
- .dual-cover[data-cover-variant="masthead"] .dual-cover__city{top:24%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__star{
   left:50%;top:17%;width:clamp(21px,5.4cqi,34px)
  }
@@ -316,19 +310,6 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{bottom:5.5%;width:62%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:24px}
 }
-/* Three reversible skyline studies. Only the CITY top changes; all assets,
-   scroll motion, typography and editorial content stay constant. The default
-   without a wall query is the balanced navy-sky / sandstone Vol.00 layout. */
-.dual-cover[data-cover-variant="masthead"][data-wall-position="logo"] .dual-cover__city{top:10%}
-/* A is the explicitly masthead-only blue-band study: no other elements
-   compete with the brand in its intentionally compressed sky.
-   The protected 3D morning-star and issue metadata remain in DOM and are
-   visible in B, C and unchanged original P2. */
-.dual-cover[data-cover-variant="masthead"][data-wall-position="logo"] .dual-cover__star,
-.dual-cover[data-cover-variant="masthead"][data-wall-position="logo"] .dual-cover__vol{visibility:hidden}
-.dual-cover[data-cover-variant="masthead"][data-wall-position="half"] .dual-cover__city{top:44%}
-.dual-cover[data-cover-variant="masthead"][data-wall-position="third"] .dual-cover__city{top:62%}
-
 /* This same composition is the P2 magazine segment inside the existing Church
    scroll surface when ?embed=1. No duplicate timeline or copy of home film. */
 /* Embedded overlay MUST have transparent canvas and body. Otherwise the
@@ -439,7 +420,7 @@ html.dual-embed .dual-film__credit{display:none}
 
 
 /* Permanent 5:8 cover: primary stone/cutout are cropped proportionally, never stretched. */
-.dual-ui [data-position],.dual-ui [data-cover-choice],.dual-ui__wall-choices{display:none!important}
+.dual-ui [data-position],.dual-ui [data-cover-choice]{display:none!important}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{left:3%;right:3%;width:94%;bottom:12%;align-items:center;text-align:center;gap:clamp(2px,.5cqi,6px)}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__en{position:relative;width:100%;font:400 clamp(28px,15cqi,90px)/.87 var(--ws-type-display-en,Georgia,serif);text-align:center;letter-spacing:-.065em}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__en span:first-child{position:absolute;top:-.61em;left:15%;width:auto;font-size:.29em;line-height:1;letter-spacing:.025em;text-align:left}
@@ -481,12 +462,6 @@ html.dual-embed .dual-film__credit{display:none}
   <button type="button" data-position="cover-left" aria-pressed="false">封面在左</button>
   <button type="button" data-position="cover-right" aria-pressed="true">封面在右</button>
   <button type="button" data-cover-choice="masthead" aria-pressed="true">正式刊名封面</button>
-   <div class="dual-ui__wall-choices" role="group" aria-label="城牆高度三案，同一素材與動效">
-    <span class="dual-ui__wall-label">WALL / SKY</span>
-    <button type="button" data-wall-position="logo" aria-pressed="false">A · 藍區僅 Logo</button>
-    <button type="button" data-wall-position="half" aria-pressed="false">B · 各 50%</button>
-    <button type="button" data-wall-position="third" aria-pressed="false">C · 藍區 2/3</button>
-   </div>
   <button type="button" data-snap="0.14">封面進場</button>
   <button type="button" data-snap="0.54">晨星顯現</button>
   <button type="button" data-snap="0.68">晨星升起</button>
@@ -504,7 +479,7 @@ html.dual-embed .dual-film__credit{display:none}
  <span class="dual-film__credit" aria-hidden="true">WESTSIDE WATCH / THE KING ENTERS THE CITY / ORIGINAL HOME FILM</span>
  <div class="dual-panels">
   <article class="dual-tile dual-tile--cover" id="dual-cover" aria-label="西望 Vol.00 午夜藍封面">
-   <div class="dual-cover" data-cover-variant="masthead" data-wall-position="half">
+   <div class="dual-cover" data-cover-variant="masthead">
      <div class="dual-cover__engraving" aria-hidden="true"></div>
      <div class="dual-cover__radiance" id="dual-radiance" aria-hidden="true"></div>
      <div class="dual-cover__city" id="dual-cover-city" aria-hidden="true">
@@ -570,25 +545,18 @@ html.dual-embed .dual-film__credit{display:none}
    <span class="dual-continuum__face dual-continuum__front"><span>WESTSIDE WATCH / SEVEN COLOURS</span></span>
    <span class="dual-continuum__face dual-continuum__back"><span>WESTSIDE WATCH / SEVEN COLOURS</span></span>
   </span>
+  <!-- Authority: data/westside-core/navigation-shell.v1.json#firstLevel; see CI exact-label gate. -->
   <span class="dual-continuum__spectrum" role="group" aria-label="七色版塊入口">
-   <button type="button" data-realm="church" data-href="/church/" aria-expanded="false" aria-label="展開活水堂"><span>活水堂 · LIVING WATER</span></button>
-   <button type="button" data-realm="journal" data-href="/journal/" aria-expanded="false" aria-label="展開西望雜誌"><span>西望 · MAGAZINE</span></button>
-   <button type="button" data-realm="one" data-href="/one/" aria-expanded="false" aria-label="展開 ONE 查經"><span>ONE · 查經</span></button>
-   <button type="button" data-realm="olive" data-href="/olive/" aria-expanded="false" aria-label="展開橄欖山"><span>橄欖山 · OLIVE</span></button>
-   <button type="button" data-realm="library" data-href="/dawn-library/" aria-expanded="false" aria-label="展開黎明書局"><span>黎明書局 · BOOKS</span></button>
-   <button type="button" data-realm="cinema" data-href="/cinema/" aria-expanded="false" aria-label="展開天堂電影院"><span>天堂電影院 · CINEMA</span></button>
-   <button type="button" data-realm="cafe" data-href="/daylight-cafe/" aria-expanded="false" aria-label="展開日光咖啡"><span>日光咖啡 · CAFE</span></button>
+   <button type="button" data-realm="church" data-surface-id="LivingWaterWest" data-href="/church/" aria-expanded="false" aria-label="展開 LivingWaterWest"><span>LivingWaterWest</span></button>
+   <button type="button" data-realm="journal" data-surface-id="Magazine" data-href="/journal/" aria-expanded="false" aria-label="展開 Magazine"><span>Magazine</span></button>
+   <button type="button" data-realm="one" data-surface-id="Emmaus" data-href="/one/" aria-expanded="false" aria-label="展開 Bible"><span>Bible</span></button>
+   <button type="button" data-realm="olive" data-surface-id="OliveMountain" data-href="/olive/" aria-expanded="false" aria-label="展開 Sermon"><span>Sermon</span></button>
+   <button type="button" data-realm="library" data-surface-id="DawnBookshop" data-href="/dawn-library/" aria-expanded="false" aria-label="展開 Book"><span>Book</span></button>
+   <button type="button" data-realm="cinema" data-surface-id="ParadiseCinema" data-href="/cinema/" aria-expanded="false" aria-label="展開 Cinema"><span>Cinema</span></button>
+   <button type="button" data-realm="cafe" data-surface-id="DaylightCafe" data-href="/daylight-cafe/" aria-expanded="false" aria-label="展開 Life"><span>Life</span></button>
   </span>
  </div>
 </section>
-<details class="dual-overview"><summary>DESIGN NOTES / EDITORIAL REVIEW</summary><div class="dual-overview__detail">
-  <p><strong>5:8 × 正方形｜現行唯一候選：</strong>官方刊名 SVG 固定於 5:8 直立封面上沿，居中的 LIGHT、點綴的 CITY OF 與金色投影為 Vol.00 專屬創作；Contents 為獨立正方形，晨星 3D 在此升起。七色功能書脊橫貫兩頁、沿同一時鐘翻轉；各色塊先展開再進入所屬版塊。曾測試的「西望」鉛字向量保留於工程但不再顯示。以下是已存檔的歷史候選記錄，不能當作現行設計要求。</p>
- <p><strong>第五輪藝術修正：</strong>原教會右／左半屏依序以 clip-path 接管，拒絕整塊從畫面外砸入；新加射線已移除，保留晨星原刻線。左頁七個獨立的「西望」字標因互相覆蓋而被否決，改為一組官方原始向量字形的七道斜向印刷色版，隨滾動依序顯現，最終構成唯一巨型「西望」。封面仍使用真城牆＋原聖殿石底紋，Contents 已找回 Vol.00 確認的十項文章題名及兩位講員。</p>
- <p><strong>第七輪實際藝術候選：</strong>官方 SVG「西望」由七條互相錯開的字形印帶組成，合計十一個完整的「西望」，不再把一個巨大字標切成七片；參考《50》的跨頁文字骨架，但保留 Westside 自己的七色印刷身份。原耶路撒冷城牆與聖殿石底紋合併到同一個 City DOM，一次升起、不再脫節。禁止額外線條／生成圖片；尚需實景驗收。</p>
- <p><strong>第六輪回歸修正：</strong>人工截圖發現 WATCH 長篇名進入 WITNESS 樂章標題。改用內容高度下限的 grid track，先保證任何樂章不重疊，裝不下時交由既有目錄卷軸完整呈現。禁止為了填滿紙面犧牲內容完整性。</p>
- <p><strong>第六輪真實截圖修訂：</strong>恢復篇名後四樂章仍過度擠在 Contents 上半段；本輪以雙欄兩段充滿版心，調整英中標題級差和行距，形成更有內容力量的紙面。右封面略調 LIGHT 的展示比例與中文主題重量，不增圖、不改城牆、晨星或教會動效；須另看真實截圖與版面溢位。</p>
- <p><strong>權威與限制：</strong>這是與 PR #1352 的真實 P2 動效並列的隔離實驗，沒有替換活水、七色、教會行程與既有開門段落。比較左／右位置後，才決定是否把藍金轉場寫回原 P2 單一 scroll clock。手機改為上下相接的兩塊，避免不可讀的雙方塊縮圖。</p>
-</div></details>
 </main>
 <script>
 (function(){
@@ -601,7 +569,7 @@ html.dual-embed .dual-film__credit{display:none}
  const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
  const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol');
  const rail=document.getElementById('dual-continuum'),railRotor=document.getElementById('dual-continuum-rotor');
- const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')],coverChoices=[...document.querySelectorAll('[data-cover-choice]')],wallChoices=[...document.querySelectorAll('[data-wall-position]')],coverArt=cover.querySelector('.dual-cover');
+ const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')],coverChoices=[...document.querySelectorAll('[data-cover-choice]')],coverArt=cover.querySelector('.dual-cover');
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
  const lerp=(a,b,t)=>a+(b-a)*t;
@@ -767,8 +735,8 @@ html.dual-embed .dual-film__credit{display:none}
   // temple-stone Contents replace the colorful lettering.
   const stone=ease((progress-.865)/.125);
    // Approved v5.3 star persists: shrink into lower Contents, no retired SVG.
-   star.style.top=(50+23*stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),Math.max(120,Math.min(225,contentsW*.30)),stone).toFixed(2)+'px';
+   star.style.top=(50+29*stone).toFixed(2)+'%';
+   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),Math.max(140,Math.min(280,contentsW*.40)),stone).toFixed(2)+'px';
   // One scroll clock. Existing impression stays as lower-paper relief.
   const reliefOn=ease((progress-.875)/.105);
   relief.style.opacity='0'; // stored print trial: not in this edition
@@ -806,19 +774,6 @@ html.dual-embed .dual-film__credit{display:none}
   if(!document.documentElement.classList.contains('dual-embed')){
    const u=new URL(location.href);u.searchParams.set('cover',v);history.replaceState(null,'',u);
   }
- }
- // Wall-only A/B/C; never alter the P2 scroll clock or saved original cover.
- function setWallPosition(raw){
-  const v=['logo','half','third'].includes(raw)?raw:'original';
-  coverArt.dataset.wallPosition=v;stage.dataset.wallPosition=v;
-  wallChoices.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.wallPosition===v)));
-  if(!document.documentElement.classList.contains('dual-embed')){
-   const url=new URL(location.href);
-   if(v==='original')url.searchParams.delete('wall');
-   else url.searchParams.set('wall',v);
-   history.replaceState(null,'',url);
-  }
-  render();
  }
  function setOrientation(val){
   coverLeft=val==='cover-left';
@@ -989,7 +944,6 @@ html.dual-embed .dual-film__credit{display:none}
  document.querySelectorAll('[data-snap]').forEach(b=>b.addEventListener('click',()=>setProgress(b.dataset.snap)));
  buttons.forEach(b=>b.addEventListener('click',()=>setOrientation(b.dataset.position)));
  coverChoices.forEach(b=>b.addEventListener('click',()=>setCoverVariant(b.dataset.coverChoice)));
- wallChoices.forEach(b=>b.addEventListener('click',()=>setWallPosition(b.dataset.wallPosition)));
  range.addEventListener('input',()=>setProgress(Number(range.value)/100));
  addEventListener('message',event=>{
   if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-dual-progress')return;
@@ -1004,7 +958,6 @@ html.dual-embed .dual-film__credit{display:none}
   const fallbackFrame=star.querySelector('iframe');if(fallbackFrame)fallbackFrame.src='/experiments/morning-star-3d-lab.html?asset=1&autoplay=0';
  }else if(frame.isConnected){frame.src=frame.dataset.originalSrc}
  setCoverVariant(qs.get('cover'));
- setWallPosition(qs.get('wall')??'half');
  setOrientation(qs.get('side')==='cover-left'?'cover-left':'cover-right');
  setProgress(Number(qs.get('p')??100)/100);
 })();
