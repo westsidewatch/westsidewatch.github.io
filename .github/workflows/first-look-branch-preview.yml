@@ -434,16 +434,14 @@ jobs:
                          silhouetteFit:getComputedStyle(wallEl).maskSize,
                         thresholdChiaroscuro:(()=>{
                            const paths=[...cv.querySelectorAll('.dual-cover__fold-light path')];
-                           const shadow=paths.filter(el=>el.getAttribute('data-role')==='shadow-burin');
-                           const contact=paths.filter(el=>el.getAttribute('data-role')==='light-contact');
-                           const prohibited=paths.filter(el=>el.getAttribute('data-role')==='burin-ray'||
-                              el.getAttribute('fill')!=='none');
-                           return {shadow:shadow.length,contact:contact.length,prohibited:prohibited.length,
-                             gateAnchored:contact.length===3&&contact.every(el=>{
-                               const d=el.getAttribute('d')||'';
-                               const n=(d.match(/-?[0-9]+(?:\.[0-9]+)?/g)||[]).map(Number);
-                               return n.length>=2&&n[0]>=420&&n[0]<=580&&n[1]>=640&&n[1]<=670;
-                             })};
+                           const roles=paths.map(el=>el.getAttribute('data-role'));
+                           const needed=['threshold-step','projected-light','light-crease','stone-shadow','threshold-edge','light-edge','shadow-edge'];
+                           const step=paths.find(el=>el.getAttribute('data-role')==='threshold-step');
+                           const source=(step?.getAttribute('d')?.match(/-?[0-9]+(?:\.[0-9]+)?/g)||[]).map(Number);
+                           return {allFacets:needed.every(role=>roles.includes(role)),
+                             facetCount:paths.length,hasBurins:roles.some(role=>['shadow-burin','jamb-incision','burin-ray'].includes(role)),
+                             sharedThreshold:paths.find(el=>el.getAttribute('data-role')==='projected-light')?.getAttribute('d')?.startsWith('M416 716 L580 716'),
+                             gateFoot:source.length>=4&&source[0]>=440&&source[0]<=480&&source[1]>=630&&source[1]<=690};
                         })(),
                          stoneSource:getComputedStyle(paperEl).backgroundImage,
                         wallSource:getComputedStyle(wallEl).backgroundImage,
@@ -484,14 +482,16 @@ jobs:
                     if(variant==='masthead'&&(!metrics.originalStoneWithSkyMask||
                       metrics.wallShadow!=='none'||metrics.wallSeam!=='none'))
                       errors.push('STONE_DOOR_TRANSPARENT_OR_DUAL_PNG_STITCH_REINTRODUCED');
-                    if(variant==='masthead'&&(metrics.foldLightPaths<300||metrics.foldLightOpacity<.95))
-                      errors.push('THRESHOLD_CHIAROSCURO_NOT_RENDERED');
+                    if(variant==='masthead'&&(metrics.foldLightPaths!==7||metrics.foldLightOpacity<.95))
+                      errors.push('SCHEME02_LIGHT_FACETS_NOT_RENDERED');
                     if(variant==='masthead'&&(metrics.materialFit!=='cover'||!metrics.silhouetteFit.startsWith('cover')))
                        errors.push('COVER_STONE_ASSETS_MUST_NOT_BE_STRETCHED');
-                     if(variant==='masthead'&&(metrics.thresholdChiaroscuro.shadow<240||
-                        metrics.thresholdChiaroscuro.contact!==3||metrics.thresholdChiaroscuro.prohibited!==0||
-                        !metrics.thresholdChiaroscuro.gateAnchored))
-                      errors.push('NO_RAY_FAN_ONLY_GATE_CONTACT_AND_SHADOW_CARVING');
+                     if(variant==='masthead'&&(!metrics.thresholdChiaroscuro.allFacets||
+                        metrics.thresholdChiaroscuro.facetCount!==7||
+                        metrics.thresholdChiaroscuro.hasBurins||
+                        !metrics.thresholdChiaroscuro.sharedThreshold||
+                        !metrics.thresholdChiaroscuro.gateFoot))
+                      errors.push('SCHEME02_GATE_THRESHOLD_FACETS_NOT_ALIGNED');
                     if(variant==='masthead'){
                       const alpha=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-stone-gate-cutout.png');
                       const stone=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-sandstone-wall.png');
