@@ -411,6 +411,8 @@ jobs:
                 if(JSON.stringify(mapping)!==JSON.stringify(expected))realmErrors.push('SEVEN_PORTAL_MAPPING');
                 const journal=page.locator('#dual-continuum button[data-realm="journal"]');
                 await journal.click();
+                // Allow the intentional .56s editorial unfolding transition to complete.
+                await page.waitForTimeout(650);
                 const opened=await journal.evaluate(b=>({
                   expanded:b.getAttribute('aria-expanded'),
                   width:b.getBoundingClientRect().width,
