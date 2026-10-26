@@ -26,7 +26,6 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-film{position:absolute;inset:0;overflow:hidden;opacity:0;pointer-events:none;transform:scale(1.02);background:url('/images/home-opening-engraving.jpg') center/cover no-repeat}
 .dual-film iframe{position:absolute;width:100%;height:100%;inset:0;border:0;pointer-events:none}
 .dual-film::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(8,24,44,.60),rgba(9,30,49,.33) 50%,rgba(10,26,42,.62));pointer-events:none}
-.dual-film__credit{position:absolute;bottom:14px;left:15px;right:15px;z-index:4;color:#f2eee2;text-align:center;font:400 12px/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.07em;opacity:0;pointer-events:none}
 .dual-panels{position:absolute;inset:0;pointer-events:none}
 .dual-tile{position:absolute;min-width:0;min-height:0;overflow:hidden;pointer-events:auto;isolation:isolate;box-shadow:none;container-type:size}
 .dual-tile--cover{background:radial-gradient(ellipse at 56% 22%,#29425b 0%,transparent 58%),var(--blue);color:var(--paper)}
@@ -323,8 +322,7 @@ html.dual-embed,html.dual-embed body{width:100%;height:100%;overflow:hidden;back
 html.dual-embed .dual-ui,html.dual-embed .dual-overview{display:none!important}
 html.dual-embed .dual-stage{height:100svh;min-height:0;background:transparent}
 html.dual-embed .dual-contents__index{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
-html.dual-embed .dual-film__credit{display:none}
-
+html.dual-embed 
 
 /* EDITORIAL PROOF 09 — approved 5:8 portrait masthead / 1:1 Contents.
    No second Design OS: inks, typography and seven realm hues resolve through
@@ -472,7 +470,7 @@ html.dual-embed .dual-film__credit{display:none}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__en{
  width:100%;max-width:100%;display:flex;flex-direction:column;
  align-items:center;align-self:center;position:relative;margin:0;
- text-align:center;font:400 clamp(31px,14.2cqi,70px)/.96 var(--ws-type-display-en,Georgia,serif);
+ text-align:center;font:400 clamp(52px,12.2cqi,60px)/.96 var(--ws-type-display-en,Georgia,serif);
  letter-spacing:-.045em;
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__en span{
@@ -480,7 +478,7 @@ html.dual-embed .dual-film__credit{display:none}
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__en span:first-child{
  position:static;top:auto;left:auto;right:auto;width:auto;
- margin:0;font-size:.76em;line-height:1.00;letter-spacing:.015em;
+ margin:0;font-size:.93em;line-height:1.00;letter-spacing:-.015em;
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__en span:nth-child(2){
  margin:2px 0 1px;font-size:.43em;line-height:.98;letter-spacing:.035em;
@@ -559,6 +557,10 @@ html.dual-embed .dual-film__credit{display:none}
 }
 .dual-movement:nth-child(n+3) ol{
  justify-content:flex-start;gap:clamp(19px,2.9cqi,27px);
+}
+.dual-movement:last-child::after{
+ content:"";display:block;margin-top:auto;
+ border-top:1px solid rgba(143,111,68,.5);
 }
 .dual-movement li{
  display:grid;grid-template-columns:clamp(17px,2.3cqi,23px) minmax(0,1fr);

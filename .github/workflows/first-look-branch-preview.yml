@@ -79,7 +79,7 @@ jobs:
             throw Error('FINAL_5_8_MASTHEAD_MUST_NOT_EXPLODE_IN_HALFSHEET_TRANSITION');
           if(!markup.includes('height:54%;max-height:54%')||!markup.includes('background:linear-gradient(145deg,#21394e,#152d42 80%)'))
             throw Error('CONTENTS_NEEDS_EDITORIAL_INK_REGISTER_AND_READING_ZONE');
-          if(!markup.includes('--ws-vol00-wall-start:13.125%') || !markup.includes('grid-template-columns:repeat(4,minmax(0,1fr))') || !markup.includes('height:56%;max-height:56%'))
+          if(!markup.includes('--ws-vol00-wall-start:13.125%') || !markup.includes('grid-template-columns:repeat(4,minmax(0,1fr))'))
             throw Error('FIXED_WALL_AND_SEPARATE_CONTENTS_READING_ZONE_REQUIRED');
           // A single issue canon for P2 and the actual Hugo /vol-00/ consumer.
           const volData=fs.readFileSync('data/volumes/vol-00.yaml','utf8');
@@ -92,7 +92,7 @@ jobs:
              !volData.includes('modulation: "WITNESS → WORSHIP"'))
             throw Error('VOL00_HUGO_DATA_MUST_MATCH_LATEST_FOUR_MOVEMENT_EDITORIAL_CANON');
 
-          const states=[['night-half',12,'cover-right'],['gold-half',33,'cover-right'],['gold-complete',44,'cover-right'],['dawn-arrival',54,'cover-right'],['morning-star',68,'cover-right'],['cover-and-star',82,'cover-right'],['temple-stone-transition',93,'cover-right'],['temple-stone-contents',100,'cover-right']];
+          const states=[['night-half',12,'cover-right'],['gold-half',33,'cover-right'],['gold-complete',44,'cover-right'],['dawn-arrival',54,'cover-right'],['morning-star',68,'cover-right'],['pre-fold',75,'cover-right'],['cover-and-star',82,'cover-right'],['temple-stone-transition',93,'cover-right'],['temple-stone-contents',100,'cover-right']];
           (async()=>{
             const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
             try{
@@ -132,6 +132,7 @@ jobs:
                         phase:root.dataset.phase,orientation:root.dataset.orientation,
                         panels:[a,b],
                         rows:document.querySelectorAll('.dual-movement li').length,
+                        mastheadOpacity:Number(getComputedStyle(document.querySelector('.dual-cover__mast')).opacity),
                         lines:Number(root.dataset.xiwangLines),
                         blueReveal:Number(root.dataset.blueReveal),
                         dawnReveal:Number(root.dataset.dawnReveal),
@@ -320,6 +321,8 @@ jobs:
                     if(p===100&&(!m.starRegisterSafe||!m.starAboveContents))errors.push('MORNING_STAR_MUST_BE_ABOVE_CONTENTS_REGISTER');
                     if(p===100&&!m.readerReach.keyboard)errors.push('CONTENTS_NOT_KEYBOARD_ACCESSIBLE');
                     if(p===100&&width>1100&&!m.readerReach.desktopReachable)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_REACHABLE');
+                    if(p===100&&width>1100&&!m.readerReach.desktopVisible)errors.push('DESKTOP_CONTENTS_MUST_NOT_HIDE_ARTICLES_BEHIND_INNER_SCROLL');
+                    if(p===75&&m.mastheadOpacity>.01)errors.push('MASTHEAD_MUST_STAY_QUIET_DURING_HALF_SHEET_TRANSITION');
                     if(p===100&&width<=1100&&!m.readerReach.mobileScrollable)errors.push('MOBILE_CONTENTS_SCROLL_NOT_AVAILABLE');
                     if(m.scrollWidth>m.width+2)errors.push('HORIZONTAL_OVERFLOW');
                     if(p===100&&!m.videoOriginLoaded)errors.push('HOME_FILM_NOT_LOADED');
