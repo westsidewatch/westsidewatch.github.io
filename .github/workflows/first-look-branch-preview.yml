@@ -393,10 +393,10 @@ jobs:
                     // bounding boxes must overlap the lower editorial title.
                     if(variant==='masthead'&&(metrics.starCentreError>3||metrics.starScale<.35||metrics.starScale>.6))
                       errors.push('MORNING_STAR_NOT_CENTRED_IN_CONTENTS');
-                    // Vol.00 B balances 44% midnight-blue sky with the original stone silhouette;
-                    // retain a bounded design check, calibrated to this approved composition.
-                    if(variant==='masthead'&&(metrics.cityTopRatio<.42||metrics.cityTopRatio>.46||metrics.wallHeightRatio<.54))
-                      errors.push('VOL00_SKY_AND_WALL_BALANCE_OUT_OF_RANGE');
+                    // Single approved masthead system: battlements breach below the title
+                    // at the one 26% city origin; old A/B/C 44% tests are retired.
+                    if(variant==='masthead'&&(metrics.cityTopRatio<.245||metrics.cityTopRatio>.275||metrics.wallHeightRatio<.70))
+                      errors.push('VOL00_FIXED_26_PERCENT_WALL_AUTHORITY_DRIFT');
                     if(variant==='masthead'&&(!metrics.headlineCentered||!metrics.sloganHidden||!metrics.titleGroupUnified))
                       errors.push('CENTER_LIGHT_NOT_PRIMARY_EDITORIAL_HEADLINE');
                     if(variant==='masthead'&&(!metrics.starInContents||!metrics.mastheadNavyOnly||!metrics.starAboveSheet))

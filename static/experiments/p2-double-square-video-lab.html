@@ -737,7 +737,7 @@ html.dual-embed .dual-film__credit{display:none}
   const stone=ease((progress-.865)/.125);
    // Approved v5.3 star persists: shrink into lower Contents, no retired SVG.
    star.style.top=(50+34*stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),Math.max(140,Math.min(258,contentsW*.36)),stone).toFixed(2)+'px';
+   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),mobile?Math.max(112,Math.min(195,contentsW*.37)):Math.max(140,Math.min(258,contentsW*.36)),stone).toFixed(2)+'px';
   // One scroll clock. Existing impression stays as lower-paper relief.
   const reliefOn=ease((progress-.875)/.105);
   relief.style.opacity='0'; // stored print trial: not in this edition
