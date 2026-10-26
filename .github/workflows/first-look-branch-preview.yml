@@ -69,7 +69,7 @@ jobs:
             throw Error('SEVENFOLD_NAV_MUST_MATCH_WESTSIDE_CORE_CANONICAL_FIRSTLEVEL');
           if(/活水堂|日光咖啡|data-wall-position|jerusalem-wall\.png/.test(markup))
             throw Error('RETIRED_NAMES_OR_WALL_VARIANTS_FOUND_IN_P2_SOURCE');
-          if(!markup.includes('--ws-vol00-wall-start:50%') || !markup.includes('grid-template-columns:repeat(4,minmax(0,1fr))') || !markup.includes('height:56%;max-height:56%'))
+          if(!markup.includes('--ws-vol00-wall-start:13.125%') || !markup.includes('grid-template-columns:repeat(4,minmax(0,1fr))') || !markup.includes('height:56%;max-height:56%'))
             throw Error('FIXED_WALL_AND_SEPARATE_CONTENTS_READING_ZONE_REQUIRED');
 
           const states=[['night-half',12,'cover-right'],['gold-half',33,'cover-right'],['gold-complete',44,'cover-right'],['dawn-arrival',54,'cover-right'],['morning-star',68,'cover-right'],['cover-and-star',82,'cover-right'],['temple-stone-transition',93,'cover-right'],['temple-stone-contents',100,'cover-right']];
@@ -394,9 +394,9 @@ jobs:
                     if(variant==='masthead'&&(metrics.starCentreError>3||metrics.starScale<.35||metrics.starScale>.6))
                       errors.push('MORNING_STAR_NOT_CENTRED_IN_CONTENTS');
                     // Single approved masthead system: battlements breach below the title
-                    // at the one 50% asset origin, mapping to ~54–55% visible crest.
-                    if(variant==='masthead'&&(metrics.cityTopRatio<.49||metrics.cityTopRatio>.51||metrics.wallHeightRatio<.48))
-                      errors.push('VOL00_WALL_REGISTER_54_55_PERCENT_AUTHORITY_DRIFT');
+                    // at 21cqi on the fixed 5:8 page, or 13.125% of cover height.
+                    if(variant==='masthead'&&(metrics.cityTopRatio<.125||metrics.cityTopRatio>.14||metrics.wallHeightRatio<.85))
+                      errors.push('VOL00_SCHEME_02_CITY_ORIGIN_AUTHORITY_DRIFT');
                     if(variant==='masthead'&&(!metrics.headlineCentered||!metrics.sloganHidden||!metrics.titleGroupUnified))
                       errors.push('CENTER_LIGHT_NOT_PRIMARY_EDITORIAL_HEADLINE');
                     if(variant==='masthead'&&(!metrics.starInContents||!metrics.mastheadNavyOnly||!metrics.starAboveSheet))

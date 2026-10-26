@@ -196,9 +196,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 /* P2 Cover / 2026-10-25: Vol.00 masthead belongs to a continuous midnight-blue
    sky, with the authentic stone battlements cutting into it. The issue label
    is below on the sandstone foot, not in the masthead field. This is the
-   verified register: 50% masonry-origin maps the approved crest to approximately 54–55%
-   of the portrait cover. Never promote the element's origin to the visible crest position. */
-.dual-cover[data-cover-variant="masthead"]{--ws-vol00-wall-start:50%;background:#102a43}
+   Scheme 02 selected in the masthead colour-breach proof: navy band 30cqi,
+   architecture enters at 21cqi. On the fixed 5:8 portrait that is 13.125%
+   of COVER HEIGHT for the city's container origin (not the painted crest).
+   The older 2026-10-24 cover skyline metric was superseded. */
+.dual-cover[data-cover-variant="masthead"]{--ws-vol00-wall-start:13.125%;background:#102a43}
 .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
  top:1.6%;left:3%;width:94%;max-width:94%;height:21%;max-height:21%;
  object-fit:contain;object-position:center top;filter:none;z-index:8
@@ -224,7 +226,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    opaque lower mask restores the doorway and full stone surface with
    zero visible horizontal photo joins. */
 .dual-cover[data-cover-variant="masthead"] .dual-cover__city{
- top:var(--ws-vol00-wall-start,50%);bottom:0;overflow:visible;isolation:isolate;
+ top:var(--ws-vol00-wall-start,13.125%);bottom:0;overflow:visible;isolation:isolate;
  background:transparent;box-shadow:none;filter:none
 }
 .dual-cover[data-cover-variant="masthead"] .dual-cover__paper{
