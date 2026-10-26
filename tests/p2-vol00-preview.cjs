@@ -63,7 +63,7 @@ const data=()=> {
   starOpacity:+getComputedStyle(star).opacity,
   starRenderer:star.dataset.renderer,
   approvedStarVisible:!!star.querySelector('img.dual-cover__approved-star')&&getComputedStyle(star).opacity==='1',
-  star:box(star),zone:box(zone),
+  star:box(star),zone:box(zone),movements:columns.map(box),
   headings:[...document.querySelectorAll('.dual-cover__en span')].map(el=>el.textContent.trim()),
   title:box(document.querySelector('.dual-cover__editorial')),
   mast:box(document.querySelector('.dual-cover__mast')),
@@ -117,6 +117,11 @@ const data=()=> {
       faults.push('gate light / masthead / title hierarchy missing');
     if(p===93&&!(m.stoneOpacity>.1&&m.stoneOpacity<.99))faults.push('Contents must hand off through a measured state');
     if(p===100){
+     if(width>1100){
+      const [watch,walk,witness,worship]=m.movements;
+      if(!(watch.left<walk.left&&walk.left<witness.left&&Math.abs(witness.left-worship.left)<2&&witness.bottom<=worship.top+2))
+       faults.push('desktop Contents must form two long reading columns and one stacked editorial column');
+     }
      if(m.starRenderer==='approved-morning-star-svg'&&!m.approvedStarVisible)faults.push('approved vector Morning Star fallback missing without WebGL');
      if(!approx(m.cover.width/m.cover.height,5/8,.01)||!approx(m.page.width/m.page.height,1,.01))faults.push('5:8 cover and 1:1 Contents');
      if(m.entries!==12||m.ariaHead!=='Contents.')faults.push('Contents canon');
