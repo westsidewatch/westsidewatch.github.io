@@ -450,10 +450,16 @@ jobs:
                           const coords=p=>(p?.getAttribute('d')?.match(/-?[0-9]+(?:\.[0-9]+)?/g)||[]).map(Number);
                           const origin=coords(paths.find(p=>p.getAttribute('data-role')==='threshold-flash'));
                           const foil=coords(paths.find(p=>p.getAttribute('data-role')==='gold-central'));
-                          const noRoad=['gold-central','gold-left','gold-right'].every(role=>{
-                            const p=paths.find(p=>p.getAttribute('data-role')===role),n=coords(p);
-                            return !!p&&n.length>=12&&!n.some((v,i)=>i%2===1&&v>=980);
-                          });
+                          // The supplied Scheme 02 print reference has ONE lower-left
+                          // cream sheet and a contiguous right-hand limestone shadow.
+                          // Reject the retired parallel road-stripe/fan geometry.
+                          const ink=role=>paths.find(p=>p.getAttribute('data-role')===role)?.getAttribute('d')||'';
+                          const noRoad=
+                            ink('gold-central').startsWith('M444 664 L552 664')&&
+                            ink('gold-central').includes('L300 1000 L0 1000 L0 782')&&
+                            ink('gold-left').startsWith('M444 664 L552 664')&&
+                            ink('gold-right').startsWith('M552 664 L300 1000')&&
+                            !roles.includes('projected-light')&&!roles.includes('light-crease');
                           return {
                             allFacets:needed.every(role=>roles.includes(role)),
                             facetCount:paths.length,
