@@ -1,13 +1,29 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-10-25T13:45:36.163211+00:00",
+  "generatedAt": "2026-10-26T16:12:00.233617+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 75,
+  "pagesChecked": 69,
   "newDiscovered": 0,
   "candidateQueue": 78,
   "catalogBooks": 1969,
-  "errors": [],
+  "errors": [
+    {
+      "query": "Josephus",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Josephus",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Augustine",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Augustine&start_index=76",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Athanasius",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Athanasius",
+      "error": "HTTPError"
+    }
+  ],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
