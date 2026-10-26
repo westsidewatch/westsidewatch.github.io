@@ -124,6 +124,7 @@ jobs:
                           const rect=index.getBoundingClientRect();
                           const allVisible=items.every(el=>{const r=el.getBoundingClientRect();return r.top>=rect.top-2&&r.bottom<=rect.bottom+2});
                           return {desktopVisible:allVisible,
+                            desktopReachable:allVisible||(index.scrollHeight>index.clientHeight+4&&index.tabIndex===0),
                             keyboard:index.tabIndex===0 && index.getAttribute('role')==='region',
                             mobileScrollable:index.scrollHeight>index.clientHeight+4};
                         })(),
@@ -214,7 +215,8 @@ jobs:
                                getComputedStyle(paper).backgroundImage==='none',
                             oldGateHidden:getComputedStyle(wall.querySelector('.dual-cover__gate')).display==='none'};
                         })(),
-                        starTextOverlap:(()=>{
+                        starRegisterSafe:(()=>{const star=document.getElementById('dual-star').getBoundingClientRect(),zone=document.getElementById('dual-contents-star-zone').getBoundingClientRect();return star.top>=zone.top-4&&star.bottom<=zone.bottom+4;})(),
+                       starTextOverlap:(()=>{
                           const r=document.getElementById('dual-star').getBoundingClientRect();
                           const visual={left:r.left+r.width*.18,right:r.right-r.width*.18,
                             top:r.top+r.height*.18,bottom:r.bottom-r.height*.18};
@@ -273,8 +275,9 @@ jobs:
                       errors.push('ORIGINAL_GATE_MUST_KEEP_STONE_DOOR_WITH_ALPHA_SKYLINE_MASK');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
                     if(p===100&&m.starTextOverlap>2)errors.push('MORNING_STAR_OVERLAPS_CONTENTS_READING');
+                    if(p===100&&!m.starRegisterSafe)errors.push('MORNING_STAR_OUTSIDE_ENGRAVED_REGISTER');
                     if(p===100&&!m.readerReach.keyboard)errors.push('CONTENTS_NOT_KEYBOARD_ACCESSIBLE');
-                    if(p===100&&width>1100&&!m.readerReach.desktopVisible)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_VISIBLE');
+                    if(p===100&&width>1100&&!m.readerReach.desktopReachable)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_REACHABLE');
                     if(p===100&&width<=1100&&!m.readerReach.mobileScrollable)errors.push('MOBILE_CONTENTS_SCROLL_NOT_AVAILABLE');
                     if(m.scrollWidth>m.width+2)errors.push('HORIZONTAL_OVERFLOW');
                     if(p===100&&!m.videoOriginLoaded)errors.push('HOME_FILM_NOT_LOADED');

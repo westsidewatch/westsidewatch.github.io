@@ -489,13 +489,13 @@ html.dual-embed .dual-film__credit{display:none}
 .dual-contents__head h2{font-size:clamp(36px,3.7vw,48px);line-height:.94}
 /* Dense upper reading register + lower Morning Star register, divided by
    one extremely fine gold engraving rule. Not arbitrary dead whitespace. */
-.dual-tile--contents .dual-contents::after{
- content:"";position:absolute;z-index:4;left:4%;right:4%;top:51%;
- height:1px;pointer-events:none;
- background:linear-gradient(90deg,rgba(162,117,48,.70),rgba(162,117,48,.28) 84%,transparent);
+.dual-contents__star-zone{
+ position:relative;z-index:2;flex:1 1 0;min-height:0;margin-top:clamp(9px,1.5cqi,16px);
+ border-top:1px solid rgba(162,117,48,.54);
+ background:transparent;pointer-events:none;
 }
 @media(min-width:1101px){
- .dual-contents__index{height:49%;max-height:49%;column-gap:clamp(14px,2.05cqi,22px)}
+ .dual-contents__index{height:41%;max-height:41%;column-gap:clamp(14px,2.05cqi,22px)}
  .dual-movement h3{font-size:clamp(25px,3.9cqi,33px);margin-bottom:10px}
  .dual-movement li{font-size:clamp(15px,2.5cqi,18px);line-height:1.28;grid-template-columns:21px minmax(0,1fr);gap:5px}
  .dual-movement li b{font-size:11px}
@@ -511,7 +511,8 @@ html.dual-embed .dual-film__credit{display:none}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{bottom:26%}
  .dual-cover[data-cover-variant="masthead"] .dual-cover__en{font-size:clamp(29px,15cqi,64px)}
  .dual-contents__head h2{font-size:clamp(33px,8vw,44px)}
- .dual-tile--contents .dual-contents::after{top:49%}
+ .dual-contents__index{height:34%;max-height:34%;flex:0 0 auto}
+ .dual-contents__star-zone{margin-top:8px}
 }
 </style>
 </head>
@@ -596,6 +597,7 @@ html.dual-embed .dual-film__credit{display:none}
        <li class="dual-entry"><b>11</b><span class="dual-entry__text"><span class="dual-entry__column">何烈山<small>Horeb</small></span><span class="dual-work" lang="zh-Hant">〈房角石：整座城由此對齊〉</span></span></li><li class="dual-entry"><b>12</b><span class="dual-entry__text"><span class="dual-entry__column">瑪拉拿<small>Maranatha</small></span><span class="dual-work" lang="zh-Hant">〈冠冕〉</span></span></li>
       </ol></section>
     </div>
+    <div class="dual-contents__star-zone" id="dual-contents-star-zone" aria-hidden="true"></div>
     <div class="dual-contents__foot"><span lang="en">VOL.00 / INDEX</span></div>
    </div>
   </section>
@@ -794,9 +796,14 @@ html.dual-embed .dual-film__credit{display:none}
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
   const stone=ease((progress-.865)/.125);
-   // Original v5.3 star rises into the lower engraved Contents register; no new star asset.
-   star.style.top=(50+18*stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),mobile?Math.max(125,Math.min(235,contentsW*.46)):Math.max(175,Math.min(380,contentsW*.45)),stone).toFixed(2)+'px';
+   // Place the original v5.3 star inside its dedicated engraved
+   // lower Contents register, measured between reading grid and footer.
+   const starZone=document.getElementById('dual-contents-star-zone').getBoundingClientRect();
+   const starPage=gold.getBoundingClientRect();
+   const starTargetCentre=((starZone.top+starZone.bottom)/2-starPage.top)/starPage.height*100;
+   const starTargetSize=Math.max(70,Math.min(380,contentsW*.45,starZone.height*.88));
+   star.style.top=lerp(50,starTargetCentre,stone).toFixed(2)+'%';
+   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),starTargetSize,stone).toFixed(2)+'px';
   // One scroll clock. Existing impression stays as lower-paper relief.
   const reliefOn=ease((progress-.875)/.105);
   relief.style.opacity='0'; // stored print trial: not in this edition
