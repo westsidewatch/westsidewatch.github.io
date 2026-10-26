@@ -346,7 +346,7 @@ jobs:
                         titleGroupUnified:!!cv.querySelector('.dual-cover__editorial')&&
                           ['en','zh'].every(name=>cv.querySelector('.dual-cover__'+name)?.parentElement===cv.querySelector('.dual-cover__editorial')),
                         starInNavy:false, // retired when the star moved to Contents
-                        mastheadNavyOnly:part('mast').bottom<=city.top+2,
+                        mastheadProtected:(()=>{const mast=cv.querySelector('.dual-cover__mast');const mastStyle=getComputedStyle(mast);const cityStyle=getComputedStyle(cityEl);return Number(mastStyle.zIndex)>Number(cityStyle.zIndex)&&mastStyle.filter==='none'&&mastStyle.maskImage==='none'&&mastStyle.objectFit==='contain';})(),
                         originalStoneWithSkyMask:getComputedStyle(wallEl).backgroundImage.includes('p2-magazine-sandstone-wall.png')&&
                           getComputedStyle(wallEl).maskImage.includes('p2-magazine-stone-gate-cutout.png')&&
                           getComputedStyle(wallEl).maskImage.includes('linear-gradient')&&
@@ -399,8 +399,8 @@ jobs:
                       errors.push('VOL00_SCHEME_02_CITY_ORIGIN_AUTHORITY_DRIFT');
                     if(variant==='masthead'&&(!metrics.headlineCentered||!metrics.sloganHidden||!metrics.titleGroupUnified))
                       errors.push('CENTER_LIGHT_NOT_PRIMARY_EDITORIAL_HEADLINE');
-                    if(variant==='masthead'&&(!metrics.starInContents||!metrics.mastheadNavyOnly||!metrics.starAboveSheet))
-                      errors.push('STAR_MUST_BE_IN_SQUARE_CONTENTS_AND_MASTHEAD_IN_NAVY');
+                    if(variant==='masthead'&&(!metrics.starInContents||!metrics.mastheadProtected||!metrics.starAboveSheet))
+                      errors.push('STAR_CONTENTS_POSITION_OR_MASTHEAD_PROTECTION_DRIFT');
                     if(variant==='masthead'&&(!metrics.originalStoneWithSkyMask||
                       metrics.wallShadow!=='none'||metrics.wallSeam!=='none'))
                       errors.push('STONE_DOOR_TRANSPARENT_OR_DUAL_PNG_STITCH_REINTRODUCED');
