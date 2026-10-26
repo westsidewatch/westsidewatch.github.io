@@ -35,3 +35,5 @@
 ## 交付不能混為一談
 
 程式持續實例 ≠ 示意街區不跳動 ≠ 有歷史證據的城市延續。這三層分開報告。單元與瀏覽器測試可驗前兩者，不能替代第三者的來源與視覺審查。本包 `historicalContinuityAccepted=false`、`foundationAccepted=false` 保持不變。
+
+2026-10-26 共同場所第一包：18期共用三個地理參照，後八期東側Cardo通道收斂為一條來源支持的示意軸線；17段場所關係只聲明地理連續，不等同實體存續。現代期標明歷史軸線語境。參見 [SHARED-PLACES-AND-CORRIDOR.md](SHARED-PLACES-AND-CORRIDOR.md)。下一項為此基礎上的主街、城界／城門與核心—住區整體變化，住宅細雕仍暫停。

@@ -32,7 +32,8 @@
     "data/urban/medieval-ottoman.skeleton.v1.json",
     "data/urban/expansion-modern.skeleton.v1.json",
     "later-sacred-cores.js",
-    "persistent-city-world.js"
+    "persistent-city-world.js",
+    "shared-urban-places.js"
   ],
   "phases": [
     {
@@ -612,5 +613,18 @@
       "incremental-transitions-and-residential-grid-replacement",
       "foundation-review-before-fine-detail"
     ]
+  },
+  "sharedPlaces": {
+    "executionDocument": "SHARED-PLACES-AND-CORRIDOR.md",
+    "phaseCoverage": 18,
+    "adjacentContextContracts": 17,
+    "terrainReferences": 3,
+    "sharedCorridorPhaseCoverage": 8,
+    "corridorCoordinateAuthority": "existing-Aelia-illustration-not-survey",
+    "corridorSource": "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/",
+    "modernCorridorScope": "historical-axis-context-not-complete-present-street",
+    "samePlaceIsSameBuilding": false,
+    "historicalContinuityAccepted": false,
+    "nextPriority": "shared-corridor-boundary-gate-core-district-transformation"
   }
 }

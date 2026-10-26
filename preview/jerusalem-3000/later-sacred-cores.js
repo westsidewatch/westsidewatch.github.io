@@ -13,14 +13,14 @@ export function laterSacredCores(phase){
   cores.push({id:`j3k:${phase}:independent:monument:holy-sepulchre-context`,type:'monument',confidence:'inferred',
    geometry:{frame:'canonical-dem-enu',status:'authored-context-not-surveyed',primitive:'polygon',polygon:rectangle(-495,15,constantinian?145:115,95)},
    source:{urls:[CHURCH_SOURCE],authority:'historical form context; coordinates and dimensions authored for schematic display'},
-   metadata:{name:'聖墓教堂群（概略量體）',coreProfile:constantinian?'constantinian-rotunda-east-basilica':'medieval-rotunda-church',
+   metadata:{placeId:'j3k:place:holy-sepulchre-site',placeRelation:'same-site-not-verified-original-fabric',name:'聖墓教堂群（概略量體）',coreProfile:constantinian?'constantinian-rotunda-east-basilica':'medieval-rotunda-church',
     referencePeriod:constantinian?'post-335, before 1009 destruction':'post-Crusader rebuilding; later changes not resolved',
     wholePhaseSimultaneity:false,geometryVerified:false,ancientGroundVerified:false}});
  }
  if(ISLAMIC_PHASES.has(phase))cores.push({id:`j3k:${phase}:independent:monument:rock-sanctuary-context`,type:'monument',confidence:'inferred',
   geometry:{frame:'canonical-dem-enu',status:'authored-context-not-surveyed',primitive:'polygon',polygon:rectangle(0,-180,80,80)},
   source:{urls:[ROCK_SOURCE],authority:'octagonal shrine and dome form context; coordinates and dimensions authored for schematic display'},
-  metadata:{name:phase==='crusader'?'岩石圓頂建築／Templum Domini（概略量體）':'岩石圓頂建築（概略量體）',coreProfile:'octagonal-rock-shrine',referencePeriod:'post-691/692; phase-specific alterations not resolved',wholePhaseSimultaneity:false,geometryVerified:false,ancientGroundVerified:false}});
+  metadata:{placeId:'j3k:place:northern-sacred-hill',placeRelation:'same-hill-not-same-ancient-building',name:phase==='crusader'?'岩石圓頂建築／Templum Domini（概略量體）':'岩石圓頂建築（概略量體）',coreProfile:'octagonal-rock-shrine',referencePeriod:'post-691/692; phase-specific alterations not resolved',wholePhaseSimultaneity:false,geometryVerified:false,ancientGroundVerified:false}});
  return cores;
 }
 // One aggregate mesh per registered core, not independently registered fragments.

@@ -57,6 +57,7 @@ jobs:
           node scripts/verify_jerusalem_3000_source_scopes.mjs
           node scripts/verify_jerusalem_3000_source_spatial.mjs
           node scripts/verify_jerusalem_3000_spatial_skeleton.mjs
+          node scripts/verify_jerusalem_3000_shared_places.mjs
           node scripts/verify_jerusalem_3000_persistent_world.mjs
           node scripts/verify_jerusalem_3000_independent_later.mjs
           node scripts/verify_jerusalem_3000_overview_housing.mjs
