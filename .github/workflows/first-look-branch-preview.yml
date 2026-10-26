@@ -145,6 +145,14 @@ jobs:
                             foldImage:fold.backgroundImage,
                             foldOpacity:Number(fold.opacity)};
                         })(),
+                        contentsTypography:(()=>{
+                          const major=document.querySelector('.dual-contents__head h2');
+                          const selectors='.dual-contents__head span,.dual-movement h3,.dual-movement h3 em,.dual-movement li b,.dual-entry__column,.dual-entry__column small,.dual-work,.dual-movement__interlude,.dual-contents__foot';
+                          const secondary=[...document.querySelectorAll(selectors)];
+                          const heavy=secondary.filter(el=>parseInt(getComputedStyle(el).fontWeight,10)>200);
+                          return {majorWeight:major?getComputedStyle(major).fontWeight:null,
+                            secondaryCount:secondary.length,heavy:heavy.map(el=>el.className||el.tagName)};
+                        })(),
                         officialWorks:document.querySelectorAll('.dual-work').length,
                         readerReach:(()=>{
                           const index=document.querySelector('.dual-contents__index');
@@ -328,6 +336,8 @@ jobs:
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
                     if(p===100&&m.starTextOverlap>2)errors.push('MORNING_STAR_OVERLAPS_CONTENTS_READING');
                     if(p===100&&(!m.starRegisterSafe||!m.starAboveContents))errors.push('MORNING_STAR_MUST_BE_ABOVE_CONTENTS_REGISTER');
+                    if(p===100&&(m.contentsTypography.majorWeight!=='400'||m.contentsTypography.secondaryCount<45||m.contentsTypography.heavy.length))
+                      errors.push('CONTENTS_SECONDARY_TYPE_MUST_BE_AIR_200');
                     if(p===100&&!m.readerReach.keyboard)errors.push('CONTENTS_NOT_KEYBOARD_ACCESSIBLE');
                     if(p===100&&width>1100&&!m.readerReach.desktopReachable)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_REACHABLE');
                     if(p===100&&width>1100&&!m.readerReach.desktopVisible)errors.push('DESKTOP_CONTENTS_MUST_NOT_HIDE_ARTICLES_BEHIND_INNER_SCROLL');

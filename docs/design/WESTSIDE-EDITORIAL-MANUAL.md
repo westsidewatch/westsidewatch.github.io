@@ -288,3 +288,11 @@ These files remain archived intact; they do not operate as independent OS author
 - **雜誌過場**保持已定的方向：午夜藍由上接管日程，黎明金由下接管活水；當純色完成接管後，應有本刊自己的晨星 v5.3、Scheme 02 耶路撒冷石城與書頁斜向刻線進場，而不是延續教會的水紋，也不得用任意紋理填補空白。
 - **封面光的參考原則（2026-10-25《西望：城市之光》）：**使用獲選的 02「建築交錯」。光從原城門洞**底部門檻**出來，不從拱門上部或畫外發射；門口亮面、第一折面、向外展開的光面與旁側石影必須共用邊界。主光為乾淨的米白／奶油金幾何折面，旁側是深一級的石材棕灰陰影，保留原石紋質地及清晰的光暗方向。已否決規則「只允許負形、禁止實心楔形」屬誤讀參考圖，撤銷；禁止以均勻短橫線、放射扇、任意 path 數量、裝飾濾鏡冒充光影。文字既定三行與中文都保持在門內、中文位於光源上方。程式檢查只能守住幾何，藝術驗收須真實看圖。
 - **保護已確認資產**：Scheme 02 城垛距離與相對位置、官方刊頭 SVG、5:8 封面、1:1 Temple-stone Contents、CITY / OF / LIGHT 三行排法及 v5.3 晨星。28%、45%、58%、97% 皆須實際看畫面，未過藝術驗收保留 draft、不進 main。
+
+### 10.12 P2 Contents 極細字重與開源光效採納門檻（2026-10-26）
+
+- **Contents 是唯一大標題**，真正文章正文不在目錄內。四樂章 `WATCH/WALK/WITNESS/WORSHIP`、十二欄目中英文、篇名清單、章節數字、INTERLUDE、期號和「目錄」全部是極細層，中文使用 OS Chiron Hei HK WS 200，不能被局部覆蓋設成 600/700。這是《西望》Contents 的明確編輯例外；其他版塊的正文 400 和短大標題 600 不受影響。
+- **英文字體技術限制**：Bodoni Moda 及 Bodoni Moda SC 目前真實字形的最低重量是 400。附屬英文元素宣告 CSS 200，會匹配到字體已有的最輕 400 字形；不能靠降透明度、模糊濾鏡假裝「極細」，也不能悄悄換掉 Design OS 的官方英文。主大標題 `Contents.` 保持 Bodoni 400。
+- **測試全覆蓋：**目錄標籤、四樂章、欄目、英文對譯、文章標題、編號、間奏、期號均需 computed-style 掃描，不只改其中一種。四欄長文在薄字重時保持足夠墨色、可讀字號與鍵盤／觸控捲動，不能以低對比或截斷模擬留白。
+- **多雷開源探索（後台、不得上讀者頁）：**[Erkaman / glsl-godrays](https://github.com/Erkaman/glsl-godrays) 使用 light-source occlusion texture 阻止光穿過遮擋物，適合城門的真遮光，但要求 WebGL 多 pass 與精確 2D 門洞 mask。[Taha Bakri / scroll-reveal](https://github.com/tahabakri/scroll-reveal)（MIT）示範 GSAP 鎖定捲動的 SVG 負形視窗與材質揭露，技術上可做「門檻→折面」而不移植 demo 的霓虹美術。[notoriousb1t / polymorph](https://github.com/notoriousb1t/polymorph)（MIT）可 morph 已畫好的相接 SVG 折面，但不會自動做出合格構圖。[pancao / apple-flare-halo-shader](https://github.com/pancao/apple-flare-halo-shader)（MIT）擅長鏡頭耀斑／光譜光暈，與本期印刷石城不匹配，**不採用**。
+- **真正採納須先匹配參考：**本期被選中的《西望：城市之光》02「建築交錯」，門檻共邊、米白主光、深一級石影、石紋與方向必須在靜態畫面先成立，再用開源遮罩／遮擋／捲動技術處理過場。絕不可把任意 God Rays、扇形射線、兩塊無意義色面和他版水紋直接貼上。CI 合格不代表藝術合格；沒看過分幀真圖就不准說定稿。
