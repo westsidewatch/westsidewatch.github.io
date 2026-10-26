@@ -100,7 +100,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    Four movements occupy four editorial columns, protecting all twelve desk
    names and the known article titles from the retained lead type below. */
 @media(min-width:1101px){
- .dual-contents__index{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:max-content;column-gap:clamp(10px,1.7cqi,17px);row-gap:0;flex:0 0 auto;height:36%;max-height:36%;overflow-y:auto;align-content:start;padding:1px 2px 3px}
+ .dual-contents__index{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:max-content;column-gap:clamp(10px,1.7cqi,17px);row-gap:0;flex:0 0 auto;height:45%;max-height:45%;overflow-y:auto;align-content:start;padding:1px 2px 3px}
  .dual-movement h3{font-size:clamp(18px,3.0cqi,24px);padding-top:6px;margin-bottom:6px;gap:5px}
  .dual-movement h3 em{font-size:.45em}
  .dual-movement ol{gap:4px}
@@ -546,6 +546,7 @@ html.dual-embed .dual-film__credit{display:none}
  </a>
 </section>
 <details class="dual-overview"><summary>DESIGN NOTES / EDITORIAL REVIEW</summary><div class="dual-overview__detail">
+  <p><strong>5:8 × 正方形｜現行唯一候選：</strong>官方刊名 SVG 固定於 5:8 直立封面上沿，右下 CITY OF LIGHT 與城門金色投影為 Vol.00 專屬創作；Contents 為獨立正方形，晨星 3D 在此升起。七色功能書脊橫貫兩頁、沿同一時鐘翻轉，點擊直接進入雜誌專頁。曾測試的「西望」鉛字向量保留於工程但不再顯示。以下是已存檔的歷史候選記錄，不能當作現行設計要求。</p>
  <p><strong>第五輪藝術修正：</strong>原教會右／左半屏依序以 clip-path 接管，拒絕整塊從畫面外砸入；新加射線已移除，保留晨星原刻線。左頁七個獨立的「西望」字標因互相覆蓋而被否決，改為一組官方原始向量字形的七道斜向印刷色版，隨滾動依序顯現，最終構成唯一巨型「西望」。封面仍使用真城牆＋原聖殿石底紋，Contents 已找回 Vol.00 確認的十項文章題名及兩位講員。</p>
  <p><strong>第七輪實際藝術候選：</strong>官方 SVG「西望」由七條互相錯開的字形印帶組成，合計十一個完整的「西望」，不再把一個巨大字標切成七片；參考《50》的跨頁文字骨架，但保留 Westside 自己的七色印刷身份。原耶路撒冷城牆與聖殿石底紋合併到同一個 City DOM，一次升起、不再脫節。禁止額外線條／生成圖片；尚需實景驗收。</p>
  <p><strong>第六輪回歸修正：</strong>人工截圖發現 WATCH 長篇名進入 WITNESS 樂章標題。改用內容高度下限的 grid track，先保證任何樂章不重疊，裝不下時交由既有目錄卷軸完整呈現。禁止為了填滿紙面犧牲內容完整性。</p>
