@@ -51,7 +51,7 @@ jobs:
       - name: Review asymmetric 5:8 cover + square Contents and seven-colour spine
         run: |
           npm install --no-save --no-package-lock playwright
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
           mkdir -p artifacts/p2-dual-square
           python3 -m http.server 4173 --directory public >/tmp/p2-dual-square-server.log 2>&1 &
           server=$!
@@ -71,6 +71,16 @@ jobs:
             throw Error('RETIRED_NAMES_OR_WALL_VARIANTS_FOUND_IN_P2_SOURCE');
           if(!markup.includes('--ws-vol00-wall-start:13.125%') || !markup.includes('grid-template-columns:repeat(4,minmax(0,1fr))') || !markup.includes('height:56%;max-height:56%'))
             throw Error('FIXED_WALL_AND_SEPARATE_CONTENTS_READING_ZONE_REQUIRED');
+          // A single issue canon for P2 and the actual Hugo /vol-00/ consumer.
+          const volData=fs.readFileSync('data/volumes/vol-00.yaml','utf8');
+          const movementNames=[...volData.matchAll(/^    name: "(Watch|Walk|Witness|Worship)"$/gm)].map(m=>m[1]);
+          const columnNos=[...volData.matchAll(/^      - number: "([0-9][0-9])"$/gm)].map(m=>m[1]);
+          if(movementNames.join('|')!=='Watch|Walk|Witness|Worship'||
+             columnNos.join('|')!=='01|02|03|04|05|06|07|08|09|10|11|12'||
+             !volData.includes('modulation: "WATCH → WALK"')||
+             !volData.includes('modulation: "WALK → WITNESS"')||
+             !volData.includes('modulation: "WITNESS → WORSHIP"'))
+            throw Error('VOL00_HUGO_DATA_MUST_MATCH_LATEST_FOUR_MOVEMENT_EDITORIAL_CANON');
 
           const states=[['night-half',12,'cover-right'],['gold-half',33,'cover-right'],['gold-complete',44,'cover-right'],['dawn-arrival',54,'cover-right'],['morning-star',68,'cover-right'],['cover-and-star',82,'cover-right'],['temple-stone-transition',93,'cover-right'],['temple-stone-contents',100,'cover-right']];
           (async()=>{
@@ -216,6 +226,7 @@ jobs:
                             oldGateHidden:getComputedStyle(wall.querySelector('.dual-cover__gate')).display==='none'};
                         })(),
                         starRegisterSafe:(()=>{const star=document.getElementById('dual-star').getBoundingClientRect(),zone=document.getElementById('dual-contents-star-zone').getBoundingClientRect();return star.top>=zone.top-4&&star.bottom<=zone.bottom+4;})(),
+                        starAboveContents:(()=>{const zone=document.getElementById('dual-contents-star-zone').getBoundingClientRect(),head=document.querySelector('.dual-contents__head').getBoundingClientRect(),index=document.querySelector('.dual-contents__index').getBoundingClientRect();return zone.bottom<=head.top+3&&head.bottom<=index.top+32;})(),
                        starTextOverlap:(()=>{
                           const r=document.getElementById('dual-star').getBoundingClientRect();
                           const visual={left:r.left+r.width*.18,right:r.right-r.width*.18,
@@ -267,9 +278,12 @@ jobs:
                             flip:Number(root.dataset.spineFlip),colorBands:leaves.length,
                             leftOfContents:Math.abs(r.right-panels.left)<=3&&
                               Math.abs(r.top-panels.top)<=3&&Math.abs(r.bottom-panels.bottom)<=3,
-                            sevenVerticalSingles:bands.length===7&&bands.every((b,i)=>
-                              Math.abs(b.width-r.width)<=3&&Math.abs(b.height-r.height/7)<=3&&
-                              (i===0||Math.abs(b.top-bands[i-1].bottom)<=3)),
+                            intactRotatedRibbon:bands.length===7&&
+                              getComputedStyle(bar.querySelector('.dual-continuum__spectrum')).flexDirection==='row'&&
+                              getComputedStyle(bar).transform!=='none'&&
+                              bands.every(b=>b.height<r.height/4&&b.width<=r.width+4)&&
+                              (Math.max(...bands.map(b=>b.bottom))-Math.min(...bands.map(b=>b.top)))<r.height*.55&&
+                              document.getElementById('dual-continuum-rotor').style.transform.includes('rotateX('),
                             solidReversibleFace:getComputedStyle(back).backgroundImage==='none'&&
                               getComputedStyle(back).backgroundColor!=='rgba(0, 0, 0, 0)'};
                         })(),
@@ -293,7 +307,7 @@ jobs:
                       errors.push('ORIGINAL_GATE_MUST_KEEP_STONE_DOOR_WITH_ALPHA_SKYLINE_MASK');
                     if(p===100&&m.movementOverlap>2)errors.push('CONTENTS_MOVEMENT_OVERLAP');
                     if(p===100&&m.starTextOverlap>2)errors.push('MORNING_STAR_OVERLAPS_CONTENTS_READING');
-                    if(p===100&&!m.starRegisterSafe)errors.push('MORNING_STAR_OUTSIDE_ENGRAVED_REGISTER');
+                    if(p===100&&(!m.starRegisterSafe||!m.starAboveContents))errors.push('MORNING_STAR_MUST_BE_ABOVE_CONTENTS_REGISTER');
                     if(p===100&&!m.readerReach.keyboard)errors.push('CONTENTS_NOT_KEYBOARD_ACCESSIBLE');
                     if(p===100&&width>1100&&!m.readerReach.desktopReachable)errors.push('DESKTOP_TWELVE_ENTRIES_NOT_REACHABLE');
                     if(p===100&&width<=1100&&!m.readerReach.mobileScrollable)errors.push('MOBILE_CONTENTS_SCROLL_NOT_AVAILABLE');
@@ -317,7 +331,7 @@ jobs:
                        const gap=(width>820)?Math.abs(m.panels[1].right-m.panels[0].left):Math.abs(m.panels[1].bottom-m.panels[0].top);
                        if(gap>3)errors.push('ASYMMETRIC_SPREAD_NOT_ADJACENT');
                        if(m.spine.targets.join('|')!=='/church/|/journal/|/one/|/olive/|/dawn-library/|/cinema/|/daylight-cafe/'||m.spine.colorBands!==7||!m.spine.clickable||m.spine.opacity<.98)errors.push('SEVEN_COLOUR_FUNCTIONAL_SPINE_MISSING');
-                       if(!m.spine.leftOfContents||!m.spine.sevenVerticalSingles||!m.spine.solidReversibleFace)errors.push('SPINE_MUST_BE_VERTICAL_LEFT_OF_CONTENTS_SEVEN_SOLID_OS_COLOURS');
+                       if(!m.spine.leftOfContents||!m.spine.intactRotatedRibbon||!m.spine.solidReversibleFace)errors.push('SPINE_MUST_BE_ORIGINAL_HORIZONTAL_RIBBON_ROTATED_INTACT_LEFT_OF_CONTENTS');
                        if(width>1100&&!m.spine.visibleBottom)errors.push('FUNCTIONAL_SPINE_BELOW_VIEWPORT');
                      }
                      if(p===82&&!(m.spine.flip>.02&&m.spine.flip<.5))errors.push('SPINE_FLIP_MUST_START_WITH_COVER');
@@ -351,8 +365,16 @@ jobs:
                       return {variant:cv.querySelector('.dual-cover').dataset.coverVariant,view,mast:part('mast'),title,zh,
                         mastLoaded:src.complete&&src.naturalWidth>0,
                         mastRatio:part('mast').width/view.width,
-                        cityOfAttached:(()=>{const a=box(cv.querySelector('.dual-cover__en span:first-child'));const b=box(cv.querySelector('.dual-cover__en span:last-child'));return Math.abs(a.left-b.left)<view.width*.025&&a.bottom<b.top+view.height*.045;})(),
-                        lightAtRayOrigin:(()=>{const light=box(cv.querySelector('.dual-cover__en span:last-child'));return Math.abs(light.bottom-(view.top+view.height*.704625))<view.height*.065;})(),
+                        titleStackInsideGate:(()=>{const lines=[...cv.querySelectorAll('.dual-cover__en span')];const y=lines.map(box);const val=lines.map(x=>x.textContent.trim());const gateLeft=view.left+view.width*.28,gateRight=view.right-view.width*.28;
+                          return lines.length===3&&val.join('|')==='CITY|OF|LIGHT'&&
+                            lines.every(el=>getComputedStyle(el).position==='static')&&
+                            y[0].bottom<=y[1].top+3&&y[1].bottom<=y[2].top+3&&
+                            y[0].top<y[1].top&&y[1].top<y[2].top&&
+                            y.every(v=>v.left>=gateLeft-view.width*.08&&v.right<=gateRight+view.width*.08)&&
+                            title.top>view.top+view.height*.36&&title.bottom<view.top+view.height*.72&&
+                            zh.top>=y[2].top;
+                        })(),
+                        chineseAboveRays:zh.bottom<view.top+view.height*.704625+2,
                         wallClearance:title.top-wall.bottom,
                         starCentreError:Math.abs((star.left+star.right)/2-(starPage.left+starPage.right)/2),
                         starScale:star.width/starPage.width,
@@ -365,7 +387,7 @@ jobs:
                            if(!glyph)return false;
                            const range=document.createRange();range.selectNodeContents(glyph);
                            const ink=range.getBoundingClientRect();
-                           return Math.abs((ink.left+ink.right)/2-(view.left+view.right)/2)<view.width*.065&&ink.width>=view.width*.45;
+                           return Math.abs((ink.left+ink.right)/2-(view.left+view.right)/2)<view.width*.06&&ink.width>=view.width*.22&&ink.width<=view.width*.48;
                          })(),
                         titleGroupUnified:!!cv.querySelector('.dual-cover__editorial')&&
                           ['en','zh'].every(name=>cv.querySelector('.dual-cover__'+name)?.parentElement===cv.querySelector('.dual-cover__editorial')),
@@ -421,8 +443,8 @@ jobs:
                     // at 21cqi on the fixed 5:8 page, or 13.125% of cover height.
                     if(variant==='masthead'&&(metrics.cityTopRatio<.125||metrics.cityTopRatio>.14||metrics.wallHeightRatio<.85))
                       errors.push('VOL00_SCHEME_02_CITY_ORIGIN_AUTHORITY_DRIFT');
-                    if(variant==='masthead'&&(!metrics.headlineCentered||!metrics.sloganHidden||!metrics.titleGroupUnified||!metrics.cityOfAttached||!metrics.lightAtRayOrigin))
-                      errors.push('CENTER_LIGHT_NOT_PRIMARY_EDITORIAL_HEADLINE');
+                    if(variant==='masthead'&&(!metrics.headlineCentered||!metrics.sloganHidden||!metrics.titleGroupUnified||!metrics.titleStackInsideGate||!metrics.chineseAboveRays))
+                      errors.push('CITY_OF_LIGHT_THREE_LINES_AND_CHINESE_MUST_REMAIN_INSIDE_GATE_ABOVE_RAYS');
                     if(variant==='masthead'&&(!metrics.starInContents||!metrics.mastheadProtected||!metrics.starAboveSheet))
                       errors.push('STAR_CONTENTS_POSITION_OR_MASTHEAD_PROTECTION_DRIFT');
                     if(variant==='masthead'&&(!metrics.originalStoneWithSkyMask||
@@ -472,10 +494,11 @@ jobs:
                 const opened=await journal.evaluate(b=>({
                   expanded:b.getAttribute('aria-expanded'),
                   width:b.getBoundingClientRect().width,
+                  height:b.getBoundingClientRect().height,
                   others:[...document.querySelectorAll('#dual-continuum button[data-realm]')]
                     .filter(x=>x!==b&&x.getAttribute('aria-expanded')==='true').length
                 }));
-                if(opened.expanded!=='true'||opened.others!==0||opened.width<28)
+                if(opened.expanded!=='true'||opened.others!==0||opened.height<80||opened.height<=opened.width*3)
                   realmErrors.push('COLOUR_LEAF_DID_NOT_EXPAND');
                 if(screen==='desktop'){
                   await journal.click();
