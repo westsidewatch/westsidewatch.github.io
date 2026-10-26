@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>if(new URLSearchParams(location.search).get("embed")==="1")document.documentElement.classList.add("dual-embed")</script>
-<title>Westside P2 · Cover → Seven-color 西望 → Morning Star → Temple-stone Contents</title>
-<meta name="description" content="原有教會活水動效連續銜接雜誌：封面先進、七色斜向西望逐行滾入、晨星升起、西望與封面停駐，最後原版聖殿石紋 Contents 接替。">
+<title>Westside P2 · 5:8 Cover / Square Contents / Morning Star / Seven-colour Folio</title>
+<meta name="description" content="教會活水銜接西望 Vol.00：固定 5:8 直立封面與正方形 Contents，晨星從黎明金上升，七色功能書脊翻頁，保留原始聖殿石紋目錄。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
 <style>
 *{box-sizing:border-box}
@@ -340,11 +340,113 @@ html.dual-embed .dual-stage{height:100svh;min-height:0;background:transparent}
 html.dual-embed .dual-contents__index{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
 html.dual-embed .dual-film__credit{display:none}
 
+
+/* EDITORIAL PROOF 09 — approved 5:8 portrait masthead / 1:1 Contents.
+   No second Design OS: inks, typography and seven realm hues resolve through
+   the existing global tokens. The official masthead asset is not altered. */
+.dual-cover[data-cover-variant="masthead"]{
+ background:linear-gradient(180deg,#10263e 0%,#102a43 47%,#24445c 100%);
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
+ top:1.6%;left:3%;width:94%;height:21%;max-width:94%;max-height:21%;
+ object-position:center top;
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
+ right:5%;bottom:8.5%;width:88%;gap:clamp(4px,.8cqi,10px);
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en{
+ font-size:clamp(39px,11cqi,86px);line-height:.84;letter-spacing:-.067em;
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:first-child{
+ font-size:.66em;line-height:1.03;letter-spacing:-.05em;
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__en span:last-child{
+ font-size:1.23em;line-height:.88;letter-spacing:-.075em;
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__zh{
+ font-size:clamp(13px,3.6cqi,24px);font-weight:700;line-height:1.25;
+}
+.dual-cover[data-cover-variant="masthead"] .dual-cover__fold-light{
+ mix-blend-mode:multiply;filter:none;
+}
+.dual-tile--contents .dual-cover__star{
+ position:absolute;z-index:2;left:50%;top:50%;width:clamp(112px,40cqi,290px);
+ aspect-ratio:1;opacity:0;pointer-events:none;overflow:hidden;
+}
+.dual-tile--contents .dual-contents::after{
+ content:"";position:absolute;z-index:1;pointer-events:none;
+ left:29%;right:29%;bottom:12%;height:29%;
+ background:url('/images/westside-watch-morning-star.svg') center/contain no-repeat;
+ opacity:.075;mix-blend-mode:multiply;
+}
+/* Functional seven-colour page-edge: one horizontal ribbon spanning both
+   asymmetrical leaves. Its CSS 3D flip is driven by the existing P2 clock. */
+.dual-continuum{
+ --active:var(--ws-first-light,#a2872a);
+ position:absolute;z-index:15;opacity:0;pointer-events:none;overflow:hidden;
+ display:block;text-decoration:none;color:#fff;perspective:850px;
+ box-shadow:0 8px 27px rgba(4,17,31,.19);
+}
+.dual-continuum__rotor{
+ position:absolute;inset:0;transform-style:preserve-3d;will-change:transform;
+}
+.dual-continuum__face{
+ position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;
+ gap:10px;padding:7px clamp(12px,2cqi,27px);backface-visibility:hidden;
+ -webkit-backface-visibility:hidden;
+ font:400 clamp(9px,1.25cqi,14px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.07em;white-space:nowrap;
+}
+.dual-continuum__face em{font:600 .92em/1 var(--ws-type-display-zh,sans-serif);letter-spacing:0}
+.dual-continuum__front{background:var(--active);color:#13283d}
+.dual-continuum__back{
+ transform:rotateX(180deg);
+ background:linear-gradient(90deg,
+ var(--ws-water,#5b8fa8),var(--ws-first-light,#a2872a),
+ var(--ws-pale-gold,#cebd74),var(--ws-olive,#738a5a),
+ var(--ws-harvest,#b8944a),var(--ws-crimson,#a14d57),
+ var(--ws-daylight-mauve,#af809a));
+ color:#101e2e;
+}
+.dual-continuum__spectrum{
+ position:absolute;z-index:2;right:0;top:0;bottom:0;display:grid;
+ grid-template-columns:repeat(7,clamp(7px,1.2cqi,15px));
+ border-left:1px solid rgba(0,0,0,.25);
+}
+.dual-continuum__spectrum i{transform-origin:bottom;display:block;background:var(--c)}
+.dual-continuum__spectrum i:nth-child(1){--c:var(--ws-water,#5b8fa8)}
+.dual-continuum__spectrum i:nth-child(2){--c:var(--ws-first-light,#a2872a)}
+.dual-continuum__spectrum i:nth-child(3){--c:var(--ws-pale-gold,#cebd74)}
+.dual-continuum__spectrum i:nth-child(4){--c:var(--ws-olive,#738a5a)}
+.dual-continuum__spectrum i:nth-child(5){--c:var(--ws-harvest,#b8944a)}
+.dual-continuum__spectrum i:nth-child(6){--c:var(--ws-crimson,#a14d57)}
+.dual-continuum__spectrum i:nth-child(7){--c:var(--ws-daylight-mauve,#af809a)}
+.dual-continuum:hover{filter:brightness(1.09)}
+.dual-continuum:focus-visible{outline:3px solid #faf3e7;outline-offset:3px}
+@media(max-width:820px){
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__mast{
+  top:1.6%;left:3%;width:94%;height:21%;max-width:94%;max-height:21%;
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__editorial{
+  right:5%;bottom:8%;width:88%;
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__en{
+  font-size:clamp(32px,11cqi,55px);
+ }
+ .dual-cover[data-cover-variant="masthead"] .dual-cover__zh{font-size:clamp(12px,3.6cqi,18px)}
+ .dual-tile--contents .dual-cover__star{width:clamp(112px,45cqi,205px)}
+ .dual-continuum__face{font-size:clamp(8px,2.7cqi,12px);padding:6px 10px}
+ .dual-continuum__face span:last-child{padding-right:65px}
+}
+@media(prefers-reduced-motion:reduce){
+ .dual-continuum__rotor{will-change:auto}
+}
+
 </style>
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
- <span class="dual-ui__name">WESTSIDE WATCH / P2 / COVER → 西望 → STAR → CONTENTS</span>
+ <span class="dual-ui__name">WESTSIDE WATCH / P2 / 5:8 COVER → STAR → CONTENTS</span>
  <nav class="dual-ui__controls" aria-label="實驗場景">
   <button type="button" data-position="cover-left" aria-pressed="false">封面在左</button>
   <button type="button" data-position="cover-right" aria-pressed="true">封面在右</button>
@@ -356,16 +458,16 @@ html.dual-embed .dual-film__credit{display:none}
     <button type="button" data-wall-position="third" aria-pressed="false">C · 藍區 2/3</button>
    </div>
   <button type="button" data-snap="0.14">封面進場</button>
-  <button type="button" data-snap="0.54">西望逐行</button>
+  <button type="button" data-snap="0.54">晨星顯現</button>
   <button type="button" data-snap="0.68">晨星升起</button>
-  <button type="button" data-snap="0.82">封面＋西望</button>
+  <button type="button" data-snap="0.82">七色書脊翻頁</button>
   <button type="button" data-snap="1">石紋 Contents</button>
   <a href="/experiments/p2-magazine-transition-lab.html?final=1">原 P2 動效 ↗</a>
  </nav>
  <label class="dual-ui__range" for="dual-progress">展開進度 <input type="range" id="dual-progress" min="0" max="100" value="100" step="1"><output id="dual-value" for="dual-progress">100%</output></label>
 </header>
 <main>
-<section class="dual-stage" id="dual-stage" data-phase="contents-final" aria-label="P2 封面先進，七色西望滾動，晨星升起，再由聖殿石紋目錄接替">
+<section class="dual-stage" id="dual-stage" data-phase="contents-final" aria-label="P2 直立 5:8 封面、正方形目錄、晨星與七色功能書脊銜接聖殿石紋目錄">
  <div class="dual-film" id="dual-film" aria-hidden="true">
   <iframe id="dual-film-frame" title="首頁原始王進城混剪，純背景且不傳播聲音" tabindex="-1" allow="autoplay" loading="eager" data-original-src="/preview/watch-city-vol00/hosanna/?cover=1"></iframe>
  </div>
@@ -381,20 +483,15 @@ html.dual-embed .dual-film__credit{display:none}
       <svg class="dual-cover__fold-light" id="dual-cover-folded-light" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
         <!-- Light begins on the DOORSTEP (y=650), not inside the pointed arch.
              Three joined geometric folds are contiguous in SVG coordinates. -->
-        <path d="M493 650 L507 650 L766 788 L730 818 Z" fill="#f4d67c" opacity=".88"/>
-        <path d="M730 818 L766 788 L81 887 L46 858 Z" fill="#d4a44b" opacity=".86"/>
-        <path d="M46 858 L81 887 L530 1000 L665 1000 Z" fill="#efc665" opacity=".74"/>
-        <path d="M730 818 L766 788 L784 803 L748 833 Z" fill="#a97e39" opacity=".55"/>
-        <path d="M46 858 L81 887 L126 898 L88 868 Z" fill="#fae09b" opacity=".59"/>
+        <path d="M491 660 L509 660 L975 969 L916 1000 Z" fill="#f4d67c" opacity=".56"/>
+        <path d="M491 660 L509 660 L680 1000 L548 1000 Z" fill="#e3b854" opacity=".48"/>
+        <path d="M491 660 L509 660 L105 1000 L0 975 Z" fill="#edc86c" opacity=".48"/>
+        <path d="M491 660 L503 660 L378 1000 L283 1000 Z" fill="#f7df9b" opacity=".36"/>
       </svg>
      </div>
      <img class="dual-cover__mast" src="/images/westside-watch-masthead-landscape.svg" alt="西望 WESTSIDE WATCH 正式雜誌標誌" loading="eager">
      <span class="dual-cover__series" lang="en"></span>
      <p class="dual-cover__tagline" lang="en">Watch for the Dawn</p>
-     <div class="dual-cover__star" id="dual-star" aria-hidden="true">
-       <iframe tabindex="-1" title="西望現有晨星 3D v5.3" src="/experiments/morning-star-3d-lab.html?asset=1&amp;autoplay=1&amp;speed=2.1" loading="eager"></iframe>
-       <div class="dual-cover__star-fallback"></div>
-     </div>
      <div class="dual-cover__editorial" aria-label="本期封面主題與導讀">
       <p class="dual-cover__en" id="dual-cover-en" lang="en"><span>CITY <em>OF</em></span> <span>LIGHT</span></p>
       <h1 class="dual-cover__zh" id="dual-cover-zh" lang="zh-Hant">守望，<span>一座光明的城</span></h1>
@@ -403,7 +500,7 @@ html.dual-embed .dual-film__credit{display:none}
      <span class="dual-cover__folio" id="dual-cover-folio" lang="en">THE NIGHT IS FAR SPENT / ROMANS 13:12</span>
     </div>
   </article>
-  <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="黎明金先演化七色西望字陣，最後替換為聖殿石紋 Contents">
+  <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="黎明金承載晨星，最後顯示正方形聖殿石紋 Contents">
    <svg class="dual-letterfield" id="dual-letterfield" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
      <defs>
       <mask id="ws-source-mask" x="0" y="0" width="432" height="218" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" style="mask-type:alpha">
@@ -412,6 +509,10 @@ html.dual-embed .dual-film__credit{display:none}
       <g id="ws-xiwang-original" mask="url(#ws-source-mask)"><rect width="432" height="218" fill="currentColor"/></g>
      </defs>
     </svg>
+     <div class="dual-cover__star" id="dual-star" aria-hidden="true">
+       <iframe tabindex="-1" title="西望現有晨星 3D v5.3" src="/experiments/morning-star-3d-lab.html?asset=1&amp;autoplay=1&amp;speed=2.1" loading="eager"></iframe>
+       <div class="dual-cover__star-fallback"></div>
+     </div>
    <div class="dual-contents" id="dual-stone-contents" aria-hidden="true" inert>
     <svg id="dual-contents-relief" class="dual-contents__relief" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"></svg>
     <span id="dual-relief-folio" class="dual-contents__relief-folio" aria-hidden="true">WESTSIDE WATCH / LETTERPRESS / VOL.00</span>
@@ -435,6 +536,13 @@ html.dual-embed .dual-film__credit{display:none}
    </div>
   </section>
  </div>
+ <a class="dual-continuum" id="dual-continuum" href="/journal/" aria-label="進入西望雜誌專頁，七色功能書脊">
+  <span class="dual-continuum__rotor" id="dual-continuum-rotor">
+   <span class="dual-continuum__face dual-continuum__front"><span>WESTSIDE WATCH <em>西望</em></span><span>OPEN THE JOURNAL ↗</span></span>
+   <span class="dual-continuum__face dual-continuum__back"><span>WESTSIDE WATCH / SEVEN COLOURS</span><span>ENTER ↗</span></span>
+  </span>
+  <span class="dual-continuum__spectrum" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+ </a>
 </section>
 <details class="dual-overview"><summary>DESIGN NOTES / EDITORIAL REVIEW</summary><div class="dual-overview__detail">
  <p><strong>第五輪藝術修正：</strong>原教會右／左半屏依序以 clip-path 接管，拒絕整塊從畫面外砸入；新加射線已移除，保留晨星原刻線。左頁七個獨立的「西望」字標因互相覆蓋而被否決，改為一組官方原始向量字形的七道斜向印刷色版，隨滾動依序顯現，最終構成唯一巨型「西望」。封面仍使用真城牆＋原聖殿石底紋，Contents 已找回 Vol.00 確認的十項文章題名及兩位講員。</p>
@@ -454,6 +562,7 @@ html.dual-embed .dual-film__credit{display:none}
  const radiance=document.getElementById('dual-radiance'),city=document.getElementById('dual-cover-city');
  const coverHeading=document.getElementById('dual-cover-zh'),coverFolio=document.getElementById('dual-cover-folio');
  const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol');
+ const rail=document.getElementById('dual-continuum'),railRotor=document.getElementById('dual-continuum-rotor');
  const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value'),buttons=[...document.querySelectorAll('[data-position]')],coverChoices=[...document.querySelectorAll('[data-cover-choice]')],wallChoices=[...document.querySelectorAll('[data-wall-position]')],coverArt=cover.querySelector('.dual-cover');
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
@@ -536,45 +645,63 @@ html.dual-embed .dual-film__credit{display:none}
  };
  function render(){
   const W=stage.clientWidth,H=stage.clientHeight,mobile=W<=820;
-  // FIRST preserve the original two halves of the Church spreads, so these
-  // planes REPLACE the existing layout rather than drop cards upon it.
-  // LATER the same planes shrink together into adjacent square folios.
+  // Church entry keeps the original two equal reveal planes. The final
+  // digital spread is deliberately asymmetric: square Contents + 5:8 cover.
+  // The functional seven-colour folio belongs to the whole spread, not either page.
   const fold=ease((progress-.755)/.105);
-  let w,h,leftX,leftY,rightX,rightY;
+  const barH=Math.max(30,Math.min(42,W*.033)),barGap=Math.max(5,Math.min(9,H*.012));
+  let coverW,coverH,contentsW,contentsH,coverX,coverY,contentsX,contentsY,railX,railY,railW;
+  const coverOnLeft=coverLeft;
   if(!mobile){
-   const mx=Math.max(16,W*.067),my=Math.max(18,H*.052);
-   const tile=Math.max(0,Math.min((W-2*mx)/2,H-2*my));
-   w=lerp(W/2,tile,fold);h=lerp(H,tile,fold);
-   leftX=(W-2*w)/2;leftY=(H-h)/2;rightX=leftX+w;rightY=leftY;
+    const mx=Math.max(16,W*.06),my=Math.max(18,H*.053);
+    const side=Math.max(0,Math.min((W-2*mx)/1.625,H-2*my-barH-barGap));
+    coverW=lerp(W/2,side*5/8,fold);
+    contentsW=lerp(W/2,side,fold);
+    coverH=contentsH=lerp(H,side,fold);
+    const spreadW=coverW+contentsW;
+    const spreadX=(W-spreadW)/2,spreadY=(H-coverH-(barH+barGap)*fold)/2;
+    coverX=coverOnLeft?spreadX:spreadX+contentsW;
+    contentsX=coverOnLeft?spreadX+coverW:spreadX;
+    coverY=contentsY=spreadY;
+    railX=spreadX;railY=spreadY+coverH+barGap;railW=spreadW;
   }else{
-   const mx=Math.max(7,W*.025),my=6;
-   const tile=Math.max(0,Math.min(W-2*mx,(H-2*my)/2));
-   w=lerp(W,tile,fold);h=lerp(H/2,tile,fold);
-   leftX=(W-w)/2;leftY=(H-2*h)/2;rightX=leftX;rightY=leftY+h;
+    const mx=Math.max(7,W*.025),my=6;
+    const side=Math.max(0,Math.min(W-2*mx,(H-2*my-barH-barGap)/2.6));
+    coverW=contentsW=lerp(W,side,fold);
+    coverH=lerp(H/2,side*8/5,fold);
+    contentsH=lerp(H/2,side,fold);
+    const stackY=(H-coverH-contentsH-(barH+barGap)*fold)/2;
+    coverX=(W-coverW)/2;contentsX=(W-contentsW)/2;
+    coverY=coverOnLeft?stackY:stackY+contentsH;
+    contentsY=coverOnLeft?stackY+coverH:stackY;
+    railX=(W-contentsW)/2;railY=stackY+coverH+contentsH+barGap;railW=contentsW;
   }
   const blue=reduce?(progress>=.22?1:0):ease((progress-.02)/.20);
   const dawn=reduce?(progress>=.435?1:0):ease((progress-.225)/.21);
-  // The accepted Church geometry is the entry surface. Right-hand schedule
-  // is taken over FROM TOP, and left-hand water FROM BOTTOM.
-  const coverOnLeft=coverLeft;
-  const coverX=coverOnLeft?leftX:rightX,coverY=coverOnLeft?leftY:rightY;
-  const goldX=coverOnLeft?rightX:leftX,goldY=coverOnLeft?rightY:leftY;
-  // Full content stays IN its original half of the Church spread;
-  // only the revealed portion grows with scroll, not the whole square.
-  pose(cover,coverX,coverY,w,h);
-  pose(gold,goldX,goldY,w,h);
+  pose(cover,coverX,coverY,coverW,coverH);
+  pose(gold,contentsX,contentsY,contentsW,contentsH);
+  pose(rail,railX,railY,railW,barH);
+  const railReveal=reduce?(progress>=.86?1:0):ease((progress-.77)/.14);
+  const railFlip=reduce?(progress>=.90?1:0):ease((progress-.80)/.155);
+  rail.style.opacity=String(railReveal);
+  rail.style.pointerEvents=railReveal>.97?'auto':'none';
+  railRotor.style.transform='rotateX('+(-180*railFlip).toFixed(3)+'deg)';
+  [...rail.querySelectorAll('.dual-continuum__spectrum i')].forEach((swatch,i)=>{
+    const on=reduce?(progress>=.90?1:0):ease((progress-.82-i*.008)/.075);
+    swatch.style.transform='scaleY('+(.12+.88*on).toFixed(3)+')';
+  });
+  stage.dataset.spread='contents-square-cover-5-8';
+  stage.dataset.spineFlip=railFlip.toFixed(3);
   cover.style.clipPath='inset(0 0 '+((1-blue)*100).toFixed(3)+'% 0)';
   gold.style.clipPath='inset('+((1-dawn)*100).toFixed(3)+'% 0 0 0)';
   stage.dataset.blueReveal=blue.toFixed(4);
   stage.dataset.dawnReveal=dawn.toFixed(4);
-  const lettersFade=1-ease((progress-.855)/.115);
-  // Clear the upper 58% of the original lead-type SVG before showing
-  // articles. Its lower registers remain as their exact copies emerge.
-  // One source progress value drives both, including reverse scroll.
-  const upperClear=ease((progress-.858)/.064);
-  letters.style.clipPath='inset('+(58*upperClear).toFixed(3)+'% 0 0 0)';
-  letters.style.opacity=String(lettersFade);
-  layoutPrint(w,h);
+  // The lead-type experiment is archived in the DOM, not published.
+  // Its original vectors and registrations remain intact and reversible.
+  letters.style.clipPath='none';
+  letters.style.opacity='0';
+  letters.style.visibility='hidden';
+  layoutPrint(contentsW,contentsH);
   bands.forEach(({band},register)=>{
    const on=reduce?(progress>=.58?1:0):ease((progress-(.438+register*.025))/.064);
    band.style.opacity=String(on*(register===3?1:.89));
@@ -584,7 +711,7 @@ html.dual-embed .dual-film__credit{display:none}
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
    const dawnRise=reduce?(progress>=.53?1:0):ease((progress-.555)/.185);
-   const starRise=reduce?(progress>=.53?1:0):ease((progress-.605)/.12);
+   const starRise=reduce?(progress>=.53?1:0):ease((progress-.475)/.16);
    // Crest and temple-stone are ONE object with one motion authority.
    city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
    city.style.opacity=String(reduce?dawnRise:ease((progress-.565)/.085));
@@ -594,8 +721,8 @@ html.dual-embed .dual-film__credit{display:none}
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
    coverFolio.style.opacity=String(reduce?dawnRise:ease((progress-.71)/.09));
    radiance.style.opacity=String(starRise);
-   star.style.opacity=String(starRise);
-   star.style.transform='translate(-50%,'+(95-95*starRise).toFixed(2)+'%)';
+   star.style.opacity=String(starRise*(1-ease((progress-.865)/.115)));
+   star.style.transform='translate(-50%,'+(45-95*starRise).toFixed(2)+'%)';
    foldedLight.style.opacity=String(reduce?dawnRise:ease((progress-.655)/.13));
 
   // Only AFTER the complete "cover + 西望" hold does the canonical
@@ -603,8 +730,8 @@ html.dual-embed .dual-film__credit{display:none}
   const stone=ease((progress-.865)/.125);
   // One scroll clock. Existing impression stays as lower-paper relief.
   const reliefOn=ease((progress-.875)/.105);
-  relief.style.opacity=String(.32*reliefOn);
-  reliefFolio.style.opacity=String(.64*reliefOn);
+  relief.style.opacity='0'; // stored print trial: not in this edition
+  reliefFolio.style.opacity='0';
   residualBands.forEach(({source,retained})=>{
    retained.setAttribute('transform',source.getAttribute('transform')||'translate(0 0)');
    retained.style.opacity=source.style.opacity||'1';
@@ -617,11 +744,11 @@ html.dual-embed .dual-film__credit{display:none}
   contents.inert=stone<.98;
   film.style.opacity=String(ease((progress-.70)/.24));
   film.style.visibility=progress<=.69?'hidden':'visible';
-  stage.dataset.phase=progress<.22?'cover-arrival':progress<.60?'xiwang-lines':
-   progress<.72?'morning-star-rise':progress<.865?'cover-and-xiwang':
+  stage.dataset.phase=progress<.22?'cover-arrival':progress<.48?'dawn-arrival':
+   progress<.72?'morning-star-rise':progress<.865?'cover-and-star':
    progress<.995?'stone-contents-reveal':'contents-final';
   stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
-  stage.dataset.xiwangLines=String(bands.filter(({band})=>Number(band.style.opacity)>.75).length);
+  stage.dataset.xiwangLines='0'; // archived print never renders
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
  }
