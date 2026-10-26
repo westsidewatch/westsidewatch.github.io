@@ -219,9 +219,15 @@ jobs:
                           const visual={left:r.left+r.width*.18,right:r.right-r.width*.18,
                             top:r.top+r.height*.18,bottom:r.bottom-r.height*.18};
                           const items=[...document.querySelectorAll('.dual-movement li,.dual-work')];
+                          const clip=document.querySelector('.dual-contents__index').getBoundingClientRect();
                           return items.reduce((n,el)=>{
-                            const b=el.getBoundingClientRect(),w=Math.min(visual.right,b.right)-Math.max(visual.left,b.left),
-                              h=Math.min(visual.bottom,b.bottom)-Math.max(visual.top,b.top);
+                            const b=el.getBoundingClientRect();
+                            // A scrolled-out entry has DOM geometry but is not
+                            // painted outside the index's clipping viewport.
+                            const visible={left:Math.max(b.left,clip.left),right:Math.min(b.right,clip.right),
+                              top:Math.max(b.top,clip.top),bottom:Math.min(b.bottom,clip.bottom)};
+                            const w=Math.min(visual.right,visible.right)-Math.max(visual.left,visible.left),
+                              h=Math.min(visual.bottom,visible.bottom)-Math.max(visual.top,visible.top);
                             return Math.max(n,w>0&&h>0?Math.min(w,h):0);
                           },0);
                         })(),
