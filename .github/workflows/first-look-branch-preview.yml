@@ -438,20 +438,31 @@ jobs:
                           getComputedStyle(wallEl).clipPath==='none'&&
                           getComputedStyle(paperEl).display==='none'&&
                           getComputedStyle(wallEl.querySelector('.dual-cover__gate')).display==='none',
-                        foldLightPaths:cv.querySelectorAll('.dual-cover__fold-light path').length,
+                        foldLightPaths:cv.querySelectorAll('.dual-cover__fold-light [data-role]').length,
                         foldLightOpacity:Number(getComputedStyle(cv.querySelector('.dual-cover__fold-light')).opacity),
-                         materialFit:getComputedStyle(wallEl).backgroundSize,
-                         silhouetteFit:getComputedStyle(wallEl).maskSize,
+                        materialFit:getComputedStyle(wallEl).backgroundSize,
+                        silhouetteFit:getComputedStyle(wallEl).maskSize,
                         thresholdChiaroscuro:(()=>{
-                           const paths=[...cv.querySelectorAll('.dual-cover__fold-light path')];
-                           const roles=paths.map(el=>el.getAttribute('data-role'));
-                           const needed=['threshold-step','projected-light','light-crease','stone-shadow','threshold-edge','light-edge','shadow-edge'];
-                           const step=paths.find(el=>el.getAttribute('data-role')==='threshold-step');
-                           const source=(step?.getAttribute('d')?.match(/-?[0-9]+(?:\.[0-9]+)?/g)||[]).map(Number);
-                           return {allFacets:needed.every(role=>roles.includes(role)),
-                             facetCount:paths.length,hasBurins:roles.some(role=>['shadow-burin','jamb-incision','burin-ray'].includes(role)),
-                             sharedThreshold:paths.find(el=>el.getAttribute('data-role')==='projected-light')?.getAttribute('d')?.startsWith('M416 716 L580 716'),
-                             gateFoot:source.length>=4&&source[0]>=440&&source[0]<=480&&source[1]>=630&&source[1]<=690};
+                          const svg=cv.querySelector('.dual-cover__fold-light');
+                          const paths=[...svg.querySelectorAll('path[data-role]')];
+                          const roles=paths.map(p=>p.getAttribute('data-role'));
+                          const needed=['gate-lumen','gate-highlight','threshold-flash','gold-central','gold-left','gold-right','stone-foil-seam'];
+                          const coords=p=>(p?.getAttribute('d')?.match(/-?[0-9]+(?:\.[0-9]+)?/g)||[]).map(Number);
+                          const origin=coords(paths.find(p=>p.getAttribute('data-role')==='threshold-flash'));
+                          const foil=coords(paths.find(p=>p.getAttribute('data-role')==='gold-central'));
+                          const noRoad=['gold-central','gold-left','gold-right'].every(role=>{
+                            const p=paths.find(p=>p.getAttribute('data-role')===role),n=coords(p);
+                            return !!p&&n.length>=12&&!n.some((v,i)=>i%2===1&&v>=980);
+                          });
+                          return {
+                            allFacets:needed.every(role=>roles.includes(role)),
+                            facetCount:paths.length,
+                            hasBurins:roles.some(role=>['shadow-burin','jamb-incision','burin-ray'].includes(role)),
+                            sharedThreshold:origin.length>=2&&foil.length>=2&&Math.abs(origin[0]-foil[0])<35&&Math.abs(origin[1]-foil[1])<22,
+                            gateFoot:origin.length>=2&&origin[0]>=440&&origin[0]<=480&&origin[1]>=630&&origin[1]<=690,
+                            noRoad,hasPrintMask:!!svg.querySelector('#p2-gold-ink')&&!!svg.querySelector('#p2-foil-grain'),
+                            hasScrollReveal:getComputedStyle(svg).clipPath.startsWith('ellipse(')
+                          };
                         })(),
                          stoneSource:getComputedStyle(paperEl).backgroundImage,
                         wallSource:getComputedStyle(wallEl).backgroundImage,
@@ -493,15 +504,18 @@ jobs:
                       metrics.wallShadow!=='none'||metrics.wallSeam!=='none'))
                       errors.push('STONE_DOOR_TRANSPARENT_OR_DUAL_PNG_STITCH_REINTRODUCED');
                     if(variant==='masthead'&&(metrics.foldLightPaths!==7||metrics.foldLightOpacity<.95))
-                      errors.push('SCHEME02_LIGHT_FACETS_NOT_RENDERED');
+                      errors.push('SCHEME02_GATE_GOLD_PRINT_NOT_RENDERED');
                     if(variant==='masthead'&&(metrics.materialFit!=='cover'||!metrics.silhouetteFit.startsWith('cover')))
                        errors.push('COVER_STONE_ASSETS_MUST_NOT_BE_STRETCHED');
                      if(variant==='masthead'&&(!metrics.thresholdChiaroscuro.allFacets||
                         metrics.thresholdChiaroscuro.facetCount!==7||
                         metrics.thresholdChiaroscuro.hasBurins||
                         !metrics.thresholdChiaroscuro.sharedThreshold||
-                        !metrics.thresholdChiaroscuro.gateFoot))
-                      errors.push('SCHEME02_GATE_THRESHOLD_FACETS_NOT_ALIGNED');
+                        !metrics.thresholdChiaroscuro.gateFoot||
+                         !metrics.thresholdChiaroscuro.noRoad||
+                         !metrics.thresholdChiaroscuro.hasPrintMask||
+                         !metrics.thresholdChiaroscuro.hasScrollReveal))
+                      errors.push('SCHEME02_GATE_GOLD_PRINT_ORIGIN_NOT_ALIGNED');
                     if(variant==='masthead'){
                       const alpha=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-stone-gate-cutout.png');
                       const stone=await page.request.get('http://127.0.0.1:4173/p2/magazine-cover/p2-magazine-sandstone-wall.png');
