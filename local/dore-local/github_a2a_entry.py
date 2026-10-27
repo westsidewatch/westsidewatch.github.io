@@ -60,7 +60,19 @@ def execute_canonical_mail(args):
  source_commit=os.environ.get('GITHUB_SHA') or 'github-issue-dispatch'
  delivery=accept(msg,source_ref='github-owner-issue',source_commit=source_commit,source_path='coordination-inbox/'+mid+'.json')
  if (delivery.get('status') or '').startswith('REJECTED'):raise RuntimeError('durable_inbox_rejected:'+str(delivery.get('status')))
- result=execute_with_plane(msg)
+ try:
+  result=execute_with_plane(msg)
+ except Exception as exc:
+  detail=getattr(exc,'result',None)
+  failure=detail if isinstance(detail,dict) else {'error':type(exc).__name__+':'+str(exc)}
+  try:
+   from coordination_worker import _mark_execution_fail
+   _mark_execution_fail(mid,failure)
+  except Exception:
+   pass
+  safe={k:(str(v)[-3200:] if isinstance(v,str) else v) for k,v in failure.items() if k in
+        {'ok','code','error','failed_index','failed_command','failed_returncode','failed_stdout','failed_stderr'}}
+  return {'ok':False,'status':'failed','message_id':mid,'failure':safe,'completion_evidence':False}
  proof=plane.status(mid)
  if not result.get('ok') or not proof.get('completion_evidence'):
   return {'ok':False,'status':'failed','message_id':mid,'execution':proof.get('task',{}).get('status'),'completion_evidence':False,'result':str(result)[:3500]}
