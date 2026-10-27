@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027d">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027e">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -210,14 +210,14 @@
   .forEach(([offset,klass])=>attrs(makeSvg('stop',klass,shade),{offset}));
  const hatch=attrs(makeSvg('pattern','ws-engraved-hatch',defs),{
   id:'ws-engraved-hatch',patternUnits:'userSpaceOnUse',
-  width:7,height:7,patternTransform:'rotate(26)'
+  width:4,height:4,patternTransform:'rotate(26)'
  });
- attrs(makeSvg('path','ws-engraved-hatch-line',hatch),{d:'M0 0V7',fill:'none','stroke-width':'.85'});
+ attrs(makeSvg('path','ws-engraved-hatch-line',hatch),{d:'M0 0V4',fill:'none','stroke-width':'.50'});
  const cross=attrs(makeSvg('pattern','ws-engraved-crosshatch',defs),{
   id:'ws-engraved-crosshatch',patternUnits:'userSpaceOnUse',
-  width:11,height:11,patternTransform:'rotate(-35)'
+  width:6,height:6,patternTransform:'rotate(-35)'
  });
- attrs(makeSvg('path','ws-engraved-cross-line',cross),{d:'M0 0V11',fill:'none','stroke-width':'.48'});
+ attrs(makeSvg('path','ws-engraved-cross-line',cross),{d:'M0 0V6',fill:'none','stroke-width':'.28'});
  const volume=makeSvg('g','ws-engraved-volume',hero);
  volume.setAttribute('mask','url(#ws-engraved-side-mask)');
  for(const fill of ['url(#ws-engraved-side-shading)','url(#ws-engraved-hatch)','url(#ws-engraved-crosshatch)']){

@@ -37,11 +37,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .ws-print-hero__highlight{color:var(--paper);shape-rendering:geometricPrecision}
 .ws-print-hero__deboss{color:#97764e;shape-rendering:geometricPrecision}
 .ws-engraved-stop--shade{stop-color:var(--blue)}
-.ws-engraved-stop--stone{stop-color:#765a3e}
+.ws-engraved-stop--stone{stop-color:#a48b6b}
 .ws-engraved-stop--light{stop-color:var(--ws-first-light,#a2872a)}
 .ws-engraved-volume{shape-rendering:geometricPrecision;pointer-events:none}
-.ws-engraved-hatch-line{stroke:var(--blue);opacity:.62}
-.ws-engraved-cross-line{stroke:#e5c88c;opacity:.38}
+.ws-engraved-hatch-line{stroke:var(--blue);opacity:.51}
+.ws-engraved-cross-line{stroke:#e5c88c;opacity:.29}
 .ws-engraved-plane{shape-rendering:geometricPrecision}
 /* Authentic 5:8 Scheme 02 issue, one intact original stone source.
    Cutout supplies only the battlement alpha silhouette; the original RGB
