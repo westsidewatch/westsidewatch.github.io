@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-egm-codex-exec-options-20261027-0429",
+  "subject": "Codex 0.163 exact exec options",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/p2-vol00-egm-goldfish-20261027",
+  "body": "Read-only exact help output only for Codex CLI exec. No model runs.",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "\"$HOME/.codex/plugins/.plugin-appserver/codex-cli/bin/codex\" exec --help 2>&1 | head -65; printf '\\nEGM_INSTALLED='; \"$HOME/.codex/plugins/.plugin-appserver/codex-cli/bin/codex\" plugin list 2>&1 | grep -E '^egm@egm' | head -1 || true"
+      ],
+      "cwd": "~",
+      "timeout": 90
+    }
+  ]
+}
