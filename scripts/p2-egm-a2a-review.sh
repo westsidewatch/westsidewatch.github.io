@@ -58,31 +58,13 @@ fi
 git show "refs/remotes/origin/$EGM_BRANCH:docs/design/WESTSIDE-EGM-INTEGRATION.md" > "$PROOF/westside-egm-integration.md"
 git show "refs/remotes/origin/$EGM_BRANCH:AGENTS.md" > "$PROOF/integration-agent-entrypoint.md"
 
-# Design OS authority lives on the companion EGM integration branch. P2 is a
-# separate draft feature branch; its worktree intentionally has no EGM gitlink.
-PIN_LINE="$(git ls-tree "refs/remotes/origin/$EGM_BRANCH" -- .tools/elephant-goldfish-model)"
-PIN_SHA="$(printf '%s\n' "$PIN_LINE" | awk '$1=="160000" && $2=="commit" {print $3}')"
-if [[ ! "$PIN_SHA" =~ ^[0-9a-f]{40}$ ]]; then
-  echo "EGM ERROR: companion Design OS branch has no pinned gitlink" >&2
+# EGM is pinned on its companion Design OS PR, not duplicated in P2.
+git ls-tree "refs/remotes/origin/$EGM_BRANCH" -- .tools/elephant-goldfish-model > "$PROOF/egm-source-authority.txt"
+if ! grep -Fq "160000 commit b3a35956759bf7f024af2ff061b2e0b44b438e4c" "$PROOF/egm-source-authority.txt"; then
+  echo "EGM ERROR: pinned official source unavailable in companion branch" >&2
   exit 13
 fi
-PIN_EXPECTED="b3a35956759bf7f024af2ff061b2e0b44b438e4c"
-if [[ "$PIN_SHA" != "$PIN_EXPECTED" ]]; then
-  echo "EGM ERROR: companion pin changed; manual source re-review required" >&2
-  exit 14
-fi
-cat > "$PROOF/egm-source-authority.txt" <<EOF
-EGM_source_branch=$EGM_BRANCH
-EGM_submodule=.tools/elephant-goldfish-model
-EGM_pinned_commit=$PIN_SHA
-EGM_installed_plugin=egm@egm
-EGM_installed_plugin_metadata=$(grep -E '^egm@egm' "$PROOF/plugin-list.txt" | head -1)
-P2_art_branch=$P2_BRANCH
-P2_source_commit=$EXPECTED_SHA
-NOTE: EGM is on its own draft branch; P2 does not need a duplicate gitlink.
-NOTE: Run the installed reviewer in native independent subagent contexts.
-EOF
-
+printf 'EGM integration branch: %s; P2 remains separate.\n' "$EGM_BRANCH" >> "$PROOF/egm-source-authority.txt"
 
 TASK_PROMPT="$(cat <<'TASK'
 Use the **installed official egm@egm** plugin's real egm-review workflow.
