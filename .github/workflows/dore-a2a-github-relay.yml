@@ -34,6 +34,7 @@ jobs:
       - name: Execute through resident Universal A2A Core
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          DORE_REPO_ROOT: ${{ github.workspace }}
           DORE_COMMAND_JSON: ${{ github.event_name == 'issues' && github.event.issue.body || github.event_name == 'repository_dispatch' && toJson(github.event.client_payload.command) || '' }}
           DORE_REQUEST_ID: ${{ github.event_name == 'workflow_dispatch' && inputs.request_id || '' }}
           DORE_CAPABILITY: ${{ github.event_name == 'workflow_dispatch' && inputs.capability || '' }}

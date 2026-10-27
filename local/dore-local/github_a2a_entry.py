@@ -42,6 +42,37 @@ def parse_command():
  if not isinstance(args,dict):raise ValueError('args_must_be_object')
  return request_id,capability,args
 
+def execute_canonical_mail(args):
+ # Owner-only issue transport reuses the already existing durable coordination
+ # execution plane; it does not execute an arbitrary issue-body shell command.
+ mid=str(args.get('message_id') or '').strip()
+ if not re.fullmatch(r'[A-Za-z0-9_.-]{1,120}',mid):raise ValueError('invalid_coordination_message_id')
+ path=HERE.parents[1]/'coordination-inbox'/f'{mid}.json'
+ if not path.is_file():raise FileNotFoundError('canonical_coordination_message_not_found:'+mid)
+ msg=json.loads(path.read_text(encoding='utf-8'))
+ if (msg.get('message_id')!=mid or msg.get('schema')!='dore.mail.v2' or
+     msg.get('sender')!='chatgpt' or msg.get('recipient')!='dore' or msg.get('kind')!='local_exec'):
+  raise ValueError('untrusted_or_unsupported_coordination_message')
+ from a2a_delivery_plane import accept
+ import a2a_execution_plane as plane
+ import a2a_result_delivery as results
+ from coordination_worker import execute_with_plane,evidence_for
+ source_commit=os.environ.get('GITHUB_SHA') or 'github-issue-dispatch'
+ delivery=accept(msg,source_ref='github-owner-issue',source_commit=source_commit,source_path='coordination-inbox/'+mid+'.json')
+ if (delivery.get('status') or '').startswith('REJECTED'):raise RuntimeError('durable_inbox_rejected:'+str(delivery.get('status')))
+ result=execute_with_plane(msg)
+ proof=plane.status(mid)
+ if not result.get('ok') or not proof.get('completion_evidence'):
+  return {'ok':False,'status':'failed','message_id':mid,'execution':proof.get('task',{}).get('status'),'completion_evidence':False,'result':str(result)[:3500]}
+ old=results.latest(mid)
+ receipt=old if (result.get('replayed') and old and old.get('task_status')=='PASS') else results.build(mid,'PASS',result,proof,attempt=1,terminal=True,evidence_refs=evidence_for(msg))
+ if not (result.get('replayed') and old and old.get('task_status')=='PASS'):results.record(receipt)
+ rows=result.get('results') or []
+ return {'ok':True,'status':'completed','message_id':mid,'delivery_status':delivery.get('delivery_status') or delivery.get('status'),
+         'execution':(proof.get('task') or {}).get('status'),'completion_evidence':bool(proof.get('completion_evidence')),
+         'receipt_sha256':receipt.get('receipt_sha256'),'replayed':bool(result.get('replayed')),
+         'commands':[{'index':x.get('index'),'returncode':x.get('returncode'),'stdout_tail':str(x.get('stdout') or '')[-3000:],'stderr_tail':str(x.get('stderr') or '')[-1500:]} for x in rows]}
+
 def post_issue_comment(payload):
  repo=os.environ.get('GITHUB_REPOSITORY','');number=(os.environ.get('DORE_REPLY_ISSUE_NUMBER') or '').strip();token=os.environ.get('GITHUB_TOKEN','')
  if not (repo and number and token):return None
@@ -55,8 +86,14 @@ def post_issue_comment(payload):
 def main():
  try:
   request_id,capability,args=parse_command();timeout=CAPABILITY_TIMEOUTS.get(capability,360.0 if capability in LONG_CAPABILITIES else 15.0)
-  rpc=call('dore.call',{'capability':capability,'args':args,'request_id':request_id,'caller_product':'github-a2a','transport':'github'},timeout=timeout)
-  result={'ok':'result' in rpc,'protocol':PROTOCOL,'request_id':request_id,'capability':capability,'rpc':rpc}
+  if capability=='coordination.mail-execute':
+   if not os.environ.get('DORE_REPLY_ISSUE_NUMBER'):raise PermissionError('owner_issue_required_for_canonical_mail')
+   payload=execute_canonical_mail(args)
+   result={'ok':bool(payload.get('ok')),'protocol':PROTOCOL,'request_id':request_id,'capability':capability,'execution':payload}
+  else:
+   rpc=call('dore.call',{'capability':capability,'args':args,'request_id':request_id,'caller_product':'github-a2a','transport':'github'},timeout=timeout)
+   semantic=rpc.get('result') if isinstance(rpc,dict) else None
+   result={'ok':bool(isinstance(semantic,dict) and semantic.get('ok')),'protocol':PROTOCOL,'request_id':request_id,'capability':capability,'rpc':rpc}
  except Exception as exc:result=fail(f'{type(exc).__name__}:{exc}')
  print(json.dumps(result,ensure_ascii=False,indent=2));post_issue_comment(result);return 0 if result.get('ok') else 1
 if __name__=='__main__':raise SystemExit(main())
