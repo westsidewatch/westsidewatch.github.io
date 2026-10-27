@@ -632,8 +632,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     if (needsFrame || changed || controls.autoRotate) {
       try {
         royalRelief?.project(camera);
-        sharedPlaceView?.project(camera);
-        wallGateView?.project(camera);
+        const placeBoxes=sharedPlaceView?.project(camera)||[];
+        wallGateView?.project(camera,placeBoxes);
         renderer.render(scene, camera);
         frameCount++;
         const sharedState = sharedEraRuntime?.diagnostics();
