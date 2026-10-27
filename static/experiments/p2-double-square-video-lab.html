@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027c">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027d">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -172,8 +172,8 @@
 
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
  const lerp=(a,b,t)=>a+(b-a)*t;
- // The official horizontal 西望 SVG is the ONE title source.
- // Two subpixel print edges, not 21 sculptural layers or 84 ghost marks.
+ // Real contours come ONLY from the approved original 西望 SVG.
+ // A unified directional side-mask prevents the old cement-layer effect.
  const svgNS='http://www.w3.org/2000/svg';
  const makeSvg=(tag,cls,parent)=>{
   const el=document.createElementNS(svgNS,tag);
@@ -181,17 +181,51 @@
   if(parent)parent.appendChild(el);
   return el;
  };
+ const attrs=(el,properties)=>{
+  for(const [key,value] of Object.entries(properties))el.setAttribute(key,String(value));
+  return el;
+ };
+ const defs=letters.querySelector('defs');
  const hero=makeSvg('g','ws-print-hero',letters);
  hero.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
- const highlight=makeSvg('use','ws-print-hero__highlight',hero);
- highlight.setAttribute('href','#ws-xiwang-original');
- highlight.style.color='#faf0d8';
- const deboss=makeSvg('use','ws-print-hero__deboss',hero);
- deboss.setAttribute('href','#ws-xiwang-original');
- deboss.style.color='#967a51';
- const heroFace=makeSvg('use','ws-print-hero__face',hero);
- heroFace.setAttribute('href','#ws-xiwang-original');
- heroFace.style.color='#233b50';
+ const sideMask=attrs(makeSvg('mask','ws-engraved-side-mask',defs),{
+  id:'ws-engraved-side-mask',maskUnits:'userSpaceOnUse',
+  maskContentUnits:'userSpaceOnUse',x:-90,y:-100,width:620,height:420
+ });
+ sideMask.style.maskType='luminance';
+ const sideSlices=[];
+ for(let i=1;i<=24;i++){
+  const slice=attrs(makeSvg('use','ws-engraved-mask-step',sideMask),{href:'#ws-xiwang-original'});
+  slice.style.color='#fff';
+  sideSlices.push(slice);
+ }
+ // The black original removes the INK FACE from the continuous white
+ // offset silhouette; lines then appear on exposed sidewalls ONLY.
+ const cutFace=attrs(makeSvg('use','ws-engraved-mask-front',sideMask),{href:'#ws-xiwang-original'});
+ cutFace.style.color='#000';
+ const shade=attrs(makeSvg('linearGradient','ws-engraved-gradient',defs),{
+  id:'ws-engraved-side-shading',x1:'0%',y1:'0%',x2:'100%',y2:'80%'
+ });
+ [['0%','ws-engraved-stop--shade'],['53%','ws-engraved-stop--stone'],['100%','ws-engraved-stop--light']]
+  .forEach(([offset,klass])=>attrs(makeSvg('stop',klass,shade),{offset}));
+ const hatch=attrs(makeSvg('pattern','ws-engraved-hatch',defs),{
+  id:'ws-engraved-hatch',patternUnits:'userSpaceOnUse',
+  width:7,height:7,patternTransform:'rotate(26)'
+ });
+ attrs(makeSvg('path','ws-engraved-hatch-line',hatch),{d:'M0 0V7',fill:'none','stroke-width':'.85'});
+ const cross=attrs(makeSvg('pattern','ws-engraved-crosshatch',defs),{
+  id:'ws-engraved-crosshatch',patternUnits:'userSpaceOnUse',
+  width:11,height:11,patternTransform:'rotate(-35)'
+ });
+ attrs(makeSvg('path','ws-engraved-cross-line',cross),{d:'M0 0V11',fill:'none','stroke-width':'.48'});
+ const volume=makeSvg('g','ws-engraved-volume',hero);
+ volume.setAttribute('mask','url(#ws-engraved-side-mask)');
+ for(const fill of ['url(#ws-engraved-side-shading)','url(#ws-engraved-hatch)','url(#ws-engraved-crosshatch)']){
+  attrs(makeSvg('rect','ws-engraved-plane',volume),{x:-88,y:-98,width:616,height:412,fill});
+ }
+ const highlight=attrs(makeSvg('use','ws-print-hero__highlight',hero),{href:'#ws-xiwang-original'});
+ const deboss=attrs(makeSvg('use','ws-print-hero__deboss',hero),{href:'#ws-xiwang-original'});
+ const heroFace=attrs(makeSvg('use','ws-print-hero__face',hero),{href:'#ws-xiwang-original'});
  let printW=0,printH=0;
  const layoutPrint=(w,h)=>{
   if(Math.abs(w-printW)<.5&&Math.abs(h-printH)<.5)return;
@@ -262,8 +296,8 @@
   stage.dataset.blueReveal=blue.toFixed(4);
   stage.dataset.dawnReveal=dawn.toFixed(4);
   stage.dataset.transitionEngraving='journal-printed-folio';
-  // The original title first owns the page; the protected star then rises.
-  // At full spread both form one publication identity on the central axis.
+  // An original Chinese type plate stands up as scrolling reveals true depth.
+  // Gradually reduce depth only when the protected Morning Star takes focus.
   const typeEnter=reduce?(progress>=.31?1:0):ease((progress-.245)/.09);
   const typeLeave=reduce?(progress>=.87?1:0):ease((progress-.865)/.11);
   const starAttention=reduce?(progress>=.56?1:0):ease((progress-.47)/.20);
@@ -273,19 +307,37 @@
   layoutPrint(contentsW,contentsH);
   const heroOn=reduce?(progress>=.31?1:0):ease((progress-.265)/.105);
   const heroMove=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
-  const heroScale=Math.min((contentsW/432)*lerp(.67,.54,heroMove),(contentsH/218)*lerp(.41,.29,heroMove));
+  const rise=reduce?1:ease((progress-.305)/.13);
+  const upright=lerp(.49,1,rise);
+  const heroScale=Math.min((contentsW/432)*lerp(.67,.54,heroMove),(contentsH/218)*lerp(.41,.265,heroMove));
   const heroX=(contentsW-432*heroScale)/2;
-  const heroY=lerp(contentsH*.325,contentsH*.61,heroMove);
-  hero.setAttribute('transform','translate('+heroX.toFixed(2)+' '+heroY.toFixed(2)+') scale('+heroScale.toFixed(5)+')');
+  const heroY=lerp(contentsH*.325,contentsH*.635,heroMove);
+  hero.setAttribute('transform',
+   'translate('+heroX.toFixed(2)+' '+heroY.toFixed(2)+') '+
+   'scale('+heroScale.toFixed(5)+') '+
+   'translate(0 '+(218*(1-upright)).toFixed(3)+') '+
+   'scale(1 '+upright.toFixed(4)+')'
+  );
   hero.style.opacity=String(heroOn);
-  const impression=reduce?1:ease((progress-.285)/.11);
-  highlight.setAttribute('transform','translate('+(1.0*impression).toFixed(3)+' '+(1.05*impression).toFixed(3)+')');
-  deboss.setAttribute('transform','translate('+(-1.3*impression).toFixed(3)+' '+(-1.25*impression).toFixed(3)+')');
-  highlight.style.opacity=String(.42*impression);
-  deboss.style.opacity=String(.36*impression);
+  const taper=lerp(1,.60,heroMove),dx=-31*rise*taper,dy=-38*rise*taper;
+  const count=sideSlices.length;
+  sideSlices.forEach((slice,i)=>{
+   const t=(i+1)/count;
+   slice.setAttribute('transform','translate('+(dx*t).toFixed(3)+' '+(dy*t).toFixed(3)+')');
+  });
+  volume.style.opacity=String(rise);
+  const impression=reduce?1:ease((progress-.29)/.12);
+  highlight.setAttribute('transform','translate(-.85 -.75)');
+  deboss.setAttribute('transform','translate(.95 1.10)');
+  highlight.style.opacity=String(.36*impression);
+  deboss.style.opacity=String(.44*impression);
   stage.dataset.xiwangHero=heroOn.toFixed(3);
   stage.dataset.xiwangImpression=impression.toFixed(3);
-  stage.dataset.xiwangPlate='official-svg-ink';
+  stage.dataset.xiwangPlate='official-svg-engraved-volume';
+  stage.dataset.xiwangRise=rise.toFixed(4);
+  stage.dataset.xiwangFaceUpright=upright.toFixed(4);
+  stage.dataset.xiwangSideDepth=Math.hypot(dx,dy).toFixed(3);
+  stage.dataset.xiwangDepthUp=Math.abs(dy*heroScale*upright).toFixed(3);
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
@@ -319,7 +371,7 @@
    const starTargetCentre=((starZone.top+starZone.bottom)/2-starPage.top)/starPage.height*100;
    const starTargetSize=Math.min(380,contentsW*.45,Math.max(0,starZone.height*.82));
    star.style.top=lerp(36,starTargetCentre,stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.min(310,contentsW*.39,contentsH*.42),starTargetSize,stone).toFixed(2)+'px';
+   star.style.width=lerp(Math.min(310,contentsW*.34,contentsH*.35),starTargetSize,stone).toFixed(2)+'px';
    // No ghosted title wallpaper beneath the original Contents.
    relief.style.opacity='0';
   contents.style.opacity=String(stone);

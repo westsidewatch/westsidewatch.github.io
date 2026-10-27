@@ -37,6 +37,11 @@ assert.doesNotMatch(css,/linear-gradient\(139deg/,'reject old synthetic paper fo
 assert.doesNotMatch(source,/ws-print-band|ws-print-mark|heroSides|stoneTones|residualBands/,'rejected grey statue and background stamps must be gone');
 assert.match(css,/dual-tile--contents::after\{content:none\}/,'cross-title rules must be removed');
 assert.match(source,/ws-print-hero__face/,'official ink wordmark must be preserved');
+assert.match(source,/id:'ws-engraved-side-mask'/,'original contour side must be a real SVG mask');
+assert.match(source,/cutFace\.style\.color='#000'/,'ink face must be subtracted from side volume');
+assert.match(source,/for\(let i=1;i<=24;i\+\+\)/,'24 sampled offsets form one continuous side volume');
+assert.match(source,/ws-engraved-hatch|ws-engraved-crosshatch/,'two directional engraved side patterns required');
+assert.match(css,/ws-engraved-stop--light/,'light-facing edge must use Design OS gold');
 assert.doesNotMatch(source,/starClearance|radial-gradient\(ellipse 24% 22%/,'a radial hole is not a physical Morning Star clearance');
 assert.doesNotMatch(css,/ocean-rise|water-doors|p2-approved-ocean|repeating-linear-gradient\(118deg/);
 assert.doesNotMatch(css,/dual-letterfield\{[^}]*drop-shadow/,'printed SVGs must stay razor-edged');
@@ -60,11 +65,12 @@ const data=()=> {
  const box=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom,top:r.top,left:r.left}};
  const stage=document.querySelector('#dual-stage');
  const hero=document.querySelector('.ws-print-hero');
+ const face=hero.querySelector('.ws-print-hero__face');
  const cover=document.querySelector('#dual-cover');
  const page=document.querySelector('#dual-contents');
  const index=document.querySelector('.dual-contents__index');
  const star=document.querySelector('#dual-star');
- const heroRect=box(hero),starRect=box(star),pageRect=box(page);
+ const heroRect=box(face),starRect=box(star),pageRect=box(page);
  const zone=document.querySelector('.dual-contents__star-zone');
  const city=document.querySelector('#dual-cover-city');
  const lightSvg=document.querySelector('#dual-cover-folded-light');
@@ -83,12 +89,17 @@ const data=()=> {
   blue:+stage.dataset.blueReveal,gold:+stage.dataset.dawnReveal,
   cover:box(cover),page:box(page),
   typeOpacity:+getComputedStyle(document.querySelector('#dual-letterfield')).opacity,
-  hero:box(hero),heroOpacity:+getComputedStyle(hero).opacity,
-  heroDepths:hero.querySelectorAll('.ws-print-hero__highlight,.ws-print-hero__deboss').length,
+  hero:heroRect,heroOpacity:+getComputedStyle(hero).opacity,
+  heroDepths:document.querySelectorAll('#ws-engraved-side-mask .ws-engraved-mask-step').length,
+  hatchPlanes:hero.querySelectorAll('.ws-engraved-volume .ws-engraved-plane').length,
+  sideMaskType:document.querySelector('#ws-engraved-side-mask').style.maskType,
+  rise:+stage.dataset.xiwangRise,
+  faceUpright:+stage.dataset.xiwangFaceUpright,
+  sideDepth:+stage.dataset.xiwangSideDepth,
   heroFaceUsesOfficial:hero.querySelector('.ws-print-hero__face')?.getAttribute('href')==='#ws-xiwang-original',
   titleTopRatio:(heroRect.top-pageRect.top)/pageRect.height,
   titleBottomClear:pageRect.bottom-heroRect.bottom,
-  starTitleGap:heroRect.top-starRect.bottom,
+  starTitleGap:heroRect.top-starRect.bottom-(+stage.dataset.xiwangDepthUp||0),
   starTitleXDelta:Math.abs((heroRect.left+heroRect.right)/2-(starRect.left+starRect.right)/2)/pageRect.width,
   lightOpacity:+getComputedStyle(document.querySelector('#dual-cover-folded-light')).opacity,
   cityOpacity:+getComputedStyle(document.querySelector('#dual-cover-city')).opacity,
@@ -159,16 +170,16 @@ const data=()=> {
     if(p===33&&m.cityOpacity<.98)faults.push('no empty midnight-blue block may persist after cover arrival');
     if(p===44){
      heroAtTypeHold=m.hero.top;
-     if(!(m.starOpacity<.05&&m.typeOpacity>.8&&m.heroOpacity>.98&&m.heroDepths===2&&m.heroFaceUsesOfficial&&m.inkPlate==='official-svg-ink'&&m.impression>.99))
-      faults.push('official 西望 must print as one deep-blue ink face');
+     if(!(m.starOpacity<.05&&m.typeOpacity>.8&&m.heroOpacity>.98&&m.heroDepths===24&&m.hatchPlanes===3&&m.sideMaskType==='luminance'&&m.heroFaceUsesOfficial&&m.inkPlate==='official-svg-engraved-volume'&&m.rise>.98&&m.faceUpright>.99&&m.sideDepth>40&&m.impression>.99))
+      faults.push('original 西望 must physically stand up with fine etched sidewalls, not flat ink');
     }
     if(p===54&&!(m.starOpacity>.1&&m.typeOpacity>.8))faults.push('Morning Star entrance missing');
     if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.8&&m.typeOpacity<.99))
      faults.push('star and official ink title must be visibly related');
-    if(p===68&&!(m.titleTopRatio>.54&&m.impression>.99))
+    if(p===68&&!(m.titleTopRatio>.55&&m.impression>.99&&m.sideDepth>20))
      faults.push('title must move beneath Morning Star');
     if(p===79||p===82){
-     if(!(m.starOpacity>.98&&m.typeOpacity>.8&&m.heroOpacity>.99))
+     if(!(m.starOpacity>.98&&m.typeOpacity>.8&&m.heroOpacity>.99&&m.sideDepth>18))
       faults.push('both star and title must remain visible at publication hold');
      if(!(m.starTitleGap>m.page.height*.025&&m.starTitleXDelta<.08&&m.titleBottomClear>m.page.height*.06))
       faults.push('star and title must align without intersection or clipping');
@@ -205,7 +216,7 @@ const data=()=> {
    // No duplicate clock: reversing the ONE slider restores same visual state.
    await page.locator('#dual-progress').evaluate(slider=>{slider.value='33';slider.dispatchEvent(new Event('input',{bubbles:true}))});
    const reverse=await page.evaluate(data);
-   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='official-svg-ink'||reverse.stoneOpacity>.01)
+   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='official-svg-engraved-volume'||reverse.rise>.3||reverse.stoneOpacity>.01)
     results.push({id:name+'-reverse',errors:['backwards scroll did not restore the original impression']});
    await page.close();
   }
