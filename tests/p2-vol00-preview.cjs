@@ -31,7 +31,10 @@ assert.match(source,/data-role="threshold-lit-edge"/,'door light and ground proj
 assert.doesNotMatch(source,/ws-gate-threshold-fade|ws-gate-ink-fade/,'retired mask erased the light exactly at the gate threshold');
 assert.doesNotMatch(source,/data-role="inner-paper-fold"|data-role="central-light-plane"|data-role="fold-seam"/,'do not revive several faint fan wedges');
 assert.doesNotMatch(source,/dual-film|dual-radiance|installV53CanvasFallback|data-cover-choice|data-position|dual-transition-water/);
+assert.match(source,/makeSvg\('g','ws-print-hero',letters\)/,'one typographic protagonist must be built from the official SVG');
+assert.doesNotMatch(source,/starClearance|radial-gradient\(ellipse 24% 22%/,'a radial hole is not a physical Morning Star clearance');
 assert.doesNotMatch(css,/ocean-rise|water-doors|p2-approved-ocean|repeating-linear-gradient\(118deg/);
+assert.doesNotMatch(css,/dual-letterfield\{[^}]*drop-shadow/,'printed SVGs must stay razor-edged');
 assert.match(css,/mask-size:cover,100% 100%/);
 assert.match(css,/background:url\('\/p2\/magazine-cover\/p2-magazine-sandstone-wall\.png'\) center top\/cover/);
 const folio=[...source.matchAll(/<button type="button" data-realm="([^"]+)" data-surface-id="([^"]+)" data-href="([^"]+)" aria-expanded="false" aria-label="展開 ([^"]+)"><span>([^<]+)<\/span><\/button>/g)];
@@ -51,6 +54,7 @@ const approx=(a,b,t=.01)=>Math.abs(a-b)<=t;
 const data=()=> {
  const box=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom,top:r.top,left:r.left}};
  const stage=document.querySelector('#dual-stage');
+ const hero=document.querySelector('.ws-print-hero');
  const cover=document.querySelector('#dual-cover');
  const page=document.querySelector('#dual-contents');
  const index=document.querySelector('.dual-contents__index');
@@ -73,6 +77,13 @@ const data=()=> {
   blue:+stage.dataset.blueReveal,gold:+stage.dataset.dawnReveal,
   cover:box(cover),page:box(page),
   typeOpacity:+getComputedStyle(document.querySelector('#dual-letterfield')).opacity,
+  hero:box(hero),heroOpacity:+getComputedStyle(hero).opacity,
+  heroDepths:hero.querySelectorAll('.ws-print-hero__side').length,
+  heroFaceUsesOfficial:hero.querySelector('.ws-print-hero__face')?.getAttribute('href')==='#ws-xiwang-original',
+  heroExtrusion:+stage.dataset.xiwangExtrusion,
+  starClear:+stage.dataset.xiwangStarClear,
+  starNearCount:+stage.dataset.xiwangStarNear,
+  starNearMaxOpacity:+stage.dataset.xiwangStarNearMax,
   lowerRegisterOpacity:+getComputedStyle(document.querySelector('.ws-print-band[data-register="7"]')).opacity,
   lightOpacity:+getComputedStyle(document.querySelector('#dual-cover-folded-light')).opacity,
   cityOpacity:+getComputedStyle(document.querySelector('#dual-cover-city')).opacity,
@@ -125,6 +136,7 @@ const data=()=> {
    page.on('pageerror',e=>pageErrors.push(e.message));
    await page.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=0&side=cover-right',{waitUntil:'domcontentloaded',timeout:45000});
    await page.evaluate(()=>document.fonts.ready);
+   let heroAtTypeHold=0;
    for(const [label,p] of scenes){
     await page.locator('#dual-progress').evaluate((slider,value)=>{
      slider.value=String(value);slider.dispatchEvent(new Event('input',{bubbles:true}));
@@ -137,12 +149,18 @@ const data=()=> {
      faults.push('door right jamb and projected-light origin drift from native stone opening during page morph');
     if(!m.wallBg.includes('cover')||!m.maskSize.includes('cover')||m.mastFit!=='contain')faults.push('stone/masthead must crop proportionally');
     if(p===14&&!(m.blue>.1&&m.blue<.95&&m.gold===0&&m.cityOpacity>.6))faults.push('stone cover must enter with midnight-blue ink');
-    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.lines>=1&&m.typeOpacity>.25&&m.lowerRegisterOpacity>.8))
+    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.lines>=1&&m.typeOpacity>.25&&m.lowerRegisterOpacity>.8&&m.heroOpacity>.5))
       faults.push('bottom print register must be visible as gold sheet rises');
     if(p===33&&m.cityOpacity<.98)faults.push('no empty midnight-blue block may persist after cover arrival');
-    if(p===44&&!(m.lines>=6&&m.starOpacity<.05&&m.typeOpacity>.8))faults.push('西望 must precede Morning Star');
+    if(p===44){
+     heroAtTypeHold=m.hero.top;
+     if(!(m.lines>=6&&m.starOpacity<.05&&m.typeOpacity>.8&&m.heroOpacity>.98&&m.heroDepths===21&&m.heroFaceUsesOfficial&&m.heroExtrusion>.99))
+      faults.push('official 西望 must rise as one continuous 21-plane lead-type master before Morning Star');
+    }
     if(p===54&&!(m.starOpacity>.1&&m.lines>=6))faults.push('Morning Star entrance missing');
     if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.45&&m.typeOpacity<.65))faults.push('real star must take focus while official print remains visible');
+    if(p===68&&!(m.hero.top>heroAtTypeHold+height*.10&&m.starClear>.99&&m.starNearCount>=1&&m.starNearMaxOpacity<.34))
+     faults.push('lead type must physically recede and nearby printed marks must clear the Morning Star');
     if(p===82&&!(m.lightOpacity>.94&&m.mastOpacity>.98&&m.volumeOpacity>.98&&m.headings.join('|')==='CITY|OF|LIGHT'))
       faults.push('cover hold must carry a fully legible masthead and issue number with the gate light');
     if(p===93&&!(m.stoneOpacity>.1&&m.stoneOpacity<.99))faults.push('Contents must hand off through a measured state');
