@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-egm-p2-native-goldfish-20261027-0438-cli-compatible",
+  "subject": "Run actual P2 EGM Goldfish with Codex 0.163 supported CLI flags",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/p2-vol00-egm-goldfish-20261027",
+  "body": "Use installed bundled EGM@EGM and verified Codex 0.163 exec syntax on immutable P2 branch revision 6cd8287ec042b11d863dd59a48df81692e289963. Review only; fresh native reviewers, exact completion traces, publish report, no website art change or merge.",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "set -euo pipefail\nSHA=\"6cd8287ec042b11d863dd59a48df81692e289963\"\nREPO=\"${DORE_REPO_ROOT:-$HOME/westsidewatch.github.io}\"\nif [[ ! -d \"$REPO/.git\" && ! -f \"$REPO/.git\" ]]; then REPO=\"$HOME/.dore/control-checkout\"; fi\nif [[ ! -d \"$REPO/.git\" && ! -f \"$REPO/.git\" ]]; then echo \"A2A DISPATCH ERROR: no known resident checkout\" >&2; exit 2; fi\ngit -C \"$REPO\" fetch --no-tags origin \"+refs/heads/p2-latest-magazine-motion-preview-20261023:refs/remotes/origin/p2-latest-magazine-motion-preview-20261023\"\nif [[ \"$(git -C \"$REPO\" rev-parse refs/remotes/origin/p2-latest-magazine-motion-preview-20261023)\" != \"$SHA\" ]]; then echo \"A2A DISPATCH ERROR: source lease changed\" >&2; exit 3; fi\nmkdir -p \"$HOME/.dore/egm-dispatch\"\nSCRIPT=\"$HOME/.dore/egm-dispatch/chatgpt-egm-p2-native-goldfish-20261027-0438-cli-compatible.sh\"\ngit -C \"$REPO\" show \"$SHA:scripts/p2-egm-a2a-review.sh\" > \"$SCRIPT\"\nexport PATH=\"$HOME/.codex/plugins/.plugin-appserver/codex-cli/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin:$PATH\"\nCLI=\"$(command -v codex || true)\"\nif [[ ! -x \"$CLI\" ]]; then echo \"A2A ERROR: verified Codex CLI is not executable\" >&2; exit 6; fi\nprintf 'A2A EGM: using official Codex CLI: %s\\n' \"$CLI\"\nP2_A2A_SOURCE_SHA=\"$SHA\" DORE_REPO_ROOT=\"$REPO\" bash \"$SCRIPT\""
+      ],
+      "cwd": "~",
+      "timeout": 900
+    }
+  ]
+}
