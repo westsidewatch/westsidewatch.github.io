@@ -3,9 +3,9 @@
   "provider": "Open Library Search API",
   "cursors": {
     "chi:Bible": {
-      "nextPage": 2,
-      "lastPage": 1,
-      "exhausted": false
+      "nextPage": 1,
+      "lastPage": 5,
+      "exhausted": true
     },
     "chi:Theology": {
       "nextPage": 1,
@@ -13,13 +13,13 @@
       "exhausted": true
     },
     "chi:Christianity": {
-      "nextPage": 1,
-      "lastPage": 19,
-      "exhausted": true
+      "nextPage": 7,
+      "lastPage": 6,
+      "exhausted": false
     },
     "eng:Bible": {
-      "nextPage": 407,
-      "lastPage": 406,
+      "nextPage": 408,
+      "lastPage": 407,
       "exhausted": false
     },
     "eng:Theology": {
@@ -84,11 +84,11 @@
     }
   },
   "metrics": {
-    "existingWorks": 46282,
-    "newWorks": 59,
-    "scannedRecords": 200,
-    "requests": 2,
-    "totalWorks": 46341
+    "existingWorks": 46341,
+    "newWorks": 102,
+    "scannedRecords": 1362,
+    "requests": 14,
+    "totalWorks": 46443
   },
-  "updatedAt": 1793086063
+  "updatedAt": 1793086249
 }
