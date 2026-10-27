@@ -70,6 +70,9 @@ const data=()=> {
   starRenderer:star.dataset.renderer,
   approvedStarVisible:!!star.querySelector('img.dual-cover__approved-star')&&getComputedStyle(star).opacity==='1',
   star:box(star),zone:box(zone),movements:columns.map(box),
+  witnessLast:box(document.querySelector('.dual-movement:nth-child(3) .dual-entry:last-child')),
+  witnessInterlude:box(document.querySelector('.dual-movement:nth-child(3) .dual-movement__interlude')),
+  worshipHeading:box(document.querySelector('.dual-movement:nth-child(4) h3')),
   headings:[...document.querySelectorAll('.dual-cover__en span')].map(el=>el.textContent.trim()),
   title:box(document.querySelector('.dual-cover__editorial')),
   mast:box(document.querySelector('.dual-cover__mast')),
@@ -130,7 +133,11 @@ const data=()=> {
       const [watch,walk,witness,worship]=m.movements;
       if(!(watch.left<walk.left&&walk.left<witness.left&&Math.abs(witness.left-worship.left)<2&&worship.top-witness.bottom>=6&&worship.top-witness.bottom<=20))
        faults.push('desktop Contents needs two long columns and a visibly separated stacked third column');
+      if(m.worshipHeading.top-m.witnessInterlude.bottom<6)
+       faults.push('WITNESS interlude must not collide with WORSHIP heading');
      }
+     if(m.witnessInterlude.top-m.witnessLast.bottom<3)
+      faults.push('WITNESS interlude overlaps its final editorial entry');
      if(m.starRenderer==='approved-morning-star-svg'&&!m.approvedStarVisible)faults.push('approved vector Morning Star fallback missing without WebGL');
      if(!approx(m.cover.width/m.cover.height,5/8,.01)||!approx(m.page.width/m.page.height,1,.01))faults.push('5:8 cover and 1:1 Contents');
      if(m.entries!==12||m.ariaHead!=='Contents.')faults.push('Contents canon');
