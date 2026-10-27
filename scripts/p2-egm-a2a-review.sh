@@ -4,7 +4,11 @@
 set -euo pipefail
 
 P2_BRANCH="p2-latest-magazine-motion-preview-20261023"
-EXPECTED_SHA="4fa21ce514440da785db52db4c6bcdfbcb574f6e"
+EXPECTED_SHA="${P2_A2A_SOURCE_SHA:-}"
+if [[ ! "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+  echo "A2A EGM ERROR: exact P2_A2A_SOURCE_SHA lease required" >&2
+  exit 12
+fi
 EGM_BRANCH="integrate-egm-into-westside-design-os-20261027"
 TARGET="docs/design/P2-VOL00-EGM-SPREAD-SPEC.md"
 REPORT="docs/design/P2-VOL00-EGM-GOLDFISH-REPORT.md"
@@ -42,7 +46,7 @@ if ! command -v codex >/dev/null 2>&1; then
   echo "A2A EGM ERROR: codex CLI unavailable in worker environment" >&2
   exit 6
 fi
-PROOF="$REVIEW_ROOT/.dev/egm/p2-${EXPECTED_SHA:0:12}"
+PROOF="$REVIEW_ROOT/.dev/egm/p2-4fa21ce51444"
 mkdir -p "$PROOF"
 codex plugin list > "$PROOF/plugin-list.txt" 2>&1
 if ! grep -Eqi '(^|[[:space:]])egm([[:space:]@]|$)' "$PROOF/plugin-list.txt"; then
