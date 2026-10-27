@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-egm-p2-shell-parse-diagnostic-20261027-0710",
+  "subject": "Bash syntax diagnostic for pinned P2 EGM runner",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/p2-vol00-egm-goldfish-20261027",
+  "body": "Read-only parse diagnostic for 41088c P2 runner, no EGM model invocation or code writes.",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "python3 - <<'PY'\nimport subprocess,tempfile,pathlib,os\nrepo=os.environ.get('DORE_REPO_ROOT') or os.getcwd()\nrev='41088c777428f532c0dd154e710a2f89654be3f9'\nr=subprocess.run(['git','show',rev+':scripts/p2-egm-a2a-review.sh'],cwd=repo,capture_output=True,text=True)\nif r.returncode: raise SystemExit('SOURCE_UNAVAILABLE '+r.stderr[-250:])\ns=r.stdout\na=s.index('# EGM is pinned on its companion Design OS PR')\nb=s.index('TASK_PROMPT=',a)\ncases={\n 'full':s,\n 'without_entire_insert':s[:a]+s[b:],\n 'only_pin_record':s[:a]+'git ls-tree \"refs/remotes/origin/$EGM_BRANCH\" -- .tools/elephant-goldfish-model > \"$PROOF/egm-source-authority.txt\"\\n'+s[b:],\n 'without_apostrophe':s.replace(\"EGM's source pin\",\"EGM source pin\"),\n 'without_printf':s.replace(\"printf 'EGM integration branch: %s; P2 remains separate.\\\\n' \\\"$EGM_BRANCH\\\" >> \\\"$PROOF/egm-source-authority.txt\\\"\",\"\"),\n 'original_prefix_only':s[:a]+s[b:].replace(\"EGM's source pin\",\"EGM source pin\"),\n}\nfor name,code in cases.items():\n with tempfile.NamedTemporaryFile(mode='w',suffix='.sh',delete=False) as f:\n  f.write(code);path=f.name\n out=subprocess.run(['bash','-n',path],capture_output=True,text=True)\n print(name,'exit',out.returncode,'error',out.stderr[-380:].strip().replace('\\n',' | '))\n pathlib.Path(path).unlink()\nprint('N_LINES',len(s.splitlines()),'SOURCE_BYTES',len(s))\nPY"
+      ],
+      "cwd": "~",
+      "timeout": 120
+    }
+  ]
+}
