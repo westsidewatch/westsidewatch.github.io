@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027f">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027g">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -86,13 +86,12 @@
     </div>
   </article>
   <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="多雷原作雕版上浮現西望，晨星升至左上，最後進入正式 Contents">
-    <figure class="dual-dore-plate" id="dual-dore-plate" aria-label="古斯塔夫·多雷《登山寶訓》雕版">
-      <img class="dual-dore-plate__image" id="dual-dore-image"
-        src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Dore_Bible_Sermon_on_the_Mount.jpg"
-        width="2061" height="2781" decoding="async" loading="eager"
-        alt="1866 年多雷《登山寶訓》原作：耶穌在濃密樹蔭下向群眾講道，細密刻線佈滿整幅版畫">
+    <figure class="dual-dore-plate" id="dual-dore-plate"
+      aria-label="多雷《聖經》插畫：城牆、城門與聖城原作連續圖版">
+      <img class="dual-dore-plate__image" id="dual-dore-image-a" alt="" decoding="async" loading="eager">
+      <img class="dual-dore-plate__image" id="dual-dore-image-b" alt="" decoding="async" loading="eager">
       <span class="dual-dore-plate__wash" aria-hidden="true"></span>
-      <figcaption class="dual-dore-plate__credit">GUSTAVE DORÉ · THE SERMON ON THE MOUNT · 1866</figcaption>
+      <figcaption class="dual-dore-plate__credit" id="dual-dore-plate-credit">GUSTAVE DORÉ · CITIES & WALLS · 1866</figcaption>
     </figure>
    
    <svg class="dual-letterfield" id="dual-letterfield" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -147,6 +146,9 @@
  </div>
 </section>
 </main>
+<!-- Use the already published Doré Search canonical registry: no parallel asset table. -->
+<script src="/one/one-dore-cover-registry.js"></script>
+<script src="/one/one-dore-assets-241.js"></script>
 <script>
 (function(){
  const stage=document.getElementById('dual-stage');
@@ -191,22 +193,122 @@
   return el;
  };
  const defs=letters.querySelector('defs');
- const xiClip=mk('clipPath',defs,{id:'ws-xi-original-crop',clipPathUnits:'userSpaceOnUse'});
- mk('rect',xiClip,{x:0,y:0,width:216,height:218});
- const wangClip=mk('clipPath',defs,{id:'ws-wang-original-crop',clipPathUnits:'userSpaceOnUse'});
- mk('rect',wangClip,{x:216,y:0,width:216,height:218});
+ // Each official glyph has a real 216×218 SVG viewport.
+ // This makes visible bounds correct for editorial star clearance.
  const vertical=mk('g',defs,{id:'ws-xiwang-vertical'});
- const xiPart=mk('g',vertical,{'clip-path':'url(#ws-xi-original-crop)'});
- mk('use',xiPart,{href:'#ws-xiwang-original'});
- const wangOffset=mk('g',vertical,{transform:'translate(-216 236)'});
- const wangPart=mk('g',wangOffset,{'clip-path':'url(#ws-wang-original-crop)'});
- mk('use',wangPart,{href:'#ws-xiwang-original'});
+ const xiWindow=mk('svg',vertical,{x:0,y:0,width:216,height:218,viewBox:'0 0 216 218',overflow:'hidden'});
+ mk('use',xiWindow,{href:'#ws-xiwang-original'});
+ const wangWindow=mk('svg',vertical,{x:0,y:236,width:216,height:218,viewBox:'216 0 216 218',overflow:'hidden'});
+ mk('use',wangWindow,{href:'#ws-xiwang-original'});
  const hero=mk('g',letters,{'class':'ws-print-hero'});
  hero.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
  const registration=mk('use',hero,{'class':'ws-print-hero__registration',href:'#ws-xiwang-vertical',transform:'translate(1.0 1.5)'});
  const heroFace=mk('use',hero,{'class':'ws-print-hero__face',href:'#ws-xiwang-vertical'});
  const artPlate=document.getElementById('dual-dore-plate');
- const artImage=document.getElementById('dual-dore-image');
+ const artCredit=document.getElementById('dual-dore-plate-credit');
+ const artImages=[document.getElementById('dual-dore-image-a'),document.getElementById('dual-dore-image-b')];
+ // These eight canonical IDs come from Doré Search's existing 241-plate source.
+ const CITY_PLATE_IDS=[10,13,48,64,115,123,127,241];
+ const artRegistry=window.ONE_DORE_COVER_REGISTRY;
+ const cityPlates=CITY_PLATE_IDS.map(id=>({
+  id,file:artRegistry?.files?.[id],
+  title:artRegistry?.titles?.[id]||
+   String(artRegistry?.files?.[id]||'').replace(/^\d+[A-Z]?\./,'').replace(/\.(jpg|jpeg|png|gif)$/i,'')
+ }));
+ if(cityPlates.some(item=>!item.file))throw Error('P2 Doré 241-plate original registry unavailable');
+ const plateUrl=id=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+
+  encodeURIComponent(artRegistry.files[id])+'?width=1600';
+ const PLATE_SCAN_MS=15000; // match existing /dore/search/ implementation
+ let plateIndex=0,plateActive=0,plateVersion=0,plateTimer=0;
+ let plateStarted=false,plateVisible=false,plateReady=false,plateChanges=0;
+ const showCredit=item=>{
+  artCredit.textContent='DORÉ '+String(item.id).padStart(3,'0')+' · '+
+   item.title.toUpperCase()+' · '+String(plateIndex+1).padStart(2,'0')+
+   '/'+String(cityPlates.length).padStart(2,'0');
+ };
+ const setPlatePose=img=>{
+  img.classList.remove('is-active');img.style.transition='none';
+  img.style.opacity='0';img.style.transform='translate3d(0,4%,0) scale(1.10)';
+ };
+ const beginPlateScan=img=>{
+  img.style.transition=reduce?'none':'opacity .9s ease, transform 15s linear';
+  img.classList.add('is-active');
+  requestAnimationFrame(()=>{
+   img.style.opacity='1';
+   img.style.transform=reduce?'translate3d(0,0,0) scale(1.04)':
+    'translate3d(0,-9%,0) scale(1.10)';
+  });
+ };
+ const preloadPlate=index=>{
+  const next=new Image();
+  next.src=plateUrl(cityPlates[index%cityPlates.length].id);
+ };
+ const galleryPause=()=>{
+  clearTimeout(plateTimer);plateTimer=0;plateVisible=false;
+ };
+ const gallerySchedule=()=>{
+  clearTimeout(plateTimer);plateTimer=0;
+  if(plateVisible&&!reduce)plateTimer=setTimeout(()=>galleryAdvance(),PLATE_SCAN_MS);
+ };
+ const galleryLoad=(slot,index,first=false)=>{
+  const ticket=++plateVersion,item=cityPlates[index%cityPlates.length];
+  const img=artImages[slot];
+  setPlatePose(img);
+  img.alt='Gustave Doré — '+item.title;img.dataset.doreId=String(item.id);
+  return new Promise(resolve=>{
+   let settled=false;
+   const finish=ok=>{
+    if(settled)return;settled=true;img.onload=null;img.onerror=null;
+    if(ticket!==plateVersion){resolve(false);return}
+    if(!ok){artPlate.dataset.galleryError='image-'+item.id;resolve(false);return}
+    if(!first){
+     const last=artImages[plateActive];
+     if(last!==img){last.classList.remove('is-active');last.style.opacity='0'}
+    }
+    plateIndex=index%cityPlates.length;plateActive=slot;plateReady=true;
+    if(!first)plateChanges++;
+    artPlate.dataset.plateId=String(item.id);
+    artPlate.dataset.plateChanges=String(plateChanges);
+    artPlate.dataset.galleryError='';
+    showCredit(item);beginPlateScan(img);
+    preloadPlate((plateIndex+1)%cityPlates.length);
+    gallerySchedule();resolve(true);
+   };
+   img.onload=()=>finish(true);
+   img.onerror=()=>finish(false);
+   img.src=plateUrl(item.id);
+   if(img.complete&&img.naturalWidth>0)queueMicrotask(()=>finish(true));
+  });
+ };
+ const galleryAdvance=async()=>{
+  if(!plateStarted||!plateVisible||reduce)return false;
+  const slot=1-plateActive;
+  // Never display a failed source. Advance to the next genuine art record.
+  for(let step=1;step<=cityPlates.length;step++){
+   const index=(plateIndex+step)%cityPlates.length;
+   if(await galleryLoad(slot,index,false))return true;
+  }
+  gallerySchedule();return false;
+ };
+ const galleryUpdate=visible=>{
+  if(!visible){galleryPause();return}
+  plateVisible=true;
+  if(!plateStarted){
+   plateStarted=true;
+   galleryLoad(plateActive,plateIndex,true).then(ok=>{
+    if(!ok&&plateVisible&&!reduce)galleryAdvance();
+   });
+  }else if(!plateTimer&&!reduce&&plateReady)gallerySchedule();
+ };
+ // Makes actual distinct-source visual verification possible in Playwright.
+ window.P2DoreGallery={
+  items:CITY_PLATE_IDS.slice(),next:()=>galleryAdvance(),
+  get state(){return {
+   id:cityPlates[plateIndex].id,changes:plateChanges,
+   ready:plateReady,visible:plateVisible,cycleMs:PLATE_SCAN_MS
+  }}
+ };
+
  let printW=0,printH=0;
  const layoutPrint=(w,h)=>{
   if(Math.abs(w-printW)<.5&&Math.abs(h-printH)<.5)return;
@@ -277,16 +379,16 @@
   stage.dataset.blueReveal=blue.toFixed(4);
   stage.dataset.dawnReveal=dawn.toFixed(4);
   stage.dataset.transitionEngraving='journal-printed-folio';
-  // The Doré original is the LEFT FOLIO, not a warm-paper wallpaper.
-  // Its slow optical pan is tied to the same reversible publication clock.
+  // /dore/search/ autonomous double-buffer plate carousel, 15s scanning.
+  // Only P2 folio visibility and the Morning Star/Contents are scroll-driven.
   const artArrival=reduce?(progress>=.31?1:0):ease((progress-.225)/.115);
   const artDeparture=reduce?(progress>=.87?1:0):ease((progress-.86)/.13);
   artPlate.style.opacity=String(artArrival*(1-artDeparture));
   artPlate.style.visibility=artArrival>0&&artDeparture<1?'visible':'hidden';
-  const artPan=reduce?0:lerp(5.5,-5.5,ease((progress-.28)/.56));
-  artImage.style.transform='translate3d(0,'+artPan.toFixed(3)+'%,0) scale(1.025)';
-  stage.dataset.dorePan=artPan.toFixed(3);
+  galleryUpdate(progress>=.30&&progress<.87);
   stage.dataset.doreVisible=artPlate.style.opacity;
+  stage.dataset.dorePlateId=artPlate.dataset.plateId||'';
+  stage.dataset.dorePlateChanges=String(plateChanges);
   // Large vertical title uses the two exact official original glyphs
   // as a translucent ink/stone overprint, matching the reference spread.
   const typeEnter=reduce?(progress>=.31?1:0):ease((progress-.255)/.11);
@@ -298,13 +400,13 @@
   const titleOn=reduce?(progress>=.31?1:0):ease((progress-.285)/.12);
   const titleScale=Math.min(contentsW*.61/216,contentsH*.89/454);
   const titleWidth=216*titleScale,titleHeight=454*titleScale;
-  const titleX=(contentsW-titleWidth)*.52;
+  const titleX=(contentsW-titleWidth)*.75;
   const titleY=(contentsH-titleHeight)*.5;
   hero.setAttribute('transform','translate('+titleX.toFixed(2)+' '+titleY.toFixed(2)+') scale('+titleScale.toFixed(5)+')');
   hero.style.opacity=String(titleOn);
   stage.dataset.xiwangHero=titleOn.toFixed(3);
   stage.dataset.xiwangImpression=titleOn.toFixed(3);
-  stage.dataset.xiwangPlate='official-svg-vertical-dore';
+  stage.dataset.xiwangPlate='official-svg-vertical-dore-city-gallery';
   stage.dataset.xiwangTitleOrientation='vertical';
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.

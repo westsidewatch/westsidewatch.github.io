@@ -31,16 +31,22 @@ assert.match(source,/data-role="threshold-lit-edge"/,'door light and ground proj
 assert.doesNotMatch(source,/ws-gate-threshold-fade|ws-gate-ink-fade/,'retired mask erased the light exactly at the gate threshold');
 assert.doesNotMatch(source,/data-role="inner-paper-fold"|data-role="central-light-plane"|data-role="fold-seam"/,'do not revive several faint fan wedges');
 assert.doesNotMatch(source,/dual-film|dual-radiance|installV53CanvasFallback|data-cover-choice|data-position|dual-transition-water/);
-assert.match(source,/Dore_Bible_Sermon_on_the_Mount\.jpg/,'the original Doré image must replace blank stone paper on left');
-assert.match(source,/2061" height="2781"/,'source image must identify its full original scan geometry');
-assert.match(source,/GUSTAVE DORÉ/,'actual public-domain engraving credit must be visible');
-assert.match(source,/id:'ws-xiwang-vertical'/,'vertical large title must use original official glyphs');
-assert.match(source,/ws-xi-original-crop/,'official 西 glyph is clipped from original SVG');
-assert.match(source,/ws-wang-original-crop/,'official 望 glyph is clipped from original SVG');
-assert.match(source,/href:'#ws-xiwang-original'/,'two letterforms must refer to the protected glyph source');
-assert.match(source,/const starRise=reduce\?/,'original scroll-controlled Morning Star rise must stay present');
-assert.match(source,/star\.style\.left=lerp\(15,50,stone\)/,'star must rise to top-left and hand off to canonical Contents');
-assert.match(css,/dual-dore-plate__image/,'authentic Doré art must have a moving left-image folio');
+assert.match(source,/\/one\/one-dore-cover-registry\.js/,'reuse the exact Doré Search canonical title catalogue');
+assert.match(source,/\/one\/one-dore-assets-241\.js/,'reuse the existing exact 241-image filename registry');
+assert.match(source,/CITY_PLATE_IDS=\[10,13,48,64,115,123,127,241\]/,'eight real city, city-gate, wall and New Jerusalem originals only');
+assert.match(source,/PLATE_SCAN_MS=15000/,'use the original Doré Search gallery scan rhythm');
+assert.match(source,/galleryAdvance|galleryLoad/,'multiple works must actually crossfade and scan, not pan one image');
+assert.match(source,/dual-dore-image-a/,'first real original image buffer exists');
+assert.match(source,/dual-dore-image-b/,'second crossfade image buffer exists');
+assert.match(source,/GUSTAVE DORÉ/,'retained public-domain attribution is required');
+assert.match(source,/id:'ws-xiwang-vertical'/,'title is the exact two original Chinese glyphs');
+assert.match(source,/viewBox:'0 0 216 218'/,'Westside original 西 must have a true clipped SVG viewport');
+assert.match(source,/viewBox:'216 0 216 218'/,'Westside original 望 must have a true clipped SVG viewport');
+assert.match(source,/href:'#ws-xiwang-original'/,'both glyphs come only from the protected SVG');
+assert.match(source,/const starRise=reduce\?/,'original Morning Star rise remains');
+assert.match(source,/star\.style\.left=lerp\(15,50,stone\)/,'Morning Star rises to editorial upper-left');
+assert.match(css,/dual-dore-plate__image/,'same double-buffer image folio as Doré Search');
+assert.doesNotMatch(source,/dual-dore-image"\s+src=|const artImage=document/,'retired single-image-only implementation must be absent');
 assert.doesNotMatch(source,/ws-engraved-side-mask|ws-engraved-mask-step|sideSlices|heroSides|residualBands|stoneTones/,'retired sidewall overlays must not interfere with engraving');
 assert.doesNotMatch(source,/starClearance|radial-gradient\(ellipse 24% 22%/,'a radial hole is not a physical Morning Star clearance');
 assert.doesNotMatch(css,/ocean-rise|water-doors|p2-approved-ocean|repeating-linear-gradient\(118deg/);
@@ -66,7 +72,8 @@ const data=()=> {
  const stage=document.querySelector('#dual-stage');
  const hero=document.querySelector('.ws-print-hero');
  const face=hero.querySelector('.ws-print-hero__face');
- const artwork=document.querySelector('#dual-dore-image');
+ const galleryImages=[...document.querySelectorAll('.dual-dore-plate__image')];
+ const activeArt=galleryImages.find(img=>img.classList.contains('is-active'));
  const artPlate=document.querySelector('#dual-dore-plate');
  const cover=document.querySelector('#dual-cover');
  const page=document.querySelector('#dual-contents');
@@ -89,10 +96,16 @@ const data=()=> {
  return {
   phase:stage.dataset.phase,impression:+stage.dataset.xiwangImpression,inkPlate:stage.dataset.xiwangPlate,
   titleOrientation:stage.dataset.xiwangTitleOrientation,
-  dorePan:+stage.dataset.dorePan,
+  dorePlateId:stage.dataset.dorePlateId,
+  dorePlateChanges:+stage.dataset.dorePlateChanges,
+  galleryIds:window.P2DoreGallery?.items,
+  galleryCycle:window.P2DoreGallery?.state?.cycleMs,
   doreVisible:+getComputedStyle(artPlate).opacity,
-  doreReady:artwork.complete&&artwork.naturalWidth>=2000,
-  doreSource:artwork.currentSrc,
+  doreReady:!!activeArt&&activeArt.complete&&activeArt.naturalWidth>=700,
+  doreSource:activeArt?.currentSrc||'',
+  doreLayerCount:galleryImages.length,
+  doreCurrentId:activeArt?.dataset.doreId||'',
+  doreCredit:document.querySelector('#dual-dore-plate-credit')?.textContent||'',
   blue:+stage.dataset.blueReveal,gold:+stage.dataset.dawnReveal,
   cover:box(cover),page:box(page),
   typeOpacity:+getComputedStyle(document.querySelector('#dual-letterfield')).opacity,
@@ -158,12 +171,15 @@ const data=()=> {
    page.on('pageerror',e=>pageErrors.push(e.message));
    await page.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=0&side=cover-right',{waitUntil:'domcontentloaded',timeout:45000});
    await page.evaluate(()=>document.fonts.ready);
-   await page.locator('#dual-dore-image').evaluate(img=>img.decode().catch(()=>{}));
+   // The first original is loaded only when the multi-plate folio becomes visible.
    let heroAtTypeHold=0;
    for(const [label,p] of scenes){
     await page.locator('#dual-progress').evaluate((slider,value)=>{
      slider.value=String(value);slider.dispatchEvent(new Event('input',{bubbles:true}));
     },p);
+    if(p===33){
+     await page.waitForFunction(()=>window.P2DoreGallery?.state.ready,null,{timeout:16000});
+    }
     await page.waitForTimeout(90);
     const m=await page.evaluate(data);
     const faults=[];
@@ -175,17 +191,31 @@ const data=()=> {
     if(p===33&&!(m.gold>.1&&m.gold<.95&&m.typeOpacity>.20&&m.heroOpacity>.25&&m.doreVisible>.1))
      faults.push('original Doré folio and official Xi Wang should enter with dawn reveal');
     if(p===33&&m.cityOpacity<.98)faults.push('do not leave empty right-cover midnight-blue block');
-    if([44,54,68,79,82].includes(p)&&!m.doreReady)
+    if([44,54,68,79,82].includes(p)&&(!m.doreReady||m.doreLayerCount!==2||!m.doreCredit.includes(String(m.doreCurrentId).padStart(3,'0'))))
      faults.push('actual unmodified public-domain Doré plate failed to load');
     if(p===44){
      heroAtTypeHold=m.hero.top;
-     if(!(m.starOpacity<.05&&m.typeOpacity>.98&&m.heroOpacity>.98&&m.officialGlyphs===2&&m.heroFaceUsesOfficial&&m.inkPlate==='official-svg-vertical-dore'&&m.titleOrientation==='vertical'&&m.titleAspect>1.7))
+     if(!(m.starOpacity<.05&&m.typeOpacity>.98&&m.heroOpacity>.98&&m.officialGlyphs===2&&m.heroFaceUsesOfficial&&m.inkPlate==='official-svg-vertical-dore-city-gallery'&&m.titleOrientation==='vertical'&&m.titleAspect>1.7))
       faults.push('large vertical original 西望 must hold over full bleed Doré plate before Morning Star enters');
     }
     if(p===54&&!(m.starOpacity>.1&&m.typeOpacity>.8))
      faults.push('protected Morning Star must begin rising over Doré plate');
     if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.98&&m.starTopRatio<.25))
      faults.push('Morning Star must finish rising toward upper-left, with vertical title readable');
+    if(p===79&&name==='desktop'){
+     // Prove the folio actually changes between TWO DIFFERENT DORÉ WORKS.
+     const first=await page.evaluate(()=>window.P2DoreGallery.state);
+     const switched=await page.evaluate(()=>window.P2DoreGallery.next());
+     if(!switched)faults.push('second authentic city/wall engraving did not load');
+     else {
+      const second=await page.evaluate(data);
+      if(first.id===+second.doreCurrentId||second.dorePlateChanges<1||!second.doreReady)
+       faults.push('gallery must change the actual source image and maintain a real loaded image');
+      if(second.galleryCycle!==15000||second.galleryIds.join('|')!=='10|13|48|64|115|123|127|241')
+       faults.push('Doré image cycle must use eight curated canonical city IDs and original scan timing');
+      await page.screenshot({path:path.join(out,'desktop-city-second-plate.png'),animations:'disabled'});
+     }
+    }
     if(p===79||p===82){
      if(!(m.starOpacity>.98&&m.typeOpacity>.98&&m.heroOpacity>.99&&m.doreVisible>.90))
       faults.push('held spread must retain the star, original large title and complete Doré image');
@@ -226,17 +256,18 @@ const data=()=> {
    // No duplicate clock: reversing the ONE slider restores same visual state.
    await page.locator('#dual-progress').evaluate(slider=>{slider.value='33';slider.dispatchEvent(new Event('input',{bubbles:true}))});
    const reverse=await page.evaluate(data);
-   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='official-svg-vertical-dore'||reverse.doreVisible<.2||reverse.stoneOpacity>.01)
+   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='official-svg-vertical-dore-city-gallery'||reverse.doreVisible<.2||reverse.stoneOpacity>.01)
     results.push({id:name+'-reverse',errors:['backwards scroll did not restore the original impression']});
    await page.close();
   }
    const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
    await reduced.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=14',{waitUntil:'domcontentloaded'});
-   await reduced.locator('#dual-dore-image').evaluate(img=>img.decode().catch(()=>{}));
+   // Reduced motion stays on the first real artwork, without any timers.
    for(const p of [14,44,79,100]){
     await reduced.locator('#dual-progress').evaluate((slider,value)=>{
      slider.value=String(value);slider.dispatchEvent(new Event('input',{bubbles:true}));
     },p);
+    if(p===44)await reduced.waitForFunction(()=>window.P2DoreGallery?.state.ready,null,{timeout:16000});
     const r=await reduced.evaluate(data),faults=[];
     if((p===44||p===79)&&!r.doreReady)faults.push('reduced motion must still show the real Doré original');
     if(r.starRenderer!=='approved-morning-star-svg-reduced')
