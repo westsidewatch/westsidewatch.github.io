@@ -116,9 +116,9 @@ all 12 canonical Contents entries and Church return path.
 
 ## 8. Accessibility, performance and implementation risks
 
-- Keep the approved iframe/WebGL star with existing SVG fallback. Check both WebGL and no-WebGL rendering; a blank/starless result is a failure.
-- The only clock is existing `progress`; one-way CSS entrance animations or time-based layers that break reverse scrolling are disallowed.
-- For `prefers-reduced-motion: reduce`, freeze meaningful states while preserving identity and 12 Contents entries.
+- In normal-motion mode, **preserve the approved Morning Star v5.3 iframe/WebGL artwork and its original internal rotation, rays and rendering cadence**. That independently authored interior rendering is *exempt* from the publication-page's single `progress` clock. The outer star container's position, visibility, entrance and departure are **not** exempt: all must remain tied to the one reversible `progress` value. Check both WebGL and no-WebGL rendering; a blank/starless result is a failure.
+- The only clock for **publication transitions** is existing `progress`; one-way CSS entrance animations or time-based page layers that break reverse scrolling are disallowed. Do not modify the iframe's protected internal animation engine merely to collapse separate renderer motion into that outer clock.
+- For `prefers-reduced-motion: reduce`, eliminate transitional slides, fades, 3D spin and moving rays **without removing content**. The original approved **static Morning Star SVG** replaces the autoplay/WebGL iframe at the *host page* level; the v5.3 source files remain immutable. Snap to the following **meaningful states**, directly controlled by requested `progress`: p≤30 = intact cover arrival (no unreadable intermediate clip); p31–55 = large legible original 西望 identity; p56–86 = final star + 西望 publication spread with safe separation; p≥87 = readable canonical Contents with its 12 entries and controls. Keyboard, scroll reversal and direct `?p=` navigation must reach every meaningful state. Do not let the old `const stone=ease((progress-.865)/.125)` override this snap behavior; adjust that transition in implementation only after signoff.
 - On narrow viewports ≤820px, the original cover/left folio stacks; re-evaluate vertical Star/title safe space in the *page* box, not desktop offsets.
 - At 200% browser zoom, text must remain legible and not cut off within fixed-height tiles.
 - Preserve `data-ws-scope` and font/weight tokens; verify fonts actually resolve, rather than relying on fallback.
@@ -132,15 +132,16 @@ all 12 canonical Contents entries and Church return path.
 - Compare and preserve the exact right-cover markup/assets before and after the implementation (same original gate coordinate space and light trajectory).
 - Hugo production build and existing branch-preview/browser checks; explicit coverage at 1648×928, 768×1024, 390×844 and 320×720.
 - Capture p14, p33, p44, p54, p68, **p79**, p82, p93, p100 at each size; reverse scroll p82→p33; reduced motion; 200% zoom.
-- Collect visible bounding rectangles for Star and `ws-print-hero`; assert that their intersection is zero in held states and that no live rule hits major lettering. The artwork needs manual optical review in addition to geometric checks.
+- Collect **transformed, visible** bounding rectangles for Star and the official 西望 face (`ws-print-hero` or its approved replacement) at p44, p68, **p79**, p82; assert a strictly positive visual separation, no collision of any line/shadow with main glyphs, and no clipping against page/gutter. In the held p68–82 state the Star and wordmark must make one legible vertical identity group: their visible horizontal optical centers should agree within an initial ±8% of the *actual left folio width*, with a provisional visible gap ≥3% of its height, subject to human optical correction. **No-collision alone is not a pass**; compare side-by-side at 1648/768/390/320 widths for title scale, negative space, path of reading and unity with the immutable gate cover. Pixel/programmatic geometry cannot replace the editor's visual approval.
 - Check canonical 12 Contents entries and all original article labels remain visible/keyboard-reachable at p100.
 - Include before/after real screenshots side by side with the single source reference; no AI generated replacement, no speculative image.
 
-**Independent EGM gate (not yet run on this P2 document):**
+**Independent EGM gate (PARTIAL native attempt; completion still required):**
+- [2026-10-27 native review ledger](P2-VOL00-EGM-GOLDFISH-PARTIAL-20261027.md): real isolated Stage 5 and 6 completions, Stage 7 interrupted by model-usage quota, Stage 8 not completed. This is not Goldfish approval. A future run must read and resolve these findings rather than replacing them with a superficial passing summary.
 - Use the **installed, matching official** `egm@egm` plugin as verified in PR #1358. Ask Codex to run **`egm-review`** with **TargetFile** this document, **Step** `feature_spec` (Stages 5–8), and **GoldfishContext** limited to the explicit files/links in §§2 and 6 plus the canonical Design OS/Editorial Manual.
 - Subagents must have fresh context (`fork_context:false` or `fork_turns:"none"`), read their actual upstream persona, the target and standards, and produce native completion/read evidence. The 15 reviewers previously used for EGM installation testing are **not a substitute** for a P2 review.
 - Resolve any Blocker/Major findings against the same document; record Nits, contested findings and accepted residual risks with the editor. Review state cannot be promoted by this parent chat alone.
 - Only after specification approval run implementation-readiness Stage 9 on the reviewed implementation plan, implement in the existing PR in a consolidated change, and require the human editor to accept the **actual** side-by-side publication screenshots.
 
-**Status:** `DRAFT → P2 GOLDFISH REVIEW REQUIRED → EDITOR ART DIRECTION → IMPLEMENTATION → ACTUAL SCREEN SIGNOFF → CI/RELEASE`.
+**Status:** `DRAFT / NATIVE REVIEW PARTIAL (Stages 5–6) → COMPLETE FRESH STAGES 7–8 → EDITOR ART DIRECTION → IMPLEMENTATION → ACTUAL SCREEN SIGNOFF → CI/RELEASE`.
 **Do not merge PR #1355 on the strength of this document.**
