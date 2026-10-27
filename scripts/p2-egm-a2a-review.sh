@@ -41,7 +41,9 @@ if [[ ! -f "$REVIEW_ROOT/$TARGET" ]]; then
   exit 5
 fi
 
-export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+# The verified Codex native CLI is bundled under ChatGPT's plugin appserver,
+# rather than a conventional Homebrew/npm-global PATH entry on this Mac.
+export PATH="$HOME/.codex/plugins/.plugin-appserver/codex-cli/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin:$HOME/.local/bin:$HOME/.npm-global/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 if ! command -v codex >/dev/null 2>&1; then
   echo "A2A EGM ERROR: codex CLI unavailable in worker environment" >&2
   exit 6
@@ -88,7 +90,7 @@ TASK
 )"
 echo "A2A EGM: starting official native isolated P2 Goldfish review at $EXPECTED_SHA"
 set +e
-codex exec -C "$REVIEW_ROOT" --full-auto --skip-git-repo-check --json \
+codex exec -C "$REVIEW_ROOT" --sandbox workspace-write --approve-for-me --skip-git-repo-check --json \
   --output-last-message "$PROOF/codex-final.md" "$TASK_PROMPT" \
   > "$PROOF/codex-events.jsonl" 2> "$PROOF/codex-stderr.log"
 CODEX_RC=$?
