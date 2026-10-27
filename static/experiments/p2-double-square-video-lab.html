@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027e">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027f">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -85,7 +85,15 @@
      <p class="dual-cover__vol" id="dual-cover-vol" lang="en">VOL.00</p>
     </div>
   </article>
-  <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="黎明金承載晨星，最後顯示正方形聖殿石紋 Contents">
+  <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="多雷原作雕版上浮現西望，晨星升至左上，最後進入正式 Contents">
+    <figure class="dual-dore-plate" id="dual-dore-plate" aria-label="古斯塔夫·多雷《登山寶訓》雕版">
+      <img class="dual-dore-plate__image" id="dual-dore-image"
+        src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Dore_Bible_Sermon_on_the_Mount.jpg"
+        width="2061" height="2781" decoding="async" loading="eager"
+        alt="1866 年多雷《登山寶訓》原作：耶穌在濃密樹蔭下向群眾講道，細密刻線佈滿整幅版畫">
+      <span class="dual-dore-plate__wash" aria-hidden="true"></span>
+      <figcaption class="dual-dore-plate__credit">GUSTAVE DORÉ · THE SERMON ON THE MOUNT · 1866</figcaption>
+    </figure>
    
    <svg class="dual-letterfield" id="dual-letterfield" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
      <defs>
@@ -172,60 +180,33 @@
 
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
  const lerp=(a,b,t)=>a+(b-a)*t;
- // Real contours come ONLY from the approved original 西望 SVG.
- // A unified directional side-mask prevents the old cement-layer effect.
+ // Official 西望 glyph paths remain the ONLY character artwork.
+ // Editorial image folio uses the approved horizontal SVG reflowed into
+ // a vertical two-glyph title; its outlines are neither redrawn nor retyped.
  const svgNS='http://www.w3.org/2000/svg';
- const makeSvg=(tag,cls,parent)=>{
+ const mk=(tag,parent,attrs={})=>{
   const el=document.createElementNS(svgNS,tag);
-  if(cls)el.setAttribute('class',cls);
-  if(parent)parent.appendChild(el);
-  return el;
- };
- const attrs=(el,properties)=>{
-  for(const [key,value] of Object.entries(properties))el.setAttribute(key,String(value));
+  for(const [key,value] of Object.entries(attrs))el.setAttribute(key,String(value));
+  parent.appendChild(el);
   return el;
  };
  const defs=letters.querySelector('defs');
- const hero=makeSvg('g','ws-print-hero',letters);
+ const xiClip=mk('clipPath',defs,{id:'ws-xi-original-crop',clipPathUnits:'userSpaceOnUse'});
+ mk('rect',xiClip,{x:0,y:0,width:216,height:218});
+ const wangClip=mk('clipPath',defs,{id:'ws-wang-original-crop',clipPathUnits:'userSpaceOnUse'});
+ mk('rect',wangClip,{x:216,y:0,width:216,height:218});
+ const vertical=mk('g',defs,{id:'ws-xiwang-vertical'});
+ const xiPart=mk('g',vertical,{'clip-path':'url(#ws-xi-original-crop)'});
+ mk('use',xiPart,{href:'#ws-xiwang-original'});
+ const wangOffset=mk('g',vertical,{transform:'translate(-216 236)'});
+ const wangPart=mk('g',wangOffset,{'clip-path':'url(#ws-wang-original-crop)'});
+ mk('use',wangPart,{href:'#ws-xiwang-original'});
+ const hero=mk('g',letters,{'class':'ws-print-hero'});
  hero.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
- const sideMask=attrs(makeSvg('mask','ws-engraved-side-mask',defs),{
-  id:'ws-engraved-side-mask',maskUnits:'userSpaceOnUse',
-  maskContentUnits:'userSpaceOnUse',x:-90,y:-100,width:620,height:420
- });
- sideMask.style.maskType='luminance';
- const sideSlices=[];
- for(let i=1;i<=24;i++){
-  const slice=attrs(makeSvg('use','ws-engraved-mask-step',sideMask),{href:'#ws-xiwang-original'});
-  slice.style.color='#fff';
-  sideSlices.push(slice);
- }
- // The black original removes the INK FACE from the continuous white
- // offset silhouette; lines then appear on exposed sidewalls ONLY.
- const cutFace=attrs(makeSvg('use','ws-engraved-mask-front',sideMask),{href:'#ws-xiwang-original'});
- cutFace.style.color='#000';
- const shade=attrs(makeSvg('linearGradient','ws-engraved-gradient',defs),{
-  id:'ws-engraved-side-shading',x1:'0%',y1:'0%',x2:'100%',y2:'80%'
- });
- [['0%','ws-engraved-stop--shade'],['53%','ws-engraved-stop--stone'],['100%','ws-engraved-stop--light']]
-  .forEach(([offset,klass])=>attrs(makeSvg('stop',klass,shade),{offset}));
- const hatch=attrs(makeSvg('pattern','ws-engraved-hatch',defs),{
-  id:'ws-engraved-hatch',patternUnits:'userSpaceOnUse',
-  width:4,height:4,patternTransform:'rotate(26)'
- });
- attrs(makeSvg('path','ws-engraved-hatch-line',hatch),{d:'M0 0V4',fill:'none','stroke-width':'.50'});
- const cross=attrs(makeSvg('pattern','ws-engraved-crosshatch',defs),{
-  id:'ws-engraved-crosshatch',patternUnits:'userSpaceOnUse',
-  width:6,height:6,patternTransform:'rotate(-35)'
- });
- attrs(makeSvg('path','ws-engraved-cross-line',cross),{d:'M0 0V6',fill:'none','stroke-width':'.28'});
- const volume=makeSvg('g','ws-engraved-volume',hero);
- volume.setAttribute('mask','url(#ws-engraved-side-mask)');
- for(const fill of ['url(#ws-engraved-side-shading)','url(#ws-engraved-hatch)','url(#ws-engraved-crosshatch)']){
-  attrs(makeSvg('rect','ws-engraved-plane',volume),{x:-88,y:-98,width:616,height:412,fill});
- }
- const highlight=attrs(makeSvg('use','ws-print-hero__highlight',hero),{href:'#ws-xiwang-original'});
- const deboss=attrs(makeSvg('use','ws-print-hero__deboss',hero),{href:'#ws-xiwang-original'});
- const heroFace=attrs(makeSvg('use','ws-print-hero__face',hero),{href:'#ws-xiwang-original'});
+ const registration=mk('use',hero,{'class':'ws-print-hero__registration',href:'#ws-xiwang-vertical',transform:'translate(1.0 1.5)'});
+ const heroFace=mk('use',hero,{'class':'ws-print-hero__face',href:'#ws-xiwang-vertical'});
+ const artPlate=document.getElementById('dual-dore-plate');
+ const artImage=document.getElementById('dual-dore-image');
  let printW=0,printH=0;
  const layoutPrint=(w,h)=>{
   if(Math.abs(w-printW)<.5&&Math.abs(h-printH)<.5)return;
@@ -296,48 +277,35 @@
   stage.dataset.blueReveal=blue.toFixed(4);
   stage.dataset.dawnReveal=dawn.toFixed(4);
   stage.dataset.transitionEngraving='journal-printed-folio';
-  // An original Chinese type plate stands up as scrolling reveals true depth.
-  // Gradually reduce depth only when the protected Morning Star takes focus.
-  const typeEnter=reduce?(progress>=.31?1:0):ease((progress-.245)/.09);
+  // The Doré original is the LEFT FOLIO, not a warm-paper wallpaper.
+  // Its slow optical pan is tied to the same reversible publication clock.
+  const artArrival=reduce?(progress>=.31?1:0):ease((progress-.225)/.115);
+  const artDeparture=reduce?(progress>=.87?1:0):ease((progress-.86)/.13);
+  artPlate.style.opacity=String(artArrival*(1-artDeparture));
+  artPlate.style.visibility=artArrival>0&&artDeparture<1?'visible':'hidden';
+  const artPan=reduce?0:lerp(5.5,-5.5,ease((progress-.28)/.56));
+  artImage.style.transform='translate3d(0,'+artPan.toFixed(3)+'%,0) scale(1.025)';
+  stage.dataset.dorePan=artPan.toFixed(3);
+  stage.dataset.doreVisible=artPlate.style.opacity;
+  // Large vertical title uses the two exact official original glyphs
+  // as a translucent ink/stone overprint, matching the reference spread.
+  const typeEnter=reduce?(progress>=.31?1:0):ease((progress-.255)/.11);
   const typeLeave=reduce?(progress>=.87?1:0):ease((progress-.865)/.11);
-  const starAttention=reduce?(progress>=.56?1:0):ease((progress-.47)/.20);
   letters.style.clipPath='none';
-  letters.style.opacity=String(typeEnter*(1-typeLeave)*(1-.08*starAttention));
+  letters.style.opacity=String(typeEnter*(1-typeLeave));
   letters.style.visibility=typeEnter>0&&typeLeave<1?'visible':'hidden';
   layoutPrint(contentsW,contentsH);
-  const heroOn=reduce?(progress>=.31?1:0):ease((progress-.265)/.105);
-  const heroMove=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
-  const rise=reduce?1:ease((progress-.305)/.13);
-  const upright=lerp(.49,1,rise);
-  const heroScale=Math.min((contentsW/432)*lerp(.67,.54,heroMove),(contentsH/218)*lerp(.41,.265,heroMove));
-  const heroX=(contentsW-432*heroScale)/2;
-  const heroY=lerp(contentsH*.325,contentsH*.635,heroMove);
-  hero.setAttribute('transform',
-   'translate('+heroX.toFixed(2)+' '+heroY.toFixed(2)+') '+
-   'scale('+heroScale.toFixed(5)+') '+
-   'translate(0 '+(218*(1-upright)).toFixed(3)+') '+
-   'scale(1 '+upright.toFixed(4)+')'
-  );
-  hero.style.opacity=String(heroOn);
-  const taper=lerp(1,.60,heroMove),dx=-31*rise*taper,dy=-38*rise*taper;
-  const count=sideSlices.length;
-  sideSlices.forEach((slice,i)=>{
-   const t=(i+1)/count;
-   slice.setAttribute('transform','translate('+(dx*t).toFixed(3)+' '+(dy*t).toFixed(3)+')');
-  });
-  volume.style.opacity=String(rise);
-  const impression=reduce?1:ease((progress-.29)/.12);
-  highlight.setAttribute('transform','translate(-.85 -.75)');
-  deboss.setAttribute('transform','translate(.95 1.10)');
-  highlight.style.opacity=String(.36*impression);
-  deboss.style.opacity=String(.44*impression);
-  stage.dataset.xiwangHero=heroOn.toFixed(3);
-  stage.dataset.xiwangImpression=impression.toFixed(3);
-  stage.dataset.xiwangPlate='official-svg-engraved-volume';
-  stage.dataset.xiwangRise=rise.toFixed(4);
-  stage.dataset.xiwangFaceUpright=upright.toFixed(4);
-  stage.dataset.xiwangSideDepth=Math.hypot(dx,dy).toFixed(3);
-  stage.dataset.xiwangDepthUp=Math.abs(dy*heroScale*upright).toFixed(3);
+  const titleOn=reduce?(progress>=.31?1:0):ease((progress-.285)/.12);
+  const titleScale=Math.min(contentsW*.61/216,contentsH*.89/454);
+  const titleWidth=216*titleScale,titleHeight=454*titleScale;
+  const titleX=(contentsW-titleWidth)*.52;
+  const titleY=(contentsH-titleHeight)*.5;
+  hero.setAttribute('transform','translate('+titleX.toFixed(2)+' '+titleY.toFixed(2)+') scale('+titleScale.toFixed(5)+')');
+  hero.style.opacity=String(titleOn);
+  stage.dataset.xiwangHero=titleOn.toFixed(3);
+  stage.dataset.xiwangImpression=titleOn.toFixed(3);
+  stage.dataset.xiwangPlate='official-svg-vertical-dore';
+  stage.dataset.xiwangTitleOrientation='vertical';
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
@@ -356,7 +324,7 @@
    coverVol.style.opacity=String(signature);
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
    star.style.opacity=String(starRise);
-   star.style.transform='translate(-50%,'+(45-95*starRise).toFixed(2)+'%)';
+   star.style.transform='translate(-50%,-50%) scale('+(reduce?1:lerp(.72,1,starRise)).toFixed(3)+')';
    const printLight=reduce?1:ease((progress-.645)/.15);
    foldedLight.style.opacity=String(printLight);
    foldedLight.style.clipPath='ellipse('+(11+96*printLight).toFixed(2)+'% '+(13+95*printLight).toFixed(2)+'% at 50% 68%)';
@@ -364,14 +332,18 @@
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
   const stone=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
-   // Place the original v5.3 star within the upper ink-engraved register;
-   // the entire lower half remains reserved for real editorial contents.
+   // The protected Morning Star still RISES from the artwork. It lands
+   // in the quiet upper-left crop, clear of the giant vertical Xi Wang;
+   // only during the Contents handoff does it migrate into the original
+   // approved navy star zone. Never pin it permanently or replace its v5.3.
    const starZone=document.getElementById('dual-contents-star-zone').getBoundingClientRect();
    const starPage=gold.getBoundingClientRect();
    const starTargetCentre=((starZone.top+starZone.bottom)/2-starPage.top)/starPage.height*100;
    const starTargetSize=Math.min(380,contentsW*.45,Math.max(0,starZone.height*.82));
-   star.style.top=lerp(36,starTargetCentre,stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.min(310,contentsW*.34,contentsH*.35),starTargetSize,stone).toFixed(2)+'px';
+   const starUpperY=reduce?17:lerp(61,17,ease((progress-.46)/.24));
+   star.style.left=lerp(15,50,stone).toFixed(2)+'%';
+   star.style.top=lerp(starUpperY,starTargetCentre,stone).toFixed(2)+'%';
+   star.style.width=lerp(Math.min(205,contentsW*.17,contentsH*.20),starTargetSize,stone).toFixed(2)+'px';
    // No ghosted title wallpaper beneath the original Contents.
    relief.style.opacity='0';
   contents.style.opacity=String(stone);

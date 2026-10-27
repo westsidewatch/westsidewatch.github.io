@@ -31,17 +31,17 @@ assert.match(source,/data-role="threshold-lit-edge"/,'door light and ground proj
 assert.doesNotMatch(source,/ws-gate-threshold-fade|ws-gate-ink-fade/,'retired mask erased the light exactly at the gate threshold');
 assert.doesNotMatch(source,/data-role="inner-paper-fold"|data-role="central-light-plane"|data-role="fold-seam"/,'do not revive several faint fan wedges');
 assert.doesNotMatch(source,/dual-film|dual-radiance|installV53CanvasFallback|data-cover-choice|data-position|dual-transition-water/);
-assert.match(source,/makeSvg\('g','ws-print-hero',letters\)/,'one typographic protagonist must be built from the official SVG');
-assert.match(css,/temple-stone-light\.png/,'folio must use authentic temple-stone material');
-assert.doesNotMatch(css,/linear-gradient\(139deg/,'reject old synthetic paper fold');
-assert.doesNotMatch(source,/ws-print-band|ws-print-mark|heroSides|stoneTones|residualBands/,'rejected grey statue and background stamps must be gone');
-assert.match(css,/dual-tile--contents::after\{content:none\}/,'cross-title rules must be removed');
-assert.match(source,/ws-print-hero__face/,'official ink wordmark must be preserved');
-assert.match(source,/id:'ws-engraved-side-mask'/,'original contour side must be a real SVG mask');
-assert.match(source,/cutFace\.style\.color='#000'/,'ink face must be subtracted from side volume');
-assert.match(source,/for\(let i=1;i<=24;i\+\+\)/,'24 sampled offsets form one continuous side volume');
-assert.match(source,/ws-engraved-hatch|ws-engraved-crosshatch/,'two directional engraved side patterns required');
-assert.match(css,/ws-engraved-stop--light/,'light-facing edge must use Design OS gold');
+assert.match(source,/Dore_Bible_Sermon_on_the_Mount\.jpg/,'the original Doré image must replace blank stone paper on left');
+assert.match(source,/2061" height="2781"/,'source image must identify its full original scan geometry');
+assert.match(source,/GUSTAVE DORÉ/,'actual public-domain engraving credit must be visible');
+assert.match(source,/id:'ws-xiwang-vertical'/,'vertical large title must use original official glyphs');
+assert.match(source,/ws-xi-original-crop/,'official 西 glyph is clipped from original SVG');
+assert.match(source,/ws-wang-original-crop/,'official 望 glyph is clipped from original SVG');
+assert.match(source,/href:'#ws-xiwang-original'/,'two letterforms must refer to the protected glyph source');
+assert.match(source,/const starRise=reduce\?/,'original scroll-controlled Morning Star rise must stay present');
+assert.match(source,/star\.style\.left=lerp\(15,50,stone\)/,'star must rise to top-left and hand off to canonical Contents');
+assert.match(css,/dual-dore-plate__image/,'authentic Doré art must have a moving left-image folio');
+assert.doesNotMatch(source,/ws-engraved-side-mask|ws-engraved-mask-step|sideSlices|heroSides|residualBands|stoneTones/,'retired sidewall overlays must not interfere with engraving');
 assert.doesNotMatch(source,/starClearance|radial-gradient\(ellipse 24% 22%/,'a radial hole is not a physical Morning Star clearance');
 assert.doesNotMatch(css,/ocean-rise|water-doors|p2-approved-ocean|repeating-linear-gradient\(118deg/);
 assert.doesNotMatch(css,/dual-letterfield\{[^}]*drop-shadow/,'printed SVGs must stay razor-edged');
@@ -66,6 +66,8 @@ const data=()=> {
  const stage=document.querySelector('#dual-stage');
  const hero=document.querySelector('.ws-print-hero');
  const face=hero.querySelector('.ws-print-hero__face');
+ const artwork=document.querySelector('#dual-dore-image');
+ const artPlate=document.querySelector('#dual-dore-plate');
  const cover=document.querySelector('#dual-cover');
  const page=document.querySelector('#dual-contents');
  const index=document.querySelector('.dual-contents__index');
@@ -86,20 +88,24 @@ const data=()=> {
  )];
  return {
   phase:stage.dataset.phase,impression:+stage.dataset.xiwangImpression,inkPlate:stage.dataset.xiwangPlate,
+  titleOrientation:stage.dataset.xiwangTitleOrientation,
+  dorePan:+stage.dataset.dorePan,
+  doreVisible:+getComputedStyle(artPlate).opacity,
+  doreReady:artwork.complete&&artwork.naturalWidth>=2000,
+  doreSource:artwork.currentSrc,
   blue:+stage.dataset.blueReveal,gold:+stage.dataset.dawnReveal,
   cover:box(cover),page:box(page),
   typeOpacity:+getComputedStyle(document.querySelector('#dual-letterfield')).opacity,
   hero:heroRect,heroOpacity:+getComputedStyle(hero).opacity,
-  heroDepths:document.querySelectorAll('#ws-engraved-side-mask .ws-engraved-mask-step').length,
-  hatchPlanes:hero.querySelectorAll('.ws-engraved-volume .ws-engraved-plane').length,
-  sideMaskType:document.querySelector('#ws-engraved-side-mask').style.maskType,
-  rise:+stage.dataset.xiwangRise,
-  faceUpright:+stage.dataset.xiwangFaceUpright,
-  sideDepth:+stage.dataset.xiwangSideDepth,
-  heroFaceUsesOfficial:hero.querySelector('.ws-print-hero__face')?.getAttribute('href')==='#ws-xiwang-original',
+  officialGlyphs:document.querySelectorAll('#ws-xiwang-vertical use').length,
+  titleAspect:heroRect.height/Math.max(heroRect.width,1),
+  starLeftRatio:(starRect.left-pageRect.left)/pageRect.width,
+  starTopRatio:(starRect.top-pageRect.top)/pageRect.height,
+  starTitleRightGap:heroRect.left-starRect.right,
+  heroFaceUsesOfficial:hero.querySelector('.ws-print-hero__face')?.getAttribute('href')==='#ws-xiwang-vertical',
   titleTopRatio:(heroRect.top-pageRect.top)/pageRect.height,
   titleBottomClear:pageRect.bottom-heroRect.bottom,
-  starTitleGap:heroRect.top-starRect.bottom-(+stage.dataset.xiwangDepthUp||0),
+  starTitleGap:heroRect.top-starRect.bottom,
   starTitleXDelta:Math.abs((heroRect.left+heroRect.right)/2-(starRect.left+starRect.right)/2)/pageRect.width,
   lightOpacity:+getComputedStyle(document.querySelector('#dual-cover-folded-light')).opacity,
   cityOpacity:+getComputedStyle(document.querySelector('#dual-cover-city')).opacity,
@@ -152,6 +158,7 @@ const data=()=> {
    page.on('pageerror',e=>pageErrors.push(e.message));
    await page.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=0&side=cover-right',{waitUntil:'domcontentloaded',timeout:45000});
    await page.evaluate(()=>document.fonts.ready);
+   await page.locator('#dual-dore-image').evaluate(img=>img.decode().catch(()=>{}));
    let heroAtTypeHold=0;
    for(const [label,p] of scenes){
     await page.locator('#dual-progress').evaluate((slider,value)=>{
@@ -165,24 +172,27 @@ const data=()=> {
      faults.push('door right jamb and projected-light origin drift from native stone opening during page morph');
     if(!m.wallBg.includes('cover')||!m.maskSize.includes('cover')||m.mastFit!=='contain')faults.push('stone/masthead must crop proportionally');
     if(p===14&&!(m.blue>.1&&m.blue<.95&&m.gold===0&&m.cityOpacity>.6))faults.push('stone cover must enter with midnight-blue ink');
-    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.typeOpacity>.25&&m.heroOpacity>.5))
-      faults.push('official ink title must appear on Temple Stone');
-    if(p===33&&m.cityOpacity<.98)faults.push('no empty midnight-blue block may persist after cover arrival');
+    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.typeOpacity>.20&&m.heroOpacity>.25&&m.doreVisible>.1))
+     faults.push('original Doré folio and official Xi Wang should enter with dawn reveal');
+    if(p===33&&m.cityOpacity<.98)faults.push('do not leave empty right-cover midnight-blue block');
+    if([44,54,68,79,82].includes(p)&&!m.doreReady)
+     faults.push('actual unmodified public-domain Doré plate failed to load');
     if(p===44){
      heroAtTypeHold=m.hero.top;
-     if(!(m.starOpacity<.05&&m.typeOpacity>.8&&m.heroOpacity>.98&&m.heroDepths===24&&m.hatchPlanes===3&&m.sideMaskType==='luminance'&&m.heroFaceUsesOfficial&&m.inkPlate==='official-svg-engraved-volume'&&m.rise>.98&&m.faceUpright>.99&&m.sideDepth>40&&m.impression>.99))
-      faults.push('original 西望 must physically stand up with fine etched sidewalls, not flat ink');
+     if(!(m.starOpacity<.05&&m.typeOpacity>.98&&m.heroOpacity>.98&&m.officialGlyphs===2&&m.heroFaceUsesOfficial&&m.inkPlate==='official-svg-vertical-dore'&&m.titleOrientation==='vertical'&&m.titleAspect>1.7))
+      faults.push('large vertical original 西望 must hold over full bleed Doré plate before Morning Star enters');
     }
-    if(p===54&&!(m.starOpacity>.1&&m.typeOpacity>.8))faults.push('Morning Star entrance missing');
-    if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.8&&m.typeOpacity<.99))
-     faults.push('star and official ink title must be visibly related');
-    if(p===68&&!(m.titleTopRatio>.55&&m.impression>.99&&m.sideDepth>20))
-     faults.push('title must move beneath Morning Star');
+    if(p===54&&!(m.starOpacity>.1&&m.typeOpacity>.8))
+     faults.push('protected Morning Star must begin rising over Doré plate');
+    if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.98&&m.starTopRatio<.25))
+     faults.push('Morning Star must finish rising toward upper-left, with vertical title readable');
     if(p===79||p===82){
-     if(!(m.starOpacity>.98&&m.typeOpacity>.8&&m.heroOpacity>.99&&m.sideDepth>18))
-      faults.push('both star and title must remain visible at publication hold');
-     if(!(m.starTitleGap>m.page.height*.025&&m.starTitleXDelta<.08&&m.titleBottomClear>m.page.height*.06))
-      faults.push('star and title must align without intersection or clipping');
+     if(!(m.starOpacity>.98&&m.typeOpacity>.98&&m.heroOpacity>.99&&m.doreVisible>.90))
+      faults.push('held spread must retain the star, original large title and complete Doré image');
+     if(!(m.starLeftRatio>=-.01&&m.starLeftRatio<.19&&m.starTopRatio>=-.01&&m.starTopRatio<.20))
+      faults.push('rising Morning Star must land in the upper-left editorial space');
+     if(!(m.starTitleRightGap>m.page.width*.025&&m.titleBottomClear>m.page.height*.035&&m.titleAspect>1.7))
+      faults.push('upper-left Morning Star must not collide with vertical original ink title');
     }
     if(p===82&&!(m.lightOpacity>.94&&m.mastOpacity>.98&&m.volumeOpacity>.98&&m.headings.join('|')==='CITY|OF|LIGHT'))
       faults.push('cover hold must carry a fully legible masthead and issue number with the gate light');
@@ -216,25 +226,27 @@ const data=()=> {
    // No duplicate clock: reversing the ONE slider restores same visual state.
    await page.locator('#dual-progress').evaluate(slider=>{slider.value='33';slider.dispatchEvent(new Event('input',{bubbles:true}))});
    const reverse=await page.evaluate(data);
-   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='official-svg-engraved-volume'||reverse.rise>.3||reverse.stoneOpacity>.01)
+   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='official-svg-vertical-dore'||reverse.doreVisible<.2||reverse.stoneOpacity>.01)
     results.push({id:name+'-reverse',errors:['backwards scroll did not restore the original impression']});
    await page.close();
   }
    const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
    await reduced.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=14',{waitUntil:'domcontentloaded'});
+   await reduced.locator('#dual-dore-image').evaluate(img=>img.decode().catch(()=>{}));
    for(const p of [14,44,79,100]){
     await reduced.locator('#dual-progress').evaluate((slider,value)=>{
      slider.value=String(value);slider.dispatchEvent(new Event('input',{bubbles:true}));
     },p);
     const r=await reduced.evaluate(data),faults=[];
+    if((p===44||p===79)&&!r.doreReady)faults.push('reduced motion must still show the real Doré original');
     if(r.starRenderer!=='approved-morning-star-svg-reduced')
      faults.push('reduced motion must use the official static star');
     if(p===14&&!(r.blue>.99&&r.starOpacity<.01))
      faults.push('reduced motion must show the intact cover');
     if(p===44&&!(r.typeOpacity>.99&&r.starOpacity<.01&&r.heroOpacity>.99))
      faults.push('reduced motion must show the official title');
-    if(p===79&&!(r.starOpacity>.99&&r.typeOpacity>.9&&r.starTitleXDelta<.08))
-     faults.push('reduced star and title must align on one vertical axis');
+    if(p===79&&!(r.starOpacity>.99&&r.typeOpacity>.9&&r.starLeftRatio<.19&&r.starTitleRightGap>r.page.width*.02))
+     faults.push('reduced Morning Star must stay upper-left without covering vertical title');
     if(p===100&&!(r.entries===12&&r.stoneOpacity>.99&&r.insideContents))
      faults.push('reduced motion must keep all 12 Contents entries');
     results.push({id:'reduced-'+p,metrics:r,errors:faults});
