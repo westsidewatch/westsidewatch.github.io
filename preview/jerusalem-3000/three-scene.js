@@ -1,3 +1,5 @@
+import {createCityConstructionPresentation} from './city-construction-presentation.js';
+import {createPhaseDissolveView} from './phase-dissolve-view.js';
 import {compileWallReference,createWallReferenceModel} from './old-city-wall-reference.js';
 import {createSharedUrbanPlaces} from './shared-urban-places.js';
 import {createSharedPlaceView} from './shared-place-view.js';
@@ -161,8 +163,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       transparent: true,
       opacity: name === 'disputed' ? 0.5 : 0.82,
     });
-  let playbackPresentation=false,renderedPlaybackPhase=null,renderedPlaybackReady=false;
-  const presentationProgress=()=>playbackPresentation&&currentPhaseId!=='modern'?Math.min(1,Math.max(0,timelinePosition-Math.floor(timelinePosition))/.8):1;
+  let playbackPresentation=false,playbackDisplayPosition=null,renderedPlaybackPhase=null,renderedPlaybackReady=false;
+  const presentationProgress=()=>playbackPresentation?Math.min(1,Math.max(0,(playbackDisplayPosition??timelinePosition)-Math.floor(timelinePosition))/.8):1;
   let currentProgress = 0,
     currentRuin = 0,
     terrainRuntime = null,
@@ -180,6 +182,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     cityCoreRuntime = null,
     cityProjection = null,
     evidenceProjection = null;
+  renderer.localClippingEnabled=true;
+  const constructionPresentation=createCityConstructionPresentation({root,getRecord:id=>cityCoreRuntime?.core.get(id)}),phaseDissolve=createPhaseDissolveView(mount);
   let independentLaterRegistrations=new Map(),fabricMaterialDisposer=null,persistentCityWorld=null,activeWorldEntry=null,sharedPlaces=null,sharedPlaceView=null,wallReference=null,wallReferenceModel=null,wallGateView=null,wallCredit=null;
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
@@ -214,7 +218,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     royalCity?.apply({position:timelinePosition,ruin:currentRuin,evidenceAllowed});
     persianSanctuary?.apply({position:timelinePosition,evidenceAllowed});
     royalRelief?.apply({phaseId:currentPhaseId,stage:royalCity?.diagnostics().stage,evidenceAllowed});
-    const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible,constructionProgress:presentationProgress() });
+    const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible,constructionProgress:1 });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
     }
@@ -222,7 +226,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       cityProjection.apply({
         phaseId: currentPhaseId,
         ruin: currentRuin,
-        constructionProgress:presentationProgress(),
+        constructionProgress:1,
         evidenceAllowed,
       });
   }
@@ -252,7 +256,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     }
     if (phase2Morphology && currentPhaseId === 'babylonian-destruction')
       setEraMorphologyProgress(phase2Morphology, 1, { ruined: true });
-    laterMorphologyBinding?.apply(evidenceAllowed,{constructionProgress:presentationProgress()});
+    laterMorphologyBinding?.apply(evidenceAllowed,{constructionProgress:1});
     updateCityCoreVisibility();
     onDistrictAcceptance?.(sharedEraRuntime?.acceptance()??null);
     needsFrame = true;
@@ -268,7 +272,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   function evidenceAllowed(level) {return allowsEvidence(currentEvidenceMode,level);}
   function setEvidenceMode(mode = 'all') {
     allowsEvidence(mode,'inferred');
-    currentEvidenceMode = mode;
+    currentEvidenceMode = mode;phaseDissolve.clear();
     if (evidenceResolution)
       for (const mesh of builder.meshes) {
         const object = mesh.userData?.evidenceObject;
@@ -301,7 +305,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       return;
     }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
-    if(foundationOwner==='independent-later-skeleton'){activeWorldEntry=persistentCityWorld.activate(phaseId);fabricMeshes=activeWorldEntry.runtime.meshes;laterMorphologyBinding=activeWorldEntry.binding;laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:presentationProgress()});return;}
+    if(foundationOwner==='independent-later-skeleton'){activeWorldEntry=persistentCityWorld.activate(phaseId);fabricMeshes=activeWorldEntry.runtime.meshes;laterMorphologyBinding=activeWorldEntry.binding;laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:1});return;}
     const ruined = phaseId.includes('destruction');
     if (foundationOwner === 'ottoman-morphology')
       phase2Morphology = buildOttomanUrbanMorphology(
@@ -336,7 +340,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       );
     if (phase2Morphology) {
       fabricMeshes = phase2Morphology.meshes;
-      if(['crusader','ottoman'].includes(phaseId)){laterMorphologyBinding=laterMorphologyLedger.bind(phase2Morphology);laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:presentationProgress()});}
+      if(['crusader','ottoman'].includes(phaseId)){laterMorphologyBinding=laterMorphologyLedger.bind(phase2Morphology);laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:1});}
       return;
     }
     fabricMeshes = addEraFabric(
@@ -346,7 +350,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       ruined,
       terrainRuntime,
     );
-    if(fabricMeshes.length){laterMorphologyBinding=laterMorphologyLedger.bind({phaseId,meshes:fabricMeshes,grammar:'legacy-era-footprint-masses',fixedVisibility:true});laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:presentationProgress()});}
+    if(fabricMeshes.length){laterMorphologyBinding=laterMorphologyLedger.bind({phaseId,meshes:fabricMeshes,grammar:'legacy-era-footprint-masses',fixedVisibility:true});laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:1});}
   }
   function updatePeriodOverview(phaseId,force=false){
     if(terrainView)return;
@@ -629,12 +633,17 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     const dt = Math.min((now - lastNow) / 1000, 0.1);
     lastNow = now;
     const changed = controls.update(dt);
+    if(changed)phaseDissolve.clear();
     if (needsFrame || changed || controls.autoRotate) {
       try {
         royalRelief?.project(camera);
         const placeBoxes=sharedPlaceView?.project(camera)||[];
         wallGateView?.project(camera,placeBoxes);
+        const phaseIndex=Math.floor(timelinePosition),fraction=(playbackDisplayPosition??timelinePosition)-phaseIndex,phaseReady=!isSharedGenerationPhase(currentPhaseId)||sharedEraRuntime?.status==='ready';
+        if(currentPhaseId)constructionPresentation.apply({phaseId:currentPhaseId,phaseIndex,position:playbackDisplayPosition??timelinePosition,active:playbackPresentation,ruin:['babylonian-destruction','roman-destruction'].includes(currentPhaseId)});
+        phaseDissolve.before({phaseId:currentPhaseId,index:phaseIndex,fraction,active:playbackPresentation,ready:phaseReady});
         renderer.render(scene, camera);
+        phaseDissolve.after(renderer.domElement,{phaseId:currentPhaseId,fraction,ready:phaseReady&&playbackPresentation});
         frameCount++;
         const sharedState = sharedEraRuntime?.diagnostics();
         renderedPlaybackPhase=currentPhaseId;renderedPlaybackReady=!isSharedGenerationPhase(currentPhaseId)||sharedState?.status==='ready';
@@ -668,6 +677,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             terrainPresentation:{...terrainPresentation?.diagnostics,surfaceId:terrainRuntime?.mesh.uuid,historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             wallReference:wallReferenceModel?.diagnostics(),
             cityWorld:persistentCityWorld?.diagnostics(),
+            constructionPresentation:constructionPresentation.diagnostics(),
+            phaseDissolve:phaseDissolve.diagnostics(),
             geographicReferences:sharedPlaceView?.diagnostics(),
             urbanFabric: {
               phase: currentPhaseId,
@@ -714,7 +725,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     controls,
     root,
     ready,
-    setPlaybackPresentation(active){playbackPresentation=Boolean(active);applyTemporalState();needsFrame=true;},
+    setPlaybackDisplayPosition(value){playbackDisplayPosition=value;needsFrame=true;},
+    setPlaybackPresentation(active){playbackPresentation=Boolean(active);playbackDisplayPosition=null;applyTemporalState();needsFrame=true;},
     playbackReadiness(){let status=isSharedGenerationPhase(currentPhaseId)?(sharedEraRuntime?.status||'idle'):'ready';if(status==='ready'&&(!renderedPlaybackReady||renderedPlaybackPhase!==currentPhaseId))status='rendering';return {phase:currentPhaseId,status,ready:status==='ready'};},
     setBuildProgress,
     setRuinProgress,
@@ -829,6 +841,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       cancelAnimationFrame(raf);
       ro.disconnect();
       controls.dispose();
+      constructionPresentation.dispose();phaseDissolve.dispose();
       builder.dispose();
       clearFabric();persistentCityWorld?.dispose();laterMorphologyLedger?.dispose();
       sharedEraRuntime?.dispose();

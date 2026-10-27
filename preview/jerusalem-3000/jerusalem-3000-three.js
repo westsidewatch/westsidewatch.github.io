@@ -74,7 +74,7 @@ try {
     for(const d of districtAcceptance.districts){const row=document.createElement('tr');row.dataset.residentialDistrict=d.id;row.dataset.buildings=String(d.buildings);row.dataset.visibleBuildings=String(d.visibleBuildings);const name=(labels[d.id.split(':').at(-1)]||'推定地區')+(d.layerState==='retained-ruin'?' · 前代遺存':districtAcceptance.phase==='babylonian-destruction'?' · 毀城示意':'');for(const value of [name,d.blocks,d.buildings,d.visibleBuildings]){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}const action=document.createElement('td'),button=document.createElement('button');button.type='button';button.textContent='近看';button.setAttribute('aria-label',name+'住宅近看');button.disabled=d.visibleBuildings===0;button.addEventListener('click',()=>{if((terrainOverview(false),three.focusResidentialDistrict(d.id))){panel.hidden=true;document.querySelector('.j3k-evidence-toggle').setAttribute('aria-expanded','false');}});action.append(button);row.append(action);table.append(row);}section.append(table);
   }
   let baselineInfo=null,baselinePhase='',baselineCompare=null,baselineGeneration='';
-  function refreshBaseline(force=false){const key=stage.dataset.phase+'|'+stage.dataset.evidenceMode+'|'+Math.floor(Number(slider.value)*10);if(!baselineInfo||!stage.dataset.phase||(!force&&baselinePhase===key))return;const s=three.inspectSpatialSkeleton();if(!s)return;baselinePhase=key;baselineInfo.textContent='統一概覽基準（城市結構未完成）· 住宅仍含占位模組，不代表實測戶數。水防：'+(s.domains.waterDefense.spatialObjects?'已登記局部':'尚缺可定位表示')+'；宗教／公共核心：'+(s.domains.sacredCivic.spatialObjects?'已有局部表示（含推定量體）':'尚缺可定位表示')+'。缺口不表示歷史不存在。';}
+  function refreshBaseline(force=false){const key=stage.dataset.phase+'|'+stage.dataset.evidenceMode+'|'+Math.floor(Number(slider.value)*10);if(!baselineInfo||!stage.dataset.phase||(!force&&baselinePhase===key))return;const s=three.inspectSpatialSkeleton();if(!s)return;baselinePhase=key;baselineInfo.textContent='統一概覽基準（城市結構未完成）· 住宅仍含占位模組，不代表實測戶數。水防：'+(s.domains.waterDefense.spatialObjects?'已登記局部':'尚缺可定位表示')+'；宗教／公共核心：'+(s.domains.sacredCivic.spatialObjects?'已有局部表示（含推定量體）':'尚缺可定位表示')+'。缺口不表示歷史不存在；建造順序與跨期轉場為展示示意。';}
   let skeletonView=null;
   const three = mountJerusalemThreeScene(mount, {
     onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();skeletonView?.refresh();const key=(info?.phase||'')+'|'+(info?.status||'');if(key!==baselineGeneration){baselineGeneration=key;refreshBaseline(true);}},
@@ -308,7 +308,7 @@ try {
     waitingForCity=false;
     play.textContent = '▶ 建城';
     play.setAttribute('aria-pressed', 'false');
-    window.__JERUSALEM3000__.playback={status:'paused',position:Number(slider.value)};
+    window.__JERUSALEM3000__.playback={status:'paused',position:Number(slider.value),presentationPosition:playbackPosition};
   }
   function frame(t) {
     if (!last) last = t;
@@ -322,35 +322,36 @@ try {
       return;
     }
     const wasWaiting=waitingForCity;waitingForCity=false;play.textContent='Ⅱ 暫停';
-    let v=advancePlayback(position,wasWaiting?0:elapsed,time.max,{rate:1/Number(speed.value)});
+    let v=advancePlayback(position,wasWaiting?0:elapsed,time.max+1,{rate:1/Number(speed.value)});
     playbackPosition=v;
     window.__JERUSALEM3000__.playback={status:'playing',position:v,phase:readiness.phase};
-    if (v >= time.max) {
-      v = time.max;
+    if (v >= time.max+1) {
+      v = time.max+1;
       stop();
     }
-    slider.value = v;
-    update(v);
+    three.setPlaybackDisplayPosition(v);
+    slider.value = Math.min(v,time.max);
+    update(Math.min(v,time.max));
     if (raf) raf = requestAnimationFrame(frame);
   }
   function start() {
     if (raf) return;
-    playbackPosition=Number(slider.value);
+    if(!(Number(slider.value)===time.max&&playbackPosition>time.max&&playbackPosition<time.max+1))playbackPosition=Number(slider.value);
     terrainOverview(true);
-    three.setPlaybackPresentation(true);
+    three.setPlaybackPresentation(true);three.setPlaybackDisplayPosition(playbackPosition);
     play.textContent = 'Ⅱ 暫停';
     play.setAttribute('aria-pressed', 'true');
     raf = requestAnimationFrame(frame);
   }
   slider.addEventListener('input', () => {
-    stop();three.setPlaybackPresentation(false);
+    stop();playbackPosition=Number(slider.value);three.setPlaybackPresentation(false);
     update(Number(slider.value));
   });
   play.addEventListener('click', () => (raf ? stop() : start()));
   markers.forEach((b) =>
     b.addEventListener('click', () => {
       stop();three.setPlaybackPresentation(false);
-      slider.value = b.dataset.phase;
+      slider.value = b.dataset.phase;playbackPosition=Number(slider.value);
       update(Number(b.dataset.phase));
     }),
   );

@@ -39,6 +39,7 @@ jobs:
         run: |
           node scripts/verify_jerusalem_3000_playback.mjs
           node scripts/verify_jerusalem_3000_construction_reveal.mjs
+          node scripts/verify_jerusalem_3000_construction_presentation.mjs
           node scripts/verify_jerusalem_3000_shared_era.mjs
           node scripts/verify_jerusalem_3000_period_spatial.mjs
           node scripts/verify_jerusalem_3000_district_infill.mjs
@@ -69,6 +70,7 @@ jobs:
           node scripts/verify_jerusalem_3000_medieval_browser.mjs
           node scripts/verify_jerusalem_3000_overview_browser.mjs
           node scripts/verify_jerusalem_3000_playback_browser.mjs
+          node scripts/verify_jerusalem_3000_transition_browser.mjs
           node scripts/audit_jerusalem_3000_foundation_gaps.mjs --report work/j3k-validation/phase-report.json --render-commit "$GITHUB_SHA" --out work/j3k-validation/foundation-gap-audit
       - uses: actions/upload-artifact@v4
         if: always()

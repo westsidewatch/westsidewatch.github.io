@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';import * as THREE from 'three';
+import {createCityConstructionPresentation} from '../preview/jerusalem-3000/city-construction-presentation.js';
+const root=new THREE.Group(),material=new THREE.MeshStandardMaterial(),records=new Map(),meshes=[];
+for(let i=0;i<8;i++){const mesh=new THREE.Mesh(new THREE.BoxGeometry(10,10,10),material);mesh.position.set(i*20,15,0);mesh.userData.cityObject={objectId:`block-${i}`};mesh.userData.overview={};root.add(mesh);meshes.push(mesh);records.set(`block-${i}`,{type:'block',lifecycle:{events:[]}});}
+const core=new THREE.Mesh(new THREE.BoxGeometry(20,40,20),material);core.position.set(30,30,30);core.userData.cityObject={objectId:'core'};root.add(core);records.set('core',{type:'monument',lifecycle:{events:[]}});
+const before=meshes.map(m=>({id:m.uuid,geometry:m.geometry.uuid,position:m.position.toArray()})),events=JSON.stringify([...records]),view=createCityConstructionPresentation({root,getRecord:id=>records.get(id)}),stages=[];
+for(const f of [0,.2,.4,.8]){const state=view.apply({phaseId:'ottoman',phaseIndex:15,position:15+f,active:true});stages.push(state);assert.ok(state.objects===9);}
+assert.equal(stages[0].waiting,9);assert.ok(stages[1].growing>0);assert.equal(stages[1].growingByRole.core,1);assert.ok(stages[2].visibleByRole.housing>stages[1].visibleByRole.housing);assert.equal(stages[3].complete,9);
+assert.ok(core.material!==material);assert.equal(core.material.clipShadows,true);assert.equal(material.clippingPlanes,null);assert.deepEqual(meshes.map(m=>({id:m.uuid,geometry:m.geometry.uuid,position:m.position.toArray()})),before);assert.equal(JSON.stringify([...records]),events);
+const kept=view.apply({phaseId:'outside-walls',phaseIndex:16,position:16,active:true});assert.equal(kept.displayKept,9);assert.equal(kept.complete,9);assert.equal(kept.historicalSurvivalInferred,false);
+const ruin=view.apply({phaseId:'roman-destruction',phaseIndex:9,position:9,active:true,ruin:true});assert.equal(ruin.complete,9,'ruins must not replay new construction');
+view.apply({phaseId:'aelia',phaseIndex:10,position:10,active:false});assert.ok(meshes.every(m=>m.material.clippingPlanes.at(-1).constant===1e9),'manual inspection must be complete');
+let disposed=0;for(const mesh of [...meshes,core])mesh.material.addEventListener('dispose',()=>disposed++);view.dispose();assert.equal(disposed,9);assert.ok([...meshes,core].every(m=>m.material===material));for(const m of [...meshes,core])m.geometry.dispose();material.dispose();console.log('PASS: common staged infrastructure/core/housing clips, completed hold, unchanged geometry/events, display-only adjacent reuse, ruin exclusion, manual restore and owned material cleanup');
