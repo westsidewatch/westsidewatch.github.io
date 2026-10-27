@@ -37,10 +37,35 @@ The last command uses the **documented upstream Codex marketplace commands**:
 reference source: verify its version/contents before making a reproducibility
 claim. Restart the coding session after plugin installation.
 
+The **installed complete package** supplies the skills, personas and standards
+actually executed. The repository gitlink supplies the required reference
+revision. Before a live review, record both identities: `git ls-tree HEAD --
+.tools/elephant-goldfish-model`, the initialized source's `git rev-parse HEAD`,
+the installed path/version reported by `codex plugin list`, and a content
+comparison of installed skills, agents, resources, docs and manifests against
+the pinned checkout. Exclude Git metadata and generated test/cache files.
+If contents differ, stop the reproducible Westside review until the installed
+package matches the pin, or the repository owner explicitly accepts and records
+the identified difference. Never silently change the gitlink or call a
+mismatched run reproducible. Missing required runtime files make the review
+incomplete, even if other reviewers finish.
+
 For ChatGPT Work, use the upstream `docs/harnesses.md` setup instructions.
 ChatGPT standard chats without native isolated subagents cannot perform an
 authentic Goldfish review. **Fail closed; never use a single shared context to
 pretend to be multiple reviewers.**
+
+### Installation alternatives considered
+
+The selected pinned submodule plus optional full host installation keeps a
+reviewable source baseline in Git and provides native skill discovery. It
+requires checking for drift between two copies. Marketplace-only installation
+avoids the extra checkout but does not preserve the project's reviewed source
+revision. Pinned source without host installation preserves that revision and
+can be read manually, but does not establish native plugin discovery or workflow
+activation. The selected arrangement retains both capabilities; the provenance
+check above addresses its maintenance cost. None removes the need for isolated
+reviewers or editorial acceptance.
 
 ## 3. Ownership and reading order
 
@@ -60,9 +85,14 @@ and links to genuine reference images and visual acceptance evidence.
 
 ## 4. Westside workflow (for consequential new designs)
 
+Use this workflow for changes to architecture, publication composition,
+typography, layout or motion behavior. A clear fix may omit **only** the
+optional brainstorming step; it does not waive the applicable specification,
+independent review, existing tests or art-direction gates.
+
 1. **Elephant / define.** Read architectural records, current branch, protected
    assets, existing art direction and representative desktop/mobile screenshots.
-   Use upstream `egm-brainstorm` where useful; for a clear fix, skip ceremony.
+   Use upstream `egm-brainstorm` where useful; a clear fix may skip brainstorming.
 2. **Elephant / specify.** Use `egm-draft` to create a complete, independently
    understandable specification under `docs/design/`, scoped to the owning
    surface. Include reference, invariants, non-goals, expected geometry,
@@ -70,8 +100,8 @@ and links to genuine reference images and visual acceptance evidence.
 3. **Goldfish / falsify.** Execute upstream `egm-review` with **fresh isolated
    subagents**: zoom-out, naive comprehension, design critic, implementation
    readiness (as upstream prescribes). Give them only the spec and cited source.
-   Preserve findings as artifacts under `.dev/egm/`. Confirm which findings
-   were fixed/rejected by editorial decision. No self-review substitution.
+   Preserve findings as artifacts under `.dev/egm/`. Record each finding as
+   fixed, contested or explicitly accepted by its responsible owner. No self-review substitution.
 4. **Implement.** Modify only permitted files, in a single cohesive change.
    Compare real screens at 1648, 768, 390 and 320 px (or the accepted viewport
    contract) and inspect actual animation time states, scroll reversal and
@@ -94,6 +124,30 @@ assets, (c) *actual* Goldfish execution/report or **NOT RUN** with reason,
 (f) explicit editor signoff if present. Never call a document draft
 `approved` on the strength of a machine-only test.
 
+Record execution separately from the verdict: **NOT RUN** means no authentic
+review ran; **PARTIAL** means some required stages or reads did not finish;
+**COMPLETE WITH FINDINGS** means all applicable stages finished with open
+findings; **COMPLETE** means they finished without open findings. Record N/A
+stages with a reason, never as passed. For each executed stage, retain actual
+native launch/completion evidence, fresh-context parameters, persona/standard
+paths, target identity, findings and report location. Retain successful read
+evidence where the host exposes it; self-written receipts alone are not native
+trace proof. Preserve completed reports after quota/tool failures and resume
+the missing work against the same document identity, or re-review changed ranges.
+For PARTIAL runs, explicitly list every completed and missing required stage
+and read so the next session can identify the remaining work.
+
+NOT RUN and PARTIAL leave this workflow's independent-review requirement
+unsatisfied and cannot be represented as approval for implementation or release.
+Before progressing under an exception, the repository owner must explicitly
+accept its scope, reason and missing evidence in the review record; an agent
+cannot grant that exception. For completed reviews, use the upstream finding
+resolution/checkpoint process and record each finding as fixed, contested or
+explicitly accepted by the responsible owner. This does not require zero
+findings, and acceptance of residual specification findings is separate from
+the editor's required acceptance of genuine screenshots. Existing CI and
+protected-asset requirements remain in force in every case.
+
 ### P2 / Vol.00 first-use target (no artwork changed by this integration)
 
 Scope: left folio's relationship to the already approved right-hand
@@ -114,7 +168,7 @@ from a green Playwright suite to a visual signoff.
   or simulating an independent review. Browser/art review is unchanged.
 - **No extra production payload:** The source lives outside Hugo static/assets;
   no font, site CSS, JS bundle, UI or image is added.
-- **No silent charge:** No API, model runner or extra agent is automatically
+- **No automatic model execution:** No API, model runner or extra agent is automatically
   launched. Live EGM review may consume the user's existing model quota.
 - **No forced reauthorization:** Any host security prompts remain host-owned;
   project code never attempts to bypass tool authorization.
