@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -40,9 +40,13 @@ jobs:
         working-directory: local/dore-local
         run: python test_coordination_transport.py
       - name: Fetch canonical coordination source ref
-        run: git fetch --no-tags --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+        run: git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
       - name: Verify canonical A2A inbox visibility
         run: |
+          set -euo pipefail
+          # A shallow checkout made HEAD^ inaccessible and previously turned a
+          # real inbox change into a misleading "accepted_count: 0" PASS.
+          git rev-parse --verify HEAD^ >/dev/null
           mapfile -t IDS < <(git diff --name-only HEAD^ HEAD -- coordination-inbox local/dore-local/coordination-inbox \
             | sed -n -E 's#^(coordination-inbox|local/dore-local/coordination-inbox)/(.+)\.json$#\2#p' \
             | sort -u)
