@@ -58,6 +58,32 @@ fi
 git show "refs/remotes/origin/$EGM_BRANCH:docs/design/WESTSIDE-EGM-INTEGRATION.md" > "$PROOF/westside-egm-integration.md"
 git show "refs/remotes/origin/$EGM_BRANCH:AGENTS.md" > "$PROOF/integration-agent-entrypoint.md"
 
+# Design OS authority lives on the companion EGM integration branch. P2 is a
+# separate draft feature branch; its worktree intentionally has no EGM gitlink.
+PIN_LINE="$(git ls-tree "refs/remotes/origin/$EGM_BRANCH" -- .tools/elephant-goldfish-model)"
+PIN_SHA="$(printf '%s\n' "$PIN_LINE" | awk '$1=="160000" && $2=="commit" {print $3}')"
+if [[ ! "$PIN_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+  echo "EGM ERROR: companion Design OS branch has no pinned gitlink" >&2
+  exit 13
+fi
+PIN_EXPECTED="b3a35956759bf7f024af2ff061b2e0b44b438e4c"
+if [[ "$PIN_SHA" != "$PIN_EXPECTED" ]]; then
+  echo "EGM ERROR: companion pin changed; manual source re-review required" >&2
+  exit 14
+fi
+cat > "$PROOF/egm-source-authority.txt" <<EOF
+EGM_source_branch=$EGM_BRANCH
+EGM_submodule=.tools/elephant-goldfish-model
+EGM_pinned_commit=$PIN_SHA
+EGM_installed_plugin=egm@egm
+EGM_installed_plugin_metadata=$(grep -E '^egm@egm' "$PROOF/plugin-list.txt" | head -1)
+P2_art_branch=$P2_BRANCH
+P2_source_commit=$EXPECTED_SHA
+NOTE: EGM is on its own draft branch; P2 does not need a duplicate gitlink.
+NOTE: Run the installed reviewer in native independent subagent contexts.
+EOF
+
+
 TASK_PROMPT="$(cat <<'TASK'
 Use the **installed official egm@egm** plugin's real egm-review workflow.
 TargetFile: docs/design/P2-VOL00-EGM-SPREAD-SPEC.md
@@ -66,7 +92,13 @@ GoldfishContext: docs/design/WESTSIDE-EDITORIAL-MANUAL.md,
 docs/design/WESTSIDE-DESIGN-OS.md, ENGINEERING-GOVERNANCE.md,
 static/experiments/p2-double-square-video-lab.html,
 static/css/p2-vol00-editorial.css, tests/p2-vol00-preview.cjs,
-and .dev/egm/p2-4fa21ce51444/westside-egm-integration.md.
+and .dev/egm/p2-4fa21ce51444/westside-egm-integration.md,
+.dev/egm/p2-4fa21ce51444/egm-source-authority.txt.
+Important: EGM's source pin belongs to the separate Design OS integration
+branch. The runner has verified that exact pinned gitlink by git ls-tree.
+It is correct that the P2 art branch does not contain a duplicate EGM
+submodule. Treat the companion branch as the source authority, not as a
+missing P2 dependency. Read the verified local source authority record.
 Before dispatch, READ the locally installed plugin's real skill and persona/standard files.
 Goldfish reviewers MUST be fresh isolated native Codex subagents, each with
 fork_context:false or fork_turns:"none", with native completion and successful
