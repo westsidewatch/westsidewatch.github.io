@@ -213,6 +213,12 @@ const data=()=> {
     if(p===79&&name==='desktop'){
      // Prove the folio actually changes between TWO DIFFERENT DORÉ WORKS.
      const first=await page.evaluate(()=>window.P2DoreGallery.state);
+     // Capture the FIRST gallery state before advancing. Otherwise the
+     // normal p79 screenshot is taken after the swap and cannot prove
+     // that two distinct compositions were ever shown.
+     const firstFrame=await page.locator('#dual-dore-plate').screenshot({
+      path:path.join(out,'desktop-city-first-plate.png'),animations:'disabled'
+     });
      const switched=await page.evaluate(()=>window.P2DoreGallery.next());
      if(!switched)faults.push('second authentic city/wall engraving did not load');
      else {
@@ -223,7 +229,11 @@ const data=()=> {
        faults.push('gallery must change the actual source image and maintain a real loaded image');
       if(second.galleryCycle!==15000||second.galleryIds.join('|')!=='10|13|48|64|115|123|127|241')
        faults.push('Doré image cycle must use eight curated canonical city IDs and original scan timing');
-      await page.screenshot({path:path.join(out,'desktop-city-second-plate.png'),animations:'disabled'});
+      const secondFrame=await page.locator('#dual-dore-plate').screenshot({
+       path:path.join(out,'desktop-city-second-plate.png'),animations:'disabled'
+      });
+      if(firstFrame.equals(secondFrame))
+       faults.push('visual proof FAIL: two different registry IDs produced the same image pixels');
      }
     }
     if(p===79||p===82){
