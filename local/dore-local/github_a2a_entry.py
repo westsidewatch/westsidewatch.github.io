@@ -93,7 +93,21 @@ def inspect_canonical_mail(args):
  if not path.is_file():raise FileNotFoundError('canonical_coordination_message_not_found:'+mid)
  from a2a_execution_plane import status as execution_status
  from pathlib import Path
- import shutil
+ import shutil,subprocess
+ probe=subprocess.run(['/bin/zsh','-lic','command -v codex || true; printf "LOGIN_PATH=%s\\n" "$PATH"'],capture_output=True,text=True,timeout=15)
+ candidates=[]
+ for pattern in (
+  '/Applications/Codex.app/Contents/MacOS/*',
+  '/Applications/Codex.app/Contents/Resources/*codex*',
+  str(Path.home() / '.nvm/versions/node/*/bin/codex'),
+  str(Path.home() / '.fnm/node-versions/*/installation/bin/codex'),
+  str(Path.home() / '.volta/bin/codex'),
+  str(Path.home() / '.bun/bin/codex'),
+  str(Path.home() / '.local/share/mise/installs/node/*/bin/codex'),
+  str(Path.home() / 'Library/Application Support/*/bin/codex'),
+ ):
+  from glob import glob
+  candidates.extend(glob(pattern)[:12])
  proof=Path.home()/'.dore'/'egm-p2-review-a0747bba9580'/'.dev'/'egm'/'p2-4fa21ce51444'
  def tail(path,limit=1800):
   try:return path.read_text(encoding='utf-8',errors='replace')[-limit:] if path.is_file() else None
@@ -102,7 +116,7 @@ def inspect_canonical_mail(args):
  task=p.get('task') or {}
  return {'ok':True,'status':'inspected','message_id':mid,
          'execution':{'status':task.get('status'),'attempts':task.get('attempts'),'completion_evidence':p.get('completion_evidence'),'failure':task.get('failure')},
-         'runner':{'codex_path':shutil.which('codex'),'proof_present':proof.is_dir(),
+         'runner':{'codex_path':shutil.which('codex'),'login_probe':(probe.stdout or '')[-1800:],'candidate_binaries':candidates[:24],'proof_present':proof.is_dir(),
                    'files':[x.name for x in proof.iterdir()] if proof.is_dir() else [],
                    'exit_code':tail(proof/'codex-exitcode.txt',120),
                    'plugin_list':tail(proof/'plugin-list.txt',1600),
