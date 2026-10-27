@@ -1,10 +1,10 @@
 name: Jerusalem 3000 Runtime
 on:
   pull_request:
-    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', 'scripts/audit_jerusalem_3000_foundation_gaps.mjs', 'scripts/ingest_jerusalem_3000_wall_reference.py', 'scripts/lib/jerusalem-foundation-gap-audit.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
+    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', 'scripts/audit_jerusalem_3000_foundation_gaps.mjs', 'scripts/ingest_jerusalem_3000_wall_reference.py', 'scripts/ingest_jerusalem_3000_core_reference.py', 'scripts/lib/jerusalem-foundation-gap-audit.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
   push:
     branches: [main]
-    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', 'scripts/audit_jerusalem_3000_foundation_gaps.mjs', 'scripts/ingest_jerusalem_3000_wall_reference.py', 'scripts/lib/jerusalem-foundation-gap-audit.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
+    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', 'scripts/audit_jerusalem_3000_foundation_gaps.mjs', 'scripts/ingest_jerusalem_3000_wall_reference.py', 'scripts/ingest_jerusalem_3000_core_reference.py', 'scripts/lib/jerusalem-foundation-gap-audit.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
 permissions:
   contents: read
 jobs:

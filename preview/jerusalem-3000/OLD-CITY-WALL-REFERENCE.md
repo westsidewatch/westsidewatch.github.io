@@ -30,3 +30,9 @@
 18期／手機瀏覽器核對三期可見城牆、三個綁定水防物件、無前代洩漏或無登記組件；缺口矩陣可重新產生。
 
 其他時代城界、完整城門與主街網、宗教核心—街區關係，以及固定方格住宅替換仍需按全線清單繼續處理。本包不是全18期城防或歷史城市延續性驗收；foundationAccepted保持false。
+
+### Religious core positions and approaches
+
+The late three phases also use modern OSM building-bounds centres for the Holy Sepulchre (way 1022672085 v14) and Dome of the Rock (way 4709536 v102). The frozen source is `data/urban/sources/old-city-cores.osm.xml`; `scripts/ingest_jerusalem_3000_core_reference.py` reproduces `core-location-reference.js` offline, using Decimal bounds midpoints rounded to seven decimal places. © OpenStreetMap contributors, ODbL. Source API and raw SHA-256 are embedded in the generated reference.
+
+Only the position of the existing illustrative mass changes. Dimensions, orientation and profile remain authored, and a modern bounds centre is not an ancient footprint survey. Two authored approaches join existing illustrative axes to the edge of these masses; they are not traced historical streets. Housing exclusions and persistent phase generation consume the same positions. Earlier periods retain their prior contextual positions pending separate evidence; no modern footprint is back-projected. The southern sanctuary/precinct and complete historical street network remain unresolved.
