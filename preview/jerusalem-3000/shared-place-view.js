@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 // Persistent geographic references, not building meshes or historical footprints.
-export function createSharedPlaceView(mount,places){
+export function createSharedPlaceView(mount,places,{credit=true}={}){
  const layer=document.createElement('div');layer.className='j3k-place-references';layer.hidden=true;layer.setAttribute('aria-label','各時代共用地理參照（概略位置）');
  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('aria-hidden','true');layer.append(svg);
  const entries=places.anchors().map((anchor,index)=>{
   const label=document.createElement('span');label.textContent=anchor.label;label.dataset.placeId=anchor.id;label.title='概略地理參照，不代表當期建築或古地表';
   const line=document.createElementNS(svg.namespaceURI,'line'),dot=document.createElementNS(svg.namespaceURI,'circle');dot.setAttribute('r','2.5');svg.append(line,dot);layer.append(label);return {anchor,label,line,dot,index};
- });const credit=document.createElement('small');credit.className='j3k-place-credit';credit.textContent='概略地理參照 · © OpenStreetMap contributors · ODbL';layer.append(credit);mount.append(layer);let visible=false;
+ });if(credit){const note=document.createElement('small');note.className='j3k-place-credit';note.textContent='概略地理參照 · © OpenStreetMap contributors · ODbL';layer.append(note);}mount.append(layer);let visible=false;
  return {
   setVisible(value){visible=Boolean(value);layer.hidden=!visible;},
   project(camera){if(!visible)return;const w=mount.clientWidth,h=mount.clientHeight,boxes=[];svg.setAttribute('viewBox',`0 0 ${w} ${h}`);

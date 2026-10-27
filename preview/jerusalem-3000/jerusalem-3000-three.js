@@ -238,8 +238,8 @@ try {
     note.textContent = isEarliestPhase(p.id) ? '東南山脊與基訓泉周邊的小規模聚落。住居數量、位置、屋頂與步徑均為推定示意；地形使用現代 DEM。可拖動旋轉、滾輪縮放。' : p.id==='middle-bronze' ? '中青銅取水設施與防護通道示意。泉塔年代有爭議，粉褐色標示為爭議層；住居、位置與高度仍屬推定。鑿岩設施只顯示輪廓，完整城牆範圍尚未核定。' : p.id==='late-bronze-iron1' ? '此期城區範圍未核定；住居僅為示意，不代表人口增減或前代房屋留存。粉褐色階梯支撐體為年代與功能爭議層，不能直接認定為王宮基礎。前期防禦未預設延續，隱藏不表示毀壞。' : p.id==='david-solomon' ? '城防、王室院落與第一聖殿為推定復原，由共同帳本分段出現。聖殿主體採經文比例，牆線、位置與外觀未核定；可點「聖殿近看」。住宅仍為較晚鐵器時代類比。' : p.id === RETAINED_PHASE
       ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建住宅採獨立山脊／北部配置；早期第二聖殿主體、院落及入口為獨立推定示意，可點「聖殿近看」。城界、街網與人口未核定。`
       : isSharedSlicePhase(p.id) ? `${p.note} 東南山脊、北部聖區與西丘採獨立配置；西向擴張方向有文獻依據，具體邊界與道路仍為推定。毀城沿用同一批示意住居。` : isSharedGenerationPhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
-    if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 宗教核心為選定階段示意量體，位置尺寸未經測繪；不是全期逐年復原。';
-    if(isIndependentLaterPhase(p.id))note.textContent+=' 本期採示意地區／路網；東側共同通道標示歷史軸線，不表示路面、寬度與高度歷代不變；屋頂／院落模組為街區概覽表達，不代表實測房屋或戶數。分區、道路寬度與完整城界仍未核定；此為時段內綜合布局，不表示全期同時存在。';
+    if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 宗教核心亦為概略量體，非測繪復原。';
+    if(isIndependentLaterPhase(p.id))note.textContent+=' 地區、路網與住宅量體為示意；共同東側軸線不表示歷代路面相同。各期採階段概覽，非逐年完整復原。';
     if(window.__JERUSALEM3000__.inheritanceState.audit?.visibleComponents>0)note.textContent+=' 前代圖層按模型比例示意，留存構件與再利用關係尚未核定。';
     skeletonView?.refresh();
     if(evidencePanelPhase!==p.id) {

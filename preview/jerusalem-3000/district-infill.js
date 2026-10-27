@@ -44,3 +44,17 @@ export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,road
  return{blocks,count:blocks.length,withheld:false,generator:'district-constrained-infill-v1'};
 }
 export function roadClearancePolygons(roads,width=6){return roads.flatMap(road=>road.geometry.points.slice(1).map((b,i)=>{const a=road.geometry.points[i],L=Math.hypot(b.x-a.x,b.z-a.z);if(!L)return null;const nx=-(b.z-a.z)/L*width/2,nz=(b.x-a.x)/L*width/2;return{polygon:[{x:a.x+nx,z:a.z+nz},{x:b.x+nx,z:b.z+nz},{x:b.x-nx,z:b.z-nz},{x:a.x-nx,z:a.z-nz}]};}).filter(Boolean));}
+// The envelope is a modelling constraint, not newly drawn wall or surveyed parcel.
+export function clipBlockToEnvelope(polygon,envelope){
+ const inside=p=>{let hit=false;for(let i=0,j=envelope.length-1;i<envelope.length;j=i++){const a=envelope[j],b=envelope[i];if((a.z>p.z)!==(b.z>p.z)&&p.x<(b.x-a.x)*(p.z-a.z)/(b.z-a.z)+a.x)hit=!hit;}return hit;};
+ const cross=(a,b,c)=>(b.x-a.x)*(c.z-a.z)-(b.z-a.z)*(c.x-a.x);
+ const crosses=polygon.some((a,i)=>{const b=polygon[(i+1)%polygon.length];return envelope.some((c,j)=>{const d=envelope[(j+1)%envelope.length];return cross(a,b,c)*cross(a,b,d)<-1e-8&&cross(c,d,a)*cross(c,d,b)<-1e-8;});});
+ if(polygon.every(inside)&&!crosses)return [polygon];
+ const result=[];
+ for(let part of convexParts(envelope)){
+  if(part.reduce((s,a,i)=>{const b=part[(i+1)%part.length];return s+a.x*b.z-b.x*a.z;},0)<0)part=[...part].reverse();
+  let p=polygon;for(let i=0;i<part.length&&p.length>=3;i++){const a=part[i],b=part[(i+1)%part.length],nx=b.z-a.z,nz=a.x-b.x;p=clip(p,nx,nz,a.x*nx+a.z*nz);}
+  if(p.length>=3&&area(p)>1)result.push(p);
+ }
+ return result;
+}

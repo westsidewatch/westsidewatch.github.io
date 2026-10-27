@@ -8,6 +8,7 @@ const valid=p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.z);
 function planar(record){
  const g=record.geometry||{},topology=record.metadata?.spatialTopology;if(String(g.status).includes('withheld'))return null;
  if(!FRAMES.has(g.frame)){if(topology?.authority==='source-provisional-anchor-v1'&&topology.frame==='canonical-dem-enu'&&valid(topology.point))return {kind:'point',points:[topology.point],confidence:topology.confidence,representation:topology.representation};return null;}
+ if(g.lines?.length&&g.lines.every(line=>line.length>=2&&line.every(valid)))return {kind:'multiline',points:g.lines.flat(),pathLengths:g.lines.map(line=>line.length)};
  if(g.polygon?.length>=3&&g.polygon.every(valid))return {kind:'polygon',points:g.polygon};
  const points=g.points||topology?.points;if(points?.length>=2&&points.every(valid))return {kind:'line',points};
  const point=g.point||topology?.point||topology?.center;if(valid(point))return {kind:'point',points:[point]};
@@ -39,7 +40,7 @@ export function collectSpatialSkeleton(core,terrain,{phaseId,position,evidenceMo
    else if(shape.mass){const g=shape.mass,a=g.rotation?.[1]||0,c=Math.cos(a),s=Math.sin(a);for(const dx of [-g.parameters.width/2,g.parameters.width/2])for(const dz of [-g.parameters.depth/2,g.parameters.depth/2])layoutPoints.push({x:g.position[0]+c*dx+s*dz,z:g.position[2]-s*dx+c*dz});}
    else layoutPoints.push(...shape.points);
   }
-  if(domain){domains[domain].spatialObjects++;features.push({id:record.id,domain,kind:domain==='districts'?shape.kind:shape.kind==='polygon'?'polygon':shape.kind,points:sampled,confidence,state,geometryVerified:false,representation:shape.representation||(shape.bounds||shape.mass?'model-center-not-footprint':record.geometry.role||'registered-illustration')});}
+  if(domain){const paths=[];let offset=0;for(const length of shape.pathLengths||[]){paths.push(sampled.slice(offset,offset+length));offset+=length;}domains[domain].spatialObjects++;features.push({id:record.id,domain,kind:domain==='districts'?shape.kind:shape.kind==='polygon'?'polygon':shape.kind,points:sampled,...(paths.length?{paths}:{}),confidence,state,geometryVerified:false,representation:shape.representation||(shape.bounds||shape.mass?'model-center-not-footprint':record.geometry.role||'registered-illustration')});}
  }
  const extent=layoutPoints.length?{minX:Math.min(...layoutPoints.map(p=>p.x)),maxX:Math.max(...layoutPoints.map(p=>p.x)),minZ:Math.min(...layoutPoints.map(p=>p.z)),maxZ:Math.max(...layoutPoints.map(p=>p.z)),role:'registered-layout-envelope-not-historical-city-boundary'}:null;
  return {phaseId,position,evidenceMode,window:{...SKELETON_WINDOW},terrain:'modern-dem-rendered-triangles',features,domains,layoutEnvelope:extent,filteredObjects:filtered,unresolvedObjects:unresolved,historicalFoundationAccepted:false};
