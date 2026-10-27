@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-egm-locate-native-codex-20261027-0406",
+  "subject": "Locate verified Codex native binary for Mac A2A EGM worker",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/p2-vol00-egm-goldfish-20261027",
+  "body": "Read-only locate the locally installed Codex CLI and model plugin executable on the resident Mac. No changes, no installation, no model invocation.",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "set +e\nprintf 'HOME=%s\\n' \"$HOME\"\nprintf 'PATH=%s\\n' \"$PATH\"\nprintf 'NODE='; command -v node\nprintf 'NPM='; command -v npm\nprintf 'CODEX='; command -v codex\nprintf 'NPM_GLOBAL_ROOT='; npm root -g 2>/dev/null\nprintf '\\n--- known bins ---\\n'\nfor f in /opt/homebrew/bin/codex /usr/local/bin/codex \"$HOME/.local/bin/codex\" \"$HOME/.npm-global/bin/codex\" \"$HOME/.bun/bin/codex\" \"$HOME/.volta/bin/codex\" \"$HOME\"/.nvm/versions/node/*/bin/codex \"$HOME\"/.fnm/node-versions/*/installation/bin/codex; do if [ -e \"$f\" ] || [ -L \"$f\" ]; then ls -l \"$f\"; fi; done\nprintf '\\n--- Codex apps ---\\n'\nls -ld /Applications/*Codex* \"$HOME\"/Applications/*Codex* 2>/dev/null\nprintf '\\n--- indexed executables ---\\n'\n/usr/bin/mdfind -name codex 2>/dev/null | grep -E '(/bin/|Codex.app|node_modules|\\.app/Contents|/codex$)' | head -35\nprintf '\\n--- scoped filesystem paths ---\\n'\nfor dir in \"$HOME/.nvm\" \"$HOME/.codex\" \"$HOME/.local\" \"$HOME/Library/Application Support/Codex\" \"$HOME/Documents/Codex\" \"$HOME/Applications\" \"/Applications\"; do\nif [ -d \"$dir\" ]; then /usr/bin/find \"$dir\" \\( -name 'codex' -o -name 'codex-cli' -o -name 'codex-aarch64-apple-darwin' \\) -print 2>/dev/null | head -20; fi\ndone\nprintf 'A2A_NATIVE_CLI_DIAG_DONE\\n'"
+      ],
+      "cwd": "~",
+      "timeout": 180
+    }
+  ]
+}
