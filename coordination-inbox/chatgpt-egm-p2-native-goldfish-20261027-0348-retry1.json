@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-egm-p2-native-goldfish-20261027-0348-retry1",
+  "subject": "Retry P2 native EGM with exact command-level failure evidence",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/p2-vol00-egm-goldfish-20261027",
+  "body": "Execute native official installed egm@egm Goldfish review on the exact PR #1355 design-spec revision via the resident Mac Codex runtime. Preserve actual isolated-agent completion and report to PR #1355. REVIEW ONLY: no site artwork, main merge, or CI bypass. Publish A2A execution receipt. Source SHA lease: a0747bba9580c08903c33a0692d9513ba923a7b9 First attempt failed before verification; retry as a new idempotent task with detailed error surfacing. Never reinterpret attempted as PASS.",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "set -euo pipefail\nSHA=\"a0747bba9580c08903c33a0692d9513ba923a7b9\"\nREPO=\"${DORE_REPO_ROOT:-$HOME/westsidewatch.github.io}\"\nif [[ ! -d \"$REPO/.git\" && ! -f \"$REPO/.git\" ]]; then REPO=\"$HOME/.dore/control-checkout\"; fi\nif [[ ! -d \"$REPO/.git\" && ! -f \"$REPO/.git\" ]]; then echo \"A2A DISPATCH ERROR: no known resident checkout\" >&2; exit 2; fi\ngit -C \"$REPO\" fetch --no-tags origin \"+refs/heads/p2-latest-magazine-motion-preview-20261023:refs/remotes/origin/p2-latest-magazine-motion-preview-20261023\"\nif [[ \"$(git -C \"$REPO\" rev-parse refs/remotes/origin/p2-latest-magazine-motion-preview-20261023)\" != \"$SHA\" ]]; then echo \"A2A DISPATCH ERROR: source lease changed\" >&2; exit 3; fi\nmkdir -p \"$HOME/.dore/egm-dispatch\"\nSCRIPT=\"$HOME/.dore/egm-dispatch/chatgpt-egm-p2-native-goldfish-20261027-0348-retry1.sh\"\ngit -C \"$REPO\" show \"$SHA:scripts/p2-egm-a2a-review.sh\" > \"$SCRIPT\"\nP2_A2A_SOURCE_SHA=\"$SHA\" DORE_REPO_ROOT=\"$REPO\" bash \"$SCRIPT\""
+      ],
+      "cwd": "~",
+      "timeout": 900
+    }
+  ]
+}
