@@ -18,6 +18,9 @@ assert.equal((source.match(/class="dual-movement"/g)||[]).length,4);
 assert.equal((source.match(/class="dual-work/g)||[]).length,11,'do not invent article titles');
 assert.match(source,/id="ws-gate-aperture"/);
 assert.match(source,/id="ws-light-floor"/);
+assert.match(source,/viewBox="0 0 1448 1086" preserveAspectRatio="xMidYMin slice"/,'light must share the original wall-image coordinate system across all cover ratios');
+assert.match(source,/<g clip-path="url\(#ws-gate-aperture\)">\s*<rect data-role="gate-inner-light"/,'door illumination must be clipped to the stone opening');
+assert.doesNotMatch(source,/data-role="gate-arch-relief"/,'a second invented arch must never extend over the real masonry');
 assert.match(source,/data-role="gate-inner-light"/);
 assert.match(source,/data-role="gate-jamb-shadow"/);
 assert.doesNotMatch(source,/data-role="stone-cast-shadow"|data-role="right-fold-shadow"/);
@@ -53,6 +56,14 @@ const data=()=> {
  const index=document.querySelector('.dual-contents__index');
  const star=document.querySelector('#dual-star');
  const zone=document.querySelector('.dual-contents__star-zone');
+ const city=document.querySelector('#dual-cover-city');
+ const lightSvg=document.querySelector('#dual-cover-folded-light');
+ const cityBox=city.getBoundingClientRect();
+ const scale=Math.max(cityBox.width/1448,cityBox.height/1086);
+ const rightInk=new DOMPoint(839,759).matrixTransform(lightSvg.getScreenCTM());
+ const alignedRight={x:cityBox.left+(cityBox.width-1448*scale)/2+839*scale,y:cityBox.top+759*scale};
+ const registerError=Math.hypot(rightInk.x-alignedRight.x,rightInk.y-alignedRight.y);
+ const wallRightPost=cityBox.left+(cityBox.width-1448*scale)/2+844*scale;
  const columns=[...document.querySelectorAll('.dual-movement')];
  const secondary=[...document.querySelectorAll(
   '.dual-contents__head span,.dual-movement h3,.dual-movement h3 em,.dual-movement li,.dual-movement li b,.dual-entry__column,.dual-entry__column small,.dual-work,.dual-movement__interlude,.dual-contents__foot'
@@ -89,6 +100,11 @@ const data=()=> {
   rail:box(document.querySelector('#dual-continuum')),
   railOpacity:+getComputedStyle(document.querySelector('#dual-continuum')).opacity,
   wallBg:getComputedStyle(document.querySelector('#dual-cover-wall')).backgroundSize,
+  lightRegisterError:registerError,
+  rightJambGap:Math.abs(rightInk.x-wallRightPost),
+  rightJambTolerance:6*scale,
+  lightViewBox:lightSvg.getAttribute('viewBox'),
+  lightAspect:lightSvg.getAttribute('preserveAspectRatio'),
   maskSize:getComputedStyle(document.querySelector('#dual-cover-wall')).maskSize,
   mastFit:getComputedStyle(document.querySelector('.dual-cover__mast')).objectFit,
   scrollWidth:document.documentElement.scrollWidth,
@@ -117,6 +133,8 @@ const data=()=> {
     const m=await page.evaluate(data);
     const faults=[];
     if(m.scrollWidth>width+2)faults.push('horizontal overflow');
+    if(m.lightRegisterError>1.5||m.rightJambGap>m.rightJambTolerance||m.lightAspect!=='xMidYMin slice')
+     faults.push('door right jamb and projected-light origin drift from native stone opening during page morph');
     if(!m.wallBg.includes('cover')||!m.maskSize.includes('cover')||m.mastFit!=='contain')faults.push('stone/masthead must crop proportionally');
     if(p===14&&!(m.blue>.1&&m.blue<.95&&m.gold===0&&m.cityOpacity>.6))faults.push('stone cover must enter with midnight-blue ink');
     if(p===33&&!(m.gold>.1&&m.gold<.95&&m.lines>=1&&m.typeOpacity>.25&&m.lowerRegisterOpacity>.8))

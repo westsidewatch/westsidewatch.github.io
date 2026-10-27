@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261026g">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261026h">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -29,10 +29,10 @@
    <div class="dual-cover" data-cover-variant="masthead">
      <div class="dual-cover__city" id="dual-cover-city" aria-hidden="true">
       <div class="dual-cover__wall" id="dual-cover-wall"></div>
-      <svg class="dual-cover__fold-light" id="dual-cover-folded-light" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+      <svg class="dual-cover__fold-light" id="dual-cover-folded-light" viewBox="0 0 1448 1086" preserveAspectRatio="xMidYMin slice" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
        <defs>
-        <!-- A screenprinted architectural aperture, not an atmospheric ray.
-             The old mask made the light DISAPPEAR at the threshold. -->
+        <!-- Register every ink edge to the 1448x1086 original stone print.
+             'slice' matches background-size:cover / center top through motion. -->
         <linearGradient id="ws-gate-illumination" x1="0" y1="0" x2=".19" y2="1">
          <stop offset="0" stop-color="#997341"/>
          <stop offset=".44" stop-color="#d8a74c"/>
@@ -53,26 +53,27 @@
          <circle cx="2" cy="2" r=".75" fill="#5f4523" opacity=".26"/>
         </pattern>
         <clipPath id="ws-gate-aperture" clipPathUnits="userSpaceOnUse">
-         <path d="M382 699 V421 C382 372 432 327 500 296 C568 327 618 372 618 421 V699 Z"/>
+         <path d="M609 759 V431 C609 364 656 318 724 278 C792 318 839 364 839 431 V759 Z"/>
         </clipPath>
         <clipPath id="ws-light-floor" clipPathUnits="userSpaceOnUse">
-         <path d="M421 699 H580 L1000 825 V1000 H390 Z"/>
+         <path d="M649 759 H839 L1448 896 V1086 H615 Z"/>
         </clipPath>
        </defs>
        <!-- One continuous source-to-floor graphic: the gate cuts a negative
             aperture in the masonry; the adjacent stone retains its texture
             beneath a bold, asymmetrical, registered gold ink impression. -->
        <g id="dual-light-threshold-architecture">
-        <path data-role="gate-arch-relief" d="M363 699 V419 Q363 349 500 272 Q637 349 637 419 V699 H621 V421 Q621 372 500 296 Q379 372 379 421 V699 Z" fill="#715339" opacity=".25"/>
-        <rect data-role="gate-inner-light" x="375" y="291" width="250" height="410" clip-path="url(#ws-gate-aperture)" fill="url(#ws-gate-illumination)"/>
-        <path data-role="gate-jamb-shadow" d="M382 418 V699 H412 V427 Q448 350 500 301 Q412 329 382 418 Z" fill="#66503b" opacity=".42"/>
-        <path data-role="stone-cast-print" d="M381 699 H421 L390 1000 H0 V882 L265 781 Z" fill="url(#ws-shadow-print)" opacity=".73"/>
-        <g clip-path="url(#ws-light-floor)">
-         <path data-role="projected-light" d="M421 699 H580 L1000 825 V1000 H390 Z" fill="url(#ws-architectural-light)"/>
-         <path data-role="printed-light-texture" d="M421 699 H580 L1000 825 V1000 H390 Z" fill="url(#ws-gold-overprint)" opacity=".5"/>
+        <g clip-path="url(#ws-gate-aperture)">
+         <rect data-role="gate-inner-light" x="600" y="274" width="248" height="485" fill="url(#ws-gate-illumination)"/>
+         <path data-role="gate-jamb-shadow" d="M609 426 V759 H649 V438 C650 372 681 324 724 278 C650 323 609 368 609 426 Z" fill="#66503b" opacity=".42"/>
         </g>
-        <path data-role="threshold-lit-edge" d="M421 699 H580" fill="none" stroke="#ffe9a3" stroke-width="5"/>
-        <path data-role="light-cutline" d="M421 699 L390 1000 M580 699 L1000 825" fill="none" stroke="#ffedb8" stroke-width="1.7" opacity=".86"/>
+        <path data-role="stone-cast-print" d="M609 759 H649 L615 1086 H0 V957 L390 849 Z" fill="url(#ws-shadow-print)" opacity=".73"/>
+        <g clip-path="url(#ws-light-floor)">
+         <path data-role="projected-light" d="M649 759 H839 L1448 896 V1086 H615 Z" fill="url(#ws-architectural-light)"/>
+         <path data-role="printed-light-texture" d="M649 759 H839 L1448 896 V1086 H615 Z" fill="url(#ws-gold-overprint)" opacity=".5"/>
+        </g>
+        <path data-role="threshold-lit-edge" d="M649 759 H839" fill="none" stroke="#ffe9a3" stroke-width="5"/>
+        <path data-role="light-cutline" d="M649 759 L615 1086 M839 759 L1448 896" fill="none" stroke="#ffedb8" stroke-width="1.7" opacity=".86"/>
        </g>
       </svg>
      </div>
