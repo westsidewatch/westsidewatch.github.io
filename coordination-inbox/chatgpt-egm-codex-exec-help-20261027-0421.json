@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-egm-codex-exec-help-20261027-0421",
+  "subject": "Inspect native bundled Codex exec invocation flags",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/p2-vol00-egm-goldfish-20261027",
+  "body": "Read-only discover the actual native bundled Codex CLI exec flags and installed EGM plugin. Do not run a model.",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "set +e\nCLI=\"$HOME/.codex/plugins/.plugin-appserver/codex-cli/bin/codex\"\nprintf '--- CODEX EXEC HELP ---\\n'\n\"$CLI\" exec --help 2>&1\nprintf '\\n--- CODEX PLUGIN LIST ---\\n'\n\"$CLI\" plugin list 2>&1\nprintf '\\n--- CLI VERSION ---\\n'\n\"$CLI\" --version 2>&1\nprintf 'CLI_HELP_COMPLETE\\n'"
+      ],
+      "cwd": "~",
+      "timeout": 150
+    }
+  ]
+}
