@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-egm-p2-native-reviewer-summary-20261027-0830",
+  "subject": "Recover isolated EGM reviewer evidence from interrupted Codex run",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/p2-vol00-egm-goldfish-20261027",
+  "body": "Read-only summarize native collab reviewer evidence and partial stage conclusions from JSON events. No model invocation or changes.",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "python3 - <<'PY'\nimport pathlib,json,collections\np=pathlib.Path.home()/'.dore/egm-p2-review-131f3769711c/.dev/egm/p2-4fa21ce51444/codex-events.jsonl'\nev=[json.loads(s) for s in p.read_text(errors='replace').splitlines() if s.strip()]\nagents=[e for e in ev if isinstance(e.get('item'),dict) and e['item'].get('type')=='collab_tool_call']\nprint('NATIVE_COLLAB',len(agents))\nfor i,e in enumerate(agents):\n item=e['item']\n keys=list(item)\n print(i,'STATE',e['type'],'ID',item.get('id'),'KEYS',keys,'TOOL',str(item.get('tool') or item.get('name') or '')[:150])\n for k in ('arguments','input','output','result','message','text'):\n  x=item.get(k)\n  if x is not None:print(' ',k,'LENGTH',len(str(x)),'PREVIEW',str(x)[:380].replace('\\n',' | '))\nprint('LAST_AGENT_MESSAGES')\nfor e in ev:\n item=e.get('item') or {}\n if isinstance(item,dict) and item.get('type')=='agent_message':\n  txt=str(item.get('text') or item.get('message') or '')\n  print('MSG',len(txt),txt[-550:].replace('\\n',' | '))\nPY"
+      ],
+      "cwd": "~",
+      "timeout": 110
+    }
+  ]
+}
