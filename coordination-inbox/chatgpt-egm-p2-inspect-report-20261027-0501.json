@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-egm-p2-inspect-report-20261027-0501",
+  "subject": "Inspect actual P2 EGM local review report and native child evidence",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/p2-vol00-egm-goldfish-20261027",
+  "body": "Read-only inspect native P2 EGM generated report and Codex traces on exact 6decc6703 worker checkout. No mutations or reruns.",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "python3 - <<'PY'\nimport json,pathlib,collections,re\nh=pathlib.Path.home(); root=h/'.dore/egm-p2-review-6decc67039c8'\nproof=root/'.dev/egm/p2-4fa21ce51444'; report=root/'docs/design/P2-VOL00-EGM-GOLDFISH-REPORT.md'\nprint('ROOT_EXISTS',root.exists(),'REPORT_EXISTS',report.exists(),'PROOF_EXISTS',proof.exists())\nif report.exists():\n s=report.read_text(errors='replace'); print('REPORT_BYTES',len(s),'REPORT_LINES',len(s.splitlines()))\n print('HEADINGS',json.dumps([l[:125] for l in s.splitlines() if l.startswith('#')][:35],ensure_ascii=False))\n print('STAGE_PATTERN',bool(re.search(r'Stage [5-8]|階段.?[5-8]',s,re.I)))\n print('REPORT_HEAD',s[:1400].replace('\\n',' | '))\n print('REPORT_TAIL',s[-800:].replace('\\n',' | '))\nif proof.exists():\n for name in ('codex-exitcode.txt','codex-final.md','codex-stderr.log','plugin-list.txt'):\n  p=proof/name\n  if p.exists():\n   s=p.read_text(errors='replace');print('FILE',name,'SIZE',len(s),'TAIL',s[-950:].replace('\\n',' | '))\n ev=proof/'codex-events.jsonl'\n if ev.exists():\n  counts=collections.Counter(); agents=[];errors=[]; n=0\n  for line in ev.open(errors='replace'):\n   n+=1\n   try:x=json.loads(line)\n   except:continue\n   counts[x.get('type','?')]+=1\n   t=str(x.get('item',{}).get('type','')) if isinstance(x.get('item'),dict) else ''\n   if t: counts['item:'+t]+=1\n   if 'spawn_agent' in line or 'fork_turns' in line or 'fork_context' in line: agents.append(line[:360])\n   if 'error' in (x.get('type') or ''):errors.append(line[:340])\n  print('EVENT_LINES',n,'COUNTS',counts.most_common(14))\n  print('NATIVE_DISPATCH_MATCHES',len(agents),'SAMPLES',[a[:250] for a in agents[:2]])\n  print('ERROR_EVENTS',[x[:220] for x in errors[-3:]])\nPY"
+      ],
+      "cwd": "~",
+      "timeout": 120
+    }
+  ]
+}
