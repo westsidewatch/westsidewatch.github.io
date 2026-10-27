@@ -34,7 +34,9 @@ assert.doesNotMatch(source,/dual-film|dual-radiance|installV53CanvasFallback|dat
 assert.match(source,/makeSvg\('g','ws-print-hero',letters\)/,'one typographic protagonist must be built from the official SVG');
 assert.match(css,/temple-stone-light\.png/,'folio must use authentic temple-stone material');
 assert.doesNotMatch(css,/linear-gradient\(139deg/,'reject old synthetic paper fold');
-assert.match(source,/col<1;col\+\+/,'seven sparse prints replace 84-word poster');
+assert.doesNotMatch(source,/ws-print-band|ws-print-mark|heroSides|stoneTones|residualBands/,'rejected grey statue and background stamps must be gone');
+assert.match(css,/dual-tile--contents::after\{content:none\}/,'cross-title rules must be removed');
+assert.match(source,/ws-print-hero__face/,'official ink wordmark must be preserved');
 assert.doesNotMatch(source,/starClearance|radial-gradient\(ellipse 24% 22%/,'a radial hole is not a physical Morning Star clearance');
 assert.doesNotMatch(css,/ocean-rise|water-doors|p2-approved-ocean|repeating-linear-gradient\(118deg/);
 assert.doesNotMatch(css,/dual-letterfield\{[^}]*drop-shadow/,'printed SVGs must stay razor-edged');
@@ -50,7 +52,7 @@ folio.forEach((m,i)=>{
 });
 
 const scenes=[['cover',14],['type-start',33],['type-complete',44],['star-entry',54],
- ['star-rise',68],['cover-hold',82],['contents-handoff',93],['contents',100]];
+ ['star-rise',68],['spread-hold',79],['cover-hold',82],['contents-handoff',93],['contents',100]];
 const screens=[['desktop',1648,928],['tablet',768,1024],['phone',390,844],['small',320,720]];
 const results=[];
 const approx=(a,b,t=.01)=>Math.abs(a-b)<=t;
@@ -62,6 +64,7 @@ const data=()=> {
  const page=document.querySelector('#dual-contents');
  const index=document.querySelector('.dual-contents__index');
  const star=document.querySelector('#dual-star');
+ const heroRect=box(hero),starRect=box(star),pageRect=box(page);
  const zone=document.querySelector('.dual-contents__star-zone');
  const city=document.querySelector('#dual-cover-city');
  const lightSvg=document.querySelector('#dual-cover-folded-light');
@@ -76,18 +79,17 @@ const data=()=> {
   '.dual-contents__head span,.dual-movement h3,.dual-movement h3 em,.dual-movement li,.dual-movement li b,.dual-entry__column,.dual-entry__column small,.dual-work,.dual-movement__interlude,.dual-contents__foot'
  )];
  return {
-  phase:stage.dataset.phase,lines:+stage.dataset.xiwangLines,
+  phase:stage.dataset.phase,impression:+stage.dataset.xiwangImpression,inkPlate:stage.dataset.xiwangPlate,
   blue:+stage.dataset.blueReveal,gold:+stage.dataset.dawnReveal,
   cover:box(cover),page:box(page),
   typeOpacity:+getComputedStyle(document.querySelector('#dual-letterfield')).opacity,
   hero:box(hero),heroOpacity:+getComputedStyle(hero).opacity,
-  heroDepths:hero.querySelectorAll('.ws-print-hero__side').length,
+  heroDepths:hero.querySelectorAll('.ws-print-hero__highlight,.ws-print-hero__deboss').length,
   heroFaceUsesOfficial:hero.querySelector('.ws-print-hero__face')?.getAttribute('href')==='#ws-xiwang-original',
-  heroExtrusion:+stage.dataset.xiwangExtrusion,
-  starClear:+stage.dataset.xiwangStarClear,
-  starNearCount:+stage.dataset.xiwangStarNear,
-  starNearMaxOpacity:+stage.dataset.xiwangStarNearMax,
-  lowerRegisterOpacity:+getComputedStyle(document.querySelector('.ws-print-band[data-register="7"]')).opacity,
+  titleTopRatio:(heroRect.top-pageRect.top)/pageRect.height,
+  titleBottomClear:pageRect.bottom-heroRect.bottom,
+  starTitleGap:heroRect.top-starRect.bottom,
+  starTitleXDelta:Math.abs((heroRect.left+heroRect.right)/2-(starRect.left+starRect.right)/2)/pageRect.width,
   lightOpacity:+getComputedStyle(document.querySelector('#dual-cover-folded-light')).opacity,
   cityOpacity:+getComputedStyle(document.querySelector('#dual-cover-city')).opacity,
   stoneOpacity:+getComputedStyle(document.querySelector('#dual-stone-contents')).opacity,
@@ -152,18 +154,25 @@ const data=()=> {
      faults.push('door right jamb and projected-light origin drift from native stone opening during page morph');
     if(!m.wallBg.includes('cover')||!m.maskSize.includes('cover')||m.mastFit!=='contain')faults.push('stone/masthead must crop proportionally');
     if(p===14&&!(m.blue>.1&&m.blue<.95&&m.gold===0&&m.cityOpacity>.6))faults.push('stone cover must enter with midnight-blue ink');
-    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.lines>=1&&m.typeOpacity>.25&&m.lowerRegisterOpacity>.30&&m.heroOpacity>.5))
-      faults.push('bottom print register must be visible as gold sheet rises');
+    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.typeOpacity>.25&&m.heroOpacity>.5))
+      faults.push('official ink title must appear on Temple Stone');
     if(p===33&&m.cityOpacity<.98)faults.push('no empty midnight-blue block may persist after cover arrival');
     if(p===44){
      heroAtTypeHold=m.hero.top;
-     if(!(m.lines>=6&&m.starOpacity<.05&&m.typeOpacity>.8&&m.heroOpacity>.98&&m.heroDepths===21&&m.heroFaceUsesOfficial&&m.heroExtrusion>.99))
-      faults.push('official 西望 must rise as one continuous 21-plane lead-type master before Morning Star');
+     if(!(m.starOpacity<.05&&m.typeOpacity>.8&&m.heroOpacity>.98&&m.heroDepths===2&&m.heroFaceUsesOfficial&&m.inkPlate==='official-svg-ink'&&m.impression>.99))
+      faults.push('official 西望 must print as one deep-blue ink face');
     }
-    if(p===54&&!(m.starOpacity>.1&&m.lines>=6))faults.push('Morning Star entrance missing');
-    if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.45&&m.typeOpacity<.65))faults.push('real star must take focus while official print remains visible');
-    if(p===68&&!(m.hero.top>heroAtTypeHold+height*.10&&m.starClear>.99&&m.heroExtrusion>.99))
-     faults.push('lead type must physically recede and nearby printed marks must clear the Morning Star');
+    if(p===54&&!(m.starOpacity>.1&&m.typeOpacity>.8))faults.push('Morning Star entrance missing');
+    if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.8&&m.typeOpacity<.99))
+     faults.push('star and official ink title must be visibly related');
+    if(p===68&&!(m.titleTopRatio>.54&&m.impression>.99))
+     faults.push('title must move beneath Morning Star');
+    if(p===79||p===82){
+     if(!(m.starOpacity>.98&&m.typeOpacity>.8&&m.heroOpacity>.99))
+      faults.push('both star and title must remain visible at publication hold');
+     if(!(m.starTitleGap>m.page.height*.025&&m.starTitleXDelta<.08&&m.titleBottomClear>m.page.height*.06))
+      faults.push('star and title must align without intersection or clipping');
+    }
     if(p===82&&!(m.lightOpacity>.94&&m.mastOpacity>.98&&m.volumeOpacity>.98&&m.headings.join('|')==='CITY|OF|LIGHT'))
       faults.push('cover hold must carry a fully legible masthead and issue number with the gate light');
     if(p===93&&!(m.stoneOpacity>.1&&m.stoneOpacity<.99))faults.push('Contents must hand off through a measured state');
@@ -196,16 +205,31 @@ const data=()=> {
    // No duplicate clock: reversing the ONE slider restores same visual state.
    await page.locator('#dual-progress').evaluate(slider=>{slider.value='33';slider.dispatchEvent(new Event('input',{bubbles:true}))});
    const reverse=await page.evaluate(data);
-   if(reverse.phase!=='xiwang-letterpress'||reverse.lines<1||reverse.stoneOpacity>.01)
+   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='official-svg-ink'||reverse.stoneOpacity>.01)
     results.push({id:name+'-reverse',errors:['backwards scroll did not restore the original impression']});
    await page.close();
   }
-  const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
-  await reduced.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=100',{waitUntil:'domcontentloaded'});
-  const r=await reduced.evaluate(data);
-  results.push({id:'reduced-motion-final',metrics:r,errors:r.entries===12&&r.stoneOpacity>.99?[]:['reduced motion hid the magazine']});
-  await reduced.screenshot({path:path.join(out,'reduced-motion-final.png')});
-  await reduced.close();
+   const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
+   await reduced.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=14',{waitUntil:'domcontentloaded'});
+   for(const p of [14,44,79,100]){
+    await reduced.locator('#dual-progress').evaluate((slider,value)=>{
+     slider.value=String(value);slider.dispatchEvent(new Event('input',{bubbles:true}));
+    },p);
+    const r=await reduced.evaluate(data),faults=[];
+    if(r.starRenderer!=='approved-morning-star-svg-reduced')
+     faults.push('reduced motion must use the official static star');
+    if(p===14&&!(r.blue>.99&&r.starOpacity<.01))
+     faults.push('reduced motion must show the intact cover');
+    if(p===44&&!(r.typeOpacity>.99&&r.starOpacity<.01&&r.heroOpacity>.99))
+     faults.push('reduced motion must show the official title');
+    if(p===79&&!(r.starOpacity>.99&&r.typeOpacity>.9&&r.starTitleXDelta<.08))
+     faults.push('reduced star and title must align on one vertical axis');
+    if(p===100&&!(r.entries===12&&r.stoneOpacity>.99&&r.insideContents))
+     faults.push('reduced motion must keep all 12 Contents entries');
+    results.push({id:'reduced-'+p,metrics:r,errors:faults});
+    await reduced.screenshot({path:path.join(out,'reduced-'+p+'.png'),animations:'disabled'});
+   }
+   await reduced.close();
  }finally{await browser.close()}
  fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({artApproval:'PENDING_EDITOR_REVIEW',scenes:results},null,2));
  if(results.some(s=>s.errors.length))process.exitCode=1;

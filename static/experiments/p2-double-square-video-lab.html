@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027b">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027c">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -148,13 +148,14 @@
  // The cloud/CI browsers can disable WebGL completely. In that case retain
  // the Design OS's OWN frozen Morning Star SVG, not the rejected fake-canvas
  // geometry. Hardware-enabled browsers still run the untouched v5.3 iframe.
+ const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  let hasWebGL=false;
  try{
   const probe=document.createElement('canvas');
   hasWebGL=!!(probe.getContext('webgl2')||probe.getContext('webgl'));
  }catch(_error){hasWebGL=false}
- star.dataset.renderer=hasWebGL?'morning-star-v5.3-webgl':'approved-morning-star-svg';
- if(!hasWebGL){
+ star.dataset.renderer=reduce?'approved-morning-star-svg-reduced':(hasWebGL?'morning-star-v5.3-webgl':'approved-morning-star-svg');
+ if(!hasWebGL||reduce){
   const approved=document.createElement('img');
   approved.src='/images/westside-watch-morning-star.svg';
   approved.className='dual-cover__approved-star';
@@ -168,19 +169,11 @@
  const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol'),masthead=cover.querySelector('.dual-cover__mast');
  const rail=document.getElementById('dual-continuum'),railRotor=document.getElementById('dual-continuum-rotor');
  const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value');
- const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
  const lerp=(a,b,t)=>a+(b-a)*t;
- // These are the seven existing Design OS editorial-page color identities.
- // No new palette and no copied seven-overlap homepage curtain animation.
- const palette=['var(--ws-water,#5b8fa8)','var(--ws-first-light,#a2872a)',
-  'var(--ws-pale-gold,#cebd74)','var(--ws-olive,#738a5a)',
-  'var(--ws-harvest,#b8944a)','var(--ws-crimson,#a14d57)',
-  'var(--ws-daylight-mauve,oklch(67% .075 330))'];
-
- // Seven original Design OS inks, one typographic protagonist. The approved
- // horizontal 西望 SVG remains the ONLY stencil for seven quiet registration stamps
- // and for the solid, stone-laminated lead-type master.
+ // The official horizontal 西望 SVG is the ONE title source.
+ // Two subpixel print edges, not 21 sculptural layers or 84 ghost marks.
  const svgNS='http://www.w3.org/2000/svg';
  const makeSvg=(tag,cls,parent)=>{
   const el=document.createElementNS(svgNS,tag);
@@ -188,76 +181,23 @@
   if(parent)parent.appendChild(el);
   return el;
  };
- const bands=[],allMarks=[];
- for(let register=0;register<7;register++){
-  const band=makeSvg('g','ws-print-band',letters);
-  band.dataset.register=String(register+1);
-  const marks=[];
-  for(let subrow=0;subrow<1;subrow++)for(let col=0;col<1;col++){
-   const mark=makeSvg('g','ws-print-mark',band);
-   mark.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
-   mark.dataset.register=String(register+1);
-   for(let depth=3;depth>=0;depth--){
-    const face=makeSvg('use',depth?'ws-print-depth':'ws-print-face',mark);
-    face.setAttribute('href','#ws-xiwang-original');
-    face.setAttribute('transform','translate('+(depth*1.8)+' '+(depth*1.2)+')');
-    // Small companion stamps are ink, not another 3D hero: no disconnected
-    // oversized silhouettes behind every single register.
-    const accent=false;
-    face.style.color=depth===0?'#263d50':palette[register];
-    face.style.opacity=depth===0?'.68':'.19';
-   }
-   marks.push(mark);allMarks.push(mark);
-  }
-  bands.push({band,marks});
- }
- // The 22-layer official wordmark has a *continuous* edge, like a piece of
- // extruded lead type. Three adjacent thin side planes per existing OS ink,
- // not four offset duplicate letterforms pretending to be depth.
  const hero=makeSvg('g','ws-print-hero',letters);
  hero.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
- const heroSides=[];
- const stoneTones=['#ddd0b9','#d8c5a1','#c5aa80','#ae8c61','#8e7051','#71604e','#48505a'];
- for(let depth=21;depth>=1;depth--){
-  const side=makeSvg('use','ws-print-hero__side',hero);
-  side.setAttribute('href','#ws-xiwang-original');
-  side.style.color=stoneTones[Math.floor((21-depth)/3)];
-  side.style.opacity='.98';
-  heroSides.push({side,depth});
- }
+ const highlight=makeSvg('use','ws-print-hero__highlight',hero);
+ highlight.setAttribute('href','#ws-xiwang-original');
+ highlight.style.color='#faf0d8';
+ const deboss=makeSvg('use','ws-print-hero__deboss',hero);
+ deboss.setAttribute('href','#ws-xiwang-original');
+ deboss.style.color='#967a51';
  const heroFace=makeSvg('use','ws-print-hero__face',hero);
  heroFace.setAttribute('href','#ws-xiwang-original');
- heroFace.style.color='#20384b';
- // Transfer only the existing lower three press registers, not a new motif.
- const residualBands=bands.slice(4).map(({band,marks})=>{
-  const retained=makeSvg('g','ws-relief-band',relief);
-  retained.dataset.originalRegister=band.dataset.register;
-  const clones=marks.map(mark=>{
-   const copy=mark.cloneNode(true);
-   copy.classList.add('ws-relief-mark');
-   retained.appendChild(copy);return copy;
-  });
-  return {source:band,marks,retained,clones};
- });
+ heroFace.style.color='#233b50';
  let printW=0,printH=0;
  const layoutPrint=(w,h)=>{
   if(Math.abs(w-printW)<.5&&Math.abs(h-printH)<.5)return;
   printW=w;printH=h;
   letters.setAttribute('viewBox','0 0 '+w.toFixed(2)+' '+h.toFixed(2));
   letters.setAttribute('preserveAspectRatio','none');
-  relief.setAttribute('viewBox',letters.getAttribute('viewBox'));
-  relief.setAttribute('preserveAspectRatio','none');
-  // Seven sparse proof marks below the architectural horizon. The white
-  // stone field around the large wordmark is intentional editorial space.
-  const size=w/432*.115;
-  for(let register=0;register<7;register++){
-   const x=w*(.07+register*.125),y=h*(.785-register*.008);
-   const mark=bands[register].marks[0];
-   mark._printSlot={x,y,size,cx:x+216*size,cy:y+109*size};
-   const printed='translate('+x.toFixed(2)+' '+y.toFixed(2)+') scale('+size.toFixed(5)+')';
-   mark.setAttribute('transform',printed);
-   if(register>=4)residualBands[register-4].clones[0].setAttribute('transform',printed);
-  }
  };
  let progress=1,coverLeft=false;
  const pose=(el,x,y,w,h)=>{
@@ -269,7 +209,7 @@
   // Two original equal reveal planes converge on a 5:8 cover and a
   // square Contents. The narrow functional folio is vertical, flush with
   // the LEFT EDGE of Contents, not a third horizontal page below.
-  const fold=ease((progress-.755)/.105);
+  const fold=reduce?(progress>=.56?1:0):ease((progress-.755)/.105);
   let coverW,coverH,contentsW,contentsH,coverX,coverY,contentsX,contentsY,railX,railY,railW;
   const coverOnLeft=coverLeft;
   if(!mobile){
@@ -301,18 +241,18 @@
     contentsY=coverOnLeft?stackY+coverH:stackY;
     railX=contentsX-edge;railY=contentsY;railW=edge;
   }
-  const blue=reduce?(progress>=.22?1:0):ease((progress-.02)/.20);
-  const dawn=reduce?(progress>=.435?1:0):ease((progress-.225)/.21);
+  const blue=reduce?1:ease((progress-.02)/.20);
+  const dawn=reduce?(progress>=.31?1:0):ease((progress-.225)/.21);
   pose(cover,coverX,coverY,coverW,coverH);
   pose(gold,contentsX,contentsY,contentsW,contentsH);
   pose(rail,railX,railY+contentsH,contentsH,railW);
-  const railReveal=reduce?(progress>=.86?1:0):ease((progress-.77)/.14);
-  const railFlip=reduce?(progress>=.90?1:0):ease((progress-.80)/.155);
+  const railReveal=reduce?(progress>=.87?1:0):ease((progress-.77)/.14);
+  const railFlip=reduce?(progress>=.87?1:0):ease((progress-.80)/.155);
   rail.style.opacity=String(railReveal);
   rail.style.pointerEvents=railReveal>.97?'auto':'none';
   railRotor.style.transform='rotateX('+(-180*railFlip).toFixed(3)+'deg)';
   [...rail.querySelectorAll('.dual-continuum__spectrum button')].forEach((swatch,i)=>{
-    const on=reduce?(progress>=.90?1:0):ease((progress-.82-i*.008)/.075);
+    const on=reduce?(progress>=.87?1:0):ease((progress-.82-i*.008)/.075);
     swatch.style.transform='scaleY('+(.12+.88*on).toFixed(3)+')';
   });
   stage.dataset.spread='contents-square-cover-5-8';
@@ -322,100 +262,66 @@
   stage.dataset.blueReveal=blue.toFixed(4);
   stage.dataset.dawnReveal=dawn.toFixed(4);
   stage.dataset.transitionEngraving='journal-printed-folio';
-  // First the physical cover, then seven registered impressions of the
-  // official 西望 SVG, then Morning Star, then the paper Contents handoff.
-  // Every step is driven by this one reversible parent scroll clock.
+  // The original title first owns the page; the protected star then rises.
+  // At full spread both form one publication identity on the central axis.
   const typeEnter=reduce?(progress>=.31?1:0):ease((progress-.245)/.09);
-  const typeLeave=reduce?(progress>=.9?1:0):ease((progress-.865)/.11);
-  const starAttention=reduce?(progress>=.6?1:0):ease((progress-.47)/.20);
+  const typeLeave=reduce?(progress>=.87?1:0):ease((progress-.865)/.11);
+  const starAttention=reduce?(progress>=.56?1:0):ease((progress-.47)/.20);
   letters.style.clipPath='none';
-  // On entry the plate owns the composition; the star then takes its place
-  // by moving the real type and displacing nearby small impressions.
-  letters.style.opacity=String(typeEnter*(1-typeLeave)*(1-.45*starAttention));
+  letters.style.opacity=String(typeEnter*(1-typeLeave)*(1-.08*starAttention));
   letters.style.visibility=typeEnter>0&&typeLeave<1?'visible':'hidden';
   layoutPrint(contentsW,contentsH);
-  const heroOn=reduce?(progress>=.35?1:0):ease((progress-.265)/.105);
+  const heroOn=reduce?(progress>=.31?1:0):ease((progress-.265)/.105);
   const heroMove=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
-  const heroScale=(contentsW/432)*lerp(.73,.52,heroMove);
-  const heroX=lerp(contentsW*.08,contentsW*.045,heroMove);
-  const heroY=lerp(contentsH*.325,contentsH*.63,heroMove);
+  const heroScale=(contentsW/432)*lerp(.67,.54,heroMove);
+  const heroX=(contentsW-432*heroScale)/2;
+  const heroY=lerp(contentsH*.325,contentsH*.61,heroMove);
   hero.setAttribute('transform','translate('+heroX.toFixed(2)+' '+heroY.toFixed(2)+') scale('+heroScale.toFixed(5)+')');
-  hero.style.opacity=String(heroOn*(1-.20*heroMove));
-  const extrusion=reduce?(heroOn>0?1:0):ease((progress-.28)/.12);
-  heroSides.forEach(({side,depth})=>{
-   side.setAttribute('transform','translate('+(depth*.67*extrusion).toFixed(3)+' '+(depth*.46*extrusion).toFixed(3)+')');
-   side.style.opacity=String(.98*extrusion);
-  });
-  bands.forEach(({band},register)=>{
-   // The gold folio rises from below, so the bottom press register must
-   // print first. All lines then travel along the same slanted print vector.
-   const revealOrder=6-register;
-   const on=reduce?(progress>=.44?1:0):ease((progress-(.24+revealOrder*.023))/.055);
-   band.style.opacity=String(on*.38);
-   band.setAttribute('transform','translate(0 '+((1-on)*contentsH*.026).toFixed(2)+')');
-  });
-  const starSafe=reduce?(progress>=.58?1:0):ease((progress-.455)/.195);
-  let nearStarMarks=0,maxNearStarOpacity=0;
-  allMarks.forEach(mark=>{
-   const {x,y,size,cx,cy}=mark._printSlot;
-   const dx=(cx-contentsW*.51)/(contentsW*.245);
-   const dy=(cy-contentsH*.39)/(contentsH*.235);
-   const proximity=clamp((1.55-Math.hypot(dx,dy))/.92);
-   const displacedX=x+Math.sign(dx||1)*proximity*starSafe*contentsW*.065;
-   const displacedY=y+Math.sign(dy||1)*proximity*starSafe*contentsH*.038;
-   mark.setAttribute('transform','translate('+displacedX.toFixed(2)+' '+displacedY.toFixed(2)+') scale('+size.toFixed(5)+')');
-   const inkOpacity=1-.91*proximity*starSafe;
-   mark.style.opacity=String(inkOpacity);
-   if(proximity>.82){nearStarMarks++;maxNearStarOpacity=Math.max(maxNearStarOpacity,inkOpacity)}
-  });
+  hero.style.opacity=String(heroOn);
+  const impression=reduce?1:ease((progress-.285)/.11);
+  highlight.setAttribute('transform','translate('+(1.0*impression).toFixed(3)+' '+(1.05*impression).toFixed(3)+')');
+  deboss.setAttribute('transform','translate('+(-1.3*impression).toFixed(3)+' '+(-1.25*impression).toFixed(3)+')');
+  highlight.style.opacity=String(.42*impression);
+  deboss.style.opacity=String(.36*impression);
   stage.dataset.xiwangHero=heroOn.toFixed(3);
-  stage.dataset.xiwangExtrusion=extrusion.toFixed(3);
-  stage.dataset.xiwangStarClear=starSafe.toFixed(3);
-  stage.dataset.xiwangStarNear=String(nearStarMarks);
-  stage.dataset.xiwangStarNearMax=maxNearStarOpacity.toFixed(3);
+  stage.dataset.xiwangImpression=impression.toFixed(3);
+  stage.dataset.xiwangPlate='official-svg-ink';
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
-   const dawnRise=reduce?(progress>=.22?1:0):ease((progress-.02)/.21);
+   const dawnRise=reduce?1:ease((progress-.02)/.21);
    const starRise=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
-   // Retired: radial hole punched over the ink. Actual nearby stamp geometry
-   // now retreats while the hero physically moves to the lower-left margin.
-   // Crest and temple-stone are ONE object with one motion authority.
+
+   // Protected cover geometry and light stay unchanged.
    city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
    city.style.opacity=String(reduce?dawnRise:ease((progress-.03)/.12));
    coverEnglish.style.opacity=String(reduce?dawnRise:ease((progress-.62)/.105));
    // The fixed masthead and issue number read as ONE editorial signature.
    // Their impression is complete by the cover+star hold; the prior late
    // fade left the entire cover identity almost invisible at that key frame.
-   const signature=reduce?(progress>=.81?1:0):ease((progress-.73)/.083);
+   const signature=reduce?1:ease((progress-.73)/.083);
    masthead.style.opacity=String(signature);
    coverVol.style.opacity=String(signature);
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
    star.style.opacity=String(starRise);
    star.style.transform='translate(-50%,'+(45-95*starRise).toFixed(2)+'%)';
-   const printLight=reduce?(progress>=.78?1:0):ease((progress-.645)/.15);
+   const printLight=reduce?1:ease((progress-.645)/.15);
    foldedLight.style.opacity=String(printLight);
    foldedLight.style.clipPath='ellipse('+(11+96*printLight).toFixed(2)+'% '+(13+95*printLight).toFixed(2)+'% at 50% 68%)';
 
   // Only AFTER the complete "cover + 西望" hold does the canonical
   // temple-stone Contents replace the colorful lettering.
-  const stone=ease((progress-.865)/.125);
+  const stone=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
    // Place the original v5.3 star within the upper ink-engraved register;
    // the entire lower half remains reserved for real editorial contents.
    const starZone=document.getElementById('dual-contents-star-zone').getBoundingClientRect();
    const starPage=gold.getBoundingClientRect();
    const starTargetCentre=((starZone.top+starZone.bottom)/2-starPage.top)/starPage.height*100;
    const starTargetSize=Math.min(380,contentsW*.45,Math.max(0,starZone.height*.82));
-   star.style.top=lerp(39,starTargetCentre,stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.max(105,Math.min(350,contentsW*.48)),starTargetSize,stone).toFixed(2)+'px';
-  // The same official press plates survive as a quiet relief *beneath* the
-  // readable paper index, never as a gold light effect or replacement copy.
-  const reliefOn=ease((progress-.875)/.105);
-  relief.style.opacity=String(reliefOn*.18);
-  residualBands.forEach(({source,retained})=>{
-   retained.setAttribute('transform',source.getAttribute('transform')||'translate(0 0)');
-   retained.style.opacity=source.style.opacity||'1';
-  });
+   star.style.top=lerp(36,starTargetCentre,stone).toFixed(2)+'%';
+   star.style.width=lerp(Math.min(310,contentsW*.39),starTargetSize,stone).toFixed(2)+'px';
+   // No ghosted title wallpaper beneath the original Contents.
+   relief.style.opacity='0';
   contents.style.opacity=String(stone);
   contents.style.visibility=stone>0?'visible':'hidden';
   contents.style.pointerEvents=stone>.99?'auto':'none';
@@ -426,7 +332,7 @@
    progress<.72?'morning-star-rise':progress<.865?'cover-and-star':
    progress<.995?'stone-contents-reveal':'contents-final';
   stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
-  stage.dataset.xiwangLines=String(bands.filter(({band})=>Number(band.style.opacity)>.30).length);
+  stage.dataset.xiwangLines='0';
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
  }
@@ -474,9 +380,7 @@
  });
  addEventListener('resize',render,{passive:true});
  const qs=new URLSearchParams(location.search);
- if(reduce){
-  const originalStar=star.querySelector('iframe');if(originalStar)originalStar.src='/experiments/morning-star-3d-lab.html?asset=1&autoplay=0';
- }
+
  setOrientation(qs.get('side')==='cover-left'?'cover-left':'cover-right');
  setProgress(Number(qs.get('p')??100)/100);
 })();
