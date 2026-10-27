@@ -76,7 +76,7 @@ static/experiments/p2-double-square-video-lab.html,
 static/css/p2-vol00-editorial.css, tests/p2-vol00-preview.cjs,
 and .dev/egm/p2-4fa21ce51444/westside-egm-integration.md,
 .dev/egm/p2-4fa21ce51444/egm-source-authority.txt.
-Important: EGM's source pin belongs to the separate Design OS integration
+Important: The EGM source pin belongs to the separate Design OS integration
 branch. The runner has verified that exact pinned gitlink by git ls-tree.
 It is correct that the P2 art branch does not contain a duplicate EGM
 submodule. Treat the companion branch as the source authority, not as a
