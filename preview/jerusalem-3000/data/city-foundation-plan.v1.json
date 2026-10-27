@@ -558,7 +558,7 @@
     "phaseCoverage": 18,
     "housingGrammar": "terrain-courtyard-mass-v1",
     "sourceHouseIdsPreserved": true,
-    "laterRoofModules": "parent-block-visual-expression-not-historical-households",
+    "laterRoofModules": "boundary-aligned-adaptive-display-not-historical-households",
     "commonComparisonWindow": {
       "minX": -2000,
       "maxX": 1100,
@@ -573,7 +573,7 @@
   "structureRecovery": {
     "status": "in-progress-not-accepted",
     "reason": "Uniform roof modules do not establish historical city structure",
-    "completedPackage": "phase-scoped schematic sacred cores with housing and visible-road exclusion",
+    "completedPackage": "boundary-aligned-adaptive-visual-masses-and-preserved-registered-parcels",
     "sacredCoreCoverage": {
       "aelia": 0,
       "byzantine": 1,
@@ -585,16 +585,17 @@
       "modern": 2
     },
     "coordinatesAndDimensions": "authored-not-surveyed",
-    "housingGridReplacementComplete": false,
+    "housingGridReplacementComplete": true,
     "wallsAndGatesComplete": false,
     "historicalFoundationAccepted": false,
-    "nextPriority": "register-source-supported-wall-gate-outlines-and-review-core-main-street-relationships-before-residential-detail"
+    "nextPriority": "whole-timeline-boundary-entrance-and-main-route-baseline",
+    "housingGridReplacementScope": "fixed-world-grid-removed-from-eight-later-renderers; historical-parcel-reconstruction-not-complete"
   },
   "landscapeContinuityRecovery": {
     "terrainPresentation": "normal-based-hillshade-default-contours-unchanged-DEM",
     "playbackCamera": "shared-landscape-frame",
     "historicalObjectContinuityComplete": false,
-    "perEraFabricRebuildStillPresent": true,
+    "perEraFabricRebuildStillPresent": false,
     "nextPriority": "shared-places-road-boundary-core-transformations-before-new-single-buildings",
     "firstTransition": "roman-destruction->aelia",
     "pairedAcceptance": "ottoman->outside-walls->modern"
@@ -647,5 +648,41 @@
     "sourceSubsetSha256": "8ac1a22604da5460ee8ea91da431038ac21da27d3730da083fb485b7e6a17fb4",
     "geometryVerified": false,
     "historicalContinuityAccepted": false
+  },
+  "balancedProgression": {
+    "policy": "breadth-before-depth-across-the-whole-timeline",
+    "reviewPhaseIds": [
+      "chalcolithic-early-bronze",
+      "middle-bronze",
+      "late-bronze-iron1",
+      "david-solomon",
+      "late-first-temple",
+      "babylonian-destruction",
+      "persian-nehemiah",
+      "hellenistic-hasmonean",
+      "herodian-jesus",
+      "roman-destruction",
+      "aelia",
+      "byzantine",
+      "early-islamic",
+      "crusader",
+      "ayyubid-mamluk",
+      "ottoman",
+      "outside-walls",
+      "modern"
+    ],
+    "reviewAdjacentPairs": 17,
+    "currentPackage": "boundary-aligned-block-masses-for-eight-lagging-phases",
+    "existingParcelPhasesPreserved": 10,
+    "perPackageRegression": "all18-forward-reverse-portrait-evidence-playback",
+    "equalProgressMeans": "same-foundation-review-standard-not-equal-area-density-or-identical-buildings",
+    "nextWaves": [
+      "whole-timeline-boundaries-entrances-and-main-routes",
+      "whole-timeline-sacred-civic-core-and-occupation-relationships",
+      "all17-adjacent-transformations",
+      "foundation-review-before-any-fine-architecture"
+    ],
+    "fineDetail": "paused",
+    "historicalFoundationAccepted": false
   }
 }
