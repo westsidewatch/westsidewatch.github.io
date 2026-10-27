@@ -74,6 +74,9 @@ const data=()=> {
   title:box(document.querySelector('.dual-cover__editorial')),
   mast:box(document.querySelector('.dual-cover__mast')),
   mastOpacity:+getComputedStyle(document.querySelector('.dual-cover__mast')).opacity,
+  volumeOpacity:+getComputedStyle(document.querySelector('.dual-cover__vol')).opacity,
+  volumeFontSize:parseFloat(getComputedStyle(document.querySelector('.dual-cover__vol')).fontSize),
+  volumeInk:getComputedStyle(document.querySelector('.dual-cover__vol')).color,
   secondaryWeights:[...new Set(secondary.map(el=>getComputedStyle(el).fontWeight))],
   majorWeight:getComputedStyle(document.querySelector('.dual-contents__head h2')).fontWeight,
   entries:document.querySelectorAll('.dual-movement li').length,
@@ -119,19 +122,21 @@ const data=()=> {
     if(p===44&&!(m.lines>=6&&m.starOpacity<.05&&m.typeOpacity>.8))faults.push('西望 must precede Morning Star');
     if(p===54&&!(m.starOpacity>.1&&m.lines>=6))faults.push('Morning Star entrance missing');
     if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.45&&m.typeOpacity<.65))faults.push('real star must take focus while official print remains visible');
-    if(p===82&&!(m.lightOpacity>.94&&m.mastOpacity>.1&&m.headings.join('|')==='CITY|OF|LIGHT'))
-      faults.push('gate light / masthead / title hierarchy missing');
+    if(p===82&&!(m.lightOpacity>.94&&m.mastOpacity>.98&&m.volumeOpacity>.98&&m.headings.join('|')==='CITY|OF|LIGHT'))
+      faults.push('cover hold must carry a fully legible masthead and issue number with the gate light');
     if(p===93&&!(m.stoneOpacity>.1&&m.stoneOpacity<.99))faults.push('Contents must hand off through a measured state');
     if(p===100){
      if(width>1100){
       const [watch,walk,witness,worship]=m.movements;
-      if(!(watch.left<walk.left&&walk.left<witness.left&&Math.abs(witness.left-worship.left)<2&&witness.bottom<=worship.top+2))
-       faults.push('desktop Contents must form two long reading columns and one stacked editorial column');
+      if(!(watch.left<walk.left&&walk.left<witness.left&&Math.abs(witness.left-worship.left)<2&&worship.top-witness.bottom>=6&&worship.top-witness.bottom<=20))
+       faults.push('desktop Contents needs two long columns and a visibly separated stacked third column');
      }
      if(m.starRenderer==='approved-morning-star-svg'&&!m.approvedStarVisible)faults.push('approved vector Morning Star fallback missing without WebGL');
      if(!approx(m.cover.width/m.cover.height,5/8,.01)||!approx(m.page.width/m.page.height,1,.01))faults.push('5:8 cover and 1:1 Contents');
      if(m.entries!==12||m.ariaHead!=='Contents.')faults.push('Contents canon');
      if(m.majorWeight!=='400'||m.secondaryWeights.some(x=>+x>200))faults.push('Contents secondary must be 200');
+     if(m.volumeFontSize<10||m.volumeInk!=='rgb(255, 248, 233)'||m.volumeOpacity<.99)
+      faults.push('Vol.00 metadata must be readable over the now-dark stone cast shadow');
      if(!m.insideContents||m.stoneOpacity<.999||m.typeOpacity>.02)faults.push('old type must yield to stone Contents');
      if(m.star.top<m.zone.top-4||m.star.bottom>m.zone.bottom+4)faults.push('star intrudes into reading zone');
      if(m.last.bottom>m.index.bottom+1&&!m.canKeyboardScroll)faults.push('last article not keyboard-reachable');

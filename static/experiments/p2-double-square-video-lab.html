@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261026d">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261026e">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -45,7 +45,7 @@
          <stop offset="1" stop-color="#e8a43c"/>
         </linearGradient>
         <linearGradient id="ws-shadow-print" x1="0" y1="0" x2="1" y2=".2">
-         <stop offset="0" stop-color="#65503b"/>
+         <stop offset="0" stop-color="#59422f"/>
          <stop offset="1" stop-color="#94704c"/>
         </linearGradient>
         <pattern id="ws-gold-overprint" width="8" height="8" patternUnits="userSpaceOnUse">
@@ -66,7 +66,7 @@
         <path data-role="gate-arch-relief" d="M363 699 V419 Q363 349 500 272 Q637 349 637 419 V699 H621 V421 Q621 372 500 296 Q379 372 379 421 V699 Z" fill="#715339" opacity=".25"/>
         <rect data-role="gate-inner-light" x="375" y="291" width="250" height="410" clip-path="url(#ws-gate-aperture)" fill="url(#ws-gate-illumination)"/>
         <path data-role="gate-jamb-shadow" d="M382 418 V699 H412 V427 Q448 350 500 301 Q412 329 382 418 Z" fill="#66503b" opacity=".42"/>
-        <path data-role="stone-cast-print" d="M381 699 H421 L312 920 L462 1000 H0 V882 L265 781 Z" fill="url(#ws-shadow-print)" opacity=".67"/>
+        <path data-role="stone-cast-print" d="M381 699 H421 L312 920 L462 1000 H0 V882 L265 781 Z" fill="url(#ws-shadow-print)" opacity=".73"/>
         <g clip-path="url(#ws-light-floor)">
          <path data-role="projected-light" d="M421 699 H580 L1000 825 V1000 H462 L312 920 Z" fill="url(#ws-architectural-light)"/>
          <path data-role="printed-light-texture" d="M421 699 H580 L1000 825 V1000 H462 L312 920 Z" fill="url(#ws-gold-overprint)" opacity=".5"/>
@@ -336,11 +336,12 @@
    city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
    city.style.opacity=String(reduce?dawnRise:ease((progress-.03)/.12));
    coverEnglish.style.opacity=String(reduce?dawnRise:ease((progress-.62)/.105));
-   // The masthead belongs to the contracted 5:8 issue, not the oversized
-   // half-screen transition plane. Reveal it as its fixed frame settles.
-   masthead.style.opacity=String(reduce?(progress>=.86?1:0):ease((progress-.795)/.068));
-   // The issue number enters with the navy masthead. No cover teasers.
-   coverVol.style.opacity=String(blue);
+   // The fixed masthead and issue number read as ONE editorial signature.
+   // Their impression is complete by the cover+star hold; the prior late
+   // fade left the entire cover identity almost invisible at that key frame.
+   const signature=reduce?(progress>=.81?1:0):ease((progress-.73)/.083);
+   masthead.style.opacity=String(signature);
+   coverVol.style.opacity=String(signature);
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
    star.style.opacity=String(starRise);
    star.style.transform='translate(-50%,'+(45-95*starRise).toFixed(2)+'%)';
