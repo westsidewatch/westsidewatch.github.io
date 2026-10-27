@@ -79,7 +79,15 @@ const data=()=> {
  const page=document.querySelector('#dual-contents');
  const index=document.querySelector('.dual-contents__index');
  const star=document.querySelector('#dual-star');
- const heroRect=box(face),starRect=box(star),pageRect=box(page);
+ // An SVG <use> contains an invisible uncropped 432px source. Only
+ // the transformed 216×454 official two-glyph viewport is visible.
+ const mx=hero.getScreenCTM();
+ const corners=[[0,0],[216,0],[216,454],[0,454]]
+  .map(([x,y])=>new DOMPoint(x,y).matrixTransform(mx));
+ const xs=corners.map(p=>p.x),ys=corners.map(p=>p.y);
+ const left=Math.min(...xs),right=Math.max(...xs),top=Math.min(...ys),bottom=Math.max(...ys);
+ const heroRect={x:left,y:top,left,top,right,bottom,width:right-left,height:bottom-top};
+ const starRect=box(star),pageRect=box(page);
  const zone=document.querySelector('.dual-contents__star-zone');
  const city=document.querySelector('#dual-cover-city');
  const lightSvg=document.querySelector('#dual-cover-folded-light');
@@ -96,8 +104,8 @@ const data=()=> {
  return {
   phase:stage.dataset.phase,impression:+stage.dataset.xiwangImpression,inkPlate:stage.dataset.xiwangPlate,
   titleOrientation:stage.dataset.xiwangTitleOrientation,
-  dorePlateId:stage.dataset.dorePlateId,
-  dorePlateChanges:+stage.dataset.dorePlateChanges,
+  dorePlateId:artPlate.dataset.plateId,
+  dorePlateChanges:+artPlate.dataset.plateChanges,
   galleryIds:window.P2DoreGallery?.items,
   galleryCycle:window.P2DoreGallery?.state?.cycleMs,
   doreVisible:+getComputedStyle(artPlate).opacity,
@@ -208,6 +216,8 @@ const data=()=> {
      const switched=await page.evaluate(()=>window.P2DoreGallery.next());
      if(!switched)faults.push('second authentic city/wall engraving did not load');
      else {
+      // Prove a visibly completed crossfade, not only a network response.
+      await page.waitForTimeout(1150);
       const second=await page.evaluate(data);
       if(first.id===+second.doreCurrentId||second.dorePlateChanges<1||!second.doreReady)
        faults.push('gallery must change the actual source image and maintain a real loaded image');

@@ -269,6 +269,9 @@
     if(!first)plateChanges++;
     artPlate.dataset.plateId=String(item.id);
     artPlate.dataset.plateChanges=String(plateChanges);
+    // Synchronize the independent 15s gallery with inspection metrics.
+    stage.dataset.dorePlateId=String(item.id);
+    stage.dataset.dorePlateChanges=String(plateChanges);
     artPlate.dataset.galleryError='';
     showCredit(item);beginPlateScan(img);
     preloadPlate((plateIndex+1)%cityPlates.length);
