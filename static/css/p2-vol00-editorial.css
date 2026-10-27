@@ -190,8 +190,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  .dual-movement:nth-child(2n+1){padding-left:0;border-left:0}
  .dual-movement h3{font-size:clamp(18px,4.8cqi,26px);margin-bottom:7px;padding-top:6px}
  .dual-movement li{font-size:clamp(12px,3.35cqi,16px)}
- .dual-movement ol{justify-content:flex-start;gap:6px}
+ .dual-movement ol{flex:0 0 auto;min-height:auto;justify-content:flex-start;gap:6px}
  .dual-movement:nth-child(n+3) ol{gap:9px}
+ .dual-movement:nth-child(3) .dual-movement__interlude{margin-top:clamp(8px,1.6cqi,12px)}
  .dual-work{font-size:clamp(10px,2.7cqi,13px)}
  .dual-movement__interlude{margin-top:8px;padding-top:6px}
  .dual-continuum__face{font-size:clamp(8px,2.7cqi,12px);padding:6px 10px}
