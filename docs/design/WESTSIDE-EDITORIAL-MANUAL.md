@@ -124,3 +124,26 @@ These files remain archived intact; they do not operate as independent OS author
 - [Camera and Attention Grammar](../../dore-design/DORE-EXPLORATION-CAMERA-ATTENTION-GRAMMAR-2026-09-09.md)
 
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
+
+## 9. Elephant–Goldfish external review — Design OS operation
+
+The [EGM integration protocol](WESTSIDE-EGM-INTEGRATION.md) is part of this
+manual's *review and judgment* layer. For a consequential magazine composition,
+**Elephant** gathers the editor-approved references, actual screenshot, assets,
+motion constraints and Design OS tokens into a self-contained spec. **Goldfish**
+must be one or more genuine fresh isolated subagents reviewing only that spec
+and cited source, never another role-play in the same chat.
+
+Required adversarial visual questions: Is this really one coherent publication
+spread rather than two posters? Does the left-page hero obey the approved
+right-page cover's hierarchy, structure, scale and negative space? Do reference
+and output match at actual viewport sizes? Are material, typography, star and
+light optically aligned? Are any lines intersecting major text? Does the motion
+form a purposeful editorial sequence? Are approved original assets preserved?
+
+A Goldfish verdict is about the **specification's quality and completeness**;
+it is not an image-similarity oracle or independent art acceptance. The human
+editor must still approve genuine viewport screenshots and moving states.
+Where native fresh-context subagents are unavailable, record **EGM REVIEW NOT
+RUN** and do not substitute a simulated "independent reviewer". Do not add a
+new type/color system, CSS import, independent CI workflow or visual standard.
