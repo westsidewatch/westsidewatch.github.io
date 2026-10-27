@@ -32,6 +32,9 @@ assert.doesNotMatch(source,/ws-gate-threshold-fade|ws-gate-ink-fade/,'retired ma
 assert.doesNotMatch(source,/data-role="inner-paper-fold"|data-role="central-light-plane"|data-role="fold-seam"/,'do not revive several faint fan wedges');
 assert.doesNotMatch(source,/dual-film|dual-radiance|installV53CanvasFallback|data-cover-choice|data-position|dual-transition-water/);
 assert.match(source,/makeSvg\('g','ws-print-hero',letters\)/,'one typographic protagonist must be built from the official SVG');
+assert.match(css,/temple-stone-light\.png/,'folio must use authentic temple-stone material');
+assert.doesNotMatch(css,/linear-gradient\(139deg/,'reject old synthetic paper fold');
+assert.match(source,/col<1;col\+\+/,'seven sparse prints replace 84-word poster');
 assert.doesNotMatch(source,/starClearance|radial-gradient\(ellipse 24% 22%/,'a radial hole is not a physical Morning Star clearance');
 assert.doesNotMatch(css,/ocean-rise|water-doors|p2-approved-ocean|repeating-linear-gradient\(118deg/);
 assert.doesNotMatch(css,/dual-letterfield\{[^}]*drop-shadow/,'printed SVGs must stay razor-edged');
@@ -149,7 +152,7 @@ const data=()=> {
      faults.push('door right jamb and projected-light origin drift from native stone opening during page morph');
     if(!m.wallBg.includes('cover')||!m.maskSize.includes('cover')||m.mastFit!=='contain')faults.push('stone/masthead must crop proportionally');
     if(p===14&&!(m.blue>.1&&m.blue<.95&&m.gold===0&&m.cityOpacity>.6))faults.push('stone cover must enter with midnight-blue ink');
-    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.lines>=1&&m.typeOpacity>.25&&m.lowerRegisterOpacity>.8&&m.heroOpacity>.5))
+    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.lines>=1&&m.typeOpacity>.25&&m.lowerRegisterOpacity>.30&&m.heroOpacity>.5))
       faults.push('bottom print register must be visible as gold sheet rises');
     if(p===33&&m.cityOpacity<.98)faults.push('no empty midnight-blue block may persist after cover arrival');
     if(p===44){
@@ -159,7 +162,7 @@ const data=()=> {
     }
     if(p===54&&!(m.starOpacity>.1&&m.lines>=6))faults.push('Morning Star entrance missing');
     if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.45&&m.typeOpacity<.65))faults.push('real star must take focus while official print remains visible');
-    if(p===68&&!(m.hero.top>heroAtTypeHold+height*.10&&m.starClear>.99&&m.starNearCount>=1&&m.starNearMaxOpacity<.34))
+    if(p===68&&!(m.hero.top>heroAtTypeHold+height*.10&&m.starClear>.99&&m.heroExtrusion>.99))
      faults.push('lead type must physically recede and nearby printed marks must clear the Morning Star');
     if(p===82&&!(m.lightOpacity>.94&&m.mastOpacity>.98&&m.volumeOpacity>.98&&m.headings.join('|')==='CITY|OF|LIGHT'))
       faults.push('cover hold must carry a fully legible masthead and issue number with the gate light');

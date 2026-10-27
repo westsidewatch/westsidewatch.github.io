@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027a">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261027b">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -179,8 +179,8 @@
   'var(--ws-daylight-mauve,oklch(67% .075 330))'];
 
  // Seven original Design OS inks, one typographic protagonist. The approved
- // horizontal 西望 SVG remains the ONLY stencil for all 84 supporting marks
- // and for the solid, seven-colour laminated lead-type master.
+ // horizontal 西望 SVG remains the ONLY stencil for seven quiet registration stamps
+ // and for the solid, stone-laminated lead-type master.
  const svgNS='http://www.w3.org/2000/svg';
  const makeSvg=(tag,cls,parent)=>{
   const el=document.createElementNS(svgNS,tag);
@@ -193,19 +193,19 @@
   const band=makeSvg('g','ws-print-band',letters);
   band.dataset.register=String(register+1);
   const marks=[];
-  for(let subrow=0;subrow<2;subrow++)for(let col=0;col<6;col++){
+  for(let subrow=0;subrow<1;subrow++)for(let col=0;col<1;col++){
    const mark=makeSvg('g','ws-print-mark',band);
    mark.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
    mark.dataset.register=String(register+1);
    for(let depth=3;depth>=0;depth--){
     const face=makeSvg('use',depth?'ws-print-depth':'ws-print-face',mark);
     face.setAttribute('href','#ws-xiwang-original');
-    face.setAttribute('transform','translate('+(depth*4.1)+' '+(depth*2.85)+')');
+    face.setAttribute('transform','translate('+(depth*1.8)+' '+(depth*1.2)+')');
     // Small companion stamps are ink, not another 3D hero: no disconnected
     // oversized silhouettes behind every single register.
-    const accent=(col===2&&subrow===0)||(col===4&&register%2===0);
-    face.style.color=depth===0?(accent?palette[register]:'#263d50'):palette[register];
-    face.style.opacity=depth===0?'1':'.85';
+    const accent=false;
+    face.style.color=depth===0?'#263d50':palette[register];
+    face.style.opacity=depth===0?'.68':'.19';
    }
    marks.push(mark);allMarks.push(mark);
   }
@@ -217,16 +217,17 @@
  const hero=makeSvg('g','ws-print-hero',letters);
  hero.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
  const heroSides=[];
+ const stoneTones=['#ddd0b9','#d8c5a1','#c5aa80','#ae8c61','#8e7051','#71604e','#48505a'];
  for(let depth=21;depth>=1;depth--){
   const side=makeSvg('use','ws-print-hero__side',hero);
   side.setAttribute('href','#ws-xiwang-original');
-  side.style.color=palette[Math.floor((21-depth)/3)];
+  side.style.color=stoneTones[Math.floor((21-depth)/3)];
   side.style.opacity='.98';
   heroSides.push({side,depth});
  }
  const heroFace=makeSvg('use','ws-print-hero__face',hero);
  heroFace.setAttribute('href','#ws-xiwang-original');
- heroFace.style.color='#142a3b';
+ heroFace.style.color='#20384b';
  // Transfer only the existing lower three press registers, not a new motif.
  const residualBands=bands.slice(4).map(({band,marks})=>{
   const retained=makeSvg('g','ws-relief-band',relief);
@@ -246,19 +247,16 @@
   letters.setAttribute('preserveAspectRatio','none');
   relief.setAttribute('viewBox',letters.getAttribute('viewBox'));
   relief.setAttribute('preserveAspectRatio','none');
-  // Leading diagonals rise from left to right; the broad paper interval
-  // allows the master type to be read as a title, not wallpaper.
-  const step=w/5.42,scale=step/432;
-  for(let register=0;register<7;register++)for(let n=0;n<12;n++){
-   const row=register*2+Math.floor(n/6),col=n%6;
-   const x=-w*.17+col*w*.224-(row%2)*w*.088+(register-3)*w*.004;
-   const y=-h*.055+row*h*.083-col*h*.025;
-   const size=scale*(.94+((row+col)%3)*.036);
-   const mark=bands[register].marks[n];
+  // Seven sparse proof marks below the architectural horizon. The white
+  // stone field around the large wordmark is intentional editorial space.
+  const size=w/432*.115;
+  for(let register=0;register<7;register++){
+   const x=w*(.07+register*.125),y=h*(.785-register*.008);
+   const mark=bands[register].marks[0];
    mark._printSlot={x,y,size,cx:x+216*size,cy:y+109*size};
    const printed='translate('+x.toFixed(2)+' '+y.toFixed(2)+') scale('+size.toFixed(5)+')';
    mark.setAttribute('transform',printed);
-   if(register>=4)residualBands[register-4].clones[n].setAttribute('transform',printed);
+   if(register>=4)residualBands[register-4].clones[0].setAttribute('transform',printed);
   }
  };
  let progress=1,coverLeft=false;
@@ -338,14 +336,14 @@
   layoutPrint(contentsW,contentsH);
   const heroOn=reduce?(progress>=.35?1:0):ease((progress-.265)/.105);
   const heroMove=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
-  const heroScale=(contentsW/432)*lerp(.68,.57,heroMove);
-  const heroX=lerp(contentsW*.115,contentsW*.035,heroMove);
-  const heroY=lerp(contentsH*.378,contentsH*.665,heroMove);
+  const heroScale=(contentsW/432)*lerp(.73,.52,heroMove);
+  const heroX=lerp(contentsW*.08,contentsW*.045,heroMove);
+  const heroY=lerp(contentsH*.325,contentsH*.63,heroMove);
   hero.setAttribute('transform','translate('+heroX.toFixed(2)+' '+heroY.toFixed(2)+') scale('+heroScale.toFixed(5)+')');
   hero.style.opacity=String(heroOn*(1-.20*heroMove));
   const extrusion=reduce?(heroOn>0?1:0):ease((progress-.28)/.12);
   heroSides.forEach(({side,depth})=>{
-   side.setAttribute('transform','translate('+(depth*2.45*extrusion).toFixed(3)+' '+(depth*1.75*extrusion).toFixed(3)+')');
+   side.setAttribute('transform','translate('+(depth*.67*extrusion).toFixed(3)+' '+(depth*.46*extrusion).toFixed(3)+')');
    side.style.opacity=String(.98*extrusion);
   });
   bands.forEach(({band},register)=>{
@@ -353,8 +351,8 @@
    // print first. All lines then travel along the same slanted print vector.
    const revealOrder=6-register;
    const on=reduce?(progress>=.44?1:0):ease((progress-(.24+revealOrder*.023))/.055);
-   band.style.opacity=String(on*(register===3?1:.94));
-   band.setAttribute('transform','translate('+(-(1-on)*contentsW*.11).toFixed(2)+' '+((1-on)*contentsH*.13).toFixed(2)+')');
+   band.style.opacity=String(on*.38);
+   band.setAttribute('transform','translate(0 '+((1-on)*contentsH*.026).toFixed(2)+')');
   });
   const starSafe=reduce?(progress>=.58?1:0):ease((progress-.455)/.195);
   let nearStarMarks=0,maxNearStarOpacity=0;
@@ -413,7 +411,7 @@
   // The same official press plates survive as a quiet relief *beneath* the
   // readable paper index, never as a gold light effect or replacement copy.
   const reliefOn=ease((progress-.875)/.105);
-  relief.style.opacity=String(reliefOn*.24);
+  relief.style.opacity=String(reliefOn*.18);
   residualBands.forEach(({source,retained})=>{
    retained.setAttribute('transform',source.getAttribute('transform')||'translate(0 0)');
    retained.style.opacity=source.style.opacity||'1';
@@ -428,7 +426,7 @@
    progress<.72?'morning-star-rise':progress<.865?'cover-and-star':
    progress<.995?'stone-contents-reveal':'contents-final';
   stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
-  stage.dataset.xiwangLines=String(bands.filter(({band})=>Number(band.style.opacity)>.85).length);
+  stage.dataset.xiwangLines=String(bands.filter(({band})=>Number(band.style.opacity)>.30).length);
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
  }
