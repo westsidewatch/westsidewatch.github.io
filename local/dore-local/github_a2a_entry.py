@@ -73,6 +73,30 @@ def execute_canonical_mail(args):
          'receipt_sha256':receipt.get('receipt_sha256'),'replayed':bool(result.get('replayed')),
          'commands':[{'index':x.get('index'),'returncode':x.get('returncode'),'stdout_tail':str(x.get('stdout') or '')[-3000:],'stderr_tail':str(x.get('stderr') or '')[-1500:]} for x in rows]}
 
+def inspect_canonical_mail(args):
+ # Read-only diagnostics for one known, immutable coordination message.
+ mid=str(args.get('message_id') or '').strip()
+ if not re.fullmatch(r'[A-Za-z0-9_.-]{1,120}',mid):raise ValueError('invalid_coordination_message_id')
+ path=HERE.parents[1]/'coordination-inbox'/f'{mid}.json'
+ if not path.is_file():raise FileNotFoundError('canonical_coordination_message_not_found:'+mid)
+ from a2a_execution_plane import status as execution_status
+ from pathlib import Path
+ import shutil
+ proof=Path.home()/'.dore'/'egm-p2-review-a0747bba9580'/'.dev'/'egm'/'p2-4fa21ce51444'
+ def tail(path,limit=1800):
+  try:return path.read_text(encoding='utf-8',errors='replace')[-limit:] if path.is_file() else None
+  except OSError as exc:return type(exc).__name__
+ p=execution_status(mid)
+ task=p.get('task') or {}
+ return {'ok':True,'status':'inspected','message_id':mid,
+         'execution':{'status':task.get('status'),'attempts':task.get('attempts'),'completion_evidence':p.get('completion_evidence'),'failure':task.get('failure')},
+         'runner':{'codex_path':shutil.which('codex'),'proof_present':proof.is_dir(),
+                   'files':[x.name for x in proof.iterdir()] if proof.is_dir() else [],
+                   'exit_code':tail(proof/'codex-exitcode.txt',120),
+                   'plugin_list':tail(proof/'plugin-list.txt',1600),
+                   'stderr_tail':tail(proof/'codex-stderr.log',2000)},
+         'source_path':'coordination-inbox/'+mid+'.json'}
+
 def post_issue_comment(payload):
  repo=os.environ.get('GITHUB_REPOSITORY','');number=(os.environ.get('DORE_REPLY_ISSUE_NUMBER') or '').strip();token=os.environ.get('GITHUB_TOKEN','')
  if not (repo and number and token):return None
@@ -86,14 +110,18 @@ def post_issue_comment(payload):
 def main():
  try:
   request_id,capability,args=parse_command();timeout=CAPABILITY_TIMEOUTS.get(capability,360.0 if capability in LONG_CAPABILITIES else 15.0)
-  if capability=='coordination.mail-execute':
+  if capability in {'coordination.mail-execute','coordination.mail-status'}:
    if not os.environ.get('DORE_REPLY_ISSUE_NUMBER'):raise PermissionError('owner_issue_required_for_canonical_mail')
-   payload=execute_canonical_mail(args)
+   payload=execute_canonical_mail(args) if capability=='coordination.mail-execute' else inspect_canonical_mail(args)
    result={'ok':bool(payload.get('ok')),'protocol':PROTOCOL,'request_id':request_id,'capability':capability,'execution':payload}
   else:
    rpc=call('dore.call',{'capability':capability,'args':args,'request_id':request_id,'caller_product':'github-a2a','transport':'github'},timeout=timeout)
    semantic=rpc.get('result') if isinstance(rpc,dict) else None
    result={'ok':bool(isinstance(semantic,dict) and semantic.get('ok')),'protocol':PROTOCOL,'request_id':request_id,'capability':capability,'rpc':rpc}
- except Exception as exc:result=fail(f'{type(exc).__name__}:{exc}')
+ except Exception as exc:
+  result=fail(f'{type(exc).__name__}:{exc}')
+  detail=getattr(exc,'result',None)
+  if isinstance(detail,dict):
+   result['task_detail']={k:(str(v)[-3500:] if k in {'failed_stderr','failed_stdout','error'} else v) for k,v in detail.items() if k in {'failed_index','failed_returncode','failed_stderr','failed_stdout','error','code'}}
  print(json.dumps(result,ensure_ascii=False,indent=2));post_issue_comment(result);return 0 if result.get('ok') else 1
 if __name__=='__main__':raise SystemExit(main())
