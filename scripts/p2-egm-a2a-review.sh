@@ -90,7 +90,7 @@ TASK
 )"
 echo "A2A EGM: starting official native isolated P2 Goldfish review at $EXPECTED_SHA"
 set +e
-codex exec -C "$REVIEW_ROOT" --sandbox workspace-write --approve-for-me --skip-git-repo-check --json \
+codex exec -C "$REVIEW_ROOT" --approve-for-me --skip-git-repo-check --json \
   --output-last-message "$PROOF/codex-final.md" "$TASK_PROMPT" \
   > "$PROOF/codex-events.jsonl" 2> "$PROOF/codex-stderr.log"
 CODEX_RC=$?
