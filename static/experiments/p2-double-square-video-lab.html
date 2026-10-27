@@ -273,7 +273,7 @@
   layoutPrint(contentsW,contentsH);
   const heroOn=reduce?(progress>=.31?1:0):ease((progress-.265)/.105);
   const heroMove=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
-  const heroScale=(contentsW/432)*lerp(.67,.54,heroMove);
+  const heroScale=Math.min((contentsW/432)*lerp(.67,.54,heroMove),(contentsH/218)*lerp(.41,.29,heroMove));
   const heroX=(contentsW-432*heroScale)/2;
   const heroY=lerp(contentsH*.325,contentsH*.61,heroMove);
   hero.setAttribute('transform','translate('+heroX.toFixed(2)+' '+heroY.toFixed(2)+') scale('+heroScale.toFixed(5)+')');
@@ -319,7 +319,7 @@
    const starTargetCentre=((starZone.top+starZone.bottom)/2-starPage.top)/starPage.height*100;
    const starTargetSize=Math.min(380,contentsW*.45,Math.max(0,starZone.height*.82));
    star.style.top=lerp(36,starTargetCentre,stone).toFixed(2)+'%';
-   star.style.width=lerp(Math.min(310,contentsW*.39),starTargetSize,stone).toFixed(2)+'px';
+   star.style.width=lerp(Math.min(310,contentsW*.39,contentsH*.42),starTargetSize,stone).toFixed(2)+'px';
    // No ghosted title wallpaper beneath the original Contents.
    relief.style.opacity='0';
   contents.style.opacity=String(stone);
