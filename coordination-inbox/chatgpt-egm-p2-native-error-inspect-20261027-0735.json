@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-egm-p2-native-error-inspect-20261027-0735",
+  "subject": "Inspect Codex Goldfish native rc1 after EGM source pin repair",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/p2-vol00-egm-goldfish-20261027",
+  "body": "Read-only inspect local Codex logs and report after rc1, no model rerun or code edits.",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "python3 - <<'PY'\nimport pathlib,json,collections,re\nroot=pathlib.Path.home()/'.dore/egm-p2-review-131f3769711c'\nproof=root/'.dev/egm/p2-4fa21ce51444'\nprint('ROOT',root.exists(),'PROOF',proof.exists())\nreport=root/'docs/design/P2-VOL00-EGM-GOLDFISH-REPORT.md'\nprint('REPORT',report.exists())\nif report.exists():\n s=report.read_text(errors='replace')\n print('REPORT_SIZE',len(s),'REPORT_HEAD',s[:900].replace('\\n',' | '),'REPORT_TAIL',s[-700:].replace('\\n',' | '))\nfor name in ('codex-exitcode.txt','codex-final.md','codex-stderr.log','egm-source-authority.txt'):\n f=proof/name\n if f.exists():\n  t=f.read_text(errors='replace')\n  print('PROOF',name,len(t),t[-1800:].replace('\\n',' | '))\nev=proof/'codex-events.jsonl'\nif ev.exists():\n lines=ev.read_text(errors='replace').splitlines()\n print('EVENT_COUNT',len(lines))\n types=collections.Counter()\n for l in lines:\n  try:\n   o=json.loads(l);types[o.get('type','?')]+=1\n  except:types['invalid-json']+=1\n print('EVENT_TYPES',dict(types))\n for l in lines[-16:]:\n  try:\n   o=json.loads(l)\n   t=o.get('type','?')\n   if t in ('item.completed','item.started','item.updated'):\n    item=o.get('item',{})\n    it=item.get('type','?') if isinstance(item,dict) else '?'\n    out=(item.get('aggregated_output') or item.get('text') or item.get('message') or item.get('command') or '') if isinstance(item,dict) else ''\n    print('EVENT',t,it,str(out)[-400:].replace('\\n',' | '))\n   else:print('EVENT',t,str(o)[-700:].replace('\\n',' | '))\n  except:print('EVENT INVALID')\nPY"
+      ],
+      "cwd": "~",
+      "timeout": 120
+    }
+  ]
+}
