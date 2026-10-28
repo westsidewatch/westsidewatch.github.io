@@ -8,6 +8,7 @@
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
 <link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028k">
+<link rel="stylesheet" href="/css/p2-contents-twelve.css?v=20261028a">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -427,12 +428,16 @@
   // rather than shrinking into a thumbnail above an imported index.
   const stoneProgress=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
   const leadScale=Math.min(contentsW*.61/216,contentsH*.89/454);
-  const folioScale=Math.min(contentsW*.32/216,contentsH*.55/454);
+  // Each of twelve commissioned editorial layouts owns a different spatial
+  // relationship between the original SVG and the typographic contents.
+  const glyph=window.P2ContentsTwelve?.glyph;
+  const folioScale=glyph?Math.min(contentsW*glyph[0]/216,contentsH*glyph[1]/454):
+   Math.min(contentsW*.32/216,contentsH*.55/454);
   const titleScale=lerp(leadScale,folioScale,stoneProgress);
-  const titleX=lerp((contentsW-216*leadScale)*.75,contentsW*.055,stoneProgress);
-  const titleY=lerp((contentsH-454*leadScale)*.5,contentsH*.335,stoneProgress);
+  const titleX=lerp((contentsW-216*leadScale)*.75,contentsW*(glyph?glyph[2]:.055),stoneProgress);
+  const titleY=lerp((contentsH-454*leadScale)*.5,contentsH*(glyph?glyph[3]:.335),stoneProgress);
   hero.setAttribute('transform','translate('+titleX.toFixed(2)+' '+titleY.toFixed(2)+') scale('+titleScale.toFixed(5)+')');
-  hero.style.opacity=String(titleOn);
+  hero.style.opacity=String(titleOn*lerp(1,glyph?glyph[4]:1,stoneProgress));
   stage.dataset.xiwangHero=titleOn.toFixed(3);
   stage.dataset.xiwangImpression=titleOn.toFixed(3);
   stage.dataset.xiwangPlate='official-svg-vertical-dore-city-gallery';
@@ -539,5 +544,6 @@
  setProgress(Number(qs.get('p')??100)/100);
 })();
 </script>
+<script src="/experiments/p2-contents-twelve.js?v=20261028a"></script>
 </body>
 </html>
