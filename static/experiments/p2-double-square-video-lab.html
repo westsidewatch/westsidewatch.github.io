@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028j">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028k">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -85,7 +85,7 @@
      <p class="dual-cover__vol" id="dual-cover-vol" lang="en">VOL.00</p>
     </div>
   </article>
-  <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="多雷原作雕版上浮現西望，晨星升至左上，與正式 Contents 共構同一頁">
+  <section class="dual-tile dual-tile--contents" id="dual-contents" aria-label="西望 Vol.00 開放式版畫目錄：多雷原作連續滾動，晨星與西望字形在前景，十二欄目嵌入編輯網格">
     <figure class="dual-dore-plate" id="dual-dore-plate"
       aria-label="多雷《聖經》插畫：城牆、城門與聖城原作連續圖版">
       <img class="dual-dore-plate__image" id="dual-dore-image-a" alt="" decoding="async" loading="eager">
@@ -108,7 +108,11 @@
    <div class="dual-contents" id="dual-stone-contents" aria-hidden="true" inert>
     <svg id="dual-contents-relief" class="dual-contents__relief" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"></svg>
     <div class="dual-contents__star-zone" id="dual-contents-star-zone" aria-hidden="true"><span class="dual-contents__folio-caption">GUSTAVE DORÉ · CITIES &amp; WALLS / 西望</span></div>
-    <header class="dual-contents__head"><h2 id="dual-contents-title" lang="en">Contents.</h2><span>目錄</span></header>
+    <header class="dual-contents__head">
+     <div class="dual-contents__kicker"><span>WESTSIDE WATCH / EDITORIAL INDEX</span><span>VOL.00 · 2026</span></div>
+     <h2 id="dual-contents-title" lang="en">Contents.</h2>
+     <div class="dual-contents__subline"><span lang="zh-Hant">目錄</span><span lang="en">TWELVE DESKS · FOUR MOVEMENTS</span></div>
+    </header>
     <div class="dual-contents__index" tabindex="0" role="region" aria-label="Vol.00 十二欄目文章目錄，可以向下捲動閱讀完整篇名">
       <section class="dual-movement" aria-label="WATCH"><h3><em>I</em>WATCH</h3><ol>
        <li class="dual-entry"><b>01</b><span class="dual-entry__text"><span class="dual-entry__column">米斯巴<small>Mizpah</small></span><span class="dual-work" lang="zh-Hant">〈守望，一座光明的城〉</span></span></li><li class="dual-entry"><b>02</b><span class="dual-entry__text"><span class="dual-entry__column">伯利恆<small>Bethlehem</small></span></span></li><li class="dual-entry"><b>03</b><span class="dual-entry__text"><span class="dual-entry__column">門<small>The Gate</small></span><span class="dual-work" lang="zh-Hant">〈城門口的人〉</span><span class="dual-work" lang="zh-Hant">〈耶路撒冷：在黑暗中軟弱，在光明中剛強〉</span><span class="dual-work" lang="zh-Hant">〈大希律：這個人會建造〉</span></span></li><li class="dual-entry"><b>04</b><span class="dual-entry__text"><span class="dual-entry__column">迦密<small>Carmel</small></span><span class="dual-work" lang="zh-Hant">〈一萬年的建城禮〉</span></span></li>
@@ -123,7 +127,7 @@
        <li class="dual-entry"><b>11</b><span class="dual-entry__text"><span class="dual-entry__column">何烈山<small>Horeb</small></span><span class="dual-work" lang="zh-Hant">〈房角石：整座城由此對齊〉</span></span></li><li class="dual-entry"><b>12</b><span class="dual-entry__text"><span class="dual-entry__column">瑪拉拿<small>Maranatha</small></span><span class="dual-work" lang="zh-Hant">〈冠冕〉</span></span></li>
       </ol></section>
     </div>
-    <div class="dual-contents__foot"><span lang="en">VOL.00 / INDEX</span></div>
+    <div class="dual-contents__foot"><span lang="en">WATCH · WALK · WITNESS · WORSHIP</span><span lang="en">INDEX / 01—12</span></div>
    </div>
   </section>
 
@@ -419,17 +423,14 @@
   letters.style.visibility=typeEnter>0&&typeLeave<1?'visible':'hidden';
   layoutPrint(contentsW,contentsH);
   const titleOn=reduce?(progress>=.31?1:0):ease((progress-.285)/.12);
-  const contentsArtZone=document.getElementById('dual-contents-star-zone');
-  const artZoneHeight=contentsArtZone.getBoundingClientRect().height;
+  // The editorial lead glyphs anchor the complete moving engraving,
+  // rather than shrinking into a thumbnail above an imported index.
   const stoneProgress=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
   const leadScale=Math.min(contentsW*.61/216,contentsH*.89/454);
-  const folioScale=Math.min(contentsW*.24/216,artZoneHeight*.70/454);
+  const folioScale=Math.min(contentsW*.32/216,contentsH*.55/454);
   const titleScale=lerp(leadScale,folioScale,stoneProgress);
-  const titleWidth=216*titleScale,titleHeight=454*titleScale;
-  const titleX=lerp((contentsW-216*leadScale)*.75,contentsW-titleWidth-contentsW*.055,stoneProgress);
-  const titleY=lerp((contentsH-454*leadScale)*.5,
-   contentsArtZone.getBoundingClientRect().top-gold.getBoundingClientRect().top+(artZoneHeight-titleHeight)*.5,
-   stoneProgress);
+  const titleX=lerp((contentsW-216*leadScale)*.75,contentsW*.055,stoneProgress);
+  const titleY=lerp((contentsH-454*leadScale)*.5,contentsH*.335,stoneProgress);
   hero.setAttribute('transform','translate('+titleX.toFixed(2)+' '+titleY.toFixed(2)+') scale('+titleScale.toFixed(5)+')');
   hero.style.opacity=String(titleOn);
   stage.dataset.xiwangHero=titleOn.toFixed(3);
@@ -459,22 +460,21 @@
    foldedLight.style.opacity=String(printLight);
    foldedLight.style.clipPath='ellipse('+(11+96*printLight).toFixed(2)+'% '+(13+95*printLight).toFixed(2)+'% at 50% 68%)';
 
-  // Only AFTER the complete "cover + 西望" hold does the canonical
-  // temple-stone Contents replace the colorful lettering.
+  // The Doré plate remains moving while the open editorial grid arrives
+  // after the complete cover + 西望 hold.
   const stone=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
    // The protected Morning Star still RISES from the artwork. It lands
    // in the quiet upper-left crop, clear of the giant vertical Xi Wang;
    // only during the Contents handoff does it migrate into the original
    // approved navy star zone. Never pin it permanently or replace its v5.3.
-   const starZone=document.getElementById('dual-contents-star-zone').getBoundingClientRect();
-   const starPage=gold.getBoundingClientRect();
-   const starTargetCentre=((starZone.top+starZone.bottom)/2-starPage.top)/starPage.height*100;
-   const starTargetSize=Math.min(205,contentsW*.19,Math.max(0,starZone.height*.77));
+   // Star stays in the quiet engraved upper-left, clear of the huge type.
+   const starTargetCentre=16.5;
+   const starTargetSize=Math.min(205,contentsW*.19,contentsH*.22);
    const starUpperY=reduce?17:lerp(61,17,ease((progress-.46)/.24));
-   star.style.left=lerp(15,18,stone).toFixed(2)+'%';
+   star.style.left=lerp(15,16,stone).toFixed(2)+'%';
    star.style.top=lerp(starUpperY,starTargetCentre,stone).toFixed(2)+'%';
    star.style.width=lerp(Math.min(205,contentsW*.17,contentsH*.20),starTargetSize,stone).toFixed(2)+'px';
-   // A single folio: Doré and the original vertical masthead remain visible above the index.
+   // A single folio: Doré scrolls behind both the monumental SVG and the index.
    relief.style.opacity='0';
   contents.style.opacity=String(stone);
   contents.style.visibility=stone>0?'visible':'hidden';
