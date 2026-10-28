@@ -97,31 +97,37 @@
    '<div class="p2x-orbit-index">'+groupList("p2x-orbit-chapter",{entryStyle:"tight"})+'</div>',
  "10":()=>'<div class="p2x-cereal-gallery"><div class="p2x-cereal-edition"><span>THE CITY OF LIGHT</span><span>GUSTAVE DORÉ / ORIGINAL PLATES</span></div>'+
    '<span class="p2x-cereal-art-credit">ENGRAVED CITIES & WALLS / 1866</span></div>'+
-   // Star-registered engraving: not a decorative gold slash, and not
-   // 09's diagram. The star at 16% / 16.5% releases a system of hand-
-   // engraved contour arcs across the entire image half. The three lines
-   // frame the restored tall official Xi Wang SVG, and meet near the foot.
-   '<svg class="p2x-cereal-engraving" viewBox="0 0 1000 1000" preserveAspectRatio="none" role="img" aria-label="由晨星發出的完整金色雕版線群，圍繞西望字標延伸至版畫下緣">'+
+   // Editorial cross-page architecture, NOT an imaginary swirl.
+   // The source for this engraving is the protected RIGHT cover's real
+   // Gothic aperture path, #ws-gate-aperture in this same P2 HTML:
+   // M609 759 V431 C609 364 656 318 724 278 C792 318 839 364 839 431 V759
+   // Adapted from 1448x1086 cover coordinates into an offset 1000²
+   // Doré folio plate: x=410+(sourceX-724)*1.35; y=309+(sourceY-278)*1.25.
+   // It is a PRINT GHOST of the same gate, not a second gate illustration.
+   '<svg class="p2x-cereal-engraving" viewBox="0 0 1000 1000" preserveAspectRatio="none" data-gate-source="ws-gate-aperture" role="img" aria-label="呼應右頁真實城門尖拱的極細金色雕版刻線">'+
     '<defs><linearGradient id="p2x-cereal-gold" x1="0" y1="0" x2="1" y2="1">'+
-      '<stop offset="0" stop-color="#e8bb73" stop-opacity=".94"/>'+
-      '<stop offset=".4" stop-color="#d4a058" stop-opacity="1"/>'+
-      '<stop offset=".75" stop-color="#b77e37" stop-opacity=".98"/>'+
-      '<stop offset="1" stop-color="#d2a45e" stop-opacity=".78"/></linearGradient></defs>'+
-    // A long left sweep and bottom embrace. Route starts at star centre.
-    '<path class="p2x-etch-line p2x-etch-line--principal" d="M166 165 C153 260 142 365 162 479 C177 621 204 748 274 852 C298 891 305 948 310 992"/>'+
-    // Long right arc. It is deliberately outside the title's letterforms.
-    '<path class="p2x-etch-line p2x-etch-line--shadow" d="M166 165 C228 206 312 213 438 275 C552 334 581 444 582 564 C585 685 550 843 590 978"/>'+
-    // Fine intermediate echo: distinct from the two framing contours.
-    '<path class="p2x-etch-line p2x-etch-line--upper" d="M182 174 C249 213 315 235 427 305 C532 371 555 468 553 570 C551 672 526 786 559 843"/>'+
-    '<path class="p2x-etch-glimmer" d="M166 165 C153 260 142 365 162 479 C177 621 204 748 274 852 C298 891 305 948 310 992"/>'+
+      '<stop offset="0" stop-color="#efce90" stop-opacity=".88"/>'+
+      '<stop offset=".40" stop-color="#c18e49" stop-opacity=".91"/>'+
+      '<stop offset=".76" stop-color="#a97533" stop-opacity=".83"/>'+
+      '<stop offset="1" stop-color="#d8b16f" stop-opacity=".68"/></linearGradient></defs>'+
+    // A SINGLE restrained connection. The star is the light source;
+    // the geometry following it is the gate ARCH, not random tentacles.
+    '<path class="p2x-portal-guide" d="M166 165 C226 204 315 250 410 309"/>'+
+    // Main contour: SAME BEZIER FORM as the cover's actual pointed gate.
+    '<path class="p2x-etch-line p2x-etch-line--principal" d="M255 910 V500 C255 416 318 359 410 309 C502 359 565 416 565 500 V910"/>'+
+    // Copperplate registration strokes — deliberate parallel offsets.
+    '<path class="p2x-etch-line p2x-etch-line--shadow" d="M245 910 V497 C245 410 311 346 410 291 C509 346 575 410 575 497 V910"/>'+
+    '<path class="p2x-etch-line p2x-etch-line--upper" d="M265 894 V507 C265 426 325 372 410 327 C495 372 555 426 555 507 V894"/>'+
+    '<path class="p2x-etch-glimmer" d="M255 910 V500 C255 416 318 359 410 309 C502 359 565 416 565 500 V910"/>'+
+    // Voussoir-engraving hatches: cut into the two arch shoulders,
+    // then sparse, short upright wall ticks. No expressive brush curves.
     '<g class="p2x-etch-hatching">'+
-      '<path d="M151 330 l-17 7 M148 353 l-16 8 M149 377 l-18 7 M152 402 l-16 8 M158 431 l-15 6 M161 454 l-15 6"/>'+
-      '<path d="M183 631 l-20 6 M192 661 l-19 9 M204 695 l-20 8 M219 723 l-18 12 M242 757 l-18 13 M271 800 l-17 15"/>'+
-      '<path d="M269 849 l-17 11 M284 879 l-15 13 M299 915 l-15 10 M305 949 l-15 8 M582 864 l16 8 M582 904 l18 5 M586 943 l18 3"/>'+
-      '<path d="M502 311 l14 -11 M524 336 l15 -12 M540 363 l16 -9 M559 398 l16 -8 M573 430 l17 -6 M579 460 l19 -4 M585 493 l18 -1"/>'+
-      '<path d="M583 665 l18 2 M578 703 l18 5 M570 744 l18 7 M570 780 l17 9 M580 822 l16 10"/></g>'+
+      '<path d="M277 423 l-15 -9 M293 398 l-13 -12 M316 374 l-10 -14 M340 354 l-9 -14 M365 337 l-7 -15 M389 322 l-5 -15"/>'+
+      '<path d="M433 322 l5 -15 M455 334 l8 -15 M480 353 l10 -14 M505 378 l12 -13 M524 403 l15 -10 M539 431 l16 -7"/>'+
+      '<path d="M255 563 l-11 0 M255 612 l-11 0 M255 667 l-11 0 M255 726 l-11 0 M565 566 l11 0 M565 626 l11 0 M565 688 l11 0 M565 755 l11 0"/></g>'+
     '<g class="p2x-etch-witness">'+
-      '<path d="M276 852 l14 -10 M306 964 l-16 8 M585 904 l18 5 M566 386 l14 9"/></g>'+
+      '<path d="M211 201 l-3 9 M275 234 l-5 10 M352 278 l-6 12"/>'+
+    '</g>'+
    '</svg>'+
    '<div class="p2x-cereal-paper">'+
     '<div class="p2x-cereal-tiny"><span>WESTSIDE WATCH / INDEX</span><span>VOL.00</span></div>'+
