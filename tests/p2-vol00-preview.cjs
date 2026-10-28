@@ -137,12 +137,12 @@ const data=()=> {
   cover:box(cover),page:box(page),
   typeOpacity:+getComputedStyle(document.querySelector('#dual-letterfield')).opacity,
   hero:heroRect,heroOpacity:+getComputedStyle(hero).opacity,
-  officialGlyphs:document.querySelectorAll('#ws-xiwang-vertical use').length,
+  inkGlyphSources:document.querySelectorAll('#ws-xiwang-vertical use').length,
   titleAspect:heroRect.height/Math.max(heroRect.width,1),
   starLeftRatio:(starRect.left-pageRect.left)/pageRect.width,
   starTopRatio:(starRect.top-pageRect.top)/pageRect.height,
   starTitleRightGap:heroRect.left-starRect.right,
-  heroFaceUsesOfficial:hero.querySelector('.ws-print-hero__face')?.getAttribute('href')==='#ws-xiwang-vertical',
+  heroFaceUsesInk:hero.querySelector('.ws-print-hero__face')?.getAttribute('href')==='#ws-xiwang-vertical',
   titleTopRatio:(heroRect.top-pageRect.top)/pageRect.height,
   titleBottomClear:pageRect.bottom-heroRect.bottom,
   starTitleGap:heroRect.top-starRect.bottom,
@@ -227,8 +227,8 @@ const data=()=> {
      faults.push('actual unmodified public-domain Doré plate failed to load');
     if(p===44){
      heroAtTypeHold=m.hero.top;
-     if(!(m.starOpacity<.05&&m.typeOpacity>.98&&m.heroOpacity>.98&&m.officialGlyphs===2&&m.heroFaceUsesOfficial&&m.inkPlate==='official-svg-vertical-dore-city-gallery'&&m.titleOrientation==='vertical'&&m.titleAspect>1.7))
-      faults.push('large vertical original 西望 must hold over full bleed Doré plate before Morning Star enters');
+     if(!(m.starOpacity<.05&&m.typeOpacity>.98&&m.heroOpacity>.98&&m.inkGlyphSources===1&&m.heroFaceUsesInk&&m.inkPlate==='wet-ink-svg-vertical-dore-city-gallery'&&m.titleOrientation==='vertical'&&m.titleAspect>1.48))
+      faults.push('selected large vertical brush-vector 西望 must hold over full bleed Doré plate before Morning Star enters');
     }
     if(p===54&&!(m.starOpacity>.1&&m.typeOpacity>.8))
      faults.push('protected Morning Star must begin rising over Doré plate');
@@ -277,8 +277,8 @@ const data=()=> {
       faults.push('held spread must retain the star, original large title and complete Doré image');
      if(!(m.starLeftRatio>=-.01&&m.starLeftRatio<.19&&m.starTopRatio>=-.01&&m.starTopRatio<.20))
       faults.push('rising Morning Star must land in the upper-left editorial space');
-     if(!(m.starTitleRightGap>m.page.width*.025&&m.titleBottomClear>m.page.height*.035&&m.titleAspect>1.7))
-      faults.push('upper-left Morning Star must not collide with vertical original ink title');
+     if(!(m.starTitleRightGap>m.page.width*.025&&m.titleBottomClear>m.page.height*.035&&m.titleAspect>1.48))
+      faults.push('upper-left Morning Star must not collide with selected vector ink title');
     }
     if(p===82&&!(m.lightOpacity>.94&&m.mastOpacity>.98&&m.volumeOpacity>.98&&m.headings.join('|')==='CITY|OF|LIGHT'))
       faults.push('cover hold must carry a fully legible masthead and issue number with the gate light');
@@ -435,8 +435,8 @@ const data=()=> {
    // No duplicate clock: reversing the ONE slider restores same visual state.
    await page.locator('#dual-progress').evaluate(slider=>{slider.value='33';slider.dispatchEvent(new Event('input',{bubbles:true}))});
    const reverse=await page.evaluate(data);
-   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='official-svg-vertical-dore-city-gallery'||reverse.doreVisible<.2||reverse.stoneOpacity>.01)
-    results.push({id:name+'-reverse',errors:['backwards scroll did not restore the original impression']});
+   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='wet-ink-svg-vertical-dore-city-gallery'||reverse.doreVisible<.2||reverse.stoneOpacity>.01)
+    results.push({id:name+'-reverse',errors:['backwards scroll did not restore the selected brush-vector impression']});
    await page.close();
   }
    const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
