@@ -18,7 +18,7 @@
   <button type="button" data-snap="0.54">晨星顯現</button>
   <button type="button" data-snap="0.68">晨星升起</button>
   <button type="button" data-snap="0.82">七色書脊翻頁</button>
-  <button type="button" data-snap="1">石紋 Contents</button>
+  <button type="button" data-snap="1">多雷 Contents</button>
  </nav>
  <label class="dual-ui__range" for="dual-progress">展開進度 <input type="range" id="dual-progress" min="0" max="100" value="100" step="1"><output id="dual-value" for="dual-progress">100%</output></label>
 </header>
@@ -401,10 +401,17 @@
   letters.style.visibility=typeEnter>0&&typeLeave<1?'visible':'hidden';
   layoutPrint(contentsW,contentsH);
   const titleOn=reduce?(progress>=.31?1:0):ease((progress-.285)/.12);
-  const titleScale=Math.min(contentsW*.61/216,contentsH*.89/454);
+  const contentsArtZone=document.getElementById('dual-contents-star-zone');
+  const artZoneHeight=contentsArtZone.getBoundingClientRect().height;
+  const stoneProgress=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
+  const leadScale=Math.min(contentsW*.61/216,contentsH*.89/454);
+  const folioScale=Math.min(contentsW*.24/216,artZoneHeight*.88/454);
+  const titleScale=lerp(leadScale,folioScale,stoneProgress);
   const titleWidth=216*titleScale,titleHeight=454*titleScale;
-  const titleX=(contentsW-titleWidth)*.75;
-  const titleY=(contentsH-titleHeight)*.5;
+  const titleX=lerp((contentsW-216*leadScale)*.75,contentsW-titleWidth-contentsW*.055,stoneProgress);
+  const titleY=lerp((contentsH-454*leadScale)*.5,
+   contentsArtZone.getBoundingClientRect().top-gold.getBoundingClientRect().top+(artZoneHeight-titleHeight)*.5,
+   stoneProgress);
   hero.setAttribute('transform','translate('+titleX.toFixed(2)+' '+titleY.toFixed(2)+') scale('+titleScale.toFixed(5)+')');
   hero.style.opacity=String(titleOn);
   stage.dataset.xiwangHero=titleOn.toFixed(3);
