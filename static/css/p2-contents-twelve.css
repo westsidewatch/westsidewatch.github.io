@@ -434,21 +434,28 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
  gap:clamp(6px,.95cqi,11px);
  align-items:start;min-height:max-content
 }
+/* A desk is one bilingual identity, followed by its own article register.
+   Keep English and Chinese on one baseline when the rail permits it;
+   flex-wrap yields a deliberate second line on exceptionally narrow rails. */
+.p2x--10 .p2x-cereal-movement .p2x-entry__body{
+ display:flex;align-items:baseline;flex-wrap:wrap;
+ column-gap:clamp(6px,.9cqi,10px);row-gap:0;min-width:0
+}
 .p2x--10 .p2x-cereal-movement .p2x-num{
  padding-top:2px;
  font:italic 200 clamp(11px,1.42cqi,15px)/1.35 var(--ws-type-display-en,Georgia,serif)
 }
 .p2x--10 .p2x-cereal-movement .p2x-zh{
- display:block;font:200 clamp(13px,1.65cqi,17px)/1.42 var(--ws-type-display-zh,sans-serif);
- overflow-wrap:anywhere
+ display:inline;flex:0 0 auto;white-space:nowrap;
+ font:200 clamp(13px,1.65cqi,17px)/1.42 var(--ws-type-display-zh,sans-serif)
 }
 .p2x--10 .p2x-cereal-movement .p2x-en{
- display:block;margin-top:3px;
+ display:inline;flex:0 0 auto;margin-top:0;white-space:nowrap;
  font:italic 200 clamp(11px,1.36cqi,14px)/1.35 var(--ws-type-display-en,Georgia,serif);
- color:#737a80;overflow-wrap:anywhere
+ color:#737a80
 }
 .p2x--10 .p2x-cereal-movement .p2x-works{
- display:block;margin-top:clamp(6px,.9cqi,9px);
+ display:block;flex:0 0 100%;min-width:0;margin-top:clamp(6px,.9cqi,9px);
  font:200 clamp(11px,1.33cqi,14px)/1.62 var(--ws-type-reading-zh,"Noto Serif TC",serif);
  color:#4e5660;overflow-wrap:anywhere
 }
