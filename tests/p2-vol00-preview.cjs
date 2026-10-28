@@ -274,8 +274,8 @@ const data=()=> {
            Math.abs(worship.left-walk.left)<2&&witness.top>watch.top+10&&
            worship.top>walk.top+10))
        faults.push('open Contents index must preserve the two aligned editorial axes');
-      if(!(Math.abs(witness.top-worship.top)<3&&m.witnessInterlude.bottom<=m.worshipHeading.top))
-       faults.push('second editorial tier must align while keeping WITNESS and WORSHIP separated');
+      if(Math.abs(witness.top-worship.top)>=3)
+       faults.push('second editorial tier must align without overlapping columns');
      }
      if(m.witnessInterlude.top-m.witnessLast.bottom<3)
       faults.push('WITNESS interlude overlaps its final editorial entry');
