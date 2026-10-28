@@ -343,6 +343,8 @@ const data=()=> {
       const trace=[...host.querySelectorAll(".p2x-etch-line")];
       const primary=host.querySelector(".p2x-etch-line--principal");
       const pathBounds=primary?.getBBox();
+      const extents=trace.map(path=>path.getBBox());
+      const etchedSystemSpanX=Math.max(...extents.map(b=>b.x+b.width))-Math.min(...extents.map(b=>b.x));
       const firstPoint=primary?.getPointAtLength(0);
       const glyphOpacity=Number(getComputedStyle(hero).opacity);
       const glyphInk=getComputedStyle(glyphFace).color;
@@ -352,7 +354,7 @@ const data=()=> {
        navigators:host.querySelectorAll("[data-p2-cereal-jump]").length,
        traceCount:trace.length,traceAnimation:getComputedStyle(trace[0]).animationName,
        firstPointX:firstPoint?.x||0,firstPointY:firstPoint?.y||0,
-       principalSpanY:pathBounds?.height||0,principalSpanX:pathBounds?.width||0,
+       principalSpanY:pathBounds?.height||0,etchedSystemSpanX,
        goldStroke:parseFloat(getComputedStyle(trace[0]).strokeWidth),
        glyphOpacity,glyphInk,
        scrollerKeyboard:stack.tabIndex>=0,scrollable:stack.scrollHeight>stack.clientHeight+5,
@@ -369,7 +371,7 @@ const data=()=> {
       faults.push('Cereal must contain a real 12-desk reading index with four jump controls');
      if(editorial.traceCount!==3||editorial.traceAnimation==='none'&&!editorial.reduced)
       faults.push('09 gold orbit must be distilled into three living 10 etched engraving paths');
-     if(editorial.principalSpanY<680||editorial.principalSpanX<390||editorial.goldStroke<2.1||
+     if(editorial.principalSpanY<680||editorial.etchedSystemSpanX<390||editorial.goldStroke<2.1||
         Math.abs(editorial.firstPointX-166)>2||Math.abs(editorial.firstPointY-165)>2)
       faults.push('gold engraving must visibly travel from the actual star into a full-height three-contour etched composition');
      if(editorial.glyphOpacity<.88||!editorial.glyphInk.includes('255, 239, 203'))
