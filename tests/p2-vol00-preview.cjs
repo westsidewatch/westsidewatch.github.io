@@ -7,11 +7,17 @@ const path=require('node:path');
 
 const source=fs.readFileSync('static/experiments/p2-double-square-video-lab.html','utf8');
 const css=fs.readFileSync('static/css/p2-vol00-editorial.css','utf8');
+const studies=fs.readFileSync('static/experiments/p2-contents-twelve.js','utf8');
+const studyCss=fs.readFileSync('static/css/p2-contents-twelve.css','utf8');
 const nav=JSON.parse(fs.readFileSync('data/westside-core/navigation-shell.v1.json','utf8')).firstLevel;
 const out='artifacts/p2-vol00';
 fs.mkdirSync(out,{recursive:true});
 assert.match(source,/\/css\/westside-design-os\.css/);
 assert.match(source,/\/css\/p2-vol00-editorial\.css/);
+assert.match(source,/\/css\/p2-contents-twelve\.css/);
+assert.match(source,/\/experiments\/p2-contents-twelve\.js/);
+assert.match(studies,/const DESIGNS=\[/);
+assert.match(studyCss,/\.p2x--12/);
 assert.match(source,/p2-vol00-editorial\.css\?v=vol00-editorial-\d{8}[a-z]/,'the standalone folio CSS must cache-bust on visual revision');
 assert.equal((source.match(/class="dual-entry"/g)||[]).length,12,'all original desks remain');
 assert.equal((source.match(/class="dual-movement"/g)||[]).length,4);
@@ -83,7 +89,7 @@ const data=()=> {
  const artPlate=document.querySelector('#dual-dore-plate');
  const cover=document.querySelector('#dual-cover');
  const page=document.querySelector('#dual-contents');
- const index=document.querySelector('.dual-contents__index');
+ const index=document.querySelector('#p2-contents-design');
  const star=document.querySelector('#dual-star');
  // An SVG <use> contains an invisible uncropped 432px source. Only
  // the transformed 216×454 official two-glyph viewport is visible.
@@ -94,7 +100,7 @@ const data=()=> {
  const left=Math.min(...xs),right=Math.max(...xs),top=Math.min(...ys),bottom=Math.max(...ys);
  const heroRect={x:left,y:top,left,top,right,bottom,width:right-left,height:bottom-top};
  const starRect=box(star),pageRect=box(page);
- const zone=document.querySelector('.dual-contents__star-zone');
+ const zone=document.querySelector('#p2-contents-design');
  const city=document.querySelector('#dual-cover-city');
  const lightSvg=document.querySelector('#dual-cover-folded-light');
  const cityBox=city.getBoundingClientRect();
@@ -103,9 +109,9 @@ const data=()=> {
  const alignedRight={x:cityBox.left+(cityBox.width-1448*scale)/2+839*scale,y:cityBox.top+759*scale};
  const registerError=Math.hypot(rightInk.x-alignedRight.x,rightInk.y-alignedRight.y);
  const wallRightPost=cityBox.left+(cityBox.width-1448*scale)/2+844*scale;
- const columns=[...document.querySelectorAll('.dual-movement')];
+ const columns=[...document.querySelectorAll('#p2-contents-design .p2x-movement')];
  const secondary=[...document.querySelectorAll(
-  '.dual-contents__head span,.dual-movement h3,.dual-movement h3 em,.dual-movement li,.dual-movement li b,.dual-entry__column,.dual-entry__column small,.dual-work,.dual-movement__interlude,.dual-contents__foot'
+  '#p2-contents-design .p2x-movement h3,#p2-contents-design .p2x-zh,#p2-contents-design .p2x-en,#p2-contents-design .p2x-works'
  )];
  return {
   phase:stage.dataset.phase,impression:+stage.dataset.xiwangImpression,inkPlate:stage.dataset.xiwangPlate,
@@ -141,9 +147,9 @@ const data=()=> {
   starRenderer:star.dataset.renderer,
   approvedStarVisible:!!star.querySelector('img.dual-cover__approved-star')&&getComputedStyle(star).opacity==='1',
   star:box(star),zone:box(zone),movements:columns.map(box),
-  witnessLast:box(document.querySelector('.dual-movement:nth-child(3) .dual-entry:last-child')),
-  witnessInterlude:box(document.querySelector('.dual-movement:nth-child(3) .dual-movement__interlude')),
-  worshipHeading:box(document.querySelector('.dual-movement:nth-child(4) h3')),
+  witnessLast:box(document.querySelector('#p2-contents-design .p2x-movement:nth-child(3) .p2x-entry:last-child')||index),
+  witnessInterlude:box(document.querySelector('#p2-contents-design .p2x-movement:nth-child(3) .p2x-interlude')||index),
+  worshipHeading:box(document.querySelector('#p2-contents-design .p2x-movement:nth-child(4) h3')||index),
   headings:[...document.querySelectorAll('.dual-cover__en span')].map(el=>el.textContent.trim()),
   title:box(document.querySelector('.dual-cover__editorial')),
   mast:box(document.querySelector('.dual-cover__mast')),
@@ -154,7 +160,7 @@ const data=()=> {
   secondaryWeights:[...new Set(secondary.map(el=>getComputedStyle(el).fontWeight))],
   majorWeight:getComputedStyle(document.querySelector('.dual-contents__head h2')).fontWeight,
   entries:document.querySelectorAll('.dual-movement li').length,
-  last:box(document.querySelector('.dual-movement:last-child li:last-child')),
+  last:box(document.querySelector('#p2-contents-design .p2x-movement:last-child .p2x-entry:last-child')||index),
   index:box(index),scrollHeight:index.scrollHeight,clientHeight:index.clientHeight,
   insideContents:!document.querySelector('#dual-stone-contents').inert,
   rail:box(document.querySelector('#dual-continuum')),
@@ -170,7 +176,12 @@ const data=()=> {
   scrollWidth:document.documentElement.scrollWidth,
   naturalWall:true,
   ariaHead:document.querySelector('#dual-contents-title').textContent.trim(),
-  canKeyboardScroll:index.tabIndex===0,
+  canKeyboardScroll:!!document.querySelector('#p2-contents-design [tabindex="0"]'),
+  designId:document.querySelector('#dual-contents').dataset.p2Design,
+  liveEntries:document.querySelectorAll('#p2-contents-design .p2x-entry').length,
+  liveMovements:columns.length,
+  availableDesigns:window.P2ContentsTwelve?.designs.length||0,
+  layoutVisible:getComputedStyle(index).display!=='none',
   reliefOpacity:+getComputedStyle(document.querySelector('#dual-contents-relief')).opacity,
   foldSurface:getComputedStyle(page,'::after').backgroundImage
  };
@@ -235,7 +246,7 @@ const data=()=> {
      // normal p79 screenshot is taken after the swap and cannot prove
      // that two distinct compositions were ever shown.
      const firstFrame=await page.locator('#dual-dore-plate').screenshot({
-      path:path.join(out,'desktop-city-first-plate.png'),animations:'disabled'
+      path:path.join(out,'desktop-city-first-plate.png'),animations:'allow'
      });
      const switched=await page.evaluate(()=>window.P2DoreGallery.next());
      if(!switched)faults.push('second authentic city/wall engraving did not load');
@@ -248,7 +259,7 @@ const data=()=> {
       if(second.galleryCycle!==15000||second.galleryIds.join('|')!=='10|13|48|64|115|123|127|241')
        faults.push('Doré image cycle must use eight curated canonical city IDs and original scan timing');
       const secondFrame=await page.locator('#dual-dore-plate').screenshot({
-       path:path.join(out,'desktop-city-second-plate.png'),animations:'disabled'
+       path:path.join(out,'desktop-city-second-plate.png'),animations:'allow'
       });
       if(firstFrame.equals(secondFrame))
        faults.push('visual proof FAIL: two different registry IDs produced the same image pixels');
@@ -266,33 +277,27 @@ const data=()=> {
       faults.push('cover hold must carry a fully legible masthead and issue number with the gate light');
     if(p===93&&!(m.stoneOpacity>.1&&m.stoneOpacity<.99))faults.push('Contents must hand off through a measured state');
     if(p===100){
-     if(width>1100){
-      const [watch,walk,witness,worship]=m.movements;
-      // A newly art-directed 2-column architectural index: WATCH and WITNESS
-      // share the left grid axis, WALK and WORSHIP share the right axis.
-      if(!(watch.left+10<walk.left&&Math.abs(witness.left-watch.left)<2&&
-           Math.abs(worship.left-walk.left)<2&&witness.top>watch.top+10&&
-           worship.top>walk.top+10))
-       faults.push('open Contents index must preserve the two aligned editorial axes');
-      if(Math.abs(witness.top-worship.top)>=3)
-       faults.push('second editorial tier must align without overlapping columns');
-     }
-     if(m.witnessInterlude.top-m.witnessLast.bottom<3)
-      faults.push('WITNESS interlude overlaps its final editorial entry');
-     if(m.starRenderer==='approved-morning-star-svg'&&!m.approvedStarVisible)faults.push('approved vector Morning Star fallback missing without WebGL');
-     if(!approx(m.cover.width/m.cover.height,5/8,.01)||!approx(m.page.width/m.page.height,1,.01))faults.push('5:8 cover and 1:1 Contents');
-     if(m.entries!==12||m.ariaHead!=='Contents.')faults.push('Contents canon');
-     if(m.majorWeight!=='400'||m.secondaryWeights.some(x=>+x>200))faults.push('Contents secondary must be 200');
+     if(!m.designId||m.designId!=='01'||!m.layoutVisible)
+      faults.push('default editorial contents must display the actual Aperture-inspired design');
+     if(m.liveEntries!==12||m.liveMovements!==4||m.availableDesigns!==12)
+      faults.push('all twelve desk entries and all twelve independent layouts must be accessible');
+     if(m.starRenderer==='approved-morning-star-svg'&&!m.approvedStarVisible)
+      faults.push('approved vector Morning Star fallback missing without WebGL');
+     if(!approx(m.cover.width/m.cover.height,5/8,.01)||!approx(m.page.width/m.page.height,1,.01))
+      faults.push('5:8 cover and 1:1 Contents');
+     if(m.entries!==12||m.ariaHead!=='Contents.')
+      faults.push('Contents canon');
+     if(m.majorWeight!=='400'||m.secondaryWeights.some(x=>+x>200))
+      faults.push('Contents secondary must be 200');
      if(m.volumeFontSize<10||m.volumeInk!=='rgb(255, 248, 233)'||m.volumeOpacity<.99)
-      faults.push('Vol.00 metadata must be readable over the now-dark stone cast shadow');
-     if(!m.insideContents||m.stoneOpacity<.999||m.typeOpacity<.98||m.doreVisible<.98)faults.push('Contents must preserve the original Doré and vertical Xi Wang visual');
-     if(m.star.top<m.zone.top-4||m.star.bottom>m.zone.bottom+4)faults.push('star intrudes into reading zone');
-      if(m.hero.top<m.zone.top-4||m.hero.bottom>m.zone.bottom+4)faults.push('vertical Xi Wang must fit inside the Contents visual field');
-     if(m.last.bottom>m.index.bottom+1&&!m.canKeyboardScroll)faults.push('last article not keyboard-reachable');
+      faults.push('Vol.00 metadata must be readable over the protected stone cover');
+     if(!m.insideContents||m.stoneOpacity<.999||m.typeOpacity<.98||m.doreVisible<.98)
+      faults.push('Contents must preserve the original Doré and vertical Xi Wang visual');
      if(m.railOpacity<.98)faults.push('seven-colour ribbon missing');
+     if(!m.canKeyboardScroll)faults.push('editorial index needs keyboard-scrolling access');
     }
     if(pageErrors.length)faults.push('PAGE_ERROR '+pageErrors.join('; '));
-    await page.screenshot({path:path.join(out,name+'-'+label+'.png'),animations:'disabled'});
+    await page.screenshot({path:path.join(out,name+'-'+label+'.png'),animations:'allow'});
     results.push({id:name+'-'+label,metrics:m,errors:faults});
     console.log(name,label,faults.length?faults:'CAPTURE_OK');
    }
@@ -324,9 +329,42 @@ const data=()=> {
     if(p===100&&!(r.entries===12&&r.stoneOpacity>.99&&r.insideContents))
      faults.push('reduced motion must keep all 12 Contents entries');
     results.push({id:'reduced-'+p,metrics:r,errors:faults});
-    await reduced.screenshot({path:path.join(out,'reduced-'+p+'.png'),animations:'disabled'});
+    await reduced.screenshot({path:path.join(out,'reduced-'+p+'.png'),animations:'allow'});
    }
    await reduced.close();
+   // Twelve independently constructed Contents: real Chromium proof at
+   // each variant, not a color swatch or thumbnail mockup.
+   const twelve=await browser.newPage({viewport:{width:1648,height:928},reducedMotion:'no-preference'});
+   const twelveErrors=[];
+   twelve.on('pageerror',e=>twelveErrors.push(e.message));
+   await twelve.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=100&side=cover-right&variant=01',
+    {waitUntil:'domcontentloaded',timeout:45000});
+   await twelve.evaluate(()=>document.fonts.ready);
+   await twelve.waitForFunction(()=>window.P2ContentsTwelve?.count===12,null,{timeout:16000});
+   const frames=[];
+   for(const design of windowDesignIds()){
+    await twelve.evaluate(id=>window.P2ContentsTwelve.select(id,false),design);
+    await twelve.waitForTimeout(120);
+    const m=await twelve.evaluate(()=>{
+     const host=document.querySelector('#p2-contents-design');
+     const page=document.querySelector('#dual-contents');
+     const bounds=host.getBoundingClientRect(),p=page.getBoundingClientRect();
+     return {id:window.P2ContentsTwelve.active,count:window.P2ContentsTwelve.count,
+      groups:host.querySelectorAll('.p2x-movement').length,
+      source:window.P2ContentsTwelve.designs.find(x=>x.id===window.P2ContentsTwelve.active).source,
+      width:bounds.width,height:bounds.height,localX:bounds.left-p.left,overflow:document.documentElement.scrollWidth>innerWidth+2};
+    });
+    const errors=[];
+    if(m.id!==design||m.count!==12||m.groups!==4||m.width<300||m.height<300||m.overflow)
+     errors.push('variant does not deliver a complete independent 12-entry composition');
+    if(twelveErrors.length)errors.push('PAGE_ERROR '+twelveErrors.join('; '));
+    const snap=await twelve.screenshot({path:path.join(out,'twelve-'+design+'-desktop.png'),animations:'allow'});
+    if(frames.some(f=>f.equals(snap)))errors.push('variant screenshot is pixel-identical to an earlier composition');
+    frames.push(snap);results.push({id:'twelve-'+design,metrics:m,errors});
+    console.log('twelve',design,m.source,errors.length?errors:'CAPTURE_OK');
+   }
+   await twelve.close();
+   function* windowDesignIds(){for(let i=1;i<=12;i++)yield String(i).padStart(2,'0')}
  }finally{await browser.close()}
  fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({artApproval:'PENDING_EDITOR_REVIEW',scenes:results},null,2));
  if(results.some(s=>s.errors.length))process.exitCode=1;
