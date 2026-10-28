@@ -1,0 +1,16 @@
+// Source locality and dating are separate from admission of scene geometry.
+export function auditDefenseSources(data){
+ if(data.sourceReviewPolicy?.schema!=='j3k.defense-source-review.v1'||data.sourceReviewPolicy.mapReferencesAreSurveyControls!==false||data.sourceReviewPolicy.physicalSurvivalVerified!==false)throw new Error('Invalid defense source admission policy');
+ const ids=new Set(data.phases.map(p=>p.id));if(ids.size!==18||data.phases.length!==18)throw new Error('Incomplete defense source coverage');
+ for(const [key,s] of Object.entries(data.sources))if(!s.url?.startsWith('https://')||!Array.isArray(s.review?.applicablePhases)||s.review.applicablePhases.some(id=>!ids.has(id))||s.review.geometryAuthority==='registered-survey')throw new Error(`Invalid defense source scope: ${key}`);
+ return data.phases.map(p=>{
+  if(!p.sourceReview||['geometryAccepted','gateLocationAccepted','streetAssociationAccepted'].some(k=>p.sourceReview[k]!==false))throw new Error('Unreviewed defense geometry admission');
+  const read=(key,background=false)=>{const s=data.sources[key];if(!s)throw new Error('Missing scoped defense source');return {key,...structuredClone(s),role:background?'background-only':s.review.geometryAuthority==='modern-reference-only'?'modern-reference':s.review.applicablePhases.includes(p.id)?'period-context':'comparison-only',geometryAccepted:false};};
+  const sources=p.sourceKeys.map(k=>read(k)),background=p.sourceReview.unmatchedBackgroundSources.map(k=>read(k,true)),segments=[];
+  for(const familyId of new Set(p.walls.map(w=>w.family))){const f=data.families[familyId];if(f.review?.geometryStatus!=='unregistered-authored-corridor'||!f.review.required?.includes('survey-controls')||f.review.openEndsVerified!==false)throw new Error('Invalid defense segment admission');
+   const scoped=f.sources.filter(k=>p.sourceKeys.includes(k));if(!scoped.length)throw new Error('Defense corridor has no scoped source');
+   for(let i=1;i<f.points.length;i++)segments.push({id:`${p.id}:${familyId}:${i-1}`,family:familyId,label:`${f.review.region} S${i}`,start:{x:f.points[i-1][0],z:f.points[i-1][1]},end:{x:f.points[i][0],z:f.points[i][1]},sourceKeys:[...scoped],status:f.review.geometryStatus,missing:[...f.review.required],geometryAccepted:false});
+  }
+  return {phase:p.id,owner:p.owner,status:p.sourceReview.status,sources,background,segments,gateCount:p.gates.length,registeredSegments:0,geometryAccepted:false,gateLocationAccepted:false,streetAssociationAccepted:false,existingGeometryOwner:p.owner==='existing',nextAction:p.owner==='existing'?'review-original-owner-not-duplicate-geometry':'register-dated-plan-controls-checkpoint-and-height-before-replacing-segments'};
+ });
+}

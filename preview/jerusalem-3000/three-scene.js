@@ -695,7 +695,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
             terrainPresentation:{...terrainPresentation?.diagnostics,surfaceId:terrainRuntime?.mesh.uuid,historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             wallReference:wallReferenceModel?.diagnostics(),
-            defenseTimeline:defenseTimeline?.snapshot(),
+            defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),
             cityWorld:persistentCityWorld?.diagnostics(),
             constructionPresentation:constructionPresentation.diagnostics(),
             phaseDissolve:phaseDissolve.diagnostics(),

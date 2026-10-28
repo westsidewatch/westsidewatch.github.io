@@ -9,43 +9,154 @@
   "sources": {
     "iron": {
       "url": "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf",
-      "scope": "published western expansion context; no vectors extracted from this guide"
+      "scope": "published western expansion context; no vectors extracted from this guide",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "late-first-temple",
+          "babylonian-destruction"
+        ],
+        "geometryAuthority": "regional-context-not-registered-linework"
+      }
     },
     "south": {
       "url": "https://hadashot.iaa.org.il/report_detail_eng.aspx?id=1530&mag=",
-      "scope": "excavated southern Hasmonean and fifth-century Byzantine fortification systems; whole lines below remain authored"
+      "scope": "excavated southern Hasmonean and fifth-century Byzantine fortification systems; whole lines below remain authored",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "hellenistic-hasmonean",
+          "herodian-jesus",
+          "roman-destruction",
+          "byzantine"
+        ],
+        "geometryAuthority": "regional-context-not-registered-linework",
+        "permit": "A-5023; A-5338",
+        "publishedMapReference": "221791/630753",
+        "locator": "Areas M and T; Fig. 1; two southern fortification systems",
+        "mapReferenceRole": "excavation-locality-only-not-wall-vertices-or-survey-controls"
+      }
     },
     "roman": {
       "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=1779",
-      "scope": "free-standing Aelia west gate; attached wall no earlier than later fourth century; decumanus and1898 opening"
+      "scope": "free-standing Aelia west gate; attached wall no earlier than later fourth century; decumanus and1898 opening",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "aelia",
+          "byzantine",
+          "ottoman",
+          "outside-walls",
+          "modern"
+        ],
+        "geometryAuthority": "regional-context-not-registered-linework",
+        "permit": "A-5815",
+        "publishedMapReference": "22170/63155",
+        "locator": "Area A; Area B; discussion of the free-standing gate and later wall",
+        "mapReferenceRole": "excavation-locality-only-not-wall-vertices-or-survey-controls"
+      }
     },
     "north": {
       "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26147&print=all",
-      "scope": "Aelia northern gate, later Crusader/Ayyubid fortifications; individual dates disputed"
+      "scope": "Aelia northern gate, later Crusader/Ayyubid fortifications; individual dates disputed",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "aelia",
+          "crusader",
+          "ayyubid-mamluk",
+          "ottoman"
+        ],
+        "geometryAuthority": "regional-context-not-registered-linework",
+        "permit": "A-8468; A-8592",
+        "publishedMapReference": "221930–958/632145–170",
+        "locator": "Excavation east of Damascus Gate; Figs. 2–3",
+        "mapReferenceRole": "excavation-locality-only-not-wall-vertices-or-survey-controls"
+      }
     },
     "islamic": {
       "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=268&mag_id=110",
-      "scope": "late Early Islamic northwest moat and earlier courses; not whole southern perimeter"
+      "scope": "late Early Islamic northwest moat and earlier courses; not whole southern perimeter",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "early-islamic"
+        ],
+        "geometryAuthority": "regional-context-not-registered-linework"
+      }
     },
     "medieval": {
       "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124",
-      "scope": "southern Fatimid/Crusader/Ayyubid overlap,1202–1217 wall and1219 dismantling,1535–1542 Ottoman rebuilding"
+      "scope": "southern Fatimid/Crusader/Ayyubid overlap,1202–1217 wall and1219 dismantling,1535–1542 Ottoman rebuilding",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "early-islamic",
+          "crusader",
+          "ayyubid-mamluk",
+          "ottoman"
+        ],
+        "geometryAuthority": "regional-context-not-registered-linework",
+        "permit": "A-7279",
+        "publishedMapReference": "222038–47/631172–80",
+        "locator": "Introduction and southern wall; Figs. 1–4",
+        "mapReferenceRole": "excavation-locality-only-not-wall-vertices-or-survey-controls"
+      }
     },
     "persian": {
       "url": "https://bibleinterp.arizona.edu/articles/walls-nehemiah-built-town-jerusalem-persian-period",
-      "scope": "debated Persian fortification existence/extent; hypothesis trace only"
+      "scope": "debated Persian fortification existence/extent; hypothesis trace only",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "persian-nehemiah"
+        ],
+        "geometryAuthority": "regional-context-not-registered-linework"
+      }
     },
     "third": {
       "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26618",
-      "scope": "Third Wall remains and70 CE battle; no Third Wall back-projected into30s CE"
+      "scope": "Third Wall remains and70 CE battle; no Third Wall back-projected into30s CE",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "roman-destruction"
+        ],
+        "geometryAuthority": "regional-context-not-registered-linework",
+        "permit": "A-8942",
+        "publishedMapReference": "22118/63211",
+        "locator": "Introduction refers to neighboring Third Wall excavation; current trench is quarry context",
+        "mapReferenceRole": "excavation-locality-only-not-wall-vertices-or-survey-controls"
+      }
     },
     "water": {
       "url": "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all",
-      "scope": "existing early water-defense context; full urban perimeter remains unresolved"
+      "scope": "existing early water-defense context; full urban perimeter remains unresolved",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "late-first-temple",
+          "babylonian-destruction"
+        ],
+        "geometryAuthority": "regional-context-not-registered-linework",
+        "permit": "A-7916; A-8257",
+        "publishedMapReference": "222447–541/631157–228",
+        "locator": "Area U; Iron Age buildings; earlier wall mentioned as nearby work",
+        "mapReferenceRole": "excavation-locality-only-not-wall-vertices-or-survey-controls"
+      }
     },
     "modern": {
       "url": "https://api.openstreetmap.org/api/0.6/map?bbox=35.222,31.770,35.242,31.785",
-      "scope": "existing frozen modern wall reference only for last three phases; not ancient survey"
+      "scope": "existing frozen modern wall reference only for last three phases; not ancient survey",
+      "review": {
+        "checkedAt": "2026-10-28",
+        "applicablePhases": [
+          "ottoman",
+          "outside-walls",
+          "modern"
+        ],
+        "geometryAuthority": "modern-reference-only"
+      }
     }
   },
   "families": {
@@ -75,7 +186,19 @@
           -35,
           220
         ]
-      ]
+      ],
+      "review": {
+        "region": "西丘",
+        "geometryStatus": "unregistered-authored-corridor",
+        "required": [
+          "dated-plan",
+          "survey-controls",
+          "independent-checkpoint",
+          "vertical-datum",
+          "gate-road-association"
+        ],
+        "openEndsVerified": false
+      }
     },
     "southwest": {
       "label": "西南城防帶（線位示意）",
@@ -107,7 +230,19 @@
           100,
           880
         ]
-      ]
+      ],
+      "review": {
+        "region": "錫安山西南坡",
+        "geometryStatus": "unregistered-authored-corridor",
+        "required": [
+          "dated-plan",
+          "survey-controls",
+          "independent-checkpoint",
+          "vertical-datum",
+          "gate-road-association"
+        ],
+        "openEndsVerified": false
+      }
     },
     "byzantine-south": {
       "label": "五世紀南部擴張城防帶（線位示意）",
@@ -143,7 +278,19 @@
           200,
           420
         ]
-      ]
+      ],
+      "review": {
+        "region": "拜占庭南部擴展帶",
+        "geometryStatus": "unregistered-authored-corridor",
+        "required": [
+          "dated-plan",
+          "survey-controls",
+          "independent-checkpoint",
+          "vertical-datum",
+          "gate-road-association"
+        ],
+        "openEndsVerified": false
+      }
     },
     "northwest": {
       "label": "西北城防帶（線位示意）",
@@ -181,7 +328,19 @@
           -100,
           -400
         ]
-      ]
+      ],
+      "review": {
+        "region": "西門—北門地帶",
+        "geometryStatus": "unregistered-authored-corridor",
+        "required": [
+          "dated-plan",
+          "survey-controls",
+          "independent-checkpoint",
+          "vertical-datum",
+          "gate-road-association"
+        ],
+        "openEndsVerified": false
+      }
     },
     "medieval-south": {
       "label": "中世紀南部城防段（線位示意）",
@@ -213,7 +372,19 @@
           200,
           150
         ]
-      ]
+      ],
+      "review": {
+        "region": "中世紀南界",
+        "geometryStatus": "unregistered-authored-corridor",
+        "required": [
+          "dated-plan",
+          "survey-controls",
+          "independent-checkpoint",
+          "vertical-datum",
+          "gate-road-association"
+        ],
+        "openEndsVerified": false
+      }
     },
     "persian-candidate": {
       "label": "波斯城防候選帶（有爭議，非牆體復原）",
@@ -237,7 +408,19 @@
           -80,
           -80
         ]
-      ]
+      ],
+      "review": {
+        "region": "波斯期候選城防帶",
+        "geometryStatus": "unregistered-authored-corridor",
+        "required": [
+          "dated-plan",
+          "survey-controls",
+          "independent-checkpoint",
+          "vertical-datum",
+          "gate-road-association"
+        ],
+        "openEndsVerified": false
+      }
     }
   },
   "gateDefinitions": {
@@ -291,9 +474,16 @@
         "不以沒有模型推論沒有防禦。"
       ],
       "datedChanges": [],
-      "sourceKeys": [
-        "water"
-      ]
+      "sourceKeys": [],
+      "sourceReview": {
+        "status": "phase-specific-evidence-missing",
+        "unmatchedBackgroundSources": [
+          "water"
+        ],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "middle-bronze",
@@ -307,9 +497,16 @@
         "泉區堡壘不能代替整座城市的圍牆。"
       ],
       "datedChanges": [],
-      "sourceKeys": [
-        "water"
-      ]
+      "sourceKeys": [],
+      "sourceReview": {
+        "status": "phase-specific-evidence-missing",
+        "unmatchedBackgroundSources": [
+          "water"
+        ],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "late-bronze-iron1",
@@ -323,9 +520,16 @@
         "不把中青銅泉塔自動延續成本期完整城防。"
       ],
       "datedChanges": [],
-      "sourceKeys": [
-        "water"
-      ]
+      "sourceKeys": [],
+      "sourceReview": {
+        "status": "phase-specific-evidence-missing",
+        "unmatchedBackgroundSources": [
+          "water"
+        ],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "david-solomon",
@@ -342,9 +546,16 @@
           "change": "北部高地擴展與新增入口；不是實測年代線。"
         }
       ],
-      "sourceKeys": [
-        "iron"
-      ]
+      "sourceKeys": [],
+      "sourceReview": {
+        "status": "phase-specific-evidence-missing",
+        "unmatchedBackgroundSources": [
+          "iron"
+        ],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "late-first-temple",
@@ -374,7 +585,14 @@
       ],
       "sourceKeys": [
         "iron"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "babylonian-destruction",
@@ -404,7 +622,14 @@
       ],
       "sourceKeys": [
         "iron"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "persian-nehemiah",
@@ -432,7 +657,14 @@
       ],
       "sourceKeys": [
         "persian"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "hellenistic-hasmonean",
@@ -462,7 +694,14 @@
       ],
       "sourceKeys": [
         "south"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "herodian-jesus",
@@ -492,7 +731,14 @@
       ],
       "sourceKeys": [
         "south"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "roman-destruction",
@@ -523,7 +769,14 @@
       "sourceKeys": [
         "south",
         "third"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "aelia",
@@ -558,9 +811,15 @@
       ],
       "sourceKeys": [
         "roman",
-        "north",
-        "islamic"
-      ]
+        "north"
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "byzantine",
@@ -598,10 +857,15 @@
       ],
       "sourceKeys": [
         "roman",
-        "north",
-        "islamic",
         "south"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "early-islamic",
@@ -644,12 +908,17 @@
         }
       ],
       "sourceKeys": [
-        "roman",
-        "north",
         "islamic",
         "south",
         "medieval"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "crusader",
@@ -686,11 +955,16 @@
         }
       ],
       "sourceKeys": [
-        "roman",
         "north",
-        "islamic",
         "medieval"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "ayyubid-mamluk",
@@ -743,11 +1017,16 @@
         }
       ],
       "sourceKeys": [
-        "roman",
         "north",
-        "islamic",
         "medieval"
-      ]
+      ],
+      "sourceReview": {
+        "status": "context-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "ottoman",
@@ -770,7 +1049,14 @@
         "modern",
         "medieval",
         "roman"
-      ]
+      ],
+      "sourceReview": {
+        "status": "modern-reference-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "outside-walls",
@@ -791,9 +1077,15 @@
       ],
       "sourceKeys": [
         "modern",
-        "medieval",
         "roman"
-      ]
+      ],
+      "sourceReview": {
+        "status": "modern-reference-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     },
     {
       "id": "modern",
@@ -809,9 +1101,15 @@
       "datedChanges": [],
       "sourceKeys": [
         "modern",
-        "medieval",
         "roman"
-      ]
+      ],
+      "sourceReview": {
+        "status": "modern-reference-only",
+        "unmatchedBackgroundSources": [],
+        "geometryAccepted": false,
+        "gateLocationAccepted": false,
+        "streetAssociationAccepted": false
+      }
     }
   ],
   "limitations": [
@@ -959,5 +1257,13 @@
       "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
       "physicalSurvivalVerified": false
     }
-  ]
+  ],
+  "sourceReviewPolicy": {
+    "schema": "j3k.defense-source-review.v1",
+    "reviewedAt": "2026-10-28",
+    "requireAllPhases": true,
+    "mapReferencesAreSurveyControls": false,
+    "runtimeRemoteFetch": false,
+    "physicalSurvivalVerified": false
+  }
 }
