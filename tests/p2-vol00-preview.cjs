@@ -44,9 +44,13 @@ assert.match(source,/viewBox:'0 0 216 218'/,'Westside original 西 must have a t
 assert.match(source,/viewBox:'216 0 216 218'/,'Westside original 望 must have a true clipped SVG viewport');
 assert.match(source,/href:'#ws-xiwang-original'/,'both glyphs come only from the protected SVG');
 assert.match(source,/const starRise=reduce\?/,'original Morning Star rise remains');
-assert.match(source,/star\.style\.left=lerp\(15,18,stone\)/,'Morning Star remains upper-left in the integrated Contents art field');
+assert.match(source,/star\.style\.left=lerp\(15,16,stone\)/,'Morning Star holds the new upper-left station of the open Contents folio');
 assert.match(css,/dual-dore-plate__image/,'same double-buffer image folio as Doré Search');
 assert.match(css,/dual-contents__folio-caption/,'Contents and Doré must occupy one editorial folio');
+assert.match(css,/VOL\.00 \/ CONTENTS \/ EDITORIAL COMPOSITION/,'Contents must use its newly art-directed editorial composition');
+assert.match(css,/grid-template-columns:minmax\(0,39%\) minmax\(0,61%\)/,'open folio must hold monument-scale art alongside the four-movement editorial index');
+assert.doesNotMatch(css,/box-shadow:inset 0 0 0 3px/,'retired inset frame must never return');
+assert.doesNotMatch(css,/\.dual-contents__head,\.dual-contents__index,\.dual-contents__foot\{[^}]*background:rgba/,'Contents must not be opaque editorial cards');
 assert.match(source,/galleryUpdate\(progress>=\.30\)/,'gallery must continue while Contents is open');
 assert.doesNotMatch(source,/dual-dore-image"\s+src=|const artImage=document/,'retired single-image-only implementation must be absent');
 assert.doesNotMatch(source,/ws-engraved-side-mask|ws-engraved-mask-step|sideSlices|heroSides|residualBands|stoneTones/,'retired sidewall overlays must not interfere with engraving');
@@ -215,6 +219,18 @@ const data=()=> {
     if(p===79&&name==='desktop'){
      // Prove the folio actually changes between TWO DIFFERENT DORÉ WORKS.
      const first=await page.evaluate(()=>window.P2DoreGallery.state);
+     // The plate *itself* must move while held, not merely flash a next source.
+     const scanFrom=await page.evaluate(()=>{
+      const img=document.querySelector('.dual-dore-plate__image.is-active');
+      return {matrix:getComputedStyle(img).transform,transition:getComputedStyle(img).transitionDuration};
+     });
+     await page.waitForTimeout(1100);
+     const scanTo=await page.evaluate(()=>{
+      const img=document.querySelector('.dual-dore-plate__image.is-active');
+      return {matrix:getComputedStyle(img).transform,transition:getComputedStyle(img).transitionDuration};
+     });
+     if(scanFrom.matrix===scanTo.matrix||!scanTo.transition.includes('15s'))
+      faults.push('Doré Search plate must visibly scroll within its own image for 15 seconds');
      // Capture the FIRST gallery state before advancing. Otherwise the
      // normal p79 screenshot is taken after the swap and cannot prove
      // that two distinct compositions were ever shown.
@@ -252,10 +268,14 @@ const data=()=> {
     if(p===100){
      if(width>1100){
       const [watch,walk,witness,worship]=m.movements;
-      if(!(watch.left<walk.left&&walk.left<witness.left&&Math.abs(witness.left-worship.left)<2&&worship.top-witness.bottom>=6&&worship.top-witness.bottom<=20))
-       faults.push('desktop Contents needs two long columns and a visibly separated stacked third column');
-      if(m.worshipHeading.top-m.witnessInterlude.bottom<6)
-       faults.push('WITNESS interlude must not collide with WORSHIP heading');
+      // A newly art-directed 2-column architectural index: WATCH and WITNESS
+      // share the left grid axis, WALK and WORSHIP share the right axis.
+      if(!(watch.left+10<walk.left&&Math.abs(witness.left-watch.left)<2&&
+           Math.abs(worship.left-walk.left)<2&&witness.top>watch.top+10&&
+           worship.top>walk.top+10))
+       faults.push('open Contents index must preserve the two aligned editorial axes');
+      if(!(Math.abs(witness.top-worship.top)<3&&m.witnessInterlude.bottom<=m.worshipHeading.top))
+       faults.push('second editorial tier must align while keeping WITNESS and WORSHIP separated');
      }
      if(m.witnessInterlude.top-m.witnessLast.bottom<3)
       faults.push('WITNESS interlude overlaps its final editorial entry');
