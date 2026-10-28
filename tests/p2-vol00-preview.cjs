@@ -45,10 +45,17 @@ assert.match(source,/galleryAdvance|galleryLoad/,'multiple works must actually c
 assert.match(source,/dual-dore-image-a/,'first real original image buffer exists');
 assert.match(source,/dual-dore-image-b/,'second crossfade image buffer exists');
 assert.match(source,/GUSTAVE DORÉ/,'retained public-domain attribution is required');
-assert.match(source,/id:'ws-xiwang-vertical'/,'title is the exact two original Chinese glyphs');
-assert.match(source,/viewBox:'0 0 216 218'/,'Westside original 西 must have a true clipped SVG viewport');
-assert.match(source,/viewBox:'216 0 216 218'/,'Westside original 望 must have a true clipped SVG viewport');
-assert.match(source,/href:'#ws-xiwang-original'/,'both glyphs come only from the protected SVG');
+assert.match(source,/id:'ws-xiwang-vertical'/,'title has the approved vertical Chinese ink lettering');
+assert.match(source,/href="\/images\/xiwang-ink-vector\.svg"/,'P2 must display selected vector mother, not old horizontal logo');
+assert.match(source,/width="288" height="454" preserveAspectRatio="xMidYMid meet"/,'wet-ink wordmark retains original 2:3 aspect ratio inside editorial folio');
+assert.match(source,/dataset\.previewSvg='xiwang-ink-vector\.svg'/,'only the Contents glyph uses preview lettering');
+assert.match(source,/src="\/images\/westside-watch-masthead-landscape\.svg"/,'protected right cover masthead remains unchanged');
+assert.match(source,/href:'#ws-xiwang-original'/,'both ink print and registration use exact vector artwork');
+const ink=fs.readFileSync('static/images/xiwang-ink-vector.svg','utf8');
+assert.match(ink,/<g id="xi" aria-label="西">/,'ink glyph 西 must be separately addressable');
+assert.match(ink,/<g id="wang" aria-label="望">/,'ink glyph 望 must be separately addressable');
+assert.doesNotMatch(ink,/<(?:image|text|foreignObject)\b|data:image\//,'ink must be true vector outlines, not raster/font');
+assert.ok(ink.length>100000,'real ink path detail must be preserved');
 assert.match(source,/const starRise=reduce\?/,'original Morning Star rise remains');
 assert.match(source,/star\.style\.left=lerp\(15,16,stone\)/,'Morning Star holds the new upper-left station of the open Contents folio');
 assert.match(css,/dual-dore-plate__image/,'same double-buffer image folio as Doré Search');
@@ -91,10 +98,10 @@ const data=()=> {
  const page=document.querySelector('#dual-contents');
  const index=document.querySelector('#p2-contents-design');
  const star=document.querySelector('#dual-star');
- // An SVG <use> contains an invisible uncropped 432px source. Only
- // the transformed 216×454 official two-glyph viewport is visible.
+ // The P2 ink vector uses one 288×454 scaled manuscript folio. The
+ // official cover masthead is a separate protected asset.
  const mx=hero.getScreenCTM();
- const corners=[[0,0],[216,0],[216,454],[0,454]]
+ const corners=[[0,0],[288,0],[288,454],[0,454]]
   .map(([x,y])=>new DOMPoint(x,y).matrixTransform(mx));
  const xs=corners.map(p=>p.x),ys=corners.map(p=>p.y);
  const left=Math.min(...xs),right=Math.max(...xs),top=Math.min(...ys),bottom=Math.max(...ys);
@@ -312,7 +319,7 @@ const data=()=> {
       const hero=document.querySelector(".ws-print-hero");
       const glyphFace=hero.querySelector(".ws-print-hero__face");
       const glyphCTM=glyphFace.getScreenCTM();
-      const pts=[[0,0],[216,0],[216,454],[0,454]]
+      const pts=[[0,0],[288,0],[288,454],[0,454]]
        .map(([x,y])=>new DOMPoint(x,y).matrixTransform(glyphCTM));
       const glyphRight=Math.max(...pts.map(p=>p.x));
       const glyphLeft=Math.min(...pts.map(p=>p.x));
