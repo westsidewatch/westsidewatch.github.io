@@ -44,8 +44,10 @@ assert.match(source,/viewBox:'0 0 216 218'/,'Westside original 西 must have a t
 assert.match(source,/viewBox:'216 0 216 218'/,'Westside original 望 must have a true clipped SVG viewport');
 assert.match(source,/href:'#ws-xiwang-original'/,'both glyphs come only from the protected SVG');
 assert.match(source,/const starRise=reduce\?/,'original Morning Star rise remains');
-assert.match(source,/star\.style\.left=lerp\(15,50,stone\)/,'Morning Star rises to editorial upper-left');
+assert.match(source,/star\.style\.left=lerp\(15,18,stone\)/,'Morning Star remains upper-left in the integrated Contents art field');
 assert.match(css,/dual-dore-plate__image/,'same double-buffer image folio as Doré Search');
+assert.match(css,/dual-contents__folio-caption/,'Contents and Doré must occupy one editorial folio');
+assert.match(source,/galleryUpdate\(progress>=\.30\)/,'gallery must continue while Contents is open');
 assert.doesNotMatch(source,/dual-dore-image"\s+src=|const artImage=document/,'retired single-image-only implementation must be absent');
 assert.doesNotMatch(source,/ws-engraved-side-mask|ws-engraved-mask-step|sideSlices|heroSides|residualBands|stoneTones/,'retired sidewall overlays must not interfere with engraving');
 assert.doesNotMatch(source,/starClearance|radial-gradient\(ellipse 24% 22%/,'a radial hole is not a physical Morning Star clearance');
@@ -263,8 +265,9 @@ const data=()=> {
      if(m.majorWeight!=='400'||m.secondaryWeights.some(x=>+x>200))faults.push('Contents secondary must be 200');
      if(m.volumeFontSize<10||m.volumeInk!=='rgb(255, 248, 233)'||m.volumeOpacity<.99)
       faults.push('Vol.00 metadata must be readable over the now-dark stone cast shadow');
-     if(!m.insideContents||m.stoneOpacity<.999||m.typeOpacity>.02)faults.push('old type must yield to stone Contents');
+     if(!m.insideContents||m.stoneOpacity<.999||m.typeOpacity<.98||m.doreVisible<.98)faults.push('Contents must preserve the original Doré and vertical Xi Wang visual');
      if(m.star.top<m.zone.top-4||m.star.bottom>m.zone.bottom+4)faults.push('star intrudes into reading zone');
+      if(m.hero.top<m.zone.top-4||m.hero.bottom>m.zone.bottom+4)faults.push('vertical Xi Wang must fit inside the Contents visual field');
      if(m.last.bottom>m.index.bottom+1&&!m.canKeyboardScroll)faults.push('last article not keyboard-reachable');
      if(m.railOpacity<.98)faults.push('seven-colour ribbon missing');
     }
