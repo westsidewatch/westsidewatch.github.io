@@ -36,7 +36,7 @@
   {id:"07",source:"The Form of Form",name:"Architectural Index",zh:"建築索引",glyph:[.19,.53,.052,.35,.67]},
   {id:"08",source:"François Girard-Meunier",name:"Swiss Counterpoint",zh:"瑞士對位",glyph:[.19,.51,.085,.37,.69]},
   {id:"09",source:"YES & NO",name:"Orbit of Four",zh:"四個軌道",glyph:[.18,.48,.07,.42,.63]},
-  {id:"10",source:"Cereal",name:"Engraved Light / Quiet Gallery",zh:"版畫光跡 · 靜默畫廊",glyph:[.34,.56,.27,.31,.94]},
+  {id:"10",source:"Cereal",name:"Engraved Light / Quiet Gallery",zh:"版畫光跡 · 靜默畫廊",glyph:[.34,.56,.055,.42,.94]},
   {id:"11",source:"W Magazine",name:"Four Monumental Numbers",zh:"四組大數字",glyph:[.19,.51,.07,.34,.69]},
   {id:"12",source:"The Eye",name:"Bibliographic Folio",zh:"古典書目",glyph:[.25,.58,.65,.29,.56]}
  ];
