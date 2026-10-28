@@ -4,6 +4,7 @@ Only expose a selectable collection after its source and exact index key have be
 
 ## Shared GLEAN method / 拾字方法
 
+- [《西望》07／09 字形基準 · 七件歷史原作及米芾字源線索板](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/XIWANG-07-09-ORIGINAL-SOURCE-BOARD-20261028.md)
 - [碑帖真跡集字 → SVG → AI 缺字補全（共同研究方法）](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/GLYPH-SOURCE-TO-SVG-AI-FALLBACK.md)
 - Design authority: [Chinese Logo Lab](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/LOGO-RESEARCH-DESIGN-CENTER.md)
 - Use existing verified glyph sources first. Crop and verify the original work; keep ImageMagick + Potrace active. VTracer is a comparison candidate; AI generation remains a **labeled, rights-reviewed fallback**, not an installed production provider.
