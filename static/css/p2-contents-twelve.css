@@ -249,23 +249,209 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
 .p2x--09 .p2x-orbit-chapter .p2x-list{gap:6px}
 .p2x--09 .p2x-orbit-chapter .p2x-works{display:block;font-size:clamp(8px,1.03cqi,11px);line-height:1.25}
 
-/* 10 — CEREAL — a deliberately silent museum-like image: art owns
-   70% of the square, tiny single-column contents are a light marginalia. */
-.p2x--10{background:linear-gradient(90deg,transparent 0 59%,rgba(247,244,237,.2) 65%,rgba(248,245,237,.98) 71%,#f8f5ed 100%)}
-.p2x--10 .p2x-cereal-gallery{position:absolute;inset:0 31% 0 0}
-.p2x--10 .p2x-cereal-edition{position:absolute;left:5%;right:5%;top:4%;display:flex;justify-content:space-between;
- font:200 clamp(8px,1.02cqi,11px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.12em;color:#ffefcf;text-shadow:0 1px 3px #172635}
-.p2x--10 .p2x-cereal-art-credit{position:absolute;bottom:4%;right:7%;text-align:right;font:italic 200 clamp(9px,1.1cqi,12px)/1.3 var(--ws-type-display-en,Georgia,serif);
- color:#ffedd2;text-shadow:0 1px 3px #172635}
-.p2x--10 .p2x-cereal-paper{position:absolute;inset:3% 2.8% 3% 70%;display:flex;flex-direction:column;min-height:0}
-.p2x--10 .p2x-cereal-tiny{padding-top:5px;border-top:1px solid #70706a;font:200 clamp(8px,.95cqi,11px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.07em}
-.p2x--10 .p2x-cereal-paper>h2{font:400 clamp(25px,4.85cqi,51px)/.9 var(--ws-type-display-en,Georgia,serif);margin:clamp(18px,3cqi,32px) 0 5px}
-.p2x--10 .p2x-cereal-chinese{font:200 clamp(9px,1.12cqi,12px)/1.2 var(--ws-type-reading-zh,sans-serif);color:#7b746c}
-.p2x--10 .p2x-cereal-stack{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;margin-top:clamp(17px,2.2cqi,24px);display:flex;flex-direction:column;gap:16px}
-.p2x--10 .p2x-cereal-movement{padding-top:6px;border-top:1px solid #a9a296}
-.p2x--10 .p2x-cereal-movement h3{font-size:clamp(16px,2.3cqi,25px)}
-.p2x--10 .p2x-cereal-movement .p2x-list{gap:7px}
-.p2x--10 .p2x-cereal-movement .p2x-works{display:block;font-size:clamp(8px,1.03cqi,11px);line-height:1.25}
+/* 10 — CEREAL × 09 / ENGRAVED LIGHT.
+   Open Doré picture gallery, its star casting a fine etched route toward
+   the architectural side index; the words remain untouched by tracing.
+   This is one art-directed composition, NOT the old narrow 30% TOC. */
+.p2x--10{
+ background:linear-gradient(90deg,transparent 0 51.5%,rgba(243,234,213,.12) 56%,
+ rgba(245,240,227,.73) 60.5%,rgba(249,246,239,.985) 65%,#f9f6ef 100%);
+}
+.p2x--10 .p2x-cereal-gallery{
+ position:absolute;inset:0 40% 0 0;z-index:2;pointer-events:none
+}
+.p2x--10 .p2x-cereal-edition{
+ position:absolute;left:5.5%;right:4.5%;top:4%;display:flex;justify-content:space-between;gap:12px;
+ color:#f6ecd4;text-shadow:0 1px 4px rgba(18,33,41,.72);
+ font:200 clamp(9px,1.05cqi,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.14em
+}
+.p2x--10 .p2x-cereal-edition span:last-child{
+ font-size:clamp(7px,.86cqi,9px);letter-spacing:.09em;text-align:right
+}
+.p2x--10 .p2x-cereal-art-credit{
+ position:absolute;left:5.5%;bottom:3.5%;font:italic 200 clamp(9px,1.15cqi,13px)/1.35 var(--ws-type-display-en,Georgia,serif);
+ color:#f6ebd4;text-shadow:0 1px 4px rgba(22,30,37,.83);
+ letter-spacing:.035em
+}
+/* The etched path literally begins at the settled Morning Star centre
+   (x=16% y=16.5%) and ends before the text-safe zone at x=61.5%. */
+.p2x--10 .p2x-cereal-engraving{
+ position:absolute;inset:0;width:100%;height:100%;z-index:1;
+ overflow:visible;pointer-events:none;
+ mix-blend-mode:multiply;opacity:.9
+}
+.p2x--10 .p2x-etch-line,
+.p2x--10 .p2x-etch-glimmer,
+.p2x--10 .p2x-etch-hatching path,
+.p2x--10 .p2x-etch-witness path{
+ fill:none;stroke-linecap:round;stroke-linejoin:round
+}
+.p2x--10 .p2x-etch-line{
+ stroke:url(#p2x-cereal-gold);stroke-width:1.7;vector-effect:non-scaling-stroke;
+ stroke-dasharray:1100;stroke-dashoffset:1100;
+ animation:p2x-etch-arrive 6.3s cubic-bezier(.28,.08,.24,1) both
+}
+.p2x--10 .p2x-etch-line--shadow{
+ stroke:#b18343;stroke-opacity:.45;stroke-width:.65;
+ animation-delay:.6s
+}
+.p2x--10 .p2x-etch-line--upper{
+ stroke:#c29c62;stroke-opacity:.54;stroke-width:.85;
+ animation-delay:1.1s
+}
+.p2x--10 .p2x-etch-glimmer{
+ stroke:#e9bc71;stroke-width:2.1;vector-effect:non-scaling-stroke;
+ opacity:.76;stroke-dasharray:24 1100;
+ animation:p2x-etch-follow 22s linear infinite
+}
+.p2x--10 .p2x-etch-hatching path{
+ stroke:#b28b50;stroke-opacity:.55;stroke-width:.75;
+ vector-effect:non-scaling-stroke;
+ stroke-dasharray:42;stroke-dashoffset:42;
+ animation:p2x-etch-arrive 6.3s ease-out 1.65s both
+}
+.p2x--10 .p2x-etch-witness path{
+ stroke:#c39750;stroke-opacity:.6;stroke-width:.75;
+ vector-effect:non-scaling-stroke;stroke-dasharray:38;stroke-dashoffset:38;
+ animation:p2x-etch-arrive 5.2s ease-out 1.5s both
+}
+#dual-stone-contents[aria-hidden="true"] .p2x--10 :is(.p2x-etch-line,.p2x-etch-glimmer,.p2x-etch-hatching path,.p2x-etch-witness path){
+ animation-play-state:paused
+}
+@keyframes p2x-etch-arrive{to{stroke-dashoffset:0}}
+@keyframes p2x-etch-follow{
+ from{stroke-dashoffset:1140;opacity:0}
+ 13%{opacity:.56}
+ 79%{opacity:.56}
+ to{stroke-dashoffset:-180;opacity:0}
+}
+/* The paper is a reading surface, not a floating framed card. */
+.p2x--10 .p2x-cereal-paper{
+ position:absolute;inset:3.5% 3.3% 3.1% 62.7%;
+ z-index:3;display:flex;flex-direction:column;min-width:0;min-height:0;
+ color:#21384a
+}
+.p2x--10 .p2x-cereal-tiny{
+ display:flex;gap:5px;align-items:baseline;justify-content:space-between;
+ border-top:1px solid rgba(53,62,67,.72);padding-top:8px;
+ font:200 clamp(8px,1cqi,11px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.08em;white-space:nowrap
+}
+.p2x--10 .p2x-cereal-tiny span:last-child{color:#90764f;flex:0 0 auto}
+.p2x--10 .p2x-cereal-header{
+ margin-top:clamp(18px,3cqi,30px);
+ flex:0 0 auto;min-width:0;display:block
+}
+.p2x--10 .p2x-cereal-header h2{
+ font:400 clamp(29px,5.65cqi,59px)/1.0 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.064em;overflow-wrap:normal;white-space:nowrap;
+ color:#23384b
+}
+.p2x--10 .p2x-cereal-chinese{
+ display:flex;justify-content:space-between;gap:8px;
+ align-items:baseline;
+ margin-top:clamp(7px,1.3cqi,13px);
+ font:200 clamp(10px,1.2cqi,13px)/1.35 var(--ws-type-reading-zh,"Noto Serif TC",serif);
+ letter-spacing:.025em;color:#6e6a63
+}
+.p2x--10 .p2x-cereal-chinese span{
+ font:200 clamp(8px,.91cqi,10px)/1.35 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.04em;text-align:right;color:#827967
+}
+.p2x--10 .p2x-cereal-nav{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;
+ margin:clamp(17px,2.7cqi,28px) 0 clamp(10px,1.8cqi,18px);
+ flex:0 0 auto;border-top:1px solid rgba(74,78,74,.44);
+ border-bottom:1px solid rgba(74,78,74,.32)
+}
+.p2x--10 .p2x-cereal-nav button{
+ min-width:0;text-align:left;border:0;border-right:1px solid rgba(74,78,74,.22);
+ background:transparent;padding:7px 3px 8px;color:#56616b;cursor:pointer;
+ display:flex;flex-direction:column;gap:2px;transition:background-color .3s ease,color .3s ease
+}
+.p2x--10 .p2x-cereal-nav button:first-child{padding-left:0}
+.p2x--10 .p2x-cereal-nav button:last-child{border-right:0;padding-right:0}
+.p2x--10 .p2x-cereal-nav button>span{
+ font:italic 200 clamp(10px,1.32cqi,14px)/1.1 var(--ws-type-display-en,Georgia,serif)
+}
+.p2x--10 .p2x-cereal-nav button small{
+ font:200 clamp(7px,.92cqi,10px)/1.25 var(--ws-type-display-en-sc,Georgia,serif);
+ overflow-wrap:anywhere
+}
+.p2x--10 .p2x-cereal-nav button[aria-current="location"]{
+ color:#976b32;background:linear-gradient(180deg,rgba(201,165,102,.12),transparent)
+}
+.p2x--10 .p2x-cereal-nav button:focus-visible{
+ outline:1px solid #a47b42;outline-offset:-1px
+}
+.p2x--10 .p2x-cereal-stack{
+ flex:1 1 0;min-width:0;min-height:0;
+ display:flex;flex-direction:column;gap:clamp(22px,3.05cqi,34px);
+ overflow-y:auto;overflow-x:hidden;
+ padding:0 clamp(4px,.7cqi,8px) 12px 0;
+ scrollbar-width:thin;scrollbar-color:rgba(151,123,79,.43) transparent;
+ overscroll-behavior:contain;scroll-behavior:smooth
+}
+.p2x--10 .p2x-cereal-movement{
+ position:relative;flex:0 0 auto;min-height:max-content;
+ border-top:1px solid rgba(56,69,76,.38);
+ padding-top:clamp(8px,1.25cqi,13px);
+ scroll-margin-top:2px
+}
+.p2x--10 .p2x-cereal-movement .p2x-movement__heading{
+ display:flex;align-items:baseline;gap:9px;
+ margin:0 0 clamp(11px,1.7cqi,18px)
+}
+.p2x--10 .p2x-cereal-movement .p2x-roman{
+ font:italic 200 clamp(12px,1.48cqi,16px)/1.25 var(--ws-type-display-en,Georgia,serif)
+}
+.p2x--10 .p2x-cereal-movement h3{
+ font:200 clamp(24px,3.25cqi,36px)/1.15 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.035em;white-space:nowrap
+}
+.p2x--10 .p2x-cereal-movement .p2x-list{
+ gap:clamp(12px,1.7cqi,18px)
+}
+.p2x--10 .p2x-cereal-movement .p2x-entry{
+ display:grid;grid-template-columns:clamp(19px,2.3cqi,25px) minmax(0,1fr);
+ gap:clamp(6px,.95cqi,11px);
+ align-items:start;min-height:max-content
+}
+.p2x--10 .p2x-cereal-movement .p2x-num{
+ padding-top:2px;
+ font:italic 200 clamp(11px,1.42cqi,15px)/1.35 var(--ws-type-display-en,Georgia,serif)
+}
+.p2x--10 .p2x-cereal-movement .p2x-zh{
+ display:block;font:200 clamp(13px,1.65cqi,17px)/1.42 var(--ws-type-display-zh,sans-serif);
+ overflow-wrap:anywhere
+}
+.p2x--10 .p2x-cereal-movement .p2x-en{
+ display:block;margin-top:3px;
+ font:italic 200 clamp(11px,1.36cqi,14px)/1.35 var(--ws-type-display-en,Georgia,serif);
+ color:#737a80;overflow-wrap:anywhere
+}
+.p2x--10 .p2x-cereal-movement .p2x-works{
+ display:block;margin-top:clamp(6px,.9cqi,9px);
+ font:200 clamp(11px,1.33cqi,14px)/1.62 var(--ws-type-reading-zh,"Noto Serif TC",serif);
+ color:#4e5660;overflow-wrap:anywhere
+}
+.p2x--10 .p2x-cereal-movement .p2x-works span{
+ display:block;overflow-wrap:anywhere
+}
+.p2x--10 .p2x-cereal-movement .p2x-interlude{
+ margin-top:clamp(11px,1.6cqi,18px);padding-top:8px;
+ font:200 clamp(9px,1.05cqi,12px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.09em;border-top:1px solid rgba(56,69,76,.26)
+}
+.p2x--10 .p2x-cereal-footer{
+ display:flex;justify-content:space-between;gap:7px;
+ padding-top:8px;border-top:1px solid rgba(56,69,76,.53);
+ flex:0 0 auto;color:#857353;
+ font:200 clamp(9px,1.1cqi,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.08em
+}
+.p2x--10 .p2x-cereal-progress{white-space:nowrap}
 
 /* 11 — W MAGAZINE — gigantic four volume numerals, an expansive
    imagery half and typographic four-act lower grid. */
@@ -343,9 +529,14 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
  .p2x--08 .p2x-swiss-quadrants{left:23%;grid-template-columns:1fr;grid-template-rows:auto;overflow-y:auto}
  .p2x--09 .p2x-orbit-head h2{font-size:clamp(30px,8cqi,50px)}
  .p2x--09 .p2x-orbit-index{inset:25% 3% 4% 47%}
- .p2x--10 .p2x-cereal-gallery{right:38%}
- .p2x--10 .p2x-cereal-paper{left:63%}
- .p2x--10 .p2x-cereal-paper>h2{font-size:clamp(22px,5.6cqi,40px)}
+ .p2x--10 .p2x-cereal-gallery{right:40%}
+ .p2x--10 .p2x-cereal-paper{left:60.5%;right:3%;top:3.1%;bottom:3%}
+ .p2x--10 .p2x-cereal-header{margin-top:clamp(12px,2.2cqi,22px)}
+ .p2x--10 .p2x-cereal-header h2{font-size:clamp(24px,5.2cqi,43px)}
+ .p2x--10 .p2x-cereal-nav{margin:clamp(10px,1.6cqi,18px) 0}
+ .p2x--10 .p2x-cereal-nav button{padding:5px 2px}
+ .p2x--10 .p2x-cereal-movement h3{font-size:clamp(20px,3.1cqi,30px)}
+ .p2x--10 .p2x-cereal-movement .p2x-list{gap:10px}
  .p2x--11 .p2x-w-upper h2{font-size:clamp(36px,9.5cqi,62px)}
  .p2x--11 .p2x-w-chapters{grid-template-columns:1fr 1fr;overflow-y:auto;gap:10px}
  .p2x--12 .p2x-eye-title h2{font-size:clamp(33px,9cqi,60px)}
@@ -354,4 +545,43 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
 }
 @media(prefers-reduced-motion:reduce){
  .p2x{scroll-behavior:auto}
+}
+
+
+/* When the actual viewport is phone-sized, use a full-width library caption:
+   do not crush twelve real titles into a 110px vertical sidebar. */
+@media(max-width:640px){
+ .p2x--10{
+  background:linear-gradient(180deg,transparent 0 41%,
+  rgba(241,231,208,.19) 46%,rgba(248,244,235,.99) 52%,#f9f6ef 100%)
+ }
+ .p2x--10 .p2x-cereal-gallery{inset:0 0 49% 0}
+ .p2x--10 .p2x-cereal-edition{top:3%;left:5%;right:5%}
+ .p2x--10 .p2x-cereal-art-credit{bottom:6%}
+ .p2x--10 .p2x-cereal-engraving{opacity:.70}
+ .p2x--10 .p2x-cereal-paper{
+  inset:52% 0 0;padding:2.8% 5% 4%;
+  background:transparent
+ }
+ .p2x--10 .p2x-cereal-tiny{padding-top:5px;font-size:8px}
+ .p2x--10 .p2x-cereal-header{margin-top:5px}
+ .p2x--10 .p2x-cereal-header h2{font-size:clamp(27px,7.1cqi,42px);line-height:1}
+ .p2x--10 .p2x-cereal-chinese{margin-top:5px}
+ .p2x--10 .p2x-cereal-nav{margin:8px 0 9px}
+ .p2x--10 .p2x-cereal-nav button{padding:4px 2px}
+ .p2x--10 .p2x-cereal-nav button small{font-size:8px}
+ .p2x--10 .p2x-cereal-stack{gap:18px}
+ .p2x--10 .p2x-cereal-movement{padding-top:7px}
+ .p2x--10 .p2x-cereal-movement h3{font-size:clamp(21px,5cqi,27px)}
+ .p2x--10 .p2x-cereal-movement .p2x-zh{font-size:clamp(13px,3.6cqi,16px)}
+ .p2x--10 .p2x-cereal-movement .p2x-en{font-size:clamp(11px,3.0cqi,13px)}
+ .p2x--10 .p2x-cereal-movement .p2x-works{font-size:clamp(11px,3cqi,13px);line-height:1.55}
+ .p2x--10 .p2x-cereal-footer{padding-top:5px;font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ .p2x--10 .p2x-cereal-stack{scroll-behavior:auto}
+ .p2x--10 .p2x-etch-line,
+ .p2x--10 .p2x-etch-glimmer,
+ .p2x--10 .p2x-etch-hatching path,
+ .p2x--10 .p2x-etch-witness path{animation:none!important;stroke-dashoffset:0!important}
 }
