@@ -36,7 +36,7 @@
   {id:"07",source:"The Form of Form",name:"Architectural Index",zh:"建築索引",glyph:[.19,.53,.052,.35,.67]},
   {id:"08",source:"François Girard-Meunier",name:"Swiss Counterpoint",zh:"瑞士對位",glyph:[.19,.51,.085,.37,.69]},
   {id:"09",source:"YES & NO",name:"Orbit of Four",zh:"四個軌道",glyph:[.18,.48,.07,.42,.63]},
-  {id:"10",source:"Cereal",name:"Quiet Gallery",zh:"靜默畫廊",glyph:[.32,.66,.09,.26,.83]},
+  {id:"10",source:"Cereal",name:"Engraved Light / Quiet Gallery",zh:"版畫光跡 · 靜默畫廊",glyph:[.18,.45,.09,.45,.31]},
   {id:"11",source:"W Magazine",name:"Four Monumental Numbers",zh:"四組大數字",glyph:[.19,.51,.07,.34,.69]},
   {id:"12",source:"The Eye",name:"Bibliographic Folio",zh:"古典書目",glyph:[.25,.58,.65,.29,.56]}
  ];
@@ -95,11 +95,33 @@
    '<div class="p2x-orbit-head"><span>FOUR POINTS OF WATCH</span><h2>Contents.</h2></div>'+
    '<div class="p2x-orbit-locations">'+groups.map((g,i)=>'<span class="p2x-orbit-marker p2x-orbit-marker--'+i+'">'+escape(g.roman)+' / '+escape(g.key)+'</span>').join("")+'</div>'+
    '<div class="p2x-orbit-index">'+groupList("p2x-orbit-chapter",{entryStyle:"tight"})+'</div>',
- "10":()=>'<div class="p2x-cereal-gallery"><div class="p2x-cereal-edition">THE CITY OF LIGHT <span>VOL. 00</span></div>'+
-   '<span class="p2x-cereal-art-credit">GUSTAVE DORÉ<br>1866 / ORIGINAL PLATES</span></div>'+
-   '<div class="p2x-cereal-paper"><span class="p2x-cereal-tiny">INDEX / WESTSIDE WATCH</span>'+
-   '<h2>Contents.</h2><span class="p2x-cereal-chinese">目錄 · 十二個入口</span>'+
-   '<div class="p2x-cereal-stack">'+groupList("p2x-cereal-movement",{entryStyle:"tight"})+'</div></div>',
+ "10":()=>'<div class="p2x-cereal-gallery"><div class="p2x-cereal-edition"><span>THE CITY OF LIGHT</span><span>GUSTAVE DORÉ / ORIGINAL PLATES</span></div>'+
+   '<span class="p2x-cereal-art-credit">ENGRAVED CITIES & WALLS / 1866</span></div>'+
+   // The star at ~16% / 16.5% is the origin of an *etched route*;
+   // 09's whole concentric orbit diagram is deliberately not transplanted.
+   '<svg class="p2x-cereal-engraving" viewBox="0 0 1000 1000" preserveAspectRatio="none" role="img" aria-label="晨星引導至目錄的極細金色雕版動態刻線">'+
+    '<defs><linearGradient id="p2x-cereal-gold" x1="0" y1="0" x2="1" y2=".8">'+
+      '<stop offset="0" stop-color="#c39146" stop-opacity=".22"/><stop offset=".35" stop-color="#f4c97e" stop-opacity=".92"/>'+
+      '<stop offset=".82" stop-color="#a67831" stop-opacity=".88"/><stop offset="1" stop-color="#c99a51" stop-opacity=".14"/></linearGradient></defs>'+
+    '<path class="p2x-etch-line p2x-etch-line--principal" d="M166 165 C196 199 204 215 236 232 S295 265 329 280 S398 314 427 346 S493 421 593 453"/>'+
+    '<path class="p2x-etch-line p2x-etch-line--shadow" d="M172 177 C200 215 213 226 244 241 S305 273 337 286 S407 325 434 360 S502 431 587 467"/>'+
+    '<path class="p2x-etch-line p2x-etch-line--upper" d="M170 156 C207 176 227 189 259 204 S331 222 364 246 S424 287 446 308"/>'+
+    '<path class="p2x-etch-glimmer" d="M166 165 C196 199 204 215 236 232 S295 265 329 280 S398 314 427 346 S493 421 593 453"/>'+
+    '<g class="p2x-etch-hatching">'+
+       '<path d="M229 223 l-6 12 M240 229 l-5 13 M250 237 l-4 12 M321 273 l-9 16 M334 280 l-8 17 M347 288 l-8 16 M418 338 l-10 19 M429 350 l-9 19 M440 362 l-8 16 M522 428 l-10 13 M531 433 l-11 13"/>'+
+     '</g>'+
+     '<g class="p2x-etch-witness"><path d="M316 281 l13 -1 l-5 11 M420 345 l9 6 l-9 11 M521 425 l11 6 l-11 9"/></g>'+
+   '</svg>'+
+   '<div class="p2x-cereal-paper">'+
+    '<div class="p2x-cereal-tiny"><span>WESTSIDE WATCH / INDEX</span><span>VOL.00</span></div>'+
+    '<header class="p2x-cereal-header"><h2>Contents<span class="p2x-dot">.</span></h2>'+
+      '<p class="p2x-cereal-chinese">目錄 <span>FOUR MOVEMENTS / TWELVE DESKS</span></p></header>'+
+    '<nav class="p2x-cereal-nav" aria-label="跳到四個目錄篇章">'+
+      groups.map((g,i)=>'<button type="button" data-p2-cereal-jump="'+i+'" aria-label="跳到 '+escape(g.key)+'"><span>'+escape(g.roman)+'</span><small>'+escape(g.key)+'</small></button>').join("")+'</nav>'+
+    '<div class="p2x-cereal-stack" tabindex="0" role="region" aria-label="可捲動的十二個欄目完整文章目錄">'+
+     groupList("p2x-cereal-movement",{entryStyle:"standard"})+'</div>'+
+    '<footer class="p2x-cereal-footer"><span>01—12 / CONTENTS</span><span class="p2x-cereal-progress" aria-live="off">SCROLL TO EXPLORE ↓</span></footer>'+
+   '</div>',
  "11":()=>'<div class="p2x-w-upper"><span>WESTSIDE WATCH / JOURNAL</span>'+
    '<h2>Contents</h2><strong>00</strong></div>'+
    '<div class="p2x-w-chapters">'+groups.map((g,i)=>'<section class="p2x-w-chapter"><span class="p2x-w-huge">'+
@@ -112,7 +134,7 @@
    '<div class="p2x-eye-mark">00</div><div class="p2x-eye-footer">THE CITY OF LIGHT / GUSTAVE DORÉ</div>'
  };
  const params=new URLSearchParams(location.search);
- let active=DESIGNS.some(d=>d.id===params.get("variant"))?params.get("variant"):"01";
+ let active=DESIGNS.some(d=>d.id===params.get("variant"))?params.get("variant"):"10";
  const host=document.createElement("div");
  host.id="p2-contents-design";
  host.setAttribute("role","document");
@@ -137,6 +159,33 @@
   host.querySelectorAll(".p2x-aperture-groups,.p2x-coeval-stairs,.p2x-surplus-mosaic,.p2x-aa-strips,.p2x-aa-column,.p2x-circular-list,.p2x-remote-constellation,.p2x-form-index,.p2x-swiss-quadrants,.p2x-orbit-index,.p2x-cereal-stack,.p2x-w-chapters,.p2x-eye-register").forEach(el=>{
    el.tabIndex=0;el.setAttribute("role","region");el.setAttribute("aria-label","可捲動的十二欄目目錄");
   });
+  if(active==="10"){
+   const scroller=host.querySelector(".p2x-cereal-stack");
+   const chapters=[...scroller.querySelectorAll(".p2x-cereal-movement")];
+   const jumps=[...host.querySelectorAll("[data-p2-cereal-jump]")];
+   const status=host.querySelector(".p2x-cereal-progress");
+   let currentChapter=-1;
+   const sync=()=>{
+    let chapter=0;
+    chapters.forEach((el,i)=>{if(el.offsetTop-scroller.offsetTop<=scroller.scrollTop+24)chapter=i});
+    if(chapter!==currentChapter){
+     currentChapter=chapter;
+     jumps.forEach((b,i)=>{
+      b.setAttribute("aria-current",i===chapter?"location":"false");
+     });
+    }
+    if(status)status.textContent=scroller.scrollHeight>scroller.clientHeight+3?
+       (scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-3?
+        "END / 12":"SCROLL / "+String(chapter+1).padStart(2,"0")+" OF 04"):"INDEX / COMPLETE";
+   };
+   scroller.addEventListener("scroll",sync,{passive:true});
+   jumps.forEach((b,i)=>b.addEventListener("click",()=>{
+    const target=chapters[i];
+    const top=target.getBoundingClientRect().top-scroller.getBoundingClientRect().top+scroller.scrollTop;
+    scroller.scrollTo({top,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
+   }));
+   sync();
+  }
   host.setAttribute("aria-label","Contents study "+active+" — "+current.source+" / "+current.name);
   toolbar.querySelector(".p2-variant-toolbar__current").textContent=current.source+" / "+current.zh;
   toolbar.querySelectorAll("button[data-p2-variant]").forEach(b=>{
