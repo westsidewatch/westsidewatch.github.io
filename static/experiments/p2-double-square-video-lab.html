@@ -97,10 +97,14 @@
    
    <svg class="dual-letterfield" id="dual-letterfield" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
      <defs>
-      <mask id="ws-source-mask" x="0" y="0" width="432" height="218" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" style="mask-type:alpha">
-       <image href="/images/westside-watch-xiwang-horizontal-motion.svg" x="0" y="0" width="432" height="218"/>
+      <!-- Selected user-approved Xi Wang MOTHER v02 ink SVG: original two
+           vertically written glyphs, real editable paths and wet/dry brush
+           transparency. This is a scoped P2 PREVIEW, not the official masthead.
+           Native 2:3 aspect ratio remains intact; no stretch or raster. -->
+      <mask id="ws-source-mask" x="0" y="0" width="288" height="454" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" style="mask-type:alpha">
+       <image href="/images/xiwang-ink-vector.svg" x="0" y="0" width="288" height="454" preserveAspectRatio="xMidYMid meet"/>
       </mask>
-      <g id="ws-xiwang-original" mask="url(#ws-source-mask)"><rect width="432" height="218" fill="currentColor"/></g>
+      <g id="ws-xiwang-original" mask="url(#ws-source-mask)"><rect width="288" height="454" fill="currentColor"/></g>
      </defs>
     </svg>
      <div class="dual-cover__star" id="dual-star" aria-hidden="true">
@@ -187,9 +191,11 @@
 
  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
  const lerp=(a,b,t)=>a+(b-a)*t;
- // Official 西望 glyph paths remain the ONLY character artwork.
- // Editorial image folio uses the approved horizontal SVG reflowed into
- // a vertical two-glyph title; its outlines are neither redrawn nor retyped.
+ // The P2 Contents and transitional monumental type use the user-selected
+ // genuine path-traced wet-ink two-glyph Xi Wang SVG in one VERTICAL folio.
+ // We preserve each original stroke and flywhite; no upscaled small script,
+ // no custom display font, no stretched 2:3 mother. The protected RIGHT cover
+ // continues to use its own official landscape masthead SVG, untouched.
  const svgNS='http://www.w3.org/2000/svg';
  const mk=(tag,parent,attrs={})=>{
   const el=document.createElementNS(svgNS,tag);
@@ -198,15 +204,10 @@
   return el;
  };
  const defs=letters.querySelector('defs');
- // Each official glyph has a real 216×218 SVG viewport.
- // This makes visible bounds correct for editorial star clearance.
  const vertical=mk('g',defs,{id:'ws-xiwang-vertical'});
- const xiWindow=mk('svg',vertical,{x:0,y:0,width:216,height:218,viewBox:'0 0 216 218',overflow:'hidden'});
- mk('use',xiWindow,{href:'#ws-xiwang-original'});
- const wangWindow=mk('svg',vertical,{x:0,y:236,width:216,height:218,viewBox:'216 0 216 218',overflow:'hidden'});
- mk('use',wangWindow,{href:'#ws-xiwang-original'});
+ mk('use',vertical,{href:'#ws-xiwang-original'});
  const hero=mk('g',letters,{'class':'ws-print-hero'});
- hero.dataset.officialSvg='westside-watch-xiwang-horizontal-motion.svg';
+ hero.dataset.previewSvg='xiwang-ink-vector.svg';
  const registration=mk('use',hero,{'class':'ws-print-hero__registration',href:'#ws-xiwang-vertical',transform:'translate(1.0 1.5)'});
  const heroFace=mk('use',hero,{'class':'ws-print-hero__face',href:'#ws-xiwang-vertical'});
  const artPlate=document.getElementById('dual-dore-plate');
@@ -415,8 +416,8 @@
   stage.dataset.doreVisible=artPlate.style.opacity;
   stage.dataset.dorePlateId=artPlate.dataset.plateId||'';
   stage.dataset.dorePlateChanges=String(plateChanges);
-  // Large vertical title uses the two exact official original glyphs
-  // as a translucent ink/stone overprint, matching the reference spread.
+  // The approved 2:3 wet-ink mother prints over the moving Doré original.
+  // Only the manuscript glyph changes; the star, cover and pacing remain.
   const typeEnter=reduce?(progress>=.31?1:0):ease((progress-.255)/.11);
   const typeLeave=0; // Keep the authentic vertical masthead in the Contents image field.
   letters.style.clipPath='none';
@@ -427,20 +428,20 @@
   // The editorial lead glyphs anchor the complete moving engraving,
   // rather than shrinking into a thumbnail above an imported index.
   const stoneProgress=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
-  const leadScale=Math.min(contentsW*.61/216,contentsH*.89/454);
+  const leadScale=Math.min(contentsW*.61/288,contentsH*.89/454);
   // Each of twelve commissioned editorial layouts owns a different spatial
   // relationship between the original SVG and the typographic contents.
   const glyph=window.P2ContentsTwelve?.glyph;
-  const folioScale=glyph?Math.min(contentsW*glyph[0]/216,contentsH*glyph[1]/454):
-   Math.min(contentsW*.32/216,contentsH*.55/454);
+  const folioScale=glyph?Math.min(contentsW*glyph[0]/288,contentsH*glyph[1]/454):
+   Math.min(contentsW*.32/288,contentsH*.55/454);
   const titleScale=lerp(leadScale,folioScale,stoneProgress);
-  const titleX=lerp((contentsW-216*leadScale)*.75,contentsW*(glyph?glyph[2]:.055),stoneProgress);
+  const titleX=lerp((contentsW-288*leadScale)*.75,contentsW*(glyph?glyph[2]:.055),stoneProgress);
   const titleY=lerp((contentsH-454*leadScale)*.5,contentsH*(glyph?glyph[3]:.335),stoneProgress);
   hero.setAttribute('transform','translate('+titleX.toFixed(2)+' '+titleY.toFixed(2)+') scale('+titleScale.toFixed(5)+')');
   hero.style.opacity=String(titleOn*lerp(1,glyph?glyph[4]:1,stoneProgress));
   stage.dataset.xiwangHero=titleOn.toFixed(3);
   stage.dataset.xiwangImpression=titleOn.toFixed(3);
-  stage.dataset.xiwangPlate='official-svg-vertical-dore-city-gallery';
+  stage.dataset.xiwangPlate='wet-ink-svg-vertical-dore-city-gallery';
   stage.dataset.xiwangTitleOrientation='vertical';
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
@@ -544,6 +545,6 @@
  setProgress(Number(qs.get('p')??100)/100);
 })();
 </script>
-<script src="/experiments/p2-contents-twelve.js?v=20261028h"></script>
+<script src="/experiments/p2-contents-twelve.js?v=20261028j"></script>
 </body>
 </html>
