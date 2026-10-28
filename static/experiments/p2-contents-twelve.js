@@ -132,6 +132,11 @@
   tile.dataset.p2Design=active;
   host.className="p2x p2x--"+active;
   host.innerHTML=renderers[active]();
+  // Each variant has its own keyboard-reachable editorial reading surface.
+  host.tabIndex=0;
+  host.querySelectorAll(".p2x-aperture-groups,.p2x-coeval-stairs,.p2x-surplus-mosaic,.p2x-aa-strips,.p2x-aa-column,.p2x-circular-list,.p2x-remote-constellation,.p2x-form-index,.p2x-swiss-quadrants,.p2x-orbit-index,.p2x-cereal-stack,.p2x-w-chapters,.p2x-eye-register").forEach(el=>{
+   el.tabIndex=0;el.setAttribute("role","region");el.setAttribute("aria-label","可捲動的十二欄目目錄");
+  });
   host.setAttribute("aria-label","Contents study "+active+" — "+current.source+" / "+current.name);
   toolbar.querySelector(".p2-variant-toolbar__current").textContent=current.source+" / "+current.zh;
   toolbar.querySelectorAll("button[data-p2-variant]").forEach(b=>{
