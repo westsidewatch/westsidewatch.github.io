@@ -428,15 +428,19 @@
   // The editorial lead glyphs anchor the complete moving engraving,
   // rather than shrinking into a thumbnail above an imported index.
   const stoneProgress=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
-  const leadScale=Math.min(contentsW*.61/288,contentsH*.89/454);
-  // Each of twelve commissioned editorial layouts owns a different spatial
-  // relationship between the original SVG and the typographic contents.
+  // Editor's lower-left placement: keep every ink stroke intact while
+  // scaling the wordmark just enough to clear the upper-left Morning Star.
+  const leadScale=Math.min(contentsW*.61/288,contentsH*.89/454)*.72;
+  const leadX=contentsW*.055;
+  const leadY=contentsH-454*leadScale-contentsH*.045;
+  // Twelve Contents layouts retain their own terminal coordinates;
+  // the selected Cereal layout also settles at the lower-left.
   const glyph=window.P2ContentsTwelve?.glyph;
   const folioScale=glyph?Math.min(contentsW*glyph[0]/288,contentsH*glyph[1]/454):
    Math.min(contentsW*.32/288,contentsH*.55/454);
   const titleScale=lerp(leadScale,folioScale,stoneProgress);
-  const titleX=lerp((contentsW-288*leadScale)*.75,contentsW*(glyph?glyph[2]:.055),stoneProgress);
-  const titleY=lerp((contentsH-454*leadScale)*.5,contentsH*(glyph?glyph[3]:.335),stoneProgress);
+  const titleX=lerp(leadX,contentsW*(glyph?glyph[2]:.055),stoneProgress);
+  const titleY=lerp(leadY,contentsH*(glyph?glyph[3]:.42),stoneProgress);
   hero.setAttribute('transform','translate('+titleX.toFixed(2)+' '+titleY.toFixed(2)+') scale('+titleScale.toFixed(5)+')');
   hero.style.opacity=String(titleOn*lerp(1,glyph?glyph[4]:1,stoneProgress));
   stage.dataset.xiwangHero=titleOn.toFixed(3);
