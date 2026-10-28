@@ -33,7 +33,29 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+      - name: Review P2 / Vol.00 in actual Chromium at four sizes
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-vol00-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-vol00-preview.cjs
+      - name: Publish twelve genuine Chromium screenshots to branch preview
+        if: always()
+        run: |
+          mkdir -p public/experiments/p2-contents-proof
+          find artifacts/p2-vol00 -maxdepth 1 -name 'twelve-??-desktop.png' -exec cp {} public/experiments/p2-contents-proof/ \; 2>/dev/null || true
+      - name: Upload Vol.00 proof screenshot set
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-vol00-editorial-proof
+          path: artifacts/p2-vol00/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Deploy Cloudflare Pages preview (never production)
+        if: always()
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -46,4 +68,4 @@ jobs:
             --commit-hash="${GITHUB_SHA}" \
             --commit-message="First Look isolated preview"
           echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
-          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/p2-double-square-video-lab.html?p=100" >> "$GITHUB_STEP_SUMMARY"

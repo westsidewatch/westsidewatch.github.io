@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WESTSIDE WATCH · Masthead / Issue Colour / Image Breach</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+/* Independent editorial experiment. No production selector, token, or P2 timeline changes.
+   The only masthead geometry comes from measured visible ink of the existing
+   680x190 official SVG: x=1..633, y=10..90, 633x81 visible pixels. */
+:root{color-scheme:light;--ui:#142235;--paper:#f1eee5;--rule:#b1aaa0}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ui);font-family:var(--ws-type-reading-zh,"Chiron Hei HK WS",sans-serif)}
+button{font:inherit}
+.head{padding:23px clamp(18px,3.8vw,62px) 20px;display:flex;justify-content:space-between;align-items:start;gap:30px;border-bottom:1px solid var(--rule)}
+.head__brand{font:400 clamp(25px,3vw,45px)/.94 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.045em}
+.head__brand em{font-weight:400}
+.head__note{font:400 12px/1.65 var(--ws-type-reading-zh,sans-serif);max-width:36ch;text-align:right}
+.smallcaps{font:400 11px/1.5 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.1em}
+.controls{padding:17px clamp(18px,3.8vw,62px);display:flex;align-items:end;flex-wrap:wrap;gap:15px 27px;border-bottom:1px solid var(--rule)}
+.control{display:grid;gap:8px}
+.control__buttons{display:flex;flex-wrap:wrap;gap:3px}
+.control__buttons button{border:1px solid #a4a29a;background:transparent;padding:9px 12px;min-height:37px;color:#27384b;cursor:pointer;font:400 11px/1.1 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
+.control__buttons button[aria-pressed="true"]{background:var(--ui);border-color:var(--ui);color:white}
+.readout{margin-left:auto;align-self:end;display:flex;gap:16px;flex-wrap:wrap;font:400 10px/1.5 var(--ws-type-display-en-sc,Georgia,serif);color:#665c4e;letter-spacing:.05em}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,320px);gap:clamp(22px,3vw,48px);padding:32px clamp(18px,3.8vw,62px) 46px;align-items:start}
+.proof-shell{min-width:0}
+.proof-heading{display:flex;justify-content:space-between;gap:10px;margin:0 0 12px;align-items:baseline}
+.cover{
+ --band:#102a43;--mast:#b99443;--surface:#e9d6ad;--copy:#162f43;--accent:#b98c2d;
+ --band-end:22cqi;--wall-start:calc(var(--band-end) - 4cqi);
+ position:relative;display:block;isolation:isolate;container-type:inline-size;aspect-ratio:8/5;
+ width:100%;overflow:hidden;background:var(--surface);box-shadow:0 17px 32px #222b321f;
+}
+.cover[data-issue="1"]{--band:#b24f43;--mast:#f4ddbb;--surface:#e8dbc8;--copy:#372c2b;--accent:#623a33}
+.cover[data-issue="2"]{--band:#e2d9c5;--mast:#233d4b;--surface:#293f4e;--copy:#e6d7bc;--accent:#c2a46b}
+.cover[data-ratio="4:3"]{aspect-ratio:4/3}
+.cover[data-ratio="4:5"]{aspect-ratio:4/5}
+.cover[data-ratio="5:8"]{aspect-ratio:5/8}
+/* Vol.00: the navy is a continuous sky behind the ORIGINAL masked stone,
+   not a rectangle ending at a colour-block seam. Extend the negative space
+   below the masthead while keeping the SVG ink coordinates unchanged. */
+.cover[data-issue="0"]{--band-end:30cqi;background:var(--band)}
+.cover[data-issue="0"] .band-rule{display:none}
+.cover[data-breach="0"]{--wall-start:calc(var(--band-end) + 4cqi);--portrait-start:calc(var(--band-end) + 3cqi);--abstract-start:var(--band-end)}
+.cover[data-breach="1"]{--wall-start:calc(var(--band-end) - 4cqi);--portrait-start:calc(var(--band-end) - 4cqi);--abstract-start:calc(var(--band-end) - 2cqi)}
+.cover[data-breach="2"]{--wall-start:calc(var(--band-end) - 9cqi);--portrait-start:calc(var(--band-end) - 9cqi);--abstract-start:calc(var(--band-end) - 5cqi)}
+.cover[data-breach="3"]{--wall-start:calc(var(--band-end) - 16cqi);--portrait-start:calc(var(--band-end) - 14cqi);--abstract-start:calc(var(--band-end) - 9cqi)}
+.band{position:absolute;top:0;left:0;right:0;height:var(--band-end);background:var(--band);z-index:0}
+.cover__mast{
+ position:absolute;left:1.45%;width:97.1%;top:1.15cqi;aspect-ratio:633/81;
+ overflow:hidden;z-index:10;pointer-events:none
+}
+/* The image itself is never distorted or redesigned. Only the transparent
+   bounding padding is optically cropped. The SVG is reused as an alpha mask
+   so its single ink can take each issue's editorial colour. */
+.cover__ink{
+ position:absolute;left:-.158%;top:-12.346%;width:107.425%;aspect-ratio:680/190;
+ background:var(--mast);
+ -webkit-mask:url('/images/westside-watch-masthead-landscape.svg') 0 0 / 100% 100% no-repeat;
+ mask:url('/images/westside-watch-masthead-landscape.svg') 0 0 / 100% 100% no-repeat;
+}
+.cover__ink-fallback{display:none}
+@supports not ((-webkit-mask-image:url("a.svg")) or (mask-image:url("a.svg"))){
+ .cover__ink{display:none}.cover__ink-fallback{display:block;position:absolute;top:-12.346%;left:-.158%;width:107.425%;height:auto}
+}
+.band-rule{position:absolute;z-index:1;top:var(--band-end);left:0;right:0;height:1px;background:color-mix(in srgb,var(--band) 82%,var(--surface));opacity:.6}
+.cover__issue{position:absolute;left:4%;bottom:4.5%;z-index:14;color:var(--copy);display:flex;align-items:baseline;gap:.29em;width:max-content;max-width:34%;white-space:nowrap;font:400 clamp(11px,1.6cqi,20px)/1 var(--ws-type-display-en-sc,Georgia,serif)}
+.issue__abbr{font-size:.78em;letter-spacing:.075em}
+.issue__num{font:400 1.43em/.86 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.07em}
+.issue__num--display{font-size:2.05em;letter-spacing:-.09em}
+.issue__abbr--stack{font-size:.60em;letter-spacing:.13em;align-self:flex-end;margin-left:.1em}
+.cover[data-folio="field"] .cover__issue{top:55%;bottom:auto;left:4%}
+.cover[data-folio="rail"] .cover__issue{top:calc(var(--band-end) + 13cqi);bottom:auto;left:1.65%;transform:rotate(180deg);writing-mode:vertical-rl;align-items:center;gap:.24em}
+.cover[data-folio="rail"] .issue__abbr--stack{margin-left:0}
+.cover__wall{position:absolute;z-index:3;left:0;right:0;top:var(--wall-start);bottom:0;background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top / cover no-repeat;
+ -webkit-mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
+ mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
+ -webkit-mask-position:center top,center top;mask-position:center top,center top;
+ -webkit-mask-size:cover,100% 100%;mask-size:cover,100% 100%;
+ -webkit-mask-repeat:no-repeat,no-repeat;mask-repeat:no-repeat,no-repeat;
+ -webkit-mask-composite:source-over;mask-composite:add;pointer-events:none;
+}
+.cover[data-breach="3"] .cover__wall,.cover[data-breach="3"] .cover__portrait,.cover[data-breach="3"] .cover__abstract{z-index:12}
+.cover[data-issue="1"] .cover__wall,.cover[data-issue="2"] .cover__wall{display:none}
+.cover__portrait{display:none;position:absolute;top:var(--portrait-start);left:46%;right:5%;bottom:0;z-index:4;overflow:visible}
+.cover[data-issue="1"] .cover__portrait{display:block}
+.portrait__back{position:absolute;inset:14% -6% 0 -13%;background:linear-gradient(95deg,#745342,#bb886c 48%,#dfb89e);clip-path:polygon(0 19%,85% 0,100% 100%,0 100%)}
+.portrait__figure{position:absolute;inset:0;background:#292c30;clip-path:path('M 0 0');opacity:0}
+.portrait__head{position:absolute;left:17%;top:1%;width:52%;aspect-ratio:3/4;border-radius:46% 48% 45% 49%;background:radial-gradient(ellipse at 53% 40%,#dac5a7,#8e7564 62%,#504f4a 90%);box-shadow:inset 8px 0 0 #5e5350}
+.portrait__torso{position:absolute;left:0;right:-7%;top:44%;bottom:0;background:#35383a;clip-path:polygon(39% 0,59% 0,78% 17%,100% 41%,100% 100%,0 100%,0 38%,18% 16%)}
+.cover__abstract{display:none;position:absolute;z-index:4;inset:var(--abstract-start) 0 0;background:#293f4e;overflow:hidden}
+.cover[data-issue="2"] .cover__abstract{display:block}
+.abstract__a{position:absolute;top:4%;left:-5%;font:400 clamp(170px,43cqi,650px)/.75 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.10em;color:#c24836;opacity:.91;transform:rotate(-13deg)}
+.abstract__b{position:absolute;left:10%;bottom:28%;font:italic 400 clamp(78px,15cqi,260px)/1 var(--ws-type-display-en,Georgia,serif);color:#d7c29a;opacity:.14;transform:rotate(-12deg)}
+.cover__theme{position:absolute;z-index:14;right:4.3%;bottom:5.6%;max-width:54%;text-align:right;color:var(--copy);text-shadow:0 1px 0 #eee0c41c}
+.cover__theme h1{font:400 clamp(31px,6.1cqi,87px)/.93 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.063em;margin:0}
+.cover__theme h1 em{font-size:.57em;vertical-align:.12em;letter-spacing:-.025em}
+.cover__theme p{font:600 clamp(12px,2.25cqi,26px)/1.22 var(--ws-type-display-zh,sans-serif);margin:12px 0 0}
+.cover[data-issue="1"] .cover__theme{max-width:38%;left:4%;right:auto;text-align:left;bottom:10%}
+.cover[data-issue="2"] .cover__theme{max-width:57%;bottom:5%;color:#f3e9d5}
+.audit{border-top:1px solid #a69e91;padding-top:15px;display:grid;gap:20px}
+.audit__num{font:400 61px/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.08em}
+.audit h2{font:400 25px/1.05 var(--ws-type-display-en,Georgia,serif);margin:3px 0 10px}
+.audit p,.audit li{font:400 13px/1.65 var(--ws-type-reading-zh,sans-serif);color:#3b4345}
+.audit ul{margin:8px 0 0;padding-left:18px}
+.audit__swatch{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.audit__swatch span{height:34px}
+.audit__line{border-top:1px solid #b1aaa0;padding-top:14px}
+.series{border-top:1px solid #aba49b;padding:34px clamp(18px,3.8vw,62px) 42px}
+.series__heading{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;gap:20px}
+.series__heading h2{margin:0;font:400 clamp(30px,3.5vw,57px)/1 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.05em}
+.series__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.series__card{min-width:0}.series__card .cover{aspect-ratio:4/5}.series__card .cover__theme h1{font-size:5.1cqi}.series__card .cover__theme p{font-size:2.05cqi}
+.series__caption{font:400 11px/1.5 var(--ws-type-display-en-sc,Georgia,serif);padding:9px 0}
+.folio-comparison{border-top:1px solid #aba49b;padding:32px clamp(18px,3.8vw,62px) 36px}
+.folio-comparison .series__heading h2{font-size:clamp(29px,3.1vw,47px)}
+.folio__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.folio__card .cover{aspect-ratio:8/5}
+.folio__card .cover__theme h1{font-size:5.1cqi}
+.folio__card .cover__theme p{font-size:2.05cqi}
+.folio__card .cover__issue{font-size:clamp(9px,1.6cqi,20px)}
+.folio__note{font:400 12px/1.65 var(--ws-type-reading-zh,sans-serif);max-width:95ch;color:#45505b;margin:6px 0 0}
+/* A separate virtual-spine study: an interactive publishing object, not a
+   fake browser binding or a replacement for the official masthead SVG. */
+.spine-lab{border-top:1px solid #aba49b;padding:36px clamp(18px,3.8vw,62px) 48px}
+.spine-lab__lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,350px);gap:24px;align-items:end;margin-bottom:20px}
+.spine-lab__lead h2{font:400 clamp(34px,4.8vw,72px)/.91 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.06em;margin:4px 0 0}
+.spine-lab__lead h2 em{font-weight:400}
+.spine-lab__lead p{font:400 13px/1.7 var(--ws-type-reading-zh,sans-serif);margin:0;color:#45505b}
+.spine-controls{display:flex;flex-wrap:wrap;gap:16px 36px;align-items:end;padding:14px 0 20px;border-top:1px solid #b7b0a6}
+.spine-controls .control__buttons button{min-width:83px}
+.spine-stage{--sheet-ratio:5/8;--page-h:clamp(340px,45vw,570px);--spine-bg:#102a43;--spine-ink:#c9a555;position:relative;isolation:isolate;min-height:calc(var(--page-h) + 58px);background:linear-gradient(180deg,#eae6dc,#e5e0d5);border-top:1px solid #b8b1a8;border-bottom:1px solid #b8b1a8;perspective:1400px;overflow:hidden}
+.spine-stage[data-format="4:5"]{--sheet-ratio:4/5}
+.spine-book{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .52s cubic-bezier(.2,.75,.2,1),transform .7s cubic-bezier(.2,.75,.2,1)}
+.spine-book--closed{opacity:1;transform:translateX(0) rotateY(-3deg);z-index:2}
+.spine-book--open{opacity:0;transform:translateX(3%) rotateY(5deg) scale(.97);pointer-events:none;z-index:1}
+.spine-stage[data-view="spread"] .spine-book--closed{opacity:0;transform:translateX(-5%) rotateY(-15deg) scale(.94);pointer-events:none;z-index:1}
+.spine-stage[data-view="spread"] .spine-book--open{opacity:1;transform:none;pointer-events:auto;z-index:2}
+.spine-sheet{position:relative;flex:none;height:var(--page-h);aspect-ratio:var(--sheet-ratio);width:auto;min-width:0;overflow:hidden;background:#f5e9d0;box-shadow:0 18px 35px #17273926}
+.spine-sheet .cover{width:100%;height:100%;aspect-ratio:auto;box-shadow:none}
+.spine-sheet .cover__issue{display:none}
+.spine-sheet--contents{background:#f3ede1;border-left:1px solid #d5cabc;border-right:1px solid #d5cabc;color:#122b40;padding:clamp(18px,3.2cqi,36px);display:flex;flex-direction:column;justify-content:space-between;container-type:inline-size}
+.spine-sheet--contents .contents-mark{display:flex;justify-content:space-between;font:400 clamp(8px,2.3cqi,12px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.08em;border-bottom:1px solid #a8a096;padding-bottom:12px;gap:10px}
+.spine-sheet--contents h3{font:400 clamp(34px,14cqi,75px)/.94 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.065em;margin:auto 0 14px;white-space:nowrap}
+.spine-sheet--contents h3 em{font-size:.65em;letter-spacing:-.04em}
+.spine-sheet--contents .contents-art{height:21%;margin:0 -2%;position:relative;overflow:hidden;border-top:1px solid #b4a999;border-bottom:1px solid #b4a999;background:linear-gradient(90deg,#102a43 0 35%,#d5c5a8 35% 72%,#b99443 72%)}
+.spine-sheet--contents .contents-art:after{content:"西望";position:absolute;top:-36%;left:23%;font:900 clamp(50px,23cqi,125px)/1 var(--ws-type-display-zh,sans-serif);color:#f3ede1;mix-blend-mode:screen;opacity:.65}
+.spine-sheet--contents .contents-list{display:grid;grid-template-columns:24px 1fr;gap:7px 10px;font:400 clamp(9px,2.85cqi,15px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);border-top:1px solid #a8a096;padding-top:12px}
+.spine-sheet--contents .contents-list strong{font:400 1.2em/1 var(--ws-type-display-en,Georgia,serif)}
+.spine-sheet--opening{background:#dfd2b7;color:#162f43;container-type:inline-size}
+.spine-sheet--opening .opening__image{position:absolute;inset:0;background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/cover no-repeat;opacity:.66}
+.spine-sheet--opening .opening__shade{position:absolute;inset:0;background:linear-gradient(180deg,#f6e5c870 0,#f6e5c830 47%,#f7eddfc9 100%)}
+.spine-sheet--opening .opening__meta{position:absolute;top:5%;left:7%;right:7%;display:flex;justify-content:space-between;border-top:1px solid currentColor;padding-top:8px;font:400 clamp(9px,2.2cqi,13px)/1.3 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.05em}
+.spine-sheet--opening .opening__title{position:absolute;bottom:9%;right:8%;left:8%;text-align:right}
+.spine-sheet--opening .opening__title strong{display:block;font:400 clamp(30px,12cqi,78px)/.88 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.06em}
+.spine-sheet--opening .opening__title em{font-size:.55em}
+.spine-sheet--opening .opening__title span{display:block;margin-top:14px;font:600 clamp(11px,3.8cqi,19px)/1.3 var(--ws-type-display-zh,sans-serif)}
+.virtual-spine{display:flex;flex-direction:column;justify-content:space-between;align-items:center;flex:none;align-self:stretch;width:clamp(27px,3.7vw,40px);height:var(--page-h);padding:16px 3px 13px;border:0;border-inline:1px solid #16253673;cursor:pointer;color:var(--spine-ink);background:linear-gradient(90deg,#00000035,transparent 27%,#ffffff1f 67%,#00000023),var(--spine-bg);font-family:var(--ws-type-display-en-sc,Georgia,serif);box-shadow:3px 15px 25px #17273920;position:relative;z-index:4}
+.virtual-spine:before{content:"";position:absolute;top:13px;bottom:13px;left:5px;width:1px;background:currentColor;opacity:.45}
+.virtual-spine:hover{filter:brightness(1.1)}
+.virtual-spine:focus-visible{outline:2px solid var(--spine-ink);outline-offset:3px}
+.spine__brand,.spine__issue,.spine__mark{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;text-transform:uppercase}
+.spine__brand{font-size:clamp(9px,1.05vw,12px);letter-spacing:.18em}
+.spine__issue{font:400 clamp(17px,2.1vw,26px)/.85 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.04em}
+.spine__mark{font:700 clamp(13px,1.5vw,20px)/1 var(--ws-type-display-zh,sans-serif);letter-spacing:.1em}
+.spine-book--closed .virtual-spine{order:-1}
+.spine-book--open .spine-sheet--contents{order:0}
+.spine-book--open .virtual-spine{order:1}
+.spine-book--open .spine-sheet--opening{order:2}
+.spine-stage[data-mode="edge"] .spine-book--open .virtual-spine{order:-1;width:28px}
+.spine-stage[data-mode="index"] .spine-book--open .virtual-spine{order:3;width:46px;background:linear-gradient(90deg,#00000027,transparent 35%,#ffffff25 70%),var(--spine-bg)}
+.spine-stage[data-mode="index"] .spine__issue{font-size:clamp(23px,3vw,32px)}
+.spine-sheet--contents,.spine-sheet--opening{box-shadow:0 18px 35px #17273920}
+.spine-stage[data-view="spread"][data-mode="hinge"] .spine-sheet--contents{box-shadow:inset -12px 0 22px #4b403321,0 18px 35px #17273918}
+.spine-stage[data-view="spread"][data-mode="hinge"] .spine-sheet--opening{box-shadow:inset 10px 0 20px #4b40331c,0 18px 35px #17273918}
+.spine-stage[data-mode="edge"] .spine-book--closed .virtual-spine{width:28px}
+.spine-stage[data-mode="index"] .spine-book--closed .virtual-spine{width:46px}
+.spine-stage__tag{position:absolute;left:20px;bottom:17px;font:400 10px/1.5 var(--ws-type-display-en-sc,Georgia,serif);color:#6b6259;letter-spacing:.1em;z-index:3}
+.spine-stage__hint{position:absolute;right:19px;bottom:17px;font:400 10px/1.5 var(--ws-type-display-en-sc,Georgia,serif);color:#6b6259;letter-spacing:.1em;z-index:3}
+.spine-verdict{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-bottom:1px solid #aba49b}
+.spine-verdict article{padding:17px 18px 18px 0;border-right:1px solid #aba49b;min-width:0}
+.spine-verdict article+article{padding-left:18px}
+.spine-verdict article:last-child{border:0}
+.spine-verdict h3{font:400 23px/1 var(--ws-type-display-en,Georgia,serif);margin:3px 0 9px;letter-spacing:-.04em}
+.spine-verdict p{font:400 12px/1.65 var(--ws-type-reading-zh,sans-serif);color:#45505b;margin:0}
+.spine-verdict [data-active="true"]{background:linear-gradient(180deg,#e5decf 0,transparent 100%)}
+.spine-lab__caveat{margin:14px 0 0;font:400 12px/1.75 var(--ws-type-reading-zh,sans-serif);color:#45505b}
+.foot{padding:17px clamp(18px,3.8vw,62px);border-top:1px solid var(--rule);font:400 12px/1.65 var(--ws-type-reading-zh,sans-serif);display:flex;justify-content:space-between;gap:20px}
+@media(max-width:1060px){.workspace{grid-template-columns:minmax(0,1fr)}.audit{grid-template-columns:repeat(3,1fr);gap:22px}.audit__line{border:0;padding:0}}
+@media(max-width:680px){.head{display:block}.head__note{text-align:left;margin-top:12px}.controls{gap:17px}.workspace{padding-top:18px}.audit{display:block}.audit__line{border-top:1px solid #b1aaa0}.audit__line{padding:14px 0}.series__grid,.folio__grid{grid-template-columns:1fr}.series__card .cover,.folio__card .cover{max-width:490px;margin:auto}.foot{display:block}.readout{margin-left:0}.cover__theme p{font-size:2.5cqi}}
+@media(max-width:800px){.spine-lab__lead{grid-template-columns:1fr}.spine-stage{--page-h:min(74vw,500px)}.spine-stage[data-view="spread"]{--page-h:min(68vw,480px)}.spine-verdict{grid-template-columns:1fr}.spine-verdict article,.spine-verdict article+article{padding:13px 0;border-right:0;border-bottom:1px solid #aba49b}.spine-verdict article:last-child{border-bottom:0}}
+@media(max-width:540px){.spine-stage{--page-h:min(101vw,480px)}.spine-stage[data-view="spread"]{--page-h:min(51vw,255px)}.spine-stage__tag,.spine-stage__hint{font-size:8px}.virtual-spine{width:25px;padding:9px 2px}.spine-stage[data-mode="index"] .spine-book--open .virtual-spine{width:31px}.spine__brand{font-size:7px}.spine__issue{font-size:14px}.spine__mark{font-size:11px}.spine-sheet--contents .contents-list{grid-template-columns:17px 1fr}.spine-sheet--contents .contents-art{height:15%}}
+@media(prefers-reduced-motion:reduce){.spine-book{transition:none;transform:none!important}.virtual-spine{transition:none}}
+</style>
+</head>
+<body data-ws-scope="journal">
+<header class="head">
+ <div><span class="smallcaps">WESTSIDE DESIGN OS / EDITORIAL PROOF 01 / 2026.10.25</span><div class="head__brand">The Masthead <em>Is the Magazine.</em></div></div>
+ <div class="head__note">沿用官方中英文 SVG。改变的只有每期主图、期刊配色、图像突破边界的程度与候选裁切；墙面保持原始比例，按版型裁切。以下均为实验，并非已批准封面。</div>
+</header>
+<section class="controls" aria-label="刊头实验控制">
+ <div class="control"><span class="smallcaps">ISSUE / 期数素材</span><div class="control__buttons" data-control="issue"><button data-value="0" aria-pressed="true">VOL.00 / 城墙</button><button data-value="1" aria-pressed="false">VOL.01 / 肖像占位</button><button data-value="2" aria-pressed="false">VOL.02 / 文字实验</button></div></div>
+ <div class="control"><span class="smallcaps">BREACH / 越界强度</span><div class="control__buttons" data-control="breach"><button data-value="0" aria-pressed="false">00 / 分区</button><button data-value="1" aria-pressed="true">01 / 微越界</button><button data-value="2" aria-pressed="false">02 / 交错</button><button data-value="3" aria-pressed="false">03 / 遮挡试验</button></div></div>
+ <div class="control"><span class="smallcaps">FORMAT / 裁切</span><div class="control__buttons" data-control="ratio"><button data-value="8:5" aria-pressed="true">8:5</button><button data-value="4:3" aria-pressed="false">4:3</button><button data-value="4:5" aria-pressed="false">4:5</button></div></div>
+ <div class="control"><span class="smallcaps">ISSUE POSITION / 期号位置</span><div class="control__buttons" data-control="folio"><button data-value="foot" aria-pressed="true">下左角</button><button data-value="field" aria-pressed="false">主图左侧</button><button data-value="rail" aria-pressed="false">侧边竖排</button></div></div>
+ <div class="control"><span class="smallcaps">ISSUE NOTATION / 字样</span><div class="control__buttons" data-control="notation"><button data-value="vol" aria-pressed="true">VOL. 00</button><button data-value="no" aria-pressed="false">No. 00</button><button data-value="number" aria-pressed="false">00 / VOLUME</button></div></div>
+ <div class="readout"><span>SVG 680×190</span><span>VISIBLE INK 633×81</span><span>FIXED COORDINATES</span></div>
+</section>
+<main>
+ <section class="workspace"><div class="proof-shell"><div class="proof-heading"><span class="smallcaps">CURRENT ARTBOARD / EXACT SVG INK</span><span class="smallcaps" id="proof-label">VOL.00 / BREACH 01 / 8:5</span></div><div id="main-cover" aria-live="polite"></div></div>
+ <aside class="audit" aria-label="设计验收逻辑"><section><div class="audit__num" id="breach-num">01</div><h2 id="breach-title">Controlled interruption.</h2><p id="breach-note">垛口越过色块与图像的分界，但不遮挡刊头字形。适合建立《西望》自己的视觉差别。</p></section><section class="audit__line"><span class="smallcaps">EDITORIAL COLOUR / 本期取色</span><div class="audit__swatch" id="swatches"></div><p>色块与刊名字色是发行期的变量。位置、光学比例与中英关系是刊物的固定资产。</p></section><section class="audit__line"><span class="smallcaps">DESIGN GATES</span><ul><li>可见字形在三期使用同一坐标。</li><li>强遮挡仅是候选，不自动批准。</li><li>从完整对开和缩略图复核比例。</li><li>城墙原始资产不重绘、不改正式 P2。</li></ul></section></aside>
+ </section>
+ <section class="folio-comparison"><div class="series__heading"><h2>Issue marks, <em>off the masthead.</em></h2><span class="smallcaps">VOL.00 / SAME COVER / THREE HYPOTHESES</span></div><div class="folio__grid" id="folio-grid"></div><p class="folio__note">这组三联仅比较期号的出版信息层级。期号从刊头色面完全移走；所有方案不加角标色块、不改官方刊名字形。侧边竖排只是把纸刊书脊信息转译为网刊边缘信息的实验，并非照搬书脊。</p></section>
+ <section class="spine-lab" id="virtual-spine-lab" aria-labelledby="spine-heading">
+  <div class="spine-lab__lead"><div><span class="smallcaps">REVISED ART DIRECTION / RESEARCH PROOF 03</span><h2 id="spine-heading">A Line <em>Through Seven Worlds.</em></h2></div><p>原先仿纸书厚度的“书脊”试验已经淘汰：它不能在网刊里形成真正的设计功能。新的七色功能带不再模仿装订，保留同一翻转动作，并通过点击进入《西望》或另外六个真实板块。<a href="/experiments/editorial-continuum-bar-lab.html" style="display:inline-block;margin-top:12px;border-bottom:1px solid currentColor;font-weight:600">进入新一轮功能色带实验 ↗</a></p></div>
+  <div class="spine-controls" aria-label="已淘汰的纸书模拟试验" hidden>
+   <div class="control"><span class="smallcaps">ONE COVER / 单封面裁切</span><div class="control__buttons" data-control="spineFormat"><button data-value="5:8" aria-pressed="true">5:8 / 修长</button><button data-value="4:5" aria-pressed="false">4:5 / 宽阔</button></div></div>
+   <div class="control"><span class="smallcaps">SPINE POSITION / 出版轴线</span><div class="control__buttons" data-control="spineMode"><button data-value="edge" aria-pressed="false">01 / 封面外缘</button><button data-value="hinge" aria-pressed="true">02 / 对开中轴</button><button data-value="index" aria-pressed="false">03 / 阅读边栏</button></div></div>
+   <div class="control"><span class="smallcaps">BOOK STATE / 阅读状态</span><div class="control__buttons" data-control="spineView"><button data-value="cover" aria-pressed="true">封面 / COVER</button><button data-value="spread" aria-pressed="false">打开 / SPREAD</button></div></div>
+  </div>
+  <div class="spine-stage" id="spine-stage" data-format="5:8" data-mode="hinge" data-view="cover" hidden></div>
+  <div class="spine-verdict" id="spine-verdict" hidden>
+   <article data-mode="edge"><span class="smallcaps">01 / OBJECT</span><h3>Bound edge.</h3><p>把出版资料放在封面侧面，主画面最干净。但如果展开后仅剩装饰性的纸本厚度，网刊自身的意义不足。</p></article>
+   <article data-mode="hinge" data-active="true"><span class="smallcaps">02 / AXIS</span><h3>Editorial hinge.</h3><p>收起时沿封面左缘，打开时进入左右对页中轴。书脊成为刊名、期号和转场共用的稳定出版轴线，优先深入。</p></article>
+   <article data-mode="index"><span class="smallcaps">03 / NAVIGATION</span><h3>Running index.</h3><p>对开后沿阅读区域外缘保留期号。适合继续探索章节与阅读进度，但本版尚未假装具有完整导航功能。</p></article>
+  </div>
+  <p class="spine-lab__caveat">5:8 与 4:5 单封面裁切的几何研究仍然保留在编辑手册，但不再与仿真实体书脊绑定。此处只作历史记录及新版实验入口；不变更 P2 正式版。</p>
+ </section>
+ <section class="series"><div class="series__heading"><h2>Three issues, <em>one masthead.</em></h2><span class="smallcaps">TEST-ONLY / 4:5 SERIES</span></div><div class="series__grid" id="series-grid"></div><p class="smallcaps">人物轮廓与文字抽象场仅用作跨期压力测试，不是 Vol.01／02 正式封面，也不冒充已取得肖像版权。</p></section>
+</main>
+<footer class="foot"><span>OFFICIAL ASSET · /images/westside-watch-masthead-landscape.svg</span><span>DESIGN OS AUTHORITY UNCHANGED · EXPERIMENT ONLY · NO P2 TIMELINE EDITS</span></footer>
+<script>
+const themes=[
+ {vol:'VOL.00',title:'CITY <em>OF</em><br>LIGHT',zh:'守望，一座光明的城',band:'#102a43',mast:'#b99443',surface:'#e9d6ad',note:'砂岩建筑 / 城墙越界 / 黎明金'},
+ {vol:'VOL.01',title:'THE HUMAN<br>FACE',zh:'人物主题 · 未刊',band:'#b24f43',mast:'#f4ddbb',surface:'#e8dbc8',note:'肖像几何占位 / 陶土色 / 奶油白'},
+ {vol:'VOL.02',title:'THE WORD<br>&amp; THE WORLD',zh:'文字主题 · 未刊',band:'#e2d9c5',mast:'#233d4b',surface:'#293f4e',note:'抽象文字场 / 纸本色 / 深海蓝'}
+];
+const levels=[
+ ['00','Clean separation.','严格分区。艺术与刊头完全不相交，这是 The Paris Review 式的基线；先确保单纯的版面已经成立。'],
+ ['01','Controlled interruption.','垛口越过色块与图像的分界，但不遮挡刊头字形。这是《西望》自己的最低强度干预。'],
+ ['02','Architectural overlap.','局部塔楼明显进入色块；刊名字形仍完整可读，艺术轮廓与编辑信息需要重新核对安全区。'],
+ ['03','Masthead tension.','艺术可能与刊头墨迹发生遮挡。仅为强度上限实验；需要逐字核对后才能决定是否允许成为少数特刊变体。']
+];
+const folioStudies=[['foot','vol','01 / 下左角 · VOL. 00 · 传统资料位'],['field','no','02 / 主图左侧 · No. 00 · 文学编号'],['rail','number','03 / 侧边竖排 · 数字主导 · 书脊转译']];
+const state={issue:0,breach:2,ratio:'8:5',folio:'foot',notation:'vol',spineFormat:'5:8',spineMode:'hinge',spineView:'cover'};
+function issueHTML(vol,notation){const n=vol.replace(/^VOL\./,'');if(notation==='no')return `<span class="issue__abbr">No.</span><span class="issue__num">${n}</span>`;if(notation==='number')return `<span class="issue__num issue__num--display">${n}</span><span class="issue__abbr issue__abbr--stack">VOLUME</span>`;return `<span class="issue__abbr">VOL.</span><span class="issue__num">${n}</span>`}
+function coverHTML(issue,breach,ratio,folio=state.folio,notation=state.notation){const t=themes[issue];return `<article class="cover" data-issue="${issue}" data-breach="${breach}" data-ratio="${ratio}" data-folio="${folio}" aria-label="${t.vol} 压顶刊头实验，越界级别 ${breach}，期号位 ${folio}">
+<div class="band"></div><div class="band-rule"></div>
+<div class="cover__wall" aria-hidden="true"></div><div class="cover__portrait" aria-hidden="true"><div class="portrait__back"></div><div class="portrait__torso"></div><div class="portrait__head"></div></div>
+<div class="cover__abstract" aria-hidden="true"><span class="abstract__a">W</span><span class="abstract__b">ord.</span></div>
+<div class="cover__mast" role="img" aria-label="官方 SVG：LivingWater / WESTSIDE WATCH / 西望"><span class="cover__ink"></span><img class="cover__ink-fallback" src="/images/westside-watch-masthead-landscape.svg" alt=""></div>
+<span class="cover__issue" aria-label="${t.vol}">${issueHTML(t.vol,notation)}</span><div class="cover__theme"><h1 lang="en">${t.title}</h1><p>${t.zh}</p></div></article>`}
+function spineButton(label){return `<button type="button" class="virtual-spine" data-spine-toggle aria-label="${label}"><span class="spine__brand">WESTSIDE WATCH</span><span class="spine__issue">VOL. 00</span><span class="spine__mark" lang="zh-Hans">西望</span></button>`}
+function spineContents(){return `<section class="spine-sheet spine-sheet--contents" aria-label="目录编辑结构占位，不是正式目录"><div class="contents-mark"><span>WESTSIDE WATCH</span><span>VOL. 00</span></div><div><span class="smallcaps">EDITORIAL STRUCTURE STUDY</span><h3>Contents<em>.</em></h3><div class="contents-art" aria-hidden="true"></div></div><div class="contents-list"><strong>01</strong><span>ISSUE / 本期</span><strong>02</strong><span>OPENING / 卷首</span><strong>03</strong><span>ART / 艺术</span></div></section>`}
+function spineOpening(){return `<section class="spine-sheet spine-sheet--opening" aria-label="光明之城开篇艺术版式占位"><div class="opening__image" aria-hidden="true"></div><div class="opening__shade" aria-hidden="true"></div><div class="opening__meta"><span>WESTSIDE WATCH</span><span>THE OPENING</span></div><div class="opening__title"><strong>CITY <em>OF</em><br>LIGHT</strong><span>守望，一座光明的城</span></div></section>`}
+function renderSpine(){const stage=document.getElementById('spine-stage');stage.dataset.format=state.spineFormat;stage.dataset.mode=state.spineMode;stage.dataset.view=state.spineView;const coverActive=state.spineView==='cover';stage.innerHTML=`<div class="spine-book spine-book--closed" aria-hidden="${!coverActive}" ${coverActive?'':'inert'}>${spineButton('打开杂志对开')}<div class="spine-sheet spine-sheet--cover">${coverHTML(0,2,state.spineFormat,'foot','vol')}</div></div><div class="spine-book spine-book--open" aria-hidden="${coverActive}" ${coverActive?'inert':''}>${spineContents()}${spineButton('合拢杂志封面')}${spineOpening()}</div><span class="spine-stage__tag">VOL. 00 / ${state.spineFormat} SINGLE COVER</span><span class="spine-stage__hint">${state.spineFormat==='5:8'?'10:8':'8:5'} APPROX. OPEN SPREAD · CLICK SPINE TO TURN</span>`;document.querySelectorAll('#spine-verdict article').forEach(a=>a.dataset.active=String(a.dataset.mode===state.spineMode))}
+function render(){
+ document.getElementById('main-cover').innerHTML=coverHTML(state.issue,state.breach,state.ratio);
+ document.getElementById('proof-label').textContent=`${themes[state.issue].vol} / BREACH ${levels[state.breach][0]} / ${state.ratio}`;
+ document.getElementById('breach-num').textContent=levels[state.breach][0];
+ document.getElementById('breach-title').textContent=levels[state.breach][1];
+ document.getElementById('breach-note').textContent=levels[state.breach][2];
+ document.getElementById('swatches').innerHTML=[themes[state.issue].band,themes[state.issue].mast,themes[state.issue].surface].map(c=>`<span title="${c}" style="background:${c}"></span>`).join('');
+ document.getElementById('folio-grid').innerHTML=folioStudies.map(([pos,type,caption])=>`<div class="folio__card">${coverHTML(0,2,'8:5',pos,type)}<div class="series__caption">${caption}</div></div>`).join('');
+ document.getElementById('series-grid').innerHTML=themes.map((t,i)=>`<div class="series__card">${coverHTML(i,state.breach,'4:5')}<div class="series__caption">${t.vol} / ${t.note}</div></div>`).join('');
+ renderSpine();
+ for(const group of document.querySelectorAll('[data-control]'))for(const b of group.querySelectorAll('button'))b.setAttribute('aria-pressed',String(b.dataset.value===String(state[group.dataset.control])));
+ const url=new URL(location.href);for(const k of ['issue','breach','ratio','folio','notation','spineFormat','spineMode','spineView'])url.searchParams.set(k,state[k]);history.replaceState(null,'',url);
+}
+for(const b of document.querySelectorAll('[data-control] button'))b.addEventListener('click',()=>{const k=b.parentElement.dataset.control;state[k]=['issue','breach'].includes(k)?Number(b.dataset.value):b.dataset.value;render()});
+document.getElementById('spine-stage').addEventListener('click',event=>{if(event.target.closest('[data-spine-toggle]')){state.spineView=state.spineView==='cover'?'spread':'cover';render()}});
+const url=new URL(location.href);const incomingIssue=Number(url.searchParams.get('issue'));const incomingBreach=Number(url.searchParams.get('breach'));const incomingRatio=url.searchParams.get('ratio');const incomingFolio=url.searchParams.get('folio');const incomingNotation=url.searchParams.get('notation');if(url.searchParams.has('issue')&&[0,1,2].includes(incomingIssue))state.issue=incomingIssue;if(url.searchParams.has('breach')&&[0,1,2,3].includes(incomingBreach))state.breach=incomingBreach;if(['8:5','4:3','4:5'].includes(incomingRatio))state.ratio=incomingRatio;if(['foot','field','rail'].includes(incomingFolio))state.folio=incomingFolio;if(['vol','no','number'].includes(incomingNotation))state.notation=incomingNotation;
+if(['5:8','4:5'].includes(url.searchParams.get('spineFormat')))state.spineFormat=url.searchParams.get('spineFormat');if(['edge','hinge','index'].includes(url.searchParams.get('spineMode')))state.spineMode=url.searchParams.get('spineMode');if(['cover','spread'].includes(url.searchParams.get('spineView')))state.spineView=url.searchParams.get('spineView');render();
+</script>
+</body>
+</html>
