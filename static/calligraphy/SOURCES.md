@@ -4,10 +4,10 @@ Only expose a selectable collection after its source and exact index key have be
 
 ## Shared GLEAN method / 拾字方法
 
-**《西望》專項禁選：**乾隆及其他清朝皇帝御筆、董其昌、小字帖放大、粗而無力之字；以有力度的寺額／匾額原字和摩崖字骨作為主池；07／09 均未定稿。
+**《西望》專項藝術方向（v3）：**真正匾額原字、紙本額字墨稿與實存古匾是字形來源，摩崖**只作風格參照**；正楷／大楷向大行書、行草研究；**保留真實飛白、筆墨、提按、墨肉**，不引入篆書、隸書；排除清朝皇帝御筆、董其昌、無力粗字及小字帖放大。07／09 都未定稿。
 
 
-- [《西望》匾額為主、摩崖為骨｜宋代額字原墨與元代宮觀原匾](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/XIWANG-STELE-PLAQUE-BANGSHU-ARCHITECTURAL-LETTERING-20261028.md)
+- [《西望》匾額原字為主、摩崖只作風格｜張即之與商挺研究 v3](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/XIWANG-STELE-PLAQUE-BANGSHU-ARCHITECTURAL-LETTERING-20261028.md)
 
 - [《西望》07／09 舊小字原帖史料索引（現非刊名主選池）](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/XIWANG-07-09-ORIGINAL-SOURCE-BOARD-20261028.md)
 - [碑帖真跡集字 → SVG → AI 缺字補全（共同研究方法）](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/GLYPH-SOURCE-TO-SVG-AI-FALLBACK.md)
