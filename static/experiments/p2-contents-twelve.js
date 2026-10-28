@@ -108,20 +108,20 @@
       '<stop offset=".75" stop-color="#b77e37" stop-opacity=".98"/>'+
       '<stop offset="1" stop-color="#d2a45e" stop-opacity=".78"/></linearGradient></defs>'+
     // A long left sweep and bottom embrace. Route starts at star centre.
-    '<path class="p2x-etch-line p2x-etch-line--principal" d="M166 165 C165 263 145 360 165 478 C183 625 205 754 326 857 C398 919 505 932 592 896"/>'+
+    '<path class="p2x-etch-line p2x-etch-line--principal" d="M166 165 C153 260 142 365 162 479 C177 621 204 748 274 852 C298 891 305 948 310 992"/>'+
     // Long right arc. It is deliberately outside the title's letterforms.
-    '<path class="p2x-etch-line p2x-etch-line--shadow" d="M166 165 C233 206 312 213 438 275 C556 334 585 438 585 562 C585 685 555 784 592 896"/>'+
+    '<path class="p2x-etch-line p2x-etch-line--shadow" d="M166 165 C228 206 312 213 438 275 C552 334 581 444 582 564 C585 685 550 843 590 978"/>'+
     // Fine intermediate echo: distinct from the two framing contours.
     '<path class="p2x-etch-line p2x-etch-line--upper" d="M182 174 C249 213 315 235 427 305 C532 371 555 468 553 570 C551 672 526 786 559 843"/>'+
-    '<path class="p2x-etch-glimmer" d="M166 165 C165 263 145 360 165 478 C183 625 205 754 326 857 C398 919 505 932 592 896"/>'+
+    '<path class="p2x-etch-glimmer" d="M166 165 C153 260 142 365 162 479 C177 621 204 748 274 852 C298 891 305 948 310 992"/>'+
     '<g class="p2x-etch-hatching">'+
       '<path d="M151 330 l-17 7 M148 353 l-16 8 M149 377 l-18 7 M152 402 l-16 8 M158 431 l-15 6 M161 454 l-15 6"/>'+
       '<path d="M183 631 l-20 6 M192 661 l-19 9 M204 695 l-20 8 M219 723 l-18 12 M242 757 l-18 13 M271 800 l-17 15"/>'+
-      '<path d="M368 885 l-7 19 M395 901 l-5 19 M423 911 l-2 18 M453 916 l1 19 M483 920 l5 15 M512 916 l8 15"/>'+
+      '<path d="M269 849 l-17 11 M284 879 l-15 13 M299 915 l-15 10 M305 949 l-15 8 M582 864 l16 8 M582 904 l18 5 M586 943 l18 3"/>'+
       '<path d="M502 311 l14 -11 M524 336 l15 -12 M540 363 l16 -9 M559 398 l16 -8 M573 430 l17 -6 M579 460 l19 -4 M585 493 l18 -1"/>'+
       '<path d="M583 665 l18 2 M578 703 l18 5 M570 744 l18 7 M570 780 l17 9 M580 822 l16 10"/></g>'+
     '<g class="p2x-etch-witness">'+
-      '<path d="M324 856 l13 -10 M438 915 l4 -15 M554 906 l-4 -17 M566 386 l14 9"/></g>'+
+      '<path d="M276 852 l14 -10 M306 964 l-16 8 M585 904 l18 5 M566 386 l14 9"/></g>'+
    '</svg>'+
    '<div class="p2x-cereal-paper">'+
     '<div class="p2x-cereal-tiny"><span>WESTSIDE WATCH / INDEX</span><span>VOL.00</span></div>'+
@@ -274,7 +274,7 @@
    // The phone composition stacks the Doré plate above the readable index.
    // Keep the official interim glyph within that art area, away from the star.
    if(active==="10" && tile.getBoundingClientRect().width<520)
-    return [.24,.34,.57,.035,.94];
+    return [.24,.31,.57,.0,.94];
    return DESIGNS.find(d=>d.id===active).glyph;
   },
   get designs(){return DESIGNS.map(d=>({id:d.id,source:d.source,name:d.name,zh:d.zh}))},
