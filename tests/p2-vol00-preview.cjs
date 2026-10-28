@@ -56,7 +56,10 @@ assert.match(ink,/<g id="xi" aria-label="西">/,'ink glyph 西 must be separatel
 assert.match(ink,/<g id="wang" aria-label="望">/,'ink glyph 望 must be separately addressable');
 assert.doesNotMatch(ink,/<(?:image|text|foreignObject)\b|data:image\//,'ink must be true vector outlines, not raster/font');
 assert.ok(ink.length>100000,'real ink path detail must be preserved');
-assert.match(source,/const starRise=reduce\?/,'original Morning Star rise remains');
+assert.match(source,/const starRise=starLift/,'the original Morning Star and the selected brush lettering must rise on one clock');
+assert.match(source,/const typeEnter=starLift/,'the brush-vector impression must not enter independently of the Morning Star');
+assert.match(source,/starBridge\.setAttribute\('d'/,'the gold bridge must be laid out as real SVG geometry');
+assert.match(source,/\.410\)\.toFixed\(2\)/,'the gold bridge must physically end at the original Gothic gate keystone');
 assert.match(source,/star\.style\.left=lerp\(15,16,stone\)/,'Morning Star holds the new upper-left station of the open Contents folio');
 assert.match(css,/dual-dore-plate__image/,'same double-buffer image folio as Doré Search');
 assert.match(css,/dual-contents__folio-caption/,'Contents and Doré must occupy one editorial folio');
@@ -81,7 +84,7 @@ folio.forEach((m,i)=>{
  assert.equal(m[5],nav[i].navLabel);
 });
 
-const scenes=[['cover',14],['type-start',33],['type-complete',44],['star-entry',54],
+const scenes=[['cover',14],['dore-without-ink',33],['star-entry',44],['star-ink-rise',54],
  ['star-rise',68],['spread-hold',79],['cover-hold',82],['contents-handoff',93],['contents',100]];
 const screens=[['desktop',1648,928],['tablet',768,1024],['phone',390,844],['small',320,720]];
 const results=[];
@@ -136,6 +139,10 @@ const data=()=> {
   blue:+stage.dataset.blueReveal,gold:+stage.dataset.dawnReveal,
   cover:box(cover),page:box(page),
   typeOpacity:+getComputedStyle(document.querySelector('#dual-letterfield')).opacity,
+  inkReveal:+stage.dataset.inkReveal,
+  goldTrace:+stage.dataset.goldTrace,
+  starInkCoupling:stage.dataset.starInkCoupling,
+  bridgeOpacity:+getComputedStyle(document.querySelector('.ws-star-bridge')).opacity,
   hero:heroRect,heroOpacity:+getComputedStyle(hero).opacity,
   inkGlyphSources:document.querySelectorAll('#ws-xiwang-vertical use').length,
   titleAspect:heroRect.height/Math.max(heroRect.width,1),
@@ -220,20 +227,23 @@ const data=()=> {
      faults.push('door right jamb and projected-light origin drift from native stone opening during page morph');
     if(!m.wallBg.includes('cover')||!m.maskSize.includes('cover')||m.mastFit!=='contain')faults.push('stone/masthead must crop proportionally');
     if(p===14&&!(m.blue>.1&&m.blue<.95&&m.gold===0&&m.cityOpacity>.6))faults.push('stone cover must enter with midnight-blue ink');
-    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.typeOpacity>.20&&m.heroOpacity>.25&&m.doreVisible>.1))
-     faults.push('original Doré folio and official Xi Wang should enter with dawn reveal');
+    if(p===33&&!(m.gold>.1&&m.gold<.95&&m.typeOpacity<.01&&m.heroOpacity<.01&&m.starOpacity<.01&&m.doreVisible>.1))
+     faults.push('the original Doré folio must enter BEFORE the jointly rising star and ink, with no spontaneous glyph');
     if(p===33&&m.cityOpacity<.98)faults.push('do not leave empty right-cover midnight-blue block');
     if([44,54,68,79,82].includes(p)&&(!m.doreReady||m.doreLayerCount!==2||!m.doreCredit.includes(String(m.doreCurrentId).padStart(3,'0'))))
      faults.push('actual unmodified public-domain Doré plate failed to load');
     if(p===44){
      heroAtTypeHold=m.hero.top;
-     if(!(m.starOpacity<.05&&m.typeOpacity>.98&&m.heroOpacity>.98&&m.inkGlyphSources===1&&m.heroFaceUsesInk&&m.inkPlate==='wet-ink-svg-vertical-dore-city-gallery'&&m.titleOrientation==='vertical'&&m.titleAspect>1.48))
-      faults.push('selected large vertical brush-vector 西望 must hold over full bleed Doré plate before Morning Star enters');
+     if(!(m.starOpacity>.005&&m.starOpacity<.12&&m.typeOpacity>.005&&m.typeOpacity<.12&&
+      m.inkGlyphSources===1&&m.heroFaceUsesInk&&m.inkPlate==='wet-ink-svg-vertical-dore-city-gallery'&&
+      m.titleOrientation==='vertical'&&m.titleAspect>1.48))
+      faults.push('the first star glimmer and the first brush impression must be one event');
     }
-    if(p===54&&!(m.starOpacity>.1&&m.typeOpacity>.8))
-     faults.push('protected Morning Star must begin rising over Doré plate');
-    if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.98&&m.starTopRatio<.25))
-     faults.push('Morning Star must finish rising toward upper-left, with vertical title readable');
+    if(p===54&&!(m.starOpacity>.25&&m.starOpacity<.75&&m.typeOpacity>.25&&m.typeOpacity<.75&&
+      approx(m.inkReveal,m.goldTrace,.002)&&approx(m.inkReveal,m.starOpacity,.002)))
+     faults.push('Morning Star, brush impression and gold incision must lift together halfway');
+    if(p===68&&!(m.starOpacity>.95&&m.typeOpacity>.98&&m.starTopRatio<.25&&m.inkReveal>.98))
+     faults.push('Morning Star must finish pulling the engraved ink to the upper-left');
     if(p===79&&name==='desktop'){
      // Prove the folio actually changes between TWO DIFFERENT DORÉ WORKS.
      const first=await page.evaluate(()=>window.P2DoreGallery.state);
@@ -275,6 +285,8 @@ const data=()=> {
     if(p===79||p===82){
      if(!(m.starOpacity>.98&&m.typeOpacity>.98&&m.heroOpacity>.99&&m.doreVisible>.90))
       faults.push('held spread must retain the star, original large title and complete Doré image');
+     if(!(m.starInkCoupling==='single-rising-incision'&&m.goldTrace>.99&&m.bridgeOpacity>.25))
+      faults.push('held spread must retain the same gold incision and Gothic bridge as the Morning Star rise');
      if(!(m.starLeftRatio>=-.01&&m.starLeftRatio<.19&&m.starTopRatio>=-.01&&m.starTopRatio<.20))
       faults.push('rising Morning Star must land in the upper-left editorial space');
      if(!((m.starTitleRightGap>m.page.width*.025||m.starTitleGap>m.page.height*.025)
@@ -403,7 +415,7 @@ const data=()=> {
          ||Math.abs(editorial.firstPointX-166)>2||Math.abs(editorial.firstPointY-165)>2
          ||Math.abs(editorial.guideEndX-410)>2||Math.abs(editorial.guideEndY-309)>2)
       faults.push('gold etching must use the real protected Gothic cover gate geometry, with a discreet Morning Star guide, not freeform curves');
-     if(editorial.glyphOpacity<.88||!editorial.glyphInk.includes('255, 239, 203'))
+     if(editorial.glyphOpacity<.88||!editorial.glyphInk.includes('41, 61, 75'))
       faults.push('official Xi Wang two-glyph SVG must remain legible at the settled Contents state');
      if(!editorial.scrollerKeyboard||!editorial.scrollable||!editorial.endReachable)
       faults.push('all twelve titles must remain reachable inside the index, with keyboard support');
@@ -442,8 +454,8 @@ const data=()=> {
    // No duplicate clock: reversing the ONE slider restores same visual state.
    await page.locator('#dual-progress').evaluate(slider=>{slider.value='33';slider.dispatchEvent(new Event('input',{bubbles:true}))});
    const reverse=await page.evaluate(data);
-   if(reverse.phase!=='xiwang-letterpress'||reverse.inkPlate!=='wet-ink-svg-vertical-dore-city-gallery'||reverse.doreVisible<.2||reverse.stoneOpacity>.01)
-    results.push({id:name+'-reverse',errors:['backwards scroll did not restore the selected brush-vector impression']});
+   if(reverse.phase!=='dore-engraving'||reverse.inkPlate!=='wet-ink-svg-vertical-dore-city-gallery'||reverse.doreVisible<.2||reverse.stoneOpacity>.01||reverse.typeOpacity>.01)
+    results.push({id:name+'-reverse',errors:['backwards scroll did not restore the Doré folio before the shared rising star / ink impression']});
    await page.close();
   }
    const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
@@ -460,8 +472,8 @@ const data=()=> {
      faults.push('reduced motion must use the official static star');
     if(p===14&&!(r.blue>.99&&r.starOpacity<.01))
      faults.push('reduced motion must show the intact cover');
-    if(p===44&&!(r.typeOpacity>.99&&r.starOpacity<.01&&r.heroOpacity>.99))
-     faults.push('reduced motion must show the official title');
+    if(p===44&&!(r.typeOpacity<.01&&r.starOpacity<.01&&r.heroOpacity<.01))
+     faults.push('reduced motion must not show the ink mother before the Morning Star trigger');
     if(p===79&&!(r.starOpacity>.99&&r.typeOpacity>.9&&r.starLeftRatio<.19&&
       (r.starTitleRightGap>r.page.width*.02||r.starTitleGap>r.page.height*.02)))
      faults.push('reduced Morning Star must stay upper-left without covering lower-left title');
