@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028i">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028j">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -226,18 +226,32 @@
    item.title.toUpperCase()+' · '+String(plateIndex+1).padStart(2,'0')+
    '/'+String(cityPlates.length).padStart(2,'0');
  };
+ // Replicate the actual continuously scrolling Doré Search image background.
+ // Commit the start frame, then animate the *image itself* over 15 seconds.
  const setPlatePose=img=>{
-  img.classList.remove('is-active');img.style.transition='none';
-  img.style.opacity='0';img.style.transform='translate3d(0,4%,0) scale(1.10)';
+  img.classList.remove('is-active','is-outgoing');
+  img.style.transition='none';
+  img.style.objectPosition='center top';
+  img.style.transformOrigin='center top';
+  img.style.opacity='0';
+  img.style.transform='translateY(0) scale(1.10)';
+  void img.offsetHeight;
  };
  const beginPlateScan=img=>{
-  img.style.transition=reduce?'none':'opacity .9s ease, transform 15s linear';
   img.classList.add('is-active');
-  requestAnimationFrame(()=>{
+  if(reduce){
+   img.style.transition='opacity .35s ease';
    img.style.opacity='1';
-   img.style.transform=reduce?'translate3d(0,0,0) scale(1.04)':
-    'translate3d(0,-9%,0) scale(1.10)';
-  });
+   img.style.transform='translateY(0) scale(1.04)';
+   return;
+  }
+  img.style.transition='opacity .9s ease, transform 15s linear';
+  void img.offsetHeight;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   if(!img.classList.contains('is-active'))return;
+   img.style.opacity='1';
+   img.style.transform='translateY(-9%) scale(1.10)';
+  }));
  };
  const preloadPlate=index=>{
   const next=new Image();
@@ -263,7 +277,11 @@
     if(!ok){artPlate.dataset.galleryError='image-'+item.id;resolve(false);return}
     if(!first){
      const last=artImages[plateActive];
-     if(last!==img){last.classList.remove('is-active');last.style.opacity='0'}
+     if(last!==img){
+      // The old moving engraving remains underneath during the crossfade.
+      last.classList.remove('is-active');
+      last.classList.add('is-outgoing');
+     }
     }
     plateIndex=index%cityPlates.length;plateActive=slot;plateReady=true;
     if(!first)plateChanges++;
