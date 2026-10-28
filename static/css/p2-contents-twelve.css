@@ -744,11 +744,11 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
    Restrict this overprint to design 10 so the other eleven studies remain
    independent. The protected source glyph is not edited or replaced. */
 .dual-tile--contents[data-p2-design="10"] .ws-print-hero__face{
- color:rgba(255,239,203,.97);
- filter:drop-shadow(1px 1.5px 2px rgba(20,30,35,.83));
+ color:rgba(41,61,75,.95);
+ filter:drop-shadow(1px 1.5px 1px rgba(197,146,75,.40));
 }
 .dual-tile--contents[data-p2-design="10"] .ws-print-hero__registration{
- color:rgba(54,40,27,.73);
+ color:rgba(168,124,61,.72);
 }
 .dual-tile--contents[data-p2-design="10"] .dual-letterfield{
  z-index:6;
