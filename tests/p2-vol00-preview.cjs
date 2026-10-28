@@ -350,6 +350,22 @@ const data=()=> {
       const overlaps=(one,two)=>one.right>two.left+2&&one.left<two.right-2&&
        one.bottom>two.top+2&&one.top<two.bottom-2;
       const glyphBounds={left:glyphLeft,right:glyphRight,top:glyphTop,bottom:glyphBottom};
+      const names=items.map(item=>{
+       const zh=box(item.querySelector('.p2x-zh'));
+       const en=box(item.querySelector('.p2x-en'));
+       const body=box(item.querySelector('.p2x-entry__body'));
+       const works=item.querySelector('.p2x-works');
+       return {zh,en,body,works:works?box(works):null};
+      });
+      const namePairsInline=names.filter(n=>
+       n.en.left>=n.zh.right-1&&n.en.top<n.zh.bottom&&n.zh.top<n.en.bottom
+      ).length;
+      const namePairsOverflow=names.some(n=>
+       n.en.right>n.body.right+1||n.zh.left<n.body.left-1
+      );
+      const articlesAfterNames=names.every(n=>!n.works||
+       n.works.top>=Math.max(n.zh.bottom,n.en.bottom)-1
+      );
       const positions=chapters.map(el=>({top:box(el).top,bottom:box(el).bottom,height:box(el).height}));
       const interludeOverlaps=chapters.some(section=>{
        const p=section.querySelector(".p2x-interlude");
@@ -394,7 +410,7 @@ const data=()=> {
           &&gateCurve.startsWith("M255 910 V500 C255 416 318 359 410 309")
           &&!/[zZ]/.test(gateCurve),
        hasArchitecturalHatching:host.querySelectorAll(".p2x-etch-hatching path").length>=3,
-       glyphOpacity,glyphInk,
+       glyphOpacity,glyphInk,namePairsInline,namePairsOverflow,articlesAfterNames,
        scrollerKeyboard:stack.tabIndex>=0,scrollable:stack.scrollHeight>stack.clientHeight+5,
        endReachable,titleReadable:box(title).width<=box(rail).width+1,
        noHeaderNavOverlap:box(nav).top>=box(header).bottom-1,
@@ -417,6 +433,8 @@ const data=()=> {
       faults.push('gold etching must use the real protected Gothic cover gate geometry, with a discreet Morning Star guide, not freeform curves');
      if(editorial.glyphOpacity<.88||!editorial.glyphInk.includes('41, 61, 75'))
       faults.push('official Xi Wang two-glyph SVG must remain legible at the settled Contents state');
+     if(editorial.namePairsInline!==12||editorial.namePairsOverflow||!editorial.articlesAfterNames)
+      faults.push('all twelve Contents desks must present Chinese/English together on one baseline, with articles in a separate row');
      if(!editorial.scrollerKeyboard||!editorial.scrollable||!editorial.endReachable)
       faults.push('all twelve titles must remain reachable inside the index, with keyboard support');
      if(!editorial.titleReadable||!editorial.noHeaderNavOverlap||!editorial.noNavIndexOverlap)
