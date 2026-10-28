@@ -279,7 +279,7 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
 .p2x--10 .p2x-cereal-engraving{
  position:absolute;inset:0;width:100%;height:100%;z-index:1;
  overflow:visible;pointer-events:none;
- mix-blend-mode:multiply;opacity:.9
+ mix-blend-mode:normal;opacity:1;filter:drop-shadow(0 0 1.3px rgba(38,31,22,.55))
 }
 .p2x--10 .p2x-etch-line,
 .p2x--10 .p2x-etch-glimmer,
@@ -288,43 +288,43 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
  fill:none;stroke-linecap:round;stroke-linejoin:round
 }
 .p2x--10 .p2x-etch-line{
- stroke:url(#p2x-cereal-gold);stroke-width:1.7;vector-effect:non-scaling-stroke;
+ stroke:url(#p2x-cereal-gold);stroke-width:2.35;vector-effect:non-scaling-stroke;
  stroke-dasharray:none;stroke-dashoffset:0;
- opacity:.8;animation:p2x-etch-breathe 13s ease-in-out infinite
+ opacity:.94;animation:p2x-etch-breathe 16s ease-in-out infinite
 }
 .p2x--10 .p2x-etch-line--shadow{
- stroke:#b18343;stroke-opacity:.45;stroke-width:.65;
+ stroke:#edc584;stroke-opacity:.79;stroke-width:1.15;
  animation-delay:-3s
 }
 .p2x--10 .p2x-etch-line--upper{
- stroke:#c29c62;stroke-opacity:.54;stroke-width:.85;
+ stroke:#a7743d;stroke-opacity:.8;stroke-width:1.1;
  animation-delay:-7s
 }
 .p2x--10 .p2x-etch-glimmer{
- stroke:#e9bc71;stroke-width:2.1;vector-effect:non-scaling-stroke;
- opacity:.76;stroke-dasharray:24 1100;
- animation:p2x-etch-follow 22s linear infinite
+ stroke:#ffe3ab;stroke-width:2.8;vector-effect:non-scaling-stroke;
+ opacity:.89;stroke-dasharray:48 1250;
+ animation:p2x-etch-follow 20s linear infinite
 }
 .p2x--10 .p2x-etch-hatching path{
- stroke:#b28b50;stroke-opacity:.55;stroke-width:.75;
+ stroke:#f1c888;stroke-opacity:.67;stroke-width:.95;
  vector-effect:non-scaling-stroke;
  stroke-dasharray:none;stroke-dashoffset:0;animation:none
 }
 .p2x--10 .p2x-etch-witness path{
- stroke:#c39750;stroke-opacity:.6;stroke-width:.75;
+ stroke:#c89656;stroke-opacity:.9;stroke-width:1;
  vector-effect:non-scaling-stroke;stroke-dasharray:none;stroke-dashoffset:0;animation:none
 }
 #dual-stone-contents[aria-hidden="true"] .p2x--10 :is(.p2x-etch-line,.p2x-etch-glimmer,.p2x-etch-hatching path,.p2x-etch-witness path){
  animation-play-state:paused
 }
 @keyframes p2x-etch-breathe{
- 0%,100%{opacity:.72}50%{opacity:.96}
+ 0%,100%{opacity:.82}50%{opacity:1}
 }
 @keyframes p2x-etch-follow{
- from{stroke-dashoffset:1140;opacity:0}
- 13%{opacity:.56}
- 79%{opacity:.56}
- to{stroke-dashoffset:-180;opacity:0}
+ from{stroke-dashoffset:0;opacity:.68}
+ 12%{opacity:.98}
+ 88%{opacity:.98}
+ to{stroke-dashoffset:-1250;opacity:.68}
 }
 /* The paper is a reading surface, not a floating framed card. */
 .p2x--10 .p2x-cereal-paper{
@@ -722,4 +722,45 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
   padding-top:3px;z-index:4;pointer-events:auto
  }
  .p2x--10 .p2x-cereal-expand{font-size:clamp(9px,2.6cqi,11px)}
+}
+
+
+/* Cereal / repaired identity and etched engraving, 2026-10-28:
+   The original Westside SVG is deliberately VISIBLE at Contents final.
+   Restrict this overprint to design 10 so the other eleven studies remain
+   independent. The protected source glyph is not edited or replaced. */
+.dual-tile--contents[data-p2-design="10"] .ws-print-hero__face{
+ color:rgba(255,239,203,.97);
+ filter:drop-shadow(1px 1.5px 2px rgba(20,30,35,.83));
+}
+.dual-tile--contents[data-p2-design="10"] .ws-print-hero__registration{
+ color:rgba(54,40,27,.73);
+}
+.dual-tile--contents[data-p2-design="10"] .dual-letterfield{
+ z-index:6;
+}
+.dual-tile--contents[data-p2-design="10"] .dual-cover__star{
+ z-index:7;
+}
+/* The mobile folio is a small, genuine 1:1 page; the star and visible
+   two-character SVG occupy its upper image, rather than disappearing. */
+@media(max-width:640px){
+ .p2x--10 .p2x-cereal-engraving{
+  opacity:.94;
+  clip-path:inset(0 0 60% 0);
+ }
+ .p2x--10 .p2x-cereal-header{
+  top:39%;left:5%;right:5%;
+ }
+ .p2x--10 .p2x-cereal-header h2{
+  font-size:clamp(23px,6.4cqi,30px);
+  line-height:1
+ }
+ .p2x--10 .p2x-cereal-chinese{display:none}
+ .p2x--10 .p2x-cereal-nav{
+  top:50%;
+ }
+ .p2x--10 .p2x-cereal-stack{
+  top:62%;bottom:9%;
+ }
 }
