@@ -15,6 +15,12 @@ NODesign 不是不設計，也不是殘缺、半成品或刻意去風格化。�
 - 一套符合池底設 NODesign 美學的中文字標方法；
 - 可持續擴充的碑帖字形、配對、校正與來源系統。
 
+## 共用方法：真跡集字 → SVG → AI 缺字補全（2026-10-28）
+
+[碑帖原帖集字、像素證據、VTracer／既有 Potrace、少樣本 AI 補字及 SVG Master 方法](./GLYPH-SOURCE-TO-SVG-AI-FALLBACK.md)
+
+這一方法已正式記錄為**拾字／GLEAN 共用研究規範**，並可由同一 Chinese Logo Lab 複用於「西望」等中文字標。優先取得可核驗真跡，逐字保存來源，保留原圖；AI 只作有標記的缺字候選，不能冒稱原書家筆跡。這個方法**不建立另一套 Design OS，也不表示已部署新的字形生成引擎**。
+
 ## 核心命題
 
 **碑骨 × 帖氣 × Optical Correction → Brand Wordmark**
