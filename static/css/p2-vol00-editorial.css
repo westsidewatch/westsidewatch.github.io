@@ -81,7 +81,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    simulated golden haze or a competing decorative index. */
 .dual-tile--contents .dual-contents{position:absolute;inset:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none;
  transform:translate3d(0,4%,0);
- background:linear-gradient(180deg,rgba(250,247,240,.91),rgba(247,242,232,.82)),url('/images/temple-stone-light.png') center/cover no-repeat}
+ background:transparent}
 .dual-contents{--ws-p2-secondary-weight:var(--ws-weight-zh-air,200);display:flex;flex-direction:column;
  width:100%;height:100%;padding:clamp(18px,2.8vmin,32px) clamp(19px,3.2vmin,40px);overflow:hidden}
 .dual-contents::before{content:"";position:absolute;z-index:4;inset:clamp(9px,2cqi,16px);pointer-events:none;
@@ -90,14 +90,13 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  clip-path:inset(62% 0 0 0);-webkit-mask-image:linear-gradient(to bottom,transparent 60%,#000 72%,#000 96%);
  mask-image:linear-gradient(to bottom,transparent 60%,#000 72%,#000 96%);filter:saturate(.44)}
 .dual-contents__star-zone{position:relative;z-index:2;flex:1 1 0;min-height:0;margin-bottom:clamp(7px,1.1cqi,12px);
- background:linear-gradient(145deg,#21394e,#152d42 80%);border:1px solid rgba(202,174,115,.45);
- box-shadow:inset 0 0 0 clamp(4px,.85cqi,8px) #1b3449,inset 0 0 0 clamp(5px,1cqi,10px) rgba(202,174,115,.42);pointer-events:none}
+ background:transparent;border:0;box-shadow:none;pointer-events:none}
 .dual-contents__star-zone::after{content:"";position:absolute;left:50%;bottom:-1px;width:13%;border-bottom:2px solid #d1b36e;transform:translateX(-50%)}
 .dual-tile--contents .dual-cover__star{position:absolute;z-index:5;left:50%;top:50%;width:clamp(155px,48cqi,350px);aspect-ratio:1;
  opacity:0;pointer-events:none;overflow:hidden;transform:translate(-50%,95%);filter:brightness(1.07) contrast(1.2)}
 .dual-cover__star iframe{position:relative;z-index:2;width:100%;height:100%;border:0;pointer-events:none;display:block}
 .dual-cover__star .dual-cover__approved-star{position:relative;z-index:2;display:block;width:100%;height:100%;object-fit:contain;filter:brightness(1.15)}
-.dual-contents__head,.dual-contents__index,.dual-contents__foot{position:relative;z-index:2}
+.dual-contents__head,.dual-contents__index,.dual-contents__foot{position:relative;z-index:2;background:rgba(249,245,236,.97)}
 .dual-contents__head{flex:none;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
  border-bottom:2px solid #223648;margin-bottom:clamp(9px,1.4cqi,14px);padding-bottom:clamp(6px,.9cqi,9px)}
 .dual-contents__head h2{margin:0;font:400 clamp(38px,6.2cqi,58px)/.9 var(--ws-type-display-en,Georgia,serif);
@@ -105,7 +104,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 .dual-contents__head span{font:200 clamp(11px,1.75cqi,15px)/1.3 var(--ws-type-reading-zh,sans-serif);letter-spacing:.05em;color:#384a59}
 .dual-contents__index{display:grid;grid-template-columns:1.06fr 1.12fr .98fr;grid-template-rows:minmax(0,1.08fr) minmax(0,.92fr);
  column-gap:clamp(13px,2.2cqi,24px);row-gap:clamp(7px,1.15cqi,12px);height:64%;max-height:64%;flex:0 0 auto;min-height:0;
- padding:0 2px 5px 0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;background:rgba(248,244,236,.94)}
+ padding:0 2px 5px 0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;background:rgba(249,245,236,.97)}
 .dual-contents__index>.dual-movement:nth-child(1){grid-column:1;grid-row:1/3}
 .dual-contents__index>.dual-movement:nth-child(2){grid-column:2;grid-row:1/3}
 .dual-contents__index>.dual-movement:nth-child(3){grid-column:3;grid-row:1}
@@ -228,3 +227,14 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
 html.dual-embed,html.dual-embed body{width:100%;height:100%;overflow:hidden;background:transparent!important}
 html.dual-embed .dual-ui{display:none!important}
 html.dual-embed .dual-stage{height:100svh;min-height:0;background:transparent}
+
+/* P2 Contents integration: one Doré folio, not a replacement stone slide.
+   The engraving/title/star share the top image field; the 12-desk index
+   remains opaque and independently scrollable for reading at every size. */
+.dual-contents__star-zone::after{display:none}
+.dual-contents__folio-caption{position:absolute;right:2%;bottom:4px;color:#f8f1e0;
+ font:200 clamp(8px,1cqi,11px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.09em;text-shadow:0 1px 3px #152531,0 0 8px #152531}
+.dual-contents__head{padding:7px 7px 8px;margin-bottom:0;border-bottom:2px solid #223648}
+.dual-contents__index{padding:9px 7px 7px}
+.dual-contents__foot{padding:5px 7px 0}
