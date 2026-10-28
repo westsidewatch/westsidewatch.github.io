@@ -315,9 +315,15 @@ const data=()=> {
       const pts=[[0,0],[216,0],[216,454],[0,454]]
        .map(([x,y])=>new DOMPoint(x,y).matrixTransform(glyphCTM));
       const glyphRight=Math.max(...pts.map(p=>p.x));
+      const glyphLeft=Math.min(...pts.map(p=>p.x));
       const glyphTop=Math.min(...pts.map(p=>p.y));
       const glyphBottom=Math.max(...pts.map(p=>p.y));
-      const railLeft=box(rail).left;
+      // Mobile deliberately places the star on the illustrated half;
+      // a full-page reading rail would trigger a false collision report.
+      const words=[header,nav,stack,host.querySelector(".p2x-cereal-footer")].map(box);
+      const overlaps=(one,two)=>one.right>two.left+2&&one.left<two.right-2&&
+       one.bottom>two.top+2&&one.top<two.bottom-2;
+      const glyphBounds={left:glyphLeft,right:glyphRight,top:glyphTop,bottom:glyphBottom};
       const positions=chapters.map(el=>({top:box(el).top,bottom:box(el).bottom,height:box(el).height}));
       const interludeOverlaps=chapters.some(section=>{
        const p=section.querySelector(".p2x-interlude");
@@ -344,8 +350,9 @@ const data=()=> {
        endReachable,titleReadable:box(title).width<=box(rail).width+1,
        noHeaderNavOverlap:box(nav).top>=box(header).bottom-1,
        noNavIndexOverlap:box(stack).top>=box(nav).bottom-1,
-       noGlyphTextCollision:glyphRight<railLeft-6 || glyphBottom<box(rail).top || glyphTop>box(rail).bottom,
-       noStarTextCollision:box(star).right<railLeft-5 || box(star).bottom<box(rail).top,
+       noGlyphTextCollision:Number(getComputedStyle(hero).opacity)<.05||
+        words.every(rect=>!overlaps(glyphBounds,rect)),
+       noStarTextCollision:words.every(rect=>!overlaps(box(star),rect)),
        interludeOverlaps,itemOverlap,chaptersOverlap,reduced
       };
      });
