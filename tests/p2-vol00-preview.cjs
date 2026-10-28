@@ -330,10 +330,10 @@ const data=()=> {
       });
       const chaptersOverlap=positions.slice(1).some((p,i)=>p.top<positions[i].bottom+1);
       // Reachability is a real scroll test, not a claim based on DOM count.
-      stack.scrollTop=stack.scrollHeight;
+      stack.scrollTo({top:stack.scrollHeight,behavior:'instant'});
       const lastItem=items.at(-1);
       const endReachable=box(lastItem).bottom<=box(stack).bottom+2;
-      stack.scrollTop=0;
+      stack.scrollTo({top:0,behavior:'instant'});
       const trace=[...host.querySelectorAll(".p2x-etch-line")];
       const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
       return {
@@ -361,6 +361,26 @@ const data=()=> {
       faults.push('article rows, movement sections or interludes physically overlap');
      if(!editorial.noGlyphTextCollision||!editorial.noStarTextCollision)
       faults.push('protected Xi Wang SVG or Morning Star collides with the Contents reading region');
+    }
+    if(p===100){
+     // The original square is physically constrained on phones. Readers
+     // must still have a full-size, keyboard-usable 12-desk dialogue.
+     const full=page.locator(".p2x-cereal-expand");
+     if(await full.count()){
+      await full.click({timeout:4000});
+      const reader=await page.locator(".p2-cereal-reader").evaluate(el=>({
+       open:el.getAttribute("aria-modal")==="true",
+       items:el.querySelectorAll(".p2x-entry").length,
+       chapters:el.querySelectorAll(".p2x-cereal-movement").length,
+       scrollHeight:el.scrollHeight,clientHeight:el.clientHeight,
+       width:el.getBoundingClientRect().width
+      }));
+      if(!reader.open||reader.items!==12||reader.chapters!==4||reader.width<width*.9)
+       faults.push('full-size responsive reader must display all twelve canonical desks');
+      await page.keyboard.press("Escape");
+      if(await page.locator(".p2-cereal-reader").count())
+       faults.push('full-size responsive reader must close with Escape');
+     }else faults.push('missing full-size accessible index action');
     }
     if(pageErrors.length)faults.push('PAGE_ERROR '+pageErrors.join('; '));
     await page.screenshot({path:path.join(out,name+'-'+label+'.png'),animations:'allow'});
