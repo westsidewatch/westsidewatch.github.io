@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028h">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028i">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -405,7 +405,7 @@
   const artZoneHeight=contentsArtZone.getBoundingClientRect().height;
   const stoneProgress=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
   const leadScale=Math.min(contentsW*.61/216,contentsH*.89/454);
-  const folioScale=Math.min(contentsW*.24/216,artZoneHeight*.88/454);
+  const folioScale=Math.min(contentsW*.24/216,artZoneHeight*.70/454);
   const titleScale=lerp(leadScale,folioScale,stoneProgress);
   const titleWidth=216*titleScale,titleHeight=454*titleScale;
   const titleX=lerp((contentsW-216*leadScale)*.75,contentsW-titleWidth-contentsW*.055,stoneProgress);
