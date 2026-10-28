@@ -36,7 +36,7 @@
   {id:"07",source:"The Form of Form",name:"Architectural Index",zh:"建築索引",glyph:[.19,.53,.052,.35,.67]},
   {id:"08",source:"François Girard-Meunier",name:"Swiss Counterpoint",zh:"瑞士對位",glyph:[.19,.51,.085,.37,.69]},
   {id:"09",source:"YES & NO",name:"Orbit of Four",zh:"四個軌道",glyph:[.18,.48,.07,.42,.63]},
-  {id:"10",source:"Cereal",name:"Engraved Light / Quiet Gallery",zh:"版畫光跡 · 靜默畫廊",glyph:[.18,.45,.09,.45,.31]},
+  {id:"10",source:"Cereal",name:"Engraved Light / Quiet Gallery",zh:"版畫光跡 · 靜默畫廊",glyph:[.27,.54,.31,.34,.94]},
   {id:"11",source:"W Magazine",name:"Four Monumental Numbers",zh:"四組大數字",glyph:[.19,.51,.07,.34,.69]},
   {id:"12",source:"The Eye",name:"Bibliographic Folio",zh:"古典書目",glyph:[.25,.58,.65,.29,.56]}
  ];
@@ -97,20 +97,31 @@
    '<div class="p2x-orbit-index">'+groupList("p2x-orbit-chapter",{entryStyle:"tight"})+'</div>',
  "10":()=>'<div class="p2x-cereal-gallery"><div class="p2x-cereal-edition"><span>THE CITY OF LIGHT</span><span>GUSTAVE DORÉ / ORIGINAL PLATES</span></div>'+
    '<span class="p2x-cereal-art-credit">ENGRAVED CITIES & WALLS / 1866</span></div>'+
-   // The star at ~16% / 16.5% is the origin of an *etched route*;
-   // 09's whole concentric orbit diagram is deliberately not transplanted.
-   '<svg class="p2x-cereal-engraving" viewBox="0 0 1000 1000" preserveAspectRatio="none" role="img" aria-label="晨星引導至目錄的極細金色雕版動態刻線">'+
-    '<defs><linearGradient id="p2x-cereal-gold" x1="0" y1="0" x2="1" y2=".8">'+
-      '<stop offset="0" stop-color="#c39146" stop-opacity=".22"/><stop offset=".35" stop-color="#f4c97e" stop-opacity=".92"/>'+
-      '<stop offset=".82" stop-color="#a67831" stop-opacity=".88"/><stop offset="1" stop-color="#c99a51" stop-opacity=".14"/></linearGradient></defs>'+
-    '<path class="p2x-etch-line p2x-etch-line--principal" d="M166 165 C196 199 204 215 236 232 S295 265 329 280 S398 314 427 346 S493 421 593 453"/>'+
-    '<path class="p2x-etch-line p2x-etch-line--shadow" d="M172 177 C200 215 213 226 244 241 S305 273 337 286 S407 325 434 360 S502 431 587 467"/>'+
-    '<path class="p2x-etch-line p2x-etch-line--upper" d="M170 156 C207 176 227 189 259 204 S331 222 364 246 S424 287 446 308"/>'+
-    '<path class="p2x-etch-glimmer" d="M166 165 C196 199 204 215 236 232 S295 265 329 280 S398 314 427 346 S493 421 593 453"/>'+
+   // Star-registered engraving: not a decorative gold slash, and not
+   // 09's diagram. The star at 16% / 16.5% releases a system of hand-
+   // engraved contour arcs across the entire image half. The three lines
+   // frame the restored tall official Xi Wang SVG, and meet near the foot.
+   '<svg class="p2x-cereal-engraving" viewBox="0 0 1000 1000" preserveAspectRatio="none" role="img" aria-label="由晨星發出的完整金色雕版線群，圍繞西望字標延伸至版畫下緣">'+
+    '<defs><linearGradient id="p2x-cereal-gold" x1="0" y1="0" x2="1" y2="1">'+
+      '<stop offset="0" stop-color="#e8bb73" stop-opacity=".94"/>'+
+      '<stop offset=".4" stop-color="#d4a058" stop-opacity="1"/>'+
+      '<stop offset=".75" stop-color="#b77e37" stop-opacity=".98"/>'+
+      '<stop offset="1" stop-color="#d2a45e" stop-opacity=".78"/></linearGradient></defs>'+
+    // A long left sweep and bottom embrace. Route starts at star centre.
+    '<path class="p2x-etch-line p2x-etch-line--principal" d="M166 165 C165 263 145 360 165 478 C183 625 205 754 326 857 C398 919 505 932 592 896"/>'+
+    // Long right arc. It is deliberately outside the title's letterforms.
+    '<path class="p2x-etch-line p2x-etch-line--shadow" d="M166 165 C233 206 312 213 438 275 C556 334 585 438 585 562 C585 685 555 784 592 896"/>'+
+    // Fine intermediate echo: distinct from the two framing contours.
+    '<path class="p2x-etch-line p2x-etch-line--upper" d="M182 174 C249 213 315 235 427 305 C532 371 555 468 553 570 C551 672 526 786 559 843"/>'+
+    '<path class="p2x-etch-glimmer" d="M166 165 C165 263 145 360 165 478 C183 625 205 754 326 857 C398 919 505 932 592 896"/>'+
     '<g class="p2x-etch-hatching">'+
-       '<path d="M229 223 l-6 12 M240 229 l-5 13 M250 237 l-4 12 M321 273 l-9 16 M334 280 l-8 17 M347 288 l-8 16 M418 338 l-10 19 M429 350 l-9 19 M440 362 l-8 16 M522 428 l-10 13 M531 433 l-11 13"/>'+
-     '</g>'+
-     '<g class="p2x-etch-witness"><path d="M316 281 l13 -1 l-5 11 M420 345 l9 6 l-9 11 M521 425 l11 6 l-11 9"/></g>'+
+      '<path d="M151 330 l-17 7 M148 353 l-16 8 M149 377 l-18 7 M152 402 l-16 8 M158 431 l-15 6 M161 454 l-15 6"/>'+
+      '<path d="M183 631 l-20 6 M192 661 l-19 9 M204 695 l-20 8 M219 723 l-18 12 M242 757 l-18 13 M271 800 l-17 15"/>'+
+      '<path d="M368 885 l-7 19 M395 901 l-5 19 M423 911 l-2 18 M453 916 l1 19 M483 920 l5 15 M512 916 l8 15"/>'+
+      '<path d="M502 311 l14 -11 M524 336 l15 -12 M540 363 l16 -9 M559 398 l16 -8 M573 430 l17 -6 M579 460 l19 -4 M585 493 l18 -1"/>'+
+      '<path d="M583 665 l18 2 M578 703 l18 5 M570 744 l18 7 M570 780 l17 9 M580 822 l16 10"/></g>'+
+    '<g class="p2x-etch-witness">'+
+      '<path d="M324 856 l13 -10 M438 915 l4 -15 M554 906 l-4 -17 M566 386 l14 9"/></g>'+
    '</svg>'+
    '<div class="p2x-cereal-paper">'+
     '<div class="p2x-cereal-tiny"><span>WESTSIDE WATCH / INDEX</span><span>VOL.00</span></div>'+
@@ -263,7 +274,7 @@
    // The phone composition stacks the Doré plate above the readable index.
    // Keep the official interim glyph within that art area, away from the star.
    if(active==="10" && tile.getBoundingClientRect().width<520)
-    return [.14,.27,.36,.23,0];
+    return [.24,.34,.57,.035,.94];
    return DESIGNS.find(d=>d.id===active).glyph;
   },
   get designs(){return DESIGNS.map(d=>({id:d.id,source:d.source,name:d.name,zh:d.zh}))},
