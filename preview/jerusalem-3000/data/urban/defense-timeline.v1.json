@@ -1,0 +1,963 @@
+{
+  "schema": "j3k.defense-timeline.v1",
+  "origin": {
+    "lat": 31.778,
+    "lon": 35.235
+  },
+  "frame": "canonical-dem-enu",
+  "authority": "historical-context-constrained authored open defense corridors; not digitized archaeological wall circuits",
+  "sources": {
+    "iron": {
+      "url": "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf",
+      "scope": "published western expansion context; no vectors extracted from this guide"
+    },
+    "south": {
+      "url": "https://hadashot.iaa.org.il/report_detail_eng.aspx?id=1530&mag=",
+      "scope": "excavated southern Hasmonean and fifth-century Byzantine fortification systems; whole lines below remain authored"
+    },
+    "roman": {
+      "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=1779",
+      "scope": "free-standing Aelia west gate; attached wall no earlier than later fourth century; decumanus and1898 opening"
+    },
+    "north": {
+      "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26147&print=all",
+      "scope": "Aelia northern gate, later Crusader/Ayyubid fortifications; individual dates disputed"
+    },
+    "islamic": {
+      "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=268&mag_id=110",
+      "scope": "late Early Islamic northwest moat and earlier courses; not whole southern perimeter"
+    },
+    "medieval": {
+      "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124",
+      "scope": "southern Fatimid/Crusader/Ayyubid overlap,1202–1217 wall and1219 dismantling,1535–1542 Ottoman rebuilding"
+    },
+    "persian": {
+      "url": "https://bibleinterp.arizona.edu/articles/walls-nehemiah-built-town-jerusalem-persian-period",
+      "scope": "debated Persian fortification existence/extent; hypothesis trace only"
+    },
+    "third": {
+      "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26618",
+      "scope": "Third Wall remains and70 CE battle; no Third Wall back-projected into30s CE"
+    },
+    "water": {
+      "url": "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all",
+      "scope": "existing early water-defense context; full urban perimeter remains unresolved"
+    },
+    "modern": {
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=35.222,31.770,35.242,31.785",
+      "scope": "existing frozen modern wall reference only for last three phases; not ancient survey"
+    }
+  },
+  "families": {
+    "western-expansion": {
+      "label": "西丘擴張城防段（線位示意）",
+      "sources": [
+        "iron"
+      ],
+      "points": [
+        [
+          -510,
+          700
+        ],
+        [
+          -540,
+          420
+        ],
+        [
+          -460,
+          160
+        ],
+        [
+          -250,
+          100
+        ],
+        [
+          -35,
+          220
+        ]
+      ]
+    },
+    "southwest": {
+      "label": "西南城防帶（線位示意）",
+      "sources": [
+        "south"
+      ],
+      "points": [
+        [
+          -810,
+          390
+        ],
+        [
+          -815,
+          650
+        ],
+        [
+          -600,
+          875
+        ],
+        [
+          -230,
+          1020
+        ],
+        [
+          30,
+          1050
+        ],
+        [
+          100,
+          880
+        ]
+      ]
+    },
+    "byzantine-south": {
+      "label": "五世紀南部擴張城防帶（線位示意）",
+      "sources": [
+        "south"
+      ],
+      "points": [
+        [
+          -850,
+          390
+        ],
+        [
+          -850,
+          680
+        ],
+        [
+          -650,
+          970
+        ],
+        [
+          -280,
+          1100
+        ],
+        [
+          100,
+          1080
+        ],
+        [
+          190,
+          820
+        ],
+        [
+          200,
+          420
+        ]
+      ]
+    },
+    "northwest": {
+      "label": "西北城防帶（線位示意）",
+      "sources": [
+        "roman",
+        "north",
+        "islamic"
+      ],
+      "points": [
+        [
+          -720,
+          440
+        ],
+        [
+          -720,
+          240
+        ],
+        [
+          -700,
+          80
+        ],
+        [
+          -760,
+          -150
+        ],
+        [
+          -650,
+          -390
+        ],
+        [
+          -250,
+          -420
+        ],
+        [
+          -100,
+          -400
+        ]
+      ]
+    },
+    "medieval-south": {
+      "label": "中世紀南部城防段（線位示意）",
+      "sources": [
+        "medieval"
+      ],
+      "points": [
+        [
+          -720,
+          440
+        ],
+        [
+          -580,
+          620
+        ],
+        [
+          -330,
+          700
+        ],
+        [
+          -80,
+          630
+        ],
+        [
+          180,
+          390
+        ],
+        [
+          200,
+          150
+        ]
+      ]
+    },
+    "persian-candidate": {
+      "label": "波斯城防候選帶（有爭議，非牆體復原）",
+      "sources": [
+        "persian"
+      ],
+      "points": [
+        [
+          -220,
+          680
+        ],
+        [
+          -220,
+          420
+        ],
+        [
+          -150,
+          180
+        ],
+        [
+          -80,
+          -80
+        ]
+      ]
+    }
+  },
+  "gateDefinitions": {
+    "west": {
+      "family": "northwest",
+      "segment": 1,
+      "t": 0.5,
+      "label": "西部入口區（示意）"
+    },
+    "north": {
+      "family": "northwest",
+      "segment": 4,
+      "t": 0.52,
+      "label": "北部入口區（示意）"
+    },
+    "southwest": {
+      "family": "southwest",
+      "segment": 1,
+      "t": 0.5,
+      "label": "西南入口（示意）"
+    },
+    "byz-south": {
+      "family": "byzantine-south",
+      "segment": 3,
+      "t": 0.55,
+      "label": "南向入口（示意）"
+    },
+    "med-south": {
+      "family": "medieval-south",
+      "segment": 2,
+      "t": 0.6,
+      "label": "南向入口（示意）"
+    },
+    "iron-west": {
+      "family": "western-expansion",
+      "segment": 1,
+      "t": 0.5,
+      "label": "西丘入口（示意）"
+    }
+  },
+  "phases": [
+    {
+      "id": "chalcolithic-early-bronze",
+      "label": "最早聚落",
+      "dateLabel": "c. 4th–3rd millennium BCE",
+      "owner": "existing",
+      "summary": "聚落期：尚無可核定的完整城防範圍。",
+      "walls": [],
+      "gates": [],
+      "uncertain": [
+        "不以沒有模型推論沒有防禦。"
+      ],
+      "datedChanges": [],
+      "sourceKeys": [
+        "water"
+      ]
+    },
+    {
+      "id": "middle-bronze",
+      "label": "迦南城市",
+      "dateLabel": "c. 19th–17th c. BCE onward",
+      "owner": "existing",
+      "summary": "泉區防禦是局部系統，沿用既有泉塔／通道模型。",
+      "walls": [],
+      "gates": [],
+      "uncertain": [
+        "泉區堡壘不能代替整座城市的圍牆。"
+      ],
+      "datedChanges": [],
+      "sourceKeys": [
+        "water"
+      ]
+    },
+    {
+      "id": "late-bronze-iron1",
+      "label": "晚青銅—鐵器早期",
+      "dateLabel": "c. 16th–11th c. BCE",
+      "owner": "existing",
+      "summary": "晚青銅—鐵器早期：前期防禦去向與完整城界未核定。",
+      "walls": [],
+      "gates": [],
+      "uncertain": [
+        "不把中青銅泉塔自動延續成本期完整城防。"
+      ],
+      "datedChanges": [],
+      "sourceKeys": [
+        "water"
+      ]
+    },
+    {
+      "id": "david-solomon",
+      "label": "大衛—所羅門",
+      "dateLabel": "10th c. BCE",
+      "owner": "existing",
+      "summary": "沿用王城既有牆段、門洞與山脊動線；整體城廓仍是推定。",
+      "walls": [],
+      "gates": [],
+      "uncertain": [],
+      "datedChanges": [
+        {
+          "date": "大衛 → 所羅門",
+          "change": "北部高地擴展與新增入口；不是實測年代線。"
+        }
+      ],
+      "sourceKeys": [
+        "iron"
+      ]
+    },
+    {
+      "id": "late-first-temple",
+      "label": "第一聖殿晚期",
+      "dateLabel": "8th–7th c. BCE",
+      "owner": "network",
+      "summary": "西丘擴張城防與西向入口接入同一主街骨架。",
+      "walls": [
+        {
+          "family": "western-expansion",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "iron-west"
+      ],
+      "uncertain": [
+        "僅表達西丘城防段；完整北、東、南界仍待配準。"
+      ],
+      "datedChanges": [
+        {
+          "date": "前8–7世紀",
+          "change": "西向擴張；輪廓與門洞是獨立設計示意。"
+        }
+      ],
+      "sourceKeys": [
+        "iron"
+      ]
+    },
+    {
+      "id": "babylonian-destruction",
+      "label": "巴比倫毀城",
+      "dateLabel": "586 BCE",
+      "owner": "network",
+      "summary": "586 BCE 毀城：低矮破壞段保留原位置語境。",
+      "walls": [
+        {
+          "family": "western-expansion",
+          "mode": "ruin",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "iron-west"
+      ],
+      "uncertain": [
+        "破斷位置和倒塌高度非發掘測繪。"
+      ],
+      "datedChanges": [
+        {
+          "date": "586 BCE",
+          "change": "毀壞；不把後期缺圖當作城防完全消失的證據。"
+        }
+      ],
+      "sourceKeys": [
+        "iron"
+      ]
+    },
+    {
+      "id": "persian-nehemiah",
+      "label": "波斯—尼希米",
+      "dateLabel": "5th c. BCE",
+      "owner": "network",
+      "summary": "尼希米城牆範圍及考古辨識有爭議，只顯示候選虛線帶。",
+      "walls": [
+        {
+          "family": "persian-candidate",
+          "mode": "candidate",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ],
+      "gates": [],
+      "uncertain": [
+        "候選線不是出土城牆，也不替換既有 withheld 原始資料。"
+      ],
+      "datedChanges": [
+        {
+          "date": "前5世紀",
+          "change": "重建的文本語境與考古爭議並列。"
+        }
+      ],
+      "sourceKeys": [
+        "persian"
+      ]
+    },
+    {
+      "id": "hellenistic-hasmonean",
+      "label": "希臘化—哈斯蒙尼",
+      "dateLabel": "4th–1st c. BCE",
+      "owner": "network",
+      "summary": "哈斯蒙尼西南城防系統與西南入口動線。",
+      "walls": [
+        {
+          "family": "southwest",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "southwest"
+      ],
+      "uncertain": [
+        "不把同一地帶等同於前代原牆連續存續；全周界未復原。"
+      ],
+      "datedChanges": [
+        {
+          "date": "前2–1世紀選定概覽",
+          "change": "城防擴建／重建語境；不代表整個希臘化期同步存在。"
+        }
+      ],
+      "sourceKeys": [
+        "south"
+      ]
+    },
+    {
+      "id": "herodian-jesus",
+      "label": "大希律—耶穌",
+      "dateLabel": "late 1st c. BCE–30s CE",
+      "owner": "network",
+      "summary": "希律—耶穌期：西南城市防禦與聖殿圍護分開表達。",
+      "walls": [
+        {
+          "family": "southwest",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "southwest"
+      ],
+      "uncertain": [
+        "第二道牆的線位仍待核定；第三道牆不套回30年代。"
+      ],
+      "datedChanges": [
+        {
+          "date": "至30年代 CE",
+          "change": "沿用西南城防系統的區位語境，不證明逐石復用。"
+        }
+      ],
+      "sourceKeys": [
+        "south"
+      ]
+    },
+    {
+      "id": "roman-destruction",
+      "label": "羅馬毀城",
+      "dateLabel": "70 CE",
+      "owner": "network",
+      "summary": "70 CE 城防毀壞概覽；第三道牆另列未配準，不能倒灌前期。",
+      "walls": [
+        {
+          "family": "southwest",
+          "mode": "ruin",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "southwest"
+      ],
+      "uncertain": [
+        "第三道牆的70 CE戰事有資料，但本包未繪測繪線。"
+      ],
+      "datedChanges": [
+        {
+          "date": "70 CE",
+          "change": "破壞／殘段；精確留存與清除區段仍未核定。"
+        }
+      ],
+      "sourceKeys": [
+        "south",
+        "third"
+      ]
+    },
+    {
+      "id": "aelia",
+      "label": "Aelia Capitolina",
+      "dateLabel": "2nd–4th c. CE",
+      "owner": "network",
+      "summary": "Aelia 初期入口可獨立存在；本期後段另顯示晚4世紀西北城防語境。",
+      "walls": [
+        {
+          "family": "northwest",
+          "mode": "standing",
+          "fromOffset": 0.65,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "west",
+        "north"
+      ],
+      "uncertain": [
+        "入口位置是區位示意；不把初期城門等同於封閉城牆。"
+      ],
+      "datedChanges": [
+        {
+          "date": "2世紀",
+          "change": "獨立紀念性入口與城市動線。"
+        },
+        {
+          "date": "晚4世紀",
+          "change": "西部城牆與入口連接；展示切點不代表線性年代換算。"
+        }
+      ],
+      "sourceKeys": [
+        "roman",
+        "north",
+        "islamic"
+      ]
+    },
+    {
+      "id": "byzantine",
+      "label": "拜占庭",
+      "dateLabel": "4th–7th c.",
+      "owner": "network",
+      "summary": "晚4世紀西北城防與5世紀南部擴張分段呈現。",
+      "walls": [
+        {
+          "family": "northwest",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        },
+        {
+          "family": "byzantine-south",
+          "mode": "standing",
+          "fromOffset": 0.2,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "west",
+        "north",
+        "byz-south"
+      ],
+      "uncertain": [
+        "只繪來源語境支持的城防帶，不補齊未核定東界。"
+      ],
+      "datedChanges": [
+        {
+          "date": "5世紀",
+          "change": "Eudocia南部城防擴展；本包線位是概略配置。"
+        }
+      ],
+      "sourceKeys": [
+        "roman",
+        "north",
+        "islamic",
+        "south"
+      ]
+    },
+    {
+      "id": "early-islamic",
+      "label": "早期伊斯蘭",
+      "dateLabel": "7th–11th c.",
+      "owner": "network",
+      "summary": "早期南部城防語境與後期西北／較緊湊南界分段比較。",
+      "walls": [
+        {
+          "family": "northwest",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        },
+        {
+          "family": "byzantine-south",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 0.65
+        },
+        {
+          "family": "medieval-south",
+          "mode": "standing",
+          "fromOffset": 0.65,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "west",
+        "north",
+        "med-south"
+      ],
+      "uncertain": [
+        "南界轉移的展示切點未核定為特定拆除年份；舊段退出不等於證明全段毀壞。"
+      ],
+      "datedChanges": [
+        {
+          "date": "7–11世紀分段概覽",
+          "change": "城防系統調整；晚期北側防禦有發掘語境。"
+        }
+      ],
+      "sourceKeys": [
+        "roman",
+        "north",
+        "islamic",
+        "south",
+        "medieval"
+      ]
+    },
+    {
+      "id": "crusader",
+      "label": "十字軍",
+      "dateLabel": "1099–1187",
+      "owner": "network",
+      "summary": "十字軍期西北、南部城防段與三向入口接線。",
+      "walls": [
+        {
+          "family": "northwest",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        },
+        {
+          "family": "medieval-south",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "west",
+        "north",
+        "med-south"
+      ],
+      "uncertain": [
+        "門名、建築裝飾及完整東界未復原。"
+      ],
+      "datedChanges": [
+        {
+          "date": "1099–1187",
+          "change": "使用與修建中世紀城防；具體構件復用未逐項證明。"
+        }
+      ],
+      "sourceKeys": [
+        "roman",
+        "north",
+        "islamic",
+        "medieval"
+      ]
+    },
+    {
+      "id": "ayyubid-mamluk",
+      "label": "阿尤布—馬穆魯克",
+      "dateLabel": "12th–16th c.",
+      "owner": "network",
+      "summary": "早段防禦與1219年後拆牆概覽分開；後段不再顯示完整高牆。",
+      "walls": [
+        {
+          "family": "northwest",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 0.35
+        },
+        {
+          "family": "medieval-south",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 0.35
+        },
+        {
+          "family": "northwest",
+          "mode": "ruin",
+          "fromOffset": 0.35,
+          "toOffset": 1
+        },
+        {
+          "family": "medieval-south",
+          "mode": "ruin",
+          "fromOffset": 0.35,
+          "toOffset": 1
+        }
+      ],
+      "gates": [
+        "west",
+        "north",
+        "med-south"
+      ],
+      "uncertain": [
+        "局部留存、修補和拆除範圍仍待核定，低矮斷段不是精確倒塌復原。"
+      ],
+      "datedChanges": [
+        {
+          "date": "1202–1217",
+          "change": "南部修建城防。"
+        },
+        {
+          "date": "1219",
+          "change": "拆除事件；展示切點僅分隔年代語境。"
+        }
+      ],
+      "sourceKeys": [
+        "roman",
+        "north",
+        "islamic",
+        "medieval"
+      ]
+    },
+    {
+      "id": "ottoman",
+      "label": "奧斯曼",
+      "dateLabel": "1517–1917",
+      "owner": "existing",
+      "summary": "沿用已配準的現代地圖外牆參照、雅法門／大馬士革門與主街連接。",
+      "walls": [],
+      "gates": [],
+      "uncertain": [
+        "現代輪廓不能代表1517起每年的精確外觀。"
+      ],
+      "datedChanges": [
+        {
+          "date": "1535–1542",
+          "change": "蘇萊曼重建的年代語境。"
+        }
+      ],
+      "sourceKeys": [
+        "modern",
+        "medieval",
+        "roman"
+      ]
+    },
+    {
+      "id": "outside-walls",
+      "label": "城外擴張",
+      "dateLabel": "19th–early 20th c.",
+      "owner": "existing",
+      "summary": "保留同一舊城參照，城外道路與住區擴展。",
+      "walls": [],
+      "gates": [],
+      "uncertain": [
+        "現代地圖開口不直接判定為某個歷史拆除點。"
+      ],
+      "datedChanges": [
+        {
+          "date": "1898",
+          "change": "雅法門附近牆段開闢通道有發掘資料；本包未精確重建歷年開口。"
+        }
+      ],
+      "sourceKeys": [
+        "modern",
+        "medieval",
+        "roman"
+      ]
+    },
+    {
+      "id": "modern",
+      "label": "現代耶路撒冷",
+      "dateLabel": "20th c.–today",
+      "owner": "existing",
+      "summary": "既有外牆與入口定位作現代參照，外部路網保持局部覆蓋。",
+      "walls": [],
+      "gates": [],
+      "uncertain": [
+        "現代城市未完整覆蓋；不代表行政或政治邊界。"
+      ],
+      "datedChanges": [],
+      "sourceKeys": [
+        "modern",
+        "medieval",
+        "roman"
+      ]
+    }
+  ],
+  "limitations": [
+    "All new x/z points, gate widths and heights are authored display coordinates, not extracted survey vectors.",
+    "Open corridor ends are unresolved, never automatically closed into a city perimeter.",
+    "Gate openings and approach streets share one topology, but do not identify excavated historical door footprints.",
+    "No modern wall line is copied into earlier periods; existing royal and late wall owners stay authoritative for their own displays.",
+    "Subphase offsets separate selected dated contexts; elapsed animation time is not a linear historical year scale.",
+    "Same corridor/model does not prove same stones survived; no physical reuse link is created."
+  ],
+  "transitions": [
+    {
+      "from": "chalcolithic-early-bronze",
+      "to": "middle-bronze",
+      "kind": "partial-defense-context",
+      "datedChangesFrom": "middle-bronze",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "middle-bronze",
+      "to": "late-bronze-iron1",
+      "kind": "unresolved-continuity",
+      "datedChangesFrom": "late-bronze-iron1",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "late-bronze-iron1",
+      "to": "david-solomon",
+      "kind": "royal-hypothesis",
+      "datedChangesFrom": "david-solomon",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "david-solomon",
+      "to": "late-first-temple",
+      "kind": "western-expansion",
+      "datedChangesFrom": "late-first-temple",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "late-first-temple",
+      "to": "babylonian-destruction",
+      "kind": "destruction",
+      "datedChangesFrom": "babylonian-destruction",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "babylonian-destruction",
+      "to": "persian-nehemiah",
+      "kind": "debated-rebuilding",
+      "datedChangesFrom": "persian-nehemiah",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "persian-nehemiah",
+      "to": "hellenistic-hasmonean",
+      "kind": "southwestern-expansion",
+      "datedChangesFrom": "hellenistic-hasmonean",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "hellenistic-hasmonean",
+      "to": "herodian-jesus",
+      "kind": "same-corridor-context",
+      "datedChangesFrom": "herodian-jesus",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "herodian-jesus",
+      "to": "roman-destruction",
+      "kind": "destruction",
+      "datedChangesFrom": "roman-destruction",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "roman-destruction",
+      "to": "aelia",
+      "kind": "replanning-and-independent-gates",
+      "datedChangesFrom": "aelia",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "aelia",
+      "to": "byzantine",
+      "kind": "late-roman-and-byzantine-wall-works",
+      "datedChangesFrom": "byzantine",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "byzantine",
+      "to": "early-islamic",
+      "kind": "changing-defense-system",
+      "datedChangesFrom": "early-islamic",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "early-islamic",
+      "to": "crusader",
+      "kind": "medieval-fortification-context",
+      "datedChangesFrom": "crusader",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "crusader",
+      "to": "ayyubid-mamluk",
+      "kind": "repair-then-dismantling",
+      "datedChangesFrom": "ayyubid-mamluk",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "ayyubid-mamluk",
+      "to": "ottoman",
+      "kind": "ottoman-rebuilding",
+      "datedChangesFrom": "ottoman",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "ottoman",
+      "to": "outside-walls",
+      "kind": "extra-mural-expansion-and-openings",
+      "datedChangesFrom": "outside-walls",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    },
+    {
+      "from": "outside-walls",
+      "to": "modern",
+      "kind": "monument-and-modern-network",
+      "datedChangesFrom": "modern",
+      "interpretation": "dated-regional-context-not-verified-individual-fabric-lineage",
+      "physicalSurvivalVerified": false
+    }
+  ]
+}

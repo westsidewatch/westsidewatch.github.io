@@ -1,3 +1,4 @@
+import {createDefenseTimelineView} from './defense-timeline-view.js';
 import {advancePlayback} from './playback-clock.js';
 import {isIndependentLaterPhase} from './independent-later-skeleton.js';
 import {createSpatialSkeletonView} from './spatial-skeleton-view.js';
@@ -75,9 +76,9 @@ try {
   }
   let baselineInfo=null,baselinePhase='',baselineCompare=null,baselineGeneration='';
   function refreshBaseline(force=false){const key=stage.dataset.phase+'|'+stage.dataset.evidenceMode+'|'+Math.floor(Number(slider.value)*10);if(!baselineInfo||!stage.dataset.phase||(!force&&baselinePhase===key))return;const s=three.inspectSpatialSkeleton();if(!s)return;baselinePhase=key;baselineInfo.textContent='統一概覽基準（城市結構未完成）· 住宅仍含占位模組，不代表實測戶數。水防：'+(s.domains.waterDefense.spatialObjects?'已登記局部':'尚缺可定位表示')+'；宗教／公共核心：'+(s.domains.sacredCivic.spatialObjects?'已有局部表示（含推定量體）':'尚缺可定位表示')+'。缺口不表示歷史不存在；建造順序與跨期轉場為展示示意。';}
-  let skeletonView=null;
+  let skeletonView=null,defenseView=null;
   const three = mountJerusalemThreeScene(mount, {
-    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();skeletonView?.refresh();const key=(info?.phase||'')+'|'+(info?.status||'');if(key!==baselineGeneration){baselineGeneration=key;refreshBaseline(true);}},
+    onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();skeletonView?.refresh();defenseView?.refresh();const key=(info?.phase||'')+'|'+(info?.status||'');if(key!==baselineGeneration){baselineGeneration=key;refreshBaseline(true);}},
     onReady(info) {
       window.__JERUSALEM3000__.three = true;
       window.__JERUSALEM3000__.evidence = true;
@@ -97,6 +98,10 @@ try {
   window.__JERUSALEM3000__.inspectPersistentCityPhase=phase=>three.inspectPersistentCityPhase(phase);
   window.__JERUSALEM3000__.inspectSpatialSkeleton=()=>three.inspectSpatialSkeleton();
   skeletonView=createSpatialSkeletonView({parent:document.querySelector('.j3k-shell'),controls:document.querySelector('.j3k-event-controls'),terrain:three.foundationContext().terrain,getSnapshot:()=>three.inspectSpatialSkeleton(),getPhaseLabel:id=>phases.find(p=>p.id===id)?.label||id});
+  window.__JERUSALEM3000__.inspectDefenseTimeline=()=>three.inspectDefenseTimeline();
+  window.__JERUSALEM3000__.defenseTimelineIndex=three.defenseTimelineIndex();
+  window.__JERUSALEM3000__.defenseTransitionIndex=three.defenseTransitionIndex();
+  defenseView=createDefenseTimelineView({parent:document.querySelector('.j3k-time'),controls:document.querySelector('.j3k-event-controls'),getSnapshot:()=>three.inspectDefenseTimeline(),index:three.defenseTimelineIndex(),transitions:three.defenseTransitionIndex()});
   const retainedToggle = document.querySelector('.j3k-retained-toggle');
   retainedToggle.addEventListener('click', () => {
     const enabled = retainedToggle.getAttribute('aria-pressed') !== 'true';
@@ -241,7 +246,8 @@ try {
     if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 宗教核心亦為概略量體，非測繪復原。';
     if(isIndependentLaterPhase(p.id))note.textContent+=' 地區、路網與住宅量體為示意；共同東側軸線不表示歷代路面相同。各期採階段概覽，非逐年完整復原。';
     if(window.__JERUSALEM3000__.inheritanceState.audit?.visibleComponents>0)note.textContent+=' 前代圖層按模型比例示意，留存構件與再利用關係尚未核定。';
-    skeletonView?.refresh();
+    if(three.inspectDefenseTimeline()?.owner==='network')note.textContent+=' 城防為開放示意段／爭議候選帶，未復原完整測繪城廓；可看「城防年代」。';
+    skeletonView?.refresh();defenseView?.refresh();
     if(evidencePanelPhase!==p.id) {
       evidencePanelPhase=p.id;
       const evidence=three.earlyLandscapeEvidence(p.id);

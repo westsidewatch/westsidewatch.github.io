@@ -22,7 +22,7 @@ export function createCityConstructionPresentation({root,getRecord}){
    const g=groups.get(id);g.items.push(mesh);g.box.union(new THREE.Box3().setFromObject(mesh));
   });
   const descriptors=new Map([...groups].map(([id,g])=>[id,g.items.map(m=>`${m.geometry.uuid}:${m.matrixWorld.elements.join(',')}:${m.userData.cityRuinFactor??1}`).sort().join('|')]));
-  if(lastPhase!==phaseId){previous=lastPhase?{phase:lastPhase,index:phases.get(lastPhase)?.index,descriptors:phases.get(lastPhase)?.descriptors}:null;lastPhase=phaseId;}
+  if(lastPhase!==phaseId){previous=lastPhase?{phase:lastPhase,index:phases.get(lastPhase)?.index,descriptors:phases.get(lastPhase)?.descriptors,defenseDescriptors:phases.get(lastPhase)?.defenseDescriptors}:null;lastPhase=phaseId;}
   const adjacent=active&&previous?.index===phaseIndex-1;
   const equalPrior=new Set(adjacent&&LATE.has(previous.phase)&&LATE.has(phaseId)?previous.descriptors.values():[]);
   const ranks=new Map();for(const kind of ['infrastructure','core','housing']){
@@ -30,16 +30,16 @@ export function createCityConstructionPresentation({root,getRecord}){
   }
   const fraction=position-phaseIndex;let growing=0,complete=0,waiting=0,kept=0;const counts={infrastructure:0,core:0,housing:0},growingByRole={infrastructure:0,core:0,housing:0};
   for(const g of groups.values()){
-   const r=ranks.get(g.id),same=adjacent&&(previous.descriptors.get(g.id)===descriptors.get(g.id)||equalPrior.has(descriptors.get(g.id)));
-   const offsets=(g.record.lifecycle?.events||[]).filter(e=>e.phase===phaseId).map(e=>e.offset||0),offset=Math.max(0,...offsets);
+   const r=ranks.get(g.id),same=adjacent&&(previous.descriptors.get(g.id)===descriptors.get(g.id)||equalPrior.has(descriptors.get(g.id))||(g.record.metadata?.defenseTimeline&&previous.defenseDescriptors?.has(descriptors.get(g.id))));
+   const offsets=(g.record.lifecycle?.events||[]).filter(e=>e.phase===phaseId&&['build','rebuild','transform','expand'].includes(e.state)&&(e.offset||0)<=fraction).map(e=>e.offset||0),offset=Math.max(0,...offsets);
    const base=g.kind==='housing'?.08+r*.42:g.kind==='core'?.06+r*.18:.01+r*.08,duration=g.kind==='core'?.38:.22;
    const start=Math.max(base,offset),end=Math.min(.95,Math.max(start+.08,start+duration));
-   const amount=!active||ruin||same?1:smooth((fraction-start)/(end-start));
+   const amount=!active||ruin||same||g.items.every(m=>m.userData.defenseMode==='ruin')?1:smooth((fraction-start)/(end-start));
    if(same)kept++;if(amount>=1)complete++;else if(amount>0){growing++;growingByRole[g.kind]++;}else waiting++;
    if(amount>0)counts[g.kind]++;
    for(const mesh of g.items){if(active){const e=entry(mesh);e.plane.constant=amount>=1?1e9:g.box.min.y-.01+amount*(g.box.max.y-g.box.min.y+.02);}else if(entries.has(mesh))entries.get(mesh).plane.constant=1e9;}
   }
-  phases.set(phaseId,{index:phaseIndex,descriptors});
+  phases.set(phaseId,{index:phaseIndex,descriptors,defenseDescriptors:new Set([...groups.values()].filter(g=>g.record.metadata?.defenseTimeline).map(g=>descriptors.get(g.id)))});
   stats={phase:phaseId,active,fraction,objects:groups.size,complete,growing,waiting,displayKept:kept,visibleByRole:counts,growingByRole,ownedMaterials:[...entries.values()].reduce((n,e)=>n+e.materials.length,0),historicalSurvivalInferred:false,geometryTransformsChanged:false};
   return stats;
  }

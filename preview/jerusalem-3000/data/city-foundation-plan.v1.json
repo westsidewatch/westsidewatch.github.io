@@ -1,7 +1,7 @@
 {
   "schema": "j3k.foundation-plan.v1",
   "kind": "reviewed-engineering-inventory-not-runtime-or-historical-certification",
-  "reviewedAt": "2026-10-24",
+  "reviewedAt": "2026-10-28",
   "baselineCommit": "d03b46cd8",
   "domains": [
     "districts",
@@ -35,7 +35,10 @@
     "persistent-city-world.js",
     "shared-urban-places.js",
     "old-city-wall-reference.js",
-    "data/urban/old-city-walls.reference.v1.json"
+    "data/urban/old-city-walls.reference.v1.json",
+    "defense-timeline.js",
+    "defense-timeline-view.js",
+    "data/urban/defense-timeline.v1.json"
   ],
   "phases": [
     {
@@ -573,7 +576,7 @@
   "structureRecovery": {
     "status": "in-progress-not-accepted",
     "reason": "Uniform roof modules do not establish historical city structure",
-    "completedPackage": "boundary-aligned-adaptive-visual-masses-and-preserved-registered-parcels",
+    "completedPackage": "all18-defense-contexts-and17-adjacent-changes-with-open-corridors-and-connected-entries",
     "sacredCoreCoverage": {
       "aelia": 0,
       "byzantine": 1,
@@ -588,7 +591,7 @@
     "housingGridReplacementComplete": true,
     "wallsAndGatesComplete": false,
     "historicalFoundationAccepted": false,
-    "nextPriority": "whole-timeline-boundary-entrance-and-main-route-baseline",
+    "nextPriority": "source-registration-of-open-defense-corridors-and-unresolved-circuit-sections-across-era-groups",
     "housingGridReplacementScope": "fixed-world-grid-removed-from-eight-later-renderers; historical-parcel-reconstruction-not-complete"
   },
   "landscapeContinuityRecovery": {
@@ -672,7 +675,7 @@
       "modern"
     ],
     "reviewAdjacentPairs": 17,
-    "currentPackage": "whole-timeline-construction-and-adjacent-visual-transitions",
+    "currentPackage": "whole-timeline-defense-gate-main-street-relationships",
     "existingParcelPhasesPreserved": 10,
     "perPackageRegression": "all18-forward-reverse-portrait-evidence-playback",
     "equalProgressMeans": "same-foundation-review-standard-not-equal-area-density-or-identical-buildings",
@@ -695,5 +698,24 @@
     "ruinPhases": "existing-ruin-projection-not-rebuilt",
     "terminalModern": "one-presentation-interval-with-historical-position-clamped-to17",
     "historicalFoundationAccepted": false
+  },
+  "defenseTimeline": {
+    "executionDocument": "DEFENSE-TIMELINE.md",
+    "reviewedPhaseCoverage": 18,
+    "adjacentContexts": 17,
+    "newNetworkProfiles": 11,
+    "existingOwnerProfiles": 7,
+    "newGeometry": "authored-open-corridors-not-digitized-surveyed-circuits",
+    "entryTopology": "same-opening-and-main-street-approach",
+    "unidentifiedCrossings": "design-gaps-not-identified-historic-gates",
+    "housing": "same-defense-and-approach-clearance-corridors",
+    "aelia": "independent-entry-context-before-late-fourth-century-wall-context",
+    "ayyubidMamluk": "early-repair-and-post1219-dismantled-context-separated",
+    "persian": "disputed-candidate-band-not-replacement-of-withheld-source",
+    "modernWallBackProjection": false,
+    "physicalSurvivalVerified": false,
+    "wholeCircuitsComplete": false,
+    "historicalFoundationAccepted": false,
+    "existingOwnerRelations": "read-from-shared-ledger-without-duplicate-models"
   }
 }
