@@ -277,8 +277,8 @@ const data=()=> {
       faults.push('cover hold must carry a fully legible masthead and issue number with the gate light');
     if(p===93&&!(m.stoneOpacity>.1&&m.stoneOpacity<.99))faults.push('Contents must hand off through a measured state');
     if(p===100){
-     if(!m.designId||m.designId!=='01'||!m.layoutVisible)
-      faults.push('default editorial contents must display the actual Aperture-inspired design');
+     if(!m.designId||m.designId!=='10'||!m.layoutVisible)
+      faults.push('the chosen Cereal engraved-light Contents must be the default editorial design');
      if(m.liveEntries!==12||m.liveMovements!==4||m.availableDesigns!==12)
       faults.push('all twelve desk entries and all twelve independent layouts must be accessible');
      if(m.starRenderer==='approved-morning-star-svg'&&!m.approvedStarVisible)
@@ -295,6 +295,72 @@ const data=()=> {
       faults.push('Contents must preserve the original Doré and vertical Xi Wang visual');
      if(m.railOpacity<.98)faults.push('seven-colour ribbon missing');
      if(!m.canKeyboardScroll)faults.push('editorial index needs keyboard-scrolling access');
+    }
+    if(p===100){
+     const editorial=await page.evaluate(()=>{
+      const host=document.querySelector(".p2x--10");
+      if(!host)return {missing:true};
+      const box=e=>e.getBoundingClientRect();
+      const header=host.querySelector(".p2x-cereal-header");
+      const nav=host.querySelector(".p2x-cereal-nav");
+      const rail=host.querySelector(".p2x-cereal-paper");
+      const stack=host.querySelector(".p2x-cereal-stack");
+      const chapters=[...host.querySelectorAll(".p2x-cereal-movement")];
+      const items=[...host.querySelectorAll(".p2x-entry")];
+      const title=host.querySelector(".p2x-cereal-header h2");
+      const star=document.querySelector("#dual-star");
+      const hero=document.querySelector(".ws-print-hero");
+      const glyphFace=hero.querySelector(".ws-print-hero__face");
+      const glyphCTM=glyphFace.getScreenCTM();
+      const pts=[[0,0],[216,0],[216,454],[0,454]]
+       .map(([x,y])=>new DOMPoint(x,y).matrixTransform(glyphCTM));
+      const glyphRight=Math.max(...pts.map(p=>p.x));
+      const glyphTop=Math.min(...pts.map(p=>p.y));
+      const glyphBottom=Math.max(...pts.map(p=>p.y));
+      const railLeft=box(rail).left;
+      const positions=chapters.map(el=>({top:box(el).top,bottom:box(el).bottom,height:box(el).height}));
+      const interludeOverlaps=chapters.some(section=>{
+       const p=section.querySelector(".p2x-interlude");
+       const last=section.querySelector(".p2x-entry:last-child");
+       return !!(p&&last&&box(p).top<box(last).bottom-1);
+      });
+      const itemOverlap=chapters.some(section=>{
+       const es=[...section.querySelectorAll(".p2x-entry")];
+       return es.slice(1).some((e,i)=>box(e).top<box(es[i]).bottom-1);
+      });
+      const chaptersOverlap=positions.slice(1).some((p,i)=>p.top<positions[i].bottom+1);
+      // Reachability is a real scroll test, not a claim based on DOM count.
+      stack.scrollTop=stack.scrollHeight;
+      const lastItem=items.at(-1);
+      const endReachable=box(lastItem).bottom<=box(stack).bottom+2;
+      stack.scrollTop=0;
+      const trace=[...host.querySelectorAll(".p2x-etch-line")];
+      const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+      return {
+       missing:false,chapters:chapters.length,items:items.length,
+       navigators:host.querySelectorAll("[data-p2-cereal-jump]").length,
+       traceCount:trace.length,traceAnimation:getComputedStyle(trace[0]).animationName,
+       scrollerKeyboard:stack.tabIndex>=0,scrollable:stack.scrollHeight>stack.clientHeight+5,
+       endReachable,titleReadable:box(title).width<=box(rail).width+1,
+       noHeaderNavOverlap:box(nav).top>=box(header).bottom-1,
+       noNavIndexOverlap:box(stack).top>=box(nav).bottom-1,
+       noGlyphTextCollision:glyphRight<railLeft-6 || glyphBottom<box(rail).top || glyphTop>box(rail).bottom,
+       noStarTextCollision:box(star).right<railLeft-5 || box(star).bottom<box(rail).top,
+       interludeOverlaps,itemOverlap,chaptersOverlap,reduced
+      };
+     });
+     if(editorial.missing||editorial.chapters!==4||editorial.items!==12||editorial.navigators!==4)
+      faults.push('Cereal must contain a real 12-desk reading index with four jump controls');
+     if(editorial.traceCount!==3||editorial.traceAnimation==='none'&&!editorial.reduced)
+      faults.push('09 gold orbit must be distilled into three living 10 etched engraving paths');
+     if(!editorial.scrollerKeyboard||!editorial.scrollable||!editorial.endReachable)
+      faults.push('all twelve titles must remain reachable inside the index, with keyboard support');
+     if(!editorial.titleReadable||!editorial.noHeaderNavOverlap||!editorial.noNavIndexOverlap)
+      faults.push('Contents heading, chapter navigation or first article text collide');
+     if(editorial.itemOverlap||editorial.chaptersOverlap||editorial.interludeOverlaps)
+      faults.push('article rows, movement sections or interludes physically overlap');
+     if(!editorial.noGlyphTextCollision||!editorial.noStarTextCollision)
+      faults.push('protected Xi Wang SVG or Morning Star collides with the Contents reading region');
     }
     if(pageErrors.length)faults.push('PAGE_ERROR '+pageErrors.join('; '));
     await page.screenshot({path:path.join(out,name+'-'+label+'.png'),animations:'allow'});
@@ -337,7 +403,7 @@ const data=()=> {
    const twelve=await browser.newPage({viewport:{width:1648,height:928},reducedMotion:'no-preference'});
    const twelveErrors=[];
    twelve.on('pageerror',e=>twelveErrors.push(e.message));
-   await twelve.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=100&side=cover-right&variant=01',
+   await twelve.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=100&side=cover-right&variant=10',
     {waitUntil:'domcontentloaded',timeout:45000});
    await twelve.evaluate(()=>document.fonts.ready);
    await twelve.waitForFunction(()=>window.P2ContentsTwelve?.count===12,null,{timeout:16000});
