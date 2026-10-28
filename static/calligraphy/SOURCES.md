@@ -4,6 +4,8 @@ Only expose a selectable collection after its source and exact index key have be
 
 ## Shared GLEAN method / 拾字方法
 
+- [《西望》12 件宋代寺額原作篩選（核心 6／備選 4／暫緩 1／排除 1）→ 下一輪生成 Brief](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/XIWANG-TWELVE-PLAQUE-REFERENCES-SELECTION-20261028.md)
+
 **《西望》專項藝術方向（v3）：**真正匾額原字、紙本額字墨稿與實存古匾是字形來源，摩崖**只作風格參照**；正楷／大楷向大行書、行草研究；**保留真實飛白、筆墨、提按、墨肉**，不引入篆書、隸書；排除清朝皇帝御筆、董其昌、無力粗字及小字帖放大。07／09 都未定稿。
 
 
