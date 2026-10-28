@@ -7,17 +7,17 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028k">
-<link rel="stylesheet" href="/css/p2-contents-twelve.css?v=20261028i">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028l">
+<link rel="stylesheet" href="/css/p2-contents-twelve.css?v=20261028j">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
  <span class="dual-ui__name">WESTSIDE WATCH · VOL.00</span>
  <nav class="dual-ui__controls" aria-label="實驗場景">
   <button type="button" data-snap="0.14">封面進場</button>
-  <button type="button" data-snap="0.39">西望鉛字</button>
-  <button type="button" data-snap="0.54">晨星顯現</button>
-  <button type="button" data-snap="0.68">晨星升起</button>
+  <button type="button" data-snap="0.48">晨星顯現</button>
+  <button type="button" data-snap="0.60">晨星升起</button>
+  <button type="button" data-snap="0.69">西望鉛字</button>
   <button type="button" data-snap="0.82">七色書脊翻頁</button>
   <button type="button" data-snap="1">多雷 Contents</button>
  </nav>
@@ -206,6 +206,10 @@
  const defs=letters.querySelector('defs');
  const vertical=mk('g',defs,{id:'ws-xiwang-vertical'});
  mk('use',vertical,{href:'#ws-xiwang-original'});
+ // An authentic burin trace is physically drawn behind the Morning Star.
+ // Its terminal curve is the existing Cereal Gothic gate's source guide.
+ const starIncision=mk('path',letters,{'class':'ws-star-incision',fill:'none'});
+ const starBridge=mk('path',letters,{'class':'ws-star-bridge',fill:'none'});
  const hero=mk('g',letters,{'class':'ws-print-hero'});
  hero.dataset.previewSvg='xiwang-ink-vector.svg';
  const registration=mk('use',hero,{'class':'ws-print-hero__registration',href:'#ws-xiwang-vertical',transform:'translate(1.0 1.5)'});
@@ -337,11 +341,22 @@
  };
 
  let printW=0,printH=0;
+ let incisionLength=0,bridgeLength=0;
  const layoutPrint=(w,h)=>{
   if(Math.abs(w-printW)<.5&&Math.abs(h-printH)<.5)return;
   printW=w;printH=h;
   letters.setAttribute('viewBox','0 0 '+w.toFixed(2)+' '+h.toFixed(2));
   letters.setAttribute('preserveAspectRatio','none');
+  // Geometric continuity: rising star at x=16.6%, y=16.5%; the curve
+  // ends at the identical (410,309) keystone as the Cereal engraving.
+  starIncision.setAttribute('d','M '+(w*.166).toFixed(2)+' '+(h*.925).toFixed(2)+
+   ' V '+(h*.165).toFixed(2));
+  starBridge.setAttribute('d','M '+(w*.166).toFixed(2)+' '+(h*.165).toFixed(2)+
+   ' C '+(w*.226).toFixed(2)+' '+(h*.204).toFixed(2)+
+   ' '+(w*.315).toFixed(2)+' '+(h*.250).toFixed(2)+
+   ' '+(w*.410).toFixed(2)+' '+(h*.309).toFixed(2));
+  incisionLength=starIncision.getTotalLength();
+  bridgeLength=starBridge.getTotalLength();
  };
  let progress=1,coverLeft=false;
  const pose=(el,x,y,w,h)=>{
@@ -416,15 +431,16 @@
   stage.dataset.doreVisible=artPlate.style.opacity;
   stage.dataset.dorePlateId=artPlate.dataset.plateId||'';
   stage.dataset.dorePlateChanges=String(plateChanges);
-  // The approved 2:3 wet-ink mother prints over the moving Doré original.
-  // Only the manuscript glyph changes; the star, cover and pacing remain.
-  const typeEnter=reduce?(progress>=.31?1:0):ease((progress-.255)/.11);
+  // A SINGLE physical reveal: the Morning Star lifts both the wet-ink
+  // mother and its engraved golden incision. Neither glyph can enter early.
+  const starLift=reduce?(progress>=.56?1:0):ease((progress-.42)/.27);
+  const typeEnter=starLift;
   const typeLeave=0; // Keep the authentic vertical masthead in the Contents image field.
-  letters.style.clipPath='none';
+  letters.style.clipPath='inset('+((1-typeEnter)*100).toFixed(2)+'% 0 0 0)';
   letters.style.opacity=String(typeEnter*(1-typeLeave));
   letters.style.visibility=typeEnter>0&&typeLeave<1?'visible':'hidden';
   layoutPrint(contentsW,contentsH);
-  const titleOn=reduce?(progress>=.31?1:0):ease((progress-.285)/.12);
+  const titleOn=starLift;
   // The editorial lead glyphs anchor the complete moving engraving,
   // rather than shrinking into a thumbnail above an imported index.
   const stoneProgress=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
@@ -441,17 +457,29 @@
   const titleScale=lerp(leadScale,folioScale,stoneProgress);
   const titleX=lerp(leadX,contentsW*(glyph?glyph[2]:.055),stoneProgress);
   const titleY=lerp(leadY,contentsH*(glyph?glyph[3]:.42),stoneProgress);
-  hero.setAttribute('transform','translate('+titleX.toFixed(2)+' '+titleY.toFixed(2)+') scale('+titleScale.toFixed(5)+')');
+  const inkLift=reduce?0:contentsH*.022*(1-starLift);
+  hero.setAttribute('transform','translate('+titleX.toFixed(2)+' '+(titleY+inkLift).toFixed(2)+') scale('+titleScale.toFixed(5)+')');
   hero.style.opacity=String(titleOn*lerp(1,glyph?glyph[4]:1,stoneProgress));
+  const incisionDraw=starLift;
+  starIncision.style.strokeDasharray=String(incisionLength);
+  starIncision.style.strokeDashoffset=String(incisionLength*(1-incisionDraw));
+  starIncision.style.opacity=String(starLift*.84);
+  const bridgeDraw=reduce?(progress>=.70?1:0):ease((progress-.62)/.24);
+  starBridge.style.strokeDasharray=String(bridgeLength);
+  starBridge.style.strokeDashoffset=String(bridgeLength*(1-bridgeDraw));
+  starBridge.style.opacity=String(bridgeDraw*.72);
   stage.dataset.xiwangHero=titleOn.toFixed(3);
   stage.dataset.xiwangImpression=titleOn.toFixed(3);
   stage.dataset.xiwangPlate='wet-ink-svg-vertical-dore-city-gallery';
   stage.dataset.xiwangTitleOrientation='vertical';
+  stage.dataset.starInkCoupling='single-rising-incision';
+  stage.dataset.inkReveal=starLift.toFixed(4);
+  stage.dataset.goldTrace=incisionDraw.toFixed(4);
    // One linked spatial event: dawn paper and the physical Jerusalem skyline
    // rise together; original 3D v5.3 star illuminates their shared horizon.
    // A reverse wheel must lower the same city and restore midnight blue.
    const dawnRise=reduce?1:ease((progress-.02)/.21);
-   const starRise=reduce?(progress>=.56?1:0):ease((progress-.455)/.15);
+   const starRise=starLift;
 
    // Protected cover geometry and light stay unchanged.
    city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
@@ -480,7 +508,7 @@
    // Star stays in the quiet engraved upper-left, clear of the huge type.
    const starTargetCentre=16.5;
    const starTargetSize=Math.min(205,contentsW*.19,contentsH*.22);
-   const starUpperY=reduce?17:lerp(61,17,ease((progress-.46)/.24));
+   const starUpperY=reduce?17:lerp(89,17,starLift);
    star.style.left=lerp(15,16,stone).toFixed(2)+'%';
    star.style.top=lerp(starUpperY,starTargetCentre,stone).toFixed(2)+'%';
    star.style.width=lerp(Math.min(205,contentsW*.17,contentsH*.20),starTargetSize,stone).toFixed(2)+'px';
@@ -492,8 +520,8 @@
   contents.style.transform='translate3d(0,'+(4*(1-stone)).toFixed(2)+'%,0)';
   contents.setAttribute('aria-hidden',stone>.98?'false':'true');
   contents.inert=stone<.98;
-  stage.dataset.phase=progress<.235?'cover-arrival':progress<.455?'xiwang-letterpress':
-   progress<.72?'morning-star-rise':progress<.865?'cover-and-star':
+  stage.dataset.phase=progress<.235?'cover-arrival':progress<.42?'dore-engraving':
+   progress<.69?'star-ink-impression':progress<.865?'cover-and-star':
    progress<.995?'stone-contents-reveal':'contents-final';
   stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
   stage.dataset.xiwangLines='0';
