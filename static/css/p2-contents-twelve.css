@@ -788,3 +788,11 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
   top:64%;bottom:9%;
  }
 }
+
+/* A Gothic arch is only meaningful if its full pointed opening is legible.
+   The stacked, tiny 1:1 folio has no room to show the architectural
+   contour in full: suppress the truncated sliver, keep the Morning Star
+   and the real Doré original instead of rendering a nonsensical stub. */
+@container (max-width:520px){
+ .p2x--10 .p2x-cereal-engraving{opacity:0!important;pointer-events:none}
+}
