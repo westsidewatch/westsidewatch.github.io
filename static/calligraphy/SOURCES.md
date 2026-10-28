@@ -2,6 +2,13 @@
 
 Only expose a selectable collection after its source and exact index key have been verified.
 
+## Shared GLEAN method / 拾字方法
+
+- [碑帖真跡集字 → SVG → AI 缺字補全（共同研究方法）](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/GLYPH-SOURCE-TO-SVG-AI-FALLBACK.md)
+- Design authority: [Chinese Logo Lab](https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/calligraphy/LOGO-RESEARCH-DESIGN-CENTER.md)
+- Use existing verified glyph sources first. Crop and verify the original work; keep ImageMagick + Potrace active. VTracer is a comparison candidate; AI generation remains a **labeled, rights-reviewed fallback**, not an installed production provider.
+- No historical-looking glyph, font or AI output is selectable as a verified master without source, pixel proof, optical review and rights clearance.
+
 ## Verified
 
 - 米芾 行書 — `neil-zt/calligraphy-community`, exact collection key: `米芾 行書`.
