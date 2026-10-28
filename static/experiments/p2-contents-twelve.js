@@ -220,7 +220,13 @@
  });
  window.P2ContentsTwelve={
   get active(){return active},
-  get glyph(){return DESIGNS.find(d=>d.id===active).glyph},
+  get glyph(){
+   // The phone composition stacks the Doré plate above the readable index.
+   // Keep the official interim glyph within that art area, away from the star.
+   if(active==="10" && tile.getBoundingClientRect().width<520)
+    return [.14,.27,.36,.23,.28];
+   return DESIGNS.find(d=>d.id===active).glyph;
+  },
   get designs(){return DESIGNS.map(d=>({id:d.id,source:d.source,name:d.name,zh:d.zh}))},
   get count(){return host.querySelectorAll(".p2x-entry").length},
   select,
