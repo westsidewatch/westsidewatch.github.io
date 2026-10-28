@@ -81,7 +81,7 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
  display:grid;grid-template-columns:1.03fr 1.03fr 1fr 1fr;gap:clamp(7px,1.45cqi,17px);overflow-y:auto}
 .p2x--01 .p2x-aperture-group h3{font-size:clamp(16px,2.5cqi,25px)}
 .p2x--01 .p2x-aperture-group .p2x-list{gap:5px}
-.p2x--01 .p2x-aperture-group .p2x-works{display:none}
+.p2x--01 .p2x-aperture-group .p2x-works{display:block;font-size:clamp(8px,1.03cqi,11px);line-height:1.25}
 .p2x--01 .p2x-aperture-group .p2x-zh{font-size:clamp(9px,1.3cqi,13px)}
 .p2x--01 .p2x-aperture-group .p2x-en{font-size:clamp(8px,.95cqi,10px)}
 
@@ -169,7 +169,7 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
 .p2x--05 .p2x-circular-group{border-top:1px solid #314354;padding-top:6px}
 .p2x--05 .p2x-circular-group h3{font-size:clamp(17px,2.5cqi,25px)}
 .p2x--05 .p2x-circular-group .p2x-list{gap:5px}
-.p2x--05 .p2x-circular-group .p2x-works{display:none}
+.p2x--05 .p2x-circular-group .p2x-works{display:block;font-size:clamp(8px,1.03cqi,11px);line-height:1.25}
 
 /* 06 — REMOTE*CONTROL — an airy typographic superimposition; four
    floating text islands are registered to contrasting washes, not cards. */
@@ -207,7 +207,7 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
 .p2x--07 .p2x-form-part{border-top:3px solid #23394c;padding-top:8px;background:rgba(247,241,227,.76)}
 .p2x--07 .p2x-form-part h3{font-size:clamp(17px,2.7cqi,28px)}
 .p2x--07 .p2x-form-part .p2x-list{gap:5px}
-.p2x--07 .p2x-form-part .p2x-works{display:none}
+.p2x--07 .p2x-form-part .p2x-works{display:block;font-size:clamp(8px,1.03cqi,11px);line-height:1.25}
 .p2x--07 .p2x-form-margin{position:absolute;left:3%;bottom:1%;font:italic 200 12px var(--ws-type-display-en,Georgia,serif)}
 
 /* 08 — FRANÇOIS GIRARD-MEUNIER — ultra-fine bilingual Swiss grid,
@@ -223,7 +223,7 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
 .p2x--08 .p2x-swiss-quadrant{padding:9px 13px;border-right:1px solid #4f5862;border-bottom:1px solid #4f5862}
 .p2x--08 .p2x-swiss-quadrant h3{font-size:clamp(17px,2.8cqi,28px)}
 .p2x--08 .p2x-swiss-quadrant .p2x-list{gap:5px}
-.p2x--08 .p2x-swiss-quadrant .p2x-works{display:none}
+.p2x--08 .p2x-swiss-quadrant .p2x-works{display:block;font-size:clamp(8px,1.03cqi,11px);line-height:1.25}
 .p2x--08 .p2x-swiss-bottom{position:absolute;right:5%;bottom:3%;font:200 clamp(7px,.95cqi,11px)/1 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.11em}
 
 /* 09 — YES & NO — orbital graphical index. The delicate arcs are
@@ -247,7 +247,7 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
 .p2x--09 .p2x-orbit-chapter{border-top:1px solid rgba(44,59,70,.49);padding-top:8px}
 .p2x--09 .p2x-orbit-chapter h3{font-size:clamp(17px,2.7cqi,27px)}
 .p2x--09 .p2x-orbit-chapter .p2x-list{gap:6px}
-.p2x--09 .p2x-orbit-chapter .p2x-works{display:none}
+.p2x--09 .p2x-orbit-chapter .p2x-works{display:block;font-size:clamp(8px,1.03cqi,11px);line-height:1.25}
 
 /* 10 — CEREAL — a deliberately silent museum-like image: art owns
    70% of the square, tiny single-column contents are a light marginalia. */
@@ -265,7 +265,7 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
 .p2x--10 .p2x-cereal-movement{padding-top:6px;border-top:1px solid #a9a296}
 .p2x--10 .p2x-cereal-movement h3{font-size:clamp(16px,2.3cqi,25px)}
 .p2x--10 .p2x-cereal-movement .p2x-list{gap:7px}
-.p2x--10 .p2x-cereal-movement .p2x-works{display:none}
+.p2x--10 .p2x-cereal-movement .p2x-works{display:block;font-size:clamp(8px,1.03cqi,11px);line-height:1.25}
 
 /* 11 — W MAGAZINE — gigantic four volume numerals, an expansive
    imagery half and typographic four-act lower grid. */
@@ -282,7 +282,7 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
 .p2x--11 .p2x-w-mini .p2x-movement__heading{margin:0 0 6px}
 .p2x--11 .p2x-w-mini h3{font-size:clamp(15px,2.3cqi,24px)}
 .p2x--11 .p2x-w-mini .p2x-list{gap:6px}
-.p2x--11 .p2x-w-mini .p2x-works{display:none}
+.p2x--11 .p2x-w-mini .p2x-works{display:block;font-size:clamp(8px,1.03cqi,11px);line-height:1.25}
 .p2x--11 .p2x-w-bottom{position:absolute;bottom:1%;right:4%;font:200 9px var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.13em}
 
 /* 12 — THE EYE — bibliographic double register and micro-rules,
