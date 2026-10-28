@@ -277,8 +277,12 @@ const data=()=> {
       faults.push('held spread must retain the star, original large title and complete Doré image');
      if(!(m.starLeftRatio>=-.01&&m.starLeftRatio<.19&&m.starTopRatio>=-.01&&m.starTopRatio<.20))
       faults.push('rising Morning Star must land in the upper-left editorial space');
-     if(!(m.starTitleRightGap>m.page.width*.025&&m.titleBottomClear>m.page.height*.035&&m.titleAspect>1.48))
-      faults.push('upper-left Morning Star must not collide with selected vector ink title');
+     if(!((m.starTitleRightGap>m.page.width*.025||m.starTitleGap>m.page.height*.025)
+       &&m.titleBottomClear>m.page.height*.035&&m.titleAspect>1.48))
+      faults.push('upper-left Morning Star must not collide with lower-left vector ink title');
+     if(name==='desktop'&&(m.hero.left-m.page.left>m.page.width*.10
+       ||m.hero.top<m.star.bottom+m.page.height*.025))
+      faults.push('editor-selected large ink glyph must anchor below the star at lower-left');
     }
     if(p===82&&!(m.lightOpacity>.94&&m.mastOpacity>.98&&m.volumeOpacity>.98&&m.headings.join('|')==='CITY|OF|LIGHT'))
       faults.push('cover hold must carry a fully legible masthead and issue number with the gate light');
@@ -301,6 +305,9 @@ const data=()=> {
      if(!m.insideContents||m.stoneOpacity<.999||m.typeOpacity<.98||m.doreVisible<.98)
       faults.push('Contents must preserve the original Doré and vertical Xi Wang visual');
      if(m.railOpacity<.98)faults.push('seven-colour ribbon missing');
+     if(name==='desktop'&&(m.hero.left-m.page.left>m.page.width*.10
+       ||m.titleBottomClear<m.page.height*.025||m.titleBottomClear>m.page.height*.10))
+      faults.push('settled Cereal ink must remain visibly anchored to the lower-left');
      if(!m.canKeyboardScroll)faults.push('editorial index needs keyboard-scrolling access');
     }
     if(p===100){
@@ -455,8 +462,9 @@ const data=()=> {
      faults.push('reduced motion must show the intact cover');
     if(p===44&&!(r.typeOpacity>.99&&r.starOpacity<.01&&r.heroOpacity>.99))
      faults.push('reduced motion must show the official title');
-    if(p===79&&!(r.starOpacity>.99&&r.typeOpacity>.9&&r.starLeftRatio<.19&&r.starTitleRightGap>r.page.width*.02))
-     faults.push('reduced Morning Star must stay upper-left without covering vertical title');
+    if(p===79&&!(r.starOpacity>.99&&r.typeOpacity>.9&&r.starLeftRatio<.19&&
+      (r.starTitleRightGap>r.page.width*.02||r.starTitleGap>r.page.height*.02)))
+     faults.push('reduced Morning Star must stay upper-left without covering lower-left title');
     if(p===100&&!(r.entries===12&&r.stoneOpacity>.99&&r.insideContents))
      faults.push('reduced motion must keep all 12 Contents entries');
     results.push({id:'reduced-'+p,metrics:r,errors:faults});
