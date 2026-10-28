@@ -92,14 +92,14 @@ a{color:inherit;text-underline-offset:4px}
   <div class="atlas-contact" id="atlas-contact" role="group" aria-label="十二版真實 Chromium 截圖"></div>
   <div class="atlas-frame-wrap">
    <iframe id="atlas-iframe" class="atlas-frame" title="西望 Vol.00 12 版 Contents 可操作預覽" loading="eager"
-    src="/experiments/p2-double-square-video-lab.html?embed=1&amp;p=100&amp;side=cover-right&amp;variant=01"></iframe>
+    src="/experiments/p2-double-square-video-lab.html?embed=1&amp;p=100&amp;side=cover-right&amp;variant=10"></iframe>
   </div>
   <div class="atlas-foot">
    <span>右頁封面固定 · 多雷原作連續移動 · 左頁十二版獨立排版</span>
    <div class="atlas-toggle">
     <button type="button" id="atlas-prev" aria-label="上一版">上一版</button>
     <button type="button" id="atlas-next" aria-label="下一版">下一版</button>
-    <a id="atlas-full" href="/experiments/p2-double-square-video-lab.html?p=100&amp;side=cover-right&amp;variant=01">獨立全屏查看</a>
+    <a id="atlas-full" href="/experiments/p2-double-square-video-lab.html?p=100&amp;side=cover-right&amp;variant=10">獨立全屏查看</a>
    </div>
   </div>
  </section>
@@ -117,7 +117,7 @@ a{color:inherit;text-underline-offset:4px}
  ["07","The Form of Form","Architectural Index","雙層巨字建築索引"],
  ["08","François Girard-Meunier","Swiss Counterpoint","雙語幾何對位"],
  ["09","YES & NO","Orbit of Four","幾何軌道目錄"],
- ["10","Cereal","Quiet Gallery","獨立畫廊窄索引"],
+ ["10","Cereal","Engraved Light / Quiet Gallery","版畫光跡＋動態刻線"],
  ["11","W Magazine","Four Monumental Numbers","巨型數字四幕"],
  ["12","The Eye","Bibliographic Folio","傳統書目雙欄"]
  ];
@@ -125,8 +125,8 @@ a{color:inherit;text-underline-offset:4px}
   title=document.getElementById("atlas-title"),full=document.getElementById("atlas-full"),
   root=document.getElementById("atlas-root"),contact=document.getElementById("atlas-contact");
  const showContact=document.getElementById("atlas-show-contact"),showLive=document.getElementById("atlas-show-live");
- let active=new URLSearchParams(location.search).get("variant")||"01";
- if(!designs.some(d=>d[0]===active))active="01";
+ let active=new URLSearchParams(location.search).get("variant")||"10";
+ if(!designs.some(d=>d[0]===active))active="10";
  contact.innerHTML=designs.map(d=>'<button type="button" class="atlas-contact-card" data-variant="'+d[0]+'" aria-label="打開第 '+d[0]+' 版 '+d[1]+'">'+
   '<img loading="lazy" src="/experiments/p2-contents-proof/twelve-'+d[0]+'-desktop.png" alt="實際 Chromium 截圖 '+d[1]+'" onerror="this.alt=\'此版本的 Chromium 截圖待部署\'">'+
   '<span class="atlas-contact-footer"><strong>'+d[0]+'</strong><span>'+d[1]+'</span><small>'+d[3]+'</small></span></button>').join("");
