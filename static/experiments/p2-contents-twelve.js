@@ -120,7 +120,7 @@
       groups.map((g,i)=>'<button type="button" data-p2-cereal-jump="'+i+'" aria-label="跳到 '+escape(g.key)+'"><span>'+escape(g.roman)+'</span><small>'+escape(g.key)+'</small></button>').join("")+'</nav>'+
     '<div class="p2x-cereal-stack" tabindex="0" role="region" aria-label="可捲動的十二個欄目完整文章目錄">'+
      groupList("p2x-cereal-movement",{entryStyle:"standard"})+'</div>'+
-    '<footer class="p2x-cereal-footer"><span>01—12 / CONTENTS</span><span class="p2x-cereal-progress" aria-live="off">SCROLL TO EXPLORE ↓</span></footer>'+
+    '<footer class="p2x-cereal-footer"><span>01—12 / CONTENTS</span><span class="p2x-cereal-progress" aria-live="off">SCROLL TO EXPLORE ↓</span><button class="p2x-cereal-expand" type="button" aria-label="完整目錄閱讀模式">FULL INDEX ↗</button></footer>'+
    '</div>',
  "11":()=>'<div class="p2x-w-upper"><span>WESTSIDE WATCH / JOURNAL</span>'+
    '<h2>Contents</h2><strong>00</strong></div>'+
@@ -147,8 +147,46 @@
   '<span class="p2-variant-toolbar__current" aria-live="polite"></span>'+
   '<a class="p2-variant-toolbar__atlas" href="/experiments/p2-contents-twelve.html">十二版總覽</a>';
  document.querySelector(".dual-ui")?.appendChild(toolbar);
+ // Reading is always possible, even in the square-constrained embedded
+ // mobile P2 spread. This preserves both fixed publication page ratios.
+ let reader=null,readerKeyHandler=null;
+ function closeReader(){
+  if(!reader)return;
+  const focus=reader._returnFocus;
+  reader.remove();reader=null;
+  if(readerKeyHandler){document.removeEventListener("keydown",readerKeyHandler);readerKeyHandler=null}
+  if(focus?.isConnected)focus.focus();
+ }
+ function openReader(trigger){
+  closeReader();
+  reader=document.createElement("div");
+  reader.className="p2-cereal-reader p2x p2x--10";
+  reader.setAttribute("role","dialog");
+  reader.setAttribute("aria-modal","true");
+  reader.setAttribute("aria-label","西望 Vol.00 完整目錄十二欄目");
+  reader._returnFocus=trigger;
+  reader.innerHTML='<div class="p2-cereal-reader__sheet">'+
+   '<header class="p2-cereal-reader__head"><div class="p2-cereal-reader__eyebrow"><span>WESTSIDE WATCH / VOL.00</span>'+
+   '<button type="button" class="p2-cereal-reader__close" aria-label="關閉完整目錄">CLOSE ×</button></div>'+
+   '<h2>Contents<span class="p2x-dot">.</span></h2><p>四個篇章 · 十二個欄目 / THE CITY OF LIGHT</p></header>'+
+   '<div class="p2-cereal-reader__chapters">'+groupList("p2x-cereal-movement",{entryStyle:"standard"})+'</div>'+
+   '<footer class="p2-cereal-reader__tail">THE WESTSIDE WATCH · INDEX / 01–12</footer></div>';
+  document.body.appendChild(reader);
+  reader.querySelector(".p2-cereal-reader__close").addEventListener("click",closeReader);
+  reader.addEventListener("click",e=>{if(e.target===reader)closeReader()});
+  readerKeyHandler=e=>{
+   if(e.key==="Escape"){e.preventDefault();closeReader()}
+   if(e.key==="Tab"){
+    const close=reader?.querySelector(".p2-cereal-reader__close");
+    if(close){e.preventDefault();close.focus()}
+   }
+  };
+  document.addEventListener("keydown",readerKeyHandler);
+  reader.querySelector(".p2-cereal-reader__close").focus();
+ }
  function select(id,history=true){
   if(!DESIGNS.some(d=>d.id===id))return;
+  closeReader();
   active=id;
   const current=DESIGNS.find(d=>d.id===active);
   tile.dataset.p2Design=active;
@@ -178,6 +216,7 @@
        (scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-3?
         "END / 12":"SCROLL / "+String(chapter+1).padStart(2,"0")+" OF 04"):"INDEX / COMPLETE";
    };
+   host.querySelector(".p2x-cereal-expand")?.addEventListener("click",e=>openReader(e.currentTarget));
    scroller.addEventListener("scroll",sync,{passive:true});
    jumps.forEach((b,i)=>b.addEventListener("click",()=>{
     const target=chapters[i];
