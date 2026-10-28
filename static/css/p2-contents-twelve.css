@@ -274,57 +274,71 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
  color:#f6ebd4;text-shadow:0 1px 4px rgba(22,30,37,.83);
  letter-spacing:.035em
 }
-/* The etched path literally begins at the settled Morning Star centre
-   (x=16% y=16.5%) and ends before the text-safe zone at x=61.5%. */
+/* ENGRAVED PORTAL / CONTENTS 10.
+   All arch proportions are traced from the protected RIGHT cover
+   (#ws-gate-aperture); the LEFT is a hairline print impression of it.
+   A single slim ray connects the Morning Star to the arch's keystone.
+   No ring, lasso, decorative flourish, or thick graphic diagram. */
 .p2x--10 .p2x-cereal-engraving{
  position:absolute;inset:0;width:100%;height:100%;z-index:1;
- overflow:visible;pointer-events:none;
- mix-blend-mode:normal;opacity:1;filter:drop-shadow(0 0 1.3px rgba(38,31,22,.55))
+ overflow:visible;pointer-events:none;mix-blend-mode:normal;
+ opacity:.91;filter:none
 }
 .p2x--10 .p2x-etch-line,
 .p2x--10 .p2x-etch-glimmer,
+.p2x--10 .p2x-portal-guide,
 .p2x--10 .p2x-etch-hatching path,
 .p2x--10 .p2x-etch-witness path{
- fill:none;stroke-linecap:round;stroke-linejoin:round
+ fill:none;stroke-linecap:butt;stroke-linejoin:round
 }
 .p2x--10 .p2x-etch-line{
- stroke:url(#p2x-cereal-gold);stroke-width:2.35;vector-effect:non-scaling-stroke;
- stroke-dasharray:none;stroke-dashoffset:0;
- opacity:.94;animation:p2x-etch-breathe 16s ease-in-out infinite
+ stroke:url(#p2x-cereal-gold);
+ stroke-width:1.5;vector-effect:non-scaling-stroke;
+ opacity:.83;animation:p2x-etch-breathe 18s ease-in-out infinite
 }
 .p2x--10 .p2x-etch-line--shadow{
- stroke:#edc584;stroke-opacity:.79;stroke-width:1.15;
- animation-delay:-3s
+ stroke:#b58b56;stroke-width:.68;opacity:.53;
+ animation-delay:-5s
 }
 .p2x--10 .p2x-etch-line--upper{
- stroke:#a7743d;stroke-opacity:.8;stroke-width:1.1;
- animation-delay:-7s
+ stroke:#f1cf9a;stroke-width:.68;opacity:.62;
+ animation-delay:-10s
+}
+.p2x--10 .p2x-portal-guide{
+ stroke:#d8a65c;stroke-opacity:.58;
+ stroke-width:.9;vector-effect:non-scaling-stroke;
+ stroke-dasharray:2 4;
+ animation:p2x-guide-emerge 7s ease-out both
 }
 .p2x--10 .p2x-etch-glimmer{
- stroke:#ffe3ab;stroke-width:2.8;vector-effect:non-scaling-stroke;
- opacity:.89;stroke-dasharray:48 1250;
- animation:p2x-etch-follow 20s linear infinite
+ stroke:#ffe3ab;stroke-width:1.7;
+ vector-effect:non-scaling-stroke;
+ opacity:.8;stroke-dasharray:26 1700;
+ animation:p2x-etch-follow 27s linear infinite
 }
 .p2x--10 .p2x-etch-hatching path{
- stroke:#f1c888;stroke-opacity:.67;stroke-width:.95;
- vector-effect:non-scaling-stroke;
- stroke-dasharray:none;stroke-dashoffset:0;animation:none
+ stroke:#b2864b;stroke-opacity:.57;stroke-width:.62;
+ vector-effect:non-scaling-stroke
 }
 .p2x--10 .p2x-etch-witness path{
- stroke:#c89656;stroke-opacity:.9;stroke-width:1;
- vector-effect:non-scaling-stroke;stroke-dasharray:none;stroke-dashoffset:0;animation:none
+ stroke:#d6ae73;stroke-opacity:.47;stroke-width:.55;
+ vector-effect:non-scaling-stroke
 }
-#dual-stone-contents[aria-hidden="true"] .p2x--10 :is(.p2x-etch-line,.p2x-etch-glimmer,.p2x-etch-hatching path,.p2x-etch-witness path){
+#dual-stone-contents[aria-hidden="true"] .p2x--10 :is(.p2x-etch-line,.p2x-etch-glimmer,.p2x-portal-guide){
  animation-play-state:paused
 }
 @keyframes p2x-etch-breathe{
- 0%,100%{opacity:.82}50%{opacity:1}
+ 0%,100%{opacity:.72}50%{opacity:.94}
+}
+@keyframes p2x-guide-emerge{
+ from{stroke-dashoffset:80;stroke-opacity:.36}
+ to{stroke-dashoffset:0;stroke-opacity:.58}
 }
 @keyframes p2x-etch-follow{
- from{stroke-dashoffset:0;opacity:.68}
- 12%{opacity:.98}
- 88%{opacity:.98}
- to{stroke-dashoffset:-1250;opacity:.68}
+ from{stroke-dashoffset:0;opacity:.35}
+ 15%{opacity:.90}
+ 85%{opacity:.90}
+ to{stroke-dashoffset:-1700;opacity:.35}
 }
 /* The paper is a reading surface, not a floating framed card. */
 .p2x--10 .p2x-cereal-paper{
@@ -746,8 +760,8 @@ html:not(.dual-embed) .dual-stage{height:calc(100svh - 181px);min-height:660px}
    two-character SVG occupy its upper image, rather than disappearing. */
 @container (max-width:520px){
  .p2x--10 .p2x-cereal-engraving{
-  opacity:.94;
-  clip-path:inset(0 0 60% 0);
+  opacity:.74;
+  clip-path:inset(0 0 59% 0);
  }
  .p2x--10 .p2x-cereal-header{
   top:34%;left:5%;right:5%;
