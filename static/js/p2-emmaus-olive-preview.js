@@ -218,7 +218,14 @@
   emRight.style.clipPath='none';
   syncGallery(move>.98&&oliveIn<.001&&document.visibilityState==='visible');
   emRight.style.opacity=String(useArchive?archive:0);
-  emPlates.style.opacity=String(1-smooth(oliveIn/.32));
+  // Keep the moving plate visible all the way to the destination.
+  // Only its editorial annotation recedes; the image itself must NOT vanish
+  // at 32% progress and leave a blank travelling rectangle.
+  emPlates.style.opacity='1';
+  const annotations=1-smooth(oliveIn/.40);
+  $('.emmaus__plate-top').style.opacity=String(annotations);
+  $('.emmaus__plate-caption').style.opacity=String(annotations);
+  $('.emmaus__gold-line').style.opacity=String(annotations);
 
   olive.style.visibility=oliveShowing?'visible':'hidden';
   olive.style.opacity='1';olive.style.clipPath='none';
