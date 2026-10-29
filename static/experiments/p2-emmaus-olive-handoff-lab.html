@@ -7,7 +7,7 @@
 <meta name="description" content="西望 P2 連續展演候選：教會、雜誌、以馬忤斯、橄欖山。僅供藝術驗收。">
 <title>P2 · Emmaus × Olive Mountain — 連續預覽</title>
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-emmaus-olive-preview.css?v=20261029-mersi11">
+<link rel="stylesheet" href="/css/p2-emmaus-olive-preview.css?v=20261029-mersi12">
 </head>
 <body data-ws-scope="p2">
 <header class="proof-controls" aria-label="P2 03 與 04 動效驗收工具">
@@ -29,6 +29,38 @@
     <div class="emmaus__left">
      <div class="emmaus__mast"><span>03 / 07</span><span>WESTSIDE / BIBLE STUDY</span><span>THE SIXTY-SIX BOOKS</span></div>
      <div class="emmaus__identity"><span class="emmaus__small">THE ROAD TO EMMAUS</span><h1>EMMAUS<span>以馬忤斯</span></h1><p>從經文進入歷史，從歷史重新走回聖經。</p></div>
+     <section class="emmaus__study" id="emmaus-study" aria-labelledby="emmaus-study-heading">
+      <img class="emmaus__scroll-engraving" src="/images/p2-emmaus-scroll-micro-engraving.svg" alt="" aria-hidden="true" decoding="async">
+      <div class="emmaus__sevenfold" aria-hidden="true" data-layer-count="7">
+      <span class="emmaus__folio-layer" style="--em-layer:0;--em-color:var(--ws-water)"></span>
+      <span class="emmaus__folio-layer" style="--em-layer:1;--em-color:var(--ws-first-light)"></span>
+      <span class="emmaus__folio-layer" style="--em-layer:2;--em-color:var(--ws-pale-gold)"></span>
+      <span class="emmaus__folio-layer" style="--em-layer:3;--em-color:var(--ws-olive)"></span>
+      <span class="emmaus__folio-layer" style="--em-layer:4;--em-color:var(--ws-harvest)"></span>
+      <span class="emmaus__folio-layer" style="--em-layer:5;--em-color:var(--ws-crimson)"></span>
+      <span class="emmaus__folio-layer" style="--em-layer:6;--em-color:var(--ws-daylight-mauve)"></span>
+      </div>
+      <div class="emmaus__study-interface">
+       <header class="emmaus__study-head"><span>ONE / BIBLE STUDY · 研讀視窗</span><span>FEATURE / LUKE 24</span></header>
+       <div class="emmaus__study-cols">
+        <div class="emmaus__study-reading">
+         <span class="emmaus__study-ref" id="em-study-ref">路加福音 24:1–53</span>
+         <h2 id="emmaus-study-heading">祂已經復活了</h2>
+         <p class="emmaus__study-movement" id="em-study-movement"></p>
+         <ol class="emmaus__study-route" id="em-study-route" aria-label="路加福音24章實際研讀路徑"></ol>
+        </div>
+        <div class="emmaus__study-tools">
+         <div class="emmaus__study-tabs" role="tablist" aria-label="路加福音24章研讀內容">
+          <button id="em-tab-background" type="button" role="tab" aria-controls="em-study-detail" aria-selected="true" data-study-view="background">歷史</button>
+          <button id="em-tab-connections" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="connections">串珠</button>
+          <button id="em-tab-questions" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="questions">問題</button>
+         </div>
+         <div class="emmaus__study-detail" id="em-study-detail" role="tabpanel" aria-labelledby="em-tab-background"></div>
+        </div>
+       </div>
+       <footer class="emmaus__study-foot"><span>ONE · 路加福音第二十四章 / 資料源自 ONE 正式研讀內容</span><a href="/one/?book=42&amp;chapter=24">打開完整研讀 ↗</a></footer>
+      </div>
+     </section>
      <div class="emmaus__reading">
       <div class="emmaus__book"><div class="emmaus__book-meta"><span id="em-book-number">BOOK 40</span><span id="em-book-part">NEW TESTAMENT</span></div><h2 id="em-book-en">Matthew</h2><p id="em-book-zh">馬太福音</p><div class="emmaus__chapter"><span id="em-book-chapters">28 CHAPTERS</span><span>ONE · 一卷</span></div></div>
       <div class="emmaus__guide"><p>66 BOOKS <span>六十六卷</span></p><p class="emmaus__guide-copy">選擇一卷，開始研讀。</p><a class="emmaus__enter" id="emmaus-enter" href="/one/?book=40&amp;chapter=1">打開一卷 <span>↗</span></a></div>
@@ -52,9 +84,11 @@
  </section>
 </main>
 <script src="/one/one-data.js"></script>
+<script src="/one/luke-core.js"></script>
+<script src="/one/luke-21-24.js"></script>
 <script src="/one/one-dore-cover-registry.js"></script>
 <script src="/one/one-dore-assets-241.js"></script>
 <script src="/olive/components/speaker-baseline-v1/baseline.js?v=07d89a2-recovered-v1"></script>
-<script src="/js/p2-emmaus-olive-preview.js?v=20261029-mersi11"></script>
+<script src="/js/p2-emmaus-olive-preview.js?v=20261029-mersi12"></script>
 </body>
 </html>
