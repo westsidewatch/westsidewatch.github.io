@@ -272,6 +272,9 @@
   // Olive editorial is revealed in the exact area vacated by the moving
   // engraved panel, from RIGHT to LEFT, not as a new page wipe.
   // The left edge of this crop tracks the same MERSI morph progress.
+  // Withhold the WHOLE Olive editorial surface, not only its letters.
+  // Otherwise an empty white rectangle replaces ONE during the early morph.
+  oliveEditorial.style.opacity=String(editorial);
   oliveEditorial.style.clipPath='none';
   $('.olive-proof__editorial > div').style.opacity=String(editorial);
   $('.olive-proof__editorial > a').style.opacity=String(smooth((oliveIn-.70)/.25));
