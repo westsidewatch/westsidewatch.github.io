@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>西望 Vol.00 / Contents 十二版設計比較</title>
+<meta name="description" content="十二種不同的西望 Vol.00 Contents 編輯設計，均以同一張可操作的多雷原作、晨星及正式西望 SVG 進行實際渲染。">
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#101b25;color:#f0e7d5}
+body{font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif)}
+a{color:inherit;text-underline-offset:4px}
+.atlas{display:grid;grid-template-columns:minmax(260px,335px) minmax(0,1fr);min-height:100svh}
+.atlas-nav{padding:24px clamp(16px,2vw,30px);border-right:1px solid #415160;display:flex;flex-direction:column;max-height:100svh;overflow-y:auto;scrollbar-width:thin}
+.atlas-kicker{display:block;font:200 11px/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.18em;color:#d4bc86}
+.atlas-nav h1{font:400 clamp(43px,5vw,70px)/.9 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.075em;margin:15px 0 8px}
+.atlas-nav>p{font:200 12px/1.75 var(--ws-type-reading-zh,serif);color:#c9c7be;max-width:29ch;margin:10px 0 19px}
+.atlas-choices{display:grid;gap:0}
+.atlas-choice{width:100%;border:0;border-top:1px solid #52616c;background:none;color:#f0e7d5;text-align:left;cursor:pointer;
+ display:grid;grid-template-columns:37px 1fr;gap:10px;align-items:baseline;padding:11px 4px 12px}
+.atlas-choice .atlas-number{font:italic 200 25px/1 var(--ws-type-display-en,Georgia,serif);color:#c2a268}
+.atlas-choice .atlas-source{font:200 14px/1.3 var(--ws-type-display-en,Georgia,serif);letter-spacing:.005em}
+.atlas-choice .atlas-zh{display:block;font:200 11px/1.6 var(--ws-type-reading-zh,serif);color:#acb6ba}
+.atlas-choice[aria-pressed=true]{background:#e9d8b5;color:#172a38;padding-left:7px}
+.atlas-choice[aria-pressed=true] .atlas-number{color:#846433}
+.atlas-choice[aria-pressed=true] .atlas-zh{color:#4b5b66}
+.atlas-choice:focus-visible{outline:2px solid #e7c781;outline-offset:-2px}
+.atlas-nav footer{margin-top:22px;font:200 11px/1.5 var(--ws-type-display-en-sc,Georgia,serif);color:#cab886}
+.atlas-review{display:flex;flex-direction:column;min-width:0;min-height:100svh}
+.atlas-contact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(9px,1vw,18px);
+ flex:1;min-height:0;overflow-y:auto;align-content:start;padding:clamp(12px,1.7vw,26px)}
+.atlas-contact-card{min-width:0;cursor:pointer;text-align:left;border:1px solid #4b5c66;background:#172735;color:#f7eedb;
+ padding:0;display:flex;flex-direction:column}
+.atlas-contact-card img{display:block;width:100%;aspect-ratio:1.77;object-fit:cover;background:#34404a;color:#ddcaa6}
+.atlas-contact-card .atlas-contact-footer{padding:8px 10px 10px;display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.atlas-contact-card strong{font:italic 200 21px var(--ws-type-display-en,Georgia,serif);color:#e4c38c}
+.atlas-contact-card span{font:200 12px/1.3 var(--ws-type-display-en,Georgia,serif)}
+.atlas-contact-card small{font:200 10px/1.4 var(--ws-type-reading-zh,serif);color:#bcc2c2}
+.atlas-contact-card:focus-visible{outline:2px solid #e8c88a;outline-offset:2px}
+.atlas[data-view="contact"] .atlas-frame-wrap{display:none}
+.atlas[data-view="live"] .atlas-contact{display:none}
+.atlas-view-switch{display:flex;gap:6px}
+.atlas-view-switch button{border:1px solid #697985;color:#e9d5ad;background:none;padding:7px 10px;cursor:pointer;font:200 11px var(--ws-type-reading-zh,serif)}
+.atlas-view-switch button[aria-pressed=true]{background:#e9d5ad;color:#132b3d;border-color:#e9d5ad}
+.atlas-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 20px;border-bottom:1px solid #415160}
+.atlas-bar h2{margin:0;font:400 clamp(15px,1.7vw,23px)/1.2 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.02em}
+.atlas-bar .atlas-steps{font:200 10px/1.4 var(--ws-type-display-en-sc,Georgia,serif);letter-spacing:.13em;color:#e4c894}
+.atlas-frame-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:clamp(10px,1.8vw,27px);background:#111e28}
+.atlas-frame{display:block;border:0;width:100%;height:calc(100svh - 125px);min-height:630px;background:#101923}
+.atlas-foot{padding:10px 20px 15px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;
+ font:200 11px/1.5 var(--ws-type-reading-zh,serif);border-top:1px solid #415160;color:#c8c7be}
+.atlas-foot a{color:#edcd91}
+.atlas-toggle{display:flex;gap:8px;align-items:center}
+.atlas-toggle button{padding:7px 11px;border:1px solid #657483;background:none;color:#ead5b3;cursor:pointer}
+@media(max-width:850px){
+ .atlas{display:flex;flex-direction:column}
+ .atlas-nav{max-height:none;padding:15px 17px 9px}
+ .atlas-nav h1{font-size:43px;margin:6px 0}
+ .atlas-nav>p{max-width:none;margin:4px 0 9px}
+ .atlas-choices{display:flex;gap:7px;overflow-x:auto;padding:5px 0 10px}
+ .atlas-choice{display:flex;flex-direction:column;gap:3px;flex:0 0 125px;border:1px solid #52616c;padding:8px}
+ .atlas-choice .atlas-number{font-size:21px}
+ .atlas-choice .atlas-source{font-size:12px}
+ .atlas-choice .atlas-zh{font-size:10px}
+ .atlas-nav footer{display:none}
+ .atlas-review{min-height:0}
+ .atlas-frame{height:clamp(520px,78svh,820px);min-height:520px}
+ .atlas-contact{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px}
+ .atlas-contact-card .atlas-contact-footer{padding:5px 7px 7px}
+ .atlas-frame-wrap{padding:5px}
+ .atlas-foot{padding:9px}
+}
+</style>
+</head>
+<body data-ws-scope="journal">
+<main class="atlas" id="atlas-root" data-view="contact">
+ <aside class="atlas-nav">
+  <span class="atlas-kicker">WESTSIDE WATCH / ART DIRECTION</span>
+  <h1>Contents<span style="font-style:italic;color:#d4b478">.</span></h1>
+  <p>十二種不同編輯構圖。點選每一版，右側顯示真實運行的多雷插圖、晨星、正式西望 SVG 與十二欄目。</p>
+  <div class="atlas-choices" id="atlas-choices" role="group" aria-label="十二版選擇"></div>
+  <footer>VOL.00 / ORIGINAL DORÉ / TWELVE DESKS / NO MERGE</footer>
+ </aside>
+ <section class="atlas-review" aria-label="P2 真實運行預覽">
+  <div class="atlas-bar">
+   <h2 id="atlas-title">12 ORIGINAL CONTENTS / EDITORIAL STUDIES</h2>
+   <div class="atlas-view-switch" role="group" aria-label="預覽模式">
+    <button type="button" id="atlas-show-contact" aria-pressed="true">十二版拼版</button>
+    <button type="button" id="atlas-show-live" aria-pressed="false">動態實頁</button>
+   </div>
+  </div>
+  <div class="atlas-contact" id="atlas-contact" role="group" aria-label="十二版真實 Chromium 截圖"></div>
+  <div class="atlas-frame-wrap">
+   <iframe id="atlas-iframe" class="atlas-frame" title="西望 Vol.00 12 版 Contents 可操作預覽" loading="eager"
+    src="/experiments/p2-double-square-video-lab.html?embed=1&amp;p=100&amp;side=cover-right&amp;variant=10"></iframe>
+  </div>
+  <div class="atlas-foot">
+   <span>右頁封面固定 · 多雷原作連續移動 · 左頁十二版獨立排版</span>
+   <div class="atlas-toggle">
+    <button type="button" id="atlas-prev" aria-label="上一版">上一版</button>
+    <button type="button" id="atlas-next" aria-label="下一版">下一版</button>
+    <a id="atlas-full" href="/experiments/p2-double-square-video-lab.html?p=100&amp;side=cover-right&amp;variant=10">獨立全屏查看</a>
+   </div>
+  </div>
+ </section>
+</main>
+<script>
+(function(){
+ "use strict";
+ const designs=[
+ ["01","Aperture","The Engraved Window","整幅版畫＋底部索引"],
+ ["02","COEVAL","Offset Staircase","斜向錯位階梯"],
+ ["03","Surplus","Editorial Collage","巨型篇號與拼貼"],
+ ["04","L’Architecture d’Aujourd’hui","Vertical Ribbons","垂直建築條帶"],
+ ["05","Circular 19","Monumental Letterforms","巨型字母構築版面"],
+ ["06","Remote*Control","Floating Typography","文字懸浮與疊印"],
+ ["07","The Form of Form","Architectural Index","雙層巨字建築索引"],
+ ["08","François Girard-Meunier","Swiss Counterpoint","雙語幾何對位"],
+ ["09","YES & NO","Orbit of Four","幾何軌道目錄"],
+ ["10","Cereal","Engraved Light / Quiet Gallery","版畫光跡＋動態刻線"],
+ ["11","W Magazine","Four Monumental Numbers","巨型數字四幕"],
+ ["12","The Eye","Bibliographic Folio","傳統書目雙欄"]
+ ];
+ const choices=document.getElementById("atlas-choices"),frame=document.getElementById("atlas-iframe"),
+  title=document.getElementById("atlas-title"),full=document.getElementById("atlas-full"),
+  root=document.getElementById("atlas-root"),contact=document.getElementById("atlas-contact");
+ const showContact=document.getElementById("atlas-show-contact"),showLive=document.getElementById("atlas-show-live");
+ let active=new URLSearchParams(location.search).get("variant")||"10";
+ if(!designs.some(d=>d[0]===active))active="10";
+ contact.innerHTML=designs.map(d=>'<button type="button" class="atlas-contact-card" data-variant="'+d[0]+'" aria-label="打開第 '+d[0]+' 版 '+d[1]+'">'+
+  '<img loading="lazy" src="/experiments/p2-contents-proof/twelve-'+d[0]+'-desktop.png" alt="實際 Chromium 截圖 '+d[1]+'" onerror="this.alt=\'此版本的 Chromium 截圖待部署\'">'+
+  '<span class="atlas-contact-footer"><strong>'+d[0]+'</strong><span>'+d[1]+'</span><small>'+d[3]+'</small></span></button>').join("");
+ choices.innerHTML=designs.map(d=>'<button class="atlas-choice" type="button" data-variant="'+d[0]+'">'+
+  '<span class="atlas-number">'+d[0]+'</span><span><span class="atlas-source">'+d[1]+'</span>'+
+  '<span class="atlas-zh">'+d[3]+'</span></span></button>').join("");
+ function setView(view){
+  root.dataset.view=view;
+  showContact.setAttribute("aria-pressed",String(view==="contact"));
+  showLive.setAttribute("aria-pressed",String(view==="live"));
+  if(view==="contact")title.textContent="12 ORIGINAL CONTENTS / EDITORIAL STUDIES";
+  else{const d=designs.find(x=>x[0]===active);title.textContent=d[0]+" / "+d[1]+" — "+d[2]}
+ }
+ showContact.addEventListener("click",()=>setView("contact"));
+ showLive.addEventListener("click",()=>setView("live"));
+ contact.addEventListener("click",e=>{const b=e.target.closest("button[data-variant]");if(b){select(b.dataset.variant);setView("live")}});
+ function select(id,replace=true){
+  const d=designs.find(x=>x[0]===id);if(!d)return;
+  active=id;title.textContent=d[0]+" / "+d[1]+" — "+d[2];
+  choices.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.variant===id)));
+  const url="/experiments/p2-double-square-video-lab.html?p=100&side=cover-right&variant="+id;
+  full.href=url;
+  frame.contentWindow?.postMessage({type:"p2-contents-variant",variant:id},location.origin);
+  if(replace){const u=new URL(location.href);u.searchParams.set("variant",id);history.replaceState(null,"",u)}
+ }
+ choices.addEventListener("click",event=>{const b=event.target.closest("button[data-variant]");if(b){select(b.dataset.variant);setView("live")}});
+ function step(n){const i=designs.findIndex(d=>d[0]===active);select(designs[(i+n+designs.length)%designs.length][0])}
+ document.getElementById("atlas-prev").addEventListener("click",()=>step(-1));
+ document.getElementById("atlas-next").addEventListener("click",()=>step(1));
+ frame.addEventListener("load",()=>{frame.contentWindow?.postMessage({type:"p2-contents-variant",variant:active},location.origin)});
+ select(active,false);setView("contact");
+})();
+</script>
+</body>
+</html>
