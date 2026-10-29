@@ -12,6 +12,14 @@
  if(!Array.isArray(books)||books.length!==66)throw Error('Canonical ONE 66-book data was not loaded');
  const rail=$('#emmaus-rail'),bookEn=$('#em-book-en'),bookZh=$('#em-book-zh'),bookNum=$('#em-book-number'),bookPart=$('#em-book-part'),bookChapters=$('#em-book-chapters');
  let selectedBook=40;
+ function centerRailBook(button,behavior='smooth'){
+  if(!button)return;
+  // Only the horizontal ONE strip moves. scrollIntoView() can also scroll
+  // the sticky P2 page vertically, which would disturb the seven-venue handoff.
+  const railRect=rail.getBoundingClientRect(),bookRect=button.getBoundingClientRect();
+  const left=rail.scrollLeft+(bookRect.left-railRect.left)-(rail.clientWidth-bookRect.width)/2;
+  rail.scrollTo({left:Math.max(0,left),behavior});
+ }
  function selectBook(number,center=true){
   const book=books.find(b=>b[0]===number);if(!book)return;
   selectedBook=number;bookEn.textContent=book[2];bookZh.textContent=book[1];
@@ -20,7 +28,7 @@
   bookChapters.textContent=book[3]+' CHAPTERS';
   rail.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.book)===number)));
   const active=rail.querySelector(`[data-book="${number}"]`);
-  if(center&&active)active.scrollIntoView({behavior:reduced?'instant':'smooth',block:'nearest',inline:'center'});
+  if(center)centerRailBook(active,reduced?'instant':'smooth');
   emmaus.dataset.selectedBook=String(number);
  }
  for(const item of books){
@@ -35,6 +43,15 @@
    rail.querySelector(`[data-book="${selectedBook}"]`)?.focus({preventScroll:true});
   }
  });
+ // Browsers can consume vertical wheel events on an overflow-x:auto strip,
+ // even when overflow-y is hidden. Bridge that delta to the single P2 page
+ // scroller; never turn the 66-book navigator into a nested vertical scene.
+ rail.addEventListener('wheel',event=>{
+  if(!event.deltaY||event.ctrlKey)return;
+  event.preventDefault();
+  const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?innerHeight:1);
+  scrollBy({top:delta,behavior:'instant'});
+ },{passive:false});
  // Horizontal pointer-drag only; P2's vertical wheel/touch remains the sole
  // realm-to-realm navigation. No nested vertical scroll container is created.
  let pointer=null;
@@ -42,6 +59,7 @@
  rail.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;const dx=e.clientX-pointer.x;if(Math.abs(dx)>5){pointer.moved=true;rail.scrollLeft=pointer.origin-dx;}});
  rail.addEventListener('pointerup',()=>{pointer=null});rail.addEventListener('pointercancel',()=>{pointer=null});
  selectBook(40,false);
+ requestAnimationFrame(()=>centerRailBook(rail.querySelector('[data-book="40"]'),'instant'));
  // Use exactly the original 241-plate Doré asset registry and the approved
  // P2 city/castle selection. Do not pretend an image depicts an unrelated book.
  const registry=window.ONE_DORE_COVER_REGISTRY,ids=[10,13,48,64,115,123,127,241];
