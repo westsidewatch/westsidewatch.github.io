@@ -16,7 +16,7 @@
   <nav class="sites-home-entry" aria-label="Homepage entry points"><a href="/preview/watch-city-vol00/hosanna/">Enter the film <span lang="zh-Hant">進城 ↗</span></a><a href="#sites-first-layer">Enter Westside Watch <span lang="zh-Hant">進入西望 ↓</span></a><a href="/church/">LivingWaterWest <span lang="zh-Hant">進入教會 ↗</span></a></nav>
 </section>
 
-<section class="candidate-focus-screen ws-p2-sevenfold-host" data-current="focus" data-layer="first" data-screen="2" aria-label="Living Water — Sevenfold P2"><iframe title="Living Water · Sevenfold, John 7:38 and Westside Watch Vol.00" loading="eager" src="/p2/living-water.html?embed=1&amp;v=p2-church-to-vol00-20261028"></iframe></section>
+<section class="candidate-focus-screen ws-p2-sevenfold-host" data-current="focus" data-layer="first" data-screen="2" aria-label="Living Water — Sevenfold P2"><iframe title="Living Water · Sevenfold, John 7:38 and Westside Watch Vol.00" loading="eager" src="/p2/living-water.html?embed=1&amp;v=p2-church-to-vol00-20261029-motion-film"></iframe></section>
 <section class="candidate-focus-screen" data-current="focus" data-layer="first" data-screen="3"><iframe title="Westside Watch · 行走與敬拜" loading="eager" src="/home-chapters/walk-worship.html?v=editorial-v1"></iframe></section>
 
 <div class="sites-home-realms" id="sites-first-layer">
@@ -30,13 +30,13 @@
 </div>
 <style>
 /* P2 scroll host: isolate approved preview CSS in its iframe; no new global CSS authority. */
-body.home .ws-p2-sevenfold-host{position:relative!important;height:520svh!important;min-height:520svh!important;overflow:clip!important}
+body.home .ws-p2-sevenfold-host{position:relative!important;height:770svh!important;min-height:770svh!important;overflow:clip!important}
 body.home .ws-p2-sevenfold-host>iframe{position:sticky!important;top:0!important;display:block!important;width:100%!important;height:100svh!important;min-height:100svh!important;border:0!important}
 </style>
 <script>
-/* Preserve the navigation's overlapping curtain choreography, scrubbed by distance.
-   Entry only pre-rolls 0.1 scene units. The reveal then gets 1.8 pinned viewports;
-   the following 2.4 viewports retain the live-water and door choreography. */
+/* Preserve the Church's existing entrance, live-water and Red Sea scroll geometry.
+   The magazine's six subsequent editorial beats get their own 3.42 pinned
+   viewports instead of flashing through the remaining ~1.12 viewports. */
 (()=>{'use strict';
 const host=document.querySelector('.ws-p2-sevenfold-host');if(!host)return;
 const frame=host.querySelector('iframe');let queued=false;
@@ -44,9 +44,20 @@ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 function sync(){
  queued=false;
  const rect=host.getBoundingClientRect(),height=Math.max(1,innerHeight);
- const entry=clamp((height-rect.top)/height,0,1),distance=clamp(-rect.top/height,0,4.2);
- const scene=rect.top>0?entry*.1:distance<=1.8?.1+distance*(.4/1.8):.5+(distance-1.8);
- if(frame.contentWindow)frame.contentWindow.postMessage({type:'westside-p2-scroll',progress:clamp(scene/2.9,0,1),active:rect.bottom>0&&rect.top<innerHeight},location.origin);
+ const entry=clamp((height-rect.top)/height,0,1),distance=clamp(-rect.top/height,0,6.5);
+ const churchEnd=3.0775,magazineEnd=6.5;
+ let progress;
+ if(rect.top>0){progress=entry*.1/2.9}
+ else if(distance<=churchEnd){
+  const scene=distance<=1.8?.1+distance*(.4/1.8):.5+(distance-1.8);
+  progress=scene/2.9;
+ }else{
+  // Inverse of the untouched Church iframe's embeddedScene() mapping.
+  // At churchEnd, Red Sea gates are already open (vh=2.37).
+  const vh=2.37+(distance-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);
+  progress=vh<=2.9?.75*vh/2.9:.75+.25*(vh-2.9)/1.1;
+ }
+ if(frame.contentWindow)frame.contentWindow.postMessage({type:'westside-p2-scroll',progress:clamp(progress,0,1),active:rect.bottom>0&&rect.top<innerHeight},location.origin);
 }
 function schedule(){if(!queued){queued=true;requestAnimationFrame(sync)}}
 addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});frame.addEventListener('load',schedule);schedule();

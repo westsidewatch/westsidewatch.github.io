@@ -34,6 +34,13 @@ jobs:
         with:
           hugo-version: '0.167.0'
           extended: true
+      - name: Restore the original homepage film clips for the Magazine background
+        uses: actions/cache/restore@v4
+        with:
+          path: preview/watch-city-vol00/hosanna/media/clips
+          key: vol00-media-v2-
+          restore-keys: |
+            vol00-media-v2-
       - name: Build isolated preview
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
