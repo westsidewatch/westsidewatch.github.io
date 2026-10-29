@@ -7,7 +7,7 @@
 <title>西望 Vol.00 — 封面與目錄</title>
 <meta name="description" content="《西望》創刊號〈守望，一座光明的城〉的封面與目錄預覽。">
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261028l">
+<link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261029g">
 <link rel="stylesheet" href="/css/p2-contents-twelve.css?v=20261028k">
 </head>
 <body data-ws-scope="journal">
@@ -79,6 +79,11 @@
       </svg>
      </div>
      <img class="dual-cover__mast" src="/images/westside-watch-masthead-landscape.svg" alt="西望 WESTSIDE WATCH 正式雜誌標誌" loading="eager">
+     <div class="dual-cover__scripture" id="dual-cover-scripture" aria-label="以賽亞書六十二章六節封面經文">
+      <p class="dual-cover__scripture-zh" lang="zh-Hant">我在你城上設立守望的，他們晝夜必不靜默</p>
+      <p class="dual-cover__scripture-en ws-type-quote-en" lang="en">I have set watchmen upon thy walls, O Jerusalem, which shall never hold their peace day nor night:</p>
+      <cite class="dual-cover__scripture-ref ws-scripture-reference" lang="en">Isaiah 62:6 · KJV</cite>
+     </div>
      <div class="dual-cover__editorial" aria-label="本期封面主題與導讀">
       <p class="dual-cover__en" id="dual-cover-en" lang="en"><span>CITY</span><span><em>OF</em></span><span>LIGHT</span></p>
       <h1 class="dual-cover__zh" id="dual-cover-zh" lang="zh-Hant">守望，<span>一座光明的城</span></h1>
@@ -185,7 +190,7 @@
  const letters=document.getElementById('dual-letterfield'),contents=document.getElementById('dual-stone-contents'),relief=document.getElementById('dual-contents-relief');
  const city=document.getElementById('dual-cover-city');
  const coverHeading=document.getElementById('dual-cover-zh');
- const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol'),masthead=cover.querySelector('.dual-cover__mast');
+ const coverEnglish=document.getElementById('dual-cover-en'),coverVol=document.getElementById('dual-cover-vol'),masthead=cover.querySelector('.dual-cover__mast'),coverScripture=document.getElementById('dual-cover-scripture');
  const rail=document.getElementById('dual-continuum'),railRotor=document.getElementById('dual-continuum-rotor');
  const range=document.getElementById('dual-progress'),output=document.getElementById('dual-value');
 
@@ -490,6 +495,7 @@
    // fade left the entire cover identity almost invisible at that key frame.
    const signature=reduce?1:ease((progress-.73)/.083);
    masthead.style.opacity=String(signature);
+   coverScripture.style.opacity=String(signature);
    coverVol.style.opacity=String(signature);
    coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
    star.style.opacity=String(starRise);
