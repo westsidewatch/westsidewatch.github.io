@@ -310,3 +310,32 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
 @media(prefers-reduced-motion:reduce){
  .emmaus__realm-nav .emmaus__folio-layer{transition:none;animation:none}
 }
+
+/* Last visual-QA corrections, still scoped to P2 only:
+   mobile ONE panel must not stretch an excerpt into a half-empty page;
+   the Chinese controls must never inherit Bodoni small-caps tofu boxes. */
+.proof-controls button{
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-standard,400);
+}
+#emmaus .emmaus__study-foot a{
+ font-family:var(--ws-type-display-zh);
+ font-size:var(--ws-type-scale-meta);
+ font-weight:var(--ws-weight-zh-standard,400);
+ letter-spacing:normal;
+}
+#emmaus .emmaus__study-head b,
+#emmaus .emmaus__study-foot b{
+ font-family:var(--ws-type-display-zh);
+ font-weight:var(--ws-weight-zh-standard,400);
+ letter-spacing:normal;
+}
+@media(max-width:820px){
+ #emmaus .emmaus__study{flex:0 0 auto;height:auto;min-height:0;max-height:none}
+ #emmaus .emmaus__study-interface{height:auto;min-height:0}
+ #emmaus .emmaus__study-route{margin:8px 0 0}
+ #emmaus .emmaus__study-cols{flex:0 0 auto}
+}
+@media(max-width:540px){
+ #emmaus .emmaus__study{max-height:none}
+ #emmaus .emmaus__study-route{margin:6px 0 0}
+}
