@@ -117,6 +117,7 @@
   b.dataset.speaker=slug;b.setAttribute('aria-label','選擇講員 '+zh);b.addEventListener('click',()=>chooseSpeaker(i));names.append(b);
  });
  chooseSpeaker(0);
+ let transferFigure=null,transferHome=null,transferNext=null,transferStyle=null;
  let frameLoaded=false,lastPaint=NaN,queued=false;
  function paint(){
   queued=false;const vh=Math.max(1,innerHeight),top=track.getBoundingClientRect().top;
@@ -126,54 +127,77 @@
   else if(legacyDistance<=churchEnd){const scene=legacyDistance<=1.8?.1+legacyDistance*(.4/1.8):.5+(legacyDistance-1.8);legacy=scene/2.9;}
   else{const scene=2.37+(legacyDistance-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);legacy=scene<=2.9?.75*scene/2.9:.75+.25*(scene-2.9)/1.1;}
   if(frameLoaded)base.contentWindow?.postMessage({type:'westside-p2-scroll',progress:clamp(legacy),active:distance<6.6},location.origin);
-  // One MERSI scroll timeline, not one page replacing another:
-  // 02 Magazine engraving LEFT physically travels to Emmaus RIGHT.
-  // The full 241-plate archive takes over silently only on arrival.
-  // ONE falls open TOP -> BOTTOM afterwards. The composed spread fills
-  // the frame only after both material fields are established.
+  // Same MERSI image object: Magazine LEFT engraving actually travels to
+  // the existing RIGHT cover rectangle. No replica image is created.
+  // Only once it arrives does the full Doré archive take over silently;
+  // ONE reveals TOP to BOTTOM, then BOTH panels expand to fill the screen.
   const move=smooth((distance-6.50)/.90);
   const archive=smooth((distance-7.40)/.28);
   const oneDrop=smooth((distance-7.66)/.78);
   const expand=smooth((distance-8.44)/.48);
   const oliveIn=smooth((distance-9.44)/1.38);
   const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
-  emmaus.style.visibility=emShowing?'visible':'hidden';
-  emmaus.style.opacity='1';
-  emmaus.style.transform='scale('+(0.945+0.055*expand).toFixed(5)+')';
+  emmaus.style.visibility=emShowing?'visible':'hidden';emmaus.style.opacity='1';emmaus.style.transform='none';
   const emInteractive=oneDrop>.999&&expand>.999&&oliveIn<.01;
-  emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
+  emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;
+  emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
 
-  // The image FRAME starts over the exact Magazine left half; there are
-  // no off-screen translation, whole-page wipe, or independent flying cards.
-  emRight.style.left=(move*66.666667).toFixed(4)+'%';
-  emRight.style.width=(50-move*16.666667).toFixed(4)+'%';
-  emRight.style.clipPath='none';
-  emLeft.style.clipPath='inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
   const sourceFrame=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
   const sourceDoc=sourceFrame?.contentDocument;
   const sourceTile=sourceDoc?.getElementById('dual-contents');
-  const sourceImg=sourceDoc?.querySelector('.dual-dore-plate__image.is-active');
-  const handoff=$('#em-handoff-photo');
-  if(sourceImg?.currentSrc&&handoff.dataset.originalSrc!==sourceImg.currentSrc&&distance<7.45){
-   handoff.src=sourceImg.currentSrc;handoff.dataset.originalSrc=sourceImg.currentSrc;
+  const sourceCover=sourceDoc?.getElementById('dual-cover');
+  const sourceFigure=transferFigure||sourceDoc?.getElementById('dual-dore-plate');
+  const frameRect=sourceFrame?.getBoundingClientRect(),baseRect=base.getBoundingClientRect(),stageRect=$('#proof-stage').getBoundingClientRect();
+  const bounds=node=>{
+   if(!node||!frameRect)return null;
+   const r=node.getBoundingClientRect();
+   return {x:baseRect.left-stageRect.left+frameRect.left+r.left,
+           y:baseRect.top-stageRect.top+frameRect.top+r.top,w:r.width,h:r.height};
+  };
+  const original=bounds(sourceTile),coverBounds=bounds(sourceCover);
+  const lerp=(a,b,p)=>a+(b-a)*p;
+  const poseRect=(el,a,b,p)=>{
+   if(!a||!b)return;
+   el.style.left=lerp(a.x,b.x,p).toFixed(2)+'px';
+   el.style.top=lerp(a.y,b.y,p).toFixed(2)+'px';
+   el.style.width=lerp(a.w,b.w,p).toFixed(2)+'px';
+   el.style.height=lerp(a.h,b.h,p).toFixed(2)+'px';
+  };
+  const fullLeft={x:0,y:0,w:stageRect.width*2/3,h:stageRect.height};
+  const fullRight={x:stageRect.width*2/3,y:0,w:stageRect.width/3,h:stageRect.height};
+  if(move>.001&&sourceFigure&&sourceTile&&coverBounds){
+   if(!transferFigure){
+    transferFigure=sourceFigure;transferHome=sourceTile;
+    transferNext=sourceFigure.nextSibling;transferStyle=sourceFigure.getAttribute('style');
+    $('#proof-stage').appendChild(sourceFigure);
+   }
+   poseRect(transferFigure,original,coverBounds,move);
+   const ready=plateEls.some(img=>img.classList.contains('is-active'));
+   transferFigure.style.setProperty('--p2-transfer-visible',String(1-(ready?archive:0)));
+   transferFigure.dataset.p2Transferred='true';
+  }else if(move<=.001&&transferFigure&&transferHome){
+   transferHome.insertBefore(transferFigure,transferNext?.parentNode===transferHome?transferNext:null);
+   if(transferStyle===null)transferFigure.removeAttribute('style');
+   else transferFigure.setAttribute('style',transferStyle);
+   transferFigure.removeAttribute('data-p2-transferred');
+   transferFigure=null;transferHome=null;transferNext=null;transferStyle=null;
   }
-  if(!handoff.src&&sourceImg?.src)handoff.src=sourceImg.src;
-  // Retire only the source image field within the isolated preview iframe,
-  // so the photographed plate does not appear twice during its actual travel.
-  // This never writes to the published Magazine files.
-  if(sourceTile)sourceTile.style.setProperty('opacity',String(1-smooth(move/.22)),'important');
+  // The ONE field opens over the vacated Contents footprint, not from outside.
+  poseRect(emLeft,original||fullLeft,fullLeft,expand);
+  emLeft.style.clipPath='inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
+  poseRect(emRight,coverBounds||fullRight,fullRight,expand);
+  emRight.style.clipPath='none';
   syncGallery(move>.98&&oliveIn<.001&&document.visibilityState==='visible');
   const archiveReady=plateEls.some(img=>img.classList.contains('is-active'));
-  handoff.style.opacity=String(archiveReady?1-archive:1);
-  const galleryOpacity=archiveReady?archive:0;
-  emPlates.style.opacity=String(galleryOpacity*(1-smooth(oliveIn/.32)));
+  emRight.style.opacity=String(archiveReady?archive:0);
+  emPlates.style.opacity=String(1-smooth(oliveIn/.32));
 
   olive.style.visibility=oliveShowing?'visible':'hidden';
   olive.style.opacity='1';olive.style.clipPath='none';
   olive.style.backgroundColor=oliveIn>=.999?'#f0eee7':'transparent';
   olive.style.pointerEvents=oliveIn>.999?'auto':'none';olive.inert=oliveIn<=.999;olive.setAttribute('aria-hidden',oliveIn>.999?'false':'true');
   if(oliveShowing&&!handoffSourceLocked){
-   handoffImage.src=plateEls[activeSlot]?.src||handoff.src||imgUrl(plates[galleryIndex]);
+   handoffImage.src=plateEls[activeSlot]?.src||imgUrl(plates[galleryIndex]);
    handoffSourceLocked=true;
   }else if(!oliveShowing)handoffSourceLocked=false;
   // 03 -> 04 retains the shared image-frame transformation, not a new page.
