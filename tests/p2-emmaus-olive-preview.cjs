@@ -42,6 +42,8 @@ const {chromium}=require('playwright');
    await page.locator('#emmaus-rail').hover();await page.mouse.wheel(0,500);await page.waitForTimeout(300);
    const after=await page.evaluate(()=>scrollY);
    assert(after>before,'vertical wheel on the book rail advances P2 instead of trapping inside ONE');
+   await page.locator('[data-jump="9.02"]').click();await page.waitForTimeout(150);
+   assert.equal(await page.locator('#olive-proof').evaluate(el=>getComputedStyle(el).opacity),'1','Olive reveal remains opaque so the earlier magazine cannot ghost through the handoff');
    await page.locator('[data-jump="10.65"]').click();await page.waitForTimeout(220);
    assert.equal(await page.locator('#olive-proof').getAttribute('aria-hidden'),'false','Olive Mountain follows Emmaus');
    assert.equal(await page.locator('#olive-speaker-names button').count(),12,'twelve verified speakers retained');

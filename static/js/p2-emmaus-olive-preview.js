@@ -123,11 +123,15 @@
   else{const scene=2.37+(legacyDistance-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);legacy=scene<=2.9?.75*scene/2.9:.75+.25*(scene-2.9)/1.1;}
   if(frameLoaded)base.contentWindow?.postMessage({type:'westside-p2-scroll',progress:clamp(legacy),active:distance<6.6},location.origin);
   const emIn=smooth((distance-6.50)/.72),oliveIn=smooth((distance-8.64)/.82);
-  const emOpacity=emIn*(1-oliveIn),oliveOpacity=oliveIn;
+  // Keep Emmaus fully opaque *behind* the Olive page while the latter is
+  // uncovered bottom-up. Cross-fading both would expose the old Magazine
+  // through two semi-transparent pages halfway across the handoff.
+  const emOpacity=emIn*(oliveIn>=.999?0:1),oliveOpacity=oliveIn>.001?1:0;
   emmaus.style.visibility=emOpacity>.001?'visible':'hidden';emmaus.style.opacity=String(emOpacity);
-  emmaus.style.pointerEvents=emOpacity>.98?'auto':'none';emmaus.inert=emOpacity<=.98;emmaus.setAttribute('aria-hidden',emOpacity>.98?'false':'true');
+  const emInteractive=emOpacity>.98&&oliveIn<.02;
+  emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
   olive.style.visibility=oliveOpacity>.001?'visible':'hidden';olive.style.opacity=String(oliveOpacity);
-  olive.style.pointerEvents=oliveOpacity>.98?'auto':'none';olive.inert=oliveOpacity<=.98;olive.setAttribute('aria-hidden',oliveOpacity>.98?'false':'true');
+  olive.style.pointerEvents=oliveIn>.98?'auto':'none';olive.inert=oliveIn<=.98;olive.setAttribute('aria-hidden',oliveIn>.98?'false':'true');
   emmaus.style.transform='translate3d('+((1-emIn)*-12).toFixed(3)+'%,0,0)';
   olive.style.clipPath='inset('+((1-oliveIn)*100).toFixed(2)+'% 0 0 0)';
   const emActive=emOpacity>.02&&document.visibilityState==='visible';syncGallery(emActive);
