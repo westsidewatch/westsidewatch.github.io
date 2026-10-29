@@ -67,12 +67,26 @@ const {chromium}=require('playwright');
    await page.waitForTimeout(200);
    assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),0,
     'reverse scrolling restores the engraving to its original magazine document');
+   // Hold the established Emmaus spread before moving into Olive.
+   await page.locator('[data-jump="9.10"]').click();
+   await page.waitForTimeout(150);
+   assert.equal(await page.locator('#emmaus > #emmaus-gallery').count(),1,
+    'at rest ONE retains its own right gallery');
+   const emmausRect=await page.locator('#emmaus > #emmaus-gallery').boundingBox();
+   const stageRect=await page.locator('#proof-stage').boundingBox();
+   assert(emmausRect && stageRect && Math.abs(emmausRect.width-stageRect.width/3)<3,
+    'Emmaus finishes at the agreed two-thirds to one-third ratio');
+   const emmausScreenshot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-emmaus-held.png');
+   await page.screenshot({path:emmausScreenshot});
    await page.locator('[data-jump="10.05"]').click();await page.waitForTimeout(150);
    assert.equal(await page.locator('#olive-proof').evaluate(el=>getComputedStyle(el).opacity),'1','Olive separate fields remain opaque while the earlier spread persists');
    assert.equal(await page.locator('#emmaus').evaluate(el=>getComputedStyle(el).visibility),'visible','Emmaus remains on stage while its pieces become Olive');
    assert.equal(await page.locator('#proof-stage > #emmaus-gallery').count(),1,'same ONE gallery is the travelling image object');
    assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).transform),'none','no overscaled speaker poster flies into frame');
    assert.equal(await page.locator('#olive-handoff-image').count(),0,'no second Doré image constructed');
+   const movingPanel=await page.locator('#proof-stage > #emmaus-gallery').boundingBox();
+   assert(movingPanel && movingPanel.x<stageRect.x+stageRect.width*2/3,
+    'ONE image field is physically crossing toward the Olive upper-left portrait slot');
    assert.match(await page.locator('.olive-proof__register').evaluate(el=>getComputedStyle(el).clipPath),/inset/,'speaker grid rises independently from the ONE rail');
    const midScreenshot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-mersi-mid.png');
    fs.mkdirSync(path.dirname(midScreenshot),{recursive:true});await page.screenshot({path:midScreenshot});
