@@ -11,6 +11,7 @@ on:
       - 'layouts/partials/watch-home-editorial.html'
       - 'tests/p2-church-magazine-handoff.cjs'
       - 'tests/p2-vol00-preview.cjs'
+      - 'tests/p2-emmaus-olive-preview.cjs'
       - '.github/workflows/first-look-branch-preview.yml'
   workflow_dispatch:
 
@@ -54,6 +55,7 @@ jobs:
           trap 'kill "$server" 2>/dev/null || true' EXIT
           node tests/p2-vol00-preview.cjs
           node tests/p2-church-magazine-handoff.cjs
+          P2_BROWSER_PROOF=1 node tests/p2-emmaus-olive-preview.cjs
       - name: Save browser proofs for Church continuity and Contents
         if: always()
         uses: actions/upload-artifact@v4
@@ -62,6 +64,7 @@ jobs:
           path: |
             artifacts/p2-vol00/
             artifacts/p2-church-magazine/
+            artifacts/p2-emmaus-olive/
           if-no-files-found: warn
           retention-days: 14
       - name: Deploy Cloudflare Pages preview (never production)
@@ -78,3 +81,4 @@ jobs:
             --commit-message="First Look isolated preview"
           echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
           echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/p2-emmaus-olive-handoff-lab.html" >> "$GITHUB_STEP_SUMMARY"
