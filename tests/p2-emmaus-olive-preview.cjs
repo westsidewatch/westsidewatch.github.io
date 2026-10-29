@@ -14,6 +14,8 @@ assert.match(js,/plates\.length!==241/,'right page rotates the entire canonical 
 assert.match(js,/Math\.min\(distance,6\.5\)/,'does not stretch the approved Church/Magazine timing');
 assert.match(js,/const move=.*6\.50[\s\S]*oliveIn=.*9\.44/,'both stages share a reversible scroll timeline');
 assert.match(js,/appendChild\(sourceFigure\)/,'the original engraving node crosses into the receiving stage');
+assert.doesNotMatch(js,/sourceTile\.style\.opacity=String\(1-smooth/,'Magazine Contents never disappear to expose the unrelated background film');
+assert.doesNotMatch(js,/sourceCover\.style\.opacity=String\(1-smooth/,'approved cover remains in the continuous frame during transfer');
 assert.match(js,/insertBefore\(transferFigure/,'reverse scroll restores the same original node');
 assert.doesNotMatch(html,/em-handoff-photo/,'no added substitute picture is allowed');
 assert.match(js,/const roster=\[/,'uses fixed factual speaker assets');
@@ -58,6 +60,13 @@ const {chromium}=require('playwright');
     scrollTo({top:el.getBoundingClientRect().top+scrollY+7.0*innerHeight,behavior:'instant'});
    });
    await page.waitForTimeout(350);
+   const magazineVisibility=await page.locator('#proof-original').evaluate(frame=>{
+    const doc=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+    const left=doc?.getElementById('dual-contents'),right=doc?.getElementById('dual-cover');
+    return [left?Number(getComputedStyle(left).opacity):0,right?Number(getComputedStyle(right).opacity):0];
+   });
+   assert(magazineVisibility[0]>.9&&magazineVisibility[1]>.9,
+    '61%: existing Contents and cover remain visibly connected behind the moving original plate');
    assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),1,
     'the actual magazine engraving is adopted into the shared P2 stage');
    const transferShot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-magazine-plate-transfer.png');
@@ -85,6 +94,8 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).transform),'none','no overscaled speaker poster flies into frame');
    assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).opacity),'0',
     'Olive portrait does not appear before the travelling engraving reaches its slot');
+   assert.equal(await page.locator('.olive-proof__kicker').evaluate(el=>getComputedStyle(el).opacity),'1',
+    '82%: the released right editorial column is labeled, not an empty white slab');
    assert.equal(await page.locator('.olive-proof__bottom').evaluate(el=>getComputedStyle(el).opacity),'0',
     'the speaker register must not reveal before the moving engraved field is established');
    assert((await page.locator('.emmaus__left').evaluate(el=>getComputedStyle(el).clipPath)).includes('inset(0px 0px 0px 0'),
