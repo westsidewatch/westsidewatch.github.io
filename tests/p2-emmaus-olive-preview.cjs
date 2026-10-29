@@ -60,12 +60,18 @@ const {chromium}=require('playwright');
    assert.match(await page.locator('#emmaus-study-heading').textContent(),/復活/);
    assert.equal(await page.locator('#em-study-route li').count(),3);
    assert.equal(await page.locator('#emmaus').getAttribute('data-study-view'),'background');
-   await page.locator('#em-tab-connections').click();
-   assert.equal(await page.locator('#emmaus').getAttribute('data-study-view'),'connections');
-   assert.match(await page.locator('#em-study-detail').textContent(),/詩篇 16:10/);
-   await page.locator('#em-tab-questions').click();
-   assert.match(await page.locator('#em-study-detail').textContent(),/以馬忤斯/);
-   await page.locator('#em-tab-background').click();
+   if(viewport.width>820){
+    await page.locator('#em-tab-connections').click();
+    assert.equal(await page.locator('#emmaus').getAttribute('data-study-view'),'connections');
+    assert.match(await page.locator('#em-study-detail').textContent(),/詩篇 16:10/);
+    await page.locator('#em-tab-questions').click();
+    assert.match(await page.locator('#em-study-detail').textContent(),/以馬忤斯/);
+    await page.locator('#em-tab-background').click();
+   }else{
+    assert.equal(await page.locator('.emmaus__study-tools').evaluate(el=>getComputedStyle(el).display),'none',
+     'phone intentionally uses a readable single-column extract instead of forcing desktop tabs into 2/3 of 390px');
+    assert.equal(await page.locator('.emmaus__study-reading').evaluate(el=>getComputedStyle(el).display),'flex');
+   }
    await page.locator('[data-book="41"]').evaluate(element=>element.click());
    assert.equal(await page.locator('#em-book-en').textContent(),'Mark','book selection changes live spread');
    assert.match(await page.locator('#emmaus-enter').getAttribute('href'),/book=41&chapter=1/,'selected volume opens the actual ONE chapter, not the default homepage');
