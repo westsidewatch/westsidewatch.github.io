@@ -69,7 +69,7 @@
  const ids=Array.from({length:241},(_,i)=>i+1);
  const plates=ids.map(id=>({id,file:registry?.files?.[id],title:registry?.titles?.[id]||String(registry?.files?.[id]||'').replace(/^\d+[A-Z]?\./,'').replace(/\.[^.]+$/,'')}));
  if(plates.length!==241||plates.some(p=>!p.file))throw Error('Shared Doré 241-plate inventory is incomplete');
- const plateEls=[$('#em-plate-a'),$('#em-plate-b')];let galleryIndex=0,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0;
+ const plateEls=[$('#em-plate-a'),$('#em-plate-b')];let galleryIndex=0,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0,galleryPrefetch=false;
  const imgUrl=plate=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(plate.file)+'?width=1200';
  async function showPlate(index){
   const ticket=++plateVersion,plate=plates[index%plates.length],slot=1-activeSlot,img=plateEls[slot];
@@ -101,7 +101,7 @@
  const emLeft=$('.emmaus__left'),emRight=$('.emmaus__right'),emPlates=$('.emmaus__plates');
  const oliveHero=$('#olive-morph-hero'),oliveEditorial=$('.olive-proof__editorial'),oliveRegister=$('.olive-proof__register'),oliveWindow=$('.olive-proof__window');
  const heroFolio=$('.olive-proof__hero-folio');
- let galleryBorrowed=false,sourceStyleOwner=null,sourceStyleCover=null,sourceStyleDoc=null;
+ let galleryBorrowed=false,archiveForOlive=null,sourceStyleDoc=null;
  function chooseSpeaker(index){
   currentSpeaker=index;const [slug,zh,en]=roster[index];
   mainImg.src='/images/olive/'+slug+'-editorial.png';mainImg.alt=zh;
@@ -172,7 +172,7 @@
     sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
    }
   }
-  emmaus.style.backgroundColor=move>=.999?'#e7decbd':'transparent';
+  emmaus.style.backgroundColor=move>=.999?'#e7decbd9':'transparent';
   const lerp=(a,b,p)=>a+(b-a)*p;
   const poseRect=(el,a,b,p)=>{
    if(!a||!b)return;
@@ -181,6 +181,16 @@
    el.style.width=lerp(a.w,b.w,p).toFixed(2)+'px';
    el.style.height=lerp(a.h,b.h,p).toFixed(2)+'px';
   };
+  if(move>.98&&!galleryPrefetch){
+   galleryPrefetch=true;void showPlate(galleryIndex);
+  }
+  const archiveReady=plateEls.some(img=>img.classList.contains('is-active'));
+  if(oliveIn<=.001)archiveForOlive=null;
+  else if(archiveForOlive===null)archiveForOlive=archiveReady;
+  // Lock the visible plate identity for a reversible 03→04 trip, even when
+  // the public-domain image host loads during the midpoint of that journey.
+  const useArchive=archiveForOlive===null?archiveReady:archiveForOlive;
+  const fieldExit=1-smooth((oliveIn-.65)/.34);
   const fullLeft={x:0,y:0,w:stageRect.width*2/3,h:stageRect.height};
   const fullRight={x:stageRect.width*2/3,y:0,w:stageRect.width/3,h:stageRect.height};
   if(move>.001&&sourceFigure&&sourceTile&&coverBounds){
@@ -190,8 +200,9 @@
     $('#proof-stage').appendChild(sourceFigure);
    }
    poseRect(transferFigure,original,coverBounds,move);
-   const ready=plateEls.some(img=>img.classList.contains('is-active'));
-   transferFigure.style.setProperty('--p2-transfer-visible',String(Math.max(0,1-(ready?archive:0)-smooth(oliveIn/.2))));
+   if(move>.999)poseRect(transferFigure,coverBounds,fullRight,expand);
+   transferFigure.style.setProperty('--p2-transfer-visible',
+    String(Math.max(0,1-(useArchive?archive:0))*fieldExit));
    transferFigure.dataset.p2Transferred='true';
   }else if(move<=.001&&transferFigure&&transferHome){
    transferHome.insertBefore(transferFigure,transferNext?.parentNode===transferHome?transferNext:null);
@@ -205,9 +216,8 @@
   emLeft.style.clipPath='inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
   poseRect(emRight,coverBounds||fullRight,fullRight,expand);
   emRight.style.clipPath='none';
-  syncGallery(move>.98&&oliveIn<.999&&document.visibilityState==='visible');
-  const archiveReady=plateEls.some(img=>img.classList.contains('is-active'));
-  emRight.style.opacity=String(archiveReady?archive:0);
+  syncGallery(move>.98&&oliveIn<.001&&document.visibilityState==='visible');
+  emRight.style.opacity=String(useArchive?archive:0);
   emPlates.style.opacity=String(1-smooth(oliveIn/.32));
 
   olive.style.visibility=oliveShowing?'visible':'hidden';
@@ -242,7 +252,13 @@
   if(oliveIn>.001)emLeft.style.clipPath='inset(0 0 0 '+(100*smooth(oliveIn/.78)).toFixed(3)+'%)';
   oliveHero.style.transform='none';
   oliveHero.style.opacity=String(smooth((oliveIn-.66)/.33));
-  emRight.style.opacity=String((archiveReady?archive:0)*(1-smooth((oliveIn-.65)/.34)));
+  emRight.style.opacity=String((useArchive?archive:0)*fieldExit);
+  // If the 241-plate host is unavailable, transfer the exact original
+  // magazine plate itself into the Olive portrait slot. No blank panel,
+  // placeholder, fabricated engraving, or duplicate image may appear.
+  if(transferFigure&&!useArchive&&oliveIn>.001){
+   poseRect(transferFigure,fullRight,destination,oliveIn);
+  }
   heroFolio.style.opacity=String(smooth((oliveIn-.76)/.23));
 
   const editorial=smooth(oliveIn/.90),register=smooth((oliveIn-.12)/.76),windowReveal=smooth((oliveIn-.34)/.66);
