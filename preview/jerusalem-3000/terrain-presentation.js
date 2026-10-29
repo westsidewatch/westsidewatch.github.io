@@ -8,15 +8,16 @@ export function createTerrainPresentation(mesh,{datum=0,interval=20}={}){
  // Elevation tint alone was washed out by the material tint and broad lighting.
  // Bake directional relief into vertex colours; geometry and ground authority stay exact.
  const normals=geometry.attributes.normal,sun=new THREE.Vector3(-.8,.55,.35).normalize();
- const colors=new Float32Array(p.count*3),low=new THREE.Color(0x667762),high=new THREE.Color(0xdfd0ad),color=new THREE.Color();
+ const colors=new Float32Array(p.count*3),low=new THREE.Color(0x536c5d),high=new THREE.Color(0xdfcba3),color=new THREE.Color();
  let shadeMin=1,shadeMax=0;
  for(let i=0;i<p.count;i++){
-  const illumination=Math.max(0,normals.getX(i)*sun.x+normals.getY(i)*sun.y+normals.getZ(i)*sun.z),shade=.42+.58*illumination;
+  const illumination=Math.max(0,normals.getX(i)*sun.x+normals.getY(i)*sun.y+normals.getZ(i)*sun.z),shade=.30+.70*illumination;
   shadeMin=Math.min(shadeMin,shade);shadeMax=Math.max(shadeMax,shade);
-  color.copy(low).lerp(high,(p.getY(i)-min)/Math.max(1,max-min)).multiplyScalar(shade);color.toArray(colors,i*3);
+  color.copy(low).lerp(high,THREE.MathUtils.clamp((p.getY(i)+datum-630)/210,0,1)).multiplyScalar(shade);color.toArray(colors,i*3);
  }
- const previousColor=geometry.getAttribute('color'),previousVertexColors=mesh.material.vertexColors,previousMaterialColor=mesh.material.color.clone();
- geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));mesh.material.color.setHex(0xffffff);mesh.material.vertexColors=true;mesh.material.needsUpdate=true;
+ const previousColor=geometry.getAttribute('color'),previousMaterial=mesh.material;
+ const reliefMaterial=new THREE.MeshBasicMaterial({color:0xffffff,vertexColors:true});mesh.material=reliefMaterial;
+ geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));mesh.material.color.setHex(0xffffff);mesh.material.needsUpdate=true;
  const lines=[];
  for(let i=0;i<index.count;i+=3){
   const ids=[index.getX(i),index.getX(i+1),index.getX(i+2)],ys=ids.map(j=>p.getY(j));
@@ -32,8 +33,8 @@ export function createTerrainPresentation(mesh,{datum=0,interval=20}={}){
   }
  }
  const lineGeometry=new THREE.BufferGeometry();lineGeometry.setAttribute('position',new THREE.Float32BufferAttribute(lines,3));
- const material=new THREE.LineBasicMaterial({color:0x534f3c,transparent:true,opacity:.18,depthWrite:false});
+ const material=new THREE.LineBasicMaterial({color:0x534f3c,transparent:true,opacity:.28,depthWrite:false});
  const contours=new THREE.LineSegments(lineGeometry,material);contours.name='modern-dem-20m-contours';contours.visible=true;mesh.add(contours);
- return {contours,diagnostics:{verticalScale:1,hillshade:true,hillshadeRange:[shadeMin,shadeMax],contoursDefaultVisible:true,contourIntervalMetres:interval,contourSegments:lines.length/6,elevationRangeMetres:[min+datum,max+datum],authority:'modern-dem-not-ancient-surface'},
-  dispose(){contours.removeFromParent();lineGeometry.dispose();material.dispose();if(previousColor)geometry.setAttribute('color',previousColor);else geometry.deleteAttribute('color');mesh.material.color.copy(previousMaterialColor);mesh.material.vertexColors=previousVertexColors;mesh.material.needsUpdate=true;}};
+ return {contours,diagnostics:{verticalScale:1,hillshade:true,reliefLighting:'baked-directional-without-double-scene-lighting',nominalPaletteMetres:[630,840],hillshadeRange:[shadeMin,shadeMax],contoursDefaultVisible:true,contourIntervalMetres:interval,contourSegments:lines.length/6,elevationRangeMetres:[min+datum,max+datum],authority:'modern-dem-not-ancient-surface'},
+  dispose(){contours.removeFromParent();lineGeometry.dispose();material.dispose();if(previousColor)geometry.setAttribute('color',previousColor);else geometry.deleteAttribute('color');mesh.material=previousMaterial;reliefMaterial.dispose();}};
 }

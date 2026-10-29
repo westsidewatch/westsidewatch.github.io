@@ -7,7 +7,7 @@ import {loadCanonicalTerrain} from '../preview/jerusalem-3000/terrain-runtime.js
 import {createInheritanceLayer} from '../preview/jerusalem-3000/phase2-inheritance-runtime.js';
 const read=p=>JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/'+p,import.meta.url)));
 const phases=read('data/continuous-build-timeline.json').phases;
-const grid=read('data/terrain/copernicus-glo90-jerusalem.json'),previousFetch=globalThis.fetch;
+const grid=read('data/terrain/copernicus-glo30-jerusalem.json'),previousFetch=globalThis.fetch;
 let terrain,saddle;
 try{
  globalThis.fetch=async()=>({ok:true,json:async()=>structuredClone(grid)});terrain=await loadCanonicalTerrain({elevationGrid:'x'},new THREE.Group());

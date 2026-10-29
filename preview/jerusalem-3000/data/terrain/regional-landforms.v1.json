@@ -1,0 +1,344 @@
+{
+  "schema": "j3k.regional-landforms.v1",
+  "origin": {
+    "lat": 31.778,
+    "lon": 35.235
+  },
+  "sourceSnapshot": "sources/landforms.osm.xml",
+  "sha256": "89bfd48d497c9af540380d828f53689722374713f334dfa24cd743cde5bb6cb2",
+  "attribution": "© OpenStreetMap contributors, ODbL. Modern mapped locations only.",
+  "contextSource": "https://rsc.byu.edu/new-testament-history-culture-society/jerusalem-holy-city",
+  "window": {
+    "minX": -1550,
+    "maxX": 1600,
+    "minZ": -2100,
+    "maxZ": 1550
+  },
+  "anchors": [
+    {
+      "id": "2031059194",
+      "label": "橄欖山",
+      "role": "east-ridge",
+      "lat": 31.7789118,
+      "lon": 35.2450347,
+      "osmType": "node",
+      "source": "https://www.openstreetmap.org/node/2031059194",
+      "positionAuthority": "modern-mapped-reference-not-ancient-survey"
+    },
+    {
+      "id": "2710941646",
+      "label": "斯科普斯山區",
+      "role": "north-ridge-context",
+      "lat": 31.794767,
+      "lon": 35.2425346,
+      "osmType": "node",
+      "source": "https://www.openstreetmap.org/node/2710941646",
+      "positionAuthority": "modern-mapped-reference-not-ancient-survey"
+    },
+    {
+      "id": "2598721627",
+      "label": "錫安山／西丘",
+      "role": "city-hill",
+      "lat": 31.7716204,
+      "lon": 35.2286571,
+      "osmType": "node",
+      "source": "https://www.openstreetmap.org/node/2598721627",
+      "positionAuthority": "modern-mapped-reference-not-ancient-survey"
+    },
+    {
+      "id": "13160843873",
+      "label": "欣嫩谷外西南丘",
+      "role": "southwest-hill",
+      "lat": 31.7683573,
+      "lon": 35.2253856,
+      "osmType": "node",
+      "source": "https://www.openstreetmap.org/node/13160843873",
+      "positionAuthority": "modern-mapped-reference-not-ancient-survey"
+    },
+    {
+      "id": "1278537560",
+      "label": "欣嫩子谷",
+      "role": "valley-context",
+      "lat": 31.7695053,
+      "lon": 35.227012,
+      "osmType": "way",
+      "source": "https://www.openstreetmap.org/way/1278537560",
+      "positionAuthority": "modern-map-alignment-not-ancient-channel-or-perennial-water"
+    },
+    {
+      "id": "844849843",
+      "label": "汲倫溪谷",
+      "role": "intermittent-valley-context",
+      "lat": 31.7768416,
+      "lon": 35.2385095,
+      "osmType": "way",
+      "source": "https://www.openstreetmap.org/way/844849843",
+      "positionAuthority": "modern-map-alignment-not-ancient-channel-or-perennial-water"
+    }
+  ],
+  "traces": [
+    {
+      "id": "1278537560",
+      "label": "欣嫩子谷",
+      "role": "valley-context",
+      "points": [
+        {
+          "lat": 31.771008,
+          "lon": 35.2261832
+        },
+        {
+          "lat": 31.7707184,
+          "lon": 35.226253
+        },
+        {
+          "lat": 31.7703217,
+          "lon": 35.226379
+        },
+        {
+          "lat": 31.7698656,
+          "lon": 35.2266955
+        },
+        {
+          "lat": 31.7695053,
+          "lon": 35.227012
+        },
+        {
+          "lat": 31.7690766,
+          "lon": 35.227586
+        },
+        {
+          "lat": 31.7688531,
+          "lon": 35.2280742
+        },
+        {
+          "lat": 31.7683378,
+          "lon": 35.2294958
+        },
+        {
+          "lat": 31.7684198,
+          "lon": 35.2307564
+        },
+        {
+          "lat": 31.768584,
+          "lon": 35.231722
+        },
+        {
+          "lat": 31.7686433,
+          "lon": 35.232693
+        },
+        {
+          "lat": 31.7685498,
+          "lon": 35.2333179
+        },
+        {
+          "lat": 31.7685065,
+          "lon": 35.2339616
+        },
+        {
+          "lat": 31.76834,
+          "lon": 35.2345973
+        },
+        {
+          "lat": 31.768193,
+          "lon": 35.2351278
+        }
+      ],
+      "source": "https://www.openstreetmap.org/way/1278537560",
+      "positionAuthority": "modern-map-alignment-not-ancient-channel-or-perennial-water"
+    },
+    {
+      "id": "844849843",
+      "label": "汲倫溪谷",
+      "role": "intermittent-valley-context",
+      "points": [
+        {
+          "lat": 31.7864178,
+          "lon": 35.2391875
+        },
+        {
+          "lat": 31.7859526,
+          "lon": 35.2392702
+        },
+        {
+          "lat": 31.7856994,
+          "lon": 35.2391709
+        },
+        {
+          "lat": 31.7856024,
+          "lon": 35.2391329
+        },
+        {
+          "lat": 31.7849458,
+          "lon": 35.2389429
+        },
+        {
+          "lat": 31.7845509,
+          "lon": 35.2389269
+        },
+        {
+          "lat": 31.7839244,
+          "lon": 35.2390985
+        },
+        {
+          "lat": 31.7832532,
+          "lon": 35.2392863
+        },
+        {
+          "lat": 31.7825235,
+          "lon": 35.2396478
+        },
+        {
+          "lat": 31.782115,
+          "lon": 35.2398195
+        },
+        {
+          "lat": 31.7817784,
+          "lon": 35.2398195
+        },
+        {
+          "lat": 31.780902,
+          "lon": 35.2396242
+        },
+        {
+          "lat": 31.780466,
+          "lon": 35.2393163
+        },
+        {
+          "lat": 31.7802792,
+          "lon": 35.2391902
+        },
+        {
+          "lat": 31.7797045,
+          "lon": 35.2388024
+        },
+        {
+          "lat": 31.7788162,
+          "lon": 35.2388228
+        },
+        {
+          "lat": 31.7783009,
+          "lon": 35.2387101
+        },
+        {
+          "lat": 31.7775293,
+          "lon": 35.2385771
+        },
+        {
+          "lat": 31.7768416,
+          "lon": 35.2385095
+        },
+        {
+          "lat": 31.7762104,
+          "lon": 35.2385825
+        },
+        {
+          "lat": 31.7759687,
+          "lon": 35.2386061
+        },
+        {
+          "lat": 31.775457,
+          "lon": 35.2385792
+        },
+        {
+          "lat": 31.7751488,
+          "lon": 35.2382992
+        },
+        {
+          "lat": 31.7748168,
+          "lon": 35.2380117
+        },
+        {
+          "lat": 31.7746699,
+          "lon": 35.2378905
+        },
+        {
+          "lat": 31.7745048,
+          "lon": 35.2376136
+        },
+        {
+          "lat": 31.7742759,
+          "lon": 35.2374656
+        },
+        {
+          "lat": 31.7740953,
+          "lon": 35.237354
+        },
+        {
+          "lat": 31.7738353,
+          "lon": 35.2371974
+        },
+        {
+          "lat": 31.7736292,
+          "lon": 35.2371416
+        },
+        {
+          "lat": 31.7731978,
+          "lon": 35.2370085
+        },
+        {
+          "lat": 31.7717393,
+          "lon": 35.2366899
+        },
+        {
+          "lat": 31.7713015,
+          "lon": 35.2365869
+        },
+        {
+          "lat": 31.7703958,
+          "lon": 35.2361459
+        },
+        {
+          "lat": 31.7694472,
+          "lon": 35.2355956
+        },
+        {
+          "lat": 31.7686746,
+          "lon": 35.2352136
+        },
+        {
+          "lat": 31.7684849,
+          "lon": 35.2350752
+        },
+        {
+          "lat": 31.768193,
+          "lon": 35.2351278
+        },
+        {
+          "lat": 31.767653,
+          "lon": 35.2354711
+        },
+        {
+          "lat": 31.7668941,
+          "lon": 35.2359003
+        },
+        {
+          "lat": 31.7667481,
+          "lon": 35.2361577
+        },
+        {
+          "lat": 31.7663395,
+          "lon": 35.2364034
+        },
+        {
+          "lat": 31.7659746,
+          "lon": 35.2365354
+        },
+        {
+          "lat": 31.7651865,
+          "lon": 35.2371019
+        },
+        {
+          "lat": 31.7642387,
+          "lon": 35.2381662
+        }
+      ],
+      "source": "https://www.openstreetmap.org/way/844849843",
+      "positionAuthority": "modern-map-alignment-not-ancient-channel-or-perennial-water"
+    }
+  ],
+  "limitations": [
+    "現代地表含建築與植被，不能當作各時代的古地表。",
+    "地圖谷線只是定位參照，非復原的古河道、古道路或常流河水。",
+    "北面有相接的高地與鞍部，不能把耶路撒冷塑成四面封閉的谷圈。"
+  ]
+}

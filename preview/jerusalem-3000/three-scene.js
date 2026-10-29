@@ -1,3 +1,5 @@
+import {createRegionalLandforms} from './regional-landforms.js';
+import {HERODIAN_DIMENSIONS} from './herodian-dimensions.js';
 import {createDefenseTimeline,compileDefenseProfile} from './defense-timeline.js';
 import {roadClearancePolygons} from './district-infill.js';
 import {deriveEraRegistration} from './era-registration-adapter.js';
@@ -187,6 +189,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     evidenceProjection = null;
   renderer.localClippingEnabled=true;
   const constructionPresentation=createCityConstructionPresentation({root,getRecord:id=>cityCoreRuntime?.core.get(id)}),phaseDissolve=createPhaseDissolveView(mount);
+  let regionalLandforms=null,regionalData=null,herodianScaleReport=null;
   let defenseTimeline=null,defenseData=null,canonicalProtected=[],independentLaterRegistrations=new Map(),fabricMaterialDisposer=null,persistentCityWorld=null,activeWorldEntry=null,sharedPlaces=null,sharedPlaceView=null,wallReference=null,wallReferenceModel=null,wallGateView=null,wallCredit=null;
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
@@ -426,6 +429,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     if (!terrainRuntime)
       throw new Error('Canonical Jerusalem DEM payload missing');
     terrainPresentation=createTerrainPresentation(terrainRuntime.mesh,{datum:terrainRuntime.grid.verticalDatumOffsetMetres});
+    regionalData=await loadCityData('./data/terrain/regional-landforms.v1.json');regionalLandforms=createRegionalLandforms(root,mount,regionalData,terrainRuntime);
     const evidenceResolutionAudit = auditEvidenceResolution(ledger.objects),
       registrationAudit = auditSpatialRegistrations(
         ledger.objects,
@@ -446,8 +450,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       if (registered) {
         renderableObjects++;
         if (['platform-enclosure', 'fortress'].includes(object.kind)) {
-          const w = object.kind === 'fortress' ? 156 : 540,
-            d = object.kind === 'fortress' ? 136 : 360,
+          const w = object.kind === 'fortress' ? 156 : HERODIAN_DIMENSIONS.platform.eastWest+20,
+            d = object.kind === 'fortress' ? 136 : HERODIAN_DIMENSIONS.platform.northSouth+20,
             x = registered.east,
             z = -registered.north;
           exclusions.push({
@@ -469,6 +473,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       builder.pieces,
     );
     builder.finish(historical);
+    herodianScaleReport={dimensions:structuredClone(HERODIAN_DIMENSIONS),models:builder.meshes.map(mesh=>{const b=new THREE.Box3().setFromObject(mesh),size=b.getSize(new THREE.Vector3());return {id:mesh.userData.evidenceObject.id,bounds:{min:b.min.toArray(),max:b.max.toArray()},eastWest:size.x,northSouth:size.z,verticalEnvelope:size.y};}),measurementScope:'canonical-standing-mesh-not-current-ruin',precinctGround:terrainRuntime.sampleElevation(31.778,35.235),ancientPlacementVerified:false};
     for (const mesh of builder.meshes) {
       const object = mesh.userData.evidenceObject;
       const anchor = object.spatial.anchor;
@@ -635,13 +640,19 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     return info;
   });
   controls.addEventListener('change', () => (needsFrame = true));
+  function frameRegionalOverview(){
+    const window=regionalData.window,points=[];
+    for(const x of [window.minX,window.maxX])for(const z of [window.minZ,window.maxZ])points.push(new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z),z));
+    for(const a of regionalLandforms.snapshot().anchors)points.push(new THREE.Vector3(a.x,a.y,a.z));
+    camera.fov=48;const frame=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov,landscape:true,viewDirection:[.28,.72,1.8]});camera.far=Math.max(camera.far,frame.distance*3);camera.updateProjectionMatrix();controls.maxDistance=frame.distance*2;camera.position.copy(frame.position);controls.target.copy(frame.target);controls.minDistance=35;controls.autoRotate=false;
+  }
   const resize = () => {
     const w = Math.max(1, mount.clientWidth),
       h = Math.max(1, mount.clientHeight);
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    if(independentLaterRegistrations.has(currentPhaseId)&&!terrainView)updatePeriodOverview(currentPhaseId,true);
+    if(terrainView&&regionalLandforms)frameRegionalOverview();else if(independentLaterRegistrations.has(currentPhaseId))updatePeriodOverview(currentPhaseId,true);
     needsFrame = true;
   };
   const ro = new ResizeObserver(resize);
@@ -655,9 +666,11 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     if(changed)phaseDissolve.clear();
     if (needsFrame || changed || controls.autoRotate) {
       try {
+        camera.updateMatrixWorld();
         royalRelief?.project(camera);
         const placeBoxes=sharedPlaceView?.project(camera)||[];
-        wallGateView?.project(camera,placeBoxes);
+        const geographyBoxes=regionalLandforms?.project(camera,placeBoxes)||placeBoxes;
+        wallGateView?.project(camera,geographyBoxes);
         const phaseIndex=Math.floor(timelinePosition),fraction=(playbackDisplayPosition??timelinePosition)-phaseIndex,phaseReady=!isSharedGenerationPhase(currentPhaseId)||sharedEraRuntime?.status==='ready';
         if(currentPhaseId)constructionPresentation.apply({phaseId:currentPhaseId,phaseIndex,position:playbackDisplayPosition??timelinePosition,active:playbackPresentation,ruin:['babylonian-destruction','roman-destruction'].includes(currentPhaseId)});
         phaseDissolve.before({phaseId:currentPhaseId,index:phaseIndex,fraction,active:playbackPresentation,ready:phaseReady});
@@ -693,7 +706,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             persianSanctuary:persianSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
-            terrainPresentation:{...terrainPresentation?.diagnostics,surfaceId:terrainRuntime?.mesh.uuid,historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
+            terrainPresentation:{...terrainPresentation?.diagnostics,surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             wallReference:wallReferenceModel?.diagnostics(),
             defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),
             cityWorld:persistentCityWorld?.diagnostics(),
@@ -782,6 +795,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     defenseTimelineIndex(){return defenseTimeline?.index()??[];},
     defenseTransitionIndex(){return defenseTimeline?.transitionIndex()??[];},
     inspectSpatialSkeleton(){return currentPhaseId?collectSpatialSkeleton(cityCoreRuntime.core,terrainRuntime,{phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode,includeRetained:retainedVisible}):null;},
+    inspectHerodianDimensions(){return structuredClone(herodianScaleReport);},
+    inspectRegionalLandforms(){return regionalLandforms?.snapshot()??null;},
     inspectCityFoundation(phaseId=currentPhaseId){return phaseId?foundationRuntime?.snapshot(phaseId)??null:null;},
     cityFoundationIndex(){return foundationRuntime?.index()??[];},
     royalReliefProfile(){return royalRelief?structuredClone(royalRelief.profile):null;},
@@ -792,15 +807,11 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         terrainView={phase:currentPhaseId,position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance,maxDistance:controls.maxDistance,far:camera.far,fov:camera.fov,autoRotate:controls.autoRotate};
         // Shared urban landscape window, wide enough to keep surrounding relief
         // in frame. This camera envelope does not define a historical city extent.
-        const points=[];
-        for(const x of [SKELETON_WINDOW.minX,SKELETON_WINDOW.maxX])for(const z of [SKELETON_WINDOW.minZ,SKELETON_WINDOW.maxZ])points.push(new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z),z));
-        camera.fov=48;
-        const frame=fitCityOverview({points,aspect:camera.aspect,fov:camera.fov,landscape:true});
-        camera.far=Math.max(camera.far,frame.distance*3);camera.updateProjectionMatrix();controls.maxDistance=frame.distance*2;
-        camera.position.copy(frame.position);controls.target.copy(frame.target);controls.minDistance=35;controls.autoRotate=false;
+        frameRegionalOverview();
       }else if(!enabled&&terrainView){
         camera.position.copy(terrainView.position);controls.target.copy(terrainView.target);controls.minDistance=terrainView.minDistance;controls.maxDistance=terrainView.maxDistance;controls.autoRotate=terrainView.autoRotate;camera.far=terrainView.far;camera.fov=terrainView.fov;camera.updateProjectionMatrix();const changedPhase=terrainView.phase!==currentPhaseId;terrainView=null;if(changedPhase){updatePeriodOverview(currentPhaseId,true);if(isEarlyLandscapePhase(currentPhaseId)){const landscape=isEarliestPhase(currentPhaseId)?earliestSettlement:currentPhaseId==='middle-bronze'?middleBronzeSettlement:currentPhaseId==='late-bronze-iron1'?lateBronzeSettlement:davidSettlement;controls.target.copy(landscape.focus);camera.position.copy(landscape.focus).add(new THREE.Vector3(180,190,270));}else if(isCorePhase(currentPhaseId)){const box=new THREE.Box3().setFromObject(cityCoreLayer),frame=fitCityOverview({points:[box.min,box.max],aspect:camera.aspect,fov:camera.fov});camera.position.copy(frame.position);controls.target.copy(frame.target);}}
       }
+      regionalLandforms?.setVisible(Boolean(terrainView));
       if(wallCredit)wallCredit.hidden=Boolean(terrainView)||!['ottoman','outside-walls','modern'].includes(currentPhaseId)||!evidenceAllowed('inferred');wallGateView?.setVisible(Boolean(terrainView)&&['ottoman','outside-walls','modern'].includes(currentPhaseId)&&evidenceAllowed('inferred'));sharedPlaceView?.setVisible(Boolean(terrainView)&&evidenceAllowed('inferred'));terrainPresentation.contours.visible=true;controls.update();needsFrame=true;return !!terrainView;
     },
     inspectSourceLifecycleContext(id){return inspectSourceLifecycleContext(cityCoreRuntime.core,id,timelinePosition);},
@@ -880,6 +891,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       wallGateView?.dispose();
       defenseTimeline?.dispose();wallReferenceModel?.dispose();
       sharedPlaceView?.dispose();
+      regionalLandforms?.dispose();
       terrainPresentation?.dispose();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])

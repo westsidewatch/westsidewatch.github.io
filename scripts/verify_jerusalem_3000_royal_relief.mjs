@@ -5,7 +5,7 @@ import {loadCanonicalTerrain} from '../preview/jerusalem-3000/terrain-runtime.js
 import {sampleRoyalRelief} from '../preview/jerusalem-3000/royal-relief.js';
 import {settlementSurfaceHeight} from '../preview/jerusalem-3000/earliest-settlement.js';
 const read=p=>JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/'+p,import.meta.url)));
-const grid=read('data/terrain/copernicus-glo90-jerusalem.json'),data=read('data/settlement/david-solomon.v1.json');
+const grid=read('data/terrain/copernicus-glo30-jerusalem.json'),data=read('data/settlement/david-solomon.v1.json');
 const originalFetch=globalThis.fetch;let terrain;
 try{globalThis.fetch=async()=>({ok:true,json:async()=>structuredClone(grid)});terrain=await loadCanonicalTerrain({elevationGrid:'x'},new THREE.Group());}finally{globalThis.fetch=originalFetch;}
 const positions=Array.from(terrain.mesh.geometry.attributes.position.array),profile=sampleRoyalRelief(data,terrain);

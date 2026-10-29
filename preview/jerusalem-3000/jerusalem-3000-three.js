@@ -93,6 +93,8 @@ try {
   window.__JERUSALEM3000__.inspectCityFoundation=phase=>three.inspectCityFoundation(phase);
   window.__JERUSALEM3000__.inspectOverviewBaseline=()=>three.inspectOverviewBaseline();
   window.__JERUSALEM3000__.cityFoundationIndex=three.cityFoundationIndex();
+  window.__JERUSALEM3000__.inspectHerodianDimensions=()=>three.inspectHerodianDimensions();
+  window.__JERUSALEM3000__.inspectRegionalLandforms=()=>three.inspectRegionalLandforms();
   window.__JERUSALEM3000__.inspectSharedPlaces=()=>three.inspectSharedPlaces();
   window.__JERUSALEM3000__.sharedPlaceTransitions=()=>three.sharedPlaceTransitions();
   window.__JERUSALEM3000__.inspectPersistentCityPhase=phase=>three.inspectPersistentCityPhase(phase);
@@ -144,9 +146,10 @@ try {
   const templeFocusButton=document.createElement('button');templeFocusButton.textContent='聖殿近看';templeFocusButton.hidden=true;
   document.querySelector('.j3k-event-controls').append(templeFocusButton);
   const terrainButton=document.createElement('button');terrainButton.type='button';terrainButton.className='j3k-terrain-toggle';terrainButton.textContent='山城地形';terrainButton.setAttribute('aria-pressed','false');
-  const terrainNote=document.createElement('span');terrainNote.className='j3k-terrain-note';terrainNote.hidden=true;terrainNote.textContent='現代 DEM · 原比例 · 20m 等高線 · 非古代地表';
+  const terrainNote=document.createElement('span');terrainNote.className='j3k-terrain-note';terrainNote.hidden=true;terrainNote.textContent='GLO-30 現代地表 · 高度原比例 · 谷線非河水';
   document.querySelector('.j3k-event-controls').append(terrainButton,terrainNote);
-  function terrainOverview(enabled){const active=three.setTerrainOverview(enabled);terrainButton.setAttribute('aria-pressed',String(active));baselineCompare?.setAttribute('aria-pressed',String(active));terrainNote.hidden=!active;}
+  const geographyCredit=document.createElement('p');geographyCredit.className='j3k-geography-credit';geographyCredit.textContent='地形：Copernicus GLO-30 · © DLR／Airbus（歐盟及 ESA 提供）；現代地名與谷線：© OpenStreetMap contributors，ODbL。';stage.after(geographyCredit);
+  function terrainOverview(enabled){const active=three.setTerrainOverview(enabled);terrainButton.setAttribute('aria-pressed',String(active));baselineCompare?.setAttribute('aria-pressed',String(active));terrainNote.hidden=!active;stage.classList.toggle('terrain-overview',active);}
   terrainButton.addEventListener('click',()=>terrainOverview(terrainButton.getAttribute('aria-pressed')!=='true'));
   templeFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusRoyalTemple();});
   const reliefButton=document.createElement('button');reliefButton.type='button';reliefButton.textContent='城內高差';reliefButton.hidden=true;
@@ -165,7 +168,7 @@ try {
     profile.anchors.forEach((p,i)=>{const circle=document.createElementNS(ns,'circle');circle.setAttribute('cx',String(x(p)));circle.setAttribute('cy',String(y(p)));circle.setAttribute('r','4');circle.setAttribute('fill','#8b422b');svg.append(circle);const label=document.createElementNS(ns,'text');label.setAttribute('x',String(x(p)));label.setAttribute('y',String(y(p)-14));label.setAttribute('text-anchor',i===2?'end':'start');label.textContent=names[i];svg.append(label);});
     const axis=document.createElementNS(ns,'text');axis.setAttribute('x','70');axis.setAttribute('y','178');axis.textContent=`南 → 北 · 剖面水平距離約 ${Math.round(profile.distance)}m · 高程／水平同尺度（無誇大）`;svg.append(axis);reliefPanel.append(svg);
     const comparison=document.createElement('p');comparison.textContent=`目前示意點的現代地形：北部比南段高約 ${Math.round(profile.deltaSouth)}m，比中段高約 ${Math.round(profile.deltaMiddle)}m。`;reliefPanel.append(comparison);
-    const caveat=document.createElement('p');caveat.className='j3k-relief-caveat';caveat.textContent='紅線為地形剖面參考線，非古道路。高差取自現代約90m DEM；示意點非考古定位，不能當作大衛／所羅門時代的實測高程。禾場與建殿關聯依代下3:1，精確位置與古地表尚未核定。';reliefPanel.append(caveat);
+    const caveat=document.createElement('p');caveat.className='j3k-relief-caveat';caveat.textContent='紅線為地形剖面參考線，非古道路。高差取自現代約30m DSM；示意點非考古定位，不能當作大衛／所羅門時代的實測高程。禾場與建殿關聯依代下3:1，精確位置與古地表尚未核定。';reliefPanel.append(caveat);
     const source=document.createElement('a');source.href='https://www.biblegateway.com/passage/?search=2+Chronicles+3%3A1&version=KJV';source.textContent='禾場與建殿的經文關聯：代下3:1';source.target='_blank';source.rel='noopener';reliefPanel.append(source);
   }
   function update(v) {
@@ -244,6 +247,7 @@ try {
       ? `${p.note} 可開啟「前代遺存」對照同一批第一聖殿廢墟；遺存範圍、埋藏深度及再利用關係尚未考古核定。重建住宅採獨立山脊／北部配置；早期第二聖殿主體、院落及入口為獨立推定示意，可點「聖殿近看」。城界、街網與人口未核定。`
       : isSharedSlicePhase(p.id) ? `${p.note} 東南山脊、北部聖區與西丘採獨立配置；西向擴張方向有文獻依據，具體邊界與道路仍為推定。毀城沿用同一批示意住居。` : isSharedGenerationPhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
     if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 宗教核心亦為概略量體，非測繪復原。';
+    if(p.id==='herodian-jesus')note.textContent+=' 比例校準：平台約300×480m；殿體高約52.5m（暫採每肘0.525m），位置與細節仍屬復原。';
     if(isIndependentLaterPhase(p.id))note.textContent+=' 地區、路網與住宅量體為示意；共同東側軸線不表示歷代路面相同。各期採階段概覽，非逐年完整復原。';
     if(window.__JERUSALEM3000__.inheritanceState.audit?.visibleComponents>0)note.textContent+=' 前代圖層按模型比例示意，留存構件與再利用關係尚未核定。';
     if(three.inspectDefenseTimeline()?.owner==='network')note.textContent+=' 赭色虛線牆為整體範圍的推定補足；低矮殘牆／候選帶保留毀壞及爭議狀態，並非測繪核定城廓；可看「城防年代」。';
