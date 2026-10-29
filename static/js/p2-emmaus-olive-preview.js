@@ -60,8 +60,57 @@
  rail.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;pointer={id:e.pointerId,x:e.clientX,origin:rail.scrollLeft,moved:false};});
  rail.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;const dx=e.clientX-pointer.x;if(Math.abs(dx)>5){pointer.moved=true;rail.scrollLeft=pointer.origin-dx;}});
  rail.addEventListener('pointerup',()=>{pointer=null});rail.addEventListener('pointercancel',()=>{pointer=null});
- selectBook(40,false);
- requestAnimationFrame(()=>centerRailBook(rail.querySelector('[data-book="40"]'),'instant'));
+ // The feature is sourced directly from ONE's own Luke 24 chapter dataset,
+ // not a mock screenshot or editorial text fabricated for this P2 spread.
+ const featured=window.ONE_DATA?.luke?.chapterStudies?.['24'];
+ if(!featured?.route?.length||!featured?.background?.length||!featured?.connections?.length)
+  throw Error('ONE Luke 24 study content missing: feature must use canonical ONE data');
+ const studyRoutes=$('#em-study-route'),studyDetail=$('#em-study-detail');
+ $('#em-study-ref').textContent=featured.passage;
+ $('#emmaus-study-heading').textContent=featured.title;
+ $('#em-study-movement').textContent=featured.movement;
+ for(const [ref,description] of featured.route.slice(0,3)){
+  const li=document.createElement('li'),code=document.createElement('span'),copy=document.createElement('p');
+  code.textContent=ref;copy.textContent=description;li.append(code,copy);studyRoutes.append(li);
+ }
+ const studyTabs=[...document.querySelectorAll('[data-study-view]')];
+ function showStudy(view){
+  let label='',body='';
+  if(view==='connections'){
+   label=featured.connections[0][0]+' / '+featured.connections[0][1];
+   body=featured.connections[0][2];
+  }else if(view==='questions'){
+   label='思考與討論 / QUESTIONS';
+   body=featured.questions[1]||featured.questions[0];
+  }else{
+   label=featured.background[1]?.[0]||featured.background[0][0];
+   body=featured.background[1]?.[1]||featured.background[0][1];
+  }
+  studyDetail.replaceChildren();
+  const strong=document.createElement('strong'),paragraph=document.createElement('p');
+  strong.textContent=label;paragraph.textContent=body;studyDetail.append(strong,paragraph);
+  for(const tab of studyTabs){
+   const active=tab.dataset.studyView===view;tab.setAttribute('aria-selected',String(active));
+   tab.tabIndex=active?0:-1;
+   if(active)studyDetail.setAttribute('aria-labelledby',tab.id);
+  }
+  emmaus.dataset.studyView=view;
+ }
+ for(const tab of studyTabs){
+  tab.addEventListener('click',()=>showStudy(tab.dataset.studyView));
+  tab.addEventListener('keydown',event=>{
+   if(event.key!=='ArrowLeft'&&event.key!=='ArrowRight')return;
+   event.preventDefault();
+   const offset=event.key==='ArrowRight'?1:-1;
+   const next=studyTabs[(studyTabs.indexOf(tab)+offset+studyTabs.length)%studyTabs.length];
+   showStudy(next.dataset.studyView);next.focus({preventScroll:true});
+  });
+ }
+ showStudy('background');
+ // Luke 24 is the featured chapter; the canonical 66-book navigator below
+ // remains independent and links the selected book into the REAL ONE app.
+ selectBook(42,false);
+ requestAnimationFrame(()=>centerRailBook(rail.querySelector('[data-book="42"]'),'instant'));
  // Once the Magazine's city/wall plate has arrived on the right, switch
  // to the canonical 241-plate library in original catalogue order. The right
  // field never invents book-specific images or reuses the city-only shortlist.
@@ -135,6 +184,16 @@
   const move=smooth((distance-6.50)/.90);
   const archive=smooth((distance-7.40)/.28);
   const oneDrop=smooth((distance-7.66)/.78);
+  // Seven distinct inherited OS color folios unfold as tiny paper edges.
+  // They NEVER replay the homepage's seven full-screen entrance curtains.
+  // No CSS clock: the same page scroll value controls this entire gesture.
+  for(const [i,layer] of [...emmaus.querySelectorAll('.emmaus__folio-layer')].entries()){
+   const unfolded=smooth((oneDrop-i*.058)/.57);
+   layer.style.transform='translate3d('+(-34*(1-unfolded)).toFixed(2)+'px,'+
+    ((1-unfolded)*(i+1)*5).toFixed(2)+'px,0) scaleX('+
+    (.18+.82*unfolded).toFixed(4)+')';
+   layer.style.opacity=(.16+.66*unfolded).toFixed(3);
+  }
   const expand=smooth((distance-8.44)/.48);
   const oliveIn=smooth((distance-9.44)/1.38);
   const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
