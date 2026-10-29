@@ -6,6 +6,14 @@
  const $=s=>document.querySelector(s),clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),smooth=t=>{t=clamp(t);return t*t*(3-2*t)};
  const track=$('#proof-track'),base=$('#proof-original'),emmaus=$('#emmaus'),olive=$('#olive-proof');
  const seek=$('#proof-seek'),percent=$('#proof-percentage'),phase=$('#proof-phase');
+ const realmNav=[...emmaus.querySelectorAll('[data-realm-jump]')];
+ for(const button of realmNav){
+  button.addEventListener('click',()=>{
+   const distance=Number(button.dataset.realmJump);
+   if(Number.isFinite(distance))scrollTo({top:scrollY+track.getBoundingClientRect().top+distance*innerHeight,behavior:'instant'});
+  });
+ }
+
  if(!track||!base||!emmaus||!olive)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const books=window.ONE_DATA?.books;
@@ -32,6 +40,8 @@
   const active=rail.querySelector(`[data-book="${number}"]`);
   if(center)centerRailBook(active,reduced?'instant':'smooth');
   emmaus.dataset.selectedBook=String(number);
+  renderBookStudy(number);
+  selectGalleryForBook(number);
  }
  for(const item of books){
   const b=document.createElement('button');b.type='button';b.className='emmaus__number';b.dataset.book=String(item[0]);
@@ -60,31 +70,107 @@
  rail.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;pointer={id:e.pointerId,x:e.clientX,origin:rail.scrollLeft,moved:false};});
  rail.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;const dx=e.clientX-pointer.x;if(Math.abs(dx)>5){pointer.moved=true;rail.scrollLeft=pointer.origin-dx;}});
  rail.addEventListener('pointerup',()=>{pointer=null});rail.addEventListener('pointercancel',()=>{pointer=null});
- // The feature is sourced directly from ONE's own Luke 24 chapter dataset,
- // not a mock screenshot or editorial text fabricated for this P2 spread.
+
+ // Doré's original 241 numbered engravings are the only image sources.
+ // Book assignments below are conservative, based on the actual titles in
+ // ONE's canonical file registry. Works with uncertain attribution are not
+ // forced onto a book. A no-match volume gets a random catalogue start.
+ const seq=(a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
+ const bookPlates={
+  1:seq(1,29),2:seq(30,41),4:seq(42,45),6:seq(46,53),7:seq(54,69),8:[70,71],
+  9:seq(72,81),10:seq(82,87),11:seq(88,95),12:seq(96,104),
+  13:seq(105,108),14:[109,110],15:[111,112,113,114,116],16:[115],
+  17:[117,118,119,144],18:[120,121],23:[122,123,124],
+  24:[125,126,127],26:[128,129],27:[130,131,132,133,134,158,159,160],
+  30:[135],32:[136,137],33:[138],38:[139],
+  40:seq(161,182),41:seq(183,192),42:seq(193,212),43:seq(213,223),
+  44:seq(224,234),52:[235],66:[236,237,239,240,241]
+ };
+ const registry=window.ONE_DORE_COVER_REGISTRY;
+ const ids=Array.from({length:241},(_,i)=>i+1);
+ const plates=ids.map(id=>({id,file:registry?.files?.[id],title:registry?.titles?.[id]||String(registry?.files?.[id]||'').replace(/^\d+[A-Z]?\./,'').replace(/\.[^.]+$/,'')}));
+ if(plates.length!==241||plates.some(p=>!p.file))throw Error('Shared Doré 241-plate inventory is incomplete');
+ const plateEls=[$('#em-plate-a'),$('#em-plate-b')];
+ let galleryIndex=211,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0,galleryPrefetch=false;
+ let galleryOrder=ids.slice(),galleryPosition=211,gallerySelectionBook=42;
+ const imgUrl=plate=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(plate.file)+'?width=1200';
+ async function showPlate(index){
+  const ticket=++plateVersion,plate=plates[index%plates.length],slot=1-activeSlot,img=plateEls[slot];
+  const ok=await new Promise(resolve=>{
+   img.onload=()=>resolve(true);img.onerror=()=>resolve(false);img.src=imgUrl(plate);
+   if(img.complete&&img.naturalWidth>0)resolve(true);
+  });
+  if(ticket!==plateVersion)return;
+  if(!ok){galleryIndex=index%plates.length;return;}
+  plateEls[activeSlot].classList.remove('is-active');img.classList.remove('is-active');
+  void img.offsetHeight;img.classList.add('is-active');
+  activeSlot=slot;galleryIndex=index%plates.length;
+  galleryPosition=galleryOrder.indexOf(plate.id);
+  $('#em-plate-title').textContent='DORÉ / '+plate.title.toUpperCase();
+  $('#em-plate-index').textContent=String(plate.id).padStart(3,'0')+' / '+String(plates.length);
+  emmaus.dataset.dorePlate=String(plate.id);
+ }
+ function selectGalleryForBook(number){
+  const associated=bookPlates[number]||[];
+  const start=associated.length?associated[0]:1+Math.floor(Math.random()*plates.length);
+  galleryOrder=[...associated,...ids.filter(id=>!associated.includes(id))];
+  if(!associated.length)galleryOrder=[...ids.slice(start-1),...ids.slice(0,start-1)];
+  galleryPosition=0;galleryIndex=start-1;gallerySelectionBook=number;
+  // Cancel stale asynchronous responses from a preceding book selection.
+  plateVersion++;galleryPrefetch=true;void showPlate(galleryIndex);
+  emmaus.dataset.illustrationMode=associated.length?'book-first':'random-fallback';
+  $('#em-plate-selection').textContent=(associated.length?'BOOK PLATES':'ARCHIVE / RANDOM START')+
+   ' · '+String(number).padStart(2,'0')+' / '+books[number-1][2].toUpperCase();
+ }
+ function syncGallery(live){
+  if(live===galleryLive)return;galleryLive=live;clearInterval(galleryTimer);galleryTimer=0;
+  if(live){
+   if(!plateEls.some(img=>img.classList.contains('is-active')))void showPlate(galleryIndex);
+   if(!reduced)galleryTimer=setInterval(()=>showPlate(galleryOrder[(galleryPosition+1)%galleryOrder.length]-1),15000);
+  }
+ }
  const featured=window.ONE_DATA?.luke?.chapterStudies?.['24'];
  if(!featured?.route?.length||!featured?.background?.length||!featured?.connections?.length)
   throw Error('ONE Luke 24 study content missing: feature must use canonical ONE data');
  const studyRoutes=$('#em-study-route'),studyDetail=$('#em-study-detail');
- $('#em-study-ref').textContent=featured.passage;
- $('#emmaus-study-heading').textContent=featured.title;
- $('#em-study-movement').textContent=featured.movement;
- for(const [ref,description] of featured.route.slice(0,2)){
-  const li=document.createElement('li'),code=document.createElement('span'),copy=document.createElement('p');
-  code.textContent=ref;copy.textContent=description;li.append(code,copy);studyRoutes.append(li);
- }
  const studyTabs=[...document.querySelectorAll('[data-study-view]')];
+ let currentBookStudy=null,currentStudyView='background';
+ function renderBookStudy(number){
+  const item=books[number-1],D=window.ONE_DATA;
+  const detailed=number===42?featured:number===40?D.matthew?.chapterStudies?.['1']:null;
+  currentBookStudy=detailed;
+  const firstChapter=detailed&&number===42?24:1;
+  $('#em-study-feature').textContent=(detailed?'ONE / FEATURED CHAPTER':'ONE / BOOK OVERVIEW')+
+   ' · '+item[2].toUpperCase();
+  $('#em-study-ref').textContent=detailed?.passage||item[1]+' · '+item[3]+' 章';
+  $('#emmaus-study-heading').textContent=detailed?.title||item[1];
+  $('#em-study-movement').textContent=detailed?.movement||'ONE 的六十六卷導航 · 選擇章節進入正式查經工具';
+  $('#em-study-source').textContent=item[1]+(detailed?' · ONE 原始研讀資料':' · ONE 書卷導覽');
+  const href='/one/?book='+number+'&chapter='+firstChapter;
+  $('#em-study-enter').href=href;
+  $('#emmaus-enter').href=href;
+  studyRoutes.replaceChildren();
+  const rows=detailed?.route?.slice(0,2)||
+   [['01','開始閱讀 '+item[1]+' 第 1 章'],['01—'+String(item[3]).padStart(2,'0'),'進入 ONE 按章瀏覽整卷']];
+  for(const [ref,desc] of rows){
+   const li=document.createElement('li'),reference=document.createElement('span'),copy=document.createElement('p');
+   reference.textContent=ref;copy.textContent=desc;li.append(reference,copy);studyRoutes.append(li);
+  }
+  showStudy(currentStudyView);
+ }
  function showStudy(view){
+  currentStudyView=view;
+  const f=currentBookStudy;
   let label='',body='';
-  if(view==='connections'){
-   label=featured.connections[0][0]+' / '+featured.connections[0][1];
-   body=featured.connections[0][2];
-  }else if(view==='questions'){
-   label='思考與討論 / QUESTIONS';
-   body=featured.questions[1]||featured.questions[0];
+  if(view==='connections'&&f?.connections?.length){
+   label=f.connections[0][0]+' / '+f.connections[0][1];body=f.connections[0][2];
+  }else if(view==='questions'&&f?.questions?.length){
+   label='思考與討論 / QUESTIONS';body=f.questions[1]||f.questions[0];
+  }else if(view==='background'&&f?.background?.length){
+   label=f.background[1]?.[0]||f.background[0][0];body=f.background[1]?.[1]||f.background[0][1];
   }else{
-   label=featured.background[1]?.[0]||featured.background[0][0];
-   body=featured.background[1]?.[1]||featured.background[0][1];
+   label=view==='connections'?'相關經文 / CROSS REFERENCES':view==='questions'?'研讀問題 / QUESTIONS':'卷書總覽 / BOOK INDEX';
+   body='ONE 已提供本卷 '+books[selectedBook-1][3]+' 章導覽；請開啟正式 ONE 選擇章節，查看實際可用的研讀資料。';
   }
   studyDetail.replaceChildren();
   const strong=document.createElement('strong'),paragraph=document.createElement('p');
@@ -106,41 +192,8 @@
    showStudy(next.dataset.studyView);next.focus({preventScroll:true});
   });
  }
- showStudy('background');
- // Luke 24 is the featured chapter; the canonical 66-book navigator below
- // remains independent and links the selected book into the REAL ONE app.
  selectBook(42,false);
  requestAnimationFrame(()=>centerRailBook(rail.querySelector('[data-book="42"]'),'instant'));
- // Once the Magazine's city/wall plate has arrived on the right, switch
- // to the canonical 241-plate library in original catalogue order. The right
- // field never invents book-specific images or reuses the city-only shortlist.
- const registry=window.ONE_DORE_COVER_REGISTRY;
- const ids=Array.from({length:241},(_,i)=>i+1);
- const plates=ids.map(id=>({id,file:registry?.files?.[id],title:registry?.titles?.[id]||String(registry?.files?.[id]||'').replace(/^\d+[A-Z]?\./,'').replace(/\.[^.]+$/,'')}));
- if(plates.length!==241||plates.some(p=>!p.file))throw Error('Shared Doré 241-plate inventory is incomplete');
- const plateEls=[$('#em-plate-a'),$('#em-plate-b')];// Original Doré Emmaus plate is #212 in the SAME canonical 241-plate index.
- // This is the first image in the full circular rotation, not a separate
- // thematic shortlist or inserted substitute plate.
- let galleryIndex=211,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0,galleryPrefetch=false;
- const imgUrl=plate=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(plate.file)+'?width=1200';
- async function showPlate(index){
-  const ticket=++plateVersion,plate=plates[index%plates.length],slot=1-activeSlot,img=plateEls[slot];
-  const ok=await new Promise(resolve=>{
-   img.onload=()=>resolve(true);img.onerror=()=>resolve(false);img.src=imgUrl(plate);
-   if(img.complete&&img.naturalWidth>0)resolve(true);
-  });
-  if(ticket!==plateVersion)return;
-  if(!ok){galleryIndex=index%plates.length;return;}// A missing Commons file never permanently blocks the rest of the collection.
-  plateEls[activeSlot].classList.remove('is-active');img.classList.remove('is-active');void img.offsetHeight;img.classList.add('is-active');
-  activeSlot=slot;galleryIndex=index%plates.length;
-  $('#em-plate-title').textContent='DORÉ / '+plate.title.toUpperCase();
-  $('#em-plate-index').textContent=String(galleryIndex+1).padStart(2,'0')+' / '+String(plates.length).padStart(2,'0');
-  emmaus.dataset.dorePlate=String(plate.id);
- }
- function syncGallery(live){
-  if(live===galleryLive)return;galleryLive=live;clearInterval(galleryTimer);galleryTimer=0;
-  if(live){if(!plateEls.some(img=>img.classList.contains('is-active')))showPlate(galleryIndex);if(!reduced)galleryTimer=setInterval(()=>showPlate(galleryIndex+1),15000);}
- }
  const roster=[
   ['watchman-nee','倪柝聲','WATCHMAN NEE'],['derek-prince','葉光明','DEREK PRINCE'],
   ['david-pawson','大衛鮑森','DAVID PAWSON'],['stephen-tong','唐崇榮','STEPHEN TONG'],
@@ -187,9 +240,8 @@
   const move=smooth((distance-6.50)/.90);
   const archive=smooth((distance-7.40)/.28);
   const oneDrop=smooth((distance-7.66)/.78);
-  // Seven distinct inherited OS color folios unfold as tiny paper edges.
-  // They NEVER replay the homepage's seven full-screen entrance curtains.
-  // No CSS clock: the same page scroll value controls this entire gesture.
+  // Actual seven realm folios / navigation, inheriting the original color
+  // identities; no replay of the shared homepage curtains.
   for(const [i,layer] of [...emmaus.querySelectorAll('.emmaus__folio-layer')].entries()){
    const unfolded=smooth((oneDrop-i*.058)/.57);
    layer.style.transform='translate3d('+(-34*(1-unfolded)).toFixed(2)+'px,'+
