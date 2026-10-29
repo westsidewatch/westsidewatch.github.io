@@ -166,12 +166,14 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('.olive-proof__bottom').evaluate(el=>getComputedStyle(el).opacity),'0',
     'the speaker register must not reveal before the moving engraved field is established');
    const oneClip=await page.locator('.emmaus__left').evaluate(el=>getComputedStyle(el).clipPath);
-   assert(oneClip.startsWith('inset(0px ')&&oneClip.endsWith(' 0px 0px)'),
-    'ONE retracts from RIGHT where the Doré image enters, not from LEFT');
+   assert.equal(oneClip,'none','ONE reflows instead of truncating text before the image finishes moving');
    assert.equal(await page.locator('#olive-handoff-image').count(),0,'no second Doré image constructed');
    const oneBefore=await page.locator('.emmaus__left').evaluate(el=>getComputedStyle(el).clipPath);
-   assert(oneBefore.startsWith('inset(0px ')&&oneBefore.endsWith(' 0px 0px)'),
-    'ONE keeps its left readable column while its right edge withdraws');
+   assert.equal(oneBefore,'none','ONE text remains a valid reflowed layout during early gallery motion');
+   const movingEdge=await page.locator('#proof-stage > #emmaus-gallery').evaluate(el=>el.getBoundingClientRect().left);
+   const oneRight=await page.locator('.emmaus__left').evaluate(el=>el.getBoundingClientRect().right);
+   assert(Math.abs(movingEdge-oneRight)<3,
+    'ONE panel and its existing engraving share one physical boundary; no blank wedge or image overprint');
    const movingPanel=await page.locator('#proof-stage > #emmaus-gallery').boundingBox();
    assert(movingPanel && movingPanel.x<stageRect.x+stageRect.width*2/3,
     'ONE image field is physically crossing toward the Olive upper-left portrait slot');
