@@ -592,7 +592,15 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "western-return",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "babylonian-destruction",
@@ -629,7 +637,15 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "western-return",
+          "mode": "ruin",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "persian-nehemiah",
@@ -664,7 +680,15 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "persian-return",
+          "mode": "candidate",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "hellenistic-hasmonean",
@@ -701,7 +725,15 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "first-wall-return",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "herodian-jesus",
@@ -738,7 +770,15 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "first-wall-return",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "roman-destruction",
@@ -776,7 +816,15 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "first-wall-return",
+          "mode": "ruin",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "aelia",
@@ -819,7 +867,15 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "compact-return",
+          "mode": "standing",
+          "fromOffset": 0.65,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "byzantine",
@@ -865,7 +921,27 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "compact-return",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 0.2
+        },
+        {
+          "key": "south-east-return",
+          "mode": "standing",
+          "fromOffset": 0.2,
+          "toOffset": 1
+        },
+        {
+          "key": "south-west-join",
+          "mode": "standing",
+          "fromOffset": 0.2,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "early-islamic",
@@ -918,7 +994,27 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "south-east-return",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 0.65
+        },
+        {
+          "key": "south-west-join",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 0.65
+        },
+        {
+          "key": "medieval-east-return",
+          "mode": "standing",
+          "fromOffset": 0.65,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "crusader",
@@ -964,7 +1060,15 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "medieval-east-return",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "ayyubid-mamluk",
@@ -1026,7 +1130,21 @@
         "geometryAccepted": false,
         "gateLocationAccepted": false,
         "streetAssociationAccepted": false
-      }
+      },
+      "extentReconstructions": [
+        {
+          "key": "medieval-east-return",
+          "mode": "standing",
+          "fromOffset": 0,
+          "toOffset": 0.35
+        },
+        {
+          "key": "medieval-east-return",
+          "mode": "ruin",
+          "fromOffset": 0.35,
+          "toOffset": 1
+        }
+      ]
     },
     {
       "id": "ottoman",
@@ -1265,5 +1383,230 @@
     "mapReferencesAreSurveyControls": false,
     "runtimeRemoteFetch": false,
     "physicalSurvivalVerified": false
+  },
+  "extentReconstructions": {
+    "western-return": {
+      "label": "西丘城防北東南側推定補足",
+      "points": [
+        [
+          -35,
+          220
+        ],
+        [
+          -210,
+          -280
+        ],
+        [
+          220,
+          -300
+        ],
+        [
+          350,
+          80
+        ],
+        [
+          300,
+          650
+        ],
+        [
+          140,
+          1100
+        ],
+        [
+          -250,
+          1120
+        ],
+        [
+          -510,
+          700
+        ]
+      ],
+      "authority": "authored-complete-range-hypothesis-not-surveyed-circuit",
+      "geometryVerified": false
+    },
+    "first-wall-return": {
+      "label": "第二聖殿期北東側推定補足",
+      "points": [
+        [
+          100,
+          880
+        ],
+        [
+          260,
+          650
+        ],
+        [
+          350,
+          120
+        ],
+        [
+          270,
+          -350
+        ],
+        [
+          -100,
+          -430
+        ],
+        [
+          -340,
+          -180
+        ],
+        [
+          -650,
+          -20
+        ],
+        [
+          -810,
+          390
+        ]
+      ],
+      "authority": "authored-complete-range-hypothesis-not-surveyed-circuit",
+      "geometryVerified": false
+    },
+    "persian-return": {
+      "label": "波斯候選範圍推定補足（有爭議）",
+      "points": [
+        [
+          -80,
+          -80
+        ],
+        [
+          150,
+          -140
+        ],
+        [
+          260,
+          140
+        ],
+        [
+          220,
+          480
+        ],
+        [
+          60,
+          780
+        ],
+        [
+          -220,
+          680
+        ]
+      ],
+      "authority": "authored-complete-range-hypothesis-not-surveyed-circuit",
+      "geometryVerified": false
+    },
+    "compact-return": {
+      "label": "晚羅馬緊湊城防東南側推定補足",
+      "points": [
+        [
+          -100,
+          -400
+        ],
+        [
+          240,
+          -490
+        ],
+        [
+          360,
+          -100
+        ],
+        [
+          330,
+          240
+        ],
+        [
+          160,
+          600
+        ],
+        [
+          -170,
+          730
+        ],
+        [
+          -520,
+          650
+        ],
+        [
+          -720,
+          440
+        ]
+      ],
+      "authority": "authored-complete-range-hypothesis-not-surveyed-circuit",
+      "geometryVerified": false
+    },
+    "south-east-return": {
+      "label": "南擴城防東側推定補足",
+      "points": [
+        [
+          -100,
+          -400
+        ],
+        [
+          240,
+          -490
+        ],
+        [
+          370,
+          -100
+        ],
+        [
+          350,
+          210
+        ],
+        [
+          200,
+          420
+        ]
+      ],
+      "authority": "authored-complete-range-hypothesis-not-surveyed-circuit",
+      "geometryVerified": false
+    },
+    "south-west-join": {
+      "label": "南擴與西側城防推定銜接",
+      "points": [
+        [
+          -850,
+          390
+        ],
+        [
+          -720,
+          440
+        ]
+      ],
+      "authority": "authored-complete-range-hypothesis-not-surveyed-circuit",
+      "geometryVerified": false
+    },
+    "medieval-east-return": {
+      "label": "中世紀城防東側推定補足",
+      "points": [
+        [
+          -100,
+          -400
+        ],
+        [
+          240,
+          -490
+        ],
+        [
+          370,
+          -100
+        ],
+        [
+          200,
+          150
+        ]
+      ],
+      "authority": "authored-complete-range-hypothesis-not-surveyed-circuit",
+      "geometryVerified": false
+    }
+  },
+  "extentReconstructionPolicy": {
+    "defaultVisible": true,
+    "geometryVerified": false,
+    "historicalCircuitVerified": false,
+    "style": "ochre-dashed-full-height-for-standing-low-for-ruin-and-disputed",
+    "earlyAelia": "independent-gates-only-no-completion-before-wall-context",
+    "earliestPhases": "no-unsupported-city-wall-added",
+    "existingOwners": "unchanged",
+    "modernBackProjection": false
   }
 }

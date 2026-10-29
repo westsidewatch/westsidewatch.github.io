@@ -246,7 +246,7 @@ try {
     if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 宗教核心亦為概略量體，非測繪復原。';
     if(isIndependentLaterPhase(p.id))note.textContent+=' 地區、路網與住宅量體為示意；共同東側軸線不表示歷代路面相同。各期採階段概覽，非逐年完整復原。';
     if(window.__JERUSALEM3000__.inheritanceState.audit?.visibleComponents>0)note.textContent+=' 前代圖層按模型比例示意，留存構件與再利用關係尚未核定。';
-    if(three.inspectDefenseTimeline()?.owner==='network')note.textContent+=' 城防為開放示意段／爭議候選帶，未復原完整測繪城廓；可看「城防年代」。';
+    if(three.inspectDefenseTimeline()?.owner==='network')note.textContent+=' 赭色虛線牆為整體範圍的推定補足；低矮殘牆／候選帶保留毀壞及爭議狀態，並非測繪核定城廓；可看「城防年代」。';
     skeletonView?.refresh();defenseView?.refresh();
     if(evidencePanelPhase!==p.id) {
       evidencePanelPhase=p.id;
@@ -354,11 +354,13 @@ try {
     update(Number(slider.value));
   });
   play.addEventListener('click', () => (raf ? stop() : start()));
+  markers.forEach(b=>b.title='查看本期後段概覽；拖動時間軸可查看早段與建造過程');
   markers.forEach((b) =>
     b.addEventListener('click', () => {
       stop();three.setPlaybackPresentation(false);
-      slider.value = b.dataset.phase;playbackPosition=Number(slider.value);
-      update(Number(b.dataset.phase));
+      const index=Number(b.dataset.phase),inspection=index===phases.length-1?index:index+.9;
+      slider.value = String(inspection);playbackPosition=inspection;
+      update(inspection);
     }),
   );
   const evidenceToggle = document.querySelector('.j3k-evidence-toggle'),
