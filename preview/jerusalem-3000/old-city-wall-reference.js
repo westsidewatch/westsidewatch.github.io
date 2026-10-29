@@ -22,16 +22,6 @@ export function wallGateApproaches(registration,reference){
  if(!spine)throw new Error('Wall reference needs existing western spine');
  registration.roads.push(make('jaffa-approach-design',jaffa,spine.geometry.points[2]),make('damascus-approach-design',damascus,spine.geometry.points[1]));
  for(const road of registration.roads)if(['westward-road-context','southwest-access-illustrative'].some(id=>road.id.endsWith(':'+id)))road.geometry.points[0]={x:jaffa.x,z:jaffa.z};
- // Connect to the edge of each illustrative core, keeping paths out of its mass.
- for(const core of registration.cores){
-  const p=core.geometry.polygon,c={x:p.reduce((s,q)=>s+q.x,0)/p.length,z:p.reduce((s,q)=>s+q.z,0)/p.length};
-  const axis=registration.roads.find(r=>r.id.endsWith(core.id.endsWith('holy-sepulchre-context')?':western-market-axis-context':':eastern-valley-link-illustrative'));
-  if(!axis)throw new Error('Missing shared core approach axis');
-  const start=axis.geometry.points.reduce((a,b)=>Math.hypot(a.x-c.x,a.z-c.z)<Math.hypot(b.x-c.x,b.z-c.z)?a:b);
-  const dx=start.x-c.x,dz=start.z-c.z,halfX=(Math.max(...p.map(q=>q.x))-Math.min(...p.map(q=>q.x)))/2,halfZ=(Math.max(...p.map(q=>q.z))-Math.min(...p.map(q=>q.z)))/2;
-  const scale=Math.max(Math.abs(dx)/halfX,Math.abs(dz)/halfZ);if(scale<=1)throw new Error('Core approach starts inside core');
-  registration.roads.push({id:`${core.id.replace(':monument:',':road:')}-approach-design`,type:'road',confidence:'inferred',geometry:{frame:'canonical-dem-enu',status:'authored-core-link-not-surveyed-street',primitive:'polyline',points:[{...start},{x:c.x+dx/scale,z:c.z+dz/scale}]},source:{urls:[...core.source.urls],authority:'authored approach from shared illustrative axis to modern core position'},metadata:{layoutRole:'old-city-route-context',coreReference:core.id,routeGeometryVerified:false}});
- }
  registration.sources=[...new Set([...registration.sources,reference.source.url,...reference.source.historicalContext])];
  registration.limitations.push('後期舊城量體受現代地圖外城牆參照包絡約束；雅法門、大馬士革門動線是設計連接，非歷史街道測繪。現代開口只在規劃包絡閉合，城牆模型不補齊。');
 }
