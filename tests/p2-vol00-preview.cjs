@@ -19,6 +19,14 @@ assert.match(source,/\/experiments\/p2-contents-twelve\.js/);
 assert.match(studies,/const DESIGNS=\[/);
 assert.match(studyCss,/\.p2x--12/);
 assert.match(source,/p2-vol00-editorial\.css\?v=vol00-editorial-\d{8}[a-z]/,'the standalone folio CSS must cache-bust on visual revision');
+assert(source.includes('Isaiah 62:6 · KJV')&&source.includes('我在你城上設立守望的，他們晝夜必不靜默'),'approved bilingual scripture is preserved');
+assert(source.includes('coverScripture.style.opacity=String(signature)'),'scripture follows existing masthead reveal without a new effect');
+assert(css.includes('.dual-cover{--ws-vol00-wall-start:13.125%;'),'protect the original city-wall top exactly');
+assert(css.includes('.dual-cover__city{position:absolute;z-index:2;top:var(--ws-vol00-wall-start);bottom:0;'),'protect the original city-wall lower edge');
+assert(!css.includes('--ws-vol00-wall-start:23.125%')&&!css.includes('bottom:-10%'),'no mobile castle displacement');
+assert(css.includes('font:400 clamp(52px,12.2cqi,60px)/.96 var(--ws-type-display-en'),'original English feature headline remains entirely unchanged');
+assert(css.includes('font:var(--ws-weight-section,900) clamp(13px,3.65cqi,17px)/1.15 var(--ws-type-display-zh'),'Chinese feature headline uses Design OS 900');
+
 assert.equal((source.match(/class="dual-entry"/g)||[]).length,12,'all original desks remain');
 assert.equal((source.match(/class="dual-movement"/g)||[]).length,4);
 assert.equal((source.match(/class="dual-work/g)||[]).length,11,'do not invent article titles');
