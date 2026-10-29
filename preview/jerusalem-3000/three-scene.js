@@ -191,6 +191,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     evidenceProjection = null;
   renderer.localClippingEnabled=true;
   const constructionPresentation=createCityConstructionPresentation({root,getRecord:id=>cityCoreRuntime?.core.get(id)}),phaseDissolve=createPhaseDissolveView(mount);
+  let landmarkLabelsEnabled=true;
+  const landmarkView=createSharedPlaceView(mount,{anchors:()=>[]},{credit:false,ariaLabel:'當期已顯示地標量體（示意）',className:'j3k-landmark-references',maxLabels:w=>w<600?3:6});
   let regionalLandforms=null,regionalData=null,herodianScaleReport=null;
   let metricHellenisticRegistration=null;
   let housingBoundaryAdmission=null;
@@ -687,9 +689,10 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         royalRelief?.project(camera);
         const placeBoxes=sharedPlaceView?.project(camera)||[];
         const geographyBoxes=regionalLandforms?.project(camera,placeBoxes)||placeBoxes;
-        wallGateView?.project(camera,geographyBoxes);
+        const gateBoxes=wallGateView?.project(camera,geographyBoxes)||geographyBoxes;
         const phaseIndex=Math.floor(timelinePosition),fraction=(playbackDisplayPosition??timelinePosition)-phaseIndex,phaseReady=!isSharedGenerationPhase(currentPhaseId)||sharedEraRuntime?.status==='ready';
         if(currentPhaseId)constructionPresentation.apply({phaseId:currentPhaseId,phaseIndex,position:playbackDisplayPosition??timelinePosition,active:playbackPresentation,ruin:['babylonian-destruction','roman-destruction'].includes(currentPhaseId)});
+        landmarkView.setAnchors(constructionPresentation.landmarks());landmarkView.setVisible(landmarkLabelsEnabled);landmarkView.project(camera,gateBoxes);
         phaseDissolve.before({phaseId:currentPhaseId,index:phaseIndex,fraction,active:playbackPresentation,ready:phaseReady});
         renderer.render(scene, camera);
         phaseDissolve.after(renderer.domElement,{phaseId:currentPhaseId,fraction,ready:phaseReady&&playbackPresentation});
@@ -729,6 +732,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),
             cityWorld:persistentCityWorld?.diagnostics(),
             constructionPresentation:constructionPresentation.diagnostics(),
+            landmarks:{phase:currentPhaseId,...landmarkView.diagnostics(),visibleModelAnchors:constructionPresentation.landmarks(),historicalGeometryAccepted:false},
             phaseDissolve:phaseDissolve.diagnostics(),
             geographicReferences:sharedPlaceView?.diagnostics(),
             urbanFabric: {
@@ -808,6 +812,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     inspectMetricResidentialPolicy(){return {phase:currentPhaseId,policy:metricResidentialPolicy(currentPhaseId),phaseCoverage:[...METRIC_RESIDENTIAL_PHASES],terrainOrigin:terrainRuntime.grid.origin,terrainScale:terrainRuntime.mesh.scale.toArray(),rootScale:root.scale.toArray(),densityHistoricallyVerified:false};},
     inspectHousingBoundary(options){return housingBoundaryAdmission?.snapshot(options);},
     inspectOverviewBaseline(){let meshes=0,modules=0,gridMeshes=0;const ids=new Set(),subdivisions=new Set(),planForms={};root.traverse(m=>{if(!m.isMesh||!m.userData.overview)return;for(let p=m;p;p=p.parent)if(!p.visible)return;meshes++;const form=m.geometry.userData.planForm||'unspecified';planForms[form]=(planForms[form]||0)+1;modules+=m.geometry.userData.visualModules||1;if(m.geometry.userData.worldGrid===true)gridMeshes++;subdivisions.add(m.geometry.userData.subdivision||'unspecified');ids.add(m.userData.cityObject?.objectId||m.userData.cityObject?.parcelId);});return {phase:currentPhaseId,grammar:'terrain-courtyard-mass-v1',mode:'city-overview',residentialProfile:residentialEraProfile(currentPhaseId),planForms,meshes,registeredHousingObjects:ids.size,visualModules:modules,subdivisions:[...subdivisions].sort(),worldGridMeshes:gridMeshes,moduleCountsAreHistoricalBuildings:false,detailWork:'paused',historicalFoundationAccepted:false};},
+    setLandmarkLabels(enabled){landmarkLabelsEnabled=Boolean(enabled);landmarkView.setVisible(landmarkLabelsEnabled);needsFrame=true;return landmarkLabelsEnabled;},
     inspectSharedPlaces(){return currentPhaseId?sharedPlaces?.snapshot({phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode})??null:null;},
     sharedPlaceTransitions(){return sharedPlaces?.transitions()??[];},
     inspectPersistentCityPhase(phase){return persistentCityWorld?.inspectPhase(phase)??null;},
@@ -910,7 +915,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       wallCredit?.remove();
       wallGateView?.dispose();
       defenseTimeline?.dispose();wallReferenceModel?.dispose();
-      sharedPlaceView?.dispose();
+      sharedPlaceView?.dispose();landmarkView.dispose();
       regionalLandforms?.dispose();
       terrainPresentation?.dispose();
       terrainRuntime?.dispose?.();

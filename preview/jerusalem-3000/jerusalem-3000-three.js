@@ -312,6 +312,7 @@ try {
   }
   const pace=document.createElement('label');pace.className='j3k-playback-pace';pace.textContent='播放速度 ';const speed=document.createElement('select');speed.setAttribute('aria-label','每期播放時間');for(const [seconds,label]of [[24,'慢速 · 24秒／期'],[12,'標準 · 12秒／期'],[6,'快速 · 6秒／期']]){const option=document.createElement('option');option.value=String(seconds);option.textContent=label;option.selected=seconds===12;speed.append(option);}pace.append(speed);play.before(pace);
   baselineInfo=document.createElement('p');baselineInfo.className='j3k-overview-baseline';document.querySelector('.j3k-time').append(baselineInfo);const compare=document.createElement('button');baselineCompare=compare;compare.type='button';compare.textContent='統一尺度比較';compare.setAttribute('aria-pressed','false');document.querySelector('.j3k-time-head').append(compare);compare.addEventListener('click',()=>{const active=terrainButton.getAttribute('aria-pressed')!=='true';terrainOverview(active);});
+  const landmarkToggle=document.createElement('button');landmarkToggle.type='button';landmarkToggle.textContent='地標標示';landmarkToggle.setAttribute('aria-pressed','true');document.querySelector('.j3k-event-controls').append(landmarkToggle);landmarkToggle.addEventListener('click',()=>landmarkToggle.setAttribute('aria-pressed',String(three.setLandmarkLabels(landmarkToggle.getAttribute('aria-pressed')!=='true'))));
   let raf = 0,
     last = 0, waitingForCity=false,playbackPosition=Number(slider.value);
   function stop() {

@@ -1126,7 +1126,15 @@
       "footprintMetres": null,
       "heightMetres": null,
       "geometryAccepted": false,
-      "existingRuntimeIds": [],
+      "existingRuntimeIds": [
+        "j3k:byzantine:independent:monument:holy-sepulchre-context",
+        "j3k:early-islamic:independent:monument:holy-sepulchre-context",
+        "j3k:crusader:independent:monument:holy-sepulchre-context",
+        "j3k:ayyubid-mamluk:independent:monument:holy-sepulchre-context",
+        "j3k:ottoman:independent:monument:holy-sepulchre-context",
+        "j3k:outside-walls:independent:monument:holy-sepulchre-context",
+        "j3k:modern:independent:monument:holy-sepulchre-context"
+      ],
       "existingRuntimeIsApprovedReconstruction": false,
       "notes": "335、614、1009、1048、1149及後期修復逐段核對，不從每一期清零重建。",
       "requiredBeforeModel": [
@@ -1246,7 +1254,14 @@
       "footprintMetres": null,
       "heightMetres": null,
       "geometryAccepted": false,
-      "existingRuntimeIds": [],
+      "existingRuntimeIds": [
+        "j3k:early-islamic:independent:monument:rock-sanctuary-context",
+        "j3k:crusader:independent:monument:rock-sanctuary-context",
+        "j3k:ayyubid-mamluk:independent:monument:rock-sanctuary-context",
+        "j3k:ottoman:independent:monument:rock-sanctuary-context",
+        "j3k:outside-walls:independent:monument:rock-sanctuary-context",
+        "j3k:modern:independent:monument:rock-sanctuary-context"
+      ],
       "existingRuntimeIsApprovedReconstruction": false,
       "notes": "與前代猶太聖殿是同區域不同建築；不建立未經證實的原構件繼承。",
       "requiredBeforeModel": [

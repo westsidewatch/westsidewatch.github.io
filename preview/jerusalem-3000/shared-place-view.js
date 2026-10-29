@@ -1,17 +1,26 @@
 import * as THREE from 'three';
 // Persistent geographic references, not building meshes or historical footprints.
-export function createSharedPlaceView(mount,places,{credit=true}={}){
- const layer=document.createElement('div');layer.className='j3k-place-references';layer.hidden=true;layer.setAttribute('aria-label','各時代共用地理參照（概略位置）');
+export function createSharedPlaceView(mount,places,{credit=true,ariaLabel='各時代共用地理參照（概略位置）',className='',maxLabels=null}={}){
+ const layer=document.createElement('div');layer.className='j3k-place-references'+(className?' '+className:'');layer.hidden=true;layer.setAttribute('aria-label',ariaLabel);
  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('aria-hidden','true');layer.append(svg);
- const entries=places.anchors().map((anchor,index)=>{
+ let entries=[];
+ function setAnchors(anchors){
+  const previous=new Map(entries.map(e=>[e.anchor.id,e]));
+  entries=anchors.map((anchor,index)=>{
+  const existing=previous.get(anchor.id);if(existing){previous.delete(anchor.id);existing.anchor=anchor;if(existing.label.textContent!==anchor.label)existing.label.textContent=anchor.label;if(anchor.description&&existing.label.title!==anchor.description)existing.label.title=anchor.description;return existing;}
   const label=document.createElement('span');label.textContent=anchor.label;label.dataset.placeId=anchor.id;label.title=anchor.description||'概略地理參照，不代表當期建築或古地表';
   const line=document.createElementNS(svg.namespaceURI,'line'),dot=document.createElementNS(svg.namespaceURI,'circle');dot.setAttribute('r','2.5');svg.append(line,dot);layer.append(label);return {anchor,label,line,dot,index};
- });if(credit){const note=document.createElement('small');note.className='j3k-place-credit';note.textContent='概略地理參照 · © OpenStreetMap contributors · ODbL';layer.append(note);}mount.append(layer);let visible=false;
+ });
+ for(const e of previous.values()){e.label.remove();e.line.remove();e.dot.remove();}
+ }
+ setAnchors(places.anchors());if(credit){const note=document.createElement('small');note.className='j3k-place-credit';note.textContent='概略地理參照 · © OpenStreetMap contributors · ODbL';layer.append(note);}mount.append(layer);let visible=false;
  return {
+  setAnchors,
   setVisible(value){visible=Boolean(value);layer.hidden=!visible;},
   project(camera,occupied=[]){if(!visible)return occupied;const w=mount.clientWidth,h=mount.clientHeight,boxes=[...occupied],bounds=mount.getBoundingClientRect(),caption=mount.parentElement.querySelector('.j3k-caption')?.getBoundingClientRect();svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+   let painted=0;const limit=maxLabels?maxLabels(w):Infinity;
    for(const {anchor,label,line,dot,index} of entries){
-    const q=new THREE.Vector3(anchor.x,anchor.y+3,anchor.z).project(camera),clipped=q.z< -1||q.z>1||Math.abs(q.x)>.98||Math.abs(q.y)>.98;
+    const q=new THREE.Vector3(anchor.x,anchor.y+3,anchor.z).project(camera),clipped=painted>=limit||q.z< -1||q.z>1||Math.abs(q.x)>.98||Math.abs(q.y)>.98;
     label.hidden=clipped;line.style.display=dot.style.display=clipped?'none':'';if(clipped)continue;
     const x=(q.x+1)*w/2,y=(1-q.y)*h/2,lw=label.offsetWidth,lh=label.offsetHeight;
     // Try both sides of the anchor and several rows; reserve the real controls
@@ -25,12 +34,12 @@ export function createSharedPlaceView(mount,places,{credit=true}={}){
      if(!overlap)candidates.push({left,top,score:Math.hypot(left+lw/2-x,top+lh/2-y)});
     }
     candidates.sort((a,b)=>a.score-b.score);if(!candidates.length){label.hidden=true;line.style.display=dot.style.display='none';continue;}const {left,top}=candidates[0];
-    boxes.push({left,right:left+lw,top,bottom:top+lh});label.style.left=`${left}px`;label.style.top=`${top}px`;
+    painted++;boxes.push({left,right:left+lw,top,bottom:top+lh});label.style.left=`${left}px`;label.style.top=`${top}px`;
     line.setAttribute('x1',x);line.setAttribute('y1',y);line.setAttribute('x2',Math.max(left,Math.min(left+lw,x)));line.setAttribute('y2',top+lh/2);dot.setAttribute('cx',x);dot.setAttribute('cy',y);
    }
    return boxes;
   },
-  diagnostics(){return {enabled:visible,anchorIds:entries.map(e=>e.anchor.id),semanticCityObjects:false};},
+  diagnostics(){return {enabled:visible,anchorIds:entries.map(e=>e.anchor.id),labelledIds:visible?entries.filter(e=>!e.label.hidden).map(e=>e.anchor.id):[],semanticCityObjects:false};},
   dispose(){layer.remove();}
  };
 }

@@ -1,10 +1,10 @@
 name: Jerusalem 3000 Runtime
 on:
   pull_request:
-    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', 'scripts/audit_jerusalem_3000_foundation_gaps.mjs', 'scripts/jerusalem3000_ingest_dem30.py', 'scripts/ingest_jerusalem_3000_wall_reference.py', 'scripts/ingest_jerusalem_3000_core_reference.py', 'scripts/lib/jerusalem-foundation-gap-audit.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
+    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', 'scripts/audit_jerusalem_3000_foundation_gaps.mjs', 'scripts/audit_jerusalem_3000_landmark_execution.mjs', 'scripts/jerusalem3000_ingest_dem30.py', 'scripts/ingest_jerusalem_3000_wall_reference.py', 'scripts/ingest_jerusalem_3000_core_reference.py', 'scripts/lib/jerusalem-foundation-gap-audit.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
   push:
     branches: [main]
-    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', 'scripts/audit_jerusalem_3000_foundation_gaps.mjs', 'scripts/jerusalem3000_ingest_dem30.py', 'scripts/ingest_jerusalem_3000_wall_reference.py', 'scripts/ingest_jerusalem_3000_core_reference.py', 'scripts/lib/jerusalem-foundation-gap-audit.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
+    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', 'scripts/audit_jerusalem_3000_foundation_gaps.mjs', 'scripts/audit_jerusalem_3000_landmark_execution.mjs', 'scripts/jerusalem3000_ingest_dem30.py', 'scripts/ingest_jerusalem_3000_wall_reference.py', 'scripts/ingest_jerusalem_3000_core_reference.py', 'scripts/lib/jerusalem-foundation-gap-audit.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
 permissions:
   contents: read
 jobs:
@@ -76,6 +76,7 @@ jobs:
           node scripts/verify_jerusalem_3000_browser.mjs
           node scripts/verify_jerusalem_3000_medieval_browser.mjs
           node scripts/verify_jerusalem_3000_overview_browser.mjs
+          node scripts/audit_jerusalem_3000_landmark_execution.mjs --report work/j3k-validation/overview-proof.json --render-commit "$GITHUB_SHA" --out work/j3k-validation/landmark-execution-audit
           node scripts/verify_jerusalem_3000_playback_browser.mjs
           node scripts/verify_jerusalem_3000_transition_browser.mjs
           node scripts/verify_jerusalem_3000_defense_browser.mjs
