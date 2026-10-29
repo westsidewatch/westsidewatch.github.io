@@ -62,11 +62,11 @@
  rail.addEventListener('pointerup',()=>{pointer=null});rail.addEventListener('pointercancel',()=>{pointer=null});
  selectBook(40,false);
  requestAnimationFrame(()=>centerRailBook(rail.querySelector('[data-book="40"]'),'instant'));
- // Traverse the entire original 241-plate Doré catalog, beginning with the
- // eight city/wall images already art-directed for Vol.00. The right page is
- // an independent engraving library, not an invented illustration of a book.
- const registry=window.ONE_DORE_COVER_REGISTRY,highlights=[10,13,48,64,115,123,127,241];
- const ids=[...highlights,...Array.from({length:241},(_,i)=>i+1).filter(id=>!highlights.includes(id))];
+ // Once the Magazine's city/wall plate has arrived on the right, switch
+ // to the canonical 241-plate library in original catalogue order. The right
+ // field never invents book-specific images or reuses the city-only shortlist.
+ const registry=window.ONE_DORE_COVER_REGISTRY;
+ const ids=Array.from({length:241},(_,i)=>i+1);
  const plates=ids.map(id=>({id,file:registry?.files?.[id],title:registry?.titles?.[id]||String(registry?.files?.[id]||'').replace(/^\d+[A-Z]?\./,'').replace(/\.[^.]+$/,'')}));
  if(plates.length!==241||plates.some(p=>!p.file))throw Error('Shared Doré 241-plate inventory is incomplete');
  const plateEls=[$('#em-plate-a'),$('#em-plate-b')];let galleryIndex=0,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0;
@@ -126,48 +126,69 @@
   else if(legacyDistance<=churchEnd){const scene=legacyDistance<=1.8?.1+legacyDistance*(.4/1.8):.5+(legacyDistance-1.8);legacy=scene/2.9;}
   else{const scene=2.37+(legacyDistance-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);legacy=scene<=2.9?.75*scene/2.9:.75+.25*(scene-2.9)/1.1;}
   if(frameLoaded)base.contentWindow?.postMessage({type:'westside-p2-scroll',progress:clamp(legacy),active:distance<6.6},location.origin);
-  const emIn=smooth((distance-6.50)/.90),oliveIn=smooth((distance-8.64)/1.38);
-  // MERSI-style spatial grammar: opposing image masks and an actual moving
-  // shared image frame, not opacity crossfades or a whole-page curtain.
-  // All geometry is a pure function of ONE scroll distance: reverse instantly
-  // restores the exact same layout and stopping scroll stops every panel.
-  const emShowing=emIn>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
-  emmaus.style.visibility=emShowing?'visible':'hidden';emmaus.style.opacity='1';emmaus.style.transform='none';
-  const emInteractive=emIn>.999&&oliveIn<.01;
+  // One MERSI scroll timeline, not one page replacing another:
+  // 02 Magazine engraving LEFT physically travels to Emmaus RIGHT.
+  // The full 241-plate archive takes over silently only on arrival.
+  // ONE falls open TOP -> BOTTOM afterwards. The composed spread fills
+  // the frame only after both material fields are established.
+  const move=smooth((distance-6.50)/.90);
+  const archive=smooth((distance-7.40)/.28);
+  const oneDrop=smooth((distance-7.66)/.78);
+  const expand=smooth((distance-8.44)/.48);
+  const oliveIn=smooth((distance-9.44)/1.38);
+  const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
+  emmaus.style.visibility=emShowing?'visible':'hidden';
+  emmaus.style.opacity='1';
+  emmaus.style.transform='scale('+(0.945+0.055*expand).toFixed(5)+')';
+  const emInteractive=oneDrop>.999&&expand>.999&&oliveIn<.01;
   emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
-  // The original Magazine is a two-page spread. Its existing gutter shifts
-  // toward Emmaus's 2/3 : 1/3 proportions while opposite vertical masks
-  // reveal Bible and engraving; the Magazine is visible only in the gaps.
-  if(innerWidth>820){const left=50+emIn*(100/6);emmaus.style.gridTemplateColumns=left.toFixed(3)+'% '+(100-left).toFixed(3)+'%';}
-  else emmaus.style.gridTemplateColumns='';
-  emLeft.style.clipPath='inset('+((1-emIn)*100).toFixed(3)+'% 0 0 0)';
-  emRight.style.clipPath='inset(0 0 '+((1-emIn)*100).toFixed(3)+'% 0)';
-  olive.style.visibility=oliveShowing?'visible':'hidden';olive.style.opacity='1';olive.style.clipPath='none';
+
+  // The image FRAME starts over the exact Magazine left half; there are
+  // no off-screen translation, whole-page wipe, or independent flying cards.
+  emRight.style.left=(move*66.666667).toFixed(4)+'%';
+  emRight.style.width=(50-move*16.666667).toFixed(4)+'%';
+  emRight.style.clipPath='none';
+  emLeft.style.clipPath='inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
+  const sourceFrame=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
+  const sourceDoc=sourceFrame?.contentDocument;
+  const sourceTile=sourceDoc?.getElementById('dual-contents');
+  const sourceImg=sourceDoc?.querySelector('.dual-dore-plate__image.is-active');
+  const handoff=$('#em-handoff-photo');
+  if(sourceImg?.currentSrc&&handoff.dataset.originalSrc!==sourceImg.currentSrc&&distance<7.45){
+   handoff.src=sourceImg.currentSrc;handoff.dataset.originalSrc=sourceImg.currentSrc;
+  }
+  if(!handoff.src&&sourceImg?.src)handoff.src=sourceImg.src;
+  // Retire only the source image field within the isolated preview iframe,
+  // so the photographed plate does not appear twice during its actual travel.
+  // This never writes to the published Magazine files.
+  if(sourceTile)sourceTile.style.setProperty('opacity',String(1-smooth(move/.22)),'important');
+  syncGallery(move>.98&&oliveIn<.001&&document.visibilityState==='visible');
+  const archiveReady=plateEls.some(img=>img.classList.contains('is-active'));
+  handoff.style.opacity=String(archiveReady?1-archive:1);
+  const galleryOpacity=archiveReady?archive:0;
+  emPlates.style.opacity=String(galleryOpacity*(1-smooth(oliveIn/.32)));
+
+  olive.style.visibility=oliveShowing?'visible':'hidden';
+  olive.style.opacity='1';olive.style.clipPath='none';
   olive.style.backgroundColor=oliveIn>=.999?'#f0eee7':'transparent';
   olive.style.pointerEvents=oliveIn>.999?'auto':'none';olive.inert=oliveIn<=.999;olive.setAttribute('aria-hidden',oliveIn>.999?'false':'true');
   if(oliveShowing&&!handoffSourceLocked){
-   handoffImage.src=plateEls[activeSlot]?.src||imgUrl(plates[galleryIndex]);
+   handoffImage.src=plateEls[activeSlot]?.src||handoff.src||imgUrl(plates[galleryIndex]);
    handoffSourceLocked=true;
   }else if(!oliveShowing)handoffSourceLocked=false;
-  // Transform the right-hand Doré field physically into Olive's upper-left
-  // portrait field, the same FLIP-style source/target rectangle relationship
-  // described by FLOT NOIR. The artwork changes inside the travelling frame.
+  // 03 -> 04 retains the shared image-frame transformation, not a new page.
   const sx=emRight.offsetWidth/Math.max(1,oliveHero.offsetWidth),sy=emRight.offsetHeight/Math.max(1,oliveHero.offsetHeight);
   const tx=emRight.offsetLeft-oliveHero.offsetLeft,ty=emRight.offsetTop-oliveHero.offsetTop;
   const travel=1-oliveIn;
   oliveHero.style.transform='translate3d('+(tx*travel).toFixed(2)+'px,'+(ty*travel).toFixed(2)+'px,0) scale('+(1+(sx-1)*travel).toFixed(5)+','+(1+(sy-1)*travel).toFixed(5)+')';
   handoffPlate.style.opacity=String(1-smooth((oliveIn-.18)/.57));
   heroFolio.style.opacity=String(smooth((oliveIn-.65)/.35));
-  emPlates.style.opacity=String(1-smooth(oliveIn/.32));
-  // Four editorial fields enter at different rates and in opposing directions;
-  // no full-screen Olive mask ever replaces the Emmaus scene as one piece.
   const editorial=smooth(oliveIn/.90),register=smooth((oliveIn-.12)/.76),windowReveal=smooth((oliveIn-.34)/.66);
   oliveEditorial.style.clipPath='inset(0 '+((1-editorial)*100).toFixed(3)+'% 0 0)';
   oliveRegister.style.clipPath='inset('+((1-register)*100).toFixed(3)+'% 0 0 0)';
   oliveWindow.style.clipPath='inset(0 0 '+((1-windowReveal)*100).toFixed(3)+'% 0)';
   $('.olive-proof__folio').style.opacity=String(smooth((oliveIn-.8)/.2));
-  const emActive=emIn>.02&&oliveIn<.001&&document.visibilityState==='visible';syncGallery(emActive);
-  const section=distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.4?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
+  const section=distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.44?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
   seek.value=String(distance/12*100);percent.textContent=(distance/12*100).toFixed(0)+'%';lastPaint=distance;
  }
