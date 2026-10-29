@@ -32,7 +32,7 @@ const {chromium}=require('playwright');
   for(const viewport of [{width:1648,height:928},{width:390,height:844}]){
    const page=await browser.newPage({viewport});
    page.on('pageerror',error=>errors.push(error.message));
-   await page.goto('http://127.0.0.1:4173/experiments/p2-emmaus-olive-handoff-lab.html?d=8.90',{waitUntil:'domcontentloaded',timeout:45000});
+   await page.goto('http://127.0.0.1:4173/experiments/p2-emmaus-olive-handoff-lab.html?d=9.10',{waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForTimeout(550);
    assert.equal(await page.locator('.emmaus__number').count(),66,'all 66 ONE books have selectable numbers');
    assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false','Emmaus visible in its reading dwell');
