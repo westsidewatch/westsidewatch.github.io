@@ -272,7 +272,10 @@
 
   const editorial=smooth((oliveIn-.60)/.38),register=smooth((oliveIn-.70)/.29),windowReveal=smooth((oliveIn-.74)/.25);
   oliveBottom.style.opacity=String(smooth((oliveIn-.69)/.30));
-  oliveEditorial.style.clipPath='inset(0 '+((1-editorial)*100).toFixed(3)+'% 0 0)';
+  // Olive editorial is revealed in the exact area vacated by the moving
+  // engraved panel, from RIGHT to LEFT, not as a new page wipe.
+  // The left edge of this crop tracks the same MERSI morph progress.
+  oliveEditorial.style.clipPath='inset(0 0 0 '+((1-morphMove)*100).toFixed(3)+'%)';
   oliveRegister.style.clipPath='inset('+((1-register)*100).toFixed(3)+'% 0 0 0)';
   oliveWindow.style.clipPath='inset(0 0 '+((1-windowReveal)*100).toFixed(3)+'% 0)';
   $('.olive-proof__folio').style.opacity=String(smooth((oliveIn-.83)/.16));
