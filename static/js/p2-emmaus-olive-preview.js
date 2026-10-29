@@ -118,7 +118,10 @@
  const ids=Array.from({length:241},(_,i)=>i+1);
  const plates=ids.map(id=>({id,file:registry?.files?.[id],title:registry?.titles?.[id]||String(registry?.files?.[id]||'').replace(/^\d+[A-Z]?\./,'').replace(/\.[^.]+$/,'')}));
  if(plates.length!==241||plates.some(p=>!p.file))throw Error('Shared Doré 241-plate inventory is incomplete');
- const plateEls=[$('#em-plate-a'),$('#em-plate-b')];let galleryIndex=0,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0,galleryPrefetch=false;
+ const plateEls=[$('#em-plate-a'),$('#em-plate-b')];// Original Doré Emmaus plate is #212 in the SAME canonical 241-plate index.
+ // This is the first image in the full circular rotation, not a separate
+ // thematic shortlist or inserted substitute plate.
+ let galleryIndex=211,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0,galleryPrefetch=false;
  const imgUrl=plate=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(plate.file)+'?width=1200';
  async function showPlate(index){
   const ticket=++plateVersion,plate=plates[index%plates.length],slot=1-activeSlot,img=plateEls[slot];
