@@ -7,6 +7,16 @@ const js=fs.readFileSync(path.join(root,'static/js/p2-emmaus-olive-preview.js'),
 const css=fs.readFileSync(path.join(root,'static/css/p2-emmaus-olive-preview.css'),'utf8');
 assert.match(html,/p2\/living-water\.html\?embed=1/,'reuses approved P2 Church/Magazine source');
 assert.match(html,/one\/one-data\.js/,'reads the canonical 66-book inventory');
+assert.match(html,/one\/luke-21-24\.js/,'features the original Luke 24 ONE study content');
+assert.match(html,/p2-emmaus-scroll-micro-engraving\.svg/,'Emmaus has its own local editable engraved scroll study');
+assert.equal((html.match(/class="emmaus__folio-layer"/g)||[]).length,7,'seven inherited OS-colored folio edges');
+assert.match(js,/ONE_DATA\?\.luke\?\.chapterStudies\?\.\['24'\]/,'chapter text comes from canonical ONE, never invented copy');
+assert.match(js,/oneDrop-i\*\.058/,'sevenfold motion shares the existing P2 scroll owner');
+assert.match(css,/var\(--ws-type-reading-zh\)/,'Emmaus tool preview binds OS Chinese reading font');
+const oneBookCSS=fs.readFileSync(path.join(root,'static/one/one-book.css'),'utf8');
+assert.match(oneBookCSS,/ONE ↔ Westside Design OS \/ scoped typography normalization candidate/,'ONE tool receives scoped typography migration');
+assert.match(oneBookCSS,/--one-body-size:var\(--ws-type-scale-reading\)/,'ONE reading size consumes OS role rather than a competing type scale');
+
 assert.match(html,/olive\/components\/speaker-baseline-v1\/baseline\.js/,'reuses protected speaker name component');
 assert.match(html,/one\/one-dore-assets-241\.js/,'reuses original engraved archive');
 assert.match(js,/books\.length!==66/,'guards the full canonical book count');
@@ -44,7 +54,17 @@ const {chromium}=require('playwright');
    await page.waitForTimeout(550);
    assert.equal(await page.locator('.emmaus__number').count(),66,'all 66 ONE books have selectable numbers');
    assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false','Emmaus visible in its reading dwell');
-   assert.equal(await page.locator('#em-book-en').textContent(),'Matthew');
+   assert.equal(await page.locator('#em-book-en').textContent(),'Luke');
+   assert.equal(await page.locator('.emmaus__folio-layer').count(),7);
+   assert.match(await page.locator('#emmaus-study-heading').textContent(),/復活/);
+   assert.equal(await page.locator('#em-study-route li').count(),3);
+   assert.equal(await page.locator('#emmaus').getAttribute('data-study-view'),'background');
+   await page.locator('#em-tab-connections').click();
+   assert.equal(await page.locator('#emmaus').getAttribute('data-study-view'),'connections');
+   assert.match(await page.locator('#em-study-detail').textContent(),/詩篇 16:10/);
+   await page.locator('#em-tab-questions').click();
+   assert.match(await page.locator('#em-study-detail').textContent(),/以馬忤斯/);
+   await page.locator('#em-tab-background').click();
    await page.locator('[data-book="41"]').evaluate(element=>element.click());
    assert.equal(await page.locator('#em-book-en').textContent(),'Mark','book selection changes live spread');
    assert.match(await page.locator('#emmaus-enter').getAttribute('href'),/book=41&chapter=1/,'selected volume opens the actual ONE chapter, not the default homepage');
@@ -85,6 +105,11 @@ const {chromium}=require('playwright');
    const stageRect=await page.locator('#proof-stage').boundingBox();
    assert(emmausRect && stageRect && Math.abs(emmausRect.width-stageRect.width/3)<3,
     'Emmaus finishes at the agreed two-thirds to one-third ratio');
+   const studyBounds=await page.locator('#emmaus-study').boundingBox();
+   assert(studyBounds&&studyBounds.height>=140&&studyBounds.height<stageRect.height*.55,
+    'ONE has a substantial but bounded study area between the Emmaus title and the book index');
+   const controlsSize=await page.locator('#em-tab-background').evaluate(el=>getComputedStyle(el).fontSize);
+   assert(parseFloat(controlsSize)>=12,'ONE tool controls remain readable when shown on P2');
    const emmausScreenshot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-emmaus-held.png');
    await page.screenshot({path:emmausScreenshot});
    await page.locator('[data-jump="10.05"]').click();await page.waitForTimeout(150);
