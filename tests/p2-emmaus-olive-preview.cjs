@@ -48,6 +48,22 @@ const {chromium}=require('playwright');
    await page.locator('#emmaus-rail').hover();await page.mouse.wheel(0,500);await page.waitForTimeout(300);
    const after=await page.evaluate(()=>scrollY);
    assert(after>before,'vertical wheel on the book rail advances P2 instead of trapping inside ONE');
+   // Verify one physical engraving moves out of and back into the already
+   // published Magazine iframe, without an inserted second picture.
+   await page.evaluate(()=>{
+    const el=document.getElementById('proof-track');
+    scrollTo({top:el.getBoundingClientRect().top+scrollY+7.0*innerHeight,behavior:'instant'});
+   });
+   await page.waitForTimeout(350);
+   assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),1,
+    'the actual magazine engraving is adopted into the shared P2 stage');
+   const transferShot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-magazine-plate-transfer.png');
+   fs.mkdirSync(path.dirname(transferShot),{recursive:true});
+   await page.screenshot({path:transferShot});
+   await page.locator('[data-jump="6.50"]').click();
+   await page.waitForTimeout(200);
+   assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),0,
+    'reverse scrolling restores the engraving to its original magazine document');
    await page.locator('[data-jump="10.05"]').click();await page.waitForTimeout(150);
    assert.equal(await page.locator('#olive-proof').evaluate(el=>getComputedStyle(el).opacity),'1','Olive separate fields remain opaque while the earlier spread persists');
    assert.equal(await page.locator('#emmaus').evaluate(el=>getComputedStyle(el).visibility),'visible','Emmaus remains on stage while its pieces become Olive');
