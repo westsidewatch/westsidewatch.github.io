@@ -10,6 +10,7 @@ assert.match(html,/one\/one-data\.js/,'reads the canonical 66-book inventory');
 assert.match(html,/olive\/components\/speaker-baseline-v1\/baseline\.js/,'reuses protected speaker name component');
 assert.match(html,/one\/one-dore-assets-241\.js/,'reuses original engraved archive');
 assert.match(js,/books\.length!==66/,'guards the full canonical book count');
+assert.match(js,/plates\.length!==241/,'right page rotates the entire canonical Doré library, after the art-directed opening plates');
 assert.match(js,/Math\.min\(distance,6\.5\)/,'does not stretch the approved Church/Magazine timing');
 assert.match(js,/const emIn=.*6\.50.*oliveIn=.*8\.64/,'both stages share a reversible scroll timeline');
 assert.match(js,/const roster=\[/,'uses fixed factual speaker assets');

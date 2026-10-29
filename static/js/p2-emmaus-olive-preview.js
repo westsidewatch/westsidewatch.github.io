@@ -62,11 +62,13 @@
  rail.addEventListener('pointerup',()=>{pointer=null});rail.addEventListener('pointercancel',()=>{pointer=null});
  selectBook(40,false);
  requestAnimationFrame(()=>centerRailBook(rail.querySelector('[data-book="40"]'),'instant'));
- // Use exactly the original 241-plate Doré asset registry and the approved
- // P2 city/castle selection. Do not pretend an image depicts an unrelated book.
- const registry=window.ONE_DORE_COVER_REGISTRY,ids=[10,13,48,64,115,123,127,241];
+ // Traverse the entire original 241-plate Doré catalog, beginning with the
+ // eight city/wall images already art-directed for Vol.00. The right page is
+ // an independent engraving library, not an invented illustration of a book.
+ const registry=window.ONE_DORE_COVER_REGISTRY,highlights=[10,13,48,64,115,123,127,241];
+ const ids=[...highlights,...Array.from({length:241},(_,i)=>i+1).filter(id=>!highlights.includes(id))];
  const plates=ids.map(id=>({id,file:registry?.files?.[id],title:registry?.titles?.[id]||String(registry?.files?.[id]||'').replace(/^\d+[A-Z]?\./,'').replace(/\.[^.]+$/,'')}));
- if(plates.some(p=>!p.file))throw Error('Shared Doré source inventory is incomplete');
+ if(plates.length!==241||plates.some(p=>!p.file))throw Error('Shared Doré 241-plate inventory is incomplete');
  const plateEls=[$('#em-plate-a'),$('#em-plate-b')];let galleryIndex=0,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0;
  const imgUrl=plate=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(plate.file)+'?width=1200';
  async function showPlate(index){
@@ -75,7 +77,8 @@
    img.onload=()=>resolve(true);img.onerror=()=>resolve(false);img.src=imgUrl(plate);
    if(img.complete&&img.naturalWidth>0)resolve(true);
   });
-  if(!ok||ticket!==plateVersion)return;
+  if(ticket!==plateVersion)return;
+  if(!ok){galleryIndex=index%plates.length;return;}// A missing Commons file never permanently blocks the rest of the collection.
   plateEls[activeSlot].classList.remove('is-active');img.classList.remove('is-active');void img.offsetHeight;img.classList.add('is-active');
   activeSlot=slot;galleryIndex=index%plates.length;
   $('#em-plate-title').textContent='DORÉ / '+plate.title.toUpperCase();
