@@ -94,6 +94,8 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).transform),'none','no overscaled speaker poster flies into frame');
    assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).opacity),'0',
     'Olive portrait does not appear before the travelling engraving reaches its slot');
+   assert(Number(await page.locator('.olive-proof__editorial').evaluate(el=>getComputedStyle(el).opacity))<.01,
+    '82%: no premature blank white Olive editorial slab masks the previous ONE page');
    assert(Number(await page.locator('.olive-proof__kicker').evaluate(el=>getComputedStyle(el).opacity))<.15,
     '82%: do not pre-reveal Olive until the ONE/photo reflow begins');
    assert.equal(await page.locator('.olive-proof__bottom').evaluate(el=>getComputedStyle(el).opacity),'0',
