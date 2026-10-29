@@ -35,6 +35,8 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#em-book-en').textContent(),'Matthew');
    await page.locator('[data-book="41"]').evaluate(element=>element.click());
    assert.equal(await page.locator('#em-book-en').textContent(),'Mark','book selection changes live spread');
+   assert.match(await page.locator('#emmaus-enter').getAttribute('href'),/book=41&chapter=1/,'selected volume opens the actual ONE chapter, not the default homepage');
+   assert.match(await page.locator('#em-plate-selection').textContent(),/BOOK 41 \/ MARK/,'the selected book is carried into the right Doré editorial margin');
    const before=await page.evaluate(()=>scrollY);
    await page.locator('#emmaus-rail').hover();await page.mouse.wheel(0,500);await page.waitForTimeout(300);
    const after=await page.evaluate(()=>scrollY);

@@ -26,6 +26,8 @@
   bookNum.textContent='BOOK '+String(number).padStart(2,'0');
   bookPart.textContent=number<=39?'OLD TESTAMENT':'NEW TESTAMENT';
   bookChapters.textContent=book[3]+' CHAPTERS';
+  $('#emmaus-enter').href='/one/?book='+number+'&chapter=1';
+  $('#em-plate-selection').textContent='BOOK '+String(number).padStart(2,'0')+' / '+book[2].toUpperCase();
   rail.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.book)===number)));
   const active=rail.querySelector(`[data-book="${number}"]`);
   if(center)centerRailBook(active,reduced?'instant':'smooth');
