@@ -53,8 +53,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    Cutout supplies only the battlement alpha silhouette; the original RGB
    image supplies ALL masonry including the closed gate. Both are cropped
    proportionally (never CSS-stretched to 100% 100%). */
-.dual-cover{--ws-vol00-wall-start:13.125%;position:relative;height:100%;width:100%;isolation:isolate;overflow:hidden;background:#102a43;color:#e9c37b}
-.dual-cover__city{position:absolute;z-index:2;top:var(--ws-vol00-wall-start);bottom:0;left:0;right:0;transform:translate3d(0,115%,0);opacity:0;isolation:isolate;will-change:transform,opacity}
+.dual-cover{--ws-vol00-wall-start:18.125%;position:relative;height:100%;width:100%;isolation:isolate;overflow:hidden;background:#102a43;color:#e9c37b}
+.dual-cover__city{position:absolute;z-index:2;top:var(--ws-vol00-wall-start);bottom:-5%;left:0;right:0;transform:translate3d(0,115%,0);opacity:0;isolation:isolate;will-change:transform,opacity}
 .dual-cover__wall{position:absolute;z-index:2;inset:0;background:url('/p2/magazine-cover/p2-magazine-sandstone-wall.png') center top/cover no-repeat;
  -webkit-mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
  mask-image:url('/p2/magazine-cover/p2-magazine-stone-gate-cutout.png'),linear-gradient(to bottom,transparent 0 26%,#000 26% 100%);
@@ -70,8 +70,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
    editorial epigraph on uninterrupted midnight blue. No text sits on stone.
    Use the single Design OS's real display fonts, air and gold tokens. */
 .dual-cover__scripture{
- position:absolute;z-index:9;top:23%;left:6%;right:6%;bottom:auto;
- max-height:16%;margin:0;display:flex;flex-direction:column;align-items:center;
+ position:absolute;z-index:9;top:13%;left:3%;right:3%;bottom:auto;
+ max-height:15%;margin:0;display:flex;flex-direction:column;align-items:center;
  gap:clamp(2px,.4cqi,4px);text-align:center;color:var(--ws-morning-gold,var(--ws-pale-gold));
  text-shadow:none;pointer-events:none;opacity:0;
 }
@@ -81,8 +81,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e4c2
  line-height:1.35;letter-spacing:.05em;font-synthesis:none;text-wrap:pretty;
 }
 .dual-cover__scripture-en.ws-type-quote-en{
- margin:0;max-width:53ch;font-family:var(--ws-type-display-en);
- font-size:var(--ws-type-scale-meta);font-style:italic;font-weight:400;
+ margin:0;max-width:62ch;font-family:var(--ws-type-display-en);
+ font-size:var(--ws-type-scale-micro);font-style:italic;font-weight:400;
  line-height:1.28;font-synthesis:none;text-wrap:balance;
 }
 .dual-cover__scripture-ref.ws-scripture-reference{
