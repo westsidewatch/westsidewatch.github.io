@@ -58,7 +58,7 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#em-book-en').textContent(),'Luke');
    assert.equal(await page.locator('.emmaus__folio-layer').count(),7);
    assert.match(await page.locator('#emmaus-study-heading').textContent(),/復活/);
-   assert.equal(await page.locator('#em-study-route li').count(),3);
+   assert.equal(await page.locator('#em-study-route li').count(),2);
    assert.equal(await page.locator('#emmaus').getAttribute('data-study-view'),'background');
    if(viewport.width>820){
     await page.locator('#em-tab-connections').click();
