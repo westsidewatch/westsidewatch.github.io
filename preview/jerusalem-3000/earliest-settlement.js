@@ -1,3 +1,4 @@
+import {residentialEraProfile} from './residential-era-profiles.js';
 import {overviewHousingGeometry} from './overview-housing.js';
 import {publishSettlementLedger} from './settlement-ledger.js';
 import * as THREE from 'three';
@@ -36,7 +37,7 @@ export function createLandscapeSettlement(parent,{data,terrain,ledgerCore=null,o
     const samples=[[-w/2,-d/2],[w/2,-d/2],[-w/2,d/2],[w/2,d/2]].map(([a,b])=>surface(x+a,z+b));
     if(samples.some(v=>!Number.isFinite(v))) throw new Error('Settlement outside canonical terrain');
     const ground=Math.max(...samples)+.08,id=`j3k:${namespace}:house:${i+1}`;houseIds.push(id);
-    if(overview){const polygon=[{x:x-w/2,z:z-d/2},{x:x+w/2,z:z-d/2},{x:x+w/2,z:z+d/2},{x:x-w/2,z:z+d/2}];const m=add(overviewHousingGeometry(polygon,terrain,h,{planForm:data.houseTypology==='four-room-analogy'?'four-room-analogy':'single-room'}),stone,0,0,0,id,'overview-dwelling');m.userData.overview={grammar:'terrain-courtyard-mass-v1'};continue;}
+    if(overview){const polygon=[{x:x-w/2,z:z-d/2},{x:x+w/2,z:z-d/2},{x:x+w/2,z:z+d/2},{x:x-w/2,z:z+d/2}];const m=add(overviewHousingGeometry(polygon,terrain,h,{planForm:residentialEraProfile(data.phase).planForms[0]}),stone,0,0,0,id,'overview-dwelling');m.userData.overview={grammar:'terrain-courtyard-mass-v1'};continue;}
     // Low single-room illustrative dwellings: stone footing, mud walls and timber roof.
     const footing=new THREE.BoxGeometry(w,1,d),fp=footing.attributes.position;
     for(let j=0;j<fp.count;j++) fp.setY(j,fp.getY(j)>0?.2:surface(x+fp.getX(j),z+fp.getZ(j))-ground);
