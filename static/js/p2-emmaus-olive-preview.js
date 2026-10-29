@@ -116,6 +116,7 @@
   galleryOrder=[...associated,...ids.filter(id=>!associated.includes(id))];
   if(!associated.length)galleryOrder=[...ids.slice(start-1),...ids.slice(0,start-1)];
   galleryPosition=0;galleryIndex=start-1;gallerySelectionBook=number;
+  emmaus.dataset.galleryStart=String(start);
   // Cancel stale asynchronous responses from a preceding book selection.
   plateVersion++;galleryPrefetch=true;void showPlate(galleryIndex);
   emmaus.dataset.illustrationMode=associated.length?'book-first':'random-fallback';
