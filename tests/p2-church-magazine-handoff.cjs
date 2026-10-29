@@ -29,7 +29,7 @@ const data=()=>{
  const doc=frame.contentDocument;
  const root=doc?.querySelector('.showcase');
  const magazine=root?.querySelector('.p2-magazine');
- const titleFrame=magazine?.querySelector('iframe');
+ const titleFrame=magazine?.querySelector('iframe:not(.p2-magazine__home-film)');
  const final=titleFrame?.contentDocument;
  const fStage=final?.querySelector('#dual-stage');
  const water=root?.querySelector('.ocean-rise');
@@ -74,7 +74,7 @@ const data=()=>{
     {waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForFunction(()=>{
     const child=document.querySelector('#p2-scene')?.contentDocument;
-    return !!child?.querySelector('.showcase[data-p2-magazine-design] .p2-magazine iframe')?.contentDocument?.querySelector('#dual-stage');
+    return !!child?.querySelector('.showcase[data-p2-magazine-design] .p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.querySelector('#dual-stage');
    },null,{timeout:30000});
    for(const [label,value] of stages){
     await page.locator('#progress').evaluate((input,p)=>{
