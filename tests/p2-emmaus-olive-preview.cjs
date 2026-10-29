@@ -83,6 +83,12 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#emmaus').evaluate(el=>getComputedStyle(el).visibility),'visible','Emmaus remains on stage while its pieces become Olive');
    assert.equal(await page.locator('#proof-stage > #emmaus-gallery').count(),1,'same ONE gallery is the travelling image object');
    assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).transform),'none','no overscaled speaker poster flies into frame');
+   assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).opacity),'0',
+    'Olive portrait does not appear before the travelling engraving reaches its slot');
+   assert.equal(await page.locator('.olive-proof__bottom').evaluate(el=>getComputedStyle(el).opacity),'0',
+    'the speaker register must not reveal before the moving engraved field is established');
+   assert((await page.locator('.emmaus__left').evaluate(el=>getComputedStyle(el).clipPath)).includes('inset(0px 0px 0px 0'),
+    'ONE stays legible during initial image travel');
    assert.equal(await page.locator('#olive-handoff-image').count(),0,'no second Doré image constructed');
    const movingPanel=await page.locator('#proof-stage > #emmaus-gallery').boundingBox();
    assert(movingPanel && movingPanel.x<stageRect.x+stageRect.width*2/3,
