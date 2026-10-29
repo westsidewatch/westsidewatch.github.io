@@ -72,3 +72,8 @@
 ## Housing/perimeter consistency (2026-10-29)
 
 All housing owners now share current-stage full-footprint admission, using existing circuits and explicit later expansion roles. Later blocks additionally admit individual visual modules at generation. No geometry is moved and no incomplete early circuit is invented. See [HOUSING-BOUNDARIES.md](HOUSING-BOUNDARIES.md). Historical acceptance remains pending.
+
+
+## 2026-10-29 全18期公尺比例與住宅區補足
+
+全期共用固定公尺政策，保留既有住宅與地塊尺寸，於既有示意住宅區補殘餘街廓；後期改按住宅模組退讓核心與道路，避免整區刪除。地形不放大或壓平，鏡頭不改建築尺寸，希臘化既有座標凍結為公尺資料而非執行時縮放參考城。參見 [METRIC-RESIDENTIAL-BASELINE.md](METRIC-RESIDENTIAL-BASELINE.md)。這不是歷史密度或全期住宅尺寸認證，未定位住宅區、古地表與台地仍待來源配準；全期歷史驗收維持未接受。

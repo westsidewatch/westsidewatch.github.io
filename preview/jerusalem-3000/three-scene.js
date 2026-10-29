@@ -1,9 +1,9 @@
+import {applyMetricResidentialRegistration,augmentMetricEarlySettlement,metricResidentialPolicy,METRIC_RESIDENTIAL_PHASES} from './metric-residential-layout.js';
 import {createHousingBoundaryAdmission,housingBoundaryAt} from './housing-boundary.js';
 import {createRegionalLandforms} from './regional-landforms.js';
 import {HERODIAN_DIMENSIONS} from './herodian-dimensions.js';
 import {createDefenseTimeline,compileDefenseProfile} from './defense-timeline.js';
 import {roadClearancePolygons} from './district-infill.js';
-import {deriveEraRegistration} from './era-registration-adapter.js';
 import {createCityConstructionPresentation} from './city-construction-presentation.js';
 import {createPhaseDissolveView} from './phase-dissolve-view.js';
 import {compileWallReference,createWallReferenceModel} from './old-city-wall-reference.js';
@@ -191,6 +191,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   renderer.localClippingEnabled=true;
   const constructionPresentation=createCityConstructionPresentation({root,getRecord:id=>cityCoreRuntime?.core.get(id)}),phaseDissolve=createPhaseDissolveView(mount);
   let regionalLandforms=null,regionalData=null,herodianScaleReport=null;
+  let metricHellenisticRegistration=null;
   let housingBoundaryAdmission=null;
   let defenseTimeline=null,defenseData=null,canonicalProtected=[],independentLaterRegistrations=new Map(),fabricMaterialDisposer=null,persistentCityWorld=null,activeWorldEntry=null,sharedPlaces=null,sharedPlaceView=null,wallReference=null,wallReferenceModel=null,wallGateView=null,wallCredit=null;
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
@@ -497,15 +498,17 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         terrain: terrainRuntime,
       });
       await registerHerodianUrbanCore(loaded.core);
-      eraRegistrationReference = await loadCityData('./data/urban/herodian-30ce.registration.json');
+      eraRegistrationReference = applyMetricResidentialRegistration(await loadCityData('./data/urban/herodian-30ce.registration.json'));
+      metricHellenisticRegistration=applyMetricResidentialRegistration(await loadCityData('./data/urban/hellenistic-metric.registration.v1.json'));
       defenseData=await loadCityData('./data/urban/defense-timeline.v1.json');
+      eraRegistrationReference.metricHousingRings=housingBoundaryAt({phaseId:'herodian-jesus',offset:.9,defenseData,origin:terrainRuntime.grid.origin}).rings;
       canonicalProtected=[...exclusions];
       const defenseProfile=compileDefenseProfile(defenseData,'herodian-jesus',eraRegistrationReference.roads,terrainRuntime,{exclusions});
       exclusions.push(...roadClearancePolygons([...defenseProfile.roads,...defenseProfile.walls.map(w=>({geometry:{points:w.points}}))],10));
       const parcels = await buildHerodianParcelCore(
         loaded.core,
         terrainRuntime,
-        { exclusions },
+        { exclusions,registration:eraRegistrationReference },
       );
       const overviewMaterial=temporalMaterials.inferred.clone();overviewMaterial.transparent=false;overviewMaterial.opacity=1;overviewMaterial.color.setHex(0xb9a27e);
       const architecture = buildHerodianParcelArchitecture(
@@ -554,7 +557,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       for(const phase of ['late-first-temple','persian-nehemiah']){const registration=compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin);periodRegistrations.set(phase,registration);bindPeriodSpatialCore(loaded.core,registration);}
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
         ledgerCore:loaded.core,overview:true,
-        getRegistration:phase => periodRegistrations.get(phase) ?? null,
+        getRegistration:phase => {const registration=applyMetricResidentialRegistration(periodRegistrations.get(phase)||metricHellenisticRegistration,phase);registration.metricHousingRings=housingBoundaryAt({phaseId:phase,offset:.9,defenseData,origin:terrainRuntime.grid.origin}).rings;return registration;},
         getExclusions:phase=>[...(royalCity?.exclusionsFor(phase)||[]),...(defenseTimeline?.exclusionsFor(phase)||[])],
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
         successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],
@@ -573,20 +576,20 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     }
     const settlementResponse=await fetch('./data/settlement/earliest.v1.json',{cache:'no-store'});
     if(!settlementResponse.ok) throw new Error('Earliest settlement data unavailable');
-    earliestSettlement=createEarliestSettlement(root,{data:await settlementResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
+    earliestSettlement=createEarliestSettlement(root,{data:augmentMetricEarlySettlement(await settlementResponse.json(),terrainRuntime),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
     const middleResponse=await fetch('./data/settlement/middle-bronze.v1.json',{cache:'no-store'});
     if(!middleResponse.ok) throw new Error('Middle Bronze settlement data unavailable');
-    middleBronzeSettlement=createEarliestSettlement(root,{data:await middleResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
+    middleBronzeSettlement=createEarliestSettlement(root,{data:augmentMetricEarlySettlement(await middleResponse.json(),terrainRuntime),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
     const lateResponse=await fetch('./data/settlement/late-bronze-iron1.v1.json',{cache:'no-store'});
     if(!lateResponse.ok) throw new Error('Late Bronze landscape data unavailable');
-    lateBronzeSettlement=createEarliestSettlement(root,{data:await lateResponse.json(),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
+    lateBronzeSettlement=createEarliestSettlement(root,{data:augmentMetricEarlySettlement(await lateResponse.json(),terrainRuntime),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
     const waterDefenseData=await loadCityData('./data/urban/water-defense.registration.v1.json');
     localPlanAudit=auditLocalPlanRegistry(await loadCityData('./data/urban/water-defense.local-plans.v1.json'),terrainRuntime.grid.origin);
     waterDefense=compileWaterDefenseRegistration(waterDefenseData,terrainRuntime.grid.origin);bindWaterDefenseCore(cityCoreRuntime.core,waterDefense);
     for(const admission of localPlanAudit){const record=cityCoreRuntime.core.get(admission.objectId);if(!record)throw new Error('Local plan target missing from shared ledger');cityCoreRuntime.core.register({...record,metadata:{...record.metadata,localPlanAdmission:admission}});}
     waterDefenseModel=createWaterDefenseModelAdapter({runtime:middleBronzeSettlement,core:cityCoreRuntime.core,registration:waterDefense});
     const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');
-    davidSettlement=createEarliestSettlement(root,{data:davidData,terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
+    davidSettlement=createEarliestSettlement(root,{data:augmentMetricEarlySettlement(davidData,terrainRuntime),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     royalRelief=createRoyalRelief(root,mount,{data:davidData,terrain:terrainRuntime});
     persianSanctuary=createPersianSanctuary(root,{data:periodSpatialData,terrain:terrainRuntime,core:cityCoreRuntime.core});
@@ -595,11 +598,12 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       if(periodRegistrations.has(phase))return periodRegistrations.get(phase).roads;
       if(phase==='babylonian-destruction')return periodRegistrations.get('late-first-temple').roads;
       if(phase==='herodian-jesus'||phase==='roman-destruction')return eraRegistrationReference.roads;
-      if(phase==='hellenistic-hasmonean')return deriveEraRegistration(eraRegistrationReference,phase,ERA_FOOTPRINTS[phase]).roads;
+      if(phase==='hellenistic-hasmonean')return metricHellenisticRegistration.roads;
       return [];
     };
     defenseTimeline=createDefenseTimeline({data:defenseData,phases:[...cityCoreRuntime.core.phases.values()],core:cityCoreRuntime.core,terrain:terrainRuntime,parent:root,roadsForPhase:defenseRoadsForPhase,exclusionsForPhase:phase=>independentLaterRegistrations.has(phase)?[...independentLaterRegistrations.get(phase).cores.map(c=>({polygon:c.geometry.polygon})),...independentLaterRegistrations.get(phase).reservations.map(c=>({polygon:c.geometry.polygon}))]:phase==='herodian-jesus'||phase==='roman-destruction'?canonicalProtected:[...(royalCity?.exclusionsFor(phase)||[]),...(periodRegistrations.get(phase)?.reservations||[])]});
     for(const [phase,registration]of independentLaterRegistrations){
+      applyMetricResidentialRegistration(registration,phase);
       registration.defenseReservations=defenseTimeline.exclusionsFor(phase);
       const candidates=[.1,.3,.8,.99].map(offset=>housingBoundaryAt({phaseId:phase,offset,defenseData,wallReference,royalData:davidData,origin:terrainRuntime.grid.origin}));
       // An unwalled interval must not inherit a future enclosure constraint.
@@ -800,6 +804,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     setWaterDefenseVariant(id){waterDefenseModel.setVariant(id);applyTemporalState();},
     waterDefenseEvidence(position){const state=waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);return state?{...state,selectedVariant:waterDefenseModel.selectedVariant,variants:waterDefense.towerVariants,localPlans:localPlanAudit}:null;},
     foundationContext(){return {terrain:terrainRuntime};},
+    inspectMetricResidentialPolicy(){return {phase:currentPhaseId,policy:metricResidentialPolicy(currentPhaseId),phaseCoverage:[...METRIC_RESIDENTIAL_PHASES],terrainOrigin:terrainRuntime.grid.origin,terrainScale:terrainRuntime.mesh.scale.toArray(),rootScale:root.scale.toArray(),densityHistoricallyVerified:false};},
     inspectHousingBoundary(options){return housingBoundaryAdmission?.snapshot(options);},
     inspectOverviewBaseline(){let meshes=0,modules=0,gridMeshes=0;const ids=new Set(),subdivisions=new Set();root.traverse(m=>{if(!m.isMesh||!m.userData.overview)return;for(let p=m;p;p=p.parent)if(!p.visible)return;meshes++;modules+=m.geometry.userData.visualModules||1;if(m.geometry.userData.worldGrid===true)gridMeshes++;subdivisions.add(m.geometry.userData.subdivision||'unspecified');ids.add(m.userData.cityObject?.objectId||m.userData.cityObject?.parcelId);});return {phase:currentPhaseId,grammar:'terrain-courtyard-mass-v1',mode:'city-overview',meshes,registeredHousingObjects:ids.size,visualModules:modules,subdivisions:[...subdivisions].sort(),worldGridMeshes:gridMeshes,moduleCountsAreHistoricalBuildings:false,detailWork:'paused',historicalFoundationAccepted:false};},
     inspectSharedPlaces(){return currentPhaseId?sharedPlaces?.snapshot({phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode})??null:null;},

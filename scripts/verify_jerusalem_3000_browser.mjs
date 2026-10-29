@@ -132,7 +132,7 @@ try {
   // The earliest phase is a geographically anchored small settlement, not a
   // scaled Herodian street/parcel city.
   await page.locator('.j3k-scrubber').evaluate(el=>{el.value='0.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
-  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement?.visibleHouses===14);
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement?.visibleHouses===window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement?.houses);
   assert.match(await page.locator('.j3k-terrain-badge').textContent(),/推定/);
   const early=await page.evaluate(()=>({render:window.__JERUSALEM3000__.renderDiagnostics,inheritance:window.__JERUSALEM3000__.inheritanceState}));
   assert.equal(early.render.urbanFabric.phase2Components,0);
@@ -143,10 +143,10 @@ try {
   await page.getByRole('button',{name:'實證',exact:true}).click();
   await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement.visibleHouses===0);
   await page.getByRole('button',{name:'全部',exact:true}).click();
-  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement.visibleHouses===14);
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement.visibleHouses===window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement.houses);
   await writeFile(`${output}/earliest-report.json`,JSON.stringify(early,null,2));
   await page.locator('.j3k-scrubber').evaluate(el=>{el.value='1.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
-  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement?.visibleHouses===24);
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement?.visibleHouses===window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement?.houses);
   const bronze=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics);
   assert.equal(bronze.earliestSettlement.visibleHouses,0);
   assert.equal(bronze.urbanFabric.phase2Components,0);
@@ -172,7 +172,7 @@ try {
   await page.getByRole('button',{name:'全部',exact:true}).click();
   await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement.visibleTowerComponents>0);
   await page.locator('.j3k-scrubber').evaluate(el=>{el.value='0.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
-  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement.visibleHouses===14);
+  await page.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement.visibleHouses===window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement.houses);
   assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement.visibleDefenseComponents),0);
   await writeFile(`${output}/middle-bronze-report.json`,JSON.stringify(bronze,null,2));
   await page.locator('.j3k-scrubber').evaluate(el=>{el.value='2.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
@@ -513,7 +513,7 @@ try {
   await mobile.waitForFunction(
     () => window.__JERUSALEM3000__?.status === 'ready',
   );
-  await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement?.visibleHouses===14);
+  await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement?.visibleHouses===window.__JERUSALEM3000__.renderDiagnostics.earliestSettlement?.houses);
   await mobile.screenshot({path:`${output}/earliest-mobile.png`,fullPage:true});
   await mobile.getByRole('button',{name:'山城地形',exact:true}).click();
   await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.terrainPresentation.overviewActive);
@@ -523,7 +523,7 @@ try {
   await mobile.waitForFunction(()=>!window.__JERUSALEM3000__.renderDiagnostics.terrainPresentation.overviewActive);
 
   await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='1.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
-  await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement?.visibleHouses===24);
+  await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement?.visibleHouses===window.__JERUSALEM3000__.renderDiagnostics.middleBronzeSettlement?.houses);
   await mobile.screenshot({path:`${output}/middle-bronze-mobile.png`,fullPage:true});
   await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='2.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
   await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.lateBronzeSettlement?.visibleSupportComponents===8);
