@@ -69,7 +69,7 @@
  $('#em-study-ref').textContent=featured.passage;
  $('#emmaus-study-heading').textContent=featured.title;
  $('#em-study-movement').textContent=featured.movement;
- for(const [ref,description] of featured.route.slice(0,3)){
+ for(const [ref,description] of featured.route.slice(0,2)){
   const li=document.createElement('li'),code=document.createElement('span'),copy=document.createElement('p');
   code.textContent=ref;copy.textContent=description;li.append(code,copy);studyRoutes.append(li);
  }
