@@ -23,6 +23,10 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
 #emmaus > .emmaus__left{position:absolute;inset:0 auto 0 0;width:66.666667%;height:100%;z-index:1}
 #emmaus > .emmaus__right{position:absolute;top:0;left:66.666667%;width:33.333333%;height:100%;z-index:2;will-change:left,width}
 /* Move the ACTUAL magazine engraving DOM node across the spread. */
+/* 03→04: the same Emmaus gallery node travels into the speaker slot.
+   Nothing is cloned or launched from outside the visible MERSI stage. */
+.proof-stage > #emmaus-gallery{position:absolute;z-index:6;min-width:0;overflow:hidden;
+ pointer-events:none;will-change:left,top,width,height,opacity}
 .proof-stage > #dual-dore-plate{position:absolute;z-index:7;margin:0;overflow:hidden;pointer-events:none;
  background:#ded1af;will-change:left,top,width,height,opacity;
  opacity:var(--p2-transfer-visible,1)!important}
@@ -84,8 +88,6 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
 .olive-proof__hero{position:relative;z-index:4;background:#e2e4db;overflow:hidden;padding:clamp(13px,2vh,25px);transform-origin:top left;will-change:transform}
 .olive-proof__portrait{position:relative;height:100%;margin:auto;aspect-ratio:3/4;max-width:100%;overflow:hidden;background:#f8f8f3}
 .olive-proof__portrait>img{width:100%;height:100%;object-fit:contain;display:block}
-.olive-proof__handoff-plate{position:absolute;z-index:5;inset:0;overflow:hidden;pointer-events:none;background:#272e2a;will-change:opacity}
-.olive-proof__handoff-plate img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(1) sepia(.4) contrast(1.3)}
 .olive-proof__hero-folio{position:absolute;z-index:6;bottom:12px;right:14px;color:#174B35;font:200 10px/1 var(--ws-type-display-en);letter-spacing:.17em}
 .olive-proof__editorial{display:flex;flex-direction:column;justify-content:space-between;padding:clamp(25px,4vw,76px) clamp(30px,5vw,85px) clamp(22px,2.7vw,50px);border-left:1px solid #174B3566;background:#f0eee7;will-change:clip-path}
 .olive-proof__kicker,.olive-proof__editorial>a,.olive-proof__bottom>div>span,.olive-proof__folio{font:200 clamp(10px,.85vw,13px)/1.3 var(--ws-type-display-en);letter-spacing:.15em}
