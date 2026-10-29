@@ -33,7 +33,11 @@
   // Replace only that magazine layer; never alter the water/door elements.
   magazine.style.visibility=active?'visible':'hidden';
   magazine.style.clipPath='none';
-  magazine.style.background='transparent';
+  // Close the Church spread like a page turn: the Vol.00 paper gradually
+  // becomes opaque so the completed folio cannot leave Sunday copy visible
+  // around its edges. The Church remains intact underneath for reverse scroll.
+  const paperCover=Math.round(easing(progress/.34)*100);
+  magazine.style.background=`color-mix(in srgb, var(--paper) ${paperCover}%, transparent)`;
   magazine.style.opacity='1';
   magazine.style.pointerEvents=progress>=.995?'auto':'none';
   magazine.inert=progress<.995;

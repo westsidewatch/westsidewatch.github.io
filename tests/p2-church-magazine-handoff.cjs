@@ -36,6 +36,7 @@ const data=()=>{
   magazinePhase:magazine?.dataset.magazineStage||'',
   magazineProgress:+(root?.dataset.p2MagazineProgress||0),
   magazineVisibility:magazine?getComputedStyle(magazine).visibility:'missing',
+  magazinePaper:magazine?.style.background||'',
   magazineChildren:magazine?.children.length||0,
   churchInert:church?.inert||false,
   churchVisible:church?getComputedStyle(church).visibility:'missing',
@@ -98,7 +99,8 @@ const data=()=>{
     if(value===91&&!(m.magazineProgress>.7&&m.starInk==='single-rising-incision'&&m.heroOriginal))
      faults.push('the Morning Star must bring the original ink title into the spread');
     if(value===100&&!(m.magazineProgress>.999&&m.magazinePhase==='contents-final'&&
-      m.coverStage==='contents-final'&&m.activeDesign==='10'&&m.count===12&&m.originalCover))
+      m.coverStage==='contents-final'&&m.activeDesign==='10'&&m.count===12&&m.originalCover&&
+      m.magazinePaper.includes('100%')))
      faults.push('the live P2 must reach its genuine two-page cover and all twelve Contents desks');
     if(errors.length)faults.push('PAGE_ERROR '+errors.join('; '));
     await page.screenshot({path:path.join(out,screen+'-'+label+'.png'),animations:'allow'});
