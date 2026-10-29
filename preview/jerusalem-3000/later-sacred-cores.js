@@ -23,13 +23,16 @@ export function laterSacredCores(phase){
   geometry:{frame:'canonical-dem-enu',status:'authored-context-not-surveyed',primitive:'polygon',polygon:rectangle(0,-180,80,80)},
   source:{urls:[ROCK_SOURCE],authority:'octagonal shrine and dome form context; coordinates and dimensions authored for schematic display'},
   metadata:{placeId:'j3k:place:northern-sacred-hill',placeRelation:'same-hill-not-same-ancient-building',name:phase==='crusader'?'岩石圓頂建築／Templum Domini（概略量體）':'岩石圓頂建築（概略量體）',coreProfile:'octagonal-rock-shrine',referencePeriod:'post-691/692; phase-specific alterations not resolved',wholePhaseSimultaneity:false,geometryVerified:false,ancientGroundVerified:false}});
- if(coreLocationReference.phases.includes(phase))for(const core of cores){
+ // These historically identified sites use one geographic display anchor in every
+ // applicable phase. The modern map does not authenticate an ancient footprint.
+ for(const core of cores){
   const key=core.id.split(':').at(-1),reference=coreLocationReference.cores[key],q=geographicToENU(reference.point.lat,reference.point.lon,{lat:31.778,lon:35.235});
   const polygon=core.geometry.polygon,cx=polygon.reduce((s,p)=>s+p.x,0)/polygon.length,cz=polygon.reduce((s,p)=>s+p.z,0)/polygon.length;
   core.geometry.polygon=polygon.map(p=>({x:p.x-cx+q.east,z:p.z-cz-q.north}));
   core.geometry.status='modern-map-position-with-illustrative-massing';
   core.source.urls.push(coreLocationReference.source.url);core.source.positionReference={...reference,...coreLocationReference.source,authority:coreLocationReference.positionAuthority};
   core.metadata.modernPositionReference=true;
+  core.metadata.siteRegistration={policy:'shared-geographic-context-not-shared-fabric',historicalPositionVerified:false,historicalFootprintVerified:false,modernReferencePhase:coreLocationReference.phases.includes(phase),siteHistorySource:core.source.urls[0]};
  }
  return cores;
 }

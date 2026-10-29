@@ -1,3 +1,4 @@
+import {laterSacredCores} from '../preview/jerusalem-3000/later-sacred-cores.js';
 import {geographicToENU} from '../preview/jerusalem-3000/terrain-runtime.js';
 import {coreLocationReference} from '../preview/jerusalem-3000/core-location-reference.js';
 import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {spawnSync} from 'node:child_process';import * as THREE from 'three';
@@ -30,3 +31,12 @@ assert.deepEqual(oldPolygons[1],oldPolygons[0]);assert.deepEqual(oldPolygons[2],
 const bad=new THREE.Group();assert.throws(()=>createWallReferenceModel(bad,{reference,terrain,core:new TemporalCityCore({phases,terrain})}),/Missing existing/);assert.equal(bad.children.length,0);
 for(const mutate of [d=>d.origin.lat=0,d=>d.lines[0].osmWay=26554724,d=>d.lines[0].points[0].lat=0,d=>d.display.heightMetres=NaN]){const copy=structuredClone(data);mutate(copy);assert.throws(()=>compileWallReference(copy,terrain));}
 let disposed=0;for(const m of model.meshes)m.geometry.addEventListener('dispose',()=>disposed++);model.dispose();assert.equal(disposed,211);assert.equal(parent.children.length,0);console.log('PASS: reproducible7 source wall paths, unfilled mapped gap,2 modern gate references, late-only persistent rendering, unchanged lifecycle, bounded old-city housing, gate links, shared expansion background and cleanup');
+
+// Site anchors must not jump at the authored/modern reference boundary.
+const siteAnchors=new Map();
+for(const phase of ['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'])for(const record of laterSacredCores(phase)){
+ const polygon=record.geometry.polygon,centre={x:polygon.reduce((s,p)=>s+p.x,0)/polygon.length,z:polygon.reduce((s,p)=>s+p.z,0)/polygon.length},key=record.id.split(':').at(-1);
+ if(siteAnchors.has(key)){const previous=siteAnchors.get(key);assert.ok(Math.hypot(previous.x-centre.x,previous.z-centre.z)<1e-8,'same site cannot jump when the phase changes');}else siteAnchors.set(key,centre);
+ assert.equal(record.metadata.siteRegistration.historicalFootprintVerified,false);assert.equal(record.metadata.geometryVerified,false);
+}
+assert.equal(laterSacredCores('aelia').length,0,'do not project Christian/Islamic buildings before construction');
