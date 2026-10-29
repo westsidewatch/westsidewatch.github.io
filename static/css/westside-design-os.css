@@ -1,7 +1,7 @@
 /* Westside Design OS — one visual authority for all public surfaces and tools. */
 /* Geometry QA: docs/DESIGN-OS-GEOMETRY.md + scripts/design-os-geometry-audit.mjs.
    Static positioning belongs to each canonical surface stylesheet; avoid competing overrides. */
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400%3B1,6..96,400&family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400%3B1,6..96,400&family=Noto+Serif+TC:wght@400%3B600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400%3B0,6..96,900%3B1,6..96,400%3B1,6..96,900&family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400%3B1,6..96,400&family=Noto+Serif+TC:wght@400%3B600&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
 @import url("/css/westside-design-tokens.css");
 /* Standalone pages and iframes: shared fonts and role sizes. */
