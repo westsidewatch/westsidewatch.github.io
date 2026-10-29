@@ -24,7 +24,7 @@ export function createSharedUrbanPlaces({terrain,phases,core}){
  const spring=geographicToENU(SPRING.lat,SPRING.lon,ORIGIN);
  const definitions=[
   {id:'j3k:place:northern-sacred-hill',label:'北部高地／聖殿山區域',x:0,z:0,authority:'existing-platform-scale-context-not-exact-ancient-temple-location',source:'data/objects/herodian-30ce.json'},
-  {id:'j3k:place:southeast-ridge',label:'東南山脊',x:spring.east-98,z:-spring.north+145,authority:'existing-illustrative-ridge-south-context',source:'data/settlement/david-solomon.v1.json'},
+  {id:'j3k:place:southeast-ridge',label:'大衛城／東南山脊',description:'大衛城所在的東南山脊；《撒母耳記下》5:7 的早期錫安。今天名為錫安山的西南丘是另一處；此標記不是古城界或宮殿定位。',historicalContextSource:'https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf',x:spring.east-98,z:-spring.north+145,authority:'existing-illustrative-ridge-south-context',source:'data/settlement/david-solomon.v1.json'},
   {id:'j3k:place:gihon',label:'基訓泉附近',x:spring.east,z:-spring.north,authority:'approximate-modern-map-location-not-ancient-access',source:'https://api.openstreetmap.org/api/0.6/node/1608094098',attribution:'OpenStreetMap contributors, ODbL'}
  ];
  const anchors=definitions.map(p=>{const y=terrain.heightAtWorld(p.x,p.z);if(!Number.isFinite(y))throw new Error('Shared place outside terrain');return {...p,y,confidence:'inferred',geometryVerified:false,semanticCityObject:false};});

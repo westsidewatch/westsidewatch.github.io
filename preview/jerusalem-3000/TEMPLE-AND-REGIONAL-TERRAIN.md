@@ -37,3 +37,13 @@ AOI仍為35.195–35.255E、31.745–31.805N，原點仍31.778/35.235；固定�
 - 真瀏覽器量測殿體、平台；本次模型屋頂約797m，低於同DEM橄欖山參照約810m。這是模型自洽檢查，不認證古屋頂海拔。
 - 全18期同一實體地形、同一地貌鏡頭、相同山谷定位；手機三個關鍵標籤、工具列和說明卡避讓、進出地貌視圖、無遠端地圖或DEM瓦片請求。
 - 原有城防、古牆來源、住區退讓、18期施工、17次換場與播放就緒檢查。
+
+## Zion / City of David location audit (2026-10-29)
+
+The modern southwestern Mount Zion label must not imply that David's city stood there. 2 Samuel 5:7 identifies the stronghold of Zion with the City of David. The City of David site's visitor guide places the early city on the eastern ridge and describes the later western-hill expansion, where today's Mount Zion stands:
+https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf
+https://www.biblegateway.com/passage/?search=2+Samuel+5%3A7&version=NIV
+
+Checked against commit 066c2a7f6: `data/settlement/david-solomon.v1.json` is byte-identical. The 30m terrain update did not move its spring, settlement offsets or temple offset. With the unchanged origin (31.778, 35.235), world x is east and z is south. The shared southeast ridge reference is (75.21, 675.44)m; Gihon is (173.21, 530.44)m; today's Mount Zion reference is (-600.24, 710.17)m. The schematic first-temple reference is (73.21, 60.44)m, north of the ridge. These are rendering references, not a surveyed ancient boundary or palace footprint.
+
+Labels now distinguish `大衛城／東南山脊` from `今稱錫安山／西南丘`, with source context in tooltips. No geometry or terrain coordinates changed. This audit checks relative geographic registration and naming; it does not certify all reconstructed footprints.
