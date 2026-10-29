@@ -368,7 +368,12 @@
   }
   // The old ONE field recedes through an inward horizontal crop as the
   // speaker identity unfolds; its content is never moved off the viewport.
-  if(oliveIn>.001)emLeft.style.clipPath='inset(0 0 0 '+(100*smooth((oliveIn-.42)/.25)).toFixed(3)+'%)';
+  if(oliveIn>.001){
+   // SAME right-to-left withdrawal as the approaching image boundary.
+   // Never clip from LEFT: that leaves ONE's right-hand text underneath
+   // the migrating plate during the midpoint of the MERSI reflow.
+   emLeft.style.clipPath='inset(0 '+(100*smooth((oliveIn-.29)/.54)).toFixed(3)+'% 0 0)';
+  }
   oliveHero.style.transform='none';
   oliveHero.style.opacity=String(1-fieldExit);
   emRight.style.opacity=String((useArchive?archive:0)*fieldExit);
