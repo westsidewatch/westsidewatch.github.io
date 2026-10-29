@@ -366,13 +366,19 @@
   }else{
    poseRect(emRight,coverBounds||fullRight,fullRight,expand);
   }
-  // The old ONE field recedes through an inward horizontal crop as the
-  // speaker identity unfolds; its content is never moved off the viewport.
+  // MERSI shared-boundary reflow: the real ONE panel ends exactly where
+  // the existing engraving panel now begins. Its width responds to the
+  // moving plate and its text REFLOWS instead of being arbitrarily clipped.
+  // Only after the speaker identity has taken over does ONE withdraw.
+  const galleryEdge=emRight.getBoundingClientRect().left-stageRect.left;
   if(oliveIn>.001){
-   // SAME right-to-left withdrawal as the approaching image boundary.
-   // Never clip from LEFT: that leaves ONE's right-hand text underneath
-   // the migrating plate during the midpoint of the MERSI reflow.
-   emLeft.style.clipPath='inset(0 '+(100*smooth((oliveIn-.29)/.54)).toFixed(3)+'% 0 0)';
+   const nextWidth=Math.min(fullLeft.w,Math.max(0,galleryEdge));
+   emLeft.style.width=nextWidth.toFixed(2)+'px';
+   emLeft.style.clipPath=oliveIn>.74
+    ?'inset(0 '+(100*smooth((oliveIn-.74)/.25)).toFixed(3)+'% 0 0)'
+    :'none';
+  }else{
+   emLeft.style.width=fullLeft.w.toFixed(2)+'px';
   }
   oliveHero.style.transform='none';
   oliveHero.style.opacity=String(1-fieldExit);
