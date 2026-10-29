@@ -14,18 +14,34 @@
  const churchIndex=root.querySelector('.index');
  const embedded=document.documentElement.dataset.p2Embedded==='true';
  const handoffVh=2.37; // the approved Red Sea / church door is fully open
- const finalVh=embedded?4:2.9;
+ const finalVh=embedded?4:5.2; // standalone also grants a full editorial scroll passage
  const clamp=n=>Math.min(1,Math.max(0,n));
  const easing=n=>{n=clamp(n);return n*n*(3-2*n)};
+ // The background is the SAME six-clip moving film used by the homepage.
+ // Reuse its cover-mode player and manifest; never create a second montage.
+ const film=document.createElement('iframe');
+ film.className='p2-magazine__home-film';
+ film.title='首頁〈王進城〉影片，延續至西望雜誌背景';
+ film.src='/preview/watch-city-vol00/hosanna/?cover=1&v=20261012-cover-palette-r1';
+ film.tabIndex=-1;
+ film.setAttribute('aria-hidden','true');
+ film.loading='eager';
+ film.setAttribute('allow','autoplay');
+ film.style.cssText='display:block;position:absolute;inset:0;width:100%;height:100%;border:0;z-index:0;pointer-events:none;background:var(--paper);opacity:0';
  const frame=document.createElement('iframe');
  frame.title='西望 Vol.00：承接活水教會的封面、晨星與十二欄目目錄';
  frame.src='/experiments/p2-double-square-video-lab.html?embed=1&p=0&side=cover-right';
  frame.loading='eager';
  frame.setAttribute('allow','autoplay');
- frame.style.cssText='display:block;position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent';
- magazine.replaceChildren(frame);
+ frame.style.cssText='display:block;position:absolute;inset:0;width:100%;height:100%;border:0;z-index:1;background:transparent';
+ magazine.replaceChildren(film,frame);
  root.dataset.p2MagazineDesign='vol00-continuous-church-handoff';
- let loaded=false,lastVh=NaN;
+ let loaded=false,filmLoaded=false,filmPlaying=null,lastVh=NaN;
+ function syncFilm(shouldPlay,force=false){
+  if(!filmLoaded||(!force&&filmPlaying===shouldPlay))return;
+  filmPlaying=shouldPlay;
+  film.contentWindow?.postMessage({type:'watch-cover-playback',paused:!shouldPlay},location.origin);
+ }
  function paint(vh){
   const progress=clamp((vh-handoffVh)/(finalVh-handoffVh));
   const active=progress>0;
@@ -38,6 +54,8 @@
   // around its edges. The Church remains intact underneath for reverse scroll.
   const paperCover=Math.round(easing(progress/.34)*100);
   magazine.style.background=`color-mix(in srgb, var(--paper) ${paperCover}%, transparent)`;
+  film.style.opacity=String(easing(progress/.20));
+  syncFilm(active&&document.visibilityState==='visible');
   magazine.style.opacity='1';
   magazine.style.pointerEvents=progress>=.995?'auto':'none';
   magazine.inert=progress<.995;
@@ -72,6 +90,16 @@
   lastVh=vh;paint(vh);
  });
  watch.observe(root,{attributes:true,attributeFilter:['data-p2-progress']});
+ film.addEventListener('load',()=>{
+  filmLoaded=true;
+  syncFilm(Number(root.dataset.p2MagazineProgress)>0&&document.visibilityState==='visible',true);
+ });
+ document.addEventListener('visibilitychange',()=>syncFilm(
+  Number(root.dataset.p2MagazineProgress)>0&&document.visibilityState==='visible'));
+ addEventListener('message',event=>{
+  if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-scroll')return;
+  syncFilm(event.data.active!==false&&Number(root.dataset.p2MagazineProgress)>0&&document.visibilityState==='visible');
+ });
  frame.addEventListener('load',()=>{loaded=true;paint(Number(root.dataset.p2Progress)||0)});
  paint(Number(root.dataset.p2Progress)||0);
 })();
