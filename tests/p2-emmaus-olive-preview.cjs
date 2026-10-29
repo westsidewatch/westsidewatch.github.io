@@ -80,6 +80,8 @@ const {chromium}=require('playwright');
     assert.equal(await page.locator('.emmaus__study-tools').evaluate(el=>getComputedStyle(el).display),'none',
      'phone intentionally uses a readable single-column extract instead of forcing desktop tabs into 2/3 of 390px');
     assert.equal(await page.locator('.emmaus__study-reading').evaluate(el=>getComputedStyle(el).display),'flex');
+    const studyHeight=await page.locator('#emmaus-study').evaluate(el=>el.getBoundingClientRect().height);
+    assert(studyHeight<260,'phone study excerpt does not leave a half-empty fixed-height box');
    }
    await page.locator('[data-book="41"]').evaluate(element=>element.click());
    assert.equal(await page.locator('#em-book-en').textContent(),'Mark','book selection changes live spread');
@@ -163,11 +165,13 @@ const {chromium}=require('playwright');
     '82%: do not pre-reveal Olive until the ONE/photo reflow begins');
    assert.equal(await page.locator('.olive-proof__bottom').evaluate(el=>getComputedStyle(el).opacity),'0',
     'the speaker register must not reveal before the moving engraved field is established');
-   assert((await page.locator('.emmaus__left').evaluate(el=>getComputedStyle(el).clipPath)).includes('inset(0px 0px 0px 0'),
-    'ONE stays legible during initial image travel');
+   const oneClip=await page.locator('.emmaus__left').evaluate(el=>getComputedStyle(el).clipPath);
+   assert(oneClip.startsWith('inset(0px ')&&oneClip.endsWith(' 0px 0px)'),
+    'ONE retracts from RIGHT where the Doré image enters, not from LEFT');
    assert.equal(await page.locator('#olive-handoff-image').count(),0,'no second Doré image constructed');
    const oneBefore=await page.locator('.emmaus__left').evaluate(el=>getComputedStyle(el).clipPath);
-   assert(oneBefore.includes('inset(0px 0px 0px 0'),'ONE is still fully legible before the picture crosses its title at 82%');
+   assert(oneBefore.startsWith('inset(0px ')&&oneBefore.endsWith(' 0px 0px)'),
+    'ONE keeps its left readable column while its right edge withdraws');
    const movingPanel=await page.locator('#proof-stage > #emmaus-gallery').boundingBox();
    assert(movingPanel && movingPanel.x<stageRect.x+stageRect.width*2/3,
     'ONE image field is physically crossing toward the Olive upper-left portrait slot');
