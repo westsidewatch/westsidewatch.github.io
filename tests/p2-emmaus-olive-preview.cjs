@@ -99,6 +99,14 @@ const {chromium}=require('playwright');
    assert.match(await page.locator('#em-study-ref').textContent(),/路加福音/);
    assert.equal(await page.locator('.emmaus__realm-nav .emmaus__folio-layer').count(),7);
    assert.equal(await page.locator('.emmaus__realm-nav [data-realm="3"]').count(),1);
+   await page.locator('[data-realm-jump="11.10"]').evaluate(el=>el.click());
+   await page.waitForTimeout(120);
+   assert.equal(await page.locator('#olive-proof').getAttribute('aria-hidden'),'false',
+    '04 Folio navigation actually opens the already implemented Olive scene');
+   await page.locator('[data-jump="9.10"]').click();
+   await page.waitForTimeout(120);
+   assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false',
+    'realm navigation stays reversible through the same P2 scroll controller');
    const before=await page.evaluate(()=>scrollY);
    await page.locator('#emmaus-rail').hover();await page.mouse.wheel(0,500);await page.waitForTimeout(300);
    const after=await page.evaluate(()=>scrollY);
