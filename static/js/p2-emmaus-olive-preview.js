@@ -99,7 +99,7 @@
  ];
  const names=$('#olive-speaker-names'),mainImg=$('#olive-main-image'),main=$('#olive-main'),nextImg=$('#olive-next-image');let currentSpeaker=0;
  const emLeft=$('.emmaus__left'),emRight=$('.emmaus__right'),emPlates=$('.emmaus__plates');
- const oliveHero=$('#olive-morph-hero'),oliveEditorial=$('.olive-proof__editorial'),oliveRegister=$('.olive-proof__register'),oliveWindow=$('.olive-proof__window');
+ const oliveHero=$('#olive-morph-hero'),oliveEditorial=$('.olive-proof__editorial'),oliveRegister=$('.olive-proof__register'),oliveWindow=$('.olive-proof__window'),oliveBottom=$('.olive-proof__bottom');
  const heroFolio=$('.olive-proof__hero-folio');
  let galleryBorrowed=false,archiveForOlive=null,sourceStyleDoc=null;
  function chooseSpeaker(index){
@@ -172,7 +172,7 @@
     sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
    }
   }
-  emmaus.style.backgroundColor=move>=.999?'#e7decbd9':'transparent';
+  emmaus.style.backgroundColor=move>=.999?'#e7decb':'transparent';
   const lerp=(a,b,p)=>a+(b-a)*p;
   const poseRect=(el,a,b,p)=>{
    if(!a||!b)return;
@@ -190,7 +190,9 @@
   // Lock the visible plate identity for a reversible 03→04 trip, even when
   // the public-domain image host loads during the midpoint of that journey.
   const useArchive=archiveForOlive===null?archiveReady:archiveForOlive;
-  const fieldExit=1-smooth((oliveIn-.65)/.34);
+  // MERSI cadence: move an EXISTING field first; expose the NEW identity in the vacancy second.
+  const morphMove=smooth(oliveIn/.64);
+  const fieldExit=1-smooth((oliveIn-.70)/.29);
   const fullLeft={x:0,y:0,w:stageRect.width*2/3,h:stageRect.height};
   const fullRight={x:stageRect.width*2/3,y:0,w:stageRect.width/3,h:stageRect.height};
   if(move>.001&&sourceFigure&&sourceTile&&coverBounds){
@@ -250,29 +252,30 @@
   const destination={x:heroRect.left-stageRect.left,y:heroRect.top-stageRect.top,
                      w:heroRect.width,h:heroRect.height};
   if(galleryBorrowed){
-   poseRect(emRight,fullRight,destination,oliveIn);
+   poseRect(emRight,fullRight,destination,morphMove);
   }else{
    poseRect(emRight,coverBounds||fullRight,fullRight,expand);
   }
   // The old ONE field recedes through an inward horizontal crop as the
   // speaker identity unfolds; its content is never moved off the viewport.
-  if(oliveIn>.001)emLeft.style.clipPath='inset(0 0 0 '+(100*smooth(oliveIn/.78)).toFixed(3)+'%)';
+  if(oliveIn>.001)emLeft.style.clipPath='inset(0 0 0 '+(100*smooth((oliveIn-.64)/.35)).toFixed(3)+'%)';
   oliveHero.style.transform='none';
-  oliveHero.style.opacity=String(smooth((oliveIn-.66)/.33));
+  oliveHero.style.opacity=String(1-fieldExit);
   emRight.style.opacity=String((useArchive?archive:0)*fieldExit);
   // If the 241-plate host is unavailable, transfer the exact original
   // magazine plate itself into the Olive portrait slot. No blank panel,
   // placeholder, fabricated engraving, or duplicate image may appear.
   if(transferFigure&&!useArchive&&oliveIn>.001){
-   poseRect(transferFigure,fullRight,destination,oliveIn);
+   poseRect(transferFigure,fullRight,destination,morphMove);
   }
   heroFolio.style.opacity=String(smooth((oliveIn-.76)/.23));
 
-  const editorial=smooth(oliveIn/.90),register=smooth((oliveIn-.12)/.76),windowReveal=smooth((oliveIn-.34)/.66);
+  const editorial=smooth((oliveIn-.60)/.38),register=smooth((oliveIn-.70)/.29),windowReveal=smooth((oliveIn-.74)/.25);
+  oliveBottom.style.opacity=String(smooth((oliveIn-.69)/.30));
   oliveEditorial.style.clipPath='inset(0 '+((1-editorial)*100).toFixed(3)+'% 0 0)';
   oliveRegister.style.clipPath='inset('+((1-register)*100).toFixed(3)+'% 0 0 0)';
   oliveWindow.style.clipPath='inset(0 0 '+((1-windowReveal)*100).toFixed(3)+'% 0)';
-  $('.olive-proof__folio').style.opacity=String(smooth((oliveIn-.8)/.2));
+  $('.olive-proof__folio').style.opacity=String(smooth((oliveIn-.83)/.16));
   const section=distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.44?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
   seek.value=String(distance/12*100);percent.textContent=(distance/12*100).toFixed(0)+'%';lastPaint=distance;
