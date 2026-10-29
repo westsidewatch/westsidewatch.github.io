@@ -100,8 +100,8 @@
  const names=$('#olive-speaker-names'),mainImg=$('#olive-main-image'),main=$('#olive-main'),nextImg=$('#olive-next-image');let currentSpeaker=0;
  const emLeft=$('.emmaus__left'),emRight=$('.emmaus__right'),emPlates=$('.emmaus__plates');
  const oliveHero=$('#olive-morph-hero'),oliveEditorial=$('.olive-proof__editorial'),oliveRegister=$('.olive-proof__register'),oliveWindow=$('.olive-proof__window');
- const handoffImage=$('#olive-handoff-image'),handoffPlate=$('#olive-handoff-plate'),heroFolio=$('.olive-proof__hero-folio');
- let handoffSourceLocked=false;
+ const heroFolio=$('.olive-proof__hero-folio');
+ let galleryBorrowed=false,sourceStyleOwner=null,sourceStyleCover=null,sourceStyleDoc=null;
  function chooseSpeaker(index){
   currentSpeaker=index;const [slug,zh,en]=roster[index];
   mainImg.src='/images/olive/'+slug+'-editorial.png';mainImg.alt=zh;
@@ -118,6 +118,7 @@
  });
  chooseSpeaker(0);
  let transferFigure=null,transferHome=null,transferNext=null,transferStyle=null;
+ let sourceOriginalTileOpacity=null,sourceOriginalCoverOpacity=null;
  let frameLoaded=false,lastPaint=NaN,queued=false;
  function paint(){
   queued=false;const vh=Math.max(1,innerHeight),top=track.getBoundingClientRect().top;
@@ -155,6 +156,23 @@
            y:baseRect.top-stageRect.top+frameRect.top+r.top,w:r.width,h:r.height};
   };
   const original=bounds(sourceTile),coverBounds=bounds(sourceCover);
+  // As the SAME engraving leaves the Magazine, its abandoned Contents
+  // typography withdraws and the previous cover clears at the receiving end.
+  // These are preview-iframe-only inline changes, restored on reverse scroll.
+  if(sourceDoc&&sourceStyleDoc!==sourceDoc){
+   sourceStyleDoc=sourceDoc;sourceOriginalTileOpacity=sourceTile?.style.opacity??'';
+   sourceOriginalCoverOpacity=sourceCover?.style.opacity??'';
+  }
+  if(sourceTile&&sourceCover){
+   if(move>.001){
+    sourceTile.style.opacity=String(1-smooth(move/.60));
+    sourceCover.style.opacity=String(1-smooth((move-.48)/.52));
+   }else{
+    sourceTile.style.opacity=sourceOriginalTileOpacity??'';
+    sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
+   }
+  }
+  emmaus.style.backgroundColor=move>=.999?'#e7decbd':'transparent';
   const lerp=(a,b,p)=>a+(b-a)*p;
   const poseRect=(el,a,b,p)=>{
    if(!a||!b)return;
@@ -187,7 +205,7 @@
   emLeft.style.clipPath='inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
   poseRect(emRight,coverBounds||fullRight,fullRight,expand);
   emRight.style.clipPath='none';
-  syncGallery(move>.98&&oliveIn<.001&&document.visibilityState==='visible');
+  syncGallery(move>.98&&oliveIn<.999&&document.visibilityState==='visible');
   const archiveReady=plateEls.some(img=>img.classList.contains('is-active'));
   emRight.style.opacity=String(archiveReady?archive:0);
   emPlates.style.opacity=String(1-smooth(oliveIn/.32));
@@ -195,18 +213,38 @@
   olive.style.visibility=oliveShowing?'visible':'hidden';
   olive.style.opacity='1';olive.style.clipPath='none';
   olive.style.backgroundColor=oliveIn>=.999?'#f0eee7':'transparent';
-  olive.style.pointerEvents=oliveIn>.999?'auto':'none';olive.inert=oliveIn<=.999;olive.setAttribute('aria-hidden',oliveIn>.999?'false':'true');
-  if(oliveShowing&&!handoffSourceLocked){
-   handoffImage.src=plateEls[activeSlot]?.src||imgUrl(plates[galleryIndex]);
-   handoffSourceLocked=true;
-  }else if(!oliveShowing)handoffSourceLocked=false;
-  // 03 -> 04 retains the shared image-frame transformation, not a new page.
-  const sx=emRight.offsetWidth/Math.max(1,oliveHero.offsetWidth),sy=emRight.offsetHeight/Math.max(1,oliveHero.offsetHeight);
-  const tx=emRight.offsetLeft-oliveHero.offsetLeft,ty=emRight.offsetTop-oliveHero.offsetTop;
-  const travel=1-oliveIn;
-  oliveHero.style.transform='translate3d('+(tx*travel).toFixed(2)+'px,'+(ty*travel).toFixed(2)+'px,0) scale('+(1+(sx-1)*travel).toFixed(5)+','+(1+(sy-1)*travel).toFixed(5)+')';
-  handoffPlate.style.opacity=String(1-smooth((oliveIn-.18)/.57));
-  heroFolio.style.opacity=String(smooth((oliveIn-.65)/.35));
+  olive.style.pointerEvents=oliveIn>.999?'auto':'none';olive.inert=oliveIn<=.999;
+  olive.setAttribute('aria-hidden',oliveIn>.999?'false':'true');
+
+  // Move the EXISTING 241-image right panel, not an extra handoff image:
+  // it is reparented inside the stage just as the earlier Vol.00 original
+  // moved. When scrolling backward it resumes its exact Emmaus position.
+  // At the end the original protected speaker poster appears IN PLACE,
+  // with no translated/scaled second portrait crossing the screen.
+  const panelTravelling=oliveIn>.001&&oliveIn<.999;
+  if(panelTravelling&&!galleryBorrowed){
+   $('#proof-stage').appendChild(emRight);galleryBorrowed=true;
+   emRight.dataset.p2GalleryTransferred='true';
+  }else if(!panelTravelling&&galleryBorrowed){
+   emmaus.appendChild(emRight);galleryBorrowed=false;
+   emRight.removeAttribute('data-p2-gallery-transferred');
+  }
+  const heroRect=oliveHero.getBoundingClientRect();
+  const destination={x:heroRect.left-stageRect.left,y:heroRect.top-stageRect.top,
+                     w:heroRect.width,h:heroRect.height};
+  if(galleryBorrowed){
+   poseRect(emRight,fullRight,destination,oliveIn);
+  }else{
+   poseRect(emRight,coverBounds||fullRight,fullRight,expand);
+  }
+  // The old ONE field recedes through an inward horizontal crop as the
+  // speaker identity unfolds; its content is never moved off the viewport.
+  if(oliveIn>.001)emLeft.style.clipPath='inset(0 0 0 '+(100*smooth(oliveIn/.78)).toFixed(3)+'%)';
+  oliveHero.style.transform='none';
+  oliveHero.style.opacity=String(smooth((oliveIn-.66)/.33));
+  emRight.style.opacity=String((archiveReady?archive:0)*(1-smooth((oliveIn-.65)/.34)));
+  heroFolio.style.opacity=String(smooth((oliveIn-.76)/.23));
+
   const editorial=smooth(oliveIn/.90),register=smooth((oliveIn-.12)/.76),windowReveal=smooth((oliveIn-.34)/.66);
   oliveEditorial.style.clipPath='inset(0 '+((1-editorial)*100).toFixed(3)+'% 0 0)';
   oliveRegister.style.clipPath='inset('+((1-register)*100).toFixed(3)+'% 0 0 0)';
