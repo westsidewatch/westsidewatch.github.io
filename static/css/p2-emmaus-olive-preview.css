@@ -20,8 +20,8 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
    Only after arrival does ONE reveal top-down; the composed stage expands last.
    Children are absolutely anchored so there is no second arriving full page. */
 .emmaus{transform-origin:center center;will-change:transform}
-.emmaus__left{position:absolute;inset:0 auto 0 0;width:66.666667%;height:100%;z-index:1}
-.emmaus__right{position:absolute;top:0;left:66.666667%;width:33.333333%;height:100%;z-index:2;will-change:left,width}
+#emmaus > .emmaus__left{position:absolute;inset:0 auto 0 0;width:66.666667%;height:100%;z-index:1}
+#emmaus > .emmaus__right{position:absolute;top:0;left:66.666667%;width:33.333333%;height:100%;z-index:2;will-change:left,width}
 .emmaus__handoff-photo{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;
  object-position:center top;filter:grayscale(1) sepia(.33) contrast(.94) brightness(1.065);
  opacity:1;pointer-events:none;will-change:opacity}
