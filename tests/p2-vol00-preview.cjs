@@ -74,9 +74,9 @@ assert.doesNotMatch(source,/starClearance|radial-gradient\(ellipse 24% 22%/,'a r
 assert.doesNotMatch(css,/ocean-rise|water-doors|p2-approved-ocean|repeating-linear-gradient\(118deg/);
 assert.doesNotMatch(css,/dual-letterfield\{[^}]*drop-shadow/,'printed SVGs must stay razor-edged');
 assert.match(css,/mask-size:cover,100% 100%/);
-assert.match(css,/font:400 clamp\\(52px,12\\.2cqi,60px\\)\\/\\.96 var\\(--ws-type-display-en/,'the English feature title must retain its approved original Bodoni 400');
-assert.match(css,/font:italic 400 1em\\/\\.98 var\\(--ws-type-display-en/,'OF in the English feature remains genuine Bodoni Italic 400');
-assert.match(css,/font:var\\(--ws-weight-section,900\\) clamp\\(13px,3\\.65cqi,17px\\)\\/1\\.15 var\\(--ws-type-display-zh/,'only the Chinese feature title uses Design OS heavy section weight');
+assert(css.includes('font:400 clamp(52px,12.2cqi,60px)/.96 var(--ws-type-display-en'),'English headline must retain original Bodoni 400 font');
+assert(css.includes('font:italic 400 1em/.98 var(--ws-type-display-en'),'English OF must retain original italic 400');
+assert(css.includes('font:var(--ws-weight-section,900) clamp(13px,3.65cqi,17px)/1.15 var(--ws-type-display-zh'),'Chinese headline alone uses Design OS 900');
 
 assert.match(css,/background:url\('\/p2\/magazine-cover\/p2-magazine-sandstone-wall\.png'\) center top\/cover/);
 const folio=[...source.matchAll(/<button type="button" data-realm="([^"]+)" data-surface-id="([^"]+)" data-href="([^"]+)" aria-expanded="false" aria-label="展開 ([^"]+)"><span>([^<]+)<\/span><\/button>/g)];
