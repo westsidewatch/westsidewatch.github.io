@@ -91,6 +91,7 @@ try {
   window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
   window.__JERUSALEM3000__.inspectSourceLifecycleContext=id=>three.inspectSourceLifecycleContext(id);
   window.__JERUSALEM3000__.inspectCityFoundation=phase=>three.inspectCityFoundation(phase);
+  window.__JERUSALEM3000__.inspectHousingBoundary=options=>three.inspectHousingBoundary(options);
   window.__JERUSALEM3000__.inspectOverviewBaseline=()=>three.inspectOverviewBaseline();
   window.__JERUSALEM3000__.cityFoundationIndex=three.cityFoundationIndex();
   window.__JERUSALEM3000__.inspectHerodianDimensions=()=>three.inspectHerodianDimensions();

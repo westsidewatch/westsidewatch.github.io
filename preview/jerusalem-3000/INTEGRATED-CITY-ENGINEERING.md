@@ -67,3 +67,8 @@
 ### 2026-10-28 聖殿尺度與全時代周邊地貌
 
 查出希律平台長向倒置、通用殿體最高136m、柱廊超大等硬編碼尺度問題，現將平台／殿體／院落分開校準，選用每肘0.525m方案且保留定位不確定性。共同地形升級為公開GLO-30原生217×217節點，維持原AOI、原點、固定基準與垂直比例1；地貌鏡頭涵蓋北側山區、橄欖山及欣嫩／汲倫谷地，六個凍結現代地圖參照與谷線共用此地形。手機重構圖並避讓標籤，地形明暗避免再受強場景燈壓平。無古地表造形宣稱，沒有按時代挖谷拉山。詳見 TEMPLE-AND-REGIONAL-TERRAIN.md；歷史基礎仍未驗收。
+
+
+## Housing/perimeter consistency (2026-10-29)
+
+All housing owners now share current-stage full-footprint admission, using existing circuits and explicit later expansion roles. Later blocks additionally admit individual visual modules at generation. No geometry is moved and no incomplete early circuit is invented. See [HOUSING-BOUNDARIES.md](HOUSING-BOUNDARIES.md). Historical acceptance remains pending.

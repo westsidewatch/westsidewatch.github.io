@@ -1,3 +1,4 @@
+import {createHousingBoundaryAdmission,housingBoundaryAt} from './housing-boundary.js';
 import {createRegionalLandforms} from './regional-landforms.js';
 import {HERODIAN_DIMENSIONS} from './herodian-dimensions.js';
 import {createDefenseTimeline,compileDefenseProfile} from './defense-timeline.js';
@@ -190,6 +191,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   renderer.localClippingEnabled=true;
   const constructionPresentation=createCityConstructionPresentation({root,getRecord:id=>cityCoreRuntime?.core.get(id)}),phaseDissolve=createPhaseDissolveView(mount);
   let regionalLandforms=null,regionalData=null,herodianScaleReport=null;
+  let housingBoundaryAdmission=null;
   let defenseTimeline=null,defenseData=null,canonicalProtected=[],independentLaterRegistrations=new Map(),fabricMaterialDisposer=null,persistentCityWorld=null,activeWorldEntry=null,sharedPlaces=null,sharedPlaceView=null,wallReference=null,wallReferenceModel=null,wallGateView=null,wallCredit=null;
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
@@ -237,6 +239,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       });
   }
   function applyTemporalState() {
+    housingBoundaryAdmission?.restore();
     wallReferenceModel?.apply({position:timelinePosition,evidenceAllowed});
     defenseTimeline?.apply({phaseId:currentPhaseId,position:timelinePosition,evidenceAllowed});
     if(wallCredit)wallCredit.hidden=Boolean(terrainView)||!['ottoman','outside-walls','modern'].includes(currentPhaseId)||!evidenceAllowed('inferred');
@@ -265,6 +268,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       setEraMorphologyProgress(phase2Morphology, 1, { ruined: true });
     laterMorphologyBinding?.apply(evidenceAllowed,{constructionProgress:1});
     updateCityCoreVisibility();
+    housingBoundaryAdmission?.apply();
     onDistrictAcceptance?.(sharedEraRuntime?.acceptance()??null);
     needsFrame = true;
   }
@@ -595,7 +599,13 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       return [];
     };
     defenseTimeline=createDefenseTimeline({data:defenseData,phases:[...cityCoreRuntime.core.phases.values()],core:cityCoreRuntime.core,terrain:terrainRuntime,parent:root,roadsForPhase:defenseRoadsForPhase,exclusionsForPhase:phase=>independentLaterRegistrations.has(phase)?[...independentLaterRegistrations.get(phase).cores.map(c=>({polygon:c.geometry.polygon})),...independentLaterRegistrations.get(phase).reservations.map(c=>({polygon:c.geometry.polygon}))]:phase==='herodian-jesus'||phase==='roman-destruction'?canonicalProtected:[...(royalCity?.exclusionsFor(phase)||[]),...(periodRegistrations.get(phase)?.reservations||[])]});
-    for(const [phase,registration]of independentLaterRegistrations)registration.defenseReservations=defenseTimeline.exclusionsFor(phase);
+    for(const [phase,registration]of independentLaterRegistrations){
+      registration.defenseReservations=defenseTimeline.exclusionsFor(phase);
+      const candidates=[.1,.3,.8,.99].map(offset=>housingBoundaryAt({phaseId:phase,offset,defenseData,wallReference,royalData:davidData,origin:terrainRuntime.grid.origin}));
+      // An unwalled interval must not inherit a future enclosure constraint.
+      if(candidates.every(b=>b.rings.length))registration.housingBoundaryRings=[...new Map(candidates.flatMap(b=>b.rings).map(r=>[JSON.stringify(r),r])).values()];
+    }
+    housingBoundaryAdmission=createHousingBoundaryAdmission({root,core:cityCoreRuntime.core,boundaryFor:()=>housingBoundaryAt({phaseId:currentPhaseId,offset:timelinePosition-Math.floor(timelinePosition),defenseData,wallReference,royalData:davidData,royalStage:royalCity?.diagnostics().stage,origin:terrainRuntime.grid.origin})});
     foundationRuntime=createCityFoundationRuntime({core:cityCoreRuntime.core,terrain:terrainRuntime,root,getCurrentPhase:()=>currentPhaseId,getPosition:()=>timelinePosition});
     const bounds = new THREE.Box3()
       .setFromObject(cityCoreLayer)
@@ -666,6 +676,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     if(changed)phaseDissolve.clear();
     if (needsFrame || changed || controls.autoRotate) {
       try {
+        housingBoundaryAdmission?.restore();
+        housingBoundaryAdmission?.apply();
         camera.updateMatrixWorld();
         royalRelief?.project(camera);
         const placeBoxes=sharedPlaceView?.project(camera)||[];
@@ -707,6 +719,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             cityOverview:overviewInfo,
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
             terrainPresentation:{...terrainPresentation?.diagnostics,surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
+            housingBoundary:housingBoundaryAdmission?.snapshot({includeIds:false}),
             wallReference:wallReferenceModel?.diagnostics(),
             defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),
             cityWorld:persistentCityWorld?.diagnostics(),
@@ -787,6 +800,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     setWaterDefenseVariant(id){waterDefenseModel.setVariant(id);applyTemporalState();},
     waterDefenseEvidence(position){const state=waterDefenseState(waterDefense,{phases:[...cityCoreRuntime.core.phases.values()]},position);return state?{...state,selectedVariant:waterDefenseModel.selectedVariant,variants:waterDefense.towerVariants,localPlans:localPlanAudit}:null;},
     foundationContext(){return {terrain:terrainRuntime};},
+    inspectHousingBoundary(options){return housingBoundaryAdmission?.snapshot(options);},
     inspectOverviewBaseline(){let meshes=0,modules=0,gridMeshes=0;const ids=new Set(),subdivisions=new Set();root.traverse(m=>{if(!m.isMesh||!m.userData.overview)return;for(let p=m;p;p=p.parent)if(!p.visible)return;meshes++;modules+=m.geometry.userData.visualModules||1;if(m.geometry.userData.worldGrid===true)gridMeshes++;subdivisions.add(m.geometry.userData.subdivision||'unspecified');ids.add(m.userData.cityObject?.objectId||m.userData.cityObject?.parcelId);});return {phase:currentPhaseId,grammar:'terrain-courtyard-mass-v1',mode:'city-overview',meshes,registeredHousingObjects:ids.size,visualModules:modules,subdivisions:[...subdivisions].sort(),worldGridMeshes:gridMeshes,moduleCountsAreHistoricalBuildings:false,detailWork:'paused',historicalFoundationAccepted:false};},
     inspectSharedPlaces(){return currentPhaseId?sharedPlaces?.snapshot({phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode})??null:null;},
     sharedPlaceTransitions(){return sharedPlaces?.transitions()??[];},
