@@ -14,7 +14,9 @@ assert.match(js,/Math\.min\(distance,6\.5\)/,'does not stretch the approved Chur
 assert.match(js,/const emIn=.*6\.50.*oliveIn=.*8\.64/,'both stages share a reversible scroll timeline');
 assert.match(js,/const roster=\[/,'uses fixed factual speaker assets');
 assert.match(css,/grid-template-columns:minmax\(0,2fr\) minmax\(0,1fr\)/,'Emmaus is left 2/3 and original engravings right 1/3');
-assert.doesNotMatch(js,/preventDefault\(\).*wheel|addEventListener\('wheel'/,'book selection must not hijack vertical P2 wheel');
+assert.match(js,/rail\.addEventListener\('wheel',/,'horizontal ONE strip bridges vertical wheel to the P2 scroll owner');
+assert.match(js,/scrollBy\(\{top:delta,behavior:'instant'\}\)/,'the rail forwards vertical wheel to the full-page handoff');
+assert.doesNotMatch(js,/stopPropagation\(\)/,'P2 should not trap wheel propagation inside a second viewport');
 console.log('P2 03/04 isolated preview source contract: pass');
 
 if(!process.env.P2_BROWSER_PROOF)process.exit(0);
@@ -34,7 +36,7 @@ const {chromium}=require('playwright');
    await page.locator('[data-book="41"]').evaluate(element=>element.click());
    assert.equal(await page.locator('#em-book-en').textContent(),'Mark','book selection changes live spread');
    const before=await page.evaluate(()=>scrollY);
-   await page.locator('#emmaus-rail').hover();await page.mouse.wheel(0,500);await page.waitForTimeout(180);
+   await page.locator('#emmaus-rail').hover();await page.mouse.wheel(0,500);await page.waitForTimeout(300);
    const after=await page.evaluate(()=>scrollY);
    assert(after>before,'vertical wheel on the book rail advances P2 instead of trapping inside ONE');
    await page.locator('[data-jump="10.65"]').click();await page.waitForTimeout(220);
