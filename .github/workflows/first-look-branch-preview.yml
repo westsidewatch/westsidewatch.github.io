@@ -33,6 +33,25 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+      - name: Verify Vol.00 and protected Church to Magazine handoff in Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-integration-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-vol00-preview.cjs
+          node tests/p2-church-magazine-handoff.cjs
+      - name: Save browser proofs for Church continuity and Contents
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-church-magazine-continuity
+          path: |
+            artifacts/p2-vol00/
+            artifacts/p2-church-magazine/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Deploy Cloudflare Pages preview (never production)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
