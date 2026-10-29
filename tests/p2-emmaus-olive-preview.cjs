@@ -21,6 +21,7 @@ assert.match(html,/olive\/components\/speaker-baseline-v1\/baseline\.js/,'reuses
 assert.match(html,/one\/one-dore-assets-241\.js/,'reuses original engraved archive');
 assert.match(js,/books\.length!==66/,'guards the full canonical book count');
 assert.match(js,/plates\.length!==241/,'right page rotates the entire canonical Doré library, after the art-directed opening plates');
+assert.match(js,/let galleryIndex=211/,'canonical Doré Emmaus plate 212 leads the same complete 241-plate archive');
 assert.match(js,/Math\.min\(distance,6\.5\)/,'does not stretch the approved Church/Magazine timing');
 assert.match(js,/const move=.*6\.50[\s\S]*oliveIn=.*9\.44/,'both stages share a reversible scroll timeline');
 assert.match(js,/appendChild\(sourceFigure\)/,'the original engraving node crosses into the receiving stage');
