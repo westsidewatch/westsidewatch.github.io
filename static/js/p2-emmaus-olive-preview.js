@@ -173,7 +173,7 @@
    }
    poseRect(transferFigure,original,coverBounds,move);
    const ready=plateEls.some(img=>img.classList.contains('is-active'));
-   transferFigure.style.setProperty('--p2-transfer-visible',String(1-(ready?archive:0)));
+   transferFigure.style.setProperty('--p2-transfer-visible',String(Math.max(0,1-(ready?archive:0)-smooth(oliveIn/.2))));
    transferFigure.dataset.p2Transferred='true';
   }else if(move<=.001&&transferFigure&&transferHome){
    transferHome.insertBefore(transferFigure,transferNext?.parentNode===transferHome?transferNext:null);
@@ -226,7 +226,11 @@
  seek.addEventListener('input',()=>seekTo(Number(seek.value)/100*12,true));
  addEventListener('scroll',requestPaint,{passive:true});addEventListener('resize',requestPaint,{passive:true});
  document.addEventListener('visibilitychange',requestPaint);
- base.addEventListener('load',()=>{frameLoaded=true;requestPaint()});
+ base.addEventListener('load',()=>{
+  frameLoaded=true;requestPaint();
+  const nested=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
+  nested?.addEventListener('load',requestPaint,{once:true});
+ });
  const initial=new URLSearchParams(location.search).get('d');
  requestAnimationFrame(()=>seekTo(initial===null?7.85:clamp(Number(initial)||0,0,12)));
  requestPaint();
