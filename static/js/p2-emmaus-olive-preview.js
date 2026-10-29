@@ -98,6 +98,10 @@
   ['yu-hong-jie','于宏潔','YU HONGJIE'],['kou-shao-en','寇紹恩','KOU SHAO-EN']
  ];
  const names=$('#olive-speaker-names'),mainImg=$('#olive-main-image'),main=$('#olive-main'),nextImg=$('#olive-next-image');let currentSpeaker=0;
+ const emLeft=$('.emmaus__left'),emRight=$('.emmaus__right'),emPlates=$('.emmaus__plates');
+ const oliveHero=$('#olive-morph-hero'),oliveEditorial=$('.olive-proof__editorial'),oliveRegister=$('.olive-proof__register'),oliveWindow=$('.olive-proof__window');
+ const handoffImage=$('#olive-handoff-image'),handoffPlate=$('#olive-handoff-plate'),heroFolio=$('.olive-proof__hero-folio');
+ let handoffSourceLocked=false;
  function chooseSpeaker(index){
   currentSpeaker=index;const [slug,zh,en]=roster[index];
   mainImg.src='/images/olive/'+slug+'-editorial.png';mainImg.alt=zh;
@@ -122,20 +126,48 @@
   else if(legacyDistance<=churchEnd){const scene=legacyDistance<=1.8?.1+legacyDistance*(.4/1.8):.5+(legacyDistance-1.8);legacy=scene/2.9;}
   else{const scene=2.37+(legacyDistance-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);legacy=scene<=2.9?.75*scene/2.9:.75+.25*(scene-2.9)/1.1;}
   if(frameLoaded)base.contentWindow?.postMessage({type:'westside-p2-scroll',progress:clamp(legacy),active:distance<6.6},location.origin);
-  const emIn=smooth((distance-6.50)/.72),oliveIn=smooth((distance-8.64)/.82);
-  // Keep Emmaus fully opaque *behind* the Olive page while the latter is
-  // uncovered bottom-up. Cross-fading both would expose the old Magazine
-  // through two semi-transparent pages halfway across the handoff.
-  const emOpacity=emIn*(oliveIn>=.999?0:1),oliveOpacity=oliveIn>.001?1:0;
-  emmaus.style.visibility=emOpacity>.001?'visible':'hidden';emmaus.style.opacity=String(emOpacity);
-  const emInteractive=emOpacity>.98&&oliveIn<.02;
+  const emIn=smooth((distance-6.50)/.90),oliveIn=smooth((distance-8.64)/1.38);
+  // MERSI-style spatial grammar: opposing image masks and an actual moving
+  // shared image frame, not opacity crossfades or a whole-page curtain.
+  // All geometry is a pure function of ONE scroll distance: reverse instantly
+  // restores the exact same layout and stopping scroll stops every panel.
+  const emShowing=emIn>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
+  emmaus.style.visibility=emShowing?'visible':'hidden';emmaus.style.opacity='1';emmaus.style.transform='none';
+  const emInteractive=emIn>.999&&oliveIn<.01;
   emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
-  olive.style.visibility=oliveOpacity>.001?'visible':'hidden';olive.style.opacity=String(oliveOpacity);
-  olive.style.pointerEvents=oliveIn>.98?'auto':'none';olive.inert=oliveIn<=.98;olive.setAttribute('aria-hidden',oliveIn>.98?'false':'true');
-  emmaus.style.transform='translate3d('+((1-emIn)*-12).toFixed(3)+'%,0,0)';
-  olive.style.clipPath='inset('+((1-oliveIn)*100).toFixed(2)+'% 0 0 0)';
-  const emActive=emOpacity>.02&&document.visibilityState==='visible';syncGallery(emActive);
-  const section=distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.05?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
+  // The original Magazine is a two-page spread. Its existing gutter shifts
+  // toward Emmaus's 2/3 : 1/3 proportions while opposite vertical masks
+  // reveal Bible and engraving; the Magazine is visible only in the gaps.
+  if(innerWidth>820){const left=50+emIn*(100/6);emmaus.style.gridTemplateColumns=left.toFixed(3)+'% '+(100-left).toFixed(3)+'%';}
+  else emmaus.style.gridTemplateColumns='';
+  emLeft.style.clipPath='inset('+((1-emIn)*100).toFixed(3)+'% 0 0 0)';
+  emRight.style.clipPath='inset(0 0 '+((1-emIn)*100).toFixed(3)+'% 0)';
+  olive.style.visibility=oliveShowing?'visible':'hidden';olive.style.opacity='1';olive.style.clipPath='none';
+  olive.style.backgroundColor=oliveIn>=.999?'#f0eee7':'transparent';
+  olive.style.pointerEvents=oliveIn>.999?'auto':'none';olive.inert=oliveIn<=.999;olive.setAttribute('aria-hidden',oliveIn>.999?'false':'true');
+  if(oliveShowing&&!handoffSourceLocked){
+   handoffImage.src=plateEls[activeSlot]?.src||imgUrl(plates[galleryIndex]);
+   handoffSourceLocked=true;
+  }else if(!oliveShowing)handoffSourceLocked=false;
+  // Transform the right-hand Doré field physically into Olive's upper-left
+  // portrait field, the same FLIP-style source/target rectangle relationship
+  // described by FLOT NOIR. The artwork changes inside the travelling frame.
+  const sx=emRight.offsetWidth/Math.max(1,oliveHero.offsetWidth),sy=emRight.offsetHeight/Math.max(1,oliveHero.offsetHeight);
+  const tx=emRight.offsetLeft-oliveHero.offsetLeft,ty=emRight.offsetTop-oliveHero.offsetTop;
+  const travel=1-oliveIn;
+  oliveHero.style.transform='translate3d('+(tx*travel).toFixed(2)+'px,'+(ty*travel).toFixed(2)+'px,0) scale('+(1+(sx-1)*travel).toFixed(5)+','+(1+(sy-1)*travel).toFixed(5)+')';
+  handoffPlate.style.opacity=String(1-smooth((oliveIn-.18)/.57));
+  heroFolio.style.opacity=String(smooth((oliveIn-.65)/.35));
+  emPlates.style.opacity=String(1-smooth(oliveIn/.32));
+  // Four editorial fields enter at different rates and in opposing directions;
+  // no full-screen Olive mask ever replaces the Emmaus scene as one piece.
+  const editorial=smooth(oliveIn/.90),register=smooth((oliveIn-.12)/.76),windowReveal=smooth((oliveIn-.34)/.66);
+  oliveEditorial.style.clipPath='inset(0 '+((1-editorial)*100).toFixed(3)+'% 0 0)';
+  oliveRegister.style.clipPath='inset('+((1-register)*100).toFixed(3)+'% 0 0 0)';
+  oliveWindow.style.clipPath='inset(0 0 '+((1-windowReveal)*100).toFixed(3)+'% 0)';
+  $('.olive-proof__folio').style.opacity=String(smooth((oliveIn-.8)/.2));
+  const emActive=emIn>.02&&oliveIn<.001&&document.visibilityState==='visible';syncGallery(emActive);
+  const section=distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.4?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
   seek.value=String(distance/12*100);percent.textContent=(distance/12*100).toFixed(0)+'%';lastPaint=distance;
  }

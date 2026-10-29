@@ -18,6 +18,9 @@ assert.match(css,/grid-template-columns:minmax\(0,2fr\) minmax\(0,1fr\)/,'Emmaus
 assert.match(js,/rail\.addEventListener\('wheel',/,'horizontal ONE strip bridges vertical wheel to the P2 scroll owner');
 assert.match(js,/scrollBy\(\{top:delta,behavior:'instant'\}\)/,'the rail forwards vertical wheel to the full-page handoff');
 assert.doesNotMatch(js,/stopPropagation\(\)/,'P2 should not trap wheel propagation inside a second viewport');
+assert.match(js,/oliveHero\.style\.transform=/,'the Doré image frame must physically move and resize into the Olive main portrait slot');
+assert.match(js,/oliveEditorial\.style\.clipPath=/,'Olive editorial fields reveal independently from the persistent spread');
+assert.doesNotMatch(js,/olive\.style\.clipPath='inset/,'a whole-scene curtain would replace one page with another');
 console.log('P2 03/04 isolated preview source contract: pass');
 
 if(!process.env.P2_BROWSER_PROOF)process.exit(0);
@@ -43,7 +46,12 @@ const {chromium}=require('playwright');
    const after=await page.evaluate(()=>scrollY);
    assert(after>before,'vertical wheel on the book rail advances P2 instead of trapping inside ONE');
    await page.locator('[data-jump="9.02"]').click();await page.waitForTimeout(150);
-   assert.equal(await page.locator('#olive-proof').evaluate(el=>getComputedStyle(el).opacity),'1','Olive reveal remains opaque so the earlier magazine cannot ghost through the handoff');
+   assert.equal(await page.locator('#olive-proof').evaluate(el=>getComputedStyle(el).opacity),'1','Olive separate fields remain opaque while the earlier spread persists');
+   assert.equal(await page.locator('#emmaus').evaluate(el=>getComputedStyle(el).visibility),'visible','Emmaus remains on stage while its pieces become Olive');
+   assert.notEqual(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).transform),'none','the Doré field is moving between real layout rectangles');
+   assert.match(await page.locator('.olive-proof__register').evaluate(el=>getComputedStyle(el).clipPath),/inset/,'speaker grid rises independently from the ONE rail');
+   const midScreenshot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-mersi-mid.png');
+   fs.mkdirSync(path.dirname(midScreenshot),{recursive:true});await page.screenshot({path:midScreenshot});
    await page.locator('[data-jump="10.65"]').click();await page.waitForTimeout(220);
    assert.equal(await page.locator('#olive-proof').getAttribute('aria-hidden'),'false','Olive Mountain follows Emmaus');
    assert.equal(await page.locator('#olive-speaker-names button').count(),12,'twelve verified speakers retained');
