@@ -186,8 +186,8 @@
   // the public-domain image host loads during the midpoint of that journey.
   const useArchive=archiveForOlive===null?archiveReady:archiveForOlive;
   // MERSI cadence: move an EXISTING field first; expose the NEW identity in the vacancy second.
-  const morphMove=smooth(oliveIn/.64);
-  const fieldExit=1-smooth((oliveIn-.70)/.29);
+  const morphMove=smooth((oliveIn-.32)/.58);
+  const fieldExit=1-smooth((oliveIn-.79)/.2);
   const fullLeft={x:0,y:0,w:stageRect.width*2/3,h:stageRect.height};
   const fullRight={x:stageRect.width*2/3,y:0,w:stageRect.width/3,h:stageRect.height};
   if(move>.001&&sourceFigure&&sourceTile&&coverBounds){
@@ -253,7 +253,7 @@
   }
   // The old ONE field recedes through an inward horizontal crop as the
   // speaker identity unfolds; its content is never moved off the viewport.
-  if(oliveIn>.001)emLeft.style.clipPath='inset(0 0 0 '+(100*smooth((oliveIn-.64)/.35)).toFixed(3)+'%)';
+  if(oliveIn>.001)emLeft.style.clipPath='inset(0 0 0 '+(100*smooth((oliveIn-.42)/.25)).toFixed(3)+'%)';
   oliveHero.style.transform='none';
   oliveHero.style.opacity=String(1-fieldExit);
   emRight.style.opacity=String((useArchive?archive:0)*fieldExit);
@@ -265,15 +265,15 @@
   }
   heroFolio.style.opacity=String(smooth((oliveIn-.76)/.23));
 
-  const editorial=smooth((oliveIn-.60)/.38),register=smooth((oliveIn-.70)/.29),windowReveal=smooth((oliveIn-.74)/.25);
+  const editorial=smooth((oliveIn-.55)/.36),register=smooth((oliveIn-.70)/.29),windowReveal=smooth((oliveIn-.74)/.25);
   const kicker=$('.olive-proof__kicker');
-  kicker.style.opacity=String(smooth((oliveIn-.05)/.22));
+  kicker.style.opacity=String(smooth((oliveIn-.38)/.3));
   oliveBottom.style.opacity=String(smooth((oliveIn-.69)/.30));
   // Olive editorial is revealed in the exact area vacated by the moving
   // engraved panel, from RIGHT to LEFT, not as a new page wipe.
   // The left edge of this crop tracks the same MERSI morph progress.
   oliveEditorial.style.clipPath='none';
-  $('.olive-proof__editorial > div').style.opacity=String(smooth((oliveIn-.44)/.35));
+  $('.olive-proof__editorial > div').style.opacity=String(editorial);
   $('.olive-proof__editorial > a').style.opacity=String(smooth((oliveIn-.70)/.25));
   oliveRegister.style.clipPath='inset('+((1-register)*100).toFixed(3)+'% 0 0 0)';
   oliveWindow.style.clipPath='inset(0 0 '+((1-windowReveal)*100).toFixed(3)+'% 0)';
