@@ -1,5 +1,7 @@
 # Jerusalem 3000：先完成全線基礎，再深化建築
 
+2026-10-29 使用者最新順序：先規劃全18時代的標誌性建築群、場所與路線，再配準地標—城牆—門路—山地，接著做主體量體與跨期事件；一般住宅退為背景。現行建造前清單為 [LANDMARK-BUILDING-PROGRAMME.md](LANDMARK-BUILDING-PROGRAMME.md) 與 `data/landmark-building-programme.v1.json`。清單是候選規劃，不是新增模型或第二份執行生命週期。以下歷次分包保留作工程紀錄，不得據此繼續用追加通用住宅代替城市主體。
+
 2026-10-26 整體執行入口：[INTEGRATED-CITY-ENGINEERING.md](INTEGRATED-CITY-ENGINEERING.md)。以共同地景與場所、全線骨架、跨期增量、基礎驗收的順序收斂以下歷次分包；不能從文末任選一個局部繼續雕刻。
 
 2026-10-22 修訂。此文件取代「下一包繼續住宅入口／屋頂細化」的工作順序；現有模型保留為可重用成果。基準為 118f92c4b，PR #1271 尚未合併。

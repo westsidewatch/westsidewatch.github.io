@@ -23,6 +23,7 @@ jobs:
           for file in preview/jerusalem-3000/*.js; do node --check "$file"; done
           node scripts/verify_jerusalem_3000_foundation_gaps.mjs
           node scripts/verify_jerusalem_3000_foundation_plan.mjs
+          node scripts/verify_jerusalem_3000_landmark_programme.mjs
           node scripts/verify_jerusalem_3000_foundation_runtime.mjs
           node scripts/verify_jerusalem_3000_phase_registration.mjs
           node scripts/verify_jerusalem_3000_terrain_presentation.mjs
