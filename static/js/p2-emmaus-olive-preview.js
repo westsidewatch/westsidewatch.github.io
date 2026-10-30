@@ -12,7 +12,7 @@
  // Magazine remains the fixed geometric master for all following chapters.
  // Only the NON-CONTENT field changes by realm (film, manuscript, terraces).
  let fixedGround=new URLSearchParams(location.search).get('ground')==='1';
- const groundToggle=$('#proof-film-toggle'),realmGround=$('#p2-realm-background');
+ const groundToggle=$('#proof-ground-toggle'),realmGround=$('#p2-realm-background');
  function syncGroundMode(){
   document.body.dataset.fixedGround=fixedGround?'on':'off';
   emmaus.dataset.fixedGround=fixedGround?'on':'off';
