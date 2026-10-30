@@ -7,17 +7,32 @@ import {buildHerodianRoadGeometry} from './herodian-road-geometry.js';
 import {roadClearancePolygons} from './district-infill.js';
 import {polygonsOverlap} from './urban-exclusion.js';
 const point=([x,z])=>({x,z}),distance=(a,b)=>Math.hypot(a.x-b.x,a.z-b.z);
-function nearest(gate,roads,exclusions){let best=null;for(const road of roads)for(let i=1;i<(road.geometry?.points?.length||0);i++){const a=road.geometry.points[i-1],b=road.geometry.points[i],dx=b.x-a.x,dz=b.z-a.z,L=dx*dx+dz*dz;if(!L)continue;const t=Math.max(0,Math.min(1,((gate.x-a.x)*dx+(gate.z-a.z)*dz)/L)),p={x:a.x+t*dx,z:a.z+t*dz},d=distance(p,gate);const strip=roadClearancePolygons([{geometry:{points:[gate,p]}}],5)[0];if(strip&&exclusions.some(e=>polygonsOverlap(strip.polygon,e.polygon)))continue;if(!best||d<best.distance)best={roadId:road.id,point:p,distance:d};}return best;}
+function nearest(gate,roads,exclusions,{insideNormal=null,via=null}={}){
+ let best=null;
+ for(const road of roads)for(let i=1;i<(road.geometry?.points?.length||0);i++){
+  const a=road.geometry.points[i-1],b=road.geometry.points[i],dx=b.x-a.x,dz=b.z-a.z,L=dx*dx+dz*dz;if(!L)continue;
+  let lo=0,hi=1;
+  if(insideNormal){
+   const va=(a.x-gate.x)*insideNormal.x+(a.z-gate.z)*insideNormal.z,vb=(b.x-gate.x)*insideNormal.x+(b.z-gate.z)*insideNormal.z;
+   if(va<14&&vb<14)continue;
+   if(va<14)lo=(14-va)/(vb-va);else if(vb<14)hi=(14-va)/(vb-va);
+  }
+  const t=Math.max(lo,Math.min(hi,((gate.x-a.x)*dx+(gate.z-a.z)*dz)/L)),p={x:a.x+t*dx,z:a.z+t*dz},d=distance(p,gate),path=via?[gate,via,p]:[gate,p];
+  const strips=roadClearancePolygons([{geometry:{points:path}}],5);if(strips.some(strip=>exclusions.some(e=>polygonsOverlap(strip.polygon,e.polygon))))continue;
+  if(!best||d<best.distance)best={roadId:road.id,point:p,distance:d};
+ }
+ return best;
+}
 export function compileDefenseProfile(data,phaseId,roads,terrain,{exclusions=[]}={}){
  const source=data.phases.find(p=>p.id===phaseId);if(!source)throw new Error('Missing defense phase');
  const profile={...structuredClone(source),walls:[],gates:[],roads:[],unresolvedCrossings:[]};if(source.owner!=='network')return profile;
  const sources=keys=>keys.map(k=>{const s=data.sources[k];if(!s?.url?.startsWith('https://'))throw new Error('Missing defense source');return s.url;});
  for(const wall of source.walls){const family=data.families[wall.family];if(!family||!['standing','ruin','candidate'].includes(wall.mode)||!(wall.fromOffset>=0&&wall.toOffset<=1&&wall.fromOffset<wall.toOffset))throw new Error('Invalid defense wall stage');const points=family.points.map(point);if(points.length<2||points.some(p=>![p.x,p.z].every(Number.isFinite)||!Number.isFinite(terrain.heightAtWorld(p.x,p.z))))throw new Error('Defense wall outside terrain');profile.walls.push({...wall,label:family.label,points,urls:sources(family.sources.filter(k=>source.sourceKeys.includes(k)))});}
  for(const e of source.extentReconstructions||[]){const definition=data.extentReconstructions?.[e.key];if(data.extentReconstructionPolicy?.geometryVerified!==false||data.extentReconstructionPolicy?.historicalCircuitVerified!==false||data.extentReconstructionPolicy?.modernBackProjection!==false||!definition||definition.geometryVerified!==false||!['standing','ruin','candidate'].includes(e.mode)||!(e.fromOffset>=0&&e.toOffset<=1&&e.fromOffset<e.toOffset))throw new Error('Invalid defense extent reconstruction');const points=definition.points.map(point);if(points.length<2||points.some(p=>![p.x,p.z].every(Number.isFinite)||!Number.isFinite(terrain.heightAtWorld(p.x,p.z))))throw new Error('Extent reconstruction outside terrain');profile.walls.push({...e,family:`extent:${e.key}`,label:definition.label,points,urls:sources(source.sourceKeys),extentReconstruction:true});}
- for(const key of source.gates){const g=data.gateDefinitions[key],family=data.families[g?.family],a=family?.points[g?.segment],b=family?.points[g?.segment+1];if(!a||!b||!(g.t>0&&g.t<1))throw new Error('Invalid defense gate');const center={x:a[0]+(b[0]-a[0])*g.t,z:a[1]+(b[1]-a[1])*g.t},span=Math.hypot(b[0]-a[0],b[1]-a[1]);if(Math.min(g.t,1-g.t)*span<7)throw new Error('Gate opening exceeds wall segment');const connection=nearest(center,roads,exclusions);if(!connection||connection.distance<1)throw new Error('Defense gate needs a main-street connection');
+ for(const key of source.gates){const g=data.gateDefinitions[key],family=data.families[g?.family],a=family?.points[g?.segment],b=family?.points[g?.segment+1];if(!a||!b||!(g.t>0&&g.t<1))throw new Error('Invalid defense gate');const center={x:a[0]+(b[0]-a[0])*g.t,z:a[1]+(b[1]-a[1])*g.t},span=Math.hypot(b[0]-a[0],b[1]-a[1]);if(Math.min(g.t,1-g.t)*span<7)throw new Error('Gate opening exceeds wall segment');const unit={x:(b[0]-a[0])/span,z:(b[1]-a[1])/span},monumental=isRomanMonumentalGate(phaseId,key),insideNormal={x:-unit.z,z:unit.x},via=monumental?{x:center.x+insideNormal.x*14,z:center.z+insideNormal.z*14}:null;const connection=nearest(center,roads,exclusions,monumental?{insideNormal,via}:{});if(!connection||connection.distance<1)throw new Error('Defense gate needs a main-street connection');
   const id=`j3k:${phaseId}:defense:gate:${key}`,approachId=`j3k:${phaseId}:defense:approach:${key}`,occurrences=profile.walls.filter(w=>w.family===g.family),start=phaseId==='aelia'?0:Math.min(...occurrences.map(w=>w.fromOffset));if(!Number.isFinite(start))throw new Error('Gate lacks a valid wall family');
   profile.gates.push({...g,key,id,approachId,center,start,...(isRomanMonumentalGate(phaseId,key)?{monumental:true,wallOpeningWidth:44}:{}),unit:{x:(b[0]-a[0])/span,z:(b[1]-a[1])/span},width:12,joinsRoadId:connection.roadId,target:connection.point});
-  profile.roads.push({id:approachId,type:'road',confidence:'inferred',geometry:{frame:'canonical-dem-enu',status:'authored-defense-approach-not-surveyed',primitive:'polyline',points:[center,connection.point]},source:{urls:sources(source.sourceKeys),authority:data.authority},metadata:{gateId:id,joinsRoadId:connection.roadId,defenseApproach:true,startOffset:start}});
+  profile.roads.push({id:approachId,type:'road',confidence:'inferred',geometry:{frame:'canonical-dem-enu',status:'authored-defense-approach-not-surveyed',primitive:'polyline',points:via?[center,via,connection.point]:[center,connection.point]},source:{urls:sources(source.sourceKeys),authority:data.authority},metadata:{gateId:id,joinsRoadId:connection.roadId,defenseApproach:true,startOffset:start}});
  }
  // Existing illustrative streets must never be sealed by a newly drawn band.
  // Unidentified intersections remain unframed design gaps, not invented gates.
