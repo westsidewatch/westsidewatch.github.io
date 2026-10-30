@@ -120,6 +120,15 @@ const {chromium}=require('playwright');
    });
    assert.equal(filmState.playerCount,1,'only the original homepage film player remains mounted');
    assert.equal(filmState.opacity,'0','at Emmaus the same Magazine film is visible under the ONE leaf');
+   const filmProofDir=path.join(root,'artifacts/p2-emmaus-olive');
+   fs.mkdirSync(filmProofDir,{recursive:true});
+   await page.screenshot({path:path.join(filmProofDir,viewport.width+'-shared-film-emmaus.png')});
+   await page.locator('[data-jump="11.10"]').click();await page.waitForTimeout(200);
+   assert.equal(await page.locator('#olive-proof').getAttribute('aria-hidden'),'false');
+   assert.equal(await page.locator('#olive-proof').evaluate(el=>getComputedStyle(el).backgroundColor),
+    'rgba(0, 0, 0, 0)','shared film mode does not fill the Olive chapter with an opaque scene background');
+   await page.screenshot({path:path.join(filmProofDir,viewport.width+'-shared-film-olive.png')});
+   await page.locator('[data-jump="9.10"]').click();await page.waitForTimeout(200);
    if(viewport.width>820){
     assert.notEqual(await page.locator('#emmaus > .emmaus__left').evaluate(
      el=>getComputedStyle(el).maskImage),'none','desktop has a visible film gutter');
