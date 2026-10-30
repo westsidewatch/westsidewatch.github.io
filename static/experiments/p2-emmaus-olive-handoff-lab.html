@@ -112,5 +112,14 @@ if(new URLSearchParams(location.search).get('engraving')==='v14'){
  if(toggle)toggle.title='Emmaus V14 / scripture-time manifold — draft concept only';
 }
 </script>
+<script>
+/* V15 art test belongs to the VIDEO negative-space field,
+   not to ONE's study widget. Opt-in only; ground=1 is required. */
+if(new URLSearchParams(location.search).get('engraving')==='v15'){
+ document.body.dataset.p2Engraving='v15';
+ const label=document.getElementById('proof-phase');
+ if(label)label.title='V15: full-field engraving in original film area only; Draft PR';
+}
+</script>
 </body>
 </html>
