@@ -19,7 +19,7 @@
   olive.dataset.fixedGround=fixedGround?'on':'off';
   if(groundToggle){
    groundToggle.setAttribute('aria-pressed',fixedGround?'true':'false');
-   groundToggle.textContent=fixedGround?'固定版式／刻線 · ON':'固定版式／刻線 · OFF';
+   groundToggle.textContent=fixedGround?'底紋 · ON':'底紋 · OFF';
   }
  }
  syncGroundMode();
