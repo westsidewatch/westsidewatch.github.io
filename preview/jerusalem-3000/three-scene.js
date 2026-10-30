@@ -27,6 +27,7 @@ import {createWaterDefenseModelAdapter} from './water-defense-model-adapter.js';
 import {compileWaterDefenseRegistration,bindWaterDefenseCore,waterDefenseState} from './water-defense-registration.js';
 import {fitCityOverview} from './city-overview.js';
 import {createPersianSanctuary} from './persian-sanctuary.js';
+import {compileHellenisticSanctuary,createHellenisticSanctuary} from './hellenistic-sanctuary.js';
 import {bindPeriodSpatialCore} from './period-spatial-ledger.js';
 import { compilePeriodRegistration } from './period-spatial-registration.js';
 import {createRoyalCity} from './royal-city.js';
@@ -199,7 +200,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   let defenseTimeline=null,defenseData=null,canonicalProtected=[],independentLaterRegistrations=new Map(),fabricMaterialDisposer=null,persistentCityWorld=null,activeWorldEntry=null,sharedPlaces=null,sharedPlaceView=null,wallReference=null,wallReferenceModel=null,wallGateView=null,wallCredit=null;
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
-  let retainedVisible = false, royalRelief=null, royalCity=null, persianSanctuary=null, periodSpatialData=null, waterDefense=null, waterDefenseModel=null, localPlanAudit=[], periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
+  let retainedVisible = false, royalRelief=null, royalCity=null, persianSanctuary=null, hellenisticSanctuary=null, hellenisticSanctuaryData=null, hellenisticSanctuaryLayout=null, periodSpatialData=null, waterDefense=null, waterDefenseModel=null, localPlanAudit=[], periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
   generationStatus.setAttribute('role', 'status');
@@ -229,6 +230,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     davidSettlement?.apply({phaseId:currentPhaseId,evidenceAllowed});
     royalCity?.apply({position:timelinePosition,ruin:currentRuin,evidenceAllowed});
     persianSanctuary?.apply({position:timelinePosition,evidenceAllowed});
+    hellenisticSanctuary?.apply({position:timelinePosition,evidenceAllowed});
     royalRelief?.apply({phaseId:currentPhaseId,stage:royalCity?.diagnostics().stage,evidenceAllowed});
     const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible,constructionProgress:1 });
     if (sharedActive) {
@@ -503,6 +505,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       await registerHerodianUrbanCore(loaded.core);
       eraRegistrationReference = applyMetricResidentialRegistration(await loadCityData('./data/urban/herodian-30ce.registration.json'));
       metricHellenisticRegistration=applyMetricResidentialRegistration(await loadCityData('./data/urban/hellenistic-metric.registration.v1.json'));
+      hellenisticSanctuaryData=await loadCityData('./data/urban/hellenistic-sanctuary.v1.json');
+      hellenisticSanctuaryLayout=compileHellenisticSanctuary(hellenisticSanctuaryData,metricHellenisticRegistration,terrainRuntime.grid.origin);
+      metricHellenisticRegistration.reservations=hellenisticSanctuaryLayout.reservations;
       defenseData=await loadCityData('./data/urban/defense-timeline.v1.json');
       eraRegistrationReference.metricHousingRings=housingBoundaryAt({phaseId:'herodian-jesus',offset:.9,defenseData,origin:terrainRuntime.grid.origin}).rings;
       canonicalProtected=[...exclusions];
@@ -561,7 +566,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
         ledgerCore:loaded.core,overview:true,
         getRegistration:phase => {const registration=applyMetricResidentialRegistration(periodRegistrations.get(phase)||metricHellenisticRegistration,phase);registration.metricHousingRings=housingBoundaryAt({phaseId:phase,offset:.9,defenseData,origin:terrainRuntime.grid.origin}).rings;return registration;},
-        getExclusions:phase=>[...(royalCity?.exclusionsFor(phase)||[]),...(defenseTimeline?.exclusionsFor(phase)||[])],
+        getExclusions:phase=>[...(royalCity?.exclusionsFor(phase)||[]),
+        ...(phase==='hellenistic-hasmonean'?hellenisticSanctuaryLayout.roadExclusions:[]),...(defenseTimeline?.exclusionsFor(phase)||[])],
         reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
         successorFootprint: ERA_FOOTPRINTS['persian-nehemiah'],
         expansionFootprint: ERA_FOOTPRINTS['hellenistic-hasmonean'],
@@ -596,6 +602,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     royalRelief=createRoyalRelief(root,mount,{data:davidData,terrain:terrainRuntime});
     persianSanctuary=createPersianSanctuary(root,{data:periodSpatialData,terrain:terrainRuntime,core:cityCoreRuntime.core});
+    hellenisticSanctuary=createHellenisticSanctuary(root,{data:hellenisticSanctuaryData,layout:hellenisticSanctuaryLayout,terrain:terrainRuntime,core:cityCoreRuntime.core});
     const defenseRoadsForPhase=phase=>{
       if(independentLaterRegistrations.has(phase))return independentLaterRegistrations.get(phase).roads;
       if(periodRegistrations.has(phase))return periodRegistrations.get(phase).roads;
@@ -604,7 +611,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       if(phase==='hellenistic-hasmonean')return metricHellenisticRegistration.roads;
       return [];
     };
-    defenseTimeline=createDefenseTimeline({data:defenseData,phases:[...cityCoreRuntime.core.phases.values()],core:cityCoreRuntime.core,terrain:terrainRuntime,parent:root,roadsForPhase:defenseRoadsForPhase,exclusionsForPhase:phase=>independentLaterRegistrations.has(phase)?[...independentLaterRegistrations.get(phase).cores.map(c=>({polygon:c.geometry.polygon})),...independentLaterRegistrations.get(phase).reservations.map(c=>({polygon:c.geometry.polygon}))]:phase==='herodian-jesus'||phase==='roman-destruction'?canonicalProtected:[...(royalCity?.exclusionsFor(phase)||[]),...(periodRegistrations.get(phase)?.reservations||[])]});
+    defenseTimeline=createDefenseTimeline({data:defenseData,phases:[...cityCoreRuntime.core.phases.values()],core:cityCoreRuntime.core,terrain:terrainRuntime,parent:root,roadsForPhase:defenseRoadsForPhase,exclusionsForPhase:phase=>independentLaterRegistrations.has(phase)?[...independentLaterRegistrations.get(phase).cores.map(c=>({polygon:c.geometry.polygon})),...independentLaterRegistrations.get(phase).reservations.map(c=>({polygon:c.geometry.polygon}))]:phase==='herodian-jesus'||phase==='roman-destruction'?canonicalProtected:[...(royalCity?.exclusionsFor(phase)||[]),...(periodRegistrations.get(phase)?.reservations||[]),...(phase==='hellenistic-hasmonean'?hellenisticSanctuaryLayout.reservations:[])]});
     for(const [phase,registration]of independentLaterRegistrations){
       applyMetricResidentialRegistration(registration,phase);
       registration.defenseReservations=defenseTimeline.exclusionsFor(phase);
@@ -724,6 +731,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             royalCity:royalCity?.diagnostics(),
             royalRelief:royalRelief?.profile,
             persianSanctuary:persianSanctuary?.diagnostics(),
+            hellenisticSanctuary:hellenisticSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
             terrainPresentation:{...terrainPresentation?.diagnostics,surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
@@ -800,6 +808,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         ]
       };
       if(independentLaterRegistrations.has(phaseId)){const data=independentLaterRegistrations.get(phaseId);return {source:data.sources[0],references:data.sources.slice(1),limitations:data.limitations};}
+      if(phaseId==='hellenistic-hasmonean')return {source:hellenisticSanctuaryData.sanctuary.sources[0],references:[],limitations:hellenisticSanctuaryData.sanctuary.limitations};
       if(phaseId==='persian-nehemiah')return {
         source:periodSpatialData.phases['persian-nehemiah'].sanctuary.sources[0],references:[],
         limitations:[...periodSpatialData.phases['persian-nehemiah'].sanctuary.limitations,'第一聖殿遺存、王室區與特定前代牆段的後續狀態尚未核定。']
@@ -853,7 +862,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       controls.minDistance=15;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(65,60,90):new THREE.Vector3(42,40,60));controls.update();needsFrame=true;return true;
     },
     focusRoyalTemple(){
-      const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:royalCity;
+      const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:currentPhaseId==='hellenistic-hasmonean'?hellenisticSanctuary:royalCity;
       if(!templeRuntime?.diagnostics().visibleTemple)return;
       if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
       controls.minDistance=35;controls.target.copy(templeRuntime.templeFocus||templeRuntime.focus);camera.position.copy(templeRuntime.templeFocus||templeRuntime.focus).add(new THREE.Vector3(65,60,90));controls.update();needsFrame=true;
@@ -911,6 +920,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       royalRelief?.dispose();
       royalCity?.dispose();
       persianSanctuary?.dispose();
+      hellenisticSanctuary?.dispose();
       generationStatus.remove();
       wallCredit?.remove();
       wallGateView?.dispose();
