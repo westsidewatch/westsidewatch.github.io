@@ -70,47 +70,38 @@ The accepted Magazine sevenfold spine must remain untouched in its owning iframe
 - The original 03→04 physical image transfer and Church/Vol.00 iframe handoff are not changed.
 - Source checks and syntax validation completed in the draft branch; visual acceptance at desktop/mobile/200% zoom, third-party image availability and reverse-scroll inspection remain separate release requirements. **Do not merge** solely because source checks pass.
 
-## 10. Shared homepage film — opt-in A/B proof (2026-10-30)
+## 10. Magazine-owned proportions → seven authored realm backdrops (2026-10-30)
 
-**Research decision:** retain the same six-clip homepage film as an underlay from the
-existing Vol.00 Magazine into P2 03 Emmaus and P2 04 Olive Mountain, rather than
-introducing another background video, a new animated curtain or another
-media-player instance. This is a preview-only experiment, **not an acceptance of
-filming behind scripture**.
+**User decision supersedes the earlier full-screen surround and common-film
+ideas.** LivingWaterWest / Church retains its unique water/door split and
+proportions. Magazine retains its approved 5:8 cover, square Contents,
+7-color spine and full-stage six-clip homepage film in the background,
+without resizing or re-creating the film. Chapters 03 onward inherit the
+**same original measured Magazine spread outer rectangle**; the film's
+remaining field is instead painted with each realm's own engraved surface.
+No second full-screen reveal, repeated movie player or separate 8.5% frame.
 
-- Compare the existing candidate (`?d=9.10`, default OFF) with the experiment
-  (`?d=9.10&film=1`, ON); the proof header toggle switches instantly without
-  reloading or losing scroll/book/speaker state.
-- **Ownership:** `.p2-magazine__home-film` remains inside the original
-  `/p2/living-water.html` iframe, where `p2-magazine-live-bridge.js` already
-  reuses the homepage six clips. Do **not** clone, adopt, or re-parent this
-  media iframe: moving it to another document would reload playback.
-  The outer P2 preview continues its existing `westside-p2-scroll` message
-  with `active:true` for the 03/04 journey in ON mode only.
-- **No second transition:** after the Magazine's original engraving has moved
-  into the handoff, the original contents/cover iframe fades on the *existing*
-  ONE top-down paper-reveal timeline. Its original node, nested navigation,
-  book-spine animation and Magazine 02 pose are untouched and restored by
-  reverse scroll or OFF mode.
-- **Revised after preview feedback (2026-10-30):** the first masked slit was a design failure:
-  virtually the entire moving film was covered. The actual A/B now gives the
-  ORIGINAL film a full cinematic **negative-space surround**. At desktop,
-  ONE and the existing Doré gallery form a 2:1 inset spread with 8.5% visible
-  video on EACH side and 9% above/below (roughly 32% of the stage unoccluded).
-  At narrow widths, retain full 2:1 spread width but give film 11.5% above
-  and 1% below, because the ONE controls cannot be further compressed.
-  Olive reuses those EXACT stage insets; no panel covers the same video field.
-  The real manuscript paper and Doré image remain wholly opaque, and the
-  magazine book spines and source video player are untouched.
-- **Reduced-motion:** the experiment adds no new motion timeline or media
-  instance. The existing film player must keep honoring its own reduced-motion
-  settings and visibility rules. A later film-content overlay in Paradise
-  Cinema must pause the common backdrop rather than run two competing films.
-- **Future seven-surface rule:** Bookshop and Café may selectively expose
-  this same underlay; cinema's featured playback takes precedence. These are
-  constraints for later chapters, *not* implemented screens in this proof.
-- **Acceptance:** compare 02→03→04 and reverse-scroll at 1648×928 and 390×844;
-  ensure one mounted film iframe, complete return of Magazine, valid 66-book
-  navigation and real Doré plates, legible ONE copy and no clipped Olive text.
-  No global CSS layer, token palette, original video or production page is
-  modified. Do not merge until visually approved.
+- The in-progress **?film=1** prototype was rejected: a narrow slit covered
+  almost the entire video and the later invented 8.5% cinema surround did
+  not respect the Magazine's approved actual ratio. Neither survives.
+- Current opt-in compare: `?d=9.10&ground=1` for the Bible and
+  `?d=11.10&ground=1` for Sermon; the proof header toggles this feature
+  without restarting the scene or changing the active book/portrait.
+- Read the real `dual-cover` + `dual-contents` bounds through the
+  pre-existing protected Magazine iframe and use their bounding union
+  for both the ONE 2:1 paper+gallery spread and the Olive portrait/editorial
+  spread. Mobile reads the actual stacked Magazine geometry, not a new
+  hand-coded global breakpoint or fixed percent.
+- A single **non-interactive P2 background field** (`p2-realm-background`)
+  reads `static/css/westside-engraving-authority.css`; Chapter 03
+  selects the `bible` line grammar + the existing approved manuscript-edge
+  study SVG, Chapter 04 selects `sermon` olive terrace contours.
+  The same authority owns Book/Cinema/Life grammar for future chapters.
+- The film remains the ORIGINAL Magazine player. When the Magazine ends,
+  it stops instead of playing invisibly beneath other chapter paper.
+  Existing painting is clipped to this same scroll timeline, and reverse
+  scroll fully restores both source pages, book spines and video.
+- These two engraved fields are **implementation candidates**, not finished
+  authored engraving artwork. The Editorial Manual now documents the
+  canonical motif sources and the required subject-specific linework QA.
+  Do not fabricate future 05–07 pages or declare visual acceptance.
