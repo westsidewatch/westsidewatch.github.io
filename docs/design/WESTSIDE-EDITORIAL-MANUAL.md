@@ -110,7 +110,59 @@ The P2 split composition preserves its water engraving, rise and opening doors o
 - **Implementation:** owning `static/css/p2-living-water.css` only; do not create another runtime, modify OS globals, replace engraving artwork or interfere with scroll/door choreography. CSS counters supply numbers without altering source copy.
 - **Proportional folio (2026-10-17):** make the schedule-owning right pane an inline-size container; use percentage-based inner gutters, container-relative column proportions and `cqi` fluid type with readable clamp bounds. Do not use CSS `transform:scale` on typography or the entire schedule. Preserve whitespace on both sides at any zoom and stack columns below the narrow-container threshold.\n- **Scripture:** the theme scripture remains left-aligned editorial reading; the independent Acts 4:12 closing citation is centered, including its reference.\n- **Acceptance:** actual 1648×928, 768px and 390px previews, 200% zoom, longest-row wrapping, keyboard and reduced-motion review, plus existing CI. A green CI alone does not certify editorial quality.
 
-## 8. Research retained as source-of-evidence
+## 8. Seven-surface P2 — Magazine-anchored fixed field and native engravings (2026-10-30)
+
+**Composition decision.** Chapter 01 LivingWaterWest is deliberately exceptional:
+its living-water / Red Sea split, door and Christian-institutional reading
+structure have their own accepted proportions. Beginning with Chapter 02
+Magazine, the remaining six realms reuse the **exact 5:8 cover + square
+Contents + original seven-color spine outer spread bounds**, measured from
+the existing Magazine folio rather than recreated by another CSS percentage
+or a new full-screen return animation. On mobile, the Magazine's approved
+stacked geometry determines the outer proportions; a new fixed crop must
+not override it. The surrounding background field is spatially continuous;
+its contents, not its size, change across realms.
+
+**The background belongs to each realm, not to a universal film loop.** The
+Magazine retains its original homepage six-clip video in the already accepted
+proportion. Bible, Sermon, Book, Cinema and Life may replace THAT SAME
+background region with their subject-specific engraving, paper tone and ink,
+using the one existing visual authority
+`static/css/westside-engraving-authority.css`. Do not replay the Magazine
+video in every chapter, create duplicate media players or make a full-screen
+film-to-engraving transformation. The per-chapter motif must be readable
+in the exposed non-content field while the actual chapter's paper/imagery
+stays opaque above it.
+
+| P2 chapter | Existing engraving owner / subject | Editorial character |
+|---|---|---|
+| 01 Church | `sites-section-church`: living currents / baptismal flow | **Distinct composition**; no compulsory Magazine geometry |
+| 02 Magazine | `sites-section-journal` / `sites-section-vol-00`: editorial folds and page diagonals | Original video outside cover, Contents and original spine |
+| 03 Bible / Emmaus | `sites-home-realm[data-realm=bible]`: canonical page/folio contours; existing manuscript scroll-edge SVG | ONE golden paper and real 241-image Doré gallery inside spread |
+| 04 Sermon / Olive | `sites-section-olive`: olive terraces / hillside contours | Speaker portraits and words on opaque paper |
+| 05 Book / Dawn Bookshop | `sites-section-dawn-library`: layered leaves, folios | Book material / fine plate-edge hatches |
+| 06 Cinema / Paradise | `sites-section-cinema`: curtain folds and projected-light contours | Film playback owns attention; do not run two independent films |
+| 07 Life / Daylight Café | `sites-section-daylight-cafe`: table rings, objects and conversation | Intimate domestic engraving, not generic line wallpaper |
+
+**Art-direction requirement.** These CSS motifs are an existing *semantic
+engraving grammar*, **not accepted award-grade artwork**. Each chapter's
+authentic subject, original engraved source or approved authored SVG,
+cross-hatching density, line direction, texture scale, dark/light falloff,
+text-safe zone and material color must still be developed and visually
+reviewed. Do not mark generic repeating CSS patterns as complete engraving
+art. Chapter 03/04 are the only implemented follow-up candidates today;
+05–07 are design rules rather than invented completed screens.
+
+**Acceptance.** Preserve the frozen original seven-color Magazine spine
+and original Church as read-only source layers; compare exact bounding
+rectangles of Magazine, Bible and Sermon at 1648×928 and 390×844, plus
+reverse scroll, 200% zoom and reduced motion. The fixed outer field and
+individual inner layouts have different owners: do not force every chapter's
+content into the same typography or internal grid merely because their
+outer rectangle aligns. Keep all work under Design OS and the existing P2
+owning CSS/JS; do not introduce a second global engraving manager.
+
+## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
 
