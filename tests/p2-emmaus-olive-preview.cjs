@@ -9,14 +9,11 @@ assert.match(html,/p2\/living-water\.html\?embed=1/,'reuses approved P2 Church/M
 assert.match(html,/one\/one-data\.js/,'reads the canonical 66-book inventory');
 assert.match(html,/one\/luke-21-24\.js/,'features the original Luke 24 ONE study content');
 assert.match(html,/p2-emmaus-scroll-micro-engraving\.svg/,'Emmaus has its own local editable engraved scroll study');
-assert.equal((html.match(/class="emmaus__folio-layer"/g)||[]).length,7,'seven inherited OS-colored folio edges');
-assert.match(html,/aria-label="P2 七個版塊導航/,'seven folios are a named navigation, not stray color bars');
-assert.equal((html.match(/data-realm="/g)||[]).length,7,'all seven realm identities have folio labels');
-assert.equal((html.match(/data-realm-jump="/g)||[]).length,4,'four implemented P2 realms are actionable in this preview');
+assert.doesNotMatch(html,/emmaus__realm-nav|emmaus__folio-layer/,'no second spine is inserted in the Emmaus chapter');
+assert.doesNotMatch(js,/data-realm-jump|realmNav/,'Magazine spines are not replaced by a second navigation controller');
 assert.match(css,/--ws-papyrus/,'Emmaus background inherits ONE papyrus palette, not Magazine white');
 assert.match(css,/scroll-micro-engraving\.svg/,'scroll edge engraving is visible in chapter structure');
 assert.match(js,/ONE_DATA\?\.luke\?\.chapterStudies\?\.\['24'\]/,'chapter text comes from canonical ONE, never invented copy');
-assert.match(js,/oneDrop-i\*\.058/,'sevenfold navigation motion shares the existing P2 scroll owner');
 assert.match(css,/var\(--ws-type-reading-zh\)/,'Emmaus tool preview binds OS Chinese reading font');
 const oneBookCSS=fs.readFileSync(path.join(root,'static/one/one-book.css'),'utf8');
 assert.match(oneBookCSS,/ONE ↔ Westside Design OS \/ scoped typography normalization candidate/,'ONE tool receives scoped typography migration');
@@ -49,11 +46,8 @@ assert.doesNotMatch(html,/olive-handoff-(image|plate)/,'no duplicate Doré hando
 assert.match(js,/oliveHero\.style\.transform='none'/,'the speaker portrait never flies into the page');
 assert.match(js,/oliveEditorial\.style\.clipPath=/,'Olive editorial fields reveal independently from the persistent spread');
 assert.doesNotMatch(js,/olive\.style\.clipPath='inset/,'a whole-scene curtain would replace one page with another');
-// Emmaus rework: every folio is a real navigation destination, the 66-book
-// selection owns the ONE chapter coordinate and right-hand plate identity.
-assert.match(html,/href="\/dawn-library\/"/,'05 opens its canonical Dawn Library page');
-assert.match(html,/href="\/cinema\/"/,'06 opens its canonical Cinema page');
-assert.match(html,/href="\/daylight-cafe\/"/,'07 opens its canonical Daylight Café page');
+// Emmaus rework: the 66-book controller stays live, while the approved magazine
+// book-spine treatment is frozen without a separate Emmaus folio controller.
 assert.match(html,/aria-live="polite"/,'selected volume identity is announced');
 assert.match(js,/renderBookStudy\(number,chapter\)/,'ONE work window accepts per-book chapter state');
 assert.match(js,/emmaus__chapter-choice/,'unfeatured volumes have functional chapter selectors');
@@ -61,10 +55,10 @@ assert.match(js,/if\(ticket!==plateVersion\)return/,'late image responses cannot
 assert.match(js,/plateEls\.forEach\(img=>img\.classList\.remove\('is-active'\)\)/,
  'old-book image is hidden before new plate is resolved');
 assert.match(js,/ORIGINAL ARCHIVE UNAVAILABLE/,'failed artwork load states unavailability, not a fake plate');
-assert.match(js,/aria-current/,'sevenfold navigation reports the active P2 layer');
-assert.match(css,/background:var\(--em-paper\)/,'Bible Study has papyrus, not Magazine paper');
-assert.match(css,/--em-ink:color-mix/,'Bible ink is a scoped Design OS semantic mix');
-assert.match(css,/clip-path:polygon/,'folio tabs are angled overlapping page edges');
+assert.doesNotMatch(js,/aria-current|realmNav/,'no duplicated sevenfold active-state logic');
+assert.match(css,/--em-paper:color-mix\(in oklab,var\(--ws-pale-gold\) 52%,var\(--ws-papyrus\)\)/,
+ 'ONE paper inherits OS papyrus and pale gold');
+assert.match(css,/--em-ink:var\(--ws-night\)/,'ONE ink uses night blue, not olive green');
 assert.match(css,/p2-emmaus-scroll-micro-engraving\.svg/,'engraved space uses its own vector');
 assert.match(css,/--ws-type-scale-display-lg/,'Emmaus display uses the Design OS type scale');
 console.log('P2 03/04 isolated preview source contract: pass');
@@ -83,7 +77,7 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('.emmaus__number').count(),66,'all 66 ONE books have selectable numbers');
    assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false','Emmaus visible in its reading dwell');
    assert.equal(await page.locator('#em-book-en').textContent(),'Luke');
-   assert.equal(await page.locator('.emmaus__folio-layer').count(),7);
+   assert.equal(await page.locator('.emmaus__folio-layer').count(),0,'no second sevenfold spine is created');
    assert.match(await page.locator('#emmaus-study-heading').textContent(),/復活/);
    assert.equal(await page.locator('#em-study-route li').count(),2);
    assert.equal(await page.locator('#emmaus').getAttribute('data-study-view'),'background');
@@ -117,16 +111,15 @@ const {chromium}=require('playwright');
    await page.locator('[data-book="42"]').evaluate(el=>el.click());
    assert.equal(await page.locator('#emmaus').getAttribute('data-gallery-start'),'193','Luke begins at first assigned Doré plate');
    assert.match(await page.locator('#em-study-ref').textContent(),/路加福音/);
-   assert.equal(await page.locator('.emmaus__realm-nav .emmaus__folio-layer').count(),7);
-   assert.equal(await page.locator('.emmaus__realm-nav [data-realm="3"]').count(),1);
-   await page.locator('[data-realm-jump="11.10"]').evaluate(el=>el.click());
+   assert.equal(await page.locator('.emmaus__realm-nav').count(),0,'original magazine spine stays with Magazine');
+   await page.locator('[data-jump="11.10"]').click();
    await page.waitForTimeout(120);
    assert.equal(await page.locator('#olive-proof').getAttribute('aria-hidden'),'false',
-    '04 Folio navigation actually opens the already implemented Olive scene');
+    'original P2 preview controls still reach Olive Mountain');
    await page.locator('[data-jump="9.10"]').click();
    await page.waitForTimeout(120);
    assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false',
-    'realm navigation stays reversible through the same P2 scroll controller');
+    'P2 scene controls stay reversible through the same scroll controller');
    const before=await page.evaluate(()=>scrollY);
    await page.locator('#emmaus-rail').hover();await page.mouse.wheel(0,500);await page.waitForTimeout(300);
    const after=await page.evaluate(()=>scrollY);
