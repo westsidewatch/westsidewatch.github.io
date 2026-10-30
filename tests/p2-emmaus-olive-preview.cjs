@@ -56,8 +56,10 @@ assert.match(js,/plateEls\.forEach\(img=>img\.classList\.remove\('is-active'\)\)
  'old-book image is hidden before new plate is resolved');
 assert.match(js,/ORIGINAL ARCHIVE UNAVAILABLE/,'failed artwork load states unavailability, not a fake plate');
 assert.doesNotMatch(js,/aria-current|realmNav/,'no duplicated sevenfold active-state logic');
-assert.match(css,/--em-paper:color-mix\(in oklab,var\(--ws-pale-gold\) 52%,var\(--ws-papyrus\)\)/,
- 'ONE paper inherits OS papyrus and pale gold');
+assert.match(css,/--em-paper:var\(--ws-one-paper\)/,
+ 'ONE paper must use the exact accepted ONE hue, registered in Design OS');
+assert.doesNotMatch(css,/--em-paper:color-mix\(in oklab/,
+ 'old near-match gold blend must not return');
 assert.match(css,/--em-ink:var\(--ws-night\)/,'ONE ink uses night blue, not olive green');
 assert.match(css,/p2-emmaus-scroll-micro-engraving\.svg/,'engraved space uses its own vector');
 assert.match(css,/--ws-type-scale-display-lg/,'Emmaus display uses the Design OS type scale');
@@ -78,6 +80,16 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false','Emmaus visible in its reading dwell');
    assert.equal(await page.locator('#em-book-en').textContent(),'Luke');
    assert.equal(await page.locator('.emmaus__folio-layer').count(),0,'no second sevenfold spine is created');
+   const paper=await page.locator('#emmaus > .emmaus__left').evaluate(el=>{
+    const css=getComputedStyle(el);return {
+     color:css.backgroundColor,
+     token:getComputedStyle(document.documentElement).getPropertyValue('--ws-one-paper').trim(),
+     image:css.backgroundImage
+    };
+   });
+   assert.equal(paper.color,'rgb(222, 208, 150)','Emmaus leaf must match the actual ONE paper, not a pale overlay');
+   assert.equal(paper.token,'rgb(222 208 150)','ONE paper is shared by the canonical Design OS');
+   assert.match(paper.image,/SITE-TEMPLE-STONE-LIGHT/,'Emmaus keeps the original ONE paper texture, not magazine white');
    assert.match(await page.locator('#emmaus-study-heading').textContent(),/復活/);
    assert.equal(await page.locator('#em-study-route li').count(),2);
    assert.equal(await page.locator('#emmaus').getAttribute('data-study-view'),'background');
