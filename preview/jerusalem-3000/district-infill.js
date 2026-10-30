@@ -7,9 +7,26 @@ const clip=(poly,nx,nz,limit)=>{
 };
 function convex(poly){let sign=0;for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length],c=poly[(i+2)%poly.length],cross=(b.x-a.x)*(c.z-b.z)-(b.z-a.z)*(c.x-b.x);if(Math.abs(cross)<1e-6)continue;if(sign&&Math.sign(cross)!==sign)return false;sign=Math.sign(cross);}return true;}
 function convexParts(poly){if(convex(poly))return[poly];return THREE.ShapeUtils.triangulateShape(poly.map(p=>new THREE.Vector2(p.x,p.z)),[]).map(indices=>indices.map(i=>poly[i]));}
+// Exact planar difference against convex parts. No block bridges an excluded
+// district/precinct; small residuals can remain unbuilt rather than be rescaled.
+export function subtractPlanarZones(polygons,zones){
+ let result=polygons;
+ for(const zone of zones)for(let part of convexParts(zone)){
+  if(part.reduce((s,a,i)=>{const b=part[(i+1)%part.length];return s+a.x*b.z-b.x*a.z;},0)<0)part=[...part].reverse();
+  result=result.flatMap(p=>{let inner=p;const outside=[];
+   for(let i=0;i<part.length&&inner.length>=3;i++){
+    const a=part[i],b=part[(i+1)%part.length],nx=b.z-a.z,nz=a.x-b.x,limit=a.x*nx+a.z*nz;
+    const out=clip(inner,-nx,-nz,-limit);if(out.length>=3&&area(out)>1)outside.push(out);
+    inner=clip(inner,nx,nz,limit);
+   }
+   return outside;
+  });
+ }
+ return result;
+}
 // Inferred subdivision of an authored district, never population/survey authority.
 // Convex clipping preserves concave district notches without bridging outside them.
-export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,roadClearance=6,maxDepth=12,partitionSeed='identity'}={}) {
+export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,roadClearance=6,maxDepth=12,partitionSeed='identity',excludePolygons=[]}={}) {
  if(!['identity','geometry'].includes(partitionSeed))throw new Error('Invalid partition seed');
  const boundary=district?.geometry?.polygon;
  if(!boundary?.length||!roads.length)return{blocks:[],count:0,withheld:true,reason:'district-or-roads-missing'};
@@ -28,6 +45,7 @@ export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,road
    return [[left,'left'],[right,'right']].filter(([p])=>p.length>=3&&area(p)>650).map(([polygon,side])=>({polygon,key:`${cell.key}:${road.id.split(':').at(-1)}-${i}-${side}`}));
   });
  }
+ if(excludePolygons.length)cells=cells.flatMap(cell=>subtractPlanarZones([cell.polygon],excludePolygons).map((polygon,i)=>({polygon,key:`${cell.key}:residual-${i}`})));
  const finished=[];
  function divide(cell,depth=0){
   const p=cell.polygon,A=area(p);

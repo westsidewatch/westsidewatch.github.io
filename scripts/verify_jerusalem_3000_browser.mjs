@@ -330,7 +330,7 @@ try {
   await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings > 0);
   const retained = await page.evaluate(() => window.__JERUSALEM3000__.renderDiagnostics);
   assert.equal(retained.sharedEra.successor.residentialLedger.published,true);
-  assert.equal(await page.locator('[data-district-acceptance] [data-residential-district]').count(),5);
+  assert.equal(await page.locator('[data-district-acceptance] [data-residential-district]').count(),7);
   await page.getByRole('button',{name:'Evidence',exact:true}).click();
   await page.locator('.j3k-evidence-panel').evaluate(el=>{el.scrollTop=el.scrollHeight;});
   await page.screenshot({path:`${output}/district-ledger.png`,fullPage:true});

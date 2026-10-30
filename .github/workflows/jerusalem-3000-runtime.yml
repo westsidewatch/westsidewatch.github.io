@@ -28,6 +28,7 @@ jobs:
           node scripts/verify_jerusalem_3000_phase_registration.mjs
           node scripts/verify_jerusalem_3000_terrain_presentation.mjs
           node scripts/verify_jerusalem_3000_metric_residential.mjs
+          node scripts/verify_jerusalem_3000_urban_coverage.mjs
           node scripts/verify_jerusalem_3000_housing_boundary.mjs
           node scripts/verify_jerusalem_3000_regional_terrain.mjs
           node scripts/verify_jerusalem_3000_herodian_dimensions.mjs

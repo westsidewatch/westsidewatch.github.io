@@ -254,6 +254,7 @@ try {
     if(p.id==='hellenistic-hasmonean')note.textContent+=' 聖域選取前164年重新奉獻後的示意形態，不代表整期；尺寸及平面未核定，可點「聖殿近看」。';
     const datedCores=three.landmarkChronology();if(datedCores.length)note.textContent+=' 本期地標階段：'+datedCores.map(c=>c.label).join('；')+'。年份僅用於這些地標的分期定位，並非全城逐年復原。';
     if(p.id==='herodian-jesus')note.textContent+=' 比例校準：平台約300×480m；殿體高約52.5m（暫採每肘0.525m），位置與細節仍屬復原。';
+    if(!isEarliestPhase(p.id)&&!['middle-bronze','late-bronze-iron1'].includes(p.id))note.textContent+=' 城內褐色為街區配置示意；灰色為待建／未核定預留，不代表自然荒山。';
     if(isIndependentLaterPhase(p.id))note.textContent+=' 地區、路網與住宅量體為示意；共同東側軸線不表示歷代路面相同。各期採階段概覽，非逐年完整復原。';
     if(window.__JERUSALEM3000__.inheritanceState.audit?.visibleComponents>0)note.textContent+=' 前代圖層按模型比例示意，留存構件與再利用關係尚未核定。';
     if(three.inspectDefenseTimeline()?.owner==='network')note.textContent+=' 赭色虛線牆為整體範圍的推定補足；低矮殘牆／候選帶保留毀壞及爭議狀態，並非測繪核定城廓；可看「城防年代」。';

@@ -1,3 +1,5 @@
+import {createUrbanGroundPresentation} from './urban-ground-presentation.js';
+import {completeUrbanCoverage} from './urban-coverage.js';
 import {coreStageAt} from './landmark-chronology.js';
 import {residentialEraProfile} from './residential-era-profiles.js';
 import {applyMetricResidentialRegistration,augmentMetricEarlySettlement,metricResidentialPolicy,METRIC_RESIDENTIAL_PHASES} from './metric-residential-layout.js';
@@ -178,7 +180,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     currentRuin = 0,
     terrainRuntime = null,
     foundationRuntime = null,
-    terrainPresentation = null,
+    terrainPresentation = null, urbanGround=null, urbanGroundKey=null,
     terrainView = null,
     evidenceResolution = null,
     currentEvidenceMode = 'all',
@@ -201,6 +203,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   let defenseTimeline=null,defenseData=null,canonicalProtected=[],independentLaterRegistrations=new Map(),fabricMaterialDisposer=null,persistentCityWorld=null,activeWorldEntry=null,sharedPlaces=null,sharedPlaceView=null,wallReference=null,wallReferenceModel=null,wallGateView=null,wallCredit=null;
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
+  let royalDataForGround=null;
   let retainedVisible = false, royalRelief=null, royalCity=null, persianSanctuary=null, hellenisticSanctuary=null, hellenisticSanctuaryData=null, hellenisticSanctuaryLayout=null, periodSpatialData=null, waterDefense=null, waterDefenseModel=null, localPlanAudit=[], periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
@@ -245,6 +248,24 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         evidenceAllowed,
       });
   }
+  function updateUrbanGround(){
+    if(!urbanGround||!currentPhaseId||!cityCoreRuntime||!defenseData)return;
+    const fraction=timelinePosition-Math.floor(timelinePosition),profile=defenseData.phases.find(p=>p.id===currentPhaseId),stage=royalCity?.diagnostics().stage;
+    const bands=[...(profile?.walls||[]),...(profile?.extentReconstructions||[])].filter(w=>fraction>=w.fromOffset&&fraction<w.toOffset).map(w=>w.family||w.key).join('|');
+    const key=currentPhaseId+'|'+(currentPhaseId==='david-solomon'?stage:'')+'|'+bands+'|'+evidenceAllowed('inferred');if(key===urbanGroundKey)return;urbanGroundKey=key;
+    const registration=independentLaterRegistrations.get(currentPhaseId)||periodRegistrations.get(currentPhaseId==='babylonian-destruction'?'late-first-temple':currentPhaseId)||(['herodian-jesus','roman-destruction'].includes(currentPhaseId)?eraRegistrationReference:currentPhaseId==='hellenistic-hasmonean'?metricHellenisticRegistration:null);
+    const zones=[];
+    if(registration){
+      for(const d of registration.districts)zones.push({polygon:d.geometry.polygon,kind:'quarter',explicitExpansion:d.metadata?.layoutRole==='extra-mural-expansion'});
+      for(const r of [...(registration.reservations||[]),...(registration.cores||[])])zones.push({polygon:r.geometry?.polygon||r.polygon,kind:'reserved'});
+    }else for(const r of cityCoreRuntime.core.phase(currentPhaseId)){
+      if(r.metadata.generationPhase!==currentPhaseId&&currentPhaseId!=='david-solomon')continue;
+      if(r.type==='district'&&r.geometry?.polygon&&!(r.metadata.regionId==='northern'&&stage!=='solomon'))zones.push({polygon:r.geometry.polygon,kind:'quarter'});
+      if(r.type==='building'&&r.geometry?.bounds){const b=r.geometry.bounds;zones.push({polygon:[{x:b.min[0],z:b.min[2]},{x:b.max[0],z:b.min[2]},{x:b.max[0],z:b.max[2]},{x:b.min[0],z:b.max[2]}],kind:'quarter'});}
+    }
+    const boundary=housingBoundaryAt({phaseId:currentPhaseId,offset:fraction,defenseData,wallReference,royalData:currentPhaseId==='david-solomon'?royalDataForGround:null,royalStage:stage,origin:terrainRuntime.grid.origin});
+    urbanGround.apply({key,phase:currentPhaseId,zones,rings:boundary.rings,allowed:evidenceAllowed('inferred')});
+  }
   function applyTemporalState() {
     housingBoundaryAdmission?.restore();
     wallReferenceModel?.apply({position:timelinePosition,evidenceAllowed});
@@ -276,6 +297,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     laterMorphologyBinding?.apply(evidenceAllowed,{constructionProgress:1,position:timelinePosition});
     updateCityCoreVisibility();
     housingBoundaryAdmission?.apply();
+    updateUrbanGround();
     onDistrictAcceptance?.(sharedEraRuntime?.acceptance()??null);
     needsFrame = true;
   }
@@ -440,6 +462,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     if (!terrainRuntime)
       throw new Error('Canonical Jerusalem DEM payload missing');
     terrainPresentation=createTerrainPresentation(terrainRuntime.mesh,{datum:terrainRuntime.grid.verticalDatumOffsetMetres});
+    urbanGround=createUrbanGroundPresentation(terrainRuntime.mesh);
     regionalData=await loadCityData('./data/terrain/regional-landforms.v1.json');regionalLandforms=createRegionalLandforms(root,mount,regionalData,terrainRuntime);
     const evidenceResolutionAudit = auditEvidenceResolution(ledger.objects),
       registrationAudit = auditSpatialRegistrations(
@@ -510,6 +533,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       hellenisticSanctuaryLayout=compileHellenisticSanctuary(hellenisticSanctuaryData,metricHellenisticRegistration,terrainRuntime.grid.origin);
       metricHellenisticRegistration.reservations=hellenisticSanctuaryLayout.reservations;
       defenseData=await loadCityData('./data/urban/defense-timeline.v1.json');
+      for(const registration of [eraRegistrationReference,metricHellenisticRegistration])completeUrbanCoverage(registration,{rings:housingBoundaryAt({phaseId:registration.phase,offset:.9,defenseData,origin:terrainRuntime.grid.origin}).rings});
+      for(const d of eraRegistrationReference.districts.filter(d=>d.metadata?.coverageResidual))loaded.core.register({...d,phaseIds:['herodian-jesus'],source:{...d.source,dataset:'herodian-30ce.registration'}});
       eraRegistrationReference.metricHousingRings=housingBoundaryAt({phaseId:'herodian-jesus',offset:.9,defenseData,origin:terrainRuntime.grid.origin}).rings;
       canonicalProtected=[...exclusions];
       const defenseProfile=compileDefenseProfile(defenseData,'herodian-jesus',eraRegistrationReference.roads,terrainRuntime,{exclusions});
@@ -544,6 +569,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       for(const phase of ['crusader','ayyubid-mamluk','ottoman'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(medievalData,phase,terrainRuntime.grid.origin,{wallReference}));
       const expansionData=await loadCityData('./data/urban/expansion-modern.skeleton.v1.json');
       for(const phase of ['outside-walls','modern'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(expansionData,phase,terrainRuntime.grid.origin,{wallReference}));
+      for(const [phase,registration]of independentLaterRegistrations)completeUrbanCoverage(registration,{rings:housingBoundaryAt({phaseId:phase,offset:.9,defenseData,wallReference,origin:terrainRuntime.grid.origin}).rings});
       sharedPlaces=createSharedUrbanPlaces({terrain:terrainRuntime,phases:[...loaded.core.phases.values()],core:loaded.core});
       sharedPlaceView=createSharedPlaceView(mount,sharedPlaces);
       persistentCityWorld=createPersistentCityWorld({parent:eraFabricLayer,phases:[...independentLaterRegistrations.keys()],build:(group,phase)=>buildIndependentLaterSkeleton(group,independentLaterRegistrations.get(phase),temporalMaterials,terrainRuntime),publish:runtime=>laterMorphologyLedger.bind(runtime)});
@@ -563,7 +589,12 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       cityProjection = createCityProjection(cityCoreLayer, architecture.meshes,{stateForObject:(id,phase)=>generatedEvents.stateFor(id,phase),stateForInfrastructure:true});
       cityCoreRuntime.projection = cityProjection;
       periodSpatialData = await loadCityData('./data/urban/first-temple-persian.spatial.v1.json');
-      for(const phase of ['late-first-temple','persian-nehemiah']){const registration=compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin);periodRegistrations.set(phase,registration);bindPeriodSpatialCore(loaded.core,registration);}
+      for(const phase of ['late-first-temple','persian-nehemiah']){
+        const registration=compilePeriodRegistration(periodSpatialData,phase,terrainRuntime.grid.origin),template=loaded.core.get(registration.districts[0].id);
+        completeUrbanCoverage(registration,{rings:housingBoundaryAt({phaseId:phase,offset:.9,defenseData,origin:terrainRuntime.grid.origin}).rings});
+        for(const d of registration.districts.filter(d=>d.metadata?.coverageResidual))loaded.core.register({...d,phaseIds:template.phaseIds,lifecycle:template.lifecycle});
+        periodRegistrations.set(phase,registration);bindPeriodSpatialCore(loaded.core,registration);
+      }
       sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
         ledgerCore:loaded.core,overview:true,
         getRegistration:phase => {const registration=applyMetricResidentialRegistration(periodRegistrations.get(phase)||metricHellenisticRegistration,phase);registration.metricHousingRings=housingBoundaryAt({phaseId:phase,offset:.9,defenseData,origin:terrainRuntime.grid.origin}).rings;return registration;},
@@ -598,7 +629,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     waterDefense=compileWaterDefenseRegistration(waterDefenseData,terrainRuntime.grid.origin);bindWaterDefenseCore(cityCoreRuntime.core,waterDefense);
     for(const admission of localPlanAudit){const record=cityCoreRuntime.core.get(admission.objectId);if(!record)throw new Error('Local plan target missing from shared ledger');cityCoreRuntime.core.register({...record,metadata:{...record.metadata,localPlanAdmission:admission}});}
     waterDefenseModel=createWaterDefenseModelAdapter({runtime:middleBronzeSettlement,core:cityCoreRuntime.core,registration:waterDefense});
-    const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');
+    const davidData=await loadCityData('./data/settlement/david-solomon.v1.json');royalDataForGround=davidData;
     davidSettlement=createEarliestSettlement(root,{data:augmentMetricEarlySettlement(davidData,terrainRuntime),terrain:terrainRuntime,ledgerCore:cityCoreRuntime.core,overview:true});
     royalCity=createRoyalCity(root,{data:davidData,terrain:terrainRuntime,core:cityCoreRuntime.core});
     royalRelief=createRoyalRelief(root,mount,{data:davidData,terrain:terrainRuntime});
@@ -693,6 +724,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       try {
         housingBoundaryAdmission?.restore();
         housingBoundaryAdmission?.apply();
+    updateUrbanGround();
         camera.updateMatrixWorld();
         royalRelief?.project(camera);
         const placeBoxes=sharedPlaceView?.project(camera)||[];
@@ -735,7 +767,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             hellenisticSanctuary:hellenisticSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
-            terrainPresentation:{...terrainPresentation?.diagnostics,surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
+            terrainPresentation:{...terrainPresentation?.diagnostics,occupation:urbanGround?.diagnostics(),surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             housingBoundary:housingBoundaryAdmission?.snapshot({includeIds:false}),
             wallReference:wallReferenceModel?.diagnostics(),
             defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),
@@ -929,6 +961,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       defenseTimeline?.dispose();wallReferenceModel?.dispose();
       sharedPlaceView?.dispose();landmarkView.dispose();
       regionalLandforms?.dispose();
+      urbanGround?.dispose();
       terrainPresentation?.dispose();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])

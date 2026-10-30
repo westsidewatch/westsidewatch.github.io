@@ -10,12 +10,12 @@ function collisionIndex(){const bins=new Map(),keys=p=>{const xs=p.map(v=>v.x),z
 export function buildEraParcelCore(core,terrain,{phaseId,registration,districtId,exclusions=[],dataset='era-registration'}={}){
  if(!phaseId||!registration||!districtId)throw new Error('Era parcel core requires phaseId, registration and districtId');
  const data=registration,district=data.districts.find(d=>d.id===districtId);if(!district)return{parcels:[],blocks:[],withheld:true,reason:'lower-city-district-missing'};
- const generation=data.generation||{},infill=generation.infillMode==='district-constrained',metric=data.metricResidentialPolicy;
- const blockResult=infill?generateDistrictInfill({district,roads:data.roads,maxBlockArea:generation.maxBlockArea,roadClearance:generation.roadClearance}):generateUrbanBlocks({district,roads:data.roads,terrain,blockSize:generation.blockSize||96,roadClearance:generation.roadClearance||18});
+ const generation=data.generation||{},residual=district.metadata?.coverageResidual,infill=generation.infillMode==='district-constrained'||residual,metric=data.metricResidentialPolicy;
+ const blockResult=infill?generateDistrictInfill({district,roads:data.roads,maxBlockArea:generation.maxBlockArea,roadClearance:generation.roadClearance||6,excludePolygons:residual?[...district.metadata.coverageExclusions,...exclusions.map(r=>r.polygon)]:[]}):generateUrbanBlocks({district,roads:data.roads,terrain,blockSize:generation.blockSize||96,roadClearance:generation.roadClearance||18});
  // Retain the existing street-front/block-edge parcels unchanged. Complete the
  // residual residential zone with separately identified, fixed-metre parcels.
- const additional=metric?generateDistrictInfill({district,roads:data.roads,maxBlockArea:12000,roadClearance:generation.roadClearance||6}).blocks.map(b=>({...b,id:`${b.id}:metric-infill`,metadata:{...b.metadata,metricInfill:true}})):[];
- const blocks=[...blockResult.blocks,...additional],reserved=infill?[...exclusions,...roadClearancePolygons(data.roads,generation.roadClearance)]:exclusions,metricReserved=[...exclusions,...roadClearancePolygons(data.roads,generation.roadClearance||6)],parcels=[],collisions=collisionIndex();
+ const additional=metric&&!residual?generateDistrictInfill({district,roads:data.roads,maxBlockArea:12000,roadClearance:generation.roadClearance||6}).blocks.map(b=>({...b,id:`${b.id}:metric-infill`,metadata:{...b.metadata,metricInfill:true}})):[];
+ const blocks=[...blockResult.blocks.map(b=>residual?{...b,metadata:{...b.metadata,metricInfill:true}}:b),...additional],reserved=infill?[...exclusions,...roadClearancePolygons(data.roads,generation.roadClearance)]:exclusions,metricReserved=[...exclusions,...roadClearancePolygons(data.roads,generation.roadClearance||6)],parcels=[],collisions=collisionIndex();
  for(const block of blocks){
   core.register({id:`${phaseId}:${block.id}`,type:CITY_OBJECT_TYPES.BLOCK,phaseIds:[phaseId],geometry:block.geometry,typology:'urban-block',source:{dataset,districtId:block.districtId,authority:infill?data.authority:'migration-scaffold'},confidence:EVIDENCE_CONFIDENCE.INFERRED,lifecycle:{built:phaseId},metadata:{...block.metadata,semanticRole:'block'}});
   const added=block.metadata.metricInfill,candidates=added?metricParcelsForBlock(block,terrain,metric):subdivideBlockToParcels(block,{terrain});
@@ -30,4 +30,8 @@ export function buildEraParcelCore(core,terrain,{phaseId,registration,districtId
  }
  return{parcels,roads:data.roads,exclusions,blocks,count:parcels.length,blockCount:blocks.length,withheld:blockResult.withheld,policy:'district→roads→terrain→blocks→parcels',generationScope:generation.scope||'unspecified',registrationAuthority:data.authority,validation:core.validate()};
 }
-export async function buildHerodianParcelCore(core,terrain,{exclusions=[],registration=null}={}){registration=registration||await load();return buildEraParcelCore(core,terrain,{phaseId:'herodian-jesus',registration,districtId:'j3k:district:western-lower-city',exclusions,dataset:'herodian-30ce.registration'});}
+export async function buildHerodianParcelCore(core,terrain,{exclusions=[],registration=null}={}){
+ registration=registration||await load();const ids=['j3k:district:western-lower-city',...registration.districts.filter(d=>d.metadata?.coverageResidual).map(d=>d.id)];
+ const results=ids.map(districtId=>buildEraParcelCore(core,terrain,{phaseId:'herodian-jesus',registration,districtId,exclusions,dataset:'herodian-30ce.registration'}));
+ return {...results[0],parcels:results.flatMap(r=>r.parcels),blocks:results.flatMap(r=>r.blocks),count:results.reduce((s,r)=>s+r.count,0),blockCount:results.reduce((s,r)=>s+r.blockCount,0)};
+}
