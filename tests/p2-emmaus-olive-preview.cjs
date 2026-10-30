@@ -11,6 +11,21 @@ assert.match(html,/one\/luke-21-24\.js/,'features the original Luke 24 ONE study
 assert.match(html,/p2-emmaus-scroll-micro-engraving\.svg/,'Emmaus has its own local editable engraved scroll study');
 assert.doesNotMatch(html,/emmaus__realm-nav|emmaus__folio-layer/,'no second spine is inserted in the Emmaus chapter');
 assert.doesNotMatch(js,/data-realm-jump|realmNav/,'Magazine spines are not replaced by a second navigation controller');
+assert.match(html,/id="proof-film-toggle"/,'A/B control exists only in the isolated P2 preview');
+assert.match(js,/filmContinuity=new URLSearchParams\(location\.search\)\.get\('film'\)==='1'/,
+ 'shared film continuity is opt-in and defaults off');
+assert.match(js,/active:filmContinuity\?distance<12:distance<6\.6/,
+ 'the published media playback defaults to its original stop point');
+assert.match(js,/sourceFrame\.style\.opacity=filmContinuity/,
+ 'same Magazine editorial iframe is uncovered only after the existing ONE reveal');
+assert.match(js,/sourceOriginalEditorialOpacity/,
+ 'backward scroll or A/B switch restores the existing Magazine frame');
+assert.doesNotMatch(js,/createElement\(['"](?:iframe|video)['"]\)/,
+ 'shared-film mode must never construct a second media player');
+assert.match(css,/#emmaus\[data-film-continuity="on"\] > \.emmaus__left/,
+ 'ONE has an intentionally masked film gutter instead of video behind reading copy');
+assert.match(css,/#olive-proof\[data-film-continuity="on"\] \.olive-proof__editorial/,
+ 'Olive independently exposes the shared backdrop without changing its speaker imagery');
 assert.match(css,/--ws-papyrus/,'Emmaus background inherits ONE papyrus palette, not Magazine white');
 assert.match(css,/scroll-micro-engraving\.svg/,'scroll edge engraving is visible in chapter structure');
 assert.match(js,/ONE_DATA\?\.luke\?\.chapterStudies\?\.\['24'\]/,'chapter text comes from canonical ONE, never invented copy');
@@ -89,6 +104,34 @@ const {chromium}=require('playwright');
    });
    assert.equal(paper.color,'rgb(222, 208, 150)','Emmaus leaf must match the actual ONE paper, not a pale overlay');
    assert.equal(paper.token,'rgb(222 208 150)','ONE paper is shared by the canonical Design OS');
+   assert.equal(await page.locator('body').getAttribute('data-film-continuity'),'off',
+    'the original candidate remains the unchanged default');
+   await page.locator('#proof-film-toggle').click();await page.waitForTimeout(170);
+   assert.equal(await page.locator('body').getAttribute('data-film-continuity'),'on',
+    'the optional common-film layer is activated without reloading the page');
+   assert.equal(await page.locator('#proof-film-toggle').getAttribute('aria-pressed'),'true');
+   const filmState=await page.locator('#proof-original').evaluate(frame=>{
+    const doc=frame.contentDocument;
+    const editorial=doc?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
+    return {
+     playerCount:doc?.querySelectorAll('.p2-magazine__home-film').length,
+     opacity:editorial?.style.opacity
+    };
+   });
+   assert.equal(filmState.playerCount,1,'only the original homepage film player remains mounted');
+   assert.equal(filmState.opacity,'0','at Emmaus the same Magazine film is visible under the ONE leaf');
+   if(viewport.width>820){
+    assert.notEqual(await page.locator('#emmaus > .emmaus__left').evaluate(
+     el=>getComputedStyle(el).maskImage),'none','desktop has a visible film gutter');
+   }else{
+    assert.equal(await page.locator('#emmaus > .emmaus__left').evaluate(
+     el=>getComputedStyle(el).maskImage),'none','mobile protects every column of ONE copy');
+   }
+   await page.locator('#proof-film-toggle').click();await page.waitForTimeout(170);
+   assert.equal(await page.locator('body').getAttribute('data-film-continuity'),'off');
+   assert.equal(await page.locator('#proof-original').evaluate(frame=>
+    frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.style.opacity),'',
+    'the approved Magazine editorial frame opacity is restored after A/B toggling');
    assert.match(paper.image,/SITE-TEMPLE-STONE-LIGHT/,'Emmaus keeps the original ONE paper texture, not magazine white');
    assert.match(await page.locator('#emmaus-study-heading').textContent(),/復活/);
    assert.equal(await page.locator('#em-study-route li').count(),2);
