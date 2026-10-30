@@ -8,8 +8,7 @@ The latest user's specific desktop composition correction supersedes the earlier
 
 - Do **not** restart seven top-anchored homepage curtains in chapter 03.
 - Existing P2 magazine seven-color book spines remain the source of the seven realm colors (Water, First Light, Pale Gold, Olive, Harvest, Crimson, Daylight Mauve), assigned by existing Design OS tokens.
-- In Emmaus they become seven **fine folio edges**, not seven new banners, not seven sub-functions of ONE. Their scalar transform samples `oneDrop` from the same existing P2 scroll distance; no autoplay, catch-up timer or independent scroll clock.
-- A held scroll position must produce held edges. Reverse scroll must restore the previous geometries.
+- **2026-10-30 review: freeze the existing Magazine book spines.** No duplicate folio tabs, no new chapter-03 spine animation, no recoloring or relocating the accepted Magazine sevenfold. Its original iframe is untouched and continues to own the design. Reverse-scrolling the 02→03 handoff must still restore the original scene.
 
 ## 2. Engraving subject and provenance
 
@@ -50,12 +49,12 @@ On any selection, `selectBook(number)` changes:
 2. The central ONE work-window. Luke 24 and Matthew 1 use real loaded ONE data; all other volumes show the selected book's canonical identity and actionable chapter coordinates (1 / midpoint / final), with the selected chapter passed to the real ONE URL and no fictitious study content;
 3. The right-hand 241-plate Doré carousel. `bookPlates` is a conservatively curated mapping of catalogue IDs to their canonical books, using the existing exact title inventory; all matching plates are played **first**, followed by the remaining 241-plate archive. Books without a match start at a randomized in-range canonical ID. The library is never replaced by theme-only pictures. A late or failed Wikimedia load must never leave the previously selected book's artwork visible; retries advance inside the canonical 241-item order and otherwise show a truthful unavailable caption. 03→04 continues transferring the same right-hand image field.
 
-## 7. Seven realm folios and palette
+## 7. Frozen Magazine spine and corrected ONE palette (2026-10-30)
 
-Seven named and layered folio edges replace the prior seven unlabeled color bars. They use the exact Design OS realm token colors, ordered by the main site: Church, Westside Magazine, Emmaus, Olive Mountain, Dawn Library, Cinema, Daylight Café.
-- 01–04 navigate the four implemented scenes using the existing reversible P2 scroll. Since scenes 05–07 are not yet implemented in this P2 Draft, their folios link to the already existing canonical Dawn Library, Cinema and Daylight Café routes, instead of inert colored labels.
-- The same existing P2 scroll `oneDrop` moves the seven layered folios, with pause and reverse semantics. This is an inherited material motion, not a repeat of the original homepage seven-curtain entrance.
-- Papyrus, ink and olive accents inherit the Design OS roles; no independent design-system palette. The ONE study remains in a dedicated legible text region, while the engraving is deliberately visible as a carved, restricted left-hand edge with a mask that recedes before the reading content.
+- The Magazine seven-color book spine remains **unchanged in its owning page**. The second Emmaus-specific seven-tab navigation, associated jump handlers, new-color fills and staggered animation have been removed. P2's existing scene jump buttons in its proof header remain available for QA.
+- ONE's actual opening uses stronger ochre manuscript paper (its standalone product declares `--one-paper:#ded096`), not the pale white/cream texture of Magazine. In chapter 03, the OS source of truth remains `--ws-papyrus` and `--ws-pale-gold`; the derived surface now blends 52% gold and 48% papyrus, to approximate ONE's existing paper without importing a second independent palette. Ink is `--ws-night`, not a night/Olive blend.
+- The 03 Doré gallery uses a night-blue neutral frame and OS pale-gold ruling rather than the green shadow previously borrowed from 04 Olive Mountain. The scroll engraving remains on the left, fading before actual ONE reading content.
+- Future work on sevenfold continuity is **paused** until the user approves a design. No new spines should be generated as a quick substitute.
 
 ## 8. Acceptance must cover behavior, not merely source checks
 
@@ -66,7 +65,7 @@ The seven folios must remain semantically labeled and 01–04 navigable. Text mu
 
 - Authority audited before modifying this Draft: `WESTSIDE-DESIGN-OS.md` and `WESTSIDE-EDITORIAL-MANUAL.md`. No new runtime entry point, extra global type scale or standalone color manager was introduced.
 - Previously missing papyrus, pale gold, morning gold, night and seventh-realm mauve variables are registered in the canonical Design OS JSON and its generated CSS runtime, rather than invented locally in P2. Mauve is the sRGB-rounded equivalent of the existing `oklch(67% .075 330)` authority.
-- Emmaus's left 2/3 applies only scoped material rules: real papyrus, ink as a deep night/olive mix, a visible left-weighted original vector scroll engraving, and seven overlapping book-leaf edges with source colors restricted to thin rules and a muted wash.
+- Emmaus's left 2/3 has ONE-weight ochre from OS papyrus/gold, true night-blue OS ink and visible engraved space. The second seven-leaf treatment and green-washed ink were rejected and disabled; Magazine spines remain untouched.
 - All 66 book labels, chapter counts and links come from `ONE_DATA.books`; local `renderBookStudy(number,chapter)` renders a genuine loaded excerpt when present or a real chapter selector if not. The right 1/3 retains the shared 241-image Doré registry and book-first order.
 - The original 03→04 physical image transfer and Church/Vol.00 iframe handoff are not changed.
 - Source checks and syntax validation completed in the draft branch; visual acceptance at desktop/mobile/200% zoom, third-party image availability and reverse-scroll inspection remain separate release requirements. **Do not merge** solely because source checks pass.
