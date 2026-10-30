@@ -24,7 +24,7 @@ export function createCityEnclosureAudit({root,core,boundaryFor}){
    const box=[{x:bounds.min.x,z:bounds.min.z},{x:bounds.max.x,z:bounds.min.z},{x:bounds.max.x,z:bounds.max.z},{x:bounds.min.x,z:bounds.max.z}];
    if(boundary.rings.some(r=>housingFitsRing(box,r,0))){inside++;continue;}
    let total=0,outside=0;
-   for(const polygon of meshes.flatMap(triangles)){const a=area(polygon);total+=a;if(boundary.rings.some(r=>housingFitsRing(polygon,r,0)))continue;const clipped=boundary.rings.flatMap(r=>clipBlockToEnvelope(polygon,r));outside+=Math.max(0,a-clipped.reduce((s,p)=>s+area(p),0));}
+   for(const polygon of meshes.flatMap(triangles)){const a=area(polygon);total+=a;if(boundary.rings.some(r=>housingFitsRing(polygon,r,0)))continue;const clipped=boundary.rings.flatMap(r=>clipBlockToEnvelope(polygon,r,{minArea:1e-8}));outside+=Math.max(0,a-clipped.reduce((s,p)=>s+area(p),0));}
    if(outside>.1)violations.push({id:record.id,type:record.type,label:record.metadata.name||record.source?.label||record.id,projectedArea:total,outsideArea:outside,outsideFraction:outside/total});else inside++;
   }
   return {phase:boundary.phaseId,basis:boundary.basis,closedRings:boundary.rings.length,inside,unresolved,exceptions,violations,examined:groups.size,historicalGeometryAccepted:false,scope:'actual-visible-housing-and-public-masses; gates/walls and explicit suburbs separate'};

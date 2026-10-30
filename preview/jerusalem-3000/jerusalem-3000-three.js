@@ -249,7 +249,8 @@ try {
     eraEn.textContent = (p.state || '').toUpperCase() + ' · ' + p.dateLabel;
     const temple=cityObjects.find(o=>o.id===([RETAINED_PHASE,'hellenistic-hasmonean'].includes(p.id)?'j3k:object:second-temple-early':'j3k:object:first-temple'));
     const availableGates=three.namedGateIndex().filter(g=>g.available),gateKey=availableGates.map(g=>g.id).join('|');if(gateFocus.dataset.gates!==gateKey){gateFocus.dataset.gates=gateKey;gateFocus.replaceChildren(new Option('城門近看',''),...availableGates.map(g=>new Option(g.label+(g.sealed?'（封閉）':''),g.id)));}gateFocus.hidden=!availableGates.length;
-    templeFocusButton.hidden=isCorePhase(p.id)?false:!['david-solomon','late-first-temple','babylonian-destruction',RETAINED_PHASE,'hellenistic-hasmonean'].includes(p.id)||!(temple?.visible||temple?.ruined);
+    const courtPhase=['early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id);templeFocusButton.textContent=courtPhase?'聖域近看':'聖殿近看';
+    templeFocusButton.hidden=isCorePhase(p.id)||courtPhase?false:!['david-solomon','late-first-temple','babylonian-destruction',RETAINED_PHASE,'hellenistic-hasmonean'].includes(p.id)||!(temple?.visible||temple?.ruined);
     eraZh.textContent=p.id==='david-solomon'?(temple?.state==='absent'?'大衛城 · 城防與王室':'所羅門城 · 第一聖殿'):p.label;
     retainedToggle.hidden = p.id !== RETAINED_PHASE;
     note.textContent = isEarliestPhase(p.id) ? '東南山脊與基訓泉周邊的小規模聚落。住居數量、位置、屋頂與步徑均為推定示意；地形使用現代 DEM。可拖動旋轉、滾輪縮放。' : p.id==='middle-bronze' ? '中青銅取水設施與防護通道示意。泉塔年代有爭議，粉褐色標示為爭議層；住居、位置與高度仍屬推定。鑿岩設施只顯示輪廓，完整城牆範圍尚未核定。' : p.id==='late-bronze-iron1' ? '此期城區範圍未核定；住居僅為示意，不代表人口增減或前代房屋留存。粉褐色階梯支撐體為年代與功能爭議層，不能直接認定為王宮基礎。前期防禦未預設延續，隱藏不表示毀壞。' : p.id==='david-solomon' ? '城防、王室院落與第一聖殿為推定復原，由共同帳本分段出現。聖殿主體採經文比例，牆線、位置與外觀未核定；可點「聖殿近看」。住宅仍為較晚鐵器時代類比。' : p.id === RETAINED_PHASE

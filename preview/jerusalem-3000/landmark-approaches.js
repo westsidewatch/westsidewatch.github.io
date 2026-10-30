@@ -1,3 +1,4 @@
+import {pointInPolygon} from './urban-exclusion.js';
 // Display registration only: an inferred connector is not a historical street.
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.z-b.z);
 function closestPoint(a,b,c){
@@ -19,7 +20,8 @@ export function registerLandmarkApproaches(registration){
   const start=candidates.filter(outside).sort((a,b)=>distance(a,c)-distance(b,c))[0];
   if(!start)throw new Error(`Landmark axis lies entirely inside core: ${core.id}`);
   const dx=start.x-c.x,dz=start.z-c.z,scale=Math.max(Math.abs(dx)/halfX,Math.abs(dz)/halfZ);
-  const end={x:c.x+dx/scale,z:c.z+dz/scale};
+  let end={x:c.x+dx/scale,z:c.z+dz/scale};
+  if(core.metadata.precinctContext){let first=Infinity;for(let i=0;i<polygon.length;i++){const a=polygon[i],b=polygon[(i+1)%polygon.length],ex=b.x-a.x,ez=b.z-a.z,den=dx*ez-dz*ex;if(Math.abs(den)<1e-8)continue;const ax=a.x-c.x,az=a.z-c.z,t=(ax*ez-az*ex)/den,u=(ax*dz-az*dx)/den;if(t>0&&t<=1&&u>=0&&u<=1)first=Math.min(first,t);}if(!Number.isFinite(first))throw new Error('Mapped courtyard approach has no boundary intersection');end={x:c.x+dx*first,z:c.z+dz*first};}
   registration.roads.push({id:`${core.id.replace(':monument:',':road:')}-approach-design`,type:'road',confidence:'inferred',geometry:{frame:'canonical-dem-enu',status:'authored-core-link-not-surveyed-street',primitive:'polyline',points:[{...start},end]},source:{urls:[...new Set([...core.source.urls,...axis.source.urls])],authority:'authored connection between contemporary illustrative axis and schematic core edge; not an identified entrance'},metadata:{layoutRole:'old-city-route-context',coreReference:core.id,axisReference:axis.id,routeGeometryVerified:false,entranceIdentified:false}});
  }
 }

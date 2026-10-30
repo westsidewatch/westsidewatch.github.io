@@ -128,6 +128,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     camera = new THREE.PerspectiveCamera(34, 1, 0.1, 18000),
     renderer = new THREE.WebGLRenderer({
       antialias: true,
+      logarithmicDepthBuffer: true,
       alpha: true,
       powerPreference: 'high-performance',
     }),
@@ -742,7 +743,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         const phaseIndex=Math.floor(timelinePosition),fraction=(playbackDisplayPosition??timelinePosition)-phaseIndex,phaseReady=!isSharedGenerationPhase(currentPhaseId)||sharedEraRuntime?.status==='ready';
         if(currentPhaseId)constructionPresentation.apply({phaseId:currentPhaseId,phaseIndex,position:playbackDisplayPosition??timelinePosition,active:playbackPresentation,ruin:['babylonian-destruction','roman-destruction'].includes(currentPhaseId)});
         landmarkView.setAnchors(constructionPresentation.landmarks());landmarkView.setVisible(landmarkLabelsEnabled);const labelBoxes=landmarkView.project(camera,gateBoxes);mount.parentElement.style.setProperty('--map-label-rail-height',`${Math.max(0,...labelBoxes.map(b=>b.bottom-mount.clientHeight+20))}px`);
-        architecturalTerrainOcclusion?.apply();
+        architecturalTerrainOcclusion?.apply(activeWorldEntry?.runtime.landmarkMeshes?.find(m=>m.visible&&m.userData.occupiedFoundation));
         phaseDissolve.before({phaseId:currentPhaseId,index:phaseIndex,fraction,active:playbackPresentation,ready:phaseReady});
         renderer.render(scene, camera);
         phaseDissolve.after(renderer.domElement,{phaseId:currentPhaseId,fraction,ready:phaseReady&&playbackPresentation});
@@ -777,7 +778,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             hellenisticSanctuary:hellenisticSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
-            terrainPresentation:{...terrainPresentation?.diagnostics,architecturalOcclusion:architecturalTerrainOcclusion?.diagnostics(),occupation:urbanGround?.diagnostics(),surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
+            terrainPresentation:{...terrainPresentation?.diagnostics,logarithmicDepthBuffer:renderer.capabilities.logarithmicDepthBuffer,architecturalOcclusion:architecturalTerrainOcclusion?.diagnostics(),occupation:urbanGround?.diagnostics(),surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             housingBoundary:housingBoundaryAdmission?.snapshot({includeIds:false}),
             wallReference:wallReferenceModel?.diagnostics(),
             defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),
@@ -914,6 +915,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       controls.minDistance=5;controls.target.copy(focus);camera.position.copy(focus).add(gate?new THREE.Vector3(-gate.normal.x*distance,.25*distance,-gate.normal.z*distance):new THREE.Vector3(.65*distance,.7*distance,distance));controls.update();needsFrame=true;return true;
     },
     focusRoyalTemple(){
+      const court=activeWorldEntry?.runtime.registration?.cores.find(c=>c.metadata.precinctContext);if(court)return this.focusCityObject(court.id);
       if(isCorePhase(currentPhaseId))return this.focusCityObject('j3k:object:inner-temple');
       const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:currentPhaseId==='hellenistic-hasmonean'?hellenisticSanctuary:royalCity;
       if(!templeRuntime?.diagnostics().visibleTemple)return;
