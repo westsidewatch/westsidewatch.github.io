@@ -8,27 +8,29 @@
  const seek=$('#proof-seek'),percent=$('#proof-percentage'),phase=$('#proof-phase');
  if(!track||!base||!emmaus||!olive)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
- // A/B art-direction experiment. One original homepage film, still owned by
- // the Magazine iframe; never reparent or clone its media playback node.
- let filmContinuity=new URLSearchParams(location.search).get('film')==='1';
- const filmToggle=$('#proof-film-toggle');
- function syncFilmMode(){
-  document.body.dataset.filmContinuity=filmContinuity?'on':'off';
-  emmaus.dataset.filmContinuity=filmContinuity?'on':'off';
-  olive.dataset.filmContinuity=filmContinuity?'on':'off';
-  if(filmToggle){
-   filmToggle.setAttribute('aria-pressed',filmContinuity?'true':'false');
-   filmToggle.textContent=filmContinuity?'共用影片 · ON':'共用影片 · OFF';
+ // A/B editorial experiment: Church alone has the Red Sea split.
+ // Magazine remains the fixed geometric master for all following chapters.
+ // Only the NON-CONTENT field changes by realm (film, manuscript, terraces).
+ let fixedGround=new URLSearchParams(location.search).get('ground')==='1';
+ const groundToggle=$('#proof-film-toggle'),realmGround=$('#p2-realm-background');
+ function syncGroundMode(){
+  document.body.dataset.fixedGround=fixedGround?'on':'off';
+  emmaus.dataset.fixedGround=fixedGround?'on':'off';
+  olive.dataset.fixedGround=fixedGround?'on':'off';
+  if(groundToggle){
+   groundToggle.setAttribute('aria-pressed',fixedGround?'true':'false');
+   groundToggle.textContent=fixedGround?'固定版式／刻線 · ON':'固定版式／刻線 · OFF';
   }
  }
- syncFilmMode();
- filmToggle?.addEventListener('click',()=>{
-  filmContinuity=!filmContinuity;
+ syncGroundMode();
+ groundToggle?.addEventListener('click',()=>{
+  fixedGround=!fixedGround;
   const url=new URL(location.href);
-  if(filmContinuity)url.searchParams.set('film','1');
-  else url.searchParams.delete('film');
+  if(fixedGround)url.searchParams.set('ground','1');
+  else url.searchParams.delete('ground');
+  url.searchParams.delete('film');
   history.replaceState(null,'',url);
-  syncFilmMode();requestPaint();
+  syncGroundMode();requestPaint();
  });
  const books=window.ONE_DATA?.books;
  if(!Array.isArray(books)||books.length!==66)throw Error('Canonical ONE 66-book data was not loaded');
@@ -284,11 +286,10 @@
   if(top>0)legacy=clamp((vh-top)/vh,0,1)*.1/2.9;
   else if(legacyDistance<=churchEnd){const scene=legacyDistance<=1.8?.1+legacyDistance*(.4/1.8):.5+(legacyDistance-1.8);legacy=scene/2.9;}
   else{const scene=2.37+(legacyDistance-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);legacy=scene<=2.9?.75*scene/2.9:.75+.25*(scene-2.9)/1.1;}
-  // Continue the SAME Magazine/home player through P2 03/04 only in film mode.
-  // The default experiment and published Church->Magazine behavior are untouched.
+  // Magazine keeps its own original film; later chapters use engraving.
+  // Never restart or clone the film, and do not alter the Church's unique split.
   if(frameLoaded)base.contentWindow?.postMessage({
-   type:'westside-p2-scroll',progress:clamp(legacy),
-   active:filmContinuity?distance<12:distance<6.6
+   type:'westside-p2-scroll',progress:clamp(legacy),active:distance<6.6
   },location.origin);
   // Same MERSI image object: Magazine LEFT engraving actually travels to
   // the existing RIGHT cover rectangle. No replica image is created.
@@ -330,15 +331,16 @@
   }
   if(sourceTile)sourceTile.style.opacity=sourceOriginalTileOpacity??'';
   if(sourceCover)sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
-  // Only after the actual Magazine plate is borrowed, the approved Contents
-  // iframe quietly recedes on the EXISTING ONE paper-reveal timeline, exposing
-  // its still-playing film sibling. Reverse scroll restores it completely.
-  if(sourceFrame)sourceFrame.style.opacity=filmContinuity
-   ?String(1-oneDrop):(sourceOriginalEditorialOpacity??'');
-  // Actual video is shown in the open space AROUND the physical spread.
-  // The manuscript and its study typography remain opaque, never overlaid
-  // by moving images. Both image panels share one measurable inset stage.
-  emmaus.style.backgroundColor=filmContinuity?'transparent'
+  // The accepted Magazine iframe, including its book spine and original
+  // video proportions, remains unchanged and restores during reverse scroll.
+  if(sourceFrame)sourceFrame.style.opacity=sourceOriginalEditorialOpacity??'';
+  // A realm-specific engraved backdrop replaces the film ONLY in the
+  // background field, on the existing 02→03 timeline (no new reveal effect).
+  if(realmGround){
+   realmGround.style.opacity=String(fixedGround?smooth((distance-6.50)/.90):0);
+   realmGround.dataset.realm=oliveIn>=.5?'sermon':'bible';
+  }
+  emmaus.style.backgroundColor=fixedGround?'transparent'
    :(oneDrop>=.999?'var(--em-paper)':'transparent');
   const lerp=(a,b,p)=>a+(b-a)*p;
   const poseRect=(el,a,b,p)=>{
@@ -360,20 +362,32 @@
   // MERSI cadence: move an EXISTING field first; expose the NEW identity in the vacancy second.
   const morphMove=smooth((oliveIn-.32)/.58);
   const fieldExit=1-smooth((oliveIn-.79)/.2);
-  // Film-continuity experiment: replace the nearly invisible masked slit
-  // with a real panoramic film surround. Contents+engraving retain their
-  // original physical handoff; only the FINISHED 03 spread becomes inset.
-  // The same insets apply to Olive via scoped CSS, so the gallery can travel
-  // to its protected portrait without a second wipe or extra video node.
-  const mobileFilm=filmContinuity&&innerWidth<=820;
-  const surroundX=filmContinuity&&!mobileFilm?stageRect.width*.085:0;
-  const surroundTop=filmContinuity?stageRect.height*(mobileFilm?.115:.09):0;
-  const surroundBottom=filmContinuity?stageRect.height*(mobileFilm?.01:.09):0;
-  const spreadWidth=stageRect.width-2*surroundX;
-  const spreadHeight=stageRect.height-surroundTop-surroundBottom;
-  const fullLeft={x:surroundX,y:surroundTop,w:spreadWidth*2/3,h:spreadHeight};
-  const fullRight={x:surroundX+spreadWidth*2/3,y:surroundTop,
-                   w:spreadWidth/3,h:spreadHeight};
+  // The actual MAGAZINE 5:8 cover + square Contents + original spine
+  // define the protected outer rectangle. Read live DOM geometry; never
+  // invent a new 8.5%/9% frame or expand the chapter back to full screen.
+  const magSpread=original&&coverBounds?{
+   x:Math.min(original.x,coverBounds.x),
+   y:Math.min(original.y,coverBounds.y),
+   w:Math.max(original.x+original.w,coverBounds.x+coverBounds.w)
+      -Math.min(original.x,coverBounds.x),
+   h:Math.max(original.y+original.h,coverBounds.y+coverBounds.h)
+      -Math.min(original.y,coverBounds.y)
+  }:null;
+  const master=magSpread||{x:0,y:0,w:stageRect.width,h:stageRect.height};
+  const fullLeft={x:master.x,y:master.y,w:master.w*2/3,h:master.h};
+  const fullRight={x:master.x+master.w*2/3,y:master.y,
+                   w:master.w/3,h:master.h};
+  // Olive has the SAME outer rectangle as the Magazine and Emmaus.
+  if(fixedGround){
+   olive.style.inset='auto';
+   olive.style.left=master.x.toFixed(2)+'px';
+   olive.style.top=master.y.toFixed(2)+'px';
+   olive.style.width=master.w.toFixed(2)+'px';
+   olive.style.height=master.h.toFixed(2)+'px';
+  }else{
+   olive.style.inset='';
+   olive.style.left='';olive.style.top='';olive.style.width='';olive.style.height='';
+  }
   if(move>.001&&sourceFigure&&sourceTile&&coverBounds){
    if(!transferFigure){
     transferFigure=sourceFigure;transferHome=sourceTile;
@@ -410,7 +424,7 @@
 
   olive.style.visibility=oliveShowing?'visible':'hidden';
   olive.style.opacity='1';olive.style.clipPath='none';
-  olive.style.backgroundColor=filmContinuity?'transparent'
+  olive.style.backgroundColor=fixedGround?'transparent'
    :(oliveIn>=.999?'#f0eee7':'transparent');
   olive.style.pointerEvents=oliveIn>.999?'auto':'none';olive.inert=oliveIn<=.999;
   olive.setAttribute('aria-hidden',oliveIn>.999?'false':'true');
