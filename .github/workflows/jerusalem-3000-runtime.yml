@@ -31,6 +31,7 @@ jobs:
           node scripts/verify_jerusalem_3000_urban_coverage.mjs
           node scripts/verify_jerusalem_3000_housing_boundary.mjs
           node scripts/verify_jerusalem_3000_regional_terrain.mjs
+          node scripts/verify_jerusalem_3000_precinct_reservations.mjs
           node scripts/verify_jerusalem_3000_haram_court.mjs
           node scripts/verify_jerusalem_3000_architectural_ground.mjs
           node scripts/verify_jerusalem_3000_herodian_dimensions.mjs

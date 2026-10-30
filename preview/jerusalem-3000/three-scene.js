@@ -262,7 +262,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     const zones=[];
     if(registration){
       for(const d of registration.districts)zones.push({polygon:d.geometry.polygon,kind:'quarter',explicitExpansion:d.metadata?.layoutRole==='extra-mural-expansion'});
-      for(const r of [...(registration.reservations||[]),...(registration.cores||[])])zones.push({polygon:r.geometry?.polygon||r.polygon,kind:'reserved'});
+      for(const r of registration.reservations||[])zones.push({polygon:r.geometry?.polygon||r.polygon,kind:r.metadata?.groundRole==='public-context'?'public':'reserved'});
+      for(const r of registration.cores||[])zones.push({polygon:r.geometry.polygon,kind:'public'});
     }else for(const r of cityCoreRuntime.core.phase(currentPhaseId)){
       if(r.metadata.generationPhase!==currentPhaseId&&currentPhaseId!=='david-solomon')continue;
       if(r.type==='district'&&r.geometry?.polygon&&!(r.metadata.regionId==='northern'&&stage!=='solomon'))zones.push({polygon:r.geometry.polygon,kind:'quarter'});
@@ -538,7 +539,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       metricHellenisticRegistration=applyMetricResidentialRegistration(await loadCityData('./data/urban/hellenistic-metric.registration.v1.json'));
       hellenisticSanctuaryData=await loadCityData('./data/urban/hellenistic-sanctuary.v1.json');
       hellenisticSanctuaryLayout=compileHellenisticSanctuary(hellenisticSanctuaryData,metricHellenisticRegistration,terrainRuntime.grid.origin);
-      metricHellenisticRegistration.reservations=hellenisticSanctuaryLayout.reservations;
+      metricHellenisticRegistration.reservations=hellenisticSanctuaryLayout.reservations.map(r=>({...r,metadata:{...r.metadata,groundRole:'public-context'}}));
+      for(const r of eraRegistrationReference.reservations||[])r.metadata={...r.metadata,groundRole:'public-context'};
       defenseData=await loadCityData('./data/urban/defense-timeline.v1.json');
       for(const registration of [eraRegistrationReference,metricHellenisticRegistration])completeUrbanCoverage(registration,{rings:housingBoundaryAt({phaseId:registration.phase,offset:.9,defenseData,origin:terrainRuntime.grid.origin}).rings});
       for(const d of eraRegistrationReference.districts.filter(d=>d.metadata?.coverageResidual))loaded.core.register({...d,phaseIds:['herodian-jesus'],source:{...d.source,dataset:'herodian-30ce.registration'}});
@@ -778,7 +780,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             hellenisticSanctuary:hellenisticSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
-            terrainPresentation:{...terrainPresentation?.diagnostics,logarithmicDepthBuffer:renderer.capabilities.logarithmicDepthBuffer,architecturalOcclusion:architecturalTerrainOcclusion?.diagnostics(),occupation:urbanGround?.diagnostics(),surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
+            terrainPresentation:{...terrainPresentation?.diagnostics,logarithmicDepthBuffer:renderer.capabilities.logarithmicDepthBuffer,architecturalOcclusion:architecturalTerrainOcclusion?.diagnostics(),occupation:urbanGround?.diagnostics(),precinctReservations:(independentLaterRegistrations.get(currentPhaseId)||periodRegistrations.get(currentPhaseId))?.precinctReservationAudit||null,surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             housingBoundary:housingBoundaryAdmission?.snapshot({includeIds:false}),
             wallReference:wallReferenceModel?.diagnostics(),
             defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),

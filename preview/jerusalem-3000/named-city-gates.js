@@ -17,7 +17,7 @@ export function registerNamedGateApproaches(registration,gates){
  if(!PHASES.includes(registration.phase))return;
  const axes=registration.roads.filter(r=>!r.metadata?.gateReference&&!r.metadata?.coreReference),makeId=g=>`j3k:${registration.phase}:independent:road:${g.key}-approach-design`;
  for(const gate of gates){
-  registration.reservations.push({id:`j3k:${registration.phase}:reservation:${gate.key}-gatehouse`,geometry:{polygon:gate.footprint},source:{urls:gate.sources}});
+  registration.reservations.push({id:`j3k:${registration.phase}:reservation:${gate.key}-gatehouse`,geometry:{polygon:gate.footprint},metadata:{groundRole:'public-context'},source:{urls:gate.sources}});
   if(gate.sealed)continue;let nearest=null;
   for(const road of axes)for(let i=1;i<road.geometry.points.length;i++){const a=road.geometry.points[i-1],b=road.geometry.points[i],dx=b.x-a.x,dz=b.z-a.z,L=dx*dx+dz*dz,t=L?Math.max(0,Math.min(1,((gate.center.x-a.x)*dx+(gate.center.z-a.z)*dz)/L)):0,p={x:a.x+t*dx,z:a.z+t*dz},v=(p.x-gate.center.x)*gate.normal.x+(p.z-gate.center.z)*gate.normal.z;if(v<gate.designDepth/2+4)continue;const distance=Math.hypot(p.x-gate.center.x,p.z-gate.center.z);if(!nearest||distance<nearest.distance)nearest={p,distance,road};}
   if(!nearest)throw new Error(`No interior street for ${gate.key}`);

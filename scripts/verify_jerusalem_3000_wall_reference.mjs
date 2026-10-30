@@ -39,4 +39,4 @@ for(const phase of ['byzantine','early-islamic','crusader','ayyubid-mamluk','ott
  if(siteAnchors.has(key)){const previous=siteAnchors.get(key);assert.ok(Math.hypot(previous.x-centre.x,previous.z-centre.z)<1e-8,'same site cannot jump when the phase changes');}else siteAnchors.set(key,centre);
  assert.equal(record.metadata.siteRegistration.historicalFootprintVerified,false);assert.equal(record.metadata.geometryVerified,false);
 }
-assert.equal(laterSacredCores('aelia').length,0,'do not project Christian/Islamic buildings before construction');
+assert.equal(laterSacredCores('aelia').length,1,'only unresolved site context before Christian/Islamic buildings');
