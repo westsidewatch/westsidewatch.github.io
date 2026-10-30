@@ -5,6 +5,7 @@ const root=path.resolve(__dirname,'..');
 const html=fs.readFileSync(path.join(root,'static/experiments/p2-emmaus-olive-handoff-lab.html'),'utf8');
 const js=fs.readFileSync(path.join(root,'static/js/p2-emmaus-olive-preview.js'),'utf8');
 const css=fs.readFileSync(path.join(root,'static/css/p2-emmaus-olive-preview.css'),'utf8');
+const engraving=fs.readFileSync(path.join(root,'static/css/westside-engraving-authority.css'),'utf8');
 assert.match(html,/p2\/living-water\.html\?embed=1/,'reuses approved P2 Church/Magazine source');
 assert.match(html,/one\/one-data\.js/,'reads the canonical 66-book inventory');
 assert.match(html,/one\/luke-21-24\.js/,'features the original Luke 24 ONE study content');
@@ -13,6 +14,10 @@ assert.doesNotMatch(html,/emmaus__realm-nav|emmaus__folio-layer/,'no second spin
 assert.doesNotMatch(js,/data-realm-jump|realmNav/,'Magazine spines are not replaced by a second navigation controller');
 assert.match(html,/id="proof-ground-toggle"/,'P2 preview provides a fixed-folio A/B control');
 assert.match(html,/westside-engraving-authority\.css/,'uses the one existing engraving authority');
+for(const realm of ['church','magazine','sermon','book','cinema','life','bible']){
+ assert.match(engraving,new RegExp('data-realm='+realm+'\\]'),
+  'the already-owned Westside engraving authority registers '+realm);
+}
 assert.match(html,/id="p2-realm-background"/,'the background texture is its own field');
 assert.match(js,/fixedGround=new URLSearchParams\(location\.search\)\.get\('ground'\)==='1'/,
  'engraved-background mode is opt-in and default remains unchanged');
@@ -133,6 +138,9 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#proof-ground-toggle').getAttribute('aria-pressed'),'true');
    assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'bible');
    assert.match(await page.locator('#p2-realm-background').evaluate(
+    el=>getComputedStyle(el,'::after').backgroundImage),/repeating-linear-gradient/,
+    'Bible uses the real shared folio engraving rules');
+   assert.match(await page.locator('#p2-realm-background').evaluate(
     el=>getComputedStyle(el).clipPath),/path\(/,
     'real Magazine aperture leaves the editorial pages uncovered');
    const stageGround=await page.locator('#proof-stage').boundingBox();
@@ -156,6 +164,9 @@ const {chromium}=require('playwright');
    await page.locator('[data-jump="11.10"]').click();await page.waitForTimeout(220);
    assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'sermon',
     'Sermon uses a distinct hillside contour engraving');
+   assert.match(await page.locator('#p2-realm-background').evaluate(
+    el=>getComputedStyle(el,'::after').backgroundImage),/repeating-radial-gradient/,
+    'Sermon changes to its own existing olive-terrace contour line grammar');
    const olRect=await page.locator('#olive-proof').boundingBox();
    assert(olRect&&Math.abs(olRect.x-expectedX)<4&&Math.abs(olRect.y-expectedY)<4,
     'Olive retains the Magazine top-left origin');
