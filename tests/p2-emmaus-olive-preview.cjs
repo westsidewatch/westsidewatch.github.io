@@ -11,7 +11,7 @@ assert.match(html,/one\/luke-21-24\.js/,'features the original Luke 24 ONE study
 assert.match(html,/p2-emmaus-scroll-micro-engraving\.svg/,'Emmaus has its own local editable engraved scroll study');
 assert.doesNotMatch(html,/emmaus__realm-nav|emmaus__folio-layer/,'no second spine is inserted in the Emmaus chapter');
 assert.doesNotMatch(js,/data-realm-jump|realmNav/,'Magazine spines are not replaced by a second navigation controller');
-assert.match(html,/id="proof-film-toggle"/,'P2 preview provides a fixed-folio A/B control');
+assert.match(html,/id="proof-ground-toggle"/,'P2 preview provides a fixed-folio A/B control');
 assert.match(html,/westside-engraving-authority\.css/,'uses the one existing engraving authority');
 assert.match(html,/id="p2-realm-background"/,'the background texture is its own field');
 assert.match(js,/fixedGround=new URLSearchParams\(location\.search\)\.get\('ground'\)==='1'/,
@@ -127,10 +127,10 @@ const {chromium}=require('playwright');
    });
    assert(sourceGeometry,'Magazine geometry must be available before acceptance');
    assert.equal(sourceGeometry.filmCount,1,'the ONE existing magazine film player is preserved');
-   await page.locator('#proof-film-toggle').click();await page.waitForTimeout(220);
+   await page.locator('#proof-ground-toggle').click();await page.waitForTimeout(220);
    assert.equal(await page.locator('body').getAttribute('data-fixed-ground'),'on',
     'opt-in shared proportions and engraved backdrop are active');
-   assert.equal(await page.locator('#proof-film-toggle').getAttribute('aria-pressed'),'true');
+   assert.equal(await page.locator('#proof-ground-toggle').getAttribute('aria-pressed'),'true');
    assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'bible');
    assert.match(await page.locator('#p2-realm-background').evaluate(
     el=>getComputedStyle(el).clipPath),/path\(/,
@@ -164,7 +164,7 @@ const {chromium}=require('playwright');
    await page.screenshot({path:path.join(groundDir,viewport.width+'-fixed-ground-sermon.png')});
    await page.locator('[data-jump="9.10"]').click();await page.waitForTimeout(220);
    assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'bible');
-   await page.locator('#proof-film-toggle').click();await page.waitForTimeout(170);
+   await page.locator('#proof-ground-toggle').click();await page.waitForTimeout(170);
    assert.equal(await page.locator('body').getAttribute('data-fixed-ground'),'off');
    assert.equal(await page.locator('#p2-realm-background').evaluate(
     el=>getComputedStyle(el).opacity),'0','baseline background restores on OFF');
