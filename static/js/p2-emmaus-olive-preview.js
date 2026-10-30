@@ -6,14 +6,6 @@
  const $=s=>document.querySelector(s),clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),smooth=t=>{t=clamp(t);return t*t*(3-2*t)};
  const track=$('#proof-track'),base=$('#proof-original'),emmaus=$('#emmaus'),olive=$('#olive-proof');
  const seek=$('#proof-seek'),percent=$('#proof-percentage'),phase=$('#proof-phase');
- const realmNav=[...emmaus.querySelectorAll('[data-realm-jump]')];
- for(const button of realmNav){
-  button.addEventListener('click',()=>{
-   const distance=Number(button.dataset.realmJump);
-   if(Number.isFinite(distance))scrollTo({top:scrollY+track.getBoundingClientRect().top+distance*innerHeight,behavior:'instant'});
-  });
- }
-
  if(!track||!base||!emmaus||!olive)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const books=window.ONE_DATA?.books;
@@ -278,15 +270,6 @@
   const move=smooth((distance-6.50)/.90);
   const archive=smooth((distance-7.40)/.28);
   const oneDrop=smooth((distance-7.66)/.78);
-  // Actual seven realm folios / navigation, inheriting the original color
-  // identities; no replay of the shared homepage curtains.
-  for(const [i,layer] of [...emmaus.querySelectorAll('.emmaus__folio-layer')].entries()){
-   const unfolded=smooth((oneDrop-i*.058)/.57);
-   layer.style.transform='translate3d('+(-34*(1-unfolded)).toFixed(2)+'px,'+
-    ((1-unfolded)*(i+1)*5).toFixed(2)+'px,0) scaleX('+
-    (.18+.82*unfolded).toFixed(4)+')';
-   layer.style.opacity=(.16+.66*unfolded).toFixed(3);
-  }
   const expand=smooth((distance-8.44)/.48);
   const oliveIn=smooth((distance-9.44)/1.38);
   const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
@@ -319,7 +302,7 @@
   }
   if(sourceTile)sourceTile.style.opacity=sourceOriginalTileOpacity??'';
   if(sourceCover)sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
-  emmaus.style.backgroundColor=oneDrop>=.999?'#e7decb':'transparent';
+  emmaus.style.backgroundColor=oneDrop>=.999?'var(--em-paper)':'transparent';
   const lerp=(a,b,p)=>a+(b-a)*p;
   const poseRect=(el,a,b,p)=>{
    if(!a||!b)return;
@@ -445,11 +428,6 @@
   oliveWindow.style.clipPath='inset(0 0 '+((1-windowReveal)*100).toFixed(3)+'% 0)';
   $('.olive-proof__folio').style.opacity=String(smooth((oliveIn-.83)/.16));
   const section=distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.44?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
-  const currentRealm=distance<3.0775?1:distance<6.5?2:distance<9.44?3:4;
-  for(const folio of realmNav){
-   if(Number(folio.dataset.realm)===currentRealm)folio.setAttribute('aria-current','location');
-   else folio.removeAttribute('aria-current');
-  }
   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
   seek.value=String(distance/12*100);percent.textContent=(distance/12*100).toFixed(0)+'%';lastPaint=distance;
  }
