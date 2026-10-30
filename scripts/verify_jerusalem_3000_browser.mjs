@@ -530,7 +530,7 @@ try {
   await mobile.screenshot({path:`${output}/late-bronze-mobile.png`,fullPage:true});
   await mobile.locator('.j3k-scrubber').evaluate(el=>{el.value='3.9';el.dispatchEvent(new Event('input',{bubbles:true}));});
   await mobile.waitForFunction(()=>window.__JERUSALEM3000__.renderDiagnostics.davidSettlement?.visibleRoyalMarkers===1);
-  const mobileReliefLabels=await mobile.locator('.j3k-relief-labels').evaluate(el=>{const box=el.getBoundingClientRect();return [...el.children].filter(c=>!c.hidden).map(c=>{const r=c.getBoundingClientRect();return {left:r.left-box.left,right:r.right-box.left,width:box.width};});});
+  const mobileReliefLabels=await mobile.locator('.j3k-relief-labels').evaluate(el=>{const box=el.getBoundingClientRect();return [...el.children].filter(c=>c.localName==='span'&&!c.hidden).map(c=>{const r=c.getBoundingClientRect();return {left:r.left-box.left,right:r.right-box.left,width:box.width};});});
   assert.equal(mobileReliefLabels.length,3);assert.ok(mobileReliefLabels.every(r=>r.left>=-1&&r.right<=r.width+1),'all royal relief labels fit portrait view');
   await mobile.screenshot({path:`${output}/david-mobile.png`,fullPage:true});
   await mobile.getByRole('button', { name: '耶穌時代', exact: false }).click();

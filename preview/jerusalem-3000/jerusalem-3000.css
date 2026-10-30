@@ -40,3 +40,14 @@
 .j3k-stage.terrain-overview .j3k-era-note{font-size:11px;line-height:1.5;max-height:50px;overflow:hidden;margin-top:6px}.j3k-landform-references span{border-color:#365b53;background:rgba(239,242,228,.96);font-weight:600}.j3k-stage.terrain-overview .j3k-three-stage:after{background:none}
 
 .j3k-geography-credit{font-size:10px;line-height:1.5;color:var(--muted);margin:6px 0}
+
+/* Text lives in a reserved rail; only fine leaders and location dots cross the map. */
+.j3k-stage.external-map-labels{margin-right:220px;margin-bottom:var(--map-label-rail-height,0px);overflow:visible}
+.external-map-labels .j3k-place-references svg{overflow:visible}
+.external-map-labels .j3k-place-references span{white-space:normal;width:max-content;background:var(--paper);font-size:11px;line-height:1.5;padding:2px 4px}
+.external-map-labels .j3k-place-references line{stroke-width:.7;opacity:.5}
+@media(max-width:720px){.j3k-stage.external-map-labels{margin-right:0;margin-bottom:var(--map-label-rail-height,320px);min-height:max(360px,52svh)}}
+
+.external-map-labels .j3k-relief-labels span{transform:none}
+
+.j3k-wall-reference-credit{position:static;display:block;font-size:10px;margin:6px 0;padding:0;background:none}.j3k-wall-reference-credit[hidden]{display:none}

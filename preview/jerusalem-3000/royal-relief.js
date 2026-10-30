@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {createSharedPlaceView} from './shared-place-view.js';
 import {geographicToENU} from './terrain-runtime.js';
 import {settlementSurfaceHeight} from './earliest-settlement.js';
 // Analytical transect through existing illustrative locations, not an ancient road.
@@ -21,13 +22,14 @@ export function createRoyalRelief(parent,mount,{data,terrain}){
  const geometry=new THREE.BufferGeometry().setFromPoints(profile.samples.map(p=>new THREE.Vector3(p.x,p.y+.5,p.z))),lineMaterial=new THREE.LineBasicMaterial({color:0x8b422b});
  group.add(new THREE.Line(geometry,lineMaterial));
  const markerGeometry=new THREE.SphereGeometry(2,8,6),markerMaterial=new THREE.MeshBasicMaterial({color:0x8b422b});
- const labels=document.createElement('div');labels.className='j3k-relief-labels';mount.append(labels);
  const names=['大衛城南段','大衛城中段','北部高處'];
- const entries=profile.anchors.map((p,i)=>{const marker=new THREE.Mesh(markerGeometry,markerMaterial);marker.position.set(p.x,p.y+2,p.z);group.add(marker);const label=document.createElement('span');label.textContent=names[i];labels.append(label);return {p,label};});
+ const anchors=profile.anchors.map((p,i)=>({...p,id:`royal-relief-${i}`,label:names[i]}));
+ for(const p of profile.anchors){const marker=new THREE.Mesh(markerGeometry,markerMaterial);marker.position.set(p.x,p.y+2,p.z);group.add(marker);}
+ const view=createSharedPlaceView(mount,{anchors:()=>anchors},{credit:false,className:'j3k-relief-labels'});
  let shown=false;
  return {profile,
-  apply({phaseId,stage,evidenceAllowed}){shown=phaseId==='david-solomon'&&evidenceAllowed('inferred');group.visible=shown;labels.hidden=!shown;entries[2].label.textContent=stage==='david'?'北部高處 · 禾場關聯區（示意）':'北部高處 · 所羅門聖殿（示意）';},
-  project(camera){if(!shown)return;const width=mount.clientWidth,height=mount.clientHeight;for(const {p,label} of entries){const q=new THREE.Vector3(p.x,p.y+8,p.z).project(camera);label.hidden=q.z< -1||q.z>1||Math.abs(q.x)>1||Math.abs(q.y)>1;const margin=label.offsetWidth/2+4;label.style.left=`${Math.max(margin,Math.min(width-margin,(q.x+1)*width/2))}px`;label.style.top=`${(1-q.y)*height/2}px`;}},
-  dispose(){geometry.dispose();lineMaterial.dispose();markerGeometry.dispose();markerMaterial.dispose();group.removeFromParent();labels.remove();}
+  apply({phaseId,stage,evidenceAllowed}){shown=phaseId==='david-solomon'&&evidenceAllowed('inferred');group.visible=shown;anchors[2].label=stage==='david'?'北部高處 · 禾場關聯區（示意）':'北部高處 · 所羅門聖殿（示意）';view.setAnchors(anchors);view.setVisible(shown);},
+  project:(camera,occupied=[])=>view.project(camera,occupied),
+  dispose(){geometry.dispose();lineMaterial.dispose();markerGeometry.dispose();markerMaterial.dispose();group.removeFromParent();view.dispose();}
  };
 }

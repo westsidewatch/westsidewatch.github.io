@@ -1,3 +1,4 @@
+import {createArchitecturalTerrainOcclusion} from './architectural-terrain-occlusion.js';
 import {compileNamedCityGates,publishNamedCityGates,registerNamedGateApproaches} from './named-city-gates.js';
 import {createCityEnclosureAudit} from './city-enclosure-audit.js';
 import {createUrbanGroundPresentation} from './urban-ground-presentation.js';
@@ -181,7 +182,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   let currentProgress = 0,
     currentRuin = 0,
     terrainRuntime = null,
-    foundationRuntime = null, cityEnclosureAudit=null,
+    foundationRuntime = null, cityEnclosureAudit=null, architecturalTerrainOcclusion=null,
     terrainPresentation = null, urbanGround=null, urbanGroundKey=null,
     terrainView = null,
     evidenceResolution = null,
@@ -198,7 +199,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   renderer.localClippingEnabled=true;
   const constructionPresentation=createCityConstructionPresentation({root,getRecord:id=>cityCoreRuntime?.core.get(id)}),phaseDissolve=createPhaseDissolveView(mount);
   let landmarkLabelsEnabled=true;
-  const landmarkView=createSharedPlaceView(mount,{anchors:()=>[]},{credit:false,ariaLabel:'當期已顯示地標量體（示意）',className:'j3k-landmark-references',maxLabels:w=>w<600?3:6});
+  const landmarkView=createSharedPlaceView(mount,{anchors:()=>[]},{credit:false,ariaLabel:'當期已顯示地標量體（示意）',className:'j3k-landmark-references'});
   let regionalLandforms=null,regionalData=null,herodianScaleReport=null;
   let metricHellenisticRegistration=null;
   let housingBoundaryAdmission=null;
@@ -510,6 +511,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       builder.pieces,
     );
     builder.finish(historical);
+    const sanctuaryMesh=builder.meshes.find(m=>m.userData.evidenceObject?.id==='j3k:object:inner-temple');if(sanctuaryMesh){const b=new THREE.Box3().setFromObject(sanctuaryMesh);sanctuaryMesh.userData.landmarkFocus={x:b.min.x+11*HERODIAN_DIMENSIONS.cubitMetres+(HERODIAN_DIMENSIONS.sanctuary.eastWest-10*HERODIAN_DIMENSIONS.cubitMetres)/2,y:b.max.y,z:(b.min.z+b.max.z)/2};}
+    architecturalTerrainOcclusion=createArchitecturalTerrainOcclusion(terrainRuntime,{platform:builder.meshes.find(m=>m.userData.evidenceObject?.id==='j3k:object:temple-mount-enclosure-herodian'),progress:builder.progress});
     herodianScaleReport={dimensions:structuredClone(HERODIAN_DIMENSIONS),models:builder.meshes.map(mesh=>{const b=new THREE.Box3().setFromObject(mesh),size=b.getSize(new THREE.Vector3());return {id:mesh.userData.evidenceObject.id,bounds:{min:b.min.toArray(),max:b.max.toArray()},eastWest:size.x,northSouth:size.z,verticalEnvelope:size.y};}),measurementScope:'canonical-standing-mesh-not-current-ruin',precinctGround:terrainRuntime.sampleElevation(31.778,35.235),ancientPlacementVerified:false};
     for (const mesh of builder.meshes) {
       const object = mesh.userData.evidenceObject;
@@ -566,7 +569,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       for(const phase of ['aelia','byzantine','early-islamic'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(independentLaterData,phase,terrainRuntime.grid.origin));
       wallReference=compileWallReference(await loadCityData('./data/urban/old-city-walls.reference.v1.json'),terrainRuntime);
       namedGates=compileNamedCityGates(await loadCityData('./data/urban/named-city-gates.v1.json'),wallReference,terrainRuntime);wallReference.namedGates=namedGates;publishNamedCityGates(loaded.core,namedGates);
-      wallCredit=document.createElement('small');wallCredit.className='j3k-wall-reference-credit';wallCredit.textContent='城牆：現代地圖參照／高度示意 · © OpenStreetMap contributors · ODbL';wallCredit.hidden=true;mount.append(wallCredit);
+      wallCredit=document.createElement('small');wallCredit.className='j3k-wall-reference-credit';wallCredit.textContent='城牆：現代地圖參照／高度示意 · © OpenStreetMap contributors · ODbL';wallCredit.hidden=true;mount.parentElement.after(wallCredit);
       const medievalData=await loadCityData('./data/urban/medieval-ottoman.skeleton.v1.json');
       for(const phase of ['crusader','ayyubid-mamluk','ottoman'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(medievalData,phase,terrainRuntime.grid.origin,{wallReference}));
       const expansionData=await loadCityData('./data/urban/expansion-modern.skeleton.v1.json');
@@ -576,7 +579,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       wallGateView=createSharedPlaceView(mount,wallReferenceModel,{credit:false});
       for(const [phase,registration]of independentLaterRegistrations)completeUrbanCoverage(registration,{rings:housingBoundaryAt({phaseId:phase,offset:.9,defenseData,wallReference,origin:terrainRuntime.grid.origin}).rings});
       sharedPlaces=createSharedUrbanPlaces({terrain:terrainRuntime,phases:[...loaded.core.phases.values()],core:loaded.core});
-      sharedPlaceView=createSharedPlaceView(mount,sharedPlaces);
+      sharedPlaceView=createSharedPlaceView(mount,sharedPlaces,{credit:false});
       persistentCityWorld=createPersistentCityWorld({parent:eraFabricLayer,phases:[...independentLaterRegistrations.keys()],build:(group,phase)=>buildIndependentLaterSkeleton(group,independentLaterRegistrations.get(phase),temporalMaterials,terrainRuntime),publish:runtime=>laterMorphologyLedger.bind(runtime)});
       if (!parcels.blockCount || !parcels.count || !architecture.buildings || !cityCoreRuntime.validation.ok)
         throw new Error(`Canonical city incomplete: ${parcels.blockCount || 0} blocks, ${parcels.count || 0} parcels, ${architecture.buildings || 0} buildings`);
@@ -732,13 +735,14 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         housingBoundaryAdmission?.apply();
     updateUrbanGround();
         camera.updateMatrixWorld();
-        royalRelief?.project(camera);
-        const placeBoxes=sharedPlaceView?.project(camera)||[];
+        const royalBoxes=royalRelief?.project(camera)||[];
+        const placeBoxes=sharedPlaceView?.project(camera,royalBoxes)||royalBoxes;
         const geographyBoxes=regionalLandforms?.project(camera,placeBoxes)||placeBoxes;
         const gateBoxes=wallGateView?.project(camera,geographyBoxes)||geographyBoxes;
         const phaseIndex=Math.floor(timelinePosition),fraction=(playbackDisplayPosition??timelinePosition)-phaseIndex,phaseReady=!isSharedGenerationPhase(currentPhaseId)||sharedEraRuntime?.status==='ready';
         if(currentPhaseId)constructionPresentation.apply({phaseId:currentPhaseId,phaseIndex,position:playbackDisplayPosition??timelinePosition,active:playbackPresentation,ruin:['babylonian-destruction','roman-destruction'].includes(currentPhaseId)});
-        landmarkView.setAnchors(constructionPresentation.landmarks());landmarkView.setVisible(landmarkLabelsEnabled);landmarkView.project(camera,gateBoxes);
+        landmarkView.setAnchors(constructionPresentation.landmarks());landmarkView.setVisible(landmarkLabelsEnabled);const labelBoxes=landmarkView.project(camera,gateBoxes);mount.parentElement.style.setProperty('--map-label-rail-height',`${Math.max(0,...labelBoxes.map(b=>b.bottom-mount.clientHeight+20))}px`);
+        architecturalTerrainOcclusion?.apply();
         phaseDissolve.before({phaseId:currentPhaseId,index:phaseIndex,fraction,active:playbackPresentation,ready:phaseReady});
         renderer.render(scene, camera);
         phaseDissolve.after(renderer.domElement,{phaseId:currentPhaseId,fraction,ready:phaseReady&&playbackPresentation});
@@ -773,7 +777,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             hellenisticSanctuary:hellenisticSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
-            terrainPresentation:{...terrainPresentation?.diagnostics,occupation:urbanGround?.diagnostics(),surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
+            terrainPresentation:{...terrainPresentation?.diagnostics,architecturalOcclusion:architecturalTerrainOcclusion?.diagnostics(),occupation:urbanGround?.diagnostics(),surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             housingBoundary:housingBoundaryAdmission?.snapshot({includeIds:false}),
             wallReference:wallReferenceModel?.diagnostics(),
             defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),
@@ -910,6 +914,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       controls.minDistance=5;controls.target.copy(focus);camera.position.copy(focus).add(gate?new THREE.Vector3(-gate.normal.x*distance,.25*distance,-gate.normal.z*distance):new THREE.Vector3(.65*distance,.7*distance,distance));controls.update();needsFrame=true;return true;
     },
     focusRoyalTemple(){
+      if(isCorePhase(currentPhaseId))return this.focusCityObject('j3k:object:inner-temple');
       const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:currentPhaseId==='hellenistic-hasmonean'?hellenisticSanctuary:royalCity;
       if(!templeRuntime?.diagnostics().visibleTemple)return;
       if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
@@ -976,6 +981,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       sharedPlaceView?.dispose();landmarkView.dispose();
       regionalLandforms?.dispose();
       urbanGround?.dispose();
+      architecturalTerrainOcclusion?.dispose();
       terrainPresentation?.dispose();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])

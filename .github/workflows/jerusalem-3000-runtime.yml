@@ -31,6 +31,7 @@ jobs:
           node scripts/verify_jerusalem_3000_urban_coverage.mjs
           node scripts/verify_jerusalem_3000_housing_boundary.mjs
           node scripts/verify_jerusalem_3000_regional_terrain.mjs
+          node scripts/verify_jerusalem_3000_architectural_ground.mjs
           node scripts/verify_jerusalem_3000_herodian_dimensions.mjs
           node scripts/verify_jerusalem_3000_royal_relief.mjs
           node scripts/verify_jerusalem_3000_city_lifecycle.mjs
@@ -82,6 +83,7 @@ jobs:
           node scripts/verify_jerusalem_3000_medieval_browser.mjs
           node scripts/verify_jerusalem_3000_hellenistic_sanctuary_browser.mjs
           node scripts/verify_jerusalem_3000_landmark_chronology_browser.mjs
+          node scripts/verify_jerusalem_3000_callouts_ground_browser.mjs
           node scripts/verify_jerusalem_3000_enclosure_gates_browser.mjs
           node scripts/verify_jerusalem_3000_overview_browser.mjs
           node scripts/audit_jerusalem_3000_landmark_execution.mjs --report work/j3k-validation/overview-proof.json --render-commit "$GITHUB_SHA" --out work/j3k-validation/landmark-execution-audit
