@@ -427,3 +427,62 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
  #emmaus .emmaus__study{max-height:none}
  #emmaus .emmaus__study-route{margin:6px 0 0}
 }
+
+/* 2026-10-30 — Emmaus material correction, scoped to this Draft.
+   The accepted Magazine book-spine layers remain in their original iframe.
+   No replacement sevenfold is mounted in Emmaus. */
+#emmaus {
+ --em-paper:color-mix(in oklab,var(--ws-pale-gold) 52%,var(--ws-papyrus));
+ --em-ink:var(--ws-night);
+ --em-line:color-mix(in srgb,var(--ws-night) 27%,transparent);
+}
+#emmaus > .emmaus__left {
+ --em-ink:var(--ws-night);
+ --em-line:color-mix(in srgb,var(--ws-night) 27%,transparent);
+ background:var(--em-paper);
+ color:var(--em-ink);
+ padding-left:clamp(24px,3.2vw,55px);
+}
+#emmaus > .emmaus__left::before {
+ background:linear-gradient(90deg,color-mix(in srgb,var(--ws-papyrus) 18%,transparent),transparent 38%,transparent 78%,color-mix(in srgb,var(--ws-pale-gold) 6%,transparent));
+}
+#emmaus .emmaus__study {
+ background:color-mix(in oklab,var(--ws-papyrus) 35%,var(--em-paper));
+ border-color:color-mix(in srgb,var(--em-ink) 24%,var(--ws-pale-gold));
+}
+#emmaus .emmaus__study-interface {
+ padding-left:clamp(22px,3.3cqi,35px);
+}
+#emmaus .emmaus__right {background:var(--ws-night);color:var(--ws-papyrus)}
+#emmaus .emmaus__plates {
+ background:linear-gradient(90deg,var(--ws-night),color-mix(in oklab,var(--ws-pale-gold) 30%,var(--ws-night)));
+}
+#emmaus .emmaus__right::after {
+ background:linear-gradient(90deg,color-mix(in srgb,var(--ws-night) 23%,transparent),transparent 17%,transparent 72%,color-mix(in srgb,var(--ws-night) 55%,transparent)),
+ linear-gradient(180deg,color-mix(in srgb,var(--ws-night) 60%,transparent),transparent 18%,transparent 76%,color-mix(in srgb,var(--ws-night) 70%,transparent));
+}
+#emmaus .emmaus__gold-line {background:var(--ws-pale-gold);box-shadow:0 0 16px color-mix(in srgb,var(--ws-pale-gold) 48%,transparent)}
+#emmaus :is(.emmaus__mast,.emmaus__foot,.emmaus__selector-head,.emmaus__book,
+ .emmaus__chapter,.emmaus__enter,.emmaus__study-head,.emmaus__study-foot,
+ .emmaus__study-tools,.emmaus__study-tabs,.emmaus__study-route li,.emmaus__number) {
+ border-color:var(--em-line);
+}
+#emmaus :is(.emmaus__small,.emmaus__book-meta,.emmaus__study-ref,
+ .emmaus__study-route li span,.emmaus__guide-copy,.emmaus__study-movement,
+ .emmaus__identity p,.emmaus__chapter,.emmaus__selector-head,.emmaus__foot) {
+ color:color-mix(in oklab,var(--em-ink) 78%,var(--ws-pale-gold));
+}
+#emmaus :is(.emmaus__identity h1,.emmaus__book h2,.emmaus__study-reading h2,
+ .emmaus__enter,.emmaus__study-foot a,.emmaus__study-head,
+ .emmaus__study-detail strong,.emmaus__study-tabs button[aria-selected="true"]) {color:var(--em-ink)}
+#emmaus .emmaus__study-tabs button[aria-selected="true"]{border-color:var(--ws-pale-gold)}
+#emmaus .emmaus__number:is(:hover,[aria-pressed="true"]){
+ background:color-mix(in oklab,var(--ws-pale-gold) 30%,var(--em-paper));color:var(--em-ink)
+}
+@media(max-width:820px) {
+ #emmaus > .emmaus__left{padding-left:clamp(14px,2.7vw,22px)}
+}
+@media(max-width:540px){
+ #emmaus > .emmaus__left{padding-left:12px;padding-right:7px}
+ #emmaus .emmaus__study-interface{padding-left:12px}
+}
