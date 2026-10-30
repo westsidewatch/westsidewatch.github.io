@@ -92,11 +92,16 @@ filming behind scripture**.
   ONE top-down paper-reveal timeline. Its original node, nested navigation,
   book-spine animation and Magazine 02 pose are untouched and restored by
   reverse scroll or OFF mode.
-- **Design:** Emmaus's literal ONE manuscript paper remains opaque; a narrow
-  **left editorial gutter** alone reveals moving film at desktop widths.
-  The mobile gutter is disabled so the 66-book interface is not squeezed.
-  At fully entered Olive Mountain, a small **right editorial gutter** reveals
-  the same film without crossing the sermon title or portrait.
+- **Revised after preview feedback (2026-10-30):** the first masked slit was a design failure:
+  virtually the entire moving film was covered. The actual A/B now gives the
+  ORIGINAL film a full cinematic **negative-space surround**. At desktop,
+  ONE and the existing Doré gallery form a 2:1 inset spread with 8.5% visible
+  video on EACH side and 9% above/below (roughly 32% of the stage unoccluded).
+  At narrow widths, retain full 2:1 spread width but give film 11.5% above
+  and 1% below, because the ONE controls cannot be further compressed.
+  Olive reuses those EXACT stage insets; no panel covers the same video field.
+  The real manuscript paper and Doré image remain wholly opaque, and the
+  magazine book spines and source video player are untouched.
 - **Reduced-motion:** the experiment adds no new motion timeline or media
   instance. The existing film player must keep honoring its own reduced-motion
   settings and visibility rules. A later film-content overlay in Paradise
