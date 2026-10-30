@@ -8,6 +8,28 @@
  const seek=$('#proof-seek'),percent=$('#proof-percentage'),phase=$('#proof-phase');
  if(!track||!base||!emmaus||!olive)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ // A/B art-direction experiment. One original homepage film, still owned by
+ // the Magazine iframe; never reparent or clone its media playback node.
+ let filmContinuity=new URLSearchParams(location.search).get('film')==='1';
+ const filmToggle=$('#proof-film-toggle');
+ function syncFilmMode(){
+  document.body.dataset.filmContinuity=filmContinuity?'on':'off';
+  emmaus.dataset.filmContinuity=filmContinuity?'on':'off';
+  olive.dataset.filmContinuity=filmContinuity?'on':'off';
+  if(filmToggle){
+   filmToggle.setAttribute('aria-pressed',filmContinuity?'true':'false');
+   filmToggle.textContent=filmContinuity?'共用影片 · ON':'共用影片 · OFF';
+  }
+ }
+ syncFilmMode();
+ filmToggle?.addEventListener('click',()=>{
+  filmContinuity=!filmContinuity;
+  const url=new URL(location.href);
+  if(filmContinuity)url.searchParams.set('film','1');
+  else url.searchParams.delete('film');
+  history.replaceState(null,'',url);
+  syncFilmMode();requestPaint();
+ });
  const books=window.ONE_DATA?.books;
  if(!Array.isArray(books)||books.length!==66)throw Error('Canonical ONE 66-book data was not loaded');
  const rail=$('#emmaus-rail'),bookEn=$('#em-book-en'),bookZh=$('#em-book-zh'),bookNum=$('#em-book-number'),bookPart=$('#em-book-part'),bookChapters=$('#em-book-chapters');
@@ -253,7 +275,7 @@
  });
  chooseSpeaker(0);
  let transferFigure=null,transferHome=null,transferNext=null,transferStyle=null;
- let sourceOriginalTileOpacity=null,sourceOriginalCoverOpacity=null;
+ let sourceOriginalTileOpacity=null,sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
  let frameLoaded=false,lastPaint=NaN,queued=false;
  function paint(){
   queued=false;const vh=Math.max(1,innerHeight),top=track.getBoundingClientRect().top;
@@ -262,7 +284,12 @@
   if(top>0)legacy=clamp((vh-top)/vh,0,1)*.1/2.9;
   else if(legacyDistance<=churchEnd){const scene=legacyDistance<=1.8?.1+legacyDistance*(.4/1.8):.5+(legacyDistance-1.8);legacy=scene/2.9;}
   else{const scene=2.37+(legacyDistance-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);legacy=scene<=2.9?.75*scene/2.9:.75+.25*(scene-2.9)/1.1;}
-  if(frameLoaded)base.contentWindow?.postMessage({type:'westside-p2-scroll',progress:clamp(legacy),active:distance<6.6},location.origin);
+  // Continue the SAME Magazine/home player through P2 03/04 only in film mode.
+  // The default experiment and published Church->Magazine behavior are untouched.
+  if(frameLoaded)base.contentWindow?.postMessage({
+   type:'westside-p2-scroll',progress:clamp(legacy),
+   active:filmContinuity?distance<12:distance<6.6
+  },location.origin);
   // Same MERSI image object: Magazine LEFT engraving actually travels to
   // the existing RIGHT cover rectangle. No replica image is created.
   // Only once it arrives does the full Doré archive take over silently;
@@ -299,10 +326,19 @@
    sourceStyleDoc=sourceDoc;
    sourceOriginalTileOpacity=sourceTile?.style.opacity??'';
    sourceOriginalCoverOpacity=sourceCover?.style.opacity??'';
+   sourceOriginalEditorialOpacity=sourceFrame?.style.opacity??'';
   }
   if(sourceTile)sourceTile.style.opacity=sourceOriginalTileOpacity??'';
   if(sourceCover)sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
-  emmaus.style.backgroundColor=oneDrop>=.999?'var(--em-paper)':'transparent';
+  // Only after the actual Magazine plate is borrowed, the approved Contents
+  // iframe quietly recedes on the EXISTING ONE paper-reveal timeline, exposing
+  // its still-playing film sibling. Reverse scroll restores it completely.
+  if(sourceFrame)sourceFrame.style.opacity=filmContinuity
+   ?String(1-oneDrop):(sourceOriginalEditorialOpacity??'');
+  // Opaque reading papers sit above film. Deliberate, text-free editorial
+  // apertures are handled by CSS masks; never show film through the study copy.
+  emmaus.style.backgroundColor=filmContinuity?'transparent'
+   :(oneDrop>=.999?'var(--em-paper)':'transparent');
   const lerp=(a,b,p)=>a+(b-a)*p;
   const poseRect=(el,a,b,p)=>{
    if(!a||!b)return;
@@ -361,7 +397,8 @@
 
   olive.style.visibility=oliveShowing?'visible':'hidden';
   olive.style.opacity='1';olive.style.clipPath='none';
-  olive.style.backgroundColor=oliveIn>=.999?'#f0eee7':'transparent';
+  olive.style.backgroundColor=filmContinuity?'transparent'
+   :(oliveIn>=.999?'#f0eee7':'transparent');
   olive.style.pointerEvents=oliveIn>.999?'auto':'none';olive.inert=oliveIn<=.999;
   olive.setAttribute('aria-hidden',oliveIn>.999?'false':'true');
 
