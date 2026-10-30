@@ -1,3 +1,4 @@
+import {romanGateGeometry,romanGateFootprint} from '../preview/jerusalem-3000/roman-gate-geometry.js';
 import {compileIndependentLaterSkeleton,buildIndependentLaterSkeleton} from '../preview/jerusalem-3000/independent-later-skeleton.js';
 import {roadClearancePolygons} from '../preview/jerusalem-3000/district-infill.js';
 import {polygonsOverlap} from '../preview/jerusalem-3000/urban-exclusion.js';
@@ -13,6 +14,17 @@ network.apply({phaseId:'ayyubid-mamluk',position:14.2,evidenceAllowed:()=>true})
 network.apply({phaseId:'persian-nehemiah',position:6.9,evidenceAllowed:()=>true});assert.ok(network.snapshot().activeCorridors.every(w=>w.mode==='candidate'));network.apply({phaseId:'persian-nehemiah',position:6.9,evidenceAllowed:c=>c!=='disputed'});assert.equal(network.snapshot().visibleComponents,0);
 for(const record of core.objects.values()){assert.equal(core.lineage(record.id).predecessors.length,0);assert.equal(core.lineage(record.id).successors.length,0);assert.ok(record.lifecycle.events.every(e=>e.authority));}
 for(const phase of data.phases.filter(p=>p.owner==='network')){const p=compileDefenseProfile(data,phase.id,roadsForPhase(phase.id),terrain);for(const g of p.gates){const a=p.walls.find(w=>w.family===g.family).points[g.segment],b=p.walls.find(w=>w.family===g.family).points[g.segment+1];assert.ok(Math.abs((g.center.x-a.x)*(b.z-a.z)-(g.center.z-a.z)*(b.x-a.x))<1e-6);}}
+
+for(const phase of ['aelia','byzantine']){
+ const gate=network.profiles.get(phase).gates.find(g=>g.key==='north');assert.equal(gate.monumental,true);assert.equal(gate.wallOpeningWidth,44);assert.equal(core.get(gate.id).type,'gate','landmark treatment must not duplicate or reclassify the gate');assert.equal(core.get(gate.id).metadata.landmarkPresentation,true);assert.equal(core.get(gate.id).metadata.geometryVerified,false);
+ const parts=romanGateGeometry(gate,terrain),u=gate.unit,v={x:-u.z,z:u.x},footprint=romanGateFootprint(gate);
+ for(const part of parts)for(let i=0;i<part.attributes.position.count;i++){const p=part.attributes.position,dx=p.getX(i)-gate.center.x,dz=p.getZ(i)-gate.center.z,a=dx*u.x+dz*u.z,b=dx*v.x+dz*v.z;assert.ok(a>=-22.001&&a<=22.001&&b>=-6.001&&b<=50.001,'all gate/plaza vertices fit their common reservation');}
+ network.apply({phaseId:phase,position:phase==='aelia'?10.8:11.9,evidenceAllowed:()=>true});const group=parent.children[0].children.find(g=>g.visible);group.updateMatrixWorld(true);
+ const ground=Math.max(...[-22,22].flatMap(a=>[-6,6].map(b=>terrain.heightAtWorld(gate.center.x+u.x*a+v.x*b,gate.center.z+u.z*a+v.z*b))));
+ const cast=(a,height)=>{const ray=new THREE.Raycaster(new THREE.Vector3(gate.center.x+u.x*a-v.x*12,ground+height,gate.center.z+u.z*a-v.z*12),new THREE.Vector3(v.x,0,v.z),0,24);return ray.intersectObjects(group.children).filter(hit=>hit.object.visible);};
+ for(const a of [-12,0,12])assert.equal(cast(a,3).length,0,'late wall and gate stones must leave all three actual portals open');assert.ok(cast(0,16).length>0,'arched head must contain real overhead geometry');assert.ok(network.exclusionsFor(phase).some(r=>JSON.stringify(r.polygon)===JSON.stringify(footprint)),'real infill must reserve the complete gate and plaza');
+ parts.forEach(g=>g.dispose());
+}
 assert.equal(JSON.stringify(data),before);assert.throws(()=>createDefenseTimeline({data:{...data,phases:[...data.phases].reverse()},phases,core,terrain,parent,roadsForPhase}));assert.throws(()=>compileDefenseProfile(data,'aelia',[],terrain));assert.throws(()=>compileDefenseProfile(data,'byzantine',roadsForPhase('byzantine'),{heightAtWorld:()=>NaN}));
 network.apply({phaseId:'crusader',position:13.9,evidenceAllowed:()=>true});const inspected=network.snapshot(),relation=inspected.gateRelations[0],gateBefore=JSON.stringify(core.get(relation.gateId).geometry);relation.center.x+=50;relation.target.z+=50;assert.equal(JSON.stringify(core.get(relation.gateId).geometry),gateBefore,'read-only inspection must not mutate registered gate topology');
 assert.equal(network.snapshot({includeSourceAudit:false}).sourceAudit,undefined,'per-frame diagnostics must not clone static source audit');const sourceBefore=JSON.stringify(data.sources);network.snapshot().sources[0].review.applicablePhases.length=0;assert.equal(JSON.stringify(data.sources),sourceBefore,'nested source inspection is detached');

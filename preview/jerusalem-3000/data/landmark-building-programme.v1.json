@@ -100,6 +100,14 @@
     "backlog": {
       "url": null,
       "role": "research-candidate-not-a-verified-historical-or-spatial-claim"
+    },
+    "roman-gate-site": {
+      "url": "https://www.pami.co.il/en/attractions/the-roman-square-museum-at-damascus-gate/",
+      "role": "site-operator-Roman-gate-and-plaza-context-not-survey-control"
+    },
+    "roman-plaza-excavation": {
+      "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26040",
+      "role": "Roman-pavement-possibly-plaza-not-complete-square-footprint"
     }
   },
   "entities": [
@@ -1047,14 +1055,19 @@
       "label": "Aelia城門、廣場、拱門與Cardo公共軸線",
       "kind": "ensemble",
       "sourceRefs": [
-        "backlog"
+        "backlog",
+        "roman-gate-site",
+        "roman-plaza-excavation"
       ],
       "researchStatus": "candidate-needs-source",
       "location": null,
       "footprintMetres": null,
       "heightMetres": null,
       "geometryAccepted": false,
-      "existingRuntimeIds": [],
+      "existingRuntimeIds": [
+        "j3k:aelia:defense:gate:north",
+        "j3k:byzantine:defense:gate:north"
+      ],
       "existingRuntimeIsApprovedReconstruction": false,
       "notes": "羅馬與拜占庭街道分段配準；Ecce Homo拱與鋪面年代須另核。",
       "requiredBeforeModel": [
@@ -2373,6 +2386,16 @@
             {
               "landmarkId": "olives-churches",
               "intendedState": "research-before-model"
+            }
+          ]
+        },
+        {
+          "id": "northern-entry",
+          "label": "羅馬北門／拜占庭廣場語境",
+          "members": [
+            {
+              "landmarkId": "roman-civic",
+              "intendedState": "selected-entrance-and-plaza-context-not-proven-fabric"
             }
           ]
         }
