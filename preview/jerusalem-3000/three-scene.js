@@ -1,3 +1,4 @@
+import {coreStageAt} from './landmark-chronology.js';
 import {residentialEraProfile} from './residential-era-profiles.js';
 import {applyMetricResidentialRegistration,augmentMetricEarlySettlement,metricResidentialPolicy,METRIC_RESIDENTIAL_PHASES} from './metric-residential-layout.js';
 import {createHousingBoundaryAdmission,housingBoundaryAt} from './housing-boundary.js';
@@ -272,7 +273,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     }
     if (phase2Morphology && currentPhaseId === 'babylonian-destruction')
       setEraMorphologyProgress(phase2Morphology, 1, { ruined: true });
-    laterMorphologyBinding?.apply(evidenceAllowed,{constructionProgress:1});
+    laterMorphologyBinding?.apply(evidenceAllowed,{constructionProgress:1,position:timelinePosition});
     updateCityCoreVisibility();
     housingBoundaryAdmission?.apply();
     onDistrictAcceptance?.(sharedEraRuntime?.acceptance()??null);
@@ -322,7 +323,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       return;
     }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
-    if(foundationOwner==='independent-later-skeleton'){activeWorldEntry=persistentCityWorld.activate(phaseId);fabricMeshes=activeWorldEntry.runtime.meshes;laterMorphologyBinding=activeWorldEntry.binding;laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:1});return;}
+    if(foundationOwner==='independent-later-skeleton'){activeWorldEntry=persistentCityWorld.activate(phaseId);fabricMeshes=activeWorldEntry.runtime.meshes;laterMorphologyBinding=activeWorldEntry.binding;laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:1,position:timelinePosition});return;}
     const ruined = phaseId.includes('destruction');
     if (foundationOwner === 'ottoman-morphology')
       phase2Morphology = buildOttomanUrbanMorphology(
@@ -357,7 +358,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       );
     if (phase2Morphology) {
       fabricMeshes = phase2Morphology.meshes;
-      if(['crusader','ottoman'].includes(phaseId)){laterMorphologyBinding=laterMorphologyLedger.bind(phase2Morphology);laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:1});}
+      if(['crusader','ottoman'].includes(phaseId)){laterMorphologyBinding=laterMorphologyLedger.bind(phase2Morphology);laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:1,position:timelinePosition});}
       return;
     }
     fabricMeshes = addEraFabric(
@@ -367,7 +368,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       ruined,
       terrainRuntime,
     );
-    if(fabricMeshes.length){laterMorphologyBinding=laterMorphologyLedger.bind({phaseId,meshes:fabricMeshes,grammar:'legacy-era-footprint-masses',fixedVisibility:true});laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:1});}
+    if(fabricMeshes.length){laterMorphologyBinding=laterMorphologyLedger.bind({phaseId,meshes:fabricMeshes,grammar:'legacy-era-footprint-masses',fixedVisibility:true});laterMorphologyBinding.apply(evidenceAllowed,{constructionProgress:1,position:timelinePosition});}
   }
   function updatePeriodOverview(phaseId,force=false){
     if(terrainView)return;
@@ -831,6 +832,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     inspectSpatialSkeleton(){return currentPhaseId?collectSpatialSkeleton(cityCoreRuntime.core,terrainRuntime,{phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode,includeRetained:retainedVisible}):null;},
     inspectHerodianDimensions(){return structuredClone(herodianScaleReport);},
     inspectRegionalLandforms(){return regionalLandforms?.snapshot()??null;},
+    landmarkChronology(){return (activeWorldEntry?.runtime.registration?.cores||[]).filter(c=>c.metadata.landmarkChronology).map(c=>({id:c.id,...coreStageAt(cityCoreRuntime.core.get(c.id)||c,timelinePosition-Math.floor(timelinePosition)),projection:c.metadata.landmarkChronology.projection,visibleProfiles:(activeWorldEntry.runtime.landmarkMeshes||[]).filter(m=>m.visible&&m.userData.cityObject?.objectId===c.id).map(m=>m.userData.landmarkRepresentation.profile),geometryVerified:false}));},
     inspectCityFoundation(phaseId=currentPhaseId){return phaseId?foundationRuntime?.snapshot(phaseId)??null:null;},
     cityFoundationIndex(){return foundationRuntime?.index()??[];},
     royalReliefProfile(){return royalRelief?structuredClone(royalRelief.profile):null;},

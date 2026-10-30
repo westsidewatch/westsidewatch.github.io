@@ -1,3 +1,4 @@
+import {coreStageVisible} from '../preview/jerusalem-3000/landmark-chronology.js';
 import {neaCore} from '../preview/jerusalem-3000/nea-core.js';
 import {aqsaCore} from '../preview/jerusalem-3000/aqsa-core.js';
 import {sacredCoreGeometry} from '../preview/jerusalem-3000/later-sacred-cores.js';
@@ -34,7 +35,7 @@ for(const pack of packs)for(const phase of Object.keys(pack.phases)){
  assert.throws(()=>rejected.bind(bad),/district relation missing/);assert.equal(isolated.objects.size,0);rejected.dispose();
  const ids=runtime.meshes.map(m=>m.userData.cityObject.objectId),geometry=runtime.meshes.map(m=>Array.from(m.geometry.attributes.position.array));fingerprints.push(JSON.stringify(registration.districts.map(d=>d.geometry.polygon)));assert.equal(new Set(runtime.meshes.map(m=>m.userData.cityObject.componentId)).size,runtime.meshes.length);assert.ok(runtime.meshes.every(m=>m.material!==material&&m.material.opacity===1&&!m.material.transparent));
  binding.apply(()=>true,{constructionProgress:0});assert.ok(runtime.meshes.filter(m=>m.userData.cityObject.kind==='block').every(m=>!m.visible));binding.apply(()=>true,{constructionProgress:.5});const half=runtime.meshes.filter(m=>m.userData.cityObject.kind==='block'&&m.visible).length;assert.ok(half>0);binding.apply(()=>true,{constructionProgress:1});assert.ok(runtime.meshes.filter(m=>m.userData.cityObject.kind==='block'&&m.visible).length>half);
- binding.apply(()=>false);assert.ok(runtime.meshes.every(m=>!m.visible));binding.apply(()=>true);assert.ok(runtime.meshes.every(m=>m.visible));
+ binding.apply(()=>false);assert.ok(runtime.meshes.every(m=>!m.visible));binding.apply(()=>true);assert.ok(runtime.meshes.every(m=>m.visible===(!m.userData.landmarkRepresentation||coreStageVisible(core.get(m.userData.cityObject.objectId),m.userData.landmarkRepresentation.profile,.999999))),'only the active cached landmark version should be visible');
  const rebuilt=buildIndependentLaterSkeleton(new THREE.Group(),registration,materials,terrain),count=core.objects.size;publisher.bind(rebuilt);assert.equal(core.objects.size,count);assert.deepEqual(rebuilt.meshes.map(m=>m.userData.cityObject.objectId),ids);assert.deepEqual(rebuilt.meshes.map(m=>Array.from(m.geometry.attributes.position.array)),geometry);
  release(runtime);release(rebuilt);
 }

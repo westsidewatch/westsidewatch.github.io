@@ -1,3 +1,4 @@
+import {holySepulchreChronology} from './landmark-chronology.js';
 import {neaCore,appendNeaGeometry} from './nea-core.js';
 import {aqsaCore,appendAqsaGeometry} from './aqsa-core.js';
 import * as THREE from 'three';
@@ -13,13 +14,13 @@ const rectangle=(x,z,w,d)=>[{x:x-w/2,z:z-d/2},{x:x+w/2,z:z-d/2},{x:x+w/2,z:z+d/2
 export function laterSacredCores(phase){
  const cores=[];
  if(CHRISTIAN_PHASES.has(phase)){
-  const constantinian=['byzantine','early-islamic'].includes(phase);
+  const constantinian=['byzantine','early-islamic'].includes(phase),chronology=holySepulchreChronology(phase);
   cores.push({id:`j3k:${phase}:independent:monument:holy-sepulchre-context`,type:'monument',confidence:'inferred',
    geometry:{frame:'canonical-dem-enu',status:'authored-context-not-surveyed',primitive:'polygon',polygon:rectangle(-495,15,constantinian?145:115,95)},
-   source:{urls:[CHURCH_SOURCE],authority:'historical form context; coordinates and dimensions authored for schematic display'},
+   source:{urls:chronology?.sources||[CHURCH_SOURCE],limitations:chronology?.limitations||[],authority:'historical form context; coordinates and dimensions authored for schematic display'},
    metadata:{placeId:'j3k:place:holy-sepulchre-site',placeRelation:'same-site-not-verified-original-fabric',name:'聖墓教堂群（概略量體）',coreProfile:constantinian?'constantinian-rotunda-east-basilica':'medieval-rotunda-church',
-    referencePeriod:constantinian?'post-335, before 1009 destruction':'post-Crusader rebuilding; later changes not resolved',
-    wholePhaseSimultaneity:false,geometryVerified:false,ancientGroundVerified:false}});
+    referencePeriod:chronology?'source-dated representations within this phase; other damage and repair unresolved':'post-Crusader rebuilding; later changes not resolved',
+    landmarkChronology:chronology,wholePhaseSimultaneity:false,geometryVerified:false,ancientGroundVerified:false}});
  }
  if(ISLAMIC_PHASES.has(phase))cores.push({id:`j3k:${phase}:independent:monument:rock-sanctuary-context`,type:'monument',confidence:'inferred',
   geometry:{frame:'canonical-dem-enu',status:'authored-context-not-surveyed',primitive:'polygon',polygon:rectangle(0,-180,80,80)},
@@ -43,7 +44,8 @@ export function laterSacredCores(phase){
 // One aggregate mesh per registered core, not independently registered fragments.
 export function sacredCoreGeometry(record,terrain){
  const vertices=[],polygon=record.geometry.polygon,cx=record.metadata.modelAnchor?.x??polygon.reduce((s,p)=>s+p.x,0)/polygon.length,cz=record.metadata.modelAnchor?.z??polygon.reduce((s,p)=>s+p.z,0)/polygon.length;
- const levelGround=['aqsa-seven-aisle-context','nea-five-aisle-context'].includes(record.metadata.coreProfile)?Math.max(...polygon.map(p=>terrain.heightAtWorld(p.x,p.z))):null;
+ const sepulchre=record.id.endsWith('holy-sepulchre-context'),groundPolygon=sepulchre?rectangle(cx,cz,145,95):polygon;
+ const levelGround=sepulchre||['aqsa-seven-aisle-context','nea-five-aisle-context'].includes(record.metadata.coreProfile)?Math.max(...groundPolygon.map(p=>terrain.heightAtWorld(p.x,p.z))):null;
  const append=(g,x,z,y=0)=>{g.translate(x,y,z);const p=g.attributes.position,indices=g.index?.array||Array.from({length:p.count},(_,i)=>i);for(const i of indices){const px=p.getX(i),pz=p.getZ(i),ground=terrain.heightAtWorld(px,pz);if(!Number.isFinite(ground)){g.dispose();throw new Error('Sacred core outside canonical DEM');}const localY=p.getY(i),base=levelGround===null?ground:localY<=1e-6?ground:levelGround;vertices.push(px,base+.2+localY,pz);}g.dispose();};
  const box=(x,z,w,d,h)=>append(new THREE.BoxGeometry(w,h,d),x,z,h/2);
  const dome=(x,z,r,base)=>append(new THREE.SphereGeometry(r,16,8,0,Math.PI*2,0,Math.PI/2),x,z,base);
@@ -54,10 +56,23 @@ export function sacredCoreGeometry(record,terrain){
  }else if(record.metadata.coreProfile==='octagonal-rock-shrine'){
   append(new THREE.CylinderGeometry(25,25,10,8),cx,cz,5);append(new THREE.CylinderGeometry(11,11,7,16),cx,cz,13.5);dome(cx,cz,11,17);
  }else{
-  const old=record.metadata.coreProfile==='constantinian-rotunda-east-basilica',rx=cx-(old?45:25);
-  append(new THREE.CylinderGeometry(20,20,15,16),rx,cz,7.5);dome(rx,cz,17,15);
-  box(cx+(old?28:15),cz,old?70:50,old?45:50,16);
-  if(!old)box(cx+20,cz+32,12,12,25);
+  // Keep the rotunda on one display anchor through all versions/eras. Its
+  // precise archaeological footprint is still unverified; do not move it when
+  // the eastern complex changes. Existing design dimensions remain metres.
+  const profile=record.metadata.coreProfile,old=profile==='constantinian-rotunda-east-basilica',rx=cx-25;
+  if(profile==='sepulchre-1009-fragments'){
+   // Open partial wall rings, no complete dome or intact eastern Martyrium.
+   // Survival heights/arcs are illustrative, not excavation measurements.
+   for(const angle of [0,Math.PI])append(new THREE.CylinderGeometry(20,20,3,12,1,true,angle,Math.PI*.65),rx,cz,1.5);
+  }else{
+   append(new THREE.CylinderGeometry(20,20,15,16),rx,cz,7.5);dome(rx,cz,17,15);
+   if(profile==='sepulchre-1048-rotunda'){
+    for(const side of [-1,1])box(rx,cz+side*25,20,10,8);
+   }else{
+    box(cx+(old?35:15),cz,old?70:50,old?45:50,16);
+    if(!old)box(cx+20,cz+32,12,12,25);
+   }
+  }
  }
  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.computeVertexNormals();g.userData={schematicSacredCore:true,geometryVerified:false};return g;
 }

@@ -70,6 +70,7 @@ jobs:
           node scripts/verify_jerusalem_3000_shared_places.mjs
           node scripts/verify_jerusalem_3000_persistent_world.mjs
           node scripts/verify_jerusalem_3000_independent_later.mjs
+          node scripts/verify_jerusalem_3000_landmark_chronology.mjs
           node scripts/verify_jerusalem_3000_overview_housing.mjs
       - name: Render the proposed city and scrub through destruction
         run: |
@@ -77,6 +78,7 @@ jobs:
           node scripts/verify_jerusalem_3000_browser.mjs
           node scripts/verify_jerusalem_3000_medieval_browser.mjs
           node scripts/verify_jerusalem_3000_hellenistic_sanctuary_browser.mjs
+          node scripts/verify_jerusalem_3000_landmark_chronology_browser.mjs
           node scripts/verify_jerusalem_3000_overview_browser.mjs
           node scripts/audit_jerusalem_3000_landmark_execution.mjs --report work/j3k-validation/overview-proof.json --render-commit "$GITHUB_SHA" --out work/j3k-validation/landmark-execution-audit
           node scripts/verify_jerusalem_3000_playback_browser.mjs

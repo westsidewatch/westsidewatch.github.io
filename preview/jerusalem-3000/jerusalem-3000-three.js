@@ -92,6 +92,7 @@ try {
   window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
   window.__JERUSALEM3000__.inspectSourceLifecycleContext=id=>three.inspectSourceLifecycleContext(id);
   window.__JERUSALEM3000__.inspectCityFoundation=phase=>three.inspectCityFoundation(phase);
+  window.__JERUSALEM3000__.landmarkChronology=()=>three.landmarkChronology();
   window.__JERUSALEM3000__.inspectMetricResidentialPolicy=()=>three.inspectMetricResidentialPolicy();
   window.__JERUSALEM3000__.inspectHousingBoundary=options=>three.inspectHousingBoundary(options);
   window.__JERUSALEM3000__.inspectOverviewBaseline=()=>three.inspectOverviewBaseline();
@@ -251,6 +252,7 @@ try {
       : isSharedSlicePhase(p.id) ? `${p.note} 東南山脊、北部聖區與西丘採獨立配置；西向擴張方向有文獻依據，具體邊界與道路仍為推定。毀城沿用同一批示意住居。` : isSharedGenerationPhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
     if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 宗教核心亦為概略量體，非測繪復原。';
     if(p.id==='hellenistic-hasmonean')note.textContent+=' 聖域選取前164年重新奉獻後的示意形態，不代表整期；尺寸及平面未核定，可點「聖殿近看」。';
+    const datedCores=three.landmarkChronology();if(datedCores.length)note.textContent+=' 本期地標階段：'+datedCores.map(c=>c.label).join('；')+'。年份僅用於這些地標的分期定位，並非全城逐年復原。';
     if(p.id==='herodian-jesus')note.textContent+=' 比例校準：平台約300×480m；殿體高約52.5m（暫採每肘0.525m），位置與細節仍屬復原。';
     if(isIndependentLaterPhase(p.id))note.textContent+=' 地區、路網與住宅量體為示意；共同東側軸線不表示歷代路面相同。各期採階段概覽，非逐年完整復原。';
     if(window.__JERUSALEM3000__.inheritanceState.audit?.visibleComponents>0)note.textContent+=' 前代圖層按模型比例示意，留存構件與再利用關係尚未核定。';

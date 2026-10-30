@@ -1,5 +1,6 @@
 import {TemporalCityCore} from './temporal-city-core.js';
-import {lifecycleStateAt} from './construction-engine.js';
+import {lifecycleStateAtPosition} from './construction-engine.js';
+import {coreStageAt,coreStageVisible} from './landmark-chronology.js';
 let sequence=0;
 const PHASES=new Set(['crusader','ottoman','aelia','byzantine','early-islamic','ayyubid-mamluk','outside-walls','modern']);
 // Registry survives renderer rebuilds; scene disposal removes only its own records.
@@ -28,7 +29,7 @@ export function createLaterMorphologyLedger(core){
     const existing=core.get(recipe.id);
     if(prior){if(existing?.metadata.generatedOwner!==owner)throw new Error(`Lost later morphology ownership: ${recipe.id}`);continue;}
     if(existing)throw new Error(`Later morphology ID collision: ${recipe.id}`);
-    const events=[{phase,state:'build',authority:'illustrative-morphology-generation-not-historical-construction'},...(next?[{phase:next,state:'unresolved',authority:'later-morphology-fate-unverified'}]:[])];
+    const events=[...(recipe.metadata?.landmarkChronology?.stages.map(s=>({phase,offset:s.offset,state:s.state,year:s.year,representationProfile:s.profile,representationLabel:s.label,authority:s.authority}))||[{phase,state:'build',authority:'illustrative-morphology-generation-not-historical-construction'}]),...(next?[{phase:next,state:'unresolved',authority:'later-morphology-fate-unverified'}]:[])];
     candidate.register({id:recipe.id,type:recipe.type,confidence:'inferred',geometry:recipe.geometry,phaseIds:events.map(e=>e.phase),lifecycle:{events},
      source:{dataset:runtime.grammar,authority:runtime.registration?.authority||'legacy-procedural-scaffold-not-historical-survey',...recipe.source,geometryVerified:false},
      metadata:{...recipe.metadata,generatedOwner:owner,generationPhase:phase,scaffoldRole:recipe.stage,constructionStart:recipe.start,geometryVerified:false,ancientGroundVerified:false,reuseLinksVerified:false,semanticBuilding:false,rendererBinding:'later-morphology-v1'}});
@@ -40,7 +41,23 @@ export function createLaterMorphologyLedger(core){
    runtime.meshes.forEach((mesh,index)=>{const recipe=recipeMap.get(bindings[index]);mesh.userData.cityObject={objectId:recipe.id,componentId:`${recipe.id}:component:${componentIndices.get(recipe.id)||0}`,confidence:'inferred',phaseIds:[phase],kind:recipe.stage};componentIndices.set(recipe.id,(componentIndices.get(recipe.id)||0)+1);});
    const blocks=recipes.filter(r=>r.type==='block'),revealOrder=new Map(blocks.map((r,i)=>[r.id,(i+1)/blocks.length]));
    const summary={published:true,phase,objects:recipes.length,geometryVerified:false,semanticBuildings:0};
-   return {summary,apply(evidenceAllowed,{constructionProgress=1}={}){for(const mesh of runtime.meshes){const record=core.get(mesh.userData.cityObject.objectId),state=record?lifecycleStateAt({lifecycleEvents:record.lifecycle.events},timeline,phase):'unresolved';mesh.visible=(runtime.fixedVisibility||mesh.visible)&&(!revealOrder.has(record?.id)||constructionProgress>=revealOrder.get(record.id))&&evidenceAllowed('inferred')&&['build','rebuild','transform','ruin','expand'].includes(state);}}};
+   return {summary,apply(evidenceAllowed,{constructionProgress=1,position=timeline.phases.findIndex(p=>p.id===phase)+.999999}={}){
+    const offset=position-timeline.phases.findIndex(p=>p.id===phase),states=new Map();
+    for(const mesh of runtime.meshes){
+     const record=core.get(mesh.userData.cityObject.objectId);
+     if(record&&!states.has(record.id))states.set(record.id,lifecycleStateAtPosition({lifecycleEvents:record.lifecycle.events},timeline,position));
+     const state=states.get(record?.id)||'unresolved',representation=mesh.userData.landmarkRepresentation;
+     if(representation){
+      const stage=coreStageAt(record,offset);
+      representation.label=stage?.label||record.metadata.name;
+      representation.year=stage?.year??null;representation.state=stage?.state||state;
+     }
+     const target=record?.metadata.coreReference&&core.get(record.metadata.coreReference),targetStage=target&&coreStageAt(target,offset);
+     mesh.visible=(!targetStage||targetStage.profile!==null)&&(!representation||coreStageVisible(record,representation.profile,offset))&&
+      (runtime.fixedVisibility||mesh.visible)&&(!revealOrder.has(record?.id)||constructionProgress>=revealOrder.get(record.id))&&
+      evidenceAllowed('inferred')&&['build','rebuild','transform','ruin','expand'].includes(state);
+    }
+   }};
   },
   dispose(){for(const batch of batches.values())for(const id of batch.ids)if(core.get(id)?.metadata.generatedOwner===owner){core.objects.delete(id);core.links.delete(id);for(const ids of core.byPhase.values())ids.delete(id);}batches.clear();}
  };

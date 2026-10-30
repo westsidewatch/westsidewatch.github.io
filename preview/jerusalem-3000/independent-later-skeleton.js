@@ -1,3 +1,4 @@
+import {coreGeometryVariants} from './landmark-chronology.js';
 import {residentialEraProfile} from './residential-era-profiles.js';
 import {registerLandmarkApproaches} from './landmark-approaches.js';
 import {terrainResidentialAdmission} from './metric-residential-layout.js';
@@ -37,10 +38,10 @@ export function buildIndependentLaterSkeleton(group,registration,materials,terra
     ledgerRecords.push({id:block.id,type:'block',geometry:{...block.geometry,frame:'canonical-dem-enu',status:'independent-coarse-layout-not-buildings'},source:{districtId:district.id,authority:registration.authority,urls:registration.sources},metadata:{...block.metadata,independentSpatialSkeleton:true,modelHeight:registration.generation.modelHeight}});
    }}
   }
-  for(const record of registration.cores){const mesh=new THREE.Mesh(sacredCoreGeometry(record,terrain),ownedMaterial);mesh.castShadow=true;mesh.receiveShadow=true;mesh.userData.phase2={stage:'monument',start:0,baseHeight:32};group.add(mesh);meshes.push(mesh);bindingIds.push(record.id);}
+  for(const record of registration.cores)for(const profile of coreGeometryVariants(record)){const version={...record,metadata:{...record.metadata,coreProfile:profile}},mesh=new THREE.Mesh(sacredCoreGeometry(version,terrain),ownedMaterial);mesh.castShadow=true;mesh.receiveShadow=true;mesh.userData.phase2={stage:'monument',start:0,baseHeight:32};mesh.userData.landmarkRepresentation={profile};group.add(mesh);meshes.push(mesh);bindingIds.push(record.id);}
   const boundedRoads=registration.occupationEnvelope?registration.roads.filter(r=>registration.phase==='ottoman'||r.metadata.layoutRole==='old-city-route-context'):[],otherRoads=registration.roads.filter(r=>!boundedRoads.includes(r)),exclusions=registration.cores.map(c=>({polygon:c.geometry.polygon}));
   const roads=[...buildHerodianRoadGeometry(group,boundedRoads,ownedMaterials,terrain,{exclusions,envelope:registration.occupationEnvelope}),...buildHerodianRoadGeometry(group,otherRoads,ownedMaterials,terrain,{exclusions})];for(const mesh of roads){mesh.userData.phase2={stage:'road',start:0,baseHeight:.35};meshes.push(mesh);bindingIds.push(mesh.userData.cityObject.objectId);}
   if(meshes.some(mesh=>Array.from(mesh.geometry.attributes.position.array).some(v=>!Number.isFinite(v))))throw new Error('Independent layout outside canonical terrain');
-  return {phaseId:registration.phase,meshes,ledgerRecords,bindingIds,grammar:'independent-later-spatial-skeleton-v1',registration,fixedVisibility:true,disposeMaterials(){ownedMaterial.dispose();}};
+  return {phaseId:registration.phase,meshes,landmarkMeshes:meshes.filter(m=>m.userData.landmarkRepresentation),ledgerRecords,bindingIds,grammar:'independent-later-spatial-skeleton-v1',registration,fixedVisibility:true,disposeMaterials(){ownedMaterial.dispose();}};
  }catch(error){for(const mesh of meshes){mesh.removeFromParent();mesh.geometry.dispose();}ownedMaterial.dispose();throw error;}
 }

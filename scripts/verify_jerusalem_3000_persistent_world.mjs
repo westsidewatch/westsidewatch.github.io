@@ -9,14 +9,14 @@ const root=new URL('../preview/jerusalem-3000/',import.meta.url),read=p=>JSON.pa
 const phases=read('data/continuous-build-timeline.json').phases,registrations=new Map();
 const terrain={heightAtWorld:(x,z)=>100+x*.02-z*.03},material=new THREE.MeshStandardMaterial(),parent=new THREE.Group();
 for(const name of ['roman-byzantine-islamic','medieval-ottoman','expansion-modern']){const data=read(`data/urban/${name}.skeleton.v1.json`);for(const phase of Object.keys(data.phases))registrations.set(phase,compileIndependentLaterSkeleton(data,phase,data.origin));}
-const core=new TemporalCityCore({phases,terrain}),publisher=createLaterMorphologyLedger(core),world=createPersistentCityWorld({parent,phases:[...registrations.keys()],build:(group,phase)=>buildIndependentLaterSkeleton(group,registrations.get(phase),{inferred:material},terrain),publish:r=>publisher.bind(r)}),snapshots=new Map(),entries=new Map();
+const core=new TemporalCityCore({phases,terrain}),publisher=createLaterMorphologyLedger(core),world=createPersistentCityWorld({parent,phases:[...registrations.keys()],build:(group,phase)=>buildIndependentLaterSkeleton(group,registrations.get(phase),{inferred:material},terrain),publish:r=>publisher.bind(r)}),snapshots=new Map(),visibility=new Map(),entries=new Map();
 for(const phase of registrations.keys()){
- const entry=world.activate(phase);entries.set(phase,entry);entry.binding.apply(()=>true);snapshots.set(phase,world.inspectPhase(phase));
+ const entry=world.activate(phase);entries.set(phase,entry);entry.binding.apply(()=>true);snapshots.set(phase,world.inspectPhase(phase));visibility.set(phase,entry.runtime.meshes.map(m=>m.visible));
  assert.equal(parent.children.filter(g=>g.visible).length,1);assert.equal(entry.group.visible,true);
 }
 for(const phase of [...registrations.keys()].reverse()){
  const entry=world.activate(phase);assert.deepEqual(world.inspectPhase(phase),snapshots.get(phase),'return must keep exact mesh AND geometry instances');
- entry.binding.apply(()=>false);assert.ok(entry.runtime.meshes.every(m=>!m.visible));entry.binding.apply(()=>true);assert.ok(entry.runtime.meshes.every(m=>m.visible));
+ entry.binding.apply(()=>false);assert.ok(entry.runtime.meshes.every(m=>!m.visible));entry.binding.apply(()=>true);assert.deepEqual(entry.runtime.meshes.map(m=>m.visible),visibility.get(phase),'evidence restoration returns the selected version, keeping cached alternatives hidden');
 }
 const blockPolygons=phase=>entries.get(phase).runtime.ledgerRecords.filter(r=>r.type==='block'&&r.source.districtId.includes(':district:')&&!r.source.districtId.includes('outside')&&!r.source.districtId.includes('modern')).map(r=>JSON.stringify(r.geometry.polygon));
 // Explicitly authored old-city background must not be re-randomised by new IDs.
