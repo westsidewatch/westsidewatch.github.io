@@ -119,6 +119,11 @@ const {chromium}=require('playwright');
    assert.equal(paper.token,'rgb(222 208 150)','ONE paper is shared by the canonical Design OS');
    assert.equal(await page.locator('body').getAttribute('data-fixed-ground'),'off',
     'protected original version is the default');
+   await page.waitForFunction(()=>{
+    const frame=document.querySelector('#proof-original')?.contentDocument;
+    const source=frame?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+    return source?.getElementById('dual-stage')?.dataset?.spread==='contents-square-cover-5-8';
+   },null,{timeout:20000});
    const sourceGeometry=await page.locator('#proof-original').evaluate(frame=>{
     const doc=frame.contentDocument;
     const source=doc?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
