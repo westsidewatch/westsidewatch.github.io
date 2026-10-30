@@ -206,7 +206,7 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
 #emmaus > .emmaus__left{
  --em-ink:color-mix(in srgb,var(--ws-night) 79%,var(--ws-olive));
  --em-line:color-mix(in srgb,var(--em-ink) 32%,transparent);
- --em-paper:var(--ws-papyrus);
+ --em-paper:var(--ws-one-paper);
  background:var(--em-paper);color:var(--em-ink);
  padding-left:clamp(87px,8.3vw,136px);
 }
@@ -325,18 +325,27 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
  #emmaus .emmaus__study-route{margin:6px 0 0}
 }
 
-/* 2026-10-30 — Emmaus material correction, scoped to this Draft.
-   The accepted Magazine book-spine layers remain in their original iframe.
-   No replacement sevenfold is mounted in Emmaus. */
+/* 2026-10-30 — ONE material correction, scoped to this Draft.
+   Use the ACTUAL accepted ONE paper (#ded096) through Design OS, not a
+   papyrus/gold approximation. The accepted Magazine sevenfold book-spine
+   remains physically owned by its original iframe: no recolor or new layers. */
 #emmaus {
- --em-paper:color-mix(in oklab,var(--ws-pale-gold) 52%,var(--ws-papyrus));
+ --em-paper:var(--ws-one-paper);
  --em-ink:var(--ws-night);
  --em-line:color-mix(in srgb,var(--ws-night) 27%,transparent);
 }
 #emmaus > .emmaus__left {
+ --em-paper:var(--ws-one-paper);
  --em-ink:var(--ws-night);
  --em-line:color-mix(in srgb,var(--ws-night) 27%,transparent);
- background:var(--em-paper);
+ background-color:var(--em-paper);
+ /* Match the accepted ONE leaf material; retain a solid ink-safe fallback. */
+ background-image:
+  radial-gradient(circle at 17% 7%,color-mix(in srgb,var(--ws-paper) 16%,transparent),transparent 28%),
+  linear-gradient(color-mix(in srgb,var(--ws-one-paper) 89%,transparent),color-mix(in srgb,var(--ws-one-paper) 92%,transparent)),
+  url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT');
+ background-size:auto,auto,560px auto;
+ background-repeat:no-repeat,no-repeat,repeat;
  color:var(--em-ink);
  padding-left:clamp(24px,3.2vw,55px);
 }
@@ -344,7 +353,7 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
  background:linear-gradient(90deg,color-mix(in srgb,var(--ws-papyrus) 18%,transparent),transparent 38%,transparent 78%,color-mix(in srgb,var(--ws-pale-gold) 6%,transparent));
 }
 #emmaus .emmaus__study {
- background:color-mix(in oklab,var(--ws-papyrus) 35%,var(--em-paper));
+ background:color-mix(in srgb,var(--ws-one-paper) 89%,var(--ws-papyrus));
  border-color:color-mix(in srgb,var(--em-ink) 24%,var(--ws-pale-gold));
 }
 #emmaus .emmaus__study-interface {
