@@ -18,6 +18,8 @@ assert.match(js,/fixedGround=new URLSearchParams\(location\.search\)\.get\('grou
  'engraved-background mode is opt-in and default remains unchanged');
 assert.match(js,/const magSpread=original&&coverBounds/,
  'the later chapters reuse the REAL Magazine cover+Contents measured footprint');
+assert.match(js,/realmGround\.style\.clipPath='path\("/,
+ 'engraving field must cut out the actual Magazine folio hole');
 assert.match(js,/const fullLeft=\{x:master\.x/,
  'the 2:1 ONE spread lives inside the Magazine footprint');
 assert.match(js,/olive\.style\.inset='auto'/,
@@ -130,6 +132,9 @@ const {chromium}=require('playwright');
     'opt-in shared proportions and engraved backdrop are active');
    assert.equal(await page.locator('#proof-film-toggle').getAttribute('aria-pressed'),'true');
    assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'bible');
+   assert.match(await page.locator('#p2-realm-background').evaluate(
+    el=>getComputedStyle(el).clipPath),/path\(/,
+    'real Magazine aperture leaves the editorial pages uncovered');
    const stageGround=await page.locator('#proof-stage').boundingBox();
    const emLeaf=await page.locator('#emmaus > .emmaus__left').boundingBox();
    const emPlate=await page.locator('#emmaus > #emmaus-gallery').boundingBox();
