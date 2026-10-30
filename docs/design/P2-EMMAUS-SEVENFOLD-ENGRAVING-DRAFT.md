@@ -108,3 +108,19 @@ No second full-screen reveal, repeated movie player or separate 8.5% frame.
   authored engraving artwork. The Editorial Manual now documents the
   canonical motif sources and the required subject-specific linework QA.
   Do not fabricate future 05–07 pages or declare visual acceptance.
+
+
+## V14 / Scripture–Time Manifold — time within God's sovereignty (2026-10-30)
+
+**Status:** isolated, opt-in experimental native SVG, not a design approval or a main-site release.
+Artifact: `static/images/p2-emmaus-scripture-time-manifold-v14.svg`.
+Preview: `/experiments/p2-emmaus-olive-handoff-lab.html?engraving=v14`.
+
+**User-supplied artistic insight:** The *scroll itself can be understood as a passage*, but do not depict a physical scroll. Borrow the hourglass/collapse/throat topology from a spacetime tunnel **only as a conceptual visual analogy**: multiple accounts, periods, and scripture references become intelligible through Christ's opening of the Scriptures. Nothing meaningful lies outside the encompassing divine sovereignty. Avoid portraying God as a black hole, the mechanism of the universe as revealed doctrine, or the diagram as scientific cosmology.
+
+- Primary Emmaus passage remains **Luke 24:27** (Christ expounds the Scriptures).
+- Interpretive reference **2 Peter 3:8**: one day as a thousand years and vice versa; its immediate context is divine patience, not a numerical time-conversion ratio.
+- Interpretive reference **Psalm 16:2**: "My goodness is nothing apart from You" / 「我的好處不在你以外」.
+- **Visual derivation:** 66 distinct native-SVG trajectories; a double-flared chronology lattice that becomes extremely narrow at the interpretive throat, then opens; multiple fine cross-reference chords and sparse register marks; a low-opacity enclosing geometry; ONE papyrus/paper remains background authority. This should be graph/engraving, never fluid-water/V75 lines or a literal parchment object.
+- SVG remains completely vector; NO embedded bitmaps. Fine line density, geometry and text safety require actual P2 desktop/mobile review. This composition is currently not endorsed for production.
+- Keep the existing Magazine/Church, live ONE study panel, canonical book rail, Doré gallery, 5:8+square inherited footprint and scroll behavior untouched.
