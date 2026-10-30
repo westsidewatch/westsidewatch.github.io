@@ -69,3 +69,43 @@ The accepted Magazine sevenfold spine must remain untouched in its owning iframe
 - All 66 book labels, chapter counts and links come from `ONE_DATA.books`; local `renderBookStudy(number,chapter)` renders a genuine loaded excerpt when present or a real chapter selector if not. The right 1/3 retains the shared 241-image Doré registry and book-first order.
 - The original 03→04 physical image transfer and Church/Vol.00 iframe handoff are not changed.
 - Source checks and syntax validation completed in the draft branch; visual acceptance at desktop/mobile/200% zoom, third-party image availability and reverse-scroll inspection remain separate release requirements. **Do not merge** solely because source checks pass.
+
+## 10. Shared homepage film — opt-in A/B proof (2026-10-30)
+
+**Research decision:** retain the same six-clip homepage film as an underlay from the
+existing Vol.00 Magazine into P2 03 Emmaus and P2 04 Olive Mountain, rather than
+introducing another background video, a new animated curtain or another
+media-player instance. This is a preview-only experiment, **not an acceptance of
+filming behind scripture**.
+
+- Compare the existing candidate (`?d=9.10`, default OFF) with the experiment
+  (`?d=9.10&film=1`, ON); the proof header toggle switches instantly without
+  reloading or losing scroll/book/speaker state.
+- **Ownership:** `.p2-magazine__home-film` remains inside the original
+  `/p2/living-water.html` iframe, where `p2-magazine-live-bridge.js` already
+  reuses the homepage six clips. Do **not** clone, adopt, or re-parent this
+  media iframe: moving it to another document would reload playback.
+  The outer P2 preview continues its existing `westside-p2-scroll` message
+  with `active:true` for the 03/04 journey in ON mode only.
+- **No second transition:** after the Magazine's original engraving has moved
+  into the handoff, the original contents/cover iframe fades on the *existing*
+  ONE top-down paper-reveal timeline. Its original node, nested navigation,
+  book-spine animation and Magazine 02 pose are untouched and restored by
+  reverse scroll or OFF mode.
+- **Design:** Emmaus's literal ONE manuscript paper remains opaque; a narrow
+  **left editorial gutter** alone reveals moving film at desktop widths.
+  The mobile gutter is disabled so the 66-book interface is not squeezed.
+  At fully entered Olive Mountain, a small **right editorial gutter** reveals
+  the same film without crossing the sermon title or portrait.
+- **Reduced-motion:** the experiment adds no new motion timeline or media
+  instance. The existing film player must keep honoring its own reduced-motion
+  settings and visibility rules. A later film-content overlay in Paradise
+  Cinema must pause the common backdrop rather than run two competing films.
+- **Future seven-surface rule:** Bookshop and Café may selectively expose
+  this same underlay; cinema's featured playback takes precedence. These are
+  constraints for later chapters, *not* implemented screens in this proof.
+- **Acceptance:** compare 02→03→04 and reverse-scroll at 1648×928 and 390×844;
+  ensure one mounted film iframe, complete return of Magazine, valid 66-book
+  navigation and real Doré plates, legible ONE copy and no clipped Olive text.
+  No global CSS layer, token palette, original video or production page is
+  modified. Do not merge until visually approved.
