@@ -491,3 +491,20 @@ body[data-p2-engraving="v14"] #emmaus .emmaus__scroll-engraving{
  mix-blend-mode:multiply;
  filter:none;
 }
+
+/* P2 03 / Emmaus V15 — the complete FILM-FIELD surface, not the ONE folio.
+   Keeps the measured Magazine folio punch-out from P2 JS. No extra OS authority.
+   Preview via ?ground=1&engraving=v15&d=9.1 only; source page unchanged. */
+body[data-p2-engraving="v15"] #p2-realm-background[data-realm="bible"] {
+ background:var(--ws-night) url('/images/p2-emmaus-fullfield-engraving-v15.svg') center center / 100% 100% no-repeat;
+ --ws-engraving-opacity:0;
+}
+body[data-p2-engraving="v15"] #p2-realm-background[data-realm="bible"]::after {
+ content:none;
+}
+/* Prevent a second false engraving inside the ONE text panel in this proof.
+   Neither the underlying reading content nor the accepted legacy assets change. */
+body[data-p2-engraving="v15"] #emmaus > .emmaus__left::after,
+body[data-p2-engraving="v15"] #emmaus .emmaus__scroll-engraving {
+ opacity:0;
+}
