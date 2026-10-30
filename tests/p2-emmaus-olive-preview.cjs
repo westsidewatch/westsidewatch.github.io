@@ -11,25 +11,27 @@ assert.match(html,/one\/luke-21-24\.js/,'features the original Luke 24 ONE study
 assert.match(html,/p2-emmaus-scroll-micro-engraving\.svg/,'Emmaus has its own local editable engraved scroll study');
 assert.doesNotMatch(html,/emmaus__realm-nav|emmaus__folio-layer/,'no second spine is inserted in the Emmaus chapter');
 assert.doesNotMatch(js,/data-realm-jump|realmNav/,'Magazine spines are not replaced by a second navigation controller');
-assert.match(html,/id="proof-film-toggle"/,'A/B control exists only in the isolated P2 preview');
-assert.match(js,/filmContinuity=new URLSearchParams\(location\.search\)\.get\('film'\)==='1'/,
- 'shared film continuity is opt-in and defaults off');
-assert.match(js,/active:filmContinuity\?distance<12:distance<6\.6/,
- 'the published media playback defaults to its original stop point');
-assert.match(js,/sourceFrame\.style\.opacity=filmContinuity/,
- 'same Magazine editorial iframe is uncovered only after the existing ONE reveal');
-assert.match(js,/sourceOriginalEditorialOpacity/,
- 'backward scroll or A/B switch restores the existing Magazine frame');
-assert.doesNotMatch(js,/createElement\(['"](?:iframe|video)['"]\)/,
- 'shared-film mode must never construct a second media player');
-assert.match(js,/const surroundX=filmContinuity/,
- 'the shared video must occupy substantial real stage area, not a narrow mask');
-assert.match(js,/const surroundTop=filmContinuity/,
- 'the video field is genuinely visible above the editorial spread');
-assert.match(css,/#emmaus\[data-film-continuity="on"\] > \.emmaus__left/,
- 'ONE retains an opaque manuscript leaf above the single playing film');
-assert.match(css,/#olive-proof\[data-film-continuity="on"\]\{[\s\S]*inset:9% 8\.5%/,
- 'the Olive chapter opens real film space while retaining its protected editorial components');
+assert.match(html,/id="proof-film-toggle"/,'P2 preview provides a fixed-folio A/B control');
+assert.match(html,/westside-engraving-authority\.css/,'uses the one existing engraving authority');
+assert.match(html,/id="p2-realm-background"/,'the background texture is its own field');
+assert.match(js,/fixedGround=new URLSearchParams\(location\.search\)\.get\('ground'\)==='1'/,
+ 'engraved-background mode is opt-in and default remains unchanged');
+assert.match(js,/const magSpread=original&&coverBounds/,
+ 'the later chapters reuse the REAL Magazine cover+Contents measured footprint');
+assert.match(js,/const fullLeft=\{x:master\.x/,
+ 'the 2:1 ONE spread lives inside the Magazine footprint');
+assert.match(js,/olive\.style\.inset='auto'/,
+ 'the Olive stage is also constrained to the Magazine geometry');
+assert.match(js,/active:distance<6\.6/,
+ 'the homepage film is not artificially replayed in the next chapters');
+assert.match(js,/realmGround\.dataset\.realm=oliveIn>=\.5\?'sermon':'bible'/,
+ 'each chapter selects its own existing Design OS engraved motif');
+assert.doesNotMatch(js,/surroundX|surroundTop|filmContinuity|filmToggle|createElement\(['"](?:iframe|video)['"]\)/,
+ 'the rejected cinema surround and new media instances are gone');
+assert.match(css,/#p2-realm-background\[data-realm="bible"\]/,
+ 'Bible engraving derives from manuscript material');
+assert.match(css,/#p2-realm-background\[data-realm="sermon"\]/,
+ 'Sermon engraving derives from olive terraces');
 assert.match(css,/--ws-papyrus/,'Emmaus background inherits ONE papyrus palette, not Magazine white');
 assert.match(css,/scroll-micro-engraving\.svg/,'scroll edge engraving is visible in chapter structure');
 assert.match(js,/ONE_DATA\?\.luke\?\.chapterStudies\?\.\['24'\]/,'chapter text comes from canonical ONE, never invented copy');
@@ -108,60 +110,59 @@ const {chromium}=require('playwright');
    });
    assert.equal(paper.color,'rgb(222, 208, 150)','Emmaus leaf must match the actual ONE paper, not a pale overlay');
    assert.equal(paper.token,'rgb(222 208 150)','ONE paper is shared by the canonical Design OS');
-   assert.equal(await page.locator('body').getAttribute('data-film-continuity'),'off',
-    'the original candidate remains the unchanged default');
-   await page.locator('#proof-film-toggle').click();await page.waitForTimeout(170);
-   assert.equal(await page.locator('body').getAttribute('data-film-continuity'),'on',
-    'the optional common-film layer is activated without reloading the page');
-   assert.equal(await page.locator('#proof-film-toggle').getAttribute('aria-pressed'),'true');
-   const filmState=await page.locator('#proof-original').evaluate(frame=>{
+   assert.equal(await page.locator('body').getAttribute('data-fixed-ground'),'off',
+    'protected original version is the default');
+   const sourceGeometry=await page.locator('#proof-original').evaluate(frame=>{
     const doc=frame.contentDocument;
-    const editorial=doc?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
-    return {
-     playerCount:doc?.querySelectorAll('.p2-magazine__home-film').length,
-     opacity:editorial?.style.opacity
-    };
+    const source=doc?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+    const c=source?.getElementById('dual-cover')?.getBoundingClientRect();
+    const t=source?.getElementById('dual-contents')?.getBoundingClientRect();
+    if(!c||!t)return null;
+    return {x:Math.min(c.x,t.x),y:Math.min(c.y,t.y),
+     w:Math.max(c.right,t.right)-Math.min(c.x,t.x),
+     h:Math.max(c.bottom,t.bottom)-Math.min(c.y,t.y),
+     filmCount:doc.querySelectorAll('.p2-magazine__home-film').length};
    });
-   assert.equal(filmState.playerCount,1,'only the original homepage film player remains mounted');
-   assert.equal(filmState.opacity,'0','at Emmaus the same Magazine film is visible under the ONE leaf');
-   const filmProofDir=path.join(root,'artifacts/p2-emmaus-olive');
-   fs.mkdirSync(filmProofDir,{recursive:true});
-   await page.screenshot({path:path.join(filmProofDir,viewport.width+'-shared-film-emmaus.png')});
-   await page.locator('[data-jump="11.10"]').click();await page.waitForTimeout(200);
-   assert.equal(await page.locator('#olive-proof').getAttribute('aria-hidden'),'false');
-   assert.equal(await page.locator('#olive-proof').evaluate(el=>getComputedStyle(el).backgroundColor),
-    'rgba(0, 0, 0, 0)','shared film mode does not fill the Olive chapter with an opaque scene background');
-   await page.screenshot({path:path.join(filmProofDir,viewport.width+'-shared-film-olive.png')});
-   await page.locator('[data-jump="9.10"]').click();await page.waitForTimeout(200);
-   const sharedStage=await page.locator('#proof-stage').boundingBox();
-   const sharedLeaf=await page.locator('#emmaus > .emmaus__left').boundingBox();
-   const sharedPlates=await page.locator('#emmaus > #emmaus-gallery').boundingBox();
-   assert(sharedStage&&sharedLeaf&&sharedPlates,'both actual paper and image planes are visible');
-   assert(Math.abs(sharedLeaf.right-sharedPlates.x)<3,'the real ONE and Doré pages still join without a gap');
-   assert(Math.abs(sharedLeaf.width-sharedPlates.width*2)<3,'the printed composition remains exactly two-to-one');
-   assert(sharedLeaf.y-sharedStage.y>sharedStage.height*.08,
-    'the film must be visible above the 03 spread, not blocked by full-height paper');
-   if(viewport.width>820){
-    assert(sharedLeaf.x-sharedStage.x>sharedStage.width*.075,
-     'a substantial unoccluded film field must be visible left of ONE');
-    assert(sharedPlates.right<sharedStage.right-sharedStage.width*.075,
-     'a substantial unoccluded film field must be visible right of the gallery');
-    assert(sharedLeaf.height<sharedStage.height*.83,
-     'the panoramic moving film must also remain visible below the spread');
-   }else{
-    assert(sharedLeaf.width+sharedPlates.width>=sharedStage.width-2,
-     'mobile keeps the full page width and exposes video above, never through scripture');
-    assert(sharedLeaf.height<=sharedStage.height*.89,
-     'mobile reserves a visible cinema-height area for the film');
-   }
+   assert(sourceGeometry,'Magazine geometry must be available before acceptance');
+   assert.equal(sourceGeometry.filmCount,1,'the ONE existing magazine film player is preserved');
+   await page.locator('#proof-film-toggle').click();await page.waitForTimeout(220);
+   assert.equal(await page.locator('body').getAttribute('data-fixed-ground'),'on',
+    'opt-in shared proportions and engraved backdrop are active');
+   assert.equal(await page.locator('#proof-film-toggle').getAttribute('aria-pressed'),'true');
+   assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'bible');
+   const stageGround=await page.locator('#proof-stage').boundingBox();
+   const emLeaf=await page.locator('#emmaus > .emmaus__left').boundingBox();
+   const emPlate=await page.locator('#emmaus > #emmaus-gallery').boundingBox();
+   assert(stageGround&&emLeaf&&emPlate,'the same Bible leaf and original Doré image remain');
+   const expectedX=stageGround.x+sourceGeometry.x,expectedY=stageGround.y+sourceGeometry.y;
+   const expectedW=sourceGeometry.w,expectedH=sourceGeometry.h;
+   assert(Math.abs(emLeaf.x-expectedX)<4,'Bible leaf starts at the real Magazine left boundary');
+   assert(Math.abs(emLeaf.y-expectedY)<4,'Bible top uses the Magazine field exactly');
+   assert(Math.abs(emLeaf.width+emPlate.width-expectedW)<4,'the complete Bible spread fits inside Magazine bounds');
+   assert(Math.abs(emLeaf.height-expectedH)<4,'Bible folio matches Magazine height');
+   assert(Math.abs(emLeaf.x+emLeaf.width-emPlate.x)<4,'Bible leaf and engraving have no new gap');
+   assert(Math.abs(emLeaf.width-2*emPlate.width)<4,'Bible spread keeps the 2:1 allocation');
    assert.equal(await page.locator('#emmaus > .emmaus__left').evaluate(
     el=>getComputedStyle(el).maskImage),'none',
-    'there is no longer a nearly invisible cutout in the actual reading paper');
+    'previously rejected narrow mask is fully removed');
+   const groundDir=path.join(root,'artifacts/p2-emmaus-olive');
+   fs.mkdirSync(groundDir,{recursive:true});
+   await page.screenshot({path:path.join(groundDir,viewport.width+'-fixed-ground-bible.png')});
+   await page.locator('[data-jump="11.10"]').click();await page.waitForTimeout(220);
+   assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'sermon',
+    'Sermon uses a distinct hillside contour engraving');
+   const olRect=await page.locator('#olive-proof').boundingBox();
+   assert(olRect&&Math.abs(olRect.x-expectedX)<4&&Math.abs(olRect.y-expectedY)<4,
+    'Olive retains the Magazine top-left origin');
+   assert(Math.abs(olRect.width-expectedW)<4&&Math.abs(olRect.height-expectedH)<4,
+    'Olive retains the exact source footprint');
+   await page.screenshot({path:path.join(groundDir,viewport.width+'-fixed-ground-sermon.png')});
+   await page.locator('[data-jump="9.10"]').click();await page.waitForTimeout(220);
+   assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'bible');
    await page.locator('#proof-film-toggle').click();await page.waitForTimeout(170);
-   assert.equal(await page.locator('body').getAttribute('data-film-continuity'),'off');
-   assert.equal(await page.locator('#proof-original').evaluate(frame=>
-    frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.style.opacity),'',
-    'the approved Magazine editorial frame opacity is restored after A/B toggling');
+   assert.equal(await page.locator('body').getAttribute('data-fixed-ground'),'off');
+   assert.equal(await page.locator('#p2-realm-background').evaluate(
+    el=>getComputedStyle(el).opacity),'0','baseline background restores on OFF');
    assert.match(paper.image,/SITE-TEMPLE-STONE-LIGHT/,'Emmaus keeps the original ONE paper texture, not magazine white');
    assert.match(await page.locator('#emmaus-study-heading').textContent(),/復活/);
    assert.equal(await page.locator('#em-study-route li').count(),2);
