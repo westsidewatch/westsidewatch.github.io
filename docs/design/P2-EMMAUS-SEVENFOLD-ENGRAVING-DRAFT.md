@@ -52,14 +52,14 @@ On any selection, `selectBook(number)` changes:
 ## 7. Frozen Magazine spine and corrected ONE palette (2026-10-30)
 
 - The Magazine seven-color book spine remains **unchanged in its owning page**. The second Emmaus-specific seven-tab navigation, associated jump handlers, new-color fills and staggered animation have been removed. P2's existing scene jump buttons in its proof header remain available for QA.
-- ONE's actual opening uses stronger ochre manuscript paper (its standalone product declares `--one-paper:#ded096`), not the pale white/cream texture of Magazine. In chapter 03, the OS source of truth now includes `--ws-one-paper:rgb(222 208 150)` alongside `--ws-papyrus` and `--ws-pale-gold`. The P2 leaf uses the exact ONE color and original temple-stone paper texture; the previous approximate 52% gold/48% papyrus mix never reliably painted the left pane because an inner custom-property declaration overrode it. Do not reintroduce that approximation.orting a second independent palette. Ink is `--ws-night`, not a night/Olive blend.
+- ONE's actual opening uses stronger ochre manuscript paper (its standalone product declares `--one-paper:#ded096`), not the pale white/cream texture of Magazine. In chapter 03, the OS source of truth now includes `--ws-one-paper:rgb(222 208 150)` alongside `--ws-papyrus` and `--ws-pale-gold`. The P2 leaf uses the exact ONE color and original temple-stone paper texture; the previous approximate 52% gold/48% papyrus mix never reliably painted the left pane because an inner custom-property declaration overrode it. Do not reintroduce that approximation or a second independent palette. Ink is `--ws-night`, not a night/Olive blend.
 - The 03 Doré gallery uses a night-blue neutral frame and OS pale-gold ruling rather than the green shadow previously borrowed from 04 Olive Mountain. The scroll engraving remains on the left, fading before actual ONE reading content.
 - Future work on sevenfold continuity is **paused** until the user approves a design. No new spines should be generated as a quick substitute.
 
 ## 8. Acceptance must cover behavior, not merely source checks
 
 Desktop and phone: changing Luke → Mark → Genesis → James → Luke must update the study heading, the right art-series start (Mark = canonical #183; Genesis = #1; Luke = #193; James = valid random fallback), the ONE link, and the selected rail state.
-The seven folios must remain semantically labeled and 01–04 navigable. Text must be legible at 390 px without the engraving overprinting it. Core Contract failures in unrelated protected assets must be recorded but must not be misrepresented as P2 visual success.
+The accepted Magazine sevenfold spine must remain untouched in its owning iframe; use existing P2 scene controls for navigation without fabricating another sevenfold in Emmaus. Text must be legible at 390 px without the engraving overprinting it. Core Contract failures in unrelated protected assets must be recorded but must not be misrepresented as P2 visual success.
 
 ## 9. Implementation record — OS review and correction (2026-10-29)
 
