@@ -90,8 +90,10 @@ No second full-screen reveal, repeated movie player or separate 8.5% frame.
 - Read the real `dual-cover` + `dual-contents` bounds through the
   pre-existing protected Magazine iframe and use their bounding union
   for both the ONE 2:1 paper+gallery spread and the Olive portrait/editorial
-  spread. Mobile reads the actual stacked Magazine geometry, not a new
-  hand-coded global breakpoint or fixed percent.
+  spread. The OS engraved field is clipped to the **outside** of that exact
+  live Magazine union, so it cannot obscure the accepted Contents/cover
+  during the handoff. Mobile reads the actual stacked Magazine geometry,
+  not a new hand-coded global breakpoint or fixed percent.
 - A single **non-interactive P2 background field** (`p2-realm-background`)
   reads `static/css/westside-engraving-authority.css`; Chapter 03
   selects the `bible` line grammar + the existing approved manuscript-edge
