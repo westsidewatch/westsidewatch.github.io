@@ -1,3 +1,5 @@
+import {compileNamedCityGates,publishNamedCityGates,registerNamedGateApproaches} from './named-city-gates.js';
+import {createCityEnclosureAudit} from './city-enclosure-audit.js';
 import {createUrbanGroundPresentation} from './urban-ground-presentation.js';
 import {completeUrbanCoverage} from './urban-coverage.js';
 import {coreStageAt} from './landmark-chronology.js';
@@ -179,7 +181,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   let currentProgress = 0,
     currentRuin = 0,
     terrainRuntime = null,
-    foundationRuntime = null,
+    foundationRuntime = null, cityEnclosureAudit=null,
     terrainPresentation = null, urbanGround=null, urbanGroundKey=null,
     terrainView = null,
     evidenceResolution = null,
@@ -200,6 +202,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   let regionalLandforms=null,regionalData=null,herodianScaleReport=null;
   let metricHellenisticRegistration=null;
   let housingBoundaryAdmission=null;
+  let namedGates=null;
   let defenseTimeline=null,defenseData=null,canonicalProtected=[],independentLaterRegistrations=new Map(),fabricMaterialDisposer=null,persistentCityWorld=null,activeWorldEntry=null,sharedPlaces=null,sharedPlaceView=null,wallReference=null,wallReferenceModel=null,wallGateView=null,wallCredit=null;
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
@@ -562,13 +565,15 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       const independentLaterData=await loadCityData('./data/urban/roman-byzantine-islamic.skeleton.v1.json');
       for(const phase of ['aelia','byzantine','early-islamic'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(independentLaterData,phase,terrainRuntime.grid.origin));
       wallReference=compileWallReference(await loadCityData('./data/urban/old-city-walls.reference.v1.json'),terrainRuntime);
-      wallReferenceModel=createWallReferenceModel(root,{reference:wallReference,terrain:terrainRuntime,core:loaded.core});
-      wallGateView=createSharedPlaceView(mount,wallReferenceModel,{credit:false});
+      namedGates=compileNamedCityGates(await loadCityData('./data/urban/named-city-gates.v1.json'),wallReference,terrainRuntime);wallReference.namedGates=namedGates;publishNamedCityGates(loaded.core,namedGates);
       wallCredit=document.createElement('small');wallCredit.className='j3k-wall-reference-credit';wallCredit.textContent='城牆：現代地圖參照／高度示意 · © OpenStreetMap contributors · ODbL';wallCredit.hidden=true;mount.append(wallCredit);
       const medievalData=await loadCityData('./data/urban/medieval-ottoman.skeleton.v1.json');
       for(const phase of ['crusader','ayyubid-mamluk','ottoman'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(medievalData,phase,terrainRuntime.grid.origin,{wallReference}));
       const expansionData=await loadCityData('./data/urban/expansion-modern.skeleton.v1.json');
       for(const phase of ['outside-walls','modern'])independentLaterRegistrations.set(phase,compileIndependentLaterSkeleton(expansionData,phase,terrainRuntime.grid.origin,{wallReference}));
+      for(const registration of independentLaterRegistrations.values())registerNamedGateApproaches(registration,namedGates);
+      wallReferenceModel=createWallReferenceModel(root,{reference:wallReference,terrain:terrainRuntime,core:loaded.core});
+      wallGateView=createSharedPlaceView(mount,wallReferenceModel,{credit:false});
       for(const [phase,registration]of independentLaterRegistrations)completeUrbanCoverage(registration,{rings:housingBoundaryAt({phaseId:phase,offset:.9,defenseData,wallReference,origin:terrainRuntime.grid.origin}).rings});
       sharedPlaces=createSharedUrbanPlaces({terrain:terrainRuntime,phases:[...loaded.core.phases.values()],core:loaded.core});
       sharedPlaceView=createSharedPlaceView(mount,sharedPlaces);
@@ -652,6 +657,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       if(candidates.every(b=>b.rings.length))registration.housingBoundaryRings=[...new Map(candidates.flatMap(b=>b.rings).map(r=>[JSON.stringify(r),r])).values()];
     }
     housingBoundaryAdmission=createHousingBoundaryAdmission({root,core:cityCoreRuntime.core,boundaryFor:()=>housingBoundaryAt({phaseId:currentPhaseId,offset:timelinePosition-Math.floor(timelinePosition),defenseData,wallReference,royalData:davidData,royalStage:royalCity?.diagnostics().stage,origin:terrainRuntime.grid.origin})});
+    cityEnclosureAudit=createCityEnclosureAudit({root,core:cityCoreRuntime.core,boundaryFor:()=>housingBoundaryAt({phaseId:currentPhaseId,offset:timelinePosition-Math.floor(timelinePosition),defenseData,wallReference,royalData:davidData,royalStage:royalCity?.diagnostics().stage,origin:terrainRuntime.grid.origin})});
     foundationRuntime=createCityFoundationRuntime({core:cityCoreRuntime.core,terrain:terrainRuntime,root,getCurrentPhase:()=>currentPhaseId,getPosition:()=>timelinePosition});
     const bounds = new THREE.Box3()
       .setFromObject(cityCoreLayer)
@@ -865,6 +871,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     inspectHerodianDimensions(){return structuredClone(herodianScaleReport);},
     inspectRegionalLandforms(){return regionalLandforms?.snapshot()??null;},
     landmarkChronology(){return (activeWorldEntry?.runtime.registration?.cores||[]).filter(c=>c.metadata.landmarkChronology).map(c=>({id:c.id,...coreStageAt(cityCoreRuntime.core.get(c.id)||c,timelinePosition-Math.floor(timelinePosition)),projection:c.metadata.landmarkChronology.projection,visibleProfiles:(activeWorldEntry.runtime.landmarkMeshes||[]).filter(m=>m.visible&&m.userData.cityObject?.objectId===c.id).map(m=>m.userData.landmarkRepresentation.profile),geometryVerified:false}));},
+    inspectCityEnclosure(){return cityEnclosureAudit?.snapshot()??null;},
     inspectCityFoundation(phaseId=currentPhaseId){return phaseId?foundationRuntime?.snapshot(phaseId)??null:null;},
     cityFoundationIndex(){return foundationRuntime?.index()??[];},
     royalReliefProfile(){return royalRelief?structuredClone(royalRelief.profile):null;},
@@ -894,6 +901,13 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       const r=records[0],bounds=r.geometry.bounds,x=(bounds.min[0]+bounds.max[0])/2,z=(bounds.min[2]+bounds.max[2])/2,focus=new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z)+3,z);
       if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
       controls.minDistance=15;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(65,60,90):new THREE.Vector3(42,40,60));controls.update();needsFrame=true;return true;
+    },
+    namedGateIndex(){return (namedGates||[]).map(g=>({id:g.id,label:g.label,profile:g.profile,sealed:g.sealed,available:!!wallReferenceModel?.diagnostics().visibleGateIds.includes(g.id)&&['ottoman','outside-walls','modern'].includes(currentPhaseId),geometryVerified:false}));},
+    focusCityObject(id){
+      const gate=namedGates?.find(g=>g.id===id),box=new THREE.Box3();root.updateMatrixWorld(true);let found=false;
+      root.traverse(m=>{if(!m.isMesh||m.userData.cityObject?.objectId!==id)return;for(let p=m;p;p=p.parent)if(!p.visible)return;box.expandByObject(m);found=true;});if(!found)return false;
+      const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*2.1;
+      controls.minDistance=5;controls.target.copy(focus);camera.position.copy(focus).add(gate?new THREE.Vector3((-gate.normal.x+.35*(gate.exitSign||1)*gate.unit.x)*distance,.38*distance,(-gate.normal.z+.35*(gate.exitSign||1)*gate.unit.z)*distance):new THREE.Vector3(.65*distance,.7*distance,distance));controls.update();needsFrame=true;return true;
     },
     focusRoyalTemple(){
       const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:currentPhaseId==='hellenistic-hasmonean'?hellenisticSanctuary:royalCity;

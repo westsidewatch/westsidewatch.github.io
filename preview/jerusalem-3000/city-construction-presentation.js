@@ -27,13 +27,14 @@ export function createCityConstructionPresentation({root,getRecord}){
   if(lastPhase!==phaseId){previous=lastPhase?{phase:lastPhase,index:phases.get(lastPhase)?.index,descriptors:phases.get(lastPhase)?.descriptors,defenseDescriptors:phases.get(lastPhase)?.defenseDescriptors}:null;lastPhase=phaseId;}
   const adjacent=active&&previous?.index===phaseIndex-1;
   const equalPrior=new Set(adjacent&&LATE.has(previous.phase)&&LATE.has(phaseId)?previous.descriptors.values():[]);
+  const keptIds=new Set([...groups.values()].filter(g=>adjacent&&(previous.descriptors.get(g.id)===descriptors.get(g.id)||equalPrior.has(descriptors.get(g.id))||(g.record.metadata?.defenseTimeline&&previous.defenseDescriptors?.has(descriptors.get(g.id))))).map(g=>g.id));
   const ranks=new Map();for(const kind of ['infrastructure','core','housing']){
-   const list=[...groups.values()].filter(g=>g.kind===kind).sort((a,b)=>(a.box.min.x+a.box.min.z)-(b.box.min.x+b.box.min.z)||a.id.localeCompare(b.id));list.forEach((g,i)=>ranks.set(g.id,i/Math.max(1,list.length-1)));
+   const list=[...groups.values()].filter(g=>g.kind===kind&&!keptIds.has(g.id)).sort((a,b)=>(a.box.min.x+a.box.min.z)-(b.box.min.x+b.box.min.z)||a.id.localeCompare(b.id));list.forEach((g,i)=>ranks.set(g.id,i/Math.max(1,list.length-1)));
   }
   const fraction=position-phaseIndex;let growing=0,complete=0,waiting=0,kept=0;const counts={infrastructure:0,core:0,housing:0},growingByRole={infrastructure:0,core:0,housing:0};
   landmarks=[];
   for(const g of groups.values()){
-   const r=ranks.get(g.id),same=adjacent&&(previous.descriptors.get(g.id)===descriptors.get(g.id)||equalPrior.has(descriptors.get(g.id))||(g.record.metadata?.defenseTimeline&&previous.defenseDescriptors?.has(descriptors.get(g.id))));
+   const r=ranks.get(g.id)??0,same=keptIds.has(g.id);
    const offsets=(g.record.lifecycle?.events||[]).filter(e=>e.phase===phaseId&&['build','rebuild','transform','expand'].includes(e.state)&&(e.offset||0)<=fraction).map(e=>e.offset||0),offset=Math.max(0,...offsets);
    const base=g.kind==='housing'?.08+r*.42:g.kind==='core'?.06+r*.18:.01+r*.08,duration=g.kind==='core'?.38:.22;
    const start=Math.max(base,offset),end=Math.min(.95,Math.max(start+.08,start+duration));

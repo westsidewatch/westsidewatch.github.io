@@ -36,3 +36,7 @@
 The late three phases also use modern OSM building-bounds centres for the Holy Sepulchre (way 1022672085 v14) and Dome of the Rock (way 4709536 v102). The frozen source is `data/urban/sources/old-city-cores.osm.xml`; `scripts/ingest_jerusalem_3000_core_reference.py` reproduces `core-location-reference.js` offline, using Decimal bounds midpoints rounded to seven decimal places. © OpenStreetMap contributors, ODbL. Source API and raw SHA-256 are embedded in the generated reference.
 
 Only the position of the existing illustrative mass changes. Dimensions, orientation and profile remain authored, and a modern bounds centre is not an ancient footprint survey. Two authored approaches join existing illustrative axes to the edge of these masses; they are not traced historical streets. Housing exclusions and persistent phase generation consume the same positions. Earlier periods retain their prior contextual positions pending separate evidence; no modern footprint is back-projected. The southern sanctuary/precinct and complete historical street network remain unresolved.
+
+## B11 named gate extension
+
+The original two-point/source-only API remains for regression coverage. Production now adds the eight individually sourced coarse gate references, gatehouse/portal cuts, traversable contemporary approaches and1889 New Gate visibility. See [NAMED-CITY-GATES.md](NAMED-CITY-GATES.md). Old source line gaps remain disclosed; named gate openings are intentional. Gate forms, dimensions and interior route choices are not surveyed historical geometry.

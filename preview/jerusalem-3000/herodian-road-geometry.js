@@ -11,7 +11,7 @@ export function buildHerodianRoadGeometry(group,roads,materials,terrain,{exclusi
       for(let j=0;j<steps;j++){
         const t0=j/steps,t1=(j+1)/steps,x0=a.x+dx*t0,z0=a.z+dz*t0,x1=a.x+dx*t1,z1=a.z+dz*t1;
         const y0=terrain.heightAtWorld(x0,z0)+.35,y1=terrain.heightAtWorld(x1,z1)+.35;
-        const nx=-dz/length*2.5,nz=dx/length*2.5;
+        const halfWidth=(road.geometry.widthMetres??5)/2;if(!(halfWidth>0&&halfWidth<=10))throw new Error('Invalid road width');const nx=-dz/length*halfWidth,nz=dx/length*halfWidth;
         const polygon=[{x:x0+nx,z:z0+nz},{x:x1+nx,z:z1+nz},{x:x1-nx,z:z1-nz},{x:x0-nx,z:z0-nz}];
         if(envelope&&!polygon.every(p=>pointInPolygon(p,envelope)))continue;
         if(exclusions.some(zone=>polygonsOverlap(polygon,zone.polygon)))continue;

@@ -91,6 +91,8 @@ try {
   await three.ready;
   window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
   window.__JERUSALEM3000__.inspectSourceLifecycleContext=id=>three.inspectSourceLifecycleContext(id);
+  window.__JERUSALEM3000__.namedGateIndex=()=>three.namedGateIndex();
+  window.__JERUSALEM3000__.inspectCityEnclosure=()=>three.inspectCityEnclosure();
   window.__JERUSALEM3000__.inspectCityFoundation=phase=>three.inspectCityFoundation(phase);
   window.__JERUSALEM3000__.landmarkChronology=()=>three.landmarkChronology();
   window.__JERUSALEM3000__.inspectMetricResidentialPolicy=()=>three.inspectMetricResidentialPolicy();
@@ -147,6 +149,8 @@ try {
   const earlyEvidencePanel=document.querySelector('.j3k-evidence-panel');
   const routeEvidenceNodes=[...earlyEvidencePanel.childNodes].map(n=>n.cloneNode(true));
   let evidencePanelPhase='';
+  const gateFocus=document.createElement('select');gateFocus.setAttribute('aria-label','城門近看');gateFocus.hidden=true;document.querySelector('.j3k-event-controls').append(gateFocus);
+  gateFocus.addEventListener('change',()=>{if(gateFocus.value){terrainOverview(false);three.focusCityObject(gateFocus.value);}});
   const templeFocusButton=document.createElement('button');templeFocusButton.textContent='聖殿近看';templeFocusButton.hidden=true;
   document.querySelector('.j3k-event-controls').append(templeFocusButton);
   const terrainButton=document.createElement('button');terrainButton.type='button';terrainButton.className='j3k-terrain-toggle';terrainButton.textContent='山城地形';terrainButton.setAttribute('aria-pressed','false');
@@ -244,6 +248,7 @@ try {
     date.textContent = p.dateLabel;
     eraEn.textContent = (p.state || '').toUpperCase() + ' · ' + p.dateLabel;
     const temple=cityObjects.find(o=>o.id===([RETAINED_PHASE,'hellenistic-hasmonean'].includes(p.id)?'j3k:object:second-temple-early':'j3k:object:first-temple'));
+    const availableGates=three.namedGateIndex().filter(g=>g.available),gateKey=availableGates.map(g=>g.id).join('|');if(gateFocus.dataset.gates!==gateKey){gateFocus.dataset.gates=gateKey;gateFocus.replaceChildren(new Option('城門近看',''),...availableGates.map(g=>new Option(g.label+(g.sealed?'（封閉）':''),g.id)));}gateFocus.hidden=!availableGates.length;
     templeFocusButton.hidden=!['david-solomon','late-first-temple','babylonian-destruction',RETAINED_PHASE,'hellenistic-hasmonean'].includes(p.id)||!(temple?.visible||temple?.ruined);
     eraZh.textContent=p.id==='david-solomon'?(temple?.state==='absent'?'大衛城 · 城防與王室':'所羅門城 · 第一聖殿'):p.label;
     retainedToggle.hidden = p.id !== RETAINED_PHASE;
@@ -257,7 +262,7 @@ try {
     if(!isEarliestPhase(p.id)&&!['middle-bronze','late-bronze-iron1'].includes(p.id))note.textContent+=' 城內褐色為街區配置示意；灰色為待建／未核定預留，不代表自然荒山。';
     if(isIndependentLaterPhase(p.id))note.textContent+=' 地區、路網與住宅量體為示意；共同東側軸線不表示歷代路面相同。各期採階段概覽，非逐年完整復原。';
     if(window.__JERUSALEM3000__.inheritanceState.audit?.visibleComponents>0)note.textContent+=' 前代圖層按模型比例示意，留存構件與再利用關係尚未核定。';
-    if(three.inspectDefenseTimeline()?.owner==='network')note.textContent+=' 赭色虛線牆為整體範圍的推定補足；低矮殘牆／候選帶保留毀壞及爭議狀態，並非測繪核定城廓；可看「城防年代」。';
+    if(three.inspectDefenseTimeline()?.owner==='network')note.textContent+=' 赭色推定牆段為整體範圍的推定補足；低矮殘牆／候選帶保留毀壞及爭議狀態，並非測繪核定城廓；可看「城防年代」。';
     skeletonView?.refresh();defenseView?.refresh();
     if(evidencePanelPhase!==p.id) {
       evidencePanelPhase=p.id;

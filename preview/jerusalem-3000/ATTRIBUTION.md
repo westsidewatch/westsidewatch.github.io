@@ -18,3 +18,5 @@ When upstream code is directly incorporated, preserve its MIT notice and isolate
 - **OpenStreetMap** — modern vector reference only. © OpenStreetMap contributors, ODbL.
 
 No Google terrain, Google 3D Tiles, or other proprietary map geometry may be copied/traced into the canonical reconstruction without an explicit compatible licence.
+
+B11 named gates: `data/urban/sources/named-city-gates.osm.xml` is a frozen subset of OpenStreetMap data, © OpenStreetMap contributors, ODbL. The JSON records source URL, element IDs, selected position/building references and SHA256. Historical form references and their explicit modelling limitations are listed in [NAMED-CITY-GATES.md](NAMED-CITY-GATES.md); no external photography or model assets are shipped.

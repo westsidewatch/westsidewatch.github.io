@@ -58,3 +58,5 @@
 新增段使用同一DEM、道路交會留口、住宅退讓、施工顯示、證據篩選與快取；每段另有 `extentReconstruction` 標記與來源准入缺口，測繪准入仍為0。拓撲測試只核對每個模型階段形成一個可連讀範圍，不認證歷史城廓。
 
 時代按鈕現在選本期0.9的後段概覽（現代仍17），不再總停在本期0；時間軸仍保留全部早段和擴建狀態。播放不改用均勻年代映射。此改動解決「按時代只看到尚未擴建部分」的展示問題，不以站立高牆覆蓋毀城時段。
+
+B11 presentation: standing inferred extent corridors are continuous amber walls; they no longer omit every fifth segment. Ruins and candidate bands retain broken low representations. This repairs visual enclosure without upgrading source confidence or accepting historical circuits. Late named gate forms and read-only actual enclosure acceptance are described in [NAMED-CITY-GATES.md](NAMED-CITY-GATES.md).

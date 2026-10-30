@@ -52,8 +52,8 @@ export function createLaterMorphologyLedger(core){
       representation.label=stage?.label||record.metadata.name;
       representation.year=stage?.year??null;representation.state=stage?.state||state;
      }
-     const target=record?.metadata.coreReference&&core.get(record.metadata.coreReference),targetStage=target&&coreStageAt(target,offset);
-     mesh.visible=(!targetStage||targetStage.profile!==null)&&(!representation||coreStageVisible(record,representation.profile,offset))&&
+     const target=record?.metadata.coreReference&&core.get(record.metadata.coreReference),targetStage=target&&coreStageAt(target,offset),gate=record?.metadata.gateReference&&core.get(record.metadata.gateReference),gateState=gate?lifecycleStateAtPosition({lifecycleEvents:gate.lifecycle.events},timeline,position):null;
+     mesh.visible=(!gateState||['build','rebuild','transform','expand'].includes(gateState))&&(!targetStage||targetStage.profile!==null)&&(!representation||coreStageVisible(record,representation.profile,offset))&&
       (runtime.fixedVisibility||mesh.visible)&&(!revealOrder.has(record?.id)||constructionProgress>=revealOrder.get(record.id))&&
       evidenceAllowed('inferred')&&['build','rebuild','transform','ruin','expand'].includes(state);
     }
