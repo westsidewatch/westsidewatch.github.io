@@ -368,6 +368,37 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
  .emmaus__realm-nav .emmaus__folio-layer{transition:none;animation:none}
 }
 
+/* Folio tabs route 05–07 to existing canonical surface pages while those
+   scenes remain outside this four-scene art-direction preview. */
+#emmaus .emmaus__realm-nav a.emmaus__folio-layer{
+ text-decoration:none;cursor:pointer;
+}
+#emmaus .emmaus__realm-nav :is(a,button).emmaus__folio-layer:is(:hover,:focus-visible){
+ background:color-mix(in srgb,var(--em-color) 24%,var(--ws-papyrus));
+}
+#emmaus :is(.emmaus__mast,.emmaus__foot,.emmaus__selector-head,
+ .emmaus__book-meta,.emmaus__chapter,.emmaus__study-head,.emmaus__plate-top,.emmaus__plate-caption){
+ font-family:var(--ws-type-display-en-sc);font-weight:400;
+ font-size:var(--ws-type-scale-micro);
+ font-synthesis:none;
+}
+#emmaus .emmaus__study-reading h2{font-size:var(--ws-type-scale-title-sm)}
+#emmaus .emmaus__identity h1{font-size:var(--ws-type-scale-display-lg)}
+#emmaus .emmaus__book h2{font-size:var(--ws-type-scale-display-md)}
+#emmaus .emmaus__study-route:has(.emmaus__chapter-choice) li:nth-child(n){
+ display:block;
+}
+@media(max-width:540px){
+ /* In a narrow 2:1 split, use legible folio numbers and preserve the
+    full destination names in each tab's accessible label and title. */
+ #emmaus .emmaus__realm-nav .emmaus__folio-layer span{font-size:0}
+ #emmaus .emmaus__realm-nav .emmaus__folio-layer::after{
+  content:attr(data-realm);position:relative;display:block;
+  color:var(--em-ink);font:400 var(--ws-type-scale-meta)/1 var(--ws-type-display-en);
+ }
+ #emmaus .emmaus__identity h1{font-size:clamp(36px,9vw,55px)}
+ #emmaus .emmaus__book h2{font-size:clamp(30px,7vw,45px)}
+}
 /* Last visual-QA corrections, still scoped to P2 only:
    mobile ONE panel must not stretch an excerpt into a half-empty page;
    the Chinese controls must never inherit Bodoni small-caps tofu boxes. */
