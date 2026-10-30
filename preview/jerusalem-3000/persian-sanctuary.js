@@ -15,8 +15,12 @@ export function createSanctuaryAssembly(parent,{data,terrain,core,layout,prefix,
  const stone=new THREE.MeshStandardMaterial({color:0xd1bb96,roughness:1}),roof=new THREE.MeshStandardMaterial({color:0x8c7554,roughness:1}),path=new THREE.MeshStandardMaterial({color:0x79694f,roughness:1});
  const group=new THREE.Group();group.name=`${prefix}-reconstruction`;group.visible=false;parent.add(group);const meshes=[];
  const surface=(x,z)=>{const y=settlementSurfaceHeight(terrain,anchor.x+x,anchor.z+z);if(!Number.isFinite(y))throw new Error(`${prefix} outside DEM`);return y;};
+ const isHallPart=part=>part.id.startsWith('hall-')||part.id.startsWith('porch-');
+ // One upper datum keeps the hall walls, lintel and roofs joined on sloping DEM.
+ // Only ground-contact vertices follow terrain; this is not an ancient platform survey.
+ const hallGround=Math.max(...layout.components.filter(isHallPart).flatMap(({x,z,w,d})=>[-1,1].flatMap(a=>[-1,1].map(b=>surface(x+a*w/2,z+b*d/2)))));
  for(const part of layout.components){
-  const {x,z,w,d,height,lift}=part,ground=Math.max(...[-1,1].flatMap(a=>[-1,1].map(b=>surface(x+a*w/2,z+b*d/2))));
+  const {x,z,w,d,height,lift}=part,ground=isHallPart(part)?hallGround:Math.max(...[-1,1].flatMap(a=>[-1,1].map(b=>surface(x+a*w/2,z+b*d/2))));
   const geometry=new THREE.BoxGeometry(w,height,d),p=geometry.attributes.position;
   for(let i=0;i<p.count;i++)if(!lift&&p.getY(i)<0)p.setY(i,surface(x+p.getX(i),z+p.getZ(i))-ground-height/2);
   geometry.computeVertexNormals();const mesh=new THREE.Mesh(geometry,part.role==='roof'?roof:stone);
