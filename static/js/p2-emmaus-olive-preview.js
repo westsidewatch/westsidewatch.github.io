@@ -95,20 +95,38 @@
  let galleryOrder=ids.slice(),galleryPosition=211,gallerySelectionBook=42;
  const imgUrl=plate=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(plate.file)+'?width=1200';
  async function showPlate(index){
-  const ticket=++plateVersion,plate=plates[index%plates.length],slot=1-activeSlot,img=plateEls[slot];
-  const ok=await new Promise(resolve=>{
-   img.onload=()=>resolve(true);img.onerror=()=>resolve(false);img.src=imgUrl(plate);
-   if(img.complete&&img.naturalWidth>0)resolve(true);
-  });
-  if(ticket!==plateVersion)return;
-  if(!ok){galleryIndex=index%plates.length;return;}
-  plateEls[activeSlot].classList.remove('is-active');img.classList.remove('is-active');
-  void img.offsetHeight;img.classList.add('is-active');
-  activeSlot=slot;galleryIndex=index%plates.length;
-  galleryPosition=galleryOrder.indexOf(plate.id);
-  $('#em-plate-title').textContent='DORÉ / '+plate.title.toUpperCase();
-  $('#em-plate-index').textContent=String(plate.id).padStart(3,'0')+' / '+String(plates.length);
-  emmaus.dataset.dorePlate=String(plate.id);
+  // A failed Commons image must not leave a prior book's plate visible.
+  const ticket=++plateVersion;
+  let position=galleryOrder.indexOf((index%plates.length)+1);
+  if(position<0)position=0;
+  for(let attempt=0;attempt<Math.min(galleryOrder.length,8);attempt++){
+   const at=(position+attempt)%galleryOrder.length;
+   const plate=plates[galleryOrder[at]-1],url=imgUrl(plate);
+   const loaded=await new Promise(resolve=>{
+    const probe=new Image();
+    probe.onload=()=>resolve(true);probe.onerror=()=>resolve(false);
+    probe.src=url;
+    if(probe.complete)resolve(probe.naturalWidth>0);
+   });
+   if(ticket!==plateVersion)return;
+   if(!loaded)continue;
+   const slot=1-activeSlot,img=plateEls[slot];
+   img.src=url;
+   plateEls[activeSlot].classList.remove('is-active');
+   img.classList.remove('is-active');
+   void img.offsetHeight;img.classList.add('is-active');
+   activeSlot=slot;galleryIndex=plate.id-1;galleryPosition=at;
+   $('#em-plate-title').textContent='DORÉ / '+plate.title.toUpperCase();
+   $('#em-plate-index').textContent=String(plate.id).padStart(3,'0')+' / '+String(plates.length);
+   emmaus.dataset.dorePlate=String(plate.id);
+   emmaus.dataset.galleryLoad='ready';
+   return;
+  }
+  if(ticket===plateVersion){
+   emmaus.dataset.galleryLoad='unavailable';
+   $('#em-plate-title').textContent='DORÉ / ORIGINAL ARCHIVE UNAVAILABLE';
+   $('#em-plate-index').textContent='— / '+plates.length;
+  }
  }
  function selectGalleryForBook(number){
   const associated=bookPlates[number]||[];
@@ -118,6 +136,10 @@
   galleryPosition=0;galleryIndex=start-1;gallerySelectionBook=number;
   emmaus.dataset.galleryStart=String(start);
   // Cancel stale asynchronous responses from a preceding book selection.
+  plateEls.forEach(img=>img.classList.remove('is-active'));
+  emmaus.dataset.galleryLoad='loading';
+  $('#em-plate-title').textContent='DORÉ / LOADING BOOK PLATES';
+  $('#em-plate-index').textContent=String(start).padStart(3,'0')+' / '+plates.length;
   plateVersion++;galleryPrefetch=true;void showPlate(galleryIndex);
   emmaus.dataset.illustrationMode=associated.length?'book-first':'random-fallback';
   $('#em-plate-selection').textContent=(associated.length?'BOOK PLATES':'ARCHIVE / RANDOM START')+
@@ -136,26 +158,41 @@
  const studyRoutes=$('#em-study-route'),studyDetail=$('#em-study-detail');
  const studyTabs=[...document.querySelectorAll('[data-study-view]')];
  let currentBookStudy=null,currentStudyView='background';
- function renderBookStudy(number){
+ let selectedChapter=24;
+ function renderBookStudy(number,chapter){
   const item=books[number-1],D=window.ONE_DATA;
-  const detailed=number===42?featured:number===40?D.matthew?.chapterStudies?.['1']:null;
+  // Only show original ONE studies available in the loaded canonical record.
+  const source=number===42?D.luke:number===40?D.matthew:null;
+  selectedChapter=Math.min(item[3],Math.max(1,Number(chapter)||(number===42?24:1)));
+  const detailed=source?.chapterStudies?.[String(selectedChapter)]||null;
   currentBookStudy=detailed;
-  const firstChapter=detailed&&number===42?24:1;
-  $('#em-study-feature').textContent=(detailed?'ONE / FEATURED CHAPTER':'ONE / BOOK OVERVIEW')+
+  $('#em-study-feature').textContent=(detailed?'ONE / FEATURED CHAPTER':'ONE / BOOK INDEX')+
    ' · '+item[2].toUpperCase();
-  $('#em-study-ref').textContent=detailed?.passage||item[1]+' · '+item[3]+' 章';
+  $('#em-study-ref').textContent=detailed?.passage||item[1]+' · 第 '+selectedChapter+' / '+item[3]+' 章';
   $('#emmaus-study-heading').textContent=detailed?.title||item[1];
-  $('#em-study-movement').textContent=detailed?.movement||'ONE 的六十六卷導航 · 選擇章節進入正式查經工具';
-  $('#em-study-source').textContent=item[1]+(detailed?' · ONE 原始研讀資料':' · ONE 書卷導覽');
-  const href='/one/?book='+number+'&chapter='+firstChapter;
-  $('#em-study-enter').href=href;
-  $('#emmaus-enter').href=href;
+  $('#em-study-movement').textContent=detailed?.movement||
+   source?.summary||'選擇章節進入 ONE，從這一卷展開經文閱讀與查經。';
+  $('#em-study-source').textContent=item[1]+
+   (detailed?' · ONE 原始研讀資料':' · ONE 正式書卷與章節索引');
+  const href='/one/?book='+number+'&chapter='+selectedChapter;
+  $('#em-study-enter').href=href;$('#emmaus-enter').href=href;
   studyRoutes.replaceChildren();
-  const rows=detailed?.route?.slice(0,2)||
-   [['01','開始閱讀 '+item[1]+' 第 1 章'],['01—'+String(item[3]).padStart(2,'0'),'進入 ONE 按章瀏覽整卷']];
-  for(const [ref,desc] of rows){
-   const li=document.createElement('li'),reference=document.createElement('span'),copy=document.createElement('p');
-   reference.textContent=ref;copy.textContent=desc;li.append(reference,copy);studyRoutes.append(li);
+  if(detailed?.route?.length){
+   for(const [ref,desc] of detailed.route.slice(0,2)){
+    const li=document.createElement('li'),reference=document.createElement('span'),copy=document.createElement('p');
+    reference.textContent=ref;copy.textContent=desc;li.append(reference,copy);studyRoutes.append(li);
+   }
+  }else{
+   const choices=[...new Set([1,Math.ceil(item[3]/2),item[3],selectedChapter])].sort((x,y)=>x-y);
+   for(const chapterNo of choices){
+    const li=document.createElement('li'),button=document.createElement('button');
+    button.type='button';button.className='emmaus__chapter-choice';
+    button.dataset.chapter=String(chapterNo);
+    button.setAttribute('aria-pressed',String(chapterNo===selectedChapter));
+    button.textContent='第 '+chapterNo+' 章 / '+item[2]+' '+chapterNo;
+    button.addEventListener('click',()=>renderBookStudy(number,chapterNo));
+    li.append(button);studyRoutes.append(li);
+   }
   }
   showStudy(currentStudyView);
  }
@@ -408,6 +445,11 @@
   oliveWindow.style.clipPath='inset(0 0 '+((1-windowReveal)*100).toFixed(3)+'% 0)';
   $('.olive-proof__folio').style.opacity=String(smooth((oliveIn-.83)/.16));
   const section=distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.44?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
+  const currentRealm=distance<3.0775?1:distance<6.5?2:distance<9.44?3:4;
+  for(const folio of realmNav){
+   if(Number(folio.dataset.realm)===currentRealm)folio.setAttribute('aria-current','location');
+   else folio.removeAttribute('aria-current');
+  }
   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
   seek.value=String(distance/12*100);percent.textContent=(distance/12*100).toFixed(0)+'%';lastPaint=distance;
  }
