@@ -466,3 +466,14 @@ body[data-p2-engraving="v5"] #emmaus > .emmaus__left::after{
 body[data-p2-engraving="v5"] #emmaus .emmaus__scroll-engraving{
  opacity:.45;
 }
+
+/* 2026-10-30: concept-only Emmaus micro-engraving, opt-in V12.
+   The ONE and Magazine original assets remain unchanged. */
+body[data-p2-engraving="v12"] #emmaus > .emmaus__left::after {
+ background-image:url('/images/p2-emmaus-interpretation-engraving-v12.svg');
+ opacity:.80;
+}
+body[data-p2-engraving="v12"] #emmaus .emmaus__scroll-engraving {
+ opacity:.24;
+ filter:none;
+}
