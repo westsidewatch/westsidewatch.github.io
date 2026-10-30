@@ -25,6 +25,8 @@ export function auditFoundationPlan(plan,timeline){
  const transitionGaps=plan.transitions.filter(t=>t.status!=='accepted').map(t=>`${t.from}->${t.to}`);
  return {inventoryValid:true,foundationAccepted:!phaseGaps.length&&!transitionGaps.length,phaseGaps,transitionGaps};
 }
+assert.deepEqual(plan.completionStandard.gates.map(g=>g.id),['spatial-relations','adjacent-changes','shared-generation']);
+for(const g of plan.completionStandard.gates){assert.ok(g.criteria.length>=3&&g.requiredEvidence.length>=2);}
 const report=auditFoundationPlan(plan,timeline);
 assert.equal(report.foundationAccepted,false,'inventory validation must not certify unfinished foundation');
 for(const mutation of [p=>p.phases.pop(),p=>p.transitions.reverse(),p=>delete p.phases[0].domains.routes,p=>p.phases[0].domains.routes='accepted']){

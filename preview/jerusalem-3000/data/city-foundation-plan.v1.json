@@ -770,5 +770,53 @@
     "currentStep": "A-all18-programme-listed",
     "nextStep": "B-contemporary-landmark-wall-gate-road-terrain-registration",
     "housing": "background-after-landmark-reservations"
+  },
+  "completionStandard": {
+    "version": 1,
+    "scope": "18 phases /17 adjacent transitions; engineering observations separate from source review",
+    "gates": [
+      {
+        "id": "spatial-relations",
+        "label": "全時代空間關係可靠",
+        "criteria": [
+          "18期均使用同一地理原點、公尺尺度與可追溯地形；古地面與現代DSM分開交代。",
+          "逐期核對山脊、谷地、城牆／城門、主街、聚落與公共核心的相對位置、尺度及適用年代。",
+          "每個公共核心具來源、入口／道路關係與住宅避讓；推定、爭議與暫緩定位可追溯。",
+          "城內開敞區須有用途或未核定說明；不以填滿、放大房屋或縮小城牆代替核對。"
+        ],
+        "requiredEvidence": [
+          "18期六域區位審核及來源適用範圍",
+          "同視角／公尺尺度比較與實際可見幾何邊界報告"
+        ]
+      },
+      {
+        "id": "adjacent-changes",
+        "label": "相鄰時代變化有據可循",
+        "criteria": [
+          "17段分別交代保留、新建、改造、損毀、重建、退出與未知去向，具體對象須有身份及年代範圍。",
+          "同址、同名、相同外觀或共用GPU緩衝區不證明原構件沿用；文獻關聯與物質存續分開核定。",
+          "重大地標與城防變化先於住宅裝飾；缺乏證據的去向保留未知，不編造拆毀或再利用事件。",
+          "逐段正向、反向、暫停及證據篩選能還原相同狀態；播放等待城市準備完成。"
+        ],
+        "requiredEvidence": [
+          "17段具年代／來源的對象去向審核",
+          "既有共同事件帳本及17段正反向播放證據"
+        ]
+      },
+      {
+        "id": "shared-generation",
+        "label": "共同生成瑕疵消除並防止復發",
+        "criteria": [
+          "所有渲染家族納入同一矩陣；檢查穿模、閃爍、懸空、長斜片、過窄住宅及無理由的大空區。",
+          "可見建築遵守當期邊界與公共核心約束；真正城外擴張及不完整城廓明示例外。",
+          "修復須對照實際幾何與覆蓋，不能只改色、隱藏標示、刪除大片街區或改變地形比例。",
+          "桌面／手機、近看／總覽、前進／回訪均檢查；新增共同缺陷以可重現案例納入CI。"
+        ],
+        "requiredEvidence": [
+          "18期實際幾何／屋頂形狀／邊界及桌面手機畫面報告",
+          "深度穿模案例、17段播放／回訪與人工同視角檢視記錄"
+        ]
+      }
+    ]
   }
 }
