@@ -477,3 +477,17 @@ body[data-p2-engraving="v12"] #emmaus .emmaus__scroll-engraving {
  opacity:.24;
  filter:none;
 }
+
+/* Emmaus V14: scriptural concordance as a time-enclosing passage.
+   Opt-in only; does not touch accepted Magazine or Church graphics. */
+body[data-p2-engraving="v14"] #emmaus > .emmaus__left::after {
+ background-image:url('/images/p2-emmaus-scripture-time-manifold-v14.svg');
+ background-position:left center;
+ background-size:auto 102%;
+ opacity:.88;
+}
+body[data-p2-engraving="v14"] #emmaus .emmaus__scroll-engraving{
+ opacity:.38;
+ mix-blend-mode:multiply;
+ filter:none;
+}
