@@ -1,3 +1,4 @@
+import {inspectSettlementFoundation} from './settlement-foundation.js';
 import {lifecycleStateAtPosition} from './construction-engine.js';
 import {allowsEvidence} from './evidence-visibility.js';
 const ACTIVE=new Set(['build','rebuild','transform','ruin','expand']);
@@ -43,5 +44,5 @@ export function collectSpatialSkeleton(core,terrain,{phaseId,position,evidenceMo
   if(domain){const paths=[];let offset=0;for(const length of shape.pathLengths||[]){paths.push(sampled.slice(offset,offset+length));offset+=length;}domains[domain].spatialObjects++;features.push({id:record.id,domain,kind:domain==='districts'?shape.kind:shape.kind==='polygon'?'polygon':shape.kind,points:sampled,...(paths.length?{paths}:{}),confidence,state,geometryVerified:false,representation:shape.representation||(shape.bounds||shape.mass?'model-center-not-footprint':record.geometry.role||'registered-illustration')});}
  }
  const extent=layoutPoints.length?{minX:Math.min(...layoutPoints.map(p=>p.x)),maxX:Math.max(...layoutPoints.map(p=>p.x)),minZ:Math.min(...layoutPoints.map(p=>p.z)),maxZ:Math.max(...layoutPoints.map(p=>p.z)),role:'registered-layout-envelope-not-historical-city-boundary'}:null;
- return {phaseId,position,evidenceMode,window:{...SKELETON_WINDOW},terrain:'modern-dem-rendered-triangles',features,domains,layoutEnvelope:extent,filteredObjects:filtered,unresolvedObjects:unresolved,historicalFoundationAccepted:false};
+ return {phaseId,position,evidenceMode,settlementContext:allowsEvidence(evidenceMode,'inferred')?inspectSettlementFoundation(core,phaseId):null,window:{...SKELETON_WINDOW},terrain:'modern-dem-rendered-triangles',features,domains,layoutEnvelope:extent,filteredObjects:filtered,unresolvedObjects:unresolved,historicalFoundationAccepted:false};
 }

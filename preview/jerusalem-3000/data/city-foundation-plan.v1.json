@@ -41,7 +41,9 @@
     "data/urban/defense-timeline.v1.json",
     "housing-boundary.js",
     "metric-residential-layout.js",
-    "data/urban/hellenistic-metric.registration.v1.json"
+    "data/urban/hellenistic-metric.registration.v1.json",
+    "settlement-foundation.js",
+    "settlement-ledger.js"
   ],
   "phases": [
     {
@@ -56,7 +58,7 @@
         "occupation": "partial",
         "lifecycle": "partial"
       },
-      "gap": "Illustrative early dwellings and footpaths share atomic object/event registration; later fate remains unresolved. Selected royal/water IDs have separate adapters. District foundations, disputed support and marker registration remain incomplete.",
+      "gap": "Existing dwellings and footpaths now share a derived residential-model envelope and nearest-existing-path references. The envelope is not an excavated district or historical occupation extent; entrances, complete city circuits, civic cores and physical continuity remain unverified. Later fate remains unresolved.",
       "acceptanceEvidence": []
     },
     {
@@ -71,7 +73,7 @@
         "occupation": "partial",
         "lifecycle": "partial"
       },
-      "gap": "Illustrative early dwellings and footpaths share atomic object/event registration; later fate remains unresolved. Selected royal/water IDs have separate adapters. District foundations, disputed support and marker registration remain incomplete.",
+      "gap": "Existing dwellings and footpaths now share a derived residential-model envelope and nearest-existing-path references. The envelope is not an excavated district or historical occupation extent; entrances, complete city circuits, civic cores and physical continuity remain unverified. Later fate remains unresolved.",
       "acceptanceEvidence": []
     },
     {
@@ -86,7 +88,7 @@
         "occupation": "partial",
         "lifecycle": "partial"
       },
-      "gap": "Illustrative early dwellings and footpaths share atomic object/event registration; later fate remains unresolved. Selected royal/water IDs have separate adapters. District foundations, disputed support and marker registration remain incomplete.",
+      "gap": "Existing dwellings and footpaths now share a derived residential-model envelope and nearest-existing-path references. The envelope is not an excavated district or historical occupation extent; entrances, complete city circuits, civic cores and physical continuity remain unverified. Later fate remains unresolved.",
       "acceptanceEvidence": []
     },
     {
@@ -101,7 +103,7 @@
         "occupation": "partial",
         "lifecycle": "partial"
       },
-      "gap": "Illustrative early dwellings and footpaths share atomic object/event registration; later fate remains unresolved. Selected royal/water IDs have separate adapters. District foundations, disputed support and marker registration remain incomplete.",
+      "gap": "Illustrative early dwellings and footpaths share atomic object/event registration; later fate remains unresolved. Selected royal/water IDs have separate adapters. District foundations, disputed support and marker registration remain incomplete. Residential model envelope and existing David-stage route references supplement the authored royal regions without relocating houses or claiming measured occupation.",
       "acceptanceEvidence": []
     },
     {
@@ -818,5 +820,18 @@
         ]
       }
     ]
+  },
+  "earlySettlementFoundation": {
+    "phases": [
+      "chalcolithic-early-bronze",
+      "middle-bronze",
+      "late-bronze-iron1",
+      "david-solomon"
+    ],
+    "policy": "existing-display-roof-envelope-and-nearest-model-route-not-excavated-occupation",
+    "geometryChanges": "none; only existing skeleton map adds dashed model context",
+    "publicOrDefenseAdditions": false,
+    "sourceReviewAccepted": false,
+    "physicalInheritanceVerified": false
   }
 }

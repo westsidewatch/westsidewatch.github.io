@@ -1,8 +1,9 @@
 import * as THREE from 'three';
+import {settlementFoundation} from './settlement-foundation.js';
 import {TemporalCityCore} from './temporal-city-core.js';
 import {lifecycleStateAt} from './construction-engine.js';
 let sequence=0;
-// Publish only illustrative dwellings and footpaths. Defense is owned by its source adapter;
+// Publish illustrative dwellings/footpaths and their derived model envelope. Defense is owned by its source adapter;
 // spring symbols, disputed support and royal location markers remain outside this batch.
 export function publishSettlementLedger(core,meshes,data){
  const owner=`settlement:${data.phase}:${++sequence}`,groups=new Map();
@@ -25,13 +26,16 @@ export function publishSettlementLedger(core,meshes,data){
    typology:building?(data.houseTypology||'single-room-illustration'):null,lifecycle:{events},
    metadata:{generatedOwner:owner,generationPhase:data.phase,componentCount:parts.length,geometryVerified:false,ancientGroundVerified:false,reuseLinksVerified:false,rendererBinding:'early-settlement-v1'}});
  }
+ const ownedIds=[...groups.keys()],buildings=ownedIds.map(id=>candidate.get(id)).filter(r=>r.type==='building');
+ const foundation=settlementFoundation(candidate,data,buildings,owner);if(candidate.get(foundation.district.id))throw new Error(`Settlement ID collision: ${foundation.district.id}`);candidate.register(foundation.district);ownedIds.push(foundation.district.id);
+ for(const relation of foundation.relations){const r=candidate.get(relation.buildingId);candidate.register({...r,source:{...r.source,districtId:relation.districtId},metadata:{...r.metadata,settlementRelation:relation}});}
  const validation=candidate.validate();if(!validation.ok)throw new Error(`Invalid settlement ledger: ${validation.errors.join('; ')}`);
  core.objects=candidate.objects;core.byPhase=candidate.byPhase;core.links=candidate.links;
  for(const [id,parts]of groups)parts.forEach((mesh,index)=>{mesh.userData.cityObject.componentId=`${id}:component:${index}`;});
  const timeline={phases:[...core.phases.values()]};
- return {summary:{published:true,objects:groups.size,buildings:[...groups.keys()].filter(id=>id.includes(':house:')).length,roads:[...groups.keys()].filter(id=>id.includes(':path:')).length,geometryVerified:false},
+ return {summary:{published:true,objects:ownedIds.length,districts:1,modelDistrictId:foundation.district.id,routeRelatedBuildings:foundation.relations.filter(r=>r.routeId).length,buildings:[...groups.keys()].filter(id=>id.includes(':house:')).length,roads:[...groups.keys()].filter(id=>id.includes(':path:')).length,geometryVerified:false},
   allows(id,phase){const record=core.get(id);return Boolean(record&&['build','rebuild','transform','ruin','expand'].includes(lifecycleStateAt({lifecycleEvents:record.lifecycle.events},timeline,phase)));},
   owns:id=>groups.has(id),
-  dispose(){for(const id of groups.keys())if(core.get(id)?.metadata.generatedOwner===owner){core.objects.delete(id);core.links.delete(id);for(const ids of core.byPhase.values())ids.delete(id);}}
+  dispose(){for(const id of ownedIds)if(core.get(id)?.metadata.generatedOwner===owner){core.objects.delete(id);core.links.delete(id);for(const ids of core.byPhase.values())ids.delete(id);}}
  };
 }

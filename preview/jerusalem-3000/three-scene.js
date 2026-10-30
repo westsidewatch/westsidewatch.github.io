@@ -266,7 +266,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       for(const r of registration.cores||[])zones.push({polygon:r.geometry.polygon,kind:'public'});
     }else for(const r of cityCoreRuntime.core.phase(currentPhaseId)){
       if(r.metadata.generationPhase!==currentPhaseId&&currentPhaseId!=='david-solomon')continue;
-      if(r.type==='district'&&r.geometry?.polygon&&!(r.metadata.regionId==='northern'&&stage!=='solomon'))zones.push({polygon:r.geometry.polygon,kind:'quarter'});
+      if(r.type==='district'&&r.geometry?.polygon&&r.geometry.role!=='residential-model-envelope'&&!(r.metadata.regionId==='northern'&&stage!=='solomon'))zones.push({polygon:r.geometry.polygon,kind:'quarter'});
       if(r.type==='building'&&r.geometry?.bounds){const b=r.geometry.bounds;zones.push({polygon:[{x:b.min[0],z:b.min[2]},{x:b.max[0],z:b.min[2]},{x:b.max[0],z:b.max[2]},{x:b.min[0],z:b.max[2]}],kind:'quarter'});}
     }
     const boundary=housingBoundaryAt({phaseId:currentPhaseId,offset:fraction,defenseData,wallReference,royalData:currentPhaseId==='david-solomon'?royalDataForGround:null,royalStage:stage,origin:terrainRuntime.grid.origin});

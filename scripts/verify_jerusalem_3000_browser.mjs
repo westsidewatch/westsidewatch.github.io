@@ -446,6 +446,7 @@ try {
     assert.equal(foundation.terrain.sampling,'rendered-dem-triangles');assert.equal(foundation.terrain.verticalScale,1);
     assert.equal(foundation.registrationAccounting.visibleScopeAccounted,true,'every visible unbound component must be explicitly scoped');
     assert.equal(foundation.domains.lifecycle.unclassifiedWithoutDeclaredEvents,0,'missing events require an explicit supported scope');
+    if(phase<4){const r=foundation.earlySettlementRelations;assert.ok(r&&r.buildings>0);assert.equal(r.districtLinkedBuildings,r.buildings);assert.equal(r.routeRelatedBuildings,r.buildings);assert.deepEqual(r.unresolvedRouteIds,[]);assert.equal(r.houseEntrancesVerified,false);assert.equal(r.physicalSurvivalVerified,false);}
     if(phase===8){assert.equal(foundation.domains.lifecycle.explicitEventScopes,7);const context=await page.evaluate(()=>window.__JERUSALEM3000__.inspectSourceLifecycleContext('j3k:district:temple-mount'));assert.ok(context.anchors.every(a=>a.state==='build'));assert.equal(context.ownPhysicalEventsDeclared,false);}
     assert.equal(foundation.foundationAccepted,false);assert.equal(Object.keys(foundation.domains).length,6);
     assert.deepEqual(foundation.renderer.outOfPhaseBindingIds,[],'visible registered objects must have a matching phase index');
