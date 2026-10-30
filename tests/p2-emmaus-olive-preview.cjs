@@ -22,7 +22,9 @@ assert.match(html,/id="p2-realm-background"/,'the background texture is its own 
 assert.match(js,/fixedGround=new URLSearchParams\(location\.search\)\.get\('ground'\)==='1'/,
  'engraved-background mode is opt-in and default remains unchanged');
 assert.match(js,/const magSpread=original&&coverBounds/,
- 'the later chapters reuse the REAL Magazine cover+Contents measured footprint');
+ 'the later chapters reuse the REAL Magazine cover+Contents+spine measured footprint');
+assert.match(js,/sourceSpine=sourceDoc\?\.getElementById\('dual-continuum'\)/,
+ 'the original frozen sevenfold spine belongs INSIDE the protected Magazine aperture');
 assert.match(js,/realmGround\.style\.clipPath='path\("/,
  'engraving field must cut out the actual Magazine folio hole');
 assert.match(js,/const fullLeft=\{x:master\.x/,
@@ -129,10 +131,12 @@ const {chromium}=require('playwright');
     const source=doc?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
     const c=source?.getElementById('dual-cover')?.getBoundingClientRect();
     const t=source?.getElementById('dual-contents')?.getBoundingClientRect();
-    if(!c||!t)return null;
-    return {x:Math.min(c.x,t.x),y:Math.min(c.y,t.y),
-     w:Math.max(c.right,t.right)-Math.min(c.x,t.x),
-     h:Math.max(c.bottom,t.bottom)-Math.min(c.y,t.y),
+    const spine=source?.getElementById('dual-continuum')?.getBoundingClientRect();
+    if(!c||!t||!spine)return null;
+    const all=[c,t,spine],x=Math.min(...all.map(r=>r.x)),y=Math.min(...all.map(r=>r.y));
+    return {x,y,
+     w:Math.max(...all.map(r=>r.right))-x,
+     h:Math.max(...all.map(r=>r.bottom))-y,
      filmCount:doc.querySelectorAll('.p2-magazine__home-film').length};
    });
    assert(sourceGeometry,'Magazine geometry must be available before acceptance');
