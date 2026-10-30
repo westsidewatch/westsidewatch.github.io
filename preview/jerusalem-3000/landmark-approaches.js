@@ -9,7 +9,7 @@ export function registerLandmarkApproaches(registration){
  for(const core of registration.cores){
   const polygon=core.geometry.polygon,c={x:polygon.reduce((s,p)=>s+p.x,0)/polygon.length,z:polygon.reduce((s,p)=>s+p.z,0)/polygon.length};
   const halfX=(Math.max(...polygon.map(p=>p.x))-Math.min(...polygon.map(p=>p.x)))/2,halfZ=(Math.max(...polygon.map(p=>p.z))-Math.min(...polygon.map(p=>p.z)))/2;
-  const church=core.id.endsWith('holy-sepulchre-context');
+  const church=core.metadata.approachAxis==='western'||core.id.endsWith('holy-sepulchre-context');
   const axis=registration.roads.find(r=>r.id.endsWith(church?':western-market-axis-context':':eastern-valley-link-illustrative'))||registration.roads.find(r=>r.id.includes(church?':western-':':eastern-'));
   if(!axis)throw new Error(`Missing landmark approach axis: ${core.id}`);
   const points=axis.geometry.points,candidates=[];

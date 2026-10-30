@@ -1,3 +1,4 @@
+import {neaCore,appendNeaGeometry} from './nea-core.js';
 import {aqsaCore,appendAqsaGeometry} from './aqsa-core.js';
 import * as THREE from 'three';
 import {geographicToENU} from './terrain-runtime.js';
@@ -35,17 +36,20 @@ export function laterSacredCores(phase){
   core.metadata.modernPositionReference=true;
   core.metadata.siteRegistration={policy:'shared-geographic-context-not-shared-fabric',historicalPositionVerified:false,historicalFootprintVerified:false,modernReferencePhase:coreLocationReference.phases.includes(phase),siteHistorySource:core.source.urls[0]};
  }
+ const nea=neaCore(phase);if(nea)cores.push(nea);
  const aqsa=aqsaCore(phase);if(aqsa)cores.push(aqsa);
  return cores;
 }
 // One aggregate mesh per registered core, not independently registered fragments.
 export function sacredCoreGeometry(record,terrain){
  const vertices=[],polygon=record.geometry.polygon,cx=record.metadata.modelAnchor?.x??polygon.reduce((s,p)=>s+p.x,0)/polygon.length,cz=record.metadata.modelAnchor?.z??polygon.reduce((s,p)=>s+p.z,0)/polygon.length;
- const levelGround=record.metadata.coreProfile==='aqsa-seven-aisle-context'?Math.max(...polygon.map(p=>terrain.heightAtWorld(p.x,p.z))):null;
+ const levelGround=['aqsa-seven-aisle-context','nea-five-aisle-context'].includes(record.metadata.coreProfile)?Math.max(...polygon.map(p=>terrain.heightAtWorld(p.x,p.z))):null;
  const append=(g,x,z,y=0)=>{g.translate(x,y,z);const p=g.attributes.position,indices=g.index?.array||Array.from({length:p.count},(_,i)=>i);for(const i of indices){const px=p.getX(i),pz=p.getZ(i),ground=terrain.heightAtWorld(px,pz);if(!Number.isFinite(ground)){g.dispose();throw new Error('Sacred core outside canonical DEM');}const localY=p.getY(i),base=levelGround===null?ground:localY<=1e-6?ground:levelGround;vertices.push(px,base+.2+localY,pz);}g.dispose();};
  const box=(x,z,w,d,h)=>append(new THREE.BoxGeometry(w,h,d),x,z,h/2);
  const dome=(x,z,r,base)=>append(new THREE.SphereGeometry(r,16,8,0,Math.PI*2,0,Math.PI/2),x,z,base);
- if(record.metadata.coreProfile==='aqsa-seven-aisle-context'){
+ if(record.metadata.coreProfile==='nea-five-aisle-context'){
+  appendNeaGeometry(record,{box,append,THREE},cx,cz);
+ }else if(record.metadata.coreProfile==='aqsa-seven-aisle-context'){
   appendAqsaGeometry(record,{box,dome,append,THREE},cx,cz);
  }else if(record.metadata.coreProfile==='octagonal-rock-shrine'){
   append(new THREE.CylinderGeometry(25,25,10,8),cx,cz,5);append(new THREE.CylinderGeometry(11,11,7,16),cx,cz,13.5);dome(cx,cz,11,17);
