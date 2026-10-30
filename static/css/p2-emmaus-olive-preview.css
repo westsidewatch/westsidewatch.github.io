@@ -458,3 +458,11 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
  .proof-controls__buttons{flex-wrap:wrap;gap:3px}
  .proof-controls #proof-ground-toggle{white-space:nowrap}
 }
+
+/* P2 / Emmaus engraving V5 opt-in. Draft branch only; base asset remains untouched. */
+body[data-p2-engraving="v5"] #emmaus > .emmaus__left::after{
+ background-image:url('/images/p2-emmaus-scroll-micro-engraving-v5.svg');
+}
+body[data-p2-engraving="v5"] #emmaus .emmaus__scroll-engraving{
+ opacity:.45;
+}
