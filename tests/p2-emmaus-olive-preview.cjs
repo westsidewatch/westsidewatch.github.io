@@ -124,7 +124,9 @@ const {chromium}=require('playwright');
    await page.waitForFunction(()=>{
     const frame=document.querySelector('#proof-original')?.contentDocument;
     const source=frame?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
-    return source?.getElementById('dual-stage')?.dataset?.spread==='contents-square-cover-5-8';
+    const stage=source?.getElementById('dual-stage');
+    return stage?.dataset?.spread==='contents-square-cover-5-8' &&
+      Number(stage?.dataset?.spineFlip)>0.99;
    },null,{timeout:20000});
    const sourceGeometry=await page.locator('#proof-original').evaluate(frame=>{
     const doc=frame.contentDocument;
