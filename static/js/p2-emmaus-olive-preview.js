@@ -335,8 +335,9 @@
   // its still-playing film sibling. Reverse scroll restores it completely.
   if(sourceFrame)sourceFrame.style.opacity=filmContinuity
    ?String(1-oneDrop):(sourceOriginalEditorialOpacity??'');
-  // Opaque reading papers sit above film. Deliberate, text-free editorial
-  // apertures are handled by CSS masks; never show film through the study copy.
+  // Actual video is shown in the open space AROUND the physical spread.
+  // The manuscript and its study typography remain opaque, never overlaid
+  // by moving images. Both image panels share one measurable inset stage.
   emmaus.style.backgroundColor=filmContinuity?'transparent'
    :(oneDrop>=.999?'var(--em-paper)':'transparent');
   const lerp=(a,b,p)=>a+(b-a)*p;
@@ -359,8 +360,20 @@
   // MERSI cadence: move an EXISTING field first; expose the NEW identity in the vacancy second.
   const morphMove=smooth((oliveIn-.32)/.58);
   const fieldExit=1-smooth((oliveIn-.79)/.2);
-  const fullLeft={x:0,y:0,w:stageRect.width*2/3,h:stageRect.height};
-  const fullRight={x:stageRect.width*2/3,y:0,w:stageRect.width/3,h:stageRect.height};
+  // Film-continuity experiment: replace the nearly invisible masked slit
+  // with a real panoramic film surround. Contents+engraving retain their
+  // original physical handoff; only the FINISHED 03 spread becomes inset.
+  // The same insets apply to Olive via scoped CSS, so the gallery can travel
+  // to its protected portrait without a second wipe or extra video node.
+  const mobileFilm=filmContinuity&&innerWidth<=820;
+  const surroundX=filmContinuity&&!mobileFilm?stageRect.width*.085:0;
+  const surroundTop=filmContinuity?stageRect.height*(mobileFilm?.115:.09):0;
+  const surroundBottom=filmContinuity?stageRect.height*(mobileFilm?.01:.09):0;
+  const spreadWidth=stageRect.width-2*surroundX;
+  const spreadHeight=stageRect.height-surroundTop-surroundBottom;
+  const fullLeft={x:surroundX,y:surroundTop,w:spreadWidth*2/3,h:spreadHeight};
+  const fullRight={x:surroundX+spreadWidth*2/3,y:surroundTop,
+                   w:spreadWidth/3,h:spreadHeight};
   if(move>.001&&sourceFigure&&sourceTile&&coverBounds){
    if(!transferFigure){
     transferFigure=sourceFigure;transferHome=sourceTile;
@@ -429,7 +442,7 @@
   // Only after the speaker identity has taken over does ONE withdraw.
   const galleryEdge=emRight.getBoundingClientRect().left-stageRect.left;
   if(oliveIn>.001){
-   const nextWidth=Math.min(fullLeft.w,Math.max(0,galleryEdge));
+   const nextWidth=Math.min(fullLeft.w,Math.max(0,galleryEdge-fullLeft.x));
    emLeft.style.width=nextWidth.toFixed(2)+'px';
    emLeft.style.clipPath=oliveIn>.74
     ?'inset(0 '+(100*smooth((oliveIn-.74)/.25)).toFixed(3)+'% 0 0)'
