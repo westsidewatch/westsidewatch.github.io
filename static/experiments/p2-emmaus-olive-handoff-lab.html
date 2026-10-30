@@ -92,5 +92,15 @@ if(new URLSearchParams(location.search).get('engraving')==='v5'){
  if(img)img.src='/images/p2-emmaus-scroll-micro-engraving-v5.svg';
 }
 </script>
+<script>
+/* Nonfigurative Emmaus engraving V12: opt-in experimental art proof. */
+if(new URLSearchParams(location.search).get('engraving')==='v12'){
+ document.body.dataset.p2Engraving='v12';
+ const img=document.querySelector('.emmaus__scroll-engraving');
+ if(img)img.src='/images/p2-emmaus-interpretation-engraving-v12.svg';
+ const toggle=document.getElementById('proof-ground-toggle');
+ if(toggle)toggle.title='Emmaus V12 / abstract biblical interpretation engravings — candidate only';
+}
+</script>
 </body>
 </html>
