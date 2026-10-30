@@ -393,44 +393,67 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
  #emmaus .emmaus__study-interface{padding-left:12px}
 }
 
-/* P2 A/B / real shared-film surround — only ?film=1.
-   ONE owns a wholly opaque and legible paper leaf; Doré remains an original
-   gallery. The MOVING HOME FILM is revealed in a significant 03/04 surround
-   instead of a tiny slit and without cloning the Magazine's media iframe.
-   Magazine's accepted 7-layer spine remains unchanged in the source page. */
-#emmaus[data-film-continuity="on"] > .emmaus__left{
+/* P2 02–07 geometry authority / Magazine's actual measured folio bounds.
+   Church is deliberately EXEMPT: its water and Red Sea split are unique.
+   This overlay changes only the non-content film/background field, never
+   the source Magazine book-spine or its 5:8 + square master proportions.
+   The chapter-specific contours are sourced from the EXISTING Design OS
+   engraving authority, not separately reproduced or given new geometry. */
+#p2-realm-background{
+ position:absolute;inset:0;z-index:2;pointer-events:none;
+ opacity:0;visibility:visible;isolation:isolate;
+ --ws-engraving-opacity:.65;
+ --ws-engraving-line:color-mix(in srgb,var(--ws-paper) 52%,transparent);
+ --ws-engraving-fine:color-mix(in srgb,var(--ws-paper) 30%,transparent);
+ background-color:var(--ws-night);
+}
+#p2-realm-background::after{
+ z-index:0;opacity:var(--ws-engraving-opacity);
+ background-position:center;
+ background-size:100% 100%;
+}
+#p2-realm-background[data-realm="bible"]{
+ --ws-branch:var(--ws-pale-gold);
+ background-color:color-mix(in srgb,var(--ws-night) 82%,var(--ws-pale-gold));
+ background-image:
+  linear-gradient(color-mix(in srgb,var(--ws-night) 60%,transparent),
+                  color-mix(in srgb,var(--ws-night) 60%,transparent)),
+  url('/images/p2-emmaus-scroll-micro-engraving.svg');
+ background-position:center;
+ background-size:cover;
+}
+#p2-realm-background[data-realm="sermon"]{
+ --ws-branch:var(--ws-olive);
+ background-color:color-mix(in srgb,var(--ws-night) 75%,var(--ws-olive));
+ background-image:
+  radial-gradient(ellipse at 50% 85%,
+   color-mix(in srgb,var(--ws-olive) 35%,transparent),
+   transparent 73%);
+}
+/* These are ONLY engraving-field labels, not fabricated future P2 chapters.
+   The shared authority already defines paper leaves, curtains, and table
+   rings for the Book, Cinema, and Life realms. */
+#p2-realm-background:is([data-realm="book"],[data-realm="cinema"],[data-realm="life"]){
+ --ws-branch:var(--ws-pale-gold);
+ background-color:var(--ws-night);
+}
+#emmaus[data-fixed-ground="on"] > .emmaus__left{
  -webkit-mask-image:none;mask-image:none;
- padding-left:clamp(24px,3.2vw,55px);
- box-shadow:0 18px 50px color-mix(in srgb,var(--ws-night) 20%,transparent);
+ box-shadow:0 12px 38px color-mix(in srgb,var(--ws-night) 27%,transparent);
 }
-#emmaus[data-film-continuity="on"] > .emmaus__right{
- box-shadow:12px 18px 50px color-mix(in srgb,var(--ws-night) 25%,transparent);
+#emmaus[data-fixed-ground="on"] > .emmaus__right{
+ box-shadow:10px 12px 38px color-mix(in srgb,var(--ws-night) 30%,transparent);
 }
-#olive-proof[data-film-continuity="on"]{
- /* Match the 03 spread's exact cinema-sized negative space.
-    The ONE/Doré handoff still lands in the REAL protected Olive portrait. */
- inset:9% 8.5%;
- background:transparent;
- box-shadow:0 18px 50px color-mix(in srgb,var(--ws-night) 24%,transparent);
+#olive-proof[data-fixed-ground="on"]{
+ box-shadow:0 12px 38px color-mix(in srgb,var(--ws-night) 25%,transparent);
 }
-#olive-proof[data-film-continuity="on"] .olive-proof__editorial{
- margin-right:0;
-}
+#olive-proof[data-fixed-ground="on"] .olive-proof__editorial{margin:0}
 .proof-controls #proof-film-toggle[aria-pressed="true"]{
  border-color:var(--ws-pale-gold);color:var(--ws-pale-gold);
 }
-@media(max-width:820px){
- /* On narrow screens expose a real top-of-stage film window while keeping
-    the full original ONE width; never show video behind tiny scripture. */
- #olive-proof[data-film-continuity="on"]{inset:11.5% 0 1%}
- #emmaus[data-film-continuity="on"] > .emmaus__left{
-  padding-left:clamp(14px,2.7vw,22px);
- }
-}
-@media(max-width:540px){
- #emmaus[data-film-continuity="on"] > .emmaus__left{padding-left:12px}
-}
-
+/* At phone sizes the background's visible proportions are STILL set by
+   the actual original Magazine's stacked cover + Contents bounding union.
+   Never add a new mobile film stripe or reset those folios to full viewport. */
 @media(max-width:820px){
  .proof-controls__buttons{flex-wrap:wrap;gap:3px}
  .proof-controls #proof-film-toggle{white-space:nowrap}
