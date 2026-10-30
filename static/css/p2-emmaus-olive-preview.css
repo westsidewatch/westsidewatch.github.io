@@ -207,105 +207,162 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
 }
 
 
-/* 03 / EMMAUS — OSCILLATING FOLIO ART DIRECTION, OS-owned palette.
-   The seven inherited colors are seven labeled REALM edges, not decorative
-   bars glued to the ONE study window. The original seven-curtain entrance
-   is not replayed; these edges inherit its identity and scrub with oneDrop. */
+/* 03 / EMMAUS — A SEVEN-LEAF FOLIO, NOT SEVEN COLOR BARS.
+   P2 inherits all colors/type from the single Design OS authority.
+   Engraving is a spatial manuscript edge; text remains an untouched leaf. */
 #emmaus > .emmaus__left{
- background:var(--ws-papyrus,#eee4c9);
- color:var(--ws-ink,#252525);
- padding-left:clamp(80px,8vw,126px);
+ --em-ink:color-mix(in srgb,var(--ws-night) 79%,var(--ws-olive));
+ --em-line:color-mix(in srgb,var(--em-ink) 32%,transparent);
+ --em-paper:var(--ws-papyrus);
+ background:var(--em-paper);color:var(--em-ink);
+ padding-left:clamp(87px,8.3vw,136px);
 }
 #emmaus > .emmaus__left::before{
- background:linear-gradient(90deg,transparent 0,transparent 72%,rgba(253,251,241,.18));
+ background:linear-gradient(90deg,
+  color-mix(in srgb,var(--ws-olive) 12%,transparent),transparent 28%,
+  transparent 78%,color-mix(in srgb,var(--ws-paper) 20%,transparent));
  z-index:0;pointer-events:none;
 }
 #emmaus > .emmaus__left::after{
- content:"";position:absolute;z-index:0;left:0;top:0;bottom:0;width:clamp(90px,17%,210px);
- background:url('/images/p2-emmaus-scroll-micro-engraving.svg') left center/auto 105% no-repeat;
- opacity:.68;mix-blend-mode:multiply;pointer-events:none;
- -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 53%,transparent 100%);
- mask-image:linear-gradient(90deg,#000 0%,#000 53%,transparent 100%);
+ content:"";position:absolute;z-index:0;left:-1.5%;top:3%;bottom:3%;
+ width:clamp(114px,21%,260px);
+ background:url('/images/p2-emmaus-scroll-micro-engraving.svg') left center/auto 102% no-repeat;
+ opacity:.92;mix-blend-mode:multiply;pointer-events:none;
+ -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 32%,#0009 53%,transparent 100%);
+ mask-image:linear-gradient(90deg,#000 0%,#000 32%,#0009 53%,transparent 100%);
 }
 #emmaus > .emmaus__left > :not(.emmaus__realm-nav){position:relative;z-index:1}
 #emmaus > .emmaus__left > .emmaus__realm-nav{
- position:absolute;z-index:11;top:21%;left:0;display:flex;flex-direction:column;
- gap:0;width:clamp(65px,7.1vw,112px);height:55%;justify-content:space-around;
- overflow:visible;pointer-events:auto;
+ position:absolute;z-index:11;top:20%;left:0;width:clamp(74px,7.5vw,120px);height:60%;
+ display:flex;flex-direction:column;justify-content:center;gap:0;
+ pointer-events:auto;isolation:isolate;overflow:visible;
 }
 .emmaus__realm-nav .emmaus__folio-layer{
  box-sizing:border-box;display:flex;align-items:center;justify-content:flex-start;
- position:relative;top:auto;left:auto;min-height:clamp(31px,4.4vh,49px);
- padding:3px 5px 3px clamp(7px,1vw,14px);
- width:clamp(65px,7.1vw,112px);height:auto;border:0;border-left:4px solid var(--em-color);
- background:color-mix(in srgb,var(--em-color) 31%,var(--ws-papyrus));
- box-shadow:0 1px 0 color-mix(in srgb,var(--ws-ink) 22%,transparent);
- text-align:left;opacity:1;transform:none;
- clip-path:polygon(0 0,88% 0,100% 50%,88% 100%,0 100%);
- color:var(--ws-ink);font:var(--ws-weight-zh-air,200) var(--ws-type-scale-meta)/1.22 var(--ws-type-display-zh);
- letter-spacing:.01em;cursor:default;
+ position:relative;flex:0 0 auto;top:auto;
+ left:calc(var(--em-layer) * 1px);z-index:calc(9 - var(--em-layer));
+ width:clamp(72px,7.5vw,120px);min-height:clamp(38px,5.1vh,51px);
+ height:auto;margin-top:-6px;padding:5px 13px 5px clamp(9px,1vw,15px);
+ border:1px solid color-mix(in srgb,var(--em-ink) 24%,transparent);
+ border-left:0;border-radius:0;
+ background:linear-gradient(105deg,
+  color-mix(in srgb,var(--ws-paper) 11%,var(--ws-papyrus)) 0%,
+  color-mix(in srgb,var(--em-color) 12%,var(--ws-papyrus)) 78%,
+  color-mix(in srgb,var(--em-color) 23%,var(--ws-papyrus)) 100%);
+ box-shadow:2px 2px 0 color-mix(in srgb,var(--em-ink) 10%,transparent);
+ clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,0 100%);
+ color:var(--em-ink);text-align:left;
+ font:var(--ws-weight-zh-standard,400) var(--ws-type-scale-meta)/1.28 var(--ws-type-display-zh);
+ letter-spacing:normal;cursor:default;transform-origin:left center;
+ will-change:transform,opacity;
 }
-.emmaus__realm-nav .emmaus__folio-layer::after{
- content:none;
+.emmaus__realm-nav .emmaus__folio-layer::before{
+ content:"";position:absolute;left:0;top:7px;bottom:7px;width:2px;
+ background:var(--em-color);
+}
+.emmaus__realm-nav .emmaus__folio-layer::after{content:none}
+.emmaus__realm-nav .emmaus__folio-layer span{
+ font:inherit;display:block;white-space:normal;overflow-wrap:normal;
 }
 .emmaus__realm-nav button.emmaus__folio-layer{cursor:pointer}
 .emmaus__realm-nav button.emmaus__folio-layer:hover,
 .emmaus__realm-nav button.emmaus__folio-layer:focus-visible{
- background:color-mix(in srgb,var(--em-color) 60%,var(--ws-papyrus));
+ color:var(--em-ink);
+ background:color-mix(in srgb,var(--em-color) 22%,var(--ws-papyrus));
 }
-.emmaus__realm-nav [data-realm="3"]{
- background:color-mix(in srgb,var(--ws-pale-gold) 67%,var(--ws-papyrus));
- border-left-width:7px;box-shadow:2px 2px 0 var(--ws-first-light);
- font-weight:var(--ws-weight-zh-anchor,600);
+.emmaus__realm-nav .emmaus__folio-layer[aria-current="location"]{
+ background:color-mix(in srgb,var(--ws-pale-gold) 29%,var(--ws-papyrus));
+ border-color:color-mix(in srgb,var(--em-ink) 43%,transparent);
+ box-shadow:2px 3px 0 color-mix(in srgb,var(--ws-first-light) 45%,transparent);
+ font-weight:var(--ws-weight-zh-standard,400);
+}
+.emmaus__realm-nav .emmaus__folio-layer[aria-current="location"]::before{
+ width:3px;background:var(--ws-first-light);
 }
 .emmaus__realm-nav [data-realm="5"],
 .emmaus__realm-nav [data-realm="6"],
-.emmaus__realm-nav [data-realm="7"]{opacity:.62}
-.emmaus__realm-nav .emmaus__folio-layer span{
- font:inherit;display:block;white-space:nowrap;
+.emmaus__realm-nav [data-realm="7"]{filter:saturate(.68)}
+.emmaus__realm-nav .emmaus__folio-layer:focus-visible{
+ outline:2px solid var(--ws-first-light);outline-offset:2px;
 }
-.emmaus__realm-nav .emmaus__folio-layer:focus-visible{outline:2px solid var(--ws-first-light);outline-offset:2px}
 #emmaus .emmaus__study{
- background:color-mix(in srgb,var(--ws-papyrus) 82%,var(--ws-paper));
- border-color:color-mix(in srgb,var(--ws-olive) 35%,var(--ws-first-light));
+ background:color-mix(in srgb,var(--ws-papyrus) 90%,var(--ws-paper));
+ border-color:color-mix(in srgb,var(--em-ink) 20%,var(--ws-first-light));
 }
 #emmaus .emmaus__scroll-engraving{
- z-index:0;left:-11%;top:-4%;width:77%;height:110%;opacity:.46;
- mix-blend-mode:multiply;filter:sepia(.15) contrast(1.45);
- -webkit-mask-image:linear-gradient(90deg,#000 5%,#000 32%,transparent 76%);
- mask-image:linear-gradient(90deg,#000 5%,#000 32%,transparent 76%);
+ z-index:0;left:-20%;top:-7%;width:69%;height:114%;opacity:.57;
+ mix-blend-mode:multiply;filter:sepia(.08) contrast(1.4);
+ -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 38%,#0008 58%,transparent 79%);
+ mask-image:linear-gradient(90deg,#000 0%,#000 38%,#0008 58%,transparent 79%);
 }
 #emmaus .emmaus__study-interface{position:relative;z-index:1}
 #emmaus .emmaus__study-ref,
 #emmaus .emmaus__study-reading h2,
 #emmaus .emmaus__study-movement,
-#emmaus .emmaus__study-route li p{color:var(--ws-ink)}
+#emmaus .emmaus__study-route li p,
+#emmaus .emmaus__study-detail strong,
+#emmaus .emmaus__study-detail p{color:var(--em-ink)}
 #emmaus .emmaus__study-tabs button[aria-selected="true"]{
- border-color:var(--ws-olive);color:var(--ws-ink);
+ border-color:var(--ws-first-light);color:var(--em-ink);
 }
 #emmaus .emmaus__number[aria-pressed="true"]{
- color:var(--ws-ink);
- background:color-mix(in srgb,var(--ws-olive) 25%,var(--ws-papyrus));
- outline:1px solid var(--ws-olive);
+ color:var(--em-ink);
+ background:color-mix(in srgb,var(--ws-olive) 16%,var(--ws-papyrus));
+ outline:1px solid color-mix(in srgb,var(--em-ink) 45%,transparent);
 }
-#emmaus .emmaus__small{color:color-mix(in srgb,var(--ws-ink) 57%,var(--ws-first-light))}
-#emmaus .emmaus__identity h1{color:var(--ws-ink)}
-#emmaus .emmaus__book h2{color:var(--ws-ink)}
+#emmaus .emmaus__small{color:color-mix(in srgb,var(--em-ink) 67%,var(--ws-first-light))}
+#emmaus .emmaus__identity h1,
+#emmaus .emmaus__book h2{color:var(--em-ink)}
 #emmaus .emmaus__plate-top span{color:var(--ws-morning-gold)}
+/* In an unfeatured volume, the middle field is a REAL chapter selector:
+   retain the ONE coordinate, but do not falsely show Luke's commentary. */
+#emmaus .emmaus__study-route:has(.emmaus__chapter-choice){
+ grid-template-columns:repeat(2,minmax(0,1fr));margin:auto 0 0;
+ gap:5px 11px;
+}
+#emmaus .emmaus__study-route:has(.emmaus__chapter-choice) li{
+ display:block;border-top:1px solid var(--em-line);min-width:0;
+}
+#emmaus .emmaus__chapter-choice{
+ width:100%;min-height:28px;border:0;background:transparent;
+ color:var(--em-ink);padding:3px 0;
+ font:var(--ws-weight-zh-standard,400) var(--ws-type-scale-meta)/1.3 var(--ws-type-display-zh);
+ text-align:left;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#emmaus .emmaus__chapter-choice[aria-pressed="true"]{
+ color:color-mix(in srgb,var(--em-ink) 72%,var(--ws-first-light));
+ text-decoration:underline;text-decoration-color:var(--ws-first-light);text-underline-offset:3px;
+}
+#emmaus .emmaus__chapter-choice:focus-visible{
+ outline:2px solid var(--ws-first-light);outline-offset:2px;
+}
 @media(max-width:820px){
- #emmaus > .emmaus__left{padding-left:clamp(44px,11vw,66px)}
- #emmaus > .emmaus__left > .emmaus__realm-nav{top:17%;width:clamp(36px,9vw,54px)}
- .emmaus__realm-nav .emmaus__folio-layer{width:clamp(36px,9vw,54px);min-height:30px;
- font-size:clamp(7px,1.5vw,10px);padding:3px 2px 3px 4px}
- .emmaus__realm-nav .emmaus__folio-layer span{white-space:normal}
- #emmaus > .emmaus__left::after{width:32%;opacity:.47}
+ #emmaus > .emmaus__left{padding-left:clamp(46px,11.8vw,73px)}
+ #emmaus > .emmaus__left > .emmaus__realm-nav{
+  top:15%;width:clamp(37px,9.2vw,57px);height:65%;
+ }
+ .emmaus__realm-nav .emmaus__folio-layer{
+  width:clamp(37px,9.2vw,57px);min-height:32px;margin-top:-4px;
+  font-size:clamp(8px,1.5vw,11px);padding:4px 6px 4px 4px;
+  clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,0 100%);
+ }
+ #emmaus > .emmaus__left::after{width:34%;opacity:.73}
 }
 @media(max-width:540px){
- #emmaus > .emmaus__left{padding-left:38px;padding-right:7px}
- #emmaus > .emmaus__left > .emmaus__realm-nav{top:13%;left:0;width:37px;height:64%}
- .emmaus__realm-nav .emmaus__folio-layer{width:37px;min-height:34px;font-size:7px;line-height:1.15}
- #emmaus .emmaus__study-interface{padding-left:10px}
- #emmaus .emmaus__scroll-engraving{opacity:.26}
+ #emmaus > .emmaus__left{padding-left:41px;padding-right:7px}
+ #emmaus > .emmaus__left > .emmaus__realm-nav{
+  top:11%;left:0;width:38px;height:73%;
+ }
+ .emmaus__realm-nav .emmaus__folio-layer{
+  width:38px;min-height:34px;font-size:8px;line-height:1.2;
+  margin-top:-4px;padding:4px 5px 4px 3px;
+ }
+ #emmaus .emmaus__study-interface{padding-left:12px}
+ #emmaus .emmaus__scroll-engraving{opacity:.41}
+ #emmaus .emmaus__study-route:has(.emmaus__chapter-choice){
+  grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 4px;
+ }
+ #emmaus .emmaus__chapter-choice{font-size:9px;min-height:24px}
 }
 @media(prefers-reduced-motion:reduce){
  .emmaus__realm-nav .emmaus__folio-layer{transition:none;animation:none}
