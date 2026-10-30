@@ -22,10 +22,14 @@ assert.match(js,/sourceOriginalEditorialOpacity/,
  'backward scroll or A/B switch restores the existing Magazine frame');
 assert.doesNotMatch(js,/createElement\(['"](?:iframe|video)['"]\)/,
  'shared-film mode must never construct a second media player');
+assert.match(js,/const surroundX=filmContinuity/,
+ 'the shared video must occupy substantial real stage area, not a narrow mask');
+assert.match(js,/const surroundTop=filmContinuity/,
+ 'the video field is genuinely visible above the editorial spread');
 assert.match(css,/#emmaus\[data-film-continuity="on"\] > \.emmaus__left/,
- 'ONE has an intentionally masked film gutter instead of video behind reading copy');
-assert.match(css,/#olive-proof\[data-film-continuity="on"\] \.olive-proof__editorial/,
- 'Olive independently exposes the shared backdrop without changing its speaker imagery');
+ 'ONE retains an opaque manuscript leaf above the single playing film');
+assert.match(css,/#olive-proof\[data-film-continuity="on"\]\{[\s\S]*inset:9% 8\.5%/,
+ 'the Olive chapter opens real film space while retaining its protected editorial components');
 assert.match(css,/--ws-papyrus/,'Emmaus background inherits ONE papyrus palette, not Magazine white');
 assert.match(css,/scroll-micro-engraving\.svg/,'scroll edge engraving is visible in chapter structure');
 assert.match(js,/ONE_DATA\?\.luke\?\.chapterStudies\?\.\['24'\]/,'chapter text comes from canonical ONE, never invented copy');
@@ -129,13 +133,30 @@ const {chromium}=require('playwright');
     'rgba(0, 0, 0, 0)','shared film mode does not fill the Olive chapter with an opaque scene background');
    await page.screenshot({path:path.join(filmProofDir,viewport.width+'-shared-film-olive.png')});
    await page.locator('[data-jump="9.10"]').click();await page.waitForTimeout(200);
+   const sharedStage=await page.locator('#proof-stage').boundingBox();
+   const sharedLeaf=await page.locator('#emmaus > .emmaus__left').boundingBox();
+   const sharedPlates=await page.locator('#emmaus > #emmaus-gallery').boundingBox();
+   assert(sharedStage&&sharedLeaf&&sharedPlates,'both actual paper and image planes are visible');
+   assert(Math.abs(sharedLeaf.right-sharedPlates.x)<3,'the real ONE and Doré pages still join without a gap');
+   assert(Math.abs(sharedLeaf.width-sharedPlates.width*2)<3,'the printed composition remains exactly two-to-one');
+   assert(sharedLeaf.y-sharedStage.y>sharedStage.height*.08,
+    'the film must be visible above the 03 spread, not blocked by full-height paper');
    if(viewport.width>820){
-    assert.notEqual(await page.locator('#emmaus > .emmaus__left').evaluate(
-     el=>getComputedStyle(el).maskImage),'none','desktop has a visible film gutter');
+    assert(sharedLeaf.x-sharedStage.x>sharedStage.width*.075,
+     'a substantial unoccluded film field must be visible left of ONE');
+    assert(sharedPlates.right<sharedStage.right-sharedStage.width*.075,
+     'a substantial unoccluded film field must be visible right of the gallery');
+    assert(sharedLeaf.height<sharedStage.height*.83,
+     'the panoramic moving film must also remain visible below the spread');
    }else{
-    assert.equal(await page.locator('#emmaus > .emmaus__left').evaluate(
-     el=>getComputedStyle(el).maskImage),'none','mobile protects every column of ONE copy');
+    assert(sharedLeaf.width+sharedPlates.width>=sharedStage.width-2,
+     'mobile keeps the full page width and exposes video above, never through scripture');
+    assert(sharedLeaf.height<=sharedStage.height*.89,
+     'mobile reserves a visible cinema-height area for the film');
    }
+   assert.equal(await page.locator('#emmaus > .emmaus__left').evaluate(
+    el=>getComputedStyle(el).maskImage),'none',
+    'there is no longer a nearly invisible cutout in the actual reading paper');
    await page.locator('#proof-film-toggle').click();await page.waitForTimeout(170);
    assert.equal(await page.locator('body').getAttribute('data-film-continuity'),'off');
    assert.equal(await page.locator('#proof-original').evaluate(frame=>
