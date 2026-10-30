@@ -102,5 +102,15 @@ if(new URLSearchParams(location.search).get('engraving')==='v12'){
  if(toggle)toggle.title='Emmaus V12 / abstract biblical interpretation engravings — candidate only';
 }
 </script>
+<script>
+/* Opt-in typography and geometry proof for manuscript-as-time, no production changes. */
+if(new URLSearchParams(location.search).get('engraving')==='v14'){
+ document.body.dataset.p2Engraving='v14';
+ const img=document.querySelector('.emmaus__scroll-engraving');
+ if(img)img.src='/images/p2-emmaus-scripture-time-manifold-v14.svg';
+ const toggle=document.getElementById('proof-ground-toggle');
+ if(toggle)toggle.title='Emmaus V14 / scripture-time manifold — draft concept only';
+}
+</script>
 </body>
 </html>
