@@ -51,21 +51,21 @@ assert.match(js,/oliveEditorial\.style\.clipPath=/,'Olive editorial fields revea
 assert.doesNotMatch(js,/olive\.style\.clipPath='inset/,'a whole-scene curtain would replace one page with another');
 // Emmaus rework: every folio is a real navigation destination, the 66-book
 // selection owns the ONE chapter coordinate and right-hand plate identity.
-assert.match(html,/href="\\/dawn-library\\/"/,'05 opens its canonical Dawn Library page');
-assert.match(html,/href="\\/cinema\\/"/,'06 opens its canonical Cinema page');
-assert.match(html,/href="\\/daylight-cafe\\/"/,'07 opens its canonical Daylight Café page');
+assert.match(html,/href="\/dawn-library\/"/,'05 opens its canonical Dawn Library page');
+assert.match(html,/href="\/cinema\/"/,'06 opens its canonical Cinema page');
+assert.match(html,/href="\/daylight-cafe\/"/,'07 opens its canonical Daylight Café page');
 assert.match(html,/aria-live="polite"/,'selected volume identity is announced');
-assert.match(js,/renderBookStudy\\(number,chapter\\)/,'ONE work window accepts per-book chapter state');
+assert.match(js,/renderBookStudy\(number,chapter\)/,'ONE work window accepts per-book chapter state');
 assert.match(js,/emmaus__chapter-choice/,'unfeatured volumes have functional chapter selectors');
-assert.match(js,/if\\(ticket!==plateVersion\\)return/,'late image responses cannot overwrite new book selection');
-assert.match(js,/plateEls\\.forEach\\(img=>img\\.classList\\.remove\\('is-active'\\)\\)/,
+assert.match(js,/if\(ticket!==plateVersion\)return/,'late image responses cannot overwrite new book selection');
+assert.match(js,/plateEls\.forEach\(img=>img\.classList\.remove\('is-active'\)\)/,
  'old-book image is hidden before new plate is resolved');
-assert.match(js,/ORIGINAL ARCHIVE UNAVAILABLE/,'failed artwork load states the unavailability rather than faking a plate');
-assert.match(js,/aria-current','sevenfold navigation reports the active P2 layer');
-assert.match(css,/background:var\\(--em-paper\\)/,'Bible Study has papyrus, not Magazine paper');
+assert.match(js,/ORIGINAL ARCHIVE UNAVAILABLE/,'failed artwork load states unavailability, not a fake plate');
+assert.match(js,/aria-current/,'sevenfold navigation reports the active P2 layer');
+assert.match(css,/background:var\(--em-paper\)/,'Bible Study has papyrus, not Magazine paper');
 assert.match(css,/--em-ink:color-mix/,'Bible ink is a scoped Design OS semantic mix');
 assert.match(css,/clip-path:polygon/,'folio tabs are angled overlapping page edges');
-assert.match(css,/p2-emmaus-scroll-micro-engraving\\.svg/,'engraved space uses its original protected vector');
+assert.match(css,/p2-emmaus-scroll-micro-engraving\.svg/,'engraved space uses its own vector');
 assert.match(css,/--ws-type-scale-display-lg/,'Emmaus display uses the Design OS type scale');
 console.log('P2 03/04 isolated preview source contract: pass');
 
