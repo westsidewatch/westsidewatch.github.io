@@ -87,7 +87,8 @@ No second full-screen reveal, repeated movie player or separate 8.5% frame.
 - Current opt-in compare: `?d=9.10&ground=1` for the Bible and
   `?d=11.10&ground=1` for Sermon; the proof header toggles this feature
   without restarting the scene or changing the active book/portrait.
-- Read the real `dual-cover` + `dual-contents` bounds through the
+- Read the real `dual-cover` + `dual-contents` + ORIGINAL
+  `dual-continuum` seven-color book-spine bounds through the
   pre-existing protected Magazine iframe and use their bounding union
   for both the ONE 2:1 paper+gallery spread and the Olive portrait/editorial
   spread. The OS engraved field is clipped to the **outside** of that exact
