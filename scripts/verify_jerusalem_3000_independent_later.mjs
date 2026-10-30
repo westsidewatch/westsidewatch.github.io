@@ -1,3 +1,5 @@
+import {aqsaCore} from '../preview/jerusalem-3000/aqsa-core.js';
+import {sacredCoreGeometry} from '../preview/jerusalem-3000/later-sacred-cores.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import * as THREE from 'three';
@@ -22,7 +24,7 @@ for(const pack of packs)for(const phase of Object.keys(pack.phases)){
   assert.ok(monument.geometry.polygon.some((a,i)=>onSegment(end,a,monument.geometry.polygon[(i+1)%monument.geometry.polygon.length])),'approach stops at the core edge');
   for(let step=0;step<20;step++)assert.equal(pointInPolygon({x:start.x+(end.x-start.x)*step/20,z:start.z+(end.z-start.z)*step/20},monument.geometry.polygon),false,'connector must not run through its core');
  }
- const monuments=runtime.ledgerRecords.filter(r=>r.type==='monument');assert.equal(monuments.length,phase==='aelia'?0:phase==='byzantine'?1:2);for(const monument of monuments){assert.ok(registration.sources.includes(monument.source.urls[0]));assert.equal(monument.metadata.geometryVerified,false);assert.equal(monument.metadata.wholePhaseSimultaneity,false);const record=core.get(monument.id);assert.equal(record.predecessorIds.length,0);assert.equal(record.successorIds.length,0);assert.ok(record.lifecycle.events.every(e=>e.phase===phase||e.state==='unresolved'));assert.ok(runtime.meshes.some(m=>m.userData.cityObject.objectId===monument.id));}
+ const monuments=runtime.ledgerRecords.filter(r=>r.type==='monument');assert.equal(monuments.length,phase==='aelia'?0:phase==='byzantine'?1:3);for(const monument of monuments){assert.ok(registration.sources.includes(monument.source.urls[0]));assert.equal(monument.metadata.geometryVerified,false);assert.equal(monument.metadata.wholePhaseSimultaneity,false);const record=core.get(monument.id);assert.equal(record.predecessorIds.length,0);assert.equal(record.successorIds.length,0);assert.ok(record.lifecycle.events.every(e=>e.phase===phase||e.state==='unresolved'));assert.ok(runtime.meshes.some(m=>m.userData.cityObject.objectId===monument.id));}
  for(const block of runtime.ledgerRecords.filter(r=>r.type==='block')){assert.ok(monuments.every(r=>!polygonsOverlap(block.geometry.polygon,r.geometry.polygon)));assert.ok(registration.districts.some(d=>d.id===block.source.districtId));assert.ok(registration.reservations.every(r=>!polygonsOverlap(block.geometry.polygon,r.geometry.polygon)));assert.ok(roadClearancePolygons(registration.roads,5).every(r=>!polygonsOverlap(block.geometry.polygon,r.polygon)));}
  for(const mesh of runtime.meshes){const p=mesh.geometry.attributes.position;assert.ok(Array.from(p.array).every(Number.isFinite));if(mesh.userData.cityObject.kind==='block'){for(let i=0;i<p.count;i++){const d=p.getY(i)-terrain.heightAtWorld(p.getX(i),p.getZ(i));assert.ok(Math.abs(d-.2)<1e-4||Math.abs(d-6)<1e-4,'all coarse cell vertices follow the same slope');}const normal=mesh.geometry.attributes.normal;assert.ok(normal.getY(0)>0,'coarse cap must face up');}}
  for(const mesh of runtime.meshes.filter(m=>m.userData.cityObject.kind==='road')){const a=mesh.geometry.attributes.position;const polygon=[0,2,3,1].map(i=>({x:a.getX(i),z:a.getZ(i)}));assert.ok(monuments.every(r=>!polygonsOverlap(polygon,r.geometry.polygon)),'display roads must not cross core envelopes');}
@@ -52,3 +54,15 @@ assert.throws(()=>compileIndependentLaterSkeleton(data,'aelia',{lat:0,lon:0}));
 for(const mutate of [d=>d.phases.aelia.roads[0].id='',d=>d.phases.aelia.roads[0].sources=[],d=>d.phases.aelia.roads[0].points=[[0,0],[0,0]],d=>d.phases.aelia.districts[0].polygon=[[0,0],[1,0],[2,0]]]){const bad=structuredClone(data);mutate(bad);assert.throws(()=>compileIndependentLaterSkeleton(bad,'aelia',data.origin));}
 const failed=new THREE.Group();assert.throws(()=>buildIndependentLaterSkeleton(failed,compileIndependentLaterSkeleton(data,'aelia',data.origin),materials,{heightAtWorld:()=>NaN}));assert.equal(failed.children.length,0);
 assert.equal(JSON.stringify(packs),originalData);publisher.dispose();assert.equal(core.objects.size,0);material.dispose();console.log('PASS: eight independent period skeletons, shared origin, roads/reservations constrain coarse cells, DEM-following caps, distinct phase IDs, evidence return, exact rebuild, malformed source/geometry rejection and owned cleanup');
+
+const aqsaIds=[];
+for(const phase of phases.map(p=>p.id)){
+ const record=aqsaCore(phase),expected=['early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(phase);
+ assert.equal(Boolean(record),expected,'Aqsa must not appear before its Islamic context');if(!record)continue;
+ aqsaIds.push(record.id);assert.deepEqual(record.metadata.mainHallMetres,{width:50,length:80,authority:'present-main-hall-reference-not-phase-survey'});assert.equal(record.metadata.wholePhaseSimultaneity,false);assert.equal(record.metadata.geometryVerified,false);assert.deepEqual(record.metadata.modelAnchor,{x:35,z:220});
+ const geometry=sacredCoreGeometry(record,terrain),p=geometry.attributes.position,n=geometry.attributes.normal;let upwardRoof=0,pitchedRoof=0;
+ for(let i=0;i<p.count;i++){assert.ok(pointInPolygon({x:p.getX(i),z:p.getZ(i)},record.geometry.polygon),'whole landmark must stay inside its reserved envelope');if(n.getY(i)>.1&&n.getY(i)<.99){upwardRoof++;if(Math.abs(Math.abs(p.getZ(i)-220)-40)<1e-4)pitchedRoof++;}}
+ assert.ok(upwardRoof>50,'dome must face the viewer rather than disappear from above');assert.ok(pitchedRoof>=12,'pitched roof surfaces must face upward independently of dome normals');geometry.dispose();
+ if(phase==='early-islamic'){assert.equal(record.metadata.eastRecess,false);assert.ok(record.metadata.referencePeriod.includes('Fatimid'));}else assert.equal(record.metadata.eastRecess,true);
+}
+assert.equal(new Set(aqsaIds).size,6,'each selected era retains a separate model identity without claiming fabric inheritance');

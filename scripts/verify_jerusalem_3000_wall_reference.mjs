@@ -19,8 +19,8 @@ for(const [pack,phase] of [[packs[0],'ottoman'],[packs[1],'outside-walls'],[pack
  for(const mesh of runtime.meshes.filter(m=>m.userData.phase2.stage==='road')){const id=mesh.userData.cityObject.objectId,r=registration.roads.find(r=>r.id===id);if(phase==='ottoman'||r.metadata.layoutRole==='old-city-route-context'){const p=mesh.geometry.attributes.position;for(let i=0;i<p.count;i++)assert.ok(pointInPolygon({x:p.getX(i),z:p.getZ(i)},reference.envelope),'displayed old-city road must stay within the planning envelope');}}
  const old=runtime.ledgerRecords.filter(r=>r.type==='block'&&oldIds.has(r.source.districtId));assert.ok(old.length>0);assert.ok(old.every(b=>b.geometry.polygon.every(p=>pointInPolygon(p,reference.envelope))),'old-city housing must remain inside the reference planning envelope');oldPolygons.push(old.map(b=>JSON.stringify(b.geometry.polygon)).sort());
  for(const core of registration.cores){const location=coreLocationReference.cores[core.id.split(':').at(-1)],polygon=core.geometry.polygon;
- const q=geographicToENU(location.point.lat,location.point.lon,data.origin);assert.ok(Math.abs(polygon.reduce((s,p)=>s+p.x,0)/polygon.length-q.east)<1e-8);assert.ok(Math.abs(polygon.reduce((s,p)=>s+p.z,0)/polygon.length+q.north)<1e-8);
- assert.equal(core.source.positionReference.osmWay,location.osmWay);assert.equal(core.geometry.status,'modern-map-position-with-illustrative-massing');
+ if(location){const q=geographicToENU(location.point.lat,location.point.lon,data.origin);assert.ok(Math.abs(polygon.reduce((s,p)=>s+p.x,0)/polygon.length-q.east)<1e-8);assert.ok(Math.abs(polygon.reduce((s,p)=>s+p.z,0)/polygon.length+q.north)<1e-8);
+ assert.equal(core.source.positionReference.osmWay,location.osmWay);assert.equal(core.geometry.status,'modern-map-position-with-illustrative-massing');}else{assert.equal(core.metadata.coreProfile,'aqsa-seven-aisle-context');assert.equal(core.source.positionReference,undefined);assert.equal(core.geometry.status,'relative-site-context-not-surveyed-footprint');}
  assert.ok(polygon.every(p=>pointInPolygon(p,reference.envelope)),'core mass must fit the shared wall envelope');
  const approach=registration.roads.find(r=>r.metadata.coreReference===core.id);assert.ok(approach);assert.equal(approach.geometry.status,'authored-core-link-not-surveyed-street');
  }
@@ -35,7 +35,7 @@ let disposed=0;for(const m of model.meshes)m.geometry.addEventListener('dispose'
 // Site anchors must not jump at the authored/modern reference boundary.
 const siteAnchors=new Map();
 for(const phase of ['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'])for(const record of laterSacredCores(phase)){
- const polygon=record.geometry.polygon,centre={x:polygon.reduce((s,p)=>s+p.x,0)/polygon.length,z:polygon.reduce((s,p)=>s+p.z,0)/polygon.length},key=record.id.split(':').at(-1);
+ const polygon=record.geometry.polygon,centre=record.metadata.modelAnchor||{x:polygon.reduce((s,p)=>s+p.x,0)/polygon.length,z:polygon.reduce((s,p)=>s+p.z,0)/polygon.length},key=record.id.split(':').at(-1);
  if(siteAnchors.has(key)){const previous=siteAnchors.get(key);assert.ok(Math.hypot(previous.x-centre.x,previous.z-centre.z)<1e-8,'same site cannot jump when the phase changes');}else siteAnchors.set(key,centre);
  assert.equal(record.metadata.siteRegistration.historicalFootprintVerified,false);assert.equal(record.metadata.geometryVerified,false);
 }

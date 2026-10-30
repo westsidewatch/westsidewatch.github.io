@@ -1285,7 +1285,14 @@
       "footprintMetres": null,
       "heightMetres": null,
       "geometryAccepted": false,
-      "existingRuntimeIds": [],
+      "existingRuntimeIds": [
+        "j3k:early-islamic:independent:monument:aqsa-context",
+        "j3k:crusader:independent:monument:aqsa-context",
+        "j3k:ayyubid-mamluk:independent:monument:aqsa-context",
+        "j3k:ottoman:independent:monument:aqsa-context",
+        "j3k:outside-walls:independent:monument:aqsa-context",
+        "j3k:modern:independent:monument:aqsa-context"
+      ],
       "existingRuntimeIsApprovedReconstruction": false,
       "notes": "倭馬亞、震後重建、法蒂瑪、十字軍用途轉變及後期修復分層。",
       "requiredBeforeModel": [

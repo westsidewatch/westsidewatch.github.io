@@ -28,7 +28,7 @@ export function createSharedUrbanPlaces({terrain,phases,core}){
   {id:'j3k:place:gihon',label:'基訓泉附近',x:spring.east,z:-spring.north,authority:'approximate-modern-map-location-not-ancient-access',source:'https://api.openstreetmap.org/api/0.6/node/1608094098',attribution:'OpenStreetMap contributors, ODbL'}
  ];
  const anchors=definitions.map(p=>{const y=terrain.heightAtWorld(p.x,p.z);if(!Number.isFinite(y))throw new Error('Shared place outside terrain');return {...p,y,confidence:'inferred',geometryVerified:false,semanticCityObject:false};});
- const placeIds=new Set([...anchors.map(p=>p.id),EASTERN_CORRIDOR_ID,'j3k:place:holy-sepulchre-site']);
+ const placeIds=new Set([...anchors.map(p=>p.id),EASTERN_CORRIDOR_ID,'j3k:place:holy-sepulchre-site','j3k:place:southern-haram']);
  const timeline={phases},active=new Set(['build','rebuild','transform','expand','ruin']);
  function representations(phaseId,position,evidenceMode){
   return core.phase(phaseId).flatMap(record=>{
