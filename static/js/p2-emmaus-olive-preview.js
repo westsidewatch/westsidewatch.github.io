@@ -336,10 +336,7 @@
   if(sourceFrame)sourceFrame.style.opacity=sourceOriginalEditorialOpacity??'';
   // A realm-specific engraved backdrop replaces the film ONLY in the
   // background field, on the existing 02→03 timeline (no new reveal effect).
-  if(realmGround){
-   realmGround.style.opacity=String(fixedGround?smooth((distance-6.50)/.90):0);
-   realmGround.dataset.realm=oliveIn>=.5?'sermon':'bible';
-  }
+  if(realmGround)realmGround.dataset.realm=oliveIn>=.5?'sermon':'bible';
   emmaus.style.backgroundColor=fixedGround?'transparent'
    :(oneDrop>=.999?'var(--em-paper)':'transparent');
   const lerp=(a,b,p)=>a+(b-a)*p;
@@ -374,6 +371,22 @@
       -Math.min(original.y,coverBounds.y)
   }:null;
   const master=magSpread||{x:0,y:0,w:stageRect.width,h:stageRect.height};
+  // Cut the REAL Magazine folio shape OUT of the background engraving.
+  // This paints engraving only in the original VIDEO field, never over the
+  // published Contents/cover or an arriving ONE page. Even the transition
+  // needs no separate full-screen curtain or reflow.
+  if(realmGround){
+   if(fixedGround&&magSpread){
+    const n=v=>Math.round(v*100)/100;
+    const x=n(master.x),y=n(master.y),right=n(master.x+master.w),bottom=n(master.y+master.h);
+    const w=n(stageRect.width),h=n(stageRect.height);
+    realmGround.style.clipPath='path("M 0 0 H '+w+' V '+h+
+      ' H 0 Z M '+x+' '+y+' V '+bottom+' H '+right+' V '+y+' Z")';
+    realmGround.style.opacity=String(move);
+   }else{
+    realmGround.style.opacity='0';realmGround.style.clipPath='none';
+   }
+  }
   const fullLeft={x:master.x,y:master.y,w:master.w*2/3,h:master.h};
   const fullRight={x:master.x+master.w*2/3,y:master.y,
                    w:master.w/3,h:master.h};
