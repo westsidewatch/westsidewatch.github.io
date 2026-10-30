@@ -448,7 +448,7 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
  box-shadow:0 12px 38px color-mix(in srgb,var(--ws-night) 25%,transparent);
 }
 #olive-proof[data-fixed-ground="on"] .olive-proof__editorial{margin:0}
-.proof-controls #proof-film-toggle[aria-pressed="true"]{
+.proof-controls #proof-ground-toggle[aria-pressed="true"]{
  border-color:var(--ws-pale-gold);color:var(--ws-pale-gold);
 }
 /* At phone sizes the background's visible proportions are STILL set by
@@ -456,5 +456,5 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
    Never add a new mobile film stripe or reset those folios to full viewport. */
 @media(max-width:820px){
  .proof-controls__buttons{flex-wrap:wrap;gap:3px}
- .proof-controls #proof-film-toggle{white-space:nowrap}
+ .proof-controls #proof-ground-toggle{white-space:nowrap}
 }
