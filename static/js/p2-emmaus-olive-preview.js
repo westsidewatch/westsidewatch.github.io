@@ -310,6 +310,7 @@
   const sourceDoc=sourceFrame?.contentDocument;
   const sourceTile=sourceDoc?.getElementById('dual-contents');
   const sourceCover=sourceDoc?.getElementById('dual-cover');
+  const sourceSpine=sourceDoc?.getElementById('dual-continuum');
   const sourceFigure=transferFigure||sourceDoc?.getElementById('dual-dore-plate');
   const frameRect=sourceFrame?.getBoundingClientRect(),baseRect=base.getBoundingClientRect(),stageRect=$('#proof-stage').getBoundingClientRect();
   const bounds=node=>{
@@ -318,7 +319,7 @@
    return {x:baseRect.left-stageRect.left+frameRect.left+r.left,
            y:baseRect.top-stageRect.top+frameRect.top+r.top,w:r.width,h:r.height};
   };
-  const original=bounds(sourceTile),coverBounds=bounds(sourceCover);
+  const original=bounds(sourceTile),coverBounds=bounds(sourceCover),spineBounds=bounds(sourceSpine);
   // Never dissolve the approved Magazine just to expose the homepage film.
   // Contents and the cover remain the connected backdrop while the REAL
   // engraving crosses from the left to the right. Only the incoming ONE
@@ -362,14 +363,15 @@
   // The actual MAGAZINE 5:8 cover + square Contents + original spine
   // define the protected outer rectangle. Read live DOM geometry; never
   // invent a new 8.5%/9% frame or expand the chapter back to full screen.
-  const magSpread=original&&coverBounds?{
-   x:Math.min(original.x,coverBounds.x),
-   y:Math.min(original.y,coverBounds.y),
-   w:Math.max(original.x+original.w,coverBounds.x+coverBounds.w)
-      -Math.min(original.x,coverBounds.x),
-   h:Math.max(original.y+original.h,coverBounds.y+coverBounds.h)
-      -Math.min(original.y,coverBounds.y)
-  }:null;
+  // Include the REAL seven-color spine in the frozen Magazine perimeter.
+  // It sits just outside Contents on desktop; excluding it would allow the
+  // new engraving to paint OVER the accepted book spine during handoff.
+  const magSpread=original&&coverBounds?(()=>{
+   const folios=[original,coverBounds,...(spineBounds?[spineBounds]:[])];
+   const x=Math.min(...folios.map(r=>r.x)),y=Math.min(...folios.map(r=>r.y));
+   return {x,y,w:Math.max(...folios.map(r=>r.x+r.w))-x,
+               h:Math.max(...folios.map(r=>r.y+r.h))-y};
+  })():null;
   const master=magSpread||{x:0,y:0,w:stageRect.width,h:stageRect.height};
   // Cut the REAL Magazine folio shape OUT of the background engraving.
   // This paints engraving only in the original VIDEO field, never over the
