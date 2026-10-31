@@ -32,6 +32,15 @@ try{
  apply(5.9);assert.equal(runtime.diagnostics().visibleTemple,0);
  apply(6.5);const diag=runtime.diagnostics();assert.ok(diag.visibleTemple>0);assert.equal(diag.visibleGate,2);assert.equal(diag.visibleAccess,true);
  const identity=diag.componentIdentity,parts=parent.children[0].children;
+
+parts.forEach(m=>m.updateMatrixWorld(true));
+const actual=id=>parts.find(m=>m.userData.cityObject.componentId===`j3k:persian-sanctuary:${id}`),roofBox=new THREE.Box3().setFromObject(actual('hall-roof')),roofCentre=roofBox.getCenter(new THREE.Vector3());
+const edgeBox=new THREE.Box3().setFromObject(actual('hall-roof-edge-1'));
+assert.ok(Math.abs(edgeBox.max.y-roofBox.max.y-.4)<1e-4,'actual roof must be recessed below perimeter');
+const floorBox=new THREE.Box3().setFromObject(actual('hall-floor')),boundaryBox=new THREE.Box3().setFromObject(actual('hall-inner-lintel')),boundaryCentre=boundaryBox.getCenter(new THREE.Vector3());
+const portalRay=new THREE.Raycaster(new THREE.Vector3(boundaryCentre.x+1,floorBox.max.y+1,roofCentre.z),new THREE.Vector3(-1,0,0),0,2);
+assert.equal(portalRay.intersectObjects(parts,true).length,0,'internal boundary must contain an actual clear doorway');
+assert.ok(!parts.some(m=>m.userData.cityObject.componentId.includes('priest-room')),'Hasmonean annexes must not leak into Persian geometry');
  const snapshots=parts.map(m=>Array.from(m.geometry.attributes.position.array));
  assert.ok(!identity.includes('j3k:royal:'),'component IDs must not reuse First Temple assembly');
  const access=parts.find(m=>m.userData.cityObject.role==='access'),p=access.geometry.attributes.position;

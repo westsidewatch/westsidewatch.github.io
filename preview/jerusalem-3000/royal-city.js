@@ -83,7 +83,19 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   for(const [a,b]of[[courtWest,court.gateX-court.gateWidth/2],[court.gateX+court.gateWidth/2,courtEast]])courtWall(`temple-court-south-${a}`,(a+b)/2,courtSouth,b-a,court.wallThickness);
   templeBox('temple-main',x,z,l,w,wall,templeStone,h-wall);
   templeBox('temple-interior-floor',x,z,l,w,.12);
-  for(const side of[-1,1])templeBox(`temple-main-side-${side}`,x,z+side*(w-wall)/2,l,wall,h-wall);
+  // 1Kings6:4 supports high windows, not their count/profile or measured sill.
+  // Six authored openings per side sit above the three low chamber tiers.
+  const sill=9,windowH=1.5,windowW=1.1,pitch=(l-2*wall)/6;
+  for(const side of[-1,1]){
+    const zz=z+side*(w-wall)/2;
+    templeBox(`temple-main-side-${side}`,x,zz,l,wall,sill);
+    templeBox(`temple-window-head-${side}`,x,zz,l,wall,h-wall-sill-windowH,templeStone,sill+windowH);
+    for(let i=0;i<=6;i++){
+      const left=i===0?x-l/2:x-l/2+wall+(i-.5)*pitch+windowW/2;
+      const right=i===6?x+l/2:x-l/2+wall+(i+.5)*pitch-windowW/2;
+      templeBox(`temple-window-pier-${side}-${i}`,(left+right)/2,zz,right-left,wall,windowH,templeStone,sill);
+    }
+  }
   templeBox('temple-main-west',x-(l-wall)/2,z,wall,w,h-wall);
   const clearDoor=2.6;
   for(const side of[-1,1])templeBox(`temple-main-entry-jamb-${side}`,x+(l-wall)/2,z+side*(clearDoor/2+(w-clearDoor)/4),wall,(w-clearDoor)/2,h-wall);

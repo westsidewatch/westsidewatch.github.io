@@ -27,10 +27,36 @@ export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approa
   box('hall-door-lintel',hx+L/2-t/2,hz,t,h.doorWidth,h.height-h.doorHeight,h.doorHeight);
   // Open leaves are an authored viewing pose, not excavated Persian door details.
   for(const side of[-1,1])box(`hall-open-door-${side}`,hx+L/2-t-h.doorWidth/4,hz+side*(h.doorWidth/2-.06),h.doorWidth/2,.12,h.doorHeight-.12,.12,'door');
-  box('hall-roof',hx,hz,L,W,.6,h.height,'roof');
+  box('hall-roof',hx,hz,L-1,W-1,.2,h.height,'roof');
   box('porch-floor',hx+L/2+p.depth/2,hz,p.depth,W,.12,0,'floor');
   for(const side of [-1,1])box(`porch-side-${side}`,hx+L/2+p.depth/2,hz+side*(W/2-t/2),p.depth,t,p.height);
   box('porch-roof',hx+L/2+p.depth/2,hz,p.depth,W,.5,p.height,'roof');
+  // Articulation stays inside the inherited court and below the existing hall roof.
+  // These proportions are authored, not Ezra decree dimensions or a Herodian plan.
+  const innerX=hx-L/2+L/3,clear=W-2*t,portal=h.doorWidth;
+  for(const side of[-1,1])box(`hall-inner-partition-${side}`,innerX,hz+side*(portal/2+(clear-portal)/4),.3,(clear-portal)/2,h.height-.3);
+  box('hall-inner-lintel',innerX,hz,.3,portal,h.height-h.doorHeight-.3,h.doorHeight);
+  for(const side of[-1,1]){
+    box(`hall-roof-edge-${side}`,hx,hz+side*(W/2-.25),L,.5,.6,h.height,'wall');
+    for(let i=0;i<4;i++)box(`hall-buttress-${side}-${i}`,hx-L/2+t+(i+.5)*(L-2*t)/4,hz+side*(W/2+.25),.7,.5,h.height*.6);
+    box(`porch-cornice-${side}`,hx+L/2+p.depth/2,hz+side*(W/2-.25),p.depth,.5,.35,p.height-.35);
+  }
+  for(const side of[-1,1])box(`hall-roof-end-${side}`,hx+side*(L/2-.25),hz,.5,W-1,.6,h.height,'wall');
+  // 1Macc4:57 names repaired priests' chambers; six/display dimensions are authored.
+  // No backward projection of these Hasmonean annexes into the Persian phase.
+  if(phaseId==='hellenistic-hasmonean'){
+    const depth=3,span=(L-2*t)/3,roomH=4.5,doorW=1.2,doorH=2.2,rt=.3;
+    for(const side of[-1,1])for(let i=0;i<3;i++){
+      const xx=hx-L/2+t+(i+.5)*span,zz=hz+side*(W/2+depth/2+.5),outerZ=zz+side*(depth-rt)/2;
+      const prefix=`hall-priest-room-${side}-${i}`;
+      box(prefix+'-floor',xx,zz,span,depth,.12,0,'floor');
+      box(prefix+'-roof',xx,zz,span,depth,.25,roomH,'roof');
+      for(const end of[-1,1])box(prefix+`-end-${end}`,xx+end*(span-rt)/2,zz,rt,depth,roomH);
+      box(prefix+'-back',xx,zz-side*(depth-rt)/2,span-2*rt,rt,roomH);
+      for(const end of[-1,1])box(prefix+`-jamb-${end}`,xx+end*(doorW/2+(span-doorW)/4),outerZ,(span-doorW)/2,rt,roomH);
+      box(prefix+'-lintel',xx,outerZ,doorW,rt,roomH-doorH,doorH);
+    }
+  }
   // Existing era-specific display envelope retained; tier/rim profile is authored.
   box('altar',...a.offset,a.width,a.depth,a.height*.2,0,'altar');
   box('altar-body',...a.offset,a.width*.88,a.depth*.88,a.height*.5,a.height*.2,'altar');

@@ -44,6 +44,9 @@ export function buildHerodianSanctuary({builder,west,y,z,c,surface,emit}){
  cub(5,54,20,97.5,73);
  // Five progressively longer beams above the20×40cubit porch aperture (Middot3:7).
  for(let i=0;i<5;i++)cub(.7,.5,22+2*i,100-.35,46.25+i,0,'roof',.9);
+ // Middot3:8 describes cedar braces between sanctuary and porch walls.
+ // Four beams/levels/sections are authored; keep the central20cubit aperture clear.
+ for(const side of[-1,1])for(const level of[28,36])cub(11,.6,.6,89.5,6+level,side*8,'superstructure',.78);
  //38 actual side/rear cell envelopes:15north,15south,8west.
  for(let tier=0;tier<3;tier++){
   const floor=6+tier*6,inner=17-tier,outer=22,roomWidth=outer-inner;

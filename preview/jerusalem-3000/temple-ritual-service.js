@@ -20,6 +20,13 @@ export function buildHerodianService({builder,minX,altarX,y,z,c,surface,emit}){
  const ring=builder.geo('north-service-ring',()=>new THREE.TorusGeometry(.5*c,.07*c,6,16));
  for(const p of layout.rings)add(ring,[altarX+p.x,floor+.07*c,z+p.z],.7,[Math.PI/2,0,0]);
  for(const p of layout.pillars){box([.6*c,2.2,.6*c],[altarX+p.x,floor+1.1,z+p.z],.97);box([1.2*c,.2,1.2*c],[altarX+p.x,floor+2.3,z+p.z],.76);}
+ // Middot3:5: iron hooks in three rows on cedar blocks. Dimensions/pose authored.
+ const hook=builder.geo('north-service-hook',()=>new THREE.TorusGeometry(.12,.025,6,12,Math.PI*1.5));
+ for(const p of layout.pillars){
+  const xx=altarX+p.x,zz=z+p.z;
+  box([.5*c,1.2,.12],[xx,floor+1.7,zz-.6*c/2-.06],.76);
+  for(const height of[1.4,1.75,2.1])add(hook,[xx,floor+height,zz-.6*c/2-.20],.6,[0,0,Math.PI/2]);
+ }
  for(const p of layout.tables){const x=altarX+p.x,zz=z+p.z;for(const side of[-1,1])box([.2,.7,.7],[x+side*.45,floor+.35,zz],.96);box([1.4,.15,.9],[x,floor+.775,zz],1.05);}
  return layout;
 }

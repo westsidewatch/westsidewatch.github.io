@@ -13,6 +13,21 @@ const terrain={grid:{origin:registration.origin},heightAtWorld:(x,z)=>60+x*.01+z
 const institution={id:'j3k:object:second-temple-early',type:'monument',phaseIds:['persian-nehemiah','hellenistic-hasmonean'],confidence:'inferred',lifecycle:{events:[{phase:'persian-nehemiah',state:'rebuild'},{phase:'hellenistic-hasmonean',state:'transform'}]}};core.register(institution);const original=core.get(institution.id);
 const group=new THREE.Group(),runtime=createHellenisticSanctuary(group,{data,layout,terrain,core});runtime.apply({position:7.9});assert.ok(runtime.diagnostics().visibleTemple>10);assert.equal(runtime.diagnostics().visibleAccess,true);assert.equal(core.get(institution.id),original,'new illustrative version must not overwrite Persian institution/geometry authority');
 const meshes=group.children[0].children,identity=meshes.map(m=>m.geometry.uuid),positions=meshes.map(m=>Array.from(m.geometry.attributes.position.array));
+
+meshes.forEach(m=>m.updateMatrixWorld(true));
+const actual=id=>meshes.find(m=>m.userData.cityObject.componentId===`j3k:hellenistic-sanctuary:${id}`),roofBox=new THREE.Box3().setFromObject(actual('hall-roof')),roofCentre=roofBox.getCenter(new THREE.Vector3());
+const edgeBox=new THREE.Box3().setFromObject(actual('hall-roof-edge-1'));
+assert.ok(Math.abs(edgeBox.max.y-roofBox.max.y-.4)<1e-4,'actual roof must be recessed below perimeter');
+const floorBox=new THREE.Box3().setFromObject(actual('hall-floor')),boundaryBox=new THREE.Box3().setFromObject(actual('hall-inner-lintel')),boundaryCentre=boundaryBox.getCenter(new THREE.Vector3());
+const portalRay=new THREE.Raycaster(new THREE.Vector3(boundaryCentre.x+1,floorBox.max.y+1,roofCentre.z),new THREE.Vector3(-1,0,0),0,2);
+assert.equal(portalRay.intersectObjects(meshes,true).length,0,'internal boundary must contain an actual clear doorway');
+
+for(const side of[-1,1])for(let i=0;i<3;i++){
+ const id=`hall-priest-room-${side}-${i}`,roomBox=new THREE.Box3().setFromObject(actual(id+'-floor')),centre=roomBox.getCenter(new THREE.Vector3()),front=new THREE.Box3().setFromObject(actual(id+'-lintel'));
+ const doorRay=new THREE.Raycaster(new THREE.Vector3(centre.x,roomBox.max.y+1,front.getCenter(new THREE.Vector3()).z+side),new THREE.Vector3(0,0,-side),0,2);
+ assert.equal(doorRay.intersectObjects(meshes,true).length,0,'each priests chamber must have a real doorway');
+ assert.ok(Math.abs(new THREE.Box3().setFromObject(actual(id+'-roof')).min.y-new THREE.Box3().setFromObject(actual(id+'-back')).max.y)<1e-4,'annex roofs and walls must share the datum');
+}
 // Actual upper faces must join despite a sloping ground surface.
 const box=id=>new THREE.Box3().setFromObject(meshes.find(m=>m.userData.cityObject.componentId===`j3k:hellenistic-sanctuary:${id}`));
 for(const id of ['hall-west','hall-side--1','hall-side-1','hall-front--1','hall-front-1','hall-door-lintel'])assert.ok(Math.abs(box(id).max.y-box('hall-roof').min.y)<1e-5,`${id} must meet roof datum`);
