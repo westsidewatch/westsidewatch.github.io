@@ -109,6 +109,24 @@ const {execFileSync}=require('node:child_process');
 const generatedV16=execFileSync(process.execPath,[path.join(root,'scripts/build-emmaus-engraving-v16.mjs')],{encoding:'utf8',maxBuffer:1024*1024*3});
 assert.equal(generatedV16,v16,'V16 SVG must be reproducible from its dependency-free source generator');
 
+// V17 creative source gate — remains in existing P2 contract, not new CI.
+const v17=fs.readFileSync(path.join(root,'static/images/p2-emmaus-time-held-open-v17.svg'),'utf8');
+assert.match(v17,/<svg[^>]*viewBox="0 0 1600 900"/,'V17 keeps the film-field coordinate frame');
+for(const key of ['time-sectioned-aperture','pressed-plate-highlights','engraved-distance-registers',
+                  'sixty-six-canonical-cross-references','time-plate-crosshatch','editorial-chapter-indexing']){
+ assert(v17.includes('id="'+key+'"'),'V17 preserves the '+key+' art-directed layer');
+}
+assert((v17.match(/<path\b/g)||[]).length>=2600,'V17 exports true parametric SVG engraving paths');
+assert.doesNotMatch(v17,/<(?:image|foreignObject|filter)\b|data:image/,'V17 cannot be a traced PNG or generated photo');
+assert.match(css,/body\[data-p2-engraving="v17"\] #p2-realm-background\[data-realm="bible"\]/,
+ 'V17 belongs to the measured video negative space, not the ONE study paper');
+assert.match(css,/background-color:var\(--ws-one-paper,#ded096\)/,
+ 'V17 retains the approved ONE paper material color');
+assert.match(html,/p2Engraving='v17'/,'V17 may only be tested by opt-in branch query');
+const regenV17=execFileSync(process.execPath,[path.join(root,'scripts/build-emmaus-engraving-v17.mjs')],
+ {encoding:'utf8',maxBuffer:1024*1024*4});
+assert.equal(v17,regenV17,'V17 is deterministically rebuilt from its checked-in original source');
+
 console.log('P2 03/04 isolated preview source contract: pass');
 
 if(!process.env.P2_BROWSER_PROOF)process.exit(0);
