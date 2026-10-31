@@ -508,3 +508,20 @@ body[data-p2-engraving="v15"] #emmaus > .emmaus__left::after,
 body[data-p2-engraving="v15"] #emmaus .emmaus__scroll-engraving {
  opacity:0;
 }
+
+/* 03 Emmaus / V16 isolated ART PROOF only.
+   Background is the existing magazine VIDEO negative-space field; the
+   original P2 geometry clip-path and 5:8+square folio footprint remain owned
+   by p2-emmaus-olive-preview.js, not by this style. No second design authority. */
+body[data-p2-engraving="v16"] #p2-realm-background[data-realm="bible"] {
+ background-color:var(--ws-one-paper,#ded096);
+ background-image:url('/images/p2-emmaus-chronology-engraving-v16.svg');
+ background-position:center center;
+ background-size:100% 100%;
+ background-repeat:no-repeat;
+ --ws-engraving-opacity:0;
+}
+body[data-p2-engraving="v16"] #p2-realm-background[data-realm="bible"]::after {
+ content:none;
+}
+/* No change to ONE content, the library's archive, magazine spine or Church. */
