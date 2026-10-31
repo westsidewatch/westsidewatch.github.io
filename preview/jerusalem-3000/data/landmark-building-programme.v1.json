@@ -343,12 +343,17 @@
       "sourceRefs": [
         "kings7"
       ],
-      "researchStatus": "context-sourced-geometry-not-admitted",
+      "researchStatus": "literary-dimensions-with-explicit-uncertain-display-zone",
       "location": null,
-      "footprintMetres": null,
-      "heightMetres": null,
+      "footprintMetres": [
+        45,
+        22.5
+      ],
+      "heightMetres": 13.5,
       "geometryAccepted": false,
-      "existingRuntimeIds": [],
+      "existingRuntimeIds": [
+        "j3k:object:solomon-royal-courtyard-hypothesis"
+      ],
       "existingRuntimeIsApprovedReconstruction": false,
       "notes": "文字尺寸100×50×30肘；肘長換算須列方案，不沿用現代地圖猜測外框。",
       "requiredBeforeModel": [
@@ -358,7 +363,16 @@
         "terrain-and-contemporary-wall-relation",
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
-      ]
+      ],
+      "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md",
+      "displayPlacement": {
+        "frame": "spring-relative-east-x-south-z-metres",
+        "offset": [
+          -140,
+          -435
+        ],
+        "surveyed": false
+      }
     },
     {
       "id": "pillars-hall",
@@ -367,12 +381,17 @@
       "sourceRefs": [
         "kings7"
       ],
-      "researchStatus": "context-sourced-geometry-not-admitted",
+      "researchStatus": "literary-dimensions-with-explicit-uncertain-display-zone",
       "location": null,
-      "footprintMetres": null,
+      "footprintMetres": [
+        22.5,
+        13.5
+      ],
       "heightMetres": null,
       "geometryAccepted": false,
-      "existingRuntimeIds": [],
+      "existingRuntimeIds": [
+        "j3k:object:solomon-royal-courtyard-hypothesis"
+      ],
       "existingRuntimeIsApprovedReconstruction": false,
       "notes": "文字平面50×30肘；高度、細部與精確位置未定。",
       "requiredBeforeModel": [
@@ -382,7 +401,16 @@
         "terrain-and-contemporary-wall-relation",
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
-      ]
+      ],
+      "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md",
+      "displayPlacement": {
+        "frame": "spring-relative-east-x-south-z-metres",
+        "offset": [
+          -140,
+          -414
+        ],
+        "surveyed": false
+      }
     },
     {
       "id": "judgement-hall",
@@ -4958,11 +4986,11 @@
       "all18RegressionRequiredForRuntimeChanges": true
     },
     "activeConstructionPackage": {
-      "id": "B28",
-      "scope": "early-precinct-context-courts-porticoes-and-herodian-stoa-clerestory",
+      "id": "B29",
+      "scope": "royal-precinct-literary-halls-and-antonia-courtyard",
       "overallPlanAccepted": false,
       "completePrecincts": false,
-      "review": "TEMPLE-PRECINCT-CONTEXT.md"
+      "review": "ROYAL-HALLS-AND-ANTONIA.md"
     }
   }
 }

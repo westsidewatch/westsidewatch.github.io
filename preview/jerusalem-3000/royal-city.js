@@ -1,3 +1,4 @@
+import {buildRoyalPrecinctHalls} from './royal-precinct-halls.js';
 import {firstTempleOuterCourt} from './temple-context-layout.js';
 import {sanctuaryAccessVertices} from './sanctuary-access-geometry.js';
 import {firstTempleCourt,courtEnvelopeDatum} from './temple-court-envelopes.js';
@@ -66,6 +67,14 @@ export function createRoyalCity(parent,{data,terrain,core}) {
     for(const side of [-1,1])box(`${prefix}-south-${side}`,'royal-palace',x+side*7.75,z+13,12.5,6,6,stage);
   }
   for(const court of data.royalCity.courtyards)courtyard(court.id,...court.offset,court.stage);
+  buildRoyalPrecinctHalls(data,{
+    stone:templeStone,timber:roof,datum:bounds=>courtEnvelopeDatum(bounds,anchor,terrain),
+    emit:(id,x,z,w,d,h,material,lift,ground)=>{
+      let geometry=null;
+      if(id.endsWith('-floor')){const points=w>d?[[x-w/2,z],[x+w/2,z]]:[[x,z-d/2],[x,z+d/2]],vertices=sanctuaryAccessVertices(points,Math.min(w,d),surface,()=>ground+h);for(let i=0;i<vertices.length;i+=3){vertices[i]-=x;vertices[i+1]-=ground+h/2;vertices[i+2]-=z;}geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));}
+      return box(id,'royal-palace',x,z,w,d,h,'solomon',material,0,lift,null,ground,geometry);
+    }
+  });
   const t=data.royalCity.temple,c=t.cubitMetres,l=t.lengthCubits*c,w=t.widthCubits*c,h=t.heightCubits*c,[x,z]=t.offset;
   // One display datum for the ensemble; footing bottoms still meet the DEM.
   const court=firstTempleCourt(data,spatial),templeGround=courtEnvelopeDatum(court.bounds,anchor,terrain);
@@ -194,7 +203,8 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   const footprints=new Map();
   for(const [id,parts] of bindings){
     const bounds=new THREE.Box3();for(const mesh of parts)bounds.expandByObject(mesh);
-    footprints.set(id,{polygon:[{x:bounds.min.x,z:bounds.min.z},{x:bounds.max.x,z:bounds.min.z},{x:bounds.max.x,z:bounds.max.z},{x:bounds.min.x,z:bounds.max.z}]});
+    const clusters=new Map();for(const mesh of parts){const key=mesh.userData.cityObject.reservationCluster||id;if(!clusters.has(key))clusters.set(key,new THREE.Box3());clusters.get(key).expandByObject(mesh);}
+    for(const [key,b]of clusters)footprints.set(key,{objectId:id,polygon:[{x:b.min.x,z:b.min.z},{x:b.max.x,z:b.min.z},{x:b.max.x,z:b.max.z},{x:b.min.x,z:b.max.z}]});
     const edge=spatial.edges.find(e=>id===`j3k:object:royal-road:${e.id}`),gate=spatial.gates.find(g=>id===`j3k:object:royal-gate:${g.id}`);
     const topology=edge?{from:edge.from,to:edge.to,points:edge.points.map(([x,z])=>({x:anchor.x+x,z:anchor.z+z}))}:gate?{gateId:gate.id,wallId:gate.wall,center:{x:anchor.x+gate.offset[0],z:anchor.z+gate.offset[1]}}:null;
     const record=core.get(id);core.register({...record,geometry:{status:'inferred-component-assembly',frame:'canonical-dem-enu',primitive:'component-assembly',authority:'literary-and-illustrative-royal-city',bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()}},metadata:{...record.metadata,rendererBinding:'royal-city-adapter-v1',componentIds:parts.map(m=>m.userData.cityObject.componentId),geometryVerified:false,spatialTopology:topology}});
@@ -213,7 +223,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
     exclusionsFor(phaseId){
       if(!['late-first-temple','babylonian-destruction'].includes(phaseId))return [];
       const position=timeline.phases.findIndex(p=>p.id===phaseId)+.5;
-      return [...footprints].filter(([id])=>['first-temple','royal-palace'].includes(bindings.get(id)[0].userData.cityObject.kind)&&['build','transform','ruin'].includes(stateAt(id,position))).map(([id,zone])=>({...zone,id,authority:'inferred-royal-footprint-exclusion-not-survey'}));
+      return [...footprints].filter(([,zone])=>['first-temple','royal-palace'].includes(bindings.get(zone.objectId)[0].userData.cityObject.kind)&&['build','transform','ruin'].includes(stateAt(zone.objectId,position))).map(([id,zone])=>({...zone,id,authority:'inferred-royal-footprint-exclusion-not-survey'}));
     },
     apply({position=0,evidenceAllowed,ruin=1}) {
       currentPosition=position;stage=stateAt('j3k:object:first-temple',position)==='absent'?'david':'solomon';group.visible=false;

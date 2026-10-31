@@ -31,5 +31,9 @@ for(const side of[-1,1]){
  const ray=(xx)=>new THREE.Raycaster(new THREE.Vector3(xx,yy,centre.z+side*(d*.2+2)),new THREE.Vector3(0,0,-side),0,3).intersectObjects(basilicaGroup.children,true);
  assert.equal(ray(centre.x-w/2+4+(w-8)/22).length,0,'clerestory bay must be genuinely open');assert.ok(ray(centre.x-w/2+4).length>0,'clerestory pier must support upper roof edge');
 }
-basilicaBuilder.dispose();mat.dispose();
+basilicaBuilder.dispose();
+const fort=objects.find(o=>o.kind==='fortress'),fortBuilder=new HeritageBuilder({reconstructed:mat,inferred:mat,observed:mat,disputed:mat}),fortGroup=new THREE.Group();fortBuilder.currentObject=fort;addEvidenceArchitecture(fortBuilder,fort,{grid:{origin:{lat:31.778,lon:35.235}},sampleElevation:()=>200,heightAtWorld:()=>200});fortBuilder.finish(fortGroup);fortGroup.updateMatrixWorld(true);const fortBounds=new THREE.Box3().setFromObject(fortGroup),fc=fortBounds.getCenter(new THREE.Vector3());
+const courtyard=new THREE.Raycaster(new THREE.Vector3(fc.x,300,fc.z),new THREE.Vector3(0,-1,0)).intersectObjects(fortGroup.children,true)[0];assert.ok(Math.abs(courtyard.point.y-202.12)<.001,'Antonia courtyard must really be open to the sky');
+assert.equal(new THREE.Raycaster(new THREE.Vector3(fc.x,204,fc.z+43),new THREE.Vector3(0,0,-1),0,12).intersectObjects(fortGroup.children,true).length,0,'authored south portal must open into the court');
+assert.ok(Math.abs(fortBounds.max.y-(200+2+70*.525))<.001,'SE tower must retain the selected70cubit height above inherited base');fortBuilder.dispose();mat.dispose();
 console.log('PASS: existing-route-aligned court entrance, full-envelope DEM datum, physically supported approach, separately inferred/batched colonnades, no Antonia collision or roof overlap, and declared ruin/unknown fate');

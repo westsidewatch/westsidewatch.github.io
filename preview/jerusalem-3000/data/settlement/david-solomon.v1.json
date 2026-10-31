@@ -585,7 +585,41 @@
         "solomon": "j3k:object:solomon-northern-wall-hypothesis"
       },
       "roadWidth": 1.6
-    }
+    },
+    "precinctHalls": [
+      {
+        "id": "lebanon-house",
+        "offset": [
+          -140,
+          -435
+        ],
+        "lengthCubits": 100,
+        "widthCubits": 50,
+        "heightCubits": 30,
+        "rows": 4,
+        "columnsPerRow": 8,
+        "source": "https://bible.usccb.org/bible/1kings/7",
+        "placementAuthority": "authored-southern-precinct-display-zone-not-excavated-location",
+        "columnCountAuthority": "4rows-from-selected-text;8per-row-authored-not45rafters",
+        "geometryVerified": false
+      },
+      {
+        "id": "pillars-hall",
+        "offset": [
+          -140,
+          -414
+        ],
+        "lengthCubits": 50,
+        "widthCubits": 30,
+        "authoredHeightMetres": 7,
+        "rows": 2,
+        "columnsPerRow": 6,
+        "source": "https://bible.usccb.org/bible/1kings/7",
+        "placementAuthority": "authored-southern-precinct-display-zone-not-excavated-location",
+        "columnCountAuthority": "authored-display-count-and-height",
+        "geometryVerified": false
+      }
+    ]
   },
   "houseDimensions": [
     10,

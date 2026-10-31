@@ -17,7 +17,24 @@ function stoa(builder,r,surface){const y=precinctY(r)+D.platform.pavingThickness
   box(builder,[w,.6,.5],[r.east,high-.3,z],surface,'superstructure',.98);
  }
  for(const z of[-d*.35,d*.35])box(builder,[w,1.2,d*.3],[r.east,y+D.stoa.sideHeight-.6,-r.north+z],surface,'roof',.94);box(builder,[w,1.2,d*.4],[r.east,y+D.stoa.centreHeight-.6,-r.north],surface,'roof',1);}
-function fortress(builder,r,surface){const y=r.up;box(builder,[126,2,106],[r.east,y+1,-r.north],surface,'foundation');box(builder,[100,21,80],[r.east,y+12.5,-r.north],surface,'superstructure',.94);for(const[x,z]of[[-50,-40],[50,-40],[-50,40],[50,40]]){const h=x>0&&z>0?70*D.cubitMetres:50*D.cubitMetres;box(builder,[22,h-1,22],[r.east+x,y+2+(h-1)/2,-r.north+z],surface,'superstructure');box(builder,[24,1,24],[r.east+x,y+2+h-.5,-r.north+z],surface,'roof',.95)}box(builder,[104,1,84],[r.east,y+23.5,-r.north],surface,'roof',.96);}
+function fortress(builder,r,surface){
+ const y=r.up;
+ box(builder,[126,2,106],[r.east,y+1,-r.north],surface,'foundation');
+ // Retain the inherited100×80m body; open its interior rather than roof a solid box.
+ box(builder,[100,.12,80],[r.east,y+2.06,-r.north],surface,'foundation',.96);
+ for(const side of[-1,1])box(builder,[4,21,80],[r.east+side*48,y+12.5,-r.north],surface,'superstructure',.94);
+ box(builder,[92,21,4],[r.east,y+12.5,-r.north-38],surface,'superstructure',.94);
+ for(const side of[-1,1])box(builder,[43,21,4],[r.east+side*24.5,y+12.5,-r.north+38],surface,'superstructure',.94);
+ box(builder,[6,16,4],[r.east,y+15,-r.north+38],surface,'superstructure',.94);
+ // Four perimeter roof walks preserve24m body roof height, leaving courtyard open.
+ for(const side of[-1,1]){box(builder,[104,1,4],[r.east,y+23.5,-r.north+side*40],surface,'roof',.96);box(builder,[4,1,76],[r.east+side*50,y+23.5,-r.north],surface,'roof',.96);}
+ for(const[x,z]of[[-50,-40],[50,-40],[-50,40],[50,40]]){const h=x>0&&z>0?70*D.cubitMetres:50*D.cubitMetres;box(builder,[22,h-1,22],[r.east+x,y+2+(h-1)/2,-r.north+z],surface,'superstructure');box(builder,[24,1,24],[r.east+x,y+2+h-.5,-r.north+z],surface,'roof',.95);}
+ // Authored internal sheltered edges; source describes rooms/courts/porticoes, not this plan.
+ for(const side of[-1,1]){
+  box(builder,[6,.4,56],[r.east+side*40,y+7.8,-r.north],surface,'roof',.93);
+  for(let i=0;i<9;i++)column(builder,r.east+side*37.5,y+2.12,-r.north-26+i*6.5,surface,5.48);
+ }
+}
 function sacredComplex(builder,r,surface){
  const base=precinctY(r)+D.platform.pavingThickness,layout=herodianRitualLayout(D.cubitMetres),c=D.cubitMetres;
  const y=base+layout.levels.priests,israelY=base+layout.levels.israel,w=D.priestCourt.eastWest,d=D.priestCourt.northSouth,ww=D.womenCourt.eastWest,courtX=r.east-ww/2;
@@ -82,6 +99,6 @@ function sacredComplex(builder,r,surface){
 }
 function approach(builder,r,surface){const y=r.up;for(let i=0;i<13;i++){const width=184-i*3;box(builder,[width,4.5,16],[r.east,y+i*2,-r.north+(i-6)*15],surface,'circulation',i%2?.94:1)}for(const x of[-58,58])box(builder,[24,30,20],[r.east+x,y+27,-r.north+104],surface,'superstructure',.95);}
 function street(builder,r,surface){const y=r.up;for(let i=-10;i<=10;i++)for(let j=-1;j<=1;j++)box(builder,[16,4.5,17],[r.east+j*17,y+2.25,-r.north+i*17],surface,'circulation',(i+j)%2?.91:.98);box(builder,[10,24,360],[r.east-34,y+12,-r.north],surface,'retaining',.9);}
-export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v12-temple-court-context';
+export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v13-royal-halls-and-antonia-courtyard';
 export const SUPPORTED_ARCHITECTURAL_KINDS=Object.freeze(['platform-enclosure','perimeter-porticoes','portico-basilica','fortress','sacred-complex','pilgrimage-access','street']);
 export function buildArchitecturalGrammar(builder,object,registration,surface){switch(object.kind){case'perimeter-porticoes':buildPerimeterPorticoes(builder,registration,surface,box);break;case'platform-enclosure':platform(builder,registration,surface);break;case'portico-basilica':stoa(builder,registration,surface);break;case'fortress':fortress(builder,registration,surface);break;case'sacred-complex':sacredComplex(builder,registration,surface);break;case'pilgrimage-access':approach(builder,registration,surface);break;case'street':street(builder,registration,surface);break;default:return false}return true;}

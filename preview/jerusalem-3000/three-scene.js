@@ -919,7 +919,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     focusCityObject(id){
       const gate=namedGates?.find(g=>g.id===id),box=new THREE.Box3();root.updateMatrixWorld(true);let found=false;
       root.traverse(m=>{if(!m.isMesh||m.userData.cityObject?.objectId!==id)return;for(let p=m;p;p=p.parent)if(!p.visible)return;box.expandByObject(m);found=true;});if(!found)return false;
-      const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*(id==='j3k:object:inner-temple'?(camera.aspect<1?1.8:1.15):2.1);
+      const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*(id==='j3k:object:inner-temple'?(camera.aspect<1?1.8:1.15):id==='j3k:object:antonia'?(camera.aspect<1?2.1:1.5):2.1);
       controls.minDistance=5;controls.target.copy(focus);camera.position.copy(focus).add(gate?new THREE.Vector3(-gate.normal.x*distance,.25*distance,-gate.normal.z*distance):new THREE.Vector3(.65*distance,.7*distance,distance));controls.update();needsFrame=true;return true;
     },
     setTempleSection(value){const enabled=templeSection.set(value,root);needsFrame=true;return enabled;},
