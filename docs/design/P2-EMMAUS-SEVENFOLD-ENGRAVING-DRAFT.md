@@ -124,3 +124,23 @@ Preview: `/experiments/p2-emmaus-olive-handoff-lab.html?engraving=v14`.
 - **Visual derivation:** 66 distinct native-SVG trajectories; a double-flared chronology lattice that becomes extremely narrow at the interpretive throat, then opens; multiple fine cross-reference chords and sparse register marks; a low-opacity enclosing geometry; ONE papyrus/paper remains background authority. This should be graph/engraving, never fluid-water/V75 lines or a literal parchment object.
 - SVG remains completely vector; NO embedded bitmaps. Fine line density, geometry and text safety require actual P2 desktop/mobile review. This composition is currently not endorsed for production.
 - Keep the existing Magazine/Church, live ONE study panel, canonical book rail, Doré gallery, 5:8+square inherited footprint and scroll behavior untouched.
+
+
+## V16 / Time field engraving — film-negative-space edition (2026-10-30)
+
+**Status:** original native SVG + reproducible zero-dependency build script, opt-in Draft PR #1381; not art-approved and not merged to production.
+
+**Files:**
+- SVG: `static/images/p2-emmaus-chronology-engraving-v16.svg` (1,812 native SVG path elements, no bitmaps or filters)
+- Source generator: `scripts/build-emmaus-engraving-v16.mjs`; regenerate with `node scripts/build-emmaus-engraving-v16.mjs > static/images/p2-emmaus-chronology-engraving-v16.svg`
+- Real P2 preview: `/experiments/p2-emmaus-olive-handoff-lab.html?ground=1&engraving=v16&d=9.1`
+
+**Corrected placement:** This engraving is the *existing video surround* `#p2-realm-background[data-realm=bible]`, **not** the embedded ONE study page. Its punch-out follows the real measured 02 Magazine spread (Contents / cover / frozen book spine). No new full-screen transition, no media players, and no fake hero image.
+
+**Visual logic:** The reference supplied by the user is a space-time tunnel; retain a spatial passage and changing time scale, but not a black hole, sci-fi lighting or a realistic scroll. The V16 system combines an orthogonal warped chronological mesh, 66 segmented scripture cross-reference registers, an open measured passage, and localized diagonally hatched tonal lenses. It is distinguished from the V75 continuous living-water flow by its *cross-indexed axes and broken citations*. No large black central void, no empty right side, no decorative water waves. Geometry spans all four edges. All strokes are native SVG paths.
+
+**Color authority:** The actual ONE paper `--ws-one-paper` (`#ded096`), registered through the existing Design OS, is applied to the film background in CSS. Engraved strokes use the corresponding OS `--ws-night` (`#102a43`), sparse `--ws-first-light` (`#a2872a`) and muted supplementary ink; no Magazine midnight background. Do not create new palette variables or CSS authorities.
+
+**Theological editorial context:** Luke 24:27 is the verse of interpretation; 2 Peter 3:8 and Psalm 16:2 are supplemental conceptual references, not a literal map of God's location or a scientific model of time. This is a nonfigurative design metaphor.
+
+**Validation status:** Source inspection checked complete native SVG path geometry and CSS opt-in attachment. Existing GitHub Actions reported Production Build success and unrelated Core Contract / DORE System Atlas failures on the latest head; those failures reference a protected homepage SVG and a film-document drift, respectively. Live browser visual acceptance is **not** established by the source checks or CI alone. Keep the original Magazine, Church and existing ONE content unchanged until accepted.
