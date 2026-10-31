@@ -1,3 +1,4 @@
+import {southernApproachReservation} from './southern-approach.js';
 import {createTempleSectionView} from './temple-section-view.js';
 import {housingBoundaryStages} from './housing-boundary-stages.js';
 import {createArchitecturalTerrainOcclusion} from './architectural-terrain-occlusion.js';
@@ -76,6 +77,7 @@ import { buildHerodianParcelCore } from './herodian-parcel-core.js';
 import { buildHerodianParcelArchitecture } from './herodian-typology-grammar.js';
 import {
   createCityProjection,
+  cityObjectIdForMesh,
   isCorePhase,
 } from './city-lifecycle-projection.js';
 const EVIDENCE_COLORS = {
@@ -494,6 +496,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       builder.currentObject = null;
       if (registered) {
         renderableObjects++;
+        if(object.kind==='pilgrimage-access')exclusions.push(southernApproachReservation(registered));
         if (['platform-enclosure', 'fortress'].includes(object.kind)) {
           const w = object.kind === 'fortress' ? 156 : HERODIAN_DIMENSIONS.platform.eastWest+20,
             d = object.kind === 'fortress' ? 136 : HERODIAN_DIMENSIONS.platform.northSouth+20,
@@ -881,7 +884,12 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     defenseTimelineIndex(){return defenseTimeline?.index()??[];},
     defenseTransitionIndex(){return defenseTimeline?.transitionIndex()??[];},
     inspectSpatialSkeleton(){return currentPhaseId?collectSpatialSkeleton(cityCoreRuntime.core,terrainRuntime,{phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode,includeRetained:retainedVisible}):null;},
-    inspectHerodianDimensions(){return structuredClone(herodianScaleReport);},
+    inspectHerodianDimensions(){
+      const result=structuredClone(herodianScaleReport);if(!result||!isCorePhase(currentPhaseId))return result;
+      const approach=result.models.find(m=>m.id==='j3k:object:southern-approach'),overlaps=new Set();let examined=0;root.updateMatrixWorld(true);
+      root.traverse(m=>{if(!m.isMesh)return;for(let p=m;p;p=p.parent)if(!p.visible)return;const id=cityObjectIdForMesh(m),record=cityCoreRuntime.core.get(id);if(record?.type!=='building')return;examined++;const b=new THREE.Box3().setFromObject(m),a=approach.bounds,dx=Math.min(b.max.x,a.max[0])-Math.max(b.min.x,a.min[0]),dz=Math.min(b.max.z,a.max[2])-Math.max(b.min.z,a.min[2]);if(dx>.01&&dz>.01)overlaps.add(id);});
+      result.southernApproachHousingClearance={examinedMeshes:examined,overlappingBuildingIds:[...overlaps],scope:'actual-visible-building-bounds-versus-stair-footprint',historicalGeometryAccepted:false};return result;
+    },
     inspectRegionalLandforms(){return regionalLandforms?.snapshot()??null;},
     landmarkChronology(){return (activeWorldEntry?.runtime.registration?.cores||[]).filter(c=>c.metadata.landmarkChronology).map(c=>({id:c.id,...coreStageAt(cityCoreRuntime.core.get(c.id)||c,timelinePosition-Math.floor(timelinePosition)),projection:c.metadata.landmarkChronology.projection,visibleProfiles:(activeWorldEntry.runtime.landmarkMeshes||[]).filter(m=>m.visible&&m.userData.cityObject?.objectId===c.id).map(m=>m.userData.landmarkRepresentation.profile),geometryVerified:false}));},
     inspectCityEnclosure(){return cityEnclosureAudit?.snapshot()??null;},
@@ -919,7 +927,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     focusCityObject(id){
       const gate=namedGates?.find(g=>g.id===id),box=new THREE.Box3();root.updateMatrixWorld(true);let found=false;
       root.traverse(m=>{if(!m.isMesh||m.userData.cityObject?.objectId!==id)return;for(let p=m;p;p=p.parent)if(!p.visible)return;box.expandByObject(m);found=true;});if(!found)return false;
-      const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*(id==='j3k:object:inner-temple'?(camera.aspect<1?1.8:1.15):id==='j3k:object:antonia'?(camera.aspect<1?2.1:1.5):2.1);
+      const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*(id==='j3k:object:inner-temple'?(camera.aspect<1?1.8:1.15):['j3k:object:antonia','j3k:object:southern-approach'].includes(id)?(camera.aspect<1?2.1:1.5):2.1);
       controls.minDistance=5;controls.target.copy(focus);camera.position.copy(focus).add(gate?new THREE.Vector3(-gate.normal.x*distance,.25*distance,-gate.normal.z*distance):new THREE.Vector3(.65*distance,.7*distance,distance));controls.update();needsFrame=true;return true;
     },
     setTempleSection(value){const enabled=templeSection.set(value,root);needsFrame=true;return enabled;},

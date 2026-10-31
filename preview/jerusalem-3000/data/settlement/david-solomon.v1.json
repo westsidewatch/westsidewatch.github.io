@@ -421,6 +421,32 @@
           "id": "northern-gate",
           "gateId": "solomon-north",
           "stage": "solomon"
+        },
+        {
+          "id": "precinct-junction",
+          "offset": [
+            -76,
+            -451
+          ],
+          "stage": "solomon"
+        },
+        {
+          "id": "royal-hall-junction",
+          "offset": [
+            -110,
+            -435
+          ],
+          "stage": "solomon"
+        },
+        {
+          "id": "lebanon-entry",
+          "hallId": "lebanon-house",
+          "stage": "solomon"
+        },
+        {
+          "id": "pillars-entry",
+          "hallId": "pillars-hall",
+          "stage": "solomon"
         }
       ],
       "edges": [
@@ -522,13 +548,9 @@
         },
         {
           "id": "temple-entry",
-          "from": "temple-approach",
+          "from": "precinct-junction",
           "to": "temple-entry",
           "via": [
-            [
-              -76,
-              -451
-            ],
             [
               -76,
               -470
@@ -551,6 +573,44 @@
             ]
           ],
           "stage": "solomon"
+        },
+        {
+          "id": "temple-forecourt",
+          "from": "temple-approach",
+          "to": "precinct-junction",
+          "stage": "solomon"
+        },
+        {
+          "id": "royal-hall-spine",
+          "from": "precinct-junction",
+          "to": "royal-hall-junction",
+          "via": [
+            [
+              -110,
+              -451
+            ]
+          ],
+          "stage": "solomon"
+        },
+        {
+          "id": "lebanon-access",
+          "from": "royal-hall-junction",
+          "to": "lebanon-entry",
+          "hallId": "lebanon-house",
+          "stage": "solomon"
+        },
+        {
+          "id": "pillars-access",
+          "from": "royal-hall-junction",
+          "to": "pillars-entry",
+          "via": [
+            [
+              -110,
+              -414
+            ]
+          ],
+          "hallId": "pillars-hall",
+          "stage": "solomon"
         }
       ],
       "requiredDestinations": {
@@ -563,7 +623,9 @@
         "solomon": [
           "solomon-court",
           "temple-entry",
-          "northern-gate"
+          "northern-gate",
+          "lebanon-entry",
+          "pillars-entry"
         ]
       },
       "regions": [

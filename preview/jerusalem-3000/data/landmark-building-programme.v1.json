@@ -4989,11 +4989,61 @@
       "all18RegressionRequiredForRuntimeChanges": true
     },
     "activeConstructionPackage": {
-      "id": "B29",
-      "scope": "royal-precinct-literary-halls-and-antonia-courtyard",
+      "id": "B30",
+      "scope": "temple-to-city-first-ring-access-and-southern-approach-repair",
       "overallPlanAccepted": false,
       "completePrecincts": false,
-      "review": "ROYAL-HALLS-AND-ANTONIA.md"
+      "review": "TEMPLE-TO-CITY-EXPANSION.md"
+    },
+    "templeToCityOrder": {
+      "runtimeEnabled": false,
+      "policy": "shared-concentric-completeness-using-period-specific-evidence-not-Herodian-backprojection",
+      "phases": [
+        "david-solomon",
+        "late-first-temple",
+        "persian-nehemiah",
+        "hellenistic-hasmonean",
+        "herodian-jesus"
+      ],
+      "rings": [
+        {
+          "id": "R0",
+          "scope": "sanctuary-courts-service-ensembles",
+          "state": "partial",
+          "gate": "plan/levels/real doors/source conflict review; no complete precinct claim"
+        },
+        {
+          "id": "R1",
+          "scope": "temple-approaches-and-neighbouring-monument-connections",
+          "state": "in-progress-B30",
+          "gate": "continuous supported paths, road/gate clearance, contemporary housing exclusions, period isolation"
+        },
+        {
+          "id": "R2",
+          "scope": "named-landmarks-and-associated-street-blocks",
+          "state": "source-and-registration-audit-needed",
+          "gate": "period form, source location or explicit uncertain zone, metre budgets, fate; no random landmark placement"
+        },
+        {
+          "id": "R3",
+          "scope": "streets-gates-and-wall-circuits",
+          "state": "existing-prototype-requires-connected-review",
+          "gate": "each street/gate/wall intersection open or justified sealed/destroyed; source-dated circuit"
+        },
+        {
+          "id": "R4",
+          "scope": "whole-city-coverage-and-surrounding-terrain",
+          "state": "unaccepted",
+          "gate": "all18period spatial and17adjacency acceptance; valleys/hills/slope preserved"
+        }
+      ],
+      "blockers": [
+        "Herodian western street candidate overlaps rounded platform envelope; source registration must precede new bridge/stair links",
+        "Antonia/platform/portico height and endpoint registration remains unresolved",
+        "First-temple royal and sanctuary placements are authored uncertain zones",
+        "Early Second Temple court footprints and absolute levels are not excavated surveys"
+      ],
+      "historicalGeometryAccepted": false
     }
   }
 }

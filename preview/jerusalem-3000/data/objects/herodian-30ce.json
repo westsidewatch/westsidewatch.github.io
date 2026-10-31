@@ -140,7 +140,8 @@
         "ruin": "70 CE / later reuse"
       },
       "geometry": {
-        "status": "registration-pending"
+        "status": "registration-pending",
+        "authority": "reference-width-with-authored-human-scale-step-profile-not-digitized-excavation"
       },
       "spatial": {
         "frame": "local-enu",
@@ -156,7 +157,12 @@
           "up": null
         },
         "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
-      }
+      },
+      "limitations": [
+        "26級、每級0.25米及交替踏面為展示選擇，非測繪階梯。",
+        "南階位置沿用既有候選；與平台、門洞及地下通道配準未完成。",
+        "移除舊184米寬巨階與虛構高大門體，不據此宣稱南入口完成。"
+      ]
     },
     {
       "id": "j3k:object:western-street",

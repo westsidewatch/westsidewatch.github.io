@@ -40,6 +40,10 @@ for(const side of['west','east','north']){
  const columns=parts.filter(m=>m.userData.cityObject.componentId.includes(`court-portico-${side}-column-`));assert.ok(columns.length>20);
  for(const column of columns){const cb=new THREE.Box3().setFromObject(column);assert.ok(Math.abs(cb.min.y-fb.max.y)<1e-4&&Math.abs(cb.max.y-rb.min.y)<1e-4,'all portico columns must join floor and roof on sloping DEM');}
 }
+for(const side of['west','east']){
+ const link=actual(`court-link-${side}`),floor=actual(`court-portico-${side}-floor`),fb=new THREE.Box3().setFromObject(floor),lp=link.geometry.attributes.position;assert.ok(link,'court context must be connected to main approach');
+ const targetX=side==='west'?fb.max.x:fb.min.x,ys=[];for(let i=0;i<lp.count;i++)if(Math.abs(lp.getX(i)-targetX)<.001)ys.push(lp.getY(i));assert.ok(ys.some(y=>Math.abs(y-fb.max.y-.02)<.001),'court link must meet gallery floor with safe paving clearance');
+}
 const edgeBox=new THREE.Box3().setFromObject(actual('hall-roof-edge-1'));
 assert.ok(Math.abs(edgeBox.max.y-roofBox.max.y-.4)<1e-4,'actual roof must be recessed below perimeter');
 const floorBox=new THREE.Box3().setFromObject(actual('hall-floor')),boundaryBox=new THREE.Box3().setFromObject(actual('hall-inner-lintel')),boundaryCentre=boundaryBox.getCenter(new THREE.Vector3());

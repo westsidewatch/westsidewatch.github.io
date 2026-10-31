@@ -39,6 +39,11 @@ try {
   const centre=bounds.getCenter(new THREE.Vector3()),ray=new THREE.Raycaster(new THREE.Vector3(bounds.min.x-1,bounds.min.y+1,centre.z),new THREE.Vector3(1,0,0),0,size.x+2);
   assert.equal(ray.intersectObjects(selected,true).length,0,'royal hall must have an actual open central aisle');
  }
+ for(const profile of data.royalCity.precinctHalls){
+  const node=layout.nodes.find(n=>n.hallId===profile.id),edge=layout.edges.find(e=>e.hallId===profile.id),road=parent.children[0].children.find(m=>m.userData.cityObject.objectId===`j3k:object:royal-road:${edge.id}`),floor=hallParts.find(m=>m.userData.cityObject.componentId===`j3k:royal:precinct-${profile.id}-floor`),fb=new THREE.Box3().setFromObject(floor),p=road.geometry.attributes.position;
+  assert.ok(layout.reachable('solomon').includes(node.id));assert.ok(!layout.reachable('david').includes(node.id));
+  const centre=fb.getCenter(new THREE.Vector3()),hits=[];for(let i=0;i<p.count;i++)if(Math.abs(p.getX(i)-fb.max.x)<.001)hits.push(p.getY(i));assert.ok(hits.some(y=>Math.abs(y-fb.max.y-.09)<.001),'hall access paving must reach its own supported display floor');
+ }
  const marked=hallParts.find(m=>m.userData.landmarkFocus);assert.ok(marked?.userData.cityObject.componentId.endsWith('lebanon-house-roof'),'royal context callout must point at actual roof, not the empty combined bounding-box centre');
  const reserved=runtime.exclusionsFor('late-first-temple');for(const profile of data.royalCity.precinctHalls)assert.ok(reserved.some(r=>r.id===`j3k:royal-context:${profile.id}`),'each hall must exclude housing by its own footprint, not one enlarged blank rectangle');
  runtime.apply({position:3.2,evidenceAllowed:()=>true});assert.ok(hallParts.every(m=>!m.visible),'Solomon halls must not appear in David');runtime.apply({position:3.9,evidenceAllowed:()=>true});assert.ok(hallParts.every(m=>m.visible));

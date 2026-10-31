@@ -1,3 +1,4 @@
+import {southernApproachPlan,buildSouthernApproach} from '../preview/jerusalem-3000/southern-approach.js';
 import {firstTempleOuterCourt,earlyCourtPorticoes} from '../preview/jerusalem-3000/temple-context-layout.js';
 import {HERODIAN_DIMENSIONS as D} from '../preview/jerusalem-3000/herodian-dimensions.js';
 import assert from 'node:assert/strict';import fs from 'node:fs/promises';import * as THREE from 'three';
@@ -35,5 +36,9 @@ basilicaBuilder.dispose();
 const fort=objects.find(o=>o.kind==='fortress'),fortBuilder=new HeritageBuilder({reconstructed:mat,inferred:mat,observed:mat,disputed:mat}),fortGroup=new THREE.Group();fortBuilder.currentObject=fort;addEvidenceArchitecture(fortBuilder,fort,{grid:{origin:{lat:31.778,lon:35.235}},sampleElevation:()=>200,heightAtWorld:()=>200});fortBuilder.finish(fortGroup);fortGroup.updateMatrixWorld(true);const fortBounds=new THREE.Box3().setFromObject(fortGroup),fc=fortBounds.getCenter(new THREE.Vector3());
 const courtyard=new THREE.Raycaster(new THREE.Vector3(fc.x,300,fc.z),new THREE.Vector3(0,-1,0)).intersectObjects(fortGroup.children,true)[0];assert.ok(Math.abs(courtyard.point.y-202.12)<.001,'Antonia courtyard must really be open to the sky');
 assert.equal(new THREE.Raycaster(new THREE.Vector3(fc.x,204,fc.z+43),new THREE.Vector3(0,0,-1),0,12).intersectObjects(fortGroup.children,true).length,0,'authored south portal must open into the court');
-assert.ok(Math.abs(fortBounds.max.y-(200+2+70*.525))<.001,'SE tower must retain the selected70cubit height above inherited base');fortBuilder.dispose();mat.dispose();
+assert.ok(Math.abs(fortBounds.max.y-(200+2+70*.525))<.001,'SE tower must retain the selected70cubit height above inherited base');fortBuilder.dispose();
+const southern=objects.find(o=>o.kind==='pilgrimage-access'),stepBuilder=new HeritageBuilder({observed:mat,reconstructed:mat,inferred:mat}),stepGroup=new THREE.Group();stepBuilder.currentObject=southern;const stepReg=addEvidenceArchitecture(stepBuilder,southern,{grid:{origin:{lat:31.778,lon:35.235}},sampleElevation:()=>200,heightAtWorld:()=>200});stepBuilder.finish(stepGroup);stepGroup.updateMatrixWorld(true);const stepPlan=southernApproachPlan(),stepBounds=new THREE.Box3().setFromObject(stepGroup);
+assert.ok(Math.abs(stepBounds.max.x-stepBounds.min.x-64)<.001,'southern stairs must not retain184m placeholder width');assert.ok(stepBounds.max.y<210,'no2m risers or invented30m gate blocks may remain');
+for(const step of stepPlan.steps){const hit=new THREE.Raycaster(new THREE.Vector3(stepReg.east,300,-stepReg.north+(step.start+step.end)/2),new THREE.Vector3(0,-1,0)).intersectObjects(stepGroup.children,true)[0];assert.ok(Math.abs(hit.point.y-(200+step.height))<.001,'all26 actual treads must follow selected human-scale display rises');}
+assert.ok(stepBounds.min.z>240,'stairs must stay outside rounded platform rather than pretend to close unresolved gate gap');stepBuilder.dispose();mat.dispose();
 console.log('PASS: existing-route-aligned court entrance, full-envelope DEM datum, physically supported approach, separately inferred/batched colonnades, no Antonia collision or roof overlap, and declared ruin/unknown fate');

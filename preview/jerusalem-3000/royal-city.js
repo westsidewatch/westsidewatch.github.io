@@ -1,4 +1,4 @@
-import {buildRoyalPrecinctHalls} from './royal-precinct-halls.js';
+import {royalPrecinctHallLayouts,buildRoyalPrecinctHalls} from './royal-precinct-halls.js';
 import {firstTempleOuterCourt} from './temple-context-layout.js';
 import {sanctuaryAccessVertices} from './sanctuary-access-geometry.js';
 import {firstTempleCourt,courtEnvelopeDatum} from './temple-court-envelopes.js';
@@ -67,6 +67,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
     for(const side of [-1,1])box(`${prefix}-south-${side}`,'royal-palace',x+side*7.75,z+13,12.5,6,6,stage);
   }
   for(const court of data.royalCity.courtyards)courtyard(court.id,...court.offset,court.stage);
+  const hallAccessDatums=new Map(royalPrecinctHallLayouts(data).map(h=>{const [x,z]=h.offset;return[h.id,courtEnvelopeDatum([x-h.length/2,z-h.width/2,x+h.length/2,z+h.width/2],anchor,terrain)];}));
   buildRoyalPrecinctHalls(data,{
     stone:templeStone,timber:roof,datum:bounds=>courtEnvelopeDatum(bounds,anchor,terrain),
     emit:(id,x,z,w,d,h,material,lift,ground)=>{
@@ -183,8 +184,9 @@ export function createRoyalCity(parent,{data,terrain,core}) {
     box(`gate-${gate.id}-lintel`,'city-gate',gx,gz,gate.width+2,2.5,1,gate.stage,stone,gate.angle,4,id);
   }
   for(const edge of spatial.edges){
-    const localVertices=sanctuaryAccessVertices(edge.points,spatial.roadWidth,surface,(px,pz)=>{
+    const localVertices=sanctuaryAccessVertices(edge.points,spatial.roadWidth,surface,(px,pz,i,fraction)=>{
       const ground=surface(px,pz)+.09;
+      if(edge.hallId)return i===edge.points.length-1?ground+fraction*Math.max(0,hallAccessDatums.get(edge.hallId)+.29-ground):ground;
       if(edge.id!=='temple-entry')return ground;
       const f=Math.max(0,Math.min(1,(courtSouth+5-pz)/5));
       return ground+f*Math.max(0,templeGround+.09-ground);
