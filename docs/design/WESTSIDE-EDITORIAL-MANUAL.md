@@ -4,6 +4,8 @@ Status: **operational chapter of the single Westside Design OS**, not a parallel
 Audience: Church, First Look, Journal, Olive Mountain, ONE, Dawn Library, Cinema, Search, tools, and Doré Design agents.  
 Source of truth: [WESTSIDE-DESIGN-OS.md](WESTSIDE-DESIGN-OS.md) → `design-system/tokens/westside.tokens.json` → `static/css/westside-design-os.css` → approved `data-ws-scope` overrides.
 
+**工作指令快速索引：** 使用者說「多雷探索」時，立即按本手冊 [§9 多雷探索 / Doré Exploration](#9-多雷探索--doré-exploration) 執行；正式定義見 [`MASTER_SITE_ARCHITECTURE.md` §9](../MASTER_SITE_ARCHITECTURE.md)。此詞不是 Gustave Doré 的藝術風格，也不是「多雷搜索」。
+
 ## 1. Authority, layers and safe integration
 
 This manual merges design **judgment, editing and verification** into the existing OS. It is a Markdown reference, **not loaded by public pages**. Nothing in it authorizes an extra CSS entry point, a new global palette, a competing type scale, a second CI pipeline or a site-wide geometry patch.
@@ -122,5 +124,41 @@ These files remain archived intact; they do not operate as independent OS author
 - [New Westside Editorial Web Skill](../../dore-design/knowledge-lab/skills/new-westside-editorial-web/SKILL.md) and [Visual Grammar / Creative Rubric](../../dore-design/knowledge-lab/skills/new-westside-editorial-web/references/visual-grammar.md)
 - [Editorial Web Maturity Study](../../dore-design/knowledge-lab/research/editorial-web-maturity-study-20260901.md)
 - [Camera and Attention Grammar](../../dore-design/DORE-EXPLORATION-CAMERA-ATTENTION-GRAMMAR-2026-09-09.md)
+
+## 9. 多雷探索 / Doré Exploration — 固定工作指令
+
+> **權威與用途：** 本節是「多雷探索」在編輯與視覺工程中的就地操作入口，依據 [`MASTER_SITE_ARCHITECTURE.md` §9](../MASTER_SITE_ARCHITECTURE.md)。正式定義仍以該架構文件為準；此處不建立第二套 Design OS、產品或工具。
+
+### 9.1 明確定義與消歧
+
+**「多雷探索」是 Doré 面對當前具體問題時啟動的全面外部學習／方案發現程序。** 它是約定的**工作指令**，而不是主站公開欄目、單一工具，**不是「多雷搜索」的同義詞，更不是要求研究 Gustave Doré 的人物或木刻風格**。即使工作涉及版畫、植物或雕刻，也必須按此工作指令的系統性研究流程執行；若需要查藝術史，僅屬本次探索的一部分。
+
+**收到「多雷探索」時：先明確當前問題、目標和已鎖定的資產，再查世界已有的方案及實例；不可只從名稱或當下題材猜測含義，也不可在未查手冊時自行把它解釋為 Doré 畫風。**
+
+### 9.2 八項不可省略的探索原則
+
+1. **全網研究：** 不局限於專案或單一來源，全面尋找已有的相關方案、工具、框架、實作、範例與資料。
+2. **開源優先：** 優先核實成熟開源專案、公開資料、可自行部署元件、現成 libraries / frameworks 和已有實現。
+3. **成熟優先：** 對照真實使用案例、維護與版本狀態、社群、生態、穩定性、已知問題與長期可用性；不因新奇而優先採用。
+4. **免費優先：** 評估實際授權、使用與持續成本；遇付費方案須同時比較免費替代品。
+5. **輕量與低資源：** 檢查 CPU、RAM、儲存、前端負載、依賴數量與部署複雜度。
+6. **穩定與易維護：** 比較故障排查、升級風險、相容性與維護成本。
+7. **優先利用現成能力：** **先研究世界上已經有甚麼，再決定我們需要自己做甚麼**，避免重造已有系統或憑空硬製造型。
+8. **最後回到 Doré Core：** 對照既有 Memory / Context / Retrieval / Knowledge / Search、Provider、Research、Graph、工具和產品 adapter，判定直接復用、以 adapter 接入、必要改造或最後才自行開發。
+
+### 9.3 實際執行及成果格式
+
+`現有問題與保護邊界 → 全網樣本／實作搜尋 → 有來源的成熟度、開源、授權、成本、負載及維護比較 → 與既有 Doré Core 和當前工程對照 → 可直接採用／adapter／改造／自研的決策 → 在原工程隔離試作 → 原版對照與實際畫面驗收 → 記錄選用及否決原因`。
+
+每次探索至少回答：**已經有哪些成熟成果？哪些開源、真正免費、輕量且可靠？哪個最接近當前需要？如何與現有資產直接整合？哪些根本不必重造？** 對沒有核實的候選標記「待驗證」，不能宣稱已安裝、已驗收、已整合或已部署。研究結果應附可追溯來源及採納／排除理由，而非只羅列名詞或圖片。
+
+### 9.4 視覺與 SVG 母本的應用（P2 工作例）
+
+- **先找成熟樣本再描畫／轉譯。** 橄欖枝裝飾、七種供應植物雕版、印刷版芯與編目語言，均先比對可追溯的真實作品、比例、刀法、構圖和可使用的權利，再依現有版面需要轉為可控 SVG；不以公式生成的大量路徑冒充成熟造型。
+- **先盤點既有工具及原稿。** 複用 P2 已保存的成長線條、活水流場、V10／SVG-075 刻線經驗及晨星表面刻線方法；先查工具能力與限制，必要時才研究外部開源套件。
+- **保護原版並同步推進。** 五張原始 V1 母本是對照基線；加層、裁切、動效或線條生長不得在未驗收時替換已成立構圖。藝術母本與 P2 版面適配分層，五個版塊維持共同版本與比較節奏。
+- **用真實畫面裁決。** 來源可信、程式可運行、路徑數增加或 CI 綠燈，均不能取代 V1／新稿並排、真實遮罩、手機、動態、反向滾動和效能檢查。藝術效果未改善則否決，不宣稱完成。
+
+**權限界線：** 「多雷探索」本身不授權更改主站資訊架構、替換已驗收設計、擅自合併分支或新增全站 CSS／JavaScript 入口；涉及正式頁面的修改仍須遵守本手冊第 1、6 節及現有 Design OS 與發布驗收程序。
 
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
