@@ -1,3 +1,4 @@
+import {firstTempleOuterCourt} from './temple-context-layout.js';
 import {sanctuaryAccessVertices} from './sanctuary-access-geometry.js';
 import {firstTempleCourt,courtEnvelopeDatum} from './temple-court-envelopes.js';
 import {firstTempleWaterLayout} from './temple-precinct-layout.js';
@@ -81,6 +82,16 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   for(const px of[courtWest,courtEast])courtWall(`temple-court-wall-${px}`,px,(courtNorth+courtSouth)/2,court.wallThickness,courtSouth-courtNorth);
   courtWall('temple-court-north',(courtWest+courtEast)/2,courtNorth,courtEast-courtWest,court.wallThickness);
   for(const [a,b]of[[courtWest,court.gateX-court.gateWidth/2],[court.gateX+court.gateWidth/2,courtEast]])courtWall(`temple-court-south-${a}`,(a+b)/2,courtSouth,b-a,court.wallThickness);
+  // An outer context boundary makes the reserved land legible without filling a court.
+  // Route-derived gaps preserve every registered crossing, including the north gate.
+  for(const seg of firstTempleOuterCourt(data,spatial)){
+    const length=seg.end-seg.start,mid=(seg.start+seg.end)/2,px=seg.axis==='x'?mid:seg.fixed,pz=seg.axis==='x'?seg.fixed:mid,pw=seg.axis==='x'?length:.5,pd=seg.axis==='x'?.5:length;
+    for(let course=0;course<4;course++){
+      const height=course===3?.2:.35,lift=course===3?1.05:course*.35;
+      const mesh=box(`temple-${seg.id}-${course}`,'first-temple',px,pz,pw,pd,height,'solomon',course===3?roof:templeStone,0,lift);
+      delete mesh.userData.templeSectionHeight;
+    }
+  }
   templeBox('temple-main',x,z,l,w,wall,templeStone,h-wall);
   templeBox('temple-interior-floor',x,z,l,w,.12);
   // 1Kings6:4 supports high windows, not their count/profile or measured sill.
@@ -197,6 +208,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   return {
     focus:new THREE.Vector3(anchor.x-110,surface(-110,-210)+5,anchor.z-210),
     ritualFocus:new THREE.Vector3(anchor.x+altarX,templeGround+2,anchor.z+z),
+    precinctFocus:new THREE.Vector3(anchor.x-102.5,surface(-102.5,-462.5)+4,anchor.z-462.5),precinctSpan:135,
     templeFocus:new THREE.Vector3(anchor.x+x,surface(x,z)+5,anchor.z+z),
     exclusionsFor(phaseId){
       if(!['late-first-temple','babylonian-destruction'].includes(phaseId))return [];

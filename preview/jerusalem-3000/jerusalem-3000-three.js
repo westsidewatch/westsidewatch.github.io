@@ -154,6 +154,7 @@ try {
   gateFocus.addEventListener('change',()=>{if(gateFocus.value){terrainOverview(false);three.focusCityObject(gateFocus.value);}});
   const templeFocusButton=document.createElement('button');templeFocusButton.textContent='聖殿近看';templeFocusButton.hidden=true;
   document.querySelector('.j3k-event-controls').append(templeFocusButton);
+  const precinctFocusButton=document.createElement('button');precinctFocusButton.textContent='院區總覽';precinctFocusButton.hidden=true;document.querySelector('.j3k-event-controls').append(precinctFocusButton);precinctFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusTemplePrecinct();});
   const ritualFocusButton=document.createElement('button');ritualFocusButton.textContent='祭儀近看';ritualFocusButton.hidden=true;document.querySelector('.j3k-event-controls').append(ritualFocusButton);ritualFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusRitualCourt();});
   const templeSectionButton=document.createElement('button');templeSectionButton.textContent='聖殿剖視';templeSectionButton.hidden=true;templeSectionButton.setAttribute('aria-pressed','false');templeSectionButton.title='水平剖開模型查看內部，並非歷史毀壞狀態';document.querySelector('.j3k-event-controls').append(templeSectionButton);
   templeSectionButton.addEventListener('click',()=>{const enabled=three.setTempleSection(templeSectionButton.getAttribute('aria-pressed')!=='true');templeSectionButton.setAttribute('aria-pressed',String(enabled));});
@@ -256,7 +257,7 @@ try {
     templeSectionButton.hidden=!['david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah','hellenistic-hasmonean','herodian-jesus','roman-destruction'].includes(p.id);
     const courtPhase=['early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id);templeFocusButton.textContent=courtPhase?'聖域近看':'聖殿近看';
     templeFocusButton.hidden=isCorePhase(p.id)||courtPhase?false:!['david-solomon','late-first-temple','babylonian-destruction',RETAINED_PHASE,'hellenistic-hasmonean'].includes(p.id)||!(temple?.visible||temple?.ruined);
-    ritualFocusButton.hidden=templeFocusButton.hidden||courtPhase;
+    ritualFocusButton.hidden=templeFocusButton.hidden||courtPhase;precinctFocusButton.hidden=ritualFocusButton.hidden;
     eraZh.textContent=p.id==='david-solomon'?(temple?.state==='absent'?'大衛城 · 城防與王室':'所羅門城 · 第一聖殿'):p.label;
     retainedToggle.hidden = p.id !== RETAINED_PHASE;
     note.textContent = isEarliestPhase(p.id) ? '東南山脊與基訓泉周邊的小規模聚落。住居數量、位置、屋頂與步徑均為推定示意；地形使用現代 DEM。可拖動旋轉、滾輪縮放。' : p.id==='middle-bronze' ? '中青銅取水設施與防護通道示意。泉塔年代有爭議，粉褐色標示為爭議層；住居、位置與高度仍屬推定。鑿岩設施只顯示輪廓，完整城牆範圍尚未核定。' : p.id==='late-bronze-iron1' ? '此期城區範圍未核定；住居僅為示意，不代表人口增減或前代房屋留存。粉褐色階梯支撐體為年代與功能爭議層，不能直接認定為王宮基礎。前期防禦未預設延續，隱藏不表示毀壞。' : p.id==='david-solomon' ? '城防、王室院落與第一聖殿為推定復原，由共同帳本分段出現。聖殿主體採經文比例，牆線、位置與外觀未核定；可點「聖殿近看」。住宅仍為較晚鐵器時代類比。' : p.id === RETAINED_PHASE
@@ -266,6 +267,7 @@ try {
     if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 宗教核心亦為概略量體，非測繪復原。';
     if(p.id==='persian-nehemiah')note.textContent+=' 可用「聖殿剖視」查看獨立殿堂、地板與開啟門扇；內部分區與凹入屋頂為示意，通路已銜接殿廊標高，祭壇有開敞爐口；坡道、器物尺度及細部仍屬示意。';
     if(p.id==='hellenistic-hasmonean')note.textContent+=' 聖域選取前164年重新奉獻後的示意形態，不代表整期；新增六間祭司側室示意、外門及室間連通門洞，數量、尺寸及平面未核定，可點「聖殿近看」或「聖殿剖視」。';
+    if(['david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah','hellenistic-hasmonean','herodian-jesus','roman-destruction'].includes(p.id))note.textContent+=' 可點「院區總覽」查看周邊。院界與通路為示意；開放院地保留，未定位配套仍待補，空白不等於古代無建築。';
     const datedCores=three.landmarkChronology();if(datedCores.length)note.textContent+=' 本期地標階段：'+datedCores.map(c=>c.label).join('；')+'。年份僅用於這些地標的分期定位，並非全城逐年復原。';
     if(p.id==='david-solomon')note.textContent+=' 殿體已有高窗開口、內部分隔與通行門洞；高窗數量及細部為示意，兩側三層側室已中空，南側底層入口為示意，上層交通與後側室待核定；另有銅海與十組盆座；內院、祭壇與入口柱採分項文獻方案，位置與細部為示意，可點「祭儀近看」。';
     if(p.id==='herodian-jesus')note.textContent+=' 婦女院經十五級半圓階連接以色列院，再升至祭司院；主殿與祭壇共用上院標高，主殿及周邊柱廊採分件示意，未定位的柱廊接口保留開放，可開剖視；主殿外側服務帶已中空並銜接前廊翼部，尚非完整登頂／排水復原；前廊增設木支撐、北側工作柱增設三層掛鉤，數量與配置細節為示意；洗濯盆與北側工作區可點「祭儀近看」；古代絕對高程未核定。';

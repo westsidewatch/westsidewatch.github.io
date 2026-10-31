@@ -1,3 +1,4 @@
+import {earlyCourtPorticoes} from './temple-context-layout.js';
 // Shared construction grammar; each era supplies its own explicit, unverified profile.
 export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approachId,approachObjectId,reservationId}) {
   const s=phase.sanctuary;
@@ -79,6 +80,20 @@ export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approa
   box('court-south-west',(xmin+left)/2,zmax,left-xmin,c.wallThickness,c.wallHeight);
   box('court-south-east',(right+xmax)/2,zmax,xmax-right,c.wallThickness,c.wallHeight);
   for(const side of [-1,1])box(`gate-post-${side}`,gate[0]+side*(c.gateWidth/2+.4),gate[1],.8,c.wallThickness,3.2,0,'gate');
+  // JosephusAnt11.4 describes cloisters: exact footprint, order and dimensions unknown.
+  // Three display strips are independent of Herodian dimensions and leave south access open.
+  for(const strip of earlyCourtPorticoes(c.bounds)){
+    const len=strip.end-strip.start,mid=(strip.start+strip.end)/2,key=`court-portico-${strip.id}`;
+    const part=(id,u,v,along,across,height,lift,role)=>{
+      const x=strip.axis==='x'?u:v,z=strip.axis==='x'?v:u;
+      box(key+'-'+id,x,z,strip.axis==='x'?along:across,strip.axis==='x'?across:along,height,lift,role);
+      components.at(-1).datumGroup=key;
+    };
+    part('floor',mid,strip.fixed,len,strip.depth,.12,0,'floor');
+    part('roof',mid,strip.fixed,len,strip.depth,.25,strip.height,'roof');
+    const n=Math.ceil((len-1)/strip.bay);
+    for(let i=0;i<=n;i++)for(const side of[-1,1])part(`column-${i}-${side}`,strip.start+.5+(len-1)*i/n,strip.fixed+side*(strip.depth/2-.35),strip.columnWidth,strip.columnWidth,strip.height-.12,.12,'colonnade');
+  }
   const margin=access.width/2;
   for(const component of components.filter(c=>!c.id.startsWith('court-')&&c.role!=='gate'))if(component.x-component.w/2<xmin+margin||component.x+component.w/2>xmax-margin||component.z-component.d/2<zmin+margin||component.z+component.d/2>zmax-margin)throw new Error('Sanctuary component outside court');
   // Validate the actual route footprint against all ground-level building components.

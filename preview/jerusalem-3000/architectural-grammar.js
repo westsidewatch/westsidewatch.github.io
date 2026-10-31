@@ -10,6 +10,12 @@ function column(builder,x,y,z,surface,height=13.125){box(builder,[1.2,height,1.2
 function precinctY(r){return r.precinctUp??r.up;}
 function platform(builder,r,surface){const y=precinctY(r),w=D.platform.eastWest,d=D.platform.northSouth,top=y+D.platform.pavingThickness;box(builder,[w,.8,d],[r.east,y+.4,-r.north],surface,'foundation',.94);const retain=(x,z,width,depth)=>{const samples=[[-width/2,-depth/2],[width/2,-depth/2],[width/2,depth/2],[-width/2,depth/2],[0,0]].map(([dx,dz])=>r.terrain?.heightAtWorld?.(x+dx,z+dz)).filter(Number.isFinite),bottom=Math.min(top-16,...samples.map(y=>y-.3));box(builder,[width,top-bottom,depth],[x,(top+bottom)/2,z],surface,'retaining');};for(const z of[-d/2+2,d/2-2])for(let x=-w/2;x<w/2;x+=10)retain(r.east+x+5,-r.north+z,10,4);for(const x of[-w/2+2,w/2-2])for(let z=-d/2;z<d/2;z+=10)retain(r.east+x,-r.north+z+5,4,10);for(let z=-d/2+12;z<d/2;z+=40)box(builder,[w-12,.12,1.2],[r.east,top+.06,-r.north+z],surface,'circulation',.94);}
 function stoa(builder,r,surface){const y=precinctY(r)+D.platform.pavingThickness,w=D.stoa.eastWest,d=D.stoa.depth;box(builder,[w,1,d],[r.east,y+.5,-r.north],surface,'foundation');for(let i=0;i<12;i++)for(let row=0;row<4;row++){const x=r.east-w/2+4+i*(w-8)/11,z=-r.north-d/2+2+row*(d-4)/3,h=row===0||row===3?D.stoa.sideHeight-2:D.stoa.centreHeight-2;column(builder,x,y+1,z,surface,h);}
+ // Three-aisled roof hierarchy: authored clerestory piers leave actual light openings.
+ for(const side of[-1,1]){
+  const z=-r.north+side*d*.2,low=y+D.stoa.sideHeight,high=y+D.stoa.centreHeight-1.2;
+  for(let i=0;i<12;i++)box(builder,[.7,high-low,.4],[r.east-w/2+4+i*(w-8)/11,(low+high)/2,z],surface,'superstructure',.96);
+  box(builder,[w,.6,.5],[r.east,high-.3,z],surface,'superstructure',.98);
+ }
  for(const z of[-d*.35,d*.35])box(builder,[w,1.2,d*.3],[r.east,y+D.stoa.sideHeight-.6,-r.north+z],surface,'roof',.94);box(builder,[w,1.2,d*.4],[r.east,y+D.stoa.centreHeight-.6,-r.north],surface,'roof',1);}
 function fortress(builder,r,surface){const y=r.up;box(builder,[126,2,106],[r.east,y+1,-r.north],surface,'foundation');box(builder,[100,21,80],[r.east,y+12.5,-r.north],surface,'superstructure',.94);for(const[x,z]of[[-50,-40],[50,-40],[-50,40],[50,40]]){const h=x>0&&z>0?70*D.cubitMetres:50*D.cubitMetres;box(builder,[22,h-1,22],[r.east+x,y+2+(h-1)/2,-r.north+z],surface,'superstructure');box(builder,[24,1,24],[r.east+x,y+2+h-.5,-r.north+z],surface,'roof',.95)}box(builder,[104,1,84],[r.east,y+23.5,-r.north],surface,'roof',.96);}
 function sacredComplex(builder,r,surface){
@@ -76,6 +82,6 @@ function sacredComplex(builder,r,surface){
 }
 function approach(builder,r,surface){const y=r.up;for(let i=0;i<13;i++){const width=184-i*3;box(builder,[width,4.5,16],[r.east,y+i*2,-r.north+(i-6)*15],surface,'circulation',i%2?.94:1)}for(const x of[-58,58])box(builder,[24,30,20],[r.east+x,y+27,-r.north+104],surface,'superstructure',.95);}
 function street(builder,r,surface){const y=r.up;for(let i=-10;i<=10;i++)for(let j=-1;j<=1;j++)box(builder,[16,4.5,17],[r.east+j*17,y+2.25,-r.north+i*17],surface,'circulation',(i+j)%2?.91:.98);box(builder,[10,24,360],[r.east-34,y+12,-r.north],surface,'retaining',.9);}
-export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v11-temple-service-passages';
+export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v12-temple-court-context';
 export const SUPPORTED_ARCHITECTURAL_KINDS=Object.freeze(['platform-enclosure','perimeter-porticoes','portico-basilica','fortress','sacred-complex','pilgrimage-access','street']);
 export function buildArchitecturalGrammar(builder,object,registration,surface){switch(object.kind){case'perimeter-porticoes':buildPerimeterPorticoes(builder,registration,surface,box);break;case'platform-enclosure':platform(builder,registration,surface);break;case'portico-basilica':stoa(builder,registration,surface);break;case'fortress':fortress(builder,registration,surface);break;case'sacred-complex':sacredComplex(builder,registration,surface);break;case'pilgrimage-access':approach(builder,registration,surface);break;case'street':street(builder,registration,surface);break;default:return false}return true;}

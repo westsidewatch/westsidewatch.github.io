@@ -35,6 +35,11 @@ try{
 
 parts.forEach(m=>m.updateMatrixWorld(true));
 const actual=id=>parts.find(m=>m.userData.cityObject.componentId===`j3k:persian-sanctuary:${id}`),roofBox=new THREE.Box3().setFromObject(actual('hall-roof')),roofCentre=roofBox.getCenter(new THREE.Vector3());
+for(const side of['west','east','north']){
+ const floor=actual(`court-portico-${side}-floor`),roof=actual(`court-portico-${side}-roof`),fb=new THREE.Box3().setFromObject(floor),rb=new THREE.Box3().setFromObject(roof);
+ const columns=parts.filter(m=>m.userData.cityObject.componentId.includes(`court-portico-${side}-column-`));assert.ok(columns.length>20);
+ for(const column of columns){const cb=new THREE.Box3().setFromObject(column);assert.ok(Math.abs(cb.min.y-fb.max.y)<1e-4&&Math.abs(cb.max.y-rb.min.y)<1e-4,'all portico columns must join floor and roof on sloping DEM');}
+}
 const edgeBox=new THREE.Box3().setFromObject(actual('hall-roof-edge-1'));
 assert.ok(Math.abs(edgeBox.max.y-roofBox.max.y-.4)<1e-4,'actual roof must be recessed below perimeter');
 const floorBox=new THREE.Box3().setFromObject(actual('hall-floor')),boundaryBox=new THREE.Box3().setFromObject(actual('hall-inner-lintel')),boundaryCentre=boundaryBox.getCenter(new THREE.Vector3());
