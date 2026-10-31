@@ -3631,11 +3631,11 @@
         "sourceRefs": [
           "kings7"
         ],
-        "currentState": "missing",
-        "remainingWork": "沿用lebanon-house；100×50×30肘候選須與殿區共同配置",
+        "currentState": "partial",
+        "remainingWork": "文獻尺寸與推定展示區已建；精確位置、格架樓層、完整內外形制及後續物理存續待核定",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "partial",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3646,7 +3646,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md"
       },
       {
         "id": "first-temple:pillared-hall",
@@ -3656,11 +3657,11 @@
         "sourceRefs": [
           "kings7"
         ],
-        "currentState": "missing",
-        "remainingWork": "沿用pillars-hall，50×30肘平面，高度未定",
+        "currentState": "partial",
+        "remainingWork": "文獻平面與推定展示區已建；高度、構件配置、精確位置及後續存續待核定",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "partial",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3671,7 +3672,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md"
       },
       {
         "id": "first-temple:throne",
@@ -4789,10 +4791,10 @@
           "josephus"
         ],
         "currentState": "partial",
-        "remainingWork": "沿用antonia；重核角部、地勢、通道與足跡爭議",
+        "remainingWork": "內院／圍廊／示意入口已建；與聖殿的降階接口、岩臺高差、足跡及完整內部分配待核定",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "partial",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4803,7 +4805,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md"
       },
       {
         "id": "herodian:bethesda",
