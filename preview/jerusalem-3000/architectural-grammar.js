@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+import {herodianRitualLayout} from './temple-precinct-layout.js';
 import {HERODIAN_DIMENSIONS as D} from './herodian-dimensions.js';
 const SCHEDULE={foundation:{start:.06,duration:.10,lift:90},retaining:{start:.12,duration:.13,lift:120},circulation:{start:.24,duration:.12,lift:95},superstructure:{start:.38,duration:.18,lift:180},colonnade:{start:.52,duration:.18,lift:145},roof:{start:.68,duration:.14,lift:120}};
 function box(builder,size,p,surface,phase,shade=1){const s=SCHEDULE[phase];builder.box(size,p,surface,s.start,{duration:s.duration,lift:s.lift,shade});}
@@ -15,6 +17,29 @@ function sacredComplex(builder,r,surface){
  box(builder,[2,4,d],[minX+1,y+2,-r.north],surface,'retaining',.94);
  const gateWidth=10*D.cubitMetres,gateHeight=20*D.cubitMetres;
  for(const x of[maxX-1,courtX+w/2]){for(const sign of[-1,1]){const span=(d-gateWidth)/2;box(builder,[2,4,span],[x,y+2,-r.north+sign*(gateWidth/2+span/2)],surface,'retaining',.94);box(builder,[2,gateHeight,1.5],[x,y+.02+gateHeight/2,-r.north+sign*(gateWidth/2+.75)],surface,'superstructure',.98);}box(builder,[2,.8,gateWidth+3],[x,y+.02+gateHeight+.4,-r.north],surface,'roof',.98);}
+ // Middot5:1 closes the east/west budget before any courtyard furniture.
+ const layout=herodianRitualLayout(D.cubitMetres),altarX=minX+layout.altar.centreFromWest;
+ // Stepped altar mass; upper-body height is an authored display interpretation.
+ const c=D.cubitMetres;
+ for(const [size,bottom,height]of[[32,0,1],[30,1,5],[28,6,3]])box(builder,[size*c,height*c,size*c],[altarX,y+.02+(bottom+height/2)*c,-r.north],surface,'superstructure',.96);
+ for(const sx of[-1,1])for(const sz of[-1,1])box(builder,[c,c,c],[altarX+sx*13*c,y+.02+9.5*c,-r.north+sz*13*c],surface,'superstructure',1);
+ // Continuous ramp assembled from sloped boxes; no staircase substituted for a ramp.
+ const rise=9*c,run=layout.ramp.length,schedule=SCHEDULE.circulation;
+ const ramp=builder.geo(`temple-ramp:${c}`,()=>{
+  const g=new THREE.BoxGeometry(layout.ramp.width,rise,run),p=g.attributes.position;
+  for(let i=0;i<p.count;i++)p.setY(i,p.getY(i)>0?(p.getZ(i)<0?rise:0):0);
+  g.computeVertexNormals();return g;
+ });
+ builder.add(ramp,surface,schedule.start,{p:[altarX,y+.02,-r.north+layout.ramp.altarJoinOffset+run/2],duration:schedule.duration,lift:schedule.lift,shade:.95});
+ // Four open-roof corner chambers, with real inward-facing access gaps.
+ const wc=(courtX+w/2+ww/2),room=layout.womenRoom;
+ for(const sx of[-1,1])for(const sz of[-1,1]){
+  const rx=wc+sx*(ww/2-room.inset-room.size/2),rz=-r.north+sz*(d/2-room.inset-room.size/2),b=y+.02;
+  box(builder,[room.size,room.height,room.wall],[rx,b+room.height/2,rz+sz*(room.size-room.wall)/2],surface,'superstructure',.94);
+  for(const side of[-1,1])box(builder,[room.wall,room.height,room.size],[rx+side*(room.size-room.wall)/2,b+room.height/2,rz],surface,'superstructure',.94);
+  const opening=3,span=(room.size-opening)/2;
+  for(const side of[-1,1])box(builder,[span,room.height,room.wall],[rx+side*(opening/2+span/2),b+room.height/2,rz-sz*(room.size-room.wall)/2],surface,'superstructure',.94);
+ }
  const west=minX+11*D.cubitMetres,porchDepth=10*D.cubitMetres,bodyLength=D.sanctuary.eastWest-porchDepth,h=D.sanctuary.height;
  box(builder,[D.sanctuary.eastWest,6*D.cubitMetres,D.sanctuary.porchNorthSouth],[west+D.sanctuary.eastWest/2,y+3*D.cubitMetres,-r.north],surface,'foundation',.98);
  box(builder,[bodyLength,h-6*D.cubitMetres-1.2,D.sanctuary.bodyNorthSouth],[west+bodyLength/2,y+(h+6*D.cubitMetres-1.2)/2,-r.north],surface,'superstructure',1);
@@ -29,6 +54,6 @@ function sacredComplex(builder,r,surface){
 }
 function approach(builder,r,surface){const y=r.up;for(let i=0;i<13;i++){const width=184-i*3;box(builder,[width,4.5,16],[r.east,y+i*2,-r.north+(i-6)*15],surface,'circulation',i%2?.94:1)}for(const x of[-58,58])box(builder,[24,30,20],[r.east+x,y+27,-r.north+104],surface,'superstructure',.95);}
 function street(builder,r,surface){const y=r.up;for(let i=-10;i<=10;i++)for(let j=-1;j<=1;j++)box(builder,[16,4.5,17],[r.east+j*17,y+2.25,-r.north+i*17],surface,'circulation',(i+j)%2?.91:.98);box(builder,[10,24,360],[r.east-34,y+12,-r.north],surface,'retaining',.9);}
-export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v4-temple-entries';
+export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v5-ritual-ensembles';
 export const SUPPORTED_ARCHITECTURAL_KINDS=Object.freeze(['platform-enclosure','portico-basilica','fortress','sacred-complex','pilgrimage-access','street']);
 export function buildArchitecturalGrammar(builder,object,registration,surface){switch(object.kind){case'platform-enclosure':platform(builder,registration,surface);break;case'portico-basilica':stoa(builder,registration,surface);break;case'fortress':fortress(builder,registration,surface);break;case'sacred-complex':sacredComplex(builder,registration,surface);break;case'pilgrimage-access':approach(builder,registration,surface);break;case'street':street(builder,registration,surface);break;default:return false}return true;}

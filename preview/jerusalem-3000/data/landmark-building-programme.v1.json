@@ -3416,11 +3416,11 @@
         "sourceRefs": [
           "kings7-full"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "核對10肘口徑、5肘高及東南側相對關係",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3431,7 +3431,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
       },
       {
         "id": "first-temple:lavers",
@@ -3441,11 +3442,11 @@
         "sourceRefs": [
           "kings7-full"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "兩側各五組，需保留通行與器物尺度",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3456,7 +3457,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
       },
       {
         "id": "first-temple:doors",
@@ -3944,11 +3946,11 @@
         "sourceRefs": [
           "middot2"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "離俗者、木、潔淨與油酒用房；西南用途傳承分歧保留",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3959,7 +3961,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
       },
       {
         "id": "herodian:women-gallery",
@@ -4149,11 +4152,11 @@
           "middot3",
           "middot5"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "32肘平面及分層；不能複製第一聖殿小祭壇",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4164,7 +4167,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
       },
       {
         "id": "herodian:ramp",
@@ -4175,11 +4179,11 @@
           "middot3",
           "middot5"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "32×16肘候選，與南側通路及祭壇合排",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4190,7 +4194,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
       },
       {
         "id": "herodian:laver",
@@ -4927,6 +4932,13 @@
       "newRuntimeLedgerAllowed": false,
       "historicalGeometryAccepted": false,
       "all18RegressionRequiredForRuntimeChanges": true
+    },
+    "activeConstructionPackage": {
+      "id": "B21",
+      "scope": "paired-ritual-ensembles",
+      "overallPlanAccepted": false,
+      "completePrecincts": false,
+      "review": "TEMPLE-RITUAL-ENSEMBLES.md"
     }
   }
 }
