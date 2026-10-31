@@ -554,7 +554,9 @@
         "terrain-and-contemporary-wall-relation",
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
-      ]
+      ],
+      "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md",
+      "implementationNote": "Independent Persian and Hasmonean shells now have floors/open authored door poses and a reversible section view; precise form/dimensions still unaccepted, no Herodian back-projection."
     },
     {
       "id": "nehemiah-defense",
@@ -3471,11 +3473,11 @@
         "sourceRefs": [
           "kings6-full"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "區分內外門、門框與折扇，不能將整殿做成實心",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3486,7 +3488,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
       },
       {
         "id": "first-temple:cherubim",
@@ -4417,7 +4420,7 @@
         "remainingWork": "已有20×40肘洞口，補梁與構造，厚度仍需核對",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4428,7 +4431,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
       },
       {
         "id": "herodian:porch-stairs",
@@ -4463,11 +4467,11 @@
         "sourceRefs": [
           "middot4"
         ],
-        "currentState": "placeholder",
+        "currentState": "partial",
         "remainingWork": "現有實心主殿不能算內部完成，需40與20肘空間",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4478,7 +4482,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
       },
       {
         "id": "herodian:entry-doors",
@@ -4488,11 +4493,11 @@
         "sourceRefs": [
           "middot4"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "10×20肘入口、門厚、北通路與封閉南門",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4503,7 +4508,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
       },
       {
         "id": "herodian:chambers38",
@@ -4513,11 +4519,11 @@
         "sourceRefs": [
           "middot4"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "北15、南15、西8；不以六個外殼量體代替",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4528,7 +4534,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
       },
       {
         "id": "herodian:ascent",
@@ -4563,11 +4570,11 @@
         "sourceRefs": [
           "middot4"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "總高100肘各層預算，避免只向上疊加而超高",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4578,7 +4585,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
       },
       {
         "id": "herodian:knife-rooms",
@@ -4588,11 +4596,11 @@
         "sourceRefs": [
           "middot4"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "與100肘前寬、70肘後寬關係統一",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4603,7 +4611,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
       },
       {
         "id": "herodian:interior",
@@ -4940,11 +4949,11 @@
       "all18RegressionRequiredForRuntimeChanges": true
     },
     "activeConstructionPackage": {
-      "id": "B22",
-      "scope": "paired-relative-court-sections-and-interior-shell",
+      "id": "B23",
+      "scope": "first-early-second-and-Herodian-volumes-and-section-view",
       "overallPlanAccepted": false,
       "completePrecincts": false,
-      "review": "TEMPLE-COURT-SECTIONS.md"
+      "review": "TEMPLE-VOLUMES-AND-SECTIONS.md"
     }
   }
 }

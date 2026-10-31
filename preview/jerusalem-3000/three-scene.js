@@ -1,3 +1,4 @@
+import {createTempleSectionView} from './temple-section-view.js';
 import {housingBoundaryStages} from './housing-boundary-stages.js';
 import {createArchitecturalTerrainOcclusion} from './architectural-terrain-occlusion.js';
 import {compileNamedCityGates,publishNamedCityGates,registerNamedGateApproaches} from './named-city-gates.js';
@@ -167,6 +168,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     cityCoreLayer = new THREE.Group(),
     sharedEraLayer = new THREE.Group();
   cityCoreLayer.name = 'j3k-canonical-herodian-city';
+  const templeSection=createTempleSectionView();
+  renderer.localClippingEnabled=true;
   scene.add(root);
   root.add(historical, eraFabricLayer, cityCoreLayer, sharedEraLayer);
   const materials = makeMaterials(),
@@ -305,6 +308,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     updateCityCoreVisibility();
     housingBoundaryAdmission?.apply();
     updateUrbanGround();
+    templeSection.update(root);
     onDistrictAcceptance?.(sharedEraRuntime?.acceptance()??null);
     needsFrame = true;
   }
@@ -514,7 +518,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       builder.pieces,
     );
     builder.finish(historical);
-    const sanctuaryMesh=builder.meshes.find(m=>m.userData.evidenceObject?.id==='j3k:object:inner-temple');if(sanctuaryMesh){const b=new THREE.Box3().setFromObject(sanctuaryMesh);sanctuaryMesh.userData.landmarkFocus={x:b.min.x+11*HERODIAN_DIMENSIONS.cubitMetres+(HERODIAN_DIMENSIONS.sanctuary.eastWest-10*HERODIAN_DIMENSIONS.cubitMetres)/2,y:b.max.y,z:(b.min.z+b.max.z)/2};}
+    const sanctuaryMesh=builder.meshes.find(m=>m.userData.evidenceObject?.id==='j3k:object:inner-temple');if(sanctuaryMesh){const b=new THREE.Box3().setFromObject(sanctuaryMesh);sanctuaryMesh.userData.templeSectionHeight=terrainRuntime.sampleElevation(31.778,35.235)+HERODIAN_DIMENSIONS.platform.pavingThickness+HERODIAN_DIMENSIONS.relativeCourtLevels.priests+6*HERODIAN_DIMENSIONS.cubitMetres+4;sanctuaryMesh.userData.landmarkFocus={x:b.min.x+11*HERODIAN_DIMENSIONS.cubitMetres+(HERODIAN_DIMENSIONS.sanctuary.eastWest-10*HERODIAN_DIMENSIONS.cubitMetres)/2,y:b.max.y,z:(b.min.z+b.max.z)/2};}
     architecturalTerrainOcclusion=createArchitecturalTerrainOcclusion(terrainRuntime,{platform:builder.meshes.find(m=>m.userData.evidenceObject?.id==='j3k:object:temple-mount-enclosure-herodian'),progress:builder.progress});
     herodianScaleReport={dimensions:structuredClone(HERODIAN_DIMENSIONS),models:builder.meshes.map(mesh=>{const b=new THREE.Box3().setFromObject(mesh),size=b.getSize(new THREE.Vector3());return {id:mesh.userData.evidenceObject.id,bounds:{min:b.min.toArray(),max:b.max.toArray()},eastWest:size.x,northSouth:size.z,verticalEnvelope:size.y};}),measurementScope:'canonical-standing-mesh-not-current-ruin',precinctGround:terrainRuntime.sampleElevation(31.778,35.235),ancientPlacementVerified:false};
     for (const mesh of builder.meshes) {
@@ -914,9 +918,11 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     focusCityObject(id){
       const gate=namedGates?.find(g=>g.id===id),box=new THREE.Box3();root.updateMatrixWorld(true);let found=false;
       root.traverse(m=>{if(!m.isMesh||m.userData.cityObject?.objectId!==id)return;for(let p=m;p;p=p.parent)if(!p.visible)return;box.expandByObject(m);found=true;});if(!found)return false;
-      const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*2.1;
+      const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*(id==='j3k:object:inner-temple'?(camera.aspect<1?1.8:1.15):2.1);
       controls.minDistance=5;controls.target.copy(focus);camera.position.copy(focus).add(gate?new THREE.Vector3(-gate.normal.x*distance,.25*distance,-gate.normal.z*distance):new THREE.Vector3(.65*distance,.7*distance,distance));controls.update();needsFrame=true;return true;
     },
+    setTempleSection(value){const enabled=templeSection.set(value,root);needsFrame=true;return enabled;},
+    inspectTempleSection(){return templeSection.diagnostics();},
     focusRoyalTemple(){
       const court=activeWorldEntry?.runtime.registration?.cores.find(c=>c.metadata.precinctContext);if(court)return this.focusCityObject(court.id);
       if(isCorePhase(currentPhaseId))return this.focusCityObject('j3k:object:inner-temple');
@@ -968,6 +974,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       ro.disconnect();
       controls.dispose();
       constructionPresentation.dispose();phaseDissolve.dispose();
+      templeSection.dispose();
       builder.dispose();
       clearFabric();persistentCityWorld?.dispose();laterMorphologyLedger?.dispose();
       sharedEraRuntime?.dispose();

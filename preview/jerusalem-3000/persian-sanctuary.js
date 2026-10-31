@@ -25,6 +25,7 @@ export function createSanctuaryAssembly(parent,{data,terrain,core,layout,prefix,
   for(let i=0;i<p.count;i++)if(!lift&&p.getY(i)<0)p.setY(i,surface(x+p.getX(i),z+p.getZ(i))-ground-height/2);
   geometry.computeVertexNormals();const mesh=new THREE.Mesh(geometry,part.role==='roof'?roof:stone);
   mesh.position.set(anchor.x+x,ground+height/2+lift,anchor.z+z);mesh.castShadow=true;mesh.receiveShadow=true;
+  if(isHallPart(part))mesh.userData.templeSectionHeight=hallGround+4;
   mesh.userData.cityObject={objectId:part.role==='gate'?layout.gate.id:layout.objectId,componentId:`j3k:${prefix}:${part.id}`,confidence:'inferred',role:part.role};group.add(mesh);meshes.push(mesh);
  }
  const vertices=[],pts=layout.access.points;

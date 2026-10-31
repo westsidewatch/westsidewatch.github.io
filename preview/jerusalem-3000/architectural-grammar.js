@@ -1,3 +1,4 @@
+import {buildHerodianSanctuary} from './herodian-sanctuary.js';
 import * as THREE from 'three';
 import {herodianRitualLayout} from './temple-precinct-layout.js';
 import {HERODIAN_DIMENSIONS as D} from './herodian-dimensions.js';
@@ -63,20 +64,15 @@ function sacredComplex(builder,r,surface){
   const opening=3,span=(room.size-opening)/2;
   for(const side of[-1,1])box(builder,[span,room.height,room.wall],[rx+side*(opening/2+span/2),b+room.height/2,rz-sz*(room.size-room.wall)/2],surface,'superstructure',.94);
  }
- const west=minX+11*D.cubitMetres,porchDepth=10*D.cubitMetres,bodyLength=D.sanctuary.eastWest-porchDepth,h=D.sanctuary.height;
- box(builder,[D.sanctuary.eastWest,6*D.cubitMetres,D.sanctuary.porchNorthSouth],[west+D.sanctuary.eastWest/2,y+3*D.cubitMetres,-r.north],surface,'foundation',.98);
- box(builder,[bodyLength,h-6*D.cubitMetres-1.2,D.sanctuary.bodyNorthSouth],[west+bodyLength/2,y+(h+6*D.cubitMetres-1.2)/2,-r.north],surface,'superstructure',1);
- const openingWidth=20*D.cubitMetres,openingHeight=40*D.cubitMetres,podium=6*D.cubitMetres,porchX=west+bodyLength+porchDepth/2,side=(D.sanctuary.porchNorthSouth-openingWidth)/2;
- for(const sign of[-1,1])box(builder,[porchDepth,h-podium-1.2,side],[porchX,y+(h+podium-1.2)/2,-r.north+sign*(openingWidth/2+side/2)],surface,'superstructure',.98);
- box(builder,[porchDepth,h-podium-openingHeight-1.2,openingWidth],[porchX,y+(h-1.2+podium+openingHeight)/2,-r.north],surface,'superstructure',.98);
+ const west=minX+11*c;
+ buildHerodianSanctuary({builder,west,y,z:-r.north,c,surface,emit:box});
+ const openingWidth=20*c;
  // Middot3:6 gives12 half-cubit rises and one-cubit treads; landings remain unmodelled.
  for(let i=0;i<12;i++){const rise=(12-i)*D.cubitMetres/2;box(builder,[D.cubitMetres,rise,openingWidth],[west+D.sanctuary.eastWest+(i+.5)*D.cubitMetres,y+rise/2,-r.north],surface,'circulation',.96);}
- box(builder,[bodyLength,1.2,D.sanctuary.bodyNorthSouth],[west+bodyLength/2,y+h-.6,-r.north],surface,'roof',.98);
- box(builder,[porchDepth,1.2,D.sanctuary.porchNorthSouth],[west+bodyLength+porchDepth/2,y+h-.6,-r.north],surface,'roof',1);
  for(let i=0;i<10;i++)for(const sign of[-1,1]){const x=minX+4+i*(maxX-minX-8)/9,datum=x<israelWest-transition?y:x<innerEast?israelY:base;column(builder,x,datum+.02,-r.north+sign*(d/2-3),surface,10.5);}
 }
 function approach(builder,r,surface){const y=r.up;for(let i=0;i<13;i++){const width=184-i*3;box(builder,[width,4.5,16],[r.east,y+i*2,-r.north+(i-6)*15],surface,'circulation',i%2?.94:1)}for(const x of[-58,58])box(builder,[24,30,20],[r.east+x,y+27,-r.north+104],surface,'superstructure',.95);}
 function street(builder,r,surface){const y=r.up;for(let i=-10;i<=10;i++)for(let j=-1;j<=1;j++)box(builder,[16,4.5,17],[r.east+j*17,y+2.25,-r.north+i*17],surface,'circulation',(i+j)%2?.91:.98);box(builder,[10,24,360],[r.east-34,y+12,-r.north],surface,'retaining',.9);}
-export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v6-court-sections';
+export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v7-sanctuary-volumes';
 export const SUPPORTED_ARCHITECTURAL_KINDS=Object.freeze(['platform-enclosure','portico-basilica','fortress','sacred-complex','pilgrimage-access','street']);
 export function buildArchitecturalGrammar(builder,object,registration,surface){switch(object.kind){case'platform-enclosure':platform(builder,registration,surface);break;case'portico-basilica':stoa(builder,registration,surface);break;case'fortress':fortress(builder,registration,surface);break;case'sacred-complex':sacredComplex(builder,registration,surface);break;case'pilgrimage-access':approach(builder,registration,surface);break;case'street':street(builder,registration,surface);break;default:return false}return true;}

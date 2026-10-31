@@ -33,6 +33,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
     mesh.castShadow=true;mesh.receiveShadow=true;
     const objectId=objectIdOverride||ledgerId(kind,stage);if(!core.get(objectId))throw new Error(`Missing royal ledger object ${objectId}`);
     mesh.userData.cityObject={objectId,componentId:`j3k:royal:${id}`,kind,confidence:core.get(objectId).confidence,stage,footprintVerified:false};
+    if(kind==='first-temple')mesh.userData.templeSectionHeight=templeGround+4;
     mesh.userData.restPositions=Float32Array.from(p.array);
     mesh.userData.groundHeights=Float32Array.from(Array.from({length:p.count},(_,i)=>surface(x+cs*p.getX(i)+sn*p.getZ(i),z-sn*p.getX(i)+cs*p.getZ(i))-mesh.position.y));
 
@@ -83,6 +84,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   for(const side of [-1,1])templeBox(`temple-porch-jamb-${side}`,porchX,z+side*(opening/2+(w-opening)/4),porchDepth,(w-opening)/2,porchHeight);
   templeBox('temple-porch-lintel',porchX,z,porchDepth,opening,porchHeight-4.5,templeStone,4.5);
   // Door aperture is physical; no opaque dark panel substitutes for the interior.
+  for(const side of[-1,1])templeBox(`temple-open-door-${side}`,x+l/2-wall-clearDoor/4,z+side*(clearDoor/2-.06),clearDoor/2,.12,4.38,doorway,.12);
   // 1Kings6:6,10: three five-cubit-high side-room tiers, widths5/6/7 cubits.
   for(let tier=0;tier<3;tier++)for(const side of [-1,1]){const depth=(5+tier)*c;templeBox(`temple-side-${side}-tier-${tier+1}`,x-1,z+side*(w/2+depth/2),l-2,depth,5*c,stone,tier*5*c);}
   for(let tier=0;tier<3;tier++){

@@ -19,11 +19,14 @@ export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approa
   const components=[];
   const box=(id,x,z,w,d,height,lift=0,role='wall')=>components.push({id,x,z,w,d,height,lift,role});
   const [hx,hz]=h.offset,t=h.wallThickness,L=h.length,W=h.width;
+  box('hall-floor',hx,hz,L,W,.12);
   box('hall-west',hx-L/2+t/2,hz,t,W,h.height);
   for(const side of [-1,1])box(`hall-side-${side}`,hx,hz+side*(W/2-t/2),L-2*t,t,h.height);
   const jamb=(W-h.doorWidth)/2;
   for(const side of [-1,1])box(`hall-front-${side}`,hx+L/2-t/2,hz+side*(h.doorWidth/2+jamb/2),t,jamb,h.height);
   box('hall-door-lintel',hx+L/2-t/2,hz,t,h.doorWidth,h.height-h.doorHeight,h.doorHeight);
+  // Open leaves are an authored viewing pose, not excavated Persian door details.
+  for(const side of[-1,1])box(`hall-open-door-${side}`,hx+L/2-t-h.doorWidth/4,hz+side*(h.doorWidth/2-.06),h.doorWidth/2,.12,h.doorHeight-.12,.12,'door');
   box('hall-roof',hx,hz,L,W,.6,h.height,'roof');
   for(const side of [-1,1])box(`porch-side-${side}`,hx+L/2+p.depth/2,hz+side*(W/2-t/2),p.depth,t,p.height);
   box('porch-roof',hx+L/2+p.depth/2,hz,p.depth,W,.5,p.height,'roof');

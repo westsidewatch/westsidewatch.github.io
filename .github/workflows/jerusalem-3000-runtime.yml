@@ -93,6 +93,7 @@ jobs:
           node scripts/verify_jerusalem_3000_landmark_chronology_browser.mjs
           node scripts/verify_jerusalem_3000_boundary_stages_browser.mjs
           node scripts/verify_jerusalem_3000_temple_entries_browser.mjs
+          node scripts/verify_jerusalem_3000_temple_sections_browser.mjs
           node scripts/verify_jerusalem_3000_depth_court_browser.mjs
           node scripts/verify_jerusalem_3000_callouts_ground_browser.mjs
           node scripts/verify_jerusalem_3000_enclosure_gates_browser.mjs
