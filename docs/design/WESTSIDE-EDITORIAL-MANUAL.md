@@ -110,7 +110,126 @@ The P2 split composition preserves its water engraving, rise and opening doors o
 - **Implementation:** owning `static/css/p2-living-water.css` only; do not create another runtime, modify OS globals, replace engraving artwork or interfere with scroll/door choreography. CSS counters supply numbers without altering source copy.
 - **Proportional folio (2026-10-17):** make the schedule-owning right pane an inline-size container; use percentage-based inner gutters, container-relative column proportions and `cqi` fluid type with readable clamp bounds. Do not use CSS `transform:scale` on typography or the entire schedule. Preserve whitespace on both sides at any zoom and stack columns below the narrow-container threshold.\n- **Scripture:** the theme scripture remains left-aligned editorial reading; the independent Acts 4:12 closing citation is centered, including its reference.\n- **Acceptance:** actual 1648×928, 768px and 390px previews, 200% zoom, longest-row wrapping, keyboard and reduced-motion review, plus existing CI. A green CI alone does not certify editorial quality.
 
-## 8. Research retained as source-of-evidence
+## 8. Seven-surface P2 — Magazine-anchored fixed field and native engravings (2026-10-30)
+
+**Composition decision.** Chapter 01 LivingWaterWest is deliberately exceptional:
+its living-water / Red Sea split, door and Christian-institutional reading
+structure have their own accepted proportions. Beginning with Chapter 02
+Magazine, the remaining six realms reuse the **exact 5:8 cover + square
+Contents + original seven-color spine outer spread bounds**, measured from
+the existing Magazine folio rather than recreated by another CSS percentage
+or a new full-screen return animation. On mobile, the Magazine's approved
+stacked geometry determines the outer proportions; a new fixed crop must
+not override it. The surrounding background field is spatially continuous;
+its contents, not its size, change across realms.
+
+**The background belongs to each realm, not to a universal film loop.** The
+Magazine retains its original homepage six-clip video in the already accepted
+proportion. Bible, Sermon, Book, Cinema and Life may replace THAT SAME
+background region with their subject-specific engraving, paper tone and ink,
+using the one existing visual authority
+`static/css/westside-engraving-authority.css`. Do not replay the Magazine
+video in every chapter, create duplicate media players or make a full-screen
+film-to-engraving transformation. The per-chapter motif must be readable
+in the exposed non-content field while the actual chapter's paper/imagery
+stays opaque above it.
+
+| P2 chapter | Existing engraving owner / subject | Editorial character |
+|---|---|---|
+| 01 Church | `sites-section-church`: living currents / baptismal flow | **Distinct composition**; no compulsory Magazine geometry |
+| 02 Magazine | `sites-section-journal` / `sites-section-vol-00`: editorial folds and page diagonals | Original video outside cover, Contents and original spine |
+| 03 Bible / Emmaus | `sites-home-realm[data-realm=bible]`: canonical page/folio contours; existing manuscript scroll-edge SVG | ONE golden paper and real 241-image Doré gallery inside spread |
+| 04 Sermon / Olive | `sites-section-olive`: olive terraces / hillside contours | Speaker portraits and words on opaque paper |
+| 05 Book / Dawn Bookshop | `sites-section-dawn-library`: layered leaves, folios | Book material / fine plate-edge hatches |
+| 06 Cinema / Paradise | `sites-section-cinema`: **tabernacle veil** / curtain of the Most Holy Place (Ex 26:31–33; Heb 10:19–20) | Christ opens the new and living way; a theatrical curtain is only the spatial metaphor, never the theological source |
+| 07 Life / Daylight Café | `sites-section-daylight-cafe`: **五穀與新酒** (Deut 11:14; 8:8) | Crop/fruit intaglio: the promised land’s seven products, harvest, gratitude; tableware is supporting material only |
+
+**Art-direction requirement.** These CSS motifs are an existing *semantic
+engraving grammar*, **not accepted award-grade artwork**. Each chapter's
+authentic subject, original engraved source or approved authored SVG,
+cross-hatching density, line direction, texture scale, dark/light falloff,
+text-safe zone and material color must still be developed and visually
+reviewed. Do not mark generic repeating CSS patterns as complete engraving
+art. Chapter 03/04 are the only implemented follow-up candidates today;
+05–07 are design rules rather than invented completed screens.
+
+### P2 各版塊主題經文與刻線來源 / Scripture-to-engraving contract (2026-10-30)
+
+**本輪決定：每一個版塊必須有自己的一組「主題經文 → 具體形體 → 隨形刻線 → 動態語義」。**
+Primary Scripture is one real passage per chapter, with distinct supporting
+passages for object provenance and narrative action. The thematic object must
+come *from* the biblical text; a generic visual trope is not evidence.
+Church (01) and Magazine (02) are protected reference works, **not included
+in the new five-surface production batch**. Verses for 03–05 below are
+proposed art-direction assignments pending theological/editorial acceptance;
+06’s curtain and 07’s 五穀與新酒 are explicit user decisions. Scripture
+references do **not** mean all quoted passages must be printed on screen;
+the final bilingual wording and placement must be approved separately.
+
+| P2 | 主題經文 / Primary verse | Supporting Scripture | Biblically sourced engraved subject | Scripture-to-art rule |
+|---|---|---|---|---|
+| 01 Church / 活水 | **約 7:38 / John 7:38** (already shown in approved P2) | 約 7:37–39 | Living water currents | **Protected V75**; no repaint, reanimation or ratio changes |
+| 02 Magazine / 西望 | **羅 13:12 / Rom 13:12** (existing Watch for the Dawn identity) | 彼後 1:19, star/light association for study only | Dawn / the already frozen Morning Star–derived engraving | **Protected cover, Contents and spine**; no new Mother artwork this batch |
+| 03 Bible / Emmaus | **路 24:27 / Luke 24:27** *(proposed)* | 路 24:32 | The Scriptures opened and explained concerning Christ: manuscript scroll curvature and incised folio edges | Must communicate Christ opening the Scriptures; avoid generic letter or paper wallpaper |
+| 04 Sermon / Olive Mountain | **太 24:3 / Matt 24:3** *(proposed)* | 亞 14:4; 徒 1:12; 王上 6:31–33 for olive-wood ornament as a distinct source | Olive Mount as the teaching location; olive leaves, branch structure, oil-wood carved detail | Do not substitute topographic map stripes or falsely attribute Sermon on the Mount (Matt 5) to Olive Mountain |
+| 05 Book / Dawn Library | **耶 30:2 / Jer 30:2** *(proposed)* | 提後 4:13; 哈 2:2 | Written and preserved words: book, parchment, tablets, folio cut-edge and binding | Focus on faithful recording/transmission, not generic bookshop furniture |
+| 06 Cinema / 天堂電影院 | **來 10:19–20 / Heb 10:19–20** *(thematic direction confirmed)* | **出 26:31–33** (veil material & cherubim), **太 27:51** (veil torn top to bottom), **約 1:14** (Word dwells/tabernacles with us), **林後 5:18–19** (reconciliation) | **會幕／至聖所幔子**: woven blue/purple/scarlet linen, living fabric curvature, cherubim relief and opening passage | **大幕揭開 = 因基督的身體、寶血，隔絕被除去，人得以親近神。** Stage curtain is the editorial metaphor, not the model. Christ fulfills God’s dwelling with humanity; do not claim the theatrical screen is itself sacred or make projected light the central motif |
+| 07 Life / 白晝咖啡館 | **申 11:14 / Deut 11:14** (五穀、新酒和油) | **申 8:8** (seven products), **書 5:11–12** (after crossing, fruit of the land replaces manna), 何 2:8 (gift unacknowledged; warning, not only celebration) | **「五穀與新酒」**: wheat, barley, vine/grapes, figs, pomegranates, olive/oil, honey. Grain & vine can lead; use harvest and bounty rather than café cup rings | **七種出產不是七種穀物、也不等於七個版塊**；「五穀」在這個中文主題是穀物的統稱，並非精確五類穀物；「蜜」的具體植物來源須獨立核實 |
+
+**Biblical source distinction.** The list of seven land products is
+**Deuteronomy 8:8, spoken before Joshua’s entry**, not a list in Joshua’s
+book. **Joshua 5:11–12** records Israel actually eating the land’s produce
+and the cessation of manna. **Deuteronomy 11:14** directly names grain,
+new wine and oil, and therefore anchors the Café’s *primary* verse.
+Hosea 2:8 is prophetic criticism of failing to acknowledge the Provider,
+so it must not be cropped into an unconditional feel-good blessing.
+
+**Cinema — theology determines the picture and movement.** Christ is the
+fulfillment of divine dwelling among us (John 1:14 uses tabernacle/dwelling
+imagery); Hebrews 10:19–20 links access to God to Jesus’ blood and the
+veil, interpreted as his flesh. Matthew 27:51 describes the **temple veil
+torn from top to bottom**, not a conventional theater curtain parting.
+A cinema-sized grand curtain may be the design analogy, but its *drawn*
+fabric, needlework, cherubim and opening sequence must be rooted in
+Exodus 26:31–33 and the New Testament fulfillment. Test a top-origin
+release/parting grammar rather than generic side-to-side curtain animation.
+Reconciliation (2 Cor 5:18–19) is the meaning; lights, film projector beams,
+floating particles and lens flare may be absent or subordinate.
+
+**Production/QA binding:** for all five newly produced surfaces register
+`realm`, `primary_scripture`, `supporting_scriptures`,
+`biblical_subject`, `source_and_rights`, `engraved_material`,
+`direction_field`, `hatch_density_and_lighting`, `motion_semantics`,
+`print_safe_area`, `reduced_motion`, and `acceptance_state`.
+All five should be art-directed as one **coherent Doré Motion batch**,
+then independently judged. A single repeated CSS gradient cannot pass.
+Do not edit accepted Church/Magazine sources, author new literal Bible
+quotations without verifying the translation, or merge experiments
+before real visual review.
+
+Scripture links (KJV cross-check):
+[John 7:38](https://www.biblegateway.com/passage/?search=John+7%3A38&version=KJV) ·
+[Rom 13:12](https://www.biblegateway.com/passage/?search=Romans+13%3A12&version=KJV) ·
+[Luke 24:27](https://www.biblegateway.com/passage/?search=Luke+24%3A27&version=KJV) ·
+[Matt 24:3](https://www.biblegateway.com/passage/?search=Matthew+24%3A3&version=KJV) ·
+[Jer 30:2](https://www.biblegateway.com/passage/?search=Jeremiah+30%3A2&version=KJV) ·
+[Heb 10:19–20](https://www.biblegateway.com/passage/?search=Hebrews+10%3A19-20&version=KJV) ·
+[Ex 26:31–33](https://www.biblegateway.com/passage/?search=Exodus+26%3A31-33&version=KJV) ·
+[Matt 27:51](https://www.biblegateway.com/passage/?search=Matthew+27%3A51&version=KJV) ·
+[Deut 11:14](https://www.biblegateway.com/passage/?search=Deuteronomy+11%3A14&version=KJV) ·
+[Deut 8:8](https://www.biblegateway.com/passage/?search=Deuteronomy+8%3A8&version=KJV) ·
+[Josh 5:11–12](https://www.biblegateway.com/passage/?search=Joshua+5%3A11-12&version=KJV).
+
+**Acceptance.** Preserve the frozen original seven-color Magazine spine
+and original Church as read-only source layers; compare exact bounding
+rectangles of Magazine, Bible and Sermon at 1648×928 and 390×844, plus
+reverse scroll, 200% zoom and reduced motion. The fixed outer field and
+individual inner layouts have different owners: do not force every chapter's
+content into the same typography or internal grid merely because their
+outer rectangle aligns. Keep all work under Design OS and the existing P2
+owning CSS/JS; do not introduce a second global engraving manager.
+
+## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
 

@@ -1,0 +1,542 @@
+/* P2 03/04 isolated art-direction proof. No production cascade or existing asset is edited. */
+*{box-sizing:border-box}
+html{scroll-behavior:auto;background:#101923}
+body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)}
+.proof-controls{position:fixed;inset:0 0 auto;z-index:200;height:56px;padding:7px clamp(10px,2vw,28px);display:flex;align-items:center;gap:clamp(10px,2vw,30px);background:#141e27;color:#f2eadb;border-bottom:1px solid #736c5c;font:200 11px/1.4 var(--ws-type-display-en,"Bodoni Moda",serif)}
+.proof-controls strong{white-space:nowrap;font-weight:400;letter-spacing:.08em}
+.proof-controls strong small{font:200 8px/1 sans-serif;letter-spacing:.2em;color:#d9b475;margin-left:9px}
+.proof-controls__buttons{display:flex;gap:5px;flex:1;justify-content:center}
+.proof-controls button{border:1px solid #4e6069;color:inherit;background:transparent;font:400 11px/1.4 inherit;padding:6px 9px;cursor:pointer;border-radius:0}
+.proof-controls button:hover{background:#253845}
+.proof-controls label{display:flex;align-items:center;gap:7px;white-space:nowrap;letter-spacing:.03em}
+.proof-controls input{accent-color:#bb9b5a;width:110px}
+.proof-controls button:focus-visible,.emmaus a:focus-visible,.emmaus button:focus-visible,.emmaus__rail:focus-visible,.olive-proof button:focus-visible,.olive-proof a:focus-visible{outline:2px solid #b99a59;outline-offset:3px}
+.proof-track{height:1290svh;position:relative}
+.proof-stage{position:sticky;top:56px;height:calc(100svh - 56px);overflow:hidden;background:#f1eade;isolation:isolate}
+.proof-original{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;background:#f0ece2}
+.emmaus,.olive-proof{position:absolute;inset:0;z-index:3;overflow:hidden;visibility:hidden;opacity:0;pointer-events:none}
+.emmaus{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);color:#292922}
+/* The same engraving physically travels from Magazine LEFT to Emmaus RIGHT.
+   Only after arrival does ONE reveal top-down; the composed stage expands last.
+   Children are absolutely anchored so there is no second arriving full page. */
+.emmaus{transform-origin:center center;will-change:transform}
+#emmaus > .emmaus__left{position:absolute;inset:0 auto 0 0;width:66.666667%;height:100%;z-index:1}
+#emmaus > .emmaus__right{position:absolute;top:0;left:66.666667%;width:33.333333%;height:100%;z-index:2;will-change:left,width}
+/* Move the ACTUAL magazine engraving DOM node across the spread. */
+/* 03→04: the same Emmaus gallery node travels into the speaker slot.
+   Nothing is cloned or launched from outside the visible MERSI stage. */
+.proof-stage > #emmaus-gallery{position:absolute;z-index:6;min-width:0;overflow:hidden;
+ pointer-events:none;will-change:left,top,width,height,opacity}
+.proof-stage > #dual-dore-plate{position:absolute;z-index:7;margin:0;overflow:hidden;pointer-events:none;
+ background:#ded1af;will-change:left,top,width,height,opacity;
+ opacity:var(--p2-transfer-visible,1)!important}
+.proof-stage > #dual-dore-plate .dual-dore-plate__image{
+ position:absolute;inset:0;width:100%;height:100%;display:block;max-width:none;
+ object-fit:cover;object-position:center top;filter:grayscale(1) sepia(.33) contrast(.94) brightness(1.065);
+ transform-origin:center top;backface-visibility:hidden}
+.proof-stage > #dual-dore-plate .dual-dore-plate__image.is-outgoing{z-index:1}
+.proof-stage > #dual-dore-plate .dual-dore-plate__image.is-active{z-index:2}
+.proof-stage > #dual-dore-plate .dual-dore-plate__wash{
+ position:absolute;inset:0;z-index:2;background:rgba(192,173,132,.15);
+ mix-blend-mode:multiply;pointer-events:none}
+.proof-stage > #dual-dore-plate .dual-dore-plate__credit{
+ position:absolute;z-index:3;left:2.2%;bottom:1.65%;
+ font:200 var(--ws-type-scale-micro)/1.3 var(--ws-type-display-en-sc);
+ letter-spacing:.115em;color:#f4efe2;text-shadow:0 1px 2px rgba(26,31,28,.65)}
+.emmaus__left{display:flex;flex-direction:column;position:relative;min-width:0;background:#dfd2b6 url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT') center/420px auto;isolation:isolate;padding:clamp(18px,2.6vw,44px) clamp(22px,3.2vw,55px) 18px}
+.emmaus__left,.emmaus__right{will-change:clip-path}
+.emmaus__left:before{content:"";position:absolute;inset:0;background:#e7decbd9;z-index:-1}
+.emmaus__mast,.emmaus__foot,.emmaus__selector-head,.emmaus__book-meta,.emmaus__chapter{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font:200 clamp(9px,.75vw,12px)/1.3 var(--ws-type-display-en,serif);letter-spacing:.13em}
+.emmaus__mast{padding-bottom:12px;border-bottom:1px solid #776d5b7d}
+.emmaus__identity{display:flex;align-items:baseline;flex-direction:column;margin-top:clamp(15px,3.2vh,44px)}
+.emmaus__small{font:200 clamp(9px,.9vw,13px)/1.1 var(--ws-type-display-en);letter-spacing:.22em;color:#8e743e}
+.emmaus__identity h1{font:400 clamp(64px,8.9vw,175px)/.75 var(--ws-type-display-en,"Bodoni Moda",serif);letter-spacing:-.065em;color:#182e36;margin:9px 0 0}
+.emmaus__identity h1 span{display:block;font:600 clamp(16px,1.7vw,30px)/1.4 var(--ws-type-display-zh);letter-spacing:.14em;margin-top:14px;color:#32382e}
+.emmaus__identity p{margin:9px 0 0;font:200 clamp(11px,1vw,16px)/1.5 var(--ws-type-display-zh);color:#78684b}
+.emmaus__reading{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(170px,.85fr);gap:clamp(15px,2.4vw,44px);margin:auto 0 clamp(12px,2.2vh,24px);align-items:end}
+.emmaus__book{min-width:0;border-top:1px solid #b08d4e;padding-top:9px}
+.emmaus__book-meta{color:#8b774e}
+.emmaus__book h2{font:400 clamp(44px,6vw,115px)/.89 var(--ws-type-display-en);letter-spacing:-.07em;margin:9px 0 5px;color:#243b3a;overflow-wrap:anywhere}
+.emmaus__book>p{font:600 clamp(18px,2vw,37px)/1.25 var(--ws-type-display-zh);margin:0 0 23px}
+.emmaus__chapter{border-top:1px solid #8c877b99;padding-top:7px;color:#685c47}
+.emmaus__guide{align-self:end;min-width:0}
+.emmaus__guide>p:first-child{font:400 clamp(15px,1.45vw,25px)/1.1 var(--ws-type-display-en);letter-spacing:-.02em;color:#374840;margin:0 0 11px}
+.emmaus__guide>p:first-child span{display:block;font:200 12px/1.4 var(--ws-type-display-zh);letter-spacing:.14em}
+.emmaus__guide-copy{font:200 clamp(10px,.92vw,14px)/1.6 var(--ws-type-display-zh);margin:0 0 19px}
+.emmaus__enter{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #b18d48;border-bottom:1px solid #b18d48;color:#34392e;text-decoration:none;padding:9px 0;font:200 clamp(12px,1vw,15px)/1.4 var(--ws-type-display-zh)}
+.emmaus__enter span{font-size:17px}
+.emmaus__selector-head{border-top:1px solid #7c7362a6;padding-top:8px;color:#74664a}
+.emmaus__rail{display:flex;gap:0;align-items:stretch;width:100%;max-width:100%;height:clamp(64px,9.1vh,110px);overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scrollbar-color:#9b8656 transparent;overscroll-behavior-x:contain;touch-action:pan-x;scroll-snap-type:x proximity;margin:3px 0 8px}
+.emmaus__number{position:relative;flex:0 0 clamp(54px,5.1vw,91px);padding:10px 4px 16px;background:transparent;border:0;border-right:1px solid #9d927c70;border-radius:0;text-align:center;cursor:pointer;color:#868274;scroll-snap-align:center;font:200 clamp(22px,2.2vw,38px)/1 var(--ws-type-display-en);transition:color .2s,background .2s}
+.emmaus__number span{display:block;font:200 8px/1.4 var(--ws-type-display-en);letter-spacing:.11em;margin-top:6px;opacity:0}
+.emmaus__number:hover,.emmaus__number[aria-pressed="true"]{color:#906c27;background:#c4b3884d}
+.emmaus__number[aria-pressed="true"] span{opacity:1}
+.emmaus__foot{border-top:1px solid #776d5b7d;padding-top:9px;color:#74664a}
+.emmaus__right{position:relative;min-width:0;overflow:hidden;background:#282e29;color:#efe7d2}
+.emmaus__plates{position:absolute;inset:0;overflow:hidden;background:linear-gradient(90deg,#2c302b,#746d52)}
+.emmaus__plates img{position:absolute;inset:0;width:100%;height:112%;object-fit:cover;object-position:center top;filter:grayscale(1) sepia(.4) contrast(1.3);opacity:0;transition:opacity 1.15s ease;transform:scale(1.09) translateY(0)}
+.emmaus__plates img.is-active{opacity:.85;animation:em-plate-scan 15s linear forwards}
+@keyframes em-plate-scan{from{transform:scale(1.09) translateY(0)}to{transform:scale(1.09) translateY(-8%)}}
+.emmaus__right:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#3c38272f,transparent 17%,transparent 72%,#26292686),linear-gradient(180deg,#1e2516ba,transparent 18%,transparent 76%,#17211acc)}
+.emmaus__gold-line{position:absolute;z-index:2;top:0;bottom:0;left:0;width:1px;background:#d2ac60;box-shadow:0 0 16px #d2ac60aa;transition:height .3s}
+.emmaus__plate-top,.emmaus__plate-caption{position:absolute;z-index:3;left:clamp(14px,1.7vw,28px);right:clamp(14px,1.7vw,28px);font:200 clamp(9px,.72vw,12px)/1.4 var(--ws-type-display-en);letter-spacing:.16em}
+.emmaus__plate-top{top:clamp(22px,3vw,43px)}
+.emmaus__plate-top span{display:block;margin-top:16px;padding:3px 0 3px 10px;border-left:1px solid #d6b56a;color:#e3cca0;font-size:clamp(9px,.82vw,13px);letter-spacing:.12em}
+.emmaus__plate-caption{bottom:30px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;border-top:1px solid #d8c08b73;padding-top:10px}
+.olive-proof{z-index:4;background:transparent;display:grid;grid-template-rows:65% 35%;color:#202d27}
+.olive-proof__top{display:grid;grid-template-columns:41% 59%;min-height:0}
+.olive-proof__hero{position:relative;z-index:4;background:#e2e4db;overflow:hidden;padding:clamp(13px,2vh,25px);transform-origin:top left;will-change:transform}
+.olive-proof__portrait{position:relative;height:100%;margin:auto;aspect-ratio:3/4;max-width:100%;overflow:hidden;background:#f8f8f3}
+.olive-proof__portrait>img{width:100%;height:100%;object-fit:contain;display:block}
+.olive-proof__hero-folio{position:absolute;z-index:6;bottom:12px;right:14px;color:#174B35;font:200 10px/1 var(--ws-type-display-en);letter-spacing:.17em}
+.olive-proof__editorial{display:flex;flex-direction:column;justify-content:space-between;padding:clamp(25px,4vw,76px) clamp(30px,5vw,85px) clamp(22px,2.7vw,50px);border-left:1px solid #174B3566;background:#f0eee7;will-change:clip-path}
+.olive-proof__kicker{position:absolute;z-index:2;top:clamp(18px,2.4vw,36px);right:clamp(18px,3vw,44px);text-align:right;opacity:0}
+.olive-proof__editorial{position:relative}
+.olive-proof__kicker,.olive-proof__editorial>a,.olive-proof__bottom>div>span,.olive-proof__folio{font:200 clamp(10px,.85vw,13px)/1.3 var(--ws-type-display-en);letter-spacing:.15em}
+.olive-proof__editorial h1{font:400 clamp(65px,9vw,163px)/.76 var(--ws-type-display-en);letter-spacing:-.075em;margin:0;color:#123d30}
+.olive-proof__editorial h1 i{font-weight:400;font-style:italic}
+.olive-proof__zh{font:600 clamp(19px,2.4vw,42px)/1.2 var(--ws-type-display-zh);margin:clamp(15px,2.5vh,28px) 0 0}
+.olive-proof__statement{font:200 clamp(13px,1.15vw,20px)/1.6 var(--ws-type-display-zh);max-width:28em;margin-top:clamp(12px,2vh,22px)}
+.olive-proof__editorial>a{display:flex;justify-content:space-between;max-width:260px;text-decoration:none;border-top:1px solid #174B35;padding-top:9px;color:#174b35;font-family:var(--ws-type-display-zh)}
+.olive-proof__bottom{display:grid;grid-template-columns:76% 24%;border-top:1px solid #174B35;min-height:0}
+.olive-proof__register{padding:clamp(12px,2vw,32px) clamp(24px,4vw,70px);display:flex;flex-direction:column;gap:clamp(10px,2vh,22px);background:#f0eee7;will-change:clip-path}
+.olive-proof__names{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;align-items:start}
+.olive-proof__names button{padding:8px 4px 10px 0;border:0;border-top:1px solid #174B3555;background:transparent;text-align:left;color:#567366;cursor:pointer;font:200 clamp(10px,.95vw,17px)/1.15 var(--ws-type-display-en)}
+.olive-proof__names button small{display:block;margin-top:5px;color:#738276;font:200 clamp(8px,.7vw,12px)/1.4 var(--ws-type-display-zh)}
+.olive-proof__names button[aria-pressed="true"]{color:#a65f4b;border-color:#a65f4b}
+.olive-proof__window{border-left:1px solid #174B35;background:#174b35;color:#f7f5ee;display:flex;flex-direction:column;gap:4px;padding:clamp(10px,1.35vw,24px);min-height:0;will-change:clip-path}
+.olive-proof__window-image{flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.olive-proof__window-image img{height:100%;max-width:100%;object-fit:contain}
+.olive-proof__window>span:last-child{font:200 clamp(9px,.72vw,12px)/1.25 var(--ws-type-display-en);letter-spacing:.07em}
+.olive-proof__folio{position:absolute;z-index:5;right:15px;bottom:4px;color:#d0d9c9;font-size:8px}
+.proof-stage__folio{position:absolute;z-index:90;right:clamp(10px,1vw,20px);bottom:10px;padding:5px 8px;background:#1d2d2ba6;color:#f7f0df;pointer-events:none;font:200 10px/1.2 var(--ws-type-display-en);letter-spacing:.1em}
+@media(max-width:820px){.proof-controls{height:96px;align-items:flex-start;flex-wrap:wrap;gap:2px;padding:5px 10px}.proof-controls strong{width:100%;font-size:10px}.proof-controls__buttons{justify-content:flex-start;width:100%;flex:0 0 100%}.proof-controls button{font-size:10px;padding:3px 5px}.proof-controls label{margin-left:auto;font-size:10px}.proof-controls input{width:75px}.proof-stage{top:96px;height:calc(100svh - 96px)}.emmaus{grid-template-columns:minmax(0,67%) minmax(0,33%)}.emmaus__left{padding:14px 18px 11px}.emmaus__mast span:nth-child(2),.emmaus__foot span:first-child{display:none}.emmaus__identity{margin-top:24px}.emmaus__identity h1{font-size:clamp(41px,9vw,80px)}.emmaus__identity h1 span{font-size:17px}.emmaus__reading{display:block}.emmaus__guide{display:none}.emmaus__book h2{font-size:clamp(31px,7vw,60px)}.emmaus__book>p{font-size:18px;margin-bottom:12px}.emmaus__rail{height:76px}.emmaus__number{flex-basis:54px}.olive-proof__editorial{padding:22px}.olive-proof__editorial h1{font-size:clamp(39px,7vw,65px)}.olive-proof__statement{font-size:12px}.olive-proof__bottom{grid-template-columns:75% 25%}.olive-proof__names{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}.olive-proof__names button{font-size:10px;padding:3px 0}.olive-proof__names button small{font-size:8px}.olive-proof__register{padding:9px}.olive-proof__window{padding:9px}}
+@media(max-width:540px){.emmaus{grid-template-columns:minmax(0,64%) minmax(0,36%)}.emmaus__left{padding:12px}.emmaus__mast,.emmaus__foot,.emmaus__selector-head,.emmaus__book-meta,.emmaus__chapter{font-size:8px}.emmaus__identity{margin-top:clamp(10px,4vh,30px)}.emmaus__identity h1{font-size:clamp(36px,10vw,55px)}.emmaus__identity h1 span{font-size:13px;margin-top:8px}.emmaus__identity p{font-size:10px}.emmaus__reading{margin-top:auto;margin-bottom:8px}.emmaus__book h2{font-size:clamp(34px,8vw,49px)}.emmaus__book>p{font-size:15px}.emmaus__selector-head span:last-child{display:none}.emmaus__number{flex-basis:48px;font-size:23px}.emmaus__rail{height:70px}.emmaus__plate-top,.emmaus__plate-caption{left:8px;right:8px;font-size:8px;letter-spacing:.05em}.olive-proof{grid-template-rows:61% 39%}.olive-proof__top{grid-template-columns:45% 55%}.olive-proof__hero{padding:7px}.olive-proof__editorial{padding:14px}.olive-proof__editorial h1{font-size:clamp(30px,7.8vw,44px)}.olive-proof__zh{font-size:17px;margin:13px 0 0}.olive-proof__statement{font-size:10px;line-height:1.5}.olive-proof__editorial>a{font-size:9px}.olive-proof__bottom{grid-template-columns:79% 21%}.olive-proof__names{grid-template-columns:repeat(3,minmax(0,1fr));gap:1px}.olive-proof__names button{font-size:9px}.olive-proof__names button small{font-size:7px}.olive-proof__window{padding:5px}.olive-proof__window>span:last-child{font-size:7px}}
+@media(prefers-reduced-motion:reduce){.emmaus__plates img.is-active{animation:none!important}.emmaus__plates img{transition:none!important}.emmaus__number{transition:none!important}}
+
+
+/* Emmaus / ONE editorial opening: not a second curtain system.
+   The SVG is a local, editable scroll-edge engraving study, not a Doré plate.
+   Color authority is the canonical Design OS; there is no local folio palette. */
+.emmaus__left{--em-ink:var(--ws-ink,#243235);--em-line:color-mix(in srgb,var(--ws-first-light) 33%,transparent);gap:0}
+.emmaus__identity{margin-top:clamp(7px,1.35vh,16px)}
+.emmaus__identity h1{font-size:clamp(58px,7.4vw,135px);margin-top:clamp(3px,.6vh,8px)}
+.emmaus__identity h1 span{font-weight:var(--ws-weight-zh-anchor,600);margin-top:clamp(6px,.7vh,11px)}
+.emmaus__identity p{font-weight:var(--ws-weight-zh-air,200);margin:clamp(2px,.4vh,6px) 0 0}
+.emmaus__study{position:relative;isolation:isolate;flex:1 1 auto;min-height:195px;max-height:clamp(242px,35vh,405px);
+ margin:clamp(12px,2vh,26px) 0 clamp(9px,1.4vh,16px);
+ border:1px solid var(--em-line);background:color-mix(in srgb,var(--ws-papyrus,#eee4c9) 80%,white);
+ overflow:hidden;container-type:inline-size}
+.emmaus__scroll-engraving{position:absolute;z-index:-1;left:-24%;top:-10%;width:64%;height:122%;
+ object-fit:cover;opacity:.18;filter:sepia(.15) contrast(1.1);pointer-events:none;
+ -webkit-mask-image:linear-gradient(90deg,#000 12%,#000 36%,transparent 66%);
+ mask-image:linear-gradient(90deg,#000 12%,#000 36%,transparent 66%)}
+.emmaus__study-interface{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100%;height:100%;
+ padding:clamp(11px,1.85cqi,21px) clamp(15px,2.5cqi,26px) clamp(9px,1.4cqi,15px) clamp(58px,6.6cqi,78px);
+ color:var(--em-ink);font-synthesis:none}
+.emmaus__study-head,.emmaus__study-foot{display:flex;justify-content:space-between;gap:10px;align-items:center;
+ font:400 var(--ws-type-scale-micro)/1.35 var(--ws-type-display-en-sc);
+ letter-spacing:var(--ws-editorial-label-tracking,.12em);color:#765b38}
+.emmaus__study-head{padding-bottom:6px;border-bottom:1px solid var(--em-line)}
+.emmaus__study-head [lang^="zh"],.emmaus__study-foot [lang^="zh"]{
+ font:var(--ws-weight-zh-standard,400) var(--ws-type-scale-meta)/1.4 var(--ws-type-display-zh);
+ letter-spacing:normal}
+.emmaus__study-foot{border-top:1px solid var(--em-line);padding-top:7px;margin-top:auto}
+.emmaus__study-foot a{color:#74562c;text-underline-offset:3px;white-space:nowrap}
+.emmaus__study-cols{flex:1;display:grid;grid-template-columns:minmax(0,1.16fr) minmax(0,.84fr);min-height:0;gap:clamp(11px,2.2cqi,27px);padding:clamp(10px,1.65cqi,18px) 0}
+.emmaus__study-reading{min-width:0;overflow:hidden;display:flex;flex-direction:column}
+.emmaus__study-ref{font:400 var(--ws-type-scale-micro)/1.25 var(--ws-type-display-zh);color:#826b45}
+.emmaus__study-reading h2{font:var(--ws-weight-zh-anchor,600) clamp(18px,2.45cqi,28px)/1.22 var(--ws-type-display-zh);
+ margin:4px 0 5px;letter-spacing:0}
+.emmaus__study-movement{font:var(--ws-weight-zh-standard,400) clamp(11px,1.45cqi,16px)/1.5 var(--ws-type-reading-zh);margin:0;color:#4e554a}
+.emmaus__study-route{list-style:none;padding:0;margin:auto 0 0;display:grid;gap:4px;overflow:hidden}
+.emmaus__study-route li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:baseline;
+ border-top:1px solid #988c7754;padding-top:3px;min-width:0}
+.emmaus__study-route li span{font:400 var(--ws-type-scale-micro)/1.3 var(--ws-type-display-en);
+ color:#956f3d;white-space:nowrap}
+.emmaus__study-route li p{font:var(--ws-weight-zh-standard,400) clamp(10px,1.2cqi,14px)/1.42 var(--ws-type-reading-zh);
+ margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.emmaus__study-tools{border-left:1px solid var(--em-line);padding-left:clamp(10px,1.6cqi,19px);
+ min-width:0;display:flex;flex-direction:column}
+.emmaus__study-tabs{display:flex;gap:0;border-bottom:1px solid var(--em-line);flex:0 0 auto}
+.emmaus__study-tabs button{border:0;border-bottom:2px solid transparent;background:transparent;min-height:33px;
+ color:#6b6b5d;padding:2px clamp(6px,.75cqi,11px);font:var(--ws-weight-zh-standard,400)
+ var(--ws-type-scale-ui)/1.3 var(--ws-type-display-zh);cursor:pointer}
+.emmaus__study-tabs button[aria-selected="true"]{color:#74552f;border-color:var(--ws-first-light)}
+.emmaus__study-detail{padding-top:clamp(8px,1.4cqi,14px);min-height:0;overflow:hidden}
+.emmaus__study-detail strong{display:block;color:#414c41;font:var(--ws-weight-zh-anchor,600)
+ clamp(12px,1.8cqi,18px)/1.32 var(--ws-type-display-zh);margin-bottom:7px}
+.emmaus__study-detail p{font:var(--ws-weight-zh-standard,400) clamp(11px,1.35cqi,15px)/1.58 var(--ws-type-reading-zh);
+ margin:0;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.emmaus__study-tabs button:focus-visible,.emmaus__study-foot a:focus-visible{outline:2px solid var(--ws-first-light);outline-offset:2px}
+.emmaus__reading{flex:0 0 auto;margin:0 0 clamp(8px,1vh,12px);gap:clamp(8px,1.2vw,18px)}
+.emmaus__book h2{font-size:clamp(36px,4.65vw,80px);margin:6px 0 3px}
+.emmaus__book>p{font-size:clamp(15px,1.65vw,28px);margin-bottom:9px}
+.emmaus__guide-copy{margin-bottom:6px}
+.emmaus__rail{height:clamp(55px,7.3vh,84px);flex:0 0 auto}
+.emmaus__foot{flex:0 0 auto}
+@media(max-width:820px){
+ .emmaus__study{min-height:180px;max-height:32vh;margin:8px 0}
+ .emmaus__study-cols{grid-template-columns:1fr;padding:7px 0}
+ .emmaus__study-tools{display:none}
+ .emmaus__study-route li:nth-child(n+3){display:none}
+ .emmaus__study-head span:last-child,.emmaus__study-foot span{display:none}
+ .emmaus__study-foot{justify-content:flex-end}
+ .emmaus__reading{margin:0 0 7px}
+ .emmaus__identity h1{font-size:clamp(40px,7vw,85px)}
+}
+@media(max-width:540px){
+ .emmaus__identity h1{font-size:clamp(30px,9vw,56px)}
+ .emmaus__identity p{font-size:clamp(10px,2.45vw,13px)}
+ .emmaus__study{min-height:152px;max-height:29vh;margin:7px 0}
+ .emmaus__study-interface{padding:8px 10px 8px 21px}
+
+ .emmaus__scroll-engraving{opacity:.1}
+ .emmaus__study-reading h2{font-size:15px}
+ .emmaus__study-movement{font-size:10px;line-height:1.32}
+ .emmaus__study-route li:nth-child(n+2){display:none}
+ .emmaus__study-foot{padding-top:4px}
+ .emmaus__study-foot a{font-size:10px}
+ .emmaus__book h2{font-size:clamp(27px,7vw,43px)}
+}
+
+
+/* 03 / EMMAUS — manuscript and ONE reading, Design OS colors.
+   The Magazine owns the original seven-book spine. No second spine in ONE. */
+#emmaus > .emmaus__left{
+ --em-ink:color-mix(in srgb,var(--ws-night) 79%,var(--ws-olive));
+ --em-line:color-mix(in srgb,var(--em-ink) 32%,transparent);
+ --em-paper:var(--ws-one-paper);
+ background:var(--em-paper);color:var(--em-ink);
+ padding-left:clamp(87px,8.3vw,136px);
+}
+#emmaus > .emmaus__left::before{
+ background:linear-gradient(90deg,
+  color-mix(in srgb,var(--ws-olive) 12%,transparent),transparent 28%,
+  transparent 78%,color-mix(in srgb,var(--ws-paper) 20%,transparent));
+ z-index:0;pointer-events:none;
+}
+#emmaus > .emmaus__left::after{
+ content:"";position:absolute;z-index:0;left:-1.5%;top:3%;bottom:3%;
+ width:clamp(114px,21%,260px);
+ background:url('/images/p2-emmaus-scroll-micro-engraving.svg') left center/auto 102% no-repeat;
+ opacity:.92;mix-blend-mode:multiply;pointer-events:none;
+ -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 32%,#0009 53%,transparent 100%);
+ mask-image:linear-gradient(90deg,#000 0%,#000 32%,#0009 53%,transparent 100%);
+}
+#emmaus > .emmaus__left > *{position:relative;z-index:1}
+#emmaus .emmaus__study{
+ background:color-mix(in srgb,var(--ws-papyrus) 90%,var(--ws-paper));
+ border-color:color-mix(in srgb,var(--em-ink) 20%,var(--ws-first-light));
+}
+#emmaus .emmaus__scroll-engraving{
+ z-index:0;left:-20%;top:-7%;width:69%;height:114%;opacity:.57;
+ mix-blend-mode:multiply;filter:sepia(.08) contrast(1.4);
+ -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 38%,#0008 58%,transparent 79%);
+ mask-image:linear-gradient(90deg,#000 0%,#000 38%,#0008 58%,transparent 79%);
+}
+#emmaus .emmaus__study-interface{position:relative;z-index:1}
+#emmaus .emmaus__study-ref,
+#emmaus .emmaus__study-reading h2,
+#emmaus .emmaus__study-movement,
+#emmaus .emmaus__study-route li p,
+#emmaus .emmaus__study-detail strong,
+#emmaus .emmaus__study-detail p{color:var(--em-ink)}
+#emmaus .emmaus__study-tabs button[aria-selected="true"]{
+ border-color:var(--ws-first-light);color:var(--em-ink);
+}
+#emmaus .emmaus__number[aria-pressed="true"]{
+ color:var(--em-ink);
+ background:color-mix(in srgb,var(--ws-olive) 16%,var(--ws-papyrus));
+ outline:1px solid color-mix(in srgb,var(--em-ink) 45%,transparent);
+}
+#emmaus .emmaus__small{color:color-mix(in srgb,var(--em-ink) 67%,var(--ws-first-light))}
+#emmaus .emmaus__identity h1,
+#emmaus .emmaus__book h2{color:var(--em-ink)}
+#emmaus .emmaus__plate-top span{color:var(--ws-morning-gold)}
+/* In an unfeatured volume, the middle field is a REAL chapter selector:
+   retain the ONE coordinate, but do not falsely show Luke's commentary. */
+#emmaus .emmaus__study-route:has(.emmaus__chapter-choice){
+ grid-template-columns:repeat(2,minmax(0,1fr));margin:auto 0 0;
+ gap:5px 11px;
+}
+#emmaus .emmaus__study-route:has(.emmaus__chapter-choice) li{
+ display:block;border-top:1px solid var(--em-line);min-width:0;
+}
+#emmaus .emmaus__chapter-choice{
+ width:100%;min-height:28px;border:0;background:transparent;
+ color:var(--em-ink);padding:3px 0;
+ font:var(--ws-weight-zh-standard,400) var(--ws-type-scale-meta)/1.3 var(--ws-type-display-zh);
+ text-align:left;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#emmaus .emmaus__chapter-choice[aria-pressed="true"]{
+ color:color-mix(in srgb,var(--em-ink) 72%,var(--ws-first-light));
+ text-decoration:underline;text-decoration-color:var(--ws-first-light);text-underline-offset:3px;
+}
+#emmaus .emmaus__chapter-choice:focus-visible{
+ outline:2px solid var(--ws-first-light);outline-offset:2px;
+}
+@media(max-width:540px){
+ #emmaus .emmaus__study-route:has(.emmaus__chapter-choice){grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 4px}
+ #emmaus .emmaus__chapter-choice{font-size:9px;min-height:24px}
+}
+#emmaus :is(.emmaus__mast,.emmaus__foot,.emmaus__selector-head,
+ .emmaus__book-meta,.emmaus__chapter,.emmaus__study-head,.emmaus__plate-top,.emmaus__plate-caption){
+ font-family:var(--ws-type-display-en-sc);font-weight:400;
+ font-size:var(--ws-type-scale-micro);
+ font-synthesis:none;
+}
+#emmaus .emmaus__study-reading h2{font-size:var(--ws-type-scale-title-sm)}
+#emmaus .emmaus__identity h1{font-size:var(--ws-type-scale-display-lg)}
+#emmaus .emmaus__book h2{font-size:var(--ws-type-scale-display-md)}
+#emmaus .emmaus__study-route:has(.emmaus__chapter-choice) li:nth-child(n){
+ display:block;
+}
+@media(max-width:540px){
+ #emmaus .emmaus__identity h1{font-size:clamp(36px,9vw,55px)}
+ #emmaus .emmaus__book h2{font-size:clamp(30px,7vw,45px)}
+}
+/* Last visual-QA corrections, still scoped to P2 only:
+   mobile ONE panel must not stretch an excerpt into a half-empty page;
+   the Chinese controls must never inherit Bodoni small-caps tofu boxes. */
+.proof-controls button{
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-standard,400);
+}
+#emmaus .emmaus__study-foot a{
+ font-family:var(--ws-type-display-zh);
+ font-size:var(--ws-type-scale-meta);
+ font-weight:var(--ws-weight-zh-standard,400);
+ letter-spacing:normal;
+}
+#emmaus .emmaus__study-head b,
+#emmaus .emmaus__study-foot b{
+ font-family:var(--ws-type-display-zh);
+ font-weight:var(--ws-weight-zh-standard,400);
+ letter-spacing:normal;
+}
+@media(max-width:820px){
+ #emmaus .emmaus__study{flex:0 0 auto;height:auto;min-height:0;max-height:none}
+ #emmaus .emmaus__study-interface{height:auto;min-height:0}
+ #emmaus .emmaus__study-route{margin:8px 0 0}
+ #emmaus .emmaus__study-cols{flex:0 0 auto}
+}
+@media(max-width:540px){
+ #emmaus .emmaus__study{max-height:none}
+ #emmaus .emmaus__study-route{margin:6px 0 0}
+}
+
+/* 2026-10-30 — ONE material correction, scoped to this Draft.
+   Use the ACTUAL accepted ONE paper (#ded096) through Design OS, not a
+   papyrus/gold approximation. The accepted Magazine sevenfold book-spine
+   remains physically owned by its original iframe: no recolor or new layers. */
+#emmaus {
+ --em-paper:var(--ws-one-paper);
+ --em-ink:var(--ws-night);
+ --em-line:color-mix(in srgb,var(--ws-night) 27%,transparent);
+}
+#emmaus > .emmaus__left {
+ --em-paper:var(--ws-one-paper);
+ --em-ink:var(--ws-night);
+ --em-line:color-mix(in srgb,var(--ws-night) 27%,transparent);
+ background-color:var(--em-paper);
+ /* Match the accepted ONE leaf material; retain a solid ink-safe fallback. */
+ background-image:
+  radial-gradient(circle at 17% 7%,color-mix(in srgb,var(--ws-paper) 16%,transparent),transparent 28%),
+  linear-gradient(color-mix(in srgb,var(--ws-one-paper) 89%,transparent),color-mix(in srgb,var(--ws-one-paper) 92%,transparent)),
+  url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT');
+ background-size:auto,auto,560px auto;
+ background-repeat:no-repeat,no-repeat,repeat;
+ color:var(--em-ink);
+ padding-left:clamp(24px,3.2vw,55px);
+}
+#emmaus > .emmaus__left::before {
+ background:linear-gradient(90deg,color-mix(in srgb,var(--ws-papyrus) 18%,transparent),transparent 38%,transparent 78%,color-mix(in srgb,var(--ws-pale-gold) 6%,transparent));
+}
+#emmaus .emmaus__study {
+ background:color-mix(in srgb,var(--ws-one-paper) 89%,var(--ws-papyrus));
+ border-color:color-mix(in srgb,var(--em-ink) 24%,var(--ws-pale-gold));
+}
+#emmaus .emmaus__study-interface {
+ padding-left:clamp(22px,3.3cqi,35px);
+}
+#emmaus .emmaus__right {background:var(--ws-night);color:var(--ws-papyrus)}
+#emmaus .emmaus__plates {
+ background:linear-gradient(90deg,var(--ws-night),color-mix(in oklab,var(--ws-pale-gold) 30%,var(--ws-night)));
+}
+#emmaus .emmaus__right::after {
+ background:linear-gradient(90deg,color-mix(in srgb,var(--ws-night) 23%,transparent),transparent 17%,transparent 72%,color-mix(in srgb,var(--ws-night) 55%,transparent)),
+ linear-gradient(180deg,color-mix(in srgb,var(--ws-night) 60%,transparent),transparent 18%,transparent 76%,color-mix(in srgb,var(--ws-night) 70%,transparent));
+}
+#emmaus .emmaus__gold-line {background:var(--ws-pale-gold);box-shadow:0 0 16px color-mix(in srgb,var(--ws-pale-gold) 48%,transparent)}
+#emmaus :is(.emmaus__mast,.emmaus__foot,.emmaus__selector-head,.emmaus__book,
+ .emmaus__chapter,.emmaus__enter,.emmaus__study-head,.emmaus__study-foot,
+ .emmaus__study-tools,.emmaus__study-tabs,.emmaus__study-route li,.emmaus__number) {
+ border-color:var(--em-line);
+}
+#emmaus :is(.emmaus__small,.emmaus__book-meta,.emmaus__study-ref,
+ .emmaus__study-route li span,.emmaus__guide-copy,.emmaus__study-movement,
+ .emmaus__identity p,.emmaus__chapter,.emmaus__selector-head,.emmaus__foot) {
+ color:color-mix(in oklab,var(--em-ink) 78%,var(--ws-pale-gold));
+}
+#emmaus :is(.emmaus__identity h1,.emmaus__book h2,.emmaus__study-reading h2,
+ .emmaus__enter,.emmaus__study-foot a,.emmaus__study-head,
+ .emmaus__study-detail strong,.emmaus__study-tabs button[aria-selected="true"]) {color:var(--em-ink)}
+#emmaus .emmaus__study-tabs button[aria-selected="true"]{border-color:var(--ws-pale-gold)}
+#emmaus .emmaus__number:is(:hover,[aria-pressed="true"]){
+ background:color-mix(in oklab,var(--ws-pale-gold) 30%,var(--em-paper));color:var(--em-ink)
+}
+@media(max-width:820px) {
+ #emmaus > .emmaus__left{padding-left:clamp(14px,2.7vw,22px)}
+}
+@media(max-width:540px){
+ #emmaus > .emmaus__left{padding-left:12px;padding-right:7px}
+ #emmaus .emmaus__study-interface{padding-left:12px}
+}
+
+/* P2 02–07 geometry authority / Magazine's actual measured folio bounds.
+   Church is deliberately EXEMPT: its water and Red Sea split are unique.
+   This overlay changes only the non-content film/background field, never
+   the source Magazine book-spine or its 5:8 + square master proportions.
+   The chapter-specific contours are sourced from the EXISTING Design OS
+   engraving authority, not separately reproduced or given new geometry. */
+#p2-realm-background{
+ position:absolute;inset:0;z-index:2;pointer-events:none;
+ opacity:0;visibility:visible;isolation:isolate;
+ --ws-engraving-opacity:.65;
+ --ws-engraving-line:color-mix(in srgb,var(--ws-paper) 52%,transparent);
+ --ws-engraving-fine:color-mix(in srgb,var(--ws-paper) 30%,transparent);
+ background-color:var(--ws-night);
+}
+#p2-realm-background::after{
+ z-index:0;opacity:var(--ws-engraving-opacity);
+ background-position:center;
+ background-size:100% 100%;
+}
+#p2-realm-background[data-realm="bible"]{
+ --ws-branch:var(--ws-pale-gold);
+ background-color:color-mix(in srgb,var(--ws-night) 82%,var(--ws-pale-gold));
+ background-image:
+  linear-gradient(color-mix(in srgb,var(--ws-night) 60%,transparent),
+                  color-mix(in srgb,var(--ws-night) 60%,transparent)),
+  url('/images/p2-emmaus-scroll-micro-engraving.svg');
+ background-position:center;
+ background-size:cover;
+}
+#p2-realm-background[data-realm="sermon"]{
+ --ws-branch:var(--ws-olive);
+ background-color:color-mix(in srgb,var(--ws-night) 75%,var(--ws-olive));
+ background-image:
+  radial-gradient(ellipse at 50% 85%,
+   color-mix(in srgb,var(--ws-olive) 35%,transparent),
+   transparent 73%);
+}
+/* These are ONLY engraving-field labels, not fabricated future P2 chapters.
+   The shared authority already defines paper leaves, curtains, and table
+   rings for the Book, Cinema, and Life realms. */
+#p2-realm-background:is([data-realm="book"],[data-realm="cinema"],[data-realm="life"]){
+ --ws-branch:var(--ws-pale-gold);
+ background-color:var(--ws-night);
+}
+#emmaus[data-fixed-ground="on"] > .emmaus__left{
+ -webkit-mask-image:none;mask-image:none;
+ box-shadow:0 12px 38px color-mix(in srgb,var(--ws-night) 27%,transparent);
+}
+#emmaus[data-fixed-ground="on"] > .emmaus__right{
+ box-shadow:10px 12px 38px color-mix(in srgb,var(--ws-night) 30%,transparent);
+}
+#olive-proof[data-fixed-ground="on"]{
+ box-shadow:0 12px 38px color-mix(in srgb,var(--ws-night) 25%,transparent);
+}
+#olive-proof[data-fixed-ground="on"] .olive-proof__editorial{margin:0}
+.proof-controls #proof-ground-toggle[aria-pressed="true"]{
+ border-color:var(--ws-pale-gold);color:var(--ws-pale-gold);
+}
+/* At phone sizes the background's visible proportions are STILL set by
+   the actual original Magazine's stacked cover + Contents bounding union.
+   Never add a new mobile film stripe or reset those folios to full viewport. */
+@media(max-width:820px){
+ .proof-controls__buttons{flex-wrap:wrap;gap:3px}
+ .proof-controls #proof-ground-toggle{white-space:nowrap}
+}
+
+/* P2 / Emmaus engraving V5 opt-in. Draft branch only; base asset remains untouched. */
+body[data-p2-engraving="v5"] #emmaus > .emmaus__left::after{
+ background-image:url('/images/p2-emmaus-scroll-micro-engraving-v5.svg');
+}
+body[data-p2-engraving="v5"] #emmaus .emmaus__scroll-engraving{
+ opacity:.45;
+}
+
+/* 2026-10-30: concept-only Emmaus micro-engraving, opt-in V12.
+   The ONE and Magazine original assets remain unchanged. */
+body[data-p2-engraving="v12"] #emmaus > .emmaus__left::after {
+ background-image:url('/images/p2-emmaus-interpretation-engraving-v12.svg');
+ opacity:.80;
+}
+body[data-p2-engraving="v12"] #emmaus .emmaus__scroll-engraving {
+ opacity:.24;
+ filter:none;
+}
+
+/* Emmaus V14: scriptural concordance as a time-enclosing passage.
+   Opt-in only; does not touch accepted Magazine or Church graphics. */
+body[data-p2-engraving="v14"] #emmaus > .emmaus__left::after {
+ background-image:url('/images/p2-emmaus-scripture-time-manifold-v14.svg');
+ background-position:left center;
+ background-size:auto 102%;
+ opacity:.88;
+}
+body[data-p2-engraving="v14"] #emmaus .emmaus__scroll-engraving{
+ opacity:.38;
+ mix-blend-mode:multiply;
+ filter:none;
+}
+
+/* P2 03 / Emmaus V15 — the complete FILM-FIELD surface, not the ONE folio.
+   Keeps the measured Magazine folio punch-out from P2 JS. No extra OS authority.
+   Preview via ?ground=1&engraving=v15&d=9.1 only; source page unchanged. */
+body[data-p2-engraving="v15"] #p2-realm-background[data-realm="bible"] {
+ background:var(--ws-night) url('/images/p2-emmaus-fullfield-engraving-v15.svg') center center / 100% 100% no-repeat;
+ --ws-engraving-opacity:0;
+}
+body[data-p2-engraving="v15"] #p2-realm-background[data-realm="bible"]::after {
+ content:none;
+}
+/* Prevent a second false engraving inside the ONE text panel in this proof.
+   Neither the underlying reading content nor the accepted legacy assets change. */
+body[data-p2-engraving="v15"] #emmaus > .emmaus__left::after,
+body[data-p2-engraving="v15"] #emmaus .emmaus__scroll-engraving {
+ opacity:0;
+}
+
+/* 03 Emmaus / V16 isolated ART PROOF only.
+   Background is the existing magazine VIDEO negative-space field; the
+   original P2 geometry clip-path and 5:8+square folio footprint remain owned
+   by p2-emmaus-olive-preview.js, not by this style. No second design authority. */
+body[data-p2-engraving="v16"] #p2-realm-background[data-realm="bible"] {
+ background-color:var(--ws-one-paper,#ded096);
+ background-image:url('/images/p2-emmaus-chronology-engraving-v16.svg');
+ background-position:center center;
+ background-size:100% 100%;
+ background-repeat:no-repeat;
+ --ws-engraving-opacity:0;
+}
+body[data-p2-engraving="v16"] #p2-realm-background[data-realm="bible"]::after {
+ content:none;
+}
+/* No change to ONE content, the library's archive, magazine spine or Church. */
+
+/* Emmaus V17 — time held open. Isolated opt-in original film-surround engraving.
+   All typography, ONE paper, chapter controls, frozen sevenfold spine, and
+   Magazine/Church are unchanged. Existing P2 JS still owns the live clip-path. */
+body[data-p2-engraving="v17"] #p2-realm-background[data-realm="bible"]{
+ background-color:var(--ws-one-paper,#ded096);
+ background-image:url('/images/p2-emmaus-time-held-open-v17.svg');
+ background-position:center;
+ background-size:100% 100%;
+ background-repeat:no-repeat;
+ --ws-engraving-opacity:0;
+}
+body[data-p2-engraving="v17"] #p2-realm-background[data-realm="bible"]::after{
+ content:none;
+}

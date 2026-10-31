@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20261029a">
+<meta name="description" content="西望 P2 連續展演候選：教會、雜誌、以馬忤斯、橄欖山。僅供藝術驗收。">
+<title>P2 · Emmaus × Olive Mountain — 連續預覽</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<link rel="stylesheet" href="/css/westside-engraving-authority.css">
+<link rel="stylesheet" href="/css/p2-emmaus-olive-preview.css?v=20261030-engraved-master-r3">
+</head>
+<body data-ws-scope="p2">
+<header class="proof-controls" aria-label="P2 03 與 04 動效驗收工具">
+ <strong>WESTSIDE / P2 / 03—04 <small>PREVIEW · NOT PUBLISHED</small></strong>
+ <div class="proof-controls__buttons">
+  <button data-jump="3.0775">01 教會</button>
+  <button data-jump="6.50">02 Contents</button>
+  <button data-jump="9.10">03 以馬忤斯</button>
+  <button data-jump="10.05">03→04</button>
+  <button data-jump="11.10">04 橄欖山</button>
+  <button id="proof-ground-toggle" type="button" aria-pressed="false" aria-label="比較雜誌固定版式與各版塊專屬刻線底景">底紋 · OFF</button>
+ </div>
+ <label>進度 <input id="proof-seek" type="range" min="0" max="100" value="88" step=".1"><output id="proof-percentage">88%</output></label>
+</header>
+<main>
+ <section class="proof-track" id="proof-track" aria-label="P2 四個版塊連續滾動驗收">
+  <div class="proof-stage" id="proof-stage">
+   <iframe class="proof-original" id="proof-original" title="已上線的教會與西望雜誌段，原始畫面保持不變" src="/p2/living-water.html?embed=1&amp;v=p2-church-to-vol00-20261029-motion-film" allow="autoplay"></iframe>
+   <div id="p2-realm-background" class="sites-home-realm" data-realm="bible" aria-hidden="true"></div>
+   <section class="emmaus" id="emmaus" aria-label="03 以馬忤斯 · 66 卷聖經查經展示" aria-hidden="true" inert>
+    <div class="emmaus__left">
+     <div class="emmaus__mast"><span>03 / 07</span><span>WESTSIDE / BIBLE STUDY</span><span>THE SIXTY-SIX BOOKS</span></div>
+     <div class="emmaus__identity"><span class="emmaus__small">THE ROAD TO EMMAUS</span><h1>EMMAUS<span>以馬忤斯</span></h1><p>從經文進入歷史，從歷史重新走回聖經。</p></div>
+     <section class="emmaus__study" id="emmaus-study" aria-labelledby="emmaus-study-heading">
+      <img class="emmaus__scroll-engraving" src="/images/p2-emmaus-scroll-micro-engraving.svg" alt="" aria-hidden="true" decoding="async">
+      <div class="emmaus__study-interface">
+       <header class="emmaus__study-head"><span>ONE / BIBLE STUDY · <b lang="zh-Hant">研讀視窗</b></span><span id="em-study-feature">FEATURE / LUKE 24</span></header>
+       <div class="emmaus__study-cols">
+        <div class="emmaus__study-reading">
+         <span class="emmaus__study-ref" id="em-study-ref">路加福音 24:1–53</span>
+         <h2 id="emmaus-study-heading">祂已經復活了</h2>
+         <p class="emmaus__study-movement" id="em-study-movement"></p>
+         <ol class="emmaus__study-route" id="em-study-route" aria-label="所選書卷的 ONE 研讀路徑"></ol>
+        </div>
+        <div class="emmaus__study-tools">
+         <div class="emmaus__study-tabs" role="tablist" aria-label="所選書卷的研讀內容">
+          <button id="em-tab-background" type="button" role="tab" aria-controls="em-study-detail" aria-selected="true" data-study-view="background">歷史</button>
+          <button id="em-tab-connections" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="connections">串珠</button>
+          <button id="em-tab-questions" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="questions">問題</button>
+         </div>
+         <div class="emmaus__study-detail" id="em-study-detail" role="tabpanel" aria-labelledby="em-tab-background"></div>
+        </div>
+       </div>
+       <footer class="emmaus__study-foot"><span>ONE · <b lang="zh-Hant" id="em-study-source">路加福音第二十四章 · ONE 正式研讀內容</b></span><a id="em-study-enter" href="/one/?book=42&amp;chapter=24">打開完整研讀 ↗</a></footer>
+      </div>
+     </section>
+     <div class="emmaus__reading">
+      <div class="emmaus__book" aria-live="polite" aria-atomic="true"><div class="emmaus__book-meta"><span id="em-book-number">BOOK 42</span><span id="em-book-part">NEW TESTAMENT</span></div><h2 id="em-book-en">Luke</h2><p id="em-book-zh">路加福音</p><div class="emmaus__chapter"><span id="em-book-chapters">24 CHAPTERS</span><span>ONE · 一卷</span></div></div>
+      <div class="emmaus__guide"><p>66 BOOKS <span>六十六卷</span></p><p class="emmaus__guide-copy">選擇一卷，開始研讀。</p><a class="emmaus__enter" id="emmaus-enter" href="/one/?book=42&amp;chapter=24">打開一卷 <span>↗</span></a></div>
+     </div>
+     <div class="emmaus__selector-head"><span>01 — 66 / CANONICAL ORDER</span><span>← 橫向選卷 →</span></div>
+     <div class="emmaus__rail" id="emmaus-rail" tabindex="0" role="group" aria-label="六十六卷聖經，使用左右方向鍵或點選書卷；上下滾動切換 P2 版塊"></div>
+     <div class="emmaus__foot"><span>ONE / SCRIPTURE · HISTORY · MAPS · CROSS-REFERENCES</span><span>03 / 07</span></div>
+    </div>
+    <div class="emmaus__right" id="emmaus-gallery"><div class="emmaus__plates"><img id="em-plate-a" alt="" decoding="async"><img id="em-plate-b" alt="" decoding="async"></div><div class="emmaus__gold-line" aria-hidden="true"></div><div class="emmaus__plate-top">GUSTAVE DORÉ / ORIGINAL ENGRAVING<span id="em-plate-selection">BOOK 42 / LUKE</span></div><div class="emmaus__plate-caption"><span id="em-plate-title">THE BIBLE / ENGRAVED ARCHIVE</span><span id="em-plate-index">01 / 08</span></div></div>
+   </section>
+   <section class="olive-proof" id="olive-proof" aria-label="04 橄欖山 · 講員與講道" aria-hidden="true" inert>
+    <div class="olive-proof__top">
+     <div class="olive-proof__hero" id="olive-morph-hero"><div class="olive-proof__portrait" id="olive-main"><img id="olive-main-image" alt="倪柝聲" src="/images/olive/watchman-nee-editorial.png"><olive-speaker-baseline data-speaker="watchman-nee" aria-hidden="true"></olive-speaker-baseline></div><span class="olive-proof__hero-folio">PORTRAIT / 01—12</span></div>
+     <div class="olive-proof__editorial"><span class="olive-proof__kicker">04 / 07 · SERMONS · SPEAKERS · SERIES</span><div><h1>OLIVE<br><i>MOUNTAIN.</i></h1><p class="olive-proof__zh">橄欖山</p><p class="olive-proof__statement">從書卷走向聲音。經文被講述、被聆聽，也在人的生命中留下見證。</p></div><a href="/olive/">登上橄欖山 <span>↗</span></a></div>
+    </div>
+    <div class="olive-proof__bottom"><div class="olive-proof__register"><span>THE VOICES / 講員</span><div class="olive-proof__names" id="olive-speaker-names" role="group" aria-label="選擇講員"></div></div><div class="olive-proof__window"><span class="olive-proof__window-head">NEXT VOICE / 02</span><div class="olive-proof__window-image"><img id="olive-next-image" src="/images/olive/derek-prince-editorial.png" alt="葉光明"></div><span id="olive-next-name">DEREK PRINCE · 葉光明</span></div></div>
+    <span class="olive-proof__folio">04 / 07 · OLIVE MOUNTAIN</span>
+   </section>
+   <div class="proof-stage__folio" id="proof-phase">02 / 07 — MAGAZINE</div>
+  </div>
+ </section>
+</main>
+<script src="/one/one-data.js"></script>
+<script src="/one/luke-core.js"></script>
+<script src="/one/luke-21-24.js"></script>
+<script src="/one/one-dore-cover-registry.js"></script>
+<script src="/one/one-dore-assets-241.js"></script>
+<script src="/olive/components/speaker-baseline-v1/baseline.js?v=07d89a2-recovered-v1"></script>
+<script src="/js/p2-emmaus-olive-preview.js?v=20261030-engraved-master-r3"></script>
+<script>
+/* Candidate engraving is opt-in, never changes accepted Church/Magazine. */
+if(new URLSearchParams(location.search).get('engraving')==='v5'){
+ document.body.dataset.p2Engraving='v5';
+ const img=document.querySelector('.emmaus__scroll-engraving');
+ if(img)img.src='/images/p2-emmaus-scroll-micro-engraving-v5.svg';
+}
+</script>
+<script>
+/* Nonfigurative Emmaus engraving V12: opt-in experimental art proof. */
+if(new URLSearchParams(location.search).get('engraving')==='v12'){
+ document.body.dataset.p2Engraving='v12';
+ const img=document.querySelector('.emmaus__scroll-engraving');
+ if(img)img.src='/images/p2-emmaus-interpretation-engraving-v12.svg';
+ const toggle=document.getElementById('proof-ground-toggle');
+ if(toggle)toggle.title='Emmaus V12 / abstract biblical interpretation engravings — candidate only';
+}
+</script>
+<script>
+/* Opt-in typography and geometry proof for manuscript-as-time, no production changes. */
+if(new URLSearchParams(location.search).get('engraving')==='v14'){
+ document.body.dataset.p2Engraving='v14';
+ const img=document.querySelector('.emmaus__scroll-engraving');
+ if(img)img.src='/images/p2-emmaus-scripture-time-manifold-v14.svg';
+ const toggle=document.getElementById('proof-ground-toggle');
+ if(toggle)toggle.title='Emmaus V14 / scripture-time manifold — draft concept only';
+}
+</script>
+<script>
+/* V15 art test belongs to the VIDEO negative-space field,
+   not to ONE's study widget. Opt-in only; ground=1 is required. */
+if(new URLSearchParams(location.search).get('engraving')==='v15'){
+ document.body.dataset.p2Engraving='v15';
+ const label=document.getElementById('proof-phase');
+ if(label)label.title='V15: full-field engraving in original film area only; Draft PR';
+}
+</script>
+<script>
+/* Emmaus V16 renders ONLY in the original VIDEO field when ground=1.
+   ONE's content and internal SVG, Church, and Magazine stay unchanged. */
+if(new URLSearchParams(location.search).get('engraving')==='v16'){
+ document.body.dataset.p2Engraving='v16';
+ const toggle=document.getElementById('proof-ground-toggle');
+ if(toggle)toggle.title='Emmaus V16 — original video field: papyrus / scripture-time manifold';
+}
+</script>
+<script>
+/* V17 artistic proof: the curved time aperture remains native SVG and lives
+   ONLY behind the measured Magazine-content cut-out, replacing video region. */
+if(new URLSearchParams(location.search).get('engraving')==='v17'){
+ document.body.dataset.p2Engraving='v17';
+ const toggle=document.getElementById('proof-ground-toggle');
+ if(toggle)toggle.title='Emmaus V17 — time-held-open SVG in original film surround';
+}
+</script>
+</body>
+</html>
