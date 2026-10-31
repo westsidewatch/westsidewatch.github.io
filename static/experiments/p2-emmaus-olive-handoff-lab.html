@@ -130,5 +130,14 @@ if(new URLSearchParams(location.search).get('engraving')==='v16'){
  if(toggle)toggle.title='Emmaus V16 — original video field: papyrus / scripture-time manifold';
 }
 </script>
+<script>
+/* V17 artistic proof: the curved time aperture remains native SVG and lives
+   ONLY behind the measured Magazine-content cut-out, replacing video region. */
+if(new URLSearchParams(location.search).get('engraving')==='v17'){
+ document.body.dataset.p2Engraving='v17';
+ const toggle=document.getElementById('proof-ground-toggle');
+ if(toggle)toggle.title='Emmaus V17 — time-held-open SVG in original film surround';
+}
+</script>
 </body>
 </html>
