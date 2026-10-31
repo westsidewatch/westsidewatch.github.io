@@ -9,20 +9,26 @@ function stoa(builder,r,surface){const y=precinctY(r)+D.platform.pavingThickness
 function fortress(builder,r,surface){const y=r.up;box(builder,[126,2,106],[r.east,y+1,-r.north],surface,'foundation');box(builder,[100,21,80],[r.east,y+12.5,-r.north],surface,'superstructure',.94);for(const[x,z]of[[-50,-40],[50,-40],[-50,40],[50,40]]){const h=x>0&&z>0?70*D.cubitMetres:50*D.cubitMetres;box(builder,[22,h-1,22],[r.east+x,y+2+(h-1)/2,-r.north+z],surface,'superstructure');box(builder,[24,1,24],[r.east+x,y+2+h-.5,-r.north+z],surface,'roof',.95)}box(builder,[104,1,84],[r.east,y+23.5,-r.north],surface,'roof',.96);}
 function sacredComplex(builder,r,surface){
  const y=precinctY(r)+D.platform.pavingThickness,w=D.priestCourt.eastWest,d=D.priestCourt.northSouth,ww=D.womenCourt.eastWest,courtX=r.east-ww/2;
- box(builder,[w,.6,d],[courtX,y+.3,-r.north],surface,'foundation',.96);box(builder,[ww,.6,d],[courtX+w/2+ww/2,y+.3,-r.north],surface,'foundation',.96);
+ box(builder,[w,.6,d],[courtX,y-.28,-r.north],surface,'foundation',.96);box(builder,[ww,.6,d],[courtX+w/2+ww/2,y-.28,-r.north],surface,'foundation',.96);
  const minX=courtX-w/2,maxX=courtX+w/2+ww;
  for(const z of[-d/2+1,d/2-1])box(builder,[w+ww,4,2],[(minX+maxX)/2,y+2,-r.north+z],surface,'retaining',.94);
- for(const x of[minX+1,maxX-1])box(builder,[2,4,d],[x,y+2,-r.north],surface,'retaining',.94);
+ box(builder,[2,4,d],[minX+1,y+2,-r.north],surface,'retaining',.94);
+ const gateWidth=10*D.cubitMetres,gateHeight=20*D.cubitMetres;
+ for(const x of[maxX-1,courtX+w/2]){for(const sign of[-1,1]){const span=(d-gateWidth)/2;box(builder,[2,4,span],[x,y+2,-r.north+sign*(gateWidth/2+span/2)],surface,'retaining',.94);box(builder,[2,gateHeight,1.5],[x,y+.02+gateHeight/2,-r.north+sign*(gateWidth/2+.75)],surface,'superstructure',.98);}box(builder,[2,.8,gateWidth+3],[x,y+.02+gateHeight+.4,-r.north],surface,'roof',.98);}
  const west=minX+11*D.cubitMetres,porchDepth=10*D.cubitMetres,bodyLength=D.sanctuary.eastWest-porchDepth,h=D.sanctuary.height;
  box(builder,[D.sanctuary.eastWest,6*D.cubitMetres,D.sanctuary.porchNorthSouth],[west+D.sanctuary.eastWest/2,y+3*D.cubitMetres,-r.north],surface,'foundation',.98);
  box(builder,[bodyLength,h-6*D.cubitMetres-1.2,D.sanctuary.bodyNorthSouth],[west+bodyLength/2,y+(h+6*D.cubitMetres-1.2)/2,-r.north],surface,'superstructure',1);
- box(builder,[porchDepth,h-6*D.cubitMetres-1.2,D.sanctuary.porchNorthSouth],[west+bodyLength+porchDepth/2,y+(h+6*D.cubitMetres-1.2)/2,-r.north],surface,'superstructure',.98);
+ const openingWidth=20*D.cubitMetres,openingHeight=40*D.cubitMetres,podium=6*D.cubitMetres,porchX=west+bodyLength+porchDepth/2,side=(D.sanctuary.porchNorthSouth-openingWidth)/2;
+ for(const sign of[-1,1])box(builder,[porchDepth,h-podium-1.2,side],[porchX,y+(h+podium-1.2)/2,-r.north+sign*(openingWidth/2+side/2)],surface,'superstructure',.98);
+ box(builder,[porchDepth,h-podium-openingHeight-1.2,openingWidth],[porchX,y+(h-1.2+podium+openingHeight)/2,-r.north],surface,'superstructure',.98);
+ // Middot3:6 gives12 half-cubit rises and one-cubit treads; landings remain unmodelled.
+ for(let i=0;i<12;i++){const rise=(12-i)*D.cubitMetres/2;box(builder,[D.cubitMetres,rise,openingWidth],[west+D.sanctuary.eastWest+(i+.5)*D.cubitMetres,y+rise/2,-r.north],surface,'circulation',.96);}
  box(builder,[bodyLength,1.2,D.sanctuary.bodyNorthSouth],[west+bodyLength/2,y+h-.6,-r.north],surface,'roof',.98);
  box(builder,[porchDepth,1.2,D.sanctuary.porchNorthSouth],[west+bodyLength+porchDepth/2,y+h-.6,-r.north],surface,'roof',1);
  for(let i=0;i<10;i++)for(const sign of[-1,1])column(builder,minX+4+i*(maxX-minX-8)/9,y+.6,-r.north+sign*(d/2-3),surface,10.5);
 }
 function approach(builder,r,surface){const y=r.up;for(let i=0;i<13;i++){const width=184-i*3;box(builder,[width,4.5,16],[r.east,y+i*2,-r.north+(i-6)*15],surface,'circulation',i%2?.94:1)}for(const x of[-58,58])box(builder,[24,30,20],[r.east+x,y+27,-r.north+104],surface,'superstructure',.95);}
 function street(builder,r,surface){const y=r.up;for(let i=-10;i<=10;i++)for(let j=-1;j<=1;j++)box(builder,[16,4.5,17],[r.east+j*17,y+2.25,-r.north+i*17],surface,'circulation',(i+j)%2?.91:.98);box(builder,[10,24,360],[r.east-34,y+12,-r.north],surface,'retaining',.9);}
-export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v3-dimensioned-precinct';
+export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v4-temple-entries';
 export const SUPPORTED_ARCHITECTURAL_KINDS=Object.freeze(['platform-enclosure','portico-basilica','fortress','sacred-complex','pilgrimage-access','street']);
 export function buildArchitecturalGrammar(builder,object,registration,surface){switch(object.kind){case'platform-enclosure':platform(builder,registration,surface);break;case'portico-basilica':stoa(builder,registration,surface);break;case'fortress':fortress(builder,registration,surface);break;case'sacred-complex':sacredComplex(builder,registration,surface);break;case'pilgrimage-access':approach(builder,registration,surface);break;case'street':street(builder,registration,surface);break;default:return false}return true;}

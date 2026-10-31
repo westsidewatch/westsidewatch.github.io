@@ -260,6 +260,8 @@ try {
     if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 宗教核心亦為概略量體，非測繪復原。';
     if(p.id==='hellenistic-hasmonean')note.textContent+=' 聖域選取前164年重新奉獻後的示意形態，不代表整期；尺寸及平面未核定，可點「聖殿近看」。';
     const datedCores=three.landmarkChronology();if(datedCores.length)note.textContent+=' 本期地標階段：'+datedCores.map(c=>c.label).join('；')+'。年份僅用於這些地標的分期定位，並非全城逐年復原。';
+    if(p.id==='david-solomon')note.textContent+=' 前廊開口與三層側室已分件呈現；側室採文獻比例，門洞與立面仍為示意。';
+    if(p.id==='herodian-jesus')note.textContent+=' 前廊門洞、登殿臺階與院落入口已分件呈現；尺寸傳統不等同考古定位。';
     if(p.id==='herodian-jesus')note.textContent+=' 比例校準：平台約300×480m；殿體高約52.5m（暫採每肘0.525m），位置與細節仍屬復原。';
     if(!isEarliestPhase(p.id)&&!['middle-bronze','late-bronze-iron1'].includes(p.id))note.textContent+=' 城內褐色為街區配置示意；淺石色為公共院落／遺址語境，內部建築仍有待核定。未定位規劃不再清空街區。';
     if(isIndependentLaterPhase(p.id))note.textContent+=' 地區、路網與住宅量體為示意；共同東側軸線不表示歷代路面相同。各期採階段概覽，非逐年完整復原。';

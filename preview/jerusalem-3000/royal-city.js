@@ -20,10 +20,10 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   const ledgerId=(kind,stage)=>'j3k:object:'+(kind==='first-temple'?'first-temple':kind==='city-wall'?(stage==='david'?'royal-city-wall-hypothesis':'solomon-northern-wall-hypothesis'):(stage==='david'?'david-royal-courtyard-hypothesis':'solomon-royal-courtyard-hypothesis'));
 
   const surface=(x,z)=>settlementSurfaceHeight(terrain,anchor.x+x,anchor.z+z);
-  function box(id,kind,x,z,w,d,h,stage='david',material=stone,angle=0,lift=0,objectIdOverride=null) {
+  function box(id,kind,x,z,w,d,h,stage='david',material=stone,angle=0,lift=0,objectIdOverride=null,levelGround=null) {
     const cs=Math.cos(angle),sn=Math.sin(angle);
     const corners=[[-w/2,-d/2],[w/2,-d/2],[-w/2,d/2],[w/2,d/2]];
-    const topGround=Math.max(...corners.map(([a,b])=>surface(x+cs*a+sn*b,z-sn*a+cs*b)));
+    const topGround=levelGround??Math.max(...corners.map(([a,b])=>surface(x+cs*a+sn*b,z-sn*a+cs*b)));
     if(!Number.isFinite(topGround))throw new Error('Royal city outside DEM');
     const geometry=new THREE.BoxGeometry(w,h,d),p=geometry.attributes.position;
     for(let i=0;i<p.count;i++)if(lift===0&&p.getY(i)<0)p.setY(i,surface(x+cs*p.getX(i)+sn*p.getZ(i),z-sn*p.getX(i)+cs*p.getZ(i))-topGround-h/2);
@@ -61,12 +61,19 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   }
   for(const court of data.royalCity.courtyards)courtyard(court.id,...court.offset,court.stage);
   const t=data.royalCity.temple,c=t.cubitMetres,l=t.lengthCubits*c,w=t.widthCubits*c,h=t.heightCubits*c,[x,z]=t.offset;
-  box('temple-main','first-temple',x,z,l,w,h,'solomon',templeStone);
-  box('temple-porch','first-temple',x+l/2+5*c,z,10*c,w,9,'solomon',templeStone);
-  box('temple-door','first-temple',x+l/2+10*c+.06,z,.12,2.6,4.5,'solomon',doorway);
-  for(const side of [-1,1])box(`temple-side-${side}`,'first-temple',x-1,z+side*(w/2+1.5),l-2,3,6,'solomon');
-  for(const side of [-1,1])box(`temple-pillar-${side}`,'first-temple',x+l/2+10*c+1,z+side*3,.8,.8,8,'solomon',roof);
-  box('temple-altar','first-temple',x+l/2+16,z,4,4,2.5,'solomon');
+  // One display datum for the ensemble; footing bottoms still meet the DEM.
+  const templeGround=Math.max(...[[-l/2,-w/2-7*c],[-l/2,w/2+7*c],[l/2+10*c,-w/2-7*c],[l/2+10*c,w/2+7*c]].map(([dx,dz])=>surface(x+dx,z+dz)));
+  const templeBox=(id,px,pz,pw,pd,ph,material=templeStone,lift=0)=>box(id,'first-temple',px,pz,pw,pd,ph,'solomon',material,0,lift,null,templeGround);
+  templeBox('temple-main',x,z,l,w,h);
+  // Existing illustrative doorway width/porch height are not textual measures.
+  const opening=2.6,porchHeight=9,porchDepth=10*c,porchX=x+l/2+porchDepth/2;
+  for(const side of [-1,1])templeBox(`temple-porch-jamb-${side}`,porchX,z+side*(opening/2+(w-opening)/4),porchDepth,(w-opening)/2,porchHeight);
+  templeBox('temple-porch-lintel',porchX,z,porchDepth,opening,porchHeight-4.5,templeStone,4.5);
+  templeBox('temple-door',x+l/2+.06,z,.12,opening,4.5,doorway);
+  // 1Kings6:6,10: three five-cubit-high side-room tiers, widths5/6/7 cubits.
+  for(let tier=0;tier<3;tier++)for(const side of [-1,1]){const depth=(5+tier)*c;templeBox(`temple-side-${side}-tier-${tier+1}`,x-1,z+side*(w/2+depth/2),l-2,depth,5*c,stone,tier*5*c);}
+  for(const side of [-1,1])templeBox(`temple-pillar-${side}`,x+l/2+10*c+1,z+side*3,.8,.8,8,roof);
+  templeBox('temple-altar',x+l/2+16,z,4,4,2.5,stone);
   for(const gate of spatial.gates){
     const [gx,gz]=gate.offset,id=`j3k:object:royal-gate:${gate.id}`;
     for(const side of [-1,1])box(`gate-${gate.id}-post-${side}`,'city-gate',gx+gate.unit[0]*side*(gate.width/2+.5),gz+gate.unit[1]*side*(gate.width/2+.5),1,2.5,4,gate.stage,stone,gate.angle,0,id);

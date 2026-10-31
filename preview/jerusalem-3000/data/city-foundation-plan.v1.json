@@ -11,7 +11,7 @@
     "occupation",
     "lifecycle"
   ],
-  "detailWork": "paused-until-foundation-review-accepted",
+  "detailWork": "general-detail-paused-except-user-authorised-paired-temple-stage",
   "scopeEvidence": [
     "three-scene.js",
     "shared-era-runtime.js",
@@ -833,5 +833,17 @@
     "publicOrDefenseAdditions": false,
     "sourceReviewAccepted": false,
     "physicalInheritanceVerified": false
+  },
+  "templeConstruction": {
+    "stage": 1,
+    "scope": [
+      "first-temple-porch-and-three-side-room-tiers",
+      "herodian-porch-gates-and-12-rises"
+    ],
+    "authority": "user-requested-landmark-ensemble-work; source constraints separate from illustrative details",
+    "historicalGeometryAccepted": false,
+    "sourceReview": "TEMPLE-CONSTRUCTION.md",
+    "generalHousingDetail": "paused",
+    "cityFoundationAcceptanceUnchanged": true
   }
 }
