@@ -22,7 +22,12 @@ export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approa
   const [hx,hz]=h.offset,t=h.wallThickness,L=h.length,W=h.width;
   box('hall-floor',hx,hz,L,W,.12,0,'floor');
   box('hall-west',hx-L/2+t/2,hz,t,W,h.height);
-  for(const side of [-1,1])box(`hall-side-${side}`,hx,hz+side*(W/2-t/2),L-2*t,t,h.height);
+  for(const side of[-1,1]){
+    const zz=hz+side*(W/2-t/2),length=L-2*t,sill=h.height*.68,wh=1.4,ww=1.2,pitch=length/5;
+    box(`hall-side-${side}`,hx,zz,length,t,sill);
+    box(`hall-window-head-${side}`,hx,zz,length,t,h.height-sill-wh,sill+wh);
+    let cursor=hx-length/2;for(let i=0;i<5;i++){const centre=hx-length/2+(i+.5)*pitch;box(`hall-window-pier-${side}-${i}`,(cursor+centre-ww/2)/2,zz,centre-ww/2-cursor,t,wh,sill);cursor=centre+ww/2;}box(`hall-window-pier-${side}-end`,(cursor+hx+length/2)/2,zz,hx+length/2-cursor,t,wh,sill);
+  }
   const jamb=(W-h.doorWidth)/2;
   for(const side of [-1,1])box(`hall-front-${side}`,hx+L/2-t/2,hz+side*(h.doorWidth/2+jamb/2),t,jamb,h.height);
   box('hall-door-lintel',hx+L/2-t/2,hz,t,h.doorWidth,h.height-h.doorHeight,h.doorHeight);

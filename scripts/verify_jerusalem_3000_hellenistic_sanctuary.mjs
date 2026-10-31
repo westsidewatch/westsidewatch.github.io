@@ -25,6 +25,11 @@ for(const side of['west','east']){
  const link=actual(`court-link-${side}`),floor=actual(`court-portico-${side}-floor`),fb=new THREE.Box3().setFromObject(floor),lp=link.geometry.attributes.position;assert.ok(link,'court context must be connected to main approach');
  const targetX=side==='west'?fb.max.x:fb.min.x,ys=[];for(let i=0;i<lp.count;i++)if(Math.abs(lp.getX(i)-targetX)<.001)ys.push(lp.getY(i));assert.ok(ys.some(y=>Math.abs(y-fb.max.y-.02)<.001),'court link must meet gallery floor with safe paving clearance');
 }
+const mainBox=new THREE.Box3().setFromObject(actual('hall-floor')),mainCentre=mainBox.getCenter(new THREE.Vector3()),windowLength=layout.hall.length-2*layout.hall.wallThickness;
+for(const side of[-1,1])for(let i=0;i<5;i++){
+ const xx=mainCentre.x-windowLength/2+(i+.5)*windowLength/5,yy=mainBox.max.y-.12+layout.hall.height*.68+.7;
+ assert.equal(new THREE.Raycaster(new THREE.Vector3(xx,yy,mainCentre.z),new THREE.Vector3(0,0,side),0,layout.hall.width).intersectObjects(meshes,true).length,0,'early sanctuary high windows must pass actual rays');
+}
 const edgeBox=new THREE.Box3().setFromObject(actual('hall-roof-edge-1'));
 assert.ok(Math.abs(edgeBox.max.y-roofBox.max.y-.4)<1e-4,'actual roof must be recessed below perimeter');
 const floorBox=new THREE.Box3().setFromObject(actual('hall-floor')),boundaryBox=new THREE.Box3().setFromObject(actual('hall-inner-lintel')),boundaryCentre=boundaryBox.getCenter(new THREE.Vector3());
@@ -44,7 +49,7 @@ for(const side of[-1,1]){
 }
 // Actual upper faces must join despite a sloping ground surface.
 const box=id=>new THREE.Box3().setFromObject(meshes.find(m=>m.userData.cityObject.componentId===`j3k:hellenistic-sanctuary:${id}`));
-for(const id of ['hall-west','hall-side--1','hall-side-1','hall-front--1','hall-front-1','hall-door-lintel'])assert.ok(Math.abs(box(id).max.y-box('hall-roof').min.y)<1e-5,`${id} must meet roof datum`);
+for(const id of ['hall-west','hall-window-head--1','hall-window-head-1','hall-front--1','hall-front-1','hall-door-lintel'])assert.ok(Math.abs(box(id).max.y-box('hall-roof').min.y)<1e-5,`${id} must meet roof datum`);
 for(const id of ['porch-side--1','porch-side-1'])assert.ok(Math.abs(box(id).max.y-box('porch-roof').min.y)<1e-5,'porch roof must meet side walls');
 const access=meshes.find(m=>m.userData.cityObject.role==='access'),p=access.geometry.attributes.position;
 for(let i=0;i<p.count;i+=3){const triangle=[0,1,2].map(k=>({x:p.getX(i+k),z:p.getZ(i+k)}));for(const obstacle of meshes.filter(m=>!['access','roof','floor'].includes(m.userData.cityObject.role)&&!m.userData.cityObject.componentId.includes('lintel'))){const b=new THREE.Box3().setFromObject(obstacle);assert.ok(!polygonsOverlap(triangle,[{x:b.min.x,z:b.min.z},{x:b.max.x,z:b.min.z},{x:b.max.x,z:b.max.z},{x:b.min.x,z:b.max.z}]),`route crosses actual ${obstacle.userData.cityObject.componentId}`);}}

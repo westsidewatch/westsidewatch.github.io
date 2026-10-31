@@ -30,6 +30,12 @@ try {
  const rawAnchor=await json('data/anchor-era-packs.json');assert.ok(!rawAnchor.packs.flatMap(p=>p.objects||[]).some(o=>o.id==='j3k:object:royal-road:spring-access'),'spatial records must not be duplicated in editable anchor packs');
  const [a,b]=await Promise.all([loadAnchorCityLedger(),loadAnchorCityLedger()]);assert.equal(a.lifecycle.objects.length,b.lifecycle.objects.length);assert.equal(a.lifecycle.objects.filter(o=>o.id==='j3k:object:royal-road:spring-access').length,1);
  const runtime=createRoyalCity(parent,{data,terrain,core});assert.equal(core.get('j3k:object:royal-region:ridge').geometry.frame,'canonical-dem-enu');assert.equal(core.get('j3k:object:royal-road:spring-access').metadata.spatialTopology.from,'spring');runtime.apply({position:3.9,evidenceAllowed:()=>true});
+ const palaceMeshes=parent.children[0].children;parent.updateMatrixWorld(true);
+ for(const court of data.royalCity.courtyards){
+  const floor=palaceMeshes.find(m=>m.userData.cityObject.componentId===`j3k:royal:${court.id}-west-floor`),fb=new THREE.Box3().setFromObject(floor),centre=fb.getCenter(new THREE.Vector3()),yy=fb.max.y+1;
+  const ray=new THREE.Raycaster(new THREE.Vector3(fb.max.x+1,yy,centre.z),new THREE.Vector3(-1,0,0),0,3);
+  assert.equal(ray.intersectObjects(palaceMeshes.filter(m=>m.userData.cityObject.componentId.startsWith(`j3k:royal:${court.id}-west-`)),true).length,0,'royal wing must contain real courtyard door and hollow room');
+ }
  const hallParts=parent.children[0].children.filter(m=>m.userData.cityObject.landmarkProgrammeId);
  assert.ok(hallParts.length>40,'royal context must contain actual building ensembles');parent.updateMatrixWorld(true);
  for(const profile of data.royalCity.precinctHalls){

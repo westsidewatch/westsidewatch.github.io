@@ -1,3 +1,4 @@
+import {towerShellParts} from './landmark-shells.js';
 import {buildSouthernApproach} from './southern-approach.js';
 import {buildHerodianService} from './temple-ritual-service.js';
 import {buildPerimeterPorticoes} from './temple-perimeter-porticoes.js';
@@ -29,7 +30,7 @@ function fortress(builder,r,surface){
  box(builder,[6,16,4],[r.east,y+15,-r.north+38],surface,'superstructure',.94);
  // Four perimeter roof walks preserve24m body roof height, leaving courtyard open.
  for(const side of[-1,1]){box(builder,[104,1,4],[r.east,y+23.5,-r.north+side*40],surface,'roof',.96);box(builder,[4,1,76],[r.east+side*50,y+23.5,-r.north],surface,'roof',.96);}
- for(const[x,z]of[[-50,-40],[50,-40],[-50,40],[50,40]]){const h=x>0&&z>0?70*D.cubitMetres:50*D.cubitMetres;box(builder,[22,h-1,22],[r.east+x,y+2+(h-1)/2,-r.north+z],surface,'superstructure');box(builder,[24,1,24],[r.east+x,y+2+h-.5,-r.north+z],surface,'roof',.95);}
+ for(const[x,z]of[[-50,-40],[50,-40],[-50,40],[50,40]]){const h=x>0&&z>0?70*D.cubitMetres:50*D.cubitMetres;for(const p of towerShellParts(22,h-1))box(builder,[p.w,p.h,p.d],[r.east+x+p.x,y+2+p.y,-r.north+z+p.z],surface,p.id==='roof'||p.id.startsWith('parapet')||p.id.startsWith('merlon')?'roof':'superstructure',p.id==='roof'?.9:1);}
  // Authored internal sheltered edges; source describes rooms/courts/porticoes, not this plan.
  for(const side of[-1,1]){
   box(builder,[6,.4,56],[r.east+side*40,y+7.8,-r.north],surface,'roof',.93);
@@ -100,6 +101,6 @@ function sacredComplex(builder,r,surface){
 }
 function approach(builder,r,surface){buildSouthernApproach(builder,r,surface);}
 function street(builder,r,surface){const y=r.up;for(let i=-10;i<=10;i++)for(let j=-1;j<=1;j++)box(builder,[16,4.5,17],[r.east+j*17,y+2.25,-r.north+i*17],surface,'circulation',(i+j)%2?.91:.98);box(builder,[10,24,360],[r.east-34,y+12,-r.north],surface,'retaining',.9);}
-export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v14-temple-first-ring-access';
+export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v15-readable-landmark-shells';
 export const SUPPORTED_ARCHITECTURAL_KINDS=Object.freeze(['platform-enclosure','perimeter-porticoes','portico-basilica','fortress','sacred-complex','pilgrimage-access','street']);
 export function buildArchitecturalGrammar(builder,object,registration,surface){switch(object.kind){case'perimeter-porticoes':buildPerimeterPorticoes(builder,registration,surface,box);break;case'platform-enclosure':platform(builder,registration,surface);break;case'portico-basilica':stoa(builder,registration,surface);break;case'fortress':fortress(builder,registration,surface);break;case'sacred-complex':sacredComplex(builder,registration,surface);break;case'pilgrimage-access':approach(builder,registration,surface);break;case'street':street(builder,registration,surface);break;default:return false}return true;}

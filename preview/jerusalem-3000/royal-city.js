@@ -61,10 +61,23 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   circuit(data.royalCity.davidWall,'david','david-wall');
   circuit(data.royalCity.northernWall,'solomon','north-wall');
   function courtyard(prefix,x,z,stage) {
-    box(`${prefix}-west`,'royal-palace',x-18,z,8,32,7,stage);
-    box(`${prefix}-east`,'royal-palace',x+18,z,8,32,7,stage);
-    box(`${prefix}-north`,'royal-palace',x,z-13,28,6,8,stage);
-    for(const side of [-1,1])box(`${prefix}-south-${side}`,'royal-palace',x+side*7.75,z+13,12.5,6,6,stage);
+    const wing=(id,cx,cz,w,d,h,frontAxis,frontSign)=>{
+      const t=.4,roofSlab=.25,door=2,doorH=3.5;
+      const emit=(suffix,px,pz,pw,pd,ph,lift=0)=>{
+        if(suffix!=='floor'&&suffix!=='roof'&&lift===0){lift=.12;ph-=.12;}
+        let g=null;if(suffix==='floor'){const points=pw>pd?[[px-pw/2,pz],[px+pw/2,pz]]:[[px,pz-pd/2],[px,pz+pd/2]],v=sanctuaryAccessVertices(points,Math.min(pw,pd),surface,()=>level+ph,{terrain,anchor});for(let i=0;i<v.length;i+=3){v[i]-=px;v[i+1]-=level+ph/2;v[i+2]-=pz;}g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));}
+        return box(`${prefix}-${id}-${suffix}`,'royal-palace',px,pz,pw,pd,ph,stage,suffix==='roof'?roof:stone,0,lift,null,level,g);
+      };
+      const level=courtEnvelopeDatum([cx-w/2,cz-d/2,cx+w/2,cz+d/2],anchor,terrain);
+      const floor=emit('floor',cx,cz,w,d,.12);floor.userData.cityObject.role='walkable-floor';emit('roof',cx,cz,w,d,roofSlab,h-roofSlab);
+      const span=frontAxis==='x'?d:w,depth=frontAxis==='x'?w:d;
+      const face=(suffix,u,pw,ph,lift=0,sign=frontSign)=>emit(suffix,frontAxis==='x'?cx+sign*(depth-t)/2:cx+u,frontAxis==='x'?cz+u:cz+sign*(depth-t)/2,frontAxis==='x'?t:pw,frontAxis==='x'?pw:t,ph,lift);
+      face('back',0,span,h-roofSlab,0,-frontSign);
+      for(const sign of[-1,1])emit(`end-${sign}`,frontAxis==='x'?cx:cx+sign*(w-t)/2,frontAxis==='x'?cz+sign*(d-t)/2:cz,frontAxis==='x'?w-2*t:t,frontAxis==='x'?t:d-2*t,h-roofSlab);
+      let cursor=-span/2;for(let i=0;i<3;i++){const u=(i-1)*span/4;face(`pier-${i}`,(cursor+u-door/2)/2,u-door/2-cursor,h-roofSlab);face(`lintel-${i}`,u,door,h-roofSlab-doorH,doorH);cursor=u+door/2;}face('pier-end',(cursor+span/2)/2,span/2-cursor,h-roofSlab);
+    };
+    wing('west',x-18,z,8,32,7,'x',1);wing('east',x+18,z,8,32,7,'x',-1);wing('north',x,z-13,28,6,8,'z',1);
+    for(const side of[-1,1])wing(`south-${side}`,x+side*7.75,z+13,12.5,6,6,'z',-1);
   }
   for(const court of data.royalCity.courtyards)courtyard(court.id,...court.offset,court.stage);
   const hallAccessDatums=new Map(royalPrecinctHallLayouts(data).map(h=>{const [x,z]=h.offset;return[h.id,courtEnvelopeDatum([x-h.length/2,z-h.width/2,x+h.length/2,z+h.width/2],anchor,terrain)];}));
@@ -219,6 +232,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   let stage='david',currentPosition=0;
   return {
     focus:new THREE.Vector3(anchor.x-110,surface(-110,-210)+5,anchor.z-210),
+    royalCourtyardFocus(){const c=data.royalCity.courtyards.find(c=>c.stage===stage);return new THREE.Vector3(anchor.x+c.offset[0],surface(...c.offset)+4,anchor.z+c.offset[1]);},
     ritualFocus:new THREE.Vector3(anchor.x+altarX,templeGround+2,anchor.z+z),
     precinctFocus:new THREE.Vector3(anchor.x-102.5,surface(-102.5,-462.5)+4,anchor.z-462.5),precinctSpan:135,
     templeFocus:new THREE.Vector3(anchor.x+x,surface(x,z)+5,anchor.z+z),

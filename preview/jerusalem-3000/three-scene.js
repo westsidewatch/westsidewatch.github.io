@@ -940,6 +940,11 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
       controls.minDistance=10;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(48,62,78):new THREE.Vector3(30,42,50));controls.update();needsFrame=true;return true;
     },
+    focusRoyalCourtyard(){
+      if(!royalCity?.diagnostics().visiblePalace)return false;const focus=royalCity.royalCourtyardFocus();
+      if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
+      controls.minDistance=15;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(80,75,110):new THREE.Vector3(45,45,65));controls.update();needsFrame=true;return true;
+    },
     focusTemplePrecinct(){
       let focus,span;
       if(isCorePhase(currentPhaseId)){focus=new THREE.Vector3(0,terrainRuntime.sampleElevation(31.778,35.235)+3,0);span=480;}

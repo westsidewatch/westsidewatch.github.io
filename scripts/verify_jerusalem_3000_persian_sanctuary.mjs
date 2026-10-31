@@ -44,6 +44,11 @@ for(const side of['west','east']){
  const link=actual(`court-link-${side}`),floor=actual(`court-portico-${side}-floor`),fb=new THREE.Box3().setFromObject(floor),lp=link.geometry.attributes.position;assert.ok(link,'court context must be connected to main approach');
  const targetX=side==='west'?fb.max.x:fb.min.x,ys=[];for(let i=0;i<lp.count;i++)if(Math.abs(lp.getX(i)-targetX)<.001)ys.push(lp.getY(i));assert.ok(ys.some(y=>Math.abs(y-fb.max.y-.02)<.001),'court link must meet gallery floor with safe paving clearance');
 }
+const mainBox=new THREE.Box3().setFromObject(actual('hall-floor')),mainCentre=mainBox.getCenter(new THREE.Vector3()),windowLength=layout.hall.length-2*layout.hall.wallThickness;
+for(const side of[-1,1])for(let i=0;i<5;i++){
+ const xx=mainCentre.x-windowLength/2+(i+.5)*windowLength/5,yy=mainBox.max.y-.12+layout.hall.height*.68+.7;
+ assert.equal(new THREE.Raycaster(new THREE.Vector3(xx,yy,mainCentre.z),new THREE.Vector3(0,0,side),0,layout.hall.width).intersectObjects(parts,true).length,0,'early sanctuary high windows must pass actual rays');
+}
 const edgeBox=new THREE.Box3().setFromObject(actual('hall-roof-edge-1'));
 assert.ok(Math.abs(edgeBox.max.y-roofBox.max.y-.4)<1e-4,'actual roof must be recessed below perimeter');
 const floorBox=new THREE.Box3().setFromObject(actual('hall-floor')),boundaryBox=new THREE.Box3().setFromObject(actual('hall-inner-lintel')),boundaryCentre=boundaryBox.getCenter(new THREE.Vector3());

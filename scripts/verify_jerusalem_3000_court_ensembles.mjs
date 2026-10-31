@@ -34,6 +34,12 @@ for(const side of[-1,1]){
 }
 basilicaBuilder.dispose();
 const fort=objects.find(o=>o.kind==='fortress'),fortBuilder=new HeritageBuilder({reconstructed:mat,inferred:mat,observed:mat,disputed:mat}),fortGroup=new THREE.Group();fortBuilder.currentObject=fort;addEvidenceArchitecture(fortBuilder,fort,{grid:{origin:{lat:31.778,lon:35.235}},sampleElevation:()=>200,heightAtWorld:()=>200});fortBuilder.finish(fortGroup);fortGroup.updateMatrixWorld(true);const fortBounds=new THREE.Box3().setFromObject(fortGroup),fc=fortBounds.getCenter(new THREE.Vector3());
+for(const sx of[-1,1])for(const sz of[-1,1]){
+ const height=sx===1&&sz===1?70*.525:50*.525,cx=fc.x+sx*50,cz=fc.z+sz*40,yy=202+(height-1)*.58+.7;
+ const opening=new THREE.Raycaster(new THREE.Vector3(cx,yy,cz),new THREE.Vector3(sx,0,0),0,14).intersectObjects(fortGroup.children,true);assert.equal(opening.length,0,'each fortress tower must have an actual upper opening');
+ assert.ok(new THREE.Raycaster(new THREE.Vector3(cx,yy,cz+1),new THREE.Vector3(sx,0,0),0,14).intersectObjects(fortGroup.children,true).length>0,'tower window pier must remain solid');
+ const terrace=new THREE.Raycaster(new THREE.Vector3(cx,300,cz),new THREE.Vector3(0,-1,0)).intersectObjects(fortGroup.children,true)[0];assert.ok(Math.abs(terrace.point.y-(200.2+height))<.001,'tower roof must be recessed below the retained parapet top');
+}
 const courtyard=new THREE.Raycaster(new THREE.Vector3(fc.x,300,fc.z),new THREE.Vector3(0,-1,0)).intersectObjects(fortGroup.children,true)[0];assert.ok(Math.abs(courtyard.point.y-202.12)<.001,'Antonia courtyard must really be open to the sky');
 assert.equal(new THREE.Raycaster(new THREE.Vector3(fc.x,204,fc.z+43),new THREE.Vector3(0,0,-1),0,12).intersectObjects(fortGroup.children,true).length,0,'authored south portal must open into the court');
 assert.ok(Math.abs(fortBounds.max.y-(200+2+70*.525))<.001,'SE tower must retain the selected70cubit height above inherited base');fortBuilder.dispose();
