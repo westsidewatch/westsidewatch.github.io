@@ -494,7 +494,7 @@ try {
     if([10,11,12,13,14,15,16,17].includes(phase)){assert.ok(spatialSkeleton.domains.districts.spatialObjects>=2);assert.equal(spatialSkeleton.domains.routes.spatialObjects,({10:6,11:9,12:10,13:12,14:11,15:16,16:19,17:20})[phase]||3);assert.equal(foundation.renderer.unboundComponents,0);assert.equal(inheritanceAudit.state.active,false,'independent layouts must not retain arbitrary Herodian overlays');assert.equal(sample.render.cityOverview.framePhase,phase>=16?'independent-expansion-shared-window':'independent-later-shared-window');}
     if(phase<=2)assert.ok(spatialSkeleton.domains.routes.spatialObjects>0,'existing early footpath linework must be available');
     const sourceZones=spatialSkeleton.features.filter(f=>f.representation==='source-provisional-zone-not-footprint');
-    assert.equal(sourceZones.length,[8,9].includes(phase)?5:0,'source zones appear only in their active Herodian/Roman source events');
+    assert.equal(sourceZones.length,[8,9].includes(phase)?6:0,'source zones appear only in their active Herodian/Roman source events');
     assert.ok(sourceZones.every(f=>f.kind==='point'&&f.confidence==='inferred'&&!f.geometryVerified));
     assert.ok(!sourceZones.some(f=>f.id.endsWith('inner-temple')||f.id.endsWith('eastern-entry-unknown')),'withheld exact positions remain unplotted');
     phaseReports.push({ spatialSkeleton, inheritanceAudit, value, elapsedMs: Date.now() - started, visible, foundation, ...sample });
