@@ -525,3 +525,18 @@ body[data-p2-engraving="v16"] #p2-realm-background[data-realm="bible"]::after {
  content:none;
 }
 /* No change to ONE content, the library's archive, magazine spine or Church. */
+
+/* Emmaus V17 — time held open. Isolated opt-in original film-surround engraving.
+   All typography, ONE paper, chapter controls, frozen sevenfold spine, and
+   Magazine/Church are unchanged. Existing P2 JS still owns the live clip-path. */
+body[data-p2-engraving="v17"] #p2-realm-background[data-realm="bible"]{
+ background-color:var(--ws-one-paper,#ded096);
+ background-image:url('/images/p2-emmaus-time-held-open-v17.svg');
+ background-position:center;
+ background-size:100% 100%;
+ background-repeat:no-repeat;
+ --ws-engraving-opacity:0;
+}
+body[data-p2-engraving="v17"] #p2-realm-background[data-realm="bible"]::after{
+ content:none;
+}
