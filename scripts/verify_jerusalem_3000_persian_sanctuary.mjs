@@ -36,7 +36,7 @@ try{
  assert.ok(!identity.includes('j3k:royal:'),'component IDs must not reuse First Temple assembly');
  const access=parts.find(m=>m.userData.cityObject.role==='access'),p=access.geometry.attributes.position;
  assert.ok(access.geometry.attributes.normal.getY(0)>0);
- for(let i=0;i<p.count;i+=3){const triangle=[0,1,2].map(k=>({x:p.getX(i+k),z:p.getZ(i+k)}));for(const obstacle of parts.filter(m=>!['access','roof'].includes(m.userData.cityObject.role)&&!m.userData.cityObject.componentId.includes('lintel'))){const b=new THREE.Box3().setFromObject(obstacle);assert.ok(!polygonsOverlap(triangle,[{x:b.min.x,z:b.min.z},{x:b.max.x,z:b.min.z},{x:b.max.x,z:b.max.z},{x:b.min.x,z:b.max.z}]),`actual road crosses ${obstacle.userData.cityObject.componentId}`);}}
+ for(let i=0;i<p.count;i+=3){const triangle=[0,1,2].map(k=>({x:p.getX(i+k),z:p.getZ(i+k)}));for(const obstacle of parts.filter(m=>!['access','roof','floor'].includes(m.userData.cityObject.role)&&!m.userData.cityObject.componentId.includes('lintel'))){const b=new THREE.Box3().setFromObject(obstacle);assert.ok(!polygonsOverlap(triangle,[{x:b.min.x,z:b.min.z},{x:b.max.x,z:b.min.z},{x:b.max.x,z:b.max.z},{x:b.min.x,z:b.max.z}]),`actual road crosses ${obstacle.userData.cityObject.componentId}`);}}
  for(const m of parts){m.updateMatrix();const p=m.geometry.attributes.position;for(let i=0;i<p.count;i++){const v=new THREE.Vector3(p.getX(i),p.getY(i),p.getZ(i)).applyMatrix4(m.matrix);assert.ok(v.y>=terrain.heightAtWorld(v.x,v.z)-1e-4,'all sanctuary vertices must remain above the DEM');}}
  const streetGroup=new THREE.Group(),streetMaterial=new THREE.MeshStandardMaterial();
  const registration=compilePeriodRegistration(data,'persian-nehemiah',data.anchor);

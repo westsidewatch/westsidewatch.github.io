@@ -131,6 +131,27 @@
     {
       "id": "j3k:object:eastern-entry-unknown",
       "lifecycleEvents": []
+    },
+    {
+      "id": "j3k:object:temple-perimeter-porticoes",
+      "lifecycleEvents": [
+        {
+          "phase": "herodian-jesus",
+          "state": "build",
+          "authority": "existing-herodian-source-pack-display-scope"
+        },
+        {
+          "phase": "roman-destruction",
+          "state": "ruin",
+          "authority": "existing-source-70ce-context-with-schematic-display-ruin",
+          "collapseGeometryVerified": false
+        },
+        {
+          "phase": "aelia",
+          "state": "unresolved",
+          "authority": "later-object-geometry-burial-and-reuse-unverified"
+        }
+      ]
     }
   ]
 }

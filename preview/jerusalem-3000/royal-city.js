@@ -1,3 +1,5 @@
+import {sanctuaryAccessVertices} from './sanctuary-access-geometry.js';
+import {firstTempleCourt,courtEnvelopeDatum} from './temple-court-envelopes.js';
 import {firstTempleWaterLayout} from './temple-precinct-layout.js';
 import {compileRoyalSpatialLayout} from './royal-spatial-layout.js';
 import {lifecycleStateAtPosition} from './construction-engine.js';
@@ -64,11 +66,20 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   for(const court of data.royalCity.courtyards)courtyard(court.id,...court.offset,court.stage);
   const t=data.royalCity.temple,c=t.cubitMetres,l=t.lengthCubits*c,w=t.widthCubits*c,h=t.heightCubits*c,[x,z]=t.offset;
   // One display datum for the ensemble; footing bottoms still meet the DEM.
-  const templeGround=Math.max(...[[-l/2-7*c,-11],[-l/2-7*c,11],[l/2+21,-11],[l/2+21,11]].map(([dx,dz])=>surface(x+dx,z+dz)));
+  const court=firstTempleCourt(data,spatial),templeGround=courtEnvelopeDatum(court.bounds,anchor,terrain);
   const templeBox=(id,px,pz,pw,pd,ph,material=templeStone,lift=0,angle=0)=>box(id,'first-temple',px,pz,pw,pd,ph,'solomon',material,angle,lift,null,templeGround);
   // Keep the inherited outside envelope; wall thickness and door widths are
   // display choices, so the nominal40/20-cubit internal budget is not a survey.
   const wall=.3;
+  const [courtWest,courtNorth,courtEast,courtSouth]=court.bounds;
+  const courtFloor=templeBox('temple-court-floor',(courtWest+courtEast)/2,(courtNorth+courtSouth)/2,courtEast-courtWest,courtSouth-courtNorth,.06);courtFloor.userData.cityObject.role='walkable-floor';
+  const courtWall=(id,px,pz,pw,pd)=>{
+    for(let course=0;course<3;course++)templeBox(`${id}-stone-${course}`,px,pz,pw,pd,court.stoneCourseHeight,templeStone,course*court.stoneCourseHeight);
+    templeBox(`${id}-cedar`,px,pz,pw,pd,court.timberHeight,roof,3*court.stoneCourseHeight);
+  };
+  for(const px of[courtWest,courtEast])courtWall(`temple-court-wall-${px}`,px,(courtNorth+courtSouth)/2,court.wallThickness,courtSouth-courtNorth);
+  courtWall('temple-court-north',(courtWest+courtEast)/2,courtNorth,courtEast-courtWest,court.wallThickness);
+  for(const [a,b]of[[courtWest,court.gateX-court.gateWidth/2],[court.gateX+court.gateWidth/2,courtEast]])courtWall(`temple-court-south-${a}`,(a+b)/2,courtSouth,b-a,court.wallThickness);
   templeBox('temple-main',x,z,l,w,wall,templeStone,h-wall);
   templeBox('temple-interior-floor',x,z,l,w,.12);
   for(const side of[-1,1])templeBox(`temple-main-side-${side}`,x,z+side*(w-wall)/2,l,wall,h-wall);
@@ -115,13 +126,13 @@ export function createRoyalCity(parent,{data,terrain,core}) {
     box(`gate-${gate.id}-lintel`,'city-gate',gx,gz,gate.width+2,2.5,1,gate.stage,stone,gate.angle,4,id);
   }
   for(const edge of spatial.edges){
-    const vertices=[];
-    for(let i=1;i<edge.points.length;i++){
-      const a=edge.points[i-1],b=edge.points[i],dx=b[0]-a[0],dz=b[1]-a[1],length=Math.hypot(dx,dz),steps=Math.ceil(length/2),nx=-dz/length*spatial.roadWidth/2,nz=dx/length*spatial.roadWidth/2;
-      for(let j=0;j<steps;j++)for(const [t,side] of [[j/steps,1],[(j+1)/steps,1],[j/steps,-1],[(j+1)/steps,1],[(j+1)/steps,-1],[j/steps,-1]]){
-        const x=a[0]+dx*t+nx*side,z=a[1]+dz*t+nz*side;vertices.push(anchor.x+x,surface(x,z)+.09,anchor.z+z);
-      }
-    }
+    const localVertices=sanctuaryAccessVertices(edge.points,spatial.roadWidth,surface,(px,pz)=>{
+      const ground=surface(px,pz)+.09;
+      if(edge.id!=='temple-entry')return ground;
+      const f=Math.max(0,Math.min(1,(courtSouth+5-pz)/5));
+      return ground+f*Math.max(0,templeGround+.09-ground);
+    },{terrain,anchor});
+    const vertices=localVertices.map((value,i)=>i%3===0?value+anchor.x:i%3===2?value+anchor.z:value);
     const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.computeVertexNormals();
     const mesh=new THREE.Mesh(geometry,pathMaterial),id=`j3k:object:royal-road:${edge.id}`;
     if(!core.get(id))throw new Error(`Missing spatial ledger object ${id}`);

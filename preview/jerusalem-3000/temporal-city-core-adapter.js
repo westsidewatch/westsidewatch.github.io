@@ -4,6 +4,7 @@ import {createTemporalCityCore,EVIDENCE_CONFIDENCE,CITY_OBJECT_TYPES} from './te
 
 const TYPE_MAP={
  'platform-enclosure':CITY_OBJECT_TYPES.MONUMENT,
+ 'perimeter-porticoes':CITY_OBJECT_TYPES.MONUMENT,
  'portico-basilica':CITY_OBJECT_TYPES.MONUMENT,
  'fortress':CITY_OBJECT_TYPES.MONUMENT,
  'sacred-complex':CITY_OBJECT_TYPES.MONUMENT,

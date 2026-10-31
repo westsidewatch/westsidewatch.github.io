@@ -6,7 +6,7 @@ export function isWithheld(object){return String(object.spatial?.registration||'
 export function addEvidenceArchitecture(builder,object,terrain){
   const registered=resolveSpatialRegistration(object,terrain);if(!registered.renderable)return false;
   const surface=EVIDENCE_SURFACE[evidenceClass(object.evidence)];
-  const modelRegistration=['platform-enclosure','portico-basilica','sacred-complex'].includes(object.kind)?{...registered,precinctUp:terrain.sampleElevation(31.778,35.235),terrain}:registered;
+  const modelRegistration=['platform-enclosure','perimeter-porticoes','portico-basilica','sacred-complex'].includes(object.kind)?{...registered,precinctUp:terrain.sampleElevation(31.778,35.235),terrain}:registered;
   if(!buildArchitecturalGrammar(builder,object,modelRegistration,surface))return false;
   return registered;
 }

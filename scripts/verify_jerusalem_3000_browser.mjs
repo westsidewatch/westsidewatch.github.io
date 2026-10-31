@@ -89,8 +89,9 @@ try {
     );
     assert.equal(state.render.visibleLegacyTemporalMeshes, 0);
     assert.equal(state.inheritance.active, false);
-    assert.equal(state.render.evidenceProjection.objects,6);
+    assert.equal(state.render.evidenceProjection.objects,7);
     const fate=await page.evaluate(()=>window.__JERUSALEM3000__.temporalCityState.objects.find(o=>o.id==='j3k:object:inner-temple')?.state);assert.equal(fate,value<9?'build':'ruin');
+    assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.temporalCityState.objects.find(o=>o.id==='j3k:object:temple-perimeter-porticoes')?.state),value<9?'build':'ruin','new inferred colonnades must share the declared phase/ruin projection');
     assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.temporalCityState.objects.find(o=>o.id==='j3k:object:eastern-entry-unknown')?.state),'withheld');
     reports.push({ value, ...state });
     if ([8, 9.5, 9.9].includes(value))

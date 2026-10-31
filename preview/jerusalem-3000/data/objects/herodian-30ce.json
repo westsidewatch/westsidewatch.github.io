@@ -207,6 +207,46 @@
         "registration": "withheld",
         "accuracy": "unknown-exact-gate"
       }
+    },
+    {
+      "id": "j3k:object:temple-perimeter-porticoes",
+      "label": "聖域周邊柱廊",
+      "kind": "perimeter-porticoes",
+      "evidence": "inferred",
+      "confidence": "inferred",
+      "lifecycle": {
+        "birth": "individual construction dates and older fabric unresolved; representative c.30CE display",
+        "stateAt30CE": "literary standing-colonnade context",
+        "ruin": "70CE context; collapse form and later specific survival unverified"
+      },
+      "geometry": {
+        "status": "illustrative-envelope-components",
+        "authority": "literary-porticoes-with-authored-bays-inside-existing-platform-not-survey"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.778,
+          "lon": 35.235
+        },
+        "registration": "provisional-centroid",
+        "accuracy": "platform-scale",
+        "enuMetres": {
+          "east": 0,
+          "north": 0,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
+      },
+      "sources": [
+        "https://penelope.uchicago.edu/josephus/war-5.html",
+        "https://www.biblegateway.com/passage/?search=John+10%3A23&version=WEB"
+      ],
+      "limitations": [
+        "柱廊存在及東廊名稱有文獻背景；各線位置、間距、柱式、厚度與安東尼堡接口未測繪核定。",
+        "北西廊避開既有安東尼堡示意足跡，接口暫留開放；南側既有皇家柱廊未移位。",
+        "既有300×480米平台與皇家柱廊配準尚待來源核對，不藉此聲稱整個外院已復原。"
+      ]
     }
   ],
   "sources": [

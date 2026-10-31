@@ -19,7 +19,7 @@ export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approa
   const components=[];
   const box=(id,x,z,w,d,height,lift=0,role='wall')=>components.push({id,x,z,w,d,height,lift,role});
   const [hx,hz]=h.offset,t=h.wallThickness,L=h.length,W=h.width;
-  box('hall-floor',hx,hz,L,W,.12);
+  box('hall-floor',hx,hz,L,W,.12,0,'floor');
   box('hall-west',hx-L/2+t/2,hz,t,W,h.height);
   for(const side of [-1,1])box(`hall-side-${side}`,hx,hz+side*(W/2-t/2),L-2*t,t,h.height);
   const jamb=(W-h.doorWidth)/2;
@@ -28,6 +28,7 @@ export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approa
   // Open leaves are an authored viewing pose, not excavated Persian door details.
   for(const side of[-1,1])box(`hall-open-door-${side}`,hx+L/2-t-h.doorWidth/4,hz+side*(h.doorWidth/2-.06),h.doorWidth/2,.12,h.doorHeight-.12,.12,'door');
   box('hall-roof',hx,hz,L,W,.6,h.height,'roof');
+  box('porch-floor',hx+L/2+p.depth/2,hz,p.depth,W,.12,0,'floor');
   for(const side of [-1,1])box(`porch-side-${side}`,hx+L/2+p.depth/2,hz+side*(W/2-t/2),p.depth,t,p.height);
   box('porch-roof',hx+L/2+p.depth/2,hz,p.depth,W,.5,p.height,'roof');
   box('altar',...a.offset,a.width,a.depth,a.height,0,'altar');
@@ -44,7 +45,7 @@ export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approa
     const [ax,az]=points[i-1],[bx,bz]=points[i],length=Math.hypot(bx-ax,bz-az);
     for(let j=0;j<=Math.ceil(length/.25);j++){
       const f=j/Math.ceil(length/.25),x=ax+(bx-ax)*f,z=az+(bz-az)*f;
-      for(const part of components.filter(c=>c.lift===0))if(x+margin>part.x-part.w/2&&x-margin<part.x+part.w/2&&z+margin>part.z-part.d/2&&z-margin<part.z+part.d/2)throw new Error(`Sanctuary access crosses ${part.id}`);
+      for(const part of components.filter(c=>c.lift===0&&c.role!=='floor'))if(x+margin>part.x-part.w/2&&x-margin<part.x+part.w/2&&z+margin>part.z-part.d/2&&z-margin<part.z+part.d/2)throw new Error(`Sanctuary access crosses ${part.id}`);
     }
   }
   const reservation=phase.reservations.find(r=>r.id===reservationId);

@@ -555,8 +555,8 @@
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
       ],
-      "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md",
-      "implementationNote": "Independent Persian and Hasmonean shells now have floors/open authored door poses and a reversible section view; precise form/dimensions still unaccepted, no Herodian back-projection."
+      "implementationReview": "TEMPLE-COURT-ENSEMBLES.md",
+      "implementationNote": "Porch floor and supported final approach join its own modern-DEM-derived hall datum; ramp pose is an engineering display, not historical geometry admission."
     },
     {
       "id": "nehemiah-defense",
@@ -3345,11 +3345,11 @@
           "kings6-full",
           "kings7-full"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "文獻院牆構造不等於已定位院區平面",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3360,7 +3360,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
       },
       {
         "id": "first-temple:court-access",
@@ -3371,11 +3372,11 @@
           "kings6-full",
           "chronicles4"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "無依據不借用第二聖殿院落與門名",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3386,7 +3387,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
       },
       {
         "id": "first-temple:altar",
@@ -3776,11 +3778,11 @@
           "john-temple",
           "josephus"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "東側連續柱廊、端部及通行；名稱不證明所羅門原構存續",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3791,7 +3793,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
       },
       {
         "id": "herodian:north-west-porticoes",
@@ -3801,11 +3804,11 @@
         "sourceRefs": [
           "josephus"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "各側柱列、屋蓋與城門間關係",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3816,7 +3819,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
       },
       {
         "id": "herodian:royal-stoa",
@@ -3902,11 +3906,11 @@
         "sourceRefs": [
           "middot2"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "建立各入口到院區路線，不用滿鋪建築填公共空間",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3917,7 +3921,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
       },
       {
         "id": "herodian:women",
@@ -4949,11 +4954,11 @@
       "all18RegressionRequiredForRuntimeChanges": true
     },
     "activeConstructionPackage": {
-      "id": "B23",
-      "scope": "first-early-second-and-Herodian-volumes-and-section-view",
+      "id": "B24",
+      "scope": "coordinated-court-approaches-and-perimeter-colonnades",
       "overallPlanAccepted": false,
       "completePrecincts": false,
-      "review": "TEMPLE-VOLUMES-AND-SECTIONS.md"
+      "review": "TEMPLE-COURT-ENSEMBLES.md"
     }
   }
 }

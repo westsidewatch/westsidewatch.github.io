@@ -1,3 +1,4 @@
+import {sanctuaryAccessVertices} from './sanctuary-access-geometry.js';
 import * as THREE from 'three';
 import {compilePersianSanctuary} from './persian-sanctuary-layout.js';
 import {geographicToENU} from './terrain-runtime.js';
@@ -28,11 +29,11 @@ export function createSanctuaryAssembly(parent,{data,terrain,core,layout,prefix,
   if(isHallPart(part))mesh.userData.templeSectionHeight=hallGround+4;
   mesh.userData.cityObject={objectId:part.role==='gate'?layout.gate.id:layout.objectId,componentId:`j3k:${prefix}:${part.id}`,confidence:'inferred',role:part.role};group.add(mesh);meshes.push(mesh);
  }
- const vertices=[],pts=layout.access.points;
- for(let i=1;i<pts.length;i++){
-  const [ax,az]=pts[i-1],[bx,bz]=pts[i],dx=bx-ax,dz=bz-az,length=Math.hypot(dx,dz),steps=Math.ceil(length/2),nx=-dz/length*layout.access.width/2,nz=dx/length*layout.access.width/2;
-  for(let j=0;j<steps;j++)for(const [t,side] of [[j/steps,1],[(j+1)/steps,1],[j/steps,-1],[(j+1)/steps,1],[(j+1)/steps,-1],[j/steps,-1]]){const x=ax+dx*t+nx*side,z=az+dz*t+nz*side;vertices.push(anchor.x+x,surface(x,z)+.1,anchor.z+z);}
- }
+ const pts=layout.access.points,localVertices=sanctuaryAccessVertices(pts,layout.access.width,surface,(x,z,i,f)=>{
+  const ground=surface(x,z)+.1;
+  return i===pts.length-1?ground+f*Math.max(0,hallGround+.12-ground):ground;
+ },{terrain,anchor});
+ const vertices=localVertices.map((value,i)=>i%3===0?value+anchor.x:i%3===2?value+anchor.z:value);
  const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.computeVertexNormals();const road=new THREE.Mesh(geometry,path);
  road.userData.cityObject={objectId:layout.access.id,componentId:`j3k:${prefix}:access`,confidence:'inferred',role:'access'};group.add(road);meshes.push(road);
  for(const id of ids){

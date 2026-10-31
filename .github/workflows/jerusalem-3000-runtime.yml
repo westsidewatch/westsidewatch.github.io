@@ -37,6 +37,7 @@ jobs:
           node scripts/verify_jerusalem_3000_haram_court.mjs
           node scripts/verify_jerusalem_3000_architectural_ground.mjs
           node scripts/verify_jerusalem_3000_temple_entries.mjs
+          node scripts/verify_jerusalem_3000_court_ensembles.mjs
           node scripts/verify_jerusalem_3000_herodian_dimensions.mjs
           node scripts/verify_jerusalem_3000_royal_relief.mjs
           node scripts/verify_jerusalem_3000_city_lifecycle.mjs
