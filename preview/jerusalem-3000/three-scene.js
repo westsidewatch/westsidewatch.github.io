@@ -924,6 +924,14 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     },
     setTempleSection(value){const enabled=templeSection.set(value,root);needsFrame=true;return enabled;},
     inspectTempleSection(){return templeSection.diagnostics();},
+    focusRitualCourt(){
+      let focus;
+      if(isCorePhase(currentPhaseId))focus=new THREE.Vector3(-HERODIAN_DIMENSIONS.womenCourt.eastWest/2-HERODIAN_DIMENSIONS.priestCourt.eastWest/2+149*HERODIAN_DIMENSIONS.cubitMetres,terrainRuntime.sampleElevation(31.778,35.235)+HERODIAN_DIMENSIONS.platform.pavingThickness+HERODIAN_DIMENSIONS.relativeCourtLevels.priests+2,-10);
+      else{const runtime=currentPhaseId==='persian-nehemiah'?persianSanctuary:currentPhaseId==='hellenistic-hasmonean'?hellenisticSanctuary:royalCity;if(!runtime?.diagnostics().visibleTemple)return false;focus=runtime.ritualFocus;}
+      if(!focus)return false;
+      if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
+      controls.minDistance=10;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(48,62,78):new THREE.Vector3(30,42,50));controls.update();needsFrame=true;return true;
+    },
     focusRoyalTemple(){
       const court=activeWorldEntry?.runtime.registration?.cores.find(c=>c.metadata.precinctContext);if(court)return this.focusCityObject(court.id);
       if(isCorePhase(currentPhaseId))return this.focusCityObject('j3k:object:inner-temple');

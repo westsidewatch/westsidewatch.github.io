@@ -248,7 +248,23 @@
       "widthCubits": 20,
       "heightCubits": 30,
       "cubitMetres": 0.45,
-      "placementAuthority": "schematic northern sacred precinct, not excavated footprint"
+      "placementAuthority": "schematic northern sacred precinct, not excavated footprint",
+      "altar": {
+        "lengthCubits": 20,
+        "widthCubits": 20,
+        "heightCubits": 10,
+        "source": "https://www.biblegateway.com/verse/en/2%20Chronicles%204%3A1",
+        "authority": "selected-literary-Chronicles-dimensions-not-excavated-plan",
+        "tierAndHornProfileVerified": false
+      },
+      "pillars": {
+        "heightCubits": 18,
+        "capitalHeightCubits": 5,
+        "circumferenceCubits": 12,
+        "source": "https://www.biblegateway.com/passage/?search=1+Kings+7%3A15-22&version=WEB",
+        "authority": "selected-Kings-tradition; comparison-with-Chronicles-unresolved",
+        "capitalProfileVerified": false
+      }
     },
     "courtyards": [
       {

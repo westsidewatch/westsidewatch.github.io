@@ -555,8 +555,8 @@
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
       ],
-      "implementationReview": "TEMPLE-COURT-ENSEMBLES.md",
-      "implementationNote": "Porch floor and supported final approach join its own modern-DEM-derived hall datum; ramp pose is an engineering display, not historical geometry admission."
+      "implementationReview": "TEMPLE-RITUAL-COURTS.md",
+      "implementationNote": "Existing altar display envelope now uses a tiered open-hearth profile on one datum; form/height remain illustrative, without dating or fabric-survival acceptance."
     },
     {
       "id": "nehemiah-defense",
@@ -3319,11 +3319,11 @@
         "sourceRefs": [
           "kings7-full"
         ],
-        "currentState": "placeholder",
+        "currentState": "partial",
         "remainingWork": "現有方柱，需核對圓柱、柱頭、網飾及高度分段",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "selected-literary-dimension-or-service-assembly-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3334,7 +3334,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-RITUAL-COURTS.md"
       },
       {
         "id": "first-temple:court",
@@ -3398,11 +3399,11 @@
         "sourceRefs": [
           "chronicles4"
         ],
-        "currentState": "placeholder",
+        "currentState": "partial",
         "remainingWork": "現有4×4×2.5米為示意，與歷代志20×20×10肘候選比較",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "selected-literary-dimension-or-service-assembly-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3413,7 +3414,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-RITUAL-COURTS.md"
       },
       {
         "id": "first-temple:sea",
@@ -4219,11 +4221,11 @@
         "sourceRefs": [
           "middot3"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "殿廊與祭壇之間略偏南，保留22肘間距",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "selected-literary-dimension-or-service-assembly-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4234,7 +4236,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-RITUAL-COURTS.md"
       },
       {
         "id": "herodian:slaughter",
@@ -4245,11 +4248,11 @@
           "middot3",
           "middot5"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "數量與北側服務帶統一佈置，環列有異說",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "selected-literary-dimension-or-service-assembly-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4260,7 +4263,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-RITUAL-COURTS.md"
       },
       {
         "id": "herodian:drainage",
@@ -4954,11 +4958,11 @@
       "all18RegressionRequiredForRuntimeChanges": true
     },
     "activeConstructionPackage": {
-      "id": "B24",
-      "scope": "coordinated-court-approaches-and-perimeter-colonnades",
+      "id": "B25",
+      "scope": "coordinated-three-stage-altar-and-service-ensembles",
       "overallPlanAccepted": false,
       "completePrecincts": false,
-      "review": "TEMPLE-COURT-ENSEMBLES.md"
+      "review": "TEMPLE-RITUAL-COURTS.md"
     }
   }
 }

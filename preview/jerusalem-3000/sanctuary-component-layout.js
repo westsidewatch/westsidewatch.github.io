@@ -31,7 +31,15 @@ export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approa
   box('porch-floor',hx+L/2+p.depth/2,hz,p.depth,W,.12,0,'floor');
   for(const side of [-1,1])box(`porch-side-${side}`,hx+L/2+p.depth/2,hz+side*(W/2-t/2),p.depth,t,p.height);
   box('porch-roof',hx+L/2+p.depth/2,hz,p.depth,W,.5,p.height,'roof');
-  box('altar',...a.offset,a.width,a.depth,a.height,0,'altar');
+  // Existing era-specific display envelope retained; tier/rim profile is authored.
+  box('altar',...a.offset,a.width,a.depth,a.height*.2,0,'altar');
+  box('altar-body',...a.offset,a.width*.88,a.depth*.88,a.height*.5,a.height*.2,'altar');
+  box('altar-hearth',...a.offset,a.width*.84,a.depth*.84,.06,a.height*.7,'hearth');
+  const rim=.3;
+  for(const side of[-1,1]){
+    box(`altar-rim-x-${side}`,a.offset[0]+side*(a.width-rim)/2,a.offset[1],rim,a.depth,a.height*.3,a.height*.7,'altar');
+    box(`altar-rim-z-${side}`,a.offset[0],a.offset[1]+side*(a.depth-rim)/2,a.width-2*rim,rim,a.height*.3,a.height*.7,'altar');
+  }
   for(const side of [-1,1])box(`court-side-${side}`,side<0?xmin:xmax,(zmin+zmax)/2,c.wallThickness,zmax-zmin,c.wallHeight);
   box('court-north',(xmin+xmax)/2,zmin,xmax-xmin,c.wallThickness,c.wallHeight);
   const left=gate[0]-c.gateWidth/2,right=gate[0]+c.gateWidth/2;

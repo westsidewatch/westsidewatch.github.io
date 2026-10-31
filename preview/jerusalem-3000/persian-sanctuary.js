@@ -20,11 +20,13 @@ export function createSanctuaryAssembly(parent,{data,terrain,core,layout,prefix,
  // One upper datum keeps the hall walls, lintel and roofs joined on sloping DEM.
  // Only ground-contact vertices follow terrain; this is not an ancient platform survey.
  const hallGround=Math.max(...layout.components.filter(isHallPart).flatMap(({x,z,w,d})=>[-1,1].flatMap(a=>[-1,1].map(b=>surface(x+a*w/2,z+b*d/2)))));
+ const isAltarPart=part=>part.id==='altar'||part.id.startsWith('altar-');
+ const altarGround=Math.max(...layout.components.filter(isAltarPart).flatMap(({x,z,w,d})=>[-1,1].flatMap(a=>[-1,1].map(b=>surface(x+a*w/2,z+b*d/2)))));
  for(const part of layout.components){
-  const {x,z,w,d,height,lift}=part,ground=isHallPart(part)?hallGround:Math.max(...[-1,1].flatMap(a=>[-1,1].map(b=>surface(x+a*w/2,z+b*d/2))));
+  const {x,z,w,d,height,lift}=part,ground=isHallPart(part)?hallGround:isAltarPart(part)?altarGround:Math.max(...[-1,1].flatMap(a=>[-1,1].map(b=>surface(x+a*w/2,z+b*d/2))));
   const geometry=new THREE.BoxGeometry(w,height,d),p=geometry.attributes.position;
   for(let i=0;i<p.count;i++)if(!lift&&p.getY(i)<0)p.setY(i,surface(x+p.getX(i),z+p.getZ(i))-ground-height/2);
-  geometry.computeVertexNormals();const mesh=new THREE.Mesh(geometry,part.role==='roof'?roof:stone);
+  geometry.computeVertexNormals();const mesh=new THREE.Mesh(geometry,['roof','hearth'].includes(part.role)?roof:stone);
   mesh.position.set(anchor.x+x,ground+height/2+lift,anchor.z+z);mesh.castShadow=true;mesh.receiveShadow=true;
   if(isHallPart(part))mesh.userData.templeSectionHeight=hallGround+4;
   mesh.userData.cityObject={objectId:part.role==='gate'?layout.gate.id:layout.objectId,componentId:`j3k:${prefix}:${part.id}`,confidence:'inferred',role:part.role};group.add(mesh);meshes.push(mesh);
@@ -43,6 +45,7 @@ export function createSanctuaryAssembly(parent,{data,terrain,core,layout,prefix,
  let position=0;
  const stateAt=(id)=>lifecycleStateAtPosition({lifecycleEvents:core.get(id).lifecycle.events},timeline,position);
  return {
+  ritualFocus:new THREE.Vector3(anchor.x+layout.altar.offset[0],altarGround+1,anchor.z+layout.altar.offset[1]),
   focus:new THREE.Vector3(anchor.x+layout.hall.offset[0],surface(...layout.hall.offset)+6,anchor.z+layout.hall.offset[1]),
   apply({position:value=0,evidenceAllowed=()=>true}){position=value;const phase=timeline.phases[Math.floor(position)]?.id;group.visible=false;for(const m of meshes){const record=core.get(m.userData.cityObject.objectId),state=stateAt(record.id);m.visible=layout.geometryValidityPhases.includes(phase)&&['build','rebuild','transform'].includes(state)&&evidenceAllowed(record.confidence);m.userData.cityObject.lifecycleState=state;group.visible ||= m.visible;}},
   diagnostics(){return{position,templeState:stateAt(layout.objectId),visibleTemple:meshes.filter(m=>m.visible&&m.userData.cityObject.objectId===layout.objectId).length,visibleGate:meshes.filter(m=>m.visible&&m.userData.cityObject.role==='gate').length,visibleAccess:road.visible,bindingIds:ids,componentIdentity:meshes.map(m=>m.userData.cityObject.componentId).join('|'),geometryValidityPhases:layout.geometryValidityPhases,geometryReuseVerified:false,geometryVerified:false,authority:layout.authority};},

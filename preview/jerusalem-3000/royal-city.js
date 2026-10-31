@@ -14,6 +14,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   const stone=new THREE.MeshStandardMaterial({color:0xb99c72,roughness:1});
   const templeStone=new THREE.MeshStandardMaterial({color:0xd8c6a1,roughness:.9});
   const roof=new THREE.MeshStandardMaterial({color:0x806549,roughness:1});
+  const bronze=new THREE.MeshStandardMaterial({color:0x8c6a42,metalness:.45,roughness:.6});
   const doorway=new THREE.MeshStandardMaterial({color:0x3e3327,roughness:1});
   if(!core)throw new Error('Royal geometry requires the shared object ledger');
   const timeline={phases:[...core.phases.values()]};
@@ -102,8 +103,18 @@ export function createRoyalCity(parent,{data,terrain,core}) {
     const depth=(5+tier)*c;
     templeBox(`temple-west-tier-${tier+1}`,x-l/2-depth/2,z,depth,w+2*depth,5*c,stone,tier*5*c);
   }
-  for(const side of [-1,1])templeBox(`temple-pillar-${side}`,x+l/2+10*c+1,z+side*3,.8,.8,8,roof);
-  templeBox('temple-altar',x+l/2+16,z,4,4,2.5,stone);
+  const pillar=t.pillars,shaftH=pillar.heightCubits*c,capH=pillar.capitalHeightCubits*c,radius=pillar.circumferenceCubits*c/(2*Math.PI);
+  for(const side of[-1,1]){
+    const px=x+l/2+10*c+1.5,pz=z+side*3;
+    box(`temple-pillar-${side}`,'first-temple',px,pz,radius*2,radius*2,shaftH,'solomon',bronze,0,.06,null,templeGround,new THREE.CylinderGeometry(radius,radius,shaftH,20));
+    const profile=[[radius,-capH/2],[radius*.9,-capH*.3],[radius*1.3,capH*.3],[radius*1.4,capH/2]].map(([r,y])=>new THREE.Vector2(r,y));
+    box(`temple-pillar-cap-${side}`,'first-temple',px,pz,radius*2.8,radius*2.8,capH,'solomon',bronze,0,shaftH+.06,null,templeGround,new THREE.LatheGeometry(profile,20));
+  }
+  const altar=t.altar,al=altar.lengthCubits*c,ad=altar.widthCubits*c,ah=altar.heightCubits*c,altarX=x+l/2+16;
+  templeBox('temple-altar',altarX,z,al,ad,ah*.2,bronze);
+  templeBox('temple-altar-body',altarX,z,al*.9,ad*.9,ah*.6,bronze,ah*.2);
+  templeBox('temple-altar-rim',altarX,z,al,ad,ah*.1,bronze,ah*.8);
+  for(const sx of[-1,1])for(const sz of[-1,1])templeBox(`temple-altar-horn-${sx}-${sz}`,altarX+sx*(al/2-c/2),z+sz*(ad/2-c/2),c,c,ah*.1,bronze,ah*.9);
   // 1Kings7 sea and ten mobile basin stands; relative placement is schematic.
   const water=firstTempleWaterLayout(c),seaX=x+l/2+water.sea.eastFromBodyEnd,seaZ=z+water.sea.southFromAxis;
   const basin=(id,bx,bz,diameter,height,lift)=>{
@@ -159,6 +170,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   let stage='david',currentPosition=0;
   return {
     focus:new THREE.Vector3(anchor.x-110,surface(-110,-210)+5,anchor.z-210),
+    ritualFocus:new THREE.Vector3(anchor.x+altarX,templeGround+2,anchor.z+z),
     templeFocus:new THREE.Vector3(anchor.x+x,surface(x,z)+5,anchor.z+z),
     exclusionsFor(phaseId){
       if(!['late-first-temple','babylonian-destruction'].includes(phaseId))return [];
@@ -180,6 +192,6 @@ export function createRoyalCity(parent,{data,terrain,core}) {
       }
     },
     diagnostics(){return {stage,position:currentPosition,spatialAuthority:spatial.authority,spatialRegions:spatial.regions.map(r=>r.id),reachableDestinations:spatial.reachable(stage),visibleGates:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='city-gate').length,visibleRoads:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='city-road').length,visibleWalls:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='city-wall').length,visibleTemple:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='first-temple').length,visiblePalace:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='royal-palace').length,templeState:stateAt('j3k:object:first-temple',currentPosition),templeCompressionFactor:bindings.get('j3k:object:first-temple')[0].userData.factor,bindingIds:[...bindings.keys()],componentIdentity:meshes.map(m=>m.userData.cityObject.componentId).join('|'),wallCircuitVerified:false,palaceGeometryVerified:false,templeDimensionsMetres:[l,w,h],geometryReuseVerified:false,ruinAuthority:'schematic-vertex-compression-not-excavated-collapse'};},
-    dispose(){meshes.forEach(m=>m.geometry.dispose());[stone,templeStone,roof,doorway,pathMaterial].forEach(m=>m.dispose());group.removeFromParent();}
+    dispose(){meshes.forEach(m=>m.geometry.dispose());[stone,templeStone,roof,bronze,doorway,pathMaterial].forEach(m=>m.dispose());group.removeFromParent();}
   };
 }

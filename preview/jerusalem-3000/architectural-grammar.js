@@ -1,3 +1,4 @@
+import {buildHerodianService} from './temple-ritual-service.js';
 import {buildPerimeterPorticoes} from './temple-perimeter-porticoes.js';
 import {buildHerodianSanctuary} from './herodian-sanctuary.js';
 import * as THREE from 'three';
@@ -45,6 +46,7 @@ function sacredComplex(builder,r,surface){
  }
  box(builder,[2,layout.levels.israel,gateWidth],[innerEast,base+.02+layout.levels.israel/2,-r.north],surface,'foundation',.96);
  const altarX=minX+layout.altar.centreFromWest;
+ buildHerodianService({builder,minX,altarX,y,z:-r.north,c,surface,emit:box});
  // Stepped altar mass; upper-body height is an authored display interpretation.
  for(const [size,bottom,height]of[[32,0,1],[30,1,5],[28,6,3]])box(builder,[size*c,height*c,size*c],[altarX,y+.02+(bottom+height/2)*c,-r.north],surface,'superstructure',.96);
  for(const sx of[-1,1])for(const sz of[-1,1])box(builder,[c,c,c],[altarX+sx*13*c,y+.02+9.5*c,-r.north+sz*13*c],surface,'superstructure',1);
@@ -74,6 +76,6 @@ function sacredComplex(builder,r,surface){
 }
 function approach(builder,r,surface){const y=r.up;for(let i=0;i<13;i++){const width=184-i*3;box(builder,[width,4.5,16],[r.east,y+i*2,-r.north+(i-6)*15],surface,'circulation',i%2?.94:1)}for(const x of[-58,58])box(builder,[24,30,20],[r.east+x,y+27,-r.north+104],surface,'superstructure',.95);}
 function street(builder,r,surface){const y=r.up;for(let i=-10;i<=10;i++)for(let j=-1;j<=1;j++)box(builder,[16,4.5,17],[r.east+j*17,y+2.25,-r.north+i*17],surface,'circulation',(i+j)%2?.91:.98);box(builder,[10,24,360],[r.east-34,y+12,-r.north],surface,'retaining',.9);}
-export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v8-court-ensembles';
+export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v9-ritual-service';
 export const SUPPORTED_ARCHITECTURAL_KINDS=Object.freeze(['platform-enclosure','perimeter-porticoes','portico-basilica','fortress','sacred-complex','pilgrimage-access','street']);
 export function buildArchitecturalGrammar(builder,object,registration,surface){switch(object.kind){case'perimeter-porticoes':buildPerimeterPorticoes(builder,registration,surface,box);break;case'platform-enclosure':platform(builder,registration,surface);break;case'portico-basilica':stoa(builder,registration,surface);break;case'fortress':fortress(builder,registration,surface);break;case'sacred-complex':sacredComplex(builder,registration,surface);break;case'pilgrimage-access':approach(builder,registration,surface);break;case'street':street(builder,registration,surface);break;default:return false}return true;}
