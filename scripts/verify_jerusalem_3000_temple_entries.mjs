@@ -33,6 +33,13 @@ assert.ok(Math.abs(downAt(gateX-ritual.israelWidth-2,z+20)-(base+ritual.levels.p
 const sanctuaryPlan=herodianSanctuaryPlan();assert.ok(Math.abs(sanctuaryPlan.length-D.sanctuary.eastWest)<1e-9,'nine longitudinal segments must close100cubits');
 assert.ok(hit(east+.1,y+podium+5).point.x<west+18*D.cubitMetres,'main and partition apertures must lead to a true hollow sanctuary');
 const c=D.cubitMetres;
+for(const side of[-1,1]){
+ const corridorZ=z+side*32.5*c,yy=y+8*c;
+ const along=new THREE.Raycaster(new THREE.Vector3(west+2*c,yy,corridorZ),new THREE.Vector3(1,0,0),0,91*c);
+ assert.equal(along.intersectObjects(group.children,true).length,0,'outer service band and porch rear portal must form a genuinely open corridor');
+ const floorRay=new THREE.Raycaster(new THREE.Vector3(west+42*c,yy,corridorZ),new THREE.Vector3(0,-1,0));
+ assert.ok(Math.abs(floorRay.intersectObjects(group.children,true)[0].point.y-(y+6.3*c))<.001,'service band must have a real joined floor');
+}
 for(const side of[-1,1])for(const level of[28,36]){
  const ray=new THREE.Raycaster(new THREE.Vector3(west+89.5*c,y+(6+level-1)*c,z+side*8*c),new THREE.Vector3(0,1,0),0,2*c);
  const brace=ray.intersectObjects(group.children,true)[0];assert.ok(brace&&Math.abs(brace.point.y-(y+(6+level-.3)*c))<.001,'all four porch braces must exist at authored levels');
@@ -63,5 +70,16 @@ for(const side of[-1,1])for(let i=0;i<6;i++){
  assert.equal(new THREE.Raycaster(new THREE.Vector3(xx,yy,cz),new THREE.Vector3(0,0,side),0,8).intersectObjects(parts.filter(m=>m.visible)).length,0,'each first-temple window must pass a real ray');
  assert.ok(new THREE.Raycaster(new THREE.Vector3(xx+.7,yy,cz),new THREE.Vector3(0,0,side),0,8).intersectObjects(parts.filter(m=>m.visible)).length>0,'window pier must remain solid');
 }
-const water=firstTempleWaterLayout();assert.equal(parts.filter(m=>m.userData.cityObject.componentId.includes('temple-laver-stand-')).length,water.stands.count);const sea=parts.find(m=>m.userData.cityObject.componentId==='j3k:royal:temple-sea');assert.ok(sea);assert.equal(sea.geometry.type,'LatheGeometry');assert.equal(parts.filter(m=>m.geometry.type==='LatheGeometry'&&(m.userData.cityObject.componentId.includes('temple-sea')||m.userData.cityObject.componentId.includes('temple-laver-'))).length,11,'vessels must each use one mesh rather than per-segment draw calls');const tiers=parts.filter(m=>m.userData.cityObject.componentId.includes('temple-side-')&&m.userData.cityObject.componentId.includes('-tier-'));assert.equal(tiers.length,6);for(const m of tiers){const tier=Number(m.userData.cityObject.componentId.split('-tier-')[1]);assert.ok(Math.abs(m.geometry.parameters.depth-(4+tier)*.45)<1e-6);assert.ok(Math.abs(m.geometry.parameters.height-5*.45)<1e-6);}royal.apply({position:3.2,evidenceAllowed:()=>true});assert.ok(tiers.every(m=>!m.visible),'Solomon components must not leak into David');royal.apply({position:5.9,evidenceAllowed:()=>true});assert.ok(royal.diagnostics().templeCompressionFactor<1);royal.apply({position:3.9,evidenceAllowed:()=>false});assert.ok(tiers.every(m=>!m.visible));}finally{royal?.dispose();globalThis.fetch=prior;invalidateCityData();mat.dispose();}
+// Six side-storey envelopes must contain real cavities rather than solid masses.
+for(let tier=0;tier<3;tier++)for(const side of[-1,1]){
+ const d=(5+tier)*.45,xx=worldX-1,zz=cz+side*(4.5+d/2),yy=baseY+tier*2.25+.8;
+ const roomParts=parts.filter(m=>m.visible&&m.userData.cityObject.kind==='first-temple');
+ const outward=new THREE.Raycaster(new THREE.Vector3(xx,yy,zz),new THREE.Vector3(0,0,side)).intersectObjects(roomParts)[0];
+ assert.ok(outward&&Math.abs(outward.point.z-(cz+side*(4.5+d-.18)))<.001,'actual side chamber must be hollow out to its outer wall');
+ const floorHit=new THREE.Raycaster(new THREE.Vector3(xx,yy,zz),new THREE.Vector3(0,-1,0)).intersectObjects(roomParts)[0];
+ assert.ok(Math.abs(floorHit.point.y-(baseY+tier*2.25+.15))<.001,'each chamber must have a joined floor at its tier datum');
+}
+const southDoorX=worldX-1+(27-2)/2-2;
+assert.equal(new THREE.Raycaster(new THREE.Vector3(southDoorX,baseY+1,cz+4.5+2.25+1),new THREE.Vector3(0,0,-1),0,2).intersectObjects(parts.filter(m=>m.visible)).length,0,'authored south entrance must be a real opening');
+const water=firstTempleWaterLayout();assert.equal(parts.filter(m=>m.userData.cityObject.componentId.includes('temple-laver-stand-')).length,water.stands.count);const sea=parts.find(m=>m.userData.cityObject.componentId==='j3k:royal:temple-sea');assert.ok(sea);assert.equal(sea.geometry.type,'LatheGeometry');assert.equal(parts.filter(m=>m.geometry.type==='LatheGeometry'&&(m.userData.cityObject.componentId.includes('temple-sea')||m.userData.cityObject.componentId.includes('temple-laver-'))).length,11,'vessels must each use one mesh rather than per-segment draw calls');const tiers=parts.filter(m=>/temple-side--?1-tier-[123]$/.test(m.userData.cityObject.componentId));assert.equal(tiers.length,6);for(const m of tiers){const tier=Number(m.userData.cityObject.componentId.split('-tier-')[1]);assert.ok(Math.abs(m.geometry.parameters.depth-(4+tier)*.45)<1e-6);assert.ok(Math.abs(m.geometry.parameters.height-.15)<1e-6);}royal.apply({position:3.2,evidenceAllowed:()=>true});assert.ok(tiers.every(m=>!m.visible),'Solomon components must not leak into David');royal.apply({position:5.9,evidenceAllowed:()=>true});assert.ok(royal.diagnostics().templeCompressionFactor<1);royal.apply({position:3.9,evidenceAllowed:()=>false});assert.ok(tiers.every(m=>!m.visible));}finally{royal?.dispose();globalThis.fetch=prior;invalidateCityData();mat.dispose();}
 console.log('PASS: actual open porch and courtyard gate rays,12stair levels, unchanged100cubit sanctuary height above raised priest datum, six first-temple chamber tiers and phase/evidence/ruin control');

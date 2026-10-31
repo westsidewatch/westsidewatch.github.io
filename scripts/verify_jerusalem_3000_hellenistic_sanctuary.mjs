@@ -28,6 +28,11 @@ for(const side of[-1,1])for(let i=0;i<3;i++){
  assert.equal(doorRay.intersectObjects(meshes,true).length,0,'each priests chamber must have a real doorway');
  assert.ok(Math.abs(new THREE.Box3().setFromObject(actual(id+'-roof')).min.y-new THREE.Box3().setFromObject(actual(id+'-back')).max.y)<1e-4,'annex roofs and walls must share the datum');
 }
+for(const side of[-1,1]){
+ const a=new THREE.Box3().setFromObject(actual(`hall-priest-room-${side}-0-floor`)),b=new THREE.Box3().setFromObject(actual(`hall-priest-room-${side}-2-floor`)),from=a.getCenter(new THREE.Vector3()),to=b.getCenter(new THREE.Vector3());
+ const passage=new THREE.Raycaster(new THREE.Vector3(from.x,a.max.y+1,from.z),new THREE.Vector3(1,0,0),0,to.x-from.x);
+ assert.equal(passage.intersectObjects(meshes,true).length,0,'three priests rooms on each side must have aligned communicating doors');
+}
 // Actual upper faces must join despite a sloping ground surface.
 const box=id=>new THREE.Box3().setFromObject(meshes.find(m=>m.userData.cityObject.componentId===`j3k:hellenistic-sanctuary:${id}`));
 for(const id of ['hall-west','hall-side--1','hall-side-1','hall-front--1','hall-front-1','hall-door-lintel'])assert.ok(Math.abs(box(id).max.y-box('hall-roof').min.y)<1e-5,`${id} must meet roof datum`);

@@ -37,7 +37,9 @@ export function buildHerodianSanctuary({builder,west,y,z,c,surface,emit}){
  // Wings are hollow service envelopes rather than full-height solid jamb blocks.
  for(const side of[-1,1]){
   cub(16,94,2,92,53,side*49);
-  cub(2,94,34,85,53,side*33);
+  // Authored service-band portal through the former solid rear wing wall.
+  for(const [a,b]of[[16,31],[34,50]])cub(2,94,b-a,85,53,side*(a+b)/2);
+  cub(2,88,3,85,56,side*32.5);
   cub(5,94,40,97.5,53,side*30);
  }
  cub(11,1,100,89.5,99.5,0,'roof',1);
@@ -72,7 +74,11 @@ export function buildHerodianSanctuary({builder,west,y,z,c,surface,emit}){
  }
  // Outer service bands/water-descent envelopes at the70cubit body boundary.
  for(const side of[-1,1]){
-  cub(84,18,5,42,15,side*32.5);
+  // The former solid5cubit band now has a floor, outer wall and open east end.
+  // It is an authored service envelope, not the full reconstructed mesibbah ascent.
+  cub(84,.3,5,42,6.15,side*32.5,'foundation',.94);
+  cub(84,17.7,.5,42,15.15,side*34.75);
+  cub(.5,17.7,5,.25,15.15,side*32.5);
   cub(84,.4,8,42,24.2,side*31,'roof',.92);
  }
  return plan;

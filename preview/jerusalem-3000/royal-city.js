@@ -110,7 +110,21 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   // Door aperture is physical; no opaque dark panel substitutes for the interior.
   for(const side of[-1,1])templeBox(`temple-open-door-${side}`,x+l/2-wall-clearDoor/4,z+side*(clearDoor/2-.06),clearDoor/2,.12,4.38,doorway,.12);
   // 1Kings6:6,10: three five-cubit-high side-room tiers, widths5/6/7 cubits.
-  for(let tier=0;tier<3;tier++)for(const side of [-1,1]){const depth=(5+tier)*c;templeBox(`temple-side-${side}-tier-${tier+1}`,x-1,z+side*(w/2+depth/2),l-2,depth,5*c,stone,tier*5*c);}
+  // Hollow side-storey envelopes within the inherited outside5/6/7cubit widths.
+  // Wall/slab thickness and south entrance position are authored, not clear textual widths.
+  const chamberWall=.18,chamberSlab=.15,chamberLength=l-2;
+  for(let tier=0;tier<3;tier++)for(const side of[-1,1]){
+    const depth=(5+tier)*c,cx=x-1,cz=z+side*(w/2+depth/2),bottom=tier*5*c,height=5*c,prefix=`temple-side-${side}-tier-${tier+1}`;
+    templeBox(prefix,cx,cz,chamberLength,depth,chamberSlab,stone,bottom);
+    templeBox(prefix+'-roof',cx,cz,chamberLength,depth,chamberSlab,stone,bottom+height-chamberSlab);
+    for(const end of[-1,1])templeBox(prefix+`-end-${end}`,cx+end*(chamberLength-chamberWall)/2,cz,chamberWall,depth,height-2*chamberSlab,stone,bottom+chamberSlab);
+    const wallZ=cz+side*(depth-chamberWall)/2;
+    if(tier===0&&side===1){
+      const door=1,doorH=1.7,doorX=cx+chamberLength/2-2;
+      for(const [left,right]of[[cx-chamberLength/2,doorX-door/2],[doorX+door/2,cx+chamberLength/2]])templeBox(prefix+`-outer-${left}`,(left+right)/2,wallZ,right-left,chamberWall,height-2*chamberSlab,stone,bottom+chamberSlab);
+      templeBox(prefix+'-lintel',doorX,wallZ,door,chamberWall,height-chamberSlab-doorH,stone,bottom+doorH);
+    }else templeBox(prefix+'-outer',cx,wallZ,chamberLength,chamberWall,height-2*chamberSlab,stone,bottom+chamberSlab);
+  }
   for(let tier=0;tier<3;tier++){
     const depth=(5+tier)*c;
     templeBox(`temple-west-tier-${tier+1}`,x-l/2-depth/2,z,depth,w+2*depth,5*c,stone,tier*5*c);

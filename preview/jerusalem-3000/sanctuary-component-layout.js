@@ -51,7 +51,14 @@ export function compileSanctuaryComponents(phase,{phaseId,gateId,accessId,approa
       const prefix=`hall-priest-room-${side}-${i}`;
       box(prefix+'-floor',xx,zz,span,depth,.12,0,'floor');
       box(prefix+'-roof',xx,zz,span,depth,.25,roomH,'roof');
-      for(const end of[-1,1])box(prefix+`-end-${end}`,xx+end*(span-rt)/2,zz,rt,depth,roomH);
+      for(const end of[-1,1]){
+        const wallX=xx+end*(span-rt)/2;
+        if((i===0&&end===-1)||(i===2&&end===1))box(prefix+`-end-${end}`,wallX,zz,rt,depth,roomH);
+        else{
+          for(const edge of[-1,1])box(prefix+`-link-${end}-${edge}`,wallX,zz+edge*(doorW/2+(depth-doorW)/4),rt,(depth-doorW)/2,roomH);
+          box(prefix+`-link-lintel-${end}`,wallX,zz,rt,doorW,roomH-doorH,doorH);
+        }
+      }
       box(prefix+'-back',xx,zz-side*(depth-rt)/2,span-2*rt,rt,roomH);
       for(const end of[-1,1])box(prefix+`-jamb-${end}`,xx+end*(doorW/2+(span-doorW)/4),outerZ,(span-doorW)/2,rt,roomH);
       box(prefix+'-lintel',xx,outerZ,doorW,rt,roomH-doorH,doorH);
