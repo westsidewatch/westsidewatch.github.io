@@ -48,3 +48,15 @@ The site is deployed automatically to GitHub Pages when changes reach `main`.
 Temple Stone is a material system with Light, Classic, and Aged variants, not a single flat brand color.
 
 The current font stack is a system-safe placeholder. Replace it with the licensed webfont files used by `join` when those assets are available.
+
+## Design-spec review (EGM)
+
+This repository includes the **complete, revision-pinned**
+[Elephant–Goldfish Model](https://github.com/google/elephant-goldfish-model)
+as a Git submodule under `.tools/elephant-goldfish-model`, managed by
+[Westside Design OS](docs/design/WESTSIDE-EGM-INTEGRATION.md).
+Initialize the source with `bash scripts/egm-setup.sh --prepare`.
+To install the upstream Codex plugin on your local machine, run
+`bash scripts/egm-setup.sh --install-codex` (requires Codex CLI).
+Live independent Goldfish reviews require fresh subagents; source checkout
+alone is not an active review. No production site assets are modified.
