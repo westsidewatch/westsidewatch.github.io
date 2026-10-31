@@ -63,16 +63,32 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   for(const court of data.royalCity.courtyards)courtyard(court.id,...court.offset,court.stage);
   const t=data.royalCity.temple,c=t.cubitMetres,l=t.lengthCubits*c,w=t.widthCubits*c,h=t.heightCubits*c,[x,z]=t.offset;
   // One display datum for the ensemble; footing bottoms still meet the DEM.
-  const templeGround=Math.max(...[[-l/2,-w/2-7*c],[-l/2,w/2+7*c],[l/2+21,-11],[l/2+21,11]].map(([dx,dz])=>surface(x+dx,z+dz)));
+  const templeGround=Math.max(...[[-l/2-7*c,-11],[-l/2-7*c,11],[l/2+21,-11],[l/2+21,11]].map(([dx,dz])=>surface(x+dx,z+dz)));
   const templeBox=(id,px,pz,pw,pd,ph,material=templeStone,lift=0,angle=0)=>box(id,'first-temple',px,pz,pw,pd,ph,'solomon',material,angle,lift,null,templeGround);
-  templeBox('temple-main',x,z,l,w,h);
+  // Keep the inherited outside envelope; wall thickness and door widths are
+  // display choices, so the nominal40/20-cubit internal budget is not a survey.
+  const wall=.3;
+  templeBox('temple-main',x,z,l,w,wall,templeStone,h-wall);
+  templeBox('temple-interior-floor',x,z,l,w,.12);
+  for(const side of[-1,1])templeBox(`temple-main-side-${side}`,x,z+side*(w-wall)/2,l,wall,h-wall);
+  templeBox('temple-main-west',x-(l-wall)/2,z,wall,w,h-wall);
+  const clearDoor=2.6;
+  for(const side of[-1,1])templeBox(`temple-main-entry-jamb-${side}`,x+(l-wall)/2,z+side*(clearDoor/2+(w-clearDoor)/4),wall,(w-clearDoor)/2,h-wall);
+  templeBox('temple-main-entry-lintel',x+(l-wall)/2,z,wall,clearDoor,h-wall-4.5,templeStone,4.5);
+  const partitionX=x-l/2+20*c,innerDoor=2;
+  for(const side of[-1,1])templeBox(`temple-inner-partition-${side}`,partitionX,z+side*(innerDoor/2+(w-innerDoor)/4),wall,(w-innerDoor)/2,h-wall);
+  templeBox('temple-inner-lintel',partitionX,z,wall,innerDoor,h-wall-4.5,templeStone,4.5);
   // Existing illustrative doorway width/porch height are not textual measures.
   const opening=2.6,porchHeight=9,porchDepth=10*c,porchX=x+l/2+porchDepth/2;
   for(const side of [-1,1])templeBox(`temple-porch-jamb-${side}`,porchX,z+side*(opening/2+(w-opening)/4),porchDepth,(w-opening)/2,porchHeight);
   templeBox('temple-porch-lintel',porchX,z,porchDepth,opening,porchHeight-4.5,templeStone,4.5);
-  templeBox('temple-door',x+l/2+.06,z,.12,opening,4.5,doorway);
+  // Door aperture is physical; no opaque dark panel substitutes for the interior.
   // 1Kings6:6,10: three five-cubit-high side-room tiers, widths5/6/7 cubits.
   for(let tier=0;tier<3;tier++)for(const side of [-1,1]){const depth=(5+tier)*c;templeBox(`temple-side-${side}-tier-${tier+1}`,x-1,z+side*(w/2+depth/2),l-2,depth,5*c,stone,tier*5*c);}
+  for(let tier=0;tier<3;tier++){
+    const depth=(5+tier)*c;
+    templeBox(`temple-west-tier-${tier+1}`,x-l/2-depth/2,z,depth,w+2*depth,5*c,stone,tier*5*c);
+  }
   for(const side of [-1,1])templeBox(`temple-pillar-${side}`,x+l/2+10*c+1,z+side*3,.8,.8,8,roof);
   templeBox('temple-altar',x+l/2+16,z,4,4,2.5,stone);
   // 1Kings7 sea and ten mobile basin stands; relative placement is schematic.

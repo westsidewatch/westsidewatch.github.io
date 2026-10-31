@@ -260,8 +260,8 @@ try {
     if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 宗教核心亦為概略量體，非測繪復原。';
     if(p.id==='hellenistic-hasmonean')note.textContent+=' 聖域選取前164年重新奉獻後的示意形態，不代表整期；尺寸及平面未核定，可點「聖殿近看」。';
     const datedCores=three.landmarkChronology();if(datedCores.length)note.textContent+=' 本期地標階段：'+datedCores.map(c=>c.label).join('；')+'。年份僅用於這些地標的分期定位，並非全城逐年復原。';
-    if(p.id==='david-solomon')note.textContent+=' 前廊、三層側室、銅海與十組盆座已分件呈現；器物位置與支座仍為示意，尚非完整院區。';
-    if(p.id==='herodian-jesus')note.textContent+=' 已加入婦女院四角開敞用房、祭壇與南坡道；院區高差、其餘用房與柱廊仍待整組建造，尺寸傳統不等同考古定位。';
+    if(p.id==='david-solomon')note.textContent+=' 殿體已有牆體、內部分隔與通行門洞，另有三面側室量體、銅海與十組盆座；牆厚與器物配置仍為示意。';
+    if(p.id==='herodian-jesus')note.textContent+=' 婦女院經十五級半圓階連接以色列院，再升至祭司院；主殿與祭壇共用上院標高，古代絕對高程未核定。';
     if(p.id==='herodian-jesus')note.textContent+=' 比例校準：平台約300×480m；殿體高約52.5m（暫採每肘0.525m），位置與細節仍屬復原。';
     if(!isEarliestPhase(p.id)&&!['middle-bronze','late-bronze-iron1'].includes(p.id))note.textContent+=' 城內褐色為街區配置示意；淺石色為公共院落／遺址語境，內部建築仍有待核定。未定位規劃不再清空街區。';
     if(isIndependentLaterPhase(p.id))note.textContent+=' 地區、路網與住宅量體為示意；共同東側軸線不表示歷代路面相同。各期採階段概覽，非逐年完整復原。';

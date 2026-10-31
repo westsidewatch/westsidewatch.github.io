@@ -3168,7 +3168,7 @@
         "remainingWork": "既有27×9×13.5米量體；重核牆厚、內外尺寸及肘制",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "relative-section-or-shell-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3179,7 +3179,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
       },
       {
         "id": "first-temple:porch",
@@ -3214,11 +3215,11 @@
         "sourceRefs": [
           "kings6-full"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "20肘內部空間與主殿40肘分段，先確認內外尺寸",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "relative-section-or-shell-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3229,7 +3230,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
       },
       {
         "id": "first-temple:side-rooms",
@@ -3243,7 +3245,7 @@
         "remainingWork": "六個側向量體不等於完整房間群；補西側與分室",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "relative-section-or-shell-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -3254,7 +3256,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
       },
       {
         "id": "first-temple:stairs",
@@ -3997,11 +4000,11 @@
         "sourceRefs": [
           "middot2"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "與殿前12級分開；不能在同一標高貼階梯",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "relative-section-or-shell-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4012,7 +4015,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
       },
       {
         "id": "herodian:nicanor",
@@ -4049,11 +4053,11 @@
           "middot2",
           "middot5"
         ],
-        "currentState": "missing",
+        "currentState": "partial",
         "remainingWork": "11肘帶寬、與祭司院邊界及分歧標高",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "relative-section-or-shell-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4064,7 +4068,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
       },
       {
         "id": "herodian:priests",
@@ -4079,7 +4084,7 @@
         "remainingWork": "現有整塊內院未作11肘區帶和儀式界線",
         "locationAccepted": false,
         "geometryAccepted": false,
-        "implementationState": "planned",
+        "implementationState": "relative-section-or-shell-built-admission-pending",
         "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
         "requiredChecks": [
           "source-phase",
@@ -4090,7 +4095,8 @@
           "construction-destruction",
           "adjacent-era-fate",
           "desktop-mobile-close-view"
-        ]
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
       },
       {
         "id": "herodian:court-gates",
@@ -4934,11 +4940,11 @@
       "all18RegressionRequiredForRuntimeChanges": true
     },
     "activeConstructionPackage": {
-      "id": "B21",
-      "scope": "paired-ritual-ensembles",
+      "id": "B22",
+      "scope": "paired-relative-court-sections-and-interior-shell",
       "overallPlanAccepted": false,
       "completePrecincts": false,
-      "review": "TEMPLE-RITUAL-ENSEMBLES.md"
+      "review": "TEMPLE-COURT-SECTIONS.md"
     }
   }
 }
