@@ -1,3 +1,4 @@
+import {housingBoundaryStages} from './housing-boundary-stages.js';
 import {createArchitecturalTerrainOcclusion} from './architectural-terrain-occlusion.js';
 import {compileNamedCityGates,publishNamedCityGates,registerNamedGateApproaches} from './named-city-gates.js';
 import {createCityEnclosureAudit} from './city-enclosure-audit.js';
@@ -580,7 +581,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       for(const registration of independentLaterRegistrations.values())registerNamedGateApproaches(registration,namedGates);
       wallReferenceModel=createWallReferenceModel(root,{reference:wallReference,terrain:terrainRuntime,core:loaded.core});
       wallGateView=createSharedPlaceView(mount,wallReferenceModel,{credit:false});
-      for(const [phase,registration]of independentLaterRegistrations)completeUrbanCoverage(registration,{rings:housingBoundaryAt({phaseId:phase,offset:.9,defenseData,wallReference,origin:terrainRuntime.grid.origin}).rings});
+      for(const [phase,registration]of independentLaterRegistrations){const stages=housingBoundaryStages({phaseId:phase,defenseData,wallReference,origin:terrainRuntime.grid.origin});registration.boundaryStages=stages;completeUrbanCoverage(registration,{rings:stages.rings});}
       sharedPlaces=createSharedUrbanPlaces({terrain:terrainRuntime,phases:[...loaded.core.phases.values()],core:loaded.core});
       sharedPlaceView=createSharedPlaceView(mount,sharedPlaces,{credit:false});
       persistentCityWorld=createPersistentCityWorld({parent:eraFabricLayer,phases:[...independentLaterRegistrations.keys()],build:(group,phase)=>buildIndependentLaterSkeleton(group,independentLaterRegistrations.get(phase),temporalMaterials,terrainRuntime),publish:runtime=>laterMorphologyLedger.bind(runtime)});
@@ -658,9 +659,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     for(const [phase,registration]of independentLaterRegistrations){
       applyMetricResidentialRegistration(registration,phase);
       registration.defenseReservations=defenseTimeline.exclusionsFor(phase);
-      const candidates=[.1,.3,.8,.99].map(offset=>housingBoundaryAt({phaseId:phase,offset,defenseData,wallReference,royalData:davidData,origin:terrainRuntime.grid.origin}));
+      const stages=registration.boundaryStages;
       // An unwalled interval must not inherit a future enclosure constraint.
-      if(candidates.every(b=>b.rings.length))registration.housingBoundaryRings=[...new Map(candidates.flatMap(b=>b.rings).map(r=>[JSON.stringify(r),r])).values()];
+      if(stages.allIntervalsClosed)registration.housingBoundaryRings=stages.rings;
     }
     housingBoundaryAdmission=createHousingBoundaryAdmission({root,core:cityCoreRuntime.core,boundaryFor:()=>housingBoundaryAt({phaseId:currentPhaseId,offset:timelinePosition-Math.floor(timelinePosition),defenseData,wallReference,royalData:davidData,royalStage:royalCity?.diagnostics().stage,origin:terrainRuntime.grid.origin})});
     cityEnclosureAudit=createCityEnclosureAudit({root,core:cityCoreRuntime.core,boundaryFor:()=>housingBoundaryAt({phaseId:currentPhaseId,offset:timelinePosition-Math.floor(timelinePosition),defenseData,wallReference,royalData:davidData,royalStage:royalCity?.diagnostics().stage,origin:terrainRuntime.grid.origin})});

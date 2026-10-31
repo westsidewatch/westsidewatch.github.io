@@ -1,3 +1,4 @@
+import {foundationContactGeometry} from './foundation-contact.js';
 import * as THREE from 'three';
 import {geographicToENU} from './terrain-runtime.js';
 import {clipBlockToEnvelope} from './district-infill.js';
@@ -12,7 +13,7 @@ export function haramCourtGeometry(record,terrain){
  const floor=haramFloor(terrain),positions=[],colours=[],stone=new THREE.Color(0xd2c4a5),dark=new THREE.Color(0xb9a27b);
  const add=(g,c=stone)=>{const p=g.attributes.position,idx=g.index?.array||Array.from({length:p.count},(_,i)=>i);for(const i of idx){positions.push(p.getX(i),p.getY(i),p.getZ(i));colours.push(c.r,c.g,c.b);}g.dispose();};
  const box=(x,y,z,w,h,d,c)=>{const g=new THREE.BoxGeometry(w,h,d);g.translate(x,y+h/2,z);add(g,c);};
- const surface=(poly,y,skirt=false)=>{const tris=THREE.ShapeUtils.triangulateShape(poly.map(p=>new THREE.Vector2(p.x,p.z)),[]),p=[];for(const tri of tris){const a=poly[tri[0]],b=poly[tri[1]],c=poly[tri[2]],up=(b.z-a.z)*(c.x-a.x)-(b.x-a.x)*(c.z-a.z)>0;for(const i of up?tri:[...tri].reverse())p.push(poly[i].x,y,poly[i].z);}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));g.computeVertexNormals();add(g);if(skirt)for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length],base=Math.min(floor-.2,terrain.heightAtWorld(a.x,a.z)-.3,terrain.heightAtWorld(b.x,b.z)-.3),g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute([a.x,base,a.z,b.x,y,b.z,b.x,base,b.z,a.x,base,a.z,a.x,y,a.z,b.x,y,b.z],3));g.computeVertexNormals();add(g,dark);}};
+ const surface=(poly,y,skirt=false)=>{const tris=THREE.ShapeUtils.triangulateShape(poly.map(p=>new THREE.Vector2(p.x,p.z)),[]),p=[];for(const tri of tris){const a=poly[tri[0]],b=poly[tri[1]],c=poly[tri[2]],up=(b.z-a.z)*(c.x-a.x)-(b.x-a.x)*(c.z-a.z)>0;for(const i of up?tri:[...tri].reverse())p.push(poly[i].x,y,poly[i].z);}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));g.computeVertexNormals();add(g);if(skirt)add(foundationContactGeometry(poly.map((a,i)=>[a,poly[(i+1)%poly.length]]),terrain,y),dark);};
  surface(haramFootprint,floor,true);surface(haramPodium,floor+3,true);
  // A separate upper court, four authored stair approaches and late arcade
  // context make circulation legible without filling an open sanctuary with houses.
