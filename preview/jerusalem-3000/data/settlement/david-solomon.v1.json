@@ -17,7 +17,9 @@
     "圓環是大型石構候選位置符號，不是已發掘王宮平面。階梯支撐體年代與功能仍有爭議。",
     "現代 DEM 與泉的近似地圖位置不代表古代地表。",
     "城防、王室院落與聖殿位置為推定幾何；跨代延續與毀壞由共同帳本控制，倒塌形態並未核定。",
-    "道路與門洞是共同配置的連接示意，並非古代街網或出土城門定位；與牆段一樣不預設後代延續。"
+    "道路與門洞是共同配置的連接示意，並非古代街網或出土城門定位；與牆段一樣不預設後代延續。",
+    "禾場與建殿地點的關聯依代下3:1作經文標示；不另行認定禾場精確平面、古代地表或實測高程。南北剖面使用目前示意配置上的現代DEM。",
+    "前廊與三層側室採王上6章的文獻比例；前廊開口2.6×4.5公尺、9公尺高度及立面細節為既有示意選值，不當作經文尺寸。共同接地標高使用現代DEM，未核定古代臺基。"
   ],
   "houseOffsets": [
     [
@@ -155,7 +157,9 @@
     "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf",
     "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all",
     "https://www.biblegateway.com/passage/?search=1+Kings+6%3A1-7&version=KJV",
-    "https://timeline.cityofdavid.org.il/event/king-davids-palace-2/"
+    "https://timeline.cityofdavid.org.il/event/king-davids-palace-2/",
+    "https://www.biblegateway.com/passage/?search=2+Chronicles+3%3A1&version=KJV",
+    "https://classic.biblegateway.com/passage/?search=1+Kings+6&version=WEB"
   ],
   "steppedSupport": {
     "offset": [
@@ -244,7 +248,35 @@
       "widthCubits": 20,
       "heightCubits": 30,
       "cubitMetres": 0.45,
-      "placementAuthority": "schematic northern sacred precinct, not excavated footprint"
+      "placementAuthority": "schematic northern sacred precinct, not excavated footprint",
+      "altar": {
+        "lengthCubits": 20,
+        "widthCubits": 20,
+        "heightCubits": 10,
+        "source": "https://www.biblegateway.com/verse/en/2%20Chronicles%204%3A1",
+        "authority": "selected-literary-Chronicles-dimensions-not-excavated-plan",
+        "tierAndHornProfileVerified": false
+      },
+      "pillars": {
+        "heightCubits": 18,
+        "capitalHeightCubits": 5,
+        "circumferenceCubits": 12,
+        "source": "https://www.biblegateway.com/passage/?search=1+Kings+7%3A15-22&version=WEB",
+        "authority": "selected-Kings-tradition; comparison-with-Chronicles-unresolved",
+        "capitalProfileVerified": false
+      },
+      "outerCourt": {
+        "bounds": [
+          -170,
+          -525,
+          -35,
+          -400
+        ],
+        "gateWidth": 5,
+        "source": "https://bible.usccb.org/bible/1kings/7",
+        "authority": "authored-precinct-context-not-identified-royal-great-court-footprint",
+        "geometryVerified": false
+      }
     },
     "courtyards": [
       {
@@ -553,7 +585,41 @@
         "solomon": "j3k:object:solomon-northern-wall-hypothesis"
       },
       "roadWidth": 1.6
-    }
+    },
+    "precinctHalls": [
+      {
+        "id": "lebanon-house",
+        "offset": [
+          -140,
+          -435
+        ],
+        "lengthCubits": 100,
+        "widthCubits": 50,
+        "heightCubits": 30,
+        "rows": 4,
+        "columnsPerRow": 8,
+        "source": "https://bible.usccb.org/bible/1kings/7",
+        "placementAuthority": "authored-southern-precinct-display-zone-not-excavated-location",
+        "columnCountAuthority": "4rows-from-selected-text;8per-row-authored-not45rafters",
+        "geometryVerified": false
+      },
+      {
+        "id": "pillars-hall",
+        "offset": [
+          -140,
+          -414
+        ],
+        "lengthCubits": 50,
+        "widthCubits": 30,
+        "authoredHeightMetres": 7,
+        "rows": 2,
+        "columnsPerRow": 6,
+        "source": "https://bible.usccb.org/bible/1kings/7",
+        "placementAuthority": "authored-southern-precinct-display-zone-not-excavated-location",
+        "columnCountAuthority": "authored-display-count-and-height",
+        "geometryVerified": false
+      }
+    ]
   },
   "houseDimensions": [
     10,

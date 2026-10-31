@@ -1,0 +1,19 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import * as THREE from 'three';
+import {TemporalCityCore} from '../preview/jerusalem-3000/temporal-city-core.js';
+import {createLandscapeSettlement} from '../preview/jerusalem-3000/earliest-settlement.js';
+import {pointInPolygon} from '../preview/jerusalem-3000/urban-exclusion.js';
+import {compileRoyalSpatialLayout} from '../preview/jerusalem-3000/royal-spatial-layout.js';
+import {inspectSettlementFoundation} from '../preview/jerusalem-3000/settlement-foundation.js';
+import {collectSpatialSkeleton} from '../preview/jerusalem-3000/spatial-skeleton.js';
+const read=p=>JSON.parse(fs.readFileSync(new URL('../preview/jerusalem-3000/'+p,import.meta.url))),timeline=read('data/continuous-build-timeline.json'),terrain={grid:{origin:{lat:31.778,lon:35.235}},heightAtWorld:(x,z)=>100+x*.01-z*.02};
+for(const [i,name]of ['earliest','middle-bronze','late-bronze-iron1','david-solomon'].entries()){
+ const data=read(`data/settlement/${name}.v1.json`),core=new TemporalCityCore({phases:timeline.phases,terrain}),parent=new THREE.Group(),plain=new THREE.Group();
+ if(data.royalCity?.spatial)for(const e of compileRoyalSpatialLayout(data).edges)core.register({id:`j3k:object:royal-road:${e.id}`,type:'road',confidence:'inferred',phaseIds:[data.phase]});
+ const foreign=[...core.objects.keys()],runtime=createLandscapeSettlement(parent,{data,terrain,ledgerCore:core,overview:true}),unpublished=createLandscapeSettlement(plain,{data,terrain,overview:true});runtime.apply({phaseId:data.phase,evidenceAllowed:()=>true});
+ const stats=inspectSettlementFoundation(core,data.phase),district=core.get(stats.districtIds[0]),buildings=core.phase(data.phase).filter(r=>r.type==='building'&&r.metadata.generationPhase===data.phase);assert.equal(stats.buildings,data.houseOffsets.length);assert.equal(stats.districtLinkedBuildings,stats.buildings);assert.equal(stats.routeRelatedBuildings,stats.buildings);assert.equal(stats.houseEntrancesVerified,false);assert.equal(district.geometry.role,'residential-model-envelope');assert.equal(district.metadata.cityBoundaryVerified,false);
+ for(const b of buildings){const box=b.geometry.bounds;for(const x of [box.min[0],box.max[0]])for(const z of [box.min[2],box.max[2]])assert.ok(pointInPolygon({x,z},district.geometry.polygon),'derived envelope must contain actual displayed roofs');const r=b.metadata.settlementRelation;assert.ok(core.get(r.routeId));assert.ok(r.distanceMetres>=0);assert.equal(r.routeAccessVerified,false);assert.equal(b.source.districtId,district.id);if(i===3)assert.ok(compileRoyalSpatialLayout(data).edges.filter(e=>e.stage==='david').some(e=>r.routeId.endsWith(':'+e.id)),'no future Solomon road may supply early residential access');}
+ const skeleton=collectSpatialSkeleton(core,terrain,{phaseId:data.phase,position:i+.9});assert.equal(skeleton.domains.districts.spatialObjects,1);assert.equal(skeleton.settlementContext.buildings,buildings.length);assert.equal(collectSpatialSkeleton(core,terrain,{phaseId:data.phase,position:i+.9,evidenceMode:'observed'}).features.length,0);assert.equal(collectSpatialSkeleton(core,terrain,{phaseId:timeline.phases[i+1].id,position:i+1.9}).features.filter(f=>f.id===district.id).length,0,'model envelope is not inherited as physical occupation');
+ const geom=root=>root.children[0].children.map(m=>[m.userData.cityObject.objectId,m.position.toArray(),Array.from(m.geometry.attributes.position.array)]);assert.deepEqual(geom(parent),geom(plain));
+ runtime.dispose();unpublished.dispose();assert.deepEqual([...core.objects.keys()],foreign);assert.ok(core.validate().ok);
+}
+console.log('PASS:4 early model envelopes, exact displayed-roof containment, explicit existing-path relationships, no future royal access, evidence/phase isolation and owned cleanup');

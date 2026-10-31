@@ -1,0 +1,4999 @@
+{
+  "schema": "j3k.landmark-building-programme.v1",
+  "date": "2026-10-29",
+  "kind": "planning-candidate-inventory-not-runtime-lifecycle-ledger",
+  "runtimeEnabled": false,
+  "historicalGeometryAccepted": false,
+  "coordinateFrame": {
+    "origin": {
+      "lat": 31.778,
+      "lon": 35.235
+    },
+    "metresPerSceneUnit": 1,
+    "verticalScale": 1
+  },
+  "sources": {
+    "cod-guide": {
+      "url": "https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf",
+      "role": "archaeological-site-guide-context-not-survey-control"
+    },
+    "parks": {
+      "url": "https://en.parks.org.il/reserve-park/jerusalem-walls-city-of-david-national-park/",
+      "role": "site-authority-water-and-defense-context"
+    },
+    "kings7": {
+      "url": "https://www.biblegateway.com/passage/?search=1+Kings+7%3A1-12&version=KJV",
+      "role": "literary-royal-complex-and-cubit-dimensions-not-excavated-plan"
+    },
+    "kings11": {
+      "url": "https://www.biblegateway.com/passage/?search=1+Kings+11%3A7-8&version=KJV",
+      "role": "literary-foreign-cult-places-not-wife-palace-plan"
+    },
+    "kings25": {
+      "url": "https://www.biblegateway.com/passage/?search=2+Kings+25%3A8-10&version=KJV",
+      "role": "literary-destruction-context-not-object-specific-collapse"
+    },
+    "upper-city": {
+      "url": "https://www.gov.il/en/pages/jerusalem-the-upper-city-during-the-second-temple-period",
+      "role": "excavation-overview-palace-towers-and-upper-city"
+    },
+    "josephus": {
+      "url": "https://penelope.uchicago.edu/josephus/war-5.html",
+      "role": "ancient-literary-description-not-surveyed-Antonia-footprint"
+    },
+    "acra": {
+      "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26089",
+      "role": "excavation-report-identification-requires-comparison-with-alternatives"
+    },
+    "citadel": {
+      "url": "https://www.tod.org.il/en/about-the-museum/",
+      "role": "site-museum-citadel-context-not-proof-of-all-fabric-continuity"
+    },
+    "sepulchre": {
+      "url": "https://www.custodia.org/en/sanctuaries/basilica-of-the-holy-sepulchre/",
+      "role": "sanctuary-history-archaeology-and-Christian-site-tradition"
+    },
+    "cenacle": {
+      "url": "https://www.itraveljerusalem.com/he/attraction/the-last-supper-room",
+      "role": "present-traditional-site-and-medieval-architecture-not-first-century-room-survey"
+    },
+    "acts12": {
+      "url": "https://www.biblegateway.com/verse/en/Acts%2012%3A12",
+      "role": "literary-house-of-Mary-mother-of-Mark-not-an-exact-site-identification"
+    },
+    "gospels": {
+      "url": "https://www.biblegateway.com/passage/?search=Mark+14%3BJohn+18-19%3BLuke+23%3AHebrews+13%3A12&version=KJV",
+      "role": "literary-event-sequence-not-a-georeferenced-itinerary"
+    },
+    "stations": {
+      "url": "https://www.viadolorosa.org/en/stations-2/",
+      "role": "current-devotional-stations-not-first-century-street-linework"
+    },
+    "nea": {
+      "url": "https://jerusalemfoundation.org/old-project/nea-church/",
+      "role": "site-project-context-543-dedication-later-destruction-needs-further-comparison"
+    },
+    "rock": {
+      "url": "https://islamicart.museumwnf.org/database_item.php?id=monument%3Bisl%3Bpa%3Bmon01%3B4%3Ben",
+      "role": "curated-monument-history-not-current-project-survey-control"
+    },
+    "aqsa": {
+      "url": "https://islamicart.museumwnf.org/database_item.php?id=monument%3Bisl%3Bpa%3Bmon01%3B3%3Ben",
+      "role": "curated-building-history-and-use-changes"
+    },
+    "ashrafiyya": {
+      "url": "https://islamicart.museumwnf.org/database_item.php?id=monument%3BISL%3Bpa%3BMon01%3B8%3Ben",
+      "role": "curated-Mamluk-monument-history"
+    },
+    "mishkenot": {
+      "url": "https://jerusalemfoundation.org/old-project/mishkenot-shaananim-cultural-center-guest-house/",
+      "role": "1860-neighbourhood-and-later-institutional-reuse"
+    },
+    "hurva": {
+      "url": "https://services.israelpost.co.il/postboolaee.nsf/all/8A2B339645B84B30C2258C730052175A/$file/%D7%94%D7%97%D7%95%D7%A8%D7%91%D7%94.pdf",
+      "role": "official-heritage-publication-1864-1948-2010-sequence"
+    },
+    "book": {
+      "url": "https://www.imj.org.il/en/exhibitions/architecture-%C2%A0shrine-book",
+      "role": "museum-own-architecture-history-1965"
+    },
+    "backlog": {
+      "url": null,
+      "role": "research-candidate-not-a-verified-historical-or-spatial-claim"
+    },
+    "roman-gate-site": {
+      "url": "https://www.pami.co.il/en/attractions/the-roman-square-museum-at-damascus-gate/",
+      "role": "site-operator-Roman-gate-and-plaza-context-not-survey-control"
+    },
+    "roman-plaza-excavation": {
+      "url": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26040",
+      "role": "Roman-pavement-possibly-plaza-not-complete-square-footprint"
+    },
+    "kings6-full": {
+      "url": "https://classic.biblegateway.com/passage/?search=1+Kings+6&version=WEB",
+      "role": "literary-first-temple-plan-not-survey"
+    },
+    "kings7-full": {
+      "url": "https://www.biblegateway.com/passage/?search=1+Kings+7&version=WEB",
+      "role": "literary-temple-fittings-and-royal-ensemble"
+    },
+    "chronicles4": {
+      "url": "https://www.biblegateway.com/passage/?search=2+Chronicles+3-4&version=WEB",
+      "role": "parallel-tradition-requires-comparison-not-automatic-dimension-merge"
+    },
+    "john-temple": {
+      "url": "https://www.biblegateway.com/passage/?search=John+5%3A1-9%3BJohn+10%3A23&version=WEB",
+      "role": "literary-pool-and-portico-context-not-footprint"
+    },
+    "bethesda-site": {
+      "url": "https://ste-anne-jerusalem.org/en/bethesda/",
+      "role": "site-history-multiphase-pools-not-first-century-survey"
+    },
+    "southern-miqweh": {
+      "url": "https://publications.iaa.org.il/atiqot/vol85/iss1/9/",
+      "role": "excavation-report-southern-access-and-ritual-bath-context"
+    },
+    "royal-portico-study": {
+      "url": "https://publications.iaa.org.il/cornerstone/vol10/iss1/9/",
+      "role": "archaeological-reconstruction-study-not-unique-reconstruction"
+    },
+    "middot1": {
+      "url": "https://www.sefaria.org/Mishnah_Middot.1",
+      "role": "retrospective-literary-description-not-excavated-Herodian-survey"
+    },
+    "middot2": {
+      "url": "https://www.sefaria.org/Mishnah_Middot.2",
+      "role": "retrospective-literary-description-not-excavated-Herodian-survey"
+    },
+    "middot3": {
+      "url": "https://www.sefaria.org/Mishnah_Middot.3",
+      "role": "retrospective-literary-description-not-excavated-Herodian-survey"
+    },
+    "middot4": {
+      "url": "https://www.sefaria.org/Mishnah_Middot.4",
+      "role": "retrospective-literary-description-not-excavated-Herodian-survey"
+    },
+    "middot5": {
+      "url": "https://www.sefaria.org/Mishnah_Middot.5",
+      "role": "retrospective-literary-description-not-excavated-Herodian-survey"
+    }
+  },
+  "entities": [
+    {
+      "id": "gihon",
+      "label": "基訓泉與取水場所",
+      "kind": "place",
+      "sourceRefs": [
+        "parks"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:gihon-spring"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "spring-defense",
+      "label": "泉旁防禦群：泉塔、受保護取水通道",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "parks",
+        "cod-guide"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "各構件年代分開審查；不能把爭議泉塔年代視為整套水防的共同年代。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "early-ridge",
+      "label": "早期東南山脊住居／工作區",
+      "kind": "background",
+      "sourceRefs": [
+        "cod-guide"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "只作地理與生活背景；尚無足夠依據命名王宮或聖殿。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "canaanite-civic",
+      "label": "迦南行政／公共核心候選區",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "列為研究缺口，不直接生成具名王宮、神廟或確定平面。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "david-palace",
+      "label": "大衛王室建築／院落",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "cod-guide"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:david-royal-courtyard-hypothesis"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "文獻王室、考古候選大型建築與目前院落假說分開。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "first-temple",
+      "label": "第一聖殿與院區",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "cod-guide"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:first-temple"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "solomon-palace",
+      "label": "所羅門王室居所",
+      "kind": "building",
+      "sourceRefs": [
+        "kings7"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:solomon-royal-courtyard-hypothesis"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "與利巴嫩林宮、柱廊、審判廊分項；不以一個通用院落代替。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "lebanon-house",
+      "label": "利巴嫩林宮",
+      "kind": "building",
+      "sourceRefs": [
+        "kings7"
+      ],
+      "researchStatus": "literary-dimensions-with-explicit-uncertain-display-zone",
+      "location": null,
+      "footprintMetres": [
+        45,
+        22.5
+      ],
+      "heightMetres": 13.5,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:solomon-royal-courtyard-hypothesis"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "文字尺寸100×50×30肘；肘長換算須列方案，不沿用現代地圖猜測外框。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ],
+      "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md",
+      "displayPlacement": {
+        "frame": "spring-relative-east-x-south-z-metres",
+        "offset": [
+          -140,
+          -435
+        ],
+        "surveyed": false
+      }
+    },
+    {
+      "id": "pillars-hall",
+      "label": "柱廊／柱子廊",
+      "kind": "building",
+      "sourceRefs": [
+        "kings7"
+      ],
+      "researchStatus": "literary-dimensions-with-explicit-uncertain-display-zone",
+      "location": null,
+      "footprintMetres": [
+        22.5,
+        13.5
+      ],
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:solomon-royal-courtyard-hypothesis"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "文字平面50×30肘；高度、細部與精確位置未定。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ],
+      "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md",
+      "displayPlacement": {
+        "frame": "spring-relative-east-x-south-z-metres",
+        "offset": [
+          -140,
+          -414
+        ],
+        "surveyed": false
+      }
+    },
+    {
+      "id": "judgement-hall",
+      "label": "寶座廊／審判廊",
+      "kind": "building",
+      "sourceRefs": [
+        "kings7"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "pharaoh-daughter-palace",
+      "label": "法老女兒的宮殿",
+      "kind": "building",
+      "sourceRefs": [
+        "kings7"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "不是外邦祭祀高處，也不等於已發掘定位的獨立宮殿。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "foreign-wives-shrines",
+      "label": "外邦妃嬪祭祀高處候選群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "kings11"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "與法老女兒宮殿分開；文獻山地語境不能直接化作確定GPS／廟群模型。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "broad-wall",
+      "label": "寬牆與西丘防禦群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "cod-guide"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "先核對實際發掘線段，不把完整推定圍城當作出土城界。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "hezekiah-water",
+      "label": "希西家水道與第一聖殿期蓄水系統",
+      "kind": "engineering-system",
+      "sourceRefs": [
+        "parks"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "地下水道、出水池與後來大型西羅亞池分開建檔。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "royal-administration",
+      "label": "第一聖殿晚期王室／行政群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "kings25",
+        "cod-guide"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "不能因同屬王室就宣稱第十世紀每一宮殿原構件一直留存。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "early-second-temple",
+      "label": "早期第二聖殿與院區",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "cod-guide"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:second-temple-early",
+        "j3k:hellenistic-hasmonean:monument:rededicated-sanctuary"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "波斯概覽已有獨立推定量體；希臘化—哈斯蒙尼另有選定前164年重新奉獻後語境的示意版本。兩者保守展示包絡相同不證明原構件存續或歷史形制；不能把較早復建一律移到尼希米年代。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ],
+      "implementationReview": "TEMPLE-RITUAL-COURTS.md",
+      "implementationNote": "Existing altar display envelope now uses a tiered open-hearth profile on one datum; form/height remain illustrative, without dating or fabric-survival acceptance."
+    },
+    {
+      "id": "nehemiah-defense",
+      "label": "波斯期城門與城防候選群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "cod-guide"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:nehemiah-wall"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "尼希米文字段落、候選線位與完整復原分開。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "acra",
+      "label": "塞琉古阿克拉堡候選",
+      "kind": "building",
+      "sourceRefs": [
+        "acra"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "候選識別與位置爭議須並列；不以單一考古新聞直接核定整座堡壘。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "baris",
+      "label": "巴里斯堡候選",
+      "kind": "building",
+      "sourceRefs": [
+        "josephus"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "與後來安東尼堡分開身分；重用關係須獨立證據。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "hasmonean-palace",
+      "label": "哈斯蒙尼王宮候選",
+      "kind": "building",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "citadel-layers",
+      "label": "西部城堡／大衛塔地區各期建築層",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "citadel",
+        "upper-city"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "大衛塔名稱不能使其變成大衛王所建；各期另列形制與存續證據。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "herodian-temple",
+      "label": "希律第二聖殿、平台與院區",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "josephus"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:temple-mount-enclosure-herodian",
+        "j3k:object:inner-temple"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "royal-stoa",
+      "label": "希律王家柱廊與南側公共通路",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "josephus"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:royal-stoa"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "antonia",
+      "label": "安東尼堡",
+      "kind": "building",
+      "sourceRefs": [
+        "josephus"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:antonia"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "既有示意堡壘仍需核對位置、平面與尺度，不因已有模型就視為已完成。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "herod-palace",
+      "label": "希律大王宮殿與宮苑",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "upper-city",
+        "citadel"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "位於西部上城的宮殿群；不是安東尼堡，也不是城外希律堡。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "herod-three-towers",
+      "label": "希律三塔：希庇庫斯、法賽勒、米利暗",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "upper-city",
+        "citadel"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "與宮殿聯動；70年後須按個別塔／基座判斷，不全數壓成同樣廢墟。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "upper-city-public",
+      "label": "上城貴族／祭司大型宅邸代表群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "upper-city"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "僅選具發掘依據的代表宅邸，不放大通用住宅冒充宮殿。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "siloam-second-temple",
+      "label": "第二聖殿期大型西羅亞池與朝聖街",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "parks"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "與第一聖殿期取水系統、拜占庭水池及教堂分層。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "bethesda",
+      "label": "畢士大池及後來的相關宗教建築群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "池體各期、羅馬／拜占庭及十字軍建築需逐層核對。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "caiaphas-place",
+      "label": "該亞法／大祭司院落事件場所",
+      "kind": "place",
+      "sourceRefs": [
+        "gospels"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "文本事件與傳統定位不直接等於已核定一世紀平面。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "last-supper-place",
+      "label": "最後晚餐樓房事件場所（通稱馬可樓的敘事層）",
+      "kind": "place",
+      "sourceRefs": [
+        "gospels"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "不得與現存哥德式樓房或徒12:12馬利亞家自動合併。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "mary-mark-house",
+      "label": "馬可母親馬利亞之家／早期聚會場所",
+      "kind": "place",
+      "sourceRefs": [
+        "acts12"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "人物與事件有文字依據，精確位置及與最後晚餐樓房是否同一建築未核定。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "cenacle-medieval",
+      "label": "錫安山現存馬可樓／晚餐廳的中世紀建築層",
+      "kind": "building",
+      "sourceRefs": [
+        "cenacle"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "只能依所屬中世紀及後期形制建造，不回投耶穌時代。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "gethsemane-place",
+      "label": "客西馬尼事件場所",
+      "kind": "place",
+      "sourceRefs": [
+        "gospels"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "與後來歷期教堂分開；不在一世紀放入現代萬國教堂。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "olives-place",
+      "label": "橄欖山及升天／進城敘事場所",
+      "kind": "place",
+      "sourceRefs": [
+        "gospels"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "golgotha",
+      "label": "各各他／髑髏地候選與聖墓傳統位置",
+      "kind": "place",
+      "sourceRefs": [
+        "gospels",
+        "sepulchre"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "受難時期城門外關係是配準條件；現代位置參照與一世紀具體形貌的證據等級不同。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "tomb-garden",
+      "label": "墓園／岩鑿墓與安葬場所",
+      "kind": "place",
+      "sourceRefs": [
+        "gospels",
+        "sepulchre"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "與各各他、後來聖墓建築群分開身分；不在一世紀放入四世紀教堂。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "praetorium",
+      "label": "彼拉多審判地點候選",
+      "kind": "place",
+      "sourceRefs": [
+        "gospels",
+        "upper-city"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "安東尼堡方案與希律宮方案並列，不能由今天苦路起點反推唯一一世紀位置。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "roman-civic",
+      "label": "Aelia城門、廣場、拱門與Cardo公共軸線",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog",
+        "roman-gate-site",
+        "roman-plaza-excavation"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:aelia:defense:gate:north",
+        "j3k:byzantine:defense:gate:north"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "羅馬與拜占庭街道分段配準；Ecce Homo拱與鋪面年代須另核。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "roman-sanctuaries",
+      "label": "Aelia異教祭祀建築候選群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "sepulchre"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "聖墓地區的祭祀層與聖殿山祭祀位置的不同主張分開，不畫成一座已知神殿。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "legion-camp",
+      "label": "第十軍團營區候選",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "軍事存在不等於營區精確邊界已定位。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "holy-sepulchre",
+      "label": "聖墓教堂歷期建築群：Martyrium、Anastasis及後期改建",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "sepulchre"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:byzantine:independent:monument:holy-sepulchre-context",
+        "j3k:early-islamic:independent:monument:holy-sepulchre-context",
+        "j3k:crusader:independent:monument:holy-sepulchre-context",
+        "j3k:ayyubid-mamluk:independent:monument:holy-sepulchre-context",
+        "j3k:ottoman:independent:monument:holy-sepulchre-context",
+        "j3k:outside-walls:independent:monument:holy-sepulchre-context",
+        "j3k:modern:independent:monument:holy-sepulchre-context"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "335、614、1009、1048、1149及後期修復逐段核對，不從每一期清零重建。 B9以共同帳本登記335／1009／1048／1149來源分期，模型為選定示意版本；614及後期事件未全部建模，原構件存續仍未驗收。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "nea",
+      "label": "查士丁尼Nea新聖母教堂與附屬建築",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "nea"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:byzantine:independent:monument:nea-context"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "543獻堂；後續破壞／廢棄分期需比對，不能未審查就寫成614必然全毀。 B9在543落成語境前不顯示堂體或專用通路，不能由表示缺席推定此前場地空置。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "holy-zion",
+      "label": "拜占庭聖錫安教堂群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "不是今日安眠堂，也不能與古代東南山脊的錫安名稱混同。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "olives-churches",
+      "label": "橄欖山Eleona／升天教堂歷期群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "現存近代堂體不得回投四世紀；逐址／逐期核對。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "byzantine-siloam",
+      "label": "拜占庭西羅亞水池與教堂群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "cod-guide"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "dome-rock",
+      "label": "岩石圓頂建築與聖域院區",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "rock"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:early-islamic:independent:monument:rock-sanctuary-context",
+        "j3k:crusader:independent:monument:rock-sanctuary-context",
+        "j3k:ayyubid-mamluk:independent:monument:rock-sanctuary-context",
+        "j3k:ottoman:independent:monument:rock-sanctuary-context",
+        "j3k:outside-walls:independent:monument:rock-sanctuary-context",
+        "j3k:modern:independent:monument:rock-sanctuary-context"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "與前代猶太聖殿是同區域不同建築；不建立未經證實的原構件繼承。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "aqsa",
+      "label": "阿克薩清真寺歷期堂體",
+      "kind": "building",
+      "sourceRefs": [
+        "aqsa"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:early-islamic:independent:monument:aqsa-context",
+        "j3k:crusader:independent:monument:aqsa-context",
+        "j3k:ayyubid-mamluk:independent:monument:aqsa-context",
+        "j3k:ottoman:independent:monument:aqsa-context",
+        "j3k:outside-walls:independent:monument:aqsa-context",
+        "j3k:modern:independent:monument:aqsa-context"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "倭馬亞、震後重建、法蒂瑪、十字軍用途轉變及後期修復分層。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "umayyad-palaces",
+      "label": "聖殿山南／西南倭馬亞宮殿與行政群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "需要發掘總平面及通路配準，不能以空地中的通用大方塊補足。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "hospital-muristan",
+      "label": "穆里斯坦醫院／醫療與商業群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "st-anne",
+      "label": "聖安妮教堂與畢士大地區宗教群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "mamluk-institutions",
+      "label": "馬穆魯克學院、旅舍、陵墓與市場群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "下一層按個別具名對象核對，不能當作同時建成的一片量體。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "ashrafiyya",
+      "label": "阿什拉菲耶學院",
+      "kind": "building",
+      "sourceRefs": [
+        "ashrafiyya"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "qaytbay",
+      "label": "蓋特貝噴泉",
+      "kind": "building",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "ottoman-walls",
+      "label": "蘇萊曼城牆、主要城門與城堡改建群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "citadel"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [
+        "j3k:object:ottoman-wall",
+        "j3k:object:jaffa-gate-ottoman",
+        "j3k:object:damascus-gate-ottoman"
+      ],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "haseki",
+      "label": "哈塞基蘇丹慈善廚房及公共服務群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "hurva",
+      "label": "胡爾瓦會堂歷期建築",
+      "kind": "building",
+      "sourceRefs": [
+        "hurva"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "舊堂、廢墟、重建分身分；現代重建不能直接視為十九世紀原構件。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "mishkenot",
+      "label": "米什克諾特沙安寧與蒙特菲奧里風車地標群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "mishkenot"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "城外拓展是奧斯曼晚期的重疊視角，不是1917之後才新建。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "late-ottoman-landmarks",
+      "label": "十九世紀城外醫院、教育、修院、車站候選群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "俄羅斯建築群、德國建築群、鐵路車站等逐項立卡；不能一概當作具名地標已核定。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "modern-churches",
+      "label": "安眠堂／萬國教堂／主哭教堂等近現代宗教群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "每棟需獨立年代與位置；不在耶穌時代顯示現存堂體。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "book-shrine",
+      "label": "以色列博物館／死海古卷館",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "book"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "需檢查目前城市鏡頭及建模窗口是否涵蓋，不能把西部地標拖進舊城。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "modern-civic",
+      "label": "議會、YMCA、洛克菲勒博物館等現代公共建築候選群",
+      "kind": "ensemble",
+      "sourceRefs": [
+        "backlog"
+      ],
+      "researchStatus": "candidate-needs-source",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "逐址／逐年核對，可能超出現有城市顯示窗口。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "entry-route",
+      "label": "耶穌進城路線候選",
+      "kind": "route",
+      "sourceRefs": [
+        "gospels"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "橄欖山—跨谷—城門—聖區；不把現存金門形制直接當作一世紀城門。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "passion-route",
+      "label": "一世紀受難事件路線候選",
+      "kind": "route",
+      "sourceRefs": [
+        "gospels"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "僅事件拓撲與候選起點；古街線、跨門點及高程尚待配準。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "historic-pilgrimage",
+      "label": "歷期朝聖路線／站點變體",
+      "kind": "route",
+      "sourceRefs": [
+        "sepulchre",
+        "stations"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "拜占庭、中世紀與近現代路線分版，不套用單一現代折線。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    },
+    {
+      "id": "via-dolorosa-modern",
+      "label": "今日苦路十四站朝聖路線",
+      "kind": "route",
+      "sourceRefs": [
+        "stations"
+      ],
+      "researchStatus": "context-sourced-geometry-not-admitted",
+      "location": null,
+      "footprintMetres": null,
+      "heightMetres": null,
+      "geometryAccepted": false,
+      "existingRuntimeIds": [],
+      "existingRuntimeIsApprovedReconstruction": false,
+      "notes": "不得作為一世紀受難路線的精確測繪證據；各站現存小堂另核建造年代。",
+      "requiredBeforeModel": [
+        "dated-phase-form",
+        "source-registered-location-or-explicit-uncertain-zone",
+        "metre-dimensions-and-cubit-policy-if-applicable",
+        "terrain-and-contemporary-wall-relation",
+        "core-road-reservation",
+        "dated-transformation-and-next-era-fate"
+      ]
+    }
+  ],
+  "phases": [
+    {
+      "phase": "chalcolithic-early-bronze",
+      "label": "最早聚落",
+      "dateLabel": "c. 4th–3rd millennium BCE",
+      "buildingGroups": [
+        {
+          "id": "spring-ridge",
+          "label": "泉—山脊生活群",
+          "members": [
+            {
+              "landmarkId": "gihon",
+              "intendedState": "geographic-anchor"
+            },
+            {
+              "landmarkId": "early-ridge",
+              "intendedState": "background-only"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "gihon"
+      ],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "尚未核定可具名的地標建築；不補王宮或神廟來湊數。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "middle-bronze",
+      "label": "迦南城市",
+      "dateLabel": "c. 19th–17th c. BCE onward",
+      "buildingGroups": [
+        {
+          "id": "water-defense",
+          "label": "泉旁公共水防群",
+          "members": [
+            {
+              "landmarkId": "spring-defense",
+              "intendedState": "dated-components-review"
+            },
+            {
+              "landmarkId": "gihon",
+              "intendedState": "geographic-anchor"
+            }
+          ]
+        },
+        {
+          "id": "civic-candidate",
+          "label": "迦南公共核心",
+          "members": [
+            {
+              "landmarkId": "canaanite-civic",
+              "intendedState": "research-only"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "gihon"
+      ],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "泉塔、通道與其他水防構件不共享一個未審查年代。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "late-bronze-iron1",
+      "label": "晚青銅—鐵器早期",
+      "dateLabel": "c. 16th–11th c. BCE",
+      "buildingGroups": [
+        {
+          "id": "canaanite-continuity",
+          "label": "既有迦南城與水防",
+          "members": [
+            {
+              "landmarkId": "spring-defense",
+              "intendedState": "continuity-unresolved"
+            }
+          ]
+        },
+        {
+          "id": "civic-candidate",
+          "label": "公共／行政核心候選",
+          "members": [
+            {
+              "landmarkId": "canaanite-civic",
+              "intendedState": "research-only"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "gihon"
+      ],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "不把晚青銅／鐵器早期直接畫成縮小的所羅門王城。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "david-solomon",
+      "label": "大衛—所羅門",
+      "dateLabel": "10th c. BCE",
+      "buildingGroups": [
+        {
+          "id": "david-royal",
+          "label": "大衛階段王室群",
+          "members": [
+            {
+              "landmarkId": "david-palace",
+              "intendedState": "literary-and-candidate-massing"
+            }
+          ]
+        },
+        {
+          "id": "solomon-sacred",
+          "label": "所羅門聖區",
+          "members": [
+            {
+              "landmarkId": "first-temple",
+              "intendedState": "narrative-new-build"
+            }
+          ]
+        },
+        {
+          "id": "solomon-royal",
+          "label": "所羅門王室複合群",
+          "members": [
+            {
+              "landmarkId": "solomon-palace",
+              "intendedState": "literary-plan-needed"
+            },
+            {
+              "landmarkId": "lebanon-house",
+              "intendedState": "literary-dimensions"
+            },
+            {
+              "landmarkId": "pillars-hall",
+              "intendedState": "literary-dimensions"
+            },
+            {
+              "landmarkId": "judgement-hall",
+              "intendedState": "literary-plan-needed"
+            },
+            {
+              "landmarkId": "pharaoh-daughter-palace",
+              "intendedState": "literary-plan-needed"
+            }
+          ]
+        },
+        {
+          "id": "foreign-cult",
+          "label": "妃嬪祭祀地候選",
+          "members": [
+            {
+              "landmarkId": "foreign-wives-shrines",
+              "intendedState": "literary-location-uncertain"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "gihon"
+      ],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "兩個君王階段分開；法老女兒宮殿與祭祀高處分開；不能給缺位置的宮殿任意填GPS。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "late-first-temple",
+      "label": "第一聖殿晚期",
+      "dateLabel": "8th–7th c. BCE",
+      "buildingGroups": [
+        {
+          "id": "temple-royal",
+          "label": "聖殿與王室行政核心",
+          "members": [
+            {
+              "landmarkId": "first-temple",
+              "intendedState": "inherited-and-altered"
+            },
+            {
+              "landmarkId": "royal-administration",
+              "intendedState": "phase-form-review"
+            }
+          ]
+        },
+        {
+          "id": "western-defense",
+          "label": "西丘防禦群",
+          "members": [
+            {
+              "landmarkId": "broad-wall",
+              "intendedState": "new-and-expanded-components"
+            }
+          ]
+        },
+        {
+          "id": "water",
+          "label": "蓄水與供水群",
+          "members": [
+            {
+              "landmarkId": "hezekiah-water",
+              "intendedState": "dated-engineering-system"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "gihon"
+      ],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "西丘、王室群與水系是不同建築層；不要全部套用第十世紀形制。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "babylonian-destruction",
+      "label": "巴比倫毀城",
+      "dateLabel": "586 BCE",
+      "buildingGroups": [
+        {
+          "id": "royal-sacred-destruction",
+          "label": "聖殿／王室毀壞群",
+          "members": [
+            {
+              "landmarkId": "first-temple",
+              "intendedState": "destruction"
+            },
+            {
+              "landmarkId": "royal-administration",
+              "intendedState": "destruction"
+            }
+          ]
+        },
+        {
+          "id": "defense-water-fate",
+          "label": "城防與水系去向",
+          "members": [
+            {
+              "landmarkId": "broad-wall",
+              "intendedState": "damage-per-component"
+            },
+            {
+              "landmarkId": "hezekiah-water",
+              "intendedState": "fate-review"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "gihon"
+      ],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "這是上一期物件的事件，不新增一座從零生成的廢墟城。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "persian-nehemiah",
+      "label": "波斯—尼希米",
+      "dateLabel": "5th c. BCE",
+      "buildingGroups": [
+        {
+          "id": "second-temple",
+          "label": "早期第二聖殿群",
+          "members": [
+            {
+              "landmarkId": "early-second-temple",
+              "intendedState": "already-rebuilt-before-fifth-century-overview"
+            }
+          ]
+        },
+        {
+          "id": "persian-defense",
+          "label": "波斯城門／防禦群",
+          "members": [
+            {
+              "landmarkId": "nehemiah-defense",
+              "intendedState": "candidate-rebuilding"
+            }
+          ]
+        },
+        {
+          "id": "water-remains",
+          "label": "供水與前代遺存",
+          "members": [
+            {
+              "landmarkId": "hezekiah-water",
+              "intendedState": "use-and-fate-review"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "gihon"
+      ],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "目前第五世紀概覽不能誤寫成聖殿在第五世紀才首次復建。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "hellenistic-hasmonean",
+      "label": "希臘化—哈斯蒙尼",
+      "dateLabel": "4th–1st c. BCE",
+      "buildingGroups": [
+        {
+          "id": "sacred",
+          "label": "第二聖殿與院區變更",
+          "members": [
+            {
+              "landmarkId": "early-second-temple",
+              "intendedState": "alteration-review"
+            }
+          ]
+        },
+        {
+          "id": "military",
+          "label": "軍政／王宮群",
+          "members": [
+            {
+              "landmarkId": "acra",
+              "intendedState": "competing-identifications"
+            },
+            {
+              "landmarkId": "baris",
+              "intendedState": "candidate-fortress"
+            },
+            {
+              "landmarkId": "hasmonean-palace",
+              "intendedState": "research-only"
+            },
+            {
+              "landmarkId": "citadel-layers",
+              "intendedState": "Hasmonean-layer-review"
+            }
+          ]
+        }
+      ],
+      "placeIds": [],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "阿克拉堡、巴里斯與安東尼堡不可混成一棟；不縮放希律城代替。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "herodian-jesus",
+      "label": "大希律—耶穌",
+      "dateLabel": "late 1st c. BCE–30s CE",
+      "buildingGroups": [
+        {
+          "id": "temple",
+          "label": "聖殿山建築群",
+          "members": [
+            {
+              "landmarkId": "herodian-temple",
+              "intendedState": "rebuilding-expansion"
+            },
+            {
+              "landmarkId": "royal-stoa",
+              "intendedState": "new-build"
+            }
+          ]
+        },
+        {
+          "id": "military-royal",
+          "label": "軍政王宮群",
+          "members": [
+            {
+              "landmarkId": "antonia",
+              "intendedState": "fortress"
+            },
+            {
+              "landmarkId": "herod-palace",
+              "intendedState": "palace-and-gardens"
+            },
+            {
+              "landmarkId": "herod-three-towers",
+              "intendedState": "individual-tower-forms"
+            }
+          ]
+        },
+        {
+          "id": "public-water",
+          "label": "大型公共／水工群",
+          "members": [
+            {
+              "landmarkId": "upper-city-public",
+              "intendedState": "excavated-representatives"
+            },
+            {
+              "landmarkId": "siloam-second-temple",
+              "intendedState": "pool-and-pilgrimage-street"
+            },
+            {
+              "landmarkId": "bethesda",
+              "intendedState": "phase-form-review"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "last-supper-place",
+        "mary-mark-house",
+        "caiaphas-place",
+        "praetorium",
+        "gethsemane-place",
+        "olives-place",
+        "golgotha",
+        "tomb-garden"
+      ],
+      "routeIds": [
+        "entry-route",
+        "passion-route"
+      ],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "本期沒有四世紀聖墓教堂、現存中世紀馬可樓或今日十四站小堂。各各他／墓園與當期牆線的內外關係先核對。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "roman-destruction",
+      "label": "羅馬毀城",
+      "dateLabel": "70 CE",
+      "buildingGroups": [
+        {
+          "id": "sacred-ruin",
+          "label": "聖殿毀壞事件群",
+          "members": [
+            {
+              "landmarkId": "herodian-temple",
+              "intendedState": "destruction"
+            },
+            {
+              "landmarkId": "royal-stoa",
+              "intendedState": "destruction"
+            }
+          ]
+        },
+        {
+          "id": "royal-military-fate",
+          "label": "王宮／堡壘／三塔去向",
+          "members": [
+            {
+              "landmarkId": "antonia",
+              "intendedState": "siege-and-destruction-review"
+            },
+            {
+              "landmarkId": "herod-palace",
+              "intendedState": "damage-and-fate-review"
+            },
+            {
+              "landmarkId": "herod-three-towers",
+              "intendedState": "selected-remains-not-uniform-ruin"
+            }
+          ]
+        },
+        {
+          "id": "water-fate",
+          "label": "水工及朝聖通路去向",
+          "members": [
+            {
+              "landmarkId": "siloam-second-temple",
+              "intendedState": "fate-review"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "golgotha",
+        "tomb-garden"
+      ],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "不能把所有塔、台基、池與街道等比例壓扁，視為已完成70年毀城。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "aelia",
+      "label": "Aelia Capitolina",
+      "dateLabel": "2nd–4th c. CE",
+      "buildingGroups": [
+        {
+          "id": "roman-public",
+          "label": "羅馬城公共軸線群",
+          "members": [
+            {
+              "landmarkId": "roman-civic",
+              "intendedState": "new-and-replanned"
+            }
+          ]
+        },
+        {
+          "id": "roman-sacred",
+          "label": "羅馬祭祀與軍事群",
+          "members": [
+            {
+              "landmarkId": "roman-sanctuaries",
+              "intendedState": "competing-location-claims"
+            },
+            {
+              "landmarkId": "legion-camp",
+              "intendedState": "research-only"
+            },
+            {
+              "landmarkId": "citadel-layers",
+              "intendedState": "Roman-reuse-review"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "golgotha",
+        "tomb-garden"
+      ],
+      "routeIds": [],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "不提前放入君士坦丁教堂；營區和神殿精確位置未定位就保留缺口。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "byzantine",
+      "label": "拜占庭",
+      "dateLabel": "4th–7th c.",
+      "buildingGroups": [
+        {
+          "id": "resurrection-complex",
+          "label": "聖墓教堂與院區",
+          "members": [
+            {
+              "landmarkId": "holy-sepulchre",
+              "intendedState": "335-build-and-later-damage-repair"
+            }
+          ]
+        },
+        {
+          "id": "southern-churches",
+          "label": "南部宗教公共群",
+          "members": [
+            {
+              "landmarkId": "nea",
+              "intendedState": "543-new-build"
+            },
+            {
+              "landmarkId": "holy-zion",
+              "intendedState": "research-before-model"
+            },
+            {
+              "landmarkId": "byzantine-siloam",
+              "intendedState": "phase-build"
+            }
+          ]
+        },
+        {
+          "id": "olives-churches",
+          "label": "橄欖山宗教群",
+          "members": [
+            {
+              "landmarkId": "olives-churches",
+              "intendedState": "research-before-model"
+            }
+          ]
+        },
+        {
+          "id": "northern-entry",
+          "label": "羅馬北門／拜占庭廣場語境",
+          "members": [
+            {
+              "landmarkId": "roman-civic",
+              "intendedState": "selected-entrance-and-plaza-context-not-proven-fabric"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "golgotha",
+        "tomb-garden",
+        "olives-place"
+      ],
+      "routeIds": [
+        "historic-pilgrimage"
+      ],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "四至七世紀不是同時建成的一個時刻；Nea須在較晚階段才出現。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "early-islamic",
+      "label": "早期伊斯蘭",
+      "dateLabel": "7th–11th c.",
+      "buildingGroups": [
+        {
+          "id": "haram",
+          "label": "伊斯蘭聖域群",
+          "members": [
+            {
+              "landmarkId": "dome-rock",
+              "intendedState": "691-692-context"
+            },
+            {
+              "landmarkId": "aqsa",
+              "intendedState": "dated-building-and-rebuilding"
+            }
+          ]
+        },
+        {
+          "id": "administration",
+          "label": "南／西南行政宮殿群",
+          "members": [
+            {
+              "landmarkId": "umayyad-palaces",
+              "intendedState": "excavation-plan-needed"
+            }
+          ]
+        },
+        {
+          "id": "christian-sites",
+          "label": "基督教場所與建築變化",
+          "members": [
+            {
+              "landmarkId": "holy-sepulchre",
+              "intendedState": "1009-destruction-1048-rebuilding"
+            },
+            {
+              "landmarkId": "byzantine-siloam",
+              "intendedState": "fate-review"
+            },
+            {
+              "landmarkId": "citadel-layers",
+              "intendedState": "Islamic-citadel-form"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "golgotha",
+        "tomb-garden"
+      ],
+      "routeIds": [
+        "historic-pilgrimage"
+      ],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "聖墓1009毀壞與1048重建在同一大分期內，必須有子階段。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "crusader",
+      "label": "十字軍",
+      "dateLabel": "1099–1187",
+      "buildingGroups": [
+        {
+          "id": "christian-core",
+          "label": "聖墓與朝聖服務群",
+          "members": [
+            {
+              "landmarkId": "holy-sepulchre",
+              "intendedState": "1149-rebuilding"
+            },
+            {
+              "landmarkId": "hospital-muristan",
+              "intendedState": "research-before-model"
+            },
+            {
+              "landmarkId": "st-anne",
+              "intendedState": "research-before-model"
+            }
+          ]
+        },
+        {
+          "id": "haram-use-change",
+          "label": "聖域用途轉換群",
+          "members": [
+            {
+              "landmarkId": "dome-rock",
+              "intendedState": "Templum-Domini-use-change"
+            },
+            {
+              "landmarkId": "aqsa",
+              "intendedState": "Templum-Salomonis-use-change"
+            }
+          ]
+        },
+        {
+          "id": "royal-citadel",
+          "label": "城堡與王權群",
+          "members": [
+            {
+              "landmarkId": "citadel-layers",
+              "intendedState": "Crusader-form"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "golgotha",
+        "tomb-garden"
+      ],
+      "routeIds": [
+        "historic-pilgrimage"
+      ],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "用途改變不是重新建造一座所羅門聖殿；現存樓房分期另審。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "ayyubid-mamluk",
+      "label": "阿尤布—馬穆魯克",
+      "dateLabel": "12th–16th c.",
+      "buildingGroups": [
+        {
+          "id": "haram-and-institutions",
+          "label": "聖域修復／學院／市場群",
+          "members": [
+            {
+              "landmarkId": "dome-rock",
+              "intendedState": "Islamic-use-restoration"
+            },
+            {
+              "landmarkId": "aqsa",
+              "intendedState": "restoration-and-alteration"
+            },
+            {
+              "landmarkId": "mamluk-institutions",
+              "intendedState": "individual-named-components-needed"
+            },
+            {
+              "landmarkId": "ashrafiyya",
+              "intendedState": "dated-build"
+            },
+            {
+              "landmarkId": "qaytbay",
+              "intendedState": "research-before-model"
+            }
+          ]
+        },
+        {
+          "id": "christian-continuity",
+          "label": "基督教建築群",
+          "members": [
+            {
+              "landmarkId": "holy-sepulchre",
+              "intendedState": "phase-alteration-review"
+            },
+            {
+              "landmarkId": "cenacle-medieval",
+              "intendedState": "medieval-form-review"
+            }
+          ]
+        },
+        {
+          "id": "citadel",
+          "label": "城防與城堡群",
+          "members": [
+            {
+              "landmarkId": "citadel-layers",
+              "intendedState": "dismantling-and-rebuilding-review"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "golgotha",
+        "tomb-garden"
+      ],
+      "routeIds": [
+        "historic-pilgrimage"
+      ],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "1219城防拆除與後來城堡重建不可合成始終完整的圍城。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "ottoman",
+      "label": "奧斯曼",
+      "dateLabel": "1517–1917",
+      "buildingGroups": [
+        {
+          "id": "walls-gates-citadel",
+          "label": "城牆／城門／城堡群",
+          "members": [
+            {
+              "landmarkId": "ottoman-walls",
+              "intendedState": "sixteenth-century-building"
+            }
+          ]
+        },
+        {
+          "id": "sacred-civic",
+          "label": "聖域與公共服務群",
+          "members": [
+            {
+              "landmarkId": "dome-rock",
+              "intendedState": "repair-not-new-building"
+            },
+            {
+              "landmarkId": "aqsa",
+              "intendedState": "repair-not-new-building"
+            },
+            {
+              "landmarkId": "haseki",
+              "intendedState": "research-before-model"
+            }
+          ]
+        },
+        {
+          "id": "christian-jewish",
+          "label": "基督教與猶太地標歷期",
+          "members": [
+            {
+              "landmarkId": "holy-sepulchre",
+              "intendedState": "1808-fire-1810-rebuilding-review"
+            },
+            {
+              "landmarkId": "cenacle-medieval",
+              "intendedState": "use-and-alteration-review"
+            },
+            {
+              "landmarkId": "hurva",
+              "intendedState": "dated-early-and-nineteenth-century-forms"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "golgotha",
+        "tomb-garden"
+      ],
+      "routeIds": [
+        "historic-pilgrimage",
+        "via-dolorosa-modern"
+      ],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "1517至1917跨度過大；十九世紀站點和建築不能在十六世紀就全部出現。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "outside-walls",
+      "label": "城外擴張",
+      "dateLabel": "19th–early 20th c.",
+      "buildingGroups": [
+        {
+          "id": "shared-old-city",
+          "label": "與晚期奧斯曼相同的舊城地標",
+          "members": [
+            {
+              "landmarkId": "ottoman-walls",
+              "intendedState": "retained"
+            },
+            {
+              "landmarkId": "holy-sepulchre",
+              "intendedState": "retained-form"
+            },
+            {
+              "landmarkId": "dome-rock",
+              "intendedState": "retained-form"
+            },
+            {
+              "landmarkId": "aqsa",
+              "intendedState": "retained-form"
+            },
+            {
+              "landmarkId": "hurva",
+              "intendedState": "nineteenth-century-building"
+            }
+          ]
+        },
+        {
+          "id": "outside-landmarks",
+          "label": "城外拓展地標群",
+          "members": [
+            {
+              "landmarkId": "mishkenot",
+              "intendedState": "1860-development"
+            },
+            {
+              "landmarkId": "late-ottoman-landmarks",
+              "intendedState": "individual-date-and-site-research"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "golgotha",
+        "tomb-garden"
+      ],
+      "routeIds": [
+        "via-dolorosa-modern"
+      ],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "這是晚期奧斯曼城外拓展視角，與上一期日曆重疊；不能把共同舊城再次從零蓋一遍。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    },
+    {
+      "phase": "modern",
+      "label": "現代耶路撒冷",
+      "dateLabel": "20th c.–today",
+      "buildingGroups": [
+        {
+          "id": "historic-core",
+          "label": "舊城歷史地標保留／修復群",
+          "members": [
+            {
+              "landmarkId": "ottoman-walls",
+              "intendedState": "retained-and-conserved"
+            },
+            {
+              "landmarkId": "holy-sepulchre",
+              "intendedState": "dated-repairs"
+            },
+            {
+              "landmarkId": "dome-rock",
+              "intendedState": "dated-repairs"
+            },
+            {
+              "landmarkId": "aqsa",
+              "intendedState": "dated-repairs"
+            },
+            {
+              "landmarkId": "citadel-layers",
+              "intendedState": "museum-and-conservation"
+            },
+            {
+              "landmarkId": "cenacle-medieval",
+              "intendedState": "present-historic-building"
+            }
+          ]
+        },
+        {
+          "id": "dated-loss-reconstruction",
+          "label": "明確毀壞與重建鏈",
+          "members": [
+            {
+              "landmarkId": "hurva",
+              "intendedState": "1948-destruction-2010-reconstruction"
+            }
+          ]
+        },
+        {
+          "id": "modern-landmarks",
+          "label": "近現代宗教／文化／公共建築群",
+          "members": [
+            {
+              "landmarkId": "modern-churches",
+              "intendedState": "individual-dates-required"
+            },
+            {
+              "landmarkId": "book-shrine",
+              "intendedState": "1965-build"
+            },
+            {
+              "landmarkId": "modern-civic",
+              "intendedState": "window-and-source-review"
+            }
+          ]
+        }
+      ],
+      "placeIds": [
+        "golgotha",
+        "tomb-garden",
+        "olives-place",
+        "gethsemane-place"
+      ],
+      "routeIds": [
+        "via-dolorosa-modern"
+      ],
+      "layoutDependencies": [
+        "contemporary-wall-envelope",
+        "landmark-and-public-reservations",
+        "ridge-valley-and-historic-ground-review",
+        "gate-main-street-connections"
+      ],
+      "criticalCaveat": "現代不得是一張靜態拼圖；1917、1948、1967及當代修復需按對象分段，西部地標不搬進舊城窗口。",
+      "historicalGeometryAccepted": false,
+      "coverageRowPresent": true
+    }
+  ],
+  "adjacentReviews": [
+    {
+      "from": "chalcolithic-early-bronze",
+      "to": "middle-bronze",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "middle-bronze",
+      "to": "late-bronze-iron1",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "late-bronze-iron1",
+      "to": "david-solomon",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "david-solomon",
+      "to": "late-first-temple",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "late-first-temple",
+      "to": "babylonian-destruction",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "babylonian-destruction",
+      "to": "persian-nehemiah",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "persian-nehemiah",
+      "to": "hellenistic-hasmonean",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "hellenistic-hasmonean",
+      "to": "herodian-jesus",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "herodian-jesus",
+      "to": "roman-destruction",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "roman-destruction",
+      "to": "aelia",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "aelia",
+      "to": "byzantine",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "byzantine",
+      "to": "early-islamic",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "early-islamic",
+      "to": "crusader",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "crusader",
+      "to": "ayyubid-mamluk",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "ayyubid-mamluk",
+      "to": "ottoman",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "ottoman",
+      "to": "outside-walls",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    },
+    {
+      "from": "outside-walls",
+      "to": "modern",
+      "review": "逐建築核對新增、保留、改建、毀壞、退場或未知；未有證據不宣告實體重用。",
+      "physicalSurvivalAccepted": false
+    }
+  ],
+  "constraints": [
+    {
+      "id": "one-metre-frame",
+      "rule": "全期使用同一公尺坐標與原始高程；建築強調靠選擇、材質、標籤與鏡頭，不能任意放大。"
+    },
+    {
+      "id": "walls-after-source-registration",
+      "rule": "先以同時代地標、山脊谷地、實際牆段／城門交叉核對城廓；不移動地標或擴張城牆以收容既有房屋。"
+    },
+    {
+      "id": "golgotha-wall-relation",
+      "rule": "受難敘事的各各他／墓園—城門外關係列為一世紀佈局約束；現代城牆不回投；候選位置與牆線都保留來源等級。"
+    },
+    {
+      "id": "palace-not-shrine",
+      "rule": "法老女兒宮殿與外邦妃嬪祭祀高處分開，位置和用途不能互相代替。"
+    },
+    {
+      "id": "cenacle-not-first-century-fabric",
+      "rule": "最後晚餐樓房、馬利亞之家和現存中世紀馬可樓分開；不把晚期形制回投耶穌時代。"
+    },
+    {
+      "id": "passion-not-modern-via",
+      "rule": "一世紀受難事件拓撲、審判地點候選與今日十四站朝聖線分開；無古街線來源不得宣稱精確路徑。"
+    },
+    {
+      "id": "holy-places-not-identical-buildings",
+      "rule": "同一場所可先後有不同宗教建築；不把同址視為同一建築或原構件存續證據。"
+    },
+    {
+      "id": "unmodelled-not-natural-hill",
+      "rule": "城內留白分為已知公共區、具依據的歷史空地、未配準地帶、尚未建模與未載入；不能一概稱作自然山地。"
+    },
+    {
+      "id": "period-overlap",
+      "rule": "晚期奧斯曼與城外拓展存在日曆重疊；共用地標不重播新建，現代期也須子階段。"
+    },
+    {
+      "id": "no-new-runtime-ledger",
+      "rule": "本檔僅是建造前候選清單，不被網站載入、不新增可執行事件；准入後沿用既有物件帳本與來源生命週期。"
+    }
+  ],
+  "modernViaDolorosaStations": [
+    {
+      "station": 1,
+      "label": "判決",
+      "narrativeBasis": "text-event",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 2,
+      "label": "背十字架",
+      "narrativeBasis": "text-event",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 3,
+      "label": "第一次跌倒",
+      "narrativeBasis": "devotional-tradition",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 4,
+      "label": "與母親相遇",
+      "narrativeBasis": "devotional-tradition",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 5,
+      "label": "古利奈人西門協助",
+      "narrativeBasis": "text-event",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 6,
+      "label": "維羅妮卡拭面",
+      "narrativeBasis": "devotional-tradition",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 7,
+      "label": "第二次跌倒",
+      "narrativeBasis": "devotional-tradition",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 8,
+      "label": "勸慰婦女",
+      "narrativeBasis": "text-event",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 9,
+      "label": "第三次跌倒",
+      "narrativeBasis": "devotional-tradition",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 10,
+      "label": "被剝衣服",
+      "narrativeBasis": "text-event",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 11,
+      "label": "被釘十字架",
+      "narrativeBasis": "text-event",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 12,
+      "label": "受死",
+      "narrativeBasis": "text-event",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 13,
+      "label": "卸下遺體",
+      "narrativeBasis": "text-event",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    },
+    {
+      "station": 14,
+      "label": "安葬",
+      "narrativeBasis": "text-event",
+      "exactFirstCenturyLocationAccepted": false,
+      "coordinates": null
+    }
+  ],
+  "workOrder": [
+    "all18-landmark-programme",
+    "all18-landform-wall-gate-landmark-registration",
+    "all18-primary-ensemble-massing",
+    "dated-object-change-and17-adjacent-reviews",
+    "contextual-background-housing",
+    "representative-architecture-details-after-foundation-review"
+  ],
+  "templePrecinctProgramme": {
+    "version": 1,
+    "date": "2026-10-30",
+    "scope": "paired-temple-precincts-and-dependent-city-interfaces",
+    "runtimeEnabled": false,
+    "completenessClaim": "scope-baseline-not-exhaustive-archaeological-certification",
+    "sourceReview": {
+      "middot1-5": "official-api-full-chapters-read-this-audit",
+      "otherReferences": "existing-project-sources-or-context-search-reviewed; exact geometry and individual passages require admission review"
+    },
+    "parents": {
+      "first-temple": "first-temple",
+      "herodian": "herodian-temple"
+    },
+    "items": [
+      {
+        "id": "first-temple:body",
+        "period": "first-temple",
+        "group": "殿體與圍護",
+        "label": "主殿與聖所",
+        "sourceRefs": [
+          "kings6-full"
+        ],
+        "currentState": "partial",
+        "remainingWork": "既有27×9×13.5米量體；重核牆厚、內外尺寸及肘制",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "relative-section-or-shell-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
+      },
+      {
+        "id": "first-temple:porch",
+        "period": "first-temple",
+        "group": "殿體與圍護",
+        "label": "前廊與門洞",
+        "sourceRefs": [
+          "kings6-full"
+        ],
+        "currentState": "partial",
+        "remainingWork": "已有門洞；高度與開口為示意，不能當文獻定值",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "first-temple:holy-holies",
+        "period": "first-temple",
+        "group": "殿體與圍護",
+        "label": "至聖所及隔斷",
+        "sourceRefs": [
+          "kings6-full"
+        ],
+        "currentState": "partial",
+        "remainingWork": "20肘內部空間與主殿40肘分段，先確認內外尺寸",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "relative-section-or-shell-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
+      },
+      {
+        "id": "first-temple:side-rooms",
+        "period": "first-temple",
+        "group": "殿體與圍護",
+        "label": "三層側室及西側房間",
+        "sourceRefs": [
+          "kings6-full"
+        ],
+        "currentState": "partial",
+        "remainingWork": "六個側向量體不等於完整房間群；補西側與分室",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "relative-section-or-shell-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
+      },
+      {
+        "id": "first-temple:stairs",
+        "period": "first-temple",
+        "group": "殿體與圍護",
+        "label": "側室出入口與樓梯",
+        "sourceRefs": [
+          "kings6-full"
+        ],
+        "currentState": "missing",
+        "remainingWork": "核對入口方位、樓層連通及譯文分歧",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "first-temple:roof-windows",
+        "period": "first-temple",
+        "group": "殿體與圍護",
+        "label": "屋頂、窗與檐部",
+        "sourceRefs": [
+          "kings6-full"
+        ],
+        "currentState": "missing",
+        "remainingWork": "先完成牆屋交接，後做可見窗與木構",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "first-temple:pillars",
+        "period": "first-temple",
+        "group": "殿體與圍護",
+        "label": "雅斤、波阿斯及柱頭",
+        "sourceRefs": [
+          "kings7-full"
+        ],
+        "currentState": "partial",
+        "remainingWork": "現有方柱，需核對圓柱、柱頭、網飾及高度分段",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "selected-literary-dimension-or-service-assembly-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-RITUAL-COURTS.md"
+      },
+      {
+        "id": "first-temple:court",
+        "period": "first-temple",
+        "group": "殿體與圍護",
+        "label": "內院與大院邊界",
+        "sourceRefs": [
+          "kings6-full",
+          "kings7-full"
+        ],
+        "currentState": "partial",
+        "remainingWork": "文獻院牆構造不等於已定位院區平面",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
+      },
+      {
+        "id": "first-temple:court-access",
+        "period": "first-temple",
+        "group": "殿體與圍護",
+        "label": "院門、通路與殿前高差",
+        "sourceRefs": [
+          "kings6-full",
+          "chronicles4"
+        ],
+        "currentState": "partial",
+        "remainingWork": "無依據不借用第二聖殿院落與門名",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
+      },
+      {
+        "id": "first-temple:altar",
+        "period": "first-temple",
+        "group": "祭儀與器物",
+        "label": "銅祭壇與接近空間",
+        "sourceRefs": [
+          "chronicles4"
+        ],
+        "currentState": "partial",
+        "remainingWork": "現有4×4×2.5米為示意，與歷代志20×20×10肘候選比較",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "selected-literary-dimension-or-service-assembly-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-RITUAL-COURTS.md"
+      },
+      {
+        "id": "first-temple:sea",
+        "period": "first-temple",
+        "group": "祭儀與器物",
+        "label": "銅海、十二牛與基座",
+        "sourceRefs": [
+          "kings7-full"
+        ],
+        "currentState": "partial",
+        "remainingWork": "核對10肘口徑、5肘高及東南側相對關係",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
+      },
+      {
+        "id": "first-temple:lavers",
+        "period": "first-temple",
+        "group": "祭儀與器物",
+        "label": "十個盆座與十盆",
+        "sourceRefs": [
+          "kings7-full"
+        ],
+        "currentState": "partial",
+        "remainingWork": "兩側各五組，需保留通行與器物尺度",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
+      },
+      {
+        "id": "first-temple:doors",
+        "period": "first-temple",
+        "group": "祭儀與器物",
+        "label": "橄欖木門與柏木門",
+        "sourceRefs": [
+          "kings6-full"
+        ],
+        "currentState": "partial",
+        "remainingWork": "區分內外門、門框與折扇，不能將整殿做成實心",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
+      },
+      {
+        "id": "first-temple:cherubim",
+        "period": "first-temple",
+        "group": "祭儀與器物",
+        "label": "至聖所兩基路伯",
+        "sourceRefs": [
+          "kings6-full"
+        ],
+        "currentState": "missing",
+        "remainingWork": "內部展示層，不在遠景堆疊金色物件",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "first-temple:furnishings",
+        "period": "first-temple",
+        "group": "祭儀與器物",
+        "label": "香壇、陳設餅桌、燈臺與器具",
+        "sourceRefs": [
+          "kings7-full"
+        ],
+        "currentState": "missing",
+        "remainingWork": "器物清單與數量逐項校核，近景載入",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "first-temple:finish",
+        "period": "first-temple",
+        "group": "祭儀與器物",
+        "label": "石材、香柏木、金飾與雕刻",
+        "sourceRefs": [
+          "kings6-full"
+        ],
+        "currentState": "missing",
+        "remainingWork": "最後材質層，不能代替空間建設",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "first-temple:royal-residence",
+        "period": "first-temple",
+        "group": "王室與山城聯繫",
+        "label": "所羅門居所及王室院落",
+        "sourceRefs": [
+          "kings7"
+        ],
+        "currentState": "placeholder",
+        "remainingWork": "沿用既有solomon-palace候選，不能把通用院落當已復原宮殿",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "first-temple:lebanon",
+        "period": "first-temple",
+        "group": "王室與山城聯繫",
+        "label": "利巴嫩林宮",
+        "sourceRefs": [
+          "kings7"
+        ],
+        "currentState": "partial",
+        "remainingWork": "文獻尺寸與推定展示區已建；精確位置、格架樓層、完整內外形制及後續物理存續待核定",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "partial",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md"
+      },
+      {
+        "id": "first-temple:pillared-hall",
+        "period": "first-temple",
+        "group": "王室與山城聯繫",
+        "label": "柱子廊",
+        "sourceRefs": [
+          "kings7"
+        ],
+        "currentState": "partial",
+        "remainingWork": "文獻平面與推定展示區已建；高度、構件配置、精確位置及後續存續待核定",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "partial",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md"
+      },
+      {
+        "id": "first-temple:throne",
+        "period": "first-temple",
+        "group": "王室與山城聯繫",
+        "label": "寶座廊與審判廊",
+        "sourceRefs": [
+          "kings7"
+        ],
+        "currentState": "missing",
+        "remainingWork": "沿用judgement-hall，不虛構確定獨立位置",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "first-temple:pharaoh",
+        "period": "first-temple",
+        "group": "王室與山城聯繫",
+        "label": "法老女兒宮殿",
+        "sourceRefs": [
+          "kings7"
+        ],
+        "currentState": "missing",
+        "remainingWork": "沿用既有候選，與外邦祭祀高處分開",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "first-temple:ridge-link",
+        "period": "first-temple",
+        "group": "王室與山城聯繫",
+        "label": "大衛城—王室—殿山通路及高程",
+        "sourceRefs": [
+          "cod-guide"
+        ],
+        "currentState": "partial",
+        "remainingWork": "現代DEM展示基準不能宣稱古代庭院標高",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:platform",
+        "period": "herodian",
+        "group": "外院與平台",
+        "label": "擴建平台、擋土牆及角部",
+        "sourceRefs": [
+          "josephus"
+        ],
+        "currentState": "partial",
+        "remainingWork": "300×480米矩形參考不等於實測四邊形，先核對邊界",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:outer-court",
+        "period": "herodian",
+        "group": "外院與平台",
+        "label": "外邦人院／外院開放空間",
+        "sourceRefs": [
+          "josephus",
+          "middot2"
+        ],
+        "currentState": "partial",
+        "remainingWork": "不能把主殿以外全部空白都命名外邦人院",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:solomon-portico",
+        "period": "herodian",
+        "group": "外院與平台",
+        "label": "所羅門廊／東廊",
+        "sourceRefs": [
+          "john-temple",
+          "josephus"
+        ],
+        "currentState": "partial",
+        "remainingWork": "東側連續柱廊、端部及通行；名稱不證明所羅門原構存續",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
+      },
+      {
+        "id": "herodian:north-west-porticoes",
+        "period": "herodian",
+        "group": "外院與平台",
+        "label": "北廊與西廊",
+        "sourceRefs": [
+          "josephus"
+        ],
+        "currentState": "partial",
+        "remainingWork": "各側柱列、屋蓋與城門間關係",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
+      },
+      {
+        "id": "herodian:royal-stoa",
+        "period": "herodian",
+        "group": "外院與平台",
+        "label": "南側皇家柱廊",
+        "sourceRefs": [
+          "royal-portico-study",
+          "josephus"
+        ],
+        "currentState": "partial",
+        "remainingWork": "既有稀疏柱列與屋蓋，需重核柱網及中側廊高度",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:soreg",
+        "period": "herodian",
+        "group": "外院與平台",
+        "label": "Soreg界欄與警告標識",
+        "sourceRefs": [
+          "middot2"
+        ],
+        "currentState": "missing",
+        "remainingWork": "邊界層級、通行口及短欄，不能做成城牆",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:hel",
+        "period": "herodian",
+        "group": "外院與平台",
+        "label": "Hel環帶及十二級階梯",
+        "sourceRefs": [
+          "middot2"
+        ],
+        "currentState": "missing",
+        "remainingWork": "10肘帶寬；此十二級與殿前十二級不同",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:circulation",
+        "period": "herodian",
+        "group": "外院與平台",
+        "label": "外院環行與朝聖集散",
+        "sourceRefs": [
+          "middot2"
+        ],
+        "currentState": "partial",
+        "remainingWork": "建立各入口到院區路線，不用滿鋪建築填公共空間",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "inferred-court-or-colonnade-ensemble-built-registration-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-ENSEMBLES.md"
+      },
+      {
+        "id": "herodian:women",
+        "period": "herodian",
+        "group": "內院、門與高程",
+        "label": "婦女院",
+        "sourceRefs": [
+          "middot2"
+        ],
+        "currentState": "partial",
+        "remainingWork": "現有135×135肘院面，補真正邊界與高程",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:women-four-rooms",
+        "period": "herodian",
+        "group": "內院、門與高程",
+        "label": "婦女院四角用房",
+        "sourceRefs": [
+          "middot2"
+        ],
+        "currentState": "partial",
+        "remainingWork": "離俗者、木、潔淨與油酒用房；西南用途傳承分歧保留",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
+      },
+      {
+        "id": "herodian:women-gallery",
+        "period": "herodian",
+        "group": "內院、門與高程",
+        "label": "婦女院周邊看臺",
+        "sourceRefs": [
+          "middot2"
+        ],
+        "currentState": "missing",
+        "remainingWork": "文獻後增構件，不能無分期從頭出現",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:fifteen-steps",
+        "period": "herodian",
+        "group": "內院、門與高程",
+        "label": "十五級半圓階與利未人位置",
+        "sourceRefs": [
+          "middot2"
+        ],
+        "currentState": "partial",
+        "remainingWork": "與殿前12級分開；不能在同一標高貼階梯",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "relative-section-or-shell-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
+      },
+      {
+        "id": "herodian:nicanor",
+        "period": "herodian",
+        "group": "內院、門與高程",
+        "label": "尼迦挪門及兩側用房",
+        "sourceRefs": [
+          "middot1",
+          "middot2"
+        ],
+        "currentState": "placeholder",
+        "remainingWork": "現有通用門洞不等於具名門；補衣服與餅房關係",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:israel",
+        "period": "herodian",
+        "group": "內院、門與高程",
+        "label": "以色列院",
+        "sourceRefs": [
+          "middot2",
+          "middot5"
+        ],
+        "currentState": "partial",
+        "remainingWork": "11肘帶寬、與祭司院邊界及分歧標高",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "relative-section-or-shell-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
+      },
+      {
+        "id": "herodian:priests",
+        "period": "herodian",
+        "group": "內院、門與高程",
+        "label": "祭司院及利未人臺",
+        "sourceRefs": [
+          "middot2",
+          "middot5"
+        ],
+        "currentState": "partial",
+        "remainingWork": "現有整塊內院未作11肘區帶和儀式界線",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "relative-section-or-shell-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-COURT-SECTIONS.md"
+      },
+      {
+        "id": "herodian:court-gates",
+        "period": "herodian",
+        "group": "內院、門與高程",
+        "label": "內院南北諸門與西側門問題",
+        "sourceRefs": [
+          "middot1",
+          "middot2"
+        ],
+        "currentState": "missing",
+        "remainingWork": "七門與十三門傳承先列表比較，不強行合成一套",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:music-rooms",
+        "period": "herodian",
+        "group": "內院、門與高程",
+        "label": "院下樂器用房",
+        "sourceRefs": [
+          "middot2"
+        ],
+        "currentState": "missing",
+        "remainingWork": "開向婦女院，須與15級階及樓板共用剖面",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:altar",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "燔祭壇、角、退臺與紅線",
+        "sourceRefs": [
+          "middot3",
+          "middot5"
+        ],
+        "currentState": "partial",
+        "remainingWork": "32肘平面及分層；不能複製第一聖殿小祭壇",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
+      },
+      {
+        "id": "herodian:ramp",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "祭壇南側坡道",
+        "sourceRefs": [
+          "middot3",
+          "middot5"
+        ],
+        "currentState": "partial",
+        "remainingWork": "32×16肘候選，與南側通路及祭壇合排",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "schematic-ensemble-built-source-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-RITUAL-ENSEMBLES.md"
+      },
+      {
+        "id": "herodian:laver",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "洗濯盆",
+        "sourceRefs": [
+          "middot3"
+        ],
+        "currentState": "partial",
+        "remainingWork": "殿廊與祭壇之間略偏南，保留22肘間距",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "selected-literary-dimension-or-service-assembly-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-RITUAL-COURTS.md"
+      },
+      {
+        "id": "herodian:slaughter",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "北側宰牲區、環、柱與桌",
+        "sourceRefs": [
+          "middot3",
+          "middot5"
+        ],
+        "currentState": "partial",
+        "remainingWork": "數量與北側服務帶統一佈置，環列有異說",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "selected-literary-dimension-or-service-assembly-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-RITUAL-COURTS.md"
+      },
+      {
+        "id": "herodian:drainage",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "排水溝與汲倫方向聯繫",
+        "sourceRefs": [
+          "middot3"
+        ],
+        "currentState": "missing",
+        "remainingWork": "只能據證據表示系統；不虛構地下精確管線",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:service-six",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "鹽、Parvah、洗滌、木／祭司長、汲水、鑿石室",
+        "sourceRefs": [
+          "middot5"
+        ],
+        "currentState": "missing",
+        "remainingWork": "六室分項及屋頂浴池；方位須對照版本，不直接照單一英譯定案",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:hearth",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "火房及四個內室",
+        "sourceRefs": [
+          "middot1"
+        ],
+        "currentState": "missing",
+        "remainingWork": "羊、餅、舊壇石及浴池通道分開；非四棟外加住宅",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:spark",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "火花門樓與守衛層",
+        "sourceRefs": [
+          "middot1"
+        ],
+        "currentState": "missing",
+        "remainingWork": "上層祭司、下層利未人及通向Hel的門",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:watch",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "守衛、香料與帷幔等用房",
+        "sourceRefs": [
+          "middot1"
+        ],
+        "currentState": "missing",
+        "remainingWork": "逐項研究識別；非每個名稱都有確定平面",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:water",
+        "period": "herodian",
+        "group": "祭壇與服務設施",
+        "label": "水井、浴池、供水與服務通道",
+        "sourceRefs": [
+          "middot1",
+          "middot5"
+        ],
+        "currentState": "missing",
+        "remainingWork": "地上地下分層；隱藏空間選看，不能無證據開挖地形",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:porch",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "前廊、門洞及上部梁",
+        "sourceRefs": [
+          "middot3"
+        ],
+        "currentState": "partial",
+        "remainingWork": "已有20×40肘洞口，補梁與構造，厚度仍需核對",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
+      },
+      {
+        "id": "herodian:porch-stairs",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "殿前十二級與平臺",
+        "sourceRefs": [
+          "middot3"
+        ],
+        "currentState": "partial",
+        "remainingWork": "已有12級；原文中間平臺及最上層異說尚未落地",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:sanctuary",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "聖所、至聖所與分隔",
+        "sourceRefs": [
+          "middot4"
+        ],
+        "currentState": "partial",
+        "remainingWork": "現有實心主殿不能算內部完成，需40與20肘空間",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
+      },
+      {
+        "id": "herodian:entry-doors",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "主殿門扇與兩側小門",
+        "sourceRefs": [
+          "middot4"
+        ],
+        "currentState": "partial",
+        "remainingWork": "10×20肘入口、門厚、北通路與封閉南門",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
+      },
+      {
+        "id": "herodian:chambers38",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "三十八側室與西側八室",
+        "sourceRefs": [
+          "middot4"
+        ],
+        "currentState": "partial",
+        "remainingWork": "北15、南15、西8；不以六個外殼量體代替",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
+      },
+      {
+        "id": "herodian:ascent",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "環繞上升通道及上室入口",
+        "sourceRefs": [
+          "middot4"
+        ],
+        "currentState": "missing",
+        "remainingWork": "東北到北、西、南的路徑，連接屋頂",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:upper-roof",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "上室、女兒牆、排水及屋頂分層",
+        "sourceRefs": [
+          "middot4"
+        ],
+        "currentState": "partial",
+        "remainingWork": "總高100肘各層預算，避免只向上疊加而超高",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
+      },
+      {
+        "id": "herodian:knife-rooms",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "前廊兩翼藏刀空間",
+        "sourceRefs": [
+          "middot4"
+        ],
+        "currentState": "partial",
+        "remainingWork": "與100肘前寬、70肘後寬關係統一",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "hollow-assembly-or-door-pose-built-admission-pending",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "TEMPLE-VOLUMES-AND-SECTIONS.md"
+      },
+      {
+        "id": "herodian:interior",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "燈臺、陳設餅桌、香壇與帷幔",
+        "sourceRefs": [
+          "josephus"
+        ],
+        "currentState": "missing",
+        "remainingWork": "不能放第一聖殿約櫃模型進第二聖殿至聖所",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:ornament",
+        "period": "herodian",
+        "group": "主殿完整建築",
+        "label": "金葡萄藤、柱式、門材與石砌",
+        "sourceRefs": [
+          "middot3",
+          "middot4",
+          "josephus"
+        ],
+        "currentState": "missing",
+        "remainingWork": "最後近景層，依來源與可見距離控制密度",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:huldah",
+        "period": "herodian",
+        "group": "入口、街道與周邊",
+        "label": "南側戶勒大門、階梯與地下通道",
+        "sourceRefs": [
+          "middot1",
+          "southern-miqweh"
+        ],
+        "currentState": "partial",
+        "remainingWork": "既有接近示意需核對雙／三門各期與人流，現狀不整套回投",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:west-access",
+        "period": "herodian",
+        "group": "入口、街道與周邊",
+        "label": "西側出入口、橋與階梯系統",
+        "sourceRefs": [
+          "josephus"
+        ],
+        "currentState": "partial",
+        "remainingWork": "Wilson／Robinson等考古命名與古代門名分開核實，不自動一一配對",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:north-east-gates",
+        "period": "herodian",
+        "group": "入口、街道與周邊",
+        "label": "Taddi、東門及橄欖山方向",
+        "sourceRefs": [
+          "middot1",
+          "middot2"
+        ],
+        "currentState": "missing",
+        "remainingWork": "北門不使用、東側視線與儀式聯繫；不是現存金門直接回投",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:antonia",
+        "period": "herodian",
+        "group": "入口、街道與周邊",
+        "label": "安東尼堡與聖域接口",
+        "sourceRefs": [
+          "josephus"
+        ],
+        "currentState": "partial",
+        "remainingWork": "內院／圍廊／示意入口已建；與聖殿的降階接口、岩臺高差、足跡及完整內部分配待核定",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "partial",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ],
+        "implementationReview": "ROYAL-HALLS-AND-ANTONIA.md"
+      },
+      {
+        "id": "herodian:bethesda",
+        "period": "herodian",
+        "group": "入口、街道與周邊",
+        "label": "畢士大池及五廊",
+        "sourceRefs": [
+          "john-temple",
+          "bethesda-site"
+        ],
+        "currentState": "missing",
+        "remainingWork": "獨立於聖殿院區；池壩、周廊、羅馬及教堂各期分開",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:miqwaot",
+        "period": "herodian",
+        "group": "入口、街道與周邊",
+        "label": "南／西側潔淨池與服務群",
+        "sourceRefs": [
+          "southern-miqweh"
+        ],
+        "currentState": "missing",
+        "remainingWork": "採已發掘樣本定點；不生成無來源均勻池群",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:streets",
+        "period": "herodian",
+        "group": "入口、街道與周邊",
+        "label": "南西側鋪石街、商業接口與排水",
+        "sourceRefs": [
+          "josephus",
+          "southern-miqweh"
+        ],
+        "currentState": "partial",
+        "remainingWork": "接既有街道權威資料，商店數量與年代另核",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:valley-links",
+        "period": "herodian",
+        "group": "入口、街道與周邊",
+        "label": "汲倫谷坡、東側擋土及橄欖山關係",
+        "sourceRefs": [
+          "josephus",
+          "middot2"
+        ],
+        "currentState": "partial",
+        "remainingWork": "保持原始地形比例，不為平台擴大而移山",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      },
+      {
+        "id": "herodian:city-links",
+        "period": "herodian",
+        "group": "入口、街道與周邊",
+        "label": "與希律宮、上城及朝聖路的聯繫",
+        "sourceRefs": [
+          "upper-city",
+          "josephus"
+        ],
+        "currentState": "partial",
+        "remainingWork": "沿用全城既有候選，不將所有宮殿塞進聖殿圍區",
+        "locationAccepted": false,
+        "geometryAccepted": false,
+        "implementationState": "planned",
+        "runtimeObjectPolicy": "reuse-existing-authority-or-admit-child-to-existing-ledger",
+        "requiredChecks": [
+          "source-phase",
+          "plan-fit",
+          "vertical-contact",
+          "access-clearance",
+          "evidence-filter",
+          "construction-destruction",
+          "adjacent-era-fate",
+          "desktop-mobile-close-view"
+        ]
+      }
+    ],
+    "implementationOrder": [
+      {
+        "id": "A",
+        "deliverable": "雙時期完整配準總平面、肘制對照、院區剖面與尺寸收支；與全城道路地形銜接",
+        "covers": "all-items",
+        "acceptance": "每項有位置依據或明確不確定區；不得用500肘方域覆寫擴建平台；無未知高度冒充考古值"
+      },
+      {
+        "id": "B",
+        "deliverable": "雙時期院牆、院門、臺階、柱廊、主殿及主要祭儀量體整組完成",
+        "covers": "all-above-ground-primary-ensembles",
+        "acceptance": "總覽可辨完整分區、路徑可通、門洞真實、公共院區保持開敞；兩時期一起驗收"
+      },
+      {
+        "id": "C",
+        "deliverable": "服務房間、水系、池群、地下通路與城市接口統一落地",
+        "covers": "support-and-city-interfaces",
+        "acceptance": "每項入帳：已建、合併展示、證據不足暫緩附原因；不得靜默遺漏"
+      },
+      {
+        "id": "D",
+        "deliverable": "全構件分期建造、毀壞及後續同址變化",
+        "covers": "all-items",
+        "acceptance": "David／Solomon、第一聖殿後期、流亡、歸回、哈斯摩尼、希律、70年及後世逐段審核；同址不是原物存續"
+      },
+      {
+        "id": "E",
+        "deliverable": "材質、器物、柱頭、門扇與選看內部；效能及全18期回歸",
+        "covers": "all-visible-details",
+        "acceptance": "近景可讀、遠景不超預算；無穿模、懸空、閃爍、標註遮擋與外部模型下載依賴"
+      }
+    ],
+    "conflictsToResolve": [
+      "0.45m-first-temple-vs-0.525m-second-temple-cubit-conventions",
+      "internal-vs-external-sanctuary-dimensions",
+      "500-cubit-sacred-square-vs-expanded-platform",
+      "seven-vs-thirteen-court-gate-traditions",
+      "Middot-service-chamber-direction-translation-comparison",
+      "porch-stair-landings-and-alternative-upper-landing",
+      "source-temple-levels-vs-modern-DEM-display-datum",
+      "first-temple-altar-Kings-vs-Chronicles-and-current-placeholder",
+      "Bethesda-pool-porticoes-vs-later-Roman-and-Christian-fabric"
+    ],
+    "releaseGate": {
+      "allItemsDispositionRequired": true,
+      "bothPrecinctsReviewedTogether": true,
+      "newRuntimeLedgerAllowed": false,
+      "historicalGeometryAccepted": false,
+      "all18RegressionRequiredForRuntimeChanges": true
+    },
+    "activeConstructionPackage": {
+      "id": "B29",
+      "scope": "royal-precinct-literary-halls-and-antonia-courtyard",
+      "overallPlanAccepted": false,
+      "completePrecincts": false,
+      "review": "ROYAL-HALLS-AND-ANTONIA.md"
+    }
+  }
+}

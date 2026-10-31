@@ -1,0 +1,2253 @@
+{
+  "schema": "j3k.foundation-gap-audit.v1",
+  "scope": "engineering-spatial-inventory-not-historical-completeness",
+  "provenance": {
+    "renderBaselineCommit": "e5da00d04",
+    "baselinePolicy": "caller-declared render revision; input-byte hashes recorded; no automatic freshness certification",
+    "reportSha256": "8d4f8c71e14883fbfe82b912ae5cd227f5097cb72fafea747592fbe02f79e955",
+    "planSha256": "c1544fa903dbf7234b60e3b64e494a92413a7395729c5eee88cee325d210d284"
+  },
+  "capturePolicy": "sequential-all-evidence-active-snapshots; registered counts include unresolved records and may depend on prior generation; not city size",
+  "window": {
+    "minX": -2000,
+    "maxX": 1100,
+    "minZ": -1300,
+    "maxZ": 1300
+  },
+  "phases": [
+    {
+      "id": "chalcolithic-early-bronze",
+      "label": "最早聚落",
+      "owner": "early-landscape",
+      "domains": {
+        "districts": {
+          "reviewStatus": "partial",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "routes": {
+          "reviewStatus": "partial",
+          "registered": 6,
+          "activeMappedScope": 6,
+          "mapped": 6,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 6,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "partial",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "sacredCivic": {
+          "reviewStatus": "partial",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "partial",
+          "registered": 14,
+          "visibleBound": 14,
+          "layoutEnvelope": {
+            "minX": 33.205203704062896,
+            "maxX": 105.90520375472684,
+            "minZ": 484.8373736268593,
+            "maxZ": 568.0373736328197,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "partial",
+          "registeredWithEvents": 20,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "build": 20
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 161,
+      "unboundComponents": 1,
+      "annotationComponents": 1,
+      "provisionalInheritedComponents": 0,
+      "scope": "Illustrative early dwellings and footpaths share atomic object/event registration; later fate remains unresolved. Selected royal/water IDs have separate adapters. District foundations, disputed support and marker registration remain incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "middle-bronze",
+      "label": "迦南城市",
+      "owner": "early-landscape",
+      "domains": {
+        "districts": {
+          "reviewStatus": "partial",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "routes": {
+          "reviewStatus": "partial",
+          "registered": 12,
+          "activeMappedScope": 6,
+          "mapped": 6,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 6,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "partial",
+          "registered": 4,
+          "activeMappedScope": 3,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 3,
+          "finding": "mapped-partial-scope"
+        },
+        "sacredCivic": {
+          "reviewStatus": "partial",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "partial",
+          "registered": 38,
+          "visibleBound": 24,
+          "layoutEnvelope": {
+            "minX": 21.90520370406289,
+            "maxX": 114.20520371002335,
+            "minZ": 465.8373736268593,
+            "maxZ": 587.6373736775232,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "partial",
+          "registeredWithEvents": 54,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "transform": 1,
+            "unresolved": 21,
+            "build": 32
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 503,
+      "unboundComponents": 1,
+      "annotationComponents": 1,
+      "provisionalInheritedComponents": 0,
+      "scope": "Illustrative early dwellings and footpaths share atomic object/event registration; later fate remains unresolved. Selected royal/water IDs have separate adapters. District foundations, disputed support and marker registration remain incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "late-bronze-iron1",
+      "label": "晚青銅—鐵器早期",
+      "owner": "early-landscape",
+      "domains": {
+        "districts": {
+          "reviewStatus": "partial",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "routes": {
+          "reviewStatus": "partial",
+          "registered": 12,
+          "activeMappedScope": 6,
+          "mapped": 6,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 6,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "partial",
+          "registered": 2,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "registered-no-active-map-representation"
+        },
+        "sacredCivic": {
+          "reviewStatus": "partial",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "partial",
+          "registered": 48,
+          "visibleBound": 24,
+          "layoutEnvelope": {
+            "minX": 21.90520370406289,
+            "maxX": 114.20520371002335,
+            "minZ": 465.8373736268593,
+            "maxZ": 587.6373736775232,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "partial",
+          "registeredWithEvents": 62,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "unresolved": 32,
+            "build": 30
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 279,
+      "unboundComponents": 9,
+      "annotationComponents": 9,
+      "provisionalInheritedComponents": 0,
+      "scope": "Illustrative early dwellings and footpaths share atomic object/event registration; later fate remains unresolved. Selected royal/water IDs have separate adapters. District foundations, disputed support and marker registration remain incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "david-solomon",
+      "label": "大衛—所羅門",
+      "owner": "early-landscape",
+      "domains": {
+        "districts": {
+          "reviewStatus": "partial",
+          "registered": 3,
+          "activeMappedScope": 3,
+          "mapped": 2,
+          "activeWithoutGeometryIds": [
+            "j3k:object:southeastern-ridge-iron-age"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "partial",
+          "registered": 19,
+          "activeMappedScope": 13,
+          "mapped": 13,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 13,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "partial",
+          "registered": 8,
+          "activeMappedScope": 6,
+          "mapped": 6,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 5,
+          "finding": "mapped-partial-scope"
+        },
+        "sacredCivic": {
+          "reviewStatus": "partial",
+          "registered": 4,
+          "activeMappedScope": 4,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [
+            "j3k:object:royal-monumental-zone-10c"
+          ],
+          "visibleBound": 3,
+          "finding": "active-geometry-gap"
+        },
+        "occupation": {
+          "reviewStatus": "partial",
+          "registered": 48,
+          "visibleBound": 24,
+          "layoutEnvelope": {
+            "minX": 24.98020371300359,
+            "maxX": 115.43020370108266,
+            "minZ": 378.71237363579996,
+            "maxZ": 668.162373623879,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "partial",
+          "registeredWithEvents": 82,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "build": 38,
+            "unresolved": 32,
+            "transform": 12
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 812,
+      "unboundComponents": 10,
+      "annotationComponents": 10,
+      "provisionalInheritedComponents": 0,
+      "scope": "Illustrative early dwellings and footpaths share atomic object/event registration; later fate remains unresolved. Selected royal/water IDs have separate adapters. District foundations, disputed support and marker registration remain incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "late-first-temple",
+      "label": "第一聖殿晚期",
+      "owner": "shared-period",
+      "domains": {
+        "districts": {
+          "reviewStatus": "partial",
+          "registered": 7,
+          "activeMappedScope": 5,
+          "mapped": 4,
+          "activeWithoutGeometryIds": [
+            "j3k:object:southeastern-ridge-iron-age"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "partial",
+          "registered": 19,
+          "activeMappedScope": 6,
+          "mapped": 6,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 6,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "partial",
+          "registered": 9,
+          "activeMappedScope": 3,
+          "mapped": 2,
+          "activeWithoutGeometryIds": [
+            "j3k:object:siloam-water-tunnel"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "sacredCivic": {
+          "reviewStatus": "partial",
+          "registered": 4,
+          "activeMappedScope": 3,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 3,
+          "finding": "mapped-partial-scope"
+        },
+        "occupation": {
+          "reviewStatus": "partial",
+          "registered": 2285,
+          "visibleBound": 1104,
+          "layoutEnvelope": {
+            "minX": -446.7947962929569,
+            "maxX": 143.20520370704313,
+            "minZ": -4.562626370160501,
+            "maxZ": 830.4373736298395,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "partial",
+          "registeredWithEvents": 2324,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "expand": 1,
+            "unresolved": 46,
+            "transform": 4,
+            "build": 2273
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 26216,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Independent inferred districts and residential publication exist; routes, defenses and all predecessor/successor fates are incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "babylonian-destruction",
+      "label": "巴比倫毀城",
+      "owner": "shared-period",
+      "domains": {
+        "districts": {
+          "reviewStatus": "partial",
+          "registered": 5,
+          "activeMappedScope": 5,
+          "mapped": 4,
+          "activeWithoutGeometryIds": [
+            "j3k:object:southeastern-ridge-iron-age"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "partial",
+          "registered": 6,
+          "activeMappedScope": 6,
+          "mapped": 6,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 6,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "partial",
+          "registered": 4,
+          "activeMappedScope": 1,
+          "mapped": 1,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "mapped-partial-scope"
+        },
+        "sacredCivic": {
+          "reviewStatus": "partial",
+          "registered": 4,
+          "activeMappedScope": 3,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 3,
+          "finding": "mapped-partial-scope"
+        },
+        "occupation": {
+          "reviewStatus": "partial",
+          "registered": 2261,
+          "visibleBound": 1104,
+          "layoutEnvelope": {
+            "minX": -446.7947962929569,
+            "maxX": 143.20520370704313,
+            "minZ": -4.562626370160501,
+            "maxZ": 830.4373736298395,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "partial",
+          "registeredWithEvents": 2280,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "ruin": 1108,
+            "unresolved": 4,
+            "transform": 1168
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 26216,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Independent inferred districts and residential publication exist; routes, defenses and all predecessor/successor fates are incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "persian-nehemiah",
+      "label": "波斯—尼希米",
+      "owner": "shared-period",
+      "domains": {
+        "districts": {
+          "reviewStatus": "partial",
+          "registered": 9,
+          "activeMappedScope": 5,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [
+            "j3k:object:persian-settlement-envelope",
+            "j3k:object:southeastern-ridge-iron-age"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "partial",
+          "registered": 10,
+          "activeMappedScope": 4,
+          "mapped": 4,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 4,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "partial",
+          "registered": 4,
+          "activeMappedScope": 3,
+          "mapped": 2,
+          "activeWithoutGeometryIds": [
+            "j3k:object:nehemiah-wall"
+          ],
+          "visibleBound": 1,
+          "finding": "active-geometry-gap"
+        },
+        "sacredCivic": {
+          "reviewStatus": "partial",
+          "registered": 5,
+          "activeMappedScope": 1,
+          "mapped": 1,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 1,
+          "finding": "mapped-partial-scope"
+        },
+        "occupation": {
+          "reviewStatus": "partial",
+          "registered": 2651,
+          "visibleBound": 189,
+          "layoutEnvelope": {
+            "minX": -1.7947962929568746,
+            "maxX": 133.20520370704313,
+            "minZ": -4.562626370160501,
+            "maxZ": 712.4373736298395,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "partial",
+          "registeredWithEvents": 2679,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "rebuild": 400,
+            "unresolved": 1172,
+            "build": 2,
+            "transform": 1,
+            "ruin": 1104
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 3090,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Independent inferred districts and residential publication exist; routes, defenses and all predecessor/successor fates are incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "hellenistic-hasmonean",
+      "label": "希臘化—哈斯蒙尼",
+      "owner": "shared-period",
+      "domains": {
+        "districts": {
+          "reviewStatus": "scaffold",
+          "registered": 5,
+          "activeMappedScope": 2,
+          "mapped": 1,
+          "activeWithoutGeometryIds": [
+            "j3k:object:persian-settlement-envelope"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "scaffold",
+          "registered": 12,
+          "activeMappedScope": 8,
+          "mapped": 8,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 8,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "scaffold",
+          "registered": 3,
+          "activeMappedScope": 1,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [
+            "j3k:object:nehemiah-wall"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "sacredCivic": {
+          "reviewStatus": "scaffold",
+          "registered": 1,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "registered-no-active-map-representation"
+        },
+        "occupation": {
+          "reviewStatus": "scaffold",
+          "registered": 5877,
+          "visibleBound": 1534,
+          "layoutEnvelope": {
+            "minX": -698.2625988915865,
+            "maxX": 660.2625988915867,
+            "minZ": -433.5769432871548,
+            "maxZ": 747.5869431342755,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "scaffold",
+          "registeredWithEvents": 5898,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "expand": 1,
+            "transform": 2,
+            "unresolved": 2660,
+            "build": 3235
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 32754,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Layout derives from a reference footprint; independent period baseline and predecessor mapping missing.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "herodian-jesus",
+      "label": "大希律—耶穌",
+      "owner": "canonical-city",
+      "domains": {
+        "districts": {
+          "reviewStatus": "partial",
+          "registered": 6,
+          "activeMappedScope": 2,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [
+            "j3k:district:western-lower-city",
+            "j3k:object:persian-settlement-envelope"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "partial",
+          "registered": 20,
+          "activeMappedScope": 10,
+          "mapped": 10,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 10,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "partial",
+          "registered": 3,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "registered-no-active-map-representation"
+        },
+        "sacredCivic": {
+          "reviewStatus": "partial",
+          "registered": 5,
+          "activeMappedScope": 4,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [
+            "j3k:object:inner-temple"
+          ],
+          "visibleBound": 4,
+          "finding": "active-geometry-gap"
+        },
+        "occupation": {
+          "reviewStatus": "partial",
+          "registered": 5511,
+          "visibleBound": 1067,
+          "layoutEnvelope": null,
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "partial",
+          "registeredWithEvents": 5538,
+          "declaredContextScopes": 7,
+          "unclassified": 0,
+          "states": {
+            "transform": 2,
+            "buried": 1,
+            "build": 2300,
+            "unresolved": 3235
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 23460,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Canonical city and destruction projection exist; incoming Hellenistic and outgoing Aelia changes are incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "roman-destruction",
+      "label": "羅馬毀城",
+      "owner": "canonical-city",
+      "domains": {
+        "districts": {
+          "reviewStatus": "partial",
+          "registered": 1,
+          "activeMappedScope": 1,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [
+            "j3k:district:western-lower-city"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "partial",
+          "registered": 10,
+          "activeMappedScope": 10,
+          "mapped": 10,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 10,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "partial",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "sacredCivic": {
+          "reviewStatus": "partial",
+          "registered": 5,
+          "activeMappedScope": 4,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [
+            "j3k:object:inner-temple"
+          ],
+          "visibleBound": 4,
+          "finding": "active-geometry-gap"
+        },
+        "occupation": {
+          "reviewStatus": "partial",
+          "registered": 2285,
+          "visibleBound": 1067,
+          "layoutEnvelope": null,
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "partial",
+          "registeredWithEvents": 2301,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "ruin": 1074,
+            "transform": 1227
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 23460,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Canonical city and destruction projection exist; incoming Hellenistic and outgoing Aelia changes are incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "aelia",
+      "label": "Aelia Capitolina",
+      "owner": "independent-later-skeleton",
+      "domains": {
+        "districts": {
+          "reviewStatus": "scaffold",
+          "registered": 3,
+          "activeMappedScope": 2,
+          "mapped": 2,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "mapped-partial-scope"
+        },
+        "routes": {
+          "reviewStatus": "scaffold",
+          "registered": 13,
+          "activeMappedScope": 3,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 3,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "sacredCivic": {
+          "reviewStatus": "scaffold",
+          "registered": 4,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "registered-no-active-map-representation"
+        },
+        "occupation": {
+          "reviewStatus": "scaffold",
+          "registered": 2317,
+          "visibleBound": 32,
+          "layoutEnvelope": {
+            "minX": -780,
+            "maxX": -180,
+            "minZ": -620,
+            "maxZ": 90,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "scaffold",
+          "registeredWithEvents": 2337,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "unresolved": 2300,
+            "build": 37
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 229,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Independent authored district/path skeleton and terrain-following coarse occupied cells replace the old mass grid. Geometry remains inferred, not archaeological survey; city limits, water/defense, dated subphases and public-building footprints remain incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "byzantine",
+      "label": "拜占庭",
+      "owner": "independent-later-skeleton",
+      "domains": {
+        "districts": {
+          "reviewStatus": "scaffold",
+          "registered": 6,
+          "activeMappedScope": 4,
+          "mapped": 4,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "mapped-partial-scope"
+        },
+        "routes": {
+          "reviewStatus": "scaffold",
+          "registered": 6,
+          "activeMappedScope": 3,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 3,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "sacredCivic": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "scaffold",
+          "registered": 85,
+          "visibleBound": 53,
+          "layoutEnvelope": {
+            "minX": -780,
+            "maxX": -140,
+            "minZ": -620,
+            "maxZ": 540.3905559269172,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "scaffold",
+          "registeredWithEvents": 97,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "unresolved": 37,
+            "build": 60
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 284,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Independent authored district/path skeleton and terrain-following coarse occupied cells replace the old mass grid. Geometry remains inferred, not archaeological survey; city limits, water/defense, dated subphases and public-building footprints remain incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "early-islamic",
+      "label": "早期伊斯蘭",
+      "owner": "independent-later-skeleton",
+      "domains": {
+        "districts": {
+          "reviewStatus": "scaffold",
+          "registered": 8,
+          "activeMappedScope": 4,
+          "mapped": 4,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "mapped-partial-scope"
+        },
+        "routes": {
+          "reviewStatus": "scaffold",
+          "registered": 6,
+          "activeMappedScope": 3,
+          "mapped": 3,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 3,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "sacredCivic": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "scaffold",
+          "registered": 109,
+          "visibleBound": 56,
+          "layoutEnvelope": {
+            "minX": -780,
+            "maxX": -180,
+            "minZ": -620,
+            "maxZ": 540,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "scaffold",
+          "registeredWithEvents": 123,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "unresolved": 60,
+            "build": 63
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 266,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Independent authored district/path skeleton and terrain-following coarse occupied cells replace the old mass grid. Geometry remains inferred, not archaeological survey; city limits, water/defense, dated subphases and public-building footprints remain incomplete.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "crusader",
+      "label": "十字軍",
+      "owner": "independent-later-skeleton",
+      "domains": {
+        "districts": {
+          "reviewStatus": "scaffold",
+          "registered": 8,
+          "activeMappedScope": 4,
+          "mapped": 4,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "mapped-partial-scope"
+        },
+        "routes": {
+          "reviewStatus": "scaffold",
+          "registered": 8,
+          "activeMappedScope": 5,
+          "mapped": 5,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 5,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "sacredCivic": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "scaffold",
+          "registered": 96,
+          "visibleBound": 40,
+          "layoutEnvelope": {
+            "minX": -770,
+            "maxX": -185,
+            "minZ": -610,
+            "maxZ": 375,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "scaffold",
+          "registeredWithEvents": 112,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "unresolved": 63,
+            "build": 49
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 281,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Independently authored district/path envelopes, DEM-following coarse cells and reserved cores now share scene, ledger and comparison map. Geometry remains illustrative/composite, not surveyed; actual wall/water networks, public buildings and adjacent survival are unverified.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "ayyubid-mamluk",
+      "label": "阿尤布—馬穆魯克",
+      "owner": "independent-later-skeleton",
+      "domains": {
+        "districts": {
+          "reviewStatus": "scaffold",
+          "registered": 9,
+          "activeMappedScope": 5,
+          "mapped": 5,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "mapped-partial-scope"
+        },
+        "routes": {
+          "reviewStatus": "scaffold",
+          "registered": 9,
+          "activeMappedScope": 4,
+          "mapped": 4,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 4,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "sacredCivic": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "scaffold",
+          "registered": 85,
+          "visibleBound": 45,
+          "layoutEnvelope": {
+            "minX": -770,
+            "maxX": 200,
+            "minZ": -610,
+            "maxZ": 365,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "scaffold",
+          "registeredWithEvents": 103,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "unresolved": 49,
+            "build": 54
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 261,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Independently authored district/path envelopes, DEM-following coarse cells and reserved cores now share scene, ledger and comparison map. Geometry remains illustrative/composite, not surveyed; actual wall/water networks, public buildings and adjacent survival are unverified.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "ottoman",
+      "label": "奧斯曼",
+      "owner": "independent-later-skeleton",
+      "domains": {
+        "districts": {
+          "reviewStatus": "scaffold",
+          "registered": 12,
+          "activeMappedScope": 7,
+          "mapped": 6,
+          "activeWithoutGeometryIds": [
+            "j3k:object:old-city-fabric-ottoman"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "scaffold",
+          "registered": 9,
+          "activeMappedScope": 5,
+          "mapped": 5,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 5,
+          "finding": "mapped-partial-scope"
+        },
+        "waterDefense": {
+          "reviewStatus": "scaffold",
+          "registered": 3,
+          "activeMappedScope": 3,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [
+            "j3k:object:damascus-gate-ottoman",
+            "j3k:object:jaffa-gate-ottoman",
+            "j3k:object:ottoman-wall"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "sacredCivic": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "scaffold",
+          "registered": 98,
+          "visibleBound": 53,
+          "layoutEnvelope": {
+            "minX": -770,
+            "maxX": 200,
+            "minZ": -610,
+            "maxZ": 330,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "scaffold",
+          "registeredWithEvents": 122,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "build": 68,
+            "unresolved": 54
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 293,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Independently authored district/path envelopes, DEM-following coarse cells and reserved cores now share scene, ledger and comparison map. Geometry remains illustrative/composite, not surveyed; actual wall/water networks, public buildings and adjacent survival are unverified.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "outside-walls",
+      "label": "城外擴張",
+      "owner": "independent-later-skeleton",
+      "domains": {
+        "districts": {
+          "reviewStatus": "scaffold",
+          "registered": 17,
+          "activeMappedScope": 10,
+          "mapped": 9,
+          "activeWithoutGeometryIds": [
+            "j3k:object:old-city-fabric-ottoman"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "scaffold",
+          "registered": 14,
+          "activeMappedScope": 9,
+          "mapped": 8,
+          "activeWithoutGeometryIds": [
+            "j3k:object:modern-road-fabric"
+          ],
+          "visibleBound": 8,
+          "finding": "active-geometry-gap"
+        },
+        "waterDefense": {
+          "reviewStatus": "scaffold",
+          "registered": 3,
+          "activeMappedScope": 3,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [
+            "j3k:object:damascus-gate-ottoman",
+            "j3k:object:jaffa-gate-ottoman",
+            "j3k:object:ottoman-wall"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "sacredCivic": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "scaffold",
+          "registered": 150,
+          "visibleBound": 97,
+          "layoutEnvelope": {
+            "minX": -1440,
+            "maxX": 200,
+            "minZ": -810,
+            "maxZ": 710,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "scaffold",
+          "registeredWithEvents": 184,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "transform": 4,
+            "settlement": 1,
+            "build": 115,
+            "unresolved": 64
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 513,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Paired inferred old-city background, extra-mural districts and connectors share DEM, ledger and comparison. Coverage is a local western-environs window, not the complete modern city; exact walls, public cores, eastern/distant districts and historical adjacent survival remain unresolved.",
+      "historicalFoundationAccepted": false
+    },
+    {
+      "id": "modern",
+      "label": "現代耶路撒冷",
+      "owner": "independent-later-skeleton",
+      "domains": {
+        "districts": {
+          "reviewStatus": "scaffold",
+          "registered": 23,
+          "activeMappedScope": 14,
+          "mapped": 11,
+          "activeWithoutGeometryIds": [
+            "j3k:object:modern-metropolitan-envelope",
+            "j3k:object:modern-old-city-preserved",
+            "j3k:object:old-city-fabric-ottoman"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "routes": {
+          "reviewStatus": "scaffold",
+          "registered": 18,
+          "activeMappedScope": 10,
+          "mapped": 9,
+          "activeWithoutGeometryIds": [
+            "j3k:object:modern-road-fabric"
+          ],
+          "visibleBound": 9,
+          "finding": "active-geometry-gap"
+        },
+        "waterDefense": {
+          "reviewStatus": "scaffold",
+          "registered": 3,
+          "activeMappedScope": 3,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [
+            "j3k:object:damascus-gate-ottoman",
+            "j3k:object:jaffa-gate-ottoman",
+            "j3k:object:ottoman-wall"
+          ],
+          "visibleBound": 0,
+          "finding": "active-geometry-gap"
+        },
+        "sacredCivic": {
+          "reviewStatus": "scaffold",
+          "registered": 0,
+          "activeMappedScope": 0,
+          "mapped": 0,
+          "activeWithoutGeometryIds": [],
+          "visibleBound": 0,
+          "finding": "no-registered-domain"
+        },
+        "occupation": {
+          "reviewStatus": "scaffold",
+          "registered": 239,
+          "visibleBound": 142,
+          "layoutEnvelope": {
+            "minX": -1830,
+            "maxX": 200,
+            "minZ": -1150,
+            "maxZ": 710,
+            "role": "registered-layout-envelope-not-historical-city-boundary"
+          },
+          "finding": "registered-model-envelope-not-historical-occupation-boundary"
+        },
+        "lifecycle": {
+          "reviewStatus": "scaffold",
+          "registeredWithEvents": 283,
+          "declaredContextScopes": 0,
+          "unclassified": 0,
+          "states": {
+            "transform": 4,
+            "build": 163,
+            "expand": 2,
+            "unresolved": 114
+          },
+          "finding": "existing-event-accounting-not-historical-lineage-acceptance"
+        }
+      },
+      "visibleComponents": 592,
+      "unboundComponents": 0,
+      "annotationComponents": 0,
+      "provisionalInheritedComponents": 0,
+      "scope": "Paired inferred old-city background, extra-mural districts and connectors share DEM, ledger and comparison. Coverage is a local western-environs window, not the complete modern city; exact walls, public cores, eastern/distant districts and historical adjacent survival remain unresolved.",
+      "historicalFoundationAccepted": false
+    }
+  ],
+  "transitions": [
+    {
+      "from": "chalcolithic-early-bronze",
+      "to": "middle-bronze",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:earliest:path:1",
+        "j3k:earliest:path:2",
+        "j3k:earliest:path:3",
+        "j3k:earliest:path:4",
+        "j3k:earliest:path:5",
+        "j3k:earliest:path:6"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:middle-bronze:path:1",
+        "j3k:middle-bronze:path:2",
+        "j3k:middle-bronze:path:3",
+        "j3k:middle-bronze:path:4",
+        "j3k:middle-bronze:path:5",
+        "j3k:middle-bronze:path:6",
+        "j3k:object:gihon-carved-installation-hypothesis",
+        "j3k:object:gihon-protected-access-hypothesis",
+        "j3k:object:gihon-spring"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "middle-bronze",
+      "to": "late-bronze-iron1",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:middle-bronze:path:1",
+        "j3k:middle-bronze:path:2",
+        "j3k:middle-bronze:path:3",
+        "j3k:middle-bronze:path:4",
+        "j3k:middle-bronze:path:5",
+        "j3k:middle-bronze:path:6",
+        "j3k:object:gihon-carved-installation-hypothesis",
+        "j3k:object:gihon-protected-access-hypothesis",
+        "j3k:object:gihon-spring"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:late-bronze-iron1:path:1",
+        "j3k:late-bronze-iron1:path:2",
+        "j3k:late-bronze-iron1:path:3",
+        "j3k:late-bronze-iron1:path:4",
+        "j3k:late-bronze-iron1:path:5",
+        "j3k:late-bronze-iron1:path:6"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "late-bronze-iron1",
+      "to": "david-solomon",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:late-bronze-iron1:path:1",
+        "j3k:late-bronze-iron1:path:2",
+        "j3k:late-bronze-iron1:path:3",
+        "j3k:late-bronze-iron1:path:4",
+        "j3k:late-bronze-iron1:path:5",
+        "j3k:late-bronze-iron1:path:6"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:object:david-royal-courtyard-hypothesis",
+        "j3k:object:first-temple",
+        "j3k:object:gihon-spring",
+        "j3k:object:royal-city-wall-hypothesis",
+        "j3k:object:royal-gate:david-east",
+        "j3k:object:royal-gate:david-north",
+        "j3k:object:royal-gate:solomon-north",
+        "j3k:object:royal-region:northern",
+        "j3k:object:royal-region:ridge",
+        "j3k:object:royal-road:david-court-access",
+        "j3k:object:royal-road:david-court-door",
+        "j3k:object:royal-road:gate-to-ridge",
+        "j3k:object:royal-road:northern-gate",
+        "j3k:object:royal-road:ophel-spine",
+        "j3k:object:royal-road:ridge-north",
+        "j3k:object:royal-road:ridge-plaza",
+        "j3k:object:royal-road:ridge-south",
+        "j3k:object:royal-road:solomon-court-access",
+        "j3k:object:royal-road:solomon-court-door",
+        "j3k:object:royal-road:spring-access",
+        "j3k:object:royal-road:temple-entry",
+        "j3k:object:royal-road:temple-spine",
+        "j3k:object:solomon-northern-wall-hypothesis",
+        "j3k:object:solomon-royal-courtyard-hypothesis"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "david-solomon",
+      "to": "late-first-temple",
+      "reviewStatus": "partial",
+      "sharedMappedIds": [
+        "j3k:object:david-royal-courtyard-hypothesis",
+        "j3k:object:first-temple",
+        "j3k:object:gihon-spring",
+        "j3k:object:solomon-royal-courtyard-hypothesis"
+      ],
+      "sourceOnlyMappedIds": [
+        "j3k:object:royal-city-wall-hypothesis",
+        "j3k:object:royal-gate:david-east",
+        "j3k:object:royal-gate:david-north",
+        "j3k:object:royal-gate:solomon-north",
+        "j3k:object:royal-region:northern",
+        "j3k:object:royal-region:ridge",
+        "j3k:object:royal-road:david-court-access",
+        "j3k:object:royal-road:david-court-door",
+        "j3k:object:royal-road:gate-to-ridge",
+        "j3k:object:royal-road:northern-gate",
+        "j3k:object:royal-road:ophel-spine",
+        "j3k:object:royal-road:ridge-north",
+        "j3k:object:royal-road:ridge-plaza",
+        "j3k:object:royal-road:ridge-south",
+        "j3k:object:royal-road:solomon-court-access",
+        "j3k:object:royal-road:solomon-court-door",
+        "j3k:object:royal-road:spring-access",
+        "j3k:object:royal-road:temple-entry",
+        "j3k:object:royal-road:temple-spine",
+        "j3k:object:solomon-northern-wall-hypothesis"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:late-first-temple:district:eastern-ridge",
+        "j3k:late-first-temple:district:northern-precinct",
+        "j3k:late-first-temple:district:western-hill",
+        "j3k:late-first-temple:reservation:sacred-precinct",
+        "j3k:late-first-temple:road:northern-approach",
+        "j3k:late-first-temple:road:ophel-west-link",
+        "j3k:late-first-temple:road:ridge-spine",
+        "j3k:late-first-temple:road:spring-access",
+        "j3k:late-first-temple:road:western-south",
+        "j3k:late-first-temple:road:western-spine",
+        "j3k:object:broad-wall-remains"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "late-first-temple",
+      "to": "babylonian-destruction",
+      "reviewStatus": "partial",
+      "sharedMappedIds": [
+        "j3k:late-first-temple:district:eastern-ridge",
+        "j3k:late-first-temple:district:northern-precinct",
+        "j3k:late-first-temple:district:western-hill",
+        "j3k:late-first-temple:reservation:sacred-precinct",
+        "j3k:late-first-temple:road:northern-approach",
+        "j3k:late-first-temple:road:ophel-west-link",
+        "j3k:late-first-temple:road:ridge-spine",
+        "j3k:late-first-temple:road:spring-access",
+        "j3k:late-first-temple:road:western-south",
+        "j3k:late-first-temple:road:western-spine",
+        "j3k:object:david-royal-courtyard-hypothesis",
+        "j3k:object:first-temple",
+        "j3k:object:gihon-spring",
+        "j3k:object:solomon-royal-courtyard-hypothesis"
+      ],
+      "sourceOnlyMappedIds": [
+        "j3k:object:broad-wall-remains"
+      ],
+      "targetOnlyMappedIds": [],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "babylonian-destruction",
+      "to": "persian-nehemiah",
+      "reviewStatus": "partial",
+      "sharedMappedIds": [
+        "j3k:object:gihon-spring"
+      ],
+      "sourceOnlyMappedIds": [
+        "j3k:late-first-temple:district:eastern-ridge",
+        "j3k:late-first-temple:district:northern-precinct",
+        "j3k:late-first-temple:district:western-hill",
+        "j3k:late-first-temple:reservation:sacred-precinct",
+        "j3k:late-first-temple:road:northern-approach",
+        "j3k:late-first-temple:road:ophel-west-link",
+        "j3k:late-first-temple:road:ridge-spine",
+        "j3k:late-first-temple:road:spring-access",
+        "j3k:late-first-temple:road:western-south",
+        "j3k:late-first-temple:road:western-spine",
+        "j3k:object:david-royal-courtyard-hypothesis",
+        "j3k:object:first-temple",
+        "j3k:object:solomon-royal-courtyard-hypothesis"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:object:second-temple-early",
+        "j3k:persian-nehemiah:district:northern-rebuilding",
+        "j3k:persian-nehemiah:district:ridge-rebuilding",
+        "j3k:persian-nehemiah:gate:sanctuary-south",
+        "j3k:persian-nehemiah:reservation:second-temple-location-reservation",
+        "j3k:persian-nehemiah:road:northern-rebuilding-access",
+        "j3k:persian-nehemiah:road:rebuilding-spine",
+        "j3k:persian-nehemiah:road:sanctuary-access",
+        "j3k:persian-nehemiah:road:spring-rebuilding-access"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "persian-nehemiah",
+      "to": "hellenistic-hasmonean",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:object:gihon-spring",
+        "j3k:object:second-temple-early",
+        "j3k:persian-nehemiah:district:northern-rebuilding",
+        "j3k:persian-nehemiah:district:ridge-rebuilding",
+        "j3k:persian-nehemiah:gate:sanctuary-south",
+        "j3k:persian-nehemiah:reservation:second-temple-location-reservation",
+        "j3k:persian-nehemiah:road:northern-rebuilding-access",
+        "j3k:persian-nehemiah:road:rebuilding-spine",
+        "j3k:persian-nehemiah:road:sanctuary-access",
+        "j3k:persian-nehemiah:road:spring-rebuilding-access"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:hellenistic-hasmonean:district:0",
+        "j3k:hellenistic-hasmonean:road:0",
+        "j3k:hellenistic-hasmonean:road:1",
+        "j3k:hellenistic-hasmonean:road:2",
+        "j3k:hellenistic-hasmonean:road:3",
+        "j3k:hellenistic-hasmonean:road:4",
+        "j3k:hellenistic-hasmonean:road:5",
+        "j3k:hellenistic-hasmonean:road:6",
+        "j3k:hellenistic-hasmonean:road:7"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "hellenistic-hasmonean",
+      "to": "herodian-jesus",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:hellenistic-hasmonean:district:0",
+        "j3k:hellenistic-hasmonean:road:0",
+        "j3k:hellenistic-hasmonean:road:1",
+        "j3k:hellenistic-hasmonean:road:2",
+        "j3k:hellenistic-hasmonean:road:3",
+        "j3k:hellenistic-hasmonean:road:4",
+        "j3k:hellenistic-hasmonean:road:5",
+        "j3k:hellenistic-hasmonean:road:6",
+        "j3k:hellenistic-hasmonean:road:7"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:object:antonia",
+        "j3k:object:royal-stoa",
+        "j3k:object:southern-approach",
+        "j3k:object:temple-mount-enclosure-herodian",
+        "j3k:object:western-street",
+        "j3k:road:central-valley",
+        "j3k:road:eastern-slope",
+        "j3k:road:lower-city-lane-a",
+        "j3k:road:lower-city-lane-b",
+        "j3k:road:lower-city-lane-c",
+        "j3k:road:lower-city-lane-d",
+        "j3k:road:southern-spine",
+        "j3k:road:western-spine"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "herodian-jesus",
+      "to": "roman-destruction",
+      "reviewStatus": "partial",
+      "sharedMappedIds": [
+        "j3k:object:antonia",
+        "j3k:object:royal-stoa",
+        "j3k:object:southern-approach",
+        "j3k:object:temple-mount-enclosure-herodian",
+        "j3k:object:western-street",
+        "j3k:road:central-valley",
+        "j3k:road:eastern-slope",
+        "j3k:road:lower-city-lane-a",
+        "j3k:road:lower-city-lane-b",
+        "j3k:road:lower-city-lane-c",
+        "j3k:road:lower-city-lane-d",
+        "j3k:road:southern-spine",
+        "j3k:road:western-spine"
+      ],
+      "sourceOnlyMappedIds": [],
+      "targetOnlyMappedIds": [],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "roman-destruction",
+      "to": "aelia",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:object:antonia",
+        "j3k:object:royal-stoa",
+        "j3k:object:southern-approach",
+        "j3k:object:temple-mount-enclosure-herodian",
+        "j3k:object:western-street",
+        "j3k:road:central-valley",
+        "j3k:road:eastern-slope",
+        "j3k:road:lower-city-lane-a",
+        "j3k:road:lower-city-lane-b",
+        "j3k:road:lower-city-lane-c",
+        "j3k:road:lower-city-lane-d",
+        "j3k:road:southern-spine",
+        "j3k:road:western-spine"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:aelia:independent:district:inter-axis-quarter",
+        "j3k:aelia:independent:district:western-axis-quarter",
+        "j3k:aelia:independent:road:eastern-cardo-context",
+        "j3k:aelia:independent:road:transverse-link-illustrative",
+        "j3k:aelia:independent:road:western-cardo-context"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "aelia",
+      "to": "byzantine",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:aelia:independent:district:inter-axis-quarter",
+        "j3k:aelia:independent:district:western-axis-quarter",
+        "j3k:aelia:independent:road:eastern-cardo-context",
+        "j3k:aelia:independent:road:transverse-link-illustrative",
+        "j3k:aelia:independent:road:western-cardo-context"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:byzantine:independent:district:inter-axis-quarter",
+        "j3k:byzantine:independent:district:southern-central-quarter",
+        "j3k:byzantine:independent:district:western-axis-quarter",
+        "j3k:byzantine:independent:district:western-southern-quarter",
+        "j3k:byzantine:independent:road:eastern-cardo-context",
+        "j3k:byzantine:independent:road:transverse-link-illustrative",
+        "j3k:byzantine:independent:road:western-cardo-southern-context"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "byzantine",
+      "to": "early-islamic",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:byzantine:independent:district:inter-axis-quarter",
+        "j3k:byzantine:independent:district:southern-central-quarter",
+        "j3k:byzantine:independent:district:western-axis-quarter",
+        "j3k:byzantine:independent:district:western-southern-quarter",
+        "j3k:byzantine:independent:road:eastern-cardo-context",
+        "j3k:byzantine:independent:road:transverse-link-illustrative",
+        "j3k:byzantine:independent:road:western-cardo-southern-context"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:early-islamic:independent:district:inter-axis-quarter",
+        "j3k:early-islamic:independent:district:southern-administrative-context",
+        "j3k:early-islamic:independent:district:western-axis-quarter",
+        "j3k:early-islamic:independent:district:western-southern-quarter",
+        "j3k:early-islamic:independent:road:eastern-street-context",
+        "j3k:early-islamic:independent:road:southern-complex-access-context",
+        "j3k:early-islamic:independent:road:western-axis-context"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "early-islamic",
+      "to": "crusader",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:early-islamic:independent:district:inter-axis-quarter",
+        "j3k:early-islamic:independent:district:southern-administrative-context",
+        "j3k:early-islamic:independent:district:western-axis-quarter",
+        "j3k:early-islamic:independent:district:western-southern-quarter",
+        "j3k:early-islamic:independent:road:eastern-street-context",
+        "j3k:early-islamic:independent:road:southern-complex-access-context",
+        "j3k:early-islamic:independent:road:western-axis-context"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:crusader:independent:district:market-side-layout",
+        "j3k:crusader:independent:district:northwest-layout",
+        "j3k:crusader:independent:district:south-central-layout",
+        "j3k:crusader:independent:district:southwest-layout",
+        "j3k:crusader:independent:road:eastern-valley-link-illustrative",
+        "j3k:crusader:independent:road:parallel-market-east-context",
+        "j3k:crusader:independent:road:parallel-market-west-context",
+        "j3k:crusader:independent:road:west-east-connector-illustrative",
+        "j3k:crusader:independent:road:western-market-axis-context"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "crusader",
+      "to": "ayyubid-mamluk",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:crusader:independent:district:market-side-layout",
+        "j3k:crusader:independent:district:northwest-layout",
+        "j3k:crusader:independent:district:south-central-layout",
+        "j3k:crusader:independent:district:southwest-layout",
+        "j3k:crusader:independent:road:eastern-valley-link-illustrative",
+        "j3k:crusader:independent:road:parallel-market-east-context",
+        "j3k:crusader:independent:road:parallel-market-west-context",
+        "j3k:crusader:independent:road:west-east-connector-illustrative",
+        "j3k:crusader:independent:road:western-market-axis-context"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:ayyubid-mamluk:independent:district:market-side-layout",
+        "j3k:ayyubid-mamluk:independent:district:north-haram-approach-layout",
+        "j3k:ayyubid-mamluk:independent:district:northwest-layout",
+        "j3k:ayyubid-mamluk:independent:district:southwest-layout",
+        "j3k:ayyubid-mamluk:independent:district:west-haram-market-layout",
+        "j3k:ayyubid-mamluk:independent:road:cotton-market-access-context",
+        "j3k:ayyubid-mamluk:independent:road:eastern-valley-link-illustrative",
+        "j3k:ayyubid-mamluk:independent:road:west-east-connector-illustrative",
+        "j3k:ayyubid-mamluk:independent:road:western-market-axis-context"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "ayyubid-mamluk",
+      "to": "ottoman",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:ayyubid-mamluk:independent:district:market-side-layout",
+        "j3k:ayyubid-mamluk:independent:district:north-haram-approach-layout",
+        "j3k:ayyubid-mamluk:independent:district:northwest-layout",
+        "j3k:ayyubid-mamluk:independent:district:southwest-layout",
+        "j3k:ayyubid-mamluk:independent:district:west-haram-market-layout",
+        "j3k:ayyubid-mamluk:independent:road:cotton-market-access-context",
+        "j3k:ayyubid-mamluk:independent:road:eastern-valley-link-illustrative",
+        "j3k:ayyubid-mamluk:independent:road:west-east-connector-illustrative",
+        "j3k:ayyubid-mamluk:independent:road:western-market-axis-context"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:ottoman:independent:district:market-side-layout",
+        "j3k:ottoman:independent:district:northeast-layout",
+        "j3k:ottoman:independent:district:northwest-layout",
+        "j3k:ottoman:independent:district:south-central-layout",
+        "j3k:ottoman:independent:district:southwest-layout",
+        "j3k:ottoman:independent:district:west-haram-layout",
+        "j3k:ottoman:independent:road:cotton-market-access-context",
+        "j3k:ottoman:independent:road:eastern-valley-link-illustrative",
+        "j3k:ottoman:independent:road:southern-access-illustrative",
+        "j3k:ottoman:independent:road:west-east-connector-illustrative",
+        "j3k:ottoman:independent:road:western-market-axis-context"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "ottoman",
+      "to": "outside-walls",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:ottoman:independent:district:market-side-layout",
+        "j3k:ottoman:independent:district:northeast-layout",
+        "j3k:ottoman:independent:district:northwest-layout",
+        "j3k:ottoman:independent:district:south-central-layout",
+        "j3k:ottoman:independent:district:southwest-layout",
+        "j3k:ottoman:independent:district:west-haram-layout",
+        "j3k:ottoman:independent:road:cotton-market-access-context",
+        "j3k:ottoman:independent:road:eastern-valley-link-illustrative",
+        "j3k:ottoman:independent:road:southern-access-illustrative",
+        "j3k:ottoman:independent:road:west-east-connector-illustrative",
+        "j3k:ottoman:independent:road:western-market-axis-context"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:outside-walls:independent:district:market-side-layout",
+        "j3k:outside-walls:independent:district:northeast-layout",
+        "j3k:outside-walls:independent:district:northwest-compound-context",
+        "j3k:outside-walls:independent:district:northwest-layout",
+        "j3k:outside-walls:independent:district:south-central-layout",
+        "j3k:outside-walls:independent:district:southwest-layout",
+        "j3k:outside-walls:independent:district:southwest-outside-context",
+        "j3k:outside-walls:independent:district:west-haram-layout",
+        "j3k:outside-walls:independent:district:western-roadside-context",
+        "j3k:outside-walls:independent:road:cotton-market-access-context",
+        "j3k:outside-walls:independent:road:eastern-valley-link-illustrative",
+        "j3k:outside-walls:independent:road:northwest-compound-access-illustrative",
+        "j3k:outside-walls:independent:road:southern-access-illustrative",
+        "j3k:outside-walls:independent:road:southwest-access-illustrative",
+        "j3k:outside-walls:independent:road:west-east-connector-illustrative",
+        "j3k:outside-walls:independent:road:western-market-axis-context",
+        "j3k:outside-walls:independent:road:westward-road-context"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    },
+    {
+      "from": "outside-walls",
+      "to": "modern",
+      "reviewStatus": "unresolved",
+      "sharedMappedIds": [],
+      "sourceOnlyMappedIds": [
+        "j3k:outside-walls:independent:district:market-side-layout",
+        "j3k:outside-walls:independent:district:northeast-layout",
+        "j3k:outside-walls:independent:district:northwest-compound-context",
+        "j3k:outside-walls:independent:district:northwest-layout",
+        "j3k:outside-walls:independent:district:south-central-layout",
+        "j3k:outside-walls:independent:district:southwest-layout",
+        "j3k:outside-walls:independent:district:southwest-outside-context",
+        "j3k:outside-walls:independent:district:west-haram-layout",
+        "j3k:outside-walls:independent:district:western-roadside-context",
+        "j3k:outside-walls:independent:road:cotton-market-access-context",
+        "j3k:outside-walls:independent:road:eastern-valley-link-illustrative",
+        "j3k:outside-walls:independent:road:northwest-compound-access-illustrative",
+        "j3k:outside-walls:independent:road:southern-access-illustrative",
+        "j3k:outside-walls:independent:road:southwest-access-illustrative",
+        "j3k:outside-walls:independent:road:west-east-connector-illustrative",
+        "j3k:outside-walls:independent:road:western-market-axis-context",
+        "j3k:outside-walls:independent:road:westward-road-context"
+      ],
+      "targetOnlyMappedIds": [
+        "j3k:modern:independent:district:market-side-layout",
+        "j3k:modern:independent:district:northeast-layout",
+        "j3k:modern:independent:district:northwest-compound-context",
+        "j3k:modern:independent:district:northwest-corridor-extension",
+        "j3k:modern:independent:district:northwest-layout",
+        "j3k:modern:independent:district:south-central-layout",
+        "j3k:modern:independent:district:southwest-layout",
+        "j3k:modern:independent:district:southwest-outside-context",
+        "j3k:modern:independent:district:west-haram-layout",
+        "j3k:modern:independent:district:western-corridor-extension",
+        "j3k:modern:independent:district:western-roadside-context",
+        "j3k:modern:independent:road:cotton-market-access-context",
+        "j3k:modern:independent:road:eastern-valley-link-illustrative",
+        "j3k:modern:independent:road:northwest-compound-access-illustrative",
+        "j3k:modern:independent:road:southern-access-illustrative",
+        "j3k:modern:independent:road:southwest-access-illustrative",
+        "j3k:modern:independent:road:west-east-connector-illustrative",
+        "j3k:modern:independent:road:western-corridor-extension-context",
+        "j3k:modern:independent:road:western-market-axis-context",
+        "j3k:modern:independent:road:westward-road-context"
+      ],
+      "interpretation": "map-ID-presence-only-not-retain-build-demolish-or-reuse-events",
+      "historicalTransitionAccepted": false,
+      "requiredReview": [
+        "dated-source-scope",
+        "persistent-new-ruin-withdraw-unknown-object-fates",
+        "geometry-validity-and-ground",
+        "exact-forward-backward-projection"
+      ],
+      "evidence": []
+    }
+  ],
+  "flags": {
+    "withoutRegisteredDistricts": [
+      "chalcolithic-early-bronze",
+      "middle-bronze",
+      "late-bronze-iron1"
+    ],
+    "withActiveGeometryGaps": [
+      "david-solomon",
+      "late-first-temple",
+      "babylonian-destruction",
+      "persian-nehemiah",
+      "hellenistic-hasmonean",
+      "herodian-jesus",
+      "roman-destruction",
+      "ottoman",
+      "outside-walls",
+      "modern"
+    ],
+    "withoutMappedWaterDefense": [
+      "chalcolithic-early-bronze",
+      "late-bronze-iron1",
+      "hellenistic-hasmonean",
+      "herodian-jesus",
+      "roman-destruction",
+      "aelia",
+      "byzantine",
+      "early-islamic",
+      "crusader",
+      "ayyubid-mamluk",
+      "ottoman",
+      "outside-walls",
+      "modern"
+    ],
+    "withoutMappedSacredCivic": [
+      "chalcolithic-early-bronze",
+      "middle-bronze",
+      "late-bronze-iron1",
+      "hellenistic-hasmonean",
+      "aelia",
+      "byzantine",
+      "early-islamic",
+      "crusader",
+      "ayyubid-mamluk",
+      "ottoman",
+      "outside-walls",
+      "modern"
+    ]
+  },
+  "priorities": [
+    {
+      "id": "existing-spatial-bindings",
+      "order": 1,
+      "dependsOn": [],
+      "phases": [
+        "david-solomon",
+        "late-first-temple",
+        "babylonian-destruction",
+        "persian-nehemiah",
+        "hellenistic-hasmonean",
+        "herodian-jesus",
+        "roman-destruction",
+        "ottoman",
+        "outside-walls",
+        "modern"
+      ],
+      "deliverable": "先核對已登記分區、道路、水防及核心的幾何與分類；明確暫緩定位的對象保持缺口，避免重建已有模型。",
+      "gate": "每項具備適用來源的可用幾何，或明確暫緩決定；驗證場景／地圖身分與篩選恢復。"
+    },
+    {
+      "id": "early-period-districts",
+      "order": 2,
+      "dependsOn": [
+        "existing-spatial-bindings"
+      ],
+      "phases": [
+        "chalcolithic-early-bronze",
+        "middle-bronze",
+        "late-bronze-iron1",
+        "david-solomon"
+      ],
+      "deliverable": "統一最早聚落至大衛—所羅門四期的分區、路徑與佔用範圍，各期保留獨立年代與地形關係。",
+      "gate": "零登記不等於歷史不存在；範圍、年代和未知邊界均需明示。"
+    },
+    {
+      "id": "hellenistic-independent-foundation",
+      "order": 3,
+      "dependsOn": [
+        "early-period-districts"
+      ],
+      "phases": [
+        "hellenistic-hasmonean"
+      ],
+      "deliverable": "以獨立來源約束分區、入口及公共核心，替換希臘化時期的參考城衍生骨架。",
+      "gate": "不能把縮放希律城或複製圍牆作為本期依據。"
+    },
+    {
+      "id": "later-water-civic-foundations",
+      "order": 4,
+      "dependsOn": [
+        "existing-spatial-bindings"
+      ],
+      "phases": [
+        "aelia",
+        "byzantine",
+        "early-islamic",
+        "crusader",
+        "ayyubid-mamluk",
+        "ottoman"
+      ],
+      "deliverable": "成組規劃Aelia至鄂圖曼六期的防禦、水系與公共核心，再進入建築深化。",
+      "gate": "預留空區不算完成核心；城牆年代及座標依據必須明確。"
+    },
+    {
+      "id": "modern-coverage",
+      "order": 5,
+      "dependsOn": [
+        "later-water-civic-foundations"
+      ],
+      "phases": [
+        "outside-walls",
+        "modern"
+      ],
+      "deliverable": "成對補足城外擴張／現代的東部及遠端地區與交通脈絡，明示各層年代範圍。",
+      "gate": "西側局部窗口不算完整城市，也不代表政治邊界。"
+    },
+    {
+      "id": "adjacent-transition-acceptance",
+      "order": 6,
+      "dependsOn": [
+        "early-period-districts",
+        "hellenistic-independent-foundation",
+        "later-water-civic-foundations",
+        "modern-coverage"
+      ],
+      "phases": [
+        "chalcolithic-early-bronze",
+        "middle-bronze",
+        "late-bronze-iron1",
+        "david-solomon",
+        "late-first-temple",
+        "babylonian-destruction",
+        "persian-nehemiah",
+        "hellenistic-hasmonean",
+        "herodian-jesus",
+        "roman-destruction",
+        "aelia",
+        "byzantine",
+        "early-islamic",
+        "crusader",
+        "ayyubid-mamluk",
+        "ottoman",
+        "outside-walls",
+        "modern"
+      ],
+      "deliverable": "逐段審核17段接續的保留、新建、毀壞、退出與未知去向，驗證反向還原。",
+      "gate": "共同ID、外觀相似、原型保留百分比或切換測試均不能證明歷史存續。"
+    }
+  ],
+  "nextPackage": "early-period-districts",
+  "sourceSpatialBindingReview": {
+    "status": "reviewed-with-deferred-geometry",
+    "evidence": "SOURCE-SPATIAL-BINDINGS.md",
+    "registeredSourceZoneIds": [
+      "j3k:object:temple-mount-enclosure-herodian",
+      "j3k:object:royal-stoa",
+      "j3k:object:antonia",
+      "j3k:object:southern-approach",
+      "j3k:object:western-street"
+    ],
+    "deferredGeometryIds": [
+      "j3k:district:western-lower-city",
+      "j3k:object:damascus-gate-ottoman",
+      "j3k:object:inner-temple",
+      "j3k:object:jaffa-gate-ottoman",
+      "j3k:object:modern-metropolitan-envelope",
+      "j3k:object:modern-old-city-preserved",
+      "j3k:object:modern-road-fabric",
+      "j3k:object:nehemiah-wall",
+      "j3k:object:old-city-fabric-ottoman",
+      "j3k:object:ottoman-wall",
+      "j3k:object:persian-settlement-envelope",
+      "j3k:object:royal-monumental-zone-10c",
+      "j3k:object:siloam-water-tunnel",
+      "j3k:object:southeastern-ridge-iron-age"
+    ],
+    "historicalFoundationAccepted": false
+  },
+  "detailWork": "paused-until-foundation-review-accepted",
+  "historicalFoundationAccepted": false
+}

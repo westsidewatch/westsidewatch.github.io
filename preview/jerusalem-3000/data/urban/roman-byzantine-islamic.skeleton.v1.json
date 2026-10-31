@@ -1,0 +1,627 @@
+{
+  "schema": "j3k.independent-later-skeleton.v1",
+  "frame": "canonical-origin-east-x-south-z-metres",
+  "origin": {
+    "lat": 31.778,
+    "lon": 35.235
+  },
+  "authority": "independently authored illustrative skeleton constrained by published spatial relationships; not archaeological survey",
+  "sources": {
+    "eastern-cardo": "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/",
+    "western-cardo": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=27699",
+    "southern-core": "https://jerusalemfoundation.org/old-project/nea-church/",
+    "umayyad-access": "https://publications.iaa.org.il/atiqot/vol120/iss1/11/"
+  },
+  "limitations": [
+    "分区与路径坐标为独立设计示意，不是从发掘图提取的测绘线。",
+    "示意分区不是完整城界；空置和未绘制区域不表示历史无人居住或建筑已毁。",
+    "占位量体是低矮的模型布局片区，不是单栋建筑；数量、分割、6米高度与道路宽度没有历史测量依据。",
+    "道路跨期使用独立物件ID；共享空间脉络不等于已证明具体构件存续或复用。",
+    "预留区仅控制占位量体；不代表圣区、教堂或行政建筑的真实平面。",
+    "现代DEM不等于古地表，未模拟历史道路切坡和人工填土。",
+    "各期为时段内综合布局，不表示整个时段同时存在；拜占庭南向轴线侧重较晚阶段，早期伊斯兰南部核心侧重倭马亚语境。"
+  ],
+  "generation": {
+    "maxBlockArea": 12000,
+    "roadClearance": 10,
+    "modelHeight": 6
+  },
+  "phases": {
+    "aelia": {
+      "districts": [
+        {
+          "id": "western-axis-quarter",
+          "polygon": [
+            [
+              -780,
+              -600
+            ],
+            [
+              -435,
+              -620
+            ],
+            [
+              -430,
+              -80
+            ],
+            [
+              -750,
+              -60
+            ]
+          ]
+        },
+        {
+          "id": "inter-axis-quarter",
+          "polygon": [
+            [
+              -410,
+              -590
+            ],
+            [
+              -245,
+              -565
+            ],
+            [
+              -180,
+              70
+            ],
+            [
+              -410,
+              90
+            ]
+          ]
+        }
+      ],
+      "roads": [
+        {
+          "id": "western-cardo-context",
+          "points": [
+            [
+              -580,
+              -610
+            ],
+            [
+              -560,
+              -360
+            ],
+            [
+              -530,
+              -100
+            ],
+            [
+              -510,
+              120
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=27699"
+          ]
+        },
+        {
+          "id": "eastern-cardo-context",
+          "points": [
+            [
+              -340,
+              -610
+            ],
+            [
+              -300,
+              -350
+            ],
+            [
+              -270,
+              -100
+            ],
+            [
+              -240,
+              200
+            ],
+            [
+              -220,
+              380
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/"
+          ]
+        },
+        {
+          "id": "transverse-link-illustrative",
+          "points": [
+            [
+              -770,
+              -210
+            ],
+            [
+              -540,
+              -210
+            ],
+            [
+              -300,
+              -210
+            ],
+            [
+              -180,
+              -210
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/",
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=27699"
+          ]
+        }
+      ],
+      "reservations": [
+        {
+          "id": "eastern-precinct-unfilled",
+          "polygon": [
+            [
+              -170,
+              -430
+            ],
+            [
+              260,
+              -410
+            ],
+            [
+              280,
+              190
+            ],
+            [
+              -180,
+              180
+            ]
+          ]
+        }
+      ],
+      "sources": [
+        "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=27699"
+      ]
+    },
+    "byzantine": {
+      "districts": [
+        {
+          "id": "western-axis-quarter",
+          "polygon": [
+            [
+              -780,
+              -600
+            ],
+            [
+              -435,
+              -620
+            ],
+            [
+              -430,
+              -80
+            ],
+            [
+              -750,
+              -60
+            ]
+          ]
+        },
+        {
+          "id": "inter-axis-quarter",
+          "polygon": [
+            [
+              -410,
+              -590
+            ],
+            [
+              -245,
+              -565
+            ],
+            [
+              -180,
+              70
+            ],
+            [
+              -410,
+              90
+            ]
+          ]
+        },
+        {
+          "id": "western-southern-quarter",
+          "polygon": [
+            [
+              -740,
+              -45
+            ],
+            [
+              -430,
+              -70
+            ],
+            [
+              -370,
+              540
+            ],
+            [
+              -650,
+              500
+            ]
+          ]
+        },
+        {
+          "id": "southern-central-quarter",
+          "polygon": [
+            [
+              -400,
+              110
+            ],
+            [
+              -170,
+              100
+            ],
+            [
+              -140,
+              530
+            ],
+            [
+              -360,
+              570
+            ]
+          ]
+        }
+      ],
+      "roads": [
+        {
+          "id": "western-cardo-southern-context",
+          "points": [
+            [
+              -580,
+              -610
+            ],
+            [
+              -560,
+              -360
+            ],
+            [
+              -530,
+              -100
+            ],
+            [
+              -510,
+              120
+            ],
+            [
+              -480,
+              340
+            ],
+            [
+              -400,
+              500
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=27699",
+            "https://jerusalemfoundation.org/old-project/nea-church/"
+          ]
+        },
+        {
+          "id": "eastern-cardo-context",
+          "points": [
+            [
+              -340,
+              -610
+            ],
+            [
+              -300,
+              -350
+            ],
+            [
+              -270,
+              -100
+            ],
+            [
+              -240,
+              200
+            ],
+            [
+              -220,
+              380
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/"
+          ]
+        },
+        {
+          "id": "transverse-link-illustrative",
+          "points": [
+            [
+              -770,
+              -210
+            ],
+            [
+              -540,
+              -210
+            ],
+            [
+              -300,
+              -210
+            ],
+            [
+              -180,
+              -210
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/",
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=27699"
+          ]
+        }
+      ],
+      "reservations": [
+        {
+          "id": "eastern-precinct-unfilled",
+          "polygon": [
+            [
+              -170,
+              -430
+            ],
+            [
+              260,
+              -410
+            ],
+            [
+              280,
+              190
+            ],
+            [
+              -180,
+              180
+            ]
+          ]
+        },
+        {
+          "id": "southern-church-context-not-footprint",
+          "polygon": [
+            [
+              -490,
+              390
+            ],
+            [
+              -240,
+              390
+            ],
+            [
+              -240,
+              600
+            ],
+            [
+              -490,
+              600
+            ]
+          ]
+        }
+      ],
+      "sources": [
+        "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=27699",
+        "https://jerusalemfoundation.org/old-project/nea-church/"
+      ]
+    },
+    "early-islamic": {
+      "districts": [
+        {
+          "id": "western-axis-quarter",
+          "polygon": [
+            [
+              -780,
+              -600
+            ],
+            [
+              -435,
+              -620
+            ],
+            [
+              -430,
+              -80
+            ],
+            [
+              -750,
+              -60
+            ]
+          ]
+        },
+        {
+          "id": "inter-axis-quarter",
+          "polygon": [
+            [
+              -410,
+              -590
+            ],
+            [
+              -245,
+              -565
+            ],
+            [
+              -180,
+              70
+            ],
+            [
+              -410,
+              90
+            ]
+          ]
+        },
+        {
+          "id": "western-southern-quarter",
+          "polygon": [
+            [
+              -740,
+              -45
+            ],
+            [
+              -430,
+              -70
+            ],
+            [
+              -370,
+              540
+            ],
+            [
+              -650,
+              500
+            ]
+          ]
+        },
+        {
+          "id": "southern-administrative-context",
+          "polygon": [
+            [
+              -200,
+              205
+            ],
+            [
+              230,
+              210
+            ],
+            [
+              220,
+              480
+            ],
+            [
+              -190,
+              480
+            ]
+          ]
+        }
+      ],
+      "roads": [
+        {
+          "id": "western-axis-context",
+          "points": [
+            [
+              -580,
+              -610
+            ],
+            [
+              -560,
+              -360
+            ],
+            [
+              -530,
+              -100
+            ],
+            [
+              -510,
+              120
+            ],
+            [
+              -480,
+              340
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=27699"
+          ]
+        },
+        {
+          "id": "eastern-street-context",
+          "points": [
+            [
+              -340,
+              -610
+            ],
+            [
+              -300,
+              -350
+            ],
+            [
+              -270,
+              -100
+            ],
+            [
+              -240,
+              200
+            ],
+            [
+              -220,
+              380
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/"
+          ]
+        },
+        {
+          "id": "southern-complex-access-context",
+          "points": [
+            [
+              -270,
+              190
+            ],
+            [
+              -260,
+              290
+            ],
+            [
+              -100,
+              290
+            ],
+            [
+              150,
+              300
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/atiqot/vol120/iss1/11/"
+          ]
+        }
+      ],
+      "reservations": [
+        {
+          "id": "eastern-precinct-unfilled",
+          "polygon": [
+            [
+              -170,
+              -430
+            ],
+            [
+              260,
+              -410
+            ],
+            [
+              280,
+              190
+            ],
+            [
+              -180,
+              180
+            ]
+          ]
+        },
+        {
+          "id": "administrative-core-unfilled",
+          "polygon": [
+            [
+              -210,
+              195
+            ],
+            [
+              240,
+              195
+            ],
+            [
+              240,
+              490
+            ],
+            [
+              -210,
+              490
+            ]
+          ]
+        }
+      ],
+      "sources": [
+        "https://publications.iaa.org.il/ha-esi/vol138/iss1/57/",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=27699",
+        "https://publications.iaa.org.il/atiqot/vol120/iss1/11/"
+      ]
+    }
+  }
+}

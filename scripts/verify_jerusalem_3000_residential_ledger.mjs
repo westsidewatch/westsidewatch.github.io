@@ -11,10 +11,10 @@ const base=new URL('../preview/jerusalem-3000/',import.meta.url),json=async path
 const original=globalThis.fetch,material=new THREE.MeshStandardMaterial();
 try{
  globalThis.fetch=async url=>({ok:true,json:()=>json(url)});invalidateCityData();
- const terrain={grid:{origin:data.anchor},heightAtWorld:()=>40},{core}=await loadTemporalCityCore(timeline.phases,{terrain});
- const registrations=new Map(['late-first-temple','persian-nehemiah'].map(phase=>[phase,compilePeriodRegistration(data,phase,data.anchor)]));
+ const terrain={grid:{origin:{lat:31.778,lon:35.235}},heightAtWorld:()=>40},{core}=await loadTemporalCityCore(timeline.phases,{terrain});
+ const registrations=new Map(['late-first-temple','persian-nehemiah'].map(phase=>[phase,compilePeriodRegistration(data,phase,terrain.grid.origin)]));
  for(const r of registrations.values())bindPeriodSpatialCore(core,r);
- const initial=[...core.objects.keys()],options={terrain,ledgerCore:core,materials:{inferred:material,facadeOpening:material},getRegistration:phase=>registrations.get(phase)};
+ const initial=[...core.objects.keys()],reference=await json('data/urban/herodian-30ce.registration.json'),options={reference,expansionFootprint:{sx:.7,sz:.7},terrain,ledgerCore:core,materials:{inferred:material,facadeOpening:material},getRegistration:phase=>registrations.get(phase)};
  const cancelled=createSharedEraRuntime(new THREE.Group(),options);cancelled.request('late-first-temple');cancelled.request('modern');await new Promise(r=>setTimeout(r,20));assert.deepEqual([...core.objects.keys()],initial,'cancelled staging must publish no objects');cancelled.dispose();
  const midParent=new THREE.Group();let midCancelled;midCancelled=createSharedEraRuntime(midParent,{...options,onProgress:progress=>{if(progress.completed===5)midCancelled.request('modern');}});midCancelled.request('late-first-temple');for(let i=0;i<1000&&midCancelled.status==='generating';i++)await new Promise(r=>setTimeout(r,5));assert.equal(midCancelled.status,'cancelled');assert.deepEqual([...core.objects.keys()],initial,'partially assembled cancellation must publish no records');assert.equal(midParent.children.length,0);midCancelled.dispose();
  const parent=new THREE.Group(),runtime=createSharedEraRuntime(parent,options);
@@ -34,6 +34,25 @@ try{
  assert.equal(core.validate().ok,true);const total=core.objects.size;
  await ready('late-first-temple');runtime.apply({phaseId:'late-first-temple'});assert.equal(core.objects.size,total,'return must not republish or duplicate records');
  const conflicting=createSharedEraRuntime(new THREE.Group(),options);conflicting.request('late-first-temple');for(let i=0;i<1500&&conflicting.status==='generating';i++)await new Promise(r=>setTimeout(r,5));assert.equal(conflicting.status,'error');assert.equal(core.objects.size,total,'collision failure must leave existing ledger unchanged');conflicting.dispose();
+ await ready('hellenistic-hasmonean');runtime.apply({phaseId:'hellenistic-hasmonean'});
+ const expansion=runtime.diagnostics().expansion.residentialLedger;
+ assert.ok(expansion.published&&expansion.registrationObjects>0&&expansion.referenceLayoutDerived);
+ const scaffold=core.get(expansion.sampleBuildingIds[0]),scaffoldDistrict=core.get(scaffold.source.districtId);
+ assert.equal(scaffoldDistrict.type,'district');assert.equal(scaffoldDistrict.metadata.referenceLayoutDerived,true);
+ assert.equal(scaffoldDistrict.source.geometryVerified,false);assert.equal(scaffoldDistrict.source.anchorObjectId,undefined);
+ assert.equal(lifecycleStateAtPosition({lifecycleEvents:scaffold.lifecycle.events},timeline,8.5),'unresolved');
+ const road=core.phase('hellenistic-hasmonean').find(r=>r.type==='road'&&r.metadata.generatedOwner===scaffold.metadata.generatedOwner);
+ assert.ok(road);assert.equal(road.confidence,'inferred');
+ const roadMeshes=parent.children.find(g=>g.name==='shared-hellenistic-hasmonean-city').children.filter(m=>m.userData.cityObject?.objectId===road.id);
+ assert.ok(roadMeshes.length&&roadMeshes.every(m=>m.visible));
+ core.register({...road,lifecycle:{events:[{phase:'hellenistic-hasmonean',state:'unresolved'}]}});runtime.apply({phaseId:'hellenistic-hasmonean'});assert.ok(roadMeshes.every(m=>!m.visible));
+ core.register(road);runtime.apply({phaseId:'hellenistic-hasmonean'});assert.ok(roadMeshes.every(m=>m.visible));
+ const restoredRoad=core.get(road.id);
+ const duplicateExpansion=createSharedEraRuntime(new THREE.Group(),options);duplicateExpansion.request('hellenistic-hasmonean');
+ for(let i=0;i<1500&&duplicateExpansion.status==='generating';i++)await new Promise(r=>setTimeout(r,5));
+ assert.equal(duplicateExpansion.status,'error');duplicateExpansion.dispose();assert.strictEqual(core.get(road.id),restoredRoad,'failed parent collision must preserve another owner');
+ const expansionTotal=core.objects.size;runtime.request('modern');await ready('hellenistic-hasmonean');assert.equal(core.objects.size,expansionTotal);
+ assert.ok(core.validate().ok);
  runtime.dispose();assert.equal(parent.children.length,0);assert.deepEqual([...core.objects.keys()],initial,'dispose must remove only owned generated records');assert.ok(core.validate().ok);
  console.log('PASS: atomic residential publication, canonical parent chain, shared fate projection, district visible counts, distinct rebuilding, no duplicates, collision rollback and owned cleanup');
 }finally{globalThis.fetch=original;invalidateCityData();material.dispose();}

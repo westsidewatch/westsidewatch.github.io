@@ -1,0 +1,84 @@
+{
+  "schema": "j3k.hellenistic-sanctuary.v1",
+  "anchor": {
+    "lat": 31.773235,
+    "lon": 35.2368303,
+    "source": "https://api.openstreetmap.org/api/0.6/node/1608094098",
+    "attribution": "© OpenStreetMap contributors, ODbL"
+  },
+  "sanctuary": {
+    "objectId": "j3k:hellenistic-hasmonean:monument:rededicated-sanctuary",
+    "authority": "selected post-164 BCE rededication context; independent illustrative profile, not an excavated plan",
+    "geometryValidityPhases": [
+      "hellenistic-hasmonean"
+    ],
+    "hall": {
+      "offset": [
+        -114,
+        -470
+      ],
+      "length": 30,
+      "width": 15,
+      "height": 12,
+      "wallThickness": 1.2,
+      "doorWidth": 2.8,
+      "doorHeight": 4.5
+    },
+    "porch": {
+      "depth": 7,
+      "height": 8
+    },
+    "court": {
+      "bounds": [
+        -158,
+        -517,
+        -40,
+        -413
+      ],
+      "wallHeight": 2.5,
+      "wallThickness": 1.2,
+      "gateX": -54,
+      "gateWidth": 5
+    },
+    "altar": {
+      "offset": [
+        -70,
+        -482
+      ],
+      "width": 5,
+      "depth": 5,
+      "height": 2
+    },
+    "access": {
+      "width": 2,
+      "waypoints": [
+        [
+          -54,
+          -438
+        ],
+        [
+          -86,
+          -438
+        ],
+        [
+          -86,
+          -455
+        ],
+        [
+          -86,
+          -470
+        ]
+      ]
+    },
+    "sources": [
+      "https://bible.usccb.org/bible/1maccabees/4"
+    ],
+    "limitations": [
+      "選取前164年重新奉獻之後的聖所修復、重建祭壇與庭院語境；不是整個希臘化—哈斯蒙尼時期的同一形態。",
+      "位置及30×15×12米殿堂、118×104米庭院等沿用既有保守展示包絡作比例參照；不是哈斯蒙尼測繪尺寸，不據此宣稱擴建或原構件存續。",
+      "不沿用波斯期幾何有效期，不主張原構件存續；未加入無足夠定位依據的亞克拉、巴里斯或希律柱廊。",
+      "現代DEM不是古代地表；沒有加入完整期內毀壞及修復動畫，進入希律期即撤下本示意形態。"
+    ],
+    "displayEnvelopeAuthority": "existing illustrative sanctuary envelope, deliberately not enlarged without period measurement; separately authored phase version, not physical fabric reuse"
+  }
+}

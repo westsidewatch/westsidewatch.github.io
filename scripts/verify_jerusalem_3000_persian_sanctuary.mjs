@@ -21,22 +21,36 @@ const noReserve=structuredClone(data);noReserve.phases['persian-nehemiah'].reser
 const original=globalThis.fetch,requests=new Map();
 try{
  globalThis.fetch=async url=>{const path=new URL(url).pathname;requests.set(path,(requests.get(path)||0)+1);return {ok:true,json:()=>json(url)};};invalidateCityData();
- const terrain={grid:{origin:data.anchor},heightAtWorld:(x,z)=>40+x*.02+z*.01};
+ const terrain={grid:{origin:{lat:31.778,lon:35.235}},heightAtWorld:(x,z)=>40+x*.02+z*.01};
  const [{core},a,b]=await Promise.all([loadTemporalCityCore(timeline.phases,{terrain}),loadAnchorCityLedger(),loadAnchorCityLedger()]);
  assert.equal(a.lifecycle.objects.length,b.lifecycle.objects.length);
  const ids=a.packs.packs.flatMap(p=>(p.objects||[]).map(o=>o.id));assert.equal(new Set(ids).size,ids.length,'derived spatial records must be unique');
  assert.equal(requests.get(new URL('data/urban/first-temple-persian.spatial.v1.json',base).pathname),1,'all ledger consumers must share one spatial request');
- for(const phase of ['late-first-temple','persian-nehemiah'])bindPeriodSpatialCore(core,compilePeriodRegistration(data,phase,data.anchor));
+ for(const phase of ['late-first-temple','persian-nehemiah'])bindPeriodSpatialCore(core,compilePeriodRegistration(data,phase,terrain.grid.origin));
  assert.equal(core.get('j3k:late-first-temple:district:western-hill').metadata.rendererBinding,'period-spatial-adapter-v1');
  const parent=new THREE.Group(),runtime=createPersianSanctuary(parent,{data,terrain,core}),apply=position=>runtime.apply({position});
  apply(5.9);assert.equal(runtime.diagnostics().visibleTemple,0);
  apply(6.5);const diag=runtime.diagnostics();assert.ok(diag.visibleTemple>0);assert.equal(diag.visibleGate,2);assert.equal(diag.visibleAccess,true);
  const identity=diag.componentIdentity,parts=parent.children[0].children;
+
+parts.forEach(m=>m.updateMatrixWorld(true));
+const actual=id=>parts.find(m=>m.userData.cityObject.componentId===`j3k:persian-sanctuary:${id}`),roofBox=new THREE.Box3().setFromObject(actual('hall-roof')),roofCentre=roofBox.getCenter(new THREE.Vector3());
+for(const side of['west','east','north']){
+ const floor=actual(`court-portico-${side}-floor`),roof=actual(`court-portico-${side}-roof`),fb=new THREE.Box3().setFromObject(floor),rb=new THREE.Box3().setFromObject(roof);
+ const columns=parts.filter(m=>m.userData.cityObject.componentId.includes(`court-portico-${side}-column-`));assert.ok(columns.length>20);
+ for(const column of columns){const cb=new THREE.Box3().setFromObject(column);assert.ok(Math.abs(cb.min.y-fb.max.y)<1e-4&&Math.abs(cb.max.y-rb.min.y)<1e-4,'all portico columns must join floor and roof on sloping DEM');}
+}
+const edgeBox=new THREE.Box3().setFromObject(actual('hall-roof-edge-1'));
+assert.ok(Math.abs(edgeBox.max.y-roofBox.max.y-.4)<1e-4,'actual roof must be recessed below perimeter');
+const floorBox=new THREE.Box3().setFromObject(actual('hall-floor')),boundaryBox=new THREE.Box3().setFromObject(actual('hall-inner-lintel')),boundaryCentre=boundaryBox.getCenter(new THREE.Vector3());
+const portalRay=new THREE.Raycaster(new THREE.Vector3(boundaryCentre.x+1,floorBox.max.y+1,roofCentre.z),new THREE.Vector3(-1,0,0),0,2);
+assert.equal(portalRay.intersectObjects(parts,true).length,0,'internal boundary must contain an actual clear doorway');
+assert.ok(!parts.some(m=>m.userData.cityObject.componentId.includes('priest-room')),'Hasmonean annexes must not leak into Persian geometry');
  const snapshots=parts.map(m=>Array.from(m.geometry.attributes.position.array));
  assert.ok(!identity.includes('j3k:royal:'),'component IDs must not reuse First Temple assembly');
  const access=parts.find(m=>m.userData.cityObject.role==='access'),p=access.geometry.attributes.position;
  assert.ok(access.geometry.attributes.normal.getY(0)>0);
- for(let i=0;i<p.count;i+=3){const triangle=[0,1,2].map(k=>({x:p.getX(i+k),z:p.getZ(i+k)}));for(const obstacle of parts.filter(m=>!['access','roof'].includes(m.userData.cityObject.role)&&!m.userData.cityObject.componentId.includes('lintel'))){const b=new THREE.Box3().setFromObject(obstacle);assert.ok(!polygonsOverlap(triangle,[{x:b.min.x,z:b.min.z},{x:b.max.x,z:b.min.z},{x:b.max.x,z:b.max.z},{x:b.min.x,z:b.max.z}]),`actual road crosses ${obstacle.userData.cityObject.componentId}`);}}
+ for(let i=0;i<p.count;i+=3){const triangle=[0,1,2].map(k=>({x:p.getX(i+k),z:p.getZ(i+k)}));for(const obstacle of parts.filter(m=>!['access','roof','floor'].includes(m.userData.cityObject.role)&&!m.userData.cityObject.componentId.includes('lintel'))){const b=new THREE.Box3().setFromObject(obstacle);assert.ok(!polygonsOverlap(triangle,[{x:b.min.x,z:b.min.z},{x:b.max.x,z:b.min.z},{x:b.max.x,z:b.max.z},{x:b.min.x,z:b.max.z}]),`actual road crosses ${obstacle.userData.cityObject.componentId}`);}}
  for(const m of parts){m.updateMatrix();const p=m.geometry.attributes.position;for(let i=0;i<p.count;i++){const v=new THREE.Vector3(p.getX(i),p.getY(i),p.getZ(i)).applyMatrix4(m.matrix);assert.ok(v.y>=terrain.heightAtWorld(v.x,v.z)-1e-4,'all sanctuary vertices must remain above the DEM');}}
  const streetGroup=new THREE.Group(),streetMaterial=new THREE.MeshStandardMaterial();
  const registration=compilePeriodRegistration(data,'persian-nehemiah',data.anchor);

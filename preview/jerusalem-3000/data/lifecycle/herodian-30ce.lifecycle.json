@@ -1,13 +1,157 @@
 {
-  "schema":"j3k.lifecycle-ledger.v1",
-  "rule":"Lifecycle is expressed against canonical continuous-build phase IDs, never hard-coded slider numbers.",
-  "objects":[
-    {"id":"j3k:object:temple-mount-enclosure-herodian","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
-    {"id":"j3k:object:royal-stoa","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
-    {"id":"j3k:object:antonia","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
-    {"id":"j3k:object:inner-temple","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
-    {"id":"j3k:object:southern-approach","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"transform"}]},
-    {"id":"j3k:object:western-street","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
-    {"id":"j3k:object:eastern-entry-unknown","lifecycleEvents":[]}
+  "schema": "j3k.lifecycle-ledger.v1",
+  "rule": "Canonical phase events shared by both temporal integration and city core. Ruin rendering is schematic; later specific geometry, burial and reuse are unverified.",
+  "objects": [
+    {
+      "id": "j3k:object:temple-mount-enclosure-herodian",
+      "lifecycleEvents": [
+        {
+          "phase": "herodian-jesus",
+          "state": "build",
+          "authority": "existing-herodian-source-pack-display-scope"
+        },
+        {
+          "phase": "roman-destruction",
+          "state": "ruin",
+          "authority": "existing-source-70ce-context-with-schematic-display-ruin",
+          "collapseGeometryVerified": false
+        },
+        {
+          "phase": "aelia",
+          "state": "unresolved",
+          "authority": "later-object-geometry-burial-and-reuse-unverified"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:royal-stoa",
+      "lifecycleEvents": [
+        {
+          "phase": "herodian-jesus",
+          "state": "build",
+          "authority": "existing-herodian-source-pack-display-scope"
+        },
+        {
+          "phase": "roman-destruction",
+          "state": "ruin",
+          "authority": "existing-source-70ce-context-with-schematic-display-ruin",
+          "collapseGeometryVerified": false
+        },
+        {
+          "phase": "aelia",
+          "state": "unresolved",
+          "authority": "later-object-geometry-burial-and-reuse-unverified"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:antonia",
+      "lifecycleEvents": [
+        {
+          "phase": "herodian-jesus",
+          "state": "build",
+          "authority": "existing-herodian-source-pack-display-scope"
+        },
+        {
+          "phase": "roman-destruction",
+          "state": "ruin",
+          "authority": "existing-source-70ce-context-with-schematic-display-ruin",
+          "collapseGeometryVerified": false
+        },
+        {
+          "phase": "aelia",
+          "state": "unresolved",
+          "authority": "later-object-geometry-burial-and-reuse-unverified"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:inner-temple",
+      "lifecycleEvents": [
+        {
+          "phase": "herodian-jesus",
+          "state": "build",
+          "authority": "existing-herodian-source-pack-display-scope"
+        },
+        {
+          "phase": "roman-destruction",
+          "state": "ruin",
+          "authority": "existing-source-70ce-context-with-schematic-display-ruin",
+          "collapseGeometryVerified": false
+        },
+        {
+          "phase": "aelia",
+          "state": "unresolved",
+          "authority": "later-object-geometry-burial-and-reuse-unverified"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:southern-approach",
+      "lifecycleEvents": [
+        {
+          "phase": "herodian-jesus",
+          "state": "build",
+          "authority": "existing-herodian-source-pack-display-scope"
+        },
+        {
+          "phase": "roman-destruction",
+          "state": "ruin",
+          "authority": "existing-source-70ce-context-with-schematic-display-ruin",
+          "collapseGeometryVerified": false
+        },
+        {
+          "phase": "aelia",
+          "state": "unresolved",
+          "authority": "later-object-geometry-burial-and-reuse-unverified"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:western-street",
+      "lifecycleEvents": [
+        {
+          "phase": "herodian-jesus",
+          "state": "build",
+          "authority": "existing-herodian-source-pack-display-scope"
+        },
+        {
+          "phase": "roman-destruction",
+          "state": "ruin",
+          "authority": "existing-source-70ce-context-with-schematic-display-ruin",
+          "collapseGeometryVerified": false
+        },
+        {
+          "phase": "aelia",
+          "state": "unresolved",
+          "authority": "later-object-geometry-burial-and-reuse-unverified"
+        }
+      ]
+    },
+    {
+      "id": "j3k:object:eastern-entry-unknown",
+      "lifecycleEvents": []
+    },
+    {
+      "id": "j3k:object:temple-perimeter-porticoes",
+      "lifecycleEvents": [
+        {
+          "phase": "herodian-jesus",
+          "state": "build",
+          "authority": "existing-herodian-source-pack-display-scope"
+        },
+        {
+          "phase": "roman-destruction",
+          "state": "ruin",
+          "authority": "existing-source-70ce-context-with-schematic-display-ruin",
+          "collapseGeometryVerified": false
+        },
+        {
+          "phase": "aelia",
+          "state": "unresolved",
+          "authority": "later-object-geometry-burial-and-reuse-unverified"
+        }
+      ]
+    }
   ]
 }

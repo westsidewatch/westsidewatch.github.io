@@ -7,9 +7,27 @@ const clip=(poly,nx,nz,limit)=>{
 };
 function convex(poly){let sign=0;for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length],c=poly[(i+2)%poly.length],cross=(b.x-a.x)*(c.z-b.z)-(b.z-a.z)*(c.x-b.x);if(Math.abs(cross)<1e-6)continue;if(sign&&Math.sign(cross)!==sign)return false;sign=Math.sign(cross);}return true;}
 function convexParts(poly){if(convex(poly))return[poly];return THREE.ShapeUtils.triangulateShape(poly.map(p=>new THREE.Vector2(p.x,p.z)),[]).map(indices=>indices.map(i=>poly[i]));}
+// Exact planar difference against convex parts. No block bridges an excluded
+// district/precinct; small residuals can remain unbuilt rather than be rescaled.
+export function subtractPlanarZones(polygons,zones){
+ let result=polygons;
+ for(const zone of zones)for(let part of convexParts(zone)){
+  if(part.reduce((s,a,i)=>{const b=part[(i+1)%part.length];return s+a.x*b.z-b.x*a.z;},0)<0)part=[...part].reverse();
+  result=result.flatMap(p=>{let inner=p;const outside=[];
+   for(let i=0;i<part.length&&inner.length>=3;i++){
+    const a=part[i],b=part[(i+1)%part.length],nx=b.z-a.z,nz=a.x-b.x,limit=a.x*nx+a.z*nz;
+    const out=clip(inner,-nx,-nz,-limit);if(out.length>=3&&area(out)>1)outside.push(out);
+    inner=clip(inner,nx,nz,limit);
+   }
+   return outside;
+  });
+ }
+ return result;
+}
 // Inferred subdivision of an authored district, never population/survey authority.
 // Convex clipping preserves concave district notches without bridging outside them.
-export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,roadClearance=6,maxDepth=12}={}) {
+export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,roadClearance=6,maxDepth=12,partitionSeed='identity',excludePolygons=[]}={}) {
+ if(!['identity','geometry'].includes(partitionSeed))throw new Error('Invalid partition seed');
  const boundary=district?.geometry?.polygon;
  if(!boundary?.length||!roads.length)return{blocks:[],count:0,withheld:true,reason:'district-or-roads-missing'};
  if(!Number.isFinite(maxBlockArea)||maxBlockArea<1200||!Number.isFinite(roadClearance)||roadClearance<5)throw new Error('Invalid district infill budget');
@@ -27,12 +45,13 @@ export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,road
    return [[left,'left'],[right,'right']].filter(([p])=>p.length>=3&&area(p)>650).map(([polygon,side])=>({polygon,key:`${cell.key}:${road.id.split(':').at(-1)}-${i}-${side}`}));
   });
  }
+ if(excludePolygons.length)cells=cells.flatMap(cell=>subtractPlanarZones([cell.polygon],excludePolygons).map((polygon,i)=>({polygon,key:`${cell.key}:residual-${i}`})));
  const finished=[];
  function divide(cell,depth=0){
   const p=cell.polygon,A=area(p);
   if(A<=maxBlockArea||depth>=maxDepth){finished.push(cell);return;}
   const xs=p.map(v=>v.x),zs=p.map(v=>v.z),xmin=Math.min(...xs),xmax=Math.max(...xs),zmin=Math.min(...zs),zmax=Math.max(...zs),alongX=xmax-xmin>=zmax-zmin;
-  let hash=2166136261;for(const c of cell.key)hash=Math.imul(hash^c.charCodeAt(0),16777619)>>>0;
+  let hash=2166136261;for(const c of (partitionSeed==='geometry'?JSON.stringify(cell.polygon):cell.key))hash=Math.imul(hash^c.charCodeAt(0),16777619)>>>0;
   const ratio=.44+(hash%13)/100,nx=alongX?1:0,nz=alongX?0:1,limit=alongX?xmin+(xmax-xmin)*ratio:zmin+(zmax-zmin)*ratio;
   const parts=[clip(p,nx,nz,limit-1.2),clip(p,-nx,-nz,-limit-1.2)];
   if(parts.some(q=>q.length<3||area(q)<650)){finished.push(cell);return;}
@@ -43,3 +62,17 @@ export function generateDistrictInfill({district,roads=[],maxBlockArea=6000,road
  return{blocks,count:blocks.length,withheld:false,generator:'district-constrained-infill-v1'};
 }
 export function roadClearancePolygons(roads,width=6){return roads.flatMap(road=>road.geometry.points.slice(1).map((b,i)=>{const a=road.geometry.points[i],L=Math.hypot(b.x-a.x,b.z-a.z);if(!L)return null;const nx=-(b.z-a.z)/L*width/2,nz=(b.x-a.x)/L*width/2;return{polygon:[{x:a.x+nx,z:a.z+nz},{x:b.x+nx,z:b.z+nz},{x:b.x-nx,z:b.z-nz},{x:a.x-nx,z:a.z-nz}]};}).filter(Boolean));}
+// The envelope is a modelling constraint, not newly drawn wall or surveyed parcel.
+export function clipBlockToEnvelope(polygon,envelope,{minArea=1}={}){
+ const inside=p=>{let hit=false;for(let i=0,j=envelope.length-1;i<envelope.length;j=i++){const a=envelope[j],b=envelope[i];if((a.z>p.z)!==(b.z>p.z)&&p.x<(b.x-a.x)*(p.z-a.z)/(b.z-a.z)+a.x)hit=!hit;}return hit;};
+ const cross=(a,b,c)=>(b.x-a.x)*(c.z-a.z)-(b.z-a.z)*(c.x-a.x);
+ const crosses=polygon.some((a,i)=>{const b=polygon[(i+1)%polygon.length];return envelope.some((c,j)=>{const d=envelope[(j+1)%envelope.length];return cross(a,b,c)*cross(a,b,d)<-1e-8&&cross(c,d,a)*cross(c,d,b)<-1e-8;});});
+ if(polygon.every(inside)&&!crosses)return [polygon];
+ const result=[];
+ for(let part of convexParts(envelope)){
+  if(part.reduce((s,a,i)=>{const b=part[(i+1)%part.length];return s+a.x*b.z-b.x*a.z;},0)<0)part=[...part].reverse();
+  let p=polygon;for(let i=0;i<part.length&&p.length>=3;i++){const a=part[i],b=part[(i+1)%part.length],nx=b.z-a.z,nz=a.x-b.x;p=clip(p,nx,nz,a.x*nx+a.z*nz);}
+  if(p.length>=3&&area(p)>minArea)result.push(p);
+ }
+ return result;
+}
