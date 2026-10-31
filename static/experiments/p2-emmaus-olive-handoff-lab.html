@@ -121,5 +121,14 @@ if(new URLSearchParams(location.search).get('engraving')==='v15'){
  if(label)label.title='V15: full-field engraving in original film area only; Draft PR';
 }
 </script>
+<script>
+/* Emmaus V16 renders ONLY in the original VIDEO field when ground=1.
+   ONE's content and internal SVG, Church, and Magazine stay unchanged. */
+if(new URLSearchParams(location.search).get('engraving')==='v16'){
+ document.body.dataset.p2Engraving='v16';
+ const toggle=document.getElementById('proof-ground-toggle');
+ if(toggle)toggle.title='Emmaus V16 — original video field: papyrus / scripture-time manifold';
+}
+</script>
 </body>
 </html>
