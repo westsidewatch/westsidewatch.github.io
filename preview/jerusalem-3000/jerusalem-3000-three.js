@@ -154,6 +154,7 @@ try {
   gateFocus.addEventListener('change',()=>{if(gateFocus.value){terrainOverview(false);three.focusCityObject(gateFocus.value);}});
   const templeFocusButton=document.createElement('button');templeFocusButton.textContent='聖殿近看';templeFocusButton.hidden=true;
   document.querySelector('.j3k-event-controls').append(templeFocusButton);
+  const laterHallButton=document.createElement('button');laterHallButton.textContent='地標近看';laterHallButton.hidden=true;document.querySelector('.j3k-event-controls').append(laterHallButton);laterHallButton.addEventListener('click',()=>{terrainOverview(false);const phase=window.__JERUSALEM3000__.historicalTime.phase;three.focusCityObject(`j3k:${phase}:independent:monument:${phase==='byzantine'?'nea-context':'aqsa-context'}`);});
   const royalCourtyardButton=document.createElement('button');royalCourtyardButton.textContent='王室院落';royalCourtyardButton.hidden=true;document.querySelector('.j3k-event-controls').append(royalCourtyardButton);royalCourtyardButton.addEventListener('click',()=>{terrainOverview(false);three.focusRoyalCourtyard();});
   const southEntryButton=document.createElement('button');southEntryButton.textContent='南側入口';southEntryButton.hidden=true;document.querySelector('.j3k-event-controls').append(southEntryButton);southEntryButton.addEventListener('click',()=>{terrainOverview(false);three.focusCityObject('j3k:object:southern-approach');});
   const antoniaFocusButton=document.createElement('button');antoniaFocusButton.textContent='安東尼堡';antoniaFocusButton.hidden=true;document.querySelector('.j3k-event-controls').append(antoniaFocusButton);antoniaFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusCityObject('j3k:object:antonia');});
@@ -260,6 +261,7 @@ try {
     templeSectionButton.hidden=!['david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah','hellenistic-hasmonean','herodian-jesus','roman-destruction'].includes(p.id);
     const courtPhase=['early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id);templeFocusButton.textContent=courtPhase?'聖域近看':'聖殿近看';
     templeFocusButton.hidden=isCorePhase(p.id)||courtPhase?false:!['david-solomon','late-first-temple','babylonian-destruction',RETAINED_PHASE,'hellenistic-hasmonean'].includes(p.id)||!(temple?.visible||temple?.ruined);
+    laterHallButton.hidden=!['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id);laterHallButton.textContent=p.id==='byzantine'?'Nea近看':'禮拜堂近看';
     royalCourtyardButton.hidden=!['david-solomon','late-first-temple','babylonian-destruction'].includes(p.id);
     antoniaFocusButton.hidden=!isCorePhase(p.id);southEntryButton.hidden=antoniaFocusButton.hidden;
     ritualFocusButton.hidden=templeFocusButton.hidden||courtPhase;precinctFocusButton.hidden=ritualFocusButton.hidden;
@@ -273,7 +275,9 @@ try {
     if(p.id==='persian-nehemiah')note.textContent+=' 可用「聖殿剖視」查看獨立殿堂、地板與開啟門扇；高窗、內部分區與凹入屋頂為示意，通路已銜接殿廊標高，祭壇有開敞爐口；坡道、器物尺度及細部仍屬示意。';
     if(p.id==='hellenistic-hasmonean')note.textContent+=' 聖域選取前164年重新奉獻後的示意形態，不代表整期；新增六間祭司側室示意、外門及室間連通門洞，數量、尺寸及平面未核定，可點「聖殿近看」或「聖殿剖視」。';
     if(['david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah','hellenistic-hasmonean','herodian-jesus','roman-destruction'].includes(p.id))note.textContent+=' 可點「院區總覽」查看周邊，早期第二聖殿院邊柱廊已有支路銜接。院界與通路為示意；開放院地保留，未定位配套仍待補，空白不等於古代無建築。';
-    const datedCores=three.landmarkChronology();if(datedCores.length)note.textContent+=' 本期地標階段：'+datedCores.map(c=>c.label).join('；')+'。年份僅用於這些地標的分期定位，並非全城逐年復原。';
+    if(p.id==='byzantine')note.textContent+=' 543年後Nea模型已有五廊通廳、入口與柱列，構件排列仍為示意。';
+    if(['early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 南側禮拜堂已有七廊通廳、北側入口及高低屋頂；採各期既有選定形態，不代表原構件一直保存。';
+    const datedCores=three.landmarkChronology();laterHallButton.disabled=p.id==='byzantine'&&!datedCores.some(c=>c.id.endsWith('nea-context')&&c.state!=='absent');if(datedCores.length)note.textContent+=' 本期地標階段：'+datedCores.map(c=>c.label).join('；')+'。年份僅用於這些地標的分期定位，並非全城逐年復原。';
     if(p.id==='david-solomon')note.textContent+=' 殿體已有高窗開口、內部分隔與通行門洞；高窗數量及細部為示意，周邊新增利巴嫩林宮與柱子廊示意，已接入聖殿前通路，採分項經文尺寸、位置未核定；王室翼樓已有室內與院向開口，可點「王室院落」；兩側三層側室已中空，南側底層入口為示意，上層交通與後側室待核定；另有銅海與十組盆座；內院、祭壇與入口柱採分項文獻方案，位置與細部為示意，可點「祭儀近看」。';
     if(p.id==='herodian-jesus')note.textContent+=' 婦女院經十五級半圓階連接以色列院，再升至祭司院；主殿與祭壇共用上院標高，主殿及周邊柱廊採分件示意，未定位的柱廊接口保留開放，可開剖視；南側入口已改為人體尺度階梯示意，可點「南側入口」；與平台門洞的配準尚待核定。安東尼堡塔樓已有真實窄窗與下凹屋頂，垛口細節屬示意；安東尼堡已有開放內院、圍廊與入口示意，可點「安東尼堡」；堡壘至聖殿的降階通道未核定。主殿外側服務帶已中空並銜接前廊翼部，尚非完整登頂／排水復原；前廊增設木支撐、北側工作柱增設三層掛鉤，數量與配置細節為示意；洗濯盆與北側工作區可點「祭儀近看」；古代絕對高程未核定。';
     if(p.id==='herodian-jesus')note.textContent+=' 比例校準：平台約300×480m；殿體高約52.5m（暫採每肘0.525m），位置與細節仍屬復原。';

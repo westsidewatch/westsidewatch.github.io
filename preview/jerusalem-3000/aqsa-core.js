@@ -1,3 +1,4 @@
+import {appendAisledHall} from './aisled-hall-shell.js';
 // A selected late-Fatimid-or-later schematic form, not the early Umayyad mosque.
 export const AQSA_SOURCE='https://islamicart.museumwnf.org/database_item.php?id=monument%3Bisl%3Bpa%3Bmon01%3B3%3Ben';
 const PHASES=['early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'];
@@ -9,8 +10,9 @@ export function aqsaCore(phase){
 // Append one recognizable assembly through the existing core renderer.
 export function appendAqsaGeometry(record,{box,dome,append,THREE},cx,cz){
  const widths=[20/3,20/3,20/3,10,20/3,20/3,20/3];let left=cx-25;
+ appendAisledHall({append,THREE},{cx,cz,length:80,widths,heights:[11,11,11,16,11,11,11],axis:'z'});
  for(const [i,width]of widths.entries()){
-  const x=left+width/2,height=i===3?16:11;box(x,cz,width,80,height);
+  const x=left+width/2,height=i===3?16:11;
   // Only the central raised roof receives a pitched silhouette; side covering
   // remains schematic rather than inventing seven separate basilica roofs.
   if(i!==3){left+=width;continue;}
@@ -22,5 +24,6 @@ export function appendAqsaGeometry(record,{box,dome,append,THREE},cx,cz){
   g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));g.computeVertexNormals();append(g,0,0);left+=width;
  }
  dome(cx,cz+24,9,18);
- if(record.metadata.eastRecess)box(cx+25,cz+14,12,16,11);
+ // Keep the union's east edge; remove the old annex overlap inside the main aisle.
+ if(record.metadata.eastRecess)appendAisledHall({append,THREE},{cx:cx+28,cz:cz+14,length:16,widths:[6],heights:[11],axis:'z'});
 }
