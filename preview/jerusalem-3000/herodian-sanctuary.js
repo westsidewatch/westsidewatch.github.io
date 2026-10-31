@@ -13,7 +13,8 @@ export function buildHerodianSanctuary({builder,west,y,z,c,surface,emit}){
  cub(100,6,100,50,3,0,'foundation',.98);
  // Holy Place/Most Holy are real volumes, not a solid body or black door panel.
  for(const side of[-1,1]){
-  cub(73,40,6,47.5,26,side*13);
+  // Authored ledges keep each5/6/7cubit room genuinely clear of the core wall.
+  for(const [bottom,top,outer]of[[6,12,17],[12,18,16],[18,24,15],[24,46,16]])cub(73,top-bottom,outer-10,47.5,(bottom+top)/2,side*(10+(outer-10)/2));
   cub(73,40,6,47.5,71,side*13);
  }
  cub(6,85,32,14,48.5);

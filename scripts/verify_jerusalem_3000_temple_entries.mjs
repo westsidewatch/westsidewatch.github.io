@@ -36,6 +36,7 @@ const c=D.cubitMetres;
 for(let tier=0;tier<3;tier++)for(const side of[-1,1])for(let i=0;i<5;i++){
  const xx=west+(11+(i+.5)*73/5)*c,zz=z+side*((17-tier+22)/2)*c,yy=y+(6+tier*6+1)*c;
  assert.equal(new THREE.Raycaster(new THREE.Vector3(xx,yy,zz),new THREE.Vector3(0,0,side),0,(29-(17-tier+22)/2)*c).intersectObjects(group.children,true).length,0,'each of30side cells has a real door into its service band');
+ const back=new THREE.Raycaster(new THREE.Vector3(xx,yy,zz),new THREE.Vector3(0,0,-side)).intersectObjects(group.children,true)[0];assert.ok(Math.abs(Math.abs(back.point.z-z)-(17-tier)*c)<.001,'actual core-wall setback must leave the nominal5/6/7cubit chamber cavity clear');
 }
 for(let tier=0;tier<3;tier++)for(let i=0;i<(tier===2?2:3);i++){
  const n=tier===2?2:3,zz=z+(-16+(i+.5)*32/n)*c,yy=y+(6+tier*6+1)*c;
