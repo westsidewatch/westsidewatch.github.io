@@ -93,6 +93,22 @@ assert.doesNotMatch(css,/--em-paper:color-mix\(in oklab/,
 assert.match(css,/--em-ink:var\(--ws-night\)/,'ONE ink uses night blue, not olive green');
 assert.match(css,/p2-emmaus-scroll-micro-engraving\.svg/,'engraved space uses its own vector');
 assert.match(css,/--ws-type-scale-display-lg/,'Emmaus display uses the Design OS type scale');
+// V16 visual contract: native scalable paths, ONE colors, and film-field-only scope.
+const v16=fs.readFileSync(path.join(root,'static/images/p2-emmaus-chronology-engraving-v16.svg'),'utf8');
+assert.match(v16,/<svg[^>]*viewBox="0 0 1600 900"/,'native full-bleed SVG uses the source film field geometry');
+assert.match(v16,/id="time-longitudes"/,'temporal wire grid must not degrade to a fluid flow field');
+assert.match(v16,/id="scripture-sixty-six"/,'scriptural-register layer survives optimization');
+assert.match(v16,/id="interpretive-passage"/,'time passage is a vector geometry layer');
+assert.match(v16,/id="micro-engraved-lenses"/,'localized hatching adds non-water tonal variety');
+assert((v16.match(/<path\\b/g)||[]).length>1200,'V16 uses real vector engraving lines, not a rasterized still');
+assert.doesNotMatch(v16,/<(?:image|foreignObject|filter)\\b|data:image/,'V16 must not embed raster, foreign DOM or visual filters');
+assert.match(css,/body\\[data-p2-engraving="v16"\\] #p2-realm-background\\[data-realm="bible"\\]/,'the candidate takes over the existing VIDEO negative space');
+assert.match(css,/background-color:var\\(--ws-one-paper,#ded096\\)/,'the visible paper is the ONE Design OS surface, not dark magazine night');
+assert.match(html,/p2Engraving='v16'/,'V16 stays in opt-in proof and never changes the default');
+const {execFileSync}=require('node:child_process');
+const generatedV16=execFileSync(process.execPath,[path.join(root,'scripts/build-emmaus-engraving-v16.mjs')],{encoding:'utf8',maxBuffer:1024*1024*3});
+assert.equal(generatedV16,v16,'V16 SVG must be reproducible from its dependency-free source generator');
+
 console.log('P2 03/04 isolated preview source contract: pass');
 
 if(!process.env.P2_BROWSER_PROOF)process.exit(0);
