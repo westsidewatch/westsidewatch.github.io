@@ -24,3 +24,7 @@ First-temple parts share one modern-DEM-derived display datum, with lower suppor
 All new parts belong to the existing temple object IDs. They are absent in David's stage, appear in Solomon's stage, share the existing later first-temple/ruin projection, and follow live evidence filters. Herodian details use the existing builder construction schedules, shared event ledger and destruction display. No new physical-survival claim is added and no temple appears in subsequent unresolved contexts.
 
 This stage intentionally precedes interiors, ornament, metallic finishes, accurate column orders, complete sanctuary chamber partitions and a full altar/courtyard plan. Next temple work should review these as paired ensembles before adding decoration. No external model/texture or runtime text-API fetch is introduced.
+
+## Complete precinct scope baseline
+
+The subsequent user-requested comprehensive inventory is [TEMPLE-PRECINCT-PROGRAMME.md](TEMPLE-PRECINCT-PROGRAMME.md), backed by `templePrecinctProgramme` in the existing landmark-building programme. It records68 work items (22first-temple,46Herodian/context) and whole-ensemble delivery gates. It supersedes ad-hoc next-detail selection, not B19 source limitations. No runtime geometry changes in this inventory package.
