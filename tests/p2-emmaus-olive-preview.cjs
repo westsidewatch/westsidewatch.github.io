@@ -100,10 +100,10 @@ assert.match(v16,/id="time-longitudes"/,'temporal wire grid must not degrade to 
 assert.match(v16,/id="scripture-sixty-six"/,'scriptural-register layer survives optimization');
 assert.match(v16,/id="interpretive-passage"/,'time passage is a vector geometry layer');
 assert.match(v16,/id="micro-engraved-lenses"/,'localized hatching adds non-water tonal variety');
-assert((v16.match(/<path\\b/g)||[]).length>1200,'V16 uses real vector engraving lines, not a rasterized still');
-assert.doesNotMatch(v16,/<(?:image|foreignObject|filter)\\b|data:image/,'V16 must not embed raster, foreign DOM or visual filters');
-assert.match(css,/body\\[data-p2-engraving="v16"\\] #p2-realm-background\\[data-realm="bible"\\]/,'the candidate takes over the existing VIDEO negative space');
-assert.match(css,/background-color:var\\(--ws-one-paper,#ded096\\)/,'the visible paper is the ONE Design OS surface, not dark magazine night');
+assert((v16.match(/<path\b/g)||[]).length>1200,'V16 uses real vector engraving lines, not a rasterized still');
+assert.doesNotMatch(v16,/<(?:image|foreignObject|filter)\b|data:image/,'V16 must not embed raster, foreign DOM or visual filters');
+assert.match(css,/body\[data-p2-engraving="v16"\] #p2-realm-background\[data-realm="bible"\]/,'the candidate takes over the existing VIDEO negative space');
+assert.match(css,/background-color:var\(--ws-one-paper,#ded096\)/,'the visible paper is the ONE Design OS surface, not dark magazine night');
 assert.match(html,/p2Engraving='v16'/,'V16 stays in opt-in proof and never changes the default');
 const {execFileSync}=require('node:child_process');
 const generatedV16=execFileSync(process.execPath,[path.join(root,'scripts/build-emmaus-engraving-v16.mjs')],{encoding:'utf8',maxBuffer:1024*1024*3});
