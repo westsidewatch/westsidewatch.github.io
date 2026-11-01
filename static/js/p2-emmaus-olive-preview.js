@@ -12,6 +12,10 @@
  // Magazine remains the fixed geometric master for all following chapters.
  // Only the NON-CONTENT field changes by realm (film, manuscript, terraces).
  let fixedGround=new URLSearchParams(location.search).get('ground')==='1';
+ // The 03–07 draft must show the five native engraving backgrounds by default.
+ // ?ground=0 (or ?five=0 without an explicit ground setting) keeps the original A/B proof.
+ const params=new URLSearchParams(location.search);
+ if(!params.has('ground')&&params.get('five')!=='0')fixedGround=true;
  const groundToggle=$('#proof-ground-toggle'),realmGround=$('#p2-realm-background');
  function syncGroundMode(){
   document.body.dataset.fixedGround=fixedGround?'on':'off';
@@ -27,7 +31,7 @@
   fixedGround=!fixedGround;
   const url=new URL(location.href);
   if(fixedGround)url.searchParams.set('ground','1');
-  else url.searchParams.delete('ground');
+  else url.searchParams.set('ground','0');
   url.searchParams.delete('film');
   history.replaceState(null,'',url);
   syncGroundMode();requestPaint();
