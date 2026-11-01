@@ -53,8 +53,8 @@ assert.match(js,/const fullLeft=\{x:master\.x/,
  'the 2:1 ONE spread lives inside the Magazine footprint');
 assert.match(js,/const fitInside=\(original,destination\)/,'projected Doré plate must fit uniformly within destination');
 assert.match(js,/blendRects\(original,coverArtwork,move\)/,'original Doré plate must animate without independent width and height deformation');
-assert.doesNotMatch(css,/\.proof-stage > #dual-dore-plate \.dual-dore-plate__image[\s\S]*?object-fit:cover/,
- 'projected Doré artwork is never cropped with object-fit:cover');
+assert.match(css,/#dual-dore-plate \.dual-dore-plate__image\{[^}]*object-fit:contain/,
+ 'projected Doré artwork stays inside its preserved page frame');
 assert.match(js,/olive\.style\.inset='auto'/,
  'the Olive stage is also constrained to the Magazine geometry');
 assert.match(js,/active:distance<6\.6/,
