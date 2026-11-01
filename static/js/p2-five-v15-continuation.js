@@ -7,7 +7,8 @@
 (()=>{'use strict';
 const $=s=>document.querySelector(s),clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),smooth=x=>{x=clamp(x);return x*x*(3-2*x)};
 const q=new URLSearchParams(location.search);
-if(new URLSearchParams(location.search).get('five')!=='1')return;
+// The draft P2 preview shows all five chapters by default. Explicit five=0 preserves the baseline for A/B checks.
+if(q.get('five')==='0')return;
 const stage=$('#proof-stage'),track=$('#proof-track'),background=$('#p2-realm-background'),base=$('#proof-original');
 if(!stage||!track||!background||!base){console.warn('[P2 five v15] original 03/04 P2 stage not found');return}
 const originalTrackHeight=getComputedStyle(track).height;
