@@ -281,7 +281,8 @@
   b.dataset.speaker=slug;b.setAttribute('aria-label','選擇講員 '+zh);b.addEventListener('click',()=>chooseSpeaker(i));names.append(b);
  });
  chooseSpeaker(0);
- let transferFigure=null,transferHome=null,transferNext=null,transferStyle=null;
+ // The source magazine node stays in its original iframe throughout the handoff.
+ let transferFigure=null,transferHome=null,transferOriginalVisibility=null;
  let sourceOriginalTileOpacity=null,sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
  let frameLoaded=false,lastPaint=NaN,queued=false,lastMeasuredSpread=null;
  function paint(){
@@ -315,7 +316,7 @@
   const sourceTile=sourceDoc?.getElementById('dual-contents');
   const sourceCover=sourceDoc?.getElementById('dual-cover');
   const sourceSpine=sourceDoc?.getElementById('dual-continuum');
-  const sourceFigure=transferFigure||sourceDoc?.getElementById('dual-dore-plate');
+  const sourceFigure=sourceDoc?.getElementById('dual-dore-plate');
   const frameRect=sourceFrame?.getBoundingClientRect(),baseRect=base.getBoundingClientRect(),stageRect=$('#proof-stage').getBoundingClientRect();
   const bounds=node=>{
    if(!node||!frameRect)return null;
@@ -411,22 +412,36 @@
   olive.style.width=master.w.toFixed(2)+'px';
   olive.style.height=master.h.toFixed(2)+'px';
   if(move>.001&&sourceFigure&&sourceTile&&coverBounds){
-   if(!transferFigure){
-    transferFigure=sourceFigure;transferHome=sourceTile;
-    transferNext=sourceFigure.nextSibling;transferStyle=sourceFigure.getAttribute('style');
-    $('#proof-stage').appendChild(sourceFigure);
+   // Keep the magazine artwork in its OWN iframe. Never adopt its DOM into P2.
+   // Project the same source image URLs only for the scroll-owned transition.
+   if(!transferFigure||transferHome!==sourceFigure){
+    if(transferFigure)transferFigure.remove();
+    if(transferHome)transferHome.style.visibility=transferOriginalVisibility??'';
+    transferHome=sourceFigure;transferOriginalVisibility=sourceFigure.style.visibility;
+    transferFigure=sourceFigure.cloneNode(true);
+    transferFigure.setAttribute('aria-hidden','true');
+    transferFigure.dataset.p2Transferred='projection';
+    $('#proof-stage').appendChild(transferFigure);
    }
+   const originals=sourceFigure.querySelectorAll('img'),projections=transferFigure.querySelectorAll('img');
+   originals.forEach((img,i)=>{
+    const projection=projections[i];if(!projection)return;
+    const url=img.currentSrc||img.src;
+    if(url&&projection.src!==url)projection.src=url;
+    projection.className=img.className;
+    projection.style.cssText=img.style.cssText;
+   });
+   const credit=sourceFigure.querySelector('figcaption'),projectedCredit=transferFigure.querySelector('figcaption');
+   if(credit&&projectedCredit)projectedCredit.textContent=credit.textContent;
+   sourceFigure.style.visibility='hidden';
    poseRect(transferFigure,original,coverBounds,move);
    if(move>.999)poseRect(transferFigure,coverBounds,fullRight,smooth((distance-7.40)/.28));
    transferFigure.style.setProperty('--p2-transfer-visible',
     String(Math.max(0,1-(useArchive?archive:0))*fieldExit));
-   transferFigure.dataset.p2Transferred='true';
-  }else if(move<=.001&&transferFigure&&transferHome){
-   transferHome.insertBefore(transferFigure,transferNext?.parentNode===transferHome?transferNext:null);
-   if(transferStyle===null)transferFigure.removeAttribute('style');
-   else transferFigure.setAttribute('style',transferStyle);
-   transferFigure.removeAttribute('data-p2-transferred');
-   transferFigure=null;transferHome=null;transferNext=null;transferStyle=null;
+  }else if(transferFigure){
+   transferFigure.remove();
+   if(transferHome)transferHome.style.visibility=transferOriginalVisibility??'';
+   transferFigure=null;transferHome=null;transferOriginalVisibility=null;
   }
   // The ONE field opens over the vacated Contents footprint, not from outside.
   // Chapter text and artwork keep their positions within the Magazine spread.
