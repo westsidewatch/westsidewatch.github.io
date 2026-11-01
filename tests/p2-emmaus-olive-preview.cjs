@@ -56,8 +56,8 @@ assert.match(js,/const movingArt=\{x:lerp\(sourceArt\.x,targetX,move\),y:sourceA
 assert.match(js,/w:sourceArt\.w,h:sourceArt\.h/,'the moving source width and height never change');
 assert.match(js,/transferFigure\.style\.clipPath='inset\('/,
  'the narrow cover crops the artwork instead of scaling it');
-assert.match(css,/#dual-dore-plate \.dual-dore-plate__image\{[^}]*object-fit:contain/,
- 'projected Doré artwork stays inside its preserved page frame');
+assert.match(css,/#dual-dore-plate \.dual-dore-plate__image\{[^}]*object-fit:cover/,
+ 'projected Doré artwork preserves the exact same crop and scale as its source Contents plate');
 assert.match(js,/olive\.style\.inset='auto'/,
  'the Olive stage is also constrained to the Magazine geometry');
 assert.match(js,/active:distance<6\.6/,
@@ -357,7 +357,7 @@ const {chromium}=require('playwright');
      proportions.art.bottom<=proportions.folio.bottom+3,
      'the transitioning Doré plate never expands outside the existing Magazine folio');
    }
-   assert.equal(proportions.imageFit,'contain','original image does not scale to fill the destination');
+   assert.equal(proportions.imageFit,'cover','the moving plate uses the original left-page image crop, without a change of scale');
    if(viewport.width>820){
     const originalSquare=await page.locator('#proof-original').evaluate(frame=>{
      const nested=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
