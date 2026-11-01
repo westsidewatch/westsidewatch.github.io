@@ -60,10 +60,11 @@ assert.match(js,/selectGalleryForBook\(number\)/,'book selection changes gallery
 assert.match(js,/renderBookStudy\(number\)/,'book selection also changes ONE study view');
 assert.match(js,/Math\.min\(distance,6\.5\)/,'does not stretch the approved Church/Magazine timing');
 assert.match(js,/const move=.*6\.50[\s\S]*oliveIn=.*9\.44/,'both stages share a reversible scroll timeline');
-assert.match(js,/appendChild\(sourceFigure\)/,'the original engraving node crosses into the receiving stage');
+assert.match(js,/transferFigure=sourceFigure\.cloneNode\(true\)/,'handoff projects the original Doré artwork without removing the Magazine DOM node');
+assert.doesNotMatch(js,/appendChild\(sourceFigure\)/,'Magazine source remains inside its original iframe');
 assert.doesNotMatch(js,/sourceTile\.style\.opacity=String\(1-smooth/,'Magazine Contents never disappear to expose the unrelated background film');
 assert.doesNotMatch(js,/sourceCover\.style\.opacity=String\(1-smooth/,'approved cover remains in the continuous frame during transfer');
-assert.match(js,/insertBefore\(transferFigure/,'reverse scroll restores the same original node');
+assert.match(js,/transferHome\.style\.visibility=transferOriginalVisibility/,'reverse scrolling restores the original artwork visibility');
 assert.doesNotMatch(html,/em-handoff-photo/,'no added substitute picture is allowed');
 assert.match(js,/const roster=\[/,'uses fixed factual speaker assets');
 assert.match(css,/grid-template-columns:minmax\(0,2fr\) minmax\(0,1fr\)/,'Emmaus is left 2/3 and original engravings right 1/3');
@@ -286,7 +287,15 @@ const {chromium}=require('playwright');
    assert(magazineVisibility[0]>.9&&magazineVisibility[1]>.9,
     '61%: existing Contents and cover remain visibly connected behind the moving original plate');
    assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),1,
-    'the actual magazine engraving is adopted into the shared P2 stage');
+    'the same Doré images are projected into the shared P2 transition stage');
+   const originalPlateState=await page.locator('#proof-original').evaluate(frame=>{
+    const source=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+    const plate=source?.getElementById('dual-dore-plate');
+    return {parent:plate?.parentElement?.id,stillConnected:plate?.isConnected,
+     visibility:plate?.style.visibility};
+   });
+   assert.deepEqual(originalPlateState,{parent:'dual-contents',stillConnected:true,visibility:'hidden'},
+    'the source engraving remains structurally anchored in the approved Magazine');
    const transferShot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-magazine-plate-transfer.png');
    fs.mkdirSync(path.dirname(transferShot),{recursive:true});
    await page.screenshot({path:transferShot});
