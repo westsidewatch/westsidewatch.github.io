@@ -514,16 +514,26 @@
    const credit=sourceFigure.querySelector('figcaption'),projectedCredit=transferFigure.querySelector('figcaption');
    if(credit&&projectedCredit)projectedCredit.textContent=credit.textContent;
    sourceFigure.style.visibility='hidden';
-   // Uniform scale only: source square -> square fitted INSIDE 5:8 cover,
-   // then fitted inside the fixed 2/3 + 1/3 Emmaus spread.
+   // 02→03: translate the SAME SIZE engraving horizontally, never scale it.
+   // A square engraving crosses to the narrower 5:8 cover without changing
+   // its width or height. The destination folio clips the overflowing edges.
    const sourceArt=validMagazine?original:{x:master.x,y:master.y,w:master.h,h:master.h};
    const targetCover=validMagazine?coverBounds:{
     x:master.x+master.w-master.h*.625,y:master.y,w:master.h*.625,h:master.h};
-   const coverArtwork=fitInside(sourceArt,targetCover);
-   const oneArtwork=fitInside(sourceArt,fullRight);
-   setRect(transferFigure,move>.999?
-    blendRects(coverArtwork,oneArtwork,archive):
-    blendRects(sourceArt,coverArtwork,move));
+   const targetX=targetCover.x+(targetCover.w-sourceArt.w)/2;
+   const movingArt={x:lerp(sourceArt.x,targetX,move),y:sourceArt.y,
+                    w:sourceArt.w,h:sourceArt.h};
+   setRect(transferFigure,movingArt);
+   // Crop only the PAGE WINDOW as it moves: the art itself stays 1:1 size.
+   const windowX=lerp(sourceArt.x,targetCover.x,move);
+   const windowY=lerp(sourceArt.y,targetCover.y,move);
+   const windowW=lerp(sourceArt.w,targetCover.w,move);
+   const windowH=lerp(sourceArt.h,targetCover.h,move);
+   const crop=[Math.max(0,windowY-movingArt.y),
+               Math.max(0,movingArt.x+movingArt.w-windowX-windowW),
+               Math.max(0,movingArt.y+movingArt.h-windowY-windowH),
+               Math.max(0,windowX-movingArt.x)];
+   transferFigure.style.clipPath='inset('+crop.map(x=>x.toFixed(2)+'px').join(' ')+')';
    transferFigure.style.setProperty('--p2-transfer-visible',
     String(Math.max(0,1-(useArchive?archive:0))*fieldExit));
   }else if(transferFigure){
@@ -597,8 +607,8 @@
   // magazine plate itself into the Olive portrait slot. No blank panel,
   // placeholder, fabricated engraving, or duplicate image may appear.
   if(transferFigure&&!useArchive&&oliveIn>.001){
-   setRect(transferFigure,blendRects(
-    fitInside(validMagazine?original:{x:master.x,y:master.y,w:master.h,h:master.h},fullRight),fitInside(validMagazine?original:{x:master.x,y:master.y,w:master.h,h:master.h},destination),morphMove));
+   // Never squeeze the original square into a narrower speaker portrait.
+   transferFigure.style.setProperty('--p2-transfer-visible',String(fieldExit));
   }
   heroFolio.style.opacity=String(smooth((oliveIn-.76)/.23));
 
