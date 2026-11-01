@@ -6,6 +6,20 @@ const html=fs.readFileSync(path.join(root,'static/experiments/p2-emmaus-olive-ha
 const js=fs.readFileSync(path.join(root,'static/js/p2-emmaus-olive-preview.js'),'utf8');
 const css=fs.readFileSync(path.join(root,'static/css/p2-emmaus-olive-preview.css'),'utf8');
 const engraving=fs.readFileSync(path.join(root,'static/css/westside-engraving-authority.css'),'utf8');
+
+const fiveCSS=fs.readFileSync(path.join(root,'static/css/p2-five-v15-continuation.css'),'utf8');
+const fiveJS=fs.readFileSync(path.join(root,'static/js/p2-five-v15-continuation.js'),'utf8');
+const emmausOriginalSVG=fs.readFileSync(path.join(root,'static/images/p2-realms/v15/03-emmaus-engraving-v1-5.svg'),'utf8');
+const emmausRuntimeSVG=fs.readFileSync(path.join(root,'static/images/p2-realms/v15/03-emmaus-engraving-p2-runtime.svg'),'utf8');
+assert.match(emmausOriginalSVG,/ws-bow-whole-slow-rotation/,'retain the original SVG master unchanged');
+assert.match(fiveCSS,/03-emmaus-engraving-p2-runtime\.svg/,'P2 uses the optimized static vector background');
+assert.doesNotMatch(emmausRuntimeSVG,/@keyframes|animation:|will-change:/,'background engraving must not continuously rotate all its paths');
+assert.match(emmausRuntimeSVG,/<svg[^>]+viewBox="0 0 1440 900"/,'native vector geometry and viewBox remain');
+assert((emmausRuntimeSVG.match(/<path\b/g)||[]).length<=900,'optimized engraving reduces the SVG DOM path count');
+assert(emmausRuntimeSVG.length<emmausOriginalSVG.length*.65,'P2 runtime SVG is substantially lighter than the preserved master');
+assert.doesNotMatch(emmausRuntimeSVG,/<(?:image|foreignObject|filter)\b|data:image/,'P2 background remains pure native SVG');
+assert.match(fiveJS,/im\.dataset\.src=srcRoot\+sec\.image/,'future SVG chapters are not decoded while entering Emmaus');
+assert.match(js,/if\(fullDistance>=12\)/,'the 03/04 animator stops repaints once 05–07 own the page');
 assert.match(html,/p2\/living-water\.html\?embed=1/,'reuses approved P2 Church/Magazine source');
 assert.match(html,/one\/one-data\.js/,'reads the canonical 66-book inventory');
 assert.match(html,/one\/luke-21-24\.js/,'features the original Luke 24 ONE study content');
@@ -360,6 +374,26 @@ const {chromium}=require('playwright');
    const screenshot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-olive.png');
    fs.mkdirSync(path.dirname(screenshot),{recursive:true});
    await page.locator('[data-jump="11.10"]').click();await page.screenshot({path:screenshot});
+
+   // Real P2 (not a separate SVG mock): verify that the background renders
+   // as a static optimized SVG in the surviving Magazine surrounding field.
+   await page.goto('http://127.0.0.1:4173/experiments/p2-emmaus-olive-handoff-lab.html?five=1&ground=1&d=9.10',
+    {waitUntil:'domcontentloaded',timeout:45000});
+   await page.waitForFunction(()=>{
+    const bg=document.getElementById('p2-realm-background');
+    return document.body.dataset.p2FiveV15==='on'&&
+     document.body.dataset.fixedGround==='on'&&
+     bg?.dataset.realm==='bible'&&
+     getComputedStyle(bg).backgroundImage.includes('03-emmaus-engraving-p2-runtime.svg')&&
+     Number(getComputedStyle(bg).opacity)>.9;
+   },null,{timeout:25000});
+   const asset=await page.request.get('http://127.0.0.1:4173/images/p2-realms/v15/03-emmaus-engraving-p2-runtime.svg');
+   assert.equal(asset.status(),200,'optimized SVG exists in the actual Hugo preview output');
+   const validSVG=await page.evaluate(xml=>!(
+    new DOMParser().parseFromString(xml,'image/svg+xml').getElementsByTagName('parsererror').length
+   ),await asset.text());
+   assert(validSVG,'browser can parse the optimized native SVG without errors');
+   await page.screenshot({path:path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-emmaus-static-engraving.png')});
    await page.close();
   }
   assert.deepEqual(errors,[],'no JavaScript errors in either browser size');
