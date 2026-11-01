@@ -1,0 +1,92 @@
+/* Opt-in P2 03–07 integration. No global tokens, no extra wallpaper animation.
+   Background OWNERSHIP and live Magazine cutout remain with the existing
+   #p2-realm-background / p2-emmaus-olive-preview.js on the draft branch. */
+body[data-p2-five-v15="on"] #p2-realm-background{
+  --ws-engraving-opacity:1;
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-size:100% 100%;
+  background-color:var(--ws-one-paper,var(--ws-papyrus,#ded096));
+}
+body[data-p2-five-v15="on"] #p2-realm-background::before,
+body[data-p2-five-v15="on"] #p2-realm-background::after{content:none!important}
+body[data-p2-five-v15="on"] #p2-realm-background[data-realm="bible"]{
+  background-image:url('/images/p2-realms/v15/03-emmaus-engraving-v1-5.svg');
+}
+body[data-p2-five-v15="on"] #p2-realm-background[data-realm="sermon"]{
+  background-image:url('/images/p2-realms/v15/04-olive-engraving-v1-5.svg');
+}
+body[data-p2-five-v15="on"] #p2-realm-background[data-realm="book"]{
+  background-image:url('/images/p2-realms/v15/05-library-engraving-v1-5.svg');
+}
+body[data-p2-five-v15="on"] #p2-realm-background[data-realm="cinema"]{
+  background-image:url('/images/p2-realms/v15/06-cinema-engraving-v1-5.svg');
+}
+body[data-p2-five-v15="on"] #p2-realm-background[data-realm="life"]{
+  background-image:url('/images/p2-realms/v15/07-cafe-engraving-v1-5.svg');
+}
+/* The scroll master stays the original sticky stage and its single owner.
+   01 Church, 02 Magazine and 03/04 keep their original distance 0–12. */
+body[data-p2-five-v15="on"] #proof-track{height:1800svh}
+body[data-p2-five-v15="on"] .p2-five-realm{
+ position:absolute;pointer-events:none;visibility:hidden;opacity:0;
+ z-index:14;box-sizing:border-box;overflow:hidden;display:grid;
+ grid-template-columns:minmax(0,2fr) minmax(0,1fr);
+ color:var(--ws-ink,#243235);font-synthesis:none;
+ background:var(--ws-papyrus,#eee4c9);
+ border:1px solid color-mix(in srgb,var(--ws-ink,#243235) 30%,transparent);
+}
+body[data-p2-five-v15="on"] .p2-five-realm.is-active{visibility:visible;pointer-events:auto}
+.p2-five-realm__main{position:relative;display:flex;flex-direction:column;gap:clamp(8px,1.8vw,22px);
+ padding:clamp(16px,3vw,52px);min-width:0;overflow:hidden}
+.p2-five-realm__main:before{content:"";position:absolute;z-index:0;inset:0;
+ background:linear-gradient(100deg,color-mix(in srgb,var(--ws-papyrus,#eee4c9) 94%,transparent),
+ color-mix(in srgb,var(--ws-papyrus,#eee4c9) 74%,transparent));pointer-events:none}
+.p2-five-realm__main>*{position:relative;z-index:1}
+.p2-five-realm__meta,.p2-five-realm__foot,.p2-five-realm__cap{display:flex;justify-content:space-between;gap:10px;
+ font:400 clamp(9px,.72vw,12px)/1.3 var(--ws-type-display-en,'Bodoni Moda',serif);letter-spacing:.13em}
+.p2-five-realm__meta{border-bottom:1px solid color-mix(in srgb,var(--ws-ink,#243235) 32%,transparent);padding-bottom:8px}
+.p2-five-realm__title{font:400 clamp(38px,7.6vw,126px)/.82 var(--ws-type-display-en,'Bodoni Moda',serif);
+ letter-spacing:-.06em;margin:auto 0 0;overflow-wrap:anywhere}
+.p2-five-realm__zh{font:600 clamp(18px,1.7vw,30px)/1.4 var(--ws-type-display-zh,sans-serif);
+ margin:0;letter-spacing:.08em}
+.p2-five-realm__desc{max-width:34em;font:400 clamp(12px,1.05vw,17px)/1.65 var(--ws-type-reading-zh,serif)}
+.p2-five-realm__link{align-self:flex-start;color:inherit;text-decoration:none;border-block:1px solid currentColor;
+ padding:10px 0;font:200 clamp(11px,1vw,15px)/1.4 var(--ws-type-display-zh,sans-serif)}
+.p2-five-realm__link:focus-visible{outline:2px solid var(--ws-first-light,#ac8a4c);outline-offset:4px}
+.p2-five-realm__foot{margin-top:auto;border-top:1px solid #7985796b;padding-top:8px}
+.p2-five-realm__side{position:relative;overflow:hidden;border-left:1px solid #ae9263;background:#182f32;color:#eddfc3}
+.p2-five-realm__side>img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;
+ filter:contrast(.98)}
+.p2-five-realm__side .p2-five-realm__cap{position:absolute;left:8%;right:8%;bottom:6%;z-index:4;
+ border-top:1px solid #ebd6a870;padding-top:9px;color:#f5e9cc}
+.p2-five-realm__side .p2-five-realm__corner{position:absolute;z-index:4;top:5%;left:8%;right:8%;
+ font:200 10px/1.4 var(--ws-type-display-en,serif);letter-spacing:.12em}
+.p2-five-realm--book .p2-five-realm__side{background:#e2d9c4;color:#38453e}
+.p2-five-realm--book .p2-five-realm__side>img{opacity:.82;object-fit:cover}
+.p2-five-realm--cinema .p2-five-realm__side{background:#18242a}
+.p2-five-realm--cinema .p2-cinema-stage{position:absolute;inset:0;overflow:hidden;background:#1c2528}
+.p2-cinema-stage__light{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,#e5ce8d 0%,#9f8b60 26%,#18272d 85%);opacity:.75}
+.p2-cinema-stage__light span{position:absolute;top:47%;left:9%;right:9%;text-align:center;color:#fff5e0;
+ font:400 clamp(13px,1.15vw,22px)/1.45 var(--ws-type-display-en,serif);letter-spacing:.12em}
+.p2-cinema-curtain{position:absolute;inset:0;display:flex;overflow:hidden}
+.p2-cinema-curtain__half{position:relative;width:50%;height:100%;overflow:hidden;will-change:transform;
+ background-image:url('/images/p2-realms/v15/06-cinema-engraving-v1-5.svg');
+ background-repeat:no-repeat;background-size:200% 100%}
+.p2-cinema-curtain__half:first-child{background-position:left center;transform:translateX(calc(-100% * var(--p2-curtain-open,0)))}
+.p2-cinema-curtain__half:last-child{background-position:right center;transform:translateX(calc(100% * var(--p2-curtain-open,0)))}
+.p2-five-realm--life .p2-five-realm__side{background:#d9c7a1}
+.p2-five-realm--life .p2-five-realm__side>img{object-position:center 48%}
+.p2-five-realm__note{position:absolute;z-index:4;bottom:4%;right:4%;font:200 9px/1.35 sans-serif;
+ color:#e7d7b3;background:#1a2e34af;padding:5px 7px}
+@media(max-width:700px){
+ body[data-p2-five-v15="on"] .p2-five-realm{grid-template-columns:minmax(0,64%) minmax(0,36%)}
+ .p2-five-realm__main{padding:clamp(9px,2vw,18px);gap:8px}
+ .p2-five-realm__title{font-size:clamp(26px,6.5vw,55px)}
+ .p2-five-realm__zh{font-size:clamp(12px,3vw,19px)}
+ .p2-five-realm__desc{font-size:clamp(9px,2.45vw,12px);line-height:1.4}
+ .p2-five-realm__cap,.p2-five-realm__meta,.p2-five-realm__foot{font-size:8px;letter-spacing:.04em}
+ .p2-five-realm__link{font-size:10px;padding:5px 0}
+ .p2-five-realm__side .p2-five-realm__corner{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){.p2-cinema-curtain__half{will-change:auto}}
