@@ -283,7 +283,7 @@
  chooseSpeaker(0);
  let transferFigure=null,transferHome=null,transferNext=null,transferStyle=null;
  let sourceOriginalTileOpacity=null,sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
- let frameLoaded=false,lastPaint=NaN,queued=false;
+ let frameLoaded=false,lastPaint=NaN,queued=false,lastMeasuredSpread=null;
  function paint(){
   queued=false;const vh=Math.max(1,innerHeight),top=track.getBoundingClientRect().top;
   const fullDistance=clamp(-top/vh,0,timelineMax),distance=clamp(fullDistance,0,12),legacyDistance=Math.min(distance,6.5),churchEnd=3.0775,magazineEnd=6.5;
@@ -299,15 +299,14 @@
   // Same MERSI image object: Magazine LEFT engraving actually travels to
   // the existing RIGHT cover rectangle. No replica image is created.
   // Only once it arrives does the full Doré archive take over silently;
-  // ONE reveals TOP to BOTTOM, then BOTH panels expand to fill the screen.
+  // ONE reveals top-to-bottom inside the fixed Magazine perimeter; never zoom back to full-screen.
   const move=smooth((distance-6.50)/.90);
   const archive=smooth((distance-7.40)/.28);
   const oneDrop=smooth((distance-7.66)/.78);
-  const expand=smooth((distance-8.44)/.48);
   const oliveIn=smooth((distance-9.44)/1.38);
   const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
   emmaus.style.visibility=emShowing?'visible':'hidden';emmaus.style.opacity='1';emmaus.style.transform='none';
-  const emInteractive=oneDrop>.999&&expand>.999&&oliveIn<.01;
+  const emInteractive=oneDrop>.999&&oliveIn<.01;
   emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;
   emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
 
@@ -376,8 +375,15 @@
    const x=Math.min(...folios.map(r=>r.x)),y=Math.min(...folios.map(r=>r.y));
    return {x,y,w:Math.max(...folios.map(r=>r.x+r.w))-x,
                h:Math.max(...folios.map(r=>r.y+r.h))-y};
-  })():null;
-  const master=magSpread||{x:0,y:0,w:stageRect.width,h:stageRect.height};
+  })():lastMeasuredSpread;
+  if(original&&coverBounds)lastMeasuredSpread=magSpread;
+  // Missing iframe geometry must never turn a fixed folio into full screen.
+  if(!magSpread){
+   emmaus.style.visibility='hidden';olive.style.visibility='hidden';
+   if(realmGround){realmGround.style.opacity='0';realmGround.style.clipPath='none';}
+   return;
+  }
+  const master=magSpread;
   // Cut the REAL Magazine folio shape OUT of the background engraving.
   // This paints engraving only in the original VIDEO field, never over the
   // published Contents/cover or an arriving ONE page. Even the transition
@@ -415,7 +421,7 @@
     $('#proof-stage').appendChild(sourceFigure);
    }
    poseRect(transferFigure,original,coverBounds,move);
-   if(move>.999)poseRect(transferFigure,coverBounds,fullRight,expand);
+   if(move>.999)poseRect(transferFigure,coverBounds,fullRight,smooth((distance-7.40)/.28));
    transferFigure.style.setProperty('--p2-transfer-visible',
     String(Math.max(0,1-(useArchive?archive:0))*fieldExit));
    transferFigure.dataset.p2Transferred='true';
@@ -427,9 +433,10 @@
    transferFigure=null;transferHome=null;transferNext=null;transferStyle=null;
   }
   // The ONE field opens over the vacated Contents footprint, not from outside.
-  poseRect(emLeft,original||fullLeft,fullLeft,expand);
+  // Chapter text and artwork keep their positions within the Magazine spread.
+  poseRect(emLeft,fullLeft,fullLeft,1);
   emLeft.style.clipPath='inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
-  poseRect(emRight,coverBounds||fullRight,fullRight,expand);
+  poseRect(emRight,fullRight,fullRight,1);
   emRight.style.clipPath='none';
   syncGallery(move>.98&&oliveIn<.001&&document.visibilityState==='visible');
   emRight.style.opacity=String(useArchive?archive:0);
@@ -468,7 +475,7 @@
   if(galleryBorrowed){
    poseRect(emRight,fullRight,destination,morphMove);
   }else{
-   poseRect(emRight,coverBounds||fullRight,fullRight,expand);
+   poseRect(emRight,fullRight,fullRight,1);
   }
   // MERSI shared-boundary reflow: the real ONE panel ends exactly where
   // the existing engraving panel now begins. Its width responds to the
