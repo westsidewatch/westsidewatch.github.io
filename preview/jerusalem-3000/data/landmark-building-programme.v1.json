@@ -1,6 +1,6 @@
 {
   "schema": "j3k.landmark-building-programme.v1",
-  "date": "2026-10-29",
+  "date": "2026-11-01",
   "kind": "planning-candidate-inventory-not-runtime-lifecycle-ledger",
   "runtimeEnabled": false,
   "historicalGeometryAccepted": false,
@@ -4715,7 +4715,7 @@
           "southern-miqweh"
         ],
         "currentState": "partial",
-        "remainingWork": "既有接近示意需核對雙／三門各期與人流，現狀不整套回投",
+        "remainingWork": "雙門外觀與後代裝飾已作來源分離；仍缺帶年代的平面／高程控制，門洞與地下通道暫不建造。",
         "locationAccepted": false,
         "geometryAccepted": false,
         "implementationState": "planned",
@@ -4989,11 +4989,11 @@
       "all18RegressionRequiredForRuntimeChanges": true
     },
     "activeConstructionPackage": {
-      "id": "B35",
-      "scope": "continuous-existing-approach-bends-and-gallery-edge-junctions",
+      "id": "B36",
+      "scope": "source-separated-inferred-western-market-shells-and-roof-lane-fragment",
       "overallPlanAccepted": false,
       "completePrecincts": false,
-      "review": "ACCESS-JOINS.md"
+      "review": "WESTERN-MARKET.md"
     },
     "templeToCityOrder": {
       "runtimeEnabled": false,
@@ -5015,7 +5015,7 @@
         {
           "id": "R1",
           "scope": "temple-approaches-and-neighbouring-monument-connections",
-          "state": "in-progress-B35-continuous-bends-registration-partial",
+          "state": "in-progress-B36-market-thresholds-connected-registration-partial",
           "gate": "continuous supported paths, road/gate clearance, contemporary housing exclusions, period isolation"
         },
         {

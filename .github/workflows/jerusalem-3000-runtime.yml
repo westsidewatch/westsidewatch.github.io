@@ -41,6 +41,7 @@ jobs:
           node scripts/verify_jerusalem_3000_aisled_landmarks.mjs
           node scripts/verify_jerusalem_3000_sepulchre_shells.mjs
           node scripts/verify_jerusalem_3000_ritual_service.mjs
+          node scripts/verify_jerusalem_3000_western_market.mjs
           node scripts/verify_jerusalem_3000_access_joins.mjs
           node scripts/verify_jerusalem_3000_earlier_routes.mjs
           node scripts/verify_jerusalem_3000_precinct_routes.mjs

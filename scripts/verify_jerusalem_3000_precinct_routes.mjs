@@ -11,7 +11,7 @@ let terrain;try{globalThis.fetch=async()=>({ok:true,json:async()=>grid});terrain
 const data=await read('data/objects/herodian-30ce.json'),street=data.objects.find(o=>o.kind==='street'),anchor=structuredClone(street.spatial.anchor),mat=new THREE.MeshStandardMaterial(),builder=new HeritageBuilder({inferred:mat,observed:mat,reconstructed:mat,disputed:mat}),parent=new THREE.Group();
 try{
  builder.currentObject=street;const r=addEvidenceArchitecture(builder,street,terrain);builder.finish(parent);parent.updateMatrixWorld(true);
- const b=new THREE.Box3().setFromObject(parent),plan=r.displayRoute;
+ const pavingMesh=builder.meshes.find(m=>m.userData.heritageComponent==='western-paving'),b=new THREE.Box3().setFromObject(pavingMesh),plan=r.displayRoute;
  assert.deepEqual(street.spatial.anchor,anchor,'source geographic candidate must remain unchanged');
  assert.equal(street.evidence,'inferred','an authored exterior candidate cannot inherit archaeological surface styling');
  assert.ok(Math.abs(b.max.x-(plan.platformWest-plan.clearance))<.001,'every street vertex must remain outside the rounded platform');
@@ -30,5 +30,10 @@ try{
  }
  assert.ok(maxIntrusion<.03,`terrain must not cut road; maximum intrusion ${maxIntrusion}`);
  assert.ok(maxClearance<.2,`paving must follow the original terrain; maximum gap ${maxClearance}`);
+ const market=builder.meshes.find(m=>m.userData.heritageComponent==='western-market');
+ for(let i=0;i<plan.market.count;i++)for(const x of[b.max.x-.1,b.max.x+.1,plan.market.x]){
+  const z=plan.market.start+(i+.5)*plan.market.cell,hit=new THREE.Raycaster(new THREE.Vector3(x,b.max.y+30,z),new THREE.Vector3(0,-1,0),0,100).intersectObjects([market,pavingMesh],true).find(h=>h.point.y<terrain.heightAtWorld(x,z)+1);
+  assert.ok(hit,'street/threshold/shop floor must exist on original terrain');assert.ok(Math.abs(hit.point.y-terrain.heightAtWorld(x,z)-.16)<.002,'shop threshold must meet the same original-DEM paving as its street');
+ }
  console.log(JSON.stringify({ok:true,vertices,samples,maxIntrusion,maxClearance,plan,historicalGeometryAccepted:false}));
 }finally{builder.dispose();mat.dispose();terrain.dispose();}
