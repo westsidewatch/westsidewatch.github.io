@@ -66,3 +66,4 @@
 .j3k-tools-content .j3k-terrain-badge{position:static;flex-basis:100%;margin:0;max-width:100%;font-size:var(--ws-type-scale-meta)}
 .j3k-tools-content .j3k-royal-relief{flex-basis:100%;max-width:100%;margin:8px 0}
 @media(max-width:720px){.j3k-shell .j3k-header h1{font-size:var(--ws-type-scale-title-lg)}}
+.j3k-tools-content button[aria-pressed="true"]{background:rgba(206,189,116,.3);border-color:var(--ink)}

@@ -1,3 +1,4 @@
+import {createCityVisualHierarchy} from './city-visual-hierarchy.js';
 import {westernRouteReservation} from './western-precinct-route.js';
 import {southernApproachReservation} from './southern-approach.js';
 import {createTempleSectionView} from './temple-section-view.js';
@@ -207,6 +208,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     evidenceProjection = null;
   renderer.localClippingEnabled=true;
   const constructionPresentation=createCityConstructionPresentation({root,getRecord:id=>cityCoreRuntime?.core.get(id)}),phaseDissolve=createPhaseDissolveView(mount);
+  const visualHierarchy=createCityVisualHierarchy({root,getRecord:id=>cityCoreRuntime?.core.get(id)});
   let landmarkLabelsEnabled=true;
   const landmarkView=createSharedPlaceView(mount,{anchors:()=>[]},{credit:false,ariaLabel:'當期已顯示地標量體（示意）',className:'j3k-landmark-references'});
   let regionalLandforms=null,regionalData=null,herodianScaleReport=null;
@@ -763,6 +765,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         const geographyBoxes=regionalLandforms?.project(camera,placeBoxes)||placeBoxes;
         const gateBoxes=wallGateView?.project(camera,geographyBoxes)||geographyBoxes;
         const phaseIndex=Math.floor(timelinePosition),fraction=(playbackDisplayPosition??timelinePosition)-phaseIndex,phaseReady=!isSharedGenerationPhase(currentPhaseId)||sharedEraRuntime?.status==='ready';
+        visualHierarchy.apply(currentPhaseId);
         if(currentPhaseId)constructionPresentation.apply({phaseId:currentPhaseId,phaseIndex,position:playbackDisplayPosition??timelinePosition,active:playbackPresentation,ruin:['babylonian-destruction','roman-destruction'].includes(currentPhaseId)});
         landmarkView.setAnchors(constructionPresentation.landmarks());landmarkView.setVisible(landmarkLabelsEnabled);const labelBoxes=landmarkView.project(camera,gateBoxes);mount.parentElement.style.setProperty('--map-label-rail-height',`${Math.max(0,...labelBoxes.map(b=>b.bottom-mount.clientHeight+20))}px`);
         architecturalTerrainOcclusion?.apply(activeWorldEntry?.runtime.landmarkMeshes?.find(m=>m.visible&&m.userData.occupiedFoundation));
@@ -799,6 +802,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             persianSanctuary:persianSanctuary?.diagnostics(),
             hellenisticSanctuary:hellenisticSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
+            visualHierarchy:visualHierarchy.diagnostics(),
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
             terrainPresentation:{...terrainPresentation?.diagnostics,logarithmicDepthBuffer:renderer.capabilities.logarithmicDepthBuffer,architecturalOcclusion:architecturalTerrainOcclusion?.diagnostics(),occupation:urbanGround?.diagnostics(),precinctReservations:(independentLaterRegistrations.get(currentPhaseId)||periodRegistrations.get(currentPhaseId))?.precinctReservationAudit||null,surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
             housingBoundary:housingBoundaryAdmission?.snapshot({includeIds:false}),
@@ -887,6 +891,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     inspectMetricResidentialPolicy(){return {phase:currentPhaseId,policy:metricResidentialPolicy(currentPhaseId),phaseCoverage:[...METRIC_RESIDENTIAL_PHASES],terrainOrigin:terrainRuntime.grid.origin,terrainScale:terrainRuntime.mesh.scale.toArray(),rootScale:root.scale.toArray(),densityHistoricallyVerified:false};},
     inspectHousingBoundary(options){return housingBoundaryAdmission?.snapshot(options);},
     inspectOverviewBaseline(){let meshes=0,modules=0,gridMeshes=0,maxVisualModuleSpanMetres=0,slenderSolidModules=0,omittedSliverAreaSquareMetres=0,projectedRoofAreaSquareMetres=0;const ids=new Set(),subdivisions=new Set(),planForms={};root.traverse(m=>{if(!m.isMesh||!m.userData.overview)return;for(let p=m;p;p=p.parent)if(!p.visible)return;meshes++;const form=m.geometry.userData.planForm||'unspecified';planForms[form]=(planForms[form]||0)+1;modules+=m.geometry.userData.visualModules||1;projectedRoofAreaSquareMetres+=m.geometry.userData.projectedRoofAreaSquareMetres||0;maxVisualModuleSpanMetres=Math.max(maxVisualModuleSpanMetres,m.geometry.userData.maxVisualModuleSpanMetres||0);slenderSolidModules+=m.geometry.userData.slenderSolidModules||0;omittedSliverAreaSquareMetres+=m.geometry.userData.omittedSliverAreaSquareMetres||0;if(m.geometry.userData.worldGrid===true)gridMeshes++;subdivisions.add(m.geometry.userData.subdivision||'unspecified');ids.add(m.userData.cityObject?.objectId||m.userData.cityObject?.parcelId);});return {phase:currentPhaseId,grammar:'terrain-courtyard-mass-v1',mode:'city-overview',residentialProfile:residentialEraProfile(currentPhaseId),planForms,meshes,registeredHousingObjects:ids.size,visualModules:modules,projectedRoofAreaSquareMetres,maxVisualModuleSpanMetres,slenderSolidModules,omittedSliverAreaSquareMetres,subdivisions:[...subdivisions].sort(),worldGridMeshes:gridMeshes,moduleCountsAreHistoricalBuildings:false,detailWork:'paused',historicalFoundationAccepted:false};},
+    setVisualHierarchy(enabled){const value=visualHierarchy.set(enabled);needsFrame=true;return value;},
     setLandmarkLabels(enabled){landmarkLabelsEnabled=Boolean(enabled);landmarkView.setVisible(landmarkLabelsEnabled);needsFrame=true;return landmarkLabelsEnabled;},
     inspectSharedPlaces(){return currentPhaseId?sharedPlaces?.snapshot({phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode})??null:null;},
     sharedPlaceTransitions(){return sharedPlaces?.transitions()??[];},
@@ -1021,7 +1026,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       ro.disconnect();
       controls.dispose();
       constructionPresentation.dispose();phaseDissolve.dispose();
-      templeSection.dispose();
+      templeSection.dispose();visualHierarchy.dispose();
       builder.dispose();
       clearFabric();persistentCityWorld?.dispose();laterMorphologyLedger?.dispose();
       sharedEraRuntime?.dispose();
