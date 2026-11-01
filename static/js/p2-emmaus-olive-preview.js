@@ -381,13 +381,27 @@
   emmaus.style.backgroundColor=fixedGround?'transparent'
    :(oneDrop>=.999?'var(--em-paper)':'transparent');
   const lerp=(a,b,p)=>a+(b-a)*p;
-  const poseRect=(el,a,b,p)=>{
-   if(!a||!b)return;
-   el.style.left=lerp(a.x,b.x,p).toFixed(2)+'px';
-   el.style.top=lerp(a.y,b.y,p).toFixed(2)+'px';
-   el.style.width=lerp(a.w,b.w,p).toFixed(2)+'px';
-   el.style.height=lerp(a.h,b.h,p).toFixed(2)+'px';
+  const setRect=(el,r)=>{
+   if(!r)return;
+   // A projected iframe node can inherit inset/right/bottom from its source.
+   el.style.inset='auto';el.style.right='auto';el.style.bottom='auto';
+   el.style.left=r.x.toFixed(2)+'px';
+   el.style.top=r.y.toFixed(2)+'px';
+   el.style.width=r.w.toFixed(2)+'px';
+   el.style.height=r.h.toFixed(2)+'px';
   };
+  const blendRects=(a,b,p)=>({
+   x:lerp(a.x,b.x,p),y:lerp(a.y,b.y,p),
+   w:lerp(a.w,b.w,p),h:lerp(a.h,b.h,p)
+  });
+  const fitInside=(original,destination)=>{
+   // Never enlarge, crop or distort the square Contents engraving to fill a 5:8 cover.
+   const scale=Math.min(1,destination.w/original.w,destination.h/original.h);
+   const w=original.w*scale,h=original.h*scale;
+   return {x:destination.x+(destination.w-w)/2,
+           y:destination.y+(destination.h-h)/2,w,h};
+  };
+  const poseRect=(el,a,b,p)=>{if(a&&b)setRect(el,blendRects(a,b,p))};
   if(move>.98&&!galleryPrefetch){
    galleryPrefetch=true;void showPlate(galleryIndex);
   }
@@ -406,15 +420,34 @@
   // Include the REAL seven-color spine in the frozen Magazine perimeter.
   // It sits just outside Contents on desktop; excluding it would allow the
   // new engraving to paint OVER the accepted book spine during handoff.
-  const magSpread=original&&coverBounds?(()=>{
-   const folios=[original,coverBounds,...(spineBounds?[spineBounds]:[])];
+  // The magazine folio has two immutable physical formats: square Contents,
+  // and its adjacent 5:8 cover. Reject an unstable iframe measurement outright.
+  // The rotated seven-colour spine must NOT expand the measured spread.
+  const validMagazine=original&&coverBounds&&
+   original.w>0&&original.h>0&&coverBounds.w>0&&coverBounds.h>0&&
+   Math.abs(original.w/original.h-1)<.09&&
+   Math.abs(coverBounds.w/coverBounds.h-.625)<.09&&
+   Math.abs(original.h-coverBounds.h)<original.h*.04&&
+   coverBounds.x>=original.x+original.w-original.w*.04&&
+   original.x>=-2&&original.y>=-2&&
+   coverBounds.x+coverBounds.w<=stageRect.width+2&&
+   coverBounds.y+coverBounds.h<=stageRect.height+2;
+  const magSpread=validMagazine?(()=>{
+   const folios=[original,coverBounds];
    const x=Math.min(...folios.map(r=>r.x)),y=Math.min(...folios.map(r=>r.y));
    return {x,y,w:Math.max(...folios.map(r=>r.x+r.w))-x,
                h:Math.max(...folios.map(r=>r.y+r.h))-y};
-  })():lastMeasuredSpread;
-  if(original&&coverBounds)lastMeasuredSpread=magSpread;
+  })():null;
+  if(magSpread)lastMeasuredSpread=magSpread;
   // Missing iframe geometry must never turn a fixed folio into full screen.
   if(!magSpread){
+   // Never throw a full-stage image across the user's approved folio when
+   // nested document dimensions are transient, unavailable or out of ratio.
+   if(transferFigure){
+    transferFigure.remove();
+    if(transferHome)transferHome.style.visibility=transferOriginalVisibility??'';
+    transferFigure=null;transferHome=null;transferOriginalVisibility=null;
+   }
    emmaus.style.visibility='hidden';olive.style.visibility='hidden';
    if(realmGround){realmGround.style.opacity='0';realmGround.style.clipPath='none';}
    return;
@@ -470,8 +503,13 @@
    const credit=sourceFigure.querySelector('figcaption'),projectedCredit=transferFigure.querySelector('figcaption');
    if(credit&&projectedCredit)projectedCredit.textContent=credit.textContent;
    sourceFigure.style.visibility='hidden';
-   poseRect(transferFigure,original,coverBounds,move);
-   if(move>.999)poseRect(transferFigure,coverBounds,fullRight,smooth((distance-7.40)/.28));
+   // Uniform scale only: source square -> square fitted INSIDE 5:8 cover,
+   // then fitted inside the fixed 2/3 + 1/3 Emmaus spread.
+   const coverArtwork=fitInside(original,coverBounds);
+   const oneArtwork=fitInside(original,fullRight);
+   setRect(transferFigure,move>.999?
+    blendRects(coverArtwork,oneArtwork,archive):
+    blendRects(original,coverArtwork,move));
    transferFigure.style.setProperty('--p2-transfer-visible',
     String(Math.max(0,1-(useArchive?archive:0))*fieldExit));
   }else if(transferFigure){
@@ -545,7 +583,8 @@
   // magazine plate itself into the Olive portrait slot. No blank panel,
   // placeholder, fabricated engraving, or duplicate image may appear.
   if(transferFigure&&!useArchive&&oliveIn>.001){
-   poseRect(transferFigure,fullRight,destination,morphMove);
+   setRect(transferFigure,blendRects(
+    fitInside(original,fullRight),fitInside(original,destination),morphMove));
   }
   heroFolio.style.opacity=String(smooth((oliveIn-.76)/.23));
 
