@@ -725,10 +725,6 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   });
   controls.addEventListener('change', () => (needsFrame = true));
   function frameCurrentCity(){root.updateMatrixWorld(true);const points=[];root.traverse(m=>{if(!m.isMesh||!m.userData.cityObject||m.userData.displayAnnotation)return;for(let p=m;p;p=p.parent)if(!p.visible)return;const b=new THREE.Box3().setFromObject(m);for(const x of[b.min.x,b.max.x])for(const y of[b.min.y,b.max.y])for(const z of[b.min.z,b.max.z])points.push(new THREE.Vector3(x,y,z));});if(!points.length)return false;camera.fov=34;camera.updateProjectionMatrix();const frame=fitCityOverview({points,aspect:camera.aspect,fov:34});controls.target.copy(frame.target);camera.position.copy(frame.position);controls.minDistance=35;controls.update();needsFrame=true;return true;}
-  function framePlaybackCity(){
-    if(!terrainRuntime)return;const points=[];for(const r of [...periodRegistrations.values(),...independentLaterRegistrations.values()])for(const d of r.districts||[])for(const p of d.geometry.polygon){const y=terrainRuntime.heightAtWorld(p.x,p.z);points.push(new THREE.Vector3(p.x,y,p.z),new THREE.Vector3(p.x,y+70,p.z));}if(!points.length)return;
-    const frame=fitCityOverview({points,aspect:camera.aspect,fov:34});camera.fov=34;camera.updateProjectionMatrix();controls.target.copy(frame.target);camera.position.copy(frame.position);controls.autoRotate=false;controls.minDistance=35;controls.update();
-  }
   function frameRegionalOverview(){
     const window=regionalData.window,points=[];
     for(const x of [window.minX,window.maxX])for(const z of [window.minZ,window.maxZ])points.push(new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z),z));
@@ -741,7 +737,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    if(terrainView&&regionalLandforms)frameRegionalOverview();else if(playbackPresentation)framePlaybackCity();else if(independentLaterRegistrations.has(currentPhaseId))updatePeriodOverview(currentPhaseId,true);
+    if(terrainView&&regionalLandforms)frameRegionalOverview();else if(!playbackPresentation&&independentLaterRegistrations.has(currentPhaseId))updatePeriodOverview(currentPhaseId,true);
     needsFrame = true;
   };
   const ro = new ResizeObserver(resize);
@@ -804,7 +800,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             cityOverview:overviewInfo,
             visualHierarchy:visualHierarchy.diagnostics(),
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
-            terrainPresentation:{...terrainPresentation?.diagnostics,logarithmicDepthBuffer:renderer.capabilities.logarithmicDepthBuffer,architecturalOcclusion:architecturalTerrainOcclusion?.diagnostics(),occupation:urbanGround?.diagnostics(),precinctReservations:(independentLaterRegistrations.get(currentPhaseId)||periodRegistrations.get(currentPhaseId))?.precinctReservationAudit||null,surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray()},
+            terrainPresentation:{...terrainPresentation?.diagnostics,logarithmicDepthBuffer:renderer.capabilities.logarithmicDepthBuffer,architecturalOcclusion:architecturalTerrainOcclusion?.diagnostics(),occupation:urbanGround?.diagnostics(),precinctReservations:(independentLaterRegistrations.get(currentPhaseId)||periodRegistrations.get(currentPhaseId))?.precinctReservationAudit||null,surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray(),fov:camera.fov},
             housingBoundary:housingBoundaryAdmission?.snapshot({includeIds:false}),
             wallReference:wallReferenceModel?.diagnostics(),
             defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),
@@ -859,7 +855,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     root,
     ready,
     setPlaybackDisplayPosition(value){playbackDisplayPosition=value;needsFrame=true;},
-    setPlaybackPresentation(active){const starting=Boolean(active)&&!playbackPresentation;playbackPresentation=Boolean(active);if(starting&&!terrainView)framePlaybackCity();playbackDisplayPosition=null;applyTemporalState();needsFrame=true;},
+    setPlaybackPresentation(active){const starting=Boolean(active)&&!playbackPresentation;playbackPresentation=Boolean(active);if(starting)pendingCityFrame=false;playbackDisplayPosition=null;applyTemporalState();needsFrame=true;},
     playbackReadiness(){let status=isSharedGenerationPhase(currentPhaseId)?(sharedEraRuntime?.status||'idle'):'ready';if(status==='ready'&&(!renderedPlaybackReady||renderedPlaybackPhase!==currentPhaseId))status='rendering';return {phase:currentPhaseId,status,ready:status==='ready'};},
     setBuildProgress,
     setRuinProgress,

@@ -12,8 +12,10 @@ try{
  await page.route('**/herodian-typology-grammar.js',async route=>{const response=await route.fetch(),source=await response.text(),needle='yieldControl = () => new Promise(resolve => setTimeout(resolve, 0))';assert.ok(source.includes(needle));await route.fulfill({response,body:source.replace(needle,'yieldControl = () => window.__TEST_GENERATION_GATE__ || new Promise(resolve => setTimeout(resolve, 0))')});});
  await openToolsForReview(page);await page.goto(url,{waitUntil:'networkidle'});await ready(page);
  await page.evaluate(()=>{window.__TEST_GENERATION_GATE__=new Promise(resolve=>window.__releaseGeneration=resolve);});
+ // Generation timing is also supported in a user-selected common landscape view.
+ await page.getByRole('button',{name:'統一尺度比較',exact:true}).click();
  await scrub(page,3.99);await page.locator('.j3k-play').click();await page.waitForFunction(()=>window.__JERUSALEM3000__.playback?.status==='waiting'&&window.__JERUSALEM3000__.historicalTime.phase==='late-first-temple');
- assert.equal(await page.getByRole('button',{name:'統一尺度比較',exact:true}).getAttribute('aria-pressed'),'true','playback must use one landscape frame');
+ assert.equal(await page.getByRole('button',{name:'統一尺度比較',exact:true}).getAttribute('aria-pressed'),'true','playback must preserve the explicitly selected landscape frame');
  const landscapeFrame=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.terrainPresentation.camera);
  const held=await page.evaluate(()=>({time:window.__JERUSALEM3000__.historicalTime.position,playback:window.__JERUSALEM3000__.playback}));assert.equal(held.time,4,'must enter slow phase exactly at its start');
  await page.waitForTimeout(900);assert.equal(await page.evaluate(()=>window.__JERUSALEM3000__.historicalTime.position),4,'no timeline movement while generation is held');

@@ -396,7 +396,6 @@ try {
   function start() {
     if (raf) return;
     if(!(Number(slider.value)===time.max&&playbackPosition>time.max&&playbackPosition<time.max+1))playbackPosition=Number(slider.value);
-    terrainOverview(true);
     three.setPlaybackPresentation(true);three.setPlaybackDisplayPosition(playbackPosition);
     play.textContent = 'Ⅱ 暫停';
     play.setAttribute('aria-pressed', 'true');
