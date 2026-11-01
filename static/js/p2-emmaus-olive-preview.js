@@ -427,11 +427,14 @@
    original.w>0&&original.h>0&&coverBounds.w>0&&coverBounds.h>0&&
    Math.abs(original.w/original.h-1)<.09&&
    Math.abs(coverBounds.w/coverBounds.h-.625)<.09&&
-   Math.abs(original.h-coverBounds.h)<original.h*.04&&
-   coverBounds.x>=original.x+original.w-original.w*.04&&
-   original.x>=-2&&original.y>=-2&&
-   coverBounds.x+coverBounds.w<=stageRect.width+2&&
-   coverBounds.y+coverBounds.h<=stageRect.height+2;
+   (stageRect.width<=820?
+    // The approved narrow-screen folio is vertically stacked, not side-by-side.
+    Math.abs(original.x-coverBounds.x)<original.w*.10:
+    Math.abs(original.h-coverBounds.h)<original.h*.04&&
+    coverBounds.x>=original.x+original.w-original.w*.04&&
+    original.x>=-2&&original.y>=-2&&
+    coverBounds.x+coverBounds.w<=stageRect.width+2&&
+    coverBounds.y+coverBounds.h<=stageRect.height+2);
   const magSpread=validMagazine?(()=>{
    const folios=[original,coverBounds];
    const x=Math.min(...folios.map(r=>r.x)),y=Math.min(...folios.map(r=>r.y));
