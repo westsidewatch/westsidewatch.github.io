@@ -51,7 +51,7 @@ export function createSanctuaryAssembly(parent,{data,terrain,core,layout,prefix,
  const vertices=localVertices.map((value,i)=>i%3===0?value+anchor.x:i%3===2?value+anchor.z:value);
  const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.computeVertexNormals();const road=new THREE.Mesh(geometry,path);
  road.userData.cityObject={objectId:layout.access.id,componentId:`j3k:${prefix}:access`,confidence:'inferred',role:'access'};group.add(road);meshes.push(road);
- const contextLinks=[{id:'west',from:pts[3],to:[layout.court.bounds[0]+6,pts[3][1]]},{id:'east',from:pts[2],to:[layout.court.bounds[2]-6,pts[2][1]]}];
+ const contextLinks=[{id:'west',junction:pts[3],from:[pts[3][0]-layout.access.width/2,pts[3][1]],to:[layout.court.bounds[0]+6,pts[3][1]]},{id:'east',junction:pts[2],from:[pts[2][0]+layout.access.width/2,pts[2][1]],to:[layout.court.bounds[2]-6,pts[2][1]]}];
  for(const link of contextLinks){
   const target=porticoDatums.get(`court-portico-${link.id}`)+.14,v=sanctuaryAccessVertices([link.from,link.to],layout.access.width,surface,(x,z,i,f)=>{const ground=surface(x,z)+.1;return ground+f*Math.max(0,target-ground);},{terrain,anchor});
   for(let i=0;i<v.length;i+=3){v[i]+=anchor.x;v[i+2]+=anchor.z;}
@@ -59,7 +59,7 @@ export function createSanctuaryAssembly(parent,{data,terrain,core,layout,prefix,
  }
  for(const id of ids){
   const parts=meshes.filter(m=>m.userData.cityObject.objectId===id),bounds=new THREE.Box3();for(const part of parts)bounds.expandByObject(part);
-  const record=core.get(id);core.register({...record,geometry:{primitive:'component-assembly',frame:'canonical-dem-enu',status:'independent-inferred-sanctuary',bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()}},metadata:{...record.metadata,rendererBinding:binding,geometryVerified:false,geometryReuseVerified:false,contextAccessBranches:id===layout.access.id?contextLinks.map(l=>({from:l.from,to:l.to,authority:'authored-gallery-link-not-ancient-road-survey'})):[],geometryValidityPhases:layout.geometryValidityPhases,componentIds:parts.map(p=>p.userData.cityObject.componentId),spatialTopology:id===layout.access.id?{from:layout.access.from,to:layout.objectId,points:pts.map(([x,z])=>({x:anchor.x+x,z:anchor.z+z}))}:id===layout.gate.id?{point:{x:anchor.x+layout.gate.point[0],z:anchor.z+layout.gate.point[1]}}:null}});
+  const record=core.get(id);core.register({...record,geometry:{primitive:'component-assembly',frame:'canonical-dem-enu',status:'independent-inferred-sanctuary',bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()}},metadata:{...record.metadata,rendererBinding:binding,geometryVerified:false,geometryReuseVerified:false,contextAccessBranches:id===layout.access.id?contextLinks.map(l=>({junction:l.junction,from:l.from,to:l.to,authority:'authored-gallery-link-not-ancient-road-survey'})):[],geometryValidityPhases:layout.geometryValidityPhases,componentIds:parts.map(p=>p.userData.cityObject.componentId),spatialTopology:id===layout.access.id?{from:layout.access.from,to:layout.objectId,points:pts.map(([x,z])=>({x:anchor.x+x,z:anchor.z+z}))}:id===layout.gate.id?{point:{x:anchor.x+layout.gate.point[0],z:anchor.z+layout.gate.point[1]}}:null}});
  }
  let position=0;
  const stateAt=(id)=>lifecycleStateAtPosition({lifecycleEvents:core.get(id).lifecycle.events},timeline,position);

@@ -160,6 +160,7 @@ try {
   const southEntryButton=document.createElement('button');southEntryButton.textContent='南側入口';southEntryButton.hidden=true;document.querySelector('.j3k-event-controls').append(southEntryButton);southEntryButton.addEventListener('click',()=>{terrainOverview(false);three.focusCityObject('j3k:object:southern-approach');});
   const westEntryButton=document.createElement('button');westEntryButton.textContent='西側街道';westEntryButton.hidden=true;document.querySelector('.j3k-event-controls').append(westEntryButton);westEntryButton.addEventListener('click',()=>{terrainOverview(false);three.focusCityObject('j3k:object:western-street');});
   const antoniaFocusButton=document.createElement('button');antoniaFocusButton.textContent='安東尼堡';antoniaFocusButton.hidden=true;document.querySelector('.j3k-event-controls').append(antoniaFocusButton);antoniaFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusCityObject('j3k:object:antonia');});
+  const accessFocusButton=document.createElement('button');accessFocusButton.textContent='院門通路';accessFocusButton.hidden=true;document.querySelector('.j3k-event-controls').append(accessFocusButton);accessFocusButton.addEventListener('click',()=>{terrainOverview(false);const phase=window.__JERUSALEM3000__.historicalTime.phase;three.focusCityObject(phase==='david-solomon'?'j3k:object:royal-road:temple-entry':`j3k:${phase}:road:sanctuary-access`);});
   const precinctFocusButton=document.createElement('button');precinctFocusButton.textContent='院區總覽';precinctFocusButton.hidden=true;document.querySelector('.j3k-event-controls').append(precinctFocusButton);precinctFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusTemplePrecinct();});
   const ritualFocusButton=document.createElement('button');ritualFocusButton.textContent='祭儀近看';ritualFocusButton.hidden=true;document.querySelector('.j3k-event-controls').append(ritualFocusButton);ritualFocusButton.addEventListener('click',()=>{terrainOverview(false);three.focusRitualCourt();});
   const templeSectionButton=document.createElement('button');templeSectionButton.textContent='聖殿剖視';templeSectionButton.hidden=true;templeSectionButton.setAttribute('aria-pressed','false');templeSectionButton.title='水平剖開模型查看內部，並非歷史毀壞狀態';document.querySelector('.j3k-event-controls').append(templeSectionButton);
@@ -267,6 +268,7 @@ try {
     laterHallButton.hidden=!['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id);laterHallButton.textContent=p.id==='byzantine'?'Nea近看':'禮拜堂近看';
     royalCourtyardButton.hidden=!['david-solomon','late-first-temple','babylonian-destruction'].includes(p.id);
     antoniaFocusButton.hidden=!isCorePhase(p.id);southEntryButton.hidden=antoniaFocusButton.hidden;westEntryButton.hidden=antoniaFocusButton.hidden;
+    accessFocusButton.hidden=templeFocusButton.hidden||!['david-solomon','persian-nehemiah','hellenistic-hasmonean'].includes(p.id);
     ritualFocusButton.hidden=templeFocusButton.hidden||courtPhase;precinctFocusButton.hidden=ritualFocusButton.hidden;
     eraZh.textContent=p.id==='david-solomon'?(temple?.state==='absent'?'大衛城 · 城防與王室':'所羅門城 · 第一聖殿'):p.label;
     retainedToggle.hidden = p.id !== RETAINED_PHASE;
@@ -278,6 +280,7 @@ try {
     if(p.id==='persian-nehemiah')note.textContent+=' 可用「聖殿剖視」查看獨立殿堂、地板與開啟門扇；高窗、內部分區與凹入屋頂為示意，通路已銜接殿廊標高，祭壇有開敞爐口；坡道、器物尺度及細部仍屬示意。';
     if(p.id==='hellenistic-hasmonean')note.textContent+=' 聖域選取前164年重新奉獻後的示意形態，不代表整期；新增六間祭司側室示意、外門及室間連通門洞，數量、尺寸及平面未核定，可點「聖殿近看」或「聖殿剖視」。';
     if(['david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah','hellenistic-hasmonean','herodian-jesus','roman-destruction'].includes(p.id))note.textContent+=' 可點「院區總覽」查看周邊，早期第二聖殿院邊柱廊已有支路銜接。院界與通路為示意；開放院地保留，未定位配套仍待補，空白不等於古代無建築。';
+    if(!accessFocusButton.hidden)note.textContent+=' 可點「院門通路」檢查進院路線；折角鋪面已連續接合，院邊支路止於主路邊緣，線位與形制仍為推定。';
     if(p.id==='byzantine')note.textContent+=' 543年後Nea模型已有五廊通廳、入口與柱列，構件排列仍為示意。';
     if(['early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 南側禮拜堂已有七廊通廳、北側入口及高低屋頂；採各期既有選定形態，不代表原構件一直保存。';
     if(['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id))note.textContent+=' 聖墓圓堂、堂體與毀壞遺構按既有階段呈現，可點「聖墓近看」；入口與室內構件配置為示意。';
