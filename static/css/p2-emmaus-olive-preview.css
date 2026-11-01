@@ -32,7 +32,7 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
  opacity:var(--p2-transfer-visible,1)!important}
 .proof-stage > #dual-dore-plate .dual-dore-plate__image{
  position:absolute;inset:0;width:100%;height:100%;display:block;max-width:none;
- object-fit:contain;object-position:center center;filter:grayscale(1) sepia(.33) contrast(.94) brightness(1.065);
+ object-fit:cover;object-position:center top;filter:grayscale(1) sepia(.33) contrast(.94) brightness(1.065);
  transform-origin:center top;backface-visibility:hidden}
 .proof-stage > #dual-dore-plate .dual-dore-plate__image.is-outgoing{z-index:1}
 .proof-stage > #dual-dore-plate .dual-dore-plate__image.is-active{z-index:2}
