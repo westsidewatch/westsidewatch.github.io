@@ -297,6 +297,26 @@
   if(frameLoaded)base.contentWindow?.postMessage({
    type:'westside-p2-scroll',progress:clamp(legacy),active:distance<6.6
   },location.origin);
+  // The 05–07 adapter owns later chapter backgrounds and SVGs. Do not repaint
+  // Emmaus/Olive, force the background back to 'sermon', or remeasure the
+  // heavyweight nested Magazine DOM on every later scroll frame.
+  if(fullDistance>=12){
+   if(transferFigure){
+    transferFigure.remove();
+    if(transferHome)transferHome.style.visibility=transferOriginalVisibility??'';
+    transferFigure=null;transferHome=null;transferOriginalVisibility=null;
+   }
+   emmaus.style.visibility='hidden';emmaus.style.pointerEvents='none';
+   emmaus.inert=true;emmaus.setAttribute('aria-hidden','true');
+   olive.style.visibility='hidden';olive.style.pointerEvents='none';
+   olive.inert=true;olive.setAttribute('aria-hidden','true');
+   const section=fullDistance>=15.14?'07 / 07 — DAYLIGHT CAFÉ':fullDistance>=13.57?'06 / 07 — PARADISE CINEMA':'05 / 07 — DAWN BOOKSHOP';
+   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
+   seek.value=String(fullDistance/timelineMax*100);
+   percent.textContent=(fullDistance/timelineMax*100).toFixed(0)+'%';
+   lastPaint=distance;
+   return;
+  }
   // Same MERSI image object: Magazine LEFT engraving actually travels to
   // the existing RIGHT cover rectangle. No replica image is created.
   // Only once it arrives does the full Doré archive take over silently;
