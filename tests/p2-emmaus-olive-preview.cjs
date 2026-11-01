@@ -13,6 +13,8 @@ const emmausOriginalSVG=fs.readFileSync(path.join(root,'static/images/p2-realms/
 const emmausRuntimeSVG=fs.readFileSync(path.join(root,'static/images/p2-realms/v15/03-emmaus-engraving-p2-local-bow-v2.svg'),'utf8');
 assert.match(emmausOriginalSVG,/ws-bow-whole-slow-rotation/,'retain the original SVG master unchanged');
 assert.match(fiveCSS,/03-emmaus-engraving-p2-local-bow-v2\.svg/,'P2 uses the optimized locally animated bow SVG');
+assert.match(fiveCSS,/background-size:cover/,'the native SVG ratio must be preserved across screens');
+assert.doesNotMatch(fiveCSS,/background-size:100% 100%/,'never stretch an engraved background nonuniformly');
 assert.match(emmausRuntimeSVG,/#emmaus-bow-core-motion/,'only the central bow is allowed to rotate');
 assert.match(emmausRuntimeSVG,/clipPathUnits="userSpaceOnUse"/,'local knot is clipped in fixed SVG coordinates');
 assert.doesNotMatch(emmausRuntimeSVG,/#emmaus-motion-rotor\s*\{[\s\S]*?animation:/,'the original full-field motion group must remain motionless');
@@ -397,6 +399,8 @@ const {chromium}=require('playwright');
     new DOMParser().parseFromString(xml,'image/svg+xml').getElementsByTagName('parsererror').length
    ),await asset.text());
    assert(validSVG,'browser can parse the optimized native SVG without errors');
+   assert.equal(await page.locator('#p2-realm-background').evaluate(el=>getComputedStyle(el).backgroundSize),'cover',
+    'Emmaus SVG should retain its native aspect ratio instead of skewing in the surrounding field');
    await page.screenshot({path:path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-emmaus-static-engraving.png')});
    await page.close();
   }
