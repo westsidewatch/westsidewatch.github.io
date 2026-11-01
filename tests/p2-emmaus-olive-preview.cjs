@@ -51,8 +51,11 @@ assert.match(js,/const clip='path\("/,
  'engraving field must cut out the measured Magazine folio hole');
 assert.match(js,/const fullLeft=\{x:master\.x/,
  'the 2:1 ONE spread lives inside the Magazine footprint');
-assert.match(js,/const fitInside=\(original,destination\)/,'projected Doré plate must fit uniformly within destination');
-assert.match(js,/blendRects\(original,coverArtwork,move\)/,'original Doré plate must animate without independent width and height deformation');
+assert.match(js,/const movingArt=\{x:lerp\(sourceArt\.x,targetX,move\),y:sourceArt\.y/,
+ '02→03 Doré plate moves horizontally only, without vertical displacement');
+assert.match(js,/w:sourceArt\.w,h:sourceArt\.h/,'the moving source width and height never change');
+assert.match(js,/transferFigure\.style\.clipPath='inset\('/,
+ 'the narrow cover crops the artwork instead of scaling it');
 assert.match(css,/#dual-dore-plate \.dual-dore-plate__image\{[^}]*object-fit:contain/,
  'projected Doré artwork stays inside its preserved page frame');
 assert.match(js,/olive\.style\.inset='auto'/,
@@ -354,7 +357,36 @@ const {chromium}=require('playwright');
      proportions.art.bottom<=proportions.folio.bottom+3,
      'the transitioning Doré plate never expands outside the existing Magazine folio');
    }
-   assert.equal(proportions.imageFit,'contain','never crop the original Doré artwork');
+   assert.equal(proportions.imageFit,'contain','original image does not scale to fill the destination');
+   if(viewport.width>820){
+    const originalSquare=await page.locator('#proof-original').evaluate(frame=>{
+     const nested=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
+     return nested?.contentDocument?.getElementById('dual-contents')?.getBoundingClientRect().width;
+    });
+    assert(Math.abs(proportions.art.w-originalSquare)<3 &&
+      Math.abs(proportions.art.h-originalSquare)<3,
+     '03 Doré plate must retain the EXACT Contents dimensions during horizontal slide');
+    const pose=await page.locator('#proof-stage > #dual-dore-plate').evaluate(el=>({
+     w:el.getBoundingClientRect().width,
+     h:el.getBoundingClientRect().height,
+     crop:getComputedStyle(el).clipPath
+    }));
+    assert(pose.crop.startsWith('inset('),'moving physical plate uses a page crop, not scaling');
+    await page.evaluate(()=>{
+     const el=document.getElementById('proof-track');
+     scrollTo({top:el.getBoundingClientRect().top+scrollY+7.40*innerHeight,behavior:'instant'});
+    });
+    await page.waitForTimeout(180);
+    const finalPose=await page.locator('#proof-stage > #dual-dore-plate').boundingBox();
+    assert(finalPose && Math.abs(finalPose.width-pose.w)<3 &&
+      Math.abs(finalPose.height-pose.h)<3,
+      'Doré plate stays exactly the same size when it reaches the right cover');
+    await page.evaluate(()=>{
+     const el=document.getElementById('proof-track');
+     scrollTo({top:el.getBoundingClientRect().top+scrollY+7.00*innerHeight,behavior:'instant'});
+    });
+    await page.waitForTimeout(150);
+   }
    const transferShot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-magazine-plate-transfer.png');
    fs.mkdirSync(path.dirname(transferShot),{recursive:true});
    await page.screenshot({path:transferShot});
