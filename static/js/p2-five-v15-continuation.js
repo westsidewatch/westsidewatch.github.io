@@ -63,11 +63,14 @@ function actualSpread(){
  const x=Math.min(...bb.map(r=>r.x)),y=Math.min(...bb.map(r=>r.y));
  return {x,y,w:Math.max(...bb.map(r=>r.x+r.w))-x,h:Math.max(...bb.map(r=>r.y+r.h))-y};
 }
-let seenFolio=false,lastActive='',requestId=0,hasMeasured=false;
+let seenFolio=false,lastActive='',requestId=0,hasMeasured=false,lastMeasuredRect=null;
 function update(){requestId=0;
  const vh=Math.max(1,innerHeight),d=clamp(-track.getBoundingClientRect().top/vh,0,18);
  const last=sections.find(sec=>d>=sec.start&&d<sec.end);
  let rect=actualSpread();
+ // Reuse only the last real DOM measurement during transient iframe reloads.
+ if(rect)lastMeasuredRect=rect;
+ else if(lastMeasuredRect)rect=lastMeasuredRect;
  // The fixture mode is exclusively for local adapter QA; never used on P2.
  if(!rect&&document.body.dataset.p2TestFixture==='on'){
   const fixture=$('#p2-fixture-magazine');if(fixture){const r=fixture.getBoundingClientRect(),sr=stage.getBoundingClientRect();rect={x:r.left-sr.left,y:r.top-sr.top,w:r.width,h:r.height}}
@@ -91,12 +94,12 @@ function update(){requestId=0;
  if(last&&rect){
   if(background.dataset.realm!==last.key)background.dataset.realm=last.key;
   background.style.opacity='1';
-  // Use the existing clipPath set by original P2 paint only if it is valid.
-  // There is no replacement guessing rectangle. A frozen magazine proof with
-  // missing source DOM is intentionally not considered a passing integration.
-  if(document.body.dataset.p2TestFixture==='on'){
-   const sr=stage.getBoundingClientRect(),x=rect.x,y=rect.y,r=x+rect.w,b=y+rect.h;
-   background.style.clipPath=`path("M 0 0 H ${sr.width} V ${sr.height} H 0 Z M ${x} ${y} V ${b} H ${r} V ${y} Z")`;
+  // Keep the native engraving in the surrounding field, not over the fixed Magazine folio.
+  // The source coordinates are read from the existing live contents/cover/spine DOM.
+  const sr=stage.getBoundingClientRect(),x=rect.x,y=rect.y,r=x+rect.w,b=y+rect.h;
+  if(sr.width>0&&sr.height>0&&rect.w>0&&rect.h>0){
+   const n=v=>Math.round(v*100)/100;
+   background.style.clipPath=`path("M 0 0 H ${n(sr.width)} V ${n(sr.height)} H 0 Z M ${n(x)} ${n(y)} V ${n(b)} H ${n(r)} V ${n(y)} Z")`;
   }
  }
  if(lastActive!==(last?.key||'')){
