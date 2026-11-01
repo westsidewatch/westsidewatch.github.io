@@ -1,3 +1,4 @@
+import {openToolsForReview} from './lib/jerusalem-browser-tools.mjs';
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
@@ -6,7 +7,7 @@ const browser=await chromium.launch({headless:true});
 try{
  const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'}),errors=[],requests=[],proof=[],first=new Map();
  page.on('pageerror',e=>errors.push(String(e)));page.on('request',r=>requests.push(r.url()));
- await page.goto(process.env.J3K_URL||'http://127.0.0.1:8765/preview/jerusalem-3000/',{waitUntil:'networkidle'});
+ await openToolsForReview(page);await page.goto(process.env.J3K_URL||'http://127.0.0.1:8765/preview/jerusalem-3000/',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>window.__JERUSALEM3000__?.status==='ready');
  await page.getByRole('button',{name:'空間骨架對照',exact:true}).click();
  for(const phase of [13,14,15,16,17,16,15,12,11,10,17,16,13]){

@@ -51,3 +51,18 @@
 .external-map-labels .j3k-relief-labels span{transform:none}
 
 .j3k-wall-reference-credit{position:static;display:block;font-size:10px;margin:6px 0;padding:0;background:none}.j3k-wall-reference-credit[hidden]{display:none}
+
+/* V1: main controls outside the model; specialist tools remain available. */
+.j3k-shell .j3k-event-controls{position:static;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0 0;padding:10px 0;border-bottom:1px solid var(--line);z-index:auto}
+.j3k-event-controls>button,.j3k-tools>summary{padding:8px 12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.j3k-tools>summary{list-style:revert;font-size:var(--ws-type-scale-ui)}
+.j3k-tools[open]{flex-basis:100%}.j3k-tools-content{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0 4px}.j3k-tools-content>[hidden]{display:none}
+.j3k-tools-content button,.j3k-tools-content select{padding:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit}
+.j3k-shell .j3k-stage{margin-top:12px}.j3k-shell .j3k-terrain-badge{max-width:calc(100% - 28px);font-size:var(--ws-type-scale-micro);pointer-events:none}
+.j3k-description{grid-column:2;grid-row:1/3;min-width:0}.j3k-description>summary{cursor:pointer;font-size:var(--ws-type-scale-ui);padding:6px 0}.j3k-description .j3k-era-note{margin:8px 0 0}
+@media(max-width:720px){.j3k-description{margin-top:8px}.j3k-shell .j3k-event-controls{gap:6px}.j3k-tools-content{gap:6px}.j3k-shell .j3k-header{gap:12px}.j3k-shell .j3k-header h1{font-size:var(--ws-type-scale-display-lg)}}
+/* This is a city tool page, using the OS compact display role rather than a realm cover. */
+.j3k-shell .j3k-header h1{font-size:var(--ws-type-scale-display-md)}
+.j3k-tools-content .j3k-terrain-badge{position:static;flex-basis:100%;margin:0;max-width:100%;font-size:var(--ws-type-scale-meta)}
+.j3k-tools-content .j3k-royal-relief{flex-basis:100%;max-width:100%;margin:8px 0}
+@media(max-width:720px){.j3k-shell .j3k-header h1{font-size:var(--ws-type-scale-title-lg)}}

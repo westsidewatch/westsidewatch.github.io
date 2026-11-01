@@ -1,3 +1,4 @@
+import {openToolsForReview} from './lib/jerusalem-browser-tools.mjs';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -17,7 +18,7 @@ page.on('console', (m) => {
 });
 const reports = [];
 try {
-  await page.goto(
+  await openToolsForReview(page);await page.goto(
     process.env.J3K_URL || 'http://127.0.0.1:8765/preview/jerusalem-3000/',
     { waitUntil: 'networkidle' },
   );
@@ -511,7 +512,7 @@ try {
     hasTouch: true,
     reducedMotion: 'reduce',
   });
-  await mobile.goto(page.url(), { waitUntil: 'networkidle' });
+  await openToolsForReview(mobile);await mobile.goto(page.url(), { waitUntil: 'networkidle' });
   await mobile.waitForFunction(
     () => window.__JERUSALEM3000__?.status === 'ready',
   );
@@ -575,7 +576,7 @@ try {
   await broken.route('**/data/urban/herodian-30ce.registration.json', (route) =>
     route.fulfill({ status: 503, body: 'unavailable' }),
   );
-  await broken.goto(page.url(), { waitUntil: 'networkidle' });
+  await openToolsForReview(broken);await broken.goto(page.url(), { waitUntil: 'networkidle' });
   await broken.waitForFunction(
     () => window.__JERUSALEM3000__?.status === 'error',
   );

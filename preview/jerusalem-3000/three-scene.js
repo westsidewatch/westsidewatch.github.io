@@ -185,6 +185,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       transparent: true,
       opacity: name === 'disputed' ? 0.5 : 0.82,
     });
+  let pendingCityFrame=false;
   let playbackPresentation=false,playbackDisplayPosition=null,renderedPlaybackPhase=null,renderedPlaybackReady=false;
   const presentationProgress=()=>playbackPresentation?Math.min(1,Math.max(0,(playbackDisplayPosition??timelinePosition)-Math.floor(timelinePosition))/.8):1;
   let currentProgress = 0,
@@ -433,10 +434,10 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   function setTemporalCityState(objects = [], position = 0, phaseId = '') {
     const previousPhase = currentPhaseId,
       phaseChanged = previousPhase !== phaseId;
-    if(phaseChanged)renderedPlaybackReady=false;
+    if(phaseChanged){renderedPlaybackReady=false;pendingCityFrame=true;}
     currentPhaseId = phaseId;
     timelinePosition=position;
-    if(!terrainView){
+    if(!terrainView&&!playbackPresentation){
     if(phaseChanged&&templePriorCamera){camera.position.copy(templePriorCamera.position);controls.target.copy(templePriorCamera.target);controls.minDistance=templePriorCamera.minDistance;templePriorCamera=null;controls.update();}
     if(phaseChanged&&overviewPriorCamera&&!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(phaseId)&&!independentLaterRegistrations.has(phaseId)){camera.position.copy(overviewPriorCamera.position);controls.target.copy(overviewPriorCamera.target);controls.minDistance=overviewPriorCamera.minDistance;overviewPriorCamera=null;overviewFrame='';overviewInfo=null;controls.update();}
     if(phaseChanged && earliestSettlement) {
@@ -721,6 +722,11 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     return info;
   });
   controls.addEventListener('change', () => (needsFrame = true));
+  function frameCurrentCity(){root.updateMatrixWorld(true);const points=[];root.traverse(m=>{if(!m.isMesh||!m.userData.cityObject||m.userData.displayAnnotation)return;for(let p=m;p;p=p.parent)if(!p.visible)return;const b=new THREE.Box3().setFromObject(m);for(const x of[b.min.x,b.max.x])for(const y of[b.min.y,b.max.y])for(const z of[b.min.z,b.max.z])points.push(new THREE.Vector3(x,y,z));});if(!points.length)return false;camera.fov=34;camera.updateProjectionMatrix();const frame=fitCityOverview({points,aspect:camera.aspect,fov:34});controls.target.copy(frame.target);camera.position.copy(frame.position);controls.minDistance=35;controls.update();needsFrame=true;return true;}
+  function framePlaybackCity(){
+    if(!terrainRuntime)return;const points=[];for(const r of [...periodRegistrations.values(),...independentLaterRegistrations.values()])for(const d of r.districts||[])for(const p of d.geometry.polygon){const y=terrainRuntime.heightAtWorld(p.x,p.z);points.push(new THREE.Vector3(p.x,y,p.z),new THREE.Vector3(p.x,y+70,p.z));}if(!points.length)return;
+    const frame=fitCityOverview({points,aspect:camera.aspect,fov:34});camera.fov=34;camera.updateProjectionMatrix();controls.target.copy(frame.target);camera.position.copy(frame.position);controls.autoRotate=false;controls.minDistance=35;controls.update();
+  }
   function frameRegionalOverview(){
     const window=regionalData.window,points=[];
     for(const x of [window.minX,window.maxX])for(const z of [window.minZ,window.maxZ])points.push(new THREE.Vector3(x,terrainRuntime.heightAtWorld(x,z),z));
@@ -733,7 +739,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    if(terrainView&&regionalLandforms)frameRegionalOverview();else if(independentLaterRegistrations.has(currentPhaseId))updatePeriodOverview(currentPhaseId,true);
+    if(terrainView&&regionalLandforms)frameRegionalOverview();else if(playbackPresentation)framePlaybackCity();else if(independentLaterRegistrations.has(currentPhaseId))updatePeriodOverview(currentPhaseId,true);
     needsFrame = true;
   };
   const ro = new ResizeObserver(resize);
@@ -750,6 +756,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         housingBoundaryAdmission?.restore();
         housingBoundaryAdmission?.apply();
     updateUrbanGround();
+        if(pendingCityFrame&&!terrainView&&!playbackPresentation&&(!isSharedGenerationPhase(currentPhaseId)||sharedEraRuntime?.status==='ready')){if(frameCurrentCity())pendingCityFrame=false;}
         camera.updateMatrixWorld();
         const royalBoxes=royalRelief?.project(camera)||[];
         const placeBoxes=sharedPlaceView?.project(camera,royalBoxes)||royalBoxes;
@@ -848,7 +855,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     root,
     ready,
     setPlaybackDisplayPosition(value){playbackDisplayPosition=value;needsFrame=true;},
-    setPlaybackPresentation(active){playbackPresentation=Boolean(active);playbackDisplayPosition=null;applyTemporalState();needsFrame=true;},
+    setPlaybackPresentation(active){const starting=Boolean(active)&&!playbackPresentation;playbackPresentation=Boolean(active);if(starting&&!terrainView)framePlaybackCity();playbackDisplayPosition=null;applyTemporalState();needsFrame=true;},
     playbackReadiness(){let status=isSharedGenerationPhase(currentPhaseId)?(sharedEraRuntime?.status||'idle'):'ready';if(status==='ready'&&(!renderedPlaybackReady||renderedPlaybackPhase!==currentPhaseId))status='rendering';return {phase:currentPhaseId,status,ready:status==='ready'};},
     setBuildProgress,
     setRuinProgress,
@@ -903,7 +910,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     inspectCityFoundation(phaseId=currentPhaseId){return phaseId?foundationRuntime?.snapshot(phaseId)??null:null;},
     cityFoundationIndex(){return foundationRuntime?.index()??[];},
     royalReliefProfile(){return royalRelief?structuredClone(royalRelief.profile):null;},
-    focusRoyalRelief(){if(currentPhaseId!=='david-solomon')return false;frameRoyalRelief();return true;},
+    focusCityOverview(){pendingCityFrame=false;return frameCurrentCity();},
+    focusRoyalRelief(){pendingCityFrame=false;if(currentPhaseId!=='david-solomon')return false;frameRoyalRelief();return true;},
     setTerrainOverview(enabled){
       if(!terrainRuntime)return false;
       if(enabled&&!terrainView){
@@ -919,7 +927,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     },
     inspectSourceLifecycleContext(id){return inspectSourceLifecycleContext(cityCoreRuntime.core,id,timelinePosition);},
     inspectCityObject(id){const record=cityCoreRuntime?.core.get(id);return record?structuredClone(record):null;},
-    focusResidentialDistrict(id){
+    focusResidentialDistrict(id){pendingCityFrame=false;
       if(!['late-first-temple','babylonian-destruction','persian-nehemiah'].includes(currentPhaseId)||!evidenceAllowed('inferred'))return false;
       const core=cityCoreRuntime.core,district=core.get(id),polygon=district?.geometry?.polygon;if(!polygon?.length)return false;
       const cx=polygon.reduce((s,p)=>s+p.x,0)/polygon.length,cz=polygon.reduce((s,p)=>s+p.z,0)/polygon.length;
@@ -931,17 +939,17 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       controls.minDistance=15;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(65,60,90):new THREE.Vector3(42,40,60));controls.update();needsFrame=true;return true;
     },
     namedGateIndex(){return (namedGates||[]).map(g=>({id:g.id,label:g.label,profile:g.profile,sealed:g.sealed,available:!!wallReferenceModel?.diagnostics().visibleGateIds.includes(g.id)&&['ottoman','outside-walls','modern'].includes(currentPhaseId),geometryVerified:false}));},
-    focusCityObject(id){
+    focusCityObject(id){pendingCityFrame=false;
       const gate=namedGates?.find(g=>g.id===id),box=new THREE.Box3();root.updateMatrixWorld(true);let found=false;
       root.traverse(m=>{if(!m.isMesh||m.userData.cityObject?.objectId!==id)return;for(let p=m;p;p=p.parent)if(!p.visible)return;box.expandByObject(m);found=true;});if(!found)return false;
       const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*(id.endsWith('sanctuary-access')||id==='j3k:object:royal-road:temple-entry'?(camera.aspect<1?1.8:1.15):id==='j3k:object:inner-temple'?(camera.aspect<1?1.8:1.15):['j3k:object:antonia','j3k:object:southern-approach'].includes(id)?(camera.aspect<1?2.1:1.5):/aqsa-context$|nea-context$|holy-sepulchre-context$/.test(id)?(camera.aspect<1?2.1:1.35):2.1);
       if(id==='j3k:object:western-street'){const x=(box.min.x+box.max.x)/2,z=(box.min.z+box.max.z)/2;focus.set(x,terrainRuntime.heightAtWorld(x,z)+.16,z);}
       controls.minDistance=5;controls.target.copy(focus);camera.position.copy(focus).add(id==='j3k:object:western-street'?new THREE.Vector3(camera.aspect<1?-100:-65,camera.aspect<1?100:65,camera.aspect<1?160:100):gate?new THREE.Vector3(-gate.normal.x*distance,.25*distance,-gate.normal.z*distance):id.endsWith('holy-sepulchre-context')?new THREE.Vector3(-.6*distance,.75*distance,distance):id.endsWith('aqsa-context')?new THREE.Vector3(-.55*distance,.65*distance,-distance):id.endsWith('nea-context')?new THREE.Vector3(-.85*distance,.7*distance,.6*distance):new THREE.Vector3(.65*distance,.7*distance,distance));controls.update();needsFrame=true;return true;
     },
-    focusWesternMarket(){const box=new THREE.Box3();root.updateMatrixWorld(true);root.traverse(m=>{if(m.isMesh&&m.userData.heritageComponent==='western-market'&&m.visible&&historical.visible)box.expandByObject(m);});if(box.isEmpty())return false;const c=box.getCenter(new THREE.Vector3());controls.minDistance=5;controls.target.copy(c);camera.position.copy(c).add(camera.aspect<1?new THREE.Vector3(-36,30,40):new THREE.Vector3(-24,19,27));controls.update();needsFrame=true;return true;},
+    focusWesternMarket(){pendingCityFrame=false;const box=new THREE.Box3();root.updateMatrixWorld(true);root.traverse(m=>{if(m.isMesh&&m.userData.heritageComponent==='western-market'&&m.visible&&historical.visible)box.expandByObject(m);});if(box.isEmpty())return false;const c=box.getCenter(new THREE.Vector3());controls.minDistance=5;controls.target.copy(c);camera.position.copy(c).add(camera.aspect<1?new THREE.Vector3(-36,30,40):new THREE.Vector3(-24,19,27));controls.update();needsFrame=true;return true;},
     setTempleSection(value){const enabled=templeSection.set(value,root);needsFrame=true;return enabled;},
     inspectTempleSection(){return templeSection.diagnostics();},
-    focusRitualCourt(){
+    focusRitualCourt(){pendingCityFrame=false;
       let focus;
       if(isCorePhase(currentPhaseId))focus=new THREE.Vector3(-HERODIAN_DIMENSIONS.womenCourt.eastWest/2-HERODIAN_DIMENSIONS.priestCourt.eastWest/2+149*HERODIAN_DIMENSIONS.cubitMetres,terrainRuntime.sampleElevation(31.778,35.235)+HERODIAN_DIMENSIONS.platform.pavingThickness+HERODIAN_DIMENSIONS.relativeCourtLevels.priests+2,-10);
       else{const runtime=currentPhaseId==='persian-nehemiah'?persianSanctuary:currentPhaseId==='hellenistic-hasmonean'?hellenisticSanctuary:royalCity;if(!runtime?.diagnostics().visibleTemple)return false;focus=runtime.ritualFocus;}
@@ -949,12 +957,12 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
       controls.minDistance=10;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(48,62,78):new THREE.Vector3(30,42,50));controls.update();needsFrame=true;return true;
     },
-    focusRoyalCourtyard(){
+    focusRoyalCourtyard(){pendingCityFrame=false;
       if(!royalCity?.diagnostics().visiblePalace)return false;const focus=royalCity.royalCourtyardFocus();
       if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
       controls.minDistance=15;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(80,75,110):new THREE.Vector3(45,45,65));controls.update();needsFrame=true;return true;
     },
-    focusTemplePrecinct(){
+    focusTemplePrecinct(){pendingCityFrame=false;
       let focus,span;
       if(isCorePhase(currentPhaseId)){focus=new THREE.Vector3(0,terrainRuntime.sampleElevation(31.778,35.235)+3,0);span=480;}
       else{const runtime=currentPhaseId==='persian-nehemiah'?persianSanctuary:currentPhaseId==='hellenistic-hasmonean'?hellenisticSanctuary:royalCity;if(!runtime?.diagnostics().visibleTemple)return false;focus=runtime.precinctFocus;span=runtime.precinctSpan;}
@@ -962,7 +970,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       if(!templePriorCamera)templePriorCamera={position:camera.position.clone(),target:controls.target.clone(),minDistance:controls.minDistance};
       const distance=span*(camera.aspect<1?2.6:1.65);controls.minDistance=20;controls.target.copy(focus);camera.position.copy(focus).add(new THREE.Vector3(.45*distance,.8*distance,distance));controls.update();needsFrame=true;return true;
     },
-    focusRoyalTemple(){
+    focusRoyalTemple(){pendingCityFrame=false;
       const court=activeWorldEntry?.runtime.registration?.cores.find(c=>c.metadata.precinctContext);if(court)return this.focusCityObject(court.id);
       if(isCorePhase(currentPhaseId))return this.focusCityObject('j3k:object:inner-temple');
       const templeRuntime=currentPhaseId==='persian-nehemiah'?persianSanctuary:currentPhaseId==='hellenistic-hasmonean'?hellenisticSanctuary:royalCity;
