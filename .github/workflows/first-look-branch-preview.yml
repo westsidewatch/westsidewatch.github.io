@@ -43,6 +43,7 @@ jobs:
           restore-keys: |
             vol00-media-v2-
       - name: Build isolated preview
+        id: preview_build
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
@@ -68,6 +69,9 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
       - name: Deploy Cloudflare Pages preview (never production)
+        # Preview remains reviewable even when a browser visual assertion fails.
+        # The workflow still reports the failing test; production is untouched.
+        if: ${{ !cancelled() && steps.preview_build.outcome == 'success' }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
