@@ -8,9 +8,9 @@ export function foundationEdgePoints(a,b,terrain){
  else{const n=Math.ceil(Math.hypot(b.x-a.x,b.z-a.z)/2);for(let i=1;i<n;i++)ts.add(i/n);}
  return [...ts].sort((a,b)=>a-b).map(t=>({x:a.x+(b.x-a.x)*t,z:a.z+(b.z-a.z)*t}));
 }
-export function foundationContactGeometry(edges,terrain,floor){
+export function foundationContactGeometry(edges,terrain,floor,{excavation=false}={}){
  const vertices=[];
- for(const [a,b]of edges){const points=foundationEdgePoints(a,b,terrain);for(let i=1;i<points.length;i++){const a=points[i-1],b=points[i],ya=Math.min(floor,terrain.heightAtWorld(a.x,a.z)-.15),yb=Math.min(floor,terrain.heightAtWorld(b.x,b.z)-.15);if(![ya,yb].every(Number.isFinite))throw new Error('Foundation outside original DEM');if(ya===floor&&yb===floor)continue;vertices.push(a.x,floor,a.z,b.x,yb,b.z,b.x,floor,b.z,a.x,floor,a.z,a.x,ya,a.z,b.x,yb,b.z);}}
+ for(const [a,b]of edges){let points=foundationEdgePoints(a,b,terrain);if(excavation){const split=[];for(let j=1;j<points.length;j++){const p=points[j-1],q=points[j],yp=terrain.heightAtWorld(p.x,p.z)-floor,yq=terrain.heightAtWorld(q.x,q.z)-floor;split.push(p);if(yp*yq<0){const t=yp/(yp-yq);split.push({x:p.x+(q.x-p.x)*t,z:p.z+(q.z-p.z)*t});}}split.push(points.at(-1));points=split;}for(let i=1;i<points.length;i++){const a=points[i-1],b=points[i],ya=excavation?terrain.heightAtWorld(a.x,a.z):Math.min(floor,terrain.heightAtWorld(a.x,a.z)-.15),yb=excavation?terrain.heightAtWorld(b.x,b.z):Math.min(floor,terrain.heightAtWorld(b.x,b.z)-.15);if(![ya,yb].every(Number.isFinite))throw new Error('Foundation outside original DEM');if(ya===floor&&yb===floor)continue;vertices.push(a.x,floor,a.z,b.x,yb,b.z,b.x,floor,b.z,a.x,floor,a.z,a.x,ya,a.z,b.x,yb,b.z);}}
  // Thin retaining/support faces can be viewed from either side. Emit both
  // windings so original mesh materials need no global side/culling change.
  const front=[...vertices];for(let i=0;i<front.length;i+=9)vertices.push(...front.slice(i+6,i+9),...front.slice(i+3,i+6),...front.slice(i,i+3));

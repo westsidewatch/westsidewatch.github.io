@@ -13,8 +13,8 @@ export function haramCourtGeometry(record,terrain){
  const floor=haramFloor(terrain),positions=[],colours=[],stone=new THREE.Color(0xd2c4a5),dark=new THREE.Color(0xb9a27b);
  const add=(g,c=stone)=>{const p=g.attributes.position,idx=g.index?.array||Array.from({length:p.count},(_,i)=>i);for(const i of idx){positions.push(p.getX(i),p.getY(i),p.getZ(i));colours.push(c.r,c.g,c.b);}g.dispose();};
  const box=(x,y,z,w,h,d,c)=>{const g=new THREE.BoxGeometry(w,h,d);g.translate(x,y+h/2,z);add(g,c);};
- const surface=(poly,y,skirt=false)=>{const tris=THREE.ShapeUtils.triangulateShape(poly.map(p=>new THREE.Vector2(p.x,p.z)),[]),p=[];for(const tri of tris){const a=poly[tri[0]],b=poly[tri[1]],c=poly[tri[2]],up=(b.z-a.z)*(c.x-a.x)-(b.x-a.x)*(c.z-a.z)>0;for(const i of up?tri:[...tri].reverse())p.push(poly[i].x,y,poly[i].z);}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));g.computeVertexNormals();add(g);if(skirt)add(foundationContactGeometry(poly.map((a,i)=>[a,poly[(i+1)%poly.length]]),terrain,y),dark);};
- surface(haramFootprint,floor,true);surface(haramPodium,floor+3,true);
+ const surface=(poly,y,skirt=false,baseTerrain=terrain)=>{const tris=THREE.ShapeUtils.triangulateShape(poly.map(p=>new THREE.Vector2(p.x,p.z)),[]),p=[];for(const tri of tris){const a=poly[tri[0]],b=poly[tri[1]],c=poly[tri[2]],up=(b.z-a.z)*(c.x-a.x)-(b.x-a.x)*(c.z-a.z)>0;for(const i of up?tri:[...tri].reverse())p.push(poly[i].x,y,poly[i].z);}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));g.computeVertexNormals();add(g);if(skirt)add(foundationContactGeometry(poly.map((a,i)=>[a,poly[(i+1)%poly.length]]),baseTerrain,y,{excavation:baseTerrain===terrain}),dark);};
+ surface(haramFootprint,floor,true);surface(haramPodium,floor+3,true,{heightAtWorld:()=>floor+.15});
  // A separate upper court, four authored stair approaches and late arcade
  // context make circulation legible without filling an open sanctuary with houses.
  const xs=haramPodium.map(p=>p.x),zs=haramPodium.map(p=>p.z),cx=(Math.min(...xs)+Math.max(...xs))/2,cz=(Math.min(...zs)+Math.max(...zs))/2;

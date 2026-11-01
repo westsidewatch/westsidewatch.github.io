@@ -67,3 +67,6 @@
 .j3k-tools-content .j3k-royal-relief{flex-basis:100%;max-width:100%;margin:8px 0}
 @media(max-width:720px){.j3k-shell .j3k-header h1{font-size:var(--ws-type-scale-title-lg)}}
 .j3k-tools-content button[aria-pressed="true"]{background:rgba(206,189,116,.3);border-color:var(--ink)}
+
+.j3k-event-controls>.j3k-guide-button{background:var(--gold,#cebd74);border-color:var(--ink)}
+.j3k-guide-note{font-size:var(--ws-type-scale-meta);line-height:1.65;margin:8px 0;max-width:72ch}

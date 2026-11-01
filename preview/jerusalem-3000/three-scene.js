@@ -723,7 +723,21 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     onReady?.(info);
     return info;
   });
+  let guidedCamera=null;
+  function cancelGuidedCamera(){guidedCamera=null;}
+  controls.addEventListener('start',cancelGuidedCamera);
   controls.addEventListener('change', () => (needsFrame = true));
+  function focusSacredRidgeChapter(view){
+    if(!royalRelief||terrainView)return false;
+    const anchors=royalRelief.profile.anchors,points=[];
+    const include=(x,y,z,w,d,h=35)=>{for(const dx of[-w/2,w/2])for(const dz of[-d/2,d/2])for(const dy of[0,h])points.push(new THREE.Vector3(x+dx,y+dy,z+dz));};
+    if(view==='ridge')for(const a of anchors)include(a.x,a.y,a.z,110,110,30);
+    else if(view==='herodian')include(0,terrainRuntime.heightAtWorld(0,0),0,340,520,85);
+    else {const runtime=view.startsWith('second')?persianSanctuary:royalCity,focus=runtime?.precinctFocus;if(!focus)return false;const span=runtime.precinctSpan;include(focus.x,focus.y,focus.z,span*1.35,span*1.35,55);if(!view.endsWith('-near')){const south=anchors[0];include(south.x,south.y,south.z,50,50,20);}}
+    const frame=fitCityOverview({points,aspect:camera.aspect,fov:34,viewDirection:[.85,.75,1.25]});
+    pendingCityFrame=false;controls.autoRotate=false;controls.minDistance=20;
+    guidedCamera={started:performance.now(),duration:matchMedia('(prefers-reduced-motion: reduce)').matches?0:2200,from:camera.position.clone(),fromTarget:controls.target.clone(),fromFov:camera.fov,to:frame.position,toTarget:frame.target};needsFrame=true;return true;
+  }
   function frameCurrentCity(){root.updateMatrixWorld(true);const points=[];root.traverse(m=>{if(!m.isMesh||!m.userData.cityObject||m.userData.displayAnnotation)return;for(let p=m;p;p=p.parent)if(!p.visible)return;const b=new THREE.Box3().setFromObject(m);for(const x of[b.min.x,b.max.x])for(const y of[b.min.y,b.max.y])for(const z of[b.min.z,b.max.z])points.push(new THREE.Vector3(x,y,z));});if(!points.length)return false;camera.fov=34;camera.updateProjectionMatrix();const frame=fitCityOverview({points,aspect:camera.aspect,fov:34});controls.target.copy(frame.target);camera.position.copy(frame.position);controls.minDistance=35;controls.update();needsFrame=true;return true;}
   function frameRegionalOverview(){
     const window=regionalData.window,points=[];
@@ -747,6 +761,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   function render(now) {
     const dt = Math.min((now - lastNow) / 1000, 0.1);
     lastNow = now;
+    if(guidedCamera){const g=guidedCamera,t=g.duration?Math.min(1,(now-g.started)/g.duration):1,u=t*t*(3-2*t);camera.position.lerpVectors(g.from,g.to,u);controls.target.lerpVectors(g.fromTarget,g.toTarget,u);camera.fov=g.fromFov+(34-g.fromFov)*u;camera.updateProjectionMatrix();needsFrame=true;if(t===1)guidedCamera=null;}
     const changed = controls.update(dt);
     if(changed)phaseDissolve.clear();
     if (needsFrame || changed || controls.autoRotate) {
@@ -799,6 +814,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             hellenisticSanctuary:hellenisticSanctuary?.diagnostics(),
             cityOverview:overviewInfo,
             visualHierarchy:visualHierarchy.diagnostics(),
+            guidedCamera:{moving:!!guidedCamera},
             foundation:currentPhaseId?foundationRuntime?.describe(currentPhaseId):null,
             terrainPresentation:{...terrainPresentation?.diagnostics,logarithmicDepthBuffer:renderer.capabilities.logarithmicDepthBuffer,architecturalOcclusion:architecturalTerrainOcclusion?.diagnostics(),occupation:urbanGround?.diagnostics(),precinctReservations:(independentLaterRegistrations.get(currentPhaseId)||periodRegistrations.get(currentPhaseId))?.precinctReservationAudit||null,surfaceId:terrainRuntime?.mesh.uuid,gridId:terrainRuntime?.grid.id,nominalResolutionMetres:terrainRuntime?.grid.nominalResolutionMetres,regionalLandforms:regionalLandforms?.diagnostics(),historicalObjectContinuityComplete:false,overviewActive:!!terrainView,camera:camera.position.toArray(),target:controls.target.toArray(),fov:camera.fov},
             housingBoundary:housingBoundaryAdmission?.snapshot({includeIds:false}),
@@ -911,6 +927,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     inspectCityFoundation(phaseId=currentPhaseId){return phaseId?foundationRuntime?.snapshot(phaseId)??null:null;},
     cityFoundationIndex(){return foundationRuntime?.index()??[];},
     royalReliefProfile(){return royalRelief?structuredClone(royalRelief.profile):null;},
+    focusSacredRidgeChapter,
+    cancelGuidedCamera,
+    guidedCameraMoving(){return !!guidedCamera;},
     focusCityOverview(){pendingCityFrame=false;return frameCurrentCity();},
     focusRoyalRelief(){pendingCityFrame=false;if(currentPhaseId!=='david-solomon')return false;frameRoyalRelief();return true;},
     setTerrainOverview(enabled){

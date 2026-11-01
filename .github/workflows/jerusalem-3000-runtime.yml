@@ -38,6 +38,7 @@ jobs:
           node scripts/verify_jerusalem_3000_haram_court.mjs
           node scripts/verify_jerusalem_3000_architectural_ground.mjs
           node scripts/verify_jerusalem_3000_temple_entries.mjs
+          node scripts/verify_jerusalem_3000_court_cut_contact.mjs
           node scripts/verify_jerusalem_3000_court_ensembles.mjs
           node scripts/verify_jerusalem_3000_aisled_landmarks.mjs
           node scripts/verify_jerusalem_3000_sepulchre_shells.mjs
@@ -110,6 +111,7 @@ jobs:
           node scripts/verify_jerusalem_3000_main_view_browser.mjs
           node scripts/verify_jerusalem_3000_overview_browser.mjs
           node scripts/audit_jerusalem_3000_landmark_execution.mjs --report work/j3k-validation/overview-proof.json --render-commit "$GITHUB_SHA" --out work/j3k-validation/landmark-execution-audit
+          node scripts/verify_jerusalem_3000_sacred_ridge_guide_browser.mjs
           node scripts/verify_jerusalem_3000_playback_view_browser.mjs
           node scripts/verify_jerusalem_3000_playback_browser.mjs
           node scripts/verify_jerusalem_3000_transition_browser.mjs

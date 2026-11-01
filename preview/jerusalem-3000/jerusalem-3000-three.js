@@ -1,3 +1,4 @@
+import {SACRED_RIDGE_START,SACRED_RIDGE_END,sacredRidgeChapter} from './sacred-ridge-guide.js';
 import {residentialEraProfile} from './residential-era-profiles.js';
 import {createDefenseTimelineView} from './defense-timeline-view.js';
 import {advancePlayback} from './playback-clock.js';
@@ -358,6 +359,14 @@ try {
   const cityViewButton=document.createElement('button');cityViewButton.textContent='城市總覽';cityViewButton.addEventListener('click',()=>{stop();three.setPlaybackPresentation(false);terrainOverview(false);three.focusCityOverview();});toolbar.prepend(cityViewButton);toolbar.append(tools);stage.before(toolbar);toolBody.append(badge,reliefPanel);
   const description=document.createElement('details'),descriptionSummary=document.createElement('summary');description.className='j3k-description';descriptionSummary.textContent='時代說明與資料限制';note.before(description);description.append(descriptionSummary,note);
   document.fonts?.addEventListener('loadingdone',()=>window.dispatchEvent(new Event('resize')));
+  // One visible entry for the authored route; ordinary construction keeps its camera.
+  const guideButton=document.createElement('button'),guideNote=document.createElement('p');
+  guideButton.type='button';guideButton.className='j3k-guide-button';guideButton.textContent='▶ 主線導覽';guideButton.setAttribute('aria-pressed','false');guideButton.setAttribute('aria-describedby','j3k-guide-note');
+  guideNote.id='j3k-guide-note';guideNote.className='j3k-guide-note';guideNote.textContent='大衛城 → 第一聖殿 → 重建第二聖殿 → 希律擴建';guideNote.setAttribute('aria-live','polite');toolbar.prepend(guideButton);toolbar.after(guideNote);
+  let guide=null;
+  function leaveGuide(){if(!guide)return;guide=null;three.cancelGuidedCamera();guideButton.textContent='▶ 主線導覽';guideButton.setAttribute('aria-pressed','false');guideNote.textContent='已切換手動視角 · 大衛城 → 第一聖殿 → 第二聖殿 → 希律擴建';}
+  for(const event of['pointerdown','wheel','keydown'])mount.addEventListener(event,()=>{if(guide){stop();leaveGuide();}},{capture:true,passive:true});
+  toolbar.addEventListener('click',e=>{if(guide&&e.target.closest('button')&&e.target!==guideButton){stop();leaveGuide();}},true);
   let raf = 0,
     last = 0, waitingForCity=false,playbackPosition=Number(slider.value);
   function stop() {
@@ -365,6 +374,7 @@ try {
     raf = 0;
     last = 0;
     waitingForCity=false;
+    three.cancelGuidedCamera();if(guide){guide.chapter=null;guideButton.textContent='▶ 繼續導覽';guideButton.setAttribute('aria-pressed','false');}
     play.textContent = '▶ 建城';
     play.setAttribute('aria-pressed', 'false');
     window.__JERUSALEM3000__.playback={status:'paused',position:Number(slider.value),presentationPosition:playbackPosition};
@@ -380,8 +390,10 @@ try {
       else {play.textContent='Ⅱ 等待城市 · 可暫停';if(raf)raf=requestAnimationFrame(frame);}
       return;
     }
+    if(guide){const chapter=sacredRidgeChapter(position);if(guide.chapter!==chapter.id){guide.chapter=chapter.id;three.focusSacredRidgeChapter(chapter.view);guideNote.textContent=chapter.title+' · '+chapter.text;window.__JERUSALEM3000__.guide={chapter:chapter.id,title:chapter.title,position};}if(three.guidedCameraMoving()){if(raf)raf=requestAnimationFrame(frame);return;}}
     const wasWaiting=waitingForCity;waitingForCity=false;play.textContent='Ⅱ 暫停';
     let v=advancePlayback(position,wasWaiting?0:elapsed,time.max+1,{rate:1/Number(speed.value)});
+    if(guide)v=Math.min(v,SACRED_RIDGE_END);
     playbackPosition=v;
     window.__JERUSALEM3000__.playback={status:'playing',position:v,phase:readiness.phase};
     if (v >= time.max+1) {
@@ -391,8 +403,10 @@ try {
     three.setPlaybackDisplayPosition(v);
     slider.value = Math.min(v,time.max);
     update(Math.min(v,time.max));
+    if(guide&&v>=SACRED_RIDGE_END){stop();guide=null;guideButton.textContent='↺ 重播主線導覽';guideNote.textContent='導覽完成 · 希律擴建屬第二聖殿時期。拖動畫面可自由查看。';}
     if (raf) raf = requestAnimationFrame(frame);
   }
+  guideButton.addEventListener('click',()=>{if(guide){if(raf)stop();else{guideButton.textContent='Ⅱ 暫停導覽';guideButton.setAttribute('aria-pressed','true');start();}return;}stop();terrainOverview(false);three.setPlaybackPresentation(true);slider.value=String(SACRED_RIDGE_START);playbackPosition=SACRED_RIDGE_START;update(playbackPosition);guide={chapter:null};guideButton.textContent='Ⅱ 暫停導覽';guideButton.setAttribute('aria-pressed','true');start();});
   function start() {
     if (raf) return;
     if(!(Number(slider.value)===time.max&&playbackPosition>time.max&&playbackPosition<time.max+1))playbackPosition=Number(slider.value);
@@ -402,14 +416,14 @@ try {
     raf = requestAnimationFrame(frame);
   }
   slider.addEventListener('input', () => {
-    stop();playbackPosition=Number(slider.value);three.setPlaybackPresentation(false);
+    stop();leaveGuide();playbackPosition=Number(slider.value);three.setPlaybackPresentation(false);
     update(Number(slider.value));
   });
-  play.addEventListener('click', () => (raf ? stop() : start()));
+  play.addEventListener('click', () => {if(raf)stop();else{leaveGuide();start();}});
   markers.forEach(b=>b.title='查看本期後段概覽；拖動時間軸可查看早段與建造過程');
   markers.forEach((b) =>
     b.addEventListener('click', () => {
-      stop();three.setPlaybackPresentation(false);
+      stop();leaveGuide();three.setPlaybackPresentation(false);
       const index=Number(b.dataset.phase),inspection=index===phases.length-1?index:index+.9;
       slider.value = String(inspection);playbackPosition=inspection;
       update(inspection);
