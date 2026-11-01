@@ -16,6 +16,7 @@
  // ?ground=0 (or ?five=0 without an explicit ground setting) keeps the original A/B proof.
  const params=new URLSearchParams(location.search);
  if(!params.has('ground')&&params.get('five')!=='0')fixedGround=true;
+ const timelineMax=params.get('five')==='0'?12:16.74;
  const groundToggle=$('#proof-ground-toggle'),realmGround=$('#p2-realm-background');
  function syncGroundMode(){
   document.body.dataset.fixedGround=fixedGround?'on':'off';
@@ -285,7 +286,7 @@
  let frameLoaded=false,lastPaint=NaN,queued=false;
  function paint(){
   queued=false;const vh=Math.max(1,innerHeight),top=track.getBoundingClientRect().top;
-  const distance=clamp(-top/vh,0,12),legacyDistance=Math.min(distance,6.5),churchEnd=3.0775,magazineEnd=6.5;
+  const fullDistance=clamp(-top/vh,0,timelineMax),distance=clamp(fullDistance,0,12),legacyDistance=Math.min(distance,6.5),churchEnd=3.0775,magazineEnd=6.5;
   let legacy;
   if(top>0)legacy=clamp((vh-top)/vh,0,1)*.1/2.9;
   else if(legacyDistance<=churchEnd){const scene=legacyDistance<=1.8?.1+legacyDistance*(.4/1.8):.5+(legacyDistance-1.8);legacy=scene/2.9;}
@@ -510,9 +511,9 @@
   oliveRegister.style.clipPath='inset('+((1-register)*100).toFixed(3)+'% 0 0 0)';
   oliveWindow.style.clipPath='inset(0 0 '+((1-windowReveal)*100).toFixed(3)+'% 0)';
   $('.olive-proof__folio').style.opacity=String(smooth((oliveIn-.83)/.16));
-  const section=distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.44?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
+  const section=fullDistance>=15.14?'07 / 07 — DAYLIGHT CAFÉ':fullDistance>=13.57?'06 / 07 — PARADISE CINEMA':fullDistance>=12?'05 / 07 — DAWN BOOKSHOP':distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.44?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
-  seek.value=String(distance/12*100);percent.textContent=(distance/12*100).toFixed(0)+'%';lastPaint=distance;
+  seek.value=String(fullDistance/timelineMax*100);percent.textContent=(fullDistance/timelineMax*100).toFixed(0)+'%';lastPaint=distance;
  }
  function requestPaint(){if(!queued){queued=true;requestAnimationFrame(paint)}}
  function seekTo(distance,updateUrl=false){
@@ -521,7 +522,7 @@
   if(updateUrl){const url=new URL(location.href);url.searchParams.set('d',distance.toFixed(2));history.replaceState(null,'',url);}
  }
  document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>seekTo(Number(b.dataset.jump),true)));
- seek.addEventListener('input',()=>seekTo(Number(seek.value)/100*12,true));
+ seek.addEventListener('input',()=>seekTo(Number(seek.value)/100*timelineMax,true));
  addEventListener('scroll',requestPaint,{passive:true});addEventListener('resize',requestPaint,{passive:true});
  document.addEventListener('visibilitychange',requestPaint);
  base.addEventListener('load',()=>{
@@ -530,6 +531,6 @@
   nested?.addEventListener('load',requestPaint,{once:true});
  });
  const initial=new URLSearchParams(location.search).get('d');
- requestAnimationFrame(()=>seekTo(initial===null?7.85:clamp(Number(initial)||0,0,12)));
+ requestAnimationFrame(()=>seekTo(initial===null?7.85:clamp(Number(initial)||0,0,timelineMax)));
  requestPaint();
 })();
