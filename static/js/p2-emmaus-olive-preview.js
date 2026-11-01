@@ -507,9 +507,14 @@
    originals.forEach((img,i)=>{
     const projection=projections[i];if(!projection)return;
     const url=img.currentSrc||img.src;
-    if(url&&projection.src!==url)projection.src=url;
+    // Freeze the original image transform while the plate travels; the
+    // source gallery has its own 15s scan/zoom, which must not resize
+    // the projected image during this horizontal slide.
+    if(url&&projection.src!==url){
+     projection.src=url;
+     projection.style.cssText=img.style.cssText;
+    }
     projection.className=img.className;
-    projection.style.cssText=img.style.cssText;
    });
    const credit=sourceFigure.querySelector('figcaption'),projectedCredit=transferFigure.querySelector('figcaption');
    if(credit&&projectedCredit)projectedCredit.textContent=credit.textContent;
