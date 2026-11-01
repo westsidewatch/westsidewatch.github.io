@@ -40,7 +40,7 @@ for(const sec of sections){
   const curtain=document.createElement('div');curtain.className='p2-cinema-curtain';
   curtain.append(document.createElement('div'),document.createElement('div'));
   curtain.firstChild.className='p2-cinema-curtain__half';curtain.lastChild.className='p2-cinema-curtain__half';scene.append(curtain);side.append(scene);
- }else{const im=document.createElement('img');im.src=srcRoot+sec.image;im.loading='lazy';im.alt='';im.decoding='async';side.append(im)}
+ }else{const im=document.createElement('img');im.dataset.src=srcRoot+sec.image;im.loading='lazy';im.alt='';im.decoding='async';side.append(im);sec.imageNode=im}
  const label=document.createElement('div');label.className='p2-five-realm__corner';label.textContent='WESTSIDE WATCH / VOL.00';side.append(label);
  const cap=document.createElement('div');cap.className='p2-five-realm__cap';cap.innerHTML='<span>ENGRAVED FIELD</span><span>'+sec.num+'</span>';side.append(cap);
  child.append(head,side);el.append(child);sec.node=child;
@@ -77,6 +77,10 @@ function update(){requestId=0;
  }
  if(rect){seenFolio=true;hasMeasured=true}
  for(const sec of sections){
+  // Avoid decoding 05/07 multi-megabyte SVGs while the user enters 03 Emmaus.
+  if(sec.imageNode&&!sec.imageNode.src&&d>=sec.start-.4&&d<sec.end+.5){
+   sec.imageNode.src=sec.imageNode.dataset.src;
+  }
   const active=sec===last&&!!rect;
   const n=sec.node;
   if(rect){n.style.left=rect.x.toFixed(2)+'px';n.style.top=rect.y.toFixed(2)+'px';n.style.width=rect.w.toFixed(2)+'px';n.style.height=rect.h.toFixed(2)+'px'}
