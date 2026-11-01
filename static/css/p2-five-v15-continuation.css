@@ -20,7 +20,7 @@ body[data-p2-five-v15="on"] #p2-realm-background[data-realm="book"]{
   background-image:url('/images/p2-realms/v15/05-library-engraving-v1-5.svg');
 }
 body[data-p2-five-v15="on"] #p2-realm-background[data-realm="cinema"]{
-  background-image:url('/images/p2-realms/v15/06-cinema-engraving-v1-5.svg');
+  /* Defer heavyweight curtain engraving until the cinema scene is actually visible. */
 }
 body[data-p2-five-v15="on"] #p2-realm-background[data-realm="life"]{
   background-image:url('/images/p2-realms/v15/07-cafe-engraving-v1-5.svg');
@@ -73,6 +73,9 @@ body[data-p2-five-v15="on"] .p2-five-realm.is-active{visibility:visible;pointer-
 .p2-cinema-curtain__half{position:relative;width:50%;height:100%;overflow:hidden;will-change:transform;
  background-image:url('/images/p2-realms/v15/06-cinema-engraving-v1-5.svg');
  background-repeat:no-repeat;background-size:200% 100%}
+.p2-five-realm--cinema.is-active .p2-cinema-curtain__half{
+ background-image:url('/images/p2-realms/v15/06-cinema-engraving-v1-5.svg');
+}
 .p2-cinema-curtain__half:first-child{background-position:left center;transform:translateX(calc(-100% * var(--p2-curtain-open,0)))}
 .p2-cinema-curtain__half:last-child{background-position:right center;transform:translateX(calc(100% * var(--p2-curtain-open,0)))}
 .p2-five-realm--life .p2-five-realm__side{background:#d9c7a1}
