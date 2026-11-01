@@ -301,8 +301,8 @@ const {chromium}=require('playwright');
     'at rest ONE retains its own right gallery');
    const emmausRect=await page.locator('#emmaus > #emmaus-gallery').boundingBox();
    const stageRect=await page.locator('#proof-stage').boundingBox();
-   assert(emmausRect && stageRect && Math.abs(emmausRect.width-stageRect.width/3)<3,
-    'Emmaus finishes at the agreed two-thirds to one-third ratio');
+   assert(emmausRect && stageRect && Math.abs(emmausRect.width-expectedW/3)<3,
+    'Emmaus remains within one-third of the measured Magazine folio, never full screen');
    const studyBounds=await page.locator('#emmaus-study').boundingBox();
    assert(studyBounds&&studyBounds.height>=140&&studyBounds.height<stageRect.height*.55,
     'ONE has a substantial but bounded study area between the Emmaus title and the book index');
