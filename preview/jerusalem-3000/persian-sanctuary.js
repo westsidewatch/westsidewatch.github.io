@@ -32,7 +32,7 @@ export function createSanctuaryAssembly(parent,{data,terrain,core,layout,prefix,
   const {x,z,w,d,height,lift}=part,ground=part.datumGroup?porticoDatums.get(part.datumGroup):isHallPart(part)?hallGround:isAltarPart(part)?altarGround:Math.max(...[-1,1].flatMap(a=>[-1,1].map(b=>surface(x+a*w/2,z+b*d/2))));
   let geometry;
   if(part.datumGroup&&part.role==='floor'){
-    const points=w>d?[[x-w/2,z],[x+w/2,z]]:[[x,z-d/2],[x,z+d/2]],width=Math.min(w,d),vertices=sanctuaryAccessVertices(points,width,surface,()=>ground+height);
+    const points=w>d?[[x-w/2,z],[x+w/2,z]]:[[x,z-d/2],[x,z+d/2]],width=Math.min(w,d),vertices=sanctuaryAccessVertices(points,width,surface,()=>ground+height,{terrain,anchor});
     for(let i=0;i<vertices.length;i+=3){vertices[i]-=x;vertices[i+1]-=ground+height/2;vertices[i+2]-=z;}
     geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
   }else{

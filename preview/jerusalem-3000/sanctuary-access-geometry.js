@@ -1,3 +1,4 @@
+import {terrainRibbonTop} from './terrain-ribbon-top.js';
 import {foundationEdgePoints} from './foundation-contact.js';
 // Raised approach ribbons have solid side support, not floating paving strips.
 export function sanctuaryAccessVertices(points,width,surface,top,context=null){
@@ -13,7 +14,10 @@ export function sanctuaryAccessVertices(points,width,surface,top,context=null){
   const breaks=[...ts].sort((a,b)=>a-b);
   for(let j=1;j<breaks.length;j++){
    const a=point(breaks[j-1],1),b=point(breaks[j],1),c=point(breaks[j-1],-1),d=point(breaks[j],-1);
-   triangle(a,b,c);triangle(b,d,c);
+   if(frame){
+    const height=(x,z)=>top(x,z,i,Math.max(0,Math.min(1,((x-ax)*dx+(z-az)*dz)/(len*len))));
+    vertices.push(...terrainRibbonTop([[a[0],a[2]],[b[0],b[2]],[d[0],d[2]],[c[0],c[2]]],context.terrain,context.anchor,height));
+   }else{triangle(a,b,c);triangle(b,d,c);}
    for(const [u,v]of[[a,b],[d,c]])if(Math.max(u[1]-surface(u[0],u[2]),v[1]-surface(v[0],v[2]))>.12){
     const bu=[u[0],surface(u[0],u[2]),u[2]],bv=[v[0],surface(v[0],v[2]),v[2]];
     face(u,bu,v);face(v,bu,bv);

@@ -166,17 +166,20 @@
     },
     {
       "id": "j3k:object:western-street",
-      "label": "Western retaining-wall street / approach system",
+      "label": "西牆外街道（相對位置示意）",
       "kind": "street",
-      "evidence": "archaeological",
-      "confidence": "high-elements",
+      "evidence": "inferred",
+      "confidence": "inferred",
       "lifecycle": {
         "birth": "Second Temple / Herodian works",
         "stateAt30CE": "active",
         "ruin": "70 CE debris event"
       },
       "geometry": {
-        "status": "registration-pending"
+        "status": "registration-pending",
+        "authority": "authored-exterior-route-relative-to-rounded-platform-not-surveyed-street",
+        "widthMetres": 8,
+        "widthAuthority": "authored-display-width-not-measured-street"
       },
       "spatial": {
         "frame": "local-enu",
@@ -192,7 +195,17 @@
           "up": null
         },
         "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
-      }
+      },
+      "sourceEvidence": "archaeological-existence-not-current-display-linework",
+      "sources": [
+        "https://thekotel.org/en/10812/2/",
+        "https://thekotel.org/en/wailing-wall-western-wall/"
+      ],
+      "limitations": [
+        "街道存在有考古依據；目前線位、8米寬度及長度為展示選擇，非測繪復原。",
+        "保留原候選地理錨點；展示線位相對現有概略平台移至西牆外，平台本身仍待配準。",
+        "尚未接通羅賓遜拱、威爾遜拱、南階及安東尼堡，不以虛構橋階掩蓋缺口。"
+      ]
     },
     {
       "id": "j3k:object:eastern-entry-unknown",

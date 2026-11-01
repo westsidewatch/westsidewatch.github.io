@@ -58,12 +58,12 @@
     {
       "objectId": "j3k:object:western-street",
       "geometryType": "LineString",
-      "status": "archaeological-linework",
+      "status": "illustrative-exterior-route-pending-survey",
       "basis": "excavated western retaining-wall street/approach remains",
-      "confidence": "high-elements",
+      "confidence": "inferred-display / archaeological-existence",
       "coordinatesENU": null,
-      "registration": "awaiting sourced line vertices",
-      "renderPolicy": "prefer observed excavated segments; extension beyond evidence must be separate geometry"
+      "registration": "original provisional anchor retained; relative exterior display offset exposed separately",
+      "renderPolicy": "current width/line/length are inferred; observed-only filter must hide display candidate; no surveyed street acceptance"
     },
     {
       "objectId": "j3k:object:eastern-entry-unknown",

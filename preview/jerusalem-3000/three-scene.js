@@ -1,3 +1,4 @@
+import {westernRouteReservation} from './western-precinct-route.js';
 import {southernApproachReservation} from './southern-approach.js';
 import {createTempleSectionView} from './temple-section-view.js';
 import {housingBoundaryStages} from './housing-boundary-stages.js';
@@ -485,7 +486,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       architecturalGrammarAudit = auditArchitecturalGrammar(ledger.objects),
       piecesBefore = builder.pieces;
     let renderableObjects = 0;
-    const exclusions = [];
+    const exclusions = [],precinctRouteRegistrations=[];
     for (const object of ledger.objects) {
       builder.currentObject = object;
       const registered = addEvidenceArchitecture(
@@ -497,6 +498,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       if (registered) {
         renderableObjects++;
         if(object.kind==='pilgrimage-access')exclusions.push(southernApproachReservation(registered));
+        if(object.kind==='street'){exclusions.push(westernRouteReservation(registered));precinctRouteRegistrations.push({id:object.id,...registered.displayRoute});}
         if (['platform-enclosure', 'fortress'].includes(object.kind)) {
           const w = object.kind === 'fortress' ? 156 : HERODIAN_DIMENSIONS.platform.eastWest+20,
             d = object.kind === 'fortress' ? 136 : HERODIAN_DIMENSIONS.platform.northSouth+20,
@@ -522,9 +524,10 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     );
     builder.finish(historical);
     const sanctuaryMesh=builder.meshes.find(m=>m.userData.evidenceObject?.id==='j3k:object:inner-temple');if(sanctuaryMesh){const b=new THREE.Box3().setFromObject(sanctuaryMesh);sanctuaryMesh.userData.templeSectionHeight=terrainRuntime.sampleElevation(31.778,35.235)+HERODIAN_DIMENSIONS.platform.pavingThickness+HERODIAN_DIMENSIONS.relativeCourtLevels.priests+6*HERODIAN_DIMENSIONS.cubitMetres+4;sanctuaryMesh.userData.landmarkFocus={x:b.min.x+11*HERODIAN_DIMENSIONS.cubitMetres+(HERODIAN_DIMENSIONS.sanctuary.eastWest-10*HERODIAN_DIMENSIONS.cubitMetres)/2,y:b.max.y,z:(b.min.z+b.max.z)/2};}
+    const streetMesh=builder.meshes.find(m=>m.userData.evidenceObject?.id==='j3k:object:western-street');if(streetMesh){const p=streetMesh.geometry.attributes.position,b=new THREE.Box3().setFromObject(streetMesh),z=(b.min.z+b.max.z)/2;let j=0;for(let i=1;i<p.count;i++)if(Math.abs(p.getZ(i)-z)<Math.abs(p.getZ(j)-z))j=i;streetMesh.userData.landmarkFocus={x:p.getX(j),y:p.getY(j),z:p.getZ(j)};}
     const perimeterMesh=builder.meshes.find(m=>m.userData.evidenceObject?.id==='j3k:object:temple-perimeter-porticoes');if(perimeterMesh)perimeterMesh.userData.landmarkFocus={x:-133.5,y:new THREE.Box3().setFromObject(perimeterMesh).max.y,z:0};
     architecturalTerrainOcclusion=createArchitecturalTerrainOcclusion(terrainRuntime,{platform:builder.meshes.find(m=>m.userData.evidenceObject?.id==='j3k:object:temple-mount-enclosure-herodian'),progress:builder.progress});
-    herodianScaleReport={dimensions:structuredClone(HERODIAN_DIMENSIONS),models:builder.meshes.map(mesh=>{const b=new THREE.Box3().setFromObject(mesh),size=b.getSize(new THREE.Vector3());return {id:mesh.userData.evidenceObject.id,bounds:{min:b.min.toArray(),max:b.max.toArray()},eastWest:size.x,northSouth:size.z,verticalEnvelope:size.y};}),measurementScope:'canonical-standing-mesh-not-current-ruin',precinctGround:terrainRuntime.sampleElevation(31.778,35.235),ancientPlacementVerified:false};
+    herodianScaleReport={precinctRoutes:precinctRouteRegistrations,dimensions:structuredClone(HERODIAN_DIMENSIONS),models:builder.meshes.map(mesh=>{const b=new THREE.Box3().setFromObject(mesh),size=b.getSize(new THREE.Vector3());return {id:mesh.userData.evidenceObject.id,bounds:{min:b.min.toArray(),max:b.max.toArray()},eastWest:size.x,northSouth:size.z,verticalEnvelope:size.y};}),measurementScope:'canonical-standing-mesh-not-current-ruin',precinctGround:terrainRuntime.sampleElevation(31.778,35.235),ancientPlacementVerified:false};
     for (const mesh of builder.meshes) {
       const object = mesh.userData.evidenceObject;
       const anchor = object.spatial.anchor;
@@ -886,8 +889,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     inspectSpatialSkeleton(){return currentPhaseId?collectSpatialSkeleton(cityCoreRuntime.core,terrainRuntime,{phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode,includeRetained:retainedVisible}):null;},
     inspectHerodianDimensions(){
       const result=structuredClone(herodianScaleReport);if(!result||!isCorePhase(currentPhaseId))return result;
-      const approach=result.models.find(m=>m.id==='j3k:object:southern-approach'),overlaps=new Set();let examined=0;root.updateMatrixWorld(true);
-      root.traverse(m=>{if(!m.isMesh)return;for(let p=m;p;p=p.parent)if(!p.visible)return;const id=cityObjectIdForMesh(m),record=cityCoreRuntime.core.get(id);if(record?.type!=='building')return;examined++;const b=new THREE.Box3().setFromObject(m),a=approach.bounds,dx=Math.min(b.max.x,a.max[0])-Math.max(b.min.x,a.min[0]),dz=Math.min(b.max.z,a.max[2])-Math.max(b.min.z,a.min[2]);if(dx>.01&&dz>.01)overlaps.add(id);});
+      const approach=result.models.find(m=>m.id==='j3k:object:southern-approach'),street=result.models.find(m=>m.id==='j3k:object:western-street'),overlaps=new Set(),streetOverlaps=new Set();let examined=0;root.updateMatrixWorld(true);
+      root.traverse(m=>{if(!m.isMesh)return;for(let p=m;p;p=p.parent)if(!p.visible)return;const id=cityObjectIdForMesh(m),record=cityCoreRuntime.core.get(id);if(record?.type!=='building')return;examined++;const b=new THREE.Box3().setFromObject(m),a=approach.bounds,dx=Math.min(b.max.x,a.max[0])-Math.max(b.min.x,a.min[0]),dz=Math.min(b.max.z,a.max[2])-Math.max(b.min.z,a.min[2]);if(dx>.01&&dz>.01)overlaps.add(id);const s=street.bounds;if(Math.min(b.max.x,s.max[0])-Math.max(b.min.x,s.min[0])>.01&&Math.min(b.max.z,s.max[2])-Math.max(b.min.z,s.min[2])>.01)streetOverlaps.add(id);});
+      result.westernStreetHousingClearance={examinedMeshes:examined,overlappingBuildingIds:[...streetOverlaps],historicalGeometryAccepted:false};
       result.southernApproachHousingClearance={examinedMeshes:examined,overlappingBuildingIds:[...overlaps],scope:'actual-visible-building-bounds-versus-stair-footprint',historicalGeometryAccepted:false};return result;
     },
     inspectRegionalLandforms(){return regionalLandforms?.snapshot()??null;},
@@ -928,7 +932,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       const gate=namedGates?.find(g=>g.id===id),box=new THREE.Box3();root.updateMatrixWorld(true);let found=false;
       root.traverse(m=>{if(!m.isMesh||m.userData.cityObject?.objectId!==id)return;for(let p=m;p;p=p.parent)if(!p.visible)return;box.expandByObject(m);found=true;});if(!found)return false;
       const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*(id==='j3k:object:inner-temple'?(camera.aspect<1?1.8:1.15):['j3k:object:antonia','j3k:object:southern-approach'].includes(id)?(camera.aspect<1?2.1:1.5):/aqsa-context$|nea-context$|holy-sepulchre-context$/.test(id)?(camera.aspect<1?2.1:1.35):2.1);
-      controls.minDistance=5;controls.target.copy(focus);camera.position.copy(focus).add(gate?new THREE.Vector3(-gate.normal.x*distance,.25*distance,-gate.normal.z*distance):id.endsWith('holy-sepulchre-context')?new THREE.Vector3(-.6*distance,.75*distance,distance):id.endsWith('aqsa-context')?new THREE.Vector3(-.55*distance,.65*distance,-distance):id.endsWith('nea-context')?new THREE.Vector3(-.85*distance,.7*distance,.6*distance):new THREE.Vector3(.65*distance,.7*distance,distance));controls.update();needsFrame=true;return true;
+      if(id==='j3k:object:western-street'){const x=(box.min.x+box.max.x)/2,z=(box.min.z+box.max.z)/2;focus.set(x,terrainRuntime.heightAtWorld(x,z)+.16,z);}
+      controls.minDistance=5;controls.target.copy(focus);camera.position.copy(focus).add(id==='j3k:object:western-street'?new THREE.Vector3(camera.aspect<1?-100:-65,camera.aspect<1?100:65,camera.aspect<1?160:100):gate?new THREE.Vector3(-gate.normal.x*distance,.25*distance,-gate.normal.z*distance):id.endsWith('holy-sepulchre-context')?new THREE.Vector3(-.6*distance,.75*distance,distance):id.endsWith('aqsa-context')?new THREE.Vector3(-.55*distance,.65*distance,-distance):id.endsWith('nea-context')?new THREE.Vector3(-.85*distance,.7*distance,.6*distance):new THREE.Vector3(.65*distance,.7*distance,distance));controls.update();needsFrame=true;return true;
     },
     setTempleSection(value){const enabled=templeSection.set(value,root);needsFrame=true;return enabled;},
     inspectTempleSection(){return templeSection.diagnostics();},

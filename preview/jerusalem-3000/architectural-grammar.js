@@ -1,3 +1,4 @@
+import {buildWesternPrecinctRoute} from './western-precinct-route.js';
 import {towerShellParts} from './landmark-shells.js';
 import {buildSouthernApproach} from './southern-approach.js';
 import {buildHerodianService} from './temple-ritual-service.js';
@@ -100,7 +101,7 @@ function sacredComplex(builder,r,surface){
  for(let i=0;i<10;i++)for(const sign of[-1,1]){const x=minX+4+i*(maxX-minX-8)/9,datum=x<israelWest-transition?y:x<innerEast?israelY:base;column(builder,x,datum+.02,-r.north+sign*(d/2-3),surface,10.5);}
 }
 function approach(builder,r,surface){buildSouthernApproach(builder,r,surface);}
-function street(builder,r,surface){const y=r.up;for(let i=-10;i<=10;i++)for(let j=-1;j<=1;j++)box(builder,[16,4.5,17],[r.east+j*17,y+2.25,-r.north+i*17],surface,'circulation',(i+j)%2?.91:.98);box(builder,[10,24,360],[r.east-34,y+12,-r.north],surface,'retaining',.9);}
-export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v15-readable-landmark-shells';
+function street(builder,r,surface){buildWesternPrecinctRoute(builder,r);}
+export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v16-exterior-precinct-route';
 export const SUPPORTED_ARCHITECTURAL_KINDS=Object.freeze(['platform-enclosure','perimeter-porticoes','portico-basilica','fortress','sacred-complex','pilgrimage-access','street']);
 export function buildArchitecturalGrammar(builder,object,registration,surface){switch(object.kind){case'perimeter-porticoes':buildPerimeterPorticoes(builder,registration,surface,box);break;case'platform-enclosure':platform(builder,registration,surface);break;case'portico-basilica':stoa(builder,registration,surface);break;case'fortress':fortress(builder,registration,surface);break;case'sacred-complex':sacredComplex(builder,registration,surface);break;case'pilgrimage-access':approach(builder,registration,surface);break;case'street':street(builder,registration,surface);break;default:return false}return true;}

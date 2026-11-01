@@ -34,6 +34,8 @@ Every tread is real geometry with riser faces and original-grid ground support. 
 
 ## Registration blockers before the next ring
 
+B34 update: see [PRECINCT-ROUTES.md](PRECINCT-ROUTES.md). Shared paving now conforms to actual DEM triangles; the western display candidate is explicitly inferred and constrained outside the rounded platform, with its original anchor/offset retained. This removes the old slab collision but does **not** resolve surveyed street/platform registration. The remaining interface blockers below still apply.
+
 - The western street candidate is centred at aboutx−123m while the rounded platform's west edge isx−150m. Its current broad placeholder overlaps the platform envelope. This is a source/registration issue, not permission to move a known street arbitrarily. Review street, retaining fabric and platform outline together before bridges/arches or new connections.
 - Antonia/platform/portico endpoint and height registration still has an unresolved gap. Do not hide it with a decorative descent stair.
 - First-temple royal placements and early Second Temple court dimensions are authored; historical locations and physical fabric continuity stay unaccepted.
