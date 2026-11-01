@@ -420,41 +420,49 @@
   // Include the REAL seven-color spine in the frozen Magazine perimeter.
   // It sits just outside Contents on desktop; excluding it would allow the
   // new engraving to paint OVER the accepted book spine during handoff.
-  // The magazine folio has two immutable physical formats: square Contents,
-  // and its adjacent 5:8 cover. Reject an unstable iframe measurement outright.
-  // The rotated seven-colour spine must NOT expand the measured spread.
+  // The real magazine is one square Contents page adjacent to a 5:8 cover.
+  // A transient iframe measurement MUST NOT erase either following chapter.
+  // Reconstruct the EXACT approved folio geometry from the source's own layout
+  // formula when DOM coordinates are not ready; never fall back to full screen.
+  const expectedFolio=()=>{
+   const W=stageRect.width,H=stageRect.height,mobile=W<=820;
+   if(mobile){
+    const mx=Math.max(7,W*.025),my=6;
+    const side=Math.max(1,Math.min((W-2*mx)/1.05,(H-2*my)/2.6));
+    const edge=Math.max(13,Math.min(20,side*.05));
+    const stackY=(H-2.6*side)/2;
+    const coverX=(W-side)/2,contentsX=(W-side-edge)/2+edge;
+    const x=Math.min(coverX,contentsX);
+    return {x,y:stackY,w:Math.max(coverX+side,contentsX+side)-x,h:2.6*side};
+   }
+   const mx=Math.max(16,W*.06),my=Math.max(18,H*.053);
+   const side=Math.max(1,Math.min((W-2*mx)/(1.625+.035),H-2*my));
+   const edge=Math.max(18,Math.min(28,side*.035));
+   const width=side*1.625+edge;
+   return {x:(W-width)/2,y:(H-side)/2,w:width,h:side};
+  };
   const validMagazine=original&&coverBounds&&
    original.w>0&&original.h>0&&coverBounds.w>0&&coverBounds.h>0&&
    Math.abs(original.w/original.h-1)<.09&&
    Math.abs(coverBounds.w/coverBounds.h-.625)<.09&&
    (stageRect.width<=820?
-    // The approved narrow-screen folio is vertically stacked, not side-by-side.
     Math.abs(original.x-coverBounds.x)<original.w*.10:
     Math.abs(original.h-coverBounds.h)<original.h*.04&&
-    coverBounds.x>=original.x+original.w-original.w*.04&&
-    original.x>=-2&&original.y>=-2&&
-    coverBounds.x+coverBounds.w<=stageRect.width+2&&
-    coverBounds.y+coverBounds.h<=stageRect.height+2);
+    coverBounds.x>=original.x+original.w-original.w*.04)&&
+   original.x>=-2&&original.y>=-2&&
+   Math.max(original.x+original.w,coverBounds.x+coverBounds.w)<=stageRect.width+2&&
+   Math.max(original.y+original.h,coverBounds.y+coverBounds.h)<=stageRect.height+2;
+  // The approved source is always the geometry authority when its page bounds
+  // are sane; otherwise compute from the SAME dimensions used by its renderer.
   const magSpread=validMagazine?(()=>{
    const folios=[original,coverBounds];
    const x=Math.min(...folios.map(r=>r.x)),y=Math.min(...folios.map(r=>r.y));
    return {x,y,w:Math.max(...folios.map(r=>r.x+r.w))-x,
                h:Math.max(...folios.map(r=>r.y+r.h))-y};
-  })():null;
-  if(magSpread)lastMeasuredSpread=magSpread;
-  // Missing iframe geometry must never turn a fixed folio into full screen.
-  if(!magSpread){
-   // Never throw a full-stage image across the user's approved folio when
-   // nested document dimensions are transient, unavailable or out of ratio.
-   if(transferFigure){
-    transferFigure.remove();
-    if(transferHome)transferHome.style.visibility=transferOriginalVisibility??'';
-    transferFigure=null;transferHome=null;transferOriginalVisibility=null;
-   }
-   emmaus.style.visibility='hidden';olive.style.visibility='hidden';
-   if(realmGround){realmGround.style.opacity='0';realmGround.style.clipPath='none';}
-   return;
-  }
+  })():expectedFolio();
+  lastMeasuredSpread=magSpread;
+  // Never conceal Emmaus or Olive Mountain because a nested iframe was late.
+  // A bad measurement is handled by the proportionally reconstructed folio.
   const master=magSpread;
   // Cut the REAL Magazine folio shape OUT of the background engraving.
   // This paints engraving only in the original VIDEO field, never over the
@@ -508,11 +516,14 @@
    sourceFigure.style.visibility='hidden';
    // Uniform scale only: source square -> square fitted INSIDE 5:8 cover,
    // then fitted inside the fixed 2/3 + 1/3 Emmaus spread.
-   const coverArtwork=fitInside(original,coverBounds);
-   const oneArtwork=fitInside(original,fullRight);
+   const sourceArt=validMagazine?original:{x:master.x,y:master.y,w:master.h,h:master.h};
+   const targetCover=validMagazine?coverBounds:{
+    x:master.x+master.w-master.h*.625,y:master.y,w:master.h*.625,h:master.h};
+   const coverArtwork=fitInside(sourceArt,targetCover);
+   const oneArtwork=fitInside(sourceArt,fullRight);
    setRect(transferFigure,move>.999?
     blendRects(coverArtwork,oneArtwork,archive):
-    blendRects(original,coverArtwork,move));
+    blendRects(sourceArt,coverArtwork,move));
    transferFigure.style.setProperty('--p2-transfer-visible',
     String(Math.max(0,1-(useArchive?archive:0))*fieldExit));
   }else if(transferFigure){
@@ -587,7 +598,7 @@
   // placeholder, fabricated engraving, or duplicate image may appear.
   if(transferFigure&&!useArchive&&oliveIn>.001){
    setRect(transferFigure,blendRects(
-    fitInside(original,fullRight),fitInside(original,destination),morphMove));
+    fitInside(validMagazine?original:{x:master.x,y:master.y,w:master.h,h:master.h},fullRight),fitInside(validMagazine?original:{x:master.x,y:master.y,w:master.h,h:master.h},destination),morphMove));
   }
   heroFolio.style.opacity=String(smooth((oliveIn-.76)/.23));
 
