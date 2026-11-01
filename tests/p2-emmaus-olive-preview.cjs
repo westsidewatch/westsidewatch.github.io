@@ -41,14 +41,20 @@ for(const realm of ['church','magazine','sermon','book','cinema','life','bible']
 assert.match(html,/id="p2-realm-background"/,'the background texture is its own field');
 assert.match(js,/fixedGround=new URLSearchParams\(location\.search\)\.get\('ground'\)==='1'/,
  'engraved-background mode is opt-in and default remains unchanged');
-assert.match(js,/const magSpread=original&&coverBounds/,
- 'the later chapters reuse the REAL Magazine cover+Contents+spine measured footprint');
+assert.match(js,/const validMagazine=original&&coverBounds/,
+ 'the later chapters validate the approved magazine source formats before any projected handoff');
+assert.match(js,/Math\.abs\(original\.w\/original\.h-1\)/,'Contents must remain square');
+assert.match(js,/Math\.abs\(coverBounds\.w\/coverBounds\.h-\.625\)/,'cover must remain 5:8');
 assert.match(js,/sourceSpine=sourceDoc\?\.getElementById\('dual-continuum'\)/,
  'the original frozen sevenfold spine belongs INSIDE the protected Magazine aperture');
-assert.match(js,/realmGround\.style\.clipPath='path\("/,
- 'engraving field must cut out the actual Magazine folio hole');
+assert.match(js,/const clip='path\("/,
+ 'engraving field must cut out the measured Magazine folio hole');
 assert.match(js,/const fullLeft=\{x:master\.x/,
  'the 2:1 ONE spread lives inside the Magazine footprint');
+assert.match(js,/const fitInside=\(original,destination\)/,'projected Doré plate must fit uniformly within destination');
+assert.match(js,/blendRects\(original,coverArtwork,move\)/,'original Doré plate must animate without independent width and height deformation');
+assert.doesNotMatch(css,/\.proof-stage > #dual-dore-plate \.dual-dore-plate__image[\s\S]*?object-fit:cover/,
+ 'projected Doré artwork is never cropped with object-fit:cover');
 assert.match(js,/olive\.style\.inset='auto'/,
  'the Olive stage is also constrained to the Magazine geometry');
 assert.match(js,/active:distance<6\.6/,
@@ -316,6 +322,39 @@ const {chromium}=require('playwright');
    });
    assert.deepEqual(originalPlateState,{parent:'dual-contents',stillConnected:true,visibility:'hidden'},
     'the source engraving remains structurally anchored in the approved Magazine');
+   const proportions=await page.evaluate(()=>{
+    const stage=document.getElementById('proof-stage');
+    const projection=stage.querySelector(':scope > #dual-dore-plate');
+    const nested=document.getElementById('proof-original')?.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
+    const doc=nested?.contentDocument;
+    const square=doc?.getElementById('dual-contents');
+    const cover=doc?.getElementById('dual-cover');
+    if(!projection||!square||!cover)return null;
+    const r=projection.getBoundingClientRect(),sr=stage.getBoundingClientRect();
+    const a=square.getBoundingClientRect(),b=cover.getBoundingClientRect(),fr=nested.getBoundingClientRect();
+    const base=document.getElementById('proof-original').getBoundingClientRect();
+    const xy=t=>({left:base.left+fr.left+t.left,top:base.top+fr.top+t.top,
+      right:base.left+fr.left+t.right,bottom:base.top+fr.top+t.bottom});
+    const x=xy(a),y=xy(b),folio={left:Math.min(x.left,y.left),top:Math.min(x.top,y.top),
+      right:Math.max(x.right,y.right),bottom:Math.max(x.bottom,y.bottom)};
+    return {art:{left:r.left,top:r.top,right:r.right,bottom:r.bottom,w:r.width,h:r.height},
+     folio,sourceRatio:a.width/a.height,coverRatio:b.width/b.height,
+     imageFit:getComputedStyle(projection.querySelector('img')).objectFit,
+     stage:{left:sr.left,right:sr.right}};
+   });
+   assert(proportions,'the Magazine and projected engraving are measurable in Chromium');
+   if(viewport.width>820){
+    assert(Math.abs(proportions.sourceRatio-1)<.09,'Contents physical page remains square');
+    assert(Math.abs(proportions.coverRatio-.625)<.09,'the original cover remains 5:8');
+    assert(Math.abs(proportions.art.w/proportions.art.h-proportions.sourceRatio)<.025,
+     'the moving Doré square retains its original intrinsic folio proportion');
+    assert(proportions.art.left>=proportions.folio.left-3&&
+     proportions.art.right<=proportions.folio.right+3&&
+     proportions.art.top>=proportions.folio.top-3&&
+     proportions.art.bottom<=proportions.folio.bottom+3,
+     'the transitioning Doré plate never expands outside the existing Magazine folio');
+   }
+   assert.equal(proportions.imageFit,'contain','never crop the original Doré artwork');
    const transferShot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-magazine-plate-transfer.png');
    fs.mkdirSync(path.dirname(transferShot),{recursive:true});
    await page.screenshot({path:transferShot});
