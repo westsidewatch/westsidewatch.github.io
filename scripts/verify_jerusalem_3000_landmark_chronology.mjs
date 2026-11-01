@@ -9,6 +9,7 @@ const terrain={grid:{origin:packs[0].origin},heightAtWorld:(x,z)=>100+x*.02+z*.0
 const visible=(runtime,id)=>runtime.meshes.filter(m=>m.visible&&m.userData.cityObject.objectId===id);
 for(const phase of ['byzantine','early-islamic','crusader']){
  const pack=packs.find(p=>p.phases[phase]),registration=compileIndependentLaterSkeleton(pack,phase,terrain.grid.origin),runtime=buildIndependentLaterSkeleton(new THREE.Group(),registration,{inferred:material},terrain),binding=publisher.bind(runtime),index=phases.findIndex(p=>p.id===phase);runtimes.push(runtime);
+ for(const mesh of runtime.landmarkMeshes.filter(m=>m.userData.cityObject?.objectId?.endsWith('holy-sepulchre-context'))){const focus=mesh.userData.landmarkFocus,p=mesh.geometry.attributes.position;assert.ok(focus);assert.ok(Array.from({length:p.count},(_,i)=>i).some(i=>Math.hypot(p.getX(i)-focus.x,p.getY(i)-focus.y,p.getZ(i)-focus.z)<.0001),'Sepulchre callout must anchor at an actual vertex, not empty aggregate-centre air');}
  const snapshots=runtime.meshes.map(m=>[m.uuid,m.geometry.uuid,Array.from(m.geometry.attributes.position.array)]);
  for(const record of registration.cores.filter(c=>c.metadata.landmarkChronology)){
   const actual=core.get(record.id),plan=actual.metadata.landmarkChronology;assert.deepEqual(actual.predecessorIds,[]);assert.deepEqual(actual.successorIds,[]);
