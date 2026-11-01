@@ -403,17 +403,13 @@
   const fullLeft={x:master.x,y:master.y,w:master.w*2/3,h:master.h};
   const fullRight={x:master.x+master.w*2/3,y:master.y,
                    w:master.w/3,h:master.h};
-  // Olive has the SAME outer rectangle as the Magazine and Emmaus.
-  if(fixedGround){
-   olive.style.inset='auto';
-   olive.style.left=master.x.toFixed(2)+'px';
-   olive.style.top=master.y.toFixed(2)+'px';
-   olive.style.width=master.w.toFixed(2)+'px';
-   olive.style.height=master.h.toFixed(2)+'px';
-  }else{
-   olive.style.inset='';
-   olive.style.left='';olive.style.top='';olive.style.width='';olive.style.height='';
-  }
+  // 03–07 remain within the SAME live Magazine perimeter in every proof mode.
+  // The engraving toggle changes the surrounding field, never the folio geometry.
+  olive.style.inset='auto';
+  olive.style.left=master.x.toFixed(2)+'px';
+  olive.style.top=master.y.toFixed(2)+'px';
+  olive.style.width=master.w.toFixed(2)+'px';
+  olive.style.height=master.h.toFixed(2)+'px';
   if(move>.001&&sourceFigure&&sourceTile&&coverBounds){
    if(!transferFigure){
     transferFigure=sourceFigure;transferHome=sourceTile;
