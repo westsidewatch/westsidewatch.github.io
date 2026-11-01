@@ -285,6 +285,8 @@
  let transferFigure=null,transferHome=null,transferOriginalVisibility=null;
  let sourceOriginalTileOpacity=null,sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
  let frameLoaded=false,lastPaint=NaN,queued=false,lastMeasuredSpread=null;
+ // Cache the settled Magazine geometry across Emmaus scroll frames.
+ let settledGeometry=null,settledGeometryDoc=null,settledGeometryW=0,settledGeometryH=0;
  function paint(){
   queued=false;const vh=Math.max(1,innerHeight),top=track.getBoundingClientRect().top;
   const fullDistance=clamp(-top/vh,0,timelineMax),distance=clamp(fullDistance,0,12),legacyDistance=Math.min(distance,6.5),churchEnd=3.0775,magazineEnd=6.5;
@@ -337,14 +339,27 @@
   const sourceCover=sourceDoc?.getElementById('dual-cover');
   const sourceSpine=sourceDoc?.getElementById('dual-continuum');
   const sourceFigure=sourceDoc?.getElementById('dual-dore-plate');
-  const frameRect=sourceFrame?.getBoundingClientRect(),baseRect=base.getBoundingClientRect(),stageRect=$('#proof-stage').getBoundingClientRect();
-  const bounds=node=>{
-   if(!node||!frameRect)return null;
-   const r=node.getBoundingClientRect();
-   return {x:baseRect.left-stageRect.left+frameRect.left+r.left,
-           y:baseRect.top-stageRect.top+frameRect.top+r.top,w:r.width,h:r.height};
-  };
-  const original=bounds(sourceTile),coverBounds=bounds(sourceCover),spineBounds=bounds(sourceSpine);
+  const stageRect=$('#proof-stage').getBoundingClientRect();
+  const canReuse=distance>=7.0&&settledGeometryDoc===sourceDoc&&
+    settledGeometryW===stageRect.width&&settledGeometryH===stageRect.height&&!!settledGeometry;
+  let original,coverBounds,spineBounds;
+  if(canReuse){
+   ({original,coverBounds,spineBounds}=settledGeometry);
+  }else{
+   const frameRect=sourceFrame?.getBoundingClientRect(),baseRect=base.getBoundingClientRect();
+   const bounds=node=>{
+    if(!node||!frameRect)return null;
+    const r=node.getBoundingClientRect();
+    return {x:baseRect.left-stageRect.left+frameRect.left+r.left,
+            y:baseRect.top-stageRect.top+frameRect.top+r.top,w:r.width,h:r.height};
+   };
+   original=bounds(sourceTile);coverBounds=bounds(sourceCover);spineBounds=bounds(sourceSpine);
+   if(distance>=7.0&&original&&coverBounds){
+    settledGeometry={original,coverBounds,spineBounds};
+    settledGeometryDoc=sourceDoc;
+    settledGeometryW=stageRect.width;settledGeometryH=stageRect.height;
+   }
+  }
   // Never dissolve the approved Magazine just to expose the homepage film.
   // Contents and the cover remain the connected backdrop while the REAL
   // engraving crosses from the left to the right. Only the incoming ONE
@@ -414,8 +429,9 @@
     const n=v=>Math.round(v*100)/100;
     const x=n(master.x),y=n(master.y),right=n(master.x+master.w),bottom=n(master.y+master.h);
     const w=n(stageRect.width),h=n(stageRect.height);
-    realmGround.style.clipPath='path("M 0 0 H '+w+' V '+h+
+    const clip='path("M 0 0 H '+w+' V '+h+
       ' H 0 Z M '+x+' '+y+' V '+bottom+' H '+right+' V '+y+' Z")';
+    if(realmGround.style.clipPath!==clip)realmGround.style.clipPath=clip;
     realmGround.style.opacity=String(move);
    }else{
     realmGround.style.opacity='0';realmGround.style.clipPath='none';
@@ -561,7 +577,7 @@
  }
  document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>seekTo(Number(b.dataset.jump),true)));
  seek.addEventListener('input',()=>seekTo(Number(seek.value)/100*timelineMax,true));
- addEventListener('scroll',requestPaint,{passive:true});addEventListener('resize',requestPaint,{passive:true});
+ addEventListener('scroll',requestPaint,{passive:true});addEventListener('resize',()=>{settledGeometry=null;settledGeometryDoc=null;requestPaint()},{passive:true});
  document.addEventListener('visibilitychange',requestPaint);
  base.addEventListener('load',()=>{
   frameLoaded=true;requestPaint();
