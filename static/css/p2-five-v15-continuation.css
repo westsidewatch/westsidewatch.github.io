@@ -5,7 +5,8 @@ body[data-p2-five-v15="on"] #p2-realm-background{
   --ws-engraving-opacity:1;
   background-repeat:no-repeat;
   background-position:center center;
-  background-size:100% 100%;
+  /* Do not stretch a 1440x900 native engraving to arbitrary viewport aspect ratios. */
+  background-size:cover;
   background-color:var(--ws-one-paper,var(--ws-papyrus,#ded096));
 }
 body[data-p2-five-v15="on"] #p2-realm-background::before,
