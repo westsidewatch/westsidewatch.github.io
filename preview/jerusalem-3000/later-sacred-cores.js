@@ -1,3 +1,4 @@
+import {appendSepulchreShell} from './sepulchre-shell.js';
 import {foundationContactGeometry} from './foundation-contact.js';
 import {haramCourt,haramCourtGeometry,haramFloor} from './haram-court.js';
 import {holySepulchreChronology} from './landmark-chronology.js';
@@ -66,19 +67,13 @@ vertices.push(px,inHaram&&localY<=1e-6?courtBase:base+.2+localY,pz);}if(inHaram)
   // Keep the rotunda on one display anchor through all versions/eras. Its
   // precise archaeological footprint is still unverified; do not move it when
   // the eastern complex changes. Existing design dimensions remain metres.
-  const profile=record.metadata.coreProfile,old=profile==='constantinian-rotunda-east-basilica',rx=cx-25;
+  const profile=record.metadata.coreProfile,rx=cx-25;
   if(profile==='sepulchre-1009-fragments'){
    // Open partial wall rings, no complete dome or intact eastern Martyrium.
    // Survival heights/arcs are illustrative, not excavation measurements.
    for(const angle of [0,Math.PI])append(new THREE.CylinderGeometry(20,20,3,12,1,true,angle,Math.PI*.65),rx,cz,1.5);
   }else{
-   append(new THREE.CylinderGeometry(20,20,15,16),rx,cz,7.5);dome(rx,cz,17,15);
-   if(profile==='sepulchre-1048-rotunda'){
-    for(const side of [-1,1])box(rx,cz+side*25,20,10,8);
-   }else{
-    box(cx+(old?35:15),cz,old?70:50,old?45:50,16);
-    if(!old)box(cx+20,cz+32,12,12,25);
-   }
+   appendSepulchreShell(profile,{append,dome,THREE},cx,cz);
   }
  }
  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.computeVertexNormals();g.userData={schematicSacredCore:true,geometryVerified:false};return g;

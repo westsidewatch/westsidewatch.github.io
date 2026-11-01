@@ -1,6 +1,6 @@
 // Shared engineering shell. Aisle/height budgets supplied independently by each period core.
 // Door counts, column grid and clerestory profiles are authored, not excavated plans.
-export function appendAisledHall({append,THREE},{cx,cz,length,widths,heights,axis,rearOpen=[]}){
+export function appendAisledHall({append,THREE},{cx,cz,length,widths,heights,axis,rearOpen=[],frontEnd=-1}){
  const total=widths.reduce((a,b)=>a+b,0),wall=.6,roof=.25;
  const emit=(u,v,along,across,h,bottom=0)=>append(new THREE.BoxGeometry(axis==='x'?along:across,h,axis==='x'?across:along),axis==='x'?cx+u:cx+v,axis==='x'?cz+v:cz+u,bottom+h/2);
  emit(0,0,length,total,.12);
@@ -10,7 +10,7 @@ export function appendAisledHall({append,THREE},{cx,cz,length,widths,heights,axi
   emit(0,mid,length,width,roof,height-roof);
   for(const end of[-1,1]){
    const u=end*(length-wall)/2;
-   if(end===-1||rearOpen.includes(i)){
+   if(end===frontEnd||rearOpen.includes(i)){
     for(const side of[-1,1])emit(u,mid+side*(door/2+(width-door)/4),wall,(width-door)/2,height-roof-.12,.12);
     emit(u,mid,wall,door,height-roof-doorH,doorH);
    }else emit(u,mid,wall,width,height-roof-.12,.12);
