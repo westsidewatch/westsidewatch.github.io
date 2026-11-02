@@ -339,6 +339,7 @@
  ];
  const names=$('#olive-speaker-names'),mainImg=$('#olive-main-image'),main=$('#olive-main'),nextImg=$('#olive-next-image');let currentSpeaker=0;
  const emLeft=$('.emmaus__left'),emRight=$('.emmaus__right'),emPlates=$('.emmaus__plates');
+ const emCover=$('#em-entry-cover');
  const oliveHero=$('#olive-morph-hero'),oliveEditorial=$('.olive-proof__editorial'),oliveRegister=$('.olive-proof__register'),oliveWindow=$('.olive-proof__window'),oliveBottom=$('.olive-proof__bottom');
  const heroFolio=$('.olive-proof__hero-folio');
  let galleryBorrowed=false,archiveForOlive=null,sourceStyleDoc=null;
@@ -402,7 +403,12 @@
   // ONE reveals top-to-bottom inside the fixed Magazine perimeter; never zoom back to full-screen.
   const move=smooth((distance-6.50)/.90);
   const archive=smooth((distance-7.40)/.28);
-  const oneDrop=smooth((distance-7.66)/.78);
+  // 02 Magazine -> ONE canonical scripture COVER -> opened Emmaus leaves.
+  // The real 5:8 cover waits as a complete title page before opening;
+  // it does not zoom, resize, or modify the approved Magazine folios.
+  const coverArrival=smooth((distance-7.40)/.34);
+  const coverOpen=smooth((distance-8.05)/.59);
+  const oneDrop=coverOpen;
   const oliveIn=smooth((distance-9.44)/1.38);
   // The chapter handoff is a single in-place folio reveal, not three reflowing panels.
   // The incoming ONE paper + original Doré gallery must cover BOTH former
@@ -411,9 +417,19 @@
   emmaus.style.visibility=emShowing?'visible':'hidden';emmaus.style.opacity='1';emmaus.style.transform='none';
   // Do not leave a visibly displayed Emmaus page inert merely because the
   // scroll frame sits a few pixels before/after the exact 03 dwell point.
-  const emInteractive=oneDrop>.82&&oliveIn<.55;
+  const emInteractive=oneDrop>.94&&oliveIn<.55;
   emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;
   emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
+  // Animate the book instead of using timed CSS: mouse-wheel direction and
+  // reverse scroll both restore the same canonical ONE front cover.
+  emLeft.style.opacity=String(coverArrival);
+  emLeft.style.setProperty('--em-page-reveal',String(coverOpen));
+  emLeft.style.setProperty('--em-cover-angle',(-86*coverOpen).toFixed(2)+'deg');
+  emCover.style.opacity=String(Math.max(0,1-smooth((coverOpen-.73)/.27)));
+  emCover.style.visibility=coverArrival>.001&&coverOpen<.999?'visible':'hidden';
+  // During the cover-only phase the selected Book/ONE controls must not steal
+  // pointer input; once opened, the existing book rail becomes interactive.
+  emmaus.dataset.coverState=coverOpen<.001?'closed':coverOpen>.999?'open':'opening';
 
   const sourceFrame=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
   const sourceDoc=sourceFrame?.contentDocument;
