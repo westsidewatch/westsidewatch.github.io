@@ -49,6 +49,12 @@
   if(!loaded.has(id)){
    loaded.set(id,(async()=>{
     for(const file of paths)await fetchScript(file);
+    // ONE index.html registers Mark 41 with this small inline compatibility
+    // mapping. Mirror the same published mapping here, without editing ONE.
+    if(id==='mark'&&D.mark){
+     D.mark.number=41;D.mark.code='MRK';D.mark.name='馬可福音';D.mark.nameEn='Mark';
+     D.studyBooks={...(D.studyBooks||{}),41:D.mark};
+    }
     return true;
    })().catch(error=>{console.warn('[P2 ONE]',error);loaded.delete(id);return false}));
   }
