@@ -84,14 +84,16 @@
    rail.querySelector(`[data-book="${selectedBook}"]`)?.focus({preventScroll:true});
   }
  });
- // Browsers can consume vertical wheel events on an overflow-x:auto strip,
- // even when overflow-y is hidden. Bridge that delta to the single P2 page
- // scroller; never turn the 66-book navigator into a nested vertical scene.
+ // A user scrolling over the ONE book strip intends to browse books,
+ // NOT leave Emmaus for the following P2 realm. Treat mouse-wheel vertical
+ // deltas as horizontal movement on this one-row canonical book rail.
  rail.addEventListener('wheel',event=>{
-  if(!event.deltaY||event.ctrlKey)return;
-  event.preventDefault();
-  const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?innerHeight:1);
-  scrollBy({top:delta,behavior:'instant'});
+  if(event.ctrlKey)return;
+  const unit=event.deltaMode===1?16:event.deltaMode===2?rail.clientWidth:1;
+  if(Math.abs(event.deltaY)>Math.abs(event.deltaX)&&rail.scrollWidth>rail.clientWidth){
+   event.preventDefault();
+   rail.scrollLeft+=event.deltaY*unit;
+  }
  },{passive:false});
  // Horizontal pointer-drag only; P2's vertical wheel/touch remains the sole
  // realm-to-realm navigation. No nested vertical scroll container is created.
@@ -122,7 +124,7 @@
  const plateEls=[$('#em-plate-a'),$('#em-plate-b')];
  let galleryIndex=211,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0,galleryPrefetch=false;
  let galleryOrder=ids.slice(),galleryPosition=211,gallerySelectionBook=42;
- const imgUrl=plate=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(plate.file)+'?width=1200';
+ const imgUrl=plate=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(plate.file)+'?width=960';
  async function showPlate(index){
   // A failed Commons image must not leave a prior book's plate visible.
   const ticket=++plateVersion;
@@ -399,7 +401,9 @@
   // Magazine folios from the first pixel of the travelling artwork.
   const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
   emmaus.style.visibility=emShowing?'visible':'hidden';emmaus.style.opacity='1';emmaus.style.transform='none';
-  const emInteractive=oneDrop>.999&&oliveIn<.01;
+  // Do not leave a visibly displayed Emmaus page inert merely because the
+  // scroll frame sits a few pixels before/after the exact 03 dwell point.
+  const emInteractive=oneDrop>.82&&oliveIn<.55;
   emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;
   emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
 
