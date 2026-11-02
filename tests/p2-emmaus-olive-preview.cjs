@@ -101,8 +101,8 @@ assert.match(js,/transferHome\.style\.visibility=transferOriginalVisibility/,'re
 assert.doesNotMatch(html,/em-handoff-photo/,'no added substitute picture is allowed');
 assert.match(js,/const roster=\[/,'uses fixed factual speaker assets');
 assert.match(css,/grid-template-columns:minmax\(0,2fr\) minmax\(0,1fr\)/,'Emmaus is left 2/3 and original engravings right 1/3');
-assert.match(js,/rail\.addEventListener\('wheel',/,'horizontal ONE strip bridges vertical wheel to the P2 scroll owner');
-assert.match(js,/scrollBy\(\{top:delta,behavior:'instant'\}\)/,'the rail forwards vertical wheel to the full-page handoff');
+assert.match(js,/rail\.addEventListener\('wheel',/,'original horizontal ONE navigation handles vertical wheel as horizontal browse');
+assert.match(js,/rail\.scrollLeft\+=event\.deltaY\*unit/,'the book strip scrolls horizontally rather than ejecting readers from Emmaus');
 assert.doesNotMatch(js,/stopPropagation\(\)/,'P2 should not trap wheel propagation inside a second viewport');
 assert.doesNotMatch(js,/\$\('#proof-stage'\)\.appendChild\(emRight\)/,
  'the 03→04 gallery must never leave its original editorial column');
@@ -322,10 +322,12 @@ const {chromium}=require('playwright');
    await page.waitForTimeout(120);
    assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false',
     'P2 scene controls stay reversible through the same scroll controller');
-   const before=await page.evaluate(()=>scrollY);
-   await page.locator('#emmaus-rail').hover();await page.mouse.wheel(0,500);await page.waitForTimeout(300);
-   const after=await page.evaluate(()=>scrollY);
-   assert(after>before,'vertical wheel on the book rail advances P2 instead of trapping inside ONE');
+   const before=await page.evaluate(()=>({pageY:scrollY,railX:document.getElementById('emmaus-rail').scrollLeft}));
+   await page.locator('#emmaus-rail').hover();
+   await page.mouse.wheel(0,500);await page.waitForTimeout(300);
+   const after=await page.evaluate(()=>({pageY:scrollY,railX:document.getElementById('emmaus-rail').scrollLeft}));
+   assert(after.railX>before.railX,'wheel should browse books without requiring memorized volume numbers');
+   assert(Math.abs(after.pageY-before.pageY)<5,'wheel must not unexpectedly exit Emmaus');
    // Verify one physical engraving moves out of and back into the already
    // published Magazine iframe, without an inserted second picture.
    await page.evaluate(()=>{
