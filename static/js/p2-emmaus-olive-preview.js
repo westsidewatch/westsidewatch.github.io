@@ -17,7 +17,7 @@
  const params=new URLSearchParams(location.search);
  if(!params.has('ground')&&params.get('five')!=='0')fixedGround=true;
  const timelineMax=params.get('five')==='0'?12:16.74;
- const groundToggle=$('#proof-ground-toggle'),realmGround=$('#p2-realm-background');
+ const groundToggle=$('#proof-ground-toggle'),realmGround=$('#p2-realm-background'),oliveGround=$('#p2-olive-ground-crossfade');
  function syncGroundMode(){
   document.body.dataset.fixedGround=fixedGround?'on':'off';
   emmaus.dataset.fixedGround=fixedGround?'on':'off';
@@ -342,6 +342,7 @@
   // Emmaus/Olive, force the background back to 'sermon', or remeasure the
   // heavyweight nested Magazine DOM on every later scroll frame.
   if(fullDistance>=12){
+   if(oliveGround)oliveGround.style.opacity='0';
    if(transferFigure){
     transferFigure.remove();
     if(transferHome)transferHome.style.visibility=transferOriginalVisibility??'';
@@ -517,8 +518,13 @@
       ' H 0 Z M '+x+' '+y+' V '+bottom+' H '+right+' V '+y+' Z")';
     if(realmGround.style.clipPath!==clip)realmGround.style.clipPath=clip;
     realmGround.style.opacity=String(move);
+    if(oliveGround){
+     if(oliveGround.style.clipPath!==clip)oliveGround.style.clipPath=clip;
+     oliveGround.style.opacity=String(oliveIn*move);
+    }
    }else{
     realmGround.style.opacity='0';realmGround.style.clipPath='none';
+    if(oliveGround){oliveGround.style.opacity='0';oliveGround.style.clipPath='none';}
    }
   }
   const fullLeft={x:master.x,y:master.y,w:master.w*2/3,h:master.h};
