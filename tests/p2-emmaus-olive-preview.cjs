@@ -89,7 +89,9 @@ assert(js.includes("sourceCover.style.transform='perspective(6400px)'"),
  'first turn must rotate the ACTUAL Magazine right cover, not an arriving green cover');
 assert(js.includes('ensureMagazineUnderlay(sourceDoc,sourceCover)'),
  'ONE green cover is only the NEXT page behind the original Magazine cover');
-assert(js.includes('const greenAngle=-178*archive'),
+assert(js.includes('const firstAngle=-86*smooth(move)'),
+ 'the original Magazine stops before its backface and matches the ONE green turn');
+assert(js.includes('const greenAngle=-86*archive'),
  'the green cover itself turns only during the SECOND flip');
 assert(js.includes("emRight.style.visibility=move>=.999?'visible':'hidden'"),
  'P2 right overlay must not occlude the original Magazine cover turning');
@@ -351,10 +353,10 @@ const {chromium}=require('playwright');
      leaf:box.toJSON()};
    });
    assert.equal(themeVerses.quotes.length,2,'the ONE green Emmaus cover includes both theme verses');
-   assert(themeVerses.quotes[0].text.includes('我們的心豈不是火熱的嗎'),
-    'Luke 24:32 appears as actual reader-facing scripture');
-   assert(themeVerses.quotes[1].text.includes('凡經上所指着自己的話'),
-    'Luke 24:27 appears as a second complete theme verse');
+   assert(themeVerses.quotes[0].text.includes('凡經上所指着自己的話'),
+    'the handbook PRIMARY Luke 24:27 is the first complete reader-facing verse');
+   assert(themeVerses.quotes[1].text.includes('我們的心豈不是火熱的嗎'),
+    'supporting Luke 24:32 is visually secondary');
    if(viewport.width>900){
     for(const q of themeVerses.quotes){
      assert(q.visible==='visible'&&q.opacity!=='0','both scripture verses must be visibly rendered');
