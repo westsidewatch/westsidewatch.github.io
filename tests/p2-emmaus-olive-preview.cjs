@@ -70,7 +70,14 @@ assert(js.includes('const archive=smooth((distance-7.66)/.64)'), 'second turn fo
 assert(js.includes('const oneDrop=smooth((distance-8.55)/.55)'), 'reading appears only after second turn');
 assert(!js.includes('sourceFigure.cloneNode(true)'),'the original Magazine engraving is never duplicated or moved');
 assert(js.includes('emCover.style.transform='),'ONE folio performs a hinge turn, not a full-screen clipping wipe');
-assert(!js.includes("sourceCover.style.transform=move>.001"),'never 3D-distort the published Magazine cover');
+assert(js.includes("sourceCover.style.transform='perspective(1900px)'"),
+ 'first turn must rotate the ACTUAL Magazine right cover, not an arriving green cover');
+assert(js.includes('ensureMagazineUnderlay(sourceDoc,sourceCover)'),
+ 'ONE green cover is only the NEXT page behind the original Magazine cover');
+assert(js.includes('const greenAngle=-87*archive'),
+ 'the green cover itself turns only during the SECOND flip');
+assert(js.includes("emRight.style.visibility=move>=.999?'visible':'hidden'"),
+ 'P2 right overlay must not occlude the original Magazine cover turning');
 assert(binding.includes('/one/cover-texture-antique-green.png')&&
  binding.includes('/one/cover-golden-shoot-frame-transparent.png'),
  'P2 directly reuses real ONE cloth and gold master');
@@ -418,10 +425,38 @@ const {chromium}=require('playwright');
    assert(baseline?.box&&baseline.parent==='dual-contents','original magazine engraving remains attached to Contents');
    assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),0,
      'the old travelling Doré plate projection must not be created');
+   // V14 FIRST turn: the original Magazine cover itself must hinge open.
+   // The green ONE cover is visibly BEHIND it inside the original iframe;
+   // merely rotating the green cover in from the edge is not acceptable.
+   await page.locator('[data-jump="6.86"]').click();
+   await page.waitForTimeout(160);
+   const nativeTurn=await page.locator('#proof-original').evaluate(frame=>{
+    const doc=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+    const cover=doc?.getElementById('dual-cover'),contents=doc?.getElementById('dual-contents');
+    const leaf=doc?.getElementById('p2-emmaus-magazine-underleaf');
+    return {coverStyle:cover?.style.transform,coverTransform:cover?getComputedStyle(cover).transform:null,
+      coverWidth:cover?.offsetWidth,contentsWidth:contents?.offsetWidth,
+      leafPresent:!!leaf,leafVisible:leaf?getComputedStyle(leaf).visibility:null,
+      coverOrigin:cover?.style.transformOrigin};
+   });
+   assert(nativeTurn.coverStyle?.includes('rotateY(')||nativeTurn.coverStyle?.includes('rotateX('),
+    'first turn physically rotates the original Westside Watch Magazine cover');
+   assert(nativeTurn.coverWidth>0&&nativeTurn.contentsWidth>0,
+    'the native cover and Contents have not been resized out of the spread');
+   assert(nativeTurn.leafPresent&&nativeTurn.leafVisible==='visible',
+    'green ONE underleaf sits behind the opening original Magazine cover');
+   const noCoverOverlay=await page.locator('#emmaus-gallery').evaluate(el=>
+    getComputedStyle(el).visibility==='hidden'||Number(getComputedStyle(el).opacity)<.02);
+   assert(noCoverOverlay,'the incoming green front cover cannot obscure the first Magazine turn');
+   await page.screenshot({path:path.join(groundDir,viewport.width+'-original-magazine-first-turn.png')});
    await page.locator('[data-jump="7.42"]').click();
    await page.waitForTimeout(160);
    assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'green');
    assert.equal(await page.locator('#em-entry-cover').isVisible(),true);
+   assert.equal(await page.locator('#proof-original').evaluate(frame=>{
+    const doc=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+    return !!doc?.getElementById('p2-emmaus-magazine-underleaf');
+   }),true,'the original green underleaf remains registered for reverse-scroll');
    const firstState=await page.locator('#em-entry-cover').evaluate(el=>({
      side:el.parentElement?.id,clip:getComputedStyle(el).clipPath,
      image:getComputedStyle(el.querySelector('.emmaus__entry-cover-leaf')).backgroundImage
