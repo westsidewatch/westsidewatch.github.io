@@ -412,6 +412,16 @@ body[data-ws-scope="p2"]{margin:0;background:#101923;color:#242724;font-family:v
  background-position:center;
  background-size:100% 100%;
 }
+/* 03→04: two independent exterior textures share one immutable Magazine
+   cutout and fade in place. The Olive field never touches the ONE folio. */
+#p2-olive-ground-crossfade{
+ position:absolute;inset:0;z-index:2;pointer-events:none;
+ opacity:0;visibility:visible;
+ background-color:color-mix(in srgb,var(--ws-night) 75%,var(--ws-olive));
+ background-image:radial-gradient(ellipse at 50% 85%,
+  color-mix(in srgb,var(--ws-olive) 35%,transparent),transparent 73%);
+ background-size:cover;background-position:center;
+}
 #p2-realm-background[data-realm="bible"]{
  --ws-branch:var(--ws-pale-gold);
  background-color:color-mix(in srgb,var(--ws-night) 82%,var(--ws-pale-gold));
