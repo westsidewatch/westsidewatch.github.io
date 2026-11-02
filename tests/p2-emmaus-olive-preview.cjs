@@ -29,7 +29,7 @@ assert.match(js,/if\(fullDistance>=12\)/,'the 03/04 animator stops repaints once
 assert.match(html,/p2\/living-water\.html\?embed=1/,'reuses approved P2 Church/Magazine source');
 assert.match(html,/one\/one-data\.js/,'reads the canonical 66-book inventory');
 assert.match(html,/one\/luke-21-24\.js/,'features the original Luke 24 ONE study content');
-assert.match(html,/p2-emmaus-scroll-micro-engraving\.svg/,'Emmaus has its own local editable engraved scroll study');
+assert.doesNotMatch(html,/<img class="emmaus__scroll-engraving"/,'Emmaus tool panel contains no decorative engraving');
 assert.doesNotMatch(html,/emmaus__realm-nav|emmaus__folio-layer/,'no second spine is inserted in the Emmaus chapter');
 assert.doesNotMatch(js,/data-realm-jump|realmNav/,'Magazine spines are not replaced by a second navigation controller');
 assert.match(html,/id="proof-ground-toggle"/,'P2 preview provides a fixed-folio A/B control');
