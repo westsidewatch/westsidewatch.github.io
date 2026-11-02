@@ -397,39 +397,47 @@
    lastPaint=distance;
    return;
   }
-  // Same MERSI image object: Magazine LEFT engraving actually travels to
-  // the existing RIGHT cover rectangle. No replica image is created.
-  // Only once it arrives does the full Doré archive take over silently;
-  // ONE reveals top-to-bottom inside the fixed Magazine perimeter; never zoom back to full-screen.
-  const move=smooth((distance-6.50)/.90);
-  const archive=smooth((distance-7.40)/.28);
-  // 02 Magazine -> ONE canonical scripture COVER -> opened Emmaus leaves.
-  // The real 5:8 cover waits as a complete title page before opening;
-  // it does not zoom, resize, or modify the approved Magazine folios.
-  const coverArrival=smooth((distance-7.40)/.34);
-  const coverOpen=smooth((distance-8.05)/.59);
-  const oneDrop=coverOpen;
+  // Three stable editorial states on the SAME approved Magazine geometry:
+  // 1. Right Magazine cover reveals the 5:8 ONE Emmaus green cover.
+  // 2. The green cover turns away to reveal Doré in that SAME right folio.
+  // 3. Only then the LEFT Magazine engraving gives way to Scripture content.
+  // No projection, translation, fake 3D paper curl, or animation timer.
+  const move=smooth((distance-6.50)/.72);
+  const archive=smooth((distance-7.66)/.64);
+  const coverArrival=move,coverOpen=archive;
+  const oneDrop=smooth((distance-8.55)/.55);
   const oliveIn=smooth((distance-9.44)/1.38);
-  // The chapter handoff is a single in-place folio reveal, not three reflowing panels.
-  // The incoming ONE paper + original Doré gallery must cover BOTH former
-  // Magazine folios from the first pixel of the travelling artwork.
   const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
-  emmaus.style.visibility=emShowing?'visible':'hidden';emmaus.style.opacity='1';emmaus.style.transform='none';
-  // Do not leave a visibly displayed Emmaus page inert merely because the
-  // scroll frame sits a few pixels before/after the exact 03 dwell point.
-  const emInteractive=oneDrop>.94&&oliveIn<.55;
-  emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;
+  emmaus.style.visibility=emShowing?'visible':'hidden';
+  emmaus.style.opacity='1';emmaus.style.transform='none';
+  const emInteractive=oneDrop>.96&&oliveIn<.55;
+  emmaus.style.pointerEvents=emInteractive?'auto':'none';
+  emmaus.inert=!emInteractive;
   emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
-  // Animate the book instead of using timed CSS: mouse-wheel direction and
-  // reverse scroll both restore the same canonical ONE front cover.
-  emLeft.style.opacity=String(coverArrival);
-  emLeft.style.setProperty('--em-page-reveal',String(coverOpen));
-  emLeft.style.setProperty('--em-cover-angle',(-86*coverOpen).toFixed(2)+'deg');
-  emCover.style.opacity=String(Math.max(0,1-smooth((coverOpen-.73)/.27)));
+  // Let the left engraving stay entirely untouched while both right-page
+  // turns play; the ONE paper itself replaces it only in the final short beat.
+  emLeft.style.opacity=String(oneDrop);
+  emLeft.style.setProperty('--em-page-reveal',String(oneDrop));
+  emRight.style.opacity=String(move>.001?1:0);
+  emRight.style.setProperty('--em-plate-reveal',String(coverOpen));
+  emPlates.style.opacity=String(coverOpen);
+  // Two opposing masks on one fixed 5:8 right leaf. At every scroll position
+  // the reverse trip is pixel-identical; no additional animation clock.
+  const greenClip=coverOpen>.001?
+   'inset(0 '+(coverOpen*100).toFixed(3)+'% 0 0)':
+   'inset(0 '+((1-coverArrival)*100).toFixed(3)+'% 0 0)';
+  emCover.style.clipPath=greenClip;
+  emCover.style.opacity=String(coverArrival>.001&&coverOpen<.999?1:0);
   emCover.style.visibility=coverArrival>.001&&coverOpen<.999?'visible':'hidden';
-  // During the cover-only phase the selected Book/ONE controls must not steal
-  // pointer input; once opened, the existing book rail becomes interactive.
-  emmaus.dataset.coverState=coverOpen<.001?'closed':coverOpen>.999?'open':'opening';
+  const edge=$('.emmaus__magazine-turn-edge');
+  if(edge){
+   const firstTurning=move>.001&&move<.999,secondTurning=archive>.001&&archive<.999;
+   edge.style.left=(secondTurning?100-archive*100:move*100).toFixed(2)+'%';
+   edge.style.opacity=String(firstTurning||secondTurning?0.67:0);
+  }
+  emmaus.dataset.coverState=move<.001?'magazine':archive<.001?
+   (move>.999?'green':'first-turn'):archive>.999?
+   (oneDrop>.999?'reading':'illustration'):'second-turn';
 
   const sourceFrame=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
   const sourceDoc=sourceFrame?.contentDocument;
@@ -602,57 +610,10 @@
   olive.style.top=master.y.toFixed(2)+'px';
   olive.style.width=master.w.toFixed(2)+'px';
   olive.style.height=master.h.toFixed(2)+'px';
-  if(move>.001&&sourceFigure&&sourceTile&&coverBounds){
-   // Keep the magazine artwork in its OWN iframe. Never adopt its DOM into P2.
-   // Project the same source image URLs only for the scroll-owned transition.
-   if(!transferFigure||transferHome!==sourceFigure){
-    if(transferFigure)transferFigure.remove();
-    if(transferHome)transferHome.style.visibility=transferOriginalVisibility??'';
-    transferHome=sourceFigure;transferOriginalVisibility=sourceFigure.style.visibility;
-    transferFigure=sourceFigure.cloneNode(true);
-    transferFigure.setAttribute('aria-hidden','true');
-    transferFigure.dataset.p2Transferred='projection';
-    $('#proof-stage').appendChild(transferFigure);
-   }
-   const originals=sourceFigure.querySelectorAll('img'),projections=transferFigure.querySelectorAll('img');
-   originals.forEach((img,i)=>{
-    const projection=projections[i];if(!projection)return;
-    const url=img.currentSrc||img.src;
-    // Freeze the original image transform while the plate travels; the
-    // source gallery has its own 15s scan/zoom, which must not resize
-    // the projected image during this horizontal slide.
-    if(url&&projection.src!==url){
-     projection.src=url;
-     projection.style.cssText=img.style.cssText;
-    }
-    projection.className=img.className;
-   });
-   const credit=sourceFigure.querySelector('figcaption'),projectedCredit=transferFigure.querySelector('figcaption');
-   if(credit&&projectedCredit)projectedCredit.textContent=credit.textContent;
-   sourceFigure.style.visibility='hidden';
-   // 02→03: translate the SAME SIZE engraving horizontally, never scale it.
-   // A square engraving crosses to the narrower 5:8 cover without changing
-   // its width or height. The destination folio clips the overflowing edges.
-   const sourceArt=validMagazine?original:{x:master.x,y:master.y,w:master.h,h:master.h};
-   const targetCover=validMagazine?coverBounds:{
-    x:master.x+master.w-master.h*.625,y:master.y,w:master.h*.625,h:master.h};
-   const targetX=targetCover.x+(targetCover.w-sourceArt.w)/2;
-   const movingArt={x:lerp(sourceArt.x,targetX,move),y:sourceArt.y,
-                    w:sourceArt.w,h:sourceArt.h};
-   setRect(transferFigure,movingArt);
-   // Crop only the PAGE WINDOW as it moves: the art itself stays 1:1 size.
-   const windowX=lerp(sourceArt.x,targetCover.x,move);
-   const windowY=lerp(sourceArt.y,targetCover.y,move);
-   const windowW=lerp(sourceArt.w,targetCover.w,move);
-   const windowH=lerp(sourceArt.h,targetCover.h,move);
-   const crop=[Math.max(0,windowY-movingArt.y),
-               Math.max(0,movingArt.x+movingArt.w-windowX-windowW),
-               Math.max(0,movingArt.y+movingArt.h-windowY-windowH),
-               Math.max(0,windowX-movingArt.x)];
-   transferFigure.style.clipPath='inset('+crop.map(x=>x.toFixed(2)+'px').join(' ')+')';
-   transferFigure.style.setProperty('--p2-transfer-visible',
-    String(Math.max(0,1-(useArchive?archive:0))*fieldExit));
-  }else if(transferFigure){
+  // V8: the Magazine-left Doré engraving remains in its original iframe.
+  // The old copied-image transfer has been explicitly retired. The previous
+  // transient projection, if present during HMR/re-entry, is cleared.
+  if(transferFigure){
    transferFigure.remove();
    if(transferHome)transferHome.style.visibility=transferOriginalVisibility??'';
    transferFigure=null;transferHome=null;transferOriginalVisibility=null;
@@ -671,8 +632,9 @@
   // Keep the moving plate visible all the way to the destination.
   // Only its editorial annotation recedes; the image itself must NOT vanish
   // at 32% progress and leave a blank travelling rectangle.
-  emPlates.style.opacity='1';
-  const annotations=1-smooth(oliveIn/.40);
+  // The Doré plate must be invisible under the first Magazine-cover turn.
+  emPlates.style.opacity=String(coverOpen);
+  const annotations=coverOpen*(1-smooth(oliveIn/.40));
   $('.emmaus__plate-top').style.opacity=String(annotations);
   $('.emmaus__plate-caption').style.opacity=String(annotations);
   $('.emmaus__gold-line').style.opacity=String(annotations);
