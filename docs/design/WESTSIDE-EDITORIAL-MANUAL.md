@@ -17,7 +17,7 @@ This manual merges design **judgment, editing and verification** into the existi
 | Award precedents and UI Skills | Research documents in `dore-design/` | Interpret into review criteria and exercises |
 | Acceptance | Existing OS, first-look, build and deployment checks + actual browser visual inspection | Do not replace visual QA with CI status |
 
-**Integration verified 2026-10-17:** The OS runtime already defines Bodoni Moda, genuine Bodoni Moda SC, Chiron Hei HK WS, Noto Serif TC, Chinese 200/400/600 weights and responsive `--ws-type-scale-*` semantics. Hence the old typography document's `typography-sitewide.css` authority statement is **superseded** by the OS umbrella and compatibility-runtime contract. It is not grounds to migrate or change working entry points.
+**Integration verified 2026-10-17:** The OS runtime already defines Bodoni Moda, genuine Bodoni Moda SC, Chiron Hei HK WS, Chiron Hei HK WS, Chinese 200/400/600 weights and responsive `--ws-type-scale-*` semantics. Hence the old typography document's `typography-sitewide.css` authority statement is **superseded** by the OS umbrella and compatibility-runtime contract. It is not grounds to migrate or change working entry points.
 
 **Entrypoint rules.** Hugo templates load OS through `layouts/_default/baseof.html`; standalone P2 loads `/css/westside-design-os.css` followed by its own `/css/p2-living-water.css`. Other standalone HTML is guarded by `scripts/check_design_os_entrypoints.py`: the OS stylesheet and `body[data-ws-scope]` must both exist. A manual consolidation **must not touch those references, their sequence, or any HTML/CSS/JS**.
 
@@ -31,7 +31,7 @@ Typography is architecture for reading, not decorative text. Decide the reader's
 4. **Body/metadata:** sufficiently legible at the actual viewport; time, author, source and captions must remain discoverable.
 5. **Citation/folio:** distinct semantic typography and stable positioning; never compete with the content.
 
-Select from the OS semantic scale; surface owners may bind scope-specific roles. Do not make a new `--root` type system and do not stretch fonts. Chinese 200 is for airy, sufficiently large editorial display; not tiny administrative descriptions. Chinese anchor 600 is for short structural titles, not whole paragraphs. English Roman/Italic Bodoni and real Small Caps retain distinct semantic roles.
+Select from the OS semantic scale; surface owners may bind scope-specific roles. Do not make a new `--root` type system and do not stretch fonts. For P2 Emmaus editorial non-body Chinese use airy Chiron 200; body prose uses Chiron 400. Maintain text contrast and legibility for small controls. Chinese anchor 600 is for short structural titles, not whole paragraphs. English Roman/Italic Bodoni and real Small Caps retain distinct semantic roles.
 
 Composition is measured by *text length, optical alignment, baseline, measure, contrast and breathing room*. A technically right-aligned row may still have a broken time-to-event association when the two columns are visually detached. Negative space needs a function, not merely width.
 
@@ -245,12 +245,12 @@ owning CSS/JS; do not introduce a second global engraving manager.
 
 | Role | Visible example / data | Indicative local size (adjust via cqi and OS scope) | Visual rule |
 |---|---|---|---|
-| Fixed realm | `EMMAUS` + `以馬忤斯` | Bodoni 72–100px; Chinese Chiron 600 18–24px | Permanent dominant realm signature; no override by study state |
-| Active Bible book | `JOHN` / `約翰福音` | Bodoni 40–56px; Chinese Chiron 600 26–34px | Actual book name (not just 43); second anchor |
-| Active chapter | `03` + `第三章` | Bodoni 48–70px; Chinese Chiron 600 24–30px | Visible adjacent to book; canonical chapter index |
-| Chapter subject | Actual ONE chapter title | Chiron 600 22–30px | Third-level feature heading, never tiny metadata |
-| Study body | Scripture / book background / chapter content | Noto Serif TC 400, ~14–17px readable at actual folio | Main reading space and stable measure; preserve source text |
-| Tools / notes / folio | Tabs, provenance, gold scripture, atlas captions | Chiron 400 for controls, 200 for meaningful micro-labels, subject to legibility | Quiet subordinate material; no row of miniature rectangular CTAs |
+| Fixed realm | `EMMAUS` + `以馬忤斯` | Bodoni 72–100px; Chinese Chiron 200 18–24px | Permanent dominant realm signature; no override by study state |
+| Active Bible book | `JOHN` / `約翰福音` | Bodoni 40–56px; Chinese Chiron 200 26–34px | Actual book name (not just 43); second anchor |
+| Active chapter | `03` + `第三章` | Bodoni 48–70px; Chinese Chiron 200 24–30px | Visible adjacent to book; canonical chapter index |
+| Chapter subject | Actual ONE chapter title | Chiron 200 22–30px | Third-level feature heading, never tiny metadata |
+| Study body | Scripture / book background / chapter content | Chiron Hei HK WS 400, ~14–17px readable at actual folio | Main reading space and stable measure; preserve source text |
+| Tools / notes / folio | Tabs, provenance, gold scripture, atlas captions | Chiron 200 for every non-body Chinese editorial label, including controls, subject to legibility | Quiet subordinate material; no row of miniature rectangular CTAs |
 
 The sizes are **research candidates requiring actual viewport and OS token verification**, not replacements for `westside-design-os.css`; ensure 200 weight never substitutes for actual readable Chinese body. Use bounded cqi only after measuring the inner container. Book/chapter must be prominent at 1648×928, 768, 390 and 320; restore / preserve the **original one-row scrolling 66-book canonical rail** as approved, rather than 22×3 or any hidden drawer.
 
