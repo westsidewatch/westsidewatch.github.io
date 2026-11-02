@@ -229,6 +229,60 @@ content into the same typography or internal grid merely because their
 outer rectangle aligns. Keep all work under Design OS and the existing P2
 owning CSS/JS; do not introduce a second global engraving manager.
 
+### P2 / 03 — EMMAUS / ONE 三重身份與選卷可見性（多雷探索，2026-11-01）
+
+**Status: comparative editorial research and implementation brief, not a visually accepted or deployed design.** This is an application of §2's hierarchy / §3's reference method to the 03 Bible folio. It does not create a new global OS rule, supersede existing tokens, change 02 Magazine, or approve any screenshot.
+
+**Current failure, from P2 visual review:** the fixed chapter title EMMAUS / 以馬忤斯, selected Bible book, selected chapter number and chapter study title have competing or nearly identical apparent weights; reader cannot identify the book (e.g., John / 約翰福音) or chapter (e.g., Chapter 03) without searching microscopic metadata. Multiple atlas/chronology/commentary modules crowd the top while the center has dead space. Decorative scripture gold cannot compensate for absence of meaningful grid, type scale, or current-location hierarchy.
+
+**Non-negotiable information architecture (three distinct identities):**
+
+1. **Realm, persistent and unmistakable:** `03 / 07 — EMMAUS / 以馬忤斯`. An art-directed editorial masthead in a fixed position. This DOES NOT change as the user chooses books.
+2. **Selected source, equally unmistakable:** `JOHN / 約翰福音` (or the canonical selected book from original ONE), followed immediately by `CHAPTER 03 / 第三章`. This pair MUST update together on selection and remain visible; a tiny `BOOK 43` or an unlabeled `03` is not sufficient.
+3. **Current chapter topic and reading:** the real chapter heading from ONE, then Scripture / authentic ONE chapter study content. Book name, chapter number, and topic may not have near-equal size/weight. Fallback for absent commentary should NEVER invent content.
+
+**Proposed desktop optical hierarchy at the APPROVED inner Magazine folio (measured in the actual left 2/3, not whole viewport):**
+
+| Role | Visible example / data | Indicative local size (adjust via cqi and OS scope) | Visual rule |
+|---|---|---|---|
+| Fixed realm | `EMMAUS` + `以馬忤斯` | Bodoni 72–100px; Chinese Chiron 600 18–24px | Permanent dominant realm signature; no override by study state |
+| Active Bible book | `JOHN` / `約翰福音` | Bodoni 40–56px; Chinese Chiron 600 26–34px | Actual book name (not just 43); second anchor |
+| Active chapter | `03` + `第三章` | Bodoni 48–70px; Chinese Chiron 600 24–30px | Visible adjacent to book; canonical chapter index |
+| Chapter subject | Actual ONE chapter title | Chiron 600 22–30px | Third-level feature heading, never tiny metadata |
+| Study body | Scripture / book background / chapter content | Noto Serif TC 400, ~14–17px readable at actual folio | Main reading space and stable measure; preserve source text |
+| Tools / notes / folio | Tabs, provenance, gold scripture, atlas captions | Chiron 400 for controls, 200 for meaningful micro-labels, subject to legibility | Quiet subordinate material; no row of miniature rectangular CTAs |
+
+The sizes are **research candidates requiring actual viewport and OS token verification**, not replacements for `westside-design-os.css`; ensure 200 weight never substitutes for actual readable Chinese body. Use bounded cqi only after measuring the inner container. Book/chapter must be prominent at 1648×928, 768, 390 and 320; restore / preserve the **original one-row scrolling 66-book canonical rail** as approved, rather than 22×3 or any hidden drawer.
+
+**Chosen composition, proposed for one A/B candidate:**
+
+- **Editorial top (~15–18% of left folio):** fixed `EMMAUS / 以馬忤斯` with the gold Luke 24:27 / 24:32 frame subordinate. This is a REAL identity, not small admin text.
+- **Source hero (~17–22%):** selected book and explicit chapter pair, `JOHN / 約翰福音  |  CHAPTER 03 / 第三章`, plus ONE's actual topic, separated from controls. On selection, update all of these atomically.
+- **Primary content (~43–48%):** dominant Scripture reading/study column (~62–66%) and quieter context column (~34–38%). Atlas / chronology / links are contextual views, NOT four co-equal cards; show actual available ONE data, never an invented map or generic empty placeholder.
+- **Bottom (~15–20%):** original one-row, big-number 66-book rail, selected book centered; chapter selection remains visible but light, subordinate and separate. Only ONE primary `open full ONE within P2` action.
+- **Print / typographic discipline:** one structural gold scripture frame; no ornamental engraving within tool content; no background-image filling whitespace. Align columns to an optical grid. Never reflow during 02→03 / 03→04; preserve approved 2/3 + 1/3 folio dimensions and original Doré artwork.
+
+**Evidence reviewed using §3 method; transferable mechanisms, not copied visual assets:**
+
+| Precedent | Transferable mechanism | Constraint / failure risk |
+|---|---|---|
+| [Logos — Studying a Bible Passage](https://support.logos.com/hc/en-us/articles/28756499675277-Studying-a-Bible-Passage-with-Logos) | Scripture primary; linked context and research panel secondary | Don't import desktop multi-panel density |
+| [Sefaria Resource Panel](https://help.sefaria.org/hc/en-us/articles/18472472138652-Quick-Guide-Meet-the-Sefaria-Library-Resource-Panel) | Contextual cross-references appear beside selected text | Don't make resource discovery overwhelm content |
+| [ESV.org layout](https://d33n9snnr16ctp.cloudfront.net/articles/esvorg-how-to-change-the-interface-layout/) | Primary Bible always stays in main panel | Flexible support panes, stable reading text |
+| [Bible Gateway tutorial](https://www.biblegateway.com/help/tutorial) | Explicit Book → Chapter → Passage sequence | Book selector and chapter may not vanish into metadata |
+| [YouVersion book/chapter](https://help.youversion.com/l/en/article/o1fuge3gfh-change-bible-version-or-language) | Current Book + Chapter permanently observable | Don't transplant mobile chrome into magazine |
+| [STEP Bible](https://stepweb.atlassian.net/wiki/spaces/SUG/overview) | Original languages and scholarly research accessible from reading | Deep tools are on-demand, not always visible |
+| [Blue Letter Bible Tools](https://blogs.blueletterbible.org/blb/2025/10/23/new-tools-functionality/) | Research follows the selected verse and next/previous context | No button explosion in base folio |
+| [BibleProject app](https://bibleproject.com/app/) | Canonical narrative / book context frames reading | Avoid decorative tiles supplanting Scripture |
+| [Bible Hub Commentary](https://www.biblehub.com/commentaries/) | Rich commentary attached to actual reference | Density is NOT the desired magazine layout |
+| [Met Heilbrunn Timeline](https://www.metmuseum.org/ko/toah/about) | Real chronology and geography linked to curated textual explanation | No invented timelines; don't force unrelated map |
+| [The Paris Review — Pentagram](https://www.pentagram.com/work/the-paris-review) | Authored hierarchy, controlled literary masthead, negative space earned by reading | Use Westside OS fonts, not its proprietary typography |
+| [The Pudding — 2025 OJA](https://awards.journalists.org/entries/the-pudding-4/) | Reader-led visual explanation with interactive affordances | Never trade discoverability for novelty |
+
+**Award-calibre gate:** [D&AD 2026 Digital Experience Design](https://www.dandad.org/awards/d-ad-awards/categories/digital-experience-design) explicitly prioritises **execution over idea**; design distinction does not excuse a hidden reading position. Acceptance is blocked unless: (a) at 1648×928 the user can visually identify EMMAUS, selected book and selected chapter immediately, in that hierarchy; (b) clicking John / chapter 3 updates primary source title, chapter number, text and linked Doré state without reflow; (c) readability survives 390/320px, keyboard and reduced motion; (d) original 66-book horizontal navigator works, and no unwanted secondary CTA row is introduced; (e) real browser screenshots, not JS syntax or Cloudflare deploy, show coherent composition and no overlap. These are implementation/review gates, **not claims of award certification**.
+
+---
+
 ## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
