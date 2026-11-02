@@ -62,8 +62,10 @@ assert.match(js,/olive\.style\.inset='auto'/,
  'the Olive stage is also constrained to the Magazine geometry');
 assert.match(js,/active:distance<6\.6/,
  'the homepage film is not artificially replayed in the next chapters');
-assert.match(js,/realmGround\.dataset\.realm=oliveIn>=\.5\?'sermon':'bible'/,
- 'each chapter selects its own existing Design OS engraved motif');
+assert.match(js,/oliveGround\.style\.opacity=String\(oliveIn\*move\)/,
+ 'Olive exterior engraving fades in as a distinct background layer, without a hard swap');
+assert.match(html,/id="p2-olive-ground-crossfade"/,
+ 'the two exterior textures share one measured Magazine aperture');
 assert.doesNotMatch(js,/surroundX|surroundTop|filmContinuity|filmToggle|createElement\(['"](?:iframe|video)['"]\)/,
  'the rejected cinema surround and new media instances are gone');
 assert.match(css,/#p2-realm-background\[data-realm="bible"\]/,
@@ -100,12 +102,21 @@ assert.match(css,/grid-template-columns:minmax\(0,2fr\) minmax\(0,1fr\)/,'Emmaus
 assert.match(js,/rail\.addEventListener\('wheel',/,'horizontal ONE strip bridges vertical wheel to the P2 scroll owner');
 assert.match(js,/scrollBy\(\{top:delta,behavior:'instant'\}\)/,'the rail forwards vertical wheel to the full-page handoff');
 assert.doesNotMatch(js,/stopPropagation\(\)/,'P2 should not trap wheel propagation inside a second viewport');
-assert.match(js,/appendChild\(emRight\)/,'existing ONE gallery itself transfers to the Olive image slot');
-assert.match(js,/emmaus\.appendChild\(emRight\)/,'the same gallery returns on reverse scroll');
+assert.doesNotMatch(js,/\$\('#proof-stage'\)\.appendChild\(emRight\)/,
+ 'the 03→04 gallery must never leave its original editorial column');
+assert.match(js,/poseRect\(emRight,fullRight,fullRight,1\)/,
+ 'the gallery stays in its original fixed 1/3 right-page rectangle');
 assert.doesNotMatch(html,/olive-handoff-(image|plate)/,'no duplicate Doré handoff image is inserted');
 assert.match(js,/oliveHero\.style\.transform='none'/,'the speaker portrait never flies into the page');
 assert.match(js,/oliveEditorial\.style\.clipPath=/,'Olive editorial fields reveal independently from the persistent spread');
-assert.doesNotMatch(js,/olive\.style\.clipPath='inset/,'a whole-scene curtain would replace one page with another');
+assert.match(js,/olive\.style\.clipPath='inset\(0 0 0 '/,
+ 'the incoming complete Olive page reveals only inside its unchanged Magazine footprint');
+assert.doesNotMatch(js,/emLeft\.style\.width=nextWidth/,
+ 'ONE must not reflow, resize or be crushed during 03→04');
+assert.doesNotMatch(js,/poseRect\(emRight,fullRight,destination,morphMove\)/,
+ 'the Doré gallery must not move or scale into Olive');
+assert.match(js,/oliveEditorial\.style\.opacity='1'/,
+ 'the destination folio is already composed before it becomes visible');
 // Emmaus rework: the 66-book controller stays live, while the approved magazine
 // book-spine treatment is frozen without a separate Emmaus folio controller.
 assert.match(html,/aria-live="polite"/,'selected volume identity is announced');
@@ -237,11 +248,14 @@ const {chromium}=require('playwright');
    fs.mkdirSync(groundDir,{recursive:true});
    await page.screenshot({path:path.join(groundDir,viewport.width+'-fixed-ground-bible.png')});
    await page.locator('[data-jump="11.10"]').click();await page.waitForTimeout(220);
-   assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'sermon',
-    'Sermon uses a distinct hillside contour engraving');
-   assert.match(await page.locator('#p2-realm-background').evaluate(
-    el=>getComputedStyle(el,'::after').backgroundImage),/repeating-radial-gradient/,
-    'Sermon changes to its own existing olive-terrace contour line grammar');
+   assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'bible',
+    'Bible backdrop stays stable during the Olive reveal');
+   const oliveField=await page.locator('#p2-olive-ground-crossfade').evaluate(el=>({
+    opacity:Number(getComputedStyle(el).opacity),
+    clip:getComputedStyle(el).clipPath
+   }));
+   assert(oliveField.opacity>.99,'the Olive backdrop has fully faded in by chapter 04');
+   assert.match(oliveField.clip,/path\(/,'both background layers use the same Magazine aperture');
    const olRect=await page.locator('#olive-proof').boundingBox();
    assert(olRect&&Math.abs(olRect.x-expectedX)<4&&Math.abs(olRect.y-expectedY)<4,
     'Olive retains the Magazine top-left origin');
@@ -411,31 +425,24 @@ const {chromium}=require('playwright');
    const emmausScreenshot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-emmaus-held.png');
    await page.screenshot({path:emmausScreenshot});
    await page.locator('[data-jump="10.05"]').click();await page.waitForTimeout(150);
-   assert.equal(await page.locator('#olive-proof').evaluate(el=>getComputedStyle(el).opacity),'1','Olive separate fields remain opaque while the earlier spread persists');
-   assert.equal(await page.locator('#emmaus').evaluate(el=>getComputedStyle(el).visibility),'visible','Emmaus remains on stage while its pieces become Olive');
-   assert.equal(await page.locator('#proof-stage > #emmaus-gallery').count(),1,'same ONE gallery is the travelling image object');
-   assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).transform),'none','no overscaled speaker poster flies into frame');
-   assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).opacity),'0',
-    'Olive portrait does not appear before the travelling engraving reaches its slot');
-   assert(Number(await page.locator('.olive-proof__editorial').evaluate(el=>getComputedStyle(el).opacity))<.01,
-    '82%: no premature blank white Olive editorial slab masks the previous ONE page');
-   assert(Number(await page.locator('.olive-proof__kicker').evaluate(el=>getComputedStyle(el).opacity))<.15,
-    '82%: do not pre-reveal Olive until the ONE/photo reflow begins');
-   assert.equal(await page.locator('.olive-proof__bottom').evaluate(el=>getComputedStyle(el).opacity),'0',
-    'the speaker register must not reveal before the moving engraved field is established');
-   const oneClip=await page.locator('.emmaus__left').evaluate(el=>getComputedStyle(el).clipPath);
-   assert.equal(oneClip,'none','ONE reflows instead of truncating text before the image finishes moving');
-   assert.equal(await page.locator('#olive-handoff-image').count(),0,'no second Doré image constructed');
-   const oneBefore=await page.locator('.emmaus__left').evaluate(el=>getComputedStyle(el).clipPath);
-   assert.equal(oneBefore,'none','ONE text remains a valid reflowed layout during early gallery motion');
-   const movingEdge=await page.locator('#proof-stage > #emmaus-gallery').evaluate(el=>el.getBoundingClientRect().left);
-   const oneRight=await page.locator('.emmaus__left').evaluate(el=>el.getBoundingClientRect().right);
-   assert(Math.abs(movingEdge-oneRight)<3,
-    'ONE panel and its existing engraving share one physical boundary; no blank wedge or image overprint');
-   const movingPanel=await page.locator('#proof-stage > #emmaus-gallery').boundingBox();
-   assert(movingPanel && movingPanel.x<stageRect.x+stageRect.width*2/3,
-    'ONE image field is physically crossing toward the Olive upper-left portrait slot');
-   assert.match(await page.locator('.olive-proof__register').evaluate(el=>getComputedStyle(el).clipPath),/inset/,'speaker grid rises independently from the ONE rail');
+   const midState=await page.evaluate(()=>{
+    const gallery=document.getElementById('emmaus-gallery');
+    const olive=document.getElementById('olive-proof'),left=document.querySelector('#emmaus .emmaus__left');
+    const rect=e=>{const r=e.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}};
+    return {left:rect(left),gallery:rect(gallery),olive:rect(olive),
+      clip:getComputedStyle(olive).clipPath,
+      galleryParent:gallery.parentElement.id,
+      opacity:getComputedStyle(olive).opacity,
+      ground:Number(getComputedStyle(document.getElementById('p2-olive-ground-crossfade')).opacity)};
+   });
+   assert.equal(midState.galleryParent,'emmaus','the gallery must stay in its original right column');
+   assert.equal(midState.opacity,'1','the destination page is fully assembled inside its reveal');
+   assert.match(midState.clip,/inset\(/,'the actual destination folio reveals in-place');
+   assert(midState.ground>0&&midState.ground<1,'background crossfades rather than flashing');
+   assert(Math.abs(midState.gallery.w-expectedW/3)<4,'right Doré column width never changes');
+   assert(Math.abs(midState.left.w-expectedW*2/3)<4,'left ONE column width never changes');
+   assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).transform),'none',
+    'the Olive portrait remains in its fixed slot; no flying image');
    const midScreenshot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-mersi-mid.png');
    fs.mkdirSync(path.dirname(midScreenshot),{recursive:true});await page.screenshot({path:midScreenshot});
    await page.locator('[data-jump="11.10"]').click();await page.waitForTimeout(220);
