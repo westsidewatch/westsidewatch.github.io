@@ -392,6 +392,15 @@
    }
    magazineUnderlayStyle=doc.createElement('style');
    magazineUnderlayStyle.textContent=`
+    /* Both faces belong to the ACTUAL page, not an inset crop.
+       The back of a turned page is a full green cloth sheet. */
+    #dual-cover.p2-emmaus-turning{overflow:visible!important;transform-style:preserve-3d!important}
+    #dual-cover.p2-emmaus-turning>.dual-cover{backface-visibility:hidden}
+    #dual-cover.p2-emmaus-turning::after{content:'';position:absolute;inset:0;
+      pointer-events:none;backface-visibility:hidden;
+      transform:rotateY(180deg) translateZ(1px);
+      background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat;
+      box-shadow:inset 0 0 0 2px rgba(206,189,116,.7)}
     #p2-emmaus-magazine-underleaf{position:absolute;overflow:hidden;isolation:isolate;
       pointer-events:none;box-sizing:border-box;color:#cebd74;
       background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat}
@@ -478,6 +487,9 @@
      oldMagazineRight.style.transform=sourceOriginalCoverTransform;
      oldMagazineRight.style.transformOrigin=sourceOriginalCoverOrigin;
      oldMagazineRight.style.backfaceVisibility=sourceOriginalCoverBackface;
+     oldMagazineRight.style.removeProperty('transform-style');
+     oldMagazineRight.classList.remove('p2-emmaus-turning');
+     oldMagazineRight.style.visibility='';
      oldMagazineRight.style.zIndex=sourceOriginalCoverZ;
     }
    }
@@ -525,7 +537,7 @@
   emPlates.style.opacity=String(coverOpen);
   // First turn happens on the original right-hand Magazine cover inside the
   // established dual-page source; this ONE layer remains flat until turn two.
-  const greenAngle=-87*archive;
+  const greenAngle=-178*archive;
   emCover.style.clipPath='none';
   emCover.style.transform='perspective(6400px) rotateY('+greenAngle.toFixed(2)+'deg)';
   emCover.style.opacity=String(move>.001&&archive<.999?1:0);
@@ -596,17 +608,24 @@
     ensureMagazineUnderlay(sourceDoc,sourceCover);
     // The source Magazine cover itself, not an arriving green panel, is
     // the first page to turn. Preserve the 5:8 layout and its inner graphics.
-    const firstAngle=-86*smooth(move);
+    const firstAngle=-178*smooth(move);
     sourceCover.style.transformOrigin=stageRect.width<=820?'center top':'left center';
     sourceCover.style.transform='perspective(6400px) '+(stageRect.width<=820?
      'rotateX('+firstAngle.toFixed(2)+'deg)':
      'rotateY('+firstAngle.toFixed(2)+'deg)');
-    sourceCover.style.backfaceVisibility='hidden';
+    sourceCover.style.backfaceVisibility='visible';
+    sourceCover.style.transformStyle='preserve-3d';
+    sourceCover.classList.add('p2-emmaus-turning');
     sourceCover.style.zIndex='11';
+    // Keep the whole page, including its green verso, during the 180° turn.
+    sourceCover.style.visibility=move>.998?'hidden':'visible';
    }else{
     sourceCover.style.transform=sourceOriginalCoverTransform;
     sourceCover.style.transformOrigin=sourceOriginalCoverOrigin;
     sourceCover.style.backfaceVisibility=sourceOriginalCoverBackface;
+    sourceCover.style.removeProperty('transform-style');
+    sourceCover.classList.remove('p2-emmaus-turning');
+    sourceCover.style.visibility='';
     sourceCover.style.zIndex=sourceOriginalCoverZ;
     if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
    }
@@ -793,7 +812,10 @@
   emRight.style.clipPath='none';
   // Hold an opaque original-gallery matte over the old magazine cover.
   // The archive image can fade inside that stable panel when loaded.
-  emRight.style.opacity='1';
+  // Never re-enable the right ONE overlay while the actual Magazine cover
+  // is still turning. That was the V14 layering inversion reported in proof.
+  emRight.style.opacity=String(move>=.998?1:0);
+  emRight.style.visibility=move>=.998?'visible':'hidden';
   olive.style.visibility=oliveShowing?'visible':'hidden';
   olive.style.opacity='1';
   olive.style.backgroundColor='#f0eee7';
