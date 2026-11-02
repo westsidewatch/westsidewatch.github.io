@@ -10,6 +10,13 @@ const host=read('js/p2-emmaus-olive-preview.js');
 const editorial=read('js/p2-emmaus-editorial-context.js');
 const v5=read('css/p2-emmaus-editorial-v5.css');
 const v6=read('css/p2-emmaus-scripture-v6.css');
+assert.match(host,/b\\.append\\(zh,en,numeral\\)/,'every book tile has visible Chinese and English names before the canon index');
+assert.doesNotMatch(host,/innerHTML=String\\(item\\[0\\]\\)/,'number-only BOOK markers are removed');
+assert.match(v6,/\\.emmaus__number-zh/,'Chinese book names are styled and never hover-only');
+assert.match(v6,/\\.emmaus__number-en/,'English book names are styled and never hover-only');
+assert.match(v6,/--em-v6-gold-ink:color-mix/,'small gold text uses a contrast-adjusted Design OS token');
+assert.match(html,/左右滑動選書/,'a visible hint explains the horizontal book rail');
+
 const verseJS=read('js/p2-emmaus-scripture-v6.js');
 const lukeBilingual=JSON.parse(read('data/p2-emmaus-scripture-v6/Luke.json'));
 const johnBilingual=JSON.parse(read('data/p2-emmaus-scripture-v6/John.json'));
@@ -127,6 +134,27 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#emmaus-rail').isVisible(),true,
     'the approved horizontal 66-book navigation must remain permanently visible');
    assert.equal(await page.locator('#emmaus-rail [data-book]').count(),66);
+   const labeledRail=await page.locator('#emmaus-rail').evaluate(rail=>{
+    const item=n=>{
+     const el=rail.querySelector('[data-book="'+n+'"]'),zh=el?.querySelector('.emmaus__number-zh'),
+      en=el?.querySelector('.emmaus__number-en'),idx=el?.querySelector('.emmaus__number-index');
+     return {zh:zh?.textContent,en:en?.textContent,idx:idx?.textContent,
+      zhVisible:getComputedStyle(zh).opacity,enVisible:getComputedStyle(en).opacity,
+      direction:getComputedStyle(el).flexDirection};
+    };
+    return {mark:item(41),luke:item(42),john:item(43),acts:item(44),long:item(53)};
+   });
+   assert.deepEqual([labeledRail.mark.zh,labeledRail.mark.en,labeledRail.mark.idx],
+    ['馬可福音','Mark','41'],'the navigation never requires memorizing the 41st book');
+   assert.deepEqual([labeledRail.john.zh,labeledRail.john.en,labeledRail.john.idx],
+    ['約翰福音','John','43'],'the bilingual book identity appears above its number');
+   assert.equal(labeledRail.long.zh,'帖撒羅尼迦後書','long Chinese book labels are retained verbatim');
+   for(const item of Object.values(labeledRail)){
+    assert.equal(item.zhVisible,'1','every Chinese book name is always visible');
+    assert.equal(item.enVisible,'1','every English book name is always visible');
+    assert.equal(item.direction,'column','book names are stacked above the canon number');
+   }
+
    const catalog=await page.locator('#emmaus-rail').evaluate(el=>({
      display:getComputedStyle(el).display,
      wrap:getComputedStyle(el).flexWrap,
