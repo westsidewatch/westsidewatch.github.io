@@ -70,3 +70,15 @@ The editorial system uses the genuine Bodoni Moda Italic and Bodoni Moda SC Ital
 - Font size uses semantic type-scale tokens, not a per-component increase to compensate for a heavy-looking fallback font.
 - Real browser verification must confirm Chiron Hei HK WS loads the 200 instance: its documented variable weight range is 200–900. A computed CSS weight of 200 does not guarantee the loaded glyphs are Chiron ExtraLight.
 - New components should choose among `ws-type-air`, `ws-type-standard`, `ws-type-anchor` or equivalent semantic tokens; never invent a content-specific global weight role.
+
+
+## 段末孤字與孤詞換行 / Orphan-free editorial line setting
+
+**Design OS 的排版規則，適用於整站編輯內容：**中文字段落的最後一行不得只留下單獨一個漢字；英文段落不得留下孤立的最後一個單詞。這是自動排版責任，不應靠手工插入空格、改寫聖經經文、插入硬換行或每次修改頁面時重做。
+
+- 標題先使用 `text-wrap: balance`，正文與經文使用 `text-wrap: pretty`、`line-break: strict`，維持自然行寬和禁則。
+- 對瀏覽器無法消除的段末孤字／孤詞，用 **同一個文字節點的行內不斷行尾組**作補強：中文通常至少保護最後三個漢字和相連標點，英文保護最後兩個單詞；禁止讓整段變成 `nowrap`。
+- 文字本身保持原樣：來源資料（包括 CUV／KJV 經文）不改寫；畫面文字的 `textContent`、複製語意、標點和經文節序須完全相同。不可使用非斷行空白替換原本的空格，亦不可製造字形圖片。
+- 對狹窄裝置避免橫向溢出；跳過極短標籤、代碼、表格、純數字、混合結構化引用或手工指定斷行。
+- **實作位置：** `static/css/westside-design-os.css` 供應 OS 的 `[data-ws-editorial-orphans]` 排版規則與 `.ws-editorial-no-orphan-tail`；`static/js/westside-editorial-orphans.js` 是可共用的輕量文字節點增強層，首輪僅在 P2 Emmaus / Olive 綁定，不改動既有受保護的 Magazine 和 Church iframe。進一步擴至整站須逐版塊驗證，不另外建立 OS。
+- 驗收包括寬窄視窗、中文繁體標點、英文 KJV、動態選卷切章、複製文字不變及反向滾動後的狀態；單有 CSS 規則不足以證明實際沒有孤字。
