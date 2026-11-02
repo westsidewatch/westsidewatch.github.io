@@ -140,3 +140,222 @@
  #emmaus .emmaus__one-workbench-head{flex-wrap:wrap}
  #emmaus .emmaus__one-workbench-foot{display:none}
 }
+
+
+
+/* P2 03 / Editorial V2 — fixed EMMAUS identity and original ONE cartographic workstation.
+   The actual SVG engraving is ONLY outside the folio. */
+#emmaus .emmaus__mast{align-items:center;letter-spacing:.10em}
+#emmaus .emmaus__mast span:first-child{color:var(--ws-night,#102a43);font-size:clamp(9px,.7vw,12px)}
+#emmaus .emmaus__identity{
+  flex:0 0 auto!important;min-height:0!important;
+  margin:clamp(8px,1.1vh,14px) 0 clamp(6px,.8vh,10px)!important;
+}
+#emmaus .emmaus__identity .emmaus__small{letter-spacing:.24em}
+#emmaus .emmaus__identity h1{
+ font-size:clamp(70px,6vw,108px)!important;line-height:.77!important;
+ letter-spacing:-.07em;white-space:nowrap;
+ margin:clamp(6px,.7vh,10px) 0 0!important;
+}
+#emmaus .emmaus__identity h1 span{
+ display:block;font-size:clamp(16px,1.2vw,21px)!important;
+ font-weight:var(--ws-weight-zh-anchor,600);letter-spacing:.06em;line-height:1.2;
+ margin-top:clamp(7px,1vh,12px);
+}
+#emmaus .emmaus__identity p{font-size:clamp(11px,.86vw,14px);line-height:1.4;max-width:60ch}
+#emmaus .emmaus__study-cols{
+ flex:0 0 clamp(140px,18.3vh,186px)!important;
+ height:clamp(140px,18.3vh,186px)!important;
+ overflow:hidden;padding:6px 0!important;
+}
+#emmaus .emmaus__study-route{margin:4px 0 0!important;max-height:90px}
+#emmaus .emmaus__study-detail{overflow-y:auto!important}
+#emmaus .emmaus__context{
+ flex:1 1 auto;min-height:135px;display:grid;
+ grid-template-columns:minmax(0,1.22fr) minmax(0,.78fr);
+ gap:clamp(7px,.9cqi,13px);
+ margin:clamp(5px,.7cqi,10px) 0 0;
+ overflow:hidden;
+}
+#emmaus .emmaus__context article{
+ min-width:0;min-height:0;padding:clamp(7px,1cqi,11px);
+ border:1px solid color-mix(in srgb,var(--ws-night) 15%,transparent);
+ background:color-mix(in srgb,var(--ws-one-paper,#ded096) 91%,white);
+ display:flex;flex-direction:column;overflow:hidden;
+}
+#emmaus .emmaus__context article>header{
+ flex:0 0 auto;display:flex;align-items:baseline;justify-content:space-between;
+ gap:8px;margin-bottom:7px;
+}
+#emmaus .emmaus__context article>header span{
+ font:200 clamp(8px,.82cqi,10px)/1.2 var(--ws-type-display-en-sc);
+ white-space:nowrap;letter-spacing:.07em;color:#6c654f;
+}
+#emmaus .emmaus__context article>header strong{
+ font:var(--ws-weight-zh-anchor,600) clamp(11px,1.14cqi,15px)/1.2 var(--ws-type-display-zh);
+ text-align:right;
+}
+#emmaus .emmaus__context-map-body{
+ flex:1 1 auto;min-height:0;display:grid;
+ grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);
+ gap:clamp(7px,1cqi,14px);
+}
+#emmaus .emmaus__context-map figure{
+ margin:0;position:relative;min-width:0;min-height:0;
+ border:1px solid #102a4320;overflow:hidden;background:#e9ddbb;
+}
+#emmaus .emmaus__context-map figure[hidden]{display:none!important}
+#emmaus .emmaus__context-map img{
+ display:block;width:100%;height:100%;object-fit:contain;object-position:center;
+ filter:grayscale(.18) sepia(.16) contrast(1.04);
+}
+#emmaus .emmaus__context-map figcaption{
+ position:absolute;inset:auto 0 0;padding:5px 6px;
+ background:color-mix(in srgb,var(--ws-one-paper) 91%,white);
+ font:200 clamp(8px,.75cqi,10px)/1.2 var(--ws-type-display-en-sc);
+}
+#emmaus .emmaus__context-map-copy{
+ min-width:0;min-height:0;overflow:auto;scrollbar-width:thin;
+ display:flex;flex-direction:column;gap:4px;
+}
+#emmaus #em-context-map-guide{flex:0 0 auto}
+#emmaus #em-context-map-guide p{
+ font:400 clamp(10px,1.13cqi,14px)/1.45 var(--ws-type-reading-zh);
+ margin:0 0 6px;color:var(--ws-night,#102a43);
+}
+#emmaus .emmaus__context-places{
+ display:flex;flex-wrap:wrap;gap:3px 8px;font:400 clamp(9px,.87cqi,11px)/1.3 var(--ws-type-display-zh);
+}
+#emmaus .emmaus__context-map a{
+ margin-top:auto;color:var(--ws-night,#102a43);
+ font:400 clamp(9px,.86cqi,11px)/1.25 var(--ws-type-display-zh);
+ text-decoration:underline;text-underline-offset:3px;
+}
+#emmaus .emmaus__context-time>p{
+ margin:0 0 5px;max-height:3.1em;overflow:hidden;
+ font:400 clamp(9px,1cqi,12px)/1.35 var(--ws-type-reading-zh);
+}
+#emmaus .emmaus__context-time ol{list-style:none;padding:0;margin:0;min-height:0;overflow:auto;scrollbar-width:thin}
+#emmaus .emmaus__context-time li{
+ display:grid;grid-template-columns:minmax(50px,.38fr) minmax(0,1fr);
+ gap:2px 6px;padding:6px 0;border-top:1px solid #102a4322;
+}
+#emmaus .emmaus__context-time li small{
+ font:400 clamp(9px,.85cqi,11px)/1.3 var(--ws-type-display-zh);grid-row:span 2;color:#725c3b;
+}
+#emmaus .emmaus__context-time li strong{font:500 clamp(10px,1.03cqi,14px)/1.3 var(--ws-type-display-zh)}
+#emmaus .emmaus__context-time li span{font:200 clamp(9px,.83cqi,11px)/1.3 var(--ws-type-display-zh)}
+/* Chapters belong INSIDE ONE; the 66-book selection is a single disclosed control. */
+#emmaus .emmaus__one-chapters{max-height:73px!important;margin-top:5px}
+#emmaus .emmaus__one-chapter-grid{
+ display:flex;overflow-x:auto;overflow-y:hidden;
+ flex-wrap:nowrap;gap:3px;max-height:42px!important;
+ padding:3px 0!important;scrollbar-width:thin;
+}
+#emmaus .emmaus__one-chapter-grid button{
+ flex:0 0 32px;min-height:29px;max-height:30px;
+ background:transparent;border:1px solid #102a4321;
+ font:400 10px/1.2 var(--ws-type-display-en);
+}
+#emmaus .emmaus__one-chapter-grid button[aria-pressed="true"]{
+ background:var(--ws-night,#102a43);color:var(--ws-one-paper,#ded096);
+}
+#emmaus .emmaus__book-switch{
+ flex:0 0 auto;display:flex;align-items:center;gap:clamp(8px,1cqi,14px);
+ padding:clamp(5px,.5vh,8px) 0!important;
+ border-top:1px solid color-mix(in srgb,var(--ws-night) 25%,transparent);
+}
+#emmaus .emmaus__book-current{
+ flex:1 1 auto;display:flex;align-items:baseline;flex-wrap:wrap;
+ gap:4px 9px;min-width:0;color:var(--ws-night,#102a43);
+}
+#emmaus .emmaus__book-current>span:first-child{
+ font:200 clamp(9px,.76vw,12px)/1.2 var(--ws-type-display-en-sc);letter-spacing:.07em;
+}
+#emmaus .emmaus__book-current strong{
+ font:400 clamp(20px,2vw,34px)/1 var(--ws-type-display-en);letter-spacing:-.04em;
+}
+#emmaus .emmaus__book-current span:not(:first-child){
+ font:500 clamp(11px,1vw,15px)/1.3 var(--ws-type-display-zh);
+}
+#emmaus .emmaus__book-current small{
+ font:200 clamp(8px,.72vw,11px)/1.2 var(--ws-type-display-en-sc);
+ opacity:.68;white-space:nowrap;
+}
+#emmaus .emmaus__book-switch>button{
+ appearance:none;cursor:pointer;background:var(--ws-night,#102a43);
+ color:var(--ws-one-paper,#ded096);border:0;padding:8px 12px;
+ font:400 clamp(10px,.83vw,13px)/1.35 var(--ws-type-display-zh);
+ white-space:nowrap;
+}
+#emmaus .emmaus__book-switch>button span{font:200 9px/1 var(--ws-type-display-en-sc);margin-left:6px}
+#emmaus .emmaus__book-switch>a{
+ color:var(--ws-night,#102a43);font:400 clamp(9px,.77vw,12px)/1.3 var(--ws-type-display-zh);
+ white-space:nowrap;
+}
+#emmaus .emmaus__book-drawer{
+ position:absolute!important;z-index:21!important;
+ inset:clamp(60px,10%,110px) clamp(8px,1vw,15px) clamp(44px,6%,68px)!important;
+ background:var(--ws-one-paper,#ded096);border:1px solid var(--ws-night,#102a43);
+ box-shadow:0 12px 28px #102a433d;padding:clamp(12px,1.4vw,22px);
+ display:flex;flex-direction:column;gap:9px;
+}
+#emmaus .emmaus__book-drawer[hidden]{display:none!important}
+#emmaus .emmaus__book-drawer-head{display:flex;justify-content:space-between;align-items:center;
+ font:200 11px/1.3 var(--ws-type-display-en-sc)}
+#emmaus .emmaus__book-drawer-head button{background:transparent;border:1px solid #102a4355;
+ font:400 12px/1.2 var(--ws-type-display-zh);padding:5px 9px;cursor:pointer}
+#emmaus .emmaus__book-drawer label{font:400 11px/1.3 var(--ws-type-display-zh)}
+#emmaus .emmaus__book-drawer input{
+ width:100%;min-height:36px;border:1px solid #102a4344;border-radius:0;
+ background:#f5eccb;color:var(--ws-night,#102a43);
+ font:400 clamp(12px,1vw,15px)/1.4 var(--ws-type-display-zh);padding:7px 9px;
+}
+#emmaus .emmaus__book-drawer .emmaus__rail{
+ flex:1 1 auto!important;height:auto!important;min-height:0;min-width:0;display:grid!important;
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ gap:4px!important;overflow-y:auto!important;overflow-x:hidden!important;
+ margin:0!important;padding:2px!important;scrollbar-width:thin;
+}
+#emmaus .emmaus__book-drawer .emmaus__rail [data-book]{
+ min-width:0;min-height:46px;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;
+ text-align:left;white-space:normal!important;background:transparent;
+ border:1px solid #102a4322;outline:none;padding:7px!important;
+ color:var(--ws-night,#102a43);cursor:pointer;
+}
+#emmaus .emmaus__book-drawer .emmaus__rail [data-book][hidden]{display:none!important}
+#emmaus .emmaus__book-drawer .emmaus__rail [data-book][aria-pressed="true"]{
+ border-color:var(--ws-night,#102a43);background:#102a431a;
+}
+#emmaus .emmaus__book-drawer .emmaus__rail .em-book-num{
+ font:200 10px/1.2 var(--ws-type-display-en-sc);color:#73592c
+}
+#emmaus .emmaus__book-drawer .emmaus__rail .em-book-label{
+ font:500 clamp(11px,.91vw,13px)/1.3 var(--ws-type-display-zh)
+}
+#emmaus .emmaus__book-drawer .emmaus__rail small{
+ font:200 9px/1.2 var(--ws-type-display-en-sc);opacity:.7
+}
+#emmaus .emmaus__foot{font-size:var(--ws-type-scale-micro);padding:2px 0}
+@media(max-width:820px){
+ #emmaus .emmaus__identity h1{font-size:clamp(42px,10vw,72px)!important}
+ #emmaus .emmaus__study-cols{flex:0 0 150px!important;height:150px!important;grid-template-columns:1fr 1fr!important}
+ #emmaus .emmaus__context{grid-template-columns:1fr;overflow-y:auto;min-height:120px}
+ #emmaus .emmaus__context article{min-height:170px}
+ #emmaus .emmaus__context-map-body{grid-template-columns:1fr 1fr}
+ #emmaus .emmaus__book-drawer .emmaus__rail{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #emmaus .emmaus__book-current small{display:none}
+}
+@media(max-width:540px){
+ #emmaus .emmaus__identity h1{font-size:clamp(38px,11.3vw,58px)!important}
+ #emmaus .emmaus__study-cols{flex:0 0 125px!important;height:125px!important;grid-template-columns:1fr!important;overflow:auto}
+ #emmaus .emmaus__study-reading{display:none}
+ #emmaus .emmaus__context-map-body{grid-template-columns:1fr}
+ #emmaus .emmaus__context-map figure{min-height:130px}
+ #emmaus .emmaus__context-map-copy{min-height:90px}
+ #emmaus .emmaus__book-switch{flex-wrap:wrap}
+ #emmaus .emmaus__book-current{flex:1 1 45%}
+ #emmaus .emmaus__book-current strong{font-size:23px}
+ #emmaus .emmaus__book-switch>a{display:none}
+ #emmaus .emmaus__book-drawer{inset:35px 6px 32px!important}
+}
