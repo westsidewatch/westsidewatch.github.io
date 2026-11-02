@@ -391,7 +391,11 @@
     transferFigure=null;transferHome=null;transferOriginalVisibility=null;
    }
    const oldMagazineRight=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.getElementById('dual-cover');
-   if(oldMagazineRight)oldMagazineRight.style.transform='';
+   if(oldMagazineRight){
+    oldMagazineRight.style.removeProperty('transform');
+    oldMagazineRight.style.removeProperty('transform-origin');
+    oldMagazineRight.style.removeProperty('backface-visibility');
+   }
    emmaus.style.visibility='hidden';emmaus.style.pointerEvents='none';
    emmaus.inert=true;emmaus.setAttribute('aria-hidden','true');
    olive.style.visibility='hidden';olive.style.pointerEvents='none';
@@ -435,11 +439,13 @@
   // The green folio then turns away to uncover the right-hand Doré plate.
   // Only perspective rotateY is animated; no paper curls, tween timer or
   // scaling of either source. All angles are pure scroll progress.
-  const firstOut=smooth(move/.58);
-  const greenIn=smooth((move-.42)/.58);
-  const greenAngle=archive>.001?-88*archive:87*(1-greenIn);
+  // A single, fixed 5:8 ONE folio turns at the right-side inner spine.
+  // Never 3D-rotate the live nested Magazine DOM: its own perspective and
+  // multi-layer city cover produced the giant triangular distortion in V9.
+  const greenIn=smooth(move/.995);
+  const greenAngle=archive>.001?-87*archive:87*(1-greenIn);
   emCover.style.clipPath='none';
-  emCover.style.transform='perspective(1600px) rotateY('+greenAngle.toFixed(2)+'deg)';
+  emCover.style.transform='perspective(1800px) rotateY('+greenAngle.toFixed(2)+'deg)';
   emCover.style.opacity=String(move>.001&&archive<.999?1:0);
   emCover.style.visibility=move>.001&&archive<.999?'visible':'hidden';
   const edge=$('.emmaus__magazine-turn-edge');
@@ -471,13 +477,9 @@
     return {x:baseRect.left-stageRect.left+frameRect.left+r.left,
             y:baseRect.top-stageRect.top+frameRect.top+r.top,w:r.width,h:r.height};
    };
-   // Measure physical pages WITHOUT the last scroll frame's 3D turn.
-   // The measured dimensions are cached for the entire turn; never feed
-   // a projected 3D bounding box back into the spread geometry.
-   const rotatedCover=sourceCover?.style.transform??'';
-   if(sourceCover)sourceCover.style.transform='none';
+   // Source Magazine DOM is never transformed by this P2 handoff.
+   // Measure its live, already-approved unmodified 5:8 cover once.
    original=bounds(sourceTile);coverBounds=bounds(sourceCover);spineBounds=bounds(sourceSpine);
-   if(sourceCover)sourceCover.style.transform=rotatedCover;
    if(distance>=6.50&&original&&coverBounds){
     settledGeometry={original,coverBounds,spineBounds};
     settledGeometryDoc=sourceDoc;
@@ -496,11 +498,13 @@
   }
   if(sourceTile)sourceTile.style.opacity=sourceOriginalTileOpacity??'';
   if(sourceCover){
+   // Restore the Magazine's OWN composition without changing its transform.
+   // The front ONE folio turns on a separate fixed-size overlay, never
+   // bends or remeasures the original magazine cover and its title.
    sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
-   sourceCover.style.transformOrigin='left center';
-   // An actual 3D-hinged Magazine cover, not opacity/clip-path reveal.
-   sourceCover.style.transform=move>.001?'perspective(1600px) rotateY('+(-88*firstOut).toFixed(2)+'deg)':'';
-   sourceCover.style.backfaceVisibility='hidden';
+   sourceCover.style.removeProperty('transform');
+   sourceCover.style.removeProperty('transform-origin');
+   sourceCover.style.removeProperty('backface-visibility');
   }
   // The accepted Magazine iframe, including its book spine and original
   // video proportions, remains unchanged and restores during reverse scroll.
