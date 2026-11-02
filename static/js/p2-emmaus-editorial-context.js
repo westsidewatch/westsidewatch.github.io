@@ -5,45 +5,27 @@
 (()=>{'use strict';
  const root=document.getElementById('emmaus'),D=window.ONE_DATA;if(!root||!D?.books)return;
  const $=id=>document.getElementById(id),books=D.books;
- const drawer=$('em-book-drawer'),toggle=$('em-book-toggle'),close=$('em-book-drawer-close'),
-  search=$('em-book-search'),rail=$('emmaus-rail');
+ const rail=$('emmaus-rail');
  const figure=$('em-context-map-figure'),image=$('em-context-map-image'),
   credit=$('em-context-map-credit'),guide=$('em-context-map-guide'),
   places=$('em-context-map-places'),mapTitle=$('em-context-map-title'),
   mapSource=$('em-context-map-source'),timelineTitle=$('em-context-time-title'),
   timelineNote=$('em-context-time-note'),timelineEvents=$('em-context-time-events');
- if(!drawer||!toggle||!close||!search||!rail||!figure||!timelineEvents)return;
- // Existing ONE book buttons preserve their canonical data-book identities.
- // Add the actual ONE book names so the chooser works without memorizing 66 numbers.
- for(const b of rail.querySelectorAll('[data-book]')){
-  const n=Number(b.dataset.book),entry=books[n-1];if(!entry)continue;
-  b.replaceChildren();
-  const numeral=document.createElement('span');numeral.className='em-book-num';numeral.textContent=String(n).padStart(2,'0');
-  const label=document.createElement('span');label.className='em-book-label';label.textContent=entry[1];
-  const en=document.createElement('small');en.textContent=entry[2];
-  b.append(numeral,label,en);
+ if(!rail||!figure||!timelineEvents)return;
+ // Restore the approved visible horizontal 66-book rail. The actual original
+ // ONE book indexes remain navigable by click, dragging and arrow keys.
+ // A number is the navigation anchor; full names remain discoverable to AT.
+ for(const button of rail.querySelectorAll('[data-book]')){
+  const n=Number(button.dataset.book),entry=books[n-1];
+  if(!entry)continue;
+  button.replaceChildren();
+  const number=document.createElement('span');number.className='em-book-num';
+  number.textContent=String(n).padStart(2,'0');
+  const label=document.createElement('span');label.className='em-book-label';
+  label.textContent=entry[1];
+  button.append(number,label);
+  button.title=entry[1]+' / '+entry[2];
  }
- function showDrawer(open){
-  drawer.hidden=!open;toggle.setAttribute('aria-expanded',String(open));
-  if(open){search.focus({preventScroll:true});search.value='';filterBooks('');}
-  else toggle.focus({preventScroll:true});
- }
- function filterBooks(term){
-  const q=String(term||'').trim().toLocaleLowerCase();
-  for(const button of rail.querySelectorAll('[data-book]')){
-   const entry=books[Number(button.dataset.book)-1];if(!entry)continue;
-   button.hidden=!!q&&!([String(entry[0]),String(entry[0]).padStart(2,'0'),entry[1].toLocaleLowerCase(),entry[2].toLocaleLowerCase()]
-    .some(x=>x.includes(q)));
-  }
- }
- toggle.addEventListener('click',()=>showDrawer(drawer.hidden));
- close.addEventListener('click',()=>showDrawer(false));
- search.addEventListener('input',()=>filterBooks(search.value));
- search.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();showDrawer(false)}});
- drawer.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();showDrawer(false)}});
- rail.addEventListener('click',e=>{
-  if(e.target.closest('[data-book]'))showDrawer(false);
- });
  // A change of book does not change the P2 chapter title, only its ONE contents.
  let selectedKey='',lastMap='';
  const sourceFor=n=>n===42?D.luke:n===40?D.matthew:D.studyBooks?.[n];
