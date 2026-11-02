@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="/css/westside-engraving-authority.css">
 <link rel="stylesheet" href="/css/p2-emmaus-olive-preview.css?v=20261101-dore-identical-crop-8">
 <link rel="stylesheet" href="/css/p2-five-v15-continuation.css?v=20261101-bow-local-v3-proportions">
+<link rel="stylesheet" href="/css/p2-emmaus-one-workbench.css?v=20261101-workbench-v1">
 </head>
 <body data-ws-scope="p2">
 <header class="proof-controls" aria-label="P2 03 與 04 動效驗收工具">
@@ -34,9 +35,9 @@
      <div class="emmaus__mast"><span>03 / 07</span><span>WESTSIDE / BIBLE STUDY</span><span>THE SIXTY-SIX BOOKS</span></div>
      <div class="emmaus__identity"><span class="emmaus__small">THE ROAD TO EMMAUS</span><h1>EMMAUS<span>以馬忤斯</span></h1><p>從經文進入歷史，從歷史重新走回聖經。</p></div>
      <section class="emmaus__study" id="emmaus-study" aria-labelledby="emmaus-study-heading">
-      <img class="emmaus__scroll-engraving" src="/images/p2-emmaus-scroll-micro-engraving.svg" alt="" aria-hidden="true" decoding="async">
       <div class="emmaus__study-interface">
        <header class="emmaus__study-head"><span>ONE / BIBLE STUDY · <b lang="zh-Hant">研讀視窗</b></span><span id="em-study-feature">FEATURE / LUKE 24</span></header>
+       <div class="emmaus__one-toolbar" aria-label="ONE 查經工具"><span id="em-one-location">路加福音 · 第 24 章</span><button type="button" id="em-one-open" aria-controls="em-one-workbench">在這頁使用完整 ONE 工作台</button></div>
        <div class="emmaus__study-cols">
         <div class="emmaus__study-reading">
          <span class="emmaus__study-ref" id="em-study-ref">路加福音 24:1–53</span>
@@ -46,13 +47,17 @@
         </div>
         <div class="emmaus__study-tools">
          <div class="emmaus__study-tabs" role="tablist" aria-label="所選書卷的研讀內容">
+          <button id="em-tab-story" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="story">本章</button>
           <button id="em-tab-background" type="button" role="tab" aria-controls="em-study-detail" aria-selected="true" data-study-view="background">歷史</button>
           <button id="em-tab-connections" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="connections">串珠</button>
           <button id="em-tab-questions" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="questions">問題</button>
+          <button id="em-tab-map" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="map">地圖</button>
+          <button id="em-tab-prepare" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="prepare">預備</button>
          </div>
          <div class="emmaus__study-detail" id="em-study-detail" role="tabpanel" aria-labelledby="em-tab-background"></div>
         </div>
        </div>
+       <section class="emmaus__one-chapters" aria-label="ONE 逐章選讀"><div class="emmaus__one-chapters-head"><span>ONE / CHAPTER INDEX</span><span id="em-one-chapter-count">24 CHAPTERS</span></div><div class="emmaus__one-chapter-grid" id="em-one-chapter-grid" role="group" aria-label="選擇研讀章節"></div></section>
        <footer class="emmaus__study-foot"><span>ONE · <b lang="zh-Hant" id="em-study-source">路加福音第二十四章 · ONE 正式研讀內容</b></span><a id="em-study-enter" href="/one/?book=42&amp;chapter=24">打開完整研讀 ↗</a></footer>
       </div>
      </section>
@@ -63,6 +68,11 @@
      <div class="emmaus__selector-head"><span>01 — 66 / CANONICAL ORDER</span><span>← 橫向選卷 →</span></div>
      <div class="emmaus__rail" id="emmaus-rail" tabindex="0" role="group" aria-label="六十六卷聖經，使用左右方向鍵或點選書卷；上下滾動切換 P2 版塊"></div>
      <div class="emmaus__foot"><span>ONE / SCRIPTURE · HISTORY · MAPS · CROSS-REFERENCES</span><span>03 / 07</span></div>
+     <section class="emmaus__one-workbench" id="em-one-workbench" aria-label="在 P2 內使用 ONE 完整查經工具" hidden>
+      <header class="emmaus__one-workbench-head"><div><span>ONE / 一卷 · 逐章研讀</span><strong id="em-one-workbench-title">路加福音 · 第 24 章</strong></div><a id="em-one-standalone" href="/one/?book=42&amp;chapter=24" target="_blank" rel="noopener">獨立視窗 ↗</a><button id="em-one-close" type="button" aria-label="關閉 ONE 工作台，返回以馬忤斯">返回 P2 ×</button></header>
+      <div class="emmaus__one-workbench-frame"><iframe id="em-one-frame" title="ONE 一卷 · 完整 66 卷查經工具" loading="lazy" allow="fullscreen"></iframe></div>
+      <footer class="emmaus__one-workbench-foot">這裡是 ONE 原始應用程式，可使用原本的 66 卷選書、逐章研讀、地圖、串珠、問題與查經日曆。首次開卷請依 ONE 的原有操作確認。</footer>
+     </section>
     </div>
     <div class="emmaus__right" id="emmaus-gallery"><div class="emmaus__plates"><img id="em-plate-a" alt="" decoding="async"><img id="em-plate-b" alt="" decoding="async"></div><div class="emmaus__gold-line" aria-hidden="true"></div><div class="emmaus__plate-top">GUSTAVE DORÉ / ORIGINAL ENGRAVING<span id="em-plate-selection">BOOK 42 / LUKE</span></div><div class="emmaus__plate-caption"><span id="em-plate-title">THE BIBLE / ENGRAVED ARCHIVE</span><span id="em-plate-index">01 / 08</span></div></div>
    </section>
@@ -140,6 +150,7 @@ if(new URLSearchParams(location.search).get('engraving')==='v17'){
  if(toggle)toggle.title='Emmaus V17 — time-held-open SVG in original film surround';
 }
 </script>
+<script src="/js/p2-emmaus-one-workbench.js?v=20261101-workbench-v1"></script>
 <script src="/js/p2-five-v15-continuation.js?v=20261101"></script>
 </body>
 </html>
