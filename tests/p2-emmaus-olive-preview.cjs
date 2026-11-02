@@ -188,14 +188,13 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#em-book-en').textContent(),'Luke');
    assert.equal(await page.locator('.emmaus__folio-layer').count(),0,'no second sevenfold spine is created');
    const paper=await page.locator('#emmaus > .emmaus__left').evaluate(el=>{
-    const css=getComputedStyle(el);return {
-     color:css.backgroundColor,
-     token:getComputedStyle(document.documentElement).getPropertyValue('--ws-one-paper').trim(),
-     image:css.backgroundImage
-    };
+    const cloth=getComputedStyle(el),page=getComputedStyle(el.querySelector('.emmaus__binding-paper'));
+    return {paper:page.backgroundColor,clothImage:cloth.backgroundImage,
+     token:getComputedStyle(document.documentElement).getPropertyValue('--ws-one-paper').trim()};
    });
-   assert.equal(paper.color,'rgb(222, 208, 150)','Emmaus leaf must match the actual ONE paper, not a pale overlay');
-   assert.equal(paper.token,'rgb(222 208 150)','ONE paper is shared by the canonical Design OS');
+   assert.equal(paper.paper,'rgb(222, 208, 150)','opened Bible must keep ONE papyrus inside the cloth cover');
+   assert.match(paper.clothImage,/cover-texture-antique-green/,'binding cloth must reuse the genuine ONE asset');
+   assert.equal(paper.token,'rgb(222 208 150)','ONE paper token stays the shared Design OS source');
    assert.equal(await page.locator('body').getAttribute('data-fixed-ground'),'off',
     'protected original version is the default');
    await page.waitForFunction(()=>{
@@ -258,6 +257,24 @@ const {chromium}=require('playwright');
    const groundDir=path.join(root,'artifacts/p2-emmaus-olive');
    fs.mkdirSync(groundDir,{recursive:true});
    await page.screenshot({path:path.join(groundDir,viewport.width+'-fixed-ground-bible.png')});
+   // New 02 -> 03 stage: original ONE green-and-gilt title cover first,
+   // opened papyrus and readable selected-book masthead only afterwards.
+   await page.locator('[data-jump="7.85"]').click();
+   await page.waitForTimeout(120);
+   assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'closed');
+   const coverState=await page.locator('#em-entry-cover').evaluate(el=>({
+    visible:getComputedStyle(el).visibility,
+    gilded:getComputedStyle(el.querySelector('.emmaus__entry-cover-gilt')).maskImage,
+    ratio:el.querySelector('.emmaus__entry-cover-leaf').getBoundingClientRect()
+   }));
+   assert.equal(coverState.visible,'visible','ONE Emmaus gilt cover precedes page opening');
+   assert.match(coverState.gilded,/cover-golden-shoot-frame-transparent/,'ornament is the original ONE hot-stamped master');
+   await page.screenshot({path:path.join(groundDir,viewport.width+'-emmaus-green-one-cover.png')});
+   await page.locator('[data-jump="9.10"]').click();
+   await page.waitForTimeout(150);
+   assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'open');
+   assert.equal(await page.locator('#em-entry-cover').isVisible(),false,'book cover disappears after opening');
+
    await page.locator('[data-jump="11.10"]').click();await page.waitForTimeout(220);
    assert.equal(await page.locator('#p2-realm-background').getAttribute('data-realm'),'bible',
     'Bible backdrop stays stable during the Olive reveal');
