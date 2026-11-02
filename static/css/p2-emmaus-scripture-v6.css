@@ -99,13 +99,13 @@
 #emmaus .emmaus__study-reading{
  flex:0 0 auto!important;
  min-height:0!important;
- max-height:clamp(63px,10.5vh,91px)!important;
+ max-height:clamp(47px,7.2vh,64px)!important;
  overflow-y:auto!important;
  padding-bottom:5px!important;
 }
 #emmaus .emmaus__study-reading h2{
  margin:2px 0 3px!important;
- font-size:clamp(21px,2.23cqi,31px)!important;
+ font-size:clamp(22px,2.4cqi,32px)!important;
 }
 #emmaus .emmaus__study-movement{
  margin:0 0 3px!important;
@@ -117,7 +117,7 @@
 /* Scripture is the main reading surface; notes remain an independently
    scrolling secondary layer below it. */
 #emmaus .emmaus__scripture-reader{
- flex:1 1 0!important;min-height:110px!important;min-width:0;
+ flex:1 1 0!important;min-height:180px!important;min-width:0;
  overflow:hidden!important;display:flex;flex-direction:column;
  border-top:1px solid var(--em-v6-rule)!important;
  border-bottom:1px solid var(--em-v6-rule)!important;
@@ -126,7 +126,7 @@
 #emmaus .emmaus__scripture-reader-head{
  flex:0 0 auto;display:flex;justify-content:space-between;
  gap:8px;align-items:flex-end;
- padding:7px 0 6px;
+ padding:9px 0 10px;
 }
 #emmaus .emmaus__scripture-reader-head > div{
  display:flex;flex-direction:column;gap:3px;
@@ -138,7 +138,7 @@
 }
 #emmaus #em-scripture-location{
  color:var(--em-v6-ink)!important;
- font:var(--ws-weight-zh-air) clamp(12px,1.30cqi,16px)/1.26 var(--ws-type-display-zh)!important;
+ font:var(--ws-weight-zh-air) clamp(16px,1.9cqi,22px)/1.35 var(--ws-type-display-zh)!important;
 }
 #emmaus .emmaus__translation-pair{
  text-align:right;
@@ -152,7 +152,7 @@
  overflow-y:auto;overflow-x:hidden;
  scrollbar-width:thin;scrollbar-color:var(--em-v6-rule) transparent;
  overscroll-behavior:contain;
- padding:0 9px 3px 0;
+ padding:0 clamp(8px,1.2cqi,16px) 5px 0;
 }
 #emmaus .emmaus__scripture-lines{
  list-style:none;margin:0;padding:0;
@@ -160,9 +160,9 @@
 }
 #emmaus .emmaus__scripture-verse{
  display:grid;grid-template-columns:clamp(29px,3cqi,39px) minmax(0,1fr);
- gap:8px;
+ gap:clamp(9px,1.2cqi,15px);
  align-items:start;
- padding:10px 0 12px 4px;
+ padding:clamp(13px,1.5cqi,20px) 0 clamp(14px,1.5cqi,20px) 4px;
  border-left:2px solid transparent;
  border-bottom:1px solid color-mix(in srgb,var(--em-v6-ink) 12%,transparent);
  transition:border-color .15s ease;
@@ -173,7 +173,7 @@
 #emmaus .emmaus__scripture-verse-number{
  display:block;
  appearance:none;cursor:pointer;
- font:400 clamp(14px,1.37cqi,18px)/1.35 var(--ws-type-display-en)!important;
+ font:400 clamp(16px,1.6cqi,21px)/1.35 var(--ws-type-display-en)!important;
  color:var(--em-v6-gold)!important;
  background:transparent!important;border:0!important;
  padding:0!important;text-align:left;
@@ -186,15 +186,15 @@
 #emmaus .emmaus__scripture-pair{min-width:0}
 #emmaus .emmaus__scripture-zh{
  color:var(--em-v6-ink)!important;
- font:400 clamp(13px,1.23cqi,16px)/1.7 var(--ws-type-reading-zh)!important;
+ font:400 clamp(16px,2.1cqi,19px)/1.72 var(--ws-type-reading-zh)!important;
  letter-spacing:.012em!important;
  margin:0!important;overflow-wrap:break-word;
 }
 #emmaus .emmaus__scripture-en{
  color:color-mix(in srgb,var(--em-v6-ink) 82%,#8c8067)!important;
- font:400 clamp(12px,1.05cqi,14px)/1.5 var(--ws-type-display-en)!important;
+ font:400 clamp(14px,1.75cqi,16px)/1.58 var(--ws-type-display-en)!important;
  letter-spacing:0!important;
- margin:6px 0 0!important;overflow-wrap:break-word;
+ margin:9px 0 0!important;overflow-wrap:break-word;
 }
 #emmaus .emmaus__scripture-source{
  flex:0 0 auto;
@@ -209,7 +209,7 @@
  margin:14px 0!important;
 }
 #emmaus .emmaus__study-tools{
- flex:0 0 clamp(67px,11vh,100px)!important;
+ flex:0 0 clamp(60px,9vh,83px)!important;
  min-height:0!important;
  padding-top:4px!important;
 }
@@ -242,13 +242,13 @@
   min-height:330px!important;
  }
  #emmaus .emmaus__study-reading{
-  max-height:82px!important;
+  max-height:58px!important;
  }
  #emmaus .emmaus__scripture-reader{
-  flex:0 0 230px!important;
-  min-height:230px!important;
+  flex:0 0 295px!important;
+  min-height:295px!important;
  }
- #emmaus .emmaus__study-tools{min-height:94px!important;flex:0 0 94px!important}
+ #emmaus .emmaus__study-tools{min-height:70px!important;flex:0 0 70px!important}
  #emmaus .emmaus__source-meta{display:none!important}
 }
 @media(max-width:540px){
@@ -266,8 +266,8 @@
  #emmaus .emmaus__translation-pair{white-space:normal;font-size:8px!important}
  #emmaus .emmaus__scripture-reader-head{align-items:flex-start}
  #emmaus .emmaus__scripture-verse{grid-template-columns:24px minmax(0,1fr);gap:5px}
- #emmaus .emmaus__scripture-zh{font-size:12px!important;line-height:1.65!important}
- #emmaus .emmaus__scripture-en{font-size:11px!important;line-height:1.5!important}
+ #emmaus .emmaus__scripture-zh{font-size:16px!important;line-height:1.67!important}
+ #emmaus .emmaus__scripture-en{font-size:14px!important;line-height:1.55!important}
 }
 @media(prefers-reduced-motion:reduce){
  #emmaus .emmaus__scripture-verse{transition:none}
