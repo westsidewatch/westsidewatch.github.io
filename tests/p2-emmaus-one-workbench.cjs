@@ -23,6 +23,18 @@ assert(!v6.includes('Georgia'),'English KJV must not silently use Georgia');
 assert(!v6.includes('Noto Serif TC'),'Chinese P2 scripture must not use Noto Serif');
 assert(!v6.includes('font:600'),'no extra-heavy Chinese P2 typography');
 
+const contextJS=read('js/p2-emmaus-editorial-context.js');
+assert(!contextJS.includes("source.movements.map("),
+ 'Bible chapter outline must not substitute the five book-wide movements');
+assert(contextJS.includes("item[2] often contains internal labels"),
+ 'editor-only labels such as book structure must never render');
+assert(contextJS.includes("timelineEvents.replaceChildren()"),
+ 'chapter selection refreshes the outline rather than retaining stale text');
+assert(html.includes('以馬忤斯欄目主題經文')&&
+ html.includes('路加福音 24:27')&&html.includes('路加福音 24:32'),
+ 'the green cover must present both Emmaus passage references');
+assert(html.includes('我們的心豈不是火熱的嗎'),
+ 'Luke 24:32 theme verse must not be replaced by a generic editorial slogan');
 const verseJS=read('js/p2-emmaus-scripture-v6.js');
 const lukeBilingual=JSON.parse(read('data/p2-emmaus-scripture-v6/Luke.json'));
 const johnBilingual=JSON.parse(read('data/p2-emmaus-scripture-v6/John.json'));
@@ -149,6 +161,25 @@ const {chromium}=require('playwright');
    const firstVerse=page.locator('#em-scripture-verses .emmaus__scripture-verse').first();
    assert.match(await firstVerse.locator('.emmaus__scripture-zh').textContent(),/七日/);
    assert.match(await firstVerse.locator('.emmaus__scripture-en').textContent(),/first day of the week/i);
+   const studyContext=await page.locator('#emmaus .emmaus__context').evaluate(el=>{
+    const title=el.querySelector('#em-context-time-title')?.textContent;
+    const note=el.querySelector('#em-context-time-note');
+    const rows=[...el.querySelectorAll('#em-context-time-events li')].map(x=>x.textContent);
+    const setting=el.querySelector('#em-context-map-guide')?.textContent||'';
+    return {title,note:note?.textContent,noteHeight:note?.clientHeight,
+     noteScrollHeight:note?.scrollHeight,rows,setting};
+   });
+   assert.equal(studyContext.title,'本章段落',
+    'Luke 24 uses its six actual chapter passages, not a full-book chronology');
+   assert(studyContext.rows.some(x=>x.includes('24:13–27')),
+    'the Emmaus-road episode must appear in the Luke 24 chapter outline');
+   assert(studyContext.rows.some(x=>x.includes('24:50–53')),
+    'the chapter outline must include the ascension, not stop at five book sections');
+   assert(!/書卷結構|原圖|圖說|必須|後備圖/.test(
+    studyContext.rows.join(' ')+studyContext.note+studyContext.setting),
+    'technical and unfinished production labels must never enter reader-facing copy');
+   assert(studyContext.noteScrollHeight<=studyContext.noteHeight+2,
+    'chapter-summary text must fit naturally instead of being cut off mid-word');
    assert.equal(await page.locator('#em-scripture-verses .emmaus__scripture-verse').count(),53,
     'Luke 24 loads the actual canonical full chapter with 53 paired verse rows');
 
