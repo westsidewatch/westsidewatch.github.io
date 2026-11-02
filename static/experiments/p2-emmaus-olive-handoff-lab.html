@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/css/p2-emmaus-olive-preview.css?v=20261102-single-folio-handoff-v1">
 <link rel="stylesheet" href="/css/p2-five-v15-continuation.css?v=20261101-bow-local-v3-proportions">
 <link rel="stylesheet" href="/css/p2-emmaus-one-workbench.css?v=20261102-original-rail-v1">
+<link rel="stylesheet" href="/css/p2-emmaus-editorial-v5.css?v=20261102-double-masthead-1">
 </head>
 <body data-ws-scope="p2">
 <header class="proof-controls" aria-label="P2 03 與 04 動效驗收工具">
@@ -36,6 +37,18 @@
      <div class="emmaus__scripture-frame" aria-hidden="true"><span class="emmaus__scripture-top">LUKE 24:27 · 凡經上所指著自己的話</span><span class="emmaus__scripture-bottom">我們的心豈不是火熱的嗎 · LUKE 24:32</span></div>
      <div class="emmaus__mast"><span>03 / 07 · BIBLE STUDY</span><span>WESTSIDE / ONE</span><span>THE SIXTY-SIX BOOKS</span></div>
      <div class="emmaus__identity"><span class="emmaus__small">THE ROAD TO EMMAUS</span><h1>EMMAUS<span>以馬忤斯</span></h1><p>從整本聖經認出基督。經文、歷史與道路，在此相遇。</p></div>
+     <nav class="emmaus__book-switch emmaus__source-hero" aria-label="目前選定的聖經書卷與章節">
+      <div class="emmaus__book-current" aria-live="polite">
+       <span class="emmaus__source-eyebrow">SELECTED BOOK · <span id="em-book-number">BOOK 42</span></span>
+       <strong id="em-book-en">Luke</strong><span id="em-book-zh">路加福音</span>
+       <span class="emmaus__source-meta"><small id="em-book-part">NEW TESTAMENT</small><small id="em-book-chapters">24 CHAPTERS</small></span>
+      </div>
+      <div class="emmaus__current-chapter" aria-live="polite">
+       <span class="emmaus__source-eyebrow">CURRENT CHAPTER / 當前章節</span>
+       <div class="emmaus__current-chapter-row"><strong id="em-current-chapter-number">24</strong><span id="em-current-chapter-zh">第二十四章</span></div>
+      </div>
+      <a id="emmaus-enter" href="/one/?book=42&amp;chapter=24" hidden tabindex="-1" aria-hidden="true">ONE</a>
+     </nav>
      <section class="emmaus__study" id="emmaus-study" aria-labelledby="emmaus-study-heading">
       <div class="emmaus__study-interface">
        <header class="emmaus__study-head"><span>ONE / BIBLE STUDY · <b lang="zh-Hant">研讀視窗</b></span><span id="em-study-feature">FEATURE / LUKE 24</span></header>
@@ -64,12 +77,7 @@
        <footer class="emmaus__study-foot"><span>ONE · <b lang="zh-Hant" id="em-study-source">路加福音第二十四章 · ONE 正式研讀內容</b></span><a id="em-study-enter" href="/one/?book=42&amp;chapter=24" hidden tabindex="-1" aria-hidden="true">ONE</a></footer>
       </div>
      </section>
-     <nav class="emmaus__book-switch" aria-label="ONE 現行書卷">
-      <div class="emmaus__book-current" aria-live="polite"><span id="em-book-number">BOOK 42</span><strong id="em-book-en">Luke</strong><span id="em-book-zh">路加福音</span><small id="em-book-part">NEW TESTAMENT</small><small id="em-book-chapters">24 CHAPTERS</small></div>
-      <span class="emmaus__book-note">THE SIXTY-SIX BOOKS / 全卷目錄</span>
-      <a id="emmaus-enter" href="/one/?book=42&amp;chapter=24" hidden tabindex="-1" aria-hidden="true">ONE</a>
-     </nav>
-     <div class="emmaus__rail" id="emmaus-rail" tabindex="0" role="group" aria-label="六十六卷聖經書卷全目錄，全部同時顯示；左右方向鍵可切換"></div>
+     <div class="emmaus__rail" id="emmaus-rail" tabindex="0" role="group" aria-label="按正典順序橫向選擇六十六卷聖經書卷；使用左右方向鍵切換"></div>
      <div class="emmaus__foot"><span>ONE / SCRIPTURE · MAPS · CHRONOLOGY</span><span>EMMAUS · 03 / 07</span></div>
      <section class="emmaus__one-workbench" id="em-one-workbench" aria-label="在 P2 內使用 ONE 完整查經工具" hidden>
       <header class="emmaus__one-workbench-head"><div><span>ONE / 一卷 · 逐章研讀</span><strong id="em-one-workbench-title">路加福音 · 第 24 章</strong></div><a id="em-one-standalone" href="/one/?book=42&amp;chapter=24" target="_blank" rel="noopener">獨立視窗 ↗</a><button id="em-one-close" type="button" aria-label="關閉 ONE 工作台，返回以馬忤斯">返回 P2 ×</button></header>
@@ -97,7 +105,7 @@
 <script src="/one/one-dore-cover-registry.js"></script>
 <script src="/one/one-dore-assets-241.js"></script>
 <script src="/olive/components/speaker-baseline-v1/baseline.js?v=07d89a2-recovered-v1"></script>
-<script src="/js/p2-emmaus-olive-preview.js?v=20261102-single-folio-handoff-v1"></script>
+<script src="/js/p2-emmaus-olive-preview.js?v=20261102-double-masthead-1"></script>
 <script>
 /* Candidate engraving is opt-in, never changes accepted Church/Magazine. */
 if(new URLSearchParams(location.search).get('engraving')==='v5'){
