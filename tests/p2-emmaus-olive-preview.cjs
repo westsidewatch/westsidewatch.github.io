@@ -380,7 +380,7 @@ const {chromium}=require('playwright');
    await page.waitForTimeout(140);
    assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'second-turn');
    const mid=await page.locator('#em-entry-cover').evaluate(el=>getComputedStyle(el).clipPath);
-   assert.match(mid,/inset\\(/,'second turn is a scroll-owned mask');
+   assert(mid.startsWith('inset('),'second turn is a scroll-owned mask');
    await page.screenshot({path:path.join(groundDir,viewport.width+'-one-second-turn.png')});
    await page.locator('[data-jump="9.10"]').click();
    await page.waitForTimeout(150);
