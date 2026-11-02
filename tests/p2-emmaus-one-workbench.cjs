@@ -8,6 +8,19 @@ const css=read('css/p2-emmaus-one-workbench.css');
 const js=read('js/p2-emmaus-one-workbench.js');
 const host=read('js/p2-emmaus-olive-preview.js');
 const editorial=read('js/p2-emmaus-editorial-context.js');
+const v5=read('css/p2-emmaus-editorial-v5.css');
+assert.match(html,/class="emmaus__book-switch emmaus__source-hero"/,
+ 'the selected Bible book has a real masthead below EMMAUS');
+assert.match(html,/id="em-current-chapter-number"/,
+ 'current chapter has its own large, always-visible number');
+assert.match(html,/id="em-current-chapter-zh"/,
+ 'current chapter has its Chinese ordinal');
+assert.match(v5,/#emmaus \.emmaus__source-hero #em-book-en/,
+ 'selected English Bible book has intentional editorial typography');
+assert.match(v5,/#emmaus #em-current-chapter-number/,
+ 'current chapter is a substantial visual anchor');
+assert.match(v5,/grid-template-columns:minmax\(0,1\.62fr\) minmax\(0,\.88fr\)/,
+ 'scripture and research panels have deliberate 65/35 editorial proportions');
 assert.match(html,/id="em-one-context"/,'the chapter displays a central ONE atlas and chronology');
 assert.match(html,/id="emmaus-rail"/,'the 66-book index is restored and always visible');
 assert.doesNotMatch(html,/id="em-book-drawer"/,'the distracting duplicate selection drawer is removed');
@@ -54,6 +67,25 @@ const {chromium}=require('playwright');
    await page.waitForFunction(()=>document.querySelectorAll('#emmaus-rail [data-book]').length===66 &&
     document.querySelectorAll('#em-one-chapter-grid button').length===24,{timeout:25000});
    assert.equal(await page.locator('#em-one-chapter-grid button').count(),24);
+   assert.equal(await page.locator('#em-current-chapter-number').textContent(),'24');
+   assert.equal(await page.locator('#em-current-chapter-zh').textContent(),'第二十四章');
+   const hero=await page.evaluate(()=>{
+    const box=id=>document.querySelector(id).getBoundingClientRect();
+    const a=box('#emmaus .emmaus__identity'),b=box('#emmaus .emmaus__source-hero'),
+      c=box('#emmaus .emmaus__study');
+    const font=id=>Number.parseFloat(getComputedStyle(document.querySelector(id)).fontSize);
+    return {identity:{y:a.y,bottom:a.bottom},source:{y:b.y,bottom:b.bottom},
+      study:{y:c.y,bottom:c.bottom},bookFont:font('#em-book-en'),
+      chapterFont:font('#em-current-chapter-number'),subjectFont:font('#emmaus-study-heading')};
+   });
+   assert(hero.identity.bottom<=hero.source.y+3,'the 03 realm masthead precedes the selected book');
+   assert(hero.source.bottom<=hero.study.y+3,'book/chapter masthead precedes study body');
+   assert(hero.bookFont>hero.subjectFont,'selected book has stronger visual presence than study subject');
+   assert(hero.chapterFont>hero.subjectFont,'selected chapter is not another tiny control');
+   if(viewport.width>900){
+    assert(hero.bookFont>=38,'selected book should read like a magazine feature title');
+    assert(hero.chapterFont>=48,'chapter number is an unmistakable second visual anchor');
+   }
    const imgRule=await page.locator('#emmaus > .emmaus__left').evaluate(el=>({
     background:getComputedStyle(el).backgroundImage,
     before:getComputedStyle(el,'::before').display,
@@ -113,6 +145,20 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#emmaus').getAttribute('data-selected-book'),'45');
    assert.equal(await page.locator('#emmaus').getAttribute('data-selected-chapter'),'8');
    const dir=path.join(root,'artifacts/p2-emmaus-olive');fs.mkdirSync(dir,{recursive:true});
+   await page.screenshot({path:path.join(dir,viewport.width+'-emmaus-v5-book-chapter-hierarchy.png')});
+   await page.locator('#emmaus-rail [data-book="43"]').evaluate(el=>el.click());
+   await page.waitForTimeout(100);
+   assert.equal(await page.locator('#em-book-en').textContent(),'John');
+   assert.equal(await page.locator('#em-book-zh').textContent(),'約翰福音');
+   assert.equal(await page.locator('#em-current-chapter-number').textContent(),'01');
+   await page.locator('#em-one-chapter-grid [data-one-chapter="3"]').evaluate(el=>el.click());
+   assert.equal(await page.locator('#em-current-chapter-number').textContent(),'03');
+   assert.equal(await page.locator('#em-current-chapter-zh').textContent(),'第三章');
+   assert.match(await page.locator('#emmaus .emmaus__identity').textContent(),/EMMAUS/);
+   await page.screenshot({path:path.join(dir,viewport.width+'-emmaus-v5-john-chapter-03.png')});
+   await page.locator('#emmaus-rail [data-book="45"]').evaluate(el=>el.click());
+   await page.locator('#em-one-chapter-grid [data-one-chapter="8"]').evaluate(el=>el.click());
+   assert.equal(await page.locator('#em-current-chapter-number').textContent(),'08');
    await page.screenshot({path:path.join(dir,viewport.width+'-one-66-book-workbench.png')});
    await page.locator('#em-one-open').click();
    assert.equal(await page.locator('#em-one-workbench').isVisible(),true);
