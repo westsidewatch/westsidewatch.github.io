@@ -386,6 +386,8 @@
     if(transferHome)transferHome.style.visibility=transferOriginalVisibility??'';
     transferFigure=null;transferHome=null;transferOriginalVisibility=null;
    }
+   const oldMagazineRight=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.getElementById('dual-cover');
+   if(oldMagazineRight)oldMagazineRight.style.transform='';
    emmaus.style.visibility='hidden';emmaus.style.pointerEvents='none';
    emmaus.inert=true;emmaus.setAttribute('aria-hidden','true');
    olive.style.visibility='hidden';olive.style.pointerEvents='none';
@@ -421,19 +423,22 @@
   emRight.style.opacity=String(move>.001?1:0);
   emRight.style.setProperty('--em-plate-reveal',String(coverOpen));
   emPlates.style.opacity=String(coverOpen);
-  // Two opposing masks on one fixed 5:8 right leaf. At every scroll position
-  // the reverse trip is pixel-identical; no additional animation clock.
-  const greenClip=coverOpen>.001?
-   'inset(0 '+(coverOpen*100).toFixed(3)+'% 0 0)':
-   'inset(0 '+((1-coverArrival)*100).toFixed(3)+'% 0 0)';
-  emCover.style.clipPath=greenClip;
-  emCover.style.opacity=String(coverArrival>.001&&coverOpen<.999?1:0);
-  emCover.style.visibility=coverArrival>.001&&coverOpen<.999?'visible':'hidden';
+  // A restrained page TURN, not a wipe: the actual Magazine right cover
+  // hinges away while the green folio comes forward on the SAME spine.
+  // The green folio then turns away to uncover the right-hand Doré plate.
+  // Only perspective rotateY is animated; no paper curls, tween timer or
+  // scaling of either source. All angles are pure scroll progress.
+  const firstOut=smooth(move/.58);
+  const greenIn=smooth((move-.42)/.58);
+  const greenAngle=archive>.001?-88*archive:87*(1-greenIn);
+  emCover.style.clipPath='none';
+  emCover.style.transform='perspective(1600px) rotateY('+greenAngle.toFixed(2)+'deg)';
+  emCover.style.opacity=String(move>.001&&archive<.999?1:0);
+  emCover.style.visibility=move>.001&&archive<.999?'visible':'hidden';
   const edge=$('.emmaus__magazine-turn-edge');
   if(edge){
-   const firstTurning=move>.001&&move<.999,secondTurning=archive>.001&&archive<.999;
-   edge.style.left=(secondTurning?100-archive*100:move*100).toFixed(2)+'%';
-   edge.style.opacity=String(firstTurning||secondTurning?0.67:0);
+   edge.style.left='0';
+   edge.style.opacity=String((move>.001&&move<.999)||(archive>.001&&archive<.999)?.28:0);
   }
   emmaus.dataset.coverState=move<.001?'magazine':archive<.001?
    (move>.999?'green':'first-turn'):archive>.999?
@@ -446,7 +451,7 @@
   const sourceSpine=sourceDoc?.getElementById('dual-continuum');
   const sourceFigure=sourceDoc?.getElementById('dual-dore-plate');
   const stageRect=$('#proof-stage').getBoundingClientRect();
-  const canReuse=distance>=7.0&&settledGeometryDoc===sourceDoc&&
+  const canReuse=distance>=6.50&&settledGeometryDoc===sourceDoc&&
     settledGeometryW===stageRect.width&&settledGeometryH===stageRect.height&&!!settledGeometry;
   let original,coverBounds,spineBounds;
   if(canReuse){
@@ -459,8 +464,14 @@
     return {x:baseRect.left-stageRect.left+frameRect.left+r.left,
             y:baseRect.top-stageRect.top+frameRect.top+r.top,w:r.width,h:r.height};
    };
+   // Measure physical pages WITHOUT the last scroll frame's 3D turn.
+   // The measured dimensions are cached for the entire turn; never feed
+   // a projected 3D bounding box back into the spread geometry.
+   const rotatedCover=sourceCover?.style.transform??'';
+   if(sourceCover)sourceCover.style.transform='none';
    original=bounds(sourceTile);coverBounds=bounds(sourceCover);spineBounds=bounds(sourceSpine);
-   if(distance>=7.0&&original&&coverBounds){
+   if(sourceCover)sourceCover.style.transform=rotatedCover;
+   if(distance>=6.50&&original&&coverBounds){
     settledGeometry={original,coverBounds,spineBounds};
     settledGeometryDoc=sourceDoc;
     settledGeometryW=stageRect.width;settledGeometryH=stageRect.height;
@@ -477,7 +488,13 @@
    sourceOriginalEditorialOpacity=sourceFrame?.style.opacity??'';
   }
   if(sourceTile)sourceTile.style.opacity=sourceOriginalTileOpacity??'';
-  if(sourceCover)sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
+  if(sourceCover){
+   sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
+   sourceCover.style.transformOrigin='left center';
+   // An actual 3D-hinged Magazine cover, not opacity/clip-path reveal.
+   sourceCover.style.transform=move>.001?'perspective(1600px) rotateY('+(-88*firstOut).toFixed(2)+'deg)':'';
+   sourceCover.style.backfaceVisibility='hidden';
+  }
   // The accepted Magazine iframe, including its book spine and original
   // video proportions, remains unchanged and restores during reverse scroll.
   if(sourceFrame)sourceFrame.style.opacity=sourceOriginalEditorialOpacity??'';
