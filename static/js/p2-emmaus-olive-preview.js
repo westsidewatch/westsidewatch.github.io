@@ -365,6 +365,7 @@
  // The source magazine node stays in its original iframe throughout the handoff.
  let transferFigure=null,transferHome=null,transferOriginalVisibility=null;
  let sourceOriginalTileOpacity=null,sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
+ let sourceOriginalCoverTransform='',sourceOriginalCoverOrigin='',sourceOriginalCoverBackface='';
  let frameLoaded=false,lastPaint=NaN,queued=false,lastMeasuredSpread=null;
  // Cache the settled Magazine geometry across Emmaus scroll frames.
  let settledGeometry=null,settledGeometryDoc=null,settledGeometryW=0,settledGeometryH=0;
@@ -392,9 +393,11 @@
    }
    const oldMagazineRight=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.getElementById('dual-cover');
    if(oldMagazineRight){
-    oldMagazineRight.style.removeProperty('transform');
-    oldMagazineRight.style.removeProperty('transform-origin');
-    oldMagazineRight.style.removeProperty('backface-visibility');
+    if(oldMagazineRight.ownerDocument===sourceStyleDoc){
+     oldMagazineRight.style.transform=sourceOriginalCoverTransform;
+     oldMagazineRight.style.transformOrigin=sourceOriginalCoverOrigin;
+     oldMagazineRight.style.backfaceVisibility=sourceOriginalCoverBackface;
+    }
    }
    emmaus.style.visibility='hidden';emmaus.style.pointerEvents='none';
    emmaus.inert=true;emmaus.setAttribute('aria-hidden','true');
@@ -494,6 +497,9 @@
    sourceStyleDoc=sourceDoc;
    sourceOriginalTileOpacity=sourceTile?.style.opacity??'';
    sourceOriginalCoverOpacity=sourceCover?.style.opacity??'';
+   sourceOriginalCoverTransform=sourceCover?.style.transform??'';
+   sourceOriginalCoverOrigin=sourceCover?.style.transformOrigin??'';
+   sourceOriginalCoverBackface=sourceCover?.style.backfaceVisibility??'';
    sourceOriginalEditorialOpacity=sourceFrame?.style.opacity??'';
   }
   if(sourceTile)sourceTile.style.opacity=sourceOriginalTileOpacity??'';
@@ -502,9 +508,9 @@
    // The front ONE folio turns on a separate fixed-size overlay, never
    // bends or remeasures the original magazine cover and its title.
    sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
-   sourceCover.style.removeProperty('transform');
-   sourceCover.style.removeProperty('transform-origin');
-   sourceCover.style.removeProperty('backface-visibility');
+   sourceCover.style.transform=sourceOriginalCoverTransform;
+   sourceCover.style.transformOrigin=sourceOriginalCoverOrigin;
+   sourceCover.style.backfaceVisibility=sourceOriginalCoverBackface;
   }
   // The accepted Magazine iframe, including its book spine and original
   // video proportions, remains unchanged and restores during reverse scroll.
