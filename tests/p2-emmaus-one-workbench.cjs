@@ -45,7 +45,12 @@ const binding=read('css/p2-emmaus-bookbinding-v7.css');
 assert(binding.includes('/one/cover-texture-antique-green.png'),'P2 must reuse genuine ONE green cloth');
 assert(binding.includes('/one/cover-golden-shoot-frame-transparent.png'),'P2 must reuse genuine ONE gilt ornament');
 assert(html.includes('id="em-entry-cover"'),'Emmaus section identity lives on the new real cover');
-assert(host.includes('const coverOpen=smooth((distance-8.05)/.59)'),'book opening is controlled by scroll');
+assert(host.includes('const coverArrival=move,coverOpen=archive'),'two page turns are scroll-owned');
+assert(host.includes('const oneDrop=smooth((distance-8.55)/.55)'),
+ 'left becomes content only after the second right-side page turn');
+assert(!host.includes('sourceFigure.cloneNode(true)'),'Magazine artwork must never be copied or moved');
+assert(html.includes('路加福音 24:27')&&html.includes('路加福音 24:32'),
+ 'ONE green chapter cover includes the canonical Emmaus verses');
 assert.match(html,/class="emmaus__book-switch emmaus__source-hero"/,
  'the selected Bible book has a real masthead below EMMAUS');
 assert.match(html,/id="em-current-chapter-number"/,
