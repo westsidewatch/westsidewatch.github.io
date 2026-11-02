@@ -131,6 +131,21 @@ const {chromium}=require('playwright');
     assert.equal(style.weight,role==='body'?'400':'200',
       'OS requires body 400 and every non-body Chinese 200: '+role);
    }
+   const readingProof=await page.evaluate(()=>{
+    const zh=getComputedStyle(document.querySelector('.emmaus__scripture-zh'));
+    const en=getComputedStyle(document.querySelector('.emmaus__scripture-en'));
+    const reader=document.querySelector('#em-scripture-reader')?.getBoundingClientRect();
+    const notes=document.querySelector('#em-one-context')?.getBoundingClientRect();
+    return {zhSize:parseFloat(zh.fontSize),enSize:parseFloat(en.fontSize),
+      zhLine:parseFloat(zh.lineHeight),enLine:parseFloat(en.lineHeight),
+      readerWidth:reader?.width,notesWidth:notes?.width};
+   });
+   assert(readingProof.zhSize>=16,'Traditional CUV is readable at least 16px');
+   assert(readingProof.enSize>=14,'English KJV is readable at least 14px');
+   assert(readingProof.zhLine>=readingProof.zhSize*1.6,'CUV interline space is sufficient');
+   assert(readingProof.enLine>=readingProof.enSize*1.5,'KJV interline space is sufficient');
+   if(viewport.width>900)assert(readingProof.readerWidth>readingProof.notesWidth*2,
+     'on desktop, real Scripture has at least twice the reference-column width');
    const firstVerse=page.locator('#em-scripture-verses .emmaus__scripture-verse').first();
    assert.match(await firstVerse.locator('.emmaus__scripture-zh').textContent(),/七日/);
    assert.match(await firstVerse.locator('.emmaus__scripture-en').textContent(),/first day of the week/i);
