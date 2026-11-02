@@ -1,73 +1,103 @@
-/* P2 / 03 — editorial atlas, chronology and quiet ONE book selector.
- * Data is read only from ONE's own chapter records. Never invent routes,
- * timelines, captions or new engravings to fill missing sources.
+/* P2 / Emmaus — reader-facing Biblical setting and chapter outline.
+ * Published ONE data remains read-only. This panel never displays internal
+ * map production instructions, missing-source caveats or book-wide movements
+ * as if they were the currently selected chapter.
  */
 (()=>{'use strict';
- const root=document.getElementById('emmaus'),D=window.ONE_DATA;if(!root||!D?.books)return;
- const $=id=>document.getElementById(id),books=D.books;
- const rail=$('emmaus-rail');
+ const root=document.getElementById('emmaus'),D=window.ONE_DATA;
+ if(!root||!D?.books)return;
+ const $=id=>document.getElementById(id);
  const figure=$('em-context-map-figure'),image=$('em-context-map-image'),
-  atlasEyebrow=$('em-context-map-eyebrow'),
-  credit=$('em-context-map-credit'),guide=$('em-context-map-guide'),
-  places=$('em-context-map-places'),mapTitle=$('em-context-map-title'),
-  mapSource=$('em-context-map-source'),timelineTitle=$('em-context-time-title'),
-  timelineNote=$('em-context-time-note'),timelineEvents=$('em-context-time-events');
- if(!rail||!figure||!timelineEvents)return;
- // Original 66-book rail cells and their BOOK labels come exclusively
- // from the P2 canonical controller. Do not replace its original markup.
- // A change of book does not change the P2 chapter title, only its ONE contents.
- let selectedKey='',lastMap='';
+  eyebrow=$('em-context-map-eyebrow'),credit=$('em-context-map-credit'),
+  guide=$('em-context-map-guide'),places=$('em-context-map-places'),
+  mapTitle=$('em-context-map-title'),mapSource=$('em-context-map-source'),
+  timelineEyebrow=$('em-context-time-eyebrow'),
+  timelineTitle=$('em-context-time-title'),timelineNote=$('em-context-time-note'),
+  timelineEvents=$('em-context-time-events');
+ if(!figure||!timelineEvents||!guide||!mapTitle)return;
+ const put=(node,value)=>{if(node)node.textContent=String(value??'')};
+ const add=(parent,value,tag='span')=>{
+  const el=document.createElement(tag);el.textContent=String(value??'');parent.append(el);return el;
+ };
  const sourceFor=n=>n===42?D.luke:n===40?D.matthew:D.studyBooks?.[n];
- const put=(node,text)=>{node.textContent=String(text||'')};
- const label=(parent,text,tag='span')=>{const node=document.createElement(tag);node.textContent=String(text);parent.append(node);return node};
- function paintMap(map,chapter){
+ // Original ONE chapter data can contain directions to map editors. That
+ // prose is not audience-facing copy and must never leak into these panels.
+ const internal=/原圖|圖說|圖上|福圖[一二三四五六七八九十\d]|若.{0,8}圖|編號線路|必須|應保留|後備圖|完整版|完整保存|製圖|設計|縮減|ONE\s*(?:原始|正式)|資料來源|工作台|候選位置|頁面呈現/;
+ const readerCopy=value=>typeof value==='string'&&!internal.test(value)?value.trim():'';
+ function paintMap(map,study,n,ch){
   const valid=map&&typeof map==='object';
-  const url=valid&&typeof map.image==='string'&&/^https:\/\//.test(map.image)?map.image:null;
-  if(atlasEyebrow)put(atlasEyebrow,url?'01 / ONE BIBLE ATLAS':'01 / BIBLICAL CONTEXT');
-  put(mapTitle,valid?(map.title||map.imageTitle||'本章地理'):'本章閱讀路徑');
-  const detail=valid?[map.guide||map.preface||'',...(map.places||[]).slice(0,6).map(x=>'· '+x)].filter(Boolean):
-   [chapter?.movement||chapter?.position||chapter?.story||'從 ONE 的本章結構與經文脈絡開始查考。'];
+  const imageURL=valid&&typeof map.image==='string'&&/^https:\/\//.test(map.image)?map.image:null;
+  put(eyebrow,imageURL?'01 / BIBLICAL ATLAS':'01 / BIBLICAL SETTING');
+  put(mapTitle,readerCopy(map?.title)||readerCopy(map?.imageTitle)||'經文地點');
   guide.replaceChildren();
-  for(const text of detail.slice(0,4))label(guide,text,'p');
-  places.replaceChildren();
-  if(!valid&&chapter?.route?.length){
-   for(const item of chapter.route.slice(0,5)){label(places,item[0]+' / '+item[1]);}
+  let paragraph='';
+  if(n===42&&ch===24){
+   paragraph='婦女清早前往墳墓；兩個門徒從耶路撒冷走向以馬忤斯，認出復活的耶穌後返回耶路撒冷。最後，耶穌在伯大尼附近祝福門徒。';
+  }else{
+   paragraph=readerCopy(map?.guide)||readerCopy(map?.preface);
+   if(!paragraph&&Array.isArray(study?.route)){
+    paragraph=study.route.slice(0,2).map(x=>String(x?.[1]||'')).filter(Boolean).join('；')+'。';
+   }
   }
-  mapSource.hidden=!valid||!map.source;
-  if(valid&&map.source){mapSource.href=map.source;mapSource.textContent='查看 ONE 原始史地圖 ↗';}
-  figure.hidden=!url;
-  if(url){
-   if(image.dataset.mapSrc!==url){image.dataset.mapSrc=url;image.src=url;}
-   image.alt=map.imageTitle||map.title||'ONE 聖經史地圖';
-   credit.textContent='ONE · '+(map.imageTitle||map.title||'BIBLE GEOGRAPHY');
+  if(paragraph)add(guide,paragraph,'p');
+  places.replaceChildren();
+  if(valid&&Array.isArray(map.places)){
+   for(const name of [...new Set(map.places)].slice(0,6)){
+    if(name&&typeof name==='string'&&!internal.test(name))add(places,name);
+   }
+  }
+  if(mapSource){
+   mapSource.hidden=!valid||!map.source;
+   if(valid&&map.source){mapSource.href=map.source;mapSource.textContent='查看相關地圖 ↗';}
+  }
+  figure.hidden=!imageURL;
+  if(imageURL){
+   if(image.dataset.mapSrc!==imageURL){image.dataset.mapSrc=imageURL;image.src=imageURL;}
+   image.alt=readerCopy(map.imageTitle)||readerCopy(map.title)||'聖經地理圖';
+   put(credit,readerCopy(map.imageTitle)||readerCopy(map.title));
   }else{image.removeAttribute('src');image.dataset.mapSrc='';}
  }
- function paintTimeline(study,source){
+ function paintTimeline(study,n,ch){
   timelineEvents.replaceChildren();
-  const data=study?.timeline;
-  const events=Array.isArray(data?.events)&&data.events.length?data.events:
-   Array.isArray(source?.movements)?source.movements.map(([id,range,title])=>[range,title,'書卷結構']):
-   Array.isArray(study?.route)?study.route.map(([range,title])=>[range,title,'經文路徑']):[];
-  put(timelineTitle,data?.title||(source?.movements?.length?'書卷結構':'本章經文路徑'));
-  put(timelineNote,data?.note||source?.summary||study?.position||'');
-  for(const item of events.slice(0,5)){
-   const li=document.createElement('li');label(li,item[0]||'','small');label(li,item[1]||'','strong');
-   if(item[2])label(li,item[2],'span');timelineEvents.append(li);
+  const timeline=study?.timeline;
+  const isChronology=Array.isArray(timeline?.events)&&timeline.events.length>0;
+  // Chapter-level events take priority. Book-wide movements (the source's
+  // 5-section overview of all of Luke) are NOT the outline of Luke 24.
+  const events=isChronology?timeline.events:
+   Array.isArray(study?.route)?study.route:[];
+  put(timelineEyebrow,isChronology?'02 / BIBLICAL CHRONOLOGY':'02 / CHAPTER OUTLINE');
+  put(timelineTitle,isChronology?(readerCopy(timeline.title)||'經文時序'):'本章段落');
+  let note=isChronology?readerCopy(timeline.note):readerCopy(study?.movement);
+  if(n===42&&ch===24)note='從空墳墓、以馬忤斯路上，到耶穌向門徒顯現及升天。';
+  put(timelineNote,note);
+  for(const item of events.slice(0,10)){
+   if(!Array.isArray(item))continue;
+   const ref=item[0],description=item[1];
+   if(!ref&&!description)continue;
+   const li=document.createElement('li');
+   if(ref)add(li,ref,'small');
+   if(description)add(li,description,'strong');
+   // item[2] often contains internal labels such as "書卷結構"; no such
+   // source-origin marker belongs in an editorial Bible-reading interface.
+   timelineEvents.append(li);
   }
-  if(!events.length){
-   const li=document.createElement('li');label(li,study?.movement||source?.summary||'閱讀本章','strong');timelineEvents.append(li);
+  if(!timelineEvents.childElementCount){
+   const li=document.createElement('li');
+   add(li,'本章經文','small');
+   add(li,'請選擇經文，逐節閱讀中文和英文譯本。','strong');
+   timelineEvents.append(li);
   }
  }
+ let selectedKey='',lastStudy=null;
  function render(book,chapter){
   const n=Number(book),ch=Number(chapter);
-  if(n<1||n>66||!Number.isInteger(n))return;
-  const key=n+':'+ch,source=sourceFor(n);
-  const study=source?.chapterStudies?.[String(ch)]||null;
-  // A fresh ONE async module may have arrived for the same book/chapter.
-  if(key===selectedKey&&lastMap===study)return;
-  selectedKey=key;lastMap=study;
-  paintMap(study?.map,study);
-  paintTimeline(study,source);
+  if(!Number.isInteger(n)||n<1||n>66||!Number.isInteger(ch)||ch<1)return;
+  const src=sourceFor(n),study=src?.chapterStudies?.[String(ch)]||null;
+  const key=n+':'+ch;
+  if(key===selectedKey&&lastStudy===study)return;
+  selectedKey=key;lastStudy=study;
+  paintMap(study?.map,study,n,ch);
+  paintTimeline(study,n,ch);
  }
  root.addEventListener('p2:one-selection',e=>render(e.detail?.book,e.detail?.chapter));
  render(Number(root.dataset.selectedBook)||42,Number(root.dataset.selectedChapter)||24);
