@@ -15,6 +15,10 @@
  // The 03–07 draft must show the five native engraving backgrounds by default.
  // ?ground=0 (or ?five=0 without an explicit ground setting) keeps the original A/B proof.
  const params=new URLSearchParams(location.search);
+ // Editorial A/B: the default 03 exterior is the approved ONE green cloth.
+ // ?surround=engraving restores the former radial engraving for comparison.
+ const surround=params.get('surround')==='engraving'?'engraving':'cloth';
+ document.body.dataset.p2Surround=surround;
  if(!params.has('ground')&&params.get('five')!=='0')fixedGround=true;
  const timelineMax=params.get('five')==='0'?12:16.74;
  const groundToggle=$('#proof-ground-toggle'),realmGround=$('#p2-realm-background'),oliveGround=$('#p2-olive-ground-crossfade');
@@ -422,6 +426,9 @@
   emLeft.style.setProperty('--em-page-reveal',String(oneDrop));
   emRight.style.opacity=String(move>.001?1:0);
   emRight.style.setProperty('--em-plate-reveal',String(coverOpen));
+  // Reveal the same original ONE green cloth on the perimeter of the right
+  // Doré illustration only after the green cover finishes its second turn.
+  emRight.style.setProperty('--em-binding-reveal',String(oneDrop));
   emPlates.style.opacity=String(coverOpen);
   // A restrained page TURN, not a wipe: the actual Magazine right cover
   // hinges away while the green folio comes forward on the SAME spine.
