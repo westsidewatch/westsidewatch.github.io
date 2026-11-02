@@ -15,10 +15,10 @@ assert.match(html,/class="emmaus__scripture-frame"/,'a separate golden scripture
 assert.match(html,/LUKE 24:27/,'the gold folio frame is composed with its scripture');
 assert.match(css,/#emmaus \.emmaus__scripture-frame\{/,'gold scripture frame is rendered as one structural element');
 assert.match(css,/#emmaus \.emmaus__study\{[\s\S]*?box-shadow:none!important/,'ONE layout removes competing nested panel borders');
-assert.match(css,/grid-template-columns:repeat\(22,minmax\(0,1fr\)\)!important/,'all 66 canonical books occupy 22 columns and 3 visible rows');
-assert.match(css,/grid-template-rows:repeat\(3,minmax\(0,1fr\)\)!important/,'the index has exactly three rows');
+assert.match(css,/#emmaus \.emmaus__rail\{[\s\S]*?overflow-x:auto!important/,'the first P2 one-row 66-book scroll navigation is restored');
+assert.match(css,/scroll-snap-type:x proximity!important/,'original horizontal canonical scroll snap is restored');
 assert.match(css,/grid-template-columns:minmax\(0,1\.12fr\) minmax\(0,\.88fr\)/,'the ONE atlas and chapter text use an actual two-column editorial grid');
-assert.doesNotMatch(host,/rail\.scrollTo\(/,'book selection never hides the other 65 volumes');
+assert.match(host,/rail\.scrollTo\(\{left:Math\.max\(0,left\),behavior\}\)/,'selected volume scrolls to the centre in the original rail');
 assert.match(html,/id="em-one-open"/,'one primary action opens the original ONE workstation');
 assert.doesNotMatch(html,/id="em-book-toggle"/,'no competing book-button action');
 assert.match(html,/id="em-study-enter"[^>]*hidden/,'duplicate workbench link is hidden');
@@ -64,28 +64,19 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#emmaus-rail').isVisible(),true,
     'the approved horizontal 66-book navigation must remain permanently visible');
    assert.equal(await page.locator('#emmaus-rail [data-book]').count(),66);
-   const catalog=await page.locator('#emmaus-rail').evaluate(el=>{
-    const rect=el.getBoundingClientRect(),style=getComputedStyle(el);
-    const buttons=[...el.querySelectorAll('[data-book]')];
-    const covered=buttons.map(b=>b.getBoundingClientRect()).filter(r=>
-      r.width<12||r.height<9||r.left<rect.left-1||r.right>rect.right+1||
-      r.top<rect.top-1||r.bottom>rect.bottom+1);
-    return {visible:buttons.length,offscreen:covered.length,columns:style.gridTemplateColumns.split(' ').length,
-      rows:style.gridTemplateRows.split(' ').length,
-      scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,
-      scrollHeight:el.scrollHeight,clientHeight:el.clientHeight,
-      lastVisible:buttons.at(-1)?.getBoundingClientRect().right<=rect.right+1,
-      display:style.display
-    };
-   });
-   assert.equal(catalog.display,'grid','all books must use the editorial grid, not a scrolling strip');
-   assert.equal(catalog.visible,66);
-   assert.equal(catalog.offscreen,0,'NO Bible book may extend outside the visible P2 magazine folio');
-   assert(catalog.lastVisible,'Revelation book 66 must be fully on-screen');
-   assert.equal(catalog.columns,viewport.width>900?22:6,'expected canonical grid column count');
-   assert.equal(catalog.rows,viewport.width>900?3:11,'expected canonical grid row count');
-   assert(catalog.scrollWidth<=catalog.clientWidth+2,'no horizontal scroll hides any book');
-   assert(catalog.scrollHeight<=catalog.clientHeight+2,'no vertical scroll hides any book');
+   const catalog=await page.locator('#emmaus-rail').evaluate(el=>({
+     display:getComputedStyle(el).display,
+     wrap:getComputedStyle(el).flexWrap,
+     scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,
+     buttons:el.querySelectorAll('[data-book]').length,
+     first:el.querySelector('[data-book="1"]')?.getBoundingClientRect().toJSON(),
+     last:el.querySelector('[data-book="66"]')?.getBoundingClientRect().toJSON()
+   }));
+   assert.equal(catalog.display,'flex','the original 66-book one-row strip is restored');
+   assert.equal(catalog.wrap,'nowrap','the book strip must never become a multi-row matrix');
+   assert.equal(catalog.buttons,66);
+   assert(catalog.scrollWidth>catalog.clientWidth*1.8,'all 66 books remain horizontally accessible in the original strip');
+   assert(Math.abs(catalog.last.top-catalog.first.top)<3,'all 66 remain on one physical row');
    const editorialGrid=await page.locator('#emmaus .emmaus__study-interface').evaluate(el=>({
      display:getComputedStyle(el).display,
      cols:getComputedStyle(el).gridTemplateColumns,
