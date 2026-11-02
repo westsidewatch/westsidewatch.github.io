@@ -9,13 +9,16 @@ const js=read('js/p2-emmaus-one-workbench.js');
 const host=read('js/p2-emmaus-olive-preview.js');
 const editorial=read('js/p2-emmaus-editorial-context.js');
 assert.match(html,/id="em-one-context"/,'the chapter displays a central ONE atlas and chronology');
-assert.match(html,/id="emmaus-rail"/,'the 66-book horizontal selector is restored and always visible');
+assert.match(html,/id="emmaus-rail"/,'the 66-book index is restored and always visible');
 assert.doesNotMatch(html,/id="em-book-drawer"/,'the distracting duplicate selection drawer is removed');
 assert.match(html,/class="emmaus__scripture-frame"/,'a separate golden scripture frame encloses the entire folio');
 assert.match(html,/LUKE 24:27/,'the gold folio frame is composed with its scripture');
 assert.match(css,/#emmaus \.emmaus__scripture-frame\{/,'gold scripture frame is rendered as one structural element');
 assert.match(css,/#emmaus \.emmaus__study\{[\s\S]*?box-shadow:none!important/,'ONE layout removes competing nested panel borders');
-assert.match(css,/#emmaus \.emmaus__rail\{[\s\S]*?overflow-x:auto!important/,'restored book rail scrolls horizontally');
+assert.match(css,/grid-template-columns:repeat\(22,minmax\(0,1fr\)\)!important/,'all 66 canonical books occupy 22 columns and 3 visible rows');
+assert.match(css,/grid-template-rows:repeat\(3,minmax\(0,1fr\)\)!important/,'the index has exactly three rows');
+assert.match(css,/grid-template-columns:minmax\(0,1\.12fr\) minmax\(0,\.88fr\)/,'the ONE atlas and chapter text use an actual two-column editorial grid');
+assert.doesNotMatch(host,/rail\.scrollTo\(/,'book selection never hides the other 65 volumes');
 assert.match(html,/id="em-one-open"/,'one primary action opens the original ONE workstation');
 assert.doesNotMatch(html,/id="em-book-toggle"/,'no competing book-button action');
 assert.match(html,/id="em-study-enter"[^>]*hidden/,'duplicate workbench link is hidden');
@@ -61,6 +64,35 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#emmaus-rail').isVisible(),true,
     'the approved horizontal 66-book navigation must remain permanently visible');
    assert.equal(await page.locator('#emmaus-rail [data-book]').count(),66);
+   const catalog=await page.locator('#emmaus-rail').evaluate(el=>{
+    const rect=el.getBoundingClientRect(),style=getComputedStyle(el);
+    const buttons=[...el.querySelectorAll('[data-book]')];
+    const covered=buttons.map(b=>b.getBoundingClientRect()).filter(r=>
+      r.width<12||r.height<9||r.left<rect.left-1||r.right>rect.right+1||
+      r.top<rect.top-1||r.bottom>rect.bottom+1);
+    return {visible:buttons.length,offscreen:covered.length,columns:style.gridTemplateColumns.split(' ').length,
+      rows:style.gridTemplateRows.split(' ').length,
+      scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,
+      scrollHeight:el.scrollHeight,clientHeight:el.clientHeight,
+      lastVisible:buttons.at(-1)?.getBoundingClientRect().right<=rect.right+1,
+      display:style.display
+    };
+   });
+   assert.equal(catalog.display,'grid','all books must use the editorial grid, not a scrolling strip');
+   assert.equal(catalog.visible,66);
+   assert.equal(catalog.offscreen,0,'NO Bible book may extend outside the visible P2 magazine folio');
+   assert(catalog.lastVisible,'Revelation book 66 must be fully on-screen');
+   assert.equal(catalog.columns,viewport.width>900?22:6,'expected canonical grid column count');
+   assert.equal(catalog.rows,viewport.width>900?3:11,'expected canonical grid row count');
+   assert(catalog.scrollWidth<=catalog.clientWidth+2,'no horizontal scroll hides any book');
+   assert(catalog.scrollHeight<=catalog.clientHeight+2,'no vertical scroll hides any book');
+   const editorialGrid=await page.locator('#emmaus .emmaus__study-interface').evaluate(el=>({
+     display:getComputedStyle(el).display,
+     cols:getComputedStyle(el).gridTemplateColumns,
+     title:document.querySelector('#emmaus .emmaus__identity')?.getBoundingClientRect().height
+   }));
+   assert.equal(editorialGrid.display,'grid','main reading folio must use designed grid');
+   assert(editorialGrid.title>50,'EMMAUS retains a dominant editorial title');
    const frameDesign=await page.locator('#emmaus .emmaus__scripture-frame').evaluate(el=>({
     border:getComputedStyle(el).borderTopStyle,
     color:getComputedStyle(el).borderTopColor,
