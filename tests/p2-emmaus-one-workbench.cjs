@@ -10,12 +10,18 @@ const host=read('js/p2-emmaus-olive-preview.js');
 const editorial=read('js/p2-emmaus-editorial-context.js');
 const v5=read('css/p2-emmaus-editorial-v5.css');
 const v6=read('css/p2-emmaus-scripture-v6.css');
-assert.match(host,/b\\.append\\(zh,en,numeral\\)/,'every book tile has visible Chinese and English names before the canon index');
-assert.doesNotMatch(host,/innerHTML=String\\(item\\[0\\]\\)/,'number-only BOOK markers are removed');
-assert.match(v6,/\\.emmaus__number-zh/,'Chinese book names are styled and never hover-only');
-assert.match(v6,/\\.emmaus__number-en/,'English book names are styled and never hover-only');
-assert.match(v6,/--em-v6-gold-ink:color-mix/,'small gold text uses a contrast-adjusted Design OS token');
-assert.match(html,/左右滑動選書/,'a visible hint explains the horizontal book rail');
+const os=read('css/westside-design-os.css');
+const osTokens=JSON.parse(fs.readFileSync(path.join(root,'design-system/tokens/westside.tokens.json'),'utf8'));
+assert(host.includes('b.append(zh,en,numeral)'), 'book tiles must name their Chinese and English book before the number');
+assert(!host.includes("b.innerHTML=String(item[0])"),'no number-only BOOK tiles');
+assert(v6.includes('.emmaus__number-zh')&&v6.includes('.emmaus__number-en'),'bilingual book labels styled');
+assert(v6.includes('--em-v6-gold-ink:color-mix'),'small gold font has contrast adjustment');
+assert(html.includes('左右滑動選書'),'visible horizontal navigation hint');
+assert.equal(osTokens.font['reading-zh'].$value[0],'Chiron Hei HK WS','canonical Chinese reading font is Chiron');
+assert(!os.includes('Noto Serif TC'),'do not import forbidden Chinese font in Design OS runtime');
+assert(!v6.includes('Georgia'),'English KJV must not silently use Georgia');
+assert(!v6.includes('Noto Serif TC'),'Chinese P2 scripture must not use Noto Serif');
+assert(!v6.includes('font:600'),'no extra-heavy Chinese P2 typography');
 
 const verseJS=read('js/p2-emmaus-scripture-v6.js');
 const lukeBilingual=JSON.parse(read('data/p2-emmaus-scripture-v6/Luke.json'));
@@ -26,16 +32,14 @@ for(const [index,chapters,data] of [[42,24,lukeBilingual],[43,21,johnBilingual]]
  assert.equal(data.translations.cuv.chapters.length,chapters,'CUV must cover the full Gospel');
  assert.equal(data.translations.kjv.chapters.length,chapters,'KJV must cover the full Gospel');
 }
-assert.match(html,/id="em-scripture-verses"/,'a real scrolling verse reader belongs to P2');
-assert.match(html,/p2-emmaus-scripture-v6\\.js/,'the bilingual reader loads in the existing P2 preview');
+assert(html.includes('id="em-scripture-verses"'),'P2 includes bilingual verses');
+assert(html.includes('p2-emmaus-scripture-v6.js'),'P2 loads the real verse reader');
 assert(html.indexOf('id="em-one-chapter-grid"')<html.indexOf('class="emmaus__current-chapter"'),
- 'chapter index is inside the selected book before the current chapter masthead');
-assert.match(v6,/var\\(--ws-one-paper/,'reader uses canonical ONE papyrus');
-assert.match(v6,/var\\(--ws-night/,'reader uses the canonical night-blue ink');
-assert.match(v6,/var\\(--ws-first-light/,'selected chapters and verses use OS gold contrast');
-assert.match(verseJS,/translations\\.cuv/,'each rendered verse contains real Traditional CUV text');
-assert.match(verseJS,/translations\\.kjv/,'each rendered verse contains English KJV text');
-assert.match(verseJS,/raw\\.githubusercontent\\.com/,'all other selected books use pinned per-book translations');
+ 'chapter picker must sit under the selected Bible book');
+assert(v6.includes('var(--ws-one-paper')&&v6.includes('var(--ws-night')&&v6.includes('var(--ws-first-light'),
+ 'P2 scripture uses canonical Design OS palette');
+assert(verseJS.includes('translations.cuv')&&verseJS.includes('translations.kjv'),'real CUV and KJV verse pairs');
+assert(verseJS.includes('raw.githubusercontent.com'),'pinned source for other books');
 
 assert.match(html,/class="emmaus__book-switch emmaus__source-hero"/,
  'the selected Bible book has a real masthead below EMMAUS');
