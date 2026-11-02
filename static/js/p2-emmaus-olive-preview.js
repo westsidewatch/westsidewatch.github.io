@@ -542,9 +542,17 @@
     if(oliveGround){oliveGround.style.opacity='0';oliveGround.style.clipPath='none';}
    }
   }
-  const fullLeft={x:master.x,y:master.y,w:master.w*2/3,h:master.h};
-  const fullRight={x:master.x+master.w*2/3,y:master.y,
-                   w:master.w/3,h:master.h};
+  // Keep the Doré gallery EXACTLY the size and position of the approved
+  // Magazine 5:8 cover. The incoming ONE folio occupies the remaining Contents
+  // space: never squeeze the cover again into an arbitrary 1/3-width panel.
+  // Mobile's original stacked Magazine folios keep their compact split.
+  const coverFolio=validMagazine?coverBounds:{
+   x:master.x+master.w-master.h*.625,y:master.y,w:master.h*.625,h:master.h
+  };
+  const fullRight=stageRect.width>820?coverFolio:{
+   x:master.x+master.w*2/3,y:master.y,w:master.w/3,h:master.h
+  };
+  const fullLeft={x:master.x,y:master.y,w:fullRight.x-master.x,h:master.h};
   // 03–07 remain within the SAME live Magazine perimeter in every proof mode.
   // The engraving toggle changes the surrounding field, never the folio geometry.
   olive.style.inset='auto';
