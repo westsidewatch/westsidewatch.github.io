@@ -306,6 +306,28 @@ const {chromium}=require('playwright');
    }));
    assert.equal(coverState.visible,'visible','ONE Emmaus gilt cover precedes page opening');
    assert.match(coverState.gilded,/cover-golden-shoot-frame-transparent/,'ornament is the original ONE hot-stamped master');
+   const themeVerses=await page.locator('#em-entry-cover').evaluate(cover=>{
+    const quotes=[...cover.querySelectorAll('.emmaus__entry-scripture blockquote')];
+    const box=cover.querySelector('.emmaus__entry-cover-leaf').getBoundingClientRect();
+    return {quotes:quotes.map(el=>({text:el.textContent,
+     visible:getComputedStyle(el).visibility,
+     opacity:getComputedStyle(el).opacity,
+     rect:el.getBoundingClientRect().toJSON()})),
+     leaf:box.toJSON()};
+   });
+   assert.equal(themeVerses.quotes.length,2,'the ONE green Emmaus cover includes both theme verses');
+   assert(themeVerses.quotes[0].text.includes('我們的心豈不是火熱的嗎'),
+    'Luke 24:32 appears as actual reader-facing scripture');
+   assert(themeVerses.quotes[1].text.includes('凡經上所指着自己的話'),
+    'Luke 24:27 appears as a second complete theme verse');
+   if(viewport.width>900){
+    for(const q of themeVerses.quotes){
+     assert(q.visible==='visible'&&q.opacity!=='0','both scripture verses must be visibly rendered');
+     assert(q.rect.y>=themeVerses.leaf.y&&q.rect.y+q.rect.height<=themeVerses.leaf.y+themeVerses.leaf.height+2,
+      'the theme verses must stay INSIDE the green/gold cover, not overflow below it');
+    }
+   }
+
    await page.screenshot({path:path.join(groundDir,viewport.width+'-emmaus-green-one-cover.png')});
    await page.locator('[data-jump="9.10"]').click();
    await page.waitForTimeout(150);
