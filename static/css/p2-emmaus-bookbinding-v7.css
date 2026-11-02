@@ -479,3 +479,18 @@ body[data-p2-surround="cloth"] #emmaus[data-fixed-ground="on"] > .emmaus__right{
  max-height:none!important;
  overflow-wrap:break-word!important;
 }
+
+/* Theme scripture citations: English small caps and Chinese Chiron 200. */
+#emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref{
+ display:inline-flex!important;flex-wrap:wrap!important;
+ align-items:baseline!important;justify-content:center!important;
+ gap:clamp(5px,.65vw,9px)!important;
+}
+#emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref [lang="en"]{
+ display:inline!important;
+ font:400 clamp(9px,.73vw,11px)/1.3 var(--ws-type-display-en-sc)!important;
+}
+#emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref [lang="zh-Hant"]{
+ display:inline!important;
+ font:var(--ws-weight-zh-air,200) clamp(9px,.73vw,11px)/1.3 var(--ws-type-display-zh)!important;
+}
