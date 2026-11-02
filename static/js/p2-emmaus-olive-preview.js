@@ -368,7 +368,9 @@
   const oneDrop=smooth((distance-7.66)/.78);
   const oliveIn=smooth((distance-9.44)/1.38);
   // The chapter handoff is a single in-place folio reveal, not three reflowing panels.
-  const emShowing=(archive>.001||oneDrop>.001)&&oliveIn<.999,oliveShowing=oliveIn>.001;
+  // The incoming ONE paper + original Doré gallery must cover BOTH former
+  // Magazine folios from the first pixel of the travelling artwork.
+  const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
   emmaus.style.visibility=emShowing?'visible':'hidden';emmaus.style.opacity='1';emmaus.style.transform='none';
   const emInteractive=oneDrop>.999&&oliveIn<.01;
   emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;
@@ -595,11 +597,14 @@
   // The ONE field opens over the vacated Contents footprint, not from outside.
   // Chapter text and artwork keep their positions within the Magazine spread.
   poseRect(emLeft,fullLeft,fullLeft,1);
-  emLeft.style.clipPath='inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
+  // Full-size destination remains opaque: no old Contents behind the transfer.
+  emLeft.style.clipPath='none';
   poseRect(emRight,fullRight,fullRight,1);
   emRight.style.clipPath='none';
   syncGallery(move>.98&&oliveIn<.001&&document.visibilityState==='visible');
-  emRight.style.opacity=String(useArchive?archive:0);
+  // Hold an opaque original-gallery matte over the old magazine cover.
+  // The archive image can fade inside that stable panel when loaded.
+  emRight.style.opacity='1';
   // Keep the moving plate visible all the way to the destination.
   // Only its editorial annotation recedes; the image itself must NOT vanish
   // at 32% progress and leave a blank travelling rectangle.
@@ -621,10 +626,13 @@
   }
   poseRect(emLeft,fullLeft,fullLeft,1);
   emLeft.style.width=fullLeft.w.toFixed(2)+'px';
-  emLeft.style.clipPath='inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
+  // Full-size destination remains opaque: no old Contents behind the transfer.
+  emLeft.style.clipPath='none';
   poseRect(emRight,fullRight,fullRight,1);
   emRight.style.clipPath='none';
-  emRight.style.opacity=String(useArchive?archive:0);
+  // Hold an opaque original-gallery matte over the old magazine cover.
+  // The archive image can fade inside that stable panel when loaded.
+  emRight.style.opacity='1';
   olive.style.visibility=oliveShowing?'visible':'hidden';
   olive.style.opacity='1';
   olive.style.backgroundColor='#f0eee7';
