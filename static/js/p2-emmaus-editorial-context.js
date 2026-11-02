@@ -12,20 +12,8 @@
   mapSource=$('em-context-map-source'),timelineTitle=$('em-context-time-title'),
   timelineNote=$('em-context-time-note'),timelineEvents=$('em-context-time-events');
  if(!rail||!figure||!timelineEvents)return;
- // Restore the approved visible horizontal 66-book rail. The actual original
- // ONE book indexes remain navigable by click, dragging and arrow keys.
- // A number is the navigation anchor; full names remain discoverable to AT.
- for(const button of rail.querySelectorAll('[data-book]')){
-  const n=Number(button.dataset.book),entry=books[n-1];
-  if(!entry)continue;
-  button.replaceChildren();
-  const number=document.createElement('span');number.className='em-book-num';
-  number.textContent=String(n).padStart(2,'0');
-  const label=document.createElement('span');label.className='em-book-label';
-  label.textContent=entry[1];
-  button.append(number,label);
-  button.title=entry[1]+' / '+entry[2];
- }
+ // Original 66-book rail cells and their BOOK labels come exclusively
+ // from the P2 canonical controller. Do not replace its original markup.
  // A change of book does not change the P2 chapter title, only its ONE contents.
  let selectedKey='',lastMap='';
  const sourceFor=n=>n===42?D.luke:n===40?D.matthew:D.studyBooks?.[n];
