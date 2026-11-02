@@ -371,6 +371,83 @@
  let transferFigure=null,transferHome=null,transferOriginalVisibility=null;
  let sourceOriginalTileOpacity=null,sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
  let sourceOriginalCoverTransform='',sourceOriginalCoverOrigin='',sourceOriginalCoverBackface='';
+ let sourceOriginalCoverZ='',magazineUnderlay=null,magazineUnderlayDoc=null,magazineUnderlayStyle=null;
+ // The actual approved magazine cover stays in the original iframe; only
+ // the P2 transition adds ONE's green next page behind it.
+ function ensureMagazineUnderlay(doc,cover){
+  if(!doc||!cover)return null;
+  if(magazineUnderlayDoc!==doc){
+   magazineUnderlay?.remove();magazineUnderlayStyle?.remove();
+   magazineUnderlay=null;magazineUnderlayStyle=null;magazineUnderlayDoc=doc;
+  }
+  if(!magazineUnderlay){
+   magazineUnderlay=doc.createElement('div');
+   magazineUnderlay.id='p2-emmaus-magazine-underleaf';
+   const leaf=emCover?.querySelector('.emmaus__entry-cover-leaf');
+   if(leaf){
+    const clone=leaf.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
+    magazineUnderlay.append(clone);
+   }
+   magazineUnderlayStyle=doc.createElement('style');
+   magazineUnderlayStyle.textContent=`
+    #p2-emmaus-magazine-underleaf{position:absolute;overflow:hidden;isolation:isolate;
+      pointer-events:none;box-sizing:border-box;color:#cebd74;
+      background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-cover-leaf{position:absolute;inset:0;
+      width:100%;height:100%;background:linear-gradient(145deg,rgba(2,7,3,.13),rgba(2,7,3,.38)),
+      url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-cover-leaf::after{
+      content:'';position:absolute;inset:4%;border:1px solid #cebd7490;pointer-events:none}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-cover-gilt{
+      position:absolute;inset:0;z-index:1;background:#cebd74;opacity:.93;
+      -webkit-mask:url('/one/cover-golden-shoot-frame-transparent.png?v=20260821a') center/100% 100% no-repeat;
+      mask:url('/one/cover-golden-shoot-frame-transparent.png?v=20260821a') center/100% 100% no-repeat}
+    #p2-emmaus-magazine-underleaf .emmaus__identity{position:absolute;z-index:2;
+      top:25%;left:12%;right:12%;display:flex;flex-direction:column;align-items:center;text-align:center;color:#cebd74}
+    #p2-emmaus-magazine-underleaf .emmaus__small{font:400 clamp(9px,.72vw,12px)/1.3 var(--ws-type-display-en-sc);
+      letter-spacing:.14em}
+    #p2-emmaus-magazine-underleaf .emmaus__identity h1{display:flex;flex-direction:column;
+      align-items:center;gap:clamp(7px,1.2vh,14px);margin:clamp(12px,2.2vh,22px) 0 0;
+      font:400 clamp(34px,3.4vw,61px)/.92 var(--ws-type-display-en);letter-spacing:-.07em}
+    #p2-emmaus-magazine-underleaf .emmaus__identity h1 span{font:200 clamp(17px,1.7vw,25px)/1.4
+      var(--ws-type-display-zh);letter-spacing:.15em}
+    #p2-emmaus-magazine-underleaf .emmaus__identity p{margin:clamp(11px,1.7vh,18px) 0 0;
+      font:400 clamp(9px,.75vw,12px)/1.3 var(--ws-type-display-en-sc);letter-spacing:.15em}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{position:absolute;z-index:3;bottom:12%;
+      left:12%;right:12%;display:flex;flex-direction:column;gap:clamp(12px,1.8vh,20px);text-align:center}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-primary{padding-bottom:clamp(8px,1.1vh,13px);
+      border-bottom:1px solid #cebd7485}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-ref{
+      display:flex;justify-content:center;gap:8px;font:400 clamp(9px,.73vw,11px)/1.35
+      var(--ws-type-display-en-sc);color:#cebd74}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-ref [lang=zh-Hant]{
+      font:200 clamp(9px,.73vw,11px)/1.35 var(--ws-type-display-zh)}
+    #p2-emmaus-magazine-underleaf blockquote{margin:5px 0 0;color:#cebd74;
+      font:200 clamp(12px,1.02vw,16px)/1.55 var(--ws-type-display-zh)}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-secondary blockquote{font-size:clamp(11px,.86vw,14px)}
+    @media(max-width:900px){
+      #p2-emmaus-magazine-underleaf .emmaus__identity h1{font-size:clamp(27px,5vw,44px)}
+      #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{bottom:6%;gap:6px}
+      #p2-emmaus-magazine-underleaf blockquote{font-size:10px;line-height:1.3}
+      #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-secondary blockquote{font-size:9px}}
+   `;
+   doc.head.append(magazineUnderlayStyle);
+   cover.parentElement.insertBefore(magazineUnderlay,cover);
+  }
+  // Both rectangles derive from the native Magazine layout, not projected
+  // post-transform bounding boxes (which would drift every scroll frame).
+  const w=cover.offsetWidth,h=cover.offsetHeight;
+  magazineUnderlay.style.cssText+=''; // Keep source author styles untouched.
+  magazineUnderlay.style.left=cover.offsetLeft+'px';
+  magazineUnderlay.style.top=cover.offsetTop+'px';
+  magazineUnderlay.style.width=w+'px';
+  magazineUnderlay.style.height=h+'px';
+  magazineUnderlay.style.zIndex='10';
+  return magazineUnderlay;
+ }
+
  let frameLoaded=false,lastPaint=NaN,queued=false,lastMeasuredSpread=null;
  // Cache the settled Magazine geometry across Emmaus scroll frames.
  let settledGeometry=null,settledGeometryDoc=null,settledGeometryW=0,settledGeometryH=0;
@@ -402,6 +479,7 @@
      oldMagazineRight.style.transform=sourceOriginalCoverTransform;
      oldMagazineRight.style.transformOrigin=sourceOriginalCoverOrigin;
      oldMagazineRight.style.backfaceVisibility=sourceOriginalCoverBackface;
+     oldMagazineRight.style.zIndex=sourceOriginalCoverZ;
     }
    }
    emmaus.style.visibility='hidden';emmaus.style.pointerEvents='none';
@@ -436,7 +514,10 @@
   // turns play; the ONE paper itself replaces it only in the final short beat.
   emLeft.style.opacity=String(oneDrop);
   emLeft.style.setProperty('--em-page-reveal',String(oneDrop));
-  emRight.style.opacity=String(move>.001?1:0);
+  // The actual native Magazine cover must sit ABOVE its new green underleaf
+  // for turn one. P2's right gallery only takes over at the settled green beat.
+  emRight.style.opacity=String(move>=.999?1:0);
+  emRight.style.visibility=move>=.999?'visible':'hidden';
   emRight.style.setProperty('--em-plate-reveal',String(coverOpen));
   // Reveal the same original ONE green cloth on the perimeter of the right
   // Doré illustration only after the green cover finishes its second turn.
@@ -450,8 +531,7 @@
   // A single, fixed 5:8 ONE folio turns at the right-side inner spine.
   // Never 3D-rotate the live nested Magazine DOM: its own perspective and
   // multi-layer city cover produced the giant triangular distortion in V9.
-  const greenIn=smooth(move/.995);
-  const greenAngle=archive>.001?-87*archive:87*(1-greenIn);
+  const greenAngle=-87*archive;
   emCover.style.clipPath='none';
   emCover.style.transform='perspective(1800px) rotateY('+greenAngle.toFixed(2)+'deg)';
   emCover.style.opacity=String(move>.001&&archive<.999?1:0);
@@ -505,6 +585,7 @@
    sourceOriginalCoverTransform=sourceCover?.style.transform??'';
    sourceOriginalCoverOrigin=sourceCover?.style.transformOrigin??'';
    sourceOriginalCoverBackface=sourceCover?.style.backfaceVisibility??'';
+   sourceOriginalCoverZ=sourceCover?.style.zIndex??'';
    sourceOriginalEditorialOpacity=sourceFrame?.style.opacity??'';
   }
   if(sourceTile)sourceTile.style.opacity=sourceOriginalTileOpacity??'';
@@ -513,9 +594,25 @@
    // The front ONE folio turns on a separate fixed-size overlay, never
    // bends or remeasures the original magazine cover and its title.
    sourceCover.style.opacity=sourceOriginalCoverOpacity??'';
-   sourceCover.style.transform=sourceOriginalCoverTransform;
-   sourceCover.style.transformOrigin=sourceOriginalCoverOrigin;
-   sourceCover.style.backfaceVisibility=sourceOriginalCoverBackface;
+   if(move>.001){
+    ensureMagazineUnderlay(sourceDoc,sourceCover);
+    // The source Magazine cover itself, not an arriving green panel, is
+    // the first page to turn. Preserve the 5:8 layout and its inner graphics.
+    const firstAngle=-86*smooth(move);
+    sourceCover.style.transformOrigin=stageRect.width<=820?'center top':'left center';
+    sourceCover.style.transform='perspective(1900px) '+(stageRect.width<=820?
+     'rotateX('+firstAngle.toFixed(2)+'deg)':
+     'rotateY('+firstAngle.toFixed(2)+'deg)');
+    sourceCover.style.backfaceVisibility='hidden';
+    sourceCover.style.zIndex='11';
+   }else{
+    sourceCover.style.transform=sourceOriginalCoverTransform;
+    sourceCover.style.transformOrigin=sourceOriginalCoverOrigin;
+    sourceCover.style.backfaceVisibility=sourceOriginalCoverBackface;
+    sourceCover.style.zIndex=sourceOriginalCoverZ;
+    if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
+   }
+   if(magazineUnderlay)magazineUnderlay.style.visibility=move>.001?'visible':'hidden';
   }
   // The accepted Magazine iframe, including its book spine and original
   // video proportions, remains unchanged and restores during reverse scroll.
@@ -667,7 +764,9 @@
   syncGallery(move>.98&&oliveIn<.001&&document.visibilityState==='visible');
   // Hold an opaque original-gallery matte over the old magazine cover.
   // The archive image can fade inside that stable panel when loaded.
-  emRight.style.opacity='1';
+  emRight.style.opacity=String(move>=.999?1:0);
+  // Only after the magazine's first turn completes does the ONE folio take
+  // its place at precisely the same measured right-hand cover bounds.
   // Keep the moving plate visible all the way to the destination.
   // Only its editorial annotation recedes; the image itself must NOT vanish
   // at 32% progress and leave a blank travelling rectangle.
