@@ -41,6 +41,11 @@ assert(v6.includes('var(--ws-one-paper')&&v6.includes('var(--ws-night')&&v6.incl
 assert(verseJS.includes('translations.cuv')&&verseJS.includes('translations.kjv'),'real CUV and KJV verse pairs');
 assert(verseJS.includes('raw.githubusercontent.com'),'pinned source for other books');
 
+const binding=read('css/p2-emmaus-bookbinding-v7.css');
+assert(binding.includes('/one/cover-texture-antique-green.png'),'P2 must reuse genuine ONE green cloth');
+assert(binding.includes('/one/cover-golden-shoot-frame-transparent.png'),'P2 must reuse genuine ONE gilt ornament');
+assert(html.includes('id="em-entry-cover"'),'Emmaus section identity lives on the new real cover');
+assert(host.includes('const coverOpen=smooth((distance-8.05)/.59)'),'book opening is controlled by scroll');
 assert.match(html,/class="emmaus__book-switch emmaus__source-hero"/,
  'the selected Bible book has a real masthead below EMMAUS');
 assert.match(html,/id="em-current-chapter-number"/,
@@ -136,7 +141,9 @@ const {chromium}=require('playwright');
       study:{y:c.y,bottom:c.bottom},bookFont:font('#em-book-en'),
       chapterFont:font('#em-current-chapter-number'),subjectFont:font('#emmaus-study-heading')};
    });
-   assert(hero.identity.bottom<=hero.source.y+3,'the 03 realm masthead precedes the selected book');
+   assert(hero.source.y<hero.identity.y,'the selected Bible book now owns the TOP of the opened interior');
+   assert.equal(await page.locator('#em-entry-cover').isVisible(),false,
+    'the ONE green title cover finishes opening before Scripture is read');
    assert(hero.source.bottom<=hero.study.y+3,'book/chapter masthead precedes study body');
    assert(hero.bookFont>hero.subjectFont,'selected book has stronger visual presence than study subject');
    assert(hero.chapterFont>hero.subjectFont,'selected chapter is not another tiny control');
@@ -149,7 +156,11 @@ const {chromium}=require('playwright');
     before:getComputedStyle(el,'::before').display,
     after:getComputedStyle(el,'::after').display
    }));
-   assert.equal(imgRule.background,'none','NO engraved decorative illustration inside the ONE reading folio');
+   assert.match(imgRule.background,/cover-texture-antique-green/,
+     'the bookbinding reuses the real ONE green cloth around the page');
+   assert.equal(await page.locator('.emmaus__binding-paper').evaluate(
+     el=>getComputedStyle(el).backgroundColor),'rgb(222, 208, 150)',
+     'the opened Scripture page itself remains canonical ONE papyrus');
    assert.equal(imgRule.before,'none');assert.equal(imgRule.after,'none');
    assert.equal(await page.locator('#emmaus-rail').isVisible(),true,
     'the approved horizontal 66-book navigation must remain permanently visible');
