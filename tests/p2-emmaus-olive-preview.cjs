@@ -49,8 +49,10 @@ assert.match(js,/sourceSpine=sourceDoc\?\.getElementById\('dual-continuum'\)/,
  'the original frozen sevenfold spine belongs INSIDE the protected Magazine aperture');
 assert.match(js,/const clip='path\("/,
  'engraving field must cut out the measured Magazine folio hole');
-assert.match(js,/const fullLeft=\{x:master\.x/,
- 'the 2:1 ONE spread lives inside the Magazine footprint');
+assert.match(js,/const coverFolio=validMagazine\?coverBounds/,
+ 'the right gallery takes its exact 5:8 size from the approved Magazine cover');
+assert.match(js,/const fullLeft=\{x:master\.x,y:master\.y,w:fullRight\.x-master\.x/,
+ 'ONE takes the remaining Contents width rather than forcing the cover to one-third');
 assert.match(js,/const movingArt=\{x:lerp\(sourceArt\.x,targetX,move\),y:sourceArt\.y/,
  '02→03 Doré plate moves horizontally only, without vertical displacement');
 assert.match(js,/w:sourceArt\.w,h:sourceArt\.h/,'the moving source width and height never change');
@@ -214,6 +216,7 @@ const {chromium}=require('playwright');
     return {x,y,
      w:Math.max(...all.map(r=>r.right))-x,
      h:Math.max(...all.map(r=>r.bottom))-y,
+     coverWidth:c.width,coverHeight:c.height,
      filmCount:doc.querySelectorAll('.p2-magazine__home-film').length};
    });
    assert(sourceGeometry,'Magazine geometry must be available before acceptance');
@@ -240,7 +243,15 @@ const {chromium}=require('playwright');
    assert(Math.abs(emLeaf.width+emPlate.width-expectedW)<4,'the complete Bible spread fits inside Magazine bounds');
    assert(Math.abs(emLeaf.height-expectedH)<4,'Bible folio matches Magazine height');
    assert(Math.abs(emLeaf.x+emLeaf.width-emPlate.x)<4,'Bible leaf and engraving have no new gap');
-   assert(Math.abs(emLeaf.width-2*emPlate.width)<4,'Bible spread keeps the 2:1 allocation');
+   if(viewport.width>820){
+    assert(Math.abs(emPlate.width-sourceGeometry.coverWidth)<4,
+     'right Doré gallery is exactly as wide as the original Magazine cover');
+    assert(Math.abs(emPlate.height-sourceGeometry.coverHeight)<4,
+     'right Doré gallery retains the original cover height and 5:8 aspect ratio');
+   }else{
+    assert(Math.abs(emLeaf.width-2*emPlate.width)<4,
+     'phone keeps its compact horizontal editorial allocation');
+   }
    assert.equal(await page.locator('#emmaus > .emmaus__left').evaluate(
     el=>getComputedStyle(el).maskImage),'none',
     'previously rejected narrow mask is fully removed');
@@ -415,8 +426,9 @@ const {chromium}=require('playwright');
     'at rest ONE retains its own right gallery');
    const emmausRect=await page.locator('#emmaus > #emmaus-gallery').boundingBox();
    const stageRect=await page.locator('#proof-stage').boundingBox();
-   assert(emmausRect && stageRect && Math.abs(emmausRect.width-expectedW/3)<3,
-    'Emmaus remains within one-third of the measured Magazine folio, never full screen');
+   const lockedCoverWidth=viewport.width>820?sourceGeometry.coverWidth:expectedW/3;
+   assert(emmausRect && stageRect && Math.abs(emmausRect.width-lockedCoverWidth)<3,
+    'Emmaus gallery never becomes smaller than the approved cover after handoff');
    const studyBounds=await page.locator('#emmaus-study').boundingBox();
    assert(studyBounds&&studyBounds.height>=140&&studyBounds.height<stageRect.height*.55,
     'ONE has a substantial but bounded study area between the Emmaus title and the book index');
@@ -439,8 +451,10 @@ const {chromium}=require('playwright');
    assert.equal(midState.opacity,'1','the destination page is fully assembled inside its reveal');
    assert.match(midState.clip,/inset\(/,'the actual destination folio reveals in-place');
    assert(midState.ground>0&&midState.ground<1,'background crossfades rather than flashing');
-   assert(Math.abs(midState.gallery.w-expectedW/3)<4,'right Doré column width never changes');
-   assert(Math.abs(midState.left.w-expectedW*2/3)<4,'left ONE column width never changes');
+   assert(Math.abs(midState.gallery.w-lockedCoverWidth)<4,
+    'the Doré image retains the Magazine cover width through 03→04');
+   assert(Math.abs(midState.left.w-(expectedW-lockedCoverWidth))<4,
+    'ONE uses the remainder without a second gallery resize');
    assert.equal(await page.locator('#olive-morph-hero').evaluate(el=>getComputedStyle(el).transform),'none',
     'the Olive portrait remains in its fixed slot; no flying image');
    const midScreenshot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-mersi-mid.png');
