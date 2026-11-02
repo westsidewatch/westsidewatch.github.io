@@ -69,7 +69,8 @@ assert(js.includes('const move=smooth((distance-6.50)/.72)'), 'first turn follow
 assert(js.includes('const archive=smooth((distance-7.66)/.64)'), 'second turn follows P2 scroll');
 assert(js.includes('const oneDrop=smooth((distance-8.55)/.55)'), 'reading appears only after second turn');
 assert(!js.includes('sourceFigure.cloneNode(true)'),'the original Magazine engraving is never duplicated or moved');
-assert(js.includes('emCover.style.clipPath=greenClip'),'ONE cover uses lightweight editorial clipping');
+assert(js.includes('emCover.style.transform='),'ONE folio performs a hinge turn, not a full-screen clipping wipe');
+assert(!js.includes("sourceCover.style.transform=move>.001"),'never 3D-distort the published Magazine cover');
 assert(binding.includes('/one/cover-texture-antique-green.png')&&
  binding.includes('/one/cover-golden-shoot-frame-transparent.png'),
  'P2 directly reuses real ONE cloth and gold master');
@@ -216,10 +217,12 @@ const {chromium}=require('playwright');
     'the old radiating engraving cannot remain above the cloth');
    const rim=await page.locator('#emmaus-gallery .emmaus__right-binding').evaluate(el=>({
     opacity:Number(getComputedStyle(el).opacity),
-    bg:getComputedStyle(el.querySelector('.emmaus__right-binding-top')).backgroundImage
+    bg:getComputedStyle(el).backgroundImage,mask:getComputedStyle(el).maskComposite,childCount:el.childElementCount
    }));
    assert(rim.opacity>.95,'both open folios must retain green binding');
-   assert.match(rim.bg,/cover-texture-antique-green/,'right frame uses the same ONE textile');
+   assert.match(rim.bg,/cover-texture-antique-green/,'right frame uses a SINGLE full-bleed ONE textile');
+   assert.equal(rim.childCount,0,'right border must never contain four separately tiled strips');
+   assert.match(rim.mask,/exclude|xor/,'a single masked canvas makes a continuous cloth rim');
    await page.screenshot({path:path.join(groundDir,viewport.width+'-green-cloth-exterior-v10.png')});
    const paper=await page.locator('#emmaus > .emmaus__left').evaluate(el=>{
     const cloth=getComputedStyle(el),page=getComputedStyle(el.querySelector('.emmaus__binding-paper'));
@@ -403,13 +406,14 @@ const {chromium}=require('playwright');
    }));
    assert.equal(firstState.side,'emmaus-gallery','the ONE green front cover replaces the RIGHT magazine cover');
    assert.match(firstState.image,/cover-texture-antique-green/);
-   assert(firstState.clip.startsWith('inset('),'the full ONE cover is revealed by a mask');
+   assert.equal(firstState.clip,'none','a true editorial page turn is not an inset-mask reveal');
    await page.screenshot({path:path.join(groundDir,viewport.width+'-one-green-cover-right.png')});
    await page.locator('[data-jump="8.16"]').click();
    await page.waitForTimeout(140);
    assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'second-turn');
-   const mid=await page.locator('#em-entry-cover').evaluate(el=>getComputedStyle(el).clipPath);
-   assert(mid.startsWith('inset('),'second turn is a scroll-owned mask');
+   const mid=await page.locator('#em-entry-cover').evaluate(el=>({clip:getComputedStyle(el).clipPath,transform:getComputedStyle(el).transform}));
+   assert.equal(mid.clip,'none','second turn does not wipe a rectangular reveal');
+   assert.notEqual(mid.transform,'none','second turn uses an actual hinge rotation');
    await page.screenshot({path:path.join(groundDir,viewport.width+'-one-second-turn.png')});
    await page.locator('[data-jump="9.10"]').click();
    await page.waitForTimeout(150);
