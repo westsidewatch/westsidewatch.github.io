@@ -346,3 +346,37 @@
  #emmaus .emmaus__right-binding-right{width:8px}
  #emmaus .emmaus__right-binding-left{width:6px}
 }
+
+/* V10 / EXTERIOR CLOTH PROOF — Emmaus only, not Church / Magazine / Olive.
+ * Replace the judged-unsuccessful radial engraving around the spread with
+ * ONE's ACTUAL green cloth from the approved scripture cover.
+ * Preserve the magazine's measured cut-out: this changes only its negative
+ * space. Optional ?surround=engraving restores the previous background for A/B.
+ * No newly rendered image, no raster generation, no body-wide wallpaper.
+ */
+body[data-p2-surround="cloth"] #p2-realm-background[data-realm="bible"]{
+ --ws-engraving-opacity:0!important;
+ --ws-branch:var(--em-binding-green,#1f2a18)!important;
+ background-color:#10170d!important;
+ background-image:
+  linear-gradient(145deg,rgba(4,10,3,.24),rgba(5,13,7,.04) 50%,rgba(4,10,3,.35)),
+  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609')!important;
+ background-position:center,center!important;
+ background-size:cover,cover!important;
+ background-repeat:no-repeat,no-repeat!important;
+}
+body[data-p2-surround="cloth"] #p2-realm-background[data-realm="bible"]::before,
+body[data-p2-surround="cloth"] #p2-realm-background[data-realm="bible"]::after{
+ content:none!important;
+ display:none!important;
+}
+/* Keep the double-page bookbinding unified. Right folio remains the exact
+ * original 5:8 Doré dimensions; the cloth only overlays the outer 10–17px. */
+#emmaus .emmaus__right-binding{
+ opacity:var(--em-binding-reveal,0)!important;
+}
+/* No heavy drop shadow or decorative spotlight: cloth is the surface. */
+body[data-p2-surround="cloth"] #emmaus[data-fixed-ground="on"] > .emmaus__left,
+body[data-p2-surround="cloth"] #emmaus[data-fixed-ground="on"] > .emmaus__right{
+ box-shadow:none!important;
+}
