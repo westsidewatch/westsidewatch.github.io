@@ -394,13 +394,8 @@
    magazineUnderlayStyle.textContent=`
     /* Both faces belong to the ACTUAL page, not an inset crop.
        The back of a turned page is a full green cloth sheet. */
-    #dual-cover.p2-emmaus-turning{overflow:visible!important;transform-style:preserve-3d!important}
+    #dual-cover.p2-emmaus-turning{overflow:visible!important}
     #dual-cover.p2-emmaus-turning>.dual-cover{backface-visibility:hidden}
-    #dual-cover.p2-emmaus-turning::after{content:'';position:absolute;inset:0;
-      pointer-events:none;backface-visibility:hidden;
-      transform:rotateY(180deg) translateZ(1px);
-      background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat;
-      box-shadow:inset 0 0 0 2px rgba(206,189,116,.7)}
     #p2-emmaus-magazine-underleaf{position:absolute;overflow:hidden;isolation:isolate;
       pointer-events:none;box-sizing:border-box;color:#cebd74;
       background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat}
@@ -424,21 +419,23 @@
       var(--ws-type-display-zh);letter-spacing:.15em}
     #p2-emmaus-magazine-underleaf .emmaus__identity p{margin:clamp(11px,1.7vh,18px) 0 0;
       font:400 clamp(9px,.75vw,12px)/1.3 var(--ws-type-display-en-sc);letter-spacing:.15em}
-    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{position:absolute;z-index:3;bottom:12%;
-      left:12%;right:12%;display:flex;flex-direction:column;gap:clamp(12px,1.8vh,20px);text-align:center}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{position:absolute;z-index:3;top:53%;bottom:auto;
+      left:14%;right:14%;max-height:34%;display:flex;flex-direction:column;align-items:center;
+      gap:clamp(12px,1.8vh,20px);text-align:center;text-wrap:pretty;line-break:strict}
     #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-primary{padding-bottom:clamp(8px,1.1vh,13px);
       border-bottom:1px solid #cebd7485}
     #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-ref{
       display:flex;justify-content:center;gap:8px;font:400 clamp(9px,.73vw,11px)/1.35
       var(--ws-type-display-en-sc);color:#cebd74}
     #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-ref [lang=zh-Hant]{
-      font:200 clamp(9px,.73vw,11px)/1.35 var(--ws-type-display-zh)}
+      font:200 clamp(10px,.75vw,12px)/1.35 var(--ws-type-display-zh)}
+    #p2-emmaus-magazine-underleaf .ws-editorial-no-orphan-tail{white-space:nowrap!important}
     #p2-emmaus-magazine-underleaf blockquote{margin:5px 0 0;color:#cebd74;
-      font:200 clamp(12px,1.02vw,16px)/1.55 var(--ws-type-display-zh)}
-    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-secondary blockquote{font-size:clamp(11px,.86vw,14px)}
+      font:400 clamp(16px,1.15vw,19px)/1.6 var(--ws-type-reading-zh);text-wrap:pretty}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-secondary blockquote{font-size:clamp(12px,.85vw,15px)}
     @media(max-width:900px){
       #p2-emmaus-magazine-underleaf .emmaus__identity h1{font-size:clamp(27px,5vw,44px)}
-      #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{bottom:6%;gap:6px}
+      #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{top:49%;bottom:auto;gap:6px}
       #p2-emmaus-magazine-underleaf blockquote{font-size:10px;line-height:1.3}
       #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-secondary blockquote{font-size:9px}}
    `;
@@ -537,7 +534,7 @@
   emPlates.style.opacity=String(coverOpen);
   // First turn happens on the original right-hand Magazine cover inside the
   // established dual-page source; this ONE layer remains flat until turn two.
-  const greenAngle=-178*archive;
+  const greenAngle=-86*archive;
   emCover.style.clipPath='none';
   emCover.style.transform='perspective(6400px) rotateY('+greenAngle.toFixed(2)+'deg)';
   emCover.style.opacity=String(move>.001&&archive<.999?1:0);
@@ -608,16 +605,14 @@
     ensureMagazineUnderlay(sourceDoc,sourceCover);
     // The source Magazine cover itself, not an arriving green panel, is
     // the first page to turn. Preserve the 5:8 layout and its inner graphics.
-    const firstAngle=-178*smooth(move);
-    sourceCover.style.transformOrigin=stageRect.width<=820?'center top':'left center';
-    sourceCover.style.transform='perspective(6400px) '+(stageRect.width<=820?
-     'rotateX('+firstAngle.toFixed(2)+'deg)':
-     'rotateY('+firstAngle.toFixed(2)+'deg)');
-    sourceCover.style.backfaceVisibility='visible';
-    sourceCover.style.transformStyle='preserve-3d';
+    const firstAngle=-86*smooth(move);
+    sourceCover.style.transformOrigin='left center';
+    sourceCover.style.transform='perspective(6400px) rotateY('+firstAngle.toFixed(2)+'deg)';
+    sourceCover.style.backfaceVisibility='hidden';
+    sourceCover.style.removeProperty('transform-style');
     sourceCover.classList.add('p2-emmaus-turning');
     sourceCover.style.zIndex='11';
-    // Keep the whole page, including its green verso, during the 180° turn.
+    // Both covers show the front only, around the SAME left-spine axis.
     sourceCover.style.visibility=move>.998?'hidden':'visible';
    }else{
     sourceCover.style.transform=sourceOriginalCoverTransform;
