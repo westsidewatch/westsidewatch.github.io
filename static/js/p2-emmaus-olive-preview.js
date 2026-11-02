@@ -123,6 +123,7 @@
  if(plates.length!==241||plates.some(p=>!p.file))throw Error('Shared Doré 241-plate inventory is incomplete');
  const plateEls=[$('#em-plate-a'),$('#em-plate-b')];
  let galleryIndex=211,activeSlot=0,galleryTimer=0,galleryLive=false,plateVersion=0,galleryPrefetch=false;
+ let gallerySelectionTimer=0;
  let galleryOrder=ids.slice(),galleryPosition=211,gallerySelectionBook=42;
  const imgUrl=plate=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(plate.file)+'?width=960';
  async function showPlate(index){
@@ -177,7 +178,14 @@
   emmaus.dataset.galleryLoad='loading';
   $('#em-plate-title').textContent='DORÉ / LOADING BOOK PLATES';
   $('#em-plate-index').textContent=String(start).padStart(3,'0')+' / '+plates.length;
-  plateVersion++;galleryPrefetch=true;void showPlate(galleryIndex);
+  // Allow rapid book browsing without starting dozens of large Wikimedia
+  // downloads. Only the most recently selected volume fetches new artwork.
+  plateVersion++;galleryPrefetch=false;
+  clearTimeout(gallerySelectionTimer);
+  gallerySelectionTimer=setTimeout(()=>{
+   if(gallerySelectionBook!==number)return;
+   galleryPrefetch=true;void showPlate(galleryIndex);
+  },180);
   emmaus.dataset.illustrationMode=associated.length?'book-first':'random-fallback';
   $('#em-plate-selection').textContent=(associated.length?'本卷插圖 / BOOK PLATES':'圖庫隨機插圖 / ARCHIVE RANDOM')+
    ' · '+String(number).padStart(2,'0')+' / '+books[number-1][2].toUpperCase();
