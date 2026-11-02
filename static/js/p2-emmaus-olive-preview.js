@@ -183,7 +183,7 @@
  function renderBookStudy(number,chapter){
   const item=books[number-1],D=window.ONE_DATA;
   // Only show original ONE studies available in the loaded canonical record.
-  const source=number===42?D.luke:number===40?D.matthew:null;
+  const source=number===42?D.luke:number===40?D.matthew:D.studyBooks?.[number]||null;
   selectedChapter=Math.min(item[3],Math.max(1,Number(chapter)||(number===42?24:1)));
   const detailed=source?.chapterStudies?.[String(selectedChapter)]||null;
   currentBookStudy=detailed;
@@ -199,7 +199,7 @@
   $('#em-study-enter').href=href;$('#emmaus-enter').href=href;
   studyRoutes.replaceChildren();
   if(detailed?.route?.length){
-   for(const [ref,desc] of detailed.route.slice(0,2)){
+   for(const [ref,desc] of detailed.route.slice(0,5)){
     const li=document.createElement('li'),reference=document.createElement('span'),copy=document.createElement('p');
     reference.textContent=ref;copy.textContent=desc;li.append(reference,copy);studyRoutes.append(li);
    }
@@ -215,28 +215,56 @@
     li.append(button);studyRoutes.append(li);
    }
   }
+  emmaus.dataset.selectedChapter=String(selectedChapter);
   showStudy(currentStudyView);
+  emmaus.dispatchEvent(new CustomEvent('p2:one-selection',{detail:{book:number,chapter:selectedChapter}}));
  }
  function showStudy(view){
   currentStudyView=view;
-  const f=currentBookStudy;
-  let label='',body='';
-  if(view==='connections'&&f?.connections?.length){
-   label=f.connections[0][0]+' / '+f.connections[0][1];body=f.connections[0][2];
-  }else if(view==='questions'&&f?.questions?.length){
-   label='思考與討論 / QUESTIONS';body=f.questions[1]||f.questions[0];
-  }else if(view==='background'&&f?.background?.length){
-   label=f.background[1]?.[0]||f.background[0][0];body=f.background[1]?.[1]||f.background[0][1];
-  }else{
-   label=view==='connections'?'相關經文 / CROSS REFERENCES':view==='questions'?'研讀問題 / QUESTIONS':'卷書總覽 / BOOK INDEX';
-   body='ONE 已提供本卷 '+books[selectedBook-1][3]+' 章導覽；請開啟正式 ONE 選擇章節，查看實際可用的研讀資料。';
-  }
+  const f=currentBookStudy,item=books[selectedBook-1],D=window.ONE_DATA;
+  const source=selectedBook===42?D.luke:selectedBook===40?D.matthew:D.studyBooks?.[selectedBook];
   studyDetail.replaceChildren();
-  const strong=document.createElement('strong'),paragraph=document.createElement('p');
-  strong.textContent=label;paragraph.textContent=body;studyDetail.append(strong,paragraph);
+  const article=(heading,copy)=>{
+   const el=document.createElement('article'),h=document.createElement('strong');
+   h.textContent=heading;el.append(h);
+   for(const line of copy.filter(Boolean)){
+    const p=document.createElement('p');p.textContent=String(line);el.append(p);
+   }
+   studyDetail.append(el);
+  };
+  const ordered=(heading,items)=>{
+   const el=document.createElement('article'),h=document.createElement('strong'),ol=document.createElement('ol');
+   h.textContent=heading;el.append(h);
+   for(const line of items){const li=document.createElement('li');li.textContent=String(line);ol.append(li);}
+   el.append(ol);studyDetail.append(el);
+  };
+  if(view==='story'&&f){
+   article('本章故事 / STORY',[f.story,f.position]);
+   (f.route||[]).forEach(item=>article(item[0],[item[1]]));
+  }else if(view==='background'&&f?.background?.length){
+   f.background.forEach(item=>article(item[0],[item[1],item[2]]));
+  }else if(view==='connections'&&f?.connections?.length){
+   f.connections.forEach(item=>article(item[0]+' / '+(item[1]||''),[item[2]]));
+  }else if(view==='questions'&&f?.questions?.length){
+   ordered('觀察與討論 / QUESTIONS',f.questions);
+  }else if(view==='prepare'&&f?.prepare?.length){
+   ordered('預備研讀 / PREPARE',f.prepare);
+  }else if(view==='map'&&f?.map){
+   article(f.map.title||'本章地理',[f.map.guide,...(f.map.places||[])]);
+   if(f.map.source){
+    const a=document.createElement('a');a.href=f.map.source;a.target='_blank';a.rel='noopener';
+    a.textContent='查閱 ONE 地理原始資料 ↗';studyDetail.append(a);
+   }
+  }else{
+   article(view==='connections'?'串珠 / CROSS REFERENCES':view==='questions'?'問題 / QUESTIONS':
+    view==='map'?'地圖 / GEOGRAPHY':view==='prepare'?'預備 / PREPARE':
+    view==='story'?'本章 / CHAPTER':'書卷 / BOOK',[
+    source?.chapters?.[selectedChapter-1]||source?.summary||item[1]+' · 第 '+selectedChapter+' 章',
+    '按「在這頁使用完整 ONE 工作台」，即可直接在此頁使用原版 ONE 的逐章研讀、地圖、串珠、問題與查經日曆。']);
+  }
+  studyDetail.scrollTop=0;
   for(const tab of studyTabs){
-   const active=tab.dataset.studyView===view;tab.setAttribute('aria-selected',String(active));
-   tab.tabIndex=active?0:-1;
+   const active=tab.dataset.studyView===view;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;
    if(active)studyDetail.setAttribute('aria-labelledby',tab.id);
   }
   emmaus.dataset.studyView=view;
@@ -249,6 +277,17 @@
    const offset=event.key==='ArrowRight'?1:-1;
    const next=studyTabs[(studyTabs.indexOf(tab)+offset+studyTabs.length)%studyTabs.length];
    showStudy(next.dataset.studyView);next.focus({preventScroll:true});
+  });
+ }
+ window.P2EmmausSelect=(number,chapter)=>{
+  const n=Number(number),ch=Number(chapter);if(!Number.isInteger(n)||n<1||n>66)return;
+  if(selectedBook!==n)selectBook(n);
+  renderBookStudy(n,ch);
+ };
+ for(const link of [$('#em-study-enter'),$('#emmaus-enter')]){
+  link.addEventListener('click',event=>{
+   if(!window.P2EmmausONE)return;
+   event.preventDefault();window.P2EmmausONE.open();
   });
  }
  selectBook(42,false);
