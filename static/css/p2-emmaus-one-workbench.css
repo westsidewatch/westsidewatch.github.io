@@ -1,0 +1,142 @@
+/* P2 03 — ONE working folio. Scoped to Emmaus only.
+   The surrounding #p2-realm-background is the SOLE engraved field.
+   Neither the original ONE app nor the approved Magazine is modified. */
+#emmaus > .emmaus__left{
+  background:var(--ws-one-paper,#ded096)!important;
+  background-image:none!important;
+  color:var(--ws-night,#102a43);
+  isolation:isolate;
+  padding:clamp(14px,1.65vw,27px) clamp(15px,2vw,32px) clamp(12px,1.4vw,22px)!important;
+  gap:0;
+}
+#emmaus > .emmaus__left::before,
+#emmaus > .emmaus__left::after,
+#emmaus .emmaus__scroll-engraving{content:none!important;display:none!important;background:none!important}
+#emmaus .emmaus__identity{margin:clamp(7px,1vh,11px) 0 clamp(4px,.65vh,9px)}
+#emmaus .emmaus__identity h1{font-size:clamp(41px,5vw,72px)!important;line-height:.82;margin:3px 0 0}
+#emmaus .emmaus__identity h1 span{font-size:clamp(13px,1.18vw,18px);margin-top:4px}
+#emmaus .emmaus__identity p{font-size:clamp(10px,.88vw,13px);margin-top:3px}
+#emmaus .emmaus__study{
+ flex:1 1 0!important;min-height:0!important;max-height:none!important;height:auto!important;
+ margin:clamp(5px,.65vh,10px) 0 clamp(5px,.7vh,10px)!important;
+ border:0!important;border-radius:0!important;
+ background:color-mix(in srgb,var(--ws-one-paper,#ded096) 84%,white)!important;
+ box-shadow:0 0 0 1px color-mix(in srgb,var(--ws-night) 13%,transparent);
+ overflow:hidden;container-type:inline-size;
+}
+#emmaus .emmaus__study-interface{
+ display:flex;flex-direction:column;min-height:0;height:100%;
+ padding:clamp(8px,1.3cqi,15px) clamp(10px,1.8cqi,19px)!important;
+}
+#emmaus .emmaus__study-head{flex:0 0 auto}
+#emmaus .emmaus__one-toolbar{
+ display:flex;align-items:center;justify-content:space-between;gap:8px;
+ padding:5px 0 7px;flex:0 0 auto;
+ font:var(--ws-weight-zh-standard,400) clamp(10px,1.12cqi,13px)/1.35 var(--ws-type-display-zh);
+}
+#emmaus .emmaus__one-toolbar span{color:var(--ws-night);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#emmaus .emmaus__one-toolbar button{
+ appearance:none;border:1px solid var(--ws-night,#102a43);background:var(--ws-night,#102a43);
+ color:var(--ws-one-paper,#ded096);padding:6px 11px;font:var(--ws-weight-zh-standard,400)
+ clamp(10px,1.1cqi,12px)/1.3 var(--ws-type-display-zh);cursor:pointer;text-align:center;
+}
+#emmaus .emmaus__study-cols{
+ flex:1 1 auto;min-height:0;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)!important;
+ gap:clamp(11px,1.4cqi,18px);padding:6px 0!important;
+}
+#emmaus .emmaus__study-reading,
+#emmaus .emmaus__study-tools{min-height:0;overflow:hidden}
+#emmaus .emmaus__study-reading h2{margin:3px 0 4px}
+#emmaus .emmaus__study-route{margin:8px 0 0!important;overflow:auto;scrollbar-width:thin}
+#emmaus .emmaus__study-route li p{white-space:normal;overflow:visible;text-overflow:clip}
+#emmaus .emmaus__study-tools{border-left:0!important;padding-left:0!important;display:flex!important}
+#emmaus .emmaus__study-tabs{flex-wrap:wrap;gap:2px;border-bottom:1px solid #102a4329}
+#emmaus .emmaus__study-tabs button{
+ min-height:25px;padding:3px clamp(5px,.65cqi,10px);
+ font-size:clamp(10px,1.04cqi,12px);flex:0 0 auto;
+}
+#emmaus .emmaus__study-detail{flex:1 1 auto;overflow-y:auto!important;overscroll-behavior:contain;
+ scrollbar-width:thin;min-height:0;padding-top:6px}
+#emmaus .emmaus__study-detail strong{margin:4px 0}
+#emmaus .emmaus__study-detail p{
+ display:block!important;-webkit-line-clamp:unset!important;
+ overflow:visible!important;line-height:1.48;margin:0 0 9px;
+}
+#emmaus .emmaus__study-detail article{margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid #102a4320}
+#emmaus .emmaus__study-detail article:last-child{border-bottom:0}
+#emmaus .emmaus__study-detail a{color:var(--ws-night);text-decoration:underline;text-underline-offset:2px}
+#emmaus .emmaus__study-detail ul,#emmaus .emmaus__study-detail ol{margin:4px 0;padding-left:18px}
+#emmaus .emmaus__study-detail li{font:400 clamp(10px,1.14cqi,14px)/1.5 var(--ws-type-reading-zh);margin:3px 0}
+#emmaus .emmaus__one-chapters{flex:0 0 auto;margin-top:5px;min-height:0;max-height:108px}
+#emmaus .emmaus__one-chapters-head{display:flex;justify-content:space-between;
+ font:200 var(--ws-type-scale-micro)/1.2 var(--ws-type-display-en-sc);letter-spacing:.08em;color:#5a593d}
+#emmaus .emmaus__one-chapter-grid{
+ display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));
+ align-content:start;gap:3px;max-height:78px;overflow-y:auto;overscroll-behavior:contain;
+ padding:5px 0 2px;scrollbar-width:thin;
+}
+#emmaus .emmaus__one-chapter-grid button{
+ min-height:30px;border:1px solid #102a432b;background:transparent;color:var(--ws-night,#102a43);
+ font:400 clamp(10px,1.05cqi,13px)/1.25 var(--ws-type-display-en);cursor:pointer;
+ padding:3px 2px;
+}
+#emmaus .emmaus__one-chapter-grid button[aria-pressed="true"]{background:var(--ws-night,#102a43);
+ color:var(--ws-one-paper,#ded096);border-color:var(--ws-night)}
+#emmaus .emmaus__one-chapter-grid button:focus-visible,
+#emmaus .emmaus__one-toolbar button:focus-visible,
+#emmaus .emmaus__one-workbench button:focus-visible{outline:2px solid #9d7427;outline-offset:2px}
+#emmaus .emmaus__study-foot{margin-top:5px;gap:6px;flex:0 0 auto}
+#emmaus .emmaus__reading{margin:0 0 3px!important;min-height:0;gap:10px}
+#emmaus .emmaus__book h2{font-size:clamp(29px,3.65vw,57px)!important;line-height:.95}
+#emmaus .emmaus__book>p{font-size:clamp(12px,1.3vw,19px);margin:3px 0}
+#emmaus .emmaus__guide{align-self:center}
+#emmaus .emmaus__guide>p:first-child{font-size:clamp(15px,1.25vw,20px);margin:0}
+#emmaus .emmaus__guide-copy{font-size:clamp(9px,.86vw,12px);margin:4px 0}
+#emmaus .emmaus__selector-head{padding:4px 0 3px}
+#emmaus .emmaus__rail{height:clamp(50px,6vh,68px)!important;margin:2px 0 3px}
+#emmaus .emmaus__foot{padding-top:5px}
+/* The complete ORIGINAL ONE application is loaded only when requested:
+   full book/chapter navigation, chronology, maps, cross refs, group records. */
+#emmaus .emmaus__one-workbench{
+ position:absolute!important;inset:clamp(5px,.6vh,9px)!important;z-index:50!important;
+ display:flex;flex-direction:column;overflow:hidden;
+ background:var(--ws-one-paper,#ded096);border:1px solid var(--ws-night,#102a43);
+ box-shadow:0 10px 26px #0c223026;
+}
+#emmaus .emmaus__one-workbench[hidden]{display:none!important}
+#emmaus .emmaus__one-workbench-head{
+ display:flex;align-items:center;gap:9px;flex:0 0 auto;min-height:46px;
+ padding:8px clamp(8px,1vw,15px);background:var(--ws-night,#102a43);color:#e8ddba;
+}
+#emmaus .emmaus__one-workbench-head div{min-width:0;flex:1}
+#emmaus .emmaus__one-workbench-head span{display:block;font:200 10px/1.2 var(--ws-type-display-en-sc)}
+#emmaus .emmaus__one-workbench-head strong{display:block;font:400 clamp(12px,1.1vw,16px)/1.4 var(--ws-type-display-zh);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#emmaus .emmaus__one-workbench-head a{color:inherit;white-space:nowrap;font:400 11px var(--ws-type-display-zh)}
+#emmaus .emmaus__one-workbench-head button{cursor:pointer;border:1px solid #e8ddba75;color:inherit;background:transparent;
+ padding:5px 10px;font:400 clamp(10px,.9vw,12px)/1.2 var(--ws-type-display-zh)}
+#emmaus .emmaus__one-workbench-frame{flex:1 1 auto;min-height:0;background:#e5d5a6}
+#emmaus #em-one-frame{display:block;width:100%;height:100%;border:0;background:#e5d5a6}
+#emmaus .emmaus__one-workbench-foot{flex:0 0 auto;padding:6px 10px;
+ font:400 clamp(9px,.82vw,11px)/1.4 var(--ws-type-display-zh);color:#33413a}
+@media(max-width:820px){
+ #emmaus .emmaus__identity h1{font-size:clamp(28px,6vw,54px)!important}
+ #emmaus .emmaus__study{min-height:0!important}
+ #emmaus .emmaus__study-cols{grid-template-columns:1fr!important;overflow-y:auto}
+ #emmaus .emmaus__study-tools{min-height:105px}
+ #emmaus .emmaus__study-reading{min-height:0}
+ #emmaus .emmaus__one-chapters{max-height:92px}
+ #emmaus .emmaus__one-chapter-grid{max-height:65px}
+ #emmaus .emmaus__guide{display:none}
+ #emmaus .emmaus__one-workbench-head a{display:none}
+}
+@media(max-width:540px){
+ #emmaus .emmaus__study-interface{padding:7px!important}
+ #emmaus .emmaus__one-toolbar{flex-wrap:wrap}
+ #emmaus .emmaus__one-toolbar button{padding:5px 7px}
+ #emmaus .emmaus__study-cols{gap:5px}
+ #emmaus .emmaus__study-tabs button{font-size:9px;padding:3px}
+ #emmaus .emmaus__one-chapter-grid{grid-template-columns:repeat(auto-fill,minmax(29px,1fr));max-height:58px}
+ #emmaus .emmaus__one-chapter-grid button{min-height:27px}
+ #emmaus .emmaus__one-workbench-head{flex-wrap:wrap}
+ #emmaus .emmaus__one-workbench-foot{display:none}
+}
