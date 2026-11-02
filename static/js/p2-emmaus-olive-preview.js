@@ -188,7 +188,7 @@
   if(n<20)return '十'+(n===10?'':digit[n%10]);
   if(n<100)return digit[Math.floor(n/10)]+'十'+(n%10?digit[n%10]:'');
   const h=Math.floor(n/100),tail=n%100;
-  return digit[h]+'百'+(tail?(tail<10?'零':'')+chapterZh(tail):'');
+  return digit[h]+'百'+(tail?(tail<10?'零'+chapterZh(tail):tail<20?'一'+chapterZh(tail):chapterZh(tail)):'');
  }
  function renderBookStudy(number,chapter){
   const item=books[number-1],D=window.ONE_DATA;
