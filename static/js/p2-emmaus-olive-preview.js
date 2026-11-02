@@ -80,9 +80,8 @@
  // even when overflow-y is hidden. Bridge that delta to the single P2 page
  // scroller; never turn the 66-book navigator into a nested vertical scene.
  rail.addEventListener('wheel',event=>{
-  // The 66-book drawer is an explicit tool, so its list owns wheel scrolling.
-  // Only a closed drawer delegates wheel events to the main P2 timeline.
-  if(!document.getElementById('em-book-drawer')?.hidden)return;
+  // The visible 66-book rail owns horizontal drag/arrow navigation only.
+  // Forward vertical wheel to the original P2 scroll timeline.
   if(!event.deltaY||event.ctrlKey)return;
   event.preventDefault();
   const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?innerHeight:1);
