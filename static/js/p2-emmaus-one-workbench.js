@@ -88,5 +88,5 @@
  // Workbench is interactive INSIDE P2, never a forced external navigation.
  root.dataset.oneWorkbench='closed';pane.hidden=true;pane.setAttribute('aria-hidden','true');
  select(Number(root.dataset.selectedBook)||42,Number(root.dataset.selectedChapter)||24);
- window.P2EmmausONE={select,open:openWorkbench,close:closeWorkbench};
+ window.P2EmmausONE={select,open:openWorkbench,close:closeWorkbench,refresh:()=>{lastRenderedBook=0;renderChapterNumbers()}};
 })();
