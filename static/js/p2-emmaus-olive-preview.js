@@ -559,9 +559,13 @@
     return {x:baseRect.left-stageRect.left+frameRect.left+r.left,
             y:baseRect.top-stageRect.top+frameRect.top+r.top,w:r.width,h:r.height};
    };
-   // Source Magazine DOM is never transformed by this P2 handoff.
-   // Measure its live, already-approved unmodified 5:8 cover once.
+   // The live 5:8 Magazine cover now hinges in turn one. Sample its
+   // UNTRANSFORMED layout box or a resize during the flip would mistake a
+   // thin projected wedge for the cover's actual width and shrink the page.
+   const currentMagazineTurn=sourceCover?.style.transform??'';
+   if(sourceCover)sourceCover.style.transform='none';
    original=bounds(sourceTile);coverBounds=bounds(sourceCover);spineBounds=bounds(sourceSpine);
+   if(sourceCover)sourceCover.style.transform=currentMagazineTurn;
    if(distance>=6.50&&original&&coverBounds){
     settledGeometry={original,coverBounds,spineBounds};
     settledGeometryDoc=sourceDoc;
