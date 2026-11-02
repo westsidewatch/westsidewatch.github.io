@@ -218,6 +218,10 @@
   const h=Math.floor(n/100),tail=n%100;
   return digit[h]+'百'+(tail?(tail<10?'零'+chapterZh(tail):tail<20?'一'+chapterZh(tail):chapterZh(tail)):'');
  }
+ // ONE records occasionally contain editorial notes to map producers.
+ // Keep them in ONE's source files, but never show them to a Bible reader.
+ const internalReaderNote=/原圖|圖說|圖上|福圖[一二三四五六七八九十\\d]|編號線路|必須|應保留|後備圖|完整保存|製圖|縮減圖說|ONE\\s*(?:原始|正式)|工作台|候選地點|地圖應|圖上每條|載入|工程/;
+ const readableText=value=>typeof value==='string'&&!internalReaderNote.test(value)?value.trim():'';
  function renderBookStudy(number,chapter){
   const item=books[number-1],D=window.ONE_DATA;
   // Only show original ONE studies available in the loaded canonical record.
@@ -228,14 +232,12 @@
   if(currentChapterZh)currentChapterZh.textContent='第'+chapterZh(selectedChapter)+'章';
   const detailed=source?.chapterStudies?.[String(selectedChapter)]||null;
   currentBookStudy=detailed;
-  $('#em-study-feature').textContent=(detailed?'ONE / FEATURED CHAPTER':'ONE / BOOK INDEX')+
+  $('#em-study-feature').textContent=(detailed?'SCRIPTURE / CHAPTER':'SCRIPTURE / BOOK')+
    ' · '+item[2].toUpperCase();
   $('#em-study-ref').textContent=detailed?.passage||item[1]+' · 第 '+selectedChapter+' / '+item[3]+' 章';
   $('#emmaus-study-heading').textContent=detailed?.title||item[1];
-  $('#em-study-movement').textContent=detailed?.movement||
-   source?.summary||'選擇章節進入 ONE，從這一卷展開經文閱讀與查經。';
-  $('#em-study-source').textContent=item[1]+
-   (detailed?' · ONE 原始研讀資料':' · ONE 正式書卷與章節索引');
+  $('#em-study-movement').textContent=readableText(detailed?.movement)||readableText(source?.summary)||'閱讀經文，從本章進入整卷聖經的脈絡。';
+  $('#em-study-source').textContent=item[1]+' · 第'+chapterZh(selectedChapter)+'章';
   const href='/one/?book='+number+'&chapter='+selectedChapter;
   $('#em-study-enter').href=href;$('#emmaus-enter').href=href;
   studyRoutes.replaceChildren();
@@ -269,7 +271,8 @@
    const el=document.createElement('article'),h=document.createElement('strong');
    h.textContent=heading;el.append(h);
    for(const line of copy.filter(Boolean)){
-    const p=document.createElement('p');p.textContent=String(line);el.append(p);
+    const copy=readableText(line);if(!copy)continue;
+    const p=document.createElement('p');p.textContent=copy;el.append(p);
    }
    studyDetail.append(el);
   };
@@ -291,17 +294,19 @@
   }else if(view==='prepare'&&f?.prepare?.length){
    ordered('預備研讀 / PREPARE',f.prepare);
   }else if(view==='map'&&f?.map){
-   article(f.map.title||'本章地理',[f.map.guide,...(f.map.places||[])]);
+   article(readableText(f.map.title)||'經文地點',[
+    readableText(f.map.guide)||((f.map.places||[]).length?'本章提及的地點：'+f.map.places.join('、'):'本章經文中的地點與行程。')
+   ]);
    if(f.map.source){
     const a=document.createElement('a');a.href=f.map.source;a.target='_blank';a.rel='noopener';
-    a.textContent='查閱 ONE 地理原始資料 ↗';studyDetail.append(a);
+    a.textContent='查看相關地圖 ↗';studyDetail.append(a);
    }
   }else{
    article(view==='connections'?'串珠 / CROSS REFERENCES':view==='questions'?'問題 / QUESTIONS':
     view==='map'?'地圖 / GEOGRAPHY':view==='prepare'?'預備 / PREPARE':
     view==='story'?'本章 / CHAPTER':'書卷 / BOOK',[
-    source?.chapters?.[selectedChapter-1]||source?.summary||item[1]+' · 第 '+selectedChapter+' 章',
-    '按「在這頁使用完整 ONE 工作台」，即可直接在此頁使用原版 ONE 的逐章研讀、地圖、串珠、問題與查經日曆。']);
+    readableText(source?.chapters?.[selectedChapter-1])||readableText(source?.summary)||item[1]+' · 第 '+selectedChapter+' 章',
+    '可在這裡閱讀經文，並查看相關背景、串珠和研讀問題。']);
   }
   studyDetail.scrollTop=0;
   for(const tab of studyTabs){
