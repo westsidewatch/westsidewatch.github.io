@@ -160,9 +160,9 @@
 }
 /* Save every pixel of the reclaimed masthead for actual Scripture. */
 #emmaus .emmaus__study-reading{
- max-height:clamp(72px,12vh,112px)!important;
+ max-height:clamp(47px,7.2vh,64px)!important;
 }
-#emmaus .emmaus__scripture-reader{min-height:150px!important}
+#emmaus .emmaus__scripture-reader{min-height:180px!important}
 @media(max-width:900px){
  #emmaus > .emmaus__left{
   grid-template-rows:auto auto minmax(0,1fr) 94px auto!important;
