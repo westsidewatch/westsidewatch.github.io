@@ -53,7 +53,7 @@
    })().catch(error=>{console.warn('[P2 ONE]',error);loaded.delete(id);return false}));
   }
   void loaded.get(id).then(success=>{
-   if(!success)return;
+   if(!success||!record(n,ch))return;
    const now=selected();if(now.n!==n||now.ch!==ch)return;
    // Update the original in-folio ONE panels, not an invented parallel copy.
    window.P2EmmausSelect?.(n,ch);
