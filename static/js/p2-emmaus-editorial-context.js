@@ -7,6 +7,7 @@
  const $=id=>document.getElementById(id),books=D.books;
  const rail=$('emmaus-rail');
  const figure=$('em-context-map-figure'),image=$('em-context-map-image'),
+  atlasEyebrow=$('em-context-map-eyebrow'),
   credit=$('em-context-map-credit'),guide=$('em-context-map-guide'),
   places=$('em-context-map-places'),mapTitle=$('em-context-map-title'),
   mapSource=$('em-context-map-source'),timelineTitle=$('em-context-time-title'),
@@ -22,6 +23,7 @@
  function paintMap(map,chapter){
   const valid=map&&typeof map==='object';
   const url=valid&&typeof map.image==='string'&&/^https:\/\//.test(map.image)?map.image:null;
+  if(atlasEyebrow)put(atlasEyebrow,url?'01 / ONE BIBLE ATLAS':'01 / BIBLICAL CONTEXT');
   put(mapTitle,valid?(map.title||map.imageTitle||'本章地理'):'本章閱讀路徑');
   const detail=valid?[map.guide||map.preface||'',...(map.places||[]).slice(0,6).map(x=>'· '+x)].filter(Boolean):
    [chapter?.movement||chapter?.position||chapter?.story||'從 ONE 的本章結構與經文脈絡開始查考。'];
