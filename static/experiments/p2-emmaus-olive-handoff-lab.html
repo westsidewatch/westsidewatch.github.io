@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="/css/p2-emmaus-editorial-v5.css?v=20261102-reading-width-v11">
 <link rel="stylesheet" href="/css/p2-emmaus-scripture-v6.css?v=20261102-bilingual-reading-v11">
 <link rel="stylesheet" href="/css/p2-emmaus-bookbinding-v7.css?v=20261102-theme-quote-complete-v13">
+<link rel="stylesheet" href="/css/p2-emmaus-study-rail-v16.css?v=20261102-tight-one-showcase">
 </head>
 <body data-ws-scope="p2">
 <header class="proof-controls" aria-label="P2 03 與 04 動效驗收工具">
@@ -79,19 +80,29 @@
          </div>
          <div class="emmaus__scripture-source" id="em-scripture-source">和合本（1919）／KJV（1769）· 逐節對照</div>
         </section>
-        <div class="emmaus__study-tools">
-         <div class="emmaus__study-tabs" role="tablist" aria-label="所選書卷的研讀內容">
-          <button id="em-tab-story" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="story">導讀</button>
-          <button id="em-tab-background" type="button" role="tab" aria-controls="em-study-detail" aria-selected="true" data-study-view="background">歷史</button>
-          <button id="em-tab-connections" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="connections">串珠</button>
-          <button id="em-tab-questions" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="questions">問題</button>
-          <button id="em-tab-map" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="map">地圖</button>
-          <button id="em-tab-prepare" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="prepare">預備</button>
-         </div>
-         <div class="emmaus__study-detail" id="em-study-detail" role="tabpanel" aria-labelledby="em-tab-background"></div>
-        </div>
        </div>
-       <section class="emmaus__context" id="em-one-context" aria-label="ONE 原生史地圖與書卷時間軸"><article class="emmaus__context-map"><header><span id="em-context-map-eyebrow">01 / BIBLICAL CONTEXT</span><strong id="em-context-map-title">經文地理</strong></header><div class="emmaus__context-map-body"><figure id="em-context-map-figure" hidden><img id="em-context-map-image" alt="" loading="lazy" decoding="async"><figcaption id="em-context-map-credit"></figcaption></figure><div class="emmaus__context-map-copy"><div id="em-context-map-guide">閱讀本章所記述的地點與行程。</div><div id="em-context-map-places" class="emmaus__context-places"></div><a id="em-context-map-source" href="/one/" target="_blank" rel="noopener" hidden>查看 ONE 原始地圖 ↗</a></div></div></article><article class="emmaus__context-time"><header><span id="em-context-time-eyebrow">02 / CHAPTER OUTLINE</span><strong id="em-context-time-title">本章段落</strong></header><p id="em-context-time-note"></p><ol id="em-context-time-events"></ol></article></section>
+       <section class="emmaus__context" id="em-one-context" aria-label="ONE 原生史地圖與書卷時間軸"><article class="emmaus__context-map"><header><span id="em-context-map-eyebrow">01 / BIBLICAL CONTEXT</span><strong id="em-context-map-title">經文地理</strong></header><div class="emmaus__context-map-body"><figure id="em-context-map-figure" hidden><img id="em-context-map-image" alt="" loading="lazy" decoding="async"><figcaption id="em-context-map-credit"></figcaption></figure><div class="emmaus__context-map-copy"><div id="em-context-map-guide">閱讀本章所記述的地點與行程。</div><div id="em-context-map-places" class="emmaus__context-places"></div><a id="em-context-map-source" href="/one/" target="_blank" rel="noopener" hidden>查看 ONE 原始地圖 ↗</a></div></div></article><article class="emmaus__context-time"><header><span id="em-context-time-eyebrow">02 / CHAPTER OUTLINE</span><strong id="em-context-time-title">本章段落</strong></header><p id="em-context-time-note"></p><ol id="em-context-time-events"></ol></article>
+        <div class="emmaus__context-tools" id="em-context-tools">
+         <div class="emmaus__context-tools-heading"><span>03 / ONE STUDY</span><strong lang="zh-Hant">查經工具</strong></div>
+         <div class="emmaus__study-tools">
+          <div class="emmaus__study-tabs" role="tablist" aria-label="所選書卷的研讀內容">
+           <button id="em-tab-story" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="story">導讀</button>
+           <button id="em-tab-background" type="button" role="tab" aria-controls="em-study-detail" aria-selected="true" data-study-view="background">歷史</button>
+           <button id="em-tab-connections" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="connections">串珠</button>
+           <button id="em-tab-questions" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="questions">問題</button>
+           <button id="em-tab-map" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="map">地圖</button>
+           <button id="em-tab-prepare" type="button" role="tab" aria-controls="em-study-detail" aria-selected="false" data-study-view="prepare">預備</button>
+          </div>
+          <div class="emmaus__study-detail" id="em-study-detail" role="tabpanel" aria-labelledby="em-tab-background"></div>
+         </div>
+         <div class="emmaus__one-extra" role="group" aria-label="ONE 完整工具">
+          <button type="button" data-one-launch="view-chapter">逐章研讀</button>
+          <button type="button" data-one-launch="view-books">66 卷書庫</button>
+          <button type="button" data-one-launch="view-calendar">查經日曆</button>
+          <button type="button" data-one-launch="groups">查經組</button>
+         </div>
+        </div>
+       </section>
 
        <footer class="emmaus__study-foot"><span>ONE · <b lang="zh-Hant" id="em-study-source">路加福音 · 第二十四章</b></span><a id="em-study-enter" href="/one/?book=42&amp;chapter=24" hidden tabindex="-1" aria-hidden="true">ONE</a></footer>
       </div>
@@ -145,7 +156,7 @@
 <script src="/one/one-dore-cover-registry.js"></script>
 <script src="/one/one-dore-assets-241.js"></script>
 <script src="/olive/components/speaker-baseline-v1/baseline.js?v=07d89a2-recovered-v1"></script>
-<script src="/js/p2-emmaus-olive-preview.js?v=20261102-real-magazine-first-turn-v14"></script>
+<script src="/js/p2-emmaus-olive-preview.js?v=20261102-true-magazine-turn-v16"></script>
 <script>
 /* Candidate engraving is opt-in, never changes accepted Church/Magazine. */
 if(new URLSearchParams(location.search).get('engraving')==='v5'){
