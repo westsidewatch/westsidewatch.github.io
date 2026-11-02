@@ -54,6 +54,17 @@ assert.match(js,/const coverFolio=validMagazine\?coverBounds/,
 assert.match(js,/const fullLeft=\{x:master\.x,y:master\.y,w:fullRight\.x-master\.x/,
  'ONE takes the remaining Contents width rather than forcing the cover to one-third');
 const binding=fs.readFileSync(path.join(root,'static/css/p2-emmaus-bookbinding-v7.css'),'utf8');
+assert(binding.includes('V10 / EXTERIOR CLOTH PROOF'),
+ 'V10 must replace the Bible surround, not modify or duplicate magazine cover');
+assert(binding.includes('body[data-p2-surround="cloth"] #p2-realm-background[data-realm="bible"]'),
+ 'the approved ONE cover cloth must replace engraving only in 03 exterior');
+assert(binding.includes('/one/cover-texture-antique-green.png'),
+ 'the canonical ONE image is reused rather than regenerated');
+assert(js.includes("document.body.dataset.p2Surround=surround"),
+ 'the controlled P2 exterior supports comparative engraving and cloth states');
+assert(js.includes("emRight.style.setProperty('--em-binding-reveal',String(oneDrop))"),
+ 'the matching green cloth rim must appear on the right 5:8 Doré folio');
+
 assert(js.includes('const move=smooth((distance-6.50)/.72)'), 'first turn follows P2 scroll');
 assert(js.includes('const archive=smooth((distance-7.66)/.64)'), 'second turn follows P2 scroll');
 assert(js.includes('const oneDrop=smooth((distance-8.55)/.55)'), 'reading appears only after second turn');
@@ -192,6 +203,24 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false','Emmaus visible in its reading dwell');
    assert.equal(await page.locator('#em-book-en').textContent(),'Luke');
    assert.equal(await page.locator('.emmaus__folio-layer').count(),0,'no second sevenfold spine is created');
+   const surroundProof=await page.locator('#p2-realm-background').evaluate(el=>({
+    mode:document.body.dataset.p2Surround,
+    texture:getComputedStyle(el).backgroundImage,
+    size:getComputedStyle(el).backgroundSize,
+    legacyEngraving:getComputedStyle(el,'::after').content
+   }));
+   assert.equal(surroundProof.mode,'cloth','current P2 draft defaults to the green cloth');
+   assert.match(surroundProof.texture,/cover-texture-antique-green/,
+    'the exterior must visually use original ONE green-cloth cover texture');
+   assert.equal(surroundProof.legacyEngraving,'none',
+    'the old radiating engraving cannot remain above the cloth');
+   const rim=await page.locator('#emmaus-gallery .emmaus__right-binding').evaluate(el=>({
+    opacity:Number(getComputedStyle(el).opacity),
+    bg:getComputedStyle(el.querySelector('.emmaus__right-binding-top')).backgroundImage
+   }));
+   assert(rim.opacity>.95,'both open folios must retain green binding');
+   assert.match(rim.bg,/cover-texture-antique-green/,'right frame uses the same ONE textile');
+   await page.screenshot({path:path.join(groundDir,viewport.width+'-green-cloth-exterior-v10.png')});
    const paper=await page.locator('#emmaus > .emmaus__left').evaluate(el=>{
     const cloth=getComputedStyle(el),page=getComputedStyle(el.querySelector('.emmaus__binding-paper'));
     return {paper:page.backgroundColor,clothImage:cloth.backgroundImage,
