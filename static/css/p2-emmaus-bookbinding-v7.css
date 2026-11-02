@@ -295,3 +295,54 @@
  #emmaus .emmaus__entry-scripture blockquote{font-size:9px!important;line-height:1.38!important}
  #emmaus .emmaus__entry-scripture span{font-size:8px!important}
 }
+
+/* V9 / DORÉ FOLIO GREEN CLOTH
+ * The opened book is one spread. Carry the canonical ONE green cloth and
+ * fine gilt lining around the RIGHT Doré folio as well as the left text leaf.
+ * The picture remains EXACTLY the original 5:8 cover dimensions. The binding
+ * is an overlay only: no width changes, image scaling or texture on the plate.
+ */
+#emmaus > .emmaus__right > .emmaus__right-binding{
+ position:absolute!important;
+ inset:0!important;
+ z-index:7!important;
+ pointer-events:none!important;
+ opacity:var(--em-binding-reveal,0)!important;
+ overflow:hidden!important;
+ border:0!important;
+ background:none!important;
+}
+#emmaus .emmaus__right-binding > span{
+ position:absolute;
+ display:block;
+ pointer-events:none;
+ background-color:var(--em-binding-deep);
+ background-image:linear-gradient(rgba(4,13,7,.12),rgba(4,13,7,.32)),
+  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609');
+ background-size:100% 100%,auto 760px;
+ box-shadow:inset 0 0 0 1px rgba(206,189,116,.27);
+}
+#emmaus .emmaus__right-binding-top{
+ top:0;left:0;right:0;height:clamp(10px,1vw,17px);
+ border-bottom:1px solid var(--em-binding-gilt);
+}
+#emmaus .emmaus__right-binding-bottom{
+ bottom:0;left:0;right:0;height:clamp(10px,1vw,17px);
+ border-top:1px solid var(--em-binding-gilt);
+}
+#emmaus .emmaus__right-binding-right{
+ right:0;top:0;bottom:0;width:clamp(10px,1vw,17px);
+ border-left:1px solid var(--em-binding-gilt);
+}
+#emmaus .emmaus__right-binding-left{
+ left:0;top:0;bottom:0;width:clamp(7px,.7vw,12px);
+ border-right:1px solid color-mix(in srgb,var(--em-binding-gilt) 62%,transparent);
+}
+/* Keep the illustration and its annotations visible inside the narrow cloth
+   lining, preserving the original editorial page rather than framing a new crop. */
+@media(max-width:900px){
+ #emmaus .emmaus__right-binding-top,
+ #emmaus .emmaus__right-binding-bottom{height:8px}
+ #emmaus .emmaus__right-binding-right{width:8px}
+ #emmaus .emmaus__right-binding-left{width:6px}
+}
