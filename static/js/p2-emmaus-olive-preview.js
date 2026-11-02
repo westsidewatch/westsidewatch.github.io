@@ -527,7 +527,7 @@
   // established dual-page source; this ONE layer remains flat until turn two.
   const greenAngle=-87*archive;
   emCover.style.clipPath='none';
-  emCover.style.transform='perspective(1800px) rotateY('+greenAngle.toFixed(2)+'deg)';
+  emCover.style.transform='perspective(6400px) rotateY('+greenAngle.toFixed(2)+'deg)';
   emCover.style.opacity=String(move>.001&&archive<.999?1:0);
   emCover.style.visibility=move>.001&&archive<.999?'visible':'hidden';
   const edge=$('.emmaus__magazine-turn-edge');
@@ -598,7 +598,7 @@
     // the first page to turn. Preserve the 5:8 layout and its inner graphics.
     const firstAngle=-86*smooth(move);
     sourceCover.style.transformOrigin=stageRect.width<=820?'center top':'left center';
-    sourceCover.style.transform='perspective(1900px) '+(stageRect.width<=820?
+    sourceCover.style.transform='perspective(6400px) '+(stageRect.width<=820?
      'rotateX('+firstAngle.toFixed(2)+'deg)':
      'rotateY('+firstAngle.toFixed(2)+'deg)');
     sourceCover.style.backfaceVisibility='hidden';
