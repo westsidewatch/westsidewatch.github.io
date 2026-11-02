@@ -146,6 +146,12 @@
    void img.offsetHeight;img.classList.add('is-active');
    activeSlot=slot;galleryIndex=plate.id-1;galleryPosition=at;
    $('#em-plate-title').textContent='DORÉ / '+plate.title.toUpperCase();
+   // The archive may continue past book-specific plates. Never imply that an
+   // unrelated engraving illustrates the selected chapter or Bible book.
+   const matched=(bookPlates[gallerySelectionBook]||[]).includes(plate.id);
+   $('#em-plate-selection').textContent=(matched?'本卷插圖 / BOOK PLATE':'圖庫其他插圖 / ARCHIVE PLATE')+
+    ' · '+String(gallerySelectionBook).padStart(2,'0')+' / '+
+    books[gallerySelectionBook-1][2].toUpperCase();
    $('#em-plate-index').textContent=String(plate.id).padStart(3,'0')+' / '+String(plates.length);
    emmaus.dataset.dorePlate=String(plate.id);
    emmaus.dataset.galleryLoad='ready';
@@ -171,7 +177,7 @@
   $('#em-plate-index').textContent=String(start).padStart(3,'0')+' / '+plates.length;
   plateVersion++;galleryPrefetch=true;void showPlate(galleryIndex);
   emmaus.dataset.illustrationMode=associated.length?'book-first':'random-fallback';
-  $('#em-plate-selection').textContent=(associated.length?'BOOK PLATES':'ARCHIVE / RANDOM START')+
+  $('#em-plate-selection').textContent=(associated.length?'本卷插圖 / BOOK PLATES':'圖庫隨機插圖 / ARCHIVE RANDOM')+
    ' · '+String(number).padStart(2,'0')+' / '+books[number-1][2].toUpperCase();
  }
  function syncGallery(live){
