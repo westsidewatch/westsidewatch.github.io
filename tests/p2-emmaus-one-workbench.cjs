@@ -105,6 +105,22 @@ const {chromium}=require('playwright');
     'chapter picker lives immediately beneath the selected book title');
    await page.waitForFunction(()=>document.querySelector('#emmaus')?.dataset.scriptureState==='ready'&&
     document.querySelector('#emmaus')?.dataset.scriptureBook==='42',{timeout:25000});
+   const fonts=await page.evaluate(()=>{
+    const style=selector=>{
+     const el=document.querySelector(selector),cs=getComputedStyle(el);
+     return {family:cs.fontFamily,weight:cs.fontWeight};
+    };
+    return {body:style('.emmaus__scripture-zh'),
+      realm:style('#emmaus .emmaus__identity h1 span'),
+      book:style('#em-book-zh'),
+      chapter:style('#em-current-chapter-zh'),
+      label:style('#emmaus-rail .emmaus__number-zh')};
+   });
+   for(const [role,style] of Object.entries(fonts)){
+    assert.match(style.family,/Chiron Hei HK WS/,'OS Chiron is required for '+role);
+    assert.equal(style.weight,role==='body'?'400':'200',
+      'OS requires body 400 and every non-body Chinese 200: '+role);
+   }
    const firstVerse=page.locator('#em-scripture-verses .emmaus__scripture-verse').first();
    assert.match(await firstVerse.locator('.emmaus__scripture-zh').textContent(),/七日/);
    assert.match(await firstVerse.locator('.emmaus__scripture-en').textContent(),/first day of the week/i);
