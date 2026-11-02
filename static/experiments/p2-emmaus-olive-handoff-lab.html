@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/css/p2-emmaus-one-workbench.css?v=20261102-os-chiron-v7">
 <link rel="stylesheet" href="/css/p2-emmaus-editorial-v5.css?v=20261102-os-chiron-v7">
 <link rel="stylesheet" href="/css/p2-emmaus-scripture-v6.css?v=20261102-os-chiron-v7">
-<link rel="stylesheet" href="/css/p2-emmaus-bookbinding-v7.css?v=20261102-one-canonical-cover-v1">
+<link rel="stylesheet" href="/css/p2-emmaus-bookbinding-v7.css?v=20261102-double-pageflips-v8">
 </head>
 <body data-ws-scope="p2">
 <header class="proof-controls" aria-label="P2 03 與 04 動效驗收工具">
@@ -21,7 +21,7 @@
  <div class="proof-controls__buttons">
   <button data-jump="3.0775">01 教會</button>
   <button data-jump="6.50">02 Contents</button>
-  <button data-jump="7.85">03 經文封面</button>
+  <button data-jump="7.42">03 經文封面</button><button data-jump="8.16">03 翻至插圖</button>
   <button data-jump="9.10">03 以馬忤斯</button>
   <button data-jump="10.05">03→04</button>
   <button data-jump="11.10">04 橄欖山</button>
@@ -38,16 +38,6 @@
    <section class="emmaus" id="emmaus" aria-label="03 以馬忤斯 · 66 卷聖經查經展示" aria-hidden="true" inert>
     <div class="emmaus__left">
      <div class="emmaus__binding-paper" aria-hidden="true"></div>
-     <div class="emmaus__entry-cover" id="em-entry-cover" aria-hidden="true">
-      <div class="emmaus__entry-cover-leaf">
-       <div class="emmaus__entry-cover-gilt" aria-hidden="true"></div>
-       <div class="emmaus__identity">
-        <span class="emmaus__small">ONE / BIBLE STUDY · 03 / 07</span>
-        <h1>EMMAUS<span lang="zh-Hant">以馬忤斯</span></h1>
-        <p>THE ROAD TO EMMAUS</p>
-       </div>
-      </div>
-     </div>
      <div class="emmaus__scripture-frame" aria-hidden="true"><span class="emmaus__scripture-top">LUKE 24:27 · 凡經上所指著自己的話</span><span class="emmaus__scripture-bottom">我們的心豈不是火熱的嗎 · LUKE 24:32</span></div>
      <div class="emmaus__mast"><span>03 / 07 · BIBLE STUDY</span><span>WESTSIDE / ONE</span><span>THE SIXTY-SIX BOOKS</span></div>
      
@@ -113,7 +103,24 @@
       <footer class="emmaus__one-workbench-foot">這裡是 ONE 原始應用程式，可使用原本的 66 卷選書、逐章研讀、地圖、串珠、問題與查經日曆。首次開卷請依 ONE 的原有操作確認。</footer>
      </section>
     </div>
-    <div class="emmaus__right" id="emmaus-gallery"><div class="emmaus__plates"><img id="em-plate-a" alt="" decoding="async"><img id="em-plate-b" alt="" decoding="async"></div><div class="emmaus__gold-line" aria-hidden="true"></div><div class="emmaus__plate-top">GUSTAVE DORÉ / ORIGINAL ENGRAVING<span id="em-plate-selection">BOOK 42 / LUKE</span></div><div class="emmaus__plate-caption"><span id="em-plate-title">THE BIBLE / ENGRAVED ARCHIVE</span><span id="em-plate-index">01 / 08</span></div></div>
+    <div class="emmaus__right" id="emmaus-gallery"><div class="emmaus__plates"><img id="em-plate-a" alt="" decoding="async"><img id="em-plate-b" alt="" decoding="async"></div><div class="emmaus__magazine-turn-edge" aria-hidden="true"></div>
+         <div class="emmaus__entry-cover" id="em-entry-cover" aria-hidden="true">
+      <div class="emmaus__entry-cover-leaf">
+       <div class="emmaus__entry-cover-gilt" aria-hidden="true"></div>
+       <div class="emmaus__identity">
+        <span class="emmaus__small">ONE / BIBLE STUDY · 03 / 07</span>
+        <h1>EMMAUS<span lang="zh-Hant">以馬忤斯</span></h1>
+        <p>THE ROAD TO EMMAUS</p>
+        <div class="emmaus__entry-scripture" lang="zh-Hant">
+         <blockquote>「凡經上所指着自己的話都給他們講解明白了。」</blockquote>
+         <span>路加福音 24:27</span>
+         <blockquote>「我們的心豈不是火熱的嗎？」</blockquote>
+         <span>路加福音 24:32</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    <div class="emmaus__gold-line" aria-hidden="true"></div><div class="emmaus__plate-top">GUSTAVE DORÉ / ORIGINAL ENGRAVING<span id="em-plate-selection">BOOK 42 / LUKE</span></div><div class="emmaus__plate-caption"><span id="em-plate-title">THE BIBLE / ENGRAVED ARCHIVE</span><span id="em-plate-index">01 / 08</span></div></div>
    </section>
    <section class="olive-proof" id="olive-proof" aria-label="04 橄欖山 · 講員與講道" aria-hidden="true" inert>
     <div class="olive-proof__top">
@@ -133,7 +140,7 @@
 <script src="/one/one-dore-cover-registry.js"></script>
 <script src="/one/one-dore-assets-241.js"></script>
 <script src="/olive/components/speaker-baseline-v1/baseline.js?v=07d89a2-recovered-v1"></script>
-<script src="/js/p2-emmaus-olive-preview.js?v=20261102-rail-active-v7"></script>
+<script src="/js/p2-emmaus-olive-preview.js?v=20261102-double-pageflips-v8"></script>
 <script>
 /* Candidate engraving is opt-in, never changes accepted Church/Magazine. */
 if(new URLSearchParams(location.search).get('engraving')==='v5'){
