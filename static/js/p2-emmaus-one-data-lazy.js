@@ -66,8 +66,17 @@
    window.P2EmmausONE?.refresh?.();
   });
  }
+ // Text, chapter identity and CUV/KJV reader update immediately in the
+ // primary controller. Deep ONE notes may load after a short pause so fast
+ // browsing never queues 12+ script downloads for discarded selections.
+ let deferred=0;
  root.addEventListener('p2:one-selection',event=>{
-  request(Number(event.detail?.book),Number(event.detail?.chapter));
+  const n=Number(event.detail?.book),ch=Number(event.detail?.chapter);
+  clearTimeout(deferred);
+  deferred=setTimeout(()=>{
+   const now=selected();
+   if(now.n===n&&now.ch===ch)request(n,ch);
+  },180);
  });
  const first=selected();request(first.n,first.ch);
 })();
