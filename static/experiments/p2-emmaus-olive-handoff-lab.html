@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/css/westside-engraving-authority.css">
 <link rel="stylesheet" href="/css/p2-emmaus-olive-preview.css?v=20261101-dore-identical-crop-8">
 <link rel="stylesheet" href="/css/p2-five-v15-continuation.css?v=20261101-bow-local-v3-proportions">
-<link rel="stylesheet" href="/css/p2-emmaus-one-workbench.css?v=20261101-workbench-v1">
+<link rel="stylesheet" href="/css/p2-emmaus-one-workbench.css?v=20261101-editorial-v2">
 </head>
 <body data-ws-scope="p2">
 <header class="proof-controls" aria-label="P2 03 與 04 動效驗收工具">
@@ -32,8 +32,8 @@
    <div id="p2-realm-background" class="sites-home-realm" data-realm="bible" aria-hidden="true"></div>
    <section class="emmaus" id="emmaus" aria-label="03 以馬忤斯 · 66 卷聖經查經展示" aria-hidden="true" inert>
     <div class="emmaus__left">
-     <div class="emmaus__mast"><span>03 / 07</span><span>WESTSIDE / BIBLE STUDY</span><span>THE SIXTY-SIX BOOKS</span></div>
-     <div class="emmaus__identity"><span class="emmaus__small">THE ROAD TO EMMAUS</span><h1>EMMAUS<span>以馬忤斯</span></h1><p>從經文進入歷史，從歷史重新走回聖經。</p></div>
+     <div class="emmaus__mast"><span>03 / 07 · EMMAUS / 以馬忤斯</span><span>WESTSIDE / BIBLE STUDY</span><span>THE SIXTY-SIX BOOKS</span></div>
+     <div class="emmaus__identity"><span class="emmaus__small">03 · THE ROAD TO EMMAUS</span><h1>EMMAUS<span>以馬忤斯</span></h1><p>從整本聖經認出基督。經文、歷史與道路，在此相遇。</p></div>
      <section class="emmaus__study" id="emmaus-study" aria-labelledby="emmaus-study-heading">
       <div class="emmaus__study-interface">
        <header class="emmaus__study-head"><span>ONE / BIBLE STUDY · <b lang="zh-Hant">研讀視窗</b></span><span id="em-study-feature">FEATURE / LUKE 24</span></header>
@@ -57,17 +57,22 @@
          <div class="emmaus__study-detail" id="em-study-detail" role="tabpanel" aria-labelledby="em-tab-background"></div>
         </div>
        </div>
+       <section class="emmaus__context" id="em-one-context" aria-label="ONE 原生史地圖與書卷時間軸"><article class="emmaus__context-map"><header><span>01 / ONE BIBLE ATLAS</span><strong id="em-context-map-title">經文地理</strong></header><div class="emmaus__context-map-body"><figure id="em-context-map-figure" hidden><img id="em-context-map-image" alt="" loading="lazy" decoding="async"><figcaption id="em-context-map-credit"></figcaption></figure><div class="emmaus__context-map-copy"><p id="em-context-map-guide">選擇一章，查看 ONE 史地資料。</p><div id="em-context-map-places" class="emmaus__context-places"></div><a id="em-context-map-source" href="/one/" target="_blank" rel="noopener" hidden>查看 ONE 原始地圖 ↗</a></div></div></article><article class="emmaus__context-time"><header><span>02 / BIBLICAL CHRONOLOGY</span><strong id="em-context-time-title">本章時間與結構</strong></header><p id="em-context-time-note"></p><ol id="em-context-time-events"></ol></article></section>
        <section class="emmaus__one-chapters" aria-label="ONE 逐章選讀"><div class="emmaus__one-chapters-head"><span>ONE / CHAPTER INDEX</span><span id="em-one-chapter-count">24 CHAPTERS</span></div><div class="emmaus__one-chapter-grid" id="em-one-chapter-grid" role="group" aria-label="選擇研讀章節"></div></section>
        <footer class="emmaus__study-foot"><span>ONE · <b lang="zh-Hant" id="em-study-source">路加福音第二十四章 · ONE 正式研讀內容</b></span><a id="em-study-enter" href="/one/?book=42&amp;chapter=24">打開完整研讀 ↗</a></footer>
       </div>
      </section>
-     <div class="emmaus__reading">
-      <div class="emmaus__book" aria-live="polite" aria-atomic="true"><div class="emmaus__book-meta"><span id="em-book-number">BOOK 42</span><span id="em-book-part">NEW TESTAMENT</span></div><h2 id="em-book-en">Luke</h2><p id="em-book-zh">路加福音</p><div class="emmaus__chapter"><span id="em-book-chapters">24 CHAPTERS</span><span>ONE · 一卷</span></div></div>
-      <div class="emmaus__guide"><p>66 BOOKS <span>六十六卷</span></p><p class="emmaus__guide-copy">選擇一卷，開始研讀。</p><a class="emmaus__enter" id="emmaus-enter" href="/one/?book=42&amp;chapter=24">打開一卷 <span>↗</span></a></div>
+     <nav class="emmaus__book-switch" aria-label="ONE 書卷選擇">
+      <div class="emmaus__book-current" aria-live="polite"><span id="em-book-number">BOOK 42</span><strong id="em-book-en">Luke</strong><span id="em-book-zh">路加福音</span><small id="em-book-part">NEW TESTAMENT</small><small id="em-book-chapters">24 CHAPTERS</small></div>
+      <button type="button" id="em-book-toggle" aria-controls="em-book-drawer" aria-expanded="false">選擇書卷 <span>01—66</span></button>
+      <a id="emmaus-enter" href="/one/?book=42&amp;chapter=24">在 P2 開啟 ONE ↗</a>
+     </nav>
+     <div class="emmaus__book-drawer" id="em-book-drawer" hidden>
+      <div class="emmaus__book-drawer-head"><span>ONE / THE SIXTY-SIX BOOKS</span><button type="button" id="em-book-drawer-close">關閉 ×</button></div>
+      <label for="em-book-search">搜尋聖經書卷</label><input id="em-book-search" type="search" placeholder="書名、Book name、01–66" autocomplete="off">
+      <div class="emmaus__rail" id="emmaus-rail" tabindex="0" role="group" aria-label="完整 66 卷聖經選書"></div>
      </div>
-     <div class="emmaus__selector-head"><span>01 — 66 / CANONICAL ORDER</span><span>← 橫向選卷 →</span></div>
-     <div class="emmaus__rail" id="emmaus-rail" tabindex="0" role="group" aria-label="六十六卷聖經，使用左右方向鍵或點選書卷；上下滾動切換 P2 版塊"></div>
-     <div class="emmaus__foot"><span>ONE / SCRIPTURE · HISTORY · MAPS · CROSS-REFERENCES</span><span>03 / 07</span></div>
+     <div class="emmaus__foot"><span>ONE / SCRIPTURE · MAPS · CHRONOLOGY</span><span>EMMAUS · 03 / 07</span></div>
      <section class="emmaus__one-workbench" id="em-one-workbench" aria-label="在 P2 內使用 ONE 完整查經工具" hidden>
       <header class="emmaus__one-workbench-head"><div><span>ONE / 一卷 · 逐章研讀</span><strong id="em-one-workbench-title">路加福音 · 第 24 章</strong></div><a id="em-one-standalone" href="/one/?book=42&amp;chapter=24" target="_blank" rel="noopener">獨立視窗 ↗</a><button id="em-one-close" type="button" aria-label="關閉 ONE 工作台，返回以馬忤斯">返回 P2 ×</button></header>
       <div class="emmaus__one-workbench-frame"><iframe id="em-one-frame" title="ONE 一卷 · 完整 66 卷查經工具" loading="lazy" allow="fullscreen"></iframe></div>
@@ -150,6 +155,7 @@ if(new URLSearchParams(location.search).get('engraving')==='v17'){
  if(toggle)toggle.title='Emmaus V17 — time-held-open SVG in original film surround';
 }
 </script>
+<script src="/js/p2-emmaus-editorial-context.js?v=20261101-editorial-v2"></script>
 <script src="/js/p2-emmaus-one-data-lazy.js?v=20261101-one-original-book-data-v1"></script>
 <script src="/js/p2-emmaus-one-workbench.js?v=20261101-workbench-v2"></script>
 <script src="/js/p2-five-v15-continuation.js?v=20261101"></script>
