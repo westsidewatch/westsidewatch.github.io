@@ -47,6 +47,16 @@
    if(selected)button.setAttribute('aria-current','step');
    else button.removeAttribute('aria-current');
   }
+  // The chapter rail now sits below its BOOK title. Keep the active chapter
+  // in the visible aperture without scrolling the surrounding P2 document.
+  requestAnimationFrame(()=>{
+   const current=chapterGrid.querySelector('[aria-current="step"]');
+   if(!current)return;
+   const railRect=chapterGrid.getBoundingClientRect();
+   const activeRect=current.getBoundingClientRect();
+   chapterGrid.scrollLeft+=activeRect.left-railRect.left-
+    (railRect.width-activeRect.width)/2;
+  });
  }
  function select(n,ch){
   if(!Number.isInteger(n)||n<1||n>66)return;
