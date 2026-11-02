@@ -14,6 +14,8 @@
   standalone=document.getElementById('em-one-standalone');
  if(!root||books?.length!==66||!chapterGrid||!pane||!frame||!open||!close)return;
  let activeBook=42,activeChapter=24,lastRenderedBook=0;
+ let requestedView='view-chapter';
+ const launchButtons=[...root.querySelectorAll('[data-one-launch]')];
  const studyFor=number=>number===42?data.luke:number===40?data.matthew:
   data.studyBooks?.[number]||null;
  const bookAt=number=>books[number-1];
@@ -70,13 +72,32 @@
    if(frame.getAttribute('src')!==route)frame.src=route;
   }
  }
- function openWorkbench(){
+ function focusRequestedONE(){
+  // The embedded same-origin ONE document has its own view registry.
+  // Use its existing navigation buttons; do not invent parallel calendars
+  // or records, and do not change original ONE data.
+  try{
+   const doc=frame.contentDocument;
+   if(!doc||!doc.querySelector('.view-tabs'))return;
+   if(requestedView==='groups'){
+    const trigger=doc.getElementById('cover-groups');
+    if(trigger)trigger.click();
+   }else{
+    const tab=doc.querySelector('[data-view="'+requestedView+'"]');
+    if(tab)tab.click();
+   }
+  }catch(_){}
+ }
+ frame.addEventListener('load',focusRequestedONE);
+ function openWorkbench(view){
+  requestedView=typeof view==='string'?view:'view-chapter';
   renderChapterNumbers();
   pane.hidden=false;
   pane.setAttribute('aria-hidden','false');
   root.dataset.oneWorkbench='open';
   const route=urlFor(activeBook,activeChapter);
   if(frame.getAttribute('src')!==route)frame.src=route;
+  else focusRequestedONE();
   close.focus({preventScroll:true});
  }
  function closeWorkbench(){
@@ -86,7 +107,10 @@
   frame.removeAttribute('src');
   open.focus({preventScroll:true});
  }
- open.addEventListener('click',openWorkbench);
+ open.addEventListener('click',()=>openWorkbench('view-chapter'));
+ for(const button of launchButtons){
+  button.addEventListener('click',()=>openWorkbench(button.dataset.oneLaunch));
+ }
  close.addEventListener('click',closeWorkbench);
  pane.addEventListener('keydown',e=>{
   if(e.key==='Escape'){e.preventDefault();closeWorkbench()}
