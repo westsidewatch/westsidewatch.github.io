@@ -9,7 +9,16 @@ const js=read('js/p2-emmaus-one-workbench.js');
 const host=read('js/p2-emmaus-olive-preview.js');
 const editorial=read('js/p2-emmaus-editorial-context.js');
 assert.match(html,/id="em-one-context"/,'the chapter displays a central ONE atlas and chronology');
-assert.match(html,/id="em-book-drawer" hidden/,'all 66 books are collapsed into one accessible chooser');
+assert.match(html,/id="emmaus-rail"/,'the 66-book horizontal selector is restored and always visible');
+assert.doesNotMatch(html,/id="em-book-drawer"/,'the distracting duplicate selection drawer is removed');
+assert.match(html,/class="emmaus__scripture-frame"/,'a separate golden scripture frame encloses the entire folio');
+assert.match(html,/LUKE 24:27/,'the gold folio frame is composed with its scripture');
+assert.match(css,/#emmaus \.emmaus__scripture-frame\{/,'gold scripture frame is rendered as one structural element');
+assert.match(css,/#emmaus \.emmaus__study\{[\s\S]*?box-shadow:none!important/,'ONE layout removes competing nested panel borders');
+assert.match(css,/#emmaus \.emmaus__rail\{[\s\S]*?overflow-x:auto!important/,'restored book rail scrolls horizontally');
+assert.match(html,/id="em-one-open"/,'one primary action opens the original ONE workstation');
+assert.doesNotMatch(html,/id="em-book-toggle"/,'no competing book-button action');
+assert.match(html,/id="em-study-enter"[^>]*hidden/,'duplicate workbench link is hidden');
 assert.match(editorial,/study\?\.map/,'the atlas reuses actual ONE chapter maps');
 assert.match(editorial,/data\?\.events/,'chronology comes directly from canonical ONE data');
 const canonicalLazy=read('js/p2-emmaus-one-data-lazy.js');
@@ -49,14 +58,19 @@ const {chromium}=require('playwright');
    }));
    assert.equal(imgRule.background,'none','NO engraved decorative illustration inside the ONE reading folio');
    assert.equal(imgRule.before,'none');assert.equal(imgRule.after,'none');
-   assert.equal(await page.locator('#em-book-drawer').isVisible(),false,'no strip of 66 distracting buttons occupies the folio');
-   await page.locator('#em-book-toggle').click();
-   assert.equal(await page.locator('#em-book-drawer').isVisible(),true);
+   assert.equal(await page.locator('#emmaus-rail').isVisible(),true,
+    'the approved horizontal 66-book navigation must remain permanently visible');
    assert.equal(await page.locator('#emmaus-rail [data-book]').count(),66);
-   await page.locator('#em-book-search').fill('Romans');
-   assert.equal(await page.locator('#emmaus-rail [data-book="45"]').isVisible(),true);
-   await page.locator('#emmaus-rail [data-book="45"]').click();
-   assert.equal(await page.locator('#em-book-drawer').isVisible(),false);
+   const frameDesign=await page.locator('#emmaus .emmaus__scripture-frame').evaluate(el=>({
+    border:getComputedStyle(el).borderTopStyle,
+    color:getComputedStyle(el).borderTopColor,
+    bounds:el.getBoundingClientRect().toJSON()
+   }));
+   assert.equal(frameDesign.border,'solid','the whole left folio has one golden scripture outline');
+   const oneControls=await page.locator('#emmaus .emmaus__one-toolbar button:visible').count();
+   assert.equal(oneControls,1,'one primary ONE call-to-action, not repeated neon controls');
+   // 66-volume selection is the original live rail; do not introduce a second UI.
+   await page.locator('#emmaus-rail [data-book="45"]').evaluate(el=>el.click());
    await page.waitForTimeout(90);
    assert.equal(await page.locator('#em-one-chapter-grid button').count(),16,'Romans shows the real 16 chapters');
    await page.locator('#em-one-chapter-grid [data-one-chapter="8"]').click();
