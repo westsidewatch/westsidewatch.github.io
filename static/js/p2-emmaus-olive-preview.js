@@ -65,9 +65,17 @@
   selectGalleryForBook(number);
  }
  for(const item of books){
-  const b=document.createElement('button');b.type='button';b.className='emmaus__number';b.dataset.book=String(item[0]);
-  b.innerHTML=String(item[0]).padStart(2,'0')+'<span>BOOK</span>';
-  b.setAttribute('aria-label',String(item[0]).padStart(2,'0')+' '+item[1]+' / '+item[2]);
+  const b=document.createElement('button');
+  b.type='button';b.className='emmaus__number';b.dataset.book=String(item[0]);
+  const zh=document.createElement('span');
+  zh.className='emmaus__number-zh';zh.lang='zh-Hant';zh.textContent=item[1];
+  const en=document.createElement('span');
+  en.className='emmaus__number-en';en.lang='en';en.textContent=item[2];
+  const numeral=document.createElement('strong');
+  numeral.className='emmaus__number-index';numeral.textContent=String(item[0]).padStart(2,'0');
+  b.append(zh,en,numeral);
+  b.setAttribute('aria-label','第 '+item[0]+' 卷：'+item[1]+' / '+item[2]);
+  b.title=item[1]+' · '+item[2]+' · 第 '+item[0]+' 卷';
   b.addEventListener('click',()=>selectBook(item[0]));rail.append(b);
  }
  rail.addEventListener('keydown',e=>{
