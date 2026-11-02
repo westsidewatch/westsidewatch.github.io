@@ -74,7 +74,7 @@ assert(js.includes("sourceCover.style.transform='perspective(6400px)'"),
  'first turn must rotate the ACTUAL Magazine right cover, not an arriving green cover');
 assert(js.includes('ensureMagazineUnderlay(sourceDoc,sourceCover)'),
  'ONE green cover is only the NEXT page behind the original Magazine cover');
-assert(js.includes('const greenAngle=-87*archive'),
+assert(js.includes('const greenAngle=-178*archive'),
  'the green cover itself turns only during the SECOND flip');
 assert(js.includes("emRight.style.visibility=move>=.999?'visible':'hidden'"),
  'P2 right overlay must not occlude the original Magazine cover turning');
@@ -374,8 +374,8 @@ const {chromium}=require('playwright');
     assert.match(await page.locator('#em-study-detail').textContent(),/以馬忤斯/);
     await page.locator('#em-tab-background').click();
    }else{
-    assert.equal(await page.locator('.emmaus__study-tools').evaluate(el=>getComputedStyle(el).display),'none',
-     'phone intentionally uses a readable single-column extract instead of forcing desktop tabs into 2/3 of 390px');
+    assert.equal(await page.locator('.emmaus__study-tools').evaluate(el=>getComputedStyle(el).display),'flex',
+     'all six ONE study views remain accessible on mobile without opening another website');
     assert.equal(await page.locator('.emmaus__study-reading').evaluate(el=>getComputedStyle(el).display),'flex');
     const studyHeight=await page.locator('#emmaus-study').evaluate(el=>el.getBoundingClientRect().height);
     assert(studyHeight<260,'phone study excerpt does not leave a half-empty fixed-height box');
@@ -441,6 +441,8 @@ const {chromium}=require('playwright');
    });
    assert(nativeTurn.coverStyle?.includes('rotateY(')||nativeTurn.coverStyle?.includes('rotateX('),
     'first turn physically rotates the original Westside Watch Magazine cover');
+   assert(nativeTurn.coverStyle?.includes('perspective(6400px)'),
+    'first Magazine page is a gently hinged folio, not a crop-mask or a giant wedge');
    assert(nativeTurn.coverWidth>0&&nativeTurn.contentsWidth>0,
     'the native cover and Contents have not been resized out of the spread');
    assert(nativeTurn.leafPresent&&nativeTurn.leafVisible==='visible',
@@ -453,6 +455,10 @@ const {chromium}=require('playwright');
    await page.waitForTimeout(160);
    assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'green');
    assert.equal(await page.locator('#em-entry-cover').isVisible(),true);
+   const toolsRail=await page.locator('#em-context-tools').evaluate(el=>({parent:el.parentElement?.id,tabs:el.querySelectorAll('[data-study-view]').length,links:el.querySelectorAll('[data-one-launch]').length}));
+   assert.equal(toolsRail.parent,'em-one-context','all ONE study functions belong in the right research rail');
+   assert.equal(toolsRail.tabs,6,'ONE includes story, history, cross references, questions, map and preparation');
+   assert.equal(toolsRail.links,4,'ONE full chapter, 66-book library, calendar and local groups are available');
    assert.equal(await page.locator('#proof-original').evaluate(frame=>{
     const doc=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
     return !!doc?.getElementById('p2-emmaus-magazine-underleaf');
