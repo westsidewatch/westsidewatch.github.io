@@ -180,11 +180,24 @@
  const studyTabs=[...document.querySelectorAll('[data-study-view]')];
  let currentBookStudy=null,currentStudyView='background';
  let selectedChapter=24;
+ // Actual canonical location is a second, large editorial masthead.
+ // It must follow every book and chapter selection, never stay in the footer.
+ function chapterZh(n){
+  const digit=['','一','二','三','四','五','六','七','八','九'];
+  if(n<10)return digit[n];
+  if(n<20)return '十'+(n===10?'':digit[n%10]);
+  if(n<100)return digit[Math.floor(n/10)]+'十'+(n%10?digit[n%10]:'');
+  const h=Math.floor(n/100),tail=n%100;
+  return digit[h]+'百'+(tail?(tail<10?'零':'')+chapterZh(tail):'');
+ }
  function renderBookStudy(number,chapter){
   const item=books[number-1],D=window.ONE_DATA;
   // Only show original ONE studies available in the loaded canonical record.
   const source=number===42?D.luke:number===40?D.matthew:D.studyBooks?.[number]||null;
   selectedChapter=Math.min(item[3],Math.max(1,Number(chapter)||(number===42?24:1)));
+  const currentChapter=$('#em-current-chapter-number'),currentChapterZh=$('#em-current-chapter-zh');
+  if(currentChapter)currentChapter.textContent=String(selectedChapter).padStart(2,'0');
+  if(currentChapterZh)currentChapterZh.textContent='第'+chapterZh(selectedChapter)+'章';
   const detailed=source?.chapterStudies?.[String(selectedChapter)]||null;
   currentBookStudy=detailed;
   $('#em-study-feature').textContent=(detailed?'ONE / FEATURED CHAPTER':'ONE / BOOK INDEX')+
