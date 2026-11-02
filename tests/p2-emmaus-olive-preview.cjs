@@ -53,13 +53,20 @@ assert.match(js,/const coverFolio=validMagazine\?coverBounds/,
  'the right gallery takes its exact 5:8 size from the approved Magazine cover');
 assert.match(js,/const fullLeft=\{x:master\.x,y:master\.y,w:fullRight\.x-master\.x/,
  'ONE takes the remaining Contents width rather than forcing the cover to one-third');
-assert.match(js,/const movingArt=\{x:lerp\(sourceArt\.x,targetX,move\),y:sourceArt\.y/,
- '02→03 Doré plate moves horizontally only, without vertical displacement');
-assert.match(js,/w:sourceArt\.w,h:sourceArt\.h/,'the moving source width and height never change');
-assert.match(js,/transferFigure\.style\.clipPath='inset\('/,
- 'the narrow cover crops the artwork instead of scaling it');
-assert.match(css,/#dual-dore-plate \.dual-dore-plate__image\{[^}]*object-fit:cover/,
- 'projected Doré artwork preserves the exact same crop and scale as its source Contents plate');
+const binding=fs.readFileSync(path.join(root,'static/css/p2-emmaus-bookbinding-v7.css'),'utf8');
+assert.match(js,/const move=smooth\\(\\(distance-6\\.50\\)\\/\\.72\\)/,
+ 'first turn must be bound to P2 scroll position');
+assert.match(js,/const archive=smooth\\(\\(distance-7\\.66\\)\\/\\.64\\)/,
+ 'second turn follows the green-cover hold, with no autoplay');
+assert.match(js,/const oneDrop=smooth\\(\\(distance-8\\.55\\)\\/\\.55\\)/,
+ 'left Magazine image becomes reading paper only AFTER the two right-page turns');
+assert(!js.includes('sourceFigure.cloneNode(true)'),'the original Magazine engraving is never duplicated or moved');
+assert.match(js,/emCover\\.style\\.clipPath=greenClip/,'ONE cover uses lightweight editorial clipping');
+assert(binding.includes('/one/cover-texture-antique-green.png')&&
+ binding.includes('/one/cover-golden-shoot-frame-transparent.png'),
+ 'P2 directly reuses real ONE cloth and gold master');
+assert(html.includes('路加福音 24:27')&&html.includes('路加福音 24:32'),
+ 'the Emmaus cover must show both canonical section scripture references');
 assert.match(js,/olive\.style\.inset='auto'/,
  'the Olive stage is also constrained to the Magazine geometry');
 assert.match(js,/active:distance<6\.6/,
@@ -93,7 +100,8 @@ assert.match(js,/selectGalleryForBook\(number\)/,'book selection changes gallery
 assert.match(js,/renderBookStudy\(number\)/,'book selection also changes ONE study view');
 assert.match(js,/Math\.min\(distance,6\.5\)/,'does not stretch the approved Church/Magazine timing');
 assert.match(js,/const move=.*6\.50[\s\S]*oliveIn=.*9\.44/,'both stages share a reversible scroll timeline');
-assert.match(js,/transferFigure=sourceFigure\.cloneNode\(true\)/,'handoff projects the original Doré artwork without removing the Magazine DOM node');
+assert.doesNotMatch(js,/transferFigure=sourceFigure\\.cloneNode\\(true\\)/,
+ 'handoff must not clone or horizontally move Magazine engraving');
 assert.doesNotMatch(js,/appendChild\(sourceFigure\)/,'Magazine source remains inside its original iframe');
 assert.doesNotMatch(js,/sourceTile\.style\.opacity=String\(1-smooth/,'Magazine Contents never disappear to expose the unrelated background film');
 assert.doesNotMatch(js,/sourceCover\.style\.opacity=String\(1-smooth/,'approved cover remains in the continuous frame during transfer');
@@ -259,9 +267,9 @@ const {chromium}=require('playwright');
    await page.screenshot({path:path.join(groundDir,viewport.width+'-fixed-ground-bible.png')});
    // New 02 -> 03 stage: original ONE green-and-gilt title cover first,
    // opened papyrus and readable selected-book masthead only afterwards.
-   await page.locator('[data-jump="7.85"]').click();
+   await page.locator('[data-jump="7.42"]').click();
    await page.waitForTimeout(120);
-   assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'closed');
+   assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'green');
    const coverState=await page.locator('#em-entry-cover').evaluate(el=>({
     visible:getComputedStyle(el).visibility,
     gilded:getComputedStyle(el.querySelector('.emmaus__entry-cover-gilt')).maskImage,
@@ -272,7 +280,7 @@ const {chromium}=require('playwright');
    await page.screenshot({path:path.join(groundDir,viewport.width+'-emmaus-green-one-cover.png')});
    await page.locator('[data-jump="9.10"]').click();
    await page.waitForTimeout(150);
-   assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'open');
+   assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'reading');
    assert.equal(await page.locator('#em-entry-cover').isVisible(),false,'book cover disappears after opening');
 
    await page.locator('[data-jump="11.10"]').click();await page.waitForTimeout(220);
@@ -345,99 +353,54 @@ const {chromium}=require('playwright');
    const after=await page.evaluate(()=>({pageY:scrollY,railX:document.getElementById('emmaus-rail').scrollLeft}));
    assert(after.railX>before.railX,'wheel should browse books without requiring memorized volume numbers');
    assert(Math.abs(after.pageY-before.pageY)<5,'wheel must not unexpectedly exit Emmaus');
-   // Verify one physical engraving moves out of and back into the already
-   // published Magazine iframe, without an inserted second picture.
-   await page.evaluate(()=>{
-    const el=document.getElementById('proof-track');
-    scrollTo({top:el.getBoundingClientRect().top+scrollY+7.0*innerHeight,behavior:'instant'});
-   });
-   await page.waitForTimeout(350);
-   const magazineVisibility=await page.locator('#proof-original').evaluate(frame=>{
-    const doc=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
-    const left=doc?.getElementById('dual-contents'),right=doc?.getElementById('dual-cover');
-    return [left?Number(getComputedStyle(left).opacity):0,right?Number(getComputedStyle(right).opacity):0];
-   });
-   assert(magazineVisibility[0]>.9&&magazineVisibility[1]>.9,
-    '61%: existing Contents and cover remain visibly connected behind the moving original plate');
-   assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),1,
-    'the same Doré images are projected into the shared P2 transition stage');
-   const originalPlateState=await page.locator('#proof-original').evaluate(frame=>{
+   // V8: verify the original square Doré NEVER moves, no clone is created,
+   // first flip reveals ONE's green cover at the right in its 5:8 frame,
+   // second flip uncovers the archive, then the left becomes CUV/KJV reading.
+   const sourcePlate=async()=>page.locator('#proof-original').evaluate(frame=>{
     const source=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
     const plate=source?.getElementById('dual-dore-plate');
-    return {parent:plate?.parentElement?.id,stillConnected:plate?.isConnected,
-     visibility:plate?.style.visibility};
+    const box=plate?.getBoundingClientRect();
+    return {parent:plate?.parentElement?.id,visible:plate?.style.visibility,
+     box:box?{x:box.x,y:box.y,w:box.width,h:box.height}:null};
    });
-   assert.deepEqual(originalPlateState,{parent:'dual-contents',stillConnected:true,visibility:'hidden'},
-    'the source engraving remains structurally anchored in the approved Magazine');
-   const proportions=await page.evaluate(()=>{
-    const stage=document.getElementById('proof-stage');
-    const projection=stage.querySelector(':scope > #dual-dore-plate');
-    const nested=document.getElementById('proof-original')?.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
-    const doc=nested?.contentDocument;
-    const square=doc?.getElementById('dual-contents');
-    const cover=doc?.getElementById('dual-cover');
-    if(!projection||!square||!cover)return null;
-    const r=projection.getBoundingClientRect(),sr=stage.getBoundingClientRect();
-    const a=square.getBoundingClientRect(),b=cover.getBoundingClientRect(),fr=nested.getBoundingClientRect();
-    const base=document.getElementById('proof-original').getBoundingClientRect();
-    const xy=t=>({left:base.left+fr.left+t.left,top:base.top+fr.top+t.top,
-      right:base.left+fr.left+t.right,bottom:base.top+fr.top+t.bottom});
-    const x=xy(a),y=xy(b),folio={left:Math.min(x.left,y.left),top:Math.min(x.top,y.top),
-      right:Math.max(x.right,y.right),bottom:Math.max(x.bottom,y.bottom)};
-    return {art:{left:r.left,top:r.top,right:r.right,bottom:r.bottom,w:r.width,h:r.height},
-     folio,sourceRatio:a.width/a.height,coverRatio:b.width/b.height,
-     imageFit:getComputedStyle(projection.querySelector('img')).objectFit,
-     stage:{left:sr.left,right:sr.right}};
-   });
-   assert(proportions,'the Magazine and projected engraving are measurable in Chromium');
-   if(viewport.width>820){
-    assert(Math.abs(proportions.sourceRatio-1)<.09,'Contents physical page remains square');
-    assert(Math.abs(proportions.coverRatio-.625)<.09,'the original cover remains 5:8');
-    assert(Math.abs(proportions.art.w/proportions.art.h-proportions.sourceRatio)<.025,
-     'the moving Doré square retains its original intrinsic folio proportion');
-    assert(proportions.art.left>=proportions.folio.left-3&&
-     proportions.art.right<=proportions.folio.right+3&&
-     proportions.art.top>=proportions.folio.top-3&&
-     proportions.art.bottom<=proportions.folio.bottom+3,
-     'the transitioning Doré plate never expands outside the existing Magazine folio');
-   }
-   assert.equal(proportions.imageFit,'cover','the moving plate uses the original left-page image crop, without a change of scale');
-   if(viewport.width>820){
-    const originalSquare=await page.locator('#proof-original').evaluate(frame=>{
-     const nested=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
-     return nested?.contentDocument?.getElementById('dual-contents')?.getBoundingClientRect().width;
-    });
-    assert(Math.abs(proportions.art.w-originalSquare)<3 &&
-      Math.abs(proportions.art.h-originalSquare)<3,
-     '03 Doré plate must retain the EXACT Contents dimensions during horizontal slide');
-    const pose=await page.locator('#proof-stage > #dual-dore-plate').evaluate(el=>({
-     w:el.getBoundingClientRect().width,
-     h:el.getBoundingClientRect().height,
-     crop:getComputedStyle(el).clipPath
-    }));
-    assert(pose.crop.startsWith('inset('),'moving physical plate uses a page crop, not scaling');
-    await page.evaluate(()=>{
-     const el=document.getElementById('proof-track');
-     scrollTo({top:el.getBoundingClientRect().top+scrollY+7.40*innerHeight,behavior:'instant'});
-    });
-    await page.waitForTimeout(180);
-    const finalPose=await page.locator('#proof-stage > #dual-dore-plate').boundingBox();
-    assert(finalPose && Math.abs(finalPose.width-pose.w)<3 &&
-      Math.abs(finalPose.height-pose.h)<3,
-      'Doré plate stays exactly the same size when it reaches the right cover');
-    await page.evaluate(()=>{
-     const el=document.getElementById('proof-track');
-     scrollTo({top:el.getBoundingClientRect().top+scrollY+7.00*innerHeight,behavior:'instant'});
-    });
-    await page.waitForTimeout(150);
-   }
-   const transferShot=path.join(root,'artifacts/p2-emmaus-olive',viewport.width+'-magazine-plate-transfer.png');
-   fs.mkdirSync(path.dirname(transferShot),{recursive:true});
-   await page.screenshot({path:transferShot});
-   await page.locator('[data-jump="6.50"]').click();
-   await page.waitForTimeout(200);
+   const baseline=await sourcePlate();
+   assert(baseline?.box&&baseline.parent==='dual-contents','original magazine engraving remains attached to Contents');
    assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),0,
-    'reverse scrolling restores the engraving to its original magazine document');
+     'the old travelling Doré plate projection must not be created');
+   await page.locator('[data-jump="7.42"]').click();
+   await page.waitForTimeout(160);
+   assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'green');
+   assert.equal(await page.locator('#em-entry-cover').isVisible(),true);
+   const firstState=await page.locator('#em-entry-cover').evaluate(el=>({
+     side:el.parentElement?.id,clip:getComputedStyle(el).clipPath,
+     image:getComputedStyle(el.querySelector('.emmaus__entry-cover-leaf')).backgroundImage
+   }));
+   assert.equal(firstState.side,'emmaus-gallery','the ONE green front cover replaces the RIGHT magazine cover');
+   assert.match(firstState.image,/cover-texture-antique-green/);
+   assert.match(firstState.clip,/inset\\(0px 0% 0px 0px\\)|inset\\(0px 0% 0px 0%\\)/,
+     'full green cover is visible after first turn');
+   await page.screenshot({path:path.join(groundDir,viewport.width+'-one-green-cover-right.png')});
+   await page.locator('[data-jump="8.16"]').click();
+   await page.waitForTimeout(140);
+   assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'second-turn');
+   const mid=await page.locator('#em-entry-cover').evaluate(el=>getComputedStyle(el).clipPath);
+   assert.match(mid,/inset\\(/,'second turn is a scroll-owned mask');
+   await page.screenshot({path:path.join(groundDir,viewport.width+'-one-second-turn.png')});
+   await page.locator('[data-jump="9.10"]').click();
+   await page.waitForTimeout(150);
+   const settled=await sourcePlate();
+   assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),0);
+   assert.equal(settled.parent,'dual-contents');
+   assert.equal(settled.visible,baseline.visible,'the original left engraving was not hidden or adopted');
+   assert(Math.abs(settled.box.w-baseline.box.w)<3,'the original engraving retains its dimensions');
+   assert.equal(await page.locator('#emmaus').getAttribute('data-cover-state'),'reading');
+   assert.equal(await page.locator('#em-entry-cover').isVisible(),false);
+   await page.locator('[data-jump="6.50"]').click();
+   await page.waitForTimeout(180);
+   assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),0,
+     'reverse scrolling restores the original Magazine without transient clones');
+   await page.locator('[data-jump="9.10"]').click();
+   await page.waitForTimeout(150);
    // Hold the established Emmaus spread before moving into Olive.
    await page.locator('[data-jump="9.10"]').click();
    await page.waitForTimeout(150);
