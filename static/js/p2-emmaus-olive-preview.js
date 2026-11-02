@@ -439,7 +439,6 @@
   // Both rectangles derive from the native Magazine layout, not projected
   // post-transform bounding boxes (which would drift every scroll frame).
   const w=cover.offsetWidth,h=cover.offsetHeight;
-  magazineUnderlay.style.cssText+=''; // Keep source author styles untouched.
   magazineUnderlay.style.left=cover.offsetLeft+'px';
   magazineUnderlay.style.top=cover.offsetTop+'px';
   magazineUnderlay.style.width=w+'px';
@@ -482,6 +481,7 @@
      oldMagazineRight.style.zIndex=sourceOriginalCoverZ;
     }
    }
+   if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
    emmaus.style.visibility='hidden';emmaus.style.pointerEvents='none';
    emmaus.inert=true;emmaus.setAttribute('aria-hidden','true');
    olive.style.visibility='hidden';olive.style.pointerEvents='none';
@@ -523,14 +523,8 @@
   // Doré illustration only after the green cover finishes its second turn.
   emRight.style.setProperty('--em-binding-reveal',String(oneDrop));
   emPlates.style.opacity=String(coverOpen);
-  // A restrained page TURN, not a wipe: the actual Magazine right cover
-  // hinges away while the green folio comes forward on the SAME spine.
-  // The green folio then turns away to uncover the right-hand Doré plate.
-  // Only perspective rotateY is animated; no paper curls, tween timer or
-  // scaling of either source. All angles are pure scroll progress.
-  // A single, fixed 5:8 ONE folio turns at the right-side inner spine.
-  // Never 3D-rotate the live nested Magazine DOM: its own perspective and
-  // multi-layer city cover produced the giant triangular distortion in V9.
+  // First turn happens on the original right-hand Magazine cover inside the
+  // established dual-page source; this ONE layer remains flat until turn two.
   const greenAngle=-87*archive;
   emCover.style.clipPath='none';
   emCover.style.transform='perspective(1800px) rotateY('+greenAngle.toFixed(2)+'deg)';
