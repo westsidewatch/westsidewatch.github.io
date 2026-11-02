@@ -140,3 +140,37 @@
  #emmaus .emmaus__context-tools{min-height:210px!important;overflow:visible!important}
  #emmaus .emmaus__context-tools .emmaus__study-detail{min-height:80px!important}
 }
+
+/* Magazine → ONE: each page is a complete physical rectangle.
+ * The surrounding page can extend to the LEFT of its original right-hand
+ * bounds. The image contents themselves remain cropped to their own page,
+ * not to the old right-hand column. */
+#emmaus > .emmaus__right{
+ overflow:visible!important;
+ transform-style:preserve-3d!important;
+}
+#emmaus > .emmaus__right > .emmaus__entry-cover{
+ transform-origin:left center!important;
+ transform-style:preserve-3d!important;
+ overflow:visible!important;
+ backface-visibility:visible!important;
+ contain:none!important;
+ clip-path:none!important;
+}
+#emmaus .emmaus__entry-cover-leaf{
+ backface-visibility:hidden!important;
+ overflow:hidden!important;
+}
+/* A single continuous green verso, seen when the second cover has passed
+ * the spine. No detached vertical strips or shape clipping. */
+#emmaus > .emmaus__right > .emmaus__entry-cover::after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609')
+   center / cover no-repeat;
+ border:1px solid rgba(206,189,116,.65);
+ transform:rotateY(180deg) translateZ(1px);
+ backface-visibility:hidden;
+}
+#emmaus .emmaus__plates{
+ overflow:hidden!important;
+}
