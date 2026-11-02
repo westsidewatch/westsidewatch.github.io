@@ -38,11 +38,11 @@
   node.nodeValue=prefix;
   node.after(span);
  }
- function addTargets(node){
+ function addTargets(node,deep=false){
   const el=node?.nodeType===1?node:node?.parentElement;
   if(!el||!roots.some(root=>root===el||root.contains(el)))return;
   if(el.matches?.(selector))pending.add(el);
-  if(el.querySelectorAll)for(const desc of el.querySelectorAll(selector))pending.add(desc);
+  if(deep&&el.querySelectorAll)for(const desc of el.querySelectorAll(selector))pending.add(desc);
   const closest=el.closest?.(selector);
   if(closest)pending.add(closest);
  }
@@ -56,19 +56,19 @@
   queued=true;
   requestAnimationFrame(flush);
  }
- for(const root of roots)addTargets(root);
+ for(const root of roots)addTargets(root,true);
  schedule();
  const observer=new MutationObserver(records=>{
   for(const record of records){
    if(record.type==='characterData'){addTargets(record.target);continue;}
    addTargets(record.target);
-   for(const node of record.addedNodes)addTargets(node);
+   for(const node of record.addedNodes)addTargets(node,true);
   }
   if(pending.size)schedule();
  });
  for(const root of roots)observer.observe(root,{subtree:true,childList:true,characterData:true});
  // P2 appenders may request a cheap refresh; this never queries iframe content.
  window.WestsideEditorialOrphans={refresh(node){
-  addTargets(node||document.getElementById('emmaus'));schedule();
+  addTargets(node||document.getElementById('emmaus'),true);schedule();
  }};
 })();
