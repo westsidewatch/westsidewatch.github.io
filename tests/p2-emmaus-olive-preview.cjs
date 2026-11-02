@@ -70,7 +70,7 @@ assert(js.includes('const archive=smooth((distance-7.66)/.64)'), 'second turn fo
 assert(js.includes('const oneDrop=smooth((distance-8.55)/.55)'), 'reading appears only after second turn');
 assert(!js.includes('sourceFigure.cloneNode(true)'),'the original Magazine engraving is never duplicated or moved');
 assert(js.includes('emCover.style.transform='),'ONE folio performs a hinge turn, not a full-screen clipping wipe');
-assert(js.includes("sourceCover.style.transform='perspective(1900px)'"),
+assert(js.includes("sourceCover.style.transform='perspective(6400px)'"),
  'first turn must rotate the ACTUAL Magazine right cover, not an arriving green cover');
 assert(js.includes('ensureMagazineUnderlay(sourceDoc,sourceCover)'),
  'ONE green cover is only the NEXT page behind the original Magazine cover');
