@@ -6,6 +6,21 @@ const html=fs.readFileSync(path.join(root,'static/experiments/p2-emmaus-olive-ha
 const js=fs.readFileSync(path.join(root,'static/js/p2-emmaus-olive-preview.js'),'utf8');
 const css=fs.readFileSync(path.join(root,'static/css/p2-emmaus-olive-preview.css'),'utf8');
 const engraving=fs.readFileSync(path.join(root,'static/css/westside-engraving-authority.css'),'utf8');
+const designOS=fs.readFileSync(path.join(root,'static/css/westside-design-os.css'),'utf8');
+const orphanRuntime=fs.readFileSync(path.join(root,'static/js/westside-editorial-orphans.js'),'utf8');
+assert(html.includes('/js/westside-editorial-orphans.js?'),
+ 'P2 must load its Design OS anti-orphan text compositor');
+assert(designOS.includes('[data-ws-editorial-orphans]'),
+ 'orphan prevention must be scoped through canonical Design OS');
+assert(designOS.includes('.ws-editorial-no-orphan-tail'),
+ 'OS provides only the minimal inline no-break final text unit');
+assert(orphanRuntime.includes("const roots=[document.getElementById('emmaus'),document.getElementById('olive-proof')]"),
+ 'the Magazine and Church original pages must remain protected and untouched');
+assert(orphanRuntime.includes('const observer=new MutationObserver'),
+ 'newly selected chapters must receive the same automatic orphan correction');
+assert(!orphanRuntime.includes('innerHTML=')&&!orphanRuntime.includes('\\u00a0'),
+ 'no destructive HTML replacement or NBSP rewriting of canonical Bible text');
+
 
 const fiveCSS=fs.readFileSync(path.join(root,'static/css/p2-five-v15-continuation.css'),'utf8');
 const fiveJS=fs.readFileSync(path.join(root,'static/js/p2-five-v15-continuation.js'),'utf8');
@@ -210,6 +225,19 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('.emmaus__number').count(),66,'all 66 ONE books have selectable numbers');
    assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false','Emmaus visible in its reading dwell');
    assert.equal(await page.locator('#em-book-en').textContent(),'Luke');
+   await page.waitForFunction(()=>document.querySelector('.emmaus__scripture-zh .ws-editorial-no-orphan-tail'),{timeout:10000});
+   const orphanProof=await page.locator('.emmaus__scripture-zh').first().evaluate(el=>{
+     const tail=el.querySelector('.ws-editorial-no-orphan-tail');
+     const style=tail?getComputedStyle(tail):null;
+     return {value:el.textContent,tail:tail?.textContent,whiteSpace:style?.whiteSpace,
+       count:el.querySelectorAll('.ws-editorial-no-orphan-tail').length,
+       full:String(el.firstChild?.nodeValue||'')+String(tail?.textContent||'')};
+   });
+   assert(orphanProof.tail?.length>=3,'the last Chinese phrase should not break into an isolated character');
+   assert.equal(orphanProof.whiteSpace,'nowrap','the Design OS tail is one unbroken inline phrase');
+   assert.equal(orphanProof.count,1,'paragraph receives only one protected tail');
+   assert.equal(orphanProof.value,orphanProof.full,'reader copy and canonical text stay identical');
+
    assert.equal(await page.locator('.emmaus__folio-layer').count(),0,'no second sevenfold spine is created');
    const surroundProof=await page.locator('#p2-realm-background').evaluate(el=>({
     mode:document.body.dataset.p2Surround,
