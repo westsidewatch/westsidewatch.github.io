@@ -229,7 +229,8 @@ const {chromium}=require('playwright');
      cols:getComputedStyle(el).gridTemplateColumns,
      title:document.querySelector('#emmaus .emmaus__identity')?.getBoundingClientRect().height
    }));
-   assert.equal(editorialGrid.display,'grid','main reading folio must use designed grid');
+   assert.equal(editorialGrid.display,viewport.width>900?'grid':'flex',
+    'desktop reading uses two-column editorial grid; small screens use accessible single-column reading');
    assert(editorialGrid.title>50,'EMMAUS retains a dominant editorial title');
    const frameDesign=await page.locator('#emmaus .emmaus__scripture-frame').evaluate(el=>({
     border:getComputedStyle(el).borderTopStyle,
