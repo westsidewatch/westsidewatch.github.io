@@ -9,6 +9,27 @@ const js=read('js/p2-emmaus-one-workbench.js');
 const host=read('js/p2-emmaus-olive-preview.js');
 const editorial=read('js/p2-emmaus-editorial-context.js');
 const v5=read('css/p2-emmaus-editorial-v5.css');
+const v6=read('css/p2-emmaus-scripture-v6.css');
+const verseJS=read('js/p2-emmaus-scripture-v6.js');
+const lukeBilingual=JSON.parse(read('data/p2-emmaus-scripture-v6/Luke.json'));
+const johnBilingual=JSON.parse(read('data/p2-emmaus-scripture-v6/John.json'));
+for(const [index,chapters,data] of [[42,24,lukeBilingual],[43,21,johnBilingual]]){
+ assert.equal(data.translations.cuv.bookId,index,'local Chinese CUV book identity is canonical');
+ assert.equal(data.translations.kjv.bookId,index,'local English KJV book identity is canonical');
+ assert.equal(data.translations.cuv.chapters.length,chapters,'CUV must cover the full Gospel');
+ assert.equal(data.translations.kjv.chapters.length,chapters,'KJV must cover the full Gospel');
+}
+assert.match(html,/id="em-scripture-verses"/,'a real scrolling verse reader belongs to P2');
+assert.match(html,/p2-emmaus-scripture-v6\\.js/,'the bilingual reader loads in the existing P2 preview');
+assert(html.indexOf('id="em-one-chapter-grid"')<html.indexOf('class="emmaus__current-chapter"'),
+ 'chapter index is inside the selected book before the current chapter masthead');
+assert.match(v6,/var\\(--ws-one-paper/,'reader uses canonical ONE papyrus');
+assert.match(v6,/var\\(--ws-night/,'reader uses the canonical night-blue ink');
+assert.match(v6,/var\\(--ws-first-light/,'selected chapters and verses use OS gold contrast');
+assert.match(verseJS,/translations\\.cuv/,'each rendered verse contains real Traditional CUV text');
+assert.match(verseJS,/translations\\.kjv/,'each rendered verse contains English KJV text');
+assert.match(verseJS,/raw\\.githubusercontent\\.com/,'all other selected books use pinned per-book translations');
+
 assert.match(html,/class="emmaus__book-switch emmaus__source-hero"/,
  'the selected Bible book has a real masthead below EMMAUS');
 assert.match(html,/id="em-current-chapter-number"/,
@@ -69,6 +90,16 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#em-one-chapter-grid button').count(),24);
    assert.equal(await page.locator('#em-current-chapter-number').textContent(),'24');
    assert.equal(await page.locator('#em-current-chapter-zh').textContent(),'第二十四章');
+   assert.equal(await page.locator('#em-one-chapter-grid').evaluate(el=>!!el.closest('.emmaus__book-current')),true,
+    'chapter picker lives immediately beneath the selected book title');
+   await page.waitForFunction(()=>document.querySelector('#emmaus')?.dataset.scriptureState==='ready'&&
+    document.querySelector('#emmaus')?.dataset.scriptureBook==='42',{timeout:25000});
+   const firstVerse=page.locator('#em-scripture-verses .emmaus__scripture-verse').first();
+   assert.match(await firstVerse.locator('.emmaus__scripture-zh').textContent(),/七日/);
+   assert.match(await firstVerse.locator('.emmaus__scripture-en').textContent(),/first day of the week/i);
+   assert.equal(await page.locator('#em-scripture-verses .emmaus__scripture-verse').count(),53,
+    'Luke 24 loads the actual canonical full chapter with 53 paired verse rows');
+
    const hero=await page.evaluate(()=>{
     const box=id=>document.querySelector(id).getBoundingClientRect();
     const a=box('#emmaus .emmaus__identity'),b=box('#emmaus .emmaus__source-hero'),
@@ -154,6 +185,16 @@ const {chromium}=require('playwright');
    await page.locator('#em-one-chapter-grid [data-one-chapter="3"]').evaluate(el=>el.click());
    assert.equal(await page.locator('#em-current-chapter-number').textContent(),'03');
    assert.equal(await page.locator('#em-current-chapter-zh').textContent(),'第三章');
+   await page.waitForFunction(()=>document.querySelector('#emmaus')?.dataset.scriptureState==='ready'&&
+    document.querySelector('#emmaus')?.dataset.scriptureBook==='43'&&
+    document.querySelector('#emmaus')?.dataset.scriptureChapter==='3',{timeout:25000});
+   const johnFirst=page.locator('#em-scripture-verses .emmaus__scripture-verse').first();
+   assert.match(await johnFirst.locator('.emmaus__scripture-zh').textContent(),/尼哥德慕/);
+   assert.match(await johnFirst.locator('.emmaus__scripture-en').textContent(),/Nicodemus/i);
+   assert.equal(await page.locator('#em-scripture-verses .emmaus__scripture-verse').count(),36,
+    'John 3 contains 36 CUV/KJV verse pairs');
+   await page.screenshot({path:path.join(dir,viewport.width+'-emmaus-v6-john-03-bilingual.png')});
+
    assert.match(await page.locator('#emmaus .emmaus__identity').textContent(),/EMMAUS/);
    await page.screenshot({path:path.join(dir,viewport.width+'-emmaus-v5-john-chapter-03.png')});
    await page.locator('#emmaus-rail [data-book="45"]').evaluate(el=>el.click());
