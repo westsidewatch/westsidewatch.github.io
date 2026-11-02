@@ -138,6 +138,26 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#emmaus-rail').isVisible(),true,
     'the approved horizontal 66-book navigation must remain permanently visible');
    assert.equal(await page.locator('#emmaus-rail [data-book]').count(),66);
+   // Actual pointer hit testing, not element.click() dispatch: a visible page
+   // with inert/pointer-events:none is a broken reader even if synthetic tests pass.
+   assert.equal(await page.locator('#emmaus').evaluate(el=>el.inert),false,
+     'Emmaus must accept real user input at the documented preview location');
+   const nextVisible=page.locator('#emmaus-rail [data-book="43"]');
+   await nextVisible.scrollIntoViewIfNeeded({timeout:10000});
+   const targetInfo=await nextVisible.evaluate(el=>{
+    const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
+    return {target:el.dataset.book,hit:el===hit||el.contains(hit)};
+   });
+   assert(targetInfo.hit,'book navigator must not be covered by an invisible blocking layer');
+   await nextVisible.click({timeout:10000});
+   await page.waitForFunction(()=>document.getElementById('em-book-zh')?.textContent==='約翰福音',
+    null,{timeout:2500});
+   assert.equal(await page.locator('#emmaus').getAttribute('data-selected-book'),'43',
+    'a real mouse click must synchronously change the selected book');
+   await page.locator('#emmaus-rail [data-book="42"]').click({timeout:10000});
+   await page.waitForFunction(()=>document.getElementById('em-book-zh')?.textContent==='路加福音',
+    null,{timeout:2500});
+
    const labeledRail=await page.locator('#emmaus-rail').evaluate(rail=>{
     const item=n=>{
      const el=rail.querySelector('[data-book="'+n+'"]'),zh=el?.querySelector('.emmaus__number-zh'),
