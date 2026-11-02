@@ -375,3 +375,34 @@
   font-size:25px!important;
  }
 }
+
+/* GOLD CONTRAST / V6.1
+ * OS first-light gold on OS ONE papyrus measures just 2.25:1.
+ * Preserve the original decorative gold for thin rules; derive a dark-ochre
+ * TEXT ink from that same OS token (60% gold / 40% black, about 5.0:1).
+ */
+#emmaus{
+ --em-v6-gold-ink:color-mix(in srgb,var(--em-v6-gold) 60%,black);
+}
+#emmaus .emmaus__source-eyebrow,
+#emmaus #em-current-chapter-number,
+#emmaus .emmaus__book-current > .emmaus__one-chapters .emmaus__one-chapters-head,
+#emmaus .emmaus__book-current .emmaus__one-chapter-grid button[aria-pressed="true"],
+#emmaus .emmaus__scripture-kicker,
+#emmaus .emmaus__translation-pair,
+#emmaus .emmaus__scripture-verse-number,
+#emmaus .emmaus__scripture-source,
+#emmaus .emmaus__study-head,
+#emmaus .emmaus__study-ref,
+#emmaus .emmaus__one-toolbar button,
+#emmaus .emmaus__context article>header span,
+#emmaus .emmaus__study-detail strong,
+#emmaus .emmaus__study-tabs button[aria-selected="true"],
+#emmaus .emmaus__rail .emmaus__number[aria-pressed="true"] .emmaus__number-index{
+ color:var(--em-v6-gold-ink)!important;
+}
+/* Original first-light gold still owns borders and accent strokes. */
+#emmaus .emmaus__book-current .emmaus__one-chapter-grid button[aria-pressed="true"],
+#emmaus .emmaus__study-tabs button[aria-selected="true"]{
+ border-bottom-color:var(--em-v6-gold)!important;
+}
