@@ -366,7 +366,8 @@
   const archive=smooth((distance-7.40)/.28);
   const oneDrop=smooth((distance-7.66)/.78);
   const oliveIn=smooth((distance-9.44)/1.38);
-  const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
+  // The chapter handoff is a single in-place folio reveal, not three reflowing panels.
+  const emShowing=(archive>.001||oneDrop>.001)&&oliveIn<.999,oliveShowing=oliveIn>.001;
   emmaus.style.visibility=emShowing?'visible':'hidden';emmaus.style.opacity='1';emmaus.style.transform='none';
   const emInteractive=oneDrop>.999&&oliveIn<.01;
   emmaus.style.pointerEvents=emInteractive?'auto':'none';emmaus.inert=!emInteractive;
@@ -416,7 +417,7 @@
   if(sourceFrame)sourceFrame.style.opacity=sourceOriginalEditorialOpacity??'';
   // A realm-specific engraved backdrop replaces the film ONLY in the
   // background field, on the existing 02→03 timeline (no new reveal effect).
-  if(realmGround)realmGround.dataset.realm=oliveIn>=.5?'sermon':'bible';
+  if(realmGround)realmGround.dataset.realm='bible';
   emmaus.style.backgroundColor=fixedGround?'transparent'
    :(oneDrop>=.999?'var(--em-paper)':'transparent');
   const lerp=(a,b,p)=>a+(b-a)*p;
@@ -451,8 +452,8 @@
   // the public-domain image host loads during the midpoint of that journey.
   const useArchive=archiveForOlive===null?archiveReady:archiveForOlive;
   // MERSI cadence: move an EXISTING field first; expose the NEW identity in the vacancy second.
-  const morphMove=smooth((oliveIn-.32)/.58);
-  const fieldExit=1-smooth((oliveIn-.79)/.2);
+  // Fade the temporary Magazine projection away before the new folio crosses it.
+  const fieldExit=1-smooth(oliveIn/.12);
   // The actual MAGAZINE 5:8 cover + square Contents + original spine
   // define the protected outer rectangle. Read live DOM geometry; never
   // invent a new 8.5%/9% frame or expand the chapter back to full screen.
@@ -602,76 +603,48 @@
   $('.emmaus__plate-caption').style.opacity=String(annotations);
   $('.emmaus__gold-line').style.opacity=String(annotations);
 
-  olive.style.visibility=oliveShowing?'visible':'hidden';
-  olive.style.opacity='1';olive.style.clipPath='none';
-  olive.style.backgroundColor=fixedGround?'transparent'
-   :(oliveIn>=.999?'#f0eee7':'transparent');
-  olive.style.pointerEvents=oliveIn>.999?'auto':'none';olive.inert=oliveIn<=.999;
-  olive.setAttribute('aria-hidden',oliveIn>.999?'false':'true');
-
-  // Move the EXISTING 241-image right panel, not an extra handoff image:
-  // it is reparented inside the stage just as the earlier Vol.00 original
-  // moved. When scrolling backward it resumes its exact Emmaus position.
-  // At the end the original protected speaker poster appears IN PLACE,
-  // with no translated/scaled second portrait crossing the screen.
-  const panelTravelling=oliveIn>.001&&oliveIn<.999;
-  if(panelTravelling&&!galleryBorrowed){
-   $('#proof-stage').appendChild(emRight);galleryBorrowed=true;
-   emRight.dataset.p2GalleryTransferred='true';
-  }else if(!panelTravelling&&galleryBorrowed){
-   emmaus.appendChild(emRight);galleryBorrowed=false;
+  // 03→04: both complete folios stay at the EXACT same Magazine rectangle.
+  // The incoming REAL Olive page is revealed from right to left INSIDE its
+  // own bounds; no color-only wipe, animated width, image transfer, layout
+  // reflow or separate half-finished layers. Reverse scroll simply reverses
+  // this in-place reveal. All source pages and ONE interaction remain intact.
+  if(galleryBorrowed){
+   emmaus.appendChild(emRight);
+   galleryBorrowed=false;
    emRight.removeAttribute('data-p2-gallery-transferred');
   }
-  const heroRect=oliveHero.getBoundingClientRect();
-  const destination={x:heroRect.left-stageRect.left,y:heroRect.top-stageRect.top,
-                     w:heroRect.width,h:heroRect.height};
-  if(galleryBorrowed){
-   poseRect(emRight,fullRight,destination,morphMove);
-  }else{
-   poseRect(emRight,fullRight,fullRight,1);
-  }
-  // MERSI shared-boundary reflow: the real ONE panel ends exactly where
-  // the existing engraving panel now begins. Its width responds to the
-  // moving plate and its text REFLOWS instead of being arbitrarily clipped.
-  // Only after the speaker identity has taken over does ONE withdraw.
-  const galleryEdge=emRight.getBoundingClientRect().left-stageRect.left;
-  if(oliveIn>.001){
-   const nextWidth=Math.min(fullLeft.w,Math.max(0,galleryEdge-fullLeft.x));
-   emLeft.style.width=nextWidth.toFixed(2)+'px';
-   emLeft.style.clipPath=oliveIn>.74
-    ?'inset(0 '+(100*smooth((oliveIn-.74)/.25)).toFixed(3)+'% 0 0)'
-    :'none';
-  }else{
-   emLeft.style.width=fullLeft.w.toFixed(2)+'px';
-  }
+  poseRect(emLeft,fullLeft,fullLeft,1);
+  emLeft.style.width=fullLeft.w.toFixed(2)+'px';
+  emLeft.style.clipPath='inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
+  poseRect(emRight,fullRight,fullRight,1);
+  emRight.style.clipPath='none';
+  emRight.style.opacity=String(useArchive?archive:0);
+  olive.style.visibility=oliveShowing?'visible':'hidden';
+  olive.style.opacity='1';
+  olive.style.backgroundColor='#f0eee7';
+  olive.style.clipPath='inset(0 0 0 '+((1-oliveIn)*100).toFixed(3)+'%)';
+  olive.style.pointerEvents=oliveIn>.999?'auto':'none';
+  olive.inert=oliveIn<=.999;
+  olive.setAttribute('aria-hidden',oliveIn>.999?'false':'true');
+  // All Olive content arrives as a composed page, not a staggered set of
+  // banners, white rectangles and floating speaker/gallery panels.
   oliveHero.style.transform='none';
-  oliveHero.style.opacity=String(1-fieldExit);
-  emRight.style.opacity=String((useArchive?archive:0)*fieldExit);
-  // If the 241-plate host is unavailable, transfer the exact original
-  // magazine plate itself into the Olive portrait slot. No blank panel,
-  // placeholder, fabricated engraving, or duplicate image may appear.
-  if(transferFigure&&!useArchive&&oliveIn>.001){
-   // Never squeeze the original square into a narrower speaker portrait.
+  oliveHero.style.opacity='1';
+  heroFolio.style.opacity='1';
+  oliveEditorial.style.opacity='1';
+  oliveEditorial.style.clipPath='none';
+  $('.olive-proof__editorial > div').style.opacity='1';
+  $('.olive-proof__editorial > a').style.opacity='1';
+  $('.olive-proof__kicker').style.opacity='1';
+  oliveBottom.style.opacity='1';
+  oliveRegister.style.clipPath='none';
+  oliveWindow.style.clipPath='none';
+  $('.olive-proof__folio').style.opacity='1';
+  // The Magazine->Emmaus projection is already faded when the Olive reveal
+  // starts; NEVER leave its z-index:7 plate painting over the incoming page.
+  if(transferFigure&&oliveIn>.001){
    transferFigure.style.setProperty('--p2-transfer-visible',String(fieldExit));
   }
-  heroFolio.style.opacity=String(smooth((oliveIn-.76)/.23));
-
-  const editorial=smooth((oliveIn-.55)/.36),register=smooth((oliveIn-.70)/.29),windowReveal=smooth((oliveIn-.74)/.25);
-  const kicker=$('.olive-proof__kicker');
-  kicker.style.opacity=String(smooth((oliveIn-.38)/.3));
-  oliveBottom.style.opacity=String(smooth((oliveIn-.69)/.30));
-  // Olive editorial is revealed in the exact area vacated by the moving
-  // engraved panel, from RIGHT to LEFT, not as a new page wipe.
-  // The left edge of this crop tracks the same MERSI morph progress.
-  // Withhold the WHOLE Olive editorial surface, not only its letters.
-  // Otherwise an empty white rectangle replaces ONE during the early morph.
-  oliveEditorial.style.opacity=String(editorial);
-  oliveEditorial.style.clipPath='none';
-  $('.olive-proof__editorial > div').style.opacity=String(editorial);
-  $('.olive-proof__editorial > a').style.opacity=String(smooth((oliveIn-.70)/.25));
-  oliveRegister.style.clipPath='inset('+((1-register)*100).toFixed(3)+'% 0 0 0)';
-  oliveWindow.style.clipPath='inset(0 0 '+((1-windowReveal)*100).toFixed(3)+'% 0)';
-  $('.olive-proof__folio').style.opacity=String(smooth((oliveIn-.83)/.16));
   const section=fullDistance>=15.14?'07 / 07 — DAYLIGHT CAFÉ':fullDistance>=13.57?'06 / 07 — PARADISE CINEMA':fullDistance>=12?'05 / 07 — DAWN BOOKSHOP':distance<3.0775?'01 / 07 — CHURCH':distance<6.5?'02 / 07 — MAGAZINE':distance<9.44?'03 / 07 — EMMAUS':'04 / 07 — OLIVE MOUNTAIN';
   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
   seek.value=String(fullDistance/timelineMax*100);percent.textContent=(fullDistance/timelineMax*100).toFixed(0)+'%';lastPaint=distance;
