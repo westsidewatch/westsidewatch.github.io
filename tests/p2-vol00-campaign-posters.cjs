@@ -48,7 +48,7 @@ for(const mode of ['a','b']){
     oldInk:getComputedStyle(document.getElementById('dual-letterfield')).display,
     posterOpacity:getComputedStyle(panel).opacity,
     artClip:getComputedStyle(art).clipPath,
-    fieldCount:panel.querySelectorAll('.xw-poster__big-type path').length,
+    fieldCount:new Set([...panel.querySelectorAll('.xw-poster__big-type path')].map(g=>g.dataset.glyph)).size,
     scrollWidth:document.documentElement.scrollWidth};
   });
   assert.equal(atRest.mode,mode);
