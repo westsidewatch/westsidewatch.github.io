@@ -4,13 +4,22 @@ import {lifecycleStateAt} from './construction-engine.js';
 let ownershipSequence=0;
 export const residentialOwner=phase=>`generated-residence:${phase}:${++ownershipSequence}`;
 // Stage validation before changing the shared ledger. A cancelled builder publishes nothing.
-export function publishGeneratedResidentialLedger(ledger,staged,{registration,architecture,generationPhase,destroyedPhase=null,retainedPhase=null,owner}){
+export function publishGeneratedResidentialLedger(ledger,staged,{registration,architecture,generationPhase,destroyedPhase=null,retainedPhase=null,includeRegistration=false,owner}){
  const records=[...staged.objects.values()].filter(r=>['block','parcel','building'].includes(r.type));
  if(!records.length||!owner)throw new Error('Missing residential publication');
  const candidate=new TemporalCityCore({phases:[...ledger.phases.values()],terrain:ledger.terrain});
  candidate.objects=new Map(ledger.objects);
  candidate.byPhase=new Map([...ledger.byPhase].map(([id,values])=>[id,new Set(values)]));
  candidate.links=new Map([...ledger.links].map(([id,value])=>[id,{predecessors:new Set(value.predecessors),successors:new Set(value.successors)}]));
+ // Provisional parents and their children commit together. Copy only transformed geometry,
+ // never the reference city's source IDs, lineage or historical confidence.
+ const parents=includeRegistration?[...registration.districts.map(item=>({...item,type:'district'})),...registration.roads.map(item=>({...item,type:'road'}))].map(item=>{
+  if(candidate.get(item.id))throw new Error(`Residential ID collision: ${item.id}`);
+  const next=[...ledger.phases.keys()][[...ledger.phases.keys()].indexOf(generationPhase)+1];
+  const events=[{phase:generationPhase,state:'build',authority:'generated-provisional-layout-not-historical-survey'},...(next?[{phase:next,state:'unresolved',authority:'later-layout-unverified'}]:[])];
+  return {id:item.id,type:item.type,confidence:'inferred',geometry:{...item.geometry,frame:'canonical-dem-enu'},source:{authority:registration.authority,geometryVerified:false,dataset:`provisional-${generationPhase}-footprint-not-surveyed`},phaseIds:events.map(e=>e.phase),lifecycle:{events},metadata:{generatedOwner:owner,referenceLayoutDerived:true,geometryVerified:false,reuseLinksVerified:false}};
+ }):[];
+ for(const record of parents)candidate.register(record);
  const components=new Map();
  for(const mesh of architecture.meshes){const id=`${mesh.userData.cityObject.parcelId}:building`;if(!components.has(id))components.set(id,[]);components.get(id).push(mesh);}
  const prepared=records.map(record=>{
@@ -43,11 +52,11 @@ export function publishGeneratedResidentialLedger(ledger,staged,{registration,ar
  ledger.objects=candidate.objects;ledger.byPhase=candidate.byPhase;ledger.links=candidate.links;
  // Bind the already finished geometry to the published records, with stable component IDs.
  for(const [id,parts] of components){const record=ledger.get(id);parts.forEach((mesh,index)=>Object.assign(mesh.userData.cityObject,{objectId:id,componentId:`${id}:component:${index}`,districtId:record.source.districtId}));}
- const ids=prepared.map(r=>r.id),buildingIds=prepared.filter(r=>r.type==='building').map(r=>r.id);
+ const ids=[...parents,...prepared].map(r=>r.id),buildingIds=prepared.filter(r=>r.type==='building').map(r=>r.id);
  const districts=registration.districts.map(d=>({id:d.id,blocks:prepared.filter(r=>r.type==='block'&&r.source.districtId===d.id).length,parcels:prepared.filter(r=>r.type==='parcel'&&r.source.districtId===d.id).length,buildings:prepared.filter(r=>r.type==='building'&&r.source.districtId===d.id).length}));
  const timeline={phases:[...ledger.phases.values()]};
  return{
-  summary:{published:true,objects:ids.length,buildings:buildingIds.length,districts,sampleBuildingIds:buildingIds.slice(0,3),generationPhase,geometryVerified:false,reuseLinksVerified:false},
+  summary:{published:true,objects:ids.length,buildings:buildingIds.length,districts,sampleBuildingIds:buildingIds.slice(0,3),generationPhase,registrationObjects:parents.length,referenceLayoutDerived:includeRegistration,geometryVerified:false,reuseLinksVerified:false},
   stateFor(id,phase){const record=ledger.get(id);return record?lifecycleStateAt({lifecycleEvents:record.lifecycle.events},timeline,phase):'unresolved';},
   dispose(){for(const id of ids)if(ledger.get(id)?.metadata.generatedOwner===owner){ledger.objects.delete(id);ledger.links.delete(id);for(const values of ledger.byPhase.values())values.delete(id);}},
  };

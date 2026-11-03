@@ -1,0 +1,49 @@
+# 聖殿尺度與周邊地貌校對
+
+2026-10-28。此包修正同一城市工程的尺度與共同地形，不是新增獨立場景。歷史基礎驗收仍未完成。
+
+## 查到的原因
+
+| 項目 | 原模型／呈現 | 本次修正 |
+| --- | --- | --- |
+| 殿體頂部 | 硬編碼最高136m（相對取樣地表），與文獻尺寸脫節 | 殿體高100肘，暫採0.525m/肘，即52.5m；新院面只高於共用地表基準0.8m |
+| 殿體與內院 | 外包約224×174m的通用組合 | 祭司院187×135肘；婦女院135×135肘；殿體長100肘、後部寬70肘、前廊寬100肘 |
+| 聖殿山平台 | 基礎520m東西×340m南北，長向顛倒，另把平台向上堆18m | 約300m東西×480m南北的14.4ha級簡化包絡；鋪面及內院、柱廊共用同一高度基準 |
+| 王家柱廊 | 390×76m，屋面最高73m | 約185×32m，側廊約15.24m、中廊30.48m的文獻尺度方案；柱數仍為簡化表示 |
+| 安東尼亞 | 通用塔樓頂部最高110m以上 | 40/50/70肘的建築高度語境，不再額外堆出百公尺塔樓；位置與外形仍推定 |
+| 地形解析度 | GLO-90，76×76；窄谷經粗取樣平滑 | 公開GLO-30，217×217原生約一角秒節點 |
+| 取樣配準 | 網格邊界與重取樣像素中心未分開處理 | 明定AOI邊界是節點中心，不再把像素邊緣當頂點 |
+| 地形視窗 | 重用城市骨架偏西視窗；東側山嶺邊緣不足、北側山區被截 | 地貌有獨立視窗，包含橄欖山、北側斯科普斯山區、欣嫩谷外西南丘及兩條谷地 |
+| 明暗與遮擋 | 地形頂點明暗再乘強場景光，對比被壓；長說明卡遮谷地 | 坡向烘焙明暗、現代高程配色和20m等高線；地貌模式縮小說明卡，手機重新構圖及避讓標籤 |
+
+尺寸依據：[Middot4:6–7](https://www.sefaria.org/Mishnah_Middot.4.6)、[5:1](https://www.sefaria.org/Mishnah_Middot.5.1)、[2:5](https://www.sefaria.org/Mishnah_Middot.2.5)；[0.525m肘長採用例](https://library.biblicalarchaeology.org/sidebar/dimensions-of-architectural-elements-of-the-temple-as-recorded-in-middot-all-dimensions-are-in-cubits-1-cubit-52-5-cm-20-7-inches/)；[Josephus Antiquities15.11.5王家柱廊](https://avande1.sites.luc.edu/jerusalem/sources/antiquities15.htm)及[War5.5.8安東尼亞](https://penelope.uchicago.edu/josephus/war-5.html)。肘長有不同方案，來源間也有分歧；本包把選用參數集中在 `herodian-dimensions.js`，不把它稱作唯一確定尺寸。
+
+平台仍是按約14.4ha級尺度取的簡化長方形，不是實際梯形輪廓的測繪。平台、殿體、院落不能混成一個「聖殿尺寸」。精確門位、平台古高程、院落高差、裝飾與建築細節尚未核定；原始精確定位缺口保留。城市住區本來仍不完整，畫面佔比不能作為縮小平台的依據。[地理與平台背景](https://rsc.byu.edu/new-testament-history-culture-society/jerusalem-holy-city)。
+
+## 地形來源與共用規則
+
+[官方公開DEM登記](https://registry.opendata.aws/copernicus-dem/)確認GLO-30 Public與GLO-90可公開取得；已實際下載耶路撒冷N31/E035的GLO-30 COG，不需要帳戶或Gateway。`scripts/jerusalem3000_ingest_dem30.py`由該41MB原始瓦片產生本地JSON，保存來源SHA256、原生解析度、節點取樣方式與授權標示。
+
+AOI仍為35.195–35.255E、31.745–31.805N，原點仍31.778/35.235；固定場景高度基準仍540.13m，垂直比例仍1。沒有依某個時代挖深河谷或拉高山。原90m檔保留供比對，運行清單只選30m檔。網頁載入326044B本地JSON，gzip約116181B；以內容雜湊版本化快取，一次載入共用18期，不下載41MB瓦片。
+
+六個地理標籤與兩條谷線由凍結的OSM現代參照節點／線取得，來源在 `data/terrain/sources/landforms.osm.xml`，有雜湊核對。谷線是位置提示，不是流動河水、古河道或古道路。標籤高度由同一渲染DEM取樣，不拿地圖的ele標籤強制改地形。現代參照點的樣本：橄欖山約810m、汲倫溪谷約682m，相差約129m；錫安山／西丘參照約773m，欣嫩子谷參照約710m，相差約63m。這些是指定點的DSM讀數，不是峰頂測量認證，也不是古代高程。
+
+現代DSM包括建築、植被和歷代堆積；不能代表最初或每一時代的裸地。中央谷地受填積等影響，沒有可靠古地表資料便不另挖一條「古谷」。北側還有相接的高地、鞍部，不能把耶路撒冷塑成四面封閉的環谷。各時代均以同一地形和同一地貌鏡頭比較。
+
+## 驗證
+
+- 真正生成的網格外包尺寸檢查；內院、殿體、前廊、柱廊與平台關係、共用院面基準，以及原精確定位缺口。
+- 官方來源雜湊、217×217節點、同AOI／原點／固定基準、現代地圖節點、谷地高差、沒有改動地形及版本化快取。
+- 真瀏覽器量測殿體、平台；本次模型屋頂約797m，低於同DEM橄欖山參照約810m。這是模型自洽檢查，不認證古屋頂海拔。
+- 全18期同一實體地形、同一地貌鏡頭、相同山谷定位；手機三個關鍵標籤、工具列和說明卡避讓、進出地貌視圖、無遠端地圖或DEM瓦片請求。
+- 原有城防、古牆來源、住區退讓、18期施工、17次換場與播放就緒檢查。
+
+## Zion / City of David location audit (2026-10-29)
+
+The modern southwestern Mount Zion label must not imply that David's city stood there. 2 Samuel 5:7 identifies the stronghold of Zion with the City of David. The City of David site's visitor guide places the early city on the eastern ridge and describes the later western-hill expansion, where today's Mount Zion stands:
+https://cityofdavid.org.il/wp-content/uploads/2023/03/Traveler_COD_Eng_2022_lowrez.pdf
+https://www.biblegateway.com/passage/?search=2+Samuel+5%3A7&version=NIV
+
+Checked against commit 066c2a7f6: `data/settlement/david-solomon.v1.json` is byte-identical. The 30m terrain update did not move its spring, settlement offsets or temple offset. With the unchanged origin (31.778, 35.235), world x is east and z is south. The shared southeast ridge reference is (75.21, 675.44)m; Gihon is (173.21, 530.44)m; today's Mount Zion reference is (-600.24, 710.17)m. The schematic first-temple reference is (73.21, 60.44)m, north of the ridge. These are rendering references, not a surveyed ancient boundary or palace footprint.
+
+Labels now distinguish `大衛城／東南山脊` from `今稱錫安山／西南丘`, with source context in tooltips. No geometry or terrain coordinates changed. This audit checks relative geographic registration and naming; it does not certify all reconstructed footprints.

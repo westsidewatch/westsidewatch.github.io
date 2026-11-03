@@ -1,0 +1,333 @@
+{
+  "schema": "j3k.temporal-city.registration.v1",
+  "phase": "hellenistic-hasmonean",
+  "authority": "frozen pre-existing illustrative Hellenistic coordinates in canonical metres; legacy-reference-derived, not independently surveyed",
+  "districts": [
+    {
+      "id": "j3k:hellenistic-hasmonean:district:0",
+      "confidence": "inferred",
+      "geometry": {
+        "status": "provisional-era-footprint-not-surveyed",
+        "frame": "scene-local-metres",
+        "polygon": [
+          {
+            "x": -796,
+            "z": -287.2
+          },
+          {
+            "x": -491.5,
+            "z": -450.4
+          },
+          {
+            "x": -103,
+            "z": -501.4
+          },
+          {
+            "x": 306.5,
+            "z": -430
+          },
+          {
+            "x": 642.5,
+            "z": -226
+          },
+          {
+            "x": 789.5,
+            "z": 120.8
+          },
+          {
+            "x": 695,
+            "z": 477.8
+          },
+          {
+            "x": 411.5,
+            "z": 743
+          },
+          {
+            "x": 2,
+            "z": 855.2
+          },
+          {
+            "x": -407.5,
+            "z": 773.6
+          },
+          {
+            "x": -722.5,
+            "z": 518.6
+          },
+          {
+            "x": -869.5,
+            "z": 161.6
+          }
+        ]
+      },
+      "sources": [
+        "legacy-era-footprint",
+        "canonical-dem"
+      ],
+      "upgradeRequired": "period-specific archaeological district registration"
+    }
+  ],
+  "roads": [
+    {
+      "id": "j3k:hellenistic-hasmonean:road:0",
+      "confidence": "inferred",
+      "geometry": {
+        "status": "provisional-era-road-not-surveyed",
+        "frame": "scene-local-metres",
+        "points": [
+          {
+            "x": -680.5,
+            "z": -175
+          },
+          {
+            "x": -491.5,
+            "z": -52.599999999999994
+          },
+          {
+            "x": -281.5,
+            "z": 39.2
+          },
+          {
+            "x": -61,
+            "z": 120.8
+          },
+          {
+            "x": 180.5,
+            "z": 202.4
+          },
+          {
+            "x": 453.5,
+            "z": 294.20000000000005
+          },
+          {
+            "x": 642.5,
+            "z": 416.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "j3k:hellenistic-hasmonean:road:1",
+      "confidence": "inferred",
+      "geometry": {
+        "status": "provisional-era-road-not-surveyed",
+        "frame": "scene-local-metres",
+        "points": [
+          {
+            "x": -586,
+            "z": -317.8
+          },
+          {
+            "x": -313,
+            "z": -256.6
+          },
+          {
+            "x": -19,
+            "z": -205.60000000000002
+          },
+          {
+            "x": 275,
+            "z": -175
+          },
+          {
+            "x": 558.5,
+            "z": -103.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "j3k:hellenistic-hasmonean:road:2",
+      "confidence": "inferred",
+      "geometry": {
+        "status": "provisional-era-road-not-surveyed",
+        "frame": "scene-local-metres",
+        "points": [
+          {
+            "x": -218.5,
+            "z": -430
+          },
+          {
+            "x": -176.5,
+            "z": -226
+          },
+          {
+            "x": -134.5,
+            "z": -1.5999999999999943
+          },
+          {
+            "x": -82,
+            "z": 243.2
+          },
+          {
+            "x": -19,
+            "z": 477.8
+          },
+          {
+            "x": 44,
+            "z": 743
+          }
+        ]
+      }
+    },
+    {
+      "id": "j3k:hellenistic-hasmonean:road:3",
+      "confidence": "inferred",
+      "geometry": {
+        "status": "provisional-era-road-not-surveyed",
+        "frame": "scene-local-metres",
+        "points": [
+          {
+            "x": 306.5,
+            "z": -358.6
+          },
+          {
+            "x": 275,
+            "z": -154.6
+          },
+          {
+            "x": 306.5,
+            "z": 59.6
+          },
+          {
+            "x": 380,
+            "z": 273.8
+          },
+          {
+            "x": 485,
+            "z": 518.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "j3k:hellenistic-hasmonean:road:4",
+      "confidence": "inferred",
+      "geometry": {
+        "status": "provisional-era-road-not-surveyed",
+        "frame": "scene-local-metres",
+        "points": [
+          {
+            "x": -586,
+            "z": 182
+          },
+          {
+            "x": -386.5,
+            "z": 253.4
+          },
+          {
+            "x": -166,
+            "z": 284
+          },
+          {
+            "x": 65,
+            "z": 345.2
+          },
+          {
+            "x": 306.5,
+            "z": 396.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "j3k:hellenistic-hasmonean:road:5",
+      "confidence": "inferred",
+      "geometry": {
+        "status": "provisional-era-road-not-surveyed",
+        "frame": "scene-local-metres",
+        "points": [
+          {
+            "x": -491.5,
+            "z": 559.4000000000001
+          },
+          {
+            "x": -302.5,
+            "z": 447.2
+          },
+          {
+            "x": -82,
+            "z": 375.8
+          },
+          {
+            "x": 159.5,
+            "z": 314.6
+          },
+          {
+            "x": 411.5,
+            "z": 233
+          }
+        ]
+      }
+    },
+    {
+      "id": "j3k:hellenistic-hasmonean:road:6",
+      "confidence": "inferred",
+      "geometry": {
+        "status": "provisional-era-road-not-surveyed",
+        "frame": "scene-local-metres",
+        "points": [
+          {
+            "x": -418,
+            "z": -185.2
+          },
+          {
+            "x": -376,
+            "z": 39.2
+          },
+          {
+            "x": -334,
+            "z": 273.8
+          },
+          {
+            "x": -271,
+            "z": 539
+          }
+        ]
+      }
+    },
+    {
+      "id": "j3k:hellenistic-hasmonean:road:7",
+      "confidence": "inferred",
+      "geometry": {
+        "status": "provisional-era-road-not-surveyed",
+        "frame": "scene-local-metres",
+        "points": [
+          {
+            "x": 138.5,
+            "z": -256.6
+          },
+          {
+            "x": 107,
+            "z": -22
+          },
+          {
+            "x": 149,
+            "z": 222.8
+          },
+          {
+            "x": 233,
+            "z": 477.8
+          }
+        ]
+      }
+    }
+  ],
+  "generation": {
+    "scope": "provisional-era-footprint",
+    "blockSize": 98,
+    "roadClearance": 18,
+    "target": "visible urban morphology rather than local demonstration patch"
+  },
+  "migration": {
+    "from": "pre-existing reference-derived design",
+    "runtimeScaleTransform": false,
+    "coordinatesReinterpretedAsSurvey": false,
+    "geometryVerified": false
+  },
+  "origin": {
+    "lat": 31.778,
+    "lon": 35.235
+  },
+  "units": "metres"
+}

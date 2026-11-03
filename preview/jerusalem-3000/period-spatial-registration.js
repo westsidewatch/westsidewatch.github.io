@@ -30,8 +30,8 @@ export function compilePeriodRegistration(data, phaseId, origin) {
   };
   const districts = phase.districts.map(d => ({id:id('district',d.id), confidence:'inferred', geometry:geometry(d.polygon,3,'polygon'), sources:data.sources}));
   const roads = phase.roads.map(r => ({id:id('road',r.id), confidence:'inferred', geometry:geometry(r.points,2,'polyline')}));
-  const reservations = (phase.reservations || []).map(r => ({id:id('reservation',r.id), polygon:geometry(r.polygon,3,'polygon').polygon}));
+  const reservations = (phase.reservations || []).map(r => ({id:id('reservation',r.id), metadata:{groundRole:'public-context'}, polygon:geometry(r.polygon,3,'polygon').polygon}));
   return {schema:'j3k.temporal-city.registration.v1',phase:phaseId,authority:data.authority,
     independentLayout:true,districts,roads,reservations,sources:data.sources,limitations:data.limitations,
-    generation:{scope:'independent-period-districts',blockSize:58,roadClearance:6,infillMode:'district-constrained',maxBlockArea:12000}};
+    generation:{scope:'independent-period-districts',blockSize:58,roadClearance:6,infillMode:'district-constrained',maxBlockArea:12000,architectureProfile:phase.residentialArchitecture}};
 }

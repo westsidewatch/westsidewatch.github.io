@@ -1,0 +1,406 @@
+{
+  "schema": "j3k.named-city-gates.v1",
+  "source": {
+    "url": "https://api.openstreetmap.org/api/0.6/map?bbox=35.222,31.770,35.242,31.785",
+    "rawSubset": "sources/named-city-gates.osm.xml",
+    "sha256": "e75c6b05708a03487b779824b305d5384d2619d003166763aee222a11e857a72",
+    "attribution": "© OpenStreetMap contributors, ODbL"
+  },
+  "gates": [
+    {
+      "id": "j3k:object:jaffa-gate-ottoman",
+      "key": "jaffa",
+      "label": "雅法門",
+      "point": {
+        "lat": 31.7766282,
+        "lon": 35.2275435
+      },
+      "osmNode": 561157424,
+      "osmWay": null,
+      "mappedBuildingPolygon": [],
+      "profile": "bent-square",
+      "designWidth": 14,
+      "designDepth": 14,
+      "designHeight": 10,
+      "sealed": false,
+      "firstYear": null,
+      "formAuthority": "selected later/modern type; dimensions and passage details illustrative, not digitized historical facade",
+      "sources": [
+        "https://israel.travel/the-gates-of-jerusalem/",
+        "https://explore.museumwnf.org/countries/c-pa/l-42/m-837/lan-en",
+        "https://www.learningsites.com/Jerusalem/OttomanGates_home.php"
+      ]
+    },
+    {
+      "id": "j3k:object:damascus-gate-ottoman",
+      "key": "damascus",
+      "label": "大馬士革門",
+      "point": {
+        "lat": 31.7816507,
+        "lon": 35.2303649
+      },
+      "osmNode": null,
+      "osmWay": 616186088,
+      "mappedBuildingPolygon": [
+        {
+          "lat": 31.7816847,
+          "lon": 35.230557
+        },
+        {
+          "lat": 31.7817635,
+          "lon": 35.2304745
+        },
+        {
+          "lat": 31.7818078,
+          "lon": 35.2305331
+        },
+        {
+          "lat": 31.781843,
+          "lon": 35.2304963
+        },
+        {
+          "lat": 31.7817634,
+          "lon": 35.2303911
+        },
+        {
+          "lat": 31.7817243,
+          "lon": 35.2304321
+        },
+        {
+          "lat": 31.7816619,
+          "lon": 35.2303496
+        },
+        {
+          "lat": 31.7816059,
+          "lon": 35.2302757
+        },
+        {
+          "lat": 31.781647,
+          "lon": 35.2302327
+        },
+        {
+          "lat": 31.781572,
+          "lon": 35.2301336
+        },
+        {
+          "lat": 31.7815127,
+          "lon": 35.2301957
+        },
+        {
+          "lat": 31.7815908,
+          "lon": 35.2302987
+        },
+        {
+          "lat": 31.7815766,
+          "lon": 35.2303136
+        },
+        {
+          "lat": 31.7815637,
+          "lon": 35.2303271
+        },
+        {
+          "lat": 31.7815848,
+          "lon": 35.230355
+        },
+        {
+          "lat": 31.7815552,
+          "lon": 35.2303859
+        },
+        {
+          "lat": 31.7816048,
+          "lon": 35.2304514
+        }
+      ],
+      "profile": "towered-bent",
+      "designWidth": 40,
+      "designDepth": 34,
+      "designHeight": 14,
+      "sealed": false,
+      "firstYear": null,
+      "formAuthority": "selected later/modern type; dimensions and passage details illustrative, not digitized historical facade",
+      "sources": [
+        "https://israel.travel/the-gates-of-jerusalem/",
+        "https://www.learningsites.com/Jerusalem/OttomanGates_home.php"
+      ]
+    },
+    {
+      "id": "j3k:object:zion-gate-ottoman",
+      "key": "zion",
+      "label": "錫安門",
+      "point": {
+        "lat": 31.7728568,
+        "lon": 35.2296377
+      },
+      "osmNode": 5003920348,
+      "osmWay": 290671706,
+      "mappedBuildingPolygon": [
+        {
+          "lat": 31.7729743,
+          "lon": 35.2296387
+        },
+        {
+          "lat": 31.772872,
+          "lon": 35.2295919
+        },
+        {
+          "lat": 31.7728568,
+          "lon": 35.2296377
+        },
+        {
+          "lat": 31.7728225,
+          "lon": 35.2297415
+        },
+        {
+          "lat": 31.7728795,
+          "lon": 35.2297676
+        },
+        {
+          "lat": 31.7729249,
+          "lon": 35.2297883
+        }
+      ],
+      "profile": "bent-square",
+      "designWidth": 18,
+      "designDepth": 17,
+      "designHeight": 10,
+      "sealed": false,
+      "firstYear": null,
+      "formAuthority": "selected later/modern type; dimensions and passage details illustrative, not digitized historical facade",
+      "sources": [
+        "https://israel.travel/the-gates-of-jerusalem/",
+        "https://www.learningsites.com/Jerusalem/OttomanGates_home.php",
+        "https://www.mountzion.org.il/"
+      ]
+    },
+    {
+      "id": "j3k:object:dung-gate-ottoman",
+      "key": "dung",
+      "label": "糞門",
+      "point": {
+        "lat": 31.7748261,
+        "lon": 35.2341733
+      },
+      "osmNode": 29944308,
+      "osmWay": 1545285986,
+      "mappedBuildingPolygon": [
+        {
+          "lat": 31.7748375,
+          "lon": 35.2341479
+        },
+        {
+          "lat": 31.7748448,
+          "lon": 35.234192
+        },
+        {
+          "lat": 31.7748247,
+          "lon": 35.2341966
+        },
+        {
+          "lat": 31.7748174,
+          "lon": 35.2341525
+        }
+      ],
+      "profile": "small-pointed",
+      "designWidth": 5,
+      "designDepth": 3,
+      "designHeight": 10,
+      "sealed": false,
+      "firstYear": null,
+      "formAuthority": "selected later/modern type; dimensions and passage details illustrative, not digitized historical facade",
+      "sources": [
+        "https://israel.travel/the-gates-of-jerusalem/"
+      ]
+    },
+    {
+      "id": "j3k:object:lions-gate-ottoman",
+      "key": "lions",
+      "label": "獅門",
+      "point": {
+        "lat": 31.7808347,
+        "lon": 35.2369345
+      },
+      "osmNode": null,
+      "osmWay": 288395731,
+      "mappedBuildingPolygon": [
+        {
+          "lat": 31.780907,
+          "lon": 35.2369656
+        },
+        {
+          "lat": 31.7808881,
+          "lon": 35.2368589
+        },
+        {
+          "lat": 31.7807821,
+          "lon": 35.2368823
+        },
+        {
+          "lat": 31.7807872,
+          "lon": 35.2369343
+        },
+        {
+          "lat": 31.7807951,
+          "lon": 35.2369884
+        },
+        {
+          "lat": 31.7808486,
+          "lon": 35.2369775
+        }
+      ],
+      "profile": "paired-relief",
+      "designWidth": 12,
+      "designDepth": 14,
+      "designHeight": 10,
+      "sealed": false,
+      "firstYear": null,
+      "formAuthority": "selected later/modern type; dimensions and passage details illustrative, not digitized historical facade",
+      "sources": [
+        "https://israel.travel/the-gates-of-jerusalem/",
+        "https://www.learningsites.com/Jerusalem/OttomanGates_home.php"
+      ]
+    },
+    {
+      "id": "j3k:object:herod-gate-ottoman",
+      "key": "herod",
+      "label": "希律門／花門",
+      "point": {
+        "lat": 31.7829637,
+        "lon": 35.2336823
+      },
+      "osmNode": null,
+      "osmWay": 291746174,
+      "mappedBuildingPolygon": [
+        {
+          "lat": 31.783022,
+          "lon": 35.2337249
+        },
+        {
+          "lat": 31.7830091,
+          "lon": 35.2336687
+        },
+        {
+          "lat": 31.7829958,
+          "lon": 35.2336106
+        },
+        {
+          "lat": 31.7829471,
+          "lon": 35.233626
+        },
+        {
+          "lat": 31.7829054,
+          "lon": 35.2336398
+        },
+        {
+          "lat": 31.7829188,
+          "lon": 35.2336962
+        },
+        {
+          "lat": 31.7829325,
+          "lon": 35.2337539
+        },
+        {
+          "lat": 31.7829793,
+          "lon": 35.2337385
+        }
+      ],
+      "profile": "rosette-tower",
+      "designWidth": 13,
+      "designDepth": 13,
+      "designHeight": 10,
+      "sealed": false,
+      "firstYear": null,
+      "formAuthority": "selected later/modern type; dimensions and passage details illustrative, not digitized historical facade",
+      "sources": [
+        "https://israel.travel/the-gates-of-jerusalem/",
+        "https://www.learningsites.com/Jerusalem/OttomanGates_home.php"
+      ]
+    },
+    {
+      "id": "j3k:object:golden-gate-ottoman",
+      "key": "golden",
+      "label": "金門／慈悲門",
+      "point": {
+        "lat": 31.7789693,
+        "lon": 35.2371335
+      },
+      "osmNode": null,
+      "osmWay": 291836693,
+      "mappedBuildingPolygon": [
+        {
+          "lat": 31.7790207,
+          "lon": 35.2369459
+        },
+        {
+          "lat": 31.7790337,
+          "lon": 35.237103
+        },
+        {
+          "lat": 31.7790376,
+          "lon": 35.2371506
+        },
+        {
+          "lat": 31.779041,
+          "lon": 35.2371913
+        },
+        {
+          "lat": 31.7790432,
+          "lon": 35.2372175
+        },
+        {
+          "lat": 31.778894,
+          "lon": 35.2372346
+        },
+        {
+          "lat": 31.7788918,
+          "lon": 35.2372085
+        },
+        {
+          "lat": 31.77889,
+          "lon": 35.237187
+        },
+        {
+          "lat": 31.7788715,
+          "lon": 35.236963
+        }
+      ],
+      "profile": "sealed-double",
+      "designWidth": 27,
+      "designDepth": 19,
+      "designHeight": 10,
+      "sealed": true,
+      "firstYear": null,
+      "formAuthority": "selected later/modern type; dimensions and passage details illustrative, not digitized historical facade",
+      "sources": [
+        "https://israel.travel/the-gates-of-jerusalem/"
+      ]
+    },
+    {
+      "id": "j3k:object:new-gate-ottoman",
+      "key": "new",
+      "label": "新門",
+      "point": {
+        "lat": 31.7793047,
+        "lon": 35.2261894
+      },
+      "osmNode": 561085431,
+      "osmWay": null,
+      "mappedBuildingPolygon": [],
+      "profile": "plain-round",
+      "designWidth": 7,
+      "designDepth": 3,
+      "designHeight": 10,
+      "sealed": false,
+      "firstYear": 1889,
+      "formAuthority": "selected later/modern type; dimensions and passage details illustrative, not digitized historical facade",
+      "sources": [
+        "https://israel.travel/the-gates-of-jerusalem/",
+        "https://enjoyjerusalem.org/sites/default/files/t1.pdf"
+      ]
+    }
+  ],
+  "limitations": [
+    "現代地圖定位及較晚門形參照，不把現代各門直接回推到早期時代。",
+    "平面示意尺寸參照地圖量級，屋高、通口與彎折配置未測繪；不能視為完成歷史復原。",
+    "新門1889年後才顯示；金門封閉，沒有穿門通路。"
+  ]
+}
