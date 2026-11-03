@@ -321,6 +321,19 @@ The sizes are **research candidates requiring actual viewport and OS token verif
 - **工程／成本判決：** 使用原生 CSS Grid、既有 Westside Design OS token、P2 scope CSS 與 ONE 實數據；不裝新 JS 庫、付費參考工具、另一設計系統或沒有必要的 grid 依賴。研究網站是資料來源，並非 runtime。
 - **實際驗收：** 1648×928、390×844、320px、200% zoom、單字孤行、長卷名、切章切卷、鍵盤、scroll reverse 和 reduced motion 的真實 screenshot + DOM 檢查，未取得視覺證據前不宣稱獲獎級或已定稿。
 
+### 2026-11-02 / P2 ONE 書卷研讀頁 — Domus 研究正式落地 V20
+
+此輪**不是**再單獨修改 7:3 CSS 欄寬，而是將現有 ONE HTML 的閱讀區重構為完整編輯格線，實際工程僅在 PR #1381 Draft；尚未進行真實 Chromium 全視口驗收，不等同通過獲獎標準。
+
+- **新的唯一左頁版式 owner**：`static/css/p2-emmaus-domus-folio-v20.css`（排在所有舊 ONE／Scripture／bookbinding 之後，並與主題經文封面的獨立 CSS 分隔）；外側雜誌、原 Church、右側 241 幅多雷、正反翻頁及原 66 卷導航均不重新繪製。
+- **Editorial book masthead**：固定承接 ONE 真實選卷／章次；英文字卷名使用既有 Bodoni Moda，在桌面最大約 100px；右側是獨立的大章次約 118px；完整章節條跨左頁整寬，長卷名依真實字數縮放，不可截成無意義省略號。
+- **Chapter→reading**：原 `emmaus__study-cols` 改為 `display:contents`，使章題、雙語逐節經文真正在網格主欄；章題自微小元資料提升為可辨識大標，經文獨立滾動但保留 CUV/KJV 原字、章節和節號。
+- **Marginalia**：原 `emmaus__context` 成為右側連續邊註欄，新增語義 `研讀邊註` header；原有史地、段落、導讀／歷史／串珠／問題／地圖／預備、以及四個 ONE 入口仍以原數據和行為受控，沒有在雜誌左頁製造另一套資料或不必要的元件。
+- **Mobile**：此重排限定在 `min-width:901px` 桌面展示；原 390px／320px 選卷與研讀互動維持，新增邊註刊頭在窄屏不額外占用第四行。
+- **工程驗證**：`tests/p2-emmaus-olive-preview.cjs` 新增真 DOM 的位置和 computed-style 關係驗收：卷名／章次主標，整頁章次條，主經文與右側筆記格線，全部六個工具分頁和四個入口。此項只描述已加入的測試，沒有聲稱瀏覽器全測已成功。
+
+**藝術判斷**：以已核實的 *Domus* 十二欄「正文＋邊註」為排版機制，參照 *The Paris Review* 的小標記和高對比層次；不是把整頁資料變成四卡 dashboard。下一輪評估必須比較舊圖中「LUKE / 24 僅佔局部，祂已經復活了很小，研究欄過密」和新版畫面，從真實截圖決定是否還要再壓縮研究密度。
+
 ## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
