@@ -1,6 +1,8 @@
 # P2 / 《西望》Campaign Posters A1 + B1 / Sevenfold Dawn
 
 **2026-11-03 · Draft implementation and art direction; NOT an approved final artwork.**
+**SUPERSEDED / LATEST VISUAL DIRECTION 2026-11-03:** [Rebuild glyphs, B upright sevenfold-overlaid engraving research](P2-XIWANG-NEW-GLYPH-OVERLAY-ENGRAVING-RESEARCH-20261103.md). The prior A2 geometric glyph, B2 seven horizontal bars, and earlier discarded masthead glyph SVG are **rejected art baselines**, not seeds for a new master. B must combine seven upright overlapping wordgroups, each with different engraved lines/colors, with NO background engraving outside letters. This research update makes **no artwork or runtime changes**.
+
 
 This decision supersedes the calligraphy-based requirement in P2-XIWANG-TYPE-REDESIGN-COSMOS-20261102.md. The earlier research remains archived but is no longer a binding glyph specification. The explicit user decisions are: **both posters must be made**; **no brush-calligraphy primary lettering**; **no Doré illustration in the Magazine spread** because Emmaus owns Doré; **remove the permanent seven-color magazine-side navigation**; let the homepage's sevenfold reveal introduce the poster itself.
 
