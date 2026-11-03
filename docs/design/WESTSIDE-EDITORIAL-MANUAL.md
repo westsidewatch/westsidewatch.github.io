@@ -380,7 +380,7 @@ A2 為兩個手工構造的大型幾何「西」「望」向量構件，`data-au
 
 **最新 A 海報工程決策**：[A 巨字海報 — 多輪開源製字工具與原始碼驗證](P2-XIWANG-A-MULTIROUND-DORE-EXPLORATION-20261103.md)。使用者要求**必須多輪探索，直到能找到具體可執行、適合全新「西望」字骨的工具為止**；遇到普通黑體加效果、只找到 README 或字型二進位、無法核實授權／輸出、兩字認不出來時，**必須繼續探索而不是把未通過的方案做成定稿**。舊 A2、淘汰刊頭和舊母本不可當新字骨。
 
-已完成三類非重複搜尋（CJK stroke skeleton；現代 font editor／modular type；SVG glyph geometry），加一輪實際 GitHub tree／license 核查；**更正先前對 Skel Sans 的誤判**：它公開 OFL 字體和介紹，但該倉庫沒有可直接重用的產生器源碼；FANGCUN 有未填／待核實說明，也不能當已完成工具。**優先技術試做**：Inkscape Shape Builder/Power Stroke/Envelope 的原生字形工作台（不靠舊字 path）＋ skia-pathops 布林／孔洞清理；Fontra、KAGE 作獨立部件／節點對照，不將 GPL 工具植入 P2。**這不是最終選型通過**：必須先用真「西」「望」新筆段做黑白 1:1 光學試驗、各尺寸與實際對開驗收；若仍像一般黑體，開下一輪搜尋，不能只調色／加斜切。
+已完成三類非重複搜尋（CJK stroke skeleton；現代 font editor／modular type；SVG glyph geometry），加一輪實際 GitHub tree／license 核查；**深入核對修正**：Skel Sans 有 OFL 字體但其 GitHub repo 沒有生成器源碼；**FANGCUN 確有約 3.6 MB 的單檔 index.html 程式碼**，不是只有 README，但公開說明有未填／待核實欄位、且尚未實測「西望」輸出。**第五輪最新技術候選**：先比較真正有原始碼的 **KAGE Editor（漢字筆畫編輯）、Kumiko（繁體 IDS 部件組合）、FANGCUN（3.6 MB 單檔參數化 App，待實測）** 的新「西」「望」字骨；再用 **Graphite／Inkscape** 做非破壞形變，以 **skia-pathops** 清理布林輪廓。不把 GPL 編輯器程式植入 P2。這些均未通過新字稿的光學驗收，不能宣稱「已找到滿意工具」。**這不是最終選型通過**：必須先用真「西」「望」新筆段做黑白 1:1 光學試驗、各尺寸與實際對開驗收；若仍像一般黑體，開下一輪搜尋，不能只調色／加斜切。
 
 **工作狀態：本輪只多雷探索與記錄，未出圖、未生成新 SVG、未改動 P2 或右封面。** 此處研究僅在 single Design OS Manual 內作鏈接，不增加第二套 OS。
 
