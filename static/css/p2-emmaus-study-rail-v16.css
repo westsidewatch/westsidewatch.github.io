@@ -310,3 +310,94 @@
    font-size:10px!important;
  }
 }
+
+
+/* V19 — Domus manuscript + marginalia (2026-11-02).
+   Research -> Layout: one reading voice plus one quiet, usable ONE register.
+   Based on Domus 12-column editorial reasoning, NOT a copied template.
+   This scope changes only the actual Emmaus interior typography, not its
+   2/3 + 5:8 spread, 66-volume rail or Doré image ownership. */
+@media(min-width:901px){
+ #emmaus .emmaus__study-interface{
+   grid-template-columns:minmax(0,7fr) minmax(185px,3fr)!important;
+   column-gap:clamp(15px,1.65cqi,24px)!important;
+ }
+ #emmaus .emmaus__study-cols{
+   padding-right:clamp(13px,1.45cqi,20px)!important;
+   border-right:1px solid color-mix(in srgb,var(--ws-night,#102a43) 30%,transparent)!important;
+ }
+ #emmaus .emmaus__study-reading{
+   max-height:clamp(79px,10.8vh,99px)!important;
+   padding-bottom:8px!important;
+ }
+ #emmaus .emmaus__study-reading h2{
+   font:var(--ws-weight-zh-anchor,600) clamp(23px,2.4cqi,32px)/1.2 var(--ws-type-display-zh)!important;
+   letter-spacing:.015em!important;
+   margin:2px 0 5px!important;
+ }
+ #emmaus .emmaus__scripture-reader-head{
+   padding:9px 0 9px!important;
+ }
+ #emmaus .emmaus__scripture-verse{
+   padding:clamp(10px,1.15cqi,14px) 0 clamp(12px,1.2cqi,16px) 2px!important;
+   gap:clamp(8px,1.0cqi,13px)!important;
+ }
+ #emmaus .emmaus__scripture-verse-number{
+   font:italic 400 clamp(18px,1.9cqi,23px)/1.3 var(--ws-type-display-en)!important;
+   font-synthesis:none!important;
+ }
+ #emmaus .emmaus__scripture-zh{
+   font:400 clamp(17px,1.85cqi,20px)/1.7 var(--ws-type-reading-zh)!important;
+   letter-spacing:.01em!important;
+ }
+ #emmaus .emmaus__scripture-en{
+   font:400 clamp(14px,1.55cqi,16px)/1.6 var(--ws-type-display-en)!important;
+   margin:7px 0 0!important;
+ }
+ #emmaus .emmaus__context{
+   grid-template-rows:minmax(0,.16fr) minmax(0,.20fr) minmax(0,.64fr)!important;
+   border:0!important;gap:0!important;
+ }
+ #emmaus .emmaus__context-map{
+   overflow-y:auto!important;scrollbar-width:thin;
+ }
+ #emmaus .emmaus__context article>header strong{
+   font:var(--ws-weight-zh-anchor,600) clamp(14px,1.25cqi,17px)/1.3 var(--ws-type-display-zh)!important;
+ }
+ #emmaus .emmaus__context article>header span{
+   font:400 clamp(9px,.8cqi,11px)/1.2 var(--ws-type-display-en-sc)!important;
+   letter-spacing:.055em!important;
+ }
+ #emmaus #em-context-map-guide p,
+ #emmaus .emmaus__context-time>p,
+ #emmaus .emmaus__context-time li strong{
+   font:400 clamp(12px,1.06cqi,14px)/1.49 var(--ws-type-reading-zh)!important;
+ }
+ #emmaus .emmaus__context-tools-heading>strong{
+   font:var(--ws-weight-zh-anchor,600) clamp(14px,1.3cqi,17px)/1.25 var(--ws-type-display-zh)!important;
+ }
+ #emmaus .emmaus__context-tools .emmaus__study-tabs{
+   gap:4px 6px!important;margin-bottom:8px!important;
+ }
+ #emmaus .emmaus__context-tools .emmaus__study-tabs button{
+   font:400 clamp(12px,1.05cqi,14px)/1.3 var(--ws-type-display-zh)!important;
+   min-height:30px!important;padding:5px 3px!important;
+ }
+ #emmaus .emmaus__context-tools .emmaus__study-detail strong{
+   font:var(--ws-weight-zh-standard,400) clamp(13px,1.1cqi,15px)/1.35 var(--ws-type-display-zh)!important;
+ }
+ #emmaus .emmaus__context-tools .emmaus__study-detail p,
+ #emmaus .emmaus__context-tools .emmaus__study-detail li{
+   font:400 clamp(12px,1.05cqi,14px)/1.53 var(--ws-type-reading-zh)!important;
+ }
+ #emmaus .emmaus__one-extra button{
+   font:400 clamp(12px,1.04cqi,14px)/1.3 var(--ws-type-display-zh)!important;
+   min-height:29px!important;padding:5px 3px!important;
+ }
+}
+@media(max-width:900px){
+ #emmaus .emmaus__context-tools .emmaus__study-tabs button,
+ #emmaus .emmaus__one-extra button{
+   font-weight:var(--ws-weight-zh-standard,400)!important;
+ }
+}
