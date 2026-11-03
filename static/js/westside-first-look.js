@@ -48,6 +48,8 @@
  // Embedded First Looks reuse this page's real content and keep intentional deep links.
  if(new URLSearchParams(location.search).get('first-look')==='embed'){
   document.documentElement.classList.add('fl-embedded');document.documentElement.style.setProperty('--fl-viewport-height',innerHeight+'px');
+  // The embedded chapter has its own editorial navigation. Remove the site's outer header from the iframe rather than trying to conceal it from the parent document.
+  const outerHeader=document.querySelector('body > .sites-layer-header');if(outerHeader)outerHeader.remove();
   let branch=stage;while(branch.parentElement&&branch.parentElement!==document.documentElement){const parent=branch.parentElement;for(const sibling of parent.children){if(sibling!==branch&&sibling!==band&&!['SCRIPT','STYLE','LINK'].includes(sibling.tagName))sibling.hidden=true}branch=parent;if(parent===document.body)break}
   const navigation=create('nav','fl-realm-nav');navigation.setAttribute('aria-label','First Look 分站');
   for(const [key,label] of [['church','LivingWaterWest'],['magazine','Magazine'],['bible','Emmaus'],['sermon','Olive'],['book','Dawn Library'],['cinema','Cinema'],['life','Life']]){const a=create('a','',label);a.href='/#first-look-'+key;a.target='_top';navigation.append(a)}stage.prepend(navigation);
