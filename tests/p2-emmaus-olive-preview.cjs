@@ -84,10 +84,12 @@ assert.match(js,/function ensureMagazinePrologue\(doc,tile\)/,
  'the magazine-to-Emmaus prologue is owned by the existing P2 bridge, not a new page');
 assert.match(js,/tile\.append\(magazinePrologue\)/,
  'the editorial half-title occupies the original Contents folio');
-assert.match(js,/const introAlpha=smooth\(\(move-\.89\)\/\.11\)\*\(1-smooth\(\(distance-8\.34\)\/\.30\)\)/,
+assert.match(js,/const introAlpha=smooth\(\(move-\.89\)\/\.11\)\*\(1-smooth\(\(oneDrop-\.45\)\/\.55\)\)/,
  'the prologue is deterministic and reversible on the existing scroll timeline');
 assert.match(js,/grid-template-columns:minmax\(0,58%\) minmax\(0,42%\)/,
  'the left Contents-to-Emmaus editorial half-title leaves the image-dominant 58% visible');
+assert.match(js,/p2-emmaus-native-contents-opacity/,
+ 'source Contents text is occluded until ONE replaces the prologue, never exposed underneath');
 assert.doesNotMatch(js,/sourceFigure\.cloneNode|sourceTile\.replaceChildren/,
  'the original Magazine Doré and Contents source are not cloned or replaced');
 assert(js.includes('const move=smooth((distance-6.50)/.72)'), 'first turn follows P2 scroll');
