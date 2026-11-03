@@ -59,16 +59,28 @@ jobs:
           PREVIEW_BRANCH: pr-${{ github.event.pull_request.number || github.run_id }}
         run: |
           test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "::error::Cloudflare preview credentials missing"; exit 1; }
-          npx --yes wrangler@4 pages deploy public \
-            --project-name=westsidewatch-github-io \
-            --branch="$PREVIEW_BRANCH" \
-            --commit-hash="${GITHUB_SHA}" \
-            --commit-message="First Look isolated preview"
+          for attempt in 1 2 3; do
+            if npx --yes wrangler@4 pages deploy public \
+              --project-name=westsidewatch-github-io \
+              --branch="$PREVIEW_BRANCH" \
+              --commit-hash="${GITHUB_SHA}" \
+              --commit-message="First Look isolated preview"; then
+              break
+            fi
+            if test "$attempt" -eq 3; then
+              echo "::error::Cloudflare Pages preview failed after three attempts"
+              exit 1
+            fi
+            echo "::warning::Cloudflare transient deployment failure; retry $attempt/3"
+            sleep 5
+          done
           echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
           echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
           echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/p2-emmaus-olive-handoff-lab.html" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Verify Vol.00 and protected Church to Magazine handoff in Chromium
+        # A Cloudflare 5xx must never prevent LOCAL screenshot verification.
+        if: ${{ !cancelled() && steps.preview_build.outcome == 'success' }}
         run: |
           npm install --no-save --no-package-lock playwright pngjs
           npx playwright install chromium
