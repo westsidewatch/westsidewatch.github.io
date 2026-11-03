@@ -283,6 +283,44 @@ The sizes are **research candidates requiring actual viewport and OS token verif
 
 ---
 
+### 2026-11-02 / 多雷探索 — 三個新參考入口與 P2 ONE 版式定向
+
+**工作指令語義：** 沿用本手冊「多雷探索」：外部成熟實例／開源／免費／成本／維護搜尋 → 提煉可複用機制 → 回到 Design OS 與原工程 → P2 真實畫面驗收。此處「多雷」不是限定畫家 Gustave Doré 或雕版畫風；不是要求重新出圖。使用者提供的兩張 P2 截圖為真實缺陷基線。
+
+**新列入並保留的三個長期研究入口（2026-11-02 查證）：**
+
+| 原站及直達入口 | 成熟度與用途 | 開源／成本／限制 | 本輪採用決策 |
+| --- | --- | --- | --- |
+| [Recent](https://recent.design/)／[Websites](https://recent.design/websites)／[Info](https://recent.design/info) | 2023 年建立、2026 年重啟並取代 Godly；含網站、動效、品牌和介面案例，有 Editorial 類型。 | 公開案例可瀏覽；個別案例著作權不代表開源。網站部份素材在純文字擷取只露縮圖，須逐例查證。研究使用不加 P2 程式依賴。 | **收錄：近期數位編輯／動效發現入口**。提取版式運作方式，不抄表面。 |
+| [Siiimple](https://siiimple.com/)／[Magazine](https://siiimple.com/category/magazine/)／[Typography](https://siiimple.com/category/typography-2/)／[Grid](https://siiimple.com/category/grid/) | 自 2008 年起長期人工策展的極簡網站庫；標籤分類可追蹤，適合比對排版、留白與可讀性。 | 免費公開瀏覽；被收錄圖片及字體並不授權複製，不能把設計案例當成可直接移植的開源碼。 | **優先採用：用作減少噪音、層級、字距與留白評鑑庫**。 |
+| [Cosmos](https://www.cosmos.so/)／[官方基本說明](https://help.cosmos.so/en/articles/17508467-cosmos-basics)／[訂閱說明](https://help.cosmos.so/en/articles/17508556-your-account-and-subscription) | 可保存視覺元素、組 collections，支援色彩搜尋與相似元素探索；web／iOS／Android。 | 一般使用免費，Premium 可選，進階協作／批量匯出／自訂 grid 屬付費功能；每項圖片的權利逐件核實。使用者指定 [元素 915285079](https://www.cosmos.so/e/915285079) 本次無法讀取其實際畫面，**待人工核對，不推測其構圖或授權**。 | **收錄：參考保存與視覺比對入口**；該單一元素在確認前不作版式依據。 |
+
+**有來源的成熟參考與採否理由**（全部只借機制，非已取得的可重用素材）：
+
+1. [Domus / Salottobuono 十二欄編輯格線](https://www.domusweb.it/en/interviews/2011/05/16/the-new-look-of-domus-an-interview-with-salottobuono.html)：按文章需要組合「兩欄正文＋一欄邊註」，控制圖文資料的閱讀優先度。**本輪首選原理**。
+2. [Domus / Mark Porter](https://markporter.com/work/domus)：同一刊物的歷史編輯身份可以用在印刷與數位；採用跨媒介格線概念，不引入外來字體。
+3. [The Paris Review / Pentagram](https://www.pentagram.com/work/the-paris-review)：文學標題與節制的負空間；借秩序不借巨大標題。
+4. [Sight and Sound / Pentagram](https://www.pentagram.com/work/sight-and-sound/story)：明確格線／閱讀節奏；借欄位導航，不借跨過正文的視覺撞字。
+5. [Siiimple / Cereal Magazine](https://siiimple.com/category/magazine/)：留白與輕量索引；借選卷資訊的 microtype，不縮小經文。
+6. [Siiimple / MacGuffin Magazine](https://siiimple.com/category/magazine/)：邊緣導覽與雜誌核心視覺分工；不移植購物導向 CTA。
+7. [Siiimple / Aeon](https://siiimple.com/category/magazine/)：文字為中心的文學編輯層級；不把長文堆疊在多雷版畫上。
+8. [Siiimple / Palime Archive](https://siiimple.com/category/magazine/)：緊湊的索引和資料 register；不借其大面積高飽和色彩。
+9. [Siiimple / Migrant Journal](https://siiimple.com/category/magazine/)：強烈獨立刊物身份；**不採用其撞色**，P2 有固定 ONE 紙色。
+10. [Siiimple / London Gallery Weekend](https://siiimple.com/category/magazine/)：文獻導覽和圖像空間的分工；採用邊註概念。
+11. [Recent / Editorial 網站分類](https://recent.design/websites)：持續發現新作品；個別未核對案例不算已驗證實例。
+12. [Cosmos / 915285079](https://www.cosmos.so/e/915285079)：**待確認來源內容，不能冒稱已看見畫面**。
+13. [Sefaria / Resource Panel](https://help.sefaria.org/hc/en-us/articles/18472472138652-Quick-Guide-Meet-the-Sefaria-Library-Resource-Panel)：經文主體維持中心，旁欄依所選經文顯示上下文。
+14. [Logos / Studying a Bible Passage](https://support.logos.com/hc/en-us/articles/28756499675277-Studying-a-Bible-Passage-with-Logos)：研究資料可深度開展，但基礎畫面不能被工具淹沒。
+
+**正式版式候選：Domus manuscript + responsive marginalia**
+
+- P2 整體仍是左 2/3 ONE 研讀、右 1/3 原多雷圖庫；左頁內部採約 **7/10 經文閱讀＋3/10 研究邊註** 的桌面格線。用「選卷與章次刊頭 → 中英逐節聖經正文 → 右側按需讀的史地／段落／六種 ONE 功能 → 底部原 66 卷導覽」建立清楚的階層。這是 Domus「正文＋邊註」的延伸，不是新增四張卡片。
+- 中文經文以 Design OS 長讀字體和 400 weight 呈現；Chiron 200 只用於夠大的空靈標題，不用於微小控制。English quotation 用現有 Bodoni Moda，經文引用用 genuine italic；真實字寬與中英孤字需在 browser 驗。
+- 原有 66 卷橫向導覽、章次、逐節、史地、串珠、問題、預備和原 241 幅圖庫保留且同步；小屏優先展示正文，工具退到從屬但仍可操作的位置。
+- 綠色 5:8 EMMAUS 右封面只保留 **路加福音 24:27**，移除 24:32。經文只佔金色植物框**內側的純綠安全區**，不能壓住左右植物壓花；整體封面幾何、壓花母本及翻頁軸不動。
+- **工程／成本判決：** 使用原生 CSS Grid、既有 Westside Design OS token、P2 scope CSS 與 ONE 實數據；不裝新 JS 庫、付費參考工具、另一設計系統或沒有必要的 grid 依賴。研究網站是資料來源，並非 runtime。
+- **實際驗收：** 1648×928、390×844、320px、200% zoom、單字孤行、長卷名、切章切卷、鍵盤、scroll reverse 和 reduced motion 的真實 screenshot + DOM 檢查，未取得視覺證據前不宣稱獲獎級或已定稿。
+
 ## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
