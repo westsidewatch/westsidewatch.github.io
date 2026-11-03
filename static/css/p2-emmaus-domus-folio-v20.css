@@ -12,7 +12,7 @@
 @media(min-width:901px){
  #emmaus > .emmaus__left{
    grid-template-columns:minmax(0,1fr)!important;
-   grid-template-rows:auto minmax(158px,21%) minmax(0,1fr) clamp(92px,11.2vh,105px) auto!important;
+   grid-template-rows:auto minmax(180px,23%) minmax(0,1fr) clamp(92px,11.2vh,105px) auto!important;
    row-gap:0!important;
    padding:clamp(19px,1.72vw,29px) clamp(22px,1.87vw,32px) clamp(18px,1.5vw,25px)!important;
  }
