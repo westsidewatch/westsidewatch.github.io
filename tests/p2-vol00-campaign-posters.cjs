@@ -3,6 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 fs.mkdirSync('artifacts/p2-vol00',{recursive:true});
 const {chromium}=require('playwright');
+const {PNG}=require('pngjs');
 const poster=fs.readFileSync('static/js/p2-vol00-poster.js','utf8');
 const css=fs.readFileSync('static/css/p2-vol00-poster.css','utf8');
 const html=fs.readFileSync('static/experiments/p2-double-square-video-lab.html','utf8');
@@ -14,9 +15,9 @@ assert.match(poster,/poster'\)==='legacy'/,'an archived legacy visual baseline r
 assert.match(poster,/const colors=\['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'\]/,
  'sevenfold reuses exact homepage seven Design OS colors');
 assert.match(poster,/scaleY\(/,'seven full-surface planes, not narrow vertical swatches');
-assert.match(poster,/data-glyph=\\"xi\\"/,'西 uses a real SVG outline');
-assert.match(poster,/data-glyph=\\"wang\\"/,'望 uses a real SVG outline');
-assert.doesNotMatch(poster,/<text x=\\"500\\"/, 'do not return to the invisible SVG text glyph mask');
+assert.match(poster,/data-glyph="xi"/,'西 uses a real SVG outline');
+assert.match(poster,/data-glyph="wang"/,'望 uses a real SVG outline');
+assert.doesNotMatch(poster,/<text x="500"/, 'do not return to the invisible SVG text glyph mask');
 assert.match(poster,/clipPath id="xw-type-clip"/,'the B1 line system is actually clipped into full-size type');
 assert.match(css,/\.dual-continuum\{[\s\S]*visibility:hidden!important/,'old colored Magazine navigation removed visually');
 assert.match(bridge,/const poster=requestedPoster==='b'\?'b':'a'/,'full P2 preview can choose A or B');
@@ -65,29 +66,26 @@ for(const mode of ['a','b']){
   assert(atRest.scrollWidth<=width+3,'poster does not create horizontal overflow');
   assert(/inset\(0px 0px 0% 0px\)|inset\(0 0 0% 0\)/.test(atRest.artClip)||atRest.artClip.includes('0%'),
    'sevenfold has fully revealed the clean poster');
-  // Pixel-level regression: paths existing in the DOM is NOT enough.
-  // The previous implementation had two glyph nodes but an empty grey
-  // screenshot. Rasterize the finished SVG in Chromium and measure the
-  // graphic's interior; a blank left panel has only one interior color.
-  const visiblePixels=await page.locator('#xw-poster svg').evaluate(async art=>{
-   const raw=new XMLSerializer().serializeToString(art);
-   const url=URL.createObjectURL(new Blob([raw],{type:'image/svg+xml'}));
-   try{
-    const image=new Image();image.src=url;await image.decode();
-    const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
-    const ctx=canvas.getContext('2d',{willReadFrequently:true});
-    ctx.drawImage(image,0,0,256,256);
-    const data=ctx.getImageData(0,0,256,256).data;
-    const samples=new Set();
-    for(let y=26;y<235;y+=3)for(let x=15;x<241;x+=3){
-     const p=(y*256+x)*4;
-     samples.add((data[p]<<16)|(data[p+1]<<8)|data[p+2]);
-    }
-    return samples.size;
-   }finally{URL.revokeObjectURL(url)}
-  });
-  assert(visiblePixels>12,
-    'The left Magazine poster cannot be a blank solid gray rectangle; require visible glyph pixels');
+  // Test the ACTUAL COMPOSITED BROWSER PIXELS, not SVG markup existence
+  // and not XML serialization (which loses external OS CSS variables).
+  const screen=await page.locator('#xw-poster').screenshot();
+  const png=PNG.sync.read(screen);
+  const bg=mode==='a'?[238,229,212]:[52,56,66];
+  let inspected=0,inkPixels=0;
+  for(let y=Math.floor(png.height*.12);y<Math.floor(png.height*.90);y+=4){
+   for(let x=Math.floor(png.width*.08);x<Math.floor(png.width*.92);x+=4){
+    const i=(y*png.width+x)*4;
+    const dist=Math.abs(png.data[i]-bg[0])+
+     Math.abs(png.data[i+1]-bg[1])+Math.abs(png.data[i+2]-bg[2]);
+    inspected++;
+    if(dist>65 && png.data[i+3]>240)inkPixels++;
+   }
+  }
+  const visibleFraction=inkPixels/Math.max(1,inspected);
+  console.log('P2 POSTER PIXELS',mode,width,visibleFraction.toFixed(4),
+   'rendered=',png.width+'x'+png.height);
+  assert(visibleFraction>(mode==='a'?.10:.035),
+   'ACTUAL poster screenshot is missing visible Xi/Wang strokes: '+visibleFraction.toFixed(4));
   await page.locator('[data-snap="0.60"]').click();
   const partial=await page.evaluate(()=>({
    seven:+document.getElementById('dual-stage').dataset.posterFoldCount,
