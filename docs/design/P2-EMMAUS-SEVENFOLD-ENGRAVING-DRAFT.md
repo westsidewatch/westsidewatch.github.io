@@ -163,3 +163,22 @@ Preview: `/experiments/p2-emmaus-olive-handoff-lab.html?engraving=v14`.
 - **Build contract:** existing P2 tests now check pure vectors, six geometry groups, canonical ONE ink/paper background, exact SVG reproducibility and opt-in scope. Technical proof is not art approval.
 
 Editorial manual acceptance remains **15/20 exploratory score with no zero for meaning, composition distinction, accessibility or editability**, plus separate CI, actual visual, reading, responsiveness and motion gates. Do not equate 2614 SVG paths with earned art quality.
+
+
+## 2026-11-02 / Emmaus Frontispiece × Editorial Half-title — reversible entry (Draft)
+
+**Editorial decision.** Apply the Folio Society *frontispiece* reading logic (engraving narrates; restrained text introduces) and The Paris Review's literary hierarchy **only to the settled Magazine→Emmaus green-cover beat**. This is not a new Contents page and does not replace the complete ONE workbench.
+
+**Single-sentence proposition:** the left source folio becomes a quiet introduction to *Christ in all the Scriptures*, while the unchanged right 5:8 green cover carries the large EMMAUS identity and Luke 24:27. Editorial hierarchy is 03 / BIBLE STUDY → **經上所指的基督** → *The Scriptures Opened* → short Chinese editorial introduction → Luke 24:27 / ONE folio. Do **not** duplicate the full Scripture quotation or the right cover's large EMMAUS on the left.
+
+**Implementation:** existing P2 preview JavaScript injects one non-interactive, semantic p2-emmaus-prologue element **inside the original** #dual-contents in the already-loaded Magazine iframe, with one strictly local style element. The original full-bleed #dual-dore-plate, animated image source, source tile, right cover, seven-color spine and film are never reparented, resized, cloned or deleted. The text field takes the right ~42% of the original left folio, using Design OS fonts (Bodoni Moda, authentic SC, Chiron Hei HK WS, reading serif), night ink, paper and a restrained first-light hairline. On mobile the text field may widen to 46% for readability; these are **candidate measurements, not acceptance values**.
+
+**Existing MERSI motion:** first the approved Magazine-right cover turns into the 5:8 ONE cloth, then the same right cover reveals the Doré archive, and **only afterward** the left becomes the Bible reading leaf. Prologue opacity is scroll-bound and reversible, not autoplay; reverse to Magazine restores original Contents in its intact DOM. At the completed 03 state, original ONE 66-book rail, book name, chapter, Chinese–KJV verse pairs and adjacent history / cross-references / tools keep their established scope.
+
+**Visual bar and known risks:**
+- The left engraved image must retain its source node and untouched positioning. No image transfer or crop to simulate a new title page.
+- Danger: overly opaque paper gradient can hide too much of the engraving; measure exposed image proportion and information density in actual browser screenshots.
+- Danger: narrow viewports can cause the Chinese heading to wrap awkwardly or metadata to compete. Check actual font instances, 390px, 320px, 200% zoom and no orphan characters.
+- Readable sequence must hold at the settled green state, middle of second turn, final ONE state and reverse to original Contents. Check keyboard focus, source text accessibility and reduced motion.
+- Run the existing 10-part editorial review (meaning, subject, composition distinction, typography, two-ink discipline, hierarchy, interaction meaning, mobile, accessibility, editability; 0–2 each). **Do not claim 15/20, award-standard or acceptance without real desktop/mobile visual evidence**.
+- No direct production change: PR #1381 stays Draft / DO NOT MERGE pending editor review, CI and Cloudflare proof.
