@@ -24,11 +24,9 @@
  position:absolute;inset:0;z-index:3;display:block;width:100%;height:100%;
  overflow:hidden;pointer-events:none;shape-rendering:geometricPrecision;
 }
-.dual-stage[data-p2-poster] .xw-poster__big-type text{
- fill:white;
- font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- font-size:570px;font-weight:600;font-style:normal;font-synthesis:none;
- paint-order:normal;letter-spacing:0;dominant-baseline:auto;
+.dual-stage[data-p2-poster] .xw-poster__big-type path{
+ shape-rendering:geometricPrecision;
+ /* Actual independent SVG outline paths, not text inside an SVG clip. */
 }
 .dual-stage[data-p2-poster] .xw-poster__metadata text{
  font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
