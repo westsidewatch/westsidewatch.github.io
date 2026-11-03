@@ -1,3 +1,5 @@
+**SUPERSEDED 2026-11-03 — This historical study explored brush/temple-plaque combinations. The user has now explicitly rejected brush calligraphy as the Magazine campaign identity and approved two modern A1/B1 full-size posters with a homepage-derived sevenfold entry. See [new authoritative P2 poster specification](P2-XIWANG-CAMPAIGN-POSTER-SEVENFOLD-20261103.md). Do not implement the old calligraphy brief.**
+
 # P2 / VOL.00｜「西望」雙字重構提案 — Contemporary Type × 張即之題額 × Design OS
 
 **日期：**2026-11-02  
