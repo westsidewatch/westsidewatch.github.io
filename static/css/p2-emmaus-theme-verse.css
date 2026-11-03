@@ -1,0 +1,96 @@
+/* P2 / Emmaus — ONE authoritative theme-verse SAFE AREA.
+   This stylesheet is loaded LAST by both the original ONE leaf and the
+   Magazine iframe underleaf, which show the same Luke 24:27 quotation.
+   No resizing or masking of the original gold botanical ornaments. */
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture{
+ position:absolute!important;
+ z-index:6!important;
+ top:52%!important;
+ bottom:auto!important;
+ left:30%!important;
+ right:30%!important;
+ width:40%!important;
+ max-width:40%!important;
+ min-width:0!important;
+ max-height:37%!important;
+ margin:0!important;
+ padding:0!important;
+ box-sizing:border-box!important;
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:stretch!important;
+ justify-content:flex-start!important;
+ gap:0!important;
+ visibility:visible!important;
+ opacity:1!important;
+ text-align:center!important;
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary{
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:center!important;
+ justify-content:center!important;
+ gap:10px!important;
+ width:100%!important;
+ min-width:0!important;
+ max-width:100%!important;
+ margin:0!important;
+ padding:0!important;
+ border:0!important;
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary blockquote{
+ display:block!important;
+ box-sizing:border-box!important;
+ width:100%!important;
+ min-width:0!important;
+ max-width:100%!important;
+ margin:0!important;
+ padding:0!important;
+ border:0!important;
+ color:#cebd74!important;
+ font-family:var(--ws-type-reading-zh)!important;
+ font-weight:400!important;
+ font-size:clamp(17px,1.4vw,21px)!important;
+ line-height:1.58!important;
+ letter-spacing:0!important;
+ font-synthesis:none!important;
+ text-align:center!important;
+ white-space:normal!important;
+ word-break:normal!important;
+ overflow-wrap:anywhere!important;
+ line-break:strict!important;
+ text-wrap:pretty!important;
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary .emmaus__entry-scripture-ref{
+ display:flex!important;
+ flex-wrap:wrap!important;
+ justify-content:center!important;
+ align-items:baseline!important;
+ gap:4px 8px!important;
+ width:100%!important;
+ max-width:100%!important;
+ margin:0!important;
+ padding:0!important;
+ text-align:center!important;
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-secondary{
+ display:none!important;
+}
+@media(max-width:900px){
+ :is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture{
+  top:49%!important;
+  left:28%!important;right:28%!important;
+  width:44%!important;max-width:44%!important;
+ }
+ :is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary blockquote{
+  font-size:clamp(13px,1.7vw,17px)!important;line-height:1.53!important;
+ }
+}
+@media(max-width:540px){
+ :is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture{
+  top:48%!important;
+ }
+ :is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary blockquote{
+  font-size:11px!important;line-height:1.46!important;
+ }
+}
