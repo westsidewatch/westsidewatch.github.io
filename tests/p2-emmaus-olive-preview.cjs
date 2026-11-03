@@ -80,6 +80,16 @@ assert(js.includes("document.body.dataset.p2Surround=surround"),
 assert(js.includes("emRight.style.setProperty('--em-binding-reveal',String(oneDrop))"),
  'the matching green cloth rim must appear on the right 5:8 Doré folio');
 
+assert.match(js,/function ensureMagazinePrologue\(doc,tile\)/,
+ 'the magazine-to-Emmaus prologue is owned by the existing P2 bridge, not a new page');
+assert.match(js,/tile\.append\(magazinePrologue\)/,
+ 'the editorial half-title occupies the original Contents folio');
+assert.match(js,/const introAlpha=smooth\(\(move-\.89\)\/\.11\)\*\(1-smooth\(\(distance-8\.34\)\/\.30\)\)/,
+ 'the prologue is deterministic and reversible on the existing scroll timeline');
+assert.match(js,/grid-template-columns:minmax\(0,58%\) minmax\(0,42%\)/,
+ 'the left Contents-to-Emmaus editorial half-title leaves the image-dominant 58% visible');
+assert.doesNotMatch(js,/sourceFigure\.cloneNode|sourceTile\.replaceChildren/,
+ 'the original Magazine Doré and Contents source are not cloned or replaced');
 assert(js.includes('const move=smooth((distance-6.50)/.72)'), 'first turn follows P2 scroll');
 assert(js.includes('const archive=smooth((distance-7.66)/.64)'), 'second turn follows P2 scroll');
 assert(js.includes('const oneDrop=smooth((distance-8.55)/.55)'), 'reading appears only after second turn');
@@ -500,6 +510,23 @@ const {chromium}=require('playwright');
    assert.equal(firstState.side,'emmaus-gallery','the ONE green front cover replaces the RIGHT magazine cover');
    assert.match(firstState.image,/cover-texture-antique-green/);
    assert.equal(firstState.clip,'none','a true editorial page turn is not an inset-mask reveal');
+   const prologueState=await page.locator('#proof-original').evaluate(frame=>{
+    const doc=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+    const left=doc?.getElementById('dual-contents');
+    const intro=left?.querySelector('.p2-emmaus-prologue');
+    const plate=left?.querySelector('#dual-dore-plate');
+    return {count:left?.querySelectorAll('.p2-emmaus-prologue').length,
+     visible:intro?getComputedStyle(intro).visibility:null,
+     title:intro?.querySelector('h2')?.textContent,
+     parent:intro?.parentElement?.id,
+     plateParent:plate?.parentElement?.id};
+   });
+   assert.equal(prologueState.count,1,'a single editorial half-title replaces only the Magazine Contents text');
+   assert.equal(prologueState.visible,'visible','prologue appears beside the settled green cover');
+   assert.equal(prologueState.title,'經上所指的基督','the entry uses one meaningful editorial thesis');
+   assert.equal(prologueState.parent,'dual-contents','half-title is part of the original left folio');
+   assert.equal(prologueState.plateParent,'dual-contents','the Doré plate stays in its original left folio');
+   await page.screenshot({path:path.join(groundDir,viewport.width+'-emmaus-frontispiece-editorial-prologue.png')});
    await page.screenshot({path:path.join(groundDir,viewport.width+'-one-green-cover-right.png')});
    await page.locator('[data-jump="8.16"]').click();
    await page.waitForTimeout(140);
@@ -521,6 +548,13 @@ const {chromium}=require('playwright');
    await page.waitForTimeout(180);
    assert.equal(await page.locator('#proof-stage > #dual-dore-plate').count(),0,
      'reverse scrolling restores the original Magazine without transient clones');
+   const restoredIntro=await page.locator('#proof-original').evaluate(frame=>{
+    const doc=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+    const intro=doc?.querySelector('.p2-emmaus-prologue');
+    return {visible:intro?getComputedStyle(intro).visibility:null,opacity:intro?getComputedStyle(intro).opacity:null};
+   });
+   assert.equal(restoredIntro.visible,'hidden','reverse scroll must restore native Contents and remove the editorial prologue');
+   assert.equal(Number(restoredIntro.opacity),0,'prologue returns to zero opacity without deleting original content');
    await page.locator('[data-jump="9.10"]').click();
    await page.waitForTimeout(150);
    // Hold the established Emmaus spread before moving into Olive.
