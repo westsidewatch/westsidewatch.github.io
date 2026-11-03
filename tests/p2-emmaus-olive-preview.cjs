@@ -113,7 +113,13 @@ assert(binding.includes('/one/cover-texture-antique-green.png')&&
 assert(html.includes('路加福音 24:27')&&!html.includes('class="emmaus__entry-scripture-secondary"'),
  'the Emmaus cover shows ONLY its approved Luke 24:27 theme scripture');
 assert.match(html,/id="em-entry-cover"[\s\S]*?Luke 24:27/,'the green cover retains the approved theme');
-assert.match(fs.readFileSync(path.join(root,'static/css/p2-emmaus-study-rail-v16.css'),'utf8'),/inset:51% 22% auto 22%/,'the theme verse must stay inside the gilded botanical frame');
+const sharedVerseCSS=fs.readFileSync(path.join(root,'static/css/p2-emmaus-theme-verse.css'),'utf8');
+assert.match(sharedVerseCSS,/left:30%!important;/,'safe frame has at least 30% side clearance');
+assert.match(sharedVerseCSS,/width:40%!important;/,'single authoritative cover verse cannot overlap gilt foliage');
+assert.match(html,/p2-emmaus-theme-verse\.css/,'actual ONE cover loads the shared safe frame');
+assert.match(js,/p2-emmaus-theme-verse-style/,'Magazine underleaf loads the same safe frame');
+assert.doesNotMatch(js,/#p2-emmaus-magazine-underleaf \.emmaus__entry-scripture\{[^}]*left:/,
+ 'Magazine injected decorations must never set a competing horizontal verse geometry');
 assert.match(js,/olive\.style\.inset='auto'/,
  'the Olive stage is also constrained to the Magazine geometry');
 assert.match(js,/active:distance<6\.6/,
@@ -374,11 +380,27 @@ const {chromium}=require('playwright');
     assert(q.visible==='visible'&&q.opacity!=='0','the theme verse must be visibly rendered');
     assert(q.rect.y>=themeVerses.leaf.y&&q.rect.y+q.rect.height<=themeVerses.leaf.y+themeVerses.leaf.height+2,
      'Luke 24:27 must stay INSIDE the green/gold cover');
-    assert(q.rect.x>=themeVerses.leaf.x+themeVerses.leaf.width*.18 &&
-     q.rect.x+q.rect.width<=themeVerses.leaf.x+themeVerses.leaf.width*.82,
+    assert(q.rect.x>=themeVerses.leaf.x+themeVerses.leaf.width*.28 &&
+     q.rect.x+q.rect.width<=themeVerses.leaf.x+themeVerses.leaf.width*.72,
      'Luke 24:27 must not collide with the gilded left/right foliage');
    }
 
+   const liveMagazineVerse=await page.locator('#proof-original').evaluate(frame=>{
+    const doc=frame.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+    const underleaf=doc?.getElementById('p2-emmaus-magazine-underleaf');
+    const quote=underleaf?.querySelector('.emmaus__entry-scripture-primary blockquote');
+    const rect=underleaf?.getBoundingClientRect();
+    const text=quote?.getBoundingClientRect();
+    const link=doc?.getElementById('p2-emmaus-theme-verse-style');
+    return {stylesheet:!!link,width:rect?.width,textX:text?.x,leafX:rect?.x,textWidth:text?.width};
+   });
+   assert.equal(liveMagazineVerse.stylesheet,true,'the magazine first page and green underleaf share the SAME safe-frame stylesheet');
+   if(viewport.width>900&&liveMagazineVerse.width){
+    assert(liveMagazineVerse.textX>=liveMagazineVerse.leafX+liveMagazineVerse.width*.28,
+     'Magazine underleaf quotation starts to the RIGHT of the gold foliage');
+    assert(liveMagazineVerse.textX+liveMagazineVerse.textWidth<=liveMagazineVerse.leafX+liveMagazineVerse.width*.72,
+     'Magazine underleaf quotation ends before the right gold foliage');
+   }
    await page.screenshot({path:path.join(groundDir,viewport.width+'-emmaus-green-one-cover.png')});
    await page.locator('[data-jump="9.10"]').click();
    await page.waitForTimeout(150);
