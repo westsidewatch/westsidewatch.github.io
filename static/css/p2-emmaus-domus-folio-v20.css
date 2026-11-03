@@ -115,6 +115,8 @@
    border-left:1px solid color-mix(in srgb,var(--ws-first-light,#a88746) 50%,transparent)!important;
  }
  #emmaus .emmaus__current-chapter .emmaus__source-eyebrow{
+   flex:0 0 auto!important;
+   width:auto!important;
    margin:0 0 4px!important;
  }
  #emmaus .emmaus__current-chapter-row{
