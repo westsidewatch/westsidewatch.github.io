@@ -231,6 +231,14 @@ const regenV17=execFileSync(process.execPath,[path.join(root,'scripts/build-emma
  {encoding:'utf8',maxBuffer:1024*1024*4});
 assert.equal(v17,regenV17,'V17 is deterministically rebuilt from its checked-in original source');
 
+const domus=fs.readFileSync(path.join(root,'static/css/p2-emmaus-domus-folio-v20.css'),'utf8');
+assert.match(html,/p2-emmaus-domus-folio-v20\.css/,'P2 loads new editorial folio');
+assert.match(html,/class="emmaus__marginalia-mast"/,'ONE marginalia has semantic masthead');
+assert.match(domus,/\.emmaus__study-cols\{\s*display:contents!important/,'actual Scripture and chapter title are independent grid items');
+assert.match(domus,/\.emmaus__scripture-reader\{\s*grid-column:1!important;grid-row:2!important/,'Scripture is primary column');
+assert.match(domus,/\.emmaus__context\{\s*grid-column:2!important;grid-row:2!important/,'research is attached side marginalia');
+assert.match(js,/bookHeadlineScale/,'long canonical books scale without truncating titles');
+
 console.log('P2 03/04 isolated preview source contract: pass');
 
 if(!process.env.P2_BROWSER_PROOF)process.exit(0);
@@ -247,6 +255,27 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('.emmaus__number').count(),66,'all 66 ONE books have selectable numbers');
    assert.equal(await page.locator('#emmaus').getAttribute('aria-hidden'),'false','Emmaus visible in its reading dwell');
    assert.equal(await page.locator('#em-book-en').textContent(),'Luke');
+   if(viewport.width>900){
+    const v20=await page.locator('#emmaus').evaluate(f=>{
+     const q=s=>f.querySelector(s),box=s=>q(s).getBoundingClientRect(),cs=s=>getComputedStyle(q(s));
+     const hero=box('.emmaus__source-hero'),nav=box('.emmaus__one-chapters');
+     const title=box('.emmaus__study-reading'),text=box('.emmaus__scripture-reader'),notes=box('.emmaus__context');
+     return {flattened:cs('.emmaus__study-cols').display,bookPx:parseFloat(cs('#em-book-en').fontSize),
+      chapterPx:parseFloat(cs('#em-current-chapter-number').fontSize),titlePx:parseFloat(cs('#emmaus-study-heading').fontSize),
+      fullNav:nav.width/hero.width,ordered:nav.bottom<title.top+20&&title.bottom<=text.top+2,
+      beside:Math.abs(text.top-notes.top)<4&&notes.left>=text.right,
+      uncut:q('#em-book-en').scrollWidth<=q('#em-book-en').clientWidth+2,
+      tabs:f.querySelectorAll('#em-context-tools [data-study-view]').length,
+      actions:f.querySelectorAll('#em-context-tools [data-one-launch]').length};
+    });
+    assert.equal(v20.flattened,'contents','left folio is a flat real editorial grid');
+    assert(v20.bookPx>=65&&v20.chapterPx>=70&&v20.titlePx>=30,'big book / chapter / study title hierarchy');
+    assert(v20.fullNav>=.93,'chapter selector fills whole folio, not half the heading');
+    assert(v20.ordered&&v20.beside,'Scripture and research marginalia align as independent grid areas');
+    assert(v20.uncut,'book name must not be truncated');
+    assert.equal(v20.tabs,6);assert.equal(v20.actions,4);
+   }
+
    await page.waitForFunction(()=>document.querySelector('.emmaus__scripture-zh .ws-editorial-no-orphan-tail'),{timeout:10000});
    const orphanProof=await page.locator('.emmaus__scripture-zh').first().evaluate(el=>{
      const tail=el.querySelector('.ws-editorial-no-orphan-tail');
