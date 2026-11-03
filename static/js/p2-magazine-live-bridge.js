@@ -30,7 +30,14 @@
  film.style.cssText='display:block;position:absolute;inset:0;width:100%;height:100%;border:0;z-index:0;pointer-events:none;background:var(--paper);opacity:0';
  const frame=document.createElement('iframe');
  frame.title='西望 Vol.00：承接活水教會的封面、晨星與十二欄目目錄';
- frame.src='/experiments/p2-double-square-video-lab.html?embed=1&p=0&side=cover-right';
+ // The outer isolated P2 preview may request B without mutating production.
+ // Parent query is read only when same-origin; the homepage defaults to A.
+ let requestedPoster=query.get('poster');
+ if(!requestedPoster){
+  try{requestedPoster=new URLSearchParams(parent.location.search).get('poster')}catch(_error){}
+ }
+ const poster=requestedPoster==='b'?'b':'a';
+ frame.src='/experiments/p2-double-square-video-lab.html?embed=1&p=0&side=cover-right&poster='+poster;
  frame.loading='eager';
  frame.setAttribute('allow','autoplay');
  frame.style.cssText='display:block;position:absolute;inset:0;width:100%;height:100%;border:0;z-index:1;background:transparent';
