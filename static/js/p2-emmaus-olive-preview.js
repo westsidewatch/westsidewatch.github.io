@@ -419,25 +419,25 @@
       var(--ws-type-display-zh);letter-spacing:.15em}
     #p2-emmaus-magazine-underleaf .emmaus__identity p{margin:clamp(11px,1.7vh,18px) 0 0;
       font:400 clamp(9px,.75vw,12px)/1.3 var(--ws-type-display-en-sc);letter-spacing:.15em}
-    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{position:absolute;z-index:3;top:53%;bottom:auto;
-      left:14%;right:14%;max-height:34%;display:flex;flex-direction:column;align-items:center;
-      gap:clamp(12px,1.8vh,20px);text-align:center;text-wrap:pretty;line-break:strict}
-    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-primary{padding-bottom:clamp(8px,1.1vh,13px);
-      border-bottom:1px solid #cebd7485}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{position:absolute;z-index:3;top:51%;bottom:auto;
+      left:22%;right:22%;width:56%;max-width:56%;max-height:38%;
+      display:flex;flex-direction:column;align-items:center;gap:0;
+      text-align:center;text-wrap:pretty;line-break:strict}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-primary{display:flex;flex-direction:column;
+      align-items:center;width:100%;padding:0;border-bottom:0;gap:clamp(8px,1.1vh,13px)}
     #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-ref{
       display:flex;justify-content:center;gap:8px;font:400 clamp(9px,.73vw,11px)/1.35
       var(--ws-type-display-en-sc);color:#cebd74}
     #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-ref [lang=zh-Hant]{
       font:200 clamp(10px,.75vw,12px)/1.35 var(--ws-type-display-zh)}
     #p2-emmaus-magazine-underleaf .ws-editorial-no-orphan-tail{white-space:nowrap!important}
-    #p2-emmaus-magazine-underleaf blockquote{margin:5px 0 0;color:#cebd74;
-      font:400 clamp(16px,1.15vw,19px)/1.6 var(--ws-type-reading-zh);text-wrap:pretty}
-    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-secondary blockquote{font-size:clamp(12px,.85vw,15px)}
+    #p2-emmaus-magazine-underleaf blockquote{margin:0;color:#cebd74;width:100%;max-width:100%;
+      font:400 clamp(16px,1.15vw,19px)/1.67 var(--ws-type-reading-zh);
+      text-wrap:pretty;overflow-wrap:break-word;white-space:normal;letter-spacing:.018em}
     @media(max-width:900px){
       #p2-emmaus-magazine-underleaf .emmaus__identity h1{font-size:clamp(27px,5vw,44px)}
-      #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{top:49%;bottom:auto;gap:6px}
-      #p2-emmaus-magazine-underleaf blockquote{font-size:10px;line-height:1.3}
-      #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-secondary blockquote{font-size:9px}}
+      #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{top:49%;left:20%;right:20%;width:60%;max-width:60%;bottom:auto;gap:8px}
+      #p2-emmaus-magazine-underleaf blockquote{font-size:clamp(11px,1.7vw,16px);line-height:1.52}}
    `;
    doc.head.append(magazineUnderlayStyle);
    cover.parentElement.insertBefore(magazineUnderlay,cover);
