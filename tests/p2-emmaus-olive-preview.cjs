@@ -110,8 +110,10 @@ assert(js.includes("emRight.style.visibility=move>=.999?'visible':'hidden'"),
 assert(binding.includes('/one/cover-texture-antique-green.png')&&
  binding.includes('/one/cover-golden-shoot-frame-transparent.png'),
  'P2 directly reuses real ONE cloth and gold master');
-assert(html.includes('路加福音 24:27')&&html.includes('路加福音 24:32'),
- 'the Emmaus cover must show both canonical section scripture references');
+assert(html.includes('路加福音 24:27')&&!html.includes('class="emmaus__entry-scripture-secondary"'),
+ 'the Emmaus cover shows ONLY its approved Luke 24:27 theme scripture');
+assert.match(html,/id="em-entry-cover"[\s\S]*?Luke 24:27/,'the green cover retains the approved theme');
+assert.match(fs.readFileSync(path.join(root,'static/css/p2-emmaus-study-rail-v16.css'),'utf8'),/inset:51% 22% auto 22%/,'the theme verse must stay inside the gilded botanical frame');
 assert.match(js,/olive\.style\.inset='auto'/,
  'the Olive stage is also constrained to the Magazine geometry');
 assert.match(js,/active:distance<6\.6/,
@@ -364,17 +366,17 @@ const {chromium}=require('playwright');
      rect:el.getBoundingClientRect().toJSON()})),
      leaf:box.toJSON()};
    });
-   assert.equal(themeVerses.quotes.length,2,'the ONE green Emmaus cover includes both theme verses');
+   assert.equal(themeVerses.quotes.length,1,'the ONE green Emmaus cover has exactly one theme verse');
    assert(themeVerses.quotes[0].text.includes('凡經上所指着自己的話'),
-    'the handbook PRIMARY Luke 24:27 is the first complete reader-facing verse');
-   assert(themeVerses.quotes[1].text.includes('我們的心豈不是火熱的嗎'),
-    'supporting Luke 24:32 is visually secondary');
+    'the full Luke 24:27 remains the sole theme quotation');
    if(viewport.width>900){
-    for(const q of themeVerses.quotes){
-     assert(q.visible==='visible'&&q.opacity!=='0','both scripture verses must be visibly rendered');
-     assert(q.rect.y>=themeVerses.leaf.y&&q.rect.y+q.rect.height<=themeVerses.leaf.y+themeVerses.leaf.height+2,
-      'the theme verses must stay INSIDE the green/gold cover, not overflow below it');
-    }
+    const q=themeVerses.quotes[0];
+    assert(q.visible==='visible'&&q.opacity!=='0','the theme verse must be visibly rendered');
+    assert(q.rect.y>=themeVerses.leaf.y&&q.rect.y+q.rect.height<=themeVerses.leaf.y+themeVerses.leaf.height+2,
+     'Luke 24:27 must stay INSIDE the green/gold cover');
+    assert(q.rect.x>=themeVerses.leaf.x+themeVerses.leaf.width*.18 &&
+     q.rect.x+q.rect.width<=themeVerses.leaf.x+themeVerses.leaf.width*.82,
+     'Luke 24:27 must not collide with the gilded left/right foliage');
    }
 
    await page.screenshot({path:path.join(groundDir,viewport.width+'-emmaus-green-one-cover.png')});
