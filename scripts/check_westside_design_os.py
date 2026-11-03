@@ -36,4 +36,6 @@ result=subprocess.run([sys.executable,str(root/"scripts/build_westside_design_os
 if result.returncode: sys.exit(result.returncode)
 if '/css/westside-design-tokens.css' not in runtime:
  print("Design OS guard failed: generated token runtime is not loaded");sys.exit(1)
+egm=subprocess.run([sys.executable,str(root/"scripts/check_design_os_egm.py")],cwd=root)
+if egm.returncode: sys.exit(egm.returncode)
 print("Westside Design OS guard: PASS")
