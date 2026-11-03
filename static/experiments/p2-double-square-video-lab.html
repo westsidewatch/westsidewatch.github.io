@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="/css/westside-design-os.css">
 <link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261029g">
 <link rel="stylesheet" href="/css/p2-contents-twelve.css?v=20261028k">
+<link rel="stylesheet" href="/css/p2-vol00-poster.css?v=20261103-sevenfold-poster-v1">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -18,8 +19,10 @@
   <button type="button" data-snap="0.48">晨星顯現</button>
   <button type="button" data-snap="0.60">晨星升起</button>
   <button type="button" data-snap="0.69">西望鉛字</button>
-  <button type="button" data-snap="0.82">七色書脊翻頁</button>
-  <button type="button" data-snap="1">多雷 Contents</button>
+  <button type="button" data-snap="0.82">七重折疊入場</button>
+  <button type="button" data-snap="1">海報定格</button>
+  <button type="button" data-postermode="a">A · 幾何字</button>
+  <button type="button" data-postermode="b">B · 刻線字</button>
  </nav>
  <label class="dual-ui__range" for="dual-progress">展開進度 <input type="range" id="dual-progress" min="0" max="100" value="100" step="1"><output id="dual-value" for="dual-progress">100%</output></label>
 </header>
@@ -163,6 +166,7 @@
 <!-- Use the already published Doré Search canonical registry: no parallel asset table. -->
 <script src="/one/one-dore-cover-registry.js"></script>
 <script src="/one/one-dore-assets-241.js"></script>
+<script src="/js/p2-vol00-poster.js?v=20261103-sevenfold-poster-v1"></script>
 <script>
 (function(){
  const stage=document.getElementById('dual-stage');
@@ -429,10 +433,10 @@
   // /dore/search/ autonomous double-buffer plate carousel, 15s scanning.
   // Only P2 folio visibility and the Morning Star/Contents are scroll-driven.
   const artArrival=reduce?(progress>=.31?1:0):ease((progress-.225)/.115);
-  const artDeparture=0; // The original engraving continues as the Contents folio's art.
+  const artDeparture=0; // Legacy Doré remains mounted as an inactive 03/04 source only.
   artPlate.style.opacity=String(artArrival*(1-artDeparture));
   artPlate.style.visibility=artArrival>0&&artDeparture<1?'visible':'hidden';
-  galleryUpdate(progress>=.30);
+  if(!window.P2Vol00Poster)galleryUpdate(progress>=.30);
   stage.dataset.doreVisible=artPlate.style.opacity;
   stage.dataset.dorePlateId=artPlate.dataset.plateId||'';
   stage.dataset.dorePlateChanges=String(plateChanges);
@@ -533,6 +537,7 @@
   stage.dataset.xiwangLines='0';
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
+  window.P2Vol00Poster?.paint(progress);
  }
  function setProgress(v){
   progress=clamp(Number(v));render();
@@ -568,6 +573,15 @@
  });
  rail.addEventListener('keydown',event=>{if(event.key==='Escape')collapseRealms()});
  document.querySelectorAll('[data-snap]').forEach(b=>b.addEventListener('click',()=>setProgress(b.dataset.snap)));
+ document.querySelectorAll('[data-postermode]').forEach(button=>{
+  const selected=button.dataset.postermode===window.P2Vol00Poster?.mode;
+  button.setAttribute('aria-pressed',String(selected));
+  button.addEventListener('click',()=>{
+   const dest=new URL(location.href);
+   dest.searchParams.set('poster',button.dataset.postermode);
+   location.assign(dest.toString());
+  });
+ });
  range.addEventListener('input',()=>setProgress(Number(range.value)/100));
  addEventListener('message',event=>{
   if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-dual-progress')return;
