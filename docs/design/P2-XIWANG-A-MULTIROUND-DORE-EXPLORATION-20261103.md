@@ -22,7 +22,7 @@
 | 來源 | 核實結果 | A 用途與處置 |
 | --- | --- | --- |
 | [Skel Sans](https://github.com/pacpapapa/skel-sans) | OFL-1.1；繁體中文；幾何骨架重建，有 Vanilla / Claw / Wiggle / Zigzag 與 wght/wdth/slnt。**實際 Git tree 只有九項、README／LICENSE／樣圖，沒有生成器代碼**；大型已編譯字體另在 Releases | **保留設計原理研究，降級為「非開源生成器」**。不可直接把既有 Noto 派生骨架當作最終「西望」 |
-| [FANGCUN 方寸](https://github.com/beastt1992/fangcuntw) | MPL-2.0 repo，自稱繁體筆畫參數生成，但 README 明示 `[VERIFY]`/`[FILL]`；實際 tree 極少，沒有核實到完整可重現的 CJK generator | **暫不採用**；不得依 README 的產品宣稱假設已有可生產的核心程式 |
+| [FANGCUN 方寸](https://github.com/beastt1992/fangcuntw) | **更正：**MPL-2.0；Git tree 僅 17 項，但包含 **3,609,463 bytes 的 index.html 單檔程式**，不是只有說明文件。[公開的互動 App](https://fangcuntw.vercel.app/) 呈現繁體字骨、參數、KAGE 匯入與 SVG／海報輸出；README 仍有待驗證欄位 | **升級為必須實測的候選**；原始碼存在不代表已核實「西望」的獨立修改、字內白、SVG 匯出與重建流程 |
 | [KAGE Python](https://github.com/HowardZorn/kage-engine) | **真正有程式碼**：`kage/kage.py`、Sans/Serif 繪筆系統、逐字生成 SVG ；GPL-3.0，GitHub 最後推送 2023-12，字形數據需另從 GlyphWiki 提供 | **保留結構參考/可執行對照**。可研究部件與筆畫建立方式，**不直接搬其成品或舊字稿作海報正式母本**；外部 tool 與資料授權分別核對 |
 | [HanGlyphComposition](https://github.com/googlefonts/HanGlyphComposition) | Google Fonts 提供 deep components 和結構資料；GitHub 網頁註記 archived/read-only | **部件關係研究用**，不是已維護的 SVG 字形設計器 |
 | [Chinese Hershey Font](https://github.com/LingDong-/chinese-hershey-font) | MIT、單線漢字資料與轉換工具，但程式基於 Python 2，最近推送 2019 | **筆畫中心線研究**；不能當作符合本次字形品質的直接輸出 |
@@ -56,11 +56,25 @@
 ### 第四輪｜原始碼存在性、授權與可部署核查
 
 - **Skel Sans 的重要糾正**：有可用的 OFL 1.1 字體，但其 GitHub repo **沒有字骨生成程式碼**。不能再宣稱已找到可直接安裝的 Skel Sans 筆畫重構演算法。
-- **FANGCUN 的重要糾正**：README 中明示尚待實際核查的參數／資料集說明，故不能以「13k 繁體」一句宣傳文字取代生成器驗收。
+- **FANGCUN 原始碼的更正**：repo 有 3.6 MB 單檔 index.html 程式碼，不是無源碼；公開 App 呈現繁體字參數編輯與 SVG 輸出介面。但 README 的資料集／參數欄位仍待核對；必須對實際「西」「望」進行操作測試，才能評判工程可靠性。
 - **KAGE 的能力與代價**：有真可執行 Python repo，卻較老且 GPL 程式碼與 GlyphWiki 字形資料的授權是兩回事，適合作部件拆解對照，不應偷渡進本站 runtime。
 - **Inkscape 的工程落點**：不需進入 PR runtime；原生 SVG 每個字獨立 path，將非標準 Live Path Effect 在輸出時正規化，交給 PathOps 清理；任何外部編輯器都不嵌進 P2。
 - **授權成本**：上列優先方案為免費開源工具；母本全新構造、不使用淘汰舊字形，既可避開舊稿失敗，也降低外部字型使用條款風險。
 
+### 第五輪｜真正能操作漢字筆畫／部件的開源工具（重要補充）
+
+這輪專門查找是否能直接操作漢字的筆畫及構件，並核對原始碼存在性、授權、維護、和 Mac 使用條件。
+
+| 來源 | 核查證據 | A 的實際適用性 |
+| --- | --- | --- |
+| **[KAGE Editor](https://github.com/kurgm/kage-editor)** | 真正有 98 項 repo tree、React/TypeScript 原始碼；可選筆畫、部件、修改控制點及起收、拆解、重排、顯示中心線。GPL-3.0，2026-06 有推送，作者宣稱測試 macOS Chrome / Firefox / Safari | **優先 CJK 筆畫建構候選**；不將 GPL 程式植入 P2，不能把內建預設 KAGE 字形不修改就當作原創巨字 |
+| **[Kumiko Font Editor](https://github.com/chiakich/kumiko-font-editor)** | MIT、約 1020 個 repo tree entries，2026-09 推送；原生 React/TypeScript + IDS 漢字部件組字、節點輪廓編輯與 UFO/GitHub 工作流。README 明言現階段以「補字」為主 | **第二個優先 CJK 字骨候選**；要實測全新「西」「望」的字骨構件和輸出 SVG，而不只是對普通字庫補字 |
+| **[Graphite](https://github.com/GraphiteEditor/Graphite)** | MIT/Apache-2.0、真 Rust/TS 程序式向量節點程式、2026-11 推送，約 1615 個 repo tree entries；公開 Alpha | **幾何變形的有力候選**；適合大量非破壞性曲線和負形試驗，但不是 CJK 部件專用工具 |
+| **[FANGCUN](https://github.com/beastt1992/fangcuntw)** | MPL-2.0；雖只有 17 個檔案，但確有 3.6 MB 單檔 JavaScript/HTML App；公開網站展示 KAGE 匯入、繁體參數、SVG 海報匯出，README 仍有待核對數據 | **升為優先操作試驗**，必須驗證新字骨的筆畫重組而不僅是現成字型風格調參 |
+
+**第五輪的工具鏈修正：**不能再僅以 Inkscape + PathOps 結案。先由 KAGE Editor／Kumiko／FANGCUN 三種真正 CJK 原生結構方案提出全新「西」「望」筆段，再由 Graphite／Inkscape 研究幾何負形、承重及曲面，skia-pathops 做布林可靠性檢查。任何來源只會把舊黑體加粗、加切線，應退回下一輪探索。
+
+**目前仍未通過完整新字稿的實際試驗**，因此以上都是查證過原始碼／授權的優先候選，不能宣稱已找到藝術上滿意的工具。
 ## III. 條件性優先組合，不冒稱已完成
 
 **方案 I（首選真實試做）：Inkscape SVG 手工字骨 + skia-pathops + fontTools SVGPath**。  
