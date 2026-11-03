@@ -48,13 +48,23 @@
    rays.push('<path d="M'+(510+Math.cos(a)*r1).toFixed(1)+' '+(825+Math.sin(a)*r1).toFixed(1)+
     ' L'+(510+Math.cos(a)*r2).toFixed(1)+' '+(825+Math.sin(a)*r2).toFixed(1)+'"/>');
   }
-  svg.innerHTML='<defs><clipPath id="xw-type-clip">'+glyphs+'</clipPath>'+
+  // B1 must be rendered by PAINTING THE GLYPH OUTLINES DIRECTLY.
+  // The previous clipPath around a group with embedded path tags rendered
+  // zero visible pixels in Chromium despite passing DOM-only tests.
+  // Engraved wave, halftone and radial field is now a userSpaceOnUse SVG
+  // pattern; glyph paths are foreground paint, never a clip target.
+  svg.innerHTML='<defs>'+
    '<pattern id="xw-dot" width="19" height="19" patternUnits="userSpaceOnUse">'+
-   '<circle cx="9.5" cy="9.5" r="4.3" fill="#f4ecdd"/></pattern></defs>'+
+    '<circle cx="9.5" cy="9.5" r="4.3" fill="#f4ecdd"/></pattern>'+
+   '<pattern id="xw-engraved-field" width="1000" height="1000" patternUnits="userSpaceOnUse">'+
+    '<rect width="1000" height="1000" fill="#343842"/>'+
+    '<rect width="1000" height="294" fill="url(#xw-dot)"/>'+
+    '<g fill="none" stroke="#f4ecdd" stroke-width="3.5" stroke-linecap="round">'+lines.join('')+'</g>'+
+    '<g fill="none" stroke="#f4ecdd" stroke-width="2.4" opacity=".93">'+rays.join('')+'</g>'+
+   '</pattern></defs>'+
    '<rect width="1000" height="1000" fill="#343842"/>'+
-   '<g clip-path="url(#xw-type-clip)"><rect width="1000" height="290" fill="url(#xw-dot)"/>'+
-   '<g fill="none" stroke="#f4ecdd" stroke-width="3.5" stroke-linecap="round">'+lines.join('')+'</g>'+
-   '<g fill="none" stroke="#f4ecdd" stroke-width="2.4" opacity=".9">'+rays.join('')+'</g></g>'+meta;
+   '<g fill="#f4ecdd" opacity=".17">'+glyphs+'</g>'+
+   '<g fill="url(#xw-engraved-field)">'+glyphs+'</g>'+meta;
  }
  const poster=document.createElement('section');
  poster.id='xw-poster';poster.className='xw-poster';
