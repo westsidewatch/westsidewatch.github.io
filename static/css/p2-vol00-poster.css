@@ -1,0 +1,54 @@
+/* P2 Vol.00 / A+B poster surfaces and sevenfold curtain.
+ * Intentional change from the retired Magazine Book-spine navigator.
+ * DOM spine anchor remains inert for 03–07 outer spread measurement only.
+ * Only the Magazine left square is affected. Homepage/Church/right cover
+ * are excluded by scoping. No Doré images in the Magazine poster. */
+.dual-stage[data-p2-poster] .dual-continuum{
+ visibility:hidden!important;opacity:0!important;pointer-events:none!important;
+ box-shadow:none!important;
+}
+.dual-stage[data-p2-poster] .dual-tile--contents .dual-dore-plate,
+.dual-stage[data-p2-poster] .dual-tile--contents .dual-letterfield,
+.dual-stage[data-p2-poster] .dual-tile--contents .dual-cover__star,
+.dual-stage[data-p2-poster] .dual-tile--contents #dual-stone-contents{
+ display:none!important;opacity:0!important;pointer-events:none!important;
+}
+.dual-stage[data-p2-poster] #dual-contents{
+ background:var(--ws-paper,#eee5d4);isolation:isolate;
+}
+.dual-stage[data-p2-poster] #dual-contents .xw-poster{
+ position:absolute;inset:0;z-index:8;overflow:hidden;
+ width:100%;height:100%;pointer-events:none;display:block;
+}
+.dual-stage[data-p2-poster] .xw-poster__art{
+ position:absolute;inset:0;display:block;width:100%;height:100%;
+ overflow:hidden;pointer-events:none;shape-rendering:geometricPrecision;
+}
+.dual-stage[data-p2-poster] .xw-poster__big-type text{
+ fill:white;
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ font-size:635px;font-weight:600;font-style:normal;font-synthesis:none;
+ paint-order:normal;letter-spacing:0;dominant-baseline:auto;
+}
+.dual-stage[data-p2-poster] .xw-poster__metadata text{
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ font-size:10px;font-weight:400;letter-spacing:2px;
+ fill:var(--ws-first-light,#a2872a);
+ font-synthesis:none;
+}
+.dual-stage[data-p2-poster] .xw-poster__folds{
+ position:absolute;inset:0;z-index:2;overflow:hidden;
+ pointer-events:none;
+}
+.dual-stage[data-p2-poster] .xw-poster__fold{
+ position:absolute;inset:0;display:block;
+ background:var(--fold-ink);
+ transform:scaleY(0);transform-origin:top center;
+ will-change:transform;contain:paint;
+}
+@media(prefers-reduced-motion:reduce){
+ .dual-stage[data-p2-poster] .xw-poster__fold{will-change:auto}
+}
+/* This does not disable the P2 03 frontispiece: its parent-injected
+ * .p2-emmaus-prologue is independently overlaid above this poster (z:9).
+ * Existing full ONE and right Doré plates remain unchanged. */
