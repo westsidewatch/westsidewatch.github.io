@@ -376,6 +376,14 @@ A2 為兩個手工構造的大型幾何「西」「望」向量構件，`data-au
 
 **研究的開源路線**：A = FontForge／fontTools + skia-pathops（PathBool.js 只作可核查候補）；B = 在字形 `Region(outer,holes)` 上生成真正受輪廓約束的線條，重點審查 [penfill](https://github.com/piLeoni/penfill)（MIT／Apache-2.0，較新的實驗候選）、d3-contour／d3-shape、vpype；另對 FANGCUN 和 VecGlypher 保留研究但不當作可直接生產的可靠字稿。**本輪僅查資料與手冊修訂，不出圖、不施工、不修改現有 P2 runtime。**
 
+### 2026-11-03 / 必須多輪多雷探索，不能再以「尚未找到工具」草率結案
+
+**最新 A 海報工程決策**：[A 巨字海報 — 多輪開源製字工具與原始碼驗證](P2-XIWANG-A-MULTIROUND-DORE-EXPLORATION-20261103.md)。使用者要求**必須多輪探索，直到能找到具體可執行、適合全新「西望」字骨的工具為止**；遇到普通黑體加效果、只找到 README 或字型二進位、無法核實授權／輸出、兩字認不出來時，**必須繼續探索而不是把未通過的方案做成定稿**。舊 A2、淘汰刊頭和舊母本不可當新字骨。
+
+已完成三類非重複搜尋（CJK stroke skeleton；現代 font editor／modular type；SVG glyph geometry），加一輪實際 GitHub tree／license 核查；**更正先前對 Skel Sans 的誤判**：它公開 OFL 字體和介紹，但該倉庫沒有可直接重用的產生器源碼；FANGCUN 有未填／待核實說明，也不能當已完成工具。**優先技術試做**：Inkscape Shape Builder/Power Stroke/Envelope 的原生字形工作台（不靠舊字 path）＋ skia-pathops 布林／孔洞清理；Fontra、KAGE 作獨立部件／節點對照，不將 GPL 工具植入 P2。**這不是最終選型通過**：必須先用真「西」「望」新筆段做黑白 1:1 光學試驗、各尺寸與實際對開驗收；若仍像一般黑體，開下一輪搜尋，不能只調色／加斜切。
+
+**工作狀態：本輪只多雷探索與記錄，未出圖、未生成新 SVG、未改動 P2 或右封面。** 此處研究僅在 single Design OS Manual 內作鏈接，不增加第二套 OS。
+
 ## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
