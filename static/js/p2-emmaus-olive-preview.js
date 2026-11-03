@@ -419,10 +419,7 @@
       var(--ws-type-display-zh);letter-spacing:.15em}
     #p2-emmaus-magazine-underleaf .emmaus__identity p{margin:clamp(11px,1.7vh,18px) 0 0;
       font:400 clamp(9px,.75vw,12px)/1.3 var(--ws-type-display-en-sc);letter-spacing:.15em}
-    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{position:absolute;z-index:3;top:51%;bottom:auto;
-      left:22%;right:22%;width:56%;max-width:56%;max-height:38%;
-      display:flex;flex-direction:column;align-items:center;gap:0;
-      text-align:center;text-wrap:pretty;line-break:strict}
+    #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{position:absolute;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center}
     #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-primary{display:flex;flex-direction:column;
       align-items:center;width:100%;padding:0;border-bottom:0;gap:clamp(8px,1.1vh,13px)}
     #p2-emmaus-magazine-underleaf .emmaus__entry-scripture-ref{
@@ -436,10 +433,19 @@
       text-wrap:pretty;overflow-wrap:break-word;white-space:normal;letter-spacing:.018em}
     @media(max-width:900px){
       #p2-emmaus-magazine-underleaf .emmaus__identity h1{font-size:clamp(27px,5vw,44px)}
-      #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{top:49%;left:20%;right:20%;width:60%;max-width:60%;bottom:auto;gap:8px}
+      #p2-emmaus-magazine-underleaf .emmaus__entry-scripture{gap:8px}
       #p2-emmaus-magazine-underleaf blockquote{font-size:clamp(11px,1.7vw,16px);line-height:1.52}}
    `;
    doc.head.append(magazineUnderlayStyle);
+   // Single shared geometry owner for BOTH green faces. This stylesheet
+   // loads after the preview's non-geometric underleaf decoration rules.
+   if(!doc.getElementById('p2-emmaus-theme-verse-style')){
+    const themeLink=doc.createElement('link');
+    themeLink.id='p2-emmaus-theme-verse-style';
+    themeLink.rel='stylesheet';
+    themeLink.href='/css/p2-emmaus-theme-verse.css?v=20261102-safe-inner-frame-v1';
+    doc.head.append(themeLink);
+   }
    cover.parentElement.insertBefore(magazineUnderlay,cover);
   }
   // Both rectangles derive from the native Magazine layout, not projected
