@@ -38,7 +38,7 @@ function makeA(){
   const holes=`<path d="M643 646H818V696H643Z M643 707H818V744H643Z" fill="${paper}"/>`;
   const edges=`<g fill="none" stroke="${gold}" stroke-width="1.6" opacity=".70"><path d="M24 49H190 M807 49H976 M24 980H206 M794 980H976"/></g>`;
   return `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-labelledby="aTitle aDesc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" role="img" aria-labelledby="aTitle aDesc">
 <title id="aTitle">西望 — Geometry / Campaign A2</title>
 <desc id="aDesc">Two monumental, individually constructed Traditional Chinese characters. Modern geometric editorial poster. No brush lettering or illustration.</desc>
 <rect width="1000" height="1000" fill="${paper}"/>
@@ -110,7 +110,7 @@ function makeB(){
    <text x="${positionTextX}" y="${positionTextY}" font-family="Georgia,serif" font-size="10" letter-spacing="1.35" fill="${p.hex}">${String(i+1).padStart(2,"0")}  /  ${xml(p.name)}  —  ${p.family}</text>`;
   }
   return `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-labelledby="bTitle bDesc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" role="img" aria-labelledby="bTitle bDesc">
 <title id="bTitle">西望 × 7 — Engraved Campaign B2</title>
 <desc id="bDesc">Seven distinct typographic Westside Watch wordgroups, each corresponding to a section's Design OS color and a separate true SVG engraving system.</desc>
 <defs>${defs}</defs>
