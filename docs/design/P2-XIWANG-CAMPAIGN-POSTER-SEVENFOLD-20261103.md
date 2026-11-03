@@ -8,9 +8,15 @@ This decision supersedes the calligraphy-based requirement in P2-XIWANG-TYPE-RED
 
 **A1 — Geometric letterform / campaign key visual.** The user's coral-red-on-pink oversized Chinese poster is a construction reference: purposefully exaggerated main strokes, counterspace, diagonal geometric cuts and nearly full-surface two-character identity. Compose two exact Traditional Chinese characters, 西 and 望, in the left square. This is a new modern publication poster, not a restyled calligraphy label. The right side remains the already approved official 5:8 Magazine cover.
 
-**B1 — Engraved typographic field / second campaign poster.** The user's grey-on-charcoal poster with dots, curved striations and radiating line density is the structural reference: native SVG engraving and optical density should FORM the Chinese glyphs, not lie as a random texture over an already finished word. Keep it independently publishable rather than making B a decoration of A.
+**B1 — Seven-color engraved typography collection / second campaign poster.** User-approved 2026-11-03 revision: compose **3–7 individual 西望 word-groups (test 3 / 5 / 7), preferably 7**. Every group must independently use a DIFFERENT engraved line-building method and a DIFFERENT one of the seven existing Design OS section colors. Size, orientation and optical weight can vary. Dots, curved striations, parallel and radial lines must FORM the words, not decorate or recolor A's identical huge outline. This is a typographic family/system, not an A effect/filter.
 
 Source illustrations and rights: user reference posters are examples of methods, not licensed files to copy. Do not import either image into the deployed P2 or claim the original typographic artwork is open source. Both A1 and B1 have a shared cover-pair composition, paper/ink discipline, fine folio labels and native SVG semantics.
+
+## 2026-11-03 / open-source research and frozen status
+
+[Verified code choices, 17 A/B candidates, exact licenses, preferred build-only integration, seven-color engraving matrix](P2-XIWANG-A-B-OPEN-SOURCE-CODE-EXPLORATION-20261103.md). **A: opentype.js + PathBool.js**, with Paper.js/skia-pathops for path verification. **B: d3-shape + d3-contour**, with flow-lines, hatched and svg-halftone as additional distinct engraving references. Not every public GitHub repository is open-source: **Halftone Pro has a proprietary license and is rejected**.
+
+Existing A/B v1 in `static/js/p2-vol00-poster.js` are display/rendering proofs only and still use a common two-glyph shape; this **fails the newly approved design distinction**. Do not claim it is the final A1/B1 artwork. This research change does not modify any runtime, the right-hand cover, or the original scroll animation.
 
 ## Sevenfold fold — source checked against the actual homepage
 
@@ -26,11 +32,11 @@ Canonical references:
 
 ## Draft implementation in the original P2
 
-1. static/js/p2-vol00-poster.js creates both selectable SVG poster studies and seven color curtains. The A geometric strokes currently use a vector text mask with deliberate angular counterspace. B uses vector dotted, wavy and radial engraving fields clipped to a Chinese glyph silhouette.
+1. static/js/p2-vol00-poster.js currently creates selectable **v1 SVG rendering proofs** and seven color curtains; A is two outlined glyphs with cuts, B is one two-glyph outline with engraved pattern. **This is the documented baseline problem, not an approved A/B design master.** The source must be superseded by separately authored A two-character geometry and B 3–7 distinct typed engraving groups after this research selection.
 2. static/css/p2-vol00-poster.css scopes all changes to the original Magazine LEFT square. Old left Doré image, ink-brush wordmark, star and Contents are not displayed in poster mode. The protected RIGHT magazine cover remains unchanged.
 3. static/experiments/p2-double-square-video-lab.html now offers A/B poster modes and controls, preserving ?poster=legacy for old approved screenshots only. It calls the same poster painter on its current scroll progress, no second animation clock.
 4. static/js/p2-magazine-live-bridge.js passes same-origin P2 query poster=a or poster=b to the original embedded magazine frame.
-5. Existing A/B is a **typographic composition proof**, not the final optically corrected original path master. SVG text currently inherits Design OS Chinese sans display. The next artistic step is true custom letter-shape adjustment, not pretending these are already award-grade original glyphs.
+5. Existing A/B are **rendering/concept proofs**, not optically corrected final masters. The current outline paths still borrow a conventional type skeleton and the same one for both A/B. The next artistic step is custom A word construction and separately generated B multi-word line families; these are not award-grade completed glyph designs.
 
 ## Required verification before approval
 
