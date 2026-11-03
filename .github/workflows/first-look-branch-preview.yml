@@ -11,6 +11,7 @@ on:
       - 'layouts/partials/watch-home-editorial.html'
       - 'tests/p2-church-magazine-handoff.cjs'
       - 'tests/p2-vol00-preview.cjs'
+      - 'tests/p2-vol00-campaign-posters.cjs'
       - 'tests/p2-emmaus-olive-preview.cjs'
       - 'tests/p2-emmaus-one-workbench.cjs'
       - '.github/workflows/first-look-branch-preview.yml'
@@ -75,6 +76,7 @@ jobs:
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
           node tests/p2-vol00-preview.cjs
+          node tests/p2-vol00-campaign-posters.cjs
           node tests/p2-church-magazine-handoff.cjs
           P2_BROWSER_PROOF=1 node tests/p2-emmaus-one-workbench.cjs
           P2_BROWSER_PROOF=1 node tests/p2-emmaus-olive-preview.cjs
