@@ -30,11 +30,10 @@ assert(contextJS.includes("item[2] often contains internal labels"),
  'editor-only labels such as book structure must never render');
 assert(contextJS.includes("timelineEvents.replaceChildren()"),
  'chapter selection refreshes the outline rather than retaining stale text');
-assert(html.includes('以馬忤斯欄目主題經文')&&
- html.includes('路加福音 24:27')&&html.includes('路加福音 24:32'),
- 'the green cover must present both Emmaus passage references');
-assert(html.includes('我們的心豈不是火熱的嗎'),
- 'Luke 24:32 theme verse must not be replaced by a generic editorial slogan');
+assert(html.includes('以馬忤斯版塊主題經文')&&html.includes('路加福音 24:27'),
+ 'the green cover must present its approved Luke 24:27 theme verse');
+assert(!html.includes('class="emmaus__entry-scripture-secondary"'),
+ 'Luke 24:32 is a reference for research, not a second cover verse');
 const verseJS=read('js/p2-emmaus-scripture-v6.js');
 const lukeBilingual=JSON.parse(read('data/p2-emmaus-scripture-v6/Luke.json'));
 const johnBilingual=JSON.parse(read('data/p2-emmaus-scripture-v6/John.json'));
@@ -61,8 +60,8 @@ assert(host.includes('const coverArrival=move,coverOpen=archive'),'two page turn
 assert(host.includes('const oneDrop=smooth((distance-8.55)/.55)'),
  'left becomes content only after the second right-side page turn');
 assert(!host.includes('sourceFigure.cloneNode(true)'),'Magazine artwork must never be copied or moved');
-assert(html.includes('路加福音 24:27')&&html.includes('路加福音 24:32'),
- 'ONE green chapter cover includes the canonical Emmaus verses');
+assert(html.includes('路加福音 24:27')&&!html.includes('class="emmaus__entry-scripture-secondary"'),
+ 'ONE green chapter cover includes a single, readable Luke 24:27 passage');
 assert.match(html,/class="emmaus__book-switch emmaus__source-hero"/,
  'the selected Bible book has a real masthead below EMMAUS');
 assert.match(html,/id="em-current-chapter-number"/,
