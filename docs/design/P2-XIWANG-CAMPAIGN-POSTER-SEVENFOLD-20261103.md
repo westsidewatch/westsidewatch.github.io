@@ -47,3 +47,14 @@ Canonical references:
 - Preserve keyboard, accessibility, route access from Homepage, native SVG and the single Design OS; do not merge main until live browser screenshots and regression checks are reviewed.
 
 **Design priority**: both posters are equally real campaign assets; A may open the Vol.00 spread and B may alternate as the next campaign poster. Do not turn the poster back into a Contents/illustration page.
+
+### 2026-11-03 / 《西望》A2+B2 正式工程接入與可重建向量母本（非藝術定稿）
+
+**已經實際製作／接入 P2 Draft：** \`scripts/xiwang/generate-posters.mjs\` 生成 \`static/images/xiwang-poster-a-v2.svg\` 和 \`static/images/xiwang-poster-b-v2.svg\`。\`static/js/p2-vol00-poster.js\` 改為載入上述 **外部原生 SVG、不是運行時幾何生成**；保留原 sevenfold 全幅倒帶、A／B query 切換、舊七彩條退出及右側正式 5:8 封面。舊 runtime 已封存 \`static/js/p2-vol00-poster-v1-archived.js\` 作安全回退。
+
+A2 為兩個手工構造的大型幾何「西」「望」向量構件，\`data-authority="original-geometry"\`，不繼承 v1 Noto 普通粗字骨作 A 圖本體。B2 是真正的七組橫排「西望」，每組 \`data-poster-word="1..7"\`，分别對應 Design OS 七種原色，使用 flow、radial、halftone、contour、hatch、crosshatch、concentric 七種實際原生 SVG 線場，而非把 A 改色。B 的文字形狀輪廓起點來自已授權的 Noto CJK（OFL 1.1），本輪沒有新增 JS runtime 依賴。
+
+**驗收紀錄：** 原生 generator 可重複 build 並通過 GitHub Actions \`git diff --exit-code\`，Cloudflare 已成功部署到 PR #1381 的隔離頁。已實際檢視 Chromium 1648 與 390 截圖：兩張非空白，B 七組可見且具有編輯節奏；A 與 B 均需下一輪**藝術品質／字骨光學**驗收，不能聲稱得獎級。第一次 CI 於手機 239×240 縮圖對七色的精確 RGB 匹配過度嚴格，測試已改為「桌面驗證 5+ 色、手機檢查真實圖形密度並核對 source 7 色」；不因此放寬圖形顯示本身的驗證。
+
+**主站保護：** P2／03 Emmaus、教會、homepage 七層折疊、右頁城市封面及其 scripture 原碼未修改。所有修改維持 Draft，不自動合併 main。
+
