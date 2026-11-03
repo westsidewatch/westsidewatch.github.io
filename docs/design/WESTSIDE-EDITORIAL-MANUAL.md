@@ -334,6 +334,14 @@ The sizes are **research candidates requiring actual viewport and OS token verif
 
 **藝術判斷**：以已核實的 *Domus* 十二欄「正文＋邊註」為排版機制，參照 *The Paris Review* 的小標記和高對比層次；不是把整頁資料變成四卡 dashboard。下一輪評估必須比較舊圖中「LUKE / 24 僅佔局部，祂已經復活了很小，研究欄過密」和新版畫面，從真實截圖決定是否還要再壓縮研究密度。
 
+### 2026-11-02 / P2「西望」雙字：12 張 Cosmos 漢字設計研究 → 新字骨提案
+
+**本輪新增交叉參照（已提交到 P2 Draft）：**[P2-XIWANG-TYPE-REDESIGN-COSMOS-20261102.md](P2-XIWANG-TYPE-REDESIGN-COSMOS-20261102.md)。按使用者實際提供的十二張 Cosmos 網頁截圖逐張標記可觀察的漢字海報特徵、可借的設計原理和不可移植的風格；照片不能當作可直接使用的 SVG 字型，也不冒認原作者或授權。
+
+**定向：**以 A「筆骨・活字 / Ink-Bone Letterpress」為下一輪**優先試稿**；B「反白字骨」是幾何負形對照；C「墨勢重疊」是書寫動勢對照。重點是「西」「望」的真正原創**字內白、粗細承重、重心、結體、真實墨肉與墨筆收束**，而非沿用現有 2.1 MB 遮罩再改顏色和陰影。此現代視覺研究與已批准的**張即之真寺額、07/09 雙基準、正楷向大行草、雄渾、禁篆隸／清皇帝／摩崖取字**保持連續，不把任何已淘汰的歷史字形偷渡回來。
+
+**實際 P2 工程安全線：**現有 \`static/images/xiwang-ink-vector.svg\`、晨星 v5.3、\`#dual-dore-plate\`、12 種 Contents 目錄、右側正式 \`westside-watch-masthead-landscape.svg\` 完全保留；新字形必須先在 Draft 的 opt-in native SVG 對照中接受 1648／768／390／320px、正逆滾動及減少動效檢查。**此輪是已歸檔的可施工修改方案，還不是已製成／上線的字標。**
+
 ## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
