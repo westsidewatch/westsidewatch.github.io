@@ -372,6 +372,18 @@ const {chromium}=require('playwright');
      rect:el.getBoundingClientRect().toJSON()})),
      leaf:box.toJSON()};
    });
+   const coverTailFont=await page.locator('#em-entry-cover').evaluate(cover=>{
+    const quote=cover.querySelector('.emmaus__entry-scripture-primary blockquote');
+    const tail=quote.querySelector('.ws-editorial-no-orphan-tail');
+    if(!tail)return {missing:true};
+    const before=getComputedStyle(quote),after=getComputedStyle(tail);
+    return {missing:false,
+     equal:['fontFamily','fontSize','fontWeight','lineHeight','letterSpacing']
+       .every(k=>before[k]===after[k])};
+   });
+   assert.equal(coverTailFont.missing,false,'Luke 24:27 final characters have anti-orphan span');
+   assert.equal(coverTailFont.equal,true,
+    'Luke 24:27 third-line tail must match earlier lines in font, size, weight, leading and tracking');
    assert.equal(themeVerses.quotes.length,1,'the ONE green Emmaus cover has exactly one theme verse');
    assert(themeVerses.quotes[0].text.includes('凡經上所指着自己的話'),
     'the full Luke 24:27 remains the sole theme quotation');
