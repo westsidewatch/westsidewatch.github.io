@@ -370,6 +370,12 @@ A2 為兩個手工構造的大型幾何「西」「望」向量構件，`data-au
 
 **主站保護：** P2／03 Emmaus、教會、homepage 七層折疊、右頁城市封面及其 scripture 原碼未修改。所有修改維持 Draft，不自動合併 main。
 
+### 2026-11-03 / 最新覆核：淘汰版「西望」不得再用，B 改成正立疊合刻線（研究定向）
+
+**最高優先的新規格**：[《西望》字骨重製／B 七層疊合刻線多雷探索](P2-XIWANG-NEW-GLYPH-OVERLAY-ENGRAVING-RESEARCH-20261103.md)。本項研究已確定此前 A2 一般幾何巨字及 B2 七排橫向字樣不符合使用者參考；**不能以已淘汰的「西望」SVG（含舊刊頭和 A2/B2）為新字骨**。A 從新字骨製作僅一組上「西」下「望」的正立巨字；B 以原灰底刻線參考為尺度，**七組各自有獨立刻線和 OS 色的「西望」共同豎直疊合成一幅構圖**，不得傾斜、七個獨立橫列、字外刻線／底紋、舊字形七次換色。
+
+**研究的開源路線**：A = FontForge／fontTools + skia-pathops（PathBool.js 只作可核查候補）；B = 在字形 `Region(outer,holes)` 上生成真正受輪廓約束的線條，重點審查 [penfill](https://github.com/piLeoni/penfill)（MIT／Apache-2.0，較新的實驗候選）、d3-contour／d3-shape、vpype；另對 FANGCUN 和 VecGlypher 保留研究但不當作可直接生產的可靠字稿。**本輪僅查資料與手冊修訂，不出圖、不施工、不修改現有 P2 runtime。**
+
 ## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
