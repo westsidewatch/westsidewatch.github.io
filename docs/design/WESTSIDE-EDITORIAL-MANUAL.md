@@ -384,6 +384,16 @@ A2 為兩個手工構造的大型幾何「西」「望」向量構件，`data-au
 
 **工作狀態：本輪只多雷探索與記錄，未出圖、未生成新 SVG、未改動 P2 或右封面。** 此處研究僅在 single Design OS Manual 內作鏈接，不增加第二套 OS。
 
+### 2026-11-03 / Poster-generation resources — existing corpus + new open-source poster engines
+
+**先讀既有手冊，不要從零搜尋**：本 OS 原有 [Recent](https://recent.design/)、[Siiimple](https://siiimple.com/)、[Cosmos](https://www.cosmos.so/)、[Codrops kinetic typography](WESTSIDE_MAGAZINE_KINETIC_TYPOGRAPHY_REFERENCE.md)、[Italian Editorial Executable Grammar](../dore/italian-editorial-executable-grammar.v1.md)、[SVG Exploration List](SVG-EXPLORATION-LIST.md)，以及 [Westside Visual Reference System](../../dore-design/new-westside/VISUAL-REFERENCE-SYSTEM.md)。它們仍是 source of design judgment，**不是可直接貼進網站的授權海報/字體**。
+
+**最新補充：[P2《西望》Poster Generation Resource Atlas](P2-XIWANG-POSTER-GENERATION-RESOURCE-ATLAS-20261103.md)**。開源／原始碼篩查包含 **flowshape**（MIT，資料化 poster composer、合法 aspect ratio、字長溢出處理、seeded SVG）、**Poster/poster-ai**（MIT，TSX→SVG/PDF/PNG）、**Satori**（MPL-2.0，HTML/CSS→SVG）、**canvas-sketch**（MIT，離線 generative drawing）、**p5.plotSvg**（MIT，筆繪 SVG 線條）、**Graphite**（MIT/Apache-2.0，非破壞性幾何）、**d3-contour/d3-shape + penfill**（B 字內線場）、**yft-design**（MIT，獨立 poster editor 研究）及印刷輸出 Typst/Paged.js。**重要排除**：generative-poster 雖有可觀察的 15 種生成器，repo 未發現 LICENSE，不能抄程式；Doory 是 Attribution Assurance License 且屬完整多層編輯器，並非適合本站輕量 SVG 的 MIT 組件；付費黑箱工作流不採用。
+
+**成熟海報研究新增入口**：[typo/graphic posters](https://www.typographicposters.com/)、[Letterform Archive](https://letterformarchive.org/online-archive/)、[Design Reviewed Archive](https://designreviewed.com/archive/)、[HMCT Archive](https://hmctartcenter.org/archive)、[Poster House](https://posterhouse.org/)、[Fonts In Use](https://fontsinuse.com/)、[TDC](https://tdc.org/)；按設計師／時間／造型／可借機制入庫，**不得把作品展示等同於開源授權**。
+
+**本輪藝術閘門不變**：A = 新字骨、僅上「西」下「望」兩個巨大正立字，不沿用已淘汰 SVG；B = 七組正立「西望」同幅疊合、各用獨立刻線與既有七種 OS 色，字外完全無底紋，不能退回七條橫向展示列。**研究只記錄選型，不等於批准某一工具或海報 artwork，未出圖／未施工／未改 P2 runtime。**
+
 ## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
