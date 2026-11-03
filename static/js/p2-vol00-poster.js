@@ -7,6 +7,8 @@
  const stage=document.getElementById('dual-stage'),tile=document.getElementById('dual-contents');
  if(!stage||!tile)return;
  const query=new URLSearchParams(location.search);
+ // Explicit archived visual baseline for original Vol.00 regression only.
+ if(query.get('poster')==='legacy')return;
  const mode=query.get('poster')?.toLowerCase()==='b'?'b':'a';
  stage.dataset.p2Poster=mode;
  document.documentElement.dataset.p2Poster=mode;
