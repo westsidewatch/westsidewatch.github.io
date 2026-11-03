@@ -5,6 +5,8 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - 'static/experiments/**'
+      - 'static/images/xiwang-poster-*.svg'
+      - 'scripts/xiwang/**'
       - 'static/css/**'
       - 'static/js/p2-magazine-live-bridge.js'
       - 'static/p2/living-water.html'
@@ -49,6 +51,15 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+      - name: Rebuild and verify native A2/B2 vector posters
+        if: ${{ !cancelled() && steps.preview_build.outcome == 'success' }}
+        run: |
+          node scripts/xiwang/generate-posters.mjs
+          git diff --exit-code -- static/images/xiwang-poster-a-v2.svg static/images/xiwang-poster-b-v2.svg
+          test -s public/images/xiwang-poster-a-v2.svg
+          test -s public/images/xiwang-poster-b-v2.svg
+          echo "A2/B2 native SVG poster masters reproduced and included in Hugo preview."
+
       - name: Deploy Cloudflare Pages preview (never production)
         # Preview remains reviewable even when a browser visual assertion fails.
         # The workflow still reports the failing test; production is untouched.
