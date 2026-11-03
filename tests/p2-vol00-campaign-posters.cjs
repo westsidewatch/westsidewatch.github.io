@@ -15,12 +15,23 @@ assert.match(poster,/poster'\)==='legacy'/,'an archived legacy visual baseline r
 assert.match(poster,/const colors=\['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'\]/,
  'sevenfold reuses exact homepage seven Design OS colors');
 assert.match(poster,/scaleY\(/,'seven full-surface planes, not narrow vertical swatches');
-assert.match(poster,/data-glyph="xi"/,'西 uses a real SVG outline');
-assert.match(poster,/data-glyph="wang"/,'望 uses a real SVG outline');
-assert.doesNotMatch(poster,/<text x="500"/, 'do not return to the invisible SVG text glyph mask');
-assert.match(poster,/pattern id="xw-engraved-field"/,'B1 engraving is a native SVG pattern');
-assert.doesNotMatch(poster,/<clipPath id="xw-type-clip"/,'B1 never uses its failed clipping approach');
-assert.match(poster,/fill="url\(#xw-engraved-field\)"/,'B1 pattern is painted directly onto full size glyph outlines');
+const masterA=fs.readFileSync('static/images/xiwang-poster-a-v2.svg','utf8');
+const masterB=fs.readFileSync('static/images/xiwang-poster-b-v2.svg','utf8');
+const generator=fs.readFileSync('scripts/xiwang/generate-posters.mjs','utf8');
+assert.match(poster,/xiwang-poster-a-v2\.svg/,'A loads the new own-form vector artwork');
+assert.match(poster,/xiwang-poster-b-v2\.svg/,'B loads the seven engraved words');
+assert.match(masterA,/data-authority="original-geometry"/,'A independently constructs the strokes');
+assert.equal((masterA.match(/data-word="(?:西|望)"/g)||[]).length,2,'A is only two Chinese characters');
+assert.doesNotMatch(masterA,/data-engraving-family/,'A is not a hatched variant of B');
+assert.equal((masterB.match(/data-poster-word="[1-7]"/g)||[]).length,7,'B has exactly seven independent word-groups');
+assert.equal(new Set([...masterB.matchAll(/data-engraving-family="([^"]+)"/g)].map(m=>m[1])).size,7,
+ 'B has seven DIFFERENT actual geometry families');
+assert.equal(new Set([...masterB.matchAll(/data-ws-token="([^"]+)"/g)].map(m=>m[1])).size,7,
+ 'B maps each word-group to a distinct Design OS section color');
+assert.match(masterB,/data-outline="西"/,'each B word contains 西');
+assert.match(masterB,/data-outline="望"/,'each B word contains 望');
+assert.match(generator,/function makeA/,'A is reproducible at build time');
+assert.match(generator,/function makeB/,'B is reproducible at build time');
 assert.match(css,/\.dual-continuum\{[\s\S]*visibility:hidden!important/,'old colored Magazine navigation removed visually');
 assert.match(bridge,/const poster=requestedPoster==='b'\?'b':'a'/,'full P2 preview can choose A or B');
 assert.match(html,/window\.P2Vol00Poster\?\.paint\(progress\)/,
@@ -37,7 +48,7 @@ for(const mode of ['a','b']){
   await page.waitForFunction(()=>document.querySelector('#dual-stage')?.dataset.posterFoldCount==='7');
   const atRest=await page.evaluate(()=>{
    const stage=document.getElementById('dual-stage'),panel=document.getElementById('xw-poster');
-   const tile=document.getElementById('dual-contents'),art=panel.querySelector('svg');
+   const tile=document.getElementById('dual-contents'),art=panel.querySelector('img.xw-poster__art');
    const colorLayers=[...panel.querySelectorAll('.xw-poster__fold')];
    const rect=el=>el.getBoundingClientRect();
    const cover=document.getElementById('dual-cover');
@@ -51,7 +62,10 @@ for(const mode of ['a','b']){
     oldInk:getComputedStyle(document.getElementById('dual-letterfield')).display,
     posterOpacity:getComputedStyle(panel).opacity,
     artClip:getComputedStyle(art).clipPath,
-    fieldCount:new Set([...panel.querySelectorAll('.xw-poster__big-type path')].map(g=>g.dataset.glyph)).size,
+    assetReady:panel.dataset.assetReady,
+    naturalWidth:art.naturalWidth,
+    naturalHeight:art.naturalHeight,
+    vectorMaster:art.dataset.vectorMaster,
     scrollWidth:document.documentElement.scrollWidth};
   });
   assert.equal(atRest.mode,mode);
@@ -62,7 +76,10 @@ for(const mode of ['a','b']){
   assert.equal(atRest.oldDoré,'none','Magazine no longer displays Doré');
   assert.equal(atRest.oldInk,'none','the brush-calligraphy mother is not shown on the campaign');
   assert.equal(atRest.posterOpacity,'1');
-  assert.equal(atRest.fieldCount,2,'only two monumental Chinese characters make the poster');
+  assert.equal(atRest.assetReady,'true','actual SVG master loaded as an image successfully');
+  assert.equal(atRest.naturalWidth,1000,'vector master natural width');
+  assert.equal(atRest.naturalHeight,1000,'vector master natural height');
+  assert.equal(atRest.vectorMaster,mode==='a'?'geometry-a2':'engraving-b2-7up');
   assert(Math.abs(atRest.poster.width-atRest.tile.width)<1.5,'poster fills original square');
   assert(Math.abs(atRest.cover.width/atRest.cover.height-.625)<.02,'RIGHT approved magazine cover remains 5:8');
   assert(atRest.scrollWidth<=width+3,'poster does not create horizontal overflow');
@@ -70,10 +87,11 @@ for(const mode of ['a','b']){
    'sevenfold has fully revealed the clean poster');
   // Test the ACTUAL COMPOSITED BROWSER PIXELS, not SVG markup existence
   // and not XML serialization (which loses external OS CSS variables).
+  await page.waitForFunction(()=>document.querySelector('#xw-poster')?.dataset.assetReady==='true');
   const screen=await page.locator('#xw-poster').screenshot();
   fs.writeFileSync('artifacts/p2-vol00/poster-'+mode+'-'+width+'-visible-proof.png',screen);
   const png=PNG.sync.read(screen);
-  const bg=mode==='a'?[238,229,212]:[52,56,66];
+  const bg=mode==='a'?[238,230,216]:[15,25,39];
   let inspected=0,inkPixels=0;
   for(let y=Math.floor(png.height*.12);y<Math.floor(png.height*.90);y+=4){
    for(let x=Math.floor(png.width*.08);x<Math.floor(png.width*.92);x+=4){
@@ -81,14 +99,34 @@ for(const mode of ['a','b']){
     const dist=Math.abs(png.data[i]-bg[0])+
      Math.abs(png.data[i+1]-bg[1])+Math.abs(png.data[i+2]-bg[2]);
     inspected++;
-    if(dist>65 && png.data[i+3]>240)inkPixels++;
+    if(dist>85 && png.data[i+3]>240)inkPixels++;
    }
   }
   const visibleFraction=inkPixels/Math.max(1,inspected);
   console.log('P2 POSTER PIXELS',mode,width,visibleFraction.toFixed(4),
    'rendered=',png.width+'x'+png.height);
-  assert(visibleFraction>(mode==='a'?.10:.035),
+  assert(visibleFraction>(mode==='a'?.12:.055),
    'ACTUAL poster screenshot is missing visible Xi/Wang strokes: '+visibleFraction.toFixed(4));
+  // B must visibly show multiple distinct colored word-groups rather
+  // than a monochrome retint of the A silhouette. Count pixels close to
+  // seven independently sourced tokens across the ACTUAL browser screenshot.
+  if(mode==='b'){
+    const colors=[[91,143,168],[162,135,42],[206,189,116],[115,138,90],
+      [184,148,74],[161,77,87],[176,133,171]];
+    const present=colors.map(c=>{
+      let count=0;
+      for(let y=5;y<png.height-5;y+=2)for(let x=5;x<png.width-5;x+=2){
+        const k=(y*png.width+x)*4;
+        const d=Math.abs(png.data[k]-c[0])+Math.abs(png.data[k+1]-c[1])+
+          Math.abs(png.data[k+2]-c[2]);
+        if(d<74)count++;
+      }
+      return count;
+    });
+    console.log('P2 B2 VISIBLE PALETTE',width,present.join(','));
+    assert(present.filter(n=>n>8).length>=5,
+      'The actual B poster must visibly contain at least five unique OS hues');
+  }
   await page.locator('[data-snap="0.60"]').click();
   const partial=await page.evaluate(()=>({
    seven:+document.getElementById('dual-stage').dataset.posterFoldCount,
