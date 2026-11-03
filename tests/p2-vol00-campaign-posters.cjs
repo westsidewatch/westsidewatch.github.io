@@ -18,7 +18,9 @@ assert.match(poster,/scaleY\(/,'seven full-surface planes, not narrow vertical s
 assert.match(poster,/data-glyph="xi"/,'西 uses a real SVG outline');
 assert.match(poster,/data-glyph="wang"/,'望 uses a real SVG outline');
 assert.doesNotMatch(poster,/<text x="500"/, 'do not return to the invisible SVG text glyph mask');
-assert.match(poster,/clipPath id="xw-type-clip"/,'the B1 line system is actually clipped into full-size type');
+assert.match(poster,/pattern id="xw-engraved-field"/,'B1 engraving is a native SVG pattern');
+assert.doesNotMatch(poster,/<clipPath id="xw-type-clip"/,'B1 never uses its failed clipping approach');
+assert.match(poster,/fill="url\(#xw-engraved-field\)"/,'B1 pattern is painted directly onto full size glyph outlines');
 assert.match(css,/\.dual-continuum\{[\s\S]*visibility:hidden!important/,'old colored Magazine navigation removed visually');
 assert.match(bridge,/const poster=requestedPoster==='b'\?'b':'a'/,'full P2 preview can choose A or B');
 assert.match(html,/window\.P2Vol00Poster\?\.paint\(progress\)/,
