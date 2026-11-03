@@ -1,6 +1,7 @@
 // A/B Campaign Poster + Homepage-faithful sevenfold fold: real-browser proof.
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
+fs.mkdirSync('artifacts/p2-vol00',{recursive:true});
 const {chromium}=require('playwright');
 const poster=fs.readFileSync('static/js/p2-vol00-poster.js','utf8');
 const css=fs.readFileSync('static/css/p2-vol00-poster.css','utf8');
