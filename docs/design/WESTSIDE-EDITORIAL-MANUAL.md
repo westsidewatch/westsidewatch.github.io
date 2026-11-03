@@ -350,6 +350,16 @@ The sizes are **research candidates requiring actual viewport and OS token verif
 
 **Two complete routes:** A1 large modern geometric Xi Wang word-image, B1 engraved native-SVG dot/wave/line-density type. The user-supplied pink-red and grey-engraving posters are reference methods, **not cleared reusable assets**. Both variants are original editable SVG studies, no generated image, no external paid dependency. Current type silhouettes are still preliminary Chiron-based compositions; a final custom-optical wordmark is not yet approved. Responsive, 200% zoom, reduced-motion, scroll reversal and real screenshots are mandatory before release.
 
+### 2026-11-03 / A 幾何字型＋B 3–7 組刻線字的開源工程探索
+
+**最新使用者要求：**A 只做一組巨大的兩字「西望」；B 不沿用 A 的字形輪廓作表面換皮，而用 **3–7 組各自有不同刻線結構／不同 Design OS 版塊色的「西望」**，可以評估 3／5／7 組的真實雜誌對開節奏。**專門的代碼／授權／維護／集成研究**： [P2-XIWANG-A-B-OPEN-SOURCE-CODE-EXPLORATION-20261103.md](P2-XIWANG-A-B-OPEN-SOURCE-CODE-EXPLORATION-20261103.md)；此文取代過往「B = A 一組巨大刻線字」的設計假設。
+
+**選型：**A 首選 [PathBool.js](https://github.com/r-flash/PathBool.js)（MIT）＋[opentype.js](https://github.com/opentypejs/opentype.js)（MIT）取得／重組兩字 Bézier 輪廓；以 [Paper.js](https://github.com/paperjs/paper.js)（MIT）與 [skia-pathops](https://github.com/fonttools/skia-pathops)（BSD-3-Clause）驗證複合 path／精修。B 首選 [d3-shape](https://github.com/d3/d3-shape)＋[d3-contour](https://github.com/d3/d3-contour)（ISC）作順形與彎曲刻線幾何引擎，參照 [flow-lines](https://github.com/msurguy/flow-lines)、[hatched](https://github.com/plottertools/hatched)、[svg-halftone](https://github.com/evestera/svg-halftone)（均 MIT）分別研究流線、平行／同心線與網點。工具**只在 offline SVG 生成階段使用**，不添加 web runtime 依賴，未經許可不動現在 PR 的 poster render 文件。
+
+**重要授權否決：**公開 GitHub 上的 [Halftone Pro](https://github.com/petra-dot/halftone-pro/blob/main/LICENSE) **實為 Proprietary License**，不是開源代碼，且依賴 Adobe Illustrator；禁止複製或直接納入 P2。A 工具 [Glyphr Studio 2](https://github.com/glyphr-studio/Glyphr-Studio-2) 是 GPL-3.0，可作外部獨立編輯器，**不將其程式碼嵌入站點**。另核實 Noto CJK 輪廓實際 OFL license，不能假定所有第三方字體素材可任意再授權。
+
+**進度區別：**本輪 **來源 research＋選型＋手冊入檔完成**；並非已完成 A 重新製字或 B 多組 SVG，更不是視覺驗收成功。A、B 的現有 v1 已知同源字骨與常規效果問題，必須重建再用 1648／768／390／320 真實 browser 畫面校準。
+
 ## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
