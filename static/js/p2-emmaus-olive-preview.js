@@ -56,6 +56,11 @@
  function selectBook(number,center=true){
   const book=books.find(b=>b[0]===number);if(!book)return;
   selectedBook=number;bookEn.textContent=book[2];bookZh.textContent=book[1];
+  // Editorial headline must show the FULL canonical book name, including
+  // long ones such as Thessalonians, without shrinking the 66-book rail.
+  const bookNameLength=String(book[2]).length;
+  const bookHeadlineScale=bookNameLength>17?.48:bookNameLength>13?.58:bookNameLength>9?.74:1;
+  $('.emmaus__source-hero')?.style.setProperty('--em-book-scale',String(bookHeadlineScale));
   bookNum.textContent='BOOK '+String(number).padStart(2,'0');
   bookPart.textContent=number<=39?'OLD TESTAMENT':'NEW TESTAMENT';
   bookChapters.textContent=book[3]+' CHAPTERS';
