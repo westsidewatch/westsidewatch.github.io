@@ -342,6 +342,14 @@ The sizes are **research candidates requiring actual viewport and OS token verif
 
 **實際 P2 工程安全線：**現有 \`static/images/xiwang-ink-vector.svg\`、晨星 v5.3、\`#dual-dore-plate\`、12 種 Contents 目錄、右側正式 \`westside-watch-masthead-landscape.svg\` 完全保留；新字形必須先在 Draft 的 opt-in native SVG 對照中接受 1648／768／390／320px、正逆滾動及減少動效檢查。**此輪是已歸檔的可施工修改方案，還不是已製成／上線的字標。**
 
+### 2026-11-03 / New authoritative poster decision — overrides the old Magazine spine and calligraphy
+
+**User-approved supersession:** the Magazine no longer needs its legacy Doré plate or brush-written Xi Wang; Doré's art now specifically identifies Emmaus. The Magazine owns **two full-size graphic-design campaign posters**, not an engraving+Contents folio. [A1 Geometry / B1 Engraving / Sevenfold poster contract](P2-XIWANG-CAMPAIGN-POSTER-SEVENFOLD-20261103.md) is authoritative for Chapter 02 and overrides earlier conflicting "frozen spine", "same artwork" and "Zhang Jizhi mandatory letterform" rules. Existing approved RIGHT 5:8 official cover stays protected.
+
+**Sevenfold = homepage mechanics, not a narrow rail.** Actual source checked: first-look-host.js makeFolds() creates seven full-viewport descending planes on the same reversible timeline; sevenfold-dawn.css uses scaleY from the top; SEVENFOLD-DAWN-NAVIGATION.md describes all seven Design OS tokens, intact homepage film and links. In P2 the old colored #dual-continuum is **visually removed and inert** while a temporary geometry-only anchor is kept to avoid damaging downstream 03–07 coordinates. Seven OS folds now occupy the entire left poster surface, then reveal A1 or B1; no persistent colored bands. P2 scroll reversibility calls for deterministic rather than homepage randomized order.
+
+**Two complete routes:** A1 large modern geometric Xi Wang word-image, B1 engraved native-SVG dot/wave/line-density type. The user-supplied pink-red and grey-engraving posters are reference methods, **not cleared reusable assets**. Both variants are original editable SVG studies, no generated image, no external paid dependency. Current type silhouettes are still preliminary Chiron-based compositions; a final custom-optical wordmark is not yet approved. Responsive, 200% zoom, reduced-motion, scroll reversal and real screenshots are mandatory before release.
+
 ## 9. Research retained as source-of-evidence
 
 These files remain archived intact; they do not operate as independent OS authorities:
