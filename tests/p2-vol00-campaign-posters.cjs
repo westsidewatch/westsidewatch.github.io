@@ -69,6 +69,7 @@ for(const mode of ['a','b']){
   // Test the ACTUAL COMPOSITED BROWSER PIXELS, not SVG markup existence
   // and not XML serialization (which loses external OS CSS variables).
   const screen=await page.locator('#xw-poster').screenshot();
+  fs.writeFileSync('artifacts/p2-vol00/poster-'+mode+'-'+width+'-visible-proof.png',screen);
   const png=PNG.sync.read(screen);
   const bg=mode==='a'?[238,229,212]:[52,56,66];
   let inspected=0,inkPixels=0;
