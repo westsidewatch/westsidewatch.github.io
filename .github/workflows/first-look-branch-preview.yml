@@ -70,7 +70,7 @@ jobs:
 
       - name: Verify Vol.00 and protected Church to Magazine handoff in Chromium
         run: |
-          npm install --no-save --no-package-lock playwright
+          npm install --no-save --no-package-lock playwright pngjs
           npx playwright install chromium
           python3 -m http.server 4173 --directory public >/tmp/p2-integration-http.log 2>&1 &
           server=$!
