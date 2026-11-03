@@ -443,7 +443,7 @@
     const themeLink=doc.createElement('link');
     themeLink.id='p2-emmaus-theme-verse-style';
     themeLink.rel='stylesheet';
-    themeLink.href='/css/p2-emmaus-theme-verse.css?v=20261102-safe-inner-frame-v1';
+    themeLink.href='/css/p2-emmaus-theme-verse.css?v=20261102-orphan-tail-font-fix-v2';
     doc.head.append(themeLink);
    }
    cover.parentElement.insertBefore(magazineUnderlay,cover);
