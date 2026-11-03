@@ -94,3 +94,22 @@
   font-size:11px!important;line-height:1.46!important;
  }
 }
+
+/* The OS anti-orphan span is INLINE TEXT, not scripture metadata.
+   Bookbinding's broad '.emmaus__entry-scripture span' rule previously
+   forced the trailing 「明白了。」 into 9px / weight 200. Keep its EXACT
+   parent glyph size, weight, leading, letterspacing and face. Do not touch
+   the quotation's established typography or the cover's dimensions. */
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf)
+ .emmaus__entry-scripture-primary blockquote .ws-editorial-no-orphan-tail{
+ font:inherit!important;
+ font-size:inherit!important;
+ font-weight:inherit!important;
+ font-family:inherit!important;
+ line-height:inherit!important;
+ letter-spacing:inherit!important;
+ color:inherit!important;
+ font-synthesis:inherit!important;
+ white-space:nowrap!important;
+ display:inline!important;
+}
