@@ -484,7 +484,8 @@
    magazinePrologueStyle.id='p2-emmaus-prologue-style';
    magazinePrologueStyle.textContent=[
     '/* Preview-only magazine-to-Emmaus editorial half-title; no font or colour authority. */',
-    '#dual-contents>.p2-emmaus-prologue{position:absolute;inset:0;z-index:9;display:grid;grid-template-columns:minmax(0,58%) minmax(0,42%);isolation:isolate;visibility:hidden;opacity:0;pointer-events:none;background:linear-gradient(90deg,transparent 0 51%,rgba(250,249,245,.12) 54%,rgba(250,249,245,.78) 59%,var(--ws-paper,#faf9f5) 65%,var(--ws-paper,#faf9f5) 100%);color:var(--ws-night,#102a43)}',
+    '#dual-contents>.p2-emmaus-prologue{position:absolute;inset:0;z-index:9;display:grid;grid-template-columns:minmax(0,58%) minmax(0,42%);isolation:isolate;visibility:hidden;opacity:0;pointer-events:none;background:linear-gradient(90deg,transparent 0 51%,rgba(250,249,245,.12) 54%,rgba(250,249,245,.78) 59%,var(--paper,var(--ws-paper,#faf9f5)) 65%,var(--paper,var(--ws-paper,#faf9f5)) 100%);color:var(--ws-night,#102a43)}',
+    '#dual-contents.p2-emmaus-prologue-active #dual-stone-contents{opacity:var(--p2-emmaus-native-contents-opacity,1)!important}',
     '#dual-contents .p2-emmaus-prologue__copy{grid-column:2;min-width:0;padding:clamp(14px,2.8cqi,30px) clamp(13px,3.1cqi,29px) clamp(17px,3.2cqi,32px) clamp(9px,1.7cqi,17px);display:flex;flex-direction:column;justify-content:space-between;gap:clamp(10px,2cqi,22px)}',
     '#dual-contents .p2-emmaus-prologue__folio,#dual-contents .p2-emmaus-prologue__colophon{display:flex;justify-content:space-between;gap:8px;border-top:1px solid color-mix(in srgb,var(--ws-night,#102a43) 50%,transparent);padding-top:clamp(7px,1.12cqi,12px);font:400 clamp(9px,1.14cqi,11px)/1.35 var(--ws-type-display-en-sc);letter-spacing:.075em;color:var(--ws-night,#102a43)}',
     '#dual-contents .p2-emmaus-prologue__folio span:last-child,#dual-contents .p2-emmaus-prologue__colophon span:last-child{text-align:right}',
@@ -494,7 +495,7 @@
     '#dual-contents .p2-emmaus-prologue__english{margin:0;font:italic 400 clamp(16px,2.5cqi,25px)/1.15 var(--ws-type-display-en);letter-spacing:-.02em;text-wrap:balance;color:var(--ws-night,#102a43)}',
     '#dual-contents .p2-emmaus-prologue__lede{margin:clamp(9px,2cqi,20px) 0 0;max-width:26ch;font:400 clamp(12px,1.55cqi,16px)/1.75 var(--ws-type-reading-zh,"Noto Serif TC",serif);text-wrap:pretty;line-break:strict;color:var(--ws-night,#102a43)}',
     '#dual-contents .p2-emmaus-prologue__colophon{border-top-color:color-mix(in srgb,var(--ws-first-light,#a2872a) 68%,transparent)}',
-    '@media(max-width:600px){#dual-contents>.p2-emmaus-prologue{grid-template-columns:minmax(0,54%) minmax(0,46%);background:linear-gradient(90deg,transparent 0 47%,rgba(250,249,245,.83) 55%,var(--ws-paper,#faf9f5) 63%)}#dual-contents .p2-emmaus-prologue__copy{padding:13px 12px 14px 7px;gap:7px}#dual-contents .p2-emmaus-prologue__folio,#dual-contents .p2-emmaus-prologue__colophon{font-size:8px;letter-spacing:.02em}#dual-contents .p2-emmaus-prologue__eyebrow{font-size:8px}#dual-contents .p2-emmaus-prologue__center h2{font-size:clamp(20px,4.5cqi,27px)}#dual-contents .p2-emmaus-prologue__english{font-size:clamp(13px,2.9cqi,18px)}#dual-contents .p2-emmaus-prologue__lede{font-size:clamp(10px,2.6cqi,13px);line-height:1.5;margin-top:2px}}',
+    '@media(max-width:600px){#dual-contents>.p2-emmaus-prologue{grid-template-columns:minmax(0,54%) minmax(0,46%);background:linear-gradient(90deg,transparent 0 47%,rgba(250,249,245,.83) 55%,var(--paper,var(--ws-paper,#faf9f5)) 63%)}#dual-contents .p2-emmaus-prologue__copy{padding:13px 12px 14px 7px;gap:7px}#dual-contents .p2-emmaus-prologue__folio,#dual-contents .p2-emmaus-prologue__colophon{font-size:8px;letter-spacing:.02em}#dual-contents .p2-emmaus-prologue__eyebrow{font-size:8px}#dual-contents .p2-emmaus-prologue__center h2{font-size:clamp(20px,4.5cqi,27px)}#dual-contents .p2-emmaus-prologue__english{font-size:clamp(13px,2.9cqi,18px)}#dual-contents .p2-emmaus-prologue__lede{font-size:clamp(10px,2.6cqi,13px);line-height:1.5;margin-top:2px}}',
     '@media(prefers-reduced-motion:reduce){#dual-contents>.p2-emmaus-prologue{transition:none!important}}'
    ].join('\n');
    doc.head.append(magazinePrologueStyle);
@@ -522,7 +523,7 @@
   // Emmaus/Olive, force the background back to 'sermon', or remeasure the
   // heavyweight nested Magazine DOM on every later scroll frame.
   if(fullDistance>=12){
-   if(magazinePrologue){magazinePrologue.style.opacity='0';magazinePrologue.style.visibility='hidden';magazinePrologue.setAttribute('aria-hidden','true');}
+   if(magazinePrologue){magazinePrologue.style.opacity='0';magazinePrologue.style.visibility='hidden';magazinePrologue.setAttribute('aria-hidden','true');magazinePrologue.parentElement?.classList.remove('p2-emmaus-prologue-active');}
    if(oliveGround)oliveGround.style.opacity='0';
    if(transferFigure){
     transferFigure.remove();
@@ -650,9 +651,13 @@
   // replace only the Contents TEXT overlay with a restrained editorial
   // half-title. The full-bleed original engraving remains the same node.
   // Scroll back to Magazine: opacity returns to zero, no content is deleted.
-  const introAlpha=smooth((move-.89)/.11)*(1-smooth((distance-8.34)/.30));
+  const introAlpha=smooth((move-.89)/.11)*(1-smooth((oneDrop-.45)/.55));
   const intro=sourceDoc&&sourceTile&&move>.86?
     ensureMagazinePrologue(sourceDoc,sourceTile):magazinePrologue;
+  if(sourceTile){
+   sourceTile.classList.toggle('p2-emmaus-prologue-active',introAlpha>.001);
+   sourceTile.style.setProperty('--p2-emmaus-native-contents-opacity',(1-introAlpha).toFixed(4));
+  }
   if(intro&&intro.ownerDocument===sourceDoc){
    intro.style.opacity=introAlpha.toFixed(4);
    intro.style.visibility=introAlpha>.001?'visible':'hidden';
