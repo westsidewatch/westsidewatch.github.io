@@ -246,3 +246,67 @@
  #emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref [lang="en"]{font-size:10px!important}
  #emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref [lang="zh-Hant"]{font-size:9px!important}
 }
+
+
+/* V18 — Luke 24:27 alone; the live verse is typeset INSIDE the gilded
+   botanical border, never over its left/right ornaments. Scope = P2 Draft.
+   Its 5:8 leaf, original ONE gilded mask and the page-turn hinge do not move. */
+#emmaus .emmaus__entry-cover .emmaus__entry-scripture{
+  inset:51% 22% auto 22%!important;
+  top:51%!important;bottom:auto!important;
+  width:56%!important;max-width:56%!important;
+  min-width:0!important;max-height:38%!important;
+  gap:0!important;margin:0!important;padding:0!important;
+  display:block!important;text-align:center!important;
+}
+#emmaus .emmaus__entry-cover .emmaus__entry-scripture-primary{
+  width:100%!important;min-width:0!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;gap:clamp(8px,1.1vh,13px)!important;
+  border:0!important;padding:0!important;margin:0!important;
+}
+#emmaus .emmaus__entry-cover .emmaus__entry-scripture-primary blockquote{
+  display:block!important;width:100%!important;max-width:100%!important;
+  margin:0!important;padding:0!important;
+  color:var(--em-binding-gilt,#cebd74)!important;
+  font:400 clamp(16px,1.15vw,19px)/1.67 var(--ws-type-reading-zh,"Noto Serif TC",serif)!important;
+  letter-spacing:.018em!important;text-align:center!important;
+  white-space:normal!important;word-break:normal!important;
+  overflow-wrap:break-word!important;text-wrap:pretty!important;
+  font-synthesis:none!important;
+}
+#emmaus .emmaus__entry-cover .emmaus__entry-scripture-primary .emmaus__entry-scripture-ref{
+  display:flex!important;justify-content:center!important;align-items:baseline!important;
+  gap:clamp(6px,.55vw,10px)!important;flex-wrap:wrap!important;
+  margin:0!important;padding:0!important;
+}
+#emmaus .emmaus__entry-cover .emmaus__entry-scripture-ref [lang="en"]{
+  font:italic 400 clamp(11px,.8vw,13px)/1.35 var(--ws-type-display-en)!important;
+  letter-spacing:0!important;
+}
+#emmaus .emmaus__entry-cover .emmaus__entry-scripture-ref [lang="zh-Hant"]{
+  font:var(--ws-weight-zh-air,200) clamp(11px,.8vw,13px)/1.4 var(--ws-type-display-zh)!important;
+  letter-spacing:0!important;
+}
+#emmaus .emmaus__entry-cover .emmaus__entry-scripture-secondary{display:none!important}
+@media(max-width:900px){
+ #emmaus .emmaus__entry-cover .emmaus__entry-scripture{
+   inset:49% 20% auto 20%!important;top:49%!important;
+   width:60%!important;max-width:60%!important;max-height:42%!important
+ }
+ #emmaus .emmaus__entry-cover .emmaus__entry-scripture-primary blockquote{
+   font-size:clamp(12px,1.7vw,16px)!important;line-height:1.55!important;
+ }
+}
+@media(max-width:540px){
+ #emmaus .emmaus__entry-cover .emmaus__entry-scripture{
+   inset:47% 20% auto 20%!important;top:47%!important;
+ }
+ #emmaus .emmaus__entry-cover .emmaus__entry-scripture-primary blockquote{
+   font-size:11px!important;line-height:1.46!important;
+ }
+ #emmaus .emmaus__entry-cover .emmaus__entry-scripture-ref [lang="en"],
+ #emmaus .emmaus__entry-cover .emmaus__entry-scripture-ref [lang="zh-Hant"]{
+   font-size:10px!important;
+ }
+}
