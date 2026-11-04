@@ -1,0 +1,342 @@
+/* P2 / 03 — Dense ONE research rail & bilingual Scripture priority.
+ * Reader-facing: source data from canonical ONE; no additional decorative
+ * mockups or iframe loaded until a visitor chooses to open full ONE.
+ * Applied LAST after editorial, Scripture, and bookbinding layers.
+ */
+@media(min-width:901px){
+ #emmaus .emmaus__study-interface{
+  grid-template-columns:minmax(0,2.12fr) minmax(0,.88fr)!important;
+  column-gap:clamp(12px,1.3cqi,19px)!important;
+ }
+ #emmaus .emmaus__study-cols{
+  grid-column:1!important;grid-row:3!important;
+  padding-right:clamp(10px,1.3cqi,18px)!important;
+ }
+ #emmaus .emmaus__study-reading{
+  flex:0 0 auto!important;max-height:clamp(69px,10vh,91px)!important;
+  padding-bottom:5px!important;
+ }
+ #emmaus .emmaus__study-route{display:none!important}
+ #emmaus .emmaus__scripture-reader{
+  flex:1 1 auto!important;min-height:0!important;
+ }
+ #emmaus .emmaus__context{
+  grid-column:2!important;grid-row:3!important;
+  grid-template-rows:minmax(0,.205fr) minmax(0,.225fr) minmax(0,.57fr)!important;
+  overflow:hidden!important;gap:0!important;
+ }
+}
+#emmaus .emmaus__context article{
+ min-height:0!important;padding:3px 0 6px!important;overflow:hidden!important;
+}
+#emmaus .emmaus__context article:last-of-type{
+ border-top:1px solid var(--em-hair)!important;
+ padding:6px 0 7px!important;
+}
+#emmaus .emmaus__context article>header{
+ margin:0 0 4px!important;
+ display:flex!important;align-items:baseline!important;
+ justify-content:space-between!important;gap:6px!important;
+}
+#emmaus .emmaus__context article>header span{
+ margin:0!important;letter-spacing:.04em!important;
+ font:400 clamp(9px,.68cqi,11px)/1.1 var(--ws-type-display-en-sc)!important;
+}
+#emmaus .emmaus__context article>header strong{
+ font:var(--ws-weight-zh-air,200) clamp(12px,1.08cqi,16px)/1.22 var(--ws-type-display-zh)!important;
+ margin:0!important;white-space:normal!important;
+}
+#emmaus #em-context-map-guide p,#emmaus .emmaus__context-time>p{
+ font:400 clamp(11px,1.0cqi,13px)/1.37 var(--ws-type-reading-zh)!important;
+ margin:0 0 4px!important;
+}
+#emmaus .emmaus__context-time li{
+ padding:3px 0!important;grid-template-columns:clamp(38px,3.8cqi,51px) minmax(0,1fr)!important;
+ gap:3px 7px!important;
+}
+#emmaus .emmaus__context-time li strong{
+ font:var(--ws-weight-zh-air,200) clamp(11px,.98cqi,13px)/1.25 var(--ws-type-display-zh)!important;
+}
+#emmaus .emmaus__context-time li small{
+ font-size:10px!important;
+}
+#emmaus .emmaus__context-tools{
+ display:flex;flex-direction:column;min-height:0;overflow:hidden;
+ padding:7px 0 0!important;border-top:1px solid var(--em-hair);
+}
+#emmaus .emmaus__context-tools-heading{
+ display:flex;justify-content:space-between;align-items:baseline;
+ gap:8px;padding:0 0 7px;
+}
+#emmaus .emmaus__context-tools-heading>span{
+ font:400 clamp(9px,.7cqi,11px)/1.1 var(--ws-type-display-en-sc);
+ color:#826b37;letter-spacing:.08em;
+}
+#emmaus .emmaus__context-tools-heading>strong{
+ color:var(--ws-night,#102a43);
+ font:var(--ws-weight-zh-air,200) clamp(13px,1.12cqi,16px)/1.2 var(--ws-type-display-zh);
+}
+#emmaus .emmaus__context-tools .emmaus__study-tools{
+ flex:1 1 auto!important;min-height:0!important;
+ padding:0!important;margin:0!important;border:0!important;
+ display:flex!important;flex-direction:column!important;
+ overflow:hidden!important;
+}
+#emmaus .emmaus__context-tools .emmaus__study-tabs{
+ display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ gap:2px 8px!important;flex:0 0 auto!important;
+ align-items:center!important;border:0!important;margin:0 0 5px!important;
+}
+#emmaus .emmaus__context-tools .emmaus__study-tabs button{
+ display:block;min-height:23px!important;line-height:1.25!important;
+ padding:3px 2px!important;text-align:center!important;
+ font:var(--ws-weight-zh-air,200) clamp(11px,.86cqi,13px)/1.25 var(--ws-type-display-zh)!important;
+ color:#6f664a!important;border-bottom:1px solid rgba(130,100,50,.22)!important;
+}
+#emmaus .emmaus__context-tools .emmaus__study-tabs button[aria-selected="true"]{
+ color:var(--ws-night,#102a43)!important;border-color:var(--em-gold)!important;
+ background:rgba(150,121,55,.10)!important;
+}
+#emmaus .emmaus__context-tools .emmaus__study-detail{
+ flex:1 1 auto!important;min-height:0!important;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ padding:4px 0 7px!important;scrollbar-width:thin;
+}
+#emmaus .emmaus__context-tools .emmaus__study-detail article{
+ margin:0 0 7px!important;padding:0!important;border:0!important;
+}
+#emmaus .emmaus__context-tools .emmaus__study-detail strong{
+ font:var(--ws-weight-zh-air,200) clamp(12px,1.0cqi,14px)/1.3 var(--ws-type-display-zh)!important;
+}
+#emmaus .emmaus__context-tools .emmaus__study-detail p,
+#emmaus .emmaus__context-tools .emmaus__study-detail li{
+ font:400 clamp(11px,.95cqi,13px)/1.42 var(--ws-type-reading-zh)!important;
+ margin:4px 0 6px!important;
+}
+#emmaus .emmaus__one-extra{
+ flex:0 0 auto!important;display:grid!important;
+ grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:4px 7px!important;
+ padding:7px 0 1px!important;border-top:1px solid var(--em-hair);
+}
+#emmaus .emmaus__one-extra button{
+ cursor:pointer;text-align:center;
+ padding:5px 4px!important;
+ border:1px solid rgba(124,92,43,.33)!important;
+ background:rgba(124,92,43,.035)!important;
+ color:var(--ws-night,#102a43)!important;
+ font:var(--ws-weight-zh-air,200) clamp(11px,.88cqi,13px)/1.3 var(--ws-type-display-zh)!important;
+}
+#emmaus .emmaus__one-extra button:hover,
+#emmaus .emmaus__one-extra button:focus-visible{
+ border-color:var(--em-gold)!important;background:rgba(140,114,48,.12)!important;
+}
+@media(max-width:900px){
+ #emmaus .emmaus__study-cols{grid-column:1!important;grid-row:3!important}
+ #emmaus .emmaus__context{
+  grid-template-rows:minmax(125px,auto) minmax(135px,auto) minmax(215px,1fr)!important;
+  overflow-y:auto!important;
+ }
+ #emmaus .emmaus__context-tools{min-height:210px!important;overflow:visible!important}
+ #emmaus .emmaus__context-tools .emmaus__study-detail{min-height:80px!important}
+}
+
+/* Magazine → ONE: each page is a complete physical rectangle.
+ * The surrounding page can extend to the LEFT of its original right-hand
+ * bounds. The image contents themselves remain cropped to their own page,
+ * not to the old right-hand column. */
+#emmaus > .emmaus__right{
+ overflow:visible!important;
+ transform-style:preserve-3d!important;
+}
+#emmaus > .emmaus__right > .emmaus__entry-cover{
+ transform-origin:left center!important;
+ transform-style:preserve-3d!important;
+ overflow:visible!important;
+ backface-visibility:visible!important;
+ contain:none!important;
+ clip-path:none!important;
+}
+#emmaus .emmaus__entry-cover-leaf{
+ backface-visibility:hidden!important;
+ overflow:hidden!important;
+}
+/* A single continuous green verso, seen when the second cover has passed
+ * the spine. No detached vertical strips or shape clipping. */
+#emmaus > .emmaus__right > .emmaus__entry-cover::after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609')
+   center / cover no-repeat;
+ border:1px solid rgba(206,189,116,.65);
+ transform:rotateY(180deg) translateZ(1px);
+ backface-visibility:hidden;
+}
+#emmaus .emmaus__plates{
+ overflow:hidden!important;
+}
+
+/* V17 / Emmaus theme is Luke 24:27 (Editorial Manual § Scripture contract).
+ * This is the cover's OWN editorial text, safely inside the ONE gilt frame:
+ * no crushed tiny footer text and no secondary verse preceding the primary.
+ */
+#emmaus > .emmaus__right > .emmaus__entry-cover::after{
+ content:none!important;display:none!important;
+}
+#emmaus > .emmaus__right > .emmaus__entry-cover{
+ backface-visibility:hidden!important;
+}
+#emmaus .emmaus__entry-cover .emmaus__identity{
+ top:24%!important;left:12%!important;right:12%!important;
+ bottom:auto!important;height:auto!important;min-height:0!important;
+}
+#emmaus .emmaus__entry-scripture{
+ position:absolute!important;z-index:6!important;
+ top:53%!important;bottom:auto!important;
+ left:14%!important;right:14%!important;width:auto!important;
+ margin:0!important;padding:0!important;max-height:34%!important;
+ display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;
+ gap:clamp(12px,1.7vh,19px)!important;
+ visibility:visible!important;opacity:1!important;
+ color:var(--em-binding-gilt,#cebd74)!important;
+}
+#emmaus .emmaus__entry-scripture-primary{
+ width:100%!important;display:flex!important;flex-direction:column!important;
+ gap:9px!important;align-items:center!important;
+ border-bottom:1px solid rgba(206,189,116,.48)!important;
+ padding:0 0 clamp(12px,1.5vh,17px)!important;
+}
+#emmaus .emmaus__entry-scripture-secondary{
+ width:100%!important;display:flex!important;flex-direction:column!important;
+ gap:6px!important;align-items:center!important;
+}
+#emmaus .emmaus__entry-scripture-primary blockquote{
+ font:400 clamp(16px,1.15vw,19px)/1.62 var(--ws-type-reading-zh)!important;
+ color:var(--em-binding-gilt,#cebd74)!important;
+ margin:0!important;letter-spacing:.015em!important;text-align:center!important;
+ text-shadow:0 1px 3px rgba(0,0,0,.37)!important;
+}
+#emmaus .emmaus__entry-scripture-secondary blockquote{
+ font:400 clamp(12px,.85vw,15px)/1.48 var(--ws-type-reading-zh)!important;
+ color:var(--em-binding-gilt,#cebd74)!important;
+ margin:0!important;text-align:center!important;
+}
+#emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref{
+ display:flex!important;flex-wrap:wrap!important;align-items:baseline!important;
+ justify-content:center!important;gap:6px!important;
+ font-size:clamp(10px,.75vw,12px)!important;
+ color:var(--em-binding-gilt,#cebd74)!important;
+}
+#emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref [lang="en"]{
+ font:italic 400 clamp(11px,.82vw,13px)/1.3 var(--ws-type-display-en)!important;
+}
+#emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref [lang="zh-Hant"]{
+ font:var(--ws-weight-zh-air,200) clamp(10px,.75vw,12px)/1.3 var(--ws-type-display-zh)!important;
+}
+@media(max-width:900px){
+ #emmaus .emmaus__entry-scripture{top:49%!important;left:12%!important;right:12%!important;gap:9px!important}
+ #emmaus .emmaus__entry-scripture-primary blockquote{font-size:clamp(12px,1.5vw,16px)!important;line-height:1.5!important}
+ #emmaus .emmaus__entry-scripture-secondary blockquote{font-size:clamp(10px,1.25vw,13px)!important}
+}
+@media(max-width:540px){
+ #emmaus .emmaus__entry-scripture{top:47%!important;left:10%!important;right:10%!important;gap:6px!important}
+ #emmaus .emmaus__entry-scripture-primary blockquote{font-size:11px!important;line-height:1.38!important}
+ #emmaus .emmaus__entry-scripture-secondary blockquote{font-size:10px!important;line-height:1.35!important}
+ #emmaus .emmaus__entry-scripture-primary{padding-bottom:7px!important;gap:4px!important}
+ #emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref [lang="en"]{font-size:10px!important}
+ #emmaus .emmaus__entry-scripture .emmaus__entry-scripture-ref [lang="zh-Hant"]{font-size:9px!important}
+}
+
+
+/* The Luke 24:27 safe text area is owned exclusively by
+   p2-emmaus-theme-verse.css, shared with the Magazine underleaf. */
+
+/* V19 — Domus manuscript + marginalia (2026-11-02).
+   Research -> Layout: one reading voice plus one quiet, usable ONE register.
+   Based on Domus 12-column editorial reasoning, NOT a copied template.
+   This scope changes only the actual Emmaus interior typography, not its
+   2/3 + 5:8 spread, 66-volume rail or Doré image ownership. */
+@media(min-width:901px){
+ #emmaus .emmaus__study-interface{
+   grid-template-columns:minmax(0,7fr) minmax(185px,3fr)!important;
+   column-gap:clamp(15px,1.65cqi,24px)!important;
+ }
+ #emmaus .emmaus__study-cols{
+   padding-right:clamp(13px,1.45cqi,20px)!important;
+   border-right:1px solid color-mix(in srgb,var(--ws-night,#102a43) 30%,transparent)!important;
+ }
+ #emmaus .emmaus__study-reading{
+   max-height:clamp(79px,10.8vh,99px)!important;
+   padding-bottom:8px!important;
+ }
+ #emmaus .emmaus__study-reading h2{
+   font:var(--ws-weight-zh-anchor,600) clamp(23px,2.4cqi,32px)/1.2 var(--ws-type-display-zh)!important;
+   letter-spacing:.015em!important;
+   margin:2px 0 5px!important;
+ }
+ #emmaus .emmaus__scripture-reader-head{
+   padding:9px 0 9px!important;
+ }
+ #emmaus .emmaus__scripture-verse{
+   padding:clamp(10px,1.15cqi,14px) 0 clamp(12px,1.2cqi,16px) 2px!important;
+   gap:clamp(8px,1.0cqi,13px)!important;
+ }
+ #emmaus .emmaus__scripture-verse-number{
+   font:italic 400 clamp(18px,1.9cqi,23px)/1.3 var(--ws-type-display-en)!important;
+   font-synthesis:none!important;
+ }
+ #emmaus .emmaus__scripture-zh{
+   font:400 clamp(17px,1.85cqi,20px)/1.7 var(--ws-type-reading-zh)!important;
+   letter-spacing:.01em!important;
+ }
+ #emmaus .emmaus__scripture-en{
+   font:400 clamp(14px,1.55cqi,16px)/1.6 var(--ws-type-display-en)!important;
+   margin:7px 0 0!important;
+ }
+ #emmaus .emmaus__context{
+   grid-template-rows:minmax(0,.16fr) minmax(0,.20fr) minmax(0,.64fr)!important;
+   border:0!important;gap:0!important;
+ }
+ #emmaus .emmaus__context-map{
+   overflow-y:auto!important;scrollbar-width:thin;
+ }
+ #emmaus .emmaus__context article>header strong{
+   font:var(--ws-weight-zh-anchor,600) clamp(14px,1.25cqi,17px)/1.3 var(--ws-type-display-zh)!important;
+ }
+ #emmaus .emmaus__context article>header span{
+   font:400 clamp(9px,.8cqi,11px)/1.2 var(--ws-type-display-en-sc)!important;
+   letter-spacing:.055em!important;
+ }
+ #emmaus #em-context-map-guide p,
+ #emmaus .emmaus__context-time>p,
+ #emmaus .emmaus__context-time li strong{
+   font:400 clamp(12px,1.06cqi,14px)/1.49 var(--ws-type-reading-zh)!important;
+ }
+ #emmaus .emmaus__context-tools-heading>strong{
+   font:var(--ws-weight-zh-anchor,600) clamp(14px,1.3cqi,17px)/1.25 var(--ws-type-display-zh)!important;
+ }
+ #emmaus .emmaus__context-tools .emmaus__study-tabs{
+   gap:4px 6px!important;margin-bottom:8px!important;
+ }
+ #emmaus .emmaus__context-tools .emmaus__study-tabs button{
+   font:400 clamp(12px,1.05cqi,14px)/1.3 var(--ws-type-display-zh)!important;
+   min-height:30px!important;padding:5px 3px!important;
+ }
+ #emmaus .emmaus__context-tools .emmaus__study-detail strong{
+   font:var(--ws-weight-zh-standard,400) clamp(13px,1.1cqi,15px)/1.35 var(--ws-type-display-zh)!important;
+ }
+ #emmaus .emmaus__context-tools .emmaus__study-detail p,
+ #emmaus .emmaus__context-tools .emmaus__study-detail li{
+   font:400 clamp(12px,1.05cqi,14px)/1.53 var(--ws-type-reading-zh)!important;
+ }
+ #emmaus .emmaus__one-extra button{
+   font:400 clamp(12px,1.04cqi,14px)/1.3 var(--ws-type-display-zh)!important;
+   min-height:29px!important;padding:5px 3px!important;
+ }
+}
+@media(max-width:900px){
+ #emmaus .emmaus__context-tools .emmaus__study-tabs button,
+ #emmaus .emmaus__one-extra button{
+   font-weight:var(--ws-weight-zh-standard,400)!important;
+ }
+}
