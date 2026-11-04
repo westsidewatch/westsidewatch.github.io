@@ -171,6 +171,7 @@
 (function(){
  const stage=document.getElementById('dual-stage');
  const cover=document.getElementById('dual-cover'),gold=document.getElementById('dual-contents');
+ const posterSpread=stage.querySelector('.dual-panels');
  const foldedLight=document.getElementById('dual-cover-folded-light');
  const star=document.getElementById('dual-star');
  // The cloud/CI browsers can disable WebGL completely. In that case retain
@@ -538,6 +539,19 @@
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
   window.P2Vol00Poster?.paint(progress);
+  // The official right-hand 5:8 cover and left-hand square poster arrive
+  // at full size first. Only after the sevenfold finishes (p≈.885) can the
+  // complete SPREAD retreat as one plane, revealing the already-playing
+  // homepage film underneath. Do not create a second video / animation clock.
+  // This is fully scroll-reversible through the existing parent P2 protocol.
+  const pullBack=reduce?(progress>=.995?1:0):ease((progress-.91)/.085);
+  const finalScale=1-.15*pullBack;
+  if(posterSpread){
+   posterSpread.style.transform='scale('+finalScale.toFixed(4)+')';
+   posterSpread.style.transformOrigin='50% 50%';
+  }
+  stage.dataset.posterPullback=pullBack.toFixed(4);
+  stage.dataset.posterSpreadScale=finalScale.toFixed(4);
  }
  function setProgress(v){
   progress=clamp(Number(v));render();
