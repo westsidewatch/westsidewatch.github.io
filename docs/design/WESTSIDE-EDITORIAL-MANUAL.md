@@ -485,3 +485,6 @@ These files remain archived intact; they do not operate as independent OS author
 **工程 owner（Draft PR #1381）：** `static/js/p2-vol00-poster.js`（七色＋底色與 A 字形縮放）；`static/css/p2-vol00-poster.css`（印刷字骨、folio、Cereal Contents 局部排版覆寫）；`static/experiments/p2-double-square-video-lab.html`（正確書脊間距、目錄與縮小相位）；`tests/p2-vol00-campaign-posters.cjs`（真 browser 驗證雙頁間隙、12 筆資料、完整海報先於目錄、目錄先於整組縮小、反向倒帶）。現有 `p2-contents-twelve.js` 原資料、右側正式封面、教會、Emmaus、首頁七重折疊及影片 player 不修改；B 保留獨立 SVG 模式，不繼承 A 的 Contents 設計覆寫。
 
 **品質界線：** 工程提交、腳本語法、現有字骨及 browser 截圖測試合格也不自動代表獲獎級藝術驗收。至少核對 desktop 1648、mobile 390、完整 Contents 狀態與逆向移動的真實 Cloudflare Preview，再決定版心和 slogan 的最終微調。Draft 禁止自動合併主站。
+
+
+**封面滿版刊頭補充（使用者 2026-11-04 最新指令）：** 完整尺寸對開期間，右側官方 `westside-watch-masthead-landscape.svg` 刊頭的金色英文須**左右撐滿其 5:8 封面版心**；西望 A 的巨字縮成 Contents 角落編輯刊頭，絕不可造成右封面刊頭跟著收窄。既有 SVG 原稿與右封面城牆光線不改；以 scoped CSS `static/css/p2-vol00-poster.css` 設定光學寬度 106%、無額外 `transform`，讓 SVG 內建左右留白在當前封面比例下得到校正。只在 Contents 完整進場、對開停留完成後，`p .97–1` 才由 `.dual-panels` 整組縮放。新增 Chromium 測試檢查 `p .84` 和 `p .95` 的刊頭寬度比至少 1.055、局部 transform 必須為 none；不以代碼靜態檢查取代視覺驗收。
