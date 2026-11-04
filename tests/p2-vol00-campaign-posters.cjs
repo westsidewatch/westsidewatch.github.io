@@ -38,9 +38,9 @@ assert.match(css,/xw-poster__glyph--foil/,'final print has stable metallic foil'
 assert.match(poster,/var\(--ws-morning-gold/,'final ink uses OS dawn-gold');
 assert.match(poster,/var\(--ws-night/,'final background uses OS midnight navy');
 assert.match(poster,/Watch for the Dawn/,'minimal editorial slogan remains');
-assert.match(html,/ease\(\(progress-\.965\)\/\.035\)/,
+assert.match(html,/ease\(\(progress-\.97\)\/\.03\)/,
  'A spread shrinks only after the actual Contents has completed its entrance');
-assert.match(html,/ease\(\(progress-\.86\)\/\.085\)/,
+assert.match(html,/ease\(\(progress-\.88\)\/\.07\)/,
  'original Contents enters AFTER the poster is finalized');
 assert.match(css,/display:block!important;z-index:9/,
  'A reinstates the original 12-desk Contents instead of force hiding it');
