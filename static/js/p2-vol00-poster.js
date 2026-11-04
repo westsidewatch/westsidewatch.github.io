@@ -99,7 +99,12 @@
    panel.style.setProperty('--xw-ink',mix(inkBase,gold,final));
    // Match the entire Magazine field to the seven native paper colors.
    // The poster is glyph-only until its real Contents page comes forward.
-   const fieldPaper=mix(paperBase,'var(--ws-night,#102a43)',final);
+   // A covered navy editorial stage accompanies the official cover.
+   // Do not fill the empty left viewport with the old pale-grey water
+   // paper while only half of the cover has entered. The pale sheet
+   // appears WITH the complete large glyph (14–31%); seven inks follow.
+   const registeredPaper=mix(paperBase,'var(--ws-night,#102a43)',final);
+   const fieldPaper=mix('var(--ws-night,#102a43)',registeredPaper,ease((p-.20)/.16));
    panel.style.setProperty('--xw-poster-bg',fieldPaper);
    stage.style.setProperty('--xw-poster-bg',fieldPaper);
    // One parent-owned reversible scroll clock. Uncover the home film only
