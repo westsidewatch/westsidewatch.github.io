@@ -219,15 +219,23 @@
    const chapters=[...scroller.querySelectorAll(".p2x-cereal-movement")];
    const jumps=[...host.querySelectorAll("[data-p2-cereal-jump]")];
    const status=host.querySelector(".p2x-cereal-progress");
-   let currentChapter=-1;
+   let currentChapter=-1,chosenColumn=0;
    const sync=()=>{
+    const grid=getComputedStyle(scroller).display==="grid";
     let chapter=0;
-    chapters.forEach((el,i)=>{if(el.offsetTop-scroller.offsetTop<=scroller.scrollTop+24)chapter=i});
+    if(grid){
+     // In the two-column editorial index WATCH/WALK share a top baseline,
+     // WITNESS/WORSHIP share the lower one. A vertical scroll alone cannot
+     // know which column is selected: preserve the reader's last click.
+     const lower=chapters[2].offsetTop-scroller.offsetTop;
+     chapter=(scroller.scrollTop>=Math.max(0,lower-24)?2:0)+chosenColumn;
+    }else{
+     chapters.forEach((el,i)=>{if(el.offsetTop-scroller.offsetTop<=scroller.scrollTop+24)chapter=i});
+    }
     if(chapter!==currentChapter){
      currentChapter=chapter;
-     jumps.forEach((b,i)=>{
-      b.setAttribute("aria-current",i===chapter?"location":"false");
-     });
+     jumps.forEach((b,i)=>b.setAttribute("aria-current",i===chapter?"location":"false"));
+     chapters.forEach((el,i)=>{el.dataset.activeSection=i===chapter?"true":"false"});
     }
     if(status)status.textContent=scroller.scrollHeight>scroller.clientHeight+3?
        (scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-3?
@@ -237,8 +245,11 @@
    scroller.addEventListener("scroll",sync,{passive:true});
    jumps.forEach((b,i)=>b.addEventListener("click",()=>{
     const target=chapters[i];
+    const grid=getComputedStyle(scroller).display==="grid";
+    if(grid){chosenColumn=i%2;currentChapter=-1}
     const top=target.getBoundingClientRect().top-scroller.getBoundingClientRect().top+scroller.scrollTop;
     scroller.scrollTo({top,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
+    sync();
    }));
    sync();
   }
