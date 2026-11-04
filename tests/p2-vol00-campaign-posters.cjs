@@ -103,7 +103,9 @@ try{
       contentsCount:window.P2ContentsTwelve?.count||0,
       markScale:+p.style.getPropertyValue('--xw-mark-scale')||1,
       markInset:parseFloat(p.style.getPropertyValue('--xw-mark-inset'))||0,
+      markDrop:parseFloat(p.style.getPropertyValue('--xw-mark-drop'))||0,
       markGlyphLeft:p.querySelector('.xw-poster__glyph')?.getBoundingClientRect().left||0,
+      markGlyphTop:p.querySelector('.xw-poster__glyph')?.getBoundingClientRect().top||0,
       markGlyphTransform:p.querySelector('.xw-poster__glyph')?getComputedStyle(p.querySelector('.xw-poster__glyph')).transform:'none',
       posterContents:+stage.dataset.posterContents||0,
       gutter:innerWidth>820?rect(cover).left-rect(tile).right:rect(cover).top-rect(tile).bottom,
@@ -155,10 +157,13 @@ try{
      assert(finished.contentsOpacity>.99,'the final Contents is visibly composited');
      assert.equal(finished.contentsInert,false,'the final Contents is keyboard-accessible');
      assert.equal(finished.contentsCount,12,'the original twelve editorial desks are preserved');
-     assert(Math.abs(finished.markScale-.23)<.02,'original Xi Wang SVG glyph becomes a small masthead');
-     assert(Math.abs(finished.markInset-2.2)<.01,'mini Xi Wang gains a reserved 2.2% optical gutter');
-     assert(Math.abs(finished.markGlyphLeft-(finished.tilePos[0]+finished.tileSize[0]*.022))<2,
-       'compact glyph is positioned at the actual page margin, not the left bleed');
+     assert(Math.abs(finished.markScale-.21)<.005,'original Xi Wang SVG glyph registers at restrained 21% masthead scale');
+     assert(Math.abs(finished.markInset-6.4)<.01,'mini Xi Wang follows 6.4% optical horizontal register');
+     assert(Math.abs(finished.markDrop-3)<.01,'mini Xi Wang is lowered 3% into the Contents editorial header');
+     assert(Math.abs(finished.markGlyphLeft-(finished.tilePos[0]+finished.tileSize[0]*.064))<2,
+       'mini identity must align with the index column, not the left bleed');
+     assert(Math.abs(finished.markGlyphTop-(finished.tilePos[1]+finished.tileSize[1]*.03))<2,
+       'mini identity descends to the same upper register as WESTSIDE WATCH / INDEX');
      assert.equal(finished.markGlyphTransform==='none',false,'compact identity is genuinely repositioned in its composed transform');
      assert(finished.posterContents>.99,'poster-to-Contents handoff completed');
      const editorial=await page.evaluate(()=>{
@@ -202,7 +207,8 @@ try{
      // Colors must travel; the approved glyph/page geometry must NOT.
      for(const state of stamps){
       assert.equal(state.bigStable,'true');
-      assert(Math.abs(state.markInset)<.001,'full-size seven-color A cannot inherit the miniature offset');
+      assert(Math.abs(state.markInset)<.001,'full-size seven-color A cannot inherit the miniature horizontal offset');
+      assert(Math.abs(state.markDrop)<.001,'full-size seven-color A cannot inherit the miniature vertical offset');
       assert.equal(state.clip,'none','no second parent wipe above the giant printed ink');
       assert(Math.abs(state.tileSize[0]-state.tileSize[1])<2,'each color keeps full square');
       assert(Math.abs(state.tileSize[0]-stamps[0].tileSize[0])<1,
@@ -217,6 +223,7 @@ try{
      assert.equal(goldHold.cornerPalette,'gold','before the logo shrinks it stays in approved gold');
      assert(Math.abs(goldHold.markScale-1)<.002,'A poster stays monumental until Contents arrives');
      assert(Math.abs(goldHold.markInset)<.001,'monumental approved A art must keep its original optical placement');
+     assert(Math.abs(goldHold.markDrop)<.001,'monumental approved A art must not inherit miniature vertical drop');
      assert.equal(goldHold.bigStable,'true');
      assert.equal(goldHold.cornerAnimation,'none','no neon or timed animation on giant Westside Watch poster');
      assert.equal(goldHold.clip,'none','historical full-sheet curtain may not amputate the giant glyph');
@@ -237,12 +244,13 @@ try{
        'reversing toward the full-size poster disables the mini neon loop');
      const atHold=await snap(.90);
      assert.equal(atHold.palette,'midnight-gold');
-     assert(atHold.markScale<1&&atHold.markScale>.23,'original gold glyph begins shrinking INTO Contents');
+     assert(atHold.markScale<1&&atHold.markScale>.21,'original gold glyph begins shrinking INTO Contents');
      assert(atHold.contentsOpacity>0&&atHold.contentsOpacity<1,'the existing index enters gradually');
      assert(Math.abs(atHold.scale-1)<.002,'two-page spread MUST NOT shrink during Contents arrival');
      const contentsHold=await snap(.95);
      assert(contentsHold.contentsOpacity>.99,'Contents is fully present before spread shrink');
-     assert(Math.abs(contentsHold.markScale-.23)<.02,'Xi Wang has settled in editorial corner');
+     assert(Math.abs(contentsHold.markScale-.21)<.005,'miniature has settled at editorial scale');
+     assert(Math.abs(contentsHold.markDrop-3)<.01,'miniature has completed its vertical descent at the Contents hold');
      assert(Math.abs(contentsHold.scale-1)<.002,'complete Contents+cover must rest before retreat');
      assert(contentsHold.mastWidthRatio>=1.055,'official masthead must still fill the cover while Contents settles');
      assert.equal(contentsHold.mastLocalTransform,'none','Contents handoff cannot scale the official masthead');
@@ -253,6 +261,7 @@ try{
      assert.equal(rewind.ink,stamps[3].ink,'scroll reversal restores exact original ink');
      assert.equal(rewind.scale,1,'reversing scroll restores full-size spread');
      assert.equal(rewind.markScale,1,'reverse-scroll restores the monumental lettering');
+     assert(Math.abs(rewind.markDrop)<.001,'reverse-scroll restores monumental glyph original vertical location');
      assert(rewind.contentsOpacity<.01,'reverse-scroll removes the contents without stale overlay');
      // Mouse wheel is an additional control ONLY for standalone laboratory.
      await page.mouse.move(width/2,height/2);
