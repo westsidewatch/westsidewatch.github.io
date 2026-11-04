@@ -544,10 +544,12 @@ These files remain archived intact; they do not operate as independent OS author
 **回歸測試**必須比較七個色站與金箔定格的左方形 `getBoundingClientRect()` 寬、高、座標及 `clipPath='none'`，不能只比較七種顏色的數值。還要驗證巨字從來沒有 `animation`，縮小到 Contents 前無另一套計時器；小角標完成後才有約 32 秒動畫，反向滑動恢復無動畫。保留 P2 Draft #1381，未有新 Chromium 視覺證據之前不能稱藝術驗收通過。
 
 
-### 2026-11-04 / Contents 西望小刊名：回到全頁共同的左版心
+### 2026-11-04 / Contents「西望」刊名字形的專業版心註冊：最新視覺覆核
 
-**使用者新截圖指出小「西望」距左頁邊界過近。** 這不是要移動整張 A 巨型海報，而是 `p .88–.95` 巨字縮成角標之後，它的**可見筆畫**左邊緣應與 Contents 的頁面主排版左邊界對齊。實際 Contents 四篇章與 Roman register 的共同左版心為 `p2x-cereal-paper` 的 5.8% padding；原小刊名字骨在縮放到 23% 後的可見筆畫僅距左邊約 4%，形成無理由的出血感。
+**新版真實截圖（07:56）觀察：** 左側獲批准的「西望」兩字可見墨色範圍約 `x=76–395, y=19–462`（在使用者提供的 2048×558 頁首截取圖中）；右側 `WESTSIDE WATCH / INDEX` 約在 `y=85`，主標 `Contents.` 的主要字形約在 `y=255–363`。問題不只是左邊距：刊名幾乎觸及頁頂，缺少與右側眉題及 Contents 主標的節奏關聯；刊名視覺重量過大，下方即將進入目錄的橫線也需要呼吸距離。這是 **optical registration** 的問題，不能僅以 SVG 外層盒子 bounding rect 冒充實際字骨的可視筆畫。
 
-**工程修正：** Approved A 兩條原生字骨 path 不改，巨字滾動／七色／藍金定稿不改。從 `p .88` Contents 進場開始，只對小字 SVG mask 的實際 `transform` 加入隨 Contents 展開、從 `0%` 漸到 `2.2%` 的相對位移，完成時字骨光學起筆約落在 5.8–6.2% 的共同版心附近；小字大小（0.23）、文字層級與 32 秒七色慢變都保持。CSS 以 `translateX(var(--xw-mark-inset)) scale(var(--xw-mark-scale))` 同時套於主字／燙金箔層，確保縮放與七色過程中兩層不錯位。這不是再加動畫時鐘、不是對整個版面或右側封面 `transform`。
+**最終本輪修正（取代舊 2.2% inset / 0.23 scale 規格）：** 全幅 A 巨字仍保留原路徑、位置、七種紙/墨配色和午夜藍＋黎明金燙金定格。只在 `p .88–.95` Contents 進場，讓「西望」兩條原生 SVG 墨版以相同的 scroll-linked `contents` 進度從 `scale(1)` 過渡至 **`scale(.21)`**；同時將整個印版的 **水平 inset 從 0 → 6.4%**、**垂直下降從 0 → 3%**（百分比均相對於左頁正方形，而非字形筆畫自身的 bbox）。此組光學座標依據截圖估計讓成品可見墨色約從左緣 5.8–8% 的版心起筆；上端與 `WESTSIDE WATCH / INDEX` 的眉題接近同一水平，而字形下端在四章索引首條金線前仍有白。這是可視校正的**初始工程值**，要在雲端真實截圖覆核才能正式確定。
 
-**驗收規則：** 在桌面 1648、手機 390 及放大字級下，`p=.85` 的全尺寸字形 inset=0；`p=1` 的小字 inset=2.2%，可視 ink 左側對齊內頁六分之一以下的小型 margin register；`Contents.`、`WESTSIDE WATCH / INDEX`、`VOL.00` 仍沿共同垂直基準，避免刊名漂移到其他欄。反向捲動字骨回到原位，不可影響 approved A。修改仍只在 Draft PR #1381，未合併主站。
+**版面層級依 The Paris Review 書冊式索引案例：** `西望` 是 editorial signature（比正文有權重，但不能取代 Contents 主標）；`Contents.` 用 OS Bodoni Moda 保持英文主標地位；`WESTSIDE WATCH / INDEX` 與 `VOL.00` 為一條上層細字資訊帶；`目錄` 與 `FOUR MOVEMENTS / TWELVE DESKS` 位於次級基線。把刊名下移並略縮小後，左側上下字結構與右方標題兩層節奏對位，保留具有意義的白，不以額外裝飾線填空。右側正式 5:8 官方封面與其左右撐滿的 `WESTSIDE WATCH` 刊頭不變。
+
+**實作與限制：** `static/js/p2-vol00-poster.js` 僅新增 `--xw-mark-drop` 並修改角標註冊值；`static/css/p2-vol00-poster.css` 對主墨和箔層共同使用 `translate(var(--xw-mark-inset),var(--xw-mark-drop)) scale(var(--xw-mark-scale))`，確保不出現兩張重影。完整大海報 `p≤.88` 的 inset/drop 必須為 0，七色 scroll wheel 原樣；完成的 Contents 小刊名仍約 32 秒一輪七色柔和霓虹慢變（reduced-motion 停用）。頁面底紙、四章十二欄文案、字級、ONE 與右側封面不受此調整影響。Regression 應檢查 `p=.85,.90,.95,1,.53` 的位置、縮放、倒帶與大海報位移為零；桌面 1648 與手機 390 確認不壓刊期、不撞目錄導覽線。仍在 Draft PR #1381，未合併主站，不能以靜態代碼檢查宣稱獲獎級視覺驗收已完成。
