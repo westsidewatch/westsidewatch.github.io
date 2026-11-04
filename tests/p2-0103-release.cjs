@@ -74,19 +74,26 @@ const browserPromise=chromium.launch({headless:true});
     assert.equal(church.olivePresent,false);
     assert(!church.coverVisible&&!church.posterVisible,'nothing from Magazine may cover church in phase 01');
     const cover=await pose(3.63);
+    console.log('RELEASE COVER-FIRST',width,JSON.stringify(cover));
     assert(cover.coverIn>.001&&cover.posterIn===0,'full cover must enter BEFORE entire 西望 poster');
     assert(!cover.posterVisible,'blank left folio must NOT be visible during cover entrance');
     assert.equal(cover.filmOpacity,0,'film must remain behind cover');
     const print=await pose(4.65);
+    console.log('RELEASE GIANT PRINT',width,JSON.stringify(print));
     assert(print.posterVisible&&print.coverVisible,'full pair must be present for seven-color print');
     assert(Math.abs(print.posterW-print.posterH)<3,'giant 西望 stays 1:1');
     assert.equal(print.filmOpacity,0,'no film while ink colors still run');
     const gold=await pose(5.99);
+    console.log('RELEASE BLUE-GOLD',width,JSON.stringify(gold));
     assert(gold.coverVisible&&gold.posterVisible,'gold print has intact complete folios');
     assert(Math.abs(gold.spreadScale-1)<.002,'do not shrink before the Contents entry');
-    const contents=await pose(6.47);
+    const contents=await pose(6.34); // p≈.953: fully settled Contents BEFORE spread retreat
+    console.log('RELEASE CONTENTS',width,JSON.stringify(contents));
     assert(Math.abs(contents.spreadScale-1)<.002,'Contents must settle before combined spread retreat');
     assert.equal(contents.filmOpacity,0,'film must not be visible until spread shrink');
+    const retreat=await pose(6.48); // p≈.994: entire spread already retreats
+    assert(retreat.spreadScale<.999,'final filmed background reveals only as the complete spread retreats');
+    assert(retreat.filmOpacity>.05,'the existing homepage film appears AFTER Contents has entered');
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
     assert(reading.oneVisible,'real ONE Bible reader remains visible at release end');
