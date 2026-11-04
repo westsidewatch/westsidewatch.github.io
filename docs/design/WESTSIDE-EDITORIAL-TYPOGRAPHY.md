@@ -1,10 +1,10 @@
 # Westside Editorial Typography Authority
 
 ## Fonts
-- English display, headings, navigation and folios: Bodoni Moda, regular 400. Never synthesize bold.
+- Current authority: `design-system/tokens/westside.tokens.json` and `static/css/westside-design-os.css` use Chiron Hei HK WS for both Chinese display and long-form reading; Noto Serif TC is not an approved runtime family.\n- English display, headings, navigation and folios: Bodoni Moda, regular 400. Never synthesize bold.
 - English editorial small-cap labels: authentic Bodoni Moda SC, regular 400. No browser-synthesized small caps.
 - Chinese realm and UI: Chiron Hei HK WS. Realm headings use the strongest approved weight 600; airy editorial typography uses 200 across all surfaces; structural hierarchy uses 600.
-- Chinese long-form reading: Noto Serif TC, 400 / 600.
+- Chinese long-form reading: Chiron Hei HK WS, 400.
 
 ## Semantic scale (responsive)
 | Role | Size | Weight | Case | Tracking |
@@ -34,14 +34,14 @@ The editorial system uses the genuine Bodoni Moda Italic and Bodoni Moda SC Ital
 | Editorial epigraph / pull quote | Bodoni Moda Italic 400 | context-specific heading scale | Use sparingly for quotations and editorial voice, never all body copy |
 | Small-caps italic signature / imprint | Bodoni Moda SC Italic 400 | editorial-label scale | Use only when semantically intentional |
 | Folio / issue index | Bodoni Moda Roman 400 | folio scale | Keep upright by default; not scripture |
-| Chinese scripture text | Noto Serif TC Roman 400 | reading scale | Do not synthetically slant Chinese glyphs |
-| Chinese Bible reference | Noto Serif TC Roman 400 + italic Latin digits | reading context | Split reference into semantic spans so only Latin and Arabic numeral runs italicize |
+| Chinese scripture text | Chiron Hei HK WS Roman 400 | reading scale | Do not synthetically slant Chinese glyphs |
+| Chinese Bible reference | Chiron Hei HK WS Roman 400 + italic Latin digits | reading context | Split reference into semantic spans so only Latin and Arabic numeral runs italicize |
 
 ### Scripture reference composition
 - Display reference: `約翰福音 <span class="ws-scripture-reference">3:16</span>` (Chinese book name stays upright, digits use genuine Bodoni Italic).
 - English display reference: `<cite class="ws-scripture-reference">John 3:16–17</cite>` (the entire Latin reference is italic).
 - Preserve semantic text and links, avoid turning citations into images or changing source verse numbers.
-- In mixed Chinese paragraphs, the Chinese sentence remains Noto Serif TC; use inline `ws-scripture-reference` only for the numeric/Latin reference.
+- In mixed Chinese paragraphs, the Chinese sentence remains Chiron Hei HK WS; use inline `ws-scripture-reference` only for the numeric/Latin reference.
 - `3:16`, `5:17–20`, `1 Corinthians 13:4–7` must retain their punctuation and ordering. Use nonbreaking spacing where a line break would separate the book name from its chapter number; do not force whole multi-verse references to overflow mobile viewports.
 - Do not apply italic to **all** numerals: dates, prices, page numbers, timestamps, navigation counters, and data tables are upright unless assigned a separate editorial role.
 - For verse numbers inside a scripture passage, mark each verse numeral semantically and style that numeral in Bodoni Moda Italic; the scripture wording stays upright. Superscript is allowed only if the passage template uses it consistently.
@@ -59,7 +59,7 @@ The editorial system uses the genuine Bodoni Moda Italic and Bodoni Moda SC Ital
 ## Global weight grammar — weight is a visual function, not a content type
 **200 / Air** is a sitewide editorial voice, not a speaker-name style. It is appropriate for spacious Chinese display and secondary headlines, article standfirsts, people and author names, book/film titles in editorial contexts, cover typography, selected navigation identities, pull-quote attributions, and large contemplative captions. Use it where ample size, contrast and breathing room preserve readability. Do not use 200 for dense paragraphs, tiny UI controls, accessibility-critical labels or low-contrast overlays.
 
-**400 / Standard** is the working voice for Chinese interface controls, descriptive metadata, short body text, explanatory headings, form fields and neutral information hierarchy. For sustained Chinese reading, switch family to Noto Serif TC 400 rather than assuming Chiron 400.
+**400 / Standard** is the working voice for Chinese interface controls, descriptive metadata, short body text, explanatory headings, form fields and neutral information hierarchy. For sustained Chinese reading, retain the unified Chiron Hei HK WS family at 400; do not substitute a second Chinese typeface.
 
 **600 / Anchor** is the structural voice for realm names, major Chinese section markers, selected issue or collection headers, and short hierarchy anchors. It is not the default for every heading and must not spread into long paragraphs.
 
@@ -70,3 +70,15 @@ The editorial system uses the genuine Bodoni Moda Italic and Bodoni Moda SC Ital
 - Font size uses semantic type-scale tokens, not a per-component increase to compensate for a heavy-looking fallback font.
 - Real browser verification must confirm Chiron Hei HK WS loads the 200 instance: its documented variable weight range is 200–900. A computed CSS weight of 200 does not guarantee the loaded glyphs are Chiron ExtraLight.
 - New components should choose among `ws-type-air`, `ws-type-standard`, `ws-type-anchor` or equivalent semantic tokens; never invent a content-specific global weight role.
+
+
+## 段末孤字與孤詞換行 / Orphan-free editorial line setting
+
+**Design OS 的排版規則，適用於整站編輯內容：**中文字段落的最後一行不得只留下單獨一個漢字；英文段落不得留下孤立的最後一個單詞。這是自動排版責任，不應靠手工插入空格、改寫聖經經文、插入硬換行或每次修改頁面時重做。
+
+- 標題先使用 `text-wrap: balance`，正文與經文使用 `text-wrap: pretty`、`line-break: strict`，維持自然行寬和禁則。
+- 對瀏覽器無法消除的段末孤字／孤詞，用 **同一個文字節點的行內不斷行尾組**作補強：中文通常至少保護最後三個漢字和相連標點，英文保護最後兩個單詞；禁止讓整段變成 `nowrap`。
+- 文字本身保持原樣：來源資料（包括 CUV／KJV 經文）不改寫；畫面文字的 `textContent`、複製語意、標點和經文節序須完全相同。不可使用非斷行空白替換原本的空格，亦不可製造字形圖片。
+- 對狹窄裝置避免橫向溢出；跳過極短標籤、代碼、表格、純數字、混合結構化引用或手工指定斷行。
+- **實作位置：** `static/css/westside-design-os.css` 供應 OS 的 `[data-ws-editorial-orphans]` 排版規則與 `.ws-editorial-no-orphan-tail`；`static/js/westside-editorial-orphans.js` 是可共用的輕量文字節點增強層，首輪僅在 P2 Emmaus / Olive 綁定，不改動既有受保護的 Magazine 和 Church iframe。進一步擴至整站須逐版塊驗證，不另外建立 OS。
+- 驗收包括寬窄視窗、中文繁體標點、英文 KJV、動態選卷切章、複製文字不變及反向滾動後的狀態；單有 CSS 規則不足以證明實際沒有孤字。

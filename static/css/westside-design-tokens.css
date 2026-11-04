@@ -3,7 +3,7 @@
   --ws-type-display-en: "Bodoni Moda", serif;
   --ws-type-display-en-sc: "Bodoni Moda SC", "Bodoni Moda", serif;
   --ws-type-display-zh: "Chiron Hei HK WS", sans-serif;
-  --ws-type-reading-zh: "Noto Serif TC", serif;
+  --ws-type-reading-zh: "Chiron Hei HK WS", sans-serif;
   --ws-weight-air: 200;
   --ws-weight-standard: 400;
   --ws-weight-anchor: 600;
@@ -15,6 +15,12 @@
   --ws-olive: rgb(115 138 90);
   --ws-harvest: rgb(184 148 74);
   --ws-crimson: rgb(161 77 87);
+  --ws-night: rgb(16 42 67);
+  --ws-papyrus: rgb(238 228 201);
+  --ws-one-paper: rgb(222 208 150);
+  --ws-pale-gold: rgb(206 189 116);
+  --ws-morning-gold: rgb(210 188 105);
+  --ws-daylight-mauve: rgb(176 133 171);
   --ws-os-font-display-en: var(--ws-type-display-en);
   --ws-os-font-display-en-sc: var(--ws-type-display-en-sc);
   --ws-os-font-display-zh: var(--ws-type-display-zh);

@@ -1,0 +1,437 @@
+/* P2 / 03 EMMAUS · Editorial candidate V5
+ * Local, isolated design layer. The existing Design OS remains authoritative.
+ * Text hierarchy is permanent Realm / Selected Book / Current Chapter / Study.
+ * This file does NOT change the Magazine, the Doré gallery or the 66-book rail.
+ */
+#emmaus > .emmaus__left {
+  --em-v5-ink: var(--ws-night,#102a43);
+  --em-v5-gold: var(--ws-first-light,#a88746);
+  --em-v5-hair: color-mix(in srgb,var(--em-v5-gold) 57%,transparent);
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:auto auto auto minmax(0,1fr) minmax(65px,10%) auto!important;
+  align-content:stretch!important;
+  row-gap:0!important;
+  padding:clamp(19px,1.72vw,29px) clamp(22px,1.87vw,32px) clamp(18px,1.5vw,25px)!important;
+  background:var(--ws-one-paper,#ded096)!important;
+  background-image:none!important;
+  overflow:hidden!important;
+}
+#emmaus .emmaus__mast{
+  min-height:19px!important;
+  padding:0 0 6px!important;
+  border-bottom:1px solid var(--em-v5-hair)!important;
+  letter-spacing:.09em!important;
+}
+#emmaus .emmaus__identity{
+  min-height:0!important;
+  margin:clamp(10px,1.45vh,17px) 0 clamp(13px,1.7vh,19px)!important;
+}
+#emmaus .emmaus__identity .emmaus__small{
+  font:400 clamp(10px,.75vw,12px)/1.2 var(--ws-type-display-en-sc)!important;
+  letter-spacing:.2em!important;
+}
+#emmaus .emmaus__identity h1{
+  font:400 clamp(68px,5.65vw,105px)/.78 var(--ws-type-display-en)!important;
+  letter-spacing:-.071em!important;
+  margin:5px 0 0!important;
+  color:var(--em-v5-ink)!important;
+  white-space:nowrap;
+}
+#emmaus .emmaus__identity h1 span{
+  display:inline-block!important;
+  vertical-align:baseline;
+  font:var(--ws-weight-zh-air) clamp(17px,1.21vw,23px)/1.15 var(--ws-type-display-zh)!important;
+  letter-spacing:.06em!important;
+  margin:0 0 0 clamp(12px,1vw,17px)!important;
+}
+#emmaus .emmaus__identity p{
+  margin:8px 0 0!important;
+  font:400 clamp(11px,.84vw,14px)/1.46 var(--ws-type-reading-zh)!important;
+  color:#545e50!important;
+  max-width:60ch;
+}
+/* The selected source is the second actual editorial masthead, immediately
+   below EMMAUS. Never again put the selected book in tiny footer metadata. */
+#emmaus .emmaus__source-hero{
+  min-height:clamp(93px,12.3vh,125px)!important;
+  max-height:none!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr)!important;
+  align-items:center!important;
+  column-gap:clamp(16px,2vw,28px)!important;
+  padding:clamp(9px,1.15vh,13px) 0 clamp(10px,1.2vh,15px)!important;
+  margin:0 0 clamp(8px,.9vh,11px)!important;
+  border-top:1.5px solid var(--em-v5-gold)!important;
+  border-bottom:1px solid var(--em-v5-hair)!important;
+  color:var(--em-v5-ink)!important;
+}
+#emmaus .emmaus__source-hero .emmaus__book-current{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:baseline!important;
+  align-content:center!important;
+  column-gap:clamp(12px,1.5vw,22px)!important;
+  row-gap:3px!important;
+  min-width:0!important;
+  overflow:visible!important;
+}
+#emmaus .emmaus__source-eyebrow{
+  display:block!important;
+  flex:0 0 100%!important;
+  color:#816738!important;
+  font:400 clamp(9px,.74vw,11px)/1.2 var(--ws-type-display-en-sc)!important;
+  letter-spacing:.105em!important;
+  text-transform:uppercase;
+}
+#emmaus .emmaus__source-eyebrow #em-book-number{
+  font:inherit!important;
+  color:inherit!important;
+}
+#emmaus .emmaus__source-hero #em-book-en{
+  display:inline-block!important;
+  max-width:100%;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  color:var(--em-v5-ink)!important;
+  font:400 clamp(38px,3.58vw,61px)/.92 var(--ws-type-display-en)!important;
+  letter-spacing:-.052em!important;
+  text-transform:uppercase;
+}
+#emmaus .emmaus__source-hero #em-book-zh{
+  display:inline-block!important;
+  color:var(--em-v5-ink)!important;
+  font:var(--ws-weight-zh-air) clamp(19px,1.5vw,28px)/1.22 var(--ws-type-display-zh)!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+}
+#emmaus .emmaus__source-meta{
+  display:flex!important;
+  flex:0 0 100%;
+  align-items:center;
+  gap:12px;
+  font:400 clamp(9px,.71vw,11px)/1.2 var(--ws-type-display-en-sc)!important;
+  color:#675e48;
+}
+#emmaus .emmaus__source-meta small{
+  opacity:.75!important;
+  font:inherit!important;
+  color:inherit!important;
+}
+#emmaus .emmaus__current-chapter{
+  min-width:0;
+  min-height:75px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  padding-left:clamp(13px,1.55vw,23px);
+  border-left:1px solid var(--em-v5-hair);
+}
+#emmaus .emmaus__current-chapter-row{
+  display:flex;align-items:baseline;
+  gap:clamp(9px,1vw,16px);
+  white-space:nowrap;
+}
+#emmaus #em-current-chapter-number{
+  color:var(--em-v5-ink);
+  font:400 clamp(48px,4.05vw,69px)/.91 var(--ws-type-display-en)!important;
+  letter-spacing:-.055em;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+#emmaus #em-current-chapter-zh{
+  color:var(--em-v5-ink);
+  font:var(--ws-weight-zh-air) clamp(19px,1.46vw,26px)/1.2 var(--ws-type-display-zh)!important;
+}
+#emmaus .emmaus__book-note,#emmaus #emmaus-enter[hidden]{display:none!important}
+/* ONE main study occupies the available reading body, not two isolated
+   stacks of metadata surrounded by empty beige space. */
+#emmaus .emmaus__study{
+  min-width:0!important;
+  min-height:0!important;
+  height:100%!important;
+  max-height:none!important;
+  margin:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+  container-type:inline-size;
+}
+#emmaus .emmaus__study-interface{
+  min-height:0!important;height:100%!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,2.06fr) minmax(0,.74fr)!important;
+  grid-template-rows:auto auto minmax(0,1fr) auto auto!important;
+  column-gap:clamp(12px,1.45cqi,20px)!important;
+  padding:0!important;
+}
+#emmaus .emmaus__study-head{
+  grid-column:1/-1;grid-row:1;
+  display:flex!important;align-items:baseline;
+  padding:5px 0 4px!important;
+  border:0!important;
+  font:400 clamp(9px,.72cqi,11px)/1.25 var(--ws-type-display-en-sc)!important;
+  color:#92723c;
+}
+#emmaus .emmaus__one-toolbar{
+  grid-column:1/-1;grid-row:2;
+  padding:3px 0 8px!important;
+  display:flex;justify-content:flex-end;align-items:center;
+  gap:12px;
+}
+#emmaus #em-one-location{display:none!important}
+#emmaus .emmaus__one-toolbar button{
+  appearance:none;
+  padding:2px 0!important;
+  border:0!important;
+  border-bottom:1px solid var(--em-v5-gold)!important;
+  background:none!important;
+  color:#765b30!important;
+  font:var(--ws-weight-zh-air) clamp(10px,.87cqi,13px)/1.4 var(--ws-type-display-zh)!important;
+  cursor:pointer;
+}
+#emmaus .emmaus__study-cols{
+  grid-column:1;grid-row:3;
+  display:flex!important;flex-direction:column!important;
+  height:100%!important;max-height:none!important;
+  min-height:0!important;min-width:0!important;
+  flex:none!important;
+  border:0!important;border-right:1px solid var(--em-v5-hair)!important;
+  padding:0 clamp(12px,1.5cqi,20px) 6px 0!important;
+  gap:0!important;overflow:hidden;
+}
+#emmaus .emmaus__study-reading{
+  flex:0 0 49%!important;
+  max-height:49%!important;
+  overflow:auto!important;
+  min-height:0!important;
+  scrollbar-width:thin;
+}
+#emmaus .emmaus__study-reading h2{
+  font:var(--ws-weight-zh-air) clamp(25px,2.7cqi,37px)/1.16 var(--ws-type-display-zh)!important;
+  color:var(--em-v5-ink);
+  margin:3px 0 8px!important;
+}
+#emmaus .emmaus__study-ref{
+  color:#6d6f59;
+  font:400 clamp(11px,1.08cqi,14px)/1.38 var(--ws-type-reading-zh)!important;
+}
+#emmaus .emmaus__study-movement{
+  font:400 clamp(11px,1.2cqi,15px)/1.55 var(--ws-type-reading-zh)!important;
+}
+#emmaus .emmaus__study-route{
+  overflow-y:auto!important;
+  margin:7px 0 0!important;
+}
+#emmaus .emmaus__study-route li{padding:3px 0!important}
+#emmaus .emmaus__study-route li p{
+  font:400 clamp(11px,1.13cqi,15px)/1.47 var(--ws-type-reading-zh)!important;
+}
+#emmaus .emmaus__study-tools{
+  flex:1 1 0!important;min-height:0!important;
+  overflow:hidden!important;
+  border:0!important;border-top:1px solid var(--em-v5-hair)!important;
+  padding:9px 0 0!important;
+  display:flex!important;
+}
+#emmaus .emmaus__study-tabs{
+  flex:0 0 auto;gap:clamp(10px,1.2cqi,17px)!important;
+  flex-wrap:wrap!important;
+  border:0!important;
+}
+#emmaus .emmaus__study-tabs button{
+  padding:1px 0 4px!important;min-height:22px!important;
+  border:0!important;border-bottom:1px solid transparent!important;
+  background:none!important;
+  color:#77715f!important;
+  font:var(--ws-weight-zh-air) clamp(10px,1.01cqi,13px)/1.3 var(--ws-type-display-zh)!important;
+}
+#emmaus .emmaus__study-tabs button[aria-selected="true"]{
+  color:var(--em-v5-ink)!important;
+  border-bottom-color:var(--em-v5-gold)!important;
+  font-weight:var(--ws-weight-zh-air)!important;
+}
+#emmaus .emmaus__study-detail{
+  overflow-y:auto!important;min-height:0;
+  padding:7px 0 0!important;
+  scrollbar-width:thin;
+}
+#emmaus .emmaus__study-detail article{border:0!important}
+#emmaus .emmaus__study-detail strong{
+  font:var(--ws-weight-zh-air) clamp(12px,1.17cqi,16px)/1.32 var(--ws-type-display-zh)!important;
+}
+#emmaus .emmaus__study-detail p{
+  font:400 clamp(11px,1.15cqi,15px)/1.53 var(--ws-type-reading-zh)!important;
+}
+/* ONLY the right research column carries cartography and chronology, and
+   both remain subordinate to the selected book/chapter masthead. */
+#emmaus .emmaus__context{
+  grid-column:2;grid-row:3;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:minmax(0,.53fr) minmax(0,.47fr)!important;
+  height:100%!important;min-height:0!important;
+  margin:0!important;gap:0!important;overflow:hidden!important;
+}
+#emmaus .emmaus__context article{
+  min-height:0!important;border:0!important;
+  background:none!important;box-shadow:none!important;
+  padding:1px 0 7px!important;
+  overflow:hidden!important;
+}
+#emmaus .emmaus__context article:last-child{
+  border:0!important;border-top:1px solid var(--em-v5-hair)!important;
+  padding-top:9px!important;
+}
+#emmaus .emmaus__context article>header{
+  display:block!important;margin-bottom:7px!important;
+}
+#emmaus .emmaus__context article>header span{
+  display:block;
+  font:400 clamp(9px,.8cqi,11px)/1.2 var(--ws-type-display-en-sc)!important;
+  letter-spacing:.08em;color:#92723c;
+}
+#emmaus .emmaus__context article>header strong{
+  display:block;text-align:left!important;
+  font:var(--ws-weight-zh-air) clamp(14px,1.39cqi,19px)/1.27 var(--ws-type-display-zh)!important;
+  margin:3px 0 0!important;color:var(--em-v5-ink);
+}
+#emmaus .emmaus__context-map-body{
+  display:block!important;overflow:auto;
+  min-height:0!important;
+}
+#emmaus .emmaus__context-map figure{
+  max-height:48%;margin:0 0 6px!important;background:none!important;border:0!important;
+}
+#emmaus .emmaus__context-map img{object-fit:contain}
+#emmaus #em-context-map-guide p{
+  font:400 clamp(11px,1.11cqi,14px)/1.48 var(--ws-type-reading-zh)!important;
+  margin:0 0 6px!important;
+}
+#emmaus .emmaus__context-time>p{
+  font:400 clamp(11px,1.05cqi,14px)/1.43 var(--ws-type-reading-zh)!important;
+}
+#emmaus .emmaus__context-time ol{overflow:auto!important;scrollbar-width:thin}
+#emmaus .emmaus__context-time li{padding:5px 0!important}
+/* The chapter numbers remain functional but stay below the reading body. */
+#emmaus .emmaus__one-chapters{
+  grid-column:1/-1;grid-row:4;
+  max-height:41px!important;min-height:0!important;
+  margin:0!important;
+  padding:5px 0 2px!important;
+  border-top:1px solid var(--em-v5-hair);
+}
+#emmaus .emmaus__one-chapters-head{
+  padding:0!important;
+  font:400 clamp(9px,.72cqi,11px)/1.1 var(--ws-type-display-en-sc)!important;
+}
+#emmaus .emmaus__one-chapter-grid{
+  display:flex!important;flex-wrap:nowrap!important;
+  overflow-x:auto!important;overflow-y:hidden!important;
+  max-height:26px!important;
+  padding:2px 0 0!important;
+  gap:2px;
+}
+#emmaus .emmaus__one-chapter-grid button{
+  min-height:20px!important;max-height:23px!important;
+  flex:0 0 clamp(24px,2.6cqi,36px)!important;
+  padding:1px 0!important;
+  background:none!important;border:0!important;
+  border-bottom:1px solid transparent!important;
+  color:#82785c!important;
+  font:400 clamp(10px,1.06cqi,13px)/1.2 var(--ws-type-display-en)!important;
+}
+#emmaus .emmaus__one-chapter-grid button[aria-pressed="true"]{
+  color:var(--em-v5-ink)!important;
+  background:none!important;
+  border-bottom:2px solid var(--em-v5-gold)!important;
+  font-weight:var(--ws-weight-zh-air)!important;
+}
+#emmaus .emmaus__study-foot{
+  grid-column:1/-1;grid-row:5;
+  padding:4px 0 5px!important;margin:0!important;
+  border:0!important;
+  font:200 clamp(9px,.7cqi,11px)/1.15 var(--ws-type-display-zh)!important;
+  color:#827052;
+}
+/* Restore the ORIGINAL one-row navigation, no layout re-interpretation.
+   The selected book is visible in the large hero above, not a footer label. */
+#emmaus .emmaus__rail{
+  display:flex!important;flex-wrap:nowrap!important;
+  grid-template-columns:none!important;
+  width:100%!important;height:100%!important;max-height:none!important;
+  margin:0!important;padding:0!important;
+  overflow-x:auto!important;overflow-y:hidden!important;
+  border:0!important;border-top:1px solid var(--em-v5-hair)!important;
+  scroll-snap-type:x proximity!important;
+}
+#emmaus .emmaus__rail .emmaus__number{
+  flex:0 0 clamp(54px,5.1vw,91px)!important;
+  background:transparent!important;
+  height:100%!important;
+  border-right:1px solid #9d927c70!important;
+  font:400 clamp(22px,2.2vw,38px)/1 var(--ws-type-display-en)!important;
+}
+#emmaus .emmaus__foot{
+  padding:3px 0 0!important;
+  border:0!important;
+  font:400 clamp(8px,.65vw,10px)/1.2 var(--ws-type-display-en-sc);
+}
+@media(max-width:900px){
+  #emmaus > .emmaus__left{
+    grid-template-rows:auto auto auto minmax(0,1fr) 66px auto!important;
+    padding:16px 13px 16px!important;
+  }
+  #emmaus .emmaus__identity h1{font-size:clamp(40px,7.8vw,72px)!important}
+  #emmaus .emmaus__identity h1 span{font-size:12px!important}
+  #emmaus .emmaus__source-hero{min-height:82px!important;padding:7px 0!important;column-gap:9px!important}
+  #emmaus .emmaus__source-hero #em-book-en{font-size:clamp(28px,5.25vw,49px)!important}
+  #emmaus .emmaus__source-hero #em-book-zh{font-size:clamp(12px,2.4vw,20px)!important}
+  #emmaus #em-current-chapter-number{font-size:clamp(37px,6.1vw,58px)!important}
+  #emmaus #em-current-chapter-zh{font-size:clamp(12px,2vw,17px)!important}
+  #emmaus .emmaus__current-chapter{padding-left:8px;min-height:60px}
+  #emmaus .emmaus__study-interface{
+    display:flex!important;flex-direction:column!important;
+    overflow-y:auto!important;
+  }
+  #emmaus .emmaus__study-head,#emmaus .emmaus__one-toolbar,
+  #emmaus .emmaus__one-chapters,#emmaus .emmaus__study-foot{flex:0 0 auto}
+  #emmaus .emmaus__study-cols{
+    display:flex!important;flex-direction:column;
+    flex:0 0 auto!important;height:auto!important;min-height:180px!important;
+    border:0!important;padding:0!important;
+  }
+  #emmaus .emmaus__study-reading{flex:0 0 auto!important;max-height:none!important}
+  #emmaus .emmaus__study-tools{min-height:100px!important;flex:0 0 auto!important}
+  #emmaus .emmaus__context{
+    display:flex!important;flex-direction:column;flex:0 0 auto!important;
+    height:auto!important;min-height:150px!important;
+    border-top:1px solid var(--em-v5-hair)!important;
+  }
+  #emmaus .emmaus__context article{min-height:105px!important}
+  #emmaus .emmaus__rail{height:66px!important}
+  #emmaus .emmaus__rail .emmaus__number{flex-basis:54px!important}
+}
+@media(max-width:540px){
+  #emmaus .emmaus__identity{margin:6px 0 9px!important}
+  #emmaus .emmaus__identity h1{font-size:clamp(29px,9.1vw,48px)!important}
+  #emmaus .emmaus__identity h1 span{display:block!important;margin:4px 0 0!important;font-size:11px!important}
+  #emmaus .emmaus__identity p{font-size:9px!important;margin-top:3px!important}
+  #emmaus .emmaus__source-hero{min-height:72px!important}
+  #emmaus .emmaus__source-hero .emmaus__book-current{row-gap:1px!important}
+  #emmaus .emmaus__source-hero #em-book-en{font-size:clamp(24px,6.5vw,35px)!important}
+  #emmaus .emmaus__source-hero #em-book-zh{font-size:11px!important}
+  #emmaus .emmaus__source-eyebrow{font-size:8px!important}
+  #emmaus #em-current-chapter-number{font-size:clamp(30px,8vw,42px)!important}
+  #emmaus #em-current-chapter-zh{font-size:11px!important}
+  #emmaus .emmaus__source-meta{display:none!important}
+  #emmaus .emmaus__study-reading h2{font-size:clamp(19px,5vw,26px)!important}
+  #emmaus .emmaus__one-toolbar button{font-size:10px!important}
+  #emmaus .emmaus__rail{height:58px!important}
+  #emmaus .emmaus__rail .emmaus__number{flex-basis:48px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #emmaus .emmaus__rail .emmaus__number{transition:none!important}
+}

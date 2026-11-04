@@ -1,0 +1,6 @@
+# Offline print-plate build tools. No browser runtime dependencies.
+fonttools>=4.0,<6
+shapely>=2.0,<3
+svgwrite>=1.4,<2
+# Inkscape 1.4+ is an optional system executable for faithful proof PNG export.
+# Local OFL Noto CJK font files are user-installed, never bundled or redistributed.

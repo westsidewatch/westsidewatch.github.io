@@ -1038,3 +1038,75 @@ main,.views{background:transparent}
 .connection-note>span,.connection-scripture-missing>span{display:block;margin-bottom:.18rem;color:var(--gold);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}
 .connection-scripture-missing{margin:.8rem 0 0;padding-top:.7rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;line-height:1.65}
 .connection-section blockquote[data-one-scripture="true"]{margin:.85rem 0 0}
+
+
+/* ONE ↔ Westside Design OS / scoped typography normalization candidate.
+   One OS; no second type scale, no global font or color changes.
+   Readable long-form remains Noto Serif TC; text controls remain Chiron 400;
+   English display stays authentic Bodoni Moda 400; editorial labels use SC 400. */
+body[data-ws-scope="one"]{
+ --one-body-size:var(--ws-type-scale-reading);
+ font-family:var(--ws-type-display-zh);
+ font-weight:var(--ws-weight-zh-standard,400);
+ font-synthesis:none;
+}
+body[data-ws-scope="one"] :is(.view-tabs button,.notice-actions button,.app-return button,
+ .reading-mode button,.reading-tools button,.profile-bar button,.profile-bar label,
+ .profile-bar select,.profile-form input,.profile-form label,.profile-form select,
+ .one-dialog button,.one-dialog input,.cover-books button,.book-dialog-context){
+ font-family:var(--ws-type-display-zh);
+ font-size:var(--ws-type-scale-ui);
+ font-weight:var(--ws-weight-zh-standard,400);
+ font-synthesis:none;
+ line-height:1.48;
+}
+body[data-ws-scope="one"] :is(.kicker,.running-head,.chapter-turn>p span,
+ .cover-brand,.chapter-art-credit,.chapter-cover-chapter>span,.profile-light-note){
+ font-family:var(--ws-type-display-en-sc);
+ font-size:var(--ws-type-scale-meta);
+ font-weight:400;
+ font-variant-caps:normal;
+ text-transform:none;
+ font-synthesis:none;
+}
+body[data-ws-scope="one"] :is(.book-frontispiece h2,.now h2,.study-intro h2,
+ .cover-one,.book-dialog-number,.one-cover .cover-one){
+ font-family:var(--ws-type-display-en);
+ font-weight:400;
+ font-synthesis:none;
+}
+body[data-ws-scope="one"] :is(.head h2,.study-intro h2,.chapter-section h3,
+ .book-detail h3,.one-dialog h2){
+ font-size:var(--ws-type-scale-title-lg);
+ line-height:var(--ws-type-leading-title,1.12);
+}
+body[data-ws-scope="one"] :is(.head h2,.chapter-section h3,.one-dialog h2):lang(zh-Hant){
+ font-family:var(--ws-type-display-zh);
+ font-weight:var(--ws-weight-zh-anchor,600);
+}
+body[data-ws-scope="one"] :is(.chapter-detail .chapter-section p,
+ .chapter-detail .scripture-reading p,.connection-section p,.background-grid p,
+ .chapter-detail blockquote,.study-intro>p:last-child,.local-privacy-note){
+ font-family:var(--ws-type-reading-zh);
+ font-size:var(--ws-type-scale-reading);
+ font-weight:400;
+ line-height:var(--ws-type-leading-reading,1.8);
+ font-synthesis:none;
+}
+body[data-ws-scope="one"] :is(.study-intro .kicker,.reading-tools>p span,
+ .map-reading__preface span,.connection-note>span,.chapter-turn>p span){
+ font-size:var(--ws-type-scale-meta);
+}
+body[data-ws-scope="one"] :is(.book-frontispiece .chapter strong,
+ .calendar-card p,.book small,.local-group i,.connection-scripture-missing){
+ font-size:var(--ws-type-scale-meta);
+ line-height:1.4;
+}
+body[data-ws-scope="one"] :is(.view-tabs button,.reading-mode button,.notice-actions button,
+ .one-dialog button,.profile-bar select):focus-visible{
+ outline:2px solid var(--ws-first-light);
+ outline-offset:2px;
+}
+@media print{
+ body[data-ws-scope="one"] .chapter-detail{font-family:var(--ws-type-reading-zh)}
+}

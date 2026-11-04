@@ -62,6 +62,50 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 - docs/dore/film/MOTION-RESEARCH-FUTURE-DEPENDENCIES-2026-10-15.md
 
 
+## P2 五聯聖經刻線 — 2026-10-30 最新工作指令（凌駕 10-18/10-19 暫停記錄）
+
+**工程範圍已定：** 只做 03 Emmaus、04 Olive Mountain、05 Dawn Library、
+06 Paradise Cinema、07 Daylight Café 五個版塊的同批高質量刻線母本與
+低幅動態版；**01 Church V75 和 02 Magazine 已驗收／保護的底紋均不重做、不修改**。
+沿用教會 V75 的曲率／線距／陰影／隨形運動工程方法和雜誌晨星精細向量
+母本的藝術品質，但不能複製同一幾何或只用 CSS repeating gradients
+冒充雕版。五個版塊須同批比較，分別有獨立主題經文與相應聖經中的物件。
+
+**七節經文索引（教會／雜誌唯讀；03–05 為待審定提案）：**
+
+| Realm | Primary passage | Core Biblical image |
+|---|---|---|
+| 01 Church | 約 7:38 | 活水（保護已驗收 V75） |
+| 02 Magazine | 羅 13:12 | 黎明／晨星及既有雜誌封面（保護原版） |
+| 03 Bible / Emmaus | 路 24:27（提案） | 基督講明經書、被展開的書卷 |
+| 04 Sermon / Olive | 太 24:3（提案） | 橄欖山上耶穌教導；橄欖枝、葉及橄欖木雕刻 |
+| 05 Book / Library | 耶 30:2（提案） | 將神的話寫在書卷上並保存 |
+| 06 Cinema / Paradise | **來 10:19–20（幔子／基督身體）** | **會幕／至聖所幔子；不是放映光束** |
+| 07 Life / Daylight Café | **申 11:14（五穀、新酒和油）** | **「五穀與新酒」；迦南七種出產（申 8:8）** |
+
+**天堂電影院的重大校正：** 劇院大幕是象徵介面，真正刻線母題來自
+**出 26:31–33**（藍、紫、朱紅、細麻、基路伯的幔子）；
+**太 27:51** 是從上到下裂開的神學性動作依據；**來 10:19–20**
+表明耶穌藉祂的血、祂的身體開通至聖所；**約 1:14** 的道成肉身
+呈現神與人同住／支搭帳幕的基督論；**林後 5:18–19** 說明
+神藉基督使人與自己和好。避免把舞台布幕、銀幕、彩色光束或
+通俗「拉開序幕」當作聖經原文；動畫須使觀眾明白**隔絕被除去，
+人因基督得以親近神**。切勿因此修改既有電影專項工程。
+
+**白晝咖啡館的重大校正：** 「五穀與新酒」是核心正式詞彙，
+不是杯盤／桌面木紋；**申 11:14** 直接提及五穀、新酒、油。
+**申 8:8** 記應許之地七出產：小麥、大麥、葡萄、無花果、
+石榴、橄欖（油）、蜜；**書 5:11–12** 記進迦南後吃地的出產與
+嗎哪停止，並未重新列舉七類。何 2:8 是供應者遭忽視的先知責備，
+不可只抽出五穀、新酒當無條件祝福。「五穀」不是五個獨立品種，
+「蜜」不應未經考證固定畫成蜂巢或棗樹。七種出產不是七版塊映射表。
+
+**責任邊界：** Design OS 編輯手冊 §8
+`docs/design/WESTSIDE-EDITORIAL-MANUAL.md` 擁有完整
+「主題經文 → 補充經文 → 聖經物件 → 刻線技法 → 動態寓意 → 安全區」
+表。本備忘只保存最新指令與索引，**不建立第二套管理系統**。
+此記錄不是五張 SVG 已完成、已驗收或已部署的證明。
+
 ## 七版塊 SVG 動態視覺與微觀雕刻底紋製作計劃（2026-10-18 整理）
 
 **記錄性質：** 整合先前關於鈔票刻線、聖殿裝飾、聖經植物與七版塊的討論，以及 2026-10-18 新確認的具體方向。這是後續製作的工程備忘與候選素材庫；除已明確確認項目外，不代表七個圖案均已定案。此節從屬既有 Westside Design OS 與 Doré Motion，不建立第二套系統。
@@ -91,8 +135,8 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 | 03 Bible / Emmaus | 多雷聖經版畫、光線揭示 | SVG 微觀底紋物件未定案 |
 | 04 橄欖山 Olive Mountain | 十二講員雕刻肖像、橫向長廊 | SVG 微觀底紋物件未定案；保護十二講員既有海報 |
 | 05 黎明書局 Dawn Library | 書頁、紙張、雕刻線條 | SVG 微觀底紋物件未定案 |
-| 06 天堂電影院 Cinema | 銀幕、遮罩與光線 | SVG 微觀底紋物件未定案 |
-| 07 Daylight Café | 黎明光影、生活影像 | SVG 微觀底紋物件未定案 |
+| 06 天堂電影院 Cinema | **會幕幔子／人與神藉基督和好**；主題經文來 10:19–20，物件出 26:31–33，開幕太 27:51 | **2026-10-30 核心方向已由使用者確認**，SVG 物件與動態仍待設計驗收；放映光非核心 |
+| 07 Daylight Café | **「五穀與新酒」**；主題經文申 11:14；七種出產申 8:8、迦南地生活書 5:11–12 | **2026-10-30 核心詞彙已由使用者確認**，SVG 物件與動態仍待設計驗收；不用咖啡杯作主要神學象徵 |
 
 七版塊開場動效／空間結構與「微觀雕刻底紋」是兩個不同層次，不能把曾討論的頁面轉場誤寫成已核准的物件底紋。其餘五個版塊不自行指定七種出產中的某一種。
 
@@ -108,7 +152,7 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 1. **先讀本節**及 `docs/design/SVG-EXPLORATION-LIST.md`、`docs/dore/motion/DORE-EDITORIAL-ENGRAVING-ASSET-ENGINE-2026-10-15.md`，不要每次重新翻找對話。
 2. 從候選素材庫選取有經文依據的物件細節，先記錄物件、經文、來源與授權、放大裁切部位、刻線方向／密度、動效目的和版塊安全區。
 3. 製作獨立 Lab 樣本，完成視覺對照及瀏覽器驗收後，才按版塊獨立接入；不改全站 Design OS 權威、不另設 CI、不破壞既有教會洋流。
-4. **依 2026-10-19 後續授權**：晨星 v5.3 已結束視覺精修，現只開發 Magazine 同源星光底紋並於獨立 Lab 驗收；其他版塊底紋仍暫停，後續需使用者逐一確認物件與構圖。
+4. **歷史決定（2026-10-19，已被 2026-10-30 新指示取代）**：先前僅研究 Magazine 星光底紋、其他版塊暫停。**最新範圍**：Church V75 / Magazine v5.3 等原版凍結不動；03 Emmaus、04 Olive、05 Library、06 Cinema、07 Café 作同批五聯動態刻線母本，一次統一質量標準；逐版人工藝術驗收，不代表已上線。每版須有自己的主題經文，具體經文及來源見 `docs/design/WESTSIDE-EDITORIAL-MANUAL.md` §8。
 
 
 
@@ -510,3 +554,68 @@ C. 《西望》雜誌插圖、封面與裝飾，以及可旋轉、可打光、�
 
 **本輪程式驗收必須逐項核對**：7 層開合與反轉、官方 SVG 唯一引用、左欄 SVG 與星體 X 座標不變、8.5°/s 僅在嵌入啟用、12＋3 精確、門左右分段城牆和底層全幅城牆素材連續、巨幅字不裁切、桌面／手機中文字重 200、舊 Church 保護、滾動暫停即停止。**CI 合格不等於視覺合格**：仍待實際截圖或瀏覽器驗收和修改。
 
+
+
+## P2 五版塊同步「多雷探索」：以接近終稿的刻線樣本為先（2026-10-31）
+
+**Context and order:** 01 Church V75 and 02 Magazine are locked. Existing Emmaus V3–V17 experiments did not meet art-quality standards because engineering proceeded without a near-final visual reference and repeatedly abandoned the user's successful time-tunnel motif. No new art asset, CSS, or illustration generation is authorized by this reference note. First shortlist actual existing *visible works*, then extract their geometry and material logic, then build five sibling native-SVG samples in the real P2 film surround with a shared review sheet.
+
+| P2 | Most useful near-result visible precedent | Native SVG / generator basis, license | Intended aesthetic mechanism / editorial constraint |
+|---|---|---|---|
+| 03 Emmaus | Forgeplot **Wormhole** (https://forgeplot.com/; actual pen-plotter single-stroke vector generator) and Rafael Araujo's hand-drawn geometrical wormhole schematic (visual only; no right to copy) | Forgeplot is an iOS app and the page does not grant us its code; for open implementation evaluate MIT-or-licensable `pywkt/plottter` (https://github.com/pywkt/plottter), or our existing native V75 geometry engine, without using its water flow primitive. | **Keep the user's approved time-tunnel visual reference**. Copy neither artwork nor physical-science illustration. Preserve reciprocal spatial contraction/expansion, thin perspective rings and cross-rulings. Build a cropped network with depth around the existing exposed video-frame fragments; do not draw a black-hole blob, a giant round border or water current. |
+| 04 Olive | Botanical leaf micro-venation / open-vein plate and CC0 `Olive branch pattern` (https://reserve.freesvg.org/olive-branch-pattern-clip-art). | `leafdraw` (https://github.com/kalairajah-personal/leafdraw), MIT, emits deterministic tagged native SVG polylines and hatching and supports leaf-vein animation. | Branching, vein-order hierarchy and real density in leaf overlaps; do not paint a literal tree-scene, or return to contour-wave water. Crop, abstract and compose as a *field*. |
+| 05 Dawn Library | Dieter Roth, `bok 2a / bok 2b`, reproduced in `Gesammelte Werke Band 3` (https://www.theideaofthebook.com/pages/books/756/dieter-roth/gesammelte-werke-band-3-bok-2a-und-bok-2b-versionen-der-im-forlag-ed-reykjavik-1960-61-erschienenen), **copyrighted visual precedent only**; patterns composed of short orthogonal printed rules. | `utrost/GenerativeArt` Paper Memory / Archive Shards algorithms (https://github.com/utrost/GenerativeArt) are AGPL-3.0: design study only, **do not copy code into Westside**. `redaction-plotter` (https://github.com/lukaszlysakowski/redaction-plotter) can export segmented hatch/SVG, license to reconfirm. | Fragmentary registries, index strata, editorial side-notes, staggered and interrupted strokes, printing/archival plate texture. **Not** books drawn as objects or unbroken waves. |
+| 06 Paradise Cinema | Adam Fuhrer `Fabric Morph` (https://adamfuhrer.bigcartel.com/product/fabric-push-pen-plot): finished Rotring 0.20mm AxiDraw drawing using tight contour striations to construct folds; artwork copyrighted, use as visual reference only. | `utrost/GenerativeArt` Thread Loom is an AGPL-3.0 concept-only implementation reference, not to be copied; our own SVG drapery folds and hatches must be independently authored. | **The tabernacle veil**: vertical taut hanging, woven folds and opening/parting, with Ex 26:31–33 and Heb 10:19–20; theater curtain is spatial analogy. Not spotlight, generic curtain photo or fluid contour. |
+| 07 Daylight Café | Plotcaster **Wheat SVG** (https://www.plotcaster.com/svg/engraving-pattern/wheat/) and **Grape and Vine SVG** (https://www.plotcaster.com/svg/engraving-pattern/grapes/): source-visible complete vector assets, explicitly available for personal/commercial use. | Source motifs are **solid cut silhouettes**, not finished micro-hatched background. Use only as structure/proportion references or licensed editable materials and add original per-grain/fruit tonal hatch via our native path engine. Also see `leafdraw` and its MIT botanically constrained veins. | Repeating / clustered produce rhythm: cereal grain, grape cluster and harvest potential, with Deut 11:14; not café equipment and not one literal pastoral illustration. |
+
+**Cross-surface native-SVG engraving production helpers, subject to license review:**
+- `penfill` (https://github.com/piLeoni/penfill), dual MIT/Apache-2.0: clipped hatching, contour/inset, stipple and material infill; useful for local tonal geometry rather than full-screen generic decorative pattern.
+- `plottter` (https://github.com/pywkt/plottter), source and layered SVG export, Bezier fitting, tapering, clipping and path cleanup; check LICENSE before code import.
+- `leafdraw` (https://github.com/kalairajah-personal/leafdraw), MIT and genuine output SVG; first technical match for Olive's vein hierarchy.
+- `plotter-declutter` (https://github.com/vicc3d/plotter-declutter), visually selective SVG occlusion/hidden-line cleanup; check licensing before any source import.
+- `utrost/GenerativeArt` is **AGPL-3.0**, not automatically suitable for integration into public production without a license review. Treat its named styles and preview renders as conceptual evidence only.
+- Forgeplot is a finished vector artwork generator but not verified as an open-source SVG engine or a reusable design asset library.
+- Purchased or artist-owned poster/plotter references never become traced SVGs. References answer **“what does near-finished work look like”**; code paths are independently produced.
+
+**Mandatory selection and QA:** five visible mother samples selected side by side, each must show a near-final art appearance, not merely a tool description. Editorial Manual (20-point exploratory rubric, threshold 15) applies, but all five must be visibly distinct from Church V75 and from each other. Test where artwork is actually exposed *outside the measured Magazine folio* at desktop and phone. Do not do five separate multi-version engineering loops before the reference aesthetic passes. No image-generation tool in this task.
+
+
+## P2 five-surface DORÉ exploration / visual-reference round 3 (2026-10-31)
+
+**User direction:** Keep the three promising primary near-result reference works (03 Wormhole, 05 Dieter Roth, 06 Fabric Morph); improve 07 Café substantially by **combining all Seven Species**, strengthen 04 Olive, find exactly one better contender each for 03/05/06. No AI image generation; no SVG implementation before comparing finished reference artworks in a side-by-side art selection.
+
+### New decisive visual evidence
+
+**07 Café — strengthened near-final visual target, not a 7-icon catalogue.**
+
+- **Primary candidate:** *Seven Species of Israel*, eight-layer hand-cut paper artwork, Hebrica Judaic Art. Published visual: https://www.hebrica.com/products/seven-species-of-israel-jewish-paper-cut-art . Dense overlapping leaves, fruits and ears of grain form a single busy *continuous cut-out screen*, while still recognisably containing all seven. As the real-work, near-result sample it is far better than Plotcaster's separate wheat and grape SVG icons. Rights: artist-owned, reference only; **do not trace/copy its design**.
+- **Backup completed visual:** 18th-century Italian Jewish embroidered Torah ark curtain explicitly depicting the seven species **bound together into one asymmetric sheaf**, with an expansive embroidered foliate border. Catalogue entry 105, Kedem Auctions Auction 92, p.199: https://d2zofuu73zurgl.cloudfront.net/kedem/auctionDocs/514/catalog/catalog_92_-_1-2_-_unified.pdf . This is extremely strong for nonuniform density, plant-overlap and overflow at edges, not for reproducing the ritual curtain or text. Textual primary catalog description verified; **catalog images not independently inspected**. An explicitly documented analogous seven-species embroidery field is Chloé Fox's block for Quilt of Belonging: https://quiltofbelonging.ca/block-by-block/asia/israel/ .
+- **Secondary visual-language sample:** all seven densely merged botanical forms in contemporary paper-cut: https://www.etsy.com/listing/4310799996/seven-species-shivat-haminim-art-modern (copyrighted reference); and woven/shiv'at haminim print https://www.etsy.com/listing/1685512819/seven-species-poster-vintage-israel (reference only). Distinguish two demands: (1) all seven recognizable at wide/near scale, (2) overflow/organic grafting as single art system—not equal-height panels or generic repetitive icon set.
+- **Scriptural fidelity:** Deut 8:8 enumerates wheat, barley, vine/grapes, fig, pomegranate, olive/oil and honey. Seven Species botany traditionally interprets honey as **date syrup/date palm**; use seven identifiable plant families, not an eighth bee/bee-hive. Primary regional scholarly evidence: https://en-lifesci.tau.ac.il/botanical/garden/Sevenfour .
+- **Original artwork to produce later:** an engraved **abundance lattice** where cereals create long fine-grain diagonal rhythm, vine tendrils interlace, fig leaves establish large shadows, olive leaves mark small sparse oscillations, pomegranate multi-seed cross-cuts create high-density pockets, dates supply hanging clusters. Composition is **non-symmetrical and full-bleed around the P2 editorial folio**; not a cornucopia illustration, store counter or six-panel still-life.
+- **SVG engineering:** independent clipped per-subject hatching via https://github.com/piLeoni/penfill (MIT + Apache-2.0), botanical venation from https://github.com/kalairajah-personal/leafdraw (MIT) and validated original canonical forms; all seven distinct labeled in source metadata, only authored vectors in final. Plotcaster https://www.plotcaster.com/svg/engraving-pattern/ is commercial-use SVG but is only a parts bank, not a completed near-result candidate.
+
+**04 Olive — upgrade over generic public-domain repeating olive decoration.**
+
+- **Primary revised art-direction candidate:** Pierre-Joseph Redouté *Olea europaea*, copperplate plant studies (1801–1819). Near-result fine plate detail, real leaf-shape, occlusion, fruit burden and delicate local dark/light modeling. Public-domain NYPL scan metadata (via archival mirror): https://nypl.getarchive.net/amp/media/olea-europaea-olivier-deurope-a-olivier-a-fruit-blanc-tache-e-rouge-b-olive-467592 ; a fuller still-engraving example: https://www.prantique.com/redoute-pj/256-olive-tree-olea-europaea-olivier-d-europe-antique-print-pierre-joseph-redoute-de-callas.html .
+- **Technical supplement, not visual mother:** MIT native SVG venation engine `leafdraw` https://github.com/kalairajah-personal/leafdraw includes orders 1–4, clip and animated strokes. Existing public-domain decorative olive repeat is demoted to reference only: https://reserve.freesvg.org/olive-branch-pattern-clip-art .
+- **Differentiation:** olive must combine hierarchical *branching* and sparse zones; never copy water ribbons or Café's integrated seven-species fruit overflow. Redouté plates are *botanical objects*: crop and abstract vein systems into exposed video region rather than mounting a complete specimen on its own page. Rights on modern photographs/reproductions require separate review.
+
+**03 Emmaus — stronger alternative discovered, keep original Wormhole as user-approved thesis.**
+
+- **Alternative potentially superior visual mother:** Lenore G. Tawney, *Wings of the Wind* (1964), pen and ink on graph paper, Whitney Museum: https://whitney.org/collection/works/46031 . Its actual composition is *two continuous fanned planes pinching and reopening*, drawn only with long ruled ink lines against faint graph-paper registration. It is strikingly closer to user's original hourglass spacetime reference than generic procedural distorted grids. Copyright **© artist/estate**; use as analytic reference only.
+- **Backup 2, less strong:** *The Great Breath* (1964), Whitney https://whitney.org/collection/works/46034 . Original Wormhole/Forgeplot path remains https://forgeplot.com/ . Only borrow topological transformations and tonal distribution; **never draw a literal black hole, complete ellipse border or water flow**, and place visible geometry around actual real masked P2 folio.
+
+**05 Dawn Library — keep Dieter Roth, consider secondary handmade geometric publishing source.**
+
+- Keep *bok 2a / bok 2b*, actual closeup with genuinely discontinuous short printed rule registers: https://www.theideaofthebook.com/pages/books/756/dieter-roth/gesammelte-werke-band-3-bok-2a-und-bok-2b-versionen-der-im-forlag-ed-reykjavik-1960-61-erschienenen ; MoMA verifies work https://www.moma.org/collection/works/165573 .
+- **Alternate:** Anni Albers, *Drawing V* (1973), pen and ink over graphite, NGA https://www.nga.gov/artists/3476-anni-albers/artworks . An editorially disciplined family of repeated mark groups / fabric-register crossings that can be put into scored grid grammar. Not clearly superior to Roth's source-specific archive identity. Do not copy copyright artwork.
+
+**06 Paradise Cinema — keep Fabric Morph, real vector-line folding alternative.**
+
+- Keep Adam Fuhrer *Fabric Morph*, actual hand-plotted high-frequency fold field https://adamfuhrer.bigcartel.com/product/fabric-push-pen-plot .
+- **Alternative:** Xavier Ho, *Generative Plotter Art* — includes an actual generatively drawn **curtain** prototype, source author describes its procedural construction: https://jtg.design/projects/generative-plotter-art . Appears coarser and less finished than Fabric Morph, so remain backup only. **Engineering technique**: physically meaningful drapery ridge + cross-contour line pressure; still grounded in *tabernacle veil*, Hebrews 10:19–20/Exodus 26:31–33; not projector beams or light as core theme.
+
+### Final comparison contract for this batch
+
+At least one *visible finished artwork* for each surface before code; 07 primary candidate now the **eight-layer seven-species papercut field**, 04 now the **Redouté etched olive venation**, while 03/05/06 have retained primaries and new backups. All references are conceptual art direction; **no license to copy lines or trace**. The actual P2 result uses original independently created vector paths under one Design OS and masked actual film-area geometry. The strict project editorial threshold is **15/20 creative-screen with distinctness not zero**, plus actual desktop/phone visual acceptance. No new assets or CSS produced as part of this reference research.

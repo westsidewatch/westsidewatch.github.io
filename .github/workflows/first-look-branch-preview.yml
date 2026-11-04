@@ -5,12 +5,17 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - 'static/experiments/**'
+      - 'static/images/xiwang-poster-*.svg'
+      - 'scripts/xiwang/**'
       - 'static/css/**'
       - 'static/js/p2-magazine-live-bridge.js'
       - 'static/p2/living-water.html'
       - 'layouts/partials/watch-home-editorial.html'
       - 'tests/p2-church-magazine-handoff.cjs'
       - 'tests/p2-vol00-preview.cjs'
+      - 'tests/p2-vol00-campaign-posters.cjs'
+      - 'tests/p2-emmaus-olive-preview.cjs'
+      - 'tests/p2-emmaus-one-workbench.cjs'
       - '.github/workflows/first-look-branch-preview.yml'
   workflow_dispatch:
 
@@ -42,18 +47,62 @@ jobs:
           restore-keys: |
             vol00-media-v2-
       - name: Build isolated preview
+        id: preview_build
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
-      - name: Verify Vol.00 and protected Church to Magazine handoff in Chromium
+      - name: Rebuild and verify native A2/B2 vector posters
+        if: ${{ !cancelled() && steps.preview_build.outcome == 'success' }}
         run: |
-          npm install --no-save --no-package-lock playwright
+          node scripts/xiwang/generate-posters.mjs
+          git diff --exit-code -- static/images/xiwang-poster-a-v2.svg static/images/xiwang-poster-b-v2.svg
+          test -s public/images/xiwang-poster-a-v2.svg
+          test -s public/images/xiwang-poster-b-v2.svg
+          echo "A2/B2 native SVG poster masters reproduced and included in Hugo preview."
+
+      - name: Deploy Cloudflare Pages preview (never production)
+        # Preview remains reviewable even when a browser visual assertion fails.
+        # The workflow still reports the failing test; production is untouched.
+        if: ${{ !cancelled() && steps.preview_build.outcome == 'success' }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREVIEW_BRANCH: pr-${{ github.event.pull_request.number || github.run_id }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "::error::Cloudflare preview credentials missing"; exit 1; }
+          for attempt in 1 2 3; do
+            if npx --yes wrangler@4 pages deploy public \
+              --project-name=westsidewatch-github-io \
+              --branch="$PREVIEW_BRANCH" \
+              --commit-hash="${GITHUB_SHA}" \
+              --commit-message="First Look isolated preview"; then
+              break
+            fi
+            if test "$attempt" -eq 3; then
+              echo "::error::Cloudflare Pages preview failed after three attempts"
+              exit 1
+            fi
+            echo "::warning::Cloudflare transient deployment failure; retry $attempt/3"
+            sleep 5
+          done
+          echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/p2-emmaus-olive-handoff-lab.html" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify Vol.00 and protected Church to Magazine handoff in Chromium
+        # A Cloudflare 5xx must never prevent LOCAL screenshot verification.
+        if: ${{ !cancelled() && steps.preview_build.outcome == 'success' }}
+        run: |
+          npm install --no-save --no-package-lock playwright pngjs
           npx playwright install chromium
           python3 -m http.server 4173 --directory public >/tmp/p2-integration-http.log 2>&1 &
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-vol00-campaign-posters.cjs
           node tests/p2-vol00-preview.cjs
           node tests/p2-church-magazine-handoff.cjs
+          P2_BROWSER_PROOF=1 node tests/p2-emmaus-one-workbench.cjs
+          P2_BROWSER_PROOF=1 node tests/p2-emmaus-olive-preview.cjs
       - name: Save browser proofs for Church continuity and Contents
         if: always()
         uses: actions/upload-artifact@v4
@@ -62,19 +111,6 @@ jobs:
           path: |
             artifacts/p2-vol00/
             artifacts/p2-church-magazine/
+            artifacts/p2-emmaus-olive/
           if-no-files-found: warn
           retention-days: 14
-      - name: Deploy Cloudflare Pages preview (never production)
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PREVIEW_BRANCH: pr-${{ github.event.pull_request.number || github.run_id }}
-        run: |
-          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "::error::Cloudflare preview credentials missing"; exit 1; }
-          npx --yes wrangler@4 pages deploy public \
-            --project-name=westsidewatch-github-io \
-            --branch="$PREVIEW_BRANCH" \
-            --commit-hash="${GITHUB_SHA}" \
-            --commit-message="First Look isolated preview"
-          echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
-          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"

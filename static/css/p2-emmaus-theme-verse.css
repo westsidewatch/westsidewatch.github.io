@@ -1,0 +1,133 @@
+/* P2 / Emmaus — ONE authoritative theme-verse SAFE AREA.
+   This stylesheet is loaded LAST by both the original ONE leaf and the
+   Magazine iframe underleaf, which show the same Luke 24:27 quotation.
+   No resizing or masking of the original gold botanical ornaments. */
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture{
+ position:absolute!important;
+ z-index:6!important;
+ top:52%!important;
+ bottom:auto!important;
+ left:30%!important;
+ right:30%!important;
+ width:40%!important;
+ max-width:40%!important;
+ min-width:0!important;
+ max-height:37%!important;
+ margin:0!important;
+ padding:0!important;
+ box-sizing:border-box!important;
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:stretch!important;
+ justify-content:flex-start!important;
+ gap:0!important;
+ visibility:visible!important;
+ opacity:1!important;
+ text-align:center!important;
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary{
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:center!important;
+ justify-content:center!important;
+ gap:10px!important;
+ width:100%!important;
+ min-width:0!important;
+ max-width:100%!important;
+ margin:0!important;
+ padding:0!important;
+ border:0!important;
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary blockquote{
+ display:block!important;
+ box-sizing:border-box!important;
+ width:100%!important;
+ min-width:0!important;
+ max-width:100%!important;
+ margin:0!important;
+ padding:0!important;
+ border:0!important;
+ color:#cebd74!important;
+ /* Design OS: Scripture is true Chinese reading text (Chiron 400);
+    editorial metadata is Chiron 200; Latin reference is true Bodoni Italic. */
+ font-family:var(--ws-type-reading-zh)!important;
+ font-weight:var(--ws-weight-zh-air,200)!important;
+ font-size:clamp(17px,1.4vw,21px)!important;
+ line-height:1.58!important;
+ letter-spacing:0!important;
+ font-synthesis:none!important;
+ text-align:center!important;
+ white-space:normal!important;
+ word-break:normal!important;
+ overflow-wrap:anywhere!important;
+ line-break:strict!important;
+ text-wrap:pretty!important;
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary .emmaus__entry-scripture-ref{
+ display:flex!important;
+ flex-wrap:wrap!important;
+ justify-content:center!important;
+ align-items:baseline!important;
+ gap:4px 8px!important;
+ width:100%!important;
+ max-width:100%!important;
+ margin:0!important;
+ padding:0!important;
+ text-align:center!important;
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-secondary{
+ display:none!important;
+}
+@media(max-width:900px){
+ :is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture{
+  top:49%!important;
+  left:28%!important;right:28%!important;
+  width:44%!important;max-width:44%!important;
+ }
+ :is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary blockquote{
+  font-size:clamp(13px,1.7vw,17px)!important;line-height:1.53!important;
+ }
+}
+@media(max-width:540px){
+ :is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture{
+  top:48%!important;
+ }
+ :is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf) .emmaus__entry-scripture-primary blockquote{
+  font-size:11px!important;line-height:1.46!important;
+ }
+}
+
+/* The OS anti-orphan span is INLINE TEXT, not scripture metadata.
+   Bookbinding's broad '.emmaus__entry-scripture span' rule previously
+   forced the trailing 「明白了。」 into 9px / weight 200. Keep its EXACT
+   parent glyph size, weight, leading, letterspacing and face. Do not touch
+   the quotation's established typography or the cover's dimensions. */
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf)
+ .emmaus__entry-scripture-primary blockquote .ws-editorial-no-orphan-tail{
+ font:inherit!important;
+ font-size:inherit!important;
+ font-weight:inherit!important;
+ font-family:inherit!important;
+ line-height:inherit!important;
+ letter-spacing:inherit!important;
+ color:inherit!important;
+ font-synthesis:inherit!important;
+ white-space:nowrap!important;
+ display:inline!important;
+}
+
+/* Scoped ONE botanical book cover, never the WESTSIDE WATCH city cover. */
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf)
+ .emmaus__entry-scripture-primary .emmaus__entry-scripture-ref [lang="en"]{
+ font-family:var(--ws-type-display-en,Georgia,serif)!important;
+ font-style:italic!important;font-weight:400!important;
+ font-size:clamp(10px,.85vw,13px)!important;
+ letter-spacing:0!important;font-synthesis:none!important
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf)
+ .emmaus__entry-scripture-primary .emmaus__entry-scripture-ref [lang="zh-Hant"]{
+ font-family:var(--ws-type-display-zh,sans-serif)!important;
+ font-style:normal!important;font-weight:var(--ws-weight-zh-air,200)!important;
+ font-size:clamp(10px,.82vw,12px)!important;
+ letter-spacing:.02em!important;font-synthesis:none!important
+}
