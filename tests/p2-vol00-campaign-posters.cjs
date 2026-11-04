@@ -134,7 +134,7 @@ try{
      assert(Math.abs(finished.markScale-.23)<.02,'original Xi Wang SVG glyph becomes a small masthead');
      assert(finished.posterContents>.99,'poster-to-Contents handoff completed');
      const stamps=[];
-     for(const p of [.30,.38,.46,.54,.62,.70,.76])stamps.push(await snap(p));
+     for(const p of [.26,.35,.44,.53,.61,.70,.77])stamps.push(await snap(p));
      assert.equal(new Set(stamps.map(x=>x.bg)).size,7,'background changes for each of seven scroll colors');
      assert.equal(new Set(stamps.map(x=>x.ink)).size,7,'西望 ink color changes for each scroll stop');
      assert.deepEqual(stamps.map(x=>x.colorStep),['1','2','3','4','5','6','7'],
