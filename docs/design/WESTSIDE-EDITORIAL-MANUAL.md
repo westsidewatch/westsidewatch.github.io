@@ -436,3 +436,14 @@ These files remain archived intact; they do not operate as independent OS author
 **開源設計方法的新補充：**[350-layout-compositions](https://github.com/nevertoday/350-layout-compositions)（CC BY 4.0；版面構圖資料庫，注意二次素材授權）、[evo-poster](https://github.com/sergiomrebelo/evo-poster)（MIT；版式變化方法）、[Paper.js](https://paperjs.org/about/)（MIT；原創漢字筆段和負形）、[bouffont](https://github.com/meodai/bouffont)（MIT；字骨重組／SVG，**CJK 必須實測**）、[TYPE-O](https://github.com/lnyssen/type-o)（MIT；recipe、字形可讀性判據，內建以 Latin 為主）、[poster-grid-inspector](https://github.com/Ygria/poster-grid-inspector)（MIT；構圖格線判讀，可選模式需模型服務）；[Volorf/Processing-Posters](https://github.com/Volorf/Processing-Posters) 有 7 張真正成品和 p5.js→Figma 的作業方法，但未核到 LICENSE，**只借完整排版工序，不複製原碼**。之前 mono-color skill 的藝術主次、印版分工與留白原則仍使用。
 
 **真正的下一輪要交付五個不同機制的比較 SVG 草案，不是再換色：**A1 原創全幅幾何巨字、A2 偏置負空間、B1 七重印版同軸交織、B2 連續刻線形成字、B3 受控錯版節奏。均不擅自改動 P2 右 5:8 封面、教會／Emmaus、首頁七重折疊或主站。這輪只完成案例找回、授權比對、設計方案和可施工訓練 brief，**還沒有新的可通過獲獎級驗收的 A/B 海報，不能宣稱定稿**。
+
+
+### 2026-11-04 / 已選定 A 午夜藍海報接入 P2 Draft
+
+**最新人工批准的決定：**以一組正立、上「西」下「望」的**深夜藍幾何巨字 A 海報**作為 P2 02 Magazine 左頁對開預設；B 七重刻線仍保留獨立創作與 `?poster=b` 對照，不代表 B 退出研究。與右側正式 5:8 午夜藍城市之光封面並排，以「大塊平面字形 vs 金光/城牆/經文細節」形成疏密對照。
+
+**已在 Draft PR #1381 實際接入：**新增 `static/images/xiwang-poster-a-night-blue-approved-p2.svg`，由使用者選定的深夜藍 A 海報字形剪影製作**獨立原生 SVG 雙字路徑（西、望各一個）**並重排於 P2 1:1 左頁；維持深夜藍與柔和紙底。為避免與右側封面重複印刷刊次，對開稿只保留二字，不重複 `WESTSIDE WATCH`、`VOL.00` 或 slogan。這是已批准點陣視覺的輪廓向量化衍生，**不是宣稱已取得原始手工筆段曲線的完全可編輯源字稿**；獨立 PNG 原稿仍只供對照，不轉存為運行時 raster。
+
+**路由：** `static/js/p2-vol00-poster.js` 的 default `poster=a` 現讀取上述 SVG；`poster=b` 分支和原七重全頁折疊/正反捲動控制原封不動。原 A2 SVG 保留為只讀歷史資產，不作現版母本；右側封面、Church、Emmaus、Homepage、Contents 時序及 03–07 均未改動。隔離實驗頁 `static/experiments/p2-double-square-video-lab.html` 更新腳本快取版本。
+
+**驗收區分：** SVG XML/兩原生路徑、資產載入路由、B 不動、右側封面 DOM 仍在，都已靜態核對；**GitHub Actions 與真實 P2 browser 視覺、1648/768/390/320、200% 縮放、逆捲動及右側視覺光學 QA 尚待當前 commit 產生實際證據，不以靜態檢查取代批准**。Draft 未合併主站。
