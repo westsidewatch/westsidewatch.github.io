@@ -217,7 +217,7 @@ const data=()=> {
    const page=await browser.newPage({viewport:{width,height},reducedMotion:'no-preference'});
    const pageErrors=[];
    page.on('pageerror',e=>pageErrors.push(e.message));
-   await page.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=0&side=cover-right',{waitUntil:'domcontentloaded',timeout:45000});
+   await page.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=0&side=cover-right&poster=legacy',{waitUntil:'domcontentloaded',timeout:45000});
    await page.evaluate(()=>document.fonts.ready);
    // The first original is loaded only when the multi-plate folio becomes visible.
    let heroAtTypeHold=0;
