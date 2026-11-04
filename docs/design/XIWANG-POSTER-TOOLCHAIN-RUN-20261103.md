@@ -61,3 +61,12 @@ node scripts/xiwang/poster-toolchain.mjs build b ./xiwang-poster-output
 ## 5. 繼續多雷探索的停止條件
 
 停止條件不是「找到更多 GitHub 專案」或「SVG 有內容」，而是 **有來源的成熟案例 → 真正調用工具 → 可重建原生字形與刻線 → P2 對開真畫面 → 使用者/人工藝術驗收**。任何一關未通過，應記錄失敗原因後嘗試*不同*的構圖/字骨機制；重複做相同線場、換色或套效果不算新的一輪。此文件只記本次已完成的實際階段，不承諾後台無人操作的持續執行。
+
+## 6. 同輪 B10／B11 補充：檢查是否真有新構圖，並回到 OS
+
+- **B10（否決）：** 把 7 個完整正立「西望」字組以不同比例和局部錯版疊合，消除文字實心底色；實際 SVG 可輸出，但重疊群組在視覺上成為無主次的灰色雜訊。這證明「真的有七個 word groups」也不等於高級海報，不把 B10 計作成功候選。
+- **B11（目前較優的隔離藝術候選，未獲批准）：** 保留 B7 具結構性留白的反白刻線系統，按 OS 把英文字形指定為 Bodoni Moda（本地缺字時 fallback Georgia），中文字形指定為 Chiron Hei HK WS（fallback Noto CJK），只保留 WESTSIDE WATCH、VOL.00、西望、**Watch for the Dawn** 四項必要刊物資訊。刪除非正式羅馬拼音及新增的製作資訊；這是編輯主次改善，不代表字骨創意問題已解決。
+- **B11 真實工程驗證：** [可重建生成器](../../scripts/xiwang/build-engraved-b-v11.py)、[原生 7-plate SVG](../../static/experiments/xiwang-printplate-b11.svg)、[獨立預覽](../../static/experiments/xiwang-printplate-b11.html)；重新建置兩次 SHA-256 同為 `f6318c3c84233e97c99e7dd8ced781cdf69ce34c3b550fe46cb8a8da8dfa3e93`；7 個 `data-word-layer`、1275 個 paths、0 個 image/rotate；Inkscape 完成 1648/768/390/320px 四寬度 SVG raster proofs。瀏覽器和對開/P2 交互仍受環境阻擋。
+- **生產入口已更新：** `node scripts/xiwang/poster-toolchain.mjs build b ./xiwang-poster-output` 現指向 B11 生成器；B7 和其他淘汰版僅用於實驗對照，不覆蓋已批准的正式雜誌封面或 P2 頁面。
+
+**狀態不變：B11 ≠ award-approved poster。** 對原本參照之「刻線即結構、七重字骨交織而成的整幅海報」尚未達到所要求的藝術水準；後續研究應解決字骨與構圖問題，而非重複改色、底紋或資訊裝飾。
