@@ -172,187 +172,165 @@
  transform:none;object-fit:contain;object-position:left top
 }
 
-/* 2026-11-04 / VOL.00 — RECOMPOSED EDITORIAL CONTENTS
- * Reference grammar: Cereal quiet paper / Paris Review monumental
- * editorial heading / contemporary Swiss chapter register. All twelve
- * original canonical desks remain DOM text in the existing Cereal #10
- * renderer; we deliberately DO NOT generate new copy, an image of words,
- * or another parallel Contents data owner.
- * Only the settled A Contents page is changed. Preserve its RIGHT cover.
+/* 2026-11-04 / PARIS REVIEW CONTENTS REGISTER — P2 02 A ONLY.
+ * 2021 Matt Willey / Pentagram: compact paperback proportion, quiet stock,
+ * book-like readable type and disciplined contents ordering, not a grid
+ * of isolated marketing cards. Preserve OS Bodoni/Chiron identities.
+ * The native 12 entries and full index are never re-created or pruned.
  */
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10{
- background:#f8f5ee;color:#183047;
+ background:#f8f5ee;color:#173249
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-paper{
- inset:0!important;
- display:grid!important;
- grid-template-rows:clamp(11px,2.6cqi,19px) minmax(0,22%) minmax(32px,6.4%) minmax(0,1fr) clamp(23px,4.0cqi,36px);
- gap:0;
- padding:4.2% 5.5% 3.6%;
- background:transparent;
- overflow:hidden;
+ inset:0!important;display:grid!important;overflow:hidden;
+ grid-template-rows:clamp(13px,2.35cqi,18px) 22.5% clamp(31px,5.3cqi,43px) minmax(0,1fr) clamp(23px,3.8cqi,33px);
+ padding:4.2% 5.8% 3.5%;gap:0;background:transparent
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-tiny{
- display:flex!important;
- border:0;padding:0;margin:0;
- color:#516273;
- font:400 clamp(8px,1.35cqi,11px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
- letter-spacing:.12em;
+ display:flex!important;position:relative;width:73%;margin:0 0 0 27%;
+ padding:0;border:0;gap:6px;align-items:baseline;justify-content:space-between;
+ font:400 clamp(8px,1.3cqi,10px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.075em;color:#5c6366;white-space:nowrap
 }
-.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-tiny span:last-child{
- color:#ad8847;
-}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-tiny span:last-child{color:#ad8750}
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header{
- min-height:0;height:100%;min-width:0;
- display:flex;flex-direction:column;justify-content:center;
- margin:0 0 0 25.5%;
- border:0;
+ margin:0 0 0 27%;height:100%;min-height:0;
+ display:flex;flex-direction:column;justify-content:center;gap:3px;
+ position:relative;z-index:2
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header h2{
- font:400 clamp(40px,10.7cqi,88px)/.89 var(--ws-type-display-en,Georgia,serif);
- color:#142b42;letter-spacing:-.068em;white-space:nowrap;
- margin:0;text-wrap:nowrap;
+ margin:0;white-space:nowrap;letter-spacing:-.065em;
+ color:#132e47;font:400 clamp(39px,10.8cqi,86px)/.92 var(--ws-type-display-en,Georgia,serif)
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese{
- margin-top:clamp(7px,1.2cqi,13px);
- font:200 clamp(10px,1.85cqi,15px)/1.4 var(--ws-type-display-zh,sans-serif);
- color:#334e59;letter-spacing:.06em;display:flex;justify-content:space-between;
+ margin:clamp(5px,.9cqi,9px) 0 0;
+ font:200 clamp(10px,1.8cqi,14px)/1.4 var(--ws-type-display-zh,sans-serif);
+ color:#43515c;display:flex;justify-content:space-between;gap:5px
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese span{
- display:inline!important;
- font:400 clamp(7px,1.2cqi,10px)/1.35 var(--ws-type-display-en-sc,Georgia,serif);
- color:#998467;letter-spacing:.06em;white-space:nowrap;
+ display:inline!important;white-space:nowrap;
+ font:400 clamp(7px,1.15cqi,10px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.05em;color:#877960
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav{
+ margin:0 0 clamp(4px,.8cqi,8px);min-width:0;align-self:stretch;
  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
- align-self:stretch;min-width:0;
- margin:0 0 clamp(8px,1.8cqi,14px);
- border-top:1px solid #b9a481;
- border-bottom:1px solid #c7bbad;
+ border-top:1px solid #b39a71;border-bottom:1px solid #c7bba9
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button{
- padding:5px 4px;display:flex;flex-direction:row;align-items:baseline;
- gap:clamp(3px,.6cqi,8px);
- border-color:rgba(37,60,72,.14);
- color:#243e54;
- background:transparent;
+ padding:3px 4px;min-width:0;display:flex;flex-direction:row;
+ align-items:baseline;gap:clamp(2px,.55cqi,7px);
+ border-right:1px solid rgba(41,58,68,.16);background:transparent;color:#173249
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button>span{
- color:#af8846;
- font:italic 400 clamp(10px,1.65cqi,16px)/1 var(--ws-type-display-en,Georgia,serif);
+ font:italic 400 clamp(10px,1.6cqi,14px)/1 var(--ws-type-display-en,Georgia,serif);
+ color:#b18c4e
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button small{
- color:#243e54;
- font:400 clamp(9px,1.55cqi,13px)/1.1 var(--ws-type-display-en-sc,Georgia,serif);
- letter-spacing:.055em;overflow-wrap:normal;white-space:nowrap;
+ font:400 clamp(8px,1.35cqi,12px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.03em;white-space:nowrap;overflow-wrap:normal
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-stack{
- display:grid!important;grid-template-columns:1.13fr 1fr;
- grid-template-rows:max-content max-content;
- column-gap:5.5%;row-gap:clamp(13px,2.6cqi,22px);
- align-items:start;align-content:start;
- overflow-y:auto;overflow-x:hidden;min-height:0;min-width:0;
- padding:4px 2px 7px 0;
- scroll-behavior:smooth;
- scrollbar-width:thin;scrollbar-color:#aa976f transparent;
- -webkit-mask-image:none;mask-image:none;
+ display:grid!important;
+ grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+ grid-template-rows:minmax(0,1.28fr) minmax(0,.72fr);
+ grid-auto-flow:row;column-gap:5.2%;row-gap:3.2%;
+ align-items:stretch;align-content:stretch;
+ min-width:0;min-height:0;overflow-y:auto;overflow-x:hidden;
+ padding:0 3px 1px 0;scroll-behavior:smooth;
+ -webkit-mask-image:none;mask-image:none;overscroll-behavior:contain
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement{
- min-width:0;min-height:0;align-self:start;position:relative;
- padding:clamp(5px,1.0cqi,9px) 0 0;
- margin:0;border-top:1px solid #b7b0a4;
+ display:flex;flex-direction:column;align-self:stretch;
+ min-width:0;min-height:0;overflow:visible;
+ margin:0;padding:clamp(6px,1cqi,9px) 0 0;
+ border-top:1px solid #bcb0a1
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement:nth-child(1){grid-column:1;grid-row:1}
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement:nth-child(2){grid-column:2;grid-row:1}
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement:nth-child(3){grid-column:1;grid-row:2}
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement:nth-child(4){grid-column:2;grid-row:2}
-.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement .p2x-movement__heading{
- display:flex;gap:clamp(8px,1.5cqi,14px);align-items:baseline;
- margin:0 0 clamp(7px,1.15cqi,12px);
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-movement__heading{
+ display:flex;align-items:baseline;gap:clamp(6px,1cqi,11px);
+ margin:0 0 clamp(3px,.65cqi,6px)
 }
-.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement .p2x-roman{
- font:italic 400 clamp(12px,2.0cqi,18px)/1 var(--ws-type-display-en,Georgia,serif);
- color:#b38844;
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-roman{
+ font:italic 400 clamp(12px,1.8cqi,16px)/1.1 var(--ws-type-display-en,Georgia,serif);color:#b18c4e
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement h3{
- font:400 clamp(19px,4.05cqi,35px)/.96 var(--ws-type-display-en,Georgia,serif);
- letter-spacing:-.055em;color:#17324a;
+ font:400 clamp(22px,3.9cqi,33px)/1 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.045em;color:#16314a
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-list{
- display:flex;flex-direction:column;gap:clamp(4px,.85cqi,8px);
+ flex:1 1 auto;display:flex;flex-direction:column;
+ justify-content:space-evenly;gap:clamp(4px,.75cqi,8px);
+ min-height:0;margin:0;padding:0
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-entry{
- grid-template-columns:clamp(19px,3.2cqi,25px) minmax(0,1fr);
- gap:clamp(6px,1cqi,10px);align-items:start;
+ display:grid;grid-template-columns:clamp(19px,2.65cqi,25px) minmax(0,1fr);
+ align-items:start;gap:clamp(5px,.85cqi,9px);min-height:max-content
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-num{
- font:italic 400 clamp(11px,1.7cqi,15px)/1.45 var(--ws-type-display-en,Georgia,serif);
- color:#af8d4b;padding:1px 0 0;
+ font:italic 400 clamp(11px,1.7cqi,14px)/1.3 var(--ws-type-display-en,Georgia,serif);
+ color:#ab8750;padding-top:1px
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-zh{
- font:200 clamp(12px,2.15cqi,17px)/1.35 var(--ws-type-display-zh,sans-serif);
- color:#1a3348;
+ font:200 clamp(13px,2.1cqi,17px)/1.4 var(--ws-type-display-zh,sans-serif);
+ white-space:nowrap;color:#19354c
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-en{
- font:italic 400 clamp(10px,1.62cqi,14px)/1.3 var(--ws-type-display-en,Georgia,serif);
- color:#6d7580;
+ font:italic 400 clamp(11px,1.6cqi,14px)/1.4 var(--ws-type-display-en,Georgia,serif);
+ color:#697783;white-space:nowrap
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-works{
- margin-top:clamp(2px,.45cqi,5px);
- font:400 clamp(10px,1.75cqi,14px)/1.43 var(--ws-type-reading-zh,sans-serif);
- color:#57626b;text-wrap:pretty;line-break:strict;
+ margin-top:clamp(2px,.4cqi,4px);
+ font:400 clamp(11px,1.64cqi,14px)/1.45 var(--ws-type-reading-zh,sans-serif);
+ color:#53606d;line-break:strict;text-wrap:pretty;
+ overflow-wrap:break-word
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-interlude{
- font:400 clamp(8px,1.25cqi,11px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);
- letter-spacing:.085em;color:#9e8250;
- margin-top:clamp(7px,1.1cqi,11px);
- padding-top:5px;
- border-color:#ddd1bb;
+ margin-top:clamp(4px,.7cqi,7px);padding-top:4px;border-color:#ded4c6;
+ color:#a08251;font:400 clamp(8px,1.2cqi,10px)/1.2 var(--ws-type-display-en-sc,Georgia,serif)
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-footer{
- padding-top:5px;border-top:1px solid #b6a381;
- display:flex;align-items:center;justify-content:space-between;
- font:400 clamp(9px,1.35cqi,12px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
- letter-spacing:.09em;color:#8d774d;
-}
-.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-progress{
- flex:1;white-space:nowrap;
+ border-top:1px solid #b6a17f;padding-top:clamp(4px,.8cqi,7px);
+ margin:0;display:flex;justify-content:space-between;gap:8px;
+ font:400 clamp(9px,1.35cqi,11px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ color:#8e774f;letter-spacing:.04em
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-expand{
- font:400 clamp(9px,1.35cqi,12px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
- color:#a17b3b;text-underline-offset:3px;
+ font:400 clamp(9px,1.35cqi,11px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ color:#a17e47;text-underline-offset:2px
 }
-/* A complete, accessible index remains one click away for every layout.
- * The 320px bound prioritizes readable movement names over a squashed grid. */
 @container (max-width:470px){
  .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-paper{
-  padding:4% 5% 3.2%;
-  grid-template-rows:clamp(10px,3cqi,14px) minmax(0,24%) minmax(31px,9%) minmax(0,1fr) clamp(20px,5cqi,27px);
+  padding:4% 5% 3%;
+  grid-template-rows:clamp(12px,3cqi,16px) 23% clamp(31px,9cqi,40px) minmax(0,1fr) 24px
  }
- .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header{
-  margin-left:27%;
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-tiny{
+  margin-left:29%;width:71%;font-size:8px
  }
- .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header h2{
-  font-size:clamp(23px,10cqi,48px);letter-spacing:-.065em;
- }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header{margin-left:29%}
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header h2{font-size:clamp(23px,9.4cqi,45px)}
  .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese span{display:none!important}
  .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button{
-  display:flex;flex-direction:column;gap:1px;padding:3px 2px;
+  flex-direction:column;gap:1px;padding:3px 1px
  }
- .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button small{font-size:clamp(8px,2.4cqi,11px)}
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button small{
+  font-size:clamp(8px,2.4cqi,11px)
+ }
  .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-stack{
-  display:flex!important;flex-direction:column;
-  gap:clamp(11px,3cqi,17px);
-  overflow-y:auto;padding-bottom:10px;
+  display:flex!important;flex-direction:column;gap:clamp(11px,3.2cqi,18px);
+  overflow-y:auto;scrollbar-width:thin
  }
  .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement{
-  flex:0 0 auto;
+  flex:0 0 auto;min-height:max-content
  }
- .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement h3{
-  font-size:clamp(22px,7cqi,33px);
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-list{
+  justify-content:flex-start
  }
  .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-works{
-  font-size:clamp(11px,3.2cqi,13px);
+  font-size:clamp(11px,3.3cqi,14px)
  }
 }
 
