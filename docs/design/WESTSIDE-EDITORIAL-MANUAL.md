@@ -426,3 +426,13 @@ These files remain archived intact; they do not operate as independent OS author
 **工程入口已從 `plan` 擴為實際 `build b`**：`node scripts/xiwang/poster-toolchain.mjs build b ./xiwang-poster-output`，調用 `scripts/xiwang/build-engraved-b.py`，需本機免費 Python build 依賴與明確的 OFL CJK 字型。生成器/隔離 [B7 SVG](../../static/experiments/xiwang-printplate-b7.svg) 和 [獨立預覽](../../static/experiments/xiwang-printplate-b7.html) 均不接管 P2 runtime；工具不可用即報錯，不能聲稱調用成功。
 
 **藝術否決仍有效：** B7 字骨還以 Noto CJK 輪廓為源，缺乏獨立原創結構及足夠強的七組套版構圖，不能以 CI/轉圖成功判定「獲獎級」。B4、B5、B6、B8、B9 及其失敗原因已回填 run log，禁止下輪又換色/換同一種線場當成新進展。Chromium local/localhost 被此環境的 administrator 封鎖，真 browser P2、zoom、反向滾動及右封面對開尚未驗收；Draft #1381 不應合併或替換正式海報。下輪先真正重建字骨與套版關係，再做完整對開藝術驗收。
+
+### 2026-11-04 / 《西望》A/B 設計方法改為「先案例、再排版、最後工具」
+
+**正式研究索引：[P2 《西望》海報 A/B Composition & Case Atlas](P2-XIWANG-POSTER-COMPOSITION-CASE-ATLAS-20261104.md)**。已在使用者的 Library 中找回 **2026-11-02 的 12 張原始 Cosmos 收藏牆截圖（22.02.17 至 22.03.03）**，與 11-03 的粉底紅字／灰底白色刻線兩張最核心參考相互核對。**這十二張是多件作品的收藏牆截圖，而非十二張只有一件作品的海報；原圖只作使用者內部研究，不轉存公開 repo、不推定它們可商用**。
+
+**新優先順序：**以使用者 22.02.59 截圖中的粉底紅色巨字作為 A「單組巨字／原創幾何筆畫與字內白」的主構圖案例；以用戶灰底點陣／同心圓／波浪／放射白線字海報作為 B「七組正立西望共同版心、不同密度/方向線場塑造一張海報」的主案例。參考圖的底色不是規範本體，B 不使用無理由的黑底；A 不能沿用 A2 字骨，B 不能變成七排字或 A 的換紋理。
+
+**開源設計方法的新補充：**[350-layout-compositions](https://github.com/nevertoday/350-layout-compositions)（CC BY 4.0；版面構圖資料庫，注意二次素材授權）、[evo-poster](https://github.com/sergiomrebelo/evo-poster)（MIT；版式變化方法）、[Paper.js](https://paperjs.org/about/)（MIT；原創漢字筆段和負形）、[bouffont](https://github.com/meodai/bouffont)（MIT；字骨重組／SVG，**CJK 必須實測**）、[TYPE-O](https://github.com/lnyssen/type-o)（MIT；recipe、字形可讀性判據，內建以 Latin 為主）、[poster-grid-inspector](https://github.com/Ygria/poster-grid-inspector)（MIT；構圖格線判讀，可選模式需模型服務）；[Volorf/Processing-Posters](https://github.com/Volorf/Processing-Posters) 有 7 張真正成品和 p5.js→Figma 的作業方法，但未核到 LICENSE，**只借完整排版工序，不複製原碼**。之前 mono-color skill 的藝術主次、印版分工與留白原則仍使用。
+
+**真正的下一輪要交付五個不同機制的比較 SVG 草案，不是再換色：**A1 原創全幅幾何巨字、A2 偏置負空間、B1 七重印版同軸交織、B2 連續刻線形成字、B3 受控錯版節奏。均不擅自改動 P2 右 5:8 封面、教會／Emmaus、首頁七重折疊或主站。這輪只完成案例找回、授權比對、設計方案和可施工訓練 brief，**還沒有新的可通過獲獎級驗收的 A/B 海報，不能宣稱定稿**。
