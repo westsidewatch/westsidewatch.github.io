@@ -248,9 +248,9 @@
 }
 .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-stack{
  display:grid!important;grid-template-columns:1.13fr 1fr;
- grid-template-rows:minmax(0,1fr) minmax(0,1fr);
- column-gap:5.5%;row-gap:4.5%;
- align-items:start;
+ grid-template-rows:max-content max-content;
+ column-gap:5.5%;row-gap:clamp(13px,2.6cqi,22px);
+ align-items:start;align-content:start;
  overflow-y:auto;overflow-x:hidden;min-height:0;min-width:0;
  padding:4px 2px 7px 0;
  scroll-behavior:smooth;
