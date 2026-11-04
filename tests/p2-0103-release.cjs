@@ -54,9 +54,14 @@ const browserPromise=chromium.launch({headless:true});
        const clip=mag?.querySelector('.p2-magazine__home-film');
        const inScene=document.getElementById('emmaus');
        const b=e=>e?.getBoundingClientRect();
+       // A hidden parent iframe retains styled child DOM. Test the
+       // COMPOSITED visibility, not the child's standalone CSS visibility.
+       const magazineComposited=!!mag&&getComputedStyle(mag).visibility==='visible'&&
+        getComputedStyle(mag).opacity!=='0';
        return {scene:document.body.dataset.proofScene,phase:stage?.dataset.phase,
-        coverVisible:!!cover&&getComputedStyle(cover).visibility==='visible',
-        posterVisible:!!poster&&getComputedStyle(poster).visibility==='visible',
+        magazineComposited,
+        coverVisible:magazineComposited&&!!cover&&getComputedStyle(cover).visibility==='visible',
+        posterVisible:magazineComposited&&!!poster&&getComputedStyle(poster).visibility==='visible',
         coverX:b(cover)?.x,coverW:b(cover)?.width,coverH:b(cover)?.height,
         posterX:b(poster)?.x,posterW:b(poster)?.width,posterH:b(poster)?.height,
         coverIn:+stage?.dataset.releaseCoverIn||0,
