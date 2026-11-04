@@ -219,7 +219,7 @@
    const chapters=[...scroller.querySelectorAll(".p2x-cereal-movement")];
    const jumps=[...host.querySelectorAll("[data-p2-cereal-jump]")];
    const status=host.querySelector(".p2x-cereal-progress");
-   let currentChapter=-1,chosenColumn=0;
+   let currentChapter=-1,chosenColumn=0,chosenRow=0;
    const sync=()=>{
     const grid=getComputedStyle(scroller).display==="grid";
     let chapter=0;
@@ -228,7 +228,12 @@
      // WITNESS/WORSHIP share the lower one. A vertical scroll alone cannot
      // know which column is selected: preserve the reader's last click.
      const lower=chapters[2].offsetTop-scroller.offsetTop;
-     chapter=(scroller.scrollTop>=Math.max(0,lower-24)?2:0)+chosenColumn;
+     const travel=Math.max(0,scroller.scrollHeight-scroller.clientHeight);
+     // If the entire two-row index is visible, clicking the right or lower
+     // movement selects its rail without forcing a meaningless scroll.
+     const row=travel<=3?chosenRow:
+      (scroller.scrollTop>=Math.min(Math.max(12,lower-24),travel*.53)?2:0);
+     chapter=row+chosenColumn;
     }else{
      chapters.forEach((el,i)=>{if(el.offsetTop-scroller.offsetTop<=scroller.scrollTop+24)chapter=i});
     }
@@ -246,7 +251,7 @@
    jumps.forEach((b,i)=>b.addEventListener("click",()=>{
     const target=chapters[i];
     const grid=getComputedStyle(scroller).display==="grid";
-    if(grid){chosenColumn=i%2;currentChapter=-1}
+    if(grid){chosenColumn=i%2;chosenRow=i>=2?2:0;currentChapter=-1}
     const top=target.getBoundingClientRect().top-scroller.getBoundingClientRect().top+scroller.scrollTop;
     scroller.scrollTo({top,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
     sync();
