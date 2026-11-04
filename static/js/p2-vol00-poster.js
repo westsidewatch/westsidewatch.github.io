@@ -1,9 +1,9 @@
 /* P2 / Vol.00 — Two actual original native SVG poster masters, build-time assets.
-   A2: exactly one monumental geometry-engineered 西望, no inherited v1 font.
+   A: user-selected midnight-blue geometric 西望, traced to editable paths and fitted to the left square.
    B2: seven actual individually engraved 西望 groups, seven OS colors.
    No Doré, brush glyphs or permanent navigation strip on Magazine left.
    Same reversible sevenfold entry. Approved right-hand cover unchanged.
-   Build script: scripts/xiwang/generate-posters.mjs */
+   A master: static/images/xiwang-poster-a-night-blue-approved-p2.svg; B remains a separate experimental variant. */
 (()=>{'use strict';
  const stage=document.getElementById('dual-stage');
  const tile=document.getElementById('dual-contents');
@@ -24,9 +24,9 @@
  art.alt='';
  art.decoding='async';
  art.src=mode==='a'
-  ?'/images/xiwang-poster-a-v2.svg?v=20261103-master2'
+  ?'/images/xiwang-poster-a-night-blue-approved-p2.svg?v=20261104-approved-a'
   :'/images/xiwang-poster-b-v2.svg?v=20261103-master2';
- art.dataset.vectorMaster=mode==='a'?'geometry-a2':'engraving-b2-7up';
+ art.dataset.vectorMaster=mode==='a'?'approved-night-blue-geometry-a':'engraving-b2-7up';
  art.addEventListener('load',()=>{
   panel.dataset.assetReady=art.naturalWidth>0?'true':'false';
  });
