@@ -86,6 +86,11 @@ try{
       scale:+stage.dataset.posterSpreadScale,revealed:+stage.dataset.posterRevealed,
       poster:rect(p).width,tile:rect(tile).width,coverRatio:rect(cover).width/rect(cover).height,
       cornerPalette:stage.dataset.posterCornerPalette||'',cornerProgress:+stage.dataset.posterCornerProgress||0,
+      bigStable:stage.dataset.posterBigStable||'',
+      cornerAnimation:getComputedStyle(p.querySelector('.xw-poster__glyph:not(.xw-poster__glyph--foil)')||art).animationName,
+      cornerDuration:getComputedStyle(p.querySelector('.xw-poster__glyph:not(.xw-poster__glyph--foil)')||art).animationDuration,
+      tileSize:[rect(tile).width,rect(tile).height],tilePos:[rect(tile).left,rect(tile).top],
+      clip:getComputedStyle(tile).clipPath,
       masks:p.querySelectorAll('.xw-poster__glyph').length,foil:p.querySelector('.xw-poster__glyph--foil')?
        +getComputedStyle(p.querySelector('.xw-poster__glyph--foil')).opacity:0,
       visible:getComputedStyle(p).opacity,
@@ -138,7 +143,9 @@ try{
      assert.equal(finished.palette,'midnight-gold');
      assert(finished.reg>.999,'last stop fully registered in navy and gold');
      assert.equal(finished.masks,2,'real glyph mask + registered foil glyph');
-     assert.equal(finished.cornerPalette,'cafe','small Contents Xi Wang advances to the seventh Design OS ink');
+     assert.equal(finished.cornerPalette,'slow-neon','only the settled small Contents identity gets a slow neon color cycle');
+     assert.equal(finished.cornerAnimation,'xw-corner-slow-neon','mini color loop is scoped to the finished index');
+     assert.equal(finished.cornerDuration,'32s','seven inks have long, smoothly interpolated holds');
      assert(finished.foil<.01,'small colored masthead does not retain gold foil overprint');
      assert.equal(finished.contentsDisplay,'block','the original Contents really appears');
      assert(finished.contentsOpacity>.99,'the final Contents is visibly composited');
@@ -182,24 +189,42 @@ try{
      assert.equal(new Set(stamps.map(x=>x.ink)).size,7,'西望 ink color changes for each scroll stop');
      assert.deepEqual(stamps.map(x=>x.colorStep),['1','2','3','4','5','6','7'],
       'seven section colors appear in the specified order');
+     // CORE REGRESSION: the old 75.5–86% "sevenfold" fold was still
+     // resizing the giant A and sweeping its square across the spread.
+     // Colors must travel; the approved glyph/page geometry must NOT.
+     for(const state of stamps){
+      assert.equal(state.bigStable,'true');
+      assert.equal(state.clip,'none','no second parent wipe above A's printed ink');
+      assert(Math.abs(state.tileSize[0]-state.tileSize[1])<2,'each color keeps full square');
+      assert(Math.abs(state.tileSize[0]-stamps[0].tileSize[0])<1,
+       'huge letterforms cannot resize while the scroll palette changes');
+      assert(Math.abs(state.tilePos[0]-stamps[0].tilePos[0])<1,
+       'huge letterforms cannot slide while scroll palette changes');
+      assert.equal(state.cornerAnimation,'none','mini neon cannot leak onto large A');
+     }
      const goldHold=await snap(.85);
      assert.equal(goldHold.palette,'midnight-gold');
      assert(goldHold.foil>.70,'full size approved gold has static foil impression');
      assert.equal(goldHold.cornerPalette,'gold','before the logo shrinks it stays in approved gold');
      assert(Math.abs(goldHold.markScale-1)<.002,'A poster stays monumental until Contents arrives');
+     assert.equal(goldHold.bigStable,'true');
+     assert.equal(goldHold.cornerAnimation,'none','no neon or timed animation on giant Westside Watch poster');
+     assert.equal(goldHold.clip,'none','historical full-sheet curtain may not amputate the giant glyph');
+     assert(Math.abs(goldHold.tileSize[0]-goldHold.tileSize[1])<2,'giant poster stays a real 1:1 square');
      assert(Math.abs(goldHold.scale-1)<.002,'finished gold poster remains full-size');
      assert(goldHold.mastWidthRatio>=1.055,'official WESTSIDE WATCH masthead must span the cover edge-to-edge');
      assert(Math.abs(goldHold.mastLeftOffset)<2,'full-bleed masthead starts at the actual cover edge');
      assert.equal(goldHold.mastLocalTransform,'none','the official masthead must not shrink independently');
-     const cornerStops=[];
-     for(const cp of [.945,.954,.963,.973,.982,.991,1])cornerStops.push(await snap(cp));
-     assert.deepEqual(cornerStops.map(x=>x.cornerPalette),
-       ['water','magazine','emmaus','olive','bookshop','cinema','cafe'],
-       'seven OS-colored miniature masthead inks advance only by scroll');
-     assert.equal(new Set(cornerStops.map(x=>x.ink)).size,7,
-       'miniature identity genuinely changes stroke color, not only label');
-     const cornerReverse=await snap(.954);
-     assert.equal(cornerReverse.ink,cornerStops[1].ink,'small masthead color scrolls backwards exactly');
+     // The mini identity must NEVER race through seven colors in the
+     // last 5.6% of wheel progress. It changes slowly after the 02
+     // Contents is completely composed; the giant printed A is untouched.
+     const compact=await snap(.96);
+     assert.equal(compact.cornerPalette,'slow-neon');
+     assert.equal(compact.cornerAnimation,'xw-corner-slow-neon');
+     const reverseMini=await snap(.90);
+     assert.equal(reverseMini.cornerPalette,'gold');
+     assert.equal(reverseMini.cornerAnimation,'none',
+       'reversing toward the full-size poster disables the mini neon loop');
      const atHold=await snap(.90);
      assert.equal(atHold.palette,'midnight-gold');
      assert(atHold.markScale<1&&atHold.markScale>.23,'original gold glyph begins shrinking INTO Contents');
