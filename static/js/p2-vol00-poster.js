@@ -91,9 +91,26 @@
    const final=ease((p-.77)/.075);
    const contents=ease((p-.88)/.07);
    const gold='var(--ws-morning-gold, #d2bc69)';
-   panel.style.setProperty('--xw-ink',mix(inkBase,gold,final));
+   // After the two original glyph paths settle as a small Contents folio,
+   // continue through the seven authentic section colors, but ONLY under
+   // the existing reversible scroll position; no timed flash/neon cycle.
+   // The 02 full-sized cover still finishes in approved night + gold.
+   const cornerActive=ease((p-.941)/.012);
+   const cornerU=clamp((p-.944)/.056)*6;
+   const cornerFrom=Math.min(6,Math.floor(cornerU));
+   const cornerTo=Math.min(6,cornerFrom+1);
+   const cornerMix=ease(cornerU-cornerFrom);
+   const cornerInk=mix(
+    'color-mix(in oklab, var('+colorStops[cornerFrom].token+') 86%, var(--ws-night))',
+    'color-mix(in oklab, var('+colorStops[cornerTo].token+') 86%, var(--ws-night))',
+    cornerMix
+   );
+   panel.style.setProperty('--xw-ink',mix(mix(inkBase,gold,final),cornerInk,cornerActive));
    panel.style.setProperty('--xw-poster-bg',mix(paperBase,'var(--ws-night,#102a43)',final));
-   panel.style.setProperty('--xw-foil-opacity',(.72*final).toFixed(4));
+   panel.style.setProperty('--xw-foil-opacity',(.72*final*(1-cornerActive)).toFixed(4));
+   panel.dataset.cornerPalette=cornerActive>.001?colorStops[cornerFrom].name:'gold';
+   stage.dataset.posterCornerPalette=panel.dataset.cornerPalette;
+   stage.dataset.posterCornerProgress=cornerU.toFixed(4);
    // Use exactly the SAME approved gold glyph paths, shrinking only when
    // Contents begins. The poster PAGE never shrinks at this moment.
    panel.style.setProperty('--xw-mark-scale',(1-.77*contents).toFixed(5));
