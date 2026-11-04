@@ -18,8 +18,8 @@ assert(!/\.olive-proof|data-realm="sermon"|data-realm="cinema"|data-realm="book"
 assert.match(js,/const timelineMax=9\.34/,'release ends before Olive starts at 9.44');
 assert.match(html,/p2-0103-release\.css/);
 assert.match(html,/p2-0103-release\.js/);
-assert.match(vol,/coverIn=stableLargeA\?ease\(\(progress-\.04\)\/\.18\)/,'whole cover enters first');
-assert.match(vol,/posterIn=stableLargeA\?ease\(\(progress-\.22\)\/\.12\)/,'whole large poster follows');
+assert.match(vol,/coverIn=stableLargeA\?ease\(\(progress-\.015\)\/\.105\)/,'whole cover enters first');
+assert.match(vol,/posterIn=stableLargeA\?ease\(\(progress-\.14\)\/\.17\)/,'whole large poster follows');
 assert.match(poster,/const u=clamp\(\(p-\.36\)\/\.41\)\*6/,'seven inks only begin after folios are visible');
 assert.match(bridge,/magazine\.style\.background='transparent'/,'no early blank paper curtain');
 assert.match(bridge,/filmReveal=easing\(\(progress-\.97\)\/\.03\)/,'home video only revealed at final spread retreat');
@@ -83,9 +83,10 @@ const browserPromise=chromium.launch({headless:true});
     const church=await pose(1.6);
     assert.equal(church.olivePresent,false);
     assert(!church.coverVisible&&!church.posterVisible,'nothing from Magazine may cover church in phase 01');
-    const cover=await pose(3.63);
+    const cover=await pose(3.55); // global ~38%, official cover now fully settled
     console.log('RELEASE COVER-FIRST',width,JSON.stringify(cover));
-    assert(cover.coverIn>.001&&cover.posterIn===0,'full cover must enter BEFORE entire 西望 poster');
+    assert(cover.coverIn>.999&&cover.posterIn===0,
+      '38% must show a COMPLETE right cover, never the clipped WESTSIDE masthead');
     assert(!cover.posterVisible,'blank left folio must NOT be visible during cover entrance');
     assert.equal(cover.filmOpacity,0,'film must remain behind cover');
     assert(cover.fieldOpacity>.99,'cover stage must conceal old Church schedule');
@@ -115,6 +116,21 @@ const browserPromise=chromium.launch({headless:true});
     assert(settled.fieldOpacity<.001&&settled.filmOpacity>.999,
       'the whole paper field must fully clear when the original film is revealed');
     await page.screenshot({path:out+'/film-after-spread-retreat-'+width+'.png'});
+    const emmausTurn=await pose(6.82); // global ~73% reported by editor
+    await page.screenshot({path:out+'/emmaus-first-turn-73percent-'+width+'.png'});
+    const backstage=await page.evaluate(()=>{
+      const origin=document.querySelector('#proof-original')?.contentDocument;
+      const magazine=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+      const stage=magazine?.querySelector('#dual-stage');
+      const field=document.getElementById('p2-realm-background');
+      return {emmausBackdrop:Number(stage?.dataset.emmausBackdrop||0),
+        exteriorOpacity:Number(field?.style.opacity||0),
+        exteriorMode:document.body.dataset.p2Surround};
+    });
+    assert(backstage.emmausBackdrop>.999,
+      '73%: old film must be covered by the native Emmaus background, not show as a collage');
+    assert.equal(backstage.exteriorOpacity,0,'73%: default must not put cloth wallpaper around the spread');
+    assert.equal(backstage.exteriorMode,'engraving','73%: the green book-cover cloth must not become outer wallpaper');
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
     assert(reading.oneVisible,'real ONE Bible reader remains visible at release end');
