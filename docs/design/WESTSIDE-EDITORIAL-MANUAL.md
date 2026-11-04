@@ -501,3 +501,20 @@ These files remain archived intact; they do not operate as independent OS author
 **03 真實續接：** 不新增假以馬忤斯插圖，也不複製 ONE 另一份資料源。原 `static/experiments/p2-emmaus-olive-handoff-lab.html` 早已擁有同一個連續捲動 owner，內嵌 **教會→雜誌** 原畫面，`distance=6.50` 保持完成的 02 對開，之後沿既有轉頁 timeline 進入 **03 以馬忤斯 ONE（66 卷、章節、CUV/KJV、史地、241 多雷插圖）**，再接 04 橄欖山及 05–07。新版從完成 Contents 定格處開啟；在 02 專門調試頁中加入實際連續預覽入口。反向滾動回到 02，不二次載入模擬 Contents。右側 5:8 正式封面、滿版刊頭、原影片與教會畫面保持。**完整 P2 預覽應用此連續舞台路線，而非只有 02 的獨立 square lab。**
 
 **獲獎級驗收：** 以 1648、768、390、320px + 200% zoom 覆核主標、角標、雙欄篇章與全文入口的實際閱讀次序；檢查 02→03→02 正逆捲動、ONE 66 卷可操作、圖片不破版、不重複播放器；附 Chromium 真截圖及失敗原因。這次 CSS 工程／連續路由能運作，並不自動表示已達藝術定稿；P2 Draft #1381 不合併主站。
+
+
+### 2026-11-04 / 真實 P2 截圖再驗收：The Paris Review Contents × 封面完整翻頁 × ONE 經文
+
+**來源與藝術機制。** 2026-11-04 06:17–06:18 四張使用者實際動效截圖。錯誤包括：（一）Contents 的 12 欄目被壓至頁面上半部，底部剩下大塊沒有理由的空白；（二）金色「西望」角標壓在頂部極細刊期字上；（三）Luke 24:27 的 ONE 主題經文在轉場可見於**雜誌**的藍金城門封面；（四）正式封面只轉約 86°，被切成一條窄條；（五）額外的「經上所指的基督」純文字頁缺乏多雷插圖，削弱過場節奏。
+
+**The Paris Review 研究依據，不是拷貝字型或版式。** Pentagram 的 Matt Willey（2021）改版：https://www.pentagram.com/work/the-paris-review/story；AIGA Eye on Design 對於緊湊書本尺度、收斂封面字量、紙張觸感與閱讀比例的分析：https://eyeondesign.aiga.org/whats-past-is-prologue-inside-the-redesign-of-the-paris-review/。取用其**從內容密度建立版心**的設計方法：不設無用途的空白，不把 12 欄當可縮到 7px 的宣傳卡片，對齊刊號、標題、編輯分部與全文入口。在現有批准的雙頁內，左頁保留 OS Bodoni Moda 大號 *Contents.*、纖細 Chiron 中標、四個 WATCH／WALK／WITNESS／WORSHIP 目錄組，兩列按頁高比例分配；原 12 欄目真實 DOM 文字、次標、中英索引及完整閱讀器保留。小版寬仍為可捲動單欄。與巴黎評論不共用其商業字型，不改 Design OS。
+
+**避免壓字。** 原 A 海報兩字印版縮為固定角標後，`p2x-cereal-tiny` 的刊期、編輯印記一律移到角標右側，不再從左 5% 開始而被金字壓住；P2 封面 `WESTSIDE WATCH` 左右撐滿、5:8 比例不變。
+
+**主題經文與 OS：** 03 以馬忤斯真正的主題經文僅 `Luke 24:27 / 路加福音 24:27`，在自己的綠布燙金花卉封面展示，**不能**移到 02《西望》藍金城門封面。中文經文是正文，依 `static/css/westside-design-os.css` 的 `--ws-weight-zh-standard:400` + Chiron HK WS reading 角色；中文參照屬非正文極細 `--ws-weight-zh-air:200`；英文經文出處使用真正 Bodoni Moda Italic 400（依 OS 備註經文數字也為 italic），不可把引用本身變成硬 bold，也不可讓孤字修復 span 另起字重。入場的綠色 underleaf 在正面雜誌尚未翻開時 `display:none` 或 opacity 0，回捲同樣清除；正式封面沒有 ONE 經文節點。
+
+**真正的翻頁，不裁切。** 原 cover 的 5:8 正式 DOM 構圖不可被縮窄或剪裁成半幅；以源 `#dual-cover` 沿書脊旋轉完整約 172°，讓原封面正面、極薄側邊以及素紙背面連續呈現。只在翻頁狀態臨時釋放內層 `dual-stage`／`dual-panels` 的 overflow，背面是位於相同書頁上的紙張，綠布新封面在下方；逆向滑動沿同一進度倒播，無額外動畫計時器。第二次打開綠布前恢復該頁真正的多雷插圖。受保護的城門和印刷刊頭 SVG 均不改。
+
+**不再有「經上所指」過渡頁。** `p2-emmaus-prologue` 的插入函數及其內嵌 CSS/文字完全刪除；一旦右封面翻至 ONE，直接進入綠布書頁→多雷插圖→ONE 經文與 66 卷，原 `03→04` 功能不改。縮短第一翻、第二翻及研讀頁進場前的無效停留，保持父頁 scroll-scrub 與反向回捲。
+
+**工程檢查與限制：** 改動限 Draft PR #1381 的 `static/css/p2-vol00-poster.css`、`static/css/p2-emmaus-theme-verse.css`、`static/js/p2-emmaus-olive-preview.js` 及 preview 引用、`tests/p2-vol00-campaign-posters.cjs`。檢查桌面與手機角標無壓印、最後一組目錄實際到頁下部、逐章可讀、02→03→02 經文不可跨封面、完整背面和無文字空頁；**程式/CI 合格不等於藝術完成**，需要真實 Cloudflare Chromium 截圖再作藝術驗收。封面、教會、ONE 正文資料與主站不合併不重寫。
