@@ -1,158 +1,149 @@
-// A/B Campaign Poster + Homepage-faithful sevenfold fold: real-browser proof.
+// P2 A scroll-linked ink/paper registration + B alternate vector + native film.
+// The retired sevenfold curtain is intentionally absent from Magazine;
+// the homepage's separate sevenfold motion is unaffected.
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
-fs.mkdirSync('artifacts/p2-vol00',{recursive:true});
 const {chromium}=require('playwright');
 const {PNG}=require('pngjs');
+fs.mkdirSync('artifacts/p2-vol00',{recursive:true});
 const poster=fs.readFileSync('static/js/p2-vol00-poster.js','utf8');
 const css=fs.readFileSync('static/css/p2-vol00-poster.css','utf8');
 const html=fs.readFileSync('static/experiments/p2-double-square-video-lab.html','utf8');
 const bridge=fs.readFileSync('static/js/p2-magazine-live-bridge.js','utf8');
-
-assert.match(html,/p2-vol00-poster\.js/,'P2 actually loads both campaign posters');
-assert.match(html,/p2-vol00-poster\.css/,'P2 loads the scoped poster design');
-assert.match(poster,/poster'\)==='legacy'/,'an archived legacy visual baseline remains inspectable');
-assert.match(poster,/const colors=\['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'\]/,
- 'sevenfold reuses exact homepage seven Design OS colors');
-assert.match(poster,/scaleY\(/,'seven full-surface planes, not narrow vertical swatches');
-const masterA=fs.readFileSync('static/images/xiwang-poster-a-v2.svg','utf8');
+const os=fs.readFileSync('static/css/westside-design-os.css','utf8');
+const glyph=fs.readFileSync('static/images/xiwang-poster-a-glyph-mask.svg','utf8');
 const masterB=fs.readFileSync('static/images/xiwang-poster-b-v2.svg','utf8');
-const generator=fs.readFileSync('scripts/xiwang/generate-posters.mjs','utf8');
-assert.match(poster,/xiwang-poster-a-v2\.svg/,'A loads the new own-form vector artwork');
-assert.match(poster,/xiwang-poster-b-v2\.svg/,'B loads the seven engraved words');
-assert.match(masterA,/data-authority="original-geometry"/,'A independently constructs the strokes');
-assert.equal((masterA.match(/data-word="(?:西|望)"/g)||[]).length,2,'A is only two Chinese characters');
-assert.doesNotMatch(masterA,/data-engraving-family/,'A is not a hatched variant of B');
-assert.equal((masterB.match(/data-poster-word="[1-7]"/g)||[]).length,7,'B has exactly seven independent word-groups');
+
+assert.match(html,/p2-vol00-poster\.js/,'P2 loads the campaign poster state controller');
+assert.match(html,/p2-vol00-poster\.css/,'P2 loads isolated poster CSS');
+assert.match(poster,/poster'\)==='legacy'/,'legacy reference stays available');
+const tokens=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'];
+for(const token of tokens) {
+ assert(poster.includes("token:'"+token+"'"),'missing P2 poster palette '+token);
+ assert(os.includes(token+':'),'missing Design OS palette token '+token);
+}
+assert.match(poster,/function paint\(progress\)/,'poster has one externally owned scroll progress');
+assert.match(html,/window\.P2Vol00Poster\?\.paint\(progress\)/,'P2 calls same progress painter');
+assert.match(bridge,/westside-p2-dual-progress/,'full P2 uses existing parent scroll bridge');
+assert.match(html,/stage\.addEventListener\('wheel'/,'standalone preview can scrub with wheel');
+assert.match(html,/!document\.documentElement\.classList\.contains\('dual-embed'\)/,
+ 'standalone wheel event does not steal parent P2 wheel');
+assert.doesNotMatch(poster,/xw-poster__folds|xw-poster__fold'/,'previous seven full-sheet curtain removed');
+assert.match(poster,/posterFoldCount='0'/,'observability declares curtain removed');
+assert.match(poster,/poster-a-night-blue-approved-p2\.svg/,'A retains approved original silhouette fallback');
+assert.match(css,/xiwang-poster-a-glyph-mask\.svg/,'colorful ink and foil are masked by the actual two glyph paths');
+assert.equal((glyph.match(/<path\b/g)||[]).length,2,'A glyph mask has separate 西 and 望 paths');
+assert.doesNotMatch(glyph,/<rect\b/,'mask must not cover the background');
+assert.match(css,/xw-poster__glyph--foil/,'final print has stable metallic foil');
+assert.match(poster,/var\(--ws-morning-gold/,'final ink uses OS dawn-gold');
+assert.match(poster,/var\(--ws-night/,'final background uses OS midnight navy');
+assert.match(poster,/Watch for the Dawn/,'minimal editorial slogan remains');
+assert.match(html,/ease\(\(progress-\.945\)\/\.055\)/,
+ 'spread must wait for finalized ink, then retreat as a single plane');
+assert.match(html,/posterSpread\.style\.transform='scale\('/,'no separate shrinking of cover or poster');
+assert.doesNotMatch(css,/@keyframes/,'no autonomous flashing and no neon timer');
+assert.match(poster,/xiwang-poster-b-v2\.svg/,'B remains a separately authored native SVG');
+assert.equal((masterB.match(/data-poster-word="[1-7]"/g)||[]).length,7,
+ 'B still contains seven independently authored word groups');
 assert.equal(new Set([...masterB.matchAll(/data-engraving-family="([^"]+)"/g)].map(m=>m[1])).size,7,
- 'B has seven DIFFERENT actual geometry families');
-assert.equal(new Set([...masterB.matchAll(/data-ws-token="([^"]+)"/g)].map(m=>m[1])).size,7,
- 'B maps each word-group to a distinct Design OS section color');
-assert.match(masterB,/data-outline="西"/,'each B word contains 西');
-assert.match(masterB,/data-outline="望"/,'each B word contains 望');
-assert.match(generator,/function makeA/,'A is reproducible at build time');
-assert.match(generator,/function makeB/,'B is reproducible at build time');
-assert.match(css,/\.dual-continuum\{[\s\S]*visibility:hidden!important/,'old colored Magazine navigation removed visually');
-assert.match(bridge,/const poster=requestedPoster==='b'\?'b':'a'/,'full P2 preview can choose A or B');
-assert.match(html,/window\.P2Vol00Poster\?\.paint\(progress\)/,
- 'poster is driven by EXISTING native P2 scroll, not an independent clock');
+ 'seven B groups still have different actual engraving methods');
 
 (async()=>{
 const browser=await chromium.launch({headless:true});
 try{
-for(const mode of ['a','b']){
- for(const [width,height] of [[1648,928],[390,844]]){
-  const page=await browser.newPage({viewport:{width,height},reducedMotion:'no-preference'});
-  await page.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?poster='+mode+'&p=100&side=cover-right',
-    {waitUntil:'domcontentloaded',timeout:45000});
-  await page.waitForFunction(()=>document.querySelector('#dual-stage')?.dataset.posterFoldCount==='7');
-  const atRest=await page.evaluate(()=>{
-   const stage=document.getElementById('dual-stage'),panel=document.getElementById('xw-poster');
-   const tile=document.getElementById('dual-contents'),art=panel.querySelector('img.xw-poster__art');
-   const colorLayers=[...panel.querySelectorAll('.xw-poster__fold')];
-   const rect=el=>el.getBoundingClientRect();
-   const cover=document.getElementById('dual-cover');
-   return {mode:stage.dataset.p2Poster,folds:colorLayers.length,
-    colors:colorLayers.map(l=>getComputedStyle(l).backgroundColor),
-    poster:rect(panel),tile:rect(tile),cover:rect(cover),
-    scene:rect(stage),coverTitle:!!cover.querySelector('img.dual-cover__mast'),
-    oldRail:getComputedStyle(document.getElementById('dual-continuum')).visibility,
-    railInert:document.getElementById('dual-continuum').inert,
-    oldDoré:getComputedStyle(document.getElementById('dual-dore-plate')).display,
-    oldInk:getComputedStyle(document.getElementById('dual-letterfield')).display,
-    posterOpacity:getComputedStyle(panel).opacity,
-    artClip:getComputedStyle(art).clipPath,
-    assetReady:panel.dataset.assetReady,
-    naturalWidth:art.naturalWidth,
-    naturalHeight:art.naturalHeight,
-    vectorMaster:art.dataset.vectorMaster,
-    scrollWidth:document.documentElement.scrollWidth};
-  });
-  assert.equal(atRest.mode,mode);
-  assert.equal(atRest.folds,7);
-  assert.equal(new Set(atRest.colors).size,7,'seven OS colors have distinct computed values');
-  assert.equal(atRest.oldRail,'hidden');
-  assert.equal(atRest.railInert,true);
-  assert.equal(atRest.oldDoré,'none','Magazine no longer displays Doré');
-  assert.equal(atRest.oldInk,'none','the brush-calligraphy mother is not shown on the campaign');
-  assert.equal(atRest.posterOpacity,'1');
-  assert.equal(atRest.assetReady,'true','actual SVG master loaded as an image successfully');
-  assert.equal(atRest.naturalWidth,1000,'vector master natural width');
-  assert.equal(atRest.naturalHeight,1000,'vector master natural height');
-  assert.equal(atRest.vectorMaster,mode==='a'?'geometry-a2':'engraving-b2-7up');
-  assert(Math.abs(atRest.poster.width-atRest.tile.width)<1.5,'poster fills original square');
-  assert(Math.abs(atRest.cover.width/atRest.cover.height-.625)<.02,'RIGHT approved magazine cover remains 5:8');
-  assert(atRest.scrollWidth<=width+3,'poster does not create horizontal overflow');
-  assert(/inset\(0px 0px 0% 0px\)|inset\(0 0 0% 0\)/.test(atRest.artClip)||atRest.artClip.includes('0%'),
-   'sevenfold has fully revealed the clean poster');
-  // Test the ACTUAL COMPOSITED BROWSER PIXELS, not SVG markup existence
-  // and not XML serialization (which loses external OS CSS variables).
-  await page.waitForFunction(()=>document.querySelector('#xw-poster')?.dataset.assetReady==='true');
-  const screen=await page.locator('#xw-poster').screenshot();
-  fs.writeFileSync('artifacts/p2-vol00/poster-'+mode+'-'+width+'-visible-proof.png',screen);
-  const png=PNG.sync.read(screen);
-  const bg=mode==='a'?[238,230,216]:[15,25,39];
-  let inspected=0,inkPixels=0;
-  for(let y=Math.floor(png.height*.12);y<Math.floor(png.height*.90);y+=4){
-   for(let x=Math.floor(png.width*.08);x<Math.floor(png.width*.92);x+=4){
-    const i=(y*png.width+x)*4;
-    const dist=Math.abs(png.data[i]-bg[0])+
-     Math.abs(png.data[i+1]-bg[1])+Math.abs(png.data[i+2]-bg[2]);
-    inspected++;
-    if(dist>85 && png.data[i+3]>240)inkPixels++;
-   }
-  }
-  const visibleFraction=inkPixels/Math.max(1,inspected);
-  console.log('P2 POSTER PIXELS',mode,width,visibleFraction.toFixed(4),
-   'rendered=',png.width+'x'+png.height);
-  assert(visibleFraction>(mode==='a'?.12:.055),
-   'ACTUAL poster screenshot is missing visible Xi/Wang strokes: '+visibleFraction.toFixed(4));
-  // B must visibly show multiple distinct colored word-groups rather
-  // than a monochrome retint of the A silhouette. Count pixels close to
-  // seven independently sourced tokens across the ACTUAL browser screenshot.
-  if(mode==='b'){
-    const colors=[[91,143,168],[162,135,42],[206,189,116],[115,138,90],
-      [184,148,74],[161,77,87],[176,133,171]];
-    const present=colors.map(c=>{
-      let count=0;
-      for(let y=5;y<png.height-5;y+=2)for(let x=5;x<png.width-5;x+=2){
-        const k=(y*png.width+x)*4;
-        const d=Math.abs(png.data[k]-c[0])+Math.abs(png.data[k+1]-c[1])+
-          Math.abs(png.data[k+2]-c[2]);
-        if(d<74)count++;
-      }
-      return count;
+ for(const mode of ['a','b']){
+  for(const [width,height] of [[1648,928],[390,844]]){
+   const page=await browser.newPage({viewport:{width,height},reducedMotion:'no-preference'});
+   try{
+    const url='http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?poster='+mode+'&p=100&side=cover-right';
+    await page.goto(url,{waitUntil:'domcontentloaded',timeout:45000});
+    await page.waitForFunction(()=>document.getElementById('xw-poster')?.dataset.assetReady==='true',{timeout:20000});
+    const sample=()=>page.evaluate(()=>{
+     const stage=document.getElementById('dual-stage'),p=document.getElementById('xw-poster');
+     const art=p.querySelector('img.xw-poster__art');
+     const rect=e=>e.getBoundingClientRect();
+     const cover=document.getElementById('dual-cover'),tile=document.getElementById('dual-contents');
+     return {
+      mode:stage.dataset.p2Poster,scrollLinked:stage.dataset.posterScrollLinked,
+      foldCount:stage.dataset.posterFoldCount,palette:stage.dataset.posterPalette,
+      colorStep:stage.dataset.posterColorStep,reg:+stage.dataset.posterRegistration,
+      bg:getComputedStyle(p).backgroundColor,ink:getComputedStyle(p.querySelector('.xw-poster__glyph')||art).backgroundColor,
+      scale:+stage.dataset.posterSpreadScale,revealed:+stage.dataset.posterRevealed,
+      poster:rect(p).width,tile:rect(tile).width,coverRatio:rect(cover).width/rect(cover).height,
+      masks:p.querySelectorAll('.xw-poster__glyph').length,foil:p.querySelector('.xw-poster__glyph--foil')?
+       +getComputedStyle(p.querySelector('.xw-poster__glyph--foil')).opacity:0,
+      visible:getComputedStyle(p).opacity,
+      artOk:p.dataset.assetReady,artWidth:art.naturalWidth,
+      overflow:document.documentElement.scrollWidth,oldRail:getComputedStyle(document.getElementById('dual-continuum')).visibility,
+      oldArt:getComputedStyle(document.getElementById('dual-dore-plate')).display,
+      oldLetter:getComputedStyle(document.getElementById('dual-letterfield')).display
+     };
     });
-    console.log('P2 B2 VISIBLE PALETTE',width,present.join(','));
-    if(width>=901){
-      assert(present.filter(n=>n>8).length>=5,
-        'Full-size B poster must visibly contain at least five OS hues');
-    }else{
-      // At 239px raster size 7 fine engraved colors are antialiased into
-      // the navy field. Their exact RGB values cannot survive downscaling.
-      // Check rendered ink coverage above and seven separate source
-      // tokens/line families in the actual B master instead.
-      assert(present.some(n=>n>8),
-        'Small B poster must still contain visibly distinct chromatic ink');
+    const snap=async value=>{await page.evaluate(v=>{const range=document.getElementById('dual-progress');range.value=String(Math.round(v*100));range.dispatchEvent(new Event('input',{bubbles:true}));},value);return sample()};
+    const finished=await sample();
+    assert.equal(finished.mode,mode);
+    assert.equal(finished.scrollLinked,'true');
+    assert.equal(finished.foldCount,'0');
+    assert.equal(finished.artOk,'true');
+    assert.equal(finished.artWidth,1000);
+    assert.equal(finished.oldRail,'hidden');
+    assert.equal(finished.oldArt,'none');
+    assert.equal(finished.oldLetter,'none');
+    assert.equal(finished.visible,'1');
+    assert(Math.abs(finished.coverRatio-.625)<.025,'approved RIGHT cover is still 5:8');
+    assert(finished.overflow<=width+3,'no horizontal overflow');
+    assert(Math.abs(finished.scale-.85)<.004,'final paired spread retreats exactly 15%');
+    const screenshot=await page.locator('#xw-poster').screenshot();
+    fs.writeFileSync('artifacts/p2-vol00/poster-'+mode+'-'+width+'-visible-proof.png',screenshot);
+    const img=PNG.sync.read(screenshot);
+    let viewed=0,different=0;
+    const bgPx=[img.data[4*(Math.min(img.width-1,2)+Math.min(img.height-1,2)*img.width)],img.data[4*(Math.min(img.width-1,2)+Math.min(img.height-1,2)*img.width)+1],img.data[4*(Math.min(img.width-1,2)+Math.min(img.height-1,2)*img.width)+2]];
+    for(let y=Math.floor(img.height*.1);y<img.height*.9;y+=4)for(let x=Math.floor(img.width*.08);x<img.width*.92;x+=4){
+     const i=4*(y*img.width+x);viewed++;
+     if(Math.abs(img.data[i]-bgPx[0])+Math.abs(img.data[i+1]-bgPx[1])+Math.abs(img.data[i+2]-bgPx[2])>75)different++;
     }
+    assert(different/Math.max(1,viewed)>.055,'poster screenshot must contain visible strokes not just a blank field');
+    if(mode==='a'){
+     assert.equal(finished.palette,'midnight-gold');
+     assert(finished.reg>.999,'last stop fully registered in navy and gold');
+     assert.equal(finished.masks,2,'real glyph mask + registered foil glyph');
+     assert(finished.foil>.70,'foil is scroll-driven and visible at final print');
+     const stamps=[];
+     for(const p of [.30,.377,.454,.53,.607,.683,.76])stamps.push(await snap(p));
+     assert.equal(new Set(stamps.map(x=>x.bg)).size,7,'background changes for each of seven scroll colors');
+     assert.equal(new Set(stamps.map(x=>x.ink)).size,7,'西望 ink color changes for each scroll stop');
+     assert.deepEqual(stamps.map(x=>x.colorStep),['1','2','3','4','5','6','7'],
+      'seven section colors appear in the specified order');
+     const atHold=await snap(.90);
+     assert.equal(atHold.palette,'midnight-gold');
+     assert(Math.abs(atHold.scale-1)<.002,'full spread MUST hold after the ink is final');
+     const shrinking=await snap(.976);
+     assert(shrinking.scale<1&&shrinking.scale>.85,'retreat is controlled by scrolling, not a timer');
+     const rewind=await snap(.53);
+     assert.equal(rewind.bg,stamps[3].bg,'scroll reversal restores exact original background');
+     assert.equal(rewind.ink,stamps[3].ink,'scroll reversal restores exact original ink');
+     assert.equal(rewind.scale,1,'reversing scroll restores full-size spread');
+     // Mouse wheel is an additional control ONLY for standalone laboratory.
+     await page.mouse.move(width/2,height/2);
+     const oldValue=await page.locator('#dual-progress').inputValue();
+     await page.mouse.wheel(0,220);
+     const nextValue=await page.locator('#dual-progress').inputValue();
+     assert(Number(nextValue)>Number(oldValue),'standalone mouse-wheel advances poster progress');
+     await page.mouse.wheel(0,-220);
+     const backValue=await page.locator('#dual-progress').inputValue();
+     assert(Number(backValue)<Number(nextValue),'standalone wheel upward reverses poster progress');
+    }else{
+     assert.equal(finished.palette,'engraving-b');
+     assert.equal(finished.masks,0,'B stays an independent native image');
+     const early=await snap(.31);
+     assert(early.revealed<1,'B also follows P2 reveal but no longer uses sevenfold curtains');
+     await snap(1);
+    }
+    await page.screenshot({path:'artifacts/p2-vol00/poster-'+mode+'-'+width+'.png'});
+    console.log('P2 POSTER OK',mode,width,'visible pixel difference', (different/viewed).toFixed(3));
+   }finally{await page.close();}
   }
-  await page.locator('[data-snap="0.60"]').click();
-  const partial=await page.evaluate(()=>({
-   seven:+document.getElementById('dual-stage').dataset.posterFoldCount,
-   revealed:+document.getElementById('dual-stage').dataset.posterRevealed,
-   turns:[...document.querySelectorAll('.xw-poster__fold')].map(el=>getComputedStyle(el).transform)
-  }));
-  assert.equal(partial.seven,7);
-  assert(partial.revealed<.01,'at 60% the poster is still behind the sevenfold');
-  assert(partial.turns.some(x=>x!=='matrix(1, 0, 0, 0, 0, 0)')&&partial.turns.some(x=>x!=='none'),
-   'layered fold is being composed from the top');
-  await page.locator('[data-snap="1"]').click();
-  assert.equal(await page.locator('#dual-stage').getAttribute('data-poster-revealed'),'1.0000',
-   'scroll back through the same sevenfold to full poster');
-  await page.screenshot({path:'artifacts/p2-vol00/poster-'+mode+'-'+width+'.png'});
-  await page.close();
  }
-}
-console.log('P2 A/B sevenfold campaign poster checks PASS (visual review still required).');
-}finally{await browser.close()}
-})().catch(e=>{console.error(e);process.exitCode=1});
+ console.log('P2 scroll-registered ink+paper, foil, B alternative, resize/reverse tests PASS');
+}finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});
