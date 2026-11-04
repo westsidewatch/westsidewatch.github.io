@@ -35,6 +35,7 @@
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
  -webkit-mask-position:center;mask-position:center;
  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ transform-origin:top left;transform:scale(var(--xw-mark-scale,1));
  pointer-events:none
 }
 /* A physical, matte metallic ink impression. The highlight is a static
@@ -48,16 +49,18 @@
 }
 .dual-stage[data-p2-poster="a"] .xw-poster__caption{
  position:absolute;z-index:6;left:9.1%;bottom:2.6%;
- display:flex;align-items:center;gap:clamp(7px,1.5cqi,14px);
- max-width:80%;white-space:nowrap;
- font:italic 400 clamp(10px,1.6cqi,14px)/1.3 var(--ws-type-display-en,Georgia,serif);
- letter-spacing:.015em;color:var(--ws-morning-gold,#d2bc69);
+ display:flex;justify-content:space-between;align-items:baseline;
+ width:81%;max-width:81%;white-space:nowrap;
+ border-top:1px solid color-mix(in srgb,var(--ws-morning-gold) 65%,transparent);
+ padding-top:clamp(5px,.9cqi,9px);
+ font:italic 200 clamp(10px,1.45cqi,13px)/1.3 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.035em;color:var(--ws-morning-gold,#d2bc69);
  opacity:var(--xw-caption-opacity,0);
  pointer-events:none
 }
-.dual-stage[data-p2-poster="a"] .xw-poster__caption::before{
- content:"";display:block;width:clamp(22px,6cqi,54px);height:1px;flex:none;
- background:currentColor;opacity:.80
+.dual-stage[data-p2-poster="a"] .xw-poster__citation{
+ font:200 clamp(7px,.9cqi,10px)/1.35 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.17em;font-style:normal;opacity:.82
 }
 @media (prefers-reduced-motion:reduce){
  .dual-stage[data-p2-poster] .xw-poster,
@@ -68,3 +71,89 @@
 }
 /* P2 03 Emmaus frontispiece (z:9) and 03–07 original components
  * intentionally remain outside the scope of this style sheet. */
+
+/* P2 A editorial handoff: after full-size scroll-printed poster, the
+ * SAME native 西望 glyph paths register as a compact corner masthead.
+ * The original twelve-desk Contents #dual-stone-contents is finally shown.
+ * Neither tile shrinks while Contents enters; the P2 outer spread handles
+ * that only after the Contents reading page is fully composed. */
+.dual-stage[data-p2-poster="a"] #dual-contents{
+ background:#f8f5ee;
+ box-shadow:1px 0 0 rgba(220,188,116,.48)
+}
+.dual-stage[data-p2-poster="a"] #dual-contents .xw-poster{
+ z-index:10;
+ background:color-mix(in srgb,var(--xw-poster-bg,#102a43) var(--xw-page-ink-opacity,100%),transparent)
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents{
+ display:block!important;z-index:9; 
+ background:#f8f5ee;
+ pointer-events:none
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents::before{content:none}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10{
+ background:#f8f5ee;
+ --p2x-paper:#f8f5ee
+}
+/* Reuse the existing Cereal/OS twelve-desk title, chapters, jumps,
+ * full-index reader and input; suppress only its old city-picture canvas,
+ * which competes with the RIGHT official cover in this poster handoff. */
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-gallery,
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-engraving{
+ display:none!important
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-paper{
+ inset:0!important;
+ display:flex;flex-direction:column;
+ padding:5% 7% 5%;
+ background:transparent;
+ min-height:0;min-width:0
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-tiny{
+ display:none
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header{
+ margin:1.4% 0 0 28%;
+ min-height:18%;
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header h2{
+ font-size:clamp(22px,5.8cqi,57px);
+ white-space:nowrap;overflow-wrap:normal;
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese{
+ margin-top:clamp(5px,.8cqi,8px)
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav{
+ flex:0 0 auto;margin:1.5% 0 2.8%;
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-stack{
+ flex:1 1 auto;min-height:0;overflow-y:auto;
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-footer{
+ flex:0 0 auto
+}
+@container (max-width:520px){
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-paper{
+  inset:0!important;padding:4.5% 6% 5%;display:flex;flex-direction:column;
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header{
+  position:relative;inset:auto;margin:1% 0 0 28%;min-height:17%;
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header h2{
+  font-size:clamp(19px,6.2cqi,34px)
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav{
+  position:relative;inset:auto;left:auto;right:auto;top:auto;bottom:auto;
+  flex:0 0 auto;margin:1.5% 0 3%;
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-stack{
+  position:relative;inset:auto;left:auto;right:auto;top:auto;bottom:auto;
+  flex:1 1 auto;min-height:0;margin:0;
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-footer{
+  position:relative;inset:auto;left:auto;right:auto;bottom:auto
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese span{
+  display:none
+ }
+}
