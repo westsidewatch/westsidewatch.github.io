@@ -109,7 +109,7 @@ try{
      assert.equal(finished.masks,2,'real glyph mask + registered foil glyph');
      assert(finished.foil>.70,'foil is scroll-driven and visible at final print');
      const stamps=[];
-     for(const p of [.30,.377,.454,.53,.607,.685,.76])stamps.push(await snap(p));
+     for(const p of [.30,.38,.46,.54,.62,.70,.76])stamps.push(await snap(p));
      assert.equal(new Set(stamps.map(x=>x.bg)).size,7,'background changes for each of seven scroll colors');
      assert.equal(new Set(stamps.map(x=>x.ink)).size,7,'西望 ink color changes for each scroll stop');
      assert.deepEqual(stamps.map(x=>x.colorStep),['1','2','3','4','5','6','7'],
@@ -119,7 +119,7 @@ try{
      assert(Math.abs(atHold.scale-1)<.002,'full spread MUST hold after the ink is final');
      const shrinking=await snap(.976);
      assert(shrinking.scale<1&&shrinking.scale>.85,'retreat is controlled by scrolling, not a timer');
-     const rewind=await snap(.53);
+     const rewind=await snap(.54);
      assert.equal(rewind.bg,stamps[3].bg,'scroll reversal restores exact original background');
      assert.equal(rewind.ink,stamps[3].ink,'scroll reversal restores exact original ink');
      assert.equal(rewind.scale,1,'reversing scroll restores full-size spread');
