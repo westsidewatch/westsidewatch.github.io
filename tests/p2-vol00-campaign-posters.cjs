@@ -254,6 +254,43 @@ try{
      hasRealEmmaus:!!document.querySelector('#emmaus')};
   });
   assert(continuity.hasRealEmmaus,'03 Emmaus must exist in the same scroll track');
+  // MERSI geometry gate: at three separate intermediate scroll positions,
+  // OLD Magazine Contents and NEW ONE paper must form a SINGLE straight
+  // crop edge, NOT semi-transparent overlapping words.
+  for(const d of [7.81,7.99,8.16]){
+   await connected.evaluate(distance=>{
+    const range=document.querySelector('#proof-seek');
+    range.value=String(distance/16.74*100);
+    range.dispatchEvent(new Event('input',{bubbles:true}));
+   },d);
+   await connected.waitForTimeout(90);
+   const wipe=await connected.evaluate(()=>{
+    const root=document.querySelector('#proof-original');
+    const mag=root?.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
+    const old=mag?.contentDocument?.getElementById('dual-contents');
+    const incoming=document.querySelector('#emmaus > .emmaus__left');
+    const pagePaper=incoming?.querySelector('.emmaus__binding-paper');
+    return {oldClip:old?.style.clipPath||'',newClip:incoming?.style.clipPath||'',
+      oldOpacity:old?+getComputedStyle(old).opacity:-1,
+      newOpacity:incoming?+getComputedStyle(incoming).opacity:-1,
+      paperOpacity:pagePaper?+getComputedStyle(pagePaper).opacity:-1};
+   });
+   const m1=wipe.oldClip.match(/inset\(0 ([\d.]+)% 0 0\)/);
+   const m2=wipe.newClip.match(/inset\(0 0 0 ([\d.]+)%\)/);
+   assert(m1&&m2,'both existing folios must own opposing clip masks at '+d);
+   assert(Math.abs(+m1[1]+ +m2[1]-100)<.11,'mask edges must meet exactly with no duplicated text');
+   assert.equal(wipe.newOpacity,1,'ONE page must be completely opaque within revealed bounds');
+   assert.equal(wipe.paperOpacity,1,'ONE binding paper may not separately fade');
+   assert.equal(wipe.oldOpacity,1,'old Magazine Contents must be completely opaque where still revealed');
+   await connected.screenshot({path:'artifacts/p2-vol00/mersi-handoff-'+d.toFixed(2)+'.png'});
+  }
+  await connected.locator('[data-jump="6.49"]').click();
+  await connected.waitForFunction(()=>{
+   const f=document.querySelector('#proof-original')?.contentDocument
+    ?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
+   const old=f?.contentDocument?.getElementById('dual-contents');
+   return old && !old.style.clipPath.startsWith('inset(');
+  },{timeout:15000});
   assert(!await connected.locator('.p2-emmaus-prologue').count(),'no extra text-only prologue');
   await connected.locator('[data-jump="6.49"]').click();
   await connected.waitForFunction(()=>document.body.dataset.proofScene==='02',{timeout:15000});
