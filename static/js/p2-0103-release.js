@@ -348,7 +348,7 @@
  const emCover=$('#em-entry-cover');let sourceStyleDoc=null;
  // The source magazine node stays in its original iframe throughout the handoff.
 
- let sourceOriginalTileOpacity=null,sourceOriginalTileClip='',sourceOriginalTilePointer='',sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
+ let sourceOriginalTileOpacity=null,sourceOriginalTileClip='',sourceOriginalTilePointer='',sourceOriginalTileZ='',sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
  let sourceOriginalCoverTransform='',sourceOriginalCoverOrigin='',sourceOriginalCoverBackface='';
  let sourceOriginalCoverZ='',magazineUnderlay=null,magazineUnderlayDoc=null,magazineUnderlayStyle=null;
  // The actual approved magazine cover stays in the original iframe; only
@@ -566,6 +566,7 @@
    sourceOriginalTileOpacity=sourceTile?.style.opacity??'';
    sourceOriginalTileClip=sourceTile?.style.clipPath??'';
    sourceOriginalTilePointer=sourceTile?.style.pointerEvents??'';
+    sourceOriginalTileZ=sourceTile?.style.zIndex??'';
    sourceOriginalCoverOpacity=sourceCover?.style.opacity??'';
    sourceOriginalCoverTransform=sourceCover?.style.transform??'';
    sourceOriginalCoverOrigin=sourceCover?.style.transformOrigin??'';
@@ -590,6 +591,9 @@
   }
   if(sourceTile){
    sourceTile.style.opacity=sourceOriginalTileOpacity??'';
+    // The native opaque Contents is the upper leaf: the full-size cover
+    // retreats BEHIND it, not through a 3D perspective spike.
+    sourceTile.style.zIndex=move>.001?'12':sourceOriginalTileZ;
    // Actual page swap, NOT opacity fading. No two sets of legible type
    // coexist in the same pixel, even at the midpoint of a slow wheel scrub.
    sourceTile.style.clipPath=oneDrop>.0001
@@ -607,18 +611,21 @@
     ensureMagazineUnderlay(sourceDoc,sourceCover);
     // The source Magazine cover itself, not an arriving green panel, is
     // the first page to turn. Preserve the 5:8 layout and its inner graphics.
-    const firstAngle=-172*smooth(move);
+    // Full 5:8 artwork, all paths preserved. Retreat into the actual
+    // book binding on the same page-plane; no 3D wedge, page cropping,
+    // distortion, cloned media or opacity-based crossfade.
+    const gap=Math.max(0,sourceCover.offsetLeft-
+      ((sourceTile?.offsetLeft??0)+(sourceTile?.offsetWidth??0)));
+    const travel=sourceCover.offsetWidth+gap+2;
     sourceCover.style.transformOrigin='left center';
-    sourceCover.style.transform='perspective(2800px) rotateY('+firstAngle.toFixed(2)+'deg)';
-    sourceCover.style.backfaceVisibility='visible';
-    sourceCover.style.transformStyle='preserve-3d';
-    sourceCover.classList.add('p2-emmaus-turning');
+    sourceCover.style.transform='translate3d('+(-travel*move).toFixed(2)+'px,0,0)';
+    sourceCover.style.backfaceVisibility='hidden';
+    sourceCover.style.removeProperty('transform-style');
+    sourceCover.classList.remove('p2-emmaus-turning');
     sourceCover.style.zIndex='11';
-    // Full page and uncut paper verso travel across the left folio.
-    // At the very end the verso dissolves, returning the existing Contents
-    // rather than introducing another empty interleaf.
-    sourceCover.style.opacity=String(1-smooth((move-.94)/.06));
+    sourceCover.style.opacity='1';
     sourceCover.style.visibility=move>.998?'hidden':'visible';
+    sourceCover.dataset.turnMode='bound-page-slide';
    }else{
     sourceCover.style.transform=sourceOriginalCoverTransform;
     sourceCover.style.transformOrigin=sourceOriginalCoverOrigin;
