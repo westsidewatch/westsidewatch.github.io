@@ -486,7 +486,7 @@ const data=()=> {
    await page.close();
   }
    const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
-   await reduced.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=14',{waitUntil:'domcontentloaded'});
+   await reduced.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=14&poster=legacy',{waitUntil:'domcontentloaded'});
    // Reduced motion stays on the first real artwork, without any timers.
    for(const p of [14,44,79,100]){
     await reduced.locator('#dual-progress').evaluate((slider,value)=>{
@@ -515,7 +515,7 @@ const data=()=> {
    const twelve=await browser.newPage({viewport:{width:1648,height:928},reducedMotion:'no-preference'});
    const twelveErrors=[];
    twelve.on('pageerror',e=>twelveErrors.push(e.message));
-   await twelve.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=100&side=cover-right&variant=10',
+   await twelve.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=100&side=cover-right&variant=10&poster=legacy',
     {waitUntil:'domcontentloaded',timeout:45000});
    await twelve.evaluate(()=>document.fonts.ready);
    await twelve.waitForFunction(()=>window.P2ContentsTwelve?.count===12,null,{timeout:16000});
