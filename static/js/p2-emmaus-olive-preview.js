@@ -403,7 +403,7 @@
        extension visible, and reveal the paper verso after edge-on. */
     .dual-stage:has(#dual-cover.p2-emmaus-turning),
     .dual-stage:has(#dual-cover.p2-emmaus-turning) .dual-panels{overflow:visible!important;transform-style:preserve-3d!important}
-    #dual-cover.p2-emmaus-turning{overflow:visible!important;transform-style:preserve-3d!important;background:transparent!important}
+    #dual-cover.p2-emmaus-turning{overflow:visible!important;clip-path:none!important;transform-style:preserve-3d!important;background:transparent!important}
     #dual-cover.p2-emmaus-turning>.dual-cover{backface-visibility:hidden!important;transform:translateZ(.5px)}
     #dual-cover.p2-emmaus-turning::after{content:'';position:absolute;inset:0;pointer-events:none;
       background:#f8f5ee;box-shadow:inset 0 0 0 1px rgba(166,137,83,.45),0 2px 9px rgba(22,35,43,.1);
