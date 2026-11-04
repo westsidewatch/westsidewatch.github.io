@@ -418,3 +418,11 @@ These files remain archived intact; they do not operate as independent OS author
 **執行路由正式入口：[《西望》Poster Toolchain — 實際工具執行規範](XIWANG-POSTER-TOOLCHAIN-EXECUTION.md)**。這不是新 OS 或 runtime；任何後續海報工作，在出稿之前須依任務選工具並記錄 `researched / available / executed / reviewed`，不可跳過字骨/刻線/版式工具直接把生成點陣圖宣稱為原生 SVG。**B 的七個 Design OS 語義色與七組正立字保留，不能因 mono-color 只有兩色印刷示例就改掉七層規格**。A 為單組原創西望巨字；B 為七組不同筆骨/刻線在同一版心交疊，不傾斜、線條只存在字內、不用七排色標／無故黑底／額外圖示。
 
 **本地工具入口：** `node scripts/xiwang/poster-toolchain.mjs plan a|b` 預檢是否找到本機需要的工具；`init a|b RECEIPT.json` 生成空白執行記錄；`verify RECEIPT.json` 阻擋未附原生 SVG、實際工具操作證據、完整尺寸截圖與人工藝術判斷的交付。它不會替使用者自動安裝/執行第三方 GUI 工具，亦不會修改 P2；通過紀錄檢查不等於設計必然獲獎。若工具在環境不可用，要明確標註並選實際可運行的替代，不能假裝調用。下一步才是在隔離 Draft 上以工具真的製作 A/B，不再重複純出圖。
+
+### 2026-11-03 / 不是再收藏工具：B 真實 SVG 印版生產已可重建，藝術仍未過關
+
+**實際工程成果與多輪判定：[《西望》B Poster Toolchain RUN](XIWANG-POSTER-TOOLCHAIN-RUN-20261103.md)**。已在本輪用 `fontTools` 輸出 licensed CJK glyph contours、`Shapely` 真正做字孔/線場交集、`SVGWrite` 匯出原生路徑，並由 Inkscape 1.4 完成 B4–B9（含隔離 B7）的向量渲染及 B7 四寬度 export。B7 第二次建置 SHA-256 完全一致，含 7 個 `data-word-layer`、1275 paths、0 `<image>`、0 rotate；運行工具與候選庫的「已閱讀但未使用」明確區分。
+
+**工程入口已從 `plan` 擴為實際 `build b`**：`node scripts/xiwang/poster-toolchain.mjs build b ./xiwang-poster-output`，調用 `scripts/xiwang/build-engraved-b.py`，需本機免費 Python build 依賴與明確的 OFL CJK 字型。生成器/隔離 [B7 SVG](../../static/experiments/xiwang-printplate-b7.svg) 和 [獨立預覽](../../static/experiments/xiwang-printplate-b7.html) 均不接管 P2 runtime；工具不可用即報錯，不能聲稱調用成功。
+
+**藝術否決仍有效：** B7 字骨還以 Noto CJK 輪廓為源，缺乏獨立原創結構及足夠強的七組套版構圖，不能以 CI/轉圖成功判定「獲獎級」。B4、B5、B6、B8、B9 及其失敗原因已回填 run log，禁止下輪又換色/換同一種線場當成新進展。Chromium local/localhost 被此環境的 administrator 封鎖，真 browser P2、zoom、反向滾動及右封面對開尚未驗收；Draft #1381 不應合併或替換正式海報。下輪先真正重建字骨與套版關係，再做完整對開藝術驗收。
