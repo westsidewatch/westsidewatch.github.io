@@ -18,8 +18,8 @@ assert(!/\.olive-proof|data-realm="sermon"|data-realm="cinema"|data-realm="book"
 assert.match(js,/const timelineMax=9\.34/,'release ends before Olive starts at 9.44');
 assert.match(html,/p2-0103-release\.css/);
 assert.match(html,/p2-0103-release\.js/);
-assert.match(vol,/coverIn=stableLargeA\?ease\(\(progress-\.04\)\/\.20\)/,'whole cover enters first');
-assert.match(vol,/posterIn=stableLargeA\?ease\(\(progress-\.28\)\/\.07\)/,'whole large poster follows');
+assert.match(vol,/coverIn=stableLargeA\?ease\(\(progress-\.04\)\/\.18\)/,'whole cover enters first');
+assert.match(vol,/posterIn=stableLargeA\?ease\(\(progress-\.22\)\/\.12\)/,'whole large poster follows');
 assert.match(poster,/const u=clamp\(\(p-\.36\)\/\.41\)\*6/,'seven inks only begin after folios are visible');
 assert.match(bridge,/magazine\.style\.background='transparent'/,'no early blank paper curtain');
 assert.match(bridge,/filmReveal=easing\(\(progress-\.97\)\/\.03\)/,'home video only revealed at final spread retreat');
