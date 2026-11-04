@@ -139,7 +139,7 @@ try{
      assert.equal(new Set(stamps.map(x=>x.ink)).size,7,'西望 ink color changes for each scroll stop');
      assert.deepEqual(stamps.map(x=>x.colorStep),['1','2','3','4','5','6','7'],
       'seven section colors appear in the specified order');
-     const goldHold=await snap(.84);
+     const goldHold=await snap(.85);
      assert.equal(goldHold.palette,'midnight-gold');
      assert(Math.abs(goldHold.markScale-1)<.002,'A poster stays monumental until Contents arrives');
      assert(Math.abs(goldHold.scale-1)<.002,'finished gold poster remains full-size');
