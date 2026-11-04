@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/css/westside-design-os.css">
 <link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261029g">
 <link rel="stylesheet" href="/css/p2-contents-twelve.css?v=20261028k">
-<link rel="stylesheet" href="/css/p2-vol00-poster.css?v=20261103-native-masters-v2">
+<link rel="stylesheet" href="/css/p2-vol00-poster.css?v=20261104-scroll-ink-v1">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -19,8 +19,9 @@
   <button type="button" data-snap="0.48">晨星顯現</button>
   <button type="button" data-snap="0.60">晨星升起</button>
   <button type="button" data-snap="0.69">西望鉛字</button>
-  <button type="button" data-snap="0.82">七重折疊入場</button>
-  <button type="button" data-snap="1">海報定格</button>
+  <button type="button" data-snap="0.58">七色滾動</button>
+  <button type="button" data-snap="0.90">藍金定格</button>
+  <button type="button" data-snap="1">雙頁縮小</button>
   <button type="button" data-postermode="a">A · 幾何字</button>
   <button type="button" data-postermode="b">B · 刻線字</button>
  </nav>
@@ -166,7 +167,7 @@
 <!-- Use the already published Doré Search canonical registry: no parallel asset table. -->
 <script src="/one/one-dore-cover-registry.js"></script>
 <script src="/one/one-dore-assets-241.js"></script>
-<script src="/js/p2-vol00-poster.js?v=20261104-approved-a"></script>
+<script src="/js/p2-vol00-poster.js?v=20261104-scroll-ink-v1"></script>
 <script>
 (function(){
  const stage=document.getElementById('dual-stage');
@@ -545,8 +546,8 @@
   // homepage film underneath. Do not create a second video / animation clock.
   // This is fully scroll-reversible through the existing parent P2 protocol.
   const pullBack=stage.dataset.p2Poster
-   ?(reduce?(progress>=.995?1:0):ease((progress-.91)/.085))
-   :0; // Preserve the opt-in historical ?poster=legacy proof untouched.
+   ?(reduce?(progress>=1?1:0):ease((progress-.945)/.055))
+   :0; // No shrink until both the official cover and final ink settle.
   const finalScale=1-.15*pullBack;
   if(posterSpread){
    posterSpread.style.transform='scale('+finalScale.toFixed(4)+')';
@@ -599,6 +600,18 @@
   });
  });
  range.addEventListener('input',()=>setProgress(Number(range.value)/100));
+ // Standalone laboratory: the same deterministic scroll value is driven
+ // directly by a wheel/trackpad for full-color forward/reverse inspection.
+ // Embedded P2 NEVER owns a wheel listener; it receives its parent's
+ // existing scroll-linked westside-p2-dual-progress messages.
+ if(!document.documentElement.classList.contains('dual-embed')){
+  stage.addEventListener('wheel',event=>{
+   if(event.ctrlKey||event.metaKey||!event.deltaY)return;
+   event.preventDefault();
+   const pixels=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?window.innerHeight:1);
+   setProgress(progress+pixels/2400);
+  },{passive:false});
+ }
  addEventListener('message',event=>{
   if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-dual-progress')return;
   progress=clamp(Number(event.data.progress)||0);
