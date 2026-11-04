@@ -85,7 +85,7 @@
  z-index:10;
  background:color-mix(in srgb,var(--xw-poster-bg,#102a43) var(--xw-page-ink-opacity,100%),transparent)
 }
-.dual-stage[data-p2-poster="a"] #dual-stone-contents{
+.dual-stage[data-p2-poster="a"] .dual-tile--contents #dual-stone-contents{
  display:block!important;z-index:9; 
  background:#f8f5ee;
  pointer-events:none
