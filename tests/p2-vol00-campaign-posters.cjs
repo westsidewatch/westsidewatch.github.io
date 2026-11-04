@@ -38,8 +38,12 @@ assert.match(css,/xw-poster__glyph--foil/,'final print has stable metallic foil'
 assert.match(poster,/var\(--ws-morning-gold/,'final ink uses OS dawn-gold');
 assert.match(poster,/var\(--ws-night/,'final background uses OS midnight navy');
 assert.match(poster,/Watch for the Dawn/,'minimal editorial slogan remains');
-assert.match(html,/ease\(\(progress-\.945\)\/\.055\)/,
- 'spread must wait for finalized ink, then retreat as a single plane');
+assert.match(html,/ease\(\(progress-\.965\)\/\.035\)/,
+ 'A spread shrinks only after the actual Contents has completed its entrance');
+assert.match(html,/ease\(\(progress-\.86\)\/\.085\)/,
+ 'original Contents enters AFTER the poster is finalized');
+assert.match(css,/display:block!important;z-index:9/,
+ 'A reinstates the original 12-desk Contents instead of force hiding it');
 assert.match(html,/posterSpread\.style\.transform='scale\('/,'no separate shrinking of cover or poster');
 assert.doesNotMatch(css,/@keyframes/,'no autonomous flashing and no neon timer');
 assert.match(poster,/xiwang-poster-b-v2\.svg/,'B remains a separately authored native SVG');
@@ -75,6 +79,13 @@ try{
       visible:getComputedStyle(p).opacity,
       artOk:p.dataset.assetReady,artWidth:art.naturalWidth,
       overflow:document.documentElement.scrollWidth,oldRail:getComputedStyle(document.getElementById('dual-continuum')).visibility,
+      contentsDisplay:getComputedStyle(document.getElementById('dual-stone-contents')).display,
+      contentsOpacity:+getComputedStyle(document.getElementById('dual-stone-contents')).opacity,
+      contentsInert:document.getElementById('dual-stone-contents').inert,
+      contentsCount:window.P2ContentsTwelve?.count||0,
+      markScale:+p.style.getPropertyValue('--xw-mark-scale')||1,
+      posterContents:+stage.dataset.posterContents||0,
+      gutter:width>820?rect(cover).left-rect(tile).right:rect(cover).top-rect(tile).bottom,
       oldArt:getComputedStyle(document.getElementById('dual-dore-plate')).display,
       oldLetter:getComputedStyle(document.getElementById('dual-letterfield')).display
      };
@@ -92,8 +103,13 @@ try{
     assert.equal(finished.visible,'1');
     assert(Math.abs(finished.coverRatio-.625)<.025,'approved RIGHT cover is still 5:8');
     assert(finished.overflow<=width+3,'no horizontal overflow');
+    assert(finished.gutter>5,'poster and official cover must be separated by a visible folio gutter');
     assert(Math.abs(finished.scale-.85)<.004,'final paired spread retreats exactly 15%');
+    // Test glyph ink from the true full-size printed poster BEFORE the
+    // accepted handoff; final p=100 is deliberately an editorial index.
+    if(mode==='a')await page.locator('[data-snap="0.845"]').click();
     const screenshot=await page.locator('#xw-poster').screenshot();
+    if(mode==='a')await page.locator('[data-snap="1"]').click();
     fs.writeFileSync('artifacts/p2-vol00/poster-'+mode+'-'+width+'-visible-proof.png',screenshot);
     const img=PNG.sync.read(screenshot);
     let viewed=0,different=0;
@@ -108,21 +124,39 @@ try{
      assert(finished.reg>.999,'last stop fully registered in navy and gold');
      assert.equal(finished.masks,2,'real glyph mask + registered foil glyph');
      assert(finished.foil>.70,'foil is scroll-driven and visible at final print');
+     assert.equal(finished.contentsDisplay,'block','the original Contents really appears');
+     assert(finished.contentsOpacity>.99,'the final Contents is visibly composited');
+     assert.equal(finished.contentsInert,false,'the final Contents is keyboard-accessible');
+     assert.equal(finished.contentsCount,12,'the original twelve editorial desks are preserved');
+     assert(Math.abs(finished.markScale-.23)<.02,'original Xi Wang SVG glyph becomes a small masthead');
+     assert(finished.posterContents>.99,'poster-to-Contents handoff completed');
      const stamps=[];
      for(const p of [.30,.38,.46,.54,.62,.70,.76])stamps.push(await snap(p));
      assert.equal(new Set(stamps.map(x=>x.bg)).size,7,'background changes for each of seven scroll colors');
      assert.equal(new Set(stamps.map(x=>x.ink)).size,7,'西望 ink color changes for each scroll stop');
      assert.deepEqual(stamps.map(x=>x.colorStep),['1','2','3','4','5','6','7'],
       'seven section colors appear in the specified order');
+     const goldHold=await snap(.84);
+     assert.equal(goldHold.palette,'midnight-gold');
+     assert(Math.abs(goldHold.markScale-1)<.002,'A poster stays monumental until Contents arrives');
+     assert(Math.abs(goldHold.scale-1)<.002,'finished gold poster remains full-size');
      const atHold=await snap(.90);
      assert.equal(atHold.palette,'midnight-gold');
-     assert(Math.abs(atHold.scale-1)<.002,'full spread MUST hold after the ink is final');
+     assert(atHold.markScale<1&&atHold.markScale>.23,'original gold glyph begins shrinking INTO Contents');
+     assert(atHold.contentsOpacity>0&&atHold.contentsOpacity<1,'the existing index enters gradually');
+     assert(Math.abs(atHold.scale-1)<.002,'two-page spread MUST NOT shrink during Contents arrival');
+     const contentsHold=await snap(.95);
+     assert(contentsHold.contentsOpacity>.99,'Contents is fully present before spread shrink');
+     assert(Math.abs(contentsHold.markScale-.23)<.02,'Xi Wang has settled in editorial corner');
+     assert(Math.abs(contentsHold.scale-1)<.002,'complete Contents+cover must rest before retreat');
      const shrinking=await snap(.976);
      assert(shrinking.scale<1&&shrinking.scale>.85,'retreat is controlled by scrolling, not a timer');
      const rewind=await snap(.54);
      assert.equal(rewind.bg,stamps[3].bg,'scroll reversal restores exact original background');
      assert.equal(rewind.ink,stamps[3].ink,'scroll reversal restores exact original ink');
      assert.equal(rewind.scale,1,'reversing scroll restores full-size spread');
+     assert.equal(rewind.markScale,1,'reverse-scroll restores the monumental lettering');
+     assert(rewind.contentsOpacity<.01,'reverse-scroll removes the contents without stale overlay');
      // Mouse wheel is an additional control ONLY for standalone laboratory.
      await page.mouse.move(width/2,height/2);
      const oldValue=await page.locator('#dual-progress').inputValue();
