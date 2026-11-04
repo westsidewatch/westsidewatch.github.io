@@ -133,6 +133,29 @@ try{
      assert.equal(finished.contentsCount,12,'the original twelve editorial desks are preserved');
      assert(Math.abs(finished.markScale-.23)<.02,'original Xi Wang SVG glyph becomes a small masthead');
      assert(finished.posterContents>.99,'poster-to-Contents handoff completed');
+     const editorial=await page.evaluate(()=>{
+      const root=document.querySelector('#dual-stone-contents .p2x--10');
+      const head=root?.querySelector('.p2x-cereal-header h2');
+      const grid=root?.querySelector('.p2x-cereal-stack');
+      const groups=[...(root?.querySelectorAll('.p2x-cereal-movement')||[])];
+      const works=root?.querySelector('.p2x-works');
+      return {heading:head?.textContent,headingSize:head?parseFloat(getComputedStyle(head).fontSize):0,
+       display:grid?getComputedStyle(grid).display:'',groupCount:groups.length,
+       indexCount:root?.querySelectorAll('.p2x-entry').length,
+       workFont:works?parseFloat(getComputedStyle(works).fontSize):0,
+       readerButton:!!root?.querySelector('.p2x-cereal-expand'),
+       gridHeight:grid?.clientHeight,scrollHeight:grid?.scrollHeight};
+     });
+     assert.equal(editorial.heading,'Contents.','Contents headline remains editable HTML');
+     assert(editorial.headingSize>=(width>820?39:22),'large English title must establish editorial hierarchy');
+     assert.equal(editorial.groupCount,4,'four original movements remain');
+     assert.equal(editorial.indexCount,12,'all twelve desks remain DOM text');
+     assert(editorial.workFont>=10,'article copy cannot be smaller than legible reading size');
+     assert(editorial.readerButton,'full index remains accessible');
+     assert.equal(editorial.display,width>820?'grid':'flex','desktop two-column; mobile single-column editorial reading');
+     await snap(.95);
+     await page.screenshot({path:'artifacts/p2-vol00/contents-redesign-'+width+'.png'});
+     console.log('Contents editorial QA',width,JSON.stringify(editorial));
      const stamps=[];
      for(const p of [.26,.35,.44,.53,.61,.70,.77])stamps.push(await snap(p));
      assert.equal(new Set(stamps.map(x=>x.bg)).size,7,'background changes for each of seven scroll colors');
@@ -186,6 +209,29 @@ try{
    }finally{await page.close();}
   }
  }
- console.log('P2 scroll-registered ink+paper, foil, B alternative, resize/reverse tests PASS');
+ // Reuse the existing ONE 66-book / Emmaus scene in the same scroll stage
+ // after Magazine Contents, rather than a new mock page.
+ const connected=await browser.newPage({viewport:{width:1648,height:928}});
+ try{
+  await connected.goto('http://127.0.0.1:4173/experiments/p2-emmaus-olive-handoff-lab.html?d=6.50&five=1',
+   {waitUntil:'domcontentloaded',timeout:45000});
+  await connected.waitForFunction(()=>window.ONE_DATA?.books?.length===66,{timeout:20000});
+  const continuity=await connected.evaluate(()=>{
+   const base=document.querySelector('#proof-original');
+   const mag=base?.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
+   return {hasOriginalMagazine:!!mag,magazineSource:mag?.getAttribute('src')||'',
+     hasRealEmmaus:!!document.querySelector('#emmaus')};
+  });
+  assert(continuity.hasRealEmmaus,'03 Emmaus must exist in the same scroll track');
+  await connected.locator('[data-jump="9.10"]').click();
+  await connected.waitForFunction(()=>document.body.dataset.proofScene==='03' &&
+   getComputedStyle(document.querySelector('#emmaus')).visibility==='visible',{timeout:15000});
+  assert(await connected.locator('#em-book-en').count(),'real ONE book selector is present');
+  await connected.screenshot({path:'artifacts/p2-vol00/p2-emmaus-03.png'});
+  await connected.locator('[data-jump="6.50"]').click();
+  await connected.waitForFunction(()=>document.body.dataset.proofScene==='02',{timeout:15000});
+  console.log('P2 CONTINUOUS 02→03→02 PASS',JSON.stringify(continuity));
+ }finally{await connected.close();}
+ console.log('P2 ink+paper, readable Contents, live Emmaus 02→03, reverse-scroll and final retreat tests PASS');
 }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
