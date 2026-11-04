@@ -355,3 +355,9 @@
   font-size:clamp(11px,3.2cqi,13px);
  }
 }
+
+/* A four-movement editorial register: one gold rule marks the active
+ * chapter without turning all four movement headings into decorative gold. */
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement[data-active-section="true"]{
+ border-top-color:#b58a47
+}
