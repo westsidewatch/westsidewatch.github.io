@@ -106,6 +106,10 @@
    // Use exactly the SAME approved gold glyph paths, shrinking only when
    // Contents begins. The poster PAGE never shrinks at this moment.
    panel.style.setProperty('--xw-mark-scale',(1-.77*contents).toFixed(5));
+   // Register the miniature's visible ink with the REAL 5.8% left
+   // editorial margin. The approved full-size A remains at x=0; only
+   // the fully settled Contents identity gains an optical 2.2% inset.
+   panel.style.setProperty('--xw-mark-inset',(2.2*contents).toFixed(3)+'%');
    panel.style.setProperty('--xw-page-ink-opacity',((1-contents)*100).toFixed(2)+'%');
    panel.style.setProperty('--xw-caption-opacity',(final*(1-contents)).toFixed(4));
    panel.dataset.palette=colorStops[from].name;
