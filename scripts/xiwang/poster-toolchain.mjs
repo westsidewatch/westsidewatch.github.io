@@ -114,12 +114,12 @@ function verify(file) {
 function build(v, dir) {
   if (v !== 'B') throw new Error('A build is NOT available: requires original hand-built glyphs. No fallback to rejected A2');
   const destination = resolve(dir || 'xiwang-poster-output');
-  const py = spawnSync('python3', [join(root, 'scripts/xiwang/build-engraved-b.py'), '--outdir', destination, '--version', 'v7'], { cwd:root, encoding:'utf8', env:process.env, timeout:120000, maxBuffer:8*1024*1024 });
+  const py = spawnSync('python3', [join(root, 'scripts/xiwang/build-engraved-b-v11.py'), '--outdir', destination, '--version', 'v11'], { cwd:root, encoding:'utf8', env:process.env, timeout:120000, maxBuffer:8*1024*1024 });
   if (py.error || py.status !== 0) throw new Error('Actual Python SVG build failed: ' + String(py.stderr || py.error?.message || py.stdout));
-  const svg = join(destination, 'xiwang-poster-b-v7.svg');
+  const svg = join(destination, 'xiwang-poster-b-v11.svg');
   if (!existsSync(svg)) throw new Error('Generator did not create native SVG: '+svg);
   console.log(String(py.stdout).trim());
-  const png = join(destination, 'xiwang-poster-b-v7.png');
+  const png = join(destination, 'xiwang-poster-b-v11.png');
   const ink = spawnSync('inkscape', [svg, '--export-width=1000', '--export-filename='+png], {cwd:root,encoding:'utf8',timeout:60000,maxBuffer:8*1024*1024});
   if (ink.error || ink.status !== 0 || !existsSync(png)) {
     console.warn('Inkscape preview unavailable; SVG is valid output but browser/visual QA is still required. ' + String(ink.stderr || ink.error?.message || ''));
