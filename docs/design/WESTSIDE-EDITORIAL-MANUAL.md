@@ -456,3 +456,15 @@ These files remain archived intact; they do not operate as independent OS author
 **已在 Draft 隔離 P2 實作：** `static/experiments/p2-double-square-video-lab.html` 使用原本的 `progress`，在 `p=.91..995` 用 smoothstep 將 `.dual-panels`（左海報＋右封面）整組從 `scale(1)` 收到 `scale(.85)`，不移動單頁相對位置；只在原本 poster/cover 均到位後動作。輸出 `data-poster-pullback`、`data-poster-spread-scale` 以利捲動斷點與 QA。這是 scene-owned transform，不改原有右封面 SVG、Church / Emmaus、sevenfold 或 P2 parent video。**真正瀏覽器畫面及 320/390/768/1648、反向滾動尚待實測驗收。**
 
 **藝術評價：**七色可在開場擔任七重折疊的印版角色，但**不採用七色持續閃爍的霓虹海報**。原因：會破壞 A 巨字／紙底的明晰度、干擾右封面金色城牆和經文，並造成閃爍/可及性風險。若後續探索，僅可隔離 A/B 比較一輪極短、不重複的七色印版校準；不改正式 A 的深夜藍定格，也不能加入快速閃頻或持續光變。
+
+### 2026-11-04 / P2 A Poster：七種字色＋背景同受「滾動」控制（最新決策，覆蓋七重折疊入場）
+
+**本輪使用者明確要求的是 scroll-scrubbing，不是 auto-playing / time-driven flashing：** P2 02 Magazine 左側 A 海報的**字色和底色**都必須依循同一個可逆 `progress`（來自既有 P2 父頁滑鼠滾輪／觸控板捲動，`westside-p2-dual-progress` 同源訊息）前進或倒退；不可新建 RAF、setInterval、CSS keyframes 或第二套 wheel timeline。獨立 `p2-double-square-video-lab.html` 可在非 embed 模式由 wheel/trackpad 直接 scrub，用來驗證，嵌入式頁面不得自行攔截父頁滾動。
+
+**新色彩段（可逆）**：`p .30–.76` 是七個原有 Design OS 語義色（活水、Magazine、Emmaus、Olive、Bookshop、Cinema、Cafe）的依序印版配色；字形主墨色依版塊色與深夜藍混合，**同時**左側紙／底色按對應語義色調和，不做外加的七張純色遮幕。`p .77–.8555` 收斂到正式 **午夜藍底 `--ws-night` + 黎明金 `--ws-morning-gold`「西望」**，以原本 A 字形雙 path 的透明 `mask` 與極克制的**靜態箔紋漸層**做燙金質感，沒有光效 timer；下方只以極細金線＋小型 *Watch for the Dawn* 補充編輯留白。七個色彩帶不是同時閃爍，也不是換掉 A 原本字形。原 A 深藍紙底 SVG 是 fallback / 舊母本保留，不把 mask 假稱原生新筆段。
+
+**完整定格才縮小**：原兩頁已達到 5:8 封面＋1:1 左海報的對開布局，`p .8555–.945` 為藍金海報與右封面的完成狀態／捲動停留區；`p .945–1` 才使 `.dual-panels` 整組從 `scale(1)` 收至 `.85`，露出既有首頁影片。捲動倒退時整組放大並把字色與底色逐步倒帶，沒有另造影片、七色霓虹或外部進場素材。
+
+**工程 owner（Draft PR #1381）**：`static/js/p2-vol00-poster.js`（純 `paint(progress)`、七色路由及墨紙混色）；`static/css/p2-vol00-poster.css`（遮罩、薄箔、slogan）；`static/images/xiwang-poster-a-glyph-mask.svg`（從已批准的 A 雙 path 提取**透明字形**）；`static/experiments/p2-double-square-video-lab.html`（parent progress + standalone wheel scrub / 完成後才縮小）。`poster=b` 保留 B 原圖作對照，不繼承已取消的七重遮幕；原 Church、以馬忤斯、右封面、Homepage 原七重折疊和已存在的影片播放器不改。
+
+**進度/驗收區分：** 靜態核對通過（所有七色 token 有定義、mask 只有兩個 glyph path 沒有底色矩形、JS 語法和父頁進度綁定、無七重遮幕）。真 P2 Chrome/Safari 視覺、字形金箔渲染、1648/768/390/320、200% zoom、上下滾動和 reduced-motion 必須在最新 Cloudflare Preview 完成，**不能以程式核對取代藝術驗收**。
