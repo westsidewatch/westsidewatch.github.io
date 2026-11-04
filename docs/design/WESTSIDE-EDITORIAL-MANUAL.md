@@ -542,3 +542,12 @@ These files remain archived intact; they do not operate as independent OS author
 **縮小之後的霓虹慢變色，是另一個不同的功能：** 舊方案把七色擠進 `p .944–1` 最後 5.6% 的輪控區間，快速滑鼠滑動會看起來像閃爍。新方案在小刊名**完全落定**後才啟動約 **32 秒／一輪** 的七色平滑變化，單色過渡約 4 秒，僅使用 OS 真正的七色 token 與輕微固定邊緣光，不做瞬間亮滅，也不讓字形位置動。使用者向上滾回大海報時，微型霓虹立即停用，完整尺寸 A 仍只接受原來的可逆 scroll progress；`prefers-reduced-motion` 下禁用色彩循環並停在金色。這一特例**不得**重新導入大海報的自動播放或破壞其七色+背景滑鼠控制邏輯。
 
 **回歸測試**必須比較七個色站與金箔定格的左方形 `getBoundingClientRect()` 寬、高、座標及 `clipPath='none'`，不能只比較七種顏色的數值。還要驗證巨字從來沒有 `animation`，縮小到 Contents 前無另一套計時器；小角標完成後才有約 32 秒動畫，反向滑動恢復無動畫。保留 P2 Draft #1381，未有新 Chromium 視覺證據之前不能稱藝術驗收通過。
+
+
+### 2026-11-04 / Contents 西望小刊名：回到全頁共同的左版心
+
+**使用者新截圖指出小「西望」距左頁邊界過近。** 這不是要移動整張 A 巨型海報，而是 `p .88–.95` 巨字縮成角標之後，它的**可見筆畫**左邊緣應與 Contents 的頁面主排版左邊界對齊。實際 Contents 四篇章與 Roman register 的共同左版心為 `p2x-cereal-paper` 的 5.8% padding；原小刊名字骨在縮放到 23% 後的可見筆畫僅距左邊約 4%，形成無理由的出血感。
+
+**工程修正：** Approved A 兩條原生字骨 path 不改，巨字滾動／七色／藍金定稿不改。從 `p .88` Contents 進場開始，只對小字 SVG mask 的實際 `transform` 加入隨 Contents 展開、從 `0%` 漸到 `2.2%` 的相對位移，完成時字骨光學起筆約落在 5.8–6.2% 的共同版心附近；小字大小（0.23）、文字層級與 32 秒七色慢變都保持。CSS 以 `translateX(var(--xw-mark-inset)) scale(var(--xw-mark-scale))` 同時套於主字／燙金箔層，確保縮放與七色過程中兩層不錯位。這不是再加動畫時鐘、不是對整個版面或右側封面 `transform`。
+
+**驗收規則：** 在桌面 1648、手機 390 及放大字級下，`p=.85` 的全尺寸字形 inset=0；`p=1` 的小字 inset=2.2%，可視 ink 左側對齊內頁六分之一以下的小型 margin register；`Contents.`、`WESTSIDE WATCH / INDEX`、`VOL.00` 仍沿共同垂直基準，避免刊名漂移到其他欄。反向捲動字骨回到原位，不可影響 approved A。修改仍只在 Draft PR #1381，未合併主站。
