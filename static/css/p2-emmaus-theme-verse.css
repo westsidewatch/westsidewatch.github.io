@@ -48,8 +48,10 @@
  padding:0!important;
  border:0!important;
  color:#cebd74!important;
+ /* Design OS: Scripture is true Chinese reading text (Chiron 400);
+    editorial metadata is Chiron 200; Latin reference is true Bodoni Italic. */
  font-family:var(--ws-type-reading-zh)!important;
- font-weight:400!important;
+ font-weight:var(--ws-weight-zh-standard,400)!important;
  font-size:clamp(17px,1.4vw,21px)!important;
  line-height:1.58!important;
  letter-spacing:0!important;
@@ -112,4 +114,20 @@
  font-synthesis:inherit!important;
  white-space:nowrap!important;
  display:inline!important;
+}
+
+/* Scoped ONE botanical book cover, never the WESTSIDE WATCH city cover. */
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf)
+ .emmaus__entry-scripture-primary .emmaus__entry-scripture-ref [lang="en"]{
+ font-family:var(--ws-type-display-en,Georgia,serif)!important;
+ font-style:italic!important;font-weight:400!important;
+ font-size:clamp(10px,.85vw,13px)!important;
+ letter-spacing:0!important;font-synthesis:none!important
+}
+:is(#emmaus .emmaus__entry-cover, #p2-emmaus-magazine-underleaf)
+ .emmaus__entry-scripture-primary .emmaus__entry-scripture-ref [lang="zh-Hant"]{
+ font-family:var(--ws-type-display-zh,sans-serif)!important;
+ font-style:normal!important;font-weight:var(--ws-weight-zh-air,200)!important;
+ font-size:clamp(10px,.82vw,12px)!important;
+ letter-spacing:.02em!important;font-synthesis:none!important
 }
