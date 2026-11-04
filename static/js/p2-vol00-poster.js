@@ -105,11 +105,17 @@
    stage.dataset.posterBigStable=p<.88?'true':'contents-handoff';
    // Use exactly the SAME approved gold glyph paths, shrinking only when
    // Contents begins. The poster PAGE never shrinks at this moment.
-   panel.style.setProperty('--xw-mark-scale',(1-.77*contents).toFixed(5));
-   // Register the miniature's visible ink with the REAL 5.8% left
-   // editorial margin. The approved full-size A remains at x=0; only
-   // the fully settled Contents identity gains an optical 2.2% inset.
-   panel.style.setProperty('--xw-mark-inset',(2.2*contents).toFixed(3)+'%');
+   // A book-like editorial masthead: 21% ink scale (not the giant A).
+   // It is visually registered to the first index rule, with the logo
+   // optically starting near the tiny WESTSIDE WATCH / INDEX headline.
+   panel.style.setProperty('--xw-mark-scale',(1-.79*contents).toFixed(5));
+   // The approved original A keeps exact x/y/scale through its seven
+   // full-size scroll colors. Only as Contents arrives, register the
+   // MINIATURE visible ink with the common opening/roman-index line.
+   // These percentages refer to the native 1:1 page (not the glyph
+   // pixel bounds), and are reversible with the same parent progress.
+   panel.style.setProperty('--xw-mark-inset',(6.4*contents).toFixed(3)+'%');
+   panel.style.setProperty('--xw-mark-drop',(3.0*contents).toFixed(3)+'%');
    panel.style.setProperty('--xw-page-ink-opacity',((1-contents)*100).toFixed(2)+'%');
    panel.style.setProperty('--xw-caption-opacity',(final*(1-contents)).toFixed(4));
    panel.dataset.palette=colorStops[from].name;
