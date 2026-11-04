@@ -544,7 +544,9 @@
   // complete SPREAD retreat as one plane, revealing the already-playing
   // homepage film underneath. Do not create a second video / animation clock.
   // This is fully scroll-reversible through the existing parent P2 protocol.
-  const pullBack=reduce?(progress>=.995?1:0):ease((progress-.91)/.085);
+  const pullBack=stage.dataset.p2Poster
+   ?(reduce?(progress>=.995?1:0):ease((progress-.91)/.085))
+   :0; // Preserve the opt-in historical ?poster=legacy proof untouched.
   const finalScale=1-.15*pullBack;
   if(posterSpread){
    posterSpread.style.transform='scale('+finalScale.toFixed(4)+')';
