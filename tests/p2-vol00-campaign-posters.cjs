@@ -228,7 +228,7 @@ try{
    getComputedStyle(document.querySelector('#emmaus')).visibility==='visible',{timeout:15000});
   assert(await connected.locator('#em-book-en').count(),'real ONE book selector is present');
   await connected.screenshot({path:'artifacts/p2-vol00/p2-emmaus-03.png'});
-  await connected.locator('[data-jump="6.46"]').click();
+  await connected.locator('[data-jump="6.49"]').click();
   await connected.waitForFunction(()=>document.body.dataset.proofScene==='02',{timeout:15000});
   console.log('P2 CONTINUOUS 02→03→02 PASS',JSON.stringify(continuity));
  }finally{await connected.close();}
