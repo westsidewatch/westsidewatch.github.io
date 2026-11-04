@@ -9,8 +9,12 @@
 }
 .dual-stage[data-p2-poster] .dual-tile--contents .dual-dore-plate,
 .dual-stage[data-p2-poster] .dual-tile--contents .dual-letterfield,
-.dual-stage[data-p2-poster] .dual-tile--contents .dual-cover__star,
-.dual-stage[data-p2-poster] .dual-tile--contents #dual-stone-contents{
+.dual-stage[data-p2-poster] .dual-tile--contents .dual-cover__star{
+ display:none!important;opacity:0!important;pointer-events:none!important
+}
+/* The alternate B experiment does not enter the Contents handoff; the
+ * production A does, so its real Contents visibility stays scroll-owned. */
+.dual-stage[data-p2-poster="b"] .dual-tile--contents #dual-stone-contents{
  display:none!important;opacity:0!important;pointer-events:none!important
 }
 .dual-stage[data-p2-poster] #dual-contents{
