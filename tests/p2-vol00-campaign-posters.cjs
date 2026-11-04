@@ -56,7 +56,8 @@ assert.match(html,/ease\(\(progress-\.88\)\/\.07\)/,
 assert.match(css,/display:block!important;z-index:9/,
  'A reinstates the original 12-desk Contents instead of force hiding it');
 assert.match(html,/posterSpread\.style\.transform='scale\('/,'no separate shrinking of cover or poster');
-assert.doesNotMatch(css,/@keyframes/,'no autonomous flashing and no neon timer');
+assert.match(css,/@keyframes xw-corner-slow-neon/,'the only new timed color loop belongs to the small editorial wordmark');
+assert.doesNotMatch(poster,/setInterval|requestAnimationFrame/,'monumental scroll-printed art cannot have its own timer');
 assert.match(poster,/xiwang-poster-b-v2\.svg/,'B remains a separately authored native SVG');
 assert.equal((masterB.match(/data-poster-word="[1-7]"/g)||[]).length,7,
  'B still contains seven independently authored word groups');
@@ -194,7 +195,7 @@ try{
      // Colors must travel; the approved glyph/page geometry must NOT.
      for(const state of stamps){
       assert.equal(state.bigStable,'true');
-      assert.equal(state.clip,'none','no second parent wipe above A's printed ink');
+      assert.equal(state.clip,'none','no second parent wipe above the giant printed ink');
       assert(Math.abs(state.tileSize[0]-state.tileSize[1])<2,'each color keeps full square');
       assert(Math.abs(state.tileSize[0]-stamps[0].tileSize[0])<1,
        'huge letterforms cannot resize while the scroll palette changes');
