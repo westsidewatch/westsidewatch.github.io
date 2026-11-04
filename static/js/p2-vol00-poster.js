@@ -75,7 +75,7 @@
  const ink=token=>'color-mix(in oklab, var('+token+') 73%, var(--ws-night))';
  function paint(progress){
   const p=clamp(progress);
-  const reveal=mode==='a'?ease((p-.19)/.07):ease((p-.23)/.115);
+  const reveal=mode==='a'?1:ease((p-.23)/.115);
   panel.style.opacity=String(reveal);
   if(mode==='a'){
    // Longer color print travel: the same parent wheel progress (26–77%).
