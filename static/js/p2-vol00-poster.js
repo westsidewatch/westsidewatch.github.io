@@ -61,7 +61,7 @@
   }else panel.dataset.maskFallback='original-approved-svg';
   const caption=document.createElement('span');
   caption.className='xw-poster__caption';
-  caption.textContent='Watch for the Dawn';
+  caption.innerHTML='<span class="xw-poster__slogan">Watch for the Dawn</span><span class="xw-poster__citation">ROMANS 13:12</span>';
   caption.setAttribute('aria-hidden','true');
   panel.append(caption);
  }
@@ -78,21 +78,27 @@
   const reveal=ease((p-.23)/.115);
   panel.style.opacity=String(reveal);
   if(mode==='a'){
-   // Seven ink+paper stations occupy scroll 30%–76% independently of time.
-   // 77%–85.5% is final print registration; 85.5%–95.5% is an actual
-   // completed two-page hold; only afterward may the parent shrink the spread.
-   const u=clamp((p-.30)/.46)*6;
+   // Longer color print travel: the same parent wheel progress (26–77%).
+   // Final foil registers by 84.5%; the full-size poster remains until
+   // CONTENTS comes forward (86–94.5%); only the finished Contents spread
+   // may retreat to reveal the EXISTING homepage film.
+   const u=clamp((p-.26)/.51)*6;
    const from=Math.min(6,Math.floor(u));
    const to=Math.min(6,from+1);
    const segment=ease(u-from);
    const inkBase=mix(ink(colorStops[from].token),ink(colorStops[to].token),segment);
    const paperBase=mix(paper(colorStops[from].token),paper(colorStops[to].token),segment);
-   const final=ease((p-.77)/.0855);
+   const final=ease((p-.77)/.075);
+   const contents=ease((p-.86)/.085);
    const gold='var(--ws-morning-gold, #d2bc69)';
    panel.style.setProperty('--xw-ink',mix(inkBase,gold,final));
    panel.style.setProperty('--xw-poster-bg',mix(paperBase,'var(--ws-night,#102a43)',final));
    panel.style.setProperty('--xw-foil-opacity',(.72*final).toFixed(4));
-   panel.style.setProperty('--xw-caption-opacity',final.toFixed(4));
+   // Use exactly the SAME approved gold glyph paths, shrinking only when
+   // Contents begins. The poster PAGE never shrinks at this moment.
+   panel.style.setProperty('--xw-mark-scale',(1-.77*contents).toFixed(5));
+   panel.style.setProperty('--xw-page-ink-opacity',((1-contents)*100).toFixed(2)+'%');
+   panel.style.setProperty('--xw-caption-opacity',(final*(1-contents)).toFixed(4));
    panel.dataset.palette=colorStops[from].name;
    panel.dataset.paletteFrom=String(from+1);
    panel.dataset.paletteTo=String(to+1);
@@ -101,6 +107,8 @@
    stage.dataset.posterPalette=final>=.9999?'midnight-gold':colorStops[from].name;
    stage.dataset.posterRegistration=final.toFixed(4);
    stage.dataset.posterColorStep=String(from+1);
+   stage.dataset.posterContents=contents.toFixed(4);
+   panel.dataset.posterState=contents>=.999?'contents':final>=.999?'gold-printed':'ink-travel';
   }else{
    panel.style.removeProperty('--xw-ink');
    panel.style.removeProperty('--xw-poster-bg');
