@@ -12,6 +12,14 @@
 - **SVG 技術**：[SVG Exploration List](SVG-EXPLORATION-LIST.md)：SVG.js、SVGO、Motion、Flubber、Chrome repaint／性能基線。純 SVG 可直接進 P2，沒有必要複製另一個運行框架。
 - **圖形字骨研究**：[A 多輪製字探索](P2-XIWANG-A-MULTIROUND-DORE-EXPLORATION-20261103.md)、[A/B 開源工具對照](P2-XIWANG-A-B-OPEN-SOURCE-CODE-EXPLORATION-20261103.md)：KAGE Editor、Kumiko、FANGCUN、Graphite、Inkscape、skia-pathops、penfill 等仍按最新的「全新字骨＋疊合刻線」藝術規範研究；不因新 poster tool 看起來強大，就推翻原創字形要求。
 
+## 1A. Mono-color Editorial Print — 編輯海報 Skill（2026-11-03 新增）
+
+**[yanliudesign/mono-color-skill](https://github.com/yanliudesign/mono-color-skill)**（上游標示 v1.2.0；[SKILL.md](https://github.com/yanliudesign/mono-color-skill/blob/main/SKILL.md)；軟體／Skill MIT，**examples 圖片另見 [ASSET-LICENSE.md](https://github.com/yanliudesign/mono-color-skill/blob/main/ASSET-LICENSE.md)**，不可直接複製）是一套單色及受控雙油墨的編輯圖像生成方法，不是可直接產生七組漢字刻線的 native SVG 程式。
+
+**收錄理由：** A/B 的主視覺需先建立「一個視覺事件」與有功能的留白；其 25–55% 空白、紙張非無故泛黃、主/輔印版明確分工、避免貼圖/濾鏡/密集設計的規則很適合先矯正過度繁複的《西望》B。**衝突裁決：** B 的七組字與七種 Design OS 原版塊色屬人工明定高優先規格；不得直接套該 Skill 的「最多兩色」條款改成兩組字或取消七個色彩層。可借節制與主次，不照搬整套色板或範例圖。
+
+**由研究改為使用：** 已增設 [海報工具鏈實際執行規範](XIWANG-POSTER-TOOLCHAIN-EXECUTION.md) 與 `scripts/xiwang/poster-toolchain.mjs`（`plan / init / verify`）。之後須區分 researched、available、executed、reviewed；生成點陣圖不能當作已使用開源字骨或 SVG 刻線工具的證據。執行工具與真實輸出要留下紀錄，受 Design OS 單一權威管理。
+
 ## 2. 第一輪新增：可重複輸出完整海報的開源引擎
 
 | 資源／原始碼 | 經核對能力、授權與限制 | 對《西望》取捨 |
