@@ -518,3 +518,16 @@ These files remain archived intact; they do not operate as independent OS author
 **不再有「經上所指」過渡頁。** `p2-emmaus-prologue` 的插入函數及其內嵌 CSS/文字完全刪除；一旦右封面翻至 ONE，直接進入綠布書頁→多雷插圖→ONE 經文與 66 卷，原 `03→04` 功能不改。縮短第一翻、第二翻及研讀頁進場前的無效停留，保持父頁 scroll-scrub 與反向回捲。
 
 **工程檢查與限制：** 改動限 Draft PR #1381 的 `static/css/p2-vol00-poster.css`、`static/css/p2-emmaus-theme-verse.css`、`static/js/p2-emmaus-olive-preview.js` 及 preview 引用、`tests/p2-vol00-campaign-posters.cjs`。檢查桌面與手機角標無壓印、最後一組目錄實際到頁下部、逐章可讀、02→03→02 經文不可跨封面、完整背面和無文字空頁；**程式/CI 合格不等於藝術完成**，需要真實 Cloudflare Chromium 截圖再作藝術驗收。封面、教會、ONE 正文資料與主站不合併不重寫。
+
+
+### 2026-11-04 / MERSI 式 Contents→ONE 版面交接＋七色縮小刊名；封面經文極細（最新指令）
+
+**使用者真實截圖（06:54）反證：** 03 經文頁與 02 Contents 同時半透明，會把兩套正文重疊在同一版心；這不是「雜誌化」，也不是 MERSI 的滾動印版動效。**本節覆蓋上節的封面經文採標準 400 的舊規格**。以馬忤斯**綠布封面**的路加福音 24:27 全句按使用者最新指定改為**極細 Chiron Air / `--ws-weight-zh-air:200`**，末尾 `ws-editorial-no-orphan-tail` 仍精確繼承。中文出處維持 200，英文出處保持 Bodoni Moda true italic 400；這是**封面詩句特殊字重**，不影響 ONE 聖經逐節正文的標準閱讀字重，也不把 Luke 24:27 放到 02 藍金城門封面。
+
+**真正的 MERSI 動效參考：** [FLOT NOIR / Codrops — Between Print and Digital: The Making of MERSI’s Website](https://tympanus.net/codrops/2026/07/27/between-print-and-digital-the-making-of-mersis-website/)。該案例同步控制兩欄內容，`clip-path: inset(...)` 從相反方向展示，不用互相疊加的 opacity。研究與實作應借「**相同一個滾動進度；成對的幾何遮罩；文字不透明；可回捲**」機制，無需導入其 Webflow／GSAP／Taxi 技術棧。實作位置是連續 P2 02→03 舊 Contents 左頁 `sourceTile` 與真正 ONE `emLeft`：`oneDrop` 進度內，目錄從右向左被遮罩退出（`inset(0, p×100%,0,0)`），ONE 經文頁從書脊即左頁的右側向左揭示（`inset(0,0,0,(1−p)×100%)`）；兩頁均保持**完全不透明**、實際同一矩形，沒有兩套可讀的文字重疊。原地恢復 source Contents 的 clip／pointer state，回滾必須完全倒帶；不加自動 timer，不讓過場更動右頁多雷插圖或頁面骨架。
+
+**Contents 左上縮小「西望」七色：** A 的原 SVG 雙字路徑仍是唯一字形母本；海報停在午夜藍底／黎明金燙金大字之後（`p≤.941` 不改），縮至 Contents 左上小型刊名後，僅**小刊名**用現有七個 OS 色彩 `--ws-water / first-light / pale-gold / olive / harvest / crimson / daylight-mauve` 隨既有 02 頁內 `p .944–1` 正反捲動逐次過版。入色時靜態 gold foil opacity 隨之退掉，否則金箔會蓋住七色；背景紙、右側 5:8 官方封面、Contents 四個篇章與全文閱讀入口完全不變。它不是自動閃燈、不可使用 CSS keyframes 或自己的 wheel/RAF。小字被 ONE 新頁遮罩替換後不應在其他版塊憑空出現新圖。
+
+**owner：** `static/js/p2-emmaus-olive-preview.js` 管理對向遮罩（替換此前 `emLeft.style.opacity=oneDrop`）；`static/js/p2-vol00-poster.js` 只對小刊名輸出七色 `--xw-ink` / `data-poster-corner-palette`；`static/css/p2-emmaus-theme-verse.css` 在**封面 quote 限定 selector**採 200，不動 ONE 內頁經文；`tests/p2-vol00-campaign-posters.cjs` 檢查七色可回捲、MERSI 相向遮罩及封面字重。以上維持 P2 Draft PR #1381，不合併主站。
+
+**未經完整驗收不得宣稱定稿：** Chromium 實際連續滾輪關鍵幀（Contents 100%、遮罩 25/50/75%、ONE 100%、逆回 Contents）、手機寬度及增大字級、左右書脊 1px 分界、七色彩墨能否被清楚辨識均須視覺檢查。工具/CI/光學通過和獲獎標準是不同的 gate。
