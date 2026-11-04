@@ -531,3 +531,14 @@ These files remain archived intact; they do not operate as independent OS author
 **owner：** `static/js/p2-emmaus-olive-preview.js` 管理對向遮罩（替換此前 `emLeft.style.opacity=oneDrop`）；`static/js/p2-vol00-poster.js` 只對小刊名輸出七色 `--xw-ink` / `data-poster-corner-palette`；`static/css/p2-emmaus-theme-verse.css` 在**封面 quote 限定 selector**採 200，不動 ONE 內頁經文；`tests/p2-vol00-campaign-posters.cjs` 檢查七色可回捲、MERSI 相向遮罩及封面字重。以上維持 P2 Draft PR #1381，不合併主站。
 
 **未經完整驗收不得宣稱定稿：** Chromium 實際連續滾輪關鍵幀（Contents 100%、遮罩 25/50/75%、ONE 100%、逆回 Contents）、手機寬度及增大字級、左右書脊 1px 分界、七色彩墨能否被清楚辨識均須視覺檢查。工具/CI/光學通過和獲獎標準是不同的 gate。
+
+
+### 2026-11-04 / 緊急校正：大「西望」海報動效，不是縮小角標
+
+**用戶最新糾正：**「不是縮小的動效有問題，是大西望動效出現了嚴重的問題。」診斷顯示 02 的父頁 `static/experiments/p2-double-square-video-lab.html` 雖已移除彩色七片遮幕，卻仍對 A 版用舊 `fold=ease((progress-.755)/.105)` 同時重算 `contentsW`、`contentsX`、`contentsH` 和右封面位置；又對整個 A 左頁使用 `gold.style.clipPath='inset(...)'`。結果是在七種印版墨色變化途中整張巨字海報發生尺寸/位置變形並被二次裁切，**不是原本批准的「同一張海報僅隨滾動更換字色與背景」**。這一診斷有確切程式路徑，目視的具體失常程度仍應由新截圖驗證。
+
+**永久約束：** A 巨字於 `p 0–.88` 必須站在穩定的 1:1 左頁正方形；右 5:8 官方封面保留固定相對邊距；七種配色只更改同一 approved A glyph mask 和紙底，絕不挪動、扭曲、重算縮放字骨，也絕不套用舊七片版心變形/整頁 clip curtain。原 `fold` 在 02 A 路線永遠等於 1，其餘 legacy/B 路線可繼續保留舊引擎以便對照。**縮小到 Contents 角標**仍由獨立的 `p .88–.95` 動作完成，不得提前觸發。全對開縮小只在 Contents 完成之後的 `p .97–1` 發生。
+
+**縮小之後的霓虹慢變色，是另一個不同的功能：** 舊方案把七色擠進 `p .944–1` 最後 5.6% 的輪控區間，快速滑鼠滑動會看起來像閃爍。新方案在小刊名**完全落定**後才啟動約 **32 秒／一輪** 的七色平滑變化，單色過渡約 4 秒，僅使用 OS 真正的七色 token 與輕微固定邊緣光，不做瞬間亮滅，也不讓字形位置動。使用者向上滾回大海報時，微型霓虹立即停用，完整尺寸 A 仍只接受原來的可逆 scroll progress；`prefers-reduced-motion` 下禁用色彩循環並停在金色。這一特例**不得**重新導入大海報的自動播放或破壞其七色+背景滑鼠控制邏輯。
+
+**回歸測試**必須比較七個色站與金箔定格的左方形 `getBoundingClientRect()` 寬、高、座標及 `clipPath='none'`，不能只比較七種顏色的數值。還要驗證巨字從來沒有 `animation`，縮小到 Contents 前無另一套計時器；小角標完成後才有約 32 秒動畫，反向滑動恢復無動畫。保留 P2 Draft #1381，未有新 Chromium 視覺證據之前不能稱藝術驗收通過。
