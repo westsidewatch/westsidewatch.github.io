@@ -82,7 +82,7 @@
    // Final foil registers by 84.5%; the full-size poster remains until
    // CONTENTS comes forward (88–95%); only the finished Contents spread
    // may retreat to reveal the EXISTING homepage film.
-   const u=clamp((p-.26)/.51)*6;
+   const u=clamp((p-.36)/.41)*6;
    const from=Math.min(6,Math.floor(u));
    const to=Math.min(6,from+1);
    const segment=ease(u-from);
