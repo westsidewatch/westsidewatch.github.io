@@ -374,7 +374,7 @@
  chooseSpeaker(0);
  // The source magazine node stays in its original iframe throughout the handoff.
  let transferFigure=null,transferHome=null,transferOriginalVisibility=null;
- let sourceOriginalTileOpacity=null,sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
+ let sourceOriginalTileOpacity=null,sourceOriginalTileClip='',sourceOriginalTilePointer='',sourceOriginalCoverOpacity=null,sourceOriginalEditorialOpacity=null;
  let sourceOriginalCoverTransform='',sourceOriginalCoverOrigin='',sourceOriginalCoverBackface='';
  let sourceOriginalCoverZ='',magazineUnderlay=null,magazineUnderlayDoc=null,magazineUnderlayStyle=null;
  // The actual approved magazine cover stays in the original iframe; only
@@ -545,7 +545,12 @@
   emmaus.setAttribute('aria-hidden',emInteractive?'false':'true');
   // Let the left engraving stay entirely untouched while both right-page
   // turns play; the ONE paper itself replaces it only in the final short beat.
-  emLeft.style.opacity=String(oneDrop);
+  // MERSI-inspired print-page handoff: both full pages remain SOLID.
+  // A scroll-linked opposing clip reveal replaces crossfade/ghosting.
+  // The incoming ONE paper grows from the bound (right) edge; the old
+  // Magazine Contents withdraws by the exact same distance.
+  emLeft.style.opacity=oneDrop>.0001?'1':'0';
+  emLeft.style.visibility=oneDrop>.0001?'visible':'hidden';
   emLeft.style.setProperty('--em-page-reveal',String(oneDrop));
   // The actual native Magazine cover must sit ABOVE its new green underleaf
   // for turn one. P2's right gallery only takes over at the settled green beat.
@@ -612,6 +617,8 @@
   if(sourceDoc&&sourceStyleDoc!==sourceDoc){
    sourceStyleDoc=sourceDoc;
    sourceOriginalTileOpacity=sourceTile?.style.opacity??'';
+   sourceOriginalTileClip=sourceTile?.style.clipPath??'';
+   sourceOriginalTilePointer=sourceTile?.style.pointerEvents??'';
    sourceOriginalCoverOpacity=sourceCover?.style.opacity??'';
    sourceOriginalCoverTransform=sourceCover?.style.transform??'';
    sourceOriginalCoverOrigin=sourceCover?.style.transformOrigin??'';
@@ -634,7 +641,16 @@
    intro.style.visibility=introAlpha>.001?'visible':'hidden';
    intro.setAttribute('aria-hidden',introAlpha>.5?'false':'true');
   }
-  if(sourceTile)sourceTile.style.opacity=sourceOriginalTileOpacity??'';
+  if(sourceTile){
+   sourceTile.style.opacity=sourceOriginalTileOpacity??'';
+   // Actual page swap, NOT opacity fading. No two sets of legible type
+   // coexist in the same pixel, even at the midpoint of a slow wheel scrub.
+   sourceTile.style.clipPath=oneDrop>.0001
+     ?'inset(0 '+(oneDrop*100).toFixed(3)+'% 0 0)'
+     :sourceOriginalTileClip;
+   sourceTile.style.pointerEvents=oneDrop>.01?'none':sourceOriginalTilePointer;
+   sourceTile.dataset.p2ContentsWipe=oneDrop.toFixed(4);
+  }
   if(sourceCover){
    // Restore the Magazine's OWN composition without changing its transform.
    // The front ONE folio turns on a separate fixed-size overlay, never
@@ -816,7 +832,8 @@
   // Chapter text and artwork keep their positions within the Magazine spread.
   poseRect(emLeft,fullLeft,fullLeft,1);
   // Full-size destination remains opaque: no old Contents behind the transfer.
-  emLeft.style.clipPath='none';
+  emLeft.style.clipPath=oneDrop>=.9999?'none':
+   'inset(0 0 0 '+((1-oneDrop)*100).toFixed(3)+'%)';
   poseRect(emRight,fullRight,fullRight,1);
   emRight.style.clipPath='none';
   syncGallery(move>.98&&oliveIn<.001&&document.visibilityState==='visible');
@@ -848,7 +865,8 @@
   poseRect(emLeft,fullLeft,fullLeft,1);
   emLeft.style.width=fullLeft.w.toFixed(2)+'px';
   // Full-size destination remains opaque: no old Contents behind the transfer.
-  emLeft.style.clipPath='none';
+  emLeft.style.clipPath=oneDrop>=.9999?'none':
+   'inset(0 0 0 '+((1-oneDrop)*100).toFixed(3)+'%)';
   poseRect(emRight,fullRight,fullRight,1);
   emRight.style.clipPath='none';
   // Hold an opaque original-gallery matte over the old magazine cover.
