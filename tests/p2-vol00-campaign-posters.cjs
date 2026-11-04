@@ -102,6 +102,9 @@ try{
       contentsInert:document.getElementById('dual-stone-contents').inert,
       contentsCount:window.P2ContentsTwelve?.count||0,
       markScale:+p.style.getPropertyValue('--xw-mark-scale')||1,
+      markInset:parseFloat(p.style.getPropertyValue('--xw-mark-inset'))||0,
+      markGlyphLeft:p.querySelector('.xw-poster__glyph')?.getBoundingClientRect().left||0,
+      markGlyphTransform:p.querySelector('.xw-poster__glyph')?getComputedStyle(p.querySelector('.xw-poster__glyph')).transform:'none',
       posterContents:+stage.dataset.posterContents||0,
       gutter:innerWidth>820?rect(cover).left-rect(tile).right:rect(cover).top-rect(tile).bottom,
       mastWidthRatio:rect(cover.querySelector('.dual-cover__mast')).width/rect(cover).width,
@@ -153,6 +156,10 @@ try{
      assert.equal(finished.contentsInert,false,'the final Contents is keyboard-accessible');
      assert.equal(finished.contentsCount,12,'the original twelve editorial desks are preserved');
      assert(Math.abs(finished.markScale-.23)<.02,'original Xi Wang SVG glyph becomes a small masthead');
+     assert(Math.abs(finished.markInset-2.2)<.01,'mini Xi Wang gains a reserved 2.2% optical gutter');
+     assert(Math.abs(finished.markGlyphLeft-(finished.tilePos[0]+finished.tileSize[0]*.022))<2,
+       'compact glyph is positioned at the actual page margin, not the left bleed');
+     assert.equal(finished.markGlyphTransform==='none',false,'compact identity is genuinely repositioned in its composed transform');
      assert(finished.posterContents>.99,'poster-to-Contents handoff completed');
      const editorial=await page.evaluate(()=>{
       const root=document.querySelector('#dual-stone-contents .p2x--10');
@@ -195,6 +202,7 @@ try{
      // Colors must travel; the approved glyph/page geometry must NOT.
      for(const state of stamps){
       assert.equal(state.bigStable,'true');
+      assert(Math.abs(state.markInset)<.001,'full-size seven-color A cannot inherit the miniature offset');
       assert.equal(state.clip,'none','no second parent wipe above the giant printed ink');
       assert(Math.abs(state.tileSize[0]-state.tileSize[1])<2,'each color keeps full square');
       assert(Math.abs(state.tileSize[0]-stamps[0].tileSize[0])<1,
@@ -208,6 +216,7 @@ try{
      assert(goldHold.foil>.70,'full size approved gold has static foil impression');
      assert.equal(goldHold.cornerPalette,'gold','before the logo shrinks it stays in approved gold');
      assert(Math.abs(goldHold.markScale-1)<.002,'A poster stays monumental until Contents arrives');
+     assert(Math.abs(goldHold.markInset)<.001,'monumental approved A art must keep its original optical placement');
      assert.equal(goldHold.bigStable,'true');
      assert.equal(goldHold.cornerAnimation,'none','no neon or timed animation on giant Westside Watch poster');
      assert.equal(goldHold.clip,'none','historical full-sheet curtain may not amputate the giant glyph');
