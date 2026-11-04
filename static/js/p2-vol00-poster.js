@@ -97,7 +97,18 @@
    // The small mark may cycle slowly ONLY after Contents fully settles.
    const miniReady=contents>=.9999;
    panel.style.setProperty('--xw-ink',mix(inkBase,gold,final));
-   panel.style.setProperty('--xw-poster-bg',mix(paperBase,'var(--ws-night,#102a43)',final));
+   // Match the entire Magazine field to the seven native paper colors.
+   // The poster is glyph-only until its real Contents page comes forward.
+   const fieldPaper=mix(paperBase,'var(--ws-night,#102a43)',final);
+   panel.style.setProperty('--xw-poster-bg',fieldPaper);
+   stage.style.setProperty('--xw-poster-bg',fieldPaper);
+   // One parent-owned reversible scroll clock. Uncover the home film only
+   // after Contents completes and the whole spread retreats (97–100%).
+   const fieldEnter=ease((p-.01)/.07);
+   const fieldRetreat=ease((p-.97)/.03);
+   const fieldOpacity=fieldEnter*(1-fieldRetreat);
+   stage.style.setProperty('--xw-field-opacity',fieldOpacity.toFixed(5));
+   stage.dataset.posterField=fieldOpacity.toFixed(5);
    panel.style.setProperty('--xw-foil-opacity',(.72*final*(1-contents)).toFixed(4));
    panel.dataset.cornerPalette=miniReady?'slow-neon':'gold';
    stage.dataset.posterCornerPalette=panel.dataset.cornerPalette;
