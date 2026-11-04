@@ -69,7 +69,7 @@
   magazine.style.pointerEvents=progress>=.995?'auto':'none';
   magazine.inert=progress<.995;
   magazine.setAttribute('aria-hidden',progress>=.995?'false':'true');
-  magazine.dataset.magazineStage=progress<.28?'whole-cover-right-entry':
+  magazine.dataset.magazineStage=progress<.22?'whole-cover-right-entry':
    progress<.36?'whole-xiwang-left-entry':
    progress<.77?'seven-color-printing':
    progress<.88?'night-blue-gold-hold':
