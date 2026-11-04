@@ -75,12 +75,12 @@
  const ink=token=>'color-mix(in oklab, var('+token+') 73%, var(--ws-night))';
  function paint(progress){
   const p=clamp(progress);
-  const reveal=ease((p-.23)/.115);
+  const reveal=mode==='a'?ease((p-.19)/.07):ease((p-.23)/.115);
   panel.style.opacity=String(reveal);
   if(mode==='a'){
    // Longer color print travel: the same parent wheel progress (26–77%).
    // Final foil registers by 84.5%; the full-size poster remains until
-   // CONTENTS comes forward (86–94.5%); only the finished Contents spread
+   // CONTENTS comes forward (88–95%); only the finished Contents spread
    // may retreat to reveal the EXISTING homepage film.
    const u=clamp((p-.26)/.51)*6;
    const from=Math.min(6,Math.floor(u));
@@ -89,7 +89,7 @@
    const inkBase=mix(ink(colorStops[from].token),ink(colorStops[to].token),segment);
    const paperBase=mix(paper(colorStops[from].token),paper(colorStops[to].token),segment);
    const final=ease((p-.77)/.075);
-   const contents=ease((p-.86)/.085);
+   const contents=ease((p-.88)/.07);
    const gold='var(--ws-morning-gold, #d2bc69)';
    panel.style.setProperty('--xw-ink',mix(inkBase,gold,final));
    panel.style.setProperty('--xw-poster-bg',mix(paperBase,'var(--ws-night,#102a43)',final));
