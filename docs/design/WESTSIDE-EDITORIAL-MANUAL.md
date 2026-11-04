@@ -68,6 +68,7 @@ Load only the skills needed for the present defect. Imported Skills are **inspir
 | Usability and accessibility | `ui.interaction-quality`, `ui.accessibility` | Reading order, focus/keyboard, contrast and small-screen test |
 | Final polish and release | `ui.critique`, `ui.visual-verification` | Severity-tagged review and before/after screenshots |
 | Variant exploration | `variant` / `prototype` / pairwise Taste Memory | A/B comparison on **one meaningful axis**, including rejection reason |
+| **Poster production (A/B)** | **[《西望》Poster Toolchain](XIWANG-POSTER-TOOLCHAIN-EXECUTION.md)**: mono-color art direction → original glyph tools → path/engraving tools → native SVG → real browser QA | **Tool execution receipt** with actual input/output, tool availability, vector source, screenshots and acceptance; research alone is not execution |
 
 This incorporates UI Skills explorations R1–R4: route the minimum capability, test motion separately from motion authoring, deliberately break at edge states, compare against the current version, and record contextual outcomes and uncertainty. Do not generate cosmetic alternatives solely to accumulate screenshots; do not compress all user tastes into one global score.
 
@@ -408,3 +409,12 @@ These files remain archived intact; they do not operate as independent OS author
 - [Camera and Attention Grammar](../../dore-design/DORE-EXPLORATION-CAMERA-ATTENTION-GRAMMAR-2026-09-09.md)
 
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
+
+
+### 2026-11-03 / 新增 mono-color-skill；海報工具必須實際調用，不再只研究
+
+**已收錄：[yanliudesign/mono-color-skill — Monocolor Editorial Print](https://github.com/yanliudesign/mono-color-skill)**（上游 README v1.2.0；[SKILL.md](https://github.com/yanliudesign/mono-color-skill/blob/main/SKILL.md)；[LICENSE](https://github.com/yanliudesign/mono-color-skill/blob/main/LICENSE)；[ASSET-LICENSE.md](https://github.com/yanliudesign/mono-color-skill/blob/main/ASSET-LICENSE.md)）。該 Skill 的一/雙油墨角色、25–55% 結構性留白、單一視覺主題、不自動做舊及印刷主次，列為《西望》A/B 海報的**藝術方向方法**，不是現成的 CJK SVG 刻線生成器。軟體及 Skill 指令採 MIT，但 `examples/` 作品和第三方參照圖不涵蓋在 MIT 之內，不能直接挪用為本站圖稿。
+
+**執行路由正式入口：[《西望》Poster Toolchain — 實際工具執行規範](XIWANG-POSTER-TOOLCHAIN-EXECUTION.md)**。這不是新 OS 或 runtime；任何後續海報工作，在出稿之前須依任務選工具並記錄 `researched / available / executed / reviewed`，不可跳過字骨/刻線/版式工具直接把生成點陣圖宣稱為原生 SVG。**B 的七個 Design OS 語義色與七組正立字保留，不能因 mono-color 只有兩色印刷示例就改掉七層規格**。A 為單組原創西望巨字；B 為七組不同筆骨/刻線在同一版心交疊，不傾斜、線條只存在字內、不用七排色標／無故黑底／額外圖示。
+
+**本地工具入口：** `node scripts/xiwang/poster-toolchain.mjs plan a|b` 預檢是否找到本機需要的工具；`init a|b RECEIPT.json` 生成空白執行記錄；`verify RECEIPT.json` 阻擋未附原生 SVG、實際工具操作證據、完整尺寸截圖與人工藝術判斷的交付。它不會替使用者自動安裝/執行第三方 GUI 工具，亦不會修改 P2；通過紀錄檢查不等於設計必然獲獎。若工具在環境不可用，要明確標註並選實際可運行的替代，不能假裝調用。下一步才是在隔離 Draft 上以工具真的製作 A/B，不再重複純出圖。
