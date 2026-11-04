@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/css/westside-design-os.css">
 <link rel="stylesheet" href="/css/p2-vol00-editorial.css?v=vol00-editorial-20261029g">
 <link rel="stylesheet" href="/css/p2-contents-twelve.css?v=20261028k">
-<link rel="stylesheet" href="/css/p2-vol00-poster.css?v=20261104-scroll-ink-v1">
+<link rel="stylesheet" href="/css/p2-vol00-poster.css?v=20261104-contents-handoff-v2">
 </head>
 <body data-ws-scope="journal">
 <header class="dual-ui">
@@ -20,7 +20,9 @@
   <button type="button" data-snap="0.60">晨星升起</button>
   <button type="button" data-snap="0.69">西望鉛字</button>
   <button type="button" data-snap="0.58">七色滾動</button>
-  <button type="button" data-snap="0.90">藍金定格</button>
+  <button type="button" data-snap="0.845">藍金定格</button>
+  <button type="button" data-snap="0.90">Contents 進場</button>
+  <button type="button" data-snap="0.95">Contents 定格</button>
   <button type="button" data-snap="1">雙頁縮小</button>
   <button type="button" data-postermode="a">A · 幾何字</button>
   <button type="button" data-postermode="b">B · 刻線字</button>
@@ -167,7 +169,7 @@
 <!-- Use the already published Doré Search canonical registry: no parallel asset table. -->
 <script src="/one/one-dore-cover-registry.js"></script>
 <script src="/one/one-dore-assets-241.js"></script>
-<script src="/js/p2-vol00-poster.js?v=20261104-scroll-ink-v1"></script>
+<script src="/js/p2-vol00-poster.js?v=20261104-contents-handoff-v2"></script>
 <script>
 (function(){
  const stage=document.getElementById('dual-stage');
@@ -380,12 +382,14 @@
   // square Contents. The narrow functional folio is vertical, flush with
   // the LEFT EDGE of Contents, not a third horizontal page below.
   const fold=reduce?(progress>=.56?1:0):ease((progress-.755)/.105);
+  const posterLayout=!!stage.dataset.p2Poster;
   let coverW,coverH,contentsW,contentsH,coverX,coverY,contentsX,contentsY,railX,railY,railW;
   const coverOnLeft=coverLeft;
   if(!mobile){
     const mx=Math.max(16,W*.06),my=Math.max(18,H*.053);
     const side=Math.max(0,Math.min((W-2*mx)/(1.625+.035),H-2*my));
-    const edge=Math.max(18,Math.min(28,side*.035))*fold;
+    const edge=(posterLayout?Math.max(14,Math.min(24,side*.026)):
+     Math.max(18,Math.min(28,side*.035)))*fold;
     coverW=lerp(W/2,side*5/8,fold);
     contentsW=lerp(W/2,side,fold);
     coverH=contentsH=lerp(H,side,fold);
@@ -393,23 +397,28 @@
     const spreadX=(W-spreadW)/2,spreadY=(H-coverH)/2;
     if(coverOnLeft){
       coverX=spreadX;railX=coverX+coverW;contentsX=railX+edge;
+    }else if(posterLayout){
+      // The retired book-spine margin sat OUTSIDE the poster: move the
+      // dark editorial gutter BETWEEN it and the protected right cover.
+      contentsX=spreadX;railX=contentsX+contentsW;coverX=railX+edge;
     }else{
       railX=spreadX;contentsX=railX+edge;coverX=contentsX+contentsW;
     }
     coverY=contentsY=spreadY;railY=contentsY;railW=edge;
   }else{
     const mx=Math.max(7,W*.025),my=6;
-    const side=Math.max(0,Math.min((W-2*mx)/1.05,(H-2*my)/2.6));
+    const side=Math.max(0,Math.min((W-2*mx)/1.05,(H-2*my)/(posterLayout?2.69:2.6)));
     const edge=Math.max(13,Math.min(20,side*.05))*fold;
     coverW=contentsW=lerp(W,side,fold);
     coverH=lerp(H/2,side*8/5,fold);
     contentsH=lerp(H/2,side,fold);
-    const stackY=(H-coverH-contentsH)/2;
+    const stackY=(H-coverH-contentsH-(posterLayout?edge:0))/2;
     coverX=(W-coverW)/2;
-    contentsX=(W-contentsW-edge)/2+edge;
-    coverY=coverOnLeft?stackY:stackY+contentsH;
-    contentsY=coverOnLeft?stackY+coverH:stackY;
-    railX=contentsX-edge;railY=contentsY;railW=edge;
+    contentsX=posterLayout?(W-contentsW)/2:(W-contentsW-edge)/2+edge;
+    coverY=coverOnLeft?stackY:stackY+contentsH+(posterLayout?edge:0);
+    contentsY=coverOnLeft?stackY+coverH+(posterLayout?edge:0):stackY;
+    railX=posterLayout?contentsX:(contentsX-edge);
+    railY=contentsY+contentsH;railW=edge;
   }
   const blue=reduce?1:ease((progress-.02)/.20);
   const dawn=reduce?(progress>=.31?1:0):ease((progress-.225)/.21);
@@ -512,7 +521,9 @@
 
   // The Doré plate remains moving while the open editorial grid arrives
   // after the complete cover + 西望 hold.
-  const stone=reduce?(progress>=.87?1:0):ease((progress-.865)/.125);
+  const stone=stage.dataset.p2Poster==='a'
+   ?(reduce?(progress>=.945?1:0):ease((progress-.86)/.085))
+   :(reduce?(progress>=.87?1:0):ease((progress-.865)/.125));
    // The protected Morning Star still RISES from the artwork. It lands
    // in the quiet upper-left crop, clear of the giant vertical Xi Wang;
    // only during the Contents handoff does it migrate into the original
@@ -532,22 +543,27 @@
   contents.style.transform='translate3d(0,'+(4*(1-stone)).toFixed(2)+'%,0)';
   contents.setAttribute('aria-hidden',stone>.98?'false':'true');
   contents.inert=stone<.98;
-  stage.dataset.phase=progress<.235?'cover-arrival':progress<.42?'dore-engraving':
-   progress<.69?'star-ink-impression':progress<.865?'cover-and-star':
-   progress<.995?'stone-contents-reveal':'contents-final';
+  stage.dataset.phase=stage.dataset.p2Poster==='a'
+   ?(progress<.26?'cover-arrival':progress<.77?'seven-color-poster':
+     progress<.86?'gold-poster-hold':progress<.945?'contents-arrival':
+     progress<.965?'contents-hold':progress<1?'contents-spread-retreat':'contents-final')
+   :(progress<.235?'cover-arrival':progress<.42?'dore-engraving':
+     progress<.69?'star-ink-impression':progress<.865?'cover-and-star':
+     progress<.995?'stone-contents-reveal':'contents-final');
   stage.dataset.orientation=coverOnLeft?'cover-left':'cover-right';
   stage.dataset.xiwangLines='0';
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
   window.P2Vol00Poster?.paint(progress);
-  // The official right-hand 5:8 cover and left-hand square poster arrive
-  // at full size first. Only after the sevenfold finishes (p≈.885) can the
-  // complete SPREAD retreat as one plane, revealing the already-playing
-  // homepage film underneath. Do not create a second video / animation clock.
-  // This is fully scroll-reversible through the existing parent P2 protocol.
-  const pullBack=stage.dataset.p2Poster
-   ?(reduce?(progress>=1?1:0):ease((progress-.945)/.055))
-   :0; // No shrink until both the official cover and final ink settle.
+  // A stays at natural size throughout seven colors and the settled gold
+  // poster. Its SAME native glyphs become the Contents masthead at 86–94.5%.
+  // Only after the original Contents has FINISHED entering may the entire
+  // Contents+official-cover spread reveal the already-playing homepage film.
+  // Reverse-scroll preserves the exact same pose. No second animation clock.
+  const pullBack=stage.dataset.p2Poster==='a'
+   ?(reduce?(progress>=1?1:0):ease((progress-.965)/.035))
+   :stage.dataset.p2Poster
+    ?(reduce?(progress>=1?1:0):ease((progress-.945)/.055)):0;
   const finalScale=1-.15*pullBack;
   if(posterSpread){
    posterSpread.style.transform='scale('+finalScale.toFixed(4)+')';
@@ -609,7 +625,7 @@
    if(event.ctrlKey||event.metaKey||!event.deltaY)return;
    event.preventDefault();
    const pixels=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?window.innerHeight:1);
-   setProgress(progress+pixels/2400);
+   setProgress(progress+pixels/3450);
   },{passive:false});
  }
  addEventListener('message',event=>{
