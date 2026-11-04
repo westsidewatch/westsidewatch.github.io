@@ -91,7 +91,7 @@
    const gold='var(--ws-morning-gold, #d2bc69)';
    panel.style.setProperty('--xw-ink',mix(inkBase,gold,final));
    panel.style.setProperty('--xw-poster-bg',mix(paperBase,'var(--ws-night,#102a43)',final));
-   panel.style.setProperty('--xw-foil-opacity',final.toFixed(4));
+   panel.style.setProperty('--xw-foil-opacity',(.72*final).toFixed(4));
    panel.style.setProperty('--xw-caption-opacity',final.toFixed(4));
    panel.dataset.palette=colorStops[from].name;
    panel.dataset.paletteFrom=String(from+1);
