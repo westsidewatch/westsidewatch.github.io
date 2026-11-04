@@ -41,6 +41,9 @@ function probes() {
     ['mono-color local skill', { available: existsSync(skillPath), info: existsSync(skillPath) ? skillPath : 'read upstream SKILL.md directly; NOT auto-installed' }],
     ['inkscape', result('inkscape', ['--version'])],
     ['python3', result('python3', ['--version'])],
+    ['fontTools Python glyph paths', result('python3', ['-c', 'import fontTools; print(fontTools.__version__)'])],
+    ['Shapely actual boolean clipping', result('python3', ['-c', 'import shapely; print(shapely.__version__)'])],
+    ['SVGWrite native SVG', result('python3', ['-c', 'import svgwrite; print(svgwrite.__version__)'])],
     ['skia-pathops (Python pathops)', result('python3', ['-c', 'import pathops; print("import OK")'])],
     ['penfill (Python)', result('python3', ['-c', 'import penfill; print("import OK")'])],
     ['vpype', result('vpype', ['--version'])],
@@ -53,6 +56,7 @@ function plan(v) {
   for (const s of stagesFor(v)) console.log('  ' + s.id.padEnd(13) + ' | ' + s.tool + '\n' + ' '.repeat(18) + s.role);
   console.log('\nLocal tool checks (unavailable tools are NOT silently simulated):');
   for (const [name, p] of probes()) console.log('  ' + (p.available ? 'FOUND  ' : 'MISSING') + ' | ' + name + ' | ' + p.info);
+  console.log('Actual B build (requires local OFL CJK font + Python imports): node scripts/xiwang/poster-toolchain.mjs build b ./xiwang-poster-output');
   console.log('\nDraft a trace: node scripts/xiwang/poster-toolchain.mjs init ' + v.toLowerCase() + ' /tmp/xiwang-' + v.toLowerCase() + '-receipt.json');
 }
 function init(v, file) {
