@@ -939,6 +939,6 @@
  // The continuous P2 preview now opens at the completed native Vol.00
  // Contents page, so forward wheel moves into the EXISTING 03 Emmaus.
  // Explicit ?d= is still respected for engineering/ONE deep links.
- requestAnimationFrame(()=>seekTo(initial===null?6.50:clamp(Number(initial)||0,0,timelineMax)));
+ requestAnimationFrame(()=>seekTo(initial===null?6.46:clamp(Number(initial)||0,0,timelineMax)));
  requestPaint();
 })();
