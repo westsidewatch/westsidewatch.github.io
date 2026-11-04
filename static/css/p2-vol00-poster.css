@@ -161,3 +161,13 @@
   display:none
  }
 }
+
+/* The approved RIGHT 5:8 cover's WESTSIDE WATCH masthead remains
+ * optically edge-to-edge while the spread is full size. The source SVG
+ * has small optical insets: 106% image width brings visible ink to both
+ * cover edges without deforming a single path. It never shrinks on its own;
+ * only the entire spread scales after Contents has fully arrived. */
+.dual-stage[data-p2-poster="a"] .dual-tile--cover .dual-cover__mast{
+ left:0;width:106%;max-width:none;height:21%;max-height:21%;
+ transform:none;object-fit:contain;object-position:left top
+}
