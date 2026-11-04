@@ -488,3 +488,16 @@ These files remain archived intact; they do not operate as independent OS author
 
 
 **封面滿版刊頭補充（使用者 2026-11-04 最新指令）：** 完整尺寸對開期間，右側官方 `westside-watch-masthead-landscape.svg` 刊頭的金色英文須**左右撐滿其 5:8 封面版心**；西望 A 的巨字縮成 Contents 角落編輯刊頭，絕不可造成右封面刊頭跟著收窄。既有 SVG 原稿與右封面城牆光線不改；以 scoped CSS `static/css/p2-vol00-poster.css` 設定光學寬度 106%、無額外 `transform`，讓 SVG 內建左右留白在當前封面比例下得到校正。只在 Contents 完整進場、對開停留完成後，`p .97–1` 才由 `.dual-panels` 整組縮放。新增 Chromium 測試檢查 `p .84` 和 `p .95` 的刊頭寬度比至少 1.055、局部 transform 必須為 none；不以代碼靜態檢查取代視覺驗收。
+
+
+### 2026-11-04 / P2 Contents「Cereal × 編輯雙欄」重排與 03 以馬忤斯真實銜接
+
+**來源／問題：** 使用者在 P2 100% Contents 實頁截圖中指出：西望金色角標、英文 Contents、四個篇章、十二個欄目沒有足夠清楚的視覺主次。舊版 `p2x--10` 來源是 Cereal × Engraved Light，但實際套用於左側正方形時出現主標過小、細字過密、可讀性不足。**這不是再做一個視覺圖或重畫 Contents 資料。**
+
+**研究案例與轉用：** 以已收錄的 [十二種目錄案例實作](../../static/experiments/p2-contents-twelve.js) 為依據：Cereal（#10）紙張質感及精緻留白；François Girard-Meunier Swiss Counterpoint（#08）的雙欄資訊層級；W Magazine（#11）的英文主標尺度；Eye（#12）的目錄雙語索引。巨字「西望」已由 A 海報縮為小型燙金角標，現在要由 *Contents.* 而不是角標主導左頁。
+
+**施工 owner：** 只在 `static/css/p2-vol00-poster.css` 對 `data-p2-poster=a` + 原 `#dual-stone-contents .p2x--10` 加排版層：頁眉 VOL.00 纖細、英文 Contents 大號 Bodoni Moda、Chiron 200 中文「目錄」、四篇章 WATCH/WALK/WITNESS/WORSHIP 雙欄網格、01–12 序號及中英正文足夠字級、金色只限極細索引及分隔線。正文及完整索引均由原 `static/experiments/p2-contents-twelve.js` 從 canonical `dual-movement` 資料生成，**十二個欄目、一切文案和全文閱讀入口不刪減**。當方形寬度不夠時，使用單欄可捲動的真文字頁，而非縮到 7px 或靠背景圖顯示漢字。閱讀者可點 FULL INDEX 開啟原有完整目錄。
+
+**03 真實續接：** 不新增假以馬忤斯插圖，也不複製 ONE 另一份資料源。原 `static/experiments/p2-emmaus-olive-handoff-lab.html` 早已擁有同一個連續捲動 owner，內嵌 **教會→雜誌** 原畫面，`distance=6.50` 保持完成的 02 對開，之後沿既有轉頁 timeline 進入 **03 以馬忤斯 ONE（66 卷、章節、CUV/KJV、史地、241 多雷插圖）**，再接 04 橄欖山及 05–07。新版從完成 Contents 定格處開啟；在 02 專門調試頁中加入實際連續預覽入口。反向滾動回到 02，不二次載入模擬 Contents。右側 5:8 正式封面、滿版刊頭、原影片與教會畫面保持。**完整 P2 預覽應用此連續舞台路線，而非只有 02 的獨立 square lab。**
+
+**獲獎級驗收：** 以 1648、768、390、320px + 200% zoom 覆核主標、角標、雙欄篇章與全文入口的實際閱讀次序；檢查 02→03→02 正逆捲動、ONE 66 卷可操作、圖片不破版、不重複播放器；附 Chromium 真截圖及失敗原因。這次 CSS 工程／連續路由能運作，並不自動表示已達藝術定稿；P2 Draft #1381 不合併主站。
