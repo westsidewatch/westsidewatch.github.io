@@ -492,20 +492,22 @@
   emLeft.style.setProperty('--em-page-reveal',oneDrop>.0001?'1':'0'); // All inner text and binding paper remain opaque during the paired clip-wipe.
   // The actual native Magazine cover must sit ABOVE its new green underleaf
   // for turn one. P2's right gallery only takes over at the settled green beat.
-  emRight.style.opacity=String(move>=.999?1:0);
-  emRight.style.visibility=move>=.999?'visible':'hidden';
+  const galleryTurn=move>=.998&&archive>.001;
+  emRight.style.opacity=galleryTurn?'1':'0';
+  emRight.style.visibility=galleryTurn?'visible':'hidden';
   emRight.style.setProperty('--em-plate-reveal',String(coverOpen));
   // Reveal the same original ONE green cloth on the perimeter of the right
   // Doré illustration only after the green cover finishes its second turn.
   emRight.style.setProperty('--em-binding-reveal',String(oneDrop));
-  emPlates.style.opacity=String(coverOpen);
+  emPlates.style.opacity='1';
   // First turn happens on the original right-hand Magazine cover inside the
   // established dual-page source; this ONE layer remains flat until turn two.
-  const greenAngle=-86*archive;
+  // The original green magazine underleaf is the ONLY second page.
+  // No duplicate 3D overlay and no wafer-thin rotated book face.
   emCover.style.clipPath='none';
-  emCover.style.transform='perspective(6400px) rotateY('+greenAngle.toFixed(2)+'deg)';
-  emCover.style.opacity=String(move>.001&&archive<.999?1:0);
-  emCover.style.visibility=move>.001&&archive<.999?'visible':'hidden';
+  emCover.style.transform='none';
+  emCover.style.opacity='0';
+  emCover.style.visibility='hidden';
   const edge=$('.emmaus__magazine-turn-edge');
   if(edge){
    edge.style.left='0';
@@ -637,9 +639,14 @@
     if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
    }
    if(magazineUnderlay){
-     magazineUnderlay.style.visibility=move>.001?'visible':'hidden';
+     const bindingGap=Math.max(0,sourceCover.offsetLeft-
+      ((sourceTile?.offsetLeft??0)+(sourceTile?.offsetWidth??0)));
+     const leafTravel=sourceCover.offsetWidth+bindingGap+2;
+     magazineUnderlay.style.transform='translate3d('+
+      (-leafTravel*archive).toFixed(2)+'px,0,0)';
+     magazineUnderlay.style.visibility=move>.001&&archive<.998?'visible':'hidden';
      magazineUnderlay.style.display=move>.001?'block':'none';
-     magazineUnderlay.style.opacity=String(smooth((move-.25)/.40));
+     magazineUnderlay.style.opacity=move>.001?'1':'0';
     }
   }
   // The accepted Magazine iframe, including its book spine and original
@@ -766,19 +773,20 @@
   emLeft.style.clipPath=oneDrop>=.9999?'none':
    'inset(0 0 0 '+((1-oneDrop)*100).toFixed(3)+'%)';
   poseRect(emRight,fullRight,fullRight,1);
-  emRight.style.clipPath='none';
+  emRight.style.clipPath=archive>=.999?'none':
+   'inset(0 0 0 '+((1-archive)*100).toFixed(3)+'%)';
   syncGallery(move>.98&&document.visibilityState==='visible');
   // Hold an opaque original-gallery matte over the old magazine cover.
   // The archive image can fade inside that stable panel when loaded.
-  emRight.style.opacity=String(move>=.999?1:0);
+  emRight.style.opacity=galleryTurn?'1':'0';
   // Only after the magazine's first turn completes does the ONE folio take
   // its place at precisely the same measured right-hand cover bounds.
   // Keep the moving plate visible all the way to the destination.
   // Only its editorial annotation recedes; the image itself must NOT vanish
   // at 32% progress and leave a blank travelling rectangle.
   // The Doré plate must be invisible under the first Magazine-cover turn.
-  emPlates.style.opacity=String(coverOpen);
-  const annotations=coverOpen;
+  emPlates.style.opacity='1';
+  const annotations=archive;
   $('.emmaus__plate-top').style.opacity=String(annotations);
   $('.emmaus__plate-caption').style.opacity=String(annotations);
   $('.emmaus__gold-line').style.opacity=String(annotations);
@@ -794,13 +802,14 @@
   emLeft.style.clipPath=oneDrop>=.9999?'none':
    'inset(0 0 0 '+((1-oneDrop)*100).toFixed(3)+'%)';
   poseRect(emRight,fullRight,fullRight,1);
-  emRight.style.clipPath='none';
+  emRight.style.clipPath=archive>=.999?'none':
+   'inset(0 0 0 '+((1-archive)*100).toFixed(3)+'%)';
   // Hold an opaque original-gallery matte over the old magazine cover.
   // The archive image can fade inside that stable panel when loaded.
   // Never re-enable the right ONE overlay while the actual Magazine cover
   // is still turning. That was the V14 layering inversion reported in proof.
-  emRight.style.opacity=String(move>=.998?1:0);
-  emRight.style.visibility=move>=.998?'visible':'hidden';
+  emRight.style.opacity=galleryTurn?'1':'0';
+  emRight.style.visibility=galleryTurn?'visible':'hidden';
   const section=distance<3.0775?'01 / 03 — CHURCH':distance<6.5?'02 / 03 — MAGAZINE':'03 / 03 — EMMAUS';
   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
   seek.value=String(fullDistance/timelineMax*100);percent.textContent=(fullDistance/timelineMax*100).toFixed(0)+'%';lastPaint=distance;
