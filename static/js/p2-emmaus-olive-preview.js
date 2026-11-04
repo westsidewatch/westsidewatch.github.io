@@ -651,7 +651,10 @@
     sourceCover.style.transformStyle='preserve-3d';
     sourceCover.classList.add('p2-emmaus-turning');
     sourceCover.style.zIndex='11';
-    // Both covers show the front only, around the SAME left-spine axis.
+    // Full page and uncut paper verso travel across the left folio.
+    // At the very end the verso dissolves, returning the existing Contents
+    // rather than introducing another empty interleaf.
+    sourceCover.style.opacity=String(1-smooth((move-.94)/.06));
     sourceCover.style.visibility=move>.998?'hidden':'visible';
    }else{
     sourceCover.style.transform=sourceOriginalCoverTransform;
