@@ -389,3 +389,25 @@
   animation:none!important;filter:none!important
  }
 }
+
+
+/* 2026-11-04 / P2 release visual correction.
+ * The Magazine must replace the old Church composition as a COMPLETE
+ * editorial field. Neither a water-pattern blank half nor Church service
+ * copy may peek around the incoming official right cover. The left monumental
+ * glyphs arrive on this same moving paper color, not inside a beige card.
+ * The field itself vanishes while the WHOLE settled Contents+cover spread
+ * pulls back, leaving the original film visible beneath the iframe. */
+.dual-stage[data-p2-poster="a"]::before{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:var(--xw-poster-bg,#f6eae2);
+ opacity:var(--xw-field-opacity,0);
+}
+.dual-stage[data-p2-poster="a"] .dual-panels{z-index:1}
+.dual-stage[data-p2-poster="a"] #dual-contents{
+ background:transparent;
+ box-shadow:none;
+}
+.dual-stage[data-p2-poster="a"] #dual-contents .xw-poster{
+ background:transparent;
+}
