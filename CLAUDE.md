@@ -8,3 +8,5 @@ This is a short **routing pointer**, not a new design system or a substitute for
 - Only claim a specific glyph, engraving, or SVG tool was **used** if there is actual output and an execution receipt. Keep the Draft and official P2/cover intact until actual human-reviewed visual acceptance.
 
 All other project work remains governed by existing user instructions and the single Design OS.
+
+- **Art-direction-first gate:** before using any SVG/poster generator for A/B, read [poster composition and user-reference case atlas](docs/design/P2-XIWANG-POSTER-COMPOSITION-CASE-ATLAS-20261104.md) and identify a concrete user-reference case, its layout/negative-space mechanism, and what is different from the rejected old work. Technical output without this step does not qualify as designed poster work.
