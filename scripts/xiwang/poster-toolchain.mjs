@@ -107,12 +107,29 @@ function verify(file) {
   problems.forEach(p => console.log('  - ' + p));
   process.exitCode = problems.length ? 1 : 0;
 }
+function build(v, dir) {
+  if (v !== 'B') throw new Error('A build is NOT available: requires original hand-built glyphs. No fallback to rejected A2');
+  const destination = resolve(dir || 'xiwang-poster-output');
+  const py = spawnSync('python3', [join(root, 'scripts/xiwang/build-engraved-b.py'), '--outdir', destination, '--version', 'v7'], { cwd:root, encoding:'utf8', env:process.env, timeout:120000, maxBuffer:8*1024*1024 });
+  if (py.error || py.status !== 0) throw new Error('Actual Python SVG build failed: ' + String(py.stderr || py.error?.message || py.stdout));
+  const svg = join(destination, 'xiwang-poster-b-v7.svg');
+  if (!existsSync(svg)) throw new Error('Generator did not create native SVG: '+svg);
+  console.log(String(py.stdout).trim());
+  const png = join(destination, 'xiwang-poster-b-v7.png');
+  const ink = spawnSync('inkscape', [svg, '--export-width=1000', '--export-filename='+png], {cwd:root,encoding:'utf8',timeout:60000,maxBuffer:8*1024*1024});
+  if (ink.error || ink.status !== 0 || !existsSync(png)) {
+    console.warn('Inkscape preview unavailable; SVG is valid output but browser/visual QA is still required. ' + String(ink.stderr || ink.error?.message || ''));
+  } else console.log('Inkscape PNG proof: ' + png);
+  console.log('Tool execution occurred. This is still a DRAFT artistic experiment; never mark review approved automatically.');
+}
+
 function main() {
   const [action, arg, arg2] = process.argv.slice(2);
   if (action === 'verify') { if (!arg) throw new Error('verify RECEIPT.json'); return verify(resolve(arg)); }
   const v = String(arg || '').toUpperCase();
-  if (!variants.has(v)) throw new Error('usage: plan a|b, init a|b RECEIPT.json, verify RECEIPT.json');
+  if (!variants.has(v)) throw new Error('usage: plan a|b, build b [OUTDIR], init a|b RECEIPT.json, verify RECEIPT.json');
   if (action === 'plan') return plan(v);
+  if (action === 'build') return build(v, arg2);
   if (action === 'init') { if (!arg2) throw new Error('init a|b RECEIPT.json'); return init(v, resolve(arg2)); }
   throw new Error('usage: plan a|b, init a|b RECEIPT.json, verify RECEIPT.json');
 }
