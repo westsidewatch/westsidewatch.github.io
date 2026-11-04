@@ -551,7 +551,7 @@
   // Magazine Contents withdraws by the exact same distance.
   emLeft.style.opacity=oneDrop>.0001?'1':'0';
   emLeft.style.visibility=oneDrop>.0001?'visible':'hidden';
-  emLeft.style.setProperty('--em-page-reveal',String(oneDrop));
+  emLeft.style.setProperty('--em-page-reveal',oneDrop>.0001?'1':'0'); // All inner text and binding paper remain opaque during the paired clip-wipe.
   // The actual native Magazine cover must sit ABOVE its new green underleaf
   // for turn one. P2's right gallery only takes over at the settled green beat.
   emRight.style.opacity=String(move>=.999?1:0);
