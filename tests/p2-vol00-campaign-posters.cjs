@@ -159,7 +159,7 @@ try{
      assert.equal(contentsHold.mastLocalTransform,'none','Contents handoff cannot scale the official masthead');
      const shrinking=await snap(.976);
      assert(shrinking.scale<1&&shrinking.scale>.85,'retreat is controlled by scrolling, not a timer');
-     const rewind=await snap(.54);
+     const rewind=await snap(.53);
      assert.equal(rewind.bg,stamps[3].bg,'scroll reversal restores exact original background');
      assert.equal(rewind.ink,stamps[3].ink,'scroll reversal restores exact original ink');
      assert.equal(rewind.scale,1,'reversing scroll restores full-size spread');
