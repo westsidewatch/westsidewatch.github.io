@@ -31,7 +31,10 @@ assert.doesNotMatch(emmausTransition,/function ensureMagazinePrologue/,'no redun
 assert.match(emmausTransition,/const firstAngle=-172\*smooth\(move\)/,'entire cover rotates beyond edge-on rather than disappearing at 86 degrees');
 assert.match(emmausTransition,/p2-emmaus-turning::after/,'page has real verso throughout second half of flip');
 assert.match(emmausTransition,/magazineUnderlay.style.display=move>/,'ONE scripture leaf hides entirely before page turn');
-assert.match(emmausTheme,/--ws-weight-zh-standard,400/,'actual Scripture is OS Chiron reading 400');
+assert.match(emmausTheme,/font-weight:var\(--ws-weight-zh-air,200\)!important/,'Emmaus CLOTH COVER quotation uses user-selected Chiron ultra-light 200');
+assert.match(emmausTransition,/sourceTile\.style\.clipPath=oneDrop>/,'native Magazine Contents exits through physical mask, not opacity');
+assert.match(emmausTransition,/emLeft\.style\.clipPath=oneDrop/,'incoming ONE page enters with opposing scroll clip');
+assert.match(emmausTransition,/emLeft\.style\.opacity=oneDrop>/,'incoming ONE page is opaque, not translucent ghost');
 assert.match(emmausTheme,/font-style:italic!important/,'English Scripture reference is genuine OS Bodoni Italic');
 assert.match(html,/stage\.addEventListener\('wheel'/,'standalone preview can scrub with wheel');
 assert.match(html,/!document\.documentElement\.classList\.contains\('dual-embed'\)/,
@@ -82,6 +85,7 @@ try{
       bg:getComputedStyle(p).backgroundColor,ink:getComputedStyle(p.querySelector('.xw-poster__glyph')||art).backgroundColor,
       scale:+stage.dataset.posterSpreadScale,revealed:+stage.dataset.posterRevealed,
       poster:rect(p).width,tile:rect(tile).width,coverRatio:rect(cover).width/rect(cover).height,
+      cornerPalette:stage.dataset.posterCornerPalette||'',cornerProgress:+stage.dataset.posterCornerProgress||0,
       masks:p.querySelectorAll('.xw-poster__glyph').length,foil:p.querySelector('.xw-poster__glyph--foil')?
        +getComputedStyle(p.querySelector('.xw-poster__glyph--foil')).opacity:0,
       visible:getComputedStyle(p).opacity,
@@ -134,7 +138,8 @@ try{
      assert.equal(finished.palette,'midnight-gold');
      assert(finished.reg>.999,'last stop fully registered in navy and gold');
      assert.equal(finished.masks,2,'real glyph mask + registered foil glyph');
-     assert(finished.foil>.70,'foil is scroll-driven and visible at final print');
+     assert.equal(finished.cornerPalette,'cafe','small Contents Xi Wang advances to the seventh Design OS ink');
+     assert(finished.foil<.01,'small colored masthead does not retain gold foil overprint');
      assert.equal(finished.contentsDisplay,'block','the original Contents really appears');
      assert(finished.contentsOpacity>.99,'the final Contents is visibly composited');
      assert.equal(finished.contentsInert,false,'the final Contents is keyboard-accessible');
@@ -179,11 +184,22 @@ try{
       'seven section colors appear in the specified order');
      const goldHold=await snap(.85);
      assert.equal(goldHold.palette,'midnight-gold');
+     assert(goldHold.foil>.70,'full size approved gold has static foil impression');
+     assert.equal(goldHold.cornerPalette,'gold','before the logo shrinks it stays in approved gold');
      assert(Math.abs(goldHold.markScale-1)<.002,'A poster stays monumental until Contents arrives');
      assert(Math.abs(goldHold.scale-1)<.002,'finished gold poster remains full-size');
      assert(goldHold.mastWidthRatio>=1.055,'official WESTSIDE WATCH masthead must span the cover edge-to-edge');
      assert(Math.abs(goldHold.mastLeftOffset)<2,'full-bleed masthead starts at the actual cover edge');
      assert.equal(goldHold.mastLocalTransform,'none','the official masthead must not shrink independently');
+     const cornerStops=[];
+     for(const cp of [.945,.954,.963,.973,.982,.991,1])cornerStops.push(await snap(cp));
+     assert.deepEqual(cornerStops.map(x=>x.cornerPalette),
+       ['water','magazine','emmaus','olive','bookshop','cinema','cafe'],
+       'seven OS-colored miniature masthead inks advance only by scroll');
+     assert.equal(new Set(cornerStops.map(x=>x.ink)).size,7,
+       'miniature identity genuinely changes stroke color, not only label');
+     const cornerReverse=await snap(.954);
+     assert.equal(cornerReverse.ink,cornerStops[1].ink,'small masthead color scrolls backwards exactly');
      const atHold=await snap(.90);
      assert.equal(atHold.palette,'midnight-gold');
      assert(atHold.markScale<1&&atHold.markScale>.23,'original gold glyph begins shrinking INTO Contents');
