@@ -382,8 +382,13 @@
   // Two original equal reveal planes converge on a 5:8 cover and a
   // square Contents. The narrow functional folio is vertical, flush with
   // the LEFT EDGE of Contents, not a third horizontal page below.
-  const fold=reduce?(progress>=.56?1:0):ease((progress-.755)/.105);
   const posterLayout=!!stage.dataset.p2Poster;
+  const stableLargeA=stage.dataset.p2Poster==='a';
+  // The approved A poster is no longer one of the retired sevenfold
+  // moving panels: its square and the official 5:8 cover are fixed
+  // during the entire seven-color scroll. The old 75.5–86% fold
+  // resized and moved this huge glyph while its ink was still printing.
+  const fold=stableLargeA?1:(reduce?(progress>=.56?1:0):ease((progress-.755)/.105));
   let coverW,coverH,contentsW,contentsH,coverX,coverY,contentsX,contentsY,railX,railY,railW;
   const coverOnLeft=coverLeft;
   if(!mobile){
@@ -438,7 +443,10 @@
   stage.dataset.spread='contents-square-cover-5-8';
   stage.dataset.spineFlip=railFlip.toFixed(3);
   cover.style.clipPath='inset(0 0 '+((1-blue)*100).toFixed(3)+'% 0)';
-  gold.style.clipPath='inset('+((1-dawn)*100).toFixed(3)+'% 0 0 0)';
+  // The seven palettes ARE the giant poster entrance; the legacy
+  // page curtain must not crop the glyphs or their background.
+  gold.style.clipPath=stableLargeA?'none':
+   'inset('+((1-dawn)*100).toFixed(3)+'% 0 0 0)';
   stage.dataset.blueReveal=blue.toFixed(4);
   stage.dataset.dawnReveal=dawn.toFixed(4);
   stage.dataset.transitionEngraving='journal-printed-folio';
