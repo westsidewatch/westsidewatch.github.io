@@ -10,6 +10,8 @@ const poster=fs.readFileSync('static/js/p2-vol00-poster.js','utf8');
 const css=fs.readFileSync('static/css/p2-vol00-poster.css','utf8');
 const html=fs.readFileSync('static/experiments/p2-double-square-video-lab.html','utf8');
 const bridge=fs.readFileSync('static/js/p2-magazine-live-bridge.js','utf8');
+const emmausTransition=fs.readFileSync('static/js/p2-emmaus-olive-preview.js','utf8');
+const emmausTheme=fs.readFileSync('static/css/p2-emmaus-theme-verse.css','utf8');
 const os=fs.readFileSync('static/css/westside-design-os.css','utf8');
 const glyph=fs.readFileSync('static/images/xiwang-poster-a-glyph-mask.svg','utf8');
 const masterB=fs.readFileSync('static/images/xiwang-poster-b-v2.svg','utf8');
@@ -25,6 +27,12 @@ for(const token of tokens) {
 assert.match(poster,/function paint\(progress\)/,'poster has one externally owned scroll progress');
 assert.match(html,/window\.P2Vol00Poster\?\.paint\(progress\)/,'P2 calls same progress painter');
 assert.match(bridge,/westside-p2-dual-progress/,'full P2 uses existing parent scroll bridge');
+assert.doesNotMatch(emmausTransition,/function ensureMagazinePrologue/,'no redundant 經上所指 interleaf');
+assert.match(emmausTransition,/const firstAngle=-172\*smooth\(move\)/,'entire cover rotates beyond edge-on rather than disappearing at 86 degrees');
+assert.match(emmausTransition,/p2-emmaus-turning::after/,'page has real verso throughout second half of flip');
+assert.match(emmausTransition,/magazineUnderlay.style.display=move>/,'ONE scripture leaf hides entirely before page turn');
+assert.match(emmausTheme,/--ws-weight-zh-standard,400/,'actual Scripture is OS Chiron reading 400');
+assert.match(emmausTheme,/font-style:italic!important/,'English Scripture reference is genuine OS Bodoni Italic');
 assert.match(html,/stage\.addEventListener\('wheel'/,'standalone preview can scrub with wheel');
 assert.match(html,/!document\.documentElement\.classList\.contains\('dual-embed'\)/,
  'standalone wheel event does not steal parent P2 wheel');
@@ -144,7 +152,11 @@ try{
        indexCount:root?.querySelectorAll('.p2x-entry').length,
        workFont:works?parseFloat(getComputedStyle(works).fontSize):0,
        readerButton:!!root?.querySelector('.p2x-cereal-expand'),
-       gridHeight:grid?.clientHeight,scrollHeight:grid?.scrollHeight};
+       gridHeight:grid?.clientHeight,scrollHeight:grid?.scrollHeight,
+       gridBottom:grid?.getBoundingClientRect().bottom,
+       lastMovementBottom:groups[3]?.getBoundingClientRect().bottom,
+       tinyLeft:root?.querySelector('.p2x-cereal-tiny')?.getBoundingClientRect().left,
+       markRight:document.querySelector('#xw-poster .xw-poster__glyph')?.getBoundingClientRect().right};
      });
      assert.equal(editorial.heading,'Contents.','Contents headline remains editable HTML');
      assert(editorial.headingSize>=(width>820?39:22),'large English title must establish editorial hierarchy');
@@ -153,6 +165,9 @@ try{
      assert(editorial.workFont>=10,'article copy cannot be smaller than legible reading size');
      assert(editorial.readerButton,'full index remains accessible');
      assert.equal(editorial.display,width>820?'grid':'flex','desktop two-column; mobile single-column editorial reading');
+     assert(editorial.tinyLeft>=editorial.markRight-8,'gold 西望 cannot overprint the tiny issue label');
+     if(width>820)assert(editorial.lastMovementBottom>editorial.gridBottom-35,
+      'lower movement register must visibly occupy bottom editorial area, not leave a dead blank half-page');
      await snap(.95);
      await page.screenshot({path:'artifacts/p2-vol00/contents-redesign-'+width+'.png'});
      console.log('Contents editorial QA',width,JSON.stringify(editorial));
@@ -223,6 +238,23 @@ try{
      hasRealEmmaus:!!document.querySelector('#emmaus')};
   });
   assert(continuity.hasRealEmmaus,'03 Emmaus must exist in the same scroll track');
+  assert(!await connected.locator('.p2-emmaus-prologue').count(),'no extra text-only prologue');
+  await connected.locator('[data-jump="6.49"]').click();
+  await connected.waitForFunction(()=>document.body.dataset.proofScene==='02',{timeout:15000});
+  await connected.locator('[data-jump="7.42"]').click();
+  await connected.waitForFunction(()=>{
+   const cover=document.querySelector('#proof-original')?.contentDocument
+    ?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')
+    ?.contentDocument?.querySelector('#p2-emmaus-magazine-underleaf');
+   return !!cover&&getComputedStyle(cover).display!=='none';
+  },{timeout:15000});
+  await connected.locator('[data-jump="6.49"]').click();
+  await connected.waitForFunction(()=>{
+   const cover=document.querySelector('#proof-original')?.contentDocument
+    ?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')
+    ?.contentDocument?.querySelector('#p2-emmaus-magazine-underleaf');
+   return !cover||getComputedStyle(cover).display==='none';
+  },{timeout:15000});
   await connected.locator('[data-jump="9.10"]').click();
   await connected.waitForFunction(()=>document.body.dataset.proofScene==='03' &&
    getComputedStyle(document.querySelector('#emmaus')).visibility==='visible',{timeout:15000});
