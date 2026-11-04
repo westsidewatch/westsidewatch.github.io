@@ -455,7 +455,7 @@
     const themeLink=doc.createElement('link');
     themeLink.id='p2-emmaus-theme-verse-style';
     themeLink.rel='stylesheet';
-    themeLink.href='/css/p2-emmaus-theme-verse.css?v=20261104-os-weight-v3';
+    themeLink.href='/css/p2-emmaus-theme-verse.css?v=20261104-os-cover-air-v4';
     doc.head.append(themeLink);
    }
    cover.parentElement.insertBefore(magazineUnderlay,cover);
