@@ -468,3 +468,20 @@ These files remain archived intact; they do not operate as independent OS author
 **工程 owner（Draft PR #1381）**：`static/js/p2-vol00-poster.js`（純 `paint(progress)`、七色路由及墨紙混色）；`static/css/p2-vol00-poster.css`（遮罩、薄箔、slogan）；`static/images/xiwang-poster-a-glyph-mask.svg`（從已批准的 A 雙 path 提取**透明字形**）；`static/experiments/p2-double-square-video-lab.html`（parent progress + standalone wheel scrub / 完成後才縮小）。`poster=b` 保留 B 原圖作對照，不繼承已取消的七重遮幕；原 Church、以馬忤斯、右封面、Homepage 原七重折疊和已存在的影片播放器不改。
 
 **進度/驗收區分：** 靜態核對通過（所有七色 token 有定義、mask 只有兩個 glyph path 沒有底色矩形、JS 語法和父頁進度綁定、無七重遮幕）。真 P2 Chrome/Safari 視覺、字形金箔渲染、1648/768/390/320、200% zoom、上下滾動和 reduced-motion 必須在最新 Cloudflare Preview 完成，**不能以程式核對取代藝術驗收**。
+
+### 2026-11-04 / P2 A 藍金海報 → 原版 Contents → 整組縮小（最新驗收方向）
+
+**使用者以 04:34 的真實 P2 截圖提出三個藝術問題：** 七色滾動已接近預期但略快；左側午夜藍與右側正式封面無分界地連接，損及右封面的獨立整體性；左側海報的孤立 slogan 沒有編輯版心依據。更重要的是 **Contents 必須在海報結束後出現，整個對開不得在 Contents 進場前縮小**。這項決定覆蓋上段過時的「藍金海報一完成便縮小」敘述，但不取消既有七色 scroll-scrubbing 與右封面保護規範。
+
+**新過場（受父頁同一可逆 scroll progress 控制）：**
+- `p .26–.77`：七種 OS 字色與背景逐版進行；比前一版的 `.30–.76` 區間更長；隔離預覽 wheel 敏感度從 `/2400` 改為 `/3450`，無自動計時。
+- `p .77–.845`：收束午夜藍底＋黎明金燙金「西望」；`.845–.86` 完整雙頁定格。左海報字形不縮小。
+- `p .86–.945`：左頁海報**不改自身整頁尺寸**，由現有 approved A glyph-mask 的兩個漢字 *縮至左上編輯刊頭*；底色同時釋放，下方露出原生 `#dual-stone-contents` / `p2x--10` Cereal 十二欄目與已有四篇章跳轉、全文閱讀入口，不另造/覆寫十二欄目資料。**右側 5:8 正式封面維持完整。**
+- `p .945–.965`：Contents＋右封面完成後暫停，呈現實際對開排版。
+- `p .965–1`：只在此時將兩頁 `.dual-panels` 同步從 100% 收至 85%，露出原先就在後面的首頁影片；反向滾動精確倒帶到完整海報；reduced-motion 可直接定位。
+
+**版心藝術修正：** 原被隱藏的七重書脊所保留的 14–24px 位置，之前錯放在左頁**外側**，令兩張午夜藍連成一片；現在只在 P2 海報模式把間距移到真正的**左海報/右封面中間**，輔以一條極細的印版金色界線，而不是重新設計或拉扯右側城牆/門光。海報底部的 `Watch for the Dawn` 不再孤立漂浮，改成一條極細上引線下的左右 editorial folio，右端引用 `ROMANS 13:12`，全部遵守 OS 非正文極細層級；入 Contents 時退場，不與新目錄的 header 爭搶層級。
+
+**工程 owner（Draft PR #1381）：** `static/js/p2-vol00-poster.js`（七色＋底色與 A 字形縮放）；`static/css/p2-vol00-poster.css`（印刷字骨、folio、Cereal Contents 局部排版覆寫）；`static/experiments/p2-double-square-video-lab.html`（正確書脊間距、目錄與縮小相位）；`tests/p2-vol00-campaign-posters.cjs`（真 browser 驗證雙頁間隙、12 筆資料、完整海報先於目錄、目錄先於整組縮小、反向倒帶）。現有 `p2-contents-twelve.js` 原資料、右側正式封面、教會、Emmaus、首頁七重折疊及影片 player 不修改；B 保留獨立 SVG 模式，不繼承 A 的 Contents 設計覆寫。
+
+**品質界線：** 工程提交、腳本語法、現有字骨及 browser 截圖測試合格也不自動代表獲獎級藝術驗收。至少核對 desktop 1648、mobile 390、完整 Contents 狀態與逆向移動的真實 Cloudflare Preview，再決定版心和 slogan 的最終微調。Draft 禁止自動合併主站。
