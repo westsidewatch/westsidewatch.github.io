@@ -522,7 +522,7 @@
   // The Doré plate remains moving while the open editorial grid arrives
   // after the complete cover + 西望 hold.
   const stone=stage.dataset.p2Poster==='a'
-   ?(reduce?(progress>=.945?1:0):ease((progress-.86)/.085))
+   ?(reduce?(progress>=.95?1:0):ease((progress-.88)/.07))
    :(reduce?(progress>=.87?1:0):ease((progress-.865)/.125));
    // The protected Morning Star still RISES from the artwork. It lands
    // in the quiet upper-left crop, clear of the giant vertical Xi Wang;
@@ -545,8 +545,8 @@
   contents.inert=stone<.98;
   stage.dataset.phase=stage.dataset.p2Poster==='a'
    ?(progress<.26?'cover-arrival':progress<.77?'seven-color-poster':
-     progress<.86?'gold-poster-hold':progress<.945?'contents-arrival':
-     progress<.965?'contents-hold':progress<1?'contents-spread-retreat':'contents-final')
+     progress<.88?'gold-poster-hold':progress<.95?'contents-arrival':
+     progress<.97?'contents-hold':progress<1?'contents-spread-retreat':'contents-final')
    :(progress<.235?'cover-arrival':progress<.42?'dore-engraving':
      progress<.69?'star-ink-impression':progress<.865?'cover-and-star':
      progress<.995?'stone-contents-reveal':'contents-final');
@@ -556,12 +556,12 @@
   output.textContent=Math.round(progress*100)+'%';
   window.P2Vol00Poster?.paint(progress);
   // A stays at natural size throughout seven colors and the settled gold
-  // poster. Its SAME native glyphs become the Contents masthead at 86–94.5%.
+  // poster. Its SAME native glyphs become the Contents masthead at 88–95%.
   // Only after the original Contents has FINISHED entering may the entire
   // Contents+official-cover spread reveal the already-playing homepage film.
   // Reverse-scroll preserves the exact same pose. No second animation clock.
   const pullBack=stage.dataset.p2Poster==='a'
-   ?(reduce?(progress>=1?1:0):ease((progress-.965)/.035))
+   ?(reduce?(progress>=1?1:0):ease((progress-.97)/.03))
    :stage.dataset.p2Poster
     ?(reduce?(progress>=1?1:0):ease((progress-.945)/.055)):0;
   const finalScale=1-.15*pullBack;
