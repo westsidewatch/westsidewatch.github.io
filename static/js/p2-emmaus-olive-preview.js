@@ -553,7 +553,7 @@
      oldMagazineRight.style.zIndex=sourceOriginalCoverZ;
     }
    }
-   if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
+   if(magazineUnderlay){magazineUnderlay.style.visibility='hidden';magazineUnderlay.style.display='none';}
    emmaus.style.visibility='hidden';emmaus.style.pointerEvents='none';
    emmaus.inert=true;emmaus.setAttribute('aria-hidden','true');
    olive.style.visibility='hidden';olive.style.pointerEvents='none';
@@ -570,10 +570,10 @@
   // 2. The green cover turns away to reveal Doré in that SAME right folio.
   // 3. Only then the LEFT Magazine engraving gives way to Scripture content.
   // No projection, translation, fake 3D paper curl, or animation timer.
-  const move=smooth((distance-6.50)/.72);
-  const archive=smooth((distance-7.66)/.64);
+  const move=smooth((distance-6.50)/.62);
+  const archive=smooth((distance-7.12)/.64);
   const coverArrival=move,coverOpen=archive;
-  const oneDrop=smooth((distance-8.55)/.55);
+  const oneDrop=smooth((distance-7.70)/.60);
   const oliveIn=smooth((distance-9.44)/1.38);
   const emShowing=move>.001&&oliveIn<.999,oliveShowing=oliveIn>.001;
   emmaus.style.visibility=emShowing?'visible':'hidden';
@@ -662,9 +662,8 @@
   // replace only the Contents TEXT overlay with a restrained editorial
   // half-title. The full-bleed original engraving remains the same node.
   // Scroll back to Magazine: opacity returns to zero, no content is deleted.
-  const introAlpha=smooth((move-.89)/.11)*(1-smooth((oneDrop-.45)/.55));
-  const intro=sourceDoc&&sourceTile&&move>.86?
-    ensureMagazinePrologue(sourceDoc,sourceTile):magazinePrologue;
+  const introAlpha=0; // Retire redundant text-only interleaf.
+  const intro=null; // Do not interrupt the canonical magazine Contents.
   if(sourceTile){
    sourceTile.classList.toggle('p2-emmaus-prologue-active',introAlpha>.001);
    sourceTile.style.setProperty('--p2-emmaus-native-contents-opacity',(1-introAlpha).toFixed(4));
@@ -684,11 +683,11 @@
     ensureMagazineUnderlay(sourceDoc,sourceCover);
     // The source Magazine cover itself, not an arriving green panel, is
     // the first page to turn. Preserve the 5:8 layout and its inner graphics.
-    const firstAngle=-86*smooth(move);
+    const firstAngle=-172*smooth(move);
     sourceCover.style.transformOrigin='left center';
-    sourceCover.style.transform='perspective(6400px) rotateY('+firstAngle.toFixed(2)+'deg)';
-    sourceCover.style.backfaceVisibility='hidden';
-    sourceCover.style.removeProperty('transform-style');
+    sourceCover.style.transform='perspective(2800px) rotateY('+firstAngle.toFixed(2)+'deg)';
+    sourceCover.style.backfaceVisibility='visible';
+    sourceCover.style.transformStyle='preserve-3d';
     sourceCover.classList.add('p2-emmaus-turning');
     sourceCover.style.zIndex='11';
     // Both covers show the front only, around the SAME left-spine axis.
@@ -703,7 +702,11 @@
     sourceCover.style.zIndex=sourceOriginalCoverZ;
     if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
    }
-   if(magazineUnderlay)magazineUnderlay.style.visibility=move>.001?'visible':'hidden';
+   if(magazineUnderlay){
+     magazineUnderlay.style.visibility=move>.001?'visible':'hidden';
+     magazineUnderlay.style.display=move>.001?'block':'none';
+     magazineUnderlay.style.opacity=String(smooth((move-.25)/.40));
+    }
   }
   // The accepted Magazine iframe, including its book spine and original
   // video proportions, remains unchanged and restores during reverse scroll.
