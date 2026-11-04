@@ -15,11 +15,11 @@
 <header class="dual-ui">
  <span class="dual-ui__name">WESTSIDE WATCH · VOL.00</span>
  <nav class="dual-ui__controls" aria-label="實驗場景">
-  <button type="button" data-snap="0.14">封面進場</button>
-  <button type="button" data-snap="0.48">晨星顯現</button>
-  <button type="button" data-snap="0.60">晨星升起</button>
-  <button type="button" data-snap="0.69">西望鉛字</button>
-  <button type="button" data-snap="0.58">七色滾動</button>
+  <button type="button" data-snap="0.14">整張封面從右進場</button>
+  <button type="button" data-snap="0.32">完整西望從左進場</button>
+  <button type="button" data-snap="0.40">巨字七色滾動</button>
+  <button type="button" data-snap="0.72">七色末段</button>
+  <button type="button" data-snap="0.77">七色完成</button>
   <button type="button" data-snap="0.845">藍金定格</button>
   <button type="button" data-snap="0.90">Contents 進場</button>
   <button type="button" data-snap="0.95">Contents 定格</button>
@@ -170,7 +170,7 @@
 <!-- Use the already published Doré Search canonical registry: no parallel asset table. -->
 <script src="/one/one-dore-cover-registry.js"></script>
 <script src="/one/one-dore-assets-241.js"></script>
-<script src="/js/p2-vol00-poster.js?v=20261104-contents-header-register-v6"></script>
+<script src="/js/p2-vol00-poster.js?v=20261104-cover-first-20261104-v7"></script>
 <script>
 (function(){
  const stage=document.getElementById('dual-stage');
@@ -426,10 +426,27 @@
     railX=posterLayout?contentsX:(contentsX-edge);
     railY=contentsY+contentsH;railW=edge;
   }
-  const blue=reduce?1:ease((progress-.02)/.20);
-  const dawn=reduce?(progress>=.31?1:0):ease((progress-.225)/.21);
+  // 01→02: full right cover first; whole left poster second; seven inks third.
+  // This is ONE reversible scroll owner; no old half-page paper curtains.
+  const coverIn=stableLargeA?ease((progress-.04)/.20):1;
+  const posterIn=stableLargeA?ease((progress-.28)/.07):1;
+  const blue=stableLargeA?1:(reduce?1:ease((progress-.02)/.20));
+  const dawn=stableLargeA?1:(reduce?(progress>=.31?1:0):ease((progress-.225)/.21));
   pose(cover,coverX,coverY,coverW,coverH);
   pose(gold,contentsX,contentsY,contentsW,contentsH);
+  if(stableLargeA){
+   cover.style.visibility=coverIn>.001?'visible':'hidden';
+   cover.style.transform='translate3d('+((1-coverIn)*Math.max(coverW,W-coverX)).toFixed(2)+'px,0,0)';
+   cover.style.opacity='1';
+   gold.style.visibility=posterIn>.001?'visible':'hidden';
+   gold.style.transform='translate3d('+(-(1-posterIn)*(contentsX+contentsW+20)).toFixed(2)+'px,0,0)';
+   gold.style.opacity='1';
+   stage.dataset.releaseCoverIn=coverIn.toFixed(4);
+   stage.dataset.releasePosterIn=posterIn.toFixed(4);
+  }else{
+   cover.style.visibility='visible';cover.style.transform='';
+   gold.style.visibility='visible';gold.style.transform='';
+  }
   pose(rail,railX,railY+contentsH,contentsH,railW);
   const railReveal=reduce?(progress>=.87?1:0):ease((progress-.77)/.14);
   const railFlip=reduce?(progress>=.87?1:0):ease((progress-.80)/.155);
@@ -442,7 +459,7 @@
   });
   stage.dataset.spread='contents-square-cover-5-8';
   stage.dataset.spineFlip=railFlip.toFixed(3);
-  cover.style.clipPath='inset(0 0 '+((1-blue)*100).toFixed(3)+'% 0)';
+  cover.style.clipPath=stableLargeA?'none':'inset(0 0 '+((1-blue)*100).toFixed(3)+'% 0)';
   // The seven palettes ARE the giant poster entrance; the legacy
   // page curtain must not crop the glyphs or their background.
   gold.style.clipPath=stableLargeA?'none':
@@ -511,17 +528,17 @@
    const starRise=starLift;
 
    // Protected cover geometry and light stay unchanged.
-   city.style.transform='translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
-   city.style.opacity=String(reduce?dawnRise:ease((progress-.03)/.12));
-   coverEnglish.style.opacity=String(reduce?dawnRise:ease((progress-.62)/.105));
+   city.style.transform=stableLargeA?'none':'translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
+   city.style.opacity=String(stableLargeA?1:(reduce?dawnRise:ease((progress-.03)/.12)));
+   coverEnglish.style.opacity=String(stableLargeA?1:(reduce?dawnRise:ease((progress-.62)/.105)));
    // The fixed masthead and issue number read as ONE editorial signature.
    // Their impression is complete by the cover+star hold; the prior late
    // fade left the entire cover identity almost invisible at that key frame.
    const signature=reduce?1:ease((progress-.73)/.083);
-   masthead.style.opacity=String(signature);
-   coverScripture.style.opacity=String(signature);
-   coverVol.style.opacity=String(signature);
-   coverHeading.style.opacity=String(reduce?dawnRise:ease((progress-.69)/.095));
+   masthead.style.opacity=String(stableLargeA?1:signature);
+   coverScripture.style.opacity=String(stableLargeA?1:signature);
+   coverVol.style.opacity=String(stableLargeA?1:signature);
+   coverHeading.style.opacity=String(stableLargeA?1:(reduce?dawnRise:ease((progress-.69)/.095)));
    star.style.opacity=String(starRise);
    star.style.transform='translate(-50%,-50%) scale('+(reduce?1:lerp(.72,1,starRise)).toFixed(3)+')';
    const printLight=reduce?1:ease((progress-.645)/.15);
@@ -553,7 +570,7 @@
   contents.setAttribute('aria-hidden',stone>.98?'false':'true');
   contents.inert=stone<.98;
   stage.dataset.phase=stage.dataset.p2Poster==='a'
-   ?(progress<.26?'cover-arrival':progress<.77?'seven-color-poster':
+   ?(progress<.28?'cover-arrival':progress<.36?'whole-poster-arrival':progress<.77?'seven-color-poster':
      progress<.88?'gold-poster-hold':progress<.95?'contents-arrival':
      progress<.97?'contents-hold':progress<1?'contents-spread-retreat':'contents-final')
    :(progress<.235?'cover-arrival':progress<.42?'dore-engraving':
