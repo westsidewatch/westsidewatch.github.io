@@ -86,6 +86,9 @@ try{
       markScale:+p.style.getPropertyValue('--xw-mark-scale')||1,
       posterContents:+stage.dataset.posterContents||0,
       gutter:innerWidth>820?rect(cover).left-rect(tile).right:rect(cover).top-rect(tile).bottom,
+      mastWidthRatio:rect(cover.querySelector('.dual-cover__mast')).width/rect(cover).width,
+      mastLeftOffset:rect(cover.querySelector('.dual-cover__mast')).left-rect(cover).left,
+      mastLocalTransform:getComputedStyle(cover.querySelector('.dual-cover__mast')).transform,
       oldArt:getComputedStyle(document.getElementById('dual-dore-plate')).display,
       oldLetter:getComputedStyle(document.getElementById('dual-letterfield')).display
      };
@@ -140,6 +143,9 @@ try{
      assert.equal(goldHold.palette,'midnight-gold');
      assert(Math.abs(goldHold.markScale-1)<.002,'A poster stays monumental until Contents arrives');
      assert(Math.abs(goldHold.scale-1)<.002,'finished gold poster remains full-size');
+     assert(goldHold.mastWidthRatio>=1.055,'official WESTSIDE WATCH masthead must span the cover edge-to-edge');
+     assert(Math.abs(goldHold.mastLeftOffset)<2,'full-bleed masthead starts at the actual cover edge');
+     assert.equal(goldHold.mastLocalTransform,'none','the official masthead must not shrink independently');
      const atHold=await snap(.90);
      assert.equal(atHold.palette,'midnight-gold');
      assert(atHold.markScale<1&&atHold.markScale>.23,'original gold glyph begins shrinking INTO Contents');
@@ -149,6 +155,8 @@ try{
      assert(contentsHold.contentsOpacity>.99,'Contents is fully present before spread shrink');
      assert(Math.abs(contentsHold.markScale-.23)<.02,'Xi Wang has settled in editorial corner');
      assert(Math.abs(contentsHold.scale-1)<.002,'complete Contents+cover must rest before retreat');
+     assert(contentsHold.mastWidthRatio>=1.055,'official masthead must still fill the cover while Contents settles');
+     assert.equal(contentsHold.mastLocalTransform,'none','Contents handoff cannot scale the official masthead');
      const shrinking=await snap(.976);
      assert(shrinking.scale<1&&shrinking.scale>.85,'retreat is controlled by scrolling, not a timer');
      const rewind=await snap(.54);
