@@ -11,6 +11,7 @@ const css=fs.readFileSync('static/css/p2-0103-release.css','utf8');
 const vol=fs.readFileSync('static/experiments/p2-double-square-video-lab.html','utf8');
 const bridge=fs.readFileSync('static/js/p2-magazine-live-bridge.js','utf8');
 const poster=fs.readFileSync('static/js/p2-vol00-poster.js','utf8');
+const posterCss=fs.readFileSync('static/css/p2-vol00-poster.css','utf8');
 assert(!/id="olive-proof"|p2-five-v15|olive-speaker-baseline|data-jump="1[01]\./.test(html),'04–07 are excluded from the release HTML');
 assert(!/\bconst olive\b|\boliveIn\b|\boliveShowing\b|galleryBorrowed|archiveForOlive/.test(js),'04–07 animation is excluded from release runtime');
 assert(!/\.olive-proof|data-realm="sermon"|data-realm="cinema"|data-realm="book"/.test(css),'release CSS excludes future realm content');
@@ -22,6 +23,8 @@ assert.match(vol,/posterIn=stableLargeA\?ease\(\(progress-\.28\)\/\.07\)/,'whole
 assert.match(poster,/const u=clamp\(\(p-\.36\)\/\.41\)\*6/,'seven inks only begin after folios are visible');
 assert.match(bridge,/magazine\.style\.background='transparent'/,'no early blank paper curtain');
 assert.match(bridge,/filmReveal=easing\(\(progress-\.97\)\/\.03\)/,'home video only revealed at final spread retreat');
+assert.match(poster,/--xw-field-opacity/,'full field follows the same scroll position');
+assert.match(posterCss,/data-p2-poster="a"\]::before/,'backing paper must replace Church water and schedule');
 assert.match(html,/p2-emmaus-theme-verse\.css/,'ONE green cover scripture has separate scoped OS rule');
 assert(!/\.olive-proof/.test(css),'no Olive Mountain CSS');
 const out='artifacts/p2-0103-release';fs.mkdirSync(out,{recursive:true});
@@ -67,6 +70,8 @@ const browserPromise=chromium.launch({headless:true});
         coverIn:+stage?.dataset.releaseCoverIn||0,
         posterIn:+stage?.dataset.releasePosterIn||0,
         spreadScale:+stage?.dataset.posterSpreadScale||1,
+        fieldOpacity:+stage?.dataset.posterField||0,
+        posterPageBackground:doc?.defaultView?.getComputedStyle(doc.getElementById('xw-poster'))?.backgroundColor||'',
         filmOpacity:clip?+getComputedStyle(clip).opacity:-1,
         sheetContents:doc?.getElementById('dual-stone-contents')?.inert,
         oneVisible:!!inScene&&getComputedStyle(inScene).visibility==='visible',
@@ -83,11 +88,15 @@ const browserPromise=chromium.launch({headless:true});
     assert(cover.coverIn>.001&&cover.posterIn===0,'full cover must enter BEFORE entire 西望 poster');
     assert(!cover.posterVisible,'blank left folio must NOT be visible during cover entrance');
     assert.equal(cover.filmOpacity,0,'film must remain behind cover');
+    assert(cover.fieldOpacity>.99,'cover stage must conceal old Church schedule');
     const print=await pose(4.65);
     console.log('RELEASE GIANT PRINT',width,JSON.stringify(print));
     assert(print.posterVisible&&print.coverVisible,'full pair must be present for seven-color print');
     assert(Math.abs(print.posterW-print.posterH)<3,'giant 西望 stays 1:1');
     assert.equal(print.filmOpacity,0,'no film while ink colors still run');
+    assert(print.fieldOpacity>.99,'Church water must not show around large 西望');
+    assert.equal(print.posterPageBackground,'rgba(0, 0, 0, 0)',
+      'large 西望 may not arrive inside an opaque beige square');
     const gold=await pose(5.99);
     console.log('RELEASE BLUE-GOLD',width,JSON.stringify(gold));
     assert(gold.coverVisible&&gold.posterVisible,'gold print has intact complete folios');
@@ -99,6 +108,7 @@ const browserPromise=chromium.launch({headless:true});
     const retreat=await pose(6.48); // p≈.994: entire spread already retreats
     assert(retreat.spreadScale<.999,'final filmed background reveals only as the complete spread retreats');
     assert(retreat.filmOpacity>.05,'the existing homepage film appears AFTER Contents has entered');
+    assert(retreat.fieldOpacity<.1,'the field backing must clear to reveal film');
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
     assert(reading.oneVisible,'real ONE Bible reader remains visible at release end');
@@ -115,6 +125,7 @@ const browserPromise=chromium.launch({headless:true});
     // Parent frame should never insert a blank opaque paper over the church.
     const rewind=await pose(1.6);
     assert(!rewind.coverVisible&&!rewind.posterVisible,'reverse scroll must restore Church only');
+    assert(rewind.fieldOpacity<.001,'reverse scroll must clear entire magazine field');
     assert(!errors.some(x=>/ReferenceError|TypeError|SyntaxError/.test(x)),
       'JavaScript errors during release choreography: '+errors.join('; '));
     console.log('P2 RELEASE VERIFIED',width,{church,cover,print,gold,contents,reading,over,rewind});
