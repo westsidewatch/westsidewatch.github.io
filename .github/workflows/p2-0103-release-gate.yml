@@ -1,0 +1,67 @@
+name: P2 01-03 Release Gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - 'static/**'
+      - 'tests/p2-0103-release.cjs'
+      - '.github/workflows/p2-0103-release-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p2-0103-release-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-preview:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release/p2-0103-')
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Build production-shaped P2 01-03 preview
+        run: |
+          hugo --gc --minify --baseURL 'https://westsidewatch-github-io.pages.dev/'
+          test -s public/experiments/p2-0103-release.html
+          ! grep -Eq 'id="olive-proof"|p2-five-v15|olive-speaker-baseline' public/experiments/p2-0103-release.html
+          test -s public/js/p2-0103-release.js
+          test -s public/css/p2-0103-release.css
+      - name: Install browser and run 01-03 release gate
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-0103-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-0103-release.cjs
+      - name: Save genuine Church / Magazine / Emmaus browser proofs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-0103-release-visual-proof
+          path: artifacts/p2-0103-release/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Deploy Cloudflare Pages preview only (NOT production)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREVIEW_BRANCH: p2-0103-${{ github.event.pull_request.number || github.run_id }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo '::error::Cloudflare preview credentials missing'; exit 1; }
+          npx --yes wrangler@4 pages deploy public \
+            --project-name=westsidewatch-github-io \
+            --branch="$PREVIEW_BRANCH" \
+            --commit-hash="${GITHUB_SHA}" \
+            --commit-message="P2 01-03 release candidate - 04 Olive excluded"
+          echo '### P2 01–03 PREVIEW ONLY — NOT MERGED' >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/p2-0103-release.html" >> "$GITHUB_STEP_SUMMARY"
