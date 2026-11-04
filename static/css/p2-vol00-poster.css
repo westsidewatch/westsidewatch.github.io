@@ -411,3 +411,21 @@
 .dual-stage[data-p2-poster="a"] #dual-contents .xw-poster{
  background:transparent;
 }
+
+
+/* 02 -> 03: a single, scroll-owned manuscript background lives INSIDE
+ * the original Magazine iframe, behind both native folios. This layer
+ * replaces the film at the chapter boundary without placing a photo
+ * behind the book or drawing green cloth around the entire viewport.
+ * Optional comparison backdrops live separately in the P2 release. */
+.dual-stage[data-p2-poster="a"]::after{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ opacity:var(--p2-emmaus-backdrop-opacity,0);
+ background-color:#e8e2d4;
+ background-image:
+   linear-gradient(90deg,rgba(232,226,212,.86),rgba(232,226,212,.77)),
+   url('/images/p2-emmaus-time-held-open-v17.svg');
+ background-position:center,center;
+ background-size:cover,cover;
+ background-repeat:no-repeat;
+}
