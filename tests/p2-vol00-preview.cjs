@@ -20,7 +20,8 @@ assert.match(studies,/const DESIGNS=\[/);
 assert.match(studyCss,/\.p2x--12/);
 assert.match(source,/p2-vol00-editorial\.css\?v=vol00-editorial-\d{8}[a-z]/,'the standalone folio CSS must cache-bust on visual revision');
 assert(source.includes('Isaiah 62:6 · KJV')&&source.includes('我在你城上設立守望的，他們晝夜必不靜默'),'approved bilingual scripture is preserved');
-assert(source.includes('coverScripture.style.opacity=String(signature)'),'scripture follows existing masthead reveal without a new effect');
+assert(source.includes('coverScripture.style.opacity=String(stableLargeA?1:signature)'),
+ 'official cover scripture arrives together with the whole right cover in A; historical proof still uses its prior signature phase');
 assert(css.includes('.dual-cover{--ws-vol00-wall-start:13.125%;'),'protect the original city-wall top exactly');
 assert(css.includes('.dual-cover__city{position:absolute;z-index:2;top:var(--ws-vol00-wall-start);bottom:0;'),'protect the original city-wall lower edge');
 assert(!css.includes('--ws-vol00-wall-start:23.125%')&&!css.includes('bottom:-10%'),'no mobile castle displacement');
