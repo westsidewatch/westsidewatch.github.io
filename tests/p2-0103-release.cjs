@@ -101,10 +101,12 @@ const browserPromise=chromium.launch({headless:true});
     console.log('RELEASE BLUE-GOLD',width,JSON.stringify(gold));
     assert(gold.coverVisible&&gold.posterVisible,'gold print has intact complete folios');
     assert(Math.abs(gold.spreadScale-1)<.002,'do not shrink before the Contents entry');
+    await page.screenshot({path:out+'/blue-gold-fixed-'+width+'.png'});
     const contents=await pose(6.34); // p≈.953: fully settled Contents BEFORE spread retreat
     console.log('RELEASE CONTENTS',width,JSON.stringify(contents));
     assert(Math.abs(contents.spreadScale-1)<.002,'Contents must settle before combined spread retreat');
     assert.equal(contents.filmOpacity,0,'film must not be visible until spread shrink');
+    await page.screenshot({path:out+'/contents-settled-'+width+'.png'});
     const retreat=await pose(6.48); // p≈.994: entire spread already retreats
     assert(retreat.spreadScale<.999,'final filmed background reveals only as the complete spread retreats');
     assert(retreat.filmOpacity>.05,'the existing homepage film appears AFTER Contents has entered');
@@ -112,6 +114,7 @@ const browserPromise=chromium.launch({headless:true});
     const settled=await pose(6.50);
     assert(settled.fieldOpacity<.001&&settled.filmOpacity>.999,
       'the whole paper field must fully clear when the original film is revealed');
+    await page.screenshot({path:out+'/film-after-spread-retreat-'+width+'.png'});
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
     assert(reading.oneVisible,'real ONE Bible reader remains visible at release end');
