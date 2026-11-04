@@ -85,7 +85,7 @@ try{
       contentsCount:window.P2ContentsTwelve?.count||0,
       markScale:+p.style.getPropertyValue('--xw-mark-scale')||1,
       posterContents:+stage.dataset.posterContents||0,
-      gutter:width>820?rect(cover).left-rect(tile).right:rect(cover).top-rect(tile).bottom,
+      gutter:innerWidth>820?rect(cover).left-rect(tile).right:rect(cover).top-rect(tile).bottom,
       oldArt:getComputedStyle(document.getElementById('dual-dore-plate')).display,
       oldLetter:getComputedStyle(document.getElementById('dual-letterfield')).display
      };
