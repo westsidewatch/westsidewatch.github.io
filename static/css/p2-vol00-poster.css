@@ -41,7 +41,7 @@
  * spatial property of foil, not a timer-driven shimmer or neon flicker. */
 .dual-stage[data-p2-poster="a"] .xw-poster__glyph--foil{
  z-index:5;
- opacity:calc(var(--xw-foil-opacity,0)*.72);
+ opacity:var(--xw-foil-opacity,0);
  background:
   repeating-linear-gradient(157deg,rgba(255,246,208,.045) 0px,rgba(80,57,23,.015) 1px,transparent 2px,transparent 5px),
   linear-gradient(111deg,#a67e33 0%,#d8b969 17%,#af883f 36%,#e8ce82 51%,#b58b3a 68%,#d2b56f 85%,#9f752d 100%)
