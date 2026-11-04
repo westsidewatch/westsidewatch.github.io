@@ -108,7 +108,10 @@ const browserPromise=chromium.launch({headless:true});
     const retreat=await pose(6.48); // p≈.994: entire spread already retreats
     assert(retreat.spreadScale<.999,'final filmed background reveals only as the complete spread retreats');
     assert(retreat.filmOpacity>.05,'the existing homepage film appears AFTER Contents has entered');
-    assert(retreat.fieldOpacity<.1,'the field backing must clear to reveal film');
+    assert(retreat.fieldOpacity<.2,'the field backing must fade during retreat to reveal film');
+    const settled=await pose(6.50);
+    assert(settled.fieldOpacity<.001&&settled.filmOpacity>.999,
+      'the whole paper field must fully clear when the original film is revealed');
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
     assert(reading.oneVisible,'real ONE Bible reader remains visible at release end');
