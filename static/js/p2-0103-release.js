@@ -17,9 +17,11 @@
  const params=new URLSearchParams(location.search);
  // Editorial A/B: the default 03 exterior is the approved ONE green cloth.
  // ?surround=engraving restores the former radial engraving for comparison.
- const surround=params.get('surround')==='engraving'?'engraving':'cloth';
+ const surround=params.get('surround')==='cloth'?'cloth':'engraving';
  document.body.dataset.p2Surround=surround;
- if(!params.has('ground')&&params.get('five')!=='0')fixedGround=true;
+ // Keep the canonical, in-folio manuscript field as the default. The
+ // independent A/B full-viewport surround is opt-in via ?ground=1 only.
+ if(!params.has('ground'))fixedGround=false;
  const timelineMax=9.34; // Hard ceiling before 04 at 9.44
  const groundToggle=$('#proof-ground-toggle'),realmGround=$('#p2-realm-background');
  function syncGroundMode(){
@@ -516,6 +518,15 @@
   const sourceFrame=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
   const sourceDoc=sourceFrame?.contentDocument;
   const sourceTile=sourceDoc?.getElementById('dual-contents');
+  const sourceStage=sourceDoc?.getElementById('dual-stage');
+  // Use the existing 02 folio as the backdrop compositor: the VIDEO is
+  // replaced by an Emmaus engraving below the actual pages. There is no
+  // external rect cut-out, cloth wallpaper, or third paper flying in.
+  if(sourceStage){
+   const paperIn=smooth((distance-6.50)/.26);
+   sourceStage.style.setProperty('--p2-emmaus-backdrop-opacity',paperIn.toFixed(5));
+   sourceStage.dataset.emmausBackdrop=paperIn.toFixed(5);
+  }
   const sourceCover=sourceDoc?.getElementById('dual-cover');
   const sourceSpine=sourceDoc?.getElementById('dual-continuum');
   const sourceFigure=sourceDoc?.getElementById('dual-dore-plate');
