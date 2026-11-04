@@ -131,6 +131,27 @@ const browserPromise=chromium.launch({headless:true});
       '73%: old film must be covered by the native Emmaus background, not show as a collage');
     assert.equal(backstage.exteriorOpacity,0,'73%: default must not put cloth wallpaper around the spread');
     assert.equal(backstage.exteriorMode,'engraving','73%: the green book-cover cloth must not become outer wallpaper');
+    const turns=await page.evaluate(()=>{
+      const origin=document.querySelector('#proof-original')?.contentDocument;
+      const source=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+      const cover=source?.getElementById('dual-cover');
+      return {mode:cover?.dataset.turnMode,transform:cover?.style.transform||''};
+    });
+    assert.equal(turns.mode,'bound-page-slide','first turn must retain the original full-size cover');
+    assert(!/rotateY|perspective/.test(turns.transform),
+      'the original 5:8 cover may NOT become a narrow perspective spike');
+    await pose(7.42); // second green-underleaf -> Doré transition, ~80%
+    await page.screenshot({path:out+'/emmaus-second-turn-80percent-'+width+'.png'});
+    const secondTurn=await page.evaluate(()=>{
+      const origin=document.querySelector('#proof-original')?.contentDocument;
+      const source=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+      const underleaf=source?.getElementById('p2-emmaus-magazine-underleaf');
+      const overlay=document.getElementById('em-entry-cover');
+      return {leaf:underleaf?.style.transform||'',
+        duplicateVisible:overlay?getComputedStyle(overlay).visibility!=='hidden':true};
+    });
+    assert(secondTurn.leaf.includes('translate3d('),'second turn must move the original green leaf');
+    assert(!secondTurn.duplicateVisible,'a duplicated rotating green book cannot overlay the original leaf');
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
     assert(reading.oneVisible,'real ONE Bible reader remains visible at release end');
