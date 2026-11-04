@@ -1,52 +1,70 @@
-/* P2 Vol.00 / A+B poster surfaces and sevenfold curtain.
- * Intentional change from the retired Magazine Book-spine navigator.
- * DOM spine anchor remains inert for 03–07 outer spread measurement only.
- * Only the Magazine left square is affected. Homepage/Church/right cover
- * are excluded by scoping. No Doré images in the Magazine poster. */
+/* P2 Vol.00 — scroll-registered print-plate poster.
+ * One P2 scroll owner. No sevenfold curtain, independent animation,
+ * global root override, or change to official RIGHT cover.
+ * This only styles the original Magazine LEFT square and isolated A art.
+ */
 .dual-stage[data-p2-poster] .dual-continuum{
  visibility:hidden!important;opacity:0!important;pointer-events:none!important;
- box-shadow:none!important;
+ box-shadow:none!important
 }
 .dual-stage[data-p2-poster] .dual-tile--contents .dual-dore-plate,
 .dual-stage[data-p2-poster] .dual-tile--contents .dual-letterfield,
 .dual-stage[data-p2-poster] .dual-tile--contents .dual-cover__star,
 .dual-stage[data-p2-poster] .dual-tile--contents #dual-stone-contents{
- display:none!important;opacity:0!important;pointer-events:none!important;
+ display:none!important;opacity:0!important;pointer-events:none!important
 }
 .dual-stage[data-p2-poster] #dual-contents{
- background:var(--ws-paper,#eee5d4);isolation:isolate;
+ background:var(--ws-paper,#faf9f5);isolation:isolate
 }
 .dual-stage[data-p2-poster] #dual-contents .xw-poster{
- position:absolute;inset:0;z-index:8;overflow:hidden;
- width:100%;height:100%;pointer-events:none;display:block;
+ position:absolute;inset:0;z-index:8;width:100%;height:100%;
+ display:block;overflow:hidden;pointer-events:none;
+ background:var(--xw-poster-bg,#f6eae2);
+ contain:paint
 }
 .dual-stage[data-p2-poster] .xw-poster__art{
- position:absolute;inset:0;z-index:3;display:block;width:100%;height:100%;
- overflow:hidden;pointer-events:none;shape-rendering:geometricPrecision;
+ position:absolute;inset:0;z-index:3;display:block;
+ width:100%;height:100%;pointer-events:none;
+ shape-rendering:geometricPrecision
 }
-.dual-stage[data-p2-poster] .xw-poster__big-type path{
- shape-rendering:geometricPrecision;
- /* Actual independent SVG outline paths, not text inside an SVG clip. */
+.dual-stage[data-p2-poster="a"] .xw-poster__glyph{
+ position:absolute;inset:0;display:block;z-index:4;
+ background:var(--xw-ink,var(--ws-first-light,#a2872a));
+ -webkit-mask-image:url('/images/xiwang-poster-a-glyph-mask.svg');
+ mask-image:url('/images/xiwang-poster-a-glyph-mask.svg');
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-position:center;mask-position:center;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ pointer-events:none
 }
-.dual-stage[data-p2-poster] .xw-poster__metadata text{
- font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
- font-size:10px;font-weight:400;letter-spacing:2px;
- fill:var(--ws-first-light,#a2872a);
- font-synthesis:none;
+/* A physical, matte metallic ink impression. The highlight is a static
+ * spatial property of foil, not a timer-driven shimmer or neon flicker. */
+.dual-stage[data-p2-poster="a"] .xw-poster__glyph--foil{
+ z-index:5;
+ opacity:calc(var(--xw-foil-opacity,0)*.72);
+ background:
+  repeating-linear-gradient(157deg,rgba(255,246,208,.045) 0px,rgba(80,57,23,.015) 1px,transparent 2px,transparent 5px),
+  linear-gradient(111deg,#a67e33 0%,#d8b969 17%,#af883f 36%,#e8ce82 51%,#b58b3a 68%,#d2b56f 85%,#9f752d 100%)
 }
-.dual-stage[data-p2-poster] .xw-poster__folds{
- position:absolute;inset:0;z-index:2;overflow:hidden;
- pointer-events:none;
+.dual-stage[data-p2-poster="a"] .xw-poster__caption{
+ position:absolute;z-index:6;left:9.1%;bottom:2.6%;
+ display:flex;align-items:center;gap:clamp(7px,1.5cqi,14px);
+ max-width:80%;white-space:nowrap;
+ font:italic 400 clamp(10px,1.6cqi,14px)/1.3 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.015em;color:var(--ws-morning-gold,#d2bc69);
+ opacity:var(--xw-caption-opacity,0);
+ pointer-events:none
 }
-.dual-stage[data-p2-poster] .xw-poster__fold{
- position:absolute;inset:0;display:block;
- background:var(--fold-ink);
- transform:scaleY(0);transform-origin:top center;
- will-change:transform;contain:paint;
+.dual-stage[data-p2-poster="a"] .xw-poster__caption::before{
+ content:"";display:block;width:clamp(22px,6cqi,54px);height:1px;flex:none;
+ background:currentColor;opacity:.80
 }
-@media(prefers-reduced-motion:reduce){
- .dual-stage[data-p2-poster] .xw-poster__fold{will-change:auto}
+@media (prefers-reduced-motion:reduce){
+ .dual-stage[data-p2-poster] .xw-poster,
+ .dual-stage[data-p2-poster] .xw-poster__glyph,
+ .dual-stage[data-p2-poster] .xw-poster__caption{
+  animation:none!important;transition:none!important
+ }
 }
-/* This does not disable the P2 03 frontispiece: its parent-injected
- * .p2-emmaus-prologue is independently overlaid above this poster (z:9).
- * Existing full ONE and right Doré plates remain unchanged. */
+/* P2 03 Emmaus frontispiece (z:9) and 03–07 original components
+ * intentionally remain outside the scope of this style sheet. */
