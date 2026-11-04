@@ -447,3 +447,12 @@ These files remain archived intact; they do not operate as independent OS author
 **路由：** `static/js/p2-vol00-poster.js` 的 default `poster=a` 現讀取上述 SVG；`poster=b` 分支和原七重全頁折疊/正反捲動控制原封不動。原 A2 SVG 保留為只讀歷史資產，不作現版母本；右側封面、Church、Emmaus、Homepage、Contents 時序及 03–07 均未改動。隔離實驗頁 `static/experiments/p2-double-square-video-lab.html` 更新腳本快取版本。
 
 **驗收區分：** SVG XML/兩原生路徑、資產載入路由、B 不動、右側封面 DOM 仍在，都已靜態核對；**GitHub Actions 與真實 P2 browser 視覺、1648/768/390/320、200% 縮放、逆捲動及右側視覺光學 QA 尚待當前 commit 產生實際證據，不以靜態檢查取代批准**。Draft 未合併主站。
+
+
+### 2026-11-04 / P2 雜誌最終過場：雙頁定格後縮小露出原影片；禁止持續霓虹
+
+**使用者最新確定的動效方向：**保留 P2 02 已選的 A 午夜藍「西望」海報＋右側正式 5:8《城市之光》封面，待七重折疊與兩張作品均到位後，才將**整組對開同步縮小**，使原本已播放的首頁 `/preview/watch-city-vol00/hosanna/?cover=1` 影片從四周露出。不可從場景外飛入新圖，不可新建影片播放器或第二個 RAF clock。反向滾動同一條軌道完全回復；reduced motion 直接在最後狀態定格。
+
+**已在 Draft 隔離 P2 實作：** `static/experiments/p2-double-square-video-lab.html` 使用原本的 `progress`，在 `p=.91..995` 用 smoothstep 將 `.dual-panels`（左海報＋右封面）整組從 `scale(1)` 收到 `scale(.85)`，不移動單頁相對位置；只在原本 poster/cover 均到位後動作。輸出 `data-poster-pullback`、`data-poster-spread-scale` 以利捲動斷點與 QA。這是 scene-owned transform，不改原有右封面 SVG、Church / Emmaus、sevenfold 或 P2 parent video。**真正瀏覽器畫面及 320/390/768/1648、反向滾動尚待實測驗收。**
+
+**藝術評價：**七色可在開場擔任七重折疊的印版角色，但**不採用七色持續閃爍的霓虹海報**。原因：會破壞 A 巨字／紙底的明晰度、干擾右封面金色城牆和經文，並造成閃爍/可及性風險。若後續探索，僅可隔離 A/B 比較一輪極短、不重複的七色印版校準；不改正式 A 的深夜藍定格，也不能加入快速閃頻或持續光變。
