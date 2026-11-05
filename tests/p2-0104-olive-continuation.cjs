@@ -37,11 +37,18 @@ assert.doesNotMatch(js,/setInterval|setTimeout|new Promise|animate\(|transitionD
  'no secondary timeline or time-based lag in P2 scroll choreography');
 assert.doesNotMatch(html,/olive-main-image|olive-next-image|olive-speaker-names/,
  'remove prior speaker-player layout and small-thumb corridor');
-assert.match(css,/04-olive-engraving-v1-5\.svg/,'reuse approved original Olive line engraving SVG');
+assert.match(css,/04-olive-terrain-editorial-v2\.svg/,'use new native Olive Mountain terrain');
+assert.match(html,/olive-surround__plate/,'one composition, no segmented color-block panels');
+assert.match(html,/id="olive-rubric"/,'reserved editorial masthead identity');
 assert.match(css,/\.olive-stage__overview\{[^}]*background:#e7e5d9/,
  'twelve-work finale must hide previous full-size pair behind opaque original paper, not leak artwork in grid gutters');
 assert(fs.existsSync(path.join(root,'static/images/p2-realms/v15/04-olive-engraving-v1-5.svg')),
- 'do not reproduce approved SVG line art');
+ 'keep approved V1.5 source intact as archive');
+const mountainSVG=read('static/images/p2-realms/v15/04-olive-terrain-editorial-v2.svg');
+assert.match(mountainSVG,/Mount of Olives/, 'mountain identity rather than generic plants');
+assert.match(mountainSVG,/Kidron Valley/, 'geographic field of the biblical setting');
+assert.match(mountainSVG,/olive-tree-/, 'native vector etched olive trees');
+assert(!mountainSVG.includes('<image'), 'terrain must stay editable native SVG');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
 (async()=>{
  const browser=await chromium.launch({headless:true});
@@ -95,12 +102,13 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       ground:+st.dataset.p2Ground,index:+st.dataset.p2Index,
       pairIndex:st.dataset.p2PairIndex||'0',pairBlend:st.dataset.p2PairBlend||'0',
       pairOrientation:st.dataset.p2PairOrientation,
-      main:box(shell),source:{...box(source.querySelector('#emmaus .emmaus__right')),folio:box(source.querySelector('#emmaus'))},
+      main:box(shell),masthead:box(document.getElementById('olive-rubric')),
+      source:{...box(source.querySelector('#emmaus .emmaus__right')),folio:box(source.querySelector('#emmaus'))},
       firstFrame:get(image),pairLeft:get(left),pairRight:get(right),
       incomingLeft:get(nl),incomingRight:get(nr),
       groundCSS:{visibility:getComputedStyle(ground).visibility,
        opacity:getComputedStyle(ground).opacity,clip:ground.style.clipPath,
-       parts:ground.querySelectorAll('.olive-surround__plane').length},
+       parts:ground.querySelectorAll('.olive-surround__plate').length},
       cards:[...overview.querySelectorAll('.olive-stage__index-card')].map(el=>
        ({src:el.querySelector('img')?.getAttribute('src'),...box(el)})),
       grid:overview.dataset.columns,
@@ -182,25 +190,29 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     {name:'WATCHMAN NEE',slug:'watchman-nee',size:'11cqw',opsz:'43.96'},
     {name:'DEREK PRINCE',slug:'derek-prince',size:'18.19cqw',opsz:'72.695'}
    ],'both poster originals MUST preserve unique English typographic masters');
+   assert(pair.pairLeft.box.y>=pair.masthead.y+pair.masthead.h-3,
+    'the reserved chapter masthead must NOT cover any original poster');
    if(width>800){
     assert.equal(pair.pairOrientation,'side-by-side');
-    assert(Math.abs(pair.pairLeft.box.w-pair.main.w/2)<3,
-     'desktop must maintain two original art works in equal LEFT/RIGHT folios');
+    assert(Math.abs(pair.pairLeft.box.w-pair.pairRight.box.w)<3,
+     'desktop maintains equal left/right original artworks');
+    assert(pair.pairRight.box.x>=pair.pairLeft.box.x+pair.pairLeft.box.w+10,
+     'intentional gutter, no poster-over-poster cards');
    }else{
     assert.equal(pair.pairOrientation,'stacked');
-    assert(Math.abs(pair.pairLeft.box.h-pair.main.h/2)<3,
-     'phone must use equal TOP/BOTTOM folios, not tiny thin portrait columns');
-    assert(Math.abs(pair.pairLeft.box.w-pair.main.w)<3,
-     'phone art must have the full page width');
-    assert(Math.abs(pair.pairRight.box.y-(pair.pairLeft.box.y+pair.pairLeft.box.h))<3,
-     'phone second speaker poster must start below first without overlap');
+    assert(Math.abs(pair.pairLeft.box.h-pair.pairRight.box.h)<3,
+     'phone maintains equal upper/lower original artworks');
+    assert(pair.pairLeft.box.w>pair.main.w*.84,
+     'phone retains wide folios, not tiny columns');
+    assert(pair.pairRight.box.y>=pair.pairLeft.box.y+pair.pairLeft.box.h+8,
+     'phone artworks are separated by a small paper gutter');
    }
    assert.equal(pair.groundCSS.visibility,'hidden',
     'the existing Emmaus background must remain during the settled two-poster hold');
    const material=await go(11.44,'04-only-now-olive-svg-background');
    assert.equal(material.scene,'04-ground-reveal');
    assert(material.ground>.45&&material.ground<.60,'engraved exterior changes on its own later beat');
-   assert.equal(material.groundCSS.parts,4,'use four original-geometry surround planes, not one overlaid bitmap');
+   assert.equal(material.groundCSS.parts,1,'one full-stage engraved terrain, no patchwork panels');
    assert.equal(material.groundCSS.opacity,'1','background transition must not use opacity fading');
    assert(material.groundCSS.clip.startsWith('inset('),'background material must enter by spatial clipping');
    assert.equal(material.pairLeft.src,pair.pairLeft.src);
