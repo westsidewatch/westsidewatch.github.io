@@ -281,8 +281,11 @@ const browserPromise=chromium.launch({headless:true});
     });
     assert(backstage.emmausBackdrop>.999,
       '73%: old film must be covered by the native Emmaus background, not show as a collage');
-    assert(backstage.exteriorOpacity>.999,
-      '73%: the ONE green book-cover backing must take over from the video outside the original book spread');
+    // 6.82vh is now the VISIBLE mid-turn of a 0.60vh page flip, not
+    // the completed green cover. The antique-green exterior must arrive
+    // continuously with the cover, rather than flashing fully green.
+    assert(backstage.exteriorOpacity>.30&&backstage.exteriorOpacity<.80,
+      '73% must show an INTERMEDIATE green-cover exterior during the slower first turn');
     assert.equal(backstage.exteriorMode,'cloth',
       '73%: use the canonical green cover cloth, not the retired pale engraving');
     const turns=await page.evaluate(()=>{
@@ -295,6 +298,13 @@ const browserPromise=chromium.launch({headless:true});
       'first magazine hinge must use the slower, bounded Emmaus-style opening');
     assert(/perspective\(2800px\) rotateY\(/.test(turns.transform),
       'first page must hinge as the original complete 5:8 cover, not be replaced by a clipped strip');
+    // Only AFTER the slow original-cover hinge has finished should the
+    // entire outer field and actual Emmaus green cover be fully settled.
+    await pose(7.17);
+    const greenBackdrop=await page.evaluate(()=>Number(
+      document.getElementById('p2-realm-background')?.style.opacity||0));
+    assert(greenBackdrop>.999,
+      '7.17vh: fully settled original green-cover texture must cover the entire exterior field');
     const greenHold=await pose(7.30); // green 5:8 cover must be complete
     const greenState=await page.evaluate(()=>document.getElementById('emmaus')?.dataset.coverState);
     assert.equal(greenState,'green','the green cover has to HOLD before the second turn');
