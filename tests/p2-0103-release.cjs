@@ -137,8 +137,8 @@ const browserPromise=chromium.launch({headless:true});
       const cover=source?.getElementById('dual-cover');
       return {mode:cover?.dataset.turnMode,transform:cover?.style.transform||''};
     });
-    assert.equal(turns.mode,'bound-page-slide','first turn must retain the original full-size cover');
-    assert(!/rotateY|perspective/.test(turns.transform),
+    assert.equal(turns.mode,'fixed-folio-page-reveal','first turn must keep the original cover in a fixed 5:8 folio');
+    assert(!/rotateY|perspective|translate3d/.test(turns.transform),
       'the original 5:8 cover may NOT become a narrow perspective spike');
     await pose(7.42); // second green-underleaf -> Doré transition, ~80%
     await page.screenshot({path:out+'/emmaus-second-turn-80percent-'+width+'.png'});
@@ -147,10 +147,11 @@ const browserPromise=chromium.launch({headless:true});
       const source=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
       const underleaf=source?.getElementById('p2-emmaus-magazine-underleaf');
       const overlay=document.getElementById('em-entry-cover');
-      return {leaf:underleaf?.style.transform||'',
+      return {leaf:underleaf?.style.transform||'',leafClip:underleaf?.style.clipPath||'',
         duplicateVisible:overlay?getComputedStyle(overlay).visibility!=='hidden':true};
     });
-    assert(secondTurn.leaf.includes('translate3d('),'second turn must move the original green leaf');
+    assert(secondTurn.leaf==='none'&&secondTurn.leafClip.startsWith('inset('),
+      'second turn must reveal the existing green 5:8 folio in place, with no lateral fragment');
     assert(!secondTurn.duplicateVisible,'a duplicated rotating green book cannot overlay the original leaf');
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
