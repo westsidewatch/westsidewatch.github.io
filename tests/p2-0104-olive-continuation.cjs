@@ -74,7 +74,11 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(start.reveal<.001&&start.visibility==='hidden','04 must not flash before reveal starts');
    const middle=await go(10.13);
    assert(middle.reveal>.49&&middle.reveal<.51,'04 half reveal must track hand 1:1');
-   assert(middle.clip.includes('inset(0 0 0 50.000%)'),'half-way must be a RIGHT-TO-LEFT mask');
+   // Chromium normalizes CSS 50.000% into 50%, so test the actual
+   // percentage and direction rather than one serialization string.
+   const mask=middle.clip.match(/^inset\(\s*0(?:px)?\s+0(?:px)?\s+0(?:px)?\s+([\\d.]+)%\s*\)$/);
+   assert(mask&&Math.abs(Number(mask[1])-50)<.15,
+    '50% must reveal FROM RIGHT across the same fixed book rectangle: '+middle.clip);
    assert.equal(middle.visibility,'visible');
    assert.equal(middle.scene,'03','underlying 03 remains stable until fully covered');
    for(const k of ['x','y','w','h']){
