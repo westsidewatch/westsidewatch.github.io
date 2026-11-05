@@ -10,6 +10,18 @@ const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const html=read('static/experiments/p2-0104-olive-continuation.html');
 const js=read('static/js/p2-0104-olive-continuation.js');
 const css=read('static/css/p2-0104-olive-continuation.css');
+const frozenSource=read('static/olive/components/speaker-baseline-v1/baseline.js');
+const frozenCSS=read('static/olive/components/speaker-baseline-v1/baseline.css');
+assert.match(js,/window\.OliveSpeakerBaseline/,
+ 'P2 must use the previously approved speaker name component, NOT naked PNG posters');
+assert.match(js,/frozen\.mount\(art,target\)/,
+ 'every original speaker image must mount the frozen typographic shadow component');
+assert.match(css,/\.olive-stage__artwork>olive-speaker-baseline/,
+ 'approved English must stay registered above the same original 3:4 image');
+assert.match(frozenCSS,/--poster-optical-size/,
+ 'original optical-sizing/variable font authority must remain unchanged');
+assert.match(frozenSource,/olive-speaker-english/,
+ 'original frozen English text must be provided by its original component');
 assert.match(html,/p2-0103-release\.html\?embed=1/,'use real approved 01–03 stage');
 assert.match(html,/id="olive-first"/,'first speaker must originate in the actual Doré frame');
 assert.match(html,/id="olive-pair-next-left"/,'opposed double-spread image masks');
@@ -47,6 +59,19 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       ?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument
       ?.getElementById('dual-cover');
    },null,{timeout:35000});
+   // Previous previews passed while OMITTING the approved two-day English.
+   // This is now a nonnegotiable visual/technical requirement.
+   await page.waitForFunction(()=>{
+      const main=document.querySelector('#olive-first .olive-stage__artwork>olive-speaker-baseline');
+      const cards=[...document.querySelectorAll('#olive-overview .olive-stage__index-card')];
+      return main?.shadowRoot?.querySelector('.olive-speaker-english')?.textContent==='WATCHMAN NEE' &&
+        cards.length===12 &&
+        cards.every(card=>{
+          const over=card.querySelector('.olive-stage__artwork>olive-speaker-baseline');
+          return over?.shadowRoot?.querySelector('.olive-speaker-english')?.textContent?.length>2;
+        }) &&
+        !!main.shadowRoot.querySelector('link[href*="speaker-baseline-v1/baseline.css"]')?.sheet;
+   },null,{timeout:18000});
    const state=()=>page.evaluate(()=>{
     const st=document.getElementById('p2-olive-stage');
     const shell=document.getElementById('olive-proof');
@@ -103,6 +128,30 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(at03.firstFrame.visibility,'hidden','04 must not enter before the 03 hold');
    assert.equal(at03.groundCSS.visibility,'hidden','Olive exterior must wait until the posters settle');
    const bridge=await go(9.76,'01-dore-frame-first-poster-half');
+   const protectedFirst=await page.evaluate(()=>{
+    const art=document.querySelector('#olive-first .olive-stage__artwork');
+    const overlay=art?.querySelector('olive-speaker-baseline');
+    const root=overlay?.shadowRoot;
+    const name=root?.querySelector('.olive-speaker-english');
+    const frame=root?.querySelector('.speaker-card');
+    const a=art?.getBoundingClientRect(),b=overlay?.getBoundingClientRect();
+    return {text:name?.textContent,slug:overlay?.dataset.speaker,
+      posterSize:frame?.style.getPropertyValue('--poster-size'),
+      opticalSize:frame?.style.getPropertyValue('--poster-optical-size'),
+      font:name?getComputedStyle(name).fontFamily:'',
+      ratio:b?b.width/b.height:0,
+      fits:!!a&&!!b&&b.width<=a.width+1&&b.height<=a.height+1};
+   });
+   assert.equal(protectedFirst.text,'WATCHMAN NEE',
+    'original large English WATCHMAN NEE must remain layered on the FIRST image');
+   assert.equal(protectedFirst.slug,'watchman-nee');
+   assert.equal(protectedFirst.posterSize,'11cqw',
+    'never silently replace the two-day approved original English font size');
+   assert.equal(protectedFirst.opticalSize,'43.96');
+   assert(protectedFirst.font.includes('Bodoni Moda'),
+    'original display font must load, not a generic small caption');
+   assert(Math.abs(protectedFirst.ratio-.75)<.01&&protectedFirst.fits,
+    'English master must stay image-relative in original 3:4 proportions');
    assert(bridge.first>.45&&bridge.first<.55,'same-frame handoff should be at midpoint');
    assert.equal(bridge.scene,'04-dore-handoff');
    assert(Math.abs(bridge.firstFrame.box.x-bridge.source.x)<2 &&
@@ -122,6 +171,17 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(pair.pairRight.visibility,'visible');
    assert.equal(pair.pairLeft.src,'/images/olive/watchman-nee-editorial.png');
    assert.equal(pair.pairRight.src,'/images/olive/derek-prince-editorial.png');
+   const pairNames=await page.evaluate(()=>['#olive-pair-left','#olive-pair-right'].map(sel=>{
+    const el=document.querySelector(sel+' olive-speaker-baseline');
+    const frame=el?.shadowRoot?.querySelector('.speaker-card');
+    return {name:el?.shadowRoot?.querySelector('.olive-speaker-english')?.textContent,
+      slug:el?.dataset.speaker,size:frame?.style.getPropertyValue('--poster-size'),
+      opsz:frame?.style.getPropertyValue('--poster-optical-size')};
+   }));
+   assert.deepEqual(pairNames,[
+    {name:'WATCHMAN NEE',slug:'watchman-nee',size:'11cqw',opsz:'43.96'},
+    {name:'DEREK PRINCE',slug:'derek-prince',size:'18.19cqw',opsz:'72.695'}
+   ],'both poster originals MUST preserve unique English typographic masters');
    if(width>800){
     assert.equal(pair.pairOrientation,'side-by-side');
     assert(Math.abs(pair.pairLeft.box.w-pair.main.w/2)<3,
@@ -163,6 +223,15 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    }
    assert(pairTransition.incomingLeft.src.includes('david-pawson-editorial.png'));
    assert(pairTransition.incomingRight.src.includes('stephen-tong-editorial.png'));
+   const incomingTypography=await page.evaluate(()=>
+    ['#olive-pair-next-left','#olive-pair-next-right'].map(sel=>{
+      const x=document.querySelector(sel+' olive-speaker-baseline');
+      return {slug:x?.dataset.speaker,name:x?.shadowRoot?.querySelector('.olive-speaker-english')?.textContent};
+    }));
+   assert.deepEqual(incomingTypography,[
+    {slug:'david-pawson',name:'DAVID PAWSON'},
+    {slug:'stephen-tong',name:'STEPHEN TONG'}
+   ],'opposed masks must carry original English along with the art');
    for(const key of ['x','y','w','h'])assert(Math.abs(pairTransition.pairLeft.box[key]-pair.pairLeft.box[key])<1,
     'all six pairs keep exactly the same folio/anchor geometry');
    const last=await go(16.11,'07-final-pair-eleven-twelve');
@@ -183,6 +252,27 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(indexFull.ctaVisibility,'visible');
    const seen=new Set(indexFull.cards.map(x=>x.src));
    assert.equal(seen.size,12,'all original 12 unique approved speaker images must be present');
+   const protectedTwelve=await page.evaluate(()=>
+    [...document.querySelectorAll('#olive-overview .olive-stage__index-card')].map(card=>{
+      const overlay=card.querySelector('.olive-stage__artwork>olive-speaker-baseline');
+      const root=overlay?.shadowRoot;
+      const frame=root?.querySelector('.speaker-card');
+      return {image:card.querySelector('img')?.getAttribute('src'),
+        slug:overlay?.dataset.speaker,
+        name:root?.querySelector('.olive-speaker-english')?.textContent,
+        size:frame?.style.getPropertyValue('--poster-size'),
+        optical:frame?.style.getPropertyValue('--poster-optical-size'),
+        cssLoaded:!!root?.querySelector('link[href*="baseline.css"]')?.sheet};
+    }));
+   assert.equal(protectedTwelve.length,12);
+   for(const entry of protectedTwelve){
+    assert.equal(entry.image,'/images/olive/'+entry.slug+'-editorial.png',
+      'image and its approved English must share exact speaker identity');
+    assert(entry.name&&entry.name.length>3&&entry.size.endsWith('cqw'),
+      'every index work MUST retain protected English instead of a bare PNG');
+    assert(entry.optical&&entry.cssLoaded,
+      'frozen optical-size and original shadow CSS must load for all twelve');
+   }
    for(const [i,c] of indexFull.cards.entries()){
     assert(c.src==='/images/olive/'+[
      'watchman-nee','derek-prince','david-pawson','stephen-tong',
