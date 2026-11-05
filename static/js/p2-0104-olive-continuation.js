@@ -152,27 +152,40 @@
  }
  // ONE continuous landscape plate. The previous four registered panels
  // created rectangular cuts and could never read as one mountain.
+ // Each protected composite (PNG + frozen Shadow DOM lettering) MUST
+ // remain a true 3:4 print. We calculate the actual outer boxes from that
+ // immutable aspect instead of letting an arbitrary responsive cell resize
+ // its image and expose synthetic gray strips.
  function galleryRects(g){
+  const portraitRatio=3/4;
   const mobile=g.w<600;
-  const margin=mobile?Math.max(12,Math.min(20,g.w*.04)):
-    Math.max(40,Math.min(142,g.w*.082));
-  const top=mobile?84:Math.max(113,Math.min(149,g.h*.14));
-  const bottom=mobile?61:Math.max(48,Math.min(73,g.h*.065));
-  const gap=mobile?10:Math.max(13,Math.min(30,g.w*.02));
-  const availW=Math.max(1,g.w-2*margin);
-  const availH=Math.max(1,g.h-top-bottom);
+  const margin=mobile?Math.max(10,Math.min(20,g.w*.037)):
+    Math.max(36,Math.min(118,g.w*.065));
+  const top=mobile?Math.max(84,Math.min(100,g.h*.12)):
+    Math.max(118,Math.min(149,g.h*.142));
+  const bottom=mobile?Math.max(46,Math.min(67,g.h*.075)):
+    Math.max(50,Math.min(73,g.h*.078));
+  const gap=mobile?12:Math.max(18,Math.min(37,g.w*.03));
+  const maxHeight=Math.max(1,g.h-top-bottom);
   if(mobile){
-   const h=(availH-gap)/2;
-   return [
-    {x:margin,y:top,w:availW,h},
-    {x:margin,y:top+h+gap,w:availW,h}
-   ];
+   // True 3:4 upper and lower PRINTS. Mobile cannot physically show two
+   // full-width 3:4 portraits in one 9:16 viewport; center them instead
+   // of stretching or cutting the frozen lettering.
+   const maxPosterH=(maxHeight-gap)/2;
+   const posterW=Math.min(g.w-2*margin,maxPosterH*portraitRatio);
+   const posterH=posterW/portraitRatio;
+   const x=(g.w-posterW)/2;
+   const y=top+Math.max(0,(maxHeight-(2*posterH+gap))/2);
+   return [{x,y,w:posterW,h:posterH},
+           {x,y:y+posterH+gap,w:posterW,h:posterH}];
   }
-  const w=(availW-gap)/2;
-  return [
-   {x:margin,y:top,w,h:availH},
-   {x:margin+w+gap,y:top,w,h:availH}
-  ];
+  const maxPosterW=(g.w-2*margin-gap)/2;
+  const posterW=Math.min(maxPosterW,maxHeight*portraitRatio);
+  const posterH=posterW/portraitRatio;
+  const x=(g.w-(2*posterW+gap))/2;
+  const y=top+Math.max(0,(maxHeight-posterH)/2);
+  return [{x,y,w:posterW,h:posterH},
+          {x:x+posterW+gap,y,w:posterW,h:posterH}];
  }
  function changePair(index,transition=0,withNext=false,vertical=false){
   setFigure(left,index*2);setFigure(right,index*2+1);
@@ -190,19 +203,31 @@
  function layoutIndex(g,t){
   const cols=g.w>=900?6:g.w>=600?4:3;
   const rows=Math.ceil(12/cols);
-  const horizontal=g.w>=900?35:13;
-  const top=g.w>=900?Math.max(122,Math.min(150,g.h*.145)):96;
-  const bottom=g.w>=900?83:78,gap=g.w>=900?12:5;
-  const cellW=(g.w-horizontal*2-gap*(cols-1))/cols;
-  const cellH=(g.h-top-bottom-gap*(rows-1))/rows;
+  const horizontal=g.w>=900?33:12;
+  const top=g.w>=900?Math.max(122,Math.min(150,g.h*.145)):95;
+  const bottom=g.w>=900?72:64;
+  const gapX=g.w>=900?13:7;
+  // A caption is now OUTSIDE its original 3:4 print, on dark-green
+  // invitation stock. The portrait box itself NEVER includes the caption.
+  const rowGap=g.w>=900?31:21;
+  const maxW=(g.w-2*horizontal-(cols-1)*gapX)/cols;
+  const maxH=(g.h-top-bottom-(rows-1)*rowGap)/rows;
+  const posterW=Math.max(1,Math.min(maxW,maxH*.75));
+  const posterH=posterW*4/3;
+  const totalW=cols*posterW+(cols-1)*gapX;
+  const totalH=rows*posterH+(rows-1)*rowGap;
+  const leftX=(g.w-totalW)/2;
+  const topY=top+Math.max(0,(g.h-top-bottom-totalH)/2);
   const anchors=galleryRects(g);
   cards.forEach((card,i)=>{
    const from=anchors[i%2];
-   const targetX=horizontal+(i%cols)*(cellW+gap);
-   const targetY=top+Math.floor(i/cols)*(cellH+gap);
+   const targetX=leftX+(i%cols)*(posterW+gapX);
+   const targetY=topY+Math.floor(i/cols)*(posterH+rowGap);
    position(card,mix(from.x,targetX,t),mix(from.y,targetY,t),
-    mix(from.w,cellW,t),mix(from.h,cellH,t));
+    mix(from.w,posterW,t),mix(from.h,posterH,t));
   });
+  overview.style.setProperty('--index-caption-alpha',
+    String(ease((t-.69)/.31)));
   overview.dataset.columns=String(cols);
  }
  function revealSplitField(node,u){
@@ -309,7 +334,8 @@
   stage.dataset.p2Ground=bg.toFixed(5);
   stage.dataset.p2FieldMethod='opposed-top-down-bottom-up';
   stage.dataset.p2Index=fan.toFixed(5);
-  stage.dataset.p2Composition='dore-bridge-to-opposed-field-to-six-pairs-to-twelve';
+  stage.dataset.p2Composition='green-bible-cover-to-gilt-sermon-invitation-to-twelve';
+  stage.dataset.p2PosterAspect='3:4';
   stage.dataset.p2PairOrientation=vertical?'stacked':'side-by-side';
   stage.dataset.p2Scene=d<T.start?'03-held':
     d<T.first?'04-dore-handoff':
