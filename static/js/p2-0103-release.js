@@ -601,10 +601,12 @@
     // The native opaque Contents is the upper leaf: the full-size cover
     // retreats BEHIND it, not through a 3D perspective spike.
     sourceTile.style.zIndex=move>.001?'12':sourceOriginalTileZ;
-   // Actual page swap, NOT opacity fading. No two sets of legible type
-   // coexist in the same pixel, even at the midpoint of a slow wheel scrub.
+   // MERSI original authors' split-screen principle: old Contents and
+   // incoming ONE Scripture share one scroll float and complementary
+   // TOP-DOWN clip-path masks. No opacity crossfade, extra clock,
+   // moving original folios or changed earlier Church/Magazine effects.
    sourceTile.style.clipPath=oneDrop>.0001
-     ?'inset(0 '+(oneDrop*100).toFixed(3)+'% 0 0)'
+     ?'inset('+(oneDrop*100).toFixed(3)+'% 0 0 0)'
      :sourceOriginalTileClip;
    sourceTile.style.pointerEvents=oneDrop>.01?'none':sourceOriginalTilePointer;
    sourceTile.dataset.p2ContentsWipe=oneDrop.toFixed(4);
@@ -778,7 +780,7 @@
   poseRect(emLeft,fullLeft,fullLeft,1);
   // Full-size destination remains opaque: no old Contents behind the transfer.
   emLeft.style.clipPath=oneDrop>=.9999?'none':
-   'inset(0 0 0 '+((1-oneDrop)*100).toFixed(3)+'%)';
+   'inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
   poseRect(emRight,fullRight,fullRight,1);
   emRight.style.clipPath=archive>=.999?'none':
    'inset(0 0 0 '+((1-archive)*100).toFixed(3)+'%)';
@@ -807,7 +809,7 @@
   emLeft.style.width=fullLeft.w.toFixed(2)+'px';
   // Full-size destination remains opaque: no old Contents behind the transfer.
   emLeft.style.clipPath=oneDrop>=.9999?'none':
-   'inset(0 0 0 '+((1-oneDrop)*100).toFixed(3)+'%)';
+   'inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
   poseRect(emRight,fullRight,fullRight,1);
   emRight.style.clipPath=archive>=.999?'none':
    'inset(0 0 0 '+((1-archive)*100).toFixed(3)+'%)';
