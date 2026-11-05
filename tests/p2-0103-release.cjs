@@ -18,7 +18,7 @@ assert(!/\.olive-proof|data-realm="sermon"|data-realm="cinema"|data-realm="book"
 assert.match(js,/const timelineMax=9\.34/,'release ends before Olive starts at 9.44');
 assert.match(html,/p2-0103-release\.css/);
 assert.match(html,/p2-0103-release\.js/);
-assert.match(vol,/coverIn=stableLargeA\?ease\(\(progress-\.04\)\/\.20\)/,'whole cover enters first');
+assert.match(vol,/coverIn=stableLargeA\?\(reduce\?\(progress>=\.14\?1:0\):ease\(\(progress-\.04\)\/\.10\)\)/,'cover field reveals while contents arrive in four stages');
 assert.match(vol,/posterIn=stableLargeA\?ease\(\(progress-\.28\)\/\.07\)/,'whole large poster follows');
 assert.match(poster,/const u=clamp\(\(p-\.36\)\/\.41\)\*6/,'seven inks only begin after folios are visible');
 assert.match(bridge,/magazine\.style\.background='transparent'/,'no early blank paper curtain');
@@ -69,6 +69,12 @@ const browserPromise=chromium.launch({headless:true});
         posterX:b(poster)?.x,posterW:b(poster)?.width,posterH:b(poster)?.height,
         coverIn:+stage?.dataset.releaseCoverIn||0,
         posterIn:+stage?.dataset.releasePosterIn||0,
+        coverClip:cover?.style.clipPath||'',
+        coverTransform:cover?.style.transform||'',
+        wallRise:+stage?.dataset.coverWallRise||0,
+        mastReveal:+stage?.dataset.coverMastReveal||0,
+        verseReveal:+stage?.dataset.coverVerseReveal||0,
+        featureReveal:+stage?.dataset.coverFeatureReveal||0,
         spreadScale:+stage?.dataset.posterSpreadScale||1,
         fieldOpacity:+stage?.dataset.posterField||0,
         posterPageBackground:doc?.defaultView?.getComputedStyle(doc.getElementById('xw-poster'))?.backgroundColor||'',
@@ -83,6 +89,22 @@ const browserPromise=chromium.launch({headless:true});
     const church=await pose(1.6);
     assert.equal(church.olivePresent,false);
     assert(!church.coverVisible&&!church.posterVisible,'nothing from Magazine may cover church in phase 01');
+    // Original cover frame is stationary while its 4 physical content
+    // layers play sequentially on the SAME scroll progress.
+    const wallFirst=await pose(3.55);
+    assert(wallFirst.wallRise>.95&&wallFirst.mastReveal<.001&&
+      wallFirst.verseReveal<.001&&wallFirst.featureReveal<.001,
+      'wall must rise FIRST with masthead/scripture/title absent');
+    await page.screenshot({path:out+'/cover-wall-rises-first-'+width+'.png'});
+    const mastSecond=await pose(3.72);
+    assert(mastSecond.wallRise>.999&&mastSecond.mastReveal>.80&&
+      mastSecond.verseReveal<.001&&mastSecond.featureReveal<.001,
+      'official full-width masthead must appear SECOND');
+    await page.screenshot({path:out+'/cover-masthead-second-'+width+'.png'});
+    const verseThird=await pose(3.86);
+    assert(verseThird.mastReveal>.999&&verseThird.verseReveal>.80&&
+      verseThird.featureReveal<.20,'Isaiah verse THIRD, title after verse');
+    await page.screenshot({path:out+'/cover-isaiah-verse-third-'+width+'.png'});
     // RECOVERY: 03 must not overwrite 02's APPROVED cover motion.
     // The native cover progresses monotonically from right to its full
     // position; an independent 03 JS cache must never snap it backward.
@@ -97,8 +119,12 @@ const browserPromise=chromium.launch({headless:true});
     console.log('RECOVERED ORIGINAL COVER',width,JSON.stringify(cover));
     assert(cover.coverIn>.999&&cover.posterIn===0,
       'recover PR #1381: the entire original right cover settles before giant A');
-    assert(enteringCover.coverX>cover.coverX+20,
-      'native cover X must progress LEFT monotonically without cached Emmaus transform resets');
+    assert.equal(enteringCover.coverTransform,'none',
+      'never fly the complete finished cover across the Church schedule');
+    assert(enteringCover.coverClip.startsWith('inset('),
+      'use a fixed page mask and internal rising architecture');
+    assert(Math.abs(enteringCover.coverX-cover.coverX)<1,
+      'cover must remain the exact same stationary Church-schedule frame');
     assert(!cover.posterVisible,'no empty left folio while the right cover settles');
     assert.equal(cover.filmOpacity,0,'the original film remains hidden during cover arrival');
     assert(cover.fieldOpacity<.001,'do not recolor the Church during the MERSI cover reveal');
@@ -122,6 +148,11 @@ const browserPromise=chromium.launch({headless:true});
         JSON.stringify(sameFrame));
       assert(sameFrame.match>.999,'original schedule-sized page must hold for the complete cover entrance');
     }
+    const completeCover=await pose(4.04);
+    assert(completeCover.wallRise>.999&&completeCover.mastReveal>.999&&
+      completeCover.verseReveal>.999&&completeCover.featureReveal>.999,
+      'city→masthead→scripture→bilingual title must all be complete before giant 西望');
+    await page.screenshot({path:out+'/cover-four-layers-complete-'+width+'.png'});
     await page.screenshot({path:out+'/cover-same-frame-as-church-schedule-'+width+'.png'});
     const print=await pose(4.65);
     console.log('RELEASE GIANT PRINT',width,JSON.stringify(print));
