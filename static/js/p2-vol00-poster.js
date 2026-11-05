@@ -89,7 +89,7 @@
    const inkBase=mix(ink(colorStops[from].token),ink(colorStops[to].token),segment);
    const paperBase=mix(paper(colorStops[from].token),paper(colorStops[to].token),segment);
    const final=ease((p-.77)/.075);
-   const contents=ease((p-.88)/.07);
+   const contents=ease((p-.93)/.055);
    const gold='var(--ws-morning-gold, #d2bc69)';
    // Separate art-direction systems: the MONUMENTAL A letterforms and
    // their background use the canonical, strictly scroll-reversible seven
@@ -107,26 +107,29 @@
    const fieldPaper=mix('var(--ws-night,#102a43)',registeredPaper,ease((p-.20)/.16));
    panel.style.setProperty('--xw-poster-bg',fieldPaper);
    stage.style.setProperty('--xw-poster-bg',fieldPaper);
-   // One parent-owned reversible scroll clock. Uncover the home film only
-   // after Contents completes and the whole spread retreats (97–100%).
+   // Only the late 02 scene changes: the blue/gold full spread shrinks
+   // over the existing film (86–92.5%) BEFORE Contents enters at 93%.
    const fieldEnter=ease((p-.01)/.07);
-   const fieldRetreat=ease((p-.97)/.03);
+   const fieldRetreat=ease((p-.86)/.065);
    const fieldOpacity=fieldEnter*(1-fieldRetreat);
    stage.style.setProperty('--xw-field-opacity',fieldOpacity.toFixed(5));
+   // Transfer opaque paper into the actual left folio as the full-stage
+   // paper clears. Earlier cover and giant-letter entry remain untouched.
+   stage.style.setProperty('--xw-page-frame-opacity',(fieldRetreat*100).toFixed(3)+'%');
    stage.dataset.posterField=fieldOpacity.toFixed(5);
    panel.style.setProperty('--xw-foil-opacity',(.72*final*(1-contents)).toFixed(4));
    panel.dataset.cornerPalette=miniReady?'slow-neon':'gold';
    stage.dataset.posterCornerPalette=panel.dataset.cornerPalette;
    stage.dataset.posterCornerProgress=miniReady?'1':'0';
-   stage.dataset.posterBigStable=p<.88?'true':'contents-handoff';
-   // Use exactly the SAME approved gold glyph paths, shrinking only when
-   // Contents begins. The poster PAGE never shrinks at this moment.
+   stage.dataset.posterBigStable=p<.93?'true':'contents-handoff';
+   // Preserve the exact approved glyphs during the full-spread shrink;
+   // only reduce the mark AFTER the native Contents enters.
    // A book-like editorial masthead: 21% ink scale (not the giant A).
    // It is visually registered to the first index rule, with the logo
    // optically starting near the tiny WESTSIDE WATCH / INDEX headline.
    panel.style.setProperty('--xw-mark-scale',(1-.79*contents).toFixed(5));
-   // The approved original A keeps exact x/y/scale through its seven
-   // full-size scroll colors. Only as Contents arrives, register the
+   // The approved original A keeps exact x/y/scale through seven colors
+   // and the whole-spread shrink. After the film shows, register the
    // MINIATURE visible ink with the common opening/roman-index line.
    // These percentages refer to the native 1:1 page (not the glyph
    // pixel bounds), and are reversible with the same parent progress.
