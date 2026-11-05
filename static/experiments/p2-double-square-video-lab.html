@@ -426,6 +426,34 @@
     railX=posterLayout?contentsX:(contentsX-edge);
     railY=contentsY+contentsH;railW=edge;
   }
+  // The 01 Church schedule occupies the RIGHT half-page at full stage
+  // height. During the accepted MERSI-style 01→02 handoff, the official
+  // Magazine front cover must replace EXACTLY that same right-hand frame.
+  // Do not introduce a smaller inset 5:8 booklet at the entrance.
+  //
+  // The approved original book geometry resumes only when the complete
+  // blue/gold spread shrinks over the existing film (86–92.5%). This is
+  // a single reversible interpolation tied to the current scroll clock;
+  // the masthead, city drawing, SVG paths and 03 page-turn sources are kept.
+  if(stableLargeA&&!mobile){
+   const scheduleFrame=1-ease((progress-.86)/.065);
+   const bookX=coverX,bookY=coverY,bookW=coverW,bookH=coverH;
+   coverX=lerp(bookX,W/2,scheduleFrame);
+   coverY=lerp(bookY,0,scheduleFrame);
+   coverW=lerp(bookW,W/2,scheduleFrame);
+   coverH=lerp(bookH,H,scheduleFrame);
+   // While the cover matches the Church's full right page, the monumental
+   // 西望 belongs to the complementary left half, never behind the cover.
+   contentsX=lerp(contentsX,0,scheduleFrame);
+   contentsW=lerp(contentsW,W/2,scheduleFrame);
+   contentsH=lerp(contentsH,W/2,scheduleFrame);
+   contentsY=lerp(contentsY,(H-W/2)/2,scheduleFrame);
+   railX=contentsX+contentsW;
+   railY=contentsY;
+   stage.dataset.coverScheduleMatch=scheduleFrame.toFixed(4);
+  }else{
+   stage.dataset.coverScheduleMatch='0';
+  }
   // 01→02: full right cover first; whole left poster second; seven inks third.
   // This is ONE reversible scroll owner; no old half-page paper curtains.
   const coverIn=stableLargeA?ease((progress-.04)/.20):1;
