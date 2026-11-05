@@ -153,7 +153,9 @@ const browserPromise=chromium.launch({headless:true});
     assert(settled.fieldOpacity<.001&&settled.filmOpacity>.999,
       'the whole paper field must fully clear when the original film is revealed');
     await page.screenshot({path:out+'/film-after-spread-retreat-'+width+'.png'});
-    const emmausTurn=await pose(6.82); // global ~73% reported by editor
+    await pose(6.67); // actual first hinge is mid-turn, not cropped flat
+    await page.screenshot({path:out+'/restored-original-magazine-cover-book-flip-'+width+'.png'});
+    const emmausTurn=await pose(6.82); // green folio revealed, ~73%
     await page.screenshot({path:out+'/emmaus-first-turn-73percent-'+width+'.png'});
     const backstage=await page.evaluate(()=>{
       const origin=document.querySelector('#proof-original')?.contentDocument;
@@ -174,9 +176,9 @@ const browserPromise=chromium.launch({headless:true});
       const cover=source?.getElementById('dual-cover');
       return {mode:cover?.dataset.turnMode,transform:cover?.style.transform||''};
     });
-    assert.equal(turns.mode,'fixed-folio-page-reveal','first turn must keep the original cover in a fixed 5:8 folio');
-    assert(!/rotateY|perspective|translate3d/.test(turns.transform),
-      'the original 5:8 cover may NOT become a narrow perspective spike');
+    assert.equal(turns.mode,'restored-original-book-flip','restore accepted PR #1381 original full-size magazine-cover hinge');
+    assert(/perspective\(2800px\) rotateY\(/.test(turns.transform),
+      'first page must hinge as the original complete 5:8 cover, not be replaced by a clipped strip');
     const greenHold=await pose(7.30); // green 5:8 cover must be complete
     const greenState=await page.evaluate(()=>document.getElementById('emmaus')?.dataset.coverState);
     assert.equal(greenState,'green','the green cover has to HOLD before the second turn');
@@ -189,11 +191,13 @@ const browserPromise=chromium.launch({headless:true});
       const underleaf=source?.getElementById('p2-emmaus-magazine-underleaf');
       const overlay=document.getElementById('em-entry-cover');
       return {leaf:underleaf?.style.transform||'',leafClip:underleaf?.style.clipPath||'',
-        duplicateVisible:overlay?getComputedStyle(overlay).visibility!=='hidden':true};
+        secondHinge:overlay?.style.transform||'',
+        secondVisible:overlay?getComputedStyle(overlay).visibility!=='hidden':false};
     });
-    assert(secondTurn.leaf==='none'&&secondTurn.leafClip.startsWith('inset('),
-      'second turn must reveal the existing green 5:8 folio in place, with no lateral fragment');
-    assert(!secondTurn.duplicateVisible,'a duplicated rotating green book cannot overlay the original leaf');
+    assert(secondTurn.leaf==='none'&&secondTurn.leafClip==='none',
+      'the original green underleaf must remain a full 5:8 book cover during the handoff');
+    assert(secondTurn.secondVisible&&/perspective\(6400px\) rotateY\(/.test(secondTurn.secondHinge),
+      'second full green cover must use the recovered PR #1381 physical flip over the Doré page');
     await pose(8.06); // complete engraving, before the ONE reading arrives
     const illustrationState=await page.evaluate(()=>document.getElementById('emmaus')?.dataset.coverState);
     assert.equal(illustrationState,'illustration',
