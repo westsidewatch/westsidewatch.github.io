@@ -25,7 +25,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
  try{
   for(const [width,height] of [[1648,928],[390,844]]){
    const page=await browser.newPage({viewport:{width,height},reducedMotion:'no-preference'});
-   const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+   const errors=[];page.on('pageerror',e=>{const detail=e.stack||String(e);errors.push(detail);console.error('P2 04 BROWSER PAGEERROR',detail)});
    await page.goto('http://127.0.0.1:4173/experiments/p2-0104-olive-continuation.html?d=9.30',
     {waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForFunction(()=>{
