@@ -225,15 +225,15 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(material.groundCSS.parts,2,'two halves are registered to one field');
     assert.equal(material.groundCSS.opacity,'1','no fade');
     assert.equal(material.method,'opposed-top-down-bottom-up');
-    assert(material.groundCSS.halves[0].startsWith('inset(0 0 '),'left from TOP');
-    assert(/^inset\([0-9.]+% 0 0 0\)/.test(material.groundCSS.halves[1]),'right from BOTTOM');
+    assert(/^inset\(0(?:px)? 0(?:px)? [0-9.]+%/.test(material.groundCSS.halves[0]),'left from TOP');
+    assert(/^inset\([0-9.]+% 0(?:px)? 0(?:px)? 0(?:px)?\)/.test(material.groundCSS.halves[1]),'right from BOTTOM');
    assert.equal(material.pairLeft.src,pair.pairLeft.src);
    assert.equal(material.pairRight.src,pair.pairRight.src);
    for(const key of ['x','y','w','h'])assert(Math.abs(material.pairLeft.box[key]-pair.pairLeft.box[key])<1,
     'speakers must be FIXED as background changes: '+key);
    const backgroundReady=await go(11.75,'05-olive-material-fixed');
    assert(backgroundReady.ground>.999 &&
-     backgroundReady.groundCSS.halves.every(x=>x.includes('0.000%')),
+     backgroundReady.groundCSS.halves.every(x=>/\b0(?:\.0+)?%/.test(x)),
      'both sides must lock before the next speaker');
    const pairTransition=await go(12.25,'06-opposed-double-poster-change');
    assert.equal(pairTransition.scene,'04-six-pair-gallery');
