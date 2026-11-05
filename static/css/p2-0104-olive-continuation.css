@@ -44,15 +44,31 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .olive-surround__half[data-side="left"]{left:0}
 .olive-bridge__half[data-side="right"],
 .olive-surround__half[data-side="right"]{right:0}
-.olive-bridge__half{background:#e5d9b8}
-.olive-surround__half{
- background-color:#193f30;
- background-image:url('/images/p2-realms/v15/04-olive-foil-field-v4.svg');
+.olive-bridge__half{
+ /* The actual 03 green Scripture COVER cloth, not invented yellow paper.
+    Each half samples the SAME full-frame printed fabric registration. */
+ background-color:#10170d;
+ background-image:
+  linear-gradient(145deg,rgba(4,10,3,.24),rgba(5,13,7,.04) 50%,rgba(4,10,3,.35)),
+  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609');
  background-repeat:no-repeat;
- background-size:200% 100%;
+ background-size:200% 100%,200% 100%;
 }
-.olive-surround__half[data-side="left"]{background-position:left center}
-.olive-surround__half[data-side="right"]{background-position:right center}
+.olive-bridge__half[data-side="left"]{background-position:left center,left center}
+.olive-bridge__half[data-side="right"]{background-position:right center,right center}
+.olive-surround__half{
+ /* ONE material authority across 03 and 04: same true antique-green cloth.
+    New 04 foil illustration is a registered transparent ink plate on top. */
+ background-color:#10170d;
+ background-image:
+  url('/images/p2-realms/v15/04-olive-invitation-foil-v5.svg'),
+  linear-gradient(150deg,rgba(5,25,17,.43),rgba(7,24,15,.18) 50%,rgba(3,21,12,.49)),
+  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609');
+ background-repeat:no-repeat;
+ background-size:200% 100%,200% 100%,200% 100%;
+}
+.olive-surround__half[data-side="left"]{background-position:left center,left center,left center}
+.olive-surround__half[data-side="right"]{background-position:right center,right center,right center}
 .olive-proof{
  position:absolute;z-index:4;overflow:hidden;
  visibility:hidden;background:transparent;color:#20382e;
@@ -68,7 +84,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .olive-stage__poster,
 .olive-stage__index-card{
  position:absolute;overflow:hidden;margin:0;border:0;
- background:#e7e5d9;box-shadow:none;
+ background:transparent;box-shadow:none;
 }
 /* Every image is paired with its ORIGINAL frozen typography and source
    occlusion layers in the same image-relative 3:4 coordinate box.
@@ -76,7 +92,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
    Overlay belongs inside .olive-stage__artwork, never outside the PNG. */
 .olive-stage__artwork{
  position:absolute;inset:0;overflow:hidden;isolation:isolate;
- background:#e7e5d9;
+ background:transparent;
 }
 .olive-stage__artwork>.olive-stage__original{
  display:block!important;width:100%!important;height:100%!important;
@@ -87,17 +103,22 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  position:absolute;display:block;z-index:6;pointer-events:none;
 }
 .olive-stage__first .olive-stage__artwork{bottom:0}
-.olive-stage__poster .olive-stage__artwork{
- bottom:clamp(31px,3.3vh,43px)
+.olive-stage__poster .olive-stage__artwork{inset:0}
+.olive-stage__index-card .olive-stage__artwork{inset:0}
+/* The initial Doré slot is taller than a 3:4 poster. Its spare strips
+   show the original binding GREEN, never a gray synthetic backing. */
+.olive-stage__first{
+ background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat;
 }
-.olive-stage__index-card .olive-stage__artwork{bottom:24px}
+.olive-stage__first .olive-stage__artwork{
+ background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat;
+}
 .olive-stage__poster{z-index:1}
 .olive-stage__incoming{z-index:2;visibility:hidden}
 .olive-stage__poster figcaption{
- position:absolute;z-index:3;bottom:0;left:0;right:0;
- padding:9px 14px 7px;background:#e7e5d9;
- font:200 clamp(9px,.66vw,12px)/1.3 var(--ws-type-display-en);
- letter-spacing:.12em;color:#224436;white-space:normal;
+ /* Approved posters are whole artworks: NO footer injected into their
+    3:4 print geometry. Sequence metadata belongs to the separate index. */
+ display:none!important;
 }
 /* Original frozen English is printed over the image; captions below
    remain only folio sequence numbers, not a substitute for it. */
@@ -129,17 +150,18 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 
 .olive-stage__rubric small{text-align:right}
 .olive-stage__index-card{
- z-index:2;display:block;text-decoration:none;
- color:#1e3b30;will-change:top,left,width,height;
+ z-index:2;display:block;text-decoration:none;overflow:visible;
+ color:#d8c58b;background:transparent;
+ will-change:top,left,width,height;
 }
 /* The same approved English + Chinese type follows every image through
    geometric FLIP recomposition, instead of disappearing in index mode. */
 .olive-stage__index-card span{
- position:absolute;inset:auto 0 0;display:block;overflow:hidden;
- white-space:nowrap;text-overflow:clip;
- font:200 clamp(7px,.66vw,12px)/20px var(--ws-type-display-en);
- letter-spacing:.015em;padding:0 4px;
- background:#e7e5d9;border-top:1px solid #1a4b382b
+ position:absolute;top:calc(100% + 3px);left:0;right:0;bottom:auto;
+ display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+ font:200 clamp(7px,.62vw,10px)/15px var(--ws-type-display-en);
+ letter-spacing:.06em;padding:0 1px;opacity:var(--index-caption-alpha,0);
+ background:transparent;color:#dfc78c;border-top:1px solid #d0b16a70;
 }
 .olive-stage__index-card:hover,.olive-stage__index-card:focus-visible{
  outline:2px solid #b59659;outline-offset:-2px
@@ -178,7 +200,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  .olive-stage__rubric::after{bottom:-2px}
  #p2-olive-folio-status{bottom:54px;right:5px;font-size:7px}
  .olive-stage__poster figcaption{font-size:8px;padding:5px 7px}
- .olive-stage__index-card .olive-stage__artwork{bottom:18px}
+ .olive-stage__index-card .olive-stage__artwork{inset:0}
 
  .olive-stage__index-card span{font-size:7px;line-height:15px}
  .olive-stage__enter{
@@ -190,8 +212,8 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  .p2-olive-controls{gap:2px;max-height:60px}
  .p2-olive-controls button{font-size:7px;padding:3px}
  .p2-olive-controls input{width:52px}
- .olive-stage__poster .olive-stage__artwork{bottom:30px}
- .olive-stage__poster figcaption{min-height:30px;font-size:7px;letter-spacing:0}
+ .olive-stage__poster .olive-stage__artwork{inset:0}
+ .olive-stage__poster figcaption{display:none!important}
  .olive-stage__index-card span{font-size:7px;line-height:15px}
  .olive-stage__rubric strong{font-size:clamp(26px,7.8vw,35px)}
  .olive-stage__rubric small{font-size:8px}
