@@ -104,7 +104,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(lowerPart&&+lowerPart[1]>84&&+lowerPart[1]<88,
     'lower must be a RIGHT→LEFT corridor: '+middle.lowerClip);
    assert.equal(middle.clip,'none','the rejected whole-page right-to-left wipe must not return');
-   assert(middle.galleryScroll>0,'horizontal speaker gallery must move as the user scrolls');
+   assert(middle.galleryScroll>(width>800?50:8),
+    'horizontal speaker gallery must MOVE substantially (no scroll-snap regression): '+middle.galleryScroll);
    assert.equal(middle.visibility,'visible');
    assert.equal(middle.scene,'03','underlying 03 remains stable until fully covered');
    for(const k of ['x','y','w','h']){
