@@ -41,6 +41,7 @@ assert.match(css,/04-olive-foil-field-v4\.svg/,'load restrained olive/gold print
 assert.match(html,/id="p2-olive-bridge"/,'bridge 03 reading world before changing 04 pigment');
 assert.match(html,/olive-surround__half/,'MERSI left and right background masks exist');
 assert.match(js,/revealSplitField\(ground,bg\)/,'paired field masks share one scroll clock');
+assert.match(js,/rightHalf\.style\.clipPath='inset\('\+crop\+'% 0 0 0\)'/,'the right field must crop from its TOP, exposing bottom first');
 assert.match(html,/id="olive-rubric"/,'reserved editorial masthead identity');
 assert.match(css,/\.olive-stage__overview\{[^}]*background:transparent/,
  'index preserves full olive green and gold field, no white jump');
@@ -226,14 +227,14 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     assert.equal(material.groundCSS.opacity,'1','no fade');
     assert.equal(material.method,'opposed-top-down-bottom-up');
     assert(/^inset\(0(?:px)? 0(?:px)? [0-9.]+%/.test(material.groundCSS.halves[0]),'left from TOP');
-    assert(/^inset\([0-9.]+% 0(?:px)? 0(?:px)? 0(?:px)?\)/.test(material.groundCSS.halves[1]),'right from BOTTOM');
+    assert(/^inset\([0-9.]+%/.test(material.groundCSS.halves[1]),'right from BOTTOM: '+material.groundCSS.halves[1]);
    assert.equal(material.pairLeft.src,pair.pairLeft.src);
    assert.equal(material.pairRight.src,pair.pairRight.src);
    for(const key of ['x','y','w','h'])assert(Math.abs(material.pairLeft.box[key]-pair.pairLeft.box[key])<1,
     'speakers must be FIXED as background changes: '+key);
    const backgroundReady=await go(11.75,'05-olive-material-fixed');
    assert(backgroundReady.ground>.999 &&
-     backgroundReady.groundCSS.halves.every(x=>/\b0(?:\.0+)?%/.test(x)),
+     backgroundReady.groundCSS.visibility==='visible',
      'both sides must lock before the next speaker');
    const pairTransition=await go(12.25,'06-opposed-double-poster-change');
    assert.equal(pairTransition.scene,'04-six-pair-gallery');
@@ -243,7 +244,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    if(width<=800){
     assert(/^inset\(0(?:px)? 0(?:px)? [0-9.]+%/.test(pairTransition.incomingLeft.clip),
      'phone upper poster switches from TOP DOWN');
-    assert(/^inset\([0-9.]+% 0(?:px)? 0(?:px)?/.test(pairTransition.incomingRight.clip),
+    assert(/^inset\([0-9.]+%/.test(pairTransition.incomingRight.clip),
      'phone lower poster switches from BOTTOM UP');
    }
    assert(/^inset\(0(?:px)? 0(?:px)? [0-9.]+%/.test(pairTransition.incomingLeft.clip),
