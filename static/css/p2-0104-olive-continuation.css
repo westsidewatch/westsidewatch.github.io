@@ -92,3 +92,30 @@ html,body{margin:0;padding:0;min-height:100%;background:#1a271b;overscroll-behav
 .olive-proof__window>span:last-child{font-size:7px}
 }
 @media(prefers-reduced-motion:reduce){.olive-proof *{transition:none!important;animation:none!important}}
+
+/* 04 MOBILE COMPOSITION QA — original artwork must remain fully visible.
+ * The draft's 30px MOUNTAIN heading sat behind the PREVIEW toolbar,
+ * while the 3:4 speaker art was isolated in an over-tall left strip.
+ * These changes affect only the 04 preview, not released ONE, not the
+ * original speaker poster's internal aspect or typography layers. */
+@media(max-width:540px){
+ .p2-olive-controls{
+  top:auto;bottom:0;min-height:34px;max-height:46px;
+  align-items:center;justify-content:flex-start;
+  background:#111f2aed
+ }
+ .p2-olive-controls strong{font-size:7px;width:100%;letter-spacing:.07em}
+ .p2-olive-controls label{font-size:7px}
+ .p2-olive-controls input{width:61px}
+ #p2-olive-folio-status{bottom:49px;right:8px;font-size:7px}
+ .olive-proof__top{grid-template-columns:54% 46%}
+ .olive-proof__hero{padding:4px;display:flex;align-items:center;justify-content:center}
+ .olive-proof__portrait{width:100%;height:auto;max-height:100%;aspect-ratio:3/4}
+ .olive-proof__editorial{padding:11px 9px 14px}
+ .olive-proof__editorial h1{font-size:clamp(20px,5.2vw,27px);line-height:.89;letter-spacing:-.09em}
+ .olive-proof__zh{font-size:16px;margin:12px 0 0}
+ .olive-proof__statement{font-size:10px;line-height:1.45;margin:10px 0 0}
+ .olive-proof__bottom{grid-template-columns:72% 28%}
+ .olive-proof__register{padding:10px 7px;gap:10px}
+ .olive-proof__window{padding:8px 5px}
+}
