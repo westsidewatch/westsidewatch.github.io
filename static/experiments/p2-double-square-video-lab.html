@@ -21,9 +21,9 @@
   <button type="button" data-snap="0.72">七色末段</button>
   <button type="button" data-snap="0.77">七色完成</button>
   <button type="button" data-snap="0.845">藍金定格</button>
-  <button type="button" data-snap="0.90">Contents 進場</button>
-  <button type="button" data-snap="0.95">Contents 定格</button>
-  <button type="button" data-snap="1">雙頁縮小</button>
+  <button type="button" data-snap="0.90">整頁縮小 · 露影片</button>
+  <button type="button" data-snap="0.95">Contents 進場</button>
+  <button type="button" data-snap="0.99">Contents 定格</button>
   <a class="dual-ui__continue" href="/experiments/p2-0103-release.html?d=6.49" title="P2 01–03 發布候選：雜誌目錄銜接以馬忤斯，未包含橄欖山">03 / 以馬忤斯 · 連續預覽</a>
   <button type="button" data-postermode="a">A · 幾何字</button>
   <button type="button" data-postermode="b">B · 刻線字</button>
@@ -548,7 +548,7 @@
   // The Doré plate remains moving while the open editorial grid arrives
   // after the complete cover + 西望 hold.
   const stone=stage.dataset.p2Poster==='a'
-   ?(reduce?(progress>=.95?1:0):ease((progress-.88)/.07))
+   ?(reduce?(progress>=.985?1:0):ease((progress-.93)/.055))
    :(reduce?(progress>=.87?1:0):ease((progress-.865)/.125));
    // The protected Morning Star still RISES from the artwork. It lands
    // in the quiet upper-left crop, clear of the giant vertical Xi Wang;
@@ -571,8 +571,8 @@
   contents.inert=stone<.98;
   stage.dataset.phase=stage.dataset.p2Poster==='a'
    ?(progress<.14?'cover-arrival':progress<.36?'whole-poster-arrival':progress<.77?'seven-color-poster':
-     progress<.88?'gold-poster-hold':progress<.95?'contents-arrival':
-     progress<.97?'contents-hold':progress<1?'contents-spread-retreat':'contents-final')
+     progress<.86?'gold-poster-hold':progress<.925?'spread-shrink-reveal-home-film':
+     progress<.93?'shrunken-spread-hold':progress<.985?'contents-arrival':'contents-final')
    :(progress<.235?'cover-arrival':progress<.42?'dore-engraving':
      progress<.69?'star-ink-impression':progress<.865?'cover-and-star':
      progress<.995?'stone-contents-reveal':'contents-final');
@@ -581,13 +581,13 @@
   range.value=String(Math.round(progress*100));
   output.textContent=Math.round(progress*100)+'%';
   window.P2Vol00Poster?.paint(progress);
-  // A stays at natural size throughout seven colors and the settled gold
-  // poster. Its SAME native glyphs become the Contents masthead at 88–95%.
-  // Only after the original Contents has FINISHED entering may the entire
-  // Contents+official-cover spread reveal the already-playing homepage film.
-  // Reverse-scroll preserves the exact same pose. No second animation clock.
+  // The accepted 01→02 cover arrival and the seven-color monumental poster
+  // above are FROZEN. Late 02: after blue/gold holds, shrink BOTH original
+  // folios together to expose the existing home film (86–92.5%), THEN let
+  // the native Contents enter (93–98.5%). Never shrink the letterforms alone.
+  // One reversible scroll value owns the entire geometry; no new timer.
   const pullBack=stage.dataset.p2Poster==='a'
-   ?(reduce?(progress>=1?1:0):ease((progress-.97)/.03))
+   ?(reduce?(progress>=.925?1:0):ease((progress-.86)/.065))
    :stage.dataset.p2Poster
     ?(reduce?(progress>=1?1:0):ease((progress-.945)/.055)):0;
   const finalScale=1-.15*pullBack;
