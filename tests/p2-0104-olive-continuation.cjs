@@ -60,7 +60,13 @@ assert.match(css,/04-olive-terrain-relief-v7\.svg/,
 assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scripture-cover green cloth');
 assert.doesNotMatch(css,/cover-golden-shoot-frame-transparent\.png/,
  'the 04 transition must NOT duplicate the old ONE book-cover gilt frame');
-const oliveCSS=css.slice(css.indexOf('.olive-surround__half{'),css.indexOf('.olive-proof{'));
+const oliveCSS=css.slice(
+ css.indexOf('.olive-surround__half{\n background-color:#163a2a'),
+ css.indexOf('.olive-proof{'));
+assert(oliveCSS.startsWith('.olive-surround__half{'),
+ 'the 04-only surface must be independently selected from the shared 03 mask geometry');
+const cardCSS=css.slice(css.indexOf('.olive-stage__invitation{'),css.indexOf('.olive-stage__first{z-index:2'));
+assert(!cardCSS.includes('/one/'),'04 invitation cards must not reuse the Bible cover stock');
 const firstCSS=css.slice(css.indexOf('/* The incoming print lives'),css.indexOf('.olive-stage__poster{'));
 assert(!oliveCSS.includes('/one/')&&!firstCSS.includes('/one/'),
  '04 final domain MUST NOT inherit ONE cover texture or gilt assets');
