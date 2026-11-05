@@ -20,7 +20,11 @@ assert.match(studies,/const DESIGNS=\[/);
 assert.match(studyCss,/\.p2x--12/);
 assert.match(source,/p2-vol00-editorial\.css\?v=vol00-editorial-\d{8}[a-z]/,'the standalone folio CSS must cache-bust on visual revision');
 assert(source.includes('Isaiah 62:6 · KJV')&&source.includes('我在你城上設立守望的，他們晝夜必不靜默'),'approved bilingual scripture is preserved');
-assert(source.includes('coverScripture.style.opacity=String(signature)'),'scripture follows existing masthead reveal without a new effect');
+assert(source.includes('coverScripture.style.opacity=String(coverVerse)'),
+ 'A cover must reveal Isaiah only AFTER the city and full-width masthead; retain the historical signature in non-A');
+assert(source.includes('const coverWall=stableLargeA?')&&source.includes('const coverMast=stableLargeA?')&&
+ source.includes('const coverVerse=stableLargeA?')&&source.includes('const coverFeature=stableLargeA?'),
+ 'accepted four-stage wall, masthead, Scripture, and feature choreography must remain scroll-owned');
 assert(css.includes('.dual-cover{--ws-vol00-wall-start:13.125%;'),'protect the original city-wall top exactly');
 assert(css.includes('.dual-cover__city{position:absolute;z-index:2;top:var(--ws-vol00-wall-start);bottom:0;'),'protect the original city-wall lower edge');
 assert(!css.includes('--ws-vol00-wall-start:23.125%')&&!css.includes('bottom:-10%'),'no mobile castle displacement');
@@ -216,7 +220,7 @@ const data=()=> {
    const page=await browser.newPage({viewport:{width,height},reducedMotion:'no-preference'});
    const pageErrors=[];
    page.on('pageerror',e=>pageErrors.push(e.message));
-   await page.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=0&side=cover-right',{waitUntil:'domcontentloaded',timeout:45000});
+   await page.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=0&side=cover-right&poster=legacy',{waitUntil:'domcontentloaded',timeout:45000});
    await page.evaluate(()=>document.fonts.ready);
    // The first original is loaded only when the multi-plate folio becomes visible.
    let heroAtTypeHold=0;
@@ -485,7 +489,7 @@ const data=()=> {
    await page.close();
   }
    const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
-   await reduced.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=14',{waitUntil:'domcontentloaded'});
+   await reduced.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=14&poster=legacy',{waitUntil:'domcontentloaded'});
    // Reduced motion stays on the first real artwork, without any timers.
    for(const p of [14,44,79,100]){
     await reduced.locator('#dual-progress').evaluate((slider,value)=>{
@@ -514,7 +518,7 @@ const data=()=> {
    const twelve=await browser.newPage({viewport:{width:1648,height:928},reducedMotion:'no-preference'});
    const twelveErrors=[];
    twelve.on('pageerror',e=>twelveErrors.push(e.message));
-   await twelve.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=100&side=cover-right&variant=10',
+   await twelve.goto('http://127.0.0.1:4173/experiments/p2-double-square-video-lab.html?p=100&side=cover-right&variant=10&poster=legacy',
     {waitUntil:'domcontentloaded',timeout:45000});
    await twelve.evaluate(()=>document.fonts.ready);
    await twelve.waitForFunction(()=>window.P2ContentsTwelve?.count===12,null,{timeout:16000});

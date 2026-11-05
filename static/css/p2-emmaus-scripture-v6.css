@@ -1,0 +1,408 @@
+/* P2 Emmaus V6 / Real CUV + KJV reading and book > chapter > verse hierarchy.
+ * This layer follows V5 and uses ONLY canonical Design OS palette tokens.
+ * No change to Magazine cover, original 66-book rail, Doré images or 04–07.
+ */
+#emmaus{
+ --em-v6-paper:var(--ws-one-paper,#ded096);
+ --em-v6-ink:var(--ws-night,#102a43);
+ --em-v6-gold:var(--ws-first-light,#a2872a);
+ --em-v6-rule:color-mix(in srgb,var(--em-v6-gold) 54%,transparent);
+}
+#emmaus > .emmaus__left{
+ color:var(--em-v6-ink)!important;
+ background:var(--em-v6-paper)!important;
+}
+/* Book title, its own chapter choices, and the currently selected chapter
+   form ONE heading, rather than a second row above the original 66 books. */
+#emmaus .emmaus__source-hero{
+ align-items:center!important;
+ min-height:clamp(136px,16.3vh,164px)!important;
+ padding-top:9px!important;padding-bottom:7px!important;
+}
+#emmaus .emmaus__source-hero .emmaus__book-current{
+ align-content:center!important;
+ row-gap:2px!important;
+}
+#emmaus .emmaus__source-meta{
+ font-size:10px!important;
+ margin-bottom:2px!important;
+}
+#emmaus .emmaus__book-current > .emmaus__one-chapters{
+ flex:0 0 100%!important;
+ width:100%!important;
+ min-height:0!important;
+ max-height:none!important;
+ height:auto!important;
+ margin:5px 0 0!important;
+ padding:5px 0 0!important;
+ border:0!important;
+ border-top:1px solid var(--em-v6-rule)!important;
+ overflow:hidden!important;
+}
+#emmaus .emmaus__book-current > .emmaus__one-chapters .emmaus__one-chapters-head{
+ display:flex!important;
+ align-items:baseline!important;
+ justify-content:space-between!important;
+ padding:0 0 3px!important;
+ color:var(--em-v6-gold)!important;
+ font:400 10px/1.25 var(--ws-type-display-en-sc)!important;
+ letter-spacing:.10em!important;
+}
+#emmaus .emmaus__book-current > .emmaus__one-chapters .emmaus__one-chapter-grid{
+ display:flex!important;flex-wrap:nowrap!important;
+ max-height:31px!important;min-height:26px!important;
+ overflow-x:auto!important;overflow-y:hidden!important;
+ padding:0 0 2px!important;gap:5px!important;
+ scrollbar-width:thin;
+ scrollbar-color:var(--em-v6-gold) transparent;
+}
+#emmaus .emmaus__book-current .emmaus__one-chapter-grid button{
+ flex:0 0 26px!important;min-height:24px!important;
+ max-height:27px!important;
+ padding:2px 0!important;
+ border:0!important;border-bottom:1px solid transparent!important;
+ border-radius:0!important;
+ color:color-mix(in srgb,var(--em-v6-ink) 72%,var(--em-v6-paper))!important;
+ font:400 13px/1.3 var(--ws-type-display-en)!important;
+}
+#emmaus .emmaus__book-current .emmaus__one-chapter-grid button[aria-pressed="true"]{
+ color:var(--em-v6-gold)!important;
+ border-bottom:2px solid var(--em-v6-gold)!important;
+ background:none!important;
+ font-weight:400!important;
+}
+#emmaus #em-current-chapter-number{
+ color:var(--em-v6-gold)!important;
+}
+#emmaus .emmaus__current-chapter{
+ border-left:1px solid var(--em-v6-rule)!important;
+}
+#emmaus .emmaus__source-eyebrow{
+ color:var(--em-v6-gold)!important;
+}
+#emmaus .emmaus__source-hero #em-book-en,
+#emmaus .emmaus__source-hero #em-book-zh,
+#emmaus #em-current-chapter-zh{
+ color:var(--em-v6-ink)!important;
+}
+#emmaus .emmaus__study-interface{
+ grid-template-rows:auto auto minmax(0,1fr) auto!important;
+}
+#emmaus .emmaus__study-foot{
+ grid-row:4!important;
+}
+#emmaus .emmaus__study-cols{
+ display:flex!important;flex-direction:column!important;
+ min-height:0!important;
+ overflow:hidden!important;
+}
+#emmaus .emmaus__study-reading{
+ flex:0 0 auto!important;
+ min-height:0!important;
+ max-height:clamp(47px,7.2vh,64px)!important;
+ overflow-y:auto!important;
+ padding-bottom:5px!important;
+}
+#emmaus .emmaus__study-reading h2{
+ margin:2px 0 3px!important;
+ font-size:clamp(22px,2.4cqi,32px)!important;
+}
+#emmaus .emmaus__study-movement{
+ margin:0 0 3px!important;
+ color:var(--em-v6-ink)!important;
+}
+#emmaus .emmaus__study-route{
+ display:none!important;
+}
+/* Scripture is the main reading surface; notes remain an independently
+   scrolling secondary layer below it. */
+#emmaus .emmaus__scripture-reader{
+ flex:1 1 0!important;min-height:180px!important;min-width:0;
+ overflow:hidden!important;display:flex;flex-direction:column;
+ border-top:1px solid var(--em-v6-rule)!important;
+ border-bottom:1px solid var(--em-v6-rule)!important;
+ background:transparent!important;
+}
+#emmaus .emmaus__scripture-reader-head{
+ flex:0 0 auto;display:flex;justify-content:space-between;
+ gap:8px;align-items:flex-end;
+ padding:9px 0 10px;
+}
+#emmaus .emmaus__scripture-reader-head > div{
+ display:flex;flex-direction:column;gap:3px;
+}
+#emmaus .emmaus__scripture-kicker{
+ color:var(--em-v6-gold)!important;
+ font:400 clamp(9px,.83cqi,11px)/1.24 var(--ws-type-display-en-sc)!important;
+ letter-spacing:.12em;
+}
+#emmaus #em-scripture-location{
+ color:var(--em-v6-ink)!important;
+ font:var(--ws-weight-zh-air) clamp(16px,1.9cqi,22px)/1.35 var(--ws-type-display-zh)!important;
+}
+#emmaus .emmaus__translation-pair{
+ text-align:right;
+ color:var(--em-v6-gold)!important;
+ font:200 clamp(9px,.8cqi,11px)/1.3 var(--ws-type-display-zh)!important;
+ white-space:nowrap;
+}
+#emmaus .emmaus__translation-pair span{color:var(--em-v6-ink);opacity:.52;padding:0 2px}
+#emmaus .emmaus__scripture-verse-list{
+ flex:1 1 0;min-height:0;
+ overflow-y:auto;overflow-x:hidden;
+ scrollbar-width:thin;scrollbar-color:var(--em-v6-rule) transparent;
+ overscroll-behavior:contain;
+ padding:0 clamp(8px,1.2cqi,16px) 5px 0;
+}
+#emmaus .emmaus__scripture-lines{
+ list-style:none;margin:0;padding:0;
+ display:flex;flex-direction:column;gap:0;
+}
+#emmaus .emmaus__scripture-verse{
+ display:grid;grid-template-columns:clamp(29px,3cqi,39px) minmax(0,1fr);
+ gap:clamp(9px,1.2cqi,15px);
+ align-items:start;
+ padding:clamp(13px,1.5cqi,20px) 0 clamp(14px,1.5cqi,20px) 4px;
+ border-left:2px solid transparent;
+ border-bottom:1px solid color-mix(in srgb,var(--em-v6-ink) 12%,transparent);
+ transition:border-color .15s ease;
+}
+#emmaus .emmaus__scripture-verse[data-emphasis="on"]{
+ border-left-color:var(--em-v6-gold);
+}
+#emmaus .emmaus__scripture-verse-number{
+ display:block;
+ appearance:none;cursor:pointer;
+ font:400 clamp(16px,1.6cqi,21px)/1.35 var(--ws-type-display-en)!important;
+ color:var(--em-v6-gold)!important;
+ background:transparent!important;border:0!important;
+ padding:0!important;text-align:left;
+ font-variant-numeric:tabular-nums;
+}
+#emmaus .emmaus__scripture-verse-number[aria-pressed="true"]{
+ font-weight:400!important;text-decoration:underline;
+ text-decoration-color:var(--em-v6-gold);text-underline-offset:4px;
+}
+#emmaus .emmaus__scripture-pair{min-width:0}
+#emmaus .emmaus__scripture-zh{
+ color:var(--em-v6-ink)!important;
+ font:400 clamp(16px,2.1cqi,19px)/1.72 var(--ws-type-reading-zh)!important;
+ letter-spacing:.012em!important;
+ margin:0!important;overflow-wrap:break-word;
+}
+#emmaus .emmaus__scripture-en{
+ color:color-mix(in srgb,var(--em-v6-ink) 82%,#8c8067)!important;
+ font:400 clamp(14px,1.75cqi,16px)/1.58 var(--ws-type-display-en)!important;
+ letter-spacing:0!important;
+ margin:9px 0 0!important;overflow-wrap:break-word;
+}
+#emmaus .emmaus__scripture-source{
+ flex:0 0 auto;
+ padding:5px 0 4px;
+ color:var(--em-v6-gold)!important;
+ font:400 9px/1.2 var(--ws-type-display-en-sc)!important;
+ letter-spacing:.06em;
+}
+#emmaus .emmaus__scripture-status{
+ font:400 clamp(11px,1.1cqi,14px)/1.6 var(--ws-type-reading-zh)!important;
+ color:var(--em-v6-ink)!important;
+ margin:14px 0!important;
+}
+#emmaus .emmaus__study-tools{
+ flex:0 0 clamp(60px,9vh,83px)!important;
+ min-height:0!important;
+ padding-top:4px!important;
+}
+#emmaus .emmaus__study-tabs button[aria-selected="true"]{
+ color:var(--em-v6-gold)!important;
+ border-bottom-color:var(--em-v6-gold)!important;
+}
+#emmaus .emmaus__study-detail strong,
+#emmaus .emmaus__context article>header span,
+#emmaus .emmaus__study-head,
+#emmaus .emmaus__study-ref{
+ color:var(--em-v6-gold)!important;
+}
+#emmaus .emmaus__context article>header strong,
+#emmaus .emmaus__study-detail p,
+#emmaus .emmaus__context-map-copy,
+#emmaus .emmaus__context-time{
+ color:var(--em-v6-ink)!important;
+}
+#emmaus .emmaus__one-toolbar button{
+ color:var(--em-v6-gold)!important;
+ border-bottom-color:var(--em-v6-gold)!important;
+}
+@media(max-width:900px){
+ #emmaus .emmaus__source-hero{
+  min-height:134px!important;
+ }
+ #emmaus .emmaus__study-cols{
+  flex:0 0 auto!important;height:auto!important;
+  min-height:330px!important;
+ }
+ #emmaus .emmaus__study-reading{
+  max-height:58px!important;
+ }
+ #emmaus .emmaus__scripture-reader{
+  flex:0 0 295px!important;
+  min-height:295px!important;
+ }
+ #emmaus .emmaus__study-tools{min-height:70px!important;flex:0 0 70px!important}
+ #emmaus .emmaus__source-meta{display:none!important}
+}
+@media(max-width:540px){
+ #emmaus .emmaus__source-hero{
+  min-height:128px!important;grid-template-columns:minmax(0,1.22fr) minmax(0,.78fr)!important;
+  column-gap:7px!important;
+ }
+ #emmaus .emmaus__book-current > .emmaus__one-chapters{
+  margin-top:6px!important;
+ }
+ #emmaus .emmaus__book-current > .emmaus__one-chapters .emmaus__one-chapters-head{
+  font-size:8px!important;
+ }
+ #emmaus .emmaus__book-current .emmaus__one-chapter-grid button{flex-basis:23px!important;font-size:12px!important}
+ #emmaus .emmaus__translation-pair{white-space:normal;font-size:8px!important}
+ #emmaus .emmaus__scripture-reader-head{align-items:flex-start}
+ #emmaus .emmaus__scripture-verse{grid-template-columns:24px minmax(0,1fr);gap:5px}
+ #emmaus .emmaus__scripture-zh{font-size:16px!important;line-height:1.67!important}
+ #emmaus .emmaus__scripture-en{font-size:14px!important;line-height:1.55!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #emmaus .emmaus__scripture-verse{transition:none}
+}
+
+/* NAVIGATION USABILITY / V6.1
+ * Every cell names its book BEFORE giving its canon number. The earlier
+ * numeric-only strip demanded memorization of all 66 canonical indices.
+ * Retain the original single-line drag/keyboard strip, but do not truncate
+ * Chinese or English identities in order to show more cells at once.
+ */
+#emmaus > .emmaus__left{
+ grid-template-rows:auto auto auto minmax(0,1fr) clamp(92px,11.2vh,105px) auto!important;
+}
+#emmaus .emmaus__rail{
+ min-height:0!important;max-height:none!important;
+ height:100%!important;margin:0!important;
+ scroll-padding-inline:8px;
+}
+#emmaus .emmaus__rail .emmaus__number{
+ display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;
+ gap:2px!important;
+ flex:0 0 clamp(94px,7.3vw,112px)!important;
+ padding:7px 7px 6px!important;
+ background:transparent!important;
+ border-top:2px solid transparent!important;
+ color:var(--em-v6-ink)!important;
+ text-align:center!important;
+ line-height:1!important;
+}
+#emmaus .emmaus__rail .emmaus__number .emmaus__number-zh{
+ display:block!important;
+ width:100%!important;min-height:13px!important;
+ font:var(--ws-weight-zh-air) 11px/1.18 var(--ws-type-display-zh)!important;
+ letter-spacing:0!important;
+ white-space:normal!important;
+ overflow-wrap:anywhere!important;
+ color:var(--em-v6-ink)!important;
+ opacity:1!important;
+ margin:0!important;
+}
+#emmaus .emmaus__rail .emmaus__number .emmaus__number-en{
+ display:block!important;
+ width:100%!important;min-height:11px!important;
+ font:400 9px/1.18 var(--ws-type-display-en)!important;
+ letter-spacing:.005em!important;
+ white-space:normal!important;
+ overflow-wrap:anywhere!important;
+ color:color-mix(in srgb,var(--em-v6-ink) 76%,var(--em-v6-paper))!important;
+ opacity:1!important;
+ margin:0!important;
+}
+#emmaus .emmaus__rail .emmaus__number .emmaus__number-index{
+ display:block!important;
+ font:400 clamp(24px,2.1vw,32px)/.98 var(--ws-type-display-en)!important;
+ letter-spacing:-.03em!important;
+ color:var(--em-v6-ink)!important;
+ margin:2px 0 0!important;
+ font-variant-numeric:lining-nums tabular-nums;
+}
+#emmaus .emmaus__rail .emmaus__number:is(:hover,[aria-pressed="true"]){
+ background:color-mix(in srgb,var(--em-v6-gold) 12%,transparent)!important;
+ border-top-color:var(--em-v6-gold)!important;
+}
+#emmaus .emmaus__rail .emmaus__number[aria-pressed="true"] .emmaus__number-zh{
+ font-weight:var(--ws-weight-zh-air)!important;
+}
+#emmaus .emmaus__rail .emmaus__number[aria-pressed="true"] .emmaus__number-index{
+ color:var(--em-v6-gold)!important;
+}
+#emmaus .emmaus__rail .emmaus__number:focus-visible{
+ outline:2px solid var(--em-v6-ink)!important;outline-offset:-3px!important;
+}
+#emmaus .emmaus__foot{
+ color:var(--em-v6-ink)!important;
+ font-size:10px!important;
+}
+@media(max-width:900px){
+ #emmaus > .emmaus__left{
+  grid-template-rows:auto auto auto minmax(0,1fr) 102px auto!important;
+ }
+ #emmaus .emmaus__rail{
+  height:100%!important;
+ }
+ #emmaus .emmaus__rail .emmaus__number{
+  flex-basis:104px!important;
+ }
+}
+@media(max-width:540px){
+ #emmaus > .emmaus__left{
+  grid-template-rows:auto auto auto minmax(0,1fr) 102px auto!important;
+ }
+ #emmaus .emmaus__rail .emmaus__number{
+  flex-basis:100px!important;
+  padding:5px 4px!important;
+ }
+ #emmaus .emmaus__rail .emmaus__number .emmaus__number-zh{
+  font-size:10px!important;
+ }
+ #emmaus .emmaus__rail .emmaus__number .emmaus__number-en{
+  font-size:9px!important;
+ }
+ #emmaus .emmaus__rail .emmaus__number .emmaus__number-index{
+  font-size:25px!important;
+ }
+}
+
+/* GOLD CONTRAST / V6.1
+ * OS first-light gold on OS ONE papyrus measures just 2.25:1.
+ * Preserve the original decorative gold for thin rules; derive a dark-ochre
+ * TEXT ink from that same OS token (60% gold / 40% black, about 5.0:1).
+ */
+#emmaus{
+ --em-v6-gold-ink:color-mix(in srgb,var(--em-v6-gold) 60%,black);
+}
+#emmaus .emmaus__source-eyebrow,
+#emmaus #em-current-chapter-number,
+#emmaus .emmaus__book-current > .emmaus__one-chapters .emmaus__one-chapters-head,
+#emmaus .emmaus__book-current .emmaus__one-chapter-grid button[aria-pressed="true"],
+#emmaus .emmaus__scripture-kicker,
+#emmaus .emmaus__translation-pair,
+#emmaus .emmaus__scripture-verse-number,
+#emmaus .emmaus__scripture-source,
+#emmaus .emmaus__study-head,
+#emmaus .emmaus__study-ref,
+#emmaus .emmaus__one-toolbar button,
+#emmaus .emmaus__context article>header span,
+#emmaus .emmaus__study-detail strong,
+#emmaus .emmaus__study-tabs button[aria-selected="true"],
+#emmaus .emmaus__rail .emmaus__number[aria-pressed="true"] .emmaus__number-index{
+ color:var(--em-v6-gold-ink)!important;
+}
+/* Original first-light gold still owns borders and accent strokes. */
+#emmaus .emmaus__book-current .emmaus__one-chapter-grid button[aria-pressed="true"],
+#emmaus .emmaus__study-tabs button[aria-selected="true"]{
+ border-bottom-color:var(--em-v6-gold)!important;
+}

@@ -30,7 +30,14 @@
  film.style.cssText='display:block;position:absolute;inset:0;width:100%;height:100%;border:0;z-index:0;pointer-events:none;background:var(--paper);opacity:0';
  const frame=document.createElement('iframe');
  frame.title='西望 Vol.00：承接活水教會的封面、晨星與十二欄目目錄';
- frame.src='/experiments/p2-double-square-video-lab.html?embed=1&p=0&side=cover-right';
+ // The outer isolated P2 preview may request B without mutating production.
+ // Parent query is read only when same-origin; the homepage defaults to A.
+ let requestedPoster=query.get('poster');
+ if(!requestedPoster){
+  try{requestedPoster=new URLSearchParams(parent.location.search).get('poster')}catch(_error){}
+ }
+ const poster=requestedPoster==='b'?'b':'a';
+ frame.src='/experiments/p2-double-square-video-lab.html?embed=1&p=0&side=cover-right&poster='+poster;
  frame.loading='eager';
  frame.setAttribute('allow','autoplay');
  frame.style.cssText='display:block;position:absolute;inset:0;width:100%;height:100%;border:0;z-index:1;background:transparent';
@@ -49,20 +56,29 @@
   // Replace only that magazine layer; never alter the water/door elements.
   magazine.style.visibility=active?'visible':'hidden';
   magazine.style.clipPath='none';
-  // Close the Church spread like a page turn: the Vol.00 paper gradually
-  // becomes opaque so the completed folio cannot leave Sunday copy visible
-  // around its edges. The Church remains intact underneath for reverse scroll.
-  const paperCover=Math.round(easing(progress/.34)*100);
-  magazine.style.background=`color-mix(in srgb, var(--paper) ${paperCover}%, transparent)`;
-  film.style.opacity=String(easing(progress/.20));
+  // 01→02 publication gate: keep the EMPTY 02 canvas transparent.
+  // Do not show a blank paper square over the Church before the full
+  // official cover arrives from the RIGHT. The original home film
+  // may appear ONLY when the completed Contents+cover SPREAD retreats.
+  magazine.style.background='transparent';
+  // Late Magazine only: the SAME original film becomes visible when the
+  // blue/gold folios shrink. All earlier Church→cover entry thresholds,
+  // transforms, geometry and navigation remain byte-for-byte unchanged.
+  const filmReveal=easing((progress-.86)/.065);
+  film.style.opacity=String(filmReveal);
+  magazine.dataset.filmReveal=filmReveal.toFixed(4);
   syncFilm(active&&document.visibilityState==='visible');
   magazine.style.opacity='1';
   magazine.style.pointerEvents=progress>=.995?'auto':'none';
   magazine.inert=progress<.995;
   magazine.setAttribute('aria-hidden',progress>=.995?'false':'true');
-  magazine.dataset.magazineStage=progress<.20?'cover-arrival':progress<.53?'xiwang-impression':
-   progress<.72?'morning-star-rise':progress<.865?'cover-and-star':
-   progress<.995?'contents-handoff':'contents-final';
+  magazine.dataset.magazineStage=progress<.22?'whole-cover-right-entry':
+   progress<.36?'whole-xiwang-left-entry':
+   progress<.77?'seven-color-printing':
+   progress<.88?'night-blue-gold-hold':
+   progress<.95?'contents-handoff':
+   progress<.97?'contents-hold':
+   progress<1?'film-reveal-on-spread-retreat':'contents-final';
   root.dataset.p2MagazineProgress=progress.toFixed(4);
   if(active){
    root.dataset.p2Phase=progress>=.995?'magazine':'church-to-magazine';

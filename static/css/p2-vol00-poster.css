@@ -1,0 +1,485 @@
+/* P2 Vol.00 — scroll-registered print-plate poster.
+ * One P2 scroll owner. No sevenfold curtain, independent animation,
+ * global root override, or change to official RIGHT cover.
+ * This only styles the original Magazine LEFT square and isolated A art.
+ */
+.dual-stage[data-p2-poster] .dual-continuum{
+ visibility:hidden!important;opacity:0!important;pointer-events:none!important;
+ box-shadow:none!important
+}
+.dual-stage[data-p2-poster] .dual-tile--contents .dual-dore-plate,
+.dual-stage[data-p2-poster] .dual-tile--contents .dual-letterfield,
+.dual-stage[data-p2-poster] .dual-tile--contents .dual-cover__star{
+ display:none!important;opacity:0!important;pointer-events:none!important
+}
+/* The alternate B experiment does not enter the Contents handoff; the
+ * production A does, so its real Contents visibility stays scroll-owned. */
+.dual-stage[data-p2-poster="b"] .dual-tile--contents #dual-stone-contents{
+ display:none!important;opacity:0!important;pointer-events:none!important
+}
+.dual-stage[data-p2-poster] #dual-contents{
+ background:var(--ws-paper,#faf9f5);isolation:isolate
+}
+.dual-stage[data-p2-poster] #dual-contents .xw-poster{
+ position:absolute;inset:0;z-index:8;width:100%;height:100%;
+ display:block;overflow:hidden;pointer-events:none;
+ background:var(--xw-poster-bg,#f6eae2);
+ contain:paint
+}
+.dual-stage[data-p2-poster] .xw-poster__art{
+ position:absolute;inset:0;z-index:3;display:block;
+ width:100%;height:100%;pointer-events:none;
+ shape-rendering:geometricPrecision
+}
+.dual-stage[data-p2-poster="a"] .xw-poster__glyph{
+ position:absolute;inset:0;display:block;z-index:4;
+ background:var(--xw-ink,var(--ws-first-light,#a2872a));
+ -webkit-mask-image:url('/images/xiwang-poster-a-glyph-mask.svg');
+ mask-image:url('/images/xiwang-poster-a-glyph-mask.svg');
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-position:center;mask-position:center;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ transform-origin:top left;
+ transform:translate(var(--xw-mark-inset,0%),var(--xw-mark-drop,0%)) scale(var(--xw-mark-scale,1));
+ pointer-events:none
+}
+/* A physical, matte metallic ink impression. The highlight is a static
+ * spatial property of foil, not a timer-driven shimmer or neon flicker. */
+.dual-stage[data-p2-poster="a"] .xw-poster__glyph--foil{
+ z-index:5;
+ opacity:var(--xw-foil-opacity,0);
+ background:
+  repeating-linear-gradient(157deg,rgba(255,246,208,.045) 0px,rgba(80,57,23,.015) 1px,transparent 2px,transparent 5px),
+  linear-gradient(111deg,#a67e33 0%,#d8b969 17%,#af883f 36%,#e8ce82 51%,#b58b3a 68%,#d2b56f 85%,#9f752d 100%)
+}
+.dual-stage[data-p2-poster="a"] .xw-poster__caption{
+ position:absolute;z-index:6;left:9.1%;bottom:2.6%;
+ display:flex;justify-content:space-between;align-items:baseline;
+ width:81%;max-width:81%;white-space:nowrap;
+ border-top:1px solid color-mix(in srgb,var(--ws-morning-gold) 65%,transparent);
+ padding-top:clamp(5px,.9cqi,9px);
+ font:italic 200 clamp(10px,1.45cqi,13px)/1.3 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:.035em;color:var(--ws-morning-gold,#d2bc69);
+ opacity:var(--xw-caption-opacity,0);
+ pointer-events:none
+}
+.dual-stage[data-p2-poster="a"] .xw-poster__citation{
+ font:200 clamp(7px,.9cqi,10px)/1.35 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.17em;font-style:normal;opacity:.82
+}
+@media (prefers-reduced-motion:reduce){
+ .dual-stage[data-p2-poster] .xw-poster,
+ .dual-stage[data-p2-poster] .xw-poster__glyph,
+ .dual-stage[data-p2-poster] .xw-poster__caption{
+  animation:none!important;transition:none!important
+ }
+}
+/* P2 03 Emmaus frontispiece (z:9) and 03–07 original components
+ * intentionally remain outside the scope of this style sheet. */
+
+/* P2 A editorial handoff: after full-size scroll-printed poster, the
+ * SAME native 西望 glyph paths register as a compact corner masthead.
+ * The original twelve-desk Contents #dual-stone-contents is finally shown.
+ * Neither tile shrinks while Contents enters; the P2 outer spread handles
+ * that only after the Contents reading page is fully composed. */
+.dual-stage[data-p2-poster="a"] #dual-contents{
+ background:#f8f5ee;
+ box-shadow:1px 0 0 rgba(220,188,116,.48)
+}
+.dual-stage[data-p2-poster="a"] #dual-contents .xw-poster{
+ z-index:10;
+ background:color-mix(in srgb,var(--xw-poster-bg,#102a43) var(--xw-page-ink-opacity,100%),transparent)
+}
+.dual-stage[data-p2-poster="a"] .dual-tile--contents #dual-stone-contents{
+ display:block!important;z-index:9; 
+ background:#f8f5ee;
+ pointer-events:none
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents::before{content:none}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10{
+ background:#f8f5ee;
+ --p2x-paper:#f8f5ee
+}
+/* Reuse the existing Cereal/OS twelve-desk title, chapters, jumps,
+ * full-index reader and input; suppress only its old city-picture canvas,
+ * which competes with the RIGHT official cover in this poster handoff. */
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-gallery,
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-engraving{
+ display:none!important
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-paper{
+ inset:0!important;
+ display:flex;flex-direction:column;
+ padding:5% 7% 5%;
+ background:transparent;
+ min-height:0;min-width:0
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-tiny{
+ display:none
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header{
+ margin:1.4% 0 0 28%;
+ min-height:18%;
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header h2{
+ font-size:clamp(22px,5.8cqi,57px);
+ white-space:nowrap;overflow-wrap:normal;
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese{
+ margin-top:clamp(5px,.8cqi,8px)
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav{
+ flex:0 0 auto;margin:1.5% 0 2.8%;
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-stack{
+ flex:1 1 auto;min-height:0;overflow-y:auto;
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-footer{
+ flex:0 0 auto
+}
+@container (max-width:520px){
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-paper{
+  inset:0!important;padding:4.5% 6% 5%;display:flex;flex-direction:column;
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header{
+  position:relative;inset:auto;margin:1% 0 0 28%;min-height:17%;
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header h2{
+  font-size:clamp(19px,6.2cqi,34px)
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav{
+  position:relative;inset:auto;left:auto;right:auto;top:auto;bottom:auto;
+  flex:0 0 auto;margin:1.5% 0 3%;
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-stack{
+  position:relative;inset:auto;left:auto;right:auto;top:auto;bottom:auto;
+  flex:1 1 auto;min-height:0;margin:0;
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-footer{
+  position:relative;inset:auto;left:auto;right:auto;bottom:auto
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese span{
+  display:none
+ }
+}
+
+/* The approved RIGHT 5:8 cover's WESTSIDE WATCH masthead remains
+ * optically edge-to-edge while the spread is full size. The source SVG
+ * has small optical insets: 106% image width brings visible ink to both
+ * cover edges without deforming a single path. It never shrinks on its own;
+ * only the entire spread scales after Contents has fully arrived. */
+.dual-stage[data-p2-poster="a"] .dual-tile--cover .dual-cover__mast{
+ left:0;width:106%;max-width:none;height:21%;max-height:21%;
+ transform:none;object-fit:contain;object-position:left top
+}
+
+/* 2026-11-04 / PARIS REVIEW CONTENTS REGISTER — P2 02 A ONLY.
+ * 2021 Matt Willey / Pentagram: compact paperback proportion, quiet stock,
+ * book-like readable type and disciplined contents ordering, not a grid
+ * of isolated marketing cards. Preserve OS Bodoni/Chiron identities.
+ * The native 12 entries and full index are never re-created or pruned.
+ */
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10{
+ background:#f8f5ee;color:#173249
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-paper{
+ inset:0!important;display:grid!important;overflow:hidden;
+ grid-template-rows:clamp(13px,2.35cqi,18px) 22.5% clamp(31px,5.3cqi,43px) minmax(0,1fr) clamp(23px,3.8cqi,33px);
+ padding:4.2% 5.8% 3.5%;gap:0;background:transparent
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-tiny{
+ display:flex!important;position:relative;width:73%;margin:0 0 0 27%;
+ padding:0;border:0;gap:6px;align-items:baseline;justify-content:space-between;
+ font:400 clamp(8px,1.3cqi,10px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.075em;color:#5c6366;white-space:nowrap
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-tiny span:last-child{color:#ad8750}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header{
+ margin:0 0 0 27%;height:100%;min-height:0;
+ display:flex;flex-direction:column;justify-content:center;gap:3px;
+ position:relative;z-index:2
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header h2{
+ margin:0;white-space:nowrap;letter-spacing:-.065em;
+ color:#132e47;font:400 clamp(39px,10.8cqi,86px)/.92 var(--ws-type-display-en,Georgia,serif)
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese{
+ margin:clamp(5px,.9cqi,9px) 0 0;
+ font:200 clamp(10px,1.8cqi,14px)/1.4 var(--ws-type-display-zh,sans-serif);
+ color:#43515c;display:flex;justify-content:space-between;gap:5px
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese span{
+ display:inline!important;white-space:nowrap;
+ font:400 clamp(7px,1.15cqi,10px)/1.4 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.05em;color:#877960
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav{
+ margin:0 0 clamp(4px,.8cqi,8px);min-width:0;align-self:stretch;
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+ border-top:1px solid #b39a71;border-bottom:1px solid #c7bba9
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button{
+ padding:3px 4px;min-width:0;display:flex;flex-direction:row;
+ align-items:baseline;gap:clamp(2px,.55cqi,7px);
+ border-right:1px solid rgba(41,58,68,.16);background:transparent;color:#173249
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button>span{
+ font:italic 400 clamp(10px,1.6cqi,14px)/1 var(--ws-type-display-en,Georgia,serif);
+ color:#b18c4e
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button small{
+ font:400 clamp(8px,1.35cqi,12px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ letter-spacing:.03em;white-space:nowrap;overflow-wrap:normal
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-stack{
+ display:grid!important;
+ grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+ grid-template-rows:minmax(0,1.28fr) minmax(0,.72fr);
+ grid-auto-flow:row;column-gap:5.2%;row-gap:3.2%;
+ align-items:stretch;align-content:stretch;
+ min-width:0;min-height:0;overflow-y:auto;overflow-x:hidden;
+ padding:0 3px 1px 0;scroll-behavior:smooth;
+ -webkit-mask-image:none;mask-image:none;overscroll-behavior:contain
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement{
+ display:flex;flex-direction:column;align-self:stretch;
+ min-width:0;min-height:0;overflow:visible;
+ margin:0;padding:clamp(6px,1cqi,9px) 0 0;
+ border-top:1px solid #bcb0a1
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement:nth-child(1){grid-column:1;grid-row:1}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement:nth-child(2){grid-column:2;grid-row:1}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement:nth-child(3){grid-column:1;grid-row:2}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement:nth-child(4){grid-column:2;grid-row:2}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-movement__heading{
+ display:flex;align-items:baseline;gap:clamp(6px,1cqi,11px);
+ margin:0 0 clamp(3px,.65cqi,6px)
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-roman{
+ font:italic 400 clamp(12px,1.8cqi,16px)/1.1 var(--ws-type-display-en,Georgia,serif);color:#b18c4e
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement h3{
+ font:400 clamp(22px,3.9cqi,33px)/1 var(--ws-type-display-en,Georgia,serif);
+ letter-spacing:-.045em;color:#16314a
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-list{
+ flex:1 1 auto;display:flex;flex-direction:column;
+ justify-content:space-evenly;gap:clamp(4px,.75cqi,8px);
+ min-height:0;margin:0;padding:0
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-entry{
+ display:grid;grid-template-columns:clamp(19px,2.65cqi,25px) minmax(0,1fr);
+ align-items:start;gap:clamp(5px,.85cqi,9px);min-height:max-content
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-num{
+ font:italic 400 clamp(11px,1.7cqi,14px)/1.3 var(--ws-type-display-en,Georgia,serif);
+ color:#ab8750;padding-top:1px
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-zh{
+ font:200 clamp(13px,2.1cqi,17px)/1.4 var(--ws-type-display-zh,sans-serif);
+ white-space:nowrap;color:#19354c
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-en{
+ font:italic 400 clamp(11px,1.6cqi,14px)/1.4 var(--ws-type-display-en,Georgia,serif);
+ color:#697783;white-space:nowrap
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-works{
+ margin-top:clamp(2px,.4cqi,4px);
+ font:400 clamp(11px,1.64cqi,14px)/1.45 var(--ws-type-reading-zh,sans-serif);
+ color:#53606d;line-break:strict;text-wrap:pretty;
+ overflow-wrap:break-word
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-interlude{
+ margin-top:clamp(4px,.7cqi,7px);padding-top:4px;border-color:#ded4c6;
+ color:#a08251;font:400 clamp(8px,1.2cqi,10px)/1.2 var(--ws-type-display-en-sc,Georgia,serif)
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-footer{
+ border-top:1px solid #b6a17f;padding-top:clamp(4px,.8cqi,7px);
+ margin:0;display:flex;justify-content:space-between;gap:8px;
+ font:400 clamp(9px,1.35cqi,11px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ color:#8e774f;letter-spacing:.04em
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-expand{
+ font:400 clamp(9px,1.35cqi,11px)/1.2 var(--ws-type-display-en-sc,Georgia,serif);
+ color:#a17e47;text-underline-offset:2px
+}
+@container (max-width:470px){
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-paper{
+  padding:4% 5% 3%;
+  grid-template-rows:clamp(12px,3cqi,16px) 23% clamp(31px,9cqi,40px) minmax(0,1fr) 24px
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-tiny{
+  margin-left:29%;width:71%;font-size:8px
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header{margin-left:29%}
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-header h2{font-size:clamp(23px,9.4cqi,45px)}
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-chinese span{display:none!important}
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button{
+  flex-direction:column;gap:1px;padding:3px 1px
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button small{
+  font-size:clamp(8px,2.4cqi,11px)
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-stack{
+  display:flex!important;flex-direction:column;gap:clamp(11px,3.2cqi,18px);
+  overflow-y:auto;scrollbar-width:thin
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement{
+  flex:0 0 auto;min-height:max-content
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-list{
+  justify-content:flex-start
+ }
+ .dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-works{
+  font-size:clamp(11px,3.3cqi,14px)
+ }
+}
+
+/* A four-movement editorial register: one gold rule marks the active
+ * chapter without turning all four movement headings into decorative gold. */
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-movement[data-active-section="true"]{
+ border-top-color:#b58a47
+}
+
+/* Paris Review index grammar: the jump rail is a marginal Roman folio,
+ * NOT a second row reprinting all four large movement names. Names remain
+ * in the four real section headings; ARIA button labels keep navigation. */
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button{
+ justify-content:center;align-items:center;border-right:0;
+ padding:3px 0
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button>span{
+ font-size:clamp(12px,1.9cqi,17px);line-height:1.1
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button small{
+ position:absolute!important;width:1px!important;height:1px!important;
+ clip-path:inset(50%)!important;overflow:hidden!important;
+ white-space:nowrap!important;padding:0!important;margin:0!important;
+ border:0!important
+}
+.dual-stage[data-p2-poster="a"] #dual-stone-contents .p2x--10 .p2x-cereal-nav button[aria-current="location"]{
+ background:transparent;
+ box-shadow:inset 0 -2px 0 #b88e4d
+}
+
+
+/* ONLY the settled, miniature Contents identity may behave like a quiet
+ * seven-ink neon sign. This is not the giant poster entrance.
+ * Each section color gets roughly 4 seconds, with continuous interpolation:
+ * no blink, no alternating visibility, no whole-background flashing.
+ * Remove this class state automatically whenever the user scrolls backward
+ * to the full-size approved blue/gold artwork. */
+@keyframes xw-corner-slow-neon {
+ 0%,100% {background:var(--ws-morning-gold,#d2bc69)}
+ 12.5% {background:color-mix(in oklab,var(--ws-water) 84%,var(--ws-night))}
+ 25% {background:color-mix(in oklab,var(--ws-first-light) 84%,var(--ws-night))}
+ 37.5% {background:color-mix(in oklab,var(--ws-pale-gold) 84%,var(--ws-night))}
+ 50% {background:color-mix(in oklab,var(--ws-olive) 84%,var(--ws-night))}
+ 62.5% {background:color-mix(in oklab,var(--ws-harvest) 84%,var(--ws-night))}
+ 75% {background:color-mix(in oklab,var(--ws-crimson) 84%,var(--ws-night))}
+ 87.5% {background:color-mix(in oklab,var(--ws-daylight-mauve) 84%,var(--ws-night))}
+}
+.dual-stage[data-p2-poster="a"] .xw-poster[data-poster-state="contents"]
+ .xw-poster__glyph:not(.xw-poster__glyph--foil){
+ animation:xw-corner-slow-neon 32s linear infinite;
+ filter:drop-shadow(0 0 2px rgba(219,174,94,.20));
+}
+@media (prefers-reduced-motion:reduce),(forced-colors:active){
+ .dual-stage[data-p2-poster="a"] .xw-poster__glyph{
+  animation:none!important;filter:none!important
+ }
+}
+
+
+/* 2026-11-04 / P2 release visual correction.
+ * The Magazine must replace the old Church composition as a COMPLETE
+ * editorial field. Neither a water-pattern blank half nor Church service
+ * copy may peek around the incoming official right cover. The left monumental
+ * glyphs arrive on this same moving paper color, not inside a beige card.
+ * The field itself vanishes while the WHOLE settled Contents+cover spread
+ * pulls back, leaving the original film visible beneath the iframe. */
+.dual-stage[data-p2-poster="a"]::before{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:var(--xw-poster-bg,#f6eae2);
+ opacity:var(--xw-field-opacity,0);
+}
+.dual-stage[data-p2-poster="a"] .dual-panels{z-index:1}
+.dual-stage[data-p2-poster="a"] #dual-contents{
+ /* During 86–92.5% the WHOLE folio shrinks, and its original stock
+    becomes opaque precisely as the full-frame editorial background retires.
+    Until then the original giant A has no isolated beige rectangle. */
+ background:color-mix(in srgb,var(--xw-poster-bg,#102a43) var(--xw-page-frame-opacity,0%),transparent);
+ box-shadow:none;
+}
+.dual-stage[data-p2-poster="a"] #dual-contents .xw-poster{
+ background:transparent;
+}
+
+
+/* 02 -> 03: a single, scroll-owned manuscript background lives INSIDE
+ * the original Magazine iframe, behind both native folios. This layer
+ * replaces the film at the chapter boundary without placing a photo
+ * behind the book or drawing green cloth around the entire viewport.
+ * Optional comparison backdrops live separately in the P2 release. */
+.dual-stage[data-p2-poster="a"]::after{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ opacity:var(--p2-emmaus-backdrop-opacity,0);
+ background-color:#e8e2d4;
+ background-image:
+   linear-gradient(90deg,rgba(232,226,212,.86),rgba(232,226,212,.77)),
+   url('/images/p2-emmaus-time-held-open-v17.svg');
+ background-position:center,center;
+ background-size:cover,cover;
+ background-repeat:no-repeat;
+}
+
+/* Actual official masthead source: 680×190 SVG.
+ * WESTSIDE WATCH ends near x595; the TWO vertical Chinese glyphs
+ * occupy x600..635. Cropping at x595 cuts off 西望 entirely.
+ * Register the FULL 635px ink extents, not the English-only width.
+ * Never distort/retype the approved paths. */
+.dual-stage[data-p2-poster="a"] .dual-tile--cover .dual-cover__mast{
+ left:0;
+ top:0;
+ width:106.6%;
+ height:auto;
+ max-height:none;
+ max-width:none;
+ object-fit:contain;
+ object-position:left top;
+ transform:none;
+}
+/* At Church-schedule page size, the registered English masthead is
+ * wider than its historical book-cover layout. Give Isaiah 62:6 the
+ * slim blue interval BELOW the masthead without moving the stone city. */
+.dual-stage[data-p2-poster="a"] .dual-cover__scripture{
+ top:14.0%;
+}
+
+/* NARROW FOLIO: keep KJV above the skyline.
+ * The original 5:8 wall source and SVG masthead dimensions are unchanged.
+ * Only the ultra-light epigraph spacing is registered in the small blue
+ * band between the masthead and the rising skyline. */
+@media(max-width:820px){
+ .dual-stage[data-p2-poster="a"] .dual-cover__scripture{
+  top:10.6%;
+  left:3%;
+  right:3%;
+  gap:1px;
+ }
+ .dual-stage[data-p2-poster="a"] .dual-cover__scripture-zh{
+  font-size:clamp(7px,2.95cqi,10px);
+  line-height:1.12;
+  letter-spacing:0;
+ }
+ .dual-stage[data-p2-poster="a"] .dual-cover__scripture-en.ws-type-quote-en{
+  width:96%;
+  max-width:none;
+  font-size:clamp(7px,2.75cqi,9px);
+  line-height:1.12;
+ }
+ .dual-stage[data-p2-poster="a"] .dual-cover__scripture-ref.ws-scripture-reference{
+  font-size:clamp(7px,2.65cqi,8px);
+  line-height:1.1;
+ }
+}
