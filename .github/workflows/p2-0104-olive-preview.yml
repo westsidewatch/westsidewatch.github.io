@@ -1,0 +1,70 @@
+name: P2 04 Olive Isolated Preview Gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - 'static/experiments/p2-0104-olive-continuation.html'
+      - 'static/css/p2-0104-olive-continuation.css'
+      - 'static/js/p2-0104-olive-continuation.js'
+      - 'static/images/p2-realms/v15/04-olive-engraving-v1-5.svg'
+      - 'tests/p2-0104-olive-continuation.cjs'
+      - '.github/workflows/p2-0104-olive-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p2-0104-olive-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-preview:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'draft/p2-0104-')
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Build 01–04 draft without touching the published 01–03
+        run: |
+          hugo --gc --minify --baseURL 'https://westsidewatch-github-io.pages.dev/'
+          test -s public/experiments/p2-0104-olive-continuation.html
+          test -s public/experiments/p2-0103-release.html
+          test -s public/images/p2-realms/v15/04-olive-engraving-v1-5.svg
+          test -s public/images/olive/watchman-nee-editorial.png
+      - name: Test genuine Chrome 03→04 entrance and reverse scroll
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-0104-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-0104-olive-continuation.cjs
+      - name: Save genuine desktop/mobile visual proofs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-0104-olive-genuine-browser-proofs
+          path: artifacts/p2-0104-olive/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Deploy isolated P2 04 Preview ONLY — never main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREVIEW_BRANCH: p2-0104-${{ github.event.pull_request.number || github.run_id }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo '::error::Cloudflare preview credentials missing'; exit 1; }
+          npx --yes wrangler@4 pages deploy public \
+            --project-name=westsidewatch-github-io \
+            --branch="$PREVIEW_BRANCH" \
+            --commit-hash="${GITHUB_SHA}" \
+            --commit-message="P2 04 Olive draft only; main stays through Emmaus 03"
+          echo "### 04 / OLIVE MOUNTAIN — DRAFT PREVIEW (NOT MERGED)" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/p2-0104-olive-continuation.html?d=9.30" >> "$GITHUB_STEP_SUMMARY"
