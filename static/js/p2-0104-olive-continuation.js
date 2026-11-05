@@ -201,21 +201,34 @@
   return {x:c.x+(c.w-w)/2,
     y:c.y+top+Math.max(0,(c.h-top-bottom-h)/2),w,h};
  }
- function cardAroundPoster(r,other,mobile){
+ function cardAroundPoster(r,other,mobile,sideIndex){
   const gap=mobile?
     Math.max(0,other.y-(r.y+r.h)):
-    Math.max(0,other.x-(r.x+r.w));
-  const side=mobile?Math.max(23,Math.min(31,r.w*.103)):
-    Math.max(8,Math.min(16,(gap-8)/2));
-  // Source portraits are already the approved size. The material extends
-  // OUTWARD to create a mount: it never grows or crops the image.
+    Math.abs(other.x-(r.x+r.w));
+  // A gallery invitation has ONE deliberately wide OUTER rail for a
+  // localized Olives relief, and a narrow INNER gutter between works.
+  // The original 3:4 poster rectangle is NEVER recomputed or touched.
+  const outer=mobile?Math.max(18,Math.min(28,r.w*.08)):
+    Math.max(36,Math.min(56,r.w*.095));
+  const inner=mobile?Math.max(18,Math.min(28,r.w*.08)):
+    Math.max(6,Math.min(12,gap*.28));
+  const left=sideIndex===0?outer:inner;
+  const right=sideIndex===0?inner:outer;
   const top=mobile?Math.min(24,Math.max(6,gap*.44)):
-    Math.max(96,Math.min(112,r.h*.16));
+    Math.max(22,Math.min(30,r.h*.045));
   const bottom=mobile?Math.min(20,Math.max(4,gap*.40)):
-    Math.max(36,Math.min(45,r.h*.061));
-  return {x:r.x-side,y:r.y-top,w:r.w+side*2,h:r.h+top+bottom};
+    Math.max(27,Math.min(34,r.h*.047));
+  return {x:r.x-left,y:r.y-top,w:r.w+left+right,h:r.h+top+bottom};
+ }
+ function setCardCaption(card,i){
+  const el=card.querySelector('.olive-card__caption span');
+  if(!el)throw new Error('Missing one-line invitation imprint');
+  const line=roster[i][2]+' · '+roster[i][1];
+  if(el.textContent!==line)el.textContent=line;
  }
  function changePair(index,transition=0,withNext=false,vertical=false){
+  setCardCaption(invitationLeft,index*2+(withNext&&transition>.5?2:0));
+  setCardCaption(invitationRight,index*2+1+(withNext&&transition>.5?2:0));
   setFigure(left,index*2);setFigure(right,index*2+1);
   if(withNext){
    setFigure(nextLeft,(index+1)*2);setFigure(nextRight,(index+1)*2+1);
@@ -317,8 +330,8 @@
   const settledLeft=rects[0],settledRight=rects[1];
   const sourceCard=g.plate;
   const mountedSourcePrint=printInsideCard(sourceCard);
-  const targetLeftCard=cardAroundPoster(settledLeft,settledRight,vertical);
-  const targetRightCard=cardAroundPoster(settledRight,settledLeft,vertical);
+  const targetLeftCard=cardAroundPoster(settledLeft,settledRight,vertical,0);
+  const targetRightCard=cardAroundPoster(settledRight,settledLeft,vertical,1);
   // 04's physical invitation first assumes the true Doré frame's bounds;
   // it then TRAVELS alongside the original print into the left position.
   const cardGeometry={
@@ -341,7 +354,8 @@
   first.style.visibility=d>T.start&&d<T.spread?'visible':'hidden';
   first.style.clipPath=d<T.first?
     'inset(0 0 0 '+((1-posterReveal)*100).toFixed(3)+'%)':'none';
-  stage.dataset.p2InvitationShell='source-plate-to-mounted-left-print';
+  stage.dataset.p2InvitationShell='source-plate-to-minimal-gallery-print';
+  stage.dataset.p2CardRelief='independent-olive-topography';
   stage.dataset.p2MountedFirstAspect=(bw/bh).toFixed(5);
   // 03 is still authoritative before the source card. Once the card
   // begins its spatial journey the existing independent field handoff
@@ -371,6 +385,8 @@
   left.style.visibility=paired?'visible':'hidden';
   right.style.visibility=paired?'visible':'hidden';
   if(forming){
+   setCardCaption(invitationLeft,0);
+   setCardCaption(invitationRight,1);
    setFigure(nextRight,1);
    nextRight.style.visibility=secondArrival>0?'visible':'hidden';
    nextRight.style.clipPath='inset('+((1-secondArrival)*100).toFixed(3)+'% 0 0 0)';
