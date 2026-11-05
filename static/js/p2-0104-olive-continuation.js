@@ -4,8 +4,8 @@
  *
  * 9.44–10.08   Doré plate -> first original speaker poster, same frame
  * 10.08–10.95  first poster to left half, second to right half
- * 10.95–11.15  both posters HOLD; background does NOT enter yet
- * 11.15–11.73  ONLY the exterior olive SVG changes, directional bottom-up
+ * 10.95–11.15  two posters HOLD under reserved masthead; landscape not entered
+ * 11.15–11.73  ONE continuous Olive terrain SVG enters, bottom-up and behind posters
  * 11.95–15.89  five opposite-mask switches, two speakers per spread (6 pairs)
  * 16.25–17.25  the SAME twelve image works geometrically recompose as index
  * 17.25–17.65  chapter title and entry invitation hold
@@ -148,17 +148,29 @@
   el.style.width=w.toFixed(2)+'px';
   el.style.height=h.toFixed(2)+'px';
  }
- function adjustGround(g){
-  const W=stage.clientWidth,H=stage.clientHeight,{x,y,w,h}=g;
-  const areas={top:[0,0,W,y],left:[0,y,x,h],
-    right:[x+w,y,Math.max(0,W-x-w),h],
-    bottom:[0,y+h,W,Math.max(0,H-y-h)]};
-  for(const el of ground.querySelectorAll('[data-side]')){
-   const [px,py,pw,ph]=areas[el.dataset.side];
-   position(el,px,py,pw,ph);
-   el.style.backgroundSize=W+'px '+H+'px';
-   el.style.backgroundPosition=-px+'px '+-py+'px';
+ // ONE continuous landscape plate. The previous four registered panels
+ // created rectangular cuts and could never read as one mountain.
+ function galleryRects(g){
+  const mobile=g.w<600;
+  const margin=mobile?Math.max(12,Math.min(20,g.w*.04)):
+    Math.max(24,Math.min(48,g.w*.03));
+  const top=mobile?73:Math.max(86,Math.min(114,g.h*.115));
+  const bottom=mobile?61:Math.max(48,Math.min(73,g.h*.065));
+  const gap=mobile?10:Math.max(13,Math.min(30,g.w*.02));
+  const availW=Math.max(1,g.w-2*margin);
+  const availH=Math.max(1,g.h-top-bottom);
+  if(mobile){
+   const h=(availH-gap)/2;
+   return [
+    {x:margin,y:top,w:availW,h},
+    {x:margin,y:top+h+gap,w:availW,h}
+   ];
   }
+  const w=(availW-gap)/2;
+  return [
+   {x:margin,y:top,w,h:availH},
+   {x:margin+w+gap,y:top,w,h:availH}
+  ];
  }
  function changePair(index,transition=0,withNext=false,vertical=false){
   setFigure(left,index*2);setFigure(right,index*2+1);
@@ -178,21 +190,18 @@
  function layoutIndex(g,t){
   const cols=g.w>=900?6:g.w>=600?4:3;
   const rows=Math.ceil(12/cols);
-  const horizontal=g.w>=900?22:9,top=g.w>=900?32:18;
+  const horizontal=g.w>=900?35:13;
+  const top=g.w>=900?Math.max(103,Math.min(123,g.h*.12)):81;
   const bottom=g.w>=900?83:78,gap=g.w>=900?12:5;
   const cellW=(g.w-horizontal*2-gap*(cols-1))/cols;
   const cellH=(g.h-top-bottom-gap*(rows-1))/rows;
-  const half=g.w/2;
+  const anchors=galleryRects(g);
   cards.forEach((card,i)=>{
-   const mobile=g.w<600;
-   const startX=mobile?0:i%2===0?0:half;
-   const startY=mobile?(i%2===0?0:g.h/2):0;
-   const startW=mobile?g.w:half;
-   const startH=mobile?g.h/2:g.h;
+   const from=anchors[i%2];
    const targetX=horizontal+(i%cols)*(cellW+gap);
    const targetY=top+Math.floor(i/cols)*(cellH+gap);
-   position(card,mix(startX,targetX,t),mix(startY,targetY,t),
-    mix(startW,cellW,t),mix(startH,cellH,t));
+   position(card,mix(from.x,targetX,t),mix(from.y,targetY,t),
+    mix(from.w,cellW,t),mix(from.h,cellH,t));
   });
   overview.dataset.columns=String(cols);
  }
@@ -211,7 +220,7 @@
   stage.dataset.p2FolioReady=g?'true':'false';
   if(!g)return;
   position(folio,g.x,g.y,g.w,g.h);
-  adjustGround(g);
+  // Landscape is one uninterrupted plate behind the poster folio.
   const stageActive=d>T.start+.00001;
   folio.style.visibility=stageActive?'visible':'hidden';
   const bridge=ease((d-T.start)/(T.first-T.start));
@@ -219,15 +228,16 @@
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
   const vertical=g.w<600;
-  const half=vertical?g.h/2:g.w/2;
+  const rects=galleryRects(g);
   // Desktop uses true folio halves; on narrow phones two original posters
   // occupy TOP/BOTTOM halves to avoid extremely thin and mostly empty strips.
   // The actual Doré image never moves: overlay #1 inherits ITS bounds.
   // It travels into the left HALF only once the first poster is established.
-  const bx=mix(g.plate.x,0,form);
-  const by=mix(g.plate.y,0,form);
-  const bw=mix(g.plate.w,vertical?g.w:half,form);
-  const bh=mix(g.plate.h,vertical?half:g.h,form);
+  const settledLeft=rects[0];
+  const bx=mix(g.plate.x,settledLeft.x,form);
+  const by=mix(g.plate.y,settledLeft.y,form);
+  const bw=mix(g.plate.w,settledLeft.w,form);
+  const bh=mix(g.plate.h,settledLeft.h,form);
   position(first,bx,by,bw,bh);
   first.style.visibility=d>T.start&&d<T.spread?'visible':'hidden';
   first.style.clipPath=d<T.first?
@@ -235,8 +245,7 @@
   // Pair B enters while A travels; both images stay 3:4 and object-fit.
   position(pair,0,0,g.w,g.h);
   for(const [element,side] of [[left,0],[right,1],[nextLeft,0],[nextRight,1]]){
-   if(vertical)position(element,0,side*half,g.w,half);
-   else position(element,side*half,0,half,g.h);
+   const r=rects[side];position(element,r.x,r.y,r.w,r.h);
   }
   pair.style.visibility=d>=T.first?'visible':'hidden';
   const forming=d>=T.first&&d<T.spread;
@@ -261,16 +270,17 @@
    stage.dataset.p2PairIndex=String(i);
    stage.dataset.p2PairBlend=u.toFixed(5);
   }
-  // The engraved exterior is separate from (and later than) the pair.
-  // Four pre-cut panels map one SVG without ever painting over the folio.
-  // We change the spatial mask; NOT opacity or color crossfade.
+  // The mountain enters as ONE engraved spatial field only after both
+  // posters have settled. No opacity blend, extra panel or time clock.
   ground.style.visibility=bg>0?'visible':'hidden';
   ground.style.clipPath=bg>.99999?'none':
    'inset('+((1-bg)*100).toFixed(3)+'% 0 0 0)';
   ground.style.opacity='1';
-  rubric.style.visibility=d>=T.groundEnd?'visible':'hidden';
-  rubric.style.clipPath=d>=T.groundEnd+.19?'none':
-   'inset(0 '+((1-ease((d-T.groundEnd)/.19))*100).toFixed(3)+'% 0 0)';
+  // The masthead has a reserved position: never overwrites original
+  // approved poster typography or crosses the artwork picture boxes.
+  rubric.style.visibility=d>=T.spread?'visible':'hidden';
+  rubric.style.clipPath=d>=T.spread+.25?'none':
+   'inset(0 '+((1-ease((d-T.spread)/.25))*100).toFixed(3)+'% 0 0)';
   overview.style.visibility=d>T.indexStart?'visible':'hidden';
   if(d>=T.indexStart)layoutIndex(g,fan);
   const finished=d>=T.indexEnd-.00001;
