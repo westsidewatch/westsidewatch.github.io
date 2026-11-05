@@ -39,7 +39,16 @@ assert.doesNotMatch(html,/olive-main-image|olive-next-image|olive-speaker-names/
  'remove prior speaker-player layout and small-thumb corridor');
 assert.match(css,/04-olive-invitation-foil-v5\.svg/,'04 uses a genuine registered gold-foil invitation plate');
 assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scripture-cover green cloth');
-assert.match(css,/cover-golden-shoot-frame-transparent\.png/,'reuse approved ONE golden botanical border');
+assert.match(css,/cover-golden-shoot-frame-transparent\.png/,'03 bridge may use its approved botanical border');
+const oliveCSS=css.slice(css.indexOf('.olive-surround__half{\n /* 04 INDEPENDENT PRINT STOCK'),css.indexOf('.olive-proof{'));
+const firstCSS=css.slice(css.indexOf('/* The incoming print lives'),css.indexOf('.olive-stage__poster{'));
+assert(!oliveCSS.includes('/one/')&&!firstCSS.includes('/one/'),
+ '04 final domain MUST NOT inherit ONE cover texture or gilt assets');
+assert.match(oliveCSS,/background-color:#173c2a/,'04 uses separate olive ink stock');
+assert.match(css,/\.olive-stage__index-card\{[^}]*overflow:hidden/,
+ '12 artwork rectangles must clip overflow');
+assert.match(css,/\.olive-stage__index-card span\{[^}]*display:none!important/,
+ 'no external caption strip or overshooting print at index');
 assert.doesNotMatch(css,/#e5d9b8|#e7e5d9|#ded1af/,
  'NO invented yellow intermediate or gray poster mat');
 assert.match(html,/id="p2-olive-bridge"/,'bridge 03 reading world before changing 04 pigment');
@@ -125,12 +134,16 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
        opacity:getComputedStyle(ground).opacity,
        halves:[...ground.querySelectorAll('[data-side]')].map(x=>x.style.clipPath),
        left:+ground.dataset.leftReveal,right:+ground.dataset.rightReveal,
+       texture:getComputedStyle(ground.querySelector('[data-side="left"]')).backgroundImage,
        parts:ground.querySelectorAll('.olive-surround__half').length},
       cards:[...overview.querySelectorAll('.olive-stage__index-card')].map(el=>
        ({src:el.querySelector('img')?.getAttribute('src'),...box(el)})),
       grid:overview.dataset.columns,
       overviewVisibility:getComputedStyle(overview).visibility,
       overviewPaper:getComputedStyle(overview).backgroundColor,
+       pairDisplay:getComputedStyle(document.getElementById('olive-pair')).display,
+       firstDisplay:getComputedStyle(document.getElementById('olive-first')).display,
+       indexIsolated:st.dataset.p2IndexIsolated,
       ctaVisibility:getComputedStyle(document.getElementById('olive-enter')).visibility
     };
    });
@@ -253,7 +266,11 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
        backgroundReady.groundCSS.visibility==='visible' &&
        backgroundReady.groundCSS.left>.999 && backgroundReady.groundCSS.right>.999,
        'both halves must finish the gilt invitation before the next speakers');
-   const pairTransition=await go(12.25,'06-opposed-double-poster-change');
+   assert.equal(backgroundReady.neutralCSS.visibility,'hidden',
+       '03 Bible cloth must retire when 04 field is complete');
+    assert(!backgroundReady.groundCSS.texture.includes('/one/'),
+       '04 realm must not load 03 book-cover texture');
+    const pairTransition=await go(12.25,'06-opposed-double-poster-change');
    assert.equal(pairTransition.scene,'04-six-pair-gallery');
    assert(+pairTransition.pairBlend>.4&&+pairTransition.pairBlend<.7,'new pair is physically half revealed');
    assert(pairTransition.incomingLeft.clip.includes('inset(')&&
@@ -295,6 +312,12 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    const indexFull=await go(17.55,'09-twelve-voices-final-overview');
    assert.equal(indexFull.scene,'04-twelve-index');
    assert.equal(indexFull.cards.length,12);
+    assert.equal(indexFull.pairDisplay,'none',
+      'no large source-pair artwork underneath the 12 prints');
+    assert.equal(indexFull.firstDisplay,'none',
+      'no entrance-frame source underneath final index');
+    assert.equal(indexFull.indexIsolated,'true',
+      'the final screen contains only the 12 gallery works');
    assert.equal(indexFull.grid,width>=800?'6':'3','6x2 desktop or 3x4 phone exhibition index');
    assert.equal(indexFull.ctaVisibility,'visible');
    const seen=new Set(indexFull.cards.map(x=>x.src));
