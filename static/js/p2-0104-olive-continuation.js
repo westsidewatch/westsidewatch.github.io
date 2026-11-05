@@ -205,12 +205,12 @@
   const gap=mobile?
     Math.max(0,other.y-(r.y+r.h)):
     Math.max(0,other.x-(r.x+r.w));
-  const side=mobile?Math.max(8,Math.min(14,r.w*.038)):
+  const side=mobile?Math.max(23,Math.min(31,r.w*.103)):
     Math.max(8,Math.min(16,(gap-8)/2));
   // Source portraits are already the approved size. The material extends
   // OUTWARD to create a mount: it never grows or crops the image.
   const top=mobile?Math.min(24,Math.max(6,gap*.44)):
-    Math.max(59,Math.min(76,r.h*.105));
+    Math.max(96,Math.min(112,r.h*.16));
   const bottom=mobile?Math.min(20,Math.max(4,gap*.40)):
     Math.max(36,Math.min(45,r.h*.061));
   return {x:r.x-side,y:r.y-top,w:r.w+side*2,h:r.h+top+bottom};
