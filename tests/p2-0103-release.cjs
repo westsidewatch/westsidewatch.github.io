@@ -18,8 +18,8 @@ assert(!/\.olive-proof|data-realm="sermon"|data-realm="cinema"|data-realm="book"
 assert.match(js,/const timelineMax=9\.34/,'release ends before Olive starts at 9.44');
 assert.match(html,/p2-0103-release\.css/);
 assert.match(html,/p2-0103-release\.js/);
-assert.match(vol,/coverIn=stableLargeA\?ease\(\(progress-\.015\)\/\.105\)/,'whole cover enters first');
-assert.match(vol,/posterIn=stableLargeA\?ease\(\(progress-\.14\)\/\.17\)/,'whole large poster follows');
+assert.match(vol,/coverIn=stableLargeA\?ease\(\(progress-\.04\)\/\.20\)/,'whole cover enters first');
+assert.match(vol,/posterIn=stableLargeA\?ease\(\(progress-\.28\)\/\.07\)/,'whole large poster follows');
 assert.match(poster,/const u=clamp\(\(p-\.36\)\/\.41\)\*6/,'seven inks only begin after folios are visible');
 assert.match(bridge,/magazine\.style\.background='transparent'/,'no early blank paper curtain');
 assert.match(bridge,/filmReveal=easing\(\(progress-\.86\)\/\.065\)/,'original home film must reveal during uniform spread shrink before Contents');
@@ -83,13 +83,25 @@ const browserPromise=chromium.launch({headless:true});
     const church=await pose(1.6);
     assert.equal(church.olivePresent,false);
     assert(!church.coverVisible&&!church.posterVisible,'nothing from Magazine may cover church in phase 01');
-    const cover=await pose(3.55); // global ~38%, official cover now fully settled
-    console.log('RELEASE COVER-FIRST',width,JSON.stringify(cover));
+    // RECOVERY: 03 must not overwrite 02's APPROVED cover motion.
+    // The native cover progresses monotonically from right to its full
+    // position; an independent 03 JS cache must never snap it backward.
+    const enteringCover=await pose(3.50);
+    assert(enteringCover.coverIn>.05&&enteringCover.coverIn<.95,
+      'approved magazine cover must enter smoothly, not flash full-width');
+    assert(!enteringCover.posterVisible,'the giant left A waits for the full right cover');
+    assert(enteringCover.fieldOpacity<.001,
+      'the Magazine cannot paint a premature navy field over the Church schedule');
+    await page.screenshot({path:out+'/cover-entering-church-unobscured-'+width+'.png'});
+    const cover=await pose(3.92);
+    console.log('RECOVERED ORIGINAL COVER',width,JSON.stringify(cover));
     assert(cover.coverIn>.999&&cover.posterIn===0,
-      '38% must show a COMPLETE right cover, never the clipped WESTSIDE masthead');
-    assert(!cover.posterVisible,'blank left folio must NOT be visible during cover entrance');
-    assert.equal(cover.filmOpacity,0,'film must remain behind cover');
-    assert(cover.fieldOpacity>.99,'cover stage must conceal old Church schedule');
+      'recover PR #1381: the entire original right cover settles before giant A');
+    assert(enteringCover.coverX>cover.coverX+20,
+      'native cover X must progress LEFT monotonically without cached Emmaus transform resets');
+    assert(!cover.posterVisible,'no empty left folio while the right cover settles');
+    assert.equal(cover.filmOpacity,0,'the original film remains hidden during cover arrival');
+    assert(cover.fieldOpacity<.001,'do not recolor the Church during the MERSI cover reveal');
     const print=await pose(4.65);
     console.log('RELEASE GIANT PRINT',width,JSON.stringify(print));
     assert(print.posterVisible&&print.coverVisible,'full pair must be present for seven-color print');
@@ -216,7 +228,7 @@ const browserPromise=chromium.launch({headless:true});
     await page.screenshot({path:out+'/end-03-'+width+'.png'});
     await pose(4.65);
     await page.screenshot({path:out+'/giant-seven-color-'+width+'.png'});
-    await pose(3.63);
+    await pose(3.92);
     await page.screenshot({path:out+'/cover-first-'+width+'.png'});
     // Parent frame should never insert a blank opaque paper over the church.
     const rewind=await pose(1.6);
