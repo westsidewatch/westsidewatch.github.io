@@ -76,7 +76,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(middle.reveal>.49&&middle.reveal<.51,'04 half reveal must track hand 1:1');
    // Chromium normalizes CSS 50.000% into 50%, so test the actual
    // percentage and direction rather than one serialization string.
-   const mask=middle.clip.match(/^inset\(\s*0(?:px)?\s+0(?:px)?\s+0(?:px)?\s+([\\d.]+)%\s*\)$/);
+   const mask=middle.clip.match(/^inset\(\s*0(?:px)?\s+0(?:px)?\s+0(?:px)?\s+([0-9.]+)%\s*\)$/);
    assert(mask&&Math.abs(Number(mask[1])-50)<.15,
     '50% must reveal FROM RIGHT across the same fixed book rectangle: '+middle.clip);
    assert.equal(middle.visibility,'visible');
