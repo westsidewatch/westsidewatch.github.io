@@ -30,8 +30,12 @@ assert.match(html,/id="olive-invitation-left"/,'left settled speaker requires ow
 assert.match(html,/id="olive-invitation-right"/,'right settled speaker requires own card');
 assert.match(css,/\.olive-stage__invitation\{/,
  'invitation is a real distinct graphic object');
-assert.match(css,/04-olive-personal-invitation-foil-v6\.svg/,
- 'dedicated chapter-04 engraved gold plate belongs on each card');
+assert.match(css,/04-olive-terrain-relief-v7\.svg/,
+ 'the invitation gets ONE localized independent topographic relief');
+assert.doesNotMatch(html,/olive-invitation__imprint|olive-invitation__colophon/,
+ 'no three competing invitation titles or redundant colophons');
+assert.equal((html.match(/OLIVE <i>MOUNTAIN<\/i>/g)||[]).length,1,
+ 'exactly one page-level Olive Mountain masthead');
 assert.match(js,/function printInsideCard\(c\)/,
  'original poster is geometrically mounted inside, not resized to hide old frame');
 assert.match(js,/position\(firstInvitation,cardGeometry\.x/,
@@ -49,17 +53,18 @@ assert.doesNotMatch(js,/setInterval|setTimeout|new Promise|animate\(|transitionD
  'no secondary timeline or time-based lag in P2 scroll choreography');
 assert.doesNotMatch(html,/olive-main-image|olive-next-image|olive-speaker-names/,
  'remove prior speaker-player layout and small-thumb corridor');
-assert.match(css,/04-olive-invitation-foil-v5\.svg/,'04 exterior still uses its independent background foil');
-assert.match(css,/04-olive-personal-invitation-foil-v6\.svg/,
- '04 speakers must have their OWN finer gold invitation-card press plate');
+assert.doesNotMatch(css,/04-olive-invitation-foil-v5\.svg/,
+ 'no ornate giant full-scene foil frame');
+assert.match(css,/04-olive-terrain-relief-v7\.svg/,
+ 'small regional relief, not full-page decorative foliage');
 assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scripture-cover green cloth');
 assert.doesNotMatch(css,/cover-golden-shoot-frame-transparent\.png/,
  'the 04 transition must NOT duplicate the old ONE book-cover gilt frame');
-const oliveCSS=css.slice(css.indexOf('.olive-surround__half{\n /* 04 INDEPENDENT PRINT STOCK'),css.indexOf('.olive-proof{'));
+const oliveCSS=css.slice(css.indexOf('.olive-surround__half{'),css.indexOf('.olive-proof{'));
 const firstCSS=css.slice(css.indexOf('/* The incoming print lives'),css.indexOf('.olive-stage__poster{'));
 assert(!oliveCSS.includes('/one/')&&!firstCSS.includes('/one/'),
  '04 final domain MUST NOT inherit ONE cover texture or gilt assets');
-assert.match(oliveCSS,/background-color:#173c2a/,'04 uses separate olive ink stock');
+assert.match(oliveCSS,/background-color:#163a2a/,'04 uses independent olive field ink');
 assert.match(css,/\.olive-stage__index-card\{[^}]*overflow:hidden/,
  '12 artwork rectangles must clip overflow');
 assert.match(css,/\.olive-stage__index-card span\{[^}]*display:none!important/,
@@ -78,11 +83,11 @@ assert.match(css,/\.olive-stage__overview\{[^}]*background:transparent/,
  'index preserves full olive green and gold field, no white jump');
 assert(fs.existsSync(path.join(root,'static/images/p2-realms/v15/04-olive-engraving-v1-5.svg')),
  'keep approved V1.5 source intact as archive');
-const invitationSVG=read('static/images/p2-realms/v15/04-olive-invitation-foil-v5.svg');
-assert.match(invitationSVG,/gold-foil invitation press plate/, 'real editorial invitation');
-assert.match(invitationSVG,/gold-olive-sprig/, 'native engraved olive motif');
-assert.match(invitationSVG,/#ddc783|#dfc885/, 'foil hue belongs to the approved cover palette');
-assert(!invitationSVG.includes('<image'), 'foil remains editable native vector');
+const reliefSVG=read('static/images/p2-realms/v15/04-olive-terrain-relief-v7.svg');
+assert.match(reliefSVG,/localized low-relief copperplate topographic vignette/,
+ 'geographic identity instead of decorative frame');
+assert.match(reliefSVG,/Mount of Olives/, 'independent 04 identity');
+assert(!reliefSVG.includes('<image'), 'relief stays editable native SVG');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
 (async()=>{
  const browser=await chromium.launch({headless:true});
@@ -147,15 +152,15 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       invitation:{visibility:getComputedStyle(invitation).visibility,
        color:getComputedStyle(invitation).backgroundColor,
        bg:getComputedStyle(invitation).backgroundImage,
-       foil:getComputedStyle(invitation.querySelector('.olive-invitation__foil')).backgroundImage,
-       imprint:invitation.querySelector('.olive-invitation__imprint strong')?.textContent,
+       relief:getComputedStyle(invitation.querySelector('.olive-card__relief')).backgroundImage,
+       caption:invitation.querySelector('.olive-card__caption')?.textContent?.trim(),
        clip:invitation.style.clipPath,box:box(invitation)},
       pairCardLeft:{visibility:getComputedStyle(cardLeft).visibility,box:box(cardLeft),
-       header:box(cardLeft.querySelector('.olive-invitation__imprint')),
-       foot:box(cardLeft.querySelector('.olive-invitation__colophon'))},
+       caption:cardLeft.querySelector('.olive-card__caption')?.textContent?.trim(),
+       relief:box(cardLeft.querySelector('.olive-card__relief'))},
       pairCardRight:{visibility:getComputedStyle(cardRight).visibility,box:box(cardRight),
-       header:box(cardRight.querySelector('.olive-invitation__imprint')),
-       foot:box(cardRight.querySelector('.olive-invitation__colophon'))},
+       caption:cardRight.querySelector('.olive-card__caption')?.textContent?.trim(),
+       relief:box(cardRight.querySelector('.olive-card__relief'))},
       pairLeft:get(left),pairRight:get(right),
       incomingLeft:get(nl),incomingRight:get(nr),
       neutralCSS:{visibility:getComputedStyle(neutral).visibility,reveal:+neutral.dataset.reveal,
@@ -229,9 +234,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      Math.abs(bridge.invitation.box.w-bridge.source.w)<2,
      'the CARD, not the portrait, assumes the original Doré frame');
    assert.equal(bridge.invitation.visibility,'visible');
-   assert(bridge.invitation.foil.includes('04-olive-personal-invitation-foil-v6.svg'),
-     'the new source card carries independent Olive gilt engraving');
-   assert.equal(bridge.invitation.imprint,'OLIVE MOUNTAIN');
+   assert(bridge.invitation.relief.includes('04-olive-terrain-relief-v7.svg'),
+     'invitation has one unique and localized olive-landscape relief');
+   assert.equal(bridge.invitation.caption,'WATCHMAN NEE · 倪柝聲');
    assert(Math.abs(bridge.firstFrame.box.w/bridge.firstFrame.box.h-.75)<.01,
      'the protected 3:4 poster must mount INSIDE the invitation');
    assert(bridge.firstFrame.box.w<bridge.invitation.box.w &&
@@ -245,9 +250,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      'the old source is claimed by a complete foil invitation');
    assert.equal(sourceTakeover.invitation.clip,'none',
      'the FULL invitation replaces the Doré source before moving');
-   assert(sourceTakeover.invitation.bg.includes('gradient'),
-     'use an intentional printed-card stock, not a flat blocker');
-   assert(sourceTakeover.invitation.foil.includes('04-olive-personal-invitation-foil-v6.svg'));
+   assert.equal(sourceTakeover.invitation.color,'rgb(25, 61, 46)',
+     'source card is matte olive, not yellow/gray or ONE fabric');
+   assert(sourceTakeover.invitation.relief.includes('04-olive-terrain-relief-v7.svg'));
    const card=sourceTakeover.invitation.box,print=sourceTakeover.firstFrame.box;
    assert(print.x>card.x+5&&print.y>card.y+5&&
      print.x+print.w<card.x+card.w-5 &&
@@ -272,14 +277,18 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      'first traveling card is replaced by TWO identical settled invitation objects');
    assert.equal(pair.pairCardLeft.visibility,'visible');
    assert.equal(pair.pairCardRight.visibility,'visible');
+   assert.equal(pair.pairCardLeft.caption,'WATCHMAN NEE · 倪柝聲');
+   assert.equal(pair.pairCardRight.caption,'DEREK PRINCE · 葉光明');
+   for(const [mount,poster] of [[pair.pairCardLeft,pair.pairLeft],
+                                [pair.pairCardRight,pair.pairRight]]){
+     assert(mount.box.y<poster.box.y&&
+       mount.box.y+mount.box.h>poster.box.y+poster.box.h,
+       'gallery cards must retain real margins beyond approved poster');
+   }
    if(width>800){
-    for(const [mount,poster] of [[pair.pairCardLeft,pair.pairLeft],
-                                 [pair.pairCardRight,pair.pairRight]]){
-     assert(mount.header.y+mount.header.h<poster.box.y-5,
-      'letterpress invitation masthead must be fully above the poster');
-     assert(mount.foot.y>poster.box.y+poster.box.h+1,
-      'printed invitation colophon must be fully below the poster');
-    }
+     assert(pair.masthead.y+pair.masthead.h<
+       Math.min(pair.pairCardLeft.box.y,pair.pairCardRight.box.y)+2,
+       'single global masthead must remain outside mounted gallery works');
    }
    for(const [cardBox,printBox] of [[pair.pairCardLeft.box,pair.pairLeft.box],
                                     [pair.pairCardRight.box,pair.pairRight.box]]){
