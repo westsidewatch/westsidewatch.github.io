@@ -456,15 +456,20 @@
   }
   // 01→02: full right cover first; whole left poster second; seven inks third.
   // This is ONE reversible scroll owner; no old half-page paper curtains.
-  const coverIn=stableLargeA?ease((progress-.04)/.20):1;
+  const coverIn=stableLargeA?(reduce?(progress>=.14?1:0):ease((progress-.04)/.10)):1;
   const posterIn=stableLargeA?ease((progress-.28)/.07):1;
   const blue=stableLargeA?1:(reduce?1:ease((progress-.02)/.20));
   const dawn=stableLargeA?1:(reduce?(progress>=.31?1:0):ease((progress-.225)/.21));
   pose(cover,coverX,coverY,coverW,coverH);
   pose(gold,contentsX,contentsY,contentsW,contentsH);
   if(stableLargeA){
+   // The cover stays fixed at the same 01 Church schedule frame.
+   // MERSI's reveal affects the blue page field, not an already
+   // completed page sliding across Church from the right.
    cover.style.visibility=coverIn>.001?'visible':'hidden';
-   cover.style.transform='translate3d('+((1-coverIn)*Math.max(coverW,W-coverX)).toFixed(2)+'px,0,0)';
+   cover.style.transform='none';
+   cover.style.clipPath=coverIn>=.9999?'none':
+    'inset(0 '+((1-coverIn)*100).toFixed(3)+'% 0 0)';
    cover.style.opacity='1';
    gold.style.visibility=posterIn>.001?'visible':'hidden';
    gold.style.transform='translate3d('+(-(1-posterIn)*(contentsX+contentsW+20)).toFixed(2)+'px,0,0)';
@@ -472,7 +477,7 @@
    stage.dataset.releaseCoverIn=coverIn.toFixed(4);
    stage.dataset.releasePosterIn=posterIn.toFixed(4);
   }else{
-   cover.style.visibility='visible';cover.style.transform='';
+   cover.style.visibility='visible';cover.style.transform='';cover.style.clipPath='';
    gold.style.visibility='visible';gold.style.transform='';
   }
   pose(rail,railX,railY+contentsH,contentsH,railW);
@@ -555,18 +560,29 @@
    const dawnRise=reduce?1:ease((progress-.02)/.21);
    const starRise=starLift;
 
-   // Protected cover geometry and light stay unchanged.
-   city.style.transform=stableLargeA?'none':'translate3d(0,'+(115*(1-dawnRise)).toFixed(3)+'%,0)';
+   // 02 internal cover choreography only. Keep the complete 01→02
+   // folio geometry, approved SVG, and left monumental A untouched.
+   // Rising CITY first; official masthead across full width second;
+   // Isaiah 62:6 third; then CITY OF LIGHT / Chinese title.
+   const coverWall=stableLargeA?(reduce?(progress>=.14?1:0):ease((progress-.045)/.095)):dawnRise;
+   const coverMast=stableLargeA?(reduce?(progress>=.19?1:0):ease((progress-.14)/.05)):
+    (reduce?1:ease((progress-.73)/.083));
+   const coverVerse=stableLargeA?(reduce?(progress>=.23?1:0):ease((progress-.19)/.04)):
+    (reduce?1:ease((progress-.73)/.083));
+   const coverFeature=stableLargeA?(reduce?(progress>=.275?1:0):ease((progress-.225)/.05)):
+    (reduce?dawnRise:ease((progress-.62)/.105));
+   city.style.transform='translate3d(0,'+(115*(1-coverWall)).toFixed(3)+'%,0)';
    city.style.opacity=String(stableLargeA?1:(reduce?dawnRise:ease((progress-.03)/.12)));
-   coverEnglish.style.opacity=String(stableLargeA?1:(reduce?dawnRise:ease((progress-.62)/.105)));
-   // The fixed masthead and issue number read as ONE editorial signature.
-   // Their impression is complete by the cover+star hold; the prior late
-   // fade left the entire cover identity almost invisible at that key frame.
-   const signature=reduce?1:ease((progress-.73)/.083);
-   masthead.style.opacity=String(stableLargeA?1:signature);
-   coverScripture.style.opacity=String(stableLargeA?1:signature);
-   coverVol.style.opacity=String(stableLargeA?1:signature);
-   coverHeading.style.opacity=String(stableLargeA?1:(reduce?dawnRise:ease((progress-.69)/.095)));
+   masthead.style.opacity=String(coverMast);
+   coverScripture.style.opacity=String(coverVerse);
+   coverEnglish.style.opacity=String(coverFeature);
+   coverHeading.style.opacity=String(stableLargeA?coverFeature:
+    (reduce?dawnRise:ease((progress-.69)/.095)));
+   coverVol.style.opacity=String(coverFeature);
+   stage.dataset.coverWallRise=coverWall.toFixed(4);
+   stage.dataset.coverMastReveal=coverMast.toFixed(4);
+   stage.dataset.coverVerseReveal=coverVerse.toFixed(4);
+   stage.dataset.coverFeatureReveal=coverFeature.toFixed(4);
    star.style.opacity=String(starRise);
    star.style.transform='translate(-50%,-50%) scale('+(reduce?1:lerp(.72,1,starRise)).toFixed(3)+')';
    const printLight=reduce?1:ease((progress-.645)/.15);
