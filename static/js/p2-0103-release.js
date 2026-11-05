@@ -546,7 +546,7 @@
   emLeft.style.setProperty('--em-page-reveal',oneDrop>.0001?'1':'0'); // All inner text and binding paper remain opaque during the paired clip-wipe.
   // The actual native Magazine cover must sit ABOVE its new green underleaf
   // for turn one. P2's right gallery only takes over at the settled green beat.
-  const galleryTurn=move>=.998&&archive>.001;
+  const galleryTurn=move>=.998;
   emRight.style.opacity=galleryTurn?'1':'0';
   emRight.style.visibility=galleryTurn?'visible':'hidden';
   emRight.style.setProperty('--em-plate-reveal',String(coverOpen));
@@ -556,12 +556,13 @@
   emPlates.style.opacity='1';
   // First turn happens on the original right-hand Magazine cover inside the
   // established dual-page source; this ONE layer remains flat until turn two.
-  // The original green magazine underleaf is the ONLY second page.
-  // No duplicate 3D overlay and no wafer-thin rotated book face.
+  // Restore the accepted PR #1381 5:8 green-cover hinge turn, not a
+  // second clipped rectangular mask.
+  const greenAngle=-86*archive;
   emCover.style.clipPath='none';
-  emCover.style.transform='none';
-  emCover.style.opacity='0';
-  emCover.style.visibility='hidden';
+  emCover.style.transform='perspective(6400px) rotateY('+greenAngle.toFixed(2)+'deg)';
+  emCover.style.opacity=String(move>.001&&archive<.999?1:0);
+  emCover.style.visibility=move>.001&&archive<.999?'visible':'hidden';
   const edge=$('.emmaus__magazine-turn-edge');
   if(edge){
    edge.style.left='0';
@@ -649,7 +650,7 @@
    sourceTile.style.opacity=sourceOriginalTileOpacity??'';
     // The native opaque Contents is the upper leaf: the full-size cover
     // retreats BEHIND it, not through a 3D perspective spike.
-    sourceTile.style.zIndex=move>.001?'12':sourceOriginalTileZ;
+    sourceTile.style.zIndex=sourceOriginalTileZ;
    // MERSI original authors' split-screen principle: old Contents and
    // incoming ONE Scripture share one scroll float and complementary
    // TOP-DOWN clip-path masks. No opacity crossfade, extra clock,
@@ -669,21 +670,20 @@
     ensureMagazineUnderlay(sourceDoc,sourceCover);
     // The source Magazine cover itself, not an arriving green panel, is
     // the first page to turn. Preserve the 5:8 layout and its inner graphics.
-    // First bounded folio handoff: ORIGINAL blue cover and ORIGINAL green
-    // underleaf remain at the EXACT same 5:8 page rectangle. Neither page
-    // slides behind Contents, shrinks, rotates, leaks the background, or
-    // shows a fragment of book outside the shared right-hand page.
-    sourceCover.style.transform='none';
+    // Restore PR #1381: the physical original Magazine front-cover
+    // hinges over the left leaf. Its complete 5:8 stone illustration,
+    // WESTSIDE WATCH masthead and paper verso are left intact.
+    const firstAngle=-172*smooth(move);
     sourceCover.style.transformOrigin='left center';
-    sourceCover.style.clipPath=move>=.999?'inset(0 100% 0 0)':
-      'inset(0 '+(move*100).toFixed(3)+'% 0 0)';
-    sourceCover.style.backfaceVisibility='hidden';
-    sourceCover.style.removeProperty('transform-style');
-    sourceCover.classList.remove('p2-emmaus-turning');
+    sourceCover.style.transform='perspective(2800px) rotateY('+firstAngle.toFixed(2)+'deg)';
+    sourceCover.style.backfaceVisibility='visible';
+    sourceCover.style.transformStyle='preserve-3d';
+    sourceCover.style.clipPath='none';
+    sourceCover.classList.add('p2-emmaus-turning');
     sourceCover.style.zIndex='11';
-    sourceCover.style.opacity='1';
+    sourceCover.style.opacity=String(1-smooth((move-.94)/.06));
     sourceCover.style.visibility=move>.998?'hidden':'visible';
-    sourceCover.dataset.turnMode='fixed-folio-page-reveal';
+    sourceCover.dataset.turnMode='restored-original-book-flip';
    }else{
     sourceCover.style.transform=sourceOriginalCoverTransform;
     sourceCover.style.clipPath='none';
@@ -696,15 +696,14 @@
     if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
    }
    if(magazineUnderlay){
-     // Second bounded handoff: the fixed 5:8 green leaf gives way to
-     // the original full-size Doré plate from the right. The combined
-     // visible cover remains one uninterrupted physical book rectangle.
+     // PR #1381 genuine green underleaf stays behind the first flip;
+     // the original full-size 03 #em-entry-cover hinges over Doré
+     // for the SECOND book turn, without a cropped green stripe.
      magazineUnderlay.style.transform='none';
-     magazineUnderlay.style.clipPath=archive>=.999?'inset(0 100% 0 0)':
-       'inset(0 '+(archive*100).toFixed(3)+'% 0 0)';
-     magazineUnderlay.style.visibility=move>.001&&archive<.998?'visible':'hidden';
+     magazineUnderlay.style.clipPath='none';
+     magazineUnderlay.style.visibility=move>.001?'visible':'hidden';
      magazineUnderlay.style.display=move>.001?'block':'none';
-     magazineUnderlay.style.opacity=move>.001?'1':'0';
+     magazineUnderlay.style.opacity=String(smooth((move-.25)/.40));
     }
   }
   // The accepted Magazine iframe, including its book spine and original
@@ -831,8 +830,7 @@
   emLeft.style.clipPath=oneDrop>=.9999?'none':
    'inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
   poseRect(emRight,fullRight,fullRight,1);
-  emRight.style.clipPath=archive>=.999?'none':
-   'inset(0 0 0 '+((1-archive)*100).toFixed(3)+'%)';
+  emRight.style.clipPath='none';
   syncGallery(move>.98&&document.visibilityState==='visible');
   // Hold an opaque original-gallery matte over the old magazine cover.
   // The archive image can fade inside that stable panel when loaded.
@@ -860,8 +858,7 @@
   emLeft.style.clipPath=oneDrop>=.9999?'none':
    'inset(0 0 '+((1-oneDrop)*100).toFixed(3)+'% 0)';
   poseRect(emRight,fullRight,fullRight,1);
-  emRight.style.clipPath=archive>=.999?'none':
-   'inset(0 0 0 '+((1-archive)*100).toFixed(3)+'%)';
+  emRight.style.clipPath='none';
   // Hold an opaque original-gallery matte over the old magazine cover.
   // The archive image can fade inside that stable panel when loaded.
   // Never re-enable the right ONE overlay while the actual Magazine cover
