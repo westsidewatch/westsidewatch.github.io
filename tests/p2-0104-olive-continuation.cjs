@@ -53,7 +53,8 @@ assert.match(css,/04-olive-invitation-foil-v5\.svg/,'04 exterior still uses its 
 assert.match(css,/04-olive-personal-invitation-foil-v6\.svg/,
  '04 speakers must have their OWN finer gold invitation-card press plate');
 assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scripture-cover green cloth');
-assert.match(css,/cover-golden-shoot-frame-transparent\.png/,'03 bridge may use its approved botanical border');
+assert.doesNotMatch(css,/cover-golden-shoot-frame-transparent\.png/,
+ 'the 04 transition must NOT duplicate the old ONE book-cover gilt frame');
 const oliveCSS=css.slice(css.indexOf('.olive-surround__half{\n /* 04 INDEPENDENT PRINT STOCK'),css.indexOf('.olive-proof{'));
 const firstCSS=css.slice(css.indexOf('/* The incoming print lives'),css.indexOf('.olive-stage__poster{'));
 assert(!oliveCSS.includes('/one/')&&!firstCSS.includes('/one/'),
@@ -149,8 +150,12 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
        foil:getComputedStyle(invitation.querySelector('.olive-invitation__foil')).backgroundImage,
        imprint:invitation.querySelector('.olive-invitation__imprint strong')?.textContent,
        clip:invitation.style.clipPath,box:box(invitation)},
-      pairCardLeft:{visibility:getComputedStyle(cardLeft).visibility,box:box(cardLeft)},
-      pairCardRight:{visibility:getComputedStyle(cardRight).visibility,box:box(cardRight)},
+      pairCardLeft:{visibility:getComputedStyle(cardLeft).visibility,box:box(cardLeft),
+       header:box(cardLeft.querySelector('.olive-invitation__imprint')),
+       foot:box(cardLeft.querySelector('.olive-invitation__colophon'))},
+      pairCardRight:{visibility:getComputedStyle(cardRight).visibility,box:box(cardRight),
+       header:box(cardRight.querySelector('.olive-invitation__imprint')),
+       foot:box(cardRight.querySelector('.olive-invitation__colophon'))},
       pairLeft:get(left),pairRight:get(right),
       incomingLeft:get(nl),incomingRight:get(nr),
       neutralCSS:{visibility:getComputedStyle(neutral).visibility,reveal:+neutral.dataset.reveal,
@@ -267,6 +272,15 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      'first traveling card is replaced by TWO identical settled invitation objects');
    assert.equal(pair.pairCardLeft.visibility,'visible');
    assert.equal(pair.pairCardRight.visibility,'visible');
+   if(width>800){
+    for(const [mount,poster] of [[pair.pairCardLeft,pair.pairLeft],
+                                 [pair.pairCardRight,pair.pairRight]]){
+     assert(mount.header.y+mount.header.h<poster.box.y-5,
+      'letterpress invitation masthead must be fully above the poster');
+     assert(mount.foot.y>poster.box.y+poster.box.h+1,
+      'printed invitation colophon must be fully below the poster');
+    }
+   }
    for(const [cardBox,printBox] of [[pair.pairCardLeft.box,pair.pairLeft.box],
                                     [pair.pairCardRight.box,pair.pairRight.box]]){
     assert(cardBox.x<=printBox.x&&cardBox.y<printBox.y&&
