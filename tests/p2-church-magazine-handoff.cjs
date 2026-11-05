@@ -143,11 +143,13 @@ const data=()=>{
     const host=document.querySelector('.ws-p2-sevenfold-host');
     window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+innerHeight*d,behavior:'instant'});
    },distance);
-   await homePage.waitForFunction(expected=>{
+   await homePage.waitForFunction(({scene,wantVh})=>{
     const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
-    return release?.body.dataset.proofScene===expected;
-   },expectedScene,{timeout:11000});
-   await homePage.waitForTimeout(230);
+    const root=release?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
+    return release?.body.dataset.proofScene===scene&&root&&
+      Math.abs(Number(root.dataset.p2Progress||0)-wantVh)<.065;
+   },{scene:expectedScene,wantVh},{timeout:24000});
+   await homePage.waitForTimeout(190);
    const state=await homePage.evaluate(()=>{
     const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
     const root=release?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
