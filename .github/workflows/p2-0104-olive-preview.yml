@@ -9,6 +9,7 @@ on:
       - 'static/css/p2-0104-olive-continuation.css'
       - 'static/js/p2-0104-olive-continuation.js'
       - 'static/images/p2-realms/v15/04-olive-engraving-v1-5.svg'
+      - 'static/images/p2-realms/v15/04-olive-terrain-editorial-v2.svg'
       - 'tests/p2-0104-olive-continuation.cjs'
       - '.github/workflows/p2-0104-olive-preview.yml'
   workflow_dispatch:
@@ -37,6 +38,7 @@ jobs:
           test -s public/experiments/p2-0104-olive-continuation.html
           test -s public/experiments/p2-0103-release.html
           test -s public/images/p2-realms/v15/04-olive-engraving-v1-5.svg
+          test -s public/images/p2-realms/v15/04-olive-terrain-editorial-v2.svg
           test -s public/images/olive/watchman-nee-editorial.png
       - name: Test genuine Chrome 03→04 entrance and reverse scroll
         run: |
