@@ -91,17 +91,51 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .olive-stage__first,.olive-stage__pair,.olive-stage__overview{
  position:absolute;margin:0;inset:0;overflow:hidden
 }
-/* Native 03 right-plate knockout. It spans the EXACT original Doré
-   FRAME, not the 3:4 print. Changing poster dimensions to hide the old
-   frame is prohibited. This is a single solid 04 editorial ink, with
-   NO ONE texture, extra border, gray backing, or decorative illustration.
-   The matching source-frame wipe is controlled by the scroll JS. */
-.olive-stage__source-occlusion{
+/* CHAPTER 04 ONLY. The source Doré plate is replaced by a complete
+   independent gold-foil INVITATION, never by a block-shaped color mask.
+   The invitation carries the untouched original 3:4 portrait as a mounted
+   print. A separate 03 bridge is transitional and cannot be this card. */
+.olive-stage__invitation{
  position:absolute;z-index:1;display:block;visibility:hidden;
- margin:0;border:0;pointer-events:none;overflow:hidden;
- background:#173c2a;
- clip-path:inset(0 0 0 100%);
+ margin:0;padding:0;border:0;pointer-events:none;overflow:hidden;
+ background-color:#173c2b;
+ background-image:
+  radial-gradient(ellipse at 14% 10%,rgba(210,177,100,.115),transparent 50%),
+  linear-gradient(153deg,#204b34 0%,#143a2a 52%,#0f3024 100%);
+ box-shadow:inset 0 0 0 1px rgba(220,185,104,.23);
+ color:#dfc785;isolation:isolate;
 }
+.olive-stage__invitation::after{
+ content:"";position:absolute;inset:8px;border:1px solid rgba(211,177,98,.19);
+ pointer-events:none;
+}
+.olive-invitation__foil{
+ position:absolute;inset:0;pointer-events:none;
+ background:url('/images/p2-realms/v15/04-olive-personal-invitation-foil-v6.svg')
+  center center/100% 100% no-repeat;
+}
+.olive-invitation__imprint,.olive-invitation__colophon{
+ position:absolute;z-index:2;left:9%;right:9%;pointer-events:none;
+ display:flex;align-items:center;justify-content:space-between;gap:8px;
+ min-width:0;color:#e3ca89;
+ font:200 clamp(7px,.63vw,11px)/1.35 var(--ws-type-display-en);
+ letter-spacing:.09em;white-space:nowrap;
+}
+.olive-invitation__imprint{
+ top:4%;height:4.4%;border-bottom:1px solid rgba(221,187,111,.48);
+}
+.olive-invitation__imprint strong{
+ font:400 clamp(10px,1.06vw,18px)/1 var(--ws-type-display-en);
+ letter-spacing:.035em;
+}
+.olive-invitation__colophon{
+ bottom:3.3%;height:4.4%;border-top:1px solid rgba(221,187,111,.48);
+}
+.olive-invitation__colophon small{
+ font:200 clamp(7px,.63vw,11px)/1.35 var(--ws-type-display-en);
+ letter-spacing:.085em;
+}
+.olive-stage__invitation--pair{z-index:0}
 .olive-stage__first{z-index:2;inset:auto}
 .olive-stage__pair{z-index:3;inset:0}
 .olive-stage__overview{z-index:6;inset:0;visibility:hidden;background:transparent}
@@ -241,7 +275,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  .olive-stage__rubric small{font-size:8px}
 }
 @media(prefers-reduced-motion:reduce){
- .olive-stage__first,.olive-stage__pair,
+ .olive-stage__invitation,.olive-stage__first,.olive-stage__pair,
  .olive-stage__poster,.olive-stage__overview,
  .olive-stage__index-card{transition:none!important;animation:none!important}
 }
