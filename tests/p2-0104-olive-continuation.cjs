@@ -169,8 +169,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(indexHalf.scene,'04-twelve-recomposition');
    assert(indexHalf.index>.35&&indexHalf.index<.55,'twelve images must visibly recompose');
    assert.equal(indexHalf.cards.length,12,'must be original TWELVE works, not gallery thumb proxies');
-   assert(indexHalf.cards[0].w<indexHalf.main.w/2,
-    'twelve poster cards must move from the former half-page to overview slots');
+   assert(indexHalf.cards[0].w<indexHalf.main.w*(width>800?.5:.82),
+    'twelve cards must interpolate from their approved desktop HALF or mobile FULL-WIDTH stacked source to grid destinations');
    const indexFull=await go(17.33,'09-twelve-voices-final-overview');
    assert.equal(indexFull.scene,'04-twelve-index');
    assert.equal(indexFull.cards.length,12);
