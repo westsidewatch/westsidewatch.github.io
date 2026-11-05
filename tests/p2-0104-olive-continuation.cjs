@@ -24,6 +24,12 @@ assert.match(frozenSource,/olive-speaker-english/,
  'original frozen English text must be provided by its original component');
 assert.match(html,/p2-0103-release\.html\?embed=1/,'use real approved 01–03 stage');
 assert.match(html,/id="olive-first"/,'first speaker must originate in the actual Doré frame');
+assert.match(html,/id="olive-source-occlusion"/,
+ 'the original 03 image plate must have a separate knockout instead of stretching the 3:4 portrait');
+assert.match(css,/\.olive-stage__source-occlusion\{[^}]*background:#173c2a/,
+ 'source knockout must use solid 04 ink, not a copy of ONE decoration or a gray image backing');
+assert.match(js,/sourceOcclusion\.style\.clipPath=d<T\.first\?first\.style\.clipPath:'none'/,
+ 'source knockout and first portrait must share the same reversible spatial reveal');
 assert.match(html,/id="olive-pair-next-left"/,'opposed double-spread image masks');
 assert.match(html,/id="olive-overview"/,'all twelve original posters must converge in one finished layout');
 assert.match(js,/first:10\.08,spread:10\.95/,'separate artwork handoff and two-poster formation');
@@ -102,6 +108,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     const st=document.getElementById('p2-olive-stage');
     const shell=document.getElementById('olive-proof');
     const image=document.getElementById('olive-first');
+    const knockout=document.getElementById('olive-source-occlusion');
     const source=document.getElementById('p2-0103-original').contentDocument;
     const origRight=source.querySelector('#emmaus .emmaus__right').getBoundingClientRect();
     const left=document.getElementById('olive-pair-left');
@@ -125,7 +132,13 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       pairOrientation:st.dataset.p2PairOrientation,
       main:box(shell),masthead:box(document.getElementById('olive-rubric')),
       source:{...box(source.querySelector('#emmaus .emmaus__right')),folio:box(source.querySelector('#emmaus'))},
-      firstFrame:get(image),pairLeft:get(left),pairRight:get(right),
+      firstFrame:get(image),
+      sourceMatte:{visibility:getComputedStyle(knockout).visibility,
+       color:getComputedStyle(knockout).backgroundColor,
+       image:getComputedStyle(knockout).backgroundImage,
+       clip:knockout.style.clipPath,box:box(knockout),
+       z:getComputedStyle(knockout).zIndex},
+      pairLeft:get(left),pairRight:get(right),
       incomingLeft:get(nl),incomingRight:get(nr),
       neutralCSS:{visibility:getComputedStyle(neutral).visibility,reveal:+neutral.dataset.reveal,
        halves:[...neutral.querySelectorAll('[data-side]')].map(x=>x.style.clipPath),
@@ -165,6 +178,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(at03.scene,'03-held');
    assert.equal(at03.firstFrame.visibility,'hidden','04 must not enter before the 03 hold');
    assert.equal(at03.groundCSS.visibility,'hidden','Olive exterior must wait until the posters settle');
+   assert.equal(at03.sourceMatte.visibility,'hidden',
+    '03 genuine Doré print must remain fully visible before its actual handoff');
    const bridge=await go(9.76,'01-dore-frame-first-poster-half');
    const protectedFirst=await page.evaluate(()=>{
     const art=document.querySelector('#olive-first .olive-stage__artwork');
@@ -198,6 +213,22 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(bridge.firstFrame.src.includes('watchman-nee-editorial.png'),'use approved original first speaker');
    assert.equal(bridge.groundCSS.visibility,'hidden','04 pigment cannot enter with first speaker');
    assert.equal(bridge.neutralCSS.visibility,'hidden','03 remains during Doré-frame handoff');
+   assert.equal(bridge.sourceMatte.visibility,'visible');
+   assert.equal(bridge.sourceMatte.clip,bridge.firstFrame.clip,
+    'the source knockout must only expose the same half of the plate as the incoming poster');
+   const sourceTakeover=await go(10.18,'01b-source-plate-no-old-engraving-exposure');
+   assert.equal(sourceTakeover.sourceMatte.visibility,'visible',
+    'the old 03 picture may not show around the 3:4 poster at the screenshot moment');
+   assert.equal(sourceTakeover.sourceMatte.clip,'none',
+    'the ORIGINAL 03 plate is fully knocked out once the speaker has entered');
+   assert.equal(sourceTakeover.sourceMatte.color,'rgb(23, 60, 42)',
+    'the gap is an opaque 04-ink knockout, not blue Doré, yellow paper, gray, or transparent');
+   assert.equal(sourceTakeover.sourceMatte.image,'none',
+    'no other chapter print pattern is copied into the 04 knockout');
+   const oc=sourceTakeover.sourceMatte.box,src=sourceTakeover.source;
+   assert(Math.abs(oc.x-src.x)<3&&Math.abs(oc.y-src.y)<3&&
+     Math.abs(oc.w-src.w)<3&&Math.abs(oc.h-src.h)<3,
+     'knockout must match exact original Doré frame even when the 3:4 speaker print is smaller');
    const forming=await go(10.38,'02-first-to-left-second-to-right');
    assert.equal(forming.scene,'04-two-poster-formation');
    assert(forming.spread>.25&&forming.spread<.45,'first speaker must visibly travel toward left folio');
