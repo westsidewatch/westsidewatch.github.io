@@ -21,6 +21,7 @@
  const stage=$('#p2-olive-stage'),track=$('#p2-olive-track');
  const base=$('#p2-0103-original'),folio=$('#olive-proof');
  const first=$('#olive-first'),firstImg=$('#olive-first-image');
+ const sourceOcclusion=$('#olive-source-occlusion');
  const pair=$('#olive-pair');
  const left=$('#olive-pair-left'),right=$('#olive-pair-right');
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
@@ -28,7 +29,7 @@
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
  const status=$('#p2-olive-folio-status');
- if(!stage||!track||!base||!folio||!first||!ground||!neutral)return;
+ if(!stage||!track||!base||!folio||!first||!ground||!neutral||!sourceOcclusion)return;
  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
  const ease=v=>{const u=clamp(v);return u*u*(3-2*u)};
  const mix=(a,b,t)=>a+(b-a)*t;
@@ -295,6 +296,16 @@
   first.style.visibility=d>T.start&&d<T.spread?'visible':'hidden';
   first.style.clipPath=d<T.first?
    'inset(0 0 0 '+((1-bridge)*100).toFixed(3)+'%)':'none';
+  // The 03 Doré IMAGE FRAME is larger than the correct 3:4 print. Cover
+  // precisely that old rectangle (including top/bottom strips), under
+  // the entering poster, using the SAME source-frame opening cutout.
+  // Once the poster moves, this knockout stays on the old plate; it
+  // retires only after 04 has independently replaced the surrounding
+  // stage. No stretching, source DOM mutation, or new timed animation.
+  position(sourceOcclusion,g.plate.x,g.plate.y,g.plate.w,g.plate.h);
+  sourceOcclusion.style.visibility=stageActive&&bg<.99999?'visible':'hidden';
+  sourceOcclusion.style.clipPath=d<T.first?first.style.clipPath:'none';
+  stage.dataset.p2SourcePlateCovered=String(stageActive&&d>=T.first&&bg<.99999);
   // Pair B enters while A travels; both images stay 3:4 and object-fit.
   position(pair,0,0,g.w,g.h);
   for(const [element,side] of [[left,0],[right,1],[nextLeft,0],[nextRight,1]]){
