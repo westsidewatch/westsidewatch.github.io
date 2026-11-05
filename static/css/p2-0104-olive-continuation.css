@@ -1,216 +1,165 @@
-/* P2 / 04 — Draft only. A new mask overlay on the published 01–03,
-   NEVER an override of the original Church, Magazine or ONE renderer.
-   Reuse the P2 04 Olive upper/lower editorial layout from PR #1381. */
+/* P2 / 04 twelve original posters — isolated real 01–03 continuation.
+   One Design OS; only 04-specific geometry. NO generic wipe, fades, pseudo
+   MERSI template, replayed sevenfold, shadowed card grid or video UI.
+   The original Doré image supplies the entrance's physical coordinates. */
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;min-height:100%;background:#1a271b;overscroll-behavior-y:none}
+html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behavior-y:none}
 .p2-olive-controls{
- position:fixed;z-index:30;top:0;left:0;right:0;display:flex;align-items:center;
- gap:18px;min-height:38px;padding:6px 16px;background:#111f2a;color:#eee7d2;
- border-bottom:1px solid #b69b6d;font:200 11px/1.3 var(--ws-type-display-en);
- letter-spacing:.12em
+ position:fixed;z-index:80;top:0;left:0;right:0;
+ display:flex;align-items:center;gap:15px;padding:5px 13px;
+ min-height:37px;border-bottom:1px solid #b99a5960;
+ background:#102229ef;color:#f4efdb;
+ font:200 10px/1.3 var(--ws-type-display-en);
+ letter-spacing:.09em
 }
+.p2-olive-controls strong{font-weight:400;white-space:nowrap}
 .p2-olive-controls nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.p2-olive-controls button{color:inherit;background:transparent;border:1px solid #c7bb8b66;
- font:inherit;padding:4px 8px;cursor:pointer}
-.p2-olive-controls button:hover,.p2-olive-controls button:focus-visible{
- border-color:#cebd74;color:#cebd74
+.p2-olive-controls button{
+ border:1px solid #c5bb9366;background:transparent;color:inherit;
+ padding:4px 8px;cursor:pointer;font:inherit;letter-spacing:.02em
 }
-.p2-olive-controls label{margin-left:auto;display:flex;align-items:center;gap:8px;white-space:nowrap}
-.p2-olive-controls input{accent-color:#cebd74;width:135px}
-#p2-olive-track{position:relative;height:1234svh}
-.p2-olive-stage{position:sticky;inset:0;top:0;height:100svh;width:100%;overflow:hidden;isolation:isolate}
-#p2-0103-original{position:absolute;inset:0;z-index:0;width:100%;height:100%;border:0;display:block;background:#142a26}
-#p2-olive-surround{position:absolute;inset:0;z-index:1;pointer-events:none;
- opacity:0;background:#1e3327 url('/images/p2-realms/v15/04-olive-engraving-v1-5.svg')
- center/cover no-repeat}
-.olive-proof{position:absolute;z-index:3;overflow:hidden;visibility:hidden;opacity:1;
- pointer-events:none;inert:true;min-width:0;min-height:0}
-.olive-proof button:focus-visible,.olive-proof a:focus-visible{outline:2px solid #b99a59;outline-offset:3px}
-.olive-proof olive-speaker-baseline{pointer-events:none}
-.olive-proof{z-index:4;background:transparent;display:grid;grid-template-rows:65% 35%;color:#202d27}
-.olive-proof__top{display:grid;grid-template-columns:41% 59%;min-height:0}
-.olive-proof__hero{position:relative;z-index:4;background:#e2e4db;overflow:hidden;padding:clamp(13px,2vh,25px);transform-origin:top left;will-change:transform}
-.olive-proof__portrait{position:relative;height:100%;margin:auto;aspect-ratio:3/4;max-width:100%;overflow:hidden;background:#f8f8f3}
-.olive-proof__portrait>img{width:100%;height:100%;object-fit:contain;display:block}
-.olive-proof__hero-folio{position:absolute;z-index:6;bottom:12px;right:14px;color:#174B35;font:200 10px/1 var(--ws-type-display-en);letter-spacing:.17em}
-.olive-proof__editorial{display:flex;flex-direction:column;justify-content:space-between;padding:clamp(25px,4vw,76px) clamp(30px,5vw,85px) clamp(22px,2.7vw,50px);border-left:1px solid #174B3566;background:#f0eee7;will-change:clip-path}
-.olive-proof__kicker{position:absolute;z-index:2;top:clamp(18px,2.4vw,36px);right:clamp(18px,3vw,44px);text-align:right;opacity:0}
-.olive-proof__editorial{position:relative}
-.olive-proof__kicker,.olive-proof__editorial>a,.olive-proof__bottom>div>span,.olive-proof__folio{font:200 clamp(10px,.85vw,13px)/1.3 var(--ws-type-display-en);letter-spacing:.15em}
-.olive-proof__editorial h1{font:400 clamp(65px,9vw,163px)/.76 var(--ws-type-display-en);letter-spacing:-.075em;margin:0;color:#123d30}
-.olive-proof__editorial h1 i{font-weight:400;font-style:italic}
-.olive-proof__zh{font:600 clamp(19px,2.4vw,42px)/1.2 var(--ws-type-display-zh);margin:clamp(15px,2.5vh,28px) 0 0}
-.olive-proof__statement{font:200 clamp(13px,1.15vw,20px)/1.6 var(--ws-type-display-zh);max-width:28em;margin-top:clamp(12px,2vh,22px)}
-.olive-proof__editorial>a{display:flex;justify-content:space-between;max-width:260px;text-decoration:none;border-top:1px solid #174B35;padding-top:9px;color:#174b35;font-family:var(--ws-type-display-zh)}
-.olive-proof__bottom{display:grid;grid-template-columns:76% 24%;border-top:1px solid #174B35;min-height:0}
-.olive-proof__register{padding:clamp(12px,2vw,32px) clamp(24px,4vw,70px);display:flex;flex-direction:column;gap:clamp(10px,2vh,22px);background:#f0eee7;will-change:clip-path}
-.olive-proof__names{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;align-items:start}
-.olive-proof__names button{padding:8px 4px 10px 0;border:0;border-top:1px solid #174B3555;background:transparent;text-align:left;color:#567366;cursor:pointer;font:200 clamp(10px,.95vw,17px)/1.15 var(--ws-type-display-en)}
-.olive-proof__names button small{display:block;margin-top:5px;color:#738276;font:200 clamp(8px,.7vw,12px)/1.4 var(--ws-type-display-zh)}
-.olive-proof__names button[aria-pressed="true"]{color:#a65f4b;border-color:#a65f4b}
-.olive-proof__window{border-left:1px solid #174B35;background:#174b35;color:#f7f5ee;display:flex;flex-direction:column;gap:4px;padding:clamp(10px,1.35vw,24px);min-height:0;will-change:clip-path}
-.olive-proof__window-image{flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.olive-proof__window-image img{height:100%;max-width:100%;object-fit:contain}
-.olive-proof__window>span:last-child{font:200 clamp(9px,.72vw,12px)/1.25 var(--ws-type-display-en);letter-spacing:.07em}
-.olive-proof__folio{position:absolute;z-index:5;right:15px;bottom:4px;color:#d0d9c9;font-size:8px}
-#p2-olive-folio-status{
- position:absolute;right:16px;bottom:10px;z-index:4;font:200 10px/1.2 var(--ws-type-display-en);
- color:#eee9da;letter-spacing:.12em;background:#0d271db3;padding:5px 7px;pointer-events:none
+.p2-olive-controls button:focus-visible,.p2-olive-controls button:hover{
+ border-color:#d0b879;color:#d0b879
 }
-@media(max-width:820px){
- .p2-olive-controls{padding:4px 6px;gap:5px;flex-wrap:wrap;font-size:9px}
- .p2-olive-controls strong{flex:0 0 100%;font-size:8px}
- .p2-olive-controls button{font-size:8px;padding:3px 4px}
- .p2-olive-controls label{margin-left:auto;font-size:8px}
- .p2-olive-controls input{width:80px}
-.olive-proof__editorial{padding:22px}
-.olive-proof__editorial h1{font-size:clamp(39px,7vw,65px)}
-.olive-proof__statement{font-size:12px}
-.olive-proof__bottom{grid-template-columns:75% 25%}
-.olive-proof__names{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}
-.olive-proof__names button{font-size:10px;padding:3px 0}
-.olive-proof__names button small{font-size:8px}
-.olive-proof__register{padding:9px}
-.olive-proof__window{padding:9px}
+.p2-olive-controls label{margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.p2-olive-controls input{accent-color:#c4a96c;width:118px}
+#p2-olive-track{position:relative;height:1865svh}
+.p2-olive-stage{position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent}
+#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:#142a26;z-index:0}
+#p2-olive-surround{
+ position:absolute;inset:0;z-index:1;
+ pointer-events:none;visibility:hidden;opacity:1;
+ /* Only a subsequent scroll beat changes the entire EXTERIOR material. */
+ clip-path:inset(100% 0 0 0);
 }
-@media(max-width:540px){
- .p2-olive-controls nav{gap:2px}
- .p2-olive-controls button{padding:2px 3px;font-size:7px}
-.olive-proof{grid-template-rows:61% 39%}
-.olive-proof__top{grid-template-columns:45% 55%}
-.olive-proof__hero{padding:7px}
-.olive-proof__editorial{padding:14px}
-.olive-proof__editorial h1{font-size:clamp(30px,7.8vw,44px)}
-.olive-proof__zh{font-size:17px;margin:13px 0 0}
-.olive-proof__statement{font-size:10px;line-height:1.5}
-.olive-proof__editorial>a{font-size:9px}
-.olive-proof__bottom{grid-template-columns:79% 21%}
-.olive-proof__names{grid-template-columns:repeat(3,minmax(0,1fr));gap:1px}
-.olive-proof__names button{font-size:9px}
-.olive-proof__names button small{font-size:7px}
-.olive-proof__window{padding:5px}
-.olive-proof__window>span:last-child{font-size:7px}
+.olive-surround__plane{
+ position:absolute;
+ background-color:#193126;
+ background-image:url('/images/p2-realms/v15/04-olive-engraving-v1-5.svg');
+ background-repeat:no-repeat;
+ will-change:clip-path
 }
-@media(prefers-reduced-motion:reduce){.olive-proof *{transition:none!important;animation:none!important}}
-
-/* 04 MOBILE COMPOSITION QA — original artwork must remain fully visible.
- * The draft's 30px MOUNTAIN heading sat behind the PREVIEW toolbar,
- * while the 3:4 speaker art was isolated in an over-tall left strip.
- * These changes affect only the 04 preview, not released ONE, not the
- * original speaker poster's internal aspect or typography layers. */
-@media(max-width:540px){
- .p2-olive-controls{
-  top:auto;bottom:0;min-height:34px;max-height:46px;
-  align-items:center;justify-content:flex-start;
-  background:#111f2aed
- }
- .p2-olive-controls strong{font-size:7px;width:100%;letter-spacing:.07em}
- .p2-olive-controls label{font-size:7px}
- .p2-olive-controls input{width:61px}
- #p2-olive-folio-status{bottom:49px;right:8px;font-size:7px}
- .olive-proof__top{grid-template-columns:54% 46%}
- .olive-proof__hero{padding:4px;display:flex;align-items:center;justify-content:center}
- .olive-proof__portrait{width:100%;height:auto;max-height:100%;aspect-ratio:3/4}
- .olive-proof__editorial{padding:11px 9px 14px}
- .olive-proof__editorial h1{font-size:clamp(20px,5.2vw,27px);line-height:.89;letter-spacing:-.09em}
- .olive-proof__zh{font-size:16px;margin:12px 0 0}
- .olive-proof__statement{font-size:10px;line-height:1.45;margin:10px 0 0}
- .olive-proof__bottom{grid-template-columns:72% 28%}
- .olive-proof__register{padding:10px 7px;gap:10px}
- .olive-proof__window{padding:8px 5px}
-}
-
-/* 2026-11-05 / 04 ENTRY CORRECTION — per TWO MANUAL CONTRACTS.
-   This is NOT the 03→04 generic horizontal page wipe previously rejected.
-   The approved upper/lower editorial construction remains in exactly the
-   established ONE folio; only each of its native two regions unveils.
-   Upper = bound portrait and editorial title descend from top.
-   Lower = immersive horizontal corridor of the 12 ORIGINAL 3:4 posters,
-   progressing from right to left as scroll advances; then native swipe.
-   No synthetic poster art, card shadow, second sevenfold, or rescaling art. */
 .olive-proof{
- background:transparent!important;
+ position:absolute;z-index:4;overflow:hidden;
+ visibility:hidden;background:transparent;color:#20382e;
+ isolation:isolate;pointer-events:none;
 }
-.olive-proof__top,.olive-proof__bottom{
- overflow:hidden;
- will-change:clip-path;
+.olive-stage__first,.olive-stage__pair,.olive-stage__overview{
+ position:absolute;margin:0;inset:0;overflow:hidden
 }
-.olive-proof__top{clip-path:inset(0 0 100% 0)}
-.olive-proof__bottom{clip-path:inset(0 0 0 100%)}
-.olive-proof__register{
- container-type:inline-size;
- min-width:0;min-height:0;
- padding:clamp(10px,1.65vw,22px) clamp(12px,2.4vw,34px);
- gap:clamp(7px,1vh,12px);
+.olive-stage__first{z-index:2;inset:auto}
+.olive-stage__pair{z-index:3;inset:0}
+.olive-stage__overview{z-index:6;inset:0;visibility:hidden}
+.olive-stage__first,
+.olive-stage__poster,
+.olive-stage__index-card{
+ position:absolute;overflow:hidden;margin:0;border:0;
+ background:#e7e5d9;box-shadow:none;
 }
-.olive-proof__names{
- display:flex!important;
- flex:1 1 auto;
- min-height:0;min-width:0;
- grid-template-columns:none!important;
- gap:clamp(6px,1vw,14px);
- overflow-x:auto;overflow-y:hidden;
- overscroll-behavior-inline:contain;
- scroll-snap-type:none; /* no browser snapping against direct reversible scroll-owned corridor */
- scrollbar-width:thin;
- align-items:start;
- padding:0 2px 7px;
-}
-.olive-proof__names button{
- box-sizing:border-box;
- display:flex;flex:0 0 clamp(72px,13cqi,126px);
- flex-direction:column;align-items:start;
- gap:4px;
- scroll-snap-align:start;
- min-width:0;max-width:none;
- border-top:1px solid #174B3550;
- padding:5px 1px 9px;
- background:transparent;
- text-align:left;
- line-height:1.12;
-}
-.olive-proof__names button img{
- display:block;
- width:auto;
- max-width:100%;
- height:clamp(45px,12svh,108px);
- aspect-ratio:3 / 4;
+.olive-stage__first img,
+.olive-stage__poster img,
+.olive-stage__index-card img{
+ display:block;width:100%;height:100%;
  object-fit:contain;
- object-position:left center;
- pointer-events:none;
- flex:0 0 auto;
+ object-position:center center;
+ /* Original art and the original 3:4 poster proportions are NEVER deformed. */
 }
-.olive-proof__names button span{
- display:block;
- max-width:100%;
- font:400 clamp(9px,.82vw,12px)/1.18 var(--ws-type-display-en);
- letter-spacing:-.015em;
- overflow-wrap:break-word;
-}
-.olive-proof__names button small{
- display:block;
- max-width:100%;
- margin:0!important;
- font:200 clamp(8px,.7vw,10px)/1.3 var(--ws-type-display-zh);
+.olive-stage__first img{object-position:center}
+.olive-stage__poster{z-index:1}
+.olive-stage__incoming{z-index:2;visibility:hidden}
+.olive-stage__poster figcaption{
+ position:absolute;z-index:3;bottom:0;left:0;right:0;
+ padding:11px 18px 9px;
+ background:#e7e5d9;
+ border-top:1px solid #16392d36;
+ font:200 clamp(8px,.66vw,12px)/1.3 var(--ws-type-display-en);
+ letter-spacing:.08em;color:#224436;
  white-space:normal;
 }
-.olive-proof__names button[aria-pressed="true"]{
- color:#174b35;
- border-top:2px solid #a2872a;
- padding-top:4px;
+.olive-stage__poster img{
+ height:calc(100% - clamp(31px,3.3vh,43px))
+}
+.olive-stage__rubric{
+ position:absolute;top:clamp(5px,1.1svh,13px);
+ left:clamp(20px,6vw,120px);right:clamp(20px,6vw,120px);
+ z-index:5;visibility:hidden;overflow:hidden;
+ display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+ pointer-events:none;color:#f3e1a9;
+}
+.olive-stage__rubric span,
+.olive-stage__rubric small{
+ font:200 clamp(8px,.6vw,12px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.14em
+}
+.olive-stage__rubric strong{
+ font:400 clamp(14px,2vw,29px)/1 var(--ws-type-display-en);
+ letter-spacing:-.065em;white-space:nowrap
+}
+.olive-stage__rubric strong i{font-weight:400}
+.olive-stage__index-card{
+ z-index:2;display:block;text-decoration:none;
+ color:#1e3b30;will-change:top,left,width,height;
+}
+.olive-stage__index-card img{
+ width:100%;height:calc(100% - 24px);object-fit:contain
+}
+.olive-stage__index-card span{
+ position:absolute;inset:auto 0 0;display:block;overflow:hidden;
+ white-space:nowrap;text-overflow:clip;
+ font:200 clamp(7px,.66vw,12px)/20px var(--ws-type-display-en);
+ letter-spacing:.015em;padding:0 4px;
+ background:#e7e5d9;border-top:1px solid #1a4b382b
+}
+.olive-stage__index-card:hover,.olive-stage__index-card:focus-visible{
+ outline:2px solid #b59659;outline-offset:-2px
+}
+.olive-stage__enter{
+ position:absolute;right:clamp(14px,3vw,52px);bottom:18px;
+ z-index:8;visibility:hidden;display:flex;gap:12px;
+ align-items:center;justify-content:space-between;
+ padding:9px 0 5px;min-width:220px;max-width:calc(100% - 28px);
+ border-top:1px solid #9d884e;text-decoration:none;color:#1b4b38;
+ font:200 clamp(10px,.9vw,16px)/1.35 var(--ws-type-display-en);
+ letter-spacing:.12em
+}
+.olive-stage__enter:focus-visible{outline:2px solid #a88a51}
+#p2-olive-folio-status{
+ position:absolute;right:14px;bottom:9px;z-index:12;
+ color:#f0e6bf;background:#0f2621bb;
+ padding:4px 8px;pointer-events:none;
+ font:200 9px/1.2 var(--ws-type-display-en);letter-spacing:.11em
 }
 @media(max-width:820px){
- .olive-proof__register{padding:8px 7px;gap:6px}
- .olive-proof__names{gap:5px;scrollbar-width:none}
- .olive-proof__names button{flex-basis:clamp(64px,24cqi,92px);padding:4px 0 6px}
- .olive-proof__names button img{height:clamp(48px,10svh,80px)}
- .olive-proof__names button span{font-size:8px}
- .olive-proof__names button small{font-size:8px}
+ .p2-olive-controls{
+  top:auto;bottom:0;gap:5px;padding:5px;
+  min-height:40px;max-height:58px;
+  flex-wrap:wrap;font-size:8px
+ }
+ .p2-olive-controls strong{width:100%;font-size:8px}
+ .p2-olive-controls nav{gap:3px}
+ .p2-olive-controls button{font-size:8px;padding:3px 5px}
+ .p2-olive-controls label{font-size:8px}
+ .p2-olive-controls input{width:72px}
+ .olive-stage__rubric{display:none}
+ #p2-olive-folio-status{bottom:54px;right:5px;font-size:7px}
+ .olive-stage__poster figcaption{font-size:8px;padding:7px 5px}
+ .olive-stage__index-card img{height:calc(100% - 18px)}
+ .olive-stage__index-card span{font-size:7px;line-height:15px}
+ .olive-stage__enter{
+  bottom:58px;right:10px;min-width:190px;
+  font-size:10px;padding-top:5px;letter-spacing:.04em
+ }
 }
 @media(max-width:540px){
- .olive-proof__register{padding:7px 5px;gap:4px}
- .olive-proof__names button{flex-basis:clamp(62px,33cqi,84px)}
- .olive-proof__names button img{height:clamp(40px,9svh,68px)}
- .olive-proof__names button span{font-size:7px}
- .olive-proof__names button small{font-size:7px}
+ .p2-olive-controls{gap:2px;max-height:60px}
+ .p2-olive-controls button{font-size:7px;padding:3px}
+ .p2-olive-controls input{width:52px}
+ .olive-stage__poster img{height:calc(100% - 30px)}
+ .olive-stage__poster figcaption{min-height:30px;font-size:7px;letter-spacing:0}
+ .olive-stage__index-card span{font-size:7px;line-height:15px}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-stage__first,.olive-stage__pair,
+ .olive-stage__poster,.olive-stage__overview,
+ .olive-stage__index-card{transition:none!important;animation:none!important}
 }
