@@ -56,6 +56,15 @@ jobs:
           path: artifacts/p2-0104-olive/
           if-no-files-found: warn
           retention-days: 14
+      - name: Include selected full-browser proof frames in the isolated PREVIEW only
+        run: |
+          mkdir -p public/experiments/p2-0104-proofs
+          for width in 1648 390; do
+            for frame in 00-original-emmaus 02-first-to-left-second-to-right 03-two-poster-locked-original-background 04-only-now-olive-svg-background 05-olive-material-fixed 09-twelve-voices-final-overview; do
+              test -s "artifacts/p2-0104-olive/${width}-${frame}.png"
+              cp "artifacts/p2-0104-olive/${width}-${frame}.png" "public/experiments/p2-0104-proofs/"
+            done
+          done
       - name: Deploy isolated P2 04 Preview ONLY — never main
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
