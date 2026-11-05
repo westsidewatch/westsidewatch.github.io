@@ -117,6 +117,14 @@
    // paper clears. Earlier cover and giant-letter entry remain untouched.
    stage.style.setProperty('--xw-page-frame-opacity',(fieldRetreat*100).toFixed(3)+'%');
    stage.dataset.posterField=fieldOpacity.toFixed(5);
+   // MERSI single-progress, no ghosting: native Contents enters from TOP,
+   // while the old full-size A prints withdraw from TOP at the SAME seam.
+   // When the page is settled, restore this layer solely for the approved
+   // tiny seven-ink Contents signature; no replacement graphic is created.
+   const mersiSeam=(contents*100).toFixed(3);
+   panel.style.clipPath=contents>.0001&&contents<.9999
+    ?'inset('+mersiSeam+'% 0 0 0)':'none';
+   panel.dataset.contentsSeam=mersiSeam;
    panel.style.setProperty('--xw-foil-opacity',(.72*final*(1-contents)).toFixed(4));
    panel.dataset.cornerPalette=miniReady?'slow-neon':'gold';
    stage.dataset.posterCornerPalette=panel.dataset.cornerPalette;
