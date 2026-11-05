@@ -121,7 +121,7 @@
   // corridor. Once settled, leave native horizontal swipe / keyboard
   // and click navigation alone (do not reset scrollLeft each paint).
   if(corridorOpen<.99999){
-   const distance=Math.min(names.scrollWidth-names.clientWidth,names.clientWidth*.44);
+   const distance=Math.min(names.scrollWidth-names.clientWidth,names.clientWidth*.70);
    names.scrollLeft=Math.max(0,distance*corridorOpen);
   }
   surround.style.opacity=progress.toFixed(5);
