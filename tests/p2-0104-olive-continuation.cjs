@@ -95,9 +95,13 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     'at halfway the upper portrait/editorial must already be entering DOWNWARD');
    assert(middle.corridor>.12&&middle.corridor<.15,
     'lower horizontal speaker gallery must reveal AFTER the upper page starts');
-   assert(/^inset\(0(?:px)? 0(?:px)? [0-9.]+% 0(?:px)?\)$/.test(middle.upperClip),
-    'upper must be a TOP-DOWN reveal: '+middle.upperClip);
-   assert(/^inset\(0(?:px)? 0(?:px)? 0(?:px)? [0-9.]+%\)$/.test(middle.lowerClip),
+   // CSSOM removes redundant zero insets: for instance the correct
+   // top-down path serializes as inset(0px 0px 17.263%).
+   const upperPart=middle.upperClip.match(/^inset\(0(?:px)? 0(?:px)? ([0-9.]+)%(?: 0(?:px)?)?\)$/);
+   const lowerPart=middle.lowerClip.match(/^inset\(0(?:px)? 0(?:px)? 0(?:px)? ([0-9.]+)%\)$/);
+   assert(upperPart&&+upperPart[1]>15&&+upperPart[1]<20,
+    'upper must be a TOP-DOWN reveal, not sideways: '+middle.upperClip);
+   assert(lowerPart&&+lowerPart[1]>84&&+lowerPart[1]<88,
     'lower must be a RIGHT→LEFT corridor: '+middle.lowerClip);
    assert.equal(middle.clip,'none','the rejected whole-page right-to-left wipe must not return');
    assert(middle.galleryScroll>0,'horizontal speaker gallery must move as the user scrolls');
