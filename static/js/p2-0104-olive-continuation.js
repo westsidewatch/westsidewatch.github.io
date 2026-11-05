@@ -191,7 +191,7 @@
   const cols=g.w>=900?6:g.w>=600?4:3;
   const rows=Math.ceil(12/cols);
   const horizontal=g.w>=900?35:13;
-  const top=g.w>=900?Math.max(103,Math.min(123,g.h*.12)):81;
+  const top=g.w>=900?Math.max(122,Math.min(150,g.h*.145)):96;
   const bottom=g.w>=900?83:78,gap=g.w>=900?12:5;
   const cellW=(g.w-horizontal*2-gap*(cols-1))/cols;
   const cellH=(g.h-top-bottom-gap*(rows-1))/rows;
