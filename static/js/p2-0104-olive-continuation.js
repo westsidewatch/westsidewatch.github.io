@@ -157,35 +157,15 @@
  // immutable aspect instead of letting an arbitrary responsive cell resize
  // its image and expose synthetic gray strips.
  function galleryRects(g){
-  const portraitRatio=3/4;
-  const mobile=g.w<600;
-  const margin=mobile?Math.max(10,Math.min(20,g.w*.037)):
-    Math.max(36,Math.min(118,g.w*.065));
-  const top=mobile?Math.max(84,Math.min(100,g.h*.12)):
-    Math.max(118,Math.min(149,g.h*.142));
-  const bottom=mobile?Math.max(46,Math.min(67,g.h*.075)):
-    Math.max(50,Math.min(73,g.h*.078));
-  const gap=mobile?12:Math.max(18,Math.min(37,g.w*.03));
-  const maxHeight=Math.max(1,g.h-top-bottom);
-  if(mobile){
-   // True 3:4 upper and lower PRINTS. Mobile cannot physically show two
-   // full-width 3:4 portraits in one 9:16 viewport; center them instead
-   // of stretching or cutting the frozen lettering.
-   const maxPosterH=(maxHeight-gap)/2;
-   const posterW=Math.min(g.w-2*margin,maxPosterH*portraitRatio);
-   const posterH=posterW/portraitRatio;
-   const x=(g.w-posterW)/2;
-   const y=top+Math.max(0,(maxHeight-(2*posterH+gap))/2);
-   return [{x,y,w:posterW,h:posterH},
-           {x,y:y+posterH+gap,w:posterW,h:posterH}];
-  }
-  const maxPosterW=(g.w-2*margin-gap)/2;
-  const posterW=Math.min(maxPosterW,maxHeight*portraitRatio);
-  const posterH=posterW/portraitRatio;
-  const x=(g.w-(2*posterW+gap))/2;
-  const y=top+Math.max(0,(maxHeight-posterH)/2);
-  return [{x,y,w:posterW,h:posterH},
-          {x:x+posterW+gap,y,w:posterW,h:posterH}];
+  // RESTORED FROM THE LAST PRE-REDESIGN MERSI ENTRANCE (129098e8).
+  // These are the original spatial half-folio frames, NOT fitted/downsized
+  // poster cards. Poster ink and frozen typography keep their own source
+  // geometry; never let the twelve-index margins change entrance size.
+  const vertical=g.w<600;
+  const half=vertical?g.h/2:g.w/2;
+  return vertical?
+    [{x:0,y:0,w:g.w,h:half},{x:0,y:half,w:g.w,h:half}]:
+    [{x:0,y:0,w:half,h:g.h},{x:half,y:0,w:half,h:g.h}];
  }
  function changePair(index,transition=0,withNext=false,vertical=false){
   setFigure(left,index*2);setFigure(right,index*2+1);
@@ -270,7 +250,7 @@
   folio.style.visibility=stageActive?'visible':'hidden';
   const bridge=ease((d-T.start)/(T.first-T.start));
   const form=ease((d-T.first)/(T.spread-T.first));
-  const firstTravel=ease(form/.73);
+  const firstTravel=form; // restore the pre-redesign spatial travel, do not accelerate it
   const secondArrival=ease((form-.57)/.43);
   const readingField=ease(form/.20);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
@@ -286,7 +266,7 @@
   // occupy TOP/BOTTOM halves to avoid extremely thin and mostly empty strips.
   // The actual Doré image never moves: overlay #1 inherits ITS bounds.
   // It travels into the left HALF only once the first poster is established.
-  const settledLeft=rects[0];
+  const settledLeft=rects[0]; // original full-size left folio
   const bx=mix(g.plate.x,settledLeft.x,firstTravel);
   const by=mix(g.plate.y,settledLeft.y,firstTravel);
   const bw=mix(g.plate.w,settledLeft.w,firstTravel);
