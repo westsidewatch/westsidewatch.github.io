@@ -231,15 +231,24 @@
   overview.dataset.columns=String(cols);
  }
  function revealSplitField(node,u){
-  const reveal=clamp(u),crop=((1-reveal)*100).toFixed(3);
+  const reveal=clamp(u);
+  const isInvitation=node===ground;
+  // 03's approved green Bible cloth remains on the LEFT while the RIGHT
+  // half turns into the gold-foil Sermon invitation. Only then does the
+  // new print spread across LEFT. This is an editorial handoff, not a
+  // simultaneous two-panel wipe, a yellow intermediary or opacity fade.
+  const leftReveal=isInvitation?ease((reveal-.52)/.48):reveal;
+  const rightReveal=isInvitation?ease(reveal/.55):reveal;
   node.style.visibility=reveal>0?'visible':'hidden';
   const leftHalf=node.querySelector('[data-side="left"]');
   const rightHalf=node.querySelector('[data-side="right"]');
-  // Both panels sample one full image. Opposite insets are authored from
-  // one absolute scroll position: pause and reverse restore exact geometry.
-  if(leftHalf)leftHalf.style.clipPath='inset(0 0 '+crop+'% 0)';
-  if(rightHalf)rightHalf.style.clipPath='inset('+crop+'% 0 0 0)';
+  if(leftHalf)leftHalf.style.clipPath='inset(0 0 '+
+   ((1-leftReveal)*100).toFixed(3)+'% 0)';
+  if(rightHalf)rightHalf.style.clipPath='inset('+
+   ((1-rightReveal)*100).toFixed(3)+'% 0 0 0)';
   node.dataset.reveal=reveal.toFixed(5);
+  node.dataset.leftReveal=leftReveal.toFixed(5);
+  node.dataset.rightReveal=rightReveal.toFixed(5);
  }
  function paint(){
   queued=false;
@@ -313,9 +322,10 @@
   // is fixed. Label and split-field move from the same progress; gold
   // is a print material, NOT a gradient opacity overlay.
   ground.style.opacity='1';
-  rubric.style.visibility=bg>0?'visible':'hidden';
-  rubric.style.clipPath=bg>=1?'none':
-   'inset(0 '+((1-bg)*49).toFixed(3)+'% 0 '+((1-bg)*49).toFixed(3)+'%)';
+  const printTitle=ease((bg-.78)/.22);
+  rubric.style.visibility=printTitle>0?'visible':'hidden';
+  rubric.style.clipPath=printTitle>=1?'none':
+   'inset(0 '+((1-printTitle)*49).toFixed(3)+'% 0 '+((1-printTitle)*49).toFixed(3)+'%)';
   overview.style.visibility=d>=T.indexStart?'visible':'hidden';
   if(d>=T.indexStart)layoutIndex(g,fan);
   const finished=d>=T.indexEnd-.00001;
