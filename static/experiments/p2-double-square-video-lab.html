@@ -563,10 +563,18 @@
    star.style.width=lerp(Math.min(205,contentsW*.17,contentsH*.20),starTargetSize,stone).toFixed(2)+'px';
    // A single folio: Doré scrolls behind both the monumental SVG and the index.
    relief.style.opacity='0';
-  contents.style.opacity=String(stone);
+  // This is a single editorial page change, not two transparent blocks:
+  // the incoming real Contents paper is fully opaque behind an opening
+  // top-down mask; the original gold glyph recedes in the complementary
+  // inverse top-down mask managed by P2Vol00Poster.paint().
+  contents.style.opacity=stableLargeA?(stone>.0001?'1':'0'):String(stone);
+  contents.style.clipPath=stableLargeA
+   ?(stone>=.9999?'none':'inset(0 0 '+((1-stone)*100).toFixed(3)+'% 0)')
+   :'none';
   contents.style.visibility=stone>0?'visible':'hidden';
   contents.style.pointerEvents=stone>.99?'auto':'none';
-  contents.style.transform='translate3d(0,'+(4*(1-stone)).toFixed(2)+'%,0)';
+  contents.style.transform=stableLargeA?'none':
+   'translate3d(0,'+(4*(1-stone)).toFixed(2)+'%,0)';
   contents.setAttribute('aria-hidden',stone>.98?'false':'true');
   contents.inert=stone<.98;
   stage.dataset.phase=stage.dataset.p2Poster==='a'
