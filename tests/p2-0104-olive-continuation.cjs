@@ -67,6 +67,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       first:+st.dataset.p2Bridge,spread:+st.dataset.p2Spread,
       ground:+st.dataset.p2Ground,index:+st.dataset.p2Index,
       pairIndex:st.dataset.p2PairIndex||'0',pairBlend:st.dataset.p2PairBlend||'0',
+      pairOrientation:st.dataset.p2PairOrientation,
       main:box(shell),source:{...box(source.querySelector('#emmaus .emmaus__right')),folio:box(source.querySelector('#emmaus'))},
       firstFrame:get(image),pairLeft:get(left),pairRight:get(right),
       incomingLeft:get(nl),incomingRight:get(nr),
@@ -118,8 +119,19 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(pair.pairRight.visibility,'visible');
    assert.equal(pair.pairLeft.src,'/images/olive/watchman-nee-editorial.png');
    assert.equal(pair.pairRight.src,'/images/olive/derek-prince-editorial.png');
-   assert(Math.abs(pair.pairLeft.box.w-pair.main.w/2)<3,
-    'exact half-spread source geometry required');
+   if(width>800){
+    assert.equal(pair.pairOrientation,'side-by-side');
+    assert(Math.abs(pair.pairLeft.box.w-pair.main.w/2)<3,
+     'desktop must maintain two original art works in equal LEFT/RIGHT folios');
+   }else{
+    assert.equal(pair.pairOrientation,'stacked');
+    assert(Math.abs(pair.pairLeft.box.h-pair.main.h/2)<3,
+     'phone must use equal TOP/BOTTOM folios, not tiny thin portrait columns');
+    assert(Math.abs(pair.pairLeft.box.w-pair.main.w)<3,
+     'phone art must have the full page width');
+    assert(Math.abs(pair.pairRight.box.y-(pair.pairLeft.box.y+pair.pairLeft.box.h))<3,
+     'phone second speaker poster must start below first without overlap');
+   }
    assert.equal(pair.groundCSS.visibility,'hidden',
     'the existing Emmaus background must remain during the settled two-poster hold');
    const material=await go(11.44,'04-only-now-olive-svg-background');
@@ -140,6 +152,12 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(+pairTransition.pairBlend>.4&&+pairTransition.pairBlend<.7,'new pair is physically half revealed');
    assert(pairTransition.incomingLeft.clip.includes('inset(')&&
      pairTransition.incomingRight.clip.includes('inset('),'both half-spreads have spatial opposing masks');
+   if(width<=800){
+    assert(/^inset\(0(?:px)? 0(?:px)? [0-9.]+%/.test(pairTransition.incomingLeft.clip),
+     'phone upper poster switches from TOP DOWN');
+    assert(/^inset\([0-9.]+% 0(?:px)? 0(?:px)?/.test(pairTransition.incomingRight.clip),
+     'phone lower poster switches from BOTTOM UP');
+   }
    assert(pairTransition.incomingLeft.src.includes('david-pawson-editorial.png'));
    assert(pairTransition.incomingRight.src.includes('stephen-tong-editorial.png'));
    for(const key of ['x','y','w','h'])assert(Math.abs(pairTransition.pairLeft.box[key]-pair.pairLeft.box[key])<1,
