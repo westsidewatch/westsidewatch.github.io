@@ -22,7 +22,7 @@ assert.match(vol,/coverIn=stableLargeA\?ease\(\(progress-\.015\)\/\.105\)/,'whol
 assert.match(vol,/posterIn=stableLargeA\?ease\(\(progress-\.14\)\/\.17\)/,'whole large poster follows');
 assert.match(poster,/const u=clamp\(\(p-\.36\)\/\.41\)\*6/,'seven inks only begin after folios are visible');
 assert.match(bridge,/magazine\.style\.background='transparent'/,'no early blank paper curtain');
-assert.match(bridge,/filmReveal=easing\(\(progress-\.97\)\/\.03\)/,'home video only revealed at final spread retreat');
+assert.match(bridge,/filmReveal=easing\(\(progress-\.86\)\/\.065\)/,'original home film must reveal during uniform spread shrink before Contents');
 assert.match(poster,/--xw-field-opacity/,'full field follows the same scroll position');
 assert.match(posterCss,/data-p2-poster="a"\]::before/,'backing paper must replace Church water and schedule');
 assert.match(html,/p2-emmaus-theme-verse\.css/,'ONE green cover scripture has separate scoped OS rule');
@@ -103,15 +103,29 @@ const browserPromise=chromium.launch({headless:true});
     assert(gold.coverVisible&&gold.posterVisible,'gold print has intact complete folios');
     assert(Math.abs(gold.spreadScale-1)<.002,'do not shrink before the Contents entry');
     await page.screenshot({path:out+'/blue-gold-fixed-'+width+'.png'});
-    const contents=await pose(6.34); // p≈.953: fully settled Contents BEFORE spread retreat
+    // The editor's crucial order: scaled blue/gold spread + original film
+    // are visible BEFORE the original Contents is allowed to enter.
+    const shrunk=await pose(6.22); // p≈.918, original folios scaled, no Contents
+    console.log('RELEASE FILM-BEFORE-CONTENTS',width,JSON.stringify(shrunk));
+    assert(shrunk.spreadScale<.87,'both original folios must scale uniformly after blue/gold hold');
+    assert(shrunk.filmOpacity>.95,'original home film must reveal BEFORE Contents enters');
+    assert(shrunk.sheetContents,'Contents must remain hidden while the blue/gold spread shrinks over film');
+    assert(shrunk.fieldOpacity<.05,'full-stage paper must clear during shrink to show original film');
+    await page.screenshot({path:out+'/blue-gold-shrunken-over-original-film-'+width+'.png'});
+    const entering=await pose(6.34); // p≈.953, Contents enters AFTER film reveal
+    assert(entering.spreadScale<.86&&entering.filmOpacity>.99,
+      'Contents must enter into already-reduced folios over the already-visible film');
+    await page.screenshot({path:out+'/contents-entering-after-film-'+width+'.png'});
+    const contents=await pose(6.47); // p≈.991: native Contents is settled
     console.log('RELEASE CONTENTS',width,JSON.stringify(contents));
-    assert(Math.abs(contents.spreadScale-1)<.002,'Contents must settle before combined spread retreat');
-    assert.equal(contents.filmOpacity,0,'film must not be visible until spread shrink');
+    assert(contents.spreadScale<.86,'Contents must arrive into the already-shrunken spread');
+    assert(contents.filmOpacity>.99,'original film remains visible beneath completed Contents');
+    assert(!contents.sheetContents,'native Contents reader must be active once settled');
     await page.screenshot({path:out+'/contents-settled-'+width+'.png'});
-    const retreat=await pose(6.48); // p≈.994: entire spread already retreats
-    assert(retreat.spreadScale<.999,'final filmed background reveals only as the complete spread retreats');
-    assert(retreat.filmOpacity>.05,'the existing homepage film appears AFTER Contents has entered');
-    assert(retreat.fieldOpacity<.2,'the field backing must fade during retreat to reveal film');
+    const retreat=await pose(6.48);
+    assert(retreat.spreadScale<.86,'both original folios retain the uniform final scale');
+    assert(retreat.filmOpacity>.99,'original home film remains visible behind Contents');
+    assert(retreat.fieldOpacity<.05,'the stage paper must not obscure the revealed film');
     const settled=await pose(6.50);
     assert(settled.fieldOpacity<.001&&settled.filmOpacity>.999,
       'the whole paper field must fully clear when the original film is revealed');
