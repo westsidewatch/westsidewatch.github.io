@@ -125,13 +125,17 @@
    el.style.backgroundPosition=-px+'px '+-py+'px';
   }
  }
- function changePair(index,transition=0,withNext=false){
+ function changePair(index,transition=0,withNext=false,vertical=false){
   setFigure(left,index*2);setFigure(right,index*2+1);
   if(withNext){
    setFigure(nextLeft,(index+1)*2);setFigure(nextRight,(index+1)*2+1);
-   const rightCrop=((1-transition)*100).toFixed(3);
-   nextLeft.style.clipPath='inset(0 '+rightCrop+'% 0 0)';
-   nextRight.style.clipPath='inset(0 0 0 '+rightCrop+'%)';
+   const crop=((1-transition)*100).toFixed(3);
+   // Desktop: opposed horizontal masks. Mobile: equivalent upper/lower
+   // vertical masks, preserving full-size 3:4 original poster art.
+   nextLeft.style.clipPath=vertical?
+    'inset(0 0 '+crop+'% 0)':'inset(0 '+crop+'% 0 0)';
+   nextRight.style.clipPath=vertical?
+    'inset('+crop+'% 0 0 0)':'inset(0 0 0 '+crop+'%)';
   }
   nextLeft.style.visibility=withNext&&transition>0?'visible':'hidden';
   nextRight.style.visibility=withNext&&transition>0?'visible':'hidden';
@@ -145,11 +149,15 @@
   const cellH=(g.h-top-bottom-gap*(rows-1))/rows;
   const half=g.w/2;
   cards.forEach((card,i)=>{
-   const startX=i%2===0?0:half;
+   const mobile=g.w<600;
+   const startX=mobile?0:i%2===0?0:half;
+   const startY=mobile?(i%2===0?0:g.h/2):0;
+   const startW=mobile?g.w:half;
+   const startH=mobile?g.h/2:g.h;
    const targetX=horizontal+(i%cols)*(cellW+gap);
    const targetY=top+Math.floor(i/cols)*(cellH+gap);
-   position(card,mix(startX,targetX,t),mix(0,targetY,t),
-    mix(half,cellW,t),mix(g.h,cellH,t));
+   position(card,mix(startX,targetX,t),mix(startY,targetY,t),
+    mix(startW,cellW,t),mix(startH,cellH,t));
   });
   overview.dataset.columns=String(cols);
  }
@@ -175,21 +183,25 @@
   const form=ease((d-T.first)/(T.spread-T.first));
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
-  const half=g.w/2;
+  const vertical=g.w<600;
+  const half=vertical?g.h/2:g.w/2;
+  // Desktop uses true folio halves; on narrow phones two original posters
+  // occupy TOP/BOTTOM halves to avoid extremely thin and mostly empty strips.
   // The actual Doré image never moves: overlay #1 inherits ITS bounds.
   // It travels into the left HALF only once the first poster is established.
   const bx=mix(g.plate.x,0,form);
   const by=mix(g.plate.y,0,form);
-  const bw=mix(g.plate.w,half,form);
-  const bh=mix(g.plate.h,g.h,form);
+  const bw=mix(g.plate.w,vertical?g.w:half,form);
+  const bh=mix(g.plate.h,vertical?half:g.h,form);
   position(first,bx,by,bw,bh);
   first.style.visibility=d>T.start&&d<T.spread?'visible':'hidden';
   first.style.clipPath=d<T.first?
    'inset(0 0 0 '+((1-bridge)*100).toFixed(3)+'%)':'none';
   // Pair B enters while A travels; both images stay 3:4 and object-fit.
   position(pair,0,0,g.w,g.h);
-  for(const [element,x] of [[left,0],[right,half],[nextLeft,0],[nextRight,half]]){
-   position(element,x,0,half,g.h);
+  for(const [element,side] of [[left,0],[right,1],[nextLeft,0],[nextRight,1]]){
+   if(vertical)position(element,0,side*half,g.w,half);
+   else position(element,side*half,0,half,g.h);
   }
   pair.style.visibility=d>=T.first?'visible':'hidden';
   const forming=d>=T.first&&d<T.spread;
@@ -199,7 +211,9 @@
   if(forming){
    setFigure(nextRight,1);
    nextRight.style.visibility=form>0?'visible':'hidden';
-   nextRight.style.clipPath='inset(0 0 0 '+((1-form)*100).toFixed(3)+'%)';
+   nextRight.style.clipPath=vertical?
+    'inset('+((1-form)*100).toFixed(3)+'% 0 0 0)':
+    'inset(0 0 0 '+((1-form)*100).toFixed(3)+'%)';
    nextLeft.style.visibility='hidden';
   }else if(d<T.pairStart){
    changePair(0); // Both full posters HOLD before the background moves.
@@ -208,7 +222,7 @@
    const tick=T.pairStart+i*T.pairStep;
    const switching=i<5;
    const u=switching?ease((d-tick)/T.pairDuration):1;
-   changePair(i,u,switching);
+   changePair(i,u,switching,vertical);
    stage.dataset.p2PairIndex=String(i);
    stage.dataset.p2PairBlend=u.toFixed(5);
   }
@@ -239,6 +253,7 @@
   stage.dataset.p2Ground=bg.toFixed(5);
   stage.dataset.p2Index=fan.toFixed(5);
   stage.dataset.p2Composition='dore-to-two-posters-to-six-pairs-to-twelve';
+  stage.dataset.p2PairOrientation=vertical?'stacked':'side-by-side';
   stage.dataset.p2Scene=d<T.start?'03-held':
     d<T.first?'04-dore-handoff':
     d<T.spread?'04-two-poster-formation':
