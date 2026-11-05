@@ -112,14 +112,14 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  letter-spacing:.09em;white-space:nowrap;
 }
 .olive-invitation__imprint{
- top:4%;height:4.4%;border-bottom:1px solid rgba(221,187,111,.48);
+ top:2.5%;height:3.6%;border-bottom:1px solid rgba(221,187,111,.48);
 }
 .olive-invitation__imprint strong{
  font:400 clamp(10px,1.06vw,18px)/1 var(--ws-type-display-en);
  letter-spacing:.035em;
 }
 .olive-invitation__colophon{
- bottom:3.3%;height:4.4%;border-top:1px solid rgba(221,187,111,.48);
+ bottom:1.4%;height:3.5%;border-top:1px solid rgba(221,187,111,.48);
 }
 .olive-invitation__colophon small{
  font:200 clamp(7px,.63vw,11px)/1.35 var(--ws-type-display-en);
@@ -255,6 +255,10 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  }
 }
 @media(max-width:540px){
+ .olive-stage__invitation--pair .olive-invitation__imprint strong{font-size:8px}
+ .olive-stage__invitation--pair .olive-invitation__imprint span{font-size:6px;letter-spacing:0}
+ .olive-stage__invitation--pair .olive-invitation__colophon{display:none}
+
  .p2-olive-controls{gap:2px;max-height:60px}
  .p2-olive-controls button{font-size:7px;padding:3px}
  .p2-olive-controls input{width:52px}
