@@ -37,21 +37,28 @@ assert.doesNotMatch(js,/setInterval|setTimeout|new Promise|animate\(|transitionD
  'no secondary timeline or time-based lag in P2 scroll choreography');
 assert.doesNotMatch(html,/olive-main-image|olive-next-image|olive-speaker-names/,
  'remove prior speaker-player layout and small-thumb corridor');
-assert.match(css,/04-olive-foil-field-v4\.svg/,'load restrained olive/gold print field');
+assert.match(css,/04-olive-invitation-foil-v5\.svg/,'04 uses a genuine registered gold-foil invitation plate');
+assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scripture-cover green cloth');
+assert.match(css,/cover-golden-shoot-frame-transparent\.png/,'reuse approved ONE golden botanical border');
+assert.doesNotMatch(css,/#e5d9b8|#e7e5d9|#ded1af/,
+ 'NO invented yellow intermediate or gray poster mat');
 assert.match(html,/id="p2-olive-bridge"/,'bridge 03 reading world before changing 04 pigment');
 assert.match(html,/olive-surround__half/,'MERSI left and right background masks exist');
 assert.match(js,/revealSplitField\(ground,bg\)/,'paired field masks share one scroll clock');
-assert.match(js,/rightHalf\.style\.clipPath='inset\('\+crop\+'% 0 0 0\)'/,'the right field must crop from its TOP, exposing bottom first');
+assert.match(js,/rightHalf\.style\.clipPath='inset\('/,
+ 'one reversible upward mask for the right-hand invitation');
+assert.match(js,/leftReveal=isInvitation\?ease\(\(reveal-\.52\)\/\.48\)/,
+ 'left must remain green Scripture cover as the right invitation enters');
 assert.match(html,/id="olive-rubric"/,'reserved editorial masthead identity');
 assert.match(css,/\.olive-stage__overview\{[^}]*background:transparent/,
  'index preserves full olive green and gold field, no white jump');
 assert(fs.existsSync(path.join(root,'static/images/p2-realms/v15/04-olive-engraving-v1-5.svg')),
  'keep approved V1.5 source intact as archive');
-const mountainSVG=read('static/images/p2-realms/v15/04-olive-foil-field-v4.svg');
-assert.match(mountainSVG,/Olive Mountain/, 'actual realm identity');
-assert.match(mountainSVG,/#193f30/, 'deep olive ink is primary');
-assert.match(mountainSVG,/#c9a95f/, 'gold ink reinforces approved poster palette');
-assert(!mountainSVG.includes('<image'), 'editability: pure SVG, no raster image');
+const invitationSVG=read('static/images/p2-realms/v15/04-olive-invitation-foil-v5.svg');
+assert.match(invitationSVG,/gold-foil invitation press plate/, 'real editorial invitation');
+assert.match(invitationSVG,/gold-olive-sprig/, 'native engraved olive motif');
+assert.match(invitationSVG,/#ddc783|#dfc885/, 'foil hue belongs to the approved cover palette');
+assert(!invitationSVG.includes('<image'), 'foil remains editable native vector');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
 (async()=>{
  const browser=await chromium.launch({headless:true});
@@ -112,10 +119,12 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       firstFrame:get(image),pairLeft:get(left),pairRight:get(right),
       incomingLeft:get(nl),incomingRight:get(nr),
       neutralCSS:{visibility:getComputedStyle(neutral).visibility,reveal:+neutral.dataset.reveal,
-       halves:[...neutral.querySelectorAll('[data-side]')].map(x=>x.style.clipPath)},
+       halves:[...neutral.querySelectorAll('[data-side]')].map(x=>x.style.clipPath),
+       cloth:getComputedStyle(neutral.querySelector('[data-side="left"]')).backgroundImage},
       groundCSS:{visibility:getComputedStyle(ground).visibility,
        opacity:getComputedStyle(ground).opacity,
        halves:[...ground.querySelectorAll('[data-side]')].map(x=>x.style.clipPath),
+       left:+ground.dataset.leftReveal,right:+ground.dataset.rightReveal,
        parts:ground.querySelectorAll('.olive-surround__half').length},
       cards:[...overview.querySelectorAll('.olive-stage__index-card')].map(el=>
        ({src:el.querySelector('img')?.getAttribute('src'),...box(el)})),
