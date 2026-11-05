@@ -210,9 +210,9 @@
   // Source portraits are already the approved size. The material extends
   // OUTWARD to create a mount: it never grows or crops the image.
   const top=mobile?Math.min(24,Math.max(6,gap*.44)):
-    Math.max(30,Math.min(44,r.h*.06));
+    Math.max(59,Math.min(76,r.h*.105));
   const bottom=mobile?Math.min(20,Math.max(4,gap*.40)):
-    Math.max(22,Math.min(34,r.h*.046));
+    Math.max(36,Math.min(45,r.h*.061));
   return {x:r.x-side,y:r.y-top,w:r.w+side*2,h:r.h+top+bottom};
  }
  function changePair(index,transition=0,withNext=false,vertical=false){
