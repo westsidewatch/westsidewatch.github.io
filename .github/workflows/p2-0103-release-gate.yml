@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   validate-and-preview:
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release/p2-0103-') || startsWith(github.head_ref, 'fix/p2-home-')
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release/p2-0103-') || startsWith(github.head_ref, 'fix/p2-home-') || startsWith(github.head_ref, 'fix/p2-magazine-')
     runs-on: ubuntu-latest
     timeout-minutes: 22
     steps:

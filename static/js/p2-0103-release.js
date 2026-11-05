@@ -521,12 +521,14 @@
   // 2. The green cover turns away to reveal Doré in that SAME right folio.
   // 3. Only then the LEFT Magazine engraving gives way to Scripture content.
   // No projection, translation, fake 3D paper curl, or animation timer.
-  // Clear editorial holds, all tied to the same reversible P2 scroll:
-  // 6.50–6.80 first bound cover change; 6.80–7.42 full green cover.
-  // 7.42–7.90 green→Doré; 7.90–8.20 full illustration; only then
-  // 8.20–8.75 Contents→ONE reading. No overlapping or half-page
-  // states at the named preview checkpoints.
-  const move=smooth((distance-6.50)/.30);
+  // One reversible P2 scroll clock with TWO readable, matching book turns:
+  // 6.50–7.10: Magazine cover hinges 0→86° over 0.60 viewport heights,
+  // matching Emmaus' 86° opening instead of the old 172° overshoot.
+  // 7.10–7.42: hold the COMPLETE green cover without moving any page.
+  // 7.42–7.90: the existing Emmaus cover hinges 0→86° over 0.48vh.
+  // 7.90–8.20: hold the full Doré plate; 8.20–8.75 ONE enters.
+  // No new animation clock, no changes to Church, big 西望 or Contents.
+  const move=smooth((distance-6.50)/.60);
   const archive=smooth((distance-7.42)/.48);
   const coverArrival=move,coverOpen=archive;
   const oneDrop=smooth((distance-8.20)/.55);
@@ -672,20 +674,21 @@
     ensureMagazineUnderlay(sourceDoc,sourceCover);
     // The source Magazine cover itself, not an arriving green panel, is
     // the first page to turn. Preserve the 5:8 layout and its inner graphics.
-    // Restore PR #1381: the physical original Magazine front-cover
-    // hinges over the left leaf. Its complete 5:8 stone illustration,
-    // WESTSIDE WATCH masthead and paper verso are left intact.
-    const firstAngle=-172*smooth(move);
+    // Keep the ORIGINAL 5:8 Magazine cover and artwork. Its hinge now
+    // matches the 03 Emmaus cover's 86° limit, but runs across a longer
+    // scroll span so the opening is visible instead of a one-frame flash.
+    // No second smooth(): move itself is already eased by the one clock.
+    const firstAngle=-86*move;
     sourceCover.style.transformOrigin='left center';
     sourceCover.style.transform='perspective(2800px) rotateY('+firstAngle.toFixed(2)+'deg)';
-    sourceCover.style.backfaceVisibility='visible';
+    sourceCover.style.backfaceVisibility='hidden';
     sourceCover.style.transformStyle='preserve-3d';
     sourceCover.style.clipPath='none';
     sourceCover.classList.add('p2-emmaus-turning');
     sourceCover.style.zIndex='11';
     sourceCover.style.opacity=String(1-smooth((move-.94)/.06));
     sourceCover.style.visibility=move>.998?'hidden':'visible';
-    sourceCover.dataset.turnMode='restored-original-book-flip';
+    sourceCover.dataset.turnMode='matched-emmaus-slow-book-flip';
    }else{
     sourceCover.style.transform=sourceOriginalCoverTransform;
     sourceCover.style.clipPath='none';

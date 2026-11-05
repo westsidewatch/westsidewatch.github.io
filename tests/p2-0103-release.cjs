@@ -16,6 +16,12 @@ assert(!/id="olive-proof"|p2-five-v15|olive-speaker-baseline|data-jump="1[01]\./
 assert(!/\bconst olive\b|\boliveIn\b|\boliveShowing\b|galleryBorrowed|archiveForOlive/.test(js),'04–07 animation is excluded from release runtime');
 assert(!/\.olive-proof|data-realm="sermon"|data-realm="cinema"|data-realm="book"/.test(css),'release CSS excludes future realm content');
 assert.match(js,/const timelineMax=9\.34/,'release ends before Olive starts at 9.44');
+assert.match(js,/const move=smooth\(\(distance-6\.50\)\/\.60\)/,
+ 'Magazine original cover opens across 0.60vh instead of flashing over 0.30vh');
+assert.match(js,/const firstAngle=-86\*move;/,
+ 'Magazine first hinge has the same 86-degree opening as the original Emmaus green cover');
+assert.match(js,/const greenAngle=-86\*archive;/,
+ 'the existing Emmaus second hinge must remain untouched');
 assert.match(html,/p2-0103-release\.css/);
 assert.match(html,/p2-0103-release\.js/);
 assert.match(vol,/coverIn=stableLargeA\?\(reduce\?\(progress>=\.14\?1:0\):ease\(\(progress-\.04\)\/\.10\)\)/,'cover field reveals while contents arrive in four stages');
@@ -225,10 +231,45 @@ const browserPromise=chromium.launch({headless:true});
     assert(settled.fieldOpacity<.001&&settled.filmOpacity>.999,
       'the whole paper field must fully clear when the original film is revealed');
     await page.screenshot({path:out+'/film-after-spread-retreat-'+width+'.png'});
-    await pose(6.67); // actual first hinge is mid-turn, not cropped flat
-    await page.screenshot({path:out+'/restored-original-magazine-cover-book-flip-'+width+'.png'});
-    const emmausTurn=await pose(6.82); // green folio revealed, ~73%
-    await page.screenshot({path:out+'/emmaus-first-turn-73percent-'+width+'.png'});
+    // The ORIGINAL magazine cover must be visible across multiple scroll
+    // positions, never rotate beyond the 86-degree Emmaus hinge or expose
+    // the mirrored printed verso as in the reported production screenshot.
+    const originalHinge=()=>page.evaluate(()=>{
+      const origin=document.querySelector('#proof-original')?.contentDocument;
+      const doc=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+      const cover=doc?.getElementById('dual-cover');
+      return {transform:cover?.style.transform||'',
+        backface:cover?.style.backfaceVisibility||'',
+        visibility:cover?.style.visibility||'',
+        mode:cover?.dataset.turnMode||''};
+    });
+    const hingeAngle=pose=>Number(pose.transform.match(/rotateY\((-?[\d.]+)deg\)/)?.[1]);
+    await pose(6.67);
+    const early=await originalHinge();
+    assert(hingeAngle(early)<-8&&hingeAngle(early)>-28,
+      'at 6.67vh the Magazine cover must JUST be beginning to open');
+    assert.equal(early.backface,'hidden','the reverse print must never appear mirrored');
+    await page.screenshot({path:out+'/magazine-first-turn-early-'+width+'.png'});
+    const emmausTurn=await pose(6.82);
+    const middle=await originalHinge();
+    assert(hingeAngle(middle)<-35&&hingeAngle(middle)>-60,
+      'at 6.82vh the full Magazine cover should remain halfway through its opening');
+    assert.equal(middle.visibility,'visible','no flash-disappearing cover at mid turn');
+    await page.screenshot({path:out+'/magazine-first-turn-middle-'+width+'.png'});
+    await pose(7.04);
+    const late=await originalHinge();
+    assert(hingeAngle(late)<-75&&hingeAngle(late)>=-86.01,
+      'the first hinge must stop at 86 degrees, not swing 172 degrees over Contents');
+    await page.screenshot({path:out+'/magazine-first-turn-late-'+width+'.png'});
+    await pose(7.17);
+    const greenPause=await page.evaluate(()=>document.querySelector('#emmaus')?.dataset.coverState);
+    assert.equal(greenPause,'green','the full green cover must HOLD before the second book turn');
+    await page.screenshot({path:out+'/magazine-first-turn-green-hold-'+width+'.png'});
+    await pose(6.82);
+    const reverse=await originalHinge();
+    assert(Math.abs(hingeAngle(reverse)-hingeAngle(middle))<2,
+      'reversing scroll must restore exactly the same mid-turn pose');
+    await page.screenshot({path:out+'/magazine-first-turn-reverse-'+width+'.png'});
     const backstage=await page.evaluate(()=>{
       const origin=document.querySelector('#proof-original')?.contentDocument;
       const magazine=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
@@ -240,8 +281,11 @@ const browserPromise=chromium.launch({headless:true});
     });
     assert(backstage.emmausBackdrop>.999,
       '73%: old film must be covered by the native Emmaus background, not show as a collage');
-    assert(backstage.exteriorOpacity>.999,
-      '73%: the ONE green book-cover backing must take over from the video outside the original book spread');
+    // 6.82vh is now the VISIBLE mid-turn of a 0.60vh page flip, not
+    // the completed green cover. The antique-green exterior must arrive
+    // continuously with the cover, rather than flashing fully green.
+    assert(backstage.exteriorOpacity>.30&&backstage.exteriorOpacity<.80,
+      '73% must show an INTERMEDIATE green-cover exterior during the slower first turn');
     assert.equal(backstage.exteriorMode,'cloth',
       '73%: use the canonical green cover cloth, not the retired pale engraving');
     const turns=await page.evaluate(()=>{
@@ -250,9 +294,17 @@ const browserPromise=chromium.launch({headless:true});
       const cover=source?.getElementById('dual-cover');
       return {mode:cover?.dataset.turnMode,transform:cover?.style.transform||''};
     });
-    assert.equal(turns.mode,'restored-original-book-flip','restore accepted PR #1381 original full-size magazine-cover hinge');
+    assert.equal(turns.mode,'matched-emmaus-slow-book-flip',
+      'first magazine hinge must use the slower, bounded Emmaus-style opening');
     assert(/perspective\(2800px\) rotateY\(/.test(turns.transform),
       'first page must hinge as the original complete 5:8 cover, not be replaced by a clipped strip');
+    // Only AFTER the slow original-cover hinge has finished should the
+    // entire outer field and actual Emmaus green cover be fully settled.
+    await pose(7.17);
+    const greenBackdrop=await page.evaluate(()=>Number(
+      document.getElementById('p2-realm-background')?.style.opacity||0));
+    assert(greenBackdrop>.999,
+      '7.17vh: fully settled original green-cover texture must cover the entire exterior field');
     const greenHold=await pose(7.30); // green 5:8 cover must be complete
     const greenState=await page.evaluate(()=>document.getElementById('emmaus')?.dataset.coverState);
     assert.equal(greenState,'green','the green cover has to HOLD before the second turn');
