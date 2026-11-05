@@ -276,6 +276,9 @@
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
   revealSplitField(neutral,readingField);
   revealSplitField(ground,bg);
+  // ONE is an outgoing transition source only. Once 04 has fully claimed
+  // the canvas there must be NO 03 cloth or gilding, even under gutters.
+  if(bg>=.99999)neutral.style.visibility='hidden';
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
   const vertical=g.w<600;
   const rects=galleryRects(g);
@@ -298,6 +301,10 @@
    const r=rects[side];position(element,r.x,r.y,r.w,r.h);
   }
   pair.style.visibility=d>=T.first&&d<T.indexStart?'visible':'hidden';
+  // Strong final-index isolation. Visibility alone allowed huge previously
+  // mounted pair composites to bleed beneath 12 prints in some browsers.
+  pair.style.display=d>=T.indexStart?'none':'block';
+  first.style.display=d>=T.indexStart?'none':'block';
   const forming=d>=T.first&&d<T.spread;
   const paired=d>=T.spread;
   left.style.visibility=paired?'visible':'hidden';
@@ -329,6 +336,9 @@
   overview.style.visibility=d>=T.indexStart?'visible':'hidden';
   if(d>=T.indexStart)layoutIndex(g,fan);
   const finished=d>=T.indexEnd-.00001;
+  stage.dataset.p2IndexIsolated=String(d>=T.indexStart);
+  stage.dataset.p2RealmSurface=bg>=.99999?'olive-exclusive':
+    readingField>0?'emmaus-olive-handoff':'emmaus';
   enter.style.visibility=finished?'visible':'hidden';
   enter.style.pointerEvents=d>T.indexEnd+.19?'auto':'none';
   enter.style.clipPath=d>=T.indexEnd+.20?'none':
