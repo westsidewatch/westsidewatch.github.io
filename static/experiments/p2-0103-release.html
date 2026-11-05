@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script>if(new URLSearchParams(location.search).get('embed')==='1')document.documentElement.classList.add('p2-main-embedded')</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20261029a">
 <meta name="description" content="西望 P2 01–03 發布候選預覽：教會、雜誌、以馬忤斯。橄欖山及後續不包含。">
 <title>P2 · 01 Church → 02 Magazine → 03 Emmaus — Release Candidate</title>
@@ -20,6 +21,20 @@
 /* Only 01→03: 9.34 scene heights + one terminal sticky viewport. */
 .proof-track{height:1034svh!important}
 .proof-stage{background:transparent}
+/* The main homepage owns scrolling. The 01–03 compositor simply fills
+ * its one fixed P2 viewport; never show preview controls on production.
+ * Standalone proof remains unchanged. */
+html.p2-main-embedded,html.p2-main-embedded body{
+ width:100%;height:100%;margin:0;overflow:hidden!important
+}
+html.p2-main-embedded .proof-controls{display:none!important}
+html.p2-main-embedded .proof-track{
+ height:100svh!important;min-height:100svh!important;overflow:hidden!important
+}
+html.p2-main-embedded .proof-stage{
+ position:relative!important;top:0!important;
+ height:100svh!important;width:100%!important;overflow:hidden!important
+}
 </style>
 </head>
 <body data-ws-scope="p2">
