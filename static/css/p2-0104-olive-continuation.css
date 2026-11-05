@@ -71,18 +71,18 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 }
 
 .olive-surround__half{
- /* ONE material authority across 03 and 04: same true antique-green cloth.
-    New 04 foil illustration is a registered transparent ink plate on top. */
- background-color:#10170d;
+ /* 04 INDEPENDENT PRINT STOCK. The 03 Scripture cover's cloth and
+    golden foliage master are strictly confined to .olive-bridge__half.
+    The new green is a saturated OLIVE ink, not ONE's dark book cloth. */
+ background-color:#173c2a;
  background-image:
   url('/images/p2-realms/v15/04-olive-invitation-foil-v5.svg'),
-  linear-gradient(150deg,rgba(5,25,17,.43),rgba(7,24,15,.18) 50%,rgba(3,21,12,.49)),
-  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609');
+  linear-gradient(145deg,#204d34 0%,#163d2b 48%,#0e3025 100%);
  background-repeat:no-repeat;
- background-size:200% 100%,200% 100%,200% 100%;
+ background-size:200% 100%,200% 100%;
 }
-.olive-surround__half[data-side="left"]{background-position:left center,left center,left center}
-.olive-surround__half[data-side="right"]{background-position:right center,right center,right center}
+.olive-surround__half[data-side="left"]{background-position:left center,left center}
+.olive-surround__half[data-side="right"]{background-position:right center,right center}
 .olive-proof{
  position:absolute;z-index:4;overflow:hidden;
  visibility:hidden;background:transparent;color:#20382e;
@@ -119,14 +119,10 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .olive-stage__first .olive-stage__artwork{bottom:0}
 .olive-stage__poster .olive-stage__artwork{inset:0}
 .olive-stage__index-card .olive-stage__artwork{inset:0}
-/* The initial Doré slot is taller than a 3:4 poster. Its spare strips
-   show the original binding GREEN, never a gray synthetic backing. */
-.olive-stage__first{
- background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat;
-}
-.olive-stage__first .olive-stage__artwork{
- background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat;
-}
+/* The incoming print lives over 03's REAL source frame; do not transfer
+   the 03 book cover into a 04 component to hide mismatched dimensions. */
+.olive-stage__first,
+.olive-stage__first .olive-stage__artwork{background:transparent}
 .olive-stage__poster{z-index:1}
 .olive-stage__incoming{z-index:2;visibility:hidden}
 .olive-stage__poster figcaption{
@@ -164,15 +160,16 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 
 .olive-stage__rubric small{text-align:right}
 .olive-stage__index-card{
- z-index:2;display:block;text-decoration:none;overflow:visible;
+ z-index:2;display:block;text-decoration:none;overflow:hidden;
  color:#d8c58b;background:transparent;
  will-change:top,left,width,height;
 }
 /* The same approved English + Chinese type follows every image through
    geometric FLIP recomposition, instead of disappearing in index mode. */
 .olive-stage__index-card span{
- position:absolute;top:calc(100% + 3px);left:0;right:0;bottom:auto;
- display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+ /* Text master is already on the poster. No external strip, footer or
+    overshooting layer may compromise the registered 3:4 print. */
+ display:none!important;position:absolute;inset:auto;overflow:hidden;
  font:200 clamp(7px,.62vw,10px)/15px var(--ws-type-display-en);
  letter-spacing:.06em;padding:0 1px;opacity:var(--index-caption-alpha,0);
  background:transparent;color:#dfc78c;border-top:1px solid #d0b16a70;
