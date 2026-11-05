@@ -49,11 +49,42 @@
   ['kou-shao-en','寇紹恩','KOU SHAO-EN']
  ];
  const pathFor=i=>'/images/olive/'+roster[i][0]+'-editorial.png';
+ // The user's two-day APPROVED original English composition is not in
+ // the portrait PNG. It lives in speaker-baseline-v1 (shadow DOM: 12
+ // position, width, line, font-size, optical size and occlusion records).
+ // Every original poster must therefore be a COMPOSITE, NOT a naked PNG.
+ // Never duplicate its type by rebuilding it from roster labels.
+ const frozen=window.OliveSpeakerBaseline;
+ if(!frozen||typeof frozen.mount!=='function'){
+  throw new Error('CRITICAL: protected Olive speaker typographic master is unavailable');
+ }
+ function protectArtwork(figure,index){
+  const img=figure.querySelector('img');
+  if(!img)throw new Error('No original portrait in '+figure.id);
+  let art=figure.querySelector('.olive-stage__artwork');
+  if(!art){
+   art=document.createElement('div');
+   art.className='olive-stage__artwork';
+   img.parentNode.insertBefore(art,img);
+   art.append(img);
+   img.classList.add('olive-stage__original');
+  }
+  // Frozen component is keyed by speaker; old shadow roots must be
+  // disconnected when the pair changes. Do not write into the master.
+  const target=roster[index][0];
+  const overlay=art.querySelector('olive-speaker-baseline');
+  if(overlay&&overlay.dataset.speaker!==target)overlay.remove();
+  if(!art.querySelector('olive-speaker-baseline'))frozen.mount(art,target);
+  figure.dataset.oliveProtectedBaseline='v1';
+  figure.dataset.speakerIndex=String(index);
+  return art;
+ }
  const figures=[left,right,nextLeft,nextRight];
  for(const figure of figures){
   const caption=document.createElement('figcaption');
   caption.setAttribute('aria-hidden','true');figure.append(caption);
  }
+ protectArtwork(first,0);
  const cards=roster.map(([slug,zh,en],i)=>{
   const a=document.createElement('a');
   a.className='olive-stage__index-card';
@@ -67,16 +98,20 @@
   a.append(img,cap);
   a.style.zIndex=String(i+1);
   overview.append(a);
+  protectArtwork(a,i);
   return a;
  });
  function setFigure(element,i){
-  if(element.dataset.speakerIndex===String(i))return;
-  element.dataset.speakerIndex=String(i);
+  if(element.dataset.speakerIndex===String(i) &&
+     element.querySelector('olive-speaker-baseline')?.dataset.speaker===roster[i][0])return;
   const [slug,zh,en]=roster[i];
   const img=element.querySelector('img');
   img.src=pathFor(i);img.alt=en+' · '+zh;
+  // The approved name and Chinese are INSIDE the artwork, as originally
+  // placed; this outer caption is just a discrete folio number.
   element.querySelector('figcaption').textContent=
-   String(i+1).padStart(2,'0')+' / '+en+' · '+zh;
+   String(i+1).padStart(2,'0')+' / 12';
+  protectArtwork(element,i);
  }
  function originalProgress(d){
   const boundary=3.0775,limit=6.5,v=Math.min(d,limit);
