@@ -223,29 +223,32 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     {name:'WATCHMAN NEE',slug:'watchman-nee',size:'11cqw',opsz:'43.96'},
     {name:'DEREK PRINCE',slug:'derek-prince',size:'18.19cqw',opsz:'72.695'}
    ],'both poster originals MUST preserve unique English typographic masters');
-   // The accepted full-size entry may occupy the editorial masthead's
-   // future area; entrance geometry is not allowed to shrink for later UI.
+   // Restore the original moderate print dimensions from 50370f07:
+   // a settled speaker print is a 3:4 composite inside a dedicated
+   // editorial frame, NOT an oversized half-viewport folio.
+   assert(pair.pairLeft.box.y>=pair.masthead.y+pair.masthead.h-3,
+    'poster must have separate vertical clearance for the chapter masthead');
+   for(const frame of [pair.pairLeft,pair.pairRight]){
+    assert(Math.abs(frame.box.w/frame.box.h-.75)<.008,
+      'speaker print retains original registered 3:4 aspect');
+    assert(frame.box.h<pair.main.h*.9,
+      'speaker poster must not expand to fill the entire scene height');
+   }
+   assert(Math.abs(pair.pairLeft.box.w-pair.pairRight.box.w)<2,
+     'two speaker posters have equal widths');
    if(width>800){
     assert.equal(pair.pairOrientation,'side-by-side');
-    assert(Math.abs(pair.pairLeft.box.w-pair.main.w/2)<3 &&
-      Math.abs(pair.pairLeft.box.h-pair.main.h)<3,
-      'desktop MERSI entrance must preserve original full-height halves');
-    assert(Math.abs(pair.pairRight.box.x-(pair.pairLeft.box.x+pair.pairLeft.box.w))<3,
-      'original folio halves meet precisely without invented paper-card gutters');
+    assert(pair.pairRight.box.x>=pair.pairLeft.box.x+pair.pairLeft.box.w+12,
+      'poster pairing has a deliberate editorial gutter');
    }else{
     assert.equal(pair.pairOrientation,'stacked');
-    assert(Math.abs(pair.pairLeft.box.h-pair.main.h/2)<3 &&
-      Math.abs(pair.pairLeft.box.w-pair.main.w)<3,
-      'mobile MERSI entrance must preserve full-width top/bottom folios');
     assert(pair.pairLeft.box.w>pair.main.w*.44,
-     'phone retains wide folios, not tiny columns');
-    assert(Math.abs(pair.pairRight.box.y-(pair.pairLeft.box.y+pair.pairLeft.box.h))<3,
-      'mobile entrance preserves the original top/bottom meeting edge');
+     'mobile posters remain readable');
+    assert(pair.pairRight.box.y>=pair.pairLeft.box.y+pair.pairLeft.box.h+8,
+      'mobile prints have a deliberate vertical gutter');
    }
-   assert.match(js,/const firstTravel=form;/,
-     'return to the accepted MERSI timing, not a new accelerated first-poster scale');
-   // The visible artwork is 3:4 inside the original spatial folio: its
-   // CONTAINER must not be forcibly redesigned into a smaller 3:4 card.
+   assert.match(js,/const firstTravel=ease\(form\/\.73\);/,
+    'preserve the first-poster entrance travel from 50370f07');
    assert.equal(pair.groundCSS.visibility,'hidden','04 pigment follows, not accompanies, the double spread');
     assert(pair.neutralCSS.reveal>.999,'03 must be fully cleared behind both posters');
     assert(pair.neutralCSS.cloth.includes('cover-texture-antique-green.png'),
