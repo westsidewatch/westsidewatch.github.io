@@ -176,6 +176,24 @@ const browserPromise=chromium.launch({headless:true});
     assert.equal(illustrationState,'illustration',
       'the entire Doré illustration must HOLD before ONE reading comes forward');
     await page.screenshot({path:out+'/dore-illustration-hold-'+width+'.png'});
+    await pose(8.475); // mid ONE entrance, MERSI coordinated mask
+    const oneWipe=await page.evaluate(()=>{
+      const origin=document.querySelector('#proof-original')?.contentDocument;
+      const magazine=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+      const oldPage=magazine?.getElementById('dual-contents');
+      const newPage=document.querySelector('#emmaus > .emmaus__left');
+      const state=document.querySelector('#emmaus')?.dataset.coverState;
+      return {oldClip:oldPage?.style.clipPath||'',
+       incomingClip:newPage?.style.clipPath||'',state};
+    });
+    assert.equal(oneWipe.state,'illustration','Dore stays visible as ONE text enters');
+    assert(oneWipe.oldClip.startsWith('inset(')&&oneWipe.incomingClip.startsWith('inset('),
+      'MERSI-style original Contents and ONE text must be controlled by synchronized clip masks');
+    assert(!oneWipe.oldClip.includes('inset(0 '),
+      'old Contents must retract from the TOP rather than slide away sideways');
+    assert(!oneWipe.incomingClip.includes('inset(0 0 0 '),
+      'incoming ONE text must be revealed vertically, not by a horizontal fake book wipe');
+    await page.screenshot({path:out+'/mersi-scripture-mid-reveal-'+width+'.png'});
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
     assert(reading.oneVisible,'real ONE Bible reader remains visible at release end');
