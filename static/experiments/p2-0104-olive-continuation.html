@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>P2 01–04 · 以馬忤斯 → 橄欖山｜隔離連續預覽</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<link rel="stylesheet" href="/css/p2-0104-olive-continuation.css?v=olive-bound-folio-01">
+</head>
+<body>
+<header class="p2-olive-controls" aria-label="P2 04 未上線動效檢查">
+ <strong>P2 / 01–04 · DRAFT · 04 NOT LIVE</strong>
+ <nav aria-label="捲動節點">
+ <button type="button" data-seek="6.48">02 CONTENTS</button>
+ <button type="button" data-seek="9.30">03 經文內容</button>
+ <button type="button" data-seek="9.44">04 開始</button>
+ <button type="button" data-seek="10.13">04 進場中</button>
+ <button type="button" data-seek="10.82">04 完成</button>
+ </nav>
+ <label>捲動 <input id="p2-olive-seek" type="range" min="0" max="11.45" step=".005" value="9.30"><output id="p2-olive-progress">9.30</output></label>
+</header>
+<main id="p2-olive-track" aria-label="P2 主站已上線 01–03 與 04 橄欖山獨立預覽">
+ <div class="p2-olive-stage" id="p2-olive-stage">
+  <!-- THE ENTIRE RELEASED 01–03 IS EMBEDDED BYTE-FOR-BYTE.
+       The 04 experiment never edits its DOM or restarts its scroll clock. -->
+  <iframe id="p2-0103-original" title="01–03 正式版本：教會、西望、以馬忤斯" src="/experiments/p2-0103-release.html?embed=1&amp;v=20261105-olive-v1" loading="eager" allow="autoplay"></iframe>
+  <div id="p2-olive-surround" aria-hidden="true"></div>
+   <section class="olive-proof" id="olive-proof" aria-label="04 橄欖山 · 講員與講道" aria-hidden="true" inert>
+    <div class="olive-proof__top">
+     <div class="olive-proof__hero" id="olive-morph-hero"><div class="olive-proof__portrait" id="olive-main"><img id="olive-main-image" alt="倪柝聲" src="/images/olive/watchman-nee-editorial.png"><olive-speaker-baseline data-speaker="watchman-nee" aria-hidden="true"></olive-speaker-baseline></div><span class="olive-proof__hero-folio">PORTRAIT / 01—12</span></div>
+     <div class="olive-proof__editorial"><span class="olive-proof__kicker">04 / 07 · SERMONS · SPEAKERS · SERIES</span><div><h1>OLIVE<br><i>MOUNTAIN.</i></h1><p class="olive-proof__zh">橄欖山</p><p class="olive-proof__statement">從書卷走向聲音。經文被講述、被聆聽，也在人的生命中留下見證。</p></div><a href="/olive/">登上橄欖山 <span>↗</span></a></div>
+    </div>
+    <div class="olive-proof__bottom"><div class="olive-proof__register"><span>THE VOICES / 講員</span><div class="olive-proof__names" id="olive-speaker-names" role="group" aria-label="選擇講員"></div></div><div class="olive-proof__window"><span class="olive-proof__window-head">NEXT VOICE / 02</span><div class="olive-proof__window-image"><img id="olive-next-image" src="/images/olive/derek-prince-editorial.png" alt="葉光明"></div><span id="olive-next-name">DEREK PRINCE · 葉光明</span></div></div>
+    <span class="olive-proof__folio">04 / 07 · OLIVE MOUNTAIN</span>
+   </section
+  <div id="p2-olive-folio-status" aria-hidden="true">03 / 07 · EMMAUS</div>
+ </div>
+</main>
+<script src="/olive/components/speaker-baseline-v1/baseline.js"></script>
+<script src="/js/p2-0104-olive-continuation.js?v=olive-bound-folio-01"></script>
+</body>
+</html>
