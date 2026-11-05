@@ -26,17 +26,33 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 #p2-olive-track{position:relative;height:1865svh}
 .p2-olive-stage{position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent}
 #p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:#142a26;z-index:0}
-#p2-olive-surround{
- position:absolute;inset:0;z-index:1;
- pointer-events:none;visibility:hidden;opacity:1;
- /* Only a subsequent scroll beat changes the entire EXTERIOR material. */
- clip-path:inset(100% 0 0 0);
+
+/* MERSI split-field: the 03 reading surface is cleared while the first
+   artwork travels into the spread. 04's olive/foil field enters LATER,
+   with opposite top/bottom reveals; one scroll value, never fades. */
+#p2-olive-bridge,#p2-olive-surround{
+ position:absolute;inset:0;pointer-events:none;
+ visibility:hidden;overflow:hidden;
 }
-.olive-surround__plate{
- position:absolute;inset:0;
- background:#e7e5d9 url('/images/p2-realms/v15/04-olive-terrain-editorial-v2.svg') center center / cover no-repeat;
- /* One uninterrupted print plate; no split color planes or four rectangle joins. */
+#p2-olive-bridge{z-index:1}
+#p2-olive-surround{z-index:2;opacity:1}
+.olive-bridge__half,.olive-surround__half{
+ position:absolute;top:0;height:100%;width:50%;
+ will-change:clip-path;clip-path:inset(100% 0 0 0);
 }
+.olive-bridge__half[data-side="left"],
+.olive-surround__half[data-side="left"]{left:0}
+.olive-bridge__half[data-side="right"],
+.olive-surround__half[data-side="right"]{right:0}
+.olive-bridge__half{background:#e5d9b8}
+.olive-surround__half{
+ background-color:#193f30;
+ background-image:url('/images/p2-realms/v15/04-olive-foil-field-v4.svg');
+ background-repeat:no-repeat;
+ background-size:200% 100%;
+}
+.olive-surround__half[data-side="left"]{background-position:left center}
+.olive-surround__half[data-side="right"]{background-position:right center}
 .olive-proof{
  position:absolute;z-index:4;overflow:hidden;
  visibility:hidden;background:transparent;color:#20382e;
@@ -47,7 +63,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 }
 .olive-stage__first{z-index:2;inset:auto}
 .olive-stage__pair{z-index:3;inset:0}
-.olive-stage__overview{z-index:6;inset:0;visibility:hidden;background:#e7e5d9}
+.olive-stage__overview{z-index:6;inset:0;visibility:hidden;background:transparent}
 .olive-stage__first,
 .olive-stage__poster,
 .olive-stage__index-card{
@@ -91,11 +107,11 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  min-height:clamp(68px,9svh,91px);visibility:hidden;overflow:hidden;
  display:grid;grid-template-columns:minmax(105px,1fr) auto minmax(105px,1fr);
  align-items:center;gap:clamp(10px,1.5vw,26px);
- color:#193b2f;pointer-events:none;
+ color:#e7c780;pointer-events:none;
 }
 .olive-stage__rubric::after{
  content:"";position:absolute;bottom:5px;left:0;right:0;
- height:1px;background:#285443;opacity:.32;
+ height:1px;background:#d2b06a;opacity:.58;
 }
 .olive-stage__rubric span,.olive-stage__rubric small{
  font:200 clamp(9px,.72vw,12px)/1.35 var(--ws-type-display-en);
@@ -106,6 +122,11 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  letter-spacing:-.07em;white-space:nowrap;text-align:center;
 }
 .olive-stage__rubric strong i{font-weight:400;font-style:italic}
+/* Optical identity: dark-green paper surround, old-gold folio rules.
+   The protected image-relative 3:4 names remain exactly as authored. */
+.olive-stage__rubric span{color:#d4bb84}
+.olive-stage__rubric small{color:#d8c092}
+
 .olive-stage__rubric small{text-align:right}
 .olive-stage__index-card{
  z-index:2;display:block;text-decoration:none;
@@ -128,7 +149,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  z-index:8;visibility:hidden;display:flex;gap:12px;
  align-items:center;justify-content:space-between;
  padding:9px 0 5px;min-width:220px;max-width:calc(100% - 28px);
- border-top:1px solid #9d884e;text-decoration:none;color:#1b4b38;
+ border-top:1px solid #c5a461;text-decoration:none;color:#e8cf96;
  font:200 clamp(10px,.9vw,16px)/1.35 var(--ws-type-display-en);
  letter-spacing:.12em
 }
@@ -158,7 +179,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  #p2-olive-folio-status{bottom:54px;right:5px;font-size:7px}
  .olive-stage__poster figcaption{font-size:8px;padding:5px 7px}
  .olive-stage__index-card .olive-stage__artwork{bottom:18px}
- .olive-surround__plate{background-position:70% center}
+
  .olive-stage__index-card span{font-size:7px;line-height:15px}
  .olive-stage__enter{
   bottom:58px;right:10px;min-width:190px;
