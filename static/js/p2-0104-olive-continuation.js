@@ -2,7 +2,7 @@
  * ONE scroll authority. The RELEASED 01–03 iframe is NEVER reparented,
  * restyled or resized. 04 reads its actual Doré plate/ONE folio bounds.
  *
- * 9.44–10.08   Doré plate -> first original speaker poster, same frame
+ * 9.44–10.08   Doré plate -> 04 gilt invitation card; mounted original print follows
  * 10.08–10.95  03 paper clears through opposed split-field masks as A moves LEFT,
  *              then B reveals from BELOW in the right plate
  * 10.95–11.15  two approved posters HOLD; 04 mountain pigment has not entered
@@ -21,7 +21,9 @@
  const stage=$('#p2-olive-stage'),track=$('#p2-olive-track');
  const base=$('#p2-0103-original'),folio=$('#olive-proof');
  const first=$('#olive-first'),firstImg=$('#olive-first-image');
- const sourceOcclusion=$('#olive-source-occlusion');
+ const firstInvitation=$('#olive-first-invitation');
+ const invitationLeft=$('#olive-invitation-left');
+ const invitationRight=$('#olive-invitation-right');
  const pair=$('#olive-pair');
  const left=$('#olive-pair-left'),right=$('#olive-pair-right');
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
@@ -29,7 +31,8 @@
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
  const status=$('#p2-olive-folio-status');
- if(!stage||!track||!base||!folio||!first||!ground||!neutral||!sourceOcclusion)return;
+ if(!stage||!track||!base||!folio||!first||!ground||!neutral||
+     !firstInvitation||!invitationLeft||!invitationRight)return;
  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
  const ease=v=>{const u=clamp(v);return u*u*(3-2*u)};
  const mix=(a,b,t)=>a+(b-a)*t;
@@ -188,6 +191,30 @@
   return [{x,y,w:posterW,h:posterH},
           {x:x+posterW+gap,y,w:posterW,h:posterH}];
  }
+ // Separate geometries: a full printed invitation card takes over the
+ // old Doré frame; the approved 3:4 speaker PRINT mounts within it.
+ // None of these calculations can resize a settled speaker poster.
+ function printInsideCard(c){
+  const side=c.w*.073,top=c.h*.12,bottom=c.h*.10;
+  const w=Math.max(1,Math.min(c.w-2*side,(c.h-top-bottom)*.75));
+  const h=w/.75;
+  return {x:c.x+(c.w-w)/2,
+    y:c.y+top+Math.max(0,(c.h-top-bottom-h)/2),w,h};
+ }
+ function cardAroundPoster(r,other,mobile){
+  const gap=mobile?
+    Math.max(0,other.y-(r.y+r.h)):
+    Math.max(0,other.x-(r.x+r.w));
+  const side=mobile?Math.max(8,Math.min(14,r.w*.038)):
+    Math.max(8,Math.min(16,(gap-8)/2));
+  // Source portraits are already the approved size. The material extends
+  // OUTWARD to create a mount: it never grows or crops the image.
+  const top=mobile?Math.min(24,Math.max(6,gap*.44)):
+    Math.max(30,Math.min(44,r.h*.06));
+  const bottom=mobile?Math.min(20,Math.max(4,gap*.40)):
+    Math.max(22,Math.min(34,r.h*.046));
+  return {x:r.x-side,y:r.y-top,w:r.w+side*2,h:r.h+top+bottom};
+ }
  function changePair(index,transition=0,withNext=false,vertical=false){
   setFigure(left,index*2);setFigure(right,index*2+1);
   if(withNext){
@@ -287,25 +314,48 @@
   // occupy TOP/BOTTOM halves to avoid extremely thin and mostly empty strips.
   // The actual Doré image never moves: overlay #1 inherits ITS bounds.
   // It travels into the left HALF only once the first poster is established.
-  const settledLeft=rects[0]; // original full-size left folio
-  const bx=mix(g.plate.x,settledLeft.x,firstTravel);
-  const by=mix(g.plate.y,settledLeft.y,firstTravel);
-  const bw=mix(g.plate.w,settledLeft.w,firstTravel);
-  const bh=mix(g.plate.h,settledLeft.h,firstTravel);
+  const settledLeft=rects[0],settledRight=rects[1];
+  const sourceCard=g.plate;
+  const mountedSourcePrint=printInsideCard(sourceCard);
+  const targetLeftCard=cardAroundPoster(settledLeft,settledRight,vertical);
+  const targetRightCard=cardAroundPoster(settledRight,settledLeft,vertical);
+  // 04's physical invitation first assumes the true Doré frame's bounds;
+  // it then TRAVELS alongside the original print into the left position.
+  const cardGeometry={
+   x:mix(sourceCard.x,targetLeftCard.x,firstTravel),
+   y:mix(sourceCard.y,targetLeftCard.y,firstTravel),
+   w:mix(sourceCard.w,targetLeftCard.w,firstTravel),
+   h:mix(sourceCard.h,targetLeftCard.h,firstTravel)
+  };
+  position(firstInvitation,cardGeometry.x,cardGeometry.y,
+   cardGeometry.w,cardGeometry.h);
+  firstInvitation.style.visibility=stageActive&&d<T.spread?'visible':'hidden';
+  firstInvitation.style.clipPath=d<T.first?
+    'inset(0 0 0 '+((1-bridge)*100).toFixed(3)+'%)':'none';
+  const bx=mix(mountedSourcePrint.x,settledLeft.x,firstTravel);
+  const by=mix(mountedSourcePrint.y,settledLeft.y,firstTravel);
+  const bw=mix(mountedSourcePrint.w,settledLeft.w,firstTravel);
+  const bh=mix(mountedSourcePrint.h,settledLeft.h,firstTravel);
   position(first,bx,by,bw,bh);
+  const posterReveal=ease((bridge-.33)/.67);
   first.style.visibility=d>T.start&&d<T.spread?'visible':'hidden';
   first.style.clipPath=d<T.first?
-   'inset(0 0 0 '+((1-bridge)*100).toFixed(3)+'%)':'none';
-  // The 03 Doré IMAGE FRAME is larger than the correct 3:4 print. Cover
-  // precisely that old rectangle (including top/bottom strips), under
-  // the entering poster, using the SAME source-frame opening cutout.
-  // Once the poster moves, this knockout stays on the old plate; it
-  // retires only after 04 has independently replaced the surrounding
-  // stage. No stretching, source DOM mutation, or new timed animation.
-  position(sourceOcclusion,g.plate.x,g.plate.y,g.plate.w,g.plate.h);
-  sourceOcclusion.style.visibility=stageActive&&bg<.99999?'visible':'hidden';
-  sourceOcclusion.style.clipPath=d<T.first?first.style.clipPath:'none';
-  stage.dataset.p2SourcePlateCovered=String(stageActive&&d>=T.first&&bg<.99999);
+    'inset(0 0 0 '+((1-posterReveal)*100).toFixed(3)+'%)':'none';
+  stage.dataset.p2InvitationShell='source-plate-to-mounted-left-print';
+  stage.dataset.p2MountedFirstAspect=(bw/bh).toFixed(5);
+  // 03 is still authoritative before the source card. Once the card
+  // begins its spatial journey the existing independent field handoff
+  // handles the retiring page; no extra paper or ONE motif is introduced.
+  position(invitationLeft,targetLeftCard.x,targetLeftCard.y,
+   targetLeftCard.w,targetLeftCard.h);
+  position(invitationRight,targetRightCard.x,targetRightCard.y,
+   targetRightCard.w,targetRightCard.h);
+  const rightCardReveal=ease((form-.44)/.26);
+  invitationLeft.style.visibility=d>=T.spread&&d<T.indexStart?'visible':'hidden';
+  invitationRight.style.visibility=rightCardReveal>0&&d<T.indexStart?'visible':'hidden';
+  invitationLeft.style.clipPath='none';
+  invitationRight.style.clipPath=d<T.spread?
+   'inset('+((1-rightCardReveal)*100).toFixed(3)+'% 0 0 0)':'none';
   // Pair B enters while A travels; both images stay 3:4 and object-fit.
   position(pair,0,0,g.w,g.h);
   for(const [element,side] of [[left,0],[right,1],[nextLeft,0],[nextRight,1]]){
