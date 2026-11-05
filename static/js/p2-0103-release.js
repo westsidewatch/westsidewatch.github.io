@@ -451,6 +451,9 @@
  let magazinePrologue=null;
 
  let frameLoaded=false,lastPaint=NaN,queued=false,lastMeasuredSpread=null;
+ // 01/02 are owned by the original Church/Magazine renderers.
+ // No Emmaus style writes before the FIRST 03 scroll frame.
+ let hadEnteredEmmaus=false;
  // Cache the settled Magazine geometry across Emmaus scroll frames.
  let settledGeometry=null,settledGeometryDoc=null,settledGeometryW=0,settledGeometryH=0;
  function paint(){
@@ -465,6 +468,52 @@
   if(frameLoaded)base.contentWindow?.postMessage({
    type:'westside-p2-scroll',progress:clamp(legacy),active:distance<6.6
   },location.origin);
+  // 01/02 MUST REMAIN READ-ONLY. Previously this 03 code wrote a cached
+  // cover transform on EVERY Magazine wheel frame. It raced the original
+  // cover-in transform, making the cover jump/flicker near 33%.
+  if(distance<6.50){
+   if(hadEnteredEmmaus){
+    // Only on REVERSE ENTRY to 02, clean up 03's temporary page writes.
+    const mag=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
+    const doc=mag?.contentDocument;
+    const cover=doc?.getElementById('dual-cover');
+    const page=doc?.getElementById('dual-contents');
+    const stage=doc?.getElementById('dual-stage');
+    stage?.style.setProperty('--p2-emmaus-backdrop-opacity','0');
+    if(doc===sourceStyleDoc){
+     if(cover){
+      cover.style.transform=sourceOriginalCoverTransform;
+      cover.style.transformOrigin=sourceOriginalCoverOrigin;
+      cover.style.backfaceVisibility=sourceOriginalCoverBackface;
+      cover.style.clipPath='none';
+      cover.style.removeProperty('transform-style');
+      cover.classList.remove('p2-emmaus-turning');
+      cover.style.zIndex=sourceOriginalCoverZ;
+      cover.style.opacity=sourceOriginalCoverOpacity??'';
+      cover.style.visibility='';
+     }
+     if(page){
+      page.style.opacity=sourceOriginalTileOpacity??'';
+      page.style.clipPath=sourceOriginalTileClip;
+      page.style.zIndex=sourceOriginalTileZ;
+      page.style.pointerEvents=sourceOriginalTilePointer;
+     }
+    }
+    if(magazineUnderlay){magazineUnderlay.style.visibility='hidden';magazineUnderlay.style.display='none'}
+    hadEnteredEmmaus=false;
+   }
+   emmaus.style.visibility='hidden';emmaus.style.opacity='0';
+   emmaus.style.pointerEvents='none';emmaus.inert=true;
+   emmaus.setAttribute('aria-hidden','true');
+   if(realmGround){realmGround.style.opacity='0';realmGround.style.clipPath='none'}
+   const section=distance<3.0775?'01 / 03 — CHURCH':'02 / 03 — MAGAZINE';
+   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
+   seek.value=String(fullDistance/timelineMax*100);
+   percent.textContent=(fullDistance/timelineMax*100).toFixed(0)+'%';
+   lastPaint=distance;
+   return;
+  }
+  hadEnteredEmmaus=true;
   // Three stable editorial states on the SAME approved Magazine geometry:
   // 1. Right Magazine cover reveals the 5:8 ONE Emmaus green cover.
   // 2. The green cover turns away to reveal Doré in that SAME right folio.
