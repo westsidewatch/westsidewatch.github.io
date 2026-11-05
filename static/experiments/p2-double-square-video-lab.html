@@ -428,8 +428,8 @@
   }
   // 01→02: full right cover first; whole left poster second; seven inks third.
   // This is ONE reversible scroll owner; no old half-page paper curtains.
-  const coverIn=stableLargeA?ease((progress-.015)/.105):1;
-  const posterIn=stableLargeA?ease((progress-.14)/.17):1;
+  const coverIn=stableLargeA?ease((progress-.04)/.20):1;
+  const posterIn=stableLargeA?ease((progress-.28)/.07):1;
   const blue=stableLargeA?1:(reduce?1:ease((progress-.02)/.20));
   const dawn=stableLargeA?1:(reduce?(progress>=.31?1:0):ease((progress-.225)/.21));
   pose(cover,coverX,coverY,coverW,coverH);
@@ -578,7 +578,7 @@
   contents.setAttribute('aria-hidden',stone>.98?'false':'true');
   contents.inert=stone<.98;
   stage.dataset.phase=stage.dataset.p2Poster==='a'
-   ?(progress<.14?'cover-arrival':progress<.36?'whole-poster-arrival':progress<.77?'seven-color-poster':
+   ?(progress<.28?'cover-arrival':progress<.36?'whole-poster-arrival':progress<.77?'seven-color-poster':
      progress<.86?'gold-poster-hold':progress<.925?'spread-shrink-reveal-home-film':
      progress<.93?'shrunken-spread-hold':progress<.985?'contents-arrival':'contents-final')
    :(progress<.235?'cover-arrival':progress<.42?'dore-engraving':
