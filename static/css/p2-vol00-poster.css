@@ -455,3 +455,31 @@
 .dual-stage[data-p2-poster="a"] .dual-cover__scripture{
  top:14.7%;
 }
+
+/* NARROW FOLIO: keep KJV above the skyline.
+ * The original 5:8 wall source and SVG masthead dimensions are unchanged.
+ * Only the ultra-light epigraph spacing is registered in the small blue
+ * band between the masthead and the rising skyline. */
+@media(max-width:820px){
+ .dual-stage[data-p2-poster="a"] .dual-cover__scripture{
+  top:10.6%;
+  left:3%;
+  right:3%;
+  gap:1px;
+ }
+ .dual-stage[data-p2-poster="a"] .dual-cover__scripture-zh{
+  font-size:clamp(7px,2.95cqi,10px);
+  line-height:1.12;
+  letter-spacing:0;
+ }
+ .dual-stage[data-p2-poster="a"] .dual-cover__scripture-en.ws-type-quote-en{
+  width:96%;
+  max-width:none;
+  font-size:clamp(7px,2.75cqi,9px);
+  line-height:1.12;
+ }
+ .dual-stage[data-p2-poster="a"] .dual-cover__scripture-ref.ws-scripture-reference{
+  font-size:clamp(7px,2.65cqi,8px);
+  line-height:1.1;
+ }
+}
