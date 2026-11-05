@@ -5,6 +5,9 @@
 (()=>{'use strict';
  const $=s=>document.querySelector(s),clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),smooth=t=>{t=clamp(t);return t*t*(3-2*t)};
  const track=$('#proof-track'),base=$('#proof-original'),emmaus=$('#emmaus');
+ const hosted=document.documentElement.classList.contains('p2-main-embedded');
+ // Standalone preview retains its own scroll; homepage uses external pose.
+ let hostPose=null;
  const seek=$('#proof-seek'),percent=$('#proof-percentage'),phase=$('#proof-phase');
  if(!track||!base||!emmaus)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -453,9 +456,13 @@
  let settledGeometry=null,settledGeometryDoc=null,settledGeometryW=0,settledGeometryH=0;
  function paint(){
   queued=false;const vh=Math.max(1,innerHeight),top=track.getBoundingClientRect().top;
-  const fullDistance=clamp(-top/vh,0,timelineMax),distance=clamp(fullDistance,0,12),legacyDistance=Math.min(distance,6.5),churchEnd=3.0775,magazineEnd=6.5;
+  const fullDistance=hosted
+   ?clamp(hostPose?.distance??0,0,timelineMax)
+   :clamp(-top/vh,0,timelineMax);
+  const distance=clamp(fullDistance,0,12),legacyDistance=Math.min(distance,6.5),churchEnd=3.0775,magazineEnd=6.5;
   let legacy;
-  if(top>0)legacy=clamp((vh-top)/vh,0,1)*.1/2.9;
+  if(hosted)legacy=clamp(hostPose?.legacyProgress??0);
+  else if(top>0)legacy=clamp((vh-top)/vh,0,1)*.1/2.9;
   else if(legacyDistance<=churchEnd){const scene=legacyDistance<=1.8?.1+legacyDistance*(.4/1.8):.5+(legacyDistance-1.8);legacy=scene/2.9;}
   else{const scene=2.37+(legacyDistance-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);legacy=scene<=2.9?.75*scene/2.9:.75+.25*(scene-2.9)/1.1;}
   // Magazine keeps its own original film; later chapters use engraving.
@@ -879,10 +886,23 @@
   const nested=base.contentDocument?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)');
   nested?.addEventListener('load',requestPaint,{once:true});
  });
- const initial=new URLSearchParams(location.search).get('d');
- // The continuous P2 preview now opens at the completed native Vol.00
- // Contents page, so forward wheel moves into the EXISTING 03 Emmaus.
- // Explicit ?d= is still respected for engineering/ONE deep links.
- requestAnimationFrame(()=>seekTo(initial===null?0.12:clamp(Number(initial)||0,0,timelineMax)));
- requestPaint();
+ if(hosted){
+  // Parent's page scroll is the sole 01–03 progress owner. Never scroll
+  // the nested 03 iframe or replay the preview slider's opening seek.
+  addEventListener('message',event=>{
+   if(event.origin!==location.origin||event.source!==parent||
+      event.data?.type!=='westside-p2-home-pose')return;
+   const distance=Number(event.data.distance),legacy=Number(event.data.legacyProgress);
+   if(!Number.isFinite(distance)||!Number.isFinite(legacy))return;
+   hostPose={distance:clamp(distance,0,timelineMax),
+    legacyProgress:clamp(legacy),active:event.data.active!==false};
+   requestPaint();
+  });
+  requestPaint();
+ }else{
+  const initial=new URLSearchParams(location.search).get('d');
+  // The existing standalone approval preview stays independent.
+  requestAnimationFrame(()=>seekTo(initial===null?0.12:clamp(Number(initial)||0,0,timelineMax)));
+  requestPaint();
+ }
 })();

@@ -47,7 +47,27 @@ const browserPromise=chromium.launch({headless:true});
        const track=document.querySelector('#proof-track');
        scrollTo({top:track.getBoundingClientRect().top+scrollY+distance*innerHeight,behavior:'instant'});
       },d);
-      await page.waitForTimeout(190);
+      // The real 01/02 artwork lives in three nested frames. The old
+      // arbitrary 190ms sleep could inspect PREVIOUS cover poses on busy
+      // CI runners, yielding false wall/masthead order regressions.
+      // Wait for the original Church scroll progress to catch up, then
+      // allow the approved child poster a fresh animation frame.
+      await page.waitForFunction(d=>{
+       const root=document.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
+       if(!root)return false;
+       const churchEnd=3.0775,magazineEnd=6.5,dist=Math.min(d,magazineEnd);
+       // The release compositor forwards NORMALIZED progress, and
+       // living-water's existing embeddedScene() maps that to vh.
+       const raw=dist<=churchEnd
+        ?((dist<=1.8?.1+dist*(.4/1.8):.5+(dist-1.8))/2.9)
+        :(()=>{
+          const vh=2.37+(dist-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);
+          return vh<=2.9?.75*vh/2.9:.75+.25*(vh-2.9)/1.1;
+         })();
+       const expected=raw<=.75?raw/.75*2.9:2.9+(raw-.75)/.25*1.1;
+       return Math.abs(Number(root.dataset.p2Progress||0)-expected)<.045;
+      },d,{timeout:16000});
+      await page.waitForTimeout(140);
       return page.evaluate(()=>{
        const root=document.getElementById('proof-original')?.contentDocument;
        const mag=root?.querySelector('.p2-magazine');

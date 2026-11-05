@@ -7,6 +7,8 @@ on:
     paths:
       - 'static/**'
       - 'tests/p2-0103-release.cjs'
+      - 'tests/p2-church-magazine-handoff.cjs'
+      - 'layouts/partials/watch-home-editorial.html'
       - '.github/workflows/p2-0103-release-gate.yml'
   workflow_dispatch:
 
@@ -19,7 +21,7 @@ concurrency:
 
 jobs:
   validate-and-preview:
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release/p2-0103-')
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release/p2-0103-') || startsWith(github.head_ref, 'fix/p2-home-')
     runs-on: ubuntu-latest
     timeout-minutes: 22
     steps:

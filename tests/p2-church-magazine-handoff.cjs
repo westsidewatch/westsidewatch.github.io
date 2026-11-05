@@ -8,8 +8,8 @@ const {chromium}=require('playwright');
 const home=fs.readFileSync('layouts/partials/watch-home-editorial.html','utf8');
 const bridge=fs.readFileSync('static/js/p2-magazine-live-bridge.js','utf8');
 const church=fs.readFileSync('static/p2/living-water.html','utf8');
-assert.match(home,/p2-church-to-vol00-20261029-motion-film/,'homepage P2 must load the current motion/film bridge');
-assert.match(home,/height:770svh!important/,'the P2 host must reserve a full magazine chapter after Church');
+assert.match(home,/p2-main-0103-20261105/,'homepage must mount approved 01–03 runtime rather than the old 01–02-only iframe');
+assert.match(home,/height:1034svh!important/,'P2 host must reserve the 03 Emmaus passage after Magazine');
 assert.match(home,/magazineEnd=6\.5/,'Magazine movement must span separate pinned viewports');
 assert.match(church,/p2-magazine-live-bridge\.js/,'church P2 must append the new Magazine bridge');
 assert.match(bridge,/handoffVh=2\.37/,'the new magazine cannot replace the prior Church scene');
@@ -117,37 +117,66 @@ const data=()=>{
    }
    await page.close();
   }
-  // Test the real homepage wheel distance, not just the laboratory's slider.
+  // Main-site wheel integration: the native homepage iframe must now
+  // contain 01 Church + 02 Magazine + 03 Emmaus, NOT merely link to a
+  // working /experiments URL. The historical lab above is still tested.
   const homePage=await browser.newPage({viewport:{width:1440,height:900}});
   await homePage.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:45000});
-  await homePage.waitForFunction(()=>!!document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument?.querySelector('.showcase[data-p2-magazine-design]'),null,{timeout:25000});
+  await homePage.waitForFunction(()=>{
+   const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const root=release?.querySelector('#proof-original')?.contentDocument?.querySelector('.showcase');
+   return !!release?.getElementById('emmaus')&&
+    !!root?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.querySelector('#dual-stage');
+  },null,{timeout:30000});
   const realScroll=[
-   ['church',2.65,1.80,.01],
-   ['magazine-start',3.10,2.381,.02],
-   ['ink-impression',3.90,2.762,.24],
-   ['star-rising',5.10,3.333,.59],
-   ['contents',6.40,3.952,.97],
-   ['final',6.50,4.00,1],
-   ['church-reverse',2.65,1.80,.01]
+   ['church',2.65,'01',1.80,.01],
+   ['magazine-start',3.10,'02',2.381,.02],
+   ['star-rising',5.10,'02',3.333,.59],
+   ['contents',6.40,'02',3.952,.97],
+   ['emmaus-green-cover',7.30,'03',4.00,1],
+   ['emmaus-dore',8.06,'03',4.00,1],
+   ['emmaus-reading',9.30,'03',4.00,1],
+   ['church-reverse',2.65,'01',1.80,.01]
   ];
-  for(const [name,distance,wantVh,wantMagazine] of realScroll){
+  for(const [name,distance,expectedScene,wantVh,wantMagazine] of realScroll){
    await homePage.evaluate(d=>{
     const host=document.querySelector('.ws-p2-sevenfold-host');
     window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+innerHeight*d,behavior:'instant'});
    },distance);
-   await homePage.waitForFunction(vh=>{
-    const root=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument?.querySelector('.showcase');
-    return root&&Math.abs(Number(root.dataset.p2Progress)-vh)<.05;
-   },wantVh,{timeout:8000});
+   await homePage.waitForFunction(({scene,wantVh})=>{
+    const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+    const root=release?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
+    return release?.body.dataset.proofScene===scene&&root&&
+      Math.abs(Number(root.dataset.p2Progress||0)-wantVh)<.065;
+   },{scene:expectedScene,wantVh},{timeout:24000});
+   await homePage.waitForTimeout(190);
    const state=await homePage.evaluate(()=>{
-    const root=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument?.querySelector('.showcase');
-    return {vh:+root.dataset.p2Progress,magazine:+root.dataset.p2MagazineProgress,
-      originalDoors:root.querySelectorAll('.water-door').length,
-      schedule:!!root.querySelector('.church-schedule-source .sunday-schedule')};
+    const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+    const root=release?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
+    const em=release?.getElementById('emmaus');
+    return {scene:release?.body.dataset.proofScene,
+      vh:+root?.dataset.p2Progress,magazine:+root?.dataset.p2MagazineProgress,
+      originalDoors:root?.querySelectorAll('.water-door').length||0,
+      schedule:!!root?.querySelector('.church-schedule-source .sunday-schedule'),
+      emVisible:em?release.defaultView.getComputedStyle(em).visibility:'missing',
+      oneBooks:release?.querySelectorAll('#emmaus-rail .emmaus__number').length||0,
+      scriptureChars:release?.querySelector('#em-scripture-verses')?.textContent?.trim().length||0,
+      hasOlive:!!release?.querySelector('#olive-proof')};
    });
-   assert.ok(state.originalDoors===2&&state.schedule,'the real home must retain the original Church');
-   assert.ok(Math.abs(state.magazine-wantMagazine)<.055,`${name}: editorial timing jumped, ${JSON.stringify(state)}`);
-   console.log('home-scroll',name,'PASS',state.vh,state.magazine);
+   assert.equal(state.scene,expectedScene,name+': main homepage P2 scene incorrect');
+   assert.equal(state.originalDoors,2,name+': original Red Sea doors disappeared');
+   assert(state.schedule,name+': original Church schedule disappeared');
+   assert(Math.abs(state.vh-wantVh)<.065,name+': original Church timing changed: '+JSON.stringify(state));
+   assert(Math.abs(state.magazine-wantMagazine)<.065,name+': original Magazine timing changed: '+JSON.stringify(state));
+   assert(!state.hasOlive,name+': 04 Olive must remain excluded');
+   if(distance>=7.3){
+    assert.equal(state.emVisible,'visible',name+': Emmaus is NOT on the actual homepage');
+    assert.equal(state.oneBooks,66,name+': original 66-book ONE navigation not mounted');
+   }
+   if(name==='emmaus-reading')assert(state.scriptureChars>30,'ONE Chinese/KJV verses must render');
+   if(name==='church-reverse')assert.equal(state.emVisible,'hidden','reverse scroll must hide Emmaus');
+   await homePage.screenshot({path:path.join(out,'homepage-'+name+'.png'),animations:'allow'});
+   console.log('HOME 01–03',name,'PASS',state);
   }
   await homePage.close();
  }finally{await browser.close()}
