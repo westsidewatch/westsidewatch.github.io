@@ -432,3 +432,22 @@
  background-size:cover,cover;
  background-repeat:no-repeat;
 }
+
+/* P2 Vol.00 full-width front-cover masthead.
+ * The approved 680×190 SVG contains an 85px internal right-side crop:
+ * its physical lettering does not fill a 680px CSS box. Register the
+ * actual 595px ink width to 100% of the RIGHT folio instead, preserving
+ * the SVG's original x/y aspect and every path. No letter distortion.
+ * This applies only to A's existing official cover, never to the
+ * left monumental 西望 poster, B poster, Church or ONE. */
+.dual-stage[data-p2-poster="a"] .dual-tile--cover .dual-cover__mast{
+ left:0;
+ top:0;
+ width:114.2%;
+ height:auto;
+ max-height:none;
+ max-width:none;
+ object-fit:contain;
+ object-position:left top;
+ transform:none;
+}
