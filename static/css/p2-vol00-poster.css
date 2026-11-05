@@ -405,7 +405,10 @@
 }
 .dual-stage[data-p2-poster="a"] .dual-panels{z-index:1}
 .dual-stage[data-p2-poster="a"] #dual-contents{
- background:transparent;
+ /* During 86–92.5% the WHOLE folio shrinks, and its original stock
+    becomes opaque precisely as the full-frame editorial background retires.
+    Until then the original giant A has no isolated beige rectangle. */
+ background:color-mix(in srgb,var(--xw-poster-bg,#102a43) var(--xw-page-frame-opacity,0%),transparent);
  box-shadow:none;
 }
 .dual-stage[data-p2-poster="a"] #dual-contents .xw-poster{
