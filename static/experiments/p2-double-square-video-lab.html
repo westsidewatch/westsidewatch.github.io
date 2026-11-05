@@ -492,7 +492,11 @@
   });
   stage.dataset.spread='contents-square-cover-5-8';
   stage.dataset.spineFlip=railFlip.toFixed(3);
-  cover.style.clipPath=stableLargeA?'none':'inset(0 0 '+((1-blue)*100).toFixed(3)+'% 0)';
+  // Do not overwrite the in-place cover field reveal established above.
+  // The former stableLargeA 'none' erased the right-edge mask every frame.
+  cover.style.clipPath=stableLargeA
+   ?(coverIn>=.9999?'none':'inset(0 '+((1-coverIn)*100).toFixed(3)+'% 0 0)')
+   :'inset(0 0 '+((1-blue)*100).toFixed(3)+'% 0)';
   // The seven palettes ARE the giant poster entrance; the legacy
   // page curtain must not crop the glyphs or their background.
   gold.style.clipPath=stableLargeA?'none':
