@@ -24,12 +24,18 @@ assert.match(frozenSource,/olive-speaker-english/,
  'original frozen English text must be provided by its original component');
 assert.match(html,/p2-0103-release\.html\?embed=1/,'use real approved 01–03 stage');
 assert.match(html,/id="olive-first"/,'first speaker must originate in the actual Doré frame');
-assert.match(html,/id="olive-source-occlusion"/,
- 'the original 03 image plate must have a separate knockout instead of stretching the 3:4 portrait');
-assert.match(css,/\.olive-stage__source-occlusion\{[^}]*background:#173c2a/,
- 'source knockout must use solid 04 ink, not a copy of ONE decoration or a gray image backing');
-assert.match(js,/sourceOcclusion\.style\.clipPath=d<T\.first\?first\.style\.clipPath:'none'/,
- 'source knockout and first portrait must share the same reversible spatial reveal');
+assert.match(html,/id="olive-first-invitation"/,
+ 'first physical object must be a proper printed card, not a plain matte');
+assert.match(html,/id="olive-invitation-left"/,'left settled speaker requires own card');
+assert.match(html,/id="olive-invitation-right"/,'right settled speaker requires own card');
+assert.match(css,/\.olive-stage__invitation\{/,
+ 'invitation is a real distinct graphic object');
+assert.match(css,/04-olive-personal-invitation-foil-v6\.svg/,
+ 'dedicated chapter-04 engraved gold plate belongs on each card');
+assert.match(js,/function printInsideCard\(c\)/,
+ 'original poster is geometrically mounted inside, not resized to hide old frame');
+assert.match(js,/position\(firstInvitation,cardGeometry\.x/,
+ 'invitation card travels from original Doré frame with its mounted print');
 assert.match(html,/id="olive-pair-next-left"/,'opposed double-spread image masks');
 assert.match(html,/id="olive-overview"/,'all twelve original posters must converge in one finished layout');
 assert.match(js,/first:10\.08,spread:10\.95/,'separate artwork handoff and two-poster formation');
@@ -43,7 +49,9 @@ assert.doesNotMatch(js,/setInterval|setTimeout|new Promise|animate\(|transitionD
  'no secondary timeline or time-based lag in P2 scroll choreography');
 assert.doesNotMatch(html,/olive-main-image|olive-next-image|olive-speaker-names/,
  'remove prior speaker-player layout and small-thumb corridor');
-assert.match(css,/04-olive-invitation-foil-v5\.svg/,'04 uses a genuine registered gold-foil invitation plate');
+assert.match(css,/04-olive-invitation-foil-v5\.svg/,'04 exterior still uses its independent background foil');
+assert.match(css,/04-olive-personal-invitation-foil-v6\.svg/,
+ '04 speakers must have their OWN finer gold invitation-card press plate');
 assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scripture-cover green cloth');
 assert.match(css,/cover-golden-shoot-frame-transparent\.png/,'03 bridge may use its approved botanical border');
 const oliveCSS=css.slice(css.indexOf('.olive-surround__half{\n /* 04 INDEPENDENT PRINT STOCK'),css.indexOf('.olive-proof{'));
@@ -108,7 +116,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     const st=document.getElementById('p2-olive-stage');
     const shell=document.getElementById('olive-proof');
     const image=document.getElementById('olive-first');
-    const knockout=document.getElementById('olive-source-occlusion');
+    const invitation=document.getElementById('olive-first-invitation');
+    const cardLeft=document.getElementById('olive-invitation-left');
+    const cardRight=document.getElementById('olive-invitation-right');
     const source=document.getElementById('p2-0103-original').contentDocument;
     const origRight=source.querySelector('#emmaus .emmaus__right').getBoundingClientRect();
     const left=document.getElementById('olive-pair-left');
@@ -133,11 +143,14 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       main:box(shell),masthead:box(document.getElementById('olive-rubric')),
       source:{...box(source.querySelector('#emmaus .emmaus__right')),folio:box(source.querySelector('#emmaus'))},
       firstFrame:get(image),
-      sourceMatte:{visibility:getComputedStyle(knockout).visibility,
-       color:getComputedStyle(knockout).backgroundColor,
-       image:getComputedStyle(knockout).backgroundImage,
-       clip:knockout.style.clipPath,box:box(knockout),
-       z:getComputedStyle(knockout).zIndex},
+      invitation:{visibility:getComputedStyle(invitation).visibility,
+       color:getComputedStyle(invitation).backgroundColor,
+       bg:getComputedStyle(invitation).backgroundImage,
+       foil:getComputedStyle(invitation.querySelector('.olive-invitation__foil')).backgroundImage,
+       imprint:invitation.querySelector('.olive-invitation__imprint strong')?.textContent,
+       clip:invitation.style.clipPath,box:box(invitation)},
+      pairCardLeft:{visibility:getComputedStyle(cardLeft).visibility,box:box(cardLeft)},
+      pairCardRight:{visibility:getComputedStyle(cardRight).visibility,box:box(cardRight)},
       pairLeft:get(left),pairRight:get(right),
       incomingLeft:get(nl),incomingRight:get(nr),
       neutralCSS:{visibility:getComputedStyle(neutral).visibility,reveal:+neutral.dataset.reveal,
@@ -178,8 +191,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(at03.scene,'03-held');
    assert.equal(at03.firstFrame.visibility,'hidden','04 must not enter before the 03 hold');
    assert.equal(at03.groundCSS.visibility,'hidden','Olive exterior must wait until the posters settle');
-   assert.equal(at03.sourceMatte.visibility,'hidden',
-    '03 genuine Doré print must remain fully visible before its actual handoff');
+   assert.equal(at03.invitation.visibility,'hidden',
+    '03 Doré remains fully intact before the invitation enters');
    const bridge=await go(9.76,'01-dore-frame-first-poster-half');
    const protectedFirst=await page.evaluate(()=>{
     const art=document.querySelector('#olive-first .olive-stage__artwork');
@@ -207,28 +220,34 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     'English master must stay image-relative in original 3:4 proportions');
    assert(bridge.first>.45&&bridge.first<.55,'same-frame handoff should be at midpoint');
    assert.equal(bridge.scene,'04-dore-handoff');
-   assert(Math.abs(bridge.firstFrame.box.x-bridge.source.x)<2 &&
-     Math.abs(bridge.firstFrame.box.w-bridge.source.w)<2,
-     'first original speaker poster must physically occupy the original Doré image frame');
-   assert(bridge.firstFrame.src.includes('watchman-nee-editorial.png'),'use approved original first speaker');
-   assert.equal(bridge.groundCSS.visibility,'hidden','04 pigment cannot enter with first speaker');
-   assert.equal(bridge.neutralCSS.visibility,'hidden','03 remains during Doré-frame handoff');
-   assert.equal(bridge.sourceMatte.visibility,'visible');
-   assert.equal(bridge.sourceMatte.clip,bridge.firstFrame.clip,
-    'the source knockout must only expose the same half of the plate as the incoming poster');
+   assert(Math.abs(bridge.invitation.box.x-bridge.source.x)<2 &&
+     Math.abs(bridge.invitation.box.w-bridge.source.w)<2,
+     'the CARD, not the portrait, assumes the original Doré frame');
+   assert.equal(bridge.invitation.visibility,'visible');
+   assert(bridge.invitation.foil.includes('04-olive-personal-invitation-foil-v6.svg'),
+     'the new source card carries independent Olive gilt engraving');
+   assert.equal(bridge.invitation.imprint,'OLIVE MOUNTAIN');
+   assert(Math.abs(bridge.firstFrame.box.w/bridge.firstFrame.box.h-.75)<.01,
+     'the protected 3:4 poster must mount INSIDE the invitation');
+   assert(bridge.firstFrame.box.w<bridge.invitation.box.w &&
+     bridge.firstFrame.box.h<bridge.invitation.box.h,
+     'the editorial print must have real green-card margins');
+   assert(bridge.firstFrame.src.includes('watchman-nee-editorial.png'));
+   assert.equal(bridge.groundCSS.visibility,'hidden');
+   assert.equal(bridge.neutralCSS.visibility,'hidden');
    const sourceTakeover=await go(10.18,'01b-source-plate-no-old-engraving-exposure');
-   assert.equal(sourceTakeover.sourceMatte.visibility,'visible',
-    'the old 03 picture may not show around the 3:4 poster at the screenshot moment');
-   assert.equal(sourceTakeover.sourceMatte.clip,'none',
-    'the ORIGINAL 03 plate is fully knocked out once the speaker has entered');
-   assert.equal(sourceTakeover.sourceMatte.color,'rgb(23, 60, 42)',
-    'the gap is an opaque 04-ink knockout, not blue Doré, yellow paper, gray, or transparent');
-   assert.equal(sourceTakeover.sourceMatte.image,'none',
-    'no other chapter print pattern is copied into the 04 knockout');
-   const oc=sourceTakeover.sourceMatte.box,src=sourceTakeover.source;
-   assert(Math.abs(oc.x-src.x)<3&&Math.abs(oc.y-src.y)<3&&
-     Math.abs(oc.w-src.w)<3&&Math.abs(oc.h-src.h)<3,
-     'knockout must match exact original Doré frame even when the 3:4 speaker print is smaller');
+   assert.equal(sourceTakeover.invitation.visibility,'visible',
+     'the old source is claimed by a complete foil invitation');
+   assert.equal(sourceTakeover.invitation.clip,'none',
+     'the FULL invitation replaces the Doré source before moving');
+   assert(sourceTakeover.invitation.bg.includes('gradient'),
+     'use an intentional printed-card stock, not a flat blocker');
+   assert(sourceTakeover.invitation.foil.includes('04-olive-personal-invitation-foil-v6.svg'));
+   const card=sourceTakeover.invitation.box,print=sourceTakeover.firstFrame.box;
+   assert(print.x>card.x+5&&print.y>card.y+5&&
+     print.x+print.w<card.x+card.w-5 &&
+     print.y+print.h<card.y+card.h-5,
+     'speaker print must be visibly inset on every side of its invitation');
    const forming=await go(10.38,'02-first-to-left-second-to-right');
    assert.equal(forming.scene,'04-two-poster-formation');
    assert(forming.spread>.25&&forming.spread<.45,'first speaker must visibly travel toward left folio');
@@ -237,9 +256,24 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(forming.groundCSS.visibility,'hidden','04 pigment waits until both originals settle');
    assert(forming.reading>.8,'old ONE typography must be covered during the physical transit');
    assert.equal(forming.incomingRight.visibility,'hidden','second portrait waits for first');
+   assert.equal(forming.invitation.visibility,'visible',
+     'the printed invitation and its original poster must travel together');
+   assert(forming.invitation.box.x<bridge.invitation.box.x,
+     'the invitation carrier must translate left as the original print travels');
    const pair=await go(10.98,'03-two-poster-locked-original-background');
    assert.equal(pair.scene,'04-pair-hold');
    assert.equal(pair.pairLeft.visibility,'visible');
+   assert.equal(pair.invitation.visibility,'hidden',
+     'first traveling card is replaced by TWO identical settled invitation objects');
+   assert.equal(pair.pairCardLeft.visibility,'visible');
+   assert.equal(pair.pairCardRight.visibility,'visible');
+   for(const [cardBox,printBox] of [[pair.pairCardLeft.box,pair.pairLeft.box],
+                                    [pair.pairCardRight.box,pair.pairRight.box]]){
+    assert(cardBox.x<=printBox.x&&cardBox.y<printBox.y&&
+      cardBox.x+cardBox.w>=printBox.x+printBox.w &&
+      cardBox.y+cardBox.h>printBox.y+printBox.h,
+      'each original print mounts independently on a green/gold invitation');
+   }
    assert.equal(pair.pairRight.visibility,'visible');
    assert.equal(pair.pairLeft.src,'/images/olive/watchman-nee-editorial.png');
    assert.equal(pair.pairRight.src,'/images/olive/derek-prince-editorial.png');
