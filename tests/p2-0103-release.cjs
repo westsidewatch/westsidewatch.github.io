@@ -102,6 +102,27 @@ const browserPromise=chromium.launch({headless:true});
     assert(!cover.posterVisible,'no empty left folio while the right cover settles');
     assert.equal(cover.filmOpacity,0,'the original film remains hidden during cover arrival');
     assert(cover.fieldOpacity<.001,'do not recolor the Church during the MERSI cover reveal');
+    if(width>820){
+      const sameFrame=await page.evaluate(()=>{
+        const church=document.getElementById('proof-original')?.contentDocument;
+        const schedule=church?.querySelector('.church-editorial__copy');
+        const magazine=church?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+        const cover=magazine?.getElementById('dual-cover');
+        const stage=magazine?.getElementById('dual-stage');
+        const a=schedule?.getBoundingClientRect(),b=cover?.getBoundingClientRect();
+        return {schedule:a?{x:a.x,y:a.y,w:a.width,h:a.height}:null,
+          magazine:b?{x:b.x,y:b.y,w:b.width,h:b.height}:null,
+          match:+stage?.dataset.coverScheduleMatch||0};
+      });
+      assert(sameFrame.schedule&&sameFrame.magazine,'the actual Church schedule and incoming original cover must exist');
+      const a=sameFrame.schedule,b=sameFrame.magazine;
+      assert(Math.abs(a.x-b.x)<2&&Math.abs(a.y-b.y)<2&&
+             Math.abs(a.w-b.w)<2&&Math.abs(a.h-b.h)<2,
+        'the incoming Magazine must match the Church schedule EXACTLY in x/y/width/height: '+
+        JSON.stringify(sameFrame));
+      assert(sameFrame.match>.999,'original schedule-sized page must hold for the complete cover entrance');
+    }
+    await page.screenshot({path:out+'/cover-same-frame-as-church-schedule-'+width+'.png'});
     const print=await pose(4.65);
     console.log('RELEASE GIANT PRINT',width,JSON.stringify(print));
     assert(print.posterVisible&&print.coverVisible,'full pair must be present for seven-color print');
@@ -221,6 +242,26 @@ const browserPromise=chromium.launch({headless:true});
     assert(!oneWipe.incomingClip.includes('inset(0 0 0 '),
       'incoming ONE text must be revealed vertically, not by a horizontal fake book wipe');
     await page.screenshot({path:out+'/mersi-scripture-mid-reveal-'+width+'.png'});
+    const greenBackground=await page.evaluate(()=>{
+      const field=document.getElementById('p2-realm-background');
+      const emmaus=document.getElementById('emmaus');
+      return {surround:document.body.dataset.p2Surround,
+        ground:document.body.dataset.fixedGround,
+        fieldOpacity:Number(getComputedStyle(field).opacity),
+        fieldImage:getComputedStyle(field).backgroundImage,
+        emmausBackground:getComputedStyle(emmaus).backgroundColor};
+    });
+    assert.equal(greenBackground.surround,'cloth',
+      'final 03 background must use the canonical antique-green cover cloth, not pale paper');
+    assert.equal(greenBackground.ground,'on',
+      'the 03 exterior background must be enabled by default');
+    assert(greenBackground.fieldOpacity>.999&&
+      greenBackground.fieldImage.includes('cover-texture-antique-green.png'),
+      'final 03 field must visibly use the actual ONE green-cover texture: '+
+      JSON.stringify(greenBackground));
+    assert.equal(greenBackground.emmausBackground,'rgba(0, 0, 0, 0)',
+      'Emmaus full-screen pale paper must NOT cover the dark green cloth exterior');
+    await page.screenshot({path:out+'/emmaus-final-green-cover-texture-'+width+'.png'});
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
     assert(reading.oneVisible,'real ONE Bible reader remains visible at release end');
