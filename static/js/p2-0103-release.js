@@ -613,23 +613,24 @@
     ensureMagazineUnderlay(sourceDoc,sourceCover);
     // The source Magazine cover itself, not an arriving green panel, is
     // the first page to turn. Preserve the 5:8 layout and its inner graphics.
-    // Full 5:8 artwork, all paths preserved. Retreat into the actual
-    // book binding on the same page-plane; no 3D wedge, page cropping,
-    // distortion, cloned media or opacity-based crossfade.
-    const gap=Math.max(0,sourceCover.offsetLeft-
-      ((sourceTile?.offsetLeft??0)+(sourceTile?.offsetWidth??0)));
-    const travel=sourceCover.offsetWidth+gap+2;
+    // First bounded folio handoff: ORIGINAL blue cover and ORIGINAL green
+    // underleaf remain at the EXACT same 5:8 page rectangle. Neither page
+    // slides behind Contents, shrinks, rotates, leaks the background, or
+    // shows a fragment of book outside the shared right-hand page.
+    sourceCover.style.transform='none';
     sourceCover.style.transformOrigin='left center';
-    sourceCover.style.transform='translate3d('+(-travel*move).toFixed(2)+'px,0,0)';
+    sourceCover.style.clipPath=move>=.999?'inset(0 100% 0 0)':
+      'inset(0 '+(move*100).toFixed(3)+'% 0 0)';
     sourceCover.style.backfaceVisibility='hidden';
     sourceCover.style.removeProperty('transform-style');
     sourceCover.classList.remove('p2-emmaus-turning');
     sourceCover.style.zIndex='11';
     sourceCover.style.opacity='1';
     sourceCover.style.visibility=move>.998?'hidden':'visible';
-    sourceCover.dataset.turnMode='bound-page-slide';
+    sourceCover.dataset.turnMode='fixed-folio-page-reveal';
    }else{
     sourceCover.style.transform=sourceOriginalCoverTransform;
+    sourceCover.style.clipPath='none';
     sourceCover.style.transformOrigin=sourceOriginalCoverOrigin;
     sourceCover.style.backfaceVisibility=sourceOriginalCoverBackface;
     sourceCover.style.removeProperty('transform-style');
@@ -639,11 +640,12 @@
     if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
    }
    if(magazineUnderlay){
-     const bindingGap=Math.max(0,sourceCover.offsetLeft-
-      ((sourceTile?.offsetLeft??0)+(sourceTile?.offsetWidth??0)));
-     const leafTravel=sourceCover.offsetWidth+bindingGap+2;
-     magazineUnderlay.style.transform='translate3d('+
-      (-leafTravel*archive).toFixed(2)+'px,0,0)';
+     // Second bounded handoff: the fixed 5:8 green leaf gives way to
+     // the original full-size Doré plate from the right. The combined
+     // visible cover remains one uninterrupted physical book rectangle.
+     magazineUnderlay.style.transform='none';
+     magazineUnderlay.style.clipPath=archive>=.999?'inset(0 100% 0 0)':
+       'inset(0 '+(archive*100).toFixed(3)+'% 0 0)';
      magazineUnderlay.style.visibility=move>.001&&archive<.998?'visible':'hidden';
      magazineUnderlay.style.display=move>.001?'block':'none';
      magazineUnderlay.style.opacity=move>.001?'1':'0';
