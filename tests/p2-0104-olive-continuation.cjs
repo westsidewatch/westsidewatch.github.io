@@ -173,13 +173,16 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      Math.abs(bridge.firstFrame.box.w-bridge.source.w)<2,
      'first original speaker poster must physically occupy the original Doré image frame');
    assert(bridge.firstFrame.src.includes('watchman-nee-editorial.png'),'use approved original first speaker');
-   assert.equal(bridge.groundCSS.visibility,'hidden','background must NOT enter with first speaker');
+   assert.equal(bridge.groundCSS.visibility,'hidden','04 pigment cannot enter with first speaker');
+   assert.equal(bridge.neutralCSS.visibility,'hidden','03 remains during Doré-frame handoff');
    const forming=await go(10.38,'02-first-to-left-second-to-right');
    assert.equal(forming.scene,'04-two-poster-formation');
    assert(forming.spread>.25&&forming.spread<.45,'first speaker must visibly travel toward left folio');
    assert(forming.firstFrame.box.x<bridge.firstFrame.box.x,
     'first speaker moves from right Doré frame to the left half');
-   assert.equal(forming.groundCSS.visibility,'hidden','background stays untouched during pair formation');
+   assert.equal(forming.groundCSS.visibility,'hidden','04 pigment waits until both originals settle');
+   assert(forming.reading>.8,'old ONE typography must be covered during the physical transit');
+   assert.equal(forming.incomingRight.visibility,'hidden','second portrait waits for first');
    const pair=await go(10.98,'03-two-poster-locked-original-background');
    assert.equal(pair.scene,'04-pair-hold');
    assert.equal(pair.pairLeft.visibility,'visible');
@@ -214,21 +217,24 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     assert(pair.pairRight.box.y>=pair.pairLeft.box.y+pair.pairLeft.box.h+8,
      'phone artworks are separated by a small paper gutter');
    }
-   assert.equal(pair.groundCSS.visibility,'hidden',
-    'the existing Emmaus background must remain during the settled two-poster hold');
+   assert.equal(pair.groundCSS.visibility,'hidden','04 pigment follows, not accompanies, the double spread');
+    assert(pair.neutralCSS.reveal>.999,'03 must be fully cleared behind both posters');
    const material=await go(11.44,'04-only-now-olive-svg-background');
    assert.equal(material.scene,'04-ground-reveal');
    assert(material.ground>.45&&material.ground<.60,'engraved exterior changes on its own later beat');
-   assert.equal(material.groundCSS.parts,1,'one full-stage engraved terrain, no patchwork panels');
-   assert.equal(material.groundCSS.opacity,'1','background transition must not use opacity fading');
-   assert(material.groundCSS.clip.startsWith('inset('),'background material must enter by spatial clipping');
+   assert.equal(material.groundCSS.parts,2,'two halves are registered to one field');
+    assert.equal(material.groundCSS.opacity,'1','no fade');
+    assert.equal(material.method,'opposed-top-down-bottom-up');
+    assert(material.groundCSS.halves[0].startsWith('inset(0 0 '),'left from TOP');
+    assert(/^inset\([0-9.]+% 0 0 0\)/.test(material.groundCSS.halves[1]),'right from BOTTOM');
    assert.equal(material.pairLeft.src,pair.pairLeft.src);
    assert.equal(material.pairRight.src,pair.pairRight.src);
    for(const key of ['x','y','w','h'])assert(Math.abs(material.pairLeft.box[key]-pair.pairLeft.box[key])<1,
     'speakers must be FIXED as background changes: '+key);
    const backgroundReady=await go(11.75,'05-olive-material-fixed');
-   assert(backgroundReady.ground>.999&&backgroundReady.groundCSS.clip==='none',
-    'background replacement completes before any pair cycling');
+   assert(backgroundReady.ground>.999 &&
+     backgroundReady.groundCSS.halves.every(x=>x.includes('0.000%')),
+     'both sides must lock before the next speaker');
    const pairTransition=await go(12.25,'06-opposed-double-poster-change');
    assert.equal(pairTransition.scene,'04-six-pair-gallery');
    assert(+pairTransition.pairBlend>.4&&+pairTransition.pairBlend<.7,'new pair is physically half revealed');
@@ -240,7 +246,11 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     assert(/^inset\([0-9.]+% 0(?:px)? 0(?:px)?/.test(pairTransition.incomingRight.clip),
      'phone lower poster switches from BOTTOM UP');
    }
-   assert(pairTransition.incomingLeft.src.includes('david-pawson-editorial.png'));
+   assert(/^inset\(0(?:px)? 0(?:px)? [0-9.]+%/.test(pairTransition.incomingLeft.clip),
+     'left artwork uses MERSI top-to-bottom mask on desktop and phone');
+    assert(/^inset\([0-9.]+% 0(?:px)? 0(?:px)?/.test(pairTransition.incomingRight.clip),
+     'right artwork uses bottom-to-top mask on desktop and phone');
+    assert(pairTransition.incomingLeft.src.includes('david-pawson-editorial.png'));
    assert(pairTransition.incomingRight.src.includes('stephen-tong-editorial.png'));
    const incomingTypography=await page.evaluate(()=>
     ['#olive-pair-next-left','#olive-pair-next-right'].map(sel=>{
@@ -258,8 +268,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(last.pairRight.src.includes('kou-shao-en-editorial.png'));
    const indexHalf=await go(16.70,'08-twelve-works-recomposing');
    assert.equal(indexHalf.scene,'04-twelve-recomposition');
-   assert.equal(indexHalf.overviewPaper,'rgb(231, 229, 217)',
-    'recomposition must have an opaque paper substrate to prevent unrelated giant-poster ghosting');
+   assert.equal(indexHalf.overviewPaper,'rgba(0, 0, 0, 0)',
+    'index must stay in the same olive-gold field; no white background');
    assert(indexHalf.index>.35&&indexHalf.index<.55,'twelve images must visibly recompose');
    assert.equal(indexHalf.cards.length,12,'must be original TWELVE works, not gallery thumb proxies');
    assert(indexHalf.cards[0].w<indexHalf.main.w*(width>800?.5:.82),
@@ -309,6 +319,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    const restored=await go(9.30,'12-reverse-restored-emmaus');
    assert.equal(restored.firstFrame.visibility,'hidden');
    assert.equal(restored.groundCSS.visibility,'hidden');
+    assert.equal(restored.neutralCSS.visibility,'hidden','return to original 03 without a bridge remnant');
    assert.equal(errors.length,0,'JavaScript browser errors: '+errors.join(' | '));
    console.log('P2 04 TWELVE VOICES PASS',width,
     JSON.stringify({stage:indexFull.scene,groundAfterHold:material.ground,
