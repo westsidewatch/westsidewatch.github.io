@@ -221,10 +221,11 @@
   return {x:r.x-left,y:r.y-top,w:r.w+left+right,h:r.h+top+bottom};
  }
  function setCardCaption(card,i){
-  const el=card.querySelector('.olive-card__caption span');
-  if(!el)throw new Error('Missing one-line invitation imprint');
-  const line=roster[i][2]+' · '+roster[i][1];
-  if(el.textContent!==line)el.textContent=line;
+  const en=card.querySelector('.olive-card__name-en');
+  const zh=card.querySelector('.olive-card__name-zh');
+  if(!en||!zh)throw new Error('Missing editorial invitation caption');
+  if(en.textContent!==roster[i][2])en.textContent=roster[i][2];
+  if(zh.textContent!==roster[i][1])zh.textContent=roster[i][1];
  }
  function changePair(index,transition=0,withNext=false,vertical=false){
   setCardCaption(invitationLeft,index*2+(withNext&&transition>.5?2:0));
