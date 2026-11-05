@@ -27,9 +27,9 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .p2-olive-stage{position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent}
 #p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:#142a26;z-index:0}
 
-/* MERSI split-field: the 03 reading surface is cleared while the first
-   artwork travels into the spread. 04's olive/foil field enters LATER,
-   with opposite top/bottom reveals; one scroll value, never fades. */
+/* MERSI 03→04 material handoff. The source is still 03 while the
+   new card travels; the 04 gallery print field enters only AFTER the
+   two protected original prints settle. Masks share one scroll value. */
 #p2-olive-bridge,#p2-olive-surround{
  position:absolute;inset:0;pointer-events:none;
  visibility:hidden;overflow:hidden;
@@ -37,8 +37,27 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 #p2-olive-bridge{z-index:1}
 #p2-olive-surround{z-index:2;opacity:1}
 .olive-bridge__half,.olive-surround__half{
- /* Independent 04 matte-olive gallery field. No full-page invitation
-    border, olive-branch wallpaper, or ONE Scripture-cover cloth. */
+ position:absolute;top:0;height:100%;width:50%;
+ will-change:clip-path;clip-path:inset(100% 0 0 0);
+}
+.olive-bridge__half[data-side="left"],
+.olive-surround__half[data-side="left"]{left:0}
+.olive-bridge__half[data-side="right"],
+.olive-surround__half[data-side="right"]{right:0}
+/* Outgoing Emmaus cover is allowed ONLY inside the transition bridge. */
+.olive-bridge__half{
+ background-color:#10170d;
+ background-image:
+  linear-gradient(145deg,rgba(4,10,3,.24),rgba(5,13,7,.04) 50%,rgba(4,10,3,.35)),
+  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609');
+ background-repeat:no-repeat;
+ background-size:200% 100%,200% 100%;
+}
+.olive-bridge__half[data-side="left"]{background-position:left center,left center}
+.olive-bridge__half[data-side="right"]{background-position:right center,right center}
+/* Independent 04 gallery field. Neither 03 cloth nor decorative foil is
+   allowed to be repainted outside the actual invitation cards. */
+.olive-surround__half{
  background-color:#163a2a;
  background-image:linear-gradient(152deg,#204432 0%,#153928 56%,#103225 100%);
  background-repeat:no-repeat;
