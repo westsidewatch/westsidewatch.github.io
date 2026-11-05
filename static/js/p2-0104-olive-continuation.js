@@ -238,7 +238,7 @@
   const form=ease((d-T.first)/(T.spread-T.first));
   const firstTravel=ease(form/.73);
   const secondArrival=ease((form-.57)/.43);
-  const readingField=ease(form/.34);
+  const readingField=ease(form/.20);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
   revealSplitField(neutral,readingField);
   revealSplitField(ground,bg);
