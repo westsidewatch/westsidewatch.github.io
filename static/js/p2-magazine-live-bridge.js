@@ -61,7 +61,10 @@
   // official cover arrives from the RIGHT. The original home film
   // may appear ONLY when the completed Contents+cover SPREAD retreats.
   magazine.style.background='transparent';
-  const filmReveal=easing((progress-.97)/.03);
+  // Late Magazine only: the SAME original film becomes visible when the
+  // blue/gold folios shrink. All earlier Church→cover entry thresholds,
+  // transforms, geometry and navigation remain byte-for-byte unchanged.
+  const filmReveal=easing((progress-.86)/.065);
   film.style.opacity=String(filmReveal);
   magazine.dataset.filmReveal=filmReveal.toFixed(4);
   syncFilm(active&&document.visibilityState==='visible');
