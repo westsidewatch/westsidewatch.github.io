@@ -109,7 +109,12 @@
    stage.style.setProperty('--xw-poster-bg',fieldPaper);
    // Only the late 02 scene changes: the blue/gold full spread shrinks
    // over the existing film (86–92.5%) BEFORE Contents enters at 93%.
-   const fieldEnter=ease((p-.01)/.07);
+   // Recover the original split-screen handoff: the Church schedule remains
+   // readable WHILE the approved right cover and then the whole giant A
+   // physically enter. The solid 02 editorial field may appear only AFTER
+   // both existing folios have finished their entrances at p=.35.
+   // An early full-screen navy pseudo-layer was obscuring Church at 33%.
+   const fieldEnter=ease((p-.35)/.05);
    const fieldRetreat=ease((p-.86)/.065);
    const fieldOpacity=fieldEnter*(1-fieldRetreat);
    stage.style.setProperty('--xw-field-opacity',fieldOpacity.toFixed(5));
