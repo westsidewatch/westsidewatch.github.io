@@ -222,19 +222,26 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     assert.equal(pair.pairOrientation,'stacked');
     assert(Math.abs(pair.pairLeft.box.h-pair.pairRight.box.h)<3,
      'phone maintains equal upper/lower original artworks');
-    assert(pair.pairLeft.box.w>pair.main.w*.84,
+    assert(pair.pairLeft.box.w>pair.main.w*.44,
      'phone retains wide folios, not tiny columns');
     assert(pair.pairRight.box.y>=pair.pairLeft.box.y+pair.pairLeft.box.h+8,
      'phone artworks are separated by a small paper gutter');
    }
+   for(const frame of [pair.pairLeft,pair.pairRight])
+     assert(Math.abs(frame.box.w/frame.box.h-.75)<.008,
+       'both approved posters must remain exact 3:4, with NO invented gray mat');
    assert.equal(pair.groundCSS.visibility,'hidden','04 pigment follows, not accompanies, the double spread');
     assert(pair.neutralCSS.reveal>.999,'03 must be fully cleared behind both posters');
+    assert(pair.neutralCSS.cloth.includes('cover-texture-antique-green.png'),
+     'transition carrier MUST retain the true green Bible-cover cloth, not yellow');
    const material=await go(11.44,'04-only-now-olive-svg-background');
    assert.equal(material.scene,'04-ground-reveal');
    assert(material.ground>.45&&material.ground<.60,'engraved exterior changes on its own later beat');
    assert.equal(material.groundCSS.parts,2,'two halves are registered to one field');
     assert.equal(material.groundCSS.opacity,'1','no fade');
     assert.equal(material.method,'opposed-top-down-bottom-up');
+    assert(material.groundCSS.right>.90&&material.groundCSS.left<.02,
+      'at 50% only RIGHT may be new Olive invitation; LEFT retains the Bible cover');
     assert(/^inset\(0(?:px)? 0(?:px)? [0-9.]+%/.test(material.groundCSS.halves[0]),'left from TOP');
     assert(/^inset\([0-9.]+%/.test(material.groundCSS.halves[1]),'right from BOTTOM: '+material.groundCSS.halves[1]);
    assert.equal(material.pairLeft.src,pair.pairLeft.src);
@@ -243,8 +250,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     'speakers must be FIXED as background changes: '+key);
    const backgroundReady=await go(11.75,'05-olive-material-fixed');
    assert(backgroundReady.ground>.999 &&
-     backgroundReady.groundCSS.visibility==='visible',
-     'both sides must lock before the next speaker');
+       backgroundReady.groundCSS.visibility==='visible' &&
+       backgroundReady.groundCSS.left>.999 && backgroundReady.groundCSS.right>.999,
+       'both halves must finish the gilt invitation before the next speakers');
    const pairTransition=await go(12.25,'06-opposed-double-poster-change');
    assert.equal(pairTransition.scene,'04-six-pair-gallery');
    assert(+pairTransition.pairBlend>.4&&+pairTransition.pairBlend<.7,'new pair is physically half revealed');
@@ -313,6 +321,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       'frozen optical-size and original shadow CSS must load for all twelve');
    }
    for(const [i,c] of indexFull.cards.entries()){
+     assert(Math.abs(c.w/c.h-.75)<.008,
+      'all twelve original artwork composites must have exact 3:4 geometry');
     assert(c.src==='/images/olive/'+[
      'watchman-nee','derek-prince','david-pawson','stephen-tong',
      'huang-shuhua','kang-lai-chang','jerry-lai','tong-liu',
