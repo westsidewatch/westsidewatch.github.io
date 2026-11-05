@@ -26,6 +26,8 @@ assert.doesNotMatch(js,/setInterval|setTimeout|new Promise|animate\(|transitionD
 assert.doesNotMatch(html,/olive-main-image|olive-next-image|olive-speaker-names/,
  'remove prior speaker-player layout and small-thumb corridor');
 assert.match(css,/04-olive-engraving-v1-5\.svg/,'reuse approved original Olive line engraving SVG');
+assert.match(css,/\.olive-stage__overview\{[^}]*background:#e7e5d9/,
+ 'twelve-work finale must hide previous full-size pair behind opaque original paper, not leak artwork in grid gutters');
 assert(fs.existsSync(path.join(root,'static/images/p2-realms/v15/04-olive-engraving-v1-5.svg')),
  'do not reproduce approved SVG line art');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
@@ -78,6 +80,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
        ({src:el.querySelector('img')?.getAttribute('src'),...box(el)})),
       grid:overview.dataset.columns,
       overviewVisibility:getComputedStyle(overview).visibility,
+      overviewPaper:getComputedStyle(overview).backgroundColor,
       ctaVisibility:getComputedStyle(document.getElementById('olive-enter')).visibility
     };
    });
@@ -167,11 +170,13 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(last.pairRight.src.includes('kou-shao-en-editorial.png'));
    const indexHalf=await go(16.70,'08-twelve-works-recomposing');
    assert.equal(indexHalf.scene,'04-twelve-recomposition');
+   assert.equal(indexHalf.overviewPaper,'rgb(231, 229, 217)',
+    'recomposition must have an opaque paper substrate to prevent unrelated giant-poster ghosting');
    assert(indexHalf.index>.35&&indexHalf.index<.55,'twelve images must visibly recompose');
    assert.equal(indexHalf.cards.length,12,'must be original TWELVE works, not gallery thumb proxies');
    assert(indexHalf.cards[0].w<indexHalf.main.w*(width>800?.5:.82),
     'twelve cards must interpolate from their approved desktop HALF or mobile FULL-WIDTH stacked source to grid destinations');
-   const indexFull=await go(17.33,'09-twelve-voices-final-overview');
+   const indexFull=await go(17.55,'09-twelve-voices-final-overview');
    assert.equal(indexFull.scene,'04-twelve-index');
    assert.equal(indexFull.cards.length,12);
    assert.equal(indexFull.grid,width>=800?'6':'3','6x2 desktop or 3x4 phone exhibition index');
