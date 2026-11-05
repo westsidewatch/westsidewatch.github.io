@@ -8,20 +8,15 @@
  const seek=$('#proof-seek'),percent=$('#proof-percentage'),phase=$('#proof-phase');
  if(!track||!base||!emmaus)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
- // A/B editorial experiment: Church alone has the Red Sea split.
- // Magazine remains the fixed geometric master for all following chapters.
- // Only the NON-CONTENT field changes by realm (film, manuscript, terraces).
- let fixedGround=new URLSearchParams(location.search).get('ground')==='1';
- // The 03–07 draft must show the five native engraving backgrounds by default.
- // ?ground=0 (or ?five=0 without an explicit ground setting) keeps the original A/B proof.
+ // Keep the already-approved 01 Church and 02 Magazine backgrounds.
+ // At the 03 Emmaus page, use the ACTUAL canonical ONE green book-cover
+ // cloth, not the pale paper/engraving comparison background. The A/B
+ // versions remain available explicitly via ?ground=0 or
+ // ?surround=engraving, but the published 03 default is green cloth.
  const params=new URLSearchParams(location.search);
- // Editorial A/B: the default 03 exterior is the approved ONE green cloth.
- // ?surround=engraving restores the former radial engraving for comparison.
- const surround=params.get('surround')==='cloth'?'cloth':'engraving';
+ let fixedGround=params.get('ground')!=='0';
+ const surround=params.get('surround')==='engraving'?'engraving':'cloth';
  document.body.dataset.p2Surround=surround;
- // Keep the canonical, in-folio manuscript field as the default. The
- // independent A/B full-viewport surround is opt-in via ?ground=1 only.
- if(!params.has('ground'))fixedGround=false;
  const timelineMax=9.34; // Hard ceiling before 04 at 9.44
  const groundToggle=$('#proof-ground-toggle'),realmGround=$('#p2-realm-background');
  function syncGroundMode(){
