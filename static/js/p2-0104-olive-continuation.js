@@ -153,7 +153,7 @@
  function galleryRects(g){
   const mobile=g.w<600;
   const margin=mobile?Math.max(12,Math.min(20,g.w*.04)):
-    Math.max(24,Math.min(48,g.w*.03));
+    Math.max(40,Math.min(142,g.w*.082));
   const top=mobile?84:Math.max(113,Math.min(149,g.h*.14));
   const bottom=mobile?61:Math.max(48,Math.min(73,g.h*.065));
   const gap=mobile?10:Math.max(13,Math.min(30,g.w*.02));
