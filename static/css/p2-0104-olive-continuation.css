@@ -91,7 +91,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  width:clamp(20px,14%,74px);height:60%;max-height:290px;
  background:url('/images/p2-realms/v15/04-olive-terrain-relief-v7.svg')
   center bottom/contain no-repeat;
- opacity:.55;pointer-events:none;
+ opacity:.68;pointer-events:none;
 }
 #olive-invitation-right .olive-card__relief{
  left:auto;right:2px;transform:scaleX(-1);
@@ -104,7 +104,13 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  font:200 clamp(8px,.69vw,11px)/1.2 var(--ws-type-display-en);
  letter-spacing:.075em;white-space:nowrap;overflow:hidden;
 }
-.olive-card__caption span{display:block;overflow:hidden;text-overflow:ellipsis}
+.olive-card__caption{gap:3px}
+.olive-card__name-en{display:block;overflow:hidden;text-overflow:ellipsis;min-width:0;white-space:nowrap}
+.olive-card__name-zh{
+ display:block;flex:0 0 auto;white-space:nowrap;
+ font-family:var(--ws-type-display-zh),"Noto Serif TC",sans-serif;
+ font-weight:200;font-style:normal;font-synthesis:none;
+}
 .olive-stage__invitation--pair{z-index:0}
 .olive-stage__first{z-index:2;inset:auto}
 .olive-stage__pair{z-index:3;inset:0}
@@ -167,7 +173,10 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  letter-spacing:-.06em;white-space:nowrap;text-align:center;
 }
 .olive-stage__rubric strong i{font-weight:400;font-style:italic}
-.olive-stage__rubric small{text-align:right}
+.olive-stage__rubric small{
+ text-align:right;font-family:var(--ws-type-display-zh),"Noto Serif TC",sans-serif;
+ font-weight:200;font-synthesis:none;
+}
 .olive-stage__index-card{
  z-index:2;display:block;text-decoration:none;overflow:hidden;
  color:#d8c58b;background:transparent;
