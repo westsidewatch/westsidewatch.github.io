@@ -56,6 +56,20 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 }
 .olive-bridge__half[data-side="left"]{background-position:left center,left center}
 .olive-bridge__half[data-side="right"]{background-position:right center,right center}
+/* SAME ONE's approved gilded botanical frame, exact source PNG as 03.
+   The book-cover print remains the left-hand intermediate material while
+   the right half becomes the Olive invitation card. */
+.olive-bridge__half[data-side="left"]::after{
+ content:"";position:absolute;pointer-events:none;
+ left:50%;top:4%;height:92%;aspect-ratio:5 / 8;max-width:83%;
+ transform:translateX(-50%);
+ background:#cebd74;opacity:.78;
+ -webkit-mask:url('/one/cover-golden-shoot-frame-transparent.png?v=20260821a')
+  center/100% 100% no-repeat;
+ mask:url('/one/cover-golden-shoot-frame-transparent.png?v=20260821a')
+  center/100% 100% no-repeat;
+}
+
 .olive-surround__half{
  /* ONE material authority across 03 and 04: same true antique-green cloth.
     New 04 foil illustration is a registered transparent ink plate on top. */
