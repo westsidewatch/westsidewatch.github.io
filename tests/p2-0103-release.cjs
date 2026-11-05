@@ -115,6 +115,17 @@ const browserPromise=chromium.launch({headless:true});
     const entering=await pose(6.34); // p≈.953, Contents enters AFTER film reveal
     assert(entering.spreadScale<.86&&entering.filmOpacity>.99,
       'Contents must enter into already-reduced folios over the already-visible film');
+    const indexSeam=await page.evaluate(()=>{
+      const origin=document.querySelector('#proof-original')?.contentDocument;
+      const doc=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
+      const poster=doc?.getElementById('xw-poster');
+      const index=doc?.getElementById('dual-stone-contents');
+      return {old:poster?.style.clipPath||'',incoming:index?.style.clipPath||'',
+        alpha:index?+doc.defaultView.getComputedStyle(index).opacity:0};
+    });
+    assert(indexSeam.old.startsWith('inset(')&&indexSeam.incoming.startsWith('inset('),
+      'giant A and original Contents must use opposing MERSI masks, not overlap as transparencies');
+    assert.equal(indexSeam.alpha,1,'the incoming native Contents paper must be opaque, not a ghosted crossfade');
     await page.screenshot({path:out+'/contents-entering-after-film-'+width+'.png'});
     const contents=await pose(6.47); // p≈.991: native Contents is settled
     console.log('RELEASE CONTENTS',width,JSON.stringify(contents));
