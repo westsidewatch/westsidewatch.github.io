@@ -37,42 +37,15 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 #p2-olive-bridge{z-index:1}
 #p2-olive-surround{z-index:2;opacity:1}
 .olive-bridge__half,.olive-surround__half{
- position:absolute;top:0;height:100%;width:50%;
- will-change:clip-path;clip-path:inset(100% 0 0 0);
-}
-.olive-bridge__half[data-side="left"],
-.olive-surround__half[data-side="left"]{left:0}
-.olive-bridge__half[data-side="right"],
-.olive-surround__half[data-side="right"]{right:0}
-.olive-bridge__half{
- /* The actual 03 green Scripture COVER cloth, not invented yellow paper.
-    Each half samples the SAME full-frame printed fabric registration. */
- background-color:#10170d;
- background-image:
-  linear-gradient(145deg,rgba(4,10,3,.24),rgba(5,13,7,.04) 50%,rgba(4,10,3,.35)),
-  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609');
+ /* Independent 04 matte-olive gallery field. No full-page invitation
+    border, olive-branch wallpaper, or ONE Scripture-cover cloth. */
+ background-color:#163a2a;
+ background-image:linear-gradient(152deg,#204432 0%,#153928 56%,#103225 100%);
  background-repeat:no-repeat;
- background-size:200% 100%,200% 100%;
+ background-size:200% 100%;
 }
-.olive-bridge__half[data-side="left"]{background-position:left center,left center}
-.olive-bridge__half[data-side="right"]{background-position:right center,right center}
-/* DO NOT counterfeit the 03 book-cover ornament in the moving 04
-   field. The huge duplicated ONE frame previously survived behind the
-   speaker prints; only the unadorned outgoing 03 surface remains until
-   the separate chapter-04 invitation takes over. */
-.olive-surround__half{
- /* 04 INDEPENDENT PRINT STOCK. The 03 Scripture cover's cloth and
-    golden foliage master are strictly confined to .olive-bridge__half.
-    The new green is a saturated OLIVE ink, not ONE's dark book cloth. */
- background-color:#173c2a;
- background-image:
-  url('/images/p2-realms/v15/04-olive-invitation-foil-v5.svg'),
-  linear-gradient(145deg,#204d34 0%,#163d2b 48%,#0e3025 100%);
- background-repeat:no-repeat;
- background-size:200% 100%,200% 100%;
-}
-.olive-surround__half[data-side="left"]{background-position:left center,left center}
-.olive-surround__half[data-side="right"]{background-position:right center,right center}
+.olive-surround__half[data-side="left"]{background-position:left center}
+.olive-surround__half[data-side="right"]{background-position:right center}
 .olive-proof{
  position:absolute;z-index:4;overflow:hidden;
  visibility:hidden;background:transparent;color:#20382e;
@@ -81,50 +54,38 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .olive-stage__first,.olive-stage__pair,.olive-stage__overview{
  position:absolute;margin:0;inset:0;overflow:hidden
 }
-/* CHAPTER 04 ONLY. The source Doré plate is replaced by a complete
-   independent gold-foil INVITATION, never by a block-shaped color mask.
-   The invitation carries the untouched original 3:4 portrait as a mounted
-   print. A separate 03 bridge is transitional and cannot be this card. */
+/* P2/04 GALLERY ANNOUNCEMENT PRINT: one card carries one COMPLETE
+   immutable 3:4 poster. Only a small localized mountain relief, fine
+   single line and one-line caption. NO second masthead or gilt frame. */
 .olive-stage__invitation{
  position:absolute;z-index:1;display:block;visibility:hidden;
  margin:0;padding:0;border:0;pointer-events:none;overflow:hidden;
- background-color:#173c2b;
- background-image:
-  radial-gradient(ellipse at 14% 10%,rgba(210,177,100,.115),transparent 50%),
-  linear-gradient(153deg,#204b34 0%,#143a2a 52%,#0f3024 100%);
- box-shadow:inset 0 0 0 1px rgba(220,185,104,.23);
- color:#dfc785;isolation:isolate;
+ background:#193d2e;
+ color:#d8be7d;isolation:isolate;
 }
 .olive-stage__invitation::after{
- content:"";position:absolute;inset:8px;border:1px solid rgba(211,177,98,.19);
- pointer-events:none;
+ content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
+ background:#bea268;opacity:.40;pointer-events:none;
 }
-.olive-invitation__foil{
- position:absolute;inset:0;pointer-events:none;
- background:url('/images/p2-realms/v15/04-olive-personal-invitation-foil-v6.svg')
-  center center/100% 100% no-repeat;
+.olive-card__relief{
+ position:absolute;left:2px;bottom:12%;
+ width:clamp(20px,14%,74px);height:60%;max-height:290px;
+ background:url('/images/p2-realms/v15/04-olive-terrain-relief-v7.svg')
+  center bottom/contain no-repeat;
+ opacity:.55;pointer-events:none;
 }
-.olive-invitation__imprint,.olive-invitation__colophon{
- position:absolute;z-index:2;left:9%;right:9%;pointer-events:none;
- display:flex;align-items:center;justify-content:space-between;gap:8px;
- min-width:0;color:#e3ca89;
- font:200 clamp(7px,.63vw,11px)/1.35 var(--ws-type-display-en);
- letter-spacing:.09em;white-space:nowrap;
+#olive-invitation-right .olive-card__relief{
+ left:auto;right:2px;transform:scaleX(-1);
 }
-.olive-invitation__imprint{
- top:8.3%;height:3.2%;border-bottom:1px solid rgba(221,187,111,.48);
+.olive-card__caption{
+ position:absolute;z-index:2;bottom:6px;left:13px;right:13px;
+ height:19px;display:flex;align-items:center;
+ border-top:1px solid rgba(216,188,125,.52);
+ color:#e2c990;background:transparent;
+ font:200 clamp(8px,.69vw,11px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.075em;white-space:nowrap;overflow:hidden;
 }
-.olive-invitation__imprint strong{
- font:400 clamp(10px,1.06vw,18px)/1 var(--ws-type-display-en);
- letter-spacing:.035em;
-}
-.olive-invitation__colophon{
- bottom:1.0%;height:3.0%;border-top:1px solid rgba(221,187,111,.48);
-}
-.olive-invitation__colophon small{
- font:200 clamp(7px,.63vw,11px)/1.35 var(--ws-type-display-en);
- letter-spacing:.085em;
-}
+.olive-card__caption span{display:block;overflow:hidden;text-overflow:ellipsis}
 .olive-stage__invitation--pair{z-index:0}
 .olive-stage__first{z-index:2;inset:auto}
 .olive-stage__pair{z-index:3;inset:0}
@@ -167,32 +128,26 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 }
 /* Original frozen English is printed over the image; captions below
    remain only folio sequence numbers, not a substitute for it. */
+/* SINGLE title, entirely OUTSIDE the mounted prints. No competing
+   title on cards and no second full-width foil border. */
 .olive-stage__rubric{
- position:absolute;z-index:9;
- top:clamp(9px,1.8svh,20px);left:clamp(18px,3.1vw,52px);right:clamp(18px,3.1vw,52px);
- min-height:clamp(68px,9svh,91px);visibility:hidden;overflow:hidden;
- display:grid;grid-template-columns:minmax(105px,1fr) auto minmax(105px,1fr);
- align-items:center;gap:clamp(10px,1.5vw,26px);
- color:#e7c780;pointer-events:none;
+ position:absolute;z-index:9;top:clamp(10px,1.6svh,17px);
+ left:clamp(22px,4vw,70px);right:clamp(22px,4vw,70px);
+ min-height:68px;visibility:hidden;overflow:hidden;
+ display:grid;grid-template-columns:minmax(112px,1fr) auto minmax(112px,1fr);
+ align-items:center;gap:clamp(8px,1.4vw,20px);
+ color:#d9bc78;pointer-events:none;
 }
-.olive-stage__rubric::after{
- content:"";position:absolute;bottom:5px;left:0;right:0;
- height:1px;background:#d2b06a;opacity:.58;
-}
+.olive-stage__rubric::after{display:none}
 .olive-stage__rubric span,.olive-stage__rubric small{
- font:200 clamp(9px,.72vw,12px)/1.35 var(--ws-type-display-en);
- letter-spacing:.14em;
+ font:200 clamp(9px,.69vw,11px)/1.3 var(--ws-type-display-en);
+ letter-spacing:.105em;color:#d7bc86;
 }
 .olive-stage__rubric strong{
- font:400 clamp(33px,4.05vw,69px)/.91 var(--ws-type-display-en);
- letter-spacing:-.07em;white-space:nowrap;text-align:center;
+ font:400 clamp(31px,3.3vw,54px)/.97 var(--ws-type-display-en);
+ letter-spacing:-.06em;white-space:nowrap;text-align:center;
 }
 .olive-stage__rubric strong i{font-weight:400;font-style:italic}
-/* Optical identity: dark-green paper surround, old-gold folio rules.
-   The protected image-relative 3:4 names remain exactly as authored. */
-.olive-stage__rubric span{color:#d4bb84}
-.olive-stage__rubric small{color:#d8c092}
-
 .olive-stage__rubric small{text-align:right}
 .olive-stage__index-card{
  z-index:2;display:block;text-decoration:none;overflow:hidden;
@@ -255,18 +210,10 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  }
 }
 @media(max-width:540px){
- /* On a stacked phone spread, preserve full 3:4 poster dimensions.
-    Letterpress text moves into the newly reserved VERTICAL card rail;
-    it must never become an invisible label behind the picture. */
- .olive-stage__invitation--pair .olive-invitation__imprint{
-  left:2px;right:auto;top:4%;bottom:4%;width:20px;height:92%;
-  writing-mode:vertical-rl;justify-content:center;align-items:center;
-  gap:12px;border-bottom:0;border-right:1px solid rgba(221,187,111,.4);
- }
- .olive-stage__invitation--pair .olive-invitation__imprint strong{font-size:9px;letter-spacing:.08em}
- .olive-stage__invitation--pair .olive-invitation__imprint span{font-size:7px;letter-spacing:.075em}
- .olive-stage__invitation--pair .olive-invitation__colophon{display:none}
-
+ /* Preserve the poster print; make the rail a genuine but quiet card. */
+ .olive-card__relief{width:22px;max-height:80px;bottom:22%;opacity:.45}
+ .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
+  font-size:7px;letter-spacing:0}
  .p2-olive-controls{gap:2px;max-height:60px}
  .p2-olive-controls button{font-size:7px;padding:3px}
  .p2-olive-controls input{width:52px}
