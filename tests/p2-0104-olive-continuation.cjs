@@ -37,18 +37,20 @@ assert.doesNotMatch(js,/setInterval|setTimeout|new Promise|animate\(|transitionD
  'no secondary timeline or time-based lag in P2 scroll choreography');
 assert.doesNotMatch(html,/olive-main-image|olive-next-image|olive-speaker-names/,
  'remove prior speaker-player layout and small-thumb corridor');
-assert.match(css,/04-olive-terrain-editorial-v2\.svg/,'use new native Olive Mountain terrain');
-assert.match(html,/olive-surround__plate/,'one composition, no segmented color-block panels');
+assert.match(css,/04-olive-foil-field-v4\.svg/,'load restrained olive/gold print field');
+assert.match(html,/id="p2-olive-bridge"/,'bridge 03 reading world before changing 04 pigment');
+assert.match(html,/olive-surround__half/,'MERSI left and right background masks exist');
+assert.match(js,/revealSplitField\(ground,bg\)/,'paired field masks share one scroll clock');
 assert.match(html,/id="olive-rubric"/,'reserved editorial masthead identity');
-assert.match(css,/\.olive-stage__overview\{[^}]*background:#e7e5d9/,
- 'twelve-work finale must hide previous full-size pair behind opaque original paper, not leak artwork in grid gutters');
+assert.match(css,/\.olive-stage__overview\{[^}]*background:transparent/,
+ 'index preserves full olive green and gold field, no white jump');
 assert(fs.existsSync(path.join(root,'static/images/p2-realms/v15/04-olive-engraving-v1-5.svg')),
  'keep approved V1.5 source intact as archive');
-const mountainSVG=read('static/images/p2-realms/v15/04-olive-terrain-editorial-v2.svg');
-assert.match(mountainSVG,/Mount of Olives/, 'mountain identity rather than generic plants');
-assert.match(mountainSVG,/Kidron Valley/, 'geographic field of the biblical setting');
-assert.match(mountainSVG,/olive-tree-/, 'native vector etched olive trees');
-assert(!mountainSVG.includes('<image'), 'terrain must stay editable native SVG');
+const mountainSVG=read('static/images/p2-realms/v15/04-olive-foil-field-v4.svg');
+assert.match(mountainSVG,/Olive Mountain/, 'actual realm identity');
+assert.match(mountainSVG,/#193f30/, 'deep olive ink is primary');
+assert.match(mountainSVG,/#c9a95f/, 'gold ink reinforces approved poster palette');
+assert(!mountainSVG.includes('<image'), 'editability: pure SVG, no raster image');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
 (async()=>{
  const browser=await chromium.launch({headless:true});
@@ -90,6 +92,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     const nl=document.getElementById('olive-pair-next-left');
     const nr=document.getElementById('olive-pair-next-right');
     const ground=document.getElementById('p2-olive-surround');
+    const neutral=document.getElementById('p2-olive-bridge');
     const overview=document.getElementById('olive-overview');
     const box=el=>{const b=el.getBoundingClientRect();return {x:b.x,y:b.y,w:b.width,h:b.height}};
     const get=el=>({visibility:getComputedStyle(el).visibility,
@@ -99,6 +102,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       scene:st.dataset.p2Scene,frameReady:st.dataset.p2FolioReady,
       underlying:source.body.dataset.proofScene,
       first:+st.dataset.p2Bridge,spread:+st.dataset.p2Spread,
+      reading:+st.dataset.p2ReadingField,method:st.dataset.p2FieldMethod,
       ground:+st.dataset.p2Ground,index:+st.dataset.p2Index,
       pairIndex:st.dataset.p2PairIndex||'0',pairBlend:st.dataset.p2PairBlend||'0',
       pairOrientation:st.dataset.p2PairOrientation,
@@ -106,9 +110,12 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       source:{...box(source.querySelector('#emmaus .emmaus__right')),folio:box(source.querySelector('#emmaus'))},
       firstFrame:get(image),pairLeft:get(left),pairRight:get(right),
       incomingLeft:get(nl),incomingRight:get(nr),
+      neutralCSS:{visibility:getComputedStyle(neutral).visibility,reveal:+neutral.dataset.reveal,
+       halves:[...neutral.querySelectorAll('[data-side]')].map(x=>x.style.clipPath)},
       groundCSS:{visibility:getComputedStyle(ground).visibility,
-       opacity:getComputedStyle(ground).opacity,clip:ground.style.clipPath,
-       parts:ground.querySelectorAll('.olive-surround__plate').length},
+       opacity:getComputedStyle(ground).opacity,
+       halves:[...ground.querySelectorAll('[data-side]')].map(x=>x.style.clipPath),
+       parts:ground.querySelectorAll('.olive-surround__half').length},
       cards:[...overview.querySelectorAll('.olive-stage__index-card')].map(el=>
        ({src:el.querySelector('img')?.getAttribute('src'),...box(el)})),
       grid:overview.dataset.columns,
