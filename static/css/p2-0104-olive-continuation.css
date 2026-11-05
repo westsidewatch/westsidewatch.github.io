@@ -112,7 +112,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  letter-spacing:.09em;white-space:nowrap;
 }
 .olive-invitation__imprint{
- top:2.5%;height:3.6%;border-bottom:1px solid rgba(221,187,111,.48);
+ top:8.3%;height:3.2%;border-bottom:1px solid rgba(221,187,111,.48);
 }
 .olive-invitation__imprint strong{
  font:400 clamp(10px,1.06vw,18px)/1 var(--ws-type-display-en);
@@ -255,8 +255,16 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  }
 }
 @media(max-width:540px){
- .olive-stage__invitation--pair .olive-invitation__imprint strong{font-size:8px}
- .olive-stage__invitation--pair .olive-invitation__imprint span{font-size:6px;letter-spacing:0}
+ /* On a stacked phone spread, preserve full 3:4 poster dimensions.
+    Letterpress text moves into the newly reserved VERTICAL card rail;
+    it must never become an invisible label behind the picture. */
+ .olive-stage__invitation--pair .olive-invitation__imprint{
+  left:2px;right:auto;top:4%;bottom:4%;width:20px;height:92%;
+  writing-mode:vertical-rl;justify-content:center;align-items:center;
+  gap:12px;border-bottom:0;border-right:1px solid rgba(221,187,111,.4);
+ }
+ .olive-stage__invitation--pair .olive-invitation__imprint strong{font-size:9px;letter-spacing:.08em}
+ .olive-stage__invitation--pair .olive-invitation__imprint span{font-size:7px;letter-spacing:.075em}
  .olive-stage__invitation--pair .olive-invitation__colophon{display:none}
 
  .p2-olive-controls{gap:2px;max-height:60px}
