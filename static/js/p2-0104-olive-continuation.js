@@ -3,9 +3,11 @@
  * restyled or resized. 04 reads its actual Doré plate/ONE folio bounds.
  *
  * 9.44–10.08   Doré plate -> first original speaker poster, same frame
- * 10.08–10.95  first poster to left half, second to right half
- * 10.95–11.15  two posters HOLD under reserved masthead; landscape not entered
- * 11.15–11.73  ONE continuous Olive terrain SVG enters, bottom-up and behind posters
+ * 10.08–10.95  03 paper clears through opposed split-field masks as A moves LEFT,
+ *              then B reveals from BELOW in the right plate
+ * 10.95–11.15  two approved posters HOLD; 04 mountain pigment has not entered
+ * 11.15–11.73  dark olive/gold mountain enters top-down LEFT, bottom-up RIGHT,
+ *              center label uses the SAME scroll progress (MERSI's actual grammar)
  * 11.95–15.89  five opposite-mask switches, two speakers per spread (6 pairs)
  * 16.25–17.25  the SAME twelve image works geometrically recompose as index
  * 17.25–17.65  chapter title and entry invitation hold
@@ -23,10 +25,10 @@
  const left=$('#olive-pair-left'),right=$('#olive-pair-right');
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
  const overview=$('#olive-overview'),enter=$('#olive-enter');
- const ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
+ const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
  const status=$('#p2-olive-folio-status');
- if(!stage||!track||!base||!folio||!first||!ground)return;
+ if(!stage||!track||!base||!folio||!first||!ground||!neutral)return;
  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
  const ease=v=>{const u=clamp(v);return u*u*(3-2*u)};
  const mix=(a,b,t)=>a+(b-a)*t;
@@ -177,12 +179,10 @@
   if(withNext){
    setFigure(nextLeft,(index+1)*2);setFigure(nextRight,(index+1)*2+1);
    const crop=((1-transition)*100).toFixed(3);
-   // Desktop: opposed horizontal masks. Mobile: equivalent upper/lower
-   // vertical masks, preserving full-size 3:4 original poster art.
-   nextLeft.style.clipPath=vertical?
-    'inset(0 0 '+crop+'% 0)':'inset(0 '+crop+'% 0 0)';
-   nextRight.style.clipPath=vertical?
-    'inset('+crop+'% 0 0 0)':'inset(0 0 0 '+crop+'%)';
+   // The same true MERSI opposition on desktop and mobile: LEFT or TOP
+   // uncovers downward; RIGHT or BOTTOM uncovers upward. No opacity fade.
+   nextLeft.style.clipPath='inset(0 0 '+crop+'% 0)';
+   nextRight.style.clipPath='inset('+crop+'% 0 0 0)';
   }
   nextLeft.style.visibility=withNext&&transition>0?'visible':'hidden';
   nextRight.style.visibility=withNext&&transition>0?'visible':'hidden';
@@ -205,6 +205,17 @@
   });
   overview.dataset.columns=String(cols);
  }
+ function revealSplitField(node,u){
+  const reveal=clamp(u),crop=((1-reveal)*100).toFixed(3);
+  node.style.visibility=reveal>0?'visible':'hidden';
+  const leftHalf=node.querySelector('[data-side="left"]');
+  const rightHalf=node.querySelector('[data-side="right"]');
+  // Both panels sample one full image. Opposite insets are authored from
+  // one absolute scroll position: pause and reverse restore exact geometry.
+  if(leftHalf)leftHalf.style.clipPath='inset(0 0 '+crop+'% 0)';
+  if(rightHalf)rightHalf.style.clipPath='inset('+crop+'% 0 0 0)';
+  node.dataset.reveal=reveal.toFixed(5);
+ }
  function paint(){
   queued=false;
   const height=Math.max(innerHeight,1);
@@ -225,7 +236,12 @@
   folio.style.visibility=stageActive?'visible':'hidden';
   const bridge=ease((d-T.start)/(T.first-T.start));
   const form=ease((d-T.first)/(T.spread-T.first));
+  const firstTravel=ease(form/.73);
+  const secondArrival=ease((form-.57)/.43);
+  const readingField=ease(form/.34);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
+  revealSplitField(neutral,readingField);
+  revealSplitField(ground,bg);
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
   const vertical=g.w<600;
   const rects=galleryRects(g);
@@ -234,10 +250,10 @@
   // The actual Doré image never moves: overlay #1 inherits ITS bounds.
   // It travels into the left HALF only once the first poster is established.
   const settledLeft=rects[0];
-  const bx=mix(g.plate.x,settledLeft.x,form);
-  const by=mix(g.plate.y,settledLeft.y,form);
-  const bw=mix(g.plate.w,settledLeft.w,form);
-  const bh=mix(g.plate.h,settledLeft.h,form);
+  const bx=mix(g.plate.x,settledLeft.x,firstTravel);
+  const by=mix(g.plate.y,settledLeft.y,firstTravel);
+  const bw=mix(g.plate.w,settledLeft.w,firstTravel);
+  const bh=mix(g.plate.h,settledLeft.h,firstTravel);
   position(first,bx,by,bw,bh);
   first.style.visibility=d>T.start&&d<T.spread?'visible':'hidden';
   first.style.clipPath=d<T.first?
@@ -247,17 +263,15 @@
   for(const [element,side] of [[left,0],[right,1],[nextLeft,0],[nextRight,1]]){
    const r=rects[side];position(element,r.x,r.y,r.w,r.h);
   }
-  pair.style.visibility=d>=T.first?'visible':'hidden';
+  pair.style.visibility=d>=T.first&&d<T.indexStart?'visible':'hidden';
   const forming=d>=T.first&&d<T.spread;
   const paired=d>=T.spread;
   left.style.visibility=paired?'visible':'hidden';
   right.style.visibility=paired?'visible':'hidden';
   if(forming){
    setFigure(nextRight,1);
-   nextRight.style.visibility=form>0?'visible':'hidden';
-   nextRight.style.clipPath=vertical?
-    'inset('+((1-form)*100).toFixed(3)+'% 0 0 0)':
-    'inset(0 0 0 '+((1-form)*100).toFixed(3)+'%)';
+   nextRight.style.visibility=secondArrival>0?'visible':'hidden';
+   nextRight.style.clipPath='inset('+((1-secondArrival)*100).toFixed(3)+'% 0 0 0)';
    nextLeft.style.visibility='hidden';
   }else if(d<T.pairStart){
    changePair(0); // Both full posters HOLD before the background moves.
@@ -270,18 +284,14 @@
    stage.dataset.p2PairIndex=String(i);
    stage.dataset.p2PairBlend=u.toFixed(5);
   }
-  // The mountain enters as ONE engraved spatial field only after both
-  // posters have settled. No opacity blend, extra panel or time clock.
-  ground.style.visibility=bg>0?'visible':'hidden';
-  ground.style.clipPath=bg>.99999?'none':
-   'inset('+((1-bg)*100).toFixed(3)+'% 0 0 0)';
+  // Mountain replaces the 03 reading substrate AFTER the double-spread
+  // is fixed. Label and split-field move from the same progress; gold
+  // is a print material, NOT a gradient opacity overlay.
   ground.style.opacity='1';
-  // The masthead has a reserved position: never overwrites original
-  // approved poster typography or crosses the artwork picture boxes.
-  rubric.style.visibility=d>=T.spread?'visible':'hidden';
-  rubric.style.clipPath=d>=T.spread+.25?'none':
-   'inset(0 '+((1-ease((d-T.spread)/.25))*100).toFixed(3)+'% 0 0)';
-  overview.style.visibility=d>T.indexStart?'visible':'hidden';
+  rubric.style.visibility=bg>0?'visible':'hidden';
+  rubric.style.clipPath=bg>=1?'none':
+   'inset(0 '+((1-bg)*49).toFixed(3)+'% 0 '+((1-bg)*49).toFixed(3)+'%)';
+  overview.style.visibility=d>=T.indexStart?'visible':'hidden';
   if(d>=T.indexStart)layoutIndex(g,fan);
   const finished=d>=T.indexEnd-.00001;
   enter.style.visibility=finished?'visible':'hidden';
@@ -295,9 +305,11 @@
   cards.forEach(card=>card.tabIndex=interactive?0:-1);
   stage.dataset.p2Bridge=bridge.toFixed(5);
   stage.dataset.p2Spread=form.toFixed(5);
+  stage.dataset.p2ReadingField=readingField.toFixed(5);
   stage.dataset.p2Ground=bg.toFixed(5);
+  stage.dataset.p2FieldMethod='opposed-top-down-bottom-up';
   stage.dataset.p2Index=fan.toFixed(5);
-  stage.dataset.p2Composition='dore-to-two-posters-to-six-pairs-to-twelve';
+  stage.dataset.p2Composition='dore-bridge-to-opposed-field-to-six-pairs-to-twelve';
   stage.dataset.p2PairOrientation=vertical?'stacked':'side-by-side';
   stage.dataset.p2Scene=d<T.start?'03-held':
     d<T.first?'04-dore-handoff':
