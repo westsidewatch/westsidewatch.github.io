@@ -470,10 +470,15 @@
   // 2. The green cover turns away to reveal Doré in that SAME right folio.
   // 3. Only then the LEFT Magazine engraving gives way to Scripture content.
   // No projection, translation, fake 3D paper curl, or animation timer.
-  const move=smooth((distance-6.50)/.62);
-  const archive=smooth((distance-7.12)/.64);
+  // Clear editorial holds, all tied to the same reversible P2 scroll:
+  // 6.50–6.80 first bound cover change; 6.80–7.42 full green cover.
+  // 7.42–7.90 green→Doré; 7.90–8.20 full illustration; only then
+  // 8.20–8.75 Contents→ONE reading. No overlapping or half-page
+  // states at the named preview checkpoints.
+  const move=smooth((distance-6.50)/.30);
+  const archive=smooth((distance-7.42)/.48);
   const coverArrival=move,coverOpen=archive;
-  const oneDrop=smooth((distance-7.70)/.60);
+  const oneDrop=smooth((distance-8.20)/.55);
   const emShowing=move>.001;
   emmaus.style.visibility=emShowing?'visible':'hidden';
   emmaus.style.opacity='1';emmaus.style.transform='none';
