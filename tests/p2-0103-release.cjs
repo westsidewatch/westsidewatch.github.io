@@ -140,8 +140,12 @@ const browserPromise=chromium.launch({headless:true});
     assert.equal(turns.mode,'fixed-folio-page-reveal','first turn must keep the original cover in a fixed 5:8 folio');
     assert(!/rotateY|perspective|translate3d/.test(turns.transform),
       'the original 5:8 cover may NOT become a narrow perspective spike');
-    await pose(7.42); // second green-underleaf -> Doré transition, ~80%
-    await page.screenshot({path:out+'/emmaus-second-turn-80percent-'+width+'.png'});
+    const greenHold=await pose(7.30); // green 5:8 cover must be complete
+    const greenState=await page.evaluate(()=>document.getElementById('emmaus')?.dataset.coverState);
+    assert.equal(greenState,'green','the green cover has to HOLD before the second turn');
+    await page.screenshot({path:out+'/green-cover-hold-'+width+'.png'});
+    await pose(7.68); // green-underleaf -> Doré, controlled page turnover
+    await page.screenshot({path:out+'/emmaus-second-turn-82percent-'+width+'.png'});
     const secondTurn=await page.evaluate(()=>{
       const origin=document.querySelector('#proof-original')?.contentDocument;
       const source=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
@@ -153,6 +157,11 @@ const browserPromise=chromium.launch({headless:true});
     assert(secondTurn.leaf==='none'&&secondTurn.leafClip.startsWith('inset('),
       'second turn must reveal the existing green 5:8 folio in place, with no lateral fragment');
     assert(!secondTurn.duplicateVisible,'a duplicated rotating green book cannot overlay the original leaf');
+    await pose(8.06); // complete engraving, before the ONE reading arrives
+    const illustrationState=await page.evaluate(()=>document.getElementById('emmaus')?.dataset.coverState);
+    assert.equal(illustrationState,'illustration',
+      'the entire Doré illustration must HOLD before ONE reading comes forward');
+    await page.screenshot({path:out+'/dore-illustration-hold-'+width+'.png'});
     const reading=await pose(9.30);
     assert.equal(reading.scene,'03','terminal release page must remain 03 Emmaus');
     assert(reading.oneVisible,'real ONE Bible reader remains visible at release end');
