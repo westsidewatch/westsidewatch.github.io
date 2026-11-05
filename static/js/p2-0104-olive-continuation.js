@@ -1,9 +1,11 @@
 /* P2 / 04 Olive Mountain — isolated continuation of the LIVE 01–03.
  * Source of truth: docs/MASTER_SITE_ARCHITECTURE.md §§11–12;
- * 03→04 later approval: same original folio rectangle, right→left MERSI
- * single-progress clip, no gallery movement/reflow/zoom/second sevenfold.
- * Olive's upper/lower 65:35 edition and 12 speaker names come from the
- * existing Draft #1381; image URLs are the published /images/olive plates.
+ * 03→04 preserves the original book-frame geometry, but unlike the rejected
+ * generic full-page right-to-left wipe it follows the TWO design contracts:
+ * FIRST-LOOK-MOTION-CONTRACT: immersive horizontal 12-speaker corridor.
+ * MASTER_SITE_ARCHITECTURE §12: upper/lower editorial portrait+viewer split.
+ * One scroll value drives the upper manuscript curtain and the lower
+ * horizontal gallery; source 01–03 never moves or changes size.
  */
 (()=>{'use strict';
  const $=s=>document.querySelector(s),stage=$('#p2-olive-stage'),track=$('#p2-olive-track');
@@ -21,7 +23,7 @@
   ['yu-hong-jie','于宏潔','YU HONGJIE'],['kou-shao-en','寇紹恩','KOU SHAO-EN']
  ];
  const names=$('#olive-speaker-names'),mainImg=$('#olive-main-image'),nextImg=$('#olive-next-image');
- const main=$('#olive-main');
+ const main=$('#olive-main'),upper=$('.olive-proof__top'),lower=$('.olive-proof__bottom');
  function chooseSpeaker(i){
   const [slug,zh,en]=roster[i],next=roster[(i+1)%roster.length];
   mainImg.src='/images/olive/'+slug+'-editorial.png';
@@ -38,8 +40,13 @@
  roster.forEach(([slug,zh,en],i)=>{
   const b=document.createElement('button');b.type='button';b.dataset.speaker=slug;
   b.setAttribute('aria-label','選擇講員 '+zh);
+  const img=document.createElement('img');
+  img.src='/images/olive/'+slug+'-editorial.png';img.alt='';
+  img.loading=i<6?'eager':'lazy';img.decoding='async';
+  const label=document.createElement('span');label.textContent=en;
   const sm=document.createElement('small');sm.textContent=zh;
-  b.textContent=en;b.append(sm);b.addEventListener('click',()=>chooseSpeaker(i));names.append(b);
+  b.append(img,label,sm);
+  b.addEventListener('click',()=>chooseSpeaker(i));names.append(b);
  });
  chooseSpeaker(0);
  let lastFolio=null,queued=false,frameReady=false;
@@ -73,7 +80,12 @@
  function paint(){
   queued=false;
   const h=Math.max(1,innerHeight),d=clamp(-track.getBoundingClientRect().top/h,0,11.34);
-  const progress=smooth((d-9.44)/1.38);
+  const progress=clamp((d-9.44)/1.38);
+  // Unlike a generic page wipe: the upper portrait/editorial *opens down*
+  // into the existing folio; then the lower 12-speaker corridor advances
+  // sideways beneath it. Both curves come from one reversible scroll clock.
+  const upperOpen=smooth(progress/.68);
+  const corridorOpen=smooth((progress-.35)/.65);
   const childD=Math.min(d,9.34);
   if(base.contentWindow)base.contentWindow.postMessage({
    type:'westside-p2-home-pose',distance:childD,
@@ -92,20 +104,37 @@
   }
   olive.style.visibility=progress>.0001?'visible':'hidden';
   olive.style.opacity='1';
-  olive.style.clipPath=progress>.9999?'none':
-   'inset(0 0 0 '+((1-progress)*100).toFixed(3)+'%)';
+  // Absolutely no single clip on the complete 04 page: the distinctive
+  // upper/lower composition IS the entry animation.
+  olive.style.clipPath='none';
+  upper.style.clipPath=upperOpen>.99999?'none':
+   'inset(0 0 '+((1-upperOpen)*100).toFixed(3)+'% 0)';
+  lower.style.clipPath=corridorOpen>.99999?'none':
+   'inset(0 0 0 '+((1-corridorOpen)*100).toFixed(3)+'%)';
   olive.dataset.reveal=progress.toFixed(5);
+  olive.dataset.upperOpen=upperOpen.toFixed(5);
+  olive.dataset.corridorOpen=corridorOpen.toFixed(5);
   olive.style.pointerEvents=progress>.999?'auto':'none';
   olive.inert=progress<.999;
   olive.setAttribute('aria-hidden',progress>.999?'false':'true');
+  // On entering, the lower folio acts as an actual horizontal speaker
+  // corridor. Once settled, leave native horizontal swipe / keyboard
+  // and click navigation alone (do not reset scrollLeft each paint).
+  if(corridorOpen<.99999){
+   const distance=Math.min(names.scrollWidth-names.clientWidth,names.clientWidth*.44);
+   names.scrollLeft=Math.max(0,distance*corridorOpen);
+  }
   surround.style.opacity=progress.toFixed(5);
   stage.dataset.p2Distance=d.toFixed(4);
   stage.dataset.p2OliveIn=progress.toFixed(5);
+  stage.dataset.p2OliveUpper=upperOpen.toFixed(5);
+  stage.dataset.p2OliveCorridor=corridorOpen.toFixed(5);
   stage.dataset.p2FolioReady=frame?'true':'false';
-  stage.dataset.p2Composition='olives-upper-lower';
+  stage.dataset.p2Composition='portrait-down-corridor-horizontal';
   output.textContent=d.toFixed(2);
   slider.value=String(d);
-  folio.textContent=d<9.44?'03 / 07 · EMMAUS':progress>.999?'04 / 07 · OLIVE MOUNTAIN':'03 → 04 · REVEAL';
+  folio.textContent=d<9.44?'03 / 07 · EMMAUS':progress>.999?
+   '04 / 07 · OLIVE MOUNTAIN':'03 → 04 · SPEAKER CORRIDOR';
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
  function go(d){
