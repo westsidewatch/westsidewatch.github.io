@@ -582,7 +582,7 @@
    coverEnglish.style.opacity=String(coverFeature);
    coverHeading.style.opacity=String(stableLargeA?coverFeature:
     (reduce?dawnRise:ease((progress-.69)/.095)));
-   coverVol.style.opacity=String(coverFeature);
+   coverVol.style.opacity=String(stableLargeA?coverFeature:coverMast);
    stage.dataset.coverWallRise=coverWall.toFixed(4);
    stage.dataset.coverMastReveal=coverMast.toFixed(4);
    stage.dataset.coverVerseReveal=coverVerse.toFixed(4);
