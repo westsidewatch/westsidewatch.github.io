@@ -189,8 +189,10 @@ const browserPromise=chromium.launch({headless:true});
     });
     assert(backstage.emmausBackdrop>.999,
       '73%: old film must be covered by the native Emmaus background, not show as a collage');
-    assert.equal(backstage.exteriorOpacity,0,'73%: default must not put cloth wallpaper around the spread');
-    assert.equal(backstage.exteriorMode,'engraving','73%: the green book-cover cloth must not become outer wallpaper');
+    assert(backstage.exteriorOpacity>.999,
+      '73%: the ONE green book-cover backing must take over from the video outside the original book spread');
+    assert.equal(backstage.exteriorMode,'cloth',
+      '73%: use the canonical green cover cloth, not the retired pale engraving');
     const turns=await page.evaluate(()=>{
       const origin=document.querySelector('#proof-original')?.contentDocument;
       const source=origin?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument;
