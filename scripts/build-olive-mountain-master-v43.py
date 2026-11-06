@@ -14,7 +14,7 @@ import tempfile
 import urllib.request
 import xml.etree.ElementTree as ET
 
-from PIL import Image, ImageOps, ImageEnhance, ImageFilter
+from PIL import Image, ImageOps, ImageEnhance, ImageFilter, ImageChops
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"static/images/p2-realms/v15"
@@ -27,8 +27,8 @@ LICENSE=("Woodward, John Douglas (1846–1924), original art; Cousen, Charles "
 "Jerusalem from the Mount of Olives (NYPL b10607452-80257).jpg. "
 "Original public-domain artwork; mechanically scanned public-domain reproduction.")
 PLATES={
- "desktop":dict(crop=(102,378,3820,2470),width=1500,thresholds=(116,165),fade=(.37,.66)),
- "mobile":dict(crop=(610,444,3290,2520),width=920,thresholds=(113,161),fade=(.42,.70)),
+ "desktop":dict(crop=(102,378,3820,2470),width=1500,thresholds=(105,209),fade=(.78,.28)),
+ "mobile":dict(crop=(610,444,3290,2520),width=920,thresholds=(104,205),fade=(.85,.25)),
 }
 
 def get_source() -> Image.Image:
@@ -66,7 +66,15 @@ def master(img:Image.Image,kind:str,config:dict):
     c=c.filter(ImageFilter.UnsharpMask(radius=.75,percent=110,threshold=2))
     with tempfile.TemporaryDirectory(prefix="olive-plate-") as d:
         tmp=Path(d)
-        fine=run_potrace(c,config["thresholds"][1],tmp,1)
+        # Recover the ORIGINAL printer's burin strokes via local light-dark
+        # contrast in the scan. This is an image-derived engraving edge, not
+        # invented leaves, random hatching, or a procedural tree skeleton.
+        high=c.filter(ImageFilter.MaxFilter(3))
+        low=c.filter(ImageFilter.MinFilter(3))
+        burin=ImageOps.invert(ImageChops.difference(high,low))
+        fine=run_potrace(burin,config["thresholds"][1],tmp,1)
+        # Keep historical broad ink shadows, but register them as the quiet
+        # second impression, not a slab of nearly solid gold.
         deep=run_potrace(c,config["thresholds"][0],tmp,2)
     # Use two real engraving-threshold traces; this is NOT two copies of a
     # generated tree. Gentle layer contrast remains OS-driven via a CSS mask.
@@ -81,7 +89,7 @@ def master(img:Image.Image,kind:str,config:dict):
          f'height="{h}" viewBox="0 0 {target_w} {h}" role="img" aria-labelledby="title desc">\n'
          f'<title id="title">{title}</title>\n<desc id="desc">{desc}</desc>\n'
          f'<metadata>{LICENSE} Sha1: {SOURCE_SHA1}. Digitally traced to SVG via '
-         f'Pillow monochrome thresholds and Potrace. Source URL: {URL}</metadata>\n'
+         f'Pillow image-derived burin contours and restrained shadow tone via Potrace. Source URL: {URL}</metadata>\n'
          '<g id="historical-steel-engraving" fill="#ffffff" fill-rule="evenodd" stroke="none">\n'
          f'<g id="burin-fine" opacity="{config["fade"][0]}">{fine}</g>\n'
          f'<g id="burin-deep" opacity="{config["fade"][1]}">{deep}</g>\n'
