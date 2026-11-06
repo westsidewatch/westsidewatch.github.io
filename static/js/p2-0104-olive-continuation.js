@@ -342,12 +342,23 @@
   if(bg>=.99999)neutral.style.visibility='hidden';
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
   const vertical=g.w<600;
-  // Reuse Westside's existing SVG stroke-growth grammar, but bind the
-  // actual path front to the TWELVE-SPEAKER scroll clock. Back-scroll
-  // retracts the original drawn lines; reduced motion shows the final
-  // engraving without playback. No image-opacity fade or repeating tile.
-  const growth=reduceGrowth.matches?(fan>0?1:0):fan;
-  if(growthSvg)growthSvg.style.visibility=d>=T.indexStart?'visible':'hidden';
+  // TWO witnesses are mounted before the background hand-off. Every
+  // further PAIR of real speaker transitions grows TWO distinct historic
+  // botanical groups, one per speaker, in the SAME continuous MERSI
+  // scroll timeline. No waiting until the final twelve-poster overview.
+  let speakerGrowth=0;
+  if(d>=T.groundEnd){
+   speakerGrowth=2/12; // Watchman Nee + Derek Prince already entered
+   if(d>=T.pairStart){
+    const pairIndex=Math.min(4,Math.floor((d-T.pairStart)/T.pairStep));
+    const pairClock=T.pairStart+pairIndex*T.pairStep;
+    const pairReveal=ease((d-pairClock)/T.pairDuration);
+    speakerGrowth=(2+2*(pairIndex+pairReveal))/12;
+   }
+   if(d>=T.indexStart)speakerGrowth=1;
+  }
+  const growth=reduceGrowth.matches?(d>=T.groundEnd?1:0):speakerGrowth;
+  if(growthSvg)growthSvg.style.visibility=d>=T.groundEnd?'visible':'hidden';
   for(const line of growthLines){
    const local=ease((growth-line.start)/(line.end-line.start));
    const offset=(1000*(1-local)).toFixed(3);
@@ -355,6 +366,8 @@
     line.el.style.strokeDashoffset=offset;
   }
   stage.dataset.p2OliveGrowth=growth.toFixed(5);
+  stage.dataset.p2OliveGrowthVoices=String(Math.floor(growth*12+.0001));
+  stage.dataset.p2OliveGrowthPair=String(Math.min(5,Math.floor(growth*6)));
   if(growthSvg)stage.dataset.p2OliveGrowthPaths=String(growthLines.length);
   const rects=galleryRects(g);
   // Desktop uses true folio halves; on narrow phones two original posters
