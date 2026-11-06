@@ -1,4 +1,4 @@
-# P2 04 — Olive Mountain: reference-led engraved invitation, V12 (Draft)
+# P2 04 — Olive Mountain: reference-led engraved invitation, V13 (Draft)
 
 Status: **art-direction experiment only**. The accepted 3:4 speaker-poster imagery,
 English lettering, twelve-speaker order, and 03 MERSI scroll geometry are protected.
@@ -67,3 +67,12 @@ An artwork's number of paths and a green CI badge are not art-direction approval
 - **Reject** this version if screenshots still show an empty card-edge
   stripe, poor botanical recognition, illegible foil, or any full black
   stage. Code acceptance is necessary but not sufficient.
+
+
+## V13 current candidate: historic vector, registered correctly
+
+**Source of actual SVG botanical paths:** [johnny_automatic, *olive branch*, Openclipart #7331](https://openclipart.org/detail/7331/olive-branch), adapted from Walter Crane's *Line and Form* (reprinted in 1914; originally published 1900). The specific SVG is also available under the [FreeSVG public-domain record](https://freesvg.org/johnny-automatic-olive-branch-1). Full native paths are retained in `static/images/p2-realms/v15/04-olive-historic-engraving-v13.svg`. The lightly outlined city/terrain marks are a secondary working study after Woodward/Cousen (1881), not an exact facsimile of the 1881 engraving.
+
+V12's branch is archived but **rejected** because its full-height diagonal art was obscured by the protected portraits and exposed broken foliage in the middle of the two speakers. V13 uses a 600×90 horizontal master, a 70px card-local headpiece, separate layers for the original 3:4 poster and one global chapter heading, and exact OS `--ws-olive`, `--ws-morning-gold`, and `--ws-paper`. The shared field is OS olive, never the old black `--ws-ink` field, in accordance with the site's **No black-and-gold variant** rule.
+
+**Unresolved art concern:** The botanical is now historical and recognizable, but the simplified city skyline and hillside fine lines remain a design judgment. It must be refined against actual archival engravings before this section is marked award-calibre or merged; a passing Chromium geometry suite is not an artistic verdict.
