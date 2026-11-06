@@ -12,14 +12,14 @@ const transition=fs.readFileSync('static/css/p2-0104-olive-continuation.css','ut
 const html=fs.readFileSync('static/experiments/p2-0103-release.html','utf8');
 const link='p2-emmaus-binding-cloth-v1.svg';
 assert.match(asset,/<svg[^>]*viewBox="0 0 640 1024"/);
-assert.equal((asset.match(/<pattern\\b/g)||[]).length,4);
-assert(!/<image\\b|<linearGradient\\b|<filter\\b|xlink:href/.test(asset));
-assert((book.match(/p2-emmaus-binding-cloth-v1\\.svg/g)||[]).length>=5);
-assert((release.match(/p2-emmaus-binding-cloth-v1\\.svg/g)||[]).length>=2);
+assert.equal((asset.match(/<pattern\b/g)||[]).length,4);
+assert(!/<image\b|<linearGradient\b|<filter\b|xlink:href/.test(asset));
+assert((book.match(/p2-emmaus-binding-cloth-v1\.svg/g)||[]).length>=5);
+assert((release.match(/p2-emmaus-binding-cloth-v1\.svg/g)||[]).length>=2);
 assert(transition.includes(link),'MERSI 03→04 bridge must preserve ONE cloth');
 assert(html.includes('20261106-vector-cloth-v1'),'actual release must load new CSS');
 assert(html.includes('20261106-vector-cloth-turn-v1'),'actual release must load new turn');
-assert(!/cover-texture-antique-green\\.png\\?v=93ae0c7e0609/.test(book+release+transition));
+assert(!/cover-texture-antique-green\.png\?v=93ae0c7e0609/.test(book+release+transition));
 (async()=>{
  const browser=await chromium.launch({headless:true});
  try{
