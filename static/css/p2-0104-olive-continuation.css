@@ -166,6 +166,14 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  opacity:.67;pointer-events:none;
  /* Fine foil stays optically clean: no brown drop-shadow or neon bloom. */
 }
+.olive-growth-field .olive-growth-burin{
+ fill:none!important;
+ stroke:var(--ws-morning-gold)!important;
+ stroke-opacity:0;
+ vector-effect:non-scaling-stroke;
+ mix-blend-mode:screen;
+ pointer-events:none;
+}
 .olive-growth-field .olive-growth-tip{
  fill:none;stroke:var(--ws-warm-gold);stroke-width:2.1;
  stroke-opacity:1;stroke-linecap:round;stroke-linejoin:round;
@@ -325,6 +333,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
   text-align:center}
 }
 @media(prefers-reduced-motion:reduce){
+ .olive-growth-field .olive-growth-burin{display:none!important}
  .olive-stage__invitation,.olive-stage__first,.olive-stage__pair,
  .olive-stage__poster,.olive-stage__overview,
  .olive-stage__index-card{transition:none!important;animation:none!important}
