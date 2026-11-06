@@ -30,7 +30,7 @@
  const overview=$('#olive-overview'),enter=$('#olive-enter');
  const growthSvg=$('#olive-growth-field'),growthRoot=$('#olive-growth-paths');
  const growthMaskLeft=$('#olive-growth-mask-left'),growthMaskRight=$('#olive-growth-mask-right');
- const growthLines=[],growthTips=[],reduceGrowth=matchMedia('(prefers-reduced-motion: reduce)');
+ const growthLines=[],growthTips=[],growthCurves=[],reduceGrowth=matchMedia('(prefers-reduced-motion: reduce)');
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
  const status=$('#p2-olive-folio-status');
@@ -163,6 +163,53 @@
  // remain a true 3:4 print. We calculate the actual outer boxes from that
  // immutable aspect instead of letting an arbitrary responsive cell resize
  // its image and expose synthetic gray strips.
+ // The SVG-002 tool animates the actual curve geometry behind a growing tip.
+ // Apply that grammar to the eight historical OLIVE spines. All leaf engraving
+ // keeps its authorized two-tone stroke-dash growth and twelve-voice timing.
+ // Geometry is sampled ONCE from the intact SVG source, never invented afresh.
+ function curvePoint(points,u){
+  const n=points.length-1,at=clamp(u)*n,j=Math.min(n-1,Math.floor(at));
+  const f=at-j,a=points[j],b=points[j+1];
+  return {x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f};
+ }
+ function drawGrowingCurve(curve,local){
+  const path=curve.el,tip=curve.tip,points=curve.points;
+  if(local<=.00001){
+   const p=points[0];
+   path.setAttribute('d','M'+p.x.toFixed(2)+' '+p.y.toFixed(2));
+   tip.style.visibility='hidden';
+   return;
+  }
+  if(local>=.99999){
+   if(path.getAttribute('d')!==curve.originalD)
+    path.setAttribute('d',curve.originalD);
+   tip.style.visibility='hidden';
+   return;
+  }
+  // Source-led adaptive tip: only the measured historical contour grows.
+  // The restrained SVG-002 sine bends follow scroll progress, NOT wall time.
+  // Returning to the same scroll position reproduces exactly the same curve.
+  const count=Math.max(2,Math.ceil(local*(points.length-1)));
+  const xy=[];
+  for(let j=0;j<=count;j++){
+   const u=local*j/count,p=curvePoint(points,u);
+   const envelope=(1-local)*Math.sin(Math.PI*u/Math.max(.02,local));
+   const wav=Math.sin(u*12.5+local*5.8+curve.seed*1.37);
+   const dx=wav*3.0*envelope,dy=Math.cos(u*8.6+local*3+curve.seed)*.9*envelope;
+   xy.push({x:p.x+dx,y:p.y+dy});
+  }
+  const d=xy.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ');
+  if(path.getAttribute('d')!==d)path.setAttribute('d',d);
+  if(reduceGrowth.matches||local<.025){
+   tip.style.visibility='hidden';return;
+  }
+  // The visible gold nib is the LAST section of that same live curve,
+  // not a dash moving over a stationary, already-completed line.
+  const start=Math.max(0,xy.length-5);
+  const nib=xy.slice(start).map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ');
+  tip.setAttribute('d',nib);
+  tip.style.visibility='visible';
+ }
  function galleryRects(g){
   const portraitRatio=3/4;
   const mobile=g.w<600;
@@ -261,7 +308,7 @@
   const cols=g.w>=900?6:g.w>=600?4:3;
   const rows=Math.ceil(12/cols);
   const horizontal=g.w>=900?33:12;
-  const top=g.w>=900?Math.max(122,Math.min(150,g.h*.145)):95;
+  const top=g.w>=900?Math.max(122,Math.min(150,g.h*.145)):Math.max(108,Math.min(132,g.h*.15));
   const bottom=g.w>=900?72:64;
   const gapX=g.w>=900?13:7;
   // A caption is now OUTSIDE its original 3:4 print, on dark-green
@@ -376,19 +423,12 @@
    const offset=(1000*(1-local)).toFixed(3);
    if(line.el.style.strokeDashoffset!==offset)
     line.el.style.strokeDashoffset=offset;
+   // SVG-002's moving growth frontier redraws real CURVE GEOMETRY.
+   // The botanical leaf hatching remains the approved static source art,
+   // with its dash offset advanced along the same scroll timeline.
+   if(line.curve)drawGrowingCurve(line.curve,local);
   }
-  // SVG-002 pen-front: the warm gold nib writes along each eight
-  // primary copperplate spines. Reverse scroll retracts the same nib;
-  // reduced-motion readers see the completed static engraving only.
-  for(const tip of growthTips){
-   const local=ease((growth-tip.start)/(tip.end-tip.start));
-   const shown=!reduceGrowth.matches&&local>.008&&local<.992;
-   tip.el.style.visibility=shown?'visible':'hidden';
-   if(shown){
-    const offset=(-1000*local).toFixed(3);
-    if(tip.el.style.strokeDashoffset!==offset)tip.el.style.strokeDashoffset=offset;
-   }
-  }
+  stage.dataset.p2OliveLiveCurves=String(growthCurves.length);
   stage.dataset.p2OliveGrowth=growth.toFixed(5);
   stage.dataset.p2OliveGrowthVoices=String(Math.floor(growth*12+.0001));
   stage.dataset.p2OliveGrowthPair=String(Math.min(5,Math.floor(growth*6)));
@@ -485,8 +525,12 @@
   rubric.style.visibility=printTitle>0?'visible':'hidden';
   // The chapter masthead takes up its own editorial line ABOVE the full
   // twelve-speaker composition; no movement over incoming 3:4 portraits.
-  rubric.style.transform=vertical?'none':
-   'translate3d(0,'+(64*fan).toFixed(1)+'px,0)';
+  // Pair phase stays within its protected headpiece; the index acquires
+  // the larger, optically lowered editorial masthead AFTER recomposition.
+  // Never carry a new title down across the mounted speaker originals.
+  rubric.style.setProperty('--olive-title-fan',fan.toFixed(4));
+  rubric.style.transform='translate3d(0,'+
+    ((vertical?22:78)*fan).toFixed(1)+'px,0)';
   rubric.style.clipPath=printTitle>=1?'none':
    'inset(0 '+((1-printTitle)*49).toFixed(3)+'% 0 '+((1-printTitle)*49).toFixed(3)+'%)';
   overview.style.visibility=d>=T.indexStart?'visible':'hidden';
@@ -595,7 +639,7 @@
     if(!interval)continue;
     const tip=original.cloneNode(true);
     tip.setAttribute('class','olive-growth-tip');
-    tip.style.strokeDasharray='12 988';
+    tip.style.strokeDasharray='none';
     tip.style.strokeDashoffset='0';
     tip.style.visibility='hidden';
     original.parentNode.appendChild(tip);
@@ -610,10 +654,34 @@
     const end=Number(parent.getAttribute('data-growth-end'));
     if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start)
       throw new Error('Invalid staged olive engraving interval');
-    el.style.strokeDasharray='1000';
+    const line={el,start,end};
+    const isHistoricSpine=!!el.closest('.olive-growth-spines');
+    if(isHistoricSpine){
+     const length=el.getTotalLength();
+     if(!Number.isFinite(length)||length<=0)throw new Error('Invalid olive spine length');
+     const points=[];
+     const slices=96;
+     for(let i=0;i<=slices;i++){
+      const p=el.getPointAtLength(length*i/slices);
+      points.push({x:p.x,y:p.y});
+     }
+     const nib=growthTips[growthCurves.length]?.el;
+     if(!nib)throw new Error('Historic spine has no source-led pen front');
+     const curve={el,tip:nib,points,originalD:el.getAttribute('d'),
+      seed:growthCurves.length};
+     growthCurves.push(curve);
+     line.curve=curve;
+     // Original tip-led geometry itself determines which portion exists.
+     // Keep offset state for reversible monitoring but disable dash masking.
+     el.style.strokeDasharray='none';
+    }else{
+     el.style.strokeDasharray='1000';
+    }
     el.style.strokeDashoffset='1000';
-    growthLines.push({el,start,end});
+    growthLines.push(line);
    }
+   if(growthCurves.length!==8)throw new Error('Eight original olive paths must use SVG-002 curve-growth');
+   stage.dataset.p2OliveLiveCurves=String(growthCurves.length);
    if(growthLines.length<80)throw new Error('Not enough botanical source paths');
    stage.dataset.p2OliveGrowthReady='true';
    schedule();
