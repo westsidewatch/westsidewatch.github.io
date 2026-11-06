@@ -123,6 +123,18 @@ assert.match(css,/\.olive-card__relief\{[^}]*top:var\(--olive-foil-top,16px\);le
  'engraving must be positioned by actual mounted-card headpiece geometry');
 assert.match(js,/function positionInvitedEngraving\(/,
  'both original-source and paired cards must use source-aware engraving registration');
+const growthSVG=read('static/images/p2-realms/v15/04-olive-growth-field-v1.svg');
+assert.match(growthSVG,/Walter Crane|public-domain botanical olive branch/,
+ 'new growing realm uses historical public-domain botanical mother paths');
+assert((growthSVG.match(/class="olive-growth-path"/g)||[]).length>=95,
+ 'olive grove needs at least 95 individually drawable native SVG strokes');
+assert(!growthSVG.includes('<image'), 'field stays 100% editable vector artwork');
+assert.match(html,/id="olive-growth-field"/,'real native SVG field lives UNDER the original twelve works');
+assert.match(js,/strokeDashoffset=offset/,'the SVG growth mechanism must DRAW each path, not fade wallpaper');
+assert.match(js,/const growth=reduceGrowth\.matches\?\(fan>0\?1:0\):fan/,
+ 'growth uses twelve-voices scroll clock and reduced-motion fallback');
+assert.match(css,/\.olive-growth-field .olive-growth-path\{[^}]*stroke:var\(--ws-morning-gold\)/,
+ 'growing engraving uses OS gold token without color mixing');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
 (async()=>{
  const browser=await chromium.launch({headless:true});
@@ -153,6 +165,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
         }) &&
         !!main.shadowRoot.querySelector('link[href*="speaker-baseline-v1/baseline.css"]')?.sheet;
    },null,{timeout:18000});
+   await page.waitForFunction(()=>
+    document.getElementById('p2-olive-stage')?.dataset.p2OliveGrowthReady==='true',
+    null,{timeout:14000});
    const state=()=>page.evaluate(()=>{
     const st=document.getElementById('p2-olive-stage');
     const shell=document.getElementById('olive-proof');
@@ -181,6 +196,11 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       ground:+st.dataset.p2Ground,index:+st.dataset.p2Index,
       pairIndex:st.dataset.p2PairIndex||'0',pairBlend:st.dataset.p2PairBlend||'0',
       pairOrientation:st.dataset.p2PairOrientation,
+      growth:{ready:st.dataset.p2OliveGrowthReady,
+       value:+st.dataset.p2OliveGrowth,paths:+st.dataset.p2OliveGrowthPaths,
+       visibility:getComputedStyle(document.querySelector('#olive-growth-field')).visibility,
+       offsets:[...document.querySelectorAll('#olive-growth-paths path')].map(el=>
+         +el.style.strokeDashoffset)},
       main:box(shell),masthead:box(document.getElementById('olive-rubric')),
       source:{...box(source.querySelector('#emmaus .emmaus__right')),folio:box(source.querySelector('#emmaus'))},
       firstFrame:get(image),
@@ -486,8 +506,19 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(indexHalf.cards.length,12,'must be original TWELVE works, not gallery thumb proxies');
    assert(indexHalf.cards[0].w<indexHalf.main.w*(width>800?.5:.82),
     'twelve cards must interpolate from their approved desktop HALF or mobile FULL-WIDTH stacked source to grid destinations');
+   assert.equal(indexHalf.growth.ready,'true');
+   assert(indexHalf.growth.paths>=95,'native engraved grove must have adequate source paths');
+   assert(indexHalf.growth.value>.1&&indexHalf.growth.value<1);
+   assert(indexHalf.growth.offsets.some(v=>v>0&&v<1000),
+     'speaker arrival must show partially GROWING original SVG stroke fronts');
+   assert.equal(indexHalf.growth.visibility,'visible');
    const indexFull=await go(17.55,'09-twelve-voices-final-overview');
    assert.equal(indexFull.scene,'04-twelve-index');
+   assert.equal(indexFull.growth.paths,indexHalf.growth.paths);
+   assert(indexFull.growth.value>.99);
+   assert(indexFull.growth.offsets.every(v=>v===0),
+     'completed twelve-speaker field should have all original botanical strokes fully drawn');
+   assert.equal(indexFull.growth.visibility,'visible');
    assert.equal(indexFull.cards.length,12);
     assert.equal(indexFull.pairDisplay,'none',
       'no large source-pair artwork underneath the 12 prints');
@@ -531,6 +562,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     assert(c.w>25&&c.h>25,'twelve original posters still visible, no zero-size index cards');
    }
    const backMid=await go(11.44,'10-reverse-return-to-ground-mid');
+   assert.equal(backMid.growth.visibility,'hidden');
+   assert(backMid.growth.offsets.every(v=>v===1000),
+     'reverse-scroll must undo each botanical stroke precisely');
    assert(Math.abs(backMid.ground-material.ground)<.005,
     'reversing returns exact exterior mask position, no delayed animation');
    const backBeginning=await go(9.76,'11-reverse-restore-dore-frame');
