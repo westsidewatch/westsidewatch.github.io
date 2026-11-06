@@ -126,13 +126,15 @@ assert.match(js,/function positionInvitedEngraving\(/,
 const growthSVG=read('static/images/p2-realms/v15/04-olive-growth-field-v1.svg');
 assert.match(growthSVG,/Walter Crane|public-domain botanical olive branch/,
  'new growing realm uses historical public-domain botanical mother paths');
-assert((growthSVG.match(/class="olive-growth-path"/g)||[]).length>=95,
- 'olive grove needs at least 95 individually drawable native SVG strokes');
+assert((growthSVG.match(/class="olive-growth-path"/g)||[]).length>=240,
+ 'each of twelve original botanical motifs should have editable drawn paths');
+assert.equal((growthSVG.match(/data-speaker-growth="/g)||[]).length,12,
+ 'there must be twelve distinct botanical branches, one for EACH preacher');
 assert(!growthSVG.includes('<image'), 'field stays 100% editable vector artwork');
 assert.match(html,/id="olive-growth-field"/,'real native SVG field lives UNDER the original twelve works');
 assert.match(js,/strokeDashoffset=offset/,'the SVG growth mechanism must DRAW each path, not fade wallpaper');
-assert.match(js,/const growth=reduceGrowth\.matches\?\(fan>0\?1:0\):fan/,
- 'growth uses twelve-voices scroll clock and reduced-motion fallback');
+assert.match(js,/const growth=reduceGrowth\.matches\?\(d>=T\.groundEnd\?1:0\):speakerGrowth/,
+ 'growth is driven by EACH preacher transition, not final twelve-index fade');
 assert.match(css,/\.olive-growth-field .olive-growth-path\{[^}]*stroke:var\(--ws-morning-gold\)/,
  'growing engraving uses OS gold token without color mixing');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
@@ -198,6 +200,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       pairOrientation:st.dataset.p2PairOrientation,
       growth:{ready:st.dataset.p2OliveGrowthReady,
        value:+st.dataset.p2OliveGrowth,paths:+st.dataset.p2OliveGrowthPaths,
+       voices:+st.dataset.p2OliveGrowthVoices,pair:+st.dataset.p2OliveGrowthPair,
        visibility:getComputedStyle(document.querySelector('#olive-growth-field')).visibility,
        offsets:[...document.querySelectorAll('#olive-growth-paths path')].map(el=>
          +el.style.strokeDashoffset)},
@@ -467,7 +470,23 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
        '03 Bible cloth must retire when 04 field is complete');
     assert(!backgroundReady.groundCSS.texture.includes('/one/'),
        '04 realm must not load 03 book-cover texture');
+    const firstGarden=await go(11.91,'05b-two-voices-with-growing-olive-field');
+   assert.equal(firstGarden.scene,'04-editorial-hold');
+   assert.equal(firstGarden.growth.visibility,'visible',
+     'the EXACT USER screenshot 11.91 must show the living olive field behind the first speakers');
+   assert.equal(firstGarden.growth.voices,2,
+     'the first TWO preachers must already produce TWO evergreen branches');
+   assert(firstGarden.growth.paths>=240);
+   assert(Math.abs(firstGarden.growth.value-2/12)<.001);
+   assert(firstGarden.growth.offsets.some(v=>v===0)&&
+     firstGarden.growth.offsets.some(v=>v>0&&v<1000),
+     'at 11.91 real organic paths must be fully inked and others still growing');
     const pairTransition=await go(12.25,'06-opposed-double-poster-change');
+   assert.equal(pairTransition.growth.visibility,'visible');
+   assert(pairTransition.growth.value>firstGarden.growth.value,
+     'third/fourth speakers must advance the olive field while MERSI posters reveal');
+   assert(pairTransition.growth.offsets.some(v=>v>0&&v<1000),
+     'the current pair must have PARTIALLY drawn SVG stems at mid-scroll');
    assert.equal(pairTransition.scene,'04-six-pair-gallery');
    assert(+pairTransition.pairBlend>.4&&+pairTransition.pairBlend<.7,'new pair is physically half revealed');
    assert(pairTransition.incomingLeft.clip.includes('inset(')&&
@@ -507,10 +526,11 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(indexHalf.cards[0].w<indexHalf.main.w*(width>800?.5:.82),
     'twelve cards must interpolate from their approved desktop HALF or mobile FULL-WIDTH stacked source to grid destinations');
    assert.equal(indexHalf.growth.ready,'true');
-   assert(indexHalf.growth.paths>=95,'native engraved grove must have adequate source paths');
-   assert(indexHalf.growth.value>.1&&indexHalf.growth.value<1);
-   assert(indexHalf.growth.offsets.some(v=>v>0&&v<1000),
-     'speaker arrival must show partially GROWING original SVG stroke fronts');
+   assert(indexHalf.growth.paths>=240,'one complete botanical source for every speaker');
+   assert(indexHalf.growth.value>.99,
+     'ALL growth must occur during speaker entrances, NOT only the final index');
+   assert(indexHalf.growth.offsets.every(v=>v===0),
+     'the twelve-gallery composition inherits already completed living engravings');
    assert.equal(indexHalf.growth.visibility,'visible');
    const indexFull=await go(17.55,'09-twelve-voices-final-overview');
    assert.equal(indexFull.scene,'04-twelve-index');
