@@ -30,7 +30,7 @@
  const overview=$('#olive-overview'),enter=$('#olive-enter');
  const growthSvg=$('#olive-growth-field'),growthRoot=$('#olive-growth-paths');
  const growthMaskLeft=$('#olive-growth-mask-left'),growthMaskRight=$('#olive-growth-mask-right');
- const growthLines=[],reduceGrowth=matchMedia('(prefers-reduced-motion: reduce)');
+ const growthLines=[],growthTips=[],reduceGrowth=matchMedia('(prefers-reduced-motion: reduce)');
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
  const status=$('#p2-olive-folio-status');
@@ -377,6 +377,18 @@
    if(line.el.style.strokeDashoffset!==offset)
     line.el.style.strokeDashoffset=offset;
   }
+  // SVG-002 pen-front: the warm gold nib writes along each eight
+  // primary copperplate spines. Reverse scroll retracts the same nib;
+  // reduced-motion readers see the completed static engraving only.
+  for(const tip of growthTips){
+   const local=ease((growth-tip.start)/(tip.end-tip.start));
+   const shown=!reduceGrowth.matches&&local>.008&&local<.992;
+   tip.el.style.visibility=shown?'visible':'hidden';
+   if(shown){
+    const offset=(-1000*local).toFixed(3);
+    if(tip.el.style.strokeDashoffset!==offset)tip.el.style.strokeDashoffset=offset;
+   }
+  }
   stage.dataset.p2OliveGrowth=growth.toFixed(5);
   stage.dataset.p2OliveGrowthVoices=String(Math.floor(growth*12+.0001));
   stage.dataset.p2OliveGrowthPair=String(Math.min(5,Math.floor(growth*6)));
@@ -533,6 +545,59 @@
    for(const child of [...doc.documentElement.children]){
     if(child.localName==='g')growthRoot.appendChild(document.importNode(child,true));
    }
+   // More abundance from EXISTING public-domain botanical plates, never
+   // formula-made twigs. Registration stays in stage-wide negative space:
+   // top, outer sides and lower folio, not atop protected speaker prints.
+   // SVG <use> references original live paths, so all added leaves follow
+   // the same dash-based drawing and retract on reverse scroll.
+   const ns='http://www.w3.org/2000/svg';
+   const historic=[...growthRoot.querySelectorAll('.olive-growth-branch')];
+   if(historic.length!==12)throw new Error('Olive mother plate must retain twelve botanical voices');
+   historic.forEach((branch,i)=>branch.id='olive-growth-master-'+(i+1));
+   const echoes=[
+    [1,'translate(24 -72) scale(.92)',.62],
+    [2,'translate(120 -73) scale(.92)',.63],
+    [3,'translate(205 -35) scale(.81)',.74],
+    [4,'translate(255 -30) scale(.81)',.74],
+    [3,'translate(405 -22) rotate(-9 370 180) scale(.62)',.50],
+    [4,'translate(550 -25) rotate(8 1210 180) scale(.62)',.52],
+    [5,'translate(88 212) scale(.78)',.75],
+    [6,'translate(320 213) scale(.78)',.77],
+    [7,'translate(46 -18) scale(.95)',.62],
+    [8,'translate(58 -15) scale(.95)',.63],
+    [9,'translate(156 342) scale(.63)',.68],
+    [10,'translate(410 341) scale(.65)',.69],
+    [11,'translate(-235 150) scale(.92)',.66],
+    [12,'translate(320 150) scale(.92)',.67]
+   ];
+   const volume=document.createElementNS(ns,'g');
+   volume.setAttribute('class','olive-growth-volume');
+   volume.setAttribute('aria-hidden','true');
+   for(const [source,transform,opacity] of echoes){
+    const use=document.createElementNS(ns,'use');
+    use.setAttribute('href','#olive-growth-master-'+source);
+    use.setAttribute('transform',transform);
+    use.setAttribute('opacity',String(opacity));
+    volume.appendChild(use);
+   }
+   growthRoot.insertBefore(volume,growthRoot.firstChild);
+   stage.dataset.p2OliveGrowthEchoes=String(echoes.length);
+   // Advance a real engraved writing-front; do not simulate growth using
+   // a new opacity timeline or duplicate the entire 840 KB SVG.
+   const spines=[...growthRoot.querySelectorAll('.olive-growth-spines path.olive-growth-path')];
+   for(const original of spines){
+    const interval=original.closest('[data-growth-start]');
+    if(!interval)continue;
+    const tip=original.cloneNode(true);
+    tip.setAttribute('class','olive-growth-tip');
+    tip.style.strokeDasharray='12 988';
+    tip.style.strokeDashoffset='0';
+    tip.style.visibility='hidden';
+    original.parentNode.appendChild(tip);
+    growthTips.push({el:tip,start:Number(interval.dataset.growthStart),
+      end:Number(interval.dataset.growthEnd)});
+   }
+   stage.dataset.p2OliveGrowthTips=String(growthTips.length);
    for(const el of growthRoot.querySelectorAll('path.olive-growth-path')){
     const parent=el.closest('[data-growth-start]');
     if(!parent)continue;
