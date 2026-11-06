@@ -69,3 +69,16 @@ GitHub issue: https://github.com/westsidewatch/westsidewatch.github.io/issues/13
 - **部署截圖、Chrome 動效、手機、反向捲動與美術是否足夠豐盛仍待 CI/瀏覽器證據；不宣稱藝術完成。**
 - Core Contract 在較早的草稿合併測試中報出 `static/images/westside-watch-morning-star.svg` 的凍結首頁檔案差異；本輪沒有修改該檔案，必須獨立辨認既存差異，不能以此掩蓋本輪錯誤。
 - 本輪一度漏掉真正執行時的 SVG fetch 位址，導致 CI 報錯、代碼看似修復但仍在載入 V1；已在 `ee098f7` 明確修正並記入此處，不能再讓未驗證的替換通過工程回報。
+
+
+## 2026-11-06 — V1／V2 實際畫面對照與否決決議
+
+經過同一滾動節點、同一尺寸的 Chromium 雙版本比較，確定 V2 雖通過工程測試但**藝術上退步**。舊 V1 雖重複同一植物，仍把金色底紋控制在雙海報兩側，讀序較安靜。新 V2 右上方巨大、失衡的葉片與左側稀疏且不連續的線條，沒有構成可信橄欖山。主要失誤是重用前輪已否決的 V11 機械樹與 V12 巨幅斜枝，再加入 V8 地形與獨立 18 條動線而沒有統一構圖。增加路徑數（284→380）及移動金線不能替代藝術品質。
+
+依 `docs/design/WESTSIDE-EDITORIAL-MANUAL.md` §6 十項方向性量表初評：V1 **13/20**，V2 **11/20**，皆低於 15/20；V2 的構圖區別度為零，按手冊直接否決。兩版均**不是獲准上線藝術稿**；V2 保留技術研究但不可作下一版藝術母本，不能合併 main。
+
+- 獨立評審：`docs/projects/olive-mountain-living-engraving/V1-V2-AWARD-ART-REVIEW-2026-11-06.md`
+- 真實相同場景比較：`/experiments/olive-engraving-v1-v2-compare.html`（1648×928、390×844，六個滾動節點）
+- 截圖核實：[GitHub Actions #42187808156](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42187808156) 與 [#42188237445](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42188237445)。
+
+**永久教訓：不能把已被否決的藝術元素換名稱後重新拼回作品，更不能用 CI 綠燈遮蓋失敗的視覺設計。**
