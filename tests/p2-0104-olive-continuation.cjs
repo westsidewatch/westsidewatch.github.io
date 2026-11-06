@@ -126,16 +126,24 @@ assert.match(js,/function positionInvitedEngraving\(/,
 // Rejected V1 remains archived: identical 23-path branch repeated 12 times.
 const archiveSVG=read('static/images/p2-realms/v15/04-olive-growth-field-v1.svg');
 assert.equal((archiveSVG.match(/data-speaker-growth="/g)||[]).length,12);
-const growthSVG=read('static/images/p2-realms/v15/04-olive-living-grove-v2.svg');
+const growthSVG=read('static/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg');
 assert.match(js,/04-olive-living-grove-v2\.svg/,
  'the P2 04 runtime must use the NEW historically grounded SVG mother');
-for(const className of ['olive-growth-terrain','olive-growth-wood','olive-growth-crane','olive-growth-cabinet']){
+for(const className of ['olive-growth-terrain','olive-growth-left','olive-growth-right','olive-growth-distant']){
  assert(growthSVG.includes(className), 'missing distinct SVG family '+className);
 }
-assert((growthSVG.match(/<path\b/g)||[]).length>=370,'V2 needs dense botanical and mountain intaglio');
+assert((growthSVG.match(/<path\b/g)||[]).length>=700,'V3 needs dense CONNECTED botanical and mountain intaglio');
 const veins=[...growthSVG.matchAll(/data-live-spine="true"[^>]*d="([^"]+)"/g)].map(x=>x[1]);
 assert.equal(veins.length,18,'eighteen different hand-authored growing spines');
 assert.equal(new Set(veins).size,18,'no cloned growth spine geometry');
+assert.match(growthSVG,/original unified engraving V3/,
+ 'V3 one-scene original copperplate must be visually identifiable');
+assert.doesNotMatch(growthSVG,/olive-growth-wood|olive-growth-crane|olive-growth-cabinet/,
+ 'none of V2 rejected collage-family geometry may be imported');
+assert.match(js,/xMinYMid slice/,
+ 'phone must use an optical, original-aspect crop instead of squashing tree anatomy');
+assert.match(js,/p2OliveArtVersion='v3'/,
+ 'runtime must mark it as V3, not a retitled V2');
 assert(!growthSVG.includes('<image'),'all growth plates remain editable vector SVG');
 assert.match(html,/id="olive-growth-field"/,'real native SVG field lives UNDER the original twelve works');
 assert(html.indexOf('id="olive-growth-field"')<html.indexOf('<section class="olive-proof"'),
@@ -147,7 +155,7 @@ assert.match(css,/\.olive-growth-field\{[^}]*z-index:3;[^}]*overflow:visible/,
 assert.match(html,/id="olive-growth-material-mask"/,
  'growth uses the SAME opposed MERSI physical 03→04 aperture');
 assert.match(js,/strokeDashoffset=offset/,'the SVG growth mechanism must DRAW each path, not fade wallpaper');
-assert.match(js,/sourceRegions\.length!==4/, 'four unique botanical/terrain families required');
+assert.match(js,/sourceRegions\.length!==4/, 'four spatial regions of ONE original perspective required');
 assert.match(js,/register\(original,region,i,voice\)/,
  'glints traverse REAL botanical source paths');
 assert.doesNotMatch(js,/historic\[source-1\]\.cloneNode\(true\)/,
@@ -608,10 +616,10 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
         count:+stage.dataset.p2OliveSourcePathCount,
         glints:+stage.dataset.p2OliveLivingBurins};
     });
-    assert.equal(sourceAudit.families,4,'all four originals mounted');
-    assert(sourceAudit.count>=370,'full multi-source copperplate mounted');
+    assert.equal(sourceAudit.families,4,'all four spatial engraving regions mounted');
+    assert(sourceAudit.count>=700,'full continuous single-view original copperplate mounted');
     assert(sourceAudit.glints>=30,'time-varying gold glints on real source curves');
-   assert(indexHalf.growth.paths>=370,'four diverse source families and eighteen growth veins');
+   assert(indexHalf.growth.paths>=700,'single plate with original connected tree growth veins');
    assert(indexHalf.growth.value>.99,
      'ALL growth must occur during speaker entrances, NOT only the final index');
    assert(indexHalf.growth.offsets.every(v=>v===0),
