@@ -159,6 +159,30 @@ These files remain archived intact; they do not operate as independent OS author
 - **保護原版並同步推進。** 五張原始 V1 母本是對照基線；加層、裁切、動效或線條生長不得在未驗收時替換已成立構圖。藝術母本與 P2 版面適配分層，五個版塊維持共同版本與比較節奏。
 - **用真實畫面裁決。** 來源可信、程式可運行、路徑數增加或 CI 綠燈，均不能取代 V1／新稿並排、真實遮罩、手機、動態、反向滾動和效能檢查。藝術效果未改善則否決，不宣稱完成。
 
+### 9.5 以馬忤斯 SVG 布面成功案例：先有成熟設計，再做最小材質替換（2026-11-06）
+
+> **有效次序：成熟的藝術構圖與保護邊界 → 選用既有配色和封面比例 → 用原生 SVG 完成「單一材質」 → 僅換資源引用 → 保留既有動效與排版 → 實際瀏覽器核對。** 這次「一次成功」特指經文封面**布面素材的 SVG 化**，不是聲稱以馬忤斯整個 P2 03 從構想到完成只做過一次。
+
+**為何有效：** 以馬忤斯封面原本就有成熟的 5:8 視覺構圖、批准的深綠布（`#1f2a18`、`#10170d`）、金色（`#cebd74`）、金色植物飾框、經文文字層級與兩段翻頁動效。真正待解的問題不是重設整幅畫，而是將既定布面質地轉成可控、可重用的 SVG。因此沒有理由重畫書本、經文、框線或翻頁。
+
+**GitHub 可稽核的實作：**
+1. `static/images/p2-emmaus-binding-cloth-v1.svg`：原生 `viewBox="0 0 640 1024"`（5:8），四層 SVG `<pattern>` 組成細織線、交織纖維、斜紋及低對比壓花菱格。直接沿用既有顏色；無嵌入點陣、外部字體、濾鏡、漸層或第二套 OS。
+2. 主站提交 [`ef292b5`](https://github.com/westsidewatch/westsidewatch.github.io/commit/ef292b5171df80a92855260b9444e45b2a3f3041) **只有三個檔案改動**：新增該 SVG；在 `static/css/p2-emmaus-bookbinding-v7.css` 替換原有 **5 個** PNG 素材網址；在 `static/js/p2-0103-release.js` 的翻頁布面替換 **2 個**網址。七處均為**同一材質的 URL 替換**；沒有改動畫邏輯、版式規則、HTML、經文或其他版塊。
+3. 保留原 `static/one/cover-texture-antique-green.png`、金色封面裝飾及 ONE 主站；只將 P2 03 對應布面改用 SVG。避免了無謂的二次設計與版本衝突。
+4. 在獨立 Draft 用 Chromium 驗證 1648×928 和 390×844、HTTP 200、四個 Pattern、封面正面與翻頁後實際承載布面的元素、兩次翻頁與反向滾動。主站兩條 Pages 發布工作流 [`42208367699`](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42208367699) 與 [`42208367725`](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42208367725) 通過。**技術測試成功不取代用戶的最終藝術驗收。**
+5. 測試一開始錯誤要求舊 PNG、又誤檢透明 3D 外層；修正為查真正可見的封面與翻頁布面，而非跳過測試或把失敗說成通過。這是不可省的觀察點核對。
+
+**對橄欖山的反面警示：** P2 04 當時沒有一幅能與十二張已批准的 3:4 講員海報相容的成熟整體構圖。V1 重複枝條、V2 拼接已淘汰素材、V3/V3.2 用公式加出上千 SVG 路徑，仍造成樹枝大面積被遮擋、場景不成整體、樹木及山勢缺乏版畫的成熟感。根本錯誤在於**未先選出藝術上成立的母本，就以程式生成、疊線、光效填補設計空缺**。不得誤解為「以馬忤斯靠幾個 SVG Pattern 成功，所以橄欖山也應再多寫幾百條路徑」。
+
+**後續 SVG 視覺工程的強制順序：**
+- **鎖定主體和安全區。** 先量出實際海報位置、可見底紋範圍、手機裁切和文字區；保護已驗收的顏色、字體、原作、滾動／翻頁動效。
+- **先用成熟的原稿而非臨時公式。** 依「多雷探索」查本手冊、`docs/design/SVG-EXPLORATION-LIST.md`、既有原生 SVG、經核實授權的公版藝術與成熟工具；比對真實作品、統一視點及版式適配。研究資料只寫在 `metadata` 不等於已經使用該作品的藝術構圖。
+- **區分「已有完整設計」與「缺少完整設計」。** 前者像以馬忤斯，採最小材質替換；後者像橄欖山，必須先完成能獨立成立、避開海報且具景觀辨識的**靜態母本**，依 §6 通過評審後再拆 SVG、加入生長動畫。
+- **以畫面決定是否完成。** 同一實際視窗、相同捲動節點的前後截圖；核實構圖、雕版刀法、疏密、主次、OS 雙色、手機與反向滾動。**CI 綠燈、路徑數或提交數不是藝術品質。**
+- **降低總成本，不是偷省單次工作。** 跳過成熟資源搜尋、實際畫面與授權核對，只會增加返工與算力消耗；不能把必要研究與藝術評估當作可省略的步驟。
+
+橄欖山詳細失誤對照保存在 `docs/projects/olive-mountain-living-engraving/PROJECT-RECORD.md` 和 `docs/design/OLIVE-MOUNTAIN-ART-SOURCES.md`。**可複製的經驗不是「少寫程式」，而是「先用對藝術與資源，只修改真正需要修改的部分」。**
+
 **權限界線：** 「多雷探索」本身不授權更改主站資訊架構、替換已驗收設計、擅自合併分支或新增全站 CSS／JavaScript 入口；涉及正式頁面的修改仍須遵守本手冊第 1、6 節及現有 Design OS 與發布驗收程序。
 
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
