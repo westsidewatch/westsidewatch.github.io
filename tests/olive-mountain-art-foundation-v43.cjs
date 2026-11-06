@@ -66,8 +66,8 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
     const svg=fs.readFileSync(svgPath,'utf8');
     assert(svg.includes('historical-steel-engraving')&&svg.includes('Sha1: 8097a8aa1e5c1ee4ef0bcd126578b73d89229f04'),
      'Plate must be traceable to real Woodward/Cousen source');
-    assert(!/<image\\b|data:image|<script\\b/.test(svg),'SVG must be native paths without bitmap or runtime script');
-    assert((svg.match(/<path\\b/g)||[]).length>250,'historic artwork must contain complex engraved contours');
+    assert(!/<image\b|data:image|<script\b/.test(svg),'SVG must be native paths without bitmap or runtime script');
+    assert((svg.match(/<path\b/g)||[]).length>250,'historic artwork must contain complex engraved contours');
 
     assert(metrics.credit.height>0&&metrics.credit.height<50,
       'isolated V4 folio footer must remain a small editorial element, not a global full-screen colophon');
