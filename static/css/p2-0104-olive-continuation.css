@@ -162,9 +162,28 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-growth-field .olive-growth-spines .olive-growth-path{
  stroke:var(--ws-warm-gold);stroke-width:.82;stroke-opacity:.67;
 }
-.olive-growth-field .olive-growth-volume{
- opacity:.67;pointer-events:none;
- /* Fine foil stays optically clean: no brown drop-shadow or neon bloom. */
+/* V2 · REAL SOURCE FAMILIES, not repeated gold-stamped ornaments.
+   Burin hierarchy: deep hill etching, old cultivated wood, archival
+   olive botanical silhouettes and the 18 separate living root lines. */
+.olive-growth-field .olive-growth-terrain{opacity:.58}
+.olive-growth-field .olive-growth-terrain .olive-growth-path{
+ stroke-opacity:.62;stroke-width:.67
+}
+.olive-growth-field .olive-growth-wood{opacity:.78}
+.olive-growth-field .olive-growth-wood .olive-growth-path{stroke-opacity:.68}
+.olive-growth-field .olive-growth-crane{opacity:.9}
+.olive-growth-field .olive-growth-cabinet{opacity:.95}
+.olive-growth-field .olive-growth-authentic{
+ fill:var(--ws-morning-gold);fill-opacity:.12;
+ stroke:var(--ws-morning-gold);stroke-width:.85;stroke-opacity:.88;
+ vector-effect:non-scaling-stroke
+}
+.olive-growth-field .olive-growth-spines .olive-growth-spine{
+ fill:none;stroke:var(--ws-warm-gold);stroke-opacity:.87;
+ stroke-width:1.6;vector-effect:non-scaling-stroke
+}
+.olive-growth-field .olive-growth-spines g:nth-child(6n + 1) .olive-growth-spine{
+ stroke-width:2.25;stroke-opacity:.91
 }
 .olive-growth-field .olive-growth-burin{
  fill:none!important;
@@ -172,11 +191,13 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  stroke-opacity:0;
  vector-effect:non-scaling-stroke;
  mix-blend-mode:screen;
+ filter:drop-shadow(0 0 1.35px var(--ws-morning-gold));
  pointer-events:none;
 }
 .olive-growth-field .olive-growth-tip{
  fill:none;stroke:var(--ws-warm-gold);stroke-width:2.1;
  stroke-opacity:1;stroke-linecap:round;stroke-linejoin:round;
+ filter:drop-shadow(0 0 2px var(--ws-morning-gold));
  vector-effect:non-scaling-stroke;stroke-dasharray:12 988;
  stroke-dashoffset:0;pointer-events:none;
 }
