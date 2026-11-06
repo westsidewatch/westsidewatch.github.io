@@ -76,6 +76,10 @@ jobs:
           git add static/images/p2-realms/v15/04-olive-woodward-cousen-*-intaglio-v43.svg
           if ! git diff --cached --quiet; then
             git commit -m 'art(olive): reproduce original public-domain steel engraving as native V4.3 SVG masters [skip ci]'
+            # Docs/other safe edits can land while this long-running trace is produced.
+            # Rebase ONLY the generated SVG commit onto latest Draft, never force push.
+            git fetch origin "${GITHUB_HEAD_REF}"
+            git rebase "origin/${GITHUB_HEAD_REF}"
             git push origin HEAD:"${GITHUB_HEAD_REF}"
           fi
       - uses: peaceiris/actions-hugo@v3
