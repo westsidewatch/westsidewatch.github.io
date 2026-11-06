@@ -150,11 +150,27 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  position:absolute;z-index:3;inset:0;display:block;width:100%;height:100%;
  pointer-events:none;overflow:visible;color:var(--ws-morning-gold);
 }
+/* A two-ink botanical copperplate, not a thick luminous outline.
+   The 1914 Walter Crane parent path remains the SOURCE of every leaf.
+   SVG-002's advancing pen nib is added by the same reversible scroll. */
 .olive-growth-field .olive-growth-path{
  fill:none;stroke:var(--ws-morning-gold);
- stroke-width:1.45;stroke-opacity:.88;stroke-linecap:round;
+ stroke-width:1.18;stroke-opacity:.96;stroke-linecap:round;
  stroke-linejoin:round;vector-effect:non-scaling-stroke;
  stroke-dasharray:1000;stroke-dashoffset:1000;
+}
+.olive-growth-field .olive-growth-spines .olive-growth-path{
+ stroke:var(--ws-first-light);stroke-width:.82;stroke-opacity:.58;
+}
+.olive-growth-field .olive-growth-volume{
+ opacity:.81;pointer-events:none;
+ filter:drop-shadow(.4px .5px 0 var(--ws-first-light));
+}
+.olive-growth-field .olive-growth-tip{
+ fill:none;stroke:var(--ws-warm-gold);stroke-width:2.1;
+ stroke-opacity:1;stroke-linecap:round;stroke-linejoin:round;
+ vector-effect:non-scaling-stroke;stroke-dasharray:12 988;
+ stroke-dashoffset:0;pointer-events:none;
 }
 .olive-stage__overview{z-index:6;inset:0;visibility:hidden;background:transparent}
 .olive-stage__first,
