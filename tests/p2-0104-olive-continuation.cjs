@@ -61,7 +61,7 @@ assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scriptu
 assert.doesNotMatch(css,/cover-golden-shoot-frame-transparent\.png/,
  'the 04 transition must NOT duplicate the old ONE book-cover gilt frame');
 const oliveCSS=css.slice(
- css.indexOf('.olive-surround__half{\n background-color:var(--ws-structure)'),
+ css.indexOf('.olive-surround__half{\n background-color:var(--ws-ink)'),
  css.indexOf('.olive-proof{'));
 assert(oliveCSS.startsWith('.olive-surround__half{'),
  'the 04-only surface must be independently selected from the shared 03 mask geometry');
@@ -70,12 +70,21 @@ assert(!cardCSS.includes('/one/'),'04 invitation cards must not reuse the Bible 
 const firstCSS=css.slice(css.indexOf('/* The incoming print lives'),css.indexOf('.olive-stage__poster{'));
 assert(!oliveCSS.includes('/one/')&&!firstCSS.includes('/one/'),
  '04 final domain MUST NOT inherit ONE cover texture or gilt assets');
-assert.match(oliveCSS,/background-color:var\(--ws-structure\)/,
- '04 field MUST consume Design OS semantic role instead of invented green');
+assert.match(oliveCSS,/background-color:var\(--ws-ink\)/,
+ '04 field uses the Design OS ink directly, no locally generated color');
+assert.doesNotMatch(oliveCSS,/color-mix\(|linear-gradient\(/,
+ '04 surrounding field must not invent olive gradients or mixes');
 assert.match(css,/\.p2-olive-stage\{[^}]*--ws-branch:var\(--ws-olive\)/,
  '04 scoped identity MUST bind to the OS canonical olive token');
-assert.match(css,/\.olive-stage__invitation\{[^}]*background:color-mix\(in oklab,var\(--ws-deep\)/,
- 'invitation stock MUST derive from OS semantic olive depth, not hard-coded teal');
+assert.match(css,/\.olive-stage__invitation\{[^}]*background:var\(--ws-olive\)/,
+ 'invitation print stock must use the exact Design OS olive token');
+assert.doesNotMatch(css,/color-mix\(|#[0-9a-fA-F]{3,8}\b/,
+ 'no local color mixes, gradients, or custom hex pigments');
+assert.match(css,/\.olive-card__relief::after\{[^}]*background:var\(--ws-morning-gold\)/,
+ 'the engraving takes its foil ink directly from the Design OS');
+assert.match(css,/mask-image:url\('\/images\/p2-realms\/v15\/04-olive-engraved-headpiece-v9\.svg'\)/,
+ 'foiled engraving is a native vector mask, never a raster');
+
 assert.doesNotMatch(css,/#193d2e|#163a2a|#173c2a|#204432/i,
  'no prior invented dark green literal may remain');
 const osCSS=read('static/css/westside-design-os.css');
@@ -98,9 +107,13 @@ assert.match(css,/\.olive-stage__overview\{[^}]*background:transparent/,
  'index preserves full olive green and gold field, no white jump');
 assert(fs.existsSync(path.join(root,'static/images/p2-realms/v15/04-olive-engraving-v1-5.svg')),
  'keep approved V1.5 source intact as archive');
-const reliefSVG=read('static/images/p2-realms/v15/04-olive-mount-etching-v8.svg');
-assert.match(reliefSVG,/Original native SVG copperplate vignette/,
- 'hillside with trees and distant Jerusalem, not a two-line doodle');
+const reliefSVG=read('static/images/p2-realms/v15/04-olive-engraved-headpiece-v9.svg');
+assert.match(reliefSVG,/full-height vector letterpress master/,
+ 'engraved headpiece remains a substantive vector landscape, not a few stray rules');
+assert.match(reliefSVG,/viewBox="0 54 1200 170"/,
+ 'engraving is registered to the invitation headpiece rather than scaled as wallpaper');
+assert((reliefSVG.match(/<path /g)||[]).length>=600,
+ 'mountain plate must retain dense editable crosshatching and foliage');
 assert.match(reliefSVG,/Mount of Olives/, 'independent 04 identity');
 assert(!reliefSVG.includes('<image'), 'relief stays editable native SVG');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
@@ -167,7 +180,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       invitation:{visibility:getComputedStyle(invitation).visibility,
        color:getComputedStyle(invitation).backgroundColor,
        bg:getComputedStyle(invitation).backgroundImage,
-       relief:getComputedStyle(invitation.querySelector('.olive-card__relief')).backgroundImage,
+       relief:getComputedStyle(invitation.querySelector('.olive-card__relief'),'::after').maskImage,
+       reliefGold:getComputedStyle(invitation.querySelector('.olive-card__relief'),'::after').backgroundColor,
        caption:invitation.querySelector('.olive-card__caption')?.textContent?.trim(),
        clip:invitation.style.clipPath,box:box(invitation)},
       pairCardLeft:{visibility:getComputedStyle(cardLeft).visibility,box:box(cardLeft),
@@ -249,7 +263,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      Math.abs(bridge.invitation.box.w-bridge.source.w)<2,
      'the CARD, not the portrait, assumes the original Doré frame');
    assert.equal(bridge.invitation.visibility,'visible');
-   assert(bridge.invitation.relief.includes('04-olive-mount-etching-v8.svg'),
+   assert(bridge.invitation.relief.includes('04-olive-engraved-headpiece-v9.svg'),
      'invitation uses actual original 04 Olives copperplate landscape engraving');
    assert.equal(bridge.invitation.caption,'WATCHMAN NEE · 倪柝聲');
    assert(Math.abs(bridge.firstFrame.box.w/bridge.firstFrame.box.h-.75)<.01,
@@ -267,9 +281,11 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      'the FULL invitation replaces the Doré source before moving');
    assert.match(sourceTakeover.invitation.color,/^(?:oklab\(|color\(|rgb\()/,
      'source card must resolve to an OS-driven real CSS color');
-   assert(sourceTakeover.invitation.color!== 'rgb(25, 61, 46)',
-     'old arbitrary teal green is forbidden');
-   assert(sourceTakeover.invitation.relief.includes('04-olive-mount-etching-v8.svg'));
+   assert.equal(sourceTakeover.invitation.color,'rgb(115, 138, 90)',
+     'entire invitation card resolves to the exact #738A5A Design OS olive');
+   assert.equal(sourceTakeover.invitation.reliefGold,'rgb(210, 188, 105)',
+     'foil must resolve to the exact OS --ws-morning-gold color');
+   assert(sourceTakeover.invitation.relief.includes('04-olive-engraved-headpiece-v9.svg'));
    assert(sourceTakeover.neutralCSS.reveal>.999,
      'at 10.18 the outgoing 03 full page must already be replaced, not torn into exposed scripture fragments');
    const card=sourceTakeover.invitation.box,print=sourceTakeover.firstFrame.box;
@@ -284,7 +300,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     'all original page material is replaced by a full-panel source field at 10.26');
    assert.equal(atUserScreenshot.invitation.visibility,'visible',
     'the 04 printed card leads the spatial handoff');
-   assert(atUserScreenshot.invitation.relief.includes('04-olive-mount-etching-v8.svg'),
+   assert(atUserScreenshot.invitation.relief.includes('04-olive-engraved-headpiece-v9.svg'),
     'the entering card carries the substantive original Olives landscape engraving');
    assert(Math.abs(atUserScreenshot.firstFrame.box.w/atUserScreenshot.firstFrame.box.h-.75)<.01,
     'the verified first-speaker 3:4 print must not be resized');
