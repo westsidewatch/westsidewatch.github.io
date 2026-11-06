@@ -230,7 +230,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 .olive-stage__rubric strong{
  font:400 clamp(28px,2.9vw,45px)/.97 var(--ws-type-display-en);
- letter-spacing:-.06em;white-space:nowrap;text-align:center;
+ letter-spacing:-.063em;white-space:nowrap;text-align:center;
+ /* The overview acquires an oversized title AFTER the two-print sequence. */
+ font-size:calc(clamp(28px,2.9vw,45px) + var(--olive-title-growth,0px));
 }
 .olive-stage__rubric strong i{font-weight:400;font-style:italic}
 .olive-stage__rubric small{
@@ -285,7 +287,8 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  }
  .olive-stage__rubric span{grid-column:1;font-size:9px;letter-spacing:.055em}
  .olive-stage__rubric small{grid-column:2;font-size:9px;letter-spacing:.035em;text-align:right}
- .olive-stage__rubric strong{grid-column:1 / -1;grid-row:2;text-align:left;font-size:clamp(28px,7.1vw,47px)}
+ .olive-stage__rubric strong{grid-column:1 / -1;grid-row:2;text-align:left;
+  font-size:calc(clamp(28px,7.1vw,47px) + var(--olive-title-growth,0px))}
  .olive-stage__rubric::after{bottom:-2px}
  #p2-olive-folio-status{bottom:54px;right:5px;font-size:7px}
  .olive-stage__poster figcaption{font-size:8px;padding:5px 7px}
@@ -317,7 +320,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-stage__rubric{top:42px;left:8px;right:8px;min-height:42px;
   grid-template-columns:1fr;justify-items:center}
  .olive-stage__rubric span,.olive-stage__rubric small{display:none}
- .olive-stage__rubric strong{font-size:clamp(26px,7.8vw,35px);text-align:center}
+ .olive-stage__rubric strong{
+  font-size:calc(clamp(26px,7.8vw,35px) + var(--olive-title-growth,0px));
+  text-align:center}
 }
 @media(prefers-reduced-motion:reduce){
  .olive-stage__invitation,.olive-stage__first,.olive-stage__pair,
