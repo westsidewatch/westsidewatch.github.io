@@ -81,6 +81,36 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
        }))};
       }));
       console.log('OLIVE_V4_WHITE_PLANE_HITTEST',JSON.stringify(at));
+
+      const drawn=await page.evaluate(()=>{
+       const X=1000,Y=60;
+       return [...document.querySelectorAll('#design-stage *')].filter(el=>{
+        const r=el.getBoundingClientRect();
+        return r.left<=X&&r.right>=X&&r.top<=Y&&r.bottom>=Y;
+       }).map(el=>{const cs=getComputedStyle(el),before=getComputedStyle(el,'::before');
+        return {tag:el.tagName,cls:String(el.className||'').slice(0,75),
+         speaker:el.dataset?.speaker||'',
+         x:Math.round(el.getBoundingClientRect().x),y:Math.round(el.getBoundingClientRect().y),
+         w:Math.round(el.getBoundingClientRect().width),h:Math.round(el.getBoundingClientRect().height),
+         pe:cs.pointerEvents,bg:cs.backgroundColor,mask:cs.maskImage,
+         before:{content:before.content,bg:before.backgroundColor}};
+       });
+      });
+      console.log('OLIVE_V4_ALL_WHITE_PLANE_CONTAINING_ELEMENTS',JSON.stringify(drawn));
+      const hosts=await page.evaluate(()=>[...document.querySelectorAll('.protected-card')].map(card=>{
+       const a=card.querySelector('olive-speaker-baseline');
+       const r=(el)=>{const x=el.getBoundingClientRect();return [Math.round(x.x),Math.round(x.y),Math.round(x.width),Math.round(x.height)]};
+       return {speaker:card.dataset.speaker,card:r(card),host:r(a),image:r(card.querySelector('img'))};
+      }));
+      console.log('OLIVE_V4_ALL_HOST_GEOMETRIES',JSON.stringify(hosts));
+      const hide=await page.addStyleTag({content:'olive-speaker-baseline{display:none!important}'});
+      const noType=await page.locator('.site-preview').screenshot({type:'jpeg',quality:47,animations:'disabled'});
+      const encoded=noType.toString('base64');
+      console.log('OLIVE_V4_NO_TYPE_BEGIN');
+      for(let z=0;z<encoded.length;z+=3200)console.log('OLIVE_V4_NO_TYPE_PART '+encoded.slice(z,z+3200));
+      console.log('OLIVE_V4_NO_TYPE_END');
+      await hide.evaluate(el=>el.remove());
+
       const style=await page.addStyleTag({content:'.plate-mark{display:none!important}'});
       const maskless=await page.locator('.site-preview').screenshot({type:'jpeg',quality:53,animations:'disabled'});
       const b64=maskless.toString('base64');
