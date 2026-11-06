@@ -10,11 +10,12 @@ const root=path.resolve(__dirname,'..');
 const source=fs.readFileSync(path.join(root,'static/experiments/olive-mountain-art-foundation-v42.html'),'utf8');
 const out=path.join(root,'artifacts/p2-0104-olive');
 fs.mkdirSync(out,{recursive:true});
-for(const text of ['OliveSpeakerBaseline.mount(art,slug)','04-olive-historic-engraving-v13.svg',
+for(const text of ['OliveSpeakerBaseline.mount(art,slug)','04-olive-mountain-panoramic-plate-v42.svg',
  '04-olive-mountain-panoramic-plate-v42.svg','data-mode="archive"','data-mode="folio"']){
- assert(source.includes(text),'V4 must implement real approved art and historic SVG: '+text);
+ assert(source.includes(text),'V4 must preserve original posters and mount new panoramic SVG: '+text);
 }
 assert(!source.includes('requestAnimationFrame'),'V4.2 is STATIC ART FIRST, not another animation attempt');
+assert(!source.includes('requestAnimationFrame'), 'static art study cannot add a new scroll clock');
 assert(!source.includes('04-olive-botanical-gallery-v12.svg'),
  'V4.2 must not reintroduce previously rejected full-height V12 artwork');
 assert(source.includes('04-olive-mountain-panoramic-plate-v42.svg'), 'V4.2 must use complete panoramic SVG');
@@ -83,7 +84,7 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
     const fname=width+'-olive-v42-static-'+mode+'.png';
     await page.locator('.site-preview').screenshot({path:path.join(out,fname),animations:'disabled'});
 
-    console.log('OLIVE V4.2 REAL ART STATIC PASS',width,mode,JSON.stringify({
+    console.log('OLIVE V4.2 GEOMETRY PASS — NOT ART APPROVAL',width,mode,JSON.stringify({
      posters:12,gridCols:colCount,first:metrics.art[0].rect,
      masthead:metrics.heading,edgePlate:metrics.scenic,footer:metrics.engraving
     }));
