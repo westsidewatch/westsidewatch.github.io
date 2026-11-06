@@ -92,15 +92,21 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
  content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
  background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
 }
+/* The invitation uses an actual Olives hillside engraving as its
+   LOCAL letterpress impression. The image does not touch the 3:4 poster.
+   On the tall incoming card the sky/terraces occupy the header stock;
+   after pair settlement the same etching becomes a restrained top edge. */
 .olive-card__relief{
- position:absolute;left:2px;bottom:12%;
- width:clamp(20px,14%,74px);height:60%;max-height:290px;
- background:url('/images/p2-realms/v15/04-olive-terrain-relief-v7.svg')
-  center bottom/contain no-repeat;
- opacity:.68;pointer-events:none;
+ position:absolute;left:5%;right:5%;top:2.5%;
+ height:clamp(42px,15%,112px);max-height:112px;
+ background:url('/images/p2-realms/v15/04-olive-mount-etching-v8.svg')
+  center bottom/100% auto no-repeat;
+ opacity:.82;pointer-events:none;
 }
-#olive-invitation-right .olive-card__relief{
- left:auto;right:2px;transform:scaleX(-1);
+.olive-stage__invitation--pair .olive-card__relief{
+ top:1px;left:4%;right:4%;height:26px;max-height:26px;
+ background-position:center bottom;
+ background-size:100% auto;opacity:.62;
 }
 .olive-card__caption{
  position:absolute;z-index:2;bottom:6px;left:13px;right:13px;
@@ -244,8 +250,10 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
  }
 }
 @media(max-width:540px){
- /* Preserve the poster print; make the rail a genuine but quiet card. */
- .olive-card__relief{width:22px;max-height:80px;bottom:22%;opacity:.45}
+ /* On phones the engraved card header remains small, but never
+    introduces a competing ornamental panel above the mounted poster. */
+ .olive-card__relief{left:7%;right:7%;top:1%;height:23px;max-height:23px;opacity:.65}
+ .olive-stage__invitation--pair .olive-card__relief{height:14px;max-height:14px}
  .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
   font-size:7px;letter-spacing:0}
  .p2-olive-controls{gap:2px;max-height:60px}
