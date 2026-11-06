@@ -28,6 +28,8 @@
  const left=$('#olive-pair-left'),right=$('#olive-pair-right');
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
  const overview=$('#olive-overview'),enter=$('#olive-enter');
+ const growthSvg=$('#olive-growth-field'),growthRoot=$('#olive-growth-paths');
+ const growthLines=[],reduceGrowth=matchMedia('(prefers-reduced-motion: reduce)');
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
  const status=$('#p2-olive-folio-status');
@@ -340,6 +342,20 @@
   if(bg>=.99999)neutral.style.visibility='hidden';
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
   const vertical=g.w<600;
+  // Reuse Westside's existing SVG stroke-growth grammar, but bind the
+  // actual path front to the TWELVE-SPEAKER scroll clock. Back-scroll
+  // retracts the original drawn lines; reduced motion shows the final
+  // engraving without playback. No image-opacity fade or repeating tile.
+  const growth=reduceGrowth.matches?(fan>0?1:0):fan;
+  if(growthSvg)growthSvg.style.visibility=d>=T.indexStart?'visible':'hidden';
+  for(const line of growthLines){
+   const local=ease((growth-line.start)/(line.end-line.start));
+   const offset=(1000*(1-local)).toFixed(3);
+   if(line.el.style.strokeDashoffset!==offset)
+    line.el.style.strokeDashoffset=offset;
+  }
+  stage.dataset.p2OliveGrowth=growth.toFixed(5);
+  if(growthSvg)stage.dataset.p2OliveGrowthPaths=String(growthLines.length);
   const rects=galleryRects(g);
   // Desktop uses true folio halves; on narrow phones two original posters
   // occupy TOP/BOTTOM halves to avoid extremely thin and mostly empty strips.
@@ -430,6 +446,10 @@
   ground.style.opacity='1';
   const printTitle=ease((bg-.78)/.22);
   rubric.style.visibility=printTitle>0?'visible':'hidden';
+  // The chapter masthead takes up its own editorial line ABOVE the full
+  // twelve-speaker composition; no movement over incoming 3:4 portraits.
+  rubric.style.transform=vertical?'none':
+   'translate3d(0,'+(64*fan).toFixed(1)+'px,0)';
   rubric.style.clipPath=printTitle>=1?'none':
    'inset(0 '+((1-printTitle)*49).toFixed(3)+'% 0 '+((1-printTitle)*49).toFixed(3)+'%)';
   overview.style.visibility=d>=T.indexStart?'visible':'hidden';
@@ -473,6 +493,39 @@
  function go(d){
   const top=track.getBoundingClientRect().top+scrollY+clamp(d,0,T.end)*Math.max(1,innerHeight);
   scrollTo({top,behavior:'instant'});schedule();
+ }
+ // Load the editable historical botanical SVG as REAL DOM paths.
+ // Uses the already tested p2-stroke-growth-prototype dash/front mechanism,
+ // not CSS background movement, so every line grows and reverses in place.
+ if(growthSvg&&growthRoot){
+  stage.dataset.p2OliveGrowthReady='false';
+  fetch('/images/p2-realms/v15/04-olive-growth-field-v1.svg').then(response=>{
+   if(!response.ok)throw new Error('Olive SVG HTTP '+response.status);
+   return response.text();
+  }).then(xml=>{
+   const doc=new DOMParser().parseFromString(xml,'image/svg+xml');
+   if(doc.querySelector('parsererror'))throw new Error('Invalid olive growth SVG');
+   for(const child of [...doc.documentElement.children]){
+    if(child.localName==='g')growthRoot.appendChild(document.importNode(child,true));
+   }
+   for(const el of growthRoot.querySelectorAll('path.olive-growth-path')){
+    const parent=el.closest('[data-growth-start]');
+    if(!parent)continue;
+    const start=Number(parent.getAttribute('data-growth-start'));
+    const end=Number(parent.getAttribute('data-growth-end'));
+    if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start)
+      throw new Error('Invalid staged olive engraving interval');
+    el.style.strokeDasharray='1000';
+    el.style.strokeDashoffset='1000';
+    growthLines.push({el,start,end});
+   }
+   if(growthLines.length<80)throw new Error('Not enough botanical source paths');
+   stage.dataset.p2OliveGrowthReady='true';
+   schedule();
+  }).catch(error=>{
+   stage.dataset.p2OliveGrowthReady='error';
+   stage.dataset.p2OliveGrowthError=String(error.message||error);
+  });
  }
  document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.seek)));
  slider.addEventListener('input',()=>go(+slider.value));
