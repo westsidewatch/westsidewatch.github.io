@@ -286,8 +286,9 @@
   const rightHalf=node.querySelector('[data-side="right"]');
   if(leftHalf)leftHalf.style.clipPath='inset(0 0 '+
    ((1-leftReveal)*100).toFixed(3)+'% 0)';
-  if(rightHalf)rightHalf.style.clipPath='inset('+
-   ((1-rightReveal)*100).toFixed(3)+'% 0 0 0)';
+  if(rightHalf)rightHalf.style.clipPath=isInvitation?
+   'inset('+((1-rightReveal)*100).toFixed(3)+'% 0 0 0)':
+   'inset(0 0 '+((1-rightReveal)*100).toFixed(3)+'% 0)';
   node.dataset.reveal=reveal.toFixed(5);
   node.dataset.leftReveal=leftReveal.toFixed(5);
   node.dataset.rightReveal=rightReveal.toFixed(5);
@@ -314,7 +315,11 @@
   const form=ease((d-T.first)/(T.spread-T.first));
   const firstTravel=ease(form/.73);
   const secondArrival=ease((form-.57)/.43);
-  const readingField=ease(form/.20);
+  // MERSI source-stage handoff is a SINGLE short spatial takeover:
+  // complete the 03 printed-cloth curtain while the invitation is still
+  // registered over Doré, BEFORE its movement can expose old scripture.
+  // At d=10.26 the outgoing 03 page must be fully hidden, not in shards.
+  const readingField=ease((d-T.first)/.065);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
   revealSplitField(neutral,readingField);
   revealSplitField(ground,bg);
