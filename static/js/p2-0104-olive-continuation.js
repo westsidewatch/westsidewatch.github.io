@@ -415,6 +415,25 @@
   // Register the line engraving to the EXACT same MERSI material split:
   // right from BOTTOM first, left from TOP afterwards. Never draw olives
   // above the outgoing Bible cover or fake their entrance with opacity.
+  // An independent ORIGINAL crop on narrow devices; never distort trees.
+  // The same reversible MERSI top/bottom split now covers the exact
+  // visible crop instead of the off-screen half of a stretched 1600px SVG.
+  const narrow=g.w<600;
+  if(growthSvg){
+   const crop=narrow?'-45 -54 570 1008':'-96 -54 1792 1008';
+   if(growthSvg.getAttribute('viewBox')!==crop)growthSvg.setAttribute('viewBox',crop);
+   const aspect=narrow?'xMinYMid slice':'xMidYMid meet';
+   if(growthSvg.getAttribute('preserveAspectRatio')!==aspect)
+    growthSvg.setAttribute('preserveAspectRatio',aspect);
+  }
+  if(growthMaskLeft){
+   growthMaskLeft.setAttribute('x',narrow?'-45':'-96');
+   growthMaskLeft.setAttribute('width',narrow?'285':'896');
+  }
+  if(growthMaskRight){
+   growthMaskRight.setAttribute('x',narrow?'240':'800');
+   growthMaskRight.setAttribute('width',narrow?'285':'896');
+  }
   const growLeft=ease((bg-.52)/.48),growRight=ease(bg/.55);
   if(growthMaskLeft)growthMaskLeft.setAttribute('height',(1008*growLeft).toFixed(3));
   if(growthMaskRight){
@@ -592,7 +611,7 @@
  // not CSS background movement, so every line grows and reverses in place.
  if(growthSvg&&growthRoot){
   stage.dataset.p2OliveGrowthReady='false';
-  fetch('/images/p2-realms/v15/04-olive-living-grove-v2.svg?v=grove-20261106').then(response=>{
+  fetch('/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg?v=unified-20261106').then(response=>{
    if(!response.ok)throw new Error('Olive SVG HTTP '+response.status);
    return response.text();
   }).then(xml=>{
@@ -601,13 +620,14 @@
    for(const child of [...doc.documentElement.children]){
     if(child.localName==='g')growthRoot.appendChild(document.importNode(child,true));
    }
-   // V2: four genuinely different source families. No source is stamped
-   // twelve times and no new foliage is fabricated by formula.
+   // V3: one authored botanical topography, represented by four spatial
+   // depth bands: left olive, right olive, distant foothill and terrain.
+   // Unlike V2, no unrelated plate is pasted onto the scene.
    const ns='http://www.w3.org/2000/svg';
    const sourceRegions=[...growthRoot.querySelectorAll(
      '.olive-growth-cluster,.olive-growth-terrain')];
    if(sourceRegions.length!==4)
-    throw new Error('Four independently sourced botanical/terrain regions required');
+    throw new Error('V3 must mount four zones of one authored original landscape');
    stage.dataset.p2OliveGrowthEchoes='0';
    const register=(source,region,i,voice)=>{
     const shine=document.createElementNS(ns,'path');
@@ -622,14 +642,15 @@
     shine.style.pointerEvents='none';
     source.parentNode.appendChild(shine);
     livingBurins.push({el:shine,voice,
-     start:Number(region.dataset.growthStart),end:Number(region.dataset.growthEnd),
+     start:Number(source.closest('[data-growth-start]')?.dataset.growthStart??region.dataset.growthStart),
+     end:Number(source.closest('[data-growth-end]')?.dataset.growthEnd??region.dataset.growthEnd),
      seed:i*.6180339+voice*.317,speed:.11+(i%7)*.016});
    };
    sourceRegions.forEach((region,voice)=>{
     const paths=[...region.querySelectorAll('path.olive-growth-path')];
-    const stride=Math.max(1,Math.floor(paths.length/20));
+    const stride=Math.max(1,Math.floor(paths.length/12));
     let count=0;
-    for(let i=voice%stride;i<paths.length&&count<20;i+=stride){
+    for(let i=voice%stride;i<paths.length&&count<12;i+=stride){
      const original=paths[i],length=original.getTotalLength();
      if(!Number.isFinite(length)||length<5)continue;
      register(original,region,i,voice);count++;
@@ -691,10 +712,12 @@
     el.style.strokeDashoffset='1000';
     growthLines.push(line);
    }
-   if(growthCurves.length!==18)throw new Error('V2 requires eighteen independently authored animated root/branch/terrace paths');
+   if(growthCurves.length!==18)throw new Error('V3 requires eighteen connected authored olive-tree structure paths');
    stage.dataset.p2OliveLiveCurves=String(growthCurves.length);
-   if(growthLines.length<300)throw new Error('V2 must contain its complete multi-source botanical engraving');
+   if(growthLines.length<700)throw new Error('V3 original whole-plate botanical etching is incomplete');
    stage.dataset.p2OliveSourceFamilies='4';
+   stage.dataset.p2OliveArtVersion='v3';
+   stage.dataset.p2OliveOriginalCopperplate='true';
    stage.dataset.p2OliveSourcePathCount=String(growthLines.length);
    stage.dataset.p2OliveGrowthReady='true';
    schedule();
