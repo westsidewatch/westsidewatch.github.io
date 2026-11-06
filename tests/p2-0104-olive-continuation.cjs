@@ -149,8 +149,8 @@ assert.match(js,/class','olive-growth-tip'/,
  'SVG-002 must have a registered line-front, not only uniform static gold strokes');
 assert.match(css,/\.olive-growth-field \.olive-growth-tip\{/,
  'the leading engraved nib uses the OS warm-gold ink');
-assert.match(css,/filter:drop-shadow\(\.4px \.5px 0 var\(--ws-first-light\)\)/,
- 'the fine foil registration uses the authorized first-light ink');
+assert.doesNotMatch(css,/filter:drop-shadow|text-shadow/,
+ 'foil engravings must not add muddy drop-shadows or luminous glow');
 assert.match(js,/const growth=reduceGrowth\.matches\?\(d>=T\.groundEnd\?1:0\):speakerGrowth/,
  'growth draws two introductory branches during material reveal, then every speaker');
 assert.match(css,/\.olive-growth-field .olive-growth-path\{[^}]*stroke:var\(--ws-morning-gold\)/,
