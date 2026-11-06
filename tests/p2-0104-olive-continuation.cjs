@@ -132,6 +132,12 @@ assert.equal((growthSVG.match(/data-speaker-growth="/g)||[]).length,12,
  'there must be twelve distinct botanical branches, one for EACH preacher');
 assert(!growthSVG.includes('<image'), 'field stays 100% editable vector artwork');
 assert.match(html,/id="olive-growth-field"/,'real native SVG field lives UNDER the original twelve works');
+assert(html.indexOf('id="olive-growth-field"')<html.indexOf('<section class="olive-proof"'),
+ 'botanical field must be stage-wide, outside the legacy 03 folio crop');
+assert.match(html,/viewBox="-96 -54 1792 1008"/,
+ 'botanical engraving retains a full outer margin rather than cropping at its SVG edges');
+assert.match(css,/\.olive-growth-field\{[^}]*z-index:3;[^}]*overflow:visible/,
+ 'growth field is above 04 background and not hidden by a bounding box');
 assert.match(html,/id="olive-growth-material-mask"/,
  'growth uses the SAME opposed MERSI physical 03→04 aperture');
 assert.match(js,/strokeDashoffset=offset/,'the SVG growth mechanism must DRAW each path, not fade wallpaper');
