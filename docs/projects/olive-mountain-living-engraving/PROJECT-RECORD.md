@@ -82,3 +82,16 @@ GitHub issue: https://github.com/westsidewatch/westsidewatch.github.io/issues/13
 - 截圖核實：[GitHub Actions #42187808156](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42187808156) 與 [#42188237445](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42188237445)。
 
 **永久教訓：不能把已被否決的藝術元素換名稱後重新拼回作品，更不能用 CI 綠燈遮蓋失敗的視覺設計。**
+
+
+## 2026-11-06｜V3.1 → V3.2 實際藝術母本製作與瀏覽器校驗
+
+在 V1／V2 獲獎標準比較淘汰 V2 拼貼稿後，重新建立一幅單視點原生 `static/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg`；保留 01–03、十二講員海報、英文排版與原始邀請函工程不動。
+
+- **V3 原作**：左右兩株位置各異的老橄欖樹，18 條連接的主幹／側枝生長結構線，原生葉叢、果實、遠山梯田和耶路撒冷地貌；拒絕 V11／V12 被否決素材的貼圖式重組。手機使用相同母本的等比裁切（非整張植物壓縮），尊重 Design OS 橄欖綠及金色；無任意色塊、漸層或黑色大背景。
+- **V3.1**：補入 1,968 條葉片輪廓（由 compound-path 組成）、280 果實與更完整樹幹，但 Chromium 1648／390 無遮擋實拍仍顯示樹冠過於稀瘦，山地與遠城缺乏可辨性，因此 **不符合藝術終驗**。
+- **V3.2**：在不同生長分枝位置加入 16 組不等大的寬樹冠，原生長葉刻線與內部刻痕，額外 2,227 條葉片輪廓，以 64 個可控 SVG compound path 壓低 DOM 數量；沒有複製完整橄欖枝。總 1,225 條 `<path>`，XML 標籤巢狀驗證通過。
+- **V3.2 測試**：[GitHub Actions #42200349195](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42200349195)，Chromium 桌面／手機、正反向生長、海報保護、等比畫面、獨立刻線實拍通過；原生完整 SVG 及截圖已進入 Preview。
+- **視覺稽核**：V3.2 比 V3.1 有更寬的密集葉冠，呈兩側更穩定的植物邊框，減少 V2 的中央雜亂。然而樹冠局部仍有公式化的鬆散斑塊，樹幹蒼老質感及城與梯田辨識度仍不夠，**不可僅因 CI PASS 或葉片數增加宣稱達到手冊的 15／20 或獲獎級**。
+- **邊界**：P2 #1385 保持 Draft，未合併 main；原始 01–03 以及已核准的 12 張講員海報不動。完整藝術終驗仍未通過，不得上線。
+
