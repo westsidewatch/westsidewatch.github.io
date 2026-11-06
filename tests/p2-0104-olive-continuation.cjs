@@ -283,8 +283,13 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(bridge.groundCSS.visibility,'hidden');
    assert.equal(bridge.neutralCSS.visibility,'hidden');
    const sourceTakeover=await go(10.18,'01b-source-plate-no-old-engraving-exposure');
-   assert(Math.abs(sourceTakeover.invitation.reliefBox.h-sourceTakeover.invitation.box.h)<2,
-     'the botanical print must fill the entire card carrier rather than only a strip');
+   assert(sourceTakeover.invitation.reliefBox.h>8&&
+     sourceTakeover.invitation.reliefBox.h<=(width>800?71:23),
+     'historical foil must occupy the real V13 invitation headpiece');
+   assert(sourceTakeover.invitation.reliefBox.y>=sourceTakeover.invitation.box.y-1&&
+     sourceTakeover.invitation.reliefBox.y+sourceTakeover.invitation.reliefBox.h<=
+      sourceTakeover.firstFrame.box.y+1,
+     'V13 engraving must remain entirely ABOVE the unchanged original print');
    assert.equal(sourceTakeover.invitation.visibility,'visible',
      'the old source is claimed by a complete foil invitation');
    assert.equal(sourceTakeover.invitation.clip,'none',
