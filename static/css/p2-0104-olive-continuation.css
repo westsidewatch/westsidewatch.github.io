@@ -3,39 +3,36 @@
    MERSI template, replayed sevenfold, shadowed card grid or video UI.
    The original Doré image supplies the entrance's physical coordinates. */
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(--ws-olive) 37%,var(--ws-ink));overscroll-behavior-y:none}
+html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll-behavior-y:none}
 .p2-olive-controls{
  position:fixed;z-index:80;top:0;left:0;right:0;
  display:flex;align-items:center;gap:15px;padding:5px 13px;
- min-height:37px;border-bottom:1px solid #b99a5960;
- background:#102229ef;color:#f4efdb;
+ min-height:37px;border-bottom:1px solid var(--ws-morning-gold);
+ background:var(--ws-ink);color:var(--ws-paper);
  font:200 10px/1.3 var(--ws-type-display-en);
  letter-spacing:.09em
 }
 .p2-olive-controls strong{font-weight:400;white-space:nowrap}
 .p2-olive-controls nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .p2-olive-controls button{
- border:1px solid #c5bb9366;background:transparent;color:inherit;
+ border:1px solid var(--ws-morning-gold);background:transparent;color:inherit;
  padding:4px 8px;cursor:pointer;font:inherit;letter-spacing:.02em
 }
 .p2-olive-controls button:focus-visible,.p2-olive-controls button:hover{
- border-color:#d0b879;color:#d0b879
+ border-color:var(--ws-warm-gold);color:var(--ws-warm-gold)
 }
 .p2-olive-controls label{margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:6px}
-.p2-olive-controls input{accent-color:#c4a96c;width:118px}
+.p2-olive-controls input{accent-color:var(--ws-morning-gold);width:118px}
 #p2-olive-track{position:relative;height:1865svh}
 .p2-olive-stage{
- /* Rescope the ORIGINAL Design OS semantic role formulas. Otherwise
-    CSS custom-property inheritance can freeze --ws-deep/--ws-structure
-    at the root first-light branch before this Olive realm is entered. */
+ /* Strict OS token authority: olive = --ws-olive, no local generated
+    green shades, no color-mix or invented gradients in this chapter. */
  --ws-branch:var(--ws-olive);
  --ws-identity:var(--ws-olive);
- --ws-structure:color-mix(in oklab,var(--ws-olive) 34%,var(--ws-ink));
- --ws-deep:color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink));
  --ws-engraving-opacity:.13;
  position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent
 }
-#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-structure);z-index:0}
+#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-ink);z-index:0}
 
 /* MERSI 03→04 material handoff. The source is still 03 while the
    new card travels; the 04 gallery print field enters only AFTER the
@@ -56,31 +53,24 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
 .olive-surround__half[data-side="right"]{right:0}
 /* Outgoing Emmaus cover is allowed ONLY inside the transition bridge. */
 .olive-bridge__half{
- background-color:#10170d;
- background-image:
-  linear-gradient(145deg,rgba(4,10,3,.24),rgba(5,13,7,.04) 50%,rgba(4,10,3,.35)),
-  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609');
+ background-color:var(--ws-ink);
+ background-image:url('/one/cover-texture-antique-green.png?v=93ae0c7e0609');
  background-repeat:no-repeat;
- background-size:200% 100%,200% 100%;
+ background-size:200% 100%;
 }
-.olive-bridge__half[data-side="left"]{background-position:left center,left center}
-.olive-bridge__half[data-side="right"]{background-position:right center,right center}
+.olive-bridge__half[data-side="left"]{background-position:left center}
+.olive-bridge__half[data-side="right"]{background-position:right center}
 /* Independent 04 gallery field. Neither 03 cloth nor decorative foil is
    allowed to be repainted outside the actual invitation cards. */
 .olive-surround__half{
- background-color:var(--ws-structure);
- background-image:linear-gradient(152deg,
-  color-mix(in oklab,var(--ws-deep) 54%,var(--ws-structure)) 0%,
-  var(--ws-structure) 56%,
-  color-mix(in oklab,var(--ws-structure) 76%,var(--ws-ink)) 100%);
- background-repeat:no-repeat;
- background-size:200% 100%;
+ background-color:var(--ws-ink);
+ background-image:none;
 }
 .olive-surround__half[data-side="left"]{background-position:left center}
 .olive-surround__half[data-side="right"]{background-position:right center}
 .olive-proof{
  position:absolute;z-index:4;overflow:hidden;
- visibility:hidden;background:transparent;color:var(--ws-structure);
+ visibility:hidden;background:transparent;color:var(--ws-ink);
  isolation:isolate;pointer-events:none;
 }
 .olive-stage__first,.olive-stage__pair,.olive-stage__overview{
@@ -92,7 +82,7 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
 .olive-stage__invitation{
  position:absolute;z-index:1;display:block;visibility:hidden;
  margin:0;padding:0;border:0;pointer-events:none;overflow:hidden;
- background:color-mix(in oklab,var(--ws-deep) 53%,var(--ws-structure));
+ background:var(--ws-olive);
  color:var(--ws-morning-gold);isolation:isolate;
 }
 .olive-stage__invitation::after{
@@ -120,7 +110,7 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
 .olive-card__caption{
  position:absolute;z-index:2;bottom:6px;left:13px;right:13px;
  height:19px;display:flex;align-items:center;
- border-top:1px solid color-mix(in oklab,var(--ws-morning-gold) 50%,transparent);
+ border-top:1px solid var(--ws-morning-gold);
  color:var(--ws-morning-gold);background:transparent;
  font:200 clamp(8px,.69vw,11px)/1.2 var(--ws-type-display-en);
  letter-spacing:.075em;white-space:nowrap;overflow:hidden;
@@ -202,7 +192,7 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
 }
 .olive-stage__index-card{
  z-index:2;display:block;text-decoration:none;overflow:hidden;
- color:#d8c58b;background:transparent;
+ color:var(--ws-morning-gold);background:transparent;
  will-change:top,left,width,height;
 }
 /* The same approved English + Chinese type follows every image through
@@ -213,21 +203,21 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
  display:none!important;position:absolute;inset:auto;overflow:hidden;
  font:200 clamp(7px,.62vw,10px)/15px var(--ws-type-display-en);
  letter-spacing:.06em;padding:0 1px;opacity:var(--index-caption-alpha,0);
- background:transparent;color:#dfc78c;border-top:1px solid #d0b16a70;
+ background:transparent;color:var(--ws-morning-gold);border-top:1px solid var(--ws-warm-gold);
 }
 .olive-stage__index-card:hover,.olive-stage__index-card:focus-visible{
- outline:2px solid #b59659;outline-offset:-2px
+ outline:2px solid var(--ws-warm-gold);outline-offset:-2px
 }
 .olive-stage__enter{
  position:absolute;right:clamp(14px,3vw,52px);bottom:18px;
  z-index:8;visibility:hidden;display:flex;gap:12px;
  align-items:center;justify-content:space-between;
  padding:9px 0 5px;min-width:220px;max-width:calc(100% - 28px);
- border-top:1px solid #c5a461;text-decoration:none;color:#e8cf96;
+ border-top:1px solid var(--ws-warm-gold);text-decoration:none;color:var(--ws-morning-gold);
  font:200 clamp(10px,.9vw,16px)/1.35 var(--ws-type-display-en);
  letter-spacing:.12em
 }
-.olive-stage__enter:focus-visible{outline:2px solid #a88a51}
+.olive-stage__enter:focus-visible{outline:2px solid var(--ws-warm-gold)}
 /* Technical scroll state is exposed in DOM, not as a black UI tag on the artwork. */
 #p2-olive-folio-status{position:absolute;clip-path:inset(100%);width:1px;height:1px;overflow:hidden}
 @media(max-width:820px){
