@@ -178,38 +178,36 @@
   if(local<=.00001){
    const p=points[0];
    path.setAttribute('d','M'+p.x.toFixed(2)+' '+p.y.toFixed(2));
-   tip.style.visibility='hidden';
-   return;
+   tip.style.visibility='hidden';return;
   }
-  if(local>=.99999){
-   if(path.getAttribute('d')!==curve.originalD)
-    path.setAttribute('d',curve.originalD);
-   tip.style.visibility='hidden';
-   return;
+  if(reduceGrowth.matches){
+   path.setAttribute('d',curve.originalD);
+   tip.style.visibility='hidden';return;
   }
-  // Source-led adaptive tip: only the measured historical contour grows.
-  // The restrained SVG-002 sine bends follow scroll progress, NOT wall time.
-  // Returning to the same scroll position reproduces exactly the same curve.
-  const count=Math.max(2,Math.ceil(local*(points.length-1)));
+  // The underlying structure physically develops with scroll, then its
+  // existing wood fibres continue breathing on an independent time clock.
+  // Grounded at the root, the terminal shoots can bend by up to ~3px.
+  const count=Math.max(4,Math.ceil(local*(points.length-1)));
   const xy=[];
   for(let j=0;j<=count;j++){
    const u=local*j/count,p=curvePoint(points,u);
-   const envelope=(1-local)*Math.sin(Math.PI*u/Math.max(.02,local));
-   const wav=Math.sin(u*12.5+local*5.8+curve.seed*1.37);
-   const dx=wav*3.0*envelope,dy=Math.cos(u*8.6+local*3+curve.seed)*.9*envelope;
-   xy.push({x:p.x+dx,y:p.y+dy});
+   const flex=Math.pow(u,1.65)*(curve.seed>=14?.6:2.65);
+   const wave=Math.sin(livingClock*(.64+.039*(curve.seed%7))+
+       u*6.8+curve.seed*1.21);
+   const cross=Math.cos(livingClock*.41+u*4.3+curve.seed*.77);
+   xy.push({x:p.x+flex*wave,y:p.y+flex*.42*cross});
   }
   const d=xy.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ');
   if(path.getAttribute('d')!==d)path.setAttribute('d',d);
-  if(reduceGrowth.matches||local<.025){
-   tip.style.visibility='hidden';return;
-  }
-  // The visible gold nib is the LAST section of that same live curve,
-  // not a dash moving over a stationary, already-completed line.
-  const start=Math.max(0,xy.length-5);
-  const nib=xy.slice(start).map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ');
-  tip.setAttribute('d',nib);
-  tip.style.visibility='visible';
+  // A writing front continues traversing COMPLETED branches, rather than
+  // disappearing once local reaches 1. The source centreline remains grown.
+  const active=local>=.9999?
+   .12+.88*((livingClock*.087+curve.seed*.137)%1):local;
+  const end=Math.max(1,Math.floor((xy.length-1)*Math.min(1,active/Math.max(local,.0001))));
+  const begin=Math.max(0,end-5);
+  tip.setAttribute('d',xy.slice(begin,end+1).map((p,i)=>
+   (i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' '));
+  tip.style.visibility=local>.025?'visible':'hidden';
  }
  function galleryRects(g){
   const portraitRatio=3/4;
@@ -437,7 +435,7 @@
   // Source-bound moving gold burins continue when scrolling stops.
   const ambient=reduceGrowth.matches?0:livingClock;
   for(const mark of livingBurins){
-   const visible=ease((growth-mark.voice/12)/.15);
+   const visible=ease((growth-mark.start)/(mark.end-mark.start));
    mark.el.style.strokeOpacity=(visible*(.42+.42*(.5+.5*Math.sin(ambient*.67+mark.seed*9)))).toFixed(3);
    mark.el.style.strokeDashoffset=(-1000*((ambient*mark.speed+mark.seed)%1)).toFixed(2);
   }
@@ -599,37 +597,44 @@
    for(const child of [...doc.documentElement.children]){
     if(child.localName==='g')growthRoot.appendChild(document.importNode(child,true));
    }
-   // Original botanical plates only: no repeated branch stamps.
+   // V2: four genuinely different source families. No source is stamped
+   // twelve times and no new foliage is fabricated by formula.
    const ns='http://www.w3.org/2000/svg';
-   const historic=[...growthRoot.querySelectorAll('.olive-growth-branch')];
-   if(historic.length!==12)throw new Error('Expected twelve olive engravings');
+   const sourceRegions=[...growthRoot.querySelectorAll(
+     '.olive-growth-cluster,.olive-growth-terrain')];
+   if(sourceRegions.length!==4)
+    throw new Error('Four independently sourced botanical/terrain regions required');
    stage.dataset.p2OliveGrowthEchoes='0';
-   historic.forEach((branch,voice)=>{
-    const paths=[...branch.querySelectorAll('path.olive-growth-path')];
-    const stride=Math.max(1,Math.floor(paths.length/18));
+   const register=(source,region,i,voice)=>{
+    const shine=document.createElementNS(ns,'path');
+    shine.setAttribute('class','olive-growth-burin');
+    shine.setAttribute('d',source.getAttribute('d'));
+    shine.setAttribute('fill','none');
+    shine.setAttribute('pathLength','1000');
+    shine.setAttribute('stroke-dasharray','105 895');
+    shine.setAttribute('stroke-dashoffset','1000');
+    shine.setAttribute('stroke-width',i%4===0?'2.0':'1.35');
+    shine.setAttribute('stroke-linecap','round');
+    shine.style.pointerEvents='none';
+    source.parentNode.appendChild(shine);
+    livingBurins.push({el:shine,voice,
+     start:Number(region.dataset.growthStart),end:Number(region.dataset.growthEnd),
+     seed:i*.6180339+voice*.317,speed:.11+(i%7)*.016});
+   };
+   sourceRegions.forEach((region,voice)=>{
+    const paths=[...region.querySelectorAll('path.olive-growth-path')];
+    const stride=Math.max(1,Math.floor(paths.length/20));
     let count=0;
-    for(let i=voice%stride;i<paths.length&&count<18;i+=stride){
-     const source=paths[i],length=source.getTotalLength();
+    for(let i=voice%stride;i<paths.length&&count<20;i+=stride){
+     const original=paths[i],length=original.getTotalLength();
      if(!Number.isFinite(length)||length<5)continue;
-     const shine=document.createElementNS(ns,'path');
-     shine.setAttribute('class','olive-growth-burin');
-     shine.setAttribute('d',source.getAttribute('d'));
-     shine.setAttribute('fill','none');
-     shine.setAttribute('pathLength','1000');
-     shine.setAttribute('stroke-dasharray','35 965');
-     shine.setAttribute('stroke-dashoffset','1000');
-     shine.setAttribute('stroke-width',i%4===0?'2.4':'1.5');
-     shine.setAttribute('stroke-linecap','round');
-     shine.style.pointerEvents='none';
-     source.parentNode.appendChild(shine);
-     livingBurins.push({el:shine,voice,seed:i*.6180339+voice*.317,
-      speed:.12+(i%7)*.016});count++;
+     register(original,region,i,voice);count++;
     }
    });
    stage.dataset.p2OliveLivingBurins=String(livingBurins.length);
    // Advance a real engraved writing-front without a second RAF or extra
    // network asset; all historic contours remain reversible DOM paths.
-   const spines=[...growthRoot.querySelectorAll('.olive-growth-spines path.olive-growth-path')];
+   const spines=[...growthRoot.querySelectorAll('[data-live-spine="true"]')];
    for(const original of spines){
     const interval=original.closest('[data-growth-start]');
     if(!interval)continue;
@@ -651,12 +656,18 @@
     if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start)
       throw new Error('Invalid staged olive engraving interval');
     const line={el,start,end};
+    // Respect the variation of the original engraved burin widths.
+    if(!el.hasAttribute('data-live-spine')){
+     const authored=Number(el.getAttribute('stroke-width'));
+     if(Number.isFinite(authored)&&authored>0)
+      el.style.strokeWidth=Math.min(2.8,Math.max(.38,authored)).toFixed(3);
+    }
     const isHistoricSpine=!!el.closest('.olive-growth-spines');
     if(isHistoricSpine){
      const length=el.getTotalLength();
      if(!Number.isFinite(length)||length<=0)throw new Error('Invalid olive spine length');
      const points=[];
-     const slices=96;
+     const slices=84;
      for(let i=0;i<=slices;i++){
       const p=el.getPointAtLength(length*i/slices);
       points.push({x:p.x,y:p.y});
@@ -678,7 +689,9 @@
    }
    if(growthCurves.length!==8)throw new Error('Eight original olive paths must use SVG-002 curve-growth');
    stage.dataset.p2OliveLiveCurves=String(growthCurves.length);
-   if(growthLines.length<80)throw new Error('Not enough botanical source paths');
+   if(growthLines.length<300)throw new Error('V2 must contain its complete multi-source botanical engraving');
+   stage.dataset.p2OliveSourceFamilies='4';
+   stage.dataset.p2OliveSourcePathCount=String(growthLines.length);
    stage.dataset.p2OliveGrowthReady='true';
    schedule();
   }).catch(error=>{
