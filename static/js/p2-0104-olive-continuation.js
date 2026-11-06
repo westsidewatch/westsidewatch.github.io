@@ -529,8 +529,10 @@
   // the larger, optically lowered editorial masthead AFTER recomposition.
   // Never carry a new title down across the mounted speaker originals.
   rubric.style.setProperty('--olive-title-fan',fan.toFixed(4));
+  rubric.style.setProperty('--olive-title-growth',
+    (fan*(vertical?12:18)).toFixed(2)+'px');
   rubric.style.transform='translate3d(0,'+
-    ((vertical?22:78)*fan).toFixed(1)+'px,0)';
+    ((vertical?22:(g.w<900?36:78))*fan).toFixed(1)+'px,0)';
   rubric.style.clipPath=printTitle>=1?'none':
    'inset(0 '+((1-printTitle)*49).toFixed(3)+'% 0 '+((1-printTitle)*49).toFixed(3)+'%)';
   overview.style.visibility=d>=T.indexStart?'visible':'hidden';
