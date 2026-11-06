@@ -709,6 +709,23 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(restored.firstFrame.visibility,'hidden');
    assert.equal(restored.groundCSS.visibility,'hidden');
     assert.equal(restored.neutralCSS.visibility,'hidden','return to original 03 without a bridge remnant');
+   // This is the SAME live P2 scene with original posters hidden only
+   // for independent SVG art inspection; normal gallery remains untouched.
+   await page.evaluate(()=>document.getElementById('p2-olive-stage')
+    .classList.add('olive-art-only'));
+   const artMid=await go(13.15,'olive-only-mid-growth');
+   assert(artMid.growth.value>.2&&artMid.growth.value<.6,
+     'isolated gold copperplate must be captured during live growth');
+   const artFull=await go(17.55,'olive-only-fully-grown');
+   assert(artFull.growth.value>.99);
+   const optical=await page.evaluate(()=>({
+    gallery:getComputedStyle(document.getElementById('olive-proof')).visibility,
+    engraved:getComputedStyle(document.getElementById('olive-growth-field')).visibility,
+    families:document.querySelectorAll('#olive-growth-paths .olive-growth-cluster, #olive-growth-paths .olive-growth-terrain').length
+   }));
+   assert.equal(optical.gallery,'hidden','independent art proof must not be covered by the original posters');
+   assert.equal(optical.engraved,'visible','the actual gold SVG must remain visible');
+   assert.equal(optical.families,4,'the independent proof and real gallery must share the same sources');
    assert.equal(errors.length,0,'JavaScript browser errors: '+errors.join(' | '));
    console.log('P2 04 TWELVE VOICES PASS',width,
     JSON.stringify({stage:indexFull.scene,groundAfterHold:material.ground,
