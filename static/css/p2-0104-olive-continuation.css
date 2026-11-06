@@ -94,27 +94,26 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
  background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
 }
-/* V12: this complete invitation engraving uses OpenClipart CC0 original
-   olive-branch vectors (credited in OLIVE-MOUNTAIN-ART-SOURCES.md), with
-   leaf geometry checked against 1820 botanicals. The POSTER layer covers
-   the center; the olive branch remains visible on the green paper around
-   the actual 3:4 print. No invented trees, no reused ONE engravings.
-   OS defines the complete color system: --ws-olive + --ws-morning-gold. */
+/* V13: a real historical 1914 Walter Crane botanical engraving, not
+   formula-generated branches or a giant masked graphic behind two posters.
+   The chapter-specific hillside & city are engraved INTO the actual
+   70px header of each physical invitation. Artwork stays fully visible
+   ABOVE the protected image, never in the shared center gutter.
+   The same unmodified 3:4 speaker artwork covers the rest of the card. */
 .olive-card__relief{
- position:absolute;inset:0;width:100%;height:100%;max-height:none;
- isolation:isolate;overflow:hidden;pointer-events:none;opacity:1;
+ position:absolute;top:0;left:4%;right:4%;width:auto;
+ height:70px;max-height:70px;pointer-events:none;
+ overflow:hidden;opacity:1;isolation:isolate;
 }
 .olive-card__relief::before,.olive-card__relief::after{
  content:"";position:absolute;inset:0;
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
- -webkit-mask-position:center;mask-position:center;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ -webkit-mask-position:center center;mask-position:center center;
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
 }
 .olive-card__relief::before{
- /* An authentic two-pass press registration: paper-toned emboss highlight,
-    no black engraving and no new page-specific pigments. */
  background:var(--ws-paper);opacity:.20;transform:translate(-1px,-1px);
 }
 .olive-card__relief::after{
@@ -265,9 +264,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  }
 }
 @media(max-width:540px){
- /* Mobile uses the same integral engraved CARD, not a tiny
-    phone-only 14px hairline. The original poster still masks the center. */
- .olive-card__relief{inset:0;width:100%;height:100%;max-height:none;opacity:1}
+ /* Engraved folio headpiece is constrained to the actual phone card's
+    top paper border; no olive leaves may float between mounted images. */
+ .olive-card__relief{left:4%;right:4%;top:0;width:auto;height:22px;max-height:22px;opacity:1}
  .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
   font-size:7px;letter-spacing:0}
  .p2-olive-controls{gap:2px;max-height:60px}
