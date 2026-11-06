@@ -724,6 +724,18 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    const artMid=await go(13.15,'olive-only-mid-growth');
    assert(artMid.growth.value>.2&&artMid.growth.value<.6,
      'isolated gold copperplate must be captured during live growth');
+   // The renderer, not a design description: inspect one fully visible
+   // original native SVG at the live chapter's precise scroll position.
+   // Encoded JPEG is only for reviewing the CI capture, not shipped to site.
+   if(width===1648||width===390){
+    const proof=await page.screenshot({type:'jpeg',quality:53,
+      animations:'disabled'});
+    const data=proof.toString('base64');
+    console.log('OLIVE_V3_JPEG_BEGIN '+width);
+    for(let z=0;z<data.length;z+=3000)
+      console.log('OLIVE_V3_JPEG_PART '+width+' '+data.slice(z,z+3000));
+    console.log('OLIVE_V3_JPEG_END '+width);
+   }
    const artFull=await go(17.55,'olive-only-fully-grown');
    assert(artFull.growth.value>.99);
    const optical=await page.evaluate(()=>({
