@@ -12,7 +12,7 @@ const html=fs.readFileSync(path.join(root,
  'static/experiments/olive-engraving-v1-v2-compare.html'),'utf8');
 assert.match(html,/5aa9c100\.westsidewatch-github-io\.pages\.dev/);
 assert.match(html,/15125d1a\.westsidewatch-github-io\.pages\.dev/);
-assert.match(html,/olive-engraving-v1-v2-compare/);
+assert.match(html,/OLIVE MOUNTAIN/);
 const out=path.join(root,'artifacts/p2-0104-olive');
 fs.mkdirSync(out,{recursive:true});
 (async()=>{
