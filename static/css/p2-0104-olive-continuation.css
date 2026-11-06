@@ -145,8 +145,10 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    it occupies the 04 olive field behind all twelve protected poster prints.
    Exact official gold token; background stays --ws-olive, never black. */
 .olive-growth-field{
- position:absolute;z-index:0;inset:0;display:block;width:100%;height:100%;
- pointer-events:none;overflow:hidden;color:var(--ws-morning-gold);
+ /* Chapter-wide botanical ink sits between the revealed 04 field and
+    the protected speaker folio. 03's folio bounds must NOT crop branches. */
+ position:absolute;z-index:3;inset:0;display:block;width:100%;height:100%;
+ pointer-events:none;overflow:visible;color:var(--ws-morning-gold);
 }
 .olive-growth-field .olive-growth-path{
  fill:none;stroke:var(--ws-morning-gold);
