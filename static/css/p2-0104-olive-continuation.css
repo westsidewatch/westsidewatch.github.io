@@ -180,6 +180,13 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-growth-field .olive-leaf-midrib{stroke-opacity:.45;stroke-width:.34}
 /* V3.1 connected crowns: long olive leaves, branchlets, dark fruit
    and delicate engraved underside.  No full-window foliage stamps. */
+/* The broader original crown masses are lower ink than the connected
+   wood/old foliage, leaving the original speaker prints dominant. */
+.olive-growth-field .olive-canopy-pad{opacity:.59}
+.olive-growth-field .olive-pad-armature{stroke-opacity:.51}
+.olive-growth-field .olive-pad-leaf{stroke-opacity:.72}
+.olive-growth-field .olive-pad-midvein{stroke-opacity:.34}
+.olive-growth-field .olive-pad-hatching{stroke-opacity:.30}
 .olive-growth-field .olive-canopy-crown{opacity:.92}
 .olive-growth-field .olive-canopy-twigs{stroke-opacity:.55}
 .olive-growth-field .olive-canopy-leaves{stroke-opacity:.87}
