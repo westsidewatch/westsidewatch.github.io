@@ -273,8 +273,12 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
  .olive-stage__poster .olive-stage__artwork{inset:0}
  .olive-stage__poster figcaption{display:none!important}
  .olive-stage__index-card span{font-size:7px;line-height:15px}
- .olive-stage__rubric strong{font-size:clamp(26px,7.8vw,35px)}
- .olive-stage__rubric small{font-size:8px}
+ /* Mobile reflows the global title as ONE centered line: the desktop
+    side labels cannot consume fixed-width columns and clip the masthead. */
+ .olive-stage__rubric{top:42px;left:8px;right:8px;min-height:42px;
+  grid-template-columns:1fr;justify-items:center}
+ .olive-stage__rubric span,.olive-stage__rubric small{display:none}
+ .olive-stage__rubric strong{font-size:clamp(26px,7.8vw,35px);text-align:center}
 }
 @media(prefers-reduced-motion:reduce){
  .olive-stage__invitation,.olive-stage__first,.olive-stage__pair,
