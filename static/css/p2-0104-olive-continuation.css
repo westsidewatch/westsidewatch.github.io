@@ -164,42 +164,39 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-growth-field .olive-growth-spines .olive-growth-path{
  stroke:var(--ws-warm-gold);stroke-width:.82;stroke-opacity:.67;
 }
-/* V2 · REAL SOURCE FAMILIES, not repeated gold-stamped ornaments.
-   Burin hierarchy: deep hill etching, old cultivated wood, archival
-   olive botanical silhouettes and the 18 separate living root lines. */
-.olive-growth-field .olive-growth-terrain{opacity:.58}
+/* V3 / ONE ORIGINAL COPPERPLATE. All paths serve one landscape
+   perspective; no V11/V12 shapes or neon glow.  A fine-burin hierarchy
+   within EXACT OS olive + gold inks, with portraits above the plate. */
+.olive-growth-field .olive-growth-terrain{opacity:.43}
 .olive-growth-field .olive-growth-terrain .olive-growth-path{
- stroke-opacity:.62;stroke-width:.67
+ stroke-opacity:.55;stroke-width:.56
 }
-.olive-growth-field .olive-growth-wood{opacity:.78}
-.olive-growth-field .olive-growth-wood .olive-growth-path{stroke-opacity:.68}
-.olive-growth-field .olive-growth-crane{opacity:.9}
-.olive-growth-field .olive-growth-cabinet{opacity:.95}
-.olive-growth-field .olive-growth-authentic{
- fill:var(--ws-morning-gold);fill-opacity:.12;
- stroke:var(--ws-morning-gold);stroke-width:.85;stroke-opacity:.88;
- vector-effect:non-scaling-stroke
+.olive-growth-field .olive-growth-left,
+.olive-growth-field .olive-growth-right{opacity:.91}
+.olive-growth-field .olive-wood-contour{stroke-opacity:.82;stroke-width:1.04}
+.olive-growth-field .olive-bark-hatch{stroke-opacity:.36;stroke-width:.4}
+.olive-growth-field .olive-sprig{stroke-opacity:.78;stroke-width:.64}
+.olive-growth-field .olive-leaf-outline{stroke-opacity:.86;stroke-width:.70}
+.olive-growth-field .olive-leaf-midrib{stroke-opacity:.45;stroke-width:.34}
+.olive-growth-field .olive-growth-distant{opacity:.43}
+.olive-growth-field .olive-growth-distant .olive-growth-path{
+ stroke-opacity:.52;stroke-width:.48
 }
-.olive-growth-field .olive-growth-spines .olive-growth-spine{
- fill:none;stroke:var(--ws-warm-gold);stroke-opacity:.87;
- stroke-width:1.6;vector-effect:non-scaling-stroke
+.olive-growth-field .olive-growth-spines .olive-growth-path{
+ stroke:var(--ws-warm-gold);stroke-width:1.18;stroke-opacity:.82;
 }
-.olive-growth-field .olive-growth-spines g:nth-child(6n + 1) .olive-growth-spine{
- stroke-width:2.25;stroke-opacity:.91
+.olive-growth-field .olive-growth-spines g:nth-child(9n + 1) .olive-growth-path{
+ stroke-width:1.62;stroke-opacity:.88;
 }
 .olive-growth-field .olive-growth-burin{
  fill:none!important;
  stroke:var(--ws-morning-gold)!important;
- stroke-opacity:0;
- vector-effect:non-scaling-stroke;
- mix-blend-mode:screen;
- filter:drop-shadow(0 0 1.35px var(--ws-morning-gold));
+ stroke-opacity:0;stroke-width:.95;vector-effect:non-scaling-stroke;
  pointer-events:none;
 }
 .olive-growth-field .olive-growth-tip{
- fill:none;stroke:var(--ws-warm-gold);stroke-width:2.1;
- stroke-opacity:1;stroke-linecap:round;stroke-linejoin:round;
- filter:drop-shadow(0 0 2px var(--ws-morning-gold));
+ fill:none;stroke:var(--ws-warm-gold);stroke-width:1.35;
+ stroke-opacity:.78;stroke-linecap:round;stroke-linejoin:round;
  vector-effect:non-scaling-stroke;stroke-dasharray:12 988;
  stroke-dashoffset:0;pointer-events:none;
 }
