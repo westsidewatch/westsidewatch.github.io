@@ -14,6 +14,8 @@ on:
       - 'static/images/p2-realms/v15/04-olive-mount-etching-v8.svg'
       - 'static/images/p2-realms/v15/04-olive-engraved-headpiece-v10.svg'
       - 'static/images/p2-realms/v15/04-olive-botanical-intaglio-v11.svg'
+      - 'static/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg'
+      - 'docs/design/OLIVE-MOUNTAIN-ART-SOURCES.md'
       - 'tests/p2-0104-olive-continuation.cjs'
       - '.github/workflows/p2-0104-olive-preview.yml'
   workflow_dispatch:
@@ -47,6 +49,7 @@ jobs:
           test -s public/images/p2-realms/v15/04-olive-mount-etching-v8.svg
           test -s public/images/p2-realms/v15/04-olive-engraved-headpiece-v10.svg
           test -s public/images/p2-realms/v15/04-olive-botanical-intaglio-v11.svg
+          test -s public/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg
           test -s public/images/olive/watchman-nee-editorial.png
           node --check tests/p2-0104-olive-continuation.cjs
       - name: Test genuine Chrome 03→04 entrance and reverse scroll
