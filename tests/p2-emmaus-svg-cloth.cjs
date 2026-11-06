@@ -37,6 +37,7 @@ assert(!/cover-texture-antique-green\.png\?v=93ae0c7e0609/.test(book+release+tra
    const result=await page.evaluate(async()=>{
     const d=document,cover=d.querySelector('#emmaus .emmaus__entry-cover-leaf');
     const outer=d.querySelector('#emmaus > .emmaus__right > .emmaus__entry-cover');
+    const binding=d.querySelector('#emmaus > .emmaus__right > .emmaus__right-binding');
     const texture=d.querySelector('#p2-realm-background[data-realm="bible"]');
     const u='/images/p2-emmaus-binding-cloth-v1.svg?v=20261106-gilt-weave';
     const response=await fetch(u);
@@ -47,6 +48,7 @@ assert(!/cover-texture-antique-green\.png\?v=93ae0c7e0609/.test(book+release+tra
       patterns:xml.querySelectorAll('pattern').length,
       front:getComputedStyle(cover).backgroundImage,
       outer:getComputedStyle(outer).backgroundImage,
+      binding:getComputedStyle(binding).backgroundImage,
       exterior:texture?getComputedStyle(texture).backgroundImage:'',
       state:d.querySelector('#emmaus').dataset.coverState,
       rect:{w:cover.getBoundingClientRect().width,h:cover.getBoundingClientRect().height}
@@ -56,7 +58,7 @@ assert(!/cover-texture-antique-green\.png\?v=93ae0c7e0609/.test(book+release+tra
    assert.equal(result.xml,true,'SVG must be parseable');
    assert.equal(result.patterns,4);
    assert(result.front.includes(link),'actual green cover MUST show SVG cloth');
-   assert(result.outer.includes(link),'outbound face MUST show SVG cloth');
+   assert(result.binding.includes(link),'post-turn bookbinding MUST retain the same native SVG cloth: '+JSON.stringify(result));
    assert.equal(result.state,'green','cover is the paused approved first turn');
    assert(!errors.length,'real bookturn JS errors '+errors.join(' / '));
    await page.screenshot({path:path.join(dir,`${width}-emmaus-svg-cloth-green-hold.png`),animations:'disabled'});
