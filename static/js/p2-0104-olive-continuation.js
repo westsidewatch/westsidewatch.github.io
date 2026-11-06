@@ -220,6 +220,18 @@
     Math.max(27,Math.min(34,r.h*.047));
   return {x:r.x-left,y:r.y-top,w:r.w+left+right,h:r.h+top+bottom};
  }
+ // Align the REGISTERED print engraving in the REAL exposed green paper
+ // above the frozen 3:4 poster, rather than pinning its gold ink to top:0.
+ // The source slot is taller than the settled pair; both are handled
+ // geometrically without ever moving/resizing the approved poster.
+ function positionInvitedEngraving(el,card,poster,mobile){
+  const exposed=Math.max(0,poster.y-card.y);
+  const safety=mobile?2:5;
+  const h=Math.min(mobile?22:70,Math.max(4,exposed-2*safety));
+  const y=Math.max(2,(exposed-h)/2);
+  el.style.setProperty('--olive-foil-top',y.toFixed(2)+'px');
+  el.style.setProperty('--olive-foil-height',h.toFixed(2)+'px');
+ }
  function setCardCaption(card,i){
   const en=card.querySelector('.olive-card__name-en');
   const zh=card.querySelector('.olive-card__name-zh');
@@ -356,6 +368,8 @@
   const bw=mix(mountedSourcePrint.w,settledLeft.w,firstTravel);
   const bh=mix(mountedSourcePrint.h,settledLeft.h,firstTravel);
   position(first,bx,by,bw,bh);
+  positionInvitedEngraving(firstInvitation,cardGeometry,
+   {x:bx,y:by,w:bw,h:bh},vertical);
   const posterReveal=ease((bridge-.33)/.67);
   first.style.visibility=d>T.start&&d<T.spread?'visible':'hidden';
   first.style.clipPath=d<T.first?
@@ -370,6 +384,8 @@
    targetLeftCard.w,targetLeftCard.h);
   position(invitationRight,targetRightCard.x,targetRightCard.y,
    targetRightCard.w,targetRightCard.h);
+  positionInvitedEngraving(invitationLeft,targetLeftCard,settledLeft,vertical);
+  positionInvitedEngraving(invitationRight,targetRightCard,settledRight,vertical);
   const rightCardReveal=ease((form-.44)/.26);
   invitationLeft.style.visibility=d>=T.spread&&d<T.indexStart?'visible':'hidden';
   invitationRight.style.visibility=rightCardReveal>0&&d<T.indexStart?'visible':'hidden';
