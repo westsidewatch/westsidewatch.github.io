@@ -3,7 +3,7 @@
    MERSI template, replayed sevenfold, shadowed card grid or video UI.
    The original Doré image supplies the entrance's physical coordinates. */
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behavior-y:none}
+html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(--ws-olive) 37%,var(--ws-ink));overscroll-behavior-y:none}
 .p2-olive-controls{
  position:fixed;z-index:80;top:0;left:0;right:0;
  display:flex;align-items:center;gap:15px;padding:5px 13px;
@@ -24,8 +24,11 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .p2-olive-controls label{margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:6px}
 .p2-olive-controls input{accent-color:#c4a96c;width:118px}
 #p2-olive-track{position:relative;height:1865svh}
-.p2-olive-stage{position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent}
-#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:#142a26;z-index:0}
+.p2-olive-stage{
+ --ws-branch:var(--ws-olive);--ws-engraving-opacity:.13;
+ position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent
+}
+#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-structure);z-index:0}
 
 /* MERSI 03→04 material handoff. The source is still 03 while the
    new card travels; the 04 gallery print field enters only AFTER the
@@ -58,8 +61,11 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 /* Independent 04 gallery field. Neither 03 cloth nor decorative foil is
    allowed to be repainted outside the actual invitation cards. */
 .olive-surround__half{
- background-color:#163a2a;
- background-image:linear-gradient(152deg,#204432 0%,#153928 56%,#103225 100%);
+ background-color:var(--ws-structure);
+ background-image:linear-gradient(152deg,
+  color-mix(in oklab,var(--ws-deep) 54%,var(--ws-structure)) 0%,
+  var(--ws-structure) 56%,
+  color-mix(in oklab,var(--ws-structure) 76%,var(--ws-ink)) 100%);
  background-repeat:no-repeat;
  background-size:200% 100%;
 }
@@ -67,7 +73,7 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .olive-surround__half[data-side="right"]{background-position:right center}
 .olive-proof{
  position:absolute;z-index:4;overflow:hidden;
- visibility:hidden;background:transparent;color:#20382e;
+ visibility:hidden;background:transparent;color:var(--ws-structure);
  isolation:isolate;pointer-events:none;
 }
 .olive-stage__first,.olive-stage__pair,.olive-stage__overview{
@@ -79,12 +85,12 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .olive-stage__invitation{
  position:absolute;z-index:1;display:block;visibility:hidden;
  margin:0;padding:0;border:0;pointer-events:none;overflow:hidden;
- background:#193d2e;
- color:#d8be7d;isolation:isolate;
+ background:color-mix(in oklab,var(--ws-deep) 53%,var(--ws-structure));
+ color:var(--ws-morning-gold);isolation:isolate;
 }
 .olive-stage__invitation::after{
  content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
- background:#bea268;opacity:.40;pointer-events:none;
+ background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
 }
 .olive-card__relief{
  position:absolute;left:2px;bottom:12%;
@@ -99,8 +105,8 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
 .olive-card__caption{
  position:absolute;z-index:2;bottom:6px;left:13px;right:13px;
  height:19px;display:flex;align-items:center;
- border-top:1px solid rgba(216,188,125,.52);
- color:#e2c990;background:transparent;
+ border-top:1px solid color-mix(in oklab,var(--ws-morning-gold) 50%,transparent);
+ color:var(--ws-morning-gold);background:transparent;
  font:200 clamp(8px,.69vw,11px)/1.2 var(--ws-type-display-en);
  letter-spacing:.075em;white-space:nowrap;overflow:hidden;
 }
@@ -161,12 +167,12 @@ html,body{margin:0;padding:0;min-height:100%;background:#172821;overscroll-behav
  min-height:68px;visibility:hidden;overflow:hidden;
  display:grid;grid-template-columns:minmax(112px,1fr) auto minmax(112px,1fr);
  align-items:center;gap:clamp(8px,1.4vw,20px);
- color:#d9bc78;pointer-events:none;
+ color:var(--ws-morning-gold);pointer-events:none;
 }
 .olive-stage__rubric::after{display:none}
 .olive-stage__rubric span,.olive-stage__rubric small{
  font:200 clamp(9px,.69vw,11px)/1.3 var(--ws-type-display-en);
- letter-spacing:.105em;color:#d7bc86;
+ letter-spacing:.105em;color:var(--ws-morning-gold);
 }
 .olive-stage__rubric strong{
  font:400 clamp(31px,3.3vw,54px)/.97 var(--ws-type-display-en);
