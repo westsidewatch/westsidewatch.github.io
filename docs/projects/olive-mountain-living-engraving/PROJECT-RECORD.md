@@ -95,3 +95,15 @@ GitHub issue: https://github.com/westsidewatch/westsidewatch.github.io/issues/13
 - **視覺稽核**：V3.2 比 V3.1 有更寬的密集葉冠，呈兩側更穩定的植物邊框，減少 V2 的中央雜亂。然而樹冠局部仍有公式化的鬆散斑塊，樹幹蒼老質感及城與梯田辨識度仍不夠，**不可僅因 CI PASS 或葉片數增加宣稱達到手冊的 15／20 或獲獎級**。
 - **邊界**：P2 #1385 保持 Draft，未合併 main；原始 01–03 以及已核准的 12 張講員海報不動。完整藝術終驗仍未通過，不得上線。
 
+
+
+## 2026-11-06｜多雷探索重建設計母本 V4（不改動效）
+
+**判定**：到 V3.2 為止，橄欖山仍沒有達標的藝術母本。不要再用千條公式植物線＋原來的整屏遮罩宣稱「刻線已完成」；需要的是優於 V1 的可見構圖。
+
+**本輪實際新增（Draft，與主站無關）**：
+- `docs/projects/olive-mountain-living-engraving/ART-FOUNDATION-V4-DORÉ-EXPLORATION-2026-11-06.md`：按編輯手冊 §9 全網確認 OpenClipart #7331（Walter Crane 1914 公版 SVG）、#7176（Rhead 1905 公版候選），NYPL Woodward／Cousen 1881–84 橄欖山地貌原作與權利、既有 V12 公版 SVG、SVG.js／SVGO 的適用性與真正接入界線。
+- `static/experiments/olive-mountain-art-foundation-v4.html`：**實際靜態設計 A/B**，十二張真實 3:4 海報全部由已批准的 `OliveSpeakerBaseline.mount` 渲染凍結英文；Walter Crane V13 只在海報以下的橫刻版芯；V12 僅做側邊窄距裁切（整張 V12 曾被否決，不代表已重新批准）；提供 A 古典軸線、B 非對稱大刊頭、海報安全區顯示切換。沒有新增動畫。
+- `tests/olive-mountain-art-foundation-v4.cjs` 與隔離 Preview workflow：四種 viewport（1648／1440／800／390）實測十二張原版、Shadow DOM 英文字、3:4、刻線不能碰撞海報及刊頭、A/B 實拍證據。
+
+**評審判準**：只有當靜態版面完整、橄欖山辨識與刀法成熟、手機正確、獲獎導向內部評審至少 15/20 且必要項非零，才考慮把 V10／SVG-002 生長機制接上。這次研究不是宣稱藝術終驗，更不是 merge main。截圖若仍存在破碎植物就否決，不再往錯誤構圖繼續添葉片。
