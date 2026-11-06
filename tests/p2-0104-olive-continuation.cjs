@@ -119,8 +119,10 @@ assert.match(reliefSVG,/OpenClipart johnny_automatic 7331/,'public domain refere
 assert.match(reliefSVG,/viewBox="0 0 600 90"/,'real original 04 invitation horizontal headpiece geometry');
 assert((reliefSVG.match(/<path\b/g)||[]).length>=29,'23 historic olive paths retained alongside cut landscape');
 assert(!reliefSVG.includes('<image'), 'art stays editable native SVG');
-assert.match(css,/\.olive-card__relief\{[^}]*top:0;left:4%;right:4%;width:auto;[^}]*height:70px;max-height:70px/,
- 'engraving must fit ABOVE mounted poster, not span the full card');
+assert.match(css,/\.olive-card__relief\{[^}]*top:var\(--olive-foil-top,16px\);left:4%;right:4%;width:auto;[^}]*height:var\(--olive-foil-height,48px\);max-height:70px/,
+ 'engraving must be positioned by actual mounted-card headpiece geometry');
+assert.match(js,/function positionInvitedEngraving\(/,
+ 'both original-source and paired cards must use source-aware engraving registration');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
 (async()=>{
  const browser=await chromium.launch({headless:true});
@@ -280,12 +282,19 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      bridge.firstFrame.box.h<bridge.invitation.box.h,
      'the editorial print must have real green-card margins');
    assert(bridge.firstFrame.src.includes('watchman-nee-editorial.png'));
+   assert(Math.abs((bridge.invitation.reliefBox.y-bridge.invitation.box.y)-
+    (bridge.firstFrame.box.y-bridge.invitation.reliefBox.y-bridge.invitation.reliefBox.h))<2.5,
+    '10.08 engraving must be CENTERED in its exposed source green headpiece');
    assert.equal(bridge.groundCSS.visibility,'hidden');
    assert.equal(bridge.neutralCSS.visibility,'hidden');
    const sourceTakeover=await go(10.18,'01b-source-plate-no-old-engraving-exposure');
    assert(sourceTakeover.invitation.reliefBox.h>8&&
      sourceTakeover.invitation.reliefBox.h<=(width>800?71:23),
      'historical foil must occupy the real V13 invitation headpiece');
+   assert(Math.abs((sourceTakeover.invitation.reliefBox.y-sourceTakeover.invitation.box.y)-
+    (sourceTakeover.firstFrame.box.y-sourceTakeover.invitation.reliefBox.y-
+     sourceTakeover.invitation.reliefBox.h))<2.5,
+    '10.18 engraving must have balanced card paper above and below');
    assert(sourceTakeover.invitation.reliefBox.y>=sourceTakeover.invitation.box.y-1&&
      sourceTakeover.invitation.reliefBox.y+sourceTakeover.invitation.reliefBox.h<=
       sourceTakeover.firstFrame.box.y+1,
@@ -345,6 +354,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(pair.pairCardLeft.visibility,'visible');
    assert.equal(pair.pairCardRight.visibility,'visible');
    for(const c of [pair.pairCardLeft,pair.pairCardRight]){
+     const poster=c===pair.pairCardLeft?pair.pairLeft.box:pair.pairRight.box;
+     assert(Math.abs((c.relief.y-c.box.y)-(poster.y-c.relief.y-c.relief.h))<2.5,
+      'pair invitation engraving must be centered between card edge and print');
      assert(c.relief.y>=c.box.y-1&&c.relief.y+c.relief.h<=c.box.y+80,
       'historic print is confined to the top card headpiece, never the shared poster gutter');
      assert(c.relief.h<=(width>800?71:23),
