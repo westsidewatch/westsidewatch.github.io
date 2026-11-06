@@ -30,7 +30,8 @@
  const overview=$('#olive-overview'),enter=$('#olive-enter');
  const growthSvg=$('#olive-growth-field'),growthRoot=$('#olive-growth-paths');
  const growthMaskLeft=$('#olive-growth-mask-left'),growthMaskRight=$('#olive-growth-mask-right');
- const growthLines=[],growthTips=[],growthCurves=[],reduceGrowth=matchMedia('(prefers-reduced-motion: reduce)');
+ const growthLines=[],growthTips=[],growthCurves=[],livingBurins=[],reduceGrowth=matchMedia('(prefers-reduced-motion: reduce)');
+ let livingClock=0,livingLast=0;
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
  const status=$('#p2-olive-folio-status');
@@ -433,6 +434,13 @@
   stage.dataset.p2OliveGrowthVoices=String(Math.floor(growth*12+.0001));
   stage.dataset.p2OliveGrowthPair=String(Math.min(5,Math.floor(growth*6)));
   if(growthSvg)stage.dataset.p2OliveGrowthPaths=String(growthLines.length);
+  // Source-bound moving gold burins continue when scrolling stops.
+  const ambient=reduceGrowth.matches?0:livingClock;
+  for(const mark of livingBurins){
+   const visible=ease((growth-mark.voice/12)/.15);
+   mark.el.style.strokeOpacity=(visible*(.42+.42*(.5+.5*Math.sin(ambient*.67+mark.seed*9)))).toFixed(3);
+   mark.el.style.strokeDashoffset=(-1000*((ambient*mark.speed+mark.seed)%1)).toFixed(2);
+  }
   const rects=galleryRects(g);
   // Desktop uses true folio halves; on narrow phones two original posters
   // occupy TOP/BOTTOM halves to avoid extremely thin and mostly empty strips.
@@ -591,48 +599,34 @@
    for(const child of [...doc.documentElement.children]){
     if(child.localName==='g')growthRoot.appendChild(document.importNode(child,true));
    }
-   // More abundance from EXISTING public-domain botanical plates, never
-   // formula-made twigs. Registration stays in stage-wide negative space:
-   // top, outer sides and lower folio, not atop protected speaker prints.
-   // SVG <use> references original live paths, so all added leaves follow
-   // the same dash-based drawing and retract on reverse scroll.
+   // Original botanical plates only: no repeated branch stamps.
    const ns='http://www.w3.org/2000/svg';
    const historic=[...growthRoot.querySelectorAll('.olive-growth-branch')];
-   if(historic.length!==12)throw new Error('Olive mother plate must retain twelve botanical voices');
-   historic.forEach((branch,i)=>branch.id='olive-growth-master-'+(i+1));
-   const echoes=[
-    [1,'translate(24 -72) scale(.92)',.62],
-    [2,'translate(120 -73) scale(.92)',.63],
-    [3,'translate(205 -35) scale(.81)',.74],
-    [4,'translate(255 -30) scale(.81)',.74],
-    [5,'translate(88 212) scale(.78)',.75],
-    [6,'translate(320 213) scale(.78)',.77],
-    [7,'translate(46 -18) scale(.95)',.62],
-    [8,'translate(58 -15) scale(.95)',.63],
-    [9,'translate(156 342) scale(.63)',.68],
-    [10,'translate(410 341) scale(.65)',.69],
-    [11,'translate(-235 150) scale(.92)',.66],
-    [12,'translate(320 150) scale(.92)',.67]
-   ];
-   const volume=document.createElementNS(ns,'g');
-   volume.setAttribute('class','olive-growth-volume');
-   volume.setAttribute('aria-hidden','true');
-   for(const [source,transform,opacity] of echoes){
-    // A live source <use> instance can lose the path's class styling in
-    // Chromium: its leaves then turn into DARK FILLED silhouettes and may
-    // ignore the reversible dash drawing. Clone the actual editorial SVG
-    // paths instead. No new asset, no generated botanical geometry.
-    const registration=document.createElementNS(ns,'g');
-    registration.setAttribute('transform',transform);
-    registration.setAttribute('opacity',String(opacity));
-    const historicalPlate=historic[source-1].cloneNode(true);
-    historicalPlate.removeAttribute('id');
-    historicalPlate.classList.add('olive-growth-echo');
-    registration.appendChild(historicalPlate);
-    volume.appendChild(registration);
-   }
-   growthRoot.insertBefore(volume,growthRoot.firstChild);
-   stage.dataset.p2OliveGrowthEchoes=String(echoes.length);
+   if(historic.length!==12)throw new Error('Expected twelve olive engravings');
+   stage.dataset.p2OliveGrowthEchoes='0';
+   historic.forEach((branch,voice)=>{
+    const paths=[...branch.querySelectorAll('path.olive-growth-path')];
+    const stride=Math.max(1,Math.floor(paths.length/18));
+    let count=0;
+    for(let i=voice%stride;i<paths.length&&count<18;i+=stride){
+     const source=paths[i],length=source.getTotalLength();
+     if(!Number.isFinite(length)||length<5)continue;
+     const shine=document.createElementNS(ns,'path');
+     shine.setAttribute('class','olive-growth-burin');
+     shine.setAttribute('d',source.getAttribute('d'));
+     shine.setAttribute('fill','none');
+     shine.setAttribute('pathLength','1000');
+     shine.setAttribute('stroke-dasharray','35 965');
+     shine.setAttribute('stroke-dashoffset','1000');
+     shine.setAttribute('stroke-width',i%4===0?'2.4':'1.5');
+     shine.setAttribute('stroke-linecap','round');
+     shine.style.pointerEvents='none';
+     source.parentNode.appendChild(shine);
+     livingBurins.push({el:shine,voice,seed:i*.6180339+voice*.317,
+      speed:.12+(i%7)*.016});count++;
+    }
+   });
+   stage.dataset.p2OliveLivingBurins=String(livingBurins.length);
    // Advance a real engraved writing-front without a second RAF or extra
    // network asset; all historic contours remain reversible DOM paths.
    const spines=[...growthRoot.querySelectorAll('.olive-growth-spines path.olive-growth-path')];
@@ -692,6 +686,17 @@
    stage.dataset.p2OliveGrowthError=String(error.message||error);
   });
  }
+ function livingFrame(now){
+  if(!livingLast)livingLast=now;
+  const dt=Math.min(.06,(now-livingLast)/1000);livingLast=now;
+  if(!reduceGrowth.matches&&stage.dataset.p2OliveGrowthReady==='true'&&
+     Number(stage.dataset.p2Distance||0)>=T.groundStart){
+   livingClock+=dt;
+   if(now-(livingFrame.lastPaint||0)>40){livingFrame.lastPaint=now;schedule();}
+  }
+  requestAnimationFrame(livingFrame);
+ }
+ requestAnimationFrame(livingFrame);
  document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.seek)));
  slider.addEventListener('input',()=>go(+slider.value));
  base.addEventListener('load',schedule);
