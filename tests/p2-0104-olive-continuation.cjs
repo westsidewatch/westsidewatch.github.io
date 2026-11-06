@@ -118,7 +118,7 @@ assert.match(reliefSVG,/ancient cultivated olive tree/,
  'visible true olive identity must appear in SVG description');
 assert(!reliefSVG.includes('<image'), 'editable pure native SVG, no raster or hidden external image');
 assert.match(css,/\.olive-card__relief\{[^}]*inset:0;width:100%;height:100%;max-height:none/,
- 'graphic covers the card's real outer rail instead of being squeezed into a tiny header');
+ "graphic covers the card's real outer rail instead of being squeezed into a tiny header");
 assert.match(css,/#olive-invitation-right \.olive-card__relief\{transform:scaleX\(-1\)\}/,
  'left and right invitations have distinct opposite outside botanical rails');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
