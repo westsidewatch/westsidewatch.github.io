@@ -25,7 +25,14 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
 .p2-olive-controls input{accent-color:#c4a96c;width:118px}
 #p2-olive-track{position:relative;height:1865svh}
 .p2-olive-stage{
- --ws-branch:var(--ws-olive);--ws-engraving-opacity:.13;
+ /* Rescope the ORIGINAL Design OS semantic role formulas. Otherwise
+    CSS custom-property inheritance can freeze --ws-deep/--ws-structure
+    at the root first-light branch before this Olive realm is entered. */
+ --ws-branch:var(--ws-olive);
+ --ws-identity:var(--ws-olive);
+ --ws-structure:color-mix(in oklab,var(--ws-olive) 34%,var(--ws-ink));
+ --ws-deep:color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink));
+ --ws-engraving-opacity:.13;
  position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent
 }
 #p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-structure);z-index:0}
