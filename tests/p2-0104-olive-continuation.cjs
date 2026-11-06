@@ -151,6 +151,12 @@ assert.match(js,/olive-growth-master-/,
  'the fuller field reuses the same twelve authentic editable source engravings');
 assert.match(js,/class','olive-growth-tip'/,
  'SVG-002 must have a registered line-front, not only uniform static gold strokes');
+assert.match(js,/function drawGrowingCurve\(curve,local\)/,
+ 'historical spines must be reauthored from SVG-002 scroll-sculpted geometry');
+assert.match(js,/getPointAtLength\(length\*i\/slices\)/,
+ 'curve-growth must sample original editorial SVG paths, not invent synthetic stems');
+assert.match(js,/path\.setAttribute\('d',d\)/,
+ 'actual geometry must extend behind the growing pen tip');
 assert.match(css,/\.olive-growth-field \.olive-growth-tip\{/,
  'the leading engraved nib uses the OS warm-gold ink');
 assert.doesNotMatch(css,/filter:drop-shadow|text-shadow/,
@@ -228,9 +234,11 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
         right:+document.querySelector('#olive-growth-mask-right').getAttribute('height'),
         rightY:+document.querySelector('#olive-growth-mask-right').getAttribute('y')},
        visibility:getComputedStyle(document.querySelector('#olive-growth-field')).visibility,
+       curveD:document.querySelector('#olive-growth-paths .olive-growth-spines path.olive-growth-path')?.getAttribute('d')||'',
        offsets:[...document.querySelectorAll('#olive-growth-paths path.olive-growth-path')].map(el=>
          +el.style.strokeDashoffset)},
       main:box(shell),masthead:box(document.getElementById('olive-rubric')),
+      titleSize:parseFloat(getComputedStyle(document.querySelector('#olive-rubric strong')).fontSize),
       source:{...box(source.querySelector('#emmaus .emmaus__right')),folio:box(source.querySelector('#emmaus'))},
       firstFrame:get(image),
       invitation:{visibility:getComputedStyle(invitation).visibility,
@@ -599,6 +607,16 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert.equal(indexHalf.growth.visibility,'visible');
    const indexFull=await go(17.55,'09-twelve-voices-final-overview');
    assert.equal(indexFull.scene,'04-twelve-index');
+   assert(indexFull.titleSize>backgroundReady.titleSize+9,
+     'twelve-voice title must become a clearly larger editorial chapter masthead');
+   assert(indexFull.masthead.y>backgroundReady.masthead.y+12,
+     'chapter masthead must move down rather than remain stuck to the top rail');
+   assert(indexFull.masthead.y+indexFull.masthead.h<indexFull.cards[0].y-4,
+     'overscale heading must not cover a single approved printed poster');
+   assert(!material.growth.curveD.includes(' C')&&material.growth.curveD.includes('L'),
+     'mid-growth olive spine must be a genuine advancing sampled curve, not a static dash');
+   assert(indexFull.growth.curveD.includes(' C'),
+     'settled historical spine must return to its EXACT source cubic geometry');
    assert.equal(indexFull.growth.paths,indexHalf.growth.paths);
    assert(indexFull.growth.value>.99);
    assert(indexFull.growth.offsets.every(v=>v===0),
@@ -651,6 +669,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      'reverse scrolling into the 03→04 material window must RESUME partial olive growth');
    assert(Math.abs(backMid.growth.value-material.growth.value)<.002,
      'reversed strokes must match the original 11.44 forward progress exactly');
+   assert.equal(backMid.growth.curveD,material.growth.curveD,
+     'reversing produces the identical historical SVG curve geometry at the same scroll position');
    assert(backMid.growth.offsets.some(v=>v>0&&v<1000)&&
       backMid.growth.offsets.some(v=>v===1000),
      'reverse-scroll retracts the newer branches while leaving the first branches partially drawn');
