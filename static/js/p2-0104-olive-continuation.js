@@ -366,10 +366,10 @@
   // right from BOTTOM first, left from TOP afterwards. Never draw olives
   // above the outgoing Bible cover or fake their entrance with opacity.
   const growLeft=ease((bg-.52)/.48),growRight=ease(bg/.55);
-  if(growthMaskLeft)growthMaskLeft.setAttribute('height',(900*growLeft).toFixed(3));
+  if(growthMaskLeft)growthMaskLeft.setAttribute('height',(1008*growLeft).toFixed(3));
   if(growthMaskRight){
-   growthMaskRight.setAttribute('y',(900*(1-growRight)).toFixed(3));
-   growthMaskRight.setAttribute('height',(900*growRight).toFixed(3));
+   growthMaskRight.setAttribute('y',(954-1008*growRight).toFixed(3));
+   growthMaskRight.setAttribute('height',(1008*growRight).toFixed(3));
   }
   for(const line of growthLines){
    const local=ease((growth-line.start)/(line.end-line.start));
