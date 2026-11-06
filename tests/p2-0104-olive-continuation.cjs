@@ -57,7 +57,7 @@ assert.doesNotMatch(css,/04-olive-invitation-foil-v5\.svg/,
  'no ornate giant full-scene foil frame');
 assert.match(css,/04-olive-historic-engraving-v13\.svg/,
  'engraved Olives ridge is LOCAL to invitation, not a full-window wallpaper');
-assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scripture-cover green cloth');
+assert.match(css,/\/images\/p2-emmaus-binding-cloth-v1\.svg/,'the 03-to-04 carrier must use the same native bookcloth SVG as Emmaus');
 assert.doesNotMatch(css,/cover-golden-shoot-frame-transparent\.png/,
  'the 04 transition must NOT duplicate the old ONE book-cover gilt frame');
 const oliveCSS=css.slice(
@@ -490,7 +490,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     'preserve the first-poster entrance travel from 50370f07');
    assert.equal(pair.groundCSS.visibility,'hidden','04 pigment follows, not accompanies, the double spread');
     assert(pair.neutralCSS.reveal>.999,'03 must be fully cleared behind both posters');
-    assert(pair.neutralCSS.cloth.includes('cover-texture-antique-green.png'),
+    assert(pair.neutralCSS.cloth.includes('p2-emmaus-binding-cloth-v1.svg'),
      'transition carrier MUST retain the true green Bible-cover cloth, not yellow');
    const material=await go(11.44,'04-only-now-olive-svg-background');
    assert.equal(material.scene,'04-ground-reveal');
