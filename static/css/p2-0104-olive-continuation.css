@@ -94,29 +94,31 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
  background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
 }
-/* V11: The engraving is an entire physical invitation press plate.
-   It is NOT a tiny banner scaled into a 66px rail. The registered 600:850
-   master places a cultivated olive tree into the large OUTER side gutter
-   and a small engraved Jerusalem skyline across the TOP only. The 3:4
-   poster is another z-layer which covers the center of this same plate.
-   All foil pigment is exactly Design OS --ws-morning-gold. */
+/* V12: this complete invitation engraving uses OpenClipart CC0 original
+   olive-branch vectors (credited in OLIVE-MOUNTAIN-ART-SOURCES.md), with
+   leaf geometry checked against 1820 botanicals. The POSTER layer covers
+   the center; the olive branch remains visible on the green paper around
+   the actual 3:4 print. No invented trees, no reused ONE engravings.
+   OS defines the complete color system: --ws-olive + --ws-morning-gold. */
 .olive-card__relief{
  position:absolute;inset:0;width:100%;height:100%;max-height:none;
  isolation:isolate;overflow:hidden;pointer-events:none;opacity:1;
 }
 .olive-card__relief::before,.olive-card__relief::after{
  content:"";position:absolute;inset:0;
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-intaglio-v11.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-intaglio-v11.svg');
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
  -webkit-mask-position:center;mask-position:center;
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
 }
 .olive-card__relief::before{
- background:var(--ws-ink);opacity:.38;transform:translate(1px,1px);
+ /* An authentic two-pass press registration: paper-toned emboss highlight,
+    no black engraving and no new page-specific pigments. */
+ background:var(--ws-paper);opacity:.20;transform:translate(-1px,-1px);
 }
 .olive-card__relief::after{
- background:var(--ws-morning-gold);opacity:1;
+ background:var(--ws-morning-gold);opacity:.96;
 }
 #olive-invitation-right .olive-card__relief{transform:scaleX(-1)}
 .olive-card__caption{
