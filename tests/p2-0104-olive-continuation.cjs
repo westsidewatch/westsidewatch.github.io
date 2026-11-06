@@ -224,7 +224,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
         right:+document.querySelector('#olive-growth-mask-right').getAttribute('height'),
         rightY:+document.querySelector('#olive-growth-mask-right').getAttribute('y')},
        visibility:getComputedStyle(document.querySelector('#olive-growth-field')).visibility,
-       offsets:[...document.querySelectorAll('#olive-growth-paths path')].map(el=>
+       offsets:[...document.querySelectorAll('#olive-growth-paths path.olive-growth-path')].map(el=>
          +el.style.strokeDashoffset)},
       main:box(shell),masthead:box(document.getElementById('olive-rubric')),
       source:{...box(source.querySelector('#emmaus .emmaus__right')),folio:box(source.querySelector('#emmaus'))},
@@ -579,6 +579,14 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(indexHalf.cards[0].w<indexHalf.main.w*(width>800?.5:.82),
     'twelve cards must interpolate from their approved desktop HALF or mobile FULL-WIDTH stacked source to grid destinations');
    assert.equal(indexHalf.growth.ready,'true');
+   assert.equal(indexHalf.growth.paths>=240,true,'all historic paths retained');
+   assert.equal(indexHalf.growth.value>.99,true,'the source grove must be drawn');
+   const foilLayers=await page.evaluate(()=>({
+    echoes:+document.getElementById('p2-olive-stage').dataset.p2OliveGrowthEchoes,
+    tips:+document.getElementById('p2-olive-stage').dataset.p2OliveGrowthTips
+   }));
+   assert.equal(foilLayers.echoes,14,'fourteen registered olive facsimiles enrich the margins');
+   assert.equal(foilLayers.tips,8,'eight live pen-fronts trace the source contour lines');
    assert(indexHalf.growth.paths>=240,'one complete botanical source for every speaker');
    assert(indexHalf.growth.value>.99,
      'ALL growth must occur during speaker entrances, NOT only the final index');
