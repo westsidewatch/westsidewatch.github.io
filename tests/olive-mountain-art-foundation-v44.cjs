@@ -70,7 +70,7 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
     assert(svg.includes('historical-steel-engraving')&&svg.includes('Sha1: 8097a8aa1e5c1ee4ef0bcd126578b73d89229f04'),
      'Plate must be traceable to real Woodward/Cousen source');
     assert(!/<image\b|data:image|<script\b/.test(svg),'SVG must be native paths without bitmap or runtime script');
-    const ink=svg.match(/Ink coverage ([0-9.]+)\/([0-9.]+)/);
+    const ink=svg.match(/Ink coverage (\d+\.\d{5})\/(\d+\.\d{5})/);
     assert(ink,'line-only engrave must publish historic ink-density budget in metadata');
     assert(+ink[1]+(+ink[2])<.19,'historic engraving must not become solid gold foil');
     assert((svg.match(/<path\b/g)||[]).length>250,'historic artwork must contain complex engraved contours');
