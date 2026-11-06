@@ -277,6 +277,17 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      print.x+print.w<card.x+card.w-5 &&
      print.y+print.h<card.y+card.h-5,
      'speaker print must be visibly inset on every side of its invitation');
+   const atUserScreenshot=await go(10.26,'01c-clean-mersi-invitation-transition');
+   assert(atUserScreenshot.reading>.999&&atUserScreenshot.neutralCSS.reveal>.999,
+    'at EXACT 10.26 the old 03 scripture page must be fully covered without exposed fragments');
+   assert(atUserScreenshot.neutralCSS.halves.every(x=>!/[1-9][0-9.]*%/.test(x)),
+    'all original page material is replaced by a full-panel source field at 10.26');
+   assert.equal(atUserScreenshot.invitation.visibility,'visible',
+    'the 04 printed card leads the spatial handoff');
+   assert(atUserScreenshot.invitation.relief.includes('04-olive-mount-etching-v8.svg'),
+    'the entering card carries the substantive original Olives landscape engraving');
+   assert(Math.abs(atUserScreenshot.firstFrame.box.w/atUserScreenshot.firstFrame.box.h-.75)<.01,
+    'the verified first-speaker 3:4 print must not be resized');
    const forming=await go(10.38,'02-first-to-left-second-to-right');
    assert.equal(forming.scene,'04-two-poster-formation');
    assert(forming.spread>.25&&forming.spread<.45,'first speaker must visibly travel toward left folio');
