@@ -37,6 +37,10 @@
  const status=$('#p2-olive-folio-status');
  if(!stage||!track||!base||!folio||!first||!ground||!neutral||
      !firstInvitation||!invitationLeft||!invitationRight)return;
+ // The independent SVG project can be inspected without foreground posters.
+ // This is a PREVIEW-ONLY optical proof; original gallery default is untouched.
+ if(new URLSearchParams(location.search).get('artOnly')==='1')
+  stage.classList.add('olive-art-only');
  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
  const ease=v=>{const u=clamp(v);return u*u*(3-2*u)};
  const mix=(a,b,t)=>a+(b-a)*t;
