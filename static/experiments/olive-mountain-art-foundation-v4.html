@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Olive Mountain / V4 Design Foundation · Static Art Direction</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+/* P2 / OLIVE / ART FOUNDATION: not a scroll, motion, or shipping change.
+   Exactly the preserved 12 image works + frozen Shadow DOM English master.
+   Historic vector plates remain references, never substituted for posters. */
+:root{color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--ws-paper);color:var(--ws-ink)}
+body{font-family:var(--ws-type-display-zh),"Noto Serif TC",serif}
+.review-toolbar{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;
+ padding:12px clamp(14px,3vw,32px);background:var(--ws-paper);
+ border-bottom:1px solid var(--ws-warm-gold);font-size:12px;
+ line-height:1.5}
+.review-toolbar .quiet-label{font:200 11px/1.3 var(--ws-type-display-en),serif;letter-spacing:.08em;margin-right:auto}
+.review-toolbar button{cursor:pointer;border:1px solid var(--ws-olive);border-radius:0;
+ color:var(--ws-ink);background:transparent;font:300 11px/1.3 var(--ws-type-display-zh),sans-serif;
+ padding:8px 13px}
+.review-toolbar button[aria-pressed="true"]{background:var(--ws-olive);color:var(--ws-paper)}
+.review-toolbar a{color:var(--ws-ink);text-underline-offset:3px}
+.site-preview{position:relative;width:100%;height:min(900px,calc(100svh - 62px));
+ min-height:710px;background:var(--ws-olive);isolation:isolate;
+ overflow:hidden;color:var(--ws-paper)}
+/* Art can live only OUTSIDE protected posters, and in the empty bands. */
+.paper-register{position:absolute;z-index:2;pointer-events:none;
+ left:clamp(85px,7.35vw,132px);right:clamp(85px,7.35vw,132px);
+ top:26px;height:120px;display:grid;grid-template-columns:1fr auto 1fr;
+ align-items:start;gap:15px}
+.plate-serial,.plate-right{font:200 clamp(9px,.7vw,11px)/1.6 var(--ws-type-display-en),serif;
+ letter-spacing:.09em;color:var(--ws-paper)}
+.plate-serial{padding-top:20px}
+.plate-right{text-align:right;padding-top:20px;font-family:var(--ws-type-display-zh),sans-serif}
+.plate-title{margin:0;white-space:nowrap;font:400 clamp(29px,3.1vw,50px)/1 var(--ws-type-display-en),serif;
+ letter-spacing:-.065em;color:var(--ws-paper);text-align:center;padding-top:4px}
+.plate-title i{font-style:italic;font-weight:400}
+.register-rule{position:absolute;left:0;right:0;bottom:14px;height:1px;background:var(--ws-morning-gold);opacity:.34}
+.register-rule::before,.register-rule::after{content:"";position:absolute;top:-3px;width:7px;height:7px;
+ transform:rotate(45deg);border:1px solid var(--ws-morning-gold)}
+.register-rule::before{left:0}.register-rule::after{right:0}
+.plate-mark{pointer-events:none;position:absolute;z-index:0;background:var(--ws-morning-gold);
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.botanical-margin{top:20%;left:-11px;width:clamp(78px,8.6vw,143px);height:57%;
+ opacity:.17;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
+ -webkit-mask-size:cover;mask-size:cover;
+ -webkit-mask-position:40% center;mask-position:40% center;
+}
+.engraved-horizon{height:clamp(62px,9vw,100px);width:min(690px,65vw);
+ bottom:23px;left:50%;transform:translateX(-50%);opacity:.62;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+}
+.gutter-rule{position:absolute;z-index:1;top:22%;bottom:16%;width:1px;background:var(--ws-morning-gold);opacity:.24}
+.gutter-rule.left{left:clamp(79px,7.0vw,126px)}
+.gutter-rule.right{right:clamp(79px,7.0vw,126px)}
+/* 12 original 3:4 complete composites. This card grid exactly mirrors the
+   actual P2 index mode's six-column desktop/two rows, not new thumbnails. */
+.protected-gallery{position:absolute;z-index:5;left:clamp(86px,7.4vw,132px);
+ right:clamp(86px,7.4vw,132px);top:54%;transform:translateY(-50%);
+ display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+ gap:clamp(7px,.9vw,13px) clamp(7px,.65vw,13px);
+ margin:0;padding:0;list-style:none}
+.protected-card{aspect-ratio:3/4;margin:0;min-width:0;position:relative;
+ isolation:isolate;overflow:hidden;background:var(--ws-paper)}
+.protected-artwork{position:absolute;inset:0;overflow:hidden;background:transparent}
+.protected-artwork img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.protected-artwork olive-speaker-baseline{position:absolute;display:block;z-index:6;pointer-events:none}
+.gallery-guard{position:absolute;pointer-events:none;inset:0;z-index:10;border:0 solid transparent}
+.safe-shown .protected-card{outline:2px solid var(--ws-paper);outline-offset:0}
+.safe-shown .gallery-guard{border:2px dashed var(--ws-morning-gold)}
+/* Keep the meaningful lower magazine band separate from poster typography. */
+.colophon{position:absolute;bottom:21px;left:clamp(82px,7.35vw,132px);
+ right:clamp(82px,7.35vw,132px);display:grid;grid-template-columns:1fr auto 1fr;
+ align-items:end;gap:16px;z-index:3;pointer-events:none}
+.colophon>*{font:200 9px/1.3 var(--ws-type-display-en),serif;letter-spacing:.14em;color:var(--ws-morning-gold)}
+.colophon .number{font-size:19px;line-height:.82}
+.colophon .crossing{font-style:italic;letter-spacing:.055em;text-align:center}
+.colophon .chapter{font-family:var(--ws-type-display-zh),sans-serif;text-align:right}
+.preview-description{padding:12px 24px;background:var(--ws-paper);
+ font:300 12px/1.75 var(--ws-type-display-zh),sans-serif}
+.preview-description strong{font-weight:500}
+.site-preview[data-direction="folio"] .plate-title{text-align:left;padding:0;
+ font-size:clamp(34px,4.9vw,76px);line-height:.84;align-self:start}
+.site-preview[data-direction="folio"] .paper-register{grid-template-columns:1.55fr 1fr;
+ top:20px;height:145px}
+.site-preview[data-direction="folio"] .plate-serial{grid-column:2;grid-row:1;text-align:right;padding:7px 0 0}
+.site-preview[data-direction="folio"] .plate-title{grid-column:1;grid-row:1}
+.site-preview[data-direction="folio"] .plate-right{display:none}
+.site-preview[data-direction="folio"] .register-rule{bottom:17px}
+.site-preview[data-direction="folio"] .botanical-margin{
+ left:auto;right:-15px;top:25%;height:52%;width:clamp(100px,9.3vw,155px);
+ -webkit-mask-position:65% center;mask-position:65% center;opacity:.23}
+.site-preview[data-direction="folio"] .engraved-horizon{
+ left:clamp(92px,8vw,146px);transform:none;width:min(620px,50vw);height:94px;
+ opacity:.47;bottom:34px}
+.site-preview[data-direction="folio"] .gutter-rule.left{opacity:0}
+.site-preview[data-direction="folio"] .colophon .crossing{text-align:left}
+.site-preview[data-direction="folio"] .colophon .number{font-size:32px}
+.site-preview[data-direction="folio"] .colophon .chapter{opacity:.84}
+@media(max-width:900px){
+ .site-preview{min-height:750px}
+ .paper-register,.protected-gallery,.colophon{left:28px;right:28px}
+ .protected-gallery{gap:8px;grid-template-columns:repeat(4,minmax(0,1fr))}
+ .gutter-rule.left{left:14px}.gutter-rule.right{right:14px}
+ .plate-serial,.plate-right{font-size:8px}
+}
+@media(max-width:600px){
+ .review-toolbar{gap:8px;padding:9px 12px}
+ .review-toolbar .quiet-label{width:100%}
+ .review-toolbar button{padding:7px}
+ .site-preview{height:calc(100svh - 112px);min-height:640px}
+ .paper-register{top:12px;left:17px;right:17px;height:107px;
+  grid-template-columns:1fr 1fr;gap:2px;align-content:start}
+ .plate-serial{grid-column:1;font-size:9px;padding:0}
+ .plate-right{grid-column:2;font-size:9px;padding:0}
+ .plate-title{grid-column:1 / -1;grid-row:2;text-align:left;
+  font-size:clamp(29px,8vw,44px);padding-top:9px}
+ .register-rule{bottom:13px}
+ .protected-gallery{left:19px;right:19px;top:53%;gap:7px;
+  grid-template-columns:repeat(3,minmax(0,1fr))}
+ .botanical-margin{left:-9px;width:27px;opacity:.16;top:24%;height:60%}
+ .gutter-rule.left{left:11px}.gutter-rule.right{right:11px}
+ .engraved-horizon{width:min(320px,83vw);height:52px;bottom:49px;opacity:.42}
+ .colophon{left:18px;right:18px;bottom:12px}
+ .colophon>*{font-size:7px}
+ .colophon .number{font-size:13px}
+ .site-preview[data-direction="folio"] .paper-register{left:17px;right:17px;
+  grid-template-columns:1fr 1fr;height:121px}
+ .site-preview[data-direction="folio"] .plate-title{grid-row:2;grid-column:1/-1;
+   font-size:clamp(30px,7.5vw,43px);padding-top:20px}
+ .site-preview[data-direction="folio"] .plate-serial{grid-row:1;grid-column:1 / -1;text-align:left}
+ .site-preview[data-direction="folio"] .botanical-margin{right:-9px;width:34px;top:23%}
+ .site-preview[data-direction="folio"] .engraved-horizon{width:75vw;left:10vw;bottom:47px;height:53px}
+}
+</style>
+</head>
+<body data-ws-scope="p2">
+<div class="review-toolbar" role="group" aria-label="橄欖山藝術設計方案與安全區測試">
+ <span class="quiet-label">OLIVE MOUNTAIN / 04 — STATIC COMPOSITION STUDY — NOT LIVE</span>
+ <button type="button" data-mode="archive" aria-pressed="true">A · 刻線留在邊緣／古典軸線</button>
+ <button type="button" data-mode="folio" aria-pressed="false">B · 大刊頭／非對稱版芯</button>
+ <button id="safe-toggle" type="button" aria-pressed="false">檢查海報安全區</button>
+ <a href="/experiments/p2-0104-olive-continuation.html?d=17.55" target="_blank" rel="noopener">目前 V3.2（比較用）</a>
+</div>
+<main class="site-preview" data-direction="archive" id="design-stage" aria-label="橄欖山 04：只研究成熟靜態藝術構圖，沒有動效">
+ <div class="paper-register">
+  <span class="plate-serial">04 / 07 · INVITATION TO HEAR</span>
+  <h1 class="plate-title" lang="en">OLIVE <i>MOUNTAIN</i></h1>
+  <small class="plate-right">橄欖山 · 誠邀聽道</small><span class="register-rule" aria-hidden="true"></span>
+ </div>
+ <div class="gutter-rule left" aria-hidden="true"></div>
+ <div class="gutter-rule right" aria-hidden="true"></div>
+ <!-- REAL historic vector ink from 1905/1914. V12 source used as ONE
+      optically cropped side specimen, never as old full-height diagonal art.
+      V13 source used ONCE as the original historic landscape/city frieze. -->
+ <div class="plate-mark botanical-margin" aria-hidden="true"></div>
+ <div class="plate-mark engraved-horizon" aria-hidden="true"></div>
+ <ol id="protected-gallery" class="protected-gallery" aria-label="十二張已核准講員 3:4 印刷海報"></ol>
+ <div class="gallery-guard" aria-hidden="true"></div>
+ <footer class="colophon" aria-label="橄欖山藏書票式章節尾版">
+  <span class="number">XII</span><span class="crossing">WATCH FOR THE DAWN</span>
+  <span class="chapter">十二位講員 · 橄欖山</span>
+ </footer>
+</main>
+<div id="review-note" class="preview-description">
+ <strong>A · Archival axis</strong> — 單一植物刻線裁入左外緣、Walter Crane 原生版畫只留在下方；十二張原始海報完整保護。這是靜態藝術母本研究，不是上線或生長動畫成果。
+</div>
+<script src="/olive/components/speaker-baseline-v1/baseline.js?v=07d89a2-recovered-v1"></script>
+<script>
+(()=>{'use strict';
+const slugs=['watchman-nee','derek-prince','david-pawson','stephen-tong','huang-shuhua','kang-lai-chang',
+ 'jerry-lai','tong-liu','jiang-xiuqin','rick-warren','yu-hong-jie','kou-shao-en'];
+const gallery=document.querySelector('#protected-gallery');
+if(!window.OliveSpeakerBaseline)throw Error('Original frozen speaker baseline is unavailable');
+for(const slug of slugs){
+ const li=document.createElement('li');li.className='protected-card';li.dataset.speaker=slug;
+ const art=document.createElement('div');art.className='protected-artwork';
+ const img=document.createElement('img');img.src='/images/olive/'+slug+'-editorial.png';
+ img.alt='Original approved '+slug+' speaker poster';img.loading='eager';
+ art.append(img);li.append(art);gallery.append(li);
+ OliveSpeakerBaseline.mount(art,slug);
+}
+const stage=document.querySelector('#design-stage'),note=document.querySelector('#review-note');
+const explanatory={
+archive:'<strong>A · Archival axis</strong> — 原生版畫作低位地平線，橄欖植物只裁入側邊的海報安全區。海報、文字均為原版。',
+folio:'<strong>B · Folio pressure</strong> — 大而不重複的刊頭建立雜誌張力，僅把歷史植物裁入右外緣；地平線變成下方細版芯。作品仍為主角。'
+};
+for(const button of document.querySelectorAll('[data-mode]'))
+ button.addEventListener('click',()=>{
+  stage.dataset.direction=button.dataset.mode;note.innerHTML=explanatory[button.dataset.mode];
+  for(const b of document.querySelectorAll('[data-mode]'))
+   b.setAttribute('aria-pressed',String(b===button));
+  location.hash=button.dataset.mode;
+ });
+const safe=document.querySelector('#safe-toggle');
+safe.addEventListener('click',()=>{
+ const active=stage.classList.toggle('safe-shown');
+ safe.setAttribute('aria-pressed',String(active));
+ });
+if(location.hash==='#folio')document.querySelector('[data-mode="folio"]').click();
+window.oliveFoundation=Object.freeze({version:'v4',originalPosterCount:slugs.length,
+ historicalPlate:'/images/p2-realms/v15/04-olive-historic-engraving-v13.svg',
+ botanicalPlate:'/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg',
+ mode:()=>stage.dataset.direction});
+})();
+</script>
+</body>
+</html>
