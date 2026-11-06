@@ -62,15 +62,6 @@ jobs:
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
           node tests/p2-0104-olive-continuation.cjs
-      - name: Inspect public-domain 1820 engraving for actual native-vector adaptation
-        if: always()
-        continue-on-error: true
-        run: |
-          mkdir -p artifacts/p2-0104-olive/source-references
-          curl --fail --location --retry 2 --max-time 25 --user-agent 'WestsideWatch Editorial Research/1.0 (noncommercial artwork verification)' \
-            'https://upload.wikimedia.org/wikipedia/commons/b/bb/Loddiges_456_Olea_europaea_drawn_by_W_Miller.jpg' \
-            --output artifacts/p2-0104-olive/source-references/Miller-1820-Olea-PD.jpg
-          file artifacts/p2-0104-olive/source-references/Miller-1820-Olea-PD.jpg
       - name: Bundle actual botanical vector master for art-direction inspection
         if: always()
         run: |
