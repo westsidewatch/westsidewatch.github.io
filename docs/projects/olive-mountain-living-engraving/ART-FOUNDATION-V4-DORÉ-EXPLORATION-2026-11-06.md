@@ -65,3 +65,18 @@ V3.2 擁有可回收的滾動生長技術，但「植物先畫滿 1600×900，�
 - `docs/design/SVG-EXPLORATION-LIST.md` 的 SVG.js、Motion、SVGO 是技術與優化候選，不能把它們誤認為能自行創作成熟橄欖樹。
 
 **藝術硬邊界：** V4.1 目標是消除 V4 原來的「植物與城牆太弱」問題，仍需以實際 1648/390 同尺寸截圖和 §6 十項標準檢查是否成熟。若 V14 側邊被裁成斷裂枝條或 V13 地貌不能識別，就淘汰當前構圖並重新選擇，**不能把安全區測試通過誤寫成藝術驗收**。背景只能使用 OS 橄欖綠、晨光／暖金、紙色；不可擴充黑底、光暈或新的動畫。
+
+
+## V4.2｜真正全景雕版區的施工與 Chromium 視覺稽核（2026-11-06）
+
+**新增工程（不更改 P2 04 的滾動引擎）**
+- `static/images/p2-realms/v15/04-olive-mountain-panoramic-plate-v42.svg`：原生 SVG 1280×190，含 Walter Crane 公共領域植物的真正原始向量 `path`（從 V13 master 取回、未改葉子筆形），另以新繪 SVG 曲線組織山坡、谷地、梯田、城牆與耶路撒冷遠城。**遠城是新的構圖研究，不是 Woodward/Cousen 鋼版掃描的向量化或複製品。** 全圖不用 bitmap、外部字型、JS 動畫、漸層或非 OS 色碼；mask 統一採用 Design OS 晨光金。
+- `static/experiments/olive-mountain-art-foundation-v42.html`：沿用 12 件已獲准的真正 3:4 海報 PNG 和 `OliveSpeakerBaseline.mount` frozen Shadow DOM 英文；可切 A 居中、B 非對稱大刊頭；**新增獨立且完整可見的 205px 原生雕版低位區**，不再把全幅畫擠在 V4.1 約 70px 的裝飾腳註內。手機採中段城市細節的局部裁切。這是 **可捲動的藝術母本版式試驗**，尚未決定能否直接改成 MERSI 全螢幕 final overview。
+- `tests/olive-mountain-art-foundation-v42.cjs` 與隔離 GitHub workflow：1648、1440、800、390px × A/B，檢查 12 人、實際 Shadow DOM 英文、全部海報維持 3:4，原生全景版芯不蓋住海報，並在 Chromium 真正截圖存證。**不視為人工作品獲獎評分。**
+
+**可見實拍與限制（已實際閱讀，不以 CI 代替眼睛）：**
+- [1648 A 的真實 Chromium 校樣](https://p2-0104-1385.westsidewatch-github-io.pages.dev/experiments/p2-0104-proofs/1648-olive-v42-static-archive.png)／[1648 B](https://p2-0104-1385.westsidewatch-github-io.pages.dev/experiments/p2-0104-proofs/1648-olive-v42-static-folio.png)／[390 B](https://p2-0104-1385.westsidewatch-github-io.pages.dev/experiments/p2-0104-proofs/390-olive-v42-static-folio.png)。
+- [V4.2 靜態 A/B 預覽](https://p2-0104-1385.westsidewatch-github-io.pages.dev/experiments/olive-mountain-art-foundation-v42.html)；[Chromium 與 Cloudflare 隔離部署 workflow #42291271851](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42291271851)，全部流程 success。
+- **進展**：1648 畫面有真正看得見的複雜歷史橄欖枝與地貌版芯；全景對十二張原海報無覆蓋。B 的大刊頭保留比 A 更強的雜誌非對稱性。
+- **否決最終藝術驗收**：遠城高塔與建築仍偏線稿化／概念化，真實 1881 年耶路撒冷地理場景的銅版層次不足；左下仍更像「枝條」而非山上古樹；手機裁切只剩城市，與橄欖山主題的植物聯繫中斷。不能把擴大畫框當成成熟藝術母本，也不能宣稱已滿足手冊 §6 的獲獎品質標準。
+- **下一步藝術前提**：首先以不同於 Crane 枝條的成熟、可追溯授權的古橄欖樹完整造型和真實山地／遠城刻線樣本，取代 V4.2 仍抽象的局部；同時應設計手機專用、全畫面有橄欖樹與城市的重新取景，而非只對桌面 SVG 裁切。確認實拍成立以前，**禁止將母本轉進 04 的滾動生長引擎、禁止 merge 上線**。
