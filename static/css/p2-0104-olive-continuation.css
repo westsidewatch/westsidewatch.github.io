@@ -81,7 +81,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  position:absolute;margin:0;inset:0;overflow:hidden
 }
 /* Isolated live SVG proof (?artOnly=1); no change to normal P2 gallery. */
-.p2-olive-stage.olive-art-only .olive-proof{visibility:hidden!important;pointer-events:none!important}
+.p2-olive-stage.olive-art-only .olive-proof{display:none!important;visibility:hidden!important;pointer-events:none!important}
 /* P2/04 GALLERY ANNOUNCEMENT PRINT: one card carries one COMPLETE
    immutable 3:4 poster. Only a small localized mountain relief, fine
    single line and one-line caption. NO second masthead or gilt frame. */
