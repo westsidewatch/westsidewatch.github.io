@@ -559,8 +559,6 @@
     [2,'translate(120 -73) scale(.92)',.63],
     [3,'translate(205 -35) scale(.81)',.74],
     [4,'translate(255 -30) scale(.81)',.74],
-    [3,'translate(405 -22) rotate(-9 370 180) scale(.62)',.50],
-    [4,'translate(550 -25) rotate(8 1210 180) scale(.62)',.52],
     [5,'translate(88 212) scale(.78)',.75],
     [6,'translate(320 213) scale(.78)',.77],
     [7,'translate(46 -18) scale(.95)',.62],
@@ -574,16 +572,23 @@
    volume.setAttribute('class','olive-growth-volume');
    volume.setAttribute('aria-hidden','true');
    for(const [source,transform,opacity] of echoes){
-    const use=document.createElementNS(ns,'use');
-    use.setAttribute('href','#olive-growth-master-'+source);
-    use.setAttribute('transform',transform);
-    use.setAttribute('opacity',String(opacity));
-    volume.appendChild(use);
+    // A live source <use> instance can lose the path's class styling in
+    // Chromium: its leaves then turn into DARK FILLED silhouettes and may
+    // ignore the reversible dash drawing. Clone the actual editorial SVG
+    // paths instead. No new asset, no generated botanical geometry.
+    const registration=document.createElementNS(ns,'g');
+    registration.setAttribute('transform',transform);
+    registration.setAttribute('opacity',String(opacity));
+    const historicalPlate=historic[source-1].cloneNode(true);
+    historicalPlate.removeAttribute('id');
+    historicalPlate.classList.add('olive-growth-echo');
+    registration.appendChild(historicalPlate);
+    volume.appendChild(registration);
    }
    growthRoot.insertBefore(volume,growthRoot.firstChild);
    stage.dataset.p2OliveGrowthEchoes=String(echoes.length);
-   // Advance a real engraved writing-front; do not simulate growth using
-   // a new opacity timeline or duplicate the entire 840 KB SVG.
+   // Advance a real engraved writing-front without a second RAF or extra
+   // network asset; all historic contours remain reversible DOM paths.
    const spines=[...growthRoot.querySelectorAll('.olive-growth-spines path.olive-growth-path')];
    for(const original of spines){
     const interval=original.closest('[data-growth-start]');
