@@ -124,6 +124,9 @@ jobs:
               src="artifacts/p2-0104-olive/${width}-olive-v4-static-${variant}.png"
               test -s "$src"
               cp "$src" public/experiments/p2-0104-proofs/
+              src="artifacts/p2-0104-olive/${width}-olive-v41-static-${variant}.png"
+              test -s "$src"
+              cp "$src" public/experiments/p2-0104-proofs/
             done
           done
       - name: Deploy isolated P2 04 Preview ONLY — never main
