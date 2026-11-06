@@ -90,35 +90,31 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll
  content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
  background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
 }
-/* V9 physical invitation engraving. Pure CSS foil/burnished ink sourced
-   from Design OS tokens; only the SVG's ALPHA, never its independent
-   color, is used. This is a real localized intaglio press area with
-   dense olive trees, hillside terraces and the distant city.
-   No full-screen decoration and no changes to protected 3:4 portraits. */
+/* V11: The engraving is an entire physical invitation press plate.
+   It is NOT a tiny banner scaled into a 66px rail. The registered 600:850
+   master places a cultivated olive tree into the large OUTER side gutter
+   and a small engraved Jerusalem skyline across the TOP only. The 3:4
+   poster is another z-layer which covers the center of this same plate.
+   All foil pigment is exactly Design OS --ws-morning-gold. */
 .olive-card__relief{
- position:absolute;left:5%;right:5%;top:3%;
- height:clamp(45px,10.5%,78px);max-height:78px;
+ position:absolute;inset:0;width:100%;height:100%;max-height:none;
  isolation:isolate;overflow:hidden;pointer-events:none;opacity:1;
 }
 .olive-card__relief::before,.olive-card__relief::after{
  content:"";position:absolute;inset:0;
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-engraved-headpiece-v10.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-engraved-headpiece-v10.svg');
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-intaglio-v11.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-intaglio-v11.svg');
  -webkit-mask-position:center;mask-position:center;
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
 }
 .olive-card__relief::before{
- background:var(--ws-ink);opacity:.30;transform:translateY(1px);
+ background:var(--ws-ink);opacity:.38;transform:translate(1px,1px);
 }
 .olive-card__relief::after{
  background:var(--ws-morning-gold);opacity:1;
 }
-.olive-stage__invitation--pair .olive-card__relief{
- /* The original 3:4 poster is unchanged; a reserved real card headpiece
-    carries the engraving, below the one separate chapter heading. */
- top:3px;left:4%;right:4%;height:66px;max-height:66px;
-}
+#olive-invitation-right .olive-card__relief{transform:scaleX(-1)}
 .olive-card__caption{
  position:absolute;z-index:2;bottom:6px;left:13px;right:13px;
  height:19px;display:flex;align-items:center;
@@ -263,10 +259,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll
  }
 }
 @media(max-width:540px){
- /* On phones the engraved card header remains small, but never
-    introduces a competing ornamental panel above the mounted poster. */
- .olive-card__relief{left:7%;right:7%;top:1%;height:23px;max-height:23px;opacity:1}
- .olive-stage__invitation--pair .olive-card__relief{height:14px;max-height:14px}
+ /* Mobile uses the same integral engraved CARD, not a tiny
+    phone-only 14px hairline. The original poster still masks the center. */
+ .olive-card__relief{inset:0;width:100%;height:100%;max-height:none;opacity:1}
  .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
   font-size:7px;letter-spacing:0}
  .p2-olive-controls{gap:2px;max-height:60px}
