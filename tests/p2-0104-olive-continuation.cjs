@@ -132,9 +132,11 @@ assert.equal((growthSVG.match(/data-speaker-growth="/g)||[]).length,12,
  'there must be twelve distinct botanical branches, one for EACH preacher');
 assert(!growthSVG.includes('<image'), 'field stays 100% editable vector artwork');
 assert.match(html,/id="olive-growth-field"/,'real native SVG field lives UNDER the original twelve works');
+assert.match(html,/id="olive-growth-material-mask"/,
+ 'growth uses the SAME opposed MERSI physical 03→04 aperture');
 assert.match(js,/strokeDashoffset=offset/,'the SVG growth mechanism must DRAW each path, not fade wallpaper');
 assert.match(js,/const growth=reduceGrowth\.matches\?\(d>=T\.groundEnd\?1:0\):speakerGrowth/,
- 'growth is driven by EACH preacher transition, not final twelve-index fade');
+ 'growth draws two introductory branches during material reveal, then every speaker');
 assert.match(css,/\.olive-growth-field .olive-growth-path\{[^}]*stroke:var\(--ws-morning-gold\)/,
  'growing engraving uses OS gold token without color mixing');
 const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:true});
@@ -201,6 +203,10 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       growth:{ready:st.dataset.p2OliveGrowthReady,
        value:+st.dataset.p2OliveGrowth,paths:+st.dataset.p2OliveGrowthPaths,
        voices:+st.dataset.p2OliveGrowthVoices,pair:+st.dataset.p2OliveGrowthPair,
+       materialMask:{
+        left:+document.querySelector('#olive-growth-mask-left').getAttribute('height'),
+        right:+document.querySelector('#olive-growth-mask-right').getAttribute('height'),
+        rightY:+document.querySelector('#olive-growth-mask-right').getAttribute('y')},
        visibility:getComputedStyle(document.querySelector('#olive-growth-field')).visibility,
        offsets:[...document.querySelectorAll('#olive-growth-paths path')].map(el=>
          +el.style.strokeDashoffset)},
@@ -457,11 +463,20 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       'at 50% only RIGHT may be new Olive invitation; LEFT retains the Bible cover');
     assert(/^inset\(0(?:px)? 0(?:px)? [0-9.]+%/.test(material.groundCSS.halves[0]),'left from TOP');
     assert(/^inset\([0-9.]+%/.test(material.groundCSS.halves[1]),'right from BOTTOM: '+material.groundCSS.halves[1]);
+   assert.equal(material.growth.visibility,'visible',
+     'the first two real botanical paths grow DURING the background change');
+   assert(material.growth.value>.04&&material.growth.value<.14,
+     'the growth must be partly drawn before the olive field is complete');
+   assert(material.growth.materialMask.left<5&&material.growth.materialMask.right>800,
+     'right growth appears with incoming olive ink, left outgoing Bible remains untouched');
    assert.equal(material.pairLeft.src,pair.pairLeft.src);
    assert.equal(material.pairRight.src,pair.pairRight.src);
    for(const key of ['x','y','w','h'])assert(Math.abs(material.pairLeft.box[key]-pair.pairLeft.box[key])<1,
     'speakers must be FIXED as background changes: '+key);
    const backgroundReady=await go(11.75,'05-olive-material-fixed');
+   assert(backgroundReady.growth.materialMask.left>899&&
+     backgroundReady.growth.materialMask.right>899,
+     'olive foliage is fully unmasked only when both MERSI halves finish');
    assert(backgroundReady.ground>.999 &&
        backgroundReady.groundCSS.visibility==='visible' &&
        backgroundReady.groundCSS.left>.999 && backgroundReady.groundCSS.right>.999,
