@@ -84,28 +84,40 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll
  margin:0;padding:0;border:0;pointer-events:none;overflow:hidden;
  background:var(--ws-olive);
  color:var(--ws-morning-gold);isolation:isolate;
+ outline:1px solid var(--ws-morning-gold);outline-offset:-1px;
 }
 .olive-stage__invitation::after{
  content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
  background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
 }
-/* The invitation uses an actual Olives hillside engraving as its
-   LOCAL letterpress impression. The image does not touch the 3:4 poster.
-   On the tall incoming card the sky/terraces occupy the header stock;
-   after pair settlement the same etching becomes a restrained top edge. */
+/* V9 physical invitation engraving. Pure CSS foil/burnished ink sourced
+   from Design OS tokens; only the SVG's ALPHA, never its independent
+   color, is used. This is a real localized intaglio press area with
+   dense olive trees, hillside terraces and the distant city.
+   No full-screen decoration and no changes to protected 3:4 portraits. */
 .olive-card__relief{
- position:absolute;left:5%;right:5%;top:2.5%;
- height:clamp(42px,15%,112px);max-height:112px;
- background:url('/images/p2-realms/v15/04-olive-mount-etching-v8.svg')
-  center bottom/100% auto no-repeat;
- opacity:.96;pointer-events:none;
+ position:absolute;left:5%;right:5%;top:3%;
+ height:clamp(45px,10.5%,78px);max-height:78px;
+ isolation:isolate;overflow:hidden;pointer-events:none;opacity:1;
+}
+.olive-card__relief::before,.olive-card__relief::after{
+ content:"";position:absolute;inset:0;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-engraved-headpiece-v9.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-engraved-headpiece-v9.svg');
+ -webkit-mask-position:center;mask-position:center;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+}
+.olive-card__relief::before{
+ background:var(--ws-ink);opacity:.30;transform:translateY(1px);
+}
+.olive-card__relief::after{
+ background:var(--ws-morning-gold);opacity:1;
 }
 .olive-stage__invitation--pair .olive-card__relief{
- /* The mounted original 3:4 portrait remains unchanged; a 70px press
-    headpiece is reserved ABOVE it for the Olives grove and city relief. */
+ /* The original 3:4 poster is unchanged; a reserved real card headpiece
+    carries the engraving, below the one separate chapter heading. */
  top:3px;left:4%;right:4%;height:66px;max-height:66px;
- background-position:center center;
- background-size:100% auto;opacity:.91;
 }
 .olive-card__caption{
  position:absolute;z-index:2;bottom:6px;left:13px;right:13px;
@@ -253,7 +265,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll
 @media(max-width:540px){
  /* On phones the engraved card header remains small, but never
     introduces a competing ornamental panel above the mounted poster. */
- .olive-card__relief{left:7%;right:7%;top:1%;height:23px;max-height:23px;opacity:.65}
+ .olive-card__relief{left:7%;right:7%;top:1%;height:23px;max-height:23px;opacity:1}
  .olive-stage__invitation--pair .olive-card__relief{height:14px;max-height:14px}
  .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
   font-size:7px;letter-spacing:0}
