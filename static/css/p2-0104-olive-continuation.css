@@ -101,8 +101,11 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    ABOVE the protected image, never in the shared center gutter.
    The same unmodified 3:4 speaker artwork covers the rest of the card. */
 .olive-card__relief{
- position:absolute;top:0;left:4%;right:4%;width:auto;
- height:70px;max-height:70px;pointer-events:none;
+ /* Center in the visible green headpiece between the physical card edge
+    and the ORIGINAL poster edge: these two CSS variables are set from
+    the real source/pair geometry on every reversible scroll frame. */
+ position:absolute;top:var(--olive-foil-top,16px);left:4%;right:4%;width:auto;
+ height:var(--olive-foil-height,48px);max-height:70px;pointer-events:none;
  overflow:hidden;opacity:1;isolation:isolate;
 }
 .olive-card__relief::before,.olive-card__relief::after{
@@ -266,7 +269,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 @media(max-width:540px){
  /* Engraved folio headpiece is constrained to the actual phone card's
     top paper border; no olive leaves may float between mounted images. */
- .olive-card__relief{left:4%;right:4%;top:0;width:auto;height:22px;max-height:22px;opacity:1}
+ .olive-card__relief{left:4%;right:4%;width:auto;
+  top:var(--olive-foil-top,3px);height:var(--olive-foil-height,16px);
+  max-height:22px;opacity:1}
  .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
   font-size:7px;letter-spacing:0}
  .p2-olive-controls{gap:2px;max-height:60px}
