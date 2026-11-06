@@ -687,7 +687,7 @@
     el.style.strokeDashoffset='1000';
     growthLines.push(line);
    }
-   if(growthCurves.length!==8)throw new Error('Eight original olive paths must use SVG-002 curve-growth');
+   if(growthCurves.length!==18)throw new Error('V2 requires eighteen independently authored animated root/branch/terrace paths');
    stage.dataset.p2OliveLiveCurves=String(growthCurves.length);
    if(growthLines.length<300)throw new Error('V2 must contain its complete multi-source botanical engraving');
    stage.dataset.p2OliveSourceFamilies='4';
