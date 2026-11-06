@@ -315,11 +315,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
        mount.box.y+mount.box.h>poster.box.y+poster.box.h,
        'gallery cards must retain real margins beyond approved poster');
    }
-   if(width>800){
-     assert(pair.masthead.y+pair.masthead.h<
-       Math.min(pair.pairCardLeft.box.y,pair.pairCardRight.box.y)+2,
-       'single global masthead must remain outside mounted gallery works');
-   }
+   assert(pair.masthead.y+pair.masthead.h<
+     Math.min(pair.pairCardLeft.box.y,pair.pairCardRight.box.y)+2,
+     'the ONE global masthead must be separate from both cards on desktop AND mobile');
    for(const [cardBox,printBox] of [[pair.pairCardLeft.box,pair.pairLeft.box],
                                     [pair.pairCardRight.box,pair.pairRight.box]]){
     assert(cardBox.x<=printBox.x&&cardBox.y<printBox.y&&
