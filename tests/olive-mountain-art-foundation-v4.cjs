@@ -69,6 +69,27 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
     assert.equal(errors.length,0,'V4 browser errors: '+jsErrors);
     const fname=width+'-olive-v4-static-'+mode+'.png';
     await page.locator('.site-preview').screenshot({path:path.join(out,fname),animations:'disabled'});
+
+    if(width===1648&&mode==='archive'){
+      const at=await page.evaluate(()=>[[1000,60],[1100,450],[1500,820],[450,60]].map(([x,y])=>{
+       const targets=document.elementsFromPoint(x,y).slice(0,8);
+       return {x,y,stack:targets.map(el=>({
+        tag:el.tagName,cls:String(el.className||'').slice(0,90),id:el.id,
+        bg:getComputedStyle(el).backgroundColor,
+        opacity:getComputedStyle(el).opacity,
+        z:getComputedStyle(el).zIndex
+       }))};
+      }));
+      console.log('OLIVE_V4_WHITE_PLANE_HITTEST',JSON.stringify(at));
+      const style=await page.addStyleTag({content:'.plate-mark{display:none!important}'});
+      const maskless=await page.locator('.site-preview').screenshot({type:'jpeg',quality:53,animations:'disabled'});
+      const b64=maskless.toString('base64');
+      console.log('OLIVE_V4_MASK_OFF_BEGIN');
+      for(let z=0;z<b64.length;z+=3200)
+       console.log('OLIVE_V4_MASK_OFF_PART '+b64.slice(z,z+3200));
+      console.log('OLIVE_V4_MASK_OFF_END');
+      await style.evaluate(el=>el.remove());
+    }
     console.log('OLIVE V4 REAL ART STATIC PASS',width,mode,JSON.stringify({
      posters:12,gridCols:colCount,first:metrics.art[0].rect,
      masthead:metrics.heading,edgePlate:metrics.botany,footer:metrics.engraving
