@@ -44,6 +44,20 @@ fs.mkdirSync(out,{recursive:true});
     await page.screenshot({
       path:path.join(out,vp.width+'-olive-v1-v2-'+short+'-review.png'),
       fullPage:true,animations:'disabled'});
+    // Visual-art QA capture for connected engineering review.
+    // JPEG is resized by the browser itself and chunked only to avoid
+    // excessive stdout line lengths; source proof remains unchanged.
+    if(vp.width===1648&&short==='live-growth'){
+      await page.setViewportSize({width:1040,height:750});
+      const jpeg=await page.screenshot({type:'jpeg',quality:48,fullPage:true,
+       animations:'disabled'});
+      const b64=jpeg.toString('base64');
+      console.log('OLIVE_ART_REVIEW_JPEG_BEGIN');
+      for(let part=0;part<b64.length;part+=3000)
+       console.log('OLIVE_ART_REVIEW_JPEG_PART '+b64.slice(part,part+3000));
+      console.log('OLIVE_ART_REVIEW_JPEG_END');
+      await page.setViewportSize(vp);
+    }
     console.log('Olive V1 vs V2 comparable browser capture PASS',
       vp.width,checkpoint,JSON.stringify(imageInfo));
    }
