@@ -45,6 +45,8 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
       heading:r(document.querySelector('.paper-register')),
       engraving:r(document.querySelector('.engraved-horizon')),
       botany:r(document.querySelector('.botanical-margin')),
+      credit:r(document.querySelector('.olive-art-credit')),
+      creditLabelBackground:getComputedStyle(document.querySelector('.olive-art-credit__chapter')).backgroundColor,
       stage:r(stage),
       mode:stage.dataset.direction,
       fullyVector:performance.getEntriesByType('resource').filter(x=>x.name.includes('04-olive-')).map(x=>x.name)
@@ -52,6 +54,13 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
     });
     assert.equal(metrics.mode,mode);
     assert.equal(metrics.art.length,12);
+    assert(metrics.credit.height>0&&metrics.credit.height<50,
+      'isolated V4 folio footer must remain a small editorial element, not a global full-screen colophon');
+    assert.equal(metrics.creditLabelBackground,'rgba(0, 0, 0, 0)',
+      'footer text must not inherit the global white chapter background');
+    assert(metrics.credit.top>=Math.max(...metrics.art.map(x=>x.rect.bottom)),
+      'folio/footer must remain BELOW all twelve original posters');
+
     assert(metrics.art.every(x=>x.shadowExists&&x.shadowName),'all original English typography is mounted');
     const seenNames=new Set(metrics.art.map(x=>x.name));
     assert.equal(seenNames.size,12,'no duplicated speaker image');
@@ -70,56 +79,6 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
     const fname=width+'-olive-v4-static-'+mode+'.png';
     await page.locator('.site-preview').screenshot({path:path.join(out,fname),animations:'disabled'});
 
-    if(width===1648&&mode==='archive'){
-      const at=await page.evaluate(()=>[[1000,60],[1100,450],[1500,820],[450,60]].map(([x,y])=>{
-       const targets=document.elementsFromPoint(x,y).slice(0,8);
-       return {x,y,stack:targets.map(el=>({
-        tag:el.tagName,cls:String(el.className||'').slice(0,90),id:el.id,
-        bg:getComputedStyle(el).backgroundColor,
-        opacity:getComputedStyle(el).opacity,
-        z:getComputedStyle(el).zIndex
-       }))};
-      }));
-      console.log('OLIVE_V4_WHITE_PLANE_HITTEST',JSON.stringify(at));
-
-      const drawn=await page.evaluate(()=>{
-       const X=1000,Y=60;
-       return [...document.querySelectorAll('#design-stage *')].filter(el=>{
-        const r=el.getBoundingClientRect();
-        return r.left<=X&&r.right>=X&&r.top<=Y&&r.bottom>=Y;
-       }).map(el=>{const cs=getComputedStyle(el),before=getComputedStyle(el,'::before');
-        return {tag:el.tagName,cls:String(el.className||'').slice(0,75),
-         speaker:el.dataset?.speaker||'',
-         x:Math.round(el.getBoundingClientRect().x),y:Math.round(el.getBoundingClientRect().y),
-         w:Math.round(el.getBoundingClientRect().width),h:Math.round(el.getBoundingClientRect().height),
-         pe:cs.pointerEvents,bg:cs.backgroundColor,mask:cs.maskImage,
-         before:{content:before.content,bg:before.backgroundColor}};
-       });
-      });
-      console.log('OLIVE_V4_ALL_WHITE_PLANE_CONTAINING_ELEMENTS',JSON.stringify(drawn));
-      const hosts=await page.evaluate(()=>[...document.querySelectorAll('.protected-card')].map(card=>{
-       const a=card.querySelector('olive-speaker-baseline');
-       const r=(el)=>{const x=el.getBoundingClientRect();return [Math.round(x.x),Math.round(x.y),Math.round(x.width),Math.round(x.height)]};
-       return {speaker:card.dataset.speaker,card:r(card),host:r(a),image:r(card.querySelector('img'))};
-      }));
-      console.log('OLIVE_V4_ALL_HOST_GEOMETRIES',JSON.stringify(hosts));
-      const hide=await page.addStyleTag({content:'olive-speaker-baseline{display:none!important}'});
-      const noType=await page.locator('.site-preview').screenshot({type:'jpeg',quality:47,animations:'disabled'});
-      const encoded=noType.toString('base64');
-      console.log('OLIVE_V4_NO_TYPE_BEGIN');
-      for(let z=0;z<encoded.length;z+=3200)console.log('OLIVE_V4_NO_TYPE_PART '+encoded.slice(z,z+3200));
-      console.log('OLIVE_V4_NO_TYPE_END');
-      await hide.evaluate(el=>el.remove());
-
-      const style=await page.addStyleTag({content:'.plate-mark{display:none!important}'});
-      const maskless=await page.locator('.site-preview').screenshot({type:'jpeg',quality:53,animations:'disabled'});
-      const b64=maskless.toString('base64');
-      console.log('OLIVE_V4_MASK_OFF_BEGIN');
-      for(let z=0;z<b64.length;z+=3200)
-       console.log('OLIVE_V4_MASK_OFF_PART '+b64.slice(z,z+3200));
-      console.log('OLIVE_V4_MASK_OFF_END');
-      await style.evaluate(el=>el.remove());
-    }
     console.log('OLIVE V4 REAL ART STATIC PASS',width,mode,JSON.stringify({
      posters:12,gridCols:colCount,first:metrics.art[0].rect,
      masthead:metrics.heading,edgePlate:metrics.botany,footer:metrics.engraving
