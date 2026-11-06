@@ -738,12 +738,21 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    }
    const artFull=await go(17.55,'olive-only-fully-grown');
    assert(artFull.growth.value>.99);
+   if(width===1648||width===390){
+    const fullJpeg=await page.screenshot({type:'jpeg',quality:55,animations:'disabled'});
+    const encoded=fullJpeg.toString('base64');
+    console.log('OLIVE_V3_FULL_BEGIN '+width);
+    for(let pos=0;pos<encoded.length;pos+=3000)
+     console.log('OLIVE_V3_FULL_PART '+width+' '+encoded.slice(pos,pos+3000));
+    console.log('OLIVE_V3_FULL_END '+width);
+   }
    const optical=await page.evaluate(()=>({
     gallery:getComputedStyle(document.getElementById('olive-proof')).visibility,
     engraved:getComputedStyle(document.getElementById('olive-growth-field')).visibility,
     families:document.querySelectorAll('#olive-growth-paths .olive-growth-cluster, #olive-growth-paths .olive-growth-terrain').length
    }));
    assert.equal(optical.gallery,'hidden','independent art proof must not be covered by the original posters');
+   assert.equal(await page.evaluate(()=>getComputedStyle(document.getElementById('olive-proof')).display),'none','original poster carriers must be genuinely removed from the isolated engraving proof');
    assert.equal(optical.engraved,'visible','the actual gold SVG must remain visible');
    assert.equal(optical.families,4,'the independent proof and real gallery must share the same sources');
    assert.equal(errors.length,0,'JavaScript browser errors: '+errors.join(' | '));
