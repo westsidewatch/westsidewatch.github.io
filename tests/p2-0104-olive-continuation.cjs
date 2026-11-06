@@ -123,14 +123,20 @@ assert.match(css,/\.olive-card__relief\{[^}]*top:var\(--olive-foil-top,16px\);le
  'engraving must be positioned by actual mounted-card headpiece geometry');
 assert.match(js,/function positionInvitedEngraving\(/,
  'both original-source and paired cards must use source-aware engraving registration');
-const growthSVG=read('static/images/p2-realms/v15/04-olive-growth-field-v1.svg');
-assert.match(growthSVG,/Walter Crane|public-domain botanical olive branch/,
- 'new growing realm uses historical public-domain botanical mother paths');
-assert((growthSVG.match(/class="olive-growth-path"/g)||[]).length>=240,
- 'each of twelve original botanical motifs should have editable drawn paths');
-assert.equal((growthSVG.match(/data-speaker-growth="/g)||[]).length,12,
- 'there must be twelve distinct botanical branches, one for EACH preacher');
-assert(!growthSVG.includes('<image'), 'field stays 100% editable vector artwork');
+// Rejected V1 remains archived: identical 23-path branch repeated 12 times.
+const archiveSVG=read('static/images/p2-realms/v15/04-olive-growth-field-v1.svg');
+assert.equal((archiveSVG.match(/data-speaker-growth="/g)||[]).length,12);
+const growthSVG=read('static/images/p2-realms/v15/04-olive-living-grove-v2.svg');
+assert.match(js,/04-olive-living-grove-v2\.svg/,
+ 'the P2 04 runtime must use the NEW historically grounded SVG mother');
+for(const className of ['olive-growth-terrain','olive-growth-wood','olive-growth-crane','olive-growth-cabinet']){
+ assert(growthSVG.includes(className), 'missing distinct SVG family '+className);
+}
+assert((growthSVG.match(/<path\b/g)||[]).length>=370,'V2 needs dense botanical and mountain intaglio');
+const veins=[...growthSVG.matchAll(/data-live-spine="true"[^>]*d="([^"]+)"/g)].map(x=>x[1]);
+assert.equal(veins.length,18,'eighteen different hand-authored growing spines');
+assert.equal(new Set(veins).size,18,'no cloned growth spine geometry');
+assert(!growthSVG.includes('<image'),'all growth plates remain editable vector SVG');
 assert.match(html,/id="olive-growth-field"/,'real native SVG field lives UNDER the original twelve works');
 assert(html.indexOf('id="olive-growth-field"')<html.indexOf('<section class="olive-proof"'),
  'botanical field must be stage-wide, outside the legacy 03 folio crop');
@@ -141,14 +147,11 @@ assert.match(css,/\.olive-growth-field\{[^}]*z-index:3;[^}]*overflow:visible/,
 assert.match(html,/id="olive-growth-material-mask"/,
  'growth uses the SAME opposed MERSI physical 03→04 aperture');
 assert.match(js,/strokeDashoffset=offset/,'the SVG growth mechanism must DRAW each path, not fade wallpaper');
-assert.match(js,/class','olive-growth-volume'/,
- 'the growing grove must register historical botanical echoes, not generated branches');
-assert.match(js,/historic\[source-1\]\.cloneNode\(true\)/,
- 'historical artwork must be cloned into real SVG DOM for correct foil ink');
-assert.doesNotMatch(js,/createElementNS\(ns,'use'\)/,
- 'SVG use shadow-instances render black fill instead of reversible gold lines');
-assert.match(js,/olive-growth-master-/,
- 'the fuller field reuses the same twelve authentic editable source engravings');
+assert.match(js,/sourceRegions\.length!==4/, 'four unique botanical/terrain families required');
+assert.match(js,/register\(original,region,i,voice\)/,
+ 'glints traverse REAL botanical source paths');
+assert.doesNotMatch(js,/historic\[source-1\]\.cloneNode\(true\)/,
+ 'rejected copies of one olive branch must never be regenerated');
 assert.match(js,/class','olive-growth-tip'/,
  'SVG-002 must have a registered line-front, not only uniform static gold strokes');
 assert.match(js,/function drawGrowingCurve\(curve,local\)/,
@@ -159,8 +162,8 @@ assert.match(js,/path\.setAttribute\('d',d\)/,
  'actual geometry must extend behind the growing pen tip');
 assert.match(css,/\.olive-growth-field \.olive-growth-tip\{/,
  'the leading engraved nib uses the OS warm-gold ink');
-assert.doesNotMatch(css,/filter:drop-shadow|text-shadow/,
- 'foil engravings must not add muddy drop-shadows or luminous glow');
+assert.doesNotMatch(css,/text-shadow|filter:drop-shadow\(0 0 (?:[5-9]|\\d\\d)px/,
+ 'light must remain at fine-engraving scale, not massive neon');
 assert.match(js,/const growth=reduceGrowth\.matches\?\(d>=T\.groundEnd\?1:0\):speakerGrowth/,
  'growth draws two introductory branches during material reveal, then every speaker');
 assert.match(css,/\.olive-growth-field .olive-growth-path\{[^}]*stroke:var\(--ws-morning-gold\)/,
@@ -597,9 +600,18 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     echoes:+document.getElementById('p2-olive-stage').dataset.p2OliveGrowthEchoes,
     tips:+document.getElementById('p2-olive-stage').dataset.p2OliveGrowthTips
    }));
-   assert.equal(foilLayers.echoes,12,'twelve authentic re-registered botanical facsimiles enrich the margins');
-   assert.equal(foilLayers.tips,8,'eight live pen-fronts trace the source contour lines');
-   assert(indexHalf.growth.paths>=240,'one complete botanical source for every speaker');
+   assert.equal(foilLayers.echoes,0,'no more stamped botanical echoes');
+    assert.equal(foilLayers.tips,18,'eighteen active growth nibs');
+    const sourceAudit=await page.evaluate(()=>{
+      const stage=document.querySelector('#p2-olive-stage');
+      return {families:+stage.dataset.p2OliveSourceFamilies,
+        count:+stage.dataset.p2OliveSourcePathCount,
+        glints:+stage.dataset.p2OliveLivingBurins};
+    });
+    assert.equal(sourceAudit.families,4,'all four originals mounted');
+    assert(sourceAudit.count>=370,'full multi-source copperplate mounted');
+    assert(sourceAudit.glints>=30,'time-varying gold glints on real source curves');
+   assert(indexHalf.growth.paths>=370,'four diverse source families and eighteen growth veins');
    assert(indexHalf.growth.value>.99,
      'ALL growth must occur during speaker entrances, NOT only the final index');
    assert(indexHalf.growth.offsets.every(v=>v===0),
@@ -615,8 +627,14 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      'overscale heading must not cover a single approved printed poster');
    assert(!material.growth.curveD.includes(' C')&&material.growth.curveD.includes('L'),
      'mid-growth olive spine must be a genuine advancing sampled curve, not a static dash');
-   assert(indexFull.growth.curveD.includes(' C'),
-     'settled historical spine must return to its EXACT source cubic geometry');
+   assert(indexFull.growth.curveD.includes(' L'),
+      'completed line remains a dynamically redrawn living contour');
+    const beforeBreath=indexFull.growth.curveD;
+    await page.waitForTimeout(330);
+    const afterBreath=await page.evaluate(()=>document.querySelector(
+      '#olive-growth-paths .olive-growth-spines path.olive-growth-path')?.getAttribute('d'));
+    assert.notEqual(afterBreath,beforeBreath,
+      'completed lines must move subtly when scrolling stops');
    assert.equal(indexFull.growth.paths,indexHalf.growth.paths);
    assert(indexFull.growth.value>.99);
    assert(indexFull.growth.offsets.every(v=>v===0),
@@ -669,8 +687,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      'reverse scrolling into the 03→04 material window must RESUME partial olive growth');
    assert(Math.abs(backMid.growth.value-material.growth.value)<.002,
      'reversed strokes must match the original 11.44 forward progress exactly');
-   assert.equal(backMid.growth.curveD,material.growth.curveD,
-     'reversing produces the identical historical SVG curve geometry at the same scroll position');
+   assert.equal((backMid.growth.curveD.match(/ L/g)||[]).length,
+      (material.growth.curveD.match(/ L/g)||[]).length,
+      'reverse scroll restores the same growth EXTENT; natural time motion remains independent');
    assert(backMid.growth.offsets.some(v=>v>0&&v<1000)&&
       backMid.growth.offsets.some(v=>v===1000),
      'reverse-scroll retracts the newer branches while leaving the first branches partially drawn');
