@@ -6,6 +6,11 @@ on:
     branches: [main]
     paths:
       - 'static/experiments/p2-0104-olive-continuation.html'
+      - 'static/experiments/p2-0103-release.html'
+      - 'static/images/p2-emmaus-binding-cloth-v1.svg'
+      - 'static/css/p2-emmaus-bookbinding-v7.css'
+      - 'static/js/p2-0103-release.js'
+      - 'tests/p2-emmaus-svg-cloth.cjs'
       - 'static/experiments/olive-engraving-v1-v2-compare.html'
       - 'tests/olive-engraving-v1-v2-compare.cjs'
       - 'static/css/p2-0104-olive-continuation.css'
@@ -50,6 +55,7 @@ jobs:
           test -s public/experiments/p2-0104-olive-continuation.html
           test -s public/experiments/olive-engraving-v1-v2-compare.html
           test -s public/experiments/p2-0103-release.html
+          test -s public/images/p2-emmaus-binding-cloth-v1.svg
           test -s public/images/p2-realms/v15/04-olive-engraving-v1-5.svg
           test -s public/images/p2-realms/v15/04-olive-invitation-foil-v5.svg
           test -s public/images/p2-realms/v15/04-olive-personal-invitation-foil-v6.svg
@@ -63,6 +69,7 @@ jobs:
           test -s public/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg
           test -s public/images/olive/watchman-nee-editorial.png
           node --check tests/p2-0104-olive-continuation.cjs
+          node --check tests/p2-emmaus-svg-cloth.cjs
           node --check tests/olive-engraving-v1-v2-compare.cjs
       - name: Test genuine Chrome 03→04 entrance and reverse scroll
         run: |
@@ -72,6 +79,8 @@ jobs:
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
           node tests/p2-0104-olive-continuation.cjs
+          node tests/p2-emmaus-svg-cloth.cjs
+          node tests/p2-0103-release.cjs
           node tests/olive-engraving-v1-v2-compare.cjs
       - name: Bundle actual botanical vector master for art-direction inspection
         if: always()
@@ -92,7 +101,7 @@ jobs:
         run: |
           mkdir -p public/experiments/p2-0104-proofs
           for width in 1648 390; do
-            for frame in 00-original-emmaus 01b-source-plate-no-old-engraving-exposure 01c-clean-mersi-invitation-transition 02-first-to-left-second-to-right 03-two-poster-locked-original-background 04-only-now-olive-svg-background 05-olive-material-fixed 05b-two-voices-with-growing-olive-field 06-opposed-double-poster-change 06c-pair-five-six-olive-growth 06e-pair-nine-ten-olive-growth 09-twelve-voices-final-overview olive-only-mid-growth olive-only-fully-grown olive-v1-v2-live-growth-review olive-v1-v2-twelve-index-review; do
+            for frame in 00-original-emmaus 01b-source-plate-no-old-engraving-exposure 01c-clean-mersi-invitation-transition 02-first-to-left-second-to-right 03-two-poster-locked-original-background 04-only-now-olive-svg-background 05-olive-material-fixed 05b-two-voices-with-growing-olive-field 06-opposed-double-poster-change 06c-pair-five-six-olive-growth 06e-pair-nine-ten-olive-growth 09-twelve-voices-final-overview olive-only-mid-growth olive-only-fully-grown olive-v1-v2-live-growth-review olive-v1-v2-twelve-index-review emmaus-svg-cloth-green-hold; do
               test -s "artifacts/p2-0104-olive/${width}-${frame}.png"
               cp "artifacts/p2-0104-olive/${width}-${frame}.png" "public/experiments/p2-0104-proofs/"
             done
