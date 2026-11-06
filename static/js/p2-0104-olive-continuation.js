@@ -29,6 +29,7 @@
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
  const overview=$('#olive-overview'),enter=$('#olive-enter');
  const growthSvg=$('#olive-growth-field'),growthRoot=$('#olive-growth-paths');
+ const growthMaskLeft=$('#olive-growth-mask-left'),growthMaskRight=$('#olive-growth-mask-right');
  const growthLines=[],reduceGrowth=matchMedia('(prefers-reduced-motion: reduce)');
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
@@ -347,8 +348,10 @@
   // botanical groups, one per speaker, in the SAME continuous MERSI
   // scroll timeline. No waiting until the final twelve-poster overview.
   let speakerGrowth=0;
-  if(d>=T.groundEnd){
-   speakerGrowth=2/12; // Watchman Nee + Derek Prince already entered
+  if(d>=T.groundStart){
+   // The first TWO are drawn as the new 04 material arrives. The right
+   // aperture opens first, then the left: no sudden completed vegetation.
+   speakerGrowth=(2/12)*bg;
    if(d>=T.pairStart){
     const pairIndex=Math.min(4,Math.floor((d-T.pairStart)/T.pairStep));
     const pairClock=T.pairStart+pairIndex*T.pairStep;
@@ -358,7 +361,16 @@
    if(d>=T.indexStart)speakerGrowth=1;
   }
   const growth=reduceGrowth.matches?(d>=T.groundEnd?1:0):speakerGrowth;
-  if(growthSvg)growthSvg.style.visibility=d>=T.groundEnd?'visible':'hidden';
+  if(growthSvg)growthSvg.style.visibility=d>=T.groundStart?'visible':'hidden';
+  // Register the line engraving to the EXACT same MERSI material split:
+  // right from BOTTOM first, left from TOP afterwards. Never draw olives
+  // above the outgoing Bible cover or fake their entrance with opacity.
+  const growLeft=ease((bg-.52)/.48),growRight=ease(bg/.55);
+  if(growthMaskLeft)growthMaskLeft.setAttribute('height',(900*growLeft).toFixed(3));
+  if(growthMaskRight){
+   growthMaskRight.setAttribute('y',(900*(1-growRight)).toFixed(3));
+   growthMaskRight.setAttribute('height',(900*growRight).toFixed(3));
+  }
   for(const line of growthLines){
    const local=ease((growth-line.start)/(line.end-line.start));
    const offset=(1000*(1-local)).toFixed(3);
