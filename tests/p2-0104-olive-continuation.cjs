@@ -514,6 +514,28 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    ],'opposed masks must carry original English along with the art');
    for(const key of ['x','y','w','h'])assert(Math.abs(pairTransition.pairLeft.box[key]-pair.pairLeft.box[key])<1,
     'all six pairs keep exactly the same folio/anchor geometry');
+   // Each new pair of TWO real preachers must advance the engraved field
+   // continuously DURING the opposed image masks, not at the very end.
+   let priorGrow=pairTransition.growth.value;
+   for(const [distance,label] of [
+    [13.08,'06b-pair-three-four-olive-growth'],
+    [13.91,'06c-pair-five-six-olive-growth'],
+    [14.74,'06d-pair-seven-eight-olive-growth'],
+    [15.57,'06e-pair-nine-ten-olive-growth']
+   ]){
+    const sample=await go(distance,label);
+    assert.equal(sample.growth.visibility,'visible',
+      'the olive field remains visible at every new pair: '+distance);
+    assert(sample.growth.value>priorGrow+.05,
+      'each successive preacher pair advances its OWN botanical field: '+distance);
+    assert(sample.growth.offsets.some(v=>v>0&&v<1000),
+      'SVG stem must be mid-draw DURING pair entrance: '+distance);
+    priorGrow=sample.growth.value;
+   }
+   const sixthPair=await go(15.95,'06f-all-twelve-branches-fully-grown');
+   assert.equal(sixthPair.growth.visibility,'visible');
+   assert(sixthPair.growth.value>.99&&sixthPair.growth.offsets.every(v=>v===0),
+     '12/12 botanical branches finish BEFORE the twelve-card recomposition');
    const last=await go(16.11,'07-final-pair-eleven-twelve');
    assert(last.pairLeft.src.includes('yu-hong-jie-editorial.png'));
    assert(last.pairRight.src.includes('kou-shao-en-editorial.png'));
