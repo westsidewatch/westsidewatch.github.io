@@ -141,6 +141,16 @@ assert.match(css,/\.olive-growth-field\{[^}]*z-index:3;[^}]*overflow:visible/,
 assert.match(html,/id="olive-growth-material-mask"/,
  'growth uses the SAME opposed MERSI physical 03→04 aperture');
 assert.match(js,/strokeDashoffset=offset/,'the SVG growth mechanism must DRAW each path, not fade wallpaper');
+assert.match(js,/class','olive-growth-volume'/,
+ 'the growing grove must register historical botanical echoes, not generated branches');
+assert.match(js,/olive-growth-master-/,
+ 'the fuller field reuses the same twelve authentic editable source engravings');
+assert.match(js,/class','olive-growth-tip'/,
+ 'SVG-002 must have a registered line-front, not only uniform static gold strokes');
+assert.match(css,/\.olive-growth-field \.olive-growth-tip\{/,
+ 'the leading engraved nib uses the OS warm-gold ink');
+assert.match(css,/filter:drop-shadow\(\.4px \.5px 0 var\(--ws-first-light\)\)/,
+ 'the fine foil registration uses the authorized first-light ink');
 assert.match(js,/const growth=reduceGrowth\.matches\?\(d>=T\.groundEnd\?1:0\):speakerGrowth/,
  'growth draws two introductory branches during material reveal, then every speaker');
 assert.match(css,/\.olive-growth-field .olive-growth-path\{[^}]*stroke:var\(--ws-morning-gold\)/,
