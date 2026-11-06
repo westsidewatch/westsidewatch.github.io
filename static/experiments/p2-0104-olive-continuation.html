@@ -80,7 +80,15 @@
      <svg id="olive-growth-field" class="olive-growth-field"
           viewBox="0 0 1600 900" preserveAspectRatio="none"
           aria-hidden="true" focusable="false" visibility="hidden">
-       <g id="olive-growth-paths"></g>
+       <defs>
+         <!-- EXACT same left-from-top/right-from-bottom material aperture
+              as 03→04 MERSI. Botanical strokes cannot float over 03. -->
+         <clipPath id="olive-growth-material-mask" clipPathUnits="userSpaceOnUse">
+           <rect id="olive-growth-mask-left" x="0" y="0" width="800" height="0"/>
+           <rect id="olive-growth-mask-right" x="800" y="900" width="800" height="0"/>
+         </clipPath>
+       </defs>
+       <g id="olive-growth-paths" clip-path="url(#olive-growth-material-mask)"></g>
      </svg>
      <div class="olive-stage__overview" id="olive-overview" aria-label="十二位講員總覽"></div>
      <a id="olive-enter" class="olive-stage__enter" href="/olive/" aria-label="進入橄欖山講道影像館">EXPLORE ALL TWELVE · 進入橄欖山 <span aria-hidden="true">↗</span></a>
