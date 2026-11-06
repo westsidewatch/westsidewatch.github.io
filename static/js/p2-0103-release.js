@@ -382,10 +382,10 @@
       transform:rotateY(180deg) translateZ(.5px);backface-visibility:hidden;z-index:1}
     #p2-emmaus-magazine-underleaf{position:absolute;overflow:hidden;isolation:isolate;
       pointer-events:none;box-sizing:border-box;color:#cebd74;
-      background:#10170d url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat}
+      background:#10170d url('/images/p2-emmaus-binding-cloth-v1.svg?v=20261106-gilt-weave') center/cover no-repeat}
     #p2-emmaus-magazine-underleaf .emmaus__entry-cover-leaf{position:absolute;inset:0;
       width:100%;height:100%;background:linear-gradient(145deg,rgba(2,7,3,.13),rgba(2,7,3,.38)),
-      url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat}
+      url('/images/p2-emmaus-binding-cloth-v1.svg?v=20261106-gilt-weave') center/cover no-repeat}
     #p2-emmaus-magazine-underleaf .emmaus__entry-cover-leaf::after{
       content:'';position:absolute;inset:4%;border:1px solid #cebd7490;pointer-events:none}
     #p2-emmaus-magazine-underleaf .emmaus__entry-cover-gilt{

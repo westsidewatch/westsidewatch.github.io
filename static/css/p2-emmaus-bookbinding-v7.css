@@ -16,7 +16,7 @@
  padding:clamp(22px,1.9vw,35px) clamp(25px,2.15vw,39px) clamp(21px,1.7vw,30px)!important;
  background-color:var(--em-binding-deep)!important;
  background-image:linear-gradient(135deg,rgba(4,13,7,.10),rgba(4,13,7,.34)),
-  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609')!important;
+  url('/images/p2-emmaus-binding-cloth-v1.svg?v=20261106-gilt-weave')!important;
  background-size:cover,cover!important;
  background-position:center!important;
  overflow:hidden!important;
@@ -82,7 +82,7 @@
  pointer-events:none!important;
  overflow:hidden!important;
  background:linear-gradient(140deg,rgba(3,10,4,.18),rgba(3,10,4,.30)),
-  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat!important;
+  url('/images/p2-emmaus-binding-cloth-v1.svg?v=20261106-gilt-weave') center/cover no-repeat!important;
  opacity:0;
  perspective:1500px;
 }
@@ -98,7 +98,7 @@
  backface-visibility:hidden;
  color:var(--em-binding-gilt);
  background:linear-gradient(150deg,rgba(2,7,3,.15),rgba(2,7,3,.4)),
-  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609') center/cover no-repeat;
+  url('/images/p2-emmaus-binding-cloth-v1.svg?v=20261106-gilt-weave') center/cover no-repeat;
  box-shadow:9px 9px 24px rgba(4,10,5,.42),inset 0 0 16px rgba(7,12,3,.6);
  isolation:isolate;
 }
@@ -312,7 +312,7 @@
  overflow:hidden!important;
  background-color:var(--em-binding-deep)!important;
  background-image:linear-gradient(145deg,rgba(4,13,7,.16),rgba(4,13,7,.34)),
-  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609')!important;
+  url('/images/p2-emmaus-binding-cloth-v1.svg?v=20261106-gilt-weave')!important;
  background-size:cover,cover!important;
  background-position:center,center!important;
  background-repeat:no-repeat!important;
@@ -343,7 +343,7 @@ body[data-p2-surround="cloth"] #p2-realm-background[data-realm="bible"]{
  background-color:#10170d!important;
  background-image:
   linear-gradient(145deg,rgba(4,10,3,.24),rgba(5,13,7,.04) 50%,rgba(4,10,3,.35)),
-  url('/one/cover-texture-antique-green.png?v=93ae0c7e0609')!important;
+  url('/images/p2-emmaus-binding-cloth-v1.svg?v=20261106-gilt-weave')!important;
  background-position:center,center!important;
  background-size:cover,cover!important;
  background-repeat:no-repeat,no-repeat!important;

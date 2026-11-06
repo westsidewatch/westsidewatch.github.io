@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 1024" width="640" height="1024" role="img" aria-labelledby="title desc">
+<title id="title">Emmaus / ONE Scripture — engraved antique green book-cloth V1</title>
+<desc id="desc">Native vector cotton-and-linen bookbinding fabric, continuous micro cross-weave with low-contrast gold jacquard lozenges, derived from the canonical ONE 5:8 green/gilt binding palette. Original cover frame and scripture typography remain separate.</desc>
+<metadata>Westside Watch P2 03, 2026-11-06. Original reusable native SVG binding underpattern. Palette copied from the existing approved P2-Emmaus binding CSS: #10170d deep green, #1f2a18 green cloth, #cebd74 binding gilt; no external fonts, CSS dependencies, raster, gradient, drop-shadow, animation or new decorative frame. Canonical /one/ assets are not modified.</metadata>
+<defs>
+  <pattern id="linen-warp" width="12" height="12" patternUnits="userSpaceOnUse">
+    <path d="M1 0V12 M3.6 0V12 M8.1 0V12 M11 0V12" stroke="#cebd74" stroke-width=".24" opacity=".11"/>
+    <path d="M0 2.2H12 M0 5.8H12 M0 10.2H12" stroke="#cebd74" stroke-width=".28" opacity=".09"/>
+    <path d="M2.9 1.4h1.4 M8 7.1h1.7 M.2 10.1h1.5" stroke="#cebd74" stroke-width=".4" opacity=".15"/>
+    <path d="M5.3 0V12 M0 7.9H12" stroke="#10170d" stroke-width=".6" opacity=".28"/>
+  </pattern>
+  <pattern id="diagonal-binding" width="48" height="48" patternUnits="userSpaceOnUse">
+    <path d="M-24 24L24 -24 M-12 48L48 -12 M0 60L60 0 M12 72L72 12 M24 84L84 24" stroke="#cebd74" opacity=".058" stroke-width=".48" fill="none"/>
+    <path d="M-24 24L24 72 M-12 12L36 60 M0 0L48 48 M12 -12L60 36 M24 -24L72 24" stroke="#10170d" opacity=".24" stroke-width=".42" fill="none"/>
+  </pattern>
+  <pattern id="blind-tooled-diamond" width="96" height="96" patternUnits="userSpaceOnUse">
+    <path d="M48 3L93 48L48 93L3 48Z" stroke="#cebd74" stroke-width=".55" opacity=".11" fill="none"/>
+    <path d="M48 13L83 48L48 83L13 48Z" stroke="#cebd74" stroke-width=".47" opacity=".08" fill="none"/>
+    <path d="M48 27L69 48L48 69L27 48Z" stroke="#cebd74" stroke-width=".43" opacity=".11" fill="none"/>
+    <path d="M48 33L63 48L48 63L33 48Z" stroke="#10170d" stroke-width=".8" opacity=".37" fill="none"/>
+    <path d="M42 48H54 M48 42V54" stroke="#cebd74" stroke-width=".45" opacity=".15"/>
+    <path d="M48 3V15 M48 81V93 M3 48H15 M81 48H93" stroke="#cebd74" stroke-width=".38" opacity=".12"/>
+    <path d="M0 0l11 11M96 0L85 11M0 96L11 85M96 96L85 85" stroke="#cebd74" stroke-width=".3" opacity=".09"/>
+  </pattern>
+  <pattern id="corner-fibres" width="32" height="32" patternUnits="userSpaceOnUse">
+    <path d="M4 0l.5 9 M9 16l-.4 12 M18 2l.7 10 M27 21l-.6 8" stroke="#cebd74" stroke-width=".27" opacity=".11"/>
+    <path d="M0 19l13 .5 M20 7l12-.5" stroke="#10170d" stroke-width=".36" opacity=".25"/>
+  </pattern>
+</defs>
+<rect x="0" y="0" width="640" height="1024" fill="#1f2a18"/>
+<rect x="0" y="0" width="640" height="1024" fill="url(#linen-warp)"/>
+<rect x="0" y="0" width="640" height="1024" fill="url(#diagonal-binding)"/>
+<rect x="0" y="0" width="640" height="1024" fill="url(#blind-tooled-diamond)"/>
+<rect x="0" y="0" width="640" height="1024" fill="url(#corner-fibres)"/>
+</svg>
