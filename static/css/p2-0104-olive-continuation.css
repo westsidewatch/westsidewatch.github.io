@@ -167,9 +167,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 /* V3 / ONE ORIGINAL COPPERPLATE. All paths serve one landscape
    perspective; no V11/V12 shapes or neon glow.  A fine-burin hierarchy
    within EXACT OS olive + gold inks, with portraits above the plate. */
-.olive-growth-field .olive-growth-terrain{opacity:.43}
+.olive-growth-field .olive-growth-terrain{opacity:.58}
 .olive-growth-field .olive-growth-terrain .olive-growth-path{
- stroke-opacity:.55;stroke-width:.56
+ stroke-opacity:.68;stroke-width:.64
 }
 .olive-growth-field .olive-growth-left,
 .olive-growth-field .olive-growth-right{opacity:.91}
@@ -178,6 +178,19 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-growth-field .olive-sprig{stroke-opacity:.78;stroke-width:.64}
 .olive-growth-field .olive-leaf-outline{stroke-opacity:.86;stroke-width:.70}
 .olive-growth-field .olive-leaf-midrib{stroke-opacity:.45;stroke-width:.34}
+/* V3.1 connected crowns: long olive leaves, branchlets, dark fruit
+   and delicate engraved underside.  No full-window foliage stamps. */
+.olive-growth-field .olive-canopy-crown{opacity:.92}
+.olive-growth-field .olive-canopy-twigs{stroke-opacity:.55}
+.olive-growth-field .olive-canopy-leaves{stroke-opacity:.87}
+.olive-growth-field .olive-canopy-ribs{stroke-opacity:.40}
+.olive-growth-field .olive-canopy-fruit{stroke-opacity:.93}
+.olive-growth-field .olive-canopy-hatch{stroke-opacity:.34}
+.olive-growth-field .olive-trunk-mature{opacity:.78}
+.olive-growth-field .olive-trunk-edge{stroke-opacity:.80}
+.olive-growth-field .olive-trunk-ridge{stroke-opacity:.56}
+.olive-growth-field .olive-trunk-root{stroke-opacity:.67}
+
 .olive-growth-field .olive-growth-distant{opacity:.43}
 .olive-growth-field .olive-growth-distant .olive-growth-path{
  stroke-opacity:.52;stroke-width:.48
