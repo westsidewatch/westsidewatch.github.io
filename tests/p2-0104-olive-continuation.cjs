@@ -61,8 +61,10 @@ assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scriptu
 assert.doesNotMatch(css,/cover-golden-shoot-frame-transparent\.png/,
  'the 04 transition must NOT duplicate the old ONE book-cover gilt frame');
 const oliveCSS=css.slice(
- css.indexOf('.olive-surround__half{'),
+ css.indexOf('.olive-surround__half{\n /* Canonical 04 realm canvas'),
  css.indexOf('.olive-proof{'));
+assert(oliveCSS.startsWith('.olive-surround__half{'),
+ '04 source scan must start at its ACTUAL material block, not a shared 03 transition selector');
 assert(oliveCSS.startsWith('.olive-surround__half{'),
  'the 04-only surface must be independently selected from the shared 03 mask geometry');
 const cardCSS=css.slice(css.indexOf('.olive-stage__invitation{'),css.indexOf('.olive-stage__first{z-index:2'));
