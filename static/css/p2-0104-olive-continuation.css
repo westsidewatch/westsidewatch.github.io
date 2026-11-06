@@ -177,9 +177,11 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
 /* SINGLE title, entirely OUTSIDE the mounted prints. No competing
    title on cards and no second full-width foil border. */
 .olive-stage__rubric{
- position:absolute;z-index:9;top:clamp(10px,1.6svh,17px);
+ /* Global chapter identity lives ABOVE the card carriers, in the scene,
+    not inside the clipped physical folio. No title may cross artwork. */
+ position:absolute;z-index:9;top:clamp(38px,4.6svh,44px);
  left:clamp(22px,4vw,70px);right:clamp(22px,4vw,70px);
- min-height:68px;visibility:hidden;overflow:hidden;
+ min-height:46px;visibility:hidden;overflow:hidden;
  display:grid;grid-template-columns:minmax(112px,1fr) auto minmax(112px,1fr);
  align-items:center;gap:clamp(8px,1.4vw,20px);
  color:var(--ws-morning-gold);pointer-events:none;
@@ -190,7 +192,7 @@ html,body{margin:0;padding:0;min-height:100%;background:color-mix(in oklab,var(-
  letter-spacing:.105em;color:var(--ws-morning-gold);
 }
 .olive-stage__rubric strong{
- font:400 clamp(31px,3.3vw,54px)/.97 var(--ws-type-display-en);
+ font:400 clamp(28px,2.9vw,45px)/.97 var(--ws-type-display-en);
  letter-spacing:-.06em;white-space:nowrap;text-align:center;
 }
 .olive-stage__rubric strong i{font-weight:400;font-style:italic}
