@@ -3,7 +3,7 @@
    MERSI template, replayed sevenfold, shadowed card grid or video UI.
    The original Doré image supplies the entrance's physical coordinates. */
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll-behavior-y:none}
+html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscroll-behavior-y:none}
 .p2-olive-controls{
  position:fixed;z-index:80;top:0;left:0;right:0;
  display:flex;align-items:center;gap:15px;padding:5px 13px;
@@ -32,7 +32,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll
  --ws-engraving-opacity:.13;
  position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent
 }
-#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-ink);z-index:0}
+#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-paper);z-index:0}
 
 /* MERSI 03→04 material handoff. The source is still 03 while the
    new card travels; the 04 gallery print field enters only AFTER the
@@ -53,7 +53,8 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll
 .olive-surround__half[data-side="right"]{right:0}
 /* Outgoing Emmaus cover is allowed ONLY inside the transition bridge. */
 .olive-bridge__half{
- background-color:var(--ws-ink);
+ /* Outgoing 03 material only: never expose a black fallback curtain. */
+ background-color:var(--ws-olive);
  background-image:url('/one/cover-texture-antique-green.png?v=93ae0c7e0609');
  background-repeat:no-repeat;
  background-size:200% 100%;
@@ -63,7 +64,10 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll
 /* Independent 04 gallery field. Neither 03 cloth nor decorative foil is
    allowed to be repainted outside the actual invitation cards. */
 .olive-surround__half{
- background-color:var(--ws-ink);
+ /* Canonical 04 realm canvas: the OS olive must occupy the full stage.
+    The previous full-screen #252525 field was an unauthorized
+    black-and-gold variant (westside-design-os.css realm contract). */
+ background-color:var(--ws-olive);
  background-image:none;
 }
 .olive-surround__half[data-side="left"]{background-position:left center}
@@ -182,12 +186,12 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-ink);overscroll
  min-height:46px;visibility:hidden;overflow:hidden;
  display:grid;grid-template-columns:minmax(112px,1fr) auto minmax(112px,1fr);
  align-items:center;gap:clamp(8px,1.4vw,20px);
- color:var(--ws-morning-gold);pointer-events:none;
+ color:var(--ws-paper);pointer-events:none;
 }
 .olive-stage__rubric::after{display:none}
 .olive-stage__rubric span,.olive-stage__rubric small{
  font:200 clamp(9px,.69vw,11px)/1.3 var(--ws-type-display-en);
- letter-spacing:.105em;color:var(--ws-morning-gold);
+ letter-spacing:.105em;color:var(--ws-paper);
 }
 .olive-stage__rubric strong{
  font:400 clamp(28px,2.9vw,45px)/.97 var(--ws-type-display-en);
