@@ -30,7 +30,7 @@ assert.match(html,/id="olive-invitation-left"/,'left settled speaker requires ow
 assert.match(html,/id="olive-invitation-right"/,'right settled speaker requires own card');
 assert.match(css,/\.olive-stage__invitation\{/,
  'invitation is a real distinct graphic object');
-assert.match(css,/04-olive-mount-etching-v8\.svg/,
+assert.match(css,/04-olive-engraved-headpiece-v9\.svg/,
  'the invitation must contain its own actual Mount of Olives landscape engraving');
 assert.doesNotMatch(html,/olive-invitation__imprint|olive-invitation__colophon/,
  'no three competing invitation titles or redundant colophons');
@@ -55,7 +55,7 @@ assert.doesNotMatch(html,/olive-main-image|olive-next-image|olive-speaker-names/
  'remove prior speaker-player layout and small-thumb corridor');
 assert.doesNotMatch(css,/04-olive-invitation-foil-v5\.svg/,
  'no ornate giant full-scene foil frame');
-assert.match(css,/04-olive-mount-etching-v8\.svg/,
+assert.match(css,/04-olive-engraved-headpiece-v9\.svg/,
  'engraved Olives ridge is LOCAL to invitation, not a full-window wallpaper');
 assert.match(css,/\/one\/cover-texture-antique-green\.png/,'use the real Scripture-cover green cloth');
 assert.doesNotMatch(css,/cover-golden-shoot-frame-transparent\.png/,
