@@ -60,6 +60,11 @@ jobs:
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
           node tests/p2-0104-olive-continuation.cjs
+      - name: Bundle actual botanical vector master for art-direction inspection
+        if: always()
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          cp static/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg artifacts/p2-0104-olive/v12-master.svg
       - name: Save genuine desktop/mobile visual proofs
         if: always()
         uses: actions/upload-artifact@v4
