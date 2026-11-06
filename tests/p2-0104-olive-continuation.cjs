@@ -619,12 +619,23 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     assert(c.w>25&&c.h>25,'twelve original posters still visible, no zero-size index cards');
    }
    const backMid=await go(11.44,'10-reverse-return-to-ground-mid');
-   assert.equal(backMid.growth.visibility,'hidden');
-   assert(backMid.growth.offsets.every(v=>v===1000),
-     'reverse-scroll must undo each botanical stroke precisely');
+   assert.equal(backMid.growth.visibility,'visible',
+     'reverse scrolling into the 03→04 material window must RESUME partial olive growth');
+   assert(Math.abs(backMid.growth.value-material.growth.value)<.002,
+     'reversed strokes must match the original 11.44 forward progress exactly');
+   assert(backMid.growth.offsets.some(v=>v>0&&v<1000)&&
+      backMid.growth.offsets.some(v=>v===1000),
+     'reverse-scroll retracts the newer branches while leaving the first branches partially drawn');
+   assert(backMid.growth.materialMask.left<5&&
+      backMid.growth.materialMask.right>800,
+     'the reversed living motif restores the source split material aperture');
    assert(Math.abs(backMid.ground-material.ground)<.005,
     'reversing returns exact exterior mask position, no delayed animation');
    const backBeginning=await go(9.76,'11-reverse-restore-dore-frame');
+   assert.equal(backBeginning.growth.visibility,'hidden',
+     'return to pre-04 Doré removes all visible olive engraving');
+   assert(backBeginning.growth.offsets.every(v=>v===1000),
+     'reverse to pre-04 resets all 12 speaker drawings to their origin');
    assert(Math.abs(backBeginning.first-bridge.first)<.005,
     'reverse restores exact first poster clip and Doré frame geometry');
    const restored=await go(9.30,'12-reverse-restored-emmaus');
