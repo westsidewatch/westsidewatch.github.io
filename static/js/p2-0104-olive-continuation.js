@@ -611,7 +611,7 @@
  // not CSS background movement, so every line grows and reverses in place.
  if(growthSvg&&growthRoot){
   stage.dataset.p2OliveGrowthReady='false';
-  fetch('/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg?v=unified-20261106').then(response=>{
+  fetch('/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg?v=unified-20261106-31').then(response=>{
    if(!response.ok)throw new Error('Olive SVG HTTP '+response.status);
    return response.text();
   }).then(xml=>{
