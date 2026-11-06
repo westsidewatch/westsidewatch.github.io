@@ -215,7 +215,7 @@
   const left=sideIndex===0?outer:inner;
   const right=sideIndex===0?inner:outer;
   const top=mobile?Math.min(24,Math.max(6,gap*.44)):
-    Math.max(22,Math.min(30,r.h*.045));
+    Math.max(68,Math.min(76,r.h*.112));
   const bottom=mobile?Math.min(20,Math.max(4,gap*.40)):
     Math.max(27,Math.min(34,r.h*.047));
   return {x:r.x-left,y:r.y-top,w:r.w+left+right,h:r.h+top+bottom};
