@@ -45,3 +45,23 @@ V3.2 擁有可回收的滾動生長技術，但「植物先畫滿 1600×900，�
 - 刻線是否有真正的橄欖樹感、意義明確的山地、設計精度；如果安全區裁切只剩幾個碎枝，應立即淘汰該方案，不得宣稱畫面成熟；
 - 按 `WESTSIDE-EDITORIAL-MANUAL.md` §6 **10 項 0–2**初審，分數需 `>=15/20`，意義／構圖區別／可近用／編輯性都不得得 0；人工作品評審未做以前不得先行宣稱通過；
 - **只在上面通過後**將靜態母本拆為可長出的路徑並接入既有 MERSI scroll engine。不得因工程測試綠燈提前上線。
+
+
+## V4.1 真實畫面與新版靜態母本補充
+
+**設計評審發現：** 初版 V4 的四種寬度 Chromium 截圖證明十二張原作、凍結英文與 3:4 比例沒有受損，但真正的公版植物在邊緣太淡、V13 城市地貌在下方幾乎不可辨。這仍是好用的**排版安全區基礎**，不是能直接拿去做生長動效的成熟藝術母本。
+
+**已實際完成的歷史 SVG 複用：**
+- 對照原始 GitHub 檔案 `static/images/p2-realms/v15/04-olive-historic-engraving-v13.svg`，只取出 Walter Crane 原有的 **23 條植物 SVG path** 和必要 `g` 轉換，重新註冊成 `static/images/p2-realms/v15/04-olive-crane-side-register-v14.svg`（`95×225` 窄縱比例）；植物造型全部來自已查核的 **1900/1914 Walter Crane 公版作品**，不是再寫一套葉片生成公式。
+- 建立**新的靜態 V4.1 A/B**：`static/experiments/olive-mountain-art-foundation-v41.html`。它使用 V14 在側邊而非 V12 被否決的大幅對角線，底部仍只用一次 V13 歷史地形版芯，按其原始約 600:90 比例呈現；提高真正可見區的印墨對比，避免在海報背後浪費路徑。
+- A `ARCHIVAL AXIS`：居中精細英文、左側博物館式狹長歷史植物邊界與下面一塊地貌印版。B `FOLIO PRESSURE`：大而偏左的英文刊頭、右側單一歷史植物邊界、地貌版芯左移。**不是兩種顏色或光效變體**。兩案都只改靜態視覺，照舊使用 12 張真正的講員印刷海報及 frozen Shadow DOM 英文，尚未接入運動。
+- `tests/olive-mountain-art-foundation-v41.cjs` 與原有 V4 測試分開檢查，應核實 1648/1440/800/390px，A、B 共八組安全區；四幅 1648/390 A/B 真實 Chromium 圖並列比較。通過之前不得報告藝術完成。
+
+**外部探索後新增／重新核實的候選：**
+- [Rhead《The Principles of Design》（1905）公版橄欖枝 OpenClipart #7176](https://openclipart.org/detail/7176/olive-branch)、[FreeSVG CC0 記錄](https://freesvg.org/johnny-automatic-olive-branch)。這是真正的**另一個**成熟 botanical vector 候選；**已核實來源和標示的權利，尚未下載、接入或藝術驗收**。不允許以這個名字虛報為正在運行的工具。
+- [NYPL Woodward/Cousen《Jerusalem from the Mount of Olives》（1881–84）](https://old-digitalcollections.nypl.org/items/510d47d9-5d9b-a3d9-e040-e00a18064a99)：由機構記錄確認鋼版畫與山地視點。NYPL 對美國境內記為公版，但**明言未逐一認定其他司法管轄區的版權**；目前只作構圖與地貌參照，沒有把 JPEG 偽裝成 SVG。
+- [William Miller《The Botanical Cabinet》Plate 456](https://commons.wikimedia.org/wiki/File:Loddiges_456_Olea_europaea_drawn_by_W_Miller.jpg) 的 19 世紀 botanical anatomy 對照是**歷史影像**，與可直接引入的 SVG 向量資產必須分開。
+- [VTracer](https://github.com/visioncortex/vtracer) 有成熟的掃描影像轉 SVG 實作；[Inkscape EggBot hatch-fill](https://github.com/evil-mad/EggBot/blob/master/inkscape_driver/eggbot_hatch.inx) 有成熟的交錯刻線填充。兩者只列**離線試驗候選**，沒有加入 P2 runtime：自動向量化可能破壞 1880 年代銅版的刀法與疏密，必須先比較藝術保真度。
+- `docs/design/SVG-EXPLORATION-LIST.md` 的 SVG.js、Motion、SVGO 是技術與優化候選，不能把它們誤認為能自行創作成熟橄欖樹。
+
+**藝術硬邊界：** V4.1 目標是消除 V4 原來的「植物與城牆太弱」問題，仍需以實際 1648/390 同尺寸截圖和 §6 十項標準檢查是否成熟。若 V14 側邊被裁成斷裂枝條或 V13 地貌不能識別，就淘汰當前構圖並重新選擇，**不能把安全區測試通過誤寫成藝術驗收**。背景只能使用 OS 橄欖綠、晨光／暖金、紙色；不可擴充黑底、光暈或新的動畫。
