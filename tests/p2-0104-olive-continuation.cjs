@@ -143,6 +143,10 @@ assert.match(html,/id="olive-growth-material-mask"/,
 assert.match(js,/strokeDashoffset=offset/,'the SVG growth mechanism must DRAW each path, not fade wallpaper');
 assert.match(js,/class','olive-growth-volume'/,
  'the growing grove must register historical botanical echoes, not generated branches');
+assert.match(js,/historic\[source-1\]\.cloneNode\(true\)/,
+ 'historical artwork must be cloned into real SVG DOM for correct foil ink');
+assert.doesNotMatch(js,/createElementNS\(ns,'use'\)/,
+ 'SVG use shadow-instances render black fill instead of reversible gold lines');
 assert.match(js,/olive-growth-master-/,
  'the fuller field reuses the same twelve authentic editable source engravings');
 assert.match(js,/class','olive-growth-tip'/,
@@ -585,7 +589,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     echoes:+document.getElementById('p2-olive-stage').dataset.p2OliveGrowthEchoes,
     tips:+document.getElementById('p2-olive-stage').dataset.p2OliveGrowthTips
    }));
-   assert.equal(foilLayers.echoes,14,'fourteen registered olive facsimiles enrich the margins');
+   assert.equal(foilLayers.echoes,12,'twelve authentic re-registered botanical facsimiles enrich the margins');
    assert.equal(foilLayers.tips,8,'eight live pen-fronts trace the source contour lines');
    assert(indexHalf.growth.paths>=240,'one complete botanical source for every speaker');
    assert(indexHalf.growth.value>.99,
