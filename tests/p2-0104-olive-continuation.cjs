@@ -265,7 +265,7 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      'the old source is claimed by a complete foil invitation');
    assert.equal(sourceTakeover.invitation.clip,'none',
      'the FULL invitation replaces the Doré source before moving');
-   assert.match(sourceTakeover.invitation.color,/^(?:color\(|rgb\()/,
+   assert.match(sourceTakeover.invitation.color,/^(?:oklab\(|color\(|rgb\()/,
      'source card must resolve to an OS-driven real CSS color');
    assert(sourceTakeover.invitation.color!== 'rgb(25, 61, 46)',
      'old arbitrary teal green is forbidden');
