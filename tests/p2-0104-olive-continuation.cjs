@@ -127,7 +127,7 @@ assert.match(js,/function positionInvitedEngraving\(/,
 const archiveSVG=read('static/images/p2-realms/v15/04-olive-growth-field-v1.svg');
 assert.equal((archiveSVG.match(/data-speaker-growth="/g)||[]).length,12);
 const growthSVG=read('static/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg');
-assert.match(js,/04-olive-living-grove-v2\.svg/,
+assert.match(js,/04-olive-hillside-copperplate-v3\.svg/,
  'the P2 04 runtime must use the NEW historically grounded SVG mother');
 for(const className of ['olive-growth-terrain','olive-growth-left','olive-growth-right','olive-growth-distant']){
  assert(growthSVG.includes(className), 'missing distinct SVG family '+className);
