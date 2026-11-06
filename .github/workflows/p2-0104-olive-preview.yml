@@ -9,10 +9,13 @@ on:
       - 'static/experiments/olive-mountain-art-foundation-v4.html'
       - 'static/experiments/olive-mountain-art-foundation-v41.html'
       - 'static/experiments/olive-mountain-art-foundation-v42.html'
+      - 'static/experiments/olive-mountain-art-foundation-v43.html'
+      - 'scripts/build-olive-mountain-master-v43.py'
       - 'static/images/p2-realms/v15/04-olive-crane-side-register-v14.svg'
       - 'static/images/p2-realms/v15/04-olive-mountain-panoramic-plate-v42.svg'
       - 'tests/olive-mountain-art-foundation-v41.cjs'
       - 'tests/olive-mountain-art-foundation-v42.cjs'
+      - 'tests/olive-mountain-art-foundation-v43.cjs'
       - 'tests/olive-mountain-art-foundation-v4.cjs'
       - 'docs/projects/olive-mountain-living-engraving/ART-FOUNDATION-V4-DORÉ-EXPLORATION-2026-11-06.md'
       - 'static/experiments/p2-0103-release.html'
@@ -41,7 +44,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write # generated historic native vector artmasters committed only to same-repo Draft PR branch
 
 concurrency:
   group: p2-0104-olive-${{ github.event.pull_request.number || github.ref_name }}
@@ -54,6 +57,27 @@ jobs:
     timeout-minutes: 24
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          persist-credentials: true
+      - name: Produce real 1881 steel-engraving desktop/mobile native SVG masters
+        # This is a trusted same-repository Draft PR, never a fork or a main-branch job.
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq potrace
+          python3 -m venv /tmp/olive-v43-env
+          /tmp/olive-v43-env/bin/pip -q install 'Pillow==11.3.0'
+          /tmp/olive-v43-env/bin/python scripts/build-olive-mountain-master-v43.py
+          test -s static/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v43.svg
+          test -s static/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v43.svg
+          git config user.name "westsidewatch-artmaster-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add static/images/p2-realms/v15/04-olive-woodward-cousen-*-intaglio-v43.svg
+          if ! git diff --cached --quiet; then
+            git commit -m 'art(olive): reproduce original public-domain steel engraving as native V4.3 SVG masters [skip ci]'
+            git push origin HEAD:"${GITHUB_HEAD_REF}"
+          fi
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.167.0'
@@ -65,6 +89,9 @@ jobs:
           test -s public/experiments/olive-mountain-art-foundation-v4.html
           test -s public/experiments/olive-mountain-art-foundation-v41.html
           test -s public/experiments/olive-mountain-art-foundation-v42.html
+          test -s public/experiments/olive-mountain-art-foundation-v43.html
+          test -s public/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v43.svg
+          test -s public/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v43.svg
           test -s public/images/p2-realms/v15/04-olive-mountain-panoramic-plate-v42.svg
           test -s public/images/p2-realms/v15/04-olive-crane-side-register-v14.svg
           test -s public/experiments/olive-engraving-v1-v2-compare.html
@@ -86,6 +113,7 @@ jobs:
           node --check tests/olive-mountain-art-foundation-v4.cjs
           node --check tests/olive-mountain-art-foundation-v41.cjs
           node --check tests/olive-mountain-art-foundation-v42.cjs
+          node --check tests/olive-mountain-art-foundation-v43.cjs
           node --check tests/p2-emmaus-svg-cloth.cjs
           node --check tests/olive-engraving-v1-v2-compare.cjs
       - name: Test genuine Chrome 03→04 entrance and reverse scroll
@@ -99,6 +127,7 @@ jobs:
           node tests/olive-mountain-art-foundation-v4.cjs
           node tests/olive-mountain-art-foundation-v41.cjs
           node tests/olive-mountain-art-foundation-v42.cjs
+          node tests/olive-mountain-art-foundation-v43.cjs
           node tests/p2-emmaus-svg-cloth.cjs
           node tests/p2-0103-release.cjs
           node tests/olive-engraving-v1-v2-compare.cjs
@@ -108,6 +137,8 @@ jobs:
           mkdir -p artifacts/p2-0104-olive
           cp static/images/p2-realms/v15/04-olive-historic-engraving-v13.svg artifacts/p2-0104-olive/v13-historic-master.svg
           cp static/images/p2-realms/v15/04-olive-mountain-panoramic-plate-v42.svg artifacts/p2-0104-olive/v42-panorama-native-master.svg
+          cp static/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v43.svg artifacts/p2-0104-olive/v43-desktop-real-engraving.svg
+          cp static/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v43.svg artifacts/p2-0104-olive/v43-mobile-real-engraving.svg
           cp static/images/p2-realms/v15/04-olive-living-grove-v2.svg artifacts/p2-0104-olive/v2-multi-source-living-grove.svg
           cp static/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg artifacts/p2-0104-olive/v3-unified-copperplate.svg
       - name: Save genuine desktop/mobile visual proofs
@@ -136,6 +167,9 @@ jobs:
               test -s "$src"
               cp "$src" public/experiments/p2-0104-proofs/
               src="artifacts/p2-0104-olive/${width}-olive-v42-static-${variant}.png"
+              test -s "$src"
+              cp "$src" public/experiments/p2-0104-proofs/
+              src="artifacts/p2-0104-olive/${width}-olive-v43-static-${variant}.png"
               test -s "$src"
               cp "$src" public/experiments/p2-0104-proofs/
             done
