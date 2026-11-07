@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>04 橄欖山 | V1 / V2 真實畫面並排藝術評審</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--ws-paper);color:var(--ws-ink);font-family:var(--ws-type-display-zh),"Noto Serif TC",serif}
+main{max-width:1650px;margin:auto;padding:clamp(18px,3vw,48px)}
+header{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;border-bottom:1px solid var(--ws-morning-gold);padding-bottom:19px}
+.kicker{font:200 11px/1.4 var(--ws-type-display-en),serif;letter-spacing:.18em}
+h1{font:400 clamp(30px,4.8vw,67px)/1 var(--ws-type-display-en),serif;letter-spacing:-.045em;margin:12px 0}
+header p,.intro{font:300 13px/1.8 var(--ws-type-display-zh),serif;max-width:75ch}
+.reference{font:200 11px/1.6 var(--ws-type-display-en),serif;text-align:right}
+.reference a{color:inherit}
+.controls{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;padding:24px 0}
+label{display:grid;gap:7px;font-size:12px;font-weight:300}
+select{min-width:245px;max-width:95vw;border:1px solid var(--ws-olive);background:transparent;color:inherit;padding:9px 12px;font:inherit}
+article{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,30px)}
+figure{margin:0;min-width:0}
+figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:11px;padding-bottom:10px;border-bottom:1px solid var(--ws-morning-gold);font:200 clamp(11px,1vw,14px)/1.4 var(--ws-type-display-en),serif;letter-spacing:.08em}
+figcaption strong{font-weight:600}
+figure img{width:100%;height:auto;display:block;aspect-ratio:1648/928;object-fit:contain;background:var(--ws-olive);border:1px solid var(--ws-olive)}
+figure img.mobile{aspect-ratio:390/844;max-width:390px;margin:0 auto}
+.frame-info{display:flex;justify-content:space-between;gap:8px;padding-top:8px;font:200 11px/1.5 var(--ws-type-display-en),serif}
+.frame-info a{color:var(--ws-ink)}
+footer{margin-top:32px;border-top:1px solid var(--ws-morning-gold);padding-top:16px;font:300 12px/1.8 var(--ws-type-display-zh),serif}
+footer a{color:var(--ws-ink)}
+@media(max-width:760px){header{grid-template-columns:1fr}.reference{text-align:left}article{grid-template-columns:1fr}figure{margin-bottom:12px}}
+</style></head><body data-ws-scope="p2">
+<main>
+<header>
+<div><div class="kicker">WESTSIDE WATCH / 04 / ART DIRECTION REVIEW · 2026.11.06</div>
+<h1>OLIVE MOUNTAIN</h1>
+<p>生長刻線 V1 → V2。將同一視窗、同一滾動節點的 Chromium 實拍並列；這不是二次製作的概念圖，也不是新的藝術母本。</p></div>
+<div class="reference">OLD <a href="https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42178859073">Run #42178859073</a><br>
+NEW <a href="https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/42183696605">Run #42183696605</a></div>
+</header>
+<div class="controls">
+<label for="stage">驗收節點
+<select id="stage">
+<option value="04-only-now-olive-svg-background">01 / 橄欖山底紋開始進入</option>
+<option value="05-olive-material-fixed">02 / 橄欖色與金線定型</option>
+<option value="05b-two-voices-with-growing-olive-field" selected>03 / 兩位講員與生長刻線</option>
+<option value="06c-pair-five-six-olive-growth">04 / 第五、六位講員</option>
+<option value="06e-pair-nine-ten-olive-growth">05 / 第九、十位講員</option>
+<option value="09-twelve-voices-final-overview">06 / 十二位講員總覽</option>
+</select></label>
+<label for="width">相同視窗尺寸
+<select id="width"><option value="1648" selected>1648 × 928 / 桌面</option><option value="390">390 × 844 / 手機</option></select></label>
+</div>
+<article>
+<figure><figcaption><span><strong>BEFORE / V1</strong> · 重複植物母本</span><span>REF 2026.11.06 / 07:08 UTC</span></figcaption>
+<a id="before-link" target="_blank" rel="noopener noreferrer"><img id="before" alt="V1 橄欖山真實 Chromium 截圖"></a>
+<div class="frame-info"><span>舊版；已歸檔</span><a id="before-original" target="_blank" rel="noopener noreferrer">開啟原始截圖</a></div></figure>
+<figure><figcaption><span><strong>AFTER / V2</strong> · 四種素材拼接</span><span>REF 2026.11.06 / 07:54 UTC</span></figcaption>
+<a id="after-link" target="_blank" rel="noopener noreferrer"><img id="after" alt="V2 橄欖山真實 Chromium 截圖"></a>
+<div class="frame-info"><span>新候選；藝術評審否決</span><a id="after-original" target="_blank" rel="noopener noreferrer">開啟原始截圖</a></div></figure>
+</article>
+<p class="intro" id="caption">前後對比使用同一個滾動節點，不用 SVG 路徑數量或 CI 綠燈冒充視覺進展。</p>
+<footer>
+<strong>編輯手冊 §6 / §9.4</strong>：構圖與主次、字體及海報完整性、兩色刻印紀律、版塊識別度、動效意義、手機、可近用性、原生編輯能力；獲獎參照採本地 0–2 分十項審查，低於 15/20 或必要項為零即淘汰。
+<p>詳細查核：<a href="https://github.com/westsidewatch/westsidewatch.github.io/issues/1390">GitHub 獨立工程 #1390</a>。本頁僅供前後核查，沒有更動講員海報、P2 01–03 或 Design OS。</p>
+</footer>
+</main>
+<script>(()=>{'use strict';
+const old='https://5aa9c100.westsidewatch-github-io.pages.dev';
+const next='https://15125d1a.westsidewatch-github-io.pages.dev';
+const stage=document.getElementById('stage'),w=document.getElementById('width');
+const captions={
+ '04-only-now-olive-svg-background':'底紋剛進場：檢查畫面的重心是否依然留在邀請函，刻線是否搶先成為主角。',
+ '05-olive-material-fixed':'背景完全落定：檢查橄欖山是否可辨認、疏密是否有節奏，以及是否像獨立的植物拼貼。',
+ '05b-two-voices-with-growing-olive-field':'前兩位講員：以講員作品、保留空間、金線的附屬關係判斷設計品質。',
+ '06c-pair-five-six-olive-growth':'中段轉場：在同一畫面確認植物增加後是否形成不必要的視覺噪音。',
+ '06e-pair-nine-ten-olive-growth':'後段轉場：比較滿版植物與海報的衝突以及背景高光的密度。',
+ '09-twelve-voices-final-overview':'終場：以完整 12 張作品的閱讀動線、版塊氣質與視覺統一性評審。'
+};
+function update(){const name=w.value+'-'+stage.value+'.png',mobile=w.value==='390';
+ const before=old+'/experiments/p2-0104-proofs/'+name,after=next+'/experiments/p2-0104-proofs/'+name;
+ for(const [id,url] of [['before',before],['after',after]]){
+  const img=document.getElementById(id);img.src=url;img.classList.toggle('mobile',mobile);
+  document.getElementById(id+'-link').href=url;
+  document.getElementById(id+'-original').href=url;
+ }
+ document.getElementById('caption').textContent=captions[stage.value];
+}
+stage.addEventListener('change',update);w.addEventListener('change',update);update();
+})();</script></body></html>

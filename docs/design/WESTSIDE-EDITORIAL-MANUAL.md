@@ -185,4 +185,17 @@ These files remain archived intact; they do not operate as independent OS author
 
 **權限界線：** 「多雷探索」本身不授權更改主站資訊架構、替換已驗收設計、擅自合併分支或新增全站 CSS／JavaScript 入口；涉及正式頁面的修改仍須遵守本手冊第 1、6 節及現有 Design OS 與發布驗收程序。
 
+### 9.5 GitHub 工程讀寫能力：每次施工必須實測，不得無根據否認
+
+**已驗證事實（2026-11-07）：** 在 Westside Watch 對話工程環境中，ChatGPT 曾透過已連接的 GitHub 工具成功讀取、建立、修改及提交本倉庫檔案。可用操作包括 `mcp__GitHub__fetch_file`、`mcp__GitHub__create_file`、`mcp__GitHub__update_file` 及 `mcp__GitHub__get_pr_info`。已實際寫入 `westsidewatch/westsidewatch.github.io` 的 Draft PR #1385（分支 `draft/p2-0104-olive-entry-20261105`）；例如提交 `143f414d6f848c0cd87942d0e6c242ea6cdf0aae`。**因此不可因對話變長、思考強度改變或不確定工具名稱，就自行聲稱「我沒有 GitHub 寫入權限」。**
+
+**每次進入工程、尤其在 Medium／High 切換或對話續接之後：**
+1. 先查當前工作階段實際可用的 GitHub 工具，再以 `get_pr_info` 確認 PR、Draft 狀態、head commit 與施工分支；必要時 `fetch_file` 讀取現有檔案和最新 blob SHA。
+2. 如果 `update_file`／`create_file` 可用且操作在已授權的 Draft 工程範圍內，就直接修改、提交、核對 commit 與測試；不要讓使用者反覆提醒已有寫入能力，也不要退回只提供 patch 或施工規格。
+3. 若工具在**當前工作階段經過實際檢查後**確實不可用，才準確報告這一事實；不得把「尚未核查工具」誤說成「無權限」。
+4. 將**讀寫能力**、**特定分支的修改授權**、**CI 通過**與**Cloudflare 部署完成**分別核實；工具可用不代表永久可用，寫入成功亦不代表通過藝術或部署驗收。
+5. 保護正式主站與已發布 01–03：P2 04 工作僅限已授權的 Draft PR；未經要求不可合併 main、改寫既有正式版本或更改已核准的十二張海報及英文排版。
+
+**錯誤案例：** 2026-11-06 至 11-07 曾在已多次成功提交 GitHub 的前提下，錯誤答覆「沒有寫入工具／不能修改倉庫」，經使用者要求重新檢查才承認工具存在。這是未核查造成的能力判斷錯誤，**不能證實**由 High／Medium 切換造成。今後必須以工具實測取代猜測。
+
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.

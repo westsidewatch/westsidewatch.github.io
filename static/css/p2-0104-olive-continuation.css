@@ -1,0 +1,447 @@
+/* P2 / 04 twelve original posters — isolated real 01–03 continuation.
+   One Design OS; only 04-specific geometry. NO generic wipe, fades, pseudo
+   MERSI template, replayed sevenfold, shadowed card grid or video UI.
+   The original Doré image supplies the entrance's physical coordinates. */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscroll-behavior-y:none}
+.p2-olive-controls{
+ position:fixed;z-index:80;top:0;left:0;right:0;
+ display:flex;align-items:center;gap:15px;padding:5px 13px;
+ min-height:37px;border-bottom:1px solid var(--ws-morning-gold);
+ background:var(--ws-ink);color:var(--ws-paper);
+ font:200 10px/1.3 var(--ws-type-display-en);
+ letter-spacing:.09em
+}
+.p2-olive-controls strong{font-weight:400;white-space:nowrap}
+.p2-olive-controls nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.p2-olive-controls button{
+ border:1px solid var(--ws-morning-gold);background:transparent;color:inherit;
+ padding:4px 8px;cursor:pointer;font:inherit;letter-spacing:.02em
+}
+.p2-olive-controls button:focus-visible,.p2-olive-controls button:hover{
+ border-color:var(--ws-warm-gold);color:var(--ws-warm-gold)
+}
+.p2-olive-controls label{margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.p2-olive-controls input{accent-color:var(--ws-morning-gold);width:118px}
+#p2-olive-track{position:relative;height:1865svh}
+.p2-olive-stage{
+ /* Strict OS token authority: olive = --ws-olive, no local generated
+    green shades, no color-mix or invented gradients in this chapter. */
+ --ws-branch:var(--ws-olive);
+ --ws-identity:var(--ws-olive);
+ --ws-engraving-opacity:.13;
+ position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent
+}
+#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-paper);z-index:0}
+
+/* MERSI 03→04 material handoff. The source is still 03 while the
+   new card travels; the 04 gallery print field enters only AFTER the
+   two protected original prints settle. Masks share one scroll value. */
+#p2-olive-bridge,#p2-olive-surround{
+ position:absolute;inset:0;pointer-events:none;
+ visibility:hidden;overflow:hidden;
+}
+#p2-olive-bridge{z-index:1}
+#p2-olive-surround{z-index:2;opacity:1}
+.olive-bridge__half,.olive-surround__half{
+ position:absolute;top:0;height:100%;width:50%;
+ will-change:clip-path;clip-path:inset(100% 0 0 0);
+}
+.olive-bridge__half[data-side="left"],
+.olive-surround__half[data-side="left"]{left:0}
+.olive-bridge__half[data-side="right"],
+.olive-surround__half[data-side="right"]{right:0}
+/* The genuine 03 Bible binding stays ONLY in the exiting 01–03 iframe.
+   Never project its dark 5:8 diamond bookcloth as full-screen wallpaper
+   behind the 04 speaker posters; that is the leaked vertical stripe.
+   This plain OS olive material field retains the original opposed masks. */
+.olive-bridge__half{
+ background-color:var(--ws-olive);
+ background-image:none;
+}
+/* Independent 04 gallery field. Neither 03 cloth nor decorative foil is
+   allowed to be repainted outside the actual invitation cards. */
+.olive-surround__half{
+ /* Canonical 04 realm canvas: the OS olive must occupy the full stage.
+    The previous full-screen OS ink field was an unauthorized
+    black-and-gold variant (westside-design-os.css realm contract). */
+ background-color:var(--ws-olive);
+ background-image:none;
+}
+.olive-surround__half[data-side="left"]{background-position:left center}
+.olive-surround__half[data-side="right"]{background-position:right center}
+/* 04 / CLEAN FIELD: editorial backdrop engraving withdrawn by request.
+   Preserve the existing opposed masks, solid OS olive canvas and all
+   protected posters. Invitation-card local headpieces are not backgrounds. */
+.olive-surround__half::after{content:none!important}
+
+/* P2 / 04 MERSI independent engraving halves — printed, not wallpaper.
+   Botanical source: public-domain OpenClipart 81199 (project V12).
+   Terrain: measured Mount of Olives DEM from Mapzen / AWS Open Data.
+   Neither layer overlaps the other half; no new animation framework.
+   Each print has one CSS mask and one scroll-owned clipping rectangle. */
+#olive-editorial-engraving{
+ position:absolute;inset:0;z-index:3;overflow:hidden;
+ pointer-events:none;visibility:hidden;
+ /* Reserve a true typographic safe zone above both vector print fields.
+    The original twelve posters are never masked: only background ink is. */
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0%,transparent 10%,#000 27%,#000 100%);
+ mask-image:linear-gradient(to bottom,transparent 0%,transparent 10%,#000 27%,#000 100%);
+}
+/* V57: Alpha feathering is a print edge, not a colour gradient.
+   Removes hard horizontal botanical / terrain SVG cut lines while the
+   reversible MERSI half-field clipping remains unchanged. */
+.olive-editorial-engraving__half{
+ position:absolute;top:0;width:50%;height:100%;overflow:hidden;
+ -webkit-mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
+ mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
+}
+.olive-editorial-engraving__half[data-art-side="left"]{left:0}
+.olive-editorial-engraving__half[data-art-side="right"]{right:0}
+.olive-editorial-engraving__print{
+ position:absolute;inset:4% 3% 5%;background:var(--ws-morning-gold);
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-size:contain;mask-size:contain;
+ opacity:.77;
+}
+/* V54 / editorial botanical folio, not scattered icon-like sprigs.
+   Six copies of an actual Walter Crane public-domain engraving are composed
+   into one asymmetric print field. All form is imported: no handmade leaves.
+   The print is behind the protected speaker figures and contained in LEFT. */
+/* V56: the same six public-domain Walter Crane sprays are printed as
+   TWO ink impressions, light relief and articulate copperplate contours.
+   The full-volume print remains visible at a distance, without a solid
+   gold hedge competing against the topographic linework on the right. */
+/* V60: six individual real Crane letterpress plates. No image clipping,
+   no sliding foil rectangle, no procedural leaves. Each complete plate
+   is added AFTER its own speaker has settled, preserving earlier ink. */
+.olive-editorial-engraving__print--botanical{
+ inset:-7% -12% -23% -9%;width:auto;height:auto;
+ background:none;opacity:1;
+ /* Six real botanical impressions, optically subordinated to the portraits. */
+ filter:opacity(.64);
+ -webkit-mask-image:none;mask-image:none;
+}
+.olive-editorial-engraving__print--botanical::before,
+.olive-editorial-engraving__print--botanical::after{content:none!important}
+.olive-botanical-plate{
+ position:absolute;inset:0;pointer-events:none;display:block;
+ background:var(--ws-morning-gold);opacity:0;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-position:center;mask-position:center;
+}
+.olive-botanical-plate[data-print-impression="1"]{
+ background:var(--ws-morning-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-1.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-1.svg');
+}
+.olive-botanical-plate[data-print-impression="2"]{
+ background:var(--ws-pale-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-2.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-2.svg');
+}
+.olive-botanical-plate[data-print-impression="3"]{
+ background:var(--ws-deep);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-3.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-3.svg');
+}
+.olive-botanical-plate[data-print-impression="4"]{
+ background:var(--ws-warm-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-4.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-4.svg');
+}
+.olive-botanical-plate[data-print-impression="5"]{
+ background:var(--ws-pale-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-5.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-5.svg');
+}
+.olive-botanical-plate[data-print-impression="6"]{
+ background:var(--ws-first-light);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-6.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-6.svg');
+}
+/* Three draw-on groups are taken from actual elevation contours.
+   The old static mask is an accessibility/offline fallback ONLY. */
+.olive-editorial-engraving__print--topography{
+ /* True measured contours continue off-paper; never expose the SVG
+    rectangle's bottom or right boundary inside the viewport. */
+ inset:-7% -24% -22% -8%;width:auto;height:auto;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ -webkit-mask-position:right center;mask-position:right center;
+ opacity:1;
+}
+.olive-editorial-engraving__print--topography.has-path-growth{
+ background:none;-webkit-mask-image:none;mask-image:none;
+}
+.olive-editorial-engraving__print--topography svg{
+ display:block;width:100%;height:100%;overflow:visible;
+ fill:none;stroke:var(--ws-morning-gold);
+}
+.olive-editorial-engraving__print--topography svg path{
+ fill:none;stroke-dasharray:1000 1000;
+}
+@media(max-width:600px){
+ .olive-editorial-engraving__print--botanical{inset:-4% -15% -20% -14%;width:auto;height:auto;opacity:1}
+ .olive-editorial-engraving__print--topography{
+  inset:-5% -26% -18% -12%;width:auto;height:auto;opacity:.92;
+ }
+}
+
+.olive-proof{
+ position:absolute;z-index:4;overflow:hidden;
+ visibility:hidden;background:transparent;color:var(--ws-ink);
+ isolation:isolate;pointer-events:none;
+}
+.olive-stage__first,.olive-stage__pair,.olive-stage__overview{
+ position:absolute;margin:0;inset:0;overflow:hidden
+}
+/* Isolated live SVG proof (?artOnly=1); no change to normal P2 gallery. */
+.p2-olive-stage.olive-art-only .olive-proof{display:none!important;visibility:hidden!important;pointer-events:none!important}
+/* P2/04 GALLERY ANNOUNCEMENT PRINT: one card carries one COMPLETE
+   immutable 3:4 poster. Only a small localized mountain relief, fine
+   single line and one-line caption. NO second masthead or gilt frame. */
+.olive-stage__invitation{
+ position:absolute;z-index:1;display:block;visibility:hidden;
+ margin:0;padding:0;border:0;pointer-events:none;overflow:hidden;
+ background:var(--ws-olive);
+ color:var(--ws-morning-gold);isolation:isolate;
+ outline:1px solid var(--ws-morning-gold);outline-offset:-1px;
+}
+.olive-stage__invitation::after{
+ content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
+ background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
+}
+/* V61: remove the alien miniature botanical fragment. V56's full
+   folio had been compressed into a 45px side gutter. This produced
+   incompatible tiny foliage beside the real large-scale olive plate.
+   Keep the approved V13 header ornament and numbered edition rail. */
+.olive-card__imprint{
+ position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+}
+.olive-card__imprint::before,.olive-card__imprint::after{
+ content:none!important;
+}
+.olive-card__edition{
+ position:absolute;z-index:2;
+ top:calc(var(--olive-foil-top,16px) + var(--olive-foil-height,48px) + 12px);
+ bottom:42px;left:0;
+ width:var(--olive-outer-rail-width,45px);
+ display:flex;justify-content:center;align-items:center;
+ writing-mode:vertical-rl;text-orientation:mixed;
+ font:200 clamp(8px,.68vw,10px)/1.1 var(--ws-type-display-en);
+ letter-spacing:.25em;color:var(--ws-morning-gold);
+ opacity:.96;white-space:nowrap;overflow:hidden;
+}
+#olive-invitation-right .olive-card__edition{left:auto;right:0;transform:rotate(180deg)}
+@media(max-width:540px){
+ .olive-card__edition{font-size:7px;letter-spacing:.08em;bottom:26px}
+}
+/* The original header/folio stays as an invariant across all four editions. */
+/* V13: a real historical 1914 Walter Crane botanical engraving, not
+   formula-generated branches or a giant masked graphic behind two posters.
+   The chapter-specific hillside & city are engraved INTO the actual
+   70px header of each physical invitation. Artwork stays fully visible
+   ABOVE the protected image, never in the shared center gutter.
+   The same unmodified 3:4 speaker artwork covers the rest of the card. */
+.olive-card__relief{
+ /* Center in the visible green headpiece between the physical card edge
+    and the ORIGINAL poster edge: these two CSS variables are set from
+    the real source/pair geometry on every reversible scroll frame. */
+ position:absolute;top:var(--olive-foil-top,16px);left:4%;right:4%;width:auto;
+ height:var(--olive-foil-height,48px);max-height:70px;pointer-events:none;
+ overflow:hidden;opacity:1;isolation:isolate;
+}
+.olive-card__relief::before,.olive-card__relief::after{
+ content:"";position:absolute;inset:0;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ -webkit-mask-position:center center;mask-position:center center;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+}
+.olive-card__relief::before{
+ background:var(--ws-paper);opacity:.20;transform:translate(-1px,-1px);
+}
+.olive-card__relief::after{
+ background:var(--ws-morning-gold);opacity:.96;
+}
+#olive-invitation-right .olive-card__relief{transform:scaleX(-1)}
+.olive-card__caption{
+ position:absolute;z-index:2;bottom:6px;left:13px;right:13px;
+ height:19px;display:flex;align-items:center;
+ border-top:1px solid var(--ws-morning-gold);
+ color:var(--ws-morning-gold);background:transparent;
+ font:200 clamp(8px,.69vw,11px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.075em;white-space:nowrap;overflow:hidden;
+}
+.olive-card__caption{gap:3px}
+.olive-card__name-en{display:block;overflow:hidden;text-overflow:ellipsis;min-width:0;white-space:nowrap}
+.olive-card__name-zh{
+ display:block;flex:0 0 auto;white-space:nowrap;
+ font-family:var(--ws-type-display-zh),"Noto Serif TC",sans-serif;
+ font-weight:200;font-style:normal;font-synthesis:none;
+}
+.olive-stage__invitation--pair{z-index:0}
+.olive-stage__first{z-index:2;inset:auto}
+.olive-stage__pair{z-index:3;inset:0}
+/* 04 background engraving retired. The speaker invitation headpiece is
+   separate card artwork, not a stage-wide texture. */
+.olive-stage__overview{z-index:6;inset:0;visibility:hidden;background:transparent}
+.olive-stage__first,
+.olive-stage__poster,
+.olive-stage__index-card{
+ position:absolute;overflow:hidden;margin:0;border:0;
+ background:transparent;box-shadow:none;
+}
+/* Every image is paired with its ORIGINAL frozen typography and source
+   occlusion layers in the same image-relative 3:4 coordinate box.
+   Do not put text in a separate caption or retune the approved letters.
+   Overlay belongs inside .olive-stage__artwork, never outside the PNG. */
+.olive-stage__artwork{
+ position:absolute;inset:0;overflow:hidden;isolation:isolate;
+ background:transparent;
+}
+.olive-stage__artwork>.olive-stage__original{
+ display:block!important;width:100%!important;height:100%!important;
+ max-width:none!important;object-fit:contain!important;
+ object-position:center center!important;
+}
+.olive-stage__artwork>olive-speaker-baseline{
+ position:absolute;display:block;z-index:6;pointer-events:none;
+}
+.olive-stage__first .olive-stage__artwork{bottom:0}
+.olive-stage__poster .olive-stage__artwork{inset:0}
+.olive-stage__index-card .olive-stage__artwork{inset:0}
+/* The incoming print lives over 03's REAL source frame; do not transfer
+   the 03 book cover into a 04 component to hide mismatched dimensions. */
+.olive-stage__first,
+.olive-stage__first .olive-stage__artwork{background:transparent}
+.olive-stage__poster{z-index:1}
+.olive-stage__incoming{z-index:2;visibility:hidden}
+.olive-stage__poster figcaption{
+ /* Approved posters are whole artworks: NO footer injected into their
+    3:4 print geometry. Sequence metadata belongs to the separate index. */
+ display:none!important;
+}
+/* Original frozen English is printed over the image; captions below
+   remain only folio sequence numbers, not a substitute for it. */
+/* SINGLE title, entirely OUTSIDE the mounted prints. No competing
+   title on cards and no second full-width foil border. */
+.olive-stage__rubric{
+ /* Global chapter identity lives ABOVE the card carriers, in the scene,
+    not inside the clipped physical folio. No title may cross artwork. */
+ position:absolute;z-index:9;top:clamp(38px,4.6svh,44px);
+ left:clamp(22px,4vw,70px);right:clamp(22px,4vw,70px);
+ min-height:46px;visibility:hidden;overflow:hidden;
+ display:grid;grid-template-columns:minmax(112px,1fr) auto minmax(112px,1fr);
+ align-items:center;gap:clamp(8px,1.4vw,20px);
+ color:var(--ws-paper);pointer-events:none;
+}
+.olive-stage__rubric::after{display:none}
+.olive-stage__rubric span,.olive-stage__rubric small{
+ font:200 clamp(9px,.69vw,11px)/1.3 var(--ws-type-display-en);
+ letter-spacing:.105em;color:var(--ws-paper);
+}
+.olive-stage__rubric strong{
+ font:400 clamp(28px,2.9vw,45px)/.97 var(--ws-type-display-en);
+ letter-spacing:-.063em;white-space:nowrap;text-align:center;
+ /* The overview acquires an oversized title AFTER the two-print sequence. */
+ font-size:calc(clamp(28px,2.9vw,45px) + var(--olive-title-growth,0px));
+}
+.olive-stage__rubric strong i{font-weight:400;font-style:italic}
+.olive-stage__rubric small{
+ text-align:right;font-family:var(--ws-type-display-zh),"Noto Serif TC",sans-serif;
+ font-weight:200;font-synthesis:none;
+}
+.olive-stage__index-card{
+ z-index:2;display:block;text-decoration:none;overflow:hidden;
+ color:var(--ws-morning-gold);background:transparent;
+ will-change:top,left,width,height;
+}
+/* The same approved English + Chinese type follows every image through
+   geometric FLIP recomposition, instead of disappearing in index mode. */
+.olive-stage__index-card span{
+ /* Text master is already on the poster. No external strip, footer or
+    overshooting layer may compromise the registered 3:4 print. */
+ display:none!important;position:absolute;inset:auto;overflow:hidden;
+ font:200 clamp(7px,.62vw,10px)/15px var(--ws-type-display-en);
+ letter-spacing:.06em;padding:0 1px;opacity:var(--index-caption-alpha,0);
+ background:transparent;color:var(--ws-morning-gold);border-top:1px solid var(--ws-warm-gold);
+}
+.olive-stage__index-card:hover,.olive-stage__index-card:focus-visible{
+ outline:2px solid var(--ws-warm-gold);outline-offset:-2px
+}
+.olive-stage__enter{
+ position:absolute;right:clamp(14px,3vw,52px);bottom:18px;
+ z-index:8;visibility:hidden;display:flex;gap:12px;
+ align-items:center;justify-content:space-between;
+ padding:9px 0 5px;min-width:220px;max-width:calc(100% - 28px);
+ border-top:1px solid var(--ws-warm-gold);text-decoration:none;color:var(--ws-morning-gold);
+ font:200 clamp(10px,.9vw,16px)/1.35 var(--ws-type-display-en);
+ letter-spacing:.12em
+}
+.olive-stage__enter:focus-visible{outline:2px solid var(--ws-warm-gold)}
+/* Technical scroll state is exposed in DOM, not as a black UI tag on the artwork. */
+#p2-olive-folio-status{position:absolute;clip-path:inset(100%);width:1px;height:1px;overflow:hidden}
+@media(max-width:820px){
+ .p2-olive-controls{
+  top:auto;bottom:0;gap:5px;padding:5px;
+  min-height:40px;max-height:58px;
+  flex-wrap:wrap;font-size:8px
+ }
+ .p2-olive-controls strong{width:100%;font-size:8px}
+ .p2-olive-controls nav{gap:3px}
+ .p2-olive-controls button{font-size:8px;padding:3px 5px}
+ .p2-olive-controls label{font-size:8px}
+ .p2-olive-controls input{width:72px}
+ .olive-stage__rubric{
+  display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;
+  column-gap:10px;row-gap:3px;top:9px;min-height:66px;
+  left:clamp(14px,4vw,24px);right:clamp(14px,4vw,24px)
+ }
+ .olive-stage__rubric span{grid-column:1;font-size:9px;letter-spacing:.055em}
+ .olive-stage__rubric small{grid-column:2;font-size:9px;letter-spacing:.035em;text-align:right}
+ .olive-stage__rubric strong{grid-column:1 / -1;grid-row:2;text-align:left;
+  font-size:calc(clamp(28px,7.1vw,47px) + var(--olive-title-growth,0px))}
+ .olive-stage__rubric::after{bottom:-2px}
+ #p2-olive-folio-status{bottom:54px;right:5px;font-size:7px}
+ .olive-stage__poster figcaption{font-size:8px;padding:5px 7px}
+ .olive-stage__index-card .olive-stage__artwork{inset:0}
+
+ .olive-stage__index-card span{font-size:7px;line-height:15px}
+ .olive-stage__enter{
+  bottom:58px;right:10px;min-width:190px;
+  font-size:10px;padding-top:5px;letter-spacing:.04em
+ }
+}
+@media(max-width:540px){
+ /* Preserve original fine lineweight on phone; crop the view, not the ink. */
+ /* Engraved folio headpiece is constrained to the actual phone card's
+    top paper border; no olive leaves may float between mounted images. */
+ .olive-card__relief{left:4%;right:4%;width:auto;
+  top:var(--olive-foil-top,3px);height:var(--olive-foil-height,16px);
+  max-height:22px;opacity:1}
+ .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
+  font-size:7px;letter-spacing:0}
+ .p2-olive-controls{gap:2px;max-height:60px}
+ .p2-olive-controls button{font-size:7px;padding:3px}
+ .p2-olive-controls input{width:52px}
+ .olive-stage__poster .olive-stage__artwork{inset:0}
+ .olive-stage__poster figcaption{display:none!important}
+ .olive-stage__index-card span{font-size:7px;line-height:15px}
+ /* Mobile reflows the global title as ONE centered line: the desktop
+    side labels cannot consume fixed-width columns and clip the masthead. */
+ .olive-stage__rubric{top:42px;left:8px;right:8px;min-height:42px;
+  grid-template-columns:1fr;justify-items:center}
+ .olive-stage__rubric span,.olive-stage__rubric small{display:none}
+ .olive-stage__rubric strong{
+  font-size:calc(clamp(26px,7.8vw,35px) + var(--olive-title-growth,0px));
+  text-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-stage__invitation,.olive-stage__first,.olive-stage__pair,
+ .olive-stage__poster,.olive-stage__overview,
+ .olive-stage__index-card{transition:none!important;animation:none!important}
+}

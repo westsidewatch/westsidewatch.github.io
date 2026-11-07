@@ -1,8 +1,9 @@
 /* P2 / 03 — Emmaus opened ONE scripture binding.
- * CANONICAL SOURCE: /one/cover-texture-antique-green.png
- *                   /one/cover-golden-shoot-frame-transparent.png
- * Reuses the approved ONE book-cover assets directly; no duplicate SVG
- * or generated image, no changes to /one/, Magazine or Olive Mountain.
+ * ORIGINAL CANONICAL COVER: /one/cover-texture-antique-green.png
+ * P2 03 VECTOR CLOTH: /images/p2-emmaus-binding-cloth-v1.svg
+ * GOLD FRAME AUTHORITY: /one/cover-golden-shoot-frame-transparent.png
+ * Uses editable native SVG for P2 cloth while retaining ONE's original gilt
+ * master, 5:8 geometry and text; canonical /one/ assets are unchanged.
  * The scroll controller sets cover progress variables, not a CSS timer.
  */
 #emmaus{
