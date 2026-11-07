@@ -29,11 +29,13 @@ assert.equal((html.match(/data-print-impression=/g)||[]).length,6,'six independe
 assert.equal((html.match(/class="olive-card__reverse olive-card__reverse--/g)||[]).length,2,
  'each invitation has an actual second face');
 assert.match(css,/backface-visibility:hidden/,'front and reverse need hidden back faces');
-assert.match(css,/--folio-paper-alpha,0/,'fold stock appears only during the 3D turn');
-assert.match(css,/--folio-edge-alpha,0/,'fold foil disappears when the back merges into the field');
+assert.match(css,/\.olive-folio-carrier\{/,'single rigid folio carrier supports protected portrait and reverse');
+assert.match(css,/\.olive-card__reverse--botanical::before/,'visible authentic botanical card back');
+assert.match(css,/\.olive-card__reverse--terrain::before/,'visible authentic topographic card back');
+assert.match(css,/transform:rotateY\(180deg\)/,'actual verso faces the camera when physical card turns');
 assert.equal((html.match(/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
  'only the single chapter masthead is allowed; card backs have understated edition labels');
-assert.match(js,/measured-two-faced-rotating-card-v63/,'MERSI drives measured 3D turns');
+assert.match(js,/measured-two-faced-rotating-card-v67/,'MERSI drives measured 3D turns');
 const terrainEngine=read('static/js/p2-0104-olive-path-growth-v60.js');
 assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
 assert.match(terrainEngine,/getBBox\(\)/);
@@ -123,6 +125,15 @@ const widths=[1648,390];
        folioFaces:stage.dataset.p2FolioReverse,
        folioAngles:stage.dataset.p2FolioAngles,
        folioSystem:stage.dataset.p2FolioSystem,
+       rigidCards:[...document.querySelectorAll('.olive-folio-carrier')].map(el=>({
+        children:[...el.children].map(c=>c.id),
+        transform:getComputedStyle(el).transform
+       })),
+       frontPortraits:[...document.querySelectorAll('#olive-pair-left,#olive-pair-right')].map(el=>({
+        parent:el.parentElement?.className,
+        transform:getComputedStyle(el).transform,
+        baseline:!!el.querySelector('olive-speaker-baseline')
+       })),
        reverseFaces:[...document.querySelectorAll('.olive-card__reverse')].map(el=>({
         visible:getComputedStyle(el).visibility,
         mask:getComputedStyle(el,'::before').webkitMaskImage,
@@ -188,10 +199,14 @@ const widths=[1648,390];
    const leftInk=await go(11.90,'05a-left-portrait-and-right-back');
    assert(leftInk.plant>.16&&leftInk.terrain>.16,'both printing fields retained');
    assert.equal(leftInk.folioFaces,'front,back','first: left portrait and right engraved reverse');
-   assert.equal(leftInk.folioSystem,'measured-two-faced-rotating-card-v63');
+   assert.equal(leftInk.folioSystem,'measured-two-faced-rotating-card-v67');
    assert.equal(leftInk.reverseFaces.length,2);
-   assert(leftInk.reverseFaces.every(x=>x.visible==='visible'&&x.mask==='none'),
-    'the original full botanical/terrain field itself must be the back, without duplicate local engravings');
+   assert(leftInk.reverseFaces.every(x=>x.visible==='visible'&&x.mask.includes('.svg')),
+    'each physical card back must actually show its olive or terrain engraved artwork');
+   assert.equal(leftInk.rigidCards.length,2,'one real carrier on each side');
+   assert(leftInk.rigidCards.every(c=>c.children.length===3),'front shell, original poster and printed back share one carrier');
+   assert(leftInk.frontPortraits.every(c=>c.parent==='olive-folio-carrier'&&c.transform==='none'&&c.baseline),
+    'frozen English baseline and image must never receive an independent 3D transform');
    assert.equal(leftInk.leftClip,'none','no box clipping on botanical field');
    assert.equal(leftInk.rightClip,'none','no box clipping on contour field');
    await page.waitForFunction(()=>['real-dem-whole-contours-v60','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
