@@ -237,6 +237,13 @@
   const safety=mobile?2:5;
   const h=Math.min(mobile?22:70,Math.max(4,exposed-2*safety));
   const y=Math.max(2,(exposed-h)/2);
+  // Derive the ONLY ink rail from registered card/poster geometry.
+  // Otherwise 80% of the decorative impression is hidden below the art.
+  const isRight=el.id==='olive-invitation-right';
+  const rail=isRight
+   ? Math.max(0,card.x+card.w-(poster.x+poster.w))
+   : Math.max(0,poster.x-card.x);
+  el.style.setProperty('--olive-outer-rail-width',rail.toFixed(2)+'px');
   el.style.setProperty('--olive-foil-top',y.toFixed(2)+'px');
   el.style.setProperty('--olive-foil-height',h.toFixed(2)+'px');
  }
@@ -247,6 +254,12 @@
   if(card.dataset.olivePrintFamily!==edition)
    card.dataset.olivePrintFamily=edition;
   card.dataset.olivePrintNumber=String(i+1).padStart(2,'0');
+  const imprint=card.querySelector('.olive-card__edition');
+  if(imprint){
+   const name=['BOTANICA','TERRAIN','JERUSALEM','HORIZON'][i%4];
+   const lettering=String(i+1).padStart(2,'0')+' / 12 · '+name;
+   if(imprint.textContent!==lettering)imprint.textContent=lettering;
+  }
  }
  function setCardCaption(card,i){
   const en=card.querySelector('.olive-card__name-en');
