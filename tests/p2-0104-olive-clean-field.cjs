@@ -195,6 +195,15 @@ const widths=[1648,390];
    assert.equal(leftInk.leftClip,'none','no box clipping on botanical field');
    assert.equal(leftInk.rightClip,'none','no box clipping on contour field');
    await page.waitForFunction(()=>['real-dem-whole-contours-v60','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
+   // Prove the magic is a geometric 3D turn, not a static front/back swap.
+   const enteringFlip=await go(12.065,'05aa1-right-card-mid-flip');
+   const enteringAngle=Number(enteringFlip.folioAngles?.split(',')[1]);
+   assert(enteringAngle>15&&enteringAngle<165,'right card physically rotates through depth while left stays steady');
+   assert(Math.abs(Number(enteringFlip.folioAngles?.split(',')[0]))<.01,
+    'left side remains locked during the right-side reveal');
+   const retiringFlip=await go(12.245,'05aa2-left-card-mid-flip');
+   const retiringAngle=Number(retiringFlip.folioAngles?.split(',')[0]);
+   assert(retiringAngle>15&&retiringAngle<165,'previous speaker folds back only after next portrait has settled');
    const rightLocked=await go(12.33,'05aa-right-front-left-back');
    assert.equal(rightLocked.folioFaces,'back,front','right figure is front; left botanical back');
    assert.equal(rightLocked.rightPoster,'1','right approved Derek Prince portrait');
