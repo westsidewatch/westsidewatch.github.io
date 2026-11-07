@@ -12,6 +12,12 @@ const css=read('static/css/p2-0104-olive-continuation.css');
 const js=read('static/js/p2-0104-olive-continuation.js');
 assert.match(html,/p2-0103-release\.html\?embed=1/);
 assert.match(html,/olive-speaker-baseline|baseline\.js/);
+assert.match(html,/id="olive-editorial-engraving"/);
+assert.match(css,/04-olive-botanical-gallery-v12\.svg/);
+assert.match(css,/04-olive-mount-terrain-contours-v1\.svg/);
+assert.match(read('static/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg'),/olivet-true-topography/);
+assert.match(js,/dataset\.p2EngravingPlant/);
+assert.match(js,/dataset\.p2EngravingTerrain/);
 assert.doesNotMatch(html,/id="olive-growth-field"/);
 assert.doesNotMatch(js,/olive-growth-|growthSvg|growthMask|drawGrowingCurve|livingClock/,
  'retired full-stage botanical/under-poster strokes must not run');
@@ -51,6 +57,9 @@ const widths=[1648,390];
      const head=document.querySelector('#p2-0103-original');
      return {scene:stage.dataset.p2Scene,
        source:getComputedStyle(head).visibility,
+       plant:Number(stage.dataset.p2EngravingPlant),
+       terrain:Number(stage.dataset.p2EngravingTerrain),
+       artVisibility:getComputedStyle(document.querySelector('#olive-editorial-engraving')).visibility,
        ground:getComputedStyle(bg).visibility,
        noGrowth:document.querySelector('#olive-growth-field')===null,
        posterNodes:document.querySelectorAll('.olive-stage__index-card').length,
@@ -69,13 +78,21 @@ const widths=[1648,390];
    assert.equal(mid.posterNodes,12,'all twelve source composites still exist');
    assert(mid.bgImages.every(x=>x==='none'),'04 background must have no image');
    assert(mid.bgPseudo.every(x=>x==='none'),'04 background must have no pseudo-image');
-   const end=await go(16.70,'09-twelve-voices-final-overview');
+   const leftInk=await go(11.90,'05a-left-botanical-only');
+   assert(leftInk.plant>.6&&leftInk.terrain<.001,'first engraving moment: left only');
+   const rightInk=await go(12.60,'05b-right-terrain-only');
+   assert(rightInk.terrain>.99&&rightInk.plant<.01,'second engraving moment: right only');
+   const leftAgain=await go(13.50,'05c-left-botanical-return');
+   assert(leftAgain.plant>.99&&leftAgain.terrain<.01,'paired alternation restores left');
+   const end=await go(17.30,'09-twelve-voices-final-overview');
+   assert(end.plant>.999&&end.terrain>.999,'all twelve posters: both engravings shown');
    assert.equal(end.posterNodes,12);
    const back=await go(9.30,'10-reversed-original-emmaus');
    assert.equal(back.source,'visible','reverse scrolling restores 03 original');
+   assert.equal(back.artVisibility,'hidden','reverse to 03 removes both 04 engraving fields');
    assert.deepEqual(oliveRequests,[],'retired 04 background SVGs must never be fetched');
    assert.deepEqual(errors,[],'browser must be free of page errors');
-   console.log('P2 04 CLEAN FIELD PASS',width,JSON.stringify({pair:pair.scene,clean:mid.scene,index:end.scene,reverse:back.scene}));
+   console.log('P2 04 CLEAN FIELD PASS',width,JSON.stringify({pair:pair.scene,clean:mid.scene,botanical:leftInk.plant,topography:rightInk.terrain,index:end.scene,reverse:back.scene}));
    await page.close();
   }
  }finally{await browser.close()}
