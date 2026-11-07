@@ -31,8 +31,8 @@ assert.equal((html.match(/class="olive-card__reverse olive-card__reverse--/g)||[
 assert.match(css,/backface-visibility:hidden/,'front and reverse need hidden back faces');
 assert.match(css,/--folio-paper-alpha,0/,'fold stock appears only during the 3D turn');
 assert.match(css,/--folio-edge-alpha,0/,'fold foil disappears when the back merges into the field');
-assert.doesNotMatch(html,/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/,
- 'duplicate chapter masthead must not be printed on every reverse');
+assert.equal((html.match(/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
+ 'only the single chapter masthead is allowed; card backs have understated edition labels');
 assert.match(js,/measured-two-faced-rotating-card-v63/,'MERSI drives measured 3D turns');
 const terrainEngine=read('static/js/p2-0104-olive-path-growth-v60.js');
 assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
