@@ -96,29 +96,23 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  -webkit-mask-size:contain;mask-size:contain;
  opacity:.77;
 }
-/* The V12 public-domain silhouette was mostly hidden behind the posters.
-   Reuse its ORIGINAL contours as two narrow engraved folio flourishes in
-   the exposed LEFT OUTER GUTTER, not as filled gold shapes beneath photos. */
+/* V54 / editorial botanical folio, not scattered icon-like sprigs.
+   Six copies of an actual Walter Crane public-domain engraving are composed
+   into one asymmetric print field. All form is imported: no handmade leaves.
+   The print is behind the protected speaker figures and contained in LEFT. */
 .olive-editorial-engraving__print--botanical{
- inset:11% auto 7% 1.5%;
- width:clamp(98px,10vw,164px);height:82%;
- background:none;opacity:1;
- -webkit-mask-image:none;mask-image:none;
-}
-.olive-editorial-engraving__print--botanical::before,
-.olive-editorial-engraving__print--botanical::after{
- content:"";position:absolute;left:0;width:100%;height:51%;
+ inset:2% -1% 3% 0;
+ width:102%;height:95%;
  background:var(--ws-morning-gold);
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-engraved-outline-v53.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-engraved-outline-v53.svg');
+ opacity:.88;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
- -webkit-mask-position:center;mask-position:center;
+ -webkit-mask-position:left center;mask-position:left center;
 }
-.olive-editorial-engraving__print--botanical::before{top:0}
-.olive-editorial-engraving__print--botanical::after{
- bottom:0;transform:scaleY(-1);opacity:.72;
-}
+.olive-editorial-engraving__print--botanical::before,
+.olive-editorial-engraving__print--botanical::after{content:none}
 /* Three draw-on groups are taken from actual elevation contours.
    The old static mask is an accessibility/offline fallback ONLY. */
 .olive-editorial-engraving__print--topography{
@@ -138,9 +132,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  fill:none;stroke-dasharray:1000 1000;
 }
 @media(max-width:600px){
- .olive-editorial-engraving__print--botanical{
-  inset:9% auto 7% 0;width:clamp(38px,12vw,70px);height:84%;
- }
+ .olive-editorial-engraving__print--botanical{inset:3% -1% 3% 0;width:102%;height:94%;opacity:.82}
  .olive-editorial-engraving__print--topography{
   inset:3% 0 3%;opacity:.62;
  }
