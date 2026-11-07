@@ -726,11 +726,11 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     'reverse MERSI scroll must restore the original Emmaus iframe');
    assert.equal(restored.groundCSS.visibility,'hidden');
     assert.equal(restored.neutralCSS.visibility,'hidden','return to original 03 without a bridge remnant');
-   // This is the SAME live P2 scene with original posters hidden only
-   // for independent SVG art inspection; normal gallery remains untouched.
-   await page.evaluate(()=>document.getElementById('p2-olive-stage')
-    .classList.add('olive-art-only'));
-   // Art-direction regression: Olive is ONE scroll-driven stage, never a
+   // Art-direction regression: first measure the LIVE exhibition geometry.
+   // The isolated art-only mode uses display:none on the poster scene;
+   // measuring after hiding it yields zero-sized bounds, a false failure.
+   // Art-only preview is activated AFTER stage registration is checked.
+   // Olive is ONE scroll-driven stage, never a
    // twelve-poster top panel plus a detached engraving underneath.
    // The botanical SVG shares the stage footprint with the original
    // poster carriers and uses the exact same MERSI material aperture.
@@ -757,6 +757,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    }
    assert(integrated.clip,'historical engraving must use the live MERSI split aperture');
    assert.equal(integrated.imageLayers,0,'do not reintroduce the rejected static V4.6 bottom plate');
+   // SVG-only proof hides prints only AFTER their actual bounds are verified.
+   await page.evaluate(()=>document.getElementById('p2-olive-stage')
+    .classList.add('olive-art-only'));
    const artMid=await go(13.15,'olive-only-mid-growth');
    assert(artMid.growth.value>.2&&artMid.growth.value<.6,
      'isolated gold copperplate must be captured during live growth');
