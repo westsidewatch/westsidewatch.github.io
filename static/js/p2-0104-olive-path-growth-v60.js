@@ -42,9 +42,11 @@
   mount.append(svg);
   const paths=[...svg.querySelectorAll('#olivet-true-topography path')];
   if(paths.length<24)throw Error('too few measured contour paths');
-  // Existing contour paths are already real geographic curves. Sort their
-  // whole-geometry bounds to lay down small enclosed rings before broader
-  // hill traces. An entire path is always visible or invisible together.
+  // Measured contour paths are already authentic geography. Print the
+  // LARGE ridge contours first, then progressively smaller hill rings.
+  // Sorting small-first left two tiny, disembodied shapes beside the
+  // portraits until the last speakers appeared: unacceptable composition.
+  // Every path is still painted whole, never unveiled by a rectangle.
   const ranked=paths.map(path=>{
    path.style.strokeDasharray='none';
    path.style.strokeDashoffset='0';
@@ -52,7 +54,7 @@
    path.setAttribute('stroke-dashoffset','0');
    const b=path.getBBox();
    return {path,area:b.width*b.height,range:b.width+b.height};
-  }).sort((a,b)=>a.area-b.area||a.range-b.range);
+  }).sort((a,b)=>b.area-a.area||b.range-a.range);
   batches=Array.from({length:6},()=>[]);
   ranked.forEach(({path},index)=>{
    const edition=Math.min(5,Math.floor(index*6/ranked.length));
