@@ -106,6 +106,9 @@ const widths=[1648,390];
        rightClip:document.querySelector('[data-art-side="right"]').style.clipPath,
        changingSide:stage.dataset.p2ActiveSide,
        oppositeLocked:stage.dataset.p2OppositeLocked,
+       leftPoster:document.querySelector('#olive-pair-left')?.dataset.speakerIndex,
+       rightPoster:document.querySelector('#olive-pair-right')?.dataset.speakerIndex,
+       portraitDecode:stage.dataset.p2PortraitDecode,
        contourOffsets:['major','mid','fine'].map(k=>document.querySelector('.terrain-'+k)?.getAttribute('stroke-dashoffset')),
        oliveMask:getComputedStyle(document.querySelector('.olive-editorial-engraving__print--botanical'),'::after').webkitMaskImage,
        ground:getComputedStyle(bg).visibility,
@@ -114,6 +117,21 @@ const widths=[1648,390];
        bgImages:[...bg.querySelectorAll('.olive-surround__half')].map(el=>getComputedStyle(el).backgroundImage),
        bgPseudo:[...bg.querySelectorAll('.olive-surround__half')].map(el=>getComputedStyle(el,'::after').content)};
     });
+    // Every image used by the active two-card handoff must have rendered
+    // pixels before visual proof; image decode regressions previously left
+    // huge blank speaker frames even when the print artwork was intact.
+    if(d>=10.95&&d<16.25){
+     await page.waitForFunction(()=>{
+      const stage=document.querySelector('#p2-olive-stage');
+      if(stage?.dataset.p2PortraitDecode!=='ready')return false;
+      const list=[...document.querySelectorAll('#olive-pair .olive-stage__poster img')]
+       .filter(img=>img.getAttribute('src'));
+      return list.length>=2&&list.every(img=>img.complete&&img.naturalWidth>0);
+     },null,{timeout:30000});
+     await page.evaluate(()=>Promise.all(
+      [...document.querySelectorAll('#olive-pair .olive-stage__poster img')]
+       .filter(img=>img.getAttribute('src')).map(img=>img.decode())));
+    }
     // The twelve protected portraits load asynchronously. A screenshot taken
     // immediately after a seek can catch their fonts before decoded pixels.
     // Verify REAL rendered image assets rather than merely counting DOM cards.
@@ -149,7 +167,13 @@ const widths=[1648,390];
    assert.equal(leftInk.leftClip,'none','the botanical field must never be box-clipped');
    assert.equal(leftInk.rightClip,'none','real terrain rings must never be box-clipped');
    await page.waitForFunction(()=>['real-dem-whole-contours-v60','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
+   const leftEntering=await go(12.10,'05aa-left-speaker-changing-right-locked');
+   assert.equal(leftEntering.changingSide,'left');
+   assert.equal(leftEntering.oppositeLocked,'true');
+   assert.equal(leftEntering.rightPoster,'1','right original speaker stays locked while left changes');
    const rightInk=await go(12.80,'05b-right-terrain-second-complete');
+   assert.equal(rightInk.leftPoster,'2','David Pawson remains mounted while Stephen Tong finishes entering right');
+   assert.equal(rightInk.portraitDecode,'ready','original portraits predecoded before alternating swaps');
    assert.equal(rightInk.terrainEngine,'real-dem-whole-contours-v60','complete measured contour paths are printed, never SVG wipe');
    assert(rightInk.fullContourPaths>=24&&rightInk.visibleContours>0,'full geographic contours displayed');
    assert(rightInk.completedRings>=2,'two successive right speakers each print a complete new contour batch');
