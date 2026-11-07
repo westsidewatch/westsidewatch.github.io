@@ -389,34 +389,37 @@
    ((1-plateReveal)*100).toFixed(2)+'%');
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
   const vertical=g.w<600;
-  // Separate paper plates, one MERSI scroll owner: alternate the left
-  // botanical and right measured topography; coexist in the final index.
-  let plant=0,terrain=0;
-  if(d>=T.groundEnd){
-   if(d<T.pairStart){
-    plant=ease((d-T.groundEnd)/(T.pairStart-T.groundEnd));
-   }else{
-    const idx=Math.min(4,Math.floor((d-T.pairStart)/T.pairStep));
-    const step=ease((d-(T.pairStart+idx*T.pairStep))/T.pairDuration);
-    const arrivingRight=idx%2===0;
-    plant=arrivingRight?1-step:step;
-    terrain=arrivingRight?step:1-step;
+  // V60: every speaker gets an actual complete ink impression.
+  // No moving clipping rectangle: each existing botanical SVG edition
+  // and each actual geographical contour group is printed once and HELD.
+  // The first pair settles before the follow-on ten single-side entries.
+  const singleStep=(T.indexStart-T.pairStart)/10;
+  const impressions=side=>Array.from({length:6},(_,k)=>{
+   if(k===0){
+    const begin=side===0?T.groundStart:T.groundStart+.28;
+    return ease((d-begin)/.24);
    }
-   if(d>=T.indexStart){
-    const joined=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
-    plant=mix(plant,1,joined);
-    terrain=mix(terrain,1,joined);
-   }
-  }
+   const speaker=2*k+side;
+   const begin=T.pairStart+(speaker-2)*singleStep;
+   return ease((d-(begin+.69*singleStep))/(singleStep*.23));
+  });
+  const plantLayers=impressions(0),terrainLayers=impressions(1);
+  const botanicalPlates=[...engraved.querySelectorAll('[data-print-impression]')];
+  botanicalPlates.forEach((plate,i)=>{
+   const opacity=plantLayers[i].toFixed(4);
+   if(plate.style.opacity!==opacity)plate.style.opacity=opacity;
+  });
+  const plant=plantLayers.reduce((a,b)=>a+b,0)/6;
+  const terrain=terrainLayers.reduce((a,b)=>a+b,0)/6;
   if(engraved)engraved.style.visibility=(plant>0||terrain>0)?'visible':'hidden';
-  if(etchedLeft)etchedLeft.style.clipPath='inset('+
-   ((1-plant)*100).toFixed(3)+'% 0 0 0)';
-  if(etchedRight)etchedRight.style.clipPath='inset(0 0 '+
-   ((1-terrain)*100).toFixed(3)+'% 0)';
-  window.P2OliveEngraving?.paint(plant,terrain);
+  if(etchedLeft)etchedLeft.style.clipPath='none';
+  if(etchedRight)etchedRight.style.clipPath='none';
+  window.P2OliveEngraving?.paint(plantLayers,terrainLayers);
   stage.dataset.p2EngravingPlant=plant.toFixed(4);
   stage.dataset.p2EngravingTerrain=terrain.toFixed(4);
-  stage.dataset.p2EngravingMode=(plant>.999&&terrain>.999)?'both':
+  stage.dataset.p2PlantImpressions=String(plantLayers.filter(v=>v>.999).length);
+  stage.dataset.p2ContourImpressions=String(terrainLayers.filter(v=>v>.999).length);
+  stage.dataset.p2EngravingMode=plant>.999&&terrain>.999?'both':
    plant>terrain?'botanical':terrain>plant?'topography':'clear';
   const rects=galleryRects(g);
   // Desktop uses true folio halves; on narrow phones two original posters
@@ -492,25 +495,66 @@
    nextRight.style.clipPath='inset('+((1-secondArrival)*100).toFixed(3)+'% 0 0 0)';
    nextLeft.style.visibility='hidden';
   }else if(d<T.pairStart){
-   changePair(0); // Both full posters HOLD before the background moves.
+   changePair(0); // Two figures lock before the first new single-side beat.
+   left.style.clipPath='none';right.style.clipPath='none';
   }else{
-   const i=Math.min(5,Math.floor((d-T.pairStart)/T.pairStep));
-   const tick=T.pairStart+i*T.pairStep;
-   const switching=i<5;
-   const u=switching?ease((d-tick)/T.pairDuration):1;
-   changePair(i,u,switching,vertical);
-   stage.dataset.p2PairIndex=String(i);
-   stage.dataset.p2PairBlend=u.toFixed(5);
+   // Exactly ten single-portrait succession beats: LEFT / RIGHT / LEFT...
+   // One side alone changes; the other speaker and ALL printed ink stay locked.
+   const event=Math.min(9,Math.floor((d-T.pairStart)/singleStep));
+   const tick=T.pairStart+event*singleStep;
+   const beat=clamp((d-tick)/singleStep);
+   const speaker=event+2,side=event%2;
+   const lastLeft=side===0?speaker-2:speaker-1;
+   const lastRight=side===1?speaker-2:speaker-1;
+   const exit=ease((beat-.10)/.22);
+   const arrival=ease((beat-.35)/.29);
+   // Card and baseline art are sourced from the approved frozen masters.
+   setFigure(left,lastLeft);setFigure(right,lastRight);
+   nextLeft.style.visibility='hidden';nextRight.style.visibility='hidden';
+   nextLeft.style.clipPath='inset(100% 0 0 0)';
+   nextRight.style.clipPath='inset(100% 0 0 0)';
+   left.style.visibility='visible';right.style.visibility='visible';
+   left.style.clipPath='none';right.style.clipPath='none';
+   if(side===0){
+    if(beat>=.98){
+     setFigure(left,speaker);setCardCaption(invitationLeft,speaker);
+    }else{
+     setCardCaption(invitationLeft,arrival>.55?speaker:lastLeft);
+     setFigure(nextLeft,speaker);
+     left.style.clipPath='inset(0 0 '+(exit*100).toFixed(3)+'% 0)';
+     nextLeft.style.visibility=arrival>0?'visible':'hidden';
+     nextLeft.style.clipPath='inset(0 0 '+((1-arrival)*100).toFixed(3)+'% 0)';
+    }
+    setCardCaption(invitationRight,lastRight);
+   }else{
+    if(beat>=.98){
+     setFigure(right,speaker);setCardCaption(invitationRight,speaker);
+    }else{
+     setCardCaption(invitationRight,arrival>.55?speaker:lastRight);
+     setFigure(nextRight,speaker);
+     right.style.clipPath='inset('+(exit*100).toFixed(3)+'% 0 0 0)';
+     nextRight.style.visibility=arrival>0?'visible':'hidden';
+     nextRight.style.clipPath='inset('+((1-arrival)*100).toFixed(3)+'% 0 0 0)';
+    }
+    setCardCaption(invitationLeft,lastLeft);
+   }
+   stage.dataset.p2SpeakerArrival=String(speaker+1);
+   stage.dataset.p2ActiveSide=side===0?'left':'right';
+   stage.dataset.p2ArrivalProgress=beat.toFixed(4);
+   stage.dataset.p2OppositeLocked='true';
   }
-  // A fresh editorial plate is revealed with each arriving pair.
-  // The V13 headpiece remains the invariant masthead on both cards.
-  const pairSlot=Math.min(5,Math.floor(Math.max(0,d-T.pairStart)/T.pairStep));
-  const localInk=d<T.pairStart
-   ?ease((d-T.first)/(T.spread-T.first))
-   :ease((d-(T.pairStart+pairSlot*T.pairStep))/T.pairDuration);
-  const inkClip=((1-localInk)*100).toFixed(2)+'%';
-  invitationLeft.style.setProperty('--olive-imprint-clip',inkClip);
-  invitationRight.style.setProperty('--olive-imprint-clip',inkClip);
+  // The SAME completed speaker beat prints the card's gold edition
+  // only AFTER its portrait lands. No simultaneous movement on both sides.
+  let localInk=1,clipL='0%',clipR='0%';
+  if(d>=T.pairStart&&d<T.indexStart){
+   const event=Math.min(9,Math.floor((d-T.pairStart)/singleStep));
+   const beat=clamp((d-(T.pairStart+event*singleStep))/singleStep);
+   localInk=ease((beat-.69)/.23);
+   const clip=((1-localInk)*100).toFixed(2)+'%';
+   if(event%2===0)clipL=clip;else clipR=clip;
+  }
+  invitationLeft.style.setProperty('--olive-imprint-clip',clipL);
+  invitationRight.style.setProperty('--olive-imprint-clip',clipR);
   stage.dataset.p2CardInkReveal=localInk.toFixed(4);
   // Mountain replaces the 03 reading substrate AFTER the double-spread
   // is fixed. Label and split-field move from the same progress; gold
