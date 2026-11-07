@@ -240,10 +240,19 @@
   el.style.setProperty('--olive-foil-top',y.toFixed(2)+'px');
   el.style.setProperty('--olive-foil-height',h.toFixed(2)+'px');
  }
+ // Four editions, one publication: category cycles without touching art.
+ const imprintFamilies=['botanical','terrain','city','horizon'];
+ function setCardImprint(card,i){
+  const edition=imprintFamilies[i%imprintFamilies.length];
+  if(card.dataset.olivePrintFamily!==edition)
+   card.dataset.olivePrintFamily=edition;
+  card.dataset.olivePrintNumber=String(i+1).padStart(2,'0');
+ }
  function setCardCaption(card,i){
   const en=card.querySelector('.olive-card__name-en');
   const zh=card.querySelector('.olive-card__name-zh');
   if(!en||!zh)throw new Error('Missing editorial invitation caption');
+  setCardImprint(card,i);
   if(en.textContent!==roster[i][2])en.textContent=roster[i][2];
   if(zh.textContent!==roster[i][1])zh.textContent=roster[i][1];
  }
@@ -359,6 +368,12 @@
   // ONE is an outgoing transition source only. Once 04 has fully claimed
   // the canvas there must be NO 03 cloth or gilding, even under gutters.
   if(bg>=.99999)neutral.style.visibility='hidden';
+  // The source card and each arriving pair use the same scroll-driven
+  // print register as their photographs. No new timeline or RAF.
+  setCardImprint(firstInvitation,0);
+  const plateReveal=ease((d-T.start)/(T.first-T.start));
+  firstInvitation.style.setProperty('--olive-imprint-clip',
+   ((1-plateReveal)*100).toFixed(2)+'%');
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
   const vertical=g.w<600;
   // Separate paper plates, one MERSI scroll owner: alternate the left
@@ -474,6 +489,16 @@
    stage.dataset.p2PairIndex=String(i);
    stage.dataset.p2PairBlend=u.toFixed(5);
   }
+  // A fresh editorial plate is revealed with each arriving pair.
+  // The V13 headpiece remains the invariant masthead on both cards.
+  const pairSlot=Math.min(5,Math.floor(Math.max(0,d-T.pairStart)/T.pairStep));
+  const localInk=d<T.pairStart
+   ?ease((d-T.first)/(T.spread-T.first))
+   :ease((d-(T.pairStart+pairSlot*T.pairStep))/T.pairDuration);
+  const inkClip=((1-localInk)*100).toFixed(2)+'%';
+  invitationLeft.style.setProperty('--olive-imprint-clip',inkClip);
+  invitationRight.style.setProperty('--olive-imprint-clip',inkClip);
+  stage.dataset.p2CardInkReveal=localInk.toFixed(4);
   // Mountain replaces the 03 reading substrate AFTER the double-spread
   // is fixed. Label and split-field move from the same progress; gold
   // is a print material, NOT a gradient opacity overlay.
