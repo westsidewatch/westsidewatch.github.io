@@ -96,20 +96,54 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  -webkit-mask-size:contain;mask-size:contain;
  opacity:.77;
 }
+/* The V12 public-domain silhouette was mostly hidden behind the posters.
+   Reuse its ORIGINAL contours as two narrow engraved folio flourishes in
+   the exposed LEFT OUTER GUTTER, not as filled gold shapes beneath photos. */
 .olive-editorial-engraving__print--botanical{
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
- -webkit-mask-position:left center;mask-position:left center;
+ inset:11% auto 7% 1.5%;
+ width:clamp(98px,10vw,164px);height:82%;
+ background:none;opacity:1;
+ -webkit-mask-image:none;mask-image:none;
 }
+.olive-editorial-engraving__print--botanical::before,
+.olive-editorial-engraving__print--botanical::after{
+ content:"";position:absolute;left:0;width:100%;height:51%;
+ background:var(--ws-morning-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-engraved-outline-v53.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-engraved-outline-v53.svg');
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-position:center;mask-position:center;
+}
+.olive-editorial-engraving__print--botanical::before{top:0}
+.olive-editorial-engraving__print--botanical::after{
+ bottom:0;transform:scaleY(-1);opacity:.72;
+}
+/* Three draw-on groups are taken from actual elevation contours.
+   The old static mask is an accessibility/offline fallback ONLY. */
 .olive-editorial-engraving__print--topography{
  -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
  mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
  -webkit-mask-position:right center;mask-position:right center;
- opacity:.64;
+ opacity:.74;
+}
+.olive-editorial-engraving__print--topography.has-path-growth{
+ background:none;-webkit-mask-image:none;mask-image:none;
+}
+.olive-editorial-engraving__print--topography svg{
+ display:block;width:100%;height:100%;overflow:visible;
+ fill:none;stroke:var(--ws-morning-gold);
+}
+.olive-editorial-engraving__print--topography svg path{
+ fill:none;stroke-dasharray:1000 1000;
 }
 @media(max-width:600px){
- .olive-editorial-engraving__print{inset:3% 0 3%;opacity:.65}
- .olive-editorial-engraving__print--topography{opacity:.55}
+ .olive-editorial-engraving__print--botanical{
+  inset:9% auto 7% 0;width:clamp(38px,12vw,70px);height:84%;
+ }
+ .olive-editorial-engraving__print--topography{
+  inset:3% 0 3%;opacity:.62;
+ }
 }
 
 .olive-proof{
