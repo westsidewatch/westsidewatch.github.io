@@ -57,7 +57,11 @@ assert.doesNotMatch(css,/04-olive-invitation-foil-v5\.svg/,
  'no ornate giant full-scene foil frame');
 assert.match(css,/04-olive-historic-engraving-v13\.svg/,
  'engraved Olives ridge is LOCAL to invitation, not a full-window wallpaper');
-assert.match(css,/\/images\/p2-emmaus-binding-cloth-v1\.svg/,'the 03-to-04 carrier must use the same native bookcloth SVG as Emmaus');
+const bridgeCSS=css.slice(css.indexOf('.olive-bridge__half{'),css.indexOf('.olive-surround__half{'));
+assert(bridgeCSS.includes('background-color:var(--ws-olive);') && bridgeCSS.includes('background-image:none;'),
+ 'the 03→04 carrier must be clean OS olive without projected bookcloth');
+assert(!bridgeCSS.includes('p2-emmaus-binding-cloth-v1.svg'),
+ 'the 5:8 Emmaus weave must NEVER be a full-stage Olive backdrop');
 assert.doesNotMatch(css,/cover-golden-shoot-frame-transparent\.png/,
  'the 04 transition must NOT duplicate the old ONE book-cover gilt frame');
 const oliveCSS=css.slice(
@@ -272,7 +276,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       incomingLeft:get(nl),incomingRight:get(nr),
       neutralCSS:{visibility:getComputedStyle(neutral).visibility,reveal:+neutral.dataset.reveal,
        halves:[...neutral.querySelectorAll('[data-side]')].map(x=>x.style.clipPath),
-       cloth:getComputedStyle(neutral.querySelector('[data-side="left"]')).backgroundImage},
+       ink:getComputedStyle(neutral.querySelector('[data-side="left"]')).backgroundColor,
+       image:getComputedStyle(neutral.querySelector('[data-side="left"]')).backgroundImage},
       bodyBackground:getComputedStyle(document.body).backgroundColor,
       groundCSS:{visibility:getComputedStyle(ground).visibility,
        oliveColor:getComputedStyle(ground.querySelector('[data-side="left"]')).backgroundColor,
@@ -397,6 +402,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(atUserScreenshot.neutralCSS.halves.every(x=>!/[1-9][0-9.]*%/.test(x)),
     'all original page material is replaced by a full-panel source field at 10.26');
    assert.equal(atUserScreenshot.invitation.visibility,'visible',
+   assert.equal(atUserScreenshot.emmausFrame.visibility,'hidden','retire outgoing 5:8 cover after takeover');
+   assert.equal(atUserScreenshot.neutralCSS.image,'none','no enlarged cloth during the handoff');
     'the 04 printed card leads the spatial handoff');
    assert(atUserScreenshot.invitation.relief.includes('04-olive-historic-engraving-v13.svg'),
     'the entering card carries the substantive original Olives landscape engraving');
@@ -497,10 +504,13 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     'preserve the first-poster entrance travel from 50370f07');
    assert.equal(pair.groundCSS.visibility,'hidden','04 pigment follows, not accompanies, the double spread');
     assert(pair.neutralCSS.reveal>.999,'03 must be fully cleared behind both posters');
-    assert(pair.neutralCSS.cloth.includes('p2-emmaus-binding-cloth-v1.svg'),
-     'transition carrier MUST retain the true green Bible-cover cloth, not yellow');
+    assert.equal(pair.neutralCSS.ink,'rgb(115, 138, 90)',
+     'the source bridge beneath both posters must use canonical OS olive');
+    assert.equal(pair.neutralCSS.image,'none',
+     'no dark book-cover geometry is allowed in the double-poster gutter');
    const material=await go(11.44,'04-only-now-olive-svg-background');
    assert.equal(material.scene,'04-ground-reveal');
+   assert.equal(material.neutralCSS.image,'none','03 weave may not return during 04 botanical reveal');
    assert(material.ground>.45&&material.ground<.60,'engraved exterior changes on its own later beat');
    assert.equal(material.groundCSS.parts,2,'two halves are registered to one field');
     assert.equal(material.groundCSS.opacity,'1','no fade');
