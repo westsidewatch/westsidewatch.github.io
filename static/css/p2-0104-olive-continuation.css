@@ -84,9 +84,14 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  position:absolute;inset:0;z-index:3;overflow:hidden;
  pointer-events:none;visibility:hidden;
 }
+/* V57: Alpha feathering is a print edge, not a colour gradient.
+   Removes hard horizontal botanical / terrain SVG cut lines while the
+   reversible MERSI half-field clipping remains unchanged. */
 .olive-editorial-engraving__half{
  position:absolute;top:0;width:50%;height:100%;overflow:hidden;
  will-change:clip-path;clip-path:inset(100% 0 0 0);
+ -webkit-mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
+ mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
 }
 .olive-editorial-engraving__half[data-art-side="left"]{left:0}
 .olive-editorial-engraving__half[data-art-side="right"]{right:0}
@@ -181,9 +186,13 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    photograph and the frozen baseline type are never repainted.
    Each card exposes ink strictly in its OWN outer rail and paper footer;
    the montage is not a decorative texture on the speaker photograph. */
+/* V57: the visible ornamental structure is registered to the REAL
+   exposed outer paper gutter, not to 19% of an overlaid photograph.
+   All cards share the same edition label, headpiece and gold burin.
+   Four motifs are variations, not different UI templates. */
 .olive-card__imprint{
  position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
- --olive-card-motif:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
+ --olive-card-motif:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
  --olive-card-motif-secondary:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
 }
 .olive-card__imprint::before,.olive-card__imprint::after{
@@ -193,13 +202,16 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  pointer-events:none;
 }
 .olive-card__imprint::before{
- top:12%;bottom:7%;left:0;width:19%;opacity:.76;
+ top:13%;bottom:12%;left:0;
+ width:var(--olive-outer-rail-width,45px);
+ opacity:.88;
  -webkit-mask-image:var(--olive-card-motif);mask-image:var(--olive-card-motif);
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
  clip-path:inset(var(--olive-imprint-clip,0%) 0 0 0);
 }
 .olive-card__imprint::after{
- bottom:1px;left:6%;right:6%;height:9%;opacity:.56;
+ bottom:1px;left:10%;right:10%;height:5%;
+ opacity:.70;
  -webkit-mask-image:var(--olive-card-motif-secondary);
  mask-image:var(--olive-card-motif-secondary);
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
@@ -219,6 +231,21 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 #olive-invitation-right .olive-card__imprint::before{left:auto;right:0}
 #olive-invitation-right .olive-card__imprint::after{transform:scaleX(-1)}
+.olive-card__edition{
+ position:absolute;z-index:2;
+ top:calc(var(--olive-foil-top,16px) + var(--olive-foil-height,48px) + 12px);
+ bottom:42px;left:0;
+ width:var(--olive-outer-rail-width,45px);
+ display:flex;justify-content:center;align-items:center;
+ writing-mode:vertical-rl;text-orientation:mixed;
+ font:200 clamp(8px,.68vw,10px)/1.1 var(--ws-type-display-en);
+ letter-spacing:.25em;color:var(--ws-morning-gold);
+ opacity:.96;white-space:nowrap;overflow:hidden;
+}
+#olive-invitation-right .olive-card__edition{left:auto;right:0;transform:rotate(180deg)}
+@media(max-width:540px){
+ .olive-card__edition{font-size:7px;letter-spacing:.08em;bottom:26px}
+}
 /* The original header/folio stays as an invariant across all four editions. */
 /* V13: a real historical 1914 Walter Crane botanical engraving, not
    formula-generated branches or a giant masked graphic behind two posters.
@@ -404,7 +431,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-card__relief{left:4%;right:4%;width:auto;
   top:var(--olive-foil-top,3px);height:var(--olive-foil-height,16px);
   max-height:22px;opacity:1}
- .olive-card__imprint::before{width:15%;opacity:.69}
+ .olive-card__imprint::before{opacity:.69}
  .olive-card__imprint::after{height:6%;opacity:.5}
  .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
   font-size:7px;letter-spacing:0}
