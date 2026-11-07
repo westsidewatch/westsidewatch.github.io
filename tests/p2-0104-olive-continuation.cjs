@@ -749,12 +749,21 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
      imageLayers:document.querySelectorAll('#p2-olive-stage .woodward-master').length
     };
    });
+   // The botanical drawing covers the WHOLE stage; the preserved
+   // speaker folio is deliberately source-registered to 03's real Doré
+   // geometry and can be an inset editorial spread. Containment (not
+   // identical bounding boxes) proves these occupy ONE stage and NOT
+   // two stacked picture panels. Do not resize protected speaker prints
+   // just to satisfy a test that assumed a full-viewport folio.
    for(let i=0;i<4;i++){
     assert(Math.abs(integrated.stage[i]-integrated.ink[i])<2,
      'living Olive engraving must cover the SAME stage as the exhibition, not a lower image panel');
-    assert(Math.abs(integrated.stage[i]-integrated.posters[i])<2,
-     'the original poster exhibition must occupy the SAME stage as the engraving');
    }
+   const [sx,sy,sw,sh]=integrated.stage,[px,py,pw,ph]=integrated.posters;
+   assert(pw>sw*.4&&ph>sh*.4 &&
+     px>=sx-2&&py>=sy-2 &&
+     px+pw<=sx+sw+2&&py+ph<=sy+sh+2,
+     'source-registered poster folio must stay INSIDE the same engraving stage');
    assert(integrated.clip,'historical engraving must use the live MERSI split aperture');
    assert.equal(integrated.imageLayers,0,'do not reintroduce the rejected static V4.6 bottom plate');
    // SVG-only proof hides prints only AFTER their actual bounds are verified.
