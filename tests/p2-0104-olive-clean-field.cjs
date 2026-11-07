@@ -32,6 +32,7 @@ assert.match(terrainEngine,/getBBox\(\)/);
 assert.doesNotMatch(terrainEngine,/strokeDashoffset='1000'/,'do not redraw or crop entire rings');
 assert.match(terrainEngine,/p2ContourImpression/);
 assert.match(terrainEngine,/original\*1\.65/,'terrain line hierarchy optically strengthened');
+assert.match(terrainEngine,/b\.area-a\.area/,'major topographic ridge lines must print before tiny isolated loops');
 assert.match(css,/filter:opacity\(\.64\)/,'oversized botanical area subdued without deleting the SVG layers');
 const terrainSvg=read('static/images/p2-realms/v15/04-olive-mount-terrain-growth-v53.svg');
 assert.match(terrainSvg,/class="terrain-major"/);
