@@ -30,6 +30,9 @@
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
  const overview=$('#olive-overview'),enter=$('#olive-enter');
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
+ const engraved=$('#olive-editorial-engraving');
+ const etchedLeft=engraved?.querySelector('[data-art-side="left"]');
+ const etchedRight=engraved?.querySelector('[data-art-side="right"]');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
  const status=$('#p2-olive-folio-status');
  if(!stage||!track||!base||!folio||!first||!ground||!neutral||
@@ -358,6 +361,34 @@
   if(bg>=.99999)neutral.style.visibility='hidden';
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
   const vertical=g.w<600;
+  // Separate paper plates, one MERSI scroll owner: alternate the left
+  // botanical and right measured topography; coexist in the final index.
+  let plant=0,terrain=0;
+  if(d>=T.groundEnd){
+   if(d<T.pairStart){
+    plant=ease((d-T.groundEnd)/(T.pairStart-T.groundEnd));
+   }else{
+    const idx=Math.min(4,Math.floor((d-T.pairStart)/T.pairStep));
+    const step=ease((d-(T.pairStart+idx*T.pairStep))/T.pairDuration);
+    const arrivingRight=idx%2===0;
+    plant=arrivingRight?1-step:step;
+    terrain=arrivingRight?step:1-step;
+   }
+   if(d>=T.indexStart){
+    const joined=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
+    plant=mix(plant,1,joined);
+    terrain=mix(terrain,1,joined);
+   }
+  }
+  if(engraved)engraved.style.visibility=(plant>0||terrain>0)?'visible':'hidden';
+  if(etchedLeft)etchedLeft.style.clipPath='inset('+
+   ((1-plant)*100).toFixed(3)+'% 0 0 0)';
+  if(etchedRight)etchedRight.style.clipPath='inset(0 0 '+
+   ((1-terrain)*100).toFixed(3)+'% 0)';
+  stage.dataset.p2EngravingPlant=plant.toFixed(4);
+  stage.dataset.p2EngravingTerrain=terrain.toFixed(4);
+  stage.dataset.p2EngravingMode=(plant>.999&&terrain>.999)?'both':
+   plant>terrain?'botanical':terrain>plant?'topography':'clear';
   const rects=galleryRects(g);
   // Desktop uses true folio halves; on narrow phones two original posters
   // occupy TOP/BOTTOM halves to avoid extremely thin and mostly empty strips.
