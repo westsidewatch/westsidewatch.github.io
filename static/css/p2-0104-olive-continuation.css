@@ -51,16 +51,14 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-surround__half[data-side="left"]{left:0}
 .olive-bridge__half[data-side="right"],
 .olive-surround__half[data-side="right"]{right:0}
-/* Outgoing Emmaus cover is allowed ONLY inside the transition bridge. */
+/* The genuine 03 Bible binding stays ONLY in the exiting 01–03 iframe.
+   Never project its dark 5:8 diamond bookcloth as full-screen wallpaper
+   behind the 04 speaker posters; that is the leaked vertical stripe.
+   This plain OS olive material field retains the original opposed masks. */
 .olive-bridge__half{
- /* Outgoing 03 material only: never expose a black fallback curtain. */
  background-color:var(--ws-olive);
- background-image:url('/images/p2-emmaus-binding-cloth-v1.svg?v=20261106-gilt-weave');
- background-repeat:no-repeat;
- background-size:200% 100%;
+ background-image:none;
 }
-.olive-bridge__half[data-side="left"]{background-position:left center}
-.olive-bridge__half[data-side="right"]{background-position:right center}
 /* Independent 04 gallery field. Neither 03 cloth nor decorative foil is
    allowed to be repainted outside the actual invitation cards. */
 .olive-surround__half{
