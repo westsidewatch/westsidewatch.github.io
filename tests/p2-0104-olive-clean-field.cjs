@@ -41,6 +41,11 @@ assert.doesNotMatch(js,/requestAnimationFrame\(livingFrame\)/);
 assert.doesNotMatch(css,/04-olive-woodward-cousen-(desktop|mobile)-intaglio-v44/);
 assert.match(css,/\.olive-surround__half\{[^}]*background-color:var\(--ws-olive\);[^}]*background-image:none;/s);
 assert.match(css,/\.olive-card__relief::after\{/,'invitation local relief retained');
+assert.equal((html.match(/class="olive-card__imprint"/g)||[]).length,3,
+ 'first and paired invitations each carry one shared imprint system');
+for(const family of ['botanical','terrain','city','horizon'])
+ assert(css.includes('data-olive-print-family="'+family+'"'),family+' print edition available');
+assert.match(js,/imprintFamilies=/,'four editions assigned from approved twelve');
 assert.match(js,/frozen\.mount\(art,target\)/,'frozen poster typography retained');
 assert.match(js,/const readingField=ease\(\(d-T\.first\)\/\.065\);/,
   'original Emmaus handoff timing unchanged');
@@ -72,6 +77,12 @@ const widths=[1648,390];
        terrain:Number(stage.dataset.p2EngravingTerrain),
        artVisibility:getComputedStyle(document.querySelector('#olive-editorial-engraving')).visibility,
        terrainEngine:stage.dataset.p2TerrainStrokeEngine,
+       cardImprints:[...document.querySelectorAll('.olive-stage__invitation--pair')].map(el=>({
+        family:el.dataset.olivePrintFamily,
+        clip:el.style.getPropertyValue('--olive-imprint-clip'),
+        mask:getComputedStyle(el.querySelector('.olive-card__imprint'),'::before').webkitMaskImage
+       })),
+       cardInk:Number(stage.dataset.p2CardInkReveal),
        contourGroups:[...document.querySelectorAll('.olive-editorial-engraving__print--topography svg > g g')].length,
        contourOffsets:['major','mid','fine'].map(k=>document.querySelector('.terrain-'+k)?.getAttribute('stroke-dashoffset')),
        oliveMask:getComputedStyle(document.querySelector('.olive-editorial-engraving__print--botanical')).webkitMaskImage,
@@ -102,6 +113,10 @@ const widths=[1648,390];
    const pair=await go(10.98,'03-two-poster-locked-original-background');
    const mid=await go(13.15,'04-clean-olive-field');
    assert.equal(mid.noGrowth,true,'04 growth SVG must not be in the DOM');
+   assert(mid.cardImprints.length===2&&mid.cardImprints.every(c=>c.family&&c.mask!=='none'),
+    'both invitation cards must have authentic vector-print decorations');
+   assert(mid.cardImprints.every(c=>c.clip.endsWith('%')),
+    'card engraving growth driven by same scroll position');
    assert.equal(mid.posterNodes,12,'all twelve source composites still exist');
    assert(mid.bgImages.every(x=>x==='none'),'04 background must have no image');
    assert(mid.bgPseudo.every(x=>x==='none'),'04 background must have no pseudo-image');
