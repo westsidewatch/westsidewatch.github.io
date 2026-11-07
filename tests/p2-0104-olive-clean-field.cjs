@@ -13,7 +13,9 @@ const js=read('static/js/p2-0104-olive-continuation.js');
 assert.match(html,/p2-0103-release\.html\?embed=1/);
 assert.match(html,/olive-speaker-baseline|baseline\.js/);
 assert.match(html,/id="olive-editorial-engraving"/);
-assert.match(css,/04-olive-botanical-folio-v54\.svg/);
+assert.match(css,/04-olive-botanical-impression-v60-1\.svg/);
+assert.match(css,/04-olive-botanical-impression-v60-6\.svg/);
+for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-botanical-impression-v60-${n}.svg`),/crane-public-domain-olive/);
 assert.match(css,/04-olive-botanical-folio-outline-v56\.svg/);
 assert.match(read('static/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg'),/fill="none" stroke="white"/);
 assert.match(read('static/images/p2-realms/v15/04-olive-botanical-folio-v54.svg'),/crane-public-domain-olive/,'use genuine public-domain Crane engraved foliage, not invented needles');
@@ -22,10 +24,13 @@ assert.match(css,/04-olive-mount-terrain-contours-v1\.svg/);
 assert.match(read('static/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg'),/olivet-true-topography/);
 assert.match(js,/dataset\.p2EngravingPlant/);
 assert.match(js,/dataset\.p2EngravingTerrain/);
-assert.match(html,/p2-0104-olive-path-growth-v53\.js/);
-const terrainEngine=read('static/js/p2-0104-olive-path-growth-v53.js');
+assert.match(html,/p2-0104-olive-path-growth-v60\.js/);
+assert.equal((html.match(/data-print-impression=/g)||[]).length,6,'six independent print layers');
+const terrainEngine=read('static/js/p2-0104-olive-path-growth-v60.js');
 assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
-assert.match(terrainEngine,/svg\.querySelector\('\.terrain-'\+name\)/);
+assert.match(terrainEngine,/getBBox\(\)/);
+assert.doesNotMatch(terrainEngine,/strokeDashoffset='1000'/,'do not redraw or crop entire rings');
+assert.match(terrainEngine,/p2ContourImpression/);
 const terrainSvg=read('static/images/p2-realms/v15/04-olive-mount-terrain-growth-v53.svg');
 assert.match(terrainSvg,/class="terrain-major"/);
 assert.match(terrainSvg,/class="terrain-mid"/);
@@ -93,7 +98,14 @@ const widths=[1648,390];
         mask:getComputedStyle(el.querySelector('.olive-card__imprint'),'::before').webkitMaskImage
        })),
        cardInk:Number(stage.dataset.p2CardInkReveal),
-       contourGroups:[...document.querySelectorAll('.olive-editorial-engraving__print--topography svg > g g')].length,
+       fullContourPaths:Number(stage.dataset.p2TerrainPathTotal),
+       visibleContours:Number(stage.dataset.p2TerrainVisiblePaths),
+       completedRings:Number(stage.dataset.p2TerrainCompleteRings),
+       plantLayers:[...document.querySelectorAll('[data-print-impression]')].map(p=>Number(p.style.opacity)),
+       leftClip:document.querySelector('[data-art-side="left"]').style.clipPath,
+       rightClip:document.querySelector('[data-art-side="right"]').style.clipPath,
+       changingSide:stage.dataset.p2ActiveSide,
+       oppositeLocked:stage.dataset.p2OppositeLocked,
        contourOffsets:['major','mid','fine'].map(k=>document.querySelector('.terrain-'+k)?.getAttribute('stroke-dashoffset')),
        oliveMask:getComputedStyle(document.querySelector('.olive-editorial-engraving__print--botanical'),'::after').webkitMaskImage,
        ground:getComputedStyle(bg).visibility,
@@ -133,18 +145,22 @@ const widths=[1648,390];
    assert(mid.bgImages.every(x=>x==='none'),'04 background must have no image');
    assert(mid.bgPseudo.every(x=>x==='none'),'04 background must have no pseudo-image');
    const leftInk=await go(11.90,'05a-left-botanical-only');
-   assert(leftInk.plant>.6&&leftInk.terrain<.001,'first engraving moment: left only');
+   assert(leftInk.plant>.16&&leftInk.terrain>.16,'two established speakers retain their complete first letterpress editions');
+   assert.equal(leftInk.leftClip,'none','the botanical field must never be box-clipped');
+   assert.equal(leftInk.rightClip,'none','real terrain rings must never be box-clipped');
    await page.waitForFunction(()=>['real-dem-dash-v53','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
-   const rightInk=await go(12.60,'05b-right-terrain-only');
-   assert.equal(rightInk.terrainEngine,'real-dem-dash-v53','real geographic contours load and animate; static fallback is not a passing result');
-   assert.equal(rightInk.contourOffsets[0],'0.000','major true-topography paths have drawn by full right-phase');
-   assert(rightInk.terrain>.99&&rightInk.plant<.01,'second engraving moment: right only');
+   const rightInk=await go(12.74,'05b-right-terrain-second-complete');
+   assert.equal(rightInk.terrainEngine,'real-dem-whole-contours-v60','complete measured contour paths are printed, never SVG wipe');
+   assert(rightInk.fullContourPaths>=24&&rightInk.visibleContours>0,'full geographic contours displayed');
+   assert(rightInk.completedRings>=2,'two successive right speakers each print a complete new contour batch');
+   assert(rightInk.terrain>.3&&rightInk.plant>.3,'left printed editions HOLD while right adds a new whole contour batch');
    const leftAgain=await go(13.50,'05c-left-botanical-return');
-   assert(leftAgain.plant>.99&&leftAgain.terrain<.01,'paired alternation restores left');
+   assert(leftAgain.plant>.3&&leftAgain.terrain>.3,'old letterpress impressions persist through next alternating speaker');
    const end=await go(17.30,'09-twelve-voices-final-overview');
    assert(end.plant>.999&&end.terrain>.999,'all twelve posters: both engravings shown');
-   assert(end.contourOffsets.every(x=>Number(x)<.001),'major, medium, fine contours completely drawn in the final spread');
-   assert(end.oliveMask.includes('04-olive-botanical-folio-outline-v56'),'left folio uses the genuine six-spray print master');
+   assert.equal(end.completedRings,6,'all six right speaker contour editions are printed');
+   assert(end.plantLayers.every(v=>v>.999),'all six botanical engraved editions remain visible after twelve speakers');
+   assert.match(css,/var\(--ws-deep\)/,'plant includes genuinely dark olive impression from the shared OS');
    assert.equal(end.posterNodes,12);
    const back=await go(9.30,'10-reversed-original-emmaus');
    assert.equal(back.source,'visible','reverse scrolling restores 03 original');
