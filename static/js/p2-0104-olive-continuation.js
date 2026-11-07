@@ -94,6 +94,20 @@
   figure.dataset.speakerIndex=String(index);
   return art;
  }
+ // A card must be ONE physical assembly. V63 incorrectly rotated shell,
+ // portrait and protected Shadow DOM type as three independent planes.
+ // Keep the original composite and its frozen English together in one
+ // carrier. The single carrier alone receives a 3D transform.
+ const carriers=[0,1].map((i)=>{
+  const card=document.createElement('div');
+  card.className='olive-folio-carrier';
+  card.dataset.folioSide=i===0?'left':'right';
+  pair.append(card);
+  card.append(i===0?invitationLeft:invitationRight,
+              i===0?left:right,
+              i===0?reverseLeft:reverseRight);
+  return card;
+ });
  const figures=[left,right,nextLeft,nextRight];
  for(const figure of figures){
   const caption=document.createElement('figcaption');
@@ -479,10 +493,8 @@
   // 03 is still authoritative before the source card. Once the card
   // begins its spatial journey the existing independent field handoff
   // handles the retiring page; no extra paper or ONE motif is introduced.
-  position(invitationLeft,targetLeftCard.x,targetLeftCard.y,
-   targetLeftCard.w,targetLeftCard.h);
-  position(invitationRight,targetRightCard.x,targetRightCard.y,
-   targetRightCard.w,targetRightCard.h);
+  position(invitationLeft,0,0,targetLeftCard.w,targetLeftCard.h);
+  position(invitationRight,0,0,targetRightCard.w,targetRightCard.h);
   positionInvitedEngraving(invitationLeft,targetLeftCard,settledLeft,vertical);
   positionInvitedEngraving(invitationRight,targetRightCard,settledRight,vertical);
   const cardSlots=[targetLeftCard,targetRightCard],portraitSlots=[settledLeft,settledRight];
@@ -490,7 +502,9 @@
   const backs=[reverseLeft,reverseRight];
   if(!reverseLeft||!reverseRight)throw new Error('04 requires two folio reverses');
   backs.forEach((back,i)=>{
-   const box=cardSlots[i];position(back,box.x,box.y,box.w,box.h);
+   const box=cardSlots[i];
+   position(carriers[i],box.x,box.y,box.w,box.h);
+   position(back,0,0,box.w,box.h);
    back.style.visibility=d>=T.spread&&d<T.indexStart?'visible':'hidden';
   });
   const rightCardReveal=ease((form-.44)/.26);
@@ -502,7 +516,9 @@
   // Pair B enters while A travels; both images stay 3:4 and object-fit.
   position(pair,0,0,g.w,g.h);
   for(const [element,side] of [[left,0],[right,1],[nextLeft,0],[nextRight,1]]){
-   const r=rects[side];position(element,r.x,r.y,r.w,r.h);
+   const r=rects[side],card=cardSlots[side];
+   const inside=element===left||element===right;
+   position(element,inside?r.x-card.x:r.x,inside?r.y-card.y:r.y,r.w,r.h);
   }
   pair.style.visibility=d>=T.first&&d<T.indexStart?'visible':'hidden';
   // Strong final-index isolation. Visibility alone allowed huge previously
@@ -548,22 +564,16 @@
    stage.dataset.p2SpeakerArrival='1';
   }
   const depth=Math.max(950,g.w*1.2);
+  // Rotate ONE rigid invitation, never its typography and photo separately.
   for(let i=0;i<2;i++){
-   const box=cardSlots[i],portrait=portraitSlots[i];
-   const axisX=box.x+box.w/2,axisY=box.y+box.h/2;
-   turnFace(shells[i],turns[i],box.w/2,box.h/2,depth);
-   turnFace(portraits[i],turns[i],axisX-portrait.x,axisY-portrait.y,depth);
-   turnFace(backs[i],turns[i]+180,box.w/2,box.h/2,depth);
-   // The settled reverse is the underlying chapter field itself, not
-   // a clipped second SVG. Card stock/foil only materialize mid-flip.
-   const physical=Math.sin(turns[i]*Math.PI/180);
-   backs[i].style.setProperty('--folio-paper-alpha',(physical*.84).toFixed(4));
-   backs[i].style.setProperty('--folio-edge-alpha',(physical*.72).toFixed(4));
+   const box=cardSlots[i];
+   turnFace(carriers[i],turns[i],box.w/2,box.h/2,depth);
   }
+  stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
   stage.dataset.p2FolioFront=activeSide;
   stage.dataset.p2FolioAngles=turns.map(x=>x.toFixed(2)).join(',');
   stage.dataset.p2FolioReverse=turns.map(x=>x>90?'back':'front').join(',');
-  stage.dataset.p2FolioSystem='measured-two-faced-rotating-card-v63';
+  stage.dataset.p2FolioSystem='measured-two-faced-rotating-card-v67';
   // The SAME completed speaker beat prints the card's gold edition
   // only AFTER its portrait lands. No simultaneous movement on both sides.
   let localInk=1,clipL='0%',clipR='0%';
