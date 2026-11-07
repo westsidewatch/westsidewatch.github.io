@@ -83,6 +83,10 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 #olive-editorial-engraving{
  position:absolute;inset:0;z-index:3;overflow:hidden;
  pointer-events:none;visibility:hidden;
+ /* Reserve a true typographic safe zone above both vector print fields.
+    The original twelve posters are never masked: only background ink is. */
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0%,transparent 10%,#000 27%,#000 100%);
+ mask-image:linear-gradient(to bottom,transparent 0%,transparent 10%,#000 27%,#000 100%);
 }
 /* V57: Alpha feathering is a print edge, not a colour gradient.
    Removes hard horizontal botanical / terrain SVG cut lines while the
