@@ -93,7 +93,6 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    reversible MERSI half-field clipping remains unchanged. */
 .olive-editorial-engraving__half{
  position:absolute;top:0;width:50%;height:100%;overflow:hidden;
- will-change:clip-path;clip-path:inset(100% 0 0 0);
  -webkit-mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
  mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
 }
@@ -113,30 +112,52 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    TWO ink impressions, light relief and articulate copperplate contours.
    The full-volume print remains visible at a distance, without a solid
    gold hedge competing against the topographic linework on the right. */
+/* V60: six individual real Crane letterpress plates. No image clipping,
+   no sliding foil rectangle, no procedural leaves. Each complete plate
+   is added AFTER its own speaker has settled, preserving earlier ink. */
 .olive-editorial-engraving__print--botanical{
- /* A physical print bleeds beyond the viewport. Cropping a finished SVG
-    at 95% stage height created the visible straight cut through leaves. */
  inset:-7% -12% -23% -9%;width:auto;height:auto;
  background:none;opacity:1;
  -webkit-mask-image:none;mask-image:none;
 }
 .olive-editorial-engraving__print--botanical::before,
-.olive-editorial-engraving__print--botanical::after{
- content:"";position:absolute;inset:0;pointer-events:none;
- background:var(--ws-morning-gold);
+.olive-editorial-engraving__print--botanical::after{content:none!important}
+.olive-botanical-plate{
+ position:absolute;inset:0;pointer-events:none;display:block;
+ background:var(--ws-morning-gold);opacity:0;
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
  -webkit-mask-position:center;mask-position:center;
 }
-.olive-editorial-engraving__print--botanical::before{
- opacity:.29;
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
+.olive-botanical-plate[data-print-impression="1"]{
+ background:var(--ws-morning-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-1.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-1.svg');
 }
-.olive-editorial-engraving__print--botanical::after{
- opacity:.86;
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
+.olive-botanical-plate[data-print-impression="2"]{
+ background:var(--ws-pale-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-2.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-2.svg');
+}
+.olive-botanical-plate[data-print-impression="3"]{
+ background:var(--ws-deep);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-3.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-3.svg');
+}
+.olive-botanical-plate[data-print-impression="4"]{
+ background:var(--ws-warm-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-4.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-4.svg');
+}
+.olive-botanical-plate[data-print-impression="5"]{
+ background:var(--ws-pale-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-5.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-5.svg');
+}
+.olive-botanical-plate[data-print-impression="6"]{
+ background:var(--ws-first-light);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-6.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-6.svg');
 }
 /* Three draw-on groups are taken from actual elevation contours.
    The old static mask is an accessibility/offline fallback ONLY. */
