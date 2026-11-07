@@ -1,7 +1,8 @@
 'use strict';
 /* Fourth requested item: vectorize P2 03 Emmaus Scripture's fabric cover.
- * Verify one newly authored 5:8 native SVG across the real book, turning
- * underleaf, exterior and 03→04 carrier WITHOUT changing canonical /one/.
+ * Verify the newly authored 5:8 SVG on the real 03 book, turning
+ * underleaf and exterior WITHOUT changing canonical /one/. The 04 bridge
+ * must not enlarge the bookbinding pattern across the two-poster stage.
  */
 const fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path');
 const {chromium}=require('playwright');
@@ -16,7 +17,11 @@ assert.equal((asset.match(/<pattern\b/g)||[]).length,4);
 assert(!/<image\b|<linearGradient\b|<filter\b|xlink:href/.test(asset));
 assert((book.match(/p2-emmaus-binding-cloth-v1\.svg/g)||[]).length>=5);
 assert((release.match(/p2-emmaus-binding-cloth-v1\.svg/g)||[]).length>=2);
-assert(transition.includes(link),'MERSI 03→04 bridge must preserve ONE cloth');
+const isolatedBridge=transition.slice(
+ transition.indexOf('.olive-bridge__half{'),
+ transition.indexOf('/* Independent 04 gallery field.'));
+assert(isolatedBridge.includes('background-image:none;') && !isolatedBridge.includes(link),
+ 'MERSI must keep 03 bookcloth on the actual 03 cover, NEVER on full-stage 04 bridge');
 assert(html.includes('20261106-vector-cloth-v1'),'actual release must load new CSS');
 assert(html.includes('20261106-vector-cloth-turn-v1'),'actual release must load new turn');
 assert(!/cover-texture-antique-green\.png\?v=93ae0c7e0609/.test(book+release+transition));
