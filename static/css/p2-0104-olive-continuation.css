@@ -171,7 +171,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
  --olive-card-motif:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
  --olive-card-motif-secondary:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
- --olive-imprint-reveal:1;
+ --olive-imprint-clip:0%;
 }
 .olive-card__imprint::before,.olive-card__imprint::after{
  content:"";position:absolute;background:var(--ws-morning-gold);
@@ -183,14 +183,14 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  top:12%;bottom:7%;left:0;width:19%;opacity:.76;
  -webkit-mask-image:var(--olive-card-motif);mask-image:var(--olive-card-motif);
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
- clip-path:inset(calc((1 - var(--olive-imprint-reveal))*100%) 0 0 0);
+ clip-path:inset(var(--olive-imprint-clip) 0 0 0);
 }
 .olive-card__imprint::after{
  bottom:1px;left:6%;right:6%;height:9%;opacity:.56;
  -webkit-mask-image:var(--olive-card-motif-secondary);
  mask-image:var(--olive-card-motif-secondary);
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
- clip-path:inset(0 calc((1 - var(--olive-imprint-reveal))*100%) 0 0);
+ clip-path:inset(0 var(--olive-imprint-clip) 0 0);
 }
 .olive-stage__invitation[data-olive-print-family="terrain"] .olive-card__imprint{
  --olive-card-motif:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
