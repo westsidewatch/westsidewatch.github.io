@@ -378,23 +378,3 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-stage__poster,.olive-stage__overview,
  .olive-stage__index-card{transition:none!important;animation:none!important}
 }
-/* After both invitation prints settle, 03's dark cloth is no longer part
-   of the composition. The entire backdrop is the ONE canonical OS olive.
-   This override applies to both split halves; no central vertical strip. */
-.p2-olive-stage.olive-spread-settled .olive-bridge__half{
- background-image:none!important;
- background-color:var(--ws-olive)!important;
-}
-
-/* 03→04 restored handoff: the outgoing 03 iframe must not show through
-   the central former book footprint after the TWO original posters settle.
-   An opaque, stage-wide OS olive registration sheet lives inside the
-   bridge (behind the new 04 split-field, engraving and protected prints).
-   This is NOT a decorative texture or a second artwork panel. */
-.p2-olive-stage.olive-spread-settled #p2-olive-bridge{
- visibility:visible!important;
-}
-.p2-olive-stage.olive-spread-settled #p2-olive-bridge::after{
- content:"";position:absolute;inset:0;
- background:var(--ws-olive);pointer-events:none;
-}
