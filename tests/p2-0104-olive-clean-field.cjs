@@ -43,7 +43,8 @@ assert.match(css,/\.olive-surround__half\{[^}]*background-color:var\(--ws-olive\
 assert.match(css,/\.olive-card__relief::after\{/,'invitation local relief retained');
 assert.equal((html.match(/class="olive-card__imprint"/g)||[]).length,3,
  'first and paired invitations each carry one shared imprint system');
-for(const family of ['botanical','terrain','city','horizon'])
+assert(css.includes('--olive-card-motif:url('),'botanical print is the shared default');
+for(const family of ['terrain','city','horizon'])
  assert(css.includes('data-olive-print-family="'+family+'"'),family+' print edition available');
 assert.match(js,/imprintFamilies=/,'four editions assigned from approved twelve');
 assert.match(js,/frozen\.mount\(art,target\)/,'frozen poster typography retained');
