@@ -75,6 +75,43 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    protected posters. Invitation-card local headpieces are not backgrounds. */
 .olive-surround__half::after{content:none!important}
 
+/* P2 / 04 MERSI independent engraving halves — printed, not wallpaper.
+   Botanical source: public-domain OpenClipart 81199 (project V12).
+   Terrain: measured Mount of Olives DEM from Mapzen / AWS Open Data.
+   Neither layer overlaps the other half; no new animation framework.
+   Each print has one CSS mask and one scroll-owned clipping rectangle. */
+#olive-editorial-engraving{
+ position:absolute;inset:0;z-index:3;overflow:hidden;
+ pointer-events:none;visibility:hidden;
+}
+.olive-editorial-engraving__half{
+ position:absolute;top:0;width:50%;height:100%;overflow:hidden;
+ will-change:clip-path;clip-path:inset(100% 0 0 0);
+}
+.olive-editorial-engraving__half[data-art-side="left"]{left:0}
+.olive-editorial-engraving__half[data-art-side="right"]{right:0}
+.olive-editorial-engraving__print{
+ position:absolute;inset:4% 3% 5%;background:var(--ws-morning-gold);
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-size:contain;mask-size:contain;
+ opacity:.77;
+}
+.olive-editorial-engraving__print--botanical{
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg');
+ -webkit-mask-position:left center;mask-position:left center;
+}
+.olive-editorial-engraving__print--topography{
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ -webkit-mask-position:right center;mask-position:right center;
+ opacity:.64;
+}
+@media(max-width:600px){
+ .olive-editorial-engraving__print{inset:3% 0 3%;opacity:.65}
+ .olive-editorial-engraving__print--topography{opacity:.55}
+}
+
 .olive-proof{
  position:absolute;z-index:4;overflow:hidden;
  visibility:hidden;background:transparent;color:var(--ws-ink);
