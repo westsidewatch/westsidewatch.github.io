@@ -118,6 +118,8 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-editorial-engraving__print--botanical{
  inset:-7% -12% -23% -9%;width:auto;height:auto;
  background:none;opacity:1;
+ /* Six real botanical impressions, optically subordinated to the portraits. */
+ filter:opacity(.64);
  -webkit-mask-image:none;mask-image:none;
 }
 .olive-editorial-engraving__print--botanical::before,
@@ -168,7 +170,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
  mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
  -webkit-mask-position:right center;mask-position:right center;
- opacity:.74;
+ opacity:1;
 }
 .olive-editorial-engraving__print--topography.has-path-growth{
  background:none;-webkit-mask-image:none;mask-image:none;
@@ -183,7 +185,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 @media(max-width:600px){
  .olive-editorial-engraving__print--botanical{inset:-4% -15% -20% -14%;width:auto;height:auto;opacity:1}
  .olive-editorial-engraving__print--topography{
-  inset:-5% -26% -18% -12%;width:auto;height:auto;opacity:.62;
+  inset:-5% -26% -18% -12%;width:auto;height:auto;opacity:.92;
  }
 }
 
@@ -211,56 +213,16 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
  background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
 }
-/* V55 / A single editorial grammar for every 04 invitation.
-   Real public-domain/real DEM vector plates only. The registered 3:4
-   photograph and the frozen baseline type are never repainted.
-   Each card exposes ink strictly in its OWN outer rail and paper footer;
-   the montage is not a decorative texture on the speaker photograph. */
-/* V57: the visible ornamental structure is registered to the REAL
-   exposed outer paper gutter, not to 19% of an overlaid photograph.
-   All cards share the same edition label, headpiece and gold burin.
-   Four motifs are variations, not different UI templates. */
+/* V61: remove the alien miniature botanical fragment. V56's full
+   folio had been compressed into a 45px side gutter. This produced
+   incompatible tiny foliage beside the real large-scale olive plate.
+   Keep the approved V13 header ornament and numbered edition rail. */
 .olive-card__imprint{
  position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
- --olive-card-motif:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
- --olive-card-motif-secondary:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
 }
 .olive-card__imprint::before,.olive-card__imprint::after{
- content:"";position:absolute;background:var(--ws-morning-gold);
- -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
- -webkit-mask-position:center;mask-position:center;
- pointer-events:none;
+ content:none!important;
 }
-.olive-card__imprint::before{
- top:13%;bottom:12%;left:0;
- width:var(--olive-outer-rail-width,45px);
- opacity:.88;
- -webkit-mask-image:var(--olive-card-motif);mask-image:var(--olive-card-motif);
- -webkit-mask-size:100% 100%;mask-size:100% 100%;
- clip-path:inset(var(--olive-imprint-clip,0%) 0 0 0);
-}
-.olive-card__imprint::after{
- bottom:1px;left:10%;right:10%;height:5%;
- opacity:.70;
- -webkit-mask-image:var(--olive-card-motif-secondary);
- mask-image:var(--olive-card-motif-secondary);
- -webkit-mask-size:100% 100%;mask-size:100% 100%;
- clip-path:inset(0 var(--olive-imprint-clip,0%) 0 0);
-}
-.olive-stage__invitation[data-olive-print-family="terrain"] .olive-card__imprint{
- --olive-card-motif:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
- --olive-card-motif-secondary:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
-}
-.olive-stage__invitation[data-olive-print-family="city"] .olive-card__imprint{
- --olive-card-motif:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
- --olive-card-motif-secondary:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
-}
-.olive-stage__invitation[data-olive-print-family="horizon"] .olive-card__imprint{
- --olive-card-motif:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
- --olive-card-motif-secondary:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
-}
-#olive-invitation-right .olive-card__imprint::before{left:auto;right:0}
-#olive-invitation-right .olive-card__imprint::after{transform:scaleX(-1)}
 .olive-card__edition{
  position:absolute;z-index:2;
  top:calc(var(--olive-foil-top,16px) + var(--olive-foil-height,48px) + 12px);
@@ -461,8 +423,6 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-card__relief{left:4%;right:4%;width:auto;
   top:var(--olive-foil-top,3px);height:var(--olive-foil-height,16px);
   max-height:22px;opacity:1}
- .olive-card__imprint::before{opacity:.69}
- .olive-card__imprint::after{height:6%;opacity:.5}
  .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
   font-size:7px;letter-spacing:0}
  .p2-olive-controls{gap:2px;max-height:60px}
