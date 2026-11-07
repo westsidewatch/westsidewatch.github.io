@@ -385,6 +385,7 @@
    ((1-plant)*100).toFixed(3)+'% 0 0 0)';
   if(etchedRight)etchedRight.style.clipPath='inset(0 0 '+
    ((1-terrain)*100).toFixed(3)+'% 0)';
+  window.P2OliveEngraving?.paint(plant,terrain);
   stage.dataset.p2EngravingPlant=plant.toFixed(4);
   stage.dataset.p2EngravingTerrain=terrain.toFixed(4);
   stage.dataset.p2EngravingMode=(plant>.999&&terrain>.999)?'both':
