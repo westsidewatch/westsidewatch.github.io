@@ -386,12 +386,18 @@
   // At d=10.26 the outgoing 03 page must be fully hidden, not in shards.
   const readingField=ease((d-T.first)/.065);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
-  // 03's antique-cloth bridge is only a SOURCE during the first poster
-  // handoff. Once BOTH original 3:4 prints have settled, its dark ONE
-  // weave must never remain as a central panel behind the Olive gallery.
-  // Preserve the source material during motion; retire only its artwork
-  // at the settled-spread boundary, keeping the same OS olive pigment.
-  stage.classList.toggle('olive-spread-settled',d>=T.spread);
+  // The ACTUAL outgoing Emmaus 5:8 book cover lives inside the 01–03
+  // iframe. Retiring a duplicate cloth background cannot hide that DOM.
+  // Once the 03→04 bridge is FULLY opaque, retire the iframe itself,
+  // before the poster spread travels away from its centre. Never hide it
+  // during the source turn; scrolling backwards restores it exactly.
+  const sourceTransferred=readingField>=.99999;
+  base.style.visibility=sourceTransferred?'hidden':'visible';
+  base.style.pointerEvents=sourceTransferred?'none':'';
+  stage.dataset.p2EmmausSource=sourceTransferred?'retired':'visible';
+  // The bridge itself keeps the outgoing cloth until both speakers have
+  // settled. After that point it becomes uninterrupted OS olive; the
+  // 04 split-field then takes over while the 12 originals remain untouched.
   for(const half of neutral.querySelectorAll('.olive-bridge__half')){
    half.style.backgroundImage=d>=T.spread?'none':'';
   }
