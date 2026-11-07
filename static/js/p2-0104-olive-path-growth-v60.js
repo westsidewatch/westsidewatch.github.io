@@ -8,8 +8,11 @@
  const mount=document.querySelector('.olive-editorial-engraving__print--topography');
  if(!stage||!mount)return;
  const clamp=x=>Math.max(0,Math.min(1,Number(x)||0));
- const colors=['var(--ws-morning-gold)','var(--ws-pale-gold)','var(--ws-deep)',
-               'var(--ws-warm-gold)','var(--ws-pale-gold)','var(--ws-first-light)'];
+ // Rebalance against the much broader leaf shapes: measured terrain
+ // deserves legible ink, alternating light and warm gold with one dark
+ // line edition for depth. All colors come from the existing Design OS.
+ const colors=['var(--ws-morning-gold)','var(--ws-pale-gold)','var(--ws-warm-gold)',
+               'var(--ws-first-light)','var(--ws-morning-gold)','var(--ws-pale-gold)'];
  let batches=null,latest=Array(6).fill(0);
  function paint(_plants,terrain){
   latest=Array.isArray(terrain)?terrain.map(clamp):Array(6).fill(clamp(terrain));
@@ -54,6 +57,10 @@
   ranked.forEach(({path},index)=>{
    const edition=Math.min(5,Math.floor(index*6/ranked.length));
    path.style.stroke=colors[edition];
+   const original=Number(path.getAttribute('stroke-width'))||.65;
+   // Maintain the major/minor engraving hierarchy while giving Olivet
+   // enough weight to balance the botanical print at actual screen size.
+   path.style.strokeWidth=(original*1.65).toFixed(2);
    path.style.opacity='0';
    path.dataset.p2ContourImpression=String(edition+1);
    batches[edition].push(path);
