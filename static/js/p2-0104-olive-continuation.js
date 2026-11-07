@@ -389,7 +389,7 @@
   // exposed at d=10.11 behind the incoming invitation. Complete the
   // 03 material handoff by d=10.10 without moving either poster or altering
   // the original 01–03 iframe contents. Reverse scroll restores 03 exactly.
-  const readingField=ease((d-(T.first-.04))/.06);
+  const readingField=ease((d-T.first)/.065);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
   // The ACTUAL outgoing Emmaus 5:8 book cover lives inside the 01–03
   // iframe. The neutral bridge must never duplicate its 5:8 binding.
@@ -623,137 +623,7 @@
   const top=track.getBoundingClientRect().top+scrollY+clamp(d,0,T.end)*Math.max(1,innerHeight);
   scrollTo({top,behavior:'instant'});schedule();
  }
- // Load the editable historical botanical SVG as REAL DOM paths.
- // Uses the already tested p2-stroke-growth-prototype dash/front mechanism,
- // not CSS background movement, so every line grows and reverses in place.
- if(growthSvg&&growthRoot){
-  stage.dataset.p2OliveGrowthReady='false';
-  fetch('/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg?v=unified-20261106-32').then(response=>{
-   if(!response.ok)throw new Error('Olive SVG HTTP '+response.status);
-   return response.text();
-  }).then(xml=>{
-   const doc=new DOMParser().parseFromString(xml,'image/svg+xml');
-   if(doc.querySelector('parsererror'))throw new Error('Invalid olive growth SVG');
-   for(const child of [...doc.documentElement.children]){
-    if(child.localName==='g')growthRoot.appendChild(document.importNode(child,true));
-   }
-   // V3: one authored botanical topography, represented by four spatial
-   // depth bands: left olive, right olive, distant foothill and terrain.
-   // Unlike V2, no unrelated plate is pasted onto the scene.
-   const ns='http://www.w3.org/2000/svg';
-   const sourceRegions=[...growthRoot.querySelectorAll(
-     '.olive-growth-cluster,.olive-growth-terrain')];
-   if(sourceRegions.length!==4)
-    throw new Error('V3 must mount four zones of one authored original landscape');
-   stage.dataset.p2OliveGrowthEchoes='0';
-   const register=(source,region,i,voice)=>{
-    const shine=document.createElementNS(ns,'path');
-    shine.setAttribute('class','olive-growth-burin');
-    shine.setAttribute('d',source.getAttribute('d'));
-    shine.setAttribute('fill','none');
-    shine.setAttribute('pathLength','1000');
-    shine.setAttribute('stroke-dasharray','105 895');
-    shine.setAttribute('stroke-dashoffset','1000');
-    shine.setAttribute('stroke-width',i%4===0?'2.0':'1.35');
-    shine.setAttribute('stroke-linecap','round');
-    shine.style.pointerEvents='none';
-    source.parentNode.appendChild(shine);
-    livingBurins.push({el:shine,voice,
-     start:Number(source.closest('[data-growth-start]')?.dataset.growthStart??region.dataset.growthStart),
-     end:Number(source.closest('[data-growth-end]')?.dataset.growthEnd??region.dataset.growthEnd),
-     seed:i*.6180339+voice*.317,speed:.11+(i%7)*.016});
-   };
-   sourceRegions.forEach((region,voice)=>{
-    const paths=[...region.querySelectorAll('path.olive-growth-path')];
-    const stride=Math.max(1,Math.floor(paths.length/12));
-    let count=0;
-    for(let i=voice%stride;i<paths.length&&count<12;i+=stride){
-     const original=paths[i],length=original.getTotalLength();
-     if(!Number.isFinite(length)||length<5)continue;
-     register(original,region,i,voice);count++;
-    }
-   });
-   stage.dataset.p2OliveLivingBurins=String(livingBurins.length);
-   // Advance a real engraved writing-front without a second RAF or extra
-   // network asset; all historic contours remain reversible DOM paths.
-   const spines=[...growthRoot.querySelectorAll('[data-live-spine="true"]')];
-   for(const original of spines){
-    const interval=original.closest('[data-growth-start]');
-    if(!interval)continue;
-    const tip=original.cloneNode(true);
-    tip.setAttribute('class','olive-growth-tip');
-    tip.style.strokeDasharray='none';
-    tip.style.strokeDashoffset='0';
-    tip.style.visibility='hidden';
-    original.parentNode.appendChild(tip);
-    growthTips.push({el:tip,start:Number(interval.dataset.growthStart),
-      end:Number(interval.dataset.growthEnd)});
-   }
-   stage.dataset.p2OliveGrowthTips=String(growthTips.length);
-   for(const el of growthRoot.querySelectorAll('path.olive-growth-path')){
-    const parent=el.closest('[data-growth-start]');
-    if(!parent)continue;
-    const start=Number(parent.getAttribute('data-growth-start'));
-    const end=Number(parent.getAttribute('data-growth-end'));
-    if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start)
-      throw new Error('Invalid staged olive engraving interval');
-    const line={el,start,end};
-    // Respect the variation of the original engraved burin widths.
-    if(!el.hasAttribute('data-live-spine')){
-     const authored=Number(el.getAttribute('stroke-width'));
-     if(Number.isFinite(authored)&&authored>0)
-      el.style.strokeWidth=Math.min(2.8,Math.max(.38,authored)).toFixed(3);
-    }
-    const isHistoricSpine=!!el.closest('.olive-growth-spines');
-    if(isHistoricSpine){
-     const length=el.getTotalLength();
-     if(!Number.isFinite(length)||length<=0)throw new Error('Invalid olive spine length');
-     const points=[];
-     const slices=84;
-     for(let i=0;i<=slices;i++){
-      const p=el.getPointAtLength(length*i/slices);
-      points.push({x:p.x,y:p.y});
-     }
-     const nib=growthTips[growthCurves.length]?.el;
-     if(!nib)throw new Error('Historic spine has no source-led pen front');
-     const curve={el,tip:nib,points,originalD:el.getAttribute('d'),
-      seed:growthCurves.length};
-     growthCurves.push(curve);
-     line.curve=curve;
-     // Original tip-led geometry itself determines which portion exists.
-     // Keep offset state for reversible monitoring but disable dash masking.
-     el.style.strokeDasharray='none';
-    }else{
-     el.style.strokeDasharray='1000';
-    }
-    el.style.strokeDashoffset='1000';
-    growthLines.push(line);
-   }
-   if(growthCurves.length!==18)throw new Error('V3 requires eighteen connected authored olive-tree structure paths');
-   stage.dataset.p2OliveLiveCurves=String(growthCurves.length);
-   if(growthLines.length<700)throw new Error('V3 original whole-plate botanical etching is incomplete');
-   stage.dataset.p2OliveSourceFamilies='4';
-   stage.dataset.p2OliveArtVersion='v3';
-   stage.dataset.p2OliveOriginalCopperplate='true';
-   stage.dataset.p2OliveSourcePathCount=String(growthLines.length);
-   stage.dataset.p2OliveGrowthReady='true';
-   schedule();
-  }).catch(error=>{
-   stage.dataset.p2OliveGrowthReady='error';
-   stage.dataset.p2OliveGrowthError=String(error.message||error);
-  });
- }
- function livingFrame(now){
-  if(!livingLast)livingLast=now;
-  const dt=Math.min(.06,(now-livingLast)/1000);livingLast=now;
-  if(!reduceGrowth.matches&&stage.dataset.p2OliveGrowthReady==='true'&&
-     Number(stage.dataset.p2Distance||0)>=T.groundStart){
-   livingClock+=dt;
-   if(now-(livingFrame.lastPaint||0)>40){livingFrame.lastPaint=now;schedule();}
-  }
-  requestAnimationFrame(livingFrame);
- }
- requestAnimationFrame(livingFrame);
+ // 04 backdrop SVG removed. No fetch, live paths or animation-frame loop.
  document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.seek)));
  slider.addEventListener('input',()=>go(+slider.value));
  base.addEventListener('load',schedule);
