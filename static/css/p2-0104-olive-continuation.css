@@ -378,3 +378,10 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-stage__poster,.olive-stage__overview,
  .olive-stage__index-card{transition:none!important;animation:none!important}
 }
+/* After both invitation prints settle, 03's dark cloth is no longer part
+   of the composition. The entire backdrop is the ONE canonical OS olive.
+   This override applies to both split halves; no central vertical strip. */
+.p2-olive-stage.olive-spread-settled .olive-bridge__half{
+ background-image:none!important;
+ background-color:var(--ws-olive)!important;
+}
