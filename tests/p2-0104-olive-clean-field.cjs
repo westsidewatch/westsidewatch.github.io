@@ -23,6 +23,7 @@ assert.match(js,/const readingField=ease\(\(d-T\.first\)\/\.065\);/,
   'original Emmaus handoff timing unchanged');
 assert.match(read('static/experiments/p2-0103-release.html'),/p2-emmaus-bookbinding-v7\.css/,
   'genuine Emmaus iframe still retains the original binding stylesheet');
+fs.mkdirSync(path.join(root,'artifacts/p2-0104-olive'),{recursive:true});
 const widths=[1648,390];
 (async()=>{
  const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
