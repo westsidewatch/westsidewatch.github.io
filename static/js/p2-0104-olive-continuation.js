@@ -115,6 +115,14 @@
   protectArtwork(a,i);
   return a;
  });
+ // Decode every approved original speaker composite while 03 is still
+ // on-screen, before the first rapid MERSI single-speaker handoff.
+ // The image elements already exist for the twelve-index; this triggers
+ // no additional artwork, font replacement, or independent animation.
+ const posterDecode=Promise.all(cards.map(card=>
+  card.querySelector('img').decode().catch(()=>null)));
+ stage.dataset.p2PortraitDecode='pending';
+ posterDecode.then(()=>{stage.dataset.p2PortraitDecode='ready'});
  function setFigure(element,i){
   if(element.dataset.speakerIndex===String(i) &&
      element.querySelector('olive-speaker-baseline')?.dataset.speaker===roster[i][0])return;
