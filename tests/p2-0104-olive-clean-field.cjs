@@ -23,7 +23,7 @@ assert.match(js,/dataset\.p2EngravingTerrain/);
 assert.match(html,/p2-0104-olive-path-growth-v53\.js/);
 const terrainEngine=read('static/js/p2-0104-olive-path-growth-v53.js');
 assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
-assert.match(terrainEngine,/terrain-(?:major|mid|fine)/);
+assert.match(terrainEngine,/svg\.querySelector\('\.terrain-'\+name\)/);
 const terrainSvg=read('static/images/p2-realms/v15/04-olive-mount-terrain-growth-v53.svg');
 assert.match(terrainSvg,/class="terrain-major"/);
 assert.match(terrainSvg,/class="terrain-mid"/);
