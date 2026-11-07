@@ -57,7 +57,7 @@ assert.doesNotMatch(css,/04-olive-invitation-foil-v5\.svg/,
  'no ornate giant full-scene foil frame');
 assert.match(css,/04-olive-historic-engraving-v13\.svg/,
  'engraved Olives ridge is LOCAL to invitation, not a full-window wallpaper');
-const bridgeCSS=css.slice(css.indexOf('.olive-bridge__half{'),css.indexOf('.olive-surround__half{'));
+const bridgeCSS=css.slice(css.indexOf('.olive-bridge__half{'),css.indexOf('/* Independent 04 gallery field.'));
 assert(bridgeCSS.includes('background-color:var(--ws-olive);') && bridgeCSS.includes('background-image:none;'),
  'the 03→04 carrier must be clean OS olive without projected bookcloth');
 assert(!bridgeCSS.includes('p2-emmaus-binding-cloth-v1.svg'),
