@@ -26,6 +26,10 @@ assert.match(js,/dataset\.p2EngravingPlant/);
 assert.match(js,/dataset\.p2EngravingTerrain/);
 assert.match(html,/p2-0104-olive-path-growth-v60\.js/);
 assert.equal((html.match(/data-print-impression=/g)||[]).length,6,'six independent print layers');
+assert.equal((html.match(/class="olive-card__reverse olive-card__reverse--/g)||[]).length,2,
+ 'each invitation has an actual second face');
+assert.match(css,/backface-visibility:hidden/,'front and reverse need hidden back faces');
+assert.match(js,/measured-two-faced-rotating-card-v63/,'MERSI drives measured 3D turns');
 const terrainEngine=read('static/js/p2-0104-olive-path-growth-v60.js');
 assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
 assert.match(terrainEngine,/getBBox\(\)/);
@@ -111,6 +115,15 @@ const widths=[1648,390];
        rightClip:document.querySelector('[data-art-side="right"]').style.clipPath,
        changingSide:stage.dataset.p2ActiveSide,
        oppositeLocked:stage.dataset.p2OppositeLocked,
+       folioFront:stage.dataset.p2FolioFront,
+       folioFaces:stage.dataset.p2FolioReverse,
+       folioAngles:stage.dataset.p2FolioAngles,
+       folioSystem:stage.dataset.p2FolioSystem,
+       reverseFaces:[...document.querySelectorAll('.olive-card__reverse')].map(el=>({
+        visible:getComputedStyle(el).visibility,
+        mask:getComputedStyle(el,'::before').webkitMaskImage,
+        transform:getComputedStyle(el).transform
+       })),
        leftPoster:document.querySelector('#olive-pair-left')?.dataset.speakerIndex,
        rightPoster:document.querySelector('#olive-pair-right')?.dataset.speakerIndex,
        portraitDecode:stage.dataset.p2PortraitDecode,
@@ -168,17 +181,22 @@ const widths=[1648,390];
    assert.equal(mid.posterNodes,12,'all twelve source composites still exist');
    assert(mid.bgImages.every(x=>x==='none'),'04 background must have no image');
    assert(mid.bgPseudo.every(x=>x==='none'),'04 background must have no pseudo-image');
-   const leftInk=await go(11.90,'05a-left-botanical-only');
-   assert(leftInk.plant>.16&&leftInk.terrain>.16,'two established speakers retain their complete first letterpress editions');
-   assert.equal(leftInk.leftClip,'none','the botanical field must never be box-clipped');
-   assert.equal(leftInk.rightClip,'none','real terrain rings must never be box-clipped');
+   const leftInk=await go(11.90,'05a-left-portrait-and-right-back');
+   assert(leftInk.plant>.16&&leftInk.terrain>.16,'both printing fields retained');
+   assert.equal(leftInk.folioFaces,'front,back','first: left portrait and right engraved reverse');
+   assert.equal(leftInk.folioSystem,'measured-two-faced-rotating-card-v63');
+   assert.equal(leftInk.reverseFaces.length,2);
+   assert(leftInk.reverseFaces.every(x=>x.visible==='visible'&&x.mask.includes('.svg')),
+    'each reverse face uses authentic chapter engraving');
+   assert.equal(leftInk.leftClip,'none','no box clipping on botanical field');
+   assert.equal(leftInk.rightClip,'none','no box clipping on contour field');
    await page.waitForFunction(()=>['real-dem-whole-contours-v60','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
-   const leftEntering=await go(12.10,'05aa-left-speaker-changing-right-locked');
-   assert.equal(leftEntering.changingSide,'left');
-   assert.equal(leftEntering.oppositeLocked,'true');
-   assert.equal(leftEntering.rightPoster,'1','right original speaker stays locked while left changes');
+   const rightLocked=await go(12.33,'05aa-right-front-left-back');
+   assert.equal(rightLocked.folioFaces,'back,front','right figure is front; left botanical back');
+   assert.equal(rightLocked.rightPoster,'1','right approved Derek Prince portrait');
+   assert.equal(rightLocked.portraitDecode,'ready','approved portraits decoded');
    const rightInk=await go(12.80,'05b-right-terrain-second-complete');
-   assert.equal(rightInk.leftPoster,'2','David Pawson remains mounted while Stephen Tong finishes entering right');
+   assert.equal(rightInk.leftPoster,'2','left retains David Pawson while right folio turns');
    assert.equal(rightInk.portraitDecode,'ready','original portraits predecoded before alternating swaps');
    assert.equal(rightInk.terrainEngine,'real-dem-whole-contours-v60','complete measured contour paths are printed, never SVG wipe');
    assert(rightInk.fullContourPaths>=24&&rightInk.visibleContours>0,'full geographic contours displayed');
