@@ -329,7 +329,8 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 .olive-card__reverse-issue,.olive-card__reverse-mark small{
  font:200 clamp(8px,.65vw,11px)/1.25 var(--ws-type-display-en);
- letter-spacing:.12em;color:var(--ws-morning-gold);
+ letter-spacing:.10em;color:var(--ws-morning-gold);
+ white-space:nowrap;min-width:0;
 }
 .olive-card__reverse-mark small{text-align:right}
 @media(max-width:600px){
