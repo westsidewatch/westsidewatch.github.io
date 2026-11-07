@@ -13,6 +13,12 @@ const js=read('static/js/p2-0104-olive-continuation.js');
 assert.match(html,/p2-0103-release\.html\?embed=1/);
 assert.match(html,/olive-speaker-baseline|baseline\.js/);
 assert.doesNotMatch(html,/id="olive-growth-field"/);
+assert.doesNotMatch(js,/olive-growth-|growthSvg|growthMask|drawGrowingCurve|livingClock/,
+ 'retired full-stage botanical/under-poster strokes must not run');
+assert.doesNotMatch(css,/\.olive-growth-|#olive-growth-field|04-olive-woodward-cousen/,
+ 'no dormant CSS can resurrect full-stage background strokes');
+assert.doesNotMatch(html,/olive-growth-|04-olive-hillside-copperplate/,
+ 'no background engraving nodes or assets in the live stage');
 assert.doesNotMatch(js,/fetch\(['"]\/images\/p2-realms\/v15\/04-olive-hillside/);
 assert.doesNotMatch(js,/requestAnimationFrame\(livingFrame\)/);
 assert.doesNotMatch(css,/04-olive-woodward-cousen-(desktop|mobile)-intaglio-v44/);
