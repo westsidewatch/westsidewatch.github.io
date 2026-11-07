@@ -70,31 +70,11 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 .olive-surround__half[data-side="left"]{background-position:left center}
 .olive-surround__half[data-side="right"]{background-position:right center}
-/* V4.7 / the historical engraving finally belongs to the ACTUAL 04
-   material handoff, rather than a disconnected static art proof.
-   Each half draws the SAME full-width intaglio using opposite registration.
-   Their existing opposed clip-paths supply all reveal timing: no new clock,
-   opacity crossfade, green cloth, or poster modifications. */
-.olive-surround__half::after{
- content:"";position:absolute;top:39%;bottom:2%;width:200%;
- pointer-events:none;background:var(--ws-morning-gold);opacity:.67;
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v44.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v44.svg');
- -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
- -webkit-mask-size:100% 100%;mask-size:100% 100%;
- -webkit-mask-position:center;mask-position:center;
-}
-.olive-surround__half[data-side="left"]::after{left:0}
-.olive-surround__half[data-side="right"]::after{right:0}
-@media(max-width:600px){
- /* The independent mobile tracing keeps the historical site recognizable;
-    both opposed materials retain identical registration. */
- .olive-surround__half::after{
-  top:46%;bottom:7%;opacity:.60;
-  -webkit-mask-image:url('/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v44.svg');
-  mask-image:url('/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v44.svg')
- }
-}
+/* 04 / CLEAN FIELD: editorial backdrop engraving withdrawn by request.
+   Preserve the existing opposed masks, solid OS olive canvas and all
+   protected posters. Invitation-card local headpieces are not backgrounds. */
+.olive-surround__half::after{content:none!important}
+#olive-growth-field{display:none!important}
 
 .olive-proof{
  position:absolute;z-index:4;overflow:hidden;
