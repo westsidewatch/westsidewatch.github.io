@@ -232,6 +232,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     return {distance:+st.dataset.p2Distance,
       scene:st.dataset.p2Scene,frameReady:st.dataset.p2FolioReady,
       underlying:source.body.dataset.proofScene,
+      emmausFrame:{visibility:getComputedStyle(document.getElementById('p2-0103-original')).visibility,
+       state:st.dataset.p2EmmausSource},
       first:+st.dataset.p2Bridge,spread:+st.dataset.p2Spread,
       reading:+st.dataset.p2ReadingField,method:st.dataset.p2FieldMethod,
       ground:+st.dataset.p2Ground,index:+st.dataset.p2Index,
@@ -306,6 +308,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    };
    const at03=await go(9.30,'00-original-emmaus');
    assert.equal(at03.scene,'03-held');
+   assert.equal(at03.emmausFrame.visibility,'visible',
+    'the original 03 iframe must be visible until the first full-screen material bridge');
    assert.equal(at03.firstFrame.visibility,'hidden','04 must not enter before the 03 hold');
    assert.equal(at03.groundCSS.visibility,'hidden','Olive exterior must wait until the posters settle');
    assert.equal(at03.invitation.visibility,'hidden',
@@ -449,6 +453,9 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
       'each original print mounts independently on a green/gold invitation');
    }
    assert.equal(pair.pairRight.visibility,'visible');
+   assert.equal(pair.emmausFrame.visibility,'hidden',
+    'the old 5:8 centre book cover must be retired BEHIND the full stage carrier');
+   assert.equal(pair.emmausFrame.state,'retired');
    assert.equal(pair.pairLeft.src,'/images/olive/watchman-nee-editorial.png');
    assert.equal(pair.pairRight.src,'/images/olive/derek-prince-editorial.png');
    const pairNames=await page.evaluate(()=>['#olive-pair-left','#olive-pair-right'].map(sel=>{
@@ -715,6 +722,8 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     'reverse restores exact first poster clip and Doré frame geometry');
    const restored=await go(9.30,'12-reverse-restored-emmaus');
    assert.equal(restored.firstFrame.visibility,'hidden');
+   assert.equal(restored.emmausFrame.visibility,'visible',
+    'reverse MERSI scroll must restore the original Emmaus iframe');
    assert.equal(restored.groundCSS.visibility,'hidden');
     assert.equal(restored.neutralCSS.visibility,'hidden','return to original 03 without a bridge remnant');
    // This is the SAME live P2 scene with original posters hidden only
