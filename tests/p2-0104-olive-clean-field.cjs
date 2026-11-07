@@ -81,6 +81,18 @@ const widths=[1648,390];
        bgImages:[...bg.querySelectorAll('.olive-surround__half')].map(el=>getComputedStyle(el).backgroundImage),
        bgPseudo:[...bg.querySelectorAll('.olive-surround__half')].map(el=>getComputedStyle(el,'::after').content)};
     });
+    // The twelve protected portraits load asynchronously. A screenshot taken
+    // immediately after a seek can catch their fonts before decoded pixels.
+    // Verify REAL rendered image assets rather than merely counting DOM cards.
+    if(d>=17.25){
+     await page.waitForFunction(()=>{
+      const imgs=[...document.querySelectorAll('#olive-overview .olive-stage__index-card img')];
+      return imgs.length===12&&imgs.every(img=>img.complete&&img.naturalWidth>0);
+     },null,{timeout:30000});
+     await page.evaluate(()=>Promise.all(
+      [...document.querySelectorAll('#olive-overview .olive-stage__index-card img')]
+       .map(img=>img.decode())));
+    }
     await page.screenshot({path:`artifacts/p2-0104-olive/${width}-${name}.png`,animations:'disabled'});
     return state;
    }
