@@ -391,6 +391,7 @@
   // weave must never remain as a central panel behind the Olive gallery.
   // Preserve the source material during motion; retire only its artwork
   // at the settled-spread boundary, keeping the same OS olive pigment.
+  stage.classList.toggle('olive-spread-settled',d>=T.spread);
   for(const half of neutral.querySelectorAll('.olive-bridge__half')){
    half.style.backgroundImage=d>=T.spread?'none':'';
   }
