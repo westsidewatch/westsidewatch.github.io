@@ -100,19 +100,33 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    Six copies of an actual Walter Crane public-domain engraving are composed
    into one asymmetric print field. All form is imported: no handmade leaves.
    The print is behind the protected speaker figures and contained in LEFT. */
+/* V56: the same six public-domain Walter Crane sprays are printed as
+   TWO ink impressions, light relief and articulate copperplate contours.
+   The full-volume print remains visible at a distance, without a solid
+   gold hedge competing against the topographic linework on the right. */
 .olive-editorial-engraving__print--botanical{
- inset:2% -1% 3% 0;
- width:102%;height:95%;
- background:var(--ws-morning-gold);
- opacity:.88;
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
- -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
- -webkit-mask-size:100% 100%;mask-size:100% 100%;
- -webkit-mask-position:left center;mask-position:left center;
+ inset:2% -1% 3% 0;width:102%;height:95%;
+ background:none;opacity:1;
+ -webkit-mask-image:none;mask-image:none;
 }
 .olive-editorial-engraving__print--botanical::before,
-.olive-editorial-engraving__print--botanical::after{content:none}
+.olive-editorial-engraving__print--botanical::after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:var(--ws-morning-gold);
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-position:center;mask-position:center;
+}
+.olive-editorial-engraving__print--botanical::before{
+ opacity:.29;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-v54.svg');
+}
+.olive-editorial-engraving__print--botanical::after{
+ opacity:.86;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
+}
 /* Three draw-on groups are taken from actual elevation contours.
    The old static mask is an accessibility/offline fallback ONLY. */
 .olive-editorial-engraving__print--topography{
@@ -132,7 +146,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  fill:none;stroke-dasharray:1000 1000;
 }
 @media(max-width:600px){
- .olive-editorial-engraving__print--botanical{inset:3% -1% 3% 0;width:102%;height:94%;opacity:.82}
+ .olive-editorial-engraving__print--botanical{inset:3% -1% 3% 0;width:102%;height:94%;opacity:1}
  .olive-editorial-engraving__print--topography{
   inset:3% 0 3%;opacity:.62;
  }
