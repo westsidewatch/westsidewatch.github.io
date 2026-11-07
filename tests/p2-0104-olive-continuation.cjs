@@ -721,6 +721,33 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    // for independent SVG art inspection; normal gallery remains untouched.
    await page.evaluate(()=>document.getElementById('p2-olive-stage')
     .classList.add('olive-art-only'));
+   // Art-direction regression: Olive is ONE scroll-driven stage, never a
+   // twelve-poster top panel plus a detached engraving underneath.
+   // The botanical SVG shares the stage footprint with the original
+   // poster carriers and uses the exact same MERSI material aperture.
+   const integrated=await page.evaluate(()=>{
+    const stage=document.getElementById('p2-olive-stage');
+    const engraving=document.getElementById('olive-growth-field');
+    const posters=document.getElementById('olive-proof');
+    const stageBox=stage.getBoundingClientRect();
+    const inkBox=engraving.getBoundingClientRect();
+    const posterBox=posters.getBoundingClientRect();
+    return {
+     stage:[stageBox.x,stageBox.y,stageBox.width,stageBox.height],
+     ink:[inkBox.x,inkBox.y,inkBox.width,inkBox.height],
+     posters:[posterBox.x,posterBox.y,posterBox.width,posterBox.height],
+     clip:engraving.querySelector('#olive-growth-material-mask')!==null,
+     imageLayers:document.querySelectorAll('#p2-olive-stage .woodward-master').length
+    };
+   });
+   for(let i=0;i<4;i++){
+    assert(Math.abs(integrated.stage[i]-integrated.ink[i])<2,
+     'living Olive engraving must cover the SAME stage as the exhibition, not a lower image panel');
+    assert(Math.abs(integrated.stage[i]-integrated.posters[i])<2,
+     'the original poster exhibition must occupy the SAME stage as the engraving');
+   }
+   assert(integrated.clip,'historical engraving must use the live MERSI split aperture');
+   assert.equal(integrated.imageLayers,0,'do not reintroduce the rejected static V4.6 bottom plate');
    const artMid=await go(13.15,'olive-only-mid-growth');
    assert(artMid.growth.value>.2&&artMid.growth.value<.6,
      'isolated gold copperplate must be captured during live growth');
