@@ -49,6 +49,7 @@ assert.equal((html.match(/class="olive-card__edition"/g)||[]).length,3,'all card
 assert.match(css,/radial-gradient\(ellipse 92% 89%/,'both editorial print fields feather before a hard edge');
 assert.match(css,/inset:-7% -12% -23% -9%/,'botanical print bleeds below actual viewport');
 assert.match(css,/inset:-7% -24% -22% -8%/,'terrain print bleeds beyond right and bottom of viewport');
+assert.match(css,/transparent 10%,#000 27%/,'editorial masthead has a gradual 10-27% exclusion zone');
 assert(css.includes('--olive-card-motif:url('),'botanical print is the shared default');
 for(const family of ['terrain','city','horizon'])
  assert(css.includes('data-olive-print-family="'+family+'"'),family+' print edition available');
