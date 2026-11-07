@@ -45,6 +45,8 @@ assert.match(css,/\.olive-surround__half\{[^}]*background-color:var\(--ws-olive\
 assert.match(css,/\.olive-card__relief::after\{/,'invitation local relief retained');
 assert.equal((html.match(/class="olive-card__imprint"/g)||[]).length,3,
  'first and paired invitations each carry one shared imprint system');
+assert.equal((html.match(/class="olive-card__edition"/g)||[]).length,3,'all card shells have a readable edition rail');
+assert.match(css,/radial-gradient\(ellipse 92% 89%/,'both editorial print fields feather before a hard edge');
 assert(css.includes('--olive-card-motif:url('),'botanical print is the shared default');
 for(const family of ['terrain','city','horizon'])
  assert(css.includes('data-olive-print-family="'+family+'"'),family+' print edition available');
@@ -83,6 +85,8 @@ const widths=[1648,390];
        cardImprints:[...document.querySelectorAll('.olive-stage__invitation--pair')].map(el=>({
         family:el.dataset.olivePrintFamily,
         clip:el.style.getPropertyValue('--olive-imprint-clip'),
+        rail:Number.parseFloat(el.style.getPropertyValue('--olive-outer-rail-width')),
+        edition:el.querySelector('.olive-card__edition')?.textContent,
         mask:getComputedStyle(el.querySelector('.olive-card__imprint'),'::before').webkitMaskImage
        })),
        cardInk:Number(stage.dataset.p2CardInkReveal),
@@ -118,6 +122,8 @@ const widths=[1648,390];
    assert.equal(mid.noGrowth,true,'04 growth SVG must not be in the DOM');
    assert(mid.cardImprints.length===2&&mid.cardImprints.every(c=>c.family&&c.mask!=='none'),
     'both invitation cards must have authentic vector-print decorations');
+   assert(mid.cardImprints.every(c=>c.rail>=8 && c.edition?.includes('/ 12')),
+    'physical exterior rails visibly receive a coordinated numbered edition');
    assert(mid.cardImprints.every(c=>c.clip.endsWith('%')),
     'card engraving growth driven by same scroll position');
    assert.equal(mid.posterNodes,12,'all twelve source composites still exist');
