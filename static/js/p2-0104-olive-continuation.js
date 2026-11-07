@@ -29,10 +29,6 @@
  const left=$('#olive-pair-left'),right=$('#olive-pair-right');
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
  const overview=$('#olive-overview'),enter=$('#olive-enter');
- const growthSvg=$('#olive-growth-field'),growthRoot=$('#olive-growth-paths');
- const growthMaskLeft=$('#olive-growth-mask-left'),growthMaskRight=$('#olive-growth-mask-right');
- const growthLines=[],growthTips=[],growthCurves=[],livingBurins=[],reduceGrowth=matchMedia('(prefers-reduced-motion: reduce)');
- let livingClock=0,livingLast=0;
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
  const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
  const status=$('#p2-olive-folio-status');
@@ -169,51 +165,6 @@
  // remain a true 3:4 print. We calculate the actual outer boxes from that
  // immutable aspect instead of letting an arbitrary responsive cell resize
  // its image and expose synthetic gray strips.
- // The SVG-002 tool animates the actual curve geometry behind a growing tip.
- // Apply that grammar to the eight historical OLIVE spines. All leaf engraving
- // keeps its authorized two-tone stroke-dash growth and twelve-voice timing.
- // Geometry is sampled ONCE from the intact SVG source, never invented afresh.
- function curvePoint(points,u){
-  const n=points.length-1,at=clamp(u)*n,j=Math.min(n-1,Math.floor(at));
-  const f=at-j,a=points[j],b=points[j+1];
-  return {x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f};
- }
- function drawGrowingCurve(curve,local){
-  const path=curve.el,tip=curve.tip,points=curve.points;
-  if(local<=.00001){
-   const p=points[0];
-   path.setAttribute('d','M'+p.x.toFixed(2)+' '+p.y.toFixed(2));
-   tip.style.visibility='hidden';return;
-  }
-  if(reduceGrowth.matches){
-   path.setAttribute('d',curve.originalD);
-   tip.style.visibility='hidden';return;
-  }
-  // The underlying structure physically develops with scroll, then its
-  // existing wood fibres continue breathing on an independent time clock.
-  // Grounded at the root, the terminal shoots can bend by up to ~3px.
-  const count=Math.max(4,Math.ceil(local*(points.length-1)));
-  const xy=[];
-  for(let j=0;j<=count;j++){
-   const u=local*j/count,p=curvePoint(points,u);
-   const flex=Math.pow(u,1.65)*(curve.seed>=14?.6:2.65);
-   const wave=Math.sin(livingClock*(.64+.039*(curve.seed%7))+
-       u*6.8+curve.seed*1.21);
-   const cross=Math.cos(livingClock*.41+u*4.3+curve.seed*.77);
-   xy.push({x:p.x+flex*wave,y:p.y+flex*.42*cross});
-  }
-  const d=xy.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ');
-  if(path.getAttribute('d')!==d)path.setAttribute('d',d);
-  // A writing front continues traversing COMPLETED branches, rather than
-  // disappearing once local reaches 1. The source centreline remains grown.
-  const active=local>=.9999?
-   .12+.88*((livingClock*.087+curve.seed*.137)%1):local;
-  const end=Math.max(1,Math.floor((xy.length-1)*Math.min(1,active/Math.max(local,.0001))));
-  const begin=Math.max(0,end-5);
-  tip.setAttribute('d',xy.slice(begin,end+1).map((p,i)=>
-   (i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' '));
-  tip.style.visibility=local>.025?'visible':'hidden';
- }
  function galleryRects(g){
   const portraitRatio=3/4;
   const mobile=g.w<600;
@@ -407,75 +358,6 @@
   if(bg>=.99999)neutral.style.visibility='hidden';
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
   const vertical=g.w<600;
-  // TWO witnesses are mounted before the background hand-off. Every
-  // further PAIR of real speaker transitions grows TWO distinct historic
-  // botanical groups, one per speaker, in the SAME continuous MERSI
-  // scroll timeline. No waiting until the final twelve-poster overview.
-  let speakerGrowth=0;
-  if(d>=T.groundStart){
-   // The first TWO are drawn as the new 04 material arrives. The right
-   // aperture opens first, then the left: no sudden completed vegetation.
-   speakerGrowth=(2/12)*bg;
-   if(d>=T.pairStart){
-    const pairIndex=Math.min(4,Math.floor((d-T.pairStart)/T.pairStep));
-    const pairClock=T.pairStart+pairIndex*T.pairStep;
-    const pairReveal=ease((d-pairClock)/T.pairDuration);
-    speakerGrowth=(2+2*(pairIndex+pairReveal))/12;
-   }
-   if(d>=T.indexStart)speakerGrowth=1;
-  }
-  const growth=reduceGrowth.matches?(d>=T.groundEnd?1:0):speakerGrowth;
-  if(growthSvg)growthSvg.style.visibility=d>=T.groundStart?'visible':'hidden';
-  // Register the line engraving to the EXACT same MERSI material split:
-  // right from BOTTOM first, left from TOP afterwards. Never draw olives
-  // above the outgoing Bible cover or fake their entrance with opacity.
-  // An independent ORIGINAL crop on narrow devices; never distort trees.
-  // The same reversible MERSI top/bottom split now covers the exact
-  // visible crop instead of the off-screen half of a stretched 1600px SVG.
-  const narrow=g.w<600;
-  if(growthSvg){
-   const crop=narrow?'-45 -54 570 1008':'-96 -54 1792 1008';
-   if(growthSvg.getAttribute('viewBox')!==crop)growthSvg.setAttribute('viewBox',crop);
-   const aspect=narrow?'xMinYMid slice':'xMidYMid meet';
-   if(growthSvg.getAttribute('preserveAspectRatio')!==aspect)
-    growthSvg.setAttribute('preserveAspectRatio',aspect);
-  }
-  if(growthMaskLeft){
-   growthMaskLeft.setAttribute('x',narrow?'-45':'-96');
-   growthMaskLeft.setAttribute('width',narrow?'285':'896');
-  }
-  if(growthMaskRight){
-   growthMaskRight.setAttribute('x',narrow?'240':'800');
-   growthMaskRight.setAttribute('width',narrow?'285':'896');
-  }
-  const growLeft=ease((bg-.52)/.48),growRight=ease(bg/.55);
-  if(growthMaskLeft)growthMaskLeft.setAttribute('height',(1008*growLeft).toFixed(3));
-  if(growthMaskRight){
-   growthMaskRight.setAttribute('y',(954-1008*growRight).toFixed(3));
-   growthMaskRight.setAttribute('height',(1008*growRight).toFixed(3));
-  }
-  for(const line of growthLines){
-   const local=ease((growth-line.start)/(line.end-line.start));
-   const offset=(1000*(1-local)).toFixed(3);
-   if(line.el.style.strokeDashoffset!==offset)
-    line.el.style.strokeDashoffset=offset;
-   // SVG-002's moving growth frontier redraws real CURVE GEOMETRY.
-   // The botanical leaf hatching remains the approved static source art,
-   // with its dash offset advanced along the same scroll timeline.
-   if(line.curve)drawGrowingCurve(line.curve,local);
-  }
-  stage.dataset.p2OliveLiveCurves=String(growthCurves.length);
-  stage.dataset.p2OliveGrowth=growth.toFixed(5);
-  stage.dataset.p2OliveGrowthVoices=String(Math.floor(growth*12+.0001));
-  stage.dataset.p2OliveGrowthPair=String(Math.min(5,Math.floor(growth*6)));
-  if(growthSvg)stage.dataset.p2OliveGrowthPaths=String(growthLines.length);
-  // Source-bound moving gold burins continue when scrolling stops.
-  const ambient=reduceGrowth.matches?0:livingClock;
-  for(const mark of livingBurins){
-   const visible=ease((growth-mark.start)/(mark.end-mark.start));
-   mark.el.style.strokeOpacity=(visible*(.42+.42*(.5+.5*Math.sin(ambient*.67+mark.seed*9)))).toFixed(3);
-   mark.el.style.strokeDashoffset=(-1000*((ambient*mark.speed+mark.seed)%1)).toFixed(2);
-  }
   const rects=galleryRects(g);
   // Desktop uses true folio halves; on narrow phones two original posters
   // occupy TOP/BOTTOM halves to avoid extremely thin and mostly empty strips.
