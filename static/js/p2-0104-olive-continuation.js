@@ -554,6 +554,11 @@
    turnFace(shells[i],turns[i],box.w/2,box.h/2,depth);
    turnFace(portraits[i],turns[i],axisX-portrait.x,axisY-portrait.y,depth);
    turnFace(backs[i],turns[i]+180,box.w/2,box.h/2,depth);
+   // The settled reverse is the underlying chapter field itself, not
+   // a clipped second SVG. Card stock/foil only materialize mid-flip.
+   const physical=Math.sin(turns[i]*Math.PI/180);
+   backs[i].style.setProperty('--folio-paper-alpha',(physical*.84).toFixed(4));
+   backs[i].style.setProperty('--folio-edge-alpha',(physical*.72).toFixed(4));
   }
   stage.dataset.p2FolioFront=activeSide;
   stage.dataset.p2FolioAngles=turns.map(x=>x.toFixed(2)).join(',');
