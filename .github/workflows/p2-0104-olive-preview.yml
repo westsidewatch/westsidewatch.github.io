@@ -41,6 +41,7 @@ on:
       - 'static/images/p2-realms/v15/04-olive-growth-field-v1.svg'
       - 'static/images/p2-realms/v15/04-olive-living-grove-v2.svg'
       - 'static/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg'
+      - 'scripts/build-olive-mountain-contours-v1.py'
       - 'docs/design/OLIVE-MOUNTAIN-ART-SOURCES.md'
       - 'tests/p2-0104-olive-continuation.cjs'
       - 'tests/p2-0104-olive-clean-field.cjs'
@@ -71,16 +72,18 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq potrace
           python3 -m venv /tmp/olive-v43-env
-          /tmp/olive-v43-env/bin/pip -q install 'Pillow==11.3.0'
+          /tmp/olive-v43-env/bin/pip -q install 'Pillow==11.3.0' 'numpy==2.3.4' 'contourpy==1.3.3'
           /tmp/olive-v43-env/bin/python scripts/build-olive-mountain-master-v43.py
           /tmp/olive-v43-env/bin/python scripts/build-olive-mountain-master-v44.py
+          /tmp/olive-v43-env/bin/python scripts/build-olive-mountain-contours-v1.py
+          test -s static/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg
           test -s static/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v43.svg
           test -s static/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v43.svg
           test -s static/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v44.svg
           test -s static/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v44.svg
           git config user.name "westsidewatch-artmaster-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add static/images/p2-realms/v15/04-olive-woodward-cousen-*-intaglio-v43.svg static/images/p2-realms/v15/04-olive-woodward-cousen-*-intaglio-v44.svg
+          git add static/images/p2-realms/v15/04-olive-woodward-cousen-*-intaglio-v43.svg static/images/p2-realms/v15/04-olive-woodward-cousen-*-intaglio-v44.svg static/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg
           if ! git diff --cached --quiet; then
             git commit -m 'art(olive): reproduce original public-domain steel engraving as native V4.3 SVG masters [skip ci]'
             # Docs/other safe edits can land while this long-running trace is produced.
@@ -97,6 +100,7 @@ jobs:
         run: |
           hugo --gc --minify --baseURL 'https://westsidewatch-github-io.pages.dev/'
           test -s public/experiments/p2-0104-olive-continuation.html
+          test -s public/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg
           test -s public/experiments/olive-mountain-art-foundation-v4.html
           test -s public/experiments/olive-mountain-art-foundation-v41.html
           test -s public/experiments/olive-mountain-art-foundation-v42.html
