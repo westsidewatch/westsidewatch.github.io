@@ -1,6 +1,7 @@
 /* P2 04 | ORIGINAL SPREAD -> TWELVE VOICES
- * ONE scroll authority. The RELEASED 01–03 iframe is NEVER reparented,
- * restyled or resized. 04 reads its actual Doré plate/ONE folio bounds.
+ * ONE scroll authority. The RELEASED 01–03 iframe is NEVER reparented
+ * or resized; only its outer visibility retires after an opaque bridge.
+ * 04 reads its actual Doré plate/ONE folio bounds.
  *
  * 9.44–10.08   Doré plate -> 04 gilt invitation card; mounted original print follows
  * 10.08–10.95  03 paper clears through opposed split-field masks as A moves LEFT,
@@ -395,12 +396,11 @@
   base.style.visibility=sourceTransferred?'hidden':'visible';
   base.style.pointerEvents=sourceTransferred?'none':'';
   stage.dataset.p2EmmausSource=sourceTransferred?'retired':'visible';
-  // The bridge itself keeps the outgoing cloth until both speakers have
-  // settled. After that point it becomes uninterrupted OS olive; the
-  // 04 split-field then takes over while the 12 originals remain untouched.
-  for(const half of neutral.querySelectorAll('.olive-bridge__half')){
-   half.style.backgroundImage=d>=T.spread?'none':'';
-  }
+  // Keep the SAME authentic 03 cloth across the entire bridge until the
+  // opposing 04 masks take it over. Clearing cloth at T.spread used to
+  // produce an incorrect flat background and broke the MERSI contract.
+  // The retired original iframe is separate: that 5:8 centre folio may
+  // NOT survive behind the full-width transition carrier.
   revealSplitField(neutral,readingField);
   revealSplitField(ground,bg);
   // ONE is an outgoing transition source only. Once 04 has fully claimed
