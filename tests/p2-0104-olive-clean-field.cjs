@@ -29,6 +29,10 @@ assert.equal((html.match(/data-print-impression=/g)||[]).length,6,'six independe
 assert.equal((html.match(/class="olive-card__reverse olive-card__reverse--/g)||[]).length,2,
  'each invitation has an actual second face');
 assert.match(css,/backface-visibility:hidden/,'front and reverse need hidden back faces');
+assert.match(css,/--folio-paper-alpha,0/,'fold stock appears only during the 3D turn');
+assert.match(css,/--folio-edge-alpha,0/,'fold foil disappears when the back merges into the field');
+assert.doesNotMatch(html,/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/,
+ 'duplicate chapter masthead must not be printed on every reverse');
 assert.match(js,/measured-two-faced-rotating-card-v63/,'MERSI drives measured 3D turns');
 const terrainEngine=read('static/js/p2-0104-olive-path-growth-v60.js');
 assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
@@ -186,8 +190,8 @@ const widths=[1648,390];
    assert.equal(leftInk.folioFaces,'front,back','first: left portrait and right engraved reverse');
    assert.equal(leftInk.folioSystem,'measured-two-faced-rotating-card-v63');
    assert.equal(leftInk.reverseFaces.length,2);
-   assert(leftInk.reverseFaces.every(x=>x.visible==='visible'&&x.mask.includes('.svg')),
-    'each reverse face uses authentic chapter engraving');
+   assert(leftInk.reverseFaces.every(x=>x.visible==='visible'&&x.mask==='none'),
+    'the original full botanical/terrain field itself must be the back, without duplicate local engravings');
    assert.equal(leftInk.leftClip,'none','no box clipping on botanical field');
    assert.equal(leftInk.rightClip,'none','no box clipping on contour field');
    await page.waitForFunction(()=>['real-dem-whole-contours-v60','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
