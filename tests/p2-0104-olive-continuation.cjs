@@ -402,9 +402,11 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
    assert(atUserScreenshot.neutralCSS.halves.every(x=>!/[1-9][0-9.]*%/.test(x)),
     'all original page material is replaced by a full-panel source field at 10.26');
    assert.equal(atUserScreenshot.invitation.visibility,'visible',
-   assert.equal(atUserScreenshot.emmausFrame.visibility,'hidden','retire outgoing 5:8 cover after takeover');
-   assert.equal(atUserScreenshot.neutralCSS.image,'none','no enlarged cloth during the handoff');
     'the 04 printed card leads the spatial handoff');
+   assert.equal(atUserScreenshot.emmausFrame.visibility,'hidden',
+    'retire outgoing 5:8 cover after takeover');
+   assert.equal(atUserScreenshot.neutralCSS.image,'none',
+    'no enlarged cloth during the handoff');
    assert(atUserScreenshot.invitation.relief.includes('04-olive-historic-engraving-v13.svg'),
     'the entering card carries the substantive original Olives landscape engraving');
    assert(Math.abs(atUserScreenshot.firstFrame.box.w/atUserScreenshot.firstFrame.box.h-.75)<.01,
