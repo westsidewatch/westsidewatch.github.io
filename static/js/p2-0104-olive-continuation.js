@@ -385,7 +385,11 @@
   // complete the opaque OS olive curtain while the invitation is still
   // registered over Doré, BEFORE its movement can expose old scripture.
   // At d=10.26 the outgoing 03 page must be fully hidden, not in shards.
-  const readingField=ease((d-T.first)/.065);
+  // The previous 10.08–10.145 reveal left the original Emmaus woven cloth
+  // exposed at d=10.11 behind the incoming invitation. Complete the
+  // 03 material handoff by d=10.10 without moving either poster or altering
+  // the original 01–03 iframe contents. Reverse scroll restores 03 exactly.
+  const readingField=ease((d-(T.first-.04))/.06);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
   // The ACTUAL outgoing Emmaus 5:8 book cover lives inside the 01–03
   // iframe. The neutral bridge must never duplicate its 5:8 binding.
