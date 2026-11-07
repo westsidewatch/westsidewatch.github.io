@@ -43,6 +43,7 @@ on:
       - 'static/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg'
       - 'docs/design/OLIVE-MOUNTAIN-ART-SOURCES.md'
       - 'tests/p2-0104-olive-continuation.cjs'
+      - 'tests/p2-0104-olive-clean-field.cjs'
       - '.github/workflows/p2-0104-olive-preview.yml'
   workflow_dispatch:
 
@@ -122,7 +123,7 @@ jobs:
           test -s public/images/p2-realms/v15/04-olive-living-grove-v2.svg
           test -s public/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg
           test -s public/images/olive/watchman-nee-editorial.png
-          node --check tests/p2-0104-olive-continuation.cjs
+          node --check tests/p2-0104-olive-clean-field.cjs
           node --check tests/olive-mountain-art-foundation-v4.cjs
           node --check tests/olive-mountain-art-foundation-v41.cjs
           node --check tests/olive-mountain-art-foundation-v42.cjs
@@ -130,14 +131,14 @@ jobs:
           node --check tests/olive-mountain-art-foundation-v44.cjs
           node --check tests/p2-emmaus-svg-cloth.cjs
           node --check tests/olive-engraving-v1-v2-compare.cjs
-      - name: Test genuine Chrome 03→04 entrance and reverse scroll
+      - name: Test 04 clean field, protected posters and reversible Emmaus handoff
         run: |
           npm install --no-save --no-package-lock playwright@1.64.1
           npx playwright install chromium
           python3 -m http.server 4173 --directory public >/tmp/p2-0104-http.log 2>&1 &
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
-          node tests/p2-0104-olive-continuation.cjs
+          node tests/p2-0104-olive-clean-field.cjs
           node tests/olive-mountain-art-foundation-v4.cjs
           node tests/olive-mountain-art-foundation-v41.cjs
           node tests/olive-mountain-art-foundation-v42.cjs
@@ -145,7 +146,6 @@ jobs:
           node tests/olive-mountain-art-foundation-v44.cjs
           node tests/p2-emmaus-svg-cloth.cjs
           node tests/p2-0103-release.cjs
-          node tests/olive-engraving-v1-v2-compare.cjs
       - name: Bundle actual botanical vector master for art-direction inspection
         if: always()
         run: |
@@ -170,7 +170,7 @@ jobs:
         run: |
           mkdir -p public/experiments/p2-0104-proofs
           for width in 1648 390; do
-            for frame in 00-original-emmaus 01b-source-plate-no-old-engraving-exposure 01c-clean-mersi-invitation-transition 02-first-to-left-second-to-right 03-two-poster-locked-original-background 04-only-now-olive-svg-background 05-olive-material-fixed 05b-two-voices-with-growing-olive-field 06-opposed-double-poster-change 06c-pair-five-six-olive-growth 06e-pair-nine-ten-olive-growth 09-twelve-voices-final-overview olive-only-mid-growth olive-only-fully-grown olive-v1-v2-live-growth-review olive-v1-v2-twelve-index-review emmaus-svg-cloth-green-hold; do
+            for frame in 00-original-emmaus 03-two-poster-locked-original-background 04-clean-olive-field 09-twelve-voices-final-overview 10-reversed-original-emmaus; do
               test -s "artifacts/p2-0104-olive/${width}-${frame}.png"
               cp "artifacts/p2-0104-olive/${width}-${frame}.png" "public/experiments/p2-0104-proofs/"
             done
