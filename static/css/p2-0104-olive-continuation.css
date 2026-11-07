@@ -294,33 +294,24 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 #olive-invitation-left,#olive-invitation-right,
 #olive-pair-left,#olive-pair-right,
 .olive-card__reverse{
- backface-visibility:hidden;-webkit-backface-visibility:hidden;
- transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
- will-change:transform;
-}
-.olive-card__reverse{
  position:absolute;z-index:2;visibility:hidden;pointer-events:none;
  overflow:hidden;box-sizing:border-box;
  color:var(--ws-morning-gold);
  background:transparent;
- outline:1px solid color-mix(in srgb,var(--ws-morning-gold) 28%,transparent);
- outline-offset:-1px;
+ /* Its real backside is the EXISTING continuous botanical/DEM field.
+    Duplicating a tiny local SVG causes an ugly framed second pattern.
+    Paper and foil are only visible while the folio is physically turning. */
 }
 .olive-card__reverse::before{
- content:"";position:absolute;inset:3% 1%;
- background:var(--ws-morning-gold);opacity:.56;
- -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
- -webkit-mask-position:center;mask-position:center;
- -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ content:"";position:absolute;inset:0;
+ background:var(--ws-olive);opacity:var(--folio-paper-alpha,0);
+ pointer-events:none;
 }
-.olive-card__reverse--botanical::before{
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
-}
-.olive-card__reverse--terrain::before{
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
- opacity:.77;
+.olive-card__reverse::after{
+ content:"";position:absolute;inset:0;
+ border:1px solid var(--ws-morning-gold);
+ opacity:var(--folio-edge-alpha,0);
+ pointer-events:none;
 }
 .olive-card__reverse-mark{
  position:absolute;left:9%;right:9%;top:38%;bottom:29%;
