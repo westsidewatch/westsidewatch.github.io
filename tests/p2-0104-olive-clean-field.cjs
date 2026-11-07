@@ -149,7 +149,7 @@ const widths=[1648,390];
    assert.equal(leftInk.leftClip,'none','the botanical field must never be box-clipped');
    assert.equal(leftInk.rightClip,'none','real terrain rings must never be box-clipped');
    await page.waitForFunction(()=>['real-dem-dash-v53','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
-   const rightInk=await go(12.74,'05b-right-terrain-second-complete');
+   const rightInk=await go(12.80,'05b-right-terrain-second-complete');
    assert.equal(rightInk.terrainEngine,'real-dem-whole-contours-v60','complete measured contour paths are printed, never SVG wipe');
    assert(rightInk.fullContourPaths>=24&&rightInk.visibleContours>0,'full geographic contours displayed');
    assert(rightInk.completedRings>=2,'two successive right speakers each print a complete new contour batch');
