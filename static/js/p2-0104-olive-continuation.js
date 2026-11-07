@@ -26,6 +26,7 @@
  const invitationLeft=$('#olive-invitation-left');
  const invitationRight=$('#olive-invitation-right');
  const pair=$('#olive-pair');
+ const reverseLeft=$('#olive-reverse-left'),reverseRight=$('#olive-reverse-right');
  const left=$('#olive-pair-left'),right=$('#olive-pair-right');
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
  const overview=$('#olive-overview'),enter=$('#olive-enter');
@@ -343,6 +344,11 @@
   node.dataset.leftReveal=leftReveal.toFixed(5);
   node.dataset.rightReveal=rightReveal.toFixed(5);
  }
+ // Front and reverse share an exact axis; controlled by one MERSI scroll value.
+ function turnFace(element,angle,axisX,axisY,depth){
+  element.style.transformOrigin=axisX.toFixed(2)+'px '+axisY.toFixed(2)+'px';
+  element.style.transform='perspective('+depth.toFixed(0)+'px) rotateY('+angle.toFixed(3)+'deg)';
+ }
  function paint(){
   queued=false;
   const height=Math.max(innerHeight,1);
@@ -475,6 +481,14 @@
    targetRightCard.w,targetRightCard.h);
   positionInvitedEngraving(invitationLeft,targetLeftCard,settledLeft,vertical);
   positionInvitedEngraving(invitationRight,targetRightCard,settledRight,vertical);
+  const cardSlots=[targetLeftCard,targetRightCard],portraitSlots=[settledLeft,settledRight];
+  const shells=[invitationLeft,invitationRight],portraits=[left,right];
+  const backs=[reverseLeft,reverseRight];
+  if(!reverseLeft||!reverseRight)throw new Error('04 requires two folio reverses');
+  backs.forEach((back,i)=>{
+   const box=cardSlots[i];position(back,box.x,box.y,box.w,box.h);
+   back.style.visibility=d>=T.spread&&d<T.indexStart?'visible':'hidden';
+  });
   const rightCardReveal=ease((form-.44)/.26);
   invitationLeft.style.visibility=d>=T.spread&&d<T.indexStart?'visible':'hidden';
   invitationRight.style.visibility=rightCardReveal>0&&d<T.indexStart?'visible':'hidden';
@@ -495,71 +509,62 @@
   const paired=d>=T.spread;
   left.style.visibility=paired?'visible':'hidden';
   right.style.visibility=paired?'visible':'hidden';
-  if(forming){
-   setCardCaption(invitationLeft,0);
-   setCardCaption(invitationRight,1);
-   setFigure(nextRight,1);
-   nextRight.style.visibility=secondArrival>0?'visible':'hidden';
-   nextRight.style.clipPath='inset('+((1-secondArrival)*100).toFixed(3)+'% 0 0 0)';
-   nextLeft.style.visibility='hidden';
-  }else if(d<T.pairStart){
-   changePair(0); // Two figures lock before the first new single-side beat.
-   left.style.clipPath='none';right.style.clipPath='none';
-  }else{
-   // Exactly ten single-portrait succession beats: LEFT / RIGHT / LEFT...
-   // One side alone changes; the other speaker and ALL printed ink stay locked.
-   const event=Math.min(9,Math.floor((d-T.pairStart)/singleStep));
-   const tick=T.pairStart+event*singleStep;
-   const beat=clamp((d-tick)/singleStep);
-   const speaker=event+2,side=event%2;
-   const lastLeft=side===0?speaker-2:speaker-1;
-   const lastRight=side===1?speaker-2:speaker-1;
-   const exit=ease((beat-.10)/.22);
-   const arrival=ease((beat-.35)/.29);
-   // Card and baseline art are sourced from the approved frozen masters.
-   setFigure(left,lastLeft);setFigure(right,lastRight);
-   nextLeft.style.visibility='hidden';nextRight.style.visibility='hidden';
-   nextLeft.style.clipPath='inset(100% 0 0 0)';
-   nextRight.style.clipPath='inset(100% 0 0 0)';
-   left.style.visibility='visible';right.style.visibility='visible';
-   left.style.clipPath='none';right.style.clipPath='none';
-   if(side===0){
-    if(beat>=.98){
-     setFigure(left,speaker);setCardCaption(invitationLeft,speaker);
-    }else{
-     setCardCaption(invitationLeft,arrival>.55?speaker:lastLeft);
-     setFigure(nextLeft,speaker);
-     left.style.clipPath='inset(0 0 '+(exit*100).toFixed(3)+'% 0)';
-     nextLeft.style.visibility=arrival>0?'visible':'hidden';
-     nextLeft.style.clipPath='inset(0 0 '+((1-arrival)*100).toFixed(3)+'% 0)';
-    }
-    setCardCaption(invitationRight,lastRight);
-   }else{
-    if(beat>=.98){
-     setFigure(right,speaker);setCardCaption(invitationRight,speaker);
-    }else{
-     setCardCaption(invitationRight,arrival>.55?speaker:lastRight);
-     setFigure(nextRight,speaker);
-     right.style.clipPath='inset('+(exit*100).toFixed(3)+'% 0 0 0)';
-     nextRight.style.visibility=arrival>0?'visible':'hidden';
-     nextRight.style.clipPath='inset('+((1-arrival)*100).toFixed(3)+'% 0 0 0)';
-    }
-    setCardCaption(invitationLeft,lastLeft);
-   }
-   stage.dataset.p2SpeakerArrival=String(speaker+1);
-   stage.dataset.p2ActiveSide=side===0?'left':'right';
+  nextLeft.style.visibility='hidden';nextRight.style.visibility='hidden';
+  nextLeft.style.clipPath='none';nextRight.style.clipPath='none';
+  left.style.clipPath='none';right.style.clipPath='none';
+  // Double-sided invitations: one portrait at a time, opposite reverse
+  // printed into the matching full-field botanical / contour language.
+  let turns=[0,180],activeSpeaker=0,activeSide='left';
+  if(d>=T.pairStart&&d<T.indexStart){
+   const relayStep=(T.indexStart-T.pairStart)/11;
+   const event=Math.min(10,Math.floor((d-T.pairStart)/relayStep));
+   const beat=clamp((d-(T.pairStart+event*relayStep))/relayStep);
+   const inSide=(event+1)%2, outSide=1-inSide;
+   const entering=ease((beat-.06)/.36),retreat=ease((beat-.58)/.34);
+   turns[inSide]=180*(1-entering);
+   turns[outSide]=180*retreat;
+   const speaker=event+1,old=event,following=event+2;
+   const indices=[0,1];indices[inSide]=speaker;
+   // Change portrait only after the departing face is past ninety degrees.
+   indices[outSide]=turns[outSide]>=100&&following<roster.length?following:old;
+   setFigure(left,indices[0]);setFigure(right,indices[1]);
+   setCardCaption(invitationLeft,indices[0]);setCardCaption(invitationRight,indices[1]);
+   activeSpeaker=retreat>=1?speaker:entering>.5?speaker:old;
+   activeSide=activeSpeaker%2?'right':'left';
+   stage.dataset.p2ActiveSide=inSide===0?'left':'right';
    stage.dataset.p2ArrivalProgress=beat.toFixed(4);
+   stage.dataset.p2SpeakerArrival=String(speaker+1);
+   stage.dataset.p2OppositeLocked=String(entering>=1&&retreat<1);
+  }else{
+   setFigure(left,0);setFigure(right,1);
+   setCardCaption(invitationLeft,0);setCardCaption(invitationRight,1);
+   stage.dataset.p2ActiveSide='left';
+   stage.dataset.p2ArrivalProgress='0';
    stage.dataset.p2OppositeLocked='true';
+   stage.dataset.p2SpeakerArrival='1';
   }
+  const depth=Math.max(950,g.w*1.2);
+  for(let i=0;i<2;i++){
+   const box=cardSlots[i],portrait=portraitSlots[i];
+   const axisX=box.x+box.w/2,axisY=box.y+box.h/2;
+   turnFace(shells[i],turns[i],box.w/2,box.h/2,depth);
+   turnFace(portraits[i],turns[i],axisX-portrait.x,axisY-portrait.y,depth);
+   turnFace(backs[i],turns[i]+180,box.w/2,box.h/2,depth);
+  }
+  stage.dataset.p2FolioFront=activeSide;
+  stage.dataset.p2FolioAngles=turns.map(x=>x.toFixed(2)).join(',');
+  stage.dataset.p2FolioReverse=turns.map(x=>x>90?'back':'front').join(',');
+  stage.dataset.p2FolioSystem='measured-two-faced-rotating-card-v63';
   // The SAME completed speaker beat prints the card's gold edition
   // only AFTER its portrait lands. No simultaneous movement on both sides.
   let localInk=1,clipL='0%',clipR='0%';
   if(d>=T.pairStart&&d<T.indexStart){
-   const event=Math.min(9,Math.floor((d-T.pairStart)/singleStep));
-   const beat=clamp((d-(T.pairStart+event*singleStep))/singleStep);
-   localInk=ease((beat-.69)/.23);
+   const relayStep=(T.indexStart-T.pairStart)/11;
+   const event=Math.min(10,Math.floor((d-T.pairStart)/relayStep));
+   const beat=clamp((d-(T.pairStart+event*relayStep))/relayStep);
+   localInk=ease((beat-.67)/.26);
    const clip=((1-localInk)*100).toFixed(2)+'%';
-   if(event%2===0)clipL=clip;else clipR=clip;
+   if((event+1)%2===0)clipL=clip;else clipR=clip;
   }
   invitationLeft.style.setProperty('--olive-imprint-clip',clipL);
   invitationRight.style.setProperty('--olive-imprint-clip',clipR);
@@ -612,7 +617,7 @@
     d<T.groundStart?'04-pair-hold':
     d<T.groundEnd?'04-ground-reveal':
     d<T.pairStart?'04-editorial-hold':
-    d<T.indexStart?'04-six-pair-gallery':
+    d<T.indexStart?'04-alternating-folio-faces':
     d<T.indexEnd?'04-twelve-recomposition':'04-twelve-index';
   status.textContent=d<T.start?'03 / 07 · EMMAUS':
    d<T.groundEnd?'04 / 07 · THE FIRST TWO':
