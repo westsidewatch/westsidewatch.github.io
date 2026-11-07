@@ -286,6 +286,16 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-stage__invitation--pair{z-index:0}
 .olive-stage__first{z-index:2;inset:auto}
 .olive-stage__pair{z-index:3;inset:0}
+/* V67 / one genuine rigid invitation carrier. Never transform a portrait
+   or its protected typography as independent objects: they must remain
+   pixel-registered on the exact same physical front of this one folio. */
+.olive-folio-carrier{
+ position:absolute;z-index:4;overflow:visible;
+ transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
+ will-change:transform;
+}
+.olive-folio-carrier>.olive-stage__invitation{z-index:1}
+.olive-folio-carrier>.olive-stage__poster{z-index:2}
 /* V63 / two-sided invitation folios.
    Both real faces rotate around the SAME measured outer-card axis.
    The existing frozen 3:4 speaker artwork stays a single protected plane;
@@ -299,23 +309,36 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  will-change:transform;
 }
 .olive-card__reverse{
- position:absolute;z-index:2;visibility:hidden;pointer-events:none;
+ position:absolute;z-index:3;visibility:hidden;pointer-events:none;
  overflow:hidden;box-sizing:border-box;
+ backface-visibility:hidden;-webkit-backface-visibility:hidden;
+ transform:rotateY(180deg) translateZ(1px);
  color:var(--ws-morning-gold);
- background:transparent;
- /* Its real backside is the EXISTING continuous botanical/DEM field.
-    Duplicating a tiny local SVG causes an ugly framed second pattern.
-    Paper and foil are only visible while the folio is physically turning. */
+ /* A visible real reverse: olive stock with authentic, chapter-specific
+    copperplate ink. The old fully transparent verso was literally empty. */
+ background:var(--ws-olive);
+ outline:1px solid var(--ws-morning-gold);outline-offset:-1px;
 }
 .olive-card__reverse::before{
- content:"";position:absolute;inset:0;
- background:var(--ws-olive);opacity:var(--folio-paper-alpha,0);
+ content:"";position:absolute;inset:5% 4% 14%;
+ background:var(--ws-morning-gold);opacity:.76;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-position:center;mask-position:center;
  pointer-events:none;
 }
+.olive-card__reverse--botanical::before{
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
+}
+.olive-card__reverse--terrain::before{
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ opacity:.94;
+}
 .olive-card__reverse::after{
- content:"";position:absolute;inset:0;
- border:1px solid var(--ws-morning-gold);
- opacity:var(--folio-edge-alpha,0);
+ content:"";position:absolute;inset:11px;
+ border:1px solid color-mix(in srgb,var(--ws-morning-gold) 45%,transparent);
  pointer-events:none;
 }
 /* A reverse is a piece of the existing print field, not a second cover.
