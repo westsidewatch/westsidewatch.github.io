@@ -386,6 +386,14 @@
   // At d=10.26 the outgoing 03 page must be fully hidden, not in shards.
   const readingField=ease((d-T.first)/.065);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
+  // 03's antique-cloth bridge is only a SOURCE during the first poster
+  // handoff. Once BOTH original 3:4 prints have settled, its dark ONE
+  // weave must never remain as a central panel behind the Olive gallery.
+  // Preserve the source material during motion; retire only its artwork
+  // at the settled-spread boundary, keeping the same OS olive pigment.
+  for(const half of neutral.querySelectorAll('.olive-bridge__half')){
+   half.style.backgroundImage=d>=T.spread?'none':'';
+  }
   revealSplitField(neutral,readingField);
   revealSplitField(ground,bg);
   // ONE is an outgoing transition source only. Once 04 has fully claimed
