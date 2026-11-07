@@ -16,7 +16,7 @@ assert.match(html,/id="olive-editorial-engraving"/);
 assert.match(css,/04-olive-botanical-impression-v60-1\.svg/);
 assert.match(css,/04-olive-botanical-impression-v60-6\.svg/);
 for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-botanical-impression-v60-${n}.svg`),/crane-public-domain-olive/);
-assert.match(css,/04-olive-botanical-folio-outline-v56\.svg/);
+assert.doesNotMatch(css,/04-olive-botanical-folio-outline-v56\\.svg/,'full-scale botanical leaf art must not be shrunk into tiny card gutter');
 assert.match(read('static/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg'),/fill="none" stroke="white"/);
 assert.match(read('static/images/p2-realms/v15/04-olive-botanical-folio-v54.svg'),/crane-public-domain-olive/,'use genuine public-domain Crane engraved foliage, not invented needles');
 assert.equal((read('static/images/p2-realms/v15/04-olive-botanical-folio-v54.svg').match(/href="#crane-public-domain-olive"/g)||[]).length,6,'six mature folio sprays, not two twigs');
@@ -31,6 +31,8 @@ assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
 assert.match(terrainEngine,/getBBox\(\)/);
 assert.doesNotMatch(terrainEngine,/strokeDashoffset='1000'/,'do not redraw or crop entire rings');
 assert.match(terrainEngine,/p2ContourImpression/);
+assert.match(terrainEngine,/original\*1\.65/,'terrain line hierarchy optically strengthened');
+assert.match(css,/filter:opacity\(\.64\)/,'oversized botanical area subdued without deleting the SVG layers');
 const terrainSvg=read('static/images/p2-realms/v15/04-olive-mount-terrain-growth-v53.svg');
 assert.match(terrainSvg,/class="terrain-major"/);
 assert.match(terrainSvg,/class="terrain-mid"/);
@@ -55,9 +57,10 @@ assert.match(css,/radial-gradient\(ellipse 92% 89%/,'both editorial print fields
 assert.match(css,/inset:-7% -12% -23% -9%/,'botanical print bleeds below actual viewport');
 assert.match(css,/inset:-7% -24% -22% -8%/,'terrain print bleeds beyond right and bottom of viewport');
 assert.match(css,/transparent 10%,#000 27%/,'editorial masthead has a gradual 10-27% exclusion zone');
-assert(css.includes('--olive-card-motif:url('),'botanical print is the shared default');
-for(const family of ['terrain','city','horizon'])
- assert(css.includes('data-olive-print-family="'+family+'"'),family+' print edition available');
+assert.match(css,/\.olive-card__imprint::before,\.olive-card__imprint::after\{[^}]*content:none!important;/s,
+ 'reject unrelated miniature botanical engraving in the narrow card gutter');
+assert.match(css,/\.olive-card__relief::after\{/,
+ 'approved historic card masthead is preserved across all editions');
 assert.match(js,/imprintFamilies=/,'four editions assigned from approved twelve');
 assert.match(js,/frozen\.mount\(art,target\)/,'frozen poster typography retained');
 assert.match(js,/const readingField=ease\(\(d-T\.first\)\/\.065\);/,
@@ -95,7 +98,8 @@ const widths=[1648,390];
         clip:el.style.getPropertyValue('--olive-imprint-clip'),
         rail:Number.parseFloat(el.style.getPropertyValue('--olive-outer-rail-width')),
         edition:el.querySelector('.olive-card__edition')?.textContent,
-        mask:getComputedStyle(el.querySelector('.olive-card__imprint'),'::before').webkitMaskImage
+        stray:getComputedStyle(el.querySelector('.olive-card__imprint'),'::before').content,
+        header:getComputedStyle(el.querySelector('.olive-card__relief'),'::after').webkitMaskImage
        })),
        cardInk:Number(stage.dataset.p2CardInkReveal),
        fullContourPaths:Number(stage.dataset.p2TerrainPathTotal),
@@ -153,8 +157,9 @@ const widths=[1648,390];
    const pair=await go(10.98,'03-two-poster-locked-original-background');
    const mid=await go(13.15,'04-clean-olive-field');
    assert.equal(mid.noGrowth,true,'04 growth SVG must not be in the DOM');
-   assert(mid.cardImprints.length===2&&mid.cardImprints.every(c=>c.family&&c.mask!=='none'),
-    'both invitation cards must have authentic vector-print decorations');
+   assert(mid.cardImprints.length===2&&mid.cardImprints.every(c=>
+     c.family&&c.stray==='none'&&c.header.includes('04-olive-historic-engraving-v13')),
+    'both physical invitation cards share V13 header without alien miniature card flora');
    assert(mid.cardImprints.every(c=>c.rail>=8 && c.edition?.includes('/ 12')),
     'physical exterior rails visibly receive a coordinated numbered edition');
    assert(mid.cardImprints.every(c=>c.clip.endsWith('%')),
