@@ -364,7 +364,14 @@ const out=path.join(root,'artifacts/p2-0104-olive');fs.mkdirSync(out,{recursive:
     '10.08 engraving must be CENTERED in its exposed source green headpiece');
    assert.equal(bridge.groundCSS.visibility,'hidden');
    assert.equal(bridge.neutralCSS.visibility,'hidden');
-   const sourceTakeover=await go(10.18,'01b-source-plate-no-old-engraving-exposure');
+   const clothLeak=await go(10.11,'01a-no-03-cloth-exposed-at-invitation');
+    assert.equal(clothLeak.emmausFrame.visibility,'hidden',
+      'at 10.11 the outgoing 03 cloth must be fully retired');
+    assert(clothLeak.neutralCSS.reveal>.999,
+      'at 10.11 the clean carrier must cover old bookcloth');
+    assert.equal(clothLeak.neutralCSS.image,'none',
+      'at 10.11 the carrier must have no woven texture');
+    const sourceTakeover=await go(10.18,'01b-source-plate-no-old-engraving-exposure');
    assert(sourceTakeover.invitation.reliefBox.h>8&&
      sourceTakeover.invitation.reliefBox.h<=(width>800?71:23),
      'historical foil must occupy the real V13 invitation headpiece');
