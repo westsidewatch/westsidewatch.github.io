@@ -14,6 +14,8 @@ assert.match(html,/p2-0103-release\.html\?embed=1/);
 assert.match(html,/olive-speaker-baseline|baseline\.js/);
 assert.match(html,/id="olive-editorial-engraving"/);
 assert.match(css,/04-olive-botanical-folio-v54\.svg/);
+assert.match(css,/04-olive-botanical-folio-outline-v56\.svg/);
+assert.match(read('static/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg'),/fill="none" stroke="white"/);
 assert.match(read('static/images/p2-realms/v15/04-olive-botanical-folio-v54.svg'),/crane-public-domain-olive/,'use genuine public-domain Crane engraved foliage, not invented needles');
 assert.equal((read('static/images/p2-realms/v15/04-olive-botanical-folio-v54.svg').match(/href="#crane-public-domain-olive"/g)||[]).length,6,'six mature folio sprays, not two twigs');
 assert.match(css,/04-olive-mount-terrain-contours-v1\.svg/);
@@ -86,7 +88,7 @@ const widths=[1648,390];
        cardInk:Number(stage.dataset.p2CardInkReveal),
        contourGroups:[...document.querySelectorAll('.olive-editorial-engraving__print--topography svg > g g')].length,
        contourOffsets:['major','mid','fine'].map(k=>document.querySelector('.terrain-'+k)?.getAttribute('stroke-dashoffset')),
-       oliveMask:getComputedStyle(document.querySelector('.olive-editorial-engraving__print--botanical')).webkitMaskImage,
+       oliveMask:getComputedStyle(document.querySelector('.olive-editorial-engraving__print--botanical'),'::after').webkitMaskImage,
        ground:getComputedStyle(bg).visibility,
        noGrowth:document.querySelector('#olive-growth-field')===null,
        posterNodes:document.querySelectorAll('.olive-stage__index-card').length,
@@ -133,7 +135,7 @@ const widths=[1648,390];
    const end=await go(17.30,'09-twelve-voices-final-overview');
    assert(end.plant>.999&&end.terrain>.999,'all twelve posters: both engravings shown');
    assert(end.contourOffsets.every(x=>Number(x)<.001),'major, medium, fine contours completely drawn in the final spread');
-   assert(end.oliveMask.includes('04-olive-botanical-folio-v54'),'left folio uses the genuine six-spray print master');
+   assert(end.oliveMask.includes('04-olive-botanical-folio-outline-v56'),'left folio uses the genuine six-spray print master');
    assert.equal(end.posterNodes,12);
    const back=await go(9.30,'10-reversed-original-emmaus');
    assert.equal(back.source,'visible','reverse scrolling restores 03 original');
