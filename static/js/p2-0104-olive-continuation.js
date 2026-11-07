@@ -341,9 +341,9 @@
  function revealSplitField(node,u){
   const reveal=clamp(u);
   const isInvitation=node===ground;
-  // 03's approved green Bible cloth remains on the LEFT while the RIGHT
-  // half turns into the gold-foil Sermon invitation. Only then does the
-  // new print spread across LEFT. This is an editorial handoff, not a
+  // 03's genuine bookcloth remains only in the outgoing iframe. A plain
+  // OS olive canvas takes over as the Sermon invitation appears. The new
+  // print then travels LEFT. This is an editorial handoff, not a
   // simultaneous two-panel wipe, a yellow intermediary or opacity fade.
   const leftReveal=isInvitation?ease((reveal-.52)/.48):reveal;
   const rightReveal=isInvitation?ease(reveal/.55):reveal;
@@ -382,13 +382,13 @@
   const firstTravel=ease(form/.73);
   const secondArrival=ease((form-.57)/.43);
   // MERSI source-stage handoff is a SINGLE short spatial takeover:
-  // complete the 03 printed-cloth curtain while the invitation is still
+  // complete the opaque OS olive curtain while the invitation is still
   // registered over Doré, BEFORE its movement can expose old scripture.
   // At d=10.26 the outgoing 03 page must be fully hidden, not in shards.
   const readingField=ease((d-T.first)/.065);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
   // The ACTUAL outgoing Emmaus 5:8 book cover lives inside the 01–03
-  // iframe. Retiring a duplicate cloth background cannot hide that DOM.
+  // iframe. The neutral bridge must never duplicate its 5:8 binding.
   // Once the 03→04 bridge is FULLY opaque, retire the iframe itself,
   // before the poster spread travels away from its centre. Never hide it
   // during the source turn; scrolling backwards restores it exactly.
@@ -396,11 +396,9 @@
   base.style.visibility=sourceTransferred?'hidden':'visible';
   base.style.pointerEvents=sourceTransferred?'none':'';
   stage.dataset.p2EmmausSource=sourceTransferred?'retired':'visible';
-  // Keep the SAME authentic 03 cloth across the entire bridge until the
-  // opposing 04 masks take it over. Clearing cloth at T.spread used to
-  // produce an incorrect flat background and broke the MERSI contract.
-  // The retired original iframe is separate: that 5:8 centre folio may
-  // NOT survive behind the full-width transition carrier.
+  // Keep an OS-token, texture-free olive bridge under the settled prints.
+  // The real 03 cloth exits with its original iframe; the opposed masks
+  // stay scroll-linked and reversible. Never clone its 5:8 cover here.
   revealSplitField(neutral,readingField);
   revealSplitField(ground,bg);
   // ONE is an outgoing transition source only. Once 04 has fully claimed
