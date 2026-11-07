@@ -74,7 +74,7 @@ const widths=[1648,390];
        terrainEngine:stage.dataset.p2TerrainStrokeEngine,
        contourGroups:[...document.querySelectorAll('.olive-editorial-engraving__print--topography svg > g g')].length,
        contourOffsets:['major','mid','fine'].map(k=>document.querySelector('.terrain-'+k)?.getAttribute('stroke-dashoffset')),
-       oliveMask:getComputedStyle(document.querySelector('.olive-editorial-engraving__print--botanical'),'::before').webkitMaskImage,
+       oliveMask:getComputedStyle(document.querySelector('.olive-editorial-engraving__print--botanical')).webkitMaskImage,
        ground:getComputedStyle(bg).visibility,
        noGrowth:document.querySelector('#olive-growth-field')===null,
        posterNodes:document.querySelectorAll('.olive-stage__index-card').length,
