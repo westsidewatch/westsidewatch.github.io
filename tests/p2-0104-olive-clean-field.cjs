@@ -47,6 +47,8 @@ assert.equal((html.match(/class="olive-card__imprint"/g)||[]).length,3,
  'first and paired invitations each carry one shared imprint system');
 assert.equal((html.match(/class="olive-card__edition"/g)||[]).length,3,'all card shells have a readable edition rail');
 assert.match(css,/radial-gradient\(ellipse 92% 89%/,'both editorial print fields feather before a hard edge');
+assert.match(css,/inset:-7% -12% -23% -9%/,'botanical print bleeds below actual viewport');
+assert.match(css,/inset:-7% -24% -22% -8%/,'terrain print bleeds beyond right and bottom of viewport');
 assert(css.includes('--olive-card-motif:url('),'botanical print is the shared default');
 for(const family of ['terrain','city','horizon'])
  assert(css.includes('data-olive-print-family="'+family+'"'),family+' print edition available');
