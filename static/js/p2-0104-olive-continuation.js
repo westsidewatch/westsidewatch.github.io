@@ -407,15 +407,19 @@
   // No moving clipping rectangle: each existing botanical SVG edition
   // and each actual geographical contour group is printed once and HELD.
   // The first pair settles before the follow-on ten single-side entries.
-  const singleStep=(T.indexStart-T.pairStart)/10;
+  const relayStep=(T.indexStart-T.pairStart)/11;
   const impressions=side=>Array.from({length:6},(_,k)=>{
    if(k===0){
+    // First left card is shown after its arrival; right engravings are
+    // already visible through the right-hand card's reverse.
     const begin=side===0?T.groundStart:T.groundStart+.28;
     return ease((d-begin)/.24);
    }
    const speaker=2*k+side;
-   const begin=T.pairStart+(speaker-2)*singleStep;
-   return ease((d-(begin+.69*singleStep))/(singleStep*.23));
+   const event=speaker-1;
+   const begin=T.pairStart+event*relayStep;
+   // Print only AFTER this individual speaker reaches the full front.
+   return ease((d-(begin+.66*relayStep))/(relayStep*.24));
   });
   const plantLayers=impressions(0),terrainLayers=impressions(1);
   const botanicalPlates=[...engraved.querySelectorAll('[data-print-impression]')];
