@@ -313,25 +313,25 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  opacity:var(--folio-edge-alpha,0);
  pointer-events:none;
 }
+/* A reverse is a piece of the existing print field, not a second cover.
+   Its restrained bottom-edge edition metadata follows the front caption. */
 .olive-card__reverse-mark{
- position:absolute;left:9%;right:9%;top:38%;bottom:29%;
- display:flex;align-items:center;justify-content:center;flex-direction:column;
- gap:clamp(6px,1.2vw,16px);text-align:center;
+ position:absolute;left:7%;right:7%;top:auto;bottom:5%;
+ display:flex;align-items:center;justify-content:space-between;flex-direction:row;
+ gap:12px;text-align:left;
+ padding-top:7px;border-top:1px solid color-mix(in srgb,var(--ws-morning-gold) 55%,transparent);
  text-shadow:0 1px 2px var(--ws-olive);
 }
 .olive-card__reverse-issue,.olive-card__reverse-mark small{
- font:200 clamp(7px,.63vw,10px)/1.3 var(--ws-type-display-en);
- letter-spacing:.16em;color:var(--ws-morning-gold);
+ font:200 clamp(8px,.65vw,11px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.12em;color:var(--ws-morning-gold);
 }
-.olive-card__reverse-mark strong{
- font:400 clamp(21px,2.3vw,40px)/1.1 var(--ws-type-display-en);
- letter-spacing:-.058em;color:var(--ws-paper);white-space:nowrap;
-}
-.olive-card__reverse-mark strong i{font-style:italic;font-weight:400}
+.olive-card__reverse-mark small{text-align:right}
 @media(max-width:600px){
- .olive-card__reverse-mark{top:37%;bottom:27%;gap:5px}
- .olive-card__reverse-mark strong{font-size:clamp(16px,5vw,26px)}
- .olive-card__reverse-issue,.olive-card__reverse-mark small{font-size:7px;letter-spacing:.07em}
+ .olive-card__reverse-mark{left:6%;right:6%;bottom:5%;gap:5px}
+ .olive-card__reverse-issue,.olive-card__reverse-mark small{
+  font-size:7px;letter-spacing:.06em;
+ }
 }
 /* 04 background engraving retired. The speaker invitation headpiece is
    separate card artwork, not a stage-wide texture. */
