@@ -201,7 +201,9 @@ const widths=[1648,390,320];
         id:el.id,speaker:el.dataset.scriptureSpeaker,
         adjacentTo:el.dataset.adjacentTo,
         ref:el.querySelector('.olive-stage__companion-reference')?.textContent,
+        refEn:el.querySelector('.olive-stage__companion-reference-en')?.textContent,
         verse:el.querySelector('.olive-stage__companion-verse')?.textContent,
+        verseEn:el.querySelector('.olive-stage__companion-verse-en')?.textContent,
         font:getComputedStyle(el.querySelector('.olive-stage__companion-reference')).fontFamily,
         color:getComputedStyle(el.querySelector('.olive-stage__companion-verse')).color,
         visible:getComputedStyle(el).visibility,
@@ -258,19 +260,39 @@ const widths=[1648,390,320];
    const mid=await go(13.15,'04-clean-olive-field');
    const scriptureHead=await page.locator('#olive-rubric').evaluate(el=>{
      const zh=el.querySelector('.olive-stage__rubric-zh');
-     const verse=el.querySelector('.olive-stage__rubric-scripture');
-     const en=el.querySelector('strong'),z=zh.getBoundingClientRect(),v=verse.getBoundingClientRect(),e=en.getBoundingClientRect();
-     return {zh:zh.textContent,verse:verse.textContent,visible:getComputedStyle(verse).display,
-       englishBottom:e.bottom,chineseTop:z.top,chineseBottom:z.bottom,verseTop:v.top,
-       ref:verse.querySelector('cite')?.textContent};
+     const en=el.querySelector('strong');
+     const zhVerse=el.querySelector('.olive-stage__rubric-scripture-zh');
+     const enVerse=el.querySelector('.olive-stage__rubric-scripture-en');
+     const bounds=node=>{const r=node.getBoundingClientRect();
+       return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}};
+     const top=el.querySelector('.olive-stage__rubric-folio');
+     return {zh:zh.textContent,en:en.textContent,
+       excerptZh:zhVerse.querySelector('p')?.textContent,
+       excerptEn:enVerse.querySelector('p')?.textContent,
+       refZh:zhVerse.querySelector('cite')?.textContent,
+       refEn:enVerse.querySelector('cite')?.textContent,
+       titleEnBox:bounds(en),titleZhBox:bounds(zh),
+       verseZhBox:bounds(zhVerse),verseEnBox:bounds(enVerse),
+       folioBox:bounds(top),rubricBox:bounds(el),
+       overflow:document.documentElement.scrollWidth-innerWidth};
    });
-   assert.equal(scriptureHead.zh,'橄欖山','04 must have an explicit Chinese chapter title');
-   assert.match(scriptureHead.verse,/信道是從聽道來的/,'04 verse printed under the title');
-   assert.equal(scriptureHead.ref,'羅馬書 10:17');
-   assert(scriptureHead.chineseTop>=scriptureHead.englishBottom-3,
-     'OS Chinese chapter title must sit below the English chapter title');
-   assert(scriptureHead.verseTop>=scriptureHead.chineseBottom-3,
-     'Romans 10:17 must be physically below the Chinese chapter name');
+   assert.equal(scriptureHead.zh,'橄欖山','04 Chinese name must be a real display title');
+   assert.equal(scriptureHead.en,'OLIVE MOUNTAIN');
+   assert.match(scriptureHead.excerptZh,/信道是從聽道來的/);
+   assert.match(scriptureHead.excerptEn,/faith cometh by hearing/);
+   assert.equal(scriptureHead.refZh,'羅馬書 10:17');
+   assert.equal(scriptureHead.refEn,'ROMANS 10:17 · KJV');
+   assert(scriptureHead.titleZhBox.left>scriptureHead.titleEnBox.left,
+     'OS Chinese chapter title is composed beside rather than below the English headline');
+   assert(scriptureHead.titleEnBox.right<=scriptureHead.titleZhBox.left+3,
+     'English and Chinese must never collide');
+   assert(scriptureHead.verseZhBox.top>=Math.max(scriptureHead.titleZhBox.bottom,
+      scriptureHead.titleEnBox.bottom)-3,
+     'paired bilingual scripture field must sit beneath both chapter names');
+   assert(scriptureHead.verseEnBox.left>=scriptureHead.verseZhBox.right-3,
+     'two scripture languages must be in distinct editorial columns');
+   assert(scriptureHead.verseEnBox.right<=width+2,'English Romans 10:17 must fit viewport');
+   assert(scriptureHead.overflow<3,'chapter masthead has no horizontal overflow');
    assert.equal(mid.noGrowth,true,'04 growth SVG must not be in the DOM');
    assert(mid.cardImprints.length===2&&mid.cardImprints.every(c=>
      c.family&&c.stray==='none'&&c.header.includes('04-olive-historic-engraving-v13')),
@@ -289,6 +311,8 @@ const widths=[1648,390,320];
    assert.equal(leftInk.companions[1].speaker,'watchman-nee',
      'first lecturer on LEFT has his scripture in the RIGHT editorial panel');
    assert.equal(leftInk.companions[1].ref,'加拉太書 2:20');
+   assert.match(leftInk.companions[1].verseEn,/Christ liveth in me/);
+   assert.equal(leftInk.companions[1].refEn,'Galatians 2:20 · KJV');
    assert.equal(leftInk.companions[1].visible,'visible');
    assert.equal(leftInk.companions[0].visible,'hidden');
    assert.equal(leftInk.folioSystem,'measured-two-faced-rotating-card-v67');
@@ -334,12 +358,14 @@ const widths=[1648,390,320];
     'reverse has visible deep olive stock distinct from the olive-green stage');
    assert.equal(rightLocked.reverseFaces[0].speaker,'0',
     'left reverse contributes first speaker botanical fragment');
-   assert.equal(rightLocked.scripturePlacement,'adjacent-independent-not-on-flipping-reverse-v81');
+   assert.equal(rightLocked.scripturePlacement,'adjacent-bilingual-cuv-kjv-v82');
    assert(rightLocked.companions.every(x=>!x.cardParent),
      'scripture must not be a child of a lecturer rotating card');
    assert.equal(rightLocked.companions[0].speaker,'derek-prince',
      'left-side reading surface MUST show the currently facing Derek Prince');
    assert.equal(rightLocked.companions[0].ref,'以弗所書 6:12');
+   assert.match(rightLocked.companions[0].verseEn,/wrestle not against flesh and blood/);
+   assert.equal(rightLocked.companions[0].refEn,'Ephesians 6:12 · KJV');
    assert.equal(rightLocked.companions[0].visible,'visible');
    assert(rightLocked.companions[0].alpha>.95,
      'verse must be visibly beside the preacher, not hidden behind his card');
@@ -373,6 +399,8 @@ const widths=[1648,390,320];
    assert.equal(kouFeatured.companions[0].speaker,'kou-shao-en',
      'last lecturer on RIGHT has his scripture in the LEFT editorial panel');
    assert.equal(kouFeatured.companions[0].ref,'腓立比書 4:7');
+   assert.match(kouFeatured.companions[0].verseEn,/peace of God/);
+   assert.equal(kouFeatured.companions[0].refEn,'Philippians 4:7 · KJV');
    assert.equal(kouFeatured.rightPoster,'11','Kou Shao-en is the final featured right-side original poster');
    assert.equal(kouFeatured.folioFaces,'back,front','Kou original image and unmirrored names remain on a physical front face');
    const end=await go(24.200,'09-twelve-voices-final-overview');
