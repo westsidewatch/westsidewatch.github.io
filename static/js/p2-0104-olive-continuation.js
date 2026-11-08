@@ -580,8 +580,9 @@
   for(let i=0;i<2;i++){
    const card=cardSlots[i],id=versoIndices[i],edition=Math.floor(id/2);
    const back=backs[i],isBotanical=i===0;
-   const source='/images/p2-realms/v15/04-olive-full-verso-v74-'+
-    (isBotanical?'botanical-':'terrain-')+(edition+1)+'.svg';
+   const source=isBotanical
+    ?'/images/p2-realms/v15/04-olive-full-verso-v74-botanical-'+(edition+1)+'.svg'
+    :'/images/p2-realms/v15/v76-exhibition/04-olive-terrain-v76-'+(edition+1)+'.svg';
    back.style.setProperty('--folio-fragment','url("'+source+'")');
    back.style.setProperty('--folio-detail','url("'+source+'")');
    const inks=['var(--ws-morning-gold)','var(--ws-pale-gold)',
@@ -600,7 +601,7 @@
    back.dataset.printFragment=String(edition+1);
    turnFace(carriers[i],turns[i],card.w/2,card.h/2,depth);
   }
-  stage.dataset.p2UniqueVersoSystem='12-complete-uncut-engraved-folios-v74';
+  stage.dataset.p2UniqueVersoSystem='12-complete-topographic-folios-v76';
   stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
   stage.dataset.p2FolioFront=activeSide;
   stage.dataset.p2FolioAngles=turns.map(x=>x.toFixed(2)).join(',');
