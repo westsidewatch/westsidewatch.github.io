@@ -270,6 +270,18 @@ const widths=[1648,390,320];
    const enteringFlip=await go(12.110,'05aa1-right-card-mid-flip');
    const enteringAngle=Number(enteringFlip.folioAngles?.split(',')[1]);
    assert(enteringAngle>15&&enteringAngle<165,'right card physically rotates through depth while left stays steady');
+   // V79 Museum Folio must be *position-deterministic*, never a catch-up
+   // timeline. Reversing to exactly the same scroll value restores the
+   // identical half-turn pose; short increments cannot create a jump.
+   const halfwayA=await go(12.235,'05aa3-halfturn-pose');
+   const halfwayB=await go(12.285,'05aa4-halfturn-small-step');
+   const halfwayAgain=await go(12.235,'05aa5-halfturn-return');
+   const angleA=Number(halfwayA.folioAngles.split(',')[1]);
+   const angleB=Number(halfwayB.folioAngles.split(',')[1]);
+   const angleAgain=Number(halfwayAgain.folioAngles.split(',')[1]);
+   assert(angleA>0&&angleA<180,'position-controlled folio must remain in a physical mid-flip');
+   assert(angleB<angleA,'five-hundredth-of-a-viewport scroll must advance the incoming right folio smoothly');
+   assert(Math.abs(angleA-angleAgain)<.02,'reverse scroll must restore exact right-card angle with no temporal lag');
    assert(Math.abs(Number(enteringFlip.folioAngles?.split(',')[0]))<.01,
     'left side remains locked during the right-side reveal');
    const retiringFlip=await go(12.690,'05aa2-left-card-mid-flip');
