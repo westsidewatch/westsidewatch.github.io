@@ -803,3 +803,30 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-card__reverse-title{left:7%;right:6%;bottom:14%;font-size:clamp(14px,4.25vw,19px);gap:5px;line-height:1.35}
  .olive-card__scripture-cite{font-size:clamp(10px,2.8vw,13px)}
 }
+
+/* V80 print legibility correction from 1648px/390px/320px screenshot review:
+   do not print traditional Chinese scripture references in the Latin
+   display font (renders missing-glyph boxes in the real P2 screenshot).
+   Warm paper reading words are distinct from the gold botanical relief. */
+.olive-card__reverse-title{
+ color:var(--ws-paper);
+ text-shadow:none;
+ max-width:86%;
+}
+.olive-card__scripture-text{
+ color:var(--ws-paper);
+ font-family:var(--ws-type-display-zh);
+ font-synthesis:none;
+}
+.olive-card__scripture-cite{
+ font-family:var(--ws-type-display-zh);
+ font-style:normal;
+ font-weight:var(--ws-weight-zh-air,200);
+ font-synthesis:none;
+ color:var(--ws-morning-gold);
+ letter-spacing:.05em;
+ font-size:clamp(14px,1.08vw,17px);
+}
+@media(max-width:540px){
+ .olive-card__scripture-cite{font-size:clamp(12px,3.8vw,15px)}
+}
