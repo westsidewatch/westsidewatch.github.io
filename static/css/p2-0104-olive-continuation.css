@@ -319,6 +319,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  /* V70: an opaque OS deep-olive stock makes the true card reverse
     readable even before the registered ink arrives. Never let the whole
     card opacity vanish while its increment transfers to the landscape. */
+ /* The previous brown paper was --ws-deep computed from the journal's
+    inherited gold --ws-branch. Bind deep olive to the actual 04 identity. */
+ --ws-branch:var(--ws-olive);
  background:var(--ws-deep);
  opacity:1;
  outline:1px solid var(--ws-morning-gold);
@@ -440,6 +443,13 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  max-width:none!important;object-fit:contain!important;
  object-position:center center!important;
 }
+/* V72 · Kou Shao-en only: mirror the raster portrait under the ORIGINAL
+   unmirrored approved English/Chinese typography. Do not transform the
+   artwork container, folio or Shadow DOM: all eleven other cards unchanged. */
+.olive-stage__artwork[data-speaker="kou-shao-en"]>.olive-stage__original{
+ transform:scaleX(-1)!important;transform-origin:50% 50%!important;
+}
+
 .olive-stage__artwork>olive-speaker-baseline{
  position:absolute;display:block;z-index:6;pointer-events:none;
 }
