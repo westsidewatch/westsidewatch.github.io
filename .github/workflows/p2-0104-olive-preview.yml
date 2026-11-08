@@ -9,6 +9,8 @@ on:
       - 'static/experiments/olive-v75-twelve-folios-exhibition.html'
       - 'static/experiments/olive-v76-terrain-and-panorama.html'
       - 'static/experiments/olive-v77-exhibition.html'
+      - 'static/experiments/olive-v78-flip-motion-study.html'
+      - 'docs/projects/olive-mountain-living-engraving/V78-FLIP-DORÉ-EXPLORATION-2026-11-08.md'
       - 'static/images/p2-realms/v15/v77-exhibition/**'
       - 'tests/p2-0104-olive-v74-integrity.cjs'
       - 'static/images/p2-realms/v15/v76-exhibition/**'
@@ -112,6 +114,7 @@ jobs:
           test -s public/experiments/olive-v75-twelve-folios-exhibition.html
           test -s public/experiments/olive-v76-terrain-and-panorama.html
           test -s public/experiments/olive-v77-exhibition.html
+          test -s public/experiments/olive-v78-flip-motion-study.html
           for terrain in 1 2 3 4 5 6; do
             test -s "public/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-${terrain}.svg"
           done
@@ -229,6 +232,46 @@ jobs:
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
           cp static/images/p2-realms/v15/v77-exhibition/*.svg artifacts/p2-0104-olive/
+      - name: Verify V78 four card systems under actual scroll and back-scroll
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          python3 -m http.server 4173 --directory public >/tmp/v78-motion-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node - <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            for(const width of [1648,390,320]){
+              const page=await browser.newPage({viewport:{width,height:844},deviceScaleFactor:1});
+              await page.goto('http://127.0.0.1:4173/experiments/olive-v78-flip-motion-study.html',{waitUntil:'networkidle'});
+              await page.evaluate(async()=>{await document.fonts.ready;for(const im of document.images)await im.decode();});
+              async function pose(value){
+                await page.locator('#pose').evaluate((el,v)=>{el.value=String(v);el.dispatchEvent(new Event('input',{bubbles:true}))},Math.round(value*1000));
+                await page.waitForTimeout(70);
+                return page.locator('.test').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n.querySelector('.folio')).transform));
+              }
+              const still=await pose(.02);
+              const middle=await pose(.50);
+              const end=await pose(.99);
+              const reversed=await pose(.02);
+              assert.deepEqual(still,reversed,'same scroll pose must restore the same card geometry');
+              assert.notEqual(still[0],middle[0]);
+              assert.notEqual(middle[1],end[1]);
+              assert.equal(middle[3],still[3],'non-3D editorial option does not use fake 3D rotations');
+              for(const [name,value] of [['front',.02],['mid',.50],['back',.99]]){
+                await pose(value);
+                await page.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v78-motion-'+name+'.png',animations:'disabled'});
+              }
+              const errors=await page.locator('.folio').count();
+              assert.equal(errors,4,'all four comparison motion systems mounted');
+              await page.close();
+            }
+            await browser.close();
+            console.log('PASS V78 isolated scroll-owned card comparison / 1648, 390, 320 / reverse');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
       - name: Bundle actual botanical vector master for art-direction inspection
         if: always()
         run: |
