@@ -316,6 +316,16 @@ const widths=[1648,390,320];
    assert(end.plantLayers.every(v=>v>.999),'all six botanical engraved editions remain visible after twelve speakers');
    assert.match(css,/var\(--ws-deep\)/,'plant includes genuinely dark olive impression from the shared OS');
    assert.equal(end.posterNodes,12);
+   const exitLink=await page.locator('#olive-enter').evaluate(a=>{
+     const box=a.getBoundingClientRect(),cs=getComputedStyle(a);
+     return {text:a.textContent,clip:cs.clipPath,visible:cs.visibility,
+      width:box.width,height:box.height,left:box.left,right:box.right};
+   });
+   assert.match(exitLink.text,/EXPLORE ALL TWELVE/,'editorial entrance label retained');
+   assert.equal(exitLink.visible,'visible','index exit visible after twelve speakers');
+   assert.equal(exitLink.clip,'none','settled index entrance must not cut off 320px text');
+   assert(exitLink.left>=0&&exitLink.right<=width&&exitLink.width>120,
+     'completed entrance must fit within desktop and 320px viewport');
    const kou=await page.evaluate(()=>{
     const card=document.querySelector('#olive-overview .olive-stage__index-card[data-speaker="kou-shao-en"]');
     const art=card?.querySelector('.olive-stage__artwork');
