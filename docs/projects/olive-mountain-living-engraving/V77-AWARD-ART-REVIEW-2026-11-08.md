@@ -47,3 +47,11 @@
 - 目前成果是**內部獲獎導向初審達標，並非任何獎項已通過或保證得獎**。
 - 主站合併仍 BLOCK：必須完成 320px、全 12 張翻背停留畫面審查，以及完整可近用性／效能終驗。Core Contract 現有 homepage morning-star SVG 基準失敗與 Olive artwork 無直接關係，不應藉修 04 擅自更改首頁資產。
 - 不再倒退至 V76「六幅近似同一母本的平移圖」；以 V77 六幅地域焦點及實際 1648/390 Chromium 圖像作新的藝術基線。
+
+## 2026-11-08｜最終 320px 文字驗收補充（實際瀏覽器截圖）
+
+原本 V77 在 1648px、390px 可看到 `EXPLORE ALL TWELVE`，但 320px 實際畫面只出現 ↗。問題並非缺少文案：原 HTML 直接放置匿名 flex 文字，且早期 `enter.style.clipPath` 在 d=21.30 還未完全解除裁切。**首次只修裁切條件後，靜態 CSS 斷言通過但 320px 圖像仍無文字；不得把該次 PASS 當作視覺合格。**
+
+更正後：把入口拆成顯式 `.olive-stage__enter-label`、`.olive-stage__enter-zh` 及箭頭，320px 使用獨立排版，保留英文主入口與完整中文 aria-label，不遮擋十二位講員的原作。最後一輪 Chromium 以 320、390、1648 三寬度實測；`tests/p2-0104-olive-clean-field.cjs` 實際斷言連結未被 clip、其內文字盒寬度足夠、在 viewport 內且不受其他元素遮蓋。**320px 最終真實截圖已確認完整 `EXPLORE ALL TWELVE` 可見**。
+
+保留本輪失敗與修復的驗證先例：CSS 屬性 / CI PASS 不代表畫面像素有效，對任何關鍵 CTA 必須同時核對實際截圖。最新成果仍需維持 Draft；正式發行需留意首頁獨立 `Core Contract` 的既存 morning-star SVG 基準失敗，不能為了這個藝術成果去改首頁。
