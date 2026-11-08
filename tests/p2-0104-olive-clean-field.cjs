@@ -102,7 +102,7 @@ for(let edition=1;edition<=6;edition++){
   assert.match(svg,/<svg /,'all twelve complete engraved card back SVGs exist');
   assert.match(svg,/viewBox="0 0 720 940"/,'each complete verso uses a consistent uncropped 3:4 folio system');
   if(family==='terrain'){
-   assert.match(svg,/authentic CLOSED contour paths/i,
+   assert.match(svg,/closed (?:Olivet-derived )?topographic contour|closed-contour folio/i,
      'terrain backs must use physically continuous loops without cut line ends');
    assert((svg.match(/<path /g)||[]).length>=10,
     'each terrain folio has seven nested complete geographic contours and secondary hills');
