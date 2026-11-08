@@ -597,15 +597,20 @@
    // of ink transfers to the permanent chapter field at the exit beat.
    const baseAlpha=(isBotanical?plantLayers:terrainLayers)[edition];
    const backward=ease((turns[i]-82)/73);
-   const alpha=backward*(1-baseAlpha);
+   // V69: Never erase a physical card back merely because its ink has
+   // transferred to the big field. V68 used backward*(1-baseAlpha), so
+   // after an edition completed the reverse became literally invisible.
+   // A partial ink impression remains readable while the same paths
+   // accumulate as the continuous landscape beneath the card.
+   const alpha=backward*(.94-.20*baseAlpha);
    back.style.setProperty('--folio-back-alpha',alpha.toFixed(4));
-   back.style.setProperty('--folio-mark-alpha','0');
+   back.style.setProperty('--folio-mark-alpha',backward.toFixed(4));
    back.style.setProperty('--folio-edge-alpha','0');
    back.dataset.speakerIndex=String(id);
    back.dataset.printFragment=String(edition+1);
    turnFace(carriers[i],turns[i],card.w/2,card.h/2,depth);
   }
-  stage.dataset.p2UniqueVersoSystem='12-registered-background-fragments-v68';
+  stage.dataset.p2UniqueVersoSystem='12-visible-registered-background-fragments-v69';
   stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
   stage.dataset.p2FolioFront=activeSide;
   stage.dataset.p2FolioAngles=turns.map(x=>x.toFixed(2)).join(',');
