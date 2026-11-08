@@ -33,7 +33,7 @@ assert.match(css,/\.olive-folio-carrier\{/,'single rigid folio carrier supports 
 assert.match(css,/\.olive-card__reverse--botanical::before/,'visible authentic botanical card back');
 assert.match(css,/\.olive-card__reverse--terrain::before/,'geographic card back has real texture');
 assert.match(css,/width:100%!important;height:100%!important/,'speaker baseline stays registered to untransformed 3:4 artwork');
-assert.match(js,/12-registered-background-fragments-v68/);
+assert.match(js,/12-visible-registered-background-fragments-v69/);
 for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-terrain-fragment-v68-${n}.svg`),/olivet topography|Olivet topography/i);
 assert.match(css,/transform:rotateY\(180deg\)/,'actual verso faces the camera when physical card turns');
 assert.equal((html.match(/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
