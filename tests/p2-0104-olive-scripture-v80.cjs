@@ -32,10 +32,10 @@ assert.doesNotMatch(html,/class="olive-card__reverse-title"/,
   'no scripture on the physical reverse of any speaker card');
 assert.doesNotMatch(html,/class="olive-card__reading-veil"/,
   'old verse-only reverse fields must be retired');
-assert.match(html,/p2-0104-olive-scriptures-v80\\.js/);
-assert.match(js,/P2OliveScriptures\\?\\.cards\\?\\.\\[speaker\\]/);
-assert.match(js,/position\\(panel,card\\.x,card\\.y,card\\.w,card\\.h\\)/);
-assert.match(js,/stage\\.dataset\\.p2ScripturePlacement='adjacent-independent-not-on-flipping-reverse-v81'/);
-assert.match(css,/\\.olive-stage__companion-reading/);
-assert.match(css,/\\.olive-stage__rubric-zh/);
+assert.match(html,/p2-0104-olive-scriptures-v80\.js/);
+assert.match(js,/P2OliveScriptures\?\.cards\?\.\[speaker\]/);
+assert.match(js,/position\(panel,card\.x,card\.y,card\.w,card\.h\)/);
+assert.match(js,/stage\.dataset\.p2ScripturePlacement='adjacent-independent-not-on-flipping-reverse-v81'/);
+assert.match(css,/\.olive-stage__companion-reading/);
+assert.match(css,/\.olive-stage__rubric-zh/);
 console.log("PASS / V81: lecturer scripture in an independent adjacent column, never on a rotating card.");
