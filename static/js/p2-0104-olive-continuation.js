@@ -64,6 +64,9 @@
   ['kou-shao-en','寇紹恩','KOU SHAO-EN']
  ];
  const pathFor=i=>'/images/olive/'+roster[i][0]+'-editorial.png';
+ if(window.P2OliveScriptures?.cards?.length!==roster.length||
+    !roster.every((r,i)=>r[0]===window.P2OliveScriptures.cards[i].slug))
+   throw new Error('04 scripture editor: 12 sourced verses must match the approved speaker roster');
  // The user's two-day APPROVED original English composition is not in
  // the portrait PNG. It lives in speaker-baseline-v1 (shadow DOM: 12
  // position, width, line, font-size, optical size and occlusion records).
@@ -598,11 +601,25 @@
   for(let i=0;i<2;i++){
    const card=cardSlots[i],id=versoIndices[i],edition=Math.floor(id/2);
    const back=backs[i],isBotanical=i===0;
-   const editionTitles=isBotanical
-    ?['THE FIRST BRANCH','OLIVE CANOPY','FRUIT & HARVEST','THE BENDING TREE','VINE & LIGHT','THE LAST GROVE']
-    :['KIDRON DESCENT','NORTHERN CREST','EASTERN RIDGE','SOUTHERN TERRACES','SACRED SADDLE','OLIVET ATLAS'];
-   const plateTitle=back.querySelector('.olive-card__reverse-title');
-   if(plateTitle)plateTitle.textContent=editionTitles[edition];
+   // V80: one actual scripture excerpt per protected speaker, NOT a
+   // geographic design-draft label. Two physical backs are reused by all
+   // twelve speakers, so the passage is selected by speaker id, not edition.
+   const sourcePassage=window.P2OliveScriptures?.cards?.[id];
+   if(!sourcePassage||sourcePassage.slug!==roster[id][0])
+    throw new Error('04 missing sourced verse for '+roster[id][0]);
+   if(back.dataset.scriptureSpeaker!==sourcePassage.slug){
+    const verse=back.querySelector('.olive-card__scripture-text');
+    const cite=back.querySelector('.olive-card__scripture-cite');
+    if(!verse||!cite)throw new Error('04 folio is missing readable scripture');
+    verse.textContent=sourcePassage.excerpt;
+    cite.textContent=sourcePassage.referenceZh;
+    back.dataset.scriptureSpeaker=sourcePassage.slug;
+    back.dataset.scriptureReference=sourcePassage.referenceEn;
+    back.dataset.scriptureEvidence=sourcePassage.evidence;
+   }
+   // Expose the real reverse verse to assistive readers only when it faces
+   // the viewer; no focus targets are added to the animated folio.
+   back.setAttribute('aria-hidden',turns[i]>92?'false':'true');
    const source=isBotanical
     ?'/images/p2-realms/v15/04-olive-full-verso-v74-botanical-'+(edition+1)+'.svg'
     :'/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-'+(edition+1)+'.svg';
@@ -656,10 +673,12 @@
   // the larger, optically lowered editorial masthead AFTER recomposition.
   // Never carry a new title down across the mounted speaker originals.
   rubric.style.setProperty('--olive-title-fan',fan.toFixed(4));
+  // The bilingual 04 masthead owns two titles and a real verse beneath;
+  // it must never drift across protected posters during final indexing.
   rubric.style.setProperty('--olive-title-growth',
-    (fan*(vertical?12:18)).toFixed(2)+'px');
+    (fan*(vertical?0:5)).toFixed(2)+'px');
   rubric.style.transform='translate3d(0,'+
-    ((vertical?22:(g.w<900?36:78))*fan).toFixed(1)+'px,0)';
+    ((vertical?0:(g.w<900?8:22))*fan).toFixed(1)+'px,0)';
   rubric.style.clipPath=printTitle>=1?'none':
    'inset(0 '+((1-printTitle)*49).toFixed(3)+'% 0 '+((1-printTitle)*49).toFixed(3)+'%)';
   overview.style.visibility=d>=T.indexStart?'visible':'hidden';
