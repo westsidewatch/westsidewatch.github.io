@@ -341,6 +341,40 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  border:1px solid color-mix(in srgb,var(--ws-morning-gold) 45%,transparent);
  pointer-events:none;
 }
+/* V68: freeze the APPROVED name master to the real 3:4 image plane.
+   The unmodified baseline.js measures getBoundingClientRect(), which
+   becomes foreshortened inside a perspective turn. A new speaker mounted
+   mid-turn therefore acquired an erroneous narrow typography viewport.
+   These declarations override that responsive inline measurement ONLY in
+   the isolated 04 pair, without touching the protected source master. */
+.olive-folio-carrier>.olive-stage__poster .olive-stage__artwork>olive-speaker-baseline{
+ position:absolute!important;inset:0!important;
+ left:0!important;top:0!important;
+ width:100%!important;height:100%!important;
+ transform:none!important;max-width:none!important;max-height:none!important;
+}
+.olive-card__reverse{
+ /* No second full-plate picture on the back. One unique speaker-owned
+    fragment is registered to the same stage coordinates as background. */
+ --folio-fragment:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-1.svg');
+ --folio-mask-width:100%;
+ --folio-mask-height:100%;
+ --folio-mask-x:0px;
+ --folio-mask-y:0px;
+}
+.olive-card__reverse::before{
+ inset:0!important;opacity:.75;
+ -webkit-mask-image:var(--folio-fragment)!important;
+ mask-image:var(--folio-fragment)!important;
+ -webkit-mask-size:var(--folio-mask-width) var(--folio-mask-height)!important;
+ mask-size:var(--folio-mask-width) var(--folio-mask-height)!important;
+ -webkit-mask-position:var(--folio-mask-x) var(--folio-mask-y)!important;
+ mask-position:var(--folio-mask-x) var(--folio-mask-y)!important;
+}
+.olive-card__reverse--botanical::before{opacity:.78}
+.olive-card__reverse--terrain::before{opacity:.88}
+.olive-card__reverse::after{opacity:var(--folio-edge-alpha,0)!important}
+.olive-card__reverse-mark{opacity:var(--folio-mark-alpha,0);pointer-events:none}
 /* A reverse is a piece of the existing print field, not a second cover.
    Its restrained bottom-edge edition metadata follows the front caption. */
 .olive-card__reverse-mark{
