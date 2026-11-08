@@ -130,11 +130,7 @@ const widths=[1648,390];
        folioSystem:stage.dataset.p2FolioSystem,
        rigidCards:[...document.querySelectorAll('.olive-folio-carrier')].map(el=>({
         children:[...el.children].map(c=>c.id),
-        transform:getComputedStyle(el).transform,
-        speaker:el.dataset.speakerIndex,
-        fragment:el.dataset.printFragment,
-        source:el.style.getPropertyValue('--folio-fragment'),
-        alpha:Number.parseFloat(el.style.getPropertyValue('--folio-back-alpha'))
+        transform:getComputedStyle(el).transform
        })),
        frontPortraits:[...document.querySelectorAll('#olive-pair-left,#olive-pair-right')].map(el=>({
         parent:el.parentElement?.className,
@@ -151,7 +147,11 @@ const widths=[1648,390];
        reverseFaces:[...document.querySelectorAll('.olive-card__reverse')].map(el=>({
         visible:getComputedStyle(el).visibility,
         mask:getComputedStyle(el,'::before').webkitMaskImage,
-        transform:getComputedStyle(el).transform
+        transform:getComputedStyle(el).transform,
+        speaker:el.dataset.speakerIndex,
+        fragment:el.dataset.printFragment,
+        source:el.style.getPropertyValue('--folio-fragment'),
+        alpha:Number.parseFloat(el.style.getPropertyValue('--folio-back-alpha'))
        })),
        leftPoster:document.querySelector('#olive-pair-left')?.dataset.speakerIndex,
        rightPoster:document.querySelector('#olive-pair-right')?.dataset.speakerIndex,
