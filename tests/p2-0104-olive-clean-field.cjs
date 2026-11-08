@@ -38,8 +38,12 @@ assert.match(css,/width:100%!important;height:100%!important/,'speaker baseline 
 assert.match(js,/12-individually-authored-topographic-folios-v77/);
 for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-terrain-fragment-v68-${n}.svg`),/olivet topography|Olivet topography/i);
 assert.match(css,/transform:rotateY\(180deg\)/,'actual verso faces the camera when physical card turns');
-assert.equal((html.match(/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
- 'only the single chapter masthead is allowed; card backs have understated edition labels');
+assert.equal((html.match(/<strong lang="en">OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
+ 'one English chapter masthead, with protected original posters still independent');
+assert.equal((html.match(/class="olive-stage__rubric-zh" lang="zh-Hant">橄欖山/g)||[]).length,1,
+ 'one Chinese chapter title in the same editorial masthead');
+assert.equal((html.match(/class="olive-stage__rubric-scripture"/g)||[]).length,1,
+ 'one chapter theme scripture immediately below the bilingual title');
 assert.match(js,/measured-two-faced-rotating-card-v67/,'MERSI drives measured 3D turns');
 assert.match(js,/indexStart:23\.00,indexEnd:24\.10,end:24\.50/,'gentle flips require real extra scroll distance');
 assert.match(css,/height:2600svh/,'physical scroll track remains longer than all V71 poses');
