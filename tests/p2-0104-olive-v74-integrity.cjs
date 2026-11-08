@@ -17,6 +17,11 @@ for(const family of ['botanical','terrain']){
     assert.match(source,new RegExp('<title>[^<]*'+edition+' \\/ 6<\\/title>'),rel+' needs its own edition');
     assert.match(source,/<path\b/,rel+' needs actual independent vector drawing');
     assert.doesNotMatch(source,/04-olive-terrain-fragment-v68|04-olive-botanical-impression-v60/,rel+' must not embed a crop');
+    if(family==='terrain'){
+      assert.match(source,/transform="translate\\(-29 -125\\) scale\\(1\\.105\\)"/,rel+' must use the rebalanced optical centering');
+      assert.equal((source.match(/opacity="0\\.[0-9]+" stroke-width="[0-9.]+"/g)||[]).length,10,rel+' must have ten deliberate contour weights');
+      assert.doesNotMatch(source,/M85 102H635|M85 823H635/,rel+' must not retain false cut-edge rules');
+    }
     hashes.add(source);
     svgPaths.push(rel);
   }
