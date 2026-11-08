@@ -119,7 +119,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  inset:-7% -12% -23% -9%;width:auto;height:auto;
  background:none;opacity:1;
  /* Six real botanical impressions, optically subordinated to the portraits. */
- filter:opacity(calc(.64 * var(--olive-ink-emphasis,1)));
+ filter:opacity(var(--olive-ink-botanical,.64));
  -webkit-mask-image:none;mask-image:none;
 }
 .olive-editorial-engraving__print--botanical::before,
