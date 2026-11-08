@@ -8,6 +8,9 @@ on:
       - 'static/experiments/p2-0104-olive-continuation.html'
       - 'static/experiments/olive-v75-twelve-folios-exhibition.html'
       - 'static/experiments/olive-v76-terrain-and-panorama.html'
+      - 'static/experiments/olive-v77-exhibition.html'
+      - 'static/images/p2-realms/v15/v77-exhibition/**'
+      - 'tests/p2-0104-olive-v74-integrity.cjs'
       - 'static/images/p2-realms/v15/v76-exhibition/**'
       - 'static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg'
       - 'static/images/p2-realms/v15/v75-exhibition/**'
@@ -108,6 +111,11 @@ jobs:
           test -s public/experiments/p2-0104-olive-continuation.html
           test -s public/experiments/olive-v75-twelve-folios-exhibition.html
           test -s public/experiments/olive-v76-terrain-and-panorama.html
+          test -s public/experiments/olive-v77-exhibition.html
+          for terrain in 1 2 3 4 5 6; do
+            test -s "public/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-${terrain}.svg"
+          done
+          node tests/p2-0104-olive-v74-integrity.cjs
           test -s public/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg
           for terrain in 1 2 3 4 5 6; do
             test -s "public/images/p2-realms/v15/v76-exhibition/04-olive-terrain-v76-${terrain}.svg"
@@ -195,6 +203,32 @@ jobs:
           NODE
           cp static/images/p2-realms/v15/v76-exhibition/*.svg artifacts/p2-0104-olive/
           cp static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg artifacts/p2-0104-olive/
+      - name: Capture V77 twelve-plate exhibition desktop and phone
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          python3 -m http.server 4173 --directory public >/tmp/olive-v77-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node - <<'NODE'
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            for(const width of [1648,390]){
+              const page=await browser.newPage({viewport:{width,height:950},deviceScaleFactor:1});
+              await page.goto('http://127.0.0.1:4173/experiments/olive-v77-exhibition.html',{waitUntil:'networkidle'});
+              await page.evaluate(async()=>{
+                for(const img of document.images){img.loading='eager';await img.decode()}
+              });
+              const failed=await page.locator('img').evaluateAll(a=>a.filter(e=>!e.complete||e.naturalWidth===0).map(e=>e.src));
+              if(failed.length)throw Error('V77 broken image(s): '+failed.join(','));
+              await page.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v77-gallery.png',fullPage:true,animations:'disabled'});
+              await page.locator('section').nth(1).screenshot({path:'artifacts/p2-0104-olive/'+width+'-v77-terrain-series.png',animations:'disabled'});
+              await page.close();
+            }
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          cp static/images/p2-realms/v15/v77-exhibition/*.svg artifacts/p2-0104-olive/
       - name: Bundle actual botanical vector master for art-direction inspection
         if: always()
         run: |
