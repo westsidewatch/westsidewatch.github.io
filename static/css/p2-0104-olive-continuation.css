@@ -846,3 +846,53 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 .olive-card__reverse-title{z-index:3}
 .olive-card__reverse-mark{z-index:3}
+
+/* V81 / the Scripture is a separate editorial composition BESIDE
+   whichever lecturer's original poster is currently facing the reader.
+   It must never be a child of, or print on, a rotating reverse folio.
+   The opposite real engraving remains the background of its own half.
+   All state follows the original single scroll pose; no transitions. */
+.olive-stage__companion{
+ position:absolute;z-index:6;box-sizing:border-box;pointer-events:none;
+ display:block;overflow:hidden;isolation:isolate;
+ color:var(--ws-paper);background:transparent;
+ opacity:0;visibility:hidden;
+}
+.olive-stage__companion::before{
+ content:"";position:absolute;z-index:0;
+ inset:auto 0 0;height:50%;pointer-events:none;
+ background:linear-gradient(to bottom,transparent 0%,
+  color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink)) 82%);
+}
+.olive-stage__companion-reading{
+ position:absolute;z-index:1;
+ left:8%;right:8%;bottom:12%;max-width:84%;
+ display:flex;flex-direction:column;align-items:flex-start;
+}
+.olive-stage__companion-kicker{
+ display:block;margin-bottom:clamp(13px,1.5vw,24px);
+ font:200 clamp(9px,.76vw,12px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.17em;color:var(--ws-morning-gold);
+}
+.olive-stage__companion-verse{
+ margin:0;max-width:100%;
+ font-family:var(--ws-type-display-zh);
+ font-size:clamp(19px,1.6vw,29px);
+ font-weight:var(--ws-weight-zh-air,200);
+ font-synthesis:none;font-style:normal;
+ line-height:1.42;letter-spacing:.025em;
+ text-wrap:pretty;color:var(--ws-paper);
+}
+.olive-stage__companion-reference{
+ display:block;margin-top:clamp(12px,1.3vw,22px);
+ font-family:var(--ws-type-display-zh);
+ font-size:clamp(14px,1.1vw,19px);
+ font-weight:var(--ws-weight-zh-air,200);font-synthesis:none;
+ font-style:normal;letter-spacing:.05em;color:var(--ws-morning-gold);
+}
+@media(max-width:600px){
+ .olive-stage__companion-reading{left:8%;right:7%;bottom:10%;max-width:85%}
+ .olive-stage__companion-kicker{margin-bottom:7px;font-size:9px;letter-spacing:.05em}
+ .olive-stage__companion-verse{font-size:clamp(14px,3.9vw,20px);line-height:1.32;letter-spacing:0}
+ .olive-stage__companion-reference{font-size:clamp(11px,3.2vw,15px);margin-top:7px}
+}
