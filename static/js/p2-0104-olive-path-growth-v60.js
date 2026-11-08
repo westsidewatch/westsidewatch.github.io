@@ -29,7 +29,7 @@
   stage.dataset.p2TerrainCompleteRings=String(latest.filter(x=>x>.999).length);
  }
  window.P2OliveEngraving={paint};
- fetch('/images/p2-realms/v15/04-olive-terrain-continuous-mother-v74.svg')
+ fetch('/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg')
  .then(r=>{if(!r.ok)throw Error('Olivet DEM SVG '+r.status);return r.text()})
  .then(source=>{
   const doc=new DOMParser().parseFromString(source,'image/svg+xml');
@@ -62,13 +62,13 @@
    const original=Number(path.getAttribute('stroke-width'))||.65;
    // Maintain the major/minor engraving hierarchy while giving Olivet
    // enough weight to balance the botanical print at actual screen size.
-   path.style.strokeWidth=(original*1.65).toFixed(2);
+   path.style.strokeWidth=(original*1.18).toFixed(2);
    path.style.opacity='0';
    path.dataset.p2ContourImpression=String(edition+1);
    batches[edition].push(path);
   });
   mount.classList.add('has-path-growth');
-  stage.dataset.p2TerrainStrokeEngine='real-dem-one-continuous-mother-v74';
+  stage.dataset.p2TerrainStrokeEngine='real-dem-one-continuous-mother-v76';
   stage.dataset.p2TerrainPathTotal=String(paths.length);
   paint(null,latest);
  })
