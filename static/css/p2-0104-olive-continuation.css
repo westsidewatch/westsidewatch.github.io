@@ -23,7 +23,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 .p2-olive-controls label{margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:6px}
 .p2-olive-controls input{accent-color:var(--ws-morning-gold);width:118px}
-#p2-olive-track{position:relative;height:2280svh}
+#p2-olive-track{position:relative;height:2600svh}
 .p2-olive-stage{
  /* Strict OS token authority: olive = --ws-olive, no local generated
     green shades, no color-mix or invented gradients in this chapter. */
@@ -682,4 +682,26 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-stage__enter-label{font-size:15px;letter-spacing:.025em}
  .olive-stage__enter-zh{display:none}
  .olive-stage__enter-arrow{font-size:20px;line-height:1}
+}
+
+/* V79 Museum Folio. Stationary perspective belongs to the entire paired
+   paper-stage, not a perspective() transform reparsed onto each moving card.
+   Only transform:rotateY() is scroll-owned on each rigid carrier; front
+   original 3:4 image and its protected Shadow DOM text stay glued together.
+   No time-based transition or smoothing tail. */
+.olive-stage__pair{
+ perspective:1400px;
+ perspective-origin:50% 50%;
+ -webkit-perspective-origin:50% 50%;
+}
+.olive-folio-carrier{
+ transform-style:preserve-3d;
+ -webkit-transform-style:preserve-3d;
+ contain:layout style;
+}
+.olive-card__reverse{
+ transform:rotateY(180deg) translateZ(1.5px);
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-folio-carrier{will-change:auto}
 }
