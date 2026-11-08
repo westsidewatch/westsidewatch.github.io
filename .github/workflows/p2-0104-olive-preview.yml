@@ -165,6 +165,36 @@ jobs:
           node tests/olive-mountain-art-foundation-v44.cjs
           node tests/p2-emmaus-svg-cloth.cjs
           node tests/p2-0103-release.cjs
+      - name: Capture V76 actual static gallery desktop and phone
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          python3 -m http.server 4173 --directory public >/tmp/p2-v76-gallery.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node - <<'NODE'
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            for(const width of [1648,390]){
+              const page=await browser.newPage({viewport:{width,height:950},deviceScaleFactor:1});
+              await page.goto('http://127.0.0.1:4173/experiments/olive-v76-terrain-and-panorama.html',{waitUntil:'networkidle'});
+              await page.evaluate(async()=>{
+                for(const img of document.images){img.loading='eager';await img.decode();}
+              });
+              const failed=await page.locator('img').evaluateAll(els=>els.filter(e=>!e.complete||e.naturalWidth===0).map(e=>e.src));
+              if(failed.length)throw Error('V76 missing images: '+failed.join(','));
+              await page.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v76-gallery.png',fullPage:true,animations:'disabled'});
+              const terrain=page.locator('section').nth(1);
+              await terrain.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v76-terrain-series.png',animations:'disabled'});
+              const panorama=page.locator('.pano');
+              await panorama.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v76-panorama.png',animations:'disabled'});
+              await page.close();
+            }
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          cp static/images/p2-realms/v15/v76-exhibition/*.svg artifacts/p2-0104-olive/
+          cp static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg artifacts/p2-0104-olive/
       - name: Bundle actual botanical vector master for art-direction inspection
         if: always()
         run: |
