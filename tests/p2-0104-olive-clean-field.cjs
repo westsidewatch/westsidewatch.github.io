@@ -13,8 +13,8 @@ const js=read('static/js/p2-0104-olive-continuation.js');
 assert.match(html,/p2-0103-release\.html\?embed=1/);
 assert.match(html,/olive-speaker-baseline|baseline\.js/);
 assert.match(html,/id="olive-editorial-engraving"/);
-assert.match(css,/04-olive-botanical-impression-v60-1\.svg/);
-assert.match(css,/04-olive-botanical-impression-v60-6\.svg/);
+assert.match(css,/v79-botanical-field\/04-olive-field-v79-1\.svg/);
+assert.match(css,/v79-botanical-field\/04-olive-field-v79-6\.svg/);
 for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-botanical-impression-v60-${n}.svg`),/crane-public-domain-olive/);
 assert.doesNotMatch(css,/04-olive-botanical-folio-outline-v56\\.svg/,'full-scale botanical leaf art must not be shrunk into tiny card gutter');
 assert.match(read('static/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg'),/fill="none" stroke="white"/);
@@ -41,8 +41,8 @@ assert.match(css,/transform:rotateY\(180deg\)/,'actual verso faces the camera wh
 assert.equal((html.match(/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
  'only the single chapter masthead is allowed; card backs have understated edition labels');
 assert.match(js,/measured-two-faced-rotating-card-v67/,'MERSI drives measured 3D turns');
-assert.match(js,/indexStart:20\.20,indexEnd:21\.20,end:21\.60/,'gentle flips require real extra scroll distance');
-assert.match(css,/height:2280svh/,'physical scroll track remains longer than all V71 poses');
+assert.match(js,/indexStart:23\.00,indexEnd:24\.10,end:24\.50/,'gentle flips require real extra scroll distance');
+assert.match(css,/height:2600svh/,'physical scroll track remains longer than all V71 poses');
 const terrainEngine=read('static/js/p2-0104-olive-path-growth-v60.js');
 assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
 assert.match(terrainEngine,/04-olive-terrain-continuous-mother-v76\.svg/,
@@ -207,7 +207,7 @@ const widths=[1648,390,320];
     // Every image used by the active two-card handoff must have rendered
     // pixels before visual proof; image decode regressions previously left
     // huge blank speaker frames even when the print artwork was intact.
-    if(d>=10.95&&d<20.20){
+    if(d>=10.95&&d<23.00){
      await page.waitForFunction(()=>{
       const stage=document.querySelector('#p2-olive-stage');
       if(stage?.dataset.p2PortraitDecode!=='ready')return false;
@@ -222,7 +222,7 @@ const widths=[1648,390,320];
     // The twelve protected portraits load asynchronously. A screenshot taken
     // immediately after a seek can catch their fonts before decoded pixels.
     // Verify REAL rendered image assets rather than merely counting DOM cards.
-    if(d>=21.20){
+    if(d>=24.10){
      await page.waitForFunction(()=>{
       const imgs=[...document.querySelectorAll('#olive-overview .olive-stage__index-card img')];
       return imgs.length===12&&imgs.every(img=>img.complete&&img.naturalWidth>0);
@@ -267,15 +267,15 @@ const widths=[1648,390,320];
    assert.equal(leftInk.rightClip,'none','no box clipping on contour field');
    await page.waitForFunction(()=>['real-dem-one-continuous-mother-v76','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
    // Prove the magic is a geometric 3D turn, not a static front/back swap.
-   const enteringFlip=await go(12.065,'05aa1-right-card-mid-flip');
+   const enteringFlip=await go(12.110,'05aa1-right-card-mid-flip');
    const enteringAngle=Number(enteringFlip.folioAngles?.split(',')[1]);
    assert(enteringAngle>15&&enteringAngle<165,'right card physically rotates through depth while left stays steady');
    assert(Math.abs(Number(enteringFlip.folioAngles?.split(',')[0]))<.01,
     'left side remains locked during the right-side reveal');
-   const retiringFlip=await go(12.49,'05aa2-left-card-mid-flip');
+   const retiringFlip=await go(12.690,'05aa2-left-card-mid-flip');
    const retiringAngle=Number(retiringFlip.folioAngles?.split(',')[0]);
    assert(retiringAngle>15&&retiringAngle<165,'previous speaker folds back only after next portrait has settled');
-   const rightLocked=await go(12.68,'05aa-right-front-left-back');
+   const rightLocked=await go(12.935,'05aa-right-front-left-back');
    assert.equal(rightLocked.folioFaces,'back,front','right figure is front; left botanical back');
    assert.equal(rightLocked.rightPoster,'1','right approved Derek Prince portrait');
    assert.equal(rightLocked.portraitDecode,'ready','approved portraits decoded');
@@ -296,7 +296,7 @@ const widths=[1648,390,320];
 
    assert(rightLocked.reverseFaces[0].source.includes('04-olive-full-verso-v74-botanical-1.svg'),
     'first of twelve card backs is independent full folio botanical artwork');
-   const rightInk=await go(15.10,'05b-right-terrain-second-complete');
+   const rightInk=await go(16.170,'05b-right-terrain-second-complete');
    assert.equal(rightInk.leftPoster,'4','left has safely preloaded the next portrait behind its botanical reverse');
    assert.equal(rightInk.portraitDecode,'ready','original portraits predecoded before alternating swaps');
    assert.equal(rightInk.terrainEngine,'real-dem-one-continuous-mother-v76','one measured mother plate is printed without panel clipping');
@@ -304,17 +304,17 @@ const widths=[1648,390,320];
    assert(rightInk.completedRings>=1,'retired right speaker has transferred the first full contour fragment');
    assert(rightInk.terrain>.15&&rightInk.plant>.15,
     'one whole contour and one earlier botanical edition transfer into persistent background');
-   const leftAgain=await go(15.50,'05c-left-botanical-return');
+   const leftAgain=await go(16.705,'05c-left-botanical-return');
    assert(leftAgain.plant>.3&&leftAgain.terrain>.15,
     'old letterpress impressions persist through the next alternating speaker');
-   const kouFeatured=await go(20.10,'08-kou-shao-en-mirrored-featured');
+   const kouFeatured=await go(22.850,'08-kou-shao-en-mirrored-featured');
    assert.equal(kouFeatured.rightPoster,'11','Kou Shao-en is the final featured right-side original poster');
    assert.equal(kouFeatured.folioFaces,'back,front','Kou original image and unmirrored names remain on a physical front face');
-   const end=await go(21.30,'09-twelve-voices-final-overview');
+   const end=await go(24.200,'09-twelve-voices-final-overview');
    assert(end.plant>.999&&end.terrain>.999,'all twelve posters: both engravings shown');
    assert.equal(end.completedRings,6,'all six right speaker contour editions are printed');
    assert(end.plantLayers.every(v=>v>.999),'all six botanical engraved editions remain visible after twelve speakers');
-   assert.match(css,/var\(--ws-deep\)/,'plant includes genuinely dark olive impression from the shared OS');
+   assert.match(css,/v79-botanical-field\/04-olive-field-v79-3\.svg/,'botanical field uses curated source and OS ink rather than opaque dark hedge');
    assert.equal(end.posterNodes,12);
    const exitLink=await page.locator('#olive-enter').evaluate(a=>{
      const box=a.getBoundingClientRect(),cs=getComputedStyle(a);
