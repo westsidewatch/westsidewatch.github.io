@@ -151,7 +151,8 @@ const widths=[1648,390];
         speaker:el.dataset.speakerIndex,
         fragment:el.dataset.printFragment,
         source:el.style.getPropertyValue('--folio-fragment'),
-        alpha:Number.parseFloat(el.style.getPropertyValue('--folio-back-alpha'))
+        alpha:Number.parseFloat(el.style.getPropertyValue('--folio-back-alpha')),
+        mark:Number.parseFloat(el.style.getPropertyValue('--folio-mark-alpha'))
        })),
        leftPoster:document.querySelector('#olive-pair-left')?.dataset.speakerIndex,
        rightPoster:document.querySelector('#olive-pair-right')?.dataset.speakerIndex,
@@ -241,6 +242,13 @@ const widths=[1648,390];
    assert.equal(rightLocked.portraitDecode,'ready','approved portraits decoded');
    assert.equal(rightLocked.reverseFaces[0].speaker,'0',
     'left reverse contributes first speaker botanical fragment');
+   assert(rightLocked.reverseFaces[0].mark>.99,
+    'completed reverse edition label and original small ink detail remain clearly visible');
+   assert(rightLocked.reverseFaces[0].alpha>.70,
+    'first completed botanical reverse must stay visibly printed after handing ink to the stage');
+   assert.equal(rightLocked.reverseFaces[0].fragment,'1',
+    'first botanical reverse is an individual speaker-specific impression');
+
    assert(rightLocked.reverseFaces[0].source.includes('impression-v60-1.svg'),
     'first of twelve card backs is individual botanical plate, not the full floral field');
    const rightInk=await go(13.10,'05b-right-terrain-second-complete');
