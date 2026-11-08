@@ -10,6 +10,8 @@ on:
       - 'static/experiments/olive-v76-terrain-and-panorama.html'
       - 'static/experiments/olive-v77-exhibition.html'
       - 'static/experiments/olive-v78-flip-motion-study.html'
+      - 'static/images/p2-realms/v15/v79-botanical-field/**'
+      - 'docs/projects/olive-mountain-living-engraving/V79-MUSEUM-FOLIO-AND-BOTANICAL-FIELD-2026-11-08.md'
       - 'docs/projects/olive-mountain-living-engraving/V78-FLIP-DORÉ-EXPLORATION-2026-11-08.md'
       - 'static/images/p2-realms/v15/v77-exhibition/**'
       - 'tests/p2-0104-olive-v74-integrity.cjs'
@@ -115,6 +117,9 @@ jobs:
           test -s public/experiments/olive-v76-terrain-and-panorama.html
           test -s public/experiments/olive-v77-exhibition.html
           test -s public/experiments/olive-v78-flip-motion-study.html
+          for impression in 1 2 3 4 5 6; do
+            test -s "public/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-${impression}.svg"
+          done
           for terrain in 1 2 3 4 5 6; do
             test -s "public/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-${terrain}.svg"
           done
