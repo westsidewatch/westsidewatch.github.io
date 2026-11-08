@@ -102,9 +102,12 @@ for(let edition=1;edition<=6;edition++){
   assert.match(svg,/<svg /,'all twelve complete engraved card back SVGs exist');
   assert.match(svg,/viewBox="0 0 720 940"/,'each complete verso uses a consistent uncropped 3:4 folio system');
   if(family==='terrain'){
-   assert.match(svg,/entirely closed genuine Mount of Olives contour rings/i,
+   assert.match(svg,/authentic CLOSED contour paths/i,
      'terrain backs must use physically continuous loops without cut line ends');
-   assert((svg.match(/<path /g)||[]).length>=6,'each topographic back carries complete nested contour figures');
+   assert((svg.match(/<path /g)||[]).length>=10,
+    'each terrain folio has seven nested complete geographic contours and secondary hills');
+   assert.equal((svg.match(/ Q[-\d.]+,/g)||[]).length>=600, true,
+    'each contour folio uses smooth connected curves, not fragments of open DEM paths');
   }else{
    assert.match(svg,/crane-public-domain-olive/,'botanical backs recompose the public-domain Walter Crane plate');
   }
