@@ -655,9 +655,12 @@
   stage.dataset.p2RealmSurface=bg>=.99999?'olive-exclusive':
     readingField>0?'emmaus-olive-handoff':'emmaus';
   enter.style.visibility=finished?'visible':'hidden';
-  enter.style.pointerEvents=d>T.indexEnd+.19?'auto':'none';
-  enter.style.clipPath=d>=T.indexEnd+.20?'none':
-   'inset('+((1-ease((d-T.indexEnd)/.20))*100).toFixed(3)+'% 0 0)';
+  // V77: complete CTA reveal by the settled twelve-speaker proof at d=21.30.
+  // The previous .20 tail clipped the first line of this real hyperlink on
+  // 320px even while the arrow appeared. Keep the reveal scroll-bound.
+  enter.style.pointerEvents=d>=T.indexEnd+.08?'auto':'none';
+  enter.style.clipPath=d>=T.indexEnd+.08?'none':
+   'inset('+((1-ease((d-T.indexEnd)/.08))*100).toFixed(3)+'% 0 0)';
   const interactive=finished;
   folio.inert=!interactive;
   folio.setAttribute('aria-hidden',interactive?'false':'true');
