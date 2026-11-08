@@ -189,11 +189,6 @@ const widths=[1648,390,320];
         mask:getComputedStyle(el,'::before').webkitMaskImage,
         transform:getComputedStyle(el).transform,
         speaker:el.dataset.speakerIndex,
-        scriptureSpeaker:el.dataset.scriptureSpeaker,
-        scriptureRef:el.querySelector('.olive-card__scripture-cite')?.textContent,
-        scriptureText:el.querySelector('.olive-card__scripture-text')?.textContent,
-        scriptureFont:getComputedStyle(el.querySelector('.olive-card__scripture-cite')).fontFamily,
-        scriptureColor:getComputedStyle(el.querySelector('.olive-card__scripture-text')).color,
         fragment:el.dataset.printFragment,
         source:el.style.getPropertyValue('--folio-fragment'),
         detail:el.style.getPropertyValue('--folio-detail'),
@@ -202,6 +197,19 @@ const widths=[1648,390,320];
         paper:getComputedStyle(el).backgroundColor,
         wholeOpacity:getComputedStyle(el).opacity
        })),
+       companions:[...document.querySelectorAll('.olive-stage__companion')].map(el=>({
+        id:el.id,speaker:el.dataset.scriptureSpeaker,
+        adjacentTo:el.dataset.adjacentTo,
+        ref:el.querySelector('.olive-stage__companion-reference')?.textContent,
+        verse:el.querySelector('.olive-stage__companion-verse')?.textContent,
+        font:getComputedStyle(el.querySelector('.olive-stage__companion-reference')).fontFamily,
+        color:getComputedStyle(el.querySelector('.olive-stage__companion-verse')).color,
+        visible:getComputedStyle(el).visibility,
+        alpha:Number(getComputedStyle(el).opacity),
+        cardParent:el.closest('.olive-folio-carrier')!==null,
+        box:(()=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}})()
+       })),
+       scripturePlacement:stage.dataset.p2ScripturePlacement,
        leftPoster:document.querySelector('#olive-pair-left')?.dataset.speakerIndex,
        rightPoster:document.querySelector('#olive-pair-right')?.dataset.speakerIndex,
        portraitDecode:stage.dataset.p2PortraitDecode,
@@ -278,6 +286,11 @@ const widths=[1648,390,320];
    assert(leftInk.plant<.01&&leftInk.terrain<.01,
     'before first exit, a unique back carries the seed, not a prematurely completed large background');
    assert.equal(leftInk.folioFaces,'front,back','first: left portrait and right engraved reverse');
+   assert.equal(leftInk.companions[1].speaker,'watchman-nee',
+     'first lecturer on LEFT has his scripture in the RIGHT editorial panel');
+   assert.equal(leftInk.companions[1].ref,'加拉太書 2:20');
+   assert.equal(leftInk.companions[1].visible,'visible');
+   assert.equal(leftInk.companions[0].visible,'hidden');
    assert.equal(leftInk.folioSystem,'measured-two-faced-rotating-card-v67');
    assert.equal(leftInk.reverseFaces.length,2);
    assert(leftInk.reverseFaces.every(x=>x.visible==='visible'&&x.mask.includes('.svg')),
@@ -321,15 +334,19 @@ const widths=[1648,390,320];
     'reverse has visible deep olive stock distinct from the olive-green stage');
    assert.equal(rightLocked.reverseFaces[0].speaker,'0',
     'left reverse contributes first speaker botanical fragment');
-   assert.equal(rightLocked.reverseFaces[0].scriptureSpeaker,'watchman-nee');
-   assert.equal(rightLocked.reverseFaces[0].scriptureRef,'加拉太書 2:20');
-   assert.match(rightLocked.reverseFaces[0].scriptureFont,/Chiron Hei HK WS/,
-     'Chinese scripture citation must use OS CJK glyphs rather than Latin Bodoni missing-glyph boxes');
-   assert.equal(rightLocked.reverseFaces[0].scriptureColor,'rgb(250, 249, 245)',
-     'Chinese reading passage should be OS paper, separate from gold botanical impression');
-   assert.match(rightLocked.reverseFaces[0].scriptureText,/不再是我/);
-   assert.equal(rightLocked.reverseFaces[1].scriptureSpeaker,'derek-prince');
-   assert.equal(rightLocked.reverseFaces[1].scriptureRef,'以弗所書 6:12');
+   assert.equal(rightLocked.scripturePlacement,'adjacent-independent-not-on-flipping-reverse-v81');
+   assert(rightLocked.companions.every(x=>!x.cardParent),
+     'scripture must not be a child of a lecturer rotating card');
+   assert.equal(rightLocked.companions[0].speaker,'derek-prince',
+     'left-side reading surface MUST show the currently facing Derek Prince');
+   assert.equal(rightLocked.companions[0].ref,'以弗所書 6:12');
+   assert.equal(rightLocked.companions[0].visible,'visible');
+   assert(rightLocked.companions[0].alpha>.95,
+     'verse must be visibly beside the preacher, not hidden behind his card');
+   assert.equal(rightLocked.companions[1].visible,'hidden');
+   assert.match(rightLocked.companions[0].font,/Chiron Hei HK WS/,
+     'companion reference uses OS CJK type');
+   assert.equal(rightLocked.companions[0].color,'rgb(250, 249, 245)');
    assert(rightLocked.reverseFaces[0].mark>.99,
     'completed reverse edition label and original small ink detail remain clearly visible');
    assert(rightLocked.reverseFaces[0].alpha>.70,
@@ -353,9 +370,9 @@ const widths=[1648,390,320];
    assert(leftAgain.plant>.3&&leftAgain.terrain>.15,
     'old letterpress impressions persist through the next alternating speaker');
    const kouFeatured=await go(22.850,'08-kou-shao-en-mirrored-featured');
-   assert.equal(kouFeatured.reverseFaces[1].scriptureSpeaker,'kou-shao-en',
-     'last physical reverse must carry its featured original preacher, not terrain edition label');
-   assert.equal(kouFeatured.reverseFaces[1].scriptureRef,'腓立比書 4:7');
+   assert.equal(kouFeatured.companions[0].speaker,'kou-shao-en',
+     'last lecturer on RIGHT has his scripture in the LEFT editorial panel');
+   assert.equal(kouFeatured.companions[0].ref,'腓立比書 4:7');
    assert.equal(kouFeatured.rightPoster,'11','Kou Shao-en is the final featured right-side original poster');
    assert.equal(kouFeatured.folioFaces,'back,front','Kou original image and unmirrored names remain on a physical front face');
    const end=await go(24.200,'09-twelve-voices-final-overview');
