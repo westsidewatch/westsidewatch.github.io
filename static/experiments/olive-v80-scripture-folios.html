@@ -13,7 +13,8 @@ header{padding-top:clamp(40px,6vw,100px);padding-bottom:44px}
 h1{font:400 clamp(46px,7vw,105px)/.94 var(--ws-type-display-en);letter-spacing:-.055em;margin:18px 0 6px}
 header h2{font:200 clamp(21px,2.6vw,37px)/1.2 var(--ws-type-display-zh);letter-spacing:.19em;margin:12px 0 0}
 header blockquote{margin:22px 0 12px;max-width:48em;font:200 clamp(14px,1.2vw,18px)/1.7 var(--ws-type-display-zh)}
-header cite{font:italic 400 14px var(--ws-type-display-en);color:var(--ws-first-light)}
+header cite{font:200 14px var(--ws-type-display-zh);font-style:normal;color:var(--ws-first-light)}
+header cite span{font:italic 400 14px var(--ws-type-display-en)}
 .intro{max-width:800px;font:200 13px/1.7 var(--ws-type-display-zh);margin-top:26px;color:var(--ws-ink)}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,2.1vw,30px) clamp(13px,2vw,26px);padding-bottom:80px}
 figure{margin:0;min-width:0}
@@ -21,13 +22,18 @@ figure{margin:0;min-width:0}
 color:var(--ws-paper);border:1px solid var(--ws-morning-gold)}
 .art::before{content:"";position:absolute;inset:5%;background:var(--ws-morning-gold);
 mask:var(--image) center/100% 100% no-repeat;opacity:.84;pointer-events:none}
+/* The actual V80 scripture never competes with full-strength engraving.
+   This opacity transition is the SAME olive paper, not a pasted panel. */
+.art::after{content:"";position:absolute;left:0;right:0;bottom:0;height:47%;
+ background:linear-gradient(to bottom,transparent 0%,var(--ws-olive) 81%);
+ pointer-events:none;z-index:1}
 .art .no{position:absolute;top:5%;left:7%;font:200 12px var(--ws-type-display-en);letter-spacing:.18em;color:var(--ws-morning-gold)}
-.art .quote{position:absolute;left:8%;right:7%;bottom:16%;
+ .art .quote{position:absolute;z-index:2;left:8%;right:7%;bottom:16%;
 font:200 clamp(17px,1.46vw,25px)/1.38 var(--ws-type-display-zh);letter-spacing:.025em;
 text-wrap:pretty;font-synthesis:none}
-.art cite{position:absolute;left:8%;bottom:9%;font:200 clamp(13px,1.07vw,17px)/1.3 var(--ws-type-display-zh);
+ .art cite{position:absolute;z-index:2;left:8%;bottom:9%;font:200 clamp(13px,1.07vw,17px)/1.3 var(--ws-type-display-zh);
 font-style:normal;letter-spacing:.04em;color:var(--ws-morning-gold)}
-.art .rule{position:absolute;left:7%;right:7%;bottom:6.5%;border-top:1px solid var(--ws-morning-gold);opacity:.5}
+ .art .rule{position:absolute;z-index:2;left:7%;right:7%;bottom:6.5%;border-top:1px solid var(--ws-morning-gold);opacity:.5}
 figcaption{padding:9px 2px;border-bottom:1px solid var(--ws-olive);display:flex;gap:4px;justify-content:space-between;
 font:200 11px/1.35 var(--ws-type-display-zh);letter-spacing:.045em}
 figcaption small{font:400 10px/1.3 var(--ws-type-display-en);color:var(--ws-olive)}
@@ -42,7 +48,7 @@ a{color:var(--ws-first-light)}
 <h1>OLIVE <i>MOUNTAIN</i></h1>
 <h2>橄欖山</h2>
 <blockquote>可見信道是從聽道來的，聽道是從基督的話來的。</blockquote>
-<cite>羅馬書 10:17 · Romans 10:17</cite>
+<cite>羅馬書 10:17 <span lang="en">· Romans 10:17</span></cite>
 <p class="intro">十二位講員，每人一句對應其著作、教導或福音主題的經文。這是靜態藝術校樣，不是講員逐節使用頻率的統計。所有植物與地形 SVG 沿用實際 P2 卡背素材，講員正面完全沒有改動。</p>
 </header>
 <main><div class="grid" id="scripture-collection" aria-label="十二幅講員經文卡背"></div></main>
