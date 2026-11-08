@@ -113,7 +113,6 @@ jobs:
           sudo dpkg -i "${{ runner.temp }}/hugo.deb"
       - name: Normalize Hugo front matter as the successful production build does
         run: python3 scripts/normalize_hugo_frontmatter.py
-          extended: true
       - name: Build 01–04 draft without touching the published 01–03
         run: |
           hugo --gc --minify --baseURL 'https://westsidewatch-github-io.pages.dev/'
