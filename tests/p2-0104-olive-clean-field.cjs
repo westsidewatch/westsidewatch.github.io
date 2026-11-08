@@ -40,6 +40,8 @@ assert.match(css,/transform:rotateY\(180deg\)/,'actual verso faces the camera wh
 assert.equal((html.match(/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
  'only the single chapter masthead is allowed; card backs have understated edition labels');
 assert.match(js,/measured-two-faced-rotating-card-v67/,'MERSI drives measured 3D turns');
+assert.match(js,/indexStart:20\.20,indexEnd:21\.20,end:21\.60/,'gentle flips require real extra scroll distance');
+assert.match(css,/height:2280svh/,'physical scroll track remains longer than all V71 poses');
 const terrainEngine=read('static/js/p2-0104-olive-path-growth-v60.js');
 assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
 assert.match(terrainEngine,/getBBox\(\)/);
@@ -171,7 +173,7 @@ const widths=[1648,390];
     // Every image used by the active two-card handoff must have rendered
     // pixels before visual proof; image decode regressions previously left
     // huge blank speaker frames even when the print artwork was intact.
-    if(d>=10.95&&d<16.25){
+    if(d>=10.95&&d<20.20){
      await page.waitForFunction(()=>{
       const stage=document.querySelector('#p2-olive-stage');
       if(stage?.dataset.p2PortraitDecode!=='ready')return false;
@@ -186,7 +188,7 @@ const widths=[1648,390];
     // The twelve protected portraits load asynchronously. A screenshot taken
     // immediately after a seek can catch their fonts before decoded pixels.
     // Verify REAL rendered image assets rather than merely counting DOM cards.
-    if(d>=17.25){
+    if(d>=21.20){
      await page.waitForFunction(()=>{
       const imgs=[...document.querySelectorAll('#olive-overview .olive-stage__index-card img')];
       return imgs.length===12&&imgs.every(img=>img.complete&&img.naturalWidth>0);
@@ -236,10 +238,10 @@ const widths=[1648,390];
    assert(enteringAngle>15&&enteringAngle<165,'right card physically rotates through depth while left stays steady');
    assert(Math.abs(Number(enteringFlip.folioAngles?.split(',')[0]))<.01,
     'left side remains locked during the right-side reveal');
-   const retiringFlip=await go(12.245,'05aa2-left-card-mid-flip');
+   const retiringFlip=await go(12.49,'05aa2-left-card-mid-flip');
    const retiringAngle=Number(retiringFlip.folioAngles?.split(',')[0]);
    assert(retiringAngle>15&&retiringAngle<165,'previous speaker folds back only after next portrait has settled');
-   const rightLocked=await go(12.33,'05aa-right-front-left-back');
+   const rightLocked=await go(12.68,'05aa-right-front-left-back');
    assert.equal(rightLocked.folioFaces,'back,front','right figure is front; left botanical back');
    assert.equal(rightLocked.rightPoster,'1','right approved Derek Prince portrait');
    assert.equal(rightLocked.portraitDecode,'ready','approved portraits decoded');
@@ -258,7 +260,7 @@ const widths=[1648,390];
 
    assert(rightLocked.reverseFaces[0].source.includes('impression-v60-1.svg'),
     'first of twelve card backs is individual botanical plate, not the full floral field');
-   const rightInk=await go(13.10,'05b-right-terrain-second-complete');
+   const rightInk=await go(15.10,'05b-right-terrain-second-complete');
    assert.equal(rightInk.leftPoster,'4','left has safely preloaded the next portrait behind its botanical reverse');
    assert.equal(rightInk.portraitDecode,'ready','original portraits predecoded before alternating swaps');
    assert.equal(rightInk.terrainEngine,'real-dem-whole-contours-v60','complete measured contour paths are printed, never SVG wipe');
@@ -266,10 +268,10 @@ const widths=[1648,390];
    assert(rightInk.completedRings>=1,'retired right speaker has transferred the first full contour fragment');
    assert(rightInk.terrain>.15&&rightInk.plant>.15,
     'one whole contour and one earlier botanical edition transfer into persistent background');
-   const leftAgain=await go(13.50,'05c-left-botanical-return');
+   const leftAgain=await go(15.50,'05c-left-botanical-return');
    assert(leftAgain.plant>.3&&leftAgain.terrain>.15,
     'old letterpress impressions persist through the next alternating speaker');
-   const end=await go(17.30,'09-twelve-voices-final-overview');
+   const end=await go(21.30,'09-twelve-voices-final-overview');
    assert(end.plant>.999&&end.terrain>.999,'all twelve posters: both engravings shown');
    assert.equal(end.completedRings,6,'all six right speaker contour editions are printed');
    assert(end.plantLayers.every(v=>v>.999),'all six botanical engraved editions remain visible after twelve speakers');
