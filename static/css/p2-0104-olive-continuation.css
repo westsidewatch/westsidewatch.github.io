@@ -376,7 +376,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  mask-position:var(--folio-mask-x) var(--folio-mask-y)!important;
 }
 .olive-card__reverse--botanical::before{opacity:1}
-.olive-card__reverse--terrain::before{opacity:.88}
+.olive-card__reverse--terrain::before{opacity:.94}
 /* A small edition-specific imprint stays optically legible on the verso;
    unlike the field-registered paths, this is a true card-scale detail.
    Same unique artwork, not a duplicated full botanical/terrain poster.
@@ -385,9 +385,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  content:""!important;position:absolute;inset:17% 16% 22%!important;
  border:0!important;
  background:var(--folio-ink,var(--ws-morning-gold));
- opacity:calc(var(--folio-mark-alpha,0) * .38)!important;
- -webkit-mask-image:var(--folio-fragment)!important;
- mask-image:var(--folio-fragment)!important;
+ opacity:calc(var(--folio-mark-alpha,0) * .82)!important;
+ -webkit-mask-image:var(--folio-detail)!important;
+ mask-image:var(--folio-detail)!important;
  -webkit-mask-size:100% 100%!important;
  mask-size:100% 100%!important;
  -webkit-mask-position:center!important;
