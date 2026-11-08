@@ -14,7 +14,7 @@
 |---|---|---|---|---|---|
 | 01 | 倪柝聲 | 加拉太書 2:20 | 現在活著的，不再是我，乃是基督在我裡面活著。 | 直接講道／本人材料 | [來源](https://ccel.org/ccel/nee/normal/normal.v.html) |
 | 02 | 葉光明 | 以弗所書 6:12 | 因我們並不是與屬血氣的爭戰。 | 直接講道／本人材料 | [來源](https://www.derekprince.com/inspirations/c-r036-101) |
-| 03 | 大衛鮑森 | 提摩太後書 3:16 | 聖經都是神所默示的，於教訓、督責、使人歸正，都是有益的。 | 編輯配經（非頻率證明） | [來源](https://www.davidpawson.co.uk/resources/unlocking-the-bible/) |
+| 03 | 大衛鮑森 | 提摩太後書 3:16 | 聖經都是神所默示的，於教訓、督責、使人歸正……都是有益的。 | 編輯配經（非頻率證明） | [來源](https://www.davidpawson.co.uk/resources/unlocking-the-bible/) |
 | 04 | 唐崇榮 | 羅馬書 1:16 | 這福音本是神的大能，要救一切相信的。 | 直接講道／本人材料 | [來源](https://www.gospelherald.com/news/gmqludo28k36) |
 | 05 | 黃淑華 | 啟示錄 1:3 | 念這書上預言的和那些聽見又遵守其中所記載的，都是有福的。 | 直接講道／本人材料 | [來源](https://tcnn.org.tw/archives/109888) |
 | 06 | 康來昌 | 馬可福音 1:38 | 我們可以往別處去……我也好在那裡傳道，因為我是為這事出來的。 | 直接講道／本人材料 | [來源](https://ct.org.tw/html/news/3-3.php?article=1393713&article_type=new&cat=4) |
@@ -22,7 +22,7 @@
 | 08 | 劉彤 | 約翰福音 7:38 | 信我的人，就如經上所說，從他腹中要流出活水的江河來。 | 直接講道／本人材料 | [來源](https://graceph.com/book_author/liou-tong/) |
 | 09 | 江秀琴 | 約翰福音 15:5 | 因為離了我，你們就不能做甚麼。 | 直接講道／本人材料 | [來源](https://www.krt.com.hk/post/12380/) |
 | 10 | 華理克 | 歌羅西書 1:16 | 萬有都是靠他造的……又是為他造的。 | 直接講道／本人材料 | [來源](https://www.purposedriven.com/day1) |
-| 11 | 于宏潔 | 以弗所書 3:20 | 神能照著運行在我們心裡的大力，充充足足地成就一切，超過我們所求所想的。 | 直接講道／本人材料 | [來源](https://cgbconline.ca/author/yuhongjie/) |
+| 11 | 于宏潔 | 以弗所書 3:20 | 神能照著運行在我們心裡的大力，充充足足的成就一切，超過我們所求所想的。 | 直接講道／本人材料 | [來源](https://cgbconline.ca/author/yuhongjie/) |
 | 12 | 寇紹恩 | 腓立比書 4:7 | 神所賜、出人意外的平安，必在基督耶穌裡保守你們的心懷意念。 | 直接講道／本人材料 | [來源](https://hvfhoc.com/grace365-20251223/) |
 
 ## 版塊經文原則
