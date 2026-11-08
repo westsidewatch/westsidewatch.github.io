@@ -48,7 +48,7 @@
  const T={start:9.44,first:10.08,spread:10.95,
           groundStart:11.15,groundEnd:11.73,
           pairStart:11.95,pairStep:.83,pairDuration:.62,
-          indexStart:20.20,indexEnd:21.20,end:21.60};
+          indexStart:23.00,indexEnd:24.10,end:24.50};
  const roster=[
   ['watchman-nee','倪柝聲','WATCHMAN NEE'],
   ['derek-prince','葉光明','DEREK PRINCE'],
@@ -365,7 +365,7 @@
  // Front and reverse share an exact axis; controlled by one MERSI scroll value.
  function turnFace(element,angle,axisX,axisY,depth){
   element.style.transformOrigin=axisX.toFixed(2)+'px '+axisY.toFixed(2)+'px';
-  element.style.transform='perspective('+depth.toFixed(0)+'px) rotateY('+angle.toFixed(3)+'deg)';
+  element.style.transform='rotateY('+angle.toFixed(3)+'deg)';
  }
  function paint(){
   queued=false;
@@ -546,10 +546,12 @@
    const event=Math.min(10,Math.floor((d-T.pairStart)/relayStep));
    const beat=clamp((d-(T.pairStart+event*relayStep))/relayStep);
    const inSide=(event+1)%2, outSide=1-inSide;
-   // V71: each fold takes substantially more actual scroll travel.
+   // V79 Museum Folio: each phase owns a longer physical scroll distance.
+   // Both 180-degree flips are deterministic scroll poses, with a tiny
+   // settle between one card finishing and its opposite card retiring.
    // One card reveals fully before the other folds away; hold the
    // completed portrait and its reverse between these actions.
-   const entering=ease((beat-.04)/.44),retreat=ease((beat-.55)/.40);
+   const entering=ease((beat-.03)/.48),retreat=ease((beat-.53)/.44);
    turns[inSide]=180*(1-entering);
    turns[outSide]=180*retreat;
    const speaker=event+1,old=event,following=event+2;
@@ -576,7 +578,9 @@
    stage.dataset.p2OppositeLocked='true';
    stage.dataset.p2SpeakerArrival='1';
   }
-  const depth=Math.max(950,g.w*1.2);
+  const depth=Math.max(1100,g.w*1.35);
+  pair.style.perspective=depth.toFixed(0)+'px';
+  pair.style.perspectiveOrigin='50% 50%';
   // V74: twelve COMPLETE engraved folios, not cut-out local SVG crops.
   // The independent right/left landscape underneath continues to grow
   // from the same real Crane & DEM sources. Never read the full-field
@@ -655,7 +659,7 @@
   stage.dataset.p2RealmSurface=bg>=.99999?'olive-exclusive':
     readingField>0?'emmaus-olive-handoff':'emmaus';
   enter.style.visibility=finished?'visible':'hidden';
-  // V77: complete CTA reveal by the settled twelve-speaker proof at d=21.30.
+  // V79: complete CTA reveal by the settled twelve-speaker proof at d=24.20.
   // The previous .20 tail clipped the first line of this real hyperlink on
   // 320px even while the arrow appeared. Keep the reveal scroll-bound.
   enter.style.pointerEvents=d>=T.indexEnd+.08?'auto':'none';
