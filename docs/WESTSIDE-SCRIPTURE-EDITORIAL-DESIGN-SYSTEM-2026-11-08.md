@@ -5,6 +5,27 @@
 **Source of direction:** User-supplied Isaiah 55:9 visual reference and V82 Olive Mountain bilingual scripture editorial design.  
 **Scope:** All Westside Watch scripture presentation; no change to canonical information architecture or existing animation.
 
+## 0. Brand decision — ONE signature, every non-body scripture instance
+
+**2026-11-08 user direction supersedes the previous proposal for four independent design modes.** All Scripture appearing outside ordinary body reading must immediately read as **Westside Watch**, whether cover, journal masthead, section head, subsection, speaker-side excerpt, pull quote, exceptional callout or scroll narrative. The signature is a single compositional family, not a menu of different styles.
+
+**Working name: WATCHWORD / 守望經文銘式.** This is an internal design name, *not* an extra public label printed on all verses.
+
+**Five invariant identity anchors:**
+1. Visually dominant Chinese scripture phrase in the OS Chinese display family.
+2. Deliberate KJV English typographic counter-rhythm in Bodoni Moda (real italics permitted).
+3. Separate top-right italic English Bible citation paired with a legible Chinese book/chapter citation.
+4. The **Watch Gate / 守望門線** open L-shaped hairline: vertical left rule + horizontal base, plus precisely seven progressively rising tiny engraved ticks; this geometry is the distinct stable brand sign. Do not put a full frame around Scripture.
+5. Fixed relationship of asymmetrical breathing space, main verse, English verse, source, the seven-tick mark and translation information.
+
+**Responsive scaling, not format fragmentation:** The five components remain recognizable on covers, 1648px section spreads, 390/320px mobile, narrow folios and scroll chapters. Layout can stack; type-size may scale with existing OS tokens; color adapts to each approved branch; reading order remains Chinese -> KJV -> labels, with reference visually separate. Never put brand identification solely in color.
+
+**Scope exception:** Continuous Bible text in ONE/other actual reading body remains untouched; ordinary verse numbers and inline citations do not become Watchword. Any Scripture intentionally pulled out of the body and designed as heading, quotation, featured verse or scroll statement uses Watchword.
+
+**Visual proof (isolated, not live):** `experiments/watchword-signature-v1.html`. It demonstrates five scales from the same mother composition: cover, Olive section header, editorial pull quote, small folio and scroll. This is a test of the structural grammar, **not yet approved or browser-verified final artwork**. Text remains native HTML, with CSS linework; maintain the authorized palettes and typography. Specific line weight, spacing, seven-tick rhythm and bilingual typographic balance must pass artistic review before implementation on production sections.
+
+**Technical decision:** Establish reusable semantic class contracts (`.watchword`, `.watchword__citation`, `.watchword__frame`, `.watchword__zh`, `.watchword__en`, `.watchword__mark`, `.watchword__translation`) from this single proof only after visual approval. Do not deploy a blanket selector or interfere with ordinary paragraphs and Bible reader.
+
 ## 1. Thesis / 主張
 
 Scripture is editorial content, not utility text, a caption or generic quote card. Give it a distinct typographic and compositional language that preserves readability, verifiable text and the identity of each site section.
@@ -20,7 +41,7 @@ Reference strengths: unusually generous asymmetric negative space; text rather t
 - Preserve reading order and semantics: `figure` / `blockquote` / `figcaption` / `cite` or appropriate editorial HTML. Copyable, selectable text, not text baked into SVG.
 - On small screens, stack language blocks without microscopic citations, broken single words or image-overlay collisions. Respect reduced motion.
 
-## 3. Four approved compositional modes (design grammar, not fixed templates)
+## 3. Historical exploration — four use cases now unified under ONE Watchword signature
 
 ### A. Scripture Monument / 經文碑銘
 Use for hero / section theme verses; 1–4 lines. Verse itself is dominant display typography, source sits separately in italic reference, meaningful asymmetric breathing room and a deliberate rule. **Do not automatically uppercase Chinese; avoid mass uppercase English in long passages.**
@@ -60,7 +81,7 @@ Use for Selah, prayer, transitions and appropriate cinema treatments. Sparse ver
 ## 6. Engineering rollout
 
 **Phase 0 — this document:** Establish design authority and reference; no live code changes.  
-**Phase 1 — isolated proof:** Develop four native text/CSS/SVG-ornament proof compositions using existing OS tokens, each with Chinese+KJV and responsive variants. Do not bake the scripture words into images or SVG.  
+**Phase 1 — isolated proof:** Validate the one Watchword identity at five scale/use cases in `experiments/watchword-signature-v1.html`, with Chinese+KJV, responsive proof and browser screenshots. Do not bake scripture words into images or SVG.  
 **Phase 2 — integration:** Adapt existing reusable scripture components, preserving owning CSS and current section geometry. Pilot on the already-draft Olive Mountain and Emmaus before widening to all surfaces.  
 **Phase 3 — validation:** Compare canonical screenshots before/after, visually inspect every breakpoint and scroll/reverse state. Any release to main remains a separate decision.
 
