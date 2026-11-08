@@ -422,18 +422,15 @@
   // and each actual geographical contour group is printed once and HELD.
   // The first pair settles before the follow-on ten single-side entries.
   const relayStep=(T.indexStart-T.pairStart)/11;
+  // A print edition enters the permanent stage when its SPEAKER
+  // turns BACK, not while the incoming portrait is moving. Every
+  // reverse is thus the seed of one successive permanent impression.
   const impressions=side=>Array.from({length:6},(_,k)=>{
-   if(k===0){
-    // First left card is shown after its arrival; right engravings are
-    // already visible through the right-hand card's reverse.
-    const begin=side===0?T.groundStart:T.groundStart+.28;
-    return ease((d-begin)/.24);
-   }
-   const speaker=2*k+side;
-   const event=speaker-1;
-   const begin=T.pairStart+event*relayStep;
-   // Print only AFTER this individual speaker reaches the full front.
-   return ease((d-(begin+.66*relayStep))/(relayStep*.24));
+   const speaker=2*k+side; // zero-based alternating roster
+   const start=speaker===11?T.indexStart-.28:
+    T.pairStart+speaker*relayStep+.65*relayStep;
+   const duration=speaker===11?.23:relayStep*.28;
+   return ease((d-start)/duration);
   });
   const plantLayers=impressions(0),terrainLayers=impressions(1);
   const botanicalPlates=[...engraved.querySelectorAll('[data-print-impression]')];
@@ -535,6 +532,7 @@
   // Double-sided invitations: one portrait at a time, opposite reverse
   // printed into the matching full-field botanical / contour language.
   let turns=[0,180],activeSpeaker=0,activeSide='left';
+  let versoIndices=[0,1];
   if(d>=T.pairStart&&d<T.indexStart){
    const relayStep=(T.indexStart-T.pairStart)/11;
    const event=Math.min(10,Math.floor((d-T.pairStart)/relayStep));
@@ -545,6 +543,10 @@
    turns[outSide]=180*retreat;
    const speaker=event+1,old=event,following=event+2;
    const indices=[0,1];indices[inSide]=speaker;
+   // The backside always belongs to the actual physical speaker page:
+   // it never borrows the next person's entire decorative illustration.
+   versoIndices[inSide]=speaker;
+   versoIndices[outSide]=old;
    // Change portrait only after the departing face is past ninety degrees.
    indices[outSide]=turns[outSide]>=100&&following<roster.length?following:old;
    setFigure(left,indices[0]);setFigure(right,indices[1]);
@@ -564,11 +566,42 @@
    stage.dataset.p2SpeakerArrival='1';
   }
   const depth=Math.max(950,g.w*1.2);
-  // Rotate ONE rigid invitation, never its typography and photo separately.
+  // Register each unique reverse fragment in the EXACT coordinate system
+  // of the real full-background print; never scale an entire botanical
+  // or topographic plate down to card size.
+  const fields=[
+   engraved.querySelector('.olive-editorial-engraving__print--botanical'),
+   engraved.querySelector('.olive-editorial-engraving__print--topography')
+  ];
+  const stageBox=stage.getBoundingClientRect();
   for(let i=0;i<2;i++){
-   const box=cardSlots[i];
-   turnFace(carriers[i],turns[i],box.w/2,box.h/2,depth);
+   const card=cardSlots[i],id=versoIndices[i],edition=Math.floor(id/2);
+   const back=backs[i],real=fields[i];
+   const imprint=real.getBoundingClientRect();
+   const px=imprint.left-stageBox.left-card.x;
+   const py=imprint.top-stageBox.top-card.y;
+   const isBotanical=i===0;
+   const source=isBotanical
+    ?'/images/p2-realms/v15/04-olive-botanical-impression-v60-'+(edition+1)+'.svg'
+    :'/images/p2-realms/v15/04-olive-terrain-fragment-v68-'+(edition+1)+'.svg';
+   back.style.setProperty('--folio-fragment','url("'+source+'")');
+   back.style.setProperty('--folio-mask-width',imprint.width.toFixed(2)+'px');
+   back.style.setProperty('--folio-mask-height',imprint.height.toFixed(2)+'px');
+   back.style.setProperty('--folio-mask-x',px.toFixed(2)+'px');
+   back.style.setProperty('--folio-mask-y',py.toFixed(2)+'px');
+   // A back fragment is never another framed poster: its identical piece
+   // of ink transfers to the permanent chapter field at the exit beat.
+   const baseAlpha=(isBotanical?plantLayers:terrainLayers)[edition];
+   const backward=ease((turns[i]-82)/73);
+   const alpha=backward*(1-baseAlpha);
+   back.style.setProperty('--folio-back-alpha',alpha.toFixed(4));
+   back.style.setProperty('--folio-mark-alpha','0');
+   back.style.setProperty('--folio-edge-alpha','0');
+   back.dataset.speakerIndex=String(id);
+   back.dataset.printFragment=String(edition+1);
+   turnFace(carriers[i],turns[i],card.w/2,card.h/2,depth);
   }
+  stage.dataset.p2UniqueVersoSystem='12-registered-background-fragments-v68';
   stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
   stage.dataset.p2FolioFront=activeSide;
   stage.dataset.p2FolioAngles=turns.map(x=>x.toFixed(2)).join(',');
