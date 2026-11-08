@@ -10,6 +10,9 @@ on:
       - 'static/experiments/olive-v76-terrain-and-panorama.html'
       - 'static/experiments/olive-v77-exhibition.html'
       - 'static/experiments/olive-v78-flip-motion-study.html'
+      - 'static/js/p2-0104-olive-scriptures-v80.js'
+      - 'tests/p2-0104-olive-scripture-v80.cjs'
+      - 'docs/projects/olive-mountain-living-engraving/V80-SPEAKER-SCRIPTURE-EDITORIAL-2026-11-08.md'
       - 'static/images/p2-realms/v15/v79-botanical-field/**'
       - 'docs/projects/olive-mountain-living-engraving/V79-MUSEUM-FOLIO-AND-BOTANICAL-FIELD-2026-11-08.md'
       - 'docs/projects/olive-mountain-living-engraving/V78-FLIP-DORÉ-EXPLORATION-2026-11-08.md'
@@ -111,6 +114,8 @@ jobs:
           cp -a static/. public/
           echo "Standalone P2 04 verified from exact committed static sources, without modifying production build."
           test -s public/experiments/p2-0104-olive-continuation.html
+          test -s public/js/p2-0104-olive-scriptures-v80.js
+          node tests/p2-0104-olive-scripture-v80.cjs
           test -s public/experiments/olive-v75-twelve-folios-exhibition.html
           test -s public/experiments/olive-v76-terrain-and-panorama.html
           test -s public/experiments/olive-v77-exhibition.html
