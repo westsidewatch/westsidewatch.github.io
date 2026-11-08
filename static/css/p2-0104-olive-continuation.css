@@ -133,33 +133,33 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 .olive-botanical-plate[data-print-impression="1"]{
  background:var(--ws-morning-gold);
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-1.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-1.svg');
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
 }
 .olive-botanical-plate[data-print-impression="2"]{
  background:var(--ws-pale-gold);
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-2.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-2.svg');
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-2.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-2.svg');
 }
 .olive-botanical-plate[data-print-impression="3"]{
- background:var(--ws-deep);
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-3.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-3.svg');
+ background:var(--ws-morning-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-3.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-3.svg');
 }
 .olive-botanical-plate[data-print-impression="4"]{
  background:var(--ws-warm-gold);
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-4.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-4.svg');
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-4.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-4.svg');
 }
 .olive-botanical-plate[data-print-impression="5"]{
  background:var(--ws-pale-gold);
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-5.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-5.svg');
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-5.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-5.svg');
 }
 .olive-botanical-plate[data-print-impression="6"]{
  background:var(--ws-first-light);
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-6.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-6.svg');
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-6.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-6.svg');
 }
 /* Three draw-on groups are taken from actual elevation contours.
    The old static mask is an accessibility/offline fallback ONLY. */
@@ -362,7 +362,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-card__reverse{
  /* No second full-plate picture on the back. One unique speaker-owned
     fragment is registered to the same stage coordinates as background. */
- --folio-fragment:url('/images/p2-realms/v15/04-olive-botanical-impression-v60-1.svg');
+ --folio-fragment:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
  --folio-mask-width:100%;
  --folio-mask-height:100%;
  --folio-mask-x:0px;
