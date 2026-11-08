@@ -185,6 +185,9 @@ const widths=[1648,390,320];
         mask:getComputedStyle(el,'::before').webkitMaskImage,
         transform:getComputedStyle(el).transform,
         speaker:el.dataset.speakerIndex,
+        scriptureSpeaker:el.dataset.scriptureSpeaker,
+        scriptureRef:el.querySelector('.olive-card__scripture-cite')?.textContent,
+        scriptureText:el.querySelector('.olive-card__scripture-text')?.textContent,
         fragment:el.dataset.printFragment,
         source:el.style.getPropertyValue('--folio-fragment'),
         detail:el.style.getPropertyValue('--folio-detail'),
@@ -239,6 +242,21 @@ const widths=[1648,390,320];
    assert.equal(src.source,'visible','03 original iframe visible before entry');
    const pair=await go(10.98,'03-two-poster-locked-original-background');
    const mid=await go(13.15,'04-clean-olive-field');
+   const scriptureHead=await page.locator('#olive-rubric').evaluate(el=>{
+     const zh=el.querySelector('.olive-stage__rubric-zh');
+     const verse=el.querySelector('.olive-stage__rubric-scripture');
+     const en=el.querySelector('strong'),z=zh.getBoundingClientRect(),v=verse.getBoundingClientRect(),e=en.getBoundingClientRect();
+     return {zh:zh.textContent,verse:verse.textContent,visible:getComputedStyle(verse).display,
+       englishBottom:e.bottom,chineseTop:z.top,chineseBottom:z.bottom,verseTop:v.top,
+       ref:verse.querySelector('cite')?.textContent};
+   });
+   assert.equal(scriptureHead.zh,'橄欖山','04 must have an explicit Chinese chapter title');
+   assert.match(scriptureHead.verse,/信道是從聽道來的/,'04 verse printed under the title');
+   assert.equal(scriptureHead.ref,'羅馬書 10:17');
+   assert(scriptureHead.chineseTop>=scriptureHead.englishBottom-3,
+     'OS Chinese chapter title must sit below the English chapter title');
+   assert(scriptureHead.verseTop>=scriptureHead.chineseBottom-3,
+     'Romans 10:17 must be physically below the Chinese chapter name');
    assert.equal(mid.noGrowth,true,'04 growth SVG must not be in the DOM');
    assert(mid.cardImprints.length===2&&mid.cardImprints.every(c=>
      c.family&&c.stray==='none'&&c.header.includes('04-olive-historic-engraving-v13')),
@@ -297,6 +315,11 @@ const widths=[1648,390,320];
     'reverse has visible deep olive stock distinct from the olive-green stage');
    assert.equal(rightLocked.reverseFaces[0].speaker,'0',
     'left reverse contributes first speaker botanical fragment');
+   assert.equal(rightLocked.reverseFaces[0].scriptureSpeaker,'watchman-nee');
+   assert.equal(rightLocked.reverseFaces[0].scriptureRef,'加拉太書 2:20');
+   assert.match(rightLocked.reverseFaces[0].scriptureText,/不再是我/);
+   assert.equal(rightLocked.reverseFaces[1].scriptureSpeaker,'derek-prince');
+   assert.equal(rightLocked.reverseFaces[1].scriptureRef,'以弗所書 6:12');
    assert(rightLocked.reverseFaces[0].mark>.99,
     'completed reverse edition label and original small ink detail remain clearly visible');
    assert(rightLocked.reverseFaces[0].alpha>.70,
@@ -320,6 +343,9 @@ const widths=[1648,390,320];
    assert(leftAgain.plant>.3&&leftAgain.terrain>.15,
     'old letterpress impressions persist through the next alternating speaker');
    const kouFeatured=await go(22.850,'08-kou-shao-en-mirrored-featured');
+   assert.equal(kouFeatured.reverseFaces[1].scriptureSpeaker,'kou-shao-en',
+     'last physical reverse must carry its featured original preacher, not terrain edition label');
+   assert.equal(kouFeatured.reverseFaces[1].scriptureRef,'腓立比書 4:7');
    assert.equal(kouFeatured.rightPoster,'11','Kou Shao-en is the final featured right-side original poster');
    assert.equal(kouFeatured.folioFaces,'back,front','Kou original image and unmirrored names remain on a physical front face');
    const end=await go(24.200,'09-twelve-voices-final-overview');
