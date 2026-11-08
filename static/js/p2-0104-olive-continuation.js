@@ -87,6 +87,10 @@
   // Frozen component is keyed by speaker; old shadow roots must be
   // disconnected when the pair changes. Do not write into the master.
   const target=roster[index][0];
+  // Flip only Kou's editorial PNG, not its protected English/Chinese
+  // Shadow DOM overlay: lettering remains correctly readable and uses
+  // the blank side opened by mirroring the original portrait artwork.
+  art.dataset.speaker=target;
   const overlay=art.querySelector('olive-speaker-baseline');
   if(overlay&&overlay.dataset.speaker!==target)overlay.remove();
   if(!art.querySelector('olive-speaker-baseline'))frozen.mount(art,target);
