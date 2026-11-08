@@ -15,14 +15,14 @@
 1. Visually dominant Chinese scripture phrase in the OS Chinese display family.
 2. Deliberate KJV English typographic counter-rhythm in Bodoni Moda (real italics permitted).
 3. Separate top-right italic English Bible citation paired with a legible Chinese book/chapter citation.
-4. The **Watch Gate / 守望門線** open L-shaped hairline: vertical left rule + horizontal base, plus precisely seven progressively rising tiny engraved ticks; this geometry is the distinct stable brand sign. Do not put a full frame around Scripture.
-5. Fixed relationship of asymmetrical breathing space, main verse, English verse, source, the seven-tick mark and translation information.
+4. **Watchword axis / 守望軸線**: an editorial hairline tied directly to the start of the English translation, with one visibly heavier short segment, never a decorative boxed frame. The V1 L-frame and seven rising ticks are rejected as an overly generic ornament. Signature strength must be achieved primarily through type, spacing and citation.
+5. Controlled hierarchy of asymmetrical breathing space, main verse, English verse, exceptional oversized citation, short accent rule and translation information.
 
 **Responsive scaling, not format fragmentation:** The five components remain recognizable on covers, 1648px section spreads, 390/320px mobile, narrow folios and scroll chapters. Layout can stack; type-size may scale with existing OS tokens; color adapts to each approved branch; reading order remains Chinese -> KJV -> labels, with reference visually separate. Never put brand identification solely in color.
 
 **Scope exception:** Continuous Bible text in ONE/other actual reading body remains untouched; ordinary verse numbers and inline citations do not become Watchword. Any Scripture intentionally pulled out of the body and designed as heading, quotation, featured verse or scroll statement uses Watchword.
 
-**Visual proof (isolated, not live):** `experiments/watchword-signature-v1.html`. It demonstrates five scales from the same mother composition: cover, Olive section header, editorial pull quote, small folio and scroll. This is a test of the structural grammar, **not yet approved or browser-verified final artwork**. Text remains native HTML, with CSS linework; maintain the authorized palettes and typography. Specific line weight, spacing, seven-tick rhythm and bilingual typographic balance must pass artistic review before implementation on production sections.
+**Visual proof (isolated, not live):** V1 `experiments/watchword-signature-v1.html` is retained as a rejected baseline (mechanical card frame, redundant seven-tick ornament, underpowered typography). **V2** `experiments/watchword-signature-v2.html` is the active five-scale draft: cover, Olive section masthead, pull quote, small folio and scroll. It experiments with much stronger display/reference contrasts, large asymmetric empty areas, a restrained editorial axis and curated Chinese line breaks. **Not yet approved or browser-verified final artwork.** Text remains native HTML; type and accent palettes consume OS tokens. Real browser layout, optical typography, text accuracy and responsive screenshot inspection remain required.
 
 **Technical decision:** Establish reusable semantic class contracts (`.watchword`, `.watchword__citation`, `.watchword__frame`, `.watchword__zh`, `.watchword__en`, `.watchword__mark`, `.watchword__translation`) from this single proof only after visual approval. Do not deploy a blanket selector or interfere with ordinary paragraphs and Bible reader.
 
@@ -81,10 +81,16 @@ Use for Selah, prayer, transitions and appropriate cinema treatments. Sparse ver
 ## 6. Engineering rollout
 
 **Phase 0 — this document:** Establish design authority and reference; no live code changes.  
-**Phase 1 — isolated proof:** Validate the one Watchword identity at five scale/use cases in `experiments/watchword-signature-v1.html`, with Chinese+KJV, responsive proof and browser screenshots. Do not bake scripture words into images or SVG.  
+**Phase 1 — isolated proof:** Review V1 as the rejected baseline and validate the revised typographic composition in `experiments/watchword-signature-v2.html` at five scale/use cases, with Chinese+KJV, responsive proof and actual browser screenshots. Do not bake scripture words into images or SVG.  
 **Phase 2 — integration:** Adapt existing reusable scripture components, preserving owning CSS and current section geometry. Pilot on the already-draft Olive Mountain and Emmaus before widening to all surfaces.  
 **Phase 3 — validation:** Compare canonical screenshots before/after, visually inspect every breakpoint and scroll/reverse state. Any release to main remains a separate decision.
 
 ## 7. Reference caution
 
 The Isaiah 55:9 image is a **design reference**, not an approved site asset to copy. Its all-caps block, orange-gold color, line breaks, exact typefaces and text treatment are not automatically OS-compliant. Preserve the hierarchy and rhythm while using the site's existing type/color authority.
+
+## 8. V1 → V2 visual diagnosis (2026-11-08)
+
+The Isaiah 55:9 user-supplied reference succeeds because **typography itself constructs the artwork**: a striking main text mass, expressive oversized italic reference, deliberate line-break rhythm and an asymmetric field of negative space. V1 was a useful grouping of text but inferior in editorial art direction. Specifically: every component occupied a generic bordered quote card; bilingual typography lacked hierarchy; automatic text wrapping prevented optical design; references appeared like metadata; seven rising lines had no established visual meaning and were UI decoration rather than an art-directed signature.
+
+V2 is a deliberately **type-first** experiment, not a final approved master. Its basic order is: sparse editorial folio → oversized italic reference → designed Chinese line mass → short horizontal axis with English KJV counterpoint → restrained bottom colophon. Paper and branch identity are taken from OS color tokens; the large composition may need additional iterations to achieve brand originality rather than merely following the reference. **Do not promote V2 to global CSS before visual approval.** Check visual rendering, translation fidelity, edge protection at 320px, visual rhythm at 1648px, and no unnatural singleton line breaks.
