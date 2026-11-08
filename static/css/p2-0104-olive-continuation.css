@@ -830,3 +830,19 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 @media(max-width:540px){
  .olive-card__scripture-cite{font-size:clamp(12px,3.8vw,15px)}
 }
+
+/* V80 printmaking art-review correction: the source botanical/contour
+   vector stays completely intact. The last third is an editorial rest
+   field, gradating into the exact physical reverse stock, never a
+   clipped rectangle or a new color. This is one continuous engraving. */
+.olive-card__reading-veil{
+ position:absolute;z-index:1;inset:auto 0 0;height:47%;
+ background:linear-gradient(
+  to bottom,
+  transparent 0%,
+  color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink)) 81%
+ );
+ pointer-events:none;
+}
+.olive-card__reverse-title{z-index:3}
+.olive-card__reverse-mark{z-index:3}
