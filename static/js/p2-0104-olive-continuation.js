@@ -644,11 +644,13 @@
    const engravedAlpha=ease((turns[adjacent]-114)/62);
    const visibility=frontAlpha*engravedAlpha*
     (d>=T.spread&&d<T.indexStart?1:0);
-   if(!verse||verse.slug!==roster[speaker]?.[0])
-    throw new Error('04 adjacent passage must match facing speaker');
+   if(!verse||verse.slug!==roster[speaker]?.[0]||!verse.excerptEn)
+    throw new Error('04 bilingual KJV passage must match facing speaker');
    if(panel.dataset.scriptureSpeaker!==verse.slug){
     panel.querySelector('.olive-stage__companion-verse').textContent=verse.excerpt;
+    panel.querySelector('.olive-stage__companion-verse-en').textContent=verse.excerptEn;
     panel.querySelector('.olive-stage__companion-reference').textContent=verse.referenceZh;
+    panel.querySelector('.olive-stage__companion-reference-en').textContent=verse.referenceEn+' · KJV';
     panel.dataset.scriptureSpeaker=verse.slug;
     panel.dataset.scriptureReference=verse.referenceEn;
     panel.dataset.scriptureEvidence=verse.evidence;
@@ -658,7 +660,7 @@
    panel.setAttribute('aria-hidden',visibility>.90?'false':'true');
    panel.dataset.adjacentTo=side===0?'left':'right';
   }
-  stage.dataset.p2ScripturePlacement='adjacent-independent-not-on-flipping-reverse-v81';
+  stage.dataset.p2ScripturePlacement='adjacent-bilingual-cuv-kjv-v82';
   stage.dataset.p2UniqueVersoSystem='12-individually-authored-topographic-folios-v77';
   stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
   stage.dataset.p2FolioFront=activeSide;
