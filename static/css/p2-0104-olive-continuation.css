@@ -639,3 +639,28 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  opacity:var(--olive-ink-emphasis,1);
 }
 @media(max-width:600px){.olive-card__reverse-title{left:7%;right:6%;bottom:15%;font-size:clamp(17px,5vw,25px)}}
+
+/* V77 final polish: the twelve protected photographic posters own the
+   visual focus; the action must remain legible at 390px and at desktop.
+   Only local 04 OS typography and colors, no external contrast plate. */
+.olive-stage__enter{
+ color:var(--ws-paper);
+ border-top-color:var(--ws-paper);
+ font-weight:300;
+ font-size:clamp(13px,1.04vw,18px);
+ letter-spacing:.095em;
+ padding:12px 3px 8px;
+}
+.olive-stage__enter:hover,.olive-stage__enter:focus-visible{
+ color:var(--ws-paper);
+ text-decoration:underline;
+ text-underline-offset:5px;
+}
+@media(max-width:820px){
+ .olive-stage__enter{
+  bottom:62px;right:clamp(13px,8vw,42px);left:clamp(13px,8vw,42px);
+  width:auto;min-width:0;max-width:none;
+  font-size:13px;letter-spacing:.08em;
+  padding:9px 2px 6px;
+ }
+}
