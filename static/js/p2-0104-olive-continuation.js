@@ -423,7 +423,7 @@
   // Subordinate the shared landscape to the twelve real speakers as
   // the index completes; driven only by the existing reversible scroll.
   stage.style.setProperty('--olive-ink-emphasis',(1-.46*fan).toFixed(4));
-  stage.style.setProperty('--olive-ink-botanical',(.64*(1-.59*fan)).toFixed(4));
+  stage.style.setProperty('--olive-ink-botanical',(.75*(1-.42*fan)).toFixed(4));
   const vertical=g.w<600;
   // V60: every speaker gets an actual complete ink impression.
   // No moving clipping rectangle: each existing botanical SVG edition
