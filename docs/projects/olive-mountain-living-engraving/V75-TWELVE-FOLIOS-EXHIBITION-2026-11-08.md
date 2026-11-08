@@ -38,3 +38,14 @@
 **禁止錯誤做法**：把線條單純加粗、平移同心圓、增加濾鏡亮點、重複同一母本碎片、遮掩斷線，不算「進階藝術設計」。
 
 **執行次序**：先完成 V76 Terrain 六張及其靜態校樣；再沿同一地理母本製作 04 終場整體背景；在視覺驗收前均保持 Draft，不合併正式主站。
+
+## 2026-11-08｜V76 實際施工紀錄
+
+- 新增 `static/images/p2-realms/v15/v76-exhibition/04-olive-terrain-v76-1.svg` 至 `6.svg`：每幅保留 Olivet DEM 全 64 條原生地理輪廓，由不同視窗位置、縮放、三層刀線權重和羽化邊緣形成六幅完整可編輯 SVG。不是拆分六個圖片條帶；亦未複製緬甸獲獎作品線稿。
+- 在 Draft `static/js/p2-0104-olive-continuation.js`，原卡正面／文字及六幅 Walter Crane 植物背面完全保留；Terrain 六張改用 V76，左右交替翻面和滾動時序不改。
+- 新增 `static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg`：來自 V74 同一份 64 條真實地理線條，重新安排主／次／細線的印刷權重，整張畫不切分、不使用多張背景的接縫。
+- `static/js/p2-0104-olive-path-growth-v60.js` 由 V74 母本轉為 V76 母本，保留全輪廓按六批生長、反向滾動與單一進度控制；不新增 RAF。
+- 新增靜態展覽頁 `static/experiments/olive-v76-terrain-and-panorama.html`：6 張未動 Botanical + 6 張 V76 Terrain + 一幅連續終場地貌。
+- `tests/p2-0104-olive-v74-integrity.cjs` 以 V76 內容重新編訂，檢查真實 DEM 來源、64 條完整原始輪廓、六張獨立檔案、單一終場 SVG，以及保留原卡翻面。
+
+**狀態：Draft 工程接入及靜態校樣已完成；仍待 GitHub Actions、Cloudflare 正式部署結果、桌面／手機真實截圖和得獎級藝術驗收。V76 不宣稱藝術終稿；不得合併 main。**
