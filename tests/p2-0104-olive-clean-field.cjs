@@ -286,6 +286,9 @@ const widths=[1648,390];
    const leftAgain=await go(15.50,'05c-left-botanical-return');
    assert(leftAgain.plant>.3&&leftAgain.terrain>.15,
     'old letterpress impressions persist through the next alternating speaker');
+   const kouFeatured=await go(20.10,'08-kou-shao-en-mirrored-featured');
+   assert.equal(kouFeatured.rightPoster,'11','Kou Shao-en is the final featured right-side original poster');
+   assert.equal(kouFeatured.folioFaces,'back,front','Kou original image and unmirrored names remain on a physical front face');
    const end=await go(21.30,'09-twelve-voices-final-overview');
    assert(end.plant>.999&&end.terrain>.999,'all twelve posters: both engravings shown');
    assert.equal(end.completedRings,6,'all six right speaker contour editions are printed');
