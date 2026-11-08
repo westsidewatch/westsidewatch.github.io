@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>OLIVE MOUNTAIN · 橄欖山 · Twelve Scripture Folios — V80</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--ws-paper);color:var(--ws-ink);font-family:var(--ws-type-display-zh)}
+header,main,footer{max-width:1560px;margin-inline:auto;padding-inline:clamp(20px,5vw,76px)}
+header{padding-top:clamp(40px,6vw,100px);padding-bottom:44px}
+.kicker{font:200 11px/1.5 var(--ws-type-display-en);letter-spacing:.17em}
+h1{font:400 clamp(46px,7vw,105px)/.94 var(--ws-type-display-en);letter-spacing:-.055em;margin:18px 0 6px}
+header h2{font:200 clamp(21px,2.6vw,37px)/1.2 var(--ws-type-display-zh);letter-spacing:.19em;margin:12px 0 0}
+header blockquote{margin:22px 0 12px;max-width:48em;font:200 clamp(14px,1.2vw,18px)/1.7 var(--ws-type-display-zh)}
+header cite{font:italic 400 14px var(--ws-type-display-en);color:var(--ws-first-light)}
+.intro{max-width:800px;font:200 13px/1.7 var(--ws-type-display-zh);margin-top:26px;color:var(--ws-ink)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,2.1vw,30px) clamp(13px,2vw,26px);padding-bottom:80px}
+figure{margin:0;min-width:0}
+.art{position:relative;aspect-ratio:720/940;overflow:hidden;background:var(--ws-olive);
+color:var(--ws-paper);border:1px solid var(--ws-morning-gold)}
+.art::before{content:"";position:absolute;inset:5%;background:var(--ws-morning-gold);
+mask:var(--image) center/100% 100% no-repeat;opacity:.84;pointer-events:none}
+.art .no{position:absolute;top:5%;left:7%;font:200 12px var(--ws-type-display-en);letter-spacing:.18em;color:var(--ws-morning-gold)}
+.art .quote{position:absolute;left:8%;right:7%;bottom:16%;
+font:200 clamp(17px,1.46vw,25px)/1.38 var(--ws-type-display-zh);letter-spacing:.025em;
+text-wrap:pretty;font-synthesis:none}
+.art cite{position:absolute;left:8%;bottom:9%;font:200 clamp(13px,1.07vw,17px)/1.3 var(--ws-type-display-zh);
+font-style:normal;letter-spacing:.04em;color:var(--ws-morning-gold)}
+.art .rule{position:absolute;left:7%;right:7%;bottom:6.5%;border-top:1px solid var(--ws-morning-gold);opacity:.5}
+figcaption{padding:9px 2px;border-bottom:1px solid var(--ws-olive);display:flex;gap:4px;justify-content:space-between;
+font:200 11px/1.35 var(--ws-type-display-zh);letter-spacing:.045em}
+figcaption small{font:400 10px/1.3 var(--ws-type-display-en);color:var(--ws-olive)}
+footer{padding-bottom:75px;font:200 13px/1.7 var(--ws-type-display-zh)}
+a{color:var(--ws-first-light)}
+@media(max-width:1060px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:750px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.art .quote{font-size:clamp(16px,2.9vw,21px)}}
+@media(max-width:420px){.grid{grid-template-columns:1fr;max-width:380px;margin-inline:auto}.art .quote{font-size:clamp(20px,6vw,25px)}.art cite{font-size:16px}}
+</style>
+</head><body data-ws-scope="p2">
+<header><span class="kicker">P2 04 / THE TWELVE / SCRIPTURE FOLIOS · V80</span>
+<h1>OLIVE <i>MOUNTAIN</i></h1>
+<h2>橄欖山</h2>
+<blockquote>可見信道是從聽道來的，聽道是從基督的話來的。</blockquote>
+<cite>羅馬書 10:17 · Romans 10:17</cite>
+<p class="intro">十二位講員，每人一句對應其著作、教導或福音主題的經文。這是靜態藝術校樣，不是講員逐節使用頻率的統計。所有植物與地形 SVG 沿用實際 P2 卡背素材，講員正面完全沒有改動。</p>
+</header>
+<main><div class="grid" id="scripture-collection" aria-label="十二幅講員經文卡背"></div></main>
+<footer>凡直接見於講員教導或本人著作的經文，與依其講道主題選用的經文，都已分別標記、附有來源於
+<a href="https://github.com/westsidewatch/westsidewatch.github.io/blob/draft/p2-0104-olive-entry-20261105/docs/projects/olive-mountain-living-engraving/V80-SPEAKER-SCRIPTURE-EDITORIAL-2026-11-08.md">SVG 工程記錄</a>。本頁只供獨立藝術審查，不上線主站。</footer>
+<script src="/js/p2-0104-olive-scriptures-v80.js"></script>
+<script>
+(()=>{'use strict';
+ const target=document.getElementById('scripture-collection');
+ const cards=window.P2OliveScriptures?.cards;
+ if(!cards||cards.length!==12){target.textContent='Scripture data missing';return;}
+ for(let i=0;i<12;i++){
+  const c=cards[i],isBotanical=i%2===0,edition=Math.floor(i/2)+1;
+  const src=isBotanical
+   ?'/images/p2-realms/v15/04-olive-full-verso-v74-botanical-'+edition+'.svg'
+   :'/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-'+edition+'.svg';
+  const fig=document.createElement('figure');
+  const art=document.createElement('div');art.className='art';art.style.setProperty('--image','url("'+src+'")');
+  const no=document.createElement('span');no.className='no';no.textContent=String(i+1).padStart(2,'0')+' / 12';
+  const verse=document.createElement('span');verse.className='quote';verse.textContent=c.excerpt;
+  const cite=document.createElement('cite');cite.textContent=c.referenceZh;
+  const rule=document.createElement('span');rule.className='rule';rule.setAttribute('aria-hidden','true');
+  art.append(no,verse,cite,rule);
+  const caption=document.createElement('figcaption');
+  const speaker=document.createElement('span');speaker.textContent=c.speaker;
+  const evidence=document.createElement('small');evidence.textContent=c.evidence==='direct'?'DOCUMENTED':'EDITORIAL';
+  caption.append(speaker,evidence);
+  fig.append(art,caption);target.append(fig);
+ }
+})();
+</script>
+</body></html>
