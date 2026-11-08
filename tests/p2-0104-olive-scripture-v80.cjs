@@ -26,13 +26,16 @@ const css=read('static/css/p2-0104-olive-continuation.css');
 assert.match(html,/olive-stage__rubric-zh[^>]*lang="zh-Hant">橄欖山/);
 assert.match(html,/olive-stage__rubric-scripture[^>]*lang="zh-Hant">可見信道/);
 assert.match(html,/羅馬書 10:17/);
-assert.match(html,/olive-card__scripture-text/);
-assert.match(html,/olive-card__scripture-cite/);
-assert.match(html,/p2-0104-olive-scriptures-v80\.js/);
-assert(!html.includes('THE FIRST BRANCH')&&!html.includes('KIDRON</span>'));
-assert.match(js,/P2OliveScriptures\?\.cards\?\.\[id\]/);
-assert.match(js,/sourcePassage\.slug!==roster\[id\]\[0\]/);
-assert.match(js,/back\.dataset\.scriptureSpeaker=sourcePassage\.slug/);
-assert.match(css,/\.olive-card__scripture-cite/);
-assert.match(css,/\.olive-stage__rubric-zh/);
-console.log('PASS / V80: bilingual Olive chapter + Romans 10:17, twelve sourced speaker verses and immutable originals.');
+assert.equal((html.match(/class="olive-stage__companion"/g)||[]).length,2,
+  'two independent scripture reading panels must be mounted beside facing posters');
+assert.doesNotMatch(html,/class="olive-card__reverse-title"/,
+  'no scripture on the physical reverse of any speaker card');
+assert.doesNotMatch(html,/class="olive-card__reading-veil"/,
+  'old verse-only reverse fields must be retired');
+assert.match(html,/p2-0104-olive-scriptures-v80\\.js/);
+assert.match(js,/P2OliveScriptures\\?\\.cards\\?\\.\\[speaker\\]/);
+assert.match(js,/position\\(panel,card\\.x,card\\.y,card\\.w,card\\.h\\)/);
+assert.match(js,/stage\\.dataset\\.p2ScripturePlacement='adjacent-independent-not-on-flipping-reverse-v81'/);
+assert.match(css,/\\.olive-stage__companion-reading/);
+assert.match(css,/\\.olive-stage__rubric-zh/);
+console.log('PASS / V81: lecturer's scripture in an independent adjacent column, no verse printed on the rotating card.');
