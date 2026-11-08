@@ -423,6 +423,39 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
   font-size:7px;letter-spacing:.06em;
  }
 }
+/* V74 · complete copperplate folio masters. The full native 720×940
+   artboard is inset from all card edges, so no source path is ever
+   truncated by a mask crop or by the card's outer rectangle.
+   The mini-fragment overlay is retired entirely. */
+.olive-card__reverse::before{
+ content:""!important;position:absolute!important;inset:4.8% 5.8% 9.6%!important;
+ background:var(--folio-ink,var(--ws-morning-gold))!important;
+ opacity:var(--folio-back-alpha,.95)!important;
+ -webkit-mask-image:var(--folio-detail)!important;
+ mask-image:var(--folio-detail)!important;
+ -webkit-mask-size:100% 100%!important;mask-size:100% 100%!important;
+ -webkit-mask-position:center center!important;mask-position:center center!important;
+ -webkit-mask-repeat:no-repeat!important;mask-repeat:no-repeat!important;
+ pointer-events:none;
+}
+.olive-card__reverse--botanical::before,
+.olive-card__reverse--terrain::before{opacity:var(--folio-back-alpha,.95)!important}
+.olive-card__reverse::after{content:none!important;display:none!important}
+.olive-card__reverse-mark{
+ z-index:2;opacity:var(--folio-mark-alpha,1)!important;
+ text-shadow:0 1px 2px color-mix(in oklab,var(--ws-olive) 55%,var(--ws-ink));
+}
+/* A single real 64-path terrain SVG is the ENTIRE final landscape.
+   Make the stage's geographic half feather softly at its true outer
+   perimeter rather than cutting line ends with an inset plate mask. */
+.olive-editorial-engraving__half[data-art-side="right"]{
+ -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 11%,#000 91%,transparent 100%)!important;
+ mask-image:linear-gradient(to right,transparent 0%,#000 11%,#000 91%,transparent 100%)!important;
+}
+.olive-editorial-engraving__print--topography svg{
+ overflow:visible!important;
+ stroke-linecap:round;stroke-linejoin:round;
+}
 /* 04 background engraving retired. The speaker invitation headpiece is
    separate card artwork, not a stage-wide texture. */
 .olive-stage__overview{z-index:6;inset:0;visibility:hidden;background:transparent}
