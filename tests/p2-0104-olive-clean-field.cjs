@@ -325,7 +325,7 @@ const widths=[1648,390,320];
    assert.equal(rightLocked.reverseFaces[0].scriptureRef,'加拉太書 2:20');
    assert.match(rightLocked.reverseFaces[0].scriptureFont,/Chiron Hei HK WS/,
      'Chinese scripture citation must use OS CJK glyphs rather than Latin Bodoni missing-glyph boxes');
-   assert.equal(rightLocked.reverseFaces[0].scriptureColor,'rgb(248, 247, 241)',
+   assert.equal(rightLocked.reverseFaces[0].scriptureColor,'rgb(250, 249, 245)',
      'Chinese reading passage should be OS paper, separate from gold botanical impression');
    assert.match(rightLocked.reverseFaces[0].scriptureText,/不再是我/);
    assert.equal(rightLocked.reverseFaces[1].scriptureSpeaker,'derek-prince');
