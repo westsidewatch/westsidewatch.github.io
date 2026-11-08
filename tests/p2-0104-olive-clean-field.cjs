@@ -318,14 +318,22 @@ const widths=[1648,390,320];
    assert.equal(end.posterNodes,12);
    const exitLink=await page.locator('#olive-enter').evaluate(a=>{
      const box=a.getBoundingClientRect(),cs=getComputedStyle(a);
+     const label=a.querySelector('.olive-stage__enter-label');
+     const lb=label?.getBoundingClientRect(),lcs=label&&getComputedStyle(label);
+     const hit=lb&&document.elementFromPoint(Math.min(innerWidth-1,lb.x+lb.width/2),Math.min(innerHeight-1,lb.y+lb.height/2));
      return {text:a.textContent,clip:cs.clipPath,visible:cs.visibility,
-      width:box.width,height:box.height,left:box.left,right:box.right};
+      width:box.width,height:box.height,left:box.left,right:box.right,
+      labelWidth:lb?.width,labelLeft:lb?.left,labelRight:lb?.right,
+      labelDisplay:lcs?.display,hitOwn:hit===label||a.contains(hit)};
    });
    assert.match(exitLink.text,/EXPLORE ALL TWELVE/,'editorial entrance label retained');
    assert.equal(exitLink.visible,'visible','index exit visible after twelve speakers');
    assert.equal(exitLink.clip,'none','settled index entrance must not cut off 320px text');
    assert(exitLink.left>=0&&exitLink.right<=width&&exitLink.width>120,
      'completed entrance must fit within desktop and 320px viewport');
+   assert(exitLink.labelWidth>120&&exitLink.labelLeft>=0&&exitLink.labelRight<=width,
+     'EXPLORE ALL TWELVE must have a real, readable 320px on-screen text box');
+   assert(exitLink.hitOwn,'actual first-party call-to-action glyphs must not be hidden by an overlay');
    const kou=await page.evaluate(()=>{
     const card=document.querySelector('#olive-overview .olive-stage__index-card[data-speaker="kou-shao-en"]');
     const art=card?.querySelector('.olive-stage__artwork');
