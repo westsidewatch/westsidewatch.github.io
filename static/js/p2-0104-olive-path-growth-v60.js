@@ -1,5 +1,5 @@
 /* P2/04 · V60 / MERSI LETTERPRESS, NOT A RECTANGULAR REVEAL.
- * One fetched, measured Olivet terrain SVG. Complete contour lines
+ * One continuous measured Olivet terrain SVG. Complete contour lines
  * are printed in six successive speaker-owned batches, inside-out.
  * No dashed drawing, no independent RAF, no invented topography.
  */
@@ -29,7 +29,7 @@
   stage.dataset.p2TerrainCompleteRings=String(latest.filter(x=>x>.999).length);
  }
  window.P2OliveEngraving={paint};
- fetch('/images/p2-realms/v15/04-olive-mount-terrain-growth-v53.svg')
+ fetch('/images/p2-realms/v15/04-olive-terrain-continuous-mother-v74.svg')
  .then(r=>{if(!r.ok)throw Error('Olivet DEM SVG '+r.status);return r.text()})
  .then(source=>{
   const doc=new DOMParser().parseFromString(source,'image/svg+xml');
@@ -68,7 +68,7 @@
    batches[edition].push(path);
   });
   mount.classList.add('has-path-growth');
-  stage.dataset.p2TerrainStrokeEngine='real-dem-whole-contours-v60';
+  stage.dataset.p2TerrainStrokeEngine='real-dem-one-continuous-mother-v74';
   stage.dataset.p2TerrainPathTotal=String(paths.length);
   paint(null,latest);
  })
