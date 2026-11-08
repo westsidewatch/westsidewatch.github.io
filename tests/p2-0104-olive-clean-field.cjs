@@ -80,6 +80,18 @@ assert.match(css,/\.olive-card__relief::after\{/,
  'approved historic card masthead is preserved across all editions');
 assert.match(js,/imprintFamilies=/,'four editions assigned from approved twelve');
 assert.match(js,/frozen\.mount\(art,target\)/,'frozen poster typography retained');
+assert.match(js,/art\.dataset\.speaker=target/,'current speaker is marked only on the original artwork plane');
+assert.match(css,/\.olive-stage__artwork\[data-speaker="kou-shao-en"\]>.olive-stage__original\{/,
+ 'Kou Shao-en alone receives an image-level mirror, never a whole-card or text mirror');
+assert.match(css,/--ws-branch:var\(--ws-olive\)/,'olive verso stock cannot inherit gold-branch muddy brown');
+assert.match(css,/-webkit-mask-image:var\(--folio-detail\)!important/,'card-back closeup must use uniquely cropped engraving');
+for(let edition=1;edition<=6;edition++){
+ for(const family of ['botanical','terrain']){
+  const svg=read(`static/images/p2-realms/v15/04-olive-verso-detail-v72-${family}-${edition}.svg`);
+  assert.match(svg,/<svg /,'all twelve unique reverse closeups exist');
+  assert.match(svg,/viewBox="/,'each closeup has real source geometry');
+ }
+}
 assert.match(js,/const readingField=ease\(\(d-T\.first\)\/\.065\);/,
   'original Emmaus handoff timing unchanged');
 assert.match(read('static/experiments/p2-0103-release.html'),/p2-emmaus-bookbinding-v7\.css/,
@@ -154,6 +166,7 @@ const widths=[1648,390];
         speaker:el.dataset.speakerIndex,
         fragment:el.dataset.printFragment,
         source:el.style.getPropertyValue('--folio-fragment'),
+        detail:el.style.getPropertyValue('--folio-detail'),
         alpha:Number.parseFloat(el.style.getPropertyValue('--folio-back-alpha')),
         mark:Number.parseFloat(el.style.getPropertyValue('--folio-mark-alpha')),
         paper:getComputedStyle(el).backgroundColor,
@@ -255,6 +268,8 @@ const widths=[1648,390];
     'completed reverse edition label and original small ink detail remain clearly visible');
    assert(rightLocked.reverseFaces[0].alpha>.70,
     'first completed botanical reverse must stay visibly printed after handing ink to the stage');
+   assert(rightLocked.reverseFaces[0].detail.includes('verso-detail-v72-botanical-1.svg'),
+    'visible botanical reverse must show its unique cropped original engraved detail');
    assert.equal(rightLocked.reverseFaces[0].fragment,'1',
     'first botanical reverse is an individual speaker-specific impression');
 
@@ -277,6 +292,20 @@ const widths=[1648,390];
    assert(end.plantLayers.every(v=>v>.999),'all six botanical engraved editions remain visible after twelve speakers');
    assert.match(css,/var\(--ws-deep\)/,'plant includes genuinely dark olive impression from the shared OS');
    assert.equal(end.posterNodes,12);
+   const kou=await page.evaluate(()=>{
+    const card=document.querySelector('#olive-overview .olive-stage__index-card[data-speaker="kou-shao-en"]');
+    const art=card?.querySelector('.olive-stage__artwork');
+    const img=art?.querySelector('.olive-stage__original');
+    const lettering=art?.querySelector('olive-speaker-baseline');
+    return {src:img?.getAttribute('src'),speaker:art?.dataset.speaker,
+     imgTransform:img?getComputedStyle(img).transform:null,
+     letterTransform:lettering?getComputedStyle(lettering).transform:null};
+   });
+   assert.equal(kou.speaker,'kou-shao-en','only Kou portrait receives mirrored source tag');
+   assert.equal(kou.imgTransform,'matrix(-1, 0, 0, 1, 0, 0)',
+    'Kou portrait image visibly flips left/right in twelve-person index');
+   assert.equal(kou.letterTransform,'none',
+    'Kou English and Chinese type are not reversed by the image mirror');
    const back=await go(9.30,'10-reversed-original-emmaus');
    assert.equal(back.source,'visible','reverse scrolling restores 03 original');
    assert.equal(back.artVisibility,'hidden','reverse to 03 removes both 04 engraving fields');
