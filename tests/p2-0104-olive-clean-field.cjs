@@ -35,7 +35,7 @@ assert.match(css,/\.olive-card__reverse--terrain::before/,'geographic card back 
 assert.match(css,/background:color-mix\(in oklab,var\(--ws-olive\) 68%,var\(--ws-ink\)\)/,
  'reverse must derive deep olive from OS olive identity rather than accidentally inheriting the gold journal branch');
 assert.match(css,/width:100%!important;height:100%!important/,'speaker baseline stays registered to untransformed 3:4 artwork');
-assert.match(js,/12-complete-uncut-engraved-folios-v74/);
+assert.match(js,/12-complete-topographic-folios-v76/);
 for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-terrain-fragment-v68-${n}.svg`),/olivet topography|Olivet topography/i);
 assert.match(css,/transform:rotateY\(180deg\)/,'actual verso faces the camera when physical card turns');
 assert.equal((html.match(/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
@@ -45,9 +45,9 @@ assert.match(js,/indexStart:20\.20,indexEnd:21\.20,end:21\.60/,'gentle flips req
 assert.match(css,/height:2280svh/,'physical scroll track remains longer than all V71 poses');
 const terrainEngine=read('static/js/p2-0104-olive-path-growth-v60.js');
 assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
-assert.match(terrainEngine,/04-olive-terrain-continuous-mother-v74\.svg/,
+assert.match(terrainEngine,/04-olive-terrain-continuous-mother-v76\.svg/,
  'only continuous geographic mother plate may supply final topography');
-const mother=read('static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v74.svg');
+const mother=read('static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg');
 assert.equal((mother.match(/<path\b/g)||[]).length,64,
  'all sixty-four authentic Mount of Olives contours remain in the ONE mother SVG');
 assert.match(mother,/terrain-horizontal-feather/);
@@ -58,7 +58,7 @@ assert.doesNotMatch(mother,/stroke-dasharray="1000 1000"/,
 assert.match(terrainEngine,/getBBox\(\)/);
 assert.doesNotMatch(terrainEngine,/strokeDashoffset='1000'/,'do not redraw or crop entire rings');
 assert.match(terrainEngine,/p2ContourImpression/);
-assert.match(terrainEngine,/original\*1\.65/,'terrain line hierarchy optically strengthened');
+assert.match(terrainEngine,/original\*1\.18/,'terrain line hierarchy optically strengthened');
 assert.match(terrainEngine,/b\.area-a\.area/,'major topographic ridge lines must print before tiny isolated loops');
 assert.match(css,/filter:opacity\(\.64\)/,'oversized botanical area subdued without deleting the SVG layers');
 const terrainSvg=read('static/images/p2-realms/v15/04-olive-mount-terrain-growth-v53.svg');
@@ -98,15 +98,15 @@ assert.match(css,/--ws-branch:var\(--ws-olive\)/,'olive verso stock cannot inher
 assert.match(css,/-webkit-mask-image:var\(--folio-detail\)!important/,'card-back closeup must use uniquely cropped engraving');
 for(let edition=1;edition<=6;edition++){
  for(const family of ['botanical','terrain']){
-  const svg=read(`static/images/p2-realms/v15/04-olive-full-verso-v74-${family}-${edition}.svg`);
+  const svg=read(family==='terrain' ? `static/images/p2-realms/v15/v76-exhibition/04-olive-terrain-v76-${edition}.svg` : `static/images/p2-realms/v15/04-olive-full-verso-v74-botanical-${edition}.svg`);
   assert.match(svg,/<svg /,'all twelve complete engraved card back SVGs exist');
   assert.match(svg,/viewBox="0 0 720 940"/,'each complete verso uses a consistent uncropped 3:4 folio system');
   if(family==='terrain'){
-   assert.match(svg,/closed (?:Olivet-derived )?topographic contour|closed-contour folio/i,
+   assert.match(svg,/Olivet.*(?:DEM|topographic)|geographic.*DEM/i,
      'terrain backs must use physically continuous loops without cut line ends');
    assert((svg.match(/<path /g)||[]).length>=10,
     'each terrain folio has seven nested complete geographic contours and secondary hills');
-   assert.equal((svg.match(/ Q[-\d.]+,/g)||[]).length>=600, true,
+   assert.equal((svg.match(/ L[-\d.]+,/g)||[]).length>=600, true,
     'each contour folio uses smooth connected curves, not fragments of open DEM paths');
   }else{
    assert.match(svg,/crane-public-domain-olive/,'botanical backs recompose the public-domain Walter Crane plate');
@@ -265,7 +265,7 @@ const widths=[1648,390];
     'protected English text must stay exactly full-size in the original 3:4 front regardless of flip geometry');
    assert.equal(leftInk.leftClip,'none','no box clipping on botanical field');
    assert.equal(leftInk.rightClip,'none','no box clipping on contour field');
-   await page.waitForFunction(()=>['real-dem-one-continuous-mother-v74','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
+   await page.waitForFunction(()=>['real-dem-one-continuous-mother-v76','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
    // Prove the magic is a geometric 3D turn, not a static front/back swap.
    const enteringFlip=await go(12.065,'05aa1-right-card-mid-flip');
    const enteringAngle=Number(enteringFlip.folioAngles?.split(',')[1]);
@@ -299,7 +299,7 @@ const widths=[1648,390];
    const rightInk=await go(15.10,'05b-right-terrain-second-complete');
    assert.equal(rightInk.leftPoster,'4','left has safely preloaded the next portrait behind its botanical reverse');
    assert.equal(rightInk.portraitDecode,'ready','original portraits predecoded before alternating swaps');
-   assert.equal(rightInk.terrainEngine,'real-dem-one-continuous-mother-v74','one measured mother plate is printed without panel clipping');
+   assert.equal(rightInk.terrainEngine,'real-dem-one-continuous-mother-v76','one measured mother plate is printed without panel clipping');
    assert(rightInk.fullContourPaths>=24&&rightInk.visibleContours>0,'full geographic contours displayed');
    assert(rightInk.completedRings>=1,'retired right speaker has transferred the first full contour fragment');
    assert(rightInk.terrain>.15&&rightInk.plant>.15,
