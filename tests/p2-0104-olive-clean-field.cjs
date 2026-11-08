@@ -31,7 +31,10 @@ assert.equal((html.match(/class="olive-card__reverse olive-card__reverse--/g)||[
 assert.match(css,/backface-visibility:hidden/,'front and reverse need hidden back faces');
 assert.match(css,/\.olive-folio-carrier\{/,'single rigid folio carrier supports protected portrait and reverse');
 assert.match(css,/\.olive-card__reverse--botanical::before/,'visible authentic botanical card back');
-assert.match(css,/\.olive-card__reverse--terrain::before/,'visible authentic topographic card back');
+assert.match(css,/\.olive-card__reverse--terrain::before/,'geographic card back has real texture');
+assert.match(css,/width:100%!important;height:100%!important/,'speaker baseline stays registered to untransformed 3:4 artwork');
+assert.match(js,/12-registered-background-fragments-v68/);
+for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-terrain-fragment-v68-${n}.svg`),/olivet topography|Olivet topography/i);
 assert.match(css,/transform:rotateY\(180deg\)/,'actual verso faces the camera when physical card turns');
 assert.equal((html.match(/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
  'only the single chapter masthead is allowed; card backs have understated edition labels');
@@ -127,12 +130,23 @@ const widths=[1648,390];
        folioSystem:stage.dataset.p2FolioSystem,
        rigidCards:[...document.querySelectorAll('.olive-folio-carrier')].map(el=>({
         children:[...el.children].map(c=>c.id),
-        transform:getComputedStyle(el).transform
+        transform:getComputedStyle(el).transform,
+        speaker:el.dataset.speakerIndex,
+        fragment:el.dataset.printFragment,
+        source:el.style.getPropertyValue('--folio-fragment'),
+        alpha:Number.parseFloat(el.style.getPropertyValue('--folio-back-alpha'))
        })),
        frontPortraits:[...document.querySelectorAll('#olive-pair-left,#olive-pair-right')].map(el=>({
         parent:el.parentElement?.className,
         transform:getComputedStyle(el).transform,
-        baseline:!!el.querySelector('olive-speaker-baseline')
+        baseline:!!el.querySelector('olive-speaker-baseline'),
+        geometry:(()=>{
+         const parent=el.querySelector('.olive-stage__artwork');
+         const type=el.querySelector('olive-speaker-baseline');
+         if(!parent||!type)return null;
+         return {artWidth:parent.offsetWidth,artHeight:parent.offsetHeight,
+          typeWidth:type.offsetWidth,typeHeight:type.offsetHeight};
+        })()
        })),
        reverseFaces:[...document.querySelectorAll('.olive-card__reverse')].map(el=>({
         visible:getComputedStyle(el).visibility,
@@ -197,7 +211,8 @@ const widths=[1648,390];
    assert(mid.bgImages.every(x=>x==='none'),'04 background must have no image');
    assert(mid.bgPseudo.every(x=>x==='none'),'04 background must have no pseudo-image');
    const leftInk=await go(11.90,'05a-left-portrait-and-right-back');
-   assert(leftInk.plant>.16&&leftInk.terrain>.16,'both printing fields retained');
+   assert(leftInk.plant<.01&&leftInk.terrain<.01,
+    'before first exit, a unique back carries the seed, not a prematurely completed large background');
    assert.equal(leftInk.folioFaces,'front,back','first: left portrait and right engraved reverse');
    assert.equal(leftInk.folioSystem,'measured-two-faced-rotating-card-v67');
    assert.equal(leftInk.reverseFaces.length,2);
@@ -205,8 +220,9 @@ const widths=[1648,390];
     'each physical card back must actually show its olive or terrain engraved artwork');
    assert.equal(leftInk.rigidCards.length,2,'one real carrier on each side');
    assert(leftInk.rigidCards.every(c=>c.children.length===3),'front shell, original poster and printed back share one carrier');
-   assert(leftInk.frontPortraits.every(c=>c.parent==='olive-folio-carrier'&&c.transform==='none'&&c.baseline),
-    'frozen English baseline and image must never receive an independent 3D transform');
+   assert(leftInk.frontPortraits.every(c=>c.parent==='olive-folio-carrier'&&c.transform==='none'&&c.baseline&&
+     Math.abs(c.geometry.typeWidth-c.geometry.artWidth)<2&&Math.abs(c.geometry.typeHeight-c.geometry.artHeight)<2),
+    'protected English text must stay exactly full-size in the original 3:4 front regardless of flip geometry');
    assert.equal(leftInk.leftClip,'none','no box clipping on botanical field');
    assert.equal(leftInk.rightClip,'none','no box clipping on contour field');
    await page.waitForFunction(()=>['real-dem-whole-contours-v60','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
@@ -223,15 +239,21 @@ const widths=[1648,390];
    assert.equal(rightLocked.folioFaces,'back,front','right figure is front; left botanical back');
    assert.equal(rightLocked.rightPoster,'1','right approved Derek Prince portrait');
    assert.equal(rightLocked.portraitDecode,'ready','approved portraits decoded');
+   assert.equal(rightLocked.reverseFaces[0].speaker,'0',
+    'left reverse contributes first speaker botanical fragment');
+   assert(rightLocked.reverseFaces[0].source.includes('impression-v60-1.svg'),
+    'first of twelve card backs is individual botanical plate, not the full floral field');
    const rightInk=await go(13.10,'05b-right-terrain-second-complete');
    assert.equal(rightInk.leftPoster,'4','left has safely preloaded the next portrait behind its botanical reverse');
    assert.equal(rightInk.portraitDecode,'ready','original portraits predecoded before alternating swaps');
    assert.equal(rightInk.terrainEngine,'real-dem-whole-contours-v60','complete measured contour paths are printed, never SVG wipe');
    assert(rightInk.fullContourPaths>=24&&rightInk.visibleContours>0,'full geographic contours displayed');
-   assert(rightInk.completedRings>=2,'two successive right speakers each print a complete new contour batch');
-   assert(rightInk.terrain>.3&&rightInk.plant>.3,'left printed editions HOLD while right adds a new whole contour batch');
+   assert(rightInk.completedRings>=1,'retired right speaker has transferred the first full contour fragment');
+   assert(rightInk.terrain>.15&&rightInk.plant>.15,
+    'one whole contour and one earlier botanical edition transfer into persistent background');
    const leftAgain=await go(13.50,'05c-left-botanical-return');
-   assert(leftAgain.plant>.3&&leftAgain.terrain>.3,'old letterpress impressions persist through next alternating speaker');
+   assert(leftAgain.plant>.3&&leftAgain.terrain>.15,
+    'old letterpress impressions persist through the next alternating speaker');
    const end=await go(17.30,'09-twelve-voices-final-overview');
    assert(end.plant>.999&&end.terrain>.999,'all twelve posters: both engravings shown');
    assert.equal(end.completedRings,6,'all six right speaker contour editions are printed');
