@@ -1,7 +1,7 @@
 # 競品樣本矩陣 R01｜中文福音 YouTube 市場
 
 **核查日期：2026-11-08；性質：探索樣本，不是市場份額排名。**  
-本樣本含 **18 個不同 YouTube 頻道／來源中的 17 個以上頻道識別**，其中包括跨地區、跨格式及英文對照。個別僅能核實「頻道存在及節目類型」，**無法核實最近 90 天完整影片數據**。特別注意：同一機構有多個語種／形式的頻道，統計學上不視為獨立經營主體。
+本樣本含 **21 個 YouTube 頻道／可靠入口的對標樣本**，其中包括跨地區、跨格式及英文對照。個別僅能核實「頻道存在及節目類型」，**無法核實最近 90 天完整影片數據**。特別注意：同一機構有多個語種／形式的頻道，統計學上不視為獨立經營主體。
 
 ### 一、華語市場樣本（C01–C14）
 
@@ -22,7 +22,19 @@
 | **C13** | [以斯拉培訓網絡](https://www.youtube.com/@equiptoserve) | 神學訓練、聖經背景與考古教學 | 深度課程和普通觀眾的進入門檻 | **B：教會資料站明確列出頻道入口；2026 近期影片樣本未驗證** [O13] |
 | **C14** | [大衛鮑森國際中文頻道（已驗證影片入口）](https://www.youtube.com/watch?v=P4IRCJKXspI) | 國際講員的中文聖經講座、逐卷解經 | 翻譯講道、長期內容索引、品牌講員效應 | **B：2021 已刊影片可確認頻道名稱及原有內容；本次未取得可信的頻道首頁 ID，故只連結確定的影片，不聲稱其 90 日活躍** [O14] |
 
-### 二、英文／跨語參照組（C15–C18）
+### 二、華語教會官方頻道（C19–C21）
+
+以下三組是**堂會經營的頻道**，與 GOOD TV、BibleProject 等機構型內容生產者不同，且有 2026 年 11 月 7–8 日可見的活動觀測。它們顯示「已有會眾／教會活動」可以穩定供應影片，但無法據此判斷對非信徒的自然搜尋觸達率。
+
+| ID | 頻道／可靠入口 | 核實的內容定位 | 最新公開觀測 | 研究問題 |
+| --- | --- | --- | --- | --- |
+| **C19** | [台北靈糧堂](https://www.youtube.com/channel/UClDpY60wBFG-j2VEI4kQplQ) | 主日、職場聚會、每日靈糧及人物內容 | **7.66 萬訂閱、3,153 影片、近月觀看增量 411,345、近月新增 49 片**（2026-11-07/08） | 直播、靈修與新觀眾探索怎樣分層 [O19] |
+| **C20** | [雙連教會 ShuangLienTV](https://www.youtube.com/channel/UCrJ9k-pBPOrgtrS8fqoG0Kw) | 主日台語／華語、逐日經文、禱告聚會 | **1.78 萬訂閱、10,961 影片、近月觀看增量 80,081、近月新增 81 片**（2026-11-08） | 高發布密度的資料庫是否適合陌生人發現 [O20] |
+| **C21** | [旌旗教會](https://www.youtube.com/channel/UCLkrfxHnrqA2hu01i7SbP_w) | 主日直播、信息、生活及部分英文版本 | **10.9 萬訂閱、2,381 影片、近月觀看增量 174,296、近月新增 22 片**（2026-11-07） | 既有教會如何安排中英節目與剪輯 [O21] |
+
+**資料註記：** 「近月觀看增量」是第三方觀測期間的整體頻道累計差額，並非「當月新發布影片播放量」；第三方部分新／排程直播未取得觀看量時顯示缺失或 0，不能解讀為影片永遠無觀眾。不同頻道的觀測窗口、內容年齡和存量影片也不完全相同。
+
+### 三、英文／跨語參照組（C15–C18）
 
 | ID | 頻道／可靠入口 | 核實的內容定位 | 可學習與限制 | 來源等級 |
 | --- | --- | --- | --- | --- |
@@ -67,5 +79,8 @@
 - **O16** https://www.youtube.com/channel/UCBXOFnNTULFaAnj24PAeblg ；https://vidiq.com/youtube-stats/channel/%40thechosenseries/about/
 - **O17** https://www.youtube.com/channel/UCaxAnjdU0EfausRUCG7iO0g ；https://www.thetmbh.com/
 - **O18** https://www.thetmbh.com/ ；https://www.youtube.com/@mattwhitmantmbh
+- **O19** https://youtube.observe.tw/channels/2666 ；https://www.youtube.com/channel/UClDpY60wBFG-j2VEI4kQplQ
+- **O20** https://youtube.observe.tw/channels/3126 ；https://www.youtube.com/channel/UCrJ9k-pBPOrgtrS8fqoG0Kw
+- **O21** https://youtube.observe.tw/channels/3097 ；https://www.youtube.com/channel/UCLkrfxHnrqA2hu01i7SbP_w
 
 **A/B 等級表示身份／內容核實強度，不表示內容神學觀點、頻道規模或作品品質分數。**
