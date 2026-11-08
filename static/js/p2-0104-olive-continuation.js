@@ -420,6 +420,9 @@
   firstInvitation.style.setProperty('--olive-imprint-clip',
    ((1-plateReveal)*100).toFixed(2)+'%');
   const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
+  // Subordinate the shared landscape to the twelve real speakers as
+  // the index completes; driven only by the existing reversible scroll.
+  stage.style.setProperty('--olive-ink-emphasis',(1-.30*fan).toFixed(4));
   const vertical=g.w<600;
   // V60: every speaker gets an actual complete ink impression.
   // No moving clipping rectangle: each existing botanical SVG edition
@@ -580,9 +583,14 @@
   for(let i=0;i<2;i++){
    const card=cardSlots[i],id=versoIndices[i],edition=Math.floor(id/2);
    const back=backs[i],isBotanical=i===0;
+   const editionTitles=isBotanical
+    ?['THE FIRST BRANCH','OLIVE CANOPY','FRUIT & HARVEST','THE BENDING TREE','VINE & LIGHT','THE LAST GROVE']
+    :['KIDRON DESCENT','NORTHERN CREST','EASTERN RIDGE','SOUTHERN TERRACES','SACRED SADDLE','OLIVET ATLAS'];
+   const plateTitle=back.querySelector('.olive-card__reverse-title');
+   if(plateTitle)plateTitle.textContent=editionTitles[edition];
    const source=isBotanical
     ?'/images/p2-realms/v15/04-olive-full-verso-v74-botanical-'+(edition+1)+'.svg'
-    :'/images/p2-realms/v15/v76-exhibition/04-olive-terrain-v76-'+(edition+1)+'.svg';
+    :'/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-'+(edition+1)+'.svg';
    back.style.setProperty('--folio-fragment','url("'+source+'")');
    back.style.setProperty('--folio-detail','url("'+source+'")');
    const inks=['var(--ws-morning-gold)','var(--ws-pale-gold)',
@@ -601,7 +609,7 @@
    back.dataset.printFragment=String(edition+1);
    turnFace(carriers[i],turns[i],card.w/2,card.h/2,depth);
   }
-  stage.dataset.p2UniqueVersoSystem='12-complete-topographic-folios-v76';
+  stage.dataset.p2UniqueVersoSystem='12-individually-authored-topographic-folios-v77';
   stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
   stage.dataset.p2FolioFront=activeSide;
   stage.dataset.p2FolioAngles=turns.map(x=>x.toFixed(2)).join(',');
