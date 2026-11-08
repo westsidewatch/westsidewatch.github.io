@@ -38,4 +38,4 @@ assert.match(js,/position\\(panel,card\\.x,card\\.y,card\\.w,card\\.h\\)/);
 assert.match(js,/stage\\.dataset\\.p2ScripturePlacement='adjacent-independent-not-on-flipping-reverse-v81'/);
 assert.match(css,/\\.olive-stage__companion-reading/);
 assert.match(css,/\\.olive-stage__rubric-zh/);
-console.log('PASS / V81: lecturer's scripture in an independent adjacent column, no verse printed on the rotating card.');
+console.log("PASS / V81: lecturer scripture in an independent adjacent column, never on a rotating card.");
