@@ -215,7 +215,9 @@
   // V82: a genuine editorial masthead reserves a separate reading band.
   // 01–03 does not move; only the settled 04 printed poster grid receives
   // more upper space. Preserve the poster 3:4 composite and original text.
-  const top=mobile?Math.max(84,Math.min(100,g.h*.12)):
+  // Mobile bilingual KJV chapter text needs a genuine gutter above the
+  // first folio; prior 390px art proof let Romans 10:17 kiss the foil border.
+  const top=mobile?Math.max(124,Math.min(145,g.h*.158)):
     Math.max(208,Math.min(238,g.h*.24));
   const bottom=mobile?Math.max(46,Math.min(67,g.h*.075)):
     Math.max(50,Math.min(73,g.h*.078));
