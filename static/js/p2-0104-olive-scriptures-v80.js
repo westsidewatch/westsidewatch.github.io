@@ -29,7 +29,7 @@
     "speaker": "大衛鮑森",
     "referenceZh": "提摩太後書 3:16",
     "referenceEn": "2 Timothy 3:16",
-    "excerpt": "聖經都是神所默示的，於教訓、督責、使人歸正，都是有益的。",
+    "excerpt": "聖經都是神所默示的，於教訓、督責、使人歸正……都是有益的。",
     "evidence": "editorial"
   },
   {
@@ -93,7 +93,7 @@
     "speaker": "于宏潔",
     "referenceZh": "以弗所書 3:20",
     "referenceEn": "Ephesians 3:20",
-    "excerpt": "神能照著運行在我們心裡的大力，充充足足地成就一切，超過我們所求所想的。",
+    "excerpt": "神能照著運行在我們心裡的大力，充充足足的成就一切，超過我們所求所想的。",
     "evidence": "direct"
   },
   {
