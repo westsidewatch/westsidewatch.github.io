@@ -35,7 +35,7 @@ assert.match(css,/\.olive-card__reverse--terrain::before/,'geographic card back 
 assert.match(css,/background:color-mix\(in oklab,var\(--ws-olive\) 68%,var\(--ws-ink\)\)/,
  'reverse must derive deep olive from OS olive identity rather than accidentally inheriting the gold journal branch');
 assert.match(css,/width:100%!important;height:100%!important/,'speaker baseline stays registered to untransformed 3:4 artwork');
-assert.match(js,/12-complete-topographic-folios-v76/);
+assert.match(js,/12-individually-authored-topographic-folios-v77/);
 for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-terrain-fragment-v68-${n}.svg`),/olivet topography|Olivet topography/i);
 assert.match(css,/transform:rotateY\(180deg\)/,'actual verso faces the camera when physical card turns');
 assert.equal((html.match(/<strong>OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
@@ -98,7 +98,7 @@ assert.match(css,/--ws-branch:var\(--ws-olive\)/,'olive verso stock cannot inher
 assert.match(css,/-webkit-mask-image:var\(--folio-detail\)!important/,'card-back closeup must use uniquely cropped engraving');
 for(let edition=1;edition<=6;edition++){
  for(const family of ['botanical','terrain']){
-  const svg=read(family==='terrain' ? `static/images/p2-realms/v15/v76-exhibition/04-olive-terrain-v76-${edition}.svg` : `static/images/p2-realms/v15/04-olive-full-verso-v74-botanical-${edition}.svg`);
+  const svg=read(family==='terrain' ? `static/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-${edition}.svg` : `static/images/p2-realms/v15/04-olive-full-verso-v74-botanical-${edition}.svg`);
   assert.match(svg,/<svg /,'all twelve complete engraved card back SVGs exist');
   assert.match(svg,/viewBox="0 0 720 940"/,'each complete verso uses a consistent uncropped 3:4 folio system');
   if(family==='terrain'){
