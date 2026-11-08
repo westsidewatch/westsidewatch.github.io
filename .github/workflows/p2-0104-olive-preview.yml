@@ -10,6 +10,7 @@ on:
       - 'static/experiments/olive-v76-terrain-and-panorama.html'
       - 'static/experiments/olive-v77-exhibition.html'
       - 'static/experiments/olive-v78-flip-motion-study.html'
+      - 'static/experiments/olive-v80-scripture-folios.html'
       - 'static/js/p2-0104-olive-scriptures-v80.js'
       - 'tests/p2-0104-olive-scripture-v80.cjs'
       - 'docs/projects/olive-mountain-living-engraving/V80-SPEAKER-SCRIPTURE-EDITORIAL-2026-11-08.md'
@@ -114,6 +115,7 @@ jobs:
           cp -a static/. public/
           echo "Standalone P2 04 verified from exact committed static sources, without modifying production build."
           test -s public/experiments/p2-0104-olive-continuation.html
+          test -s public/experiments/olive-v80-scripture-folios.html
           test -s public/js/p2-0104-olive-scriptures-v80.js
           node tests/p2-0104-olive-scripture-v80.cjs
           test -s public/experiments/olive-v75-twelve-folios-exhibition.html
@@ -278,6 +280,51 @@ jobs:
             }
             await browser.close();
             console.log('PASS V78 isolated scroll-owned card comparison / 1648, 390, 320 / reverse');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Verify V80 twelve scripture folios on desktop and narrow phones
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          python3 -m http.server 4173 --directory public >/tmp/olive-v80-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node - <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            for(const width of [1648,390,320]){
+              const page=await browser.newPage({viewport:{width,height:950},deviceScaleFactor:1});
+              const response=await page.goto('http://127.0.0.1:4173/experiments/olive-v80-scripture-folios.html',{waitUntil:'networkidle'});
+              assert.equal(response.status(),200);
+              await page.evaluate(()=>document.fonts.ready);
+              const verdict=await page.evaluate(()=>{
+                const figures=[...document.querySelectorAll('.grid figure')];
+                const bounds=figures.map(fig=>{
+                  const art=fig.querySelector('.art').getBoundingClientRect();
+                  const quote=fig.querySelector('.quote').getBoundingClientRect();
+                  const cite=fig.querySelector('cite').getBoundingClientRect();
+                  return {reference:fig.querySelector('cite').textContent,
+                   quoteInside:quote.left>=art.left-1&&quote.right<=art.right+1&&
+                    quote.top>=art.top-1&&quote.bottom<cite.top-1,
+                   citeInside:cite.bottom<=art.bottom+1,
+                   font:getComputedStyle(fig.querySelector('cite')).fontFamily};
+                });
+                return {count:figures.length,overflow:document.documentElement.scrollWidth-innerWidth,
+                  details:bounds};
+              });
+              assert.equal(verdict.count,12,'must show 12 complete individual scripture folios');
+              assert(verdict.overflow<2,'no horizontal overflow');
+              for(const c of verdict.details){
+                assert(c.quoteInside,'verse collides with reference or exceeds card: '+c.reference);
+                assert(c.citeInside,'reference outside card: '+c.reference);
+                assert.match(c.font,/Chiron Hei HK WS/,'CJK verse reference uses OS type');
+              }
+              await page.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v80-twelve-scripture-folios.png',fullPage:true,animations:'disabled'});
+              await page.close();
+            }
+            await browser.close();
+            console.log('PASS V80: twelve legible scripture folios at 1648/390/320.');
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
       - name: Bundle actual botanical vector master for art-direction inspection
