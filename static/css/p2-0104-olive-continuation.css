@@ -370,7 +370,28 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 .olive-card__reverse--botanical::before{opacity:1}
 .olive-card__reverse--terrain::before{opacity:.88}
-.olive-card__reverse::after{opacity:var(--folio-edge-alpha,0)!important}
+/* A small edition-specific imprint stays optically legible on the verso;
+   unlike the field-registered paths, this is a true card-scale detail.
+   Same unique artwork, not a duplicated full botanical/terrain poster.
+   No rectangular border and no complete SVG fitted into the card. */
+.olive-card__reverse::after{
+ content:""!important;position:absolute;inset:17% 16% 22%!important;
+ border:0!important;
+ background:var(--folio-ink,var(--ws-morning-gold));
+ opacity:calc(var(--folio-mark-alpha,0) * .38)!important;
+ -webkit-mask-image:var(--folio-fragment)!important;
+ mask-image:var(--folio-fragment)!important;
+ -webkit-mask-size:100% 100%!important;
+ mask-size:100% 100%!important;
+ -webkit-mask-position:center!important;
+ mask-position:center!important;
+ -webkit-mask-repeat:no-repeat!important;
+ mask-repeat:no-repeat!important;
+ pointer-events:none;
+}
+.olive-card__reverse-mark{
+ opacity:var(--folio-mark-alpha,0);
+}
 .olive-card__reverse-mark{opacity:var(--folio-mark-alpha,0);pointer-events:none}
 /* A reverse is a piece of the existing print field, not a second cover.
    Its restrained bottom-edge edition metadata follows the front caption. */
