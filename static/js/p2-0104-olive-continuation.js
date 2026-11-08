@@ -183,11 +183,18 @@
           y:b.top+src.top-dest.top-y,w:b.width,h:b.height}};
   return lastGeometry;
  }
+ // V79: the original MERSI scene has multiple registered poster surfaces.
+ // Prevent unchanged geometry from invalidating style/layout every scroll frame.
+ const registeredGeometry=new WeakMap();
  function position(el,x,y,w,h){
-  el.style.left=x.toFixed(2)+'px';
-  el.style.top=y.toFixed(2)+'px';
-  el.style.width=w.toFixed(2)+'px';
-  el.style.height=h.toFixed(2)+'px';
+  const next=[x,y,w,h].map(v=>v.toFixed(2)+'px');
+  const prev=registeredGeometry.get(el);
+  if(prev&&next.every((v,i)=>v===prev[i]))return;
+  if(!prev||next[0]!==prev[0])el.style.left=next[0];
+  if(!prev||next[1]!==prev[1])el.style.top=next[1];
+  if(!prev||next[2]!==prev[2])el.style.width=next[2];
+  if(!prev||next[3]!==prev[3])el.style.height=next[3];
+  registeredGeometry.set(el,next);
  }
  // ONE continuous landscape plate. The previous four registered panels
  // created rectangular cuts and could never read as one mountain.
@@ -363,9 +370,11 @@
   node.dataset.rightReveal=rightReveal.toFixed(5);
  }
  // Front and reverse share an exact axis; controlled by one MERSI scroll value.
- function turnFace(element,angle,axisX,axisY,depth){
-  element.style.transformOrigin=axisX.toFixed(2)+'px '+axisY.toFixed(2)+'px';
-  element.style.transform='rotateY('+angle.toFixed(3)+'deg)';
+ function turnFace(element,angle,axisX,axisY){
+  const origin=axisX.toFixed(2)+'px '+axisY.toFixed(2)+'px';
+  const transform='rotateY('+angle.toFixed(3)+'deg)';
+  if(element.style.transformOrigin!==origin)element.style.transformOrigin=origin;
+  if(element.style.transform!==transform)element.style.transform=transform;
  }
  function paint(){
   queued=false;
@@ -579,8 +588,9 @@
    stage.dataset.p2SpeakerArrival='1';
   }
   const depth=Math.max(1100,g.w*1.35);
-  pair.style.perspective=depth.toFixed(0)+'px';
-  pair.style.perspectiveOrigin='50% 50%';
+  const perspective=depth.toFixed(0)+'px';
+  if(pair.style.perspective!==perspective)pair.style.perspective=perspective;
+  if(pair.style.perspectiveOrigin!=='50% 50%')pair.style.perspectiveOrigin='50% 50%';
   // V74: twelve COMPLETE engraved folios, not cut-out local SVG crops.
   // The independent right/left landscape underneath continues to grow
   // from the same real Crane & DEM sources. Never read the full-field
@@ -612,7 +622,7 @@
    back.style.setProperty('--folio-edge-alpha','0');
    back.dataset.speakerIndex=String(id);
    back.dataset.printFragment=String(edition+1);
-   turnFace(carriers[i],turns[i],card.w/2,card.h/2,depth);
+   turnFace(carriers[i],turns[i],card.w/2,card.h/2);
   }
   stage.dataset.p2UniqueVersoSystem='12-individually-authored-topographic-folios-v77';
   stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
