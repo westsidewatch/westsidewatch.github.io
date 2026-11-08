@@ -705,3 +705,101 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 @media(prefers-reduced-motion:reduce){
  .olive-folio-carrier{will-change:auto}
 }
+
+/* V80 / Scriptural Folios — editorial typesetting using Design OS only.
+   The chapter's Chinese name and Romans 10:17 are not a tiny corner
+   annotation: they share the actual title's centre axis, above the works.
+   Bilingual masthead never transforms/resizes the original 3:4 posters. */
+.olive-stage__rubric{
+ grid-template-columns:minmax(105px,1fr) minmax(0,620px) minmax(105px,1fr);
+ align-items:start;gap:clamp(9px,1.4vw,20px);
+ min-height:108px;overflow:visible;
+}
+.olive-stage__rubric-kicker{align-self:start;padding-top:7px}
+.olive-stage__rubric-heading{
+ display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+ min-width:0;gap:0;text-align:center;
+}
+.olive-stage__rubric-heading strong{
+ display:block;font-family:var(--ws-type-display-en);
+ font-style:normal;font-weight:400;white-space:nowrap;
+ font-size:calc(clamp(28px,2.7vw,43px) + var(--olive-title-growth,0px));
+ line-height:1.02;letter-spacing:-.055em;
+}
+.olive-stage__rubric-zh{
+ display:block;margin-top:4px;
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);
+ font-size:clamp(17px,1.36vw,23px);line-height:1.18;
+ letter-spacing:.22em;font-synthesis:none;
+}
+.olive-stage__rubric-scripture{
+ margin:9px 0 0;max-width:100%;color:var(--ws-paper);
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);
+ font-size:clamp(11px,.82vw,14px);line-height:1.5;
+ letter-spacing:.05em;text-wrap:pretty;font-synthesis:none;
+}
+.olive-stage__rubric-scripture cite{
+ display:block;margin-top:2px;color:var(--ws-morning-gold);
+ font-family:var(--ws-type-display-en);font-weight:400;font-style:italic;
+ font-size:clamp(10px,.75vw,13px);letter-spacing:.025em;
+}
+.olive-stage__rubric>small{align-self:start;padding-top:7px}
+/* Exactly the old inscription location remains, now readable Scripture.
+   The source original full-size botanical/terrain reverse mask is untouched. */
+.olive-card__reverse-title{
+ bottom:13%;left:7%;right:7%;max-width:86%;
+ display:flex;flex-direction:column;align-items:flex-start;gap:7px;
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);
+ font-style:normal;font-size:clamp(17px,1.45vw,25px);
+ line-height:1.34;letter-spacing:.025em;
+ text-wrap:pretty;font-synthesis:none;
+ color:var(--ws-morning-gold);text-align:left;
+}
+.olive-card__scripture-text{display:block;max-width:100%}
+.olive-card__scripture-cite{
+ display:block;font-family:var(--ws-type-display-en);
+ font-weight:400;font-style:italic;
+ font-size:clamp(11px,.87vw,14px);line-height:1.3;
+ letter-spacing:.02em;color:var(--ws-paper);
+}
+@media(max-width:900px){
+ .olive-stage__rubric{
+  grid-template-columns:1fr;
+  justify-items:center;gap:3px;
+  top:clamp(39px,5svh,48px);
+  left:12px;right:12px;min-height:88px;
+ }
+ .olive-stage__rubric>.olive-stage__rubric-kicker,
+ .olive-stage__rubric>small{display:none}
+ .olive-stage__rubric-heading{grid-column:1;grid-row:1;max-width:100%}
+ .olive-stage__rubric-heading strong{
+  grid-column:auto;grid-row:auto;
+  font-size:calc(clamp(25px,4.65vw,34px) + var(--olive-title-growth,0px));
+  text-align:center;
+ }
+ .olive-stage__rubric-zh{font-size:clamp(15px,2.6vw,18px);margin-top:3px}
+ .olive-stage__rubric-scripture{font-size:clamp(11px,1.5vw,13px);margin-top:4px;max-width:520px}
+ .olive-stage__rubric-scripture cite{font-size:11px}
+}
+@media(max-width:540px){
+ .olive-stage__rubric{
+  top:42px;min-height:78px;
+  grid-template-columns:1fr;
+  justify-items:center;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading{
+  display:flex;grid-column:1;grid-row:1;
+ }
+ .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(24px,7.3vw,33px) + var(--olive-title-growth,0px));
+  white-space:nowrap;letter-spacing:-.052em;
+ }
+ .olive-stage__rubric-zh{font-size:15px;margin-top:2px}
+ .olive-stage__rubric-scripture{
+  font-size:11px;line-height:1.45;margin-top:4px;
+  max-width:calc(100vw - 32px);letter-spacing:0;
+ }
+ .olive-stage__rubric-scripture cite{font-size:10px;margin-top:1px}
+ .olive-card__reverse-title{left:7%;right:6%;bottom:14%;font-size:clamp(14px,4.25vw,19px);gap:5px;line-height:1.35}
+ .olive-card__scripture-cite{font-size:clamp(10px,2.8vw,13px)}
+}
