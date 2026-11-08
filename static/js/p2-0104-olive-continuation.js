@@ -9,9 +9,9 @@
  * 10.95–11.15  two approved posters HOLD; 04 mountain pigment has not entered
  * 11.15–11.73  dark olive/gold mountain enters top-down LEFT, bottom-up RIGHT,
  *              center label uses the SAME scroll progress (MERSI's actual grammar)
- * 11.95–15.89  five opposite-mask switches, two speakers per spread (6 pairs)
- * 16.25–17.25  the SAME twelve image works geometrically recompose as index
- * 17.25–17.65  chapter title and entry invitation hold
+ * 11.95–20.20  eleven slow, alternating individual speaker folio turns
+ * 20.20–21.20  the SAME twelve image works geometrically recompose as index
+ * 21.20–21.60  chapter title and entry invitation hold
  *
  * Source: MASTER_SITE_ARCHITECTURE §§11–12; FIRST-LOOK-MOTION-CONTRACT;
  * user's accepted P2 04 art direction. No autoplay, opacity crossfade,
@@ -48,7 +48,7 @@
  const T={start:9.44,first:10.08,spread:10.95,
           groundStart:11.15,groundEnd:11.73,
           pairStart:11.95,pairStep:.83,pairDuration:.62,
-          indexStart:16.25,indexEnd:17.25,end:17.65};
+          indexStart:20.20,indexEnd:21.20,end:21.60};
  const roster=[
   ['watchman-nee','倪柝聲','WATCHMAN NEE'],
   ['derek-prince','葉光明','DEREK PRINCE'],
@@ -538,7 +538,10 @@
    const event=Math.min(10,Math.floor((d-T.pairStart)/relayStep));
    const beat=clamp((d-(T.pairStart+event*relayStep))/relayStep);
    const inSide=(event+1)%2, outSide=1-inSide;
-   const entering=ease((beat-.06)/.36),retreat=ease((beat-.58)/.34);
+   // V71: each fold takes substantially more actual scroll travel.
+   // One card reveals fully before the other folds away; hold the
+   // completed portrait and its reverse between these actions.
+   const entering=ease((beat-.04)/.44),retreat=ease((beat-.55)/.40);
    turns[inSide]=180*(1-entering);
    turns[outSide]=180*retreat;
    const speaker=event+1,old=event,following=event+2;
