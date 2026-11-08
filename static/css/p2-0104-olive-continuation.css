@@ -316,9 +316,13 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  color:var(--ws-morning-gold);
  /* A visible real reverse: olive stock with authentic, chapter-specific
     copperplate ink. The old fully transparent verso was literally empty. */
- background:transparent;
- opacity:var(--folio-back-alpha,1);
- outline:none;
+ /* V70: an opaque OS deep-olive stock makes the true card reverse
+    readable even before the registered ink arrives. Never let the whole
+    card opacity vanish while its increment transfers to the landscape. */
+ background:var(--ws-deep);
+ opacity:1;
+ outline:1px solid var(--ws-morning-gold);
+ outline-offset:-1px;
 }
 .olive-card__reverse::before{
  content:"";position:absolute;inset:5% 4% 14%;
@@ -360,7 +364,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  --folio-mask-y:0px;
 }
 .olive-card__reverse::before{
- inset:0!important;opacity:.75;
+ inset:0!important;opacity:var(--folio-back-alpha,.85);
  -webkit-mask-image:var(--folio-fragment)!important;
  mask-image:var(--folio-fragment)!important;
  -webkit-mask-size:var(--folio-mask-width) var(--folio-mask-height)!important;
