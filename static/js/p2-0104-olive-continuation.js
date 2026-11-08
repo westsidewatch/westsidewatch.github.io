@@ -212,8 +212,11 @@
   const mobile=g.w<600;
   const margin=mobile?Math.max(10,Math.min(20,g.w*.037)):
     Math.max(36,Math.min(118,g.w*.065));
+  // V82: a genuine editorial masthead reserves a separate reading band.
+  // 01–03 does not move; only the settled 04 printed poster grid receives
+  // more upper space. Preserve the poster 3:4 composite and original text.
   const top=mobile?Math.max(84,Math.min(100,g.h*.12)):
-    Math.max(118,Math.min(149,g.h*.142));
+    Math.max(208,Math.min(238,g.h*.24));
   const bottom=mobile?Math.max(46,Math.min(67,g.h*.075)):
     Math.max(50,Math.min(73,g.h*.078));
   const gap=mobile?12:Math.max(18,Math.min(37,g.w*.03));
