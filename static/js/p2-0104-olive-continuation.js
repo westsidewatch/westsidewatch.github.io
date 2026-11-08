@@ -585,6 +585,10 @@
     ?'/images/p2-realms/v15/04-olive-botanical-impression-v60-'+(edition+1)+'.svg'
     :'/images/p2-realms/v15/04-olive-terrain-fragment-v68-'+(edition+1)+'.svg';
    back.style.setProperty('--folio-fragment','url("'+source+'")');
+   const inks=['var(--ws-morning-gold)','var(--ws-pale-gold)',
+    'var(--ws-deep)','var(--ws-warm-gold)','var(--ws-pale-gold)',
+    'var(--ws-first-light)'];
+   back.style.setProperty('--folio-ink',inks[edition]);
    back.style.setProperty('--folio-mask-width',imprint.width.toFixed(2)+'px');
    back.style.setProperty('--folio-mask-height',imprint.height.toFixed(2)+'px');
    back.style.setProperty('--folio-mask-x',px.toFixed(2)+'px');
