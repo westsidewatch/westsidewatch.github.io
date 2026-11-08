@@ -32,6 +32,7 @@ assert.match(css,/backface-visibility:hidden/,'front and reverse need hidden bac
 assert.match(css,/\.olive-folio-carrier\{/,'single rigid folio carrier supports protected portrait and reverse');
 assert.match(css,/\.olive-card__reverse--botanical::before/,'visible authentic botanical card back');
 assert.match(css,/\.olive-card__reverse--terrain::before/,'geographic card back has real texture');
+assert.match(css,/background:var\(--ws-deep\)/,'reverse is physical deep olive stock, not transparent');
 assert.match(css,/width:100%!important;height:100%!important/,'speaker baseline stays registered to untransformed 3:4 artwork');
 assert.match(js,/12-visible-registered-background-fragments-v69/);
 for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-terrain-fragment-v68-${n}.svg`),/olivet topography|Olivet topography/i);
@@ -152,7 +153,9 @@ const widths=[1648,390];
         fragment:el.dataset.printFragment,
         source:el.style.getPropertyValue('--folio-fragment'),
         alpha:Number.parseFloat(el.style.getPropertyValue('--folio-back-alpha')),
-        mark:Number.parseFloat(el.style.getPropertyValue('--folio-mark-alpha'))
+        mark:Number.parseFloat(el.style.getPropertyValue('--folio-mark-alpha')),
+        paper:getComputedStyle(el).backgroundColor,
+        wholeOpacity:getComputedStyle(el).opacity
        })),
        leftPoster:document.querySelector('#olive-pair-left')?.dataset.speakerIndex,
        rightPoster:document.querySelector('#olive-pair-right')?.dataset.speakerIndex,
@@ -240,6 +243,10 @@ const widths=[1648,390];
    assert.equal(rightLocked.folioFaces,'back,front','right figure is front; left botanical back');
    assert.equal(rightLocked.rightPoster,'1','right approved Derek Prince portrait');
    assert.equal(rightLocked.portraitDecode,'ready','approved portraits decoded');
+   assert.equal(rightLocked.reverseFaces[0].wholeOpacity,'1',
+    'completed reverse stock remains fully opaque rather than disappearing with ink handoff');
+   assert(rightLocked.reverseFaces[0].paper!=='rgba(0, 0, 0, 0)'&&rightLocked.reverseFaces[0].paper!=='transparent',
+    'reverse has visible deep olive stock distinct from the olive-green stage');
    assert.equal(rightLocked.reverseFaces[0].speaker,'0',
     'left reverse contributes first speaker botanical fragment');
    assert(rightLocked.reverseFaces[0].mark>.99,
