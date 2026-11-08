@@ -7,6 +7,9 @@ on:
     paths:
       - 'static/experiments/p2-0104-olive-continuation.html'
       - 'static/experiments/olive-v75-twelve-folios-exhibition.html'
+      - 'static/experiments/olive-v76-terrain-and-panorama.html'
+      - 'static/images/p2-realms/v15/v76-exhibition/**'
+      - 'static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg'
       - 'static/images/p2-realms/v15/v75-exhibition/**'
       - 'docs/projects/olive-mountain-living-engraving/V75-TWELVE-FOLIOS-EXHIBITION-2026-11-08.md'
       - 'static/experiments/olive-mountain-art-foundation-v4.html'
@@ -104,6 +107,11 @@ jobs:
           hugo --gc --minify --baseURL 'https://westsidewatch-github-io.pages.dev/'
           test -s public/experiments/p2-0104-olive-continuation.html
           test -s public/experiments/olive-v75-twelve-folios-exhibition.html
+          test -s public/experiments/olive-v76-terrain-and-panorama.html
+          test -s public/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg
+          for terrain in 1 2 3 4 5 6; do
+            test -s "public/images/p2-realms/v15/v76-exhibition/04-olive-terrain-v76-${terrain}.svg"
+          done
           for folio in $(seq -w 1 12); do
             test -s "public/images/p2-realms/v15/v75-exhibition/04-olive-exhibition-v75-${folio}.svg"
           done
