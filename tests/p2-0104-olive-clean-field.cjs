@@ -351,6 +351,14 @@ const widths=[1648,390,320];
    const rightLocked=await go(12.935,'05aa-right-front-left-back');
    assert.equal(rightLocked.folioFaces,'back,front','right figure is front; left botanical back');
    assert.equal(rightLocked.rightPoster,'1','right approved Derek Prince portrait');
+   const mastheadClearance=await page.evaluate(()=>{
+     const header=document.querySelector('#olive-rubric').getBoundingClientRect();
+     const rightCard=document.querySelector('.olive-folio-carrier[data-folio-side="right"]').getBoundingClientRect();
+     return {headerBottom:header.bottom,cardTop:rightCard.top,
+       overlap:header.bottom-rightCard.top};
+   });
+   assert(mastheadClearance.overlap<=-4,
+     'Bilingual award-direction header must have a genuine breathing band above the right printed card, not intrude into its gilded frame');
    assert.equal(rightLocked.portraitDecode,'ready','approved portraits decoded');
    assert.equal(rightLocked.reverseFaces[0].wholeOpacity,'1',
     'completed reverse stock remains fully opaque rather than disappearing with ink handoff');
