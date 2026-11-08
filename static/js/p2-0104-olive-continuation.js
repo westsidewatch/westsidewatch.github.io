@@ -27,6 +27,8 @@
  const invitationRight=$('#olive-invitation-right');
  const pair=$('#olive-pair');
  const reverseLeft=$('#olive-reverse-left'),reverseRight=$('#olive-reverse-right');
+ const companionLeft=$('#olive-companion-left'),companionRight=$('#olive-companion-right');
+ if(!companionLeft||!companionRight)throw new Error('04 requires two independent scripture companions');
  const left=$('#olive-pair-left'),right=$('#olive-pair-right');
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
  const overview=$('#olive-overview'),enter=$('#olive-enter');
@@ -601,25 +603,10 @@
   for(let i=0;i<2;i++){
    const card=cardSlots[i],id=versoIndices[i],edition=Math.floor(id/2);
    const back=backs[i],isBotanical=i===0;
-   // V80: one actual scripture excerpt per protected speaker, NOT a
-   // geographic design-draft label. Two physical backs are reused by all
-   // twelve speakers, so the passage is selected by speaker id, not edition.
-   const sourcePassage=window.P2OliveScriptures?.cards?.[id];
-   if(!sourcePassage||sourcePassage.slug!==roster[id][0])
-    throw new Error('04 missing sourced verse for '+roster[id][0]);
-   if(back.dataset.scriptureSpeaker!==sourcePassage.slug){
-    const verse=back.querySelector('.olive-card__scripture-text');
-    const cite=back.querySelector('.olive-card__scripture-cite');
-    if(!verse||!cite)throw new Error('04 folio is missing readable scripture');
-    verse.textContent=sourcePassage.excerpt;
-    cite.textContent=sourcePassage.referenceZh;
-    back.dataset.scriptureSpeaker=sourcePassage.slug;
-    back.dataset.scriptureReference=sourcePassage.referenceEn;
-    back.dataset.scriptureEvidence=sourcePassage.evidence;
-   }
-   // Expose the real reverse verse to assistive readers only when it faces
-   // the viewer; no focus targets are added to the animated folio.
-   back.setAttribute('aria-hidden',turns[i]>92?'false':'true');
+   // Keep the physical reverse an unmodified botanical/terrain engraving.
+   // A separate editorial text surface beside the FACING preacher owns
+   // Scripture; do not attach a passage to the flipping paper back.
+   back.setAttribute('aria-hidden','true');
    const source=isBotanical
     ?'/images/p2-realms/v15/04-olive-full-verso-v74-botanical-'+(edition+1)+'.svg'
     :'/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-'+(edition+1)+'.svg';
@@ -641,6 +628,37 @@
    back.dataset.printFragment=String(edition+1);
    turnFace(carriers[i],turns[i],card.w/2,card.h/2);
   }
+  // V81 / ADJACENT SCRIPTURE. Each panel is positioned over the OTHER
+  // folio's engraved half, fully outside the rotating card carrier.
+  // The reference comes from the visible front portrait, never from the
+  // reverse face or its edition. Same paint(), same scroll value, no RAF.
+  const companionNodes=[companionLeft,companionRight];
+  const facingFronts=[left,right];
+  for(let side=0;side<2;side++){
+   const adjacent=1-side, panel=companionNodes[adjacent];
+   const card=cardSlots[adjacent];
+   position(panel,card.x,card.y,card.w,card.h);
+   const speaker=Number(facingFronts[side].dataset.speakerIndex);
+   const verse=window.P2OliveScriptures?.cards?.[speaker];
+   const frontAlpha=1-ease((turns[side]-28)/38);
+   const engravedAlpha=ease((turns[adjacent]-114)/62);
+   const visibility=frontAlpha*engravedAlpha*
+    (d>=T.spread&&d<T.indexStart?1:0);
+   if(!verse||verse.slug!==roster[speaker]?.[0])
+    throw new Error('04 adjacent passage must match facing speaker');
+   if(panel.dataset.scriptureSpeaker!==verse.slug){
+    panel.querySelector('.olive-stage__companion-verse').textContent=verse.excerpt;
+    panel.querySelector('.olive-stage__companion-reference').textContent=verse.referenceZh;
+    panel.dataset.scriptureSpeaker=verse.slug;
+    panel.dataset.scriptureReference=verse.referenceEn;
+    panel.dataset.scriptureEvidence=verse.evidence;
+   }
+   panel.style.opacity=visibility.toFixed(4);
+   panel.style.visibility=visibility>.001?'visible':'hidden';
+   panel.setAttribute('aria-hidden',visibility>.90?'false':'true');
+   panel.dataset.adjacentTo=side===0?'left':'right';
+  }
+  stage.dataset.p2ScripturePlacement='adjacent-independent-not-on-flipping-reverse-v81';
   stage.dataset.p2UniqueVersoSystem='12-individually-authored-topographic-folios-v77';
   stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
   stage.dataset.p2FolioFront=activeSide;
