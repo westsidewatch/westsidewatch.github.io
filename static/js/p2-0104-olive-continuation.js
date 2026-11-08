@@ -592,8 +592,14 @@
     ?'/images/p2-realms/v15/04-olive-botanical-impression-v60-'+(edition+1)+'.svg'
     :'/images/p2-realms/v15/04-olive-terrain-fragment-v68-'+(edition+1)+'.svg';
    back.style.setProperty('--folio-fragment','url("'+source+'")');
+   // Same unique engraving, but a locally cropped detail for the BACK.
+   // Full-stage coordinates continue to drive the accumulating landscape;
+   // the card does not shrink the entire botanical/mountain SVG.
+   const detail='/images/p2-realms/v15/04-olive-verso-detail-v72-'+
+    (isBotanical?'botanical-':'terrain-')+(edition+1)+'.svg';
+   back.style.setProperty('--folio-detail','url("'+detail+'")');
    const inks=['var(--ws-morning-gold)','var(--ws-pale-gold)',
-    'var(--ws-deep)','var(--ws-warm-gold)','var(--ws-pale-gold)',
+    'var(--ws-warm-gold)','var(--ws-morning-gold)','var(--ws-pale-gold)',
     'var(--ws-first-light)'];
    back.style.setProperty('--folio-ink',inks[edition]);
    back.style.setProperty('--folio-mask-width',imprint.width.toFixed(2)+'px');
