@@ -573,49 +573,26 @@
    stage.dataset.p2SpeakerArrival='1';
   }
   const depth=Math.max(950,g.w*1.2);
-  // Register each unique reverse fragment in the EXACT coordinate system
-  // of the real full-background print; never scale an entire botanical
-  // or topographic plate down to card size.
-  const fields=[
-   engraved.querySelector('.olive-editorial-engraving__print--botanical'),
-   engraved.querySelector('.olive-editorial-engraving__print--topography')
-  ];
-  const stageBox=stage.getBoundingClientRect();
+  // V74: twelve COMPLETE engraved folios, not cut-out local SVG crops.
+  // The independent right/left landscape underneath continues to grow
+  // from the same real Crane & DEM sources. Never read the full-field
+  // geometry as a crop window for a card again.
   for(let i=0;i<2;i++){
    const card=cardSlots[i],id=versoIndices[i],edition=Math.floor(id/2);
-   const back=backs[i],real=fields[i];
-   const imprint=real.getBoundingClientRect();
-   const px=imprint.left-stageBox.left-card.x;
-   const py=imprint.top-stageBox.top-card.y;
-   const isBotanical=i===0;
-   const source=isBotanical
-    ?'/images/p2-realms/v15/04-olive-botanical-impression-v60-'+(edition+1)+'.svg'
-    :'/images/p2-realms/v15/04-olive-terrain-fragment-v68-'+(edition+1)+'.svg';
-   back.style.setProperty('--folio-fragment','url("'+source+'")');
-   // Same unique engraving, but a locally cropped detail for the BACK.
-   // Full-stage coordinates continue to drive the accumulating landscape;
-   // the card does not shrink the entire botanical/mountain SVG.
-   const detail='/images/p2-realms/v15/04-olive-verso-detail-v72-'+
+   const back=backs[i],isBotanical=i===0;
+   const source='/images/p2-realms/v15/04-olive-full-verso-v74-'+
     (isBotanical?'botanical-':'terrain-')+(edition+1)+'.svg';
-   back.style.setProperty('--folio-detail','url("'+detail+'")');
+   back.style.setProperty('--folio-fragment','url("'+source+'")');
+   back.style.setProperty('--folio-detail','url("'+source+'")');
    const inks=['var(--ws-morning-gold)','var(--ws-pale-gold)',
-    'var(--ws-warm-gold)','var(--ws-morning-gold)','var(--ws-pale-gold)',
-    'var(--ws-first-light)'];
+    'var(--ws-morning-gold)','var(--ws-warm-gold)','var(--ws-pale-gold)',
+    'var(--ws-morning-gold)'];
    back.style.setProperty('--folio-ink',inks[edition]);
-   back.style.setProperty('--folio-mask-width',imprint.width.toFixed(2)+'px');
-   back.style.setProperty('--folio-mask-height',imprint.height.toFixed(2)+'px');
-   back.style.setProperty('--folio-mask-x',px.toFixed(2)+'px');
-   back.style.setProperty('--folio-mask-y',py.toFixed(2)+'px');
-   // A back fragment is never another framed poster: its identical piece
-   // of ink transfers to the permanent chapter field at the exit beat.
    const baseAlpha=(isBotanical?plantLayers:terrainLayers)[edition];
    const backward=ease((turns[i]-82)/73);
-   // V69: Never erase a physical card back merely because its ink has
-   // transferred to the big field. V68 used backward*(1-baseAlpha), so
-   // after an edition completed the reverse became literally invisible.
-   // A partial ink impression remains readable while the same paths
-   // accumulate as the continuous landscape beneath the card.
-   const alpha=backward*(.94-.20*baseAlpha);
+   // Paper and a complete interior engraving stay visible while facing
+   // the viewer. Background growth never makes the real card disappear.
+   const alpha=backward*(.98-.08*baseAlpha);
    back.style.setProperty('--folio-back-alpha',alpha.toFixed(4));
    back.style.setProperty('--folio-mark-alpha',backward.toFixed(4));
    back.style.setProperty('--folio-edge-alpha','0');
@@ -623,7 +600,7 @@
    back.dataset.printFragment=String(edition+1);
    turnFace(carriers[i],turns[i],card.w/2,card.h/2,depth);
   }
-  stage.dataset.p2UniqueVersoSystem='12-visible-registered-background-fragments-v69';
+  stage.dataset.p2UniqueVersoSystem='12-complete-uncut-engraved-folios-v74';
   stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
   stage.dataset.p2FolioFront=activeSide;
   stage.dataset.p2FolioAngles=turns.map(x=>x.toFixed(2)).join(',');
