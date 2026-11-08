@@ -316,12 +316,13 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  color:var(--ws-morning-gold);
  /* A visible real reverse: olive stock with authentic, chapter-specific
     copperplate ink. The old fully transparent verso was literally empty. */
- background:var(--ws-olive);
- outline:1px solid var(--ws-morning-gold);outline-offset:-1px;
+ background:transparent;
+ opacity:var(--folio-back-alpha,1);
+ outline:none;
 }
 .olive-card__reverse::before{
  content:"";position:absolute;inset:5% 4% 14%;
- background:var(--ws-morning-gold);opacity:.76;
+ background:var(--folio-ink,var(--ws-morning-gold));opacity:1;
  -webkit-mask-size:100% 100%;mask-size:100% 100%;
  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
  -webkit-mask-position:center;mask-position:center;
@@ -331,11 +332,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
  mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
 }
-.olive-card__reverse--terrain::before{
- -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
- mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
- opacity:.94;
-}
+.olive-card__reverse--terrain::before{opacity:1;}
 .olive-card__reverse::after{
  content:"";position:absolute;inset:11px;
  border:1px solid color-mix(in srgb,var(--ws-morning-gold) 45%,transparent);
@@ -371,7 +368,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  -webkit-mask-position:var(--folio-mask-x) var(--folio-mask-y)!important;
  mask-position:var(--folio-mask-x) var(--folio-mask-y)!important;
 }
-.olive-card__reverse--botanical::before{opacity:.78}
+.olive-card__reverse--botanical::before{opacity:1}
 .olive-card__reverse--terrain::before{opacity:.88}
 .olive-card__reverse::after{opacity:var(--folio-edge-alpha,0)!important}
 .olive-card__reverse-mark{opacity:var(--folio-mark-alpha,0);pointer-events:none}
