@@ -94,3 +94,13 @@ The Isaiah 55:9 image is a **design reference**, not an approved site asset to c
 The Isaiah 55:9 user-supplied reference succeeds because **typography itself constructs the artwork**: a striking main text mass, expressive oversized italic reference, deliberate line-break rhythm and an asymmetric field of negative space. V1 was a useful grouping of text but inferior in editorial art direction. Specifically: every component occupied a generic bordered quote card; bilingual typography lacked hierarchy; automatic text wrapping prevented optical design; references appeared like metadata; seven rising lines had no established visual meaning and were UI decoration rather than an art-directed signature.
 
 V2 is a deliberately **type-first** experiment, not a final approved master. Its basic order is: sparse editorial folio → oversized italic reference → designed Chinese line mass → short horizontal axis with English KJV counterpoint → restrained bottom colophon. Paper and branch identity are taken from OS color tokens; the large composition may need additional iterations to achieve brand originality rather than merely following the reference. **Do not promote V2 to global CSS before visual approval.** Check visual rendering, translation fidelity, edge protection at 320px, visual rhythm at 1648px, and no unnatural singleton line breaks.
+
+## 9. Canonical two-track implementation decision (2026-11-08)
+
+This earlier Watchword exploration has been superseded by the accepted **Scripture Seal × Scripture Folio** architecture. **Canonical implementation brief:** `docs/projects/scripture-signature/SEAL-AND-FOLIO-MASTER-ENGINEERING-BRIEF-2026-11-08.md`.
+
+- **Scripture Seal** is the signature animated square artwork, built on authentic Chinese vertical + English KJV horizontal letterpress/interwoven type. It provides the identifiable optical DNA.
+- **Scripture Folio** is the flexible family derived from that *approved* artwork for every non-body Scripture use.
+- Watchword V1 and V2 remain historical proofs only. Neither is approved as the final brand identity; their compulsory L-shaped frames, seven decorative ticks and generic type+rule compositions must not be treated as binding shared DNA.
+- “THE WORD / 經文” is not a required label and should not be reintroduced to the Olive P2 masthead or side quotations.
+- The approved direction is currently a documented specification, **not** a completed kinetic artwork, verified component library or live production rollout.
