@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>福音內容理解度匿名研究｜G1 Prototype</title>
+<style>
+:root{color-scheme:light;--ink:#26332e;--muted:#66736d;--paper:#f7f5f0;--card:#fff;--rule:#d9dfd8;--accent:#245a49}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif}
+main{width:min(100% - 36px,720px);margin:40px auto 80px}
+.kicker{text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:650;font-size:.75rem}
+h1{font-family:Georgia,"Noto Serif TC",serif;font-size:clamp(1.6rem,5vw,2.4rem);line-height:1.3;margin:.5rem 0 1rem}
+h2{font-size:1.25rem;line-height:1.5;margin:0 0 1.1rem}
+p{margin:0 0 1rem}.muted{color:var(--muted)}.panel{background:var(--card);border:1px solid var(--rule);padding:clamp(20px,5vw,36px);border-radius:12px;margin:20px 0}
+button{font:inherit;padding:12px 18px;border-radius:8px;background:var(--accent);color:white;border:1px solid var(--accent);cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}.secondary{background:white;color:var(--accent)}
+label{display:block;font-weight:600;margin:20px 0 8px}textarea,select{display:block;width:100%;border:1px solid #a8b6ac;border-radius:6px;background:#fff;padding:11px 12px;font:inherit;color:var(--ink)}
+textarea{min-height:84px;resize:vertical}.choice{display:flex;gap:12px;align-items:flex-start;margin:16px 0}.choice label{margin:0;font-weight:400}
+.reading{font-size:1.13rem;line-height:2;white-space:pre-line;padding:16px 0;border-block:1px solid var(--rule);margin:14px 0 22px}
+small{display:block;color:var(--muted);margin-top:8px}.hidden{display:none!important}
+.progress{font-size:.85rem;color:var(--muted)}.foot{font-size:.8rem;color:var(--muted);border-top:1px solid var(--rule);padding-top:16px;margin-top:32px}
+:focus-visible{outline:3px solid #7aaf92;outline-offset:3px}
+@media print{button{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<main>
+<div class="kicker">G1 / Content Comprehension Study</div>
+<h1>福音內容理解度研究</h1>
+<p class="muted">研究用文字原型 • 非已發佈影片 • 不評估個人信仰</p>
+<p id="progress" class="progress" aria-live="polite">參與說明</p>
+
+<section class="panel" id="consentSection">
+<h2>參與前請閱讀</h2>
+<p>我們比較兩種介紹聖經與華人文化問題的短文開場方式，目的是知道內容是否容易理解、是否尊重不同想法。你會閱讀兩段短文，每段之後回答問題。這不是宗教測驗，不要求認同任何觀點。</p>
+<p>參與完全自願；你可跳過問題，或隨時關閉頁面停止。**此頁不連線、不使用 Cookie、不保存到伺服器，也不會自動傳送任何答案。** 只有你選擇下載檔案並交給研究者時，研究者才會收到內容。請不要在開放回答中提供姓名、聯絡方式或他人的私事。</p>
+<p>我們不詢問宗教歸屬、受洗、移民狀態或其他身分資料。閱讀測試不能代表正式影片的留存率。</p>
+<div class="choice"><input id="consent" type="checkbox"><label for="consent">我已理解以上說明，並自願參與這項匿名文字理解度測試。</label></div>
+<button id="start" disabled>開始測試</button>
+</section>
+
+<section class="panel hidden" id="readingSection" aria-labelledby="topicTitle">
+<h2 id="topicTitle"></h2>
+<p class="muted">請完整閱讀下面內容。閱讀完成後，按「開始回答」；內容會隱藏。</p>
+<div id="reading" class="reading"></div>
+<button id="readDone">我已讀完，開始回答</button>
+</section>
+
+<section class="panel hidden" id="questionSection" aria-labelledby="questionTitle">
+<h2 id="questionTitle"></h2>
+<p class="muted">以下答案可跳過。請依你剛才讀到的內容回答，不需要表達自己的宗教立場。</p>
+<form id="answers">
+<label for="q1">1．這段內容主要想回答什麼問題？</label>
+<textarea id="q1" maxlength="700" placeholder="請用自己的話回答（可跳過）"></textarea>
+<label for="q2">2．哪個說法是經文或故事的敘述？哪個是基督徒的信仰理解？請舉一個例子。</label>
+<textarea id="q2" maxlength="700" placeholder="請用自己的話回答（可跳過）"></textarea>
+<label for="q3">3．如果向沒讀過的朋友介紹，你會怎樣用一句話說明？</label>
+<textarea id="q3" maxlength="700" placeholder="請用自己的話回答（可跳過）"></textarea>
+<label for="clarity">4．內容是否清楚？</label>
+<select id="clarity"><option value="">不作答</option><option value="1">1 非常不清楚</option><option value="2">2 不太清楚</option><option value="3">3 一般</option><option value="4">4 清楚</option><option value="5">5 非常清楚</option></select>
+<label for="jargon">5．宗教專有詞是否難懂？</label>
+<select id="jargon"><option value="">不作答</option><option value="1">1 完全不難懂</option><option value="2">2 不太難懂</option><option value="3">3 一般</option><option value="4">4 比較難懂</option><option value="5">5 非常難懂</option></select>
+<label for="respect">6．內容是否尊重不同想法的人？</label>
+<select id="respect"><option value="">不作答</option><option value="1">1 完全不尊重</option><option value="2">2 不太尊重</option><option value="3">3 一般</option><option value="4">4 尊重</option><option value="5">5 非常尊重</option></select>
+<label for="nextStep">7．內容是否給出可自行了解下一步的方向？</label>
+<select id="nextStep"><option value="">不作答</option><option value="1">1 沒有</option><option value="2">2 不太清楚</option><option value="3">3 一般</option><option value="4">4 有</option><option value="5">5 非常清楚</option></select>
+<label for="notes">8．哪一句令人困惑？（可跳過）</label>
+<textarea id="notes" maxlength="700" placeholder="可不作答，勿填姓名或聯絡資訊"></textarea>
+<button type="submit">提交這段回應</button>
+</form>
+</section>
+
+<section class="panel hidden" id="doneSection">
+<h2>兩段測試已完成</h2>
+<p>本頁沒有傳送任何內容。下方按鈕會將本次回應下載成 JSON 檔案，只存於你目前的裝置；下載前請確認你的回答沒有個人資料。</p>
+<p>是否把檔案交給研究者，由你自行決定。若不想分享，直接關閉即可。沒有下載或提交，不代表你未完成閱讀。</p>
+<button id="export">下載匿名研究回應（JSON）</button>
+<button id="finish" class="secondary">清除本頁回應</button>
+<p id="exportNotice" class="muted" aria-live="polite"></p>
+</section>
+
+<div class="foot">Gospel YouTube G1 Research • R05 Pilot • 本頁離線運作、無外部字型或分析工具。自由文字可能由填答者自行寫入個人資訊，分享前請自行檢查。</div>
+</main>
+<script>
+(function(){
+"use strict";
+const topics={
+ T1:{
+  title:"T1｜耶穌是誰？",
+  A:"聖誕節、十字架、教堂，這些你可能都見過。但耶穌究竟是誰？如果暫時放下熟悉的宗教稱呼，福音書到底怎樣介紹這個人？",
+  B:"在一世紀的加利利，有人在海邊工作，福音書記載耶穌邀請他們跟從自己。這段故事裡出現的人是誰？他為何使人願意重新思考生活？",
+  common:"新約的前四卷被稱為福音書，記錄了關於耶穌的教導、行動、受死以及復活的宣告。基督徒相信，耶穌不只是古代的宗教老師，而是基督、是救主。要知道這個信仰如何形成，可以從福音書的具體故事開始，逐步查考，而不必先熟悉教會的用語。"
+ },
+ T2:{
+  title:"T2｜祭祖與孝道如何理解？",
+  A:"清明掃墓時，基督徒能不能參加家族活動？不拿香就等於不孝嗎？這不只是宗教規矩，也牽涉怎樣與自己重視的家人相處。",
+  B:"假設一個家庭約好清明一起掃墓，有位家人剛接觸基督教，不知道怎樣參與傳統儀式，又怕家人因此覺得自己不孝。",
+  common:"在華人家庭中，紀念祖先可能包含感謝、追思和具有宗教意義的儀式。聖經也有孝敬父母的教導。基督徒常區分尊重家族與把祖先當作神明敬拜，但不同家庭和教會對具體參與方式可能有不同理解。真正需要討論的是儀式代表什麼、自己相信什麼，以及如何在尊重家人的同時誠實地表達。"
+ }
+};
+const ids=["consentSection","readingSection","questionSection","doneSection"];
+const f=id=>document.getElementById(id);
+const randomBit=()=>{try{return crypto.getRandomValues(new Uint32Array(1))[0]%2}catch(e){return Math.floor(Math.random()*2)}};
+const group=randomBit()===0?"AB":"BA";
+const order=randomBit()===0?["T1","T2"]:["T2","T1"];
+const variants=group==="AB"?{T1:"A",T2:"B"}:{T1:"B",T2:"A"};
+let idx=0;
+let responses=[];
+const show=id=>ids.forEach(x=>f(x).classList.toggle("hidden",x!==id));
+f("consent").addEventListener("change",()=>f("start").disabled=!f("consent").checked);
+f("start").addEventListener("click",()=>{
+ if(!f("consent").checked)return;
+ idx=0;responses=[];startReading();
+});
+function startReading(){
+ let key=order[idx],item=topics[key],v=variants[key];
+ f("topicTitle").textContent=item.title;
+ f("reading").textContent=item[v]+"\n\n"+item.common;
+ f("progress").textContent="第 "+(idx+1)+"／2 段：閱讀";
+ show("readingSection");
+}
+f("readDone").addEventListener("click",()=>{
+ f("reading").textContent="";
+ f("questionTitle").textContent=topics[order[idx]].title+"｜回答";
+ f("answers").reset();
+ f("progress").textContent="第 "+(idx+1)+"／2 段：回答";
+ show("questionSection");
+});
+f("answers").addEventListener("submit",ev=>{
+ ev.preventDefault();
+ const key=order[idx];
+ responses.push({
+  topic:key,version:variants[key],
+  answers:[f("q1").value.trim(),f("q2").value.trim(),f("q3").value.trim()],
+  clarity:opt("clarity"),jargon_difficulty:opt("jargon"),respect:opt("respect"),
+  next_step:opt("nextStep"),confusing_phrase:f("notes").value.trim()
+ });
+ idx++;
+ if(idx<order.length){startReading()}else{
+  f("progress").textContent="已完成兩段研究";
+  show("doneSection");
+ }
+});
+function opt(id){let v=f(id).value;return v?Number(v):null}
+function clearData(){
+ responses=[];idx=0;
+ f("answers").reset();f("consent").checked=false;f("start").disabled=true;f("reading").textContent="";
+ f("exportNotice").textContent="";
+ show("consentSection");f("progress").textContent="參與說明";
+}
+f("export").addEventListener("click",()=>{
+ const record={schema:"gospel-youtube-g1-r05-1",medium:"written-text-not-video",group:group,order:order.slice(),responses:responses};
+ const blob=new Blob([JSON.stringify(record,null,2)],{type:"application/json;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download="g1-anonymous-comprehension.json";
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);
+ f("exportNotice").textContent="已啟動本機下載。只有你主動分享檔案，研究者才會收到。";
+});
+f("finish").addEventListener("click",clearData);
+})();
+</script>
+</body>
+</html>
