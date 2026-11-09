@@ -52,3 +52,18 @@ This is a **single alternating sequence** with four typed segments (ZH, EN, ZH, 
 - Decorating an unresolved type layout with frames, texture, lines or generated images.
 
 **Design aim:** Modern, rigorous and minimal artwork. Start with black-on-white character form, measured typography and balanced negative space. The artistic result, not the novelty of an algorithm, determines acceptance.
+
+## Mandatory Design OS weight correction — 2026-11-09
+
+**User requirement:** test the true two endpoint Chinese weights of the actual OS font, not the ordinary heading/body weight.
+
+- Chinese family: **Chiron Hei HK WS** (existing Design OS `--ws-type-display-zh`).
+- **200 / ExtraLight** and **900 / Heavy** are the required contrast extremes for Scripture Studio's experimental compositions.
+- **400 / Regular** and **600 / SemiBold** may be tested as intermediate choices, but `600` is NOT the heaviest. The existing OS semantic anchor `--ws-weight-zh-anchor:600` must **not** be silently substituted for the design experiment's requested `900`.
+- English: **Bodoni Moda Regular 400**, **genuine Bodoni Moda Italic 400**, **Bodoni Moda SC 400**, and the permitted genuine italic small caps. Never browser-synthesize variants.
+- Chinese and English should start at the same nominal type size as requested; differences in glyph optical density are studied through family/cut/weight, not an arbitrary Chinese-large/English-small rule. No text omission to fit the stamp.
+- A computed `font-weight:900` alone is inadequate proof. Capture `document.fonts.check` plus inspected font face/network loading; verify actual Chiron glyphs render in the 900 variable-font instance, including 200 comparison. If external fonts are unavailable, mark preview **UNVERIFIED** rather than presenting fallback glyphs as OS compliance.
+
+Sources: [Design OS runtime](../../../../static/css/westside-design-os.css), [OS editorial typography](../../design/WESTSIDE-EDITORIAL-TYPOGRAPHY.md), and [Chiron Hei HK official documented weight axis](https://github.com/chiron-fonts/chiron-hei-hk/blob/release/README.en.md): 200–900, Heavy=900, SemiBold=600. Source font uses SIL OFL-1.1.
+
+**No renewed art-approval claims until both 200 and 900 are visually verified with the real OS font.**
