@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scripture Studio | 鉛字交叉印記 · 設計樣本 V2</title>
+<style>
+:root{--paper:#faf9f5;--ink:#252525;--gold:#a2872a;--olive:#738a5a}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}
+header{padding:20px clamp(16px,3vw,42px);border-bottom:1px solid #d4d2cc;display:flex;align-items:baseline;justify-content:space-between;gap:15px}
+h1{font:400 clamp(23px,2.7vw,36px) Georgia,serif;margin:0;letter-spacing:-.035em}.overline{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#72746c}
+main{display:grid;grid-template-columns:minmax(265px,330px) minmax(0,1fr)}aside{padding:23px;border-right:1px solid #d4d2cc;display:grid;gap:15px;align-content:start}
+label{display:grid;gap:6px;font-size:12px;font-weight:600}input,textarea,select,button{border:1px solid #c9c8c1;background:white;border-radius:3px;color:var(--ink);font:inherit;padding:9px 10px;width:100%}
+textarea{min-height:74px;resize:vertical}input[type=range]{padding:0}.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.primary{background:#263d2b;color:white;border-color:#263d2b}
+aside p{font-size:12px;color:#666e65;margin:0}section.work{padding:clamp(16px,3vw,46px);min-width:0}
+.heading{display:flex;align-items:end;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:18px}.heading h2{font:400 25px Georgia,serif;margin:0}
+.twins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,2vw,32px);max-width:1050px}
+.sample svg{display:block;width:100%;aspect-ratio:1;overflow:visible}.sample small{display:block;margin:0 0 10px;color:#73766c;letter-spacing:.08em}
+hr{border:0;border-top:1px solid #d6d4ce;margin:30px 0 22px}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 12px;max-width:1050px}
+.thumb{border:0;text-align:left;padding:0;background:none;cursor:pointer}.thumb svg{display:block;width:100%;aspect-ratio:1}.thumb strong{font:500 12px/1.4 sans-serif;display:block;margin-top:7px}
+.thumb[aria-current=true] svg{outline:2px solid var(--gold);outline-offset:3px}.quiet{font-size:12px;color:#666e65;max-width:780px;margin-top:16px}
+.hidden-text{position:absolute;left:-10000px}footer{border-top:1px solid #dedcd5;padding:15px 35px;font-size:12px;color:#7a7c73}
+@media(max-width:900px){main{display:block}aside{border-right:0;border-bottom:1px solid #ddd;grid-template-columns:repeat(2,minmax(0,1fr))}aside .wide,aside p{grid-column:1/-1}.gallery{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:600px){header{display:block}aside{grid-template-columns:1fr}.twins{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}}
+</style></head><body>
+<header><div><div class="overline">Westside Watch / Scripture Studio · M1</div><h1>東西鉛字交叉 <i>Type / 印</i></h1></div><div class="overline">原生 SVG · 可編輯設計樣本 V2</div></header>
+<main><aside>
+<label>經文基礎 / EIGHT SOURCE STUDIES<select id="preset"></select></label>
+<label>作品構圖<select id="layout"><option value="interlock">01 · 咬合 / Interlock</option><option value="counter">02 · 對軸 / Counter-axis</option><option value="monogram">03 · 字核 / Monogram</option></select></label>
+<label class="wide">中文作品節錄<textarea id="zh"></textarea></label>
+<label class="wide">英文作品節錄<textarea id="en"></textarea></label>
+<div class="cols"><label>中文出處<input id="zhref"></label><label>English<input id="enref"></label></div>
+<div class="cols"><label>字形密度<input type="range" id="density" min="70" max="125" value="100" step="5"></label><label>排字進度<input type="range" id="progress" min="0" max="100" value="100" step="5"></label></div>
+<div class="cols"><button id="reverse">陰陽互換</button><button id="reset">還原樣本</button></div>
+<div class="cols"><button class="primary" id="saveSvg">匯出雙印 SVG</button><button id="saveJson">匯出編輯配方</button></div>
+<p>這是文字印記生成器的設計試作，不是插圖或經文海報。兩種文字共享視覺格網，英文橫軸進入中文文字留白；陰版將閱讀方向互換。選取下方八枚樣本，可將其帶入主編輯區。</p>
+</aside>
+<section class="work">
+<div class="heading"><div><div class="overline">01 / paired master</div><h2>一體雙印</h2></div><span class="overline" id="status">完成落印</span></div>
+<div class="twins"><div class="sample"><small>陽文　中文直排 × 英文橫排</small><svg id="pos" viewBox="0 0 640 640" role="img" aria-label="陽文經文印記"></svg></div>
+<div class="sample"><small>陰文　中文橫排 × 英文直向軸</small><svg id="neg" viewBox="0 0 640 640" role="img" aria-label="陰文經文印記"></svg></div></div>
+<p class="quiet">中文和英文的版面位置不是兩個不相關的盒子。字群依照字數和字軸協調尺寸、讀取方向、共用基準線與交錯區；完成態不加框線、假印泥、插畫或裝飾。此版重點為實測母版的普適性，尚未宣告視覺定稿。</p>
+<hr>
+<div class="heading"><div><div class="overline">02 / source specimens</div><h2>首頁與七個版塊</h2></div><span class="overline">點擊任一樣本進行編輯</span></div>
+<div id="gallery" class="gallery"></div>
+<p class="quiet">05–07 的經文在此仍屬候選測試資料；首頁與 01–04 亦須按正式譯本及欄目主題經文資料核對後才能發布。設計預覽不是經文資料審定。</p>
+</section></main>
+<footer>Design OS: paper / ink / authorized identity roles · No main-site or P2 production changes · Draft art and code, not editorial approval</footer>
+<script>
+"use strict";
+const entries=[
+{title:"首頁｜黑夜已深",zh:"黑夜已深，白晝將近。",en:"The night is far spent, the day is at hand.",zr:"羅馬書 13:12",er:"ROMANS 13:12"},
+{title:"01｜活水堂",zh:"除他以外，別無拯救。",en:"Neither is there salvation in any other.",zr:"使徒行傳 4:12",er:"ACTS 4:12"},
+{title:"02｜西望",zh:"我在你城上設立守望的。",en:"I have set watchmen upon thy walls.",zr:"以賽亞書 62:6",er:"ISAIAH 62:6"},
+{title:"03｜以馬忤斯",zh:"凡經上所指著自己的話，都給他們講解明白了。",en:"He expounded unto them in all the scriptures the things concerning himself.",zr:"路加福音 24:27",er:"LUKE 24:27"},
+{title:"04｜橄欖山",zh:"可見信道是從聽道來的。",en:"So then faith cometh by hearing.",zr:"羅馬書 10:17",er:"ROMANS 10:17"},
+{title:"05｜黎明書局（候選）",zh:"你的話是我腳前的燈，是我路上的光。",en:"Thy word is a lamp unto my feet, and a light unto my path.",zr:"詩篇 119:105",er:"PSALM 119:105"},
+{title:"06｜天堂電影院（候選）",zh:"將這默示明明地寫在版上。",en:"Write the vision, and make it plain upon tables.",zr:"哈巴谷書 2:2",er:"HABAKKUK 2:2"},
+{title:"07｜白晝咖啡館（候選）",zh:"有小麥、大麥、葡萄樹、無花果樹、石榴樹、橄欖樹，和蜜。",en:"A land of wheat, and barley, and vines, and fig trees, and pomegranates; a land of oil olive, and honey.",zr:"申命記 8:8",er:"DEUTERONOMY 8:8"}];
+const $=x=>document.getElementById(x),ns="http://www.w3.org/2000/svg";
+let index=0,reversed=false;
+entries.forEach((p,i)=>{let opt=document.createElement("option");opt.value=i;opt.textContent=p.title;$("preset").append(opt)});
+const create=(tag,attrs={},txt)=>{let el=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));if(txt!==undefined)el.textContent=txt;return el};
+function linesEN(str,maxUnits){let ws=str.trim().split(/\s+/),out=[],line="";for(let w of ws){if(line&&(line+" "+w).length>maxUnits){out.push(line);line=w}else line+=(line?" ":"")+w}if(line)out.push(line);return out}
+function chineseColumns(str,limit){let s=Array.from(str.replace(/\s/g,""));let n=Math.max(1,Math.ceil(s.length/limit));let arr=[],i=0;while(i<s.length){arr.push(s.slice(i,i+limit).join(""));i+=limit}return arr}
+function svgPanel(root,p,mode,layout,density,progress){
+ root.replaceChildren();
+ let negative=(mode==="yin")!==reversed;
+ let bg=negative?"#252525":"#faf9f5",ink=negative?"#faf9f5":"#252525",accent=negative?"#faf9f5":"#a2872a";
+ root.append(create("rect",{x:0,y:0,width:640,height:640,fill:bg}));
+ let cleanZH=p.zh.replace(/[\s]/g,""), chinese=Array.from(cleanZH),en=p.en.trim(),count=chinese.length,scale=density/100;
+ let group=create("g",{opacity:progress===0?0:1});root.append(group);
+ // The visual register is shared, but one pair reverses the reading axes.
+ let art={x:61,y:60,w:518,h:504};
+ let anchor=layout==="interlock"? .53:layout==="counter"?.46:.59;
+ if(mode==="yang"){
+   let rows=Math.min(12,Math.max(5,Math.ceil(count/Math.max(2,Math.ceil(count/11)))));
+   let cols=chineseColumns(cleanZH,rows);
+   let colW=Math.min(64,Math.floor((art.w*.58)/Math.max(2,cols.length))),csize=Math.min(67,Math.floor((art.h*.86)/rows),Math.floor(colW*.96))*scale;
+   let xRight=art.x+art.w-20, top=art.y+(art.h-rows*csize*1.03)/2;
+   // Chinese ordered top-to-bottom, right-to-left, forms large shape on the same optical grid.
+   let chineseGroup=create("g",{opacity:progress>=25?1:0});group.append(chineseGroup);
+   cols.forEach((s,i)=>{Array.from(s).forEach((char,j)=>{
+     chineseGroup.append(create("text",{x:xRight-i*csize*1.06,y:top+(j+.86)*csize*1.03,"font-size":csize,"font-weight":700,"font-family":'"Noto Serif TC","Songti TC",serif',"text-anchor":"middle",fill:ink},char));
+   })});
+   let lineWidth=layout==="monogram"?400: (anchor===.53?355:315), maxChars=Math.max(11,Math.floor(lineWidth/(scale*18)));
+   let engLines=linesEN(en,maxChars);
+   let fs=Math.min(49,(398/Math.max(1,...engLines.map(x=>x.length*0.52))),Math.floor(365/engLines.length*.93))*scale;
+   let enTop=layout==="counter"?top+rows*csize*.25:layout==="monogram"?art.y+190:art.y+168;
+   let englishGroup=create("g",{opacity:progress>=65?1:0});group.append(englishGroup);
+   // Negative space between character masses receives independent horizontal letterpress measure;
+   // the two scripts overlap in footprint but have individually controlled baselines.
+   engLines.forEach((l,i)=>englishGroup.append(create("text",{x:art.x+8,y:enTop+i*fs*1.18,"font-size":fs,"font-family":'Georgia,"Times New Roman",serif',"letter-spacing":"-1.3",fill:accent},l)));
+   if(layout==="monogram"){group.append(create("rect",{x:art.x+210,y:art.y+90,width:3,height:305,fill:bg}))}
+ } else {
+   // Counterform: horizontal Chinese lives above, vertical Latin measures drop through its open columns.
+   let zhLines=chineseColumns(cleanZH,Math.max(5,Math.ceil(count/3)));
+   let sz=Math.min(56,500/Math.max(...zhLines.map(x=>x.length)))*scale;
+   let zhGroup=create("g",{opacity:progress>=25?1:0});group.append(zhGroup);
+   zhLines.forEach((l,i)=>zhGroup.append(create("text",{x:art.x+8,y:art.y+105+i*sz*1.25,fill:ink,"font-size":sz,"font-family":'"Noto Serif TC","Songti TC",serif',"font-weight":700,"letter-spacing":"-2"},l)));
+   let words=en.split(/\s+/),columns=[[],[],[],[]];words.forEach((w,i)=>columns[i%4].push(w));
+   let enGroup=create("g",{opacity:progress>=65?1:0});group.append(enGroup);
+   // Compose vertical Latin as continuous independent typeset strings (rotated as Latin words, not individual glyphs).
+   let colSize=Math.min(33,Math.floor((art.h*.60)/Math.max(...columns.map(a=>a.join(" ").length)))*1.7)*scale;
+   let baseY=layout==="counter"?art.y+260:art.y+295;
+   columns.forEach((arr,i)=>{
+     let t=create("text",{x:art.x+24+i*(art.w-30)/4,y:baseY,fill:accent,"font-size":colSize,"font-family":'Georgia,"Times New Roman",serif',"letter-spacing":"-.5",transform:"rotate(90 "+(art.x+24+i*(art.w-30)/4)+" "+baseY+")"},arr.join(" "));
+     enGroup.append(t);
+   });
+ }
+ // Verse reference is optically subordinate, using a shared two-sided baseline, not an ornamental horizontal divider.
+ if(progress>=95){
+ group.append(create("text",{x:art.x+8,y:art.y+art.h+34,fill:ink,"font-size":18,"font-family":'"Noto Serif TC",serif'},p.zr));
+ group.append(create("text",{x:art.x+art.w,y:art.y+art.h+34,fill:ink,"font-size":15,"text-anchor":"end","font-family":'Georgia,serif',"letter-spacing":"1"},p.er));
+ }
+ root.setAttribute("aria-label",p.title+" — "+p.zh+" / "+p.en);
+}
+function values(){return {title:entries[index].title,zh:$("zh").value,en:$("en").value,zr:$("zhref").value,er:$("enref").value}}
+function render(){
+ let p=values(),layout=$("layout").value,d=Number($("density").value),pr=Number($("progress").value);
+ svgPanel($("pos"),p,"yang",layout,d,pr);svgPanel($("neg"),p,"yin",layout,d,pr);
+ $("status").textContent=pr===100?"完成落印":pr===0?"空版":pr<25?"準備排字":pr<65?"中文排入":pr<95?"英文交叉":"落印";
+ document.querySelectorAll(".thumb").forEach((t,i)=>t.setAttribute("aria-current",i===index?"true":"false"));
+}
+function load(){index=Number($("preset").value);let p=entries[index];$("zh").value=p.zh;$("en").value=p.en;$("zhref").value=p.zr;$("enref").value=p.er;render()}
+function gallery(){
+ const host=$("gallery");host.replaceChildren();
+ entries.forEach((p,i)=>{let b=document.createElement("button");b.className="thumb";b.type="button";b.setAttribute("aria-label","編輯 "+p.title);
+ let svg=create("svg",{viewBox:"0 0 640 640","aria-hidden":"true"});svgPanel(svg,p,"yang",["interlock","counter","monogram"][i%3],i===3?80:100,100);
+ let label=document.createElement("strong");label.textContent=p.title;b.append(svg,label);
+ b.addEventListener("click",()=>{$("preset").value=i;load();document.querySelector(".twins").scrollIntoView({block:"nearest",behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"})});
+ host.append(b)});
+}
+function dl(name,txt,type){let blob=new Blob([txt],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function serializeSvg(s){let c=s.cloneNode(true);c.setAttribute("xmlns",ns);c.setAttribute("width","640");c.setAttribute("height","640");return new XMLSerializer().serializeToString(c)}
+$("saveSvg").addEventListener("click",()=>{const a=$("pos").cloneNode(true),b=$("neg").cloneNode(true);a.removeAttribute("id");b.removeAttribute("id");let innerA=Array.from(a.children).map(x=>new XMLSerializer().serializeToString(x)).join(""),innerB=Array.from(b.children).map(x=>new XMLSerializer().serializeToString(x)).join("");let text='<svg xmlns="'+ns+'" viewBox="0 0 1312 640" width="1312" height="640"><g>'+innerA+'</g><g transform="translate(672 0)">'+innerB+'</g></svg>';dl("scripture-studio-dual-seal-v2.svg",text,"image/svg+xml")});
+$("saveJson").addEventListener("click",()=>dl("scripture-studio-recipe-v2.json",JSON.stringify({schema:"scripture-studio-design-samples-v2",...values(),layout:$("layout").value,density:Number($("density").value),progress:Number($("progress").value),polarityReversed:reversed},null,2),"application/json"));
+["zh","en","zhref","enref","layout","density","progress"].forEach(id=>$(id).addEventListener("input",render));
+$("preset").addEventListener("change",load);
+$("reset").addEventListener("click",load);
+$("reverse").addEventListener("click",()=>{reversed=!reversed;render()});
+gallery();load();
+</script></body></html>
