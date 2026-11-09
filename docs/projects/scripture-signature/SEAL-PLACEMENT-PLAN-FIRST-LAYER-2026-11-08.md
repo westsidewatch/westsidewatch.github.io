@@ -1,4 +1,7 @@
 # Scripture Seal — First-Layer Artwork Placement Plan
+
+> **IMPORTANT — SUPERSEDED PLACEMENT POLICY (2026-11-08, later decision):** The latest user direction requires a theme-scripture **Seal at the entrance to each of the seven first-layer realms**, where the impression marks the transition rhythm. This replaces this document's earlier selective/conditional placement recommendations. Retain the older matrix only as historical exploration. The **current authority** is [Seven-realm Scripture Seal transition decision](SEVEN-REALM-SCRIPTURE-SEAL-TRANSITION-DECISION-2026-11-08.md). The everyday Folio remains a separate derived system. No implementation/live approval is implied.
+
 ## Westside Watch 主站第一層經文戳記作品級應用規劃
 
 **Date:** 2026-11-08  
