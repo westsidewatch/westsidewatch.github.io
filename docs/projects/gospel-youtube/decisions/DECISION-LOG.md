@@ -32,7 +32,8 @@
 - **R-002 / 2026-11-08**：完成第二輪桌面研究：5 個公開頻道的 24 支最近 90 日內發布影片（發布期間 2026-10-13 至 11-06，有來源的最後已知觀看觀測）、六組華語福音問題的搜尋**內容供應**核查、雙語案例與官方多語音軌方案比較。報告見 [R02 影片樣本](../research/r02-video-sample-2026-11-08.md)、[R02 搜尋供應](../research/r02-search-intent-audit-2026-11-08.md)、[R02 綜合](../research/r02-market-synthesis-2026-11-08.md)。本輪不定頻道定位或發布策略。
 - **R-003 / 2026-11-08**：第三輪新增 [學術證據與小型創作者研究](../research/r03-evidence-and-creator-study-2026-11-08.md)：2026 年華語神學 YouTube 同行評審 50 支影片研究、BrotherNai 歷史個人工作流、UCLA 青年與加拿大成年人研究（不可外推華語市場）、YouTube Studio 2026 Trends 功能變動及五維內容審核 rubric。此為研究新證據，不批准節目定位、片長、口播形式或受眾年齡。
 - **R-004 / 2026-11-08**：第四輪完成 [十二項搜尋意圖供應審計](../research/r04-intent-and-format-benchmark-2026-11-08.md)，把 R01 問題池實際對應至 19 組可核查的福音課程、個人與教會 YouTube 影片、短片和譯製資源；另建立 [觀眾理解度試驗包](../research/r04-audience-comprehension-study-kit-2026-11-08.md)，包括同題不同開場、共同正文與匿名評分。這是 **已完成的研究設計與資料歸檔**，不是已完成的受眾訪談或需求測量。
-- **G1 狀態**：進行中；已有近期影片級公開觀測、中文影片方法論研究與 12 項內容可索引供應審計，但**尚欠相近觀測期同類樣本、YouTube Studio/Google Trends 真正搜索意圖測量及一手華語受眾理解度調查**，不能把內容供應誤稱搜尋需求。
+- **R-005 / 2026-11-09**：正式進入實證工具準備：核對 YouTube Studio Trends / Reach / Advanced Mode 官方說明，建立 [R05 執行手冊](../research/r05-studio-and-anonymous-field-protocol-2026-11-09.md)、[36 列官方搜尋訊號採集空表](../research/data/r05-studio-trends-capture-template.csv)、[離線匿名文字理解度測試頁](../research/tools/g1-anonymous-reading-test.html)與[匿名彙總程式](../research/tools/summarize-g1-r05.py)。**目前沒有 Studio 授權、沒有真人參與、沒有真正的影片測試結果**；不能將工具製作報為市場方向已驗證。
+- **G1 狀態**：進行中；已有近期影片級公開觀測、中文影片方法論研究與 12 項內容可索引供應審計；現已具備搜尋／匿名理解度資料的**採集工具**，但**尚欠官方搜尋興趣觀測、同期可比較樣本與真實成年志願者的同意和理解度回應**，不得聲稱市場需求已驗證。
 
 ## 研究記錄寫入規則
 
