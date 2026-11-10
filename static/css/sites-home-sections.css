@@ -204,3 +204,39 @@ html{scroll-behavior:smooth}
 
   .sites-home-realm:hover h2,.sites-home-closing a:hover,.sites-home-closing a:focus-visible{transform:none!important}
 }
+
+/* FIRST-LAYER EDITORIAL COMPOSITION — single authority for seven chapters.
+   The chapter's own live content stays inside the iframe; its parent provides
+   the continuous visual grammar, without circular ornaments or extra headers. */
+body.home .sites-home-realms{background:var(--ws-surface,#faf9f5)}
+body.home .sites-home-realm.fl-first-look-host{
+ --editorial-ink:var(--ws-text,#252525);
+ position:relative;display:block;min-height:100svh;
+ padding:0;overflow:clip;isolation:isolate;
+ border:0;border-top:1px solid color-mix(in srgb,var(--editorial-ink) 16%,transparent);
+ background:var(--ws-surface,#faf9f5);color:var(--editorial-ink);
+ animation:none!important;clip-path:none!important;
+}
+body.home .sites-home-realm.fl-first-look-host::before,
+body.home .sites-home-realm.fl-first-look-host::after{
+ content:none!important;display:none!important;
+}
+body.home .sites-home-realm.fl-first-look-host > iframe{
+ display:block;width:100%;min-height:100svh;height:100svh;
+ max-width:none;border:0;background:transparent;
+}
+body.home .sites-home-realm.fl-first-look-host:hover{
+ background:var(--ws-surface,#faf9f5);
+}
+body.home .sites-home-realm.fl-first-look-host[data-realm="sermon"]{
+ background:var(--ws-surface,#faf9f5);
+}
+/* Preserve each chapter's original imagery and motion while aligning its
+   editorial frame and typography through the existing Design OS. */
+body.home .sites-home-closing{
+ background:var(--ws-surface,#faf9f5);
+ border-top:1px solid var(--ws-line,rgba(37,37,37,.2));
+}
+@media(prefers-reduced-motion:reduce){
+ body.home .sites-home-realm.fl-first-look-host{transition:none!important}
+}
