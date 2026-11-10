@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-11-09T19:55:34.508504+00:00",
+  "generatedAt": "2026-11-10T17:09:08.209423+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -39,6 +39,12 @@
       "source": "Project Gutenberg"
     },
     {
+      "id": "gutenberg-ancient-history-archaeology",
+      "title": "古代世界與考古",
+      "books": 25,
+      "source": "Project Gutenberg"
+    },
+    {
       "id": "gutenberg-philosophy-classics",
       "title": "哲學與思想",
       "books": 25,
@@ -51,20 +57,20 @@
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 141,
-  "sourceCovers": 101,
+  "mappedBooks": 166,
+  "sourceCovers": 116,
   "directPublications": 14,
   "providers": {
     "Standard Ebooks": 14,
     "Internet Archive": 40,
-    "Project Gutenberg": 87
+    "Project Gutenberg": 112
   },
   "identity": {
-    "queriedThisRun": 0,
-    "resolved": 86,
-    "coversAdded": 47,
-    "internetArchiveLinks": 39,
-    "cacheEntries": 258
+    "queriedThisRun": 3,
+    "resolved": 104,
+    "coversAdded": 62,
+    "internetArchiveLinks": 47,
+    "cacheEntries": 261
   },
   "errors": [
     {
@@ -78,11 +84,6 @@
     {
       "source": "DOAB archaeology",
       "error": "HTTPError: HTTP Error 403: Forbidden"
-    },
-    {
-      "source": "Project Gutenberg",
-      "query": "ancient history archaeology",
-      "error": "RemoteDisconnected: Remote end closed connection without response"
     }
   ],
   "contentDownloaded": false
