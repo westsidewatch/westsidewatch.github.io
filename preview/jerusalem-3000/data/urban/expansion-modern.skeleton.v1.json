@@ -1,0 +1,1078 @@
+{
+  "schema": "j3k.independent-later-skeleton.v1",
+  "frame": "canonical-origin-east-x-south-z-metres",
+  "origin": {
+    "lat": 31.778,
+    "lon": 35.235
+  },
+  "authority": "independently authored illustrative skeleton constrained by published spatial relationships; not archaeological survey",
+  "generation": {
+    "maxBlockArea": 12000,
+    "roadClearance": 10,
+    "modelHeight": 6
+  },
+  "sources": {
+    "mishkenot": "https://jerusalemfoundation.org/old-project/mishkenot-shaananim-cultural-center-guest-house/",
+    "russian-compound": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26618",
+    "jaffa-archive": "https://archives.openjerusalem.org/index.php/mikhailov-asks-police-to-prohibit-to-cabmen-to-use-jaffa-road-during-explosions-for-construction-of-cistern",
+    "modern-corridor": "https://onlinepubs.trb.org/onlinepubs/circulars/ec058/15_04_Daniel.pdf"
+  },
+  "phases": {
+    "outside-walls": {
+      "districts": [
+        {
+          "id": "northwest-layout",
+          "polygon": [
+            [
+              -770,
+              -590
+            ],
+            [
+              -435,
+              -610
+            ],
+            [
+              -430,
+              -100
+            ],
+            [
+              -750,
+              -80
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417",
+            "https://publications.iaa.org.il/atiqot/vol65/iss1/26/"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "market-side-layout",
+          "polygon": [
+            [
+              -410,
+              -575
+            ],
+            [
+              -245,
+              -555
+            ],
+            [
+              -190,
+              70
+            ],
+            [
+              -410,
+              85
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "northeast-layout",
+          "polygon": [
+            [
+              -220,
+              -600
+            ],
+            [
+              200,
+              -590
+            ],
+            [
+              190,
+              -455
+            ],
+            [
+              -220,
+              -450
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "west-haram-layout",
+          "polygon": [
+            [
+              -245,
+              -420
+            ],
+            [
+              -175,
+              -420
+            ],
+            [
+              -175,
+              115
+            ],
+            [
+              -230,
+              120
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "southwest-layout",
+          "polygon": [
+            [
+              -740,
+              -55
+            ],
+            [
+              -435,
+              -70
+            ],
+            [
+              -395,
+              315
+            ],
+            [
+              -680,
+              300
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "south-central-layout",
+          "polygon": [
+            [
+              -405,
+              110
+            ],
+            [
+              -195,
+              100
+            ],
+            [
+              -185,
+              300
+            ],
+            [
+              -380,
+              330
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "southwest-outside-context",
+          "polygon": [
+            [
+              -1080,
+              220
+            ],
+            [
+              -835,
+              210
+            ],
+            [
+              -810,
+              690
+            ],
+            [
+              -1070,
+              710
+            ]
+          ],
+          "sources": [
+            "https://jerusalemfoundation.org/old-project/mishkenot-shaananim-cultural-center-guest-house/"
+          ],
+          "layoutRole": "extra-mural-expansion"
+        },
+        {
+          "id": "western-roadside-context",
+          "polygon": [
+            [
+              -1420,
+              -390
+            ],
+            [
+              -815,
+              -180
+            ],
+            [
+              -815,
+              -30
+            ],
+            [
+              -1440,
+              -220
+            ]
+          ],
+          "sources": [
+            "https://archives.openjerusalem.org/index.php/mikhailov-asks-police-to-prohibit-to-cabmen-to-use-jaffa-road-during-explosions-for-construction-of-cistern"
+          ],
+          "layoutRole": "extra-mural-expansion"
+        },
+        {
+          "id": "northwest-compound-context",
+          "polygon": [
+            [
+              -1320,
+              -800
+            ],
+            [
+              -880,
+              -810
+            ],
+            [
+              -830,
+              -430
+            ],
+            [
+              -1330,
+              -440
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26618"
+          ],
+          "layoutRole": "extra-mural-expansion"
+        }
+      ],
+      "roads": [
+        {
+          "id": "western-market-axis-context",
+          "points": [
+            [
+              -565,
+              -600
+            ],
+            [
+              -550,
+              -360
+            ],
+            [
+              -530,
+              -100
+            ],
+            [
+              -510,
+              100
+            ],
+            [
+              -490,
+              320
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "eastern-valley-link-illustrative",
+          "points": [
+            [
+              -330,
+              -590
+            ],
+            [
+              -295,
+              -340
+            ],
+            [
+              -260,
+              -80
+            ],
+            [
+              -230,
+              180
+            ],
+            [
+              -215,
+              335
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "west-east-connector-illustrative",
+          "points": [
+            [
+              -755,
+              -80
+            ],
+            [
+              -530,
+              -80
+            ],
+            [
+              -270,
+              -80
+            ],
+            [
+              -180,
+              -70
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "cotton-market-access-context",
+          "points": [
+            [
+              -285,
+              -255
+            ],
+            [
+              -240,
+              -255
+            ],
+            [
+              -180,
+              -255
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "southern-access-illustrative",
+          "points": [
+            [
+              -490,
+              320
+            ],
+            [
+              -380,
+              305
+            ],
+            [
+              -215,
+              300
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "westward-road-context",
+          "points": [
+            [
+              -755,
+              -80
+            ],
+            [
+              -900,
+              -180
+            ],
+            [
+              -1130,
+              -310
+            ],
+            [
+              -1480,
+              -430
+            ]
+          ],
+          "sources": [
+            "https://archives.openjerusalem.org/index.php/mikhailov-asks-police-to-prohibit-to-cabmen-to-use-jaffa-road-during-explosions-for-construction-of-cistern"
+          ],
+          "layoutRole": "extra-mural-connector"
+        },
+        {
+          "id": "southwest-access-illustrative",
+          "points": [
+            [
+              -755,
+              -80
+            ],
+            [
+              -880,
+              90
+            ],
+            [
+              -940,
+              350
+            ],
+            [
+              -940,
+              650
+            ]
+          ],
+          "sources": [
+            "https://jerusalemfoundation.org/old-project/mishkenot-shaananim-cultural-center-guest-house/"
+          ],
+          "layoutRole": "extra-mural-connector"
+        },
+        {
+          "id": "northwest-compound-access-illustrative",
+          "points": [
+            [
+              -1130,
+              -310
+            ],
+            [
+              -1100,
+              -540
+            ],
+            [
+              -1090,
+              -780
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26618"
+          ],
+          "layoutRole": "extra-mural-connector"
+        }
+      ],
+      "reservations": [
+        {
+          "id": "eastern-precinct-unfilled",
+          "polygon": [
+            [
+              -170,
+              -430
+            ],
+            [
+              260,
+              -410
+            ],
+            [
+              280,
+              190
+            ],
+            [
+              -180,
+              180
+            ]
+          ]
+        },
+        {
+          "id": "western-core-unfilled-not-measured",
+          "polygon": [
+            [
+              -715,
+              -340
+            ],
+            [
+              -585,
+              -350
+            ],
+            [
+              -575,
+              -180
+            ],
+            [
+              -710,
+              -170
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        }
+      ],
+      "sources": [
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417",
+        "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124",
+        "https://publications.iaa.org.il/atiqot/vol65/iss1/26/",
+        "https://jerusalemfoundation.org/old-project/mishkenot-shaananim-cultural-center-guest-house/",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26618",
+        "https://archives.openjerusalem.org/index.php/mikhailov-asks-police-to-prohibit-to-cabmen-to-use-jaffa-road-during-explosions-for-construction-of-cistern",
+        "https://onlinepubs.trb.org/onlinepubs/circulars/ec058/15_04_Daniel.pdf"
+      ]
+    },
+    "modern": {
+      "districts": [
+        {
+          "id": "northwest-layout",
+          "polygon": [
+            [
+              -770,
+              -590
+            ],
+            [
+              -435,
+              -610
+            ],
+            [
+              -430,
+              -100
+            ],
+            [
+              -750,
+              -80
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417",
+            "https://publications.iaa.org.il/atiqot/vol65/iss1/26/"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "market-side-layout",
+          "polygon": [
+            [
+              -410,
+              -575
+            ],
+            [
+              -245,
+              -555
+            ],
+            [
+              -190,
+              70
+            ],
+            [
+              -410,
+              85
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "northeast-layout",
+          "polygon": [
+            [
+              -220,
+              -600
+            ],
+            [
+              200,
+              -590
+            ],
+            [
+              190,
+              -455
+            ],
+            [
+              -220,
+              -450
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "west-haram-layout",
+          "polygon": [
+            [
+              -245,
+              -420
+            ],
+            [
+              -175,
+              -420
+            ],
+            [
+              -175,
+              115
+            ],
+            [
+              -230,
+              120
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "southwest-layout",
+          "polygon": [
+            [
+              -740,
+              -55
+            ],
+            [
+              -435,
+              -70
+            ],
+            [
+              -395,
+              315
+            ],
+            [
+              -680,
+              300
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "south-central-layout",
+          "polygon": [
+            [
+              -405,
+              110
+            ],
+            [
+              -195,
+              100
+            ],
+            [
+              -185,
+              300
+            ],
+            [
+              -380,
+              330
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ],
+          "layoutRole": "old-city-context"
+        },
+        {
+          "id": "southwest-outside-context",
+          "polygon": [
+            [
+              -1080,
+              220
+            ],
+            [
+              -835,
+              210
+            ],
+            [
+              -810,
+              690
+            ],
+            [
+              -1070,
+              710
+            ]
+          ],
+          "sources": [
+            "https://jerusalemfoundation.org/old-project/mishkenot-shaananim-cultural-center-guest-house/"
+          ],
+          "layoutRole": "extra-mural-expansion"
+        },
+        {
+          "id": "western-roadside-context",
+          "polygon": [
+            [
+              -1420,
+              -390
+            ],
+            [
+              -815,
+              -180
+            ],
+            [
+              -815,
+              -30
+            ],
+            [
+              -1440,
+              -220
+            ]
+          ],
+          "sources": [
+            "https://archives.openjerusalem.org/index.php/mikhailov-asks-police-to-prohibit-to-cabmen-to-use-jaffa-road-during-explosions-for-construction-of-cistern"
+          ],
+          "layoutRole": "extra-mural-expansion"
+        },
+        {
+          "id": "northwest-compound-context",
+          "polygon": [
+            [
+              -1320,
+              -800
+            ],
+            [
+              -880,
+              -810
+            ],
+            [
+              -830,
+              -430
+            ],
+            [
+              -1330,
+              -440
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26618"
+          ],
+          "layoutRole": "extra-mural-expansion"
+        },
+        {
+          "id": "western-corridor-extension",
+          "polygon": [
+            [
+              -1830,
+              -680
+            ],
+            [
+              -1470,
+              -490
+            ],
+            [
+              -1450,
+              -215
+            ],
+            [
+              -1820,
+              -250
+            ]
+          ],
+          "sources": [
+            "https://onlinepubs.trb.org/onlinepubs/circulars/ec058/15_04_Daniel.pdf"
+          ],
+          "layoutRole": "extra-mural-expansion"
+        },
+        {
+          "id": "northwest-corridor-extension",
+          "polygon": [
+            [
+              -1760,
+              -1150
+            ],
+            [
+              -1370,
+              -1150
+            ],
+            [
+              -1345,
+              -460
+            ],
+            [
+              -1740,
+              -600
+            ]
+          ],
+          "sources": [
+            "https://onlinepubs.trb.org/onlinepubs/circulars/ec058/15_04_Daniel.pdf"
+          ],
+          "layoutRole": "extra-mural-expansion"
+        }
+      ],
+      "roads": [
+        {
+          "id": "western-market-axis-context",
+          "points": [
+            [
+              -565,
+              -600
+            ],
+            [
+              -550,
+              -360
+            ],
+            [
+              -530,
+              -100
+            ],
+            [
+              -510,
+              100
+            ],
+            [
+              -490,
+              320
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "eastern-valley-link-illustrative",
+          "points": [
+            [
+              -330,
+              -590
+            ],
+            [
+              -295,
+              -340
+            ],
+            [
+              -260,
+              -80
+            ],
+            [
+              -230,
+              180
+            ],
+            [
+              -215,
+              335
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "west-east-connector-illustrative",
+          "points": [
+            [
+              -755,
+              -80
+            ],
+            [
+              -530,
+              -80
+            ],
+            [
+              -270,
+              -80
+            ],
+            [
+              -180,
+              -70
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "cotton-market-access-context",
+          "points": [
+            [
+              -285,
+              -255
+            ],
+            [
+              -240,
+              -255
+            ],
+            [
+              -180,
+              -255
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "southern-access-illustrative",
+          "points": [
+            [
+              -490,
+              320
+            ],
+            [
+              -380,
+              305
+            ],
+            [
+              -215,
+              300
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ],
+          "layoutRole": "old-city-route-context"
+        },
+        {
+          "id": "westward-road-context",
+          "points": [
+            [
+              -755,
+              -80
+            ],
+            [
+              -900,
+              -180
+            ],
+            [
+              -1130,
+              -310
+            ],
+            [
+              -1480,
+              -430
+            ]
+          ],
+          "sources": [
+            "https://archives.openjerusalem.org/index.php/mikhailov-asks-police-to-prohibit-to-cabmen-to-use-jaffa-road-during-explosions-for-construction-of-cistern"
+          ],
+          "layoutRole": "extra-mural-connector"
+        },
+        {
+          "id": "southwest-access-illustrative",
+          "points": [
+            [
+              -755,
+              -80
+            ],
+            [
+              -880,
+              90
+            ],
+            [
+              -940,
+              350
+            ],
+            [
+              -940,
+              650
+            ]
+          ],
+          "sources": [
+            "https://jerusalemfoundation.org/old-project/mishkenot-shaananim-cultural-center-guest-house/"
+          ],
+          "layoutRole": "extra-mural-connector"
+        },
+        {
+          "id": "northwest-compound-access-illustrative",
+          "points": [
+            [
+              -1130,
+              -310
+            ],
+            [
+              -1100,
+              -540
+            ],
+            [
+              -1090,
+              -780
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26618"
+          ],
+          "layoutRole": "extra-mural-connector"
+        },
+        {
+          "id": "western-corridor-extension-context",
+          "points": [
+            [
+              -1480,
+              -430
+            ],
+            [
+              -1640,
+              -550
+            ],
+            [
+              -1810,
+              -640
+            ]
+          ],
+          "sources": [
+            "https://onlinepubs.trb.org/onlinepubs/circulars/ec058/15_04_Daniel.pdf"
+          ],
+          "layoutRole": "extra-mural-connector"
+        }
+      ],
+      "reservations": [
+        {
+          "id": "eastern-precinct-unfilled",
+          "polygon": [
+            [
+              -170,
+              -430
+            ],
+            [
+              260,
+              -410
+            ],
+            [
+              280,
+              190
+            ],
+            [
+              -180,
+              180
+            ]
+          ]
+        },
+        {
+          "id": "western-core-unfilled-not-measured",
+          "polygon": [
+            [
+              -715,
+              -340
+            ],
+            [
+              -585,
+              -350
+            ],
+            [
+              -575,
+              -180
+            ],
+            [
+              -710,
+              -170
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        }
+      ],
+      "sources": [
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417",
+        "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124",
+        "https://publications.iaa.org.il/atiqot/vol65/iss1/26/",
+        "https://jerusalemfoundation.org/old-project/mishkenot-shaananim-cultural-center-guest-house/",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26618",
+        "https://archives.openjerusalem.org/index.php/mikhailov-asks-police-to-prohibit-to-cabmen-to-use-jaffa-road-during-explosions-for-construction-of-cistern",
+        "https://onlinepubs.trb.org/onlinepubs/circulars/ec058/15_04_Daniel.pdf"
+      ]
+    }
+  },
+  "limitations": [
+    "分区与路径坐标为独立设计示意，不是从发掘图提取的测绘线。",
+    "示意分区不是完整城界；空置和未绘制区域不表示历史无人居住或建筑已毁。",
+    "占位量体是低矮的模型布局片区，不是单栋建筑；数量、分割、6米高度与道路宽度没有历史测量依据。",
+    "道路跨期使用独立物件ID；共享空间脉络不等于已证明具体构件存续或复用。",
+    "预留区仅控制占位量体；不代表圣区、教堂或行政建筑的真实平面。",
+    "现代DEM不等于古地表，未模拟历史道路切坡和人工填土。",
+    "本包仅为旧城周边及西北、西部、西南局部研究窗口，不是完整19世纪城市，也不是现代都会区、行政界或政治边界。",
+    "旧城使用上一包鄂图曼示意分区与路径作为共同背景，不表示其单栋建筑、用途、人口或构件完整延续；两期各有独立ID，实际相邻存续尚未证明。",
+    "城外扩张是19世纪综合示意；现代期是20世纪至今的局部综合窗口，不能视为每一年代同时存在。",
+    "外部来源仅约束邻区与道路发展语境；分区多边形、连接线、道路宽度、建筑高度与小区数量均未测绘配准；未生成风车、俄国建筑或轻轨线路。",
+    "东部、远北、远西、南部城区及完整交通网仍未覆盖；空白区域不表示无人居住，扩大窗口不代表完整覆盖。"
+  ]
+}

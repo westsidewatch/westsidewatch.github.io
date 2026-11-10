@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';import{readFile}from'node:fs/promises';
+import{compileWaterDefenseRegistration,appendWaterDefenseLedger,bindWaterDefenseCore,waterDefenseState}from'../preview/jerusalem-3000/water-defense-registration.js';
+import{loadTemporalCityCore}from'../preview/jerusalem-3000/temporal-city-core-adapter.js';import{loadAnchorCityLedger}from'../preview/jerusalem-3000/anchor-ledger-loader.js';import{invalidateCityData}from'../preview/jerusalem-3000/city-data-loader.js';
+const base=new URL('../preview/jerusalem-3000/',import.meta.url),json=async p=>JSON.parse(await readFile(new URL(p,base))),data=await json('data/urban/water-defense.registration.v1.json'),timeline=await json('data/continuous-build-timeline.json'),origin={lat:31.773235,lon:35.2368303},compiled=compileWaterDefenseRegistration(data,origin);
+assert.equal(compiled.objects.length,6);assert.equal(compiled.objects.filter(o=>o.point).length,2);
+assert.deepEqual(compiled.objects[0].point,{x:0,z:-0});assert.ok(compiled.objects[1].point.x< -450&&compiled.objects[1].point.z< -280);
+assert.ok(compiled.objects.every(o=>!o.geometryVerified&&o.geometry.primitive!=='polygon'&&o.geometry.primitive!=='polyline'));
+const fabricated=structuredClone(data);fabricated.objects[1].footprint=[[0,0],[10,10]];assert.throws(()=>compileWaterDefenseRegistration(fabricated,origin),/Unreviewed/);
+const noSource=structuredClone(data);noSource.objects[0].reference.source='';assert.throws(()=>compileWaterDefenseRegistration(noSource,origin));
+const invalid=structuredClone(data);invalid.objects[0].reference.lat=100;assert.throws(()=>compileWaterDefenseRegistration(invalid,origin));
+assert.equal(waterDefenseState(compiled,timeline,5.5).objects.find(o=>o.label==='基訓泉').state,'transform','city destruction must not destroy the natural spring');
+assert.equal(waterDefenseState(compiled,timeline,5.5).objects.find(o=>o.id.endsWith('water-tunnel')).state,'unresolved','do not infer specific tunnel collapse');
+assert.equal(waterDefenseState(compiled,timeline,7.5),null);
+const original=globalThis.fetch;let requests=0;
+try{globalThis.fetch=async url=>{if(String(url).endsWith('water-defense.registration.v1.json'))requests++;return{ok:true,json:()=>json(url)}};invalidateCityData();
+ const[{core},a,b]=await Promise.all([loadTemporalCityCore(timeline.phases),loadAnchorCityLedger(),loadAnchorCityLedger()]);assert.equal(requests,1);assert.equal(a.lifecycle.objects.length,b.lifecycle.objects.length);
+ assert.equal(core.get('j3k:object:gihon-system-iron-age').confidence,'inferred');assert.ok(core.get('j3k:object:gihon-system-iron-age').lifecycle.events.every(e=>e.state==='unresolved'));
+ bindWaterDefenseCore(core,compiled);assert.equal(core.get('j3k:object:broad-wall-remains').geometry.role,'modern-reference-only');assert.equal(core.get('j3k:object:gihon-spring-tower').confidence,'disputed');assert.equal(core.validate().ok,true);
+ assert.throws(()=>appendWaterDefenseLedger(a.packs,a.lifecycle,data),/Duplicate/);
+ console.log('PASS: component-specific water/defense states, modern map references, withheld linework, malformed source/geometry rejection and single shared request');
+}finally{globalThis.fetch=original;invalidateCityData();}

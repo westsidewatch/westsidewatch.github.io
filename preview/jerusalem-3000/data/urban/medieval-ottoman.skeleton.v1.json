@@ -1,0 +1,937 @@
+{
+  "schema": "j3k.independent-later-skeleton.v1",
+  "frame": "canonical-origin-east-x-south-z-metres",
+  "origin": {
+    "lat": 31.778,
+    "lon": 35.235
+  },
+  "authority": "independently authored illustrative skeleton constrained by published spatial relationships; not archaeological survey",
+  "generation": {
+    "maxBlockArea": 12000,
+    "roadClearance": 10,
+    "modelHeight": 6
+  },
+  "sources": {
+    "market": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529",
+    "late-market": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417",
+    "cotton": "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/",
+    "south-wall": "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124",
+    "north-wall": "https://publications.iaa.org.il/atiqot/vol65/iss1/26/"
+  },
+  "limitations": [
+    "分区与路径坐标为独立设计示意，不是从发掘图提取的测绘线。",
+    "示意分区不是完整城界；空置和未绘制区域不表示历史无人居住或建筑已毁。",
+    "占位量体是低矮的模型布局片区，不是单栋建筑；数量、分割、6米高度与道路宽度没有历史测量依据。",
+    "道路跨期使用独立物件ID；共享空间脉络不等于已证明具体构件存续或复用。",
+    "预留区仅控制占位量体；不代表圣区、教堂或行政建筑的真实平面。",
+    "现代DEM不等于古地表，未模拟历史道路切坡和人工填土。",
+    "此包三期是分期综合示意；阿尤布／马木鲁克的棉花市场侧重14世纪，不能回推到整个阿尤布时期。",
+    "三个平行市场、接近圣区的市场街与南部防御变迁仅提供空间语境；模型路径长度、分区及预留核心坐标均未测绘配准。",
+    "鄂图曼城墙确实存在，但本包没有已配准城墙线；旧规则矩形围墙不再作为现期城界显示，防御与公共建筑域仍待补齐。",
+    "西部核心预留区是布局设计约束，关联来源仅支持附近市场语境，不确认教堂位置、大小或轮廓。"
+  ],
+  "phases": {
+    "crusader": {
+      "districts": [
+        {
+          "id": "northwest-layout",
+          "polygon": [
+            [
+              -770,
+              -590
+            ],
+            [
+              -435,
+              -610
+            ],
+            [
+              -430,
+              -100
+            ],
+            [
+              -750,
+              -80
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "market-side-layout",
+          "polygon": [
+            [
+              -410,
+              -575
+            ],
+            [
+              -245,
+              -555
+            ],
+            [
+              -190,
+              70
+            ],
+            [
+              -410,
+              85
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "southwest-layout",
+          "polygon": [
+            [
+              -740,
+              -55
+            ],
+            [
+              -435,
+              -70
+            ],
+            [
+              -390,
+              365
+            ],
+            [
+              -690,
+              350
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ]
+        },
+        {
+          "id": "south-central-layout",
+          "polygon": [
+            [
+              -405,
+              110
+            ],
+            [
+              -195,
+              100
+            ],
+            [
+              -185,
+              350
+            ],
+            [
+              -380,
+              375
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ]
+        }
+      ],
+      "roads": [
+        {
+          "id": "western-market-axis-context",
+          "points": [
+            [
+              -565,
+              -600
+            ],
+            [
+              -550,
+              -360
+            ],
+            [
+              -530,
+              -100
+            ],
+            [
+              -510,
+              100
+            ],
+            [
+              -490,
+              320
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "eastern-valley-link-illustrative",
+          "points": [
+            [
+              -330,
+              -590
+            ],
+            [
+              -295,
+              -340
+            ],
+            [
+              -260,
+              -80
+            ],
+            [
+              -230,
+              180
+            ],
+            [
+              -215,
+              335
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417"
+          ]
+        },
+        {
+          "id": "west-east-connector-illustrative",
+          "points": [
+            [
+              -755,
+              -80
+            ],
+            [
+              -530,
+              -80
+            ],
+            [
+              -270,
+              -80
+            ],
+            [
+              -180,
+              -70
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "parallel-market-west-context",
+          "points": [
+            [
+              -555,
+              -275
+            ],
+            [
+              -545,
+              -150
+            ],
+            [
+              -540,
+              -90
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "parallel-market-east-context",
+          "points": [
+            [
+              -515,
+              -275
+            ],
+            [
+              -510,
+              -150
+            ],
+            [
+              -505,
+              -90
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        }
+      ],
+      "reservations": [
+        {
+          "id": "eastern-precinct-unfilled",
+          "polygon": [
+            [
+              -170,
+              -430
+            ],
+            [
+              260,
+              -410
+            ],
+            [
+              280,
+              190
+            ],
+            [
+              -180,
+              180
+            ]
+          ]
+        },
+        {
+          "id": "western-core-unfilled-not-measured",
+          "polygon": [
+            [
+              -715,
+              -340
+            ],
+            [
+              -585,
+              -350
+            ],
+            [
+              -575,
+              -180
+            ],
+            [
+              -710,
+              -170
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        }
+      ],
+      "sources": [
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+      ]
+    },
+    "ayyubid-mamluk": {
+      "districts": [
+        {
+          "id": "northwest-layout",
+          "polygon": [
+            [
+              -770,
+              -590
+            ],
+            [
+              -435,
+              -610
+            ],
+            [
+              -430,
+              -100
+            ],
+            [
+              -750,
+              -80
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "market-side-layout",
+          "polygon": [
+            [
+              -410,
+              -575
+            ],
+            [
+              -245,
+              -555
+            ],
+            [
+              -190,
+              70
+            ],
+            [
+              -410,
+              85
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "north-haram-approach-layout",
+          "polygon": [
+            [
+              -220,
+              -600
+            ],
+            [
+              200,
+              -590
+            ],
+            [
+              190,
+              -455
+            ],
+            [
+              -220,
+              -450
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ]
+        },
+        {
+          "id": "west-haram-market-layout",
+          "polygon": [
+            [
+              -245,
+              -420
+            ],
+            [
+              -175,
+              -420
+            ],
+            [
+              -175,
+              115
+            ],
+            [
+              -230,
+              120
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ]
+        },
+        {
+          "id": "southwest-layout",
+          "polygon": [
+            [
+              -740,
+              -55
+            ],
+            [
+              -435,
+              -70
+            ],
+            [
+              -390,
+              365
+            ],
+            [
+              -690,
+              350
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ]
+        }
+      ],
+      "roads": [
+        {
+          "id": "western-market-axis-context",
+          "points": [
+            [
+              -565,
+              -600
+            ],
+            [
+              -550,
+              -360
+            ],
+            [
+              -530,
+              -100
+            ],
+            [
+              -510,
+              100
+            ],
+            [
+              -490,
+              320
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "eastern-valley-link-illustrative",
+          "points": [
+            [
+              -330,
+              -590
+            ],
+            [
+              -295,
+              -340
+            ],
+            [
+              -260,
+              -80
+            ],
+            [
+              -230,
+              180
+            ],
+            [
+              -215,
+              335
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417"
+          ]
+        },
+        {
+          "id": "west-east-connector-illustrative",
+          "points": [
+            [
+              -755,
+              -80
+            ],
+            [
+              -530,
+              -80
+            ],
+            [
+              -270,
+              -80
+            ],
+            [
+              -180,
+              -70
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "cotton-market-access-context",
+          "points": [
+            [
+              -285,
+              -255
+            ],
+            [
+              -240,
+              -255
+            ],
+            [
+              -180,
+              -255
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ]
+        }
+      ],
+      "reservations": [
+        {
+          "id": "eastern-precinct-unfilled",
+          "polygon": [
+            [
+              -170,
+              -430
+            ],
+            [
+              260,
+              -410
+            ],
+            [
+              280,
+              190
+            ],
+            [
+              -180,
+              180
+            ]
+          ]
+        },
+        {
+          "id": "western-core-unfilled-not-measured",
+          "polygon": [
+            [
+              -715,
+              -340
+            ],
+            [
+              -585,
+              -350
+            ],
+            [
+              -575,
+              -180
+            ],
+            [
+              -710,
+              -170
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "cotton-services-unfilled-not-footprint",
+          "polygon": [
+            [
+              -275,
+              -240
+            ],
+            [
+              -170,
+              -240
+            ],
+            [
+              -170,
+              -150
+            ],
+            [
+              -275,
+              -150
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ]
+        }
+      ],
+      "sources": [
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417",
+        "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+      ]
+    },
+    "ottoman": {
+      "districts": [
+        {
+          "id": "northwest-layout",
+          "polygon": [
+            [
+              -770,
+              -590
+            ],
+            [
+              -435,
+              -610
+            ],
+            [
+              -430,
+              -100
+            ],
+            [
+              -750,
+              -80
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417",
+            "https://publications.iaa.org.il/atiqot/vol65/iss1/26/"
+          ]
+        },
+        {
+          "id": "market-side-layout",
+          "polygon": [
+            [
+              -410,
+              -575
+            ],
+            [
+              -245,
+              -555
+            ],
+            [
+              -190,
+              70
+            ],
+            [
+              -410,
+              85
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "northeast-layout",
+          "polygon": [
+            [
+              -220,
+              -600
+            ],
+            [
+              200,
+              -590
+            ],
+            [
+              190,
+              -455
+            ],
+            [
+              -220,
+              -450
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ]
+        },
+        {
+          "id": "west-haram-layout",
+          "polygon": [
+            [
+              -245,
+              -420
+            ],
+            [
+              -175,
+              -420
+            ],
+            [
+              -175,
+              115
+            ],
+            [
+              -230,
+              120
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ]
+        },
+        {
+          "id": "southwest-layout",
+          "polygon": [
+            [
+              -740,
+              -55
+            ],
+            [
+              -435,
+              -70
+            ],
+            [
+              -395,
+              315
+            ],
+            [
+              -680,
+              300
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ]
+        },
+        {
+          "id": "south-central-layout",
+          "polygon": [
+            [
+              -405,
+              110
+            ],
+            [
+              -195,
+              100
+            ],
+            [
+              -185,
+              300
+            ],
+            [
+              -380,
+              330
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ]
+        }
+      ],
+      "roads": [
+        {
+          "id": "western-market-axis-context",
+          "points": [
+            [
+              -565,
+              -600
+            ],
+            [
+              -550,
+              -360
+            ],
+            [
+              -530,
+              -100
+            ],
+            [
+              -510,
+              100
+            ],
+            [
+              -490,
+              320
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "eastern-valley-link-illustrative",
+          "points": [
+            [
+              -330,
+              -590
+            ],
+            [
+              -295,
+              -340
+            ],
+            [
+              -260,
+              -80
+            ],
+            [
+              -230,
+              180
+            ],
+            [
+              -215,
+              335
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417"
+          ]
+        },
+        {
+          "id": "west-east-connector-illustrative",
+          "points": [
+            [
+              -755,
+              -80
+            ],
+            [
+              -530,
+              -80
+            ],
+            [
+              -270,
+              -80
+            ],
+            [
+              -180,
+              -70
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        },
+        {
+          "id": "cotton-market-access-context",
+          "points": [
+            [
+              -285,
+              -255
+            ],
+            [
+              -240,
+              -255
+            ],
+            [
+              -180,
+              -255
+            ]
+          ],
+          "sources": [
+            "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/"
+          ]
+        },
+        {
+          "id": "southern-access-illustrative",
+          "points": [
+            [
+              -490,
+              320
+            ],
+            [
+              -380,
+              305
+            ],
+            [
+              -215,
+              300
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124"
+          ]
+        }
+      ],
+      "reservations": [
+        {
+          "id": "eastern-precinct-unfilled",
+          "polygon": [
+            [
+              -170,
+              -430
+            ],
+            [
+              260,
+              -410
+            ],
+            [
+              280,
+              190
+            ],
+            [
+              -180,
+              180
+            ]
+          ]
+        },
+        {
+          "id": "western-core-unfilled-not-measured",
+          "polygon": [
+            [
+              -715,
+              -340
+            ],
+            [
+              -585,
+              -350
+            ],
+            [
+              -575,
+              -180
+            ],
+            [
+              -710,
+              -170
+            ]
+          ],
+          "sources": [
+            "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529"
+          ]
+        }
+      ],
+      "sources": [
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=8529",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26417",
+        "https://publications.iaa.org.il/cornerstone/vol10/iss1/49/",
+        "https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=25008&mag_id=124",
+        "https://publications.iaa.org.il/atiqot/vol65/iss1/26/"
+      ]
+    }
+  }
+}

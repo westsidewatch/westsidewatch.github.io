@@ -1,0 +1,30 @@
+{
+  "schema": "j3k.source-intake.v1",
+  "report": "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all",
+  "authors": "Ortal Chalaf and Joe Uziel",
+  "reportDate": "2020-11-15",
+  "credit": "Israel Antiquities Authority; figures not republished with the website",
+  "assets": [
+    {
+      "url": "https://hadashot.iaa.org.il/Images/7916-8257-2s.jpg",
+      "sha256": "aa1b6cff206d90023fd5e10cedc7671a53b3631f018bb79131b9625c4cc22667",
+      "bytes": 44495,
+      "role": "typology-and-registration-review-only",
+      "geographicControlVerified": false
+    },
+    {
+      "url": "https://hadashot.iaa.org.il/Images/7916%208257-1.jpg",
+      "sha256": "8e17b2604a6bb1095317148cf3ecc7d646beed2956cb7bba6126d4adbfaa0574",
+      "bytes": 237368,
+      "role": "typology-and-registration-review-only",
+      "geographicControlVerified": false
+    }
+  ],
+  "use": "Iron Age II/III residential analogy; not a traced or registered city plan",
+  "constraints": [
+    "Plan has a scale bar and north arrow but no verified world control/checkpoint alignment in this project.",
+    "Location map locates Area U, not each building corner.",
+    "Preserved wall heights do not establish original roof heights.",
+    "This source does not register the Broad Wall or Siloam tunnel."
+  ]
+}

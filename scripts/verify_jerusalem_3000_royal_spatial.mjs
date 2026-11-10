@@ -26,11 +26,34 @@ for(const e of layout.edges)for(let i=1;i<e.points.length;i++){
 const original=globalThis.fetch;
 try {
  globalThis.fetch=async url=>({ok:true,json:()=>json(url)});invalidateCityData();
- const terrain={grid:{origin:data.spring},heightAtWorld:()=>40},{core}=await loadTemporalCityCore(timeline.phases,{terrain}),parent=new THREE.Group();
+ const terrain={grid:{origin:{lat:31.778,lon:35.235}},heightAtWorld:()=>40},{core}=await loadTemporalCityCore(timeline.phases,{terrain}),parent=new THREE.Group();
  const rawAnchor=await json('data/anchor-era-packs.json');assert.ok(!rawAnchor.packs.flatMap(p=>p.objects||[]).some(o=>o.id==='j3k:object:royal-road:spring-access'),'spatial records must not be duplicated in editable anchor packs');
  const [a,b]=await Promise.all([loadAnchorCityLedger(),loadAnchorCityLedger()]);assert.equal(a.lifecycle.objects.length,b.lifecycle.objects.length);assert.equal(a.lifecycle.objects.filter(o=>o.id==='j3k:object:royal-road:spring-access').length,1);
  const runtime=createRoyalCity(parent,{data,terrain,core});assert.equal(core.get('j3k:object:royal-region:ridge').geometry.frame,'canonical-dem-enu');assert.equal(core.get('j3k:object:royal-road:spring-access').metadata.spatialTopology.from,'spring');runtime.apply({position:3.9,evidenceAllowed:()=>true});
- const parts=parent.children[0].children,roads=parts.filter(m=>m.userData.cityObject.kind==='city-road'),obstacles=parts.filter(m=>m.userData.cityObject.kind!=='city-road'&&!m.userData.cityObject.componentId.endsWith('lintel'));
+ const palaceMeshes=parent.children[0].children;parent.updateMatrixWorld(true);
+ for(const court of data.royalCity.courtyards){
+  const floor=palaceMeshes.find(m=>m.userData.cityObject.componentId===`j3k:royal:${court.id}-west-floor`),fb=new THREE.Box3().setFromObject(floor),centre=fb.getCenter(new THREE.Vector3()),yy=fb.max.y+1;
+  const ray=new THREE.Raycaster(new THREE.Vector3(fb.max.x+1,yy,centre.z),new THREE.Vector3(-1,0,0),0,3);
+  assert.equal(ray.intersectObjects(palaceMeshes.filter(m=>m.userData.cityObject.componentId.startsWith(`j3k:royal:${court.id}-west-`)),true).length,0,'royal wing must contain real courtyard door and hollow room');
+ }
+ const hallParts=parent.children[0].children.filter(m=>m.userData.cityObject.landmarkProgrammeId);
+ assert.ok(hallParts.length>40,'royal context must contain actual building ensembles');parent.updateMatrixWorld(true);
+ for(const profile of data.royalCity.precinctHalls){
+  const selected=hallParts.filter(m=>m.userData.cityObject.landmarkProgrammeId===profile.id),bounds=new THREE.Box3();selected.forEach(m=>bounds.expandByObject(m));const size=bounds.getSize(new THREE.Vector3()),c=data.royalCity.temple.cubitMetres;
+  assert.ok(Math.abs(size.x-profile.lengthCubits*c)<1e-4&&Math.abs(size.z-profile.widthCubits*c)<1e-4,'royal hall must retain selected literary plan budget');
+  assert.ok(Math.abs(size.y-(profile.heightCubits?profile.heightCubits*c:profile.authoredHeightMetres))<1e-4,'each hall height must follow its own explicit authority');
+  const centre=bounds.getCenter(new THREE.Vector3()),ray=new THREE.Raycaster(new THREE.Vector3(bounds.min.x-1,bounds.min.y+1,centre.z),new THREE.Vector3(1,0,0),0,size.x+2);
+  assert.equal(ray.intersectObjects(selected,true).length,0,'royal hall must have an actual open central aisle');
+ }
+ for(const profile of data.royalCity.precinctHalls){
+  const node=layout.nodes.find(n=>n.hallId===profile.id),edge=layout.edges.find(e=>e.hallId===profile.id),road=parent.children[0].children.find(m=>m.userData.cityObject.objectId===`j3k:object:royal-road:${edge.id}`),floor=hallParts.find(m=>m.userData.cityObject.componentId===`j3k:royal:precinct-${profile.id}-floor`),fb=new THREE.Box3().setFromObject(floor),p=road.geometry.attributes.position;
+  assert.ok(layout.reachable('solomon').includes(node.id));assert.ok(!layout.reachable('david').includes(node.id));
+  const centre=fb.getCenter(new THREE.Vector3()),hits=[];for(let i=0;i<p.count;i++)if(Math.abs(p.getX(i)-fb.max.x)<.001)hits.push(p.getY(i));assert.ok(hits.some(y=>Math.abs(y-fb.max.y-.09)<.001),'hall access paving must reach its own supported display floor');
+ }
+ const marked=hallParts.find(m=>m.userData.landmarkFocus);assert.ok(marked?.userData.cityObject.componentId.endsWith('lebanon-house-roof'),'royal context callout must point at actual roof, not the empty combined bounding-box centre');
+ const reserved=runtime.exclusionsFor('late-first-temple');for(const profile of data.royalCity.precinctHalls)assert.ok(reserved.some(r=>r.id===`j3k:royal-context:${profile.id}`),'each hall must exclude housing by its own footprint, not one enlarged blank rectangle');
+ runtime.apply({position:3.2,evidenceAllowed:()=>true});assert.ok(hallParts.every(m=>!m.visible),'Solomon halls must not appear in David');runtime.apply({position:3.9,evidenceAllowed:()=>true});assert.ok(hallParts.every(m=>m.visible));
+ const parts=parent.children[0].children,roads=parts.filter(m=>m.userData.cityObject.kind==='city-road'),obstacles=parts.filter(m=>m.userData.cityObject.kind!=='city-road'&&m.userData.cityObject.role!=='walkable-floor'&&!m.userData.cityObject.componentId.endsWith('lintel'));
  for(const road of roads){const p=road.geometry.attributes.position;assert.ok(road.geometry.attributes.normal.getY(0)>0);for(let i=0;i<p.count;i+=3){const triangle=[0,1,2].map(k=>({x:p.getX(i+k),z:p.getZ(i+k)}));for(const obstacle of obstacles){const b=new THREE.Box3().setFromObject(obstacle);assert.ok(!polygonsOverlap(triangle,rect((b.min.x+b.max.x)/2,(b.min.z+b.max.z)/2,b.max.x-b.min.x,b.max.z-b.min.z)),`${road.userData.cityObject.componentId} crosses ${obstacle.userData.cityObject.componentId}`);}}}
  assert.equal(runtime.diagnostics().visibleGates,9);assert.equal(runtime.diagnostics().visibleRoads,layout.edges.length);
  runtime.apply({position:3.2,evidenceAllowed:()=>true});assert.equal(runtime.diagnostics().visibleGates,6);assert.ok(runtime.diagnostics().visibleRoads<layout.edges.length);

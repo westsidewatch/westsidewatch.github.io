@@ -33,7 +33,7 @@ for(const phase of Object.keys(data.phases)){
  const points=registration.districts.flatMap(d=>d.geometry.polygon.flatMap(p=>[new THREE.Vector3(p.x,50,p.z),new THREE.Vector3(p.x,82,p.z)]));
  for(const aspect of [1.77,.55]){
   const framing=fitCityOverview({points,aspect}),camera=new THREE.PerspectiveCamera(34,aspect,.1,18000);camera.position.copy(framing.position);camera.lookAt(framing.target);camera.updateMatrixWorld();
-  for(const point of points){const projected=point.clone().project(camera);assert.ok(Math.abs(projected.x)<.85&&projected.y>-.35&&projected.y<.8,'period envelope must fit above caption on desktop and portrait');}
+  for(const point of points){const projected=point.clone().project(camera);assert.ok(Math.abs(projected.x)<.85&&projected.y>-.85&&projected.y<.85,'period envelope must fit the full canvas; caption is outside on desktop and portrait');}
  }
 }
 assert.throws(()=>fitCityOverview({points:[],aspect:1}));
