@@ -17,6 +17,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Design OS authority
+        run: |
+          python3 scripts/check_westside_design_os.py
+          python3 scripts/check_design_os_entrypoints.py
       - name: First-layer and protected speaker assets
         run: |
           python3 scripts/check_first_look_contract.py
@@ -25,9 +29,5 @@ jobs:
         run: python3 scripts/check_home_editorial_contract.py
       - name: Italian editorial grammar
         run: python3 scripts/validate_italian_editorial_grammar_promotion.py
-      - name: Design OS authority
-        run: |
-          python3 scripts/check_westside_design_os.py
-          python3 scripts/check_design_os_entrypoints.py
       - name: First-look runtime regression
         run: node --test tests/first-look-*.test.cjs

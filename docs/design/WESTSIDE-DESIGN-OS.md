@@ -55,3 +55,7 @@ Precise CSS positioning is verified through the shared OS diagnostic `scripts/de
 ## SVG exploration research index (2026-10-17)
 
 SVG performance, animation, path geometry, clipping and open-source references are indexed in [SVG-EXPLORATION-LIST.md](SVG-EXPLORATION-LIST.md). This is a research list inside the existing Westside Design OS authority, not a new OS, runtime, or CI. Preserve the approved P2 V75 water and door composition; require measured traces before production performance changes.
+
+## EGM — independent design-spec review method (2026-10-27)
+
+The complete, pinned open-source [Elephant–Goldfish Model](https://github.com/google/elephant-goldfish-model) is now integrated as a **development/review method**, not a second visual authority. The complete source is linked under `.tools/elephant-goldfish-model`; the agent entrypoint is `AGENTS.md`. [WESTSIDE-EGM-INTEGRATION.md](WESTSIDE-EGM-INTEGRATION.md) is the executable-process contract within this OS, specifying official local installation, zero-context reviewer isolation, specification evidence, real screenshot/art signoff, and fail-closed behavior where subagents are unavailable. All typography/color/layout/motion authority remains here and in the existing canonical tokens, scopes and runtime. Existing CI only checks source registration; an actual Goldfish review requires a capable coding harness and is not claimed by CI.

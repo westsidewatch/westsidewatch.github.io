@@ -444,3 +444,18 @@ Implementation scope recorded here: P2 removes its 85 ms follow delay, applies i
 **Authority and implementation.** This records the agreed visual plan; it does not itself claim that scenes 02–07 are implemented or visually accepted. Keep existing homepage navigation mapping and the single Westside Design OS as authorities. Surface-specific responsive layout belongs in P2-owned scoped CSS/JS; desktop and mobile may differ in composition without creating another design system. Protect typography, source content, existing approved art, the V75 water texture and the Church door sequence. For each scene: inspect current files → implement a coherent scoped change → verify actual desktop/mobile/reduced-motion and reverse-scroll behavior → run existing CI and preview inspection → merge/deploy only after acceptance.
 
 **Separate composition note.** Earlier “P2 Feature Spread” (2/3 main feature plus two stacked side windows) and “P3 Editorial Index” (left 1/3, stacked center, right 1/3) are additional page-level studies. They are **not** replacements for the seven-realm composition map above.
+
+## 12. Independent design review / EGM (2026-10-27)
+
+Google's complete Apache-2.0 Elephant–Goldfish Model is linked at the pinned
+Git submodule `.tools/elephant-goldfish-model`. It is an **engineering review
+method inside the existing Westside Design OS**, never a new visual management
+system. Canonical operating directions: `AGENTS.md` and
+`docs/design/WESTSIDE-EGM-INTEGRATION.md`. Initialize with
+`bash scripts/egm-setup.sh --prepare`; activation of Codex/ChatGPT plugins is
+separate and optional. Real Goldfish review requires isolated fresh agents;
+without such agents, mark review NOT RUN. Human acceptance of actual editorial
+screenshots remains mandatory. No site runtime assets or Design OS tokens were changed. The existing
+Core Contract simply runs its already-present Design OS authority step first,
+so a pre-existing unrelated first-layer failure cannot hide OS integration
+results; no new workflow or job was created.
