@@ -43,11 +43,11 @@ body{font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)}
 .schedule-heading i{font-weight:400}
 .church-schedule-source{font-size:var(--ws-type-scale-meta)}
 .sunday-schedule__top,.worship-row{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid #bbb;padding:8px 0}
-.worship-row time{flex:0 0 35%}
+.worship-row time{flex:0 0 clamp(78px,18%,132px);font-size:clamp(12px,.85vw,15px);line-height:1.5;font-variant-numeric:tabular-nums;white-space:nowrap}
 .worship-row>div{flex:1;min-width:0;text-align:right}
 .worship-row strong,.worship-row p{text-align:right}
 .worship-row strong{display:block;font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-title-sm);font-weight:var(--ws-weight-zh-anchor);font-synthesis:none;line-height:1.18;color:var(--ws-first-light,#a2872a)}
-.worship-row p{margin:4px 0}
+.worship-row p{margin:5px 0 0;font-size:clamp(12px,.82vw,15px);line-height:1.5;overflow-wrap:anywhere}.worship-row{align-items:start;gap:clamp(12px,2vw,28px);padding-block:clamp(9px,1.15vh,14px)}
 .sunday-schedule h3{font-family:var(--ws-type-display-zh);font-size:var(--ws-type-scale-title-sm);font-weight:var(--ws-weight-zh-anchor);font-synthesis:none}
 .sunday-schedule h3 span{display:block;font:italic var(--ws-type-scale-meta) var(--ws-type-display-en)}
 .worship-ministry p{line-height:1.6}
