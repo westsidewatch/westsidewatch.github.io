@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '23 9 * * *'
   push:
+    branches: [main]
     paths:
       - 'static/dawn-library/**'
       - 'scripts/run_dawn_library_discovery.py'
@@ -113,7 +114,7 @@ jobs:
             static/dawn-library/biblical-world/english-resolver-results.json
             static/dawn-library/biblical-world/chinese-resolver-results.json
       - name: Persist autonomous library growth
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
@@ -136,7 +137,7 @@ jobs:
           if git diff --cached --quiet; then exit 0; fi
           for attempt in 1 2 3 4; do
             git commit -m 'chore(dawn): persist autonomous bookstore growth [skip ci]'
-            if git push; then exit 0; fi
+            if git push origin HEAD:main; then exit 0; fi
             git fetch origin main
             git reset --hard origin/main
             regenerate
