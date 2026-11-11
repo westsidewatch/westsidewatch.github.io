@@ -40,9 +40,15 @@ if(z.join('')!==zhExact||e.join('')!==enExact)throw new Error('SOURCE LOSS');
 for(const x of zhLines){const p=document.createElement('p');p.textContent=x;$('zhPoem').appendChild(p)}
 for(const x of enLines){const p=document.createElement('p');p.textContent=x;$('enPoem').appendChild(p)}
 let approved=false, ranked=[],selected=0,stage=null,showGuides=false;
-const signatures=['ZEZE','ZEZE','ZEZ','ZEZ','ZE','ZE','ZE'];
+// Each grammar consumes exactly 11 Chinese and 9 KJV units while varying start language
+// and inside-strip switching; the original all-Z-first grammar is deliberately excluded.
+const signatureSets=[
+ ['ZEZZ','EZEZ','EZE','ZEZ','ZE','EZ','ZE'],
+ ['ZZEZ','ZEZE','EZE','ZEZ','EZ','ZE','EZ'],
+ ['EZZZ','ZEZE','ZEZ','EZE','EZ','ZE','EZ']
+];
 function uniquePermutations(input){let all=[],seen=new Set();function visit(a,left){if(!left.length){const key=a.join('|');if(!seen.has(key)){seen.add(key);all.push([...a])}return}for(let i=0;i<left.length;i++)visit([...a,left[i]],left.slice(0,i).concat(left.slice(i+1)))}visit([],input);return all}
-const perm=uniquePermutations(signatures);
+const perm=signatureSets.flatMap(uniquePermutations);
 function checkFaces(){const loaded=[...document.fonts].filter(f=>f.status==='loaded'),check=(family,w)=>loaded.some(f=>{if(f.family.replace(/["']/g,'').trim()!==family)return false;const v=String(f.weight).split(/\s+/).map(Number);return (v.length===1&&v[0]===w)||(v.length===2&&v[0]<=w&&v[1]>=w)});return {bodoni:check('WS Bodoni Moda SC File',400),chironHeavy:check('Chiron Hei HK WS',900),chironLight:check('Chiron Hei HK WS',200)}}
 const measurement=document.createElement('div');measurement.style.cssText='position:fixed;top:-5000px;left:-5000px;visibility:hidden;pointer-events:none;z-index:-1';document.body.append(measurement);
 const measureCache=new Map();
@@ -58,7 +64,9 @@ const offsets=candidate.rhythm.map(x=>x*rhythmScale*maxH),minY=Math.min(...offse
 const width=7*size*1.10+6*size*gap,aspect=width/height,rect=Math.abs(Math.log(Math.max(.01,aspect)));
 const spread=Math.sqrt(columns.reduce((s,c)=>s+(c.height-meanH)**2,0)/7)/meanH;
 const asymmetry=columns.reduce((s,c)=>s+Math.abs(c.share-.5),0)/7;
-const cost=rect*7+Math.abs(spread-.27)*1.9+(7-asym)*.12-Math.min(asymmetry,.4)*.25+Math.abs(offsets[0]-offsets[6])/(height||1)*.15;
+const repeatedAdjacent=candidate.signatures.slice(1).filter((sig,i)=>sig===candidate.signatures[i]).length;
+const singleLanguageStarts=candidate.signatures.filter(sig=>sig[0]==='E').length;
+const cost=rect*7+Math.abs(spread-.27)*1.9+(7-asym)*.12-Math.min(asymmetry,.4)*.25+Math.abs(offsets[0]-offsets[6])/(height||1)*.15+repeatedAdjacent*.22+Math.abs(singleLanguageStarts-3)*.075;
 return {...candidate,columns,offsets:offsets.map(x=>x-minY),w:width,h:height,maxH,cost,asym,spread,aspect,fontSize:size,gapRatio:gap};}
 function build(form,candidate){form.innerHTML='';form.style.width=candidate.w+'px';form.style.height=candidate.h+'px';const fontSize=candidate.fontSize,gap=fontSize*candidate.gapRatio;
  candidate.columns.forEach((c,i)=>{const column=document.createElement('div');column.className='column';column.style.width=(fontSize*1.10)+'px';column.style.right=(i*(fontSize*1.10+gap))+'px';column.style.top=candidate.offsets[i]+'px';column.style.gap=(fontSize*.06)+'px';for(const part of c.parts){const node=document.createElement('span');node.className='piece '+part.lang;node.textContent=part.token;node.style.fontSize=(part.lang==='en'?fontSize*enRatio():fontSize)+'px';column.append(node)}form.append(column)});
