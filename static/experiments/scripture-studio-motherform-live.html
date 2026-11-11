@@ -32,7 +32,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 @media(max-width:1120px){.shell{grid-template-columns:1fr}aside{border-right:none;border-bottom:1px solid var(--hair);display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:780px){aside{display:block}.pair,.source{grid-template-columns:1fr}.work{padding:18px 14px}.plate{max-width:640px}}
 
 
-/* V30.11 — one bilingual citation in a single typographic register.
+/* V30.12 — one bilingual citation, corrected orthogonal flex axes in a single typographic register.
    The same reference rotates with the complete letterpress forme. */
 .plate{background:#f6f3e9}
 .plate.inverse{background:#243024;border-color:#243024;color:#ede8d7}
@@ -40,8 +40,10 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .plate.inverse:before{border-color:rgba(203,177,111,.35)}
 .forme .refRail.combined{position:absolute;top:0;bottom:0;right:0;width:var(--rail-width);
  border-left:1px solid rgba(127,109,72,.50);display:flex;flex-direction:column;
- align-items:center;justify-content:center;gap:calc(var(--rail-width) * .10);
- writing-mode:vertical-rl;white-space:nowrap;color:#645e4b;line-height:1.0}
+ align-items:center;justify-content:center;gap:calc(var(--rail-width) * .075);
+ writing-mode:horizontal-tb;white-space:nowrap;color:#645e4b;line-height:1.0;overflow:hidden}
+.forme .refRail.combined>span{display:block;flex:none;writing-mode:vertical-rl;
+ white-space:nowrap;max-width:100%;text-align:center}
 .forme .refRail .refZh{font-family:var(--font-zh),sans-serif;font-size:calc(var(--rail-width) * .56);
  font-weight:900;font-variation-settings:"wght" 900,"PADG" 0;font-synthesis:none}
 .forme .refRail .refEn{font-family:var(--font-en),serif;font-size:calc(var(--rail-width) * .48);
@@ -77,7 +79,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
 <article class="impression"><div class="plateTitle">02 / 英文主讀｜Bodoni SC 96% > 中文 Chiron 200 60%</div><div class="plate inverse" id="plateEn"><div class="plateInner" id="viewportEn"><div class="forme" id="formeEn"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricEn" class="metrics"></div></article>
 </div><section class="source"><div><h3>CHINESE UNION VERSION / 源文分行</h3><div class="zhPoem" id="zhPoem"></div></div><div><h3>KING JAMES VERSION / SOURCE LINES</h3><div class="enPoem" id="enPoem"></div></div></section></main></div>
-<footer>Scripture Studio · V30.11 Bilingual Reference · 印章出處已納入雙向印面；經文原文保持不變。 The Biblical text remains source-ordered in both languages; exploratory secondary poetic breaks require editorial approval. Font binaries must load before impression approval.</footer>
+<footer>Scripture Studio · V30.12 Bilingual Reference · 印章出處已納入雙向印面；經文原文保持不變。 The Biblical text remains source-ordered in both languages; exploratory secondary poetic breaks require editorial approval. Font binaries must load before impression approval.</footer>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
@@ -153,7 +155,7 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
 async function startup(){const loads=await Promise.allSettled([document.fonts.load('400 48px "WS Bodoni Moda SC File"',enExact),document.fonts.load('900 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('200 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('900 48px "Chiron Hei HK WS"','以賽亞書'),document.fonts.load('200 48px "Chiron Hei HK WS"','以賽亞書')]);await document.fonts.ready;const f=checkFaces();const subsetFaces=[...document.fonts].filter(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS');const loadedSubsets=subsetFaces.filter(face=>face.status==='loaded').length;f.subsets=loadedSubsets;f.subsetTotal=subsetFaces.length;f.citationLoaded=loads.slice(3).every(x=>x.status==='fulfilled'&&x.value.some(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS'));approved=loads.every(x=>x.status==='fulfilled')&&f.citationLoaded&&f.bodoni&&f.chironHeavy&&f.chironLight&&loadedSubsets===12;
 $('fontStatus').className='status '+(approved?'pass':'fail');$('fontStatus').textContent=`Bodoni Moda SC / actual file ${f.bodoni?'PASS':'FAIL'}\nChiron Heavy / 900 ${f.chironHeavy?'PASS':'FAIL'}\nChiron ExtraLight / 200 ${f.chironLight?'PASS':'FAIL'}\n12 local CJK subsets ${f.subsets}/12 ${f.subsets===12?'PASS':'FAIL'}\nCitation glyphs 以賽亞書 / Chiron 900+200 ${f.citationLoaded?'PASS':'FAIL'}\n${approved?'正式字型已載入，允許構圖搜尋':'正規字檔未載入：請使用完整網站預覽，單獨下載 HTML 不包含字體檔'}`;
 $('plateZh').classList.toggle('blocked',!approved);$('plateEn').classList.toggle('blocked',!approved);if(approved)search();}
-$('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('enRatio').oninput=()=>{$('enRatioValue').textContent=$('enRatio').value};$('enRatio').onchange=search;$('fontSize').onchange=search;$('cadence').onchange=search;$('recompute').onclick=search;$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage){alert('字體未通過驗收，不能匯出正式構圖配方');return}const data={version:'30.11',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v30-07-recipe.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
+$('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('enRatio').oninput=()=>{$('enRatioValue').textContent=$('enRatio').value};$('enRatio').onchange=search;$('fontSize').onchange=search;$('cadence').onchange=search;$('recompute').onclick=search;$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage){alert('字體未通過驗收，不能匯出正式構圖配方');return}const data={version:'30.12',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v30-07-recipe.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
 $('printProof').onclick=()=>{if(!approved||!stage){alert('字型未通過完整字集驗證');return}window.print()};
 new ResizeObserver(fit).observe($('viewportZh'));new ResizeObserver(fit).observe($('viewportEn'));
 startup();
