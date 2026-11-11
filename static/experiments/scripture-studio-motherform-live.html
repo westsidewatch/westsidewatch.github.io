@@ -73,13 +73,13 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
 <div class="shell"><aside>
 <section class="panel"><h2>01 / 字體載入</h2><div id="fontStatus" class="status">正在載入實際字型檔…</div></section>
-<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">56</output>px</label><input id="fontSize" type="range" min="42" max="76" step="2" value="56"><label for="enRatio">英文字級比例 <output id="enRatioValue">62</output>%（整件固定）</label><input id="enRatio" type="range" min="56" max="100" step="2" value="62"><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>語意單位完整，拒絕單字孤行或拆詞；不為填滿印面強行分割句意。字號在一組構圖中固定；不為填滿版心偷偷縮小個別字帶。印面只以預覽比例縮放，不改母本量測。</p></section>
+<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">56</output>px</label><input id="fontSize" type="range" min="42" max="76" step="2" value="56"><label for="enRatio">英文字級比例 <output id="enRatioValue">62</output>%（整件固定）</label><input id="enRatio" type="range" min="56" max="100" step="2" value="62"><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>每條鉛字帶中英同行，拒絕純中文或純英文孤立字柱；語意單位完整，拒絕單字孤行或拆詞；不為填滿印面強行分割句意。字號在一組構圖中固定；不為填滿版心偷偷縮小個別字帶。印面只以預覽比例縮放，不改母本量測。</p></section>
 <section class="panel"><h2>03 / 真實量測</h2><div id="metrics" class="status">等待字體驗證…</div><p>評估版心寬高、字柱長度差異、交錯次數與非對稱比例。墨跡像素面積另列，不用文字框比例冒充。</p><button id="recipe">匯出排列配方 JSON</button><button id="printProof" type="button" style="margin-left:7px">列印雙印校樣</button></section>
 </aside><main class="work"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><div class="pair">
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
 <article class="impression"><div class="plateTitle">02 / 英文主讀｜Bodoni SC 96% > 中文 Chiron 200 60%</div><div class="plate inverse" id="plateEn"><div class="plateInner" id="viewportEn"><div class="forme" id="formeEn"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricEn" class="metrics"></div></article>
 </div><section class="source"><div><h3>CHINESE UNION VERSION / 源文分行</h3><div class="zhPoem" id="zhPoem"></div></div><div><h3>KING JAMES VERSION / SOURCE LINES</h3><div class="enPoem" id="enPoem"></div></div></section></main></div>
-<footer>Scripture Studio · V32.1 Semantic Scripture Forme · 印章出處已納入雙向印面；經文原文保持不變。 The Biblical text remains source-ordered in both languages; exploratory secondary poetic breaks require editorial approval. Font binaries must load before impression approval.</footer>
+<footer>Scripture Studio · V32.2 Bilingual Same-line Forme · 印章出處已納入雙向印面；經文原文保持不變。 The Biblical text remains source-ordered in both languages; exploratory secondary poetic breaks require editorial approval. Font binaries must load before impression approval.</footer>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
@@ -120,25 +120,34 @@ let approved=false, ranked=[],selected=0,stage=null,showGuides=false;
 // Scripture length determines the number of composing strips; no fixed seven-column canon.
 // Each source language retains its internal sequence. The result remains one rotating forme.
 function composeSignatures(zhCount,enCount,columnCount,seed){
- const total=zhCount+enCount,stream=[],remaining={Z:zhCount,E:enCount};
- for(let i=0;i<total;i++){
-  const bias=Math.sin((i+1)*(seed+1)*1.618)*.16;
-  const zhPriority=remaining.Z/(remaining.Z+remaining.E)+bias;
-  const choice=remaining.Z===0?'E':remaining.E===0?'Z':zhPriority>=.5?'Z':'E';
-  stream.push(choice);remaining[choice]--;
+ // Every strip is bilingual, with ZH and EN assembled in the SAME physical line.
+ // Preserve each language's source sequence, and never split its approved phrases.
+ if(columnCount>Math.min(zhCount,enCount)||columnCount<1)return null;
+ const groups=Array.from({length:columnCount},()=>({Z:1,E:1}));
+ let leftZ=zhCount-columnCount,leftE=enCount-columnCount;
+ let turn=0;
+ while(leftZ+leftE>0){
+  const i=(turn*3+seed)%columnCount;
+  const lang=leftZ===0?'E':leftE===0?'Z':(turn+seed)%2===0?'Z':'E';
+  groups[i][lang]++;if(lang==='Z')leftZ--;else leftE--;turn++;
  }
- const lengths=Array(columnCount).fill(Math.floor(total/columnCount));
- for(let i=0;i<total%columnCount;i++)lengths[(i*3+seed)%columnCount]++;
- // Keep contiguous language order; shifts change grouping, not what words are printed.
- let index=0;return lengths.map(length=>{const segment=stream.slice(index,index+length).join('');index+=length;return segment});
+ return groups.map((g,i)=>{
+  let zLeft=g.Z,eLeft=g.E,seq='',lang=(i+seed)%2===0?'Z':'E';
+  while(zLeft+eLeft>0){
+   if((lang==='Z'&&zLeft===0)||(lang==='E'&&eLeft===0))lang=lang==='Z'?'E':'Z';
+   seq+=lang;if(lang==='Z')zLeft--;else eLeft--;
+   lang=lang==='Z'?'E':'Z';
+  }
+  return seq;
+ });
 }
 function createCandidates(zhCount,enCount){
- const total=zhCount+enCount,out=[];
- // Content-dependent search, neither seven strips nor a mandatory range for other passages.
- const low=Math.max(2,Math.min(total,Math.floor(Math.sqrt(total)*.85)));
- const high=Math.min(total,Math.max(low,Math.ceil(Math.sqrt(total)*2.45)));
- for(let count=low;count<=high;count++)for(let variant=0;variant<7;variant++){
+ const out=[],max=Math.min(zhCount,enCount);
+ if(max<1)return out; // No false bilingual impression when a language is missing.
+ // The number of strips follows content; there is no seven-column or preset layout.
+ for(let count=1;count<=max;count++)for(let variant=0;variant<9;variant++){
   const signatures=composeSignatures(zhCount,enCount,count,variant);
+  if(!signatures||signatures.some(sig=>!sig.includes('Z')||!sig.includes('E')))continue;
   const rhythm=Array.from({length:count},(_,i)=>Math.sin((i+1)*(variant+2)*.71)*.11+Math.cos(i*1.33+variant)*.04);
   out.push({signatures,rhythm,variant,count});
  }
@@ -166,7 +175,7 @@ function evaluate(candidate,size,density){
   const share=zlen/Math.max(1,zlen+elen);
   columns.push({parts,height,share,asymmetric:share<.4||share>.6});
  }
- if(zi!==z.length||ei!==e.length)return null;
+ if(zi!==z.length||ei!==e.length||columns.some(c=>!c.parts.some(p=>p.lang==='zh')||!c.parts.some(p=>p.lang==='en')))return null;
  const count=columns.length,asym=columns.filter(c=>c.asymmetric).length;
  const maxH=Math.max(...columns.map(c=>c.height));
  const meanH=columns.reduce((sum,c)=>sum+c.height,0)/count;
@@ -227,16 +236,16 @@ const citationGeometry=['formeZh','formeEn'].every(id=>{const root=$(id),rail=ro
  const contentInside=runs.every(b=>b.left>=rr.left-1&&b.right<=rr.right+1&&b.top>=rr.top-1&&b.bottom<=rr.bottom+1);
  const bodySeparate=[...root.querySelectorAll('.column')].every(n=>{const b=n.getBoundingClientRect();return b.right<=rr.left+1||b.left>=rr.right-1||b.bottom<=rr.top+1||b.top>=rr.bottom-1});
  return contentInside&&bodySeparate});
-const more=stage.columns.filter(c=>c.parts.length>=3).length;const breaks=editorialBreakCheck(z,e);
+const bilingualLines=stage.columns.every(c=>c.parts.some(p=>p.lang==='zh')&&c.parts.some(p=>p.lang==='en'));const more=stage.columns.filter(c=>c.parts.length>=3).length;const breaks=editorialBreakCheck(z,e);
 const citationFontOS=['formeZh','formeEn'].every(id=>{const rail=$(id).querySelector('.refRail.combined');return rail&&getComputedStyle(rail.querySelector('.refZh')).fontFamily.includes('Chiron Hei HK WS')&&getComputedStyle(rail.querySelector('.refEn')).fontFamily.includes('WS Bodoni Moda SC File')});
 const citationVerified=['formeZh','formeEn'].every(id=>{const rails=[...$(id).querySelectorAll('.refRail')];return rails.length===1&&rails[0].querySelector('.refZh')?.textContent==='以賽亞書'&&rails[0].querySelector('.refEn')?.textContent==='Isaiah'&&rails[0].querySelectorAll('.refNumber').length===1&&rails[0].querySelector('.refNumber')?.textContent==='62:6'});
-$('metrics').textContent=`候選 ${selected+1} / ${ranked.length}\n完整印面寬×高 ${stage.fullW.toFixed(0)} × ${stage.h.toFixed(0)}px\n字框縱橫比 ${(stage.aspect).toFixed(2)}\n非均分字帶 ${stage.asym}/${stage.count} · 多次交錯 ${more}/${stage.count}\n中英原文無損 ${exact?'PASS':'FAIL'}\n英文逐詞首字母大寫＋Small Caps ${printedEn===enDisplay?'PASS':'FAIL'}\n語意斷行／孤字孤詞 ${breaks.ok?'PASS':'FAIL'}\n出處中英合一／章節一次 ${citationVerified?'PASS':'FAIL'}\n出處與正文無碰撞／不裁切 ${citationGeometry?'PASS':'FAIL'}\n出處 OS 字體宣告 ${citationFontOS?'PASS':'FAIL'}\n出處中文「以賽亞書」：官方 Chiron 子集載入與字形檢查\n正反向比例 ${stage.aspect.toFixed(2)} / ${stage.inverseAspect.toFixed(2)}\n墨跡像素佔有率：未驗收`;
-$('metricZh').textContent=`中文主讀 · 字重 900 · 原始字形高度 ${stage.h.toFixed(0)}px`; $('metricEn').textContent=`同一字帶位置旋轉 90° · 英文 96% > 中文 60% · Chiron 200`;window.__scriptureStudio ={valid:exact&&breaks.ok&&citationGeometry&&citationVerified,rank:selected,layout:stage,fonts:checkFaces(),citationGeometry,breaks};}
+$('metrics').textContent=`候選 ${selected+1} / ${ranked.length}\n完整印面寬×高 ${stage.fullW.toFixed(0)} × ${stage.h.toFixed(0)}px\n字框縱橫比 ${(stage.aspect).toFixed(2)}\n非均分字帶 ${stage.asym}/${stage.count} · 多次交錯 ${more}/${stage.count}\n中英原文無損 ${exact?'PASS':'FAIL'}\n英文逐詞首字母大寫＋Small Caps ${printedEn===enDisplay?'PASS':'FAIL'}\n語意斷行／孤字孤詞 ${breaks.ok?'PASS':'FAIL'}\n每條字帶中英文同行 ${bilingualLines?'PASS':'FAIL'}\n出處中英合一／章節一次 ${citationVerified?'PASS':'FAIL'}\n出處與正文無碰撞／不裁切 ${citationGeometry?'PASS':'FAIL'}\n出處 OS 字體宣告 ${citationFontOS?'PASS':'FAIL'}\n出處中文「以賽亞書」：官方 Chiron 子集載入與字形檢查\n正反向比例 ${stage.aspect.toFixed(2)} / ${stage.inverseAspect.toFixed(2)}\n墨跡像素佔有率：未驗收`;
+$('metricZh').textContent=`中文主讀 · 字重 900 · 原始字形高度 ${stage.h.toFixed(0)}px`; $('metricEn').textContent=`同一字帶位置旋轉 90° · 英文 96% > 中文 60% · Chiron 200`;window.__scriptureStudio ={valid:exact&&breaks.ok&&bilingualLines&&citationGeometry&&citationVerified,rank:selected,layout:stage,fonts:checkFaces(),citationGeometry,breaks};}
 async function search(){if(!approved)return;measureCache.clear();const size=Number($('fontSize').value),density=$('cadence').value;$('fontSizeValue').textContent=size;ranked=[];for(const c of candidates){const v=evaluate(c,size,density);if(v)ranked.push(v)}ranked.sort((a,b)=>a.cost-b.cost);render(0)}
 async function startup(){const loads=await Promise.allSettled([document.fonts.load('400 48px "WS Bodoni Moda SC File"',enExact),document.fonts.load('900 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('200 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('900 48px "Chiron Hei HK WS"','以賽亞書'),document.fonts.load('200 48px "Chiron Hei HK WS"','以賽亞書')]);await document.fonts.ready;const f=checkFaces();const subsetFaces=[...document.fonts].filter(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS');const loadedSubsets=subsetFaces.filter(face=>face.status==='loaded').length;f.subsets=loadedSubsets;f.subsetTotal=subsetFaces.length;f.citationLoaded=loads.slice(3).every(x=>x.status==='fulfilled'&&x.value.some(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS'));approved=loads.every(x=>x.status==='fulfilled')&&f.citationLoaded&&f.bodoni&&f.chironHeavy&&f.chironLight&&loadedSubsets===12;
 $('fontStatus').className='status '+(approved?'pass':'fail');$('fontStatus').textContent=`Bodoni Moda SC / actual file ${f.bodoni?'PASS':'FAIL'}\nChiron Heavy / 900 ${f.chironHeavy?'PASS':'FAIL'}\nChiron ExtraLight / 200 ${f.chironLight?'PASS':'FAIL'}\n12 local CJK subsets ${f.subsets}/12 ${f.subsets===12?'PASS':'FAIL'}\nCitation glyphs 以賽亞書 / Chiron 900+200 ${f.citationLoaded?'PASS':'FAIL'}\n${approved?'正式字型已載入，允許構圖搜尋':'正規字檔未載入：請使用完整網站預覽，單獨下載 HTML 不包含字體檔'}`;
 $('plateZh').classList.toggle('blocked',!approved);$('plateEn').classList.toggle('blocked',!approved);if(approved)search();}
-$('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('enRatio').oninput=()=>{$('enRatioValue').textContent=$('enRatio').value};$('enRatio').onchange=search;$('fontSize').onchange=search;$('cadence').onchange=search;$('recompute').onclick=search;$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage){alert('字體未通過驗收，不能匯出正式構圖配方');return}const data={version:'32.1',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v32-variable-forme-recipe.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
+$('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('enRatio').oninput=()=>{$('enRatioValue').textContent=$('enRatio').value};$('enRatio').onchange=search;$('fontSize').onchange=search;$('cadence').onchange=search;$('recompute').onclick=search;$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage){alert('字體未通過驗收，不能匯出正式構圖配方');return}const data={version:'32.2',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v32-variable-forme-recipe.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
 $('printProof').onclick=()=>{if(!approved||!stage){alert('字型未通過完整字集驗證');return}window.print()};
 new ResizeObserver(fit).observe($('viewportZh'));new ResizeObserver(fit).observe($('viewportEn'));
 startup();
