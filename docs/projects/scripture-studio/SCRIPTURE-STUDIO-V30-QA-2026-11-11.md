@@ -5,9 +5,9 @@
 ## Verified in isolated Chromium structural test
 
 - Native editable HTML / CSS / JS; no generated image used as design source.
-- Seven mixed-language strips; four strips contain three or more alternating passages.
-- Four strips have deliberately asymmetrical Chinese/English passage lengths.
-- 585 legal candidate combinations were ranked after filtering out violations of the majority-asymmetry rule. The number may change with real font metrics.
+- Seven mixed-language strips; four strips contain three or more alternating passages. Unlike V29, strips may begin in English or Chinese, and signatures are deliberately nonrepetitive.
+- Six strips have deliberately asymmetrical Chinese/English passage lengths in the selected offline fallback-only test.
+- 31,095 legal candidate combinations were ranked after filtering out violations of the majority-asymmetry rule. The number may change with real font metrics.
 - Exact Traditional Chinese and English KJV strings reconstruct from the displayed mother-form tokens with no deletion, reordering within each language, or case conversion in source data.
 - Two compositions use identical token runs and positions; second print rotates the mother forme 90 degrees. Chinese weight changes from 900 to 200 on reverse reading, English remains actual Bodoni Moda SC 400, `smcp=1`, `c2sc=0`.
 - No uncaught browser JavaScript exceptions in the isolated test.
