@@ -91,7 +91,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
 <div class="shell"><aside>
 <section class="panel"><h2>01 / 字體載入</h2><div id="fontStatus" class="status">正在載入實際字型檔…</div></section>
-<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">56</output>px</label><input id="fontSize" type="range" min="42" max="76" step="2" value="56"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="squareMode">方塊與文字的構圖語法</label><select id="squareMode"><option value="registered">A / Masonry Mass · 連體砌字墨塊</option><option value="cutout">B / Open Contour · 連體外輪廓</option><option value="none">比較基準 / 純鉛字</option></select><div id="squareStudyStatus" class="squareStudyStatus">相鄰字帶連成階梯量體，開窗在合法文字間隙；未經核准的斷句不視為合法排版。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>先依 V18 的經文來源詩行與人工核准斷點判斷；每條鉛字帶中英同行，拒絕純中文或純英文孤立字柱；語意單位完整，拒絕單字孤行或拆詞；不為填滿印面強行分割句意。字號在一組構圖中固定；不為填滿版心偷偷縮小個別字帶。印面只以預覽比例縮放，不改母本量測。</p></section>
+<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">56</output>px</label><input id="fontSize" type="range" min="42" max="76" step="2" value="56"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="squareMode">方塊與文字的構圖語法</label><select id="squareMode"><option value="registered">A / Masonry Mass · 連體砌字墨塊</option><option value="cutout">B / Open Contour · 連體外輪廓</option><option value="none">比較基準 / 純鉛字</option></select><div id="squareStudyStatus" class="squareStudyStatus">相鄰字帶共用階梯形量體；每段原文周圍留出無墨安全區；未經核准的斷句不視為合法排版。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>先依 V18 的經文來源詩行與人工核准斷點判斷；每條鉛字帶中英同行，拒絕純中文或純英文孤立字柱；語意單位完整，拒絕單字孤行或拆詞；不為填滿印面強行分割句意。字號在一組構圖中固定；不為填滿版心偷偷縮小個別字帶。印面只以預覽比例縮放，不改母本量測。</p></section>
 <section class="panel"><h2>03 / 聖經語義來源</h2><p>本母版目前仍以內嵌編輯片段做試驗，尚未接入 V18 的 USFM 審核結果；任何候選都不可視為核定經文印章。</p><p><a href="./scripture-studio-poetry-v18.html" target="_blank" rel="noopener">開啟 V18 USFM 詩行／合法斷句工具</a></p></section><section class="panel"><h2>04 / 硬性門檻與量測</h2><div id="metrics" class="status">等待字體驗證…</div><p>評估版心寬高、字柱長度差異、交錯次數與非對稱比例。墨跡像素面積另列，不用文字框比例冒充。</p><button id="recipe">匯出排列配方 JSON</button><button id="printProof" type="button" style="margin-left:7px">列印雙印校樣</button></section>
 </aside><main class="work"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><div class="pair">
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
@@ -253,6 +253,14 @@ function applySquareStructure(form,candidate){
  svg.setAttribute('viewBox','0 0 '+Math.ceil(candidate.fullW)+' '+Math.ceil(candidate.h));
  svg.setAttribute('width',candidate.fullW);svg.setAttribute('height',candidate.h);
  svg.setAttribute('aria-hidden','true');
+ const defs=document.createElementNS(NS,'defs');svg.appendChild(defs);
+ const mask=document.createElementNS(NS,'mask'),maskId='square-cut-'+form.id;
+ mask.setAttribute('id',maskId);mask.setAttribute('maskUnits','userSpaceOnUse');
+ mask.setAttribute('x','0');mask.setAttribute('y','0');
+ mask.setAttribute('width',String(candidate.fullW));mask.setAttribute('height',String(candidate.h));
+ const maskBase=document.createElementNS(NS,'rect');
+ for(const [k,v] of Object.entries({x:0,y:0,width:candidate.fullW,height:candidate.h,fill:'#fff'}))maskBase.setAttribute(k,String(v));
+ mask.appendChild(maskBase);defs.appendChild(mask);
  const shape=(tag,attrs,klass)=>{
   const n=document.createElementNS(NS,tag);n.setAttribute('class',klass);
   for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));svg.appendChild(n);return n;
@@ -260,6 +268,15 @@ function applySquareStructure(form,candidate){
  // Column positions are measured in the actual formes' coordinate frame.
  const rects=cols.map(c=>({x:c.offsetLeft,y:c.offsetTop,w:c.offsetWidth,h:c.offsetHeight,
   parts:[...c.querySelectorAll('.piece')].map(p=>({y:c.offsetTop+p.offsetTop,h:p.offsetHeight}))}));
+ // Exclusion windows protect EVERY real character/word run from painted masses.
+ // This is negative-space typography: solid structure only lives between runs.
+ let cleared=0;for(const col of rects)for(const p of col.parts){
+  const cut=document.createElementNS(NS,'rect');
+  const safe=fs*.085;
+  for(const [key,val] of Object.entries({x:col.x-safe,y:p.y-safe,
+   width:col.w+safe*2,height:p.h+safe*2,fill:'#000'}))cut.setAttribute(key,String(val));
+  mask.appendChild(cut);cleared++;
+ }
  // On each contiguous word-group pair, define a shared band by two real phrase
  // boundaries; stair-stepped contours mean one mass lives across several tracks.
  let blocks=0,windows=0;
@@ -281,7 +298,7 @@ function applySquareStructure(form,candidate){
   const end=order[order.length-1];d+=' V '+end.bottom;
   for(let j=order.length-1;j>=0;j--){const r=order[j];d+=' H '+r.left+' V '+r.bottom;}
   d+=' Z';
-  shape('path',{d},'mass');blocks++;
+  shape('path',{d,mask:'url(#'+maskId+')'},'mass');blocks++;
   // A single architectural courtyard per block: an intentional square negative
   // field facing a multilingual switch, not a grid of randomly decorated tokens.
   const inner=order[Math.floor(order.length/2)];
@@ -296,7 +313,7 @@ function applySquareStructure(form,candidate){
  }
  form.insertBefore(svg,form.firstChild);
  form.dataset.structure='cross-strip';form.dataset.structureBlocks=String(blocks);
- form.dataset.structureWindows=String(windows);
+ form.dataset.structureWindows=String(windows);form.dataset.clearTextZones=String(cleared);
 }
 function fit(){if(!stage)return;const zh=$('viewportZh'),en=$('viewportEn');const bounds=stage;const fullW=bounds.fullW;const size=fitScale=>Math.min(fitScale.clientWidth/fullW,fitScale.clientHeight/bounds.h)*.975;
 $('formeZh').style.transform='translate(-50%,-50%) scale('+size(zh).toFixed(5)+')';
