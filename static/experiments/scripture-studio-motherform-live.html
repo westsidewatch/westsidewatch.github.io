@@ -321,33 +321,6 @@ function distributeSemanticUnits(total,count,phase){
  for(let j=0;j<extra;j++)lengths[(j+phase)%count]++;
  return lengths;
 }
-function createFillCandidates(){
- const {zh:zu,en:eu,semanticSource}=availableLayoutBreaks();
- const out=[],limits={zh:zu.length,en:eu.length};
- const maxBilingualStrips=Math.min(limits.zh,limits.en);
- if(!maxBilingualStrips)return {out,limits,maxBilingualStrips,status:'INSUFFICIENT_APPROVED_BREAKPOINTS'};
- // No numeric template: every natural word boundary is available to the
- // solver, with multi-language switches in each mother-forme strip.
- for(let count=1;count<=maxBilingualStrips;count++)for(let variant=0;variant<12;variant++){
-  const zl=distributeSemanticUnits(zu.length,count,variant);
-  const el=distributeSemanticUnits(eu.length,count,(variant*3+1)%count);
-  const signatures=zl.map((zCount,i)=>{
-   let eCount=el[i],sig='',turn=(i+variant)%2?'E':'Z';
-   while(zCount+eCount){
-    if(turn==='Z'&&zCount===0)turn='E';
-    if(turn==='E'&&eCount===0)turn='Z';
-    sig+=turn;if(turn==='Z')zCount--;else eCount--;
-    turn=turn==='Z'?'E':'Z';
-   }
-   return sig;
-  });
-  if(signatures.some(v=>!v.includes('Z')||!v.includes('E')))continue;
-  out.push({signatures,variant,count,fill:true,provisional:true,
-   zhUnits:zu,enUnits:eu,semanticSource,
-   rhythm:Array.from({length:count},(_,i)=>Math.sin(i*1.8+variant)*.015)});
- }
- return {out,limits,maxBilingualStrips,status:'CANDIDATES_READY'};
-}
 function checkFaces(){const loaded=[...document.fonts].filter(f=>f.status==='loaded'),check=(family,w)=>loaded.some(f=>{if(f.family.replace(/["']/g,'').trim()!==family)return false;const v=String(f.weight).split(/\s+/).map(Number);return (v.length===1&&v[0]===w)||(v.length===2&&v[0]<=w&&v[1]>=w)});return {bodoni:check('WS Bodoni Moda SC File',400),chironHeavy:check('Chiron Hei HK WS',900),chironLight:check('Chiron Hei HK WS',200)}}
 const measurement=document.createElement('div');measurement.style.cssText='position:fixed;top:-5000px;left:-5000px;visibility:hidden;pointer-events:none;z-index:-1';document.body.append(measurement);
 const measureCache=new Map();
