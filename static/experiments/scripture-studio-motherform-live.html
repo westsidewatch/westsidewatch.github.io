@@ -194,8 +194,8 @@ function checkedSemanticUnits(){
 // V41: reuse V18's Intl.Segmenter Chinese word candidate method and its
 // English space/word boundary method; semantic locks are separate from layout
 // break opportunities. These are EDITORIAL CANDIDATES, never official approvals.
-const V18_PROTECTED_ZH=['耶路撒冷','我在你城上','設立守望的','他們晝夜必不靜默','呼籲耶和華的','你們不要歇息'];
-const V18_PROTECTED_EN=['I have set watchmen','upon thy walls','O Jerusalem','which shall never hold their peace','day nor night','ye that make mention of the LORD','keep not silence'];
+const V18_PROTECTED_ZH=['耶路撒冷','耶和華','守望','晝夜','靜默','呼籲','你們','歇息','設立','不要'];
+const V18_PROTECTED_EN=['O Jerusalem','the LORD','day nor night','hold their peace','keep not silence'];
 function v18WordCandidateZH(source){
  const segmenter=new Intl.Segmenter('zh-Hant',{granularity:'word'});
  const candidates=[...segmenter.segment(source)].map(x=>x.segment);
@@ -464,7 +464,7 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
  if(!ranked.length){const provisional=candidates.map(c=>evaluate({...c,provisional:true},size,density)).filter(Boolean);
  provisional.sort((a,b)=>a.cost-b.cost);ranked=provisional.slice(0,12);
  if(!ranked.length){$('formeZh').replaceChildren();$('formeEn').replaceChildren();stage=null;$('metrics').textContent='INSUFFICIENT_APPROVED_BREAKPOINTS · 現有合法詞組不足以構成雙語印章；請由 V18 審核新增斷點或改採多印面。禁止縮字或任意切詞。';window.__scriptureStudio={valid:false,reason:'INSUFFICIENT_APPROVED_BREAKPOINTS',candidateCount:0};return}
- $('squareStudyStatus').textContent='V41 按既有 V18 詞界候選自動尋找視覺換行：詞組保護與字帶布局分離；不限制預設行數。V18 自動詞界仍待人工審核，禁止正式出版。';
+ $('squareStudyStatus').textContent='V41 按 V18 的自然詞界重新排版：保護不可拆專名和詞語，但允許句子從詞界折入下一字帶；字帶數由原文詞界產生，不設定固定行數。自動詞界仍待人工審核。';
 }
  render(0);
  if(stage&&stage.fillEstimate<.75){
