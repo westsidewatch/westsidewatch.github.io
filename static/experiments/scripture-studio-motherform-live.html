@@ -278,8 +278,8 @@ function applySquareStructure(form,candidate){
   // typography is cut cleanly out of its ink mass and stays editable above.
   element('rect',{x:0,y:0,width:side,height:side,class:'mass',mask:fullMask});
   element('path',{d:`M ${side*.17} ${side*.16} H ${side*.73} V ${side*.43}
- H ${side*.56} V ${side*.69} H ${side*.19} Z`,class:'chamber'});
-  element('rect',{x:side*.59,y:side*.74,width:side*.25,height:side*.11,class:'chamber'});
+ H ${side*.56} V ${side*.69} H ${side*.19} Z`,class:'chamber',mask:fullMask});
+  element('rect',{x:side*.59,y:side*.74,width:side*.25,height:side*.11,class:'chamber',mask:fullMask});
  }else{
   // B: One uninterrupted square outline, with interlocking, asymmetric paper
   // fields inside. The square itself — not the runs — owns the composition.
