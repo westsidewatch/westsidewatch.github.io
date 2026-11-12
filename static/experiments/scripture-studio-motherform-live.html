@@ -92,7 +92,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
 <div class="shell"><aside>
 <section class="panel"><h2>01 / 字體載入</h2><div id="fontStatus" class="status">正在載入實際字型檔…</div></section>
-<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="squareMode">無底色刻印 · 構圖比較</label><select id="squareMode"><option value="registered">A / 雙框 · 出處成脊</option><option value="cutout">B / 開放式框線 · 出處成梁</option><option value="none">C / 純鉛字 · 無構造線</option></select><p><strong>V39.0 / 字體填滿試驗</strong> · 母本字號不等於螢幕字號，下面顯示真實縮放。</p><div id="scaleDiagnosis" class="engravingStatus" aria-live="polite">正在檢查畫面字級……</div><div id="squareStudyStatus" class="engravingStatus">V37 無色塊、無白色貼片、無遮罩；由同一母版上的框線和經文出處建立方形骨架。V18 審核尚未接入。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>先依 V18 的經文來源詩行與人工核准斷點判斷；每條鉛字帶中英同行，拒絕純中文或純英文孤立字柱；語意單位完整，拒絕單字孤行或拆詞；不為填滿印面強行分割句意。字號在一組構圖中固定；不為填滿版心偷偷縮小個別字帶。印面只以預覽比例縮放，不改母本量測。</p></section>
+<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="squareMode">無底色刻印 · 構圖比較</label><select id="squareMode"><option value="registered">A / 雙框 · 出處成脊</option><option value="cutout">B / 開放式框線 · 出處成梁</option><option value="none">C / 純鉛字 · 無構造線</option></select><p><strong>V39.0 / 字體填滿試驗</strong> · 母本字號不等於螢幕字號，下面顯示真實縮放。</p><div id="scaleDiagnosis" class="engravingStatus" aria-live="polite">正在檢查畫面字級……</div><div id="squareStudyStatus" class="engravingStatus">V39 密排字型試驗：禁止人工撐開字帶間距；用新增字帶與零斷片間距填滿方形。此模式暫不遵守舊有斷句與 H4／H6 限制，但保留逐字原文。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>V39 僅為視覺填滿試驗：暫時取消已核准短語分組與語意斷句對排字的阻礙，沿原文逐字／逐詞重排，所有文字仍可逆還原。禁止將此版作為正式經文印刷。</p></section>
 <section class="panel"><h2>03 / 聖經語義來源</h2><p>本母版目前仍以內嵌編輯片段做試驗，尚未接入 V18 的 USFM 審核結果；任何候選都不可視為核定經文印章。</p><p><a href="./scripture-studio-poetry-v18.html" target="_blank" rel="noopener">開啟 V18 USFM 詩行／合法斷句工具</a></p></section><section class="panel"><h2>04 / 硬性門檻與量測</h2><div id="metrics" class="status">等待字體驗證…</div><p>評估版心寬高、字柱長度差異、交錯次數與非對稱比例。墨跡像素面積另列，不用文字框比例冒充。</p><button id="recipe">匯出排列配方 JSON</button><button id="printProof" type="button" style="margin-left:7px">列印雙印校樣</button></section>
 </aside><main class="work"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><div class="pair">
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
@@ -268,7 +268,7 @@ function evaluate(candidate,size,density){
  const spread=Math.sqrt(columns.reduce((sum,c)=>sum+(c.height-meanH)**2,0)/count)/Math.max(1,meanH);
  const asymmetry=columns.reduce((sum,c)=>sum+Math.abs(c.share-.5),0)/count;
  const repeatedAdjacent=candidate.signatures.slice(1).filter((sig,i)=>sig===candidate.signatures[i]).length;
- const cost=Math.abs(Math.log(Math.max(.01,aspect)))*24+
+ const cost=Math.abs(Math.log(Math.max(.01,aspect)))*32+
   Math.abs(Math.log(Math.max(.01,inverseAspect)))*3.1+
   Math.abs(spread-.27)*1.2-Math.min(asymmetry,.45)*.3+
   repeatedAdjacent*.02+Math.abs(count-Math.sqrt(zhUnits.length+enUnits.length)*1.55)*.025;
@@ -389,7 +389,7 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
  if(!ranked.length){const provisional=candidates.map(c=>evaluate({...c,provisional:true},size,density)).filter(Boolean);
  provisional.sort((a,b)=>a.cost-b.cost);ranked=provisional.slice(0,12);
  if(!ranked.length){$('formeZh').replaceChildren();$('formeEn').replaceChildren();stage=null;$('metrics').textContent='NO LEGAL LAYOUT · V18 尚未完成接入';window.__scriptureStudio={valid:false,reason:'NO_CANDIDATE',candidateCount:0};return}
- $('squareStudyStatus').textContent='V14 H4/H6 尚未通過：以下只比較無底色框線構圖，禁止正式匯出。';
+ $('squareStudyStatus').textContent='V39 密排試驗：V14／V18 規則暫不阻擋構圖試驗，原文保持完整，仍禁止正式印刷。';
 }
  render(0)
 }
