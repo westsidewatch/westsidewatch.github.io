@@ -203,7 +203,7 @@ function createFillCandidates(){
  const out=[];
  // Search a wide content-driven set of word/character rows. 13 is not imposed.
  const high=Math.min(zu.length,eu.length,24);
- for(let count=12;count<=high;count++)for(let variant=0;variant<4;variant++){
+ for(let count=9;count<=high;count++)for(let variant=0;variant<4;variant++){
   const signatures=fillLines(count,variant,zu,eu);
   if(signatures.some(v=>!v.includes('E')||!v.includes('Z')))continue;
   out.push({signatures,variant,count,fill:true,provisional:true,
@@ -260,7 +260,7 @@ function evaluate(candidate,size,density){
  const colWidths=columns.map(c=>Math.max(size*1.04,...c.parts.map(p=>p.width)));// actual font advance
  const positions=[0];
  // Preserve a narrow but visible gap: avoid the overlapping type in the V39 screenshot.
- for(let i=1;i<count;i++)positions.push(positions[i-1]+colWidths[i-1]+size*.15);
+ for(let i=1;i<count;i++)positions.push(positions[i-1]+colWidths[i-1]+size*.12);
  const width=positions[count-1]+colWidths[count-1],fullWidth=width+railWidth;
  const extraWidth=0,intrinsicWidth=fullWidth,targetFullWidth=fullWidth;
  const aspect=fullWidth/Math.max(height,1);
