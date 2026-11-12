@@ -308,7 +308,7 @@ function applySquareStructure(form,candidate){
   // Cutout entirely in the band, aligned to the actual middle strip.
   if(inner.bottom-inner.top>box*2.4){
    shape('rect',{x:inner.left+(inner.right-inner.left-box)/2,y:cy,
-    width:box,height:box},'chamber');windows++;
+    width:box,height:box,mask:'url(#'+maskId+')'},'chamber');windows++;
   }
  }
  form.insertBefore(svg,form.firstChild);
