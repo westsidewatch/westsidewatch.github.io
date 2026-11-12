@@ -194,7 +194,7 @@ function checkedSemanticUnits(){
 // V41: reuse V18's Intl.Segmenter Chinese word candidate method and its
 // English space/word boundary method; semantic locks are separate from layout
 // break opportunities. These are EDITORIAL CANDIDATES, never official approvals.
-const V18_PROTECTED_ZH=['耶路撒冷','耶和華','守望','晝夜','靜默','呼籲','你們','歇息','設立','不要'];
+const V18_PROTECTED_ZH=['耶路撒冷','耶和華','我在你城上','守望的，','晝夜','必不靜默','呼籲','你們','歇息','設立','不要'];
 const V18_PROTECTED_EN=['O Jerusalem','the LORD','day nor night','hold their peace','keep not silence'];
 function v18WordCandidateZH(source){
  const segmenter=new Intl.Segmenter('zh-Hant',{granularity:'word'});
