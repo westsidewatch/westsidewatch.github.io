@@ -333,14 +333,15 @@ function fit(){
   height:((inkEnvelope.maxY-inkEnvelope.minY)/plateBounds.height)
  }:null;
  const actualZh=stage.fontSize*scaleZh,actualEn=stage.fontSize*scaleEn;
- const diagnosis='V38.0 · 方形佔用率驗證\n母版字級 '+stage.fontSize+'px'+
+ const fillPass=!!ratio&&ratio.width>=.90&&ratio.height>=.90;
+ const diagnosis='V38.0 · 方形佔用率驗證 '+(fillPass?'PASS':'未通過')+'\n母版字級 '+stage.fontSize+'px'+
   ' · 中文縮放 '+scaleZh.toFixed(3)+'× → 螢幕約 '+actualZh.toFixed(1)+'px'+
   ' · 英文縮放 '+scaleEn.toFixed(3)+'× → 螢幕約 '+actualEn.toFixed(1)+'px'+
   (ratio?'\n文字盒佔版心：寬 '+(ratio.width*100).toFixed(1)+'% ／ 高 '+(ratio.height*100).toFixed(1)+'%':'')+
   '\n放大母版若被 fit() 抵消會在此顯示。';
  $('scaleDiagnosis').textContent=diagnosis;
  window.__scriptureScaleDiagnostics={revision:'38.0',fontSize:stage.fontSize,scaleZh,scaleEn,
-  actualZh,actualEn,ratio,viewport:{width:zh.clientWidth,height:zh.clientHeight},
+  actualZh,actualEn,ratio,fillPass,viewport:{width:zh.clientWidth,height:zh.clientHeight},
   squareSize:square,cssSample:getComputedStyle(zhForm.querySelector('.piece')).fontSize};
 }
 function render(index=0){if(!approved){$('plateZh').classList.add('blocked');$('plateEn').classList.add('blocked');return}if(!ranked.length)return;
