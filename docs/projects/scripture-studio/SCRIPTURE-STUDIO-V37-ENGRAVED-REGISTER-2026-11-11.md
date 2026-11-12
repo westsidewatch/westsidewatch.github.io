@@ -42,3 +42,24 @@
 確實存在縮放抵消：`fontSize` 改大時 `measure()`、`evaluate()`、`side=Math.max(fullW,h)+fontSize*.45` 同比增大，而 `fit()` 取 `viewportWidth/side`、`viewportHeight/side` 的較小值，造成 `fontSize * scale` 大致不變。文字長條比例偏窄是另一個獨立因素：在不拆散合法語義單元和不變形字體下，靠調大 CSS font-size 無法填滿方形兩軸。
 
 V37.2（提交 `13b33c8`）在現行頁面加入可見的母版字級、正反向縮放倍率、最終螢幕字級，以及主讀向文字外接盒寬高佔版心比例。保留固定 SHA 版本預覽及 V14/V18 審核限制；本輪修正**診斷可見性**，不虛稱已修正方形充滿度，後續須處理語義合法前提下的字帶構成及版心長寬比。
+
+## V38.0 正式合併 Fill-Square 演算法（2026-11-12）
+
+**根因與取消的規則**：先前母版寬度僅取所有文字帶的最小排字寬；長片段決定印面高度，而沒有等量填入橫軸的合法位置，`fit()` 再以較長邊縮小整體，形成中央狹長的閱讀區。簡單放大 `font-size` 只讓原母版與縮放倍率相互抵消。本輪**取消「以最小內容寬度決定版心」的限制**；不取消經文合法斷句、V14 雙語同帶、多次交錯與來源核驗的保護規則。
+
+**原工程** `static/experiments/scripture-studio-motherform-live.html` 的 `evaluate()`：
+```js
+const intrinsicWidth = count*stripAdvance + sum(initialGutters);
+const targetFullWidth = Math.max(intrinsicWidth+railWidth,height*.975);
+const extraWidth = targetFullWidth-(intrinsicWidth+railWidth);
+// 將 extraWidth 加權分配在相鄰文字帶之間；保留每條文字帶原有完整內容。
+// width、fullWidth、aspect、positions 一起更新，build() 直接沿用 positions。
+```
+
+- 新目標為**整份引文連同中英合一出處的母本寬高約 97.5% 比例**，並保留既有 V37 無填色的線性結構及整件 90° 翻轉；不扭曲字形、不改原文、不拆開已審定的語義原子。
+- 演算法在單字帶無法真正跨寬時停止把虛設的畫布當作合法文字填充；不強制固定字帶數。
+- V38 即時診斷新增可見的正向文字 DOM 外接矩形覆蓋率：**寬與高都至少 90% 才標 PASS**，避免只檢查框線方形卻聲稱文字填滿；同時記錄幕前縮放倍率。
+- 使用仿真 token 長度量測測試，測得 45 個可計算候選的 **母本幾何寬高比均為 0.975**；此為求解器數學測試，**不是實際 Chromium 的渲染覆蓋率**。
+- V18 核准語義來源仍未正式接入，故繼續禁止將預覽視為正式出版印章；本輪未繞過 H4/H6 的淘汰條件，也未重啟底色／遮罩設計。
+
+**程式提交**：`82cce72befcbb7f2aa72c5a876e51d38b28b3fd4`（求解器）、`65b6d3d2929f9cc018b6dbe9ec902272c0b07739`（DOM 覆蓋率 QA）。**尚缺**實際安裝字型 Chromium 截圖、90% 實測 PASS、手機及列印版確認；絕不把數學寬高比等同於視覺獲獎通過。
