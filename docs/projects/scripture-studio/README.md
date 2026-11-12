@@ -11,6 +11,7 @@
 - [三條鉛字語法與範例 07](./TYPE-SEAL-THREE-GRAMMAR-RULES-2026-11-09.md)
 - [聖經詩行與語義保護 V18 的 QA](./SCRIPTURE-STUDIO-V18-POETRY-SEMANTICS-QA-2026-11-10.md)
 - [多雷探索與候選構圖](./Dore-exploration-2026-11-11.md)
+- [V37 無底色刻印／雙框與出處結構（現行施工規格）](./SCRIPTURE-STUDIO-V37-ENGRAVED-REGISTER-2026-11-11.md)
 - [目前母版生成器](../../../static/experiments/scripture-studio-motherform-live.html)
 - [既有 V18 USFM 詩行斷句工具](../../../static/experiments/scripture-studio-poetry-v18.html)
 
