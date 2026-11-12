@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Scripture Studio ·雙向經文鉛字印章 · 實際母版預覽</title>
+<title>Scripture Studio V37.2 · 字號縮放診斷 · 雙向母版</title>
 
 <style>
 /* Entire Isaiah 62:6 glyphset self-hosted in this repository; no CDN or AI artwork. */
@@ -92,13 +92,13 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
 <div class="shell"><aside>
 <section class="panel"><h2>01 / 字體載入</h2><div id="fontStatus" class="status">正在載入實際字型檔…</div></section>
-<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="squareMode">無底色刻印 · 構圖比較</label><select id="squareMode"><option value="registered">A / 雙框 · 出處成脊</option><option value="cutout">B / 開放式框線 · 出處成梁</option><option value="none">C / 純鉛字 · 無構造線</option></select><div id="squareStudyStatus" class="engravingStatus">V37 無色塊、無白色貼片、無遮罩；由同一母版上的框線和經文出處建立方形骨架。V18 審核尚未接入。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>先依 V18 的經文來源詩行與人工核准斷點判斷；每條鉛字帶中英同行，拒絕純中文或純英文孤立字柱；語意單位完整，拒絕單字孤行或拆詞；不為填滿印面強行分割句意。字號在一組構圖中固定；不為填滿版心偷偷縮小個別字帶。印面只以預覽比例縮放，不改母本量測。</p></section>
+<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="squareMode">無底色刻印 · 構圖比較</label><select id="squareMode"><option value="registered">A / 雙框 · 出處成脊</option><option value="cutout">B / 開放式框線 · 出處成梁</option><option value="none">C / 純鉛字 · 無構造線</option></select><p><strong>V37.2 / 字號縮放診斷</strong> · 母本字號不等於螢幕字號，下面顯示真實縮放。</p><div id="scaleDiagnosis" class="engravingStatus" aria-live="polite">正在檢查畫面字級……</div><div id="squareStudyStatus" class="engravingStatus">V37 無色塊、無白色貼片、無遮罩；由同一母版上的框線和經文出處建立方形骨架。V18 審核尚未接入。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>先依 V18 的經文來源詩行與人工核准斷點判斷；每條鉛字帶中英同行，拒絕純中文或純英文孤立字柱；語意單位完整，拒絕單字孤行或拆詞；不為填滿印面強行分割句意。字號在一組構圖中固定；不為填滿版心偷偷縮小個別字帶。印面只以預覽比例縮放，不改母本量測。</p></section>
 <section class="panel"><h2>03 / 聖經語義來源</h2><p>本母版目前仍以內嵌編輯片段做試驗，尚未接入 V18 的 USFM 審核結果；任何候選都不可視為核定經文印章。</p><p><a href="./scripture-studio-poetry-v18.html" target="_blank" rel="noopener">開啟 V18 USFM 詩行／合法斷句工具</a></p></section><section class="panel"><h2>04 / 硬性門檻與量測</h2><div id="metrics" class="status">等待字體驗證…</div><p>評估版心寬高、字柱長度差異、交錯次數與非對稱比例。墨跡像素面積另列，不用文字框比例冒充。</p><button id="recipe">匯出排列配方 JSON</button><button id="printProof" type="button" style="margin-left:7px">列印雙印校樣</button></section>
 </aside><main class="work"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><div class="pair">
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
 <article class="impression"><div class="plateTitle">02 / 英文主讀｜Bodoni SC × Chiron 200 · 同字號</div><div class="plate inverse" id="plateEn"><div class="plateInner" id="viewportEn"><div class="forme" id="formeEn"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricEn" class="metrics"></div></article>
 </div><section class="source"><div><h3>CHINESE UNION VERSION / 源文分行</h3><div class="zhPoem" id="zhPoem"></div></div><div><h3>KING JAMES VERSION / SOURCE LINES</h3><div class="enPoem" id="enPoem"></div></div></section></main></div>
-<footer>Scripture Studio · V37.1 Type-size and Tight Forme · 印章出處已納入雙向印面；經文原文保持不變。 The Biblical text remains source-ordered in both languages; exploratory secondary poetic breaks require editorial approval. Font binaries must load before impression approval.</footer>
+<footer>Scripture Studio · V37.2 Scale Diagnostic · 印章出處已納入雙向印面；經文原文保持不變。 The Biblical text remains source-ordered in both languages; exploratory secondary poetic breaks require editorial approval. Font binaries must load before impression approval.</footer>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
@@ -290,13 +290,38 @@ function applyEngravedStructure(form,candidate){
  form.insertBefore(svg,form.firstChild);
  form.dataset.structure='engraved-register';form.dataset.structureInkFills='0';
 }
-function fit(){if(!stage)return;const zh=$('viewportZh'),en=$('viewportEn');const square=Number($('formeZh').dataset.squareSide);
-const size=fitScale=>Math.min(fitScale.clientWidth/square,fitScale.clientHeight/square)*.995;
-$('formeZh').style.transform='translate(-50%,-50%) scale('+size(zh).toFixed(5)+')';
-// Same token order and coordinates; the 90-degree view rotates the same geometry.
-const inverse=$('formeEn');const inverseSide=Number(inverse.dataset.squareSide);
-const inverseScale=Math.min(en.clientWidth/inverseSide,en.clientHeight/inverseSide)*.995;
-inverse.style.transform='translate(-50%,-50%) rotate(-90deg) scale('+inverseScale.toFixed(5)+')';}
+function fit(){
+ if(!stage)return;
+ const zh=$('viewportZh'),en=$('viewportEn');
+ const zhForm=$('formeZh'),enForm=$('formeEn');
+ const square=Number(zhForm.dataset.squareSide),inverseSide=Number(enForm.dataset.squareSide);
+ const scaleZh=Math.min(zh.clientWidth/square,zh.clientHeight/square)*.995;
+ const scaleEn=Math.min(en.clientWidth/inverseSide,en.clientHeight/inverseSide)*.995;
+ zhForm.style.transform='translate(-50%,-50%) scale('+scaleZh.toFixed(6)+')';
+ enForm.style.transform='translate(-50%,-50%) rotate(-90deg) scale('+scaleEn.toFixed(6)+')';
+ const glyphBounds=[...zhForm.querySelectorAll('.column>.piece')].map(p=>p.getBoundingClientRect());
+ const plateBounds=zh.getBoundingClientRect();
+ const inkEnvelope=glyphBounds.length?{
+  minX:Math.min(...glyphBounds.map(b=>b.left)),
+  maxX:Math.max(...glyphBounds.map(b=>b.right)),
+  minY:Math.min(...glyphBounds.map(b=>b.top)),
+  maxY:Math.max(...glyphBounds.map(b=>b.bottom))
+ }:null;
+ const ratio=inkEnvelope?{
+  width:((inkEnvelope.maxX-inkEnvelope.minX)/plateBounds.width),
+  height:((inkEnvelope.maxY-inkEnvelope.minY)/plateBounds.height)
+ }:null;
+ const actualZh=stage.fontSize*scaleZh,actualEn=stage.fontSize*scaleEn;
+ const diagnosis='V37.2 · 即時縮放診斷\n母版字級 '+stage.fontSize+'px'+
+  ' · 中文縮放 '+scaleZh.toFixed(3)+'× → 螢幕約 '+actualZh.toFixed(1)+'px'+
+  ' · 英文縮放 '+scaleEn.toFixed(3)+'× → 螢幕約 '+actualEn.toFixed(1)+'px'+
+  (ratio?'\n文字盒佔版心：寬 '+(ratio.width*100).toFixed(1)+'% ／ 高 '+(ratio.height*100).toFixed(1)+'%':'')+
+  '\n放大母版若被 fit() 抵消會在此顯示。';
+ $('scaleDiagnosis').textContent=diagnosis;
+ window.__scriptureScaleDiagnostics={revision:'37.2',fontSize:stage.fontSize,scaleZh,scaleEn,
+  actualZh,actualEn,ratio,viewport:{width:zh.clientWidth,height:zh.clientHeight},
+  squareSize:square,cssSample:getComputedStyle(zhForm.querySelector('.piece')).fontSize};
+}
 function render(index=0){if(!approved){$('plateZh').classList.add('blocked');$('plateEn').classList.add('blocked');return}if(!ranked.length)return;
 selected=((index%ranked.length)+ranked.length)%ranked.length;stage=ranked[selected];build($('formeZh'),stage);build($('formeEn'),stage);fit();
 $('plateZh').classList.toggle('experimental',!!stage.provisional);
@@ -326,7 +351,7 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
 async function startup(){const loads=await Promise.allSettled([document.fonts.load('400 48px "WS Bodoni Moda SC File"',enExact),document.fonts.load('900 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('200 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('900 48px "Chiron Hei HK WS"','以賽亞書'),document.fonts.load('200 48px "Chiron Hei HK WS"','以賽亞書')]);await document.fonts.ready;const f=checkFaces();const subsetFaces=[...document.fonts].filter(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS');const loadedSubsets=subsetFaces.filter(face=>face.status==='loaded').length;f.subsets=loadedSubsets;f.subsetTotal=subsetFaces.length;f.citationLoaded=loads.slice(3).every(x=>x.status==='fulfilled'&&x.value.some(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS'));approved=loads.every(x=>x.status==='fulfilled')&&f.citationLoaded&&f.bodoni&&f.chironHeavy&&f.chironLight&&loadedSubsets===12;
 $('fontStatus').className='status '+(approved?'pass':'fail');$('fontStatus').textContent=`Bodoni Moda SC / actual file ${f.bodoni?'PASS':'FAIL'}\nChiron Heavy / 900 ${f.chironHeavy?'PASS':'FAIL'}\nChiron ExtraLight / 200 ${f.chironLight?'PASS':'FAIL'}\n12 local CJK subsets ${f.subsets}/12 ${f.subsets===12?'PASS':'FAIL'}\nCitation glyphs 以賽亞書 / Chiron 900+200 ${f.citationLoaded?'PASS':'FAIL'}\n${approved?'正式字型已載入，允許構圖搜尋':'正規字檔未載入：請使用完整網站預覽，單獨下載 HTML 不包含字體檔'}`;
 $('plateZh').classList.toggle('blocked',!approved);$('plateEn').classList.toggle('blocked',!approved);if(approved)search();}
-$('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('fontSize').onchange=search;$('cadence').onchange=search;$('recompute').onclick=search;$('squareMode').onchange=()=>{if(stage)render(selected)};$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('V14／V18 完整驗收尚未通過，禁止正式匯出；目前僅供方塊語法設計比較。');return}const data={version:'37.1',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v37-1-tight-type-recipe.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
+$('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('fontSize').onchange=search;$('cadence').onchange=search;$('recompute').onclick=search;$('squareMode').onchange=()=>{if(stage)render(selected)};$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('V14／V18 完整驗收尚未通過，禁止正式匯出；目前僅供方塊語法設計比較。');return}const data={version:'37.2',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v37-1-tight-type-recipe.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
 $('printProof').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('印版未通過 V14／V18 驗收，不能列印為正式校樣');return}window.print()};
 new ResizeObserver(fit).observe($('viewportZh'));new ResizeObserver(fit).observe($('viewportEn'));
 startup();
