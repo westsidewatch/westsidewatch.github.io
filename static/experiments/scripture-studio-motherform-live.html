@@ -330,7 +330,7 @@ function measure(token,lang,size,opticalRatio=null){const key=lang+'|'+size+'|'+
 // Candidate families are generated from the scripture's actual token counts.
 const candidateSearch=createFillCandidates();
 const candidates=candidateSearch.out;
-const semanticDiagnostic={maxBilingualStrips:candidateSearch.maxBilingualStrips,zhUnits:candidateSearch.limits.zh,enUnits:candidateSearch.limits.en,semanticBreakSource:'V18 word candidates + protected span locks',nowrapPhraseRuns:true};
+const semanticDiagnostic={maxBilingualStrips:candidateSearch.maxBilingualStrips,zhUnits:candidateSearch.limits.zh,enUnits:candidateSearch.limits.en,semanticBreakSource:'V18 poetry protected phrases + lexically verified optional breaks',nowrapPhraseRuns:true};
 function evaluate(candidate,size,density){
  const zhUnits=candidate.zhUnits||z,enUnits=candidate.enUnits||e;
  let zi=0,ei=0,columns=[];
@@ -480,7 +480,7 @@ function fit(){
  }:null;
  const actualZh=stage.fontSize*scaleZh,actualEn=stage.fontSize*scaleEn;
  const fillPass=!!ratio&&ratio.width>=.90&&ratio.height>=.90;
- const diagnosis='V40.1 · 斷句佔版診斷 '+(fillPass?'PASS':'未通過')+'\n母版字級 '+stage.fontSize+'px'+
+ const diagnosis='V43.0 · 雙層斷點佔版診斷 '+(fillPass?'PASS':'未通過')+'\n母版字級 '+stage.fontSize+'px'+
   ' · 中文縮放 '+scaleZh.toFixed(3)+'× → 螢幕約 '+actualZh.toFixed(1)+'px'+
   ' · 英文縮放 '+scaleEn.toFixed(3)+'× → 螢幕約 '+actualEn.toFixed(1)+'px'+
   (ratio?'\n文字盒佔版心：寬 '+(ratio.width*100).toFixed(1)+'% ／ 高 '+(ratio.height*100).toFixed(1)+'%':'')+
@@ -489,6 +489,26 @@ function fit(){
  window.__scriptureScaleDiagnostics={revision:'43.0',fontSize:stage.fontSize,scaleZh,scaleEn,semanticDiagnostic,
   actualZh,actualEn,ratio,fillPass,viewport:{width:zh.clientWidth,height:zh.clientHeight},
   squareSize:square,cssSample:getComputedStyle(zhForm.querySelector('.piece')).fontSize};
+}
+// DOM typography QA for the TWO orientations, including rotated English view.
+// Rectangular overlap is conservative and is not equivalent to glyph-pixel QA.
+function measureGlyphSafety(root){
+ const forme=root.getBoundingClientRect();
+ const entries=[...root.querySelectorAll('.column>.piece')].map(node=>({node,b:node.getBoundingClientRect()}));
+ const violations=[];
+ for(const {b,node} of entries){
+  if(b.left<forme.left-2||b.right>forme.right+2||b.top<forme.top-2||b.bottom>forme.bottom+2)
+   violations.push('GLYPH_CLIPPED:'+node.dataset.original.slice(0,18));
+ }
+ for(let i=0;i<entries.length;i++)for(let j=i+1;j<entries.length;j++){
+  const a=entries[i],b=entries[j];
+  if(a.node.parentElement===b.node.parentElement)continue;
+  const x=Math.min(a.b.right,b.b.right)-Math.max(a.b.left,b.b.left);
+  const y=Math.min(a.b.bottom,b.b.bottom)-Math.max(a.b.top,b.b.top);
+  if(x>1.5&&y>1.5)violations.push('GLYPH_BOX_COLLISION');
+  if(violations.length>24)break;
+ }
+ return {ok:violations.length===0,violations};
 }
 function render(index=0){if(!approved){$('plateZh').classList.add('blocked');$('plateEn').classList.add('blocked');return}if(!ranked.length)return;
 selected=((index%ranked.length)+ranked.length)%ranked.length;stage=ranked[selected];build($('formeZh'),stage);build($('formeEn'),stage);fit();
@@ -503,11 +523,12 @@ const citationGeometry=['formeZh','formeEn'].every(id=>{const root=$(id),rail=ro
  const contentInside=runs.every(b=>b.left>=rr.left-1&&b.right<=rr.right+1&&b.top>=rr.top-1&&b.bottom<=rr.bottom+1);
  const bodySeparate=[...root.querySelectorAll('.column')].every(n=>{const b=n.getBoundingClientRect();return b.right<=rr.left+1||b.left>=rr.right-1||b.bottom<=rr.top+1||b.top>=rr.bottom-1});
  return contentInside&&bodySeparate});
-const bilingualLines=stage.columns.every(c=>c.parts.some(p=>p.lang==='zh')&&c.parts.some(p=>p.lang==='en'));const more=stage.columns.filter(c=>c.parts.length>=3).length;const breaks={ok:stage.zhUnits.join('')===zhExact&&stage.enUnits.join('')===enExact&&stage.zhUnits.every(x=>x.length>0)&&stage.enUnits.every(x=>x.length>0),reasons:[]};
+const bilingualLines=stage.columns.every(c=>c.parts.some(p=>p.lang==='zh')&&c.parts.some(p=>p.lang==='en'));const more=stage.columns.filter(c=>c.parts.length>=3).length;const breaks={ok:stage.zhUnits.join('')===zhExact&&stage.enUnits.join('')===enExact&&stage.zhUnits.every(x=>isReadableRun(x,'zh'))&&stage.enUnits.every(x=>isReadableRun(x,'en')),reasons:[]};
+const glyphQA={zh:measureGlyphSafety($('formeZh')),en:measureGlyphSafety($('formeEn'))};
 const citationFontOS=['formeZh','formeEn'].every(id=>{const rail=$(id).querySelector('.refRail.combined');return rail&&getComputedStyle(rail.querySelector('.refZh')).fontFamily.includes('Chiron Hei HK WS')&&getComputedStyle(rail.querySelector('.refEn')).fontFamily.includes('WS Bodoni Moda SC File')});
 const citationVerified=['formeZh','formeEn'].every(id=>{const rails=[...$(id).querySelectorAll('.refRail')];return rails.length===1&&rails[0].querySelector('.refZh')?.textContent==='以賽亞書'&&rails[0].querySelector('.refEn')?.textContent==='Isaiah'&&rails[0].querySelectorAll('.refNumber').length===1&&rails[0].querySelector('.refNumber')?.textContent==='62:6'});
-$('metrics').textContent=`候選 ${selected+1} / ${ranked.length}\n完整印面寬×高 ${stage.fullW.toFixed(0)} × ${stage.h.toFixed(0)}px\n字框縱橫比 ${(stage.aspect).toFixed(2)}\n放大母版字級 ${stage.fontSize}px · 方形佈局 ${stage.aspect.toFixed(3)} · 拓寬 ${stage.extraWidth.toFixed(0)}px\n非均分字帶 ${stage.asym}/${stage.count} · 多次交錯 ${more}/${stage.count}\n中英原文無損 ${exact?'PASS':'FAIL'}\n英文逐詞首字母大寫＋Small Caps ${printedEn===enDisplay?'PASS':'FAIL'}\nV18 硬保護＋可選斷點／無孤字 ${breaks.ok?'PASS':'FAIL'}\n每條字帶中英文同行 ${bilingualLines?'PASS':'FAIL'}\n出處中英合一／章節一次 ${citationVerified?'PASS':'FAIL'}\n出處與正文無碰撞／不裁切 ${citationGeometry?'PASS':'FAIL'}\n出處 OS 字體宣告 ${citationFontOS?'PASS':'FAIL'}\n出處中文「以賽亞書」：官方 Chiron 子集載入與字形檢查\nH4 多次語言轉換 ${stage.multi}/${stage.count}（嚴格過半）\nH6 不均分字帶 ${stage.asym}/${stage.count}（嚴格過半）\nH8 中英同標稱字號 ${stage.fontSize}px\n語義來源 V18 研究候選（未經編輯核准）：NOT APPROVED\n正反向比例 ${stage.aspect.toFixed(2)} / ${stage.inverseAspect.toFixed(2)}\n墨跡像素佔有率：未驗收`;
-$('metricZh').textContent=`中文主讀 · Chiron 900 · 同標稱字級 ${stage.fontSize}px · 原始高度 ${stage.h.toFixed(0)}px`; $('metricEn').textContent=`同一字帶位置旋轉 90° · 字級 ${stage.fontSize}px · Bodoni SC / Chiron 200`;window.__scriptureStudio ={valid:false,reason:'V18_POETRY_LAYOUT_BREAKS_REVIEW_ONLY',experimentalValid:exact&&breaks.ok&&bilingualLines&&citationGeometry&&citationVerified,rank:selected,layout:stage,fonts:checkFaces(),citationGeometry,breaks};}
+$('metrics').textContent=`候選 ${selected+1} / ${ranked.length}\n完整印面寬×高 ${stage.fullW.toFixed(0)} × ${stage.h.toFixed(0)}px\n字框縱橫比 ${(stage.aspect).toFixed(2)}\n放大母版字級 ${stage.fontSize}px · 方形佈局 ${stage.aspect.toFixed(3)} · 拓寬 ${stage.extraWidth.toFixed(0)}px\n非均分字帶 ${stage.asym}/${stage.count} · 多次交錯 ${more}/${stage.count}\n中英原文無損 ${exact?'PASS':'FAIL'}\n英文逐詞首字母大寫＋Small Caps ${printedEn===enDisplay?'PASS':'FAIL'}\nV18 硬保護＋可選斷點／無孤字 ${breaks.ok?'PASS':'FAIL'}\n雙印字形外接盒碰撞／裁切 ${glyphQA.zh.ok&&glyphQA.en.ok?'PASS':'FAIL'}\nV43 可選合法斷點 Z:${stage.softBreaks.zh.toString(2)} E:${stage.softBreaks.en.toString(2)}\n每條字帶中英文同行 ${bilingualLines?'PASS':'FAIL'}\n出處中英合一／章節一次 ${citationVerified?'PASS':'FAIL'}\n出處與正文無碰撞／不裁切 ${citationGeometry?'PASS':'FAIL'}\n出處 OS 字體宣告 ${citationFontOS?'PASS':'FAIL'}\n出處中文「以賽亞書」：官方 Chiron 子集載入與字形檢查\nH4 多次語言轉換 ${stage.multi}/${stage.count}（嚴格過半）\nH6 不均分字帶 ${stage.asym}/${stage.count}（嚴格過半）\nH8 中英同標稱字號 ${stage.fontSize}px\n語義來源 V18 研究候選（未經編輯核准）：NOT APPROVED\n正反向比例 ${stage.aspect.toFixed(2)} / ${stage.inverseAspect.toFixed(2)}\n墨跡像素佔有率：未驗收`;
+$('metricZh').textContent=`中文主讀 · Chiron 900 · 同標稱字級 ${stage.fontSize}px · 原始高度 ${stage.h.toFixed(0)}px`; $('metricEn').textContent=`同一字帶位置旋轉 90° · 字級 ${stage.fontSize}px · Bodoni SC / Chiron 200`;window.__scriptureStudio ={valid:false,reason:'V18_POETRY_LAYOUT_BREAKS_REVIEW_ONLY',experimentalValid:exact&&breaks.ok&&bilingualLines&&citationGeometry&&citationVerified&&glyphQA.zh.ok&&glyphQA.en.ok,rank:selected,layout:stage,fonts:checkFaces(),citationGeometry,breaks,glyphQA};}
 async function search(){if(!approved)return;measureCache.clear();const size=Number($('fontSize').value),density=$('cadence').value;$('fontSizeValue').textContent=size;ranked=[];for(const c of candidates){const v=evaluate(c,size,density);if(v)ranked.push(v)}ranked.sort((a,b)=>a.cost-b.cost);
  if(!ranked.length){const provisional=candidates.map(c=>evaluate({...c,provisional:true},size,density)).filter(Boolean);
  provisional.sort((a,b)=>a.cost-b.cost);ranked=provisional.slice(0,12);
@@ -516,7 +537,7 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
 }
  render(0);
  if(stage&&stage.fillEstimate<.75){
-  $('squareStudyStatus').textContent='INSUFFICIENT_APPROVED_BREAKPOINTS · 試稿未達 75% 方形視覺填充，當前每語 '+candidateSearch.limits.zh+'/'+candidateSearch.limits.en+' 個 V18 研究候選語義單元，最多 '+candidateSearch.maxBilingualStrips+' 條雙語字帶。可追加經人工核准的斷點、擴展印版或改用多印面；不縮字、不拆詞。';
+  $('squareStudyStatus').textContent='INSUFFICIENT_APPROVED_BREAKPOINTS · 試稿未達 75% 方形視覺填充，當前每語最多 '+candidateSearch.limits.zh+'/'+candidateSearch.limits.en+' 個 V18 語義加軟斷點組合，最多 '+candidateSearch.maxBilingualStrips+' 條雙語字帶。可追加經人工核准的斷點、擴展印版或改用多印面；不縮字、不拆詞。';
   window.__scriptureStudio={...(window.__scriptureStudio||{}),valid:false,reason:'INSUFFICIENT_APPROVED_BREAKPOINTS'};
  }
 }
