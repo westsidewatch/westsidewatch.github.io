@@ -19,7 +19,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .plateInner{position:absolute;inset:1.8%;overflow:hidden;display:flex;align-items:center;justify-content:center}.forme{position:absolute;left:50%;top:50%;transform-origin:center center;will-change:transform}.column{position:absolute;top:0;display:flex;flex-direction:column;align-items:center;white-space:nowrap}.piece{flex:0 0 auto;display:block;writing-mode:vertical-rl;line-height:1;white-space:nowrap;text-orientation:mixed}.piece.zh{font-family:var(--font-zh);font-weight:900;font-variation-settings:"wght" 900,"PADG" 0;font-synthesis:none}.piece.en{font-family:var(--font-en);font-weight:400;font-variant-caps:small-caps;font-feature-settings:"smcp" 1,"c2sc" 0,"kern" 1;font-synthesis:none;text-transform:none;text-orientation:sideways}.inverse .piece.zh{font-weight:200;font-variation-settings:"wght" 200,"PADG" 0;color:#e2ddd1}.inverse .piece.en{color:#f4efe4}
 .showGuides .column{outline:1px solid rgba(174,120,45,.3)}.showGuides .piece{outline:1px dotted rgba(174,120,45,.17)}
 /* One engraved mother forme in both orientations: consistent, tighter Latin tracking. */
-.piece.en{letter-spacing:-.045em}
+.piece.en{letter-spacing:-.018em}
 .guard{position:absolute;inset:0;display:none;place-items:center;text-align:center;padding:9%;font:13px/1.7 ui-monospace,monospace;background:#faf6ed;color:#81392d;z-index:5}.inverse .guard{background:#292521;color:#e6b4a8}.blocked .guard{display:grid}.blocked .forme{visibility:hidden}
 .metrics{margin:9px 0;font:11px/1.55 ui-monospace,monospace;color:#64695e;white-space:pre-wrap}.source{margin-top:25px;padding-top:20px;border-top:1px solid var(--hair);display:grid;grid-template-columns:1fr 1fr;gap:30px}.source h3{margin:0 0 9px;font:11px/1.3 ui-monospace,monospace;letter-spacing:.08em}.source .zhPoem{font:400 15px/1.8 var(--font-zh),sans-serif}.source .enPoem{font:400 18px/1.7 var(--font-en),serif;font-variant-caps:small-caps;font-feature-settings:"smcp" 1,"c2sc" 0;font-synthesis:none}.source p{margin:0;color:var(--ink)}.foot{padding:17px clamp(18px,3vw,48px);border-top:1px solid var(--hair);font:11px/1.5 ui-monospace,monospace;color:#6c7067}
 @media(max-width:1120px){.shell{grid-template-columns:1fr}aside{border-right:none;border-bottom:1px solid var(--hair);display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:780px){aside{display:block}.pair,.source{grid-template-columns:1fr}.work{padding:18px 14px}.plate{max-width:640px}}
@@ -68,10 +68,10 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .p2EditorialNote strong{font:400 clamp(18px,2vw,29px)/1.1 Georgia,serif;letter-spacing:.035em}
 .p2EditorialNote small{font:10px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#6c7067}
 .work[data-p2-section] .plate:not(.inverse){background:color-mix(in srgb,var(--section-bg,#102a43) 13%,#FAF9F5);color:#252525}
-.work[data-p2-section] .plate:not(.inverse) .refRail{color:color-mix(in srgb,var(--section-bg,#102a43) 72%,#252525)}
-.work[data-p2-section] .plate:not(.inverse) .piece.en{color:color-mix(in srgb,var(--section-bg,#102a43) 58%,#252525)}
+.work[data-p2-section] .plate:not(.inverse) .refRail{color:color-mix(in srgb,var(--section-bg,#102a43) 56%,#252525)}
+.work[data-p2-section] .plate:not(.inverse) .piece.en{color:color-mix(in srgb,var(--section-bg,#102a43) 53%,#252525)}
 .work[data-p2-section] .plate.inverse{background:var(--section-bg,#102a43);color:var(--section-text,#faf9f5)}
-.work[data-p2-section] .plate.inverse .piece.zh{color:color-mix(in srgb,var(--section-text,#faf9f5) 40%,var(--section-bg,#102a43));font-weight:200;font-variation-settings:"wght" 200}
+.work[data-p2-section] .plate.inverse .piece.zh{color:color-mix(in srgb,var(--section-text,#faf9f5) 65%,var(--section-bg,#102a43));font-weight:200;font-variation-settings:"wght" 200}
 .work[data-p2-section] .plate.inverse .piece.en{color:var(--section-text,#faf9f5);font-weight:400;font-variation-settings:"wght" 400}
 .work[data-p2-section] .plate.inverse .refRail{color:var(--section-text,#faf9f5)}
 .work[data-p2-section] .plateTitle:before{content:"";display:inline-block;width:15px;height:5px;background:var(--section-bg,#102a43);vertical-align:middle;margin-right:8px}
@@ -85,7 +85,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 /* The citation is perpendicular to its reading face and occupies its own margin. */
 .forme .refRail.combined{visibility:hidden}
 /* Citation family: Chiron 200 + one coherent Georgia Italic Latin register. */
-.plate .cornerCitation{position:absolute;z-index:3;display:flex;gap:.30em;line-height:1.05;pointer-events:none;color:color-mix(in srgb,var(--section-bg,#102a43) 72%,#252525)}
+.plate .cornerCitation{position:absolute;z-index:3;display:flex;gap:.30em;line-height:1.05;pointer-events:none;color:color-mix(in srgb,var(--section-bg,#102a43) 52%,#252525)}
 .plate:not(.inverse) .cornerCitation{left:8.5%;bottom:2.8%;writing-mode:horizontal-tb;align-items:baseline;max-width:83%;font-size:clamp(17px,2.7cqw,28px);white-space:nowrap}
 .plate.inverse .cornerCitation{right:2.8%;top:9%;writing-mode:vertical-rl;align-items:baseline;justify-content:start;max-height:78%;font-size:clamp(17px,2.7cqw,28px);color:var(--section-text,#faf9f5)}
 .plate.inverse .cornerCitation .citationEn,.plate.inverse .cornerCitation .citationNum{text-orientation:sideways}
@@ -678,10 +678,13 @@ function candidateVisualScore(candidate){
  }
  const zhFill=footprint(zhRoot),enFill=footprint(enRoot);
  const overlap=zhSafety.violations.length+enSafety.violations.length;
- // Failing collision and cutout checks outweigh any nominal square ratio.
+ // A readable impression is not a maximally filled rectangle. Beyond the
+ // editorial 75% minimum, reward a restrained 80–88% optical footprint.
+ // The collision penalty remains absolute; no spacing preference may buy it off.
+ const opticalTarget=.84;
+ const breathing=Math.abs(zhFill.ratio-opticalTarget)+Math.abs(enFill.ratio-opticalTarget);
  const score=overlap*100+Math.abs(zhFill.width-zhFill.height)*5+
-   Math.abs(enFill.width-enFill.height)*5-
-   Math.min(zhFill.ratio,enFill.ratio)*12+candidate.cost*.12;
+   Math.abs(enFill.width-enFill.height)*5+breathing*9+candidate.cost*.12;
  return {score,overlap,zhFill,enFill,safe:overlap===0};
 }
 function render(index=0){if(!approved){$('plateZh').classList.add('blocked');$('plateEn').classList.add('blocked');return}if(!ranked.length)return;
@@ -723,11 +726,12 @@ $('metricZh').textContent=`中文主讀 · Chiron 900 · 同標稱字級 ${stage
 function editorialSelect(inspected,baseline){
  if(!baseline)return null;
  const minimum=Math.min(baseline.qa.zhFill.ratio,baseline.qa.enFill.ratio);
+ const editorialFloor=Math.min(.75,minimum);
  const candidates=inspected.filter(({candidate,qa})=>
   qa.overlap<=baseline.qa.overlap&&
-  qa.zhFill.ratio>=baseline.qa.zhFill.ratio*.97&&
-  qa.enFill.ratio>=baseline.qa.enFill.ratio*.97&&
-  candidate.fillEstimate>=baseline.candidate.fillEstimate*.97);
+  qa.zhFill.ratio>=editorialFloor&&
+  qa.enFill.ratio>=editorialFloor&&
+  candidate.fillEstimate>=baseline.candidate.fillEstimate*.88);
  if(!candidates.length)return baseline;
  const target=(x)=>{
   const c=x.candidate, q=x.qa;
@@ -737,10 +741,11 @@ function editorialSelect(inspected,baseline){
   const shortfall=Math.max(0,cutoff-c.multi)+Math.max(0,cutoff-c.asym);
   const readableColumns=c.columns.filter(col=>col.parts.length>=3).length;
   const unevenness=Math.abs(c.spread-.22);
+  const opticalBreathing=Math.abs(q.zhFill.ratio-.84)+Math.abs(q.enFill.ratio-.84);
   return shortfall*7+unevenness*2-readableColumns*.25+
    q.overlap*100+Math.abs(q.zhFill.width-q.zhFill.height)*2+
    Math.abs(q.enFill.width-q.enFill.height)*2+
-   (Math.max(0,minimum-Math.min(q.zhFill.ratio,q.enFill.ratio)))*20;
+   opticalBreathing*14;
  };
  return candidates.slice().sort((a,b)=>target(a)-target(b))[0]||baseline;
 }
@@ -765,7 +770,7 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
   window.__scriptureCandidateQA={inspected:inspected.length,safe:inspected.filter(x=>x.qa.safe).length,
    reference:baseline?{coverageZH:baseline.qa.zhFill.ratio,coverageEN:baseline.qa.enFill.ratio,overlap:baseline.qa.overlap}:null,
    selected:chosen?{coverageZH:chosen.qa.zhFill.ratio,coverageEN:chosen.qa.enFill.ratio,overlap:chosen.qa.overlap}:null,
-   preserved:!chosen||!baseline||(chosen.qa.zhFill.ratio>=baseline.qa.zhFill.ratio*.97&&chosen.qa.enFill.ratio>=baseline.qa.enFill.ratio*.97),
+   preserved:!chosen||!baseline||(chosen.qa.zhFill.ratio>=Math.min(.75,baseline.qa.zhFill.ratio)&&chosen.qa.enFill.ratio>=Math.min(.75,baseline.qa.enFill.ratio)),
    top:inspected.slice(0,5).map(x=>({count:x.candidate.count,score:x.qa.score,overlap:x.qa.overlap,zh:x.qa.zhFill,en:x.qa.enFill}))};
  }
  if(!ranked.length){const provisional=candidates.map(c=>evaluate({...c,provisional:true},size,density)).filter(Boolean);
