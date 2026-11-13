@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Scripture Studio V54.0 · P2 雙頁色彩 × 網頁接入接口</title>
+<title>Scripture Studio V55.0 · 左下豎排出處 × 右上橫排出處</title>
 
 <style>
 /* Entire Isaiah 62:6 glyphset self-hosted in this repository; no CDN or AI artwork. */
@@ -89,6 +89,14 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
  font:9px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#816c42
 }
 .plate.inverse.experimental:after{color:#c0aa76}
+/* V55: citation is a page-furniture element, independent of rotated body type. */
+.forme .refRail.combined{visibility:hidden}
+.plate .cornerCitation{position:absolute;z-index:3;display:flex;gap:.22em;line-height:1.18;pointer-events:none;color:color-mix(in srgb,var(--section-bg,#102a43) 72%,#252525)}
+.plate:not(.inverse) .cornerCitation{left:3%;bottom:3%;writing-mode:vertical-rl;align-items:end;max-height:43%;font-size:clamp(10px,1.08vw,15px)}
+.plate.inverse .cornerCitation{right:3%;top:3%;writing-mode:horizontal-tb;align-items:baseline;justify-content:end;font-size:clamp(10px,1.08vw,15px);color:var(--section-text,#faf9f5)}
+.cornerCitation .citationZh{font-family:var(--font-zh),sans-serif;font-weight:200;font-variation-settings:"wght" 200}
+.cornerCitation .citationEn{font-family:var(--font-en),serif;font-variant-caps:small-caps;font-feature-settings:"smcp" 1}
+.cornerCitation .citationNum{font-family:Georgia,serif;font-style:italic}
 /* P2 embedded use keeps both impressions, removes the studio inspector chrome. */
 .p2Embedded>header,.p2Embedded .shell>aside,.p2Embedded footer{display:none}
 .p2Embedded .shell{display:block}.p2Embedded .work{padding:clamp(12px,2vw,28px)}
@@ -120,7 +128,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
 <article class="impression"><div class="plateTitle">02 / 英文主讀｜Bodoni SC × Chiron 200 · 同字號</div><div class="plate inverse" id="plateEn"><div class="plateInner" id="viewportEn"><div class="forme" id="formeEn"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricEn" class="metrics"></div></article>
 </div><section class="source"><div><h3>CHINESE UNION VERSION / 源文分行</h3><div class="zhPoem" id="zhPoem"></div></div><div><h3>KING JAMES VERSION / SOURCE LINES</h3><div class="enPoem" id="enPoem"></div></div></section></main></div>
-<footer>Scripture Studio · V54.0 P2 Two-Impression Color and Embed Interface · Accent colors identify chapters, never decorate individual Scripture words. V49 typography and coverage remain untouched. Exploratory poetic breaks require editorial approval.</footer>
+<footer>Scripture Studio · V55.0 Corner Citations and P2 Two-Impression Color · Accent colors identify chapters, never decorate individual Scripture words. V49 typography and coverage remain untouched. Exploratory poetic breaks require editorial approval.</footer>
 <script src="./scripture-studio-passage-model.js"></script>
 <script>
 'use strict';
@@ -556,6 +564,15 @@ function candidateVisualScore(candidate){
 }
 function render(index=0){if(!approved){$('plateZh').classList.add('blocked');$('plateEn').classList.add('blocked');return}if(!ranked.length)return;
 selected=((index%ranked.length)+ranked.length)%ranked.length;stage=ranked[selected];build($('formeZh'),stage);build($('formeEn'),stage);fit();
+for(const [id,mode] of [['plateZh','vertical'],['plateEn','horizontal']]){
+ const plate=$(id);
+ plate.querySelector('.cornerCitation')?.remove();
+ const ref=document.createElement('div');ref.className='cornerCitation';ref.setAttribute('aria-label',scripturePassage.reference.zh+' '+scripturePassage.reference.en+' '+scripturePassage.reference.chapterVerse);
+ for(const [cls,value] of [['citationZh',scripturePassage.reference.zh],['citationEn',scripturePassage.reference.en],['citationNum',scripturePassage.reference.chapterVerse]]){
+  const item=document.createElement('span');item.className=cls;item.textContent=value;ref.append(item);
+ }
+ ref.dataset.orientation=mode;plate.append(ref);
+}
 renderP2Palette();
 $('plateZh').classList.toggle('experimental',!!stage.provisional);
 $('plateEn').classList.toggle('experimental',!!stage.provisional);
