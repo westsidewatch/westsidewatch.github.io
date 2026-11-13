@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Scripture Studio V62.0 · P2 七色主題經文主畫面</title>
+<title>Scripture Studio V59.0 · 橫版英文主讀優先</title>
 
 <style>
 /* Entire Isaiah 62:6 glyphset self-hosted in this repository; no CDN or AI artwork. */
@@ -70,17 +70,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .p2Palette button:hover,.p2Palette button[aria-pressed=true]{filter:saturate(1.05)}
 .p2Palette button[aria-pressed=true]:after{content:"";position:absolute;bottom:0;left:6px;right:6px;border-bottom:3px solid currentColor}
 .p2Palette .p2Numeral{font:11px/1 Georgia,serif;letter-spacing:.1em}
-.p2Palette .p2Label{font:11px/1.25 var(--font-zh),sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.p2Palette .p2Ref{font:italic 14px/1.1 Georgia,serif;letter-spacing:-.02em}
-.p2Palette .p2VerseZh{font:200 12px/1.35 var(--font-zh),sans-serif}
-.p2Palette .p2Verse{font:400 clamp(11px,.78vw,14px)/1.3 Georgia,serif;max-height:3.9em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
-.p2Palette button{min-height:155px;gap:5px}
-.p2ThemeImpression{background:var(--section-bg,#102A43);color:var(--section-text,#FAF9F5);margin:0 0 17px;padding:clamp(18px,2.4vw,38px);min-height:190px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 32px;align-items:end}
-.p2ThemeImpression .themeEyebrow{grid-column:1/-1;align-self:start;font:11px/1.4 ui-monospace,monospace;letter-spacing:.13em}
-.p2ThemeImpression .themeZh{font:200 clamp(22px,2.1vw,37px)/1.3 var(--font-zh),sans-serif;max-width:28em}
-.p2ThemeImpression .themeEn{font:italic 400 clamp(24px,2.4vw,42px)/1.08 Georgia,serif;letter-spacing:-.035em;max-width:21em;grid-column:1}
-.p2ThemeImpression .themeRef{font:italic clamp(27px,2.5vw,44px)/1 Georgia,serif;white-space:nowrap;text-align:right;grid-column:2;grid-row:3}
-@media(max-width:880px){.p2ThemeImpression{display:block}.p2ThemeImpression>*{display:block;margin-bottom:12px}.p2ThemeImpression .themeRef{text-align:left}}
+.p2Palette .p2Label{font:10px/1.2 var(--font-zh),sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .p2EditorialNote{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 13px;border-bottom:1px solid #c5c6bd;padding-bottom:8px}
 .p2EditorialNote strong{font:400 clamp(18px,2vw,29px)/1.1 Georgia,serif;letter-spacing:.035em}
 .p2EditorialNote small{font:10px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#6c7067}
@@ -137,12 +127,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <section class="panel"><h2>01 / 字體載入</h2><div id="fontStatus" class="status">正在載入實際字型檔…</div></section>
 <section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="artDirection">經文設計 · 構圖方向</label><select id="artDirection"><option value="editorial">V53 / P2 編輯式色彩</option><option value="v49">V49 / 飽滿母版</option></select><p>七版塊採各自專屬色系，色彩放在頁面層次與印面，不逐詞上色；V49 飽滿版心保留。</p><input id="squareMode" type="hidden" value="none"><p><strong>V53.0 / Tokyo 雙語編輯節奏 × P2</strong> · 母本字號不等於螢幕字號，下面顯示真實縮放。</p><div id="scaleDiagnosis" class="engravingStatus" aria-live="polite">正在檢查畫面字級……</div><div id="squareStudyStatus" class="engravingStatus">V39.2 恢復 V18 以賽亞書 62:6 編輯候選語義斷點，禁用逐字／逐單詞強拆；保留 V39 的字型、緊湊版心及中英同帶，候選仍待聖經編輯核定。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>V39.2 恢復 V18 編輯研究候選斷句：保護「我在你城上」「他們晝夜必不靜默」「呼籲耶和華的」及 KJV 完整短語。這些是經文編輯候選而非官方譯本 USFM，仍禁止正式經文印製。</p></section>
 <section class="panel"><h2>03 / 聖經語義來源</h2><p>本母版目前仍以內嵌編輯片段做試驗，尚未接入 V18 的 USFM 審核結果；任何候選都不可視為核定經文印章。</p><p><a href="./scripture-studio-poetry-v18.html" target="_blank" rel="noopener">開啟 V18 USFM 詩行／合法斷句工具</a></p></section><section class="panel"><h2>04 / 硬性門檻與量測</h2><div id="metrics" class="status">等待字體驗證…</div><p>評估版心寬高、字柱長度差異、交錯次數與非對稱比例。墨跡像素面積另列，不用文字框比例冒充。</p><button id="recipe">匯出排列配方 JSON</button><button id="printProof" type="button" style="margin-left:7px">列印雙印校樣</button></section>
-</aside><main class="work" id="scriptureWork"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><nav class="p2Palette" id="p2Palette" aria-label="P2 七個版塊的編輯色系"></nav><div class="p2EditorialNote"><strong id="p2SectionTitle">THE JOURNAL / 西望</strong><small id="p2SectionCaption">P2 · SEVEN CHAPTERS / ONE EDITORIAL SYSTEM</small></div><section class="p2ThemeImpression" id="p2ThemeImpression" aria-label="目前版塊的主題經文摘句">
-<span class="themeEyebrow" id="themeEyebrow">P2 / 02 · THEME SCRIPTURE EXCERPT</span>
-<span class="themeZh" id="themeZh">我在你城上設立守望的</span>
-<span class="themeEn" id="themeEn">I have set watchmen upon thy walls.</span>
-<span class="themeRef" id="themeRef">Isaiah 62:6</span>
-</section><div class="pair">
+</aside><main class="work" id="scriptureWork"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><nav class="p2Palette" id="p2Palette" aria-label="P2 七個版塊的編輯色系"></nav><div class="p2EditorialNote"><strong id="p2SectionTitle">THE JOURNAL / 西望</strong><small id="p2SectionCaption">P2 · SEVEN CHAPTERS / ONE EDITORIAL SYSTEM</small></div><div class="pair">
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
 <article class="impression"><div class="plateTitle">02 / 英文主讀｜Bodoni SC × Chiron 200 · 同字號</div><div class="plate inverse" id="plateEn"><div class="plateInner" id="viewportEn"><div class="forme" id="formeEn"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricEn" class="metrics"></div></article>
 </div><section class="source"><div><h3>CHINESE UNION VERSION / 源文分行</h3><div class="zhPoem" id="zhPoem"></div></div><div><h3>KING JAMES VERSION / SOURCE LINES</h3><div class="enPoem" id="enPoem"></div></div></section></main></div>
@@ -455,15 +440,14 @@ function evaluate(candidate,size,density){
  return {...candidate,columns,offsets,w:width,fullW:fullWidth,railWidth,h:height,maxH,
   inverseH,cost,asym,multi,spread,aspect,inverseAspect,fillEstimate,fontSize:size,gapRatio:gap,positions,colWidths,count,extraWidth,intrinsicWidth,targetFullWidth};
 }
-// References 01/02/03/07 are established in P2 work. 04/05/06 are editorial research selections, pending P2 sign-off.
 const p2Sections=[
- {id:'01',zh:'教會',en:'CHURCH',color:'#5B8FA8',ink:'#FAF9F5',latinInk:'#F7E2AB',ref:'John 7:38',zhVerse:'活水的江河',verse:'Rivers of living water.'},
- {id:'02',zh:'西望',en:'THE JOURNAL',color:'#102A43',ink:'#FAF9F5',latinInk:'#E9C46A',ref:'Isaiah 62:6',zhVerse:'我在你城上設立守望的',verse:'I have set watchmen upon thy walls.'},
- {id:'03',zh:'以馬忤斯',en:'EMMAUS',color:'#A2872A',ink:'#FAF9F5',latinInk:'#FFF4D7',ref:'Luke 24:27',zhVerse:'從摩西和眾先知起',verse:'Beginning at Moses and all the prophets.'},
- {id:'04',zh:'橄欖山',en:'OLIVE MOUNTAIN',color:'#738A5A',ink:'#FAF9F5',latinInk:'#FFE4A0',ref:'Romans 10:17',zhVerse:'信道是從聽道來的',verse:'Faith cometh by hearing.',review:false},
- {id:'05',zh:'黎明書局',en:'DAWN BOOKS',color:'#FAF9F5',ink:'#252525',latinInk:'#A14D57',ref:'Psalm 119:18',zhVerse:'求你開我的眼睛',verse:'Open thou mine eyes.',review:true},
- {id:'06',zh:'電影院',en:'CINEMA',color:'#A14D57',ink:'#FAF9F5',latinInk:'#FFE0A6',ref:'1 Corinthians 13:12',zhVerse:'如今彷彿對著鏡子觀看',verse:'For now we see through a glass, darkly.',review:true},
- {id:'07',zh:'白晝咖啡館',en:'DAYLIGHT CAFÉ',color:'#B8944A',ink:'#252525',latinInk:'#FFF9E9',ref:'Deuteronomy 8:8',zhVerse:'那地有小麥、大麥',verse:'A land of wheat and barley.'}
+ {id:'01',zh:'教會',en:'CHURCH',color:'#5B8FA8',ink:'#FAF9F5',latinInk:'#F7E2AB'},
+ {id:'02',zh:'西望',en:'THE JOURNAL',color:'#102A43',ink:'#FAF9F5',latinInk:'#E9C46A'},
+ {id:'03',zh:'以馬忤斯',en:'EMMAUS',color:'#A2872A',ink:'#FAF9F5',latinInk:'#FFF4D7'},
+ {id:'04',zh:'橄欖山',en:'OLIVE MOUNTAIN',color:'#738A5A',ink:'#FAF9F5',latinInk:'#FFE4A0'},
+ {id:'05',zh:'黎明書局',en:'DAWN BOOKS',color:'#FAF9F5',ink:'#252525',latinInk:'#A14D57'},
+ {id:'06',zh:'電影院',en:'CINEMA',color:'#A14D57',ink:'#FAF9F5',latinInk:'#FFE0A6'},
+ {id:'07',zh:'白晝咖啡館',en:'DAYLIGHT CAFÉ',color:'#B8944A',ink:'#252525',latinInk:'#FFF9E9'}
 ];
 let activeP2='02';
 function renderP2Palette(){
@@ -473,19 +457,11 @@ function renderP2Palette(){
   b.setAttribute('aria-pressed',String(item.id===activeP2));b.setAttribute('aria-label',item.id+' '+item.zh+' / '+item.en);
   const n=document.createElement('span');n.className='p2Numeral';n.textContent=item.id;
   const name=document.createElement('span');name.className='p2Label';name.textContent=item.zh;
-  const ref=document.createElement('span');ref.className='p2Ref';ref.textContent=item.ref;
-  const zhVerse=document.createElement('span');zhVerse.className='p2VerseZh';zhVerse.textContent=item.zhVerse;
-  const verse=document.createElement('span');verse.className='p2Verse';verse.textContent=item.verse;
-  b.append(n,name,ref,zhVerse,verse);b.title=item.ref+' — '+item.verse+(item.review?' · EDITORIAL REVIEW':'');
-  b.onclick=()=>{activeP2=item.id;renderP2Palette()};el.append(b);
+  b.append(n,name);b.onclick=()=>{activeP2=item.id;renderP2Palette()};el.append(b);
  }
  const item=p2Sections.find(x=>x.id===activeP2);
  $('p2SectionTitle').textContent=item.en+' / '+item.zh;
  $('p2SectionCaption').textContent='P2 / '+item.id+' · EDITORIAL COLOR FIELD';
- $('themeEyebrow').textContent='P2 / '+item.id+' · THEME SCRIPTURE EXCERPT';
- $('themeZh').textContent=item.zhVerse;
- $('themeEn').textContent=item.verse;
- $('themeRef').textContent=item.ref;
  $('scriptureWork').dataset.p2Section=item.id;
  $('scriptureWork').style.setProperty('--section-bg',item.color);
  $('scriptureWork').style.setProperty('--section-text',item.ink);
