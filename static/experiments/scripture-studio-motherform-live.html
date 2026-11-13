@@ -288,28 +288,6 @@ function segmentsForSoftMask(base,options,mask,lang){
 // V50: derive band count and language run allocation from the actual number of
 // editorially safe units. Every candidate preserves each language's source order.
 // No fixed number of columns, no word/single-character chopping, no fake spacing.
-function distributeRuns(total,bands,seed){
- const sizes=Array(bands).fill(1);
- for(let n=0;n<total-bands;n++){
-  const i=(n*(seed%3+1)+seed+Math.floor(n/bands))%bands;
-  sizes[i]++;
- }
- return sizes;
-}
-function interleaveBand(zhCount,enCount,seed){
- let zh=zhCount,en=enCount,out='',previous='';
- // More than a single Z/E pair whenever legitimate segments exist.
- while(zh+en){
-  let next;
-  if(!zh)next='E';else if(!en)next='Z';
-  else if(previous==='Z')next='E';
-  else if(previous==='E')next='Z';
-  else next=seed%2?'E':'Z';
-  out+=next;previous=next;
-  if(next==='Z')zh--;else en--;
- }
- return out;
-}
 function createFillCandidates(){
  const model=availableLayoutBreaks(),out=[],seen=new Set();
  const plans=[[0,0],[8,0],[3,3],[11,7],[15,7],[13,5],[6,6],[7,3],[3,7]];
@@ -318,15 +296,11 @@ function createFillCandidates(){
   const eu=segmentsForSoftMask(model.en.base,model.en.soft,emask,'en');
   if(!zu||!eu)continue;
   if(zu.join('')!==zhExact||eu.join('')!==enExact)throw Error('SOURCE_LOSS');
-  const upper=Math.min(zu.length,eu.length);
-  for(let count=1;count<=upper;count++)for(let variant=0;variant<14;variant++){
-   const zl=distributeRuns(zu.length,count,variant+1);
-   const el=distributeRuns(eu.length,count,(variant+3)*2);
-   const signatures=zl.map((n,i)=>interleaveBand(n,el[i],variant+i));
-   const strictMajority=Math.floor(count/2)+1;
-   const multi=signatures.filter(x=>x.length>=3&&x.split('').some((v,i)=>i>1&&v!==x[i-1])).length;
-   // A majority of strips must have at least two language switches.
-   if(multi<strictMajority)continue;
+  const arrangements=window.ScriptureStudioPassageModel.runSignatures(zu,eu,14);
+  for(const arrangement of arrangements){
+   const {signatures,variant,count}=arrangement;
+   const verification=window.ScriptureStudioPassageModel.verifyMixedRuns(zu,eu,signatures);
+   if(!verification.ok)throw Error('V50_MIXED_RUN_SOURCE_OR_H4_FAIL');
    const id=zmask+'/'+emask+'/'+count+'/'+signatures.join('/');
    if(seen.has(id))continue;seen.add(id);
    out.push({signatures,variant,count,provisional:true,fill:true,
