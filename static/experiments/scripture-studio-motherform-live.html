@@ -5,19 +5,10 @@
 <title>Scripture Studio V59.0 · 橫版英文主讀優先</title>
 
 <style>
-/* Entire Isaiah 62:6 glyphset self-hosted in this repository; no CDN or AI artwork. */
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_67.woff2") format("woff2");unicode-range:U+665d;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_106.woff2") format("woff2");unicode-range:U+6b47;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_107.woff2") format("woff2");unicode-range:U+7c72;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_108.woff2") format("woff2");unicode-range:U+6492;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_111.woff2") format("woff2");unicode-range:U+8036,U+9ed8;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_112.woff2") format("woff2");unicode-range:U+547c;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_113.woff2") format("woff2");unicode-range:U+554a,U+5b88,U+975c;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_115.woff2") format("woff2");unicode-range:U+51b7,U+591c,U+8cfd;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_116.woff2") format("woff2");unicode-range:U+57ce,U+671b,U+4e9e;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_117.woff2") format("woff2");unicode-range:U+5fc5,U+83ef,U+606f,U+66f8;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_118.woff2") format("woff2");unicode-range:U+8def,U+4f60,U+8a2d,U+7acb,U+4ed6,U+5011,U+548c,U+8981;}
-@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200 900;font-display:block;src:url("../fonts/scripture-studio/chiron-subsets/gf_119.woff2") format("woff2");unicode-range:U+ff0c,U+6211,U+5728,U+4e0a,U+7684,U+4e0d,U+3002,U+4ee5;}
+/* Seven P2 passages share two self-hosted, glyph-audited Chiron faces.
+   Static fonts guarantee the requested 200/900 weights without synthesis. */
+@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200;font-display:block;src:url("../fonts/scripture-studio/ChironHeiHK-P2-200.woff2") format("woff2")}
+@font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:900;font-display:block;src:url("../fonts/scripture-studio/ChironHeiHK-P2-900.woff2") format("woff2")}
 
 @font-face{font-family:"WS Bodoni Moda SC File";src:url("../fonts/scripture-studio/BodoniModaSC-VF.ttf") format("truetype");font-style:normal;font-weight:400 900;font-display:block}
 :root{--paper:#f5f1e6;--ink:#242722;--muted:#6b7069;--hair:#c8c5b6;--accent:#817b53;--font-en:"WS Bodoni Moda SC File";--font-zh:"Chiron Hei HK WS"}
@@ -105,6 +96,14 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .p2Embedded .shell{display:block}.p2Embedded .work{padding:clamp(12px,2vw,28px)}
 .p2Embedded .topline{margin-bottom:9px}
 .p2Embedded .source{display:none}
+/* P2-scene surface: the host owns chapter navigation and editorial headings.
+   Both impressions remain driven by the same stage and font audit. */
+.p2Embedded .topline,.p2Embedded .p2Palette,.p2Embedded .p2EditorialNote,
+.p2Embedded .plateTitle,.p2Embedded .metrics,.p2Embedded .engravingStatus,
+.p2Embedded #squareStudyStatus{display:none!important}
+.p2Embedded .work{padding:0}
+.p2Embedded .pair{gap:clamp(10px,1.8vw,30px)}
+.p2Embedded .plate{width:100%;aspect-ratio:1}
 /* Print proof uses the SAME live mother forme and its verified self-hosted font files. */
 @media print{
  @page{size:A4 landscape;margin:11mm}
@@ -177,7 +176,19 @@ const initialBreaks=editorialBreakCheck(z,e);
 if(!initialBreaks.ok)throw new Error('SCRIPTURE BREAKS: '+initialBreaks.reasons.join('; '));
 for(const x of zhLines){const p=document.createElement('p');p.textContent=x;$('zhPoem').appendChild(p)}
 for(const x of enLines){const p=document.createElement('p');p.textContent=sealTitleCase(x);$('enPoem').appendChild(p)}
-let approved=false, ranked=[],selected=0,stage=null,showGuides=false;
+let approved=false, fontReady=false, chironGlyphs=null, ranked=[],selected=0,stage=null,showGuides=false;
+function refreshFontApproval(){
+ const reference=scripturePassage.reference?.zh||'';
+ const missing=chironGlyphs?[...new Set([...zhExact,...reference].filter(c=>!chironGlyphs.has(c.codePointAt(0))))]:[];
+ approved=fontReady&&!!chironGlyphs&&missing.length===0;
+ $('plateZh').classList.toggle('blocked',!approved);
+ $('plateEn').classList.toggle('blocked',!approved);
+ $('fontStatus').className='status '+(approved?'pass':'fail');
+ $('fontStatus').textContent=approved
+  ?`Chiron Heavy 900 / self-hosted PASS\nChiron ExtraLight 200 / self-hosted PASS\nBodoni Moda SC 400 / self-hosted PASS\n${[...new Set([...zhExact,...reference])].length} distinct current glyphs / coverage PASS`
+  :`字型驗收未通過 · 禁止正式輸出\n${missing.length?'缺失字形：'+missing.join(''):'字型尚未載入或無法核驗字形清單'}`;
+ return approved;
+}
 // Scripture length determines the number of composing strips; no fixed seven-column canon.
 // Each source language retains its internal sequence. The result remains one rotating forme.
 function composeSignatures(zhCount,enCount,columnCount,seed){
@@ -476,23 +487,23 @@ function renderP2Palette(){
 // Other realm texts remain editorial trials until source and Chiron glyph coverage pass.
 const realmVerseData={
  '01':{reference:{zh:'約翰福音',en:'John',chapterVerse:'7:38'},
-  zh:'信我的人|就如經上所說：|『從他腹中|要流出活水的江河來。』」',
-  en:'He that believeth on me, |as the scripture hath said, |out of his belly shall flow |rivers of living water.'},
+  zh:'信我的人|就如經上所說：|『從他腹中|要流出|活水的|江河來。』」',
+  en:'He that believeth |on me, |as the scripture |hath said, |out of his belly |shall flow |rivers of |living water.'},
  '03':{reference:{zh:'路加福音',en:'Luke',chapterVerse:'24:27'},
-  zh:'於是從摩西|和眾先知起，|凡經上所指着自己的話|都給他們講解明白了。',
-  en:'And beginning at Moses |and all the prophets, |he expounded unto them |in all the scriptures |the things concerning himself.'},
+  zh:'於是從摩西|和眾先知起，|凡經上所指着|自己的話|都給他們|講解明白了。',
+  en:'And beginning |at Moses |and all the prophets, |he expounded |unto them |in all the scriptures |the things |concerning himself.'},
  '04':{reference:{zh:'羅馬書',en:'Romans',chapterVerse:'10:17'},
-  zh:'可見信道|是從聽道來的，|聽道是從|基督的話來的。',
-  en:'So then faith |cometh by hearing, |and hearing by |the word of God.'},
+  zh:'可見信道|是從聽道|來的，|聽道是從|基督的話|來的。',
+  en:'So then |faith cometh |by hearing, |and hearing |by the word of God.'},
  '05':{reference:{zh:'詩篇',en:'Psalms',chapterVerse:'119:18'},
-  zh:'求你開我的眼睛，|使我看出|你律法中的奇妙。',
-  en:'Open thou mine eyes, |that I may behold |wondrous things out of thy law.'},
+  zh:'求你開|我的眼睛，|使我看出|你律法中|的奇妙。',
+  en:'Open thou |mine eyes, |that I may |behold wondrous |things out |of thy law.'},
  '06':{reference:{zh:'哥林多前書',en:'1 Corinthians',chapterVerse:'13:12'},
-  zh:'我們如今彷彿對著鏡子觀看，|糢糊不清（原文作：如同猜謎）；|到那時就要面對面了。|我如今所知道的有限，|到那時就全知道，|如同主知道我一樣。',
-  en:'For now we see through a glass, darkly; |but then face to face: |now I know in part; |but then shall I know |even as also I am known.'},
+  zh:'我們如今|彷彿對著鏡子觀看，|糢糊不清|（原文作：如同猜謎）；|到那時|就要面對面了。|我如今所知道的有限，|到那時就全知道，|如同主知道我一樣。',
+  en:'For now we see |through a glass, darkly; |but then |face to face: |now I know |in part; |but then shall I know |even as also |I am known.'},
  '07':{reference:{zh:'申命記',en:'Deuteronomy',chapterVerse:'8:8'},
-  zh:'那地有小麥、|大麥、葡萄樹、|無花果樹、石榴樹、|橄欖樹和蜜。',
-  en:'A land of wheat, and barley, |and vines, and fig trees, |and pomegranates; |a land of oil olive, and honey;'}
+  zh:'那地有|小麥、|大麥、|葡萄樹、|無花果樹、|石榴樹、|橄欖樹和蜜。',
+  en:'A land of wheat, |and barley, |and vines, |and fig trees, |and pomegranates; |a land of oil olive, |and honey;'}
 };
 function themeCandidateSearch(){
  // Exactly the same V49 fill compositor as Isaiah, with each passage's
@@ -508,7 +519,7 @@ function updatePassageForRealm(id){
   $('zhPoem').replaceChildren();$('enPoem').replaceChildren();
   for(const item of zhLines){const p=document.createElement('p');p.textContent=item;$('zhPoem').append(p)}
   for(const item of enLines){const p=document.createElement('p');p.textContent=sealTitleCase(item);$('enPoem').append(p)}
-  if(approved)search();
+  refreshFontApproval();if(approved)search();
   return;
  }
  const data=realmVerseData[id];
@@ -518,7 +529,8 @@ function updatePassageForRealm(id){
  zhLines=[zhExact];enLines=[enExact];
  scripturePassage=window.ScriptureStudioPassageModel.passage({
   id:'p2-realm-'+id,kind:'home',zh:zhExact,en:enExact,
-  reference:data.reference,segments:{zh:z,en:null},breakReview:'unreviewed',hardSpans:{zh:[],en:[]}
+  reference:data.reference,segments:{zh:z,en:null},breakReview:'unreviewed',
+  hardSpans:id==='04'?{zh:['信道','聽道','基督的話'],en:['by hearing','by the word of God']}:{zh:[],en:[]}
  });
  universalPassageDesign=window.ScriptureStudioPassageModel.designParameters(scripturePassage);
  universalPassageAudit=window.ScriptureStudioPassageModel.audit(scripturePassage);
@@ -528,8 +540,7 @@ function updatePassageForRealm(id){
  $('zhPoem').replaceChildren();$('enPoem').replaceChildren();
  for(const item of zhLines){const p=document.createElement('p');p.textContent=item;$('zhPoem').append(p)}
  for(const item of enLines){const p=document.createElement('p');p.textContent=sealTitleCase(item);$('enPoem').append(p)}
- $('fontStatus').textContent='主題經文已接入原雙印面。非以賽亞書字形尚待 Chiron 全字集驗證；不可正式印製。';
- if(approved)search();
+ refreshFontApproval();if(approved)search();
 }
 function build(form,candidate){form.innerHTML='';form.dataset.squareMode=$('squareMode').value;const fontSize=candidate.fontSize,gap=fontSize*candidate.gapRatio;const railWidth=candidate.railWidth;
 // A compact frame: the earlier 3.25em surround made every line tiny on screen.
@@ -717,9 +728,26 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
   window.__scriptureStudio={...(window.__scriptureStudio||{}),valid:false,reason:'INSUFFICIENT_APPROVED_BREAKPOINTS'};
  }
 }
-async function startup(){const loads=await Promise.allSettled([document.fonts.load('400 48px "WS Bodoni Moda SC File"',enExact),document.fonts.load('900 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('200 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('900 48px "Chiron Hei HK WS"','以賽亞書'),document.fonts.load('200 48px "Chiron Hei HK WS"','以賽亞書')]);await document.fonts.ready;const f=checkFaces();const subsetFaces=[...document.fonts].filter(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS');const loadedSubsets=subsetFaces.filter(face=>face.status==='loaded').length;f.subsets=loadedSubsets;f.subsetTotal=subsetFaces.length;f.citationLoaded=loads.slice(3).every(x=>x.status==='fulfilled'&&x.value.some(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS'));approved=loads.every(x=>x.status==='fulfilled')&&f.citationLoaded&&f.bodoni&&f.chironHeavy&&f.chironLight&&loadedSubsets===12;
-$('fontStatus').className='status '+(approved?'pass':'fail');$('fontStatus').textContent=`Bodoni Moda SC / actual file ${f.bodoni?'PASS':'FAIL'}\nChiron Heavy / 900 ${f.chironHeavy?'PASS':'FAIL'}\nChiron ExtraLight / 200 ${f.chironLight?'PASS':'FAIL'}\n12 local CJK subsets ${f.subsets}/12 ${f.subsets===12?'PASS':'FAIL'}\nCitation glyphs 以賽亞書 / Chiron 900+200 ${f.citationLoaded?'PASS':'FAIL'}\n${approved?'正式字型已載入，允許構圖搜尋':'正規字檔未載入：請使用完整網站預覽，單獨下載 HTML 不包含字體檔'}`;
-$('plateZh').classList.toggle('blocked',!approved);$('plateEn').classList.toggle('blocked',!approved);if(approved){if(activeP2!=='02')$('fontStatus').textContent='本版塊經文已進入雙印面；新增中文 glyph 尚未通過完整 Chiron 字型驗收。';search()}}
+async function startup(){
+ try{
+  const [response,loads]=await Promise.all([
+   fetch('../fonts/scripture-studio/ChironHeiHK-P2-coverage.json',{cache:'no-store'}),
+   Promise.allSettled([
+    document.fonts.load('400 48px "WS Bodoni Moda SC File"',enExact),
+    document.fonts.load('900 48px "Chiron Hei HK WS"',zhExact),
+    document.fonts.load('200 48px "Chiron Hei HK WS"',zhExact)
+   ])
+  ]);
+  if(!response.ok)throw Error('MISSING_CHIRON_COVERAGE_MANIFEST');
+  const manifest=await response.json();
+  if(manifest.weights?.join(',')!=='200,900'||!Array.isArray(manifest.codepoints))throw Error('INVALID_CHIRON_COVERAGE_MANIFEST');
+  chironGlyphs=new Set(manifest.codepoints);
+  await document.fonts.ready;
+  const fonts=checkFaces();
+  fontReady=loads.every(x=>x.status==='fulfilled'&&x.value.length>0)&&fonts.bodoni&&fonts.chironHeavy&&fonts.chironLight;
+  if(refreshFontApproval())search();
+ }catch(error){fontReady=false;refreshFontApproval();$('fontStatus').textContent+='\n'+String(error)}
+}
 $('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('fontSize').onchange=search;$('cadence').onchange=search;$('artDirection').onchange=search;$('recompute').onclick=search;$('squareMode').onchange=()=>{if(stage)render(selected)};$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('V14／V18 完整驗收尚未通過，禁止正式匯出；目前僅供方塊語法設計比較。');return}const data={version:'51.0',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v51-editorial-composition.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
 $('printProof').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('印版未通過 V14／V18 驗收，不能列印為正式校樣');return}window.print()};
 new ResizeObserver(fit).observe($('viewportZh'));new ResizeObserver(fit).observe($('viewportEn'));

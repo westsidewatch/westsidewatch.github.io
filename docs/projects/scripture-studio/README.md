@@ -14,6 +14,7 @@
 - [V45 通用經文設計系統（首頁／版塊／工具跨經文規格）](./SCRIPTURE-STUDIO-UNIVERSAL-PASSAGE-SYSTEM-2026-11-12.md)
 - [V37 無底色刻印／雙框與出處結構（現行施工規格）](./SCRIPTURE-STUDIO-V37-ENGRAVED-REGISTER-2026-11-11.md)
 - [目前母版生成器](../../../static/experiments/scripture-studio-motherform-live.html)
+- [P2 七版塊字型修復與主站接入契約（2026-11-13）](./P2-INTEGRATION-CONTRACT-2026-11-13.md)
 - [既有 V18 USFM 詩行斷句工具](../../../static/experiments/scripture-studio-poetry-v18.html)
 
 本入口僅索引現有能力，不代表各模組已整合或最新構圖通過驗收；執行前必須查證檔案、分支、字體及 QA 狀態。
