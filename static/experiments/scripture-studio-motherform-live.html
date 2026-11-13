@@ -322,10 +322,10 @@ function segmentsForSoftMask(base,options,mask,lang){
  return chunks;
 }
 function createFillCandidates(){
- const model=availableLayoutBreaks(),out=[],seen=new Set();
+ const model=scripturePassage.id==='isaiah-62-6'?availableLayoutBreaks():{zh:{base:z,soft:[]},en:{base:e,soft:[]},semanticSource:'P2_THEME_REVIEW_SEGMENTS'},out=[],seen=new Set();
  // A few intentional combinations, not arbitrary chopping of each word.
  // Every option comes from an existing V18 lexical boundary.
- const plans=[[0,0],[8,0],[3,3],[11,7],[15,7],[13,5],[6,6],[7,3],[3,7]];
+ const plans=scripturePassage.id==='isaiah-62-6'?[[0,0],[8,0],[3,3],[11,7],[15,7],[13,5],[6,6],[7,3],[3,7]]:[[0,0]];
  for(const [zmask,emask] of plans){
   const zu=segmentsForSoftMask(model.zh.base,model.zh.soft,zmask,'zh');
   const eu=segmentsForSoftMask(model.en.base,model.en.soft,emask,'en');
@@ -495,8 +495,9 @@ const realmVerseData={
   en:'A land of wheat, and barley, |and vines, and fig trees, |and pomegranates; |a land of oil olive, and honey;'}
 };
 function themeCandidateSearch(){
- const out=createCandidates(z.length,e.length).map(c=>({...c,zhUnits:z.slice(),enUnits:e.slice(),fill:true,provisional:true,softBreaks:{zh:0,en:0}}));
- return {out,limits:{zh:z.length,en:e.length},maxBilingualStrips:Math.min(z.length,e.length)};
+ // Exactly the same V49 fill compositor as Isaiah, with each passage's
+ // own editor-supplied phrases. No alternate rendering or ranking engine.
+ return createFillCandidates();
 }
 function updatePassageForRealm(id){
  if(id==='02'){
