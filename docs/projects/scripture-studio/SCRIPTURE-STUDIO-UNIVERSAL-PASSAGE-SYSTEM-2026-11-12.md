@@ -61,3 +61,17 @@ const profile=ScriptureStudioPassageModel.passage({
 - 新模組對 `breakReview='unreviewed'` 不會給出出版完成狀態
 
 **總結：** 通用設計系統的標準是「固定法則，可變構圖」，不是讓其他經文配合 Isaiah 62:6 排版模版。
+
+## V46 視覺修正：回應 V45 預覽「畫面沒有改變」
+
+V45 本來只完成資料模型與出處橋接，並沒有執行前一輪要求的英文斜體與減框；用戶提供的 V45 截圖清楚顯示仍有正體英文、重複框線、過大的出處軌。這不能作為已完成的視覺設計。
+
+V46 **實際修改母版** `static/experiments/scripture-studio-motherform-live.html`：
+- 將 `applyEngravedStructure()` 從「外框、內框、定位脊、端線」改成僅一個精細方形 SVG 框；移除全部嵌套次框與定位梁。不增加貼片底色。
+- 經文英文 `.piece.en` 改用**確實存在的 Georgia Italic 系統斜體路線**，而非仍沿用 Bodoni Moda SC 正體；這是本次的可見字型試驗，**不宣稱已接入正式 Bodoni Moda Italic**。後續找到已授權並驗證的 Bodoni Italic，才可取代測試字體。中文 Chiron 保持。
+- 中文＋英文＋章節號保持同一組 citation，縮小字級並收短出處軌（由經文字高和 em 自適應，不固定 Isaiah 62:6 的具體像素）。
+- 新版維持首頁／版塊／工具的 passage model 契約，保留 V18 候選及印刷未核准狀態。
+
+**驗證**：主頁內嵌 JS 語法 PASS、共用 passage model JS 語法 PASS；原稿僅存在一個 `applyEngravedStructure`，已確認無 nested-frame 生成程式；英文 italic CSS 存在。**尚缺 V46 真實瀏覽器截圖及字型碰撞驗證**，不能宣稱視覺已驗收。
+
+提交：`cb64fc8d5f8188f311f46d83c768195fcea55f55`。
