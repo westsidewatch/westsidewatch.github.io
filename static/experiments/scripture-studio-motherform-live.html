@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Scripture Studio V56.0 · Editorial Scripture Citation</title>
+<title>Scripture Studio V57.0 · 統一出處字型與字號</title>
 
 <style>
 /* Entire Isaiah 62:6 glyphset self-hosted in this repository; no CDN or AI artwork. */
@@ -91,17 +91,13 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .plate.inverse.experimental:after{color:#c0aa76}
 /* V55: citation is a page-furniture element, independent of rotated body type. */
 .forme .refRail.combined{visibility:hidden}
-.plate .cornerCitation{position:absolute;z-index:3;display:flex;gap:.22em;line-height:1.18;pointer-events:none;color:color-mix(in srgb,var(--section-bg,#102a43) 72%,#252525)}
-.plate:not(.inverse) .cornerCitation{left:3%;bottom:4%;writing-mode:vertical-rl;align-items:end;max-height:50%;font-size:clamp(23px,3.5cqw,38px);gap:.14em}
-.plate.inverse .cornerCitation{right:4%;top:5%;writing-mode:horizontal-tb;align-items:baseline;justify-content:end;font-size:clamp(22px,3.7cqw,40px);gap:.20em;color:var(--section-text,#faf9f5)}
-.cornerCitation .citationZh{font-family:var(--font-zh),sans-serif;font-weight:200;font-variation-settings:"wght" 200}
-.cornerCitation .citationEn{font-family:var(--font-en),serif;font-variant-caps:small-caps;font-feature-settings:"smcp" 1}
-.cornerCitation .citationNum{font-family:Georgia,serif;font-style:italic;font-size:1.35em;letter-spacing:-.035em}
-.plate:not(.inverse) .citationZh{font-size:1.20em}
-.plate:not(.inverse) .citationEn{font-size:.64em}
-.plate.inverse .citationZh{font-size:.48em;align-self:end;opacity:.88}
-.plate.inverse .citationEn{font-family:Georgia,serif;font-style:italic;font-size:1.35em;letter-spacing:-.06em;font-variant-caps:normal;font-feature-settings:"kern" 1}
-.plate.inverse .citationNum{font-size:1.35em}
+/* Citation family: Chiron 200 + one coherent Georgia Italic Latin register. */
+.plate .cornerCitation{position:absolute;z-index:3;display:flex;gap:.30em;line-height:1.05;pointer-events:none;color:color-mix(in srgb,var(--section-bg,#102a43) 72%,#252525)}
+.plate:not(.inverse) .cornerCitation{left:3.5%;bottom:4%;writing-mode:vertical-rl;align-items:end;max-height:50%;font-size:clamp(23px,3.4cqw,36px)}
+.plate.inverse .cornerCitation{right:4%;top:5%;writing-mode:horizontal-tb;align-items:baseline;justify-content:end;font-size:clamp(24px,3.5cqw,37px);color:var(--section-text,#faf9f5)}
+.cornerCitation .citationZh{font-family:var(--font-zh),sans-serif;font-weight:200;font-variation-settings:"wght" 200;font-synthesis:none;font-size:1.05em;letter-spacing:0}
+.cornerCitation .citationEn,.cornerCitation .citationNum{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;font-variant-caps:normal;font-feature-settings:"kern" 1;font-size:1.17em;letter-spacing:-.035em}
+.plate.inverse .citationZh{font-size:1.00em;align-self:baseline;opacity:1}
 /* The reference governs the spare corner, never floats as a footnote. */
 .plate{container-type:inline-size}
 /* P2 embedded use keeps both impressions, removes the studio inspector chrome. */
