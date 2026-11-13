@@ -36,7 +36,7 @@
   let tokens;
   if(lang==='zh'){
    tokens=[...new Intl.Segmenter('zh-Hant',{granularity:'word'}).segment(source)].map(x=>x.segment);
-  }else{tokens=source.match(/\\S+\\s*/g)||[]}
+  }else{tokens=source.match(/\S+\s*/g)||[]}
   assert(tokens.join('')===source,'TOKENIZER_SOURCE_LOSS_'+lang);
   const positions=[0],out=[];
   let offset=0;for(const unit of tokens){offset+=unit.length;positions.push(offset)}
@@ -70,8 +70,8 @@
  function designParameters(p){
   // Optical direction is relative to passage length; no reference-specific
   // switch, no 4/6/7-column template, no 90%-fill hard gate.
-  const zhChars=[...p.zh.replace(/\\s/g,'')].length;
-  const enWords=(p.en.match(/\\S+/g)||[]).length;
+  const zhChars=[...p.zh.replace(/\s/g,'')].length;
+  const enWords=(p.en.match(/\S+/g)||[]).length;
   const total=zhChars+enWords;
   const density=total<=35?'airy':total<=95?'editorial':'extended';
   return {kind:p.kind, density, glyphPolicy:'one-size-bilingual',
