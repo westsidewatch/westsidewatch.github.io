@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Scripture Studio V52.0 · 語義重音 · V49 飽滿構圖保護</title>
+<title>Scripture Studio V53.0 · P2 七版塊編輯色彩 · Tokyo Editorial</title>
 
 <style>
 /* Entire Isaiah 62:6 glyphset self-hosted in this repository; no CDN or AI artwork. */
@@ -65,16 +65,21 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .inverse .forme .refRail{color:#d5bd7e}
 .inverse .forme .refRail .refZh{font-weight:200;font-variation-settings:"wght" 200,"PADG" 0}
 /* V52: semantic ink hierarchy changes no glyph sizes, positions, or source text. */
-.editorialInk .piece.semanticAnchor.zh{color:#80633b}
-.editorialInk .piece.semanticAnchor.en{color:#9a7540}
-.editorialInk .piece.semanticQuiet.zh{color:#626b60}
-.editorialInk .piece.semanticQuiet.en{color:#657169}
-.inverse.editorialInk .piece.semanticAnchor.zh{color:#e9c787}
-.inverse.editorialInk .piece.semanticAnchor.en{color:#e9c787}
-.inverse.editorialInk .piece.semanticQuiet.zh{color:#bac7b4}
-.inverse.editorialInk .piece.semanticQuiet.en{color:#bac7b4}
-.editorialLegend{font:11px/1.45 ui-monospace,monospace;letter-spacing:.045em;color:#6d6555;margin:0 0 14px;display:flex;gap:16px;flex-wrap:wrap}
-.editorialLegend span:first-child{color:#80633b}
+.p2Palette{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;margin:0 0 15px;min-height:72px}
+.p2Palette button{border:0;border-radius:0;min-width:0;padding:8px 5px 7px;background:var(--swatch);color:var(--swatchInk);text-align:left;display:flex;flex-direction:column;justify-content:space-between;transition:flex .25s,filter .2s;filter:saturate(.75);position:relative}
+.p2Palette button:hover,.p2Palette button[aria-pressed=true]{filter:saturate(1.05)}
+.p2Palette button[aria-pressed=true]:after{content:"";position:absolute;bottom:0;left:6px;right:6px;border-bottom:3px solid currentColor}
+.p2Palette .p2Numeral{font:11px/1 Georgia,serif;letter-spacing:.1em}
+.p2Palette .p2Label{font:10px/1.2 var(--font-zh),sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p2EditorialNote{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 13px;border-bottom:1px solid #c5c6bd;padding-bottom:8px}
+.p2EditorialNote strong{font:400 clamp(18px,2vw,29px)/1.1 Georgia,serif;letter-spacing:.035em}
+.p2EditorialNote small{font:10px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#6c7067}
+.work[data-p2-section] .plate.inverse{background:var(--section-bg,#102a43);color:var(--section-text,#faf9f5)}
+.work[data-p2-section] .plate.inverse .piece.zh{color:var(--section-text,#faf9f5)}
+.work[data-p2-section] .plate.inverse .piece.en{color:var(--section-text,#faf9f5)}
+.work[data-p2-section] .plate.inverse .refRail{color:var(--section-text,#faf9f5)}
+.work[data-p2-section] .plateTitle:before{content:"";display:inline-block;width:15px;height:5px;background:var(--section-bg,#102a43);vertical-align:middle;margin-right:8px}
+@media(max-width:560px){.p2Palette .p2Label{writing-mode:vertical-rl;min-height:39px}.p2Palette{min-height:86px}.p2EditorialNote{display:block}}
 .engravingStatus{font:11px/1.55 ui-monospace,monospace;color:#586151;white-space:pre-wrap}
 .plate.experimental:after{
  content:"STUDY · NOT APPROVED";position:absolute;right:3.3%;bottom:3.2%;
@@ -87,6 +92,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
  html,body{background:#fff!important;color:#242722}
  header{padding:0 0 8mm;border-bottom:1px solid #aaa}
  .shell{display:block!important}
+ .p2Palette{display:none!important}
  aside,.source,.metrics,.foot,.micro,.topline .micro{display:none!important}
  .work{padding:6mm 0 0!important}
  .topline{margin-bottom:6mm}
@@ -100,13 +106,13 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
 <div class="shell"><aside>
 <section class="panel"><h2>01 / 字體載入</h2><div id="fontStatus" class="status">正在載入實際字型檔…</div></section>
-<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="artDirection">經文設計 · 構圖方向</label><select id="artDirection"><option value="editorial">V52 / 語義重音</option><option value="v49">V49 / 飽滿母版</option></select><p>新版只從與 V49 同等飽滿的合法候選中選擇；不擴大外框，不修改經文文字。</p><input id="squareMode" type="hidden" value="none"><p><strong>V52.0 / 聖經編輯視覺重音</strong> · 母本字號不等於螢幕字號，下面顯示真實縮放。</p><div id="scaleDiagnosis" class="engravingStatus" aria-live="polite">正在檢查畫面字級……</div><div id="squareStudyStatus" class="engravingStatus">V39.2 恢復 V18 以賽亞書 62:6 編輯候選語義斷點，禁用逐字／逐單詞強拆；保留 V39 的字型、緊湊版心及中英同帶，候選仍待聖經編輯核定。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>V39.2 恢復 V18 編輯研究候選斷句：保護「我在你城上」「他們晝夜必不靜默」「呼籲耶和華的」及 KJV 完整短語。這些是經文編輯候選而非官方譯本 USFM，仍禁止正式經文印製。</p></section>
+<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="artDirection">經文設計 · 構圖方向</label><select id="artDirection"><option value="editorial">V53 / P2 編輯式色彩</option><option value="v49">V49 / 飽滿母版</option></select><p>七版塊採各自專屬色系，色彩放在頁面層次與印面，不逐詞上色；V49 飽滿版心保留。</p><input id="squareMode" type="hidden" value="none"><p><strong>V53.0 / Tokyo 雙語編輯節奏 × P2</strong> · 母本字號不等於螢幕字號，下面顯示真實縮放。</p><div id="scaleDiagnosis" class="engravingStatus" aria-live="polite">正在檢查畫面字級……</div><div id="squareStudyStatus" class="engravingStatus">V39.2 恢復 V18 以賽亞書 62:6 編輯候選語義斷點，禁用逐字／逐單詞強拆；保留 V39 的字型、緊湊版心及中英同帶，候選仍待聖經編輯核定。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>V39.2 恢復 V18 編輯研究候選斷句：保護「我在你城上」「他們晝夜必不靜默」「呼籲耶和華的」及 KJV 完整短語。這些是經文編輯候選而非官方譯本 USFM，仍禁止正式經文印製。</p></section>
 <section class="panel"><h2>03 / 聖經語義來源</h2><p>本母版目前仍以內嵌編輯片段做試驗，尚未接入 V18 的 USFM 審核結果；任何候選都不可視為核定經文印章。</p><p><a href="./scripture-studio-poetry-v18.html" target="_blank" rel="noopener">開啟 V18 USFM 詩行／合法斷句工具</a></p></section><section class="panel"><h2>04 / 硬性門檻與量測</h2><div id="metrics" class="status">等待字體驗證…</div><p>評估版心寬高、字柱長度差異、交錯次數與非對稱比例。墨跡像素面積另列，不用文字框比例冒充。</p><button id="recipe">匯出排列配方 JSON</button><button id="printProof" type="button" style="margin-left:7px">列印雙印校樣</button></section>
-</aside><main class="work"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><div class="editorialLegend" id="editorialLegend"><span>01 — 守望 / WATCHMEN</span><span>02 — 晝夜 / DAY NOR NIGHT</span><span>03 — 不歇息 / KEEP NOT SILENCE</span></div><div class="pair">
+</aside><main class="work" id="scriptureWork"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><nav class="p2Palette" id="p2Palette" aria-label="P2 七個版塊的編輯色系"></nav><div class="p2EditorialNote"><strong id="p2SectionTitle">THE JOURNAL / 西望</strong><small id="p2SectionCaption">P2 · SEVEN CHAPTERS / ONE EDITORIAL SYSTEM</small></div><div class="pair">
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
 <article class="impression"><div class="plateTitle">02 / 英文主讀｜Bodoni SC × Chiron 200 · 同字號</div><div class="plate inverse" id="plateEn"><div class="plateInner" id="viewportEn"><div class="forme" id="formeEn"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricEn" class="metrics"></div></article>
 </div><section class="source"><div><h3>CHINESE UNION VERSION / 源文分行</h3><div class="zhPoem" id="zhPoem"></div></div><div><h3>KING JAMES VERSION / SOURCE LINES</h3><div class="enPoem" id="enPoem"></div></div></section></main></div>
-<footer>Scripture Studio · V52.0 Semantic Ink Hierarchy, V49 Coverage Guard · 印章出處已納入雙向印面；經文原文保持不變。 The Biblical text remains source-ordered in both languages; exploratory secondary poetic breaks require editorial approval. Font binaries must load before impression approval.</footer>
+<footer>Scripture Studio · V53.0 P2 Seven-Section Editorial Color · Accent colors identify chapters, never decorate individual Scripture words. V49 typography and coverage remain untouched. Exploratory poetic breaks require editorial approval.</footer>
 <script src="./scripture-studio-passage-model.js"></script>
 <script>
 'use strict';
@@ -415,16 +421,31 @@ function evaluate(candidate,size,density){
  return {...candidate,columns,offsets,w:width,fullW:fullWidth,railWidth,h:height,maxH,
   inverseH,cost,asym,multi,spread,aspect,inverseAspect,fillEstimate,fontSize:size,gapRatio:gap,positions,colWidths,count,extraWidth,intrinsicWidth,targetFullWidth};
 }
-function semanticInkClass(lang,token){
- const t=token.toLowerCase();
- if(lang==='zh'){
-  if(/守望|晝夜|歇息|靜默/.test(t))return 'semanticAnchor';
-  if(/呼籲|耶和華/.test(t))return 'semanticQuiet';
- }else{
-  if(/watchmen|day nor night|silence|hold their peace/.test(t))return 'semanticAnchor';
-  if(/mention of the lord/.test(t))return 'semanticQuiet';
+const p2Sections=[
+ {id:'01',zh:'教會',en:'CHURCH',color:'#5B8FA8',ink:'#FAF9F5'},
+ {id:'02',zh:'西望',en:'THE JOURNAL',color:'#102A43',ink:'#FAF9F5'},
+ {id:'03',zh:'以馬忤斯',en:'EMMAUS',color:'#A2872A',ink:'#FAF9F5'},
+ {id:'04',zh:'橄欖山',en:'OLIVE MOUNTAIN',color:'#738A5A',ink:'#FAF9F5'},
+ {id:'05',zh:'黎明書局',en:'DAWN BOOKS',color:'#FAF9F5',ink:'#252525'},
+ {id:'06',zh:'電影院',en:'CINEMA',color:'#A14D57',ink:'#FAF9F5'},
+ {id:'07',zh:'白晝咖啡館',en:'DAYLIGHT CAFÉ',color:'#B8944A',ink:'#252525'}
+];
+let activeP2='02';
+function renderP2Palette(){
+ const el=$('p2Palette');el.replaceChildren();
+ for(const item of p2Sections){
+  const b=document.createElement('button');b.type='button';b.style.setProperty('--swatch',item.color);b.style.setProperty('--swatchInk',item.ink);
+  b.setAttribute('aria-pressed',String(item.id===activeP2));b.setAttribute('aria-label',item.id+' '+item.zh+' / '+item.en);
+  const n=document.createElement('span');n.className='p2Numeral';n.textContent=item.id;
+  const name=document.createElement('span');name.className='p2Label';name.textContent=item.zh;
+  b.append(n,name);b.onclick=()=>{activeP2=item.id;renderP2Palette()};el.append(b);
  }
- return '';
+ const item=p2Sections.find(x=>x.id===activeP2);
+ $('p2SectionTitle').textContent=item.en+' / '+item.zh;
+ $('p2SectionCaption').textContent='P2 / '+item.id+' · EDITORIAL COLOR FIELD';
+ $('scriptureWork').dataset.p2Section=item.id;
+ $('scriptureWork').style.setProperty('--section-bg',item.color);
+ $('scriptureWork').style.setProperty('--section-text',item.ink);
 }
 function build(form,candidate){form.innerHTML='';form.dataset.squareMode=$('squareMode').value;const fontSize=candidate.fontSize,gap=fontSize*candidate.gapRatio;const railWidth=candidate.railWidth;
 // A compact frame: the earlier 3.25em surround made every line tiny on screen.
@@ -433,7 +454,7 @@ const side=Math.max(candidate.fullW,candidate.h)+fontSize*.55; // visible safe m
 const xPad=(side-candidate.fullW)/2,yPad=(side-candidate.h)/2;
 form.dataset.squareSide=String(side);form.dataset.squareXPad=String(xPad);form.dataset.squareYPad=String(yPad);
 form.style.setProperty('--rail-width',railWidth+'px');form.style.width=side+'px';form.style.height=side+'px';
- candidate.columns.forEach((c,i)=>{const column=document.createElement('div');column.className='column';column.style.width=candidate.colWidths[i]+'px';column.style.right=(xPad+railWidth+candidate.positions[i])+'px';column.style.top=(yPad+candidate.offsets[i])+'px';column.style.gap=(fontSize*.055)+'px';for(const part of c.parts){const node=document.createElement('span');node.className='piece '+part.lang;const ink=semanticInkClass(part.lang,part.token);if(ink)node.classList.add(ink);node.textContent=part.lang==='en'?sealTitleCase(part.token):part.token;node.dataset.original=part.token;node.style.fontSize=fontSize+'px';column.append(node)}form.append(column)});
+ candidate.columns.forEach((c,i)=>{const column=document.createElement('div');column.className='column';column.style.width=candidate.colWidths[i]+'px';column.style.right=(xPad+railWidth+candidate.positions[i])+'px';column.style.top=(yPad+candidate.offsets[i])+'px';column.style.gap=(fontSize*.055)+'px';for(const part of c.parts){const node=document.createElement('span');node.className='piece '+part.lang;node.textContent=part.lang==='en'?sealTitleCase(part.token):part.token;node.dataset.original=part.token;node.style.fontSize=fontSize+'px';column.append(node)}form.append(column)});
  // Citation participates in mother-form geometry: long vertical rails become
  // horizontal title lines when the EXACT forme rotates 90 degrees.
  const rail=document.createElement('div');rail.className='refRail combined';rail.setAttribute('aria-label',window.ScriptureStudioPassageModel.referenceLabel(scripturePassage));
@@ -526,9 +547,7 @@ function candidateVisualScore(candidate){
 }
 function render(index=0){if(!approved){$('plateZh').classList.add('blocked');$('plateEn').classList.add('blocked');return}if(!ranked.length)return;
 selected=((index%ranked.length)+ranked.length)%ranked.length;stage=ranked[selected];build($('formeZh'),stage);build($('formeEn'),stage);fit();
-const editorialMode=$('artDirection').value==='editorial';
-for(const id of ['plateZh','plateEn'])$(id).classList.toggle('editorialInk',editorialMode);
-$('editorialLegend').hidden=!editorialMode;
+renderP2Palette();
 $('plateZh').classList.toggle('experimental',!!stage.provisional);
 $('plateEn').classList.toggle('experimental',!!stage.provisional);
 $('squareStudyStatus').textContent='版面：'+$('artDirection').selectedOptions[0].text+' · '+(stage.provisional?'V18 語義斷點為研究候選；構圖仍待 H4/H6 與實際字型驗收，不可正式匯出':'初步構圖驗收；仍需完成印刷與跨經文檢驗');
@@ -611,6 +630,7 @@ $('plateZh').classList.toggle('blocked',!approved);$('plateEn').classList.toggle
 $('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('fontSize').onchange=search;$('cadence').onchange=search;$('artDirection').onchange=search;$('recompute').onclick=search;$('squareMode').onchange=()=>{if(stage)render(selected)};$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('V14／V18 完整驗收尚未通過，禁止正式匯出；目前僅供方塊語法設計比較。');return}const data={version:'51.0',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v51-editorial-composition.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
 $('printProof').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('印版未通過 V14／V18 驗收，不能列印為正式校樣');return}window.print()};
 new ResizeObserver(fit).observe($('viewportZh'));new ResizeObserver(fit).observe($('viewportEn'));
+renderP2Palette();
 startup();
 </script>
 </body></html>
