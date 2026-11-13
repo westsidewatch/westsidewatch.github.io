@@ -82,12 +82,15 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
  font:9px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#816c42
 }
 .plate.inverse.experimental:after{color:#c0aa76}
-/* V55: citation is a page-furniture element, independent of rotated body type. */
+/* The citation is perpendicular to its reading face and occupies its own margin. */
 .forme .refRail.combined{visibility:hidden}
 /* Citation family: Chiron 200 + one coherent Georgia Italic Latin register. */
 .plate .cornerCitation{position:absolute;z-index:3;display:flex;gap:.30em;line-height:1.05;pointer-events:none;color:color-mix(in srgb,var(--section-bg,#102a43) 72%,#252525)}
-.plate:not(.inverse) .cornerCitation{left:3.5%;bottom:4%;writing-mode:vertical-rl;align-items:end;max-height:50%;font-size:clamp(23px,3.4cqw,36px)}
-.plate.inverse .cornerCitation{right:4%;top:5%;writing-mode:horizontal-tb;align-items:baseline;justify-content:end;font-size:clamp(24px,3.5cqw,37px);color:var(--section-text,#faf9f5)}
+.plate:not(.inverse) .cornerCitation{left:8.5%;bottom:2.8%;writing-mode:horizontal-tb;align-items:baseline;max-width:83%;font-size:clamp(17px,2.7cqw,28px);white-space:nowrap}
+.plate.inverse .cornerCitation{right:2.8%;top:9%;writing-mode:vertical-rl;align-items:baseline;justify-content:start;max-height:78%;font-size:clamp(17px,2.7cqw,28px);color:var(--section-text,#faf9f5)}
+.plate.inverse .cornerCitation .citationEn,.plate.inverse .cornerCitation .citationNum{text-orientation:sideways}
+.plate:not(.inverse) .plateInner{inset:8.5% 8.5% 11%}
+.plate.inverse .plateInner{inset:8.5% 11% 8.5% 8.5%}
 .cornerCitation .citationZh{font-family:var(--font-zh),sans-serif;font-weight:200;font-variation-settings:"wght" 200;font-synthesis:none;font-size:1.05em;letter-spacing:0}
 .cornerCitation .citationEn,.cornerCitation .citationNum{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;font-variant-caps:normal;font-feature-settings:"kern" 1;font-size:1.17em;letter-spacing:-.035em}
 .plate.inverse .citationZh{font-size:1.00em;align-self:baseline;opacity:1}
@@ -698,12 +701,16 @@ $('plateEn').classList.toggle('experimental',!!stage.provisional);
 $('squareStudyStatus').textContent='版面：'+$('artDirection').selectedOptions[0].text+' · '+(stage.provisional?'V18 語義斷點為研究候選；構圖仍待 H4/H6 與實際字型驗收，不可正式匯出':'初步構圖驗收；仍需完成印刷與跨經文檢驗');
 $('plateZh').classList.toggle('showGuides',showGuides);$('plateEn').classList.toggle('showGuides',showGuides);
 const allZh=[...$('formeZh').querySelectorAll('.column>.piece.zh')].map(n=>n.dataset.original).join(''),allEn=[...$('formeZh').querySelectorAll('.column>.piece.en')].map(n=>n.dataset.original).join('');const printedEn=[...$('formeZh').querySelectorAll('.column>.piece.en')].map(n=>n.textContent).join('');const exact=allZh===zhExact&&allEn===enExact&&printedEn===enDisplay;
-const citationGeometry=['formeZh','formeEn'].every(id=>{const root=$(id),rail=root.querySelector('.refRail.combined');
- if(!rail)return false;const rr=rail.getBoundingClientRect();
- const runs=[...rail.children].map(n=>n.getBoundingClientRect());
- const contentInside=runs.every(b=>b.left>=rr.left-1&&b.right<=rr.right+1&&b.top>=rr.top-1&&b.bottom<=rr.bottom+1);
- const bodySeparate=[...root.querySelectorAll('.column')].every(n=>{const b=n.getBoundingClientRect();return b.right<=rr.left+1||b.left>=rr.right-1||b.bottom<=rr.top+1||b.top>=rr.bottom-1});
- return contentInside&&bodySeparate});
+const citationGeometry=[['plateZh','formeZh'],['plateEn','formeEn']].every(([plateId,formId])=>{
+ const plate=$(plateId),citation=plate.querySelector('.cornerCitation'),body=$(formId);
+ if(!citation)return false;
+ const frame=plate.getBoundingClientRect(),r=citation.getBoundingClientRect();
+ const inside=r.left>=frame.left+4&&r.right<=frame.right-4&&r.top>=frame.top+4&&r.bottom<=frame.bottom-4;
+ const noBodyCollision=[...body.querySelectorAll('.column>.piece')].every(n=>{
+  const b=n.getBoundingClientRect();return b.right+12<=r.left||b.left-12>=r.right||b.bottom+12<=r.top||b.top-12>=r.bottom;
+ });
+ return inside&&noBodyCollision;
+});
 const bilingualLines=stage.columns.every(c=>c.parts.some(p=>p.lang==='zh')&&c.parts.some(p=>p.lang==='en'));const more=stage.multi;const breaks={ok:stage.zhUnits.join('')===zhExact&&stage.enUnits.join('')===enExact&&stage.zhUnits.every(x=>isReadableRun(x,'zh'))&&stage.enUnits.every(x=>isReadableRun(x,'en')),reasons:[]};
 const glyphQA={zh:measureGlyphSafety($('formeZh')),en:measureGlyphSafety($('formeEn'))};
 const inspectedQA=stage.visualQA;
