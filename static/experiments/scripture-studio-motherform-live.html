@@ -89,13 +89,13 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
 <div class="shell"><aside>
 <section class="panel"><h2>01 / 字體載入</h2><div id="fontStatus" class="status">正在載入實際字型檔…</div></section>
-<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="squareMode">無底色刻印 · 構圖比較</label><select id="squareMode"><option value="registered">A / 單框 · 短出處</option><option value="cutout">B / 單框 · 同一極簡母版</option><option value="none">C / 純鉛字 · 無構造線</option></select><p><strong>V49.0 / 移除壓字框線</strong> · 母本字號不等於螢幕字號，下面顯示真實縮放。</p><div id="scaleDiagnosis" class="engravingStatus" aria-live="polite">正在檢查畫面字級……</div><div id="squareStudyStatus" class="engravingStatus">V39.2 恢復 V18 以賽亞書 62:6 編輯候選語義斷點，禁用逐字／逐單詞強拆；保留 V39 的字型、緊湊版心及中英同帶，候選仍待聖經編輯核定。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>V39.2 恢復 V18 編輯研究候選斷句：保護「我在你城上」「他們晝夜必不靜默」「呼籲耶和華的」及 KJV 完整短語。這些是經文編輯候選而非官方譯本 USFM，仍禁止正式經文印製。</p></section>
+<section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="artDirection">經文設計 · 構圖方向</label><select id="artDirection"><option value="editorial">Editorial / 經文主導</option><option value="v49">V49 / 飽滿母版</option></select><p>新版只從與 V49 同等飽滿的合法候選中選擇；不擴大外框，不修改經文文字。</p><label for="squareMode">無底色刻印 · 構圖比較</label><select id="squareMode"><option value="registered">A / 無框 · 文字優先</option><option value="cutout">B / 無框 · 字帶節奏</option><option value="none">C / 純鉛字 · 無構造線</option></select><p><strong>V51.0 / 編輯設計與 V49 保護</strong> · 母本字號不等於螢幕字號，下面顯示真實縮放。</p><div id="scaleDiagnosis" class="engravingStatus" aria-live="polite">正在檢查畫面字級……</div><div id="squareStudyStatus" class="engravingStatus">V39.2 恢復 V18 以賽亞書 62:6 編輯候選語義斷點，禁用逐字／逐單詞強拆；保留 V39 的字型、緊湊版心及中英同帶，候選仍待聖經編輯核定。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>V39.2 恢復 V18 編輯研究候選斷句：保護「我在你城上」「他們晝夜必不靜默」「呼籲耶和華的」及 KJV 完整短語。這些是經文編輯候選而非官方譯本 USFM，仍禁止正式經文印製。</p></section>
 <section class="panel"><h2>03 / 聖經語義來源</h2><p>本母版目前仍以內嵌編輯片段做試驗，尚未接入 V18 的 USFM 審核結果；任何候選都不可視為核定經文印章。</p><p><a href="./scripture-studio-poetry-v18.html" target="_blank" rel="noopener">開啟 V18 USFM 詩行／合法斷句工具</a></p></section><section class="panel"><h2>04 / 硬性門檻與量測</h2><div id="metrics" class="status">等待字體驗證…</div><p>評估版心寬高、字柱長度差異、交錯次數與非對稱比例。墨跡像素面積另列，不用文字框比例冒充。</p><button id="recipe">匯出排列配方 JSON</button><button id="printProof" type="button" style="margin-left:7px">列印雙印校樣</button></section>
 </aside><main class="work"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><div class="pair">
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
 <article class="impression"><div class="plateTitle">02 / 英文主讀｜Bodoni SC × Chiron 200 · 同字號</div><div class="plate inverse" id="plateEn"><div class="plateInner" id="viewportEn"><div class="forme" id="formeEn"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricEn" class="metrics"></div></article>
 </div><section class="source"><div><h3>CHINESE UNION VERSION / 源文分行</h3><div class="zhPoem" id="zhPoem"></div></div><div><h3>KING JAMES VERSION / SOURCE LINES</h3><div class="enPoem" id="enPoem"></div></div></section></main></div>
-<footer>Scripture Studio · V49.0 Frameless Readable Type · 印章出處已納入雙向印面；經文原文保持不變。 The Biblical text remains source-ordered in both languages; exploratory secondary poetic breaks require editorial approval. Font binaries must load before impression approval.</footer>
+<footer>Scripture Studio · V51.0 Editorial Typography, V49 Coverage Guard · 印章出處已納入雙向印面；經文原文保持不變。 The Biblical text remains source-ordered in both languages; exploratory secondary poetic breaks require editorial approval. Font binaries must load before impression approval.</footer>
 <script src="./scripture-studio-passage-model.js"></script>
 <script>
 'use strict';
@@ -459,7 +459,7 @@ function fit(){
   (ratio?'\n文字盒佔版心：寬 '+(ratio.width*100).toFixed(1)+'% ／ 高 '+(ratio.height*100).toFixed(1)+'%':'')+
   '\n造成窄長字群的原因：V18 每語 '+semanticDiagnostic.zhUnits+'/'+semanticDiagnostic.enUnits+' 個語義片段；每條都要雙語，最多 '+semanticDiagnostic.maxBilingualStrips+' 條；nowrap 長片段令字群變高，fit() 依高邊縮小。';
  $('scaleDiagnosis').textContent=diagnosis;
- window.__scriptureScaleDiagnostics={revision:'49.0',fontSize:stage.fontSize,scaleZh,scaleEn,semanticDiagnostic,
+ window.__scriptureScaleDiagnostics={revision:'51.0',fontSize:stage.fontSize,scaleZh,scaleEn,semanticDiagnostic,
   actualZh,actualEn,ratio,fillPass,viewport:{width:zh.clientWidth,height:zh.clientHeight},
   squareSize:square,cssSample:getComputedStyle(zhForm.querySelector('.piece')).fontSize};
 }
@@ -526,15 +526,50 @@ const citationFontOS=['formeZh','formeEn'].every(id=>{const rail=$(id).querySele
 const citationVerified=['formeZh','formeEn'].every(id=>{const rails=[...$(id).querySelectorAll('.refRail')];return rails.length===1&&rails[0].querySelector('.refZh')?.textContent===scripturePassage.reference.zh&&rails[0].querySelector('.refEn')?.textContent===scripturePassage.reference.en&&rails[0].querySelectorAll('.refNumber').length===1&&rails[0].querySelector('.refNumber')?.textContent===scripturePassage.reference.chapterVerse});
 $('metrics').textContent=`候選 ${selected+1} / ${ranked.length}\n完整印面寬×高 ${stage.fullW.toFixed(0)} × ${stage.h.toFixed(0)}px\n字框縱橫比 ${(stage.aspect).toFixed(2)}\n放大母版字級 ${stage.fontSize}px · 方形佈局 ${stage.aspect.toFixed(3)} · 拓寬 ${stage.extraWidth.toFixed(0)}px\n非均分字帶 ${stage.asym}/${stage.count} · 多次交錯 ${more}/${stage.count}\n中英原文無損 ${exact?'PASS':'FAIL'}\n英文逐詞首字母大寫＋Small Caps ${printedEn===enDisplay?'PASS':'FAIL'}\nV18 硬保護＋可選斷點／無孤字 ${breaks.ok?'PASS':'FAIL'}\n雙印字形外接盒碰撞／裁切 ${glyphQA.zh.ok&&glyphQA.en.ok?'PASS':'FAIL'}\nV44 雙向 DOM 評量 ${inspectedQA?'已核查':'未核查'} · 撞字／逼邊 ${inspectedQA?inspectedQA.overlap:'—'} · 中文覆蓋 ${inspectedQA?(inspectedQA.zhFill.ratio*100).toFixed(1)+'%':'—'} · 英文覆蓋 ${inspectedQA?(inspectedQA.enFill.ratio*100).toFixed(1)+'%':'—'}\nV43 可選合法斷點 Z:${stage.softBreaks.zh.toString(2)} E:${stage.softBreaks.en.toString(2)}\n每條字帶中英文同行 ${bilingualLines?'PASS':'FAIL'}\n出處中英合一／章節一次 ${citationVerified?'PASS':'FAIL'}\n出處與正文無碰撞／不裁切 ${citationGeometry?'PASS':'FAIL'}\n出處 OS 字體宣告 ${citationFontOS?'PASS':'FAIL'}\n出處中文「以賽亞書」：官方 Chiron 子集載入與字形檢查\nH4 多次語言轉換 ${stage.multi}/${stage.count}（嚴格過半）\nH6 不均分字帶 ${stage.asym}/${stage.count}（嚴格過半）\nH8 中英同標稱字號 ${stage.fontSize}px\n語義來源 V18 研究候選（未經編輯核准）：NOT APPROVED\n正反向比例 ${stage.aspect.toFixed(2)} / ${stage.inverseAspect.toFixed(2)}\n墨跡像素佔有率：未驗收`;
 $('metricZh').textContent=`中文主讀 · Chiron 900 · 同標稱字級 ${stage.fontSize}px · 原始高度 ${stage.h.toFixed(0)}px`; $('metricEn').textContent=`同一字帶位置旋轉 90° · 字級 ${stage.fontSize}px · Bodoni SC / Chiron 200`;window.__scriptureStudio ={valid:false,reason:'V18_POETRY_LAYOUT_BREAKS_REVIEW_ONLY',experimentalValid:exact&&breaks.ok&&bilingualLines&&citationGeometry&&citationVerified&&glyphQA.zh.ok&&glyphQA.en.ok,rank:selected,layout:stage,fonts:checkFaces(),citationGeometry,breaks,glyphQA,passage:scripturePassage.id,passageAudit:universalPassageAudit};}
+// V51 / editorial selection: baseline is an invariant, not a prior to overwrite.
+// Reject candidate changes that lose optical occupation in either impression.
+function editorialSelect(inspected,baseline){
+ if(!baseline)return null;
+ const minimum=Math.min(baseline.qa.zhFill.ratio,baseline.qa.enFill.ratio);
+ const candidates=inspected.filter(({candidate,qa})=>
+  qa.overlap<=baseline.qa.overlap&&
+  qa.zhFill.ratio>=baseline.qa.zhFill.ratio*.97&&
+  qa.enFill.ratio>=baseline.qa.enFill.ratio*.97&&
+  candidate.fillEstimate>=baseline.candidate.fillEstimate*.97);
+ if(!candidates.length)return baseline;
+ const target=(x)=>{
+  const c=x.candidate, q=x.qa;
+  const cutoff=Math.floor(c.count/2)+1;
+  // Existing V49 semantic fragments remain untouched. Legal structure and
+  // balanced mass are favoured only AFTER preserving V49 optical coverage.
+  const shortfall=Math.max(0,cutoff-c.multi)+Math.max(0,cutoff-c.asym);
+  const readableColumns=c.columns.filter(col=>col.parts.length>=3).length;
+  const unevenness=Math.abs(c.spread-.22);
+  return shortfall*7+unevenness*2-readableColumns*.25+
+   q.overlap*100+Math.abs(q.zhFill.width-q.zhFill.height)*2+
+   Math.abs(q.enFill.width-q.enFill.height)*2+
+   (Math.max(0,minimum-Math.min(q.zhFill.ratio,q.enFill.ratio)))*20;
+ };
+ return candidates.slice().sort((a,b)=>target(a)-target(b))[0]||baseline;
+}
 async function search(){if(!approved)return;measureCache.clear();const size=Number($('fontSize').value),density=$('cadence').value;$('fontSizeValue').textContent=size;ranked=[];for(const c of candidates){const v=evaluate(c,size,density);if(v)ranked.push(v)}ranked.sort((a,b)=>a.cost-b.cost);
  // First prune by fast math, then re-rank using both REAL DOM orientations.
  // This retains candidate diversity while preferring collision-free printing.
  if(ranked.length){
-  const shortlist=ranked.slice(0,Math.min(36,ranked.length));
+  const shortlist=ranked.slice(0,Math.min(48,ranked.length));
   const inspected=shortlist.map(candidate=>({candidate,qa:candidateVisualScore(candidate)}));
   inspected.sort((a,b)=>a.qa.score-b.qa.score);
-  ranked=[...inspected.map(x=>({...x.candidate,visualQA:x.qa})),...ranked.slice(shortlist.length)];
+  const baseline=inspected[0]; // V49 winner, unchanged ranking.
+  const editorial=editorialSelect(inspected,baseline);
+  const chosen=$('artDirection').value==='v49'?baseline:editorial;
+  // Put selected design first, retain V49 at index 1 for immediate comparison.
+  const displayOrder=[chosen,baseline,...inspected].filter((x,i,all)=>
+    x&&all.findIndex(y=>y.candidate===x.candidate)===i);
+  ranked=[...displayOrder.map(x=>({...x.candidate,visualQA:x.qa})),...ranked.slice(shortlist.length)];
   window.__scriptureCandidateQA={inspected:inspected.length,safe:inspected.filter(x=>x.qa.safe).length,
+   reference:baseline?{coverageZH:baseline.qa.zhFill.ratio,coverageEN:baseline.qa.enFill.ratio,overlap:baseline.qa.overlap}:null,
+   selected:chosen?{coverageZH:chosen.qa.zhFill.ratio,coverageEN:chosen.qa.enFill.ratio,overlap:chosen.qa.overlap}:null,
+   preserved:!chosen||!baseline||(chosen.qa.zhFill.ratio>=baseline.qa.zhFill.ratio*.97&&chosen.qa.enFill.ratio>=baseline.qa.enFill.ratio*.97),
    top:inspected.slice(0,5).map(x=>({count:x.candidate.count,score:x.qa.score,overlap:x.qa.overlap,zh:x.qa.zhFill,en:x.qa.enFill}))};
  }
  if(!ranked.length){const provisional=candidates.map(c=>evaluate({...c,provisional:true},size,density)).filter(Boolean);
@@ -551,7 +586,7 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
 async function startup(){const loads=await Promise.allSettled([document.fonts.load('400 48px "WS Bodoni Moda SC File"',enExact),document.fonts.load('900 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('200 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('900 48px "Chiron Hei HK WS"','以賽亞書'),document.fonts.load('200 48px "Chiron Hei HK WS"','以賽亞書')]);await document.fonts.ready;const f=checkFaces();const subsetFaces=[...document.fonts].filter(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS');const loadedSubsets=subsetFaces.filter(face=>face.status==='loaded').length;f.subsets=loadedSubsets;f.subsetTotal=subsetFaces.length;f.citationLoaded=loads.slice(3).every(x=>x.status==='fulfilled'&&x.value.some(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS'));approved=loads.every(x=>x.status==='fulfilled')&&f.citationLoaded&&f.bodoni&&f.chironHeavy&&f.chironLight&&loadedSubsets===12;
 $('fontStatus').className='status '+(approved?'pass':'fail');$('fontStatus').textContent=`Bodoni Moda SC / actual file ${f.bodoni?'PASS':'FAIL'}\nChiron Heavy / 900 ${f.chironHeavy?'PASS':'FAIL'}\nChiron ExtraLight / 200 ${f.chironLight?'PASS':'FAIL'}\n12 local CJK subsets ${f.subsets}/12 ${f.subsets===12?'PASS':'FAIL'}\nCitation glyphs 以賽亞書 / Chiron 900+200 ${f.citationLoaded?'PASS':'FAIL'}\n${approved?'正式字型已載入，允許構圖搜尋':'正規字檔未載入：請使用完整網站預覽，單獨下載 HTML 不包含字體檔'}`;
 $('plateZh').classList.toggle('blocked',!approved);$('plateEn').classList.toggle('blocked',!approved);if(approved)search();}
-$('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('fontSize').onchange=search;$('cadence').onchange=search;$('recompute').onclick=search;$('squareMode').onchange=()=>{if(stage)render(selected)};$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('V14／V18 完整驗收尚未通過，禁止正式匯出；目前僅供方塊語法設計比較。');return}const data={version:'49.0',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v48-canonical-frame.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
+$('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('fontSize').onchange=search;$('cadence').onchange=search;$('recompute').onclick=search;$('squareMode').onchange=()=>{if(stage)render(selected)};$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('V14／V18 完整驗收尚未通過，禁止正式匯出；目前僅供方塊語法設計比較。');return}const data={version:'51.0',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v48-canonical-frame.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
 $('printProof').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('印版未通過 V14／V18 驗收，不能列印為正式校樣');return}window.print()};
 new ResizeObserver(fit).observe($('viewportZh'));new ResizeObserver(fit).observe($('viewportEn'));
 startup();
