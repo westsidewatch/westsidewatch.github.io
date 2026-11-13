@@ -84,10 +84,15 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .plate.inverse.experimental:after{color:#c0aa76}
 /* The citation is perpendicular to its reading face and occupies its own margin. */
 .forme .refRail.combined{visibility:hidden}
-/* Citation family: Chiron 200 + one coherent Georgia Italic Latin register. */
-.plate .cornerCitation{position:absolute;z-index:3;display:flex;gap:.30em;line-height:1.05;pointer-events:none;color:color-mix(in srgb,var(--section-bg,#102a43) 52%,#252525)}
-.plate:not(.inverse) .cornerCitation{left:8.5%;bottom:2.8%;writing-mode:horizontal-tb;align-items:baseline;max-width:83%;font-size:clamp(17px,2.7cqw,28px);white-space:nowrap}
-.plate.inverse .cornerCitation{right:2.8%;top:9%;writing-mode:vertical-rl;align-items:baseline;justify-content:start;max-height:78%;font-size:clamp(17px,2.7cqw,28px);color:var(--section-text,#faf9f5)}
+/* A fixed folio-register on the outer margin: short engraved rule, then source.
+   Left impression: horizontal baseline at the bottom. Right: vertical axis at
+   the outside right, optically centered. Neither moves with passage length. */
+.plate .cornerCitation{position:absolute;z-index:3;display:flex;gap:.34em;line-height:1.05;pointer-events:none;color:color-mix(in srgb,var(--section-bg,#102a43) 52%,#252525);white-space:nowrap}
+.plate .cornerCitation::before{content:"";display:block;flex:none;background:currentColor;opacity:.58}
+.plate:not(.inverse) .cornerCitation{left:8.5%;bottom:3.8%;writing-mode:horizontal-tb;align-items:baseline;max-width:83%;font-size:clamp(17px,2.7cqw,28px)}
+.plate:not(.inverse) .cornerCitation::before{width:clamp(24px,5cqw,52px);height:1px;align-self:center}
+.plate.inverse .cornerCitation{right:3.8%;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;align-items:baseline;justify-content:center;max-height:78%;font-size:clamp(17px,2.7cqw,28px);color:var(--section-text,#faf9f5)}
+.plate.inverse .cornerCitation::before{height:clamp(24px,5cqw,52px);width:1px;align-self:center}
 .plate.inverse .cornerCitation .citationEn,.plate.inverse .cornerCitation .citationNum{text-orientation:sideways}
 .plate:not(.inverse) .plateInner{inset:8.5% 8.5% 11%}
 .plate.inverse .plateInner{inset:8.5% 11% 8.5% 8.5%}
