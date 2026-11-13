@@ -136,25 +136,25 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const zhLines=['耶路撒冷啊，','我在你城上設立守望的，','他們晝夜必不靜默。','呼籲耶和華的，','你們不要歇息，'];
-const enLines=['I have set watchmen upon thy walls, O Jerusalem,','which shall never hold their peace day nor night:','ye that make mention of the LORD,','keep not silence,'];
+let zhLines=['耶路撒冷啊，','我在你城上設立守望的，','他們晝夜必不靜默。','呼籲耶和華的，','你們不要歇息，'];
+let enLines=['I have set watchmen upon thy walls, O Jerusalem,','which shall never hold their peace day nor night:','ye that make mention of the LORD,','keep not silence,'];
 // Deliberate editorial breath units; never fracture Chinese words to fill a seal.
-const z=['耶路撒冷啊，','我在你城上','設立守望的，','他們晝夜必不靜默。','呼籲耶和華的，','你們不要歇息，'];
+let z=['耶路撒冷啊，','我在你城上','設立守望的，','他們晝夜必不靜默。','呼籲耶和華的，','你們不要歇息，'];
 // English pieces are complete rhetorical units, not arbitrary line-width fragments.
-const e=['I have set watchmen ','upon thy walls, ','O Jerusalem, ','which shall never hold their peace ','day nor night: ','ye that make mention of the LORD, ','keep not silence,'];
-const zhExact=zhLines.join(''),enExact=enLines.join(' ');
-const scripturePassage=window.ScriptureStudioPassageModel.passage({
+let e=['I have set watchmen ','upon thy walls, ','O Jerusalem, ','which shall never hold their peace ','day nor night: ','ye that make mention of the LORD, ','keep not silence,'];
+let zhExact=zhLines.join(''),enExact=enLines.join(' ');
+let scripturePassage=window.ScriptureStudioPassageModel.passage({
  id:'isaiah-62-6',kind:'home',zh:zhExact,en:enExact,
  reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6'},
  segments:{zh:z,en:null},breakReview:'unreviewed',
  hardSpans:{zh:['耶路撒冷','耶和華'],en:['O Jerusalem','the LORD']}
 });
-const universalPassageDesign=window.ScriptureStudioPassageModel.designParameters(scripturePassage);
-const universalPassageAudit=window.ScriptureStudioPassageModel.audit(scripturePassage);
+let universalPassageDesign=window.ScriptureStudioPassageModel.designParameters(scripturePassage);
+let universalPassageAudit=window.ScriptureStudioPassageModel.audit(scripturePassage);
 // Display-only editorial Title Case: full-height initial for EVERY English word;
 // original KJV units remain unchanged for source integrity and recipe export.
 function sealTitleCase(text){return text.replace(/[A-Za-z]+/g,word=>word[0].toUpperCase()+word.slice(1).toLowerCase())}
-const enDisplay=sealTitleCase(enExact);
+let enDisplay=sealTitleCase(enExact);
 
 function editorialBreakCheck(zhUnits,enUnits){
  const reasons=[];
@@ -370,9 +370,11 @@ const measureCache=new Map();
 const enRatio=()=>1; // V14 H8: bilingual face uses one nominal type size.
 function measure(token,lang,size,opticalRatio=null){const key=lang+'|'+size+'|'+(opticalRatio??'default')+'|'+token;if(measureCache.has(key))return measureCache.get(key);const n=document.createElement('span');n.className='piece '+lang;n.style.fontSize=(opticalRatio===null?(lang==='en'?size*enRatio():size):size*opticalRatio)+'px';n.textContent=lang==='en'?sealTitleCase(token):token;measurement.append(n);const box=n.getBoundingClientRect();const d={width:box.width,height:box.height};n.remove();measureCache.set(key,d);return d}
 // Candidate families are generated from the scripture's actual token counts.
-const candidateSearch=createFillCandidates();
-const candidates=candidateSearch.out;
-const semanticDiagnostic={maxBilingualStrips:candidateSearch.maxBilingualStrips,zhUnits:candidateSearch.limits.zh,enUnits:candidateSearch.limits.en,semanticBreakSource:'V18 poetry protected phrases + lexically verified optional breaks',nowrapPhraseRuns:true};
+let candidateSearch=createFillCandidates();
+let candidates=candidateSearch.out;
+let semanticDiagnostic={maxBilingualStrips:candidateSearch.maxBilingualStrips,zhUnits:candidateSearch.limits.zh,enUnits:candidateSearch.limits.en,semanticBreakSource:'V18 poetry protected phrases + lexically verified optional breaks',nowrapPhraseRuns:true};
+const journalBaseline={z:z.slice(),e:e.slice(),zhLines:zhLines.slice(),enLines:enLines.slice(),
+ zhExact,enExact,enDisplay,scripturePassage,universalPassageDesign,universalPassageAudit,candidateSearch,candidates,semanticDiagnostic};
 function evaluate(candidate,size,density){
  const zhUnits=candidate.zhUnits||z,enUnits=candidate.enUnits||e;
  let zi=0,ei=0,columns=[];
@@ -457,7 +459,7 @@ function renderP2Palette(){
   b.setAttribute('aria-pressed',String(item.id===activeP2));b.setAttribute('aria-label',item.id+' '+item.zh+' / '+item.en);
   const n=document.createElement('span');n.className='p2Numeral';n.textContent=item.id;
   const name=document.createElement('span');name.className='p2Label';name.textContent=item.zh;
-  b.append(n,name);b.onclick=()=>{activeP2=item.id;renderP2Palette()};el.append(b);
+  b.append(n,name);b.onclick=()=>{const prior=activeP2;activeP2=item.id;if(prior!==activeP2)updatePassageForRealm(activeP2);renderP2Palette()};el.append(b);
  }
  const item=p2Sections.find(x=>x.id===activeP2);
  $('p2SectionTitle').textContent=item.en+' / '+item.zh;
@@ -467,6 +469,66 @@ function renderP2Palette(){
  $('scriptureWork').style.setProperty('--section-text',item.ink);
  $('scriptureWork').style.setProperty('--section-latin-ink',item.latinInk);
  document.documentElement.style.setProperty('--p2-current-color',item.color);
+}
+
+// P2 passage data is applied to the existing two letterpress impressions.
+// The original Isaiah 62:6 candidate family is preserved as the Magazine baseline.
+// Other realm texts remain editorial trials until source and Chiron glyph coverage pass.
+const realmVerseData={
+ '01':{reference:{zh:'約翰福音',en:'John',chapterVerse:'7:38'},
+  zh:'信我的人|就如經上所說：|『從他腹中|要流出活水的江河來。』」',
+  en:'He that believeth on me, |as the scripture hath said, |out of his belly shall flow |rivers of living water.'},
+ '03':{reference:{zh:'路加福音',en:'Luke',chapterVerse:'24:27'},
+  zh:'於是從摩西|和眾先知起，|凡經上所指着自己的話|都給他們講解明白了。',
+  en:'And beginning at Moses |and all the prophets, |he expounded unto them |in all the scriptures |the things concerning himself.'},
+ '04':{reference:{zh:'羅馬書',en:'Romans',chapterVerse:'10:17'},
+  zh:'可見信道|是從聽道來的，|聽道是從|基督的話來的。',
+  en:'So then faith |cometh by hearing, |and hearing by |the word of God.'},
+ '05':{reference:{zh:'詩篇',en:'Psalms',chapterVerse:'119:18'},
+  zh:'求你開我的眼睛，|使我看出|你律法中的奇妙。',
+  en:'Open thou mine eyes, |that I may behold |wondrous things out of thy law.'},
+ '06':{reference:{zh:'哥林多前書',en:'1 Corinthians',chapterVerse:'13:12'},
+  zh:'我們如今彷彿對著鏡子觀看，|糢糊不清（原文作：如同猜謎）；|到那時就要面對面了。|我如今所知道的有限，|到那時就全知道，|如同主知道我一樣。',
+  en:'For now we see through a glass, darkly; |but then face to face: |now I know in part; |but then shall I know |even as also I am known.'},
+ '07':{reference:{zh:'申命記',en:'Deuteronomy',chapterVerse:'8:8'},
+  zh:'那地有小麥、|大麥、葡萄樹、|無花果樹、石榴樹、|橄欖樹和蜜。',
+  en:'A land of wheat, and barley, |and vines, and fig trees, |and pomegranates; |a land of oil olive, and honey;'}
+};
+function themeCandidateSearch(){
+ const out=createCandidates(z.length,e.length).map(c=>({...c,zhUnits:z.slice(),enUnits:e.slice(),fill:true,provisional:true,softBreaks:{zh:0,en:0}}));
+ return {out,limits:{zh:z.length,en:e.length},maxBilingualStrips:Math.min(z.length,e.length)};
+}
+function updatePassageForRealm(id){
+ if(id==='02'){
+  ({zhExact,enExact,enDisplay,scripturePassage,universalPassageDesign,universalPassageAudit,
+    candidateSearch,candidates,semanticDiagnostic}=journalBaseline);
+  z=journalBaseline.z.slice();e=journalBaseline.e.slice();
+  zhLines=journalBaseline.zhLines.slice();enLines=journalBaseline.enLines.slice();
+  $('zhPoem').replaceChildren();$('enPoem').replaceChildren();
+  for(const item of zhLines){const p=document.createElement('p');p.textContent=item;$('zhPoem').append(p)}
+  for(const item of enLines){const p=document.createElement('p');p.textContent=sealTitleCase(item);$('enPoem').append(p)}
+  if(approved)search();
+  return;
+ }
+ const data=realmVerseData[id];
+ if(!data)return;
+ z=data.zh.split('|');e=data.en.split('|');
+ zhExact=z.join('');enExact=e.join('');enDisplay=sealTitleCase(enExact);
+ zhLines=[zhExact];enLines=[enExact];
+ scripturePassage=window.ScriptureStudioPassageModel.passage({
+  id:'p2-realm-'+id,kind:'home',zh:zhExact,en:enExact,
+  reference:data.reference,segments:{zh:z,en:null},breakReview:'unreviewed',hardSpans:{zh:[],en:[]}
+ });
+ universalPassageDesign=window.ScriptureStudioPassageModel.designParameters(scripturePassage);
+ universalPassageAudit=window.ScriptureStudioPassageModel.audit(scripturePassage);
+ candidateSearch=themeCandidateSearch();candidates=candidateSearch.out;
+ semanticDiagnostic={maxBilingualStrips:candidateSearch.maxBilingualStrips,
+  zhUnits:z.length,enUnits:e.length,semanticBreakSource:'P2 theme-verse editorial phrases (review)',nowrapPhraseRuns:true};
+ $('zhPoem').replaceChildren();$('enPoem').replaceChildren();
+ for(const item of zhLines){const p=document.createElement('p');p.textContent=item;$('zhPoem').append(p)}
+ for(const item of enLines){const p=document.createElement('p');p.textContent=sealTitleCase(item);$('enPoem').append(p)}
+ $('fontStatus').textContent='主題經文已接入原雙印面。非以賽亞書字形尚待 Chiron 全字集驗證；不可正式印製。';
+ if(approved)search();
 }
 function build(form,candidate){form.innerHTML='';form.dataset.squareMode=$('squareMode').value;const fontSize=candidate.fontSize,gap=fontSize*candidate.gapRatio;const railWidth=candidate.railWidth;
 // A compact frame: the earlier 3.25em surround made every line tiny on screen.
@@ -656,7 +718,7 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
 }
 async function startup(){const loads=await Promise.allSettled([document.fonts.load('400 48px "WS Bodoni Moda SC File"',enExact),document.fonts.load('900 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('200 48px "Chiron Hei HK WS"',zhExact),document.fonts.load('900 48px "Chiron Hei HK WS"','以賽亞書'),document.fonts.load('200 48px "Chiron Hei HK WS"','以賽亞書')]);await document.fonts.ready;const f=checkFaces();const subsetFaces=[...document.fonts].filter(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS');const loadedSubsets=subsetFaces.filter(face=>face.status==='loaded').length;f.subsets=loadedSubsets;f.subsetTotal=subsetFaces.length;f.citationLoaded=loads.slice(3).every(x=>x.status==='fulfilled'&&x.value.some(face=>face.family.replace(/["']/g,'').trim()==='Chiron Hei HK WS'));approved=loads.every(x=>x.status==='fulfilled')&&f.citationLoaded&&f.bodoni&&f.chironHeavy&&f.chironLight&&loadedSubsets===12;
 $('fontStatus').className='status '+(approved?'pass':'fail');$('fontStatus').textContent=`Bodoni Moda SC / actual file ${f.bodoni?'PASS':'FAIL'}\nChiron Heavy / 900 ${f.chironHeavy?'PASS':'FAIL'}\nChiron ExtraLight / 200 ${f.chironLight?'PASS':'FAIL'}\n12 local CJK subsets ${f.subsets}/12 ${f.subsets===12?'PASS':'FAIL'}\nCitation glyphs 以賽亞書 / Chiron 900+200 ${f.citationLoaded?'PASS':'FAIL'}\n${approved?'正式字型已載入，允許構圖搜尋':'正規字檔未載入：請使用完整網站預覽，單獨下載 HTML 不包含字體檔'}`;
-$('plateZh').classList.toggle('blocked',!approved);$('plateEn').classList.toggle('blocked',!approved);if(approved)search();}
+$('plateZh').classList.toggle('blocked',!approved);$('plateEn').classList.toggle('blocked',!approved);if(approved){if(activeP2!=='02')$('fontStatus').textContent='本版塊經文已進入雙印面；新增中文 glyph 尚未通過完整 Chiron 字型驗收。';search()}}
 $('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('fontSize').onchange=search;$('cadence').onchange=search;$('artDirection').onchange=search;$('recompute').onclick=search;$('squareMode').onchange=()=>{if(stage)render(selected)};$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('V14／V18 完整驗收尚未通過，禁止正式匯出；目前僅供方塊語法設計比較。');return}const data={version:'51.0',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v51-editorial-composition.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
 $('printProof').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('印版未通過 V14／V18 驗收，不能列印為正式校樣');return}window.print()};
 new ResizeObserver(fit).observe($('viewportZh'));new ResizeObserver(fit).observe($('viewportEn'));
@@ -672,6 +734,7 @@ addEventListener('message',event=>{
   activeP2=data.section;renderP2Palette();
  }
 });
+if(activeP2!=='02')updatePassageForRealm(activeP2);
 renderP2Palette();
 startup();
 </script>
