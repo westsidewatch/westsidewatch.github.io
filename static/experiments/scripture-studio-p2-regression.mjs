@@ -13,6 +13,7 @@ assert.deepEqual(manifest.weights,[200,900]);
 const coverage=new Set(manifest.codepoints);
 for(const weight of [200,900])assert.match(html,new RegExp(`ChironHeiHK-P2-${weight}\\.woff2`));
 assert.match(html,/font-synthesis:none/);
+assert.match(html,/\.piece\.en\{letter-spacing:-\.045em\}/,'Both orientations must use one tighter English tracking rule');
 
 const marker='const realmVerseData=';
 const at=html.indexOf(marker);
@@ -29,6 +30,7 @@ assert.equal(seven.length,7);
 for(const p of seven){
  const chunks=p.zh.split('|');
  assert(chunks.every(c=>c.length>=2),`${p.id} orphaned Chinese strip`);
+ assert(chunks.every(c=>!/^[的了啊呢嗎吧，。！？]/.test(c)),`${p.id} invalid initial Chinese particle blocks candidate generation`);
  const missing=[...new Set([...chunks.join(''),...p.reference.zh].filter(c=>!coverage.has(c.codePointAt(0))))];
  assert.deepEqual(missing,[],`${p.id} Chiron glyphs missing`);
  if(p.en){
