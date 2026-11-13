@@ -552,7 +552,7 @@ async function search(){if(!approved)return;measureCache.clear();const size=Numb
  // First prune by fast math, then re-rank using both REAL DOM orientations.
  // This retains candidate diversity while preferring collision-free printing.
  if(ranked.length){
-  const shortlist=ranked.slice(0,Math.min(48,ranked.length));
+  const shortlist=ranked.slice(0,Math.min(36,ranked.length));
   const inspected=shortlist.map(candidate=>({candidate,qa:candidateVisualScore(candidate)}));
   inspected.sort((a,b)=>a.qa.score-b.qa.score);
   const baseline=inspected[0]; // V49 winner, unchanged ranking.
