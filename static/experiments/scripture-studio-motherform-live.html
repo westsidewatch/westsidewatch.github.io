@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Scripture Studio V57.0 · 統一出處字型與字號</title>
+<title>Scripture Studio V58.0 · P2 雙語墨色層次</title>
 
 <style>
 /* Entire Isaiah 62:6 glyphset self-hosted in this repository; no CDN or AI artwork. */
@@ -79,7 +79,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .work[data-p2-section] .plate:not(.inverse) .piece.en{color:color-mix(in srgb,var(--section-bg,#102a43) 58%,#252525)}
 .work[data-p2-section] .plate.inverse{background:var(--section-bg,#102a43);color:var(--section-text,#faf9f5)}
 .work[data-p2-section] .plate.inverse .piece.zh{color:var(--section-text,#faf9f5)}
-.work[data-p2-section] .plate.inverse .piece.en{color:var(--section-text,#faf9f5)}
+.work[data-p2-section] .plate.inverse .piece.en{color:var(--section-latin-ink,#E9C46A)}
 .work[data-p2-section] .plate.inverse .refRail{color:var(--section-text,#faf9f5)}
 .work[data-p2-section] .plateTitle:before{content:"";display:inline-block;width:15px;height:5px;background:var(--section-bg,#102a43);vertical-align:middle;margin-right:8px}
 @media(max-width:560px){.p2Palette .p2Label{writing-mode:vertical-rl;min-height:39px}.p2Palette{min-height:86px}.p2EditorialNote{display:block}}
@@ -441,13 +441,13 @@ function evaluate(candidate,size,density){
   inverseH,cost,asym,multi,spread,aspect,inverseAspect,fillEstimate,fontSize:size,gapRatio:gap,positions,colWidths,count,extraWidth,intrinsicWidth,targetFullWidth};
 }
 const p2Sections=[
- {id:'01',zh:'教會',en:'CHURCH',color:'#5B8FA8',ink:'#FAF9F5'},
- {id:'02',zh:'西望',en:'THE JOURNAL',color:'#102A43',ink:'#FAF9F5'},
- {id:'03',zh:'以馬忤斯',en:'EMMAUS',color:'#A2872A',ink:'#FAF9F5'},
- {id:'04',zh:'橄欖山',en:'OLIVE MOUNTAIN',color:'#738A5A',ink:'#FAF9F5'},
- {id:'05',zh:'黎明書局',en:'DAWN BOOKS',color:'#FAF9F5',ink:'#252525'},
- {id:'06',zh:'電影院',en:'CINEMA',color:'#A14D57',ink:'#FAF9F5'},
- {id:'07',zh:'白晝咖啡館',en:'DAYLIGHT CAFÉ',color:'#B8944A',ink:'#252525'}
+ {id:'01',zh:'教會',en:'CHURCH',color:'#5B8FA8',ink:'#FAF9F5',latinInk:'#F7E2AB'},
+ {id:'02',zh:'西望',en:'THE JOURNAL',color:'#102A43',ink:'#FAF9F5',latinInk:'#E9C46A'},
+ {id:'03',zh:'以馬忤斯',en:'EMMAUS',color:'#A2872A',ink:'#FAF9F5',latinInk:'#FFF4D7'},
+ {id:'04',zh:'橄欖山',en:'OLIVE MOUNTAIN',color:'#738A5A',ink:'#FAF9F5',latinInk:'#FFE4A0'},
+ {id:'05',zh:'黎明書局',en:'DAWN BOOKS',color:'#FAF9F5',ink:'#252525',latinInk:'#A14D57'},
+ {id:'06',zh:'電影院',en:'CINEMA',color:'#A14D57',ink:'#FAF9F5',latinInk:'#FFE0A6'},
+ {id:'07',zh:'白晝咖啡館',en:'DAYLIGHT CAFÉ',color:'#B8944A',ink:'#252525',latinInk:'#FFF9E9'}
 ];
 let activeP2='02';
 function renderP2Palette(){
@@ -465,6 +465,7 @@ function renderP2Palette(){
  $('scriptureWork').dataset.p2Section=item.id;
  $('scriptureWork').style.setProperty('--section-bg',item.color);
  $('scriptureWork').style.setProperty('--section-text',item.ink);
+ $('scriptureWork').style.setProperty('--section-latin-ink',item.latinInk);
  document.documentElement.style.setProperty('--p2-current-color',item.color);
 }
 function build(form,candidate){form.innerHTML='';form.dataset.squareMode=$('squareMode').value;const fontSize=candidate.fontSize,gap=fontSize*candidate.gapRatio;const railWidth=candidate.railWidth;
