@@ -75,3 +75,22 @@ V46 **實際修改母版** `static/experiments/scripture-studio-motherform-live.
 **驗證**：主頁內嵌 JS 語法 PASS、共用 passage model JS 語法 PASS；原稿僅存在一個 `applyEngravedStructure`，已確認無 nested-frame 生成程式；英文 italic CSS 存在。**尚缺 V46 真實瀏覽器截圖及字型碰撞驗證**，不能宣稱視覺已驗收。
 
 提交：`cb64fc8d5f8188f311f46d83c768195fcea55f55`。
+
+## V50｜跨經文交錯語法施工（2026-11-12）
+
+此輪改動針對 V49 的實質缺口：多數字帶仍是機械 `ZH–EN` 配對，H4「過半字帶至少兩次語言轉換」不足。**無框、中文 Chiron Heavy/ExtraLight、英文 Bodoni Moda SC 正文、僅出處斜體，以及母版 90° 轉向一律保留**。不增刻線、不改動既有經文內容。
+
+- 共用模型 `static/experiments/scripture-studio-passage-model.js` 新增 `runSignatures(zhUnits,enUnits)` 和 `verifyMixedRuns()`，以有來源的語義單元而非單字數作輸入，生成不同帶數、真正 `Z–E–Z`／`E–Z–E` 及以上的連續交錯字帶。每語原文順序保留，H4 不合格方案不輸出；沒有合法單元就不強造雙語帶。
+- 現有 `scripture-studio-motherform-live.html` 排字求解器已改為呼叫**同一個通用模型**；刪除專屬於主頁的重複分配函式，仍使用 V18 以賽亞書 62:6 的語義候選作第一輪實際構圖。
+- `evaluate()` 和 `candidateVisualScore()` 的排序把真實雙向碰撞與 H4／H6 放在方形比例之前，光學平衡只在語義與交錯成立後參與排序。
+- 輸出診斷現在報告真實多次語言轉換的字帶數，不再把任意「三個片段」錯認為兩次切換。
+
+### 回歸
+
+新的 `static/experiments/scripture-studio-v50-regression.js` 以**合成測試文字（不是聖經原文）**驗證三種長度：短文 2 個構圖候選、中等長度 28 個、長文 57 個。全部來源精確、H4、每帶中英、未批准不得出版 PASS。
+
+以 Isaiah 62:6 目前 V18 研究候選進行純程式碼測試：236 組可供排版測量的交錯構圖，每組中英來源還原正確，H4 結構檢查通過；使用*近似而非真實字型*的字寬模型，200 組達 H6，這不等於真正的字型驗收。
+
+**未完成**：真實瀏覽器兩面截圖及肉眼光學驗收、Chiron 跨經文完整字庫、正式經文分詞編輯核准、Bodoni Moda 真正斜體字型，以及其他主題經文的完整印面渲染。新的模組可用於其他輸入，但目前 live 頁仍展示 Isaiah 樣章，不能聲稱七版塊已自動套版或作品達得獎標準。
+
+工程：`cf7c8abdf109e602fe515a67de7afdff2fe9658a`、`c5f0ebb02c31018db8e4e98819af28163119370f`、`97e0dc8769b6129a4082b4f21d00bb0a088d135a`、`2ca980c4545a970a20cc28e360e0a71b8ad73426`、`467a64416bf794c15322115afa87b9e50587092f`。
