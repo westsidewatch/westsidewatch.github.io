@@ -64,6 +64,10 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .p2Palette button[aria-pressed=true]:after{content:"";position:absolute;bottom:0;left:6px;right:6px;border-bottom:3px solid currentColor}
 .p2Palette .p2Numeral{font:11px/1 Georgia,serif;letter-spacing:.1em}
 .p2Palette .p2Label{font:10px/1.2 var(--font-zh),sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toolPalette{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:-6px 0 13px}
+.toolPalette .toolPaletteTitle{font:10px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#62675e;margin-right:7px}
+.toolPalette button{font:12px/1.3 var(--font-zh),sans-serif;border:1px solid #bdbbb0;border-radius:0;padding:5px 12px;background:transparent;color:#393b35}
+.toolPalette button[aria-pressed=true]{background:#25394a;color:#faf9f5;border-color:#25394a}
 .p2EditorialNote{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 13px;border-bottom:1px solid #c5c6bd;padding-bottom:8px}
 .p2EditorialNote strong{font:400 clamp(18px,2vw,29px)/1.1 Georgia,serif;letter-spacing:.035em}
 .p2EditorialNote small{font:10px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#6c7067}
@@ -133,7 +137,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <section class="panel"><h2>01 / 字體載入</h2><div id="fontStatus" class="status">正在載入實際字型檔…</div></section>
 <section class="panel"><h2>02 / 排版搜尋</h2><label for="fontSize">固定基準字號 <output id="fontSizeValue">88</output>px</label><input id="fontSize" type="range" min="56" max="128" step="4" value="88"><p>V14 固定字級：中文與英文使用相同標稱字號，不以縮小一種語言製造對比。</p><label for="cadence">疏密與錯落</label><select id="cadence"><option value="editorial">Editorial / 參差有致</option><option value="dense">Dense / 密集</option><option value="quiet">Quiet / 留白</option></select><label for="artDirection">經文設計 · 構圖方向</label><select id="artDirection"><option value="editorial">V53 / P2 編輯式色彩</option><option value="v49">V49 / 飽滿母版</option></select><p>七版塊採各自專屬色系，色彩放在頁面層次與印面，不逐詞上色；V49 飽滿版心保留。</p><input id="squareMode" type="hidden" value="none"><p><strong>V53.0 / Tokyo 雙語編輯節奏 × P2</strong> · 母本字號不等於螢幕字號，下面顯示真實縮放。</p><div id="scaleDiagnosis" class="engravingStatus" aria-live="polite">正在檢查畫面字級……</div><div id="squareStudyStatus" class="engravingStatus">V39.2 恢復 V18 以賽亞書 62:6 編輯候選語義斷點，禁用逐字／逐單詞強拆；保留 V39 的字型、緊湊版心及中英同帶，候選仍待聖經編輯核定。</div><div class="buttons" style="margin-top:13px"><button id="recompute">重新搜尋</button><button id="next">下一構圖</button><button id="guides">顯示字柱</button></div><p>V39.2 恢復 V18 編輯研究候選斷句：保護「我在你城上」「他們晝夜必不靜默」「呼籲耶和華的」及 KJV 完整短語。這些是經文編輯候選而非官方譯本 USFM，仍禁止正式經文印製。</p></section>
 <section class="panel"><h2>03 / 聖經語義來源</h2><p>本母版目前仍以內嵌編輯片段做試驗，尚未接入 V18 的 USFM 審核結果；任何候選都不可視為核定經文印章。</p><p><a href="./scripture-studio-poetry-v18.html" target="_blank" rel="noopener">開啟 V18 USFM 詩行／合法斷句工具</a></p></section><section class="panel"><h2>04 / 硬性門檻與量測</h2><div id="metrics" class="status">等待字體驗證…</div><p>評估版心寬高、字柱長度差異、交錯次數與非對稱比例。墨跡像素面積另列，不用文字框比例冒充。</p><button id="recipe">匯出排列配方 JSON</button><button id="printProof" type="button" style="margin-left:7px">列印雙印校樣</button></section>
-</aside><main class="work" id="scriptureWork"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><nav class="p2Palette" id="p2Palette" aria-label="P2 七個版塊的編輯色系"></nav><div class="p2EditorialNote"><strong id="p2SectionTitle">THE JOURNAL / 西望</strong><small id="p2SectionCaption">P2 · SEVEN CHAPTERS / ONE EDITORIAL SYSTEM</small></div><div class="pair">
+</aside><main class="work" id="scriptureWork"><div class="topline"><h2>同一組鉛字母本，旋轉 90°</h2><div class="micro">True font binaries · Same-origin assets · DOM typesetting</div></div><nav class="p2Palette" id="p2Palette" aria-label="P2 七個版塊的編輯色系"></nav><nav class="toolPalette" id="toolPalette" aria-label="首頁與工具主題經文"></nav><div class="p2EditorialNote"><strong id="p2SectionTitle">THE JOURNAL / 西望</strong><small id="p2SectionCaption">P2 · SEVEN CHAPTERS / ONE EDITORIAL SYSTEM</small></div><div class="pair">
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
 <article class="impression"><div class="plateTitle">02 / 英文主讀｜Bodoni SC × Chiron 200 · 同字號</div><div class="plate inverse" id="plateEn"><div class="plateInner" id="viewportEn"><div class="forme" id="formeEn"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricEn" class="metrics"></div></article>
 </div><section class="source"><div><h3>CHINESE UNION VERSION / 源文分行</h3><div class="zhPoem" id="zhPoem"></div></div><div><h3>KING JAMES VERSION / SOURCE LINES</h3><div class="enPoem" id="enPoem"></div></div></section></main></div>
@@ -493,18 +497,36 @@ const p2Sections=[
  {id:'07',zh:'白晝咖啡館',en:'DAYLIGHT CAFÉ',color:'#B8944A',ink:'#252525',latinInk:'#FFF9E9'}
 ];
 let activeP2='02';
+let activeTheme=null;
+// Only documentary-backed themes are selectable. Do not guess mottos for
+// other tools, nor silently reuse a P2 chapter verse as their product verse.
+const toolThemes=[
+ {id:'HOME',zh:'首頁',en:'HOME',color:'#102A43',ink:'#FAF9F5',latinInk:'#F3D77B',source:'scripture-studio-poetry-v18.html · Romans 13:12'},
+ {id:'ONE',zh:'one 查經',en:'ONE',color:'#738A5A',ink:'#FAF9F5',latinInk:'#F3D77B',source:'user-designated Psalm 36:9'}
+];
+function renderToolPalette(){
+ const nav=$('toolPalette');nav.replaceChildren();
+ const caption=document.createElement('span');caption.className='toolPaletteTitle';caption.textContent='HOME / TOOLS';nav.append(caption);
+ for(const item of toolThemes){
+  const button=document.createElement('button');button.type='button';button.textContent=item.zh+' / '+item.en;
+  button.setAttribute('aria-pressed',String(activeTheme===item.id));
+  button.title=item.source;
+  button.onclick=()=>{activeTheme=item.id;activeP2=null;renderP2Palette();renderToolPalette();updatePassageForRealm(item.id)};
+  nav.append(button);
+ }
+}
 function renderP2Palette(){
  const el=$('p2Palette');el.replaceChildren();
  for(const item of p2Sections){
   const b=document.createElement('button');b.type='button';b.style.setProperty('--swatch',item.color);b.style.setProperty('--swatchInk',item.ink);
-  b.setAttribute('aria-pressed',String(item.id===activeP2));b.setAttribute('aria-label',item.id+' '+item.zh+' / '+item.en);
+  b.setAttribute('aria-pressed',String(!activeTheme&&item.id===activeP2));b.setAttribute('aria-label',item.id+' '+item.zh+' / '+item.en);
   const n=document.createElement('span');n.className='p2Numeral';n.textContent=item.id;
   const name=document.createElement('span');name.className='p2Label';name.textContent=item.zh;
-  b.append(n,name);b.onclick=()=>{const prior=activeP2;activeP2=item.id;if(prior!==activeP2)updatePassageForRealm(activeP2);renderP2Palette()};el.append(b);
+  b.append(n,name);b.onclick=()=>{const prior=activeP2,wasTool=!!activeTheme;activeP2=item.id;activeTheme=null;if(prior!==activeP2||wasTool)updatePassageForRealm(activeP2);renderP2Palette();renderToolPalette()};el.append(b);
  }
- const item=p2Sections.find(x=>x.id===activeP2);
+ const item=activeTheme?toolThemes.find(x=>x.id===activeTheme):p2Sections.find(x=>x.id===activeP2);
  $('p2SectionTitle').textContent=item.en+' / '+item.zh;
- $('p2SectionCaption').textContent='P2 / '+item.id+' · EDITORIAL COLOR FIELD';
+ $('p2SectionCaption').textContent=activeTheme?'HOME / TOOLS · SCRIPTURE STUDY':'P2 / '+item.id+' · EDITORIAL COLOR FIELD';
  $('scriptureWork').dataset.p2Section=item.id;
  $('scriptureWork').style.setProperty('--section-bg',item.color);
  $('scriptureWork').style.setProperty('--section-text',item.ink);
@@ -516,6 +538,12 @@ function renderP2Palette(){
 // The original Isaiah 62:6 candidate family is preserved as the Magazine baseline.
 // Other realm texts remain editorial trials until source and Chiron glyph coverage pass.
 const realmVerseData={
+ 'HOME':{reference:{zh:'羅馬書',en:'Romans',chapterVerse:'13:12'},
+  zh:'黑夜已深，|白晝將近；|我們就當脫去|暗昧的行為，|帶上光明的兵器。',
+  en:'The night is far spent, |the day is at hand: |let us therefore |cast off the works of darkness, |and let us put on |the armour of light.'},
+ 'ONE':{reference:{zh:'詩篇',en:'Psalms',chapterVerse:'36:9'},
+  zh:'因為在你那裡|有生命的源頭；|在你的光中，|我們必得見光。',
+  en:'For with thee |is the fountain of life: |in thy light |shall we see light.'},
  '01':{reference:{zh:'約翰福音',en:'John',chapterVerse:'7:38'},
   zh:'信我的人|就如經上|所說：|『從他腹中|要流出|活水的|江河來。』」',
   en:'He that believeth |on me, |as the scripture |hath said, |out of his belly |shall flow |rivers of |living water.'},
@@ -815,16 +843,20 @@ new ResizeObserver(fit).observe($('viewportZh'));new ResizeObserver(fit).observe
 const p2Params=new URLSearchParams(location.search);
 const sectionFromUrl=p2Params.get('section')||p2Params.get('p2');
 if(p2Sections.some(x=>x.id===sectionFromUrl))activeP2=sectionFromUrl;
+const themeFromUrl=(p2Params.get('theme')||'').toUpperCase();
+if(toolThemes.some(x=>x.id===themeFromUrl)){activeTheme=themeFromUrl;activeP2=null}
 if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
 addEventListener('message',event=>{
  if(event.origin!==location.origin)return;
  const data=event.data;
  if(data?.type==='WESTSIDE_P2_SECTION'&&p2Sections.some(x=>x.id===data.section)){
-  activeP2=data.section;renderP2Palette();
+  activeTheme=null;activeP2=data.section;updatePassageForRealm(activeP2);renderP2Palette();renderToolPalette();
  }
 });
-if(activeP2!=='02')updatePassageForRealm(activeP2);
+if(activeTheme)updatePassageForRealm(activeTheme);
+else if(activeP2!=='02')updatePassageForRealm(activeP2);
 renderP2Palette();
+renderToolPalette();
 startup();
 </script>
 </body></html>
