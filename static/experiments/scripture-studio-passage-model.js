@@ -87,5 +87,54 @@
     renderEligible:z.reviewed&&e.reviewed,
     reason:z.reviewed&&e.reviewed?'READY_FOR_VISUAL_QA':'BREAKPOINTS_REQUIRE_EDITORIAL_REVIEW'};
  }
- root.ScriptureStudioPassageModel=Object.freeze({passage,referenceLabel,tokenBoundaries,legalBreaks,designParameters,audit,version:'1.0.0'});
+ // General mixed-run grammar. Input is editorially chosen semantic units, never
+ // automatically chopped glyphs. Returns source-exact candidates or a no-solution state.
+ function runSignatures(zhUnits,enUnits,maxVariants=12){
+  assert(Array.isArray(zhUnits)&&Array.isArray(enUnits)&&zhUnits.every(Boolean)&&enUnits.every(Boolean),
+   'BILINGUAL_APPROVED_UNITS_REQUIRED');
+  const out=[],seen=new Set();
+  const bounds=Math.min(zhUnits.length,enUnits.length);
+  const distribute=(total,bands,seed)=>{
+   const sizes=Array(bands).fill(1);
+   for(let n=0;n<total-bands;n++)sizes[(n*(seed%3+1)+seed+Math.floor(n/bands))%bands]++;
+   return sizes;
+  };
+  const alternate=(z,e,seed)=>{
+   let run='',last='';
+   while(z||e){
+    const lang=!z?'E':!e?'Z':last==='Z'?'E':last==='E'?'Z':seed%2?'E':'Z';
+    run+=lang;last=lang;if(lang==='Z')z--;else e--;
+   }
+   return run;
+  };
+  for(let bands=1;bands<=bounds;bands++)for(let variant=0;variant<maxVariants;variant++){
+   const z=distribute(zhUnits.length,bands,variant+1);
+   const e=distribute(enUnits.length,bands,(variant+3)*2);
+   const signatures=z.map((n,i)=>alternate(n,e[i],variant+i));
+   const switches=signatures.map(sig=>[...sig].slice(1).filter((c,i)=>c!==sig[i]).length);
+   if(switches.filter(n=>n>=2).length<Math.floor(bands/2)+1)continue;
+   const key=signatures.join('/');
+   if(seen.has(key))continue;seen.add(key);
+   out.push({signatures,variant,count:bands});
+  }
+  return out;
+ }
+ function verifyMixedRuns(zhUnits,enUnits,signatures){
+  let zi=0,ei=0,zh='',en='',multi=0;
+  for(const sig of signatures){
+   if(!sig.includes('Z')||!sig.includes('E'))return {ok:false,reason:'NOT_BILINGUAL'};
+   const switches=[...sig].slice(1).filter((c,i)=>c!==sig[i]).length;
+   if(switches>=2)multi++;
+   for(const code of sig){
+    if(code==='Z')zh+=zhUnits[zi++]||'';
+    else if(code==='E')en+=enUnits[ei++]||'';
+    else return {ok:false,reason:'UNKNOWN_LANGUAGE'};
+   }
+  }
+  const exact=zi===zhUnits.length&&ei===enUnits.length&&
+   zh===zhUnits.join('')&&en===enUnits.join('');
+  return {ok:exact&&multi>=Math.floor(signatures.length/2)+1,
+   exact,multi,bands:signatures.length};
+ }
+ root.ScriptureStudioPassageModel=Object.freeze({passage,referenceLabel,tokenBoundaries,legalBreaks,designParameters,audit,runSignatures,verifyMixedRuns,version:'1.1.0'});
 })(typeof window!=='undefined'?window:globalThis);
