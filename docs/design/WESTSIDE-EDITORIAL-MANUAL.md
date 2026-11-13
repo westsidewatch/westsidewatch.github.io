@@ -185,4 +185,54 @@ These files remain archived intact; they do not operate as independent OS author
 
 **權限界線：** 「多雷探索」本身不授權更改主站資訊架構、替換已驗收設計、擅自合併分支或新增全站 CSS／JavaScript 入口；涉及正式頁面的修改仍須遵守本手冊第 1、6 節及現有 Design OS 與發布驗收程序。
 
+### 9.5 GitHub 工程讀寫能力：每次施工必須實測，不得無根據否認
+
+**已驗證事實（2026-11-07）：** 在 Westside Watch 對話工程環境中，ChatGPT 曾透過已連接的 GitHub 工具成功讀取、建立、修改及提交本倉庫檔案。可用操作包括 `mcp__GitHub__fetch_file`、`mcp__GitHub__create_file`、`mcp__GitHub__update_file` 及 `mcp__GitHub__get_pr_info`。已實際寫入 `westsidewatch/westsidewatch.github.io` 的 Draft PR #1385（分支 `draft/p2-0104-olive-entry-20261105`）；例如提交 `143f414d6f848c0cd87942d0e6c242ea6cdf0aae`。**因此不可因對話變長、思考強度改變或不確定工具名稱，就自行聲稱「我沒有 GitHub 寫入權限」。**
+
+**每次進入工程、尤其在 Medium／High 切換或對話續接之後：**
+1. 先查當前工作階段實際可用的 GitHub 工具，再以 `get_pr_info` 確認 PR、Draft 狀態、head commit 與施工分支；必要時 `fetch_file` 讀取現有檔案和最新 blob SHA。
+2. 如果 `update_file`／`create_file` 可用且操作在已授權的 Draft 工程範圍內，就直接修改、提交、核對 commit 與測試；不要讓使用者反覆提醒已有寫入能力，也不要退回只提供 patch 或施工規格。
+3. 若工具在**當前工作階段經過實際檢查後**確實不可用，才準確報告這一事實；不得把「尚未核查工具」誤說成「無權限」。
+4. 將**讀寫能力**、**特定分支的修改授權**、**CI 通過**與**Cloudflare 部署完成**分別核實；工具可用不代表永久可用，寫入成功亦不代表通過藝術或部署驗收。
+5. 保護正式主站與已發布 01–03：P2 04 工作僅限已授權的 Draft PR；未經要求不可合併 main、改寫既有正式版本或更改已核准的十二張海報及英文排版。
+
+**錯誤案例：** 2026-11-06 至 11-07 曾在已多次成功提交 GitHub 的前提下，錯誤答覆「沒有寫入工具／不能修改倉庫」，經使用者要求重新檢查才承認工具存在。這是未核查造成的能力判斷錯誤，**不能證實**由 High／Medium 切換造成。今後必須以工具實測取代猜測。
+
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
+
+
+## 10. 伯利恆一日 / Bethlehem — A Day / Scripture Calendar
+
+**正式名稱與資訊架構：** `伯利恆一日 / Bethlehem` 是 Journal/WATCH 的固定欄目；`A Day` 是其每日／即時內容形式，**不是**第十三個欄目。「每日靈糧」只作內容功能描述。詳見 `docs/MASTER_SITE_ARCHITECTURE.md` §2–3。
+
+**現已作為獨立工程立項：** `docs/projects/scripture-studio/SCRIPTURE-STUDIO-PROJECT-CHARTER-2026-11-08.md`。它包含經文印記藝術母本、直接在發布表面編輯的 Scripture Editor、以及伯利恆一日聖經日曆的審核與每日定時發布。此章為編輯權威，該 Charter 為具體產品交付與工程界線；不創建第二套 OS。
+
+### 10.1 每日三層內容——作品、主文、分享
+
+1. **今日經文作品：** 當日選經可有三節，但只擷取其中最有力量的一節、半節或若干**準確原文字詞**，以 Scripture Seal 藝術 DNA 呈現為作品級經文；不強制把全部所選節文放進作品。陰陽印版、中英字體配對、疏密與版心秩序保持品牌一致；每日可有不同構圖，不堆疊外框、裝飾線、`THE WORD / 經文` 等多餘標籤。
+2. **當日主文經文：** 當日選定的**全部節文**以正確順序、準確譯本與可追溯出處呈現（選三節就提供三節），可作乾淨的通用 Folio 閱讀。藝術節錄不可冒充完整引文，不可把 AI 轉述當成聖經原文。
+3. **當日理解／分享：** 根據經文上下文、日期與節期背景形成清楚的編輯／牧養理解；與聖經引文清楚區隔。編輯審核人確認神學與來源後才能發布。
+
+### 10.2 每日內容如何形成
+
+採用 `America/Toronto` 本地日期，優先核對教會年、當日節期／節日／紀念日、教會當年主題、一般每日讀經脈絡。節期標籤必須有可靠出處，不虛構固定的節期選經規則。人工或研究工具可提出候選經文及素材，但經文原文必須來源驗證，分享與設計經過明確審核。
+
+### 10.3 高頻使用形成識別
+
+**作品級的不是每天三節經文全部，而是每天從其中提煉的一個文字作品。** 每日持續呈現印記系統的同一套字體、字重關係、雙語視覺節奏、陰陽與留白 DNA，逐年累積成 Westside Watch 可按日期檢索、收藏、回顧、分享的**聖經日曆**。作品可以混排，日常閱讀版式從完成的作品萃取 DNA，但不強制混排。
+
+### 10.4 出版與編輯器界線
+
+伯利恆一日須能在可見編輯畫面完成：選經→標出作品重點→即時排版預覽→編輯主文與理解→審核→設定發佈日期時間→每日定時發佈→永久日期頁與檔案。**每日定時發佈必須以已核准的不可變版本為依據，不自動杜撰當日經文或無人審核的分享。** 發布失敗不能以未審內容代替；排程要支援多倫多夏令時間、重試、避免重複刊登及版本紀錄。
+
+現階段為**工程立項與編輯規範**，尚未聲稱編輯器、每日排程或日曆已上線。不得因編輯手冊文字直接覆寫已驗收主站／P2 頁面。
+
+## Scripture Studio — Official Small Caps typeface (2026-11-10)
+
+**Approved English typeface for Scripture Seal / the 07 mixed letterpress composition:** **Bodoni Moda SC** — designed by **Owen Earl / indestructible type***. This is a **distinct authentic Small Caps font family**, NOT Bodoni Moda Roman, not EB Garamond, not merely uppercased text. License: **SIL Open Font License 1.1**, permitting web and print use subject to license conditions. Original project: https://github.com/indestructible-type/Bodoni ; authoritative distributor and downloadable self-hostable WOFF2 package: https://fontsource.org/fonts/bodoni-moda-sc/use ; npm: `@fontsource-variable/bodoni-moda-sc` (family name `Bodoni Moda SC Variable`), variable weights 400–900, optical size 6–96. When using the static font family, use `Bodoni Moda SC` at 400 for the Seal master.
+
+**All Small Caps requirement:** keep source KJV case and punctuation intact. Render with the actual SC font plus `font-variant-caps:all-small-caps`; when available, activate OpenType `smcp` and `c2sc` and validate actual glyph substitution. Do **not** use `text-transform:uppercase` or synthesize fake small caps, and do **not** infer success from CSS computed style alone. Even though the face is a Small Caps family, inspect its actual GSUB tables and browser rendering, because static SC faces can encode petite/full caps differently. If the correct font file or real glyphs fail to load, block approval and clearly report FONT_UNVERIFIED.
+
+**Chinese Seal weights:** `Chiron Hei HK WS` (genuine Chiron Hei HK webfont) Heavy **900** for Chinese-primary Seal and ExtraLight **200** for Chinese as English-primary countertype. Chiron official documented weight axis **200–900**: https://github.com/chiron-fonts/chiron-hei-hk/blob/release/README.en.md . The sitewide OS semantic heading token **600** is NOT a substitute for this artwork's Heavy **900**; do not change the OS global token to accomplish the artwork-specific requirement. Use actual font-face inspection and glyph capture, not CSS numbers alone.
+
+**07 design acceptance:** all bilingual scripture exact; authoritative poetry lines and editor-approved secondary breaks before geometry; one mixed mother forme and two reading orientations; varied crossings within strips rather than repeated ZH–EN pairs; strict majority non-50/50; measure **actual ink silhouette** as well as DOM bounding boxes in both axes; determine artboard dimensions and inter-strip rhythm from text, never auto-shrink glyphs to fit. Neither a failed font-gate screenshot nor a nice-looking fallback-raster mockup constitutes approved art. Isolated experimental pages must not affect main P2 without review.

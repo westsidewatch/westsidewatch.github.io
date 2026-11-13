@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scripture Studio · Type Seal Generator V1</title>
+<style>
+:root{color-scheme:light;--paper:#faf9f5;--ink:#252525;--olive:#738a5a;--gold:#a2872a}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}
+header{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid #d5d1c9;padding:16px clamp(16px,3vw,48px);gap:10px}
+h1{font:600 clamp(19px,2vw,26px)/1.2 Georgia,serif;margin:0}small,.hint{color:#6a6b66}.sub{font-size:12px;letter-spacing:.14em}
+main{display:grid;grid-template-columns:minmax(285px,345px) minmax(350px,1fr);min-height:calc(100dvh - 67px)}
+aside{border-right:1px solid #dedad0;padding:20px;display:grid;align-content:start;gap:14px}
+label{display:grid;font-size:12px;font-weight:600;gap:5px}
+input,textarea,select,button{font:inherit;border:1px solid #bdbbb4;border-radius:4px;padding:10px;background:#fff;color:#202b20;min-width:0}
+textarea{resize:vertical;min-height:84px}input[type=range]{width:100%;padding:0}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{cursor:pointer}button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.action{background:#263d2b;color:#fff;border-color:#263d2b}button:hover{filter:brightness(.96)}
+.workspace{padding:clamp(12px,3.2vw,45px);display:grid;align-content:start;gap:18px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:12px}
+.board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,3vw,48px);align-items:start}
+.art{aspect-ratio:1;position:relative;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.08);background:#f5f1e7;color:#263d2b;container-type:inline-size;user-select:text}
+.art.negative{background:#263d2b;color:#f5f1e7}
+.type-block{position:absolute;inset:8.5%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;column-gap:4%;row-gap:3%}
+.art.alt .type-block{grid-template-columns:1fr;grid-template-rows:auto 1fr auto}
+.english{min-width:0;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:0;font:500 clamp(10px,3.55cqi,36px)/1.11 Georgia,"Times New Roman",serif;letter-spacing:-.045em;overflow:hidden;overflow-wrap:anywhere}
+.english .en-line{display:block}
+.chinese{min-height:0;min-width:0;display:flex;gap:1.8%;flex-direction:row-reverse;align-items:center;justify-content:center}
+.ch-col{writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-weight:700;font-size:clamp(14px,5.9cqi,62px);letter-spacing:-.095em;line-height:1;max-height:100%;text-align:center}
+.art.alt .chinese{flex-direction:row;justify-content:space-between;align-items:stretch}
+.art.alt .ch-col{writing-mode:horizontal-tb;white-space:normal;text-wrap:balance;line-height:1.15;font-size:clamp(16px,5.4cqi,55px)}
+.art.alt .english{display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:5%;overflow:hidden;font-size:clamp(12px,4cqi,42px)}
+.art.alt .english .en-line{writing-mode:vertical-rl;transform:none;white-space:nowrap;max-height:100%}
+.citation{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:5px;font:500 clamp(9px,2.2cqi,22px)/1.2 Georgia,"Noto Serif TC",serif;border-top:1px solid currentColor;padding-top:3%;opacity:.88}
+.citation span:last-child{text-align:right}
+.art.alt .citation{border-top:0}
+.art::before{content:"";position:absolute;inset:0;pointer-events:none;border:0}
+.art .type-block{transform:scale(var(--type-scale,1));transform-origin:center;transition:none}
+.art[data-stage="0"] .chinese,.art[data-stage="0"] .english,.art[data-stage="0"] .citation{opacity:0}
+.art[data-stage="1"] .english,.art[data-stage="1"] .citation{opacity:0}
+.art[data-stage="2"] .citation{opacity:0}
+.note{font-size:12px;color:#5d625b;max-width:760px}
+.art-title{font-size:11px;letter-spacing:.13em;color:#636b62;margin-bottom:8px}
+footer{padding:15px clamp(16px,3vw,48px);border-top:1px solid #ddd;color:#777;font-size:12px}
+@media(max-width:850px){main{display:block}aside{border-right:0;border-bottom:1px solid #ddd}.board{gap:12px}.workspace{padding:18px}}
+@media(max-width:560px){.board{grid-template-columns:1fr;max-width:470px;margin:auto;width:100%}.english{font-size:4cqi}.ch-col{font-size:6.6cqi}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head>
+<body>
+<header><div><h1>Scripture Studio <span class="sub">/ TYPE SEAL GENERATOR · V1</span></h1><small>東西鉛字交叉 · 雙向字印生成器 / 隔離工程試作</small></div><span class="sub">WESTSIDE WATCH</span></header>
+<main><aside>
+<label>經文樣本 / PRESET<select id="preset"></select></label>
+<label>中文作品節錄<textarea id="zh" spellcheck="false"></textarea></label>
+<label>英文作品節錄<textarea id="en" spellcheck="false"></textarea></label>
+<div class="controls"><label>中文出處<input id="zhRef"></label><label>English citation<input id="enRef"></label></div>
+<div class="controls"><label>中文直排列數<select id="columns"><option value="2">2 列</option><option value="3" selected>3 列</option><option value="4">4 列</option></select></label><label>印記密度<select id="density"><option value=".86">寬鬆</option><option value="1" selected>標準</option><option value="1.10">緊密</option></select></label></div>
+<label>排字／落印進度 <span id="stageText">完成</span><input type="range" id="stage" min="0" max="3" step="1" value="3"></label>
+<div class="controls"><button id="reverse">陰陽換位</button><button id="reset">恢復經文樣本</button></div>
+<div class="controls"><button id="exportSvg" class="action">匯出 SVG 雙印</button><button id="exportJson">匯出配方 JSON</button></div>
+<p class="hint">中文字句依照列數分配字柱，英文依照單字分行。兩枚印記共用相同經文與排字配方，分別試驗中文直排／英文橫排，以及中文橫排／英文直排。可直接編輯並即時重新排版。</p>
+</aside>
+<section class="workspace">
+<div class="toolbar"><span>實際 HTML 文字排版 / 可選取、可響應</span><span id="measure">桌面雙印預覽</span></div>
+<div class="board">
+<div><div class="art-title">陽文 / 中文縱軸 × 英文橫軸</div><div class="art positive" id="positive" data-stage="3"><div class="type-block"><div class="english"></div><div class="chinese"></div><div class="citation"></div></div></div></div>
+<div><div class="art-title">陰文 / 中文橫軸 × 英文縱軸</div><div class="art negative alt" id="negative" data-stage="3"><div class="type-block"><div class="chinese"></div><div class="english"></div><div class="citation"></div></div></div></div>
+</div>
+<p class="note">作品進度：原生可編輯生成器第一版，非視覺定稿。這裡沒有插圖、外框或固定「THE WORD」標籤。中文與英文的斷行、比例與交叉構圖仍待藝術驗收；預設經文中特別註明的候選主題不可視為工程正式定案。</p>
+</section></main>
+<footer>Scripture Studio · Design OS-compatible isolated prototype · Not published to the main site · Bible excerpts must be checked against the canonical scripture registry before public use.</footer>
+<script>
+"use strict";
+const presets=[
+["HOME · 羅馬書 13:12","黑夜已深，白晝將近。","The night is far spent, the day is at hand.","羅馬書 13:12","ROMANS 13:12"],
+["01 · 活水堂","除他以外，別無拯救。","Neither is there salvation in any other.","使徒行傳 4:12","ACTS 4:12"],
+["02 · 西望","我在你城上設立守望的。","I have set watchmen upon thy walls.","以賽亞書 62:6","ISAIAH 62:6"],
+["03 · 以馬忤斯","凡經上所指著自己的話，都給他們講解明白了。","He expounded unto them in all the scriptures the things concerning himself.","路加福音 24:27","LUKE 24:27"],
+["04 · 橄欖山","可見信道是從聽道來的。","So then faith cometh by hearing.","羅馬書 10:17","ROMANS 10:17"],
+["05 · 黎明書局 [候選]","你的話是我腳前的燈，是我路上的光。","Thy word is a lamp unto my feet, and a light unto my path.","詩篇 119:105","PSALM 119:105"],
+["06 · 天堂電影院 [候選]","將這默示明明地寫在版上。","Write the vision, and make it plain upon tables.","哈巴谷書 2:2","HABAKKUK 2:2"],
+["07 · 白晝咖啡館 [候選]","有小麥、大麥、葡萄樹、無花果樹、石榴樹、橄欖樹，和蜜。","A land of wheat, and barley, and vines, and fig trees, and pomegranates; a land of oil olive, and honey.","申命記 8:8","DEUTERONOMY 8:8"]
+];
+const $=id=>document.getElementById(id);
+const ids=["zh","en","zhRef","enRef","columns","density","stage"];
+const preset=$("preset");
+presets.forEach((p,i)=>{const o=document.createElement("option");o.value=i;o.textContent=p[0];preset.append(o)});
+function load(){const p=presets[Number(preset.value)];["zh","en","zhRef","enRef"].forEach((k,i)=>$(k).value=p[i+1]);render()}
+function splitChinese(raw,n){
+const chars=Array.from(raw.replace(/\s/g,""));
+const chunks=[];let start=0;
+for(let i=0;i<n;i++){let len=Math.ceil((chars.length-start)/(n-i));chunks.push(chars.slice(start,start+len).join(""));start+=len}
+return chunks.filter(Boolean);
+}
+function splitEnglish(raw,n){
+const words=raw.trim().split(/\s+/).filter(Boolean);let chunks=Array(n).fill("");let lengths=Array(n).fill(0);
+for(const word of words){let i=lengths.indexOf(Math.min(...lengths));chunks[i]+=(chunks[i]?" ":"")+word;lengths[i]+=word.length+1}
+return chunks.filter(Boolean);
+}
+function node(tag,klass,text){const e=document.createElement(tag);e.className=klass;e.textContent=text;return e}
+function renderArt(el,alt){
+const zh=$("zh").value,en=$("en").value;
+const cn=splitChinese(zh,Number($("columns").value));
+const eg=splitEnglish(en,alt?Math.min(4,Math.max(2,Math.ceil(en.length/14))):Math.min(5,Math.max(2,Math.ceil(en.length/15))));
+const ch=el.querySelector(".chinese"),eng=el.querySelector(".english"),ref=el.querySelector(".citation");ch.replaceChildren();eng.replaceChildren();ref.replaceChildren();
+cn.forEach(s=>ch.append(node("span","ch-col",s)));
+eg.forEach(s=>eng.append(node("span","en-line",s)));
+ref.append(node("span","", $("zhRef").value),node("span","", $("enRef").value));
+el.style.setProperty("--type-scale",$("density").value);
+el.dataset.stage=$("stage").value;
+}
+function render(){renderArt($("positive"),false);renderArt($("negative"),true);$("stageText").textContent=["空版","中文排入","英文交叉","完成落印"][Number($("stage").value)]}
+ids.forEach(x=>$(x).addEventListener("input",render));
+preset.addEventListener("change",load);
+$("reset").addEventListener("click",load);
+$("reverse").addEventListener("click",()=>{const a=$("positive"),b=$("negative");a.classList.toggle("negative");a.classList.toggle("positive");b.classList.toggle("negative");b.classList.toggle("positive")});
+function download(name,data,mime){const a=document.createElement("a"),url=URL.createObjectURL(new Blob([data],{type:mime}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$("exportJson").addEventListener("click",()=>{const x={schema:"scripture-studio-type-seal-v1",preset:presets[Number(preset.value)][0]};ids.forEach(k=>x[k]=$(k).value);download("scripture-seal-recipe.json",JSON.stringify(x,null,2),"application/json")});
+function xml(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function makeSvg(){
+const z=$("zh").value,e=$("en").value,cn=splitChinese(z,Number($("columns").value)),eng=splitEnglish(e,4);
+const panel=(x,negative,alt)=>{
+const bg=negative?"#263d2b":"#f5f1e7",fg=negative?"#f5f1e7":"#263d2b",s=[];
+s.push('<g transform="translate('+x+' 0)"><rect width="600" height="600" fill="'+bg+'"/>');
+if(!alt){const cs=Math.min(54,300/(Math.ceil(z.length/cn.length)+1));cn.forEach((line,i)=>{Array.from(line).forEach((char,j)=>s.push('<text x="'+(555-i*cs*1.18)+'" y="'+(78+j*cs*1.15)+'" fill="'+fg+'" font-family="serif" font-size="'+cs+'" font-weight="700" text-anchor="middle">'+xml(char)+'</text>'))});
+eng.forEach((line,i)=>s.push('<text x="46" y="'+(140+i*67)+'" fill="'+fg+'" font-family="Georgia,serif" font-size="39">'+xml(line)+'</text>'))
+}else{
+const size=Math.min(48,440/Math.max(...cn.map(c=>c.length)));cn.forEach((line,i)=>s.push('<text x="48" y="'+(90+i*size*1.35)+'" fill="'+fg+'" font-family="serif" font-size="'+size+'" font-weight="700">'+xml(line)+'</text>'));
+eng.forEach((line,i)=>{Array.from(line).forEach((char,j)=>s.push('<text x="'+(70+i*116)+'" y="'+(310+j*19)+'" fill="'+fg+'" font-size="21" font-family="Georgia,serif">'+xml(char)+'</text>'))});
+}
+s.push('<text x="45" y="568" fill="'+fg+'" font-size="19" font-family="serif">'+xml($("zhRef").value)+'</text><text x="555" y="568" text-anchor="end" fill="'+fg+'" font-size="18" font-family="Georgia,serif">'+xml($("enRef").value)+'</text></g>');return s.join("")
+};
+return '<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="600" viewBox="0 0 1240 600">'+panel(0,false,false)+panel(640,true,true)+'</svg>'
+}
+$("exportSvg").addEventListener("click",()=>download("scripture-seal-dual-v1.svg",makeSvg(),"image/svg+xml;charset=utf-8"));
+$("measure").textContent=window.innerWidth<560?"單欄雙印預覽":"雙印對照";
+load();
+</script></body></html>

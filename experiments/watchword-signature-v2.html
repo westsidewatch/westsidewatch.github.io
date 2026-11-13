@@ -1,0 +1,94 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Watchword V2 / Westside Watch Scripture Signature</title><style>
+@import url('/css/westside-design-os.css');
+@import url('/css/westside-color-authority.css');
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ws-paper,#faf9f5);color:var(--ws-ink,#252525)}
+main{width:min(1460px,100%);margin:auto;padding:36px clamp(14px,3vw,52px) 100px}
+h1,h2,p,figure,blockquote{margin:0}
+.label{margin:0 0 16px;font:400 12px/1.3 var(--ws-type-display-en,serif);letter-spacing:.19em;color:var(--ws-ink)}
+.series{display:grid;gap:80px}
+.ww{--field:var(--ws-papyrus,#eee4c9);--ink:var(--ws-ink,#252525);--accent:var(--ws-first-light,#a2872a);position:relative;isolation:isolate;overflow:hidden;color:var(--ink);background:var(--field);min-width:0}
+.ww--hero{min-height:770px;padding:clamp(28px,4.5vw,80px)}
+.ww__index{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;border-top:1px solid color-mix(in oklab,var(--accent) 68%,transparent);padding-top:14px;font:400 11px/1.2 var(--ws-type-display-en,serif);letter-spacing:.2em}
+.ww__index b{font-weight:400;font-style:italic;letter-spacing:.03em;font-size:15px}
+.ww__space{min-height:clamp(95px,12vw,175px)}
+.ww__content{position:relative;display:grid;grid-template-columns:minmax(0,.28fr) minmax(0,.72fr);column-gap:clamp(18px,5vw,72px);align-items:end}
+.ww__side{align-self:stretch;display:flex;flex-direction:column;justify-content:flex-end;gap:13px;padding-bottom:5px}
+.ww__number{font:italic 400 clamp(48px,8vw,120px)/.8 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.07em;color:var(--accent)}
+.ww__book{font:200 clamp(13px,1.4vw,20px)/1.5 var(--ws-type-display-zh,sans-serif);letter-spacing:.09em}
+.ww__reference{font:italic 400 clamp(36px,5vw,80px)/1.02 var(--ws-type-display-en,Georgia,serif);text-align:right;letter-spacing:-.055em;color:var(--accent);margin-bottom:24px;white-space:nowrap}
+.ww__verse-zh{font:600 clamp(33px,4.7vw,82px)/1.28 var(--ws-type-display-zh,sans-serif);letter-spacing:-.025em;text-align:right;text-wrap:pretty}
+.ww__verse-zh .line{display:block;white-space:nowrap}
+.ww__axis{display:flex;gap:22px;align-items:flex-start;margin:clamp(34px,5vw,70px) 0 0 auto;width:min(790px,100%);border-top:1px solid var(--accent);padding-top:22px}
+.ww__axis::before{content:"";flex:0 0 56px;display:block;border-top:5px solid var(--accent);margin-top:-25px}
+.ww__verse-en{font:400 clamp(20px,2vw,31px)/1.26 var(--ws-type-display-en,Georgia,serif);font-style:italic;text-wrap:pretty;text-align:left;max-width:630px}
+.ww__footer{display:flex;justify-content:space-between;gap:15px;margin-top:clamp(60px,8vw,115px);border-bottom:1px solid color-mix(in oklab,var(--accent) 68%,transparent);padding-bottom:13px;font:400 11px/1.4 var(--ws-type-display-en,serif);letter-spacing:.14em}
+.ww__footer span:last-child{text-align:right}
+.ww--olive{--field:color-mix(in oklab,var(--ws-olive,#738a5a) 20%,var(--ws-paper,#faf9f5));--accent:var(--ws-olive,#738a5a);padding:clamp(24px,4vw,55px);min-height:560px}
+.ww--olive .ww__space{min-height:65px}
+.ww--olive .ww__content{grid-template-columns:minmax(0,.25fr) minmax(0,.75fr)}
+.ww--olive .ww__reference{font-size:clamp(34px,4.4vw,60px)}
+.ww--olive .ww__verse-zh{font-size:clamp(27px,3.4vw,50px)}
+.ww--olive .ww__verse-en{font-size:clamp(19px,2vw,27px)}
+.ww--olive .ww__footer{margin-top:55px}
+.ww--pull{--field:var(--ws-paper,#faf9f5);padding:clamp(25px,4vw,55px);max-width:900px}
+.ww--pull .ww__space{min-height:30px}
+.ww--pull .ww__content{grid-template-columns:130px 1fr}
+.ww--pull .ww__number{font-size:70px}
+.ww--pull .ww__reference{font-size:clamp(30px,4vw,55px)}
+.ww--pull .ww__verse-zh{font-size:clamp(27px,3vw,45px)}
+.ww--pull .ww__verse-en{font-size:22px}
+.ww--pull .ww__footer{margin-top:38px}
+.ww--small{--field:var(--ws-paper,#faf9f5);max-width:410px;padding:22px}
+.ww--small .ww__index{font-size:9px;padding-top:10px}
+.ww--small .ww__space{min-height:34px}
+.ww--small .ww__content{display:block}
+.ww--small .ww__side{flex-direction:row;align-items:baseline;gap:12px;margin-bottom:12px}
+.ww--small .ww__number{font-size:39px}
+.ww--small .ww__book{font-size:12px}
+.ww--small .ww__reference{font-size:32px;margin-bottom:17px}
+.ww--small .ww__verse-zh{font-size:27px;text-align:left;line-height:1.4}
+.ww--small .ww__verse-zh .line{white-space:normal}
+.ww--small .ww__axis{margin-top:26px;gap:10px;padding-top:13px}
+.ww--small .ww__axis::before{flex-basis:24px;border-top-width:3px;margin-top:-15px}
+.ww--small .ww__verse-en{font-size:18px}
+.ww--small .ww__footer{margin-top:34px;font-size:9px}
+.ww--scroll{min-height:620px;padding:clamp(24px,4vw,65px);--field:var(--ws-papyrus,#eee4c9)}
+.ww--scroll .ww__space{min-height:80px}
+.ww--scroll .ww__reference{font-size:clamp(34px,5vw,70px)}
+.ww--scroll .ww__verse-zh{font-size:clamp(31px,4.4vw,66px)}
+.ww--scroll .ww__verse-en{font-size:clamp(19px,2vw,30px)}
+@media(max-width:800px){
+.ww--hero{min-height:620px}
+.ww__space{min-height:80px}
+.ww__content,.ww--olive .ww__content{grid-template-columns:minmax(0,.18fr) minmax(0,.82fr);gap:18px}
+.ww__number{font-size:clamp(40px,7vw,70px)}
+.ww__book{font-size:12px}
+.ww__reference{font-size:clamp(34px,5vw,56px)}
+.ww__verse-zh{font-size:clamp(28px,4.6vw,48px)}
+.ww__verse-zh .line{white-space:normal}
+.ww__axis{gap:14px}
+.ww__axis::before{flex-basis:34px}
+}
+@media(max-width:520px){
+main{padding:20px 10px 60px}.series{gap:45px}
+.ww,.ww--hero,.ww--olive,.ww--pull,.ww--scroll{padding:20px 17px;min-height:unset}
+.ww__index{font-size:9px}.ww__index b{font-size:12px}
+.ww__space,.ww--olive .ww__space,.ww--scroll .ww__space{min-height:80px}
+.ww__content,.ww--olive .ww__content,.ww--pull .ww__content{display:block}
+.ww__side{display:flex;flex-direction:row;align-items:baseline;gap:12px;margin-bottom:14px;justify-content:flex-start}
+.ww__number,.ww--pull .ww__number{font-size:50px}
+.ww__book{font-size:12px}
+.ww__reference,.ww--olive .ww__reference,.ww--pull .ww__reference,.ww--scroll .ww__reference{font-size:clamp(31px,9vw,47px);margin-bottom:24px}
+.ww__verse-zh,.ww--olive .ww__verse-zh,.ww--pull .ww__verse-zh,.ww--scroll .ww__verse-zh{font-size:clamp(27px,7.7vw,37px);line-height:1.4;text-align:left}
+.ww__axis{margin-top:30px;padding-top:15px;gap:12px}
+.ww__axis::before{flex-basis:22px;border-top-width:3px;margin-top:-17px}
+.ww__verse-en,.ww--olive .ww__verse-en,.ww--pull .ww__verse-en,.ww--scroll .ww__verse-en{font-size:19px}
+.ww__footer,.ww--olive .ww__footer{margin-top:70px;font-size:9px}
+.ww--small{padding:18px}
+.ww--small .ww__space{min-height:35px}
+.ww--small .ww__verse-zh{font-size:27px}
+.ww__index,.ww__footer{letter-spacing:.1em}
+}
+</style></head><body><main><h1 class="label">Watchword · Westside Watch bilingual Scripture identity / V2 · editorial proof</h1><div class="series"><section><h2 class="label">01 / Cover · type-driven composition</h2><figure class="ww ww--hero" aria-label="以賽亞書 55:9 中英經文設計"><div class="ww__index"><span>WESTSIDE WATCH / 西區守望</span><b>SCRIPTURE</b></div><div class="ww__space" aria-hidden="true"></div><div class="ww__content"><div class="ww__side"><span class="ww__number">55</span><span class="ww__book">以賽亞書</span></div><div><figcaption class="ww__reference">Isaiah 55:9</figcaption><blockquote><p class="ww__verse-zh"><span class="line">天怎樣高過地，</span><span class="line">照樣，我的道路</span><span class="line">高過你們的道路。</span></p><div class="ww__axis"><p class="ww__verse-en" lang="en">For as the heavens are higher than the earth, so are my ways higher than your ways.</p></div></blockquote></div></div><div class="ww__footer"><span>WATCH FOR THE DAWN</span><span>CUV · KJV / EXCERPT</span></div></figure></section><section><h2 class="label">02 / Section masthead · Olive Mountain</h2><figure class="ww ww--olive" aria-label="羅馬書 10:17 中英經文設計"><div class="ww__index"><span>WESTSIDE WATCH / 西區守望</span><b>SCRIPTURE</b></div><div class="ww__space" aria-hidden="true"></div><div class="ww__content"><div class="ww__side"><span class="ww__number">10</span><span class="ww__book">羅馬書</span></div><div><figcaption class="ww__reference">Romans 10:17</figcaption><blockquote><p class="ww__verse-zh"><span class="line">可見信道是從聽道來的，</span><span class="line">聽道是從基督的話來的。</span></p><div class="ww__axis"><p class="ww__verse-en" lang="en">So then faith cometh by hearing, and hearing by the word of God.</p></div></blockquote></div></div><div class="ww__footer"><span>WATCH FOR THE DAWN</span><span>CUV · KJV</span></div></figure></section><section><h2 class="label">03 / Editorial pull quotation</h2><figure class="ww ww--pull" aria-label="以賽亞書 55:9 中英經文設計"><div class="ww__index"><span>WESTSIDE WATCH / 西區守望</span><b>SCRIPTURE</b></div><div class="ww__space" aria-hidden="true"></div><div class="ww__content"><div class="ww__side"><span class="ww__number">55</span><span class="ww__book">以賽亞書</span></div><div><figcaption class="ww__reference">Isaiah 55:9</figcaption><blockquote><p class="ww__verse-zh"><span class="line">天怎樣高過地，</span><span class="line">照樣，我的道路</span><span class="line">高過你們的道路。</span></p><div class="ww__axis"><p class="ww__verse-en" lang="en">For as the heavens are higher than the earth, so are my ways higher than your ways.</p></div></blockquote></div></div><div class="ww__footer"><span>WATCH FOR THE DAWN</span><span>CUV · KJV / EXCERPT</span></div></figure></section><section><h2 class="label">04 / Small folio / emphasis</h2><figure class="ww ww--small" aria-label="羅馬書 10:17 中英經文設計"><div class="ww__index"><span>WESTSIDE WATCH / 西區守望</span><b>SCRIPTURE</b></div><div class="ww__space" aria-hidden="true"></div><div class="ww__content"><div class="ww__side"><span class="ww__number">10</span><span class="ww__book">羅馬書</span></div><div><figcaption class="ww__reference">Romans 10:17</figcaption><blockquote><p class="ww__verse-zh"><span class="line">可見信道是從聽道來的，</span><span class="line">聽道是從基督的話來的。</span></p><div class="ww__axis"><p class="ww__verse-en" lang="en">So then faith cometh by hearing, and hearing by the word of God.</p></div></blockquote></div></div><div class="ww__footer"><span>WATCH FOR THE DAWN</span><span>CUV · KJV</span></div></figure></section><section><h2 class="label">05 / Scroll narrative spread</h2><figure class="ww ww--scroll" aria-label="以賽亞書 55:9 中英經文設計"><div class="ww__index"><span>WESTSIDE WATCH / 西區守望</span><b>SCRIPTURE</b></div><div class="ww__space" aria-hidden="true"></div><div class="ww__content"><div class="ww__side"><span class="ww__number">55</span><span class="ww__book">以賽亞書</span></div><div><figcaption class="ww__reference">Isaiah 55:9</figcaption><blockquote><p class="ww__verse-zh"><span class="line">天怎樣高過地，</span><span class="line">照樣，我的道路</span><span class="line">高過你們的道路。</span></p><div class="ww__axis"><p class="ww__verse-en" lang="en">For as the heavens are higher than the earth, so are my ways higher than your ways.</p></div></blockquote></div></div><div class="ww__footer"><span>WATCH FOR THE DAWN</span><span>CUV · KJV / EXCERPT</span></div></figure></section></div></main></body></html>

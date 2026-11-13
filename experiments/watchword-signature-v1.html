@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Watchword V1 — Westside Scripture Signature Proof</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<link rel="stylesheet" href="/css/westside-color-authority.css">
+<style>
+/* Isolated artwork proof; NOT a global override. CSS variables come from existing OS. */
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ws-paper,#faf9f5);color:var(--ws-ink,#252525);font-family:var(--ws-type-display-zh,"Noto Serif TC",serif)}
+main{max-width:1440px;margin:auto;padding:clamp(22px,5vw,80px)}
+.proof-label{font-family:var(--ws-type-display-en,serif);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 20px;color:var(--ws-ink)}
+.proof-stack{display:grid;gap:70px}
+.proof-section{min-width:0}
+.watchword{--ww-accent:var(--ws-first-light,#a2872a);--ww-type:var(--ws-ink,#252525);--ww-paper:var(--ws-paper,#faf9f5);position:relative;isolation:isolate;max-width:100%;padding:clamp(26px,4.5vw,70px);background:var(--ww-paper);color:var(--ww-type);overflow:hidden}
+.watchword__citation{display:flex;justify-content:flex-end;gap:.5em;align-items:baseline;flex-wrap:wrap;margin:0 0 clamp(16px,3vw,44px);font-family:var(--ws-type-display-en,Georgia,serif);font-size:clamp(15px,2vw,27px);font-style:italic;font-weight:400;text-align:right;line-height:1.12}
+.watchword__citation-zh{font-family:var(--ws-type-display-zh,"Noto Serif TC",serif);font-size:.56em;font-style:normal;font-weight:200;white-space:nowrap}
+.watchword__frame{position:relative;border-left:1px solid var(--ww-accent);border-bottom:1px solid var(--ww-accent);padding:clamp(22px,3vw,50px);margin-left:clamp(0px,1vw,12px)}
+.watchword__frame::before{content:"";position:absolute;top:0;left:-1px;width:1px;height:17%;background:var(--ww-accent)}
+.watchword__zh{font-family:var(--ws-type-display-zh,"Noto Serif TC",serif);font-weight:600;font-synthesis:none;font-size:clamp(28px,4.4vw,78px);line-height:1.38;letter-spacing:.025em;margin:0 0 .55em;max-width:18em;text-wrap:balance}
+.watchword__en{font-family:var(--ws-type-display-en,Georgia,serif);font-size:clamp(18px,2.2vw,34px);line-height:1.3;font-weight:400;max-width:34em;margin:0;font-style:italic;text-wrap:pretty}
+.watchword__footer{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-top:16px}
+.watchword__mark{display:flex;align-items:end;gap:5px;height:26px;padding-left:clamp(0px,1vw,12px)}
+.watchword__mark i{display:block;width:1px;background:var(--ww-accent);height:calc(7px + var(--i)*2.5px)}
+.watchword__translation{font-family:var(--ws-type-display-en,Georgia,serif);font-size:clamp(10px,1vw,13px);font-weight:400;letter-spacing:.16em}
+.watchword--cover{--ww-paper:var(--ws-papyrus,#eee4c9);--ww-accent:var(--ws-first-light,#a2872a);padding-top:clamp(60px,10vw,135px);padding-bottom:clamp(60px,10vw,135px)}
+.watchword--olive{--ww-paper:color-mix(in oklab,var(--ws-olive,#738a5a) 12%,var(--ws-paper,#faf9f5));--ww-accent:var(--ws-olive,#738a5a)}
+.watchword--olive .watchword__zh{font-size:clamp(24px,3vw,44px)}
+.watchword--quote{max-width:800px}
+.watchword--quote .watchword__zh{font-size:clamp(24px,2.7vw,42px)}
+.watchword--quote .watchword__en{font-size:clamp(17px,1.7vw,25px)}
+.watchword--folio{max-width:420px;padding:24px}
+.watchword--folio .watchword__citation{font-size:17px;margin-bottom:15px}
+.watchword--folio .watchword__citation-zh{font-size:10px}
+.watchword--folio .watchword__frame{padding:19px}
+.watchword--folio .watchword__zh{font-size:25px;line-height:1.45}
+.watchword--folio .watchword__en{font-size:18px}
+.watchword--folio .watchword__translation{font-size:10px}
+.watchword--scroll{--ww-accent:var(--ws-first-light,#a2872a);padding-block:clamp(45px,7vw,90px)}
+.watchword--scroll .watchword__frame{max-width:1100px;margin-left:auto;margin-right:auto}
+.watchword--scroll .watchword__zh{max-width:20em}
+.watchword--scroll .watchword__en{max-width:40em}
+@media(max-width:640px){main{padding:18px}.proof-stack{gap:40px}.watchword{padding:24px 16px}.watchword__frame{padding:18px 12px 22px 16px}.watchword__citation{font-size:17px}.watchword__citation-zh{font-size:10px}.watchword__zh{font-size:clamp(25px,7vw,35px);line-height:1.42;word-break:normal;overflow-wrap:anywhere}.watchword__en{font-size:clamp(17px,4.5vw,21px)}.watchword--cover{padding-block:45px}.watchword__translation{font-size:10px}}
+@media(prefers-reduced-motion:no-preference){.watchword--scroll .watchword__frame{animation:ww-reveal 1.1s ease-out both}@keyframes ww-reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}}
+</style>
+</head>
+<body><main>
+<h1 class="proof-label">Westside Watch · Watchword / 守望經文銘式 · isolated V1 proof</h1>
+<div class="proof-stack">
+<section class="proof-section"><h2 class="proof-label">01 / Cover · 封面</h2>
+<figure class="watchword watchword--cover">
+<figcaption class="watchword__citation"><span>Isaiah 55:9</span><span class="watchword__citation-zh">以賽亞書 55:9</span></figcaption>
+<div class="watchword__frame"><blockquote style="margin:0"><p class="watchword__zh">天怎樣高過地，照樣，我的道路高過你們的道路；我的意念高過你們的意念。</p><p class="watchword__en" lang="en">For as the heavens are higher than the earth, so are my ways higher than your ways, and my thoughts than your thoughts.</p></blockquote></div>
+<div class="watchword__footer"><div class="watchword__mark" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i></div><span class="watchword__translation">CUV / KJV · WESTSIDE WATCH</span></div>
+</figure></section>
+<section class="proof-section"><h2 class="proof-label">02 / Olive masthead · 版頭</h2>
+<figure class="watchword watchword--olive">
+<figcaption class="watchword__citation"><span>Romans 10:17</span><span class="watchword__citation-zh">羅馬書 10:17</span></figcaption>
+<div class="watchword__frame"><blockquote style="margin:0"><p class="watchword__zh">可見信道是從聽道來的，聽道是從基督的話來的。</p><p class="watchword__en" lang="en">So then faith cometh by hearing, and hearing by the word of God.</p></blockquote></div>
+<div class="watchword__footer"><div class="watchword__mark" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i></div><span class="watchword__translation">CUV / KJV · WESTSIDE WATCH</span></div>
+</figure></section>
+<section class="proof-section"><h2 class="proof-label">03 / Pull quote · 特別引用</h2>
+<figure class="watchword watchword--quote">
+<figcaption class="watchword__citation"><span>Isaiah 55:9</span><span class="watchword__citation-zh">以賽亞書 55:9</span></figcaption>
+<div class="watchword__frame"><blockquote style="margin:0"><p class="watchword__zh">我的道路高過你們的道路。</p><p class="watchword__en" lang="en">My ways higher than your ways.</p></blockquote></div>
+<div class="watchword__footer"><div class="watchword__mark" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i></div><span class="watchword__translation">CUV / KJV · EXCERPT</span></div>
+</figure></section>
+<section class="proof-section"><h2 class="proof-label">04 / Small folio · 小標題旁註</h2>
+<figure class="watchword watchword--folio">
+<figcaption class="watchword__citation"><span>Romans 10:17</span><span class="watchword__citation-zh">羅馬書 10:17</span></figcaption>
+<div class="watchword__frame"><blockquote style="margin:0"><p class="watchword__zh">信道是從聽道來的。</p><p class="watchword__en" lang="en">Faith cometh by hearing.</p></blockquote></div>
+<div class="watchword__footer"><div class="watchword__mark" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i></div><span class="watchword__translation">CUV / KJV · EXCERPT</span></div>
+</figure></section>
+<section class="proof-section"><h2 class="proof-label">05 / Scroll folio · 滾動段落</h2>
+<figure class="watchword watchword--scroll">
+<figcaption class="watchword__citation"><span>Isaiah 55:9</span><span class="watchword__citation-zh">以賽亞書 55:9</span></figcaption>
+<div class="watchword__frame"><blockquote style="margin:0"><p class="watchword__zh">天怎樣高過地，照樣，我的道路高過你們的道路。</p><p class="watchword__en" lang="en">For as the heavens are higher than the earth, so are my ways higher than your ways.</p></blockquote></div>
+<div class="watchword__footer"><div class="watchword__mark" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i></div><span class="watchword__translation">CUV / KJV · EXCERPT</span></div>
+</figure></section>
+</div></main></body></html>

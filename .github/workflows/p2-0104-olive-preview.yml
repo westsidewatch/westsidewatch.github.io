@@ -1,0 +1,391 @@
+name: P2 04 Olive Isolated Preview Gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - 'static/experiments/p2-0104-olive-continuation.html'
+      - 'static/experiments/olive-v75-twelve-folios-exhibition.html'
+      - 'static/experiments/olive-v76-terrain-and-panorama.html'
+      - 'static/experiments/olive-v77-exhibition.html'
+      - 'static/experiments/olive-v78-flip-motion-study.html'
+      - 'static/experiments/olive-v80-scripture-folios.html'
+      - 'static/js/p2-0104-olive-scriptures-v80.js'
+      - 'tests/p2-0104-olive-scripture-v80.cjs'
+      - 'docs/projects/olive-mountain-living-engraving/V80-SPEAKER-SCRIPTURE-EDITORIAL-2026-11-08.md'
+      - 'static/images/p2-realms/v15/v79-botanical-field/**'
+      - 'docs/projects/olive-mountain-living-engraving/V79-MUSEUM-FOLIO-AND-BOTANICAL-FIELD-2026-11-08.md'
+      - 'docs/projects/olive-mountain-living-engraving/V78-FLIP-DORÉ-EXPLORATION-2026-11-08.md'
+      - 'static/images/p2-realms/v15/v77-exhibition/**'
+      - 'tests/p2-0104-olive-v74-integrity.cjs'
+      - 'static/images/p2-realms/v15/v76-exhibition/**'
+      - 'static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg'
+      - 'static/images/p2-realms/v15/v75-exhibition/**'
+      - 'docs/projects/olive-mountain-living-engraving/V75-TWELVE-FOLIOS-EXHIBITION-2026-11-08.md'
+      - 'static/experiments/olive-mountain-art-foundation-v4.html'
+      - 'static/experiments/olive-mountain-art-foundation-v41.html'
+      - 'static/experiments/olive-mountain-art-foundation-v42.html'
+      - 'static/experiments/olive-mountain-art-foundation-v43.html'
+      - 'static/experiments/olive-mountain-art-foundation-v44.html'
+      - 'scripts/build-olive-mountain-master-v43.py'
+      - 'scripts/build-olive-mountain-master-v44.py'
+      - 'static/images/p2-realms/v15/04-olive-crane-side-register-v14.svg'
+      - 'static/images/p2-realms/v15/04-olive-mountain-panoramic-plate-v42.svg'
+      - 'tests/olive-mountain-art-foundation-v41.cjs'
+      - 'tests/olive-mountain-art-foundation-v42.cjs'
+      - 'tests/olive-mountain-art-foundation-v43.cjs'
+      - 'tests/olive-mountain-art-foundation-v44.cjs'
+      - 'tests/olive-mountain-art-foundation-v4.cjs'
+      - 'docs/projects/olive-mountain-living-engraving/ART-FOUNDATION-V4-DORÉ-EXPLORATION-2026-11-06.md'
+      - 'static/experiments/p2-0103-release.html'
+      - 'static/images/p2-emmaus-binding-cloth-v1.svg'
+      - 'static/css/p2-emmaus-bookbinding-v7.css'
+      - 'static/js/p2-0103-release.js'
+      - 'tests/p2-emmaus-svg-cloth.cjs'
+      - 'static/experiments/olive-engraving-v1-v2-compare.html'
+      - 'tests/olive-engraving-v1-v2-compare.cjs'
+      - 'static/css/p2-0104-olive-continuation.css'
+      - 'static/js/p2-0104-olive-continuation.js'
+      - 'static/images/p2-realms/v15/04-olive-engraving-v1-5.svg'
+      - 'static/images/p2-realms/v15/04-olive-invitation-foil-v5.svg'
+      - 'static/images/p2-realms/v15/04-olive-personal-invitation-foil-v6.svg'
+      - 'static/images/p2-realms/v15/04-olive-mount-etching-v8.svg'
+      - 'static/images/p2-realms/v15/04-olive-engraved-headpiece-v10.svg'
+      - 'static/images/p2-realms/v15/04-olive-botanical-intaglio-v11.svg'
+      - 'static/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg'
+      - 'static/images/p2-realms/v15/04-olive-historic-engraving-v13.svg'
+      - 'static/images/p2-realms/v15/04-olive-growth-field-v1.svg'
+      - 'static/images/p2-realms/v15/04-olive-living-grove-v2.svg'
+      - 'static/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg'
+      - 'scripts/build-olive-mountain-contours-v1.py'
+      - 'docs/design/OLIVE-MOUNTAIN-ART-SOURCES.md'
+      - 'tests/p2-0104-olive-continuation.cjs'
+      - 'tests/p2-0104-olive-clean-field.cjs'
+      - '.github/workflows/p2-0104-olive-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write # generated historic native vector artmasters committed only to same-repo Draft PR branch
+
+concurrency:
+  group: p2-0104-olive-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-preview:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'draft/p2-0104-')
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          persist-credentials: true
+      - name: Produce real 1881 steel-engraving desktop/mobile native SVG masters
+        # This is a trusted same-repository Draft PR, never a fork or a main-branch job.
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq potrace
+          python3 -m venv /tmp/olive-v43-env
+          /tmp/olive-v43-env/bin/pip -q install 'Pillow==11.3.0' 'numpy==2.3.4' 'contourpy==1.3.3'
+          /tmp/olive-v43-env/bin/python scripts/build-olive-mountain-master-v43.py
+          /tmp/olive-v43-env/bin/python scripts/build-olive-mountain-master-v44.py
+          /tmp/olive-v43-env/bin/python scripts/build-olive-mountain-contours-v1.py
+          test -s static/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg
+          test -s static/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v43.svg
+          test -s static/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v43.svg
+          test -s static/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v44.svg
+          test -s static/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v44.svg
+          git config user.name "westsidewatch-artmaster-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add static/images/p2-realms/v15/04-olive-woodward-cousen-*-intaglio-v43.svg static/images/p2-realms/v15/04-olive-woodward-cousen-*-intaglio-v44.svg static/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg
+          if ! git diff --cached --quiet; then
+            git commit -m 'art(olive): reproduce original public-domain steel engraving as native V4.3 SVG masters [skip ci]'
+            # Docs/other safe edits can land while this long-running trace is produced.
+            # Rebase ONLY the generated SVG commit onto latest Draft, never force push.
+            git fetch origin "${GITHUB_HEAD_REF}"
+            git rebase "origin/${GITHUB_HEAD_REF}"
+            git push origin HEAD:"${GITHUB_HEAD_REF}"
+          fi
+      - name: Assemble standalone P2 04 preview directly from static (no external Hugo download)
+        run: |
+          mkdir -p public
+          cp -a static/. public/
+          echo "Standalone P2 04 verified from exact committed static sources, without modifying production build."
+          test -s public/experiments/p2-0104-olive-continuation.html
+          test -s public/experiments/olive-v80-scripture-folios.html
+          test -s public/js/p2-0104-olive-scriptures-v80.js
+          node tests/p2-0104-olive-scripture-v80.cjs
+          test -s public/experiments/olive-v75-twelve-folios-exhibition.html
+          test -s public/experiments/olive-v76-terrain-and-panorama.html
+          test -s public/experiments/olive-v77-exhibition.html
+          test -s public/experiments/olive-v78-flip-motion-study.html
+          for impression in 1 2 3 4 5 6; do
+            test -s "public/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-${impression}.svg"
+          done
+          for terrain in 1 2 3 4 5 6; do
+            test -s "public/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-${terrain}.svg"
+          done
+          node tests/p2-0104-olive-v74-integrity.cjs
+          test -s public/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg
+          for terrain in 1 2 3 4 5 6; do
+            test -s "public/images/p2-realms/v15/v76-exhibition/04-olive-terrain-v76-${terrain}.svg"
+          done
+          for folio in $(seq -w 1 12); do
+            test -s "public/images/p2-realms/v15/v75-exhibition/04-olive-exhibition-v75-${folio}.svg"
+          done
+          test -s public/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg
+          test -s public/experiments/olive-mountain-art-foundation-v4.html
+          test -s public/experiments/olive-mountain-art-foundation-v41.html
+          test -s public/experiments/olive-mountain-art-foundation-v42.html
+          test -s public/experiments/olive-mountain-art-foundation-v43.html
+          test -s public/experiments/olive-mountain-art-foundation-v44.html
+          test -s public/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v43.svg
+          test -s public/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v43.svg
+          test -s public/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v44.svg
+          test -s public/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v44.svg
+          test -s public/images/p2-realms/v15/04-olive-mountain-panoramic-plate-v42.svg
+          test -s public/images/p2-realms/v15/04-olive-crane-side-register-v14.svg
+          test -s public/experiments/olive-engraving-v1-v2-compare.html
+          test -s public/experiments/p2-0103-release.html
+          test -s public/images/p2-emmaus-binding-cloth-v1.svg
+          test -s public/images/p2-realms/v15/04-olive-engraving-v1-5.svg
+          test -s public/images/p2-realms/v15/04-olive-invitation-foil-v5.svg
+          test -s public/images/p2-realms/v15/04-olive-personal-invitation-foil-v6.svg
+          test -s public/images/p2-realms/v15/04-olive-mount-etching-v8.svg
+          test -s public/images/p2-realms/v15/04-olive-engraved-headpiece-v10.svg
+          test -s public/images/p2-realms/v15/04-olive-botanical-intaglio-v11.svg
+          test -s public/images/p2-realms/v15/04-olive-botanical-gallery-v12.svg
+          test -s public/images/p2-realms/v15/04-olive-historic-engraving-v13.svg
+          test -s public/images/p2-realms/v15/04-olive-growth-field-v1.svg
+          test -s public/images/p2-realms/v15/04-olive-living-grove-v2.svg
+          test -s public/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg
+          test -s public/images/olive/watchman-nee-editorial.png
+          node --check tests/p2-0104-olive-clean-field.cjs
+          node --check tests/olive-mountain-art-foundation-v4.cjs
+          node --check tests/olive-mountain-art-foundation-v41.cjs
+          node --check tests/olive-mountain-art-foundation-v42.cjs
+          node --check tests/olive-mountain-art-foundation-v43.cjs
+          node --check tests/olive-mountain-art-foundation-v44.cjs
+          node --check tests/p2-emmaus-svg-cloth.cjs
+          node --check tests/olive-engraving-v1-v2-compare.cjs
+      - name: Test 04 clean field, protected posters and reversible Emmaus handoff
+        run: |
+          npm install --no-save --no-package-lock playwright@1.64.1
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-0104-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-0104-olive-clean-field.cjs
+          node tests/olive-mountain-art-foundation-v4.cjs
+          node tests/olive-mountain-art-foundation-v41.cjs
+          node tests/olive-mountain-art-foundation-v42.cjs
+          node tests/olive-mountain-art-foundation-v43.cjs
+          node tests/olive-mountain-art-foundation-v44.cjs
+          node tests/p2-emmaus-svg-cloth.cjs
+          node tests/p2-0103-release.cjs
+      - name: Capture V76 actual static gallery desktop and phone
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          python3 -m http.server 4173 --directory public >/tmp/p2-v76-gallery.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node - <<'NODE'
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            for(const width of [1648,390,320]){
+              const page=await browser.newPage({viewport:{width,height:950},deviceScaleFactor:1});
+              await page.goto('http://127.0.0.1:4173/experiments/olive-v76-terrain-and-panorama.html',{waitUntil:'networkidle'});
+              await page.evaluate(async()=>{
+                for(const img of document.images){img.loading='eager';await img.decode();}
+              });
+              const failed=await page.locator('img').evaluateAll(els=>els.filter(e=>!e.complete||e.naturalWidth===0).map(e=>e.src));
+              if(failed.length)throw Error('V76 missing images: '+failed.join(','));
+              await page.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v76-gallery.png',fullPage:true,animations:'disabled'});
+              const terrain=page.locator('section').nth(1);
+              await terrain.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v76-terrain-series.png',animations:'disabled'});
+              const panorama=page.locator('.pano');
+              await panorama.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v76-panorama.png',animations:'disabled'});
+              await page.close();
+            }
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          cp static/images/p2-realms/v15/v76-exhibition/*.svg artifacts/p2-0104-olive/
+          cp static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg artifacts/p2-0104-olive/
+      - name: Capture V77 twelve-plate exhibition desktop and phone
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          python3 -m http.server 4173 --directory public >/tmp/olive-v77-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node - <<'NODE'
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            for(const width of [1648,390,320]){
+              const page=await browser.newPage({viewport:{width,height:950},deviceScaleFactor:1});
+              await page.goto('http://127.0.0.1:4173/experiments/olive-v77-exhibition.html',{waitUntil:'networkidle'});
+              await page.evaluate(async()=>{
+                for(const img of document.images){img.loading='eager';await img.decode()}
+              });
+              const failed=await page.locator('img').evaluateAll(a=>a.filter(e=>!e.complete||e.naturalWidth===0).map(e=>e.src));
+              if(failed.length)throw Error('V77 broken image(s): '+failed.join(','));
+              await page.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v77-gallery.png',fullPage:true,animations:'disabled'});
+              await page.locator('section').nth(1).screenshot({path:'artifacts/p2-0104-olive/'+width+'-v77-terrain-series.png',animations:'disabled'});
+              await page.close();
+            }
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          cp static/images/p2-realms/v15/v77-exhibition/*.svg artifacts/p2-0104-olive/
+      - name: Verify V78 four card systems under actual scroll and back-scroll
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          python3 -m http.server 4173 --directory public >/tmp/v78-motion-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node - <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            for(const width of [1648,390,320]){
+              const page=await browser.newPage({viewport:{width,height:844},deviceScaleFactor:1});
+              await page.goto('http://127.0.0.1:4173/experiments/olive-v78-flip-motion-study.html',{waitUntil:'networkidle'});
+              await page.evaluate(async()=>{await document.fonts.ready;for(const im of document.images)await im.decode();});
+              async function pose(value){
+                await page.locator('#pose').evaluate((el,v)=>{el.value=String(v);el.dispatchEvent(new Event('input',{bubbles:true}))},Math.round(value*1000));
+                await page.waitForTimeout(70);
+                return page.locator('.test').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n.querySelector('.folio')).transform));
+              }
+              const still=await pose(.02);
+              const middle=await pose(.50);
+              const end=await pose(.99);
+              const reversed=await pose(.02);
+              assert.deepEqual(still,reversed,'same scroll pose must restore the same card geometry');
+              assert.notEqual(still[0],middle[0]);
+              assert.notEqual(middle[1],end[1]);
+              assert.equal(middle[3],still[3],'non-3D editorial option does not use fake 3D rotations');
+              for(const [name,value] of [['front',.02],['mid',.50],['back',.99]]){
+                await pose(value);
+                await page.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v78-motion-'+name+'.png',animations:'disabled'});
+              }
+              const errors=await page.locator('.folio').count();
+              assert.equal(errors,4,'all four comparison motion systems mounted');
+              await page.close();
+            }
+            await browser.close();
+            console.log('PASS V78 isolated scroll-owned card comparison / 1648, 390, 320 / reverse');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Verify V80 twelve scripture folios on desktop and narrow phones
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          python3 -m http.server 4173 --directory public >/tmp/olive-v80-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node - <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            for(const width of [1648,390,320]){
+              const page=await browser.newPage({viewport:{width,height:950},deviceScaleFactor:1});
+              const response=await page.goto('http://127.0.0.1:4173/experiments/olive-v80-scripture-folios.html',{waitUntil:'networkidle'});
+              assert.equal(response.status(),200);
+              await page.evaluate(()=>document.fonts.ready);
+              const verdict=await page.evaluate(()=>{
+                const figures=[...document.querySelectorAll('.grid figure')];
+                const bounds=figures.map(fig=>{
+                  const art=fig.querySelector('.art').getBoundingClientRect();
+                  const quote=fig.querySelector('.quote').getBoundingClientRect();
+                  const cite=fig.querySelector('cite').getBoundingClientRect();
+                  return {reference:fig.querySelector('cite').textContent,
+                   quoteInside:quote.left>=art.left-1&&quote.right<=art.right+1&&
+                    quote.top>=art.top-1&&quote.bottom<cite.top-1,
+                   citeInside:cite.bottom<=art.bottom+1,
+                   font:getComputedStyle(fig.querySelector('cite')).fontFamily};
+                });
+                return {count:figures.length,overflow:document.documentElement.scrollWidth-innerWidth,
+                  details:bounds};
+              });
+              assert.equal(verdict.count,12,'must show 12 complete individual scripture folios');
+              assert(verdict.overflow<2,'no horizontal overflow');
+              for(const c of verdict.details){
+                assert(c.quoteInside,'verse collides with reference or exceeds card: '+c.reference);
+                assert(c.citeInside,'reference outside card: '+c.reference);
+                assert.match(c.font,/Chiron Hei HK WS/,'CJK verse reference uses OS type');
+              }
+              await page.screenshot({path:'artifacts/p2-0104-olive/'+width+'-v80-twelve-scripture-folios.png',fullPage:true,animations:'disabled'});
+              await page.close();
+            }
+            await browser.close();
+            console.log('PASS V80: twelve legible scripture folios at 1648/390/320.');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Bundle actual botanical vector master for art-direction inspection
+        if: always()
+        run: |
+          mkdir -p artifacts/p2-0104-olive
+          cp static/images/p2-realms/v15/04-olive-historic-engraving-v13.svg artifacts/p2-0104-olive/v13-historic-master.svg
+          cp static/images/p2-realms/v15/04-olive-mountain-panoramic-plate-v42.svg artifacts/p2-0104-olive/v42-panorama-native-master.svg
+          cp static/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v43.svg artifacts/p2-0104-olive/v43-desktop-real-engraving.svg
+          cp static/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v43.svg artifacts/p2-0104-olive/v43-mobile-real-engraving.svg
+          cp static/images/p2-realms/v15/04-olive-woodward-cousen-desktop-intaglio-v44.svg artifacts/p2-0104-olive/v44-desktop-burin-master.svg
+          cp static/images/p2-realms/v15/04-olive-woodward-cousen-mobile-intaglio-v44.svg artifacts/p2-0104-olive/v44-mobile-burin-master.svg
+          cp static/images/p2-realms/v15/04-olive-living-grove-v2.svg artifacts/p2-0104-olive/v2-multi-source-living-grove.svg
+          cp static/images/p2-realms/v15/04-olive-hillside-copperplate-v3.svg artifacts/p2-0104-olive/v3-unified-copperplate.svg
+      - name: Save genuine desktop/mobile visual proofs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-0104-olive-genuine-browser-proofs
+          path: artifacts/p2-0104-olive/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Include selected full-browser proof frames in the isolated PREVIEW only
+        run: |
+          mkdir -p public/experiments/p2-0104-proofs
+          for width in 1648 390; do
+            for frame in 00-original-emmaus 03-two-poster-locked-original-background 04-clean-olive-field 09-twelve-voices-final-overview 10-reversed-original-emmaus; do
+              test -s "artifacts/p2-0104-olive/${width}-${frame}.png"
+              cp "artifacts/p2-0104-olive/${width}-${frame}.png" "public/experiments/p2-0104-proofs/"
+            done
+          done
+          for width in 1648 1440 800 390; do
+            for variant in archive folio; do
+              src="artifacts/p2-0104-olive/${width}-olive-v4-static-${variant}.png"
+              test -s "$src"
+              cp "$src" public/experiments/p2-0104-proofs/
+              src="artifacts/p2-0104-olive/${width}-olive-v41-static-${variant}.png"
+              test -s "$src"
+              cp "$src" public/experiments/p2-0104-proofs/
+              src="artifacts/p2-0104-olive/${width}-olive-v42-static-${variant}.png"
+              test -s "$src"
+              cp "$src" public/experiments/p2-0104-proofs/
+              src="artifacts/p2-0104-olive/${width}-olive-v43-static-${variant}.png"
+              test -s "$src"
+              cp "$src" public/experiments/p2-0104-proofs/
+              src="artifacts/p2-0104-olive/${width}-olive-v44-static-${variant}.png"
+              test -s "$src"
+              cp "$src" public/experiments/p2-0104-proofs/
+            done
+          done
+      - name: Deploy isolated P2 04 Preview ONLY — never main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREVIEW_BRANCH: p2-0104-${{ github.event.pull_request.number || github.run_id }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo '::error::Cloudflare preview credentials missing'; exit 1; }
+          npx --yes wrangler@4 pages deploy public \
+            --project-name=westsidewatch-github-io \
+            --branch="$PREVIEW_BRANCH" \
+            --commit-hash="${GITHUB_SHA}" \
+            --commit-message="P2 04 Olive draft only; main stays through Emmaus 03"
+          echo "### 04 / OLIVE MOUNTAIN — DRAFT PREVIEW (NOT MERGED)" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/p2-0104-olive-continuation.html?d=9.30" >> "$GITHUB_STEP_SUMMARY"

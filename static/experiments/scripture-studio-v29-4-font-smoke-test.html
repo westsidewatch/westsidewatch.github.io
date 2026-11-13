@@ -1,0 +1,45 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scripture Studio | Genuine OS Font Smoke Test</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont@2.6.9/css/vf.css">
+<style>
+@font-face{font-family:"WS Bodoni Moda SC File";src:url("../fonts/scripture-studio/BodoniModaSC-VF.ttf") format("truetype");font-style:normal;font-weight:400 900;font-display:block}
+*{box-sizing:border-box}body{margin:0;background:#faf8f0;color:#28241f;padding:clamp(18px,4vw,46px);font:14px/1.5 system-ui,sans-serif}
+main{max-width:1040px;margin:auto}header{border-bottom:1px solid #bfb4a5;padding-bottom:16px;margin-bottom:20px}h1{font:400 clamp(27px,4vw,48px)/1.1 Georgia,serif;margin:0}
+.small{letter-spacing:.12em;text-transform:uppercase;color:#737369;font-size:11px}.row{padding:18px 0;border-bottom:1px solid #e0d9cb}
+.specimen,.impression-en,.poetry-en{font-family:"WS Bodoni Moda SC File";font-weight:400;font-variant-caps:small-caps;font-feature-settings:"smcp" 1,"c2sc" 0,"kern" 1;font-synthesis:none;text-transform:none;letter-spacing:-.015em}
+.specimen{font-size:clamp(34px,6vw,68px);line-height:1.16}.impression-en{font-size:clamp(24px,4vw,48px)}.poetry-en{font-size:clamp(20px,3vw,32px)}
+.zh-heavy{font-family:"Chiron Hei HK WS";font-weight:900;font-size:40px}.zh-light{font-family:"Chiron Hei HK WS";font-weight:200;font-size:40px}
+#out{padding:16px 20px;border:1px solid #bdb4a8;background:white;white-space:pre-wrap;font:12px/1.65 ui-monospace,monospace;color:#343c34}
+.fail{color:#a53020}.pass{color:#175d2e}
+</style></head>
+<body><main><header><div class="small">Westside Watch / Scripture Studio / Genuine font proof</div><h1>字形接入驗收</h1></header>
+<div class="row"><div class="small">下方標準樣本 · genuine Bodoni Moda SC</div><div class="specimen">The Watchmen</div></div>
+<div class="row"><div class="small">正文 · same font family, same OpenType properties</div><div class="poetry-en">I have set watchmen upon thy walls, O Jerusalem,</div></div>
+<div class="row"><div class="small">作品印面 · same exact font face</div><div class="impression-en">The Watchmen · DAY NOR NIGHT · keep not silence,</div></div>
+<div class="row"><div class="small">中文 Heavy 900</div><div class="zh-heavy">耶路撒冷啊，我在你城上設立守望的</div></div>
+<div class="row"><div class="small">中文 ExtraLight 200</div><div class="zh-light">呼籲耶和華的，你們不要歇息</div></div>
+<div class="row"><div class="small">實際字體資源 / Font Face Loaded</div><div id="out">正在測試字型檔…</div></div>
+</main>
+<script>
+(async()=>{
+ const out=document.getElementById('out');
+ const results=await Promise.allSettled([
+  document.fonts.load('400 48px "WS Bodoni Moda SC File"','The Watchmen'),
+  document.fonts.load('900 48px "Chiron Hei HK WS"','耶路撒冷啊'),
+  document.fonts.load('200 48px "Chiron Hei HK WS"','守望的')
+ ]);
+ await document.fonts.ready;
+ const faces=[...document.fonts].filter(f=>f.status==='loaded');
+ const family=(f)=>f.family.replace(/['"]/g,'').trim();
+ const eng=faces.some(f=>family(f)==='WS Bodoni Moda SC File');
+ const faceSupports=(f,w)=>f.status==='loaded'&&family(f)==='Chiron Hei HK WS'&&(String(f.weight)===String(w)||(()=>{const r=String(f.weight).split(/\s+/).map(Number);return r.length===2&&r[0]<=w&&r[1]>=w})());
+ const zh900=faces.some(f=>faceSupports(f,900)),zh200=faces.some(f=>faceSupports(f,200));
+ const sample=getComputedStyle(document.querySelector('.specimen'));
+ const poem=getComputedStyle(document.querySelector('.poetry-en'));
+ const seal=getComputedStyle(document.querySelector('.impression-en'));
+ const same=[sample,poem,seal].every(f=>f.fontFamily===sample.fontFamily&&f.fontWeight===sample.fontWeight&&f.fontFeatureSettings===sample.fontFeatureSettings&&f.fontVariantCaps===sample.fontVariantCaps);
+ const asset=performance.getEntriesByType('resource').filter(x=>/BodoniModaSC-VF\.ttf/.test(x.name)).map(x=>({url:x.name,bytes:x.transferSize,durationMs:+x.duration.toFixed(1)}));
+ out.className=eng&&zh900&&zh200&&same?'pass':'fail';
+ out.textContent=JSON.stringify({selfHostedBodoniSC:eng,ChironHeavy900:zh900,ChironExtraLight200:zh200,identicalEnglishCSS: same,requestedLoaded:results.map(x=>x.status),bodoniResource:asset,loadedFaces:faces.filter(f=>/Chiron|Bodoni/.test(f.family)).map(f=>({family:f.family,weight:f.weight,status:f.status})),accept:eng&&zh900&&zh200&&same},null,2);
+ window.__fontVerification={eng,zh900,zh200,same,asset};
+})();
+</script></body></html>

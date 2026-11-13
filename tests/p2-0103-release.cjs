@@ -32,6 +32,19 @@ assert.match(bridge,/filmReveal=easing\(\(progress-\.86\)\/\.065\)/,'original ho
 assert.match(poster,/--xw-field-opacity/,'full field follows the same scroll position');
 assert.match(posterCss,/data-p2-poster="a"\]::before/,'backing paper must replace Church water and schedule');
 assert.match(html,/p2-emmaus-theme-verse\.css/,'ONE green cover scripture has separate scoped OS rule');
+const cloth=fs.readFileSync('static/images/p2-emmaus-binding-cloth-v1.svg','utf8');
+const clothCss=fs.readFileSync('static/css/p2-emmaus-bookbinding-v7.css','utf8');
+assert.match(cloth,/<svg[^>]+viewBox="0 0 640 1024"/,
+ 'ONE bookcloth SVG must retain the approved 5:8 aspect ratio');
+assert.equal((cloth.match(/<pattern\b/g)||[]).length,4,
+ 'cloth must have four fine all-vector weave/emboss layers');
+assert(!/<image\b|<linearGradient\b|<filter\b/.test(cloth),
+ 'authored bookcloth stays editable native SVG without raster/gradient/filter');
+assert((clothCss.match(/p2-emmaus-binding-cloth-v1\.svg/g)||[]).length>=5,
+ 'green cover, its paper verso and both cloth bindings must share the SVG');
+assert(!clothCss.includes('cover-texture-antique-green.png?v=93ae0c7e0609'),
+ 'P2 Emmaus must no longer load the PNG fabric');
+
 assert(!/\.olive-proof/.test(css),'no Olive Mountain CSS');
 const out='artifacts/p2-0103-release';fs.mkdirSync(out,{recursive:true});
 const u='http://127.0.0.1:4173/experiments/p2-0103-release.html';
@@ -361,8 +374,8 @@ const browserPromise=chromium.launch({headless:true});
     assert.equal(greenBackground.ground,'on',
       'the 03 exterior background must be enabled by default');
     assert(greenBackground.fieldOpacity>.999&&
-      greenBackground.fieldImage.includes('cover-texture-antique-green.png'),
-      'final 03 field must visibly use the actual ONE green-cover texture: '+
+      greenBackground.fieldImage.includes('p2-emmaus-binding-cloth-v1.svg'),
+      'final 03 field must visibly use the same native SVG cloth as the approved ONE-colour 5:8 cover: '+
       JSON.stringify(greenBackground));
     assert.equal(greenBackground.emmausBackground,'rgba(0, 0, 0, 0)',
       'Emmaus full-screen pale paper must NOT cover the dark green cloth exterior');

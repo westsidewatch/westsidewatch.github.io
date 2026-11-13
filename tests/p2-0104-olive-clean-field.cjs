@@ -1,0 +1,461 @@
+'use strict';
+/* P2 04 CLEAN FIELD regression.
+ * Approved 03 Emmaus and its 5:8 cloth must remain untouched.
+ * Only the 04 full-stage engraving was retired; the V13 card headpiece
+ * and original twelve composites stay protected. */
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {chromium}=require('playwright');
+const root=path.resolve(__dirname,'..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const html=read('static/experiments/p2-0104-olive-continuation.html');
+const css=read('static/css/p2-0104-olive-continuation.css');
+const js=read('static/js/p2-0104-olive-continuation.js');
+assert.match(html,/p2-0103-release\.html\?embed=1/);
+assert.match(html,/olive-speaker-baseline|baseline\.js/);
+assert.match(html,/id="olive-editorial-engraving"/);
+assert.match(css,/v79-botanical-field\/04-olive-field-v79-1\.svg/);
+assert.match(css,/v79-botanical-field\/04-olive-field-v79-6\.svg/);
+for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-botanical-impression-v60-${n}.svg`),/crane-public-domain-olive/);
+assert.doesNotMatch(css,/04-olive-botanical-folio-outline-v56\\.svg/,'full-scale botanical leaf art must not be shrunk into tiny card gutter');
+assert.match(read('static/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg'),/fill="none" stroke="white"/);
+assert.match(read('static/images/p2-realms/v15/04-olive-botanical-folio-v54.svg'),/crane-public-domain-olive/,'use genuine public-domain Crane engraved foliage, not invented needles');
+assert.equal((read('static/images/p2-realms/v15/04-olive-botanical-folio-v54.svg').match(/href="#crane-public-domain-olive"/g)||[]).length,6,'six mature folio sprays, not two twigs');
+assert.match(css,/04-olive-mount-terrain-contours-v1\.svg/);
+assert.match(read('static/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg'),/olivet-true-topography/);
+assert.match(js,/dataset\.p2EngravingPlant/);
+assert.match(js,/dataset\.p2EngravingTerrain/);
+assert.match(html,/p2-0104-olive-path-growth-v60\.js/);
+assert.equal((html.match(/data-print-impression=/g)||[]).length,6,'six independent print layers');
+assert.equal((html.match(/class="olive-card__reverse olive-card__reverse--/g)||[]).length,2,
+ 'each invitation has an actual second face');
+assert.match(css,/backface-visibility:hidden/,'front and reverse need hidden back faces');
+assert.match(css,/\.olive-folio-carrier\{/,'single rigid folio carrier supports protected portrait and reverse');
+assert.match(css,/\.olive-card__reverse--botanical::before/,'visible authentic botanical card back');
+assert.match(css,/\.olive-card__reverse--terrain::before/,'geographic card back has real texture');
+assert.match(css,/background:color-mix\(in oklab,var\(--ws-olive\) 68%,var\(--ws-ink\)\)/,
+ 'reverse must derive deep olive from OS olive identity rather than accidentally inheriting the gold journal branch');
+assert.match(css,/width:100%!important;height:100%!important/,'speaker baseline stays registered to untransformed 3:4 artwork');
+assert.match(js,/12-individually-authored-topographic-folios-v77/);
+for(let n=1;n<=6;n++)assert.match(read(`static/images/p2-realms/v15/04-olive-terrain-fragment-v68-${n}.svg`),/olivet topography|Olivet topography/i);
+assert.match(css,/transform:rotateY\(180deg\)/,'actual verso faces the camera when physical card turns');
+assert.equal((html.match(/<strong lang="en">OLIVE <i>MOUNTAIN<\/i><\/strong>/g)||[]).length,1,
+ 'one English chapter masthead, with protected original posters still independent');
+assert.equal((html.match(/class="olive-stage__rubric-zh" lang="zh-Hant">橄欖山/g)||[]).length,1,
+ 'one Chinese chapter title in the same editorial masthead');
+assert.equal((html.match(/class="olive-stage__rubric-scripture"/g)||[]).length,1,
+ 'one chapter theme scripture immediately below the bilingual title');
+assert.match(js,/measured-two-faced-rotating-card-v67/,'MERSI drives measured 3D turns');
+assert.match(js,/indexStart:23\.00,indexEnd:24\.10,end:24\.50/,'gentle flips require real extra scroll distance');
+assert.match(css,/height:2600svh/,'physical scroll track remains longer than all V71 poses');
+const terrainEngine=read('static/js/p2-0104-olive-path-growth-v60.js');
+assert.match(terrainEngine,/P2OliveEngraving=\{paint\}/);
+assert.match(terrainEngine,/04-olive-terrain-continuous-mother-v76\.svg/,
+ 'only continuous geographic mother plate may supply final topography');
+const mother=read('static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg');
+assert.equal((mother.match(/<path\b/g)||[]).length,64,
+ 'all sixty-four authentic Mount of Olives contours remain in the ONE mother SVG');
+assert.match(mother,/terrain-horizontal-feather/);
+assert.match(mother,/terrain-vertical-feather/);
+assert.doesNotMatch(mother,/stroke-dasharray="1000 1000"/,
+ 'geographic mother artwork must not have a visible unprinted tail');
+
+assert.match(terrainEngine,/getBBox\(\)/);
+assert.doesNotMatch(terrainEngine,/strokeDashoffset='1000'/,'do not redraw or crop entire rings');
+assert.match(terrainEngine,/p2ContourImpression/);
+assert.match(terrainEngine,/original\*1\.18/,'terrain line hierarchy optically strengthened');
+assert.match(terrainEngine,/b\.area-a\.area/,'major topographic ridge lines must print before tiny isolated loops');
+assert.match(css,/filter:opacity\(var\(--olive-ink-botanical,\.64\)\)/,'oversized botanical area subordinate to reversible scroll rather than deleted');
+const terrainSvg=read('static/images/p2-realms/v15/04-olive-mount-terrain-growth-v53.svg');
+assert.match(terrainSvg,/class="terrain-major"/);
+assert.match(terrainSvg,/class="terrain-mid"/);
+assert.match(terrainSvg,/class="terrain-fine"/);
+assert.match(terrainSvg,/pathLength="1000"/);
+assert.doesNotMatch(html,/id="olive-growth-field"/);
+assert.doesNotMatch(js,/olive-growth-|growthSvg|growthMask|drawGrowingCurve|livingClock/,
+ 'retired full-stage botanical/under-poster strokes must not run');
+assert.doesNotMatch(css,/\.olive-growth-|#olive-growth-field|04-olive-woodward-cousen/,
+ 'no dormant CSS can resurrect full-stage background strokes');
+assert.doesNotMatch(html,/olive-growth-|04-olive-hillside-copperplate/,
+ 'no background engraving nodes or assets in the live stage');
+assert.doesNotMatch(js,/fetch\(['"]\/images\/p2-realms\/v15\/04-olive-hillside/);
+assert.doesNotMatch(js,/requestAnimationFrame\(livingFrame\)/);
+assert.doesNotMatch(css,/04-olive-woodward-cousen-(desktop|mobile)-intaglio-v44/);
+assert.match(css,/\.olive-surround__half\{[^}]*background-color:var\(--ws-olive\);[^}]*background-image:none;/s);
+assert.match(css,/\.olive-card__relief::after\{/,'invitation local relief retained');
+assert.equal((html.match(/class="olive-card__imprint"/g)||[]).length,3,
+ 'first and paired invitations each carry one shared imprint system');
+assert.equal((html.match(/class="olive-card__edition"/g)||[]).length,3,'all card shells have a readable edition rail');
+assert.match(css,/radial-gradient\(ellipse 92% 89%/,'botanical print field retains soft paper edges');
+assert.match(css,/inset:-7% -12% -23% -9%/,'botanical print bleeds below actual viewport');
+assert.match(css,/inset:-7% -24% -22% -8%/,'terrain print bleeds beyond right and bottom of viewport');
+assert.match(css,/transparent 10%,#000 27%/,'editorial masthead has a gradual 10-27% exclusion zone');
+assert.match(css,/\.olive-card__imprint::before,\.olive-card__imprint::after\{[^}]*content:none!important;/s,
+ 'reject unrelated miniature botanical engraving in the narrow card gutter');
+assert.match(css,/\.olive-card__relief::after\{/,
+ 'approved historic card masthead is preserved across all editions');
+assert.match(js,/imprintFamilies=/,'four editions assigned from approved twelve');
+assert.match(js,/frozen\.mount\(art,target\)/,'frozen poster typography retained');
+assert.match(js,/art\.dataset\.speaker=target/,'current speaker is marked only on the original artwork plane');
+assert.match(css,/\.olive-stage__artwork\[data-speaker="kou-shao-en"\]>.olive-stage__original\{/,
+ 'Kou Shao-en alone receives an image-level mirror, never a whole-card or text mirror');
+assert.match(css,/--ws-branch:var\(--ws-olive\)/,'olive verso stock cannot inherit gold-branch muddy brown');
+assert.match(css,/-webkit-mask-image:var\(--folio-detail\)!important/,'card-back closeup must use uniquely cropped engraving');
+for(let edition=1;edition<=6;edition++){
+ for(const family of ['botanical','terrain']){
+  const svg=read(family==='terrain' ? `static/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-${edition}.svg` : `static/images/p2-realms/v15/04-olive-full-verso-v74-botanical-${edition}.svg`);
+  assert.match(svg,/<svg /,'all twelve complete engraved card back SVGs exist');
+  assert.match(svg,/viewBox="0 0 720 940"/,'each complete verso uses a consistent uncropped 3:4 folio system');
+  if(family==='terrain'){
+   assert.match(svg,/Olivet.*(?:DEM|topographic)|geographic.*DEM/i,
+     'terrain backs must use physically continuous loops without cut line ends');
+   assert((svg.match(/<path /g)||[]).length>=10,
+    'each terrain folio has seven nested complete geographic contours and secondary hills');
+   assert.equal((svg.match(/ L[-\d.]+,/g)||[]).length>=600, true,
+    'each contour folio uses smooth connected curves, not fragments of open DEM paths');
+  }else{
+   assert.match(svg,/crane-public-domain-olive/,'botanical backs recompose the public-domain Walter Crane plate');
+  }
+ }
+}
+assert.match(js,/const readingField=ease\(\(d-T\.first\)\/\.065\);/,
+  'original Emmaus handoff timing unchanged');
+assert.match(read('static/experiments/p2-0103-release.html'),/p2-emmaus-bookbinding-v7\.css/,
+  'genuine Emmaus iframe still retains the original binding stylesheet');
+fs.mkdirSync(path.join(root,'artifacts/p2-0104-olive'),{recursive:true});
+const widths=[1648,390,320];
+(async()=>{
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+ try{
+  for(const width of widths){
+   const page=await browser.newPage({viewport:{width,height:width===1648?928:844},deviceScaleFactor:1});
+   const errors=[],oliveRequests=[];
+   page.on('pageerror',e=>errors.push(e.message));
+   page.on('request',r=>{if(/04-olive-(?:hillside-copperplate|living-grove|woodward-cousen|growth-field)/.test(r.url()))oliveRequests.push(r.url())});
+   await page.goto('http://127.0.0.1:4173/experiments/p2-0104-olive-continuation.html?d=9.30',
+    {waitUntil:'domcontentloaded'});
+   await page.waitForFunction(()=>document.querySelector('#p2-olive-stage')?.dataset.p2FolioReady==='true',{timeout:20000});
+   async function go(d,name){
+    await page.evaluate(d=>{const t=document.querySelector('#p2-olive-track');scrollTo(0,t.getBoundingClientRect().top+scrollY+d*innerHeight)},d);
+    await page.waitForFunction(d=>Math.abs(Number(document.querySelector('#p2-olive-stage').dataset.p2Distance)-d)<.025,d,{timeout:12000});
+    const state=await page.evaluate(()=>{
+     const stage=document.querySelector('#p2-olive-stage');
+     const bg=document.querySelector('#p2-olive-surround');
+     const head=document.querySelector('#p2-0103-original');
+     return {scene:stage.dataset.p2Scene,
+       source:getComputedStyle(head).visibility,
+       plant:Number(stage.dataset.p2EngravingPlant),
+       terrain:Number(stage.dataset.p2EngravingTerrain),
+       artVisibility:getComputedStyle(document.querySelector('#olive-editorial-engraving')).visibility,
+       terrainEngine:stage.dataset.p2TerrainStrokeEngine,
+       cardImprints:[...document.querySelectorAll('.olive-stage__invitation--pair')].map(el=>({
+        family:el.dataset.olivePrintFamily,
+        clip:el.style.getPropertyValue('--olive-imprint-clip'),
+        rail:Number.parseFloat(el.style.getPropertyValue('--olive-outer-rail-width')),
+        edition:el.querySelector('.olive-card__edition')?.textContent,
+        stray:getComputedStyle(el.querySelector('.olive-card__imprint'),'::before').content,
+        header:getComputedStyle(el.querySelector('.olive-card__relief'),'::after').webkitMaskImage
+       })),
+       cardInk:Number(stage.dataset.p2CardInkReveal),
+       fullContourPaths:Number(stage.dataset.p2TerrainPathTotal),
+       visibleContours:Number(stage.dataset.p2TerrainVisiblePaths),
+       completedRings:Number(stage.dataset.p2TerrainCompleteRings),
+       plantLayers:[...document.querySelectorAll('[data-print-impression]')].map(p=>Number(p.style.opacity)),
+       leftClip:document.querySelector('[data-art-side="left"]').style.clipPath,
+       rightClip:document.querySelector('[data-art-side="right"]').style.clipPath,
+       changingSide:stage.dataset.p2ActiveSide,
+       oppositeLocked:stage.dataset.p2OppositeLocked,
+       folioFront:stage.dataset.p2FolioFront,
+       folioFaces:stage.dataset.p2FolioReverse,
+       folioAngles:stage.dataset.p2FolioAngles,
+       folioSystem:stage.dataset.p2FolioSystem,
+       rigidCards:[...document.querySelectorAll('.olive-folio-carrier')].map(el=>({
+        children:[...el.children].map(c=>c.id),
+        transform:getComputedStyle(el).transform
+       })),
+       frontPortraits:[...document.querySelectorAll('#olive-pair-left,#olive-pair-right')].map(el=>({
+        parent:el.parentElement?.className,
+        transform:getComputedStyle(el).transform,
+        baseline:!!el.querySelector('olive-speaker-baseline'),
+        geometry:(()=>{
+         const parent=el.querySelector('.olive-stage__artwork');
+         const type=el.querySelector('olive-speaker-baseline');
+         if(!parent||!type)return null;
+         return {artWidth:parent.offsetWidth,artHeight:parent.offsetHeight,
+          typeWidth:type.offsetWidth,typeHeight:type.offsetHeight};
+        })()
+       })),
+       reverseFaces:[...document.querySelectorAll('.olive-card__reverse')].map(el=>({
+        visible:getComputedStyle(el).visibility,
+        mask:getComputedStyle(el,'::before').webkitMaskImage,
+        transform:getComputedStyle(el).transform,
+        speaker:el.dataset.speakerIndex,
+        fragment:el.dataset.printFragment,
+        source:el.style.getPropertyValue('--folio-fragment'),
+        detail:el.style.getPropertyValue('--folio-detail'),
+        alpha:Number.parseFloat(el.style.getPropertyValue('--folio-back-alpha')),
+        mark:Number.parseFloat(el.style.getPropertyValue('--folio-mark-alpha')),
+        paper:getComputedStyle(el).backgroundColor,
+        wholeOpacity:getComputedStyle(el).opacity
+       })),
+       companions:[...document.querySelectorAll('.olive-stage__companion')].map(el=>({
+        id:el.id,speaker:el.dataset.scriptureSpeaker,
+        adjacentTo:el.dataset.adjacentTo,
+        ref:el.querySelector('.olive-stage__companion-reference')?.textContent,
+        refEn:el.querySelector('.olive-stage__companion-reference-en')?.textContent,
+        verse:el.querySelector('.olive-stage__companion-verse')?.textContent,
+        verseEn:el.querySelector('.olive-stage__companion-verse-en')?.textContent,
+        font:getComputedStyle(el.querySelector('.olive-stage__companion-reference')).fontFamily,
+        color:getComputedStyle(el.querySelector('.olive-stage__companion-verse')).color,
+        visible:getComputedStyle(el).visibility,
+        alpha:Number(getComputedStyle(el).opacity),
+        cardParent:el.closest('.olive-folio-carrier')!==null,
+        box:(()=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}})()
+       })),
+       scripturePlacement:stage.dataset.p2ScripturePlacement,
+       leftPoster:document.querySelector('#olive-pair-left')?.dataset.speakerIndex,
+       rightPoster:document.querySelector('#olive-pair-right')?.dataset.speakerIndex,
+       portraitDecode:stage.dataset.p2PortraitDecode,
+       contourOffsets:['major','mid','fine'].map(k=>document.querySelector('.terrain-'+k)?.getAttribute('stroke-dashoffset')),
+       oliveMask:getComputedStyle(document.querySelector('.olive-editorial-engraving__print--botanical'),'::after').webkitMaskImage,
+       ground:getComputedStyle(bg).visibility,
+       noGrowth:document.querySelector('#olive-growth-field')===null,
+       posterNodes:document.querySelectorAll('.olive-stage__index-card').length,
+       bgImages:[...bg.querySelectorAll('.olive-surround__half')].map(el=>getComputedStyle(el).backgroundImage),
+       bgPseudo:[...bg.querySelectorAll('.olive-surround__half')].map(el=>getComputedStyle(el,'::after').content)};
+    });
+    // Every image used by the active two-card handoff must have rendered
+    // pixels before visual proof; image decode regressions previously left
+    // huge blank speaker frames even when the print artwork was intact.
+    if(d>=10.95&&d<23.00){
+     await page.waitForFunction(()=>{
+      const stage=document.querySelector('#p2-olive-stage');
+      if(stage?.dataset.p2PortraitDecode!=='ready')return false;
+      const list=[...document.querySelectorAll('#olive-pair .olive-stage__poster img')]
+       .filter(img=>img.getAttribute('src'));
+      return list.length>=2&&list.every(img=>img.complete&&img.naturalWidth>0);
+     },null,{timeout:30000});
+     await page.evaluate(()=>Promise.all(
+      [...document.querySelectorAll('#olive-pair .olive-stage__poster img')]
+       .filter(img=>img.getAttribute('src')).map(img=>img.decode())));
+    }
+    // The twelve protected portraits load asynchronously. A screenshot taken
+    // immediately after a seek can catch their fonts before decoded pixels.
+    // Verify REAL rendered image assets rather than merely counting DOM cards.
+    if(d>=24.10){
+     await page.waitForFunction(()=>{
+      const imgs=[...document.querySelectorAll('#olive-overview .olive-stage__index-card img')];
+      return imgs.length===12&&imgs.every(img=>img.complete&&img.naturalWidth>0);
+     },null,{timeout:30000});
+     await page.evaluate(()=>Promise.all(
+      [...document.querySelectorAll('#olive-overview .olive-stage__index-card img')]
+       .map(img=>img.decode())));
+    }
+    await page.screenshot({path:`artifacts/p2-0104-olive/${width}-${name}.png`,animations:'disabled'});
+    return state;
+   }
+   await page.evaluate(()=>document.fonts.ready);
+   const src=await go(9.30,'00-original-emmaus');
+   assert.equal(src.source,'visible','03 original iframe visible before entry');
+   const pair=await go(10.98,'03-two-poster-locked-original-background');
+   const mid=await go(13.15,'04-clean-olive-field');
+   const scriptureHead=await page.locator('#olive-rubric').evaluate(el=>{
+     const zh=el.querySelector('.olive-stage__rubric-zh');
+     const en=el.querySelector('strong');
+     const zhVerse=el.querySelector('.olive-stage__rubric-scripture-zh');
+     const enVerse=el.querySelector('.olive-stage__rubric-scripture-en');
+     const bounds=node=>{const r=node.getBoundingClientRect();
+       return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}};
+     const top=el.querySelector('.olive-stage__rubric-folio');
+     return {zh:zh.textContent,en:en.textContent,
+       excerptZh:zhVerse.querySelector('p')?.textContent,
+       excerptEn:enVerse.querySelector('p')?.textContent,
+       refZh:zhVerse.querySelector('cite')?.textContent,
+       refEn:enVerse.querySelector('cite')?.textContent,
+       titleEnBox:bounds(en),titleZhBox:bounds(zh),
+       verseZhBox:bounds(zhVerse),verseEnBox:bounds(enVerse),
+       folioBox:bounds(top),rubricBox:bounds(el),
+       overflow:document.documentElement.scrollWidth-innerWidth};
+   });
+   assert.equal(scriptureHead.zh,'橄欖山','04 Chinese name must be a real display title');
+   assert.equal(scriptureHead.en,'OLIVE MOUNTAIN');
+   assert.match(scriptureHead.excerptZh,/信道是從聽道來的/);
+   assert.match(scriptureHead.excerptEn,/faith cometh by hearing/);
+   assert.equal(scriptureHead.refZh,'羅馬書 10:17');
+   assert.equal(scriptureHead.refEn,'ROMANS 10:17 · KJV');
+   assert(scriptureHead.titleZhBox.left>scriptureHead.titleEnBox.left,
+     'OS Chinese chapter title is composed beside rather than below the English headline');
+   assert(scriptureHead.titleEnBox.right<=scriptureHead.titleZhBox.left+3,
+     'English and Chinese must never collide');
+   assert(scriptureHead.verseZhBox.top>=Math.max(scriptureHead.titleZhBox.bottom,
+      scriptureHead.titleEnBox.bottom)-3,
+     'paired bilingual scripture field must sit beneath both chapter names');
+   assert(scriptureHead.verseEnBox.left>=scriptureHead.verseZhBox.right-3,
+     'two scripture languages must be in distinct editorial columns');
+   assert(scriptureHead.verseEnBox.right<=width+2,'English Romans 10:17 must fit viewport');
+   assert(scriptureHead.overflow<3,'chapter masthead has no horizontal overflow');
+   assert.equal(mid.noGrowth,true,'04 growth SVG must not be in the DOM');
+   assert(mid.cardImprints.length===2&&mid.cardImprints.every(c=>
+     c.family&&c.stray==='none'&&c.header.includes('04-olive-historic-engraving-v13')),
+    'both physical invitation cards share V13 header without alien miniature card flora');
+   assert(mid.cardImprints.every(c=>c.rail>=8 && c.edition?.includes('/ 12')),
+    'physical exterior rails visibly receive a coordinated numbered edition');
+   assert(mid.cardImprints.every(c=>c.clip.endsWith('%')),
+    'card engraving growth driven by same scroll position');
+   assert.equal(mid.posterNodes,12,'all twelve source composites still exist');
+   assert(mid.bgImages.every(x=>x==='none'),'04 background must have no image');
+   assert(mid.bgPseudo.every(x=>x==='none'),'04 background must have no pseudo-image');
+   const leftInk=await go(11.90,'05a-left-portrait-and-right-back');
+   assert(leftInk.plant<.01&&leftInk.terrain<.01,
+    'before first exit, a unique back carries the seed, not a prematurely completed large background');
+   assert.equal(leftInk.folioFaces,'front,back','first: left portrait and right engraved reverse');
+   assert.equal(leftInk.companions[1].speaker,'watchman-nee',
+     'first lecturer on LEFT has his scripture in the RIGHT editorial panel');
+   assert.equal(leftInk.companions[1].ref,'加拉太書 2:20');
+   assert.match(leftInk.companions[1].verseEn,/Christ liveth in me/);
+   assert.equal(leftInk.companions[1].refEn,'Galatians 2:20 · KJV');
+   assert.equal(leftInk.companions[1].visible,'visible');
+   assert.equal(leftInk.companions[0].visible,'hidden');
+   assert.equal(leftInk.folioSystem,'measured-two-faced-rotating-card-v67');
+   assert.equal(leftInk.reverseFaces.length,2);
+   assert(leftInk.reverseFaces.every(x=>x.visible==='visible'&&x.mask.includes('.svg')),
+    'each physical card back must actually show its olive or terrain engraved artwork');
+   assert.equal(leftInk.rigidCards.length,2,'one real carrier on each side');
+   assert(leftInk.rigidCards.every(c=>c.children.length===3),'front shell, original poster and printed back share one carrier');
+   assert(leftInk.frontPortraits.every(c=>c.parent==='olive-folio-carrier'&&c.transform==='none'&&c.baseline&&
+     Math.abs(c.geometry.typeWidth-c.geometry.artWidth)<2&&Math.abs(c.geometry.typeHeight-c.geometry.artHeight)<2),
+    'protected English text must stay exactly full-size in the original 3:4 front regardless of flip geometry');
+   assert.equal(leftInk.leftClip,'none','no box clipping on botanical field');
+   assert.equal(leftInk.rightClip,'none','no box clipping on contour field');
+   await page.waitForFunction(()=>['real-dem-one-continuous-mother-v76','static-fallback'].includes(document.querySelector('#p2-olive-stage')?.dataset.p2TerrainStrokeEngine),{timeout:20000});
+   // Prove the magic is a geometric 3D turn, not a static front/back swap.
+   const enteringFlip=await go(12.110,'05aa1-right-card-mid-flip');
+   const enteringAngle=Number(enteringFlip.folioAngles?.split(',')[1]);
+   assert(enteringAngle>15&&enteringAngle<165,'right card physically rotates through depth while left stays steady');
+   // V79 Museum Folio must be *position-deterministic*, never a catch-up
+   // timeline. Reversing to exactly the same scroll value restores the
+   // identical half-turn pose; short increments cannot create a jump.
+   const halfwayA=await go(12.235,'05aa3-halfturn-pose');
+   const halfwayB=await go(12.285,'05aa4-halfturn-small-step');
+   const halfwayAgain=await go(12.235,'05aa5-halfturn-return');
+   const angleA=Number(halfwayA.folioAngles.split(',')[1]);
+   const angleB=Number(halfwayB.folioAngles.split(',')[1]);
+   const angleAgain=Number(halfwayAgain.folioAngles.split(',')[1]);
+   assert(angleA>0&&angleA<180,'position-controlled folio must remain in a physical mid-flip');
+   assert(angleB<angleA,'five-hundredth-of-a-viewport scroll must advance the incoming right folio smoothly');
+   assert(Math.abs(angleA-angleAgain)<.02,'reverse scroll must restore exact right-card angle with no temporal lag');
+   assert(Math.abs(Number(enteringFlip.folioAngles?.split(',')[0]))<.01,
+    'left side remains locked during the right-side reveal');
+   const retiringFlip=await go(12.690,'05aa2-left-card-mid-flip');
+   const retiringAngle=Number(retiringFlip.folioAngles?.split(',')[0]);
+   assert(retiringAngle>15&&retiringAngle<165,'previous speaker folds back only after next portrait has settled');
+   const rightLocked=await go(12.935,'05aa-right-front-left-back');
+   assert.equal(rightLocked.folioFaces,'back,front','right figure is front; left botanical back');
+   assert.equal(rightLocked.rightPoster,'1','right approved Derek Prince portrait');
+   const mastheadClearance=await page.evaluate(()=>{
+     const header=document.querySelector('#olive-rubric').getBoundingClientRect();
+     const rightCard=document.querySelector('.olive-folio-carrier[data-folio-side="right"]').getBoundingClientRect();
+     return {headerBottom:header.bottom,cardTop:rightCard.top,
+       overlap:header.bottom-rightCard.top};
+   });
+   assert(mastheadClearance.overlap<=-4,
+     'Bilingual award-direction header must have a genuine breathing band above the right printed card, not intrude into its gilded frame');
+   assert.equal(rightLocked.portraitDecode,'ready','approved portraits decoded');
+   assert.equal(rightLocked.reverseFaces[0].wholeOpacity,'1',
+    'completed reverse stock remains fully opaque rather than disappearing with ink handoff');
+   assert(rightLocked.reverseFaces[0].paper!=='rgba(0, 0, 0, 0)'&&rightLocked.reverseFaces[0].paper!=='transparent',
+    'reverse has visible deep olive stock distinct from the olive-green stage');
+   assert.equal(rightLocked.reverseFaces[0].speaker,'0',
+    'left reverse contributes first speaker botanical fragment');
+   assert.equal(rightLocked.scripturePlacement,'adjacent-bilingual-cuv-kjv-v82');
+   assert(rightLocked.companions.every(x=>!x.cardParent),
+     'scripture must not be a child of a lecturer rotating card');
+   assert.equal(rightLocked.companions[0].speaker,'derek-prince',
+     'left-side reading surface MUST show the currently facing Derek Prince');
+   assert.equal(rightLocked.companions[0].ref,'以弗所書 6:12');
+   assert.match(rightLocked.companions[0].verseEn,/wrestle not against flesh and blood/);
+   assert.equal(rightLocked.companions[0].refEn,'Ephesians 6:12 · KJV');
+   assert.equal(rightLocked.companions[0].visible,'visible');
+   assert(rightLocked.companions[0].alpha>.95,
+     'verse must be visibly beside the preacher, not hidden behind his card');
+   assert.equal(rightLocked.companions[1].visible,'hidden');
+   assert.match(rightLocked.companions[0].font,/Chiron Hei HK WS/,
+     'companion reference uses OS CJK type');
+   assert.equal(rightLocked.companions[0].color,'rgb(250, 249, 245)');
+   assert(rightLocked.reverseFaces[0].mark>.99,
+    'completed reverse edition label and original small ink detail remain clearly visible');
+   assert(rightLocked.reverseFaces[0].alpha>.70,
+    'first completed botanical reverse must stay visibly printed after handing ink to the stage');
+   assert(rightLocked.reverseFaces[0].detail.includes('04-olive-full-verso-v74-botanical-1.svg'),
+    'visible botanical reverse must show a full uncropped original engraved composition');
+   assert.equal(rightLocked.reverseFaces[0].fragment,'1',
+    'first botanical reverse is an individual speaker-specific impression');
+
+   assert(rightLocked.reverseFaces[0].source.includes('04-olive-full-verso-v74-botanical-1.svg'),
+    'first of twelve card backs is independent full folio botanical artwork');
+   const rightInk=await go(16.170,'05b-right-terrain-second-complete');
+   assert.equal(rightInk.leftPoster,'4','left has safely preloaded the next portrait behind its botanical reverse');
+   assert.equal(rightInk.portraitDecode,'ready','original portraits predecoded before alternating swaps');
+   assert.equal(rightInk.terrainEngine,'real-dem-one-continuous-mother-v76','one measured mother plate is printed without panel clipping');
+   assert(rightInk.fullContourPaths>=24&&rightInk.visibleContours>0,'full geographic contours displayed');
+   assert(rightInk.completedRings>=1,'retired right speaker has transferred the first full contour fragment');
+   assert(rightInk.terrain>.15&&rightInk.plant>.15,
+    'one whole contour and one earlier botanical edition transfer into persistent background');
+   const leftAgain=await go(16.705,'05c-left-botanical-return');
+   assert(leftAgain.plant>.3&&leftAgain.terrain>.15,
+    'old letterpress impressions persist through the next alternating speaker');
+   const kouFeatured=await go(22.850,'08-kou-shao-en-mirrored-featured');
+   assert.equal(kouFeatured.companions[0].speaker,'kou-shao-en',
+     'last lecturer on RIGHT has his scripture in the LEFT editorial panel');
+   assert.equal(kouFeatured.companions[0].ref,'腓立比書 4:7');
+   assert.match(kouFeatured.companions[0].verseEn,/peace of God/);
+   assert.equal(kouFeatured.companions[0].refEn,'Philippians 4:7 · KJV');
+   assert.equal(kouFeatured.rightPoster,'11','Kou Shao-en is the final featured right-side original poster');
+   assert.equal(kouFeatured.folioFaces,'back,front','Kou original image and unmirrored names remain on a physical front face');
+   const end=await go(24.200,'09-twelve-voices-final-overview');
+   assert(end.plant>.999&&end.terrain>.999,'all twelve posters: both engravings shown');
+   assert.equal(end.completedRings,6,'all six right speaker contour editions are printed');
+   assert(end.plantLayers.every(v=>v>.999),'all six botanical engraved editions remain visible after twelve speakers');
+   assert.match(css,/v79-botanical-field\/04-olive-field-v79-3\.svg/,'botanical field uses curated source and OS ink rather than opaque dark hedge');
+   assert.equal(end.posterNodes,12);
+   const exitLink=await page.locator('#olive-enter').evaluate(a=>{
+     const box=a.getBoundingClientRect(),cs=getComputedStyle(a);
+     const label=a.querySelector('.olive-stage__enter-label');
+     const lb=label?.getBoundingClientRect(),lcs=label&&getComputedStyle(label);
+     const hit=lb&&document.elementFromPoint(Math.min(innerWidth-1,lb.x+lb.width/2),Math.min(innerHeight-1,lb.y+lb.height/2));
+     return {text:a.textContent,clip:cs.clipPath,visible:cs.visibility,
+      width:box.width,height:box.height,left:box.left,right:box.right,
+      labelWidth:lb?.width,labelLeft:lb?.left,labelRight:lb?.right,
+      labelDisplay:lcs?.display,hitOwn:hit===label||a.contains(hit)};
+   });
+   assert.match(exitLink.text,/EXPLORE ALL TWELVE/,'editorial entrance label retained');
+   assert.equal(exitLink.visible,'visible','index exit visible after twelve speakers');
+   assert.equal(exitLink.clip,'none','settled index entrance must not cut off 320px text');
+   assert(exitLink.left>=0&&exitLink.right<=width&&exitLink.width>120,
+     'completed entrance must fit within desktop and 320px viewport');
+   assert(exitLink.labelWidth>120&&exitLink.labelLeft>=0&&exitLink.labelRight<=width,
+     'EXPLORE ALL TWELVE must have a real, readable 320px on-screen text box');
+   assert(exitLink.hitOwn,'actual first-party call-to-action glyphs must not be hidden by an overlay');
+   const kou=await page.evaluate(()=>{
+    const card=document.querySelector('#olive-overview .olive-stage__index-card[data-speaker="kou-shao-en"]');
+    const art=card?.querySelector('.olive-stage__artwork');
+    const img=art?.querySelector('.olive-stage__original');
+    const lettering=art?.querySelector('olive-speaker-baseline');
+    return {src:img?.getAttribute('src'),speaker:art?.dataset.speaker,
+     imgTransform:img?getComputedStyle(img).transform:null,
+     letterTransform:lettering?getComputedStyle(lettering).transform:null};
+   });
+   assert.equal(kou.speaker,'kou-shao-en','only Kou portrait receives mirrored source tag');
+   assert.equal(kou.imgTransform,'matrix(-1, 0, 0, 1, 0, 0)',
+    'Kou portrait image visibly flips left/right in twelve-person index');
+   assert.equal(kou.letterTransform,'none',
+    'Kou English and Chinese type are not reversed by the image mirror');
+   const back=await go(9.30,'10-reversed-original-emmaus');
+   assert.equal(back.source,'visible','reverse scrolling restores 03 original');
+   assert.equal(back.artVisibility,'hidden','reverse to 03 removes both 04 engraving fields');
+   assert.deepEqual(oliveRequests,[],'retired 04 background SVGs must never be fetched');
+   assert.deepEqual(errors,[],'browser must be free of page errors');
+   console.log('P2 04 CLEAN FIELD PASS',width,JSON.stringify({pair:pair.scene,clean:mid.scene,botanical:leftInk.plant,topography:rightInk.terrain,index:end.scene,reverse:back.scene}));
+   await page.close();
+  }
+ }finally{await browser.close()}
+})().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scripture Studio · Typeface Register V3</title>
+<style>
+:root{--paper:#faf9f5;--ink:#252525;--edge:#d8d6d0;--gold:#a2872a}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}
+header{padding:20px clamp(18px,3vw,45px);border-bottom:1px solid var(--edge);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+header h1{font:400 clamp(24px,3vw,39px)/1.2 Georgia,serif;letter-spacing:-.04em;margin:2px 0 0}
+.eyebrow{font-size:10px;letter-spacing:.20em;color:#727269;text-transform:uppercase}
+main{display:grid;grid-template-columns:310px minmax(0,1fr);min-height:85dvh}
+aside{padding:22px;border-right:1px solid var(--edge);display:flex;flex-direction:column;gap:14px}
+label{font-size:12px;font-weight:550;display:grid;gap:6px}
+select,input,textarea,button{font:inherit;border:1px solid #c7c7be;border-radius:3px;padding:9px 10px;color:var(--ink);background:white;min-width:0;width:100%}
+textarea{resize:vertical;min-height:68px}button{cursor:pointer}
+button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+aside p,.footnote{font-size:12px;color:#686963;margin:0}
+.work{padding:clamp(16px,3vw,45px);min-width:0}
+.headline{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:20px}
+.headline h2{font:400 clamp(23px,3vw,32px) Georgia,serif;margin:0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,3vw,45px);max-width:1100px}
+.seal-wrap{min-width:0}
+.seal-wrap .over{font-size:11px;letter-spacing:.08em;margin-bottom:9px;color:#75756f}
+.seal{width:100%;display:block;aspect-ratio:1;overflow:hidden;background:var(--paper)}
+hr{border:0;border-top:1px solid var(--edge);margin:31px 0 25px}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 12px;max-width:1100px}
+.specimen{background:none;border:0;padding:0;text-align:left;cursor:pointer}.specimen svg{width:100%;aspect-ratio:1;display:block}.specimen[aria-current=true] svg{outline:2px solid var(--gold);outline-offset:3px}
+.specimen span{font-size:11px;display:block;margin-top:7px}
+footer{padding:14px clamp(18px,3vw,45px);border-top:1px solid var(--edge);font-size:11px;color:#76766f}
+@media(max-width:930px){main{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--edge);display:grid;grid-template-columns:repeat(2,1fr)}aside p{grid-column:1/-1}}
+@media(max-width:570px){header{display:block}.pair{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}aside{grid-template-columns:1fr}}
+</style></head><body>
+<header><div><div class="eyebrow">Westside Watch · Scripture Studio / Letterpress research</div><h1>經文的形狀 <em>·</em> 字印 V3</h1></div><div class="eyebrow">黑白母本 / No Ornament</div></header>
+<main><aside>
+<label>首頁與七個版塊<select id="source"></select></label>
+<label>構圖方法<select id="grammar"><option value="bridge">A｜橋接 · 交錯字軸</option><option value="threshold">B｜門檻 · 不對稱字核</option></select></label>
+<label>中文字形（選取的作品節錄）<textarea id="zh"></textarea></label>
+<label>英文鉛字（選取的作品節錄）<textarea id="en"></textarea></label>
+<div class="controls"><label>中文出處<input id="zhref"></label><label>English<input id="enref"></label></div>
+<div class="controls"><label>印版緊度 <input id="tight" type="range" min="85" max="115" value="100" step="5"></label><label>排字過程 <input id="progress" type="range" min="0" max="100" value="100" step="5"></label></div>
+<div class="controls"><button id="exchange">陰陽交換</button><button id="restore">恢復經文</button></div>
+<div class="controls"><button id="export" class="primary">匯出雙印 SVG</button><button id="recipe">儲存配方 JSON</button></div>
+<p>不以單字平均切段：編輯者直接選擇經文的重點短語。構圖透過同一份模數座標生成雙印，使用原生 SVG 字形。A 與 B 是可比較的設計探索，不是「已驗收」的設計系統。</p>
+</aside>
+<section class="work">
+<div class="headline"><div><div class="eyebrow">01 / Primary typography studies</div><h2>陰陽 · 同一字模</h2></div><div class="eyebrow" id="state">完成印版</div></div>
+<div class="pair"><div class="seal-wrap"><div class="over">陽文 / 中文竪排 × 英文橫排</div><svg id="yang" class="seal" viewBox="0 0 640 640" role="img"></svg></div><div class="seal-wrap"><div class="over">陰文 / 中文橫排 × 英文竪排</div><svg id="yin" class="seal" viewBox="0 0 640 640" role="img"></svg></div></div>
+<p class="footnote" style="margin-top:15px">文字之間的比例、分組及可讀性仍需逐字校對。本輪去除外框、假紙紋、刻線和裝飾；展示的是能隨內容重算的字形設計，而不是圖片。</p>
+<hr><div class="headline"><div><div class="eyebrow">02 / Input pressure test</div><h2>八段不同長度的經文</h2></div><div class="eyebrow">選一幅回到編輯器</div></div>
+<div id="gallery" class="gallery"></div>
+<p class="footnote" style="margin-top:14px">預置摘句僅作字形壓力測試；05–07 仍是候選主題，發佈前應從欄目經文權威來源核對。設計工具不應重寫聖經。</p>
+</section></main><footer>Isolated Scripture Studio experiment. No changes to released P2 / existing animations. First art-direction review, not public publication.</footer>
+<script>
+"use strict";
+const data=[
+["首頁 / 黑夜已深","黑夜已深，白晝將近","The night is far spent, the day is at hand","羅馬書 13:12","ROMANS 13:12"],
+["01 / 活水堂","除他以外，別無拯救","Neither is there salvation in any other","使徒行傳 4:12","ACTS 4:12"],
+["02 / 西望","我在你城上設立守望的","I have set watchmen upon thy walls","以賽亞書 62:6","ISAIAH 62:6"],
+["03 / 以馬忤斯","凡經上所指著自己的話，都給他們講解明白了","He expounded unto them in all the scriptures the things concerning himself","路加福音 24:27","LUKE 24:27"],
+["04 / 橄欖山","信道是從聽道來的","Faith cometh by hearing","羅馬書 10:17","ROMANS 10:17"],
+["05 / 黎明書局（候選）","你的話是我腳前的燈","Thy word is a lamp unto my feet","詩篇 119:105","PSALM 119:105"],
+["06 / 天堂電影院（候選）","將這默示明明地寫在版上","Write the vision, and make it plain upon tables","哈巴谷書 2:2","HABAKKUK 2:2"],
+["07 / 白晝咖啡館（候選）","小麥、大麥、葡萄樹、無花果樹","A land of wheat, and barley, and vines, and fig trees","申命記 8:8","DEUTERONOMY 8:8"]
+];
+const NS="http://www.w3.org/2000/svg",$=id=>document.getElementById(id);let flipped=false,idx=0;
+function elt(tag,attrs={},txt){let e=document.createElementNS(NS,tag);for(let [k,v] of Object.entries(attrs))e.setAttribute(k,v);if(txt!==undefined)e.textContent=txt;return e}
+function text(g,x,y,s,sz,color,attr={}){let t=elt("text",{x,y,fill:color,"font-size":sz,...attr},s);g.append(t);return t}
+function wrap(words,max){let lines=[],current="";for(let w of words.trim().split(/\s+/)){if(current&&current.length+w.length+1>max){lines.push(current);current=w}else current+=(current?" ":"")+w}if(current)lines.push(current);return lines}
+function splitHan(h,n){let chars=Array.from(h.replace(/[\s，。！？、；：]/g,"")),len=Math.ceil(chars.length/n),out=[];for(let i=0;i<n;i++){let c=chars.slice(i*len,(i+1)*len).join("");if(c)out.push(c)}return out}
+function compose(svg,record,side,grammar,tight=100,progress=100){
+ svg.replaceChildren();let swapped=(side==="yin")!==flipped,ink=swapped?"#faf9f5":"#252525",paper=swapped?"#252525":"#faf9f5",scale=tight/100;
+ svg.append(elt("rect",{width:640,height:640,fill:paper}));let g=elt("g");svg.append(g);
+ let zh=record.zh.replace(/\s+/g,""),en=record.en.trim(),short=zh.length<=13;
+ if(progress<25)return;
+ let HanFont='"Noto Serif TC","Songti TC","PMingLiU",serif',LatinFont='Georgia,"Times New Roman",serif';
+ if(side==="yang"){
+  // A single shared typographic register: a large vertical right-hand Chinese axis,
+  // a smaller offset Chinese type column at left, and horizontal Latin countermeasures.
+  let cols=splitHan(zh,zh.length>22?4:zh.length>12?3:2),rows=Math.max(...cols.map(s=>s.length));
+  let maxSz=Math.min(70,408/Math.max(rows,3),cols.length>3?48:70)*scale;
+  let right=grammar==="bridge"?535:555, centerY=320,top=centerY-(rows*maxSz*1.035)/2;
+  const han=elt("g",{opacity:1});g.append(han);
+  cols.forEach((col,i)=>Array.from(col).forEach((c,j)=>text(han,right-i*maxSz*1.08,top+(j+.82)*maxSz*1.035,c,maxSz,ink,{"font-family":HanFont,"font-weight":"700","text-anchor":"middle"})));
+  if(progress<55)return;
+  let words=en.split(/\s+/),limit=grammar==="bridge"?16:13,latin=wrap(en,limit),fs=Math.min(42,252/(latin.length*1.17),340/Math.max(...latin.map(x=>x.length*.52)))*scale;
+  // Horizontal axis crosses the two Chinese columns' y-span in negative space.
+  let x=grammar==="bridge"?70:82,y=grammar==="bridge"?208:170;
+  latin.forEach((line,i)=>text(g,x,y+i*fs*1.24,line,fs,ink,{"font-family":LatinFont,"letter-spacing":"-.85"}));
+  if(grammar==="threshold"&&short){ // a typographic hinge made only from core words
+   const first=zh.slice(0,2);text(g,77,490,first,Math.min(84,105*scale),ink,{"font-family":HanFont,"font-weight":"700"});
+  }
+ }else{
+  // Reverse inscription: horizontal Chinese head and lower register create open vertical lanes.
+  let words=splitHan(zh,zh.length>20?4:zh.length>12?3:2);
+  let hanRows=words.slice(0,3),maxLen=Math.max(...hanRows.map(s=>s.length));
+  let sz=Math.min(67,488/(maxLen*1.06),125/hanRows.length*2)*scale;
+  let x=grammar==="bridge"?72:84,y=grammar==="bridge"?155:130;
+  hanRows.forEach((l,i)=>text(g,x,y+i*sz*1.21,l,sz,ink,{"font-family":HanFont,"font-weight":"700","letter-spacing":"-2"}));
+  if(progress<55)return;
+  let lines=wrap(en,grammar==="bridge"?18:15),cols=lines.slice(0,4);
+  let font=Math.min(33,365/Math.max(...cols.map(s=>s.length*.62)),(420/(cols.length*1.15)))*scale;
+  let top=grammar==="bridge"?352:320,start=grammar==="bridge"?105:85,gap=(465-start)/Math.max(1,cols.length-1);
+  cols.forEach((s,i)=>{let xx=start+i*gap,yy=top;let t=text(g,xx,yy,s,font,ink,{"font-family":LatinFont,"letter-spacing":"-.7",transform:"rotate(90 "+xx+" "+yy+")"});});
+  if(grammar==="threshold"&&short){text(g,392,240,zh.slice(-2),Math.min(75,85*scale),ink,{"font-family":HanFont,"font-weight":700})}
+ }
+ if(progress<95)return;
+ // Citation is aligned to the same internal optical boundaries; no generic underline.
+ text(g,75,585,record.zr,18,ink,{"font-family":HanFont});
+ text(g,566,585,record.er,16,ink,{"font-family":LatinFont,"text-anchor":"end","letter-spacing":".6"});
+ svg.setAttribute("aria-label",record.zh+" / "+record.en);
+}
+function current(){return {zh:$("zh").value,en:$("en").value,zr:$("zhref").value,er:$("enref").value}}
+function render(){let r=current(),gram=$("grammar").value,t=Number($("tight").value),p=Number($("progress").value);compose($("yang"),r,"yang",gram,t,p);compose($("yin"),r,"yin",gram,t,p);$("state").textContent=p<25?"空版":p<55?"中文進版":p<95?"英文交叉":"完成印版";document.querySelectorAll(".specimen").forEach((b,i)=>b.setAttribute("aria-current",i===idx?"true":"false"))}
+function load(){idx=Number($("source").value);let p=data[idx];["zh","en","zhref","enref"].forEach((k,i)=>$(k).value=p[i+1]);render()}
+const source=$("source");data.forEach((r,i)=>{let o=document.createElement("option");o.textContent=r[0];o.value=i;source.append(o)});
+function buildGallery(){let gallery=$("gallery");gallery.replaceChildren();data.forEach((r,i)=>{let btn=document.createElement("button");btn.className="specimen";btn.type="button";btn.setAttribute("aria-label","選取 "+r[0]);let svg=elt("svg",{viewBox:"0 0 640 640","aria-hidden":true});compose(svg,{zh:r[1],en:r[2],zr:r[3],er:r[4]},"yang","bridge",100,100);let name=document.createElement("span");name.textContent=r[0];btn.append(svg,name);btn.onclick=()=>{source.value=i;load()};gallery.append(btn)})}
+function download(name,txt,mime){let url=URL.createObjectURL(new Blob([txt],{type:mime})),a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+$("export").onclick=()=>{let serializer=new XMLSerializer(),a=$("yang").cloneNode(true),b=$("yin").cloneNode(true);a.removeAttribute("id");b.removeAttribute("id");let inner=s=>Array.from(s.children).map(x=>serializer.serializeToString(x)).join("");let svg='<svg xmlns="'+NS+'" viewBox="0 0 1300 640" width="1300" height="640"><g>'+inner(a)+'</g><g transform="translate(660 0)">'+inner(b)+'</g></svg>';download("scripture-type-register-v3.svg",svg,"image/svg+xml")};
+$("recipe").onclick=()=>download("scripture-type-register-v3.json",JSON.stringify({name:"Scripture Studio V3",preset:data[idx][0],...current(),grammar:$("grammar").value,tight:Number($("tight").value),progress:Number($("progress").value),flipped},null,2),"application/json");
+$("exchange").onclick=()=>{flipped=!flipped;render()};$("restore").onclick=load;
+["zh","en","zhref","enref","grammar","tight","progress"].forEach(id=>$(id).addEventListener("input",render));source.onchange=load;
+buildGallery();load();
+</script></body></html>

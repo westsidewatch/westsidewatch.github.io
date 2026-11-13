@@ -1,0 +1,94 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scripture Studio · Isa 62:6 Mother Form</title>
+<link rel="stylesheet" href="https://westsidewatch.github.io/css/westside-design-os.css">
+<style>
+:root{--paper:#faf9f5;--ink:#252525;--zh:'Chiron Hei HK WS';--en:'Bodoni Moda';color-scheme:light}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font:14px/1.5 system-ui,-apple-system,sans-serif}header{padding:21px clamp(16px,3vw,45px);border-bottom:1px solid #d4d2ca;display:flex;align-items:end;justify-content:space-between;gap:20px}header h1{font:400 clamp(23px,3vw,37px)/1.2 Georgia,serif;margin:0}.eyebrow{font-size:11px;letter-spacing:.15em;color:#73756e;text-transform:uppercase}
+main{display:grid;grid-template-columns:minmax(290px,330px) minmax(0,1fr)}aside{padding:20px;display:flex;flex-direction:column;gap:13px;border-right:1px solid #dedbd2}label{display:grid;gap:5px;font-size:12px;font-weight:600}select,button,textarea,input{font:inherit;background:#fff;border:1px solid #c5c2b9;color:var(--ink);padding:10px;border-radius:3px;width:100%}textarea{min-height:76px;resize:vertical}button{cursor:pointer}button.primary{background:#263d2b;color:#fff;border-color:#263d2b}.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}.note{font-size:12px;color:#64685f;margin:0}.work{padding:clamp(16px,2.5vw,36px);min-width:0}.work h2{font:400 25px Georgia,serif;margin:5px 0 22px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,34px);max-width:1250px}.pair>div{min-width:0}.label{font-size:11px;color:#5e655d;letter-spacing:.03em;margin-bottom:7px}.seal{width:100%;aspect-ratio:1;position:relative;overflow:hidden;background:#faf9f5;container-type:inline-size}.seal.inverse{background:#252525}.forme{position:absolute;left:50%;top:50%;width:var(--plate-side,800px);height:var(--plate-side,800px);transform:translate(-50%,-50%) scale(var(--display-scale,1));display:grid;place-items:center;transform-origin:center;color:var(--ink)}.inverse .forme{color:#faf9f5;transform:translate(-50%,-50%) scale(var(--display-scale,1)) rotate(-90deg)}
+.bands{display:flex;flex-direction:row-reverse;justify-content:center;align-items:center;gap:var(--gap,40px);width:max-content;height:max-content;font-size:var(--type-size,44px);font-synthesis:none}.band{writing-mode:vertical-rl;text-orientation:mixed;white-space:nowrap;flex:none;line-height:1;max-width:none}.band .zh{font-family:var(--zh),'Noto Sans CJK TC',sans-serif;font-weight:900;text-orientation:upright;word-break:keep-all;letter-spacing:-.035em}.band .en{font-family:var(--en),Georgia,serif;font-weight:400;text-orientation:sideways;word-break:normal;letter-spacing:-.01em}.inverse .band .zh{font-weight:200!important}.inverse .band .en{text-transform:uppercase}.band>span{display:inline-block;unicode-bidi:isolate;white-space:nowrap;vertical-align:middle}.band .offset{display:inline-block;inline-size:var(--start-offset,0px)}
+.status{margin:17px 0 12px;max-width:1100px;border-top:1px solid #d6d4cc;padding:10px 0;font:12px/1.6 ui-monospace,monospace;white-space:pre-wrap;color:#4a584c}.status.fail{color:#922e24}.poetry{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:1100px;margin-top:12px}.poetry section{border-top:1px solid #d6d4cc;padding-top:12px}.poetry blockquote{margin:7px 0;font-family:'Noto Serif TC','Noto Serif CJK TC',serif;font-size:13px;line-height:1.9}.poetry section:last-child blockquote{font:14px/1.7 Georgia,serif}.poetry small{color:#6b6d67}.poetry p{margin:2px 0}footer{border-top:1px solid #ddd;padding:12px 30px;color:#777;font-size:11px}.opt{display:flex;align-items:center;gap:7px;font-weight:400}.opt input{width:auto}
+@media(max-width:1050px){main{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid #ddd;display:grid;grid-template-columns:1fr 1fr}aside .full{grid-column:1/-1}}
+@media(max-width:630px){.pair,.poetry,aside{grid-template-columns:1fr}header{display:block}}
+</style></head><body>
+<header><div><div class="eyebrow">Westside Watch / Scripture Studio · Real typesetting engine proof</div><h1>經文印記 · 鉛字母本</h1></div><div class="eyebrow">Isaiah 62:6 · Candidate poetry lineation</div></header>
+<main><aside>
+<label>母本試驗方案<select id="variant"><option value="one" selected>01 / 詩行保護・七柱錯落</option><option value="two">02 / 另一排列候選</option><option value="three">03 / 對比：最密集候選</option></select></label>
+<label>固定母版字號<select id="size"><option value="40">40px</option><option value="44" selected>44px</option><option value="48">48px</option></select></label>
+<label class="full">中文詩歌全文<textarea id="zh" readonly></textarea></label><label class="full">KJV 全文<textarea id="en" readonly></textarea></label>
+<div class="two"><button id="regen" class="primary">重新求解母版</button><button id="export">匯出可編輯 HTML</button></div>
+<button id="saveJson">匯出構圖資料 JSON</button>
+<label class="opt full"><input type="checkbox" id="guides">顯示字帶輪廓（驗收用）</label>
+<p class="note full">實際鉛字排版，不是生成圖片。單一母版透過 90° 旋轉切換中英文閱讀；英文主讀印使用全大寫 Bodoni，中文是 Chiron 200，中文主讀印使用 Chiron 900。文字來源和詩行依據為待核定的編輯候選。</p>
+<p class="note full">此樣章使用<strong>詩行優先＋人工認定次級斷點</strong>。其中「呼籲耶和華的，」保持完整。「他們晝夜必不靜默。」的內部拆分僅作算法容量測試，尚需編輯同意；未獲核定前不能上線。</p>
+</aside><section class="work"><div class="eyebrow">01 / one forme, two orientations</div><h2>雙語共用鉛字印版</h2><div class="pair">
+<div><div class="label">甲 · 中文主讀｜中文豎行右起左行</div><div class="seal" id="zhSeal"><div class="forme"><div class="bands"></div></div></div></div>
+<div><div class="label">乙 · 英文主讀｜整塊印版橫轉 90°</div><div class="seal inverse" id="enSeal"><div class="forme"><div class="bands"></div></div></div></div>
+</div><div id="status" class="status" aria-live="polite">計算中</div>
+<div class="poetry"><section><small>中文編輯詩行候選｜非正式 USFM 出版分行</small><blockquote id="poemZh"></blockquote></section><section><small>KJV 詩行候選｜非正式版面來源</small><blockquote id="poemEn"></blockquote></section></div></section></main>
+<footer>Prototype only · No publication / P2 integration · OS font appearance requires real network font loading proof</footer>
+<script>
+'use strict';
+const $=s=>document.getElementById(s);
+const zhLines=['耶路撒冷啊，','我在你城上設立守望的，','他們晝夜必不靜默。','呼籲耶和華的，','你們不要歇息，'];
+const enLines=['I have set watchmen upon thy walls, O Jerusalem,','which shall never hold their peace day nor night:','ye that make mention of the LORD,','keep not silence,'];
+const zhSource=zhLines.join(''),enSource=enLines.join(' ');
+// Text units are source-preserving and may not be split by the solver. Additional intra-line boundaries are explicit editorial REVIEW CANDIDATES, not imported official USFM markers.
+const zhUnits=['耶路撒冷啊，','我在','你城上','設立','守望的，','他們','晝夜','必不靜默。','呼籲耶和華的，','你們','不要歇息，'];
+const enUnits=['I have set ','watchmen ','upon thy walls, ','O Jerusalem, ','which shall never ','hold their peace ','day nor night: ','ye that make mention of the LORD, ','keep not silence,'];
+const enNormalized=enUnits.join('');
+if(zhUnits.join('')!==zhSource || enNormalized!==enSource){throw Error('Poetry units must reconstruct source exactly')}
+$('zh').value=zhSource;$('en').value=enSource;
+zhLines.forEach(x=>{const p=document.createElement('p');p.textContent=x;$('poemZh').append(p)});
+enLines.forEach(x=>{const p=document.createElement('p');p.textContent=x;$('poemEn').append(p)});
+const cvs=document.createElement('canvas'),ctx=cvs.getContext('2d');let last=null;
+function measured(text,lang,size,mode){if(lang==='zh')return Array.from(text).reduce((s,c)=>s+size*(/[，。；：！？、]/.test(c)?.52:1),0);ctx.font=`${size}px Georgia, serif`;return ctx.measureText(mode==='uppercase'?text.toUpperCase():text).width}
+const signatures=['ZEZE','ZEZE','ZEZ','ZEZ','ZE','ZE','ZE'];
+// The source token counts force exactly 11 ZH + 9 EN = four multiple-switch strips, three simple strips.
+function permutations(arr){let set=new Set(),out=[];function rec(prefix,items){if(!items.length){let key=prefix.join('|');if(!set.has(key)){set.add(key);out.push(prefix)}return;}for(let i=0;i<items.length;i++)rec([...prefix,items[i]],items.slice(0,i).concat(items.slice(i+1)));}rec([],arr);return out}
+function solve(size,mode){const all=[];const perms=permutations(signatures),zw=zhUnits.map(x=>measured(x,'zh',size,mode)),ew=enUnits.map(x=>Math.max(measured(x,'en',size,'uppercase'),measured(x,'en',size,'roman')));
+for(const types of perms){let zi=0,ei=0,rows=[],valid=true;
+ for(let idx=0;idx<types.length;idx++){let parts=[],zwRow=0,ewRow=0;for(const c of types[idx]){const lang=c==='Z'?'zh':'en',n=c==='Z'?zi++:ei++;const item=lang==='zh'?zhUnits[n]:enUnits[n],w=lang==='zh'?zw[n]:ew[n];if(item===undefined){valid=false;break}parts.push({lang,text:item,advance:w});if(lang==='zh')zwRow+=w;else ewRow+=w;}if(!valid)break;const advance=zwRow+ewRow+size*.08*(parts.length-1),share=zwRow/(zwRow+ewRow);rows.push({parts,signature:types[idx],advance,share,asymmetric:share<.4||share>.6});}
+ if(!valid||zi!==zhUnits.length||ei!==enUnits.length)continue;
+ const countAsym=rows.filter(x=>x.asymmetric).length;if(countAsym<4)continue;
+ const maxLen=Math.max(...rows.map(r=>r.advance)),minLen=Math.min(...rows.map(r=>r.advance)),average=rows.reduce((s,r)=>s+r.advance,0)/rows.length;
+ const targetHeight=maxLen;
+ const nominalWidth=7*size*1.02;
+ const gap=Math.max(size*.35,Math.min(size*2.0,(targetHeight*.85-nominalWidth)/6));
+ const totalWidth=nominalWidth+gap*6;
+ const aspect=Math.min(totalWidth,maxLen)/Math.max(totalWidth,maxLen);
+ const spread=Math.max(0,(maxLen-minLen)/maxLen);
+ const nearEqual=rows.filter(r=>r.share>=.4&&r.share<=.6).length;
+ let cost=12*(1-aspect)+.80*nearEqual + Math.abs(spread-.36)*.7+Math.abs(rows[0].advance-rows[6].advance)/maxLen*.3;
+ // Soft art direction: favor different first/second/last outline, no font-size changes.
+ if(rows[0].signature===rows[1].signature)cost+=.05;
+ all.push({rows,gap,cost,estimatedAspect:aspect,nominalWidth,maxLen,asym:countAsym,signatures:types});
+}
+ all.sort((a,b)=>a.cost-b.cost);return all;}
+function makeBands(layout){const n=document.createDocumentFragment();for(const r of layout.rows){const b=document.createElement('div');b.className='band';b.dataset.signature=r.signature;b.style.setProperty('--start-offset','0px');for(const x of r.parts){const sp=document.createElement('span');sp.className=x.lang;sp.lang=x.lang==='zh'?'zh-Hant':'en';sp.textContent=x.text;b.append(sp)}n.append(b)}return n}
+function exportData(){return {schema:'scripture-studio-motherform-v19',source:{zh:zhSource,en:enSource,reference:'Isaiah 62:6',translationZH:'CUV',translationEN:'KJV',literaryStructure:'editorial candidate, not official USFM'},locked:{zh:zhUnits,en:enUnits},typeSize:Number($('size').value),layout:last?.rows||[],gap:last?.gap||0,validation:last?.validation||null}}
+function save(name,text,mime){const blob=new Blob([text],{type:mime}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function render(){const size=Number($('size').value),variant=$('variant').value,opts=solve(size,'uppercase');if(!opts.length){$('status').textContent='沒有符合完整來源與節奏條件的構圖';$('status').classList.add('fail');return}
+const choice=variant==='one'?0:variant==='two'?Math.min(1,opts.length-1):Math.min(2,opts.length-1),o=opts[choice];last=o;
+for(const id of ['zhSeal','enSeal']){const root=$(id);root.querySelector('.bands').replaceChildren(makeBands(o));root.style.setProperty('--type-size',size+'px');root.style.setProperty('--gap',o.gap+'px');}
+// Font-run bounds are measured from real DOM instead of estimating from token counts.
+requestAnimationFrame(()=>requestAnimationFrame(()=>{
+const original=$('zhSeal').querySelector('.bands'),inverse=$('enSeal').querySelector('.bands');
+// Keep one shared forme. English uppercase may expand ink geometry and must be included in sizing.
+const w=Math.max(original.scrollWidth,inverse.scrollWidth),h=Math.max(original.scrollHeight,inverse.scrollHeight),physicalSide=Math.ceil(Math.max(w,h)/.87);
+for(const id of ['zhSeal','enSeal']){const root=$(id);root.style.setProperty('--plate-side',physicalSide+'px');root.style.setProperty('--display-scale',(root.clientWidth/physicalSide).toFixed(6));}
+const spans=Array.from(original.querySelectorAll('.band'));const zhBack=spans.flatMap(b=>Array.from(b.querySelectorAll('.zh'),x=>x.textContent)).join(''),enBack=spans.flatMap(b=>Array.from(b.querySelectorAll('.en'),x=>x.textContent)).join('');
+const ox=w/physicalSide,oy=h/physicalSide,visible=ox>=.72&&oy>=.72&&ox<=.94&&oy<=.94;
+const asym=o.rows.filter(x=>x.asymmetric).length,switched=o.rows.filter(x=>x.parts.length>=3).length;
+const fontload=[...document.fonts].filter(f=>/Chiron|Bodoni/.test(f.family)&&f.status==='loaded').map(f=>f.family+' '+f.weight);
+const ok=zhBack===zhSource&&enBack===enNormalized&&visible&&asym>=4&&switched>=4;
+o.validation={ok,sourceExactZH:zhBack===zhSource,sourceExactEN:enBack===enNormalized,bands:spans.length,multipleSwitchBands:switched,asymmetricBands:asym,inkBounds:{width:w,height:h},plateSide:physicalSide,occupancy:{x:ox,y:oy},fontLoaded:fontload};
+$('status').classList.toggle('fail',!ok);
+$('status').textContent=[`構圖 ${ok?'結構／幾何通過（正式字體及詩行仍待驗）':'未達標'} · ${opts.length} 組合法候選 · 選取第 ${choice+1} 組`, `語法：${o.rows.map(r=>r.signature).join(' / ')}`,`中文完整 ${zhBack===zhSource} · 英文完整 ${enBack===enNormalized} · 非均分 ${asym}/${o.rows.length} · 多次交錯 ${switched}/${o.rows.length}`,`真實 DOM 字群 ${w.toFixed(0)} × ${h.toFixed(0)}px · 印版 ${physicalSide}px · 水平 ${(ox*100).toFixed(1)}% / 垂直 ${(oy*100).toFixed(1)}% · 原生字級 ${size}px`,`OS 字體：${fontload.length?fontload.join(', '):'未載入，截圖是後備字體；不可作字重驗收'}`].join('\n');
+window.__scriptureMotherformQA=o.validation;
+}));}
+$('regen').onclick=render;$('variant').onchange=render;$('size').onchange=render;
+$('guides').onchange=()=>{document.querySelectorAll('.band').forEach(el=>el.style.outline=$('guides').checked?'1px solid #a2872a':'none')};
+$('saveJson').onclick=()=>save('scripture-studio-motherform-recipe-v19.json',JSON.stringify(exportData(),null,2),'application/json');
+$('export').onclick=()=>{const css=document.querySelector('style').textContent,content=document.querySelector('.pair').outerHTML;save('scripture-studio-motherform-v19-standalone.html','<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><style>'+css+'</style><div class="pair">'+content+'</div></html>','text/html')};
+new ResizeObserver(()=>{const side=last?.validation?.plateSide;if(!side)return;for(const id of ['zhSeal','enSeal'])$(id).style.setProperty('--display-scale',($(id).clientWidth/side).toFixed(6))}).observe(document.querySelector('.pair'));
+render();document.fonts.ready.then(render);
+</script></body></html>

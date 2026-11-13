@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>P2 01–04 · 多雷插圖 → 雙海報 → 十二位講員總覽｜隔離預覽</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<link rel="stylesheet" href="/css/p2-0104-olive-continuation.css?v=olive-bilingual-editorial-v82-20261108">
+<style>
+/* Watchword V2 — protected opt-in overlay inside original P2 Draft preview.
+   This never changes the timed exhibition or original 01–03/04 transforms. */
+#p2-watchword-preview[hidden]{display:none!important}
+#p2-watchword-preview{
+ position:fixed;z-index:100;inset:0;overflow-y:auto;overscroll-behavior:contain;
+ background:color-mix(in oklab,var(--ws-ink) 76%,transparent);
+ padding:clamp(40px,6vw,84px) clamp(12px,4vw,64px) 40px;
+}
+.p2-ww-panel{position:relative;max-width:1300px;margin:auto;background:var(--ws-paper);color:var(--ws-ink);
+ box-shadow:0 18px 80px color-mix(in oklab,var(--ws-ink) 35%,transparent)}
+.p2-ww-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+ padding:13px clamp(18px,3vw,42px);font:400 12px/1.3 var(--ws-type-display-en);letter-spacing:.12em;
+ border-bottom:1px solid var(--ws-first-light)}
+#p2-watchword-close{cursor:pointer;border:1px solid var(--ws-first-light);background:var(--ws-paper);
+ color:var(--ws-ink);padding:7px 13px;font:inherit;letter-spacing:0}
+.p2-ww-composition{--ww-ink:var(--ws-ink);--ww-gold:var(--ws-first-light);
+ background:var(--ws-papyrus);color:var(--ww-ink);padding:clamp(26px,5vw,80px);min-height:min(750px,80svh)}
+.p2-ww-folio{border-top:1px solid var(--ww-gold);padding-top:12px;display:flex;justify-content:space-between;
+ gap:12px;font:400 11px/1.25 var(--ws-type-display-en);letter-spacing:.15em}
+.p2-ww-upper-space{height:clamp(56px,10vw,165px)}
+.p2-ww-grid{display:grid;grid-template-columns:minmax(90px,26%) minmax(0,74%);
+ gap:clamp(8px,3vw,40px);align-items:end}
+.p2-ww-aside{align-self:stretch;display:flex;flex-direction:column;justify-content:flex-end;gap:12px}
+.p2-ww-numeral{font:italic 400 clamp(50px,8vw,110px)/.9 var(--ws-type-display-en);letter-spacing:-.07em;color:var(--ww-gold)}
+.p2-ww-aside-zh{font:200 clamp(13px,1.4vw,19px)/1.4 var(--ws-type-display-zh)}
+.p2-ww-ref{display:block;text-align:right;color:var(--ww-gold);margin:0 0 24px;
+ font:italic 400 clamp(37px,6.5vw,85px)/1 var(--ws-type-display-en);letter-spacing:-.055em}
+.p2-ww-zh{margin:0;font:600 clamp(34px,4.75vw,74px)/1.34 var(--ws-type-display-zh);
+ letter-spacing:-.025em;text-align:right;text-wrap:pretty}
+.p2-ww-zh span{display:block}
+.p2-ww-enwrap{display:flex;align-items:flex-start;gap:18px;border-top:1px solid var(--ww-gold);
+ padding-top:20px;margin:clamp(29px,5vw,72px) 0 0 auto;width:min(840px,100%)}
+.p2-ww-enwrap:before{content:"";display:block;flex:0 0 54px;border-top:5px solid var(--ww-gold);margin-top:-23px}
+.p2-ww-en{margin:0;font:italic 400 clamp(20px,2vw,29px)/1.36 var(--ws-type-display-en);max-width:31em}
+.p2-ww-colophon{margin-top:clamp(46px,7vw,96px);border-bottom:1px solid var(--ww-gold);
+ padding-bottom:12px;display:flex;justify-content:space-between;gap:15px;
+ font:400 11px/1.35 var(--ws-type-display-en);letter-spacing:.12em}
+.p2-ww-note{padding:18px clamp(22px,4vw,50px);font:400 14px/1.5 var(--ws-type-display-zh);
+ background:var(--ws-paper)}
+@media(max-width:680px){
+ #p2-watchword-preview{padding:47px 8px 25px}
+ .p2-ww-toolbar{padding:12px 14px;font-size:10px}
+ .p2-ww-composition{padding:20px 17px;min-height:0}
+ .p2-ww-folio{font-size:9px}
+ .p2-ww-upper-space{height:80px}
+ .p2-ww-grid{display:block}
+ .p2-ww-aside{display:flex;flex-direction:row;align-items:baseline;gap:11px;margin-bottom:17px}
+ .p2-ww-numeral{font-size:48px}.p2-ww-aside-zh{font-size:12px}
+ .p2-ww-ref{font-size:clamp(37px,9vw,50px);margin-bottom:28px}
+ .p2-ww-zh{font-size:clamp(29px,7.5vw,40px);text-align:left;line-height:1.4}
+ .p2-ww-zh span{display:inline}
+ .p2-ww-enwrap{margin-top:30px;padding-top:15px;gap:12px}
+ .p2-ww-enwrap:before{flex-basis:25px;border-top-width:3px;margin-top:-17px}
+ .p2-ww-en{font-size:20px}.p2-ww-colophon{margin-top:70px;font-size:9px}
+ .p2-ww-note{font-size:12px}
+}
+</style>
+</head>
+<body data-ws-scope="p2">
+<header class="p2-olive-controls" aria-label="P2 04 十二位講員 · 五階段滾動動效檢查">
+ <strong>P2 / 01–04 · DRAFT · 04 NOT LIVE</strong>
+ <button type="button" id="p2-watchword-open" aria-haspopup="dialog" aria-controls="p2-watchword-preview" aria-expanded="false">經文識別 V2 預覽</button>
+ <nav aria-label="捲動節點">
+ <button type="button" data-seek="6.48">02 CONTENTS</button>
+ <button type="button" data-seek="9.30">03 經文內容</button>
+ <button type="button" data-seek="9.44">04 開始</button>
+ <button type="button" data-seek="10.38">04 雙海報</button>
+ <button type="button" data-seek="11.43">04 背景換景</button>
+  <button type="button" data-seek="13.65">04 展覽</button>
+  <button type="button" data-seek="23.55">十二人總覽</button>
+ </nav>
+ <label>捲動 <input id="p2-olive-seek" type="range" min="0" max="24.50" step=".005" value="9.30"><output id="p2-olive-progress">9.30</output></label>
+</header>
+<main id="p2-olive-track" aria-label="P2 主站已上線 01–03 與 04 橄欖山獨立預覽">
+ <div class="p2-olive-stage" id="p2-olive-stage">
+  <!-- THE ENTIRE RELEASED 01–03 IS EMBEDDED BYTE-FOR-BYTE.
+       The 04 experiment never edits its DOM or restarts its scroll clock. -->
+  <iframe id="p2-0103-original" title="01–03 正式版本：教會、西望、以馬忤斯" src="/experiments/p2-0103-release.html?embed=1&amp;v=20261106-emmaus-svg-cloth" loading="eager" allow="autoplay"></iframe>
+  <!-- MERSI split-field carrier: 03's neutral reading surface replaces the
+       retired ONE text only during poster rearrangement. 04 pigment waits. -->
+  <div id="p2-olive-bridge" aria-hidden="true">
+    <div class="olive-bridge__half" data-side="left"></div>
+    <div class="olive-bridge__half" data-side="right"></div>
+  </div>
+  <!-- Identical full-plate artwork on paired top/bottom opposition masks.
+       Both halves are aligned to one global image; NO independent panels. -->
+  <div id="p2-olive-surround" aria-hidden="true">
+    <div class="olive-surround__half" data-side="left"></div>
+    <div class="olive-surround__half" data-side="right"></div>
+  </div>
+  <!-- Independent MERSI engraving fields. Each remains within one half;
+       NO reintroduction of the retired V1–V4 whole-stage SVG. -->
+  <div id="olive-editorial-engraving" aria-hidden="true">
+   <div class="olive-editorial-engraving__half" data-art-side="left">
+    <div class="olive-editorial-engraving__print olive-editorial-engraving__print--botanical">
+     <span class="olive-botanical-plate" data-print-impression="1"></span>
+     <span class="olive-botanical-plate" data-print-impression="2"></span>
+     <span class="olive-botanical-plate" data-print-impression="3"></span>
+     <span class="olive-botanical-plate" data-print-impression="4"></span>
+     <span class="olive-botanical-plate" data-print-impression="5"></span>
+     <span class="olive-botanical-plate" data-print-impression="6"></span>
+    </div>
+   </div>
+   <div class="olive-editorial-engraving__half" data-art-side="right">
+    <div class="olive-editorial-engraving__print olive-editorial-engraving__print--topography"></div>
+   </div>
+  </div>
+   <!-- ONE page footprint persists. Stage layers below are photographic
+        editorial projections, not a second interactive Olive application. -->
+   <!-- One chapter masthead is OUTSIDE all incoming and paired card objects,
+        in the single stage's reserved global header zone. -->
+   <!-- Editorial masthead lives in reserved paper above the works; never across approved names. -->
+     <div class="olive-stage__rubric" id="olive-rubric">
+      <div class="olive-stage__rubric-folio">
+       <span class="olive-stage__rubric-kicker">04 / 07</span>
+       <small>INVITATION TO HEAR <span lang="zh-Hant">／ 誠邀聽道</span></small>
+      </div>
+      <div class="olive-stage__rubric-heading">
+       <strong lang="en">OLIVE <i>MOUNTAIN</i></strong>
+       <b class="olive-stage__rubric-zh" lang="zh-Hant">橄欖山</b>
+      </div>
+      <div class="olive-stage__rubric-scripture" aria-label="橄欖山版塊中英文主題經文">
+       <div class="olive-stage__rubric-scripture-zh" lang="zh-Hant">
+        <p>可見信道是從聽道來的，聽道是從基督的話來的。</p>
+        <cite>羅馬書 10:17</cite>
+       </div>
+       <div class="olive-stage__rubric-scripture-en" lang="en">
+        <p>So then faith cometh by hearing, and hearing by the word of God.</p>
+        <cite>ROMANS 10:17 · KJV</cite>
+       </div>
+      </div>
+     </div>
+     <!-- No background engravings in the 04 exhibition. The separated
+          invitation-card headpieces remain protected within their cards. -->
+   <section class="olive-proof" id="olive-proof" aria-label="04 橄欖山 · 十二位講員展覽" aria-hidden="true" inert>
+<!-- The FIRST physical object is a complete printed invitation card,
+          matching the native Doré slot. The protected original 3:4 poster
+          mounts INSIDE it. The green and foil are unique to chapter 04. -->
+       <div class="olive-stage__invitation olive-stage__invitation--first" id="olive-first-invitation" aria-hidden="true">
+        <div class="olive-card__imprint" aria-hidden="true"></div>
+        <div class="olive-card__edition" aria-hidden="true"></div>
+        <div class="olive-card__relief" aria-hidden="true"></div>
+        <div class="olive-card__caption"><span class="olive-card__name-en">WATCHMAN NEE</span> · <span class="olive-card__name-zh" lang="zh-Hant">倪柝聲</span></div>
+       </div>
+     <figure class="olive-stage__first" id="olive-first">
+       <img id="olive-first-image" src="/images/olive/watchman-nee-editorial.png" alt="倪柝聲 · 第一位講員" decoding="async">
+     </figure>
+     <div class="olive-stage__pair" id="olive-pair" aria-label="兩張獨立橄欖山燙金邀請函">
+       <div class="olive-stage__invitation olive-stage__invitation--pair" id="olive-invitation-left" aria-hidden="true">
+        <div class="olive-card__imprint" aria-hidden="true"></div>
+        <div class="olive-card__edition" aria-hidden="true"></div>
+        <div class="olive-card__relief" aria-hidden="true"></div>
+        <div class="olive-card__caption"><span class="olive-card__name-en">WATCHMAN NEE</span> · <span class="olive-card__name-zh" lang="zh-Hant">倪柝聲</span></div>
+       </div>
+       <div class="olive-stage__invitation olive-stage__invitation--pair" id="olive-invitation-right" aria-hidden="true">
+        <div class="olive-card__imprint" aria-hidden="true"></div>
+        <div class="olive-card__edition" aria-hidden="true"></div>
+        <div class="olive-card__relief" aria-hidden="true"></div>
+        <div class="olive-card__caption"><span class="olive-card__name-en">DEREK PRINCE</span> · <span class="olive-card__name-zh" lang="zh-Hant">葉光明</span></div>
+       </div>
+       <!-- Two true reverse faces share the measured invitation geometry.
+            Full background engraving stays behind the fold and is not cloned. -->
+       <div class="olive-card__reverse olive-card__reverse--botanical" id="olive-reverse-left" aria-hidden="true">
+        <div class="olive-card__reverse-mark">
+         <span class="olive-card__reverse-issue">04 / 07 · OLIVE</span>
+         <small>BOTANICAL / ENGRAVING</small>
+        </div>
+       </div>
+       <div class="olive-card__reverse olive-card__reverse--terrain" id="olive-reverse-right" aria-hidden="true">
+        <div class="olive-card__reverse-mark">
+         <span class="olive-card__reverse-issue">04 / 07 · OLIVE</span>
+         <small>TERRAIN / ENGRAVING</small>
+        </div>
+       </div>
+       <figure class="olive-stage__poster" id="olive-pair-left"><img alt="" decoding="async"></figure>
+       <figure class="olive-stage__poster" id="olive-pair-right"><img alt="" decoding="async"></figure>
+       <figure class="olive-stage__poster olive-stage__incoming" id="olive-pair-next-left"><img alt="" decoding="async"></figure>
+       <figure class="olive-stage__poster olive-stage__incoming" id="olive-pair-next-right"><img alt="" decoding="async"></figure>
+       <!-- Scripture companions are independent from both real 3D folios.
+            They appear beside the facing speaker, not on any card reverse. -->
+       <aside class="olive-stage__companion" id="olive-companion-left" aria-hidden="true" lang="zh-Hant">
+        <div class="olive-stage__companion-reading">
+         
+         <blockquote class="olive-stage__companion-verse" lang="zh-Hant"></blockquote>
+         <blockquote class="olive-stage__companion-verse-en" lang="en"></blockquote>
+         <div class="olive-stage__companion-citations">
+          <cite class="olive-stage__companion-reference" lang="zh-Hant"></cite>
+          <cite class="olive-stage__companion-reference-en" lang="en"></cite>
+         </div>
+        </div>
+       </aside>
+       <aside class="olive-stage__companion" id="olive-companion-right" aria-hidden="true" lang="zh-Hant">
+        <div class="olive-stage__companion-reading">
+         
+         <blockquote class="olive-stage__companion-verse" lang="zh-Hant"></blockquote>
+         <blockquote class="olive-stage__companion-verse-en" lang="en"></blockquote>
+         <div class="olive-stage__companion-citations">
+          <cite class="olive-stage__companion-reference" lang="zh-Hant"></cite>
+          <cite class="olive-stage__companion-reference-en" lang="en"></cite>
+         </div>
+        </div>
+       </aside>
+     </div>
+
+     <div class="olive-stage__overview" id="olive-overview" aria-label="十二位講員總覽"></div>
+     <a id="olive-enter" class="olive-stage__enter" href="/olive/" aria-label="進入橄欖山講道影像館"><span class="olive-stage__enter-label">EXPLORE ALL TWELVE</span><span class="olive-stage__enter-zh" lang="zh-Hant">進入橄欖山</span><span class="olive-stage__enter-arrow" aria-hidden="true">↗</span></a>
+   </section>
+  <div id="p2-olive-folio-status" aria-hidden="true">03 / 07 · EMMAUS</div>
+ </div>
+</main>
+<script src="/olive/components/speaker-baseline-v1/baseline.js"></script>
+<script src="/js/p2-0104-olive-path-growth-v60.js?v=olive-bilingual-editorial-v82-20261108"></script>
+<script src="/js/p2-0104-olive-scriptures-v80.js?v=olive-bilingual-editorial-v82-20261108"></script>
+<script src="/js/p2-0104-olive-continuation.js?v=olive-bilingual-editorial-v82-20261108"></script>
+<section id="p2-watchword-preview" role="dialog" aria-modal="true" aria-label="Westside Watch Watchword V2 橄欖山 P2 經文識別構圖預覽" hidden>
+ <div class="p2-ww-panel">
+  <div class="p2-ww-toolbar"><span>WESTSIDE WATCH / P2 · OLIVE MOUNTAIN · WATCHWORD V2</span>
+   <button type="button" id="p2-watchword-close" aria-label="關閉經文識別預覽，回到橄欖山動畫">關閉預覽 ×</button>
+  </div>
+  <figure class="p2-ww-composition">
+   <figcaption class="p2-ww-folio"><span>WESTSIDE WATCH / 西區守望</span><span>04 / 07</span></figcaption>
+   <div class="p2-ww-upper-space" aria-hidden="true"></div>
+   <div class="p2-ww-grid">
+    <div class="p2-ww-aside"><span class="p2-ww-numeral">10</span><span class="p2-ww-aside-zh">羅馬書 · 橄欖山</span></div>
+    <div>
+     <cite class="p2-ww-ref">Romans 10:17</cite>
+     <blockquote style="margin:0">
+      <p class="p2-ww-zh" lang="zh-Hant"><span>可見信道是從聽道來的，</span><span>聽道是從基督的話來的。</span></p>
+      <div class="p2-ww-enwrap"><p class="p2-ww-en" lang="en">So then faith cometh by hearing, and hearing by the word of God.</p></div>
+     </blockquote>
+    </div>
+   </div>
+   <div class="p2-ww-colophon"><span>WATCH FOR THE DAWN</span><span>CUV · KJV / WESTSIDE WATCH</span></div>
+  </figure>
+  <p class="p2-ww-note">V2 排版構圖測試。此視圖嵌入 P2 Draft 預覽；關閉後可繼續查看原本十二位講員及全部捲動動效。尚未替換正式版頭。</p>
+ </div>
+</section>
+<script>
+(()=>{'use strict';
+ const panel=document.getElementById('p2-watchword-preview');
+ const opener=document.getElementById('p2-watchword-open');
+ const closer=document.getElementById('p2-watchword-close');
+ let previous=null;
+ function toggle(show){
+  if(show){previous=document.activeElement;panel.hidden=false;opener.setAttribute('aria-expanded','true');closer.focus({preventScroll:true})}
+  else{panel.hidden=true;opener.setAttribute('aria-expanded','false');(previous||opener).focus({preventScroll:true})}
+ }
+ opener.addEventListener('click',()=>toggle(panel.hidden));
+ closer.addEventListener('click',()=>toggle(false));
+ panel.addEventListener('click',e=>{if(e.target===panel)toggle(false)});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)toggle(false)});
+ if(new URLSearchParams(window.location.search).get('watchword')==='v2')toggle(true);
+})();
+</script>
+</body>
+</html>
