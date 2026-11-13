@@ -2,10 +2,10 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Scripture Studio V59.0 · 橫版英文主讀優先</title>
+<title>Scripture Studio V60.0 · 全主題經文雙向母版</title>
 
 <style>
-/* Seven P2 passages share two self-hosted, glyph-audited Chiron faces.
+/* All verified P2 and tool passages share two self-hosted, glyph-audited Chiron faces.
    Static fonts guarantee the requested 200/900 weights without synthesis. */
 @font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:200;font-display:block;src:url("../fonts/scripture-studio/ChironHeiHK-P2-200.woff2") format("woff2")}
 @font-face{font-family:"Chiron Hei HK WS";font-style:normal;font-weight:900;font-display:block;src:url("../fonts/scripture-studio/ChironHeiHK-P2-900.woff2") format("woff2")}
@@ -68,6 +68,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .toolPalette .toolPaletteTitle{font:10px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#62675e;margin-right:7px}
 .toolPalette button{font:12px/1.3 var(--font-zh),sans-serif;border:1px solid #bdbbb0;border-radius:0;padding:5px 12px;background:transparent;color:#393b35}
 .toolPalette button[aria-pressed=true]{background:#25394a;color:#faf9f5;border-color:#25394a}
+.toolPalette button:disabled{opacity:.48;cursor:not-allowed;border-style:dashed}
 .p2EditorialNote{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 13px;border-bottom:1px solid #c5c6bd;padding-bottom:8px}
 .p2EditorialNote strong{font:400 clamp(18px,2vw,29px)/1.1 Georgia,serif;letter-spacing:.035em}
 .p2EditorialNote small{font:10px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#6c7067}
@@ -501,16 +502,29 @@ let activeTheme=null;
 // Only documentary-backed themes are selectable. Do not guess mottos for
 // other tools, nor silently reuse a P2 chapter verse as their product verse.
 const toolThemes=[
- {id:'HOME',zh:'首頁',en:'HOME',color:'#102A43',ink:'#FAF9F5',latinInk:'#F3D77B',source:'scripture-studio-poetry-v18.html · Romans 13:12'},
- {id:'ONE',zh:'one 查經',en:'ONE',color:'#738A5A',ink:'#FAF9F5',latinInk:'#F3D77B',source:'user-designated Psalm 36:9'}
+ {id:'HOME',zh:'首頁',en:'HOME',color:'#102A43',ink:'#FAF9F5',latinInk:'#F3D77B',source:'layouts/partials/watch-home-editorial.html · Romans 13:12'},
+ {id:'FOUNDATION',zh:'首頁／城',en:'FOUNDATION',color:'#102A43',ink:'#FAF9F5',latinInk:'#F3D77B',source:'layouts/partials/home-proclamation.html · Hebrews 11:10'},
+ {id:'WATCH',zh:'首頁／守望',en:'WATCH',color:'#102A43',ink:'#FAF9F5',latinInk:'#F3D77B',source:'layouts/partials/home-proclamation.html · Psalm 127:1'},
+ {id:'GATE',zh:'門',en:'THE GATE',color:'#A2872A',ink:'#FAF9F5',latinInk:'#FFF4D7',source:'join/index.html · Romans 13:12'},
+ {id:'ONE',zh:'一卷查經',en:'ONE',color:'#738A5A',ink:'#FAF9F5',latinInk:'#F3D77B',source:'static/one/index.html · Psalm 36:9'},
+ {id:'CAFE',zh:'咖啡館／日常',en:'DAYLIGHT CAFÉ',color:'#B8944A',ink:'#252525',latinInk:'#FFF9E9',source:'layouts/daylight-cafe/portal.html · Matthew 6:34'},
+ {id:'DORE_SEARCH',zh:'多雷搜索',en:'DORÉ SEARCH',color:'#102A43',ink:'#FAF9F5',latinInk:'#E9C46A',source:'static/dore/search/index.html · Jeremiah 33:3'},
+ {id:'HABAKKUK',zh:'哈巴谷',en:'HABAKKUK',color:'#A2872A',ink:'#FAF9F5',latinInk:'#FFF4D7',source:'westsidewatch/Westside-Stories · README.md · Habakkuk 2:2'},
+ // Multiwrite and the calligraphy pipeline are DIFFERENT tools.
+ // Psalm 45:1 is documented only on Multiwrite's product cover; do not
+ // propagate it to the calligraphy pipeline by shared naming or proximity.
+ {id:'MULTIWRITE',zh:'多寫',en:'DORÉ FOLIO',color:'#B8944A',ink:'#252525',latinInk:'#FFF9E9',source:'static/multiwrite/index.html · Psalm 45:1'},
+ {id:'GLEAN',zh:'拾字 → 寫心 → 成卷',en:'GLEAN / INSCRIBE / SEAL',color:'#738A5A',ink:'#FAF9F5',latinInk:'#F3D77B',source:'static/calligraphy/glean-ui.js · one tool with three stages · no approved theme verse',pending:true},
+ {id:'CHIDI',zh:'池底',en:'CHIDI',color:'#102A43',ink:'#FAF9F5',latinInk:'#E9C46A',source:'docs/projects/watch-city-vol00/manuscript/JERUSALEM-BUILD.md · canonical manuscript/production tool · no verified theme verse',pending:true}
 ];
 function renderToolPalette(){
  const nav=$('toolPalette');nav.replaceChildren();
- const caption=document.createElement('span');caption.className='toolPaletteTitle';caption.textContent='HOME / TOOLS';nav.append(caption);
+ const caption=document.createElement('span');caption.className='toolPaletteTitle';caption.textContent='HOME / TOOLS · GITHUB VERIFIED';nav.append(caption);
  for(const item of toolThemes){
   const button=document.createElement('button');button.type='button';button.textContent=item.zh+' / '+item.en;
   button.setAttribute('aria-pressed',String(activeTheme===item.id));
-  button.title=item.source;
+  button.title=item.source+(item.pending?' · 主題經文待核定':'');
+  if(item.pending){button.disabled=true;button.textContent+=' · 待核定'}
   button.onclick=()=>{activeTheme=item.id;activeP2=null;renderP2Palette();renderToolPalette();updatePassageForRealm(item.id)};
   nav.append(button);
  }
@@ -538,6 +552,27 @@ function renderP2Palette(){
 // The original Isaiah 62:6 candidate family is preserved as the Magazine baseline.
 // Other realm texts remain editorial trials until source and Chiron glyph coverage pass.
 const realmVerseData={
+ 'DORE_SEARCH':{reference:{zh:'耶利米書',en:'Jeremiah',chapterVerse:'33:3'},
+  zh:'你求告我，|我就應允你，|並將你所不知道、|又大又難的事|指示你。',
+  en:'Call unto me, |and I will answer thee, |and shew thee great |and mighty things, |which thou knowest not.'},
+ 'HABAKKUK':{reference:{zh:'哈巴谷書',en:'Habakkuk',chapterVerse:'2:2'},
+  zh:'將這默示|明明地寫在版上，|使讀的人容易讀。',
+  en:'Write the vision, |and make it plain |upon tables, |that he may run |that readeth it.'},
+ 'MULTIWRITE':{reference:{zh:'詩篇',en:'Psalms',chapterVerse:'45:1'},
+  zh:'我心裡湧出美辭；|我論到我為王做的事；|我的舌頭|是快手筆。',
+  en:'My heart is inditing |a good matter: |I speak of the things |which I have made touching the king: |my tongue is the pen |of a ready writer.'},
+ 'FOUNDATION':{reference:{zh:'希伯來書',en:'Hebrews',chapterVerse:'11:10'},
+  zh:'因為他等候|那座有根基的城，|就是神所經營、|所建造的。',
+  en:'For he looked |for a city |which hath foundations, |whose builder and maker |is God.'},
+ 'WATCH':{reference:{zh:'詩篇',en:'Psalms',chapterVerse:'127:1'},
+  zh:'若不是耶和華|建造房屋，|建造的人就枉然勞力；|若不是耶和華|看守城池，|看守的人就枉然警醒。',
+  en:'Except the LORD |build the house, |they labour in vain |that build it: |except the LORD |keep the city, |the watchman waketh |but in vain.'},
+ 'GATE':{reference:{zh:'羅馬書',en:'Romans',chapterVerse:'13:12'},
+  zh:'黑夜已深，|白晝將近；|我們就當脫去|暗昧的行為，|帶上光明的兵器。',
+  en:'The night is far spent, |the day is at hand: |let us therefore |cast off the works of darkness, |and let us put on |the armour of light.'},
+ 'CAFE':{reference:{zh:'馬太福音',en:'Matthew',chapterVerse:'6:34'},
+  zh:'一天的難處|一天當就夠了。',
+  en:'Sufficient unto the day |is the evil thereof.'},
  'HOME':{reference:{zh:'羅馬書',en:'Romans',chapterVerse:'13:12'},
   zh:'黑夜已深，|白晝將近；|我們就當脫去|暗昧的行為，|帶上光明的兵器。',
   en:'The night is far spent, |the day is at hand: |let us therefore |cast off the works of darkness, |and let us put on |the armour of light.'},
@@ -602,7 +637,7 @@ function updatePassageForRealm(id){
  zhExact=z.join('');enExact=e.join('');enDisplay=sealTitleCase(enExact);
  zhLines=[zhExact];enLines=[enExact];
  scripturePassage=window.ScriptureStudioPassageModel.passage({
-  id:'p2-realm-'+id,kind:'home',zh:zhExact,en:enExact,
+  id:'p2-realm-'+id,kind:toolThemes.some(x=>x.id===id)?(id==='HOME'||id==='FOUNDATION'||id==='WATCH'?'home':'tool'):'section',zh:zhExact,en:enExact,
   reference:data.reference,segments:{zh:z,en:null},breakReview:'unreviewed',
   hardSpans:id==='04'?{zh:['信道','聽道','基督的話'],en:['by hearing','by the word of God']}:{zh:[],en:[]}
  });
@@ -844,7 +879,7 @@ const p2Params=new URLSearchParams(location.search);
 const sectionFromUrl=p2Params.get('section')||p2Params.get('p2');
 if(p2Sections.some(x=>x.id===sectionFromUrl))activeP2=sectionFromUrl;
 const themeFromUrl=(p2Params.get('theme')||'').toUpperCase();
-if(toolThemes.some(x=>x.id===themeFromUrl)){activeTheme=themeFromUrl;activeP2=null}
+if(toolThemes.some(x=>x.id===themeFromUrl&&!x.pending)){activeTheme=themeFromUrl;activeP2=null}
 if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
 addEventListener('message',event=>{
  if(event.origin!==location.origin)return;
