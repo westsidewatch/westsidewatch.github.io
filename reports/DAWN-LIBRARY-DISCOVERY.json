@@ -1,18 +1,33 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-11-12T17:39:15.910442+00:00",
+  "generatedAt": "2026-11-13T17:16:42.111057+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 73,
+  "pagesChecked": 70,
   "newDiscovered": 0,
   "candidateQueue": 80,
   "catalogBooks": 1969,
   "errors": [
     {
-      "query": "Reformation Christianity",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Reformation+Christianity&start_index=26",
-      "error": "RemoteDisconnected"
+      "query": "Philip Melanchthon",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Philip+Melanchthon",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Thomas Watson",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Thomas+Watson",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Oswald Chambers",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Oswald+Chambers",
+      "error": "HTTPError"
+    },
+    {
+      "query": "hymns Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=hymns+Christianity&start_index=26",
+      "error": "HTTPError"
     }
   ],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."

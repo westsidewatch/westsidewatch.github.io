@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-11-12T17:39:46.498538+00:00",
+  "generatedAt": "2026-11-13T17:17:14.568683+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -604,6 +604,98 @@
           "contentDownloaded": false
         },
         {
+          "id": "internet-archive-bibletranslation0000unse",
+          "title": "Bible translation and the spread of the church : the last 200 years",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bibletranslation0000unse",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bibletranslation0000unse",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-swordofspiritpur0000knot",
+          "title": "The sword of the spirit : Puritan responses to the Bible",
+          "author": "Knott, John R. (John Ray), 1937-",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/swordofspiritpur0000knot",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/swordofspiritpur0000knot",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-caseforjesusbibl0000bran",
+          "title": "The case for Jesus : the biblical and historical evidence for Christ",
+          "author": "Pitre, Brant James, author",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/caseforjesusbibl0000bran",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/caseforjesusbibl0000bran",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-editingbibleasse0000unse",
+          "title": "Editing the Bible : assessing the task past and present",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/editingbibleasse0000unse",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/editingbibleasse0000unse",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
           "id": "internet-archive-bakersbibleatlas0000pfei_b1e4",
           "title": "Baker's Bible atlas",
           "author": "Pfeiffer, Charles F",
@@ -696,18 +788,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fromancienttable0000ewer_v4a6",
-          "title": "From ancient tablets to modern translations : a general introduction to the Bible",
-          "author": "Ewert, David, 1922-",
+          "id": "internet-archive-cu31924029280786",
+          "title": "Normal addresses on Bible-diffusion, for the use of the younger clergy, and layspeakers in general meetings, training colleges and schools",
+          "author": "Cust, Robert Needham, 1821-1909",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fromancienttable0000ewer_v4a6",
+            "url": "https://archive.org/details/cu31924029280786",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fromancienttable0000ewer_v4a6",
+            "url": "https://archive.org/services/img/cu31924029280786",
             "mode": "source"
           },
           "rights": {
@@ -857,18 +949,64 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-myth-and-history-in-the-bible",
-          "title": "Myth And History In The Bible",
+          "id": "internet-archive-textsandstudies203unknuoft",
+          "title": "Texts and studies : contributions to Biblical and Patristic literature",
+          "author": "Robinson, J. Armitage (Joseph Armitage), 1858-1933",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/textsandstudies203unknuoft",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/textsandstudies203unknuoft",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-textual-criticism-techniques-protocols-as-applied-to-bible-apocrypha-islam-hinduism-buddhism",
+          "title": "Textual Criticism Techniques : Protocols As Applied To Bible, Apocrypha, Islam, Hinduism, Buddhism",
+          "author": "Dr. Avraham Mattityahu",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/textual-criticism-techniques-protocols-as-applied-to-bible-apocrypha-islam-hinduism-buddhism",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/textual-criticism-techniques-protocols-as-applied-to-bible-apocrypha-islam-hinduism-buddhism",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-the-cambridge-history-of-the-bible-vol.-2_202301",
+          "title": "The Cambridge History of The Bible, Volume 2",
           "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/myth-and-history-in-the-bible",
+            "url": "https://archive.org/details/the-cambridge-history-of-the-bible-vol.-2_202301",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/myth-and-history-in-the-bible",
+            "url": "https://archive.org/services/img/the-cambridge-history-of-the-bible-vol.-2_202301",
             "mode": "source"
           },
           "rights": {
@@ -880,156 +1018,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-TheDanceOfDeathDibdin",
-          "title": "The Dance of Death in a series of engravings on wood from designs attributed to Hans Holbein with a treatise on the subject by Francis Douce, also Holbein's Bible cuts consisting of ninety engravings on wood with an introduction by Thomas Frognall Dibdin",
-          "author": "Holbein, Hans, 1497-1543",
+          "id": "internet-archive-eerdmansatlasofb0000wmbe",
+          "title": "Eerdmans' Atlas of the Bible : with a-z guide to places",
+          "author": "Wm. B. Eerdmans Publishing Co",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/TheDanceOfDeathDibdin",
+            "url": "https://archive.org/details/eerdmansatlasofb0000wmbe",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/TheDanceOfDeathDibdin",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-baruchbenneriahf0000wrig",
-          "title": "Baruch ben Neriah : from biblical scribe to apocalyptic seer",
-          "author": "Wright, J. Edward",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/baruchbenneriahf0000wrig",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/baruchbenneriahf0000wrig",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-modernreadersbib0000rowl",
-          "title": "The modern reader's Bible atlas",
-          "author": "Rowley, H. H. (Harold Henry), 1890-1969",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/modernreadersbib0000rowl",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/modernreadersbib0000rowl",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-biblicalengineer0000schw",
-          "title": "The biblical engineer : how the temple in Jerusalem was built",
-          "author": "Schwartz, Max, 1922-",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/biblicalengineer0000schw",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/biblicalengineer0000schw",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-collegevillebibl00staf",
-          "title": "The Collegeville Bible study atlas",
-          "author": "Staff Carta",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/collegevillebibl00staf",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/collegevillebibl00staf",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-thebibleanditsle0000unse",
-          "title": "The Bible and its literary associations",
-          "author": "Crook, Margaret Brackenbury, editor",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/thebibleanditsle0000unse",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/thebibleanditsle0000unse",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-womensbiblecomme0000unse_y2z6",
-          "title": "The Women's Bible commentary",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/womensbiblecomme0000unse_y2z6",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/womensbiblecomme0000unse_y2z6",
+            "url": "https://archive.org/services/img/eerdmansatlasofb0000wmbe",
             "mode": "source"
           },
           "rights": {
@@ -1130,98 +1130,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/holycommunioninc0000unse",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-storyofchurch0000char_i4n8",
-          "title": "The Story of the Church",
-          "author": "Charles M. Jacobs",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/storyofchurch0000char_i4n8",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/storyofchurch0000char_i4n8",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-truechristianreg0001eman",
-          "title": "The True Christian Region containing the Universal Theology of the New Church",
-          "author": "Emanuel Swendenborg",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/truechristianreg0001eman",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/truechristianreg0001eman",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-isbn_9781937004019",
-          "title": "Seasoned With Rhymes and a Pinch of Thyme: Immanuel Evangelical Lutheran Church",
-          "author": "Bonnie Hull",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/isbn_9781937004019",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/isbn_9781937004019",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-prospectingforun0000angu",
-          "title": "Prospecting for a united church",
-          "author": "Angus Dun",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/prospectingforun0000angu",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/prospectingforun0000angu",
             "mode": "source"
           },
           "rights": {
@@ -1348,75 +1256,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_Y0-BCM-857",
-          "title": "The growth of the christian church",
-          "author": "Robert hastings Nichols",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_Y0-BCM-857",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_Y0-BCM-857",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-churchpeoplesmov0000math",
-          "title": "The Church: A Peoples' Movement",
-          "author": "Mathai Zachariah",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/churchpeoplesmov0000math",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/churchpeoplesmov0000math",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-churchnotmadewit0000hull",
-          "title": "The Church Not Made with Hands",
-          "author": "Hull, Eleanor",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/churchnotmadewit0000hull",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/churchnotmadewit0000hull",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-bwb_C0-BPX-774",
           "title": "The Black Church",
           "author": "William L. Banks",
@@ -1486,18 +1325,179 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-ChurchHistoryPrint",
-          "title": "Church History Print",
-          "author": "",
+          "id": "internet-archive-bwb_KQ-734-479",
+          "title": "the faith of the church",
+          "author": "Karl Barth",
           "language": "en",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/ChurchHistoryPrint",
+            "url": "https://archive.org/details/bwb_KQ-734-479",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/ChurchHistoryPrint",
+            "url": "https://archive.org/services/img/bwb_KQ-734-479",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-DSF-647",
+          "title": "A Selected Library of the Nicene and Post-Nicene Fathers of The Christian Church",
+          "author": "Various",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-DSF-647",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-DSF-647",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-EAO-213",
+          "title": "new testament church",
+          "author": "roy e. cogdill",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-EAO-213",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-EAO-213",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-CPS-363",
+          "title": "The Church of English 1900-1965",
+          "author": "Roger Lloyd",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-CPS-363",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-CPS-363",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-BXS-114",
+          "title": "Teaching of presidents of the church brigham young",
+          "author": "Various",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-BXS-114",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-BXS-114",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-BFL-750",
+          "title": "A select library of nicene and post-nicene fathers of the christian church",
+          "author": "Philip Schaff, D.D., LL.D.",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-BFL-750",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-BFL-750",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_W9-CXA-238",
+          "title": "Church Reform in 18th Century Italy (The Synod of Pistoia, 1786)",
+          "author": "Charles A. Bolton",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_W9-CXA-238",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_W9-CXA-238",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_W9-DFC-399",
+          "title": "The Building of the Eighteenth-Century Church",
+          "author": "Basil F. L. Clarke",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_W9-DFC-399",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_W9-DFC-399",
             "mode": "source"
           },
           "rights": {
@@ -1772,51 +1772,6 @@
           }
         },
         {
-          "id": "gutenberg-26881",
-          "title": "The Gospel of Luke, an exposition",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/26881",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/9506551-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL13171206W",
-            "editionId": "OL36576450M",
-            "isbn": "9798520006640",
-            "coverId": 9506551,
-            "internetArchiveId": "gospellukeanexp00erdmgoog",
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL13171206W",
-            "openLibraryEdition": "OL36576450M",
-            "isbn": "9798520006640"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/gospellukeanexp00erdmgoog",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
           "id": "gutenberg-64858",
           "title": "Toleration and other essays",
           "author": "",
@@ -1894,6 +1849,51 @@
             "openLibraryEdition": "OL57632104M",
             "isbn": "0585017956"
           }
+        },
+        {
+          "id": "gutenberg-26881",
+          "title": "The Gospel of Luke, an exposition",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/26881",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/9506551-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL13171206W",
+            "editionId": "OL36576450M",
+            "isbn": "9798520006640",
+            "coverId": 9506551,
+            "internetArchiveId": "gospellukeanexp00erdmgoog",
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL13171206W",
+            "openLibraryEdition": "OL36576450M",
+            "isbn": "9798520006640"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/gospellukeanexp00erdmgoog",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
         },
         {
           "id": "gutenberg-38162",
@@ -1974,6 +1974,91 @@
           ]
         },
         {
+          "id": "gutenberg-5881",
+          "title": "Reina Valera New Testament of the Bible 1909 (Spanish)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/5881",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
+          "id": "gutenberg-79978",
+          "title": "The Bible and Islam : or, The influence of the Old and New Testaments on the religion of Mohammed",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/79978",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/2490941-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL2339821W",
+            "editionId": "OL37888482M",
+            "isbn": "9780548150214",
+            "coverId": 2490941,
+            "internetArchiveId": "bibleislamorinfl0000smit_h7p6",
+            "resolvedAt": "2026-11-13T17:17:14.568683+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL2339821W",
+            "openLibraryEdition": "OL37888482M",
+            "isbn": "9780548150214"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/bibleislamorinfl0000smit_h7p6",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-38808",
+          "title": "The Works of Robert G. Ingersoll, Vol. 08 (of 12)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/38808",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
           "id": "gutenberg-27514",
           "title": "A Handful of Stars: Texts That Have Moved Great Minds",
           "author": "",
@@ -2010,44 +2095,48 @@
           }
         },
         {
-          "id": "gutenberg-38808",
-          "title": "The Works of Robert G. Ingersoll, Vol. 08 (of 12)",
+          "id": "gutenberg-13166",
+          "title": "The Psalms of David",
           "author": "",
           "language": "en",
           "source": {
             "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/38808",
+            "url": "https://www.gutenberg.org/ebooks/13166",
             "kind": "remote-public"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://covers.openlibrary.org/b/id/8244480-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
           },
           "rights": {
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
           "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-5881",
-          "title": "Reina Valera New Testament of the Bible 1909 (Spanish)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/5881",
-            "kind": "remote-public"
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL667198W",
+            "editionId": "OL17706525M",
+            "isbn": null,
+            "coverId": 8244480,
+            "internetArchiveId": "psimate00watt",
+            "resolvedAt": "2026-09-14T15:55:45.042808+00:00"
           },
-          "cover": {
-            "mode": "one-fallback"
+          "identifiers": {
+            "openLibraryWork": "/works/OL667198W",
+            "openLibraryEdition": "OL17706525M"
           },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/psimate00watt",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
         },
         {
           "id": "gutenberg-13601",
@@ -2117,50 +2206,6 @@
             "openLibraryWork": "/works/OL39001736W",
             "openLibraryEdition": "OL53105992M"
           }
-        },
-        {
-          "id": "gutenberg-13166",
-          "title": "The Psalms of David",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/13166",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/8244480-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL667198W",
-            "editionId": "OL17706525M",
-            "isbn": null,
-            "coverId": 8244480,
-            "internetArchiveId": "psimate00watt",
-            "resolvedAt": "2026-09-14T15:55:45.042808+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL667198W",
-            "openLibraryEdition": "OL17706525M"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/psimate00watt",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
         },
         {
           "id": "gutenberg-69329",
@@ -2261,6 +2306,26 @@
           }
         },
         {
+          "id": "gutenberg-44962",
+          "title": "Early American poetry, 1610-1820 : a list of works in the New York Public Library",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/44962",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
           "id": "gutenberg-23038",
           "title": "Quiet Talks on the Crowned Christ of Revelation",
           "author": "",
@@ -2295,26 +2360,6 @@
           }
         },
         {
-          "id": "gutenberg-44962",
-          "title": "Early American poetry, 1610-1820 : a list of works in the New York Public Library",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/44962",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-2100",
           "title": "Bibeln, Gamla och Nya Testamentet (Swedish)",
           "author": "",
@@ -2333,50 +2378,6 @@
           },
           "quality": "source-edition",
           "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-64160",
-          "title": "Experimental Investigation of the Spirit Manifestations",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/64160",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/6063907-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL2505909W",
-            "editionId": "OL23663197M",
-            "isbn": null,
-            "coverId": 6063907,
-            "internetArchiveId": "experimentalinve00hare",
-            "resolvedAt": "2026-09-17T14:22:38.747042+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL2505909W",
-            "openLibraryEdition": "OL23663197M"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/experimentalinve00hare",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
         }
       ]
     },
@@ -2538,6 +2539,42 @@
           ]
         },
         {
+          "id": "gutenberg-61779",
+          "title": "Crises in the History of the Papacy",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/61779",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/1451644-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL8061494M",
+            "editionId": "OL8061494M",
+            "isbn": "9780766179042",
+            "coverId": 1451644,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL8061494M",
+            "openLibraryEdition": "OL8061494M",
+            "isbn": "9780766179042"
+          }
+        },
+        {
           "id": "gutenberg-39744",
           "title": "Arne; Early Tales and Sketches",
           "author": "",
@@ -2580,42 +2617,6 @@
               "rightsStatus": "source-rights-check"
             }
           ]
-        },
-        {
-          "id": "gutenberg-61779",
-          "title": "Crises in the History of the Papacy",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/61779",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/1451644-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL8061494M",
-            "editionId": "OL8061494M",
-            "isbn": "9780766179042",
-            "coverId": 1451644,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL8061494M",
-            "openLibraryEdition": "OL8061494M",
-            "isbn": "9780766179042"
-          }
         },
         {
           "id": "gutenberg-34067",
@@ -2817,855 +2818,6 @@
             {
               "provider": "Internet Archive",
               "url": "https://archive.org/details/josephuswithengl03joseuoft",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "gutenberg-ancient-history-archaeology",
-      "title": "古代世界與考古",
-      "kind": "source-shelf",
-      "source": "Project Gutenberg",
-      "items": [
-        {
-          "id": "gutenberg-69566",
-          "title": "The Egyptian Book of the dead",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/69566",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/10659409-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL5054855W",
-            "editionId": "OL7269819M",
-            "isbn": "0029014700",
-            "coverId": 10659409,
-            "internetArchiveId": "ancientegyptianb0000unse_u6b3",
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL5054855W",
-            "openLibraryEdition": "OL7269819M",
-            "isbn": "0029014700"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/ancientegyptianb0000unse_u6b3",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "gutenberg-2131",
-          "title": "An Account of Egypt",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/2131",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/2890548-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL985228W",
-            "editionId": "OL8470014M",
-            "isbn": "143461381X",
-            "coverId": 2890548,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL985228W",
-            "openLibraryEdition": "OL8470014M",
-            "isbn": "143461381X"
-          }
-        },
-        {
-          "id": "gutenberg-25097",
-          "title": "Cités et ruines américaines: Mitla, Palenqué, Izamal, Chichen-Itza, Uxmal (French)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/25097",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-57493",
-          "title": "The Natural History of Pliny, Volume 1 (of 6)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/57493",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-22153",
-          "title": "Pagan and Christian Rome",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/22153",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/1448494-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL8521156W",
-            "editionId": "OL48234932M",
-            "isbn": "9781647989651",
-            "coverId": 1448494,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-12T19:08:35.385013+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL8521156W",
-            "openLibraryEdition": "OL48234932M",
-            "isbn": "9781647989651"
-          }
-        },
-        {
-          "id": "gutenberg-60230",
-          "title": "The Natural History of Pliny, Volume 2 (of 6)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/60230",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-43491",
-          "title": "An Introduction to the Study of the Maya Hieroglyphs",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/43491",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/1282533-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL9204185W",
-            "editionId": "OL9585963M",
-            "isbn": "9780548184356",
-            "coverId": 1282533,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-10T15:28:03.609695+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL9204185W",
-            "openLibraryEdition": "OL9585963M",
-            "isbn": "9780548184356"
-          }
-        },
-        {
-          "id": "gutenberg-48155",
-          "title": "History of Ancient Pottery: Greek, Etruscan, and Roman. Volume 2 (of 2)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/48155",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/11219575-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL24568360W",
-            "editionId": "OL32578006M",
-            "isbn": "9781345078817",
-            "coverId": 11219575,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL24568360W",
-            "openLibraryEdition": "OL32578006M",
-            "isbn": "9781345078817"
-          }
-        },
-        {
-          "id": "gutenberg-17321",
-          "title": "History of Egypt, Chaldea, Syria, Babylonia, and Assyria in the Light of Recent Discovery",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/17321",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/6512515-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL7023896W",
-            "editionId": "OL11828473M",
-            "isbn": "9781421972053",
-            "coverId": 6512515,
-            "internetArchiveId": "cu31924028575466",
-            "resolvedAt": "2026-10-08T16:37:29.244600+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL7023896W",
-            "openLibraryEdition": "OL11828473M",
-            "isbn": "9781421972053"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/cu31924028575466",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "gutenberg-42715",
-          "title": "Pompeii, Its Life and Art",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/42715",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/6164683-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL6598889W",
-            "editionId": "OL23448165M",
-            "isbn": "0843401389",
-            "coverId": 6164683,
-            "internetArchiveId": "pompeiiitslifear0000maua",
-            "resolvedAt": "2026-10-10T15:28:03.609695+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL6598889W",
-            "openLibraryEdition": "OL23448165M",
-            "isbn": "0843401389"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/pompeiiitslifear0000maua",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "gutenberg-2124",
-          "title": "A Record of Buddhistic Kingdoms",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/2124",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/1755307-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL8720314W",
-            "editionId": "OL42364938M",
-            "isbn": "9781694920485",
-            "coverId": 1755307,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-11T15:48:40.970250+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL8720314W",
-            "openLibraryEdition": "OL42364938M",
-            "isbn": "9781694920485"
-          }
-        },
-        {
-          "id": "gutenberg-27995",
-          "title": "The History of London",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/27995",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/11776-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL264813W",
-            "editionId": "OL9217685M",
-            "isbn": "0007166532",
-            "coverId": 11776,
-            "internetArchiveId": "timeshistoryoflo0000unse",
-            "resolvedAt": "2026-10-15T14:14:13.019001+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL264813W",
-            "openLibraryEdition": "OL9217685M",
-            "isbn": "0007166532"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/timeshistoryoflo0000unse",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "gutenberg-71398",
-          "title": "The excavations at Babylon",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/71398",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-49668",
-          "title": "Ancient Monuments of the Mississippi Valley",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/49668",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/3732507-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL1616925W",
-            "editionId": "OL12162485M",
-            "isbn": "0404573029",
-            "coverId": 3732507,
-            "internetArchiveId": "ancientmonuments00squi",
-            "resolvedAt": "2026-09-27T14:44:56.745127+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL1616925W",
-            "openLibraryEdition": "OL12162485M",
-            "isbn": "0404573029"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/ancientmonuments00squi",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "gutenberg-45950",
-          "title": "Ancient society : or, Researches in the lines of human progress from savagery, through barbarism to civilization",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/45950",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL38776360W",
-            "editionId": "OL54252173M",
-            "isbn": "084462611X",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-07T16:38:41.343486+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL38776360W",
-            "openLibraryEdition": "OL54252173M",
-            "isbn": "084462611X"
-          }
-        },
-        {
-          "id": "gutenberg-66116",
-          "title": "Modern Greek Folklore and Ancient Greek Religion: A Study in Survivals",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/66116",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL31427311W",
-            "editionId": "OL43082890M",
-            "isbn": null,
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL31427311W",
-            "openLibraryEdition": "OL43082890M"
-          }
-        },
-        {
-          "id": "gutenberg-44884",
-          "title": "The Geography of Strabo, Volume 1 (of 3)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/44884",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-40812",
-          "title": "The Swastika, the Earliest Known Symbol, and Its Migration",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/40812",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/6329863-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL15406617W",
-            "editionId": "OL24151649M",
-            "isbn": null,
-            "coverId": 6329863,
-            "internetArchiveId": "cu31924023008067",
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL15406617W",
-            "openLibraryEdition": "OL24151649M"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/cu31924023008067",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "gutenberg-4032",
-          "title": "Atlantis: The Antedeluvian World",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/4032",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL30971425W",
-            "editionId": "OL55537420M",
-            "isbn": "1723578886",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-11-11T17:16:04.947111+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL30971425W",
-            "openLibraryEdition": "OL55537420M",
-            "isbn": "1723578886"
-          }
-        },
-        {
-          "id": "gutenberg-47215",
-          "title": "The Sacred Tree; or, the tree in religion and myth",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/47215",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL28477322W",
-            "editionId": "OL46168534M",
-            "isbn": "9781015535589",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-11-02T19:36:31.975967+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL28477322W",
-            "openLibraryEdition": "OL46168534M",
-            "isbn": "9781015535589"
-          }
-        },
-        {
-          "id": "gutenberg-28072",
-          "title": "A history of art in Chaldæa & Assyria, Vol. 1 (of 2)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/28072",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-48785",
-          "title": "The travels of Pedro de Cieza de Léon; part 2",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/48785",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-20758",
-          "title": "The Religion of Babylonia and Assyria",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/20758",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/1759153-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL247590W",
-            "editionId": "OL11727863M",
-            "isbn": "1412129206",
-            "coverId": 1759153,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL247590W",
-            "openLibraryEdition": "OL11727863M",
-            "isbn": "1412129206"
-          }
-        },
-        {
-          "id": "gutenberg-54550",
-          "title": "Ancient Civilizations of Mexico and Central America",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/54550",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/10930450-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL24393491W",
-            "editionId": "OL32585738M",
-            "isbn": "9780342835522",
-            "coverId": 10930450,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-31T15:24:16.628388+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL24393491W",
-            "openLibraryEdition": "OL32585738M",
-            "isbn": "9780342835522"
-          }
-        },
-        {
-          "id": "gutenberg-15359",
-          "title": "The Negro",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/15359",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/799531-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL48136W",
-            "editionId": "OL31827447M",
-            "isbn": "9781448671243",
-            "coverId": 799531,
-            "internetArchiveId": "bwb_W7-CTG-021",
-            "resolvedAt": "2026-10-12T19:08:35.385013+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL48136W",
-            "openLibraryEdition": "OL31827447M",
-            "isbn": "9781448671243"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/bwb_W7-CTG-021",
               "kind": "remote-scan",
               "reader": "Internet Archive BookReader",
               "rightsStatus": "source-rights-check"
@@ -4259,40 +3411,6 @@
           ]
         },
         {
-          "id": "gutenberg-59",
-          "title": "Discourse on the Method of Rightly Conducting One's Reason and of Seeking Truth in the Sciences",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/59",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL35849902W",
-            "editionId": "OL48387484M",
-            "isbn": "3842436394",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-01T16:32:24.060193+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL35849902W",
-            "openLibraryEdition": "OL48387484M",
-            "isbn": "3842436394"
-          }
-        },
-        {
           "id": "gutenberg-18269",
           "title": "Pascal's Pensées",
           "author": "",
@@ -4324,6 +3442,40 @@
             "openLibraryWork": "/works/OL1305558W",
             "openLibraryEdition": "OL20822574M",
             "isbn": "9782718116822"
+          }
+        },
+        {
+          "id": "gutenberg-59",
+          "title": "Discourse on the Method of Rightly Conducting One's Reason and of Seeking Truth in the Sciences",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/59",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL35849902W",
+            "editionId": "OL48387484M",
+            "isbn": "3842436394",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-01T16:32:24.060193+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL35849902W",
+            "openLibraryEdition": "OL48387484M",
+            "isbn": "3842436394"
           }
         },
         {
@@ -4444,26 +3596,6 @@
           }
         },
         {
-          "id": "gutenberg-1636",
-          "title": "Phaedrus",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/1636",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-3330",
           "title": "The Analects of Confucius (from the Chinese Classics)",
           "author": "",
@@ -4496,6 +3628,26 @@
             "openLibraryEdition": "OL39405021M",
             "isbn": "9798526473781"
           }
+        },
+        {
+          "id": "gutenberg-1636",
+          "title": "Phaedrus",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1636",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
         },
         {
           "id": "gutenberg-2388",
@@ -4978,6 +4130,40 @@
           "contentDownloaded": false
         },
         {
+          "id": "gutenberg-40236",
+          "title": "Memoirs of Benjamin Franklin; Written by Himself. [Vol. 2 of 2]",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/40236",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL41292201W",
+            "editionId": "OL56088536M",
+            "isbn": "1720780706",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-17T07:37:16.435409+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL41292201W",
+            "openLibraryEdition": "OL56088536M",
+            "isbn": "1720780706"
+          }
+        },
+        {
           "id": "gutenberg-50508",
           "title": "The Memoirs of Admiral Lord Beresford",
           "author": "",
@@ -5023,40 +4209,6 @@
           ]
         },
         {
-          "id": "gutenberg-40236",
-          "title": "Memoirs of Benjamin Franklin; Written by Himself. [Vol. 2 of 2]",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/40236",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL41292201W",
-            "editionId": "OL56088536M",
-            "isbn": "1720780706",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-17T07:37:16.435409+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL41292201W",
-            "openLibraryEdition": "OL56088536M",
-            "isbn": "1720780706"
-          }
-        },
-        {
           "id": "gutenberg-25700",
           "title": "The Greville Memoirs, Part 1 (of 3), Volume 1 (of 3)",
           "author": "",
@@ -5088,40 +4240,6 @@
             "openLibraryWork": "/works/OL41555562W",
             "openLibraryEdition": "OL56432657M",
             "isbn": "9781722636876"
-          }
-        },
-        {
-          "id": "gutenberg-28169",
-          "title": "Memoirs to Illustrate the History of My Time, Volume 1",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/28169",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL36065429W",
-            "editionId": "OL48715489M",
-            "isbn": "384722509X",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-10-14T14:34:07.582227+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL36065429W",
-            "openLibraryEdition": "OL48715489M",
-            "isbn": "384722509X"
           }
         },
         {
@@ -5314,50 +4432,6 @@
           }
         },
         {
-          "id": "gutenberg-27153",
-          "title": "Spare Hours",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/27153",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/5663633-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL1595678W",
-            "editionId": "OL7035396M",
-            "isbn": null,
-            "coverId": 5663633,
-            "internetArchiveId": "sparehours00brow",
-            "resolvedAt": "2026-10-12T19:08:35.385013+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL1595678W",
-            "openLibraryEdition": "OL7035396M"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/sparehours00brow",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
           "id": "gutenberg-57390",
           "title": "Sappho: Memoir, text, selected renderings, and a literal translation",
           "author": "",
@@ -5463,13 +4537,58 @@
           ]
         },
         {
-          "id": "gutenberg-20946",
-          "title": "Memoirs of the Jacobites of 1715 and 1745. Volume I.",
+          "id": "gutenberg-6031",
+          "title": "Memoirs of My Life and Writings",
           "author": "",
           "language": "en",
           "source": {
             "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/20946",
+            "url": "https://www.gutenberg.org/ebooks/6031",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/5019103-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1285003W",
+            "editionId": "OL9837422M",
+            "isbn": "9781406930993",
+            "coverId": 5019103,
+            "internetArchiveId": "memoirsofmylifew0000gibb",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1285003W",
+            "openLibraryEdition": "OL9837422M",
+            "isbn": "9781406930993"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/memoirsofmylifew0000gibb",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-16784",
+          "title": "Memoir, Correspondence, and Miscellanies, From the Papers of Thomas Jefferson, Volume 4",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/16784",
             "kind": "remote-public"
           },
           "cover": {
@@ -5483,38 +4602,83 @@
           "contentDownloaded": false,
           "identity": {
             "provider": "Open Library",
-            "workId": "/works/OL36070228W",
-            "editionId": "OL48725172M",
-            "isbn": "3849173429",
+            "workId": "/works/OL28509661W",
+            "editionId": "OL39086654M",
+            "isbn": "9781376800593",
             "coverId": null,
             "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+            "resolvedAt": "2026-11-13T17:17:14.568683+00:00"
           },
           "identifiers": {
-            "openLibraryWork": "/works/OL36070228W",
-            "openLibraryEdition": "OL48725172M",
-            "isbn": "3849173429"
+            "openLibraryWork": "/works/OL28509661W",
+            "openLibraryEdition": "OL39086654M",
+            "isbn": "9781376800593"
           }
+        },
+        {
+          "id": "gutenberg-2523",
+          "title": "The Memoirs of Victor Hugo",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/2523",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/6045852-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1064084W",
+            "editionId": "OL9824419M",
+            "isbn": "9781404319301",
+            "coverId": 6045852,
+            "internetArchiveId": "memoirsofvictorh00hugo",
+            "resolvedAt": "2026-11-13T17:17:14.568683+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1064084W",
+            "openLibraryEdition": "OL9824419M",
+            "isbn": "9781404319301"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/memoirsofvictorh00hugo",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
         }
       ]
     }
   ],
   "metrics": {
-    "shelves": 9,
-    "mappedBooks": 166,
-    "sourceCovers": 114,
+    "shelves": 8,
+    "mappedBooks": 141,
+    "sourceCovers": 101,
     "directPublications": 14,
     "providers": {
       "Standard Ebooks": 14,
       "Internet Archive": 40,
-      "Project Gutenberg": 112
+      "Project Gutenberg": 87
     },
     "identity": {
-      "queriedThisRun": 0,
-      "resolved": 103,
-      "coversAdded": 60,
-      "internetArchiveLinks": 45,
-      "cacheEntries": 262
+      "queriedThisRun": 3,
+      "resolved": 85,
+      "coversAdded": 47,
+      "internetArchiveLinks": 39,
+      "cacheEntries": 265
     }
   },
   "errors": [
@@ -5529,6 +4693,11 @@
     {
       "source": "DOAB archaeology",
       "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "ancient history archaeology",
+      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
     }
   ]
 }
