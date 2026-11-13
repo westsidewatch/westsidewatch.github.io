@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Scripture Studio V53.0 · P2 七版塊編輯色彩 · Tokyo Editorial</title>
+<title>Scripture Studio V54.0 · P2 雙頁色彩 × 網頁接入接口</title>
 
 <style>
 /* Entire Isaiah 62:6 glyphset self-hosted in this repository; no CDN or AI artwork. */
@@ -74,6 +74,9 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .p2EditorialNote{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 13px;border-bottom:1px solid #c5c6bd;padding-bottom:8px}
 .p2EditorialNote strong{font:400 clamp(18px,2vw,29px)/1.1 Georgia,serif;letter-spacing:.035em}
 .p2EditorialNote small{font:10px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#6c7067}
+.work[data-p2-section] .plate:not(.inverse){background:color-mix(in srgb,var(--section-bg,#102a43) 13%,#FAF9F5);color:#252525}
+.work[data-p2-section] .plate:not(.inverse) .refRail{color:color-mix(in srgb,var(--section-bg,#102a43) 72%,#252525)}
+.work[data-p2-section] .plate:not(.inverse) .piece.en{color:color-mix(in srgb,var(--section-bg,#102a43) 58%,#252525)}
 .work[data-p2-section] .plate.inverse{background:var(--section-bg,#102a43);color:var(--section-text,#faf9f5)}
 .work[data-p2-section] .plate.inverse .piece.zh{color:var(--section-text,#faf9f5)}
 .work[data-p2-section] .plate.inverse .piece.en{color:var(--section-text,#faf9f5)}
@@ -86,6 +89,11 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
  font:9px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#816c42
 }
 .plate.inverse.experimental:after{color:#c0aa76}
+/* P2 embedded use keeps both impressions, removes the studio inspector chrome. */
+.p2Embedded>header,.p2Embedded .shell>aside,.p2Embedded footer{display:none}
+.p2Embedded .shell{display:block}.p2Embedded .work{padding:clamp(12px,2vw,28px)}
+.p2Embedded .topline{margin-bottom:9px}
+.p2Embedded .source{display:none}
 /* Print proof uses the SAME live mother forme and its verified self-hosted font files. */
 @media print{
  @page{size:A4 landscape;margin:11mm}
@@ -112,7 +120,7 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 <article class="impression"><div class="plateTitle">01 / 中文主讀｜Chiron Heavy 900</div><div class="plate" id="plateZh"><div class="plateInner" id="viewportZh"><div class="forme" id="formeZh"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricZh" class="metrics"></div></article>
 <article class="impression"><div class="plateTitle">02 / 英文主讀｜Bodoni SC × Chiron 200 · 同字號</div><div class="plate inverse" id="plateEn"><div class="plateInner" id="viewportEn"><div class="forme" id="formeEn"></div></div><div class="guard">字體未完成載入驗證。不得用替代字形展示正式構圖。</div></div><div id="metricEn" class="metrics"></div></article>
 </div><section class="source"><div><h3>CHINESE UNION VERSION / 源文分行</h3><div class="zhPoem" id="zhPoem"></div></div><div><h3>KING JAMES VERSION / SOURCE LINES</h3><div class="enPoem" id="enPoem"></div></div></section></main></div>
-<footer>Scripture Studio · V53.0 P2 Seven-Section Editorial Color · Accent colors identify chapters, never decorate individual Scripture words. V49 typography and coverage remain untouched. Exploratory poetic breaks require editorial approval.</footer>
+<footer>Scripture Studio · V54.0 P2 Two-Impression Color and Embed Interface · Accent colors identify chapters, never decorate individual Scripture words. V49 typography and coverage remain untouched. Exploratory poetic breaks require editorial approval.</footer>
 <script src="./scripture-studio-passage-model.js"></script>
 <script>
 'use strict';
@@ -446,6 +454,7 @@ function renderP2Palette(){
  $('scriptureWork').dataset.p2Section=item.id;
  $('scriptureWork').style.setProperty('--section-bg',item.color);
  $('scriptureWork').style.setProperty('--section-text',item.ink);
+ document.documentElement.style.setProperty('--p2-current-color',item.color);
 }
 function build(form,candidate){form.innerHTML='';form.dataset.squareMode=$('squareMode').value;const fontSize=candidate.fontSize,gap=fontSize*candidate.gapRatio;const railWidth=candidate.railWidth;
 // A compact frame: the earlier 3.25em surround made every line tiny on screen.
@@ -630,6 +639,18 @@ $('plateZh').classList.toggle('blocked',!approved);$('plateEn').classList.toggle
 $('fontSize').oninput=()=>{$('fontSizeValue').textContent=$('fontSize').value};$('fontSize').onchange=search;$('cadence').onchange=search;$('artDirection').onchange=search;$('recompute').onclick=search;$('squareMode').onchange=()=>{if(stage)render(selected)};$('next').onclick=()=>render(selected+1);$('guides').onclick=()=>{showGuides=!showGuides;render(selected)};$('recipe').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('V14／V18 完整驗收尚未通過，禁止正式匯出；目前僅供方塊語法設計比較。');return}const data={version:'51.0',displayTransform:'Title Case initials + true small caps; raw KJV unchanged',scripture:'Isaiah 62:6',reference:{zh:'以賽亞書',en:'Isaiah',chapterVerse:'62:6',composition:'single bilingual register within rotating mother forme'},font:{en:'Bodoni Moda SC',zh:'Chiron Hei HK WS',zhHeavy:900,zhLight:200},text:{zh:zhExact,en:enExact},layout:stage};const a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='scripture-studio-v51-editorial-composition.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)};
 $('printProof').onclick=()=>{if(!approved||!stage||stage.provisional||!window.__scriptureStudio?.valid){alert('印版未通過 V14／V18 驗收，不能列印為正式校樣');return}window.print()};
 new ResizeObserver(fit).observe($('viewportZh'));new ResizeObserver(fit).observe($('viewportEn'));
+// P2 integration: read initial section from query; accept same-origin scene events.
+const p2Params=new URLSearchParams(location.search);
+const sectionFromUrl=p2Params.get('section')||p2Params.get('p2');
+if(p2Sections.some(x=>x.id===sectionFromUrl))activeP2=sectionFromUrl;
+if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
+addEventListener('message',event=>{
+ if(event.origin!==location.origin)return;
+ const data=event.data;
+ if(data?.type==='WESTSIDE_P2_SECTION'&&p2Sections.some(x=>x.id===data.section)){
+  activeP2=data.section;renderP2Palette();
+ }
+});
 renderP2Palette();
 startup();
 </script>
