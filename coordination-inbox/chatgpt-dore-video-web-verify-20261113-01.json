@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-dore-video-web-verify-20261113-01",
+  "subject": "Read-only smoke test of repaired Doré video frontend and local bridge",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "high",
+  "requires_reply": true,
+  "related_goal": "dore-video-acquisition-web-repair-1392",
+  "body": "Read-only verify repaired three local files, local bridge health, and served frontend. Do not restart services, download media, or change files.",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path\nimport urllib.request,json,ast,sys\nroot=Path.home()/'Documents/Codex/2026-10-27/elephant-goldfish-github-x20-westside-design/work/westside'\nadapter=root/'dore-core/tools/video_acquisition.py'\nstatic=root/'static/dore/video/index.html'\nother=root/'dore/video/index.html'\nfor p in (adapter,static,other):\n if not p.is_file():raise RuntimeError('MISSING:'+str(p))\na=adapter.read_text(encoding='utf-8');ast.parse(a)\nif '--write-subs' in a or '--write-auto-subs' in a:raise RuntimeError('SUBTITLE_FLAGS_STILL_PRESENT')\nfor p in (static,other):\n s=p.read_text(encoding='utf-8')\n if \"const failure=d.status==='failed'\" not in s:raise RuntimeError('ERROR_DISPLAY_MISSING:'+str(p))\nprint('LOCAL_FILES_PASS')\nfor url in ('http://127.0.0.1:43127/health','http://127.0.0.1:8000/dore/video/'):\n try:\n  with urllib.request.urlopen(url,timeout=4) as r:\n   body=r.read(100000).decode('utf-8','replace')\n   print(url+' HTTP '+str(r.status))\n   if url.endswith('/health'):\n    if not json.loads(body).get('ok'):raise RuntimeError('BRIDGE_HEALTH_NOT_OK')\n   elif \"const failure=d.status==='failed'\" not in body:raise RuntimeError('WEB_SERVER_STALE_FRONTEND')\n except Exception as e:\n  print('SERVICE_CHECK_FAIL '+url+' '+type(e).__name__+':'+str(e))\n  sys.exit(3)\nprint('DORE_WEB_RUNTIME_SMOKE_PASS')"
+      ],
+      "cwd": "~",
+      "timeout": 60
+    }
+  ]
+}
