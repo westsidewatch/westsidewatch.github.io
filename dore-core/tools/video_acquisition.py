@@ -160,7 +160,7 @@ def download_manifest(url, output):
 def download_yt(url, fmt, output):
     Path(output).mkdir(parents=True,exist_ok=True)
     cmd=[yt_dlp(),"--no-playlist","--write-info-json","--write-thumbnail",
-         "--write-subs","--write-auto-subs","--sub-langs","zh.*,en.*",
+         
          "-P",output,"-o","%(title).180B [%(id)s].%(ext)s"]
     cmd += ["-f",fmt or "bv*+ba/b",url]
     subprocess.run(cmd,check=True)
