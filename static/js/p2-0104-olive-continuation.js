@@ -652,7 +652,18 @@
    if(!verse||verse.slug!==roster[speaker]?.[0]||!verse.excerptEn)
     throw new Error('04 bilingual KJV passage must match facing speaker');
    if(panel.dataset.scriptureSpeaker!==verse.slug){
-    panel.querySelector('.olive-stage__companion-verse').textContent=verse.excerpt;
+    const zhLine=panel.querySelector('.olive-stage__companion-verse');
+    zhLine.textContent=verse.excerpt;
+    // OS reading rule: keep the closing Chinese phrase together so a
+    // single final character or punctuation mark cannot form its own line.
+    const tail=verse.excerpt.match(/([\p{Script=Han}]{2,4}[。！？；，…]*)$/u);
+    if(tail){
+     const end=document.createElement('span');
+     end.className='olive-stage__unbroken-tail';
+     end.textContent=tail[1];
+     zhLine.textContent=verse.excerpt.slice(0,-tail[1].length);
+     zhLine.append(end);
+    }
     panel.querySelector('.olive-stage__companion-verse-en').textContent=verse.excerptEn;
     panel.querySelector('.olive-stage__companion-reference').textContent=verse.referenceZh;
     panel.querySelector('.olive-stage__companion-reference-en').textContent=verse.referenceEn+' · KJV';
