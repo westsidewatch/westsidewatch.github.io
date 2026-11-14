@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-dore-video-web-local-repair-20261113-01",
+  "subject": "Repair local Doré video downloader and frontend without overwriting unrelated changes",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "high",
+  "requires_reply": true,
+  "related_goal": "dore-video-acquisition-web-repair-1392",
+  "body": "Authorized narrow in-place repair of three local Doré files. Preserve unrelated edits, back up changed files, verify Python syntax and exact content. No git pull, merge, process restart, or unrelated modifications.",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path\nimport ast,os,sys,shutil,datetime\nroot=Path.home()/'Documents/Codex/2026-10-27/elephant-goldfish-github-x20-westside-design/work/westside'\nif not (root/'dore-core/tools/video_acquisition.py').is_file():\n print('LOCAL_REPO_NOT_FOUND: '+str(root));sys.exit(2)\nfiles=['dore-core/tools/video_acquisition.py','static/dore/video/index.html','dore/video/index.html']\nold='s.textContent=label+seg+(d.result&&d.result.file?\\' · \\'+d.result.file:\\'\\');'\nnew=\"const failure=d.status==='failed'||d.status==='master_failed';const detail=failure?(d.detail||d.error||(d.result&&(d.result.error||d.result.detail||d.result.raw||JSON.stringify(d.result)))||'未知錯誤'):'';s.textContent=label+seg+(d.result&&d.result.file?' · '+d.result.file:'')+(detail?' · '+String(detail).slice(0,1200):'');\"\nneedle='\"--write-subs\",\"--write-auto-subs\",\"--sub-langs\",\"zh.*,en.*\",'\nplanned=[]\nfor i,rel in enumerate(files):\n p=root/rel;s=p.read_text(encoding='utf-8')\n if i==0:\n  if needle in s: t=s.replace(needle,'',1)\n  elif '--write-subs' not in s and '--write-auto-subs' not in s: t=s\n  else: raise RuntimeError('ADAPTER_UNEXPECTED_SUBTITLE_FLAGS')\n  ast.parse(t)\n else:\n  if old in s:t=s.replace(old,new,1)\n  elif new in s:t=s\n  else:raise RuntimeError('FRONTEND_PATTERN_MISMATCH:'+rel)\n planned.append((p,s,t))\nstamp=datetime.datetime.now().strftime('%Y%m%d-%H%M%S')\nchanged=[]\ntry:\n for p,s,t in planned:\n  if s!=t:\n   backup=p.with_name(p.name+'.a2a-backup-'+stamp);backup.write_text(s,encoding='utf-8')\n   p.write_text(t,encoding='utf-8');changed.append((p,backup))\n for p,s,t in planned:\n  if p.read_text(encoding='utf-8')!=t:raise RuntimeError('VERIFY_MISMATCH:'+str(p))\n print('DORE_VIDEO_LOCAL_REPAIR_PASS')\n print('changed='+str(len(changed)))\n for p,b in changed:print('updated='+str(p.relative_to(root))+' backup='+b.name)\nexcept Exception:\n for p,b in changed:shutil.copy2(b,p)\n raise"
+      ],
+      "cwd": "~",
+      "timeout": 120
+    }
+  ]
+}
