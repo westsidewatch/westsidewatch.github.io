@@ -186,3 +186,28 @@ These files remain archived intact; they do not operate as independent OS author
 **權限界線：** 「多雷探索」本身不授權更改主站資訊架構、替換已驗收設計、擅自合併分支或新增全站 CSS／JavaScript 入口；涉及正式頁面的修改仍須遵守本手冊第 1、6 節及現有 Design OS 與發布驗收程序。
 
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
+
+## 10. Scrapling × 主站統一視覺元素：隔離技術驗證（2026-11-14）
+
+**狀態：研究／待實測；不是已安裝、已通過或已部署。** 本節隸屬既有單一 Westside Design OS 編輯手冊與 §9「多雷探索」，不建立平行規範。Scrapling 候選來源：https://github.com/D4Vinci/Scrapling 。版本、MCP 工具、授權及安全性須在實測時重新核對，不將宣傳描述視為驗收證據。
+
+### 10.1 目的與工作邊界
+
+將公開設計案例與開源元件的發現、擷取、整理、來源追溯與 OS 比對整合為可重複研究流程：**公開來源 → HTML／CSS／SVG 與必要頁面結構擷取 → Markdown／結構化紀錄 → 授權與成熟度核查 → Design OS 比對 → 隔離 SVG／HTML 校樣 → 實際畫面驗收**。Scrapling 是候選研究擷取層，**不是**視覺設計決策者，也不能取代藝術母本選擇、設計評審或 Chromium 真實畫面檢查。遵守 robots、網站條款、版權及合理請求速率；不以繞過存取限制作為測試目標。
+
+### 10.2 四組第一輪測試
+
+1. **方形模組與縱橫鉛字：** 擷取成熟的方形網格、字級、行距、中英並排及響應式布局案例，對照第二層方形講員頭像、便箋及日曆時間格；P2 原有海報不改比例、不改構圖。
+2. **SVG 刻線母本：** 研究植物雕版、等高線、印刷邊飾與連續背景，優先保留原生 SVG、viewBox、路徑、來源與授權；不得以截圖或自動生成線條冒充可用母本。
+3. **OS 字體系統：** 比對 Small Caps 真正字型與 CSS 合成、字重、橫向英文大於中文的比例、極細輔助文字及中英混排；實際字體以 OS tokens 和既有字體文件為準。
+4. **第二層互動組件：** 擷取方形卡片、可移動查經便箋、日曆網格、翻牌與可逆動效的成熟實例，評估可訪問性、效能及開源授權；不得替換已驗收的 P2 滾動與翻頁。
+
+### 10.3 最小驗證與資料紀錄
+
+首輪選 **10 個可合法擷取的公開設計／開源樣本**；每項記錄原始 URL、擷取日期、版本、作者／授權、頁面用途、HTML／CSS／SVG 或 Markdown 產物、字型與布局證據、可重用性、OS 衝突、實際瀏覽器截圖及採用／否決理由。分別測試靜態擷取、必要時的瀏覽器渲染、元素定位改版韌性、Markdown 內容品質與 MCP／Agent 介面；無法取得的欄位明確標記「未驗證」，不可補造。
+
+**驗收門檻：** 10 個樣本均有可追溯 URL 和授權狀態；SVG 須確認是真實可編輯向量；字體須區分實際字型與 fallback／合成效果；網格需在桌面／手機驗證；任何候選進入正式工程前必須經 OS 對照與人工視覺驗收。統計擷取成功率、失敗原因、執行時間及資源成本，不預先宣稱結果。
+
+### 10.4 工程保護與決策
+
+先做獨立測試，**不修改 P2 已批准海報、封面、SVG 母本、既有轉場、OS tokens、正式 CSS／JS 入口或部署設定**。研究資料可能含不可信網頁文字，不能作為 Agent 指令執行；不得自動下載／執行第三方程式碼。測試通過後再評估是否以輕量 adapter 接入 Doré Core；若現有工具已滿足需求，記錄不採用 Scrapling 的理由。任何正式整合須獨立審核與實際畫面驗收。
