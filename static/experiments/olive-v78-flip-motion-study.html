@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>04 / V78 — Four Scroll-Driven Folio Motion Systems</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:var(--ws-paper,#faf9f5);color:var(--ws-ink,#252525);font-family:"Bodoni Moda",Georgia,serif}
+body{min-height:320svh}header{padding:38px clamp(20px,4vw,60px) 30px;max-width:1300px;margin:auto}
+.kicker{font:200 11px Arial,sans-serif;letter-spacing:.2em}h1{font-weight:400;font-size:clamp(35px,5.5vw,70px);letter-spacing:-.055em;line-height:1.04;margin:15px 0}
+header p{font:14px/1.7 Arial,sans-serif;max-width:840px;color:#53584e}
+.motion-scroll{height:290svh;position:relative}.sticky{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;background:var(--ws-olive,#738a5a);overflow:hidden}
+.status{display:flex;align-items:center;justify-content:space-between;padding:12px clamp(16px,3vw,42px);color:var(--ws-paper,#faf9f5);font:200 11px Arial,sans-serif;letter-spacing:.12em}
+.motion-demo{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,2vw,28px);align-items:center;padding:12px clamp(18px,4vw,70px) 25px;min-height:0}
+.test{min-width:0;align-self:center}.test h2{font:400 clamp(12px,1.2vw,18px)/1.1 Georgia,serif;letter-spacing:.045em;color:var(--ws-paper,#faf9f5);min-height:25px;margin:0 0 18px}
+.card-frame{height:min(55vh,380px);display:flex;align-items:center;justify-content:center;perspective:1500px}
+.folio{width:min(100%,245px);aspect-ratio:3/4;position:relative;transform-style:preserve-3d;will-change:transform}
+.folio .face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face.front{background:var(--ws-paper,#faf9f5);border:1px solid var(--ws-morning-gold,#d2bc69);color:var(--ws-olive,#738a5a);display:flex;flex-direction:column;padding:9%}
+.face.front small{font:200 10px Arial,sans-serif;letter-spacing:.2em}
+.face.front strong{font-size:clamp(27px,3vw,48px);font-weight:400;line-height:.9;letter-spacing:-.04em;margin:auto 0;text-wrap:balance}
+.face.front em{font:200 11px Arial,sans-serif;letter-spacing:.12em}
+.face.back{background:color-mix(in oklab,var(--ws-olive,#738a5a) 70%,var(--ws-ink,#252525));transform:rotateY(180deg) translateZ(1px);border:1px solid var(--ws-morning-gold,#d2bc69)}
+.face.back::before{content:"";position:absolute;inset:7%;background:var(--ws-morning-gold,#d2bc69);mask:url('/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-1.svg') center/100% 100% no-repeat}
+.face.back span{position:absolute;left:8%;bottom:9%;color:var(--ws-morning-gold,#d2bc69);font:200 11px Arial,sans-serif;letter-spacing:.14em}
+.folio::after{content:"";position:absolute;top:0;bottom:0;left:calc(50% - .5px);width:1px;background:var(--ws-morning-gold,#d2bc69);opacity:0;pointer-events:none}
+.test p{color:var(--ws-paper,#faf9f5);opacity:.85;font:12px/1.4 Arial,sans-serif;min-height:35px;margin:14px 0 0}
+.demo-range{background:var(--ws-paper,#faf9f5);padding:14px clamp(20px,4vw,60px);display:flex;align-items:center;gap:15px;font:12px Arial,sans-serif}
+.demo-range input{flex:1;accent-color:var(--ws-olive,#738a5a)}
+.demo-range output{font-variant-numeric:tabular-nums;min-width:4em;text-align:right}
+.test[data-design="c"] .folio{transform:rotateY(0)!important}
+.test[data-design="c"] .face.back{transform:none;z-index:2}
+.test[data-design="c"] .face.front{z-index:1}
+.test[data-design="c"] .face.back::after{content:"";position:absolute;inset:0;border-left:1px solid var(--ws-morning-gold,#d2bc69)}
+footer{max-width:1100px;padding:55px 25px 70px;margin:auto;font:14px/1.7 Arial,sans-serif}
+footer h2{font:400 30px Georgia,serif}footer a{color:#486d49}
+@media(max-width:900px){.motion-demo{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}.card-frame{height:min(31vh,280px)}.folio{width:min(100%,156px)}.test h2{margin-bottom:5px}.test p{margin:4px 0 0;font-size:10px;min-height:24px}}
+@media(max-width:380px){.motion-demo{padding:7px 14px;gap:3px 10px}.card-frame{height:29vh}.folio{width:min(100%,130px)}.face.front strong{font-size:23px}.status{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.motion-scroll{height:150svh}.test .folio{will-change:auto}}
+</style></head>
+<body data-ws-scope="olive">
+<header><div class="kicker">WESTSIDE / P2 04 / V78 / ISOLATED MOTION STUDY</div>
+<h1>Four ways to<br>turn a printed folio.</h1>
+<p>真實捲動控制的隔離試稿。四個方案接受同一滾動進度、同時停止、同時反向，彼此不使用延遲時間線。正面只放「測試」字樣，刻意不挪用已鎖定的十二張講員原始海報或其英文 Shadow DOM。</p>
+</header>
+<div id="motion-scroll" class="motion-scroll"><div class="sticky">
+<div class="status"><span>04 / OLIVE · MERSI POSITION-OWNED MOTION</span><span id="current-label">SCROLL TO TURN</span></div>
+<div class="motion-demo">
+<section class="test" data-design="old"><h2>00 · ORIGINAL FAST</h2><div class="card-frame"><div class="folio"><div class="face front"><small>WESTSIDE / 04</small><strong>THE<br>OLIVE<br>MOUNTAIN</strong><em>ARCHIVAL MOTION TEST</em></div><div class="face back"><span>THE RIDGE · 01 / 06</span></div></div></div><p>短行程 180°；只作問題基線。</p></section>
+<section class="test" data-design="a"><h2>A · MUSEUM FOLIO</h2><div class="card-frame"><div class="folio"><div class="face front"><small>WESTSIDE / 04</small><strong>THE<br>OLIVE<br>MOUNTAIN</strong><em>ARCHIVAL MOTION TEST</em></div><div class="face back"><span>THE RIDGE · 01 / 06</span></div></div></div><p>加長行程，中央實軸，無時間拖尾。</p></section>
+<section class="test" data-design="b"><h2>B · HINGED PRINT</h2><div class="card-frame"><div class="folio"><div class="face front"><small>WESTSIDE / 04</small><strong>THE<br>OLIVE<br>MOUNTAIN</strong><em>ARCHIVAL MOTION TEST</em></div><div class="face back"><span>THE RIDGE · 01 / 06</span></div></div></div><p>外側折頁軸；可能破壞海報原位。</p></section>
+<section class="test" data-design="c"><h2>C · EDITORIAL REVEAL</h2><div class="card-frame"><div class="folio"><div class="face front"><small>WESTSIDE / 04</small><strong>THE<br>OLIVE<br>MOUNTAIN</strong><em>ARCHIVAL MOTION TEST</em></div><div class="face back"><span>THE RIDGE · 01 / 06</span></div></div></div><p>雙向印刷遮罩；沒有虛假 3D。</p></section>
+</div>
+<div class="demo-range"><label for="pose">POSITION</label><input type="range" id="pose" min="0" max="1000" step="1" value="0" aria-label="四種版畫翻卡進度比較"><output id="pose-value">0%</output></div>
+</div></div>
+<footer><h2>Art-direction gate</h2><p>選型須比較：0–180 度反轉的視覺重量、速度、卡背停留、快慢捲與反向、320/390/1648 寬度及動態偏好。V77 的正面影像／姓名均不在這個頁面修改。先比較 A、B、C 再決定能否進原 04。</p><p>Reference: <a href="https://github.com/codrops/3DStackMotion">Codrops 3D Stack Motion (MIT)</a> · <a href="https://motion.dev/docs/scroll">Motion scroll</a> · <a href="https://tympanus.net/codrops/2026/07/27/between-print-and-digital-the-making-of-mersis-website/">MERSI making-of</a></p></footer>
+<script>
+(()=>{'use strict';
+ const frame=document.getElementById('motion-scroll');
+ const input=document.getElementById('pose');
+ const out=document.getElementById('pose-value');
+ const status=document.getElementById('current-label');
+ const sections=[...document.querySelectorAll('.test')];
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+ const clamp=v=>Math.max(0,Math.min(1,v));
+ const ease=p=>{let x=clamp(p);return x*x*(3-2*x)};
+ const apply=p=>{
+  let v=clamp(p);
+  input.value=String(Math.round(v*1000));out.textContent=Math.round(v*100)+'%';
+  status.textContent=v<.08?'FACE / INK':v>.92?'VERSO / RELIEF':'REVERSIBLE SCROLL';
+  for(const sec of sections){
+   const type=sec.dataset.design,folio=sec.querySelector('.folio');
+   const turn=type==='old'?ease((v-.18)/.34):type==='a'?ease((v-.065)/.87):ease((v-.075)/.85);
+   if(type==='c'){
+    sec.querySelector('.face.back').style.clipPath='inset(0 '+((1-turn)*100).toFixed(3)+'% 0 0)';
+    sec.querySelector('.face.front').style.clipPath='inset(0 0 0 '+(turn*100).toFixed(3)+'%)';
+   }else{
+    folio.style.transformOrigin=type==='b'?'8% 50%':'50% 50%';
+    folio.style.transform='rotateY('+(turn*180).toFixed(3)+'deg)';
+    folio.style.setProperty('--turn',turn.toFixed(3));
+   }
+  }
+ };
+ let suppress=false,queued=false;
+ function onScroll(){
+  if(suppress)return;
+  if(queued)return;queued=true;
+  requestAnimationFrame(()=>{queued=false;
+   const rect=frame.getBoundingClientRect();
+   const total=Math.max(1,rect.height-innerHeight);
+   const p=clamp(-rect.top/total);apply(p);
+  });
+ }
+ input.addEventListener('input',()=>{const v=+input.value/1000;
+  const rect=frame.getBoundingClientRect(),total=Math.max(1,rect.height-innerHeight);
+  scrollTo({top:scrollY+rect.top+total*v,behavior:'instant'});
+  apply(v);
+ });
+ addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll,{passive:true});
+ reduce.addEventListener('change',onScroll);
+ onScroll();
+})();
+</script>
+</body></html>

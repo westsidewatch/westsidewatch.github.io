@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scripture Studio · V17 詩歌結構生成器</title>
+<link rel="stylesheet" href="https://westsidewatch.github.io/css/westside-design-os.css"><style>
+:root{--paper:#faf9f5;--ink:#252525;--gold:#a2872a;--zh:'Chiron Hei HK WS';--en:'Bodoni Moda'}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 system-ui,-apple-system,sans-serif}header{padding:20px clamp(18px,3vw,40px);border-bottom:1px solid #d9d7d1;display:flex;align-items:end;justify-content:space-between;gap:14px}h1{font:400 clamp(22px,2.7vw,37px)/1.2 Georgia,serif;margin:3px 0}.over{font-size:11px;letter-spacing:.16em;color:#62635d}main{display:grid;grid-template-columns:310px 1fr;min-height:80svh}aside{border-right:1px solid #d9d7d1;padding:18px;display:grid;align-content:start;gap:12px}label{display:grid;gap:5px;font-size:12px;font-weight:600}select,input,textarea,button{font:inherit;background:#fff;color:#252525;border:1px solid #c5c4bd;border-radius:3px;padding:8px;width:100%;min-width:0}textarea{min-height:80px;resize:vertical}button{cursor:pointer}.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.primary{background:var(--ink);color:white}aside p,small{font-size:12px;color:#6e6e68;margin:0}.area{padding:clamp(18px,3vw,42px);min-width:0}h2{font:400 26px Georgia,serif;margin:3px 0 15px}.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2vw,36px);max-width:1080px}.pair>div{min-width:0}.panelname{font:11px/1.3 system-ui;margin-bottom:7px;color:#777}.seal{aspect-ratio:1;width:100%;position:relative;overflow:hidden;background:var(--paper);container-type:inline-size;}.seal.inverse{background:var(--ink)}.inverse .band .zh{font-family:var(--zh),'Noto Sans CJK TC',sans-serif;font-weight:200!important;font-synthesis:none}.inverse .band .en{font-style:var(--style,normal);text-transform:none;letter-spacing:.015em}.inverse.focus-uppercase .band .en{text-transform:uppercase}.forme{position:absolute;width:var(--plate-side,600px);height:var(--plate-side,600px);left:50%;top:50%;transform:translate(-50%,-50%) scale(var(--fit,1));transform-origin:center;display:flex;align-items:center;justify-content:center;color:var(--ink)}.inverse .forme{color:var(--paper);transform:translate(-50%,-50%) scale(var(--fit,1)) rotate(-90deg)}.lineform{writing-mode:horizontal-tb;display:flex;align-items:center;justify-content:center;width:auto;height:auto;font-size:var(--typesize,46px);font-synthesis:none}.bands{display:flex;flex-direction:row-reverse;writing-mode:horizontal-tb;direction:ltr;justify-content:center;align-items:center;gap:var(--gutter,10px);max-width:none;max-height:none}.band{writing-mode:vertical-rl;text-orientation:mixed;direction:ltr;display:block;white-space:nowrap;line-height:1.02;flex-shrink:0;font-size:inherit;}.band .zh{font-family:var(--zh),'Noto Sans CJK TC',sans-serif;font-weight:var(--weight,900);font-synthesis:none;text-orientation:upright}.band .en{font-family:var(--en),Georgia,serif;font-style:var(--style,normal);font-weight:400;text-orientation:sideways;font-synthesis:none}.band .en.smallcaps{font-family:'Bodoni Moda SC','Bodoni Moda',Georgia,serif;font-variant-caps:normal;letter-spacing:.02em;text-transform:none}.inverse .band .en.smallcaps{text-transform:uppercase}.band span{display:inline}.band span[lang]{unicode-bidi:isolate}.band .zh{word-break:keep-all;overflow-wrap:normal}.band .en{word-break:normal;overflow-wrap:normal}.caption{font-size:12px;color:#666d65;margin-top:15px;max-width:770px}hr{border:0;border-top:1px solid #d8d5cd;margin:30px 0 20px}.samples{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.sample{padding:10px;text-align:left;background:#fff;border:1px solid #dad8d1;cursor:pointer}.sample b{font-size:12px}.sample em{display:block;color:#777;font-size:11px;font-weight:400}.sample[aria-current=true]{border:2px solid #a2872a;padding:9px}.full-text{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:17px;max-width:980px}.full-text section{border-top:1px solid #ccc;padding-top:11px;line-height:1.65}.full-text section:first-child{font-family:var(--zh),'Noto Sans CJK TC',sans-serif}.full-text section:nth-child(2){font-family:var(--en),Georgia,serif}#checks{white-space:pre-wrap;font:11px/1.55 ui-monospace,monospace;color:#596158;margin-top:10px}@media(max-width:950px){main{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid #ddd;grid-template-columns:repeat(2,1fr)}aside>p{grid-column:1/-1}}@media(max-width:600px){header{display:block}.pair,.full-text{grid-template-columns:1fr}.samples{grid-template-columns:repeat(2,1fr)}aside{grid-template-columns:1fr}}
+.seal.not-approved .bands{visibility:hidden}.seal.not-approved::after{content:"NOT APPROVED / 版心不合格";position:absolute;inset:0;display:grid;place-items:center;font:600 13px/1.4 system-ui;text-align:center;color:#9c605b;letter-spacing:.04em;pointer-events:none}.seal.inverse.not-approved::after{color:#df9c8f}
+.poetry-tool{padding:13px 12px;border:1px solid #c9c7bb;background:#f4f0e7;display:grid;gap:9px}
+.poetry-tool summary{font-weight:650;cursor:pointer}.poetry-tool details{display:grid;gap:8px}
+.poetry-tool textarea{font:12px/1.55 ui-monospace,monospace;min-height:120px;white-space:pre;tab-size:2}
+.poetry-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.poetry-preview section{background:white;padding:10px;border:1px solid #dfdcd2;min-width:0}
+.poetry-preview .line{font-size:12px;line-height:1.65;white-space:pre-wrap;border-left:2px solid #bbb7ab;padding-left:6px;margin:3px 0}
+.poetry-preview .line.q2{margin-left:11px;border-color:#a2872a}
+.poetry-preview strong{display:block;font-size:11px;margin-bottom:7px}
+#poetryStatus{font-size:12px;color:#625c50;white-space:pre-wrap}
+#poetryStatus.error{color:#9a3a2e}
+.review-line{display:flex;align-items:flex-start;gap:8px;font-weight:400}.review-line input{width:auto;margin-top:4px}
+@media(max-width:650px){.poetry-preview{grid-template-columns:1fr}}
+</style></head><body><header><div><div class="over">WESTSIDE WATCH / SCRIPTURE STUDIO · NATIVE TYPE STUDY</div><h1>同一印版 · 兩種閱讀</h1></div><div class="over">真混排 · 語義鎖定 · 聖經詩行優先 · V17</div></header><main><aside>
+<label>經文資料<select id="preset"></select></label><label>中文字重<select id="weight"><option value="900">HEAVY 900｜最粗</option><option value="200">EXTRALIGHT 200｜極細</option></select></label><label>英文形態<select id="variant"><option value="roman">Bodoni Moda Roman</option><option value="italic">Bodoni Moda Italic</option><option value="smallcaps">Bodoni Moda Small Caps</option><option value="smallcapsitalic">Bodoni Moda SC Italic</option></select></label><label>固定母版字號<select id="typesize"><option value="42">42 px</option><option value="46" selected>46 px</option><option value="50">50 px</option><option value="54">54 px</option></select></label><label>中文全文<textarea id="zh" spellcheck="false"></textarea></label><label>英文全文<textarea id="en" spellcheck="false"></textarea></label><label>中文語義鎖定（只在 | 處允許斷開）<textarea id="zhlocks" spellcheck="false"></textarea></label><label>英文語義鎖定（保留原文空格，只在 | 處斷開）<textarea id="enlocks" spellcheck="false"></textarea></label><details class="poetry-tool" id="poetryTool" open>
+<summary>USFM 詩歌行匯入｜聖經斷句先於排版</summary>
+<div class="controls"><button id="poetryExample" type="button">載入 62:6 編輯候選</button><button id="importPoetry" type="button" class="primary">匯入兩個 USFM</button></div>
+<label>中文 USFM（\q1／\q2／\v）<textarea id="usfmZh" spellcheck="false" aria-label="中文 USFM"></textarea></label>
+<label>English USFM<textarea id="usfmEn" spellcheck="false" aria-label="English USFM"></textarea></label>
+<label>來源、譯本與詩行依據<input id="poetryProvenance" value="編輯候選分行（非譯本官方 USFM）"></label>
+<label class="review-line"><input id="allowSoftBreak" type="checkbox">我已人工審核，允許在原詩行內加入設計用的軟斷點（須保留原文與結構紀錄）</label>
+<div id="poetryStatus" aria-live="polite"></div>
+<div class="poetry-preview" id="poetryPreview"></div>
+<p>本版內建離線 USFM 詩歌標記適配器，解析 \id、\c、\v、\q1–3、\b、\p；不是完整 Bridgeconn Grammar 套件。匯入無詩行標記或含不支援標記時會拒絕，不能假稱獲得原版詩行。</p>
+</details>
+<button id="relock">由原文重新產生斷句候選</button><div class="controls"><label>中文出處<input id="zr"></label><label>英文出處<input id="er"></label></div><label>英文主讀字形<select id="englishFocus"><option value="uppercase">UPPERCASE / Bodoni Roman</option><option value="smallcaps">Small Caps / Bodoni Moda SC</option><option value="italic">Bodoni Moda Italic</option><option value="roman" selected>Bodoni Moda Roman</option></select></label><div class="controls"><button id="reset">恢復原文</button><button id="export" class="primary">匯出 HTML 雙印</button></div><p>V17 加入 USFM 詩行匯入、來源標示與詩行保護。V16 保留固定字號、混排和版心硬約束：每條字帶都含雙語，但大多數字帶不得 50/50 對切；英文主讀時英文在前，中文主讀時中文在上。長經文只增行與擴大印版，不縮字。</p><div id="checks" aria-live="polite"></div><div id="occupancy" role="status" style="font-size:12px;margin-top:8px"></div></aside>
+<div class="area"><div class="over">01 / ONE SHARED FORME</div><h2>中文主讀 × 英文主讀</h2><div class="pair"><div><div class="panelname">甲｜中文豎讀（中文在上，英文在下）</div><div class="seal" id="zhSeal"><div class="forme"><div class="lineform"><div class="bands"></div></div></div></div></div><div><div class="panelname">乙｜英文橫讀（英文在前，中文在後）</div><div class="seal inverse" id="enSeal"><div class="forme"><div class="lineform"><div class="bands"></div></div></div></div></div></div><p class="caption">V17 先保護聖經詩行，再以語義鎖定的完整詞組為排字單位，並加入節奏限制：4 行時至少 2–3 行不是 50/50，6 行時至少 3–4 行不是 50/50。英文主讀以英文先行，中文主讀則中文在上；空間不足時增加字帶與印版尺寸，讓文字群真正撐滿方塊。</p>
+<hr><div class="over">02 / EIGHT REALM TESTS</div><h2>八組經文壓力測試</h2><div id="samples" class="samples"></div><div class="full-text"><section><b>中文完整原文</b><div id="zhFull"></div></section><section><b>English full source</b><div id="enFull"></div></section></div></div></main>
+<script>
+"use strict";
+const P=[
+['HOME / 黑夜已深','黑夜已深，白晝將近；我們就當脫去暗昧的行為，帶上光明的兵器。','The night is far spent, the day is at hand: let us therefore cast off the works of darkness, and let us put on the armour of light.','羅馬書 13:12','ROMANS 13:12'],
+['01 / 活水堂','除他以外，別無拯救；因為在天下人間，沒有賜下別的名，我們可以靠著得救。','Neither is there salvation in any other: for there is none other name under heaven given among men, whereby we must be saved.','使徒行傳 4:12','ACTS 4:12'],
+['02 / 西望','耶路撒冷啊，我在你城上設立守望的，他們晝夜必不靜默。呼籲耶和華的，你們不要歇息，','I have set watchmen upon thy walls, O Jerusalem, which shall never hold their peace day nor night: ye that make mention of the LORD, keep not silence,','以賽亞書 62:6','ISAIAH 62:6'],
+['03 / 以馬忤斯','於是從摩西和眾先知起，凡經上所指著自己的話都給他們講解明白了。','And beginning at Moses and all the prophets, he expounded unto them in all the scriptures the things concerning himself.','路加福音 24:27','LUKE 24:27'],
+['04 / 橄欖山','可見信道是從聽道來的，聽道是從基督的話來的。','So then faith cometh by hearing, and hearing by the word of God.','羅馬書 10:17','ROMANS 10:17'],
+['05 / 黎明書局（候選）','你的話是我腳前的燈，是我路上的光。','Thy word is a lamp unto my feet, and a light unto my path.','詩篇 119:105','PSALM 119:105'],
+['06 / 天堂電影院（候選）','他對我說：將這默示明明地寫在版上，使讀的人容易讀。','And the LORD answered me, and said, Write the vision, and make it plain upon tables, that he may run that readeth it.','哈巴谷書 2:2','HABAKKUK 2:2'],
+['07 / 白晝咖啡館（候選）','有小麥、大麥、葡萄樹、無花果樹、石榴樹、橄欖樹，和蜜。','A land of wheat, and barley, and vines, and fig trees, and pomegranates; a land of oil olive, and honey.','申命記 8:8','DEUTERONOMY 8:8']
+];
+const Z=[
+['黑夜已深，','白晝將近；','我們就當','脫去','暗昧的行為，','帶上','光明的兵器。'],
+['除他以外，','別無拯救；','因為','在天下人間，','沒有賜下','別的名，','我們可以','靠著得救。'],
+['耶路撒冷啊，','我在','你城上','設立','守望的，','他們','晝夜','必不靜默。','呼籲','耶和華的，','你們','不要歇息，'],
+['於是','從摩西和眾先知起，','凡經上','所指著自己的話','都給他們','講解明白了。'],
+['可見','信道','是從','聽道','來的，','聽道','是從','基督的話','來的。'],
+['你的話','是我腳前的燈，','是我路上的光。'],
+['他對我說：','將這默示','明明地寫在版上，','使讀的人','容易讀。'],
+['有小麥、','大麥、','葡萄樹、','無花果樹、','石榴樹、','橄欖樹，','和蜜。']
+];
+const E=[
+['The night is far spent, ','the day is at hand: ','let us therefore ','cast off ','the works of darkness, ','and let us put on ','the armour of light.'],
+['Neither is there salvation ','in any other: ','for there is ','none other name ','under heaven ','given among men, ','whereby we must be saved.'],
+['I have set ','watchmen ','upon thy walls, ','O Jerusalem, ','which shall ','never hold ','their peace ','day nor night: ','ye that ','make mention ','of the LORD, ','keep not silence,'],
+['And beginning ','at Moses and all the prophets, ','he expounded unto them ','in all the scriptures ','the things concerning himself.'],
+['So then ','faith ','cometh ','by hearing, ','and hearing ','by the word of God.'],
+['Thy word ','is a lamp unto my feet, ','and a light unto my path.'],
+['And the LORD answered me, ','and said, ','Write the vision, ','and make it plain upon tables, ','that he may run ','that readeth it.'],
+['A land of wheat, ','and barley, ','and vines, ','and fig trees, ','and pomegranates; ','a land of oil olive, ','and honey.']
+];
+const $=id=>document.getElementById(id); let current=4, lastPlan=null;
+const canvas=document.createElement('canvas'), ctx=canvas.getContext('2d');
+const fontZH='"Chiron Hei HK WS"', fontEN='"Bodoni Moda", Georgia';
+P.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p[0];$('preset').append(o)});
+function assert(x,msg){ if(!x) throw new Error(msg) }
+function makeLocks(source,parts){ assert(parts.join('')===source,'phrase lock mismatch'); return parts.join('|') }
+function candidateZH(s){
+  let out=[]; let units=[...new Intl.Segmenter('zh-Hant',{granularity:'word'}).segment(s)].map(x=>x.segment);
+  for(const piece of units){ if(!piece) continue; if(/^[，。；：！？、\s]+$/.test(piece)&&out.length){ out[out.length-1]+=piece; continue } out.push(piece) }
+  const protectedWords=['基督的話','從聽道來的','所指著自己的話','從摩西和眾先知起','明明地寫在版上','天下人間','光明的兵器','我腳前的燈','我路上的光'];
+  for(const word of protectedWords){ for(let i=0;i<out.length;i++){ let t=''; for(let j=i;j<out.length;j++){ t+=out[j]; if(t===word){ out.splice(i,j-i+1,word); break } if(!word.startsWith(t)) break } } }
+  return out;
+}
+function candidateEN(s){
+  const clauses=s.split(/(?<=[,:;.!?])\s+/).filter(Boolean);
+  const out=[];
+  for(const c of clauses){
+    if(c.length<22 || !/\s/.test(c)){ out.push(c + (/[,:;.!?]$/.test(c)?'':' ')); continue; }
+    // mild phrase grouping by prepositions/conjunctions if long
+    let parts=c.match(/\S+\s*/g)||[]; let buf='';
+    for(let i=0;i<parts.length;i++){
+      buf += parts[i];
+      const word = parts[i].trim().toLowerCase();
+      const next = (parts[i+1]||'').trim().toLowerCase();
+      const boundary = /[,;:.!?]$/.test(parts[i]) || ['and','or','that','which','whereby','unto','upon','under','of','by','at','in'].includes(next) || buf.length>26;
+      if(boundary){ out.push(buf); buf=''; }
+    }
+    if(buf) out.push(buf);
+  }
+  return out;
+}
+function parseLocks(source,val,lang){ const parts=val.split('|'); assert(parts.every(p=>p.length>0), lang+' lock contains empty segment'); assert(parts.join('')===source, lang+' lock no longer matches source text'); return parts; }
+function intrinsicWidth(str,lang,size,focus){
+  if(lang==='zh') return [...str].reduce((sum,ch)=>sum+(/^[，。！？；：、]$/.test(ch)? size*0.62 : size*0.98),0);
+  ctx.font=(focus==='italic'?'italic ':'') + size + 'px ' + fontEN + ', serif';
+  const text = focus==='uppercase'? str.toUpperCase() : str;
+  return ctx.measureText(text).width;
+}
+
+
+function ratioBucket(r){return r>=.4&&r<=.6?'balanced':r<.4?'en-dominant':'zh-dominant'}
+function solve(zt,et,size,focus){
+ const zw=zt.map(t=>intrinsicWidth(t,'zh',size,focus)), ew=et.map(t=>intrinsicWidth(t,'en',size,focus));
+ const nz=zt.length, ne=et.length, total=zw.reduce((a,b)=>a+b,0)+ew.reduce((a,b)=>a+b,0);
+ const maxRows=Math.min(8,nz,ne), all=[];
+ function candidates(i,j,remaining,cap){
+  let out=[];
+  function walk(zi,ei,last,parts,zA,eA){
+    const depth=parts.length, adv=zA+eA+size*.12*Math.max(0,depth-1);
+    if(depth>=3 && zi>i && ei>j && nz-zi>=remaining-1 && ne-ei>=remaining-1 && adv<=cap*1.02){
+      const share=zA/(zA+eA);
+      out.push({parts:parts.slice(),i:zi,j:ei,advance:adv,share,bucket:ratioBucket(share),switches:depth-1,signature:parts.map(p=>p.lang==='zh'?'Z':'E').join(''),zhAdvance:zA,enAdvance:eA});
+    }
+    if(depth>=6 || out.length>700 || adv>=cap*1.04)return;
+    for(const lang of ['zh','en']){
+      if(last===lang)continue;
+      const pos=lang==='zh'?zi:ei, arr=lang==='zh'?zt:et, widths=lang==='zh'?zw:ew;
+      const spare=arr.length-pos-(remaining-1);
+      for(let take=1;take<=Math.min(2,spare);take++){
+        const word=arr.slice(pos,pos+take).join(''), w=widths.slice(pos,pos+take).reduce((a,b)=>a+b,0);
+        if(adv+w+size*.12>cap*1.04)break;
+        walk(zi+(lang==='zh'?take:0),ei+(lang==='en'?take:0),lang,[...parts,{lang,text:word,advance:w}],zA+(lang==='zh'?w:0),eA+(lang==='en'?w:0));
+      }
+    }
+  }
+  walk(i,j,'',[],0,0);
+  const unique=new Map();
+  for(const a of out){ const key=[a.i,a.j,a.signature,a.bucket].join('|'); const b=unique.get(key); if(!b||Math.abs(a.advance/cap-.77)<Math.abs(b.advance/cap-.77))unique.set(key,a); }
+  return [...unique.values()].sort((a,b)=>Math.abs(a.advance/cap-.78)-Math.abs(b.advance/cap-.78)).slice(0,110);
+ }
+ function attempt(rows,cap){
+  let beam=[{i:0,j:0,items:[],cost:0,balanced:0,multi:0,deep:0,last:'',minAdvance:Infinity,maxAdvance:0}];
+  for(let k=0;k<rows;k++){
+    const next=[];
+    for(const path of beam){
+      for(const row of candidates(path.i,path.j,rows-k,cap)){
+        const balanced=path.balanced+(row.bucket==='balanced'); if(balanced>Math.ceil(rows/2)-1)continue;
+        const multi=path.multi+(row.switches>=2); if(multi+(rows-k-1)<Math.floor(rows/2)+1)continue;
+        let cost=path.cost+(row.advance/cap-.76)**2*1.4+(row.switches===2?.15:0)+(row.signature===path.last?.7:0);
+        if(row.advance<cap*.40)cost+=1.2;
+        if(row.switches>=4)cost-=.15;
+        next.push({i:row.i,j:row.j,items:[...path.items,row],cost,balanced,multi,deep:path.deep+(row.switches>=3),last:row.signature,minAdvance:Math.min(path.minAdvance,row.advance),maxAdvance:Math.max(path.maxAdvance,row.advance)});
+      }
+    }
+    next.sort((a,b)=>a.cost-b.cost);
+    let dedup=new Map(),kept=[];
+    for(const a of next){const key=[a.i,a.j,a.balanced,a.multi,a.last].join('|');const n=dedup.get(key)||0;if(n>=3)continue;dedup.set(key,n+1);kept.push(a);if(kept.length>=140)break}
+    beam=kept;if(!beam.length)return null;
+  }
+  const legal=beam.filter(p=>p.i===nz&&p.j===ne&&p.multi>=Math.floor(rows/2)+1&&p.deep>=1&&new Set(p.items.map(r=>r.signature)).size>=2);
+  if(!legal.length)return null;
+  const gapMin=size*.15, gapMax=size*1.3, bandWidth=size*1.05;
+  for(const p of legal){
+    const maxLen=p.maxAdvance;
+    // Effective height can gain breathing room *between* full-size lines, never via font-size decrease.
+    const nativeHeight=rows*bandWidth;
+    const gap=Math.max(gapMin,Math.min(gapMax,(maxLen*.88-nativeHeight)/Math.max(1,rows-1)));
+    const height=nativeHeight+(rows-1)*gap;
+    const occupancy=Math.min(maxLen,height)/Math.max(maxLen,height);
+    const spread=p.minAdvance/p.maxAdvance;
+    const cost=p.cost+(1-occupancy)*16+Math.max(0,.42-spread)*2+Math.abs(rows-5)*.07;
+    all.push({cost,rows:p.items,rowCount:rows,fontSize:size,balanced:p.balanced,switched:p.multi,deep:p.deep,limit:maxLen,gap,estimatedOccupancy:occupancy,spread});
+  }
+  return true;
+ }
+ for(let rows=2;rows<=maxRows;rows++){
+  const cap=Math.max(size*8,total/rows*1.20,Math.max(...zw,...ew)*1.13);
+  attempt(rows,cap);
+ }
+ if(!all.length)throw Error('No legal interleaved sequence: approve additional semantic phrase boundaries; cannot split or shrink words.');
+ all.sort((a,b)=>a.cost-b.cost);
+ const visuallyLegal=all.filter(a=>a.estimatedOccupancy>=.72);
+ if(!visuallyLegal.length)throw Error('版心不合格：現有合法詞組無法排成飽滿方塊；請核定更多有語義的斷點或採用多枚印版，不會縮字或輸出細柱。');
+ return visuallyLegal[0];
+}
+function makeBand(row){ const div=document.createElement('div'); div.className='band'; div.dataset.pairs=row.pairs; div.dataset.bucket=row.bucket; row.parts.forEach(p=>{ const span=document.createElement('span'); span.className=p.lang; span.lang=p.lang==='zh'?'zh-Hant':'en'; span.textContent=p.text; div.append(span); }); return div; }
+function build(){
+ const ticket=++renderTicket;
+ try{
+  verifyPoetryLocks();
+  const zh=$('zh').value,en=$('en').value,z=parseLocks(zh,$('zhlocks').value,'Chinese'),e=parseLocks(en,$('enlocks').value,'English');
+  const size=Number($('typesize').value),focus=$('englishFocus').value,plan=solve(z,e,size,focus);lastPlan=plan;
+  const v=$('variant').value,weight=$('weight').value,bands=plan.rows.map(makeBand);
+  for(const id of ['zhSeal','enSeal']){
+   const root=$(id),target=root.querySelector('.bands');target.replaceChildren(...bands.map(b=>b.cloneNode(true)));
+   root.style.setProperty('--typesize',size+'px');root.style.setProperty('--gutter',plan.gap+'px');root.style.setProperty('--weight',id==='zhSeal'?weight:'200');root.style.setProperty('--style',id==='enSeal'?(focus==='italic'?'italic':'normal'):(v.includes('italic')?'italic':'normal'));
+   root.classList.toggle('focus-uppercase',id==='enSeal'&&focus==='uppercase');target.querySelectorAll('.en').forEach(el=>el.classList.toggle('smallcaps',id==='enSeal'?focus==='smallcaps':v.includes('smallcaps')));
+  }
+  $('zhFull').textContent=zh+' — '+$('zr').value;$('enFull').textContent=en+' — '+$('er').value;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   if(ticket!==renderTicket)return;
+   const base=$('zhSeal').querySelector('.bands'),secondary=$('enSeal').querySelector('.bands');
+   const measuredW=Math.max(base.scrollWidth,secondary.scrollWidth),measuredH=Math.max(base.scrollHeight,secondary.scrollHeight);
+   const plate=Math.max(200,Math.ceil(Math.max(measuredW,measuredH)/.85));
+   for(const id of ['zhSeal','enSeal']){const root=$(id);root.style.setProperty('--plate-side',plate+'px');root.style.setProperty('--fit',(root.clientWidth/plate*.98).toFixed(6))}
+   const rows=[...$('zhSeal').querySelectorAll('.band')];const zhBack=rows.flatMap(b=>[...b.querySelectorAll('.zh')].map(x=>x.textContent)).join(''),enBack=rows.flatMap(b=>[...b.querySelectorAll('.en')].map(x=>x.textContent)).join('');
+   const balance=plan.rows.filter(r=>r.bucket==='balanced').length,multi=plan.rows.filter(r=>r.switches>=2).length,signatures=[...new Set(plan.rows.map(r=>r.signature))];
+   const occupancyX=measuredW/plate,occupancyY=measuredH/plate,fill=Math.min(occupancyX,occupancyY);
+   const structural=zhBack===zh&&enBack===en&&multi>=Math.floor(rows.length/2)+1&&balance<=Math.ceil(rows.length/2)-1&&signatures.length>=2;
+   const optical=fill>=.72&&occupancyX<=.94&&occupancyY<=.94;
+   const fontloaded=[...document.fonts].some(f=>/Chiron/.test(f.family)&&f.status==='loaded') && [...document.fonts].some(f=>/Bodoni/.test(f.family)&&f.status==='loaded');
+   const status=structural&&optical?'幾何檢查通過 · 詩行出處／字體另待驗':'未通過 — 不可作為完成作品';
+   $('occupancy').textContent=status;
+   for(const id of ['zhSeal','enSeal'])$(id).classList.toggle('not-approved',!(structural&&optical));
+   $('occupancy').style.color=structural&&optical?'#376342':'#a33e2e';
+   $('checks').textContent=[
+    'Scripture Studio V17｜詩行優先＋混排搜尋＋版心檢驗',
+    '字帶數 '+rows.length+' · 語法 '+plan.rows.map(r=>r.signature).join(' / '),
+    '非均分 '+(rows.length-balance)+'/'+rows.length+' · 多次交錯 '+multi+'/'+rows.length,
+    '中文原文 '+(zhBack===zh?'完整':'錯誤')+' · 英文原文 '+(enBack===en?'完整':'錯誤'),
+    '固定字號 '+size+'px · 欄間距 '+plan.gap.toFixed(1)+'px',
+    '實測字群 '+measuredW+' × '+measuredH+'px / 印版 '+plate+'px',
+    '字群寬度佔比 '+(occupancyX*100).toFixed(1)+'% · 高度佔比 '+(occupancyY*100).toFixed(1)+'%',
+    '字體實際載入 '+(fontloaded?'有載入（字重仍須檢查）':'未驗證，使用後備字體'),
+    '結構 '+(structural?'PASS':'FAIL')+' · 飽滿度 '+(optical?'PASS':'FAIL')
+   ].join('\n');
+   window.__scriptureStatus={ok:structural&&optical,poetryMode:!!poemStructure,poetrySource:poemStructure?.source||null,poetryReviewed:poemStructure?.reviewed||false,structural,optical,rows:rows.length,balancedRows:balance,multiRows:multi,signatures,occupancyX,occupancyY,fill,size,plate,gap:plan.gap,fontloaded,plan:plan.rows.map(r=>r.parts.map(p=>p.lang+':'+p.text))};
+  }));
+ }catch(error){for(const id of ['zhSeal','enSeal'])$(id).querySelector('.bands').replaceChildren(); $('checks').textContent='排字失敗：'+error.message;$('occupancy').textContent='未通過';for(const id of ['zhSeal','enSeal'])$(id).classList.add('not-approved');window.__scriptureStatus={ok:false,error:error.message}}
+}
+
+// USFM poetry subset adapter: strict, offline, provenance-preserving. Bridgeconn/USFM Grammar
+// is the long-term full parser. This does not claim full USFM3 validation.
+const POETRY_62={
+ zh:[['q1','耶路撒冷啊，'],['q2','我在你城上設立守望的，'],['q1','他們晝夜必不靜默。'],['q2','呼籲耶和華的，'],['q1','你們不要歇息，']],
+ en:[['q1','I have set watchmen upon thy walls, O Jerusalem,'],['q2','which shall never hold their peace day nor night:'],['q1','ye that make mention of the LORD,'],['q2','keep not silence,']]
+};
+let poemStructure=null;
+let renderTicket=0;
+function buildUSFM(lines,lang){
+ return '\\id ISA\n\\c 62\n'+lines.map(([type,text],i)=>'\\'+type+' '+(i===0?'\\v 6 ':'')+text).join('\n');
+}
+function parsePoetryUSFM(raw,lang){
+ const lines=[];let current=null,chapter=null,book=null,verse=null,foundPoetry=false;
+ const push=()=>{if(current){current.text=current.text.trim();if(current.text)lines.push(current);current=null}};
+ for(const entry of raw.replace(/\r/g,'').split('\n')){
+  const line=entry.trim();if(!line)continue;
+  if(!line.startsWith('\\'))throw Error(lang+': 非標記文字行，無法確認詩行歸屬');
+  let remaining=line;
+  while(remaining){
+   const m=remaining.match(/^\\([a-zA-Z]+\d*\*?)\s*/);if(!m)throw Error(lang+': 無法解析標記 '+remaining.slice(0,25));
+   const marker=m[1];remaining=remaining.slice(m[0].length);
+   const next=remaining.search(/\\[a-zA-Z]+\d*\*?/);
+   const value=(next<0?remaining:remaining.slice(0,next)).trim();
+   remaining=next<0?'':remaining.slice(next);
+   if(marker==='id'){book=value.split(/\s+/)[0];continue}
+   if(marker==='c'){chapter=value;continue}
+   if(/^q[123]$/.test(marker)){push();current={marker,text:'',verse,chapter,book};foundPoetry=true;if(value)current.text+=value;continue}
+   if(marker==='v'){
+    const v=value.match(/^(\d+(?:-\d+)?)\s*(.*)$/);if(!v)throw Error(lang+': 章節號錯誤 '+value);
+    verse=v[1];if(!current)current={marker:'p',text:'',verse,chapter,book};current.verse=verse;
+    if(v[2])current.text+=v[2];continue
+   }
+   if(marker==='b'){push();continue}
+   if(marker==='p'){push();current={marker:'p',text:value,verse,chapter,book};continue}
+   throw Error(lang+': 未支援的 USFM 標記 \\'+marker+'，請使用完整 Grammar 解析器預處理');
+  }
+ }
+ push();if(!foundPoetry)throw Error(lang+': 找不到 q1／q2／q3，拒絕猜測詩歌分行');
+ if(!book||!chapter||lines.some(x=>!x.verse))throw Error(lang+': 缺少 id／c／v 或詩行無節號');
+ if(lines.some(x=>x.marker==='p'))throw Error(lang+': 散文與詩歌混合需要完整 USFM 解析器');
+ let normalized=lines.map(x=>x.text).join(lang==='en'?' ':'');
+ let pieces=lines.map((x,i)=>x.text+(lang==='en'&&i<lines.length-1?' ':''));
+ return {book,chapter,lines,pieces,text:normalized,lang};
+}
+function renderPoetryStructure(){
+ const host=$('poetryPreview');host.replaceChildren();if(!poemStructure)return;
+ for(const lang of ['zh','en']){
+  const section=document.createElement('section'),header=document.createElement('strong');header.textContent=lang==='zh'?'中文詩行（分行不等於作品字帶）':'English poetic lines';section.append(header);
+  for(const l of poemStructure[lang].lines){let d=document.createElement('div');d.className='line '+l.marker;d.textContent=l.text;d.title=l.marker+' · '+l.book+' '+l.chapter+':'+l.verse;section.append(d)}host.append(section)
+ }
+}
+function importPoem(){
+ try{
+  const zh=parsePoetryUSFM($('usfmZh').value,'zh'),en=parsePoetryUSFM($('usfmEn').value,'en');
+  if(zh.book!==en.book||zh.chapter!==en.chapter||zh.lines.some(x=>x.verse!==zh.lines[0].verse)||en.lines.some(x=>x.verse!==en.lines[0].verse)||zh.lines[0].verse!==en.lines[0].verse)throw Error('兩種語言的書卷、章次、節號不一致；本版只接受同一節詩歌');
+  $('zh').value=zh.text;$('en').value=en.text;$('zhlocks').value=zh.pieces.join('|');$('enlocks').value=en.pieces.join('|');
+  poemStructure={zh,en,source:$('poetryProvenance').value,reviewed:false};
+  $('allowSoftBreak').checked=false;
+  $('poetryStatus').classList.remove('error');
+  $('poetryStatus').textContent='已匯入 '+zh.book+' '+zh.chapter+':'+zh.lines[0].verse+'；中文 '+zh.lines.length+' 詩行／英文 '+en.lines.length+' 詩行。來源：'+poemStructure.source+'。原詩行硬鎖定；不得為了排版拆句。';
+  renderPoetryStructure();build();
+ }catch(e){poemStructure=null; ++renderTicket; $('poetryStatus').classList.add('error');$('poetryStatus').textContent='匯入失敗：'+e.message;for(const id of ['zhSeal','enSeal'])$(id).classList.add('not-approved');$('occupancy').textContent='詩行解析未通過，停止生成';window.__scriptureStatus={ok:false,error:e.message};}
+}
+function loadPoetryExample(){
+ $('usfmZh').value=buildUSFM(POETRY_62.zh,'zh');$('usfmEn').value=buildUSFM(POETRY_62.en,'en');
+ $('poetryProvenance').value='編輯研究候選｜以賽亞書 62:6；人工整理 q1/q2，並非譯本官方 USFM';
+ importPoem();
+}
+function verifyPoetryLocks(){
+ if(!poemStructure)return;
+ const soft=$('allowSoftBreak').checked;
+ for(const lang of ['zh','en']){
+  const src=$(lang==='zh'?'zh':'en').value;const currentLocks=$(lang==='zh'?'zhlocks':'enlocks').value;
+  if(src!==poemStructure[lang].text)throw Error(lang+': 原文已變更；請重新匯入以更新詩行來源');
+  const base=poemStructure[lang].pieces, parts=currentLocks.split('|');
+  if(!soft){
+   if(parts.join('|')!==base.join('|'))throw Error(lang+': 編輯斷句與原詩行不一致。須先審核並勾選軟斷點覆核，或恢復匯入的詩行。');
+  }else{
+   // Each original q line must remain contiguous in the original source; no word move.
+   let starts=0;const allowedEnds=new Set();for(const b of base){starts+=b.length;allowedEnds.add(starts)}
+   let offset=0;for(const part of parts){offset+=part.length;if(offset<src.length && !allowedEnds.has(offset) && !soft)throw Error(lang+': 詩行內未獲批准的斷點')}
+  }
+ }
+}
+$('poetryExample').addEventListener('click',loadPoetryExample);
+$('importPoetry').addEventListener('click',importPoem);
+$('allowSoftBreak').addEventListener('change',()=>{if(poemStructure){poemStructure.reviewed=$('allowSoftBreak').checked;build()}});
+function load(){ poemStructure=null;$('poetryStatus').textContent='目前為普通經文斷句；詩歌版請匯入 USFM 或載入編輯候選。';$('poetryPreview').replaceChildren();current=Number($('preset').value); const p=P[current]; for(const [id,val] of [['zh',p[1]],['en',p[2]],['zr',p[3]],['er',p[4]]]) $(id).value=val; $('zhlocks').value=makeLocks(p[1],Z[current]); $('enlocks').value=makeLocks(p[2],E[current]); document.querySelectorAll('.sample').forEach((b,i)=>b.setAttribute('aria-current',i===current)); build(); }
+$('preset').value='2'; const gallery=$('samples'); P.forEach((p,i)=>{ const b=document.createElement('button'); b.className='sample'; b.innerHTML='<b></b><em></em>'; b.querySelector('b').textContent=p[0]; b.querySelector('em').textContent=p[3]; b.onclick=()=>{$('preset').value=i; load()}; gallery.append(b); });
+$('relock').onclick=()=>{ $('zhlocks').value=candidateZH($('zh').value).join('|'); $('enlocks').value=candidateEN($('en').value).join('|'); build(); };
+['zh','en','zr','er','zhlocks','enlocks','weight','variant','englishFocus','typesize'].forEach(id=>$(id).addEventListener('input',build)); $('preset').onchange=load; $('reset').onclick=load;
+$('export').onclick=()=>{ if(!window.__scriptureStatus?.ok){alert('目前排字尚未通過原文、語義與版心驗收，不能匯出完成作品。');return} let style=document.querySelector('style').outerHTML; let html='<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>Scripture Studio exported V17</title>'+style+'<div class="pair">'+document.querySelector('.pair').innerHTML+'</div></html>'; let u=URL.createObjectURL(new Blob([html],{type:'text/html'})),a=document.createElement('a'); a.href=u; a.download='scripture-studio-v17-poetry-export.html'; a.click(); setTimeout(()=>URL.revokeObjectURL(u),1000); };
+new ResizeObserver(()=>{ const side=Number(getComputedStyle($('zhSeal')).getPropertyValue('--plate-side').replace('px',''))||600; for(const id of ['zhSeal','enSeal']) $(id).style.setProperty('--fit',($(id).clientWidth/side*0.96).toFixed(6)); }).observe(document.querySelector('.pair'));
+load(); if(current===2)loadPoetryExample(); document.fonts.ready.then(build);
+</script></body></html>

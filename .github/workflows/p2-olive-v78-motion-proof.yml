@@ -1,0 +1,81 @@
+name: P2 04 V78 Independent Flip Motion Proof
+on:
+  push:
+    branches:
+      - draft/p2-0104-olive-entry-20261105
+    paths:
+      - static/experiments/olive-v78-flip-motion-study.html
+      - .github/workflows/p2-olive-v78-motion-proof.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: olive-v78-independent-motion
+  cancel-in-progress: true
+jobs:
+  verify-independent-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Browser and lightweight asset server
+        run: |
+          npm install --no-save --no-package-lock playwright@1.64.1
+          npx playwright install chromium
+      - name: Real 3D scroll pose and reverse-screen verification
+        run: |
+          mkdir -p artifacts/olive-v78
+          python3 -m http.server 4173 --directory static >/tmp/olive-v78-static.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node - <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            for(const width of [1648,390,320]){
+              const page=await browser.newPage({viewport:{width,height:844},deviceScaleFactor:1});
+              const errors=[];
+              page.on('pageerror',e=>errors.push(e.message));
+              const response=await page.goto('http://127.0.0.1:4173/experiments/olive-v78-flip-motion-study.html',{waitUntil:'networkidle'});
+              assert.equal(response.status(),200);
+              await page.evaluate(async()=>{await document.fonts.ready;});
+              async function pose(v){
+                await page.locator('#pose').evaluate((el,p)=>{el.value=String(Math.round(p*1000));el.dispatchEvent(new Event('input',{bubbles:true}))},v);
+                await page.waitForTimeout(40);
+                return page.locator('.test').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n.querySelector('.folio')).transform));
+              }
+              const front=await pose(.02),middle=await pose(.5),back=await pose(.99),reverse=await pose(.02);
+              assert.deepEqual(front,reverse,'reversing restores the original card pose');
+              assert.notEqual(front[0],middle[0],'legacy fast flip must actually rotate');
+              assert.notEqual(middle[1],back[1],'long museum folio must be scroll-linked');
+              assert.equal(front[3],middle[3],'mask-based reveal must not fake rotate');
+              assert.deepEqual(errors,[],'browser exceptions prohibited');
+              for(const [name,v] of [['start',.02],['middle',.50],['back',.99]]){
+                await pose(v);
+                await page.screenshot({path:'artifacts/olive-v78/'+width+'-'+name+'.png',animations:'disabled'});
+              }
+              await page.close();
+            }
+            await browser.close();
+            console.log('V78 MOTION PROOF PASS: native scroll pose, forward/reverse, 1648/390/320');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: p2-olive-v78-motion-real-browser-proofs
+          path: artifacts/olive-v78/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Deploy independent V78 art-direction proof (not P2 main)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID"
+          npx --yes wrangler@4 pages deploy static \
+            --project-name=westsidewatch-github-io \
+            --branch=p2-olive-v78-motion-isolated \
+            --commit-hash="${GITHUB_SHA}" \
+            --commit-message="V78 standalone flip research, no published P2 changes"

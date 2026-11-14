@@ -1,0 +1,1114 @@
+/* P2 / 04 twelve original posters — isolated real 01–03 continuation.
+   One Design OS; only 04-specific geometry. NO generic wipe, fades, pseudo
+   MERSI template, replayed sevenfold, shadowed card grid or video UI.
+   The original Doré image supplies the entrance's physical coordinates. */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscroll-behavior-y:none}
+.p2-olive-controls{
+ position:fixed;z-index:80;top:0;left:0;right:0;
+ display:flex;align-items:center;gap:15px;padding:5px 13px;
+ min-height:37px;border-bottom:1px solid var(--ws-morning-gold);
+ background:var(--ws-ink);color:var(--ws-paper);
+ font:200 10px/1.3 var(--ws-type-display-en);
+ letter-spacing:.09em
+}
+.p2-olive-controls strong{font-weight:400;white-space:nowrap}
+.p2-olive-controls nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.p2-olive-controls button{
+ border:1px solid var(--ws-morning-gold);background:transparent;color:inherit;
+ padding:4px 8px;cursor:pointer;font:inherit;letter-spacing:.02em
+}
+.p2-olive-controls button:focus-visible,.p2-olive-controls button:hover{
+ border-color:var(--ws-warm-gold);color:var(--ws-warm-gold)
+}
+.p2-olive-controls label{margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.p2-olive-controls input{accent-color:var(--ws-morning-gold);width:118px}
+#p2-olive-track{position:relative;height:2600svh}
+.p2-olive-stage{
+ /* Strict OS token authority: olive = --ws-olive, no local generated
+    green shades, no color-mix or invented gradients in this chapter. */
+ --ws-branch:var(--ws-olive);
+ --ws-identity:var(--ws-olive);
+ --ws-engraving-opacity:.13;
+ position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent
+}
+#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-paper);z-index:0}
+
+/* MERSI 03→04 material handoff. The source is still 03 while the
+   new card travels; the 04 gallery print field enters only AFTER the
+   two protected original prints settle. Masks share one scroll value. */
+#p2-olive-bridge,#p2-olive-surround{
+ position:absolute;inset:0;pointer-events:none;
+ visibility:hidden;overflow:hidden;
+}
+#p2-olive-bridge{z-index:1}
+#p2-olive-surround{z-index:2;opacity:1}
+.olive-bridge__half,.olive-surround__half{
+ position:absolute;top:0;height:100%;width:50%;
+ will-change:clip-path;clip-path:inset(100% 0 0 0);
+}
+.olive-bridge__half[data-side="left"],
+.olive-surround__half[data-side="left"]{left:0}
+.olive-bridge__half[data-side="right"],
+.olive-surround__half[data-side="right"]{right:0}
+/* The genuine 03 Bible binding stays ONLY in the exiting 01–03 iframe.
+   Never project its dark 5:8 diamond bookcloth as full-screen wallpaper
+   behind the 04 speaker posters; that is the leaked vertical stripe.
+   This plain OS olive material field retains the original opposed masks. */
+.olive-bridge__half{
+ background-color:var(--ws-olive);
+ background-image:none;
+}
+/* Independent 04 gallery field. Neither 03 cloth nor decorative foil is
+   allowed to be repainted outside the actual invitation cards. */
+.olive-surround__half{
+ /* Canonical 04 realm canvas: the OS olive must occupy the full stage.
+    The previous full-screen OS ink field was an unauthorized
+    black-and-gold variant (westside-design-os.css realm contract). */
+ background-color:var(--ws-olive);
+ background-image:none;
+}
+.olive-surround__half[data-side="left"]{background-position:left center}
+.olive-surround__half[data-side="right"]{background-position:right center}
+/* 04 / CLEAN FIELD: editorial backdrop engraving withdrawn by request.
+   Preserve the existing opposed masks, solid OS olive canvas and all
+   protected posters. Invitation-card local headpieces are not backgrounds. */
+.olive-surround__half::after{content:none!important}
+
+/* P2 / 04 MERSI independent engraving halves — printed, not wallpaper.
+   Botanical source: public-domain OpenClipart 81199 (project V12).
+   Terrain: measured Mount of Olives DEM from Mapzen / AWS Open Data.
+   Neither layer overlaps the other half; no new animation framework.
+   Each print has one CSS mask and one scroll-owned clipping rectangle. */
+#olive-editorial-engraving{
+ position:absolute;inset:0;z-index:3;overflow:hidden;
+ pointer-events:none;visibility:hidden;
+ /* Reserve a true typographic safe zone above both vector print fields.
+    The original twelve posters are never masked: only background ink is. */
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0%,transparent 10%,#000 27%,#000 100%);
+ mask-image:linear-gradient(to bottom,transparent 0%,transparent 10%,#000 27%,#000 100%);
+}
+/* V57: Alpha feathering is a print edge, not a colour gradient.
+   Removes hard horizontal botanical / terrain SVG cut lines while the
+   reversible MERSI half-field clipping remains unchanged. */
+.olive-editorial-engraving__half{
+ position:absolute;top:0;width:50%;height:100%;overflow:hidden;
+ -webkit-mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
+ mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
+}
+.olive-editorial-engraving__half[data-art-side="left"]{left:0}
+.olive-editorial-engraving__half[data-art-side="right"]{right:0}
+.olive-editorial-engraving__print{
+ position:absolute;inset:4% 3% 5%;background:var(--ws-morning-gold);
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-size:contain;mask-size:contain;
+ opacity:.77;
+}
+/* V54 / editorial botanical folio, not scattered icon-like sprigs.
+   Six copies of an actual Walter Crane public-domain engraving are composed
+   into one asymmetric print field. All form is imported: no handmade leaves.
+   The print is behind the protected speaker figures and contained in LEFT. */
+/* V56: the same six public-domain Walter Crane sprays are printed as
+   TWO ink impressions, light relief and articulate copperplate contours.
+   The full-volume print remains visible at a distance, without a solid
+   gold hedge competing against the topographic linework on the right. */
+/* V60: six individual real Crane letterpress plates. No image clipping,
+   no sliding foil rectangle, no procedural leaves. Each complete plate
+   is added AFTER its own speaker has settled, preserving earlier ink. */
+.olive-editorial-engraving__print--botanical{
+ inset:-7% -12% -23% -9%;width:auto;height:auto;
+ background:none;opacity:1;
+ /* Six real botanical impressions, optically subordinated to the portraits. */
+ filter:opacity(var(--olive-ink-botanical,.64));
+ -webkit-mask-image:none;mask-image:none;
+}
+.olive-editorial-engraving__print--botanical::before,
+.olive-editorial-engraving__print--botanical::after{content:none!important}
+.olive-botanical-plate{
+ position:absolute;inset:0;pointer-events:none;display:block;
+ background:var(--ws-morning-gold);opacity:0;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-position:center;mask-position:center;
+}
+.olive-botanical-plate[data-print-impression="1"]{
+ background:var(--ws-morning-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+}
+.olive-botanical-plate[data-print-impression="2"]{
+ background:var(--ws-pale-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-2.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-2.svg');
+}
+.olive-botanical-plate[data-print-impression="3"]{
+ background:var(--ws-morning-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-3.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-3.svg');
+}
+.olive-botanical-plate[data-print-impression="4"]{
+ background:var(--ws-warm-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-4.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-4.svg');
+}
+.olive-botanical-plate[data-print-impression="5"]{
+ background:var(--ws-pale-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-5.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-5.svg');
+}
+.olive-botanical-plate[data-print-impression="6"]{
+ background:var(--ws-first-light);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-6.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-6.svg');
+}
+/* Three draw-on groups are taken from actual elevation contours.
+   The old static mask is an accessibility/offline fallback ONLY. */
+.olive-editorial-engraving__print--topography{
+ /* True measured contours continue off-paper; never expose the SVG
+    rectangle's bottom or right boundary inside the viewport. */
+ inset:-7% -24% -22% -8%;width:auto;height:auto;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ -webkit-mask-position:right center;mask-position:right center;
+ opacity:1;
+}
+.olive-editorial-engraving__print--topography.has-path-growth{
+ background:none;-webkit-mask-image:none;mask-image:none;
+}
+.olive-editorial-engraving__print--topography svg{
+ display:block;width:100%;height:100%;overflow:visible;
+ fill:none;stroke:var(--ws-morning-gold);
+}
+.olive-editorial-engraving__print--topography svg path{
+ fill:none;stroke-dasharray:1000 1000;
+}
+@media(max-width:600px){
+ .olive-editorial-engraving__print--botanical{inset:-4% -15% -20% -14%;width:auto;height:auto;opacity:1}
+ .olive-editorial-engraving__print--topography{
+  inset:-5% -26% -18% -12%;width:auto;height:auto;opacity:.92;
+ }
+}
+
+.olive-proof{
+ position:absolute;z-index:4;overflow:hidden;
+ visibility:hidden;background:transparent;color:var(--ws-ink);
+ isolation:isolate;pointer-events:none;
+}
+.olive-stage__first,.olive-stage__pair,.olive-stage__overview{
+ position:absolute;margin:0;inset:0;overflow:hidden
+}
+/* Isolated live SVG proof (?artOnly=1); no change to normal P2 gallery. */
+.p2-olive-stage.olive-art-only .olive-proof{display:none!important;visibility:hidden!important;pointer-events:none!important}
+/* P2/04 GALLERY ANNOUNCEMENT PRINT: one card carries one COMPLETE
+   immutable 3:4 poster. Only a small localized mountain relief, fine
+   single line and one-line caption. NO second masthead or gilt frame. */
+.olive-stage__invitation{
+ position:absolute;z-index:1;display:block;visibility:hidden;
+ margin:0;padding:0;border:0;pointer-events:none;overflow:hidden;
+ background:var(--ws-olive);
+ color:var(--ws-morning-gold);isolation:isolate;
+ outline:1px solid var(--ws-morning-gold);outline-offset:-1px;
+}
+.olive-stage__invitation::after{
+ content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
+ background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
+}
+/* V61: remove the alien miniature botanical fragment. V56's full
+   folio had been compressed into a 45px side gutter. This produced
+   incompatible tiny foliage beside the real large-scale olive plate.
+   Keep the approved V13 header ornament and numbered edition rail. */
+.olive-card__imprint{
+ position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+}
+.olive-card__imprint::before,.olive-card__imprint::after{
+ content:none!important;
+}
+.olive-card__edition{
+ position:absolute;z-index:2;
+ top:calc(var(--olive-foil-top,16px) + var(--olive-foil-height,48px) + 12px);
+ bottom:42px;left:0;
+ width:var(--olive-outer-rail-width,45px);
+ display:flex;justify-content:center;align-items:center;
+ writing-mode:vertical-rl;text-orientation:mixed;
+ font:200 clamp(8px,.68vw,10px)/1.1 var(--ws-type-display-en);
+ letter-spacing:.25em;color:var(--ws-morning-gold);
+ opacity:.96;white-space:nowrap;overflow:hidden;
+}
+#olive-invitation-right .olive-card__edition{left:auto;right:0;transform:rotate(180deg)}
+@media(max-width:540px){
+ .olive-card__edition{font-size:7px;letter-spacing:.08em;bottom:26px}
+}
+/* The original header/folio stays as an invariant across all four editions. */
+/* V13: a real historical 1914 Walter Crane botanical engraving, not
+   formula-generated branches or a giant masked graphic behind two posters.
+   The chapter-specific hillside & city are engraved INTO the actual
+   70px header of each physical invitation. Artwork stays fully visible
+   ABOVE the protected image, never in the shared center gutter.
+   The same unmodified 3:4 speaker artwork covers the rest of the card. */
+.olive-card__relief{
+ /* Center in the visible green headpiece between the physical card edge
+    and the ORIGINAL poster edge: these two CSS variables are set from
+    the real source/pair geometry on every reversible scroll frame. */
+ position:absolute;top:var(--olive-foil-top,16px);left:4%;right:4%;width:auto;
+ height:var(--olive-foil-height,48px);max-height:70px;pointer-events:none;
+ overflow:hidden;opacity:1;isolation:isolate;
+}
+.olive-card__relief::before,.olive-card__relief::after{
+ content:"";position:absolute;inset:0;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ -webkit-mask-position:center center;mask-position:center center;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+}
+.olive-card__relief::before{
+ background:var(--ws-paper);opacity:.20;transform:translate(-1px,-1px);
+}
+.olive-card__relief::after{
+ background:var(--ws-morning-gold);opacity:.96;
+}
+#olive-invitation-right .olive-card__relief{transform:scaleX(-1)}
+.olive-card__caption{
+ position:absolute;z-index:2;bottom:6px;left:13px;right:13px;
+ height:19px;display:flex;align-items:center;
+ border-top:1px solid var(--ws-morning-gold);
+ color:var(--ws-morning-gold);background:transparent;
+ font:200 clamp(8px,.69vw,11px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.075em;white-space:nowrap;overflow:hidden;
+}
+.olive-card__caption{gap:3px}
+.olive-card__name-en{display:block;overflow:hidden;text-overflow:ellipsis;min-width:0;white-space:nowrap}
+.olive-card__name-zh{
+ display:block;flex:0 0 auto;white-space:nowrap;
+ font-family:var(--ws-type-display-zh),"Noto Serif TC",sans-serif;
+ font-weight:200;font-style:normal;font-synthesis:none;
+}
+.olive-stage__invitation--pair{z-index:0}
+.olive-stage__first{z-index:2;inset:auto}
+.olive-stage__pair{z-index:3;inset:0}
+/* V67 / one genuine rigid invitation carrier. Never transform a portrait
+   or its protected typography as independent objects: they must remain
+   pixel-registered on the exact same physical front of this one folio. */
+.olive-folio-carrier{
+ position:absolute;z-index:4;overflow:visible;
+ transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
+ will-change:transform;
+}
+.olive-folio-carrier>.olive-stage__invitation{z-index:1}
+.olive-folio-carrier>.olive-stage__poster{z-index:2}
+/* V63 / two-sided invitation folios.
+   Both real faces rotate around the SAME measured outer-card axis.
+   The existing frozen 3:4 speaker artwork stays a single protected plane;
+   the verso shares the actual botanical/terrain language of its half.
+   No page fold, unrelated texture, standalone animation or raster redraw. */
+#olive-invitation-left,#olive-invitation-right,
+#olive-pair-left,#olive-pair-right,
+.olive-card__reverse{
+ backface-visibility:hidden;-webkit-backface-visibility:hidden;
+ transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
+ will-change:transform;
+}
+.olive-card__reverse{
+ position:absolute;z-index:3;visibility:hidden;pointer-events:none;
+ overflow:hidden;box-sizing:border-box;
+ backface-visibility:hidden;-webkit-backface-visibility:hidden;
+ transform:rotateY(180deg) translateZ(1px);
+ color:var(--ws-morning-gold);
+ /* A visible real reverse: olive stock with authentic, chapter-specific
+    copperplate ink. The old fully transparent verso was literally empty. */
+ /* V70: an opaque OS deep-olive stock makes the true card reverse
+    readable even before the registered ink arrives. Never let the whole
+    card opacity vanish while its increment transfers to the landscape. */
+ /* The previous brown paper was --ws-deep computed from the journal's
+    inherited gold --ws-branch. Bind deep olive to the actual 04 identity. */
+ /* Design OS deep formula evaluated with the ACTUAL olive identity:
+    CSS custom --ws-deep was already computed on an earlier gold ancestor.
+    Rebinding --ws-branch alone did not re-evaluate that inherited value. */
+ background:color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink));
+ opacity:1;
+ outline:1px solid var(--ws-morning-gold);
+ outline-offset:-1px;
+}
+.olive-card__reverse::before{
+ content:"";position:absolute;inset:5% 4% 14%;
+ background:var(--folio-ink,var(--ws-morning-gold));opacity:1;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-position:center;mask-position:center;
+ pointer-events:none;
+}
+.olive-card__reverse--botanical::before{
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
+}
+.olive-card__reverse--terrain::before{opacity:1;}
+.olive-card__reverse::after{
+ content:"";position:absolute;inset:11px;
+ border:1px solid color-mix(in srgb,var(--ws-morning-gold) 45%,transparent);
+ pointer-events:none;
+}
+/* V68: freeze the APPROVED name master to the real 3:4 image plane.
+   The unmodified baseline.js measures getBoundingClientRect(), which
+   becomes foreshortened inside a perspective turn. A new speaker mounted
+   mid-turn therefore acquired an erroneous narrow typography viewport.
+   These declarations override that responsive inline measurement ONLY in
+   the isolated 04 pair, without touching the protected source master. */
+.olive-folio-carrier>.olive-stage__poster .olive-stage__artwork>olive-speaker-baseline{
+ position:absolute!important;inset:0!important;
+ left:0!important;top:0!important;
+ width:100%!important;height:100%!important;
+ transform:none!important;max-width:none!important;max-height:none!important;
+}
+.olive-card__reverse{
+ /* No second full-plate picture on the back. One unique speaker-owned
+    fragment is registered to the same stage coordinates as background. */
+ --folio-fragment:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+ --folio-mask-width:100%;
+ --folio-mask-height:100%;
+ --folio-mask-x:0px;
+ --folio-mask-y:0px;
+}
+.olive-card__reverse::before{
+ inset:0!important;opacity:var(--folio-back-alpha,.85);
+ -webkit-mask-image:var(--folio-fragment)!important;
+ mask-image:var(--folio-fragment)!important;
+ -webkit-mask-size:var(--folio-mask-width) var(--folio-mask-height)!important;
+ mask-size:var(--folio-mask-width) var(--folio-mask-height)!important;
+ -webkit-mask-position:var(--folio-mask-x) var(--folio-mask-y)!important;
+ mask-position:var(--folio-mask-x) var(--folio-mask-y)!important;
+}
+.olive-card__reverse--botanical::before{opacity:.58}
+.olive-card__reverse--terrain::before{opacity:.74}
+/* A small edition-specific imprint stays optically legible on the verso;
+   unlike the field-registered paths, this is a true card-scale detail.
+   Same unique artwork, not a duplicated full botanical/terrain poster.
+   No rectangular border and no complete SVG fitted into the card. */
+.olive-card__reverse::after{
+ content:""!important;position:absolute;inset:17% 16% 22%!important;
+ border:0!important;
+ background:var(--folio-ink,var(--ws-morning-gold));
+ opacity:calc(var(--folio-mark-alpha,0) * .66)!important;
+ -webkit-mask-image:var(--folio-detail)!important;
+ mask-image:var(--folio-detail)!important;
+ -webkit-mask-size:100% 100%!important;
+ mask-size:100% 100%!important;
+ -webkit-mask-position:center!important;
+ mask-position:center!important;
+ -webkit-mask-repeat:no-repeat!important;
+ mask-repeat:no-repeat!important;
+ pointer-events:none;
+}
+.olive-card__reverse-mark{
+ opacity:var(--folio-mark-alpha,0);
+}
+.olive-card__reverse-mark{opacity:var(--folio-mark-alpha,0);pointer-events:none}
+/* A reverse is a piece of the existing print field, not a second cover.
+   Its restrained bottom-edge edition metadata follows the front caption. */
+.olive-card__reverse-mark{
+ position:absolute;left:7%;right:7%;top:auto;bottom:5%;
+ display:flex;align-items:center;justify-content:space-between;flex-direction:row;
+ gap:12px;text-align:left;
+ padding-top:7px;border-top:1px solid color-mix(in srgb,var(--ws-morning-gold) 55%,transparent);
+ text-shadow:0 1px 2px var(--ws-olive);
+}
+.olive-card__reverse-issue,.olive-card__reverse-mark small{
+ font:200 clamp(8px,.65vw,11px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.10em;color:var(--ws-morning-gold);
+ white-space:nowrap;min-width:0;
+}
+.olive-card__reverse-mark small{text-align:right}
+@media(max-width:600px){
+ .olive-card__reverse-mark{left:6%;right:6%;bottom:5%;gap:5px}
+ .olive-card__reverse-issue,.olive-card__reverse-mark small{
+  font-size:7px;letter-spacing:.06em;
+ }
+}
+/* V74 · complete copperplate folio masters. The full native 720×940
+   artboard is inset from all card edges, so no source path is ever
+   truncated by a mask crop or by the card's outer rectangle.
+   The mini-fragment overlay is retired entirely. */
+.olive-card__reverse::before{
+ content:""!important;position:absolute!important;inset:4.8% 5.8% 9.6%!important;
+ background:var(--folio-ink,var(--ws-morning-gold))!important;
+ opacity:var(--folio-back-alpha,.95)!important;
+ -webkit-mask-image:var(--folio-detail)!important;
+ mask-image:var(--folio-detail)!important;
+ -webkit-mask-size:100% 100%!important;mask-size:100% 100%!important;
+ -webkit-mask-position:center center!important;mask-position:center center!important;
+ -webkit-mask-repeat:no-repeat!important;mask-repeat:no-repeat!important;
+ pointer-events:none;
+}
+.olive-card__reverse--botanical::before,
+.olive-card__reverse--terrain::before{opacity:var(--folio-back-alpha,.95)!important}
+.olive-card__reverse::after{content:none!important;display:none!important}
+.olive-card__reverse-mark{
+ z-index:2;opacity:var(--folio-mark-alpha,1)!important;
+ text-shadow:0 1px 2px color-mix(in oklab,var(--ws-olive) 55%,var(--ws-ink));
+}
+/* A single real 64-path terrain SVG is the ENTIRE final landscape.
+   Make the stage's geographic half feather softly at its true outer
+   perimeter rather than cutting line ends with an inset plate mask. */
+.olive-editorial-engraving__half[data-art-side="right"]{
+ -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 11%,#000 91%,transparent 100%)!important;
+ mask-image:linear-gradient(to right,transparent 0%,#000 11%,#000 91%,transparent 100%)!important;
+}
+.olive-editorial-engraving__print--topography svg{
+ overflow:visible!important;
+ stroke-linecap:round;stroke-linejoin:round;
+}
+/* 04 background engraving retired. The speaker invitation headpiece is
+   separate card artwork, not a stage-wide texture. */
+.olive-stage__overview{z-index:6;inset:0;visibility:hidden;background:transparent}
+.olive-stage__first,
+.olive-stage__poster,
+.olive-stage__index-card{
+ position:absolute;overflow:hidden;margin:0;border:0;
+ background:transparent;box-shadow:none;
+}
+/* Every image is paired with its ORIGINAL frozen typography and source
+   occlusion layers in the same image-relative 3:4 coordinate box.
+   Do not put text in a separate caption or retune the approved letters.
+   Overlay belongs inside .olive-stage__artwork, never outside the PNG. */
+.olive-stage__artwork{
+ position:absolute;inset:0;overflow:hidden;isolation:isolate;
+ background:transparent;
+}
+.olive-stage__artwork>.olive-stage__original{
+ display:block!important;width:100%!important;height:100%!important;
+ max-width:none!important;object-fit:contain!important;
+ object-position:center center!important;
+}
+/* V72 · Kou Shao-en only: mirror the raster portrait under the ORIGINAL
+   unmirrored approved English/Chinese typography. Do not transform the
+   artwork container, folio or Shadow DOM: all eleven other cards unchanged. */
+.olive-stage__artwork[data-speaker="kou-shao-en"]>.olive-stage__original{
+ transform:scaleX(-1)!important;transform-origin:50% 50%!important;
+}
+
+.olive-stage__artwork>olive-speaker-baseline{
+ position:absolute;display:block;z-index:6;pointer-events:none;
+}
+.olive-stage__first .olive-stage__artwork{bottom:0}
+.olive-stage__poster .olive-stage__artwork{inset:0}
+.olive-stage__index-card .olive-stage__artwork{inset:0}
+/* The incoming print lives over 03's REAL source frame; do not transfer
+   the 03 book cover into a 04 component to hide mismatched dimensions. */
+.olive-stage__first,
+.olive-stage__first .olive-stage__artwork{background:transparent}
+.olive-stage__poster{z-index:1}
+.olive-stage__incoming{z-index:2;visibility:hidden}
+.olive-stage__poster figcaption{
+ /* Approved posters are whole artworks: NO footer injected into their
+    3:4 print geometry. Sequence metadata belongs to the separate index. */
+ display:none!important;
+}
+/* Original frozen English is printed over the image; captions below
+   remain only folio sequence numbers, not a substitute for it. */
+/* SINGLE title, entirely OUTSIDE the mounted prints. No competing
+   title on cards and no second full-width foil border. */
+.olive-stage__rubric{
+ /* Global chapter identity lives ABOVE the card carriers, in the scene,
+    not inside the clipped physical folio. No title may cross artwork. */
+ position:absolute;z-index:9;top:clamp(38px,4.6svh,44px);
+ left:clamp(22px,4vw,70px);right:clamp(22px,4vw,70px);
+ min-height:46px;visibility:hidden;overflow:hidden;
+ display:grid;grid-template-columns:minmax(112px,1fr) auto minmax(112px,1fr);
+ align-items:center;gap:clamp(8px,1.4vw,20px);
+ color:var(--ws-paper);pointer-events:none;
+}
+.olive-stage__rubric::after{display:none}
+.olive-stage__rubric span,.olive-stage__rubric small{
+ font:200 clamp(9px,.69vw,11px)/1.3 var(--ws-type-display-en);
+ letter-spacing:.105em;color:var(--ws-paper);
+}
+.olive-stage__rubric strong{
+ font:400 clamp(28px,2.9vw,45px)/.97 var(--ws-type-display-en);
+ letter-spacing:-.063em;white-space:nowrap;text-align:center;
+ /* The overview acquires an oversized title AFTER the two-print sequence. */
+ font-size:calc(clamp(28px,2.9vw,45px) + var(--olive-title-growth,0px));
+}
+.olive-stage__rubric strong i{font-weight:400;font-style:italic}
+.olive-stage__rubric small{
+ text-align:right;font-family:var(--ws-type-display-zh),"Noto Serif TC",sans-serif;
+ font-weight:200;font-synthesis:none;
+}
+.olive-stage__index-card{
+ z-index:2;display:block;text-decoration:none;overflow:hidden;
+ color:var(--ws-morning-gold);background:transparent;
+ will-change:top,left,width,height;
+}
+/* The same approved English + Chinese type follows every image through
+   geometric FLIP recomposition, instead of disappearing in index mode. */
+.olive-stage__index-card span{
+ /* Text master is already on the poster. No external strip, footer or
+    overshooting layer may compromise the registered 3:4 print. */
+ display:none!important;position:absolute;inset:auto;overflow:hidden;
+ font:200 clamp(7px,.62vw,10px)/15px var(--ws-type-display-en);
+ letter-spacing:.06em;padding:0 1px;opacity:var(--index-caption-alpha,0);
+ background:transparent;color:var(--ws-morning-gold);border-top:1px solid var(--ws-warm-gold);
+}
+.olive-stage__index-card:hover,.olive-stage__index-card:focus-visible{
+ outline:2px solid var(--ws-warm-gold);outline-offset:-2px
+}
+.olive-stage__enter{
+ position:absolute;right:clamp(14px,3vw,52px);bottom:18px;
+ z-index:8;visibility:hidden;display:flex;gap:12px;
+ align-items:center;justify-content:space-between;
+ padding:9px 0 5px;min-width:220px;max-width:calc(100% - 28px);
+ border-top:1px solid var(--ws-warm-gold);text-decoration:none;color:var(--ws-morning-gold);
+ font:200 clamp(10px,.9vw,16px)/1.35 var(--ws-type-display-en);
+ letter-spacing:.12em
+}
+.olive-stage__enter:focus-visible{outline:2px solid var(--ws-warm-gold)}
+/* Technical scroll state is exposed in DOM, not as a black UI tag on the artwork. */
+#p2-olive-folio-status{position:absolute;clip-path:inset(100%);width:1px;height:1px;overflow:hidden}
+@media(max-width:820px){
+ .p2-olive-controls{
+  top:auto;bottom:0;gap:5px;padding:5px;
+  min-height:40px;max-height:58px;
+  flex-wrap:wrap;font-size:8px
+ }
+ .p2-olive-controls strong{width:100%;font-size:8px}
+ .p2-olive-controls nav{gap:3px}
+ .p2-olive-controls button{font-size:8px;padding:3px 5px}
+ .p2-olive-controls label{font-size:8px}
+ .p2-olive-controls input{width:72px}
+ .olive-stage__rubric{
+  display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;
+  column-gap:10px;row-gap:3px;top:9px;min-height:66px;
+  left:clamp(14px,4vw,24px);right:clamp(14px,4vw,24px)
+ }
+ .olive-stage__rubric span{grid-column:1;font-size:9px;letter-spacing:.055em}
+ .olive-stage__rubric small{grid-column:2;font-size:9px;letter-spacing:.035em;text-align:right}
+ .olive-stage__rubric strong{grid-column:1 / -1;grid-row:2;text-align:left;
+  font-size:calc(clamp(28px,7.1vw,47px) + var(--olive-title-growth,0px))}
+ .olive-stage__rubric::after{bottom:-2px}
+ #p2-olive-folio-status{bottom:54px;right:5px;font-size:7px}
+ .olive-stage__poster figcaption{font-size:8px;padding:5px 7px}
+ .olive-stage__index-card .olive-stage__artwork{inset:0}
+
+ .olive-stage__index-card span{font-size:7px;line-height:15px}
+ .olive-stage__enter{
+  bottom:58px;right:10px;min-width:190px;
+  font-size:10px;padding-top:5px;letter-spacing:.04em
+ }
+}
+@media(max-width:540px){
+ /* Preserve original fine lineweight on phone; crop the view, not the ink. */
+ /* Engraved folio headpiece is constrained to the actual phone card's
+    top paper border; no olive leaves may float between mounted images. */
+ .olive-card__relief{left:4%;right:4%;width:auto;
+  top:var(--olive-foil-top,3px);height:var(--olive-foil-height,16px);
+  max-height:22px;opacity:1}
+ .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
+  font-size:7px;letter-spacing:0}
+ .p2-olive-controls{gap:2px;max-height:60px}
+ .p2-olive-controls button{font-size:7px;padding:3px}
+ .p2-olive-controls input{width:52px}
+ .olive-stage__poster .olive-stage__artwork{inset:0}
+ .olive-stage__poster figcaption{display:none!important}
+ .olive-stage__index-card span{font-size:7px;line-height:15px}
+ /* Mobile reflows the global title as ONE centered line: the desktop
+    side labels cannot consume fixed-width columns and clip the masthead. */
+ .olive-stage__rubric{top:42px;left:8px;right:8px;min-height:42px;
+  grid-template-columns:1fr;justify-items:center}
+ .olive-stage__rubric span,.olive-stage__rubric small{display:none}
+ .olive-stage__rubric strong{
+  font-size:calc(clamp(26px,7.8vw,35px) + var(--olive-title-growth,0px));
+  text-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-stage__invitation,.olive-stage__first,.olive-stage__pair,
+ .olive-stage__poster,.olive-stage__overview,
+ .olive-stage__index-card{transition:none!important;animation:none!important}
+}
+
+/* V77 / measured geographic engraving, genuine title folios.
+   Titles belong to the physical reverse and must never distort the
+   frozen poster-face typography or become another screen-wide layer. */
+.olive-card__reverse-title{
+ position:absolute;z-index:2;left:7%;right:7%;bottom:14%;
+ display:block;max-width:86%;pointer-events:none;
+ font-family:var(--ws-type-display-en);font-style:normal;font-weight:300;
+ font-size:clamp(20px,1.65vw,34px);line-height:1.0;
+ letter-spacing:-.015em;text-wrap:balance;color:var(--ws-morning-gold);
+ opacity:var(--folio-mark-alpha,1);
+ text-shadow:none;
+}
+.olive-editorial-engraving__print--topography svg{
+ opacity:var(--olive-ink-emphasis,1);
+}
+@media(max-width:600px){.olive-card__reverse-title{left:7%;right:6%;bottom:15%;font-size:clamp(17px,5vw,25px)}}
+
+/* V77 final polish: the twelve protected photographic posters own the
+   visual focus; the action must remain legible at 390px and at desktop.
+   Only local 04 OS typography and colors, no external contrast plate. */
+.olive-stage__enter{
+ color:var(--ws-paper);
+ border-top-color:var(--ws-paper);
+ font-weight:300;
+ font-size:clamp(13px,1.04vw,18px);
+ letter-spacing:.095em;
+ padding:12px 3px 8px;
+}
+.olive-stage__enter:hover,.olive-stage__enter:focus-visible{
+ color:var(--ws-paper);
+ text-decoration:underline;
+ text-underline-offset:5px;
+}
+@media(max-width:820px){
+ .olive-stage__enter{
+  bottom:62px;right:clamp(13px,8vw,42px);left:clamp(13px,8vw,42px);
+  width:auto;min-width:0;max-width:none;
+  font-size:13px;letter-spacing:.08em;
+  padding:9px 2px 6px;
+ }
+}
+
+/* V77 narrow-screen CTA: named flex items prevent the anonymous source
+   text node from losing width beside the arrow in a 320px index. */
+.olive-stage__enter{display:flex;flex-wrap:nowrap;align-items:center;justify-content:flex-end}
+.olive-stage__enter-label{display:inline-block;flex:0 0 auto;white-space:nowrap}
+.olive-stage__enter-zh{display:inline-block;flex:0 0 auto;white-space:nowrap;font-size:.72em}
+.olive-stage__enter-arrow{display:inline-block;flex:0 0 auto;margin-left:auto}
+@media(max-width:820px){
+ .olive-stage__enter{justify-content:space-between;gap:7px}
+ .olive-stage__enter-label{font-size:clamp(13px,3.5vw,16px)}
+ .olive-stage__enter-zh{font-size:10px}
+ .olive-stage__enter-arrow{margin-left:auto;font-size:18px}
+}
+@media(max-width:370px){
+ .olive-stage__enter{left:15px;right:15px;bottom:62px;gap:5px;padding:8px 0 7px;min-height:36px}
+ .olive-stage__enter-label{font-size:15px;letter-spacing:.025em}
+ .olive-stage__enter-zh{display:none}
+ .olive-stage__enter-arrow{font-size:20px;line-height:1}
+}
+
+/* V79 Museum Folio. Stationary perspective belongs to the entire paired
+   paper-stage, not a perspective() transform reparsed onto each moving card.
+   Only transform:rotateY() is scroll-owned on each rigid carrier; front
+   original 3:4 image and its protected Shadow DOM text stay glued together.
+   No time-based transition or smoothing tail. */
+.olive-stage__pair{
+ perspective:1400px;
+ perspective-origin:50% 50%;
+ -webkit-perspective-origin:50% 50%;
+}
+.olive-folio-carrier{
+ transform-style:preserve-3d;
+ -webkit-transform-style:preserve-3d;
+ contain:layout style;
+}
+.olive-card__reverse{
+ transform:rotateY(180deg) translateZ(1.5px);
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-folio-carrier{will-change:auto}
+}
+
+/* V80 / Scriptural Folios — editorial typesetting using Design OS only.
+   The chapter's Chinese name and Romans 10:17 are not a tiny corner
+   annotation: they share the actual title's centre axis, above the works.
+   Bilingual masthead never transforms/resizes the original 3:4 posters. */
+.olive-stage__rubric{
+ grid-template-columns:minmax(105px,1fr) minmax(0,620px) minmax(105px,1fr);
+ align-items:start;gap:clamp(9px,1.4vw,20px);
+ min-height:108px;overflow:visible;
+}
+.olive-stage__rubric-kicker{align-self:start;padding-top:7px}
+.olive-stage__rubric-heading{
+ display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+ min-width:0;gap:0;text-align:center;
+}
+.olive-stage__rubric-heading strong{
+ display:block;font-family:var(--ws-type-display-en);
+ font-style:normal;font-weight:400;white-space:nowrap;
+ font-size:calc(clamp(28px,2.7vw,43px) + var(--olive-title-growth,0px));
+ line-height:1.02;letter-spacing:-.055em;
+}
+.olive-stage__rubric-zh{
+ display:block;margin-top:4px;
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);
+ font-size:clamp(17px,1.36vw,23px);line-height:1.18;
+ letter-spacing:.22em;font-synthesis:none;
+}
+.olive-stage__rubric-scripture{
+ margin:9px 0 0;max-width:100%;color:var(--ws-paper);
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);
+ font-size:clamp(11px,.82vw,14px);line-height:1.5;
+ letter-spacing:.05em;text-wrap:pretty;font-synthesis:none;
+}
+.olive-stage__rubric-scripture cite{
+ display:block;margin-top:2px;color:var(--ws-morning-gold);
+ font-family:var(--ws-type-display-en);font-weight:400;font-style:italic;
+ font-size:clamp(10px,.75vw,13px);letter-spacing:.025em;
+}
+.olive-stage__rubric>small{align-self:start;padding-top:7px}
+/* Exactly the old inscription location remains, now readable Scripture.
+   The source original full-size botanical/terrain reverse mask is untouched. */
+.olive-card__reverse-title{
+ bottom:13%;left:7%;right:7%;max-width:86%;
+ display:flex;flex-direction:column;align-items:flex-start;gap:7px;
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);
+ font-style:normal;font-size:clamp(17px,1.45vw,25px);
+ line-height:1.34;letter-spacing:.025em;
+ text-wrap:pretty;font-synthesis:none;
+ color:var(--ws-morning-gold);text-align:left;
+}
+.olive-card__scripture-text{display:block;max-width:100%}
+.olive-card__scripture-cite{
+ display:block;font-family:var(--ws-type-display-en);
+ font-weight:400;font-style:italic;
+ font-size:clamp(11px,.87vw,14px);line-height:1.3;
+ letter-spacing:.02em;color:var(--ws-paper);
+}
+@media(max-width:900px){
+ .olive-stage__rubric{
+  grid-template-columns:1fr;
+  justify-items:center;gap:3px;
+  top:clamp(39px,5svh,48px);
+  left:12px;right:12px;min-height:88px;
+ }
+ .olive-stage__rubric>.olive-stage__rubric-kicker,
+ .olive-stage__rubric>small{display:none}
+ .olive-stage__rubric-heading{grid-column:1;grid-row:1;max-width:100%}
+ .olive-stage__rubric-heading strong{
+  grid-column:auto;grid-row:auto;
+  font-size:calc(clamp(25px,4.65vw,34px) + var(--olive-title-growth,0px));
+  text-align:center;
+ }
+ .olive-stage__rubric-zh{font-size:clamp(15px,2.6vw,18px);margin-top:3px}
+ .olive-stage__rubric-scripture{font-size:clamp(11px,1.5vw,13px);margin-top:4px;max-width:520px}
+ .olive-stage__rubric-scripture cite{font-size:11px}
+}
+@media(max-width:540px){
+ .olive-stage__rubric{
+  top:42px;min-height:78px;
+  grid-template-columns:1fr;
+  justify-items:center;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading{
+  display:flex;grid-column:1;grid-row:1;
+ }
+ .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(24px,7.3vw,33px) + var(--olive-title-growth,0px));
+  white-space:nowrap;letter-spacing:-.052em;
+ }
+ .olive-stage__rubric-zh{font-size:15px;margin-top:2px}
+ .olive-stage__rubric-scripture{
+  font-size:11px;line-height:1.45;margin-top:4px;
+  max-width:calc(100vw - 32px);letter-spacing:0;
+ }
+ .olive-stage__rubric-scripture cite{font-size:10px;margin-top:1px}
+ .olive-card__reverse-title{left:7%;right:6%;bottom:14%;font-size:clamp(14px,4.25vw,19px);gap:5px;line-height:1.35}
+ .olive-card__scripture-cite{font-size:clamp(10px,2.8vw,13px)}
+}
+
+/* V80 print legibility correction from 1648px/390px/320px screenshot review:
+   do not print traditional Chinese scripture references in the Latin
+   display font (renders missing-glyph boxes in the real P2 screenshot).
+   Warm paper reading words are distinct from the gold botanical relief. */
+.olive-card__reverse-title{
+ color:var(--ws-paper);
+ text-shadow:none;
+ max-width:86%;
+}
+.olive-card__scripture-text{
+ color:var(--ws-paper);
+ font-family:var(--ws-type-display-zh);
+ font-synthesis:none;
+}
+.olive-card__scripture-cite{
+ font-family:var(--ws-type-display-zh);
+ font-style:normal;
+ font-weight:var(--ws-weight-zh-air,200);
+ font-synthesis:none;
+ color:var(--ws-morning-gold);
+ letter-spacing:.05em;
+ font-size:clamp(14px,1.08vw,17px);
+}
+@media(max-width:540px){
+ .olive-card__scripture-cite{font-size:clamp(12px,3.8vw,15px)}
+}
+
+/* V80 printmaking art-review correction: the source botanical/contour
+   vector stays completely intact. The last third is an editorial rest
+   field, gradating into the exact physical reverse stock, never a
+   clipped rectangle or a new color. This is one continuous engraving. */
+.olive-card__reading-veil{
+ position:absolute;z-index:1;inset:auto 0 0;height:47%;
+ background:linear-gradient(
+  to bottom,
+  transparent 0%,
+  color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink)) 81%
+ );
+ pointer-events:none;
+}
+.olive-card__reverse-title{z-index:3}
+.olive-card__reverse-mark{z-index:3}
+
+/* V81 / the Scripture is a separate editorial composition BESIDE
+   whichever lecturer's original poster is currently facing the reader.
+   It must never be a child of, or print on, a rotating reverse folio.
+   The opposite real engraving remains the background of its own half.
+   All state follows the original single scroll pose; no transitions. */
+.olive-stage__companion{
+ position:absolute;z-index:6;box-sizing:border-box;pointer-events:none;
+ display:block;overflow:hidden;isolation:isolate;
+ color:var(--ws-paper);background:transparent;
+ opacity:0;visibility:hidden;
+}
+.olive-stage__companion::before{
+ content:"";position:absolute;z-index:0;
+ inset:auto 0 0;height:50%;pointer-events:none;
+ background:linear-gradient(to bottom,transparent 0%,
+  color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink)) 82%);
+}
+.olive-stage__companion-reading{
+ position:absolute;z-index:1;
+ left:8%;right:8%;bottom:12%;max-width:84%;
+ display:flex;flex-direction:column;align-items:flex-start;
+}
+.olive-stage__companion-kicker{
+ display:block;margin-bottom:clamp(13px,1.5vw,24px);
+ font:200 clamp(9px,.76vw,12px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.17em;color:var(--ws-morning-gold);
+}
+.olive-stage__companion-verse{
+ margin:0;max-width:100%;
+ font-family:var(--ws-type-display-zh);
+ font-size:clamp(19px,1.6vw,29px);
+ font-weight:var(--ws-weight-zh-air,200);
+ font-synthesis:none;font-style:normal;
+ line-height:1.42;letter-spacing:.025em;
+ text-wrap:pretty;color:var(--ws-paper);
+}
+.olive-stage__companion-reference{
+ display:block;margin-top:clamp(12px,1.3vw,22px);
+ font-family:var(--ws-type-display-zh);
+ font-size:clamp(14px,1.1vw,19px);
+ font-weight:var(--ws-weight-zh-air,200);font-synthesis:none;
+ font-style:normal;letter-spacing:.05em;color:var(--ws-morning-gold);
+}
+@media(max-width:600px){
+ .olive-stage__companion-reading{left:8%;right:7%;bottom:10%;max-width:85%}
+ .olive-stage__companion-kicker{margin-bottom:7px;font-size:9px;letter-spacing:.05em}
+ .olive-stage__companion-verse{font-size:clamp(14px,3.9vw,20px);line-height:1.32;letter-spacing:0}
+ .olive-stage__companion-reference{font-size:clamp(11px,3.2vw,15px);margin-top:7px}
+}
+
+/* V82 / award-direction bilingual editorial masthead.
+   One strong English identity, a genuinely sized Chinese chapter name,
+   one 2-column CUV/KJV citation field. The rule carries the edition
+   baseline across the digital facing spread; it is not a third frame.
+   All fonts/inks are the existing Westside Design OS variables.
+   Keep this compact ABOVE the approved portrait art, never across it. */
+.olive-stage__rubric{
+ top:clamp(42px,4.8svh,52px);
+ left:clamp(22px,4.8vw,78px);
+ right:clamp(22px,4.8vw,78px);
+ min-height:0;
+ display:flex;flex-direction:column;align-items:stretch;
+ gap:0;overflow:visible;
+ transform-origin:center top;
+}
+.olive-stage__rubric-folio{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:18px;min-height:14px;
+}
+.olive-stage__rubric .olive-stage__rubric-folio .olive-stage__rubric-kicker,
+.olive-stage__rubric .olive-stage__rubric-folio small{
+ display:block;align-self:auto;padding:0;white-space:nowrap;
+ font:200 clamp(9px,.68vw,11px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.16em;color:var(--ws-morning-gold);
+ text-align:left;
+}
+.olive-stage__rubric .olive-stage__rubric-folio small{text-align:right}
+.olive-stage__rubric .olive-stage__rubric-folio small span{
+ font-family:var(--ws-type-display-zh);
+ font-weight:var(--ws-weight-zh-air,200);letter-spacing:.08em;
+ color:var(--ws-morning-gold);
+}
+.olive-stage__rubric .olive-stage__rubric-heading{
+ display:flex;flex-direction:row;flex-wrap:nowrap;
+ gap:clamp(13px,1.3vw,23px);
+ align-items:baseline;justify-content:flex-start;text-align:left;
+ padding:4px 0 9px;
+ width:100%;min-width:0;
+}
+.olive-stage__rubric .olive-stage__rubric-heading strong{
+ display:block;text-align:left;flex:0 1 auto;
+ margin:0;min-width:0;
+ font-family:var(--ws-type-display-en);
+ font-size:calc(clamp(33px,3.65vw,57px) + var(--olive-title-growth,0px));
+ line-height:.94;font-weight:400;letter-spacing:-.058em;
+ white-space:nowrap;
+}
+.olive-stage__rubric .olive-stage__rubric-heading .olive-stage__rubric-zh{
+ display:block;flex:0 0 auto;
+ margin:0;
+ font-family:var(--ws-type-display-zh);
+ font-size:clamp(21px,1.55vw,29px);
+ line-height:1.1;font-weight:600;letter-spacing:.08em;
+ color:var(--ws-paper);white-space:nowrap;font-synthesis:none;
+}
+.olive-stage__rubric .olive-stage__rubric-scripture{
+ display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.18fr);
+ gap:clamp(24px,2.35vw,42px);
+ align-items:start;
+ border-top:1px solid color-mix(in srgb,var(--ws-morning-gold) 68%,transparent);
+ padding:10px 0 0;margin:0;
+ color:var(--ws-paper);width:min(100%,960px);max-width:100%;
+}
+.olive-stage__rubric-scripture-zh,
+.olive-stage__rubric-scripture-en{min-width:0}
+.olive-stage__rubric-scripture-zh p,
+.olive-stage__rubric-scripture-en p{
+ margin:0 0 4px;padding:0;
+ font-size:clamp(11px,.87vw,14px);
+ font-weight:var(--ws-weight-zh-air,200);
+ line-height:1.42;letter-spacing:.02em;text-wrap:balance;
+ color:var(--ws-paper);
+}
+.olive-stage__rubric-scripture-zh p{
+ font-family:var(--ws-type-display-zh);font-synthesis:none;
+}
+.olive-stage__rubric-scripture-en p{
+ font-family:var(--ws-type-display-en);font-size:clamp(12px,.94vw,15px);
+ font-weight:400;font-style:italic;letter-spacing:.006em;
+}
+.olive-stage__rubric-scripture-zh,
+.olive-stage__rubric-scripture-en{display:flex;flex-direction:column;justify-content:flex-start}
+.olive-stage__rubric-scripture-zh p{color:var(--ws-paper)}
+.olive-stage__rubric-scripture-en p{color:var(--ws-paper)}
+.olive-stage__unbroken-tail{white-space:nowrap}
+.olive-stage__companion-verse,
+.olive-stage__companion-verse-en{text-wrap:balance;overflow-wrap:normal}
+.olive-stage__rubric-scripture-zh cite,
+.olive-stage__rubric-scripture-en cite{
+ display:block;margin:0;font-style:normal;font-weight:400;
+ font-size:clamp(9px,.68vw,11px);line-height:1.25;
+ letter-spacing:.09em;color:var(--ws-morning-gold);
+}
+.olive-stage__rubric-scripture-zh cite{
+ font-family:var(--ws-type-display-zh);font-synthesis:none;
+ font-weight:var(--ws-weight-zh-air,200);
+}
+.olive-stage__rubric-scripture-en cite{
+ font-family:var(--ws-type-display-en);letter-spacing:.13em;
+}
+/* V82 / two full languages for each lecturer: Chinese reading anchor,
+   English italic secondary voice and a paired bilingual folio citation.
+   The previous adjacent (never on card reverse) geometry remains intact. */
+.olive-stage__companion-reading{bottom:9%;left:8%;right:8%;max-width:84%}
+.olive-stage__companion-kicker{margin-bottom:clamp(9px,1vw,16px)}
+.olive-stage__companion-verse{
+ font-size:clamp(17px,1.39vw,24px);line-height:1.34;
+ letter-spacing:.02em;
+}
+.olive-stage__companion-verse-en{
+ display:block;margin:clamp(9px,.9vw,14px) 0 0;
+ max-width:100%;
+ font-family:var(--ws-type-display-en);
+ font-size:clamp(14px,1.05vw,18px);font-weight:400;
+ font-style:italic;line-height:1.35;letter-spacing:.003em;
+ color:var(--ws-paper);text-wrap:pretty;
+}
+.olive-stage__companion-citations{
+ margin-top:clamp(12px,1.15vw,19px);padding-top:8px;
+ border-top:1px solid color-mix(in srgb,var(--ws-morning-gold) 42%,transparent);
+ display:flex;align-items:baseline;justify-content:space-between;
+ flex-wrap:wrap;gap:5px 14px;max-width:100%;
+}
+.olive-stage__companion-citations .olive-stage__companion-reference{
+ margin:0;display:block;font-size:clamp(12px,.9vw,16px);line-height:1.3;
+}
+.olive-stage__companion-reference-en{
+ display:block;margin:0;font-family:var(--ws-type-display-en);
+ font-style:italic;font-weight:400;font-size:clamp(10px,.72vw,13px);
+ line-height:1.3;letter-spacing:.01em;color:var(--ws-morning-gold);
+}
+@media(max-width:900px){
+ .olive-stage__rubric{top:clamp(19px,3.2svh,30px);left:16px;right:16px}
+ .olive-stage__rubric .olive-stage__rubric-folio{
+  display:flex;grid-column:auto;grid-row:auto;min-height:11px;
+ }
+ .olive-stage__rubric .olive-stage__rubric-folio small{
+  display:block;font-size:8px;letter-spacing:.045em;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading{
+  display:flex;gap:10px;align-items:baseline;padding:4px 0 7px;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(26px,4.45vw,37px) + var(--olive-title-growth,0px));
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  font-size:clamp(18px,2.6vw,24px);margin:0;
+ }
+ .olive-stage__rubric .olive-stage__rubric-scripture{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;
+  padding-top:5px;
+ }
+ .olive-stage__rubric-scripture-zh p{font-size:clamp(10px,1.4vw,12px);line-height:1.3}
+ .olive-stage__rubric-scripture-en p{font-size:clamp(10px,1.35vw,12px);line-height:1.25}
+ .olive-stage__rubric-scripture-zh cite,
+ .olive-stage__rubric-scripture-en cite{font-size:9px}
+ .olive-stage__companion-reading{bottom:8%;left:7%;right:7%;max-width:86%}
+ .olive-stage__companion-verse{font-size:clamp(13px,2.15vw,19px);line-height:1.28}
+ .olive-stage__companion-verse-en{font-size:clamp(11px,1.6vw,15px);line-height:1.27;margin-top:8px}
+ .olive-stage__companion-citations{padding-top:6px;margin-top:8px;gap:3px 9px}
+ .olive-stage__companion-citations .olive-stage__companion-reference{font-size:clamp(11px,1.6vw,14px)}
+ .olive-stage__companion-reference-en{font-size:clamp(9px,1.2vw,11px)}
+}
+@media(max-width:540px){
+ .olive-stage__rubric{top:24px;left:10px;right:10px;min-height:0}
+ .olive-stage__rubric .olive-stage__rubric-folio{
+  display:flex;align-items:center;gap:5px;min-height:9px;
+ }
+ .olive-stage__rubric .olive-stage__rubric-folio .olive-stage__rubric-kicker{
+  font-size:8px;letter-spacing:.09em;
+ }
+ .olive-stage__rubric .olive-stage__rubric-folio small{font-size:7px;letter-spacing:0}
+ .olive-stage__rubric .olive-stage__rubric-heading{
+  display:flex;gap:8px;padding:4px 0 6px;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(19px,5.5vw,29px) + var(--olive-title-growth,0px));
+  white-space:nowrap;letter-spacing:-.055em;text-align:left;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  display:block;font-size:clamp(15px,3.8vw,19px);letter-spacing:.055em;
+ }
+ .olive-stage__rubric .olive-stage__rubric-scripture{
+  grid-template-columns:1fr 1fr;gap:8px;padding-top:5px;
+ }
+ .olive-stage__rubric-scripture-zh p{font-size:10px;line-height:1.23;letter-spacing:0}
+ .olive-stage__rubric-scripture-en p{font-size:10px;line-height:1.19;letter-spacing:0}
+ .olive-stage__rubric-scripture-zh cite,
+ .olive-stage__rubric-scripture-en cite{font-size:8px;line-height:1.18;letter-spacing:0}
+ .olive-stage__companion-reading{left:8%;right:7%;bottom:6%;max-width:85%}
+ .olive-stage__companion-kicker{font-size:8px;margin-bottom:6px}
+ .olive-stage__companion-verse{font-size:clamp(11px,3.35vw,15px);line-height:1.23;letter-spacing:0}
+ .olive-stage__companion-verse-en{
+  font-size:clamp(9px,2.75vw,12px);line-height:1.22;
+  margin-top:6px;letter-spacing:0;
+ }
+ .olive-stage__companion-citations{margin-top:7px;padding-top:5px;gap:2px 8px}
+ .olive-stage__companion-citations .olive-stage__companion-reference{
+  font-size:clamp(10px,2.9vw,12px);letter-spacing:0;
+ }
+ .olive-stage__companion-reference-en{font-size:clamp(8px,2.5vw,10px)}
+}
+
+/* V82 final legibility pass: 320px KJV must remain real reading text,
+   not a decorative 9px whisper. Responsive top clearance is already
+   protected by the 04-specific poster grid, so enlarge copy instead. */
+@media(max-width:540px){
+ .olive-stage__rubric-scripture-zh p{font-size:11px;line-height:1.28}
+ .olive-stage__rubric-scripture-en p{font-size:11px;line-height:1.23}
+ .olive-stage__rubric-scripture-zh cite,
+ .olive-stage__rubric-scripture-en cite{font-size:9px;line-height:1.22}
+ .olive-stage__companion-verse{font-size:clamp(12px,3.7vw,16px);line-height:1.27}
+ .olive-stage__companion-verse-en{font-size:clamp(11px,3.05vw,13px);line-height:1.27}
+ .olive-stage__companion-reference-en{font-size:clamp(10px,2.75vw,11px)}
+}
