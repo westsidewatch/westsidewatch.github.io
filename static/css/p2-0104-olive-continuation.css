@@ -1183,3 +1183,88 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
   column-gap:8px;padding-top:6px;
  }
 }
+
+/* R27: the chapter masthead IS the two-square entry, not a split wordmark.
+   Sevenfold is constrained to that carrier and never alters scripture glyphs.
+   The untouched R26 title/verse remains in DOM as editorial fallback. */
+.olive-stage__rubric--twin-editorial{
+ left:50%;right:auto;top:clamp(43px,5.1svh,58px);width:auto;
+ transform:translateX(-50%);z-index:35;overflow:visible;
+}
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-folio,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-heading,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-scripture{display:none}
+.olive-twin-entry{--twin-side:clamp(94px,8.25vw,148px);
+ position:relative;display:grid;grid-template-columns:repeat(2,var(--twin-side));
+ width:calc(var(--twin-side)*2);height:var(--twin-side);padding:0;
+ border:1px solid var(--ws-morning-gold);background:transparent;
+ color:var(--ws-paper);text-align:left;cursor:pointer;
+ font-family:var(--ws-type-display-en);isolation:isolate;
+}
+.olive-twin-entry:focus-visible{outline:2px solid var(--ws-paper);outline-offset:5px}
+.olive-twin-entry__square{position:relative;display:flex;flex-direction:column;
+ justify-content:space-between;min-width:0;padding:clamp(8px,.75vw,13px);
+ overflow:hidden;background:rgba(37,57,32,.19)}
+.olive-twin-entry__square--right{border-left:1px solid var(--ws-morning-gold)}
+.olive-twin-entry .olive-twin-entry__edition{display:block;font-size:clamp(6px,.54vw,9px);
+ letter-spacing:.1em;line-height:1.2;font-weight:200;color:var(--ws-morning-gold)}
+.olive-twin-entry .olive-twin-entry__title{display:block;font-style:normal;
+ font-family:var(--ws-type-display-en);font-weight:400;
+ font-size:clamp(24px,2.15vw,39px);line-height:.92;letter-spacing:-.065em;
+ white-space:nowrap;transform:none}
+.olive-twin-entry__square--right .olive-twin-entry__title{font-size:clamp(15px,1.25vw,24px);letter-spacing:-.07em}
+.olive-twin-entry .olive-twin-entry__zh{display:block;font-size:clamp(13px,1.17vw,22px);
+ font-family:var(--ws-type-display-zh);font-weight:600;line-height:1.1;align-self:flex-end}
+.olive-twin-entry .olive-twin-entry__verse{display:block;font-size:clamp(7px,.64vw,10px);
+ font-weight:200;line-height:1.35;letter-spacing:0}
+.olive-twin-entry .olive-twin-entry__ref{display:block;font-size:clamp(7px,.58vw,9px);
+ letter-spacing:.09em;color:var(--ws-morning-gold)}
+.olive-twin-entry__folds{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.olive-twin-entry__folds i{position:absolute;inset:0;background:var(--ws-morning-gold);
+ transform:scaleX(0);transform-origin:left center;opacity:0}
+.olive-twin-entry__folds i:nth-child(1){background:var(--ws-water)}
+.olive-twin-entry__folds i:nth-child(2){background:var(--ws-first-light)}
+.olive-twin-entry__folds i:nth-child(3){background:var(--ws-pale-gold)}
+.olive-twin-entry__folds i:nth-child(4){background:var(--ws-olive)}
+.olive-twin-entry__folds i:nth-child(5){background:var(--ws-harvest)}
+.olive-twin-entry__folds i:nth-child(6){background:var(--ws-crimson)}
+.olive-twin-entry__folds i:nth-child(7){background:var(--ws-daylight-mauve)}
+.olive-twin-entry.is-folding .olive-twin-entry__folds i{
+ animation:oliveSevenfold .8s cubic-bezier(.76,0,.24,1) both;
+ animation-delay:calc((var(--fold-index) - 1)*.085s)}
+.olive-twin-entry__folds i:nth-child(1){--fold-index:1}
+.olive-twin-entry__folds i:nth-child(2){--fold-index:2}
+.olive-twin-entry__folds i:nth-child(3){--fold-index:3}
+.olive-twin-entry__folds i:nth-child(4){--fold-index:4}
+.olive-twin-entry__folds i:nth-child(5){--fold-index:5}
+.olive-twin-entry__folds i:nth-child(6){--fold-index:6}
+.olive-twin-entry__folds i:nth-child(7){--fold-index:7}
+@keyframes oliveSevenfold{0%{transform:scaleX(0);opacity:1}52%{transform:scaleX(1);opacity:1}100%{transform:translateX(100%);opacity:1}}
+.olive-twin-reading{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:clamp(12px,1.3vw,22px);position:absolute;top:0;left:50%;
+ width:min(70vw,600px);transform:translateX(-50%) scale(.86);
+ opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.olive-twin-reading__square{aspect-ratio:1;background:var(--ws-paper);color:#26412c;
+ border:1px solid var(--ws-morning-gold);padding:clamp(12px,2vw,30px);
+ display:flex;flex-direction:column;justify-content:space-between}
+.olive-twin-reading__square small{font-size:clamp(9px,.7vw,12px);
+ letter-spacing:.12em;font-weight:200}
+.olive-twin-reading__square p{margin:0;font-family:var(--ws-type-display-zh);
+ font-size:clamp(16px,2vw,29px);line-height:1.45}
+.olive-twin-reading__square--vertical p{writing-mode:vertical-rl;max-height:78%;align-self:center}
+.olive-twin-reading__square--horizontal p{font-family:var(--ws-type-display-en);
+ font-size:clamp(18px,2.05vw,30px);line-height:1.25}
+.olive-stage__rubric--twin-editorial.is-reading .olive-twin-entry{visibility:hidden}
+.olive-stage__rubric--twin-editorial.is-reading .olive-twin-reading{
+ visibility:visible;opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+@media(max-width:700px){
+ .olive-twin-entry{--twin-side:clamp(85px,22vw,115px)}
+ .olive-twin-reading{width:min(94vw,440px)}
+ .olive-twin-reading__square{padding:12px}
+ .olive-twin-reading__square p{font-size:clamp(14px,3.4vw,21px)}
+ .olive-twin-reading__square--horizontal p{font-size:clamp(15px,3.5vw,22px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-twin-entry.is-folding .olive-twin-entry__folds i{animation:none}
+ .olive-twin-reading{transition:none}
+}
