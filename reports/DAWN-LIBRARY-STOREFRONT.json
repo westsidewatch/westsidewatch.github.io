@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-11-15T16:26:59.518975+00:00",
+  "generatedAt": "2026-11-16T19:42:26.012265+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -19,58 +19,21 @@
       "title": "原版古籍 · 教會歷史",
       "books": 20,
       "source": "Internet Archive"
-    },
-    {
-      "id": "gutenberg-bible-christianity",
-      "title": "聖經與基督教",
-      "books": 25,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-early-church-fathers",
-      "title": "早期教會與教父",
-      "books": 10,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-jewish-history-josephus",
-      "title": "猶太與第二聖殿世界",
-      "books": 2,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-ancient-history-archaeology",
-      "title": "古代世界與考古",
-      "books": 25,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-philosophy-classics",
-      "title": "哲學與思想",
-      "books": 25,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-biography-memoir",
-      "title": "傳記與回憶",
-      "books": 25,
-      "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 166,
-  "sourceCovers": 114,
+  "mappedBooks": 54,
+  "sourceCovers": 54,
   "directPublications": 14,
   "providers": {
     "Standard Ebooks": 14,
-    "Internet Archive": 40,
-    "Project Gutenberg": 112
+    "Internet Archive": 40
   },
   "identity": {
-    "queriedThisRun": 0,
-    "resolved": 103,
-    "coversAdded": 60,
-    "internetArchiveLinks": 45,
-    "cacheEntries": 265
+    "queriedThisRun": 1,
+    "resolved": 13,
+    "coversAdded": 0,
+    "internetArchiveLinks": 9,
+    "cacheEntries": 266
   },
   "errors": [
     {
@@ -84,6 +47,36 @@
     {
       "source": "DOAB archaeology",
       "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "bible christianity",
+      "error": "HTTPError: HTTP Error 503: Service Unavailable"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "early church fathers",
+      "error": "HTTPError: HTTP Error 503: Service Unavailable"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "jewish history josephus",
+      "error": "HTTPError: HTTP Error 503: Service Unavailable"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "ancient history archaeology",
+      "error": "HTTPError: HTTP Error 503: Service Unavailable"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "philosophy classics",
+      "error": "HTTPError: HTTP Error 503: Service Unavailable"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "biography memoir",
+      "error": "HTTPError: HTTP Error 503: Service Unavailable"
     }
   ],
   "contentDownloaded": false
