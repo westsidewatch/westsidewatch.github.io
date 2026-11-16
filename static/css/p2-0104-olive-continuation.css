@@ -1735,3 +1735,21 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 @media(prefers-reduced-motion:reduce){
  .olive-sevenfold-handoff__sheet{will-change:auto}
 }
+
+/* R39 / The twin-square editorial rail stays entirely clear of the
+   protected twelve-poster arrangement. No overprinted portraits. */
+.olive-second-layer__detail blockquote{
+ margin:17px 0 0;max-width:35ch;
+ font:400 clamp(17px,1.38vw,23px)/1.38 var(--ws-type-display-zh);
+}
+.olive-second-layer__detail blockquote[lang="en"]{
+ font:italic 400 clamp(16px,1.18vw,21px)/1.35 var(--ws-type-display-en);
+}
+.olive-second-layer__detail cite{
+ display:block;margin:12px 0 20px;
+ font:200 clamp(11px,.9vw,14px)/1.4 var(--ws-type-display-en);
+}
+@media(max-width:700px){
+ .olive-second-layer__detail blockquote{font-size:16px}
+ .olive-second-layer__detail blockquote[lang="en"]{font-size:15px}
+}
