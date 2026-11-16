@@ -1324,7 +1324,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
   left:0;right:0;width:100%;overflow:visible;
 }
 .olive-twin-entry{
-  width:100%;height:clamp(130px,15svh,143px);
+  width:100%;height:clamp(140px,16svh,155px);
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   column-gap:clamp(8px,1vw,16px);
   border:0;overflow:visible;
@@ -1334,7 +1334,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-twin-entry__square--right{
   box-sizing:border-box;
   align-self:end;
-  height:calc(100% - 51px);
+  height:calc(100% - 61px);
   min-width:0;
   padding:19px clamp(13px,2.8vw,48px) 8px;
   border:1px solid var(--ws-morning-gold);
@@ -1360,11 +1360,11 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
   left:auto;right:clamp(13px,2.8vw,48px);
 }
 .olive-twin-entry .olive-twin-entry__verse{
-  font:200 clamp(16px,1.33vw,24px)/1.15 var(--ws-type-display-zh);
-  letter-spacing:.01em;max-width:32ch;
+  font:200 clamp(18px,1.6vw,25px)/1.13 var(--ws-type-display-zh);
+  letter-spacing:.01em;max-width:24ch;
 }
 .olive-twin-entry__square--right .olive-twin-entry__verse{
-  font:italic 400 clamp(16px,1.33vw,24px)/1.08 var(--ws-type-display-en);
+  font:italic 400 clamp(18px,1.55vw,25px)/1.08 var(--ws-type-display-en);
   max-width:35ch;margin-left:0;text-align:right;
 }
 .olive-twin-entry .olive-twin-entry__ref{font-size:clamp(8px,.59vw,10px)}
@@ -1372,9 +1372,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    first-to-second-layer transition, not to this chapter masthead. */
 .olive-twin-entry__folds{display:none!important}
 @media(max-width:700px){
-  .olive-twin-entry{height:clamp(129px,18svh,150px);column-gap:6px}
+  .olive-twin-entry{height:clamp(140px,19svh,162px);column-gap:6px}
   .olive-twin-entry__square,.olive-twin-entry__square--right{
-    height:calc(100% - 46px);padding:16px 7px 5px;gap:2px;
+    height:calc(100% - 55px);padding:16px 7px 5px;gap:2px;
   }
   .olive-twin-entry>.olive-twin-entry__title{top:0;font-size:clamp(25px,6vw,38px)}
   .olive-twin-entry>.olive-twin-entry__zh{top:34px;font-size:11px}
