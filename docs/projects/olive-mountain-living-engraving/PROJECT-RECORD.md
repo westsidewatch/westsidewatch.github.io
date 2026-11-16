@@ -123,3 +123,14 @@ GitHub issue: https://github.com/westsidewatch/westsidewatch.github.io/issues/13
 **多雷探索與決策依據**：MERSI 網站案例（Codrops 2026-07-27）採用共享元素跨兩個 DOM 網格真實移位，逆向捲動可恢復；Codrops Menu-to-Grid（2022-09-19）與 Responsive Grid Transitions（2026-01-20）示範使用 GSAP Flip 進行布局而非遮罩物件的連續運動；GSAP 官方 Flip 文件說明 `getState` + DOM 改變 + `from`。R29 此輪暫不接第二層，避免未完成的空間落點造成浮動經文壓住海報。來源：https://tympanus.net/codrops/2026/07/27/between-print-and-digital-the-making-of-mersis-website/ 、https://tympanus.net/codrops/2022/09/19/menu-to-grid-layout-animation/ 、https://tympanus.net/codrops/2026/01/20/animating-responsive-grid-layout-transitions-with-gsap-flip/ 、https://gsap.com/docs/v3/Plugins/Flip/ 。
 
 **驗收狀態**：需在 Cloudflare 真實畫面檢查 1440 與手機版文字層次、正規 OS 字體與色彩、單字回行、所有畫面邊界、七重疊左→右節奏；通過技術測試並不等於獲獎級別藝術驗收。只保留 Draft，不合併 main。
+
+
+## 2026-11-16｜R30 通欄刊頭重製：研究校正與捲動驅動
+
+用戶對 R29 的三點否決已確定：①「SEVENFOLD / 七重疊動效檢視」為工程按鈕，不能出現在訪客界面；② `OLIVE`／`MOUNTAIN` 被左右拆開使英文名稱不自然；③ 有頁邊距的兩個矩形不是首頁既有七重疊那種真正全幅。三點均不得繼承。
+
+**實際施工**：`static/experiments/olive-masthead-r30-scroll.html`。單一全幅橄欖綠刊頭（不加外層 `.sheet` 限寬或左右空白）；單行完整 `OLIVE MOUNTAIN`；`橄欖山` 中文標題；中英羅馬書 10:17 分別以合宜的縱／橫閱讀方向呈現（不拆英文版塊名稱）。底層七色覆蓋整個 `inset:0` 通欄，用 `requestAnimationFrame` 讀取真實 `scrollY`、`transform:translate3d` 決定七層左入右出位置，反向捲動按同一函數回收；不顯示任何播放／測試按鈕。`prefers-reduced-motion` 下停用遮層。倪柝聲與葉光明原有海報只作下方設計安全區，無改圖、無改字。
+
+**技術來源判斷**：LxL Creative（Awwwards SOTD 2026-09-17）具導航轉場／GSAP／Barba.js 標籤；Gil Huybrecht（SOTD 2026-09-21）字體與無限捲動；Why Zero（SOTD 2026-09-07）單頁敘事／GSAP。研究歸納的原則是「動效因正常閱讀和導航發生」，不是要求訪客為特效而操作後台按鈕。參考索引：https://teasertrack.cc/websites/lxl-creative 、https://teasertrack.cc/websites/gil-huybrecht 、https://teasertrack.cc/websites/why-zero 。
+
+**邊界**：R30 是獨立一層構圖／動效校樣，尚未接入 P2 01–04 真正轉場，也不宣稱已有第二層方塊落點；現有 P2 01–03 和十二張講員海報完全保留。Cloudflare 驗收與美術審查完成之前不合併 main。
