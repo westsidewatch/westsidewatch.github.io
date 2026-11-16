@@ -1518,3 +1518,65 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:6px}
  .olive-twin-entry .olive-twin-entry__ref{font-size:5px}
 }
+
+/* R36 — readable vertical bilingual pair, OS olive title / gold scripture.
+   The two visible blocks are the transition's source geometry. */
+.olive-stage__rubric--twin-editorial{
+ left:clamp(14px,2.2vw,34px);top:clamp(44px,5svh,58px);
+ width:auto;max-width:calc(100vw - 28px);
+}
+.olive-twin-entry{
+ --olive-panel-w:clamp(310px,30vw,490px);
+ --olive-panel-h:clamp(94px,10.6svh,112px);
+ width:var(--olive-panel-w);height:calc(2 * var(--olive-panel-h));
+ display:flex;flex-direction:column;align-items:stretch;
+}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ width:100%;height:var(--olive-panel-h);flex:none;
+ margin:0;padding:clamp(10px,1.15svh,14px) clamp(16px,1.6vw,26px);
+ border:1px solid var(--ws-morning-gold);border-radius:0;
+ justify-content:center;align-items:flex-start;gap:clamp(4px,.6svh,8px);
+ overflow:hidden;box-shadow:none;
+}
+.olive-twin-entry__square--left{background:var(--ws-olive);color:var(--ws-paper)}
+.olive-twin-entry__square--right{
+ border-top:0;background:var(--ws-morning-gold);color:var(--ws-olive);
+}
+.olive-twin-entry .olive-twin-entry__edition{
+ font-size:clamp(9px,.9svh,11px);color:var(--ws-morning-gold);
+}
+.olive-twin-entry .olive-twin-entry__title{
+ font-size:clamp(29px,3.5svh,44px);line-height:.95;
+ letter-spacing:-.025em;color:var(--ws-paper);
+}
+.olive-twin-entry .olive-twin-entry__title br{display:none}
+.olive-twin-entry .olive-twin-entry__zh{
+ font-size:clamp(18px,2svh,23px);line-height:1;
+ letter-spacing:.12em;color:var(--ws-paper);
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ font:200 clamp(14px,1.55svh,18px)/1.24 var(--ws-type-display-zh);
+ color:var(--ws-olive);max-width:none;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ font:italic 400 clamp(13px,1.4svh,17px)/1.16 var(--ws-type-display-en);
+ color:var(--ws-olive);max-width:none;
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ font:200 clamp(8px,.78svh,10px)/1.1 var(--ws-type-display-en);
+ color:var(--ws-olive);
+}
+@media(max-width:700px){
+ .olive-stage__rubric--twin-editorial{left:8px;top:42px;max-width:calc(100vw - 16px)}
+ .olive-twin-entry{
+  --olive-panel-w:min(calc(100vw - 16px),390px);
+  --olive-panel-h:clamp(98px,12svh,122px);
+  width:var(--olive-panel-w);height:calc(2 * var(--olive-panel-h));
+ }
+ .olive-twin-entry__square,.olive-twin-entry__square--right{padding:9px 14px;gap:4px}
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(26px,5.9vw,36px)}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:18px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(13px,3.25vw,16px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(12px,3vw,15px)}
+ .olive-twin-entry .olive-twin-entry__ref{font-size:8px}
+}
