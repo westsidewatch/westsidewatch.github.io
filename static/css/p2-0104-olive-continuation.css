@@ -1753,3 +1753,125 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-second-layer__detail blockquote{font-size:16px}
  .olive-second-layer__detail blockquote[lang="en"]{font-size:15px}
 }
+
+/* R40 / Olive Mountain second-layer folio. The two squares land as
+   editorial objects after the sevenfold folds back; the engravings
+   belong to the chapter, never an arbitrary full-black backdrop. */
+.olive-second-layer{
+ background:var(--ws-olive)!important;color:var(--ws-paper)!important;
+ isolation:isolate;overflow:auto;
+}
+.olive-second-layer::before{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background-image:url("/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-1.svg");
+ background-size:cover;background-position:center;
+ opacity:.17;
+}
+.olive-second-layer::after{
+ content:"";position:absolute;left:0;top:0;bottom:0;width:48%;z-index:-1;
+ pointer-events:none;
+ background:url("/images/p2-realms/v15/04-olive-full-verso-v74-botanical-1.svg") center/cover no-repeat;
+ opacity:.15;mask-image:linear-gradient(to right,#000 22%,transparent 100%);
+}
+.olive-second-layer__folio{
+ color:var(--ws-morning-gold);border-color:var(--ws-morning-gold);
+}
+.olive-second-layer__body{
+ grid-template-columns:clamp(128px,12vw,172px) minmax(0,2.65fr) minmax(260px,1.85fr);
+ gap:clamp(16px,2.1vw,36px);align-items:start;
+}
+.olive-second-layer__masthead{
+ display:flex;flex-direction:column;gap:0;align-self:start;
+ position:relative;z-index:2;
+}
+.olive-second-layer__landing{
+ width:100%;aspect-ratio:1/1;position:relative;
+}
+.olive-second-layer__landing-square{
+ position:absolute;inset:0;box-sizing:border-box;
+ display:flex;flex-direction:column;justify-content:center;
+ padding:clamp(10px,1vw,18px);gap:clamp(6px,.7vw,12px);
+ border:1px solid var(--ws-morning-gold);
+ transform-origin:top left;
+}
+.olive-second-layer__landing-square--title{
+ background:var(--ws-olive);color:var(--ws-paper);
+}
+.olive-second-layer__landing-square--title strong{
+ font:400 clamp(21px,2vw,31px)/.98 var(--ws-type-display-en);
+ letter-spacing:-.04em;
+}
+.olive-second-layer__landing-square--title [lang="zh-Hant"]{
+ font:200 clamp(17px,1.5vw,24px)/1.16 var(--ws-type-display-zh);
+ align-self:flex-end;
+}
+.olive-second-layer__edition{
+ font:200 10px/1 var(--ws-type-display-en);
+ color:var(--ws-morning-gold);letter-spacing:.09em;
+}
+.olive-second-layer__landing-square--verse{
+ background:var(--ws-morning-gold);color:var(--ws-ink);border-top:0;
+}
+.olive-second-layer__landing-square--verse blockquote{
+ margin:0;font:400 clamp(12px,.96vw,16px)/1.22 var(--ws-type-display-zh);
+}
+.olive-second-layer__landing-square--verse blockquote[lang="en"]{
+ font:italic 400 clamp(11px,.9vw,15px)/1.2 var(--ws-type-display-en);
+}
+.olive-second-layer__landing-square--verse cite{
+ font:200 clamp(8px,.62vw,11px)/1.1 var(--ws-type-display-en);
+}
+.olive-second-layer__person{
+ border-color:var(--ws-morning-gold);box-shadow:0 0 0 1px rgba(255,255,255,.06);
+ transition:border-color .3s ease,box-shadow .3s ease;
+}
+.olive-second-layer__person:hover,
+.olive-second-layer__person[aria-pressed="true"]{
+ border-color:var(--ws-paper);box-shadow:0 0 0 2px var(--ws-morning-gold);
+}
+.olive-second-layer__person span{font-size:clamp(10px,.79vw,13px)}
+.olive-second-layer__detail{
+ border-top:2px solid var(--ws-morning-gold);
+ background:rgba(21,51,28,.16);padding:clamp(17px,1.5vw,26px);
+ min-height:420px;position:relative;overflow:hidden;
+}
+.olive-second-layer__detail::before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.09;
+ background:url("/images/p2-realms/v15/04-olive-full-verso-v74-botanical-1.svg") center/cover no-repeat;
+}
+.olive-second-layer__detail>*{position:relative}
+.olive-second-layer__detail h2{color:var(--ws-paper)}
+.olive-second-layer__detail blockquote{
+ color:var(--ws-paper);max-width:38ch;
+}
+.olive-second-layer__detail cite,.olive-second-layer__label{
+ color:var(--ws-morning-gold);
+}
+.olive-second-layer__detail img{
+ display:block;margin-top:24px;max-height:33svh;
+ border:1px solid var(--ws-morning-gold);
+}
+@media(max-width:900px){
+ .olive-second-layer__body{
+  grid-template-columns:clamp(112px,18vw,160px) minmax(0,1fr);
+  gap:16px;
+ }
+ .olive-second-layer__detail{grid-column:2}
+ .olive-second-layer__index{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .olive-second-layer__body{display:grid;grid-template-columns:106px minmax(0,1fr);gap:12px}
+ .olive-second-layer__masthead{grid-row:1}
+ .olive-second-layer__index{grid-column:2;grid-row:1;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ .olive-second-layer__detail{grid-column:1/-1;grid-row:2}
+ .olive-second-layer__landing-square{padding:8px;gap:4px}
+ .olive-second-layer__landing-square--title strong{font-size:17px}
+ .olive-second-layer__landing-square--title [lang="zh-Hant"]{font-size:16px}
+ .olive-second-layer__landing-square--verse blockquote{font-size:9px}
+ .olive-second-layer__landing-square--verse blockquote[lang="en"]{font-size:8px}
+ .olive-second-layer__landing-square--verse cite{font-size:7px}
+ .olive-second-layer__person span{font-size:8px;padding:4px}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-second-layer__person{transition:none}
+}
