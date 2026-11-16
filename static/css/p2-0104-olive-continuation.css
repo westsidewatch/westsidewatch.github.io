@@ -1875,3 +1875,102 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 @media(prefers-reduced-motion:reduce){
  .olive-second-layer__person{transition:none}
 }
+
+/* R41 / Scripture-led second layer: NO new section masthead.
+   The very same two geometric origins become two full scripture squares.
+   Speaker pages are editorial archives, with reserved space for series. */
+.olive-second-layer{padding-top:clamp(44px,5svh,62px)!important}
+.olive-second-layer__folio{display:none!important}
+.olive-second-layer__body{
+ grid-template-columns:clamp(144px,15vw,212px) minmax(0,1fr)!important;
+ gap:clamp(20px,2.5vw,44px)!important;margin-top:0!important;
+ align-items:start;
+}
+.olive-second-layer__masthead{grid-column:1;grid-row:1}
+.olive-second-layer__index{grid-column:2;grid-row:1;
+ grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1.1vw,19px)}
+.olive-second-layer__detail{grid-column:2;grid-row:1;min-height:70svh}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__index{display:none}
+.olive-second-layer[data-view="index"] .olive-second-layer__detail{display:none}
+.olive-second-layer__landing-square--title blockquote{
+ margin:0;color:var(--ws-paper);
+ font:200 clamp(17px,1.25vw,24px)/1.36 var(--ws-type-display-zh);
+}
+.olive-second-layer__landing-square--verse blockquote[lang="en"]{
+ font:italic 400 clamp(16px,1.2vw,23px)/1.27 var(--ws-type-display-en);
+}
+.olive-second-layer__landing-square--verse cite{
+ font-size:clamp(9px,.72vw,12px);
+}
+.olive-second-layer__speaker-hero{
+ display:grid;grid-template-columns:minmax(170px,30%) minmax(0,1fr);
+ gap:clamp(16px,2vw,35px);align-items:start;
+}
+.olive-second-layer__speaker-portrait{
+ grid-column:1;grid-row:1/3;width:100%!important;
+ max-width:none!important;max-height:none!important;aspect-ratio:3/4;
+ object-fit:cover;margin:0!important;
+}
+.olive-second-layer__speaker-heading{grid-column:2;grid-row:1}
+.olive-second-layer__speaker-scripture{grid-column:2;grid-row:2}
+.olive-second-layer__speaker-heading h2{
+ font:400 clamp(36px,3vw,64px)/1 var(--ws-type-display-en);
+ overflow-wrap:normal;margin:14px 0 6px;
+}
+.olive-second-layer__speaker-scripture blockquote{
+ margin:10px 0;max-width:50ch;
+}
+.olive-second-layer__back{
+ display:block;cursor:pointer;background:none;color:var(--ws-morning-gold);
+ border:0;border-bottom:1px solid var(--ws-morning-gold);
+ padding:0 0 12px;margin-bottom:26px;letter-spacing:.12em;
+ font:200 clamp(11px,.86vw,14px)/1.2 var(--ws-type-display-en);
+}
+.olive-second-layer__series{
+ margin-top:clamp(30px,4svh,58px);
+ border-top:1px solid var(--ws-morning-gold);padding-top:16px;
+}
+.olive-second-layer__series h3{
+ margin:0 0 20px;color:var(--ws-morning-gold);
+ font:400 clamp(23px,2vw,37px)/1.1 var(--ws-type-display-en);
+}
+.olive-second-layer__series-grid{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:clamp(10px,1.2vw,20px);min-height:220px;
+}
+.olive-second-layer__series-card{
+ padding:14px;min-height:190px;
+ background:var(--ws-paper);color:var(--ws-ink);
+ border-top:3px solid var(--ws-morning-gold);
+}
+.olive-second-layer__series-card span{
+ display:block;color:var(--ws-olive);font:400 12px var(--ws-type-display-en);
+}
+.olive-second-layer__series-card h4{
+ font:400 clamp(17px,1.2vw,23px)/1.3 var(--ws-type-display-zh);
+}
+.olive-second-layer__series-card p{font:400 13px/1.35 var(--ws-type-display-en)}
+.olive-second-layer__series-empty{
+ grid-column:1/-1;align-self:start;padding:22px 0;
+ border-top:1px solid var(--ws-morning-gold);
+ color:var(--ws-paper);font:200 15px/1.5 var(--ws-type-display-en);
+}
+@media(max-width:900px){
+ .olive-second-layer__body{grid-template-columns:130px minmax(0,1fr)!important}
+ .olive-second-layer__speaker-hero{grid-template-columns:minmax(120px,36%) minmax(0,1fr)}
+ .olive-second-layer__series-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .olive-second-layer__body{grid-template-columns:106px minmax(0,1fr)!important;gap:12px!important}
+ .olive-second-layer__landing-square--title blockquote{font-size:12px}
+ .olive-second-layer__landing-square--verse blockquote[lang="en"]{font-size:11px}
+ .olive-second-layer__landing-square--verse cite{font-size:8px}
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__detail{
+  grid-column:1/-1;grid-row:2;
+ }
+ .olive-second-layer__speaker-hero{grid-template-columns:35% minmax(0,1fr);gap:10px}
+ .olive-second-layer__speaker-portrait{grid-row:1/3}
+ .olive-second-layer__speaker-heading h2{font-size:29px}
+ .olive-second-layer__speaker-scripture blockquote{font-size:14px}
+ .olive-second-layer__series-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
