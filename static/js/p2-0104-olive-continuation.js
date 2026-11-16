@@ -87,6 +87,7 @@
   button.append(img,caption);secondIndex?.append(button);
   button.addEventListener('click',()=>{
    const origin=img.getBoundingClientRect();
+   const flipSource=window.Flip?.getState(img);
    secondButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
    const back=document.createElement('button');back.type='button';
    back.className='olive-second-layer__back';back.textContent='← 十二位講員 / THE TWELVE';
@@ -142,11 +143,20 @@
     requestAnimationFrame(()=>{
      const to=image.getBoundingClientRect();
      if(to.width>0&&to.height>0&&origin.width>0&&origin.height>0){
-      image.animate([
-       {transform:'translate3d('+(origin.left-to.left)+'px,'+(origin.top-to.top)+
-        'px,0) scale('+(origin.width/to.width)+','+(origin.height/to.height)+')'},
-       {transform:'translate3d(0,0,0) scale(1,1)'}
-      ],{duration:760,easing:'cubic-bezier(.22,1,.36,1)'});
+      if(window.gsap&&window.Flip&&flipSource){
+       const startVars=Flip.fit(image,flipSource,{getVars:true,scale:true});
+       gsap.from(image,{...startVars,duration:.78,ease:'power3.out',
+        clearProps:'transform'});
+       stage.dataset.p2SpeakerMotion='gsap-flip-fit';
+      }else{
+       // Fail gracefully if the public CDN is unavailable.
+       image.animate([
+        {transform:'translate3d('+(origin.left-to.left)+'px,'+(origin.top-to.top)+
+         'px,0) scale('+(origin.width/to.width)+','+(origin.height/to.height)+')'},
+        {transform:'translate3d(0,0,0) scale(1,1)'}
+       ],{duration:760,easing:'cubic-bezier(.22,1,.36,1)'});
+       stage.dataset.p2SpeakerMotion='fallback-waapi';
+      }
      }
      [hero,verses,series].forEach((el,i)=>el.animate([
       {clipPath:'inset(0 100% 0 0)',transform:'translateY(12px)'},
@@ -178,7 +188,10 @@
    const ratio=1+(source.width/target.width-1)*remaining;
    square.style.transform='translate3d('+dx.toFixed(2)+'px,'+
     dy.toFixed(2)+'px,0) scale('+ratio.toFixed(5)+')';
-   square.style.opacity=ease((p-.61)/.13).toFixed(4);
+   // R42: the actual engraved motherform takes over. The two incoming
+   // squares are only the handoff carriers, not replacement typography.
+   square.style.opacity=(ease((p-.61)/.13)*
+    (1-ease((p-.86)/.10))).toFixed(4);
   });
   sheets.forEach((sheet,i)=>{
    const sq=twins[i%2].getBoundingClientRect();
@@ -198,6 +211,7 @@
   enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1;
   stage.dataset.p2Layer=p<=0?'first':p<.99999?'sevenfold-handoff':'second';
   stage.dataset.p2Sevenfold=p.toFixed(4);
+  stage.dataset.p2ScriptureMaster='scripture-studio-v60-p2-04';
  }
 
  if(window.P2OliveScriptures?.cards?.length!==roster.length||
