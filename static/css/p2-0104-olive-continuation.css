@@ -1189,7 +1189,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    The untouched R26 title/verse remains in DOM as editorial fallback. */
 .olive-stage__rubric--twin-editorial{
  left:50%;right:auto;top:clamp(43px,5.1svh,58px);width:auto;
- transform:translateX(-50%);z-index:35;overflow:visible;
+ transform:translateX(-50%);z-index:35;overflow:visible;pointer-events:auto;
 }
 .olive-stage__rubric--twin-editorial>.olive-stage__rubric-folio,
 .olive-stage__rubric--twin-editorial>.olive-stage__rubric-heading,
@@ -1198,7 +1198,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  position:relative;display:grid;grid-template-columns:repeat(2,var(--twin-side));
  width:calc(var(--twin-side)*2);height:var(--twin-side);padding:0;
  border:1px solid var(--ws-morning-gold);background:transparent;
- color:var(--ws-paper);text-align:left;cursor:pointer;
+ color:var(--ws-paper);text-align:left;cursor:pointer;pointer-events:auto;
  font-family:var(--ws-type-display-en);isolation:isolate;
 }
 .olive-twin-entry:focus-visible{outline:2px solid var(--ws-paper);outline-offset:5px}
