@@ -1580,3 +1580,14 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(12px,3vw,15px)}
  .olive-twin-entry .olive-twin-entry__ref{font-size:8px}
 }
+
+/* R36b — keep both readable panels ABOVE the first poster row. */
+@media(min-width:701px){
+ .olive-stage__rubric--twin-editorial{top:39px}
+ .olive-twin-entry{--olive-panel-h:clamp(78px,8.9svh,88px)}
+ .olive-twin-entry__square,.olive-twin-entry__square--right{padding:7px 18px;gap:2px}
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(27px,3.2svh,37px)}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:clamp(16px,1.85svh,20px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(13px,1.48svh,16px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(12px,1.34svh,15px)}
+}
