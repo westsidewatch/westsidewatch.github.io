@@ -2013,3 +2013,46 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-second-layer__index{grid-template-columns:repeat(3,minmax(0,1fr))}
  .olive-second-layer[data-view="speaker"] .olive-second-layer__detail{grid-column:auto;grid-row:auto}
 }
+
+
+/* R43 / Codrops Thumbnail Grid Expanding Preview: the detail is an
+   INLINE grid-row expansion, never a route or an independent page.
+   The selected 8:5 thumbnail row remains the visual anchor. */
+.olive-second-layer__index{
+ display:grid!important;
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ align-items:start;gap:clamp(10px,1.2vw,20px)!important;
+ width:100%;
+}
+.olive-second-layer__person{align-self:stretch;min-width:0;overflow:hidden}
+.olive-second-layer__person img{
+ aspect-ratio:8/5!important;object-fit:cover!important;
+ object-position:center 25%;
+}
+.olive-second-layer__detail{
+ grid-column:1/-1!important;grid-row:auto!important;width:100%;
+ min-width:0;min-height:clamp(360px,65svh,760px);
+ background:color-mix(in srgb,var(--ws-olive) 88%,var(--ws-paper));
+ border-top:2px solid var(--ws-morning-gold)!important;
+ padding:clamp(20px,2.5vw,42px)!important;
+ margin:0!important;overflow:visible;
+}
+.olive-second-layer__detail[hidden]{display:none!important}
+.olive-second-layer__detail .olive-second-layer__speaker-hero{
+ max-width:100%;
+}
+.olive-second-layer__detail .olive-second-layer__series{
+ margin-bottom:clamp(24px,5svh,55px);
+}
+@media(max-width:900px){
+ .olive-second-layer__index{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .olive-second-layer__detail{padding:22px!important}
+}
+@media(max-width:560px){
+ .olive-second-layer__index{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .olive-second-layer__person span{font-size:clamp(11px,2.8vw,14px)!important}
+ .olive-second-layer__detail{min-height:55svh;padding:16px!important}
+ .olive-second-layer__series-grid{grid-template-columns:1fr!important}
+ .olive-second-layer__speaker-hero{grid-template-columns:1fr!important}
+ .olive-second-layer__speaker-portrait{grid-row:auto!important}
+}
