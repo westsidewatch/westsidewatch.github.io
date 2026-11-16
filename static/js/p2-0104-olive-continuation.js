@@ -77,9 +77,22 @@
   const el=document.createElement('div');el.className='olive-sevenfold-handoff__sheet';
   el.style.setProperty('--olive-fold-color','var('+token+')');sheetHost?.append(el);return el;
  });
+ function inlinePreviewColumns(){
+  if(!secondIndex)return 4;
+  const tracks=getComputedStyle(secondIndex).gridTemplateColumns.split(' ').filter(Boolean);
+  return Math.max(1,tracks.length||4);
+ }
+ function placeInlinePreview(index){
+  const columns=inlinePreviewColumns();
+  const nextRow=(Math.floor(index/columns)+1)*columns;
+  // Codrops: expand directly beneath the selected thumbnail row.
+  secondIndex.insertBefore(detail,secondButtons[nextRow]||null);
+  second.dataset.activeSpeaker=String(index);
+ }
  const secondButtons=roster.map((speaker,index)=>{
   const button=document.createElement('button');button.type='button';
   button.className='olive-second-layer__person';button.setAttribute('aria-pressed','false');
+  button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','olive-second-detail');
   button.setAttribute('aria-label',speaker[2]+' · '+speaker[1]);
   const img=document.createElement('img');img.src='/images/olive/'+speaker[0]+'-editorial.png';
   img.alt='';img.loading='lazy';
@@ -88,12 +101,12 @@
   button.addEventListener('click',()=>{
    const origin=img.getBoundingClientRect();
    const flipSource=window.Flip?.getState(img);
-   secondButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+   secondButtons.forEach(b=>{const on=b===button;b.setAttribute('aria-pressed',String(on));b.setAttribute('aria-expanded',String(on))});
    const back=document.createElement('button');back.type='button';
    back.className='olive-second-layer__back';back.textContent='← 十二位講員 / THE TWELVE';
    back.addEventListener('click',()=>{
     second.dataset.view='index';detail.hidden=true;
-    secondButtons.forEach(b=>b.setAttribute('aria-pressed','false'));
+    secondButtons.forEach(b=>{b.setAttribute('aria-pressed','false');b.setAttribute('aria-expanded','false')});
     button.focus({preventScroll:true});
    });
    const label=document.createElement('span');label.className='olive-second-layer__label';
@@ -136,7 +149,9 @@
    }
    series.append(seriesHeading,catalogue);
    detail.replaceChildren(back,head,series);
+   placeInlinePreview(index);
    detail.hidden=false;detail.dataset.speaker=speaker[0];second.dataset.view='speaker';
+   requestAnimationFrame(()=>detail.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'}));
    // Full folio opens in place, keeping the first-page Scripture as
    // the leading structure and reserving genuine room for lecture series.
    if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -167,6 +182,17 @@
   });
   return button;
  });
+ // Responsive row placement retains the inline Codrops expansion.
+ let inlineResizeRAF=0;
+ addEventListener('resize',()=>{
+  if(second.dataset.view!=='speaker')return;
+  cancelAnimationFrame(inlineResizeRAF);
+  inlineResizeRAF=requestAnimationFrame(()=>{
+   const index=Number(second.dataset.activeSpeaker);
+   if(Number.isInteger(index)&&index>=0&&index<secondButtons.length)
+    placeInlinePreview(index);
+  });
+ },{passive:true});
  function paintSecondLayer(d){
   if(!second||!sevenfold||twins.length!==2)return;
   const p=clamp((d-24.50)/1.80),active=p>0&&p<.99999,open=p>.62;
