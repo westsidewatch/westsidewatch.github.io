@@ -2015,9 +2015,10 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 
 
-/* R43 / Codrops Thumbnail Grid Expanding Preview: the detail is an
+/* R44 / Codrops Thumbnail Grid Expanding Preview: the detail is an
    INLINE grid-row expansion, never a route or an independent page.
-   The selected 8:5 thumbnail row remains the visual anchor. */
+   Speaker thumbnails retain their original 1:1 squares; expansion
+   behavior does not authorize changing the approved thumbnail geometry. */
 .olive-second-layer__index{
  display:grid!important;
  grid-template-columns:repeat(4,minmax(0,1fr))!important;
@@ -2025,10 +2026,6 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  width:100%;
 }
 .olive-second-layer__person{align-self:stretch;min-width:0;overflow:hidden}
-.olive-second-layer__person img{
- aspect-ratio:8/5!important;object-fit:cover!important;
- object-position:center 25%;
-}
 .olive-second-layer__detail{
  grid-column:1/-1!important;grid-row:auto!important;width:100%;
  min-width:0;min-height:clamp(360px,65svh,760px);
