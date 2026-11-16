@@ -70,6 +70,8 @@
  const sevenfold=$('#olive-sevenfold-handoff'),sheetHost=sevenfold?.firstElementChild;
  const second=$('#olive-second-layer'),secondIndex=$('#olive-second-index'),detail=$('#olive-second-detail');
  const twins=[...document.querySelectorAll('.olive-twin-entry__square')];
+ const landings=[...document.querySelectorAll('.olive-second-layer__landing-square')];
+ const landingFrames=[...document.querySelectorAll('.olive-second-layer__landing')];
  const palette=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'];
  const sheets=palette.map(token=>{
   const el=document.createElement('div');el.className='olive-sevenfold-handoff__sheet';
@@ -98,6 +100,28 @@
    const reference=document.createElement('cite');
    reference.textContent=(passage?.referenceZh||'')+' / '+(passage?.referenceEn||'')+' · KJV';
    detail.replaceChildren(label,h,zh,verseZh,verseEn,reference,image);
+   detail.dataset.speaker=speaker[0];
+   // Measured FLIP: the selected portrait travels into its reading
+   // folio, with the text revealed afterward. Never navigate away.
+   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const from=img.getBoundingClientRect();
+    requestAnimationFrame(()=>{
+     const to=image.getBoundingClientRect();
+     if(to.width>0&&to.height>0&&from.width>0&&from.height>0){
+      const sx=from.width/to.width,sy=from.height/to.height;
+      image.animate([
+       {transform:'translate3d('+(from.left-to.left)+'px,'+(from.top-to.top)+
+        'px,0) scale('+sx+','+sy+')',opacity:.86},
+       {transform:'translate3d(0,0,0) scale(1,1)',opacity:1}
+      ],{duration:740,easing:'cubic-bezier(.22,1,.36,1)'});
+     }
+     [label,h,zh,verseZh,verseEn,reference].forEach((el,i)=>
+      el.animate([
+       {clipPath:'inset(0 100% 0 0)',transform:'translateY(8px)'},
+       {clipPath:'inset(0 0 0 0)',transform:'translateY(0)'}
+      ],{duration:580,delay:i*65,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'}));
+    });
+   }
   });
   return button;
  });
@@ -110,6 +134,20 @@
   second.setAttribute('aria-hidden',open?'false':'true');
   sevenfold.style.visibility=active?'visible':'hidden';
   const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
+  // The two text-bearing squares have a destination. Their geometry
+  // travels into the second editorial page instead of vanishing.
+  const landed=ease((p-.68)/.26);
+  landings.forEach((square,i)=>{
+   const source=twins[i]?.getBoundingClientRect();
+   const target=landingFrames[i]?.getBoundingClientRect();
+   if(!source||!target||!target.width)return;
+   const remaining=1-landed;
+   const dx=(source.left-target.left)*remaining,dy=(source.top-target.top)*remaining;
+   const ratio=1+(source.width/target.width-1)*remaining;
+   square.style.transform='translate3d('+dx.toFixed(2)+'px,'+
+    dy.toFixed(2)+'px,0) scale('+ratio.toFixed(5)+')';
+   square.style.opacity=ease((p-.61)/.13).toFixed(4);
+  });
   sheets.forEach((sheet,i)=>{
    const sq=twins[i%2].getBoundingClientRect();
    const x=clamp(sq.left-stageRect.left,0,w),y=clamp(sq.top-stageRect.top,0,h);
