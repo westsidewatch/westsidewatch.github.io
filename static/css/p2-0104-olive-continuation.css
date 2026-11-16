@@ -1452,3 +1452,69 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  }
  .olive-twin-entry .olive-twin-entry__edition,.olive-twin-entry .olive-twin-entry__ref{font-size:6px}
 }
+
+/* R35 — the agreed vertical pair at the upper-left: title / scripture.
+   Each panel is a true square; the pair forms one vertical rectangle. */
+.olive-stage__rubric--twin-editorial{
+ left:clamp(10px,1.1vw,22px);right:auto;
+ top:clamp(40px,4.6svh,52px);width:auto;
+ transform:none;overflow:visible;pointer-events:none;
+}
+.olive-twin-entry{
+ --olive-square:clamp(84px,10.4svh,106px);
+ display:flex;flex-direction:column;align-items:stretch;gap:0;
+ width:var(--olive-square);height:calc(2 * var(--olive-square));
+ padding:0;margin:0;overflow:visible;border:0;
+}
+.olive-twin-entry::before{display:none!important;content:none!important}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ box-sizing:border-box;position:relative;
+ flex:none;margin:0;width:var(--olive-square);height:var(--olive-square);
+ min-width:0;max-width:none;overflow:hidden;
+ padding:clamp(5px,.65svh,7px);border:1px solid var(--ws-morning-gold);
+ background:rgba(40,63,35,.23);
+ display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:1px;
+}
+.olive-twin-entry__square--right{border-top:0;align-items:flex-start}
+.olive-twin-entry .olive-twin-entry__edition{
+ position:static;top:auto;left:auto;right:auto;
+ font:200 clamp(6px,.6svh,8px)/1.1 var(--ws-type-display-en);
+ color:var(--ws-morning-gold);letter-spacing:.05em;
+}
+.olive-twin-entry .olive-twin-entry__title{
+ position:static;top:auto;left:auto;right:auto;transform:none;
+ font:400 clamp(15px,1.85svh,20px)/.96 var(--ws-type-display-en);
+ letter-spacing:-.035em;color:var(--ws-paper);white-space:normal;
+ text-shadow:none;display:block;
+}
+.olive-twin-entry .olive-twin-entry__zh{
+ position:static;top:auto;left:auto;right:auto;transform:none;
+ font:200 clamp(13px,1.55svh,17px)/1 var(--ws-type-display-zh);
+ letter-spacing:.04em;color:var(--ws-paper);text-shadow:none;display:block;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse,
+.olive-twin-entry__square--left .olive-twin-entry__verse{
+ position:static;top:auto;left:auto;right:auto;margin:0;width:auto;max-width:100%;
+ display:block;text-align:left;letter-spacing:0;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ font:200 clamp(8px,.9svh,10px)/1.18 var(--ws-type-display-zh);
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ font:italic 400 clamp(7px,.76svh,9px)/1.08 var(--ws-type-display-en);
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ position:static;display:block;font:200 clamp(5px,.6svh,7px)/1.1 var(--ws-type-display-en);
+ color:var(--ws-morning-gold);text-align:left;
+}
+.olive-twin-entry__folds{display:none!important}
+@media(max-width:700px){
+ .olive-stage__rubric--twin-editorial{left:5px;top:40px}
+ .olive-twin-entry{--olive-square:clamp(67px,10.1svh,85px)}
+ .olive-twin-entry__square,.olive-twin-entry__square--right{padding:4px}
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(12px,1.75svh,15px)}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:12px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:7px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:6px}
+ .olive-twin-entry .olive-twin-entry__ref{font-size:5px}
+}
