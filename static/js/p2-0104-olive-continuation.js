@@ -440,8 +440,8 @@
   const horizontal=g.w>=900?33:12;
   const stageBounds=stage.getBoundingClientRect();
   const mastheadBounds=twins[1].getBoundingClientRect();
-  const mastheadRight=mastheadBounds.right-stageBounds.left+16;
-  const mastheadBottom=mastheadBounds.bottom-stageBounds.top+14;
+  const mastheadRight=mastheadBounds.right-stageBounds.left+38;
+  const mastheadBottom=mastheadBounds.bottom-stageBounds.top+24;
   const reserveX=narrow?horizontal:Math.max(horizontal,mastheadRight);
   const top=narrow?Math.max(108,mastheadBottom):
     g.w>=900?Math.max(122,Math.min(150,g.h*.145)):Math.max(108,Math.min(132,g.h*.15));
