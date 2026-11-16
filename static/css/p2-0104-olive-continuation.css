@@ -1591,3 +1591,16 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(13px,1.48svh,16px)}
  .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(12px,1.34svh,15px)}
 }
+
+/* R37 — preserve true English word spacing and readable scripture contrast. */
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ color:var(--ws-ink);font-weight:400;font-size:clamp(15px,1.62svh,18px);
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ color:var(--ws-ink);font-weight:400;font-size:clamp(14px,1.47svh,17px);
+}
+.olive-twin-entry .olive-twin-entry__ref{color:var(--ws-ink)}
+@media(max-width:700px){
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(14px,3.3vw,17px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(13px,3.1vw,16px)}
+}
