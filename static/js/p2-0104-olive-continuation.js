@@ -33,8 +33,6 @@
  const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
  const overview=$('#olive-overview'),enter=$('#olive-enter');
  const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
- const sceneFold=$('#olive-scene-sevenfold');
- const sceneSheets=[...(sceneFold?.querySelectorAll('i')||[])];
  const engraved=$('#olive-editorial-engraving');
  const etchedLeft=engraved?.querySelector('[data-art-side="left"]');
  const etchedRight=engraved?.querySelector('[data-art-side="right"]');
@@ -417,21 +415,6 @@
   // Preserve the original reversible 03→04 reading-surface handoff.
   const readingField=ease((d-T.first)/.065);
   const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
-  // R32 sevenfold is an actual 03→04 handoff across the complete scene.
-  // Enter, cover, then clear into the settled Olive environment. One
-  // reversible timeline, no click or independent window-scroll clock.
-  const sevenIn=10.32,sevenOut=11.72;
-  const foldPhase=clamp((d-sevenIn)/(sevenOut-sevenIn));
-  const foldActive=d>sevenIn&&d<sevenOut;
-  if(sceneFold){
-   sceneFold.style.visibility=foldActive?'visible':'hidden';
-   stage.dataset.p2SevenfoldHandoff=foldActive?'active':d>=sevenOut?'completed':'pending';
-   sceneSheets.forEach((sheet,i)=>{
-    const enter=ease((foldPhase-i*.064)/.22);
-    const exit=ease((foldPhase-(.67+i*.035))/.12);
-    sheet.style.transform='translate3d('+(-101+101*enter+101*exit).toFixed(3)+'%,0,0)';
-   });
-  }
   // The ACTUAL outgoing Emmaus 5:8 book cover lives inside the 01–03
   // iframe. The neutral bridge must never duplicate its 5:8 binding.
   // Once the 03→04 bridge is FULLY opaque, retire the iframe itself,
@@ -731,7 +714,14 @@
   rubric.style.setProperty('--olive-title-growth',
     (fan*(vertical?0:5)).toFixed(2)+'px');
   rubric.style.transform='none';
-  // R31's seven isolated header wipes were decorative and are retired.
+  // Fold the entire two-field headpiece with the SAME continuous 01–04
+  // scroll authority. Both directions are reversible, no user click.
+  const folds=rubric.querySelectorAll('.olive-twin-entry__folds i');
+  const foldProgress=clamp((d-11.73)/.84);
+  folds.forEach((fold,i)=>{
+   const local=ease((foldProgress-i*.055)/.62);
+   fold.style.transform='translate3d('+(-102+204*local).toFixed(3)+'%,0,0)';
+  });
   rubric.style.clipPath=printTitle>=1?'none':
    'inset(0 '+((1-printTitle)*49).toFixed(3)+'% 0 '+((1-printTitle)*49).toFixed(3)+'%)';
   overview.style.visibility=d>=T.indexStart?'visible':'hidden';
