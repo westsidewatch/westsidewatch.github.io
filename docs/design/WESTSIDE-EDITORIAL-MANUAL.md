@@ -4,7 +4,7 @@ Status: **operational chapter of the single Westside Design OS**, not a parallel
 Audience: Church, First Look, Journal, Olive Mountain, ONE, Dawn Library, Cinema, Search, tools, and Doré Design agents.  
 Source of truth: [WESTSIDE-DESIGN-OS.md](WESTSIDE-DESIGN-OS.md) → `design-system/tokens/westside.tokens.json` → `static/css/westside-design-os.css` → approved `data-ws-scope` overrides.
 
-**工作指令快速索引：** 使用者說「多雷探索」時，立即按本手冊 [§9 多雷探索 / Doré Exploration](#9-多雷探索--doré-exploration) 執行；正式定義見 [`MASTER_SITE_ARCHITECTURE.md` §9](../MASTER_SITE_ARCHITECTURE.md)。此詞不是 Gustave Doré 的藝術風格，也不是「多雷搜索」。
+**施工啟動詞：「施工四查」** — 每次接到「開始製作／施工／修改／繼續工程」或任何實際程式、版面、動效修改指令，先強制執行 [§12 施工四查](#12-施工四查--每次製作前的強制門檻)，再讀取與修改檔案；使用者不必每次重說。未完成四查，不得寫入工程。\n\n**工作指令快速索引：** 使用者說「多雷探索」時，立即按本手冊 [§9 多雷探索 / Doré Exploration](#9-多雷探索--doré-exploration) 執行；正式定義見 [`MASTER_SITE_ARCHITECTURE.md` §9](../MASTER_SITE_ARCHITECTURE.md)。此詞不是 Gustave Doré 的藝術風格，也不是「多雷搜索」。
 
 ## 1. Authority, layers and safe integration
 
@@ -240,3 +240,27 @@ These files remain archived intact; they do not operate as independent OS author
 **安全邊界：** 不改 01–03 已驗收轉場、12 張講員海報、講員英文排版、橄欖山公版 SVG 底紋與 OS tokens；先在既有 P2 04 Draft 隔離預覽完成。逐項量測兩個 `getBoundingClientRect()` 的 width≈height 且兩者相等、無中線穿越、字體實際可讀、七層遮罩完全覆蓋、反向滾動、390／768／1648px 與 reduced-motion，通過後再提出正式合併，不能以 CI 綠燈替代畫面驗收。
 
 **本輪決策：採用現成成熟遮罩與捲動原理，改造接入既有 Olive stage；排除僅播放彩色片段、點擊按鈕、雙長方形、影片假轉場和另設第八套導航。**
+
+
+## 12. 施工四查 — 每次製作前的強制門檻
+
+**唯一啟動關鍵詞：`施工四查`。** 這是強制執行指令，不是建議、口號、研究報告或允許重議既定方案的邀請。使用者說「施工四查」即執行；即使使用者只說「開始製作」、「繼續」、「修改」、「施工」等，只要涉及 Westside Watch 網站、P2、SVG、字體、內容、互動或動效的實際修改，也**自動執行**，無需再次提醒。
+
+> **可直接執行的一句話：**「每次動手製作之前，必須先讀本次工程的現行記錄與已核准決策、完整相關《編輯手冊》條款、Westside Design OS 的權威規格，以及手冊的獲獎標準與已選定成熟範例；逐項比對現有程式和最新真實畫面，列出不可動內容與本次修改範圍。四項有一項未查證，就停止猜測與寫入；不得重新設計、替換、刪除或繞過已確定成果。完成後用真實瀏覽器與測試逐條驗收，未通過不得報稱完成。」
+
+### 四項查核必須形成可核對的施工輸入
+
+1. **查工程記錄與既定結果（WHAT IS LOCKED）。** 先核對當前 Draft PR／工作分支／最新 commit、相關 `docs/projects/` 工程文件、已核准的對話決策、既有原始碼／資產與上一輪截圖或預覽。明確列出「要保留」「這次要改」「禁止改」；既有成功母本與選定開源範例優先重用，不得無故另起版本。使用者此前說過的確定方案具約束力，不因對話換輪而失效。
+2. **查《編輯手冊》（HOW TO EDIT）。** 讀取本文件的相關完整章節，至少比對 §1 權威／接入、§2 排版、§5 動效、§6 驗收；涉及多雷探索讀 §9，雙方塊／七重疊讀 §11，經文鉛字另讀本手冊 Scripture Studio 章與所屬項目契約。不可只記得章名、摘要或憑印象施工。
+3. **查 Design OS（WHICH DESIGN AUTHORITY）。** 讀 `docs/design/WESTSIDE-DESIGN-OS.md`，依修改範圍核對 `design-system/tokens/westside.tokens.json`、`design-system/scopes.json`、`static/css/westside-design-os.css` 與所屬 `data-ws-scope`。字體、字重、色彩、字號、留白、材料與動效必須從權威來源核對；局部修正不得創造另一個全域 OS。
+4. **查獲獎標準與實際成熟範例（WHY THIS IS GOOD ENOUGH）。** 讀本手冊 §3 Award-calibre precedent method、§4 視覺／動效能力、§6 的 20 分內部評估與阻斷條件，及本工程已選定的範例／「多雷探索」成果。只轉譯已選範例的**可運行機制**，不憑空宣稱獲獎或重新搜尋來代替製作。完成時以真實構圖、可讀性、連續動效、互動、手機、反向、減動態驗收；CI 綠燈不是藝術通過。
+
+### 執行與停止條件
+
+- **寫入前短報告：** 用最短可核對文字列出四查各自查到的具體檔案／版本／約束，列出本次只改哪些檔案。這是施工核對，不要求使用者重新批准已核准方案；完成後直接工作，不反覆討論。
+- **先檢查，後寫入：** 禁止在四查完成前修改 HTML／CSS／JS／SVG、替換海報／母本或提交 PR。若某一份必需權威文件不可讀、相互矛盾或未定位，精確說出缺項並先查找；若仍無法判定，暫停有風險修改並請求指示，不能自行作主。
+- **優先原件：** 「有成熟開源技術／已完成母本」不是可選建議。應先確認並整合已選來源及授權、實際讀取原件，再改局部接口；禁止以普通文字、測試 iframe、全新交互或視覺近似品假冒原件。
+- **驗收四對照：** 修改後逐條核對 (A) 既定決策是否原樣保留、(B) 手冊排版／動效語法是否成立、(C) OS 是否合規、(D) 真實瀏覽器畫面和互動是否達內部獲獎標準。記下已驗證／未驗證；不能把「已提交」「預覽在部署」「測試通過」說成「視覺完成」。
+- **工程邊界：** 本條只規範工作順序，不擴大任務授權、不允許修改不相關頁面、合併 Draft、覆寫正式 P2 01–03，也不新增全站運行時依賴。
+
+**反面案例（2026-11-16，橄欖山第二層）：** 已選 Codrops [Thumbnail Grid Expanding Preview](https://tympanus.net/Tutorials/ThumbnailGridExpandingPreview/) 與 GSAP Flip 作同頁 4×3 講員網格展開；已有 Scripture Studio 單組鉛字母本／雙閱讀方向與七重疊交接規格。卻曾用自行編寫的獨立講員詳頁與普通經文／嵌入測試 iframe 替代。這不是探索不足，是**施工四查缺失**。後續必須使用原件、同頁開合、正確經文轉化，不得再次要求使用者重新說明已核准結果。
