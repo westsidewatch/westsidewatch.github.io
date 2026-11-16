@@ -713,7 +713,7 @@
   // it must never drift across protected posters during final indexing.
   rubric.style.setProperty('--olive-title-growth',
     (fan*(vertical?0:5)).toFixed(2)+'px');
-  rubric.style.transform='translate3d(0,'+
+  rubric.style.transform='translate3d(-50%,'+
     ((vertical?0:(g.w<900?8:22))*fan).toFixed(1)+'px,0)';
   rubric.style.clipPath=printTitle>=1?'none':
    'inset(0 '+((1-printTitle)*49).toFixed(3)+'% 0 '+((1-printTitle)*49).toFixed(3)+'%)';
@@ -764,6 +764,34 @@
  }
  // 04 backdrop SVG removed. No fetch, live paths or animation-frame loop.
  document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.seek)));
+ const twinEntry=document.getElementById('olive-twin-entry');
+ const twinReading=document.getElementById('olive-twin-reading');
+ let sevenfoldTimer=0;
+ function closeTwinReading(){
+  clearTimeout(sevenfoldTimer);
+  twinEntry.classList.remove('is-folding');
+  rubric.classList.remove('is-reading');
+  twinEntry.setAttribute('aria-expanded','false');
+  twinReading.setAttribute('aria-hidden','true');
+ }
+ if(twinEntry&&twinReading){
+  twinEntry.addEventListener('click',()=>{
+   if(twinEntry.classList.contains('is-folding'))return;
+   twinEntry.classList.add('is-folding');
+   sevenfoldTimer=setTimeout(()=>{
+    rubric.classList.add('is-reading');
+    twinReading.setAttribute('aria-hidden','false');
+    twinEntry.setAttribute('aria-expanded','true');
+   },matchMedia('(prefers-reduced-motion: reduce)').matches?0:1450);
+  });
+  twinReading.setAttribute('role','button');
+  twinReading.setAttribute('tabindex','0');
+  twinReading.setAttribute('aria-label','收合雙經文方塊，返回橄欖山刊頭');
+  twinReading.addEventListener('click',closeTwinReading);
+  twinReading.addEventListener('keydown',event=>{
+   if(event.key==='Enter'||event.key===' '){event.preventDefault();closeTwinReading();twinEntry.focus()}
+  });
+ }
  slider.addEventListener('input',()=>go(+slider.value));
  base.addEventListener('load',schedule);
  addEventListener('scroll',schedule,{passive:true});
