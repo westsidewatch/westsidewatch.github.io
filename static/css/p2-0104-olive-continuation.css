@@ -1384,3 +1384,71 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
   .olive-twin-entry__square--right .olive-twin-entry__verse{font-size:clamp(11px,2.7vw,16px);line-height:1.1}
   .olive-twin-entry .olive-twin-entry__ref{font-size:7px}
 }
+
+/* R34: the actual two-square 2:1 carrier, NOT two elongated fields.
+   Its title and scripture occupy the full-width editorial register around it. */
+.olive-stage__rubric--twin-editorial{left:0;right:0;width:100%;top:clamp(37px,4.35svh,48px);overflow:visible}
+.olive-twin-entry{
+ --olive-square:clamp(92px,11.5svh,116px);
+ display:grid;grid-template-columns:repeat(2,var(--olive-square));
+ justify-content:center;align-content:start;gap:0;
+ width:100%;height:calc(var(--olive-square) + 51px);
+ border:0;overflow:visible;
+}
+.olive-twin-entry::before{content:none!important;display:none!important}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ box-sizing:border-box;position:relative;
+ width:var(--olive-square);height:var(--olive-square);
+ margin:51px 0 0;padding:14px 8px 9px;
+ border:1px solid var(--ws-morning-gold);overflow:visible;
+ background:rgba(35,58,32,.24);align-items:flex-start;justify-content:space-between;
+}
+.olive-twin-entry__square--right{border-left:0;align-items:flex-end}
+.olive-twin-entry>.olive-twin-entry__title{
+ top:0;left:50%;transform:translateX(-50%);
+ font:400 clamp(30px,3vw,46px)/1 var(--ws-type-display-en);
+ letter-spacing:-.03em;white-space:nowrap;text-shadow:none;
+}
+.olive-twin-entry>.olive-twin-entry__zh{
+ top:clamp(32px,2.9vw,42px);font:200 clamp(11px,.92vw,15px)/1 var(--ws-type-display-zh);
+ letter-spacing:.18em;text-shadow:none;
+}
+.olive-twin-entry .olive-twin-entry__edition,
+.olive-twin-entry__square--right .olive-twin-entry__edition{
+ position:relative;top:auto;left:auto;right:auto;
+ font:200 clamp(7px,.54vw,9px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.04em;
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ font-size:clamp(7px,.52vw,9px);line-height:1.2;
+}
+.olive-twin-entry__square--left .olive-twin-entry__verse{
+ position:absolute;top:19px;right:calc(100% + clamp(20px,3vw,52px));
+ width:clamp(260px,32vw,520px);max-width:none;
+ font:200 clamp(18px,1.65vw,27px)/1.22 var(--ws-type-display-zh);
+ text-align:left;letter-spacing:.015em;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse{
+ position:absolute;top:19px;left:calc(100% + clamp(20px,3vw,52px));
+ width:clamp(260px,32vw,520px);max-width:none;margin:0;
+ font:italic 400 clamp(18px,1.63vw,27px)/1.13 var(--ws-type-display-en);
+ text-align:right;
+}
+.olive-twin-entry__folds{display:none!important}
+@media(max-width:700px){
+ .olive-twin-entry{--olive-square:clamp(70px,10.5svh,96px);height:calc(var(--olive-square) + 50px)}
+ .olive-twin-entry__square,.olive-twin-entry__square--right{
+  width:var(--olive-square);height:var(--olive-square);margin-top:50px;padding:10px 5px 6px;
+ }
+ .olive-twin-entry>.olive-twin-entry__title{font-size:clamp(24px,6vw,35px)}
+ .olive-twin-entry>.olive-twin-entry__zh{top:34px;font-size:11px}
+ .olive-twin-entry__square--left .olive-twin-entry__verse{
+  top:12px;right:calc(100% + 8px);width:calc((100vw - 2 * var(--olive-square))/2 - 13px);
+  font-size:clamp(10px,2.4vw,15px);line-height:1.17;
+ }
+ .olive-twin-entry__square--right .olive-twin-entry__verse{
+  top:12px;left:calc(100% + 8px);width:calc((100vw - 2 * var(--olive-square))/2 - 13px);
+  font-size:clamp(10px,2.4vw,15px);line-height:1.1;
+ }
+ .olive-twin-entry .olive-twin-entry__edition,.olive-twin-entry .olive-twin-entry__ref{font-size:6px}
+}
