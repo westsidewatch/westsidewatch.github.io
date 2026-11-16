@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OLIVE MOUNTAIN — R29 Full-Width Masthead</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:var(--ws-olive,#71885d);color:var(--ws-paper,#f5f0e4)}
+body{font-family:var(--ws-type-display-en,Georgia,serif)}
+.sheet{width:min(100%,1800px);padding:clamp(16px,3.3vw,60px);margin:0 auto}
+.folio{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ws-morning-gold,#d6c475);padding:0 0 11px;gap:16px;color:var(--ws-morning-gold,#d6c475);font:200 10px/1.35 system-ui;letter-spacing:.19em}
+.masthead{position:relative;display:grid;grid-template-columns:1fr 1fr;min-height:clamp(290px,28vw,440px);border-bottom:1px solid var(--ws-morning-gold,#d6c475);overflow:hidden;isolation:isolate}
+.half{position:relative;min-width:0;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(19px,2.25vw,38px) clamp(20px,2.5vw,45px);border-right:1px solid color-mix(in srgb,var(--ws-morning-gold,#d6c475) 75%,transparent)}
+.half:last-of-type{border-right:0}.half .meta{font:200 10px/1.25 system-ui;letter-spacing:.2em;color:var(--ws-morning-gold,#d6c475)}
+.half-cn .content{display:grid;grid-template-columns:minmax(140px,.8fr) minmax(0,1fr);align-items:center;gap:clamp(14px,2.6vw,44px)}
+.section-identity{align-self:center}.section-identity .en-name{display:block;font:400 clamp(65px,7.4vw,135px)/.76 var(--ws-type-display-en,Didot,Georgia,serif);letter-spacing:-.09em;white-space:nowrap}
+.section-identity .zh-name{display:block;font:600 clamp(27px,3.1vw,55px)/1.2 var(--ws-type-display-zh,'Songti TC',serif);margin-top:clamp(20px,2vw,34px);letter-spacing:.12em;white-space:nowrap}
+.scripture-cn{display:block;align-self:center;justify-self:end;writing-mode:vertical-rl;max-height:clamp(160px,20vw,310px);font:200 clamp(19px,1.65vw,30px)/1.55 var(--ws-type-display-zh,'Songti TC',serif);letter-spacing:.065em;text-align:start}
+.half-en .en-content{align-self:center;display:flex;flex-direction:column;justify-content:center;gap:clamp(13px,1.6vw,26px);padding-left:clamp(9px,1.7vw,30px)}
+.mountain{font:400 clamp(60px,6.2vw,113px)/.77 var(--ws-type-display-en,Didot,Georgia,serif);letter-spacing:-.095em;white-space:nowrap}
+.scripture-en{max-width:20ch;font:italic 400 clamp(23px,2.48vw,44px)/1.12 var(--ws-type-display-en,Georgia,serif);letter-spacing:-.025em;margin:0}
+.verse-ref{font:200 11px/1.4 system-ui;letter-spacing:.17em;color:var(--ws-morning-gold,#d6c475)}
+.prompt{display:inline-flex;align-items:center;gap:15px;border:0;background:none;color:var(--ws-morning-gold,#d6c475);font:200 11px/1.3 system-ui;letter-spacing:.16em;padding:10px 0;cursor:pointer}
+.prompt:focus-visible{outline:2px solid white;outline-offset:4px}.prompt::after{content:'→';font-size:22px;line-height:.4}
+.sevenfold{pointer-events:none;position:absolute;z-index:7;inset:0;overflow:hidden}
+.sevenfold i{position:absolute;top:0;bottom:0;width:100%;left:0;background:var(--color);transform:translateX(-105%);visibility:hidden}
+.masthead.is-folding .sevenfold i{visibility:visible;animation:fullfold 1.35s cubic-bezier(.76,0,.24,1) both;animation-delay:calc(var(--i)*.095s)}
+@keyframes fullfold{0%{transform:translateX(-105%)}55%{transform:translateX(0)}100%{transform:translateX(105%)}}
+.below{display:flex;justify-content:space-between;gap:24px;margin:14px 0 32px;color:var(--ws-morning-gold,#d6c475);font:200 11px/1.45 system-ui;letter-spacing:.13em}
+.portraits{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,30px);width:min(100%,1180px);margin:0 auto}
+.portrait{margin:0;min-width:0;padding:clamp(8px,.8vw,14px);border:1px solid color-mix(in srgb,var(--ws-morning-gold,#d6c475) 53%,transparent)}
+.portrait img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;background:#ede3d1}.portrait figcaption{padding:10px 0 0;color:var(--ws-morning-gold,#d6c475);font:200 10px/1.2 system-ui;letter-spacing:.14em}
+.status{font:200 10px/1.5 system-ui;letter-spacing:.13em;color:var(--ws-morning-gold,#d6c475);margin-top:28px}
+@media(max-width:1000px){.half-cn .content{grid-template-columns:1fr;gap:15px}.scripture-cn{justify-self:start;writing-mode:horizontal-tb;max-height:none;font-size:clamp(14px,2vw,22px);line-height:1.45}.section-identity .en-name{font-size:clamp(48px,7vw,75px)}.mountain{font-size:clamp(38px,5.8vw,65px)}.scripture-en{font-size:clamp(19px,2.5vw,31px)}}
+@media(max-width:650px){.sheet{padding:18px 13px}.folio{font-size:7px;letter-spacing:.08em}.masthead{grid-template-columns:1fr;min-height:0}.half{border-right:0;border-bottom:1px solid var(--ws-morning-gold,#d6c475);padding:18px 6px 20px}.half:last-of-type{border:0}.half-cn .content{display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:150px}.section-identity .en-name{font-size:clamp(52px,12vw,75px)}.section-identity .zh-name{font-size:clamp(26px,6vw,37px);margin-top:16px}.scripture-cn{writing-mode:vertical-rl;max-height:135px;justify-self:end;font-size:15px;line-height:1.5}.half-en .en-content{padding:10px 0 0;gap:16px}.mountain{font-size:clamp(47px,11vw,75px)}.scripture-en{font-size:clamp(22px,6.2vw,34px);max-width:22ch}.below{font-size:8px}.portraits{gap:8px}.portrait{padding:4px}.portrait figcaption{font-size:7px;letter-spacing:0}.status{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.masthead.is-folding .sevenfold i{animation:none;visibility:hidden}}
+</style></head>
+<body><main class="sheet">
+ <div class="folio"><span>WESTSIDE WATCH · P2 / VOL.00</span><span>04 / 07 · 橄欖山 · INVITATION TO HEAR</span></div>
+ <header class="masthead" id="masthead" aria-label="橄欖山全幅雙經文刊頭">
+  <section class="half half-cn" lang="zh-Hant"><span class="meta">01 / THE WORD · 中文經文</span><div class="content"><div class="section-identity"><strong class="en-name" lang="en">OLIVE</strong><strong class="zh-name">橄欖山</strong></div><p class="scripture-cn">可見信道是從聽道來的，聽道是從基督的話來的。</p></div><span class="verse-ref">羅馬書 10:17</span></section>
+  <section class="half half-en" lang="en"><span class="meta">02 / THE WORD · KING JAMES VERSION</span><div class="en-content"><strong class="mountain">MOUNTAIN</strong><p class="scripture-en">So then faith cometh by hearing, and hearing by the word of God.</p></div><span class="verse-ref">ROMANS 10:17 · KJV</span></section>
+  <div class="sevenfold" aria-hidden="true"><i style="--i:0;--color:var(--ws-water,#6f9aa0)"></i><i style="--i:1;--color:var(--ws-first-light,#a4b5a1)"></i><i style="--i:2;--color:var(--ws-pale-gold,#e1cf8b)"></i><i style="--i:3;--color:var(--ws-olive,#71885d)"></i><i style="--i:4;--color:var(--ws-harvest,#bc8b4c)"></i><i style="--i:5;--color:var(--ws-crimson,#ae5148)"></i><i style="--i:6;--color:var(--ws-daylight-mauve,#90869d)"></i></div>
+ </header>
+ <div class="below"><button class="prompt" id="play" type="button">SEVENFOLD / 七重疊動效檢視</button><span>FULL-WIDTH SCRIPTURE-LED MASTHEAD · R29</span></div>
+ <section class="portraits" aria-label="原有講員海報安全區"><figure class="portrait"><img src="/images/olive/watchman-nee-editorial.png" alt="倪柝聲原有海報"><figcaption>WATCHMAN NEE · 倪柝聲</figcaption></figure><figure class="portrait"><img src="/images/olive/derek-prince-editorial.png" alt="葉光明原有海報"><figcaption>DEREK PRINCE · 葉光明</figcaption></figure></section>
+ <p class="status">R29 ISOLATED EDITORIAL PROOF · LAYER 1 ONLY · LAYER 2 AND ORIGINAL P2 MOTION UNTOUCHED</p>
+ </main><script>const m=document.getElementById('masthead');document.getElementById('play').addEventListener('click',()=>{m.classList.remove('is-folding');void m.offsetWidth;m.classList.add('is-folding')});</script></body></html>
