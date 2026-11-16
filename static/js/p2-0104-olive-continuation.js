@@ -86,12 +86,21 @@
   const caption=document.createElement('span');caption.textContent=speaker[2]+' / '+speaker[1];
   button.append(img,caption);secondIndex?.append(button);
   button.addEventListener('click',()=>{
+   const origin=img.getBoundingClientRect();
    secondButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+   const back=document.createElement('button');back.type='button';
+   back.className='olive-second-layer__back';back.textContent='← 十二位講員 / THE TWELVE';
+   back.addEventListener('click',()=>{
+    second.dataset.view='index';detail.hidden=true;
+    secondButtons.forEach(b=>b.setAttribute('aria-pressed','false'));
+    button.focus({preventScroll:true});
+   });
    const label=document.createElement('span');label.className='olive-second-layer__label';
    label.textContent='04 / 07 · OLIVE MOUNTAIN';
    const h=document.createElement('h2');h.textContent=speaker[2];
    const zh=document.createElement('p');zh.lang='zh-Hant';zh.textContent=speaker[1];
    const image=document.createElement('img');image.src=img.src;image.alt=caption.textContent;
+   image.className='olive-second-layer__speaker-portrait';
    const passage=window.P2OliveScriptures?.cards?.[index];
    const verseZh=document.createElement('blockquote');verseZh.lang='zh-Hant';
    verseZh.textContent=passage?.excerpt||'';
@@ -99,27 +108,50 @@
    verseEn.textContent=passage?.excerptEn||'';
    const reference=document.createElement('cite');
    reference.textContent=(passage?.referenceZh||'')+' / '+(passage?.referenceEn||'')+' · KJV';
-   detail.replaceChildren(label,h,zh,verseZh,verseEn,reference,image);
-   detail.dataset.speaker=speaker[0];
-   // Measured FLIP: the selected portrait travels into its reading
-   // folio, with the text revealed afterward. Never navigate away.
+   const hero=document.createElement('header');hero.className='olive-second-layer__speaker-heading';
+   hero.append(label,h,zh);
+   const verses=document.createElement('div');verses.className='olive-second-layer__speaker-scripture';
+   verses.append(verseZh,verseEn,reference);
+   const head=document.createElement('div');head.className='olive-second-layer__speaker-hero';
+   head.append(image,hero,verses);
+   const series=document.createElement('section');series.className='olive-second-layer__series';
+   const seriesHeading=document.createElement('h3');seriesHeading.textContent='系列講座 / LECTURE SERIES';
+   const catalogue=document.createElement('div');catalogue.className='olive-second-layer__series-grid';
+   const items=window.P2OliveSeries?.[speaker[0]]||[];
+   if(items.length){
+    items.forEach((entry,i)=>{
+     const article=document.createElement('article');article.className='olive-second-layer__series-card';
+     const serial=document.createElement('span');serial.textContent=String(i+1).padStart(2,'0');
+     const title=document.createElement('h4');title.textContent=entry.titleZh||entry.title||'';
+     const english=document.createElement('p');english.textContent=entry.titleEn||'';
+     const count=document.createElement('small');
+     count.textContent=Array.isArray(entry.episodes)?entry.episodes.length+' 講':'';
+     article.append(serial,title,english,count);catalogue.append(article);
+    });
+   }else{
+    const note=document.createElement('p');note.className='olive-second-layer__series-empty';
+    note.textContent='系列講座目錄整理中 · SERIES CATALOGUE IN PREPARATION';
+    catalogue.append(note);
+   }
+   series.append(seriesHeading,catalogue);
+   detail.replaceChildren(back,head,series);
+   detail.hidden=false;detail.dataset.speaker=speaker[0];second.dataset.view='speaker';
+   // Full folio opens in place, keeping the first-page Scripture as
+   // the leading structure and reserving genuine room for lecture series.
    if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const from=img.getBoundingClientRect();
     requestAnimationFrame(()=>{
      const to=image.getBoundingClientRect();
-     if(to.width>0&&to.height>0&&from.width>0&&from.height>0){
-      const sx=from.width/to.width,sy=from.height/to.height;
+     if(to.width>0&&to.height>0&&origin.width>0&&origin.height>0){
       image.animate([
-       {transform:'translate3d('+(from.left-to.left)+'px,'+(from.top-to.top)+
-        'px,0) scale('+sx+','+sy+')',opacity:.86},
-       {transform:'translate3d(0,0,0) scale(1,1)',opacity:1}
-      ],{duration:740,easing:'cubic-bezier(.22,1,.36,1)'});
+       {transform:'translate3d('+(origin.left-to.left)+'px,'+(origin.top-to.top)+
+        'px,0) scale('+(origin.width/to.width)+','+(origin.height/to.height)+')'},
+       {transform:'translate3d(0,0,0) scale(1,1)'}
+      ],{duration:760,easing:'cubic-bezier(.22,1,.36,1)'});
      }
-     [label,h,zh,verseZh,verseEn,reference].forEach((el,i)=>
-      el.animate([
-       {clipPath:'inset(0 100% 0 0)',transform:'translateY(8px)'},
-       {clipPath:'inset(0 0 0 0)',transform:'translateY(0)'}
-      ],{duration:580,delay:i*65,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'}));
+     [hero,verses,series].forEach((el,i)=>el.animate([
+      {clipPath:'inset(0 100% 0 0)',transform:'translateY(12px)'},
+      {clipPath:'inset(0 0 0 0)',transform:'translateY(0)'}
+     ],{duration:620,delay:140+i*115,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'}));
     });
    }
   });
