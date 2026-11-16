@@ -1264,6 +1264,74 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-twin-reading__square p{font-size:clamp(14px,3.4vw,21px)}
  .olive-twin-reading__square--horizontal p{font-size:clamp(15px,3.5vw,22px)}
 }
+
+/* R32: scripture is the visual subject; the title is a quiet colophon.
+   The two fields keep their outside frame but the seam begins BELOW
+   the uninterrupted English name, never through the letters. */
+.olive-stage__rubric--twin-editorial{top:clamp(48px,5svh,58px)}
+.olive-twin-entry{
+ height:clamp(172px,18svh,202px);position:relative;
+ border-top:1px solid var(--ws-morning-gold);
+ border-bottom:1px solid var(--ws-morning-gold);
+}
+.olive-twin-entry::before{
+ content:"";position:absolute;top:62px;bottom:0;left:50%;width:1px;
+ background:var(--ws-morning-gold);opacity:.65;z-index:1;
+}
+.olive-twin-entry__square--right{border-left:0}
+.olive-twin-entry__square{
+ padding:78px clamp(18px,4.2vw,82px) 16px;
+ align-items:flex-start;justify-content:center;gap:8px;
+}
+.olive-twin-entry__square--right{align-items:flex-end}
+.olive-twin-entry>.olive-twin-entry__title{
+ top:12px;font:400 clamp(26px,3.1vw,53px)/1 var(--ws-type-display-en);
+ letter-spacing:-.048em;text-shadow:none;
+}
+.olive-twin-entry>.olive-twin-entry__zh{
+ top:clamp(43px,3.4vw,55px);font:200 clamp(12px,1vw,17px)/1.1 var(--ws-type-display-zh);
+ letter-spacing:.22em;text-shadow:none;
+}
+.olive-twin-entry .olive-twin-entry__edition{
+ top:12px;font-size:clamp(8px,.55vw,10px);
+}
+.olive-twin-entry .olive-twin-entry__verse{
+ font:200 clamp(18px,2vw,32px)/1.28 var(--ws-type-display-zh);
+ max-width:24ch;letter-spacing:.018em;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse{
+ font:italic 400 clamp(17px,1.85vw,30px)/1.17 var(--ws-type-display-en);
+ max-width:32ch;margin-left:0;text-align:left;
+}
+.olive-twin-entry .olive-twin-entry__ref{font-size:clamp(9px,.67vw,12px)}
+.olive-twin-entry__folds{display:none}
+#olive-scene-sevenfold{
+ position:absolute;inset:0;z-index:8;overflow:hidden;pointer-events:none;
+ visibility:hidden;
+}
+#olive-scene-sevenfold i{
+ position:absolute;inset:0;display:block;will-change:transform;
+ transform:translate3d(-101%,0,0);
+}
+#olive-scene-sevenfold i:nth-child(1){background:var(--ws-water)}
+#olive-scene-sevenfold i:nth-child(2){background:var(--ws-first-light)}
+#olive-scene-sevenfold i:nth-child(3){background:var(--ws-pale-gold)}
+#olive-scene-sevenfold i:nth-child(4){background:var(--ws-olive)}
+#olive-scene-sevenfold i:nth-child(5){background:var(--ws-harvest)}
+#olive-scene-sevenfold i:nth-child(6){background:var(--ws-crimson)}
+#olive-scene-sevenfold i:nth-child(7){background:var(--ws-olive)}
+@media(max-width:700px){
+ .olive-twin-entry{height:clamp(170px,23svh,218px)}
+ .olive-twin-entry::before{top:57px}
+ .olive-twin-entry>.olive-twin-entry__title{top:12px;font-size:clamp(25px,6vw,40px)}
+ .olive-twin-entry>.olive-twin-entry__zh{top:44px;font-size:12px}
+ .olive-twin-entry__square{padding:66px 11px 9px;gap:6px}
+ .olive-twin-entry .olive-twin-entry__edition{top:5px;font-size:6px;letter-spacing:0}
+ .olive-twin-entry .olive-twin-entry__verse{font-size:clamp(13px,3.1vw,20px);line-height:1.3}
+ .olive-twin-entry__square--right .olive-twin-entry__verse{font-size:clamp(12px,2.9vw,20px);line-height:1.25}
+ .olive-twin-entry .olive-twin-entry__ref{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){#olive-scene-sevenfold{display:none}}
 @media(prefers-reduced-motion:reduce){
  .olive-twin-entry.is-folding .olive-twin-entry__folds i{animation:none}
  .olive-twin-reading{transition:none}
@@ -1315,4 +1383,28 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-twin-entry>.olive-twin-entry__zh{top:75px;font-size:16px}
  .olive-twin-entry .olive-twin-entry__verse{font-size:10px}
  .olive-twin-entry__square--right .olive-twin-entry__verse{font-size:11px}
+}
+
+/* R32 final authority after legacy R31: scripture-led twin frame. */
+.olive-stage__rubric--twin-editorial{top:clamp(48px,5svh,58px)}
+.olive-twin-entry{height:clamp(172px,18svh,202px)}
+.olive-twin-entry__square--right{border-left:0}
+.olive-twin-entry__square{padding:78px clamp(18px,4.2vw,82px) 16px;align-items:flex-start;justify-content:center;gap:8px}
+.olive-twin-entry__square--right{align-items:flex-end}
+.olive-twin-entry>.olive-twin-entry__title{top:12px;font:400 clamp(26px,3.1vw,53px)/1 var(--ws-type-display-en);letter-spacing:-.048em;text-shadow:none}
+.olive-twin-entry>.olive-twin-entry__zh{top:clamp(43px,3.4vw,55px);font:200 clamp(12px,1vw,17px)/1.1 var(--ws-type-display-zh);letter-spacing:.22em;text-shadow:none}
+.olive-twin-entry .olive-twin-entry__edition{top:12px;font-size:clamp(8px,.55vw,10px)}
+.olive-twin-entry .olive-twin-entry__verse{font:200 clamp(18px,2vw,32px)/1.28 var(--ws-type-display-zh);max-width:24ch;letter-spacing:.018em}
+.olive-twin-entry__square--right .olive-twin-entry__verse{font:italic 400 clamp(17px,1.85vw,30px)/1.17 var(--ws-type-display-en);max-width:32ch;margin-left:0;text-align:left}
+.olive-twin-entry .olive-twin-entry__ref{font-size:clamp(9px,.67vw,12px)}
+.olive-twin-entry__folds{display:none}
+@media(max-width:700px){
+ .olive-twin-entry{height:clamp(170px,23svh,218px)}
+ .olive-twin-entry>.olive-twin-entry__title{top:12px;font-size:clamp(25px,6vw,40px)}
+ .olive-twin-entry>.olive-twin-entry__zh{top:44px;font-size:12px}
+ .olive-twin-entry__square{padding:66px 11px 9px;gap:6px}
+ .olive-twin-entry .olive-twin-entry__edition{top:5px;font-size:6px;letter-spacing:0}
+ .olive-twin-entry .olive-twin-entry__verse{font-size:clamp(13px,3.1vw,20px);line-height:1.3}
+ .olive-twin-entry__square--right .olive-twin-entry__verse{font-size:clamp(12px,2.9vw,20px);line-height:1.25}
+ .olive-twin-entry .olive-twin-entry__ref{font-size:8px}
 }
