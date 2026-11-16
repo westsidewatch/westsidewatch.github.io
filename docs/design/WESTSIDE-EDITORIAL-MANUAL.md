@@ -212,3 +212,31 @@ These files remain archived intact; they do not operate as independent OS author
 **Chinese Seal weights:** `Chiron Hei HK WS` (genuine Chiron Hei HK webfont) Heavy **900** for Chinese-primary Seal and ExtraLight **200** for Chinese as English-primary countertype. Chiron official documented weight axis **200–900**: https://github.com/chiron-fonts/chiron-hei-hk/blob/release/README.en.md . The sitewide OS semantic heading token **600** is NOT a substitute for this artwork's Heavy **900**; do not change the OS global token to accomplish the artwork-specific requirement. Use actual font-face inspection and glyph capture, not CSS numbers alone.
 
 **07 design acceptance:** all bilingual scripture exact; authoritative poetry lines and editor-approved secondary breaks before geometry; one mixed mother forme and two reading orientations; varied crossings within strips rather than repeated ZH–EN pairs; strict majority non-50/50; measure **actual ink silhouette** as well as DOM bounding boxes in both axes; determine artboard dimensions and inter-strip rhythm from text, never auto-shrink glyphs to fit. Neither a failed font-gate screenshot nor a nice-looking fallback-raster mockup constitutes approved art. Isolated experimental pages must not affect main P2 without review.
+
+
+## 11. 橄欖山雙正方形與七重疊轉場 — 多雷探索技術成果（2026-11-16）
+
+**來源與工作目標固定，不得擅改：** Uppdrag Granskning（Dallas STHLM，Red Dot 2024 Best of the Best）的兩個 *Search Lights* 正方形是造型與敘事的共同起點；P2 橄欖山第一層左上角必須由**兩個真正等大、上下相接的正方形**形成一個豎向 1:2 矩形。上方為 OS 橄欖綠底的「OLIVE MOUNTAIN／橄欖山」，下方為 OS 金色底的羅馬書 10:17 中英經文。中英文均須實際可讀，不得用 5–8px 微字湊入小方框，也不得把兩個方塊改成長方形、添加腰斬刊頭的中線、轉場按鈕或工程控制文字。
+
+**獲獎案例一手資料：**
+- Dallas 動態案例：https://www.dallas.se/uppdrag-granskning-motion-studio
+- Dallas 視覺識別：https://www.dallas.se/uppdrag-granskning-visual-identities
+- Red Dot：https://www.red-dot.org/zh/project/svt-uppdrag-granskning-73286
+- Dallas 確認其工作為 Visual Identity、Motion Design、2D Animation、Motion Templates；雙方塊用於 *unmask images / open and close overlays / direct attention*。公開案例由 Squarespace + Vimeo／影片載入展示；不得把展示頁面的 JS 當成原動畫的源碼，亦不得未經證據宣稱原作使用 GSAP 或 After Effects。
+
+**可實際取用的工程母本（優先級與分工）：**
+1. [Codrops：SVG Mask Transitions on Scroll（2026-03-11）](https://tympanus.net/codrops/2026/03/11/svg-mask-transitions-on-scroll-with-gsap-and-scrolltrigger/)：真正的畫面遮蔽／揭示；SVG mask 以黑／白控制隱藏／顯示，將七層方塊幾何展開為遮罩。利用可響應的 viewBox、微重疊消除 1px 接縫、resize 時重建 timeline。**首選轉場技術母本**，教程代碼的授權狀態需在重用時逐檔確認。
+2. [Codrops OneElementScroll](https://github.com/codrops/OneElementScroll)：同一元素在 ScrollTrigger + Flip 驅動下跨幾何位置運動；借用測量與連續性，不複製展示樣式。
+3. [Codrops ScrollBasedLayoutAnimations](https://github.com/codrops/ScrollBasedLayoutAnimations)：ScrollTrigger + Flip 的版面狀態交接；GitHub 專案標示 MIT，重用需保存授權。
+4. [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)：`scrub` 綁定真實捲動進度，`pin` 固定舞台，向上滾動按原路復原。
+5. [GSAP Flip](https://gsap.com/docs/v3/Plugins/Flip/)：只在 DOM 版面位置切換時使用；七層 SVG 遮罩幾何直接動畫，不強迫 Flip 變形遮罩。
+6. [Codrops OnScrollFilter](https://github.com/codrops/OnScrollFilter)：可選的 SVG 紋理實驗，非最小必要依賴；避免因刻線或濾鏡降低可讀性和效能。
+
+**成熟度／費用／負載決策：** GSAP 3.13+ 的核心及插件目前可免費取得，普通網站商用須遵守 [GSAP／Webflow 授權](https://webflow.com/legal/product-terms)。優先原生 SVG + 一條 GSAP timeline；不引入 WebGL、額外全域滾動引擎或重複的動畫控制器。Lenis 是 Codrops 教程的可選平滑捲動，不預設加入既有 P2，避免改壞 01–03 Merci 滾動。減少每幀 DOM/layout 寫入，尊重 `prefers-reduced-motion`。
+
+**不可修改的實作與驗收語法：**
+`雙方塊（標題／經文） → 使用者捲動 → 兩個既有方塊成為七層遮罩的幾何源頭 → 七層確實遮蔽第一層 → 展開揭示第二層 → 第二層無第一層刊頭`。向上捲動全程反向復原。**七重疊是第一層到第二層的轉場，不是第一層內無目的的自動表演或按鈕動畫。** 第一層 P2 後續章節採通欄刊頭的總體原則保留，橄欖山雙正方形在通欄區左上建立清晰的閱讀錨點；第二層不設刊頭。
+
+**安全邊界：** 不改 01–03 已驗收轉場、12 張講員海報、講員英文排版、橄欖山公版 SVG 底紋與 OS tokens；先在既有 P2 04 Draft 隔離預覽完成。逐項量測兩個 `getBoundingClientRect()` 的 width≈height 且兩者相等、無中線穿越、字體實際可讀、七層遮罩完全覆蓋、反向滾動、390／768／1648px 與 reduced-motion，通過後再提出正式合併，不能以 CI 綠燈替代畫面驗收。
+
+**本輪決策：採用現成成熟遮罩與捲動原理，改造接入既有 Olive stage；排除僅播放彩色片段、點擊按鈕、雙長方形、影片假轉場和另設第八套導航。**
