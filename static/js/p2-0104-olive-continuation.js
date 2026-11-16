@@ -90,7 +90,14 @@
    const h=document.createElement('h2');h.textContent=speaker[2];
    const zh=document.createElement('p');zh.lang='zh-Hant';zh.textContent=speaker[1];
    const image=document.createElement('img');image.src=img.src;image.alt=caption.textContent;
-   detail.replaceChildren(label,h,zh,image);
+   const passage=window.P2OliveScriptures?.cards?.[index];
+   const verseZh=document.createElement('blockquote');verseZh.lang='zh-Hant';
+   verseZh.textContent=passage?.excerpt||'';
+   const verseEn=document.createElement('blockquote');verseEn.lang='en';
+   verseEn.textContent=passage?.excerptEn||'';
+   const reference=document.createElement('cite');
+   reference.textContent=(passage?.referenceZh||'')+' / '+(passage?.referenceEn||'')+' · KJV';
+   detail.replaceChildren(label,h,zh,verseZh,verseEn,reference,image);
   });
   return button;
  });
@@ -98,6 +105,8 @@
   if(!second||!sevenfold||twins.length!==2)return;
   const p=clamp((d-24.50)/1.80),active=p>0&&p<.99999,open=p>.62;
   second.style.visibility=open?'visible':'hidden';second.inert=p<.99999;
+  // Focus must never reach the original gallery through the second page.
+  if(open){folio.inert=true;folio.setAttribute('aria-hidden','true')}
   second.setAttribute('aria-hidden',open?'false':'true');
   sevenfold.style.visibility=active?'visible':'hidden';
   const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
@@ -106,7 +115,10 @@
    const x=clamp(sq.left-stageRect.left,0,w),y=clamp(sq.top-stageRect.top,0,h);
    const rw=clamp(sq.width,0,w-x),rh=clamp(sq.height,0,h-y);
    const rem=1-ease((p-i*.035)/.34);
-   const t=Math.max(0,y*rem),r=Math.max(0,(w-x-rw)*rem);
+   // Seven distinct overlapping color leaves, not seven opaque
+   // full-screen planes hiding one another as a purple flash.
+   const band=i*w*.125*ease((p-.24)/.24);
+   const t=Math.max(0,y*rem),r=Math.max((w-x-rw)*rem,band);
    const b=Math.max(0,(h-y-rh)*rem),l=Math.max(0,x*rem);
    sheet.style.clipPath='inset('+t.toFixed(2)+'px '+r.toFixed(2)+'px '+
     b.toFixed(2)+'px '+l.toFixed(2)+'px)';
@@ -381,22 +393,33 @@
   nextRight.style.visibility=withNext&&transition>0?'visible':'hidden';
  }
  function layoutIndex(g,t){
-  const cols=g.w>=900?6:g.w>=600?4:3;
+  // R39: the two approved square blocks own a physical editorial
+  // rail. Never place a poster underneath the masthead; on narrow
+  // screens the complete twelve-speaker grid follows that rail.
+  const narrow=g.w<700;
+  const cols=narrow?4:g.w>=900?6:4;
   const rows=Math.ceil(12/cols);
   const horizontal=g.w>=900?33:12;
-  const top=g.w>=900?Math.max(122,Math.min(150,g.h*.145)):Math.max(108,Math.min(132,g.h*.15));
-  const bottom=g.w>=900?72:64;
+  const stageBounds=stage.getBoundingClientRect();
+  const mastheadBounds=twins[1].getBoundingClientRect();
+  const mastheadRight=mastheadBounds.right-stageBounds.left+16;
+  const mastheadBottom=mastheadBounds.bottom-stageBounds.top+14;
+  const reserveX=narrow?horizontal:Math.max(horizontal,mastheadRight);
+  const top=narrow?Math.max(108,mastheadBottom):
+    g.w>=900?Math.max(122,Math.min(150,g.h*.145)):Math.max(108,Math.min(132,g.h*.15));
+  const bottom=narrow?22:g.w>=900?72:64;
   const gapX=g.w>=900?13:7;
   // A caption is now OUTSIDE its original 3:4 print, on dark-green
   // invitation stock. The portrait box itself NEVER includes the caption.
   const rowGap=g.w>=900?31:21;
-  const maxW=(g.w-2*horizontal-(cols-1)*gapX)/cols;
+  const availableW=g.w-reserveX-horizontal;
+  const maxW=(availableW-(cols-1)*gapX)/cols;
   const maxH=(g.h-top-bottom-(rows-1)*rowGap)/rows;
   const posterW=Math.max(1,Math.min(maxW,maxH*.75));
   const posterH=posterW*4/3;
   const totalW=cols*posterW+(cols-1)*gapX;
   const totalH=rows*posterH+(rows-1)*rowGap;
-  const leftX=(g.w-totalW)/2;
+  const leftX=reserveX+(availableW-totalW)/2;
   const topY=top+Math.max(0,(g.h-top-bottom-totalH)/2);
   const anchors=galleryRects(g);
   cards.forEach((card,i)=>{
