@@ -116,6 +116,15 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .p2Embedded .work{padding:0}
 .p2Embedded .pair{gap:clamp(10px,1.8vw,30px)}
 .p2Embedded .plate{width:100%;aspect-ratio:1}
+/* P2 proof embedded inside a fixed 2:1 editorial frame: no studio tools,
+   nested scrollbars or single-column collapse. Standalone studio untouched. */
+.p2Embedded{overflow:hidden!important}
+.p2Embedded .toolPalette{display:none!important}
+.p2Embedded .pair{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:clamp(10px,1.8vw,30px)!important}
+.p2Embedded .shell,.p2Embedded .work{min-width:0!important;overflow:hidden!important}
+.p2Embedded .impression{min-width:0}
+.p2Embedded .plate{max-width:none!important}
+
 /* Print proof uses the SAME live mother forme and its verified self-hosted font files. */
 @media print{
  @page{size:A4 landscape;margin:11mm}
