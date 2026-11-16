@@ -1112,3 +1112,74 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-stage__companion-verse-en{font-size:clamp(11px,3.05vw,13px);line-height:1.27}
  .olive-stage__companion-reference-en{font-size:clamp(10px,2.75vw,11px)}
 }
+
+/* R26 / direct P2 integration: R25 AB editorial twin geometry.
+   This is the EXISTING 04 masthead in its reserved stage zone. No new
+   full-screen object, poster layer, or independent transition controller.
+   The two fields govern alignment; they are not permanent box borders. */
+.olive-stage__rubric--twin-editorial{
+ --olive-twin-gutter:clamp(18px,2.1vw,36px);
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:var(--olive-twin-gutter);row-gap:3px;
+ align-items:end;position:relative;padding:7px 0 12px;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading::after{
+ content:"";position:absolute;bottom:0;left:0;right:0;
+ border-bottom:1px solid color-mix(in srgb,var(--ws-morning-gold) 42%,transparent);
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading strong{
+ grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:var(--olive-twin-gutter);align-items:end;width:100%;
+ font-size:calc(clamp(36px,5.7vw,89px) + var(--olive-title-growth,0px));
+ letter-spacing:-.066em;line-height:.87;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__word-olive,
+.olive-stage__rubric--twin-editorial .olive-stage__word-mountain{
+ display:block;min-width:0;white-space:nowrap;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__word-mountain{
+ font-size:.69em;letter-spacing:-.052em;text-align:right;
+ padding-bottom:.045em;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading .olive-stage__rubric-zh{
+ grid-column:2;justify-self:end;text-align:right;
+ font-size:clamp(18px,1.9vw,29px);line-height:1.12;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture{
+ width:100%;grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:var(--olive-twin-gutter);padding-top:9px;border-top:0;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture-zh,
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture-en{
+ max-width:48ch;
+}
+@media(max-width:900px){
+ .olive-stage__rubric--twin-editorial{--olive-twin-gutter:clamp(10px,2vw,22px)}
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(27px,6.2vw,54px) + var(--olive-title-growth,0px));
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__word-mountain{font-size:.69em}
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  font-size:clamp(15px,2.6vw,23px)
+ }
+}
+@media(max-width:540px){
+ .olive-stage__rubric--twin-editorial{--olive-twin-gutter:8px}
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading{
+  padding:4px 0 7px;row-gap:3px;
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(22px,6.5vw,32px) + var(--olive-title-growth,0px));
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__word-mountain{
+  font-size:.64em;letter-spacing:-.065em;
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  font-size:clamp(14px,3.7vw,17px)
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture{
+  column-gap:8px;padding-top:6px;
+ }
+}
