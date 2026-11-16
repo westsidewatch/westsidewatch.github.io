@@ -50,7 +50,7 @@
  const T={start:9.44,first:10.08,spread:10.95,
           groundStart:11.15,groundEnd:11.73,
           pairStart:11.95,pairStep:.83,pairDuration:.62,
-          indexStart:23.00,indexEnd:24.10,end:24.50};
+          indexStart:23.00,indexEnd:24.10,end:26.30};
  const roster=[
   ['watchman-nee','倪柝聲','WATCHMAN NEE'],
   ['derek-prince','葉光明','DEREK PRINCE'],
@@ -66,6 +66,58 @@
   ['kou-shao-en','寇紹恩','KOU SHAO-EN']
  ];
  const pathFor=i=>'/images/olive/'+roster[i][0]+'-editorial.png';
+ // R38: two actual squares drive seven masks through one existing scroll clock.
+ const sevenfold=$('#olive-sevenfold-handoff'),sheetHost=sevenfold?.firstElementChild;
+ const second=$('#olive-second-layer'),secondIndex=$('#olive-second-index'),detail=$('#olive-second-detail');
+ const twins=[...document.querySelectorAll('.olive-twin-entry__square')];
+ const palette=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'];
+ const sheets=palette.map(token=>{
+  const el=document.createElement('div');el.className='olive-sevenfold-handoff__sheet';
+  el.style.setProperty('--olive-fold-color','var('+token+')');sheetHost?.append(el);return el;
+ });
+ const secondButtons=roster.map((speaker,index)=>{
+  const button=document.createElement('button');button.type='button';
+  button.className='olive-second-layer__person';button.setAttribute('aria-pressed','false');
+  button.setAttribute('aria-label',speaker[2]+' · '+speaker[1]);
+  const img=document.createElement('img');img.src='/images/olive/'+speaker[0]+'-editorial.png';
+  img.alt='';img.loading='lazy';
+  const caption=document.createElement('span');caption.textContent=speaker[2]+' / '+speaker[1];
+  button.append(img,caption);secondIndex?.append(button);
+  button.addEventListener('click',()=>{
+   secondButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+   const label=document.createElement('span');label.className='olive-second-layer__label';
+   label.textContent='04 / 07 · OLIVE MOUNTAIN';
+   const h=document.createElement('h2');h.textContent=speaker[2];
+   const zh=document.createElement('p');zh.lang='zh-Hant';zh.textContent=speaker[1];
+   const image=document.createElement('img');image.src=img.src;image.alt=caption.textContent;
+   detail.replaceChildren(label,h,zh,image);
+  });
+  return button;
+ });
+ function paintSecondLayer(d){
+  if(!second||!sevenfold||twins.length!==2)return;
+  const p=clamp((d-24.50)/1.80),active=p>0&&p<.99999,open=p>.62;
+  second.style.visibility=open?'visible':'hidden';second.inert=p<.99999;
+  second.setAttribute('aria-hidden',open?'false':'true');
+  sevenfold.style.visibility=active?'visible':'hidden';
+  const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
+  sheets.forEach((sheet,i)=>{
+   const sq=twins[i%2].getBoundingClientRect();
+   const x=clamp(sq.left-stageRect.left,0,w),y=clamp(sq.top-stageRect.top,0,h);
+   const rw=clamp(sq.width,0,w-x),rh=clamp(sq.height,0,h-y);
+   const rem=1-ease((p-i*.035)/.34);
+   const t=Math.max(0,y*rem),r=Math.max(0,(w-x-rw)*rem);
+   const b=Math.max(0,(h-y-rh)*rem),l=Math.max(0,x*rem);
+   sheet.style.clipPath='inset('+t.toFixed(2)+'px '+r.toFixed(2)+'px '+
+    b.toFixed(2)+'px '+l.toFixed(2)+'px)';
+   sheet.style.transform='translate3d(0,'+
+    (-101*ease((p-.60-i*.024)/.20)).toFixed(3)+'%,0)';
+  });
+  enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1;
+  stage.dataset.p2Layer=p<=0?'first':p<.99999?'sevenfold-handoff':'second';
+  stage.dataset.p2Sevenfold=p.toFixed(4);
+ }
+
  if(window.P2OliveScriptures?.cards?.length!==roster.length||
     !roster.every((r,i)=>r[0]===window.P2OliveScriptures.cards[i].slug))
    throw new Error('04 scripture editor: 12 sourced verses must match the approved speaker roster');
@@ -759,6 +811,7 @@
     d<T.pairStart?'04-editorial-hold':
     d<T.indexStart?'04-alternating-folio-faces':
     d<T.indexEnd?'04-twelve-recomposition':'04-twelve-index';
+  paintSecondLayer(d);
   status.textContent=d<T.start?'03 / 07 · EMMAUS':
    d<T.groundEnd?'04 / 07 · THE FIRST TWO':
    d<T.indexStart?'04 / 07 · TWELVE VOICES':
