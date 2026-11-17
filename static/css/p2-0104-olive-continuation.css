@@ -2015,7 +2015,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 }
 
 
-/* R44 / Codrops Thumbnail Grid Expanding Preview: the detail is an
+/* R45 / Codrops Thumbnail Grid Expanding Preview: the detail is an
    INLINE grid-row expansion, never a route or an independent page.
    Speaker thumbnails retain their original 1:1 squares; expansion
    behavior does not authorize changing the approved thumbnail geometry. */
@@ -2023,7 +2023,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  display:grid!important;
  grid-template-columns:repeat(4,minmax(0,1fr))!important;
  align-items:start;gap:clamp(10px,1.2vw,20px)!important;
- width:100%;
+ width:min(100%,960px);margin-inline:auto;
 }
 .olive-second-layer__person{align-self:stretch;min-width:0;overflow:hidden}
 .olive-second-layer__detail{
