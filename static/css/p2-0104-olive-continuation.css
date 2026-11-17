@@ -1713,7 +1713,7 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-second-layer__person{background:var(--ws-paper);color:var(--ws-ink);border:1px solid var(--ws-first-light);
  cursor:pointer;text-align:left;padding:0;display:grid;min-width:0}
 .olive-second-layer__person img{display:block;aspect-ratio:1/1;object-fit:cover;
- object-position:50% 20%;width:100%;filter:grayscale(100%)}
+ object-position:50% 20%;width:100%;filter:none}
 .olive-second-layer__person span{padding:8px 9px;display:block;
  font:400 clamp(10px,.85vw,14px)/1.25 var(--ws-type-display-en);overflow-wrap:break-word}
 .olive-second-layer__person:focus-visible,.olive-second-layer__person[aria-pressed="true"]{
@@ -2052,4 +2052,67 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-second-layer__series-grid{grid-template-columns:1fr!important}
  .olive-second-layer__speaker-hero{grid-template-columns:1fr!important}
  .olive-second-layer__speaker-portrait{grid-row:auto!important}
+}
+
+/* R46 / four-check integration: preserve authentic 1:1 speaker images, their
+   individual editorial colour and the original Codrops inline grid expander.
+   Two existing scripture formes now frame the full-width speaker catalogue.
+   These rules are scoped to P2 04, not the shared Design OS. */
+.olive-second-layer{
+ background:var(--ws-olive)!important;color:var(--ws-paper)!important;
+}
+.olive-second-layer__body{
+ width:100%!important;max-width:none!important;
+ gap:clamp(24px,3svh,45px)!important;
+}
+.olive-second-layer__masthead,
+.olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+ width:100%!important;max-width:none!important;margin:0!important;
+ aspect-ratio:auto!important;height:clamp(174px,19vw,330px)!important;
+}
+.olive-second-layer__scripture-master{width:100%!important;height:100%!important}
+.olive-second-layer__landing-overlay{display:none!important}
+.olive-second-layer__index{
+ width:100%!important;max-width:none!important;margin:0!important;
+ grid-template-columns:repeat(4,minmax(0,220px))!important;
+ justify-content:space-between!important;
+ column-gap:clamp(12px,2vw,38px)!important;
+ row-gap:clamp(12px,1.4vw,24px)!important;
+}
+.olive-second-layer__person{
+ background:var(--ws-paper);
+ border-color:var(--ws-morning-gold);
+ box-shadow:0 2px 0 var(--ws-morning-gold);
+}
+.olive-second-layer__person img{
+ filter:none!important;-webkit-filter:none!important;
+ aspect-ratio:1/1!important;object-fit:cover;
+}
+.olive-second-layer__person span{
+ font-size:clamp(11px,.87vw,14px)!important;
+ color:var(--ws-ink);background:var(--ws-paper);
+}
+.olive-second-layer__detail{
+ background:var(--ws-olive)!important;
+ border-top-color:var(--ws-morning-gold)!important;
+}
+@media(max-width:1060px){
+ .olive-second-layer__index{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  column-gap:clamp(9px,1.4vw,17px)!important;
+ }
+}
+@media(max-width:900px){
+ .olive-second-layer__index{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .olive-second-layer__masthead,
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+  height:clamp(160px,32vw,280px)!important
+ }
+}
+@media(max-width:560px){
+ .olive-second-layer__index{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .olive-second-layer__masthead,
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+  height:clamp(155px,44vw,235px)!important
+ }
 }
