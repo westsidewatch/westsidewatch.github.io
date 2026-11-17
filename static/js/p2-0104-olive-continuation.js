@@ -73,10 +73,34 @@
  const landings=[...document.querySelectorAll('.olive-second-layer__landing-square')];
  const landingFrames=[...document.querySelectorAll('.olive-second-layer__landing')];
  const palette=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'];
- const sheets=palette.map(token=>{
-  const el=document.createElement('div');el.className='olive-sevenfold-handoff__sheet';
-  el.style.setProperty('--olive-fold-color','var('+token+')');sheetHost?.append(el);return el;
+ // Dallas Search Lights spatial grammar + Codrops SVG mask geometry:
+ // two source squares become seven responsive, individually masked leaves.
+ const svgNS='http://www.w3.org/2000/svg';
+ const svgNode=(name,attrs={})=>{
+  const node=document.createElementNS(svgNS,name);
+  Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));return node;
+ };
+ const foldSvg=svgNode('svg',{class:'olive-sevenfold-handoff__svg','aria-hidden':'true',preserveAspectRatio:'none'});
+ const foldDefs=svgNode('defs');foldSvg.append(foldDefs);
+ const sheets=palette.map((token,i)=>{
+  const id='olive-sevenfold-leaf-r50-'+i;
+  const mask=svgNode('mask',{id,maskUnits:'userSpaceOnUse',maskContentUnits:'userSpaceOnUse'});
+  const polygon=svgNode('polygon',{fill:'white'});mask.append(polygon);foldDefs.append(mask);
+  const group=svgNode('g');
+  const fill=svgNode('rect',{x:'0',y:'0',fill:'var('+token+')',mask:'url(#'+id+')'});
+  group.append(fill);foldSvg.append(group);
+  return {group,fill,mask,polygon};
  });
+ sheetHost?.replaceChildren(foldSvg);
+ // Carry the SAME approved HTML letterforms; never replace them with raster cards.
+ const carrierHost=document.createElement('div');
+ carrierHost.className='olive-twin-entry olive-sevenfold-carrier-host';
+ const foldCarriers=twins.map(source=>{
+  const node=source.cloneNode(true);
+  node.classList.add('olive-sevenfold-carrier');node.setAttribute('aria-hidden','true');
+  carrierHost.append(node);return node;
+ });
+ sevenfold?.append(carrierHost);
  function inlinePreviewColumns(){
   if(!secondIndex)return 4;
   const tracks=getComputedStyle(secondIndex).gridTemplateColumns.split(' ').filter(Boolean);
@@ -193,29 +217,40 @@
     placeInlinePreview(index);
   });
  },{passive:true});
- // R49: the cross-layer sevenfold is a deliberate masthead click,
- // never a scroll distance. P2's scroll continues to subsequent first-layer chapters.
- let handoffProgress=0,handoffTarget=0,handoffFrame=0,handoffStart=0;
- const handoffDuration=1250;
+ // R50: one reversible GSAP timeline. Click owns the handoff; scroll
+ // remains the independent P2 first-layer clock. The two squares travel
+ // through offset / cross / gathering states before revealing seven SVG leaves.
  const masthead=$('#olive-twin-entry');
- function animateHandoff(now){
-  const elapsed=clamp((now-handoffStart)/handoffDuration);
-  handoffProgress=mix(handoffProgressStart,handoffTarget,ease(elapsed));
-  schedule();
-  if(elapsed<1)handoffFrame=requestAnimationFrame(animateHandoff);
-  else{handoffProgress=handoffTarget;handoffFrame=0;schedule();}
- }
- let handoffProgressStart=0;
+ const handoffClock={value:0};
+ let handoffProgress=0,handoffTarget=0;
+ const handoffTimeline=window.gsap?.timeline({paused:true,onUpdate:()=>{
+  handoffProgress=handoffClock.value;schedule();
+ }})?.to(handoffClock,{value:1,duration:2.35,ease:'none'});
  function setHandoff(target){
-  target=target?1:0;
-  if(target===handoffTarget&&(!handoffFrame||handoffProgress===target))return;
-  if(handoffFrame)cancelAnimationFrame(handoffFrame);
-  handoffProgressStart=handoffProgress;handoffTarget=target;
-  handoffStart=performance.now();
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-   handoffProgress=target;schedule();return;
+  handoffTarget=target?1:0;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches||!handoffTimeline){
+   handoffTimeline?.pause(handoffTarget?handoffTimeline.duration():0);
+   handoffClock.value=handoffTarget;handoffProgress=handoffTarget;schedule();return;
   }
-  handoffFrame=requestAnimationFrame(animateHandoff);
+  if(handoffTarget)handoffTimeline.play();else handoffTimeline.reverse();
+ }
+ // Per-section spatial vocabulary: Olive 04 = botanical outward encounter,
+ // cross-axis exchange, gathering at the center, then seven engraved leaves.
+ const oliveMoves=[
+  [{t:0,x:0,y:0,s:1},{t:.22,x:.34,y:.23,s:.88},{t:.43,x:.68,y:.26,s:.84},{t:.62,x:.45,y:.47,s:.72},{t:.80,x:.31,y:.30,s:.66}],
+  [{t:0,x:0,y:0,s:1},{t:.22,x:.69,y:.71,s:.88},{t:.43,x:.32,y:.70,s:.84},{t:.62,x:.55,y:.53,s:.72},{t:.80,x:.69,y:.30,s:.66}]
+ ];
+ function carrierPose(i,p,source,stageRect){
+  const keys=oliveMoves[i],w=stageRect.width,h=stageRect.height;
+  const initial={x:source.left-stageRect.left+source.width/2,
+   y:source.top-stageRect.top+source.height/2};
+  const xy=k=>k.t===0?{x:initial.x,y:initial.y,s:1}:
+   {x:k.x*w,y:k.y*h,s:k.s};
+  if(p>=.80){const v=xy(keys[keys.length-1]);return {...v,s:mix(v.s,.07,ease((p-.80)/.17))};}
+  let lo=keys[0],hi=keys[keys.length-1];
+  for(let k=1;k<keys.length;k++)if(p<=keys[k].t){lo=keys[k-1];hi=keys[k];break;}
+  const a=xy(lo),b=xy(hi),v=ease((p-lo.t)/(hi.t-lo.t));
+  return {x:mix(a.x,b.x,v),y:mix(a.y,b.y,v),s:mix(a.s,b.s,v)};
  }
  if(masthead){
   masthead.setAttribute('role','button');masthead.tabIndex=0;
@@ -238,7 +273,7 @@
  });
  function paintSecondLayer(){
   if(!second||!sevenfold||twins.length!==2)return;
-  const p=handoffProgress,active=p>0&&p<.99999,open=p>.62;
+  const p=handoffProgress,active=p>.001&&p<.99999,open=p>.57;
   second.style.visibility=open?'visible':'hidden';second.inert=p<.99999;
   if(masthead)masthead.setAttribute('aria-expanded',String(p>.62));
   returnToFirst.tabIndex=p>.62?0:-1;
@@ -247,37 +282,36 @@
   second.setAttribute('aria-hidden',open?'false':'true');
   sevenfold.style.visibility=active?'visible':'hidden';
   const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
-  // The two text-bearing squares have a destination. Their geometry
-  // travels into the second editorial page instead of vanishing.
-  const landed=ease((p-.68)/.26);
-  landings.forEach((square,i)=>{
-   const source=twins[i]?.getBoundingClientRect();
-   const target=landingFrames[i]?.getBoundingClientRect();
-   if(!source||!target||!target.width)return;
-   const remaining=1-landed;
-   const dx=(source.left-target.left)*remaining,dy=(source.top-target.top)*remaining;
-   const ratio=1+(source.width/target.width-1)*remaining;
-   square.style.transform=p<=0?'':'translate3d('+dx.toFixed(2)+'px,'+
-    dy.toFixed(2)+'px,0) scale('+ratio.toFixed(5)+')';
-   // R42: the actual engraved motherform takes over. The two incoming
-   // squares are only the handoff carriers, not replacement typography.
-   square.style.opacity=p<=0?'':(ease((p-.61)/.13)*
-    (1-ease((p-.86)/.10))).toFixed(4);
+  foldSvg.setAttribute('viewBox','0 0 '+w+' '+h);
+  const poses=twins.map((source,i)=>{
+   const rect=source.getBoundingClientRect(),pose=carrierPose(i,p,rect,stageRect);
+   const copy=foldCarriers[i];
+   copy.style.setProperty('width',rect.width+'px','important');
+   copy.style.setProperty('height',rect.height+'px','important');
+   copy.style.transform='translate3d('+(pose.x-rect.width/2).toFixed(2)+'px,'+
+    (pose.y-rect.height/2).toFixed(2)+'px,0) scale('+pose.s.toFixed(4)+')';
+   copy.style.visibility=p>.004&&p<.91?'visible':'hidden';
+   source.style.opacity=p>.004?'0':'';
+   return pose;
   });
+  // Seven separate, actual SVG masks. Each grows from the moved square's
+  // geometry into one precisely tessellated colored leaf, then peels upward.
   sheets.forEach((sheet,i)=>{
-   const sq=twins[i%2].getBoundingClientRect();
-   const x=clamp(sq.left-stageRect.left,0,w),y=clamp(sq.top-stageRect.top,0,h);
-   const rw=clamp(sq.width,0,w-x),rh=clamp(sq.height,0,h-y);
-   const rem=1-ease((p-i*.035)/.34);
-   // Seven distinct overlapping color leaves, not seven opaque
-   // full-screen planes hiding one another as a purple flash.
-   const band=i*w*.125*ease((p-.24)/.24);
-   const t=Math.max(0,y*rem),r=Math.max((w-x-rw)*rem,band);
-   const b=Math.max(0,(h-y-rh)*rem),l=Math.max(0,x*rem);
-   sheet.style.clipPath='inset('+t.toFixed(2)+'px '+r.toFixed(2)+'px '+
-    b.toFixed(2)+'px '+l.toFixed(2)+'px)';
-   sheet.style.transform='translate3d(0,'+
-    (-101*ease((p-.60-i*.024)/.20)).toFixed(3)+'%,0)';
+   const source=poses[i%2],size=Math.max(2,twins[i%2].getBoundingClientRect().width*.48);
+   const grow=ease((p-.15)/.47),exit=ease((p-.67-i*.022)/.24);
+   const x0=i*w/7-1,x1=(i+1)*w/7+1;
+   const corners=[[source.x-size,source.y-size],[source.x+size,source.y-size],
+    [source.x+size,source.y+size],[source.x-size,source.y+size]];
+   const band=[[x0,-1],[x1,-1],[x1,h+1],[x0,h+1]];
+   const points=corners.map((v,k)=>
+    mix(v[0],band[k][0],grow).toFixed(2)+','+
+    mix(v[1],band[k][1],grow).toFixed(2)).join(' ');
+   sheet.polygon.setAttribute('points',points);
+   sheet.mask.setAttribute('x','0');sheet.mask.setAttribute('y','0');
+   sheet.mask.setAttribute('width',w);sheet.mask.setAttribute('height',h);
+   sheet.fill.setAttribute('width',w);sheet.fill.setAttribute('height',h);
+   sheet.group.style.visibility=p>.15&&p<.999?'visible':'hidden';
+   sheet.group.setAttribute('transform','translate(0 '+(-exit*(h+3)).toFixed(2)+')');
   });
   enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1;
   stage.dataset.p2Layer=p<=0?'first':p<.99999?'sevenfold-handoff':'second';
