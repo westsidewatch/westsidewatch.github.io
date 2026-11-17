@@ -59,3 +59,8 @@
 - `static/images/westside-watch-v7-curves-proof.svg`：V7 的排版校樣。
 - `static/images/xiwang-mountain-study-v1.svg`：沿用已批准「西望」外輪廓，試驗厚度、石材陰影與落地線。**藝術自評不足：仍未真正修正原字形的柔軟筆勢，不能當作聖殿基石版本完成品。**
 - `static/images/westside-watch-standard-v6-taut-study.svg`：僅外部曲線試稿，證實外部曲線與字形分離，不可作為最終旌旗解決方案。
+
+### 2026-11-17 字形修正 V8／山岳 V2
+
+- 英文 `static/images/westside-watch-lettering-v8-balanced.svg`、排版 `static/images/westside-watch-v8-balanced-proof.svg`：I 上緣加入與 E／T 相同的輕微凸曲，WATCH 的 A／T／C／H 光學側距收緊，與 WESTSIDE 的視覺密度一致；保持超寬／極粗。已渲染校樣，尚未完成 P2 真實轉場藝術驗收。
+- 中文 `static/images/xiwang-mountain-v2-structural-foot.svg`：撤回失敗的整塊直角重建；只修「望」下部過圓的右端輪廓及承重轉折，原有筆畫連續。**仍待進一步去除『像腿』的視覺聯想、提升聖殿基石感，不能聲稱完成。**
