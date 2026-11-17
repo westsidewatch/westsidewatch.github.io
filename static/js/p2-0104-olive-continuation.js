@@ -92,33 +92,6 @@
   return {group,fill,mask,polygon};
  });
  sheetHost?.replaceChildren(foldSvg);
- // WESTSIDE WATCH is physically inside the SAME sevenfold SVG carrier.
- // Its bespoke stroke skeleton (not browser text, not a new screen) sits below
- // both moving original squares and receives the same seven masked colors.
- const standardGlyphs={
-  W:'M8 0 L24 112 L45 56 L66 112 L82 0',
-  E:'M77 0 H12 V112 H77 M12 56 H67',
-  S:'M77 8 H25 Q9 8 9 28 Q9 46 32 52 L56 61 Q79 69 79 89 Q79 112 57 112 H8',
-  T:'M5 0 H85 M45 0 V112',
-  I:'M12 0 H78 M45 0 V112 M12 112 H78',
-  D:'M12 0 V112 H39 Q82 112 82 56 Q82 0 39 0 Z',
-  A:'M8 112 L45 0 L82 112 M22 72 H68',
-  C:'M80 10 Q48 -5 24 8 Q5 21 5 56 Q5 91 24 104 Q48 119 80 103',
-  H:'M10 0 V112 M80 0 V112 M10 56 H80'
- };
- const standard=svgNode('g',{'aria-hidden':'true',fill:'none',stroke:'var(--ws-paper)',
-  'stroke-width':'34','stroke-linecap':'butt','stroke-linejoin':'miter'});
- function standardLine(word,x,y,scale,spacing){
-  let at=x;
-  for(const glyph of word){
-   const path=svgNode('path',{d:standardGlyphs[glyph],transform:'translate('+at+' '+y+') scale('+scale+')'});
-   standard.append(path);at+=(90+spacing)*scale;
-  }
- }
- standardLine('WESTSIDE',125,99,1.62,17);
- standardLine('WATCH',125,308,1.68,23);
- const standardMark=svgNode('g',{class:'olive-sevenfold-handoff__standard'});
- standardMark.append(standard);foldSvg.append(standardMark);
  // Carry the SAME approved HTML letterforms; never replace them with raster cards.
  const carrierHost=document.createElement('div');
  carrierHost.className='olive-twin-entry olive-sevenfold-carrier-host';
@@ -333,11 +306,6 @@
   sevenfold.style.visibility=active?'visible':'hidden';
   const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
   foldSvg.setAttribute('viewBox','0 0 '+w+' '+h);
-  standardMark.setAttribute('transform','scale('+(w/1600).toFixed(5)+' '+(h/550).toFixed(5)+')');
-  // Brand letters participate in the click-driven sevenfold state, not scroll.
-  const standardIn=ease((p-.07)/.17),standardOut=1-ease((p-.73)/.20);
-  standardMark.style.opacity=String(Math.max(0,standardIn*standardOut));
-  standard.setAttribute('stroke','var('+palette[Math.min(6,Math.floor(Math.max(0,p)*7))]+')');
   const poses=twins.map((source,i)=>{
    const rect=source.getBoundingClientRect(),pose=carrierPose(i,p,rect,stageRect);
    const copy=foldCarriers[i];
