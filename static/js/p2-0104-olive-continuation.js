@@ -333,6 +333,11 @@
   sevenfold.style.visibility=active?'visible':'hidden';
   const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
   foldSvg.setAttribute('viewBox','0 0 '+w+' '+h);
+  standardMark.setAttribute('transform','scale('+(w/1600).toFixed(5)+' '+(h/550).toFixed(5)+')');
+  // Brand letters participate in the click-driven sevenfold state, not scroll.
+  const standardIn=ease((p-.07)/.17),standardOut=1-ease((p-.73)/.20);
+  standardMark.style.opacity=String(Math.max(0,standardIn*standardOut));
+  standard.setAttribute('stroke','var('+palette[Math.min(6,Math.floor(Math.max(0,p)*7))]+')');
   const poses=twins.map((source,i)=>{
    const rect=source.getBoundingClientRect(),pose=carrierPose(i,p,rect,stageRect);
    const copy=foldCarriers[i];
