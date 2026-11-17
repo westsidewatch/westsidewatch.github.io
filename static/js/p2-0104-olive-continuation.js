@@ -193,10 +193,55 @@
     placeInlinePreview(index);
   });
  },{passive:true});
- function paintSecondLayer(d){
+ // R49: the cross-layer sevenfold is a deliberate masthead click,
+ // never a scroll distance. P2's scroll continues to subsequent first-layer chapters.
+ let handoffProgress=0,handoffTarget=0,handoffFrame=0,handoffStart=0;
+ const handoffDuration=1250;
+ const masthead=$('#olive-twin-entry');
+ function animateHandoff(now){
+  const elapsed=clamp((now-handoffStart)/handoffDuration);
+  handoffProgress=mix(handoffProgressStart,handoffTarget,ease(elapsed));
+  schedule();
+  if(elapsed<1)handoffFrame=requestAnimationFrame(animateHandoff);
+  else{handoffProgress=handoffTarget;handoffFrame=0;schedule();}
+ }
+ let handoffProgressStart=0;
+ function setHandoff(target){
+  target=target?1:0;
+  if(target===handoffTarget&&(!handoffFrame||handoffProgress===target))return;
+  if(handoffFrame)cancelAnimationFrame(handoffFrame);
+  handoffProgressStart=handoffProgress;handoffTarget=target;
+  handoffStart=performance.now();
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+   handoffProgress=target;schedule();return;
+  }
+  handoffFrame=requestAnimationFrame(animateHandoff);
+ }
+ if(masthead){
+  masthead.setAttribute('role','button');masthead.tabIndex=0;
+  masthead.setAttribute('aria-label','點擊橄欖山刊頭，展開第二層十二位講員');
+  masthead.setAttribute('aria-controls','olive-second-layer');
+  masthead.setAttribute('aria-expanded','false');
+  masthead.addEventListener('click',()=>setHandoff(1));
+  masthead.addEventListener('keydown',event=>{
+   if(event.key==='Enter'||event.key===' '){event.preventDefault();setHandoff(1);}
+  });
+ }
+ const returnToFirst=document.createElement('button');
+ returnToFirst.type='button';returnToFirst.className='olive-second-layer__return-first';
+ returnToFirst.textContent='← 返回 P2 第一層 / BACK TO P2';
+ returnToFirst.setAttribute('aria-label','返回 P2 橄欖山第一層');
+ second?.prepend(returnToFirst);
+ returnToFirst.addEventListener('click',()=>setHandoff(0));
+ document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&handoffTarget===1)setHandoff(0);
+ });
+ function paintSecondLayer(){
   if(!second||!sevenfold||twins.length!==2)return;
-  const p=clamp((d-24.50)/1.80),active=p>0&&p<.99999,open=p>.62;
+  const p=handoffProgress,active=p>0&&p<.99999,open=p>.62;
   second.style.visibility=open?'visible':'hidden';second.inert=p<.99999;
+  if(masthead)masthead.setAttribute('aria-expanded',String(p>.62));
+  returnToFirst.tabIndex=p>.62?0:-1;
   // Focus must never reach the original gallery through the second page.
   if(open){folio.inert=true;folio.setAttribute('aria-hidden','true')}
   second.setAttribute('aria-hidden',open?'false':'true');
@@ -212,11 +257,11 @@
    const remaining=1-landed;
    const dx=(source.left-target.left)*remaining,dy=(source.top-target.top)*remaining;
    const ratio=1+(source.width/target.width-1)*remaining;
-   square.style.transform='translate3d('+dx.toFixed(2)+'px,'+
+   square.style.transform=p<=0?'':'translate3d('+dx.toFixed(2)+'px,'+
     dy.toFixed(2)+'px,0) scale('+ratio.toFixed(5)+')';
    // R42: the actual engraved motherform takes over. The two incoming
    // squares are only the handoff carriers, not replacement typography.
-   square.style.opacity=(ease((p-.61)/.13)*
+   square.style.opacity=p<=0?'':(ease((p-.61)/.13)*
     (1-ease((p-.86)/.10))).toFixed(4);
   });
   sheets.forEach((sheet,i)=>{
@@ -944,7 +989,7 @@
     d<T.pairStart?'04-editorial-hold':
     d<T.indexStart?'04-alternating-folio-faces':
     d<T.indexEnd?'04-twelve-recomposition':'04-twelve-index';
-  paintSecondLayer(d);
+  paintSecondLayer();
   status.textContent=d<T.start?'03 / 07 · EMMAUS':
    d<T.groundEnd?'04 / 07 · THE FIRST TWO':
    d<T.indexStart?'04 / 07 · TWELVE VOICES':
