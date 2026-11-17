@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-11-16T19:42:26.012265+00:00",
+  "generatedAt": "2026-11-17T18:39:21.596909+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -590,18 +590,41 @@
       "source": "Internet Archive",
       "items": [
         {
-          "id": "internet-archive-bibletranslation0000unse",
-          "title": "Bible translation and the spread of the church : the last 200 years",
-          "author": "",
+          "id": "internet-archive-theseweregodspeo0000mart_b2l3",
+          "title": "These were God's people; a Bible history: the story of Israel and early Christianity, based on the Holy Scriptures, ancient historical and religious documents, and the findings of archaeology",
+          "author": "Martin, William C. (William Curtis), 1937-",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bibletranslation0000unse",
+            "url": "https://archive.org/details/theseweregodspeo0000mart_b2l3",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bibletranslation0000unse",
+            "url": "https://archive.org/services/img/theseweregodspeo0000mart_b2l3",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-greatpeopleofbib0000unse_w5c8",
+          "title": "Great people of the Bible and how they lived",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/greatpeopleofbib0000unse_w5c8",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/greatpeopleofbib0000unse_w5c8",
             "mode": "source"
           },
           "rights": {
@@ -636,18 +659,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bibleinmaking0000macg_w3m7",
-          "title": "The Bible in the making",
-          "author": "MacGregor, Geddes",
+          "id": "internet-archive-manifoldgreatnes0000unse",
+          "title": "Manifold greatness : the making of the King James Bible",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bibleinmaking0000macg_w3m7",
+            "url": "https://archive.org/details/manifoldgreatnes0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bibleinmaking0000macg_w3m7",
+            "url": "https://archive.org/services/img/manifoldgreatnes0000unse",
             "mode": "source"
           },
           "rights": {
@@ -659,18 +682,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-swordofspiritpur0000knot",
-          "title": "The sword of the spirit : Puritan responses to the Bible",
-          "author": "Knott, John R. (John Ray), 1937-",
+          "id": "internet-archive-makingofenglishb0000bobr",
+          "title": "The making of the English Bible",
+          "author": "Bobrick, Benson, 1947-",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/swordofspiritpur0000knot",
+            "url": "https://archive.org/details/makingofenglishb0000bobr",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/swordofspiritpur0000knot",
+            "url": "https://archive.org/services/img/makingofenglishb0000bobr",
             "mode": "source"
           },
           "rights": {
@@ -682,64 +705,41 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-labibleselonpasc0000goun",
-          "title": "La Bible selon Pascal",
-          "author": "Gounelle, André",
+          "id": "internet-archive-SmithsDictionariesContinuationBibleDictionaryChristianChurchGreek-roman",
+          "title": "Smiths Dictionaries Continuation Bible Dictionary Christian Church, Greek-Roman Classics, Atlas, etc.18 vols. 5 sets, 5 vols.1828..1896.",
+          "author": "Smith, William, Dr., Sir, chief editor, author, Wace, Anthon, Chetham co-editors, various scholars, etc. 19th century.",
+          "language": "grc",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/SmithsDictionariesContinuationBibleDictionaryChristianChurchGreek-roman",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/SmithsDictionariesContinuationBibleDictionaryChristianChurchGreek-roman",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-lestraductionsde0000bonn",
+          "title": "Les Traductions de la Bible en vers français au Moyen Age",
+          "author": "Bonnard, Jean, 1855-1915",
           "language": "fre",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/labibleselonpasc0000goun",
+            "url": "https://archive.org/details/lestraductionsde0000bonn",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/labibleselonpasc0000goun",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-Mark827-33PieceByPieceCaesariaPhilippi1975-BibleCommentary",
-          "title": "Mark 8:27-33 â Piece By Piece â Caesaria Philippi â1975- Bible Commentary and Sermon by Rev Ralph C Link and uploaded by Peter-John Parisis",
-          "author": "Rev Ralph Charles Link and Rev Ralph C. Link",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/Mark827-33PieceByPieceCaesariaPhilippi1975-BibleCommentary",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/Mark827-33PieceByPieceCaesariaPhilippi1975-BibleCommentary",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-historyofendofwo0000kirs",
-          "title": "A history of the end of the world : how the most controversial book in the Bible changed the course of Western civilization",
-          "author": "Kirsch, Jonathan, 1949-",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/historyofendofwo0000kirs",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/historyofendofwo0000kirs",
+            "url": "https://archive.org/services/img/lestraductionsde0000bonn",
             "mode": "source"
           },
           "rights": {
@@ -774,18 +774,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-wherewegotbibleo00grah",
-          "title": "Where we got the Bible; our debt to the Catholic church; being a contribution to the tercetenary celebrations",
-          "author": "Graham, Henry Grey, 1874-1959",
+          "id": "internet-archive-studiesinbibleed0000unse",
+          "title": "Studies in the Bible : edited on behalf of the Institute of Jewish Studies in the Faculty of Humanities",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/wherewegotbibleo00grah",
+            "url": "https://archive.org/details/studiesinbibleed0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/wherewegotbibleo00grah",
+            "url": "https://archive.org/services/img/studiesinbibleed0000unse",
             "mode": "source"
           },
           "rights": {
@@ -797,18 +797,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-dinneratdanbibli0000gree",
-          "title": "Dinner at Dan : biblical and archaeological evidence for sacred feasts at Iron Age II Tel Dan and their significance",
-          "author": "Greer, Jonathan S",
+          "id": "internet-archive-ongenderingtexts0000bren",
+          "title": "On gendering texts : female and male voices in the Hebrew Bible",
+          "author": "Brenner-Idan, Athalya",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/dinneratdanbibli0000gree",
+            "url": "https://archive.org/details/ongenderingtexts0000bren",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/dinneratdanbibli0000gree",
+            "url": "https://archive.org/services/img/ongenderingtexts0000bren",
             "mode": "source"
           },
           "rights": {
@@ -820,18 +820,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-where-we-got-the-bible-by-bishop-henry-grey-graham",
-          "title": "Where We Got The Bible",
-          "author": "Bishop Henry Grey Graham",
+          "id": "internet-archive-literacybiblerea0000watk",
+          "title": "Literacy, Bible reading, and church growth through the ages",
+          "author": "Watkins, Morris G",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/where-we-got-the-bible-by-bishop-henry-grey-graham",
+            "url": "https://archive.org/details/literacybiblerea0000watk",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/where-we-got-the-bible-by-bishop-henry-grey-graham",
+            "url": "https://archive.org/services/img/literacybiblerea0000watk",
             "mode": "source"
           },
           "rights": {
@@ -843,18 +843,133 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-godsunfoldingpur0000diet",
-          "title": "God's unfolding purpose; a guide to the study of the Bible",
-          "author": "Dietrich, Suzanne de",
-          "language": "eng",
+          "id": "internet-archive-originesethistoi0000port",
+          "title": "Origines et histoires de la bible",
+          "author": "Porter, J. R. (Joshua Roy), 1921-",
+          "language": "fre",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/godsunfoldingpur0000diet",
+            "url": "https://archive.org/details/originesethistoi0000port",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/godsunfoldingpur0000diet",
+            "url": "https://archive.org/services/img/originesethistoi0000port",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-loavesfishesfood0000kina_b6c6",
+          "title": "Loaves & fishes : foods from Bible times",
+          "author": "Kinard, Malvina C., author",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/loavesfishesfood0000kina_b6c6",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/loavesfishesfood0000kina_b6c6",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-anglicanismbible0000unse",
+          "title": "Anglicanism and the Bible",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/anglicanismbible0000unse",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/anglicanismbible0000unse",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-400th-anniversary-king-james-bible",
+          "title": "400th Anniversary King James Bible",
+          "author": "Christian History Institute",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/400th-anniversary-king-james-bible",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/400th-anniversary-king-james-bible",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bakersbibleatlas0000pfei",
+          "title": "Baker's Bible atlas",
+          "author": "Pfeiffer, Charles F",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bakersbibleatlas0000pfei",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bakersbibleatlas0000pfei",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bakersbibleatlas0000pfei_e6y0",
+          "title": "Baker's Bible atlas",
+          "author": "Pfeiffer, Charles F",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bakersbibleatlas0000pfei_e6y0",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bakersbibleatlas0000pfei_e6y0",
             "mode": "source"
           },
           "rights": {
@@ -889,18 +1004,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-classicalrecrea00barkgoog",
-          "title": "Classical recreations : interspersed with much biblical criticism. vol. I",
-          "author": "Barker, Edmund Henry, 1788-1839",
+          "id": "internet-archive-approachingbible00pole",
+          "title": "Approaching the Bible in medieval England",
+          "author": "Poleg, Eyal, author",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/classicalrecrea00barkgoog",
+            "url": "https://archive.org/details/approachingbible00pole",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/classicalrecrea00barkgoog",
+            "url": "https://archive.org/services/img/approachingbible00pole",
             "mode": "source"
           },
           "rights": {
@@ -924,121 +1039,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/hiddenfuturesdea0000unse",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-heavenlyjourneyf0000alph",
-          "title": "A heavenly journey : a fictional story based on historical and biblical facts",
-          "author": "Alpha, Veralyn R",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/heavenlyjourneyf0000alph",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/heavenlyjourneyf0000alph",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-modernbiblicalsc0000unse",
-          "title": "Modern Biblical scholarship : its impact on theology and proclamation",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/modernbiblicalsc0000unse",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/modernbiblicalsc0000unse",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-postbiblicalhist02raph_0",
-          "title": "Post-Biblical history of the Jews; from the close of the Old Testament, about the year 420 B. C. E., till the destruction of the second temple in the year 70 C. E",
-          "author": "Raphall, Morris J. (Morris Jacob), 1798-1868",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/postbiblicalhist02raph_0",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/postbiblicalhist02raph_0",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-storyofbiblefrom00fost_1",
-          "title": "The story of the Bible from Genesis to Revelation",
-          "author": "Foster, Charles, 1822-1887",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/storyofbiblefrom00fost_1",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/storyofbiblefrom00fost_1",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-isbn_9781400308804",
-          "title": "Student discovery Bible : a journey through God's word",
-          "author": "",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/isbn_9781400308804",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/isbn_9781400308804",
             "mode": "source"
           },
           "rights": {
@@ -1242,18 +1242,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-popularmisconcep0000will",
-          "title": "Popular Misconceptions Of The Episcopal Church (1891)",
-          "author": "William Reed Huntington",
+          "id": "internet-archive-bwb_Y0-BCM-857",
+          "title": "The growth of the christian church",
+          "author": "Robert hastings Nichols",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/popularmisconcep0000will",
+            "url": "https://archive.org/details/bwb_Y0-BCM-857",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/popularmisconcep0000will",
+            "url": "https://archive.org/services/img/bwb_Y0-BCM-857",
             "mode": "source"
           },
           "rights": {
@@ -1530,7 +1530,7 @@
       "Internet Archive": 40
     },
     "identity": {
-      "queriedThisRun": 1,
+      "queriedThisRun": 0,
       "resolved": 13,
       "coversAdded": 0,
       "internetArchiveLinks": 9,
