@@ -237,8 +237,8 @@
  // Per-section spatial vocabulary: Olive 04 = botanical outward encounter,
  // cross-axis exchange, gathering at the center, then seven engraved leaves.
  const oliveMoves=[
-  [{t:0,x:0,y:0,s:1},{t:.22,x:.34,y:.23,s:.88},{t:.43,x:.68,y:.26,s:.84},{t:.62,x:.45,y:.47,s:.72},{t:.80,x:.31,y:.30,s:.66}],
-  [{t:0,x:0,y:0,s:1},{t:.22,x:.69,y:.71,s:.88},{t:.43,x:.32,y:.70,s:.84},{t:.62,x:.55,y:.53,s:.72},{t:.80,x:.69,y:.30,s:.66}]
+  [{t:0,x:0,y:0,s:1},{t:.22,x:.34,y:.23,s:.88},{t:.43,x:.68,y:.26,s:.84},{t:.62,x:.38,y:.43,s:.72},{t:.80,x:.31,y:.30,s:.66}],
+  [{t:0,x:0,y:0,s:1},{t:.22,x:.69,y:.71,s:.88},{t:.43,x:.32,y:.70,s:.84},{t:.62,x:.62,y:.55,s:.72},{t:.80,x:.69,y:.30,s:.66}]
  ];
  function carrierPose(i,p,source,stageRect){
   const keys=oliveMoves[i],w=stageRect.width,h=stageRect.height;
@@ -297,12 +297,13 @@
   // Seven separate, actual SVG masks. Each grows from the moved square's
   // geometry into one precisely tessellated colored leaf, then peels upward.
   sheets.forEach((sheet,i)=>{
-   const source=poses[i%2],size=Math.max(2,twins[i%2].getBoundingClientRect().width*.48);
-   const grow=ease((p-.15)/.47),exit=ease((p-.67-i*.022)/.24);
+   const source=poses[i%2],size=1.5;
+   const grow=ease((p-.22)/.40),exit=ease((p-.67-i*.022)/.24);
    const x0=i*w/7-1,x1=(i+1)*w/7+1;
    const corners=[[source.x-size,source.y-size],[source.x+size,source.y-size],
     [source.x+size,source.y+size],[source.x-size,source.y+size]];
-   const band=[[x0,-1],[x1,-1],[x1,h+1],[x0,h+1]];
+   const skew=clamp(w*.026,12,36);
+   const band=[[x0+skew,-1],[x1+skew,-1],[x1-skew,h+1],[x0-skew,h+1]];
    const points=corners.map((v,k)=>
     mix(v[0],band[k][0],grow).toFixed(2)+','+
     mix(v[1],band[k][1],grow).toFixed(2)).join(' ');
@@ -310,7 +311,7 @@
    sheet.mask.setAttribute('x','0');sheet.mask.setAttribute('y','0');
    sheet.mask.setAttribute('width',w);sheet.mask.setAttribute('height',h);
    sheet.fill.setAttribute('width',w);sheet.fill.setAttribute('height',h);
-   sheet.group.style.visibility=p>.15&&p<.999?'visible':'hidden';
+   sheet.group.style.visibility=p>.22&&p<.999?'visible':'hidden';
    sheet.group.setAttribute('transform','translate(0 '+(-exit*(h+3)).toFixed(2)+')');
   });
   enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1;
