@@ -2073,10 +2073,10 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-second-layer__scripture-master{width:100%!important;height:100%!important}
 .olive-second-layer__landing-overlay{display:none!important}
 .olive-second-layer__index{
- width:min(100%,1020px)!important;margin:0 auto!important;
- grid-template-columns:repeat(4,minmax(0,1fr))!important;
- justify-content:center!important;
- column-gap:clamp(12px,1.6vw,24px)!important;
+ width:100%!important;max-width:none!important;margin:0!important;
+ grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ justify-content:stretch!important;
+ column-gap:clamp(10px,1.15vw,20px)!important;
  row-gap:clamp(12px,1.4vw,24px)!important;
 }
 .olive-second-layer__person{
