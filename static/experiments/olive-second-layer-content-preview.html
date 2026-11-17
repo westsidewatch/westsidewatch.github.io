@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Olive Mountain · 第二層講員內容接入檢查</title>
+<style>
+:root{--olive:#71895b;--gold:#b99b4f;--paper:#f3efdf;--ink:#203329}
+*{box-sizing:border-box}body{margin:0;background:var(--olive);color:var(--paper);font-family:Georgia,"Noto Serif TC",serif}
+main{max-width:1700px;margin:auto;padding:clamp(20px,3vw,52px)}
+.folio{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--gold);padding-bottom:12px;font-size:11px;letter-spacing:.17em}
+h1{font-size:clamp(50px,10vw,145px);font-weight:900;letter-spacing:-.075em;line-height:.82;margin:52px 0 24px}
+h1 small{display:block;font-size:clamp(18px,2.5vw,28px);letter-spacing:.12em;margin-top:22px;font-weight:200}
+.help{font-size:12px;letter-spacing:.08em;color:#f4e8c8;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(8px,1.2vw,20px)}
+.speaker{appearance:none;display:block;position:relative;border:1px solid #c2ad76;background:#eee8da;padding:0;color:#192b22;cursor:pointer;text-align:left;min-width:0;transition:transform .3s,border-color .3s}
+.speaker:hover,.speaker:focus-visible{transform:translateY(-7px);outline:2px solid #edd38c;outline-offset:2px}.speaker[aria-expanded=true]{border:3px solid #f2d784}
+.portrait{aspect-ratio:1;overflow:hidden;background:#ddd5bf}.portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 20%}.speaker-name{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:11px 9px;font-size:clamp(10px,1.1vw,15px)}.speaker-name small{font-size:9px;letter-spacing:.06em;opacity:.7;white-space:nowrap}
+.detail{position:relative;background:var(--paper);color:var(--ink);margin:14px 0 30px;padding:clamp(22px,3vw,48px);border-top:6px solid var(--gold);min-height:240px}
+.detail[hidden]{display:none}.detail-header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}.detail h2{font-size:clamp(40px,5vw,80px);line-height:.9;letter-spacing:-.05em;margin:0}.detail h2 small{display:block;font-size:20px;letter-spacing:0;margin-top:16px;font-weight:300}
+.close{background:transparent;border:1px solid var(--ink);font:inherit;font-size:13px;padding:8px 14px;cursor:pointer}
+.series{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}.series h3{font-size:21px;font-weight:400;border-bottom:1px solid var(--gold);padding-bottom:11px}.video-list{display:grid;gap:10px}.video{background:#fff;border:1px solid #b9b29c;padding:13px;text-align:left;cursor:pointer;color:var(--ink);font:inherit}.video:hover,.video:focus-visible{background:#ece2c5}.video small{display:block;color:#65755e;font-size:11px;margin-top:6px}
+.player{margin-top:30px;aspect-ratio:16/9;width:min(900px,100%);background:#0b2017}.player iframe{width:100%;height:100%;border:0}.note{font-size:12px;line-height:1.7;opacity:.75}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.speaker-name{display:block}.speaker-name small{display:block}.detail h2{font-size:40px}}
+@media(prefers-reduced-motion:reduce){.speaker{transition:none}}
+</style>
+</head>
+<body><main>
+<div class="folio"><span>WESTSIDE WATCH / 04 · OLIVE MOUNTAIN</span><span>SECOND LAYER / CONTENT INTEGRATION TEST</span></div>
+<h1>OLIVE MOUNTAIN<small>橄欖山 / 十二位講員</small></h1>
+<p class="help">兩行 · 十二個方形頭像 · 點擊後在本頁展開 · 不轉跳 · 使用原有專題內容（待動效聯調）</p>
+<section class="grid" id="speaker-grid" aria-label="十二位講員方形縮圖"></section>
+<section class="detail" id="speaker-detail" hidden aria-live="polite"><div class="detail-header"><h2 id="detail-name"></h2><button class="close" id="detail-close" type="button">收起 ×</button></div><div class="series" id="detail-series"></div><div class="player" id="player" hidden></div></section>
+<p class="note">工程內容驗收頁：真實的講道清單來自原有 <code>content/olive/*.md</code> 和 <code>data/westside-index</code>；新增劉彤影片 ID：KKWUFISsvyk。其他九位尚無在此驗證的講道清單，不虛構內容。原網站 P2 捲動、七重疊動效與主站沒有被替換。</p>
+</main><script>
+'use strict';
+const stage=document.getElementById('speaker-grid'),panel=document.getElementById('speaker-detail'),seriesRoot=document.getElementById('detail-series'),player=document.getElementById('player');let selected=null;
+function button(el,cls,label){const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=label;el.append(b);return b}
+function hide(){panel.hidden=true;player.hidden=true;player.replaceChildren();selected=null;document.querySelectorAll('.speaker').forEach(b=>b.setAttribute('aria-expanded','false'))}
+function open(slug,d){const record=d.speakers[slug];if(selected===slug){hide();return}selected=slug;document.querySelectorAll('.speaker').forEach(b=>b.setAttribute('aria-expanded',String(b.dataset.slug===slug)));panel.hidden=false;player.hidden=true;player.replaceChildren();
+ const h=document.getElementById('detail-name');h.replaceChildren();h.append(document.createTextNode(record.en));const sm=document.createElement('small');sm.textContent=record.name;h.append(sm);seriesRoot.replaceChildren();
+ if(!record.series.length){const p=document.createElement('p');p.textContent='這位講員的舊有資料尚待接入；請保留原人物卡及圖片，不在此臆造講道。';seriesRoot.append(p)}
+ for(const s of record.series){const col=document.createElement('section'),title=document.createElement('h3');title.textContent=s.title;col.append(title);const list=document.createElement('div');list.className='video-list';col.append(list);
+  if(s.indexOnly){const p=document.createElement('p');p.className='note';p.textContent='既有共用索引：'+s.keys.join(' / ')+'。這是資源指標，待 runtime 資料接入，不複製影音。';list.append(p)}
+  for(const item of s.items||[]){const b=button(list,'video',item.title);const sm=document.createElement('small');sm.textContent=item.status==='title-unverified'?'原片標題待核對 · YouTube':item.source||'YouTube · 原有館藏';b.append(sm);b.addEventListener('click',()=>{player.replaceChildren();const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(item.youtubeId)+'?rel=0';f.allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';f.allowFullscreen=true;f.title=record.name+'｜'+item.title;f.loading='lazy';player.append(f);player.hidden=false;player.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'})})}
+  seriesRoot.append(col)
+ }
+ panel.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'})
+}
+fetch('./olive-speaker-second-layer-data.json').then(r=>{if(!r.ok)throw Error('內容 JSON 未載入');return r.json()}).then(d=>{
+ for(const slug of d.speakerOrder){const r=d.speakers[slug],b=button(stage,'speaker','');b.dataset.slug=slug;b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','speaker-detail');const pic=document.createElement('div');pic.className='portrait';const img=document.createElement('img');img.src='/images/olive/'+slug+'-editorial.png';img.alt='';img.loading='lazy';img.onerror=()=>{img.style.display='none';pic.style.background='var(--gold)'};pic.append(img);b.append(pic);const n=document.createElement('div');n.className='speaker-name';n.append(document.createTextNode(r.name));const e=document.createElement('small');e.textContent=r.en;n.append(e);b.append(n);b.addEventListener('click',()=>open(slug,d))}
+}).catch(e=>{const p=document.createElement('p');p.textContent='資料載入失敗：'+e.message;stage.append(p)});
+document.getElementById('detail-close').addEventListener('click',hide);
+</script></body></html>
