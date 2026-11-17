@@ -2116,3 +2116,22 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
   height:clamp(180px,47vw,250px)!important
  }
 }
+
+/* R49 — chapter handoff is clicked, not scrolled; retain approved twin masthead. */
+.olive-stage__rubric--twin-editorial #olive-twin-entry{
+ pointer-events:auto!important;cursor:pointer;
+}
+.olive-stage__rubric--twin-editorial #olive-twin-entry:focus-visible{
+ outline:2px solid var(--ws-morning-gold);outline-offset:5px;
+}
+.olive-second-layer__return-first{
+ position:relative;z-index:4;display:inline-flex;align-items:center;
+ margin:0 0 16px;padding:5px 0 8px;
+ color:var(--ws-morning-gold);background:transparent;
+ border:0;border-bottom:1px solid currentColor;cursor:pointer;
+ font:200 clamp(11px,.86vw,14px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.1em;
+}
+.olive-second-layer__return-first:focus-visible{
+ outline:2px solid var(--ws-morning-gold);outline-offset:4px;
+}
