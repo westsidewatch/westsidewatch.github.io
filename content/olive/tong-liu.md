@@ -23,6 +23,9 @@ sermon_series:
         url: "https://www.youtube.com/watch?v=50T6t47EExs"
         source: "生命河 ROLCC Media"
         date: "2026-04-19"
+      - title: "指定新影片（標題待核）"
+        url: "https://www.youtube.com/watch?v=KKWUFISsvyk"
+        source: "使用者指定 YouTube"
 ---
 
 劉彤人物介紹。
