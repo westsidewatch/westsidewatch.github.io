@@ -164,7 +164,30 @@
      const english=document.createElement('p');english.textContent=entry.titleEn||'';
      const count=document.createElement('small');
      count.textContent=Array.isArray(entry.episodes)?entry.episodes.length+' 講':'';
-     article.append(serial,title,english,count);catalogue.append(article);
+     article.append(serial,title,english,count);
+     if(Array.isArray(entry.episodes)&&entry.episodes.length){
+      const playlist=document.createElement('div');playlist.className='olive-second-layer__episodes';
+      entry.episodes.forEach(episode=>{
+       if(!/^[A-Za-z0-9_-]{11}$/.test(episode.videoId||''))return;
+       const play=document.createElement('button');play.type='button';
+       play.className='olive-second-layer__episode';play.textContent=episode.title;
+       play.setAttribute('aria-label','在本頁播放 '+speaker[1]+'：'+episode.title);
+       if(episode.status==='title-unverified')play.dataset.titleStatus='unverified';
+       play.addEventListener('click',()=>{
+        const oldPlayer=detail.querySelector('.olive-second-layer__player');oldPlayer?.remove();
+        const player=document.createElement('div');player.className='olive-second-layer__player';
+        const frame=document.createElement('iframe');
+        frame.title=speaker[1]+'｜'+episode.title;
+        frame.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(episode.videoId)+'?rel=0';
+        frame.loading='lazy';frame.allow='autoplay; encrypted-media; picture-in-picture';
+        frame.allowFullscreen=true;player.append(frame);article.append(player);
+       });playlist.append(play);
+      });
+      article.append(playlist);
+     }else if(Array.isArray(entry.indexKeys)&&entry.indexKeys.length){
+      const note=document.createElement('small');note.textContent='共用索引已保存，待系列清單調試';article.append(note);
+     }
+     catalogue.append(article);
     });
    }else{
     const note=document.createElement('p');note.className='olive-second-layer__series-empty';
