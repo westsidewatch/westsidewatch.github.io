@@ -52,3 +52,10 @@
 ## 7. 目前實際狀態
 
 2026-11-17：建立獨立記錄並新增兩份**尚未批准**的中英靜態衍生校樣；**尚未完成**雙方塊／七重疊一體化動畫、真實瀏覽器藝術驗收、正式上線。下一步對兩份 SVG 做嚴格比較和幾何修正，再進入 P2 轉場接入。
+
+### 2026-11-17 追加校樣（仍未批准）
+
+- `static/images/westside-watch-lettering-v7-taut-curves.svg`：從 V4 自繪字形直接重繪 E／T／H 的局部水平輪廓，以小幅 Bézier 曲率呈現緊繃旗面。字高、超寬比例、粗筆畫及字腔保留。這是階段 A 的新候選，不是已完成七重疊動畫。
+- `static/images/westside-watch-v7-curves-proof.svg`：V7 的排版校樣。
+- `static/images/xiwang-mountain-study-v1.svg`：沿用已批准「西望」外輪廓，試驗厚度、石材陰影與落地線。**藝術自評不足：仍未真正修正原字形的柔軟筆勢，不能當作聖殿基石版本完成品。**
+- `static/images/westside-watch-standard-v6-taut-study.svg`：僅外部曲線試稿，證實外部曲線與字形分離，不可作為最終旌旗解決方案。
