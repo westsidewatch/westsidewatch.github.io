@@ -1,3 +1,4 @@
+import {towerShellGeometry} from './fortification-architecture.js';
 import * as THREE from 'three';
 export const ROMAN_GATE_SOURCES=['https://www.pami.co.il/en/attractions/the-roman-square-museum-at-damascus-gate/','https://hadashot.iaa.org.il/Report_Detail_Eng.aspx?id=26040'];
 export const isRomanMonumentalGate=(phase,key)=>['aelia','byzantine'].includes(phase)&&key==='north';
@@ -9,7 +10,7 @@ export function romanGateGeometry(gate,terrain){
  function locate(g,{surface=false}={}){const p=g.attributes.position;for(let i=0;i<p.count;i++){const q=world(p.getX(i),p.getZ(i)),y=p.getY(i),base=terrain.heightAtWorld(q.x,q.z);if(!Number.isFinite(base))throw new Error('Roman gate outside canonical DEM');p.setXYZ(i,q.x,(surface||y<1e-6?base:ground)+y+.12,q.z);}g.computeVertexNormals();parts.push(g);}
  const box=(x,z,w,d,h)=>{const g=new THREE.BoxGeometry(w,h,d);g.translate(x,h/2,z);locate(g);};
  for(const [a,b]of [[-18,-14.5],[-9.5,-6],[6,9.5],[14.5,18]])box((a+b)/2,0,b-a,8,18);
- for(const side of [-1,1])box(side*20,0,4,12,20);
+ for(const side of [-1,1]){const g=towerShellGeometry(4,12,20,{bevel:.35,wall:.6});g.translate(side*20,0,0);locate(g);}
  for(const [center,radius,spring]of [[-12,2.5,6],[0,6,9],[12,2.5,6]]){
   const shape=new THREE.Shape();shape.moveTo(center-radius,18);shape.lineTo(center+radius,18);shape.lineTo(center+radius,spring);
   for(let i=1;i<=16;i++){const angle=Math.PI*i/16;shape.lineTo(center+radius*Math.cos(angle),spring+radius*Math.sin(angle));}shape.closePath();

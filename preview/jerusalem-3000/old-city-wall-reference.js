@@ -1,6 +1,6 @@
 import {subtractPlanarZones} from './district-infill.js';
 import {pointInPolygon} from './urban-exclusion.js';
-import {namedGateGeometry} from './named-city-gates.js';
+import {namedGateGeometry,namedGateVariants,namedGateForPhase} from './named-city-gates.js';
 import * as THREE from 'three';
 import {geographicToENU} from './terrain-runtime.js';
 import {TemporalCityCore} from './temporal-city-core.js';
@@ -33,13 +33,14 @@ export function createWallReferenceModel(parent,{reference,terrain,core}){
  const material=new THREE.MeshStandardMaterial({color:0xc6b089,roughness:.95}),markerMaterial=new THREE.MeshStandardMaterial({color:0xb9a17b,roughness:.9}),meshes=[];
  const add=(geometry,id)=>{const mesh=new THREE.Mesh(geometry,id===WALL?material:markerMaterial);mesh.castShadow=true;mesh.receiveShadow=true;mesh.userData.cityObject={objectId:id,componentId:`${id}:modern-reference:${meshes.filter(m=>m.userData.cityObject.objectId===id).length}`,confidence:'inferred',kind:id===WALL?'wall-reference':reference.namedGates?'named-gate-reference':'gate-location-marker'};group.add(mesh);meshes.push(mesh);};
  try{
+  const gateVariants=(reference.namedGates||[]).flatMap(namedGateVariants);
   for(const line of reference.lines)for(let i=1;i<line.length;i++){
    const a=line[i-1],b=line[i],L=Math.hypot(b.x-a.x,b.z-a.z);if(L<.01)continue;const nx=-(b.z-a.z)/L*reference.width/2,nz=(b.x-a.x)/L*reference.width/2;
    const positions=[],steps=Math.ceil(L/8);
    for(let step=0;step<steps;step++){
     const from={x:a.x+(b.x-a.x)*step/steps,z:a.z+(b.z-a.z)*step/steps},to={x:a.x+(b.x-a.x)*(step+1)/steps,z:a.z+(b.z-a.z)*(step+1)/steps};
     let p=[{x:from.x+nx,z:from.z+nz},{x:to.x+nx,z:to.z+nz},{x:to.x-nx,z:to.z-nz},{x:from.x-nx,z:from.z-nz}];if(p.reduce((s,a,i)=>{const b=p[(i+1)%4];return s+a.x*b.z-b.x*a.z;},0)<0)p.reverse();
-    const gateCuts=(reference.namedGates||[]).flatMap(g=>{
+    const gateCuts=gateVariants.flatMap(g=>{
      const w=g.profile==='small-pointed'?1.8:g.profile==='towered-bent'?3.5:2.5;
      const cuts=[g.footprint,[g.at(-w,-g.designDepth/2-5),g.at(w,-g.designDepth/2-5),g.at(w,0),g.at(-w,0)]];
      if(g.bent){const end=g.exitSign*(g.designWidth/2+4);cuts.push([g.at(0,-w),g.at(end+g.exitSign*w,-w),g.at(end+g.exitSign*w,w),g.at(0,w)],[g.at(end-w,-w),g.at(end+w,-w),g.at(end+w,g.designDepth/2+4+w),g.at(end-w,g.designDepth/2+4+w)]);}
@@ -64,7 +65,7 @@ export function createWallReferenceModel(parent,{reference,terrain,core}){
    const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));g.computeVertexNormals();add(g,WALL);
   }
   for(const gate of reference.namedGates||reference.gates){
-   if(reference.namedGates)add(namedGateGeometry(gate,terrain),gate.id);
+   if(reference.namedGates)for(const variant of namedGateVariants(gate)){add(namedGateGeometry(variant,terrain),gate.id);meshes.at(-1).userData.gateContextPhases=variant.contextPhases;meshes.at(-1).userData.gatePassageMode=variant.passageMode;}
    else{const g=new THREE.TorusGeometry(5,1.1,6,16);g.rotateX(-Math.PI/2);g.translate(gate.x,terrain.heightAtWorld(gate.x,gate.z)+1.5,gate.z);add(g,gate.objectId);}
   }
   for(const gate of reference.namedGates||[])if(gate.firstYear){const g=new THREE.BoxGeometry(gate.designWidth+2,reference.height,reference.width);g.rotateY(-Math.atan2(gate.unit.z,gate.unit.x));g.translate(gate.x,terrain.heightAtWorld(gate.x,gate.z)+reference.height/2,gate.z);add(g,WALL);meshes.at(-1).userData.beforeGate=gate.id;}
@@ -73,14 +74,14 @@ export function createWallReferenceModel(parent,{reference,terrain,core}){
   const candidate=new TemporalCityCore({phases:[...core.phases.values()],terrain});candidate.objects=new Map(core.objects);candidate.byPhase=new Map([...core.byPhase].map(([id,set])=>[id,new Set(set)]));candidate.links=new Map(core.links);
   for(const id of [WALL,...(reference.namedGates||reference.gates).map(g=>g.id||g.objectId)]){
    const record=core.get(id);if(!record)throw new Error(`Missing existing wall/gate object ${id}`);const gate=(reference.namedGates||reference.gates).find(g=>(g.id||g.objectId)===id);
-   candidate.register({...record,confidence:'inferred',geometry:{frame:'canonical-dem-enu',status:'modern-map-reference-not-historical-survey',primitive:gate?'point':'multi-polyline',...(gate?{point:{x:gate.x,z:gate.z}}:{lines:reference.lines})},source:{...record.source,urls:[...new Set([...(gate?.sources||[]),reference.source.url,...reference.source.historicalContext])],modernReference:reference.source,historicalExistenceConfidence:record.confidence},metadata:{...record.metadata,rendererBinding:'modern-wall-reference-v1',geometryValidityPhases:[...PHASES],geometryVerified:false,referenceOnly:true,illustrativeDimensions:gate?null:{height:reference.height,width:reference.width},gapsNotFilled:true,...(gate?.profile?{gateProfile:gate.profile,gateFormAuthority:gate.formAuthority,sealed:gate.sealed,sourceGateFootprint:gate.mappedBuildingPolygon}:{}),}});
+   candidate.register({...record,confidence:'inferred',geometry:{frame:'canonical-dem-enu',status:'modern-map-reference-not-historical-survey',primitive:gate?'point':'multi-polyline',...(gate?{point:{x:gate.x,z:gate.z}}:{lines:reference.lines})},source:{...record.source,urls:[...new Set([...(gate?.sources||[]),reference.source.url,...reference.source.historicalContext])],modernReference:reference.source,historicalExistenceConfidence:record.confidence},metadata:{...record.metadata,rendererBinding:'modern-wall-reference-v1',geometryValidityPhases:[...PHASES],geometryVerified:false,referenceOnly:true,illustrativeDimensions:gate?null:{height:reference.height,width:reference.width},gapsNotFilled:true,...(gate?.profile?{gateProfile:gate.profile,gateFormAuthority:gate.formAuthority,passageContexts:gate.passageContexts?structuredClone(gate.passageContexts):null,sealed:gate.sealed,sourceGateFootprint:gate.mappedBuildingPolygon}:{}),}});
   }
   const validation=candidate.validate();if(!validation.ok)throw new Error(validation.errors.join('; '));core.objects=candidate.objects;core.byPhase=candidate.byPhase;core.links=candidate.links;
  }catch(error){for(const m of meshes)m.geometry.dispose();material.dispose();markerMaterial.dispose();group.removeFromParent();throw error;}
  const timeline={phases:[...core.phases.values()]};let phase=null;
  return {meshes,anchors:()=>(reference.namedGates||reference.gates).filter(g=>meshes.some(m=>m.userData.cityObject.objectId===(g.id||g.objectId)&&m.visible)).map(g=>({id:g.id||g.objectId,label:g.label+(g.sealed?'（封閉）':'（形態示意）'),x:g.x,z:g.z,y:terrain.heightAtWorld(g.x,g.z)})),
-  apply({position,evidenceAllowed}){phase=timeline.phases[Math.floor(position)]?.id;group.visible=PHASES.includes(phase);for(const m of meshes){const r=core.get(m.userData.cityObject.objectId),state=lifecycleStateAtPosition({lifecycleEvents:r.lifecycle.events},timeline,position);const future=m.userData.beforeGate&&core.get(m.userData.beforeGate),futureState=future&&lifecycleStateAtPosition({lifecycleEvents:future.lifecycle.events},timeline,position);m.visible=evidenceAllowed('inferred')&&['build','transform','rebuild','expand'].includes(state)&&(!future||!['build','transform','rebuild','expand'].includes(futureState));}},
-  diagnostics(){return{phase,visible:group.visible&&meshes.some(m=>m.visible),visibleComponents:group.visible?meshes.filter(m=>m.visible).length:0,componentIds:meshes.map(m=>m.uuid),referenceOnly:true,geometryVerified:false,sourceGaps:reference.gaps.length,namedGateCount:reference.namedGates?.length||0,visibleGateIds:[...new Set(meshes.filter(m=>m.visible&&m.userData.cityObject.objectId!==WALL).map(m=>m.userData.cityObject.objectId))]};},
+  apply({position,evidenceAllowed}){phase=timeline.phases[Math.floor(position)]?.id;group.visible=PHASES.includes(phase);for(const m of meshes){const r=core.get(m.userData.cityObject.objectId),state=lifecycleStateAtPosition({lifecycleEvents:r.lifecycle.events},timeline,position);const future=m.userData.beforeGate&&core.get(m.userData.beforeGate),futureState=future&&lifecycleStateAtPosition({lifecycleEvents:future.lifecycle.events},timeline,position);m.visible=evidenceAllowed('inferred')&&['build','transform','rebuild','expand'].includes(state)&&(!future||!['build','transform','rebuild','expand'].includes(futureState))&&(!m.userData.gateContextPhases||m.userData.gateContextPhases.includes(phase));}},
+  diagnostics(){return{phase,visible:group.visible&&meshes.some(m=>m.visible),visibleComponents:group.visible?meshes.filter(m=>m.visible).length:0,componentIds:meshes.map(m=>m.uuid),referenceOnly:true,geometryVerified:false,sourceGaps:reference.gaps.length,namedGateCount:reference.namedGates?.length||0,visibleGateModels:group.visible?meshes.filter(m=>m.visible&&m.userData.gateContextPhases).map(m=>({id:m.userData.cityObject.objectId,mode:m.userData.gatePassageMode,contextPhases:[...m.userData.gateContextPhases]})):[],gatePassages:(reference.namedGates||[]).map(g=>({id:g.id,mode:namedGateForPhase(g,phase).passageMode,geometryVerified:false})),visibleGateIds:[...new Set(meshes.filter(m=>m.visible&&m.userData.cityObject.objectId!==WALL).map(m=>m.userData.cityObject.objectId))]};},
   dispose(){for(const m of meshes)m.geometry.dispose();material.dispose();markerMaterial.dispose();group.removeFromParent();}
  };
 }

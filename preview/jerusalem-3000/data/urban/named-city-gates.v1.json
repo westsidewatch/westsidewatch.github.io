@@ -309,11 +309,23 @@
       "designHeight": 10,
       "sealed": false,
       "firstYear": null,
-      "formAuthority": "selected later/modern type; dimensions and passage details illustrative, not digitized historical facade",
+      "formAuthority": "period-selected bent/straight contexts from reconstruction publication; dimensions, side opening and exact passage plan illustrative",
       "sources": [
         "https://israel.travel/the-gates-of-jerusalem/",
         "https://www.learningsites.com/Jerusalem/OttomanGates_home.php"
-      ]
+      ],
+      "passageContexts": {
+        "source": "https://www.learningsites.com/Jerusalem/OttomanGates_home.php",
+        "authority": "reconstruction publisher describes original Ottoman L-shaped entry and later British Mandate straightening",
+        "boundary": "selected-period-context-not-exact-dated-construction-event",
+        "geometryVerified": false,
+        "phases": {
+          "ottoman": "bent",
+          "outside-walls": "bent",
+          "modern": "straight"
+        },
+        "reviewedOn": "2026-11-18"
+      }
     },
     {
       "id": "j3k:object:golden-gate-ottoman",

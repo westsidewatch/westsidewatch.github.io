@@ -44,3 +44,23 @@ export function gateHeaderGeometry(width,depth,height=1){
  }
  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.computeVertexNormals();return g;
 }
+
+// Coarse structural display inside the inherited tower envelope. The bevel,
+// wall thickness and deck are authored; this is not an excavated tower plan.
+export function towerShellGeometry(width,depth,height,{bevel=.35,wall=.65}={}){
+ if(!(width>2*wall&&depth>2*wall&&height>2))throw new Error('Invalid tower envelope');
+ const outline=(w,d,b)=>{const x=w/2,z=d/2;return[[-x+b,-z],[x-b,-z],[x,-z+b],[x,z-b],[x-b,z],[-x+b,z],[-x,z-b],[-x,-z+b]];},outer=outline(width,depth,Math.min(bevel,width/6,depth/6)),inner=outline(width-2*wall,depth-2*wall,Math.min(bevel*.5,(width-2*wall)/6,(depth-2*wall)/6)),vertices=[];
+ const layer=(low,high,hollow)=>{
+  const shape=new THREE.Shape(outer.map(([x,z])=>new THREE.Vector2(x,-z)));if(hollow)shape.holes.push(new THREE.Path(inner.map(([x,z])=>new THREE.Vector2(x,-z))));
+  const g=new THREE.ExtrudeGeometry(shape,{depth:high-low,bevelEnabled:false,steps:1});g.rotateX(-Math.PI/2);g.translate(0,low,0);const p=g.attributes.position;for(const i of g.index?.array||Array.from({length:p.count},(_,i)=>i))vertices.push(p.getX(i),p.getY(i),p.getZ(i));g.dispose();
+ };
+ layer(0,height-.85,true);layer(height-1.05,height-.85,false);layer(height-.85,height,true);
+ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.computeVertexNormals();g.userData.wallArchitecture={profile:'tower-shell-recessed-deck',dimensionsVerified:false};return g;
+}
+export function parapetRingGeometry(width,depth,height=.7,thickness=.4){
+ if(!(width>2*thickness&&depth>2*thickness&&height>0))throw new Error('Invalid parapet envelope');const vertices=[];
+ for(const [x,z,w,d]of[[0,-(depth-thickness)/2,width,thickness],[0,(depth-thickness)/2,width,thickness],[-(width-thickness)/2,0,thickness,depth-2*thickness],[(width-thickness)/2,0,thickness,depth-2*thickness]]){
+  const g=new THREE.BoxGeometry(w,height,d);g.translate(x,height/2,z);const p=g.attributes.position;for(const i of g.index.array)vertices.push(p.getX(i),p.getY(i),p.getZ(i));g.dispose();
+ }
+ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.computeVertexNormals();return g;
+}
