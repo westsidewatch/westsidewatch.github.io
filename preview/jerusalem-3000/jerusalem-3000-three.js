@@ -1,4 +1,4 @@
-import {SACRED_RIDGE_START,SACRED_RIDGE_END,sacredRidgeChapter} from './sacred-ridge-guide.js';
+import {SACRED_RIDGE_START,SACRED_RIDGE_END,SACRED_RIDGE_CHAPTERS,sacredRidgeChapter} from './sacred-ridge-guide.js';
 import {residentialEraProfile} from './residential-era-profiles.js';
 import {createDefenseTimelineView} from './defense-timeline-view.js';
 import {advancePlayback} from './playback-clock.js';
@@ -363,10 +363,20 @@ try {
   const guideButton=document.createElement('button'),guideNote=document.createElement('p');
   guideButton.type='button';guideButton.className='j3k-guide-button';guideButton.textContent='▶ 主線導覽';guideButton.setAttribute('aria-pressed','false');guideButton.setAttribute('aria-describedby','j3k-guide-note');
   guideNote.id='j3k-guide-note';guideNote.className='j3k-guide-note';guideNote.textContent='大衛城 → 第一聖殿 → 重建第二聖殿 → 希律擴建';guideNote.setAttribute('aria-live','polite');toolbar.prepend(guideButton);toolbar.after(guideNote);
+  const guideProgress=document.createElement('p'),guideNext=document.createElement('button');
+  guideProgress.className='j3k-guide-note';guideProgress.hidden=true;guideNext.type='button';guideNext.textContent='下一段 →';guideNext.hidden=true;guideNote.after(guideProgress);guideButton.after(guideNext);
   let guide=null;
-  function leaveGuide(){if(!guide)return;guide=null;three.cancelGuidedCamera();guideButton.textContent='▶ 主線導覽';guideButton.setAttribute('aria-pressed','false');guideNote.textContent='已切換手動視角 · 大衛城 → 第一聖殿 → 第二聖殿 → 希律擴建';}
-  for(const event of['pointerdown','wheel','keydown'])mount.addEventListener(event,()=>{if(guide){stop();leaveGuide();}},{capture:true,passive:true});
-  toolbar.addEventListener('click',e=>{if(guide&&e.target.closest('button')&&e.target!==guideButton){stop();leaveGuide();}},true);
+  function showGuideProgress(status,position=playbackPosition){if(!guide)return;const chapter=sacredRidgeChapter(position),index=SACRED_RIDGE_CHAPTERS.indexOf(chapter),next=SACRED_RIDGE_CHAPTERS[index+1];const remaining=Math.ceil(((next?.at??SACRED_RIDGE_END)-position)*Number(speed.value));guideProgress.hidden=false;guideNext.hidden=false;guideNext.disabled=!next;const progressText='第 '+(index+1)+'／'+SACRED_RIDGE_CHAPTERS.length+' 段 · '+status+(next?' · 下一段：'+next.title+(status==='播放中'?'（約 '+remaining+' 秒）':''):' · 希律擴建後結束');if(guideProgress.textContent!==progressText)guideProgress.textContent=progressText;window.__JERUSALEM3000__.guide={chapter:chapter.id,title:chapter.title,position,status};}
+  function pauseForCamera(){if(!guide||!raf)return;stop();showGuideProgress('已暫停，按「繼續導覽」接續');}
+  let guidePointer=null;
+  mount.addEventListener('pointerdown',e=>{guidePointer={x:e.clientX,y:e.clientY};},{capture:true,passive:true});
+  mount.addEventListener('pointermove',e=>{if(guidePointer&&Math.hypot(e.clientX-guidePointer.x,e.clientY-guidePointer.y)>5){pauseForCamera();guidePointer=null;}},{capture:true,passive:true});
+  for(const event of['pointerup','pointercancel'])mount.addEventListener(event,()=>guidePointer=null,{capture:true,passive:true});
+  mount.addEventListener('wheel',pauseForCamera,{capture:true,passive:true});
+  mount.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','+','-'].includes(e.key))pauseForCamera();},{capture:true});
+  guideNext.addEventListener('click',()=>{if(!guide)return;const index=SACRED_RIDGE_CHAPTERS.indexOf(sacredRidgeChapter(playbackPosition)),next=SACRED_RIDGE_CHAPTERS[index+1];if(!next)return;stop();playbackPosition=next.at;slider.value=String(next.at);three.setPlaybackDisplayPosition(next.at);update(next.at);guide.chapter=null;showGuideProgress('準備下一段',next.at);guideButton.textContent='Ⅱ 暫停導覽';guideButton.setAttribute('aria-pressed','true');start();});
+  function leaveGuide(){if(!guide)return;guide=null;guideProgress.hidden=true;guideNext.hidden=true;three.cancelGuidedCamera();guideButton.textContent='▶ 主線導覽';guideButton.setAttribute('aria-pressed','false');guideNote.textContent='已切換手動視角 · 大衛城 → 第一聖殿 → 第二聖殿 → 希律擴建';}
+  toolbar.addEventListener('click',e=>{if(guide&&e.target.closest('button')&&e.target!==guideButton&&e.target!==guideNext){stop();leaveGuide();}},true);
   let raf = 0,
     last = 0, waitingForCity=false,playbackPosition=Number(slider.value);
   function stop() {
@@ -374,7 +384,7 @@ try {
     raf = 0;
     last = 0;
     waitingForCity=false;
-    three.cancelGuidedCamera();if(guide){guide.chapter=null;guideButton.textContent='▶ 繼續導覽';guideButton.setAttribute('aria-pressed','false');}
+    three.cancelGuidedCamera();if(guide){guide.chapter=null;guideButton.textContent='▶ 繼續導覽';guideButton.setAttribute('aria-pressed','false');showGuideProgress('已暫停');}
     play.textContent = '▶ 建城';
     play.setAttribute('aria-pressed', 'false');
     window.__JERUSALEM3000__.playback={status:'paused',position:Number(slider.value),presentationPosition:playbackPosition};
@@ -384,13 +394,14 @@ try {
     const readiness=three.playbackReadiness(),position=playbackPosition;
     const elapsed=(t-last)/1000;last=t;
     if(!readiness.ready){
-      waitingForCity=true;
+      waitingForCity=true;if(guide)showGuideProgress(readiness.status==='error'?'城市生成失敗，請重試':'等待城市準備完成',position);
       window.__JERUSALEM3000__.playback={status:readiness.status==='error'?'error':'waiting',position,phase:readiness.phase};
       if(readiness.status==='error'){stop();window.__JERUSALEM3000__.playback={status:'error',position,phase:readiness.phase};}
       else {play.textContent='Ⅱ 等待城市 · 可暫停';if(raf)raf=requestAnimationFrame(frame);}
       return;
     }
-    if(guide){const chapter=sacredRidgeChapter(position);if(guide.chapter!==chapter.id){guide.chapter=chapter.id;three.focusSacredRidgeChapter(chapter.view);guideNote.textContent=chapter.title+' · '+chapter.text;window.__JERUSALEM3000__.guide={chapter:chapter.id,title:chapter.title,position};}if(three.guidedCameraMoving()){if(raf)raf=requestAnimationFrame(frame);return;}}
+    if(guide){const chapter=sacredRidgeChapter(position);if(guide.chapter!==chapter.id){guide.chapter=chapter.id;three.focusSacredRidgeChapter(chapter.view);guideNote.textContent=chapter.title+' · '+chapter.text;window.__JERUSALEM3000__.guide={chapter:chapter.id,title:chapter.title,position};}if(three.guidedCameraMoving()){showGuideProgress('鏡頭移動中',position);if(raf)raf=requestAnimationFrame(frame);return;}}
+    if(guide)showGuideProgress('播放中',position);
     const wasWaiting=waitingForCity;waitingForCity=false;play.textContent='Ⅱ 暫停';
     let v=advancePlayback(position,wasWaiting?0:elapsed,time.max+1,{rate:1/Number(speed.value)});
     if(guide)v=Math.min(v,SACRED_RIDGE_END);
@@ -403,7 +414,7 @@ try {
     three.setPlaybackDisplayPosition(v);
     slider.value = Math.min(v,time.max);
     update(Math.min(v,time.max));
-    if(guide&&v>=SACRED_RIDGE_END){stop();guide=null;guideButton.textContent='↺ 重播主線導覽';guideNote.textContent='導覽完成 · 希律擴建屬第二聖殿時期。拖動畫面可自由查看。';}
+    if(guide&&v>=SACRED_RIDGE_END){stop();showGuideProgress('導覽完成',v);guideNext.hidden=true;guide=null;guideButton.textContent='↺ 重播主線導覽';guideNote.textContent='導覽完成 · 希律擴建屬第二聖殿時期。拖動畫面可自由查看。';}
     if (raf) raf = requestAnimationFrame(frame);
   }
   guideButton.addEventListener('click',()=>{if(guide){if(raf)stop();else{guideButton.textContent='Ⅱ 暫停導覽';guideButton.setAttribute('aria-pressed','true');start();}return;}stop();terrainOverview(false);three.setPlaybackPresentation(true);slider.value=String(SACRED_RIDGE_START);playbackPosition=SACRED_RIDGE_START;update(playbackPosition);guide={chapter:null};guideButton.textContent='Ⅱ 暫停導覽';guideButton.setAttribute('aria-pressed','true');start();});

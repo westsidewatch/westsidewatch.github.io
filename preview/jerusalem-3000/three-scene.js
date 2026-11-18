@@ -725,7 +725,6 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   });
   let guidedCamera=null;
   function cancelGuidedCamera(){guidedCamera=null;}
-  controls.addEventListener('start',cancelGuidedCamera);
   controls.addEventListener('change', () => (needsFrame = true));
   function focusSacredRidgeChapter(view){
     if(!royalRelief||terrainView)return false;
