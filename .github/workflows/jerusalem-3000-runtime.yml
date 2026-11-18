@@ -108,6 +108,7 @@ jobs:
           node scripts/verify_jerusalem_3000_landmark_chronology.mjs
           node scripts/verify_jerusalem_3000_module_shapes.mjs
           node scripts/verify_jerusalem_3000_overview_housing.mjs
+          node scripts/verify_jerusalem_3000_housing_topology.mjs
       - name: Start city browser fixture
         id: city_server
         run: |
@@ -136,6 +137,7 @@ jobs:
         if: ${{ !cancelled() && steps.city_server.outcome == 'success' }}
         run: |
           node scripts/verify_jerusalem_3000_residential_distance_browser.mjs
+          node scripts/verify_jerusalem_3000_housing_topology_browser.mjs
           node scripts/verify_jerusalem_3000_visual_hierarchy_browser.mjs
           node scripts/verify_jerusalem_3000_main_view_browser.mjs
           node scripts/verify_jerusalem_3000_overview_browser.mjs

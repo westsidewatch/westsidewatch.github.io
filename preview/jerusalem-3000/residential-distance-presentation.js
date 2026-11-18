@@ -27,13 +27,13 @@ if(j3kResidentialBlend>0.)outgoingLight=mix(outgoingLight,diffuseColor.rgb*.6,j3
   apply({camera,viewportHeight,phase}){
    uniforms.j3kResidentialViewportHeight.value=Math.max(1,viewportHeight);uniforms.j3kResidentialDistanceEnabled.value=enabled?1:0;
    root.updateMatrixWorld(true);
-   const counts={near:0,middle:0,far:0},objects=new Set();let eligibleMeshes=0;
+   const topology={trackedMeshes:0,referenceTriangles:0,renderedTriangles:0,omittedTriangles:0,referencePositionBytes:0,positionBytes:0,generationMilliseconds:0};const counts={near:0,middle:0,far:0},objects=new Set();let eligibleMeshes=0;
    root.traverse(mesh=>{if(!mesh.isMesh||mesh.userData.displayAnnotation)return;for(let p=mesh;p;p=p.parent)if(!p.visible)return;const id=cityObjectIdForMesh(mesh),record=id&&getRecord(id);if(cityVisualRole(record,mesh)!=='housing'||(!mesh.userData.overview&&!['building','block'].includes(record.type)))return;
     const source=mesh.material,materials=[].concat(source);if(!materials.some(m=>m.userData.j3kResidentialDistance||m.isMeshStandardMaterial||m.isMeshLambertMaterial||m.isMeshPhongMaterial))return;
-    if(!originals.has(mesh))originals.set(mesh,source);mesh.material=Array.isArray(source)?source.map(style):style(source);eligibleMeshes++;objects.add(id);
+    if(!originals.has(mesh))originals.set(mesh,source);mesh.material=Array.isArray(source)?source.map(style):style(source);eligibleMeshes++;objects.add(id);const economy=mesh.geometry.userData.housingTopology;if(economy){topology.trackedMeshes++;for(const k of ['referenceTriangles','renderedTriangles','omittedTriangles','referencePositionBytes','positionBytes','generationMilliseconds'])topology[k]+=economy[k];}
     if(!mesh.geometry.boundingSphere)mesh.geometry.computeBoundingSphere();if(mesh.geometry.boundingSphere)centre.copy(mesh.geometry.boundingSphere.center);else centre.set(0,0,0);centre.applyMatrix4(mesh.matrixWorld);centre.applyMatrix4(camera.matrixWorldInverse);const ppm=.5*viewportHeight*camera.projectionMatrix.elements[5]/Math.max(.01,-centre.z);counts[ppm>=RESIDENTIAL_DISTANCE_BANDS.nearPixelsPerMetre?'near':ppm<=RESIDENTIAL_DISTANCE_BANDS.farPixelsPerMetre?'far':'middle']++;
    });
-   stats={phase,enabled,eligibleMeshes,objects:objects.size,bands:counts,materialVariants:variants.size,viewportHeight,bandsPixelsPerMetre:RESIDENTIAL_DISTANCE_BANDS,geometryChanged:false,drawCallReduction:0,triangleReduction:0,evidenceReclassified:false,historicalTypologyVerified:false};return stats;
+   stats={phase,enabled,housingTopology:topology,eligibleMeshes,objects:objects.size,bands:counts,materialVariants:variants.size,viewportHeight,bandsPixelsPerMetre:RESIDENTIAL_DISTANCE_BANDS,geometryChanged:false,drawCallReduction:0,triangleReduction:0,evidenceReclassified:false,historicalTypologyVerified:false};return stats;
   },
   set(value){enabled=Boolean(value);uniforms.j3kResidentialDistanceEnabled.value=enabled?1:0;return enabled;},
   diagnostics:()=>structuredClone(stats),
