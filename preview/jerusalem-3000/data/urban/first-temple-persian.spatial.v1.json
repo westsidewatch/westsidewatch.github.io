@@ -254,7 +254,19 @@
             ]
           ]
         }
-      ]
+      ],
+      "residentialArchitecture": {
+        "id": "iron-age-four-room-analogy",
+        "wallHeightMetres": 3.2,
+        "sources": [
+          "https://hadashot.iaa.org.il/Report_Detail_eng.aspx?id=25841&mag_id=128&print=all"
+        ],
+        "authority": "Iron Age II/III four-room analogy, not excavated house locations",
+        "limitations": [
+          "住宅沿用推定地塊；四室形制為類比，不是把 Area U 建築複製成整座城。",
+          "屋頂、高度與開放中庭為設計假說；保存牆高不等於原始建築高度。"
+        ]
+      }
     },
     "persian-nehemiah": {
       "districts": [
@@ -452,6 +464,15 @@
           "重建事件有經文依據；主殿、廊、院牆、祭壇、屋頂、位置與尺寸都是獨立設計示意，並非出土復原。",
           "沒有把以斯拉記六章詔令的六十肘當作已建成平面，也沒有採用希律時期聖殿形制。",
           "此幾何僅用於波斯期；後期制度延續不證明建築與地基原樣留存。"
+        ]
+      },
+      "residentialArchitecture": {
+        "id": "persian-courtyard-analogy",
+        "wallHeightMetres": 3.0,
+        "sources": [],
+        "authority": "inferred low-rise courtyard design, Persian typology not archaeologically verified",
+        "limitations": [
+          "波斯住宅低層院落為設計類比，並未核定為本地考古平面或人口規模。"
         ]
       }
     }

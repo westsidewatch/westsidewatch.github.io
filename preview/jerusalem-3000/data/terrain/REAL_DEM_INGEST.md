@@ -1,29 +1,19 @@
-# Jerusalem 3000 — Real DEM ingest
+# Jerusalem 3000 — Public real DEM ingest
 
-Phase 1 knife 2/7.
+Current runtime (2026-10-28): Copernicus GLO-30 Public,217x217 node-centred grid over the original AOI. The previously recorded CDSE account restriction does not block this publicly accessible AWS tile; no credential or Gateway is needed for this ingest.
 
-Canonical target: Copernicus DEM GLO-30 (`COPERNICUS_30`), Jerusalem AOI already fixed in `data/copernicus-dem-request.json`.
+Source: https://registry.opendata.aws/copernicus-dem/
 
-## Current access reality (2026-09-24)
+Tile: https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N31_00_E035_00_DEM/Copernicus_DSM_COG_10_N31_00_E035_00_DEM.tif
 
-CDSE now restricts COP-DEM-GLO-30 access to users registered for Copernicus Contributing Missions (CCM) data. General-public CCM users retain download rights for GLO-30, but the account must opt into CCM and accept the applicable ESA licence. Requests that omit `demInstance` default to GLO-90; Jerusalem 3000 must therefore keep `COPERNICUS_30` explicit.
+Offline reproduction (requires rasterio/numpy):
 
-Official access paths include Copernicus Browser, OData, S3-compatible storage, and Sentinel Hub Process API. Credentials/tokens are runtime secrets and must never enter this repository.
-
-## Ingest
-
-Once an authorized GLO-30 GeoTIFF covering the canonical AOI exists locally:
-
-```bash
-python3 scripts/ingest_jerusalem_dem.py /path/to/jerusalem-glo30.tif
+```sh
+python3 scripts/jerusalem3000_ingest_dem30.py /path/to/Copernicus_DSM_COG_10_N31_00_E035_00_DEM.tif
 ```
 
-The wrapper invokes `scripts/build_terrain_mesh.py`, which validates AOI coverage and generates:
+Output: copernicus-glo30-jerusalem.json. The source SHA256 is stored in that file; the output SHA256 is stored in data/terrain-manifest.json and versions the browser cache. Updating the output also requires updating that manifest hash.
 
-`preview/jerusalem-3000/data/terrain/jerusalem-real.mesh.json`
+The native one-arcsecond sample centres map to scene vertices, including the AOI bounds. Preserve the shared origin and fixed540.13m scene datum. GLO-90 remains a retired comparison asset, not an active fallback. Do not label GLO-90 as30m or synthetic relief as measured terrain.
 
-No substitute GLO-90 payload may be silently labelled GLO-30. No synthetic terrain may be promoted to REAL TERRAIN.
-
-## Attribution gate
-
-Any distributed derivative must retain the applicable Copernicus WorldDEM-30 attribution required by the licence. Attribution metadata will be attached to the generated terrain authority before production publication.
+This is a modern DSM including buildings and vegetation, not an ancient ground reconstruction. Maintain attribution: Copernicus DEM accessed via AWS Open Data; copyright DLR e.V.2010-2014 and Airbus Defence and Space GmbH2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved. See the published Copernicus DEM licence linked by the official registry.

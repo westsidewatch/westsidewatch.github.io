@@ -140,7 +140,8 @@
         "ruin": "70 CE / later reuse"
       },
       "geometry": {
-        "status": "registration-pending"
+        "status": "registration-pending",
+        "authority": "reference-width-with-authored-human-scale-step-profile-not-digitized-excavation"
       },
       "spatial": {
         "frame": "local-enu",
@@ -156,21 +157,29 @@
           "up": null
         },
         "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
-      }
+      },
+      "limitations": [
+        "26級、每級0.25米及交替踏面為展示選擇，非測繪階梯。",
+        "南階位置沿用既有候選；與平台、門洞及地下通道配準未完成。",
+        "移除舊184米寬巨階與虛構高大門體，不據此宣稱南入口完成。"
+      ]
     },
     {
       "id": "j3k:object:western-street",
-      "label": "Western retaining-wall street / approach system",
+      "label": "西牆外街道（相對位置示意）",
       "kind": "street",
-      "evidence": "archaeological",
-      "confidence": "high-elements",
+      "evidence": "inferred",
+      "confidence": "inferred",
       "lifecycle": {
         "birth": "Second Temple / Herodian works",
         "stateAt30CE": "active",
         "ruin": "70 CE debris event"
       },
       "geometry": {
-        "status": "registration-pending"
+        "status": "registration-pending",
+        "authority": "authored-exterior-route-relative-to-rounded-platform-not-surveyed-street",
+        "widthMetres": 8,
+        "widthAuthority": "authored-display-width-not-measured-street"
       },
       "spatial": {
         "frame": "local-enu",
@@ -186,7 +195,19 @@
           "up": null
         },
         "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
-      }
+      },
+      "sourceEvidence": "archaeological-existence-not-current-display-linework",
+      "sources": [
+        "https://thekotel.org/en/10812/2/",
+        "https://thekotel.org/en/wailing-wall-western-wall/",
+        "https://cojs.org/kathleen-ritmeyer-and-leen-ritmeyer-reconstructing-herods-temple-mount-in-jerusalem-biblical-archaeology-review-15-6-1989/"
+      ],
+      "limitations": [
+        "街道存在有考古依據；目前線位、8米寬度及長度為展示選擇，非測繪復原。",
+        "保留原候選地理錨點；展示線位相對現有概略平台移至西牆外，平台本身仍待配準。",
+        "尚未接通羅賓遜拱、威爾遜拱、南階及安東尼堡，不以虛構橋階掩蓋缺口。",
+        "西牆店室及屋頂步道有發掘者重建解釋；目前四間、尺寸、線位與配置為示意，不等同羅賓遜拱下四間遺構。屋頂步道與街道的登階未定位。"
+      ]
     },
     {
       "id": "j3k:object:eastern-entry-unknown",
@@ -207,6 +228,46 @@
         "registration": "withheld",
         "accuracy": "unknown-exact-gate"
       }
+    },
+    {
+      "id": "j3k:object:temple-perimeter-porticoes",
+      "label": "聖域周邊柱廊",
+      "kind": "perimeter-porticoes",
+      "evidence": "inferred",
+      "confidence": "inferred",
+      "lifecycle": {
+        "birth": "individual construction dates and older fabric unresolved; representative c.30CE display",
+        "stateAt30CE": "literary standing-colonnade context",
+        "ruin": "70CE context; collapse form and later specific survival unverified"
+      },
+      "geometry": {
+        "status": "illustrative-envelope-components",
+        "authority": "literary-porticoes-with-authored-bays-inside-existing-platform-not-survey"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.778,
+          "lon": 35.235
+        },
+        "registration": "provisional-centroid",
+        "accuracy": "platform-scale",
+        "enuMetres": {
+          "east": 0,
+          "north": 0,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
+      },
+      "sources": [
+        "https://penelope.uchicago.edu/josephus/war-5.html",
+        "https://www.biblegateway.com/passage/?search=John+10%3A23&version=WEB"
+      ],
+      "limitations": [
+        "柱廊存在及東廊名稱有文獻背景；各線位置、間距、柱式、厚度與安東尼堡接口未測繪核定。",
+        "北西廊避開既有安東尼堡示意足跡，接口暫留開放；南側既有皇家柱廊未移位。",
+        "既有300×480米平台與皇家柱廊配準尚待來源核對，不藉此聲稱整個外院已復原。"
+      ]
     }
   ],
   "sources": [
