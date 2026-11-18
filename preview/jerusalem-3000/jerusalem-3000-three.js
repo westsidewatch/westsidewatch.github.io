@@ -361,7 +361,7 @@ try {
   document.fonts?.addEventListener('loadingdone',()=>window.dispatchEvent(new Event('resize')));
   // One visible entry for the authored route; ordinary construction keeps its camera.
   const guideButton=document.createElement('button'),guideNote=document.createElement('p');
-  guideButton.type='button';guideButton.className='j3k-guide-button';guideButton.textContent='▶ 主線導覽';guideButton.setAttribute('aria-pressed','false');guideButton.setAttribute('aria-describedby','j3k-guide-note');
+  guideButton.type='button';guideButton.disabled=true;guideButton.className='j3k-guide-button';guideButton.textContent='▶ 主線導覽';guideButton.setAttribute('aria-pressed','false');guideButton.setAttribute('aria-describedby','j3k-guide-note');
   guideNote.id='j3k-guide-note';guideNote.className='j3k-guide-note';guideNote.textContent='大衛城 → 第一聖殿 → 重建第二聖殿 → 希律擴建';guideNote.setAttribute('aria-live','polite');toolbar.prepend(guideButton);toolbar.after(guideNote);
   const guideProgress=document.createElement('p'),guideNext=document.createElement('button');
   guideProgress.className='j3k-guide-note';guideProgress.hidden=true;guideNext.type='button';guideNext.textContent='下一段 →';guideNext.hidden=true;guideNote.after(guideProgress);guideButton.after(guideNext);
@@ -481,6 +481,7 @@ try {
   stage.dataset.phaseAudit = phaseAudit.complete ? 'pass' : phaseAudit.ok ? 'deferred' : 'fail';
   if (!phaseAudit.ok) console.error('[Jerusalem 3000 phase audit]', phaseAudit.emptyPhases);
   update(0);
+  play.disabled=false;play.removeAttribute('aria-busy');play.textContent='▶ 建城';guideButton.disabled=false;
   window.__JERUSALEM3000__.status = 'ready';
   const production = auditProductionReadiness(window.__JERUSALEM3000__);
   window.__JERUSALEM3000__.production = production;
@@ -505,6 +506,8 @@ try {
   );
 } catch (error) {
   console.error('[Jerusalem 3000 core runtime]', error);
+  const failedGuide=document.querySelector('.j3k-guide-button');if(failedGuide)failedGuide.disabled=true;
+  const failedPlay=document.querySelector('.j3k-play');if(failedPlay){failedPlay.disabled=true;failedPlay.removeAttribute('aria-busy');failedPlay.textContent='城市載入失敗';}
   window.__JERUSALEM3000__.status = 'error';
   window.__JERUSALEM3000__.productionReady = false;
   window.__JERUSALEM3000__.complete = false;
