@@ -33,19 +33,22 @@ export function createWallReferenceModel(parent,{reference,terrain,core}){
  const material=new THREE.MeshStandardMaterial({color:0xc6b089,roughness:.95}),markerMaterial=new THREE.MeshStandardMaterial({color:0xb9a17b,roughness:.9}),meshes=[];
  const add=(geometry,id)=>{const mesh=new THREE.Mesh(geometry,id===WALL?material:markerMaterial);mesh.castShadow=true;mesh.receiveShadow=true;mesh.userData.cityObject={objectId:id,componentId:`${id}:modern-reference:${meshes.filter(m=>m.userData.cityObject.objectId===id).length}`,confidence:'inferred',kind:id===WALL?'wall-reference':reference.namedGates?'named-gate-reference':'gate-location-marker'};group.add(mesh);meshes.push(mesh);};
  try{
-  const gateVariants=(reference.namedGates||[]).flatMap(namedGateVariants);
-  for(const line of reference.lines)for(let i=1;i<line.length;i++){
-   const a=line[i-1],b=line[i],L=Math.hypot(b.x-a.x,b.z-a.z);if(L<.01)continue;const nx=-(b.z-a.z)/L*reference.width/2,nz=(b.x-a.x)/L*reference.width/2;
-   const positions=[],steps=Math.ceil(L/8);
-   for(let step=0;step<steps;step++){
-    const from={x:a.x+(b.x-a.x)*step/steps,z:a.z+(b.z-a.z)*step/steps},to={x:a.x+(b.x-a.x)*(step+1)/steps,z:a.z+(b.z-a.z)*(step+1)/steps};
-    let p=[{x:from.x+nx,z:from.z+nz},{x:to.x+nx,z:to.z+nz},{x:to.x-nx,z:to.z-nz},{x:from.x-nx,z:from.z-nz}];if(p.reduce((s,a,i)=>{const b=p[(i+1)%4];return s+a.x*b.z-b.x*a.z;},0)<0)p.reverse();
-    const gateCuts=gateVariants.flatMap(g=>{
+  const cutsFor=gates=>gates.flatMap(g=>{
      const w=g.profile==='small-pointed'?1.8:g.profile==='towered-bent'?3.5:2.5;
      const cuts=[g.footprint,[g.at(-w,-g.designDepth/2-5),g.at(w,-g.designDepth/2-5),g.at(w,0),g.at(-w,0)]];
      if(g.bent){const end=g.exitSign*(g.designWidth/2+4);cuts.push([g.at(0,-w),g.at(end+g.exitSign*w,-w),g.at(end+g.exitSign*w,w),g.at(0,w)],[g.at(end-w,-w),g.at(end+w,-w),g.at(end+w,g.designDepth/2+4+w),g.at(end-w,g.designDepth/2+4+w)]);}
      return cuts;
     });
+  const wallContexts=[];
+  for(const phase of (reference.namedGates?PHASES:[null])){const gates=(reference.namedGates||[]).map(g=>namedGateForPhase(g,phase)),key=JSON.stringify(gates.map(g=>[g.bent,g.exitSign]));const prior=wallContexts.find(c=>c.key===key);if(prior)prior.phases.push(phase);else wallContexts.push({key,cuts:cutsFor(gates),phases:[phase]});}
+  for(const line of reference.lines)for(let i=1;i<line.length;i++){
+   const a=line[i-1],b=line[i],L=Math.hypot(b.x-a.x,b.z-a.z);if(L<.01)continue;const nx=-(b.z-a.z)/L*reference.width/2,nz=(b.x-a.x)/L*reference.width/2;
+   const segmentVariants=[];
+   for(const context of wallContexts){const positions=[],steps=Math.ceil(L/8);
+   for(let step=0;step<steps;step++){
+    const from={x:a.x+(b.x-a.x)*step/steps,z:a.z+(b.z-a.z)*step/steps},to={x:a.x+(b.x-a.x)*(step+1)/steps,z:a.z+(b.z-a.z)*(step+1)/steps};
+    let p=[{x:from.x+nx,z:from.z+nz},{x:to.x+nx,z:to.z+nz},{x:to.x-nx,z:to.z-nz},{x:from.x-nx,z:from.z-nz}];if(p.reduce((s,a,i)=>{const b=p[(i+1)%4];return s+a.x*b.z-b.x*a.z;},0)<0)p.reverse();
+    const gateCuts=context.cuts;
     const pieces=reference.namedGates?subtractPlanarZones([p],gateCuts):[p];
     const emit=(polys,low,high)=>{for(const poly of polys){
      const push=(i,top)=>positions.push(poly[i].x,terrain.heightAtWorld(poly[i].x,poly[i].z)+(top?high:low),poly[i].z);
@@ -62,7 +65,9 @@ export function createWallReferenceModel(parent,{reference,terrain,core}){
     }
    }
    if(!positions.length)continue;
-   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));g.computeVertexNormals();add(g,WALL);
+   const values=Float32Array.from(positions),same=segmentVariants.find(v=>v.values.length===values.length&&v.values.every((n,i)=>n===values[i]));if(same)same.phases.push(...context.phases);else segmentVariants.push({values,phases:[...context.phases]});
+   }
+   for(const variant of segmentVariants){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(variant.values,3));g.computeVertexNormals();add(g,WALL);if(reference.namedGates){meshes.at(-1).userData.wallContextPhases=variant.phases;meshes.at(-1).userData.wallSegmentKey=reference.lines.indexOf(line)+':'+i;}}
   }
   for(const gate of reference.namedGates||reference.gates){
    if(reference.namedGates)for(const variant of namedGateVariants(gate)){add(namedGateGeometry(variant,terrain),gate.id);meshes.at(-1).userData.gateContextPhases=variant.contextPhases;meshes.at(-1).userData.gatePassageMode=variant.passageMode;}
@@ -80,7 +85,7 @@ export function createWallReferenceModel(parent,{reference,terrain,core}){
  }catch(error){for(const m of meshes)m.geometry.dispose();material.dispose();markerMaterial.dispose();group.removeFromParent();throw error;}
  const timeline={phases:[...core.phases.values()]};let phase=null;
  return {meshes,anchors:()=>(reference.namedGates||reference.gates).filter(g=>meshes.some(m=>m.userData.cityObject.objectId===(g.id||g.objectId)&&m.visible)).map(g=>({id:g.id||g.objectId,label:g.label+(g.sealed?'（封閉）':'（形態示意）'),x:g.x,z:g.z,y:terrain.heightAtWorld(g.x,g.z)})),
-  apply({position,evidenceAllowed}){phase=timeline.phases[Math.floor(position)]?.id;group.visible=PHASES.includes(phase);for(const m of meshes){const r=core.get(m.userData.cityObject.objectId),state=lifecycleStateAtPosition({lifecycleEvents:r.lifecycle.events},timeline,position);const future=m.userData.beforeGate&&core.get(m.userData.beforeGate),futureState=future&&lifecycleStateAtPosition({lifecycleEvents:future.lifecycle.events},timeline,position);m.visible=evidenceAllowed('inferred')&&['build','transform','rebuild','expand'].includes(state)&&(!future||!['build','transform','rebuild','expand'].includes(futureState))&&(!m.userData.gateContextPhases||m.userData.gateContextPhases.includes(phase));}},
+  apply({position,evidenceAllowed}){phase=timeline.phases[Math.floor(position)]?.id;group.visible=PHASES.includes(phase);for(const m of meshes){const r=core.get(m.userData.cityObject.objectId),state=lifecycleStateAtPosition({lifecycleEvents:r.lifecycle.events},timeline,position);const future=m.userData.beforeGate&&core.get(m.userData.beforeGate),futureState=future&&lifecycleStateAtPosition({lifecycleEvents:future.lifecycle.events},timeline,position);m.visible=evidenceAllowed('inferred')&&['build','transform','rebuild','expand'].includes(state)&&(!future||!['build','transform','rebuild','expand'].includes(futureState))&&(!m.userData.gateContextPhases||m.userData.gateContextPhases.includes(phase))&&(!m.userData.wallContextPhases||m.userData.wallContextPhases.includes(phase));}},
   diagnostics(){return{phase,visible:group.visible&&meshes.some(m=>m.visible),visibleComponents:group.visible?meshes.filter(m=>m.visible).length:0,componentIds:meshes.map(m=>m.uuid),referenceOnly:true,geometryVerified:false,sourceGaps:reference.gaps.length,namedGateCount:reference.namedGates?.length||0,visibleGateModels:group.visible?meshes.filter(m=>m.visible&&m.userData.gateContextPhases).map(m=>({id:m.userData.cityObject.objectId,mode:m.userData.gatePassageMode,contextPhases:[...m.userData.gateContextPhases]})):[],gatePassages:(reference.namedGates||[]).map(g=>({id:g.id,mode:namedGateForPhase(g,phase).passageMode,geometryVerified:false})),visibleGateIds:[...new Set(meshes.filter(m=>m.visible&&m.userData.cityObject.objectId!==WALL).map(m=>m.userData.cityObject.objectId))]};},
   dispose(){for(const m of meshes)m.geometry.dispose();material.dispose();markerMaterial.dispose();group.removeFromParent();}
  };
