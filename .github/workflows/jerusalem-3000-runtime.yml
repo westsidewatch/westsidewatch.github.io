@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-24.04
     # Full city/18-era GPU coverage includes real-time guide and playback waits.
     timeout-minutes: 20
+    env:
+      J3K_URL: http://127.0.0.1:8765/preview/jerusalem-3000/
+      J3K_OUTPUT: work/j3k-validation
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
