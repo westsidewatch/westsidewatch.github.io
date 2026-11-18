@@ -59,7 +59,15 @@ jobs:
           node scripts/verify_jerusalem_3000_continuity_ledger.mjs
           node scripts/verify_jerusalem_3000_royal_adapter.mjs
           node scripts/verify_jerusalem_3000_royal_spatial.mjs
+      - name: Select official Ubuntu package mirror
+        run: |
+          # The runner's regional EC2 mirror has stalled on font/Mesa downloads.
+          # Keep Ubuntu signatures and suites; only replace that mirror endpoint.
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            echo 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
+          fi
       - name: Install browser
+        timeout-minutes: 5
         run: |
           npx playwright install --with-deps chromium
       - name: Verify bounded shared generation
