@@ -11,7 +11,8 @@ jobs:
   city-runtime:
     # Keep the pinned Playwright browser dependencies on a supported OS.
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    # Full city/18-era GPU coverage includes real-time guide and playback waits.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

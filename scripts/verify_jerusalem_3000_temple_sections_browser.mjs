@@ -8,12 +8,12 @@ const browser=await chromium.launch({headless:true});try{
  for(const v of[3.9,6.9,7.9,8.9]){
   await p.locator('.j3k-scrubber').evaluate((e,v)=>{e.value=String(v);e.dispatchEvent(new Event('input',{bubbles:true}));},v);
   await p.waitForFunction(v=>window.__JERUSALEM3000__.historicalTime.position===v,v);
-  await p.getByRole('button',{name:'聖殿近看',exact:true}).click();await p.waitForTimeout(1000);
+  await p.getByRole('button',{name:'聖殿近看',exact:true}).click();await p.evaluate(()=>document.fonts.ready);await p.waitForTimeout(1000);
   const canvas=p.locator('.j3k-stage canvas').first(),capture=()=>canvas.screenshot(),before=await capture();
   await p.getByRole('button',{name:'聖殿剖視',exact:true}).click();await p.waitForTimeout(200);
   const info=await p.evaluate(()=>window.__JERUSALEM3000__.inspectTempleSection());assert.equal(info.enabled,true);assert.ok(info.clippedMeshes>0);
   const cut=await capture();assert.ok(!before.equals(cut),`GPU section must visibly change temple ${v}`);
-  await p.screenshot({path:`${out}/temple-section-${v}.png`,fullPage:true});
+  await fs.writeFile(`${out}/temple-section-${v}.png`,cut);
   await p.getByRole('button',{name:'聖殿剖視',exact:true}).click();await p.waitForTimeout(200);
   assert.equal(await p.evaluate(()=>window.__JERUSALEM3000__.inspectTempleSection().clippedMeshes),0);
   const restored=await capture();await fs.writeFile(`${out}/canvas-before-${v}.png`,before);await fs.writeFile(`${out}/canvas-restored-${v}.png`,restored);assert.ok(before.equals(restored),`closing section must restore original GPU scene below the toolbar ${v}`);rows.push({position:v,section:info,exactCanvasRestore:true});
