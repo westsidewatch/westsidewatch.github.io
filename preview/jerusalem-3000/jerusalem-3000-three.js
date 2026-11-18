@@ -262,7 +262,7 @@ try {
     date.textContent = p.dateLabel;
     eraEn.textContent = (p.state || '').toUpperCase() + ' · ' + p.dateLabel;
     const temple=cityObjects.find(o=>o.id===([RETAINED_PHASE,'hellenistic-hasmonean'].includes(p.id)?'j3k:object:second-temple-early':'j3k:object:first-temple'));
-    const availableGates=three.namedGateIndex().filter(g=>g.available),gateKey=availableGates.map(g=>g.id).join('|');if(gateFocus.dataset.gates!==gateKey){gateFocus.dataset.gates=gateKey;gateFocus.replaceChildren(new Option('城門近看',''),...availableGates.map(g=>new Option(g.label+(g.sealed?'（封閉）':''),g.id)));}gateFocus.hidden=!availableGates.length;
+    const availableGates=three.gateViewIndex(),gateKey=availableGates.map(g=>g.id).join('|');if(gateFocus.dataset.gates!==gateKey){gateFocus.dataset.gates=gateKey;gateFocus.replaceChildren(new Option('城門近看',''),...availableGates.map(g=>new Option(g.label+(g.sealed?'（封閉）':''),g.id)));}gateFocus.hidden=!availableGates.length;
     const holySection=['byzantine','early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id);templeSectionButton.textContent=holySection?'聖墓剖視':'聖殿剖視';templeSectionButton.hidden=!holySection&&!['david-solomon','late-first-temple','babylonian-destruction','persian-nehemiah','hellenistic-hasmonean','herodian-jesus','roman-destruction'].includes(p.id);
     const courtPhase=['early-islamic','crusader','ayyubid-mamluk','ottoman','outside-walls','modern'].includes(p.id);templeFocusButton.textContent=courtPhase?'聖域近看':'聖殿近看';
     templeFocusButton.hidden=isCorePhase(p.id)||courtPhase?false:!['david-solomon','late-first-temple','babylonian-destruction',RETAINED_PHASE,'hellenistic-hasmonean'].includes(p.id)||!(temple?.visible||temple?.ruined);

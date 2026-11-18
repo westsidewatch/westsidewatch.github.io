@@ -46,13 +46,18 @@ export function createWallReferenceModel(parent,{reference,terrain,core}){
      return cuts;
     });
     const pieces=reference.namedGates?subtractPlanarZones([p],gateCuts):[p];
-    for(const poly of pieces){
-     const push=(i,top)=>positions.push(poly[i].x,terrain.heightAtWorld(poly[i].x,poly[i].z)+(top?reference.height:.15),poly[i].z);
+    const emit=(polys,low,high)=>{for(const poly of polys){
+     const push=(i,top)=>positions.push(poly[i].x,terrain.heightAtWorld(poly[i].x,poly[i].z)+(top?high:low),poly[i].z);
      const tris=THREE.ShapeUtils.triangulateShape(poly.map(p=>new THREE.Vector2(p.x,p.z)),[]);for(const tri of tris)for(const i of [...tri].reverse())push(i,true);
      for(let j=0;j<poly.length;j++){const k=(j+1)%poly.length;for(const [n,t] of [[j,false],[k,true],[k,false],[j,false],[j,true],[k,true]])push(n,t);}
-    }
-    if(reference.namedGates)for(const f of [.25,.75]){const x=from.x+(to.x-from.x)*f,z=from.z+(to.z-from.z)*f;if(!pieces.some(poly=>pointInPolygon({x,z},poly)))continue;
-     const m=new THREE.BoxGeometry(1.2,1.1,reference.width);m.rotateY(-Math.atan2(b.z-a.z,b.x-a.x));m.translate(x,terrain.heightAtWorld(x,z)+reference.height+.55,z);const attr=m.attributes.position,idx=m.index.array;for(const i of idx)positions.push(attr.getX(i),attr.getY(i),attr.getZ(i));m.dispose();
+    }};
+    const deck=reference.height-.85;emit(pieces,-.15,deck);
+    // Thin parapets leave a real wall walk; apply the same gate cuts to every layer.
+    const inset=1-Math.min(.4,reference.width*.2)/(reference.width/2);
+    for(const side of[-1,1]){let strip=[{x:from.x+nx*side,z:from.z+nz*side},{x:to.x+nx*side,z:to.z+nz*side},{x:to.x+nx*side*inset,z:to.z+nz*side*inset},{x:from.x+nx*side*inset,z:from.z+nz*side*inset}];if(strip.reduce((sum,a,i)=>{const b=strip[(i+1)%4];return sum+a.x*b.z-b.x*a.z;},0)<0)strip.reverse();emit(reference.namedGates?subtractPlanarZones([strip],gateCuts):[strip],deck,reference.height);}
+    const mid={x:(from.x+to.x)/2,z:(from.z+to.z)/2},outer=pointInPolygon({x:mid.x+nx*1.2,z:mid.z+nz*1.2},reference.envelope)?-1:1;
+    if(reference.namedGates)for(const f of [.25,.75]){const x=from.x+(to.x-from.x)*f+nx*outer*.85,z=from.z+(to.z-from.z)*f+nz*outer*.85;if(!pieces.some(poly=>pointInPolygon({x,z},poly)))continue;
+     const m=new THREE.BoxGeometry(1.2,1.1,Math.min(.4,reference.width*.2));m.rotateY(-Math.atan2(b.z-a.z,b.x-a.x));m.translate(x,terrain.heightAtWorld(x,z)+reference.height+.55,z);const attr=m.attributes.position,idx=m.index.array;for(const i of idx)positions.push(attr.getX(i),attr.getY(i),attr.getZ(i));m.dispose();
     }
    }
    if(!positions.length)continue;

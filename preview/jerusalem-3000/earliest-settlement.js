@@ -1,3 +1,4 @@
+import {wallPrismGeometry} from './fortification-architecture.js';
 import {residentialEraProfile} from './residential-era-profiles.js';
 import {overviewHousingGeometry} from './overview-housing.js';
 import {publishSettlementLedger} from './settlement-ledger.js';
@@ -84,18 +85,13 @@ export function createLandscapeSettlement(parent,{data,terrain,ledgerCore=null,o
       const dx=b[0]-a[0],dz=b[1]-a[1],length=Math.hypot(dx,dz),count=Math.ceil(length/2.4),angle=-Math.atan2(dz,dx);
       for(let i=0;i<count;i++) {
         const x=spring.x+a[0]+dx*(i+.5)/count,z=spring.z+a[1]+dz*(i+.5)/count;
-        const span=length/count*.97,cs=Math.cos(angle),sn=Math.sin(angle);
+        const span=length/count,cs=Math.cos(angle),sn=Math.sin(angle);
         const corners=[[-span/2,-width/2],[span/2,-width/2],[-span/2,width/2],[span/2,width/2]];
-        const ground=Math.max(...corners.map(([a,b])=>surface(x+cs*a+sn*b,z-sn*a+cs*b))),rows=Math.ceil(height/1.1),course=height/rows;
-        const footing=new THREE.BoxGeometry(span,1,width),fp=footing.attributes.position;
-        for(let j=0;j<fp.count;j++)fp.setY(j,fp.getY(j)>0?0:surface(x+cs*fp.getX(j)+sn*fp.getZ(j),z-sn*fp.getX(j)+cs*fp.getZ(j))-ground);
-        footing.computeVertexNormals();
-        add(footing,confidence==='disputed'?disputedStone:stone,x,ground,z,`j3k:${namespace}:defense:${blockIndex++}`,kind,confidence).rotation.y=angle;
-        for(let row=0;row<rows;row++) {
-          const mesh=add(new THREE.BoxGeometry(length/count*.97,course*.95,width),confidence==='disputed'?disputedStone:stone,
-            x,ground+(row+.5)*course,z,`j3k:${namespace}:defense:${blockIndex++}`,kind,confidence);
-          mesh.rotation.y=angle;
-        }
+        const ground=Math.max(...corners.map(([a,b])=>surface(x+cs*a+sn*b,z-sn*a+cs*b)));
+        const geometry=wallPrismGeometry(span,width,height),p=geometry.attributes.position;
+        for(let j=0;j<p.count;j++)if(p.getY(j)<-height/2)p.setY(j,surface(x+cs*p.getX(j)+sn*p.getZ(j),z-sn*p.getX(j)+cs*p.getZ(j))-ground-height/2-.15);
+        geometry.computeVertexNormals();
+        add(geometry,confidence==='disputed'?disputedStone:stone,x,ground+height/2,z,`j3k:${namespace}:defense:${blockIndex++}`,kind,confidence).rotation.y=angle;
       }
     }
     const t=data.defense.tower,half=t.outerSize/2,c=half-t.wallWidth/2;

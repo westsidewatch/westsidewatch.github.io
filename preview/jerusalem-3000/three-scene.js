@@ -221,6 +221,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
   let sharedEraRuntime = null, laterMorphologyLedger=null, laterMorphologyBinding=null;
   let earliestSettlement = null, middleBronzeSettlement = null, lateBronzeSettlement = null, davidSettlement = null, priorCamera = null;
   let royalDataForGround=null;
+  let gateViewCache={key:null,items:[]};
   let retainedVisible = false, royalRelief=null, royalCity=null, persianSanctuary=null, hellenisticSanctuary=null, hellenisticSanctuaryData=null, hellenisticSanctuaryLayout=null, periodSpatialData=null, waterDefense=null, waterDefenseModel=null, localPlanAudit=[], periodRegistrations=new Map(), overviewPriorCamera=null, overviewFrame='', overviewInfo=null, timelinePosition=0, royalCameraStage='', templePriorCamera=null;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
@@ -964,8 +965,12 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       controls.minDistance=15;controls.target.copy(focus);camera.position.copy(focus).add(camera.aspect<1?new THREE.Vector3(65,60,90):new THREE.Vector3(42,40,60));controls.update();needsFrame=true;return true;
     },
     namedGateIndex(){return (namedGates||[]).map(g=>({id:g.id,label:g.label,profile:g.profile,sealed:g.sealed,available:!!wallReferenceModel?.diagnostics().visibleGateIds.includes(g.id)&&['ottoman','outside-walls','modern'].includes(currentPhaseId),geometryVerified:false}));},
+    gateViewIndex(){
+      const modern=this.namedGateIndex().filter(g=>g.available);if(modern.length)return modern;
+      const context=defenseTimeline?.snapshot({includeSourceAudit:false}),key=currentPhaseId+'|'+evidenceAllowed('inferred')+'|'+(royalCity?.diagnostics().stage||'')+'|'+(context?.gateRelations||[]).map(g=>g.gateId).join('|');if(gateViewCache.key===key)return gateViewCache.items;const items=(context?.gateRelations||[]).filter(g=>{let visible=false;root.traverse(m=>{if(!m.isMesh||m.userData.cityObject?.objectId!==g.gateId)return;for(let p=m;p;p=p.parent)if(!p.visible)return;visible=true;});return visible;}).map((g,i)=>({id:g.gateId,label:cityCoreRuntime.core.get(g.gateId)?.metadata?.name||`城門 ${i+1}（位置推定）`,available:true,sealed:false}));gateViewCache={key,items};return items;
+    },
     focusCityObject(id){pendingCityFrame=false;
-      const gate=namedGates?.find(g=>g.id===id),box=new THREE.Box3();root.updateMatrixWorld(true);let found=false;
+      const relation=defenseTimeline?.snapshot({includeSourceAudit:false})?.gateRelations.find(g=>g.gateId===id),approach=relation?new THREE.Vector2(relation.target.x-relation.center.x,relation.target.z-relation.center.z).normalize():null,gate=namedGates?.find(g=>g.id===id)||(approach?{normal:{x:approach.x,z:approach.y}}:null),box=new THREE.Box3();root.updateMatrixWorld(true);let found=false;
       root.traverse(m=>{if(!m.isMesh||m.userData.cityObject?.objectId!==id)return;for(let p=m;p;p=p.parent)if(!p.visible)return;box.expandByObject(m);found=true;});if(!found)return false;
       const focus=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),distance=Math.max(size.x,size.y,size.z)*(id.endsWith('sanctuary-access')||id==='j3k:object:royal-road:temple-entry'?(camera.aspect<1?1.8:1.15):id==='j3k:object:inner-temple'?(camera.aspect<1?1.8:1.15):['j3k:object:antonia','j3k:object:southern-approach'].includes(id)?(camera.aspect<1?2.1:1.5):/aqsa-context$|nea-context$|holy-sepulchre-context$/.test(id)?(camera.aspect<1?2.1:1.35):2.1);
       if(id==='j3k:object:western-street'){const x=(box.min.x+box.max.x)/2,z=(box.min.z+box.max.z)/2;focus.set(x,terrainRuntime.heightAtWorld(x,z)+.16,z);}

@@ -1,3 +1,4 @@
+import {wallPrismGeometry,wallJoinSkew,gateHeaderGeometry} from './fortification-architecture.js';
 import {royalPrecinctHallLayouts,buildRoyalPrecinctHalls} from './royal-precinct-halls.js';
 import {firstTempleOuterCourt} from './temple-context-layout.js';
 import {sanctuaryAccessVertices} from './sanctuary-access-geometry.js';
@@ -45,6 +46,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
     group.add(mesh);meshes.push(mesh);return mesh;
   }
   function circuit(points,stage,prefix){
+    const trace=points.map(([x,z])=>({x,z}));
     for(let j=1;j<points.length;j++){
       const a=points[j-1],b=points[j],dx=b[0]-a[0],dz=b[1]-a[1],length=Math.hypot(dx,dz),angle=-Math.atan2(dz,dx),intervals=[];
       let cursor=0,index=0;
@@ -54,7 +56,7 @@ export function createRoyalCity(parent,{data,terrain,core}) {
       }
       intervals.push([cursor,length]);
       for(const [start,end] of intervals){const span=end-start,count=Math.ceil(span/5);
-        for(let i=0;i<count;i++){const distance=start+span*(i+.5)/count;box(`${prefix}-${j}-${index++}`,'city-wall',a[0]+dx*distance/length,a[1]+dz*distance/length,span/count*.98,2.5,5,stage,stone,angle);}
+        for(let i=0;i<count;i++){const distance=start+span*(i+.5)/count;box(`${prefix}-${j}-${index++}`,'city-wall',a[0]+dx*distance/length,a[1]+dz*distance/length,span/count,2.5,5,stage,stone,angle,0,null,null,wallPrismGeometry(span/count,2.5,5,{startSkew:start===0&&i===0?wallJoinSkew(trace,j-1,j-1):0,endSkew:end===length&&i===count-1?wallJoinSkew(trace,j,j-1):0}));}
       }
     }
   }
@@ -193,8 +195,8 @@ export function createRoyalCity(parent,{data,terrain,core}) {
   }
   for(const gate of spatial.gates){
     const [gx,gz]=gate.offset,id=`j3k:object:royal-gate:${gate.id}`;
-    for(const side of [-1,1])box(`gate-${gate.id}-post-${side}`,'city-gate',gx+gate.unit[0]*side*(gate.width/2+.5),gz+gate.unit[1]*side*(gate.width/2+.5),1,2.5,4,gate.stage,stone,gate.angle,0,id);
-    box(`gate-${gate.id}-lintel`,'city-gate',gx,gz,gate.width+2,2.5,1,gate.stage,stone,gate.angle,4,id);
+    for(const side of [-1,1])box(`gate-${gate.id}-post-${side}`,'city-gate',gx+gate.unit[0]*side*(gate.width/2+.5),gz+gate.unit[1]*side*(gate.width/2+.5),1,2.5,4,gate.stage,stone,gate.angle,0,id,null,wallPrismGeometry(1,2.5,4));
+    box(`gate-${gate.id}-lintel`,'city-gate',gx,gz,gate.width+2,2.5,1,gate.stage,stone,gate.angle,4,id,null,gateHeaderGeometry(gate.width+2,2.5));
   }
   for(const edge of spatial.edges){
     const localVertices=sanctuaryAccessVertices(edge.points,spatial.roadWidth,surface,(px,pz,i,fraction)=>{

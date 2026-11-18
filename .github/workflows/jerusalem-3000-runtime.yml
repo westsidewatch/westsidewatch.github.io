@@ -101,6 +101,7 @@ jobs:
           node scripts/verify_jerusalem_3000_wall_reference.mjs
           node scripts/verify_jerusalem_3000_defense_sources.mjs
           node scripts/verify_jerusalem_3000_defense_timeline.mjs
+          node scripts/verify_jerusalem_3000_fortification_architecture.mjs
           node scripts/verify_jerusalem_3000_shared_places.mjs
           node scripts/verify_jerusalem_3000_persistent_world.mjs
           node scripts/verify_jerusalem_3000_independent_later.mjs
