@@ -82,6 +82,28 @@
   cloth.append(sheen);carrier.append(cloth);sheetHost?.append(carrier);
   return {carrier,cloth,sheen,index:i};
  });
+ // Keep the motion visible on immutable Cloudflare previews whose HTML
+ // still references a previously cached CSS URL during deployment.
+ if(!document.getElementById('olive-r51-banner-style')){
+  const style=document.createElement('style');style.id='olive-r51-banner-style';
+  style.textContent=`
+  .olive-sevenfold-banner{position:absolute;left:0;top:0;z-index:1;overflow:hidden;
+   transform-origin:50% 0;pointer-events:none;will-change:transform,opacity;
+   filter:drop-shadow(5px 2px 5px rgba(22,33,27,.15))}
+  .olive-sevenfold-banner__cloth{position:absolute;inset:-1px;display:block;
+   background:var(--olive-banner-color);transform-origin:center top;
+   clip-path:polygon(0 0,100% 0,100% 96%,88% 100%,4% 98%);
+   will-change:transform}
+  .olive-sevenfold-banner__sheen{position:absolute;inset:-10% -55%;display:block;
+   background:linear-gradient(90deg,transparent 10%,rgba(255,255,255,.18) 23%,
+   rgba(25,38,31,.16) 40%,rgba(255,255,255,.13) 60%,
+   rgba(28,39,28,.15) 76%,transparent 92%);pointer-events:none}
+  .olive-sevenfold-banner__cloth::after{content:"";position:absolute;inset:0;
+   opacity:.14;background:repeating-linear-gradient(0deg,rgba(255,255,255,.22) 0 1px,
+   transparent 2px 12px)}
+  `;
+  document.head.append(style);
+ }
  // Carry the SAME approved HTML letterforms; never replace them with raster cards.
  const carrierHost=document.createElement('div');
  carrierHost.className='olive-twin-entry olive-sevenfold-carrier-host';
