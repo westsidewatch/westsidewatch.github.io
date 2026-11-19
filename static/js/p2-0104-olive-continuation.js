@@ -66,47 +66,92 @@
   ['kou-shao-en','寇紹恩','KOU SHAO-EN']
  ];
  const pathFor=i=>'/images/olive/'+roster[i][0]+'-editorial.png';
- // R38: two actual squares drive seven masks through one existing scroll clock.
- const sevenfold=$('#olive-sevenfold-handoff'),sheetHost=sevenfold?.firstElementChild;
+  // V11 / The REAL P2 masthead squares carry the V9 flag into the inline L2.
+  // This is mounted in the existing stage, not a dialog, iframe or parallel page.
+  const sevenfold=$('#olive-sevenfold-handoff');
  const second=$('#olive-second-layer'),secondIndex=$('#olive-second-index'),detail=$('#olive-second-detail');
  const twins=[...document.querySelectorAll('.olive-twin-entry__square')];
- const landings=[...document.querySelectorAll('.olive-second-layer__landing-square')];
- const landingFrames=[...document.querySelectorAll('.olive-second-layer__landing')];
- const palette=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'];
- // Dallas Search Lights spatial grammar + Codrops SVG mask geometry:
- // two source squares become seven responsive, individually masked leaves.
+  const palette=['#427D99','#B79B41','#C6AF69','#718B5F','#A56C40','#A35458','#8570A1'];
  const svgNS='http://www.w3.org/2000/svg';
  const svgNode=(name,attrs={})=>{
   const node=document.createElementNS(svgNS,name);
   Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));return node;
  };
- const foldSvg=svgNode('svg',{class:'olive-sevenfold-handoff__svg','aria-hidden':'true',preserveAspectRatio:'none'});
- const foldDefs=svgNode('defs');foldSvg.append(foldDefs);
- const sheets=palette.map((token,i)=>{
-  const id='olive-sevenfold-leaf-r50-'+i;
-  const mask=svgNode('mask',{id,maskUnits:'userSpaceOnUse',maskContentUnits:'userSpaceOnUse'});
-  const polygon=svgNode('polygon',{fill:'white'});mask.append(polygon);foldDefs.append(mask);
-  const group=svgNode('g');
-  const fill=svgNode('rect',{x:'0',y:'0',fill:'var('+token+')',mask:'url(#'+id+')'});
-  group.append(fill);foldSvg.append(group);
-  return {group,fill,mask,polygon};
- });
- sheetHost?.replaceChildren(foldSvg);
- // R52: one original WESTSIDE WATCH SVG wordmark, not seven cloth flags.
- // Its seven-color fill and the two live square carriers share one timeline.
- const englishBanner=document.createElement('div');
- englishBanner.className='olive-sevenfold-wordmark';
- englishBanner.setAttribute('aria-hidden','true');
- sevenfold?.append(englishBanner);
- // Carry the SAME approved HTML letterforms; never replace them with raster cards.
- const carrierHost=document.createElement('div');
- carrierHost.className='olive-twin-entry olive-sevenfold-carrier-host';
- const foldCarriers=twins.map(source=>{
-  const node=source.cloneNode(true);
-  node.classList.add('olive-sevenfold-carrier');node.setAttribute('aria-hidden','true');
-  carrierHost.append(node);return node;
- });
- sevenfold?.append(carrierHost);
+  const number=(n)=>Math.round(n*100)/100;
+  const hexMix=(a,b,t)=>'#'+[1,3,5].map(i=>{
+   const x=parseInt(a.slice(i,i+2),16),y=parseInt(b.slice(i,i+2),16);
+   return Math.round(mix(x,y,clamp(t))).toString(16).padStart(2,'0');
+  }).join('');
+  const sevenColor=p=>{
+   const t=clamp((p-.08)/.74)*6,i=Math.min(5,Math.floor(t));
+   return hexMix(hexMix(palette[i],palette[i+1],t-i),'#647D54',ease((p-.86)/.14));
+  };
+  const kinetic=svgNode('svg',{class:'olive-sevenfold-handoff__svg','aria-hidden':'true'});
+  const defs=svgNode('defs'),clip=svgNode('clipPath',{id:'p2-v9-ribbon-clip'});
+  const ribbonWindow=svgNode('rect');clip.append(ribbonWindow);defs.append(clip);kinetic.append(defs);
+  const banner=svgNode('g',{'clip-path':'url(#p2-v9-ribbon-clip)'});
+  const fabric=svgNode('rect',{x:0,y:0,width:1600,height:108,
+   fill:'var(--ws-paper)',stroke:'var(--ws-morning-gold)','stroke-width':1});
+  const ruleTop=svgNode('path',{d:'M0 1H1600',stroke:'#b99b4f','stroke-width':1,fill:'none'});
+  const ruleBottom=svgNode('path',{d:'M0 107H1600',stroke:'#b99b4f','stroke-width':1,fill:'none'});
+  const v9Letters=svgNode('g',{id:'p2-v9-letter-paths'});
+  banner.append(fabric,ruleTop,ruleBottom,v9Letters);kinetic.append(banner);
+  function makeSeal(kind){
+   const group=svgNode('g',{class:'p2-kinetic-seal'});
+   const shell=svgNode('rect',{width:500,height:500,fill:'#647D54',
+    stroke:'#b99b4f','stroke-width':2});group.append(shell);
+   const initial=svgNode('g',{class:'p2-kinetic-initial'});
+   const copy=svgNode('g',{class:'p2-kinetic-scripture',opacity:0});
+   const addText=(host,value,x,y,size=22,fill='#f4eedf',extra={})=>{
+    const node=svgNode('text',{x,y,'font-size':size,fill,...extra});node.textContent=value;
+    host.append(node);return node;
+   };
+   addText(initial,kind===0?'04 / 07':'ROMANS 10:17',29,56,24,'#eed79a',{'letter-spacing':3});
+   addText(initial,kind===0?'OLIVE MOUNTAIN':'THE WORD',29,202,46,'#f4eedf');
+   addText(initial,kind===0?'橄欖山':'可見信道',29,283,40,'#f4eedf');
+   const label=kind===0?'ROMANS 13:12 / KJV':'ROMANS 10:17 / KJV';
+   addText(copy,label,29,39,16,'#f0d38e',{'font-family':'Arial,sans-serif','font-weight':600,'letter-spacing':3});
+   copy.append(svgNode('path',{d:'M29 53H471',stroke:'#d2b66f','stroke-width':1}));
+   const english=kind===0?[
+    ['THE NIGHT IS FAR SPENT,',114],['THE DAY IS AT HAND:',157]]:[
+    ['SO THEN FAITH COMETH',112],['BY HEARING, AND HEARING',152],['BY THE WORD OF GOD.',192]];
+   english.forEach(([line,y])=>addText(copy,line,29,y,29));
+   if(kind===0){
+    addText(copy,'黑夜已深，白晝將近。',29,240,27);
+    copy.append(svgNode('path',{d:'M29 276H471',stroke:'#d2b66f','stroke-width':1,opacity:.6}));
+    [['LET US THEREFORE CAST OFF',337],['THE WORKS OF DARKNESS,',367],
+     ['AND LET US PUT ON THE ARMOUR OF LIGHT.',397]].forEach(([line,y])=>
+      addText(copy,line,29,y,19,'#f4eedf',{'font-style':'italic'}));
+   }else{
+    copy.append(svgNode('path',{d:'M29 236H471',stroke:'#d2b66f','stroke-width':1,opacity:.6}));
+    addText(copy,'可見信道是從聽道來的，',29,303,27);
+    addText(copy,'聽道是從基督的話來的。',29,344,27);
+   }
+   copy.append(svgNode('path',{d:'M29 455H471',stroke:'#d2b66f','stroke-width':1}));
+   addText(copy,kind===0?'WATCH FOR THE DAWN':'OLIVE MOUNTAIN / 04',29,482,16,
+    '#f0d38e',{'font-family':'Arial,sans-serif','font-weight':600,'letter-spacing':3});
+   group.append(initial,copy);return {group,shell,initial,copy};
+  }
+  const seals=[makeSeal(0),makeSeal(1)];seals.forEach(s=>kinetic.append(s.group));
+  sevenfold?.replaceChildren(kinetic);
+  const finalCells=[...document.querySelectorAll('.p2-l2-final-seal')];
+  seals.forEach((seal,i)=>{
+   const svg=svgNode('svg',{viewBox:'0 0 500 500','aria-hidden':'true'});
+   const art=seal.group.cloneNode(true);art.removeAttribute('transform');
+   art.querySelector('.p2-kinetic-initial').setAttribute('opacity',0);
+   art.querySelector('.p2-kinetic-scripture').setAttribute('opacity',1);
+   svg.append(art);finalCells[i]?.append(svg);
+  });
+  fetch('/images/westside-watch-lettering-v9-clean-kern.svg').then(r=>{
+   if(!r.ok)throw Error('Original V9 lettering unavailable');return r.text();
+  }).then(xml=>{
+   const original=new DOMParser().parseFromString(xml,'image/svg+xml');
+   const paths=[...original.querySelectorAll('path[data-letter]')];
+   if(paths.length!==13||paths.map(node=>node.getAttribute('data-letter')).join('')!=='WESTSIDEWATCH')
+    throw Error('V9 glyph identity mismatch');
+   paths.forEach(node=>v9Letters.append(document.importNode(node,true)));
+   stage.dataset.p2Wordmark='v9-final-13-paths';
+  }).catch(error=>{stage.dataset.p2Wordmark='load-error';console.error(error)});
  function inlinePreviewColumns(){
   if(!secondIndex)return 4;
   const tracks=getComputedStyle(secondIndex).gridTemplateColumns.split(' ').filter(Boolean);
@@ -246,40 +291,21 @@
     placeInlinePreview(index);
   });
  },{passive:true});
- // R50: one reversible GSAP timeline. Click owns the handoff; scroll
- // remains the independent P2 first-layer clock. The two squares travel
- // through offset / cross / gathering states before revealing seven SVG leaves.
+  // One reversible stage-bound handoff; the original 01–04 scroll remains intact.
  const masthead=$('#olive-twin-entry');
  const handoffClock={value:0};
  let handoffProgress=0,handoffTarget=0;
  const handoffTimeline=window.gsap?.timeline({paused:true,onUpdate:()=>{
   handoffProgress=handoffClock.value;schedule();
- }})?.to(handoffClock,{value:1,duration:2.35,ease:'none'});
+  }})?.to(handoffClock,{value:1,duration:7.6,ease:'none'});
  function setHandoff(target){
   handoffTarget=target?1:0;
+   if(second)second.scrollTop=0;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches||!handoffTimeline){
    handoffTimeline?.pause(handoffTarget?handoffTimeline.duration():0);
    handoffClock.value=handoffTarget;handoffProgress=handoffTarget;schedule();return;
   }
   if(handoffTarget)handoffTimeline.play();else handoffTimeline.reverse();
- }
- // Per-section spatial vocabulary: Olive 04 = botanical outward encounter,
- // cross-axis exchange, gathering at the center, then seven engraved leaves.
- const oliveMoves=[
-  [{t:0,x:0,y:0,s:1},{t:.22,x:.34,y:.23,s:.88},{t:.43,x:.68,y:.26,s:.84},{t:.62,x:.38,y:.43,s:.72},{t:.80,x:.31,y:.30,s:.66}],
-  [{t:0,x:0,y:0,s:1},{t:.22,x:.69,y:.71,s:.88},{t:.43,x:.32,y:.70,s:.84},{t:.62,x:.62,y:.55,s:.72},{t:.80,x:.69,y:.30,s:.66}]
- ];
- function carrierPose(i,p,source,stageRect){
-  const keys=oliveMoves[i],w=stageRect.width,h=stageRect.height;
-  const initial={x:source.left-stageRect.left+source.width/2,
-   y:source.top-stageRect.top+source.height/2};
-  const xy=k=>k.t===0?{x:initial.x,y:initial.y,s:1}:
-   {x:k.x*w,y:k.y*h,s:k.s};
-  if(p>=.80){const v=xy(keys[keys.length-1]);return {...v,s:mix(v.s,.07,ease((p-.80)/.17))};}
-  let lo=keys[0],hi=keys[keys.length-1];
-  for(let k=1;k<keys.length;k++)if(p<=keys[k].t){lo=keys[k-1];hi=keys[k];break;}
-  const a=xy(lo),b=xy(hi),v=ease((p-lo.t)/(hi.t-lo.t));
-  return {x:mix(a.x,b.x,v),y:mix(a.y,b.y,v),s:mix(a.s,b.s,v)};
  }
  if(masthead){
   masthead.setAttribute('role','button');masthead.tabIndex=0;
@@ -291,6 +317,8 @@
    if(event.key==='Enter'||event.key===' '){event.preventDefault();setHandoff(1);}
   });
  }
+  // The original P2 exhibit finale now enters the SAME inline layer.
+  enter.addEventListener('click',event=>{event.preventDefault();setHandoff(1)});
  const returnToFirst=document.createElement('button');
  returnToFirst.type='button';returnToFirst.className='olive-second-layer__return-first';
  returnToFirst.textContent='← 返回 P2 第一層 / BACK TO P2';
@@ -302,61 +330,71 @@
  });
  function paintSecondLayer(){
   if(!second||!sevenfold||twins.length!==2)return;
-  const p=handoffProgress,active=p>.001&&p<.99999,open=p>.57;
-  second.style.visibility=open?'visible':'hidden';second.inert=p<.99999;
-  if(masthead)masthead.setAttribute('aria-expanded',String(p>.62));
-  returnToFirst.tabIndex=p>.62?0:-1;
-  // Focus must never reach the original gallery through the second page.
-  if(open){folio.inert=true;folio.setAttribute('aria-hidden','true')}
-  second.setAttribute('aria-hidden',open?'false':'true');
-  sevenfold.style.visibility=active?'visible':'hidden';
+   const p=handoffProgress,complete=p>=.99999;
+   second.style.visibility=complete?'visible':'hidden';second.inert=!complete;
+   second.setAttribute('aria-hidden',complete?'false':'true');
+   if(masthead)masthead.setAttribute('aria-expanded',String(complete));
+   returnToFirst.tabIndex=complete?0:-1;
+   sevenfold.style.visibility=p>.001&&!complete?'visible':'hidden';
+   if(p>.001){folio.inert=true;folio.setAttribute('aria-hidden','true')}
+   if(complete){folio.inert=true;folio.setAttribute('aria-hidden','true')}
   const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
-  foldSvg.setAttribute('viewBox','0 0 '+w+' '+h);
-  const poses=twins.map((source,i)=>{
-   const rect=source.getBoundingClientRect(),pose=carrierPose(i,p,rect,stageRect);
-   const copy=foldCarriers[i];
-   copy.style.setProperty('width',rect.width+'px','important');
-   copy.style.setProperty('height',rect.height+'px','important');
-   copy.style.transform='translate3d('+(pose.x-rect.width/2).toFixed(2)+'px,'+
-    (pose.y-rect.height/2).toFixed(2)+'px,0) scale('+pose.s.toFixed(4)+')';
-   copy.style.visibility=p>.004&&p<.91?'visible':'hidden';
-   source.style.opacity=p>.004?'0':'';
-   return pose;
-  });
-  // Seven separate, actual SVG masks. Each grows from the moved square's
-  // geometry into one precisely tessellated colored leaf, then peels upward.
-  sheets.forEach((sheet,i)=>{
-   const source=poses[i%2],size=1.5;
-   const grow=ease((p-.22)/.40),exit=ease((p-.67-i*.022)/.24);
-   const x0=i*w/7-1,x1=(i+1)*w/7+1;
-   const corners=[[source.x-size,source.y-size],[source.x+size,source.y-size],
-    [source.x+size,source.y+size],[source.x-size,source.y+size]];
-   const skew=clamp(w*.026,12,36);
-   const band=[[x0+skew,-1],[x1+skew,-1],[x1-skew,h+1],[x0-skew,h+1]];
-   const points=corners.map((v,k)=>
-    mix(v[0],band[k][0],grow).toFixed(2)+','+
-    mix(v[1],band[k][1],grow).toFixed(2)).join(' ');
-   sheet.polygon.setAttribute('points',points);
-   sheet.mask.setAttribute('x','0');sheet.mask.setAttribute('y','0');
-   sheet.mask.setAttribute('width',w);sheet.mask.setAttribute('height',h);
-   sheet.fill.setAttribute('width',w);sheet.fill.setAttribute('height',h);
-   sheet.group.style.visibility=p>.22&&p<.999?'visible':'hidden';
-   sheet.group.setAttribute('transform','translate(0 '+(-exit*(h+3)).toFixed(2)+')');
-  });
-  // The approved ultra-wide English paths unfold as a single taut banner.
-  // Seven colors are a mask/overlap grammar, never seven separate banners.
-  const letterIn=ease((p-.28)/.32),letterOut=ease((p-.72)/.22);
-  const centerX=(poses[0].x+poses[1].x)*.5;
-  englishBanner.style.transform='translate3d('+
-   (mix(centerX-w*.5,0,letterIn)).toFixed(2)+'px,'+
-   (mix(h*.24,0,letterIn)-letterOut*h*.9).toFixed(2)+'px,0) scale('+
-   mix(.35,1,letterIn).toFixed(3)+')';
-  englishBanner.style.opacity=(
-   ease((p-.27)/.14)*(1-ease((p-.73)/.16))).toFixed(3);
-    enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1;
+   kinetic.setAttribute('viewBox','0 0 '+number(w)+' '+number(h));
+   const narrow=w<620;
+   const bannerWidth=w*.91,scale=bannerWidth/1600,bannerHeight=108*scale;
+   const bannerX=(w-bannerWidth)/2,bannerY=h*.33;
+   banner.setAttribute('transform',`translate(${number(bannerX)} ${number(bannerY)}) scale(${scale})`);
+   // The reveal follows the separating original squares. The fabric stays
+   // paper-colored; only real vector letters and squares share the seven colors.
+   const opened=ease((p-.06)/.32);
+   ribbonWindow.setAttribute('x',number((1-opened)*800));
+   ribbonWindow.setAttribute('y',0);
+   ribbonWindow.setAttribute('width',number(opened*1600));
+   ribbonWindow.setAttribute('height',108);
+   const ink=sevenColor(p);v9Letters.setAttribute('fill',ink);
+   const capHeight=100*scale,letterCenterY=bannerY+54*scale;
+   const finalSize=narrow?Math.min(w*.60,h*.29,250):Math.min(w*.335,h*.44,430);
+   const gap=narrow?12:Math.min(36,w*.025);
+   const finalLeftX=narrow?(w-finalSize)/2:(w-2*finalSize-gap)/2;
+   const finalRightX=narrow?finalLeftX:finalLeftX+finalSize+gap;
+   const finalLeftY=narrow?Math.min(h-2*finalSize-gap-16,h*.43):
+    Math.min(h-finalSize-16,Math.max(bannerY+bannerHeight+55,h*.53));
+   const finalRightY=narrow?finalLeftY+finalSize+gap:finalLeftY;
+   const sourceRects=twins.map(node=>node.getBoundingClientRect());
+   const split=ease((p-.04)/.30),cross=ease((p-.37)/.34),seal=ease((p-.73)/.27);
+   const endCenters=[bannerX+capHeight/2,bannerX+bannerWidth-capHeight/2];
+   sourceRects.forEach((rect,i)=>{
+    const sourceX=rect.left-stageRect.left+rect.width/2;
+    const sourceY=rect.top-stageRect.top+rect.height/2;
+    let cx=mix(sourceX,endCenters[i],split),cy=mix(sourceY,letterCenterY,split);
+    let size=mix(rect.width,capHeight,split);
+    cx=mix(cx,endCenters[1-i],cross);
+    const destX=(i===0?finalLeftX:finalRightX)+finalSize/2;
+    const destY=(i===0?finalLeftY:finalRightY)+finalSize/2;
+    cx=mix(cx,destX,seal);cy=mix(cy,destY,seal);size=mix(size,finalSize,seal);
+    const group=seals[i].group;
+    group.setAttribute('transform',`translate(${number(cx-size/2)} ${number(cy-size/2)}) scale(${size/500})`);
+    seals[i].shell.setAttribute('fill',ink);
+    seals[i].initial.setAttribute('opacity',1-ease((p-.12)/.15));
+    seals[i].copy.setAttribute('opacity',ease((p-.79)/.16));
+    twins[i].style.opacity=p>.001?'0':'';
+   });
+   // The inline second layer takes over at the same pixel coordinates.
+   const position={
+    '--p2-banner-x':bannerX+'px','--p2-banner-y':bannerY+'px',
+    '--p2-banner-width':bannerWidth+'px','--p2-banner-height':bannerHeight+'px',
+    '--p2-seal-size':finalSize+'px','--p2-seal-left-x':finalLeftX+'px',
+    '--p2-seal-right-x':finalRightX+'px','--p2-seal-left-y':finalLeftY+'px',
+    '--p2-seal-right-y':finalRightY+'px',
+    '--p2-scripture-head-height':(Math.max(finalLeftY,finalRightY)+finalSize+34)+'px'
+   };
+   Object.entries(position).forEach(([key,value])=>second.style.setProperty(key,value));
+   if(p>.005){enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1}
   stage.dataset.p2Layer=p<=0?'first':p<.99999?'sevenfold-handoff':'second';
   stage.dataset.p2Sevenfold=p.toFixed(4);
-  stage.dataset.p2ScriptureMaster='scripture-studio-v60-p2-04';
+   stage.dataset.p2ScriptureMaster='two-square-native-v9-p2-04';
+   stage.dataset.p2SquareAspect='1:1';
+   stage.dataset.p2LetterSquareColor=ink;
  }
 
  if(window.P2OliveScriptures?.cards?.length!==roster.length||
