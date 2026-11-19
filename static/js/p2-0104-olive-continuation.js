@@ -1113,7 +1113,10 @@
   scrollTo({top,behavior:'instant'});schedule();
  }
  // 04 backdrop SVG removed. No fetch, live paths or animation-frame loop.
- document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.seek)));
+  document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>{
+   go(+b.dataset.seek);
+   if(b.dataset.seek==='25.60')setHandoff(1);
+  }));
  slider.addEventListener('input',()=>go(+slider.value));
  base.addEventListener('load',schedule);
  addEventListener('scroll',schedule,{passive:true});
