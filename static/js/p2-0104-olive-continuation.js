@@ -73,37 +73,31 @@
  const landings=[...document.querySelectorAll('.olive-second-layer__landing-square')];
  const landingFrames=[...document.querySelectorAll('.olive-second-layer__landing')];
  const palette=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'];
- // R51 Codrops parent/child counter-motion; seven OS-color cloth banners.
+ // Dallas Search Lights spatial grammar + Codrops SVG mask geometry:
+ // two source squares become seven responsive, individually masked leaves.
+ const svgNS='http://www.w3.org/2000/svg';
+ const svgNode=(name,attrs={})=>{
+  const node=document.createElementNS(svgNS,name);
+  Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));return node;
+ };
+ const foldSvg=svgNode('svg',{class:'olive-sevenfold-handoff__svg','aria-hidden':'true',preserveAspectRatio:'none'});
+ const foldDefs=svgNode('defs');foldSvg.append(foldDefs);
  const sheets=palette.map((token,i)=>{
-  const carrier=document.createElement('div');carrier.className='olive-sevenfold-banner';
-  carrier.style.setProperty('--olive-banner-color','var('+token+')');
-  const cloth=document.createElement('div');cloth.className='olive-sevenfold-banner__cloth';
-  const sheen=document.createElement('i');sheen.className='olive-sevenfold-banner__sheen';
-  cloth.append(sheen);carrier.append(cloth);sheetHost?.append(carrier);
-  return {carrier,cloth,sheen,index:i};
+  const id='olive-sevenfold-leaf-r50-'+i;
+  const mask=svgNode('mask',{id,maskUnits:'userSpaceOnUse',maskContentUnits:'userSpaceOnUse'});
+  const polygon=svgNode('polygon',{fill:'white'});mask.append(polygon);foldDefs.append(mask);
+  const group=svgNode('g');
+  const fill=svgNode('rect',{x:'0',y:'0',fill:'var('+token+')',mask:'url(#'+id+')'});
+  group.append(fill);foldSvg.append(group);
+  return {group,fill,mask,polygon};
  });
- // Keep the motion visible on immutable Cloudflare previews whose HTML
- // still references a previously cached CSS URL during deployment.
- if(!document.getElementById('olive-r51-banner-style')){
-  const style=document.createElement('style');style.id='olive-r51-banner-style';
-  style.textContent=`
-  .olive-sevenfold-banner{position:absolute;left:0;top:0;z-index:1;overflow:hidden;
-   transform-origin:50% 0;pointer-events:none;will-change:transform,opacity;
-   filter:drop-shadow(5px 2px 5px rgba(22,33,27,.15))}
-  .olive-sevenfold-banner__cloth{position:absolute;inset:-1px;display:block;
-   background:var(--olive-banner-color);transform-origin:center top;
-   clip-path:polygon(0 0,100% 0,100% 96%,88% 100%,4% 98%);
-   will-change:transform}
-  .olive-sevenfold-banner__sheen{position:absolute;inset:-10% -55%;display:block;
-   background:linear-gradient(90deg,transparent 10%,rgba(255,255,255,.18) 23%,
-   rgba(25,38,31,.16) 40%,rgba(255,255,255,.13) 60%,
-   rgba(28,39,28,.15) 76%,transparent 92%);pointer-events:none}
-  .olive-sevenfold-banner__cloth::after{content:"";position:absolute;inset:0;
-   opacity:.14;background:repeating-linear-gradient(0deg,rgba(255,255,255,.22) 0 1px,
-   transparent 2px 12px)}
-  `;
-  document.head.append(style);
- }
+ sheetHost?.replaceChildren(foldSvg);
+ // R52: one original WESTSIDE WATCH SVG wordmark, not seven cloth flags.
+ // Its seven-color fill and the two live square carriers share one timeline.
+ const englishBanner=document.createElement('div');
+ englishBanner.className='olive-sevenfold-wordmark';
+ englishBanner.setAttribute('aria-hidden','true');
+ sevenfold?.append(englishBanner);
  // Carry the SAME approved HTML letterforms; never replace them with raster cards.
  const carrierHost=document.createElement('div');
  carrierHost.className='olive-twin-entry olive-sevenfold-carrier-host';
@@ -317,6 +311,7 @@
   second.setAttribute('aria-hidden',open?'false':'true');
   sevenfold.style.visibility=active?'visible':'hidden';
   const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
+  foldSvg.setAttribute('viewBox','0 0 '+w+' '+h);
   const poses=twins.map((source,i)=>{
    const rect=source.getBoundingClientRect(),pose=carrierPose(i,p,rect,stageRect);
    const copy=foldCarriers[i];
@@ -328,30 +323,37 @@
    source.style.opacity=p>.004?'0':'';
    return pose;
   });
-  // Seven separate Codrops-style clipped parents and counter-moving cloths.
+  // Seven separate, actual SVG masks. Each grows from the moved square's
+  // geometry into one precisely tessellated colored leaf, then peels upward.
   sheets.forEach((sheet,i)=>{
-   const lead=poses[i%2],delay=i*.026;
-   const arrive=ease((p-.19-delay)/.35),leave=ease((p-.68-delay*.30)/.27);
-   const wave=Math.sin(p*18-i*.64)*(1-leave);
-   const width=w/7+3,left=i*w/7;
-   const x=mix(lead.x-width*.5,left,arrive);
-   const lift=-h*(1-arrive)*.94-h*leave*1.12;
-   const tilt=(1-arrive)*(i%2?-13:13)+wave*2.8;
-   sheet.carrier.style.width=width.toFixed(2)+'px';
-   sheet.carrier.style.height=(h*1.18).toFixed(2)+'px';
-   sheet.carrier.style.transform='translate3d('+x.toFixed(2)+'px,'+
-    (lift-h*.08).toFixed(2)+'px,0) rotate('+tilt.toFixed(2)+'deg)';
-   sheet.carrier.style.opacity=p>.17&&p<.985?'1':'0';
-   sheet.cloth.style.transform='translate3d('+
-    (Math.sin(p*15+i*.9)*10*(1-leave)).toFixed(2)+'px,'+
-    ((1-arrive)*h*.32).toFixed(2)+'px,0) skewY('+
-    (wave*2.5).toFixed(2)+'deg) rotateY('+
-    (wave*4.5).toFixed(2)+'deg)';
-   sheet.sheen.style.transform='translateX('+
-    (Math.sin(p*13-i*.48)*22).toFixed(2)+'%) skewX('+
-    (wave*2.5).toFixed(2)+'deg)';
+   const source=poses[i%2],size=1.5;
+   const grow=ease((p-.22)/.40),exit=ease((p-.67-i*.022)/.24);
+   const x0=i*w/7-1,x1=(i+1)*w/7+1;
+   const corners=[[source.x-size,source.y-size],[source.x+size,source.y-size],
+    [source.x+size,source.y+size],[source.x-size,source.y+size]];
+   const skew=clamp(w*.026,12,36);
+   const band=[[x0+skew,-1],[x1+skew,-1],[x1-skew,h+1],[x0-skew,h+1]];
+   const points=corners.map((v,k)=>
+    mix(v[0],band[k][0],grow).toFixed(2)+','+
+    mix(v[1],band[k][1],grow).toFixed(2)).join(' ');
+   sheet.polygon.setAttribute('points',points);
+   sheet.mask.setAttribute('x','0');sheet.mask.setAttribute('y','0');
+   sheet.mask.setAttribute('width',w);sheet.mask.setAttribute('height',h);
+   sheet.fill.setAttribute('width',w);sheet.fill.setAttribute('height',h);
+   sheet.group.style.visibility=p>.22&&p<.999?'visible':'hidden';
+   sheet.group.setAttribute('transform','translate(0 '+(-exit*(h+3)).toFixed(2)+')');
   });
-  enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1;
+  // The approved ultra-wide English paths unfold as a single taut banner.
+  // Seven colors are a mask/overlap grammar, never seven separate banners.
+  const letterIn=ease((p-.28)/.32),letterOut=ease((p-.72)/.22);
+  const centerX=(poses[0].x+poses[1].x)*.5;
+  englishBanner.style.transform='translate3d('+
+   (mix(centerX-w*.5,0,letterIn)).toFixed(2)+'px,'+
+   (mix(h*.24,0,letterIn)-letterOut*h*.9).toFixed(2)+'px,0) scale('+
+   mix(.35,1,letterIn).toFixed(3)+')';
+  englishBanner.style.opacity=(
+   ease((p-.27)/.14)*(1-ease((p-.73)/.16))).toFixed(3);
+    enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1;
   stage.dataset.p2Layer=p<=0?'first':p<.99999?'sevenfold-handoff':'second';
   stage.dataset.p2Sevenfold=p.toFixed(4);
   stage.dataset.p2ScriptureMaster='scripture-studio-v60-p2-04';
