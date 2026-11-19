@@ -2167,30 +2167,20 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
 .olive-second-layer__player{width:100%;aspect-ratio:16/9;background:var(--ws-ink);margin-top:14px}
 .olive-second-layer__player iframe{display:block;width:100%;height:100%;border:0}
 
-/* R51 — Codrops-inspired sevenfold cloth handoff. Scoped to Olive 04. */
-.olive-sevenfold-handoff__sheets{position:absolute;inset:0;isolation:isolate}
-.olive-sevenfold-banner{
- position:absolute;left:0;top:0;z-index:1;overflow:hidden;
- transform-origin:50% 0;pointer-events:none;will-change:transform,opacity;
- filter:drop-shadow(5px 2px 5px rgba(22,33,27,.15));
-}
-.olive-sevenfold-banner__cloth{
- position:absolute;inset:-1px;display:block;background:var(--olive-banner-color);
- clip-path:polygon(0 0,100% 0,100% 96%,88% 100%,4% 98%);
- transform-origin:center top;will-change:transform;
- backface-visibility:visible;
-}
-.olive-sevenfold-banner__sheen{
- position:absolute;inset:-10% -55%;display:block;
- background:linear-gradient(90deg,transparent 10%,rgba(255,255,255,.18) 23%,
- rgba(25,38,31,.16) 40%,rgba(255,255,255,.13) 60%,
- rgba(28,39,28,.15) 76%,transparent 92%);
- pointer-events:none;will-change:transform;
-}
-.olive-sevenfold-banner__cloth::after{
- content:"";position:absolute;inset:0;opacity:.14;
- background:repeating-linear-gradient(0deg,rgba(255,255,255,.22) 0 1px,transparent 2px 12px);
+/* R52 — one original WESTSIDE WATCH banner lettering over the sevenfold. */
+.olive-sevenfold-wordmark{
+ position:absolute;z-index:3;left:3%;top:43%;width:94%;
+ aspect-ratio:1600/108;pointer-events:none;opacity:0;
+ transform-origin:center center;will-change:transform,opacity;
+ background:linear-gradient(90deg,
+  var(--ws-water) 0 14.285%,var(--ws-first-light) 14.285% 28.57%,
+  var(--ws-pale-gold) 28.57% 42.855%,var(--ws-olive) 42.855% 57.14%,
+  var(--ws-harvest) 57.14% 71.425%,var(--ws-crimson) 71.425% 85.71%,
+  var(--ws-daylight-mauve) 85.71% 100%);
+ -webkit-mask:url('/images/westside-watch-lettering-v4-transparent.svg') center/contain no-repeat;
+ mask:url('/images/westside-watch-lettering-v4-transparent.svg') center/contain no-repeat;
+ filter:drop-shadow(0 3px 3px rgba(30,42,32,.35));
 }
 @media(prefers-reduced-motion:reduce){
- .olive-sevenfold-banner,.olive-sevenfold-banner__cloth,.olive-sevenfold-banner__sheen{will-change:auto}
+ .olive-sevenfold-wordmark{will-change:auto}
 }
