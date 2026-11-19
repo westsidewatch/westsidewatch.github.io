@@ -66,8 +66,8 @@
   ['kou-shao-en','寇紹恩','KOU SHAO-EN']
  ];
  const pathFor=i=>'/images/olive/'+roster[i][0]+'-editorial.png';
-  // V11 / The REAL P2 masthead squares carry the V9 flag into the inline L2.
-  // This is mounted in the existing stage, not a dialog, iframe or parallel page.
+  // R55 / Motion is mounted in the real P2 stage; all second-layer artwork,
+  // colors, typography and speaker-grid geometry stay on their old master.
   const sevenfold=$('#olive-sevenfold-handoff');
  const second=$('#olive-second-layer'),secondIndex=$('#olive-second-index'),detail=$('#olive-second-detail');
  const twins=[...document.querySelectorAll('.olive-twin-entry__square')];
@@ -134,14 +134,6 @@
   }
   const seals=[makeSeal(0),makeSeal(1)];seals.forEach(s=>kinetic.append(s.group));
   sevenfold?.replaceChildren(kinetic);
-  const finalCells=[...document.querySelectorAll('.p2-l2-final-seal')];
-  seals.forEach((seal,i)=>{
-   const svg=svgNode('svg',{viewBox:'0 0 500 500','aria-hidden':'true'});
-   const art=seal.group.cloneNode(true);art.removeAttribute('transform');
-   art.querySelector('.p2-kinetic-initial').setAttribute('opacity',0);
-   art.querySelector('.p2-kinetic-scripture').setAttribute('opacity',1);
-   svg.append(art);finalCells[i]?.append(svg);
-  });
   fetch('/images/westside-watch-lettering-v9-clean-kern.svg').then(r=>{
    if(!r.ok)throw Error('Original V9 lettering unavailable');return r.text();
   }).then(xml=>{
@@ -383,21 +375,13 @@
     seals[i].copy.setAttribute('opacity',ease((p-.79)/.16));
     twins[i].style.opacity=p>.001?'0':'';
    });
-   // The inline second layer takes over at the same pixel coordinates.
-   const position={
-    '--p2-banner-x':bannerX+'px','--p2-banner-y':bannerY+'px',
-    '--p2-banner-width':bannerWidth+'px','--p2-banner-height':bannerHeight+'px',
-    '--p2-seal-size':finalSize+'px','--p2-seal-left-x':finalLeftX+'px',
-    '--p2-seal-right-x':finalRightX+'px','--p2-seal-left-y':finalLeftY+'px',
-    '--p2-seal-right-y':finalRightY+'px',
-    '--p2-scripture-head-height':(Math.max(finalLeftY,finalRightY)+finalSize+34)+'px'
-   };
-   Object.entries(position).forEach(([key,value])=>second.style.setProperty(key,value));
+   // Handoff is visibility-only: the existing second-layer page is never
+   // restyled, reflowed or filled with duplicated transition artwork.
    if(p>.005){enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1}
   stage.dataset.p2Layer=p<=0?'first':p<.99999?'sevenfold-handoff':'second';
   stage.dataset.p2Sevenfold=p.toFixed(4);
-   stage.dataset.p2ScriptureMaster='two-square-native-v9-p2-04';
-   stage.dataset.p2SquareAspect='1:1';
+   stage.dataset.p2ScriptureMaster='original-second-layer-scripture-studio';
+   stage.dataset.p2SquareAspect='1:1-during-transition';
    stage.dataset.p2LetterSquareColor=ink;
  }
 
