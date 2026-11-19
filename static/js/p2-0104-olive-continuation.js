@@ -363,12 +363,16 @@
    const sourceRects=twins.map(node=>node.getBoundingClientRect());
    const split=ease((p-.04)/.30),cross=ease((p-.37)/.34),seal=ease((p-.73)/.27);
    const endCenters=[bannerX+capHeight/2,bannerX+bannerWidth-capHeight/2];
+   // Travel THROUGH their own portions of the English wordmark, then open
+   // outward into two distinct scripture squares. Never swap the squares:
+   // their reverse cross-over used to stack two growing verses on one another.
+   const letterStations=[bannerX+bannerWidth*.43,bannerX+bannerWidth*.68];
    sourceRects.forEach((rect,i)=>{
     const sourceX=rect.left-stageRect.left+rect.width/2;
     const sourceY=rect.top-stageRect.top+rect.height/2;
     let cx=mix(sourceX,endCenters[i],split),cy=mix(sourceY,letterCenterY,split);
     let size=mix(rect.width,capHeight,split);
-    cx=mix(cx,endCenters[1-i],cross);
+    cx=mix(cx,letterStations[i],cross);
     const destX=(i===0?finalLeftX:finalRightX)+finalSize/2;
     const destY=(i===0?finalLeftY:finalRightY)+finalSize/2;
     cx=mix(cx,destX,seal);cy=mix(cy,destY,seal);size=mix(size,finalSize,seal);
