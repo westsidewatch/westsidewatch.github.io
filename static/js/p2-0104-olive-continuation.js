@@ -179,6 +179,7 @@
   secondIndex.insertBefore(detail,secondButtons[nextRow]||null);
   second.dataset.activeSpeaker=String(index);
  }
+ const secondSpeakerOpeners=[];
  const secondButtons=roster.map((speaker,index)=>{
   const button=document.createElement('button');button.type='button';
   button.className='olive-second-layer__person';button.setAttribute('aria-pressed','false');
@@ -188,9 +189,9 @@
   img.alt='';img.loading='lazy';
   const caption=document.createElement('span');caption.textContent=speaker[2]+' / '+speaker[1];
   button.append(img,caption);secondIndex?.append(button);
-  button.addEventListener('click',()=>{
-   const origin=img.getBoundingClientRect();
-   const flipSource=window.Flip?.getState(img);
+  const showSpeaker=(instant=false)=>{
+   const origin=instant?null:img.getBoundingClientRect();
+   const flipSource=instant?null:window.Flip?.getState(img);
    secondButtons.forEach(b=>{const on=b===button;b.setAttribute('aria-pressed',String(on));b.setAttribute('aria-expanded',String(on))});
    const back=document.createElement('button');back.type='button';
    back.className='olive-second-layer__back';back.textContent='← 十二位講員 / THE TWELVE';
@@ -291,10 +292,10 @@
    detail.replaceChildren(back,head,series);
    placeInlinePreview(index);
    detail.hidden=false;detail.dataset.speaker=speaker[0];second.dataset.view='speaker';
-   requestAnimationFrame(()=>detail.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'}));
+   if(!instant)requestAnimationFrame(()=>detail.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'}));
    // Full folio opens in place, keeping the first-page Scripture as
    // the leading structure and reserving genuine room for lecture series.
-   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+   if(!instant&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
     requestAnimationFrame(()=>{
      const to=image.getBoundingClientRect();
      if(to.width>0&&to.height>0&&origin.width>0&&origin.height>0){
@@ -319,7 +320,9 @@
      ],{duration:620,delay:140+i*115,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'}));
     });
    }
-  });
+  };
+  secondSpeakerOpeners[index]=showSpeaker;
+  button.addEventListener('click',()=>showSpeaker());
   return button;
  });
  // Responsive row placement retains the inline Codrops expansion.
@@ -344,17 +347,51 @@
  function resetHandoff(){
   handoffTarget=0;handoffOriginD=null;handoffTimeline?.pause(0);
   handoffClock.value=0;handoffProgress=0;
+  stage.dataset.p2EntryMethod='first-layer';
   if(second)second.scrollTop=0;
   schedule();
  }
+ function resetSecondIndex(){
+  second.dataset.view='index';detail.hidden=true;
+  secondButtons.forEach(button=>{
+   button.setAttribute('aria-pressed','false');
+   button.setAttribute('aria-expanded','false');
+  });
+ }
+ // Direct, zero-motion entry for a P2 portrait: build the exact existing
+ // speaker page, then reveal the existing second layer in the same frame.
+ // The masthead's distinct V9 animation remains available from the index.
+ function enterSecondInstant(index=null){
+  if(index!==null&&(!Number.isInteger(index)||index<0||index>=roster.length))return;
+  handoffTimeline?.pause(0);
+  handoffOriginD=clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,T.end);
+  handoffTarget=1;handoffClock.value=1;handoffProgress=1;
+  if(index===null)resetSecondIndex();
+  else secondSpeakerOpeners[index](true);
+  second.scrollTop=0;
+  stage.dataset.p2EntryMethod=index===null?'instant-index':'instant-speaker';
+  stage.dataset.p2RequestedSpeaker=index===null?'':roster[index][0];
+  schedule();
+  // The speaker page is below the index in the unchanged inline second-layer
+  // structure. Land on its own hero immediately; never strand the visitor at
+  // the twelve-thumbnails header after tapping an individual P2 portrait.
+  if(index!==null)requestAnimationFrame(()=>{
+   if(handoffProgress<.99999||second.dataset.activeSpeaker!==String(index))return;
+   const delta=detail.getBoundingClientRect().top-second.getBoundingClientRect().top-18;
+   second.scrollTop=Math.max(0,second.scrollTop+delta);
+  });
+ }
  function setHandoff(target){
   if(!target){resetHandoff();return}
-  // The two masthead squares are a valid entry on EVERY Olive speaker folio,
-  // not just after the twelve-poster index. The outgoing pair stays readable
-  // beneath the safely raised flag, then departs before the seals enlarge.
+  // On a two-speaker folio the animated flag inevitably approaches moving
+  // portraits. Keep the masthead clickable, but enter the index instantly.
+  // The V9 sevenfold is reserved for the fully visible twelve-person phase.
   const d=clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,T.end);
   if(d<T.first-.01){stage.dataset.p2EntryGate='olive-speaker-pages-only';return}
   stage.dataset.p2EntryGate='open';
+  if(d<T.indexStart){enterSecondInstant();return}
+  resetSecondIndex();
+  stage.dataset.p2EntryMethod='sevenfold';
   handoffOriginD=d;
   handoffTarget=1;
   if(second)second.scrollTop=0;
@@ -383,7 +420,7 @@
  second?.prepend(returnToFirst);
  returnToFirst.addEventListener('click',()=>setHandoff(0));
  document.addEventListener('keydown',event=>{
-  if(event.key==='Escape'&&handoffTarget===1)setHandoff(0);
+  if(event.key==='Escape'&&handoffProgress>0)setHandoff(0);
  });
  function paintSecondLayer(){
   if(!second||!sevenfold||twins.length!==2)return;
@@ -554,6 +591,7 @@
   if(!art.querySelector('olive-speaker-baseline'))frozen.mount(art,target);
   figure.dataset.oliveProtectedBaseline='v1';
   figure.dataset.speakerIndex=String(index);
+  figure.setAttribute('aria-label',roster[index][2]+' · '+roster[index][1]+'，開啟講員單頁');
   return art;
  }
  // A card must be ONE physical assembly. V63 incorrectly rotated shell,
@@ -576,6 +614,22 @@
   caption.setAttribute('aria-hidden','true');figure.append(caption);
  }
  protectArtwork(first,0);
+ // The actual on-stage portrait is the direct speaker entry. The rotating
+ // carrier, engraved reverse and scripture companion remain untouched.
+ // Read the figure's CURRENT speakerIndex, not a stale fixed pair number.
+ [first,left,right,nextLeft,nextRight].forEach(figure=>{
+  figure.setAttribute('role','button');figure.tabIndex=-1;
+  const open=event=>{
+   if(getComputedStyle(figure).visibility!=='visible')return;
+   const index=Number(figure.dataset.speakerIndex);
+   if(!Number.isInteger(index)||index<0||index>=roster.length)return;
+   event.preventDefault();event.stopPropagation();enterSecondInstant(index);
+  };
+  figure.addEventListener('click',open);
+  figure.addEventListener('keydown',event=>{
+   if(event.key==='Enter'||event.key===' '){event.preventDefault();open(event)}
+  });
+ });
  const cards=roster.map(([slug,zh,en],i)=>{
   const a=document.createElement('a');
   a.className='olive-stage__index-card';
@@ -590,6 +644,9 @@
   a.style.zIndex=String(i+1);
   overview.append(a);
   protectArtwork(a,i);
+  a.addEventListener('click',event=>{
+   event.preventDefault();event.stopPropagation();enterSecondInstant(i);
+  });
   return a;
  });
  // Decode every approved original speaker composite while 03 is still
@@ -1209,7 +1266,13 @@
   folio.inert=!interactive;
   folio.setAttribute('aria-hidden',interactive?'false':'true');
   enter.tabIndex=interactive?0:-1;
-  cards.forEach(card=>card.tabIndex=interactive?0:-1);
+  // Every visible P2 portrait is actionable before the twelve-index settles.
+  first.tabIndex=d>T.start&&d<T.spread?0:-1;
+  [left,right].forEach((figure,side)=>{
+   figure.tabIndex=d>=T.spread&&d<T.indexStart&&turns[side]<90?0:-1;
+  });
+  nextLeft.tabIndex=-1;nextRight.tabIndex=-1;
+  cards.forEach(card=>card.tabIndex=d>=T.indexStart?0:-1);
   stage.dataset.p2Bridge=bridge.toFixed(5);
   stage.dataset.p2Spread=form.toFixed(5);
   stage.dataset.p2ReadingField=readingField.toFixed(5);
