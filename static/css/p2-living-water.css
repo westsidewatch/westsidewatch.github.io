@@ -790,3 +790,32 @@ body[data-ws-scope="p2"] .church-editorial__maquette{
   background:transparent;
   pointer-events:none;
 }
+
+
+/* P2 Sunday growth: keep the architectural ornament visible beside the
+   actual programme on every viewport. Earlier mobile reading CSS had hidden it. */
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__visual{
+  display:block;
+  visibility:visible;
+}
+@media (max-width:700px){
+  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:clamp(190px,32svh,310px) minmax(0,1fr);
+  }
+  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__visual{
+    display:block;
+    grid-column:1;
+    grid-row:1;
+    min-width:0;
+    min-height:0;
+    overflow:hidden;
+  }
+  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__copy{
+    grid-column:1;
+    grid-row:2;
+    min-height:0;
+    overflow-y:auto;
+  }
+}
