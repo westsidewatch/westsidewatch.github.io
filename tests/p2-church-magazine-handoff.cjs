@@ -122,6 +122,14 @@ const data=()=>{
   // working /experiments URL. The historical lab above is still tested.
   const homePage=await browser.newPage({viewport:{width:1440,height:900}});
   await homePage.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:45000});
+  // The published 04 wrapper intentionally sleeps its nested 01–03 runtime
+  // outside the P2 viewport. Warm the protected Magazine frame by entering
+  // its original scroll passage before testing the 01–03 sequence.
+  await homePage.evaluate(()=>{
+   const host=document.querySelector('.ws-p2-sevenfold-host');
+   window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+
+    innerHeight*4.5,behavior:'instant'});
+  });
   await homePage.waitForFunction(()=>{
    const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
    const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
