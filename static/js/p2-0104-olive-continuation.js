@@ -221,6 +221,26 @@
    const series=document.createElement('section');series.className='olive-second-layer__series';
    const seriesHeading=document.createElement('h3');seriesHeading.textContent='系列講座 / LECTURE SERIES';
    const catalogue=document.createElement('div');catalogue.className='olive-second-layer__series-grid';
+   // The lecture catalogue is the left-hand navigation, while the large
+   // reserved right-hand folio is the actual, shared sermon viewing surface.
+   // Do not mount a player inside an individual narrow catalogue card.
+   const preview=document.createElement('aside');
+   preview.className='olive-second-layer__sermon-preview';
+   preview.dataset.state='idle';preview.setAttribute('aria-label','講道影片預覽');
+   const previewLabel=document.createElement('p');
+   previewLabel.className='olive-second-layer__sermon-preview-label';
+   previewLabel.textContent='講道預覽 / SERMON PREVIEW';
+   const previewTitle=document.createElement('p');
+   previewTitle.className='olive-second-layer__sermon-preview-title';
+   previewTitle.textContent='選擇左側講道主題';
+   const previewStage=document.createElement('div');
+   previewStage.className='olive-second-layer__sermon-preview-stage';
+   const previewHint=document.createElement('p');
+   previewHint.className='olive-second-layer__sermon-preview-hint';
+   previewHint.textContent='點選講道題目，影片將在這裡展開。';
+   previewStage.append(previewHint);
+   preview.append(previewLabel,previewTitle,previewStage);
+   const episodeControls=[];
    const items=window.P2OliveSeries?.[speaker[0]]||[];
    if(items.length){
     items.forEach((entry,i)=>{
@@ -238,15 +258,22 @@
        const play=document.createElement('button');play.type='button';
        play.className='olive-second-layer__episode';play.textContent=episode.title;
        play.setAttribute('aria-label','在本頁播放 '+speaker[1]+'：'+episode.title);
+       play.setAttribute('aria-pressed','false');episodeControls.push(play);
        if(episode.status==='title-unverified')play.dataset.titleStatus='unverified';
        play.addEventListener('click',()=>{
-        const oldPlayer=detail.querySelector('.olive-second-layer__player');oldPlayer?.remove();
+        episodeControls.forEach(control=>control.setAttribute('aria-pressed',String(control===play)));
         const player=document.createElement('div');player.className='olive-second-layer__player';
         const frame=document.createElement('iframe');
         frame.title=speaker[1]+'｜'+episode.title;
         frame.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(episode.videoId)+'?rel=0';
         frame.loading='lazy';frame.allow='autoplay; encrypted-media; picture-in-picture';
-        frame.allowFullscreen=true;player.append(frame);article.append(player);
+        frame.allowFullscreen=true;player.append(frame);
+        previewTitle.textContent=episode.title;
+        previewStage.replaceChildren(player);
+        preview.dataset.state='playing';
+        if(matchMedia('(max-width:950px)').matches){
+         preview.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'});
+        }
        });playlist.append(play);
       });
       article.append(playlist);
@@ -260,7 +287,7 @@
     note.textContent='系列講座目錄整理中 · SERIES CATALOGUE IN PREPARATION';
     catalogue.append(note);
    }
-   series.append(seriesHeading,catalogue);
+   series.append(seriesHeading,catalogue,preview);
    detail.replaceChildren(back,head,series);
    placeInlinePreview(index);
    detail.hidden=false;detail.dataset.speaker=speaker[0];second.dataset.view='speaker';
