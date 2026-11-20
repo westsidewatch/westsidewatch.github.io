@@ -64,13 +64,23 @@
      <cite>JOHN 8:32 · KJV</cite>
     </div>
    </div>
-   <section class="dawn-catalogue" aria-labelledby="dawn-catalogue-title">
+   <section class="dawn-wall" id="dawn-wall" aria-label="黎明書局方形黑膠牆與館藏發現">
+    <div class="dawn-wall__folio"><span>05 / LIBRARY</span><span>THE LIVING COLLECTION · 21,047 RECORDS</span></div>
+    <div class="dawn-wall__grid" id="dawn-wall-grid" aria-live="polite">
+     <button type="button" class="dawn-wall__tile dawn-wall__tile--portal dawn-wall__tile--sunrise" data-dawn-portal="三晨星"><small>01 / CURATED READING</small><strong>三晨星</strong><em>THE THREE MORNING STARS</em></button>
+     <button type="button" class="dawn-wall__tile dawn-wall__tile--portal dawn-wall__tile--spectrum" data-dawn-portal="光譜"><small>02 / DISCOVERY</small><strong>光譜</strong><em>THE SPECTRUM</em></button>
+     <button type="button" class="dawn-wall__tile dawn-wall__tile--portal dawn-wall__tile--curation" data-dawn-portal="策展集"><small>03 / EDITORIAL</small><strong>策展集</strong><em>THE CURATED COLLECTION</em></button>
+     <div class="dawn-wall__tile dawn-wall__tile--imprint" aria-hidden="true"><span>THE<br>WORD<br>LIVES.</span><i>JOHN 8:32</i></div>
+    </div>
+    <div class="dawn-wall__tail"><span>每個方塊都是一個閱讀入口</span><button type="button" id="dawn-open-catalogue">探索完整館藏 <span aria-hidden="true">＋</span></button></div>
+   </section>
+   <section class="dawn-catalogue" id="dawn-catalogue" aria-labelledby="dawn-catalogue-title" hidden>
+    <button type="button" class="dawn-catalogue__back" id="dawn-close-catalogue">返回方形黑膠牆</button>
     <header class="dawn-catalogue__heading">
-     <div><span>DAWN LIBRARY</span><h2 id="dawn-catalogue-title">THE COLLECTION</h2><p>館藏 · 歷史書籍與信仰資源</p></div>
+     <div><span>DAWN LIBRARY</span><h2 id="dawn-catalogue-title">THE COLLECTION</h2><p id="dawn-catalogue-focus">館藏 · 歷史書籍與信仰資源</p></div>
      <div class="dawn-catalogue__total"><output id="dawn-total">—</output><span>館藏記錄</span></div>
     </header>
     <nav class="dawn-catalogue__nav" aria-label="黎明書局內容入口">
-     <a href="/dawn-library/">三晨星</a><a href="/dawn-library/">光譜</a><a href="/dawn-library/">策展集</a>
      <label>館藏搜尋 <input id="dawn-search" type="search" placeholder="按書名或作者搜尋已載入的館藏" autocomplete="off"></label>
     </nav>
     <ol class="dawn-catalogue__works" id="dawn-works" aria-live="polite"></ol>
@@ -79,6 +89,6 @@
   </section>
  </div>
 </main>
-<script src="/js/p2-0105-dawn-continuation.js?v=r4-20261120"></script>
+<script src="/js/p2-0105-dawn-continuation.js?v=r5-20261120"></script>
 </body>
 </html>
