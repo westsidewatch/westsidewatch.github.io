@@ -1,0 +1,38 @@
+name: P2 Sunday Growth Visible
+on:
+  pull_request:
+    paths:
+      - 'static/p2/living-water.html'
+      - 'static/js/p2-church-growth-maquette.js'
+      - 'static/js/p2-living-water.js'
+      - 'static/css/p2-living-water.css'
+      - 'tests/p2-sunday-growth-visible.cjs'
+      - '.github/workflows/p2-sunday-growth-visible.yml'
+  workflow_dispatch:
+jobs:
+  sunday-growth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Build the real P2 page
+        run: hugo --gc --minify --baseURL 'http://127.0.0.1:4173/'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+      - name: Verify visible model next to the Sunday schedule on desktop and mobile
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/p2-sunday-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-sunday-growth-visible.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-sunday-growth-visible
+          path: artifacts/p2-sunday-growth/
+          if-no-files-found: ignore
