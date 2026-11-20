@@ -9,7 +9,7 @@
  const spread=$('#dawn-spread'),windowFrame=$('#dawn-book-window'),book=$('#dawn-book'),cover=$('#dawn-book-cover');
  const hint=$('#dawn-enter-hint'),handoff=$('#dawn-handoff'),second=$('#dawn-second'),returnButton=$('#dawn-return');
  const plates=[$('#dawn-plate-zh'),$('#dawn-plate-en')];
- const slider=$('#p205-seek'),out=$('#p205-progress'),search=$('#dawn-search'),works=$('#dawn-works');
+ const search=$('#dawn-search'),works=$('#dawn-works');
  const more=$('#dawn-more'),prevButton=$('#dawn-prev'),pageStatus=$('#dawn-page-status'),total=$('#dawn-total');
  const wall=$('#dawn-wall'),wallGrid=$('#dawn-wall-grid'),catalogue=$('#dawn-catalogue'),catalogueFocus=$('#dawn-catalogue-focus');
  const openCatalogue=$('#dawn-open-catalogue'),closeCatalogue=$('#dawn-close-catalogue');
@@ -18,7 +18,7 @@
  let queued=false,at=0,entryProgress=0,entryClock=0,entryTarget=0,rafId=0;
  function progress(){return clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,32.3)}
  function paint(){queued=false;const d=progress(),p=entryProgress;
-  slider.value=d.toFixed(2);out.textContent=d.toFixed(2);
+
   // THE ORIGINAL 01–04 FILES REMAIN UNMODIFIED AND BEHIND THEIR OWN STAGE.
   prior.contentWindow?.postMessage({type:'westside-p2-home-pose',distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),active:d<27.3},location.origin);
   const start=ease((d-26.23)/.86),come=ease((d-26.72)/.72),leaf=ease((d-27.35)/1.35),open=ease((d-28.48)/1.24);
@@ -39,8 +39,6 @@
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
  function jump(d){resetEntry();scrollTo({top:track.offsetTop+clamp(d,0,32.3)*innerHeight,behavior:'instant'});schedule()}
- document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>jump(+b.dataset.seek)));
- slider.addEventListener('input',()=>jump(+slider.value));
  addEventListener('scroll',()=>{if(entryProgress>.001&&progress()<26.23)resetEntry();schedule()},{passive:true});
  addEventListener('resize',schedule,{passive:true});prior.addEventListener('load',schedule);
 
@@ -52,7 +50,7 @@
  function osColor(name,fallback){const raw=osStyle.getPropertyValue(name).trim();if(/^#[\da-f]{6}$/i.test(raw))return raw.toLowerCase();
   if(raw&&ctx&&window.CSS?.supports('color',raw)){ctx.clearRect(0,0,1,1);ctx.fillStyle=raw;ctx.fillRect(0,0,1,1);const data=ctx.getImageData(0,0,1,1).data;if(data[3]===255)return '#'+[...data].slice(0,3).map(v=>v.toString(16).padStart(2,'0')).join('');}return fallback;}
  const palette=token.map((t,i)=>osColor(t,['#5b8fa8','#a2872a','#cebd74','#738a5a','#b8944a','#a14d57','#b085ab'][i]));
- const harvest=palette[4],olive=palette[3],gold=osColor('--ws-morning-gold','#d2bc69'),paper=osColor('--ws-paper','#faf9f5'),papyrus=osColor('--ws-papyrus','#eee4c9');
+ const harvest=palette[4],gold=osColor('--ws-morning-gold','#d2bc69'),paper=osColor('--ws-paper','#faf9f5'),papyrus=osColor('--ws-papyrus','#eee4c9');
  function hexMix(a,b,t){return '#'+[1,3,5].map(i=>Math.round(mix(parseInt(a.slice(i,i+2),16),parseInt(b.slice(i,i+2),16),clamp(t))).toString(16).padStart(2,'0')).join('')}
  function sevenInk(p){const t=clamp((p-.22)/.62)*6,i=Math.min(5,Math.floor(t));return hexMix(palette[i],palette[i+1],t-i)}
  const ns='http://www.w3.org/2000/svg';
@@ -66,7 +64,7 @@
  const letters=svg('g');banner.append(topRule,bottomRule,letters);kinetic.append(banner);
  const seals=[0,1].map(i=>{
   const g=svg('g'),shell=svg('rect',{width:500,height:500,fill:i?papyrus:harvest,stroke:gold,'stroke-width':2});g.append(shell);
-  const initial=svg('g');textNode(initial,i?'JOHN 8:32':'05 / 07',25,56,22,i?harvest:paper);
+  const initial=svg('g');textNode(initial,i?'JOHN 8:32':'DAWN LIBRARY',25,56,22,i?harvest:paper);
   textNode(initial,i?'THE TRUTH':'DAWN LIBRARY',25,192,i?42:45,i?harvest:paper);
   textNode(initial,i?'真理使人自由':'黎明書局',25,280,36,i?harvest:paper);g.append(initial);
   const copy=svg('g',{opacity:0});textNode(copy,i?'THE TRUTH':'DAWN LIBRARY',25,50,23,gold);
@@ -84,8 +82,8 @@
  function paintHandoff(){const p=entryProgress,complete=p>=.99999;stage.dataset.p205Handoff=p.toFixed(4);
   twins.setAttribute('aria-expanded',String(complete));
   handoff.style.visibility=p>.001&&!complete?'visible':'hidden';
-  second.style.visibility=p>.61?'visible':'hidden';
-  second.style.clipPath=`inset(0 0 ${(100* (1-ease((p-.77)/.23))).toFixed(2)}% 0)`;
+  second.style.visibility=p>.64?'visible':'hidden';
+  second.style.clipPath='none';
   second.inert=!complete;second.setAttribute('aria-hidden',complete?'false':'true');
   second.style.pointerEvents=complete?'auto':'none';
   if(p<=.001)return;
@@ -94,19 +92,20 @@
   // Seven full-bleed sheets: each occupies the COMPLETE stage, not the banner.
   // Staggered vertical sweeps overlap with no exposed margin at any screen ratio.
   sheets.forEach((sheet,i)=>{
-   const sweep=ease((p-.42-i*.047)/.25);
+   const arrive=ease((p-.34-i*.033)/.19);
+   const depart=ease((p-.72-i*.018)/.17);
    sheet.setAttribute('x',0);
-   sheet.setAttribute('y',(-h*(1-sweep)).toFixed(2));
+   sheet.setAttribute('y',(-h*(1-arrive)+h*depart).toFixed(2));
    sheet.setAttribute('width',w);
    sheet.setAttribute('height',h);
   });
   const bw=w*.9,scale=bw/1600,bh=108*scale,bx=(w-bw)/2,by=Math.max(25,Math.min(h*.27,twins.getBoundingClientRect().bottom-bounds.top+14));
   banner.setAttribute('transform',`translate(${bx} ${by}) scale(${scale})`);
-  const opened=ease((p-.045)/.31),retire=ease((p-.70)/.17);
+  const opened=ease((p-.045)/.28),retire=ease((p-.56)/.15);
   aperture.setAttribute('x',800*(1-opened+retire*opened));aperture.setAttribute('width',1600*opened*(1-retire));
-  const ink=hexMix(gold,sevenInk(p),ease((p-.07)/.13));letters.setAttribute('fill',ink);topRule.setAttribute('stroke',ink);bottomRule.setAttribute('stroke',ink);
+  const ink=hexMix(gold,sevenInk(p),ease((p-.07)/.13));letters.setAttribute('fill',ink);topRule.setAttribute('stroke',ink);bottomRule.setAttribute('stroke',ink);banner.setAttribute('opacity',String(1-ease((p-.59)/.13)));
   const source=squares.map(node=>node.getBoundingClientRect());const target=plates.map(node=>node.getBoundingClientRect());
-  const lift=ease((p-.015)/.17),cross=ease((p-.18)/.38),land=ease((p-.68)/.27),capHeight=100*scale;
+  const lift=ease((p-.015)/.17),cross=ease((p-.18)/.34),land=ease((p-.58)/.15),capHeight=100*scale;
   seals.forEach((seal,i)=>{
    const src=source[i],dst=target[i],s0=src.width,sz=mix(mix(s0,capHeight,lift),dst.width,land);
    const sourceX=src.left-bounds.left+src.width/2,sourceY=src.top-bounds.top+src.height/2;
@@ -114,11 +113,12 @@
    const endX=dst.left-bounds.left+dst.width/2,endY=dst.top-bounds.top+dst.height/2;
    const cx=mix(mix(sourceX,stationX,cross),endX,land),cy=mix(mix(sourceY,stationY,lift),endY,land);
    seal.g.setAttribute('transform',`translate(${cx-sz/2} ${cy-sz/2}) scale(${sz/500})`);
+   seal.g.setAttribute('opacity',String(1-ease((p-.76)/.14)));
    const currentSealInk=hexMix(i?papyrus:harvest,sevenInk(p),ease((p-.14)/.66));
    seal.shell.setAttribute('fill',currentSealInk);
    seal.shell.setAttribute('stroke',ink);
    seal.initial.querySelectorAll('text').forEach(n=>n.setAttribute('fill',hexMix(i?harvest:paper,paper,ease((p-.14)/.66))));
-   seal.initial.setAttribute('opacity',1-ease((p-.13)/.18));seal.copy.setAttribute('opacity',ease((p-.73)/.11));
+   seal.initial.setAttribute('opacity',1-ease((p-.13)/.18));seal.copy.setAttribute('opacity',ease((p-.57)/.12)*(1-ease((p-.74)/.14)));
    // The two real second-layer plates are the physical targets: no last-frame jump.
   });
  }
@@ -139,7 +139,7 @@
  let index=null,currentPage=0,loading=false,loaded=[],cache=new Map();
  function openCollection(origin='館藏總索引',title=''){
   wall.hidden=true;catalogue.hidden=false;
-  catalogueFocus.textContent=origin==='館藏總索引'?'館藏 · 歷史書籍與信仰資源':`從「${origin}」進入 · 目前呈現完整館藏索引`;
+  catalogueFocus.textContent=origin==='館藏總索引'?'館藏 · 歷史書籍與信仰資源':`從「${origin}」探索館藏`;
   if(title&&currentPage){search.value=title;renderWorks()}else if(currentPage){search.value='';renderWorks()}
   second.scrollTo({top:catalogue.offsetTop,behavior:'instant'});
   loadCatalogue();
@@ -159,7 +159,7 @@
    const tile=document.createElement('button'),num=document.createElement('small'),title=document.createElement('strong'),creator=document.createElement('em');
    tile.type='button';tile.className='dawn-wall__tile dawn-wall__tile--record';tile.style.setProperty('--tile-index',i);
    tile.dataset.workTitle=work.title||'';tile.setAttribute('aria-label',`${work.title||'Untitled'}；展開館藏索引`);
-   num.textContent=String(i+1).padStart(3,'0')+' / ARCHIVE';title.textContent=work.title||'Untitled';creator.textContent=work.creator||'作者未詳';
+   num.textContent=String(i+1).padStart(3,'0');title.textContent=work.title||'Untitled';creator.textContent=work.creator||'作者未詳';
    tile.append(num,title,creator);fragment.append(tile);
   });
   wallGrid.append(fragment);wallGrid.dataset.loaded='true';
