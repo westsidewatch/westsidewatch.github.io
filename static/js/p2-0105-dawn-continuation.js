@@ -150,7 +150,7 @@
  wallGrid.addEventListener('click',e=>{
   const tile=e.target.closest('button');if(!tile)return;
   if(tile.dataset.dawnPortal)openCollection(tile.dataset.dawnPortal);
-  else if(tile.dataset.workTitle)openCollection('方形黑膠牆',tile.dataset.workTitle);
+  else if(tile.dataset.workTitle)openCollection('書籍',tile.dataset.workTitle);
  });
  function renderWall(records){
   if(wallGrid.dataset.loaded==='true')return;
