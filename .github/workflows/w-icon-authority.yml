@@ -1,0 +1,19 @@
+name: W Icon Authority
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  icon-lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reject W icon regression
+        run: python3 scripts/check_w_icon_authority.py
