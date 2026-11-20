@@ -8,8 +8,8 @@ const {chromium}=require('playwright');
 const home=fs.readFileSync('layouts/partials/watch-home-editorial.html','utf8');
 const bridge=fs.readFileSync('static/js/p2-magazine-live-bridge.js','utf8');
 const church=fs.readFileSync('static/p2/living-water.html','utf8');
-assert.match(home,/p2-main-0103-20261105/,'homepage must mount approved 01–03 runtime rather than the old 01–02-only iframe');
-assert.match(home,/height:1034svh!important/,'P2 host must reserve the 03 Emmaus passage after Magazine');
+assert.match(home,/p2-0104-olive-continuation\.html\?embed=1/,'homepage must mount the 04 wrapper around the protected 01–03 source');
+assert.match(home,/height:2730svh!important/,'P2 host must append 04 after the untouched Emmaus passage');
 assert.match(home,/magazineEnd=6\.5/,'Magazine movement must span separate pinned viewports');
 assert.match(church,/p2-magazine-live-bridge\.js/,'church P2 must append the new Magazine bridge');
 assert.match(bridge,/handoffVh=2\.37/,'the new magazine cannot replace the prior Church scene');
@@ -124,8 +124,9 @@ const data=()=>{
   await homePage.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:45000});
   await homePage.waitForFunction(()=>{
    const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
    const root=release?.querySelector('#proof-original')?.contentDocument?.querySelector('.showcase');
-   return !!release?.getElementById('emmaus')&&
+   return !!source?.getElementById('emmaus')&&
     !!root?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.querySelector('#dual-stage');
   },null,{timeout:30000});
   const realScroll=[
@@ -145,30 +146,34 @@ const data=()=>{
    },distance);
    await homePage.waitForFunction(({scene,wantVh})=>{
     const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
-    const root=release?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
-    return release?.body.dataset.proofScene===scene&&root&&
+   const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
+    const root=source?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
+    return source?.body.dataset.proofScene===scene&&root&&
       Math.abs(Number(root.dataset.p2Progress||0)-wantVh)<.065;
    },{scene:expectedScene,wantVh},{timeout:24000});
    await homePage.waitForTimeout(190);
    const state=await homePage.evaluate(()=>{
     const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
-    const root=release?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
-    const em=release?.getElementById('emmaus');
-    return {scene:release?.body.dataset.proofScene,
+   const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
+    const root=source?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
+    const em=source?.getElementById('emmaus');
+    return {scene:source?.body.dataset.proofScene,
       vh:+root?.dataset.p2Progress,magazine:+root?.dataset.p2MagazineProgress,
       originalDoors:root?.querySelectorAll('.water-door').length||0,
       schedule:!!root?.querySelector('.church-schedule-source .sunday-schedule'),
       emVisible:em?release.defaultView.getComputedStyle(em).visibility:'missing',
-      oneBooks:release?.querySelectorAll('#emmaus-rail .emmaus__number').length||0,
-      scriptureChars:release?.querySelector('#em-scripture-verses')?.textContent?.trim().length||0,
-      hasOlive:!!release?.querySelector('#olive-proof')};
+      oneBooks:source?.querySelectorAll('#emmaus-rail .emmaus__number').length||0,
+      scriptureChars:source?.querySelector('#em-scripture-verses')?.textContent?.trim().length||0,
+      hasOlive:!!source?.querySelector('#olive-proof'),
+      wrapperOlive:!!release?.querySelector('#olive-proof')};
    });
    assert.equal(state.scene,expectedScene,name+': main homepage P2 scene incorrect');
    assert.equal(state.originalDoors,2,name+': original Red Sea doors disappeared');
    assert(state.schedule,name+': original Church schedule disappeared');
    assert(Math.abs(state.vh-wantVh)<.065,name+': original Church timing changed: '+JSON.stringify(state));
    assert(Math.abs(state.magazine-wantMagazine)<.065,name+': original Magazine timing changed: '+JSON.stringify(state));
-   assert(!state.hasOlive,name+': 04 Olive must remain excluded');
+   assert(!state.hasOlive,name+': original 01–03 source must remain unmodified');
+   assert(state.wrapperOlive,name+': appended Olive continuation must remain present');
    if(distance>=7.3){
     assert.equal(state.emVisible,'visible',name+': Emmaus is NOT on the actual homepage');
     assert.equal(state.oneBooks,66,name+': original 66-book ONE navigation not mounted');
