@@ -41,6 +41,7 @@ const data=()=>{
   magazineProgress:+(root?.dataset.p2MagazineProgress||0),
   magazineVisibility:magazine?getComputedStyle(magazine).visibility:'missing',
   magazinePaper:magazine?.style.background||'',
+  magazineClear:magazine?getComputedStyle(magazine).backgroundColor==='rgba(0, 0, 0, 0)'&&getComputedStyle(magazine).backgroundImage==='none':false,
   magazineChildren:magazine?.children.length||0,
   filmSrc:magazine?.querySelector('.p2-magazine__home-film')?.getAttribute('src')||'',
   filmOpacity:+(magazine?.querySelector('.p2-magazine__home-film')?.style.opacity||0),
@@ -101,13 +102,13 @@ const data=()=>{
      faults.push('the original Church and opening water doors must remain accessible on reverse');
     if(value===62&&!(m.rootPhase==='church-to-magazine'&&m.magazineProgress>0&&
        m.magazineProgress<.1&&m.magazineVisibility==='visible'&&m.churchInert&&
-       m.filmOpacity===0&&m.magazinePaper==='transparent'))
+       m.filmOpacity===0&&m.magazineClear))
      faults.push('the approved Magazine must begin only after the Church door is open');
     if(value===91&&!(m.magazineProgress>.7&&m.starInk==='single-rising-incision'&&m.heroOriginal))
      faults.push('the Morning Star must bring the original ink title into the spread');
     if(value===100&&!(m.magazineProgress>.999&&m.magazinePhase==='contents-final'&&
       m.coverStage==='contents-final'&&m.activeDesign==='10'&&m.count===12&&m.originalCover&&
-      m.magazinePaper==='transparent'&&m.magazineChildren===2&&m.filmOpacity>.999&&
+      m.magazineClear&&m.magazineChildren===2&&m.filmOpacity>.999&&
       m.filmSrc.startsWith('/preview/watch-city-vol00/hosanna/?cover=1')))
      faults.push('the live P2 must reach its genuine two-page cover and all twelve Contents desks');
     if(errors.length)faults.push('PAGE_ERROR '+errors.join('; '));

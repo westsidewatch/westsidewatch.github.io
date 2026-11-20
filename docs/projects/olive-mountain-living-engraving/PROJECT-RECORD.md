@@ -107,3 +107,30 @@ GitHub issue: https://github.com/westsidewatch/westsidewatch.github.io/issues/13
 - `tests/olive-mountain-art-foundation-v4.cjs` 與隔離 Preview workflow：四種 viewport（1648／1440／800／390）實測十二張原版、Shadow DOM 英文字、3:4、刻線不能碰撞海報及刊頭、A/B 實拍證據。
 
 **評審判準**：只有當靜態版面完整、橄欖山辨識與刀法成熟、手機正確、獲獎導向內部評審至少 15/20 且必要項非零，才考慮把 V10／SVG-002 生長機制接上。這次研究不是宣稱藝術終驗，更不是 merge main。截圖若仍存在破碎植物就否決，不再往錯誤構圖繼續添葉片。
+
+
+## 2026-11-16｜R29 全幅經文主導刊頭（Draft，第一層）
+
+**決策與範圍**：P2 04 橄欖山、05 黎明書局、06 天堂電影院、07 白晝咖啡館的**第一層**全部採用通欄刊頭。各版塊的中英文名稱與中英文主題經文組成雙方塊編輯系統，主題經文具有視覺與構圖主導權；不將經文變成植物、人物或其他圖案。**第二層沒有刊頭**，也不沿用通欄約束；七重疊只負責第一層到第二層的跨層轉場，第二層雙經文方塊可重新組合產生版塊專屬構圖，最後進入互動閱讀。
+
+**為何改**：R27 的雙方塊狹小地懸在兩張海報中央上方；點擊後白色經文方塊絕對定位覆蓋海報。R28 先證明可將刊頭與海報分離，但仍呈「左側小雙方塊＋右側經文」，經文主導不足。因此 R29 應以整條刊頭承載兩個共享幾何區，讓橫向七重疊取得充分運動距離。
+
+**R29 實際施工**：
+- `static/experiments/olive-masthead-r29-full-width.html`：通欄刊頭，左欄中文縱向經文和 OLIVE／橄欖山，右欄 MOUNTAIN 與完整 Romans 10:17 KJV；下方原有 3:4 倪柝聲、葉光明海報僅作安全區對照，不裁圖不改英文。
+- 七層 OS 色票從通欄左側進場、向右連續展開，測試轉場節奏；只屬第一層動畫校樣，不宣稱已接入第二層閱讀／GSAP Flip。
+- 舊 R28 校樣 `static/experiments/olive-masthead-r28-proof.html` 保留作 A/B 對照；R27 P2 原入口、01–03 iframe、十二講員既有動效與 Design OS 都未修改。
+
+**多雷探索與決策依據**：MERSI 網站案例（Codrops 2026-07-27）採用共享元素跨兩個 DOM 網格真實移位，逆向捲動可恢復；Codrops Menu-to-Grid（2022-09-19）與 Responsive Grid Transitions（2026-01-20）示範使用 GSAP Flip 進行布局而非遮罩物件的連續運動；GSAP 官方 Flip 文件說明 `getState` + DOM 改變 + `from`。R29 此輪暫不接第二層，避免未完成的空間落點造成浮動經文壓住海報。來源：https://tympanus.net/codrops/2026/07/27/between-print-and-digital-the-making-of-mersis-website/ 、https://tympanus.net/codrops/2022/09/19/menu-to-grid-layout-animation/ 、https://tympanus.net/codrops/2026/01/20/animating-responsive-grid-layout-transitions-with-gsap-flip/ 、https://gsap.com/docs/v3/Plugins/Flip/ 。
+
+**驗收狀態**：需在 Cloudflare 真實畫面檢查 1440 與手機版文字層次、正規 OS 字體與色彩、單字回行、所有畫面邊界、七重疊左→右節奏；通過技術測試並不等於獲獎級別藝術驗收。只保留 Draft，不合併 main。
+
+
+## 2026-11-16｜R30 通欄刊頭重製：研究校正與捲動驅動
+
+用戶對 R29 的三點否決已確定：①「SEVENFOLD / 七重疊動效檢視」為工程按鈕，不能出現在訪客界面；② `OLIVE`／`MOUNTAIN` 被左右拆開使英文名稱不自然；③ 有頁邊距的兩個矩形不是首頁既有七重疊那種真正全幅。三點均不得繼承。
+
+**實際施工**：`static/experiments/olive-masthead-r30-scroll.html`。單一全幅橄欖綠刊頭（不加外層 `.sheet` 限寬或左右空白）；單行完整 `OLIVE MOUNTAIN`；`橄欖山` 中文標題；中英羅馬書 10:17 分別以合宜的縱／橫閱讀方向呈現（不拆英文版塊名稱）。底層七色覆蓋整個 `inset:0` 通欄，用 `requestAnimationFrame` 讀取真實 `scrollY`、`transform:translate3d` 決定七層左入右出位置，反向捲動按同一函數回收；不顯示任何播放／測試按鈕。`prefers-reduced-motion` 下停用遮層。倪柝聲與葉光明原有海報只作下方設計安全區，無改圖、無改字。
+
+**技術來源判斷**：LxL Creative（Awwwards SOTD 2026-09-17）具導航轉場／GSAP／Barba.js 標籤；Gil Huybrecht（SOTD 2026-09-21）字體與無限捲動；Why Zero（SOTD 2026-09-07）單頁敘事／GSAP。研究歸納的原則是「動效因正常閱讀和導航發生」，不是要求訪客為特效而操作後台按鈕。參考索引：https://teasertrack.cc/websites/lxl-creative 、https://teasertrack.cc/websites/gil-huybrecht 、https://teasertrack.cc/websites/why-zero 。
+
+**邊界**：R30 是獨立一層構圖／動效校樣，尚未接入 P2 01–04 真正轉場，也不宣稱已有第二層方塊落點；現有 P2 01–03 和十二張講員海報完全保留。Cloudflare 驗收與美術審查完成之前不合併 main。

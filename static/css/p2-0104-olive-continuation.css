@@ -1112,3 +1112,1157 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
  .olive-stage__companion-verse-en{font-size:clamp(11px,3.05vw,13px);line-height:1.27}
  .olive-stage__companion-reference-en{font-size:clamp(10px,2.75vw,11px)}
 }
+
+/* R26 / direct P2 integration: R25 AB editorial twin geometry.
+   This is the EXISTING 04 masthead in its reserved stage zone. No new
+   full-screen object, poster layer, or independent transition controller.
+   The two fields govern alignment; they are not permanent box borders. */
+.olive-stage__rubric--twin-editorial{
+ --olive-twin-gutter:clamp(18px,2.1vw,36px);
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:var(--olive-twin-gutter);row-gap:3px;
+ align-items:end;position:relative;padding:7px 0 12px;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading::after{
+ content:"";position:absolute;bottom:0;left:0;right:0;
+ border-bottom:1px solid color-mix(in srgb,var(--ws-morning-gold) 42%,transparent);
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading strong{
+ grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:var(--olive-twin-gutter);align-items:end;width:100%;
+ font-size:calc(clamp(36px,5.7vw,89px) + var(--olive-title-growth,0px));
+ letter-spacing:-.066em;line-height:.87;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__word-olive,
+.olive-stage__rubric--twin-editorial .olive-stage__word-mountain{
+ display:block;min-width:0;white-space:nowrap;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__word-mountain{
+ font-size:.69em;letter-spacing:-.052em;text-align:right;
+ padding-bottom:.045em;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading .olive-stage__rubric-zh{
+ grid-column:2;justify-self:end;text-align:right;
+ font-size:clamp(18px,1.9vw,29px);line-height:1.12;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture{
+ width:100%;grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:var(--olive-twin-gutter);padding-top:9px;border-top:0;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture-zh,
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture-en{
+ max-width:48ch;
+}
+@media(max-width:900px){
+ .olive-stage__rubric--twin-editorial{--olive-twin-gutter:clamp(10px,2vw,22px)}
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(27px,6.2vw,54px) + var(--olive-title-growth,0px));
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__word-mountain{font-size:.69em}
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  font-size:clamp(15px,2.6vw,23px)
+ }
+}
+@media(max-width:540px){
+ .olive-stage__rubric--twin-editorial{--olive-twin-gutter:8px}
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading{
+  padding:4px 0 7px;row-gap:3px;
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(22px,6.5vw,32px) + var(--olive-title-growth,0px));
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__word-mountain{
+  font-size:.64em;letter-spacing:-.065em;
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  font-size:clamp(14px,3.7vw,17px)
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture{
+  column-gap:8px;padding-top:6px;
+ }
+}
+
+/* R27: the chapter masthead IS the two-square entry, not a split wordmark.
+   Sevenfold is constrained to that carrier and never alters scripture glyphs.
+   The untouched R26 title/verse remains in DOM as editorial fallback. */
+.olive-stage__rubric--twin-editorial{
+ left:50%;right:auto;top:clamp(43px,5.1svh,58px);width:auto;
+ transform:translateX(-50%);z-index:35;overflow:visible;pointer-events:auto;
+}
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-folio,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-heading,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-scripture{display:none}
+.olive-twin-entry{--twin-side:clamp(94px,8.25vw,148px);
+ position:relative;display:grid;grid-template-columns:repeat(2,var(--twin-side));
+ width:calc(var(--twin-side)*2);height:var(--twin-side);padding:0;
+ border:1px solid var(--ws-morning-gold);background:transparent;
+ color:var(--ws-paper);text-align:left;cursor:pointer;pointer-events:auto;
+ font-family:var(--ws-type-display-en);isolation:isolate;
+}
+.olive-twin-entry:focus-visible{outline:2px solid var(--ws-paper);outline-offset:5px}
+.olive-twin-entry__square{position:relative;display:flex;flex-direction:column;
+ justify-content:space-between;min-width:0;padding:clamp(8px,.75vw,13px);
+ overflow:hidden;background:rgba(37,57,32,.19)}
+.olive-twin-entry__square--right{border-left:1px solid var(--ws-morning-gold)}
+.olive-twin-entry .olive-twin-entry__edition{display:block;font-size:clamp(6px,.54vw,9px);
+ letter-spacing:.1em;line-height:1.2;font-weight:200;color:var(--ws-morning-gold)}
+.olive-twin-entry .olive-twin-entry__title{display:block;font-style:normal;
+ font-family:var(--ws-type-display-en);font-weight:400;
+ font-size:clamp(24px,2.15vw,39px);line-height:.92;letter-spacing:-.065em;
+ white-space:nowrap;transform:none}
+.olive-twin-entry__square--right .olive-twin-entry__title{font-size:clamp(15px,1.25vw,24px);letter-spacing:-.07em}
+.olive-twin-entry .olive-twin-entry__zh{display:block;font-size:clamp(13px,1.17vw,22px);
+ font-family:var(--ws-type-display-zh);font-weight:600;line-height:1.1;align-self:flex-end}
+.olive-twin-entry .olive-twin-entry__verse{display:block;font-size:clamp(7px,.64vw,10px);
+ font-weight:200;line-height:1.35;letter-spacing:0}
+.olive-twin-entry .olive-twin-entry__ref{display:block;font-size:clamp(7px,.58vw,9px);
+ letter-spacing:.09em;color:var(--ws-morning-gold)}
+.olive-twin-entry__folds{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.olive-twin-entry__folds i{position:absolute;inset:0;background:var(--ws-morning-gold);
+ transform:scaleX(0);transform-origin:left center;opacity:0}
+.olive-twin-entry__folds i:nth-child(1){background:var(--ws-water)}
+.olive-twin-entry__folds i:nth-child(2){background:var(--ws-first-light)}
+.olive-twin-entry__folds i:nth-child(3){background:var(--ws-pale-gold)}
+.olive-twin-entry__folds i:nth-child(4){background:var(--ws-olive)}
+.olive-twin-entry__folds i:nth-child(5){background:var(--ws-harvest)}
+.olive-twin-entry__folds i:nth-child(6){background:var(--ws-crimson)}
+.olive-twin-entry__folds i:nth-child(7){background:var(--ws-daylight-mauve)}
+.olive-twin-entry.is-folding .olive-twin-entry__folds i{
+ animation:oliveSevenfold .8s cubic-bezier(.76,0,.24,1) both;
+ animation-delay:calc((var(--fold-index) - 1)*.085s)}
+.olive-twin-entry__folds i:nth-child(1){--fold-index:1}
+.olive-twin-entry__folds i:nth-child(2){--fold-index:2}
+.olive-twin-entry__folds i:nth-child(3){--fold-index:3}
+.olive-twin-entry__folds i:nth-child(4){--fold-index:4}
+.olive-twin-entry__folds i:nth-child(5){--fold-index:5}
+.olive-twin-entry__folds i:nth-child(6){--fold-index:6}
+.olive-twin-entry__folds i:nth-child(7){--fold-index:7}
+@keyframes oliveSevenfold{0%{transform:scaleX(0);opacity:1}52%{transform:scaleX(1);opacity:1}100%{transform:translateX(100%);opacity:1}}
+.olive-twin-reading{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:clamp(12px,1.3vw,22px);position:absolute;top:0;left:50%;
+ width:min(70vw,600px);transform:translateX(-50%) scale(.86);
+ opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.olive-twin-reading__square{aspect-ratio:1;background:var(--ws-paper);color:#26412c;
+ border:1px solid var(--ws-morning-gold);padding:clamp(12px,2vw,30px);
+ display:flex;flex-direction:column;justify-content:space-between}
+.olive-twin-reading__square small{font-size:clamp(9px,.7vw,12px);
+ letter-spacing:.12em;font-weight:200}
+.olive-twin-reading__square p{margin:0;font-family:var(--ws-type-display-zh);
+ font-size:clamp(16px,2vw,29px);line-height:1.45}
+.olive-twin-reading__square--vertical p{writing-mode:vertical-rl;max-height:78%;align-self:center}
+.olive-twin-reading__square--horizontal p{font-family:var(--ws-type-display-en);
+ font-size:clamp(18px,2.05vw,30px);line-height:1.25}
+.olive-stage__rubric--twin-editorial.is-reading .olive-twin-entry{visibility:hidden}
+.olive-stage__rubric--twin-editorial.is-reading .olive-twin-reading{
+ visibility:visible;opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+@media(max-width:700px){
+ .olive-twin-entry{--twin-side:clamp(85px,22vw,115px)}
+ .olive-twin-reading{width:min(94vw,440px)}
+ .olive-twin-reading__square{padding:12px}
+ .olive-twin-reading__square p{font-size:clamp(14px,3.4vw,21px)}
+ .olive-twin-reading__square--horizontal p{font-size:clamp(15px,3.5vw,22px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-twin-entry.is-folding .olive-twin-entry__folds i{animation:none}
+ .olive-twin-reading{transition:none}
+}
+
+/* R31 — actual P2 04 stage: one full-width, compact, two-field masthead.
+   The fold is scrubbed by the existing P2 scroll clock, never by a click. */
+.olive-stage__rubric--twin-editorial{
+ left:0;right:0;top:clamp(38px,4.6svh,50px);width:100%;
+ transform:none;overflow:hidden;pointer-events:none;z-index:35;
+}
+.olive-twin-entry{
+ --twin-side:auto;width:100%;height:clamp(126px,14svh,166px);
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ border:0;border-top:1px solid var(--ws-morning-gold);
+ border-bottom:1px solid var(--ws-morning-gold);
+ cursor:default;overflow:hidden;
+}
+.olive-twin-entry__square{padding:clamp(9px,1vw,15px) clamp(16px,3vw,52px) 10px;
+ justify-content:flex-end;gap:5px;background:transparent;min-width:0}
+.olive-twin-entry__square--right{border-left:1px solid var(--ws-morning-gold)}
+.olive-twin-entry .olive-twin-entry__edition{font-size:clamp(8px,.7vw,11px)}
+.olive-twin-entry .olive-twin-entry__edition{position:absolute;top:8px;left:clamp(16px,3vw,52px)}
+.olive-twin-entry__square--right .olive-twin-entry__edition{left:auto;right:clamp(16px,3vw,52px)}
+.olive-twin-entry .olive-twin-entry__verse{font:200 clamp(11px,1.1vw,17px)/1.34 var(--ws-type-display-zh);max-width:36ch}
+.olive-twin-entry__square--right .olive-twin-entry__verse{font:italic 400 clamp(12px,1.2vw,19px)/1.25 var(--ws-type-display-en);max-width:37ch;margin-left:auto}
+.olive-twin-entry .olive-twin-entry__ref{font-size:clamp(8px,.65vw,10px)}
+.olive-twin-entry__square--right .olive-twin-entry__edition,
+.olive-twin-entry__square--right .olive-twin-entry__ref{text-align:right}
+.olive-twin-entry>.olive-twin-entry__title{
+ position:absolute;left:50%;top:clamp(20px,2.2vw,33px);transform:translateX(-50%);
+ z-index:2;white-space:nowrap;font:400 clamp(32px,4.4vw,80px)/.94 var(--ws-type-display-en);
+ letter-spacing:-.063em;color:var(--ws-paper);text-shadow:0 0 15px var(--ws-olive);
+}
+.olive-twin-entry>.olive-twin-entry__zh{
+ position:absolute;top:clamp(69px,6.1vw,99px);left:50%;transform:translateX(-50%);
+ z-index:2;font:600 clamp(13px,1.45vw,23px)/1.1 var(--ws-type-display-zh);
+ letter-spacing:.2em;text-shadow:0 0 10px var(--ws-olive);
+}
+.olive-twin-entry__folds{z-index:5}
+.olive-twin-entry__folds i{transform:translate3d(-102%,0,0);opacity:1;will-change:transform}
+.olive-twin-entry.is-folding .olive-twin-entry__folds i{animation:none}
+@media(max-width:700px){
+ .olive-twin-entry{height:clamp(150px,20svh,184px)}
+ .olive-twin-entry__square{padding:10px}
+ .olive-twin-entry .olive-twin-entry__edition{left:10px;font-size:7px}
+ .olive-twin-entry__square--right .olive-twin-entry__edition{right:10px;left:auto}
+ .olive-twin-entry>.olive-twin-entry__title{top:35px;font-size:clamp(30px,7.6vw,48px)}
+ .olive-twin-entry>.olive-twin-entry__zh{top:75px;font-size:16px}
+ .olive-twin-entry .olive-twin-entry__verse{font-size:10px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse{font-size:11px}
+}
+
+/* R33 — editorial correction. A continuous chapter name sits ABOVE two
+   fully outlined, separate scripture blocks. No central dividing line. */
+.olive-stage__rubric--twin-editorial{
+  top:clamp(37px,4.35svh,48px);
+  left:0;right:0;width:100%;overflow:visible;
+}
+.olive-twin-entry{
+  width:100%;height:clamp(140px,16svh,155px);
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  column-gap:clamp(8px,1vw,16px);
+  border:0;overflow:visible;
+}
+.olive-twin-entry::before{content:none!important;display:none!important}
+.olive-twin-entry__square,
+.olive-twin-entry__square--right{
+  box-sizing:border-box;
+  align-self:end;
+  height:calc(100% - 61px);
+  min-width:0;
+  padding:19px clamp(13px,2.8vw,48px) 8px;
+  border:1px solid var(--ws-morning-gold);
+  background:rgba(35,58,32,.18);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  align-items:flex-start;gap:3px;
+}
+.olive-twin-entry__square--right{align-items:flex-end}
+.olive-twin-entry>.olive-twin-entry__title{
+  top:0;left:50%;transform:translateX(-50%);
+  font:400 clamp(30px,3vw,48px)/1 var(--ws-type-display-en);
+  letter-spacing:-.035em;white-space:nowrap;text-shadow:none;
+}
+.olive-twin-entry>.olive-twin-entry__zh{
+  top:clamp(32px,2.9vw,43px);font:200 clamp(11px,.92vw,15px)/1 var(--ws-type-display-zh);
+  letter-spacing:.18em;text-shadow:none;
+}
+.olive-twin-entry .olive-twin-entry__edition{
+  top:5px;left:clamp(13px,2.8vw,48px);font-size:clamp(7px,.55vw,9px);
+}
+.olive-twin-entry__square--right .olive-twin-entry__edition{
+  left:auto;right:clamp(13px,2.8vw,48px);
+}
+.olive-twin-entry .olive-twin-entry__verse{
+  font:200 clamp(18px,1.6vw,25px)/1.13 var(--ws-type-display-zh);
+  letter-spacing:.01em;max-width:24ch;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse{
+  font:italic 400 clamp(18px,1.55vw,25px)/1.08 var(--ws-type-display-en);
+  max-width:35ch;margin-left:0;text-align:right;
+}
+.olive-twin-entry .olive-twin-entry__ref{font-size:clamp(8px,.59vw,10px)}
+/* This is the first-layer header. The agreed sevenfold belongs to the
+   first-to-second-layer transition, not to this chapter masthead. */
+.olive-twin-entry__folds{display:none!important}
+@media(max-width:700px){
+  .olive-twin-entry{height:clamp(140px,19svh,162px);column-gap:6px}
+  .olive-twin-entry__square,.olive-twin-entry__square--right{
+    height:calc(100% - 55px);padding:16px 7px 5px;gap:2px;
+  }
+  .olive-twin-entry>.olive-twin-entry__title{top:0;font-size:clamp(25px,6vw,38px)}
+  .olive-twin-entry>.olive-twin-entry__zh{top:34px;font-size:11px}
+  .olive-twin-entry .olive-twin-entry__edition{top:4px;left:7px;font-size:6px}
+  .olive-twin-entry__square--right .olive-twin-entry__edition{right:7px;left:auto}
+  .olive-twin-entry .olive-twin-entry__verse{font-size:clamp(11px,2.7vw,16px);line-height:1.17}
+  .olive-twin-entry__square--right .olive-twin-entry__verse{font-size:clamp(11px,2.7vw,16px);line-height:1.1}
+  .olive-twin-entry .olive-twin-entry__ref{font-size:7px}
+}
+
+/* R34: the actual two-square 2:1 carrier, NOT two elongated fields.
+   Its title and scripture occupy the full-width editorial register around it. */
+.olive-stage__rubric--twin-editorial{left:0;right:0;width:100%;top:clamp(37px,4.35svh,48px);overflow:visible}
+.olive-twin-entry{
+ --olive-square:clamp(92px,11.5svh,116px);
+ display:grid;grid-template-columns:repeat(2,var(--olive-square));
+ justify-content:center;align-content:start;gap:0;
+ width:100%;height:calc(var(--olive-square) + 51px);
+ border:0;overflow:visible;
+}
+.olive-twin-entry::before{content:none!important;display:none!important}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ box-sizing:border-box;position:relative;
+ width:var(--olive-square);height:var(--olive-square);
+ margin:51px 0 0;padding:14px 8px 9px;
+ border:1px solid var(--ws-morning-gold);overflow:visible;
+ background:rgba(35,58,32,.24);align-items:flex-start;justify-content:space-between;
+}
+.olive-twin-entry__square--right{border-left:0;align-items:flex-end}
+.olive-twin-entry>.olive-twin-entry__title{
+ top:0;left:50%;transform:translateX(-50%);
+ font:400 clamp(30px,3vw,46px)/1 var(--ws-type-display-en);
+ letter-spacing:-.03em;white-space:nowrap;text-shadow:none;
+}
+.olive-twin-entry>.olive-twin-entry__zh{
+ top:clamp(32px,2.9vw,42px);font:200 clamp(11px,.92vw,15px)/1 var(--ws-type-display-zh);
+ letter-spacing:.18em;text-shadow:none;
+}
+.olive-twin-entry .olive-twin-entry__edition,
+.olive-twin-entry__square--right .olive-twin-entry__edition{
+ position:relative;top:auto;left:auto;right:auto;
+ font:200 clamp(7px,.54vw,9px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.04em;
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ font-size:clamp(7px,.52vw,9px);line-height:1.2;
+}
+.olive-twin-entry__square--left .olive-twin-entry__verse{
+ position:absolute;top:19px;right:calc(100% + clamp(20px,3vw,52px));
+ width:clamp(260px,32vw,520px);max-width:none;
+ font:200 clamp(18px,1.65vw,27px)/1.22 var(--ws-type-display-zh);
+ text-align:left;letter-spacing:.015em;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse{
+ position:absolute;top:19px;left:calc(100% + clamp(20px,3vw,52px));
+ width:clamp(260px,32vw,520px);max-width:none;margin:0;
+ font:italic 400 clamp(18px,1.63vw,27px)/1.13 var(--ws-type-display-en);
+ text-align:right;
+}
+.olive-twin-entry__folds{display:none!important}
+@media(max-width:700px){
+ .olive-twin-entry{--olive-square:clamp(70px,10.5svh,96px);height:calc(var(--olive-square) + 50px)}
+ .olive-twin-entry__square,.olive-twin-entry__square--right{
+  width:var(--olive-square);height:var(--olive-square);margin-top:50px;padding:10px 5px 6px;
+ }
+ .olive-twin-entry>.olive-twin-entry__title{font-size:clamp(24px,6vw,35px)}
+ .olive-twin-entry>.olive-twin-entry__zh{top:34px;font-size:11px}
+ .olive-twin-entry__square--left .olive-twin-entry__verse{
+  top:12px;right:calc(100% + 8px);width:calc((100vw - 2 * var(--olive-square))/2 - 13px);
+  font-size:clamp(10px,2.4vw,15px);line-height:1.17;
+ }
+ .olive-twin-entry__square--right .olive-twin-entry__verse{
+  top:12px;left:calc(100% + 8px);width:calc((100vw - 2 * var(--olive-square))/2 - 13px);
+  font-size:clamp(10px,2.4vw,15px);line-height:1.1;
+ }
+ .olive-twin-entry .olive-twin-entry__edition,.olive-twin-entry .olive-twin-entry__ref{font-size:6px}
+}
+
+/* R35 — the agreed vertical pair at the upper-left: title / scripture.
+   Each panel is a true square; the pair forms one vertical rectangle. */
+.olive-stage__rubric--twin-editorial{
+ left:clamp(10px,1.1vw,22px);right:auto;
+ top:clamp(40px,4.6svh,52px);width:auto;
+ transform:none;overflow:visible;pointer-events:none;
+}
+.olive-twin-entry{
+ --olive-square:clamp(84px,10.4svh,106px);
+ display:flex;flex-direction:column;align-items:stretch;gap:0;
+ width:var(--olive-square);height:calc(2 * var(--olive-square));
+ padding:0;margin:0;overflow:visible;border:0;
+}
+.olive-twin-entry::before{display:none!important;content:none!important}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ box-sizing:border-box;position:relative;
+ flex:none;margin:0;width:var(--olive-square);height:var(--olive-square);
+ min-width:0;max-width:none;overflow:hidden;
+ padding:clamp(5px,.65svh,7px);border:1px solid var(--ws-morning-gold);
+ background:rgba(40,63,35,.23);
+ display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:1px;
+}
+.olive-twin-entry__square--right{border-top:0;align-items:flex-start}
+.olive-twin-entry .olive-twin-entry__edition{
+ position:static;top:auto;left:auto;right:auto;
+ font:200 clamp(6px,.6svh,8px)/1.1 var(--ws-type-display-en);
+ color:var(--ws-morning-gold);letter-spacing:.05em;
+}
+.olive-twin-entry .olive-twin-entry__title{
+ position:static;top:auto;left:auto;right:auto;transform:none;
+ font:400 clamp(15px,1.85svh,20px)/.96 var(--ws-type-display-en);
+ letter-spacing:-.035em;color:var(--ws-paper);white-space:normal;
+ text-shadow:none;display:block;
+}
+.olive-twin-entry .olive-twin-entry__zh{
+ position:static;top:auto;left:auto;right:auto;transform:none;
+ font:200 clamp(13px,1.55svh,17px)/1 var(--ws-type-display-zh);
+ letter-spacing:.04em;color:var(--ws-paper);text-shadow:none;display:block;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse,
+.olive-twin-entry__square--left .olive-twin-entry__verse{
+ position:static;top:auto;left:auto;right:auto;margin:0;width:auto;max-width:100%;
+ display:block;text-align:left;letter-spacing:0;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ font:200 clamp(8px,.9svh,10px)/1.18 var(--ws-type-display-zh);
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ font:italic 400 clamp(7px,.76svh,9px)/1.08 var(--ws-type-display-en);
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ position:static;display:block;font:200 clamp(5px,.6svh,7px)/1.1 var(--ws-type-display-en);
+ color:var(--ws-morning-gold);text-align:left;
+}
+.olive-twin-entry__folds{display:none!important}
+@media(max-width:700px){
+ .olive-stage__rubric--twin-editorial{left:5px;top:40px}
+ .olive-twin-entry{--olive-square:clamp(67px,10.1svh,85px)}
+ .olive-twin-entry__square,.olive-twin-entry__square--right{padding:4px}
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(12px,1.75svh,15px)}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:12px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:7px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:6px}
+ .olive-twin-entry .olive-twin-entry__ref{font-size:5px}
+}
+
+/* R36 — readable vertical bilingual pair, OS olive title / gold scripture.
+   The two visible blocks are the transition's source geometry. */
+.olive-stage__rubric--twin-editorial{
+ left:clamp(14px,2.2vw,34px);top:clamp(44px,5svh,58px);
+ width:auto;max-width:calc(100vw - 28px);
+}
+.olive-twin-entry{
+ --olive-panel-w:clamp(310px,30vw,490px);
+ --olive-panel-h:clamp(94px,10.6svh,112px);
+ width:var(--olive-panel-w);height:calc(2 * var(--olive-panel-h));
+ display:flex;flex-direction:column;align-items:stretch;
+}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ width:100%;height:var(--olive-panel-h);flex:none;
+ margin:0;padding:clamp(10px,1.15svh,14px) clamp(16px,1.6vw,26px);
+ border:1px solid var(--ws-morning-gold);border-radius:0;
+ justify-content:center;align-items:flex-start;gap:clamp(4px,.6svh,8px);
+ overflow:hidden;box-shadow:none;
+}
+.olive-twin-entry__square--left{background:var(--ws-olive);color:var(--ws-paper)}
+.olive-twin-entry__square--right{
+ border-top:0;background:var(--ws-morning-gold);color:var(--ws-olive);
+}
+.olive-twin-entry .olive-twin-entry__edition{
+ font-size:clamp(9px,.9svh,11px);color:var(--ws-morning-gold);
+}
+.olive-twin-entry .olive-twin-entry__title{
+ font-size:clamp(29px,3.5svh,44px);line-height:.95;
+ letter-spacing:-.025em;color:var(--ws-paper);
+}
+.olive-twin-entry .olive-twin-entry__title br{display:none}
+.olive-twin-entry .olive-twin-entry__zh{
+ font-size:clamp(18px,2svh,23px);line-height:1;
+ letter-spacing:.12em;color:var(--ws-paper);
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ font:200 clamp(14px,1.55svh,18px)/1.24 var(--ws-type-display-zh);
+ color:var(--ws-olive);max-width:none;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ font:italic 400 clamp(13px,1.4svh,17px)/1.16 var(--ws-type-display-en);
+ color:var(--ws-olive);max-width:none;
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ font:200 clamp(8px,.78svh,10px)/1.1 var(--ws-type-display-en);
+ color:var(--ws-olive);
+}
+@media(max-width:700px){
+ .olive-stage__rubric--twin-editorial{left:8px;top:42px;max-width:calc(100vw - 16px)}
+ .olive-twin-entry{
+  --olive-panel-w:min(calc(100vw - 16px),390px);
+  --olive-panel-h:clamp(98px,12svh,122px);
+  width:var(--olive-panel-w);height:calc(2 * var(--olive-panel-h));
+ }
+ .olive-twin-entry__square,.olive-twin-entry__square--right{padding:9px 14px;gap:4px}
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(26px,5.9vw,36px)}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:18px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(13px,3.25vw,16px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(12px,3vw,15px)}
+ .olive-twin-entry .olive-twin-entry__ref{font-size:8px}
+}
+
+/* R36b — keep both readable panels ABOVE the first poster row. */
+@media(min-width:701px){
+ .olive-stage__rubric--twin-editorial{top:39px}
+ .olive-twin-entry{--olive-panel-h:clamp(78px,8.9svh,88px)}
+ .olive-twin-entry__square,.olive-twin-entry__square--right{padding:7px 18px;gap:2px}
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(27px,3.2svh,37px)}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:clamp(16px,1.85svh,20px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(13px,1.48svh,16px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(12px,1.34svh,15px)}
+}
+
+/* R37 — preserve true English word spacing and readable scripture contrast. */
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ color:var(--ws-ink);font-weight:400;font-size:clamp(15px,1.62svh,18px);
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ color:var(--ws-ink);font-weight:400;font-size:clamp(14px,1.47svh,17px);
+}
+.olive-twin-entry .olive-twin-entry__ref{color:var(--ws-ink)}
+@media(max-width:700px){
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(14px,3.3vw,17px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(13px,3.1vw,16px)}
+}
+
+
+/* R38 / TWO TRUE SQUARES + SCROLL MASK. Geometry is an approved brief,
+   never a label for two horizontal rectangles. No decorative centre line. */
+#p2-olive-track{height:2800svh}
+.olive-stage__rubric--twin-editorial{
+ display:block;position:absolute;z-index:9;
+ top:clamp(54px,7svh,74px);left:clamp(14px,2.6vw,46px);
+ right:auto;width:auto;max-width:none;min-height:0;overflow:visible;
+ transform:none!important;pointer-events:none;
+}
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-folio,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-heading,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-scripture{display:none!important}
+.olive-twin-entry{
+ --olive-square:clamp(184px,min(22vw,26svh),238px);
+ box-sizing:border-box;display:flex;flex-direction:column;gap:0;
+ width:var(--olive-square);height:calc(var(--olive-square) * 2);
+ max-width:none;min-width:0;overflow:visible;margin:0;padding:0;border:0;
+}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ box-sizing:border-box!important;display:flex!important;flex:0 0 var(--olive-square)!important;
+ flex-direction:column;align-items:flex-start!important;justify-content:center!important;
+ gap:clamp(6px,.9svh,10px)!important;
+ width:var(--olive-square)!important;height:var(--olive-square)!important;
+ min-width:var(--olive-square)!important;min-height:var(--olive-square)!important;
+ max-width:var(--olive-square)!important;max-height:var(--olive-square)!important;
+ aspect-ratio:1/1;margin:0!important;padding:clamp(14px,1.6svh,21px)!important;
+ overflow:hidden!important;position:relative;
+ border:1px solid var(--ws-morning-gold)!important;border-radius:0;
+ box-shadow:none;transform:none;
+}
+.olive-twin-entry__square--left{
+ background:var(--ws-olive)!important;color:var(--ws-paper);
+}
+.olive-twin-entry__square--right{
+ background:var(--ws-morning-gold)!important;color:var(--ws-ink);
+ border-top:0!important;
+}
+.olive-twin-entry .olive-twin-entry__edition{
+ font:200 clamp(10px,1.15svh,12px)/1.1 var(--ws-type-display-en)!important;
+ letter-spacing:.08em;color:var(--ws-morning-gold)!important;
+ position:static!important;text-align:left;
+}
+.olive-twin-entry .olive-twin-entry__title{
+ font:400 clamp(27px,3.25svh,38px)/.98 var(--ws-type-display-en)!important;
+ letter-spacing:-.045em;color:var(--ws-paper)!important;
+ white-space:normal!important;text-wrap:balance;position:static!important;
+ transform:none!important;text-shadow:none!important;
+}
+.olive-twin-entry .olive-twin-entry__zh{
+ font:200 clamp(20px,2.4svh,28px)/1.15 var(--ws-type-display-zh)!important;
+ letter-spacing:.06em;color:var(--ws-paper)!important;
+ position:static!important;transform:none!important;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ font:400 clamp(15px,1.75svh,19px)/1.28 var(--ws-type-display-zh)!important;
+ letter-spacing:0!important;color:var(--ws-ink)!important;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ font:italic 400 clamp(13px,1.48svh,17px)/1.22 var(--ws-type-display-en)!important;
+ letter-spacing:0!important;color:var(--ws-ink)!important;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse{
+ max-width:100%!important;width:auto!important;position:static!important;
+ display:block!important;text-align:left!important;margin:0!important;
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ font:200 clamp(9px,.99svh,11px)/1.15 var(--ws-type-display-en)!important;
+ color:var(--ws-ink)!important;text-align:left!important;position:static!important;
+}
+@media(max-width:700px){
+ .olive-stage__rubric--twin-editorial{top:44px!important;left:10px!important}
+ .olive-twin-entry{
+  --olive-square:clamp(160px,45vw,198px);
+  width:var(--olive-square)!important;height:calc(2 * var(--olive-square))!important;
+ }
+ .olive-twin-entry__square,.olive-twin-entry__square--right{
+  padding:10px 12px!important;gap:5px!important
+ }
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(23px,6.4vw,29px)!important}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:20px!important}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+  font-size:clamp(12px,3.45vw,15px)!important;line-height:1.16!important;
+ }
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+  font-size:clamp(11px,3.05vw,13px)!important;line-height:1.12!important;
+ }
+ .olive-twin-entry .olive-twin-entry__ref{font-size:9px!important}
+}
+.olive-sevenfold-handoff{position:absolute;inset:0;z-index:30;pointer-events:none;
+ overflow:hidden;visibility:hidden;isolation:isolate}
+.olive-sevenfold-handoff__sheets{position:absolute;inset:0}
+.olive-sevenfold-handoff__sheet{position:absolute;inset:0;background:var(--olive-fold-color);
+ clip-path:inset(100% 100% 0 0);will-change:clip-path,transform;transform:translate3d(0,0,0)}
+.olive-second-layer{
+ position:absolute;inset:0;z-index:25;background:var(--ws-papyrus);
+ color:var(--ws-ink);visibility:hidden;overflow:auto;overscroll-behavior:contain;
+ padding:clamp(65px,7svh,92px) clamp(20px,4vw,75px) clamp(35px,5svh,60px)
+}
+.olive-second-layer__folio{font:400 11px/1.2 var(--ws-type-display-en);
+ letter-spacing:.13em;display:flex;justify-content:space-between;
+ border-bottom:1px solid var(--ws-olive);padding-bottom:13px}
+.olive-second-layer__body{display:grid;grid-template-columns:minmax(0,3fr) minmax(240px,2fr);
+ gap:clamp(20px,3vw,60px);margin-top:clamp(18px,3svh,35px);align-items:start}
+.olive-second-layer__index{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1vw,15px)}
+.olive-second-layer__person{background:var(--ws-paper);color:var(--ws-ink);border:1px solid var(--ws-first-light);
+ cursor:pointer;text-align:left;padding:0;display:grid;min-width:0}
+.olive-second-layer__person img{display:block;aspect-ratio:1/1;object-fit:cover;
+ object-position:50% 20%;width:100%;filter:none}
+.olive-second-layer__person span{padding:8px 9px;display:block;
+ font:400 clamp(10px,.85vw,14px)/1.25 var(--ws-type-display-en);overflow-wrap:break-word}
+.olive-second-layer__person:focus-visible,.olive-second-layer__person[aria-pressed="true"]{
+ outline:3px solid var(--ws-olive);outline-offset:2px}
+.olive-second-layer__detail{border-top:3px solid var(--ws-olive);padding-top:22px;
+ min-height:300px}
+.olive-second-layer__label{font:400 11px/1.1 var(--ws-type-display-en);letter-spacing:.13em}
+.olive-second-layer__detail h2{font:400 clamp(30px,3vw,58px)/1 var(--ws-type-display-en);
+ margin:18px 0 8px}
+.olive-second-layer__detail p{font:200 clamp(17px,1.25vw,21px)/1.5 var(--ws-type-display-zh)}
+.olive-second-layer__detail img{max-width:min(100%,300px);max-height:50svh;object-fit:contain}
+@media(max-width:700px){
+ .olive-second-layer{padding:52px 12px 24px}
+ .olive-second-layer__body{display:block;margin-top:16px}
+ .olive-second-layer__index{gap:6px}
+ .olive-second-layer__person span{font-size:9px;padding:5px}
+ .olive-second-layer__detail{margin-top:26px}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-sevenfold-handoff__sheet{will-change:auto}
+}
+
+/* R39 / The twin-square editorial rail stays entirely clear of the
+   protected twelve-poster arrangement. No overprinted portraits. */
+.olive-second-layer__detail blockquote{
+ margin:17px 0 0;max-width:35ch;
+ font:400 clamp(17px,1.38vw,23px)/1.38 var(--ws-type-display-zh);
+}
+.olive-second-layer__detail blockquote[lang="en"]{
+ font:italic 400 clamp(16px,1.18vw,21px)/1.35 var(--ws-type-display-en);
+}
+.olive-second-layer__detail cite{
+ display:block;margin:12px 0 20px;
+ font:200 clamp(11px,.9vw,14px)/1.4 var(--ws-type-display-en);
+}
+@media(max-width:700px){
+ .olive-second-layer__detail blockquote{font-size:16px}
+ .olive-second-layer__detail blockquote[lang="en"]{font-size:15px}
+}
+
+/* R40 / Olive Mountain second-layer folio. The two squares land as
+   editorial objects after the sevenfold folds back; the engravings
+   belong to the chapter, never an arbitrary full-black backdrop. */
+.olive-second-layer{
+ background:var(--ws-olive)!important;color:var(--ws-paper)!important;
+ isolation:isolate;overflow:auto;
+}
+.olive-second-layer::before{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background-image:url("/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-1.svg");
+ background-size:cover;background-position:center;
+ opacity:.17;
+}
+.olive-second-layer::after{
+ content:"";position:absolute;left:0;top:0;bottom:0;width:48%;z-index:-1;
+ pointer-events:none;
+ background:url("/images/p2-realms/v15/04-olive-full-verso-v74-botanical-1.svg") center/cover no-repeat;
+ opacity:.15;mask-image:linear-gradient(to right,#000 22%,transparent 100%);
+}
+.olive-second-layer__folio{
+ color:var(--ws-morning-gold);border-color:var(--ws-morning-gold);
+}
+.olive-second-layer__body{
+ grid-template-columns:clamp(128px,12vw,172px) minmax(0,2.65fr) minmax(260px,1.85fr);
+ gap:clamp(16px,2.1vw,36px);align-items:start;
+}
+.olive-second-layer__masthead{
+ display:flex;flex-direction:column;gap:0;align-self:start;
+ position:relative;z-index:2;
+}
+.olive-second-layer__landing{
+ width:100%;aspect-ratio:1/1;position:relative;
+}
+.olive-second-layer__landing-square{
+ position:absolute;inset:0;box-sizing:border-box;
+ display:flex;flex-direction:column;justify-content:center;
+ padding:clamp(10px,1vw,18px);gap:clamp(6px,.7vw,12px);
+ border:1px solid var(--ws-morning-gold);
+ transform-origin:top left;
+}
+.olive-second-layer__landing-square--title{
+ background:var(--ws-olive);color:var(--ws-paper);
+}
+.olive-second-layer__landing-square--title strong{
+ font:400 clamp(21px,2vw,31px)/.98 var(--ws-type-display-en);
+ letter-spacing:-.04em;
+}
+.olive-second-layer__landing-square--title [lang="zh-Hant"]{
+ font:200 clamp(17px,1.5vw,24px)/1.16 var(--ws-type-display-zh);
+ align-self:flex-end;
+}
+.olive-second-layer__edition{
+ font:200 10px/1 var(--ws-type-display-en);
+ color:var(--ws-morning-gold);letter-spacing:.09em;
+}
+.olive-second-layer__landing-square--verse{
+ background:var(--ws-morning-gold);color:var(--ws-ink);border-top:0;
+}
+.olive-second-layer__landing-square--verse blockquote{
+ margin:0;font:400 clamp(12px,.96vw,16px)/1.22 var(--ws-type-display-zh);
+}
+.olive-second-layer__landing-square--verse blockquote[lang="en"]{
+ font:italic 400 clamp(11px,.9vw,15px)/1.2 var(--ws-type-display-en);
+}
+.olive-second-layer__landing-square--verse cite{
+ font:200 clamp(8px,.62vw,11px)/1.1 var(--ws-type-display-en);
+}
+.olive-second-layer__person{
+ border-color:var(--ws-morning-gold);box-shadow:0 0 0 1px rgba(255,255,255,.06);
+ transition:border-color .3s ease,box-shadow .3s ease;
+}
+.olive-second-layer__person:hover,
+.olive-second-layer__person[aria-pressed="true"]{
+ border-color:var(--ws-paper);box-shadow:0 0 0 2px var(--ws-morning-gold);
+}
+.olive-second-layer__person span{font-size:clamp(10px,.79vw,13px)}
+.olive-second-layer__detail{
+ border-top:2px solid var(--ws-morning-gold);
+ background:rgba(21,51,28,.16);padding:clamp(17px,1.5vw,26px);
+ min-height:420px;position:relative;overflow:hidden;
+}
+.olive-second-layer__detail::before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.09;
+ background:url("/images/p2-realms/v15/04-olive-full-verso-v74-botanical-1.svg") center/cover no-repeat;
+}
+.olive-second-layer__detail>*{position:relative}
+.olive-second-layer__detail h2{color:var(--ws-paper)}
+.olive-second-layer__detail blockquote{
+ color:var(--ws-paper);max-width:38ch;
+}
+.olive-second-layer__detail cite,.olive-second-layer__label{
+ color:var(--ws-morning-gold);
+}
+.olive-second-layer__detail img{
+ display:block;margin-top:24px;max-height:33svh;
+ border:1px solid var(--ws-morning-gold);
+}
+@media(max-width:900px){
+ .olive-second-layer__body{
+  grid-template-columns:clamp(112px,18vw,160px) minmax(0,1fr);
+  gap:16px;
+ }
+ .olive-second-layer__detail{grid-column:2}
+ .olive-second-layer__index{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .olive-second-layer__body{display:grid;grid-template-columns:106px minmax(0,1fr);gap:12px}
+ .olive-second-layer__masthead{grid-row:1}
+ .olive-second-layer__index{grid-column:2;grid-row:1;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ .olive-second-layer__detail{grid-column:1/-1;grid-row:2}
+ .olive-second-layer__landing-square{padding:8px;gap:4px}
+ .olive-second-layer__landing-square--title strong{font-size:17px}
+ .olive-second-layer__landing-square--title [lang="zh-Hant"]{font-size:16px}
+ .olive-second-layer__landing-square--verse blockquote{font-size:9px}
+ .olive-second-layer__landing-square--verse blockquote[lang="en"]{font-size:8px}
+ .olive-second-layer__landing-square--verse cite{font-size:7px}
+ .olive-second-layer__person span{font-size:8px;padding:4px}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-second-layer__person{transition:none}
+}
+
+/* R41 / Scripture-led second layer: NO new section masthead.
+   The very same two geometric origins become two full scripture squares.
+   Speaker pages are editorial archives, with reserved space for series. */
+.olive-second-layer{padding-top:clamp(44px,5svh,62px)!important}
+.olive-second-layer__folio{display:none!important}
+.olive-second-layer__body{
+ grid-template-columns:clamp(144px,15vw,212px) minmax(0,1fr)!important;
+ gap:clamp(20px,2.5vw,44px)!important;margin-top:0!important;
+ align-items:start;
+}
+.olive-second-layer__masthead{grid-column:1;grid-row:1}
+.olive-second-layer__index{grid-column:2;grid-row:1;
+ grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1.1vw,19px)}
+.olive-second-layer__detail{grid-column:2;grid-row:1;min-height:70svh}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__index{display:none}
+.olive-second-layer[data-view="index"] .olive-second-layer__detail{display:none}
+.olive-second-layer__landing-square--title blockquote{
+ margin:0;color:var(--ws-paper);
+ font:200 clamp(17px,1.25vw,24px)/1.36 var(--ws-type-display-zh);
+}
+.olive-second-layer__landing-square--verse blockquote[lang="en"]{
+ font:italic 400 clamp(16px,1.2vw,23px)/1.27 var(--ws-type-display-en);
+}
+.olive-second-layer__landing-square--verse cite{
+ font-size:clamp(9px,.72vw,12px);
+}
+.olive-second-layer__speaker-hero{
+ display:grid;grid-template-columns:minmax(170px,30%) minmax(0,1fr);
+ gap:clamp(16px,2vw,35px);align-items:start;
+}
+.olive-second-layer__speaker-portrait{
+ grid-column:1;grid-row:1/3;width:100%!important;
+ max-width:none!important;max-height:none!important;aspect-ratio:3/4;
+ object-fit:cover;margin:0!important;
+}
+.olive-second-layer__speaker-heading{grid-column:2;grid-row:1}
+.olive-second-layer__speaker-scripture{grid-column:2;grid-row:2}
+.olive-second-layer__speaker-heading h2{
+ font:400 clamp(36px,3vw,64px)/1 var(--ws-type-display-en);
+ overflow-wrap:normal;margin:14px 0 6px;
+}
+.olive-second-layer__speaker-scripture blockquote{
+ margin:10px 0;max-width:50ch;
+}
+.olive-second-layer__back{
+ display:block;cursor:pointer;background:none;color:var(--ws-morning-gold);
+ border:0;border-bottom:1px solid var(--ws-morning-gold);
+ padding:0 0 12px;margin-bottom:26px;letter-spacing:.12em;
+ font:200 clamp(11px,.86vw,14px)/1.2 var(--ws-type-display-en);
+}
+.olive-second-layer__series{
+ margin-top:clamp(30px,4svh,58px);
+ border-top:1px solid var(--ws-morning-gold);padding-top:16px;
+}
+.olive-second-layer__series h3{
+ margin:0 0 20px;color:var(--ws-morning-gold);
+ font:400 clamp(23px,2vw,37px)/1.1 var(--ws-type-display-en);
+}
+.olive-second-layer__series-grid{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:clamp(10px,1.2vw,20px);min-height:220px;
+}
+.olive-second-layer__series-card{
+ padding:14px;min-height:190px;
+ background:var(--ws-paper);color:var(--ws-ink);
+ border-top:3px solid var(--ws-morning-gold);
+}
+.olive-second-layer__series-card span{
+ display:block;color:var(--ws-olive);font:400 12px var(--ws-type-display-en);
+}
+.olive-second-layer__series-card h4{
+ font:400 clamp(17px,1.2vw,23px)/1.3 var(--ws-type-display-zh);
+}
+.olive-second-layer__series-card p{font:400 13px/1.35 var(--ws-type-display-en)}
+.olive-second-layer__series-empty{
+ grid-column:1/-1;align-self:start;padding:22px 0;
+ border-top:1px solid var(--ws-morning-gold);
+ color:var(--ws-paper);font:200 15px/1.5 var(--ws-type-display-en);
+}
+@media(max-width:900px){
+ .olive-second-layer__body{grid-template-columns:130px minmax(0,1fr)!important}
+ .olive-second-layer__speaker-hero{grid-template-columns:minmax(120px,36%) minmax(0,1fr)}
+ .olive-second-layer__series-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .olive-second-layer__body{grid-template-columns:106px minmax(0,1fr)!important;gap:12px!important}
+ .olive-second-layer__landing-square--title blockquote{font-size:12px}
+ .olive-second-layer__landing-square--verse blockquote[lang="en"]{font-size:11px}
+ .olive-second-layer__landing-square--verse cite{font-size:8px}
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__detail{
+  grid-column:1/-1;grid-row:2;
+ }
+ .olive-second-layer__speaker-hero{grid-template-columns:35% minmax(0,1fr);gap:10px}
+ .olive-second-layer__speaker-portrait{grid-row:1/3}
+ .olive-second-layer__speaker-heading h2{font-size:29px}
+ .olive-second-layer__speaker-scripture blockquote{font-size:14px}
+ .olive-second-layer__series-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* R42 / The actual, previously engineered Scripture Studio is the
+   second-layer artwork. Never substitute freshly re-typeset quotations. */
+.olive-second-layer__body{
+ display:flex!important;flex-direction:column!important;
+ align-items:stretch!important;gap:clamp(22px,3vw,48px)!important;
+}
+.olive-second-layer__masthead{
+ width:min(100%,860px)!important;margin:0 auto;
+ aspect-ratio:2/1;position:relative;display:block!important;
+ flex:0 0 auto;
+}
+.olive-second-layer__scripture-master{
+ display:block;width:100%;height:100%;border:0;background:transparent;
+ overflow:hidden;
+}
+.olive-second-layer__landing-overlay{
+ position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;
+ gap:clamp(10px,1.8vw,30px);pointer-events:none;
+}
+.olive-second-layer__landing{aspect-ratio:1/1;width:100%;height:auto}
+.olive-second-layer__index{
+ width:100%;grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.olive-second-layer__detail{width:100%;grid-column:auto;grid-row:auto}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+ width:min(100%,720px)!important;
+}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__detail{
+ display:block!important;
+}
+.olive-second-layer__landing-square--title strong{
+ font:900 clamp(24px,3vw,44px)/1.08 "Chiron Hei HK WS",var(--ws-type-display-zh);
+}
+@media(max-width:700px){
+ .olive-second-layer__masthead{width:100%!important;aspect-ratio:2/1}
+ .olive-second-layer__index{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__detail{grid-column:auto;grid-row:auto}
+}
+
+
+/* R45 / Codrops Thumbnail Grid Expanding Preview: the detail is an
+   INLINE grid-row expansion, never a route or an independent page.
+   Speaker thumbnails retain their original 1:1 squares; expansion
+   behavior does not authorize changing the approved thumbnail geometry. */
+.olive-second-layer__index{
+ display:grid!important;
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ align-items:start;gap:clamp(10px,1.2vw,20px)!important;
+ width:min(100%,960px);margin-inline:auto;
+}
+.olive-second-layer__person{align-self:stretch;min-width:0;overflow:hidden}
+.olive-second-layer__detail{
+ grid-column:1/-1!important;grid-row:auto!important;width:100%;
+ min-width:0;min-height:clamp(360px,65svh,760px);
+ background:color-mix(in srgb,var(--ws-olive) 88%,var(--ws-paper));
+ border-top:2px solid var(--ws-morning-gold)!important;
+ padding:clamp(20px,2.5vw,42px)!important;
+ margin:0!important;overflow:visible;
+}
+.olive-second-layer__detail[hidden]{display:none!important}
+.olive-second-layer__detail .olive-second-layer__speaker-hero{
+ max-width:100%;
+}
+.olive-second-layer__detail .olive-second-layer__series{
+ margin-bottom:clamp(24px,5svh,55px);
+}
+@media(max-width:900px){
+ .olive-second-layer__index{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .olive-second-layer__detail{padding:22px!important}
+}
+@media(max-width:560px){
+ .olive-second-layer__index{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .olive-second-layer__person span{font-size:clamp(11px,2.8vw,14px)!important}
+ .olive-second-layer__detail{min-height:55svh;padding:16px!important}
+ .olive-second-layer__series-grid{grid-template-columns:1fr!important}
+ .olive-second-layer__speaker-hero{grid-template-columns:1fr!important}
+ .olive-second-layer__speaker-portrait{grid-row:auto!important}
+}
+
+/* R46 / four-check integration: preserve authentic 1:1 speaker images, their
+   individual editorial colour and the original Codrops inline grid expander.
+   Two existing scripture formes now frame the full-width speaker catalogue.
+   These rules are scoped to P2 04, not the shared Design OS. */
+.olive-second-layer{
+ background:var(--ws-olive)!important;color:var(--ws-paper)!important;
+}
+.olive-second-layer__body{
+ width:100%!important;max-width:none!important;
+ gap:clamp(24px,3svh,45px)!important;
+}
+.olive-second-layer__masthead,
+.olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+ width:100%!important;max-width:none!important;margin:0!important;
+ aspect-ratio:auto!important;height:clamp(240px,24vw,390px)!important;
+}
+.olive-second-layer__scripture-master{width:100%!important;height:100%!important}
+.olive-second-layer__landing-overlay{display:none!important}
+.olive-second-layer__index{
+ width:100%!important;max-width:none!important;margin:0!important;
+ grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ justify-content:stretch!important;
+ column-gap:clamp(10px,1.15vw,20px)!important;
+ row-gap:clamp(12px,1.4vw,24px)!important;
+}
+.olive-second-layer__person{
+ background:var(--ws-paper);
+ border-color:var(--ws-morning-gold);
+ box-shadow:0 2px 0 var(--ws-morning-gold);
+}
+.olive-second-layer__person img{
+ filter:none!important;-webkit-filter:none!important;
+ aspect-ratio:1/1!important;object-fit:cover;
+}
+.olive-second-layer__person span{
+ font-size:clamp(11px,.87vw,14px)!important;
+ color:var(--ws-ink);background:var(--ws-paper);
+}
+.olive-second-layer__detail{
+ background:var(--ws-olive)!important;
+ border-top-color:var(--ws-morning-gold)!important;
+}
+@media(max-width:1060px){
+ .olive-second-layer__index{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  column-gap:clamp(9px,1.4vw,17px)!important;
+ }
+}
+@media(max-width:900px){
+ .olive-second-layer__index{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .olive-second-layer__masthead,
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+  height:clamp(205px,34vw,330px)!important
+ }
+}
+@media(max-width:560px){
+ .olive-second-layer__index{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .olive-second-layer__masthead,
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+  height:clamp(180px,47vw,250px)!important
+ }
+}
+
+/* R49 — chapter handoff is clicked, not scrolled; retain approved twin masthead. */
+.olive-stage__rubric--twin-editorial #olive-twin-entry{
+ pointer-events:auto!important;cursor:pointer;
+}
+.olive-stage__rubric--twin-editorial #olive-twin-entry:focus-visible{
+ outline:2px solid var(--ws-morning-gold);outline-offset:5px;
+}
+.olive-second-layer__return-first{
+ position:relative;z-index:4;display:inline-flex;align-items:center;
+ margin:0 0 16px;padding:5px 0 8px;
+ color:var(--ws-morning-gold);background:transparent;
+ border:0;border-bottom:1px solid currentColor;cursor:pointer;
+ font:200 clamp(11px,.86vw,14px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.1em;
+}
+.olive-second-layer__return-first:focus-visible{
+ outline:2px solid var(--ws-morning-gold);outline-offset:4px;
+}
+
+/* R50 · Dallas Search Lights × Codrops masked square recomposition.
+   Two genuine OS-color HTML squares travel above seven SVG masked leaves. */
+.olive-sevenfold-handoff__svg{
+ position:absolute;inset:0;width:100%;height:100%;z-index:1;
+ overflow:visible;pointer-events:none;
+}
+.olive-sevenfold-carrier-host{
+ display:contents!important;pointer-events:none!important;
+}
+.olive-sevenfold-carrier{
+ position:absolute!important;left:0!important;top:0!important;
+ margin:0!important;transform-origin:center center!important;
+ z-index:2!important;visibility:hidden;box-sizing:border-box;
+ pointer-events:none!important;will-change:transform;
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-sevenfold-carrier{will-change:auto}
+}
+
+/* Speaker content bridge v1 — existing series, no page navigation. */
+.olive-second-layer__episodes{display:grid;gap:8px;margin-top:16px}
+.olive-second-layer__episode{display:block;width:100%;padding:11px 13px;text-align:left;
+ border:1px solid var(--ws-morning-gold);background:var(--ws-paper);color:var(--ws-ink);
+ cursor:pointer;font:400 clamp(12px,.95vw,15px)/1.4 var(--ws-type-display-zh)}
+.olive-second-layer__episode:hover,.olive-second-layer__episode:focus-visible{
+ background:var(--ws-first-light);outline:1px solid var(--ws-morning-gold)}
+.olive-second-layer__episode[data-title-status="unverified"]::after{
+ content:' · 標題待核';font-size:.75em;opacity:.75}
+.olive-second-layer__player{width:100%;aspect-ratio:16/9;background:var(--ws-ink);margin-top:14px}
+.olive-second-layer__player iframe{display:block;width:100%;height:100%;border:0}
+
+/* R62 / Speaker lecture folio: preserve the original lecture catalogue on
+   the left, but use the previously vacant right-hand page for the selected
+   video. No speaker art, index geometry, colors or scripture are changed. */
+.olive-second-layer[data-view="speaker"] .olive-second-layer__series{
+ display:grid;grid-template-columns:minmax(285px,34%) minmax(0,1fr);
+ align-items:start;column-gap:clamp(20px,2.6vw,48px);
+ row-gap:clamp(15px,1.8vw,30px);
+}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__series>h3{
+ grid-column:1/-1;margin-bottom:0;
+}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__series-grid{
+ grid-column:1;grid-template-columns:minmax(0,1fr)!important;
+ min-height:0;gap:clamp(12px,1.25vw,22px);
+}
+.olive-second-layer__sermon-preview{
+ grid-column:2;min-width:0;position:sticky;top:clamp(12px,2.5svh,28px);
+ border-top:3px solid var(--ws-morning-gold);
+ border-left:1px solid var(--ws-morning-gold);
+ padding:clamp(16px,1.7vw,28px);
+ background:rgba(255,255,255,.035);color:var(--ws-paper);
+}
+.olive-second-layer__sermon-preview-label{
+ margin:0 0 10px;color:var(--ws-morning-gold);
+ font:200 clamp(12px,.88vw,15px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.12em;
+}
+.olive-second-layer__sermon-preview-title{
+ margin:0 0 clamp(14px,1.5vw,24px);
+ font:400 clamp(20px,1.5vw,29px)/1.35 var(--ws-type-display-zh);
+}
+.olive-second-layer__sermon-preview-stage{
+ width:100%;aspect-ratio:16/9;
+ display:grid;place-items:center;
+ border:1px solid var(--ws-morning-gold);
+ background:rgba(21,51,28,.12);
+}
+.olive-second-layer__sermon-preview-hint{
+ max-width:32ch;margin:0;padding:26px;text-align:center;
+ font:200 clamp(16px,1vw,19px)/1.5 var(--ws-type-display-zh);
+}
+.olive-second-layer__sermon-preview .olive-second-layer__player{
+ width:100%;height:100%;aspect-ratio:16/9;margin:0;
+}
+.olive-second-layer__episode[aria-pressed="true"]{
+ background:var(--ws-morning-gold);color:var(--ws-ink);
+ border-color:var(--ws-morning-gold);
+}
+@media(max-width:950px){
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__series{
+  grid-template-columns:minmax(0,1fr);
+ }
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__series>h3,
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__series-grid,
+ .olive-second-layer__sermon-preview{grid-column:1}
+ .olive-second-layer__sermon-preview{position:static}
+}
+
+/* R52 — one original WESTSIDE WATCH banner lettering over the sevenfold. */
+.olive-sevenfold-wordmark{
+ position:absolute;z-index:3;left:3%;top:43%;width:94%;
+ aspect-ratio:1600/108;pointer-events:none;opacity:0;
+ transform-origin:center center;will-change:transform,opacity;
+ background:linear-gradient(90deg,
+  var(--ws-water) 0 14.285%,var(--ws-first-light) 14.285% 28.57%,
+  var(--ws-pale-gold) 28.57% 42.855%,var(--ws-olive) 42.855% 57.14%,
+  var(--ws-harvest) 57.14% 71.425%,var(--ws-crimson) 71.425% 85.71%,
+  var(--ws-daylight-mauve) 85.71% 100%);
+ -webkit-mask:url('/images/westside-watch-lettering-v4-transparent.svg') center/contain no-repeat;
+ mask:url('/images/westside-watch-lettering-v4-transparent.svg') center/contain no-repeat;
+ filter:drop-shadow(0 3px 3px rgba(30,42,32,.35));
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-sevenfold-wordmark{will-change:auto}
+}
+
+/* R55 / motion-only P2 handoff. These declarations style the temporary
+   stage SVG only; the established second-layer colors, layout, masthead,
+   scripture studio and six-column speaker grid retain their original CSS. */
+.olive-sevenfold-handoff__svg{display:block;position:absolute;inset:0;
+ width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none}
+.p2-kinetic-scripture text{font-family:Georgia,'Times New Roman',serif;
+ letter-spacing:.01em}
+.p2-kinetic-scripture text[font-family]{font-family:Arial,sans-serif}
+.p2-kinetic-initial text{font-family:Georgia,'Times New Roman',serif}
+
+/* R64 / Speaker portraits themselves enter their own second-layer pages.
+   The gallery keeps its scroll-only layout, but these exact original prints
+   are clickable and keyboard-focusable even though .olive-proof is passive. */
+.olive-proof .olive-stage__first,
+.olive-proof .olive-stage__poster,
+.olive-proof .olive-stage__index-card{
+ pointer-events:auto!important;cursor:pointer;
+}
+.olive-proof .olive-stage__first:focus-visible,
+.olive-proof .olive-stage__poster:focus-visible,
+.olive-proof .olive-stage__index-card:focus-visible{
+ outline:2px solid var(--ws-morning-gold);outline-offset:3px;
+}

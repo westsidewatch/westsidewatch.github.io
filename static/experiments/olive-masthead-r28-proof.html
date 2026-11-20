@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OLIVE MOUNTAIN · Twin Masthead / R28 Design Proof</title>
+<link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+ :root{--olive:#748b5d;--gold:#d7c574;--paper:#f4f0e5;--pine:#203a2b}
+ *{box-sizing:border-box}html{background:#273b2e}body{margin:0;color:var(--paper);background:var(--olive);min-height:100vh;font-family:Georgia,serif}
+ .proof{width:min(100%,1760px);margin:auto;padding:clamp(24px,3.4vw,64px) clamp(18px,4vw,80px) 48px}
+ .context{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d7c57477;padding-bottom:12px;font:200 10px/1.4 system-ui;letter-spacing:.2em;color:var(--gold)}
+ .mast{display:grid;grid-template-columns:minmax(340px,540px) minmax(0,1fr);column-gap:clamp(25px,4vw,80px);align-items:end;padding:28px 0 34px}
+ .twin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;aspect-ratio:2/1;border:1px solid var(--gold);background:transparent;color:var(--paper);font:inherit;padding:0;text-align:left;cursor:pointer;isolation:isolate;position:relative}
+ .twin:focus-visible{outline:2px solid var(--paper);outline-offset:5px}
+ .square{display:flex;flex-direction:column;justify-content:space-between;min-width:0;padding:clamp(11px,1.3vw,22px);position:relative}
+ .square+.square{border-left:1px solid var(--gold)}
+ .eyebrow{font:200 clamp(8px,.65vw,10px)/1.2 system-ui,sans-serif;letter-spacing:.14em;color:var(--gold)}
+ .eng{display:block;font-family:'Bodoni Moda',Didot,Georgia,serif;font-size:clamp(43px,4.45vw,79px);font-weight:400;line-height:.8;letter-spacing:-.085em;white-space:nowrap}
+ .eng.mountain{font-size:clamp(25px,2.67vw,47px);letter-spacing:-.082em}
+ .zh{font:600 clamp(24px,2.8vw,46px)/1.1 'Noto Serif TC','Songti TC',serif;letter-spacing:.14em;white-space:nowrap}
+ .roman{font:italic 400 clamp(11px,.9vw,15px)/1.25 Georgia,serif;letter-spacing:0}
+ .link{font:200 clamp(9px,.68vw,11px)/1.2 system-ui;letter-spacing:.08em;color:var(--gold)}
+ .intro{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr);gap:clamp(18px,2.8vw,54px);padding-bottom:10px;border-bottom:1px solid #d7c57477;min-height:150px;align-content:end}
+ .intro p{font-weight:200;margin:0 0 9px;font-size:clamp(12px,1vw,17px);line-height:1.65;letter-spacing:.06em}
+ .intro .en{font-style:italic;letter-spacing:0;line-height:1.5}
+ .intro cite{font:200 10px/1.3 system-ui;letter-spacing:.14em;color:var(--gold);font-style:normal}
+ .portraits{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.3vw,22px);max-width:1120px;margin:0 auto}
+ .portrait{margin:0;border:1px solid #d7c57466;padding:clamp(9px,.9vw,16px);min-width:0}
+ .engraving{height:25px;border-bottom:1px solid #d7c57466;margin-bottom:12px;font:200 10px/1.2 system-ui;letter-spacing:.2em;color:var(--gold)}
+ .portrait img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;background:#e6e0cd}
+ .portrait figcaption{padding-top:8px;font:200 10px/1.3 system-ui;letter-spacing:.12em;color:var(--gold)}
+ .note{margin:22px 0 0;font:200 10px/1.5 system-ui;letter-spacing:.1em;color:var(--gold)}
+ @media(max-width:1050px){.mast{grid-template-columns:1fr;gap:24px}.twin{width:min(100%,540px)}.intro{width:min(100%,700px)}.eng{font-size:clamp(42px,8vw,79px)}.eng.mountain{font-size:clamp(25px,4.9vw,47px)}.zh{font-size:clamp(24px,5vw,46px)}}
+ @media(max-width:620px){.proof{padding:22px 14px 38px}.context{font-size:8px}.mast{padding:24px 0}.twin{aspect-ratio:2/1}.square{padding:11px}.eng{font-size:clamp(34px,9vw,50px)}.eng.mountain{font-size:clamp(21px,5.4vw,30px)}.zh{font-size:clamp(20px,6vw,32px)}.eyebrow{font-size:7px}.roman{font-size:10px}.intro{min-height:0;gap:12px}.intro p{font-size:11px}.intro cite{font-size:8px}.portraits{gap:8px}.portrait{padding:5px}.engraving{font-size:7px;height:18px;margin-bottom:5px}.portrait figcaption{font-size:7px}}
+</style>
+</head>
+<body>
+<main class="proof">
+ <div class="context"><span>WESTSIDE WATCH · P2 / 04—07</span><span>INVITATION TO HEAR / 誠邀聽道</span></div>
+ <header class="mast" aria-label="橄欖山版塊雙方塊刊頭">
+  <button class="twin" type="button" aria-label="橄欖山：雙方塊版頭，下一階段接入七重疊">
+   <span class="square"><span class="eyebrow">04 / 07 · WESTSIDE WATCH</span><strong class="eng">OLIVE</strong><span class="link">ROMANS 10:17 / 羅馬書</span></span>
+   <span class="square"><span class="eyebrow">INVITATION TO HEAR</span><strong class="eng mountain">MOUNTAIN</strong><strong class="zh">橄欖山</strong><span class="roman">Faith cometh by hearing.</span></span>
+  </button>
+  <div class="intro" aria-label="橄欖山主題經文">
+   <div><p lang="zh-Hant">可見信道是從聽道來的，聽道是從基督的話來的。</p><cite>羅馬書 10:17</cite></div>
+   <div><p class="en" lang="en">So then faith cometh by hearing, and hearing by the word of God.</p><cite>ROMANS 10:17 · KJV</cite></div>
+  </div>
+ </header>
+ <section class="portraits" aria-label="原有講員海報安全區 · 不更改圖像構圖">
+  <figure class="portrait"><div class="engraving">01 / THE WATCHMEN</div><img src="https://pr-1398.westsidewatch-github-io.pages.dev/images/olive/watchman-nee-editorial.png" alt="倪柝聲原有海報"><figcaption>WATCHMAN NEE · 倪柝聲</figcaption></figure>
+  <figure class="portrait"><div class="engraving">02 / THE WATCHMEN</div><img src="https://pr-1398.westsidewatch-github-io.pages.dev/images/olive/derek-prince-editorial.png" alt="葉光明原有海報"><figcaption>DEREK PRINCE · 葉光明</figcaption></figure>
+ </section>
+ <p class="note">R28 / MASTHEAD ONLY · ORIGINAL P2 MOTION AND SEVENFOLD NOT CHANGED · EDITORIAL PROOF</p>
+</main>
+</body>
+</html>

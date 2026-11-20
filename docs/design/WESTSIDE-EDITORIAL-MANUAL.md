@@ -4,7 +4,7 @@ Status: **operational chapter of the single Westside Design OS**, not a parallel
 Audience: Church, First Look, Journal, Olive Mountain, ONE, Dawn Library, Cinema, Search, tools, and Doré Design agents.  
 Source of truth: [WESTSIDE-DESIGN-OS.md](WESTSIDE-DESIGN-OS.md) → `design-system/tokens/westside.tokens.json` → `static/css/westside-design-os.css` → approved `data-ws-scope` overrides.
 
-**工作指令快速索引：** 使用者說「多雷探索」時，立即按本手冊 [§9 多雷探索 / Doré Exploration](#9-多雷探索--doré-exploration) 執行；正式定義見 [`MASTER_SITE_ARCHITECTURE.md` §9](../MASTER_SITE_ARCHITECTURE.md)。此詞不是 Gustave Doré 的藝術風格，也不是「多雷搜索」。
+**施工啟動詞：「施工四查」** — 每次接到「開始製作／施工／修改／繼續工程」或任何實際程式、版面、動效修改指令，先強制執行 [§12 施工四查](#12-施工四查--每次製作前的強制門檻)，再讀取與修改檔案；使用者不必每次重說。未完成四查，不得寫入工程。\n\n**工作指令快速索引：** 使用者說「多雷探索」時，立即按本手冊 [§9 多雷探索 / Doré Exploration](#9-多雷探索--doré-exploration) 執行；正式定義見 [`MASTER_SITE_ARCHITECTURE.md` §9](../MASTER_SITE_ARCHITECTURE.md)。此詞不是 Gustave Doré 的藝術風格，也不是「多雷搜索」。
 
 ## 1. Authority, layers and safe integration
 
@@ -212,3 +212,83 @@ These files remain archived intact; they do not operate as independent OS author
 **Chinese Seal weights:** `Chiron Hei HK WS` (genuine Chiron Hei HK webfont) Heavy **900** for Chinese-primary Seal and ExtraLight **200** for Chinese as English-primary countertype. Chiron official documented weight axis **200–900**: https://github.com/chiron-fonts/chiron-hei-hk/blob/release/README.en.md . The sitewide OS semantic heading token **600** is NOT a substitute for this artwork's Heavy **900**; do not change the OS global token to accomplish the artwork-specific requirement. Use actual font-face inspection and glyph capture, not CSS numbers alone.
 
 **07 design acceptance:** all bilingual scripture exact; authoritative poetry lines and editor-approved secondary breaks before geometry; one mixed mother forme and two reading orientations; varied crossings within strips rather than repeated ZH–EN pairs; strict majority non-50/50; measure **actual ink silhouette** as well as DOM bounding boxes in both axes; determine artboard dimensions and inter-strip rhythm from text, never auto-shrink glyphs to fit. Neither a failed font-gate screenshot nor a nice-looking fallback-raster mockup constitutes approved art. Isolated experimental pages must not affect main P2 without review.
+
+
+## 11. 橄欖山雙正方形與七重疊轉場 — 多雷探索技術成果（2026-11-16）
+
+**來源與工作目標固定，不得擅改：** Uppdrag Granskning（Dallas STHLM，Red Dot 2024 Best of the Best）的兩個 *Search Lights* 正方形是造型與敘事的共同起點；P2 橄欖山第一層左上角必須由**兩個真正等大、上下相接的正方形**形成一個豎向 1:2 矩形。上方為 OS 橄欖綠底的「OLIVE MOUNTAIN／橄欖山」，下方為 OS 金色底的羅馬書 10:17 中英經文。中英文均須實際可讀，不得用 5–8px 微字湊入小方框，也不得把兩個方塊改成長方形、添加腰斬刊頭的中線、轉場按鈕或工程控制文字。
+
+**獲獎案例一手資料：**
+- Dallas 動態案例：https://www.dallas.se/uppdrag-granskning-motion-studio
+- Dallas 視覺識別：https://www.dallas.se/uppdrag-granskning-visual-identities
+- Red Dot：https://www.red-dot.org/zh/project/svt-uppdrag-granskning-73286
+- Dallas 確認其工作為 Visual Identity、Motion Design、2D Animation、Motion Templates；雙方塊用於 *unmask images / open and close overlays / direct attention*。公開案例由 Squarespace + Vimeo／影片載入展示；不得把展示頁面的 JS 當成原動畫的源碼，亦不得未經證據宣稱原作使用 GSAP 或 After Effects。
+
+**可實際取用的工程母本（優先級與分工）：**
+1. [Codrops：SVG Mask Transitions on Scroll（2026-03-11）](https://tympanus.net/codrops/2026/03/11/svg-mask-transitions-on-scroll-with-gsap-and-scrolltrigger/)：真正的畫面遮蔽／揭示；SVG mask 以黑／白控制隱藏／顯示，將七層方塊幾何展開為遮罩。利用可響應的 viewBox、微重疊消除 1px 接縫、resize 時重建 timeline。**首選轉場技術母本**，教程代碼的授權狀態需在重用時逐檔確認。
+2. [Codrops OneElementScroll](https://github.com/codrops/OneElementScroll)：同一元素在 ScrollTrigger + Flip 驅動下跨幾何位置運動；借用測量與連續性，不複製展示樣式。
+3. [Codrops ScrollBasedLayoutAnimations](https://github.com/codrops/ScrollBasedLayoutAnimations)：ScrollTrigger + Flip 的版面狀態交接；GitHub 專案標示 MIT，重用需保存授權。
+4. [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)：`scrub` 綁定真實捲動進度，`pin` 固定舞台，向上滾動按原路復原。
+5. [GSAP Flip](https://gsap.com/docs/v3/Plugins/Flip/)：只在 DOM 版面位置切換時使用；七層 SVG 遮罩幾何直接動畫，不強迫 Flip 變形遮罩。
+6. [Codrops OnScrollFilter](https://github.com/codrops/OnScrollFilter)：可選的 SVG 紋理實驗，非最小必要依賴；避免因刻線或濾鏡降低可讀性和效能。
+
+**成熟度／費用／負載決策：** GSAP 3.13+ 的核心及插件目前可免費取得，普通網站商用須遵守 [GSAP／Webflow 授權](https://webflow.com/legal/product-terms)。優先原生 SVG + 一條 GSAP timeline；不引入 WebGL、額外全域滾動引擎或重複的動畫控制器。Lenis 是 Codrops 教程的可選平滑捲動，不預設加入既有 P2，避免改壞 01–03 Merci 滾動。減少每幀 DOM/layout 寫入，尊重 `prefers-reduced-motion`。
+
+**不可修改的實作與驗收語法：**
+`雙方塊（標題／經文） → 使用者點擊第一層橄欖山刊頭 → 兩個既有方塊以錯位、交叉、聚合的空間重組成為七層 SVG 遮罩的幾何源頭 → 七層確實遮蔽第一層 → 展開揭示第二層 → 第二層無第一層刊頭`。第二層同頁返回時完整反向復原；**不得由滑鼠捲動觸發跨層**，P2 第一層捲動必須保留給後續章節。**七重疊是第一層到第二層的轉場，不是第一層內無目的的自動表演或按鈕動畫。** 第一層 P2 後續章節採通欄刊頭的總體原則保留，橄欖山雙正方形在通欄區左上建立清晰的閱讀錨點；第二層不設刊頭。
+
+**安全邊界：** 不改 01–03 已驗收轉場、12 張講員海報、講員英文排版、橄欖山公版 SVG 底紋與 OS tokens；先在既有 P2 04 Draft 隔離預覽完成。逐項量測兩個 `getBoundingClientRect()` 的 width≈height 且兩者相等、無中線穿越、字體實際可讀、七層遮罩完全覆蓋、點擊及同頁反向返回、捲動不跨層、390／768／1648px 與 reduced-motion，通過後再提出正式合併，不能以 CI 綠燈替代畫面驗收。
+
+**本輪決策：採用現成成熟遮罩與方塊重組原理，按刊頭點擊接入既有 Olive stage；排除僅播放彩色片段、額外轉場按鈕、雙長方形、影片假轉場和另設第八套導航。**
+
+
+## 12. 施工四查 — 每次製作前的強制門檻
+
+**唯一啟動關鍵詞：`施工四查`。** 這是強制執行指令，不是建議、口號、研究報告或允許重議既定方案的邀請。使用者說「施工四查」即執行；即使使用者只說「開始製作」、「繼續」、「修改」、「施工」等，只要涉及 Westside Watch 網站、P2、SVG、字體、內容、互動或動效的實際修改，也**自動執行**，無需再次提醒。
+
+> **可直接執行的一句話：**「每次動手製作之前，必須先讀本次工程的現行記錄與已核准決策、完整相關《編輯手冊》條款、Westside Design OS 的權威規格，以及手冊的獲獎標準與已選定成熟範例；逐項比對現有程式和最新真實畫面，列出不可動內容與本次修改範圍。四項有一項未查證，就停止猜測與寫入；不得重新設計、替換、刪除或繞過已確定成果。完成後用真實瀏覽器與測試逐條驗收，未通過不得報稱完成。」
+
+### 四項查核必須形成可核對的施工輸入
+
+1. **查工程記錄與既定結果（WHAT IS LOCKED）。** 先核對當前 Draft PR／工作分支／最新 commit、相關 `docs/projects/` 工程文件、已核准的對話決策、既有原始碼／資產與上一輪截圖或預覽。明確列出「要保留」「這次要改」「禁止改」；既有成功母本與選定開源範例優先重用，不得無故另起版本。使用者此前說過的確定方案具約束力，不因對話換輪而失效。
+2. **查《編輯手冊》（HOW TO EDIT）。** 讀取本文件的相關完整章節，至少比對 §1 權威／接入、§2 排版、§5 動效、§6 驗收；涉及多雷探索讀 §9，雙方塊／七重疊讀 §11，經文鉛字另讀本手冊 Scripture Studio 章與所屬項目契約。不可只記得章名、摘要或憑印象施工。
+3. **查 Design OS（WHICH DESIGN AUTHORITY）。** 讀 `docs/design/WESTSIDE-DESIGN-OS.md`，依修改範圍核對 `design-system/tokens/westside.tokens.json`、`design-system/scopes.json`、`static/css/westside-design-os.css` 與所屬 `data-ws-scope`。字體、字重、色彩、字號、留白、材料與動效必須從權威來源核對；局部修正不得創造另一個全域 OS。
+4. **查獲獎標準與實際成熟範例（WHY THIS IS GOOD ENOUGH）。** 讀本手冊 §3 Award-calibre precedent method、§4 視覺／動效能力、§6 的 20 分內部評估與阻斷條件，及本工程已選定的範例／「多雷探索」成果。只轉譯已選範例的**可運行機制**，不憑空宣稱獲獎或重新搜尋來代替製作。完成時以真實構圖、可讀性、連續動效、互動、手機、反向、減動態驗收；CI 綠燈不是藝術通過。
+
+### 執行與停止條件
+
+- **寫入前短報告：** 用最短可核對文字列出四查各自查到的具體檔案／版本／約束，列出本次只改哪些檔案。這是施工核對，不要求使用者重新批准已核准方案；完成後直接工作，不反覆討論。
+- **先檢查，後寫入：** 禁止在四查完成前修改 HTML／CSS／JS／SVG、替換海報／母本或提交 PR。若某一份必需權威文件不可讀、相互矛盾或未定位，精確說出缺項並先查找；若仍無法判定，暫停有風險修改並請求指示，不能自行作主。
+- **優先原件：** 「有成熟開源技術／已完成母本」不是可選建議。應先確認並整合已選來源及授權、實際讀取原件，再改局部接口；禁止以普通文字、測試 iframe、全新交互或視覺近似品假冒原件。
+- **驗收四對照：** 修改後逐條核對 (A) 既定決策是否原樣保留、(B) 手冊排版／動效語法是否成立、(C) OS 是否合規、(D) 真實瀏覽器畫面和互動是否達內部獲獎標準。記下已驗證／未驗證；不能把「已提交」「預覽在部署」「測試通過」說成「視覺完成」。
+- **工程邊界：** 本條只規範工作順序，不擴大任務授權、不允許修改不相關頁面、合併 Draft、覆寫正式 P2 01–03，也不新增全站運行時依賴。
+
+**反面案例（2026-11-16，橄欖山第二層）：** 已選 Codrops [Thumbnail Grid Expanding Preview](https://tympanus.net/Tutorials/ThumbnailGridExpandingPreview/) 與 GSAP Flip 作同頁 4×3 講員網格展開；已有 Scripture Studio 單組鉛字母本／雙閱讀方向與七重疊交接規格。卻曾用自行編寫的獨立講員詳頁與普通經文／嵌入測試 iframe 替代。這不是探索不足，是**施工四查缺失**。後續必須使用原件、同頁開合、正確經文轉化，不得再次要求使用者重新說明已核准結果。
+
+## 13. 中英文大型字形共同原則 — 靜如山岳，動如旌旗（2026-11-17 核准）
+
+> **核心命題：**「靜如山岳，動如旌旗。」這是 Westside Watch 大型中文「西望」、英文「WESTSIDE WATCH」、七重疊和雙方塊轉場共同遵守的設計上位原則。出埃及記 17:15「耶和華尼西／耶和華是我的旌旗」是神學語境；視覺須傳達立於根基、力量、盼望與得勝，不得落入輕飄、氣球膨脹或娛樂化的文字效果。
+
+### 13.1 中文大「西望」：更傾向山岳、地基、聖殿石材
+
+- **權重優先順序：** 山岳／大地根基／聖殿石塊的重量、重心、承托與屹立感 **高於** 書法線條的柔軟、飛白、飄動。字形首先應像建立在穩固根基上的巨石，無動效時亦有不可撼動的體量。
+- **現版問題（待設計修正，不得視為已解決）：** P2 雜誌左頁已批准的第二版大「西望」雖有力量、長筆勢與弧形留白，但**整體仍過於柔軟**，未充分呈現「立大地根基」和「聖殿石頭」的特質。下一輪須優先提升筆畫承重、底部落地、轉折結構及負空間的石質張力，避免將筆畫當成軟布拉扯。
+- **修正方向：** 保留既有兩字的辨識、已批准的高品質輪廓與 P2 排版；研究方整的承重面、重心下沉、厚薄間的石材受力、乾淨有力的轉角與堅實基底。長斜筆可延伸氣勢，曲線須有筋骨，不可全字軟化、液化或變成無重量的筆刷特效。
+- **動態：** 以穩固本體為主，只有局部筆勢呼應風勢；不可使整個「西望」像布條搖擺。靜態母本和動態衍生版分離，正式既有 SVG 在藝術驗收之前保持原樣。
+
+### 13.2 英文大「WESTSIDE WATCH」：更傾向被風吹緊的得勝旌旗
+
+- **權重優先順序：** 超寬、極粗、平展、充滿張力的紀念碑式字形為骨架；迎風舒展的平滑曲線為局部生命。**「更傾向旌旗」絕不等於柔軟。** 旗面是被風拉緊、被高舉的得勝之旗，不是氣球、絲帶、海浪字或軟布。
+- **母本：** 以現有 V4 原創超寬實心輪廓為下一輪研究基礎；V5 尖銳切口／刻痕方案是錯誤探索，**禁止直接接入 P2**。不得非等比拉伸、改回瘦長、以商業字型直接替換或破壞字母可讀性。
+- **字形修正：** 借鑑 Druk Wide Super、PP Monument Extended Black、Sharp Grotesk Black 的重量、字寬、光學修正；只在合適的水平筆畫、外輪廓、轉角加入小幅度、連續、自然的 Bézier 曲率，維持垂直支撐與字腔通透。避免密集重複波紋、每字亂割切口或全字彎曲。
+- **靜態與動態：** 即使停止動畫也要像旌旗站立；啟動後曲線才在張力中舒展、形成有方向的飄揚，最後收束於穩定且昂揚的定格。
+
+### 13.3 中英共同動態語法與雙方塊／七重疊
+
+- **共同精神，不同造型：** 中文以山岳、根基、聖殿石材為主要意象；英文以迎風繃緊的旌旗為主要意象。兩者共用七重色彩、時序、張力、停駐規則，但不得複製同一波浪變形。
+- **絕對一體性：** 英文旌旗、兩個 Scripture Studio 正方塊與七重疊不是三段並列特效；方塊穿行或交換位置時須與字形的動勢、遮擋關係和色彩層次形成**同一連續構圖**。各版塊終點使用其經 Design OS 批准的語義色。
+- **互動契約：** P2 第一層正常垂直滾動仍可前往後續第一層版塊；橄欖山第一層進第二層由**點擊橄欖山刊頭**觸發七重疊，不能劫持捲動。第二層只有沿 P2 進入的同一實體，不另建平行版本。
+- **成熟範例定位：** EuroPride 2018 — Loud & Proud（ADC 2019 Merit）可研究「字體＋旗幟色彩＋容器變化＋動態」的完整品牌系統，但其氣球般膨脹字形**不作造型範本**；Olas／Waverse 等柔性波浪字體僅提供曲線技術知識。實際動效機制以經驗證的 Codrops／GSAP 成熟原件與現有 P2 結構接入，不用仿製影片或互不相干的裝飾動效。
+- **技術／藝術驗收：** SVG 母本、衍生形變與七重疊必須分别比對 1648／768／390px、文字輪廓、字腔、兩正方塊尺寸、正反向開合、reduced-motion、頁面正常滾動、OS 配色及真實瀏覽器動畫。先在 Draft 實物驗收，不因 GitHub 提交或 CI 綠燈宣稱獲獎品質。
+
+**參考來源：** [Druk Wide](https://commercialtype.com/catalog/druk_wide)；[Monument Extended](https://pangrampangram.com/products/monument-extended)；[Sharp Grotesk](https://www.sharptype.co/typefaces/sharp-grotesk)；[EuroPride 2018 — ADC Merit](https://www.oneclub.org/awards/adcawards/-award/32353/europride-2018-loud-proud/)；[Glyphs 曲線協調](https://glyphsapp.com/learn/harmonization)。

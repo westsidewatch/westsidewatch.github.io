@@ -116,6 +116,54 @@ h1{font:400 clamp(25px,3.5vw,44px)/1.1 Georgia,serif;margin:3px 0 0}.micro{font:
 .p2Embedded .work{padding:0}
 .p2Embedded .pair{gap:clamp(10px,1.8vw,30px)}
 .p2Embedded .plate{width:100%;aspect-ratio:1}
+/* P2 proof embedded inside a fixed 2:1 editorial frame: no studio tools,
+   nested scrollbars or single-column collapse. Standalone studio untouched. */
+.p2Embedded{overflow:hidden!important}
+.p2Embedded .toolPalette{display:none!important}
+.p2Embedded .pair{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:clamp(10px,1.8vw,30px)!important}
+.p2Embedded .shell,.p2Embedded .work{min-width:0!important;overflow:hidden!important}
+.p2Embedded .impression{min-width:0}
+.p2Embedded .plate{max-width:none!important}
+
+/* R46: approved P2 Olive second-layer composition adapter. The same live
+   mother formes and exact scripture continue to render. Only placement
+   and section-specific inks change; the standalone studio is untouched. */
+body.p2Embedded.p2OliveSpread{background:transparent!important}
+body.p2Embedded.p2OliveSpread .pair{
+ display:flex!important;justify-content:space-between!important;
+ align-items:flex-start!important;gap:clamp(24px,6vw,140px)!important;
+}
+body.p2Embedded.p2OliveSpread .impression{
+ flex:0 0 clamp(190px,27vw,355px)!important;
+ width:clamp(190px,27vw,355px)!important;max-width:44%!important;
+}
+body.p2Embedded.p2OliveSpread .plate:not(.inverse){
+ background:#B8944A!important;color:#252525!important;
+ border:2px solid #61774A!important;
+}
+body.p2Embedded.p2OliveSpread .plate:not(.inverse) .piece,
+body.p2Embedded.p2OliveSpread .plate:not(.inverse) .cornerCitation{
+ color:#252525!important;
+}
+body.p2Embedded.p2OliveSpread .plate.inverse{
+ background:#61774A!important;color:#FFE4A0!important;
+ border:2px solid #B8944A!important;
+}
+body.p2Embedded.p2OliveSpread .plate.inverse .piece,
+body.p2Embedded.p2OliveSpread .plate.inverse .cornerCitation{
+ color:#FFE4A0!important;
+}
+@media(max-width:900px){
+ body.p2Embedded.p2OliveSpread .impression{
+  flex-basis:clamp(150px,35vw,285px)!important;
+  width:clamp(150px,35vw,285px)!important
+ }
+}
+@media(max-width:560px){
+ body.p2Embedded.p2OliveSpread .impression{
+  flex-basis:43vw!important;width:43vw!important
+ }
+}
 /* Print proof uses the SAME live mother forme and its verified self-hosted font files. */
 @media print{
  @page{size:A4 landscape;margin:11mm}
@@ -881,6 +929,7 @@ if(p2Sections.some(x=>x.id===sectionFromUrl))activeP2=sectionFromUrl;
 const themeFromUrl=(p2Params.get('theme')||'').toUpperCase();
 if(toolThemes.some(x=>x.id===themeFromUrl&&!x.pending)){activeTheme=themeFromUrl;activeP2=null}
 if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
+if(p2Params.get('layout')==='olive-spread'&&p2Params.get('embed')==='1'&&activeP2==='04')document.body.classList.add('p2OliveSpread');
 addEventListener('message',event=>{
  if(event.origin!==location.origin)return;
  const data=event.data;
