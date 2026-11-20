@@ -393,7 +393,9 @@
  }
  function setHandoff(target){
   if(!target){resetHandoff();return}
-  if(performance.now()<returnGuardUntil)return;
+  if(performance.now()<returnGuardUntil){
+   stage.dataset.p2EntryGuarded='return-click-through';return;
+  }
   // The masthead ALWAYS owns the approved V9 sevenfold performance. It is
   // intentionally independent from the zero-motion speaker-portrait entry.
   // Paired portraits are protected by the transition's upper-stage clipping
@@ -450,12 +452,12 @@
  second?.prepend(returnToFirst);
  returnToFirst.addEventListener('click',event=>{
   event.preventDefault();event.stopPropagation();
-  returnGuardUntil=performance.now()+700;
+  returnGuardUntil=performance.now()+3000;
   setHandoff(0);
  });
  document.addEventListener('keydown',event=>{
   if(event.key==='Escape'&&handoffProgress>0){
-   returnGuardUntil=performance.now()+700;setHandoff(0);
+   returnGuardUntil=performance.now()+3000;setHandoff(0);
   }
  });
  function paintSecondLayer(){
