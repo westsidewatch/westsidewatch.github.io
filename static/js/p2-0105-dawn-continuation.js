@@ -26,7 +26,7 @@
   halves[0].style.clipPath=`inset(${(100*(1-start)).toFixed(2)}% 0 0 0)`;
   halves[1].style.clipPath=`inset(0 0 ${(100*(1-start)).toFixed(2)}% 0)`;
   twins.style.visibility=come>.001?'visible':'hidden';twins.style.opacity=String(come*(1-ease((p-.01)/.16)));
-  twins.style.transform=`translateX(-50%) translateY(${((1-come)*-30).toFixed(2)}px)`;
+  twins.style.transform=`translateY(${((1-come)*-30).toFixed(2)}px)`;
   spread.style.visibility=come>.001?'visible':'hidden';spread.style.opacity=String(come);
   windowFrame.style.clipPath=`inset(0 ${(100*(1-leaf)).toFixed(2)}% 0 0)`;
   book.style.transform=`translateX(${((1-leaf)*125).toFixed(2)}%) scale(${(0.78+.22*leaf).toFixed(3)})`;
