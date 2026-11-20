@@ -347,6 +347,9 @@
  const masthead=$('#olive-twin-entry');
  const handoffClock={value:0};
  let handoffProgress=0,handoffTarget=0,handoffOriginD=null;
+ // When the second-layer return control disappears under the pointer, the
+ // same physical gesture must NEVER click through into the masthead opener.
+ let returnGuardUntil=0;
  const handoffTimeline=window.gsap?.timeline({paused:true,onUpdate:()=>{
   handoffProgress=handoffClock.value;schedule();
   }})?.to(handoffClock,{value:1,duration:7.6,ease:'none'});
@@ -390,6 +393,7 @@
  }
  function setHandoff(target){
   if(!target){resetHandoff();return}
+  if(performance.now()<returnGuardUntil)return;
   // The masthead ALWAYS owns the approved V9 sevenfold performance. It is
   // intentionally independent from the zero-motion speaker-portrait entry.
   // Paired portraits are protected by the transition's upper-stage clipping
@@ -425,9 +429,15 @@
  returnToFirst.textContent='← 返回 P2 第一層 / BACK TO P2';
  returnToFirst.setAttribute('aria-label','返回 P2 橄欖山第一層');
  second?.prepend(returnToFirst);
- returnToFirst.addEventListener('click',()=>setHandoff(0));
+ returnToFirst.addEventListener('click',event=>{
+  event.preventDefault();event.stopPropagation();
+  returnGuardUntil=performance.now()+700;
+  setHandoff(0);
+ });
  document.addEventListener('keydown',event=>{
-  if(event.key==='Escape'&&handoffProgress>0)setHandoff(0);
+  if(event.key==='Escape'&&handoffProgress>0){
+   returnGuardUntil=performance.now()+700;setHandoff(0);
+  }
  });
  function paintSecondLayer(){
   if(!second||!sevenfold||twins.length!==2)return;
