@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#edeee9" />
+  <meta name="description" content="活水堂西區真實三維建築白模，由根基、結構、空間至光與生命，逐步生長。P2 主日日程建築裝飾。" />
+  <title>活水堂西區 · 建築與生命｜P2</title>
+  <script type="module" crossorigin src="/p2-maquette/assets/p2-BIwqVfIr.js"></script>
+  <link rel="modulepreload" crossorigin href="/p2-maquette/assets/GLTFLoader-j388d5bW.js">
+  <link rel="stylesheet" crossorigin href="/p2-maquette/assets/p2-CHhh-Mtx.css">
+  <style>.model-fallback{background-image:url('/p2-maquette/maquette-fallback.webp')}</style>
+</head>
+<body class="assembly-body">
+  <main class="assembly-layout">
+    <header class="assembly-heading">
+      <div class="editorial-line"><span class="mini-cross" aria-hidden="true"></span><span>LIVING WATER ASSEMBLY · WEST</span><span class="line-fill"></span><span>ARCHITECTURAL STUDY</span></div>
+      <div class="heading-columns">
+        <div>
+          <p class="kicker">P2 / SUNDAY SERVICE · THE CHURCH IN THE MAKING</p>
+          <h1>從根基，<br /><em>漸漸長成。</em></h1>
+        </div>
+        <div class="heading-copy"><span class="scripture-mark">EPHESIANS 2:21</span><p>各房靠他聯絡得合式，<br />漸漸成為主的聖殿。</p><small>一座教會的建造，也是門徒生命的成長。</small></div>
+      </div>
+    </header>
+    <section class="model-frame" id="model-frame" aria-label="由地基到屋頂與四周樹木逐步生長的活水堂 3D 建築基地模型動畫">
+      <div class="scene-grid" aria-hidden="true"></div>
+      <div class="scene-glow" id="scene-glow" aria-hidden="true"></div>
+      <canvas id="assembly-canvas" aria-label="真實教會建築白模及四周景觀植栽的逐層組裝，可旋轉檢視"></canvas>
+      <div class="model-loading" id="model-loading" role="status">正在準備建築白模 <span>LOADING ARCHITECTURE</span></div>
+      <div class="model-fallback" id="model-fallback" hidden role="img" aria-label="活水堂白色建築模型靜態視圖，適用於未啟用 WebGL 的裝置"></div>
+      <span class="model-corner corner-a" aria-hidden="true"></span><span class="model-corner corner-b" aria-hidden="true"></span>
+      <div class="model-marker top"><span>30 M × 30 M · SITE STUDY</span><span>CONCEPT LANDSCAPE · NOT SURVEYED</span></div>
+      <div class="model-marker bottom"><span id="stage-name">THE GROUND</span><span id="model-percent">00%</span></div>
+      <div class="embed-caption" id="embed-caption" aria-live="off"><span class="embed-rule"></span><span id="embed-stage">THE GROUND</span></div>
+    </section>
+    <footer class="timeline-panel" aria-label="建造時間軸">
+      <div class="timeline-heading"><span>FROM NOTHING TO A PLACE OF WORSHIP</span><span id="phase-counter">01 / 06</span></div>
+      <input type="range" id="assembly-progress" min="0" max="1000" step="1" value="0" aria-label="拖動建築生長進度；從無到完成" />
+      <div class="timeline-bottom"><div class="phase-words"><strong id="phase-cn">基地</strong><span id="phase-en">THE GROUND</span></div><div class="play-actions"><button type="button" id="restart-button">重播建造 <span>↺</span></button><button type="button" id="toggle-button" aria-pressed="false">暫停 <span>Ⅱ</span></button></div></div>
+      <p class="timeline-note">原建築模型逐物件組裝 · 30 米概念基地與四周植栽 · 可逆時間軸 · 非測繪與施工圖｜Architecture as discipleship</p>
+    </footer>
+  </main>
+</body>
+</html>

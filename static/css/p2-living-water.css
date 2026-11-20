@@ -769,3 +769,24 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church-to-magazine"] .church-e
 @media(prefers-reduced-motion:reduce){
  body[data-ws-scope="p2"] .p2-magazine__panel{transform:none}
 }
+
+/* Church growth white maquette — silent, frameless ornament in the
+   pre-existing left editorial pane. The Sunday programme stays untouched. */
+body[data-ws-scope="p2"] .church-editorial__visual{
+  position:relative;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  background:transparent;
+  pointer-events:none;
+}
+body[data-ws-scope="p2"] .church-editorial__maquette{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  border:0;
+  background:transparent;
+  pointer-events:none;
+}
