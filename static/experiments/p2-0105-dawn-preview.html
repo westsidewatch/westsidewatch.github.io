@@ -4,107 +4,84 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>WESTSIDE WATCH · P2 01–05 · DAWN LIBRARY</title>
+<title>WESTSIDE WATCH · P2 01–05 · 黎明書局</title>
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<style>
-*{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;background:var(--ws-papyrus);color:var(--ws-ink)}
-.p2-five-track{height:3320svh;position:relative}.p2-five-stage{position:sticky;top:0;height:100svh;overflow:hidden;isolation:isolate}
-.p2-five-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-olive)}
-.book-entry{position:absolute;inset:0;visibility:hidden;pointer-events:none;overflow:hidden;background:var(--ws-papyrus);clip-path:inset(0 100% 0 0);z-index:2}
-.book-entry__slit{position:absolute;inset:0;pointer-events:none;background:var(--ws-paper);clip-path:inset(0 0 0 50%);transform:translateX(100%)}
-.book-entry__body{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);padding:clamp(45px,5.4vw,105px) clamp(24px,5.5vw,108px);gap:clamp(24px,4vw,80px);align-items:stretch}
-.book-entry__type{position:relative;display:flex;flex-direction:column;align-items:flex-start;min-width:0;border-top:1px solid var(--ws-harvest);border-bottom:1px solid var(--ws-harvest);padding:clamp(20px,3vw,55px) 0}
-.book-entry__folio{display:flex;width:100%;justify-content:space-between;gap:1rem;color:var(--ws-harvest);font:400 13px/1.2 var(--ws-type-display-en);letter-spacing:.12em}
-.book-entry__heading{margin:auto 0 0;font:400 clamp(60px,7.8vw,160px)/.88 var(--ws-type-display-en);letter-spacing:-.05em;text-transform:uppercase;max-width:7.3em}
-.book-entry__heading span{display:block}
-.book-entry__zh{margin:20px 0 0;font:200 clamp(24px,3vw,56px)/1.4 var(--ws-type-display-zh);letter-spacing:.12em}
-.book-entry__scripture{margin:auto 0 0;max-width:39ch;font:italic 400 clamp(18px,1.55vw,26px)/1.48 var(--ws-type-display-en)}
-.book-entry__scripture em{display:block;margin-top:12px;font:200 clamp(14px,1.2vw,20px)/1.7 var(--ws-type-display-zh);font-style:normal}
-.book-entry__scripture cite{display:block;color:var(--ws-harvest);font:400 13px/1.7 var(--ws-type-display-en);margin-top:14px}
-.book-entry__print{position:relative;display:grid;place-items:center;min-width:0;border-top:1px solid var(--ws-harvest);border-bottom:1px solid var(--ws-harvest);background:var(--ws-paper);overflow:hidden}
-.book-entry__print:before{content:"";position:absolute;inset:6%;opacity:.22;background:repeating-linear-gradient(0deg,transparent 0 7px,var(--ws-harvest) 7px 8px,transparent 8px 17px),repeating-linear-gradient(90deg,transparent 0 91px,var(--ws-harvest) 91px 92px,transparent 92px 184px);mask-image:linear-gradient(90deg,transparent,#000 20% 80%,transparent)}
-.catalogue{width:min(68%,390px);aspect-ratio:5/8;z-index:1;background:var(--ws-papyrus);border:1px solid var(--ws-harvest);padding:clamp(16px,2.4vw,38px);display:flex;flex-direction:column;transform:translateY(100svh) rotate(0deg);box-shadow:11px 11px 0 var(--ws-harvest);color:var(--ws-ink)}
-.catalogue__eyebrow{border-top:1px solid var(--ws-harvest);padding-top:10px;font:400 12px/1.3 var(--ws-type-display-en);letter-spacing:.1em}
-.catalogue__star{margin:auto;text-align:center;color:var(--ws-harvest);font:400 clamp(75px,10vw,180px)/.8 var(--ws-type-display-en)}
-.catalogue__title{border-bottom:1px solid var(--ws-harvest);padding-bottom:16px;font:400 clamp(23px,2.2vw,42px)/1.13 var(--ws-type-display-en)}
-.catalogue__title span{display:block;font:200 15px/1.5 var(--ws-type-display-zh);margin-top:6px}
-.book-entry__rail{position:absolute;bottom:clamp(9px,2vw,26px);right:clamp(24px,5.5vw,108px);z-index:2;color:var(--ws-harvest);font:400 12px/1.4 var(--ws-type-display-en);letter-spacing:.1em}
-.book-detail{position:absolute;inset:0;z-index:3;visibility:hidden;pointer-events:none;background:var(--ws-paper);clip-path:inset(0 0 100% 0);padding:clamp(40px,5vw,100px) clamp(24px,6vw,110px);display:flex;flex-direction:column;overflow:auto}
-.book-detail__top{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--ws-harvest);padding-bottom:20px;gap:20px}
-.book-detail h2{font:400 clamp(40px,6.6vw,100px)/.95 var(--ws-type-display-en);letter-spacing:-.045em;margin:0}.book-detail__top p{font:200 clamp(17px,1.7vw,28px)/1.5 var(--ws-type-display-zh);margin:0}
-.book-detail__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,4vw,65px);margin:auto 0;align-items:stretch;padding:clamp(40px,6vw,90px) 0}
-.book-detail__card{border-top:1px solid var(--ws-harvest);padding-top:20px;display:flex;flex-direction:column;gap:15px;min-height:260px;color:inherit;text-decoration:none}
-.book-detail__number{color:var(--ws-harvest);font:italic 400 clamp(40px,5vw,85px)/1 var(--ws-type-display-en)}
-.book-detail__card h3{margin:auto 0 0;font:400 clamp(25px,3vw,48px)/1.05 var(--ws-type-display-en)}
-.book-detail__card p{margin:0;font:200 clamp(16px,1.4vw,22px)/1.5 var(--ws-type-display-zh)}
-.book-detail__card:focus-visible{outline:2px solid var(--ws-harvest);outline-offset:9px}
-.book-detail__foot{border-top:1px solid var(--ws-harvest);padding-top:20px;display:flex;justify-content:space-between;gap:20px;font:400 14px/1.5 var(--ws-type-display-en)}
-.book-detail__foot a{color:inherit;text-decoration-thickness:1px;text-underline-offset:5px}
-.p2-five-controls{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;background:var(--ws-ink);color:var(--ws-paper);padding:8px 16px;font:400 12px/1.3 var(--ws-type-display-en)}
-.p2-five-controls label{display:flex;align-items:center;gap:9px;margin-left:auto}.p2-five-controls input{width:min(30vw,260px);accent-color:var(--ws-harvest)}
-.p2-five-controls button{font:inherit;background:transparent;border:1px solid var(--ws-harvest);color:inherit;padding:5px 10px;cursor:pointer}
-@media(max-width:800px){.book-entry__body{grid-template-columns:1fr 1fr;padding:58px 20px 30px;gap:16px}.book-entry__heading{font-size:clamp(47px,9vw,86px)}.book-entry__folio{font-size:10px}.book-entry__scripture{font-size:16px}.book-entry__scripture em{font-size:12px}.catalogue{width:85%}.book-detail__grid{gap:20px}}
-@media(max-width:580px){.book-entry__body{display:flex;flex-direction:column;gap:0;padding:54px 16px 25px}.book-entry__type{flex:0 0 48%;padding:12px 0}.book-entry__heading{font-size:clamp(58px,15vw,90px);margin:15px 0 0}.book-entry__heading span{display:inline}.book-entry__zh{margin:5px 0 0;font-size:23px}.book-entry__scripture{margin:10px 0 0;font-size:15px;max-width:none}.book-entry__scripture em{display:none}.book-entry__scripture cite{margin-top:5px;font-size:11px}.book-entry__print{flex:1}.catalogue{width:38%;min-width:120px}.catalogue__title{font-size:20px}.catalogue__star{font-size:80px}.book-entry__rail{display:none}.book-detail{padding:66px 20px 30px}.book-detail__top{display:block}.book-detail h2{font-size:45px}.book-detail__top p{margin-top:10px}.book-detail__grid{grid-template-columns:1fr;gap:10px;padding:20px 0}.book-detail__card{min-height:0;display:grid;grid-template-columns:55px 1fr;gap:6px 15px;padding:10px 0}.book-detail__number{grid-row:1/3;font-size:38px}.book-detail__card h3{font-size:25px}.book-detail__card p{font-size:14px}.book-detail__foot{font-size:12px}.p2-five-controls strong{display:none}.p2-five-controls label{width:100%}.p2-five-controls input{flex:1;width:0}}
-@media(prefers-reduced-motion:reduce){.catalogue,.book-entry__slit{will-change:auto}}
-</style>
+<link rel="stylesheet" href="/css/p2-0105-dawn-continuation.css?v=r2-20261120">
 </head>
 <body data-ws-scope="p2">
-<div class="p2-five-controls" aria-label="P2 卷首與黎明書局預覽控制">
- <strong>WESTSIDE WATCH / P2 / 01–05</strong><button type="button" data-jump="25.4">04 OLIVE</button><button type="button" data-jump="27.6">05 DAWN</button>
- <label>SCROLL <input id="p2-five-seek" aria-label="P2 捲動進度" type="range" min="0" max="32.2" step=".01" value="25.4"><output id="p2-five-progress">25.40</output></label>
-</div>
-<main class="p2-five-track" id="p2-five-track" aria-label="西望 P2 教會、雜誌、以馬忤斯、橄欖山、黎明書局連續閱讀">
- <div class="p2-five-stage" id="p2-five-stage">
-  <iframe class="p2-five-original" id="p2-four-original" title="P2 已確認的 01–04 正式連續版面與講員第二層" src="/experiments/p2-0104-olive-continuation.html?embed=1&amp;v=20261120-04-protected" allow="autoplay" loading="eager"></iframe>
-  <section class="book-entry" id="p2-book-entry" aria-labelledby="p2-book-title" aria-hidden="true" inert>
-   <div class="book-entry__slit" id="p2-book-slit"></div>
-   <div class="book-entry__body">
-    <div class="book-entry__type">
-     <div class="book-entry__folio"><span>WESTSIDE WATCH</span><span>05 / 07</span></div>
-     <h1 class="book-entry__heading" id="p2-book-title"><span>DAWN</span><span>LIBRARY</span></h1>
-     <p class="book-entry__zh">黎明書局</p>
-     <blockquote class="book-entry__scripture">And ye shall know the truth, and the truth shall make you free.<em>你們必曉得真理，真理必叫你們得以自由。</em><cite>JOHN 8:32 · 約翰福音 8:32</cite></blockquote>
+<header class="p205-controls" aria-label="P2 01–05 預覽操作">
+ <strong>WESTSIDE WATCH · P2 / 01–05</strong>
+ <button type="button" data-seek="25.4">04 OLIVE</button>
+ <button type="button" data-seek="27.5">05 DAWN</button>
+ <label>SCROLL <input id="p205-seek" type="range" min="0" max="32.3" step=".01" value="25.4" aria-label="P2 捲動進度"><output id="p205-progress">25.40</output></label>
+</header>
+<main class="p205-track" id="p205-track" aria-label="P2：教會、雜誌、以馬忤斯、橄欖山、黎明書局連續閱讀">
+ <div class="p205-stage" id="p205-stage">
+  <iframe id="p205-prior" title="P2 已確認的 01–04 及橄欖山第二層" src="/experiments/p2-0104-olive-continuation.html?embed=1&amp;v=20261120-04-protected" allow="autoplay" loading="eager"></iframe>
+  <section class="dawn-realm" id="dawn-realm" aria-labelledby="dawn-heading" inert aria-hidden="true">
+   <div class="dawn-realm__half dawn-realm__half--left" aria-hidden="true"></div>
+   <div class="dawn-realm__half dawn-realm__half--right" aria-hidden="true"></div>
+   <button class="dawn-twins" id="dawn-twins" type="button" aria-label="黎明書局雙方塊刊頭；展開 Westside Watch 旌旗進入書局第二層" aria-haspopup="true" aria-expanded="false">
+    <span class="dawn-twins__square dawn-twins__square--title">
+     <span class="dawn-twins__edition">05 / 07</span>
+     <span class="dawn-twins__en" id="dawn-heading">DAWN LIBRARY</span>
+     <span class="dawn-twins__zh">黎明書局</span>
+    </span>
+    <span class="dawn-twins__square dawn-twins__square--verse">
+     <span class="dawn-twins__verse-zh">你們必曉得真理，真理必叫你們得以自由。</span>
+     <span class="dawn-twins__verse-en">And ye shall know the truth, and the truth shall make you free.</span>
+     <span class="dawn-twins__ref">約翰福音 8:32 · JOHN 8:32 KJV</span>
+    </span>
+   </button>
+   <div class="dawn-spread" id="dawn-spread">
+    <div class="dawn-spread__editorial">
+     <div class="dawn-spread__thinrule"></div>
+     <p class="dawn-spread__overline">A LIVING LIBRARY · WESTSIDE WATCH</p>
+     <h2>THE <em>BOOK</em><br>OPENS.</h2>
+     <p class="dawn-spread__zh">黎明書局</p>
+     <div class="dawn-spread__copy"><p>經文在中心，資源服務學習。</p><p>從一本書的封面，走進知識的脈絡。</p></div>
+     <div class="dawn-spread__bottom"><span>05 / 07</span><span>WATCH FOR THE DAWN</span></div>
     </div>
-    <div class="book-entry__print"><div class="catalogue" id="p2-book-catalogue"><span class="catalogue__eyebrow">THE WESTSIDE CATALOGUE / VOL. 00</span><span class="catalogue__star" aria-hidden="true">✳</span><div class="catalogue__title">THREE MORNING STARS<span>三晨星</span></div></div></div>
+    <div class="dawn-spread__window" id="dawn-book-window" aria-label="四分之一閱讀窗口：書籍封面與內頁開啟">
+     <div class="dawn-spread__hatch" aria-hidden="true"></div>
+     <div class="dawn-book" id="dawn-book" aria-hidden="true">
+      <div class="dawn-book__leaves"><div class="dawn-book__left-page"><span>VERITAS</span><b>IN THE<br>BEGINNING</b><i>READING THE WORD</i></div><div class="dawn-book__right-page"><small>01 / THE READING</small><span>Thy word is a lamp unto my feet, and a light unto my path.</span><i>PSALM 119:105</i></div></div>
+      <div class="dawn-book__cover" id="dawn-book-cover"><span>WESTSIDE<br>WATCH</span><div class="dawn-book__cover-title">THE<br>DAWN<br>LIBRARY</div><span>05 · MMXXVI</span></div>
+     </div>
+    </div>
    </div>
-   <span class="book-entry__rail">TRUTH · KNOWLEDGE · READING</span>
+   <p class="dawn-enter-hint" id="dawn-enter-hint">點擊版頭雙方塊，進入黎明書局</p>
   </section>
-  <section class="book-detail" id="p2-book-detail" aria-label="黎明書局第二層入口" aria-hidden="true" inert>
-   <div class="book-detail__top"><h2>THE LIBRARY</h2><p>黎明書局</p></div>
-   <div class="book-detail__grid">
-    <a class="book-detail__card" href="/dawn-library/"><span class="book-detail__number">I</span><h3>THREE MORNING STARS</h3><p>三晨星・留下值得保存的資源</p></a>
-    <a class="book-detail__card" href="/dawn-library/"><span class="book-detail__number">II</span><h3>SPECTRUM</h3><p>光譜・探索經文與知識的脈絡</p></a>
-    <a class="book-detail__card" href="/dawn-library/"><span class="book-detail__number">III</span><h3>COLLECTION</h3><p>策展集・沿著閱讀路徑深入學習</p></a>
-   </div>
-   <div class="book-detail__foot"><span>WATCH FOR THE DAWN</span><a href="/dawn-library/">進入黎明書局</a></div>
+  <div class="dawn-handoff" id="dawn-handoff" aria-hidden="true"></div>
+  <section class="dawn-second" id="dawn-second" inert aria-hidden="true">
+   <button type="button" class="dawn-second__return" id="dawn-return">返回 P2 第一層</button>
+   <header class="dawn-second__press" aria-label="縱橫鉛字經文">
+    <div class="dawn-press-plate dawn-press-plate--vertical" id="dawn-plate-zh">
+     <span class="dawn-press-plate__slug">05 · 黎明書局</span>
+     <blockquote>你們必曉得真理，真理必叫你們得以自由。</blockquote>
+     <cite>約翰福音 八章卅二節</cite>
+    </div>
+    <div class="dawn-press-plate dawn-press-plate--horizontal" id="dawn-plate-en">
+     <span class="dawn-press-plate__slug">THE TRUTH · 05</span>
+     <blockquote>AND YE SHALL<br>KNOW THE TRUTH,<br>AND THE TRUTH SHALL<br>MAKE YOU FREE.</blockquote>
+     <cite>JOHN 8:32 · KJV</cite>
+    </div>
+   </header>
+   <section class="dawn-catalogue" aria-labelledby="dawn-catalogue-title">
+    <header class="dawn-catalogue__heading">
+     <div><span>DAWN LIBRARY</span><h2 id="dawn-catalogue-title">THE COLLECTION</h2><p>館藏 · 歷史書籍與信仰資源</p></div>
+     <div class="dawn-catalogue__total"><output id="dawn-total">—</output><span>館藏記錄</span></div>
+    </header>
+    <nav class="dawn-catalogue__nav" aria-label="黎明書局內容入口">
+     <a href="/dawn-library/">三晨星</a><a href="/dawn-library/">光譜</a><a href="/dawn-library/">策展集</a>
+     <label>館藏搜尋 <input id="dawn-search" type="search" placeholder="按書名或作者搜尋已載入的館藏" autocomplete="off"></label>
+    </nav>
+    <ol class="dawn-catalogue__works" id="dawn-works" aria-live="polite"></ol>
+    <div class="dawn-catalogue__more"><button type="button" id="dawn-prev">上一頁</button><button type="button" id="dawn-more">下一頁館藏</button><output id="dawn-page-status" aria-live="polite"></output></div>
+   </section>
   </section>
  </div>
 </main>
-<script>
-(()=>{'use strict';
- const $=s=>document.querySelector(s),track=$('#p2-five-track'),base=$('#p2-four-original'),entry=$('#p2-book-entry'),slit=$('#p2-book-slit'),card=$('#p2-book-catalogue'),detail=$('#p2-book-detail'),slider=$('#p2-five-seek'),output=$('#p2-five-progress');
- const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n)),ease=n=>{const x=clamp(n);return x*x*(3-2*x)};
- let queued=false,prev=0;
- function render(){queued=false;const d=clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,32.2);slider.value=d.toFixed(2);output.textContent=d.toFixed(2);
-  // The exact approved 01–04 release remains a byte-identical child. Its existing
-  // scroll owner sees only its established 0–26.3 distance; no reset or replay.
-  base.contentWindow?.postMessage({type:'westside-p2-home-pose',distance:Math.min(26.3,d),legacyProgress:clamp(d/26.3),active:d<27.4},location.origin);
-  const wipe=ease((d-26.15)/1.05),leaf=ease((d-26.5)/1.2),spread=ease((d-29.6)/1.05);
-  entry.style.visibility=wipe>0?'visible':'hidden';entry.style.clipPath=`inset(0 ${(100-wipe*100).toFixed(3)}% 0 0)`;
-  slit.style.transform=`translateX(${((1-wipe)*100).toFixed(2)}%)`;
-  card.style.transform=`translateY(${((1-leaf)*105).toFixed(2)}svh)`;
-  entry.inert=wipe<.999;entry.setAttribute('aria-hidden',wipe<.999?'true':'false');
-  detail.style.visibility=spread>0?'visible':'hidden';detail.style.clipPath=`inset(0 0 ${(100-spread*100).toFixed(3)}% 0)`;
-  detail.inert=spread<.999;detail.setAttribute('aria-hidden',spread<.999?'true':'false');
-  if(d!==prev)prev=d;
- }
- function schedule(){if(!queued){queued=true;requestAnimationFrame(render)}}
- function jump(d){scrollTo({top:track.offsetTop+clamp(d,0,32.2)*innerHeight,behavior:'instant'});schedule()}
- document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>jump(+b.dataset.jump)));
- slider.addEventListener('input',()=>jump(+slider.value));addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});base.addEventListener('load',schedule);
- const initial=Number(new URLSearchParams(location.search).get('d')??25.4);
- requestAnimationFrame(()=>requestAnimationFrame(()=>jump(Number.isFinite(initial)?initial:25.4)));
-})();
-</script>
+<script src="/js/p2-0105-dawn-continuation.js?v=r2-20261120"></script>
 </body>
 </html>
