@@ -399,8 +399,17 @@
   const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
    kinetic.setAttribute('viewBox','0 0 '+number(w)+' '+number(h));
    const bannerWidth=w*.91,scale=bannerWidth/1600,bannerHeight=108*scale;
-   const firstPosterTop=Math.min(...cards.map(card=>
-    card.getBoundingClientRect().top-stageRect.top).filter(Number.isFinite));
+   // A pair folio and a twelve-person index have DIFFERENT image geometry.
+   // Hidden index cards often sit above the viewport in the pair phase;
+   // using those boxes here placed the whole flag behind the top toolbar.
+   const sourcePosters=handoffOriginD!==null&&handoffOriginD<T.indexStart?
+    [first,left,right,nextLeft,nextRight]:cards;
+   const portraitTops=sourcePosters.filter(node=>{
+    const style=getComputedStyle(node);
+    return style.display!=='none'&&style.visibility==='visible';
+   }).map(node=>node.getBoundingClientRect().top-stageRect.top)
+    .filter(Number.isFinite);
+   const firstPosterTop=portraitTops.length?Math.min(...portraitTops):h*.43;
    // Keep the V9 banner entirely above the already-approved poster portraits.
    // The 24px clearance protects their top edge at every viewport width.
    const bannerX=(w-bannerWidth)/2;
