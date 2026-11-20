@@ -132,7 +132,16 @@
     '#f0d38e',{'font-family':'Arial,sans-serif','font-weight':600,'letter-spacing':3});
    group.append(initial,copy);return {group,shell,initial,copy};
   }
-  const seals=[makeSeal(0),makeSeal(1)];seals.forEach(s=>kinetic.append(s.group));
+  const seals=[makeSeal(0),makeSeal(1)];
+  // Real second-layer scripture is revealed beneath these moving seals by a
+  // reversible type-high wipe; no substitute forme is inserted in that layer.
+  const sealWipes=seals.map((seal,i)=>{
+   const clip=svgNode('clipPath',{id:'p2-kinetic-seal-wipe-'+i});
+   const aperture=svgNode('rect',{x:0,y:0,width:500,height:500});
+   clip.append(aperture);defs.append(clip);
+   seal.group.setAttribute('clip-path','url(#p2-kinetic-seal-wipe-'+i+')');
+   kinetic.append(seal.group);return aperture;
+  });
   sevenfold?.replaceChildren(kinetic);
   fetch('/images/westside-watch-lettering-v9-clean-kern.svg').then(r=>{
    if(!r.ok)throw Error('Original V9 lettering unavailable');return r.text();
@@ -323,16 +332,16 @@
  function paintSecondLayer(){
   if(!second||!sevenfold||twins.length!==2)return;
    const p=handoffProgress,complete=p>=.99999;
-   second.style.visibility=complete?'visible':'hidden';second.inert=!complete;
+   second.inert=!complete;
    second.setAttribute('aria-hidden',complete?'false':'true');
    if(masthead)masthead.setAttribute('aria-expanded',String(complete));
    returnToFirst.tabIndex=complete?0:-1;
    sevenfold.style.visibility=p>.001&&!complete?'visible':'hidden';
    if(p>.001){folio.inert=true;folio.setAttribute('aria-hidden','true')}
    if(complete){folio.inert=true;folio.setAttribute('aria-hidden','true')}
+   if(p<=.001){folio.inert=false;folio.removeAttribute('aria-hidden')}
   const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
    kinetic.setAttribute('viewBox','0 0 '+number(w)+' '+number(h));
-   const narrow=w<620;
    const bannerWidth=w*.91,scale=bannerWidth/1600,bannerHeight=108*scale;
    const firstPosterTop=Math.min(...cards.map(card=>
     card.getBoundingClientRect().top-stageRect.top).filter(Number.isFinite));
@@ -341,27 +350,52 @@
    const bannerX=(w-bannerWidth)/2;
    const bannerY=Math.max(16,Math.min(h*.18,firstPosterTop-bannerHeight-24));
    banner.setAttribute('transform',`translate(${number(bannerX)} ${number(bannerY)}) scale(${scale})`);
-   // The reveal follows the separating original squares. The fabric stays
-   // paper-colored; only real vector letters and squares share the seven colors.
+   // No flag background: only the V9 glyphs, rules and travelling squares.
    const opened=ease((p-.06)/.32);
-   ribbonWindow.setAttribute('x',number((1-opened)*800));
+   const flagRetire=ease((p-.71)/.20);
+   ribbonWindow.setAttribute('x',number((1-opened)*800+opened*800*flagRetire));
    ribbonWindow.setAttribute('y',0);
-   ribbonWindow.setAttribute('width',number(opened*1600));
+   ribbonWindow.setAttribute('width',number(opened*1600*(1-flagRetire)));
    ribbonWindow.setAttribute('height',108);
    const ink=sevenColor(p);v9Letters.setAttribute('fill',ink);
    const capHeight=100*scale,letterCenterY=bannerY+54*scale;
-   const finalSize=narrow?Math.min(w*.60,h*.29,250):Math.min(w*.335,h*.44,430);
-   const gap=narrow?12:Math.min(36,w*.025);
-   const finalLeftX=narrow?(w-finalSize)/2:(w-2*finalSize-gap)/2;
-   const finalRightX=narrow?finalLeftX:finalLeftX+finalSize+gap;
-   const finalLeftY=narrow?Math.min(h-2*finalSize-gap-16,h*.43):
-    Math.min(h-finalSize-16,Math.max(bannerY+bannerHeight+55,h*.53));
-   const finalRightY=narrow?finalLeftY+finalSize+gap:finalLeftY;
+   // Use the existing second layer's *actual* iframe and two Scripture Studio
+   // plates as end points. Never derive a new layout from the stage dimensions.
+   const mother=second.querySelector('.olive-second-layer__scripture-master');
+   const motherRect=mother.getBoundingClientRect();
+   let formes=[];
+   try{formes=[...mother.contentDocument.querySelectorAll('#plateZh,#plateEn')];}
+   catch(_error){/* Browser isolation can disallow iframe DOM access. */}
+   const iframeWidth=motherRect.width;
+   const cssPlateSize=Math.min(iframeWidth*.44,
+    iframeWidth<=560?iframeWidth*.43:
+    iframeWidth<=900?Math.min(285,Math.max(150,iframeWidth*.35)):
+    Math.min(355,Math.max(190,iframeWidth*.27)));
+   const frameX=motherRect.left-stageRect.left,frameY=motherRect.top-stageRect.top;
+   const landing=seals.map((_,i)=>{
+    const actual=formes[i]?.getBoundingClientRect();
+    return actual&&actual.width>0?{
+     x:frameX+actual.left,y:frameY+actual.top,size:actual.width
+    }:{x:frameX+(i?iframeWidth-cssPlateSize:0),y:frameY,size:cssPlateSize};
+   });
+   stage.dataset.p2LandingMeasure=formes.length===2?'scripture-studio-plate-dom':'scripture-studio-original-css';
+   // Two exact square apertures grow into the full second-layer page. The old
+   // and new plates share their edges during the wipe: no terminal jump/cut.
+   const pageReveal=ease((p-.925)/.075);
+   if(p>.925){
+    second.style.visibility='visible';
+    second.style.clipPath='path("'+landing.map(target=>{
+     const x=mix(target.x,0,pageReveal),y=mix(target.y,0,pageReveal);
+     const right=mix(target.x+target.size,w,pageReveal);
+     const bottom=mix(target.y+target.size,h,pageReveal);
+     return `M${number(x)} ${number(y)} H${number(right)} V${number(bottom)} H${number(x)} Z`;
+    }).join(' ')+'")';
+   }else{second.style.visibility='hidden';second.style.clipPath='none'}
    const sourceRects=twins.map(node=>node.getBoundingClientRect());
    // Rise out of the masthead first, while still left of the speaker prints;
    // only then move horizontally along the transparent flag above the portraits.
    const lift=ease((p-.015)/.145);
-   const split=ease((p-.08)/.26),cross=ease((p-.37)/.34),seal=ease((p-.73)/.27);
+   const split=ease((p-.08)/.26),cross=ease((p-.37)/.34),seal=ease((p-.68)/.25);
    const endCenters=[bannerX+capHeight/2,bannerX+bannerWidth-capHeight/2];
    // Travel THROUGH their own portions of the English wordmark, then open
    // outward into two distinct scripture squares. Never swap the squares:
@@ -373,23 +407,27 @@
     let cx=mix(sourceX,endCenters[i],split),cy=mix(sourceY,letterCenterY,lift);
     let size=mix(rect.width,capHeight,lift);
     cx=mix(cx,letterStations[i],cross);
-    const destX=(i===0?finalLeftX:finalRightX)+finalSize/2;
-    const destY=(i===0?finalLeftY:finalRightY)+finalSize/2;
-    cx=mix(cx,destX,seal);cy=mix(cy,destY,seal);size=mix(size,finalSize,seal);
+    const target=landing[i];
+    const destX=target.x+target.size/2,destY=target.y+target.size/2;
+    cx=mix(cx,destX,seal);cy=mix(cy,destY,seal);size=mix(size,target.size,seal);
     const group=seals[i].group;
     group.setAttribute('transform',`translate(${number(cx-size/2)} ${number(cy-size/2)}) scale(${size/500})`);
-    seals[i].shell.setAttribute('fill',ink);
+    const colorSettle=ease((p-.78)/.15);
+    seals[i].shell.setAttribute('fill',hexMix(ink,i===0?'#B8944A':'#61774A',colorSettle));
+    seals[i].shell.setAttribute('stroke',hexMix('#b99b4f',i===0?'#61774A':'#B8944A',colorSettle));
     seals[i].initial.setAttribute('opacity',1-ease((p-.12)/.15));
-    seals[i].copy.setAttribute('opacity',ease((p-.79)/.16));
+    seals[i].copy.setAttribute('opacity',ease((p-.75)/.13));
+    sealWipes[i].setAttribute('width',number(500*(1-pageReveal)));
     twins[i].style.opacity=p>.001?'0':'';
    });
    // Handoff is visibility-only: the existing second-layer page is never
    // restyled, reflowed or filled with duplicated transition artwork.
    if(p>.005){enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1}
+   else{enter.style.visibility='';enter.style.pointerEvents='';enter.removeAttribute('tabindex')}
   stage.dataset.p2Layer=p<=0?'first':p<.99999?'sevenfold-handoff':'second';
   stage.dataset.p2Sevenfold=p.toFixed(4);
    stage.dataset.p2ScriptureMaster='original-second-layer-scripture-studio';
-   stage.dataset.p2SquareAspect='1:1-during-transition';
+   stage.dataset.p2SquareAspect='1:1-exact-original-scripture-landing';
    stage.dataset.p2LetterSquareColor=ink;
  }
 
