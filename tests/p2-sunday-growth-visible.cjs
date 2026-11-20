@@ -21,7 +21,7 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
      frame:document.querySelector('.church-editorial__maquette')?.outerHTML.slice(0,240)
    }))),JSON.stringify(pageErrors));
    await page.screenshot({path:'artifacts/p2-sunday-growth/'+screen.name+'-before.png'});
-   await page.waitForFunction(()=>document.querySelector('.showcase')?.dataset.p2Phase==='church',null,{timeout:12000});
+   await page.waitForFunction(()=>document.querySelector('.showcase')?.classList.contains('p2-church-model-visible'),null,{timeout:12000});
    await page.waitForFunction(()=>!!document.querySelector('.church-editorial__maquette')?.getAttribute('src'),null,{timeout:12000});
    const result=await page.evaluate(()=>{
     const stage=document.querySelector('.showcase');
@@ -29,12 +29,12 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
     const visual=document.querySelector('.church-editorial__visual');
     const frame=document.querySelector('.church-editorial__maquette');
     const rect=e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}};
-    return {phase:stage.dataset.p2Phase,programme:!!programme,
+    return {phase:stage.dataset.p2Phase,modelActive:stage.classList.contains('p2-church-model-visible'),programme:!!programme,
       visualDisplay:getComputedStyle(visual).display,
       visual:rect(visual),frame:rect(frame),frameSrc:frame.src,
       scheduleDisplay:getComputedStyle(programme).display};
    });
-   assert.equal(result.phase,'church',screen.name+' not showing the Church');
+   assert.equal(result.modelActive,true,screen.name+' not displaying the Church visual');
    assert.equal(result.programme,true,screen.name+' missing Sunday programme');
    assert.notEqual(result.visualDisplay,'none',screen.name+' hides the architectural model');
    assert.ok(result.visual.width>180&&result.visual.height>170,screen.name+' architectural model collapsed');
@@ -50,7 +50,7 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
   await home.evaluate(()=>{
     const host=document.querySelector('.ws-p2-sevenfold-host');
     if(!host) throw new Error('P2 homepage section missing');
-    window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+innerHeight*3.8,behavior:'instant'});
+    window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+innerHeight*3.09,behavior:'instant'});
   });
   await home.waitForFunction(()=>{
     const o=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
@@ -59,8 +59,8 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
     const stage=inner?.querySelector('.showcase');
     const visual=inner?.querySelector('.church-editorial__visual');
     const model=inner?.querySelector('.church-editorial__maquette');
-    return stage?.dataset.p2Phase==='church'&&
-      visual&&getComputedStyle(visual).display!=='none'&&
+    return stage?.classList.contains('p2-church-model-visible')&&
+      visual&&inner.defaultView.getComputedStyle(visual).display!=='none'&&
       visual.getBoundingClientRect().width>200&&
       model?.getAttribute('src')?.includes('/p2-maquette/index.html');
   },{timeout:45000});
