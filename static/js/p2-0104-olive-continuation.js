@@ -360,7 +360,8 @@
  }
  // Direct, zero-motion entry for a P2 portrait: build the exact existing
  // speaker page, then reveal the existing second layer in the same frame.
- // The masthead's distinct V9 animation remains available from the index.
+ // The masthead's distinct V9 animation remains available at EVERY P2
+ // stage, including the paired-folio passage. Only portraits bypass it.
  function enterSecondInstant(index=null){
   if(index!==null&&(!Number.isInteger(index)||index<0||index>=roster.length))return;
   handoffTimeline?.pause(0);
@@ -383,13 +384,13 @@
  }
  function setHandoff(target){
   if(!target){resetHandoff();return}
-  // On a two-speaker folio the animated flag inevitably approaches moving
-  // portraits. Keep the masthead clickable, but enter the index instantly.
-  // The V9 sevenfold is reserved for the fully visible twelve-person phase.
+  // The masthead ALWAYS owns the approved V9 sevenfold performance. It is
+  // intentionally independent from the zero-motion speaker-portrait entry.
+  // Paired portraits are protected by the transition's upper-stage clipping
+  // and depart before the scripture squares descend toward layer two.
   const d=clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,T.end);
   if(d<T.first-.01){stage.dataset.p2EntryGate='olive-speaker-pages-only';return}
   stage.dataset.p2EntryGate='open';
-  if(d<T.indexStart){enterSecondInstant();return}
   resetSecondIndex();
   stage.dataset.p2EntryMethod='sevenfold';
   handoffOriginD=d;
@@ -447,6 +448,17 @@
    }).map(node=>node.getBoundingClientRect().top-stageRect.top)
     .filter(Number.isFinite);
    const firstPosterTop=portraitTops.length?Math.min(...portraitTops):h*.43;
+   // During paired-folio entry the masthead's lettering and two travelling
+   // squares must stay ABOVE the original portraits until those portraits
+   // have fully retired. The clipping is on the temporary SVG host alone:
+   // no original P2 print, typography, color or second-layer box is altered.
+   // Release it at p=.64, after pair opacity is exactly zero (p>=.63),
+   // and BEFORE the scripture seals begin their final descent at p=.68.
+   const protectPair=handoffOriginD!==null&&handoffOriginD<T.indexStart&&p<.64;
+   const safePortraitEdge=Math.max(0,Math.min(h,firstPosterTop-12));
+   sevenfold.style.clipPath=protectPair?
+    `inset(0px 0px ${number(Math.max(0,h-safePortraitEdge))}px 0px)`:'none';
+   stage.dataset.p2PairArtworkGuard=protectPair?'clipped-above-portraits':'released';
    // Keep the V9 banner entirely above the already-approved poster portraits.
    // The 24px clearance protects their top edge at every viewport width.
    const bannerX=(w-bannerWidth)/2;
