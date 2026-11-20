@@ -126,3 +126,35 @@
  .dawn-spread__editorial h2{font-size:clamp(32px,8vw,52px)}
  .dawn-spread__copy{display:none}
 }
+
+/* R5 / Nov 14 approved grammar: square vinyl wall, NOT the retired 5:8
+   masonry, wall battlements or a columnar catalogue as L2. */
+.dawn-wall{position:relative;padding:clamp(30px,4vw,68px) clamp(16px,4.5vw,78px) clamp(55px,7vw,100px);background:var(--ws-papyrus);border-top:1px solid var(--ws-harvest)}
+.dawn-wall__folio,.dawn-wall__tail{display:flex;justify-content:space-between;align-items:center;gap:24px;font:400 clamp(11px,.85vw,14px)/1.4 var(--ws-type-display-en);letter-spacing:.09em;color:var(--ws-harvest)}
+.dawn-wall__folio{margin-bottom:20px;border-bottom:1px solid var(--ws-harvest);padding-bottom:14px}
+.dawn-wall__grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-flow:row dense;gap:clamp(6px,.7vw,12px)}
+.dawn-wall__tile{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;min-width:0;aspect-ratio:1;overflow:hidden;border:1px solid var(--ws-harvest);border-radius:0;padding:clamp(9px,1.3vw,25px);background:var(--ws-paper);color:var(--ws-ink);text-align:left;cursor:pointer;font:inherit;transition:background-color .45s ease,color .45s ease,outline-offset .25s ease}
+.dawn-wall__tile:hover,.dawn-wall__tile:focus-visible{background:var(--ws-olive);color:var(--ws-paper);outline:1px solid var(--ws-morning-gold);outline-offset:-5px}
+.dawn-wall__tile--portal{grid-column:span 2;grid-row:span 2;padding:clamp(18px,2.3vw,45px)}
+.dawn-wall__tile small{font:400 clamp(9px,.85vw,13px)/1.3 var(--ws-type-display-en);letter-spacing:.075em}
+.dawn-wall__tile--portal strong{font:200 clamp(28px,4.15vw,70px)/1.2 var(--ws-type-display-zh);letter-spacing:.08em;margin-top:auto}
+.dawn-wall__tile--portal em{font:italic 400 clamp(11px,1.22vw,20px)/1.3 var(--ws-type-display-en);margin-top:10px}
+.dawn-wall__tile--sunrise{background:var(--ws-harvest);color:var(--ws-paper)}
+.dawn-wall__tile--spectrum{background:var(--ws-olive);color:var(--ws-paper)}
+.dawn-wall__tile--curation{background:var(--ws-pale-gold);color:var(--ws-ink)}
+.dawn-wall__tile--record{gap:8px}
+.dawn-wall__tile--record strong{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;font:400 clamp(13px,1.3vw,23px)/1.13 var(--ws-type-display-en);letter-spacing:-.02em}
+.dawn-wall__tile--record em{display:block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:italic 400 clamp(10px,.75vw,13px)/1.3 var(--ws-type-display-en)}
+.dawn-wall__tile--imprint{background:var(--ws-paper);color:var(--ws-harvest);cursor:default;border-color:var(--ws-morning-gold)}
+.dawn-wall__tile--imprint span{font:400 clamp(23px,3vw,53px)/.9 var(--ws-type-display-en);letter-spacing:-.06em}
+.dawn-wall__tile--imprint i{font:italic 400 12px var(--ws-type-display-en)}
+.dawn-wall__tail{padding-top:22px}
+.dawn-wall__tail button,.dawn-catalogue__back{border:1px solid var(--ws-harvest);background:transparent;color:var(--ws-ink);padding:13px 20px;cursor:pointer;font:200 clamp(14px,1.3vw,18px)/1.25 var(--ws-type-display-zh)}
+.dawn-wall__tail button:hover,.dawn-catalogue__back:hover{background:var(--ws-olive);color:var(--ws-paper)}
+.dawn-wall__tile--record{animation:dawnWallPrint .7s both;animation-delay:calc(var(--tile-index,0)*.035s)}
+@keyframes dawnWallPrint{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0)}}
+.dawn-catalogue[hidden]{display:none!important}
+.dawn-catalogue__back{margin-bottom:clamp(20px,2vw,36px)}
+@media(max-width:950px){.dawn-wall__grid{grid-template-columns:repeat(4,minmax(0,1fr))}.dawn-wall__tile--portal strong{font-size:clamp(27px,4.7vw,51px)}}
+@media(max-width:600px){.dawn-wall{padding:24px 10px 50px}.dawn-wall__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.dawn-wall__folio{font-size:9px;gap:8px}.dawn-wall__tile{padding:12px}.dawn-wall__tile--portal{grid-column:span 2;grid-row:span 2;padding:24px}.dawn-wall__tile--portal strong{font-size:clamp(40px,12vw,70px)}.dawn-wall__tile--record strong{font-size:clamp(14px,4vw,19px)}.dawn-wall__tail{align-items:flex-start;flex-direction:column}.dawn-wall__tile--imprint span{font-size:clamp(26px,8vw,42px)}}
+@media(prefers-reduced-motion:reduce){.dawn-wall__tile{transition:none}.dawn-wall__tile--record{animation:none}}
