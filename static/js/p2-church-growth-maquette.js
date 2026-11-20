@@ -21,6 +21,13 @@
   }
  }
  frame.addEventListener('load',()=>{if(active)replay()});
+ // Hide the paper maquette placeholder only when the real GLB has arrived.
+ window.addEventListener('message',e=>{
+  if(e.origin!==location.origin||e.source!==frame.contentWindow)return;
+  if(e.data?.type==='P2_CHURCH_GEOMETRY_READY'){
+   frame.parentElement?.classList.add('maquette-geometry-ready');
+  }
+ });
 
  function sync(){
   const pose=Number(stage.dataset.p2Progress||0);
