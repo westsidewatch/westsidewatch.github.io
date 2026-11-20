@@ -1717,6 +1717,9 @@ html.p2-main-embedded .p2-olive-stage{
  color:var(--ws-ink);visibility:hidden;overflow:auto;overscroll-behavior:contain;
  padding:clamp(65px,7svh,92px) clamp(20px,4vw,75px) clamp(35px,5svh,60px)
 }
+/* The twin masthead has z=35; once the scripture squares reach layer two,
+   the real second-layer controls must sit above it and receive pointer input. */
+.p2-olive-stage.olive-second-complete .olive-second-layer{z-index:45}
 .olive-second-layer__folio{font:400 11px/1.2 var(--ws-type-display-en);
  letter-spacing:.13em;display:flex;justify-content:space-between;
  border-bottom:1px solid var(--ws-olive);padding-bottom:13px}
