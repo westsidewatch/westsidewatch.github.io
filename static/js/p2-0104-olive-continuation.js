@@ -306,21 +306,33 @@
     placeInlinePreview(index);
   });
  },{passive:true});
-  // One reversible stage-bound handoff; the original 01–04 scroll remains intact.
+  // The seven-color entry is FORWARD ONLY. Returning is an immediate restore
+  // of the current P2 scroll page, never a reverse performance over portraits.
  const masthead=$('#olive-twin-entry');
  const handoffClock={value:0};
  let handoffProgress=0,handoffTarget=0;
  const handoffTimeline=window.gsap?.timeline({paused:true,onUpdate:()=>{
   handoffProgress=handoffClock.value;schedule();
   }})?.to(handoffClock,{value:1,duration:7.6,ease:'none'});
+ function resetHandoff(){
+  handoffTarget=0;handoffTimeline?.pause(0);
+  handoffClock.value=0;handoffProgress=0;
+  if(second)second.scrollTop=0;
+  schedule();
+ }
  function setHandoff(target){
-  handoffTarget=target?1:0;
-   if(second)second.scrollTop=0;
+  if(!target){resetHandoff();return}
+  // The masthead is visible throughout the two-speaker folio sequence. It
+  // must not launch the second-layer squares over those protected posters.
+  const d=clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,T.end);
+  if(d<T.indexEnd-.01){stage.dataset.p2EntryGate='twelve-index-only';return}
+  handoffTarget=1;
+  if(second)second.scrollTop=0;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches||!handoffTimeline){
-   handoffTimeline?.pause(handoffTarget?handoffTimeline.duration():0);
-   handoffClock.value=handoffTarget;handoffProgress=handoffTarget;schedule();return;
+   handoffTimeline?.pause(handoffTimeline.duration());
+   handoffClock.value=1;handoffProgress=1;schedule();return;
   }
-  if(handoffTarget)handoffTimeline.play();else handoffTimeline.reverse();
+  handoffTimeline.play();
  }
  if(masthead){
   masthead.setAttribute('role','button');masthead.tabIndex=0;
@@ -400,15 +412,6 @@
    // Two exact square apertures grow into the full second-layer page. The old
    // and new plates share their edges during the wipe: no terminal jump/cut.
    const pageReveal=ease((p-.925)/.075);
-   if(p>.925){
-    second.style.visibility='visible';
-    second.style.clipPath='path("'+landing.map(target=>{
-     const x=mix(target.x,0,pageReveal),y=mix(target.y,0,pageReveal);
-     const right=mix(target.x+target.size,w,pageReveal);
-     const bottom=mix(target.y+target.size,h,pageReveal);
-     return `M${number(x)} ${number(y)} H${number(right)} V${number(bottom)} H${number(x)} Z`;
-    }).join(' ')+'")';
-   }else{second.style.visibility='hidden';second.style.clipPath='none'}
    const sourceRects=twins.map(node=>node.getBoundingClientRect());
    // Rise out of the masthead first, while still left of the speaker prints;
    // only then move horizontally along the transparent flag above the portraits.
@@ -419,6 +422,7 @@
    // outward into two distinct scripture squares. Never swap the squares:
    // their reverse cross-over used to stack two growing verses on one another.
    const letterStations=[bannerX+bannerWidth*.43,bannerX+bannerWidth*.68];
+   let carrierBottom=0;
    sourceRects.forEach((rect,i)=>{
     const sourceX=rect.left-stageRect.left+rect.width/2;
     const sourceY=rect.top-stageRect.top+rect.height/2;
@@ -430,6 +434,7 @@
     cx=mix(cx,destX,seal);cy=mix(cy,destY,seal);size=mix(size,target.size,seal);
     const group=seals[i].group;
     group.setAttribute('transform',`translate(${number(cx-size/2)} ${number(cy-size/2)}) scale(${size/500})`);
+    carrierBottom=Math.max(carrierBottom,cy+size/2);
     const colorSettle=ease((p-.78)/.15);
     const squareInk=hexMix(sourceSquareColors[i],ink,openingColor);
     seals[i].shell.setAttribute('fill',hexMix(squareInk,i===0?'#B8944A':'#61774A',colorSettle));
@@ -442,6 +447,23 @@
     sealWipes[i].setAttribute('width',number(500*(1-pageReveal)));
     twins[i].style.opacity=p>.001?'0':'';
    });
+   // Once seals begin to grow, the genuine second-layer field progressively
+   // replaces the FIRST layer behind them, top-down. Its speaker grid remains
+   // below the masked edge until the two seals reach their actual destination.
+   // Thus a carrier never visually sits on top of either page's portraits.
+   const secondIndexTop=secondIndex.getBoundingClientRect().top-stageRect.top;
+   const safeHeaderBottom=Math.max(0,Math.min(h,secondIndexTop-10));
+   const fieldAdvance=ease((p-.62)/.20);
+   const fieldBottom=Math.min(safeHeaderBottom,(carrierBottom+24)*fieldAdvance);
+   const curtainBottom=mix(fieldBottom,h,pageReveal);
+   if(p>.62){
+    second.style.visibility='visible';
+    second.style.clipPath=`inset(0 0 ${number(Math.max(0,h-curtainBottom))}px 0)`;
+   }else{second.style.visibility='hidden';second.style.clipPath='none'}
+   // The two authentic mother formes appear only when the travelling seals
+   // are registered exactly over them, then take over through the seal wipe.
+   mother.style.visibility=p>.925?'visible':'hidden';
+   returnToFirst.style.visibility=complete?'visible':'hidden';
    // Handoff is visibility-only: the existing second-layer page is never
    // restyled, reflowed or filled with duplicated transition artwork.
    if(p>.005){enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1}
@@ -789,6 +811,9 @@
   queued=false;
   const height=Math.max(innerHeight,1);
   const d=clamp(-track.getBoundingClientRect().top/height,0,T.end);
+  // Any scrub/navigation back to a paired-speaker page cancels the entrance
+  // before its SVG can linger above the original two-portrait folio.
+  if(d<T.indexEnd-.01&&(handoffTarget||handoffProgress>.001))resetHandoff();
   if(base.contentWindow)base.contentWindow.postMessage({
    type:'westside-p2-home-pose',
    distance:Math.min(d,9.34),
@@ -1166,6 +1191,7 @@
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
  function go(d){
+  if(d<T.indexEnd-.01&&(handoffTarget||handoffProgress>.001))resetHandoff();
   const top=track.getBoundingClientRect().top+scrollY+clamp(d,0,T.end)*Math.max(1,innerHeight);
   scrollTo({top,behavior:'instant'});schedule();
  }
