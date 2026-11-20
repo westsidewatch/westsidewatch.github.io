@@ -361,7 +361,7 @@
    // Rise out of the masthead first, while still left of the speaker prints;
    // only then move horizontally along the transparent flag above the portraits.
    const lift=ease((p-.015)/.145);
-   const split=ease((p-.15)/.19),cross=ease((p-.37)/.34),seal=ease((p-.73)/.27);
+   const split=ease((p-.08)/.26),cross=ease((p-.37)/.34),seal=ease((p-.73)/.27);
    const endCenters=[bannerX+capHeight/2,bannerX+bannerWidth-capHeight/2];
    // Travel THROUGH their own portions of the English wordmark, then open
    // outward into two distinct scripture squares. Never swap the squares:
