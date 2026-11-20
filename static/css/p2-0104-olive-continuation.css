@@ -1,0 +1,2279 @@
+/* P2 / 04 twelve original posters — isolated real 01–03 continuation.
+   One Design OS; only 04-specific geometry. NO generic wipe, fades, pseudo
+   MERSI template, replayed sevenfold, shadowed card grid or video UI.
+   The original Doré image supplies the entrance's physical coordinates. */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscroll-behavior-y:none}
+.p2-olive-controls{
+ position:fixed;z-index:80;top:0;left:0;right:0;
+ display:flex;align-items:center;gap:15px;padding:5px 13px;
+ min-height:37px;border-bottom:1px solid var(--ws-morning-gold);
+ background:var(--ws-ink);color:var(--ws-paper);
+ font:200 10px/1.3 var(--ws-type-display-en);
+ letter-spacing:.09em
+}
+.p2-olive-controls strong{font-weight:400;white-space:nowrap}
+.p2-olive-controls nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.p2-olive-controls button{
+ border:1px solid var(--ws-morning-gold);background:transparent;color:inherit;
+ padding:4px 8px;cursor:pointer;font:inherit;letter-spacing:.02em
+}
+.p2-olive-controls button:focus-visible,.p2-olive-controls button:hover{
+ border-color:var(--ws-warm-gold);color:var(--ws-warm-gold)
+}
+.p2-olive-controls label{margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.p2-olive-controls input{accent-color:var(--ws-morning-gold);width:118px}
+#p2-olive-track{position:relative;height:2600svh}
+/* Published homepage P2: the OUTER home scroll remains the one clock.
+   The 01–03 source is an unmodified nested release iframe. The 04
+   continuation is painted from the host's progress, not internal scrolling. */
+html.p2-main-embedded,html.p2-main-embedded body{
+ height:100%;overflow:hidden!important;overscroll-behavior-y:contain;
+}
+html.p2-main-embedded .p2-olive-controls{display:none!important}
+html.p2-main-embedded #p2-olive-track{height:100svh!important;overflow:hidden}
+html.p2-main-embedded .p2-olive-stage{
+ position:relative!important;top:0!important;background:var(--ws-paper);
+}
+.p2-olive-stage{
+ /* Strict OS token authority: olive = --ws-olive, no local generated
+    green shades, no color-mix or invented gradients in this chapter. */
+ --ws-branch:var(--ws-olive);
+ --ws-identity:var(--ws-olive);
+ --ws-engraving-opacity:.13;
+ position:sticky;top:0;left:0;isolation:isolate;height:100svh;overflow:hidden;background:transparent
+}
+#p2-0103-original{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-paper);z-index:0}
+
+/* MERSI 03→04 material handoff. The source is still 03 while the
+   new card travels; the 04 gallery print field enters only AFTER the
+   two protected original prints settle. Masks share one scroll value. */
+#p2-olive-bridge,#p2-olive-surround{
+ position:absolute;inset:0;pointer-events:none;
+ visibility:hidden;overflow:hidden;
+}
+#p2-olive-bridge{z-index:1}
+#p2-olive-surround{z-index:2;opacity:1}
+.olive-bridge__half,.olive-surround__half{
+ position:absolute;top:0;height:100%;width:50%;
+ will-change:clip-path;clip-path:inset(100% 0 0 0);
+}
+.olive-bridge__half[data-side="left"],
+.olive-surround__half[data-side="left"]{left:0}
+.olive-bridge__half[data-side="right"],
+.olive-surround__half[data-side="right"]{right:0}
+/* The genuine 03 Bible binding stays ONLY in the exiting 01–03 iframe.
+   Never project its dark 5:8 diamond bookcloth as full-screen wallpaper
+   behind the 04 speaker posters; that is the leaked vertical stripe.
+   This plain OS olive material field retains the original opposed masks. */
+.olive-bridge__half{
+ background-color:var(--ws-olive);
+ background-image:none;
+}
+/* Independent 04 gallery field. Neither 03 cloth nor decorative foil is
+   allowed to be repainted outside the actual invitation cards. */
+.olive-surround__half{
+ /* Canonical 04 realm canvas: the OS olive must occupy the full stage.
+    The previous full-screen OS ink field was an unauthorized
+    black-and-gold variant (westside-design-os.css realm contract). */
+ background-color:var(--ws-olive);
+ background-image:none;
+}
+.olive-surround__half[data-side="left"]{background-position:left center}
+.olive-surround__half[data-side="right"]{background-position:right center}
+/* 04 / CLEAN FIELD: editorial backdrop engraving withdrawn by request.
+   Preserve the existing opposed masks, solid OS olive canvas and all
+   protected posters. Invitation-card local headpieces are not backgrounds. */
+.olive-surround__half::after{content:none!important}
+
+/* P2 / 04 MERSI independent engraving halves — printed, not wallpaper.
+   Botanical source: public-domain OpenClipart 81199 (project V12).
+   Terrain: measured Mount of Olives DEM from Mapzen / AWS Open Data.
+   Neither layer overlaps the other half; no new animation framework.
+   Each print has one CSS mask and one scroll-owned clipping rectangle. */
+#olive-editorial-engraving{
+ position:absolute;inset:0;z-index:3;overflow:hidden;
+ pointer-events:none;visibility:hidden;
+ /* Reserve a true typographic safe zone above both vector print fields.
+    The original twelve posters are never masked: only background ink is. */
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0%,transparent 10%,#000 27%,#000 100%);
+ mask-image:linear-gradient(to bottom,transparent 0%,transparent 10%,#000 27%,#000 100%);
+}
+/* V57: Alpha feathering is a print edge, not a colour gradient.
+   Removes hard horizontal botanical / terrain SVG cut lines while the
+   reversible MERSI half-field clipping remains unchanged. */
+.olive-editorial-engraving__half{
+ position:absolute;top:0;width:50%;height:100%;overflow:hidden;
+ -webkit-mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
+ mask-image:radial-gradient(ellipse 92% 89% at 50% 49%,#000 56%,transparent 100%);
+}
+.olive-editorial-engraving__half[data-art-side="left"]{left:0}
+.olive-editorial-engraving__half[data-art-side="right"]{right:0}
+.olive-editorial-engraving__print{
+ position:absolute;inset:4% 3% 5%;background:var(--ws-morning-gold);
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-size:contain;mask-size:contain;
+ opacity:.77;
+}
+/* V54 / editorial botanical folio, not scattered icon-like sprigs.
+   Six copies of an actual Walter Crane public-domain engraving are composed
+   into one asymmetric print field. All form is imported: no handmade leaves.
+   The print is behind the protected speaker figures and contained in LEFT. */
+/* V56: the same six public-domain Walter Crane sprays are printed as
+   TWO ink impressions, light relief and articulate copperplate contours.
+   The full-volume print remains visible at a distance, without a solid
+   gold hedge competing against the topographic linework on the right. */
+/* V60: six individual real Crane letterpress plates. No image clipping,
+   no sliding foil rectangle, no procedural leaves. Each complete plate
+   is added AFTER its own speaker has settled, preserving earlier ink. */
+.olive-editorial-engraving__print--botanical{
+ inset:-7% -12% -23% -9%;width:auto;height:auto;
+ background:none;opacity:1;
+ /* Six real botanical impressions, optically subordinated to the portraits. */
+ filter:opacity(var(--olive-ink-botanical,.64));
+ -webkit-mask-image:none;mask-image:none;
+}
+.olive-editorial-engraving__print--botanical::before,
+.olive-editorial-engraving__print--botanical::after{content:none!important}
+.olive-botanical-plate{
+ position:absolute;inset:0;pointer-events:none;display:block;
+ background:var(--ws-morning-gold);opacity:0;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-position:center;mask-position:center;
+}
+.olive-botanical-plate[data-print-impression="1"]{
+ background:var(--ws-morning-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+}
+.olive-botanical-plate[data-print-impression="2"]{
+ background:var(--ws-pale-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-2.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-2.svg');
+}
+.olive-botanical-plate[data-print-impression="3"]{
+ background:var(--ws-morning-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-3.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-3.svg');
+}
+.olive-botanical-plate[data-print-impression="4"]{
+ background:var(--ws-warm-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-4.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-4.svg');
+}
+.olive-botanical-plate[data-print-impression="5"]{
+ background:var(--ws-pale-gold);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-5.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-5.svg');
+}
+.olive-botanical-plate[data-print-impression="6"]{
+ background:var(--ws-first-light);
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-6.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-6.svg');
+}
+/* Three draw-on groups are taken from actual elevation contours.
+   The old static mask is an accessibility/offline fallback ONLY. */
+.olive-editorial-engraving__print--topography{
+ /* True measured contours continue off-paper; never expose the SVG
+    rectangle's bottom or right boundary inside the viewport. */
+ inset:-7% -24% -22% -8%;width:auto;height:auto;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ -webkit-mask-position:right center;mask-position:right center;
+ opacity:1;
+}
+.olive-editorial-engraving__print--topography.has-path-growth{
+ background:none;-webkit-mask-image:none;mask-image:none;
+}
+.olive-editorial-engraving__print--topography svg{
+ display:block;width:100%;height:100%;overflow:visible;
+ fill:none;stroke:var(--ws-morning-gold);
+}
+.olive-editorial-engraving__print--topography svg path{
+ fill:none;stroke-dasharray:1000 1000;
+}
+@media(max-width:600px){
+ .olive-editorial-engraving__print--botanical{inset:-4% -15% -20% -14%;width:auto;height:auto;opacity:1}
+ .olive-editorial-engraving__print--topography{
+  inset:-5% -26% -18% -12%;width:auto;height:auto;opacity:.92;
+ }
+}
+
+.olive-proof{
+ position:absolute;z-index:4;overflow:hidden;
+ visibility:hidden;background:transparent;color:var(--ws-ink);
+ isolation:isolate;pointer-events:none;
+}
+.olive-stage__first,.olive-stage__pair,.olive-stage__overview{
+ position:absolute;margin:0;inset:0;overflow:hidden
+}
+/* Isolated live SVG proof (?artOnly=1); no change to normal P2 gallery. */
+.p2-olive-stage.olive-art-only .olive-proof{display:none!important;visibility:hidden!important;pointer-events:none!important}
+/* P2/04 GALLERY ANNOUNCEMENT PRINT: one card carries one COMPLETE
+   immutable 3:4 poster. Only a small localized mountain relief, fine
+   single line and one-line caption. NO second masthead or gilt frame. */
+.olive-stage__invitation{
+ position:absolute;z-index:1;display:block;visibility:hidden;
+ margin:0;padding:0;border:0;pointer-events:none;overflow:hidden;
+ background:var(--ws-olive);
+ color:var(--ws-morning-gold);isolation:isolate;
+ outline:1px solid var(--ws-morning-gold);outline-offset:-1px;
+}
+.olive-stage__invitation::after{
+ content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
+ background:var(--ws-morning-gold);opacity:.30;pointer-events:none;
+}
+/* V61: remove the alien miniature botanical fragment. V56's full
+   folio had been compressed into a 45px side gutter. This produced
+   incompatible tiny foliage beside the real large-scale olive plate.
+   Keep the approved V13 header ornament and numbered edition rail. */
+.olive-card__imprint{
+ position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+}
+.olive-card__imprint::before,.olive-card__imprint::after{
+ content:none!important;
+}
+.olive-card__edition{
+ position:absolute;z-index:2;
+ top:calc(var(--olive-foil-top,16px) + var(--olive-foil-height,48px) + 12px);
+ bottom:42px;left:0;
+ width:var(--olive-outer-rail-width,45px);
+ display:flex;justify-content:center;align-items:center;
+ writing-mode:vertical-rl;text-orientation:mixed;
+ font:200 clamp(8px,.68vw,10px)/1.1 var(--ws-type-display-en);
+ letter-spacing:.25em;color:var(--ws-morning-gold);
+ opacity:.96;white-space:nowrap;overflow:hidden;
+}
+#olive-invitation-right .olive-card__edition{left:auto;right:0;transform:rotate(180deg)}
+@media(max-width:540px){
+ .olive-card__edition{font-size:7px;letter-spacing:.08em;bottom:26px}
+}
+/* The original header/folio stays as an invariant across all four editions. */
+/* V13: a real historical 1914 Walter Crane botanical engraving, not
+   formula-generated branches or a giant masked graphic behind two posters.
+   The chapter-specific hillside & city are engraved INTO the actual
+   70px header of each physical invitation. Artwork stays fully visible
+   ABOVE the protected image, never in the shared center gutter.
+   The same unmodified 3:4 speaker artwork covers the rest of the card. */
+.olive-card__relief{
+ /* Center in the visible green headpiece between the physical card edge
+    and the ORIGINAL poster edge: these two CSS variables are set from
+    the real source/pair geometry on every reversible scroll frame. */
+ position:absolute;top:var(--olive-foil-top,16px);left:4%;right:4%;width:auto;
+ height:var(--olive-foil-height,48px);max-height:70px;pointer-events:none;
+ overflow:hidden;opacity:1;isolation:isolate;
+}
+.olive-card__relief::before,.olive-card__relief::after{
+ content:"";position:absolute;inset:0;
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-historic-engraving-v13.svg');
+ -webkit-mask-position:center center;mask-position:center center;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+}
+.olive-card__relief::before{
+ background:var(--ws-paper);opacity:.20;transform:translate(-1px,-1px);
+}
+.olive-card__relief::after{
+ background:var(--ws-morning-gold);opacity:.96;
+}
+#olive-invitation-right .olive-card__relief{transform:scaleX(-1)}
+.olive-card__caption{
+ position:absolute;z-index:2;bottom:6px;left:13px;right:13px;
+ height:19px;display:flex;align-items:center;
+ border-top:1px solid var(--ws-morning-gold);
+ color:var(--ws-morning-gold);background:transparent;
+ font:200 clamp(8px,.69vw,11px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.075em;white-space:nowrap;overflow:hidden;
+}
+.olive-card__caption{gap:3px}
+.olive-card__name-en{display:block;overflow:hidden;text-overflow:ellipsis;min-width:0;white-space:nowrap}
+.olive-card__name-zh{
+ display:block;flex:0 0 auto;white-space:nowrap;
+ font-family:var(--ws-type-display-zh),"Noto Serif TC",sans-serif;
+ font-weight:200;font-style:normal;font-synthesis:none;
+}
+.olive-stage__invitation--pair{z-index:0}
+.olive-stage__first{z-index:2;inset:auto}
+.olive-stage__pair{z-index:3;inset:0}
+/* V67 / one genuine rigid invitation carrier. Never transform a portrait
+   or its protected typography as independent objects: they must remain
+   pixel-registered on the exact same physical front of this one folio. */
+.olive-folio-carrier{
+ position:absolute;z-index:4;overflow:visible;
+ transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
+ will-change:transform;
+}
+.olive-folio-carrier>.olive-stage__invitation{z-index:1}
+.olive-folio-carrier>.olive-stage__poster{z-index:2}
+/* V63 / two-sided invitation folios.
+   Both real faces rotate around the SAME measured outer-card axis.
+   The existing frozen 3:4 speaker artwork stays a single protected plane;
+   the verso shares the actual botanical/terrain language of its half.
+   No page fold, unrelated texture, standalone animation or raster redraw. */
+#olive-invitation-left,#olive-invitation-right,
+#olive-pair-left,#olive-pair-right,
+.olive-card__reverse{
+ backface-visibility:hidden;-webkit-backface-visibility:hidden;
+ transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
+ will-change:transform;
+}
+.olive-card__reverse{
+ position:absolute;z-index:3;visibility:hidden;pointer-events:none;
+ overflow:hidden;box-sizing:border-box;
+ backface-visibility:hidden;-webkit-backface-visibility:hidden;
+ transform:rotateY(180deg) translateZ(1px);
+ color:var(--ws-morning-gold);
+ /* A visible real reverse: olive stock with authentic, chapter-specific
+    copperplate ink. The old fully transparent verso was literally empty. */
+ /* V70: an opaque OS deep-olive stock makes the true card reverse
+    readable even before the registered ink arrives. Never let the whole
+    card opacity vanish while its increment transfers to the landscape. */
+ /* The previous brown paper was --ws-deep computed from the journal's
+    inherited gold --ws-branch. Bind deep olive to the actual 04 identity. */
+ /* Design OS deep formula evaluated with the ACTUAL olive identity:
+    CSS custom --ws-deep was already computed on an earlier gold ancestor.
+    Rebinding --ws-branch alone did not re-evaluate that inherited value. */
+ background:color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink));
+ opacity:1;
+ outline:1px solid var(--ws-morning-gold);
+ outline-offset:-1px;
+}
+.olive-card__reverse::before{
+ content:"";position:absolute;inset:5% 4% 14%;
+ background:var(--folio-ink,var(--ws-morning-gold));opacity:1;
+ -webkit-mask-size:100% 100%;mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-position:center;mask-position:center;
+ pointer-events:none;
+}
+.olive-card__reverse--botanical::before{
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-botanical-folio-outline-v56.svg');
+}
+.olive-card__reverse--terrain::before{opacity:1;}
+.olive-card__reverse::after{
+ content:"";position:absolute;inset:11px;
+ border:1px solid color-mix(in srgb,var(--ws-morning-gold) 45%,transparent);
+ pointer-events:none;
+}
+/* V68: freeze the APPROVED name master to the real 3:4 image plane.
+   The unmodified baseline.js measures getBoundingClientRect(), which
+   becomes foreshortened inside a perspective turn. A new speaker mounted
+   mid-turn therefore acquired an erroneous narrow typography viewport.
+   These declarations override that responsive inline measurement ONLY in
+   the isolated 04 pair, without touching the protected source master. */
+.olive-folio-carrier>.olive-stage__poster .olive-stage__artwork>olive-speaker-baseline{
+ position:absolute!important;inset:0!important;
+ left:0!important;top:0!important;
+ width:100%!important;height:100%!important;
+ transform:none!important;max-width:none!important;max-height:none!important;
+}
+.olive-card__reverse{
+ /* No second full-plate picture on the back. One unique speaker-owned
+    fragment is registered to the same stage coordinates as background. */
+ --folio-fragment:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+ --folio-mask-width:100%;
+ --folio-mask-height:100%;
+ --folio-mask-x:0px;
+ --folio-mask-y:0px;
+}
+.olive-card__reverse::before{
+ inset:0!important;opacity:var(--folio-back-alpha,.85);
+ -webkit-mask-image:var(--folio-fragment)!important;
+ mask-image:var(--folio-fragment)!important;
+ -webkit-mask-size:var(--folio-mask-width) var(--folio-mask-height)!important;
+ mask-size:var(--folio-mask-width) var(--folio-mask-height)!important;
+ -webkit-mask-position:var(--folio-mask-x) var(--folio-mask-y)!important;
+ mask-position:var(--folio-mask-x) var(--folio-mask-y)!important;
+}
+.olive-card__reverse--botanical::before{opacity:.58}
+.olive-card__reverse--terrain::before{opacity:.74}
+/* A small edition-specific imprint stays optically legible on the verso;
+   unlike the field-registered paths, this is a true card-scale detail.
+   Same unique artwork, not a duplicated full botanical/terrain poster.
+   No rectangular border and no complete SVG fitted into the card. */
+.olive-card__reverse::after{
+ content:""!important;position:absolute;inset:17% 16% 22%!important;
+ border:0!important;
+ background:var(--folio-ink,var(--ws-morning-gold));
+ opacity:calc(var(--folio-mark-alpha,0) * .66)!important;
+ -webkit-mask-image:var(--folio-detail)!important;
+ mask-image:var(--folio-detail)!important;
+ -webkit-mask-size:100% 100%!important;
+ mask-size:100% 100%!important;
+ -webkit-mask-position:center!important;
+ mask-position:center!important;
+ -webkit-mask-repeat:no-repeat!important;
+ mask-repeat:no-repeat!important;
+ pointer-events:none;
+}
+.olive-card__reverse-mark{
+ opacity:var(--folio-mark-alpha,0);
+}
+.olive-card__reverse-mark{opacity:var(--folio-mark-alpha,0);pointer-events:none}
+/* A reverse is a piece of the existing print field, not a second cover.
+   Its restrained bottom-edge edition metadata follows the front caption. */
+.olive-card__reverse-mark{
+ position:absolute;left:7%;right:7%;top:auto;bottom:5%;
+ display:flex;align-items:center;justify-content:space-between;flex-direction:row;
+ gap:12px;text-align:left;
+ padding-top:7px;border-top:1px solid color-mix(in srgb,var(--ws-morning-gold) 55%,transparent);
+ text-shadow:0 1px 2px var(--ws-olive);
+}
+.olive-card__reverse-issue,.olive-card__reverse-mark small{
+ font:200 clamp(8px,.65vw,11px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.10em;color:var(--ws-morning-gold);
+ white-space:nowrap;min-width:0;
+}
+.olive-card__reverse-mark small{text-align:right}
+@media(max-width:600px){
+ .olive-card__reverse-mark{left:6%;right:6%;bottom:5%;gap:5px}
+ .olive-card__reverse-issue,.olive-card__reverse-mark small{
+  font-size:7px;letter-spacing:.06em;
+ }
+}
+/* V74 · complete copperplate folio masters. The full native 720×940
+   artboard is inset from all card edges, so no source path is ever
+   truncated by a mask crop or by the card's outer rectangle.
+   The mini-fragment overlay is retired entirely. */
+.olive-card__reverse::before{
+ content:""!important;position:absolute!important;inset:4.8% 5.8% 9.6%!important;
+ background:var(--folio-ink,var(--ws-morning-gold))!important;
+ opacity:var(--folio-back-alpha,.95)!important;
+ -webkit-mask-image:var(--folio-detail)!important;
+ mask-image:var(--folio-detail)!important;
+ -webkit-mask-size:100% 100%!important;mask-size:100% 100%!important;
+ -webkit-mask-position:center center!important;mask-position:center center!important;
+ -webkit-mask-repeat:no-repeat!important;mask-repeat:no-repeat!important;
+ pointer-events:none;
+}
+.olive-card__reverse--botanical::before,
+.olive-card__reverse--terrain::before{opacity:var(--folio-back-alpha,.95)!important}
+.olive-card__reverse::after{content:none!important;display:none!important}
+.olive-card__reverse-mark{
+ z-index:2;opacity:var(--folio-mark-alpha,1)!important;
+ text-shadow:0 1px 2px color-mix(in oklab,var(--ws-olive) 55%,var(--ws-ink));
+}
+/* A single real 64-path terrain SVG is the ENTIRE final landscape.
+   Make the stage's geographic half feather softly at its true outer
+   perimeter rather than cutting line ends with an inset plate mask. */
+.olive-editorial-engraving__half[data-art-side="right"]{
+ -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 11%,#000 91%,transparent 100%)!important;
+ mask-image:linear-gradient(to right,transparent 0%,#000 11%,#000 91%,transparent 100%)!important;
+}
+.olive-editorial-engraving__print--topography svg{
+ overflow:visible!important;
+ stroke-linecap:round;stroke-linejoin:round;
+}
+/* 04 background engraving retired. The speaker invitation headpiece is
+   separate card artwork, not a stage-wide texture. */
+.olive-stage__overview{z-index:6;inset:0;visibility:hidden;background:transparent}
+.olive-stage__first,
+.olive-stage__poster,
+.olive-stage__index-card{
+ position:absolute;overflow:hidden;margin:0;border:0;
+ background:transparent;box-shadow:none;
+}
+/* Every image is paired with its ORIGINAL frozen typography and source
+   occlusion layers in the same image-relative 3:4 coordinate box.
+   Do not put text in a separate caption or retune the approved letters.
+   Overlay belongs inside .olive-stage__artwork, never outside the PNG. */
+.olive-stage__artwork{
+ position:absolute;inset:0;overflow:hidden;isolation:isolate;
+ background:transparent;
+}
+.olive-stage__artwork>.olive-stage__original{
+ display:block!important;width:100%!important;height:100%!important;
+ max-width:none!important;object-fit:contain!important;
+ object-position:center center!important;
+}
+/* V72 · Kou Shao-en only: mirror the raster portrait under the ORIGINAL
+   unmirrored approved English/Chinese typography. Do not transform the
+   artwork container, folio or Shadow DOM: all eleven other cards unchanged. */
+.olive-stage__artwork[data-speaker="kou-shao-en"]>.olive-stage__original{
+ transform:scaleX(-1)!important;transform-origin:50% 50%!important;
+}
+
+.olive-stage__artwork>olive-speaker-baseline{
+ position:absolute;display:block;z-index:6;pointer-events:none;
+}
+.olive-stage__first .olive-stage__artwork{bottom:0}
+.olive-stage__poster .olive-stage__artwork{inset:0}
+.olive-stage__index-card .olive-stage__artwork{inset:0}
+/* The incoming print lives over 03's REAL source frame; do not transfer
+   the 03 book cover into a 04 component to hide mismatched dimensions. */
+.olive-stage__first,
+.olive-stage__first .olive-stage__artwork{background:transparent}
+.olive-stage__poster{z-index:1}
+.olive-stage__incoming{z-index:2;visibility:hidden}
+.olive-stage__poster figcaption{
+ /* Approved posters are whole artworks: NO footer injected into their
+    3:4 print geometry. Sequence metadata belongs to the separate index. */
+ display:none!important;
+}
+/* Original frozen English is printed over the image; captions below
+   remain only folio sequence numbers, not a substitute for it. */
+/* SINGLE title, entirely OUTSIDE the mounted prints. No competing
+   title on cards and no second full-width foil border. */
+.olive-stage__rubric{
+ /* Global chapter identity lives ABOVE the card carriers, in the scene,
+    not inside the clipped physical folio. No title may cross artwork. */
+ position:absolute;z-index:9;top:clamp(38px,4.6svh,44px);
+ left:clamp(22px,4vw,70px);right:clamp(22px,4vw,70px);
+ min-height:46px;visibility:hidden;overflow:hidden;
+ display:grid;grid-template-columns:minmax(112px,1fr) auto minmax(112px,1fr);
+ align-items:center;gap:clamp(8px,1.4vw,20px);
+ color:var(--ws-paper);pointer-events:none;
+}
+.olive-stage__rubric::after{display:none}
+.olive-stage__rubric span,.olive-stage__rubric small{
+ font:200 clamp(9px,.69vw,11px)/1.3 var(--ws-type-display-en);
+ letter-spacing:.105em;color:var(--ws-paper);
+}
+.olive-stage__rubric strong{
+ font:400 clamp(28px,2.9vw,45px)/.97 var(--ws-type-display-en);
+ letter-spacing:-.063em;white-space:nowrap;text-align:center;
+ /* The overview acquires an oversized title AFTER the two-print sequence. */
+ font-size:calc(clamp(28px,2.9vw,45px) + var(--olive-title-growth,0px));
+}
+.olive-stage__rubric strong i{font-weight:400;font-style:italic}
+.olive-stage__rubric small{
+ text-align:right;font-family:var(--ws-type-display-zh),"Noto Serif TC",sans-serif;
+ font-weight:200;font-synthesis:none;
+}
+.olive-stage__index-card{
+ z-index:2;display:block;text-decoration:none;overflow:hidden;
+ color:var(--ws-morning-gold);background:transparent;
+ will-change:top,left,width,height;
+}
+/* The same approved English + Chinese type follows every image through
+   geometric FLIP recomposition, instead of disappearing in index mode. */
+.olive-stage__index-card span{
+ /* Text master is already on the poster. No external strip, footer or
+    overshooting layer may compromise the registered 3:4 print. */
+ display:none!important;position:absolute;inset:auto;overflow:hidden;
+ font:200 clamp(7px,.62vw,10px)/15px var(--ws-type-display-en);
+ letter-spacing:.06em;padding:0 1px;opacity:var(--index-caption-alpha,0);
+ background:transparent;color:var(--ws-morning-gold);border-top:1px solid var(--ws-warm-gold);
+}
+.olive-stage__index-card:hover,.olive-stage__index-card:focus-visible{
+ outline:2px solid var(--ws-warm-gold);outline-offset:-2px
+}
+.olive-stage__enter{
+ position:absolute;right:clamp(14px,3vw,52px);bottom:18px;
+ z-index:8;visibility:hidden;display:flex;gap:12px;
+ align-items:center;justify-content:space-between;
+ padding:9px 0 5px;min-width:220px;max-width:calc(100% - 28px);
+ border-top:1px solid var(--ws-warm-gold);text-decoration:none;color:var(--ws-morning-gold);
+ font:200 clamp(10px,.9vw,16px)/1.35 var(--ws-type-display-en);
+ letter-spacing:.12em
+}
+.olive-stage__enter:focus-visible{outline:2px solid var(--ws-warm-gold)}
+/* Technical scroll state is exposed in DOM, not as a black UI tag on the artwork. */
+#p2-olive-folio-status{position:absolute;clip-path:inset(100%);width:1px;height:1px;overflow:hidden}
+@media(max-width:820px){
+ .p2-olive-controls{
+  top:auto;bottom:0;gap:5px;padding:5px;
+  min-height:40px;max-height:58px;
+  flex-wrap:wrap;font-size:8px
+ }
+ .p2-olive-controls strong{width:100%;font-size:8px}
+ .p2-olive-controls nav{gap:3px}
+ .p2-olive-controls button{font-size:8px;padding:3px 5px}
+ .p2-olive-controls label{font-size:8px}
+ .p2-olive-controls input{width:72px}
+ .olive-stage__rubric{
+  display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;
+  column-gap:10px;row-gap:3px;top:9px;min-height:66px;
+  left:clamp(14px,4vw,24px);right:clamp(14px,4vw,24px)
+ }
+ .olive-stage__rubric span{grid-column:1;font-size:9px;letter-spacing:.055em}
+ .olive-stage__rubric small{grid-column:2;font-size:9px;letter-spacing:.035em;text-align:right}
+ .olive-stage__rubric strong{grid-column:1 / -1;grid-row:2;text-align:left;
+  font-size:calc(clamp(28px,7.1vw,47px) + var(--olive-title-growth,0px))}
+ .olive-stage__rubric::after{bottom:-2px}
+ #p2-olive-folio-status{bottom:54px;right:5px;font-size:7px}
+ .olive-stage__poster figcaption{font-size:8px;padding:5px 7px}
+ .olive-stage__index-card .olive-stage__artwork{inset:0}
+
+ .olive-stage__index-card span{font-size:7px;line-height:15px}
+ .olive-stage__enter{
+  bottom:58px;right:10px;min-width:190px;
+  font-size:10px;padding-top:5px;letter-spacing:.04em
+ }
+}
+@media(max-width:540px){
+ /* Preserve original fine lineweight on phone; crop the view, not the ink. */
+ /* Engraved folio headpiece is constrained to the actual phone card's
+    top paper border; no olive leaves may float between mounted images. */
+ .olive-card__relief{left:4%;right:4%;width:auto;
+  top:var(--olive-foil-top,3px);height:var(--olive-foil-height,16px);
+  max-height:22px;opacity:1}
+ .olive-card__caption{left:7px;right:7px;bottom:4px;height:13px;
+  font-size:7px;letter-spacing:0}
+ .p2-olive-controls{gap:2px;max-height:60px}
+ .p2-olive-controls button{font-size:7px;padding:3px}
+ .p2-olive-controls input{width:52px}
+ .olive-stage__poster .olive-stage__artwork{inset:0}
+ .olive-stage__poster figcaption{display:none!important}
+ .olive-stage__index-card span{font-size:7px;line-height:15px}
+ /* Mobile reflows the global title as ONE centered line: the desktop
+    side labels cannot consume fixed-width columns and clip the masthead. */
+ .olive-stage__rubric{top:42px;left:8px;right:8px;min-height:42px;
+  grid-template-columns:1fr;justify-items:center}
+ .olive-stage__rubric span,.olive-stage__rubric small{display:none}
+ .olive-stage__rubric strong{
+  font-size:calc(clamp(26px,7.8vw,35px) + var(--olive-title-growth,0px));
+  text-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-stage__invitation,.olive-stage__first,.olive-stage__pair,
+ .olive-stage__poster,.olive-stage__overview,
+ .olive-stage__index-card{transition:none!important;animation:none!important}
+}
+
+/* V77 / measured geographic engraving, genuine title folios.
+   Titles belong to the physical reverse and must never distort the
+   frozen poster-face typography or become another screen-wide layer. */
+.olive-card__reverse-title{
+ position:absolute;z-index:2;left:7%;right:7%;bottom:14%;
+ display:block;max-width:86%;pointer-events:none;
+ font-family:var(--ws-type-display-en);font-style:normal;font-weight:300;
+ font-size:clamp(20px,1.65vw,34px);line-height:1.0;
+ letter-spacing:-.015em;text-wrap:balance;color:var(--ws-morning-gold);
+ opacity:var(--folio-mark-alpha,1);
+ text-shadow:none;
+}
+.olive-editorial-engraving__print--topography svg{
+ opacity:var(--olive-ink-emphasis,1);
+}
+@media(max-width:600px){.olive-card__reverse-title{left:7%;right:6%;bottom:15%;font-size:clamp(17px,5vw,25px)}}
+
+/* V77 final polish: the twelve protected photographic posters own the
+   visual focus; the action must remain legible at 390px and at desktop.
+   Only local 04 OS typography and colors, no external contrast plate. */
+.olive-stage__enter{
+ color:var(--ws-paper);
+ border-top-color:var(--ws-paper);
+ font-weight:300;
+ font-size:clamp(13px,1.04vw,18px);
+ letter-spacing:.095em;
+ padding:12px 3px 8px;
+}
+.olive-stage__enter:hover,.olive-stage__enter:focus-visible{
+ color:var(--ws-paper);
+ text-decoration:underline;
+ text-underline-offset:5px;
+}
+@media(max-width:820px){
+ .olive-stage__enter{
+  bottom:62px;right:clamp(13px,8vw,42px);left:clamp(13px,8vw,42px);
+  width:auto;min-width:0;max-width:none;
+  font-size:13px;letter-spacing:.08em;
+  padding:9px 2px 6px;
+ }
+}
+
+/* V77 narrow-screen CTA: named flex items prevent the anonymous source
+   text node from losing width beside the arrow in a 320px index. */
+.olive-stage__enter{display:flex;flex-wrap:nowrap;align-items:center;justify-content:flex-end}
+.olive-stage__enter-label{display:inline-block;flex:0 0 auto;white-space:nowrap}
+.olive-stage__enter-zh{display:inline-block;flex:0 0 auto;white-space:nowrap;font-size:.72em}
+.olive-stage__enter-arrow{display:inline-block;flex:0 0 auto;margin-left:auto}
+@media(max-width:820px){
+ .olive-stage__enter{justify-content:space-between;gap:7px}
+ .olive-stage__enter-label{font-size:clamp(13px,3.5vw,16px)}
+ .olive-stage__enter-zh{font-size:10px}
+ .olive-stage__enter-arrow{margin-left:auto;font-size:18px}
+}
+@media(max-width:370px){
+ .olive-stage__enter{left:15px;right:15px;bottom:62px;gap:5px;padding:8px 0 7px;min-height:36px}
+ .olive-stage__enter-label{font-size:15px;letter-spacing:.025em}
+ .olive-stage__enter-zh{display:none}
+ .olive-stage__enter-arrow{font-size:20px;line-height:1}
+}
+
+/* V79 Museum Folio. Stationary perspective belongs to the entire paired
+   paper-stage, not a perspective() transform reparsed onto each moving card.
+   Only transform:rotateY() is scroll-owned on each rigid carrier; front
+   original 3:4 image and its protected Shadow DOM text stay glued together.
+   No time-based transition or smoothing tail. */
+.olive-stage__pair{
+ perspective:1400px;
+ perspective-origin:50% 50%;
+ -webkit-perspective-origin:50% 50%;
+}
+.olive-folio-carrier{
+ transform-style:preserve-3d;
+ -webkit-transform-style:preserve-3d;
+ contain:layout style;
+}
+.olive-card__reverse{
+ transform:rotateY(180deg) translateZ(1.5px);
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-folio-carrier{will-change:auto}
+}
+
+/* V80 / Scriptural Folios — editorial typesetting using Design OS only.
+   The chapter's Chinese name and Romans 10:17 are not a tiny corner
+   annotation: they share the actual title's centre axis, above the works.
+   Bilingual masthead never transforms/resizes the original 3:4 posters. */
+.olive-stage__rubric{
+ grid-template-columns:minmax(105px,1fr) minmax(0,620px) minmax(105px,1fr);
+ align-items:start;gap:clamp(9px,1.4vw,20px);
+ min-height:108px;overflow:visible;
+}
+.olive-stage__rubric-kicker{align-self:start;padding-top:7px}
+.olive-stage__rubric-heading{
+ display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+ min-width:0;gap:0;text-align:center;
+}
+.olive-stage__rubric-heading strong{
+ display:block;font-family:var(--ws-type-display-en);
+ font-style:normal;font-weight:400;white-space:nowrap;
+ font-size:calc(clamp(28px,2.7vw,43px) + var(--olive-title-growth,0px));
+ line-height:1.02;letter-spacing:-.055em;
+}
+.olive-stage__rubric-zh{
+ display:block;margin-top:4px;
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);
+ font-size:clamp(17px,1.36vw,23px);line-height:1.18;
+ letter-spacing:.22em;font-synthesis:none;
+}
+.olive-stage__rubric-scripture{
+ margin:9px 0 0;max-width:100%;color:var(--ws-paper);
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);
+ font-size:clamp(11px,.82vw,14px);line-height:1.5;
+ letter-spacing:.05em;text-wrap:pretty;font-synthesis:none;
+}
+.olive-stage__rubric-scripture cite{
+ display:block;margin-top:2px;color:var(--ws-morning-gold);
+ font-family:var(--ws-type-display-en);font-weight:400;font-style:italic;
+ font-size:clamp(10px,.75vw,13px);letter-spacing:.025em;
+}
+.olive-stage__rubric>small{align-self:start;padding-top:7px}
+/* Exactly the old inscription location remains, now readable Scripture.
+   The source original full-size botanical/terrain reverse mask is untouched. */
+.olive-card__reverse-title{
+ bottom:13%;left:7%;right:7%;max-width:86%;
+ display:flex;flex-direction:column;align-items:flex-start;gap:7px;
+ font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air,200);
+ font-style:normal;font-size:clamp(17px,1.45vw,25px);
+ line-height:1.34;letter-spacing:.025em;
+ text-wrap:pretty;font-synthesis:none;
+ color:var(--ws-morning-gold);text-align:left;
+}
+.olive-card__scripture-text{display:block;max-width:100%}
+.olive-card__scripture-cite{
+ display:block;font-family:var(--ws-type-display-en);
+ font-weight:400;font-style:italic;
+ font-size:clamp(11px,.87vw,14px);line-height:1.3;
+ letter-spacing:.02em;color:var(--ws-paper);
+}
+@media(max-width:900px){
+ .olive-stage__rubric{
+  grid-template-columns:1fr;
+  justify-items:center;gap:3px;
+  top:clamp(39px,5svh,48px);
+  left:12px;right:12px;min-height:88px;
+ }
+ .olive-stage__rubric>.olive-stage__rubric-kicker,
+ .olive-stage__rubric>small{display:none}
+ .olive-stage__rubric-heading{grid-column:1;grid-row:1;max-width:100%}
+ .olive-stage__rubric-heading strong{
+  grid-column:auto;grid-row:auto;
+  font-size:calc(clamp(25px,4.65vw,34px) + var(--olive-title-growth,0px));
+  text-align:center;
+ }
+ .olive-stage__rubric-zh{font-size:clamp(15px,2.6vw,18px);margin-top:3px}
+ .olive-stage__rubric-scripture{font-size:clamp(11px,1.5vw,13px);margin-top:4px;max-width:520px}
+ .olive-stage__rubric-scripture cite{font-size:11px}
+}
+@media(max-width:540px){
+ .olive-stage__rubric{
+  top:42px;min-height:78px;
+  grid-template-columns:1fr;
+  justify-items:center;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading{
+  display:flex;grid-column:1;grid-row:1;
+ }
+ .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(24px,7.3vw,33px) + var(--olive-title-growth,0px));
+  white-space:nowrap;letter-spacing:-.052em;
+ }
+ .olive-stage__rubric-zh{font-size:15px;margin-top:2px}
+ .olive-stage__rubric-scripture{
+  font-size:11px;line-height:1.45;margin-top:4px;
+  max-width:calc(100vw - 32px);letter-spacing:0;
+ }
+ .olive-stage__rubric-scripture cite{font-size:10px;margin-top:1px}
+ .olive-card__reverse-title{left:7%;right:6%;bottom:14%;font-size:clamp(14px,4.25vw,19px);gap:5px;line-height:1.35}
+ .olive-card__scripture-cite{font-size:clamp(10px,2.8vw,13px)}
+}
+
+/* V80 print legibility correction from 1648px/390px/320px screenshot review:
+   do not print traditional Chinese scripture references in the Latin
+   display font (renders missing-glyph boxes in the real P2 screenshot).
+   Warm paper reading words are distinct from the gold botanical relief. */
+.olive-card__reverse-title{
+ color:var(--ws-paper);
+ text-shadow:none;
+ max-width:86%;
+}
+.olive-card__scripture-text{
+ color:var(--ws-paper);
+ font-family:var(--ws-type-display-zh);
+ font-synthesis:none;
+}
+.olive-card__scripture-cite{
+ font-family:var(--ws-type-display-zh);
+ font-style:normal;
+ font-weight:var(--ws-weight-zh-air,200);
+ font-synthesis:none;
+ color:var(--ws-morning-gold);
+ letter-spacing:.05em;
+ font-size:clamp(14px,1.08vw,17px);
+}
+@media(max-width:540px){
+ .olive-card__scripture-cite{font-size:clamp(12px,3.8vw,15px)}
+}
+
+/* V80 printmaking art-review correction: the source botanical/contour
+   vector stays completely intact. The last third is an editorial rest
+   field, gradating into the exact physical reverse stock, never a
+   clipped rectangle or a new color. This is one continuous engraving. */
+.olive-card__reading-veil{
+ position:absolute;z-index:1;inset:auto 0 0;height:47%;
+ background:linear-gradient(
+  to bottom,
+  transparent 0%,
+  color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink)) 81%
+ );
+ pointer-events:none;
+}
+.olive-card__reverse-title{z-index:3}
+.olive-card__reverse-mark{z-index:3}
+
+/* V81 / the Scripture is a separate editorial composition BESIDE
+   whichever lecturer's original poster is currently facing the reader.
+   It must never be a child of, or print on, a rotating reverse folio.
+   The opposite real engraving remains the background of its own half.
+   All state follows the original single scroll pose; no transitions. */
+.olive-stage__companion{
+ position:absolute;z-index:6;box-sizing:border-box;pointer-events:none;
+ display:block;overflow:hidden;isolation:isolate;
+ color:var(--ws-paper);background:transparent;
+ opacity:0;visibility:hidden;
+}
+.olive-stage__companion::before{
+ content:"";position:absolute;z-index:0;
+ inset:auto 0 0;height:50%;pointer-events:none;
+ background:linear-gradient(to bottom,transparent 0%,
+  color-mix(in oklab,var(--ws-olive) 68%,var(--ws-ink)) 82%);
+}
+.olive-stage__companion-reading{
+ position:absolute;z-index:1;
+ left:8%;right:8%;bottom:12%;max-width:84%;
+ display:flex;flex-direction:column;align-items:flex-start;
+}
+.olive-stage__companion-kicker{
+ display:block;margin-bottom:clamp(13px,1.5vw,24px);
+ font:200 clamp(9px,.76vw,12px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.17em;color:var(--ws-morning-gold);
+}
+.olive-stage__companion-verse{
+ margin:0;max-width:100%;
+ font-family:var(--ws-type-display-zh);
+ font-size:clamp(19px,1.6vw,29px);
+ font-weight:var(--ws-weight-zh-air,200);
+ font-synthesis:none;font-style:normal;
+ line-height:1.42;letter-spacing:.025em;
+ text-wrap:pretty;color:var(--ws-paper);
+}
+.olive-stage__companion-reference{
+ display:block;margin-top:clamp(12px,1.3vw,22px);
+ font-family:var(--ws-type-display-zh);
+ font-size:clamp(14px,1.1vw,19px);
+ font-weight:var(--ws-weight-zh-air,200);font-synthesis:none;
+ font-style:normal;letter-spacing:.05em;color:var(--ws-morning-gold);
+}
+@media(max-width:600px){
+ .olive-stage__companion-reading{left:8%;right:7%;bottom:10%;max-width:85%}
+ .olive-stage__companion-kicker{margin-bottom:7px;font-size:9px;letter-spacing:.05em}
+ .olive-stage__companion-verse{font-size:clamp(14px,3.9vw,20px);line-height:1.32;letter-spacing:0}
+ .olive-stage__companion-reference{font-size:clamp(11px,3.2vw,15px);margin-top:7px}
+}
+
+/* V82 / award-direction bilingual editorial masthead.
+   One strong English identity, a genuinely sized Chinese chapter name,
+   one 2-column CUV/KJV citation field. The rule carries the edition
+   baseline across the digital facing spread; it is not a third frame.
+   All fonts/inks are the existing Westside Design OS variables.
+   Keep this compact ABOVE the approved portrait art, never across it. */
+.olive-stage__rubric{
+ top:clamp(42px,4.8svh,52px);
+ left:clamp(22px,4.8vw,78px);
+ right:clamp(22px,4.8vw,78px);
+ min-height:0;
+ display:flex;flex-direction:column;align-items:stretch;
+ gap:0;overflow:visible;
+ transform-origin:center top;
+}
+.olive-stage__rubric-folio{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:18px;min-height:14px;
+}
+.olive-stage__rubric .olive-stage__rubric-folio .olive-stage__rubric-kicker,
+.olive-stage__rubric .olive-stage__rubric-folio small{
+ display:block;align-self:auto;padding:0;white-space:nowrap;
+ font:200 clamp(9px,.68vw,11px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.16em;color:var(--ws-morning-gold);
+ text-align:left;
+}
+.olive-stage__rubric .olive-stage__rubric-folio small{text-align:right}
+.olive-stage__rubric .olive-stage__rubric-folio small span{
+ font-family:var(--ws-type-display-zh);
+ font-weight:var(--ws-weight-zh-air,200);letter-spacing:.08em;
+ color:var(--ws-morning-gold);
+}
+.olive-stage__rubric .olive-stage__rubric-heading{
+ display:flex;flex-direction:row;flex-wrap:nowrap;
+ gap:clamp(13px,1.3vw,23px);
+ align-items:baseline;justify-content:flex-start;text-align:left;
+ padding:4px 0 9px;
+ width:100%;min-width:0;
+}
+.olive-stage__rubric .olive-stage__rubric-heading strong{
+ display:block;text-align:left;flex:0 1 auto;
+ margin:0;min-width:0;
+ font-family:var(--ws-type-display-en);
+ font-size:calc(clamp(33px,3.65vw,57px) + var(--olive-title-growth,0px));
+ line-height:.94;font-weight:400;letter-spacing:-.058em;
+ white-space:nowrap;
+}
+.olive-stage__rubric .olive-stage__rubric-heading .olive-stage__rubric-zh{
+ display:block;flex:0 0 auto;
+ margin:0;
+ font-family:var(--ws-type-display-zh);
+ font-size:clamp(21px,1.55vw,29px);
+ line-height:1.1;font-weight:600;letter-spacing:.08em;
+ color:var(--ws-paper);white-space:nowrap;font-synthesis:none;
+}
+.olive-stage__rubric .olive-stage__rubric-scripture{
+ display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.18fr);
+ gap:clamp(24px,2.35vw,42px);
+ align-items:start;
+ border-top:1px solid color-mix(in srgb,var(--ws-morning-gold) 68%,transparent);
+ padding:10px 0 0;margin:0;
+ color:var(--ws-paper);width:min(100%,960px);max-width:100%;
+}
+.olive-stage__rubric-scripture-zh,
+.olive-stage__rubric-scripture-en{min-width:0}
+.olive-stage__rubric-scripture-zh p,
+.olive-stage__rubric-scripture-en p{
+ margin:0 0 4px;padding:0;
+ font-size:clamp(11px,.87vw,14px);
+ font-weight:var(--ws-weight-zh-air,200);
+ line-height:1.42;letter-spacing:.02em;text-wrap:balance;
+ color:var(--ws-paper);
+}
+.olive-stage__rubric-scripture-zh p{
+ font-family:var(--ws-type-display-zh);font-synthesis:none;
+}
+.olive-stage__rubric-scripture-en p{
+ font-family:var(--ws-type-display-en);font-size:clamp(12px,.94vw,15px);
+ font-weight:400;font-style:italic;letter-spacing:.006em;
+}
+.olive-stage__rubric-scripture-zh,
+.olive-stage__rubric-scripture-en{display:flex;flex-direction:column;justify-content:flex-start}
+.olive-stage__rubric-scripture-zh p{color:var(--ws-paper)}
+.olive-stage__rubric-scripture-en p{color:var(--ws-paper)}
+.olive-stage__unbroken-tail{white-space:nowrap}
+.olive-stage__companion-verse,
+.olive-stage__companion-verse-en{text-wrap:balance;overflow-wrap:normal}
+.olive-stage__rubric-scripture-zh cite,
+.olive-stage__rubric-scripture-en cite{
+ display:block;margin:0;font-style:normal;font-weight:400;
+ font-size:clamp(9px,.68vw,11px);line-height:1.25;
+ letter-spacing:.09em;color:var(--ws-morning-gold);
+}
+.olive-stage__rubric-scripture-zh cite{
+ font-family:var(--ws-type-display-zh);font-synthesis:none;
+ font-weight:var(--ws-weight-zh-air,200);
+}
+.olive-stage__rubric-scripture-en cite{
+ font-family:var(--ws-type-display-en);letter-spacing:.13em;
+}
+/* V82 / two full languages for each lecturer: Chinese reading anchor,
+   English italic secondary voice and a paired bilingual folio citation.
+   The previous adjacent (never on card reverse) geometry remains intact. */
+.olive-stage__companion-reading{bottom:9%;left:8%;right:8%;max-width:84%}
+.olive-stage__companion-kicker{margin-bottom:clamp(9px,1vw,16px)}
+.olive-stage__companion-verse{
+ font-size:clamp(17px,1.39vw,24px);line-height:1.34;
+ letter-spacing:.02em;
+}
+.olive-stage__companion-verse-en{
+ display:block;margin:clamp(9px,.9vw,14px) 0 0;
+ max-width:100%;
+ font-family:var(--ws-type-display-en);
+ font-size:clamp(14px,1.05vw,18px);font-weight:400;
+ font-style:italic;line-height:1.35;letter-spacing:.003em;
+ color:var(--ws-paper);text-wrap:pretty;
+}
+.olive-stage__companion-citations{
+ margin-top:clamp(12px,1.15vw,19px);padding-top:8px;
+ border-top:1px solid color-mix(in srgb,var(--ws-morning-gold) 42%,transparent);
+ display:flex;align-items:baseline;justify-content:space-between;
+ flex-wrap:wrap;gap:5px 14px;max-width:100%;
+}
+.olive-stage__companion-citations .olive-stage__companion-reference{
+ margin:0;display:block;font-size:clamp(12px,.9vw,16px);line-height:1.3;
+}
+.olive-stage__companion-reference-en{
+ display:block;margin:0;font-family:var(--ws-type-display-en);
+ font-style:italic;font-weight:400;font-size:clamp(10px,.72vw,13px);
+ line-height:1.3;letter-spacing:.01em;color:var(--ws-morning-gold);
+}
+@media(max-width:900px){
+ .olive-stage__rubric{top:clamp(19px,3.2svh,30px);left:16px;right:16px}
+ .olive-stage__rubric .olive-stage__rubric-folio{
+  display:flex;grid-column:auto;grid-row:auto;min-height:11px;
+ }
+ .olive-stage__rubric .olive-stage__rubric-folio small{
+  display:block;font-size:8px;letter-spacing:.045em;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading{
+  display:flex;gap:10px;align-items:baseline;padding:4px 0 7px;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(26px,4.45vw,37px) + var(--olive-title-growth,0px));
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  font-size:clamp(18px,2.6vw,24px);margin:0;
+ }
+ .olive-stage__rubric .olive-stage__rubric-scripture{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;
+  padding-top:5px;
+ }
+ .olive-stage__rubric-scripture-zh p{font-size:clamp(10px,1.4vw,12px);line-height:1.3}
+ .olive-stage__rubric-scripture-en p{font-size:clamp(10px,1.35vw,12px);line-height:1.25}
+ .olive-stage__rubric-scripture-zh cite,
+ .olive-stage__rubric-scripture-en cite{font-size:9px}
+ .olive-stage__companion-reading{bottom:8%;left:7%;right:7%;max-width:86%}
+ .olive-stage__companion-verse{font-size:clamp(13px,2.15vw,19px);line-height:1.28}
+ .olive-stage__companion-verse-en{font-size:clamp(11px,1.6vw,15px);line-height:1.27;margin-top:8px}
+ .olive-stage__companion-citations{padding-top:6px;margin-top:8px;gap:3px 9px}
+ .olive-stage__companion-citations .olive-stage__companion-reference{font-size:clamp(11px,1.6vw,14px)}
+ .olive-stage__companion-reference-en{font-size:clamp(9px,1.2vw,11px)}
+}
+@media(max-width:540px){
+ .olive-stage__rubric{top:24px;left:10px;right:10px;min-height:0}
+ .olive-stage__rubric .olive-stage__rubric-folio{
+  display:flex;align-items:center;gap:5px;min-height:9px;
+ }
+ .olive-stage__rubric .olive-stage__rubric-folio .olive-stage__rubric-kicker{
+  font-size:8px;letter-spacing:.09em;
+ }
+ .olive-stage__rubric .olive-stage__rubric-folio small{font-size:7px;letter-spacing:0}
+ .olive-stage__rubric .olive-stage__rubric-heading{
+  display:flex;gap:8px;padding:4px 0 6px;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(19px,5.5vw,29px) + var(--olive-title-growth,0px));
+  white-space:nowrap;letter-spacing:-.055em;text-align:left;
+ }
+ .olive-stage__rubric .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  display:block;font-size:clamp(15px,3.8vw,19px);letter-spacing:.055em;
+ }
+ .olive-stage__rubric .olive-stage__rubric-scripture{
+  grid-template-columns:1fr 1fr;gap:8px;padding-top:5px;
+ }
+ .olive-stage__rubric-scripture-zh p{font-size:10px;line-height:1.23;letter-spacing:0}
+ .olive-stage__rubric-scripture-en p{font-size:10px;line-height:1.19;letter-spacing:0}
+ .olive-stage__rubric-scripture-zh cite,
+ .olive-stage__rubric-scripture-en cite{font-size:8px;line-height:1.18;letter-spacing:0}
+ .olive-stage__companion-reading{left:8%;right:7%;bottom:6%;max-width:85%}
+ .olive-stage__companion-kicker{font-size:8px;margin-bottom:6px}
+ .olive-stage__companion-verse{font-size:clamp(11px,3.35vw,15px);line-height:1.23;letter-spacing:0}
+ .olive-stage__companion-verse-en{
+  font-size:clamp(9px,2.75vw,12px);line-height:1.22;
+  margin-top:6px;letter-spacing:0;
+ }
+ .olive-stage__companion-citations{margin-top:7px;padding-top:5px;gap:2px 8px}
+ .olive-stage__companion-citations .olive-stage__companion-reference{
+  font-size:clamp(10px,2.9vw,12px);letter-spacing:0;
+ }
+ .olive-stage__companion-reference-en{font-size:clamp(8px,2.5vw,10px)}
+}
+
+/* V82 final legibility pass: 320px KJV must remain real reading text,
+   not a decorative 9px whisper. Responsive top clearance is already
+   protected by the 04-specific poster grid, so enlarge copy instead. */
+@media(max-width:540px){
+ .olive-stage__rubric-scripture-zh p{font-size:11px;line-height:1.28}
+ .olive-stage__rubric-scripture-en p{font-size:11px;line-height:1.23}
+ .olive-stage__rubric-scripture-zh cite,
+ .olive-stage__rubric-scripture-en cite{font-size:9px;line-height:1.22}
+ .olive-stage__companion-verse{font-size:clamp(12px,3.7vw,16px);line-height:1.27}
+ .olive-stage__companion-verse-en{font-size:clamp(11px,3.05vw,13px);line-height:1.27}
+ .olive-stage__companion-reference-en{font-size:clamp(10px,2.75vw,11px)}
+}
+
+/* R26 / direct P2 integration: R25 AB editorial twin geometry.
+   This is the EXISTING 04 masthead in its reserved stage zone. No new
+   full-screen object, poster layer, or independent transition controller.
+   The two fields govern alignment; they are not permanent box borders. */
+.olive-stage__rubric--twin-editorial{
+ --olive-twin-gutter:clamp(18px,2.1vw,36px);
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:var(--olive-twin-gutter);row-gap:3px;
+ align-items:end;position:relative;padding:7px 0 12px;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading::after{
+ content:"";position:absolute;bottom:0;left:0;right:0;
+ border-bottom:1px solid color-mix(in srgb,var(--ws-morning-gold) 42%,transparent);
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading strong{
+ grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:var(--olive-twin-gutter);align-items:end;width:100%;
+ font-size:calc(clamp(36px,5.7vw,89px) + var(--olive-title-growth,0px));
+ letter-spacing:-.066em;line-height:.87;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__word-olive,
+.olive-stage__rubric--twin-editorial .olive-stage__word-mountain{
+ display:block;min-width:0;white-space:nowrap;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__word-mountain{
+ font-size:.69em;letter-spacing:-.052em;text-align:right;
+ padding-bottom:.045em;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-heading .olive-stage__rubric-zh{
+ grid-column:2;justify-self:end;text-align:right;
+ font-size:clamp(18px,1.9vw,29px);line-height:1.12;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture{
+ width:100%;grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:var(--olive-twin-gutter);padding-top:9px;border-top:0;
+}
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture-zh,
+.olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture-en{
+ max-width:48ch;
+}
+@media(max-width:900px){
+ .olive-stage__rubric--twin-editorial{--olive-twin-gutter:clamp(10px,2vw,22px)}
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(27px,6.2vw,54px) + var(--olive-title-growth,0px));
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__word-mountain{font-size:.69em}
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  font-size:clamp(15px,2.6vw,23px)
+ }
+}
+@media(max-width:540px){
+ .olive-stage__rubric--twin-editorial{--olive-twin-gutter:8px}
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading{
+  padding:4px 0 7px;row-gap:3px;
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading strong{
+  font-size:calc(clamp(22px,6.5vw,32px) + var(--olive-title-growth,0px));
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__word-mountain{
+  font-size:.64em;letter-spacing:-.065em;
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-heading .olive-stage__rubric-zh{
+  font-size:clamp(14px,3.7vw,17px)
+ }
+ .olive-stage__rubric--twin-editorial .olive-stage__rubric-scripture{
+  column-gap:8px;padding-top:6px;
+ }
+}
+
+/* R27: the chapter masthead IS the two-square entry, not a split wordmark.
+   Sevenfold is constrained to that carrier and never alters scripture glyphs.
+   The untouched R26 title/verse remains in DOM as editorial fallback. */
+.olive-stage__rubric--twin-editorial{
+ left:50%;right:auto;top:clamp(43px,5.1svh,58px);width:auto;
+ transform:translateX(-50%);z-index:35;overflow:visible;pointer-events:auto;
+}
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-folio,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-heading,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-scripture{display:none}
+.olive-twin-entry{--twin-side:clamp(94px,8.25vw,148px);
+ position:relative;display:grid;grid-template-columns:repeat(2,var(--twin-side));
+ width:calc(var(--twin-side)*2);height:var(--twin-side);padding:0;
+ border:1px solid var(--ws-morning-gold);background:transparent;
+ color:var(--ws-paper);text-align:left;cursor:pointer;pointer-events:auto;
+ font-family:var(--ws-type-display-en);isolation:isolate;
+}
+.olive-twin-entry:focus-visible{outline:2px solid var(--ws-paper);outline-offset:5px}
+.olive-twin-entry__square{position:relative;display:flex;flex-direction:column;
+ justify-content:space-between;min-width:0;padding:clamp(8px,.75vw,13px);
+ overflow:hidden;background:rgba(37,57,32,.19)}
+.olive-twin-entry__square--right{border-left:1px solid var(--ws-morning-gold)}
+.olive-twin-entry .olive-twin-entry__edition{display:block;font-size:clamp(6px,.54vw,9px);
+ letter-spacing:.1em;line-height:1.2;font-weight:200;color:var(--ws-morning-gold)}
+.olive-twin-entry .olive-twin-entry__title{display:block;font-style:normal;
+ font-family:var(--ws-type-display-en);font-weight:400;
+ font-size:clamp(24px,2.15vw,39px);line-height:.92;letter-spacing:-.065em;
+ white-space:nowrap;transform:none}
+.olive-twin-entry__square--right .olive-twin-entry__title{font-size:clamp(15px,1.25vw,24px);letter-spacing:-.07em}
+.olive-twin-entry .olive-twin-entry__zh{display:block;font-size:clamp(13px,1.17vw,22px);
+ font-family:var(--ws-type-display-zh);font-weight:600;line-height:1.1;align-self:flex-end}
+.olive-twin-entry .olive-twin-entry__verse{display:block;font-size:clamp(7px,.64vw,10px);
+ font-weight:200;line-height:1.35;letter-spacing:0}
+.olive-twin-entry .olive-twin-entry__ref{display:block;font-size:clamp(7px,.58vw,9px);
+ letter-spacing:.09em;color:var(--ws-morning-gold)}
+.olive-twin-entry__folds{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.olive-twin-entry__folds i{position:absolute;inset:0;background:var(--ws-morning-gold);
+ transform:scaleX(0);transform-origin:left center;opacity:0}
+.olive-twin-entry__folds i:nth-child(1){background:var(--ws-water)}
+.olive-twin-entry__folds i:nth-child(2){background:var(--ws-first-light)}
+.olive-twin-entry__folds i:nth-child(3){background:var(--ws-pale-gold)}
+.olive-twin-entry__folds i:nth-child(4){background:var(--ws-olive)}
+.olive-twin-entry__folds i:nth-child(5){background:var(--ws-harvest)}
+.olive-twin-entry__folds i:nth-child(6){background:var(--ws-crimson)}
+.olive-twin-entry__folds i:nth-child(7){background:var(--ws-daylight-mauve)}
+.olive-twin-entry.is-folding .olive-twin-entry__folds i{
+ animation:oliveSevenfold .8s cubic-bezier(.76,0,.24,1) both;
+ animation-delay:calc((var(--fold-index) - 1)*.085s)}
+.olive-twin-entry__folds i:nth-child(1){--fold-index:1}
+.olive-twin-entry__folds i:nth-child(2){--fold-index:2}
+.olive-twin-entry__folds i:nth-child(3){--fold-index:3}
+.olive-twin-entry__folds i:nth-child(4){--fold-index:4}
+.olive-twin-entry__folds i:nth-child(5){--fold-index:5}
+.olive-twin-entry__folds i:nth-child(6){--fold-index:6}
+.olive-twin-entry__folds i:nth-child(7){--fold-index:7}
+@keyframes oliveSevenfold{0%{transform:scaleX(0);opacity:1}52%{transform:scaleX(1);opacity:1}100%{transform:translateX(100%);opacity:1}}
+.olive-twin-reading{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:clamp(12px,1.3vw,22px);position:absolute;top:0;left:50%;
+ width:min(70vw,600px);transform:translateX(-50%) scale(.86);
+ opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.olive-twin-reading__square{aspect-ratio:1;background:var(--ws-paper);color:#26412c;
+ border:1px solid var(--ws-morning-gold);padding:clamp(12px,2vw,30px);
+ display:flex;flex-direction:column;justify-content:space-between}
+.olive-twin-reading__square small{font-size:clamp(9px,.7vw,12px);
+ letter-spacing:.12em;font-weight:200}
+.olive-twin-reading__square p{margin:0;font-family:var(--ws-type-display-zh);
+ font-size:clamp(16px,2vw,29px);line-height:1.45}
+.olive-twin-reading__square--vertical p{writing-mode:vertical-rl;max-height:78%;align-self:center}
+.olive-twin-reading__square--horizontal p{font-family:var(--ws-type-display-en);
+ font-size:clamp(18px,2.05vw,30px);line-height:1.25}
+.olive-stage__rubric--twin-editorial.is-reading .olive-twin-entry{visibility:hidden}
+.olive-stage__rubric--twin-editorial.is-reading .olive-twin-reading{
+ visibility:visible;opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+@media(max-width:700px){
+ .olive-twin-entry{--twin-side:clamp(85px,22vw,115px)}
+ .olive-twin-reading{width:min(94vw,440px)}
+ .olive-twin-reading__square{padding:12px}
+ .olive-twin-reading__square p{font-size:clamp(14px,3.4vw,21px)}
+ .olive-twin-reading__square--horizontal p{font-size:clamp(15px,3.5vw,22px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-twin-entry.is-folding .olive-twin-entry__folds i{animation:none}
+ .olive-twin-reading{transition:none}
+}
+
+/* R31 — actual P2 04 stage: one full-width, compact, two-field masthead.
+   The fold is scrubbed by the existing P2 scroll clock, never by a click. */
+.olive-stage__rubric--twin-editorial{
+ left:0;right:0;top:clamp(38px,4.6svh,50px);width:100%;
+ transform:none;overflow:hidden;pointer-events:none;z-index:35;
+}
+.olive-twin-entry{
+ --twin-side:auto;width:100%;height:clamp(126px,14svh,166px);
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ border:0;border-top:1px solid var(--ws-morning-gold);
+ border-bottom:1px solid var(--ws-morning-gold);
+ cursor:default;overflow:hidden;
+}
+.olive-twin-entry__square{padding:clamp(9px,1vw,15px) clamp(16px,3vw,52px) 10px;
+ justify-content:flex-end;gap:5px;background:transparent;min-width:0}
+.olive-twin-entry__square--right{border-left:1px solid var(--ws-morning-gold)}
+.olive-twin-entry .olive-twin-entry__edition{font-size:clamp(8px,.7vw,11px)}
+.olive-twin-entry .olive-twin-entry__edition{position:absolute;top:8px;left:clamp(16px,3vw,52px)}
+.olive-twin-entry__square--right .olive-twin-entry__edition{left:auto;right:clamp(16px,3vw,52px)}
+.olive-twin-entry .olive-twin-entry__verse{font:200 clamp(11px,1.1vw,17px)/1.34 var(--ws-type-display-zh);max-width:36ch}
+.olive-twin-entry__square--right .olive-twin-entry__verse{font:italic 400 clamp(12px,1.2vw,19px)/1.25 var(--ws-type-display-en);max-width:37ch;margin-left:auto}
+.olive-twin-entry .olive-twin-entry__ref{font-size:clamp(8px,.65vw,10px)}
+.olive-twin-entry__square--right .olive-twin-entry__edition,
+.olive-twin-entry__square--right .olive-twin-entry__ref{text-align:right}
+.olive-twin-entry>.olive-twin-entry__title{
+ position:absolute;left:50%;top:clamp(20px,2.2vw,33px);transform:translateX(-50%);
+ z-index:2;white-space:nowrap;font:400 clamp(32px,4.4vw,80px)/.94 var(--ws-type-display-en);
+ letter-spacing:-.063em;color:var(--ws-paper);text-shadow:0 0 15px var(--ws-olive);
+}
+.olive-twin-entry>.olive-twin-entry__zh{
+ position:absolute;top:clamp(69px,6.1vw,99px);left:50%;transform:translateX(-50%);
+ z-index:2;font:600 clamp(13px,1.45vw,23px)/1.1 var(--ws-type-display-zh);
+ letter-spacing:.2em;text-shadow:0 0 10px var(--ws-olive);
+}
+.olive-twin-entry__folds{z-index:5}
+.olive-twin-entry__folds i{transform:translate3d(-102%,0,0);opacity:1;will-change:transform}
+.olive-twin-entry.is-folding .olive-twin-entry__folds i{animation:none}
+@media(max-width:700px){
+ .olive-twin-entry{height:clamp(150px,20svh,184px)}
+ .olive-twin-entry__square{padding:10px}
+ .olive-twin-entry .olive-twin-entry__edition{left:10px;font-size:7px}
+ .olive-twin-entry__square--right .olive-twin-entry__edition{right:10px;left:auto}
+ .olive-twin-entry>.olive-twin-entry__title{top:35px;font-size:clamp(30px,7.6vw,48px)}
+ .olive-twin-entry>.olive-twin-entry__zh{top:75px;font-size:16px}
+ .olive-twin-entry .olive-twin-entry__verse{font-size:10px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse{font-size:11px}
+}
+
+/* R33 — editorial correction. A continuous chapter name sits ABOVE two
+   fully outlined, separate scripture blocks. No central dividing line. */
+.olive-stage__rubric--twin-editorial{
+  top:clamp(37px,4.35svh,48px);
+  left:0;right:0;width:100%;overflow:visible;
+}
+.olive-twin-entry{
+  width:100%;height:clamp(140px,16svh,155px);
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  column-gap:clamp(8px,1vw,16px);
+  border:0;overflow:visible;
+}
+.olive-twin-entry::before{content:none!important;display:none!important}
+.olive-twin-entry__square,
+.olive-twin-entry__square--right{
+  box-sizing:border-box;
+  align-self:end;
+  height:calc(100% - 61px);
+  min-width:0;
+  padding:19px clamp(13px,2.8vw,48px) 8px;
+  border:1px solid var(--ws-morning-gold);
+  background:rgba(35,58,32,.18);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  align-items:flex-start;gap:3px;
+}
+.olive-twin-entry__square--right{align-items:flex-end}
+.olive-twin-entry>.olive-twin-entry__title{
+  top:0;left:50%;transform:translateX(-50%);
+  font:400 clamp(30px,3vw,48px)/1 var(--ws-type-display-en);
+  letter-spacing:-.035em;white-space:nowrap;text-shadow:none;
+}
+.olive-twin-entry>.olive-twin-entry__zh{
+  top:clamp(32px,2.9vw,43px);font:200 clamp(11px,.92vw,15px)/1 var(--ws-type-display-zh);
+  letter-spacing:.18em;text-shadow:none;
+}
+.olive-twin-entry .olive-twin-entry__edition{
+  top:5px;left:clamp(13px,2.8vw,48px);font-size:clamp(7px,.55vw,9px);
+}
+.olive-twin-entry__square--right .olive-twin-entry__edition{
+  left:auto;right:clamp(13px,2.8vw,48px);
+}
+.olive-twin-entry .olive-twin-entry__verse{
+  font:200 clamp(18px,1.6vw,25px)/1.13 var(--ws-type-display-zh);
+  letter-spacing:.01em;max-width:24ch;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse{
+  font:italic 400 clamp(18px,1.55vw,25px)/1.08 var(--ws-type-display-en);
+  max-width:35ch;margin-left:0;text-align:right;
+}
+.olive-twin-entry .olive-twin-entry__ref{font-size:clamp(8px,.59vw,10px)}
+/* This is the first-layer header. The agreed sevenfold belongs to the
+   first-to-second-layer transition, not to this chapter masthead. */
+.olive-twin-entry__folds{display:none!important}
+@media(max-width:700px){
+  .olive-twin-entry{height:clamp(140px,19svh,162px);column-gap:6px}
+  .olive-twin-entry__square,.olive-twin-entry__square--right{
+    height:calc(100% - 55px);padding:16px 7px 5px;gap:2px;
+  }
+  .olive-twin-entry>.olive-twin-entry__title{top:0;font-size:clamp(25px,6vw,38px)}
+  .olive-twin-entry>.olive-twin-entry__zh{top:34px;font-size:11px}
+  .olive-twin-entry .olive-twin-entry__edition{top:4px;left:7px;font-size:6px}
+  .olive-twin-entry__square--right .olive-twin-entry__edition{right:7px;left:auto}
+  .olive-twin-entry .olive-twin-entry__verse{font-size:clamp(11px,2.7vw,16px);line-height:1.17}
+  .olive-twin-entry__square--right .olive-twin-entry__verse{font-size:clamp(11px,2.7vw,16px);line-height:1.1}
+  .olive-twin-entry .olive-twin-entry__ref{font-size:7px}
+}
+
+/* R34: the actual two-square 2:1 carrier, NOT two elongated fields.
+   Its title and scripture occupy the full-width editorial register around it. */
+.olive-stage__rubric--twin-editorial{left:0;right:0;width:100%;top:clamp(37px,4.35svh,48px);overflow:visible}
+.olive-twin-entry{
+ --olive-square:clamp(92px,11.5svh,116px);
+ display:grid;grid-template-columns:repeat(2,var(--olive-square));
+ justify-content:center;align-content:start;gap:0;
+ width:100%;height:calc(var(--olive-square) + 51px);
+ border:0;overflow:visible;
+}
+.olive-twin-entry::before{content:none!important;display:none!important}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ box-sizing:border-box;position:relative;
+ width:var(--olive-square);height:var(--olive-square);
+ margin:51px 0 0;padding:14px 8px 9px;
+ border:1px solid var(--ws-morning-gold);overflow:visible;
+ background:rgba(35,58,32,.24);align-items:flex-start;justify-content:space-between;
+}
+.olive-twin-entry__square--right{border-left:0;align-items:flex-end}
+.olive-twin-entry>.olive-twin-entry__title{
+ top:0;left:50%;transform:translateX(-50%);
+ font:400 clamp(30px,3vw,46px)/1 var(--ws-type-display-en);
+ letter-spacing:-.03em;white-space:nowrap;text-shadow:none;
+}
+.olive-twin-entry>.olive-twin-entry__zh{
+ top:clamp(32px,2.9vw,42px);font:200 clamp(11px,.92vw,15px)/1 var(--ws-type-display-zh);
+ letter-spacing:.18em;text-shadow:none;
+}
+.olive-twin-entry .olive-twin-entry__edition,
+.olive-twin-entry__square--right .olive-twin-entry__edition{
+ position:relative;top:auto;left:auto;right:auto;
+ font:200 clamp(7px,.54vw,9px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.04em;
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ font-size:clamp(7px,.52vw,9px);line-height:1.2;
+}
+.olive-twin-entry__square--left .olive-twin-entry__verse{
+ position:absolute;top:19px;right:calc(100% + clamp(20px,3vw,52px));
+ width:clamp(260px,32vw,520px);max-width:none;
+ font:200 clamp(18px,1.65vw,27px)/1.22 var(--ws-type-display-zh);
+ text-align:left;letter-spacing:.015em;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse{
+ position:absolute;top:19px;left:calc(100% + clamp(20px,3vw,52px));
+ width:clamp(260px,32vw,520px);max-width:none;margin:0;
+ font:italic 400 clamp(18px,1.63vw,27px)/1.13 var(--ws-type-display-en);
+ text-align:right;
+}
+.olive-twin-entry__folds{display:none!important}
+@media(max-width:700px){
+ .olive-twin-entry{--olive-square:clamp(70px,10.5svh,96px);height:calc(var(--olive-square) + 50px)}
+ .olive-twin-entry__square,.olive-twin-entry__square--right{
+  width:var(--olive-square);height:var(--olive-square);margin-top:50px;padding:10px 5px 6px;
+ }
+ .olive-twin-entry>.olive-twin-entry__title{font-size:clamp(24px,6vw,35px)}
+ .olive-twin-entry>.olive-twin-entry__zh{top:34px;font-size:11px}
+ .olive-twin-entry__square--left .olive-twin-entry__verse{
+  top:12px;right:calc(100% + 8px);width:calc((100vw - 2 * var(--olive-square))/2 - 13px);
+  font-size:clamp(10px,2.4vw,15px);line-height:1.17;
+ }
+ .olive-twin-entry__square--right .olive-twin-entry__verse{
+  top:12px;left:calc(100% + 8px);width:calc((100vw - 2 * var(--olive-square))/2 - 13px);
+  font-size:clamp(10px,2.4vw,15px);line-height:1.1;
+ }
+ .olive-twin-entry .olive-twin-entry__edition,.olive-twin-entry .olive-twin-entry__ref{font-size:6px}
+}
+
+/* R35 — the agreed vertical pair at the upper-left: title / scripture.
+   Each panel is a true square; the pair forms one vertical rectangle. */
+.olive-stage__rubric--twin-editorial{
+ left:clamp(10px,1.1vw,22px);right:auto;
+ top:clamp(40px,4.6svh,52px);width:auto;
+ transform:none;overflow:visible;pointer-events:none;
+}
+.olive-twin-entry{
+ --olive-square:clamp(84px,10.4svh,106px);
+ display:flex;flex-direction:column;align-items:stretch;gap:0;
+ width:var(--olive-square);height:calc(2 * var(--olive-square));
+ padding:0;margin:0;overflow:visible;border:0;
+}
+.olive-twin-entry::before{display:none!important;content:none!important}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ box-sizing:border-box;position:relative;
+ flex:none;margin:0;width:var(--olive-square);height:var(--olive-square);
+ min-width:0;max-width:none;overflow:hidden;
+ padding:clamp(5px,.65svh,7px);border:1px solid var(--ws-morning-gold);
+ background:rgba(40,63,35,.23);
+ display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:1px;
+}
+.olive-twin-entry__square--right{border-top:0;align-items:flex-start}
+.olive-twin-entry .olive-twin-entry__edition{
+ position:static;top:auto;left:auto;right:auto;
+ font:200 clamp(6px,.6svh,8px)/1.1 var(--ws-type-display-en);
+ color:var(--ws-morning-gold);letter-spacing:.05em;
+}
+.olive-twin-entry .olive-twin-entry__title{
+ position:static;top:auto;left:auto;right:auto;transform:none;
+ font:400 clamp(15px,1.85svh,20px)/.96 var(--ws-type-display-en);
+ letter-spacing:-.035em;color:var(--ws-paper);white-space:normal;
+ text-shadow:none;display:block;
+}
+.olive-twin-entry .olive-twin-entry__zh{
+ position:static;top:auto;left:auto;right:auto;transform:none;
+ font:200 clamp(13px,1.55svh,17px)/1 var(--ws-type-display-zh);
+ letter-spacing:.04em;color:var(--ws-paper);text-shadow:none;display:block;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse,
+.olive-twin-entry__square--left .olive-twin-entry__verse{
+ position:static;top:auto;left:auto;right:auto;margin:0;width:auto;max-width:100%;
+ display:block;text-align:left;letter-spacing:0;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ font:200 clamp(8px,.9svh,10px)/1.18 var(--ws-type-display-zh);
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ font:italic 400 clamp(7px,.76svh,9px)/1.08 var(--ws-type-display-en);
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ position:static;display:block;font:200 clamp(5px,.6svh,7px)/1.1 var(--ws-type-display-en);
+ color:var(--ws-morning-gold);text-align:left;
+}
+.olive-twin-entry__folds{display:none!important}
+@media(max-width:700px){
+ .olive-stage__rubric--twin-editorial{left:5px;top:40px}
+ .olive-twin-entry{--olive-square:clamp(67px,10.1svh,85px)}
+ .olive-twin-entry__square,.olive-twin-entry__square--right{padding:4px}
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(12px,1.75svh,15px)}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:12px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:7px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:6px}
+ .olive-twin-entry .olive-twin-entry__ref{font-size:5px}
+}
+
+/* R36 — readable vertical bilingual pair, OS olive title / gold scripture.
+   The two visible blocks are the transition's source geometry. */
+.olive-stage__rubric--twin-editorial{
+ left:clamp(14px,2.2vw,34px);top:clamp(44px,5svh,58px);
+ width:auto;max-width:calc(100vw - 28px);
+}
+.olive-twin-entry{
+ --olive-panel-w:clamp(310px,30vw,490px);
+ --olive-panel-h:clamp(94px,10.6svh,112px);
+ width:var(--olive-panel-w);height:calc(2 * var(--olive-panel-h));
+ display:flex;flex-direction:column;align-items:stretch;
+}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ width:100%;height:var(--olive-panel-h);flex:none;
+ margin:0;padding:clamp(10px,1.15svh,14px) clamp(16px,1.6vw,26px);
+ border:1px solid var(--ws-morning-gold);border-radius:0;
+ justify-content:center;align-items:flex-start;gap:clamp(4px,.6svh,8px);
+ overflow:hidden;box-shadow:none;
+}
+.olive-twin-entry__square--left{background:var(--ws-olive);color:var(--ws-paper)}
+.olive-twin-entry__square--right{
+ border-top:0;background:var(--ws-morning-gold);color:var(--ws-olive);
+}
+.olive-twin-entry .olive-twin-entry__edition{
+ font-size:clamp(9px,.9svh,11px);color:var(--ws-morning-gold);
+}
+.olive-twin-entry .olive-twin-entry__title{
+ font-size:clamp(29px,3.5svh,44px);line-height:.95;
+ letter-spacing:-.025em;color:var(--ws-paper);
+}
+.olive-twin-entry .olive-twin-entry__title br{display:none}
+.olive-twin-entry .olive-twin-entry__zh{
+ font-size:clamp(18px,2svh,23px);line-height:1;
+ letter-spacing:.12em;color:var(--ws-paper);
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ font:200 clamp(14px,1.55svh,18px)/1.24 var(--ws-type-display-zh);
+ color:var(--ws-olive);max-width:none;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ font:italic 400 clamp(13px,1.4svh,17px)/1.16 var(--ws-type-display-en);
+ color:var(--ws-olive);max-width:none;
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ font:200 clamp(8px,.78svh,10px)/1.1 var(--ws-type-display-en);
+ color:var(--ws-olive);
+}
+@media(max-width:700px){
+ .olive-stage__rubric--twin-editorial{left:8px;top:42px;max-width:calc(100vw - 16px)}
+ .olive-twin-entry{
+  --olive-panel-w:min(calc(100vw - 16px),390px);
+  --olive-panel-h:clamp(98px,12svh,122px);
+  width:var(--olive-panel-w);height:calc(2 * var(--olive-panel-h));
+ }
+ .olive-twin-entry__square,.olive-twin-entry__square--right{padding:9px 14px;gap:4px}
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(26px,5.9vw,36px)}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:18px}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(13px,3.25vw,16px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(12px,3vw,15px)}
+ .olive-twin-entry .olive-twin-entry__ref{font-size:8px}
+}
+
+/* R36b — keep both readable panels ABOVE the first poster row. */
+@media(min-width:701px){
+ .olive-stage__rubric--twin-editorial{top:39px}
+ .olive-twin-entry{--olive-panel-h:clamp(78px,8.9svh,88px)}
+ .olive-twin-entry__square,.olive-twin-entry__square--right{padding:7px 18px;gap:2px}
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(27px,3.2svh,37px)}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:clamp(16px,1.85svh,20px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(13px,1.48svh,16px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(12px,1.34svh,15px)}
+}
+
+/* R37 — preserve true English word spacing and readable scripture contrast. */
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ color:var(--ws-ink);font-weight:400;font-size:clamp(15px,1.62svh,18px);
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ color:var(--ws-ink);font-weight:400;font-size:clamp(14px,1.47svh,17px);
+}
+.olive-twin-entry .olive-twin-entry__ref{color:var(--ws-ink)}
+@media(max-width:700px){
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{font-size:clamp(14px,3.3vw,17px)}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{font-size:clamp(13px,3.1vw,16px)}
+}
+
+
+/* R38 / TWO TRUE SQUARES + SCROLL MASK. Geometry is an approved brief,
+   never a label for two horizontal rectangles. No decorative centre line. */
+#p2-olive-track{height:2800svh}
+.olive-stage__rubric--twin-editorial{
+ display:block;position:absolute;z-index:9;
+ top:clamp(54px,7svh,74px);left:clamp(14px,2.6vw,46px);
+ right:auto;width:auto;max-width:none;min-height:0;overflow:visible;
+ transform:none!important;pointer-events:none;
+}
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-folio,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-heading,
+.olive-stage__rubric--twin-editorial>.olive-stage__rubric-scripture{display:none!important}
+.olive-twin-entry{
+ --olive-square:clamp(184px,min(22vw,26svh),238px);
+ box-sizing:border-box;display:flex;flex-direction:column;gap:0;
+ width:var(--olive-square);height:calc(var(--olive-square) * 2);
+ max-width:none;min-width:0;overflow:visible;margin:0;padding:0;border:0;
+}
+.olive-twin-entry__square,.olive-twin-entry__square--right{
+ box-sizing:border-box!important;display:flex!important;flex:0 0 var(--olive-square)!important;
+ flex-direction:column;align-items:flex-start!important;justify-content:center!important;
+ gap:clamp(6px,.9svh,10px)!important;
+ width:var(--olive-square)!important;height:var(--olive-square)!important;
+ min-width:var(--olive-square)!important;min-height:var(--olive-square)!important;
+ max-width:var(--olive-square)!important;max-height:var(--olive-square)!important;
+ aspect-ratio:1/1;margin:0!important;padding:clamp(14px,1.6svh,21px)!important;
+ overflow:hidden!important;position:relative;
+ border:1px solid var(--ws-morning-gold)!important;border-radius:0;
+ box-shadow:none;transform:none;
+}
+.olive-twin-entry__square--left{
+ background:var(--ws-olive)!important;color:var(--ws-paper);
+}
+.olive-twin-entry__square--right{
+ background:var(--ws-morning-gold)!important;color:var(--ws-ink);
+ border-top:0!important;
+}
+.olive-twin-entry .olive-twin-entry__edition{
+ font:200 clamp(10px,1.15svh,12px)/1.1 var(--ws-type-display-en)!important;
+ letter-spacing:.08em;color:var(--ws-morning-gold)!important;
+ position:static!important;text-align:left;
+}
+.olive-twin-entry .olive-twin-entry__title{
+ font:400 clamp(27px,3.25svh,38px)/.98 var(--ws-type-display-en)!important;
+ letter-spacing:-.045em;color:var(--ws-paper)!important;
+ white-space:normal!important;text-wrap:balance;position:static!important;
+ transform:none!important;text-shadow:none!important;
+}
+.olive-twin-entry .olive-twin-entry__zh{
+ font:200 clamp(20px,2.4svh,28px)/1.15 var(--ws-type-display-zh)!important;
+ letter-spacing:.06em;color:var(--ws-paper)!important;
+ position:static!important;transform:none!important;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+ font:400 clamp(15px,1.75svh,19px)/1.28 var(--ws-type-display-zh)!important;
+ letter-spacing:0!important;color:var(--ws-ink)!important;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+ font:italic 400 clamp(13px,1.48svh,17px)/1.22 var(--ws-type-display-en)!important;
+ letter-spacing:0!important;color:var(--ws-ink)!important;
+}
+.olive-twin-entry__square--right .olive-twin-entry__verse{
+ max-width:100%!important;width:auto!important;position:static!important;
+ display:block!important;text-align:left!important;margin:0!important;
+}
+.olive-twin-entry .olive-twin-entry__ref{
+ font:200 clamp(9px,.99svh,11px)/1.15 var(--ws-type-display-en)!important;
+ color:var(--ws-ink)!important;text-align:left!important;position:static!important;
+}
+@media(max-width:700px){
+ .olive-stage__rubric--twin-editorial{top:44px!important;left:10px!important}
+ .olive-twin-entry{
+  --olive-square:clamp(160px,45vw,198px);
+  width:var(--olive-square)!important;height:calc(2 * var(--olive-square))!important;
+ }
+ .olive-twin-entry__square,.olive-twin-entry__square--right{
+  padding:10px 12px!important;gap:5px!important
+ }
+ .olive-twin-entry .olive-twin-entry__title{font-size:clamp(23px,6.4vw,29px)!important}
+ .olive-twin-entry .olive-twin-entry__zh{font-size:20px!important}
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="zh-Hant"]{
+  font-size:clamp(12px,3.45vw,15px)!important;line-height:1.16!important;
+ }
+ .olive-twin-entry__square--right .olive-twin-entry__verse[lang="en"]{
+  font-size:clamp(11px,3.05vw,13px)!important;line-height:1.12!important;
+ }
+ .olive-twin-entry .olive-twin-entry__ref{font-size:9px!important}
+}
+.olive-sevenfold-handoff{position:absolute;inset:0;z-index:30;pointer-events:none;
+ overflow:hidden;visibility:hidden;isolation:isolate}
+.olive-sevenfold-handoff__sheets{position:absolute;inset:0}
+.olive-sevenfold-handoff__sheet{position:absolute;inset:0;background:var(--olive-fold-color);
+ clip-path:inset(100% 100% 0 0);will-change:clip-path,transform;transform:translate3d(0,0,0)}
+.olive-second-layer{
+ position:absolute;inset:0;z-index:25;background:var(--ws-papyrus);
+ color:var(--ws-ink);visibility:hidden;overflow:auto;overscroll-behavior:contain;
+ padding:clamp(65px,7svh,92px) clamp(20px,4vw,75px) clamp(35px,5svh,60px)
+}
+.olive-second-layer__folio{font:400 11px/1.2 var(--ws-type-display-en);
+ letter-spacing:.13em;display:flex;justify-content:space-between;
+ border-bottom:1px solid var(--ws-olive);padding-bottom:13px}
+.olive-second-layer__body{display:grid;grid-template-columns:minmax(0,3fr) minmax(240px,2fr);
+ gap:clamp(20px,3vw,60px);margin-top:clamp(18px,3svh,35px);align-items:start}
+.olive-second-layer__index{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1vw,15px)}
+.olive-second-layer__person{background:var(--ws-paper);color:var(--ws-ink);border:1px solid var(--ws-first-light);
+ cursor:pointer;text-align:left;padding:0;display:grid;min-width:0}
+.olive-second-layer__person img{display:block;aspect-ratio:1/1;object-fit:cover;
+ object-position:50% 20%;width:100%;filter:none}
+.olive-second-layer__person span{padding:8px 9px;display:block;
+ font:400 clamp(10px,.85vw,14px)/1.25 var(--ws-type-display-en);overflow-wrap:break-word}
+.olive-second-layer__person:focus-visible,.olive-second-layer__person[aria-pressed="true"]{
+ outline:3px solid var(--ws-olive);outline-offset:2px}
+.olive-second-layer__detail{border-top:3px solid var(--ws-olive);padding-top:22px;
+ min-height:300px}
+.olive-second-layer__label{font:400 11px/1.1 var(--ws-type-display-en);letter-spacing:.13em}
+.olive-second-layer__detail h2{font:400 clamp(30px,3vw,58px)/1 var(--ws-type-display-en);
+ margin:18px 0 8px}
+.olive-second-layer__detail p{font:200 clamp(17px,1.25vw,21px)/1.5 var(--ws-type-display-zh)}
+.olive-second-layer__detail img{max-width:min(100%,300px);max-height:50svh;object-fit:contain}
+@media(max-width:700px){
+ .olive-second-layer{padding:52px 12px 24px}
+ .olive-second-layer__body{display:block;margin-top:16px}
+ .olive-second-layer__index{gap:6px}
+ .olive-second-layer__person span{font-size:9px;padding:5px}
+ .olive-second-layer__detail{margin-top:26px}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-sevenfold-handoff__sheet{will-change:auto}
+}
+
+/* R39 / The twin-square editorial rail stays entirely clear of the
+   protected twelve-poster arrangement. No overprinted portraits. */
+.olive-second-layer__detail blockquote{
+ margin:17px 0 0;max-width:35ch;
+ font:400 clamp(17px,1.38vw,23px)/1.38 var(--ws-type-display-zh);
+}
+.olive-second-layer__detail blockquote[lang="en"]{
+ font:italic 400 clamp(16px,1.18vw,21px)/1.35 var(--ws-type-display-en);
+}
+.olive-second-layer__detail cite{
+ display:block;margin:12px 0 20px;
+ font:200 clamp(11px,.9vw,14px)/1.4 var(--ws-type-display-en);
+}
+@media(max-width:700px){
+ .olive-second-layer__detail blockquote{font-size:16px}
+ .olive-second-layer__detail blockquote[lang="en"]{font-size:15px}
+}
+
+/* R40 / Olive Mountain second-layer folio. The two squares land as
+   editorial objects after the sevenfold folds back; the engravings
+   belong to the chapter, never an arbitrary full-black backdrop. */
+.olive-second-layer{
+ background:var(--ws-olive)!important;color:var(--ws-paper)!important;
+ isolation:isolate;overflow:auto;
+}
+.olive-second-layer::before{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background-image:url("/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-1.svg");
+ background-size:cover;background-position:center;
+ opacity:.17;
+}
+.olive-second-layer::after{
+ content:"";position:absolute;left:0;top:0;bottom:0;width:48%;z-index:-1;
+ pointer-events:none;
+ background:url("/images/p2-realms/v15/04-olive-full-verso-v74-botanical-1.svg") center/cover no-repeat;
+ opacity:.15;mask-image:linear-gradient(to right,#000 22%,transparent 100%);
+}
+.olive-second-layer__folio{
+ color:var(--ws-morning-gold);border-color:var(--ws-morning-gold);
+}
+.olive-second-layer__body{
+ grid-template-columns:clamp(128px,12vw,172px) minmax(0,2.65fr) minmax(260px,1.85fr);
+ gap:clamp(16px,2.1vw,36px);align-items:start;
+}
+.olive-second-layer__masthead{
+ display:flex;flex-direction:column;gap:0;align-self:start;
+ position:relative;z-index:2;
+}
+.olive-second-layer__landing{
+ width:100%;aspect-ratio:1/1;position:relative;
+}
+.olive-second-layer__landing-square{
+ position:absolute;inset:0;box-sizing:border-box;
+ display:flex;flex-direction:column;justify-content:center;
+ padding:clamp(10px,1vw,18px);gap:clamp(6px,.7vw,12px);
+ border:1px solid var(--ws-morning-gold);
+ transform-origin:top left;
+}
+.olive-second-layer__landing-square--title{
+ background:var(--ws-olive);color:var(--ws-paper);
+}
+.olive-second-layer__landing-square--title strong{
+ font:400 clamp(21px,2vw,31px)/.98 var(--ws-type-display-en);
+ letter-spacing:-.04em;
+}
+.olive-second-layer__landing-square--title [lang="zh-Hant"]{
+ font:200 clamp(17px,1.5vw,24px)/1.16 var(--ws-type-display-zh);
+ align-self:flex-end;
+}
+.olive-second-layer__edition{
+ font:200 10px/1 var(--ws-type-display-en);
+ color:var(--ws-morning-gold);letter-spacing:.09em;
+}
+.olive-second-layer__landing-square--verse{
+ background:var(--ws-morning-gold);color:var(--ws-ink);border-top:0;
+}
+.olive-second-layer__landing-square--verse blockquote{
+ margin:0;font:400 clamp(12px,.96vw,16px)/1.22 var(--ws-type-display-zh);
+}
+.olive-second-layer__landing-square--verse blockquote[lang="en"]{
+ font:italic 400 clamp(11px,.9vw,15px)/1.2 var(--ws-type-display-en);
+}
+.olive-second-layer__landing-square--verse cite{
+ font:200 clamp(8px,.62vw,11px)/1.1 var(--ws-type-display-en);
+}
+.olive-second-layer__person{
+ border-color:var(--ws-morning-gold);box-shadow:0 0 0 1px rgba(255,255,255,.06);
+ transition:border-color .3s ease,box-shadow .3s ease;
+}
+.olive-second-layer__person:hover,
+.olive-second-layer__person[aria-pressed="true"]{
+ border-color:var(--ws-paper);box-shadow:0 0 0 2px var(--ws-morning-gold);
+}
+.olive-second-layer__person span{font-size:clamp(10px,.79vw,13px)}
+.olive-second-layer__detail{
+ border-top:2px solid var(--ws-morning-gold);
+ background:rgba(21,51,28,.16);padding:clamp(17px,1.5vw,26px);
+ min-height:420px;position:relative;overflow:hidden;
+}
+.olive-second-layer__detail::before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.09;
+ background:url("/images/p2-realms/v15/04-olive-full-verso-v74-botanical-1.svg") center/cover no-repeat;
+}
+.olive-second-layer__detail>*{position:relative}
+.olive-second-layer__detail h2{color:var(--ws-paper)}
+.olive-second-layer__detail blockquote{
+ color:var(--ws-paper);max-width:38ch;
+}
+.olive-second-layer__detail cite,.olive-second-layer__label{
+ color:var(--ws-morning-gold);
+}
+.olive-second-layer__detail img{
+ display:block;margin-top:24px;max-height:33svh;
+ border:1px solid var(--ws-morning-gold);
+}
+@media(max-width:900px){
+ .olive-second-layer__body{
+  grid-template-columns:clamp(112px,18vw,160px) minmax(0,1fr);
+  gap:16px;
+ }
+ .olive-second-layer__detail{grid-column:2}
+ .olive-second-layer__index{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .olive-second-layer__body{display:grid;grid-template-columns:106px minmax(0,1fr);gap:12px}
+ .olive-second-layer__masthead{grid-row:1}
+ .olive-second-layer__index{grid-column:2;grid-row:1;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ .olive-second-layer__detail{grid-column:1/-1;grid-row:2}
+ .olive-second-layer__landing-square{padding:8px;gap:4px}
+ .olive-second-layer__landing-square--title strong{font-size:17px}
+ .olive-second-layer__landing-square--title [lang="zh-Hant"]{font-size:16px}
+ .olive-second-layer__landing-square--verse blockquote{font-size:9px}
+ .olive-second-layer__landing-square--verse blockquote[lang="en"]{font-size:8px}
+ .olive-second-layer__landing-square--verse cite{font-size:7px}
+ .olive-second-layer__person span{font-size:8px;padding:4px}
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-second-layer__person{transition:none}
+}
+
+/* R41 / Scripture-led second layer: NO new section masthead.
+   The very same two geometric origins become two full scripture squares.
+   Speaker pages are editorial archives, with reserved space for series. */
+.olive-second-layer{padding-top:clamp(44px,5svh,62px)!important}
+.olive-second-layer__folio{display:none!important}
+.olive-second-layer__body{
+ grid-template-columns:clamp(144px,15vw,212px) minmax(0,1fr)!important;
+ gap:clamp(20px,2.5vw,44px)!important;margin-top:0!important;
+ align-items:start;
+}
+.olive-second-layer__masthead{grid-column:1;grid-row:1}
+.olive-second-layer__index{grid-column:2;grid-row:1;
+ grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1.1vw,19px)}
+.olive-second-layer__detail{grid-column:2;grid-row:1;min-height:70svh}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__index{display:none}
+.olive-second-layer[data-view="index"] .olive-second-layer__detail{display:none}
+.olive-second-layer__landing-square--title blockquote{
+ margin:0;color:var(--ws-paper);
+ font:200 clamp(17px,1.25vw,24px)/1.36 var(--ws-type-display-zh);
+}
+.olive-second-layer__landing-square--verse blockquote[lang="en"]{
+ font:italic 400 clamp(16px,1.2vw,23px)/1.27 var(--ws-type-display-en);
+}
+.olive-second-layer__landing-square--verse cite{
+ font-size:clamp(9px,.72vw,12px);
+}
+.olive-second-layer__speaker-hero{
+ display:grid;grid-template-columns:minmax(170px,30%) minmax(0,1fr);
+ gap:clamp(16px,2vw,35px);align-items:start;
+}
+.olive-second-layer__speaker-portrait{
+ grid-column:1;grid-row:1/3;width:100%!important;
+ max-width:none!important;max-height:none!important;aspect-ratio:3/4;
+ object-fit:cover;margin:0!important;
+}
+.olive-second-layer__speaker-heading{grid-column:2;grid-row:1}
+.olive-second-layer__speaker-scripture{grid-column:2;grid-row:2}
+.olive-second-layer__speaker-heading h2{
+ font:400 clamp(36px,3vw,64px)/1 var(--ws-type-display-en);
+ overflow-wrap:normal;margin:14px 0 6px;
+}
+.olive-second-layer__speaker-scripture blockquote{
+ margin:10px 0;max-width:50ch;
+}
+.olive-second-layer__back{
+ display:block;cursor:pointer;background:none;color:var(--ws-morning-gold);
+ border:0;border-bottom:1px solid var(--ws-morning-gold);
+ padding:0 0 12px;margin-bottom:26px;letter-spacing:.12em;
+ font:200 clamp(11px,.86vw,14px)/1.2 var(--ws-type-display-en);
+}
+.olive-second-layer__series{
+ margin-top:clamp(30px,4svh,58px);
+ border-top:1px solid var(--ws-morning-gold);padding-top:16px;
+}
+.olive-second-layer__series h3{
+ margin:0 0 20px;color:var(--ws-morning-gold);
+ font:400 clamp(23px,2vw,37px)/1.1 var(--ws-type-display-en);
+}
+.olive-second-layer__series-grid{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:clamp(10px,1.2vw,20px);min-height:220px;
+}
+.olive-second-layer__series-card{
+ padding:14px;min-height:190px;
+ background:var(--ws-paper);color:var(--ws-ink);
+ border-top:3px solid var(--ws-morning-gold);
+}
+.olive-second-layer__series-card span{
+ display:block;color:var(--ws-olive);font:400 12px var(--ws-type-display-en);
+}
+.olive-second-layer__series-card h4{
+ font:400 clamp(17px,1.2vw,23px)/1.3 var(--ws-type-display-zh);
+}
+.olive-second-layer__series-card p{font:400 13px/1.35 var(--ws-type-display-en)}
+.olive-second-layer__series-empty{
+ grid-column:1/-1;align-self:start;padding:22px 0;
+ border-top:1px solid var(--ws-morning-gold);
+ color:var(--ws-paper);font:200 15px/1.5 var(--ws-type-display-en);
+}
+@media(max-width:900px){
+ .olive-second-layer__body{grid-template-columns:130px minmax(0,1fr)!important}
+ .olive-second-layer__speaker-hero{grid-template-columns:minmax(120px,36%) minmax(0,1fr)}
+ .olive-second-layer__series-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .olive-second-layer__body{grid-template-columns:106px minmax(0,1fr)!important;gap:12px!important}
+ .olive-second-layer__landing-square--title blockquote{font-size:12px}
+ .olive-second-layer__landing-square--verse blockquote[lang="en"]{font-size:11px}
+ .olive-second-layer__landing-square--verse cite{font-size:8px}
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__detail{
+  grid-column:1/-1;grid-row:2;
+ }
+ .olive-second-layer__speaker-hero{grid-template-columns:35% minmax(0,1fr);gap:10px}
+ .olive-second-layer__speaker-portrait{grid-row:1/3}
+ .olive-second-layer__speaker-heading h2{font-size:29px}
+ .olive-second-layer__speaker-scripture blockquote{font-size:14px}
+ .olive-second-layer__series-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* R42 / The actual, previously engineered Scripture Studio is the
+   second-layer artwork. Never substitute freshly re-typeset quotations. */
+.olive-second-layer__body{
+ display:flex!important;flex-direction:column!important;
+ align-items:stretch!important;gap:clamp(22px,3vw,48px)!important;
+}
+.olive-second-layer__masthead{
+ width:min(100%,860px)!important;margin:0 auto;
+ aspect-ratio:2/1;position:relative;display:block!important;
+ flex:0 0 auto;
+}
+.olive-second-layer__scripture-master{
+ display:block;width:100%;height:100%;border:0;background:transparent;
+ overflow:hidden;
+}
+.olive-second-layer__landing-overlay{
+ position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;
+ gap:clamp(10px,1.8vw,30px);pointer-events:none;
+}
+.olive-second-layer__landing{aspect-ratio:1/1;width:100%;height:auto}
+.olive-second-layer__index{
+ width:100%;grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.olive-second-layer__detail{width:100%;grid-column:auto;grid-row:auto}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+ width:min(100%,720px)!important;
+}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__detail{
+ display:block!important;
+}
+.olive-second-layer__landing-square--title strong{
+ font:900 clamp(24px,3vw,44px)/1.08 "Chiron Hei HK WS",var(--ws-type-display-zh);
+}
+@media(max-width:700px){
+ .olive-second-layer__masthead{width:100%!important;aspect-ratio:2/1}
+ .olive-second-layer__index{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__detail{grid-column:auto;grid-row:auto}
+}
+
+
+/* R45 / Codrops Thumbnail Grid Expanding Preview: the detail is an
+   INLINE grid-row expansion, never a route or an independent page.
+   Speaker thumbnails retain their original 1:1 squares; expansion
+   behavior does not authorize changing the approved thumbnail geometry. */
+.olive-second-layer__index{
+ display:grid!important;
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ align-items:start;gap:clamp(10px,1.2vw,20px)!important;
+ width:min(100%,960px);margin-inline:auto;
+}
+.olive-second-layer__person{align-self:stretch;min-width:0;overflow:hidden}
+.olive-second-layer__detail{
+ grid-column:1/-1!important;grid-row:auto!important;width:100%;
+ min-width:0;min-height:clamp(360px,65svh,760px);
+ background:color-mix(in srgb,var(--ws-olive) 88%,var(--ws-paper));
+ border-top:2px solid var(--ws-morning-gold)!important;
+ padding:clamp(20px,2.5vw,42px)!important;
+ margin:0!important;overflow:visible;
+}
+.olive-second-layer__detail[hidden]{display:none!important}
+.olive-second-layer__detail .olive-second-layer__speaker-hero{
+ max-width:100%;
+}
+.olive-second-layer__detail .olive-second-layer__series{
+ margin-bottom:clamp(24px,5svh,55px);
+}
+@media(max-width:900px){
+ .olive-second-layer__index{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .olive-second-layer__detail{padding:22px!important}
+}
+@media(max-width:560px){
+ .olive-second-layer__index{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .olive-second-layer__person span{font-size:clamp(11px,2.8vw,14px)!important}
+ .olive-second-layer__detail{min-height:55svh;padding:16px!important}
+ .olive-second-layer__series-grid{grid-template-columns:1fr!important}
+ .olive-second-layer__speaker-hero{grid-template-columns:1fr!important}
+ .olive-second-layer__speaker-portrait{grid-row:auto!important}
+}
+
+/* R46 / four-check integration: preserve authentic 1:1 speaker images, their
+   individual editorial colour and the original Codrops inline grid expander.
+   Two existing scripture formes now frame the full-width speaker catalogue.
+   These rules are scoped to P2 04, not the shared Design OS. */
+.olive-second-layer{
+ background:var(--ws-olive)!important;color:var(--ws-paper)!important;
+}
+.olive-second-layer__body{
+ width:100%!important;max-width:none!important;
+ gap:clamp(24px,3svh,45px)!important;
+}
+.olive-second-layer__masthead,
+.olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+ width:100%!important;max-width:none!important;margin:0!important;
+ aspect-ratio:auto!important;height:clamp(240px,24vw,390px)!important;
+}
+.olive-second-layer__scripture-master{width:100%!important;height:100%!important}
+.olive-second-layer__landing-overlay{display:none!important}
+.olive-second-layer__index{
+ width:100%!important;max-width:none!important;margin:0!important;
+ grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ justify-content:stretch!important;
+ column-gap:clamp(10px,1.15vw,20px)!important;
+ row-gap:clamp(12px,1.4vw,24px)!important;
+}
+.olive-second-layer__person{
+ background:var(--ws-paper);
+ border-color:var(--ws-morning-gold);
+ box-shadow:0 2px 0 var(--ws-morning-gold);
+}
+.olive-second-layer__person img{
+ filter:none!important;-webkit-filter:none!important;
+ aspect-ratio:1/1!important;object-fit:cover;
+}
+.olive-second-layer__person span{
+ font-size:clamp(11px,.87vw,14px)!important;
+ color:var(--ws-ink);background:var(--ws-paper);
+}
+.olive-second-layer__detail{
+ background:var(--ws-olive)!important;
+ border-top-color:var(--ws-morning-gold)!important;
+}
+@media(max-width:1060px){
+ .olive-second-layer__index{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  column-gap:clamp(9px,1.4vw,17px)!important;
+ }
+}
+@media(max-width:900px){
+ .olive-second-layer__index{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .olive-second-layer__masthead,
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+  height:clamp(205px,34vw,330px)!important
+ }
+}
+@media(max-width:560px){
+ .olive-second-layer__index{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .olive-second-layer__masthead,
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__masthead{
+  height:clamp(180px,47vw,250px)!important
+ }
+}
+
+/* R49 — chapter handoff is clicked, not scrolled; retain approved twin masthead. */
+.olive-stage__rubric--twin-editorial #olive-twin-entry{
+ pointer-events:auto!important;cursor:pointer;
+}
+.olive-stage__rubric--twin-editorial #olive-twin-entry:focus-visible{
+ outline:2px solid var(--ws-morning-gold);outline-offset:5px;
+}
+.olive-second-layer__return-first{
+ position:relative;z-index:4;display:inline-flex;align-items:center;
+ margin:0 0 16px;padding:5px 0 8px;
+ color:var(--ws-morning-gold);background:transparent;
+ border:0;border-bottom:1px solid currentColor;cursor:pointer;
+ font:200 clamp(11px,.86vw,14px)/1.2 var(--ws-type-display-en);
+ letter-spacing:.1em;
+}
+.olive-second-layer__return-first:focus-visible{
+ outline:2px solid var(--ws-morning-gold);outline-offset:4px;
+}
+
+/* R50 · Dallas Search Lights × Codrops masked square recomposition.
+   Two genuine OS-color HTML squares travel above seven SVG masked leaves. */
+.olive-sevenfold-handoff__svg{
+ position:absolute;inset:0;width:100%;height:100%;z-index:1;
+ overflow:visible;pointer-events:none;
+}
+.olive-sevenfold-carrier-host{
+ display:contents!important;pointer-events:none!important;
+}
+.olive-sevenfold-carrier{
+ position:absolute!important;left:0!important;top:0!important;
+ margin:0!important;transform-origin:center center!important;
+ z-index:2!important;visibility:hidden;box-sizing:border-box;
+ pointer-events:none!important;will-change:transform;
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-sevenfold-carrier{will-change:auto}
+}
+
+/* Speaker content bridge v1 — existing series, no page navigation. */
+.olive-second-layer__episodes{display:grid;gap:8px;margin-top:16px}
+.olive-second-layer__episode{display:block;width:100%;padding:11px 13px;text-align:left;
+ border:1px solid var(--ws-morning-gold);background:var(--ws-paper);color:var(--ws-ink);
+ cursor:pointer;font:400 clamp(12px,.95vw,15px)/1.4 var(--ws-type-display-zh)}
+.olive-second-layer__episode:hover,.olive-second-layer__episode:focus-visible{
+ background:var(--ws-first-light);outline:1px solid var(--ws-morning-gold)}
+.olive-second-layer__episode[data-title-status="unverified"]::after{
+ content:' · 標題待核';font-size:.75em;opacity:.75}
+.olive-second-layer__player{width:100%;aspect-ratio:16/9;background:var(--ws-ink);margin-top:14px}
+.olive-second-layer__player iframe{display:block;width:100%;height:100%;border:0}
+
+/* R62 / Speaker lecture folio: preserve the original lecture catalogue on
+   the left, but use the previously vacant right-hand page for the selected
+   video. No speaker art, index geometry, colors or scripture are changed. */
+.olive-second-layer[data-view="speaker"] .olive-second-layer__series{
+ display:grid;grid-template-columns:minmax(285px,34%) minmax(0,1fr);
+ align-items:start;column-gap:clamp(20px,2.6vw,48px);
+ row-gap:clamp(15px,1.8vw,30px);
+}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__series>h3{
+ grid-column:1/-1;margin-bottom:0;
+}
+.olive-second-layer[data-view="speaker"] .olive-second-layer__series-grid{
+ grid-column:1;grid-template-columns:minmax(0,1fr)!important;
+ min-height:0;gap:clamp(12px,1.25vw,22px);
+}
+.olive-second-layer__sermon-preview{
+ grid-column:2;min-width:0;position:sticky;top:clamp(12px,2.5svh,28px);
+ border-top:3px solid var(--ws-morning-gold);
+ border-left:1px solid var(--ws-morning-gold);
+ padding:clamp(16px,1.7vw,28px);
+ background:rgba(255,255,255,.035);color:var(--ws-paper);
+}
+.olive-second-layer__sermon-preview-label{
+ margin:0 0 10px;color:var(--ws-morning-gold);
+ font:200 clamp(12px,.88vw,15px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.12em;
+}
+.olive-second-layer__sermon-preview-title{
+ margin:0 0 clamp(14px,1.5vw,24px);
+ font:400 clamp(20px,1.5vw,29px)/1.35 var(--ws-type-display-zh);
+}
+.olive-second-layer__sermon-preview-stage{
+ width:100%;aspect-ratio:16/9;
+ display:grid;place-items:center;
+ border:1px solid var(--ws-morning-gold);
+ background:rgba(21,51,28,.12);
+}
+.olive-second-layer__sermon-preview-hint{
+ max-width:32ch;margin:0;padding:26px;text-align:center;
+ font:200 clamp(16px,1vw,19px)/1.5 var(--ws-type-display-zh);
+}
+.olive-second-layer__sermon-preview .olive-second-layer__player{
+ width:100%;height:100%;aspect-ratio:16/9;margin:0;
+}
+.olive-second-layer__episode[aria-pressed="true"]{
+ background:var(--ws-morning-gold);color:var(--ws-ink);
+ border-color:var(--ws-morning-gold);
+}
+@media(max-width:950px){
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__series{
+  grid-template-columns:minmax(0,1fr);
+ }
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__series>h3,
+ .olive-second-layer[data-view="speaker"] .olive-second-layer__series-grid,
+ .olive-second-layer__sermon-preview{grid-column:1}
+ .olive-second-layer__sermon-preview{position:static}
+}
+
+/* R52 — one original WESTSIDE WATCH banner lettering over the sevenfold. */
+.olive-sevenfold-wordmark{
+ position:absolute;z-index:3;left:3%;top:43%;width:94%;
+ aspect-ratio:1600/108;pointer-events:none;opacity:0;
+ transform-origin:center center;will-change:transform,opacity;
+ background:linear-gradient(90deg,
+  var(--ws-water) 0 14.285%,var(--ws-first-light) 14.285% 28.57%,
+  var(--ws-pale-gold) 28.57% 42.855%,var(--ws-olive) 42.855% 57.14%,
+  var(--ws-harvest) 57.14% 71.425%,var(--ws-crimson) 71.425% 85.71%,
+  var(--ws-daylight-mauve) 85.71% 100%);
+ -webkit-mask:url('/images/westside-watch-lettering-v4-transparent.svg') center/contain no-repeat;
+ mask:url('/images/westside-watch-lettering-v4-transparent.svg') center/contain no-repeat;
+ filter:drop-shadow(0 3px 3px rgba(30,42,32,.35));
+}
+@media(prefers-reduced-motion:reduce){
+ .olive-sevenfold-wordmark{will-change:auto}
+}
+
+/* R55 / motion-only P2 handoff. These declarations style the temporary
+   stage SVG only; the established second-layer colors, layout, masthead,
+   scripture studio and six-column speaker grid retain their original CSS. */
+.olive-sevenfold-handoff__svg{display:block;position:absolute;inset:0;
+ width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none}
+.p2-kinetic-scripture text{font-family:Georgia,'Times New Roman',serif;
+ letter-spacing:.01em}
+.p2-kinetic-scripture text[font-family]{font-family:Arial,sans-serif}
+.p2-kinetic-initial text{font-family:Georgia,'Times New Roman',serif}
+
+/* R64 / Speaker portraits themselves enter their own second-layer pages.
+   The gallery keeps its scroll-only layout, but these exact original prints
+   are clickable and keyboard-focusable even though .olive-proof is passive. */
+.olive-proof .olive-stage__first,
+.olive-proof .olive-stage__poster,
+.olive-proof .olive-stage__index-card{
+ pointer-events:auto!important;cursor:pointer;
+}
+.olive-proof .olive-stage__first:focus-visible,
+.olive-proof .olive-stage__poster:focus-visible,
+.olive-proof .olive-stage__index-card:focus-visible{
+ outline:2px solid var(--ws-morning-gold);outline-offset:3px;
+}

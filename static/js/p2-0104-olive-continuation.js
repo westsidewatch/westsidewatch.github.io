@@ -1,0 +1,1362 @@
+/* P2 04 | ORIGINAL SPREAD -> TWELVE VOICES
+ * ONE scroll authority. The RELEASED 01–03 iframe is NEVER reparented
+ * or resized; only its outer visibility retires after an opaque bridge.
+ * 04 reads its actual Doré plate/ONE folio bounds.
+ *
+ * 9.44–10.08   Doré plate -> 04 gilt invitation card; mounted original print follows
+ * 10.08–10.95  03 paper clears through opposed split-field masks as A moves LEFT,
+ *              then B reveals from BELOW in the right plate
+ * 10.95–11.15  two approved posters HOLD; 04 mountain pigment has not entered
+ * 11.15–11.73  dark olive/gold mountain enters top-down LEFT, bottom-up RIGHT,
+ *              center label uses the SAME scroll progress (MERSI's actual grammar)
+ * 11.95–20.20  eleven slow, alternating individual speaker folio turns
+ * 20.20–21.20  the SAME twelve image works geometrically recompose as index
+ * 21.20–21.60  chapter title and entry invitation hold
+ *
+ * Source: MASTER_SITE_ARCHITECTURE §§11–12; FIRST-LOOK-MOTION-CONTRACT;
+ * user's accepted P2 04 art direction. No autoplay, opacity crossfade,
+ * film player, poster distortion or second Sevenfold entry.
+ */
+(()=>{'use strict';
+ const $=s=>document.querySelector(s);
+ const stage=$('#p2-olive-stage'),track=$('#p2-olive-track');
+ const base=$('#p2-0103-original'),folio=$('#olive-proof');
+ const first=$('#olive-first'),firstImg=$('#olive-first-image');
+ const firstInvitation=$('#olive-first-invitation');
+ const invitationLeft=$('#olive-invitation-left');
+ const invitationRight=$('#olive-invitation-right');
+ const pair=$('#olive-pair');
+ const reverseLeft=$('#olive-reverse-left'),reverseRight=$('#olive-reverse-right');
+ const companionLeft=$('#olive-companion-left'),companionRight=$('#olive-companion-right');
+ if(!companionLeft||!companionRight)throw new Error('04 requires two independent scripture companions');
+ const left=$('#olive-pair-left'),right=$('#olive-pair-right');
+ const nextLeft=$('#olive-pair-next-left'),nextRight=$('#olive-pair-next-right');
+ const overview=$('#olive-overview'),enter=$('#olive-enter');
+ const neutral=$('#p2-olive-bridge'),ground=$('#p2-olive-surround'),rubric=$('#olive-rubric');
+ const engraved=$('#olive-editorial-engraving');
+ const etchedLeft=engraved?.querySelector('[data-art-side="left"]');
+ const etchedRight=engraved?.querySelector('[data-art-side="right"]');
+ const slider=$('#p2-olive-seek'),output=$('#p2-olive-progress');
+ const status=$('#p2-olive-folio-status');
+ if(!stage||!track||!base||!folio||!first||!ground||!neutral||
+     !firstInvitation||!invitationLeft||!invitationRight)return;
+ // The independent SVG project can be inspected without foreground posters.
+ // This is a PREVIEW-ONLY optical proof; original gallery default is untouched.
+ if(new URLSearchParams(location.search).get('artOnly')==='1')
+  stage.classList.add('olive-art-only');
+ const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+ // Production's home page is the only scroll authority. The approved 01–03
+ // iframe keeps its exact source and receives its original published pose.
+ const embedded=document.documentElement.classList.contains('p2-main-embedded');
+ let hostDistance=null,hostLegacyProgress=null,hostActive=true;
+ const currentDistance=()=>hostDistance===null?
+  clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,T.end):hostDistance;
+ const ease=v=>{const u=clamp(v);return u*u*(3-2*u)};
+ const mix=(a,b,t)=>a+(b-a)*t;
+ const T={start:9.44,first:10.08,spread:10.95,
+          groundStart:11.15,groundEnd:11.73,
+          pairStart:11.95,pairStep:.83,pairDuration:.62,
+          indexStart:23.00,indexEnd:24.10,end:26.30};
+ const roster=[
+  ['watchman-nee','倪柝聲','WATCHMAN NEE'],
+  ['derek-prince','葉光明','DEREK PRINCE'],
+  ['david-pawson','大衛鮑森','DAVID PAWSON'],
+  ['stephen-tong','唐崇榮','STEPHEN TONG'],
+  ['huang-shuhua','黃淑華','HUANG SHUHUA'],
+  ['kang-lai-chang','康來昌','KANG LAI-CHANG'],
+  ['jerry-lai','賴若瀚','JERRY LAI'],
+  ['tong-liu','劉彤','TONG LIU'],
+  ['jiang-xiuqin','江秀琴','GRACE CHIANG'],
+  ['rick-warren','華理克','RICK WARREN'],
+  ['yu-hong-jie','于宏潔','YU HONGJIE'],
+  ['kou-shao-en','寇紹恩','KOU SHAO-EN']
+ ];
+ const pathFor=i=>'/images/olive/'+roster[i][0]+'-editorial.png';
+  // R55 / Motion is mounted in the real P2 stage; all second-layer artwork,
+  // colors, typography and speaker-grid geometry stay on their old master.
+  const sevenfold=$('#olive-sevenfold-handoff');
+ const second=$('#olive-second-layer'),secondIndex=$('#olive-second-index'),detail=$('#olive-second-detail');
+ const twins=[...document.querySelectorAll('.olive-twin-entry__square')];
+  const palette=['#427D99','#B79B41','#C6AF69','#718B5F','#A56C40','#A35458','#8570A1'];
+  // The first frame must inherit the existing masthead's TWO real OS inks:
+  // left olive, right gold. The seven-color cycle is entered only afterward.
+  const cssHex=(value,fallback)=>{
+   const rgb=value.match(/\d+(?:\.\d+)?/g)?.slice(0,3);
+   return rgb?.length===3?'#'+rgb.map(v=>Math.min(255,Math.max(0,Math.round(Number(v))))
+    .toString(16).padStart(2,'0')).join(''):fallback;
+  };
+  const sourceSquareColors=twins.map((node,i)=>cssHex(getComputedStyle(node).backgroundColor,
+   i===0?'#647D54':'#B8944A'));
+  const sourceSquareText=twins.map((node,i)=>cssHex(getComputedStyle(
+   node.querySelector('.olive-twin-entry__verse')||node).color,
+   i===0?'#F5F1E6':'#242722'));
+ const svgNS='http://www.w3.org/2000/svg';
+ const svgNode=(name,attrs={})=>{
+  const node=document.createElementNS(svgNS,name);
+  Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));return node;
+ };
+  const number=(n)=>Math.round(n*100)/100;
+  const hexMix=(a,b,t)=>'#'+[1,3,5].map(i=>{
+   const x=parseInt(a.slice(i,i+2),16),y=parseInt(b.slice(i,i+2),16);
+   return Math.round(mix(x,y,clamp(t))).toString(16).padStart(2,'0');
+  }).join('');
+  const sevenColor=p=>{
+   const t=clamp((p-.23)/.60)*6,i=Math.min(5,Math.floor(t));
+   return hexMix(hexMix(palette[i],palette[i+1],t-i),'#647D54',ease((p-.86)/.14));
+  };
+  const kinetic=svgNode('svg',{class:'olive-sevenfold-handoff__svg','aria-hidden':'true'});
+  const defs=svgNode('defs'),clip=svgNode('clipPath',{id:'p2-v9-ribbon-clip'});
+  const ribbonWindow=svgNode('rect');clip.append(ribbonWindow);defs.append(clip);kinetic.append(defs);
+  const banner=svgNode('g',{'clip-path':'url(#p2-v9-ribbon-clip)'});
+  // The flag has no stock/background: only the original V9 letter shapes and
+  // two very fine gold rails belong to the unfolding transparent banner.
+  const ruleTop=svgNode('path',{d:'M0 1H1600',stroke:'#b99b4f','stroke-width':1,fill:'none'});
+  const ruleBottom=svgNode('path',{d:'M0 107H1600',stroke:'#b99b4f','stroke-width':1,fill:'none'});
+  const v9Letters=svgNode('g',{id:'p2-v9-letter-paths'});
+  banner.append(ruleTop,ruleBottom,v9Letters);kinetic.append(banner);
+  function makeSeal(kind){
+   const group=svgNode('g',{class:'p2-kinetic-seal'});
+   const shell=svgNode('rect',{width:500,height:500,fill:'#647D54',
+    stroke:'#b99b4f','stroke-width':2});group.append(shell);
+   const initial=svgNode('g',{class:'p2-kinetic-initial'});
+   const copy=svgNode('g',{class:'p2-kinetic-scripture',opacity:0});
+   const addText=(host,value,x,y,size=22,fill='#f4eedf',extra={})=>{
+    const node=svgNode('text',{x,y,'font-size':size,fill,...extra});node.textContent=value;
+    host.append(node);return node;
+   };
+   addText(initial,kind===0?'04 / 07':'ROMANS 10:17',29,56,24,'#eed79a',{'letter-spacing':3});
+   addText(initial,kind===0?'OLIVE MOUNTAIN':'THE WORD',29,202,46,'#f4eedf');
+   addText(initial,kind===0?'橄欖山':'可見信道',29,283,40,'#f4eedf');
+   const label=kind===0?'ROMANS 13:12 / KJV':'ROMANS 10:17 / KJV';
+   addText(copy,label,29,39,16,'#f0d38e',{'font-family':'Arial,sans-serif','font-weight':600,'letter-spacing':3});
+   copy.append(svgNode('path',{d:'M29 53H471',stroke:'#d2b66f','stroke-width':1}));
+   const english=kind===0?[
+    ['THE NIGHT IS FAR SPENT,',114],['THE DAY IS AT HAND:',157]]:[
+    ['SO THEN FAITH COMETH',112],['BY HEARING, AND HEARING',152],['BY THE WORD OF GOD.',192]];
+   english.forEach(([line,y])=>addText(copy,line,29,y,29));
+   if(kind===0){
+    addText(copy,'黑夜已深，白晝將近。',29,240,27);
+    copy.append(svgNode('path',{d:'M29 276H471',stroke:'#d2b66f','stroke-width':1,opacity:.6}));
+    [['LET US THEREFORE CAST OFF',337],['THE WORKS OF DARKNESS,',367],
+     ['AND LET US PUT ON THE ARMOUR OF LIGHT.',397]].forEach(([line,y])=>
+      addText(copy,line,29,y,19,'#f4eedf',{'font-style':'italic'}));
+   }else{
+    copy.append(svgNode('path',{d:'M29 236H471',stroke:'#d2b66f','stroke-width':1,opacity:.6}));
+    addText(copy,'可見信道是從聽道來的，',29,303,27);
+    addText(copy,'聽道是從基督的話來的。',29,344,27);
+   }
+   copy.append(svgNode('path',{d:'M29 455H471',stroke:'#d2b66f','stroke-width':1}));
+   addText(copy,kind===0?'WATCH FOR THE DAWN':'OLIVE MOUNTAIN / 04',29,482,16,
+    '#f0d38e',{'font-family':'Arial,sans-serif','font-weight':600,'letter-spacing':3});
+   group.append(initial,copy);return {group,shell,initial,copy};
+  }
+  const seals=[makeSeal(0),makeSeal(1)];
+  const initialInks=seals.map(seal=>[...seal.initial.querySelectorAll('text')]
+   .map(node=>({node,original:node.getAttribute('fill')})));
+  // Real second-layer scripture is revealed beneath these moving seals by a
+  // reversible type-high wipe; no substitute forme is inserted in that layer.
+  const sealWipes=seals.map((seal,i)=>{
+   const clip=svgNode('clipPath',{id:'p2-kinetic-seal-wipe-'+i});
+   const aperture=svgNode('rect',{x:0,y:0,width:500,height:500});
+   clip.append(aperture);defs.append(clip);
+   seal.group.setAttribute('clip-path','url(#p2-kinetic-seal-wipe-'+i+')');
+   kinetic.append(seal.group);return aperture;
+  });
+  sevenfold?.replaceChildren(kinetic);
+  fetch('/images/westside-watch-lettering-v9-clean-kern.svg').then(r=>{
+   if(!r.ok)throw Error('Original V9 lettering unavailable');return r.text();
+  }).then(xml=>{
+   const original=new DOMParser().parseFromString(xml,'image/svg+xml');
+   const paths=[...original.querySelectorAll('path[data-letter]')];
+   if(paths.length!==13||paths.map(node=>node.getAttribute('data-letter')).join('')!=='WESTSIDEWATCH')
+    throw Error('V9 glyph identity mismatch');
+   paths.forEach(node=>v9Letters.append(document.importNode(node,true)));
+   stage.dataset.p2Wordmark='v9-final-13-paths';
+  }).catch(error=>{stage.dataset.p2Wordmark='load-error';console.error(error)});
+ function inlinePreviewColumns(){
+  if(!secondIndex)return 4;
+  const tracks=getComputedStyle(secondIndex).gridTemplateColumns.split(' ').filter(Boolean);
+  return Math.max(1,tracks.length||4);
+ }
+ function placeInlinePreview(index){
+  const columns=inlinePreviewColumns();
+  const nextRow=(Math.floor(index/columns)+1)*columns;
+  // Codrops: expand directly beneath the selected thumbnail row.
+  secondIndex.insertBefore(detail,secondButtons[nextRow]||null);
+  second.dataset.activeSpeaker=String(index);
+ }
+ const secondSpeakerOpeners=[];
+ const secondButtons=roster.map((speaker,index)=>{
+  const button=document.createElement('button');button.type='button';
+  button.className='olive-second-layer__person';button.setAttribute('aria-pressed','false');
+  button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','olive-second-detail');
+  button.setAttribute('aria-label',speaker[2]+' · '+speaker[1]);
+  const img=document.createElement('img');img.src='/images/olive/'+speaker[0]+'-editorial.png';
+  img.alt='';img.loading='lazy';
+  const caption=document.createElement('span');caption.textContent=speaker[2]+' / '+speaker[1];
+  button.append(img,caption);secondIndex?.append(button);
+  const showSpeaker=(instant=false)=>{
+   const origin=instant?null:img.getBoundingClientRect();
+   const flipSource=instant?null:window.Flip?.getState(img);
+   secondButtons.forEach(b=>{const on=b===button;b.setAttribute('aria-pressed',String(on));b.setAttribute('aria-expanded',String(on))});
+   const back=document.createElement('button');back.type='button';
+   back.className='olive-second-layer__back';back.textContent='← 十二位講員 / THE TWELVE';
+   back.addEventListener('click',()=>{
+    second.dataset.view='index';detail.hidden=true;
+    secondButtons.forEach(b=>{b.setAttribute('aria-pressed','false');b.setAttribute('aria-expanded','false')});
+    button.focus({preventScroll:true});
+   });
+   const label=document.createElement('span');label.className='olive-second-layer__label';
+   label.textContent='04 / 07 · OLIVE MOUNTAIN';
+   const h=document.createElement('h2');h.textContent=speaker[2];
+   const zh=document.createElement('p');zh.lang='zh-Hant';zh.textContent=speaker[1];
+   const image=document.createElement('img');image.src=img.src;image.alt=caption.textContent;
+   image.className='olive-second-layer__speaker-portrait';
+   const passage=window.P2OliveScriptures?.cards?.[index];
+   const verseZh=document.createElement('blockquote');verseZh.lang='zh-Hant';
+   verseZh.textContent=passage?.excerpt||'';
+   const verseEn=document.createElement('blockquote');verseEn.lang='en';
+   verseEn.textContent=passage?.excerptEn||'';
+   const reference=document.createElement('cite');
+   reference.textContent=(passage?.referenceZh||'')+' / '+(passage?.referenceEn||'')+' · KJV';
+   const hero=document.createElement('header');hero.className='olive-second-layer__speaker-heading';
+   hero.append(label,h,zh);
+   const verses=document.createElement('div');verses.className='olive-second-layer__speaker-scripture';
+   verses.append(verseZh,verseEn,reference);
+   const head=document.createElement('div');head.className='olive-second-layer__speaker-hero';
+   head.append(image,hero,verses);
+   const series=document.createElement('section');series.className='olive-second-layer__series';
+   const seriesHeading=document.createElement('h3');seriesHeading.textContent='系列講座 / LECTURE SERIES';
+   const catalogue=document.createElement('div');catalogue.className='olive-second-layer__series-grid';
+   // The lecture catalogue is the left-hand navigation, while the large
+   // reserved right-hand folio is the actual, shared sermon viewing surface.
+   // Do not mount a player inside an individual narrow catalogue card.
+   const preview=document.createElement('aside');
+   preview.className='olive-second-layer__sermon-preview';
+   preview.dataset.state='idle';preview.setAttribute('aria-label','講道影片預覽');
+   const previewLabel=document.createElement('p');
+   previewLabel.className='olive-second-layer__sermon-preview-label';
+   previewLabel.textContent='講道預覽 / SERMON PREVIEW';
+   const previewTitle=document.createElement('p');
+   previewTitle.className='olive-second-layer__sermon-preview-title';
+   previewTitle.textContent='選擇左側講道主題';
+   const previewStage=document.createElement('div');
+   previewStage.className='olive-second-layer__sermon-preview-stage';
+   const previewHint=document.createElement('p');
+   previewHint.className='olive-second-layer__sermon-preview-hint';
+   previewHint.textContent='點選講道題目，影片將在這裡展開。';
+   previewStage.append(previewHint);
+   preview.append(previewLabel,previewTitle,previewStage);
+   const episodeControls=[];
+   const items=window.P2OliveSeries?.[speaker[0]]||[];
+   if(items.length){
+    items.forEach((entry,i)=>{
+     const article=document.createElement('article');article.className='olive-second-layer__series-card';
+     const serial=document.createElement('span');serial.textContent=String(i+1).padStart(2,'0');
+     const title=document.createElement('h4');title.textContent=entry.titleZh||entry.title||'';
+     const english=document.createElement('p');english.textContent=entry.titleEn||'';
+     const count=document.createElement('small');
+     count.textContent=Array.isArray(entry.episodes)?entry.episodes.length+' 講':'';
+     article.append(serial,title,english,count);
+     if(Array.isArray(entry.episodes)&&entry.episodes.length){
+      const playlist=document.createElement('div');playlist.className='olive-second-layer__episodes';
+      entry.episodes.forEach(episode=>{
+       if(!/^[A-Za-z0-9_-]{11}$/.test(episode.videoId||''))return;
+       const play=document.createElement('button');play.type='button';
+       play.className='olive-second-layer__episode';play.textContent=episode.title;
+       play.setAttribute('aria-label','在本頁播放 '+speaker[1]+'：'+episode.title);
+       play.setAttribute('aria-pressed','false');episodeControls.push(play);
+       if(episode.status==='title-unverified')play.dataset.titleStatus='unverified';
+       play.addEventListener('click',()=>{
+        episodeControls.forEach(control=>control.setAttribute('aria-pressed',String(control===play)));
+        const player=document.createElement('div');player.className='olive-second-layer__player';
+        const frame=document.createElement('iframe');
+        frame.title=speaker[1]+'｜'+episode.title;
+        frame.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(episode.videoId)+'?rel=0';
+        frame.loading='lazy';frame.allow='autoplay; encrypted-media; picture-in-picture';
+        frame.allowFullscreen=true;player.append(frame);
+        previewTitle.textContent=episode.title;
+        previewStage.replaceChildren(player);
+        preview.dataset.state='playing';
+        if(matchMedia('(max-width:950px)').matches){
+         preview.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'});
+        }
+       });playlist.append(play);
+      });
+      article.append(playlist);
+     }else if(Array.isArray(entry.indexKeys)&&entry.indexKeys.length){
+      const note=document.createElement('small');note.textContent='共用索引已保存，待系列清單調試';article.append(note);
+     }
+     catalogue.append(article);
+    });
+   }else{
+    const note=document.createElement('p');note.className='olive-second-layer__series-empty';
+    note.textContent='系列講座目錄整理中 · SERIES CATALOGUE IN PREPARATION';
+    catalogue.append(note);
+   }
+   series.append(seriesHeading,catalogue,preview);
+   detail.replaceChildren(back,head,series);
+   placeInlinePreview(index);
+   detail.hidden=false;detail.dataset.speaker=speaker[0];second.dataset.view='speaker';
+   if(!instant)requestAnimationFrame(()=>detail.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'}));
+   // Full folio opens in place, keeping the first-page Scripture as
+   // the leading structure and reserving genuine room for lecture series.
+   if(!instant&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    requestAnimationFrame(()=>{
+     const to=image.getBoundingClientRect();
+     if(to.width>0&&to.height>0&&origin.width>0&&origin.height>0){
+      if(window.gsap&&window.Flip&&flipSource){
+       const startVars=Flip.fit(image,flipSource,{getVars:true,scale:true});
+       gsap.from(image,{...startVars,duration:.78,ease:'power3.out',
+        clearProps:'transform'});
+       stage.dataset.p2SpeakerMotion='gsap-flip-fit';
+      }else{
+       // Fail gracefully if the public CDN is unavailable.
+       image.animate([
+        {transform:'translate3d('+(origin.left-to.left)+'px,'+(origin.top-to.top)+
+         'px,0) scale('+(origin.width/to.width)+','+(origin.height/to.height)+')'},
+        {transform:'translate3d(0,0,0) scale(1,1)'}
+       ],{duration:760,easing:'cubic-bezier(.22,1,.36,1)'});
+       stage.dataset.p2SpeakerMotion='fallback-waapi';
+      }
+     }
+     [hero,verses,series].forEach((el,i)=>el.animate([
+      {clipPath:'inset(0 100% 0 0)',transform:'translateY(12px)'},
+      {clipPath:'inset(0 0 0 0)',transform:'translateY(0)'}
+     ],{duration:620,delay:140+i*115,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'}));
+    });
+   }
+  };
+  secondSpeakerOpeners[index]=showSpeaker;
+  button.addEventListener('click',()=>showSpeaker());
+  return button;
+ });
+ // Responsive row placement retains the inline Codrops expansion.
+ let inlineResizeRAF=0;
+ addEventListener('resize',()=>{
+  if(second.dataset.view!=='speaker')return;
+  cancelAnimationFrame(inlineResizeRAF);
+  inlineResizeRAF=requestAnimationFrame(()=>{
+   const index=Number(second.dataset.activeSpeaker);
+   if(Number.isInteger(index)&&index>=0&&index<secondButtons.length)
+    placeInlinePreview(index);
+  });
+ },{passive:true});
+  // The seven-color entry is FORWARD ONLY. Returning is an immediate restore
+  // of the current P2 scroll page, never a reverse performance over portraits.
+ const masthead=$('#olive-twin-entry');
+ const handoffClock={value:0};
+ let handoffProgress=0,handoffTarget=0,handoffOriginD=null;
+ const handoffTimeline=window.gsap?.timeline({paused:true,onUpdate:()=>{
+  handoffProgress=handoffClock.value;schedule();
+  }})?.to(handoffClock,{value:1,duration:7.6,ease:'none'});
+ function resetHandoff(){
+  handoffTarget=0;handoffOriginD=null;handoffTimeline?.pause(0);
+  handoffClock.value=0;handoffProgress=0;
+  stage.dataset.p2EntryMethod='first-layer';
+  if(second)second.scrollTop=0;
+  schedule();
+ }
+ function resetSecondIndex(){
+  second.dataset.view='index';detail.hidden=true;
+  secondButtons.forEach(button=>{
+   button.setAttribute('aria-pressed','false');
+   button.setAttribute('aria-expanded','false');
+  });
+ }
+ // Direct, zero-motion entry for a P2 portrait: build the exact existing
+ // speaker page, then reveal the existing second layer in the same frame.
+ // The masthead's distinct V9 animation remains available at EVERY P2
+ // stage, including the paired-folio passage. Only portraits bypass it.
+ function enterSecondInstant(index=null){
+  if(index!==null&&(!Number.isInteger(index)||index<0||index>=roster.length))return;
+  handoffTimeline?.pause(0);
+  handoffOriginD=currentDistance();
+  handoffTarget=1;handoffClock.value=1;handoffProgress=1;
+  if(index===null)resetSecondIndex();
+  else secondSpeakerOpeners[index](true);
+  second.scrollTop=0;
+  stage.dataset.p2EntryMethod=index===null?'instant-index':'instant-speaker';
+  stage.dataset.p2RequestedSpeaker=index===null?'':roster[index][0];
+  schedule();
+  // The speaker page is below the index in the unchanged inline second-layer
+  // structure. Land on its own hero immediately; never strand the visitor at
+  // the twelve-thumbnails header after tapping an individual P2 portrait.
+  if(index!==null)requestAnimationFrame(()=>{
+   if(handoffProgress<.99999||second.dataset.activeSpeaker!==String(index))return;
+   const delta=detail.getBoundingClientRect().top-second.getBoundingClientRect().top-18;
+   second.scrollTop=Math.max(0,second.scrollTop+delta);
+  });
+ }
+ function setHandoff(target){
+  if(!target){resetHandoff();return}
+  // The masthead ALWAYS owns the approved V9 sevenfold performance. It is
+  // intentionally independent from the zero-motion speaker-portrait entry.
+  // Paired portraits are protected by the transition's upper-stage clipping
+  // and depart before the scripture squares descend toward layer two.
+  const d=currentDistance();
+  if(d<T.first-.01){stage.dataset.p2EntryGate='olive-speaker-pages-only';return}
+  stage.dataset.p2EntryGate='open';
+  resetSecondIndex();
+  stage.dataset.p2EntryMethod='sevenfold';
+  handoffOriginD=d;
+  handoffTarget=1;
+  if(second)second.scrollTop=0;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches||!handoffTimeline){
+   handoffTimeline?.pause(handoffTimeline.duration());
+   handoffClock.value=1;handoffProgress=1;schedule();return;
+  }
+  handoffTimeline.play();
+ }
+ if(masthead){
+  masthead.setAttribute('role','button');masthead.tabIndex=0;
+  masthead.setAttribute('aria-label','點擊橄欖山刊頭，展開第二層十二位講員');
+  masthead.setAttribute('aria-controls','olive-second-layer');
+  masthead.setAttribute('aria-expanded','false');
+  masthead.addEventListener('click',()=>setHandoff(1));
+  masthead.addEventListener('keydown',event=>{
+   if(event.key==='Enter'||event.key===' '){event.preventDefault();setHandoff(1);}
+  });
+ }
+  // The original P2 exhibit finale now enters the SAME inline layer.
+  enter.addEventListener('click',event=>{event.preventDefault();setHandoff(1)});
+ const returnToFirst=document.createElement('button');
+ returnToFirst.type='button';returnToFirst.className='olive-second-layer__return-first';
+ returnToFirst.textContent='← 返回 P2 第一層 / BACK TO P2';
+ returnToFirst.setAttribute('aria-label','返回 P2 橄欖山第一層');
+ second?.prepend(returnToFirst);
+ returnToFirst.addEventListener('click',()=>setHandoff(0));
+ document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&handoffProgress>0)setHandoff(0);
+ });
+ function paintSecondLayer(){
+  if(!second||!sevenfold||twins.length!==2)return;
+   const p=handoffProgress,complete=p>=.99999;
+   second.inert=!complete;
+   second.setAttribute('aria-hidden',complete?'false':'true');
+   if(masthead)masthead.setAttribute('aria-expanded',String(complete));
+   returnToFirst.tabIndex=complete?0:-1;
+   sevenfold.style.visibility=p>.001&&!complete?'visible':'hidden';
+   if(p>.001){folio.inert=true;folio.setAttribute('aria-hidden','true')}
+   if(complete){folio.inert=true;folio.setAttribute('aria-hidden','true')}
+   if(p<=.001){folio.inert=false;folio.removeAttribute('aria-hidden')}
+  const stageRect=stage.getBoundingClientRect(),w=stageRect.width,h=stageRect.height;
+   kinetic.setAttribute('viewBox','0 0 '+number(w)+' '+number(h));
+   const bannerWidth=w*.91,scale=bannerWidth/1600,bannerHeight=108*scale;
+   // A pair folio and a twelve-person index have DIFFERENT image geometry.
+   // Hidden index cards often sit above the viewport in the pair phase;
+   // using those boxes here placed the whole flag behind the top toolbar.
+   const sourcePosters=handoffOriginD!==null&&handoffOriginD<T.indexStart?
+    [first,left,right,nextLeft,nextRight]:cards;
+   const portraitTops=sourcePosters.filter(node=>{
+    const style=getComputedStyle(node);
+    return style.display!=='none'&&style.visibility==='visible';
+   }).map(node=>node.getBoundingClientRect().top-stageRect.top)
+    .filter(Number.isFinite);
+   const firstPosterTop=portraitTops.length?Math.min(...portraitTops):h*.43;
+   // During paired-folio entry the masthead's lettering and two travelling
+   // squares must stay ABOVE the original portraits until those portraits
+   // have fully retired. The clipping is on the temporary SVG host alone:
+   // no original P2 print, typography, color or second-layer box is altered.
+   // Release it at p=.64, after pair opacity is exactly zero (p>=.63),
+   // and BEFORE the scripture seals begin their final descent at p=.68.
+   const protectPair=handoffOriginD!==null&&handoffOriginD<T.indexStart&&p<.64;
+   const safePortraitEdge=Math.max(0,Math.min(h,firstPosterTop-12));
+   sevenfold.style.clipPath=protectPair?
+    `inset(0px 0px ${number(Math.max(0,h-safePortraitEdge))}px 0px)`:'none';
+   stage.dataset.p2PairArtworkGuard=protectPair?'clipped-above-portraits':'released';
+   // Keep the V9 banner entirely above the already-approved poster portraits.
+   // The 24px clearance protects their top edge at every viewport width.
+   const bannerX=(w-bannerWidth)/2;
+   const bannerY=Math.max(16,Math.min(h*.18,firstPosterTop-bannerHeight-24));
+   banner.setAttribute('transform',`translate(${number(bannerX)} ${number(bannerY)}) scale(${scale})`);
+   // No flag background: only the V9 glyphs, rules and travelling squares.
+   // The raised banner stays above visible prints during the opening beat.
+   const opened=ease((p-.06)/.32);
+   const flagRetire=ease((p-.71)/.20);
+   ribbonWindow.setAttribute('x',number((1-opened)*800+opened*800*flagRetire));
+   ribbonWindow.setAttribute('y',0);
+   ribbonWindow.setAttribute('width',number(opened*1600*(1-flagRetire)));
+   ribbonWindow.setAttribute('height',108);
+   const ink=sevenColor(p),openingColor=ease((p-.065)/.16);
+   // V9 lettering begins in the masthead's gold; both moving squares retain
+   // their respective olive/gold until the shared seven-color ink takes over.
+   const letterInk=hexMix(sourceSquareColors[1],ink,openingColor);
+   v9Letters.setAttribute('fill',letterInk);
+   ruleTop.setAttribute('stroke',letterInk);
+   ruleBottom.setAttribute('stroke',letterInk);
+   const capHeight=100*scale,letterCenterY=bannerY+54*scale;
+   // Use the existing second layer's *actual* iframe and two Scripture Studio
+   // plates as end points. Never derive a new layout from the stage dimensions.
+   const mother=second.querySelector('.olive-second-layer__scripture-master');
+   const motherRect=mother.getBoundingClientRect();
+   let formes=[];
+   try{formes=[...mother.contentDocument.querySelectorAll('#plateZh,#plateEn')];}
+   catch(_error){/* Browser isolation can disallow iframe DOM access. */}
+   const iframeWidth=motherRect.width;
+   const cssPlateSize=Math.min(iframeWidth*.44,
+    iframeWidth<=560?iframeWidth*.43:
+    iframeWidth<=900?Math.min(285,Math.max(150,iframeWidth*.35)):
+    Math.min(355,Math.max(190,iframeWidth*.27)));
+   const frameX=motherRect.left-stageRect.left,frameY=motherRect.top-stageRect.top;
+   const landing=seals.map((_,i)=>{
+    const actual=formes[i]?.getBoundingClientRect();
+    return actual&&actual.width>0?{
+     x:frameX+actual.left,y:frameY+actual.top,size:actual.width
+    }:{x:frameX+(i?iframeWidth-cssPlateSize:0),y:frameY,size:cssPlateSize};
+   });
+   stage.dataset.p2LandingMeasure=formes.length===2?'scripture-studio-plate-dom':'scripture-studio-original-css';
+   // Two exact square apertures grow into the full second-layer page. The old
+   // and new plates share their edges during the wipe: no terminal jump/cut.
+   const pageReveal=ease((p-.925)/.075);
+   const sourceRects=twins.map(node=>node.getBoundingClientRect());
+   // Rise out of the masthead first, while still left of the speaker prints;
+   // only then move horizontally along the transparent flag above the portraits.
+   const lift=ease((p-.015)/.145);
+   const split=ease((p-.08)/.26),cross=ease((p-.37)/.34),seal=ease((p-.68)/.25);
+   const endCenters=[bannerX+capHeight/2,bannerX+bannerWidth-capHeight/2];
+   // Travel THROUGH their own portions of the English wordmark, then open
+   // outward into two distinct scripture squares. Never swap the squares:
+   // their reverse cross-over used to stack two growing verses on one another.
+   const letterStations=[bannerX+bannerWidth*.43,bannerX+bannerWidth*.68];
+   let carrierBottom=0;
+   sourceRects.forEach((rect,i)=>{
+    const sourceX=rect.left-stageRect.left+rect.width/2;
+    const sourceY=rect.top-stageRect.top+rect.height/2;
+    let cx=mix(sourceX,endCenters[i],split),cy=mix(sourceY,letterCenterY,lift);
+    let size=mix(rect.width,capHeight,lift);
+    cx=mix(cx,letterStations[i],cross);
+    const target=landing[i];
+    const destX=target.x+target.size/2,destY=target.y+target.size/2;
+    cx=mix(cx,destX,seal);cy=mix(cy,destY,seal);size=mix(size,target.size,seal);
+    const group=seals[i].group;
+    group.setAttribute('transform',`translate(${number(cx-size/2)} ${number(cy-size/2)}) scale(${size/500})`);
+    carrierBottom=Math.max(carrierBottom,cy+size/2);
+    const colorSettle=ease((p-.78)/.15);
+    const squareInk=hexMix(sourceSquareColors[i],ink,openingColor);
+    seals[i].shell.setAttribute('fill',hexMix(squareInk,i===0?'#B8944A':'#61774A',colorSettle));
+    seals[i].shell.setAttribute('stroke',hexMix('#b99b4f',i===0?'#61774A':'#B8944A',colorSettle));
+    initialInks[i].forEach(({node,original})=>{
+     node.setAttribute('fill',i===0?original:hexMix(sourceSquareText[i],original,openingColor));
+    });
+    seals[i].initial.setAttribute('opacity',1-ease((p-.12)/.15));
+    seals[i].copy.setAttribute('opacity',ease((p-.75)/.13));
+    sealWipes[i].setAttribute('width',number(500*(1-pageReveal)));
+    twins[i].style.opacity=p>.001?'0':'';
+   });
+   // Once seals begin to grow, the genuine second-layer field progressively
+   // replaces the FIRST layer behind them, top-down. Its speaker grid remains
+   // below the masked edge until the two seals reach their actual destination.
+   // Thus a carrier never visually sits on top of either page's portraits.
+   const secondIndexTop=secondIndex.getBoundingClientRect().top-stageRect.top;
+   const safeHeaderBottom=Math.max(0,Math.min(h,secondIndexTop-10));
+   const fieldAdvance=ease((p-.62)/.20);
+   const fieldBottom=Math.min(safeHeaderBottom,(carrierBottom+24)*fieldAdvance);
+   const curtainBottom=mix(fieldBottom,h,pageReveal);
+   if(p>.62){
+    second.style.visibility='visible';
+    second.style.clipPath=`inset(0 0 ${number(Math.max(0,h-curtainBottom))}px 0)`;
+   }else{second.style.visibility='hidden';second.style.clipPath='none'}
+   // The two authentic mother formes appear only when the travelling seals
+   // are registered exactly over them, then take over through the seal wipe.
+   mother.style.visibility=p>.925?'visible':'hidden';
+   returnToFirst.style.visibility=complete?'visible':'hidden';
+   // Handoff is visibility-only: the existing second-layer page is never
+   // restyled, reflowed or filled with duplicated transition artwork.
+   if(p>.005){enter.style.visibility='hidden';enter.style.pointerEvents='none';enter.tabIndex=-1}
+   else{enter.style.visibility='';enter.style.pointerEvents='';enter.removeAttribute('tabindex')}
+  stage.dataset.p2Layer=p<=0?'first':p<.99999?'sevenfold-handoff':'second';
+  stage.dataset.p2Sevenfold=p.toFixed(4);
+   stage.dataset.p2ScriptureMaster='original-second-layer-scripture-studio';
+   stage.dataset.p2SquareAspect='1:1-exact-original-scripture-landing';
+   stage.dataset.p2LetterSquareColor=letterInk;
+   stage.dataset.p2BannerRulesColor=letterInk;
+   stage.dataset.p2MastheadStartColors=sourceSquareColors.join(',');
+ }
+
+ if(window.P2OliveScriptures?.cards?.length!==roster.length||
+    !roster.every((r,i)=>r[0]===window.P2OliveScriptures.cards[i].slug))
+   throw new Error('04 scripture editor: 12 sourced verses must match the approved speaker roster');
+ // The user's two-day APPROVED original English composition is not in
+ // the portrait PNG. It lives in speaker-baseline-v1 (shadow DOM: 12
+ // position, width, line, font-size, optical size and occlusion records).
+ // Every original poster must therefore be a COMPOSITE, NOT a naked PNG.
+ // Never duplicate its type by rebuilding it from roster labels.
+ const frozen=window.OliveSpeakerBaseline;
+ if(!frozen||typeof frozen.mount!=='function'){
+  throw new Error('CRITICAL: protected Olive speaker typographic master is unavailable');
+ }
+ function protectArtwork(figure,index){
+  const img=figure.querySelector('img');
+  if(!img)throw new Error('No original portrait in '+figure.id);
+  let art=figure.querySelector('.olive-stage__artwork');
+  if(!art){
+   art=document.createElement('div');
+   art.className='olive-stage__artwork';
+   img.parentNode.insertBefore(art,img);
+   art.append(img);
+   img.classList.add('olive-stage__original');
+  }
+  // Frozen component is keyed by speaker; old shadow roots must be
+  // disconnected when the pair changes. Do not write into the master.
+  const target=roster[index][0];
+  // Flip only Kou's editorial PNG, not its protected English/Chinese
+  // Shadow DOM overlay: lettering remains correctly readable and uses
+  // the blank side opened by mirroring the original portrait artwork.
+  art.dataset.speaker=target;
+  const overlay=art.querySelector('olive-speaker-baseline');
+  if(overlay&&overlay.dataset.speaker!==target)overlay.remove();
+  if(!art.querySelector('olive-speaker-baseline'))frozen.mount(art,target);
+  figure.dataset.oliveProtectedBaseline='v1';
+  figure.dataset.speakerIndex=String(index);
+  figure.setAttribute('aria-label',roster[index][2]+' · '+roster[index][1]+'，開啟講員單頁');
+  return art;
+ }
+ // A card must be ONE physical assembly. V63 incorrectly rotated shell,
+ // portrait and protected Shadow DOM type as three independent planes.
+ // Keep the original composite and its frozen English together in one
+ // carrier. The single carrier alone receives a 3D transform.
+ const carriers=[0,1].map((i)=>{
+  const card=document.createElement('div');
+  card.className='olive-folio-carrier';
+  card.dataset.folioSide=i===0?'left':'right';
+  pair.append(card);
+  card.append(i===0?invitationLeft:invitationRight,
+              i===0?left:right,
+              i===0?reverseLeft:reverseRight);
+  return card;
+ });
+ const figures=[left,right,nextLeft,nextRight];
+ for(const figure of figures){
+  const caption=document.createElement('figcaption');
+  caption.setAttribute('aria-hidden','true');figure.append(caption);
+ }
+ protectArtwork(first,0);
+ // The actual on-stage portrait is the direct speaker entry. The rotating
+ // carrier, engraved reverse and scripture companion remain untouched.
+ // Read the figure's CURRENT speakerIndex, not a stale fixed pair number.
+ [first,left,right,nextLeft,nextRight].forEach(figure=>{
+  figure.setAttribute('role','button');figure.tabIndex=-1;
+  const open=event=>{
+   if(getComputedStyle(figure).visibility!=='visible')return;
+   const index=Number(figure.dataset.speakerIndex);
+   if(!Number.isInteger(index)||index<0||index>=roster.length)return;
+   event.preventDefault();event.stopPropagation();enterSecondInstant(index);
+  };
+  figure.addEventListener('click',open);
+  figure.addEventListener('keydown',event=>{
+   if(event.key==='Enter'||event.key===' '){event.preventDefault();open(event)}
+  });
+ });
+ const cards=roster.map(([slug,zh,en],i)=>{
+  const a=document.createElement('a');
+  a.className='olive-stage__index-card';
+  a.href='/olive/';a.tabIndex=-1;
+  a.dataset.speaker=slug;a.setAttribute('aria-label',en+' · '+zh+'，進入橄欖山');
+  const img=document.createElement('img');
+  img.src=pathFor(i);img.alt=en+' · '+zh;
+  img.decoding='async';img.loading='eager';
+  const cap=document.createElement('span');
+  cap.textContent=String(i+1).padStart(2,'0')+' / '+en+' · '+zh;
+  a.append(img,cap);
+  a.style.zIndex=String(i+1);
+  overview.append(a);
+  protectArtwork(a,i);
+  a.addEventListener('click',event=>{
+   event.preventDefault();event.stopPropagation();enterSecondInstant(i);
+  });
+  return a;
+ });
+ // Decode every approved original speaker composite while 03 is still
+ // on-screen, before the first rapid MERSI single-speaker handoff.
+ // The image elements already exist for the twelve-index; this triggers
+ // no additional artwork, font replacement, or independent animation.
+ const posterDecode=Promise.all(cards.map(card=>
+  card.querySelector('img').decode().catch(()=>null)));
+ stage.dataset.p2PortraitDecode='pending';
+ posterDecode.then(()=>{stage.dataset.p2PortraitDecode='ready'});
+ function setFigure(element,i){
+  if(element.dataset.speakerIndex===String(i) &&
+     element.querySelector('olive-speaker-baseline')?.dataset.speaker===roster[i][0])return;
+  const [slug,zh,en]=roster[i];
+  const img=element.querySelector('img');
+  img.src=pathFor(i);img.alt=en+' · '+zh;
+  // The approved name and Chinese are INSIDE the artwork, as originally
+  // placed; this outer caption is just a discrete folio number.
+  element.querySelector('figcaption').textContent=
+   String(i+1).padStart(2,'0')+' / 12';
+  protectArtwork(element,i);
+ }
+ function originalProgress(d){
+  const boundary=3.0775,limit=6.5,v=Math.min(d,limit);
+  if(v<=boundary){
+   const scene=v<=1.8?.1+v*(.4/1.8):.5+(v-1.8);
+   return clamp(scene/2.9);
+  }
+  const vh=2.37+(v-boundary)/(limit-boundary)*(4-2.37);
+  return clamp(vh<=2.9?.75*vh/2.9:.75+.25*(vh-2.9)/1.1);
+ }
+ let lastGeometry=null,queued=false;
+ function measure(){
+  const doc=base.contentDocument;
+  const one=doc?.querySelector('#emmaus .emmaus__left');
+  const plate=doc?.querySelector('#emmaus .emmaus__right');
+  if(!one||!plate)return lastGeometry;
+  const a=one.getBoundingClientRect(),b=plate.getBoundingClientRect();
+  const src=base.getBoundingClientRect(),dest=stage.getBoundingClientRect();
+  if(a.width<30||b.width<30||a.height<30||b.height<30)return lastGeometry;
+  const x=Math.min(a.left,b.left)+src.left-dest.left;
+  const y=Math.min(a.top,b.top)+src.top-dest.top;
+  const w=Math.max(a.right,b.right)-Math.min(a.left,b.left);
+  const h=Math.max(a.bottom,b.bottom)-Math.min(a.top,b.top);
+  if(x<0||y<0||x+w>dest.width+3||y+h>dest.height+3)return lastGeometry;
+  // Both coordinates are in the exact published ONE+Doré scene, in px.
+  lastGeometry={x,y,w,h,
+   plate:{x:b.left+src.left-dest.left-x,
+          y:b.top+src.top-dest.top-y,w:b.width,h:b.height}};
+  return lastGeometry;
+ }
+ // V79: the original MERSI scene has multiple registered poster surfaces.
+ // Prevent unchanged geometry from invalidating style/layout every scroll frame.
+ const registeredGeometry=new WeakMap();
+ function position(el,x,y,w,h){
+  const next=[x,y,w,h].map(v=>v.toFixed(2)+'px');
+  const prev=registeredGeometry.get(el);
+  if(prev&&next.every((v,i)=>v===prev[i]))return;
+  if(!prev||next[0]!==prev[0])el.style.left=next[0];
+  if(!prev||next[1]!==prev[1])el.style.top=next[1];
+  if(!prev||next[2]!==prev[2])el.style.width=next[2];
+  if(!prev||next[3]!==prev[3])el.style.height=next[3];
+  registeredGeometry.set(el,next);
+ }
+ // ONE continuous landscape plate. The previous four registered panels
+ // created rectangular cuts and could never read as one mountain.
+ // Each protected composite (PNG + frozen Shadow DOM lettering) MUST
+ // remain a true 3:4 print. We calculate the actual outer boxes from that
+ // immutable aspect instead of letting an arbitrary responsive cell resize
+ // its image and expose synthetic gray strips.
+ function galleryRects(g){
+  const portraitRatio=3/4;
+  const mobile=g.w<600;
+  const margin=mobile?Math.max(10,Math.min(20,g.w*.037)):
+    Math.max(36,Math.min(118,g.w*.065));
+  // V82: a genuine editorial masthead reserves a separate reading band.
+  // 01–03 does not move; only the settled 04 printed poster grid receives
+  // more upper space. Preserve the poster 3:4 composite and original text.
+  // Mobile bilingual KJV chapter text needs a genuine gutter above the
+  // first folio; prior 390px art proof let Romans 10:17 kiss the foil border.
+  const top=mobile?Math.max(124,Math.min(145,g.h*.158)):
+    Math.max(208,Math.min(238,g.h*.24));
+  const bottom=mobile?Math.max(46,Math.min(67,g.h*.075)):
+    Math.max(50,Math.min(73,g.h*.078));
+  const gap=mobile?12:Math.max(18,Math.min(37,g.w*.03));
+  const maxHeight=Math.max(1,g.h-top-bottom);
+  if(mobile){
+   // True 3:4 upper and lower PRINTS. Mobile cannot physically show two
+   // full-width 3:4 portraits in one 9:16 viewport; center them instead
+   // of stretching or cutting the frozen lettering.
+   const maxPosterH=(maxHeight-gap)/2;
+   const posterW=Math.min(g.w-2*margin,maxPosterH*portraitRatio);
+   const posterH=posterW/portraitRatio;
+   const x=(g.w-posterW)/2;
+   const y=top+Math.max(0,(maxHeight-(2*posterH+gap))/2);
+   return [{x,y,w:posterW,h:posterH},
+           {x,y:y+posterH+gap,w:posterW,h:posterH}];
+  }
+  const maxPosterW=(g.w-2*margin-gap)/2;
+  const posterW=Math.min(maxPosterW,maxHeight*portraitRatio);
+  const posterH=posterW/portraitRatio;
+  const x=(g.w-(2*posterW+gap))/2;
+  const y=top+Math.max(0,(maxHeight-posterH)/2);
+  return [{x,y,w:posterW,h:posterH},
+          {x:x+posterW+gap,y,w:posterW,h:posterH}];
+ }
+ // Separate geometries: a full printed invitation card takes over the
+ // old Doré frame; the approved 3:4 speaker PRINT mounts within it.
+ // None of these calculations can resize a settled speaker poster.
+ function printInsideCard(c){
+  const side=c.w*.073,top=c.h*.12,bottom=c.h*.10;
+  const w=Math.max(1,Math.min(c.w-2*side,(c.h-top-bottom)*.75));
+  const h=w/.75;
+  return {x:c.x+(c.w-w)/2,
+    y:c.y+top+Math.max(0,(c.h-top-bottom-h)/2),w,h};
+ }
+ function cardAroundPoster(r,other,mobile,sideIndex){
+  const gap=mobile?
+    Math.max(0,other.y-(r.y+r.h)):
+    Math.abs(other.x-(r.x+r.w));
+  // A gallery invitation has ONE deliberately wide OUTER rail for a
+  // localized Olives relief, and a narrow INNER gutter between works.
+  // The original 3:4 poster rectangle is NEVER recomputed or touched.
+  const outer=mobile?Math.max(18,Math.min(28,r.w*.08)):
+    Math.max(36,Math.min(56,r.w*.095));
+  const inner=mobile?Math.max(18,Math.min(28,r.w*.08)):
+    Math.max(6,Math.min(12,gap*.28));
+  const left=sideIndex===0?outer:inner;
+  const right=sideIndex===0?inner:outer;
+  const top=mobile?Math.min(24,Math.max(6,gap*.44)):
+    Math.max(68,Math.min(76,r.h*.112));
+  const bottom=mobile?Math.min(20,Math.max(4,gap*.40)):
+    Math.max(27,Math.min(34,r.h*.047));
+  return {x:r.x-left,y:r.y-top,w:r.w+left+right,h:r.h+top+bottom};
+ }
+ // Align the REGISTERED print engraving in the REAL exposed green paper
+ // above the frozen 3:4 poster, rather than pinning its gold ink to top:0.
+ // The source slot is taller than the settled pair; both are handled
+ // geometrically without ever moving/resizing the approved poster.
+ function positionInvitedEngraving(el,card,poster,mobile){
+  const exposed=Math.max(0,poster.y-card.y);
+  const safety=mobile?2:5;
+  const h=Math.min(mobile?22:70,Math.max(4,exposed-2*safety));
+  const y=Math.max(2,(exposed-h)/2);
+  // Derive the ONLY ink rail from registered card/poster geometry.
+  // Otherwise 80% of the decorative impression is hidden below the art.
+  const isRight=el.id==='olive-invitation-right';
+  const rail=isRight
+   ? Math.max(0,card.x+card.w-(poster.x+poster.w))
+   : Math.max(0,poster.x-card.x);
+  el.style.setProperty('--olive-outer-rail-width',rail.toFixed(2)+'px');
+  el.style.setProperty('--olive-foil-top',y.toFixed(2)+'px');
+  el.style.setProperty('--olive-foil-height',h.toFixed(2)+'px');
+ }
+ // Four editions, one publication: category cycles without touching art.
+ const imprintFamilies=['botanical','terrain','city','horizon'];
+ function setCardImprint(card,i){
+  const edition=imprintFamilies[i%imprintFamilies.length];
+  if(card.dataset.olivePrintFamily!==edition)
+   card.dataset.olivePrintFamily=edition;
+  card.dataset.olivePrintNumber=String(i+1).padStart(2,'0');
+  const imprint=card.querySelector('.olive-card__edition');
+  if(imprint){
+   const name=['BOTANICA','TERRAIN','JERUSALEM','HORIZON'][i%4];
+   const lettering=String(i+1).padStart(2,'0')+' / 12 · '+name;
+   if(imprint.textContent!==lettering)imprint.textContent=lettering;
+  }
+ }
+ function setCardCaption(card,i){
+  const en=card.querySelector('.olive-card__name-en');
+  const zh=card.querySelector('.olive-card__name-zh');
+  if(!en||!zh)throw new Error('Missing editorial invitation caption');
+  setCardImprint(card,i);
+  if(en.textContent!==roster[i][2])en.textContent=roster[i][2];
+  if(zh.textContent!==roster[i][1])zh.textContent=roster[i][1];
+ }
+ function changePair(index,transition=0,withNext=false,vertical=false){
+  setCardCaption(invitationLeft,index*2+(withNext&&transition>.5?2:0));
+  setCardCaption(invitationRight,index*2+1+(withNext&&transition>.5?2:0));
+  setFigure(left,index*2);setFigure(right,index*2+1);
+  if(withNext){
+   setFigure(nextLeft,(index+1)*2);setFigure(nextRight,(index+1)*2+1);
+   const crop=((1-transition)*100).toFixed(3);
+   // The same true MERSI opposition on desktop and mobile: LEFT or TOP
+   // uncovers downward; RIGHT or BOTTOM uncovers upward. No opacity fade.
+   nextLeft.style.clipPath='inset(0 0 '+crop+'% 0)';
+   nextRight.style.clipPath='inset('+crop+'% 0 0 0)';
+  }
+  nextLeft.style.visibility=withNext&&transition>0?'visible':'hidden';
+  nextRight.style.visibility=withNext&&transition>0?'visible':'hidden';
+ }
+ function layoutIndex(g,t){
+  // R39: the two approved square blocks own a physical editorial
+  // rail. Never place a poster underneath the masthead; on narrow
+  // screens the complete twelve-speaker grid follows that rail.
+  const narrow=g.w<700;
+  const cols=narrow?4:g.w>=900?6:4;
+  const rows=Math.ceil(12/cols);
+  const horizontal=g.w>=900?33:12;
+  const stageBounds=stage.getBoundingClientRect();
+  const mastheadBounds=twins[1].getBoundingClientRect();
+  const mastheadRight=mastheadBounds.right-stageBounds.left+38;
+  const mastheadBottom=mastheadBounds.bottom-stageBounds.top+24;
+  const reserveX=narrow?horizontal:Math.max(horizontal,mastheadRight);
+  const top=narrow?Math.max(108,mastheadBottom):
+    g.w>=900?Math.max(122,Math.min(150,g.h*.145)):Math.max(108,Math.min(132,g.h*.15));
+  const bottom=narrow?22:g.w>=900?72:64;
+  const gapX=g.w>=900?13:7;
+  // A caption is now OUTSIDE its original 3:4 print, on dark-green
+  // invitation stock. The portrait box itself NEVER includes the caption.
+  const rowGap=g.w>=900?31:21;
+  const availableW=g.w-reserveX-horizontal;
+  const maxW=(availableW-(cols-1)*gapX)/cols;
+  const maxH=(g.h-top-bottom-(rows-1)*rowGap)/rows;
+  const posterW=Math.max(1,Math.min(maxW,maxH*.75));
+  const posterH=posterW*4/3;
+  const totalW=cols*posterW+(cols-1)*gapX;
+  const totalH=rows*posterH+(rows-1)*rowGap;
+  const leftX=reserveX+(availableW-totalW)/2;
+  const topY=top+Math.max(0,(g.h-top-bottom-totalH)/2);
+  const anchors=galleryRects(g);
+  cards.forEach((card,i)=>{
+   const from=anchors[i%2];
+   const targetX=leftX+(i%cols)*(posterW+gapX);
+   const targetY=topY+Math.floor(i/cols)*(posterH+rowGap);
+   position(card,mix(from.x,targetX,t),mix(from.y,targetY,t),
+    mix(from.w,posterW,t),mix(from.h,posterH,t));
+  });
+  overview.style.setProperty('--index-caption-alpha',
+    String(ease((t-.69)/.31)));
+  overview.dataset.columns=String(cols);
+ }
+ function revealSplitField(node,u){
+  const reveal=clamp(u);
+  const isInvitation=node===ground;
+  // 03's genuine bookcloth remains only in the outgoing iframe. A plain
+  // OS olive canvas takes over as the Sermon invitation appears. The new
+  // print then travels LEFT. This is an editorial handoff, not a
+  // simultaneous two-panel wipe, a yellow intermediary or opacity fade.
+  const leftReveal=isInvitation?ease((reveal-.52)/.48):reveal;
+  const rightReveal=isInvitation?ease(reveal/.55):reveal;
+  node.style.visibility=reveal>0?'visible':'hidden';
+  const leftHalf=node.querySelector('[data-side="left"]');
+  const rightHalf=node.querySelector('[data-side="right"]');
+  if(leftHalf)leftHalf.style.clipPath='inset(0 0 '+
+   ((1-leftReveal)*100).toFixed(3)+'% 0)';
+  if(rightHalf)rightHalf.style.clipPath=isInvitation?
+   'inset('+((1-rightReveal)*100).toFixed(3)+'% 0 0 0)':
+   'inset(0 0 '+((1-rightReveal)*100).toFixed(3)+'% 0)';
+  node.dataset.reveal=reveal.toFixed(5);
+  node.dataset.leftReveal=leftReveal.toFixed(5);
+  node.dataset.rightReveal=rightReveal.toFixed(5);
+ }
+ // Front and reverse share an exact axis; controlled by one MERSI scroll value.
+ function turnFace(element,angle,axisX,axisY){
+  const origin=axisX.toFixed(2)+'px '+axisY.toFixed(2)+'px';
+  const transform='rotateY('+angle.toFixed(3)+'deg)';
+  if(element.style.transformOrigin!==origin)element.style.transformOrigin=origin;
+  if(element.style.transform!==transform)element.style.transform=transform;
+ }
+ function paint(){
+  queued=false;
+  const height=Math.max(innerHeight,1);
+  const d=currentDistance();
+  // Keep the click-to-enter motion on its chosen folio. Only an actual page
+  // scroll away from that origin cancels it (never merely being on a pair).
+  if(handoffTarget&&handoffOriginD!==null&&Math.abs(d-handoffOriginD)>.12)
+   resetHandoff();
+  if(base.contentWindow)base.contentWindow.postMessage({
+   type:'westside-p2-home-pose',
+   distance:Math.min(d,9.34),
+   legacyProgress:hostLegacyProgress===null?originalProgress(d):hostLegacyProgress,
+   active:embedded?hostActive:true
+  },location.origin);
+  const g=measure();
+  output.textContent=d.toFixed(2);slider.value=String(d);
+  stage.dataset.p2Distance=d.toFixed(4);
+  stage.dataset.p2FolioReady=g?'true':'false';
+  if(!g)return;
+  position(folio,g.x,g.y,g.w,g.h);
+  // Landscape is one uninterrupted plate behind the poster folio.
+  const stageActive=d>T.start+.00001;
+  folio.style.visibility=stageActive?'visible':'hidden';
+  const bridge=ease((d-T.start)/(T.first-T.start));
+  const form=ease((d-T.first)/(T.spread-T.first));
+  const firstTravel=ease(form/.73);
+  const secondArrival=ease((form-.57)/.43);
+  // MERSI source-stage handoff is a SINGLE short spatial takeover:
+  // complete the opaque OS olive curtain while the invitation is still
+  // registered over Doré, BEFORE its movement can expose old scripture.
+  // At d=10.26 the outgoing 03 page must be fully hidden, not in shards.
+  // Preserve the original reversible 03→04 reading-surface handoff.
+  const readingField=ease((d-T.first)/.065);
+  const bg=ease((d-T.groundStart)/(T.groundEnd-T.groundStart));
+  // The ACTUAL outgoing Emmaus 5:8 book cover lives inside the 01–03
+  // iframe. The neutral bridge must never duplicate its 5:8 binding.
+  // Once the 03→04 bridge is FULLY opaque, retire the iframe itself,
+  // before the poster spread travels away from its centre. Never hide it
+  // during the source turn; scrolling backwards restores it exactly.
+  const sourceTransferred=readingField>=.99999;
+  base.style.visibility=sourceTransferred?'hidden':'visible';
+  base.style.pointerEvents=sourceTransferred?'none':'';
+  stage.dataset.p2EmmausSource=sourceTransferred?'retired':'visible';
+  // Keep an OS-token, texture-free olive bridge under the settled prints.
+  // The real 03 cloth exits with its original iframe; the opposed masks
+  // stay scroll-linked and reversible. Never clone its 5:8 cover here.
+  revealSplitField(neutral,readingField);
+  revealSplitField(ground,bg);
+  // ONE is an outgoing transition source only. Once 04 has fully claimed
+  // the canvas there must be NO 03 cloth or gilding, even under gutters.
+  if(bg>=.99999)neutral.style.visibility='hidden';
+  // The source card and each arriving pair use the same scroll-driven
+  // print register as their photographs. No new timeline or RAF.
+  setCardImprint(firstInvitation,0);
+  const plateReveal=ease((d-T.start)/(T.first-T.start));
+  firstInvitation.style.setProperty('--olive-imprint-clip',
+   ((1-plateReveal)*100).toFixed(2)+'%');
+  const fan=ease((d-T.indexStart)/(T.indexEnd-T.indexStart));
+  // Subordinate the shared landscape to the twelve real speakers as
+  // the index completes; driven only by the existing reversible scroll.
+  stage.style.setProperty('--olive-ink-emphasis',(1-.46*fan).toFixed(4));
+  stage.style.setProperty('--olive-ink-botanical',(.75*(1-.42*fan)).toFixed(4));
+  const vertical=g.w<600;
+  // V60: every speaker gets an actual complete ink impression.
+  // No moving clipping rectangle: each existing botanical SVG edition
+  // and each actual geographical contour group is printed once and HELD.
+  // The first pair settles before the follow-on ten single-side entries.
+  const relayStep=(T.indexStart-T.pairStart)/11;
+  // A print edition enters the permanent stage when its SPEAKER
+  // turns BACK, not while the incoming portrait is moving. Every
+  // reverse is thus the seed of one successive permanent impression.
+  const impressions=side=>Array.from({length:6},(_,k)=>{
+   const speaker=2*k+side; // zero-based alternating roster
+   const start=speaker===11?T.indexStart-.28:
+    T.pairStart+speaker*relayStep+.65*relayStep;
+   const duration=speaker===11?.23:relayStep*.28;
+   return ease((d-start)/duration);
+  });
+  const plantLayers=impressions(0),terrainLayers=impressions(1);
+  const botanicalPlates=[...engraved.querySelectorAll('[data-print-impression]')];
+  botanicalPlates.forEach((plate,i)=>{
+   const opacity=plantLayers[i].toFixed(4);
+   if(plate.style.opacity!==opacity)plate.style.opacity=opacity;
+  });
+  const plant=plantLayers.reduce((a,b)=>a+b,0)/6;
+  const terrain=terrainLayers.reduce((a,b)=>a+b,0)/6;
+  if(engraved)engraved.style.visibility=(plant>0||terrain>0)?'visible':'hidden';
+  if(etchedLeft)etchedLeft.style.clipPath='none';
+  if(etchedRight)etchedRight.style.clipPath='none';
+  window.P2OliveEngraving?.paint(plantLayers,terrainLayers);
+  stage.dataset.p2EngravingPlant=plant.toFixed(4);
+  stage.dataset.p2EngravingTerrain=terrain.toFixed(4);
+  stage.dataset.p2PlantImpressions=String(plantLayers.filter(v=>v>.999).length);
+  stage.dataset.p2ContourImpressions=String(terrainLayers.filter(v=>v>.999).length);
+  stage.dataset.p2EngravingMode=plant>.999&&terrain>.999?'both':
+   plant>terrain?'botanical':terrain>plant?'topography':'clear';
+  const rects=galleryRects(g);
+  // Desktop uses true folio halves; on narrow phones two original posters
+  // occupy TOP/BOTTOM halves to avoid extremely thin and mostly empty strips.
+  // The actual Doré image never moves: overlay #1 inherits ITS bounds.
+  // It travels into the left HALF only once the first poster is established.
+  const settledLeft=rects[0],settledRight=rects[1];
+  const sourceCard=g.plate;
+  const mountedSourcePrint=printInsideCard(sourceCard);
+  const targetLeftCard=cardAroundPoster(settledLeft,settledRight,vertical,0);
+  const targetRightCard=cardAroundPoster(settledRight,settledLeft,vertical,1);
+  // 04's physical invitation first assumes the true Doré frame's bounds;
+  // it then TRAVELS alongside the original print into the left position.
+  const cardGeometry={
+   x:mix(sourceCard.x,targetLeftCard.x,firstTravel),
+   y:mix(sourceCard.y,targetLeftCard.y,firstTravel),
+   w:mix(sourceCard.w,targetLeftCard.w,firstTravel),
+   h:mix(sourceCard.h,targetLeftCard.h,firstTravel)
+  };
+  position(firstInvitation,cardGeometry.x,cardGeometry.y,
+   cardGeometry.w,cardGeometry.h);
+  firstInvitation.style.visibility=stageActive&&d<T.spread?'visible':'hidden';
+  firstInvitation.style.clipPath=d<T.first?
+    'inset(0 0 0 '+((1-bridge)*100).toFixed(3)+'%)':'none';
+  const bx=mix(mountedSourcePrint.x,settledLeft.x,firstTravel);
+  const by=mix(mountedSourcePrint.y,settledLeft.y,firstTravel);
+  const bw=mix(mountedSourcePrint.w,settledLeft.w,firstTravel);
+  const bh=mix(mountedSourcePrint.h,settledLeft.h,firstTravel);
+  position(first,bx,by,bw,bh);
+  positionInvitedEngraving(firstInvitation,cardGeometry,
+   {x:bx,y:by,w:bw,h:bh},vertical);
+  const posterReveal=ease((bridge-.33)/.67);
+  first.style.visibility=d>T.start&&d<T.spread?'visible':'hidden';
+  first.style.clipPath=d<T.first?
+    'inset(0 0 0 '+((1-posterReveal)*100).toFixed(3)+'%)':'none';
+  stage.dataset.p2InvitationShell='source-plate-to-minimal-gallery-print';
+  stage.dataset.p2CardRelief='independent-olive-topography';
+  stage.dataset.p2MountedFirstAspect=(bw/bh).toFixed(5);
+  // 03 is still authoritative before the source card. Once the card
+  // begins its spatial journey the existing independent field handoff
+  // handles the retiring page; no extra paper or ONE motif is introduced.
+  position(invitationLeft,0,0,targetLeftCard.w,targetLeftCard.h);
+  position(invitationRight,0,0,targetRightCard.w,targetRightCard.h);
+  positionInvitedEngraving(invitationLeft,targetLeftCard,settledLeft,vertical);
+  positionInvitedEngraving(invitationRight,targetRightCard,settledRight,vertical);
+  const cardSlots=[targetLeftCard,targetRightCard],portraitSlots=[settledLeft,settledRight];
+  const shells=[invitationLeft,invitationRight],portraits=[left,right];
+  const backs=[reverseLeft,reverseRight];
+  if(!reverseLeft||!reverseRight)throw new Error('04 requires two folio reverses');
+  backs.forEach((back,i)=>{
+   const box=cardSlots[i];
+   position(carriers[i],box.x,box.y,box.w,box.h);
+   position(back,0,0,box.w,box.h);
+   back.style.visibility=d>=T.spread&&d<T.indexStart?'visible':'hidden';
+  });
+  const rightCardReveal=ease((form-.44)/.26);
+  invitationLeft.style.visibility=d>=T.spread&&d<T.indexStart?'visible':'hidden';
+  invitationRight.style.visibility=rightCardReveal>0&&d<T.indexStart?'visible':'hidden';
+  invitationLeft.style.clipPath='none';
+  invitationRight.style.clipPath=d<T.spread?
+   'inset('+((1-rightCardReveal)*100).toFixed(3)+'% 0 0 0)':'none';
+  // Pair B enters while A travels; both images stay 3:4 and object-fit.
+  position(pair,0,0,g.w,g.h);
+  for(const [element,side] of [[left,0],[right,1],[nextLeft,0],[nextRight,1]]){
+   const r=rects[side],card=cardSlots[side];
+   const inside=element===left||element===right;
+   position(element,inside?r.x-card.x:r.x,inside?r.y-card.y:r.y,r.w,r.h);
+  }
+  pair.style.visibility=d>=T.first&&d<T.indexStart?'visible':'hidden';
+  // Strong final-index isolation. Visibility alone allowed huge previously
+  // mounted pair composites to bleed beneath 12 prints in some browsers.
+  pair.style.display=d>=T.indexStart?'none':'block';
+  first.style.display=d>=T.indexStart?'none':'block';
+  const forming=d>=T.first&&d<T.spread;
+  const paired=d>=T.spread;
+  left.style.visibility=paired?'visible':'hidden';
+  right.style.visibility=paired?'visible':'hidden';
+  nextLeft.style.visibility='hidden';nextRight.style.visibility='hidden';
+  nextLeft.style.clipPath='none';nextRight.style.clipPath='none';
+  left.style.clipPath='none';right.style.clipPath='none';
+  // Double-sided invitations: one portrait at a time, opposite reverse
+  // printed into the matching full-field botanical / contour language.
+  let turns=[0,180],activeSpeaker=0,activeSide='left';
+  let versoIndices=[0,1];
+  if(d>=T.pairStart&&d<T.indexStart){
+   const relayStep=(T.indexStart-T.pairStart)/11;
+   const event=Math.min(10,Math.floor((d-T.pairStart)/relayStep));
+   const beat=clamp((d-(T.pairStart+event*relayStep))/relayStep);
+   const inSide=(event+1)%2, outSide=1-inSide;
+   // V79 Museum Folio: each phase owns a longer physical scroll distance.
+   // Both 180-degree flips are deterministic scroll poses, with a tiny
+   // settle between one card finishing and its opposite card retiring.
+   // One card reveals fully before the other folds away; hold the
+   // completed portrait and its reverse between these actions.
+   const entering=ease((beat-.03)/.48),retreat=ease((beat-.53)/.44);
+   turns[inSide]=180*(1-entering);
+   turns[outSide]=180*retreat;
+   const speaker=event+1,old=event,following=event+2;
+   const indices=[0,1];indices[inSide]=speaker;
+   // The backside always belongs to the actual physical speaker page:
+   // it never borrows the next person's entire decorative illustration.
+   versoIndices[inSide]=speaker;
+   versoIndices[outSide]=old;
+   // Change portrait only after the departing face is past ninety degrees.
+   indices[outSide]=turns[outSide]>=100&&following<roster.length?following:old;
+   setFigure(left,indices[0]);setFigure(right,indices[1]);
+   setCardCaption(invitationLeft,indices[0]);setCardCaption(invitationRight,indices[1]);
+   activeSpeaker=retreat>=1?speaker:entering>.5?speaker:old;
+   activeSide=activeSpeaker%2?'right':'left';
+   stage.dataset.p2ActiveSide=inSide===0?'left':'right';
+   stage.dataset.p2ArrivalProgress=beat.toFixed(4);
+   stage.dataset.p2SpeakerArrival=String(speaker+1);
+   stage.dataset.p2OppositeLocked=String(entering>=1&&retreat<1);
+  }else{
+   setFigure(left,0);setFigure(right,1);
+   setCardCaption(invitationLeft,0);setCardCaption(invitationRight,1);
+   stage.dataset.p2ActiveSide='left';
+   stage.dataset.p2ArrivalProgress='0';
+   stage.dataset.p2OppositeLocked='true';
+   stage.dataset.p2SpeakerArrival='1';
+  }
+  const depth=Math.max(1100,g.w*1.35);
+  const perspective=depth.toFixed(0)+'px';
+  if(pair.style.perspective!==perspective)pair.style.perspective=perspective;
+  if(pair.style.perspectiveOrigin!=='50% 50%')pair.style.perspectiveOrigin='50% 50%';
+  // V74: twelve COMPLETE engraved folios, not cut-out local SVG crops.
+  // The independent right/left landscape underneath continues to grow
+  // from the same real Crane & DEM sources. Never read the full-field
+  // geometry as a crop window for a card again.
+  for(let i=0;i<2;i++){
+   const card=cardSlots[i],id=versoIndices[i],edition=Math.floor(id/2);
+   const back=backs[i],isBotanical=i===0;
+   // Keep the physical reverse an unmodified botanical/terrain engraving.
+   // A separate editorial text surface beside the FACING preacher owns
+   // Scripture; do not attach a passage to the flipping paper back.
+   back.setAttribute('aria-hidden','true');
+   const source=isBotanical
+    ?'/images/p2-realms/v15/04-olive-full-verso-v74-botanical-'+(edition+1)+'.svg'
+    :'/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-'+(edition+1)+'.svg';
+   back.style.setProperty('--folio-fragment','url("'+source+'")');
+   back.style.setProperty('--folio-detail','url("'+source+'")');
+   const inks=['var(--ws-morning-gold)','var(--ws-pale-gold)',
+    'var(--ws-morning-gold)','var(--ws-warm-gold)','var(--ws-pale-gold)',
+    'var(--ws-morning-gold)'];
+   back.style.setProperty('--folio-ink',inks[edition]);
+   const baseAlpha=(isBotanical?plantLayers:terrainLayers)[edition];
+   const backward=ease((turns[i]-82)/73);
+   // Paper and a complete interior engraving stay visible while facing
+   // the viewer. Background growth never makes the real card disappear.
+   const alpha=backward*(.98-.08*baseAlpha);
+   back.style.setProperty('--folio-back-alpha',alpha.toFixed(4));
+   back.style.setProperty('--folio-mark-alpha',backward.toFixed(4));
+   back.style.setProperty('--folio-edge-alpha','0');
+   back.dataset.speakerIndex=String(id);
+   back.dataset.printFragment=String(edition+1);
+   turnFace(carriers[i],turns[i],card.w/2,card.h/2);
+  }
+  // V81 / ADJACENT SCRIPTURE. Each panel is positioned over the OTHER
+  // folio's engraved half, fully outside the rotating card carrier.
+  // The reference comes from the visible front portrait, never from the
+  // reverse face or its edition. Same paint(), same scroll value, no RAF.
+  const companionNodes=[companionLeft,companionRight];
+  const facingFronts=[left,right];
+  for(let side=0;side<2;side++){
+   const adjacent=1-side, panel=companionNodes[adjacent];
+   const card=cardSlots[adjacent];
+   position(panel,card.x,card.y,card.w,card.h);
+   const speaker=Number(facingFronts[side].dataset.speakerIndex);
+   const verse=window.P2OliveScriptures?.cards?.[speaker];
+   const frontAlpha=1-ease((turns[side]-28)/38);
+   const engravedAlpha=ease((turns[adjacent]-114)/62);
+   const visibility=frontAlpha*engravedAlpha*
+    (d>=T.spread&&d<T.indexStart?1:0);
+   if(!verse||verse.slug!==roster[speaker]?.[0]||!verse.excerptEn)
+    throw new Error('04 bilingual KJV passage must match facing speaker');
+   if(panel.dataset.scriptureSpeaker!==verse.slug){
+    const zhLine=panel.querySelector('.olive-stage__companion-verse');
+    zhLine.textContent=verse.excerpt;
+    // OS reading rule: keep the closing Chinese phrase together so a
+    // single final character or punctuation mark cannot form its own line.
+    const tail=verse.excerpt.match(/([\p{Script=Han}]{2,4}[。！？；，…]*)$/u);
+    if(tail){
+     const end=document.createElement('span');
+     end.className='olive-stage__unbroken-tail';
+     end.textContent=tail[1];
+     zhLine.textContent=verse.excerpt.slice(0,-tail[1].length);
+     zhLine.append(end);
+    }
+    panel.querySelector('.olive-stage__companion-verse-en').textContent=verse.excerptEn;
+    panel.querySelector('.olive-stage__companion-reference').textContent=verse.referenceZh;
+    panel.querySelector('.olive-stage__companion-reference-en').textContent=verse.referenceEn+' · KJV';
+    panel.dataset.scriptureSpeaker=verse.slug;
+    panel.dataset.scriptureReference=verse.referenceEn;
+    panel.dataset.scriptureEvidence=verse.evidence;
+   }
+   panel.style.opacity=visibility.toFixed(4);
+   panel.style.visibility=visibility>.001?'visible':'hidden';
+   panel.setAttribute('aria-hidden',visibility>.90?'false':'true');
+   panel.dataset.adjacentTo=side===0?'left':'right';
+  }
+  stage.dataset.p2ScripturePlacement='adjacent-bilingual-cuv-kjv-v82';
+  stage.dataset.p2UniqueVersoSystem='12-individually-authored-topographic-folios-v77';
+  stage.dataset.p2FolioAssembly='one-rigid-carrier-with-front-and-engraved-back-v67';
+  stage.dataset.p2FolioFront=activeSide;
+  stage.dataset.p2FolioAngles=turns.map(x=>x.toFixed(2)).join(',');
+  stage.dataset.p2FolioReverse=turns.map(x=>x>90?'back':'front').join(',');
+  stage.dataset.p2FolioSystem='measured-two-faced-rotating-card-v67';
+  // The SAME completed speaker beat prints the card's gold edition
+  // only AFTER its portrait lands. No simultaneous movement on both sides.
+  let localInk=1,clipL='0%',clipR='0%';
+  if(d>=T.pairStart&&d<T.indexStart){
+   const relayStep=(T.indexStart-T.pairStart)/11;
+   const event=Math.min(10,Math.floor((d-T.pairStart)/relayStep));
+   const beat=clamp((d-(T.pairStart+event*relayStep))/relayStep);
+   localInk=ease((beat-.67)/.26);
+   const clip=((1-localInk)*100).toFixed(2)+'%';
+   if((event+1)%2===0)clipL=clip;else clipR=clip;
+  }
+  invitationLeft.style.setProperty('--olive-imprint-clip',clipL);
+  invitationRight.style.setProperty('--olive-imprint-clip',clipR);
+  stage.dataset.p2CardInkReveal=localInk.toFixed(4);
+  // Mountain replaces the 03 reading substrate AFTER the double-spread
+  // is fixed. Label and split-field move from the same progress; gold
+  // is a print material, NOT a gradient opacity overlay.
+  ground.style.opacity='1';
+  const printTitle=ease((bg-.78)/.22);
+  rubric.style.visibility=printTitle>0?'visible':'hidden';
+  // The chapter masthead takes up its own editorial line ABOVE the full
+  // twelve-speaker composition; no movement over incoming 3:4 portraits.
+  // Pair phase stays within its protected headpiece; the index acquires
+  // the larger, optically lowered editorial masthead AFTER recomposition.
+  // Never carry a new title down across the mounted speaker originals.
+  rubric.style.setProperty('--olive-title-fan',fan.toFixed(4));
+  // The bilingual 04 masthead owns two titles and a real verse beneath;
+  // it must never drift across protected posters during final indexing.
+  rubric.style.setProperty('--olive-title-growth',
+    (fan*(vertical?0:5)).toFixed(2)+'px');
+  rubric.style.transform='none';
+  // Fold the entire two-field headpiece with the SAME continuous 01–04
+  // scroll authority. Both directions are reversible, no user click.
+  const folds=rubric.querySelectorAll('.olive-twin-entry__folds i');
+  const foldProgress=clamp((d-11.73)/.84);
+  folds.forEach((fold,i)=>{
+   const local=ease((foldProgress-i*.055)/.62);
+   fold.style.transform='translate3d('+(-102+204*local).toFixed(3)+'%,0,0)';
+  });
+  rubric.style.clipPath=printTitle>=1?'none':
+   'inset(0 '+((1-printTitle)*49).toFixed(3)+'% 0 '+((1-printTitle)*49).toFixed(3)+'%)';
+  overview.style.visibility=d>=T.indexStart?'visible':'hidden';
+  if(d>=T.indexStart)layoutIndex(g,fan);
+  const finished=d>=T.indexEnd-.00001;
+  stage.dataset.p2IndexIsolated=String(d>=T.indexStart);
+  stage.dataset.p2RealmSurface=bg>=.99999?'olive-exclusive':
+    readingField>0?'emmaus-olive-handoff':'emmaus';
+  enter.style.visibility=finished?'visible':'hidden';
+  // V79: complete CTA reveal by the settled twelve-speaker proof at d=24.20.
+  // The previous .20 tail clipped the first line of this real hyperlink on
+  // 320px even while the arrow appeared. Keep the reveal scroll-bound.
+  enter.style.pointerEvents=d>=T.indexEnd+.08?'auto':'none';
+  enter.style.clipPath=d>=T.indexEnd+.08?'none':
+   'inset('+((1-ease((d-T.indexEnd)/.08))*100).toFixed(3)+'% 0 0)';
+  const interactive=finished;
+  folio.inert=!interactive;
+  folio.setAttribute('aria-hidden',interactive?'false':'true');
+  enter.tabIndex=interactive?0:-1;
+  // Every visible P2 portrait is actionable before the twelve-index settles.
+  first.tabIndex=d>T.start&&d<T.spread?0:-1;
+  [left,right].forEach((figure,side)=>{
+   figure.tabIndex=d>=T.spread&&d<T.indexStart&&turns[side]<90?0:-1;
+  });
+  nextLeft.tabIndex=-1;nextRight.tabIndex=-1;
+  cards.forEach(card=>card.tabIndex=d>=T.indexStart?0:-1);
+  stage.dataset.p2Bridge=bridge.toFixed(5);
+  stage.dataset.p2Spread=form.toFixed(5);
+  stage.dataset.p2ReadingField=readingField.toFixed(5);
+  stage.dataset.p2Ground=bg.toFixed(5);
+  stage.dataset.p2FieldMethod='opposed-top-down-bottom-up';
+  stage.dataset.p2Index=fan.toFixed(5);
+  stage.dataset.p2Composition='green-bible-cover-to-gilt-sermon-invitation-to-twelve';
+  stage.dataset.p2PosterAspect='3:4';
+  stage.dataset.p2PairOrientation=vertical?'stacked':'side-by-side';
+  stage.dataset.p2Scene=d<T.start?'03-held':
+    d<T.first?'04-dore-handoff':
+    d<T.spread?'04-two-poster-formation':
+    d<T.groundStart?'04-pair-hold':
+    d<T.groundEnd?'04-ground-reveal':
+    d<T.pairStart?'04-editorial-hold':
+    d<T.indexStart?'04-alternating-folio-faces':
+    d<T.indexEnd?'04-twelve-recomposition':'04-twelve-index';
+  // The last enlarging scripture squares must not appear to stamp over, or
+  // slice through, the protected twelve-person index. Let that intact P2
+  // montage dissolve before the second-layer curtain meets its lower edge.
+  // The ordinary P2 scroll and every instant return restore full opacity.
+  overview.style.opacity=String(1-ease((handoffProgress-.56)/.14));
+  // Paired speaker prints remain under the safely elevated V9 flag, then
+  // depart before the final growing scripture squares enter their space.
+  const pairedDepart=d<T.indexStart&&handoffProgress>.001;
+  const pairedOpacity=1-ease((handoffProgress-.49)/.14);
+  pair.style.opacity=pairedDepart?String(pairedOpacity):'';
+  first.style.opacity=pairedDepart?String(pairedOpacity):'';
+  paintSecondLayer();
+  status.textContent=d<T.start?'03 / 07 · EMMAUS':
+   d<T.groundEnd?'04 / 07 · THE FIRST TWO':
+   d<T.indexStart?'04 / 07 · TWELVE VOICES':
+   '04 / 07 · THE TWELVE';
+ }
+ function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
+ function go(d){
+  if(handoffTarget||handoffProgress>.001)resetHandoff();
+  const top=track.getBoundingClientRect().top+scrollY+clamp(d,0,T.end)*Math.max(1,innerHeight);
+  scrollTo({top,behavior:'instant'});schedule();
+ }
+ // 04 backdrop SVG removed. No fetch, live paths or animation-frame loop.
+  document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>{
+   go(+b.dataset.seek);
+   if(b.dataset.seek==='25.60')setHandoff(1);
+  }));
+ slider.addEventListener('input',()=>go(+slider.value));
+ base.addEventListener('load',schedule);
+ addEventListener('scroll',schedule,{passive:true});
+ addEventListener('resize',()=>{lastGeometry=null;schedule()},{passive:true});
+ if(embedded){
+  // The home scroll drives all P2 distance. A nested continuation must not
+  // create a second vertical scrollbar or alter the released 01–03 clock.
+  addEventListener('message',event=>{
+   if(event.origin!==location.origin||event.source!==parent||
+      event.data?.type!=='westside-p2-home-pose')return;
+   const distance=Number(event.data.distance),legacy=Number(event.data.legacyProgress);
+   if(!Number.isFinite(distance)||!Number.isFinite(legacy))return;
+   hostDistance=clamp(distance,0,T.end);
+   hostLegacyProgress=clamp(legacy);
+   hostActive=event.data.active!==false;
+   schedule();
+  });
+  schedule();
+ }else{
+  const initial=Number(new URLSearchParams(location.search).get('d')??9.30);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>go(Number.isFinite(initial)?initial:9.30)));
+ }
+})();
