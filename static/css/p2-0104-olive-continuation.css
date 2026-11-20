@@ -28,7 +28,9 @@ html,body{margin:0;padding:0;min-height:100%;background:var(--ws-olive);overscro
    The 01–03 source is an unmodified nested release iframe. The 04
    continuation is painted from the host's progress, not internal scrolling. */
 html.p2-main-embedded,html.p2-main-embedded body{
- height:100%;overflow:hidden!important;overscroll-behavior-y:contain;
+ /* Forward wheel/touch scroll chaining to the main homepage's scroll clock.
+    The embedded page itself stays fixed, but must not trap the host's scroll. */
+ height:100%;overflow:hidden!important;overscroll-behavior-y:auto;
 }
 html.p2-main-embedded .p2-olive-controls{display:none!important}
 html.p2-main-embedded #p2-olive-track{height:100svh!important;overflow:hidden}
