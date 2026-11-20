@@ -73,3 +73,50 @@
 @media(max-width:900px){.dawn-spread__editorial h2{font-size:clamp(52px,8vw,100px)}.dawn-twins__en{font-size:clamp(25px,4vw,42px)}.dawn-spread__copy{display:block}.dawn-catalogue__works{grid-template-columns:repeat(2,minmax(0,1fr))}.dawn-press-plate--horizontal blockquote{font-size:clamp(20px,3vw,34px)}}
 @media(max-width:600px){.p205-controls strong{display:none}.p205-controls label{flex:1}.p205-controls input{width:0;flex:1}.dawn-twins{width:96%;height:clamp(145px,21svh,185px);top:46px}.dawn-twins__square{padding:15px 10px}.dawn-twins__edition{left:10px;top:8px;font-size:9px}.dawn-twins__en{font-size:clamp(19px,5.2vw,28px);white-space:normal;line-height:1}.dawn-twins__zh{font-size:17px}.dawn-twins__verse-zh{font-size:11px;line-height:1.35}.dawn-twins__verse-en{font-size:10px;line-height:1.2}.dawn-twins__ref{font-size:8px}.dawn-spread{top:clamp(200px,29svh,275px);left:2%;right:2%;bottom:30px;grid-template-columns:3fr 1fr;gap:8px}.dawn-spread__editorial{padding:12px 0}.dawn-spread__overline{font-size:9px}.dawn-spread__editorial h2{font-size:clamp(38px,10vw,58px)}.dawn-spread__zh{font-size:20px;margin:8px 0}.dawn-spread__copy{font-size:13px}.dawn-spread__copy p+p{display:none}.dawn-spread__bottom{font-size:9px}.dawn-book{width:94%}.dawn-book__cover{padding:7%}.dawn-book__cover-title{font-size:clamp(13px,4vw,22px)}.dawn-book__cover>span{font-size:7px}.dawn-book__left-page b{font-size:10px}.dawn-book__right-page span{font-size:9px}.dawn-enter-hint{font-size:12px}.dawn-second__press{grid-template-columns:1fr 1fr;padding:48px 10px 16px;gap:8px;min-height:290px}.dawn-press-plate{min-height:0;aspect-ratio:1;padding:12px}.dawn-press-plate__slug{font-size:9px}.dawn-press-plate blockquote{font-size:clamp(15px,4vw,24px);max-height:190px}.dawn-press-plate--horizontal blockquote{font-size:clamp(13px,3.4vw,21px)}.dawn-press-plate cite{font-size:10px}.dawn-catalogue{padding:22px 16px}.dawn-catalogue__heading h2{font-size:36px}.dawn-catalogue__total output{font-size:24px}.dawn-catalogue__nav{gap:16px}.dawn-catalogue__nav label{margin:0;width:100%}.dawn-catalogue__nav input{flex:1;width:0}.dawn-catalogue__works{grid-template-columns:1fr}.dawn-catalogue__works li{padding:20px 0}}
 @media(prefers-reduced-motion:reduce){.dawn-book,.dawn-book__cover,.dawn-spread__window{will-change:auto}}
+
+/* R3 / Literal 1:1 squares — never stretch the two masthead seals into bars.
+   Their dimensions are identical at every viewport, as are the two landing
+   scripture squares in the second layer. The V9 animation measures DOM edges. */
+.dawn-realm{
+ --dawn-square:clamp(150px,min(28svh,28vw),270px);
+ --dawn-square-top:clamp(45px,5svh,80px);
+}
+.dawn-twins{
+ top:var(--dawn-square-top);
+ width:calc(var(--dawn-square)*2);
+ height:var(--dawn-square);
+ grid-template-columns:repeat(2,var(--dawn-square));
+ aspect-ratio:2/1;
+}
+.dawn-twins__square{
+ width:var(--dawn-square);
+ height:var(--dawn-square);
+ aspect-ratio:1/1;
+ padding:clamp(12px,1.4vw,23px);
+ gap:clamp(3px,.7vw,9px);
+}
+.dawn-twins__edition{left:clamp(12px,1.4vw,23px);top:12px;font-size:clamp(9px,.8vw,12px)}
+.dawn-twins__en{
+ font-size:clamp(21px,2.2vw,37px);
+ line-height:1.03;
+ white-space:normal;
+ overflow-wrap:normal;
+ max-width:100%;
+}
+.dawn-twins__zh{font-size:clamp(16px,1.6vw,24px)}
+.dawn-twins__verse-zh{font-size:clamp(11px,1vw,15px);line-height:1.3}
+.dawn-twins__verse-en{font-size:clamp(10px,.95vw,15px);line-height:1.25}
+.dawn-twins__ref{font-size:clamp(8px,.7vw,11px)}
+.dawn-spread{top:calc(var(--dawn-square-top) + var(--dawn-square) + 26px)}
+@media(max-width:600px){
+ .dawn-realm{--dawn-square:clamp(150px,43vw,184px);--dawn-square-top:46px}
+ .dawn-twins{width:calc(var(--dawn-square)*2);height:var(--dawn-square);top:var(--dawn-square-top)}
+ .dawn-twins__square{width:var(--dawn-square);height:var(--dawn-square);padding:12px 9px}
+ .dawn-twins__en{font-size:clamp(20px,5.5vw,27px);line-height:1.02}
+ .dawn-twins__zh{font-size:16px}
+ .dawn-twins__verse-zh{font-size:11px}
+ .dawn-twins__verse-en{font-size:10px}
+ .dawn-twins__ref{font-size:8px}
+ .dawn-twins__edition{top:8px;left:9px;font-size:9px}
+ .dawn-spread{top:calc(var(--dawn-square-top) + var(--dawn-square) + 20px)}
+}
