@@ -1183,6 +1183,11 @@
     d<T.pairStart?'04-editorial-hold':
     d<T.indexStart?'04-alternating-folio-faces':
     d<T.indexEnd?'04-twelve-recomposition':'04-twelve-index';
+  // The last enlarging scripture squares must not appear to stamp over, or
+  // slice through, the protected twelve-person index. Let that intact P2
+  // montage dissolve before the second-layer curtain meets its lower edge.
+  // The ordinary P2 scroll and every instant return restore full opacity.
+  overview.style.opacity=String(1-ease((handoffProgress-.56)/.14));
   paintSecondLayer();
   status.textContent=d<T.start?'03 / 07 · EMMAUS':
    d<T.groundEnd?'04 / 07 · THE FIRST TWO':
