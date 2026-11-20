@@ -350,8 +350,8 @@
  function setHandoff(target){
   if(!target){resetHandoff();return}
   // The two masthead squares are a valid entry on EVERY Olive speaker folio,
-  // not just after the twelve-poster index. The outgoing pair is protected
-  // by a short departure fade before the V9 flag actually unfurls.
+  // not just after the twelve-poster index. The outgoing pair stays readable
+  // beneath the safely raised flag, then departs before the seals enlarge.
   const d=clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,T.end);
   if(d<T.first-.01){stage.dataset.p2EntryGate='olive-speaker-pages-only';return}
   stage.dataset.p2EntryGate='open';
@@ -416,10 +416,8 @@
    const bannerY=Math.max(16,Math.min(h*.18,firstPosterTop-bannerHeight-24));
    banner.setAttribute('transform',`translate(${number(bannerX)} ${number(bannerY)}) scale(${scale})`);
    // No flag background: only the V9 glyphs, rules and travelling squares.
-   // On paired folios, the portraits finish departing before the transparent
-   // flag opens; on the twelve-person index retain its original timing.
-   const flagOpenAt=handoffOriginD!==null&&handoffOriginD<T.indexStart?0.11:0.06;
-   const opened=ease((p-flagOpenAt)/.32);
+   // The raised banner stays above visible prints during the opening beat.
+   const opened=ease((p-.06)/.32);
    const flagRetire=ease((p-.71)/.20);
    ribbonWindow.setAttribute('x',number((1-opened)*800+opened*800*flagRetire));
    ribbonWindow.setAttribute('y',0);
@@ -1234,11 +1232,10 @@
   // montage dissolve before the second-layer curtain meets its lower edge.
   // The ordinary P2 scroll and every instant return restore full opacity.
   overview.style.opacity=String(1-ease((handoffProgress-.56)/.14));
-  // Paired speaker prints depart just before the V9 flag begins opening.
-  // This prevents a wide word or enlarging scripture square from ever
-  // stamping over the original front/back poster assemblies.
+  // Paired speaker prints remain under the safely elevated V9 flag, then
+  // depart before the final growing scripture squares enter their space.
   const pairedDepart=d<T.indexStart&&handoffProgress>.001;
-  const pairedOpacity=1-ease((handoffProgress-.005)/.075);
+  const pairedOpacity=1-ease((handoffProgress-.49)/.14);
   pair.style.opacity=pairedDepart?String(pairedOpacity):'';
   first.style.opacity=pairedDepart?String(pairedOpacity):'';
   paintSecondLayer();
