@@ -358,7 +358,10 @@
     Math.min(h-finalSize-16,Math.max(bannerY+bannerHeight+55,h*.53));
    const finalRightY=narrow?finalLeftY+finalSize+gap:finalLeftY;
    const sourceRects=twins.map(node=>node.getBoundingClientRect());
-   const split=ease((p-.04)/.30),cross=ease((p-.37)/.34),seal=ease((p-.73)/.27);
+   // Rise out of the masthead first, while still left of the speaker prints;
+   // only then move horizontally along the transparent flag above the portraits.
+   const lift=ease((p-.015)/.145);
+   const split=ease((p-.15)/.19),cross=ease((p-.37)/.34),seal=ease((p-.73)/.27);
    const endCenters=[bannerX+capHeight/2,bannerX+bannerWidth-capHeight/2];
    // Travel THROUGH their own portions of the English wordmark, then open
    // outward into two distinct scripture squares. Never swap the squares:
@@ -367,8 +370,8 @@
    sourceRects.forEach((rect,i)=>{
     const sourceX=rect.left-stageRect.left+rect.width/2;
     const sourceY=rect.top-stageRect.top+rect.height/2;
-    let cx=mix(sourceX,endCenters[i],split),cy=mix(sourceY,letterCenterY,split);
-    let size=mix(rect.width,capHeight,split);
+    let cx=mix(sourceX,endCenters[i],split),cy=mix(sourceY,letterCenterY,lift);
+    let size=mix(rect.width,capHeight,lift);
     cx=mix(cx,letterStations[i],cross);
     const destX=(i===0?finalLeftX:finalRightX)+finalSize/2;
     const destY=(i===0?finalLeftY:finalRightY)+finalSize/2;
