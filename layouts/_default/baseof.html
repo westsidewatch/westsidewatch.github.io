@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#faf9f5">
     {{ if .IsHome }}<style id="home-first-paint">html,body{margin:0;background:#faf9f5;color:#252525}.sites-home-hero{position:relative;min-height:100svh;background:#faf9f5 url('/images/home-opening-engraving.jpg') center/cover no-repeat}.sites-home-masthead img,.sites-home-star{filter:brightness(0) invert(1)}</style>{{ end }}
     <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}</title>
-    <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
+    <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}?v=20261120-w-r1">
     {{ $sitesSection := or (eq .Section "journal") (eq .Section "dawn-library") (eq .Section "cinema") (eq .Section "church") (eq .Section "olive") (eq .Section "daylight-cafe") (eq .Section "vol-00") (eq .Section "emmaus") }}
     {{ $sitesSurface := or .IsHome $sitesSection }}
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="{{ "css/westside-design-os.css" | relURL }}?v=20261012-first-look-stage-v6">
