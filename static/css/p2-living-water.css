@@ -846,3 +846,20 @@ body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__vi
     overflow-y:auto;
   }
 }
+
+/* A silent white-model preview remains under the WebGL iframe during loading.
+   Once the genuine mesh is ready, reveal only the live growing architecture. */
+body[data-ws-scope="p2"] .church-editorial__visual::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ display:block;
+ background:url('/p2-maquette/maquette-fallback.webp') center/contain no-repeat;
+ opacity:.84;
+ transition:opacity .42s ease;
+ pointer-events:none;
+}
+body[data-ws-scope="p2"] .church-editorial__visual.maquette-geometry-ready::before{
+ opacity:0;
+}
+body[data-ws-scope="p2"] .church-editorial__maquette{z-index:1}
