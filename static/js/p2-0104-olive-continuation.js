@@ -81,7 +81,8 @@
   };
   const sourceSquareColors=twins.map((node,i)=>cssHex(getComputedStyle(node).backgroundColor,
    i===0?'#647D54':'#B8944A'));
-  const sourceSquareText=twins.map((node,i)=>cssHex(getComputedStyle(node).color,
+  const sourceSquareText=twins.map((node,i)=>cssHex(getComputedStyle(
+   node.querySelector('.olive-twin-entry__verse')||node).color,
    i===0?'#F5F1E6':'#242722'));
  const svgNS='http://www.w3.org/2000/svg';
  const svgNode=(name,attrs={})=>{
