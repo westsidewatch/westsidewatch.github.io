@@ -11,6 +11,8 @@
  const plates=[$('#dawn-plate-zh'),$('#dawn-plate-en')];
  const slider=$('#p205-seek'),out=$('#p205-progress'),search=$('#dawn-search'),works=$('#dawn-works');
  const more=$('#dawn-more'),prevButton=$('#dawn-prev'),pageStatus=$('#dawn-page-status'),total=$('#dawn-total');
+ const wall=$('#dawn-wall'),wallGrid=$('#dawn-wall-grid'),catalogue=$('#dawn-catalogue'),catalogueFocus=$('#dawn-catalogue-focus');
+ const openCatalogue=$('#dawn-open-catalogue'),closeCatalogue=$('#dawn-close-catalogue');
  const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n)),ease=n=>{const x=clamp(n);return x*x*(3-2*x)};
  const mix=(a,b,t)=>a+(b-a)*t;
  let queued=false,at=0,entryProgress=0,entryClock=0,entryTarget=0,rafId=0;
@@ -112,7 +114,7 @@
    // The two real second-layer plates are the physical targets: no last-frame jump.
   });
  }
- function resetEntry(){if(rafId)cancelAnimationFrame(rafId);rafId=0;entryClock=entryProgress=entryTarget=0;second.scrollTop=0;schedule()}
+ function resetEntry(){if(rafId)cancelAnimationFrame(rafId);rafId=0;entryClock=entryProgress=entryTarget=0;catalogue.hidden=true;wall.hidden=false;second.scrollTop=0;schedule()}
  function animateEntry(target){if(rafId)cancelAnimationFrame(rafId);entryTarget=target;
   const from=entryProgress,start=performance.now(),duration=target?7600:0;
   if(!duration||matchMedia('(prefers-reduced-motion: reduce)').matches){entryClock=entryProgress=target;schedule();if(target)loadCatalogue();return;}
@@ -127,11 +129,38 @@
  // Actual Dawn Library catalogue: 21,047 records / 85 paged JSON files.
  // Fetch one page on demand. Never download the whole corpus on first paint.
  let index=null,currentPage=0,loading=false,loaded=[],cache=new Map();
+ function openCollection(origin='館藏總索引',title=''){
+  wall.hidden=true;catalogue.hidden=false;
+  catalogueFocus.textContent=origin==='館藏總索引'?'館藏 · 歷史書籍與信仰資源':`從「${origin}」進入 · 目前呈現完整館藏索引`;
+  if(title&&currentPage){search.value=title;renderWorks()}else if(currentPage){search.value='';renderWorks()}
+  second.scrollTo({top:catalogue.offsetTop,behavior:'instant'});
+  loadCatalogue();
+ }
+ function closeCollection(){catalogue.hidden=true;wall.hidden=false;search.value='';second.scrollTo({top:wall.offsetTop,behavior:'instant'})}
+ openCatalogue.addEventListener('click',()=>openCollection());
+ closeCatalogue.addEventListener('click',closeCollection);
+ wallGrid.addEventListener('click',e=>{
+  const tile=e.target.closest('button');if(!tile)return;
+  if(tile.dataset.dawnPortal)openCollection(tile.dataset.dawnPortal);
+  else if(tile.dataset.workTitle)openCollection('方形黑膠牆',tile.dataset.workTitle);
+ });
+ function renderWall(records){
+  if(wallGrid.dataset.loaded==='true')return;
+  const fragment=document.createDocumentFragment();
+  records.slice(0,18).forEach((work,i)=>{
+   const tile=document.createElement('button'),num=document.createElement('small'),title=document.createElement('strong'),creator=document.createElement('em');
+   tile.type='button';tile.className='dawn-wall__tile dawn-wall__tile--record';tile.style.setProperty('--tile-index',i);
+   tile.dataset.workTitle=work.title||'';tile.setAttribute('aria-label',`${work.title||'Untitled'}；展開館藏索引`);
+   num.textContent=String(i+1).padStart(3,'0')+' / ARCHIVE';title.textContent=work.title||'Untitled';creator.textContent=work.creator||'作者未詳';
+   tile.append(num,title,creator);fragment.append(tile);
+  });
+  wallGrid.append(fragment);wallGrid.dataset.loaded='true';
+ }
  async function loadCatalogue(){if(!index){try{const r=await fetch('/dawn-library/catalogue/index.json');if(!r.ok)throw Error('Catalogue index unavailable');index=await r.json();total.textContent=Number(index.count).toLocaleString('en-CA');}catch(e){pageStatus.textContent='館藏暫時未能載入';console.error(e);return;}}if(!currentPage)await showPage(1);}
  async function showPage(page){if(loading||!index||page<1||page>index.pageCount)return;loading=true;more.disabled=true;prevButton.disabled=true;
   try{if(!cache.has(page)){const file=index.pages[page-1],r=await fetch('/dawn-library/catalogue/'+file);if(!r.ok)throw Error('Missing catalogue page '+page);
    const data=await r.json();cache.set(page,data.works||[]);}
-   currentPage=page;loaded=cache.get(page);search.value='';renderWorks();}
+   currentPage=page;loaded=cache.get(page);search.value='';renderWorks();if(page===1)renderWall(loaded);}
   catch(e){pageStatus.textContent='館藏載入中斷，請重試';console.error(e)}
   finally{loading=false;more.disabled=currentPage>=index.pageCount;prevButton.disabled=currentPage<=1;}}
  function renderWorks(){const needle=search.value.trim().toLocaleLowerCase(),matches=loaded.filter(w=>!needle||[w.title,w.creator,String(w.date||'')].some(v=>String(v||'').toLocaleLowerCase().includes(needle)));
