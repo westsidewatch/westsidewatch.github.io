@@ -72,6 +72,17 @@
  const second=$('#olive-second-layer'),secondIndex=$('#olive-second-index'),detail=$('#olive-second-detail');
  const twins=[...document.querySelectorAll('.olive-twin-entry__square')];
   const palette=['#427D99','#B79B41','#C6AF69','#718B5F','#A56C40','#A35458','#8570A1'];
+  // The first frame must inherit the existing masthead's TWO real OS inks:
+  // left olive, right gold. The seven-color cycle is entered only afterward.
+  const cssHex=(value,fallback)=>{
+   const rgb=value.match(/\d+(?:\.\d+)?/g)?.slice(0,3);
+   return rgb?.length===3?'#'+rgb.map(v=>Math.min(255,Math.max(0,Math.round(Number(v))))
+    .toString(16).padStart(2,'0')).join(''):fallback;
+  };
+  const sourceSquareColors=twins.map((node,i)=>cssHex(getComputedStyle(node).backgroundColor,
+   i===0?'#647D54':'#B8944A'));
+  const sourceSquareText=twins.map((node,i)=>cssHex(getComputedStyle(node).color,
+   i===0?'#F5F1E6':'#242722'));
  const svgNS='http://www.w3.org/2000/svg';
  const svgNode=(name,attrs={})=>{
   const node=document.createElementNS(svgNS,name);
@@ -83,7 +94,7 @@
    return Math.round(mix(x,y,clamp(t))).toString(16).padStart(2,'0');
   }).join('');
   const sevenColor=p=>{
-   const t=clamp((p-.08)/.74)*6,i=Math.min(5,Math.floor(t));
+   const t=clamp((p-.23)/.60)*6,i=Math.min(5,Math.floor(t));
    return hexMix(hexMix(palette[i],palette[i+1],t-i),'#647D54',ease((p-.86)/.14));
   };
   const kinetic=svgNode('svg',{class:'olive-sevenfold-handoff__svg','aria-hidden':'true'});
@@ -133,6 +144,8 @@
    group.append(initial,copy);return {group,shell,initial,copy};
   }
   const seals=[makeSeal(0),makeSeal(1)];
+  const initialInks=seals.map(seal=>[...seal.initial.querySelectorAll('text')]
+   .map(node=>({node,original:node.getAttribute('fill')})));
   // Real second-layer scripture is revealed beneath these moving seals by a
   // reversible type-high wipe; no substitute forme is inserted in that layer.
   const sealWipes=seals.map((seal,i)=>{
@@ -357,7 +370,11 @@
    ribbonWindow.setAttribute('y',0);
    ribbonWindow.setAttribute('width',number(opened*1600*(1-flagRetire)));
    ribbonWindow.setAttribute('height',108);
-   const ink=sevenColor(p);v9Letters.setAttribute('fill',ink);
+   const ink=sevenColor(p),openingColor=ease((p-.065)/.16);
+   // V9 lettering begins in the masthead's gold; both moving squares retain
+   // their respective olive/gold until the shared seven-color ink takes over.
+   const letterInk=hexMix(sourceSquareColors[1],ink,openingColor);
+   v9Letters.setAttribute('fill',letterInk);
    const capHeight=100*scale,letterCenterY=bannerY+54*scale;
    // Use the existing second layer's *actual* iframe and two Scripture Studio
    // plates as end points. Never derive a new layout from the stage dimensions.
@@ -413,8 +430,12 @@
     const group=seals[i].group;
     group.setAttribute('transform',`translate(${number(cx-size/2)} ${number(cy-size/2)}) scale(${size/500})`);
     const colorSettle=ease((p-.78)/.15);
-    seals[i].shell.setAttribute('fill',hexMix(ink,i===0?'#B8944A':'#61774A',colorSettle));
+    const squareInk=hexMix(sourceSquareColors[i],ink,openingColor);
+    seals[i].shell.setAttribute('fill',hexMix(squareInk,i===0?'#B8944A':'#61774A',colorSettle));
     seals[i].shell.setAttribute('stroke',hexMix('#b99b4f',i===0?'#61774A':'#B8944A',colorSettle));
+    initialInks[i].forEach(({node,original})=>{
+     node.setAttribute('fill',i===0?original:hexMix(sourceSquareText[i],original,openingColor));
+    });
     seals[i].initial.setAttribute('opacity',1-ease((p-.12)/.15));
     seals[i].copy.setAttribute('opacity',ease((p-.75)/.13));
     sealWipes[i].setAttribute('width',number(500*(1-pageReveal)));
@@ -428,7 +449,8 @@
   stage.dataset.p2Sevenfold=p.toFixed(4);
    stage.dataset.p2ScriptureMaster='original-second-layer-scripture-studio';
    stage.dataset.p2SquareAspect='1:1-exact-original-scripture-landing';
-   stage.dataset.p2LetterSquareColor=ink;
+   stage.dataset.p2LetterSquareColor=letterInk;
+   stage.dataset.p2MastheadStartColors=sourceSquareColors.join(',');
  }
 
  if(window.P2OliveScriptures?.cards?.length!==roster.length||
