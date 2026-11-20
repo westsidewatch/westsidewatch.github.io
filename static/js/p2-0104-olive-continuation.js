@@ -77,7 +77,41 @@
   const sevenfold=$('#olive-sevenfold-handoff');
  const second=$('#olive-second-layer'),secondIndex=$('#olive-second-index'),detail=$('#olive-second-detail');
  const twins=[...document.querySelectorAll('.olive-twin-entry__square')];
-  const palette=['#427D99','#B79B41','#C6AF69','#718B5F','#A56C40','#A35458','#8570A1'];
+  // Resolve the seven chapter inks from the same Design OS tokens that paint
+  // the live site. Canvas provides an sRGB sample for the OS's OKLCH mauve;
+  // hexMix must never interpolate an unparsed CSS color string.
+  const osStyles=getComputedStyle(document.documentElement);
+  const osPixel=document.createElement('canvas');
+  osPixel.width=osPixel.height=1;
+  const osContext=osPixel.getContext('2d',{willReadFrequently:true});
+  const osColor=(token,fallback)=>{
+   const value=osStyles.getPropertyValue(token).trim();
+   if(/^#[0-9a-f]{6}$/i.test(value))return value.toLowerCase();
+   if(value&&osContext&&window.CSS?.supports('color',value)){
+    osContext.clearRect(0,0,1,1);
+    osContext.fillStyle=value;
+    osContext.fillRect(0,0,1,1);
+    const rgba=osContext.getImageData(0,0,1,1).data;
+    if(rgba[3]===255)return '#'+[...rgba].slice(0,3)
+     .map(n=>n.toString(16).padStart(2,'0')).join('');
+   }
+   return fallback;
+  };
+  const os={
+   water:osColor('--ws-water','#5b8fa8'),
+   firstLight:osColor('--ws-first-light','#a2872a'),
+   paleGold:osColor('--ws-pale-gold','#cebd74'),
+   olive:osColor('--ws-olive','#738a5a'),
+   harvest:osColor('--ws-harvest','#b8944a'),
+   crimson:osColor('--ws-crimson','#a14d57'),
+   daylightMauve:osColor('--ws-daylight-mauve','#b085ab'),
+   morningGold:osColor('--ws-morning-gold','#d2bc69'),
+   papyrus:osColor('--ws-papyrus','#eee4c9'),
+   paper:osColor('--ws-paper','#faf9f5'),
+   ink:osColor('--ws-ink','#252525')
+  };
+  const palette=[os.water,os.firstLight,os.paleGold,os.olive,
+   os.harvest,os.crimson,os.daylightMauve];
   // The first frame must inherit the existing masthead's TWO real OS inks:
   // left olive, right gold. The seven-color cycle is entered only afterward.
   const cssHex=(value,fallback)=>{
@@ -86,10 +120,10 @@
     .toString(16).padStart(2,'0')).join(''):fallback;
   };
   const sourceSquareColors=twins.map((node,i)=>cssHex(getComputedStyle(node).backgroundColor,
-   i===0?'#647D54':'#B8944A'));
+    i===0?os.olive:os.morningGold));
   const sourceSquareText=twins.map((node,i)=>cssHex(getComputedStyle(
    node.querySelector('.olive-twin-entry__verse')||node).color,
-   i===0?'#F5F1E6':'#242722'));
+    i===0?os.paper:os.ink));
  const svgNS='http://www.w3.org/2000/svg';
  const svgNode=(name,attrs={})=>{
   const node=document.createElementNS(svgNS,name);
@@ -102,7 +136,7 @@
   }).join('');
   const sevenColor=p=>{
    const t=clamp((p-.23)/.60)*6,i=Math.min(5,Math.floor(t));
-   return hexMix(hexMix(palette[i],palette[i+1],t-i),'#647D54',ease((p-.86)/.14));
+    return hexMix(hexMix(palette[i],palette[i+1],t-i),os.olive,ease((p-.86)/.14));
   };
   const kinetic=svgNode('svg',{class:'olive-sevenfold-handoff__svg','aria-hidden':'true'});
   const defs=svgNode('defs'),clip=svgNode('clipPath',{id:'p2-v9-ribbon-clip'});
@@ -110,44 +144,44 @@
   const banner=svgNode('g',{'clip-path':'url(#p2-v9-ribbon-clip)'});
   // The flag has no stock/background: only the original V9 letter shapes and
   // two very fine gold rails belong to the unfolding transparent banner.
-  const ruleTop=svgNode('path',{d:'M0 1H1600',stroke:'#b99b4f','stroke-width':1,fill:'none'});
-  const ruleBottom=svgNode('path',{d:'M0 107H1600',stroke:'#b99b4f','stroke-width':1,fill:'none'});
+   const ruleTop=svgNode('path',{d:'M0 1H1600',stroke:os.morningGold,'stroke-width':1,fill:'none'});
+   const ruleBottom=svgNode('path',{d:'M0 107H1600',stroke:os.morningGold,'stroke-width':1,fill:'none'});
   const v9Letters=svgNode('g',{id:'p2-v9-letter-paths'});
   banner.append(ruleTop,ruleBottom,v9Letters);kinetic.append(banner);
   function makeSeal(kind){
    const group=svgNode('g',{class:'p2-kinetic-seal'});
-   const shell=svgNode('rect',{width:500,height:500,fill:'#647D54',
-    stroke:'#b99b4f','stroke-width':2});group.append(shell);
+    const shell=svgNode('rect',{width:500,height:500,fill:os.olive,
+     stroke:os.morningGold,'stroke-width':2});group.append(shell);
    const initial=svgNode('g',{class:'p2-kinetic-initial'});
    const copy=svgNode('g',{class:'p2-kinetic-scripture',opacity:0});
-   const addText=(host,value,x,y,size=22,fill='#f4eedf',extra={})=>{
+    const addText=(host,value,x,y,size=22,fill=os.papyrus,extra={})=>{
     const node=svgNode('text',{x,y,'font-size':size,fill,...extra});node.textContent=value;
     host.append(node);return node;
    };
-   addText(initial,kind===0?'04 / 07':'ROMANS 10:17',29,56,24,'#eed79a',{'letter-spacing':3});
-   addText(initial,kind===0?'OLIVE MOUNTAIN':'THE WORD',29,202,46,'#f4eedf');
-   addText(initial,kind===0?'橄欖山':'可見信道',29,283,40,'#f4eedf');
+    addText(initial,kind===0?'04 / 07':'ROMANS 10:17',29,56,24,os.morningGold,{'letter-spacing':3});
+    addText(initial,kind===0?'OLIVE MOUNTAIN':'THE WORD',29,202,46,os.papyrus);
+    addText(initial,kind===0?'橄欖山':'可見信道',29,283,40,os.papyrus);
    const label=kind===0?'ROMANS 13:12 / KJV':'ROMANS 10:17 / KJV';
-   addText(copy,label,29,39,16,'#f0d38e',{'font-family':'Arial,sans-serif','font-weight':600,'letter-spacing':3});
-   copy.append(svgNode('path',{d:'M29 53H471',stroke:'#d2b66f','stroke-width':1}));
+    addText(copy,label,29,39,16,os.morningGold,{'font-family':'Arial,sans-serif','font-weight':600,'letter-spacing':3});
+    copy.append(svgNode('path',{d:'M29 53H471',stroke:os.morningGold,'stroke-width':1}));
    const english=kind===0?[
     ['THE NIGHT IS FAR SPENT,',114],['THE DAY IS AT HAND:',157]]:[
     ['SO THEN FAITH COMETH',112],['BY HEARING, AND HEARING',152],['BY THE WORD OF GOD.',192]];
    english.forEach(([line,y])=>addText(copy,line,29,y,29));
    if(kind===0){
     addText(copy,'黑夜已深，白晝將近。',29,240,27);
-    copy.append(svgNode('path',{d:'M29 276H471',stroke:'#d2b66f','stroke-width':1,opacity:.6}));
+     copy.append(svgNode('path',{d:'M29 276H471',stroke:os.morningGold,'stroke-width':1,opacity:.6}));
     [['LET US THEREFORE CAST OFF',337],['THE WORKS OF DARKNESS,',367],
      ['AND LET US PUT ON THE ARMOUR OF LIGHT.',397]].forEach(([line,y])=>
-      addText(copy,line,29,y,19,'#f4eedf',{'font-style':'italic'}));
+       addText(copy,line,29,y,19,os.papyrus,{'font-style':'italic'}));
    }else{
-    copy.append(svgNode('path',{d:'M29 236H471',stroke:'#d2b66f','stroke-width':1,opacity:.6}));
+     copy.append(svgNode('path',{d:'M29 236H471',stroke:os.morningGold,'stroke-width':1,opacity:.6}));
     addText(copy,'可見信道是從聽道來的，',29,303,27);
     addText(copy,'聽道是從基督的話來的。',29,344,27);
    }
-   copy.append(svgNode('path',{d:'M29 455H471',stroke:'#d2b66f','stroke-width':1}));
+    copy.append(svgNode('path',{d:'M29 455H471',stroke:os.morningGold,'stroke-width':1}));
    addText(copy,kind===0?'WATCH FOR THE DAWN':'OLIVE MOUNTAIN / 04',29,482,16,
-    '#f0d38e',{'font-family':'Arial,sans-serif','font-weight':600,'letter-spacing':3});
+     os.morningGold,{'font-family':'Arial,sans-serif','font-weight':600,'letter-spacing':3});
    group.append(initial,copy);return {group,shell,initial,copy};
   }
   const seals=[makeSeal(0),makeSeal(1)];
@@ -568,8 +602,8 @@
     carrierBottom=Math.max(carrierBottom,cy+size/2);
     const colorSettle=ease((p-.78)/.15);
     const squareInk=hexMix(sourceSquareColors[i],ink,openingColor);
-    seals[i].shell.setAttribute('fill',hexMix(squareInk,i===0?'#B8944A':'#61774A',colorSettle));
-    seals[i].shell.setAttribute('stroke',hexMix('#b99b4f',i===0?'#61774A':'#B8944A',colorSettle));
+     seals[i].shell.setAttribute('fill',hexMix(squareInk,i===0?os.harvest:os.olive,colorSettle));
+     seals[i].shell.setAttribute('stroke',hexMix(os.morningGold,i===0?os.olive:os.harvest,colorSettle));
     initialInks[i].forEach(({node,original})=>{
      node.setAttribute('fill',i===0?original:hexMix(sourceSquareText[i],original,openingColor));
     });
