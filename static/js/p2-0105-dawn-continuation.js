@@ -1,0 +1,148 @@
+/* P2 05 — continuous 01–04 -> Dawn Library, V9 flag and scripture-to-catalogue handoff.
+   A single scroll distance drives the first layer; one click-driven 7.6s
+   timeline drives only the second-layer entry, mirroring approved Olive 04.
+   P2 returns never replay the flag. All animation states are deterministic. */
+(()=>{'use strict';
+ const $=s=>document.querySelector(s),track=$('#p205-track'),stage=$('#p205-stage');
+ const prior=$('#p205-prior'),realm=$('#dawn-realm'),halves=[...document.querySelectorAll('.dawn-realm__half')];
+ const twins=$('#dawn-twins'),squares=[...twins.querySelectorAll('.dawn-twins__square')];
+ const spread=$('#dawn-spread'),windowFrame=$('#dawn-book-window'),book=$('#dawn-book'),cover=$('#dawn-book-cover');
+ const hint=$('#dawn-enter-hint'),handoff=$('#dawn-handoff'),second=$('#dawn-second'),returnButton=$('#dawn-return');
+ const plates=[$('#dawn-plate-zh'),$('#dawn-plate-en')];
+ const slider=$('#p205-seek'),out=$('#p205-progress'),search=$('#dawn-search'),works=$('#dawn-works');
+ const more=$('#dawn-more'),prevButton=$('#dawn-prev'),pageStatus=$('#dawn-page-status'),total=$('#dawn-total');
+ const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n)),ease=n=>{const x=clamp(n);return x*x*(3-2*x)};
+ const mix=(a,b,t)=>a+(b-a)*t;
+ let queued=false,at=0,entryProgress=0,entryClock=0,entryTarget=0,rafId=0;
+ function progress(){return clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,32.3)}
+ function paint(){queued=false;const d=progress(),p=entryProgress;
+  slider.value=d.toFixed(2);out.textContent=d.toFixed(2);
+  // THE ORIGINAL 01–04 FILES REMAIN UNMODIFIED AND BEHIND THEIR OWN STAGE.
+  prior.contentWindow?.postMessage({type:'westside-p2-home-pose',distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),active:d<27.3},location.origin);
+  const start=ease((d-26.23)/.86),come=ease((d-26.72)/.72),leaf=ease((d-27.35)/1.35),open=ease((d-28.48)/1.24);
+  realm.style.visibility=start>.001?'visible':'hidden';
+  realm.inert=!come||p>.001;realm.setAttribute('aria-hidden',!come||p>.001?'true':'false');
+  realm.style.pointerEvents=come>.97&&p<.001?'auto':'none';
+  halves[0].style.clipPath=`inset(${(100*(1-start)).toFixed(2)}% 0 0 0)`;
+  halves[1].style.clipPath=`inset(0 0 ${(100*(1-start)).toFixed(2)}% 0)`;
+  twins.style.visibility=come>.001?'visible':'hidden';twins.style.opacity=String(come*(1-ease((p-.01)/.16)));
+  twins.style.transform=`translateX(-50%) translateY(${((1-come)*-30).toFixed(2)}px)`;
+  spread.style.visibility=come>.001?'visible':'hidden';spread.style.opacity=String(come);
+  windowFrame.style.clipPath=`inset(0 ${(100*(1-leaf)).toFixed(2)}% 0 0)`;
+  book.style.transform=`translateX(${((1-leaf)*125).toFixed(2)}%) scale(${(0.78+.22*leaf).toFixed(3)})`;
+  cover.style.transform=`rotateY(${(-168*open).toFixed(2)}deg)`;
+  hint.style.visibility=d>=29.5&&p<.001?'visible':'hidden';
+  stage.dataset.p205Scene=d<26.23?'04-protected':d<27.44?'05-two-square-masthead':d<28.48?'05-book-entry':d<29.72?'05-opening-pages':'05-reading-world';
+  paintHandoff();
+ }
+ function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
+ function jump(d){resetEntry();scrollTo({top:track.offsetTop+clamp(d,0,32.3)*innerHeight,behavior:'instant'});schedule()}
+ document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>jump(+b.dataset.seek)));
+ slider.addEventListener('input',()=>jump(+slider.value));
+ addEventListener('scroll',()=>{if(entryProgress>.001&&progress()<26.23)resetEntry();schedule()},{passive:true});
+ addEventListener('resize',schedule,{passive:true});prior.addEventListener('load',schedule);
+
+ // These are the seven exact Design OS color roles already used by Olive 04.
+ const token=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'];
+ const osStyle=getComputedStyle(document.documentElement);
+ const sampler=document.createElement('canvas');sampler.width=sampler.height=1;
+ const ctx=sampler.getContext('2d',{willReadFrequently:true});
+ function osColor(name,fallback){const raw=osStyle.getPropertyValue(name).trim();if(/^#[\da-f]{6}$/i.test(raw))return raw.toLowerCase();
+  if(raw&&ctx&&window.CSS?.supports('color',raw)){ctx.clearRect(0,0,1,1);ctx.fillStyle=raw;ctx.fillRect(0,0,1,1);const data=ctx.getImageData(0,0,1,1).data;if(data[3]===255)return '#'+[...data].slice(0,3).map(v=>v.toString(16).padStart(2,'0')).join('');}return fallback;}
+ const palette=token.map((t,i)=>osColor(t,['#5b8fa8','#a2872a','#cebd74','#738a5a','#b8944a','#a14d57','#b085ab'][i]));
+ const harvest=palette[4],olive=palette[3],gold=osColor('--ws-morning-gold','#d2bc69'),paper=osColor('--ws-paper','#faf9f5'),papyrus=osColor('--ws-papyrus','#eee4c9');
+ function hexMix(a,b,t){return '#'+[1,3,5].map(i=>Math.round(mix(parseInt(a.slice(i,i+2),16),parseInt(b.slice(i,i+2),16),clamp(t))).toString(16).padStart(2,'0')).join('')}
+ function sevenInk(p){const t=clamp((p-.22)/.62)*6,i=Math.min(5,Math.floor(t));return hexMix(palette[i],palette[i+1],t-i)}
+ const ns='http://www.w3.org/2000/svg';
+ function svg(name,attrs={}){const e=document.createElementNS(ns,name);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);return e}
+ function textNode(group,str,x,y,size,color){const n=svg('text',{x,y,'font-size':size,fill:color,'font-family':'Bodoni Moda SC,Georgia,serif'});n.textContent=str;group.append(n);return n}
+ const kinetic=svg('svg',{'aria-hidden':'true'}),defs=svg('defs');kinetic.append(defs);
+ const clip=svg('clipPath',{id:'p205-v9-clip'}),aperture=svg('rect',{x:800,y:0,width:0,height:108});clip.append(aperture);defs.append(clip);
+ const sheetGroup=svg('g');kinetic.append(sheetGroup);
+ const sheets=palette.map(color=>{const rect=svg('rect',{x:0,y:0,width:1,height:0,fill:color});sheetGroup.append(rect);return rect});
+ const banner=svg('g',{'clip-path':'url(#p205-v9-clip)'}),topRule=svg('path',{d:'M0 1H1600',stroke:gold,'stroke-width':1,fill:'none'}),bottomRule=svg('path',{d:'M0 107H1600',stroke:gold,'stroke-width':1,fill:'none'});
+ const letters=svg('g');banner.append(topRule,bottomRule,letters);kinetic.append(banner);
+ const seals=[0,1].map(i=>{
+  const g=svg('g'),shell=svg('rect',{width:500,height:500,fill:i?papyrus:harvest,stroke:gold,'stroke-width':2});g.append(shell);
+  const initial=svg('g');textNode(initial,i?'JOHN 8:32':'05 / 07',25,56,22,i?harvest:paper);
+  textNode(initial,i?'THE TRUTH':'DAWN LIBRARY',25,192,i?42:45,i?harvest:paper);
+  textNode(initial,i?'真理使人自由':'黎明書局',25,280,36,i?harvest:paper);g.append(initial);
+  const copy=svg('g',{opacity:0});textNode(copy,i?'THE TRUTH':'DAWN LIBRARY',25,50,23,gold);
+  if(i){textNode(copy,'AND YE SHALL KNOW',25,136,29,paper);textNode(copy,'THE TRUTH, AND',25,182,29,paper);textNode(copy,'THE TRUTH SHALL',25,228,29,paper);textNode(copy,'MAKE YOU FREE.',25,274,29,paper);textNode(copy,'JOHN 8:32 · KJV',25,460,18,gold)}
+  else{textNode(copy,'你們必曉得真理，',25,155,35,paper);textNode(copy,'真理必叫你們',25,220,35,paper);textNode(copy,'得以自由。',25,285,35,paper);textNode(copy,'約翰福音 8:32',25,460,18,gold)}
+  g.append(copy);kinetic.append(g);return {g,shell,initial,copy};
+ });
+ handoff.replaceChildren(kinetic);
+ let glyphReady=false;
+ fetch('/images/westside-watch-lettering-v9-clean-kern.svg').then(r=>{if(!r.ok)throw Error('V9 lettering not available');return r.text()}).then(xml=>{
+  const doc=new DOMParser().parseFromString(xml,'image/svg+xml');const paths=[...doc.querySelectorAll('path[data-letter]')];
+  if(paths.length!==13||paths.map(n=>n.getAttribute('data-letter')).join('')!=='WESTSIDEWATCH')throw Error('Original V9 glyph mismatch');
+  paths.forEach(n=>letters.append(document.importNode(n,true)));glyphReady=true;stage.dataset.p205Wordmark='v9-final';
+ }).catch(e=>{console.error(e);stage.dataset.p205Wordmark='unavailable'});
+ function paintHandoff(){const p=entryProgress,complete=p>=.99999;stage.dataset.p205Handoff=p.toFixed(4);
+  twins.setAttribute('aria-expanded',String(complete));
+  handoff.style.visibility=p>.001&&!complete?'visible':'hidden';
+  second.style.visibility=p>.61?'visible':'hidden';
+  second.style.clipPath=`inset(0 0 ${(100* (1-ease((p-.77)/.23))).toFixed(2)}% 0)`;
+  second.inert=!complete;second.setAttribute('aria-hidden',complete?'false':'true');
+  second.style.pointerEvents=complete?'auto':'none';
+  if(p<=.001)return;
+  const bounds=stage.getBoundingClientRect(),w=bounds.width,h=bounds.height;
+  kinetic.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  sheets.forEach((sheet,i)=>{sheet.setAttribute('width',w);sheet.setAttribute('height',(h*ease((p-.48-i*.035)/.25)).toFixed(2));});
+  const bw=w*.9,scale=bw/1600,bh=108*scale,bx=(w-bw)/2,by=Math.max(25,Math.min(h*.27,twins.getBoundingClientRect().bottom-bounds.top+14));
+  banner.setAttribute('transform',`translate(${bx} ${by}) scale(${scale})`);
+  const opened=ease((p-.045)/.31),retire=ease((p-.70)/.17);
+  aperture.setAttribute('x',800*(1-opened+retire*opened));aperture.setAttribute('width',1600*opened*(1-retire));
+  const ink=hexMix(gold,sevenInk(p),ease((p-.07)/.13));letters.setAttribute('fill',ink);topRule.setAttribute('stroke',ink);bottomRule.setAttribute('stroke',ink);
+  const source=squares.map(node=>node.getBoundingClientRect());const target=plates.map(node=>node.getBoundingClientRect());
+  const lift=ease((p-.015)/.17),cross=ease((p-.18)/.38),land=ease((p-.68)/.27),capHeight=100*scale;
+  seals.forEach((seal,i)=>{
+   const src=source[i],dst=target[i],s0=src.width,sz=mix(mix(s0,capHeight,lift),dst.width,land);
+   const sourceX=src.left-bounds.left+src.width/2,sourceY=src.top-bounds.top+src.height/2;
+   const stationX=bx+bw*(i?.68:.43),stationY=by+bh/2;
+   const endX=dst.left-bounds.left+dst.width/2,endY=dst.top-bounds.top+dst.height/2;
+   const cx=mix(mix(sourceX,stationX,cross),endX,land),cy=mix(mix(sourceY,stationY,lift),endY,land);
+   seal.g.setAttribute('transform',`translate(${cx-sz/2} ${cy-sz/2}) scale(${sz/500})`);
+   const currentSealInk=hexMix(i?papyrus:harvest,sevenInk(p),ease((p-.14)/.66));
+   seal.shell.setAttribute('fill',currentSealInk);
+   seal.shell.setAttribute('stroke',ink);
+   seal.initial.querySelectorAll('text').forEach(n=>n.setAttribute('fill',hexMix(i?harvest:paper,paper,ease((p-.14)/.66))));
+   seal.initial.setAttribute('opacity',1-ease((p-.13)/.18));seal.copy.setAttribute('opacity',ease((p-.73)/.11));
+   // The two real second-layer plates are the physical targets: no last-frame jump.
+  });
+ }
+ function resetEntry(){if(rafId)cancelAnimationFrame(rafId);rafId=0;entryClock=entryProgress=entryTarget=0;second.scrollTop=0;schedule()}
+ function animateEntry(target){if(rafId)cancelAnimationFrame(rafId);entryTarget=target;
+  const from=entryProgress,start=performance.now(),duration=target?7600:0;
+  if(!duration||matchMedia('(prefers-reduced-motion: reduce)').matches){entryClock=entryProgress=target;schedule();if(target)loadCatalogue();return;}
+  const tick=now=>{entryProgress=mix(from,target,clamp((now-start)/duration));entryClock=entryProgress;schedule();
+   if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target)loadCatalogue();}};
+  rafId=requestAnimationFrame(tick);
+ }
+ twins.addEventListener('click',()=>{if(progress()<29.25||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
+ returnButton.addEventListener('click',()=>{resetEntry();schedule()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&entryProgress>.001)resetEntry()});
+
+ // Actual Dawn Library catalogue: 21,047 records / 85 paged JSON files.
+ // Fetch one page on demand. Never download the whole corpus on first paint.
+ let index=null,currentPage=0,loading=false,loaded=[],cache=new Map();
+ async function loadCatalogue(){if(!index){try{const r=await fetch('/dawn-library/catalogue/index.json');if(!r.ok)throw Error('Catalogue index unavailable');index=await r.json();total.textContent=Number(index.count).toLocaleString('en-CA');}catch(e){pageStatus.textContent='館藏暫時未能載入';console.error(e);return;}}if(!currentPage)await showPage(1);}
+ async function showPage(page){if(loading||!index||page<1||page>index.pageCount)return;loading=true;more.disabled=true;prevButton.disabled=true;
+  try{if(!cache.has(page)){const file=index.pages[page-1],r=await fetch('/dawn-library/catalogue/'+file);if(!r.ok)throw Error('Missing catalogue page '+page);
+   const data=await r.json();cache.set(page,data.works||[]);}
+   currentPage=page;loaded=cache.get(page);search.value='';renderWorks();}
+  catch(e){pageStatus.textContent='館藏載入中斷，請重試';console.error(e)}
+  finally{loading=false;more.disabled=currentPage>=index.pageCount;prevButton.disabled=currentPage<=1;}}
+ function renderWorks(){const needle=search.value.trim().toLocaleLowerCase(),matches=loaded.filter(w=>!needle||[w.title,w.creator,String(w.date||'')].some(v=>String(v||'').toLocaleLowerCase().includes(needle)));
+  const fragment=document.createDocumentFragment();matches.forEach((work,i)=>{
+   const li=document.createElement('li'),num=document.createElement('span'),title=document.createElement('h3'),creator=document.createElement('p'),date=document.createElement('span');
+   num.className='work-number';num.textContent=String((currentPage-1)*index.pageSize+loaded.indexOf(work)+1).padStart(4,'0');
+   title.textContent=work.title||'Untitled';creator.className='work-creator';creator.textContent=work.creator||'作者未詳';
+   date.className='work-date';date.textContent=work.date?String(work.date):'HISTORICAL EDITION';li.append(num,title,creator,date);fragment.append(li);
+  });works.replaceChildren(fragment);pageStatus.textContent=`第 ${currentPage} / ${index.pageCount} 頁 · ${matches.length} 筆 · 全部 ${Number(index.count).toLocaleString('en-CA')} 筆`;
+ }
+ more.addEventListener('click',()=>showPage(currentPage+1));prevButton.addEventListener('click',()=>showPage(currentPage-1));search.addEventListener('input',renderWorks);
+ const initial=Number(new URLSearchParams(location.search).get('d')??26.1);
+ requestAnimationFrame(()=>requestAnimationFrame(()=>jump(Number.isFinite(initial)?initial:26.1)));
+})();
