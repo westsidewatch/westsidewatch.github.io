@@ -102,6 +102,18 @@ jobs:
           grep -q 'Westside Watch — Editorial Candidate' "$file"
           grep -q 'chapter-inner' "$file"
           echo "Editorial candidate included in published artifact"
+      - name: Restore canonical ONE Bible study application
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s static/one/index.html
+          test -s static/one/one-app.js
+          mkdir -p public/one
+          cp -a static/one/. public/one/
+          cmp static/one/index.html public/one/index.html
+          grep -q 'id="cover-books"' public/one/index.html
+          grep -q 'one-app.js' public/one/index.html
+          echo "ONE canonical 66-book application staged at /one/"
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
