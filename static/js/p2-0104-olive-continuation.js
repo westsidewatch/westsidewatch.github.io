@@ -337,22 +337,25 @@
   // of the current P2 scroll page, never a reverse performance over portraits.
  const masthead=$('#olive-twin-entry');
  const handoffClock={value:0};
- let handoffProgress=0,handoffTarget=0;
+ let handoffProgress=0,handoffTarget=0,handoffOriginD=null;
  const handoffTimeline=window.gsap?.timeline({paused:true,onUpdate:()=>{
   handoffProgress=handoffClock.value;schedule();
   }})?.to(handoffClock,{value:1,duration:7.6,ease:'none'});
  function resetHandoff(){
-  handoffTarget=0;handoffTimeline?.pause(0);
+  handoffTarget=0;handoffOriginD=null;handoffTimeline?.pause(0);
   handoffClock.value=0;handoffProgress=0;
   if(second)second.scrollTop=0;
   schedule();
  }
  function setHandoff(target){
   if(!target){resetHandoff();return}
-  // The masthead is visible throughout the two-speaker folio sequence. It
-  // must not launch the second-layer squares over those protected posters.
+  // The two masthead squares are a valid entry on EVERY Olive speaker folio,
+  // not just after the twelve-poster index. The outgoing pair is protected
+  // by a short departure fade before the V9 flag actually unfurls.
   const d=clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,T.end);
-  if(d<T.indexEnd-.01){stage.dataset.p2EntryGate='twelve-index-only';return}
+  if(d<T.first-.01){stage.dataset.p2EntryGate='olive-speaker-pages-only';return}
+  stage.dataset.p2EntryGate='open';
+  handoffOriginD=d;
   handoffTarget=1;
   if(second)second.scrollTop=0;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches||!handoffTimeline){
@@ -404,7 +407,10 @@
    const bannerY=Math.max(16,Math.min(h*.18,firstPosterTop-bannerHeight-24));
    banner.setAttribute('transform',`translate(${number(bannerX)} ${number(bannerY)}) scale(${scale})`);
    // No flag background: only the V9 glyphs, rules and travelling squares.
-   const opened=ease((p-.06)/.32);
+   // On paired folios, the portraits finish departing before the transparent
+   // flag opens; on the twelve-person index retain its original timing.
+   const flagOpenAt=handoffOriginD!==null&&handoffOriginD<T.indexStart?0.11:0.06;
+   const opened=ease((p-flagOpenAt)/.32);
    const flagRetire=ease((p-.71)/.20);
    ribbonWindow.setAttribute('x',number((1-opened)*800+opened*800*flagRetire));
    ribbonWindow.setAttribute('y',0);
@@ -415,6 +421,8 @@
    // their respective olive/gold until the shared seven-color ink takes over.
    const letterInk=hexMix(sourceSquareColors[1],ink,openingColor);
    v9Letters.setAttribute('fill',letterInk);
+   ruleTop.setAttribute('stroke',letterInk);
+   ruleBottom.setAttribute('stroke',letterInk);
    const capHeight=100*scale,letterCenterY=bannerY+54*scale;
    // Use the existing second layer's *actual* iframe and two Scripture Studio
    // plates as end points. Never derive a new layout from the stage dimensions.
@@ -500,6 +508,7 @@
    stage.dataset.p2ScriptureMaster='original-second-layer-scripture-studio';
    stage.dataset.p2SquareAspect='1:1-exact-original-scripture-landing';
    stage.dataset.p2LetterSquareColor=letterInk;
+   stage.dataset.p2BannerRulesColor=letterInk;
    stage.dataset.p2MastheadStartColors=sourceSquareColors.join(',');
  }
 
@@ -838,9 +847,10 @@
   queued=false;
   const height=Math.max(innerHeight,1);
   const d=clamp(-track.getBoundingClientRect().top/height,0,T.end);
-  // Any scrub/navigation back to a paired-speaker page cancels the entrance
-  // before its SVG can linger above the original two-portrait folio.
-  if(d<T.indexEnd-.01&&(handoffTarget||handoffProgress>.001))resetHandoff();
+  // Keep the click-to-enter motion on its chosen folio. Only an actual page
+  // scroll away from that origin cancels it (never merely being on a pair).
+  if(handoffTarget&&handoffOriginD!==null&&Math.abs(d-handoffOriginD)>.12)
+   resetHandoff();
   if(base.contentWindow)base.contentWindow.postMessage({
    type:'westside-p2-home-pose',
    distance:Math.min(d,9.34),
@@ -1215,6 +1225,13 @@
   // montage dissolve before the second-layer curtain meets its lower edge.
   // The ordinary P2 scroll and every instant return restore full opacity.
   overview.style.opacity=String(1-ease((handoffProgress-.56)/.14));
+  // Paired speaker prints depart just before the V9 flag begins opening.
+  // This prevents a wide word or enlarging scripture square from ever
+  // stamping over the original front/back poster assemblies.
+  const pairedDepart=d<T.indexStart&&handoffProgress>.001;
+  const pairedOpacity=1-ease((handoffProgress-.005)/.075);
+  pair.style.opacity=pairedDepart?String(pairedOpacity):'';
+  first.style.opacity=pairedDepart?String(pairedOpacity):'';
   paintSecondLayer();
   status.textContent=d<T.start?'03 / 07 · EMMAUS':
    d<T.groundEnd?'04 / 07 · THE FIRST TWO':
@@ -1223,7 +1240,7 @@
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
  function go(d){
-  if(d<T.indexEnd-.01&&(handoffTarget||handoffProgress>.001))resetHandoff();
+  if(handoffTarget||handoffProgress>.001)resetHandoff();
   const top=track.getBoundingClientRect().top+scrollY+clamp(d,0,T.end)*Math.max(1,innerHeight);
   scrollTo({top,behavior:'instant'});schedule();
  }
