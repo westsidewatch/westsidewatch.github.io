@@ -91,7 +91,15 @@
   if(p<=.001)return;
   const bounds=stage.getBoundingClientRect(),w=bounds.width,h=bounds.height;
   kinetic.setAttribute('viewBox',`0 0 ${w} ${h}`);
-  sheets.forEach((sheet,i)=>{sheet.setAttribute('width',w);sheet.setAttribute('height',(h*ease((p-.48-i*.035)/.25)).toFixed(2));});
+  // Seven full-bleed sheets: each occupies the COMPLETE stage, not the banner.
+  // Staggered vertical sweeps overlap with no exposed margin at any screen ratio.
+  sheets.forEach((sheet,i)=>{
+   const sweep=ease((p-.42-i*.047)/.25);
+   sheet.setAttribute('x',0);
+   sheet.setAttribute('y',(-h*(1-sweep)).toFixed(2));
+   sheet.setAttribute('width',w);
+   sheet.setAttribute('height',h);
+  });
   const bw=w*.9,scale=bw/1600,bh=108*scale,bx=(w-bw)/2,by=Math.max(25,Math.min(h*.27,twins.getBoundingClientRect().bottom-bounds.top+14));
   banner.setAttribute('transform',`translate(${bx} ${by}) scale(${scale})`);
   const opened=ease((p-.045)/.31),retire=ease((p-.70)/.17);
