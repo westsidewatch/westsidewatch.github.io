@@ -33,5 +33,29 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
    console.log(screen.name,'SUNDAY_MODEL_VISIBLE',JSON.stringify(result));
    await page.close();
   }
+  // Verify the real homepage P2, which nests 04 → 01–03 → Church, not just
+  // the standalone /p2/ HTML route.
+  const home=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
+  await home.goto(base+'/',{waitUntil:'domcontentloaded',timeout:45000});
+  await home.evaluate(()=>{
+    const host=document.querySelector('.ws-p2-sevenfold-host');
+    if(!host) throw new Error('P2 homepage section missing');
+    window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+innerHeight*3.8,behavior:'instant'});
+  });
+  await home.waitForFunction(()=>{
+    const o=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+    const m=o?.getElementById('p2-0103-original')?.contentDocument||o;
+    const inner=m?.getElementById('proof-original')?.contentDocument;
+    const stage=inner?.querySelector('.showcase');
+    const visual=inner?.querySelector('.church-editorial__visual');
+    const model=inner?.querySelector('.church-editorial__maquette');
+    return stage?.dataset.p2Phase==='church'&&
+      visual&&getComputedStyle(visual).display!=='none'&&
+      visual.getBoundingClientRect().width>200&&
+      model?.getAttribute('src')?.includes('/p2-maquette/index.html');
+  },{timeout:45000});
+  await home.screenshot({path:'artifacts/p2-sunday-growth/homepage-real-p2.png'});
+  console.log('HOMEPAGE_REAL_P2_SUNDAY_MODEL_VISIBLE');
+  await home.close();
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
