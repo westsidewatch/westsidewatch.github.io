@@ -10,9 +10,19 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
   fs.mkdirSync('artifacts/p2-sunday-growth',{recursive:true});
   for(const screen of [{name:'desktop',width:1440,height:900},{name:'phone',width:390,height:844}]){
    const page=await browser.newPage({viewport:{width:screen.width,height:screen.height},deviceScaleFactor:1});
+   const pageErrors=[];
+   page.on('pageerror',e=>pageErrors.push(String(e)));
+   page.on('console',msg=>{if(msg.type()==='error')pageErrors.push(msg.text())});
    await page.goto(base+'/p2/living-water.html?churchPreview=1',{waitUntil:'domcontentloaded',timeout:45000});
-   await page.waitForFunction(()=>document.querySelector('.showcase')?.dataset.p2Phase==='church',{timeout:15000});
-   await page.waitForFunction(()=>!!document.querySelector('.church-editorial__maquette')?.getAttribute('src'),{timeout:15000});
+   await page.waitForTimeout(900);
+   console.log('PAGE_DEBUG',screen.name,JSON.stringify(await page.evaluate(()=>({
+     url:location.href,ready:document.readyState,stage:document.querySelector('.showcase')?.dataset.p2Phase,
+     scripts:[...document.scripts].map(s=>s.src).filter(Boolean).slice(-9),
+     frame:document.querySelector('.church-editorial__maquette')?.outerHTML.slice(0,240)
+   }))),JSON.stringify(pageErrors));
+   await page.screenshot({path:'artifacts/p2-sunday-growth/'+screen.name+'-before.png'});
+   await page.waitForFunction(()=>document.querySelector('.showcase')?.dataset.p2Phase==='church',null,{timeout:12000});
+   await page.waitForFunction(()=>!!document.querySelector('.church-editorial__maquette')?.getAttribute('src'),null,{timeout:12000});
    const result=await page.evaluate(()=>{
     const stage=document.querySelector('.showcase');
     const programme=document.querySelector('.church-schedule-source');
