@@ -24,7 +24,7 @@
   const start=ease((d-26.23)/.86),come=ease((d-26.72)/.72),leaf=ease((d-27.35)/1.35),open=ease((d-28.48)/1.24);
   realm.style.visibility=start>.001?'visible':'hidden';
   realm.inert=!come||p>.001;realm.setAttribute('aria-hidden',!come||p>.001?'true':'false');
-  realm.style.pointerEvents=come>.97&&p<.001?'auto':'none';
+  realm.style.pointerEvents=come>.7&&p<.001?'auto':'none';
   halves[0].style.clipPath=`inset(${(100*(1-start)).toFixed(2)}% 0 0 0)`;
   halves[1].style.clipPath=`inset(0 0 ${(100*(1-start)).toFixed(2)}% 0)`;
   twins.style.visibility=come>.001?'visible':'hidden';twins.style.opacity=String(come*(1-ease((p-.01)/.16)));
@@ -122,7 +122,7 @@
    if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target)loadCatalogue();}};
   rafId=requestAnimationFrame(tick);
  }
- twins.addEventListener('click',()=>{if(progress()<27.35||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
+ twins.addEventListener('click',()=>{if(progress()<27.18||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
  returnButton.addEventListener('click',()=>{resetEntry();schedule()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&entryProgress>.001)resetEntry()});
 
