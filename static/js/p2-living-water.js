@@ -5,12 +5,14 @@ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),smooth=v=>{v=clamp(v,0,1);return 
 const embeddedScene=p=>p<=.75?p/.75*2.9:2.9+(p-.75)/.25*1.1;
 const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
 const magazineProof=new URLSearchParams(location.search).get('magazineProof')==='1';
+// An opt-in direct Church/P2 acceptance view; ordinary scroll film is untouched.
+const churchPreview=new URLSearchParams(location.search).get('churchPreview')==='1';
 const embedded=document.documentElement.dataset.p2Embedded==='true',reduced=typeof matchMedia==='function'?matchMedia('(prefers-reduced-motion: reduce)'): {matches:false};
 let raf=0,externalProgress=0,hasExternalProgress=embedded,displayVh=null,sceneVh=null,active=!embedded;
 function render(now=performance.now()){
  raf=0;
  const distance=embedded?0:clamp(-root.getBoundingClientRect().top/Math.max(1,innerHeight),0,5.4);
- const target=hasExternalProgress?embeddedScene(externalProgress):distance<=1.8?.1+distance*(.4/1.8):.5+(distance-1.8);
+ const target=churchPreview&&!embedded?2.65:hasExternalProgress?embeddedScene(externalProgress):distance<=1.8?.1+distance*(.4/1.8):.5+(distance-1.8);
  // Scroll position is the only choreography clock: no catch-up or timed easing.
  displayVh=target;
  const rect=embedded?null:root.getBoundingClientRect();
