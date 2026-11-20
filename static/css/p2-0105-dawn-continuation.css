@@ -202,3 +202,8 @@
  .dawn-book{width:85%}
  .dawn-wall__tile--portal strong{font-size:clamp(28px,8vw,47px)}
 }
+
+/* Visitor-facing typography: Chinese reading title follows Design OS, not Latin display face. */
+.dawn-spread__editorial h2{font-family:var(--ws-type-display-zh);font-weight:200;letter-spacing:.025em;line-height:1.32;font-size:clamp(24px,2.25vw,38px)}
+.dawn-enter-hint{font-family:var(--ws-type-display-zh)}
+@media(max-width:600px){.dawn-spread__editorial h2{font-size:clamp(17px,4.3vw,24px)}}
