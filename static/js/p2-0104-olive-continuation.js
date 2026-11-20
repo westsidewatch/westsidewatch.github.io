@@ -90,12 +90,12 @@
   const defs=svgNode('defs'),clip=svgNode('clipPath',{id:'p2-v9-ribbon-clip'});
   const ribbonWindow=svgNode('rect');clip.append(ribbonWindow);defs.append(clip);kinetic.append(defs);
   const banner=svgNode('g',{'clip-path':'url(#p2-v9-ribbon-clip)'});
-  const fabric=svgNode('rect',{x:0,y:0,width:1600,height:108,
-   fill:'var(--ws-paper)',stroke:'var(--ws-morning-gold)','stroke-width':1});
+  // The flag has no stock/background: only the original V9 letter shapes and
+  // two very fine gold rails belong to the unfolding transparent banner.
   const ruleTop=svgNode('path',{d:'M0 1H1600',stroke:'#b99b4f','stroke-width':1,fill:'none'});
   const ruleBottom=svgNode('path',{d:'M0 107H1600',stroke:'#b99b4f','stroke-width':1,fill:'none'});
   const v9Letters=svgNode('g',{id:'p2-v9-letter-paths'});
-  banner.append(fabric,ruleTop,ruleBottom,v9Letters);kinetic.append(banner);
+  banner.append(ruleTop,ruleBottom,v9Letters);kinetic.append(banner);
   function makeSeal(kind){
    const group=svgNode('g',{class:'p2-kinetic-seal'});
    const shell=svgNode('rect',{width:500,height:500,fill:'#647D54',
@@ -334,7 +334,12 @@
    kinetic.setAttribute('viewBox','0 0 '+number(w)+' '+number(h));
    const narrow=w<620;
    const bannerWidth=w*.91,scale=bannerWidth/1600,bannerHeight=108*scale;
-   const bannerX=(w-bannerWidth)/2,bannerY=h*.33;
+   const firstPosterTop=Math.min(...cards.map(card=>
+    card.getBoundingClientRect().top-stageRect.top).filter(Number.isFinite));
+   // Keep the V9 banner entirely above the already-approved poster portraits.
+   // The 24px clearance protects their top edge at every viewport width.
+   const bannerX=(w-bannerWidth)/2;
+   const bannerY=Math.max(16,Math.min(h*.18,firstPosterTop-bannerHeight-24));
    banner.setAttribute('transform',`translate(${number(bannerX)} ${number(bannerY)}) scale(${scale})`);
    // The reveal follows the separating original squares. The fabric stays
    // paper-colored; only real vector letters and squares share the seven colors.
