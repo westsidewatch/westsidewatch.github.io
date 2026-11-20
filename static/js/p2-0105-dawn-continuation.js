@@ -31,7 +31,7 @@
   windowFrame.style.clipPath=`inset(0 ${(100*(1-leaf)).toFixed(2)}% 0 0)`;
   book.style.transform=`translateX(${((1-leaf)*125).toFixed(2)}%) scale(${(0.78+.22*leaf).toFixed(3)})`;
   cover.style.transform=`rotateY(${(-168*open).toFixed(2)}deg)`;
-  hint.style.visibility=d>=29.5&&p<.001?'visible':'hidden';
+  hint.style.visibility=d>=28.2&&p<.001?'visible':'hidden';
   stage.dataset.p205Scene=d<26.23?'04-protected':d<27.44?'05-two-square-masthead':d<28.48?'05-book-entry':d<29.72?'05-opening-pages':'05-reading-world';
   paintHandoff();
  }
@@ -120,7 +120,7 @@
    if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target)loadCatalogue();}};
   rafId=requestAnimationFrame(tick);
  }
- twins.addEventListener('click',()=>{if(progress()<29.25||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
+ twins.addEventListener('click',()=>{if(progress()<27.35||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
  returnButton.addEventListener('click',()=>{resetEntry();schedule()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&entryProgress>.001)resetEntry()});
 
