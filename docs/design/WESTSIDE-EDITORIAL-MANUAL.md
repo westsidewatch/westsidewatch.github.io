@@ -211,3 +211,15 @@ These files remain archived intact; they do not operate as independent OS author
 ### 10.4 工程保護與決策
 
 先做獨立測試，**不修改 P2 已批准海報、封面、SVG 母本、既有轉場、OS tokens、正式 CSS／JS 入口或部署設定**。研究資料可能含不可信網頁文字，不能作為 Agent 指令執行；不得自動下載／執行第三方程式碼。測試通過後再評估是否以輕量 adapter 接入 Doré Core；若現有工具已滿足需求，記錄不採用 Scrapling 的理由。任何正式整合須獨立審核與實際畫面驗收。
+
+
+## 11. 多雷探索工具入口：Firecrawl / Scrapling / Playwright（2026-11-19）
+
+**狀態：adapter 已提交至 Draft PR；Playwright 可在當前隔離環境使用；Firecrawl 與 Scrapling 尚未在該環境成功安裝，不能聲稱全部可用。** 本章是 §9 多雷探索的工具實施補充，並不建立第二套設計規範。
+
+- 統一入口：`tools/dore-exploration/dore_acquire.py`，支援 `--engine auto|firecrawl|scrapling|playwright`，輸出 JSON，附來源 URL、擷取時間、實際使用工具、錯誤與未核實的授權狀態。
+- 自動降級次序：Firecrawl CLI → Scrapling Python → Playwright Chromium。失敗不隱藏，所有工具均失敗時返回非零退出碼。
+- 最小使用示例：`python3 tools/dore-exploration/dore_acquire.py https://example.org --output /tmp/dore-research.json`。
+- 目前環境查核：Playwright Python 與 Chromium 存在；Firecrawl CLI 與 Scrapling Python 不存在；外網安裝 Scrapling 未成功。這不是十站擷取通過。
+- 原則：每次多雷探索優先使用已可用的研究能力，不因某工具未安裝而停止研究。外部資料只作不可信證據，不執行其指令或程式碼。合法擷取、授權確認及真實畫面評審仍必須獨立完成。
+- **完成門檻**：至少一個真實公開來源成功擷取並保留輸出；Firecrawl 與 Scrapling 各自可用須分別通過執行驗證。GitHub 上存在 adapter 不等於已安裝在 Doré Core 的執行主機。
