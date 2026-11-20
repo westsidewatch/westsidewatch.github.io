@@ -452,17 +452,20 @@
  second?.prepend(returnToFirst);
  returnToFirst.addEventListener('click',event=>{
   event.preventDefault();event.stopPropagation();
-  returnGuardUntil=performance.now()+3000;
+  returnGuardUntil=performance.now()+250;
   setHandoff(0);
  });
  document.addEventListener('keydown',event=>{
   if(event.key==='Escape'&&handoffProgress>0){
-   returnGuardUntil=performance.now()+3000;setHandoff(0);
+   returnGuardUntil=performance.now()+250;setHandoff(0);
   }
  });
  function paintSecondLayer(){
   if(!second||!sevenfold||twins.length!==2)return;
    const p=handoffProgress,complete=p>=.99999;
+   // Only after landing may the second layer overtake the masthead (z=35).
+   // The flag itself keeps its original stacking throughout the 7.6s motion.
+   stage.classList.toggle('olive-second-complete',complete);
    second.inert=!complete;
    second.setAttribute('aria-hidden',complete?'false':'true');
    if(masthead)masthead.setAttribute('aria-expanded',String(complete));
