@@ -417,13 +417,32 @@
   masthead.setAttribute('aria-label','點擊橄欖山刊頭，展開第二層十二位講員');
   masthead.setAttribute('aria-controls','olive-second-layer');
   masthead.setAttribute('aria-expanded','false');
-  masthead.addEventListener('click',()=>setHandoff(1));
+  // Only a gesture that BEGAN on the masthead may activate its pointer click.
+  // A return-button click can uncover this same spot before the event ends;
+  // such a click-through must not start another sevenfold performance.
+  let mastheadArmed=false;
+  masthead.addEventListener('pointerdown',()=>{mastheadArmed=true});
+  masthead.addEventListener('pointercancel',()=>{mastheadArmed=false});
+  masthead.addEventListener('click',event=>{
+   const armed=mastheadArmed;mastheadArmed=false;
+   if(event.detail>0&&!armed)return;
+   stage.dataset.p2LastEntryTrigger=armed?'masthead-pointer':'masthead-keyboard';
+   setHandoff(1);
+  });
   masthead.addEventListener('keydown',event=>{
    if(event.key==='Enter'||event.key===' '){event.preventDefault();setHandoff(1);}
   });
  }
   // The original P2 exhibit finale now enters the SAME inline layer.
-  enter.addEventListener('click',event=>{event.preventDefault();setHandoff(1)});
+ let enterArmed=false;
+ enter.addEventListener('pointerdown',()=>{enterArmed=true});
+ enter.addEventListener('pointercancel',()=>{enterArmed=false});
+ enter.addEventListener('click',event=>{
+  event.preventDefault();const armed=enterArmed;enterArmed=false;
+  if(event.detail>0&&!armed)return;
+  stage.dataset.p2LastEntryTrigger=armed?'invitation-pointer':'invitation-keyboard';
+  setHandoff(1);
+ });
  const returnToFirst=document.createElement('button');
  returnToFirst.type='button';returnToFirst.className='olive-second-layer__return-first';
  returnToFirst.textContent='← 返回 P2 第一層 / BACK TO P2';
