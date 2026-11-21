@@ -43,22 +43,31 @@ function resize() {
 window.addEventListener("resize", resize, { passive: true });
 resize();
 
-scene.add(new HemisphereLight(0xf3f5f8, 0xa4a5a2, 1.9));
+// Lightweight architectural daylight rig: open-sky diffuse illumination,
+// one moving solar key, two shadowless room-bounce fills. No extra render pass.
+const skyFill = new HemisphereLight(0xeaf1ff, 0xb4afa4, 1.18);
+scene.add(skyFill);
 const sun = new DirectionalLight(0xfff0db, 1.7);
 sun.position.set(4, 21, 10);
 sun.target.position.set(9, 0, -8);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, {
-  left: -29, right: 29, top: 29, bottom: -29, near: 0.1, far: 85
+  left: -23, right: 23, top: 23, bottom: -23, near: 0.1, far: 85
 });
-sun.shadow.normalBias = 0.035;
+sun.shadow.normalBias = 0.015;
+sun.shadow.bias = -0.0002;
 sun.shadow.radius = 5;
 scene.add(sun, sun.target);
-const ambientFill = new DirectionalLight(0xe9efff, 0.6);
+const ambientFill = new DirectionalLight(0xddeaff, 0.44);
 ambientFill.position.set(19, 12, -24);
 scene.add(ambientFill);
-const sanctuaryLight = new DirectionalLight(0xfff0db, 0.40);
+// Warm secondary reflected light from the opposite side of the courtyard.
+// Shadowless bounce preserves readable interior whites without fake beams.
+const bounceFill = new DirectionalLight(0xffead7, 0.28);
+bounceFill.position.set(-13, 8, 12);
+scene.add(bounceFill);
+const sanctuaryLight = new DirectionalLight(0xfff1e4, 0.22);
 sanctuaryLight.position.set(15.5, 5.1, -1.3);
 sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
@@ -200,19 +209,50 @@ function connectArchitecturalDoors(building) {
   eastChapelSlider.attach(mesh("C EAST CHAPEL large sliding glass door"));
   rearSanctuaryHinge.attach(mesh("SANCTUARY MAIN PUBLIC DOOR"));
   staffSanctuaryHinge.attach(mesh("SANCTUARY STAFF DOOR"));
-  // Hardware belongs to the SAME moving leaf, not the static wall.
-  // Blender V23 explicitly names these real hardware nodes.
-  const attachHardware=(group,prefix)=>{
-    const hardware=[];
-    building.traverse(object=>{
-      if(object.isMesh && modelName(object.name).startsWith(modelName(prefix)))
-        hardware.push(object);
-    });
-    for(const object of hardware) group.attach(object);
-    return hardware.length;
-  };
-  attachHardware(rearSanctuaryHinge,"ENTRY HANDLE NORTH PUBLIC");
-  attachHardware(staffSanctuaryHinge,"ENTRY HANDLE SOUTH STAFF");
+  // The GLB handles were baked as independent world-coordinate meshes.
+  // Merely attaching them to the hinge kept their old floating offsets.
+  // Replace just those small handles with door-local hardware; the hinge
+  // still moves the ORIGINAL architectural door geometry.
+  const oldHandles = [];
+  building.traverse(object => {
+    if (object.isMesh && /^(entry|door) handle/i.test(modelName(object.name)))
+      oldHandles.push(object);
+  });
+  for (const object of oldHandles) object.visible = false;
+  const handleMetal = new MeshStandardMaterial({
+    color: 0x777d80, metalness: 0.7, roughness: 0.32
+  });
+  function addDoorLocalHandle(door, label) {
+    if (!door.geometry?.boundingBox) door.geometry?.computeBoundingBox();
+    const bounds = door.geometry?.boundingBox;
+    if (!bounds) return;
+    const extent = new Vector3().subVectors(bounds.max, bounds.min);
+    const height = bounds.min.y + Math.min(1.05, extent.y * .46);
+    const isCrosswise = extent.x > extent.z;
+    // Place the plate on the visible face. Compute everything in DOOR-local
+    // coordinates: opening never changes the handle-to-leaf relationship.
+    const center = isCrosswise
+      ? new Vector3(bounds.max.x - Math.min(.23, extent.x*.18), height, bounds.max.z + .042)
+      : new Vector3(bounds.min.x - .042, height, bounds.max.z - Math.min(.23, extent.z*.18));
+    const plate = new Mesh(
+      new BoxGeometry(isCrosswise?.085:.026, .115, isCrosswise?.026:.085),
+      handleMetal
+    );
+    plate.position.copy(center);
+    plate.name = 'Attached handle plate - ' + label;
+    const lever = new Mesh(
+      new BoxGeometry(isCrosswise?.19:.036, .027, isCrosswise?.037:.19),
+      handleMetal
+    );
+    lever.position.copy(center);
+    if (isCrosswise) lever.position.z += .024;
+    else lever.position.x -= .024;
+    lever.name = 'Attached handle lever - ' + label;
+    door.add(plate, lever);
+  }
+  addDoorLocalHandle(mesh("TALL SINGLE WHITE PIVOT DOOR"), "south entry");
+  addDoorLocalHandle(mesh("SANCTUARY MAIN PUBLIC DOOR"), "north public");
+  addDoorLocalHandle(mesh("SANCTUARY STAFF DOOR"), "south staff");
   northCourtSlider.attach(mesh("A NORTH COURT double-wide glass door"));
   doorsAttached = true;
 }
@@ -433,6 +473,7 @@ function updateDaylight(t,duration) {
   // prevents the previously rejected bright sunlight teleport.
   const angle=phase*Math.PI*2;
   const solar=Math.max(0,Math.sin(angle));
+  // A smooth day-to-night irradiance curve, with a soft low-sun shoulder.
   const daylight=solar*solar*(3-2*solar);
   const season=Math.min(1,Math.max(0,t/duration));
   // Sun moves SOUTH from screen left to screen right while it is up;
@@ -447,13 +488,15 @@ function updateDaylight(t,duration) {
     1.0-.08*morningEvening-.09*winter,
     .98-.21*morningEvening+.015*winter
   );
-  sun.intensity=Math.max(0.03,.12+1.75*daylight-.14*winter);
+  sun.intensity=Math.max(0.035, .08+1.65*daylight-.10*winter);
   // Prevent a constant hard shaft of light remaining through the night.
-  sanctuaryLight.intensity=.17+.28*daylight;
+  sanctuaryLight.intensity=.10+.16*daylight;
   // Daylight changes; the wall PBR base colors remain from the original GLB.
   ambientFill.color.setRGB(.79+.06*winter,.86+.045*winter,.93+.04*winter);
-  ambientFill.intensity=.50+.38*daylight;
-  renderer.toneMappingExposure=.90+.09*daylight;
+  ambientFill.intensity=.26+.31*daylight;
+  bounceFill.intensity=.20+.16*daylight;
+  skyFill.intensity=1.05+.25*daylight;
+  renderer.toneMappingExposure=.91+.11*daylight;
   updateMapleSeason(t,duration);
 }
 
