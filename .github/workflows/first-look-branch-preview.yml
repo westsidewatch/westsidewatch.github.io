@@ -45,6 +45,20 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+      - name: Deploy Cloudflare Pages preview (never production)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREVIEW_BRANCH: pr-${{ github.event.pull_request.number || github.run_id }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "::error::Cloudflare preview credentials missing"; exit 1; }
+          npx --yes wrangler@4 pages deploy public \
+            --project-name=westsidewatch-github-io \
+            --branch="$PREVIEW_BRANCH" \
+            --commit-hash="${GITHUB_SHA}" \
+            --commit-message="First Look isolated preview"
+          echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
       - name: Verify Vol.00 and protected Church to Magazine handoff in Chromium
         # Preview remains accessible for visual review; failures are recorded,
         # but do not suppress this isolated draft branch's deployment.
@@ -67,17 +81,3 @@ jobs:
             artifacts/p2-church-magazine/
           if-no-files-found: warn
           retention-days: 14
-      - name: Deploy Cloudflare Pages preview (never production)
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PREVIEW_BRANCH: pr-${{ github.event.pull_request.number || github.run_id }}
-        run: |
-          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "::error::Cloudflare preview credentials missing"; exit 1; }
-          npx --yes wrangler@4 pages deploy public \
-            --project-name=westsidewatch-github-io \
-            --branch="$PREVIEW_BRANCH" \
-            --commit-hash="${GITHUB_SHA}" \
-            --commit-message="First Look isolated preview"
-          echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
-          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
