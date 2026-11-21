@@ -329,3 +329,47 @@
 .dawn-world__page[data-world="engraving"] .dawn-world__art::before{background-image:url('/images/home-opening-engraving.jpg')}
 .dawn-world__page[data-world="scripture"] .dawn-world__art::before{background-image:url('/images/p2-emmaus-fullfield-engraving-v15.svg')}
 @media(max-width:600px){.dawn-world__art img{max-width:90%;max-height:86%}}
+
+/* R12 · MERSI image world — undo the rejected book mockup completely.
+   Two image fields, independently clipped; no gutter, linework, page border,
+   outlined frames, false shadows, cover cards, page-corner details, or 3D turn. */
+.dawn-realm{perspective:none!important;transform-style:flat!important;background:var(--ws-paper)}
+.dawn-folio,.dawn-folio__spine,.dawn-realm__half,.dawn-spread,.dawn-enter-hint{display:none!important}
+.dawn-world{inset:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;perspective:none!important;background:var(--ws-paper);overflow:hidden}
+.dawn-world__page{position:relative;min-width:0;border:0!important;outline-offset:-4px;background:var(--ws-paper);box-shadow:none!important;transform:none!important;transform-style:flat!important;will-change:auto}
+.dawn-world__page::before,.dawn-world__page::after,
+.dawn-world__corner,.dawn-world__binding{display:none!important;content:none!important}
+.dawn-world__art{position:absolute;inset:0!important;display:block;overflow:hidden;background:var(--ws-papyrus)}
+.dawn-world__art::before,.dawn-world__art::after{display:none!important;content:none!important}
+.dawn-world__art img,.dawn-world__art img.dawn-world__incoming{
+ position:absolute;inset:0;display:block;width:100%;height:100%;
+ max-width:none!important;max-height:none!important;
+ object-fit:cover;object-position:center;
+ box-shadow:none!important;filter:none!important;
+ margin:0;border:0;border-radius:0;transition:none!important;
+ will-change:transform,clip-path;
+}
+.dawn-world__page:hover img,.dawn-world__page:focus-visible img{transform:none}
+.dawn-world__edition{
+ left:0;right:0;bottom:0;min-height:0;gap:5px;
+ padding:clamp(20px,3.6vw,56px) clamp(15px,3vw,48px) clamp(18px,3vw,45px);
+ background:linear-gradient(0deg,rgba(20,19,17,.76),rgba(20,19,17,.49) 57%,transparent);
+ color:var(--ws-paper);border:0!important;pointer-events:none;
+}
+.dawn-world__rubric{font-size:clamp(9px,.8vw,12px);color:var(--ws-paper);opacity:.81;letter-spacing:.13em}
+.dawn-world__edition strong{font-size:clamp(18px,1.9vw,32px);max-width:28ch;color:var(--ws-paper);line-height:1.13;font-weight:400}
+.dawn-world__edition span:last-child{font-size:clamp(11px,1vw,15px);color:var(--ws-paper);opacity:.9}
+.dawn-twins{
+ z-index:9;left:50%;top:50%;transform:translate(-50%,-50%);
+ box-shadow:none!important;filter:none!important;border:0!important;
+}
+.dawn-twins__square{box-shadow:none!important}
+@media(max-width:600px){
+ .dawn-world__art{inset:0!important}
+ .dawn-world__edition{left:0;right:0;bottom:0;padding:60px 9px 14px;min-height:0}
+ .dawn-world__edition strong{font-size:clamp(12px,3.6vw,17px);-webkit-line-clamp:3}
+ .dawn-world__edition span:last-child{font-size:9px}
+ .dawn-world__rubric{font-size:8px}
+ .dawn-twins{left:50%;top:50%}
+}
+@media(prefers-reduced-motion:reduce){.dawn-world__art img,.dawn-world__art img.dawn-world__incoming{will-change:auto}}
