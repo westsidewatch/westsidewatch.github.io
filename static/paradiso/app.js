@@ -7,7 +7,7 @@ const getStored = (key, fallback) => {try { const raw=localStorage.getItem(key);
 const saveStored = (key, value) => {try {localStorage.setItem(key,JSON.stringify(value));}catch{/* private mode */}};
 const state = {titles:[],activeCategory:'全部作品',query:'',favorites:new Set(getStored(STORAGE_KEYS.favorites, [])),custom:getStored(STORAGE_KEYS.custom, []),progress:getStored(STORAGE_KEYS.progress, {}),current:null,episode:0,source:0,lastFocus:null,hls:null,recovered:false,token:0};
 const make = (tag, cls, text) => {const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
-const isSafeMedia = (value) => {try{const url=new URL(value);return url.protocol==='https:' && /\.(m3u8|mp4|webm)(?:$|[?#])/i.test(url.pathname+url.search+url.hash);}catch{return false;}};
+const isSafeMedia = (value) => {try{const url=new URL(value);return url.protocol==='https:' && /\.(m3u8|mp4|webm|ogv|ogg)(?:$|[?#])/i.test(url.pathname+url.search+url.hash);}catch{return false;}};
 const isSafeWeb = (value) => {try{return new URL(value).protocol==='https:';}catch{return false;}};
 const cleanTitle = (v) => typeof v==='string' ? v.trim().slice(0,100) : '';
 const visibleSources = (ep) => Array.isArray(ep.sources)?ep.sources.filter(x=>x&&isSafeMedia(x.url)):[];
@@ -141,7 +141,7 @@ $('import-form').addEventListener('submit',e=>{
   const episodes=[];
   for(let i=0;i<raw.length;i++){const bar=raw[i].indexOf('|');if(bar<1){error.textContent=`第 ${i+1} 行需要用「|」分隔集數與地址。`;return;}
     const label=raw[i].slice(0,bar).trim().slice(0,60),url=raw[i].slice(bar+1).trim();
-    if(!isSafeMedia(url)){error.textContent=`第 ${i+1} 行不是 HTTPS m3u8／mp4／webm 地址。`;return;}
+    if(!isSafeMedia(url)){error.textContent=`第 ${i+1} 行不是 HTTPS m3u8／mp4／webm／ogv 地址。`;return;}
     episodes.push({number:i+1,label,sources:[{name:'我的個人來源',format:url.split('.').pop().split('?')[0],url}]});
   }
   if(!title||!episodes.length){error.textContent='請填寫影片名稱及至少一集。';return;}
