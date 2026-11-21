@@ -1338,3 +1338,109 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="red-sea"] .index a{
 html[data-p2-embedded="true"] body[data-ws-scope="p2"] .showcase{
   height:100svh;
 }
+
+
+/* P2 R11 / 2026-11-21 — fully legible meeting details, not a scrolled footer.
+   The programme and the next-service metadata used to share one overflowing
+   scroll region; the 17% label column also forced '18 OCT' onto a second line.
+   Keep the 7 worship rows scrollable, but make both meeting-info lines fixed
+   and readable above the independent scripture area. */
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-content-group{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:minmax(0,1fr) auto;
+  row-gap:clamp(5px,.65svh,9px);
+  min-height:0;
+  min-width:0;
+  overflow:hidden;
+  align-items:stretch;
+  overscroll-behavior:auto;
+}
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-content-group > .church-schedule-source{
+  grid-column:1;
+  grid-row:1;
+  min-width:0;
+  min-height:0;
+  max-width:none;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:auto;
+  scrollbar-gutter:auto;
+}
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-content-group > .church-folio__meeting-meta{
+  grid-column:1;
+  grid-row:2;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  row-gap:clamp(3px,.4svh,6px);
+  min-width:0;
+  min-height:max-content;
+  padding:clamp(5px,.6svh,8px) 0 clamp(5px,.6svh,8px);
+  border-top:1px solid color-mix(in srgb,var(--ink) 23%,transparent);
+  border-bottom:1px solid color-mix(in srgb,var(--ink) 18%,transparent);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .worship-next,
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .sunday-schedule__place{
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr);
+  column-gap:clamp(12px,1.4cqi,20px);
+  align-items:start;
+  margin:0;
+  padding:0;
+  width:100%;
+  min-width:0;
+  min-height:0;
+  font-size:var(--ws-type-scale-ui);
+  line-height:var(--ws-type-leading-ui);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .worship-next > span,
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .sunday-schedule__place > span{
+  grid-column:1;
+  grid-row:1;
+  display:block;
+  width:max-content;
+  max-width:none;
+  min-width:0;
+  margin:0;
+  padding:0;
+  white-space:nowrap;
+  word-break:keep-all;
+  overflow-wrap:normal;
+  font:400 var(--ws-type-scale-meta)/var(--ws-type-leading-ui) var(--ws-type-display-en);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .worship-next > p,
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .sunday-schedule__place > p{
+  grid-column:2;
+  grid-row:1;
+  min-width:0;
+  width:auto;
+  max-width:none;
+  display:block;
+  margin:0;
+  padding:0;
+  font-size:var(--ws-type-scale-ui);
+  line-height:var(--ws-type-leading-ui);
+  text-align:left;
+  overflow-wrap:normal;
+  word-break:normal;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .sunday-schedule__place > p{
+  font-family:var(--ws-type-display-en);
+  font-weight:400;
+  white-space:normal;
+}
+@container p2-paper (max-width:650px){
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .worship-next,
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .sunday-schedule__place{
+    grid-template-columns:minmax(0,1fr);
+    row-gap:2px;
+  }
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .worship-next > span,
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .sunday-schedule__place > span{
+    grid-column:1;grid-row:1;
+  }
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .worship-next > p,
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .sunday-schedule__place > p{
+    grid-column:1;grid-row:2;
+  }
+}
