@@ -5,7 +5,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
 (async()=>{
- const browser=await chromium.launch({headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-webgl']});
  try{
   fs.mkdirSync('artifacts/p2-sunday-growth',{recursive:true});
   for(const screen of [{name:'desktop',width:1440,height:900},{name:'phone',width:390,height:844}]){
