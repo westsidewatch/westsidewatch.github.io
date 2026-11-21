@@ -2,7 +2,7 @@
 const root=document.querySelector('.showcase'),planes=[...root.querySelectorAll('.plane')],wrap=root.querySelector('.planes'),scripture=root.querySelector('.editorial-john'),editions=[...root.querySelectorAll('.edition')],sea=root.querySelector('.ocean-rise'),cover=root.querySelector('.water-cover'),doors=root.querySelector('.water-doors'),leftDoor=root.querySelector('.water-door--left'),rightDoor=root.querySelector('.water-door--right'),church=root.querySelector('.church-editorial'),churchPanel=church.querySelector('.church-editorial__copy'),index=root.querySelector('.index'),tint=root.querySelector('.water-rise-tint'),waterline=root.querySelector('.water-rise-line path');
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};
 // Same positional curve and stagger as the homepage navigation; no timed playback.
-const embeddedScene=p=>p<=.75?p/.75*2.9:2.9+(p-.75)/.25*1.1;
+const embeddedScene=p=>p<=.7?p/.7*3.25:3.25+(p-.7)/.3*2.0;
 const foldEase=v=>v<.5?8*v**4:1-(-2*v+2)**4/2;
 const magazineProof=new URLSearchParams(location.search).get('magazineProof')==='1';
 // An opt-in direct Church/P2 acceptance view; ordinary scroll film is untouched.
@@ -12,7 +12,7 @@ let raf=0,externalProgress=0,hasExternalProgress=embedded,displayVh=null,sceneVh
 function render(now=performance.now()){
  raf=0;
  const distance=embedded?0:clamp(-root.getBoundingClientRect().top/Math.max(1,innerHeight),0,5.4);
- const target=churchPreview&&!embedded?2.37:hasExternalProgress?embeddedScene(externalProgress):distance<=1.8?.1+distance*(.4/1.8):.5+(distance-1.8);
+ const target=churchPreview&&!embedded?clamp(2.37+distance*.58,2.37,5.25):hasExternalProgress?embeddedScene(externalProgress):distance<=1.8?.1+distance*(.4/1.8):.5+(distance-1.8);
  // Scroll position is the only choreography clock: no catch-up or timed easing.
  displayVh=target;
  const rect=embedded?null:root.getBoundingClientRect();
@@ -27,7 +27,7 @@ function render(now=performance.now()){
  if(visible&&!reduced.matches)schedule();
 }
 function drawScene(vh,now){
- const magazineStart=2.85,magazineEnd=3.85,magazineProgress=smooth((vh-magazineStart)/(magazineEnd-magazineStart));
+ const magazineStart=3.36,magazineEnd=5.18,magazineProgress=smooth((vh-magazineStart)/(magazineEnd-magazineStart));
  const magazine=root.querySelector('.p2-magazine');
  const reveal=clamp(vh/.5,0,1),rise=smooth((vh-.65)/.95),opening=smooth((vh-1.72)/.65),showChurch=vh>=1.72;
  const waterTop=(1-rise)*100,wave=[],coverWave=[],foldWave=[],line=[];
@@ -87,7 +87,12 @@ function drawScene(vh,now){
  magazine.setAttribute('aria-hidden',magazineProgress>=.999?'false':'true');
  }
  church.style.pointerEvents=magazineProgress>0?'none':'';
- root.dataset.p2Phase=vh<.65?'identity':vh<1.72?'ocean-rise':vh<2.37?'red-sea':magazineProgress>=.999?'magazine':magazineProgress>0?'church-to-magazine':'church';root.dataset.p2Progress=vh.toFixed(4);root.dataset.p2WaterLevel=rise.toFixed(4);
+ root.dataset.p2Phase=vh<.65?'identity':vh<1.72?'ocean-rise':vh<2.37?'red-sea':magazineProgress>=.999?'magazine':magazineProgress>0?'church-to-magazine':'church';
+ // One scroll clock controls church construction and its reversible growth.
+ // The completed model is held before the separate Magazine curtain may enter.
+ root.dataset.p2ChurchGrowth=(reduced.matches?1:smooth((vh-1.48)/1.60)).toFixed(4);
+ root.dataset.p2WaterLevel=rise.toFixed(4);
+ root.dataset.p2Progress=vh.toFixed(4);
  index.querySelector('span').textContent=magazineProgress>=.5?'02 / 07':'01 / 07';
  const entry=index.querySelector('a');entry.href=magazineProgress>=.5?'/journal/':'/church/';entry.textContent=magazineProgress>=.5?'READ THE JOURNAL':'ENTER LIVING WATER';
 }
