@@ -35,11 +35,19 @@
   realm.style.pointerEvents=come>.98&&p<.001?'auto':'none';
   halves[0].style.clipPath=`inset(${(100*(1-start)).toFixed(2)}% 0 0 0)`;
   halves[1].style.clipPath=`inset(0 0 ${(100*(1-start)).toFixed(2)}% 0)`;
-  twins.style.visibility=come>.75?'visible':'hidden';twins.style.opacity=String(1-ease((p-.01)/.16));
-  twins.style.transform='none';
-  spread.style.visibility=come>.001?'visible':'hidden';
-  spread.style.opacity='1';
-  spread.style.clipPath=`inset(0 ${(100*(1-come)).toFixed(2)}% 0 0)`;
+  // MERSI-style identity: centered pair enters as the sole focal object,
+  // then rises together to make room for the book and editorial spread.
+  const settle=ease((d-28.03)/.68);
+  const pairHeight=twins.offsetHeight;
+  const cap=parseFloat(getComputedStyle(realm).getPropertyValue('--dawn-square-top'))||24;
+  const shift=Math.max(0,(stage.clientHeight-pairHeight)/2-cap)*settle;
+  twins.style.visibility=come>.75?'visible':'hidden';
+  twins.style.opacity=String(1-ease((p-.01)/.16));
+  twins.style.transform=`translate(-50%,-50%) translateY(${(-shift).toFixed(2)}px)`;
+  const editorial=ease((d-28.12)/.61);
+  spread.style.visibility=editorial>.001?'visible':'hidden';
+  spread.style.opacity=String(editorial);
+  spread.style.clipPath=`inset(0 ${(100*(1-editorial)).toFixed(2)}% 0 0)`;
   windowFrame.style.clipPath=`inset(0 ${(100*(1-leaf)).toFixed(2)}% 0 0)`;
   book.style.transform=`translateX(${((1-leaf)*125).toFixed(2)}%) scale(${(0.78+.22*leaf).toFixed(3)})`;
   cover.style.transform=`rotateY(${(-168*open).toFixed(2)}deg)`;
