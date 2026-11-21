@@ -93,7 +93,7 @@ const finishes = {
 // GLTFLoader sanitizes source node labels into animation-safe identifiers
 // (spaces become underscores). Match against normalized source names.
 function modelName(value) {
-  return String(value).toLowerCase().replace(/[_\\s·.–—]+/g, " ").trim();
+  return String(value).toLowerCase().replace(/[_\s·.–—]+/g, " ").trim();
 }
 function chooseFinish(name) {
   const n = modelName(name);
