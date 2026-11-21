@@ -12,7 +12,7 @@
  const search=$('#dawn-search'),works=$('#dawn-works');
  const more=$('#dawn-more'),prevButton=$('#dawn-prev'),pageStatus=$('#dawn-page-status'),total=$('#dawn-total');
  const wall=$('#dawn-wall'),wallGrid=$('#dawn-wall-grid'),catalogue=$('#dawn-catalogue'),catalogueFocus=$('#dawn-catalogue-focus');
- const openCatalogue=$('#dawn-open-catalogue'),closeCatalogue=$('#dawn-close-catalogue');
+ const openCatalogue=$('#dawn-open-catalogue'),openCatalogueTop=$('#dawn-open-catalogue-top'),closeCatalogue=$('#dawn-close-catalogue');
  const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n)),ease=n=>{const x=clamp(n);return x*x*(3-2*x)};
  const mix=(a,b,t)=>a+(b-a)*t;
  let queued=false,at=0,entryProgress=0,entryClock=0,entryTarget=0,rafId=0;
@@ -76,20 +76,9 @@
  const sheetGroup=svg('g');kinetic.append(sheetGroup);
  // Full-screen sevenfold rects removed by editorial direction.
  const banner=svg('g',{'clip-path':'url(#p205-v9-clip)'});
- // The first frame is literally the twin squares' own pigments. During the
- // ribbon expansion the two fields remain divided at the same 50% seam.
- const bannerFieldLeft=svg('rect',{x:0,y:0,width:800,height:108,fill:startTwinColors[0].background});
- const bannerFieldRight=svg('rect',{x:800,y:0,width:800,height:108,fill:startTwinColors[1].background});
  const topRule=svg('path',{d:'M0 1H1600',stroke:startTwinColors[0].ink,'stroke-width':1,fill:'none'});
- const bottomRule=svg('path',{d:'M0 107H1600',stroke:startTwinColors[0].ink,'stroke-width':1,fill:'none'});
- const leftHalfClip=svg('clipPath',{id:'p205-banner-left'}),rightHalfClip=svg('clipPath',{id:'p205-banner-right'});
- leftHalfClip.append(svg('rect',{x:0,y:0,width:800,height:108}));
- rightHalfClip.append(svg('rect',{x:800,y:0,width:800,height:108}));
- defs.append(leftHalfClip,rightHalfClip);
- const letters=svg('g',{'clip-path':'url(#p205-banner-left)'});
- const lettersRight=svg('g',{'clip-path':'url(#p205-banner-right)'});
- banner.append(bannerFieldLeft,bannerFieldRight,topRule,bottomRule,letters,lettersRight);
- kinetic.append(banner);
+ const bottomRule=svg('path',{d:'M0 107H1600',stroke:startTwinColors[1].ink,'stroke-width':1,fill:'none'});
+ const letters=svg('g');banner.append(topRule,bottomRule,letters);kinetic.append(banner);
  const seals=[0,1].map(i=>{
   const g=svg('g'),shell=svg('rect',{width:500,height:500,fill:i?papyrus:harvest,stroke:gold,'stroke-width':2});g.append(shell);
   const initial=svg('g');textNode(initial,i?'JOHN 8:32':'DAWN LIBRARY',25,56,22,i?harvest:paper);
@@ -105,12 +94,12 @@
  fetch('/images/westside-watch-lettering-v9-clean-kern.svg').then(r=>{if(!r.ok)throw Error('V9 lettering not available');return r.text()}).then(xml=>{
   const doc=new DOMParser().parseFromString(xml,'image/svg+xml');const paths=[...doc.querySelectorAll('path[data-letter]')];
   if(paths.length!==13||paths.map(n=>n.getAttribute('data-letter')).join('')!=='WESTSIDEWATCH')throw Error('Original V9 glyph mismatch');
-  paths.forEach(n=>{letters.append(document.importNode(n,true));lettersRight.append(document.importNode(n,true));});glyphReady=true;stage.dataset.p205Wordmark='v9-final';
+  paths.forEach(n=>letters.append(document.importNode(n,true)));glyphReady=true;stage.dataset.p205Wordmark='v9-final';
  }).catch(e=>{console.error(e);stage.dataset.p205Wordmark='unavailable'});
  function paintHandoff(){const p=entryProgress,complete=p>=.99999;stage.dataset.p205Handoff=p.toFixed(4);
   twins.setAttribute('aria-expanded',String(complete));
-  handoff.style.visibility=p>.001&&!complete?'visible':'hidden';
-  second.style.visibility=p>.64?'visible':'hidden';
+  handoff.style.visibility=p>.001&&p<.65?'visible':'hidden';
+  second.style.visibility=p>.67?'visible':'hidden';
   second.style.clipPath='none';
   second.inert=!complete;second.setAttribute('aria-hidden',complete?'false':'true');
   second.style.pointerEvents=complete?'auto':'none';
@@ -123,16 +112,15 @@
   banner.setAttribute('transform',`translate(${bx} ${by}) scale(${scale})`);
   const opened=ease((p-.045)/.28),retire=ease((p-.56)/.15);
   aperture.setAttribute('x',800*(1-opened+retire*opened));aperture.setAttribute('width',1600*opened*(1-retire));
-  // No first-frame flash: hold the exact two original masthead colors until
-  // the banner is open. Only then begin the sevenfold palette transition.
-  const colorShift=ease((p-.34)/.24),ink=sevenInk(p);
-  bannerFieldLeft.setAttribute('fill',hexMix(startTwinColors[0].background,ink,colorShift));
-  bannerFieldRight.setAttribute('fill',hexMix(startTwinColors[1].background,ink,colorShift));
-  letters.setAttribute('fill',hexMix(startTwinColors[0].ink,ink,colorShift));
-  lettersRight.setAttribute('fill',hexMix(startTwinColors[1].ink,ink,colorShift));
-  topRule.setAttribute('stroke',hexMix(startTwinColors[0].ink,ink,colorShift));
-  bottomRule.setAttribute('stroke',hexMix(startTwinColors[1].ink,ink,colorShift));
-  banner.setAttribute('opacity',String(1-ease((p-.59)/.13)));
+  // The V9 letters remain a single original SVG, with no extra color slabs.
+  // Ink starts in the visible masthead's existing color and enters sevenfold
+  // only after the ribbon has fully opened.
+  const shift=ease((p-.35)/.25);
+  const ink=hexMix(startTwinColors[0].ink,sevenInk(p),shift);
+  letters.setAttribute('fill',ink);
+  topRule.setAttribute('stroke',hexMix(startTwinColors[0].ink,sevenInk(p),shift));
+  bottomRule.setAttribute('stroke',hexMix(startTwinColors[1].ink,sevenInk(p),shift));
+  banner.setAttribute('opacity',String(1-ease((p-.56)/.08)));
   const source=squares.map(node=>node.getBoundingClientRect());const target=plates.map(node=>node.getBoundingClientRect());
   const lift=ease((p-.015)/.17),cross=ease((p-.18)/.34),land=ease((p-.58)/.15),capHeight=100*scale;
   seals.forEach((seal,i)=>{
@@ -142,11 +130,10 @@
    const endX=dst.left-bounds.left+dst.width/2,endY=dst.top-bounds.top+dst.height/2;
    const cx=mix(mix(sourceX,stationX,cross),endX,land),cy=mix(mix(sourceY,stationY,lift),endY,land);
    seal.g.setAttribute('transform',`translate(${cx-sz/2} ${cy-sz/2}) scale(${sz/500})`);
-   seal.g.setAttribute('opacity',String(1-ease((p-.76)/.14)));
-   const original=startTwinColors[i];
-   const sealTransition=ease((p-.34)/.34);
+   seal.g.setAttribute('opacity',String(ease((p-.045)/.07)*(1-ease((p-.53)/.1))));
+   const original=startTwinColors[i],sealTransition=ease((p-.35)/.18);
    seal.shell.setAttribute('fill',hexMix(original.background,sevenInk(p),sealTransition));
-   seal.shell.setAttribute('stroke',hexMix(original.background,ink,colorShift));
+   seal.shell.setAttribute('stroke',hexMix(original.ink,sevenInk(p),sealTransition));
    seal.initial.querySelectorAll('text').forEach(n=>n.setAttribute('fill',hexMix(original.ink,paper,sealTransition)));
    seal.initial.setAttribute('opacity',1-ease((p-.13)/.18));seal.copy.setAttribute('opacity',ease((p-.57)/.12)*(1-ease((p-.74)/.14)));
    // The two real second-layer plates are the physical targets: no last-frame jump.
@@ -164,9 +151,9 @@
   }
   entryTarget=target;
   const from=entryProgress,start=performance.now(),duration=target?7600:0;
-  if(!duration||matchMedia('(prefers-reduced-motion: reduce)').matches){entryClock=entryProgress=target;schedule();if(target){loadCatalogue();loadWallCovers();}return;}
+  if(!duration||matchMedia('(prefers-reduced-motion: reduce)').matches){entryClock=entryProgress=target;schedule();if(target){loadWallCovers();}return;}
   const tick=now=>{entryProgress=mix(from,target,clamp((now-start)/duration));entryClock=entryProgress;schedule();
-   if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target){loadCatalogue();loadWallCovers();}}};
+   if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target){loadWallCovers();}}};
   rafId=requestAnimationFrame(tick);
  }
  twins.addEventListener('click',()=>{if(progress()<27.96||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
@@ -355,28 +342,31 @@
   'bible':'聖經與信仰','church':'教會歷史','ancient':'歷史與考古',
   'philosophy':'哲學與思想','biography':'傳記與生命'
  };
- function briefFor(work,source){
-  const summary=[work.introductionZh,work.descriptionZh,work.summaryZh,work.captionZh,work.caption,
-   work.description?.zhHant,work.description?.zh,work.description,source?.introductionZh]
-   .find(value=>typeof value==='string'&&/[一-龥]/u.test(value.trim())&&value.trim().length>=8);
-  if(summary)return summary.trim();
-  const title=String(work.title||'').trim(),author=String(work.creator||work.author||(work.authors||[]).join('、')||'').trim();
-  const date=work.date?String(work.date):'';
-  const subject=CATEGORY_ZH[work.editorialTopic]||work.classification?.labelZh||work.subjectZh||'';
-  const statements=[];
-  if(author&&date)statements.push('《'+title+'》為'+author+'的作品，出版年代記為'+date+'年。');
-  else if(author)statements.push('《'+title+'》為'+author+'的作品。');
-  else if(date)statements.push('《'+title+'》的出版年代記為'+date+'年。');
-  if(subject)statements.push('本書收於「'+subject+'」主題，適合從相關作品與歷史脈絡展開閱讀。');
-  if(!statements.length)statements.push('《'+title+'》收錄於黎明書局，可由作品題名進一步閱讀並探索相關著作。');
-  return statements.join('');
+ let bookIntroductionIndex=null;
+ async function getBookIntroductionIndex(){
+  if(bookIntroductionIndex)return bookIntroductionIndex;
+  const response=await fetch('/dawn-library/p2-exhibitions/jerusalem-3000-introductions.json');
+  if(!response.ok)throw Error('Curated introductions unavailable');
+  bookIntroductionIndex=await response.json();return bookIntroductionIndex;
+ }
+ function introductionParagraphs(work,source){
+  if(Array.isArray(work.editorialParagraphs)&&work.editorialParagraphs.length)return work.editorialParagraphs;
+  const candidate=[work.introductionZh,work.descriptionZh,work.summaryZh,work.description?.zhHant,work.description?.zh,source?.introductionZh]
+   .find(v=>typeof v==='string'&&v.trim().length>=110&&/[一-龥]/u.test(v));
+  return candidate?[candidate.trim()]:[];
  }
  function drawBookIntroduction(work,source){
   detailText.replaceChildren();
-  const lead=document.createElement('div');lead.className='dawn-book-detail__introduction';lead.lang='zh-Hant';
-  const heading=document.createElement('h3');heading.textContent='作品簡介';
-  const p=document.createElement('p');p.textContent=briefFor(work,source);
-  lead.append(heading,p);detailText.append(lead);
+  const paragraphs=introductionParagraphs(work,source);
+  if(!paragraphs.length){
+   // No invented contents: the heading area already has actual bibliographic
+   // metadata. Do not manufacture simplistic copy and call it a synopsis.
+   return;
+  }
+  const lead=document.createElement('section');lead.className='dawn-book-detail__introduction';lead.lang='zh-Hant';
+  const heading=document.createElement('h3');heading.textContent='作品導讀';lead.append(heading);
+  for(const copy of paragraphs){const p=document.createElement('p');p.textContent=copy;lead.append(p)}
+  detailText.append(lead);
  }
  function appendReadingExtract(pack){
   const excerpt=document.createElement('section');excerpt.className='dawn-book-detail__extract';
@@ -427,7 +417,8 @@
  function openCollection(origin='館藏總索引',title=''){
   if(!detail.hidden)closeBook();
   wall.hidden=true;catalogue.hidden=false;activePortal=origin==='館藏總索引'?'all':origin;
-  catalogueFocus.textContent=activePortal==='all'?'':origin;
+  catalogueFocus.textContent=activePortal==='all'?'全部館藏':origin;
+  renderChannelIntroduction(activePortal);
   second.scrollTo({top:catalogue.offsetTop,behavior:'instant'});
   const ticket=++portalTicket;
   if(activePortal==='all'){
@@ -442,6 +433,28 @@
    pageStatus.textContent='';
    showPortalCollection(activePortal,ticket);
   }
+ }
+ const portalIntro=$('#dawn-catalogue-introduction');
+ const channelCopy={
+  '三晨星':[
+   '三晨星不是按銷量、年代或書架位置排列的暢銷榜，而是從書局作品中挑選值得反覆閱讀的三部著作。每一次推薦都應能回答：這部書提出什麼重要問題，它如何幫助我們理解信仰、歷史與生命？',
+   '選書保留原著身份與版本線索，讀者可以由這三部書進入作者的思想，再逐步延伸到相關作品。這裡重視深入閱讀，而非以書量製造豐富的假象。'
+  ],
+  '策展集':[
+   '一座城市可以在地圖、手抄本、版畫、攝影和考古重建中呈現完全不同的面貌。《耶路撒冷三千年》以作品之間的對照展開：同一個地方如何被朝聖者描繪、被史家書寫、被藝術家想像，又如何進入現代測繪與攝影。',
+   '每件圖像都應回到自己的年代、媒材與原始來源。歷史見證、藝術寓言和當代重建不能混作同一種證據；它們相互並置，才使策展成為一條有論點的閱讀路徑。'
+  ],
+  '光譜':[
+   '閱讀不能只停在單一學科的書目。聖經詮釋需要歷史背景，教會思想與哲學問題彼此對話；人物的生命經驗也常常照見一個時代的信仰、制度與文化。',
+   '光譜以聖經與信仰、教會歷史、歷史與考古、哲學與思想、傳記與生命五條線索組織作品。分類是發現書與書之間關係的入口，而不是把不同知識封存在互不往來的房間。'
+  ]
+ };
+ function renderChannelIntroduction(channel){
+  if(!portalIntro)return;
+  portalIntro.replaceChildren();
+  if(channel==='all'){portalIntro.hidden=true;return}
+  for(const text of channelCopy[channel]||[]){const p=document.createElement('p');p.textContent=text;portalIntro.append(p)}
+  portalIntro.hidden=!portalIntro.childElementCount;
  }
  let editorialManifest=null,activeTopic='all',editorialWorks=[],portalTopics=null;
  async function loadEditorialChannels(){
@@ -489,7 +502,8 @@
    }else if(kind==='策展集'){
     const response=await fetch(config.source);if(!response.ok)throw Error('Exhibition missing');
     const data=await response.json();
-    for(const item of data.items||[])list.push({title:item.title,creator:item.creator,date:item.year,curationMedium:item.curationMedium,captionZh:item.caption,illustration:{url:item.media?.src,alt:item.media?.alt,source:item.media?.source,credit:item.creator},sourceUrl:item.sourceWork||item.destination});
+    const introductionIndex=await getBookIntroductionIndex().catch(()=>({items:{}}));
+    for(const item of data.items||[])list.push({id:item.id,title:item.title,creator:item.creator,date:item.year,curationMedium:item.curationMedium,editorialParagraphs:introductionIndex.items?.[item.id]||[],illustration:{url:item.media?.src,alt:item.media?.alt,source:item.media?.source,credit:item.creator},sourceUrl:item.sourceWork||item.destination});
    }else if(kind==='光譜'){
     const response=await fetch(config.source);if(!response.ok)throw Error('Disciplinary shelves missing');
     const data=await response.json(),byId=new Map();
@@ -538,6 +552,7 @@
  }
  function closeCollection(){++portalTicket;activePortal='all';portalTopics?.remove();portalTopics=null;editorialWorks=[];search.disabled=false;if(!detail.hidden)closeBook();catalogue.hidden=true;wall.hidden=false;search.value='';second.scrollTo({top:wall.offsetTop,behavior:'instant'})}
  openCatalogue.addEventListener('click',()=>openCollection());
+ openCatalogueTop?.addEventListener('click',()=>openCollection());
  closeCatalogue.addEventListener('click',closeCollection);
  wallGrid.addEventListener('click',e=>{
   const tile=e.target.closest('button');if(!tile)return;
