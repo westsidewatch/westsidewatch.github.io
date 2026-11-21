@@ -4,10 +4,10 @@
    P2 returns never replay the flag. All animation states are deterministic. */
 (()=>{'use strict';
  const $=s=>document.querySelector(s),track=$('#p205-track'),stage=$('#p205-stage');
- const prior=$('#p205-prior'),realm=$('#dawn-realm'),halves=[...document.querySelectorAll('.dawn-realm__half')],folio=$('#dawn-folio'),spine=$('#dawn-spine');
+ const prior=$('#p205-prior'),realm=$('#dawn-realm');
  const twins=$('#dawn-twins'),squares=[...twins.querySelectorAll('.dawn-twins__square')];
- const spread=$('#dawn-spread'),windowFrame=$('#dawn-book-window'),book=$('#dawn-book'),cover=$('#dawn-book-cover'),world=$('#dawn-world');
- const hint=$('#dawn-enter-hint'),handoff=$('#dawn-handoff'),second=$('#dawn-second'),returnButton=$('#dawn-return');
+ const world=$('#dawn-world');
+ const handoff=$('#dawn-handoff'),second=$('#dawn-second'),returnButton=$('#dawn-return');
  const plates=[$('#dawn-plate-zh'),$('#dawn-plate-en')];
  const search=$('#dawn-search'),works=$('#dawn-works');
  const more=$('#dawn-more'),prevButton=$('#dawn-prev'),pageStatus=$('#dawn-page-status'),total=$('#dawn-total');
@@ -21,35 +21,17 @@
 
   // THE ORIGINAL 01–04 FILES REMAIN UNMODIFIED AND BEHIND THEIR OWN STAGE.
   prior.contentWindow?.postMessage({type:'westside-p2-home-pose',distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),active:d<27.3},location.origin);
-  // Independent chapter identity: the entire new folio unfolds first.
-  // A fixed scroll location restores identical geometry in either direction.
-  const fold=ease((d-26.19)/1.35);
-  const start=ease((d-26.30)/1.21);
-  const come=ease((d-27.37)/.64);
-  const leaf=ease((d-27.93)/.86);
-  const open=ease((d-28.66)/1.11);
-  realm.style.visibility=fold>.001?'visible':'hidden';
-  folio.style.transform=`rotateY(${(-88*(1-fold)).toFixed(2)}deg)`;
-  world.style.opacity=String(ease((d-26.38)/.83));
-  world.style.pointerEvents=come>.97&&p<.001?'auto':'none';
-  spine.style.opacity=String(ease((fold-.04)/.18));
-  realm.inert=!come||p>.001;realm.setAttribute('aria-hidden',!come||p>.001?'true':'false');
-  realm.style.pointerEvents=come>.98&&p<.001?'auto':'none';
-  halves[0].style.clipPath=`inset(${(100*(1-start)).toFixed(2)}% 0 0 0)`;
-  halves[1].style.clipPath=`inset(0 0 ${(100*(1-start)).toFixed(2)}% 0)`;
-  // The two centered title squares are the stable binding of the Gospel book.
-  twins.style.visibility=come>.75?'visible':'hidden';
-  twins.style.opacity=String(1-ease((p-.01)/.16));
+  const appear=ease((d-26.23)/1.22),settled=ease((d-27.35)/.44);
+  realm.style.visibility=appear>.001?'visible':'hidden';
+  realm.inert=settled<.98||p>.001;
+  realm.setAttribute('aria-hidden',settled<.98||p>.001?'true':'false');
+  realm.style.pointerEvents=settled>.98&&p<.001?'auto':'none';
+  world.style.opacity=String(appear);
+  twins.style.visibility=settled>.02?'visible':'hidden';
+  twins.style.opacity=String(settled*(1-ease((p-.01)/.16)));
   twins.style.transform='translate(-50%,-50%)';
-  const editorial=0;
-  spread.style.visibility=editorial>.001?'visible':'hidden';
-  spread.style.opacity=String(editorial);
-  spread.style.clipPath=`inset(0 ${(100*(1-editorial)).toFixed(2)}% 0 0)`;
-  windowFrame.style.clipPath=`inset(0 ${(100*(1-leaf)).toFixed(2)}% 0 0)`;
-  book.style.transform=`translateX(${((1-leaf)*125).toFixed(2)}%) scale(${(0.78+.22*leaf).toFixed(3)})`;
-  cover.style.transform=`rotateY(${(-168*open).toFixed(2)}deg)`;
-  hint.style.visibility='hidden';
-  stage.dataset.p205Scene=d<26.19?'04-protected':d<27.54?'05-folio-unfold':d<28.66?'05-quarter-window':d<29.77?'05-page-turn':'05-reading-world';
+  paintWorld(d);
+  stage.dataset.p205Scene=d<26.23?'04-protected':'05-gospel-image-world';
   paintHandoff();
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
@@ -149,93 +131,71 @@
  returnButton.addEventListener('click',()=>{resetEntry();schedule()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&entryProgress>.001)resetEntry()});
 
- // A real illustrated-reading world on each facing folio leaf.
- // Curated from the repository's existing cover-preview Open Library holdings.
- // Each page owns one real work ID; destination updates with the visible cover.
- const gospelLeaves={
+ // Genuine interior illustrations and Holy Land photographs.
+ // MERSI grammar: the scroll position directly sets slide and clip geometry.
+ // No page rotation, clock-based slideshow, fictional book-cover art, or central seam.
+ const commons=name=>'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(name)+'?width=1200';
+ const gospelScenes={
   left:[
-   {id:'OL100679W',title:"The Children's Atlas of the Bible",caption:'聖經地理與歷史',cover:9600327,world:'engraving'},
-   {id:'OL101993W',title:'The Gospel according to John',caption:'約翰福音',cover:124022,world:'scripture'},
-   {id:'OL1005006W',title:'Jesus Christ liberator',caption:'耶穌基督',cover:680922,world:'engraving'},
-   {id:'OL102027W',title:'The Essential Jesus',caption:'基督生平',cover:3870881,world:'temple'},
-   {id:'OL10099843W',title:'Reading Biblical Narrative',caption:'聖經敘事',cover:12859271,world:'scripture'},
-   {id:'OL102017W',title:'The Gospel of eternal life',caption:'永生福音',cover:9305284,world:'engraving'}
+   {image:'/images/home-opening-engraving.jpg',title:'The Doré Bible Gallery',caption:'聖經雕版畫 · 1890',kind:'SCRIPTURE · ENGRAVING',href:'https://www.loc.gov/item/10002262/'},
+   {image:commons('Gustave Doré - Crucifixion of Jesus.jpg'),title:'The Crucifixion',caption:'Gustave Doré · The Holy Bible · 1866',kind:'BIBLICAL ENGRAVING',href:'https://commons.wikimedia.org/wiki/File:Gustave_Dor%C3%A9_-_Crucifixion_of_Jesus.jpg'},
+   {image:commons('The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598368358).jpg'),title:'Jesus and the Woman of Samaria',caption:'The Bible Panorama · 1891 · 書內插圖',kind:'GOSPEL · ILLUSTRATION',href:'https://archive.org/details/biblepanoramaorh00fost'},
+   {image:commons('The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598534357).jpg'),title:'The Road to Emmaus',caption:'The Bible Panorama · 1891 · 書內插圖',kind:'GOSPEL · ILLUSTRATION',href:'https://archive.org/details/biblepanoramaorh00fost'}
   ],
   right:[
-   {id:'OL10128466W',title:'Jerusalem Crown',caption:'耶路撒冷與經文',cover:13505898,world:'jerusalem'},
-   {id:'OL10077333W',title:'Christianity in Modern China',caption:'中國教會歷史',cover:3337951,world:'temple'},
-   {id:'OL10010026W',title:'Language of the Heart: How to Read the Bible',caption:'聖經閱讀',cover:3158621,world:'scripture'},
-   {id:'OL1004971W',title:'Praying With Jesus And Mary',caption:'禱告與默想',cover:1915401,world:'engraving'},
-   {id:'OL102029W',title:'The Historical Jesus',caption:'福音歷史',cover:4940356,world:'temple'},
-   {id:'OL10016417W',title:'Jewish Pesach and the Origins of the Christian Easter',caption:'逾越節與復活',cover:3168093,world:'jerusalem'}
+   {image:'https://cdn.loc.gov/service/pnp/ppmsca/02600/02693v.jpg',title:'The Holy Sepulchre',caption:'Jerusalem · 1890–1900 · 聖地攝影',kind:'HOLY LAND · PHOTOGRAPHY',href:'https://www.loc.gov/pictures/item/2002725004/'},
+   {image:'https://cdn.loc.gov/service/pnp/ppmsc/05900/05910v.jpg',title:'Tiberias, Holy Land',caption:'提比哩亞 · 聖地歷史攝影',kind:'HOLY LAND · PHOTOGRAPHY',href:'https://www.loc.gov/pictures/item/2001699273/'},
+   {image:commons('The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598369549).jpg'),title:'Entry into Jerusalem',caption:'The Bible Panorama · 1891 · 書內插圖',kind:'GOSPEL · ILLUSTRATION',href:'https://archive.org/details/biblepanoramaorh00fost'},
+   {image:'https://cdn.loc.gov/service/pnp/ppmsca/02600/02669v.jpg',title:'The Street Called Straight',caption:'Damascus · 1890–1900 · 聖地攝影',kind:'HOLY LAND · PHOTOGRAPHY',href:'https://www.loc.gov/pictures/item/2002724979/'}
   ]
  };
- const folioSide=['left','right'].map((key,i)=>({
-   key,anchor:$('#dawn-page-'+key),img:$('#dawn-image-'+key),
-   title:$('#dawn-title-'+key),author:$('#dawn-author-'+key),index:0,busy:false,
-   lastTurn:performance.now()+i*3800
- }));
- const bookImage=(book,size='L')=>`https://covers.openlibrary.org/b/id/${book.cover}-${size}.jpg?default=false`;
- const bookDestination=book=>`https://openlibrary.org/works/${book.id}`;
- function preloadBook(book){return new Promise(resolve=>{
-   const img=new Image();let triedMedium=false;
-   img.onload=()=>resolve(img.src);
-   img.onerror=()=>{if(!triedMedium){triedMedium=true;img.src=bookImage(book,'M');}else resolve(null)};
-   img.src=bookImage(book);
- });}
- async function turnFolio(side){
-  if(side.busy||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  side.busy=true;
-  let nextIndex=side.index,nextBook,cover;
-  for(let attempt=0;attempt<gospelLeaves[side.key].length-1;attempt++){
-   nextIndex=(nextIndex+1)%gospelLeaves[side.key].length;
-   nextBook=gospelLeaves[side.key][nextIndex];
-   cover=await preloadBook(nextBook);
-   if(cover)break;
-  }
-  if(!cover){side.busy=false;return;}
-  try{
-   const direction=side.key==='left'?1:-1;
-   const first=side.anchor.animate(
-    [{transform:'rotateY(0deg)'},{transform:`rotateY(${direction*79}deg)`}],
-    {duration:880,easing:'cubic-bezier(.62,.05,.4,1)',fill:'forwards'});
-   await first.finished;
-   // Change the real book and the navigation together, at the page-turn midpoint.
-   side.img.src=cover;
-   side.img.alt=nextBook.title+' 書封';
-   side.anchor.dataset.world=nextBook.world;
-   side.anchor.href=bookDestination(nextBook);
-   side.anchor.setAttribute('aria-label','開啟 '+nextBook.title);
-   side.title.textContent=nextBook.title;
-   side.author.textContent=nextBook.caption;
-   side.index=nextIndex;
-   first.cancel();
-   const second=side.anchor.animate(
-    [{transform:`rotateY(${direction*-76}deg)`},{transform:'rotateY(0deg)'}],
-    {duration:1040,easing:'cubic-bezier(.18,.8,.28,1)',fill:'none'});
-   await second.finished;
-  }catch(e){ /* Cancelled motion must not break the user's reading. */ }
-  finally{side.busy=false;side.lastTurn=performance.now();}
- }
- folioSide[0].anchor.dataset.world='engraving';
- folioSide[1].anchor.dataset.world='jerusalem';
- let motionInterval=0;
- function maybeTurnPages(){
-  if(document.hidden||entryProgress>.001||progress()<27.9||
-     matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  for(const side of folioSide){
-   if(side.anchor.matches(':hover,:focus-within'))continue;
-   if(performance.now()-side.lastTurn>(side.key==='left'?6100:8200))void turnFolio(side);
+ const imageSides=['left','right'].map((key)=>{
+  const node=$('#dawn-page-'+key),art=$('#dawn-art-'+key),current=$('#dawn-image-'+key);
+  const next=document.createElement('img');next.className='dawn-world__incoming';
+  next.alt='';next.decoding='async';next.loading='lazy';art.append(next);
+  return {key,node,current,next,art,title:$('#dawn-title-'+key),caption:$('#dawn-author-'+key),index:-1,nextIndex:-1};
+ });
+ for(const side of imageSides){
+  // Hide any broken remote asset rather than displaying a missing-image icon.
+  for(const img of [side.current,side.next]){
+   img.addEventListener('error',()=>{img.style.opacity='0';});
+   img.addEventListener('load',()=>{img.style.removeProperty('opacity');});
   }
  }
- motionInterval=setInterval(maybeTurnPages,550);
- document.addEventListener('visibilitychange',()=>{
-  if(!document.hidden)folioSide.forEach(side=>side.lastTurn=performance.now());
- });
- folioSide.forEach(side=>{
-  side.anchor.addEventListener('pointerenter',()=>side.lastTurn=performance.now());
-  side.anchor.addEventListener('focusin',()=>side.lastTurn=performance.now());
- });
+ function paintWorld(d){
+  // Two independently staggered visual strips, with scroll-owned MERSI-like
+  // sliding masks. Motion stops on stationary scroll and reverses precisely.
+  const base=Math.max(0,d-27.65);
+  for(const side of imageSides){
+   const scenes=gospelScenes[side.key],s=base*(side.key==='left'?1.18:.94)+(side.key==='right'?.43:0);
+   const step=Math.floor(Math.max(0,s)),fraction=ease(s-Math.floor(s));
+   const i=step%scenes.length,ni=(i+1)%scenes.length;
+   if(side.index!==i){
+    const item=scenes[i];side.current.src=item.image;
+    side.current.alt=item.title+' — '+item.caption;
+    side.index=i;
+   }
+   if(side.nextIndex!==ni){
+    side.next.src=scenes[ni].image;
+    side.next.alt=scenes[ni].title+' — '+scenes[ni].caption;
+    side.nextIndex=ni;
+   }
+   const currentPct=(fraction*102).toFixed(2);
+   const incomingPct=(100-fraction*100).toFixed(2);
+   side.current.style.clipPath=`inset(0 0 ${currentPct}% 0)`;
+   side.next.style.clipPath=`inset(${incomingPct}% 0 0 0)`;
+   side.current.style.transform=`translate3d(0,${(-fraction*12).toFixed(2)}%,0)`;
+   side.next.style.transform=`translate3d(0,${((1-fraction)*12).toFixed(2)}%,0)`;
+   const shown=fraction>.5?scenes[ni]:scenes[i];
+   if(side.node.href!==shown.href){
+    side.node.href=shown.href;
+    side.node.setAttribute('aria-label','查看 '+shown.title+' · 原始書籍或館藏');
+   }
+   side.title.textContent=shown.title;
+   side.caption.textContent=shown.caption;
+   side.node.querySelector('.dawn-world__rubric').textContent=shown.kind;
+  }
+ }
 
  // Actual Dawn Library catalogue: 21,047 records / 85 paged JSON files.
  // Fetch one page on demand. Never download the whole corpus on first paint.
