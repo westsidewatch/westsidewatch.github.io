@@ -32,3 +32,11 @@ jobs:
             --remote-debugging-port=9222 --user-data-dir=/tmp/p2-chrome-cdp \
             --window-size=900,600 about:blank >/tmp/p2-chrome.log 2>&1 &
           node scripts/p2-church-browser-cdp.mjs
+      - name: Preserve all visual verification frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-church-v41-camera-visual-proof
+          path: artifacts/p2-church-visual-qa/
+          if-no-files-found: warn
+          retention-days: 30
