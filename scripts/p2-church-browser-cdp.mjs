@@ -55,7 +55,7 @@ async function evaluate(expression){
   return r.result?.value;
 }
 try{
-  for(const frame of [0,26,52]){
+  for(const frame of [9,40,64,89,110,150,174,204,223,250]){
     errors.length=0;
     await send('Page.navigate',{
       url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frame
