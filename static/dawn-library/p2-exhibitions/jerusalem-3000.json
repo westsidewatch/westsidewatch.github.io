@@ -3,8 +3,8 @@
   "id": "jerusalem-3000",
   "title": "耶路撒冷三千年",
   "subtitle": "JERUSALEM · 3000 YEARS",
-  "description": "十二個不同來源的耶路撒冷史料視覺場景，跨越馬賽克、古地圖、歷史復原、考古測繪、石版畫、攝影和彩色印刷。此為十二景策展工程母本，並非十二本獨立書籍的最終選書。",
-  "curationStatus": "12-visual-scenes-provisional",
+  "description": "十二部各具視覺語言的原始出版物選書。只有原書圖版位置已確認的作品可進入 P2 展示；其餘須取得可檢驗內頁與授權才可發佈。",
+  "curationStatus": "12-books-selected-assets-incomplete",
   "sourceCollection": "/dawn-library/collections/jerusalem-3000/maps/",
   "display": {
     "mode": "mersi-counterflow",
@@ -12,191 +12,193 @@
     "right": "down",
     "centralTitle": "DAWN LIBRARY"
   },
+  "bookSelectionCount": 12,
   "items": [
     {
-      "id": "jerusalem-map-1",
-      "title": "Madaba Mosaic Map",
-      "caption": "馬達巴馬賽克 · 六世紀朝聖圖像",
-      "kind": "MOSAIC · PILGRIMAGE",
-      "year": "6C",
-      "media": {
-        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Madaba%20Mosaic%20Map%20depicting%20Jerusalem%20and%20the%20Dead%20Sea%20Church%20of%20St%20George.jpg?width=1800",
-        "alt": "Madaba Mosaic Map · 馬達巴馬賽克 · 六世紀朝聖圖像",
-        "type": "image",
-        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Madaba%20Mosaic%20Map%20depicting%20Jerusalem%20and%20the%20Dead%20Sea%20Church%20of%20St%20George.jpg"
-      },
-      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=0"
-    },
-    {
-      "id": "jerusalem-map-2",
-      "title": "Breydenbach · Jerusalem",
-      "caption": "早期印刷朝聖城市圖",
-      "kind": "EARLY PRINT · PILGRIMAGE",
+      "id": "breydenbach-1486",
+      "title": "Peregrinatio in Terram Sanctam",
+      "creator": "Bernhard von Breydenbach",
       "year": "1486",
+      "kind": "EARLY PRINT · PILGRIMAGE",
+      "caption": "十五世紀朝聖巨幅木刻城市全景",
+      "sourceWork": "https://www.loc.gov/item/2021667084/",
+      "curationMedium": "woodcut",
+      "imageStatus": "existing-collection-sample",
       "media": {
-        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Civitas%20Iherusalem.jpg?width=1800",
-        "alt": "Breydenbach · Jerusalem · 早期印刷朝聖城市圖",
-        "type": "image",
-        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Civitas%20Iherusalem.jpg"
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Civitas%20Iherusalem.jpg?width=1600",
+        "source": "https://www.loc.gov/item/2021667084/",
+        "alt": "Peregrinatio in Terram Sanctam — 十五世紀朝聖巨幅木刻城市全景",
+        "type": "image"
       },
-      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=1"
+      "destination": "https://www.loc.gov/item/2021667084/"
     },
     {
-      "id": "jerusalem-map-3",
-      "title": "Van Adrichem · Ierusalem",
-      "caption": "基督時代耶路撒冷歷史復原圖",
-      "kind": "HISTORICAL RECONSTRUCTION",
-      "year": "1590",
-      "media": {
-        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Christian%20van%20Adrichem%201590%20map%20Ierusalem%2C%20et%20suburbia%20eius%2C%20sicut%20tempre%20Christi%20floruit%2C%20cum%20locis%2C%20in%20quibus%20Christ%20passus%20est%20qu%C3%A6%20religiose%20%C3%A0%20Christianis%20observata%2C%20eti%C3%A3%20n%C5%A9%20Venerationi%20habentur.jpg?width=1800",
-        "alt": "Van Adrichem · Ierusalem · 基督時代耶路撒冷歷史復原圖",
-        "type": "image",
-        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Christian%20van%20Adrichem%201590%20map%20Ierusalem%2C%20et%20suburbia%20eius%2C%20sicut%20tempre%20Christi%20floruit%2C%20cum%20locis%2C%20in%20quibus%20Christ%20passus%20est%20qu%C3%A6%20religiose%20%C3%A0%20Christianis%20observata%2C%20eti%C3%A3%20n%C5%A9%20Venerationi%20habentur.jpg"
-      },
-      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=2"
+      "id": "jewish-antiquities-1465",
+      "title": "Jewish Antiquities",
+      "creator": "Flavius Josephus · illuminated edition",
+      "year": "1465",
+      "kind": "ILLUMINATED MANUSCRIPT",
+      "caption": "中世紀手抄本中的聖殿與耶路撒冷想像",
+      "sourceWork": "https://www.loc.gov/item/2021667600/",
+      "curationMedium": "illuminated-manuscript",
+      "imageStatus": "image-asset-pending",
+      "media": null,
+      "destination": "https://www.loc.gov/item/2021667600/"
     },
     {
-      "id": "jerusalem-map-4",
-      "title": "Wilson · Ordnance Survey",
-      "caption": "威爾遜實地測繪 · 十九世紀",
-      "kind": "ARCHAEOLOGY · SURVEY",
-      "year": "1865",
-      "media": {
-        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/1865%20Ordnance%20Survey%20of%20Jerusalem%20Old%20City%20full%20map.jpg?width=1800",
-        "alt": "Wilson · Ordnance Survey · 威爾遜實地測繪 · 十九世紀",
-        "type": "image",
-        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/1865%20Ordnance%20Survey%20of%20Jerusalem%20Old%20City%20full%20map.jpg"
-      },
-      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=3"
+      "id": "blake-jerusalem",
+      "title": "Jerusalem: The Emanation of the Giant Albion",
+      "creator": "William Blake",
+      "year": "1804–1832",
+      "kind": "VISIONARY PRINT · POETRY",
+      "caption": "彩飾刻版的文字與神學藝術世界（藝術寓言，非城市史圖）",
+      "sourceWork": "https://www.loc.gov/item/48038103/",
+      "curationMedium": "illuminated-print",
+      "imageStatus": "image-asset-pending",
+      "media": null,
+      "destination": "https://www.loc.gov/item/48038103/"
     },
     {
-      "id": "jerusalem-map-5",
-      "title": "Survey of Palestine",
-      "caption": "英國託管時期的城市測量圖",
-      "kind": "HISTORICAL CARTOGRAPHY",
-      "year": "1937",
+      "id": "dore-bible",
+      "title": "The Doré Bible Gallery",
+      "creator": "Gustave Doré",
+      "year": "1890",
+      "kind": "BIBLICAL ENGRAVING",
+      "caption": "聖經故事敘事雕版畫",
+      "sourceWork": "https://www.loc.gov/item/10002262/",
+      "curationMedium": "engraving",
+      "imageStatus": "remote-image-needs-browser-check",
       "media": {
-        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Jerusalem%20-%20Compiled%2C%20drawn%20%26%20printed%20under%20the%20direction%20of%20F.J.%20Salmon%2C%20Commissioner%20for%20Lands%20%26%20Surveys%2C%20Palestine.jpg?width=1800",
-        "alt": "Survey of Palestine · 英國託管時期的城市測量圖",
-        "type": "image",
-        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Jerusalem%20-%20Compiled%2C%20drawn%20%26%20printed%20under%20the%20direction%20of%20F.J.%20Salmon%2C%20Commissioner%20for%20Lands%20%26%20Surveys%2C%20Palestine.jpg"
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Gustave%20Dor%C3%A9%20-%20Crucifixion%20of%20Jesus.jpg?width=1600",
+        "source": "https://www.loc.gov/item/10002262/",
+        "alt": "The Doré Bible Gallery — 聖經故事敘事雕版畫",
+        "type": "image"
       },
-      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=4"
+      "destination": "https://www.loc.gov/item/10002262/"
     },
     {
-      "id": "roberts-jerusalem",
-      "title": "Jerusalem — David Roberts",
-      "caption": "1839 城市彩色石版畫 · 《The Holy Land》內頁",
-      "kind": "LITHOGRAPH · ART",
-      "year": "1839",
+      "id": "roberts-holy-land",
+      "title": "The Holy Land, Syria, Idumea, Arabia, Egypt and Nubia",
+      "creator": "David Roberts · Louis Haghe",
+      "year": "1842–1845",
+      "kind": "COLOUR LITHOGRAPH",
+      "caption": "耶路撒冷彩色石版風景內頁",
+      "sourceWork": "https://www.loc.gov/item/2002717464/",
+      "curationMedium": "lithograph",
+      "imageStatus": "source-file-listed",
       "media": {
         "src": "https://tile.loc.gov/storage-services/service/pnp/ds/04500/04515v.jpg",
         "source": "https://www.loc.gov/item/2002717464/",
-        "alt": "David Roberts Jerusalem colour lithograph",
+        "alt": "The Holy Land, Syria, Idumea, Arabia, Egypt and Nubia — 耶路撒冷彩色石版風景內頁",
         "type": "image"
       },
-      "destination": "https://www.loc.gov/item/2002717464/",
-      "sourceWork": "The Holy Land, Syria, Idumea, Arabia, Egypt and Nubia",
-      "curationMedium": "book-interior"
+      "destination": "https://www.loc.gov/item/2002717464/"
     },
     {
-      "id": "olive-panorama",
-      "title": "Jerusalem from the Mount of Olives",
-      "caption": "橄欖山眺望聖城 · 早期銀鹽攝影",
-      "kind": "HISTORIC PHOTOGRAPHY",
-      "year": "1900–1940",
-      "media": {
-        "src": "https://cdn.loc.gov/service/pnp/ppmsca/18900/18904v.jpg",
-        "source": "https://www.loc.gov/item/2008676384/",
-        "alt": "Early photographic panorama of Jerusalem from Mount of Olives",
-        "type": "image"
-      },
-      "destination": "https://www.loc.gov/item/2008676384/",
-      "sourceWork": "Photographic print, Library of Congress",
-      "curationMedium": "photography"
+      "id": "salzmann-jerusalem",
+      "title": "Jérusalem: Étude et reproduction photographique des monuments",
+      "creator": "Auguste Salzmann",
+      "year": "1856",
+      "kind": "EARLY PHOTOGRAPHIC BOOK",
+      "caption": "古城建築早期蛋白相紙攝影圖版",
+      "sourceWork": "https://www.loc.gov/item/2001695436/",
+      "curationMedium": "albumen-photography",
+      "imageStatus": "image-asset-pending",
+      "media": null,
+      "destination": "https://www.loc.gov/item/2001695436/"
     },
     {
-      "id": "south-jerusalem",
-      "title": "Old City and the Temple Mount",
-      "caption": "舊城與聖殿山 · 城市建築攝影",
-      "kind": "ARCHITECTURE · PHOTOGRAPHY",
-      "year": "1900–1940",
-      "media": {
-        "src": "https://tile.loc.gov/storage-services/service/pnp/ppmsca/18900/18902v.jpg",
-        "source": "https://www.loc.gov/item/2008676374/",
-        "alt": "Jerusalem city walls, Dome of the Rock, al-Aqsa in historical photograph",
-        "type": "image"
-      },
-      "destination": "https://www.loc.gov/item/2008676374/",
-      "sourceWork": "Photographic print, Library of Congress",
-      "curationMedium": "photography"
+      "id": "frith-sinai-palestine",
+      "title": "Sinai and Palestine",
+      "creator": "Francis Frith",
+      "year": "1862",
+      "kind": "PHOTOGRAPHIC TRAVELOGUE",
+      "caption": "聖地遠景與聖殿山的攝影書插頁",
+      "sourceWork": "https://www.loc.gov/item/97502739/",
+      "curationMedium": "photographic-print",
+      "imageStatus": "image-asset-pending",
+      "media": null,
+      "destination": "https://www.loc.gov/item/97502739/"
     },
     {
-      "id": "american-colony-view",
-      "title": "Jerusalem — American Colony",
-      "caption": "美國殖民地攝影隊 · 城市歷史照片",
-      "kind": "URBAN HISTORY · PHOTO",
-      "year": "1898–1946",
-      "media": {
-        "src": "https://cdn.loc.gov/service/pnp/matpc/04800/04899v.jpg",
-        "source": "https://www.loc.gov/item/2019697309/",
-        "alt": "Historic Jerusalem photograph from the Matson/American Colony collection",
-        "type": "image"
-      },
-      "destination": "https://www.loc.gov/item/2019697309/",
-      "sourceWork": "American Colony / Matson Photograph Collection",
-      "curationMedium": "photography"
+      "id": "pierotti-explored",
+      "title": "Jerusalem Explored, Volume 2 — Plates",
+      "creator": "Ermete Pierotti",
+      "year": "1864",
+      "kind": "ARCHAEOLOGICAL PLATES",
+      "caption": "聖殿及城牆測繪、建築剖面與考古圖版",
+      "sourceWork": "https://www.gutenberg.org/ebooks/44241",
+      "curationMedium": "architectural-plates",
+      "imageStatus": "image-asset-pending",
+      "media": null,
+      "destination": "https://www.gutenberg.org/ebooks/44241"
     },
     {
-      "id": "jerusalem-matson",
-      "title": "Jerusalem — Historic City",
-      "caption": "近代耶路撒冷 · 城市街景檔案",
-      "kind": "DOCUMENTARY · PHOTO",
-      "year": "1898–1946",
+      "id": "conder-city",
+      "title": "The City of Jerusalem",
+      "creator": "Claude Reignier Conder",
+      "year": "1909",
+      "kind": "TEMPLE RECONSTRUCTION",
+      "caption": "希律聖殿建築模型 · 原書卷首插圖",
+      "sourceWork": "https://www.gutenberg.org/ebooks/70537",
+      "curationMedium": "architectural-model",
+      "imageStatus": "source-path-known-not-live-tested",
       "media": {
-        "src": "https://cdn.loc.gov/service/pnp/matpc/04800/04868v.jpg",
-        "source": "https://www.loc.gov/item/2019697344/",
-        "alt": "Historic Jerusalem streetscape in the Matson collection",
+        "src": "https://www.gutenberg.org/files/70537/70537-h/images/i_001.jpg",
+        "source": "https://www.gutenberg.org/ebooks/70537",
+        "alt": "The City of Jerusalem — 希律聖殿建築模型 · 原書卷首插圖",
         "type": "image"
       },
-      "destination": "https://www.loc.gov/item/2019697344/",
-      "sourceWork": "Matson Photograph Collection",
-      "curationMedium": "photography"
+      "destination": "https://www.gutenberg.org/ebooks/70537"
     },
     {
-      "id": "holy-sepulchre-photo",
-      "title": "Church of the Holy Sepulchre",
-      "caption": "聖墓教堂 · 朝聖與建築攝影",
-      "kind": "PILGRIMAGE · ARCHITECTURE",
-      "year": "1890–1900",
+      "id": "besant-herod-saladin",
+      "title": "Jerusalem, the City of Herod and Saladin",
+      "creator": "Walter Besant · Edward Henry Palmer",
+      "year": "1871",
+      "kind": "HISTORY · PHOTOGRAPHY",
+      "caption": "圓頂清真寺的歷史照片作為原書卷首",
+      "sourceWork": "https://www.gutenberg.org/ebooks/60319",
+      "curationMedium": "historic-photography",
+      "imageStatus": "source-path-known-not-live-tested",
       "media": {
-        "src": "https://cdn.loc.gov/service/pnp/ppmsca/02600/02693v.jpg",
-        "source": "https://www.loc.gov/item/2002725004/",
-        "alt": "Holy Sepulchre historical photochrom in Jerusalem",
+        "src": "https://www.gutenberg.org/files/60319/60319-h/images/frontis.jpg",
+        "source": "https://www.gutenberg.org/ebooks/60319",
+        "alt": "Jerusalem, the City of Herod and Saladin — 圓頂清真寺的歷史照片作為原書卷首",
         "type": "image"
       },
-      "destination": "https://www.loc.gov/item/2002725004/",
-      "sourceWork": "Views of the Holy Land, photochrom collection",
-      "curationMedium": "photography"
+      "destination": "https://www.gutenberg.org/ebooks/60319"
     },
     {
-      "id": "historic-jerusalem-art",
-      "title": "Jerusalem in Color",
-      "caption": "十九世紀聖城 · 彩色印刷攝影",
-      "kind": "PHOTOCHROM · COLOR",
-      "year": "1890–1900",
+      "id": "manning-holy-fields",
+      "title": "Those Holy Fields: Palestine Illustrated by Pen and Pencil",
+      "creator": "Samuel Manning",
+      "year": "1873–1874",
+      "kind": "LANDSCAPE · ENGRAVING",
+      "caption": "聖墓教堂、客西馬尼園、橄欖山和人物版畫",
+      "sourceWork": "https://www.gutenberg.org/ebooks/51452",
+      "curationMedium": "engraved-landscape",
+      "imageStatus": "image-asset-pending",
+      "media": null,
+      "destination": "https://www.gutenberg.org/ebooks/51452"
+    },
+    {
+      "id": "american-colony-album",
+      "title": "Hand-colored Photographs of Jerusalem and Palestine",
+      "creator": "American Colony Photo Department",
+      "year": "1919",
+      "kind": "HAND-COLOURED PHOTO ALBUM",
+      "caption": "彩色歷史攝影集：古城、人物、朝聖者與城市生活",
+      "sourceWork": "https://www.loc.gov/item/2007682813/",
+      "curationMedium": "hand-coloured-photography",
+      "imageStatus": "source-path-in-LOC-record-not-live-tested",
       "media": {
-        "src": "https://cdn.loc.gov/service/pnp/ppmsca/02700/02705v.jpg",
-        "source": "https://www.loc.gov/item/2002725017/",
-        "alt": "Photochrom view of Jerusalem from Mount of Olives",
+        "src": "https://tile.loc.gov/storage-services/service/pnp/ds/03100/03108v.jpg",
+        "source": "https://www.loc.gov/item/2007682813/",
+        "alt": "Hand-colored Photographs of Jerusalem and Palestine — 彩色歷史攝影集：古城、人物、朝聖者與城市生活",
         "type": "image"
       },
-      "destination": "https://www.loc.gov/item/2002725017/",
-      "sourceWork": "Views of the Holy Land",
-      "curationMedium": "photochrom"
+      "destination": "https://www.loc.gov/item/2007682813/"
     }
-  ],
-  "presentationCount": 12,
-  "bookSelectionCount": 0,
-  "rightsStatus": "source-page-rights-review-required"
+  ]
 }
