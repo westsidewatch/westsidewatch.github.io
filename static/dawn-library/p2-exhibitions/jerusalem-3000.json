@@ -4,7 +4,7 @@
   "title": "耶路撒冷三千年",
   "subtitle": "JERUSALEM · 3000 YEARS",
   "description": "十二部各具視覺語言的原始出版物選書。只有原書圖版位置已確認的作品可進入 P2 展示；其餘須取得可檢驗內頁與授權才可發佈。",
-  "curationStatus": "12-books-selected-assets-incomplete",
+  "curationStatus": "12-books-selected-7-asset-paths",
   "sourceCollection": "/dawn-library/collections/jerusalem-3000/maps/",
   "display": {
     "mode": "mersi-counterflow",
@@ -175,11 +175,16 @@
       "creator": "Samuel Manning",
       "year": "1873–1874",
       "kind": "LANDSCAPE · ENGRAVING",
-      "caption": "聖墓教堂、客西馬尼園、橄欖山和人物版畫",
+      "caption": "從橄欖山觀看耶路撒冷 · 原書第93頁插圖",
       "sourceWork": "https://www.gutenberg.org/ebooks/51452",
       "curationMedium": "engraved-landscape",
-      "imageStatus": "image-asset-pending",
-      "media": null,
+      "imageStatus": "source-path-confirmed-not-live-tested",
+      "media": {
+        "src": "https://www.gutenberg.org/files/51452/51452-h/images/i_093.jpg",
+        "source": "https://www.gutenberg.org/files/51452/51452-h/51452-h.htm",
+        "alt": "Jerusalem from the Mount of Olives — engraving inside Those Holy Fields",
+        "type": "image"
+      },
       "destination": "https://www.gutenberg.org/ebooks/51452"
     },
     {
