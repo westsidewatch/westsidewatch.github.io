@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const root=document.querySelector('.showcase'),planes=[...root.querySelectorAll('.plane')],wrap=root.querySelector('.planes'),scripture=root.querySelector('.editorial-john'),editions=[...root.querySelectorAll('.edition')],sea=root.querySelector('.ocean-rise'),cover=root.querySelector('.water-cover'),doors=root.querySelector('.water-doors'),leftDoor=root.querySelector('.water-door--left'),rightDoor=root.querySelector('.water-door--right'),church=root.querySelector('.church-editorial'),index=root.querySelector('.index'),tint=root.querySelector('.water-rise-tint'),waterline=root.querySelector('.water-rise-line path');
+const root=document.querySelector('.showcase'),planes=[...root.querySelectorAll('.plane')],wrap=root.querySelector('.planes'),scripture=root.querySelector('.editorial-john'),editions=[...root.querySelectorAll('.edition')],sea=root.querySelector('.ocean-rise'),cover=root.querySelector('.water-cover'),doors=root.querySelector('.water-doors'),leftDoor=root.querySelector('.water-door--left'),rightDoor=root.querySelector('.water-door--right'),church=root.querySelector('.church-editorial'),churchPanel=church.querySelector('.church-editorial__copy'),index=root.querySelector('.index'),tint=root.querySelector('.water-rise-tint'),waterline=root.querySelector('.water-rise-line path');
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v)};
 // Same positional curve and stagger as the homepage navigation; no timed playback.
 const embeddedScene=p=>p<=.75?p/.75*2.9:2.9+(p-.75)/.25*1.1;
@@ -36,12 +36,29 @@ function drawScene(vh,now){
   wave.push(x.toFixed(2)+'% '+y.toFixed(2)+'%');foldWave.push(x.toFixed(2)+'% '+Math.min(100,y*2).toFixed(2)+'%');coverWave.push(x.toFixed(2)+'% '+Math.min(50,y).toFixed(2)+'%');line.push((j?'L':'M')+x.toFixed(2)+' '+y.toFixed(2));
  }
  cover.style.clipPath=rise>=1?'inset(0 0 100% 0)':'polygon(0% 0%,100% 0%,'+coverWave.slice().reverse().join(',')+')';
- tint.style.clipPath=showChurch?'inset(0 50% 0 0)':'polygon('+wave.join(',')+',100% 100%,0% 100%)';
+ // The original full-page V75 engraving parts symmetrically.
+ // One scroll position controls both water walls and the central paper reveal.
+ const shoreWidth=innerWidth<=700?Math.max(0,innerWidth-12):Math.min(innerWidth*.8,1040)+12;
+ const shift=opening*shoreWidth*.5;
+ const edgeL=(50-shift/innerWidth*100).toFixed(4);
+ const edgeR=(50+shift/innerWidth*100).toFixed(4);
+ const bankMask='linear-gradient(to right,#000 0%,#000 '+edgeL+'%,transparent '+edgeL+'%,transparent '+edgeR+'%,#000 '+edgeR+'%,#000 100%)';
+ const cut=(50*(1-opening)).toFixed(4);
+ tint.style.clipPath=showChurch?'none':'polygon('+wave.join(',')+',100% 100%,0% 100%)';
+ tint.style.maskImage=showChurch?bankMask:'none';
+ tint.style.webkitMaskImage=showChurch?bankMask:'none';
  tint.style.opacity=rise>0?'1':'0';
  waterline.setAttribute('d',line.join(' '));
  waterline.style.opacity=rise>0&&rise<1?'1':'0';
- sea.style.visibility='visible';sea.style.clipPath=showChurch?'inset(0 50% 0 0)':'none';sea.style.opacity='1';
- doors.style.visibility=showChurch?'visible':'hidden';leftDoor.style.transform='none';rightDoor.style.transform='translate3d('+(50*opening).toFixed(3)+'vw,0,0)';
+ sea.style.visibility='visible';
+ sea.style.clipPath='none';
+ sea.style.maskImage=showChurch?bankMask:'none';
+ sea.style.webkitMaskImage=showChurch?bankMask:'none';
+ sea.style.opacity='1';
+ doors.style.visibility=showChurch?'visible':'hidden';
+ leftDoor.style.transform='translate3d('+(-shift).toFixed(2)+'px,0,0)';
+ rightDoor.style.transform='translate3d('+shift.toFixed(2)+'px,0,0)';
+ churchPanel.style.clipPath='inset(0 '+cut+'% 0 '+cut+'%)';
  planes.forEach((el,i)=>{
   // Seven independent top-anchored curtains, staggered like the navigation.
   // Easing shapes the fold by position; it never continues after scroll stops.
