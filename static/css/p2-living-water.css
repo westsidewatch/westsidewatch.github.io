@@ -1056,8 +1056,10 @@ body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity{
   grid-column:1;grid-row:1;
   display:grid;
   grid-template-columns:minmax(0,1fr);
-  grid-template-rows:auto minmax(0,1fr) auto auto;
-  row-gap:clamp(5px,.8svh,10px);
+  /* The first row alone absorbs extra height. The Chinese/English/address
+     trio below is a tightly controlled, consecutive stack. */
+  grid-template-rows:minmax(0,1fr) auto auto auto;
+  row-gap:clamp(9px,1.12svh,13px);
   justify-items:center;
   align-content:stretch;
   min-width:0;min-height:0;
@@ -1066,6 +1068,9 @@ body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity{
 }
 body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity > small{
   display:block;
+  grid-column:1;
+  grid-row:1;
+  align-self:start;
   justify-self:start;
   margin:0;
   width:100%;
@@ -1076,13 +1081,13 @@ body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity > sma
 body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-logo{
   grid-column:1;grid-row:2;
   justify-self:center;
-  align-self:center;
+  align-self:end;
   display:block;
   flex:none;
   width:min(96%,920px);
   aspect-ratio:1800/193;
   height:auto;
-  margin:0 0 clamp(7px,.85svh,11px);
+  margin:0;
   background:var(--ws-first-light);
   -webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
   mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
@@ -1090,18 +1095,23 @@ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedu
 body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-english{
   grid-column:1;grid-row:3;
   width:100%;
+  min-width:0;
   margin:0;
+  padding:0;
   text-align:center;
+  white-space:normal;
   font:400 var(--ws-type-scale-title-md)/1.2 var(--ws-type-display-en);
   font-synthesis:none;
 }
 body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-address{
   grid-column:1;grid-row:4;
   width:100%;
-  margin:clamp(7px,.95svh,12px) 0 0;
-  padding:0 0 2px;
+  margin:0;
+  padding:0;
+  min-height:1.5em;
+  align-self:start;
   text-align:center;
-  font:italic 400 var(--ws-type-scale-meta)/var(--ws-type-leading-ui) var(--ws-type-display-en);
+  font:italic 400 var(--ws-type-scale-meta)/1.5 var(--ws-type-display-en);
   font-synthesis:none;
 }
 body[data-ws-scope="p2"] .church-editorial__copy > .schedule-content-group{
