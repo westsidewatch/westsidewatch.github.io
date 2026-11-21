@@ -1,0 +1,55 @@
+name: P2 Virtual Church Visual QA
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'static/p2/church-tour.html'
+      - 'static/p2/church-tour.js'
+      - '.github/workflows/p2-church-tour-visual-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render browser proof of actual 3D entrance and interior
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 --directory static >/tmp/p2-server.log 2>&1 &
+          sleep 2
+          CHROME=$(command -v google-chrome || command -v chromium || true)
+          if [ -z "$CHROME" ]; then echo "No Chromium executable"; exit 1; fi
+          for frame in 0 26 52; do
+            echo "Rendering virtual church camera station $frame"
+            timeout 65 "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage \
+              --enable-webgl --ignore-gpu-blocklist \
+              --enable-unsafe-swiftshader --use-gl=angle --use-angle=swiftshader \
+              --disable-background-timer-throttling --virtual-time-budget=12000 \
+              --window-size=1200,760 --hide-scrollbars \
+              --screenshot="/tmp/p2-frame-$frame.png" \
+              "http://127.0.0.1:8765/p2/church-tour.html?proofFrame=$frame" \
+              >/tmp/p2-chrome-$frame.log 2>&1 || true
+            test -s "/tmp/p2-frame-$frame.png"
+            if command -v convert >/dev/null 2>&1; then
+              convert "/tmp/p2-frame-$frame.png" -resize 760x -strip -quality 57 "/tmp/p2-frame-$frame.jpg"
+            else
+              python3 -m pip install pillow -q --break-system-packages
+              FRAME="$frame" python3 - <<'PY'
+import os
+from PIL import Image
+f=os.environ['FRAME']
+im=Image.open('/tmp/p2-frame-'+f+'.png').convert('RGB')
+im.thumbnail((760,760))
+im.save('/tmp/p2-frame-'+f+'.jpg',quality=57,optimize=True)
+PY
+            fi
+            bytes=$(wc -c < "/tmp/p2-frame-$frame.jpg")
+            echo "Proof $frame JPEG bytes: $bytes"
+            if [ "$bytes" -gt 160000 ]; then echo "Proof image too large"; exit 1; fi
+            echo "P2_FRAME_${frame}_BASE64=$(base64 -w0 "/tmp/p2-frame-$frame.jpg")"
+            grep -Ei "WebGL.*(error|disabled)|Uncaught|GLB missing|model load failed|shader error|failed to fetch" /tmp/p2-chrome-$frame.log | head -10 || true
+          done
