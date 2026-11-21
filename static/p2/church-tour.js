@@ -90,8 +90,13 @@ const finishes = {
   ground: new MeshStandardMaterial({ color: 0xc5c8c0, roughness: 1 })
 };
 
+// GLTFLoader sanitizes source node labels into animation-safe identifiers
+// (spaces become underscores). Match against normalized source names.
+function modelName(value) {
+  return String(value).toLowerCase().replace(/[_\\s·.–—]+/g, " ").trim();
+}
 function chooseFinish(name) {
-  const n = name.toLowerCase();
+  const n = modelName(name);
   // SOUTH CROSS WALL consists of four SOLID quadrants surrounding a void.
   // Never make those large wall solids emissive gold.
   if (/south cross wall|solid quadrant/.test(n)) return finishes.plaster;
@@ -142,7 +147,7 @@ function connectArchitecturalDoors(building) {
   const mesh = name => {
     let result = null;
     building.traverse(object => {
-      if (!result && object.isMesh && object.name.startsWith(name)) result = object;
+      if (!result && object.isMesh && modelName(object.name).startsWith(modelName(name))) result = object;
     });
     if (!result) throw new Error("GLB missing original building door: " + name);
     return result;
