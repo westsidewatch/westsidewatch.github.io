@@ -770,245 +770,254 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church-to-magazine"] .church-e
  body[data-ws-scope="p2"] .p2-magazine__panel{transform:none}
 }
 
-/* The growing architectural maquette is pinned to the lower-left corner
-   of the RIGHT page (x = 50% of the spread + inner paper margin).
-   It must not be a scrolling child of the scripture. The left plate remains
-   exclusively for the original water engraving. */
-body[data-ws-scope="p2"] .church-editorial__visual{
-  position:relative;
-  min-width:0;
-  min-height:0;
-  overflow:hidden;
-  background:transparent;
-  pointer-events:none;
-}
-body[data-ws-scope="p2"] .church-editorial > .church-schedule-maquette{
-  position:absolute;
-  left:calc(50% + clamp(12px,1.7vw,25px));
-  bottom:clamp(18px,2.7svh,30px);
-  z-index:3;
-  width:min(47vw,530px);
-  height:clamp(255px,36svh,325px);
-  max-width:calc(50% - 27px);
-  margin:0;
-  overflow:hidden;
-  background:var(--paper);
-  isolation:isolate;
-  pointer-events:none;
-}
-body[data-ws-scope="p2"] .church-schedule-maquette::before{
-  /* Suppress the opaque fallback thumbnail so no grey rectangle reaches paper. */
-  content:none;
-  position:absolute;
-  inset:0;
-  display:block;
-  background:url("/p2-maquette/maquette-fallback.webp") center / contain no-repeat;
-  opacity:.25;
-  mix-blend-mode:multiply;
-  -webkit-mask-image:radial-gradient(ellipse 70% 65% at 50% 52%,#000 70%,transparent 100%);
-  mask-image:radial-gradient(ellipse 70% 65% at 50% 52%,#000 70%,transparent 100%);
-  transition:opacity .42s ease;
-  pointer-events:none;
-}
-body[data-ws-scope="p2"] .church-schedule-maquette.maquette-geometry-ready::before{opacity:0}
-body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
-  position:absolute;
-  inset:0;
-  display:block;
-  width:100%;
-  height:100%;
-  border:0;
-  margin:0;
-  padding:0;
-  background:transparent;
-  pointer-events:none;
-  mix-blend-mode:normal;
-  -webkit-mask-image:none;
-  mask-image:none;
-}
-@media(min-width:701px) and (max-height:780px){
-  /* Keep the decorative building clear of long scripture at short heights. */
-  body[data-ws-scope="p2"] .church-editorial > .church-schedule-maquette{
-    width:min(29vw,340px);
-    height:clamp(135px,22svh,180px);
-    bottom:clamp(15px,3svh,26px);
-  }
-}
-@media(max-width:700px){
-  /* A single-column phone page has no facing left folio to preserve. */
-  body[data-ws-scope="p2"] .church-editorial > .church-schedule-maquette{display:none}
-}
 
-/* Reclaim the ~200px formerly occupied by the right-panel image and keep
-   every original Sunday row and all three scripture quotations intact.
-   Compact spacing, not disappearing or truncating words. */
-@media(min-width:701px){
-  body[data-ws-scope="p2"] .church-editorial__copy{
-    padding:clamp(12px,1.65svh,21px) clamp(18px,2.25vw,38px)
-      clamp(12px,1.6svh,21px);
-    scrollbar-gutter:stable;
-    overflow-y:auto;
-  }
-  body[data-ws-scope="p2"] .church-editorial__copy>small{
-    margin-bottom:clamp(5px,.8svh,9px);
-  }
-  body[data-ws-scope="p2"] .schedule-content-group{
-    gap:clamp(2px,.35svh,5px);
-    margin-block:0;
-  }
-  body[data-ws-scope="p2"] .schedule-church-address{
-    margin-bottom:clamp(3px,.5svh,6px);
-  }
-  body[data-ws-scope="p2"] .sunday-schedule__top{
-    padding-block:clamp(3px,.5svh,6px);
-  }
-  body[data-ws-scope="p2"] .sunday-schedule h3{
-    margin:clamp(3px,.55svh,7px) 0;
-    line-height:1.04;
-  }
-  body[data-ws-scope="p2"] .worship-ministry{
-    margin-bottom:clamp(3px,.55svh,7px);
-    line-height:1.35;
-  }
-  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row{
-    padding-block:clamp(4px,.65svh,7px);
-  }
-  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row strong{
-    line-height:1.2;
-  }
-  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row p{
-    line-height:1.35;
-  }
-  body[data-ws-scope="p2"] .worship-next{
-    margin-top:clamp(3px,.55svh,7px);
-  }
-  body[data-ws-scope="p2"] .worship-next p,
-  body[data-ws-scope="p2"] .sunday-schedule__place p{
-    margin-top:2px;
-    margin-bottom:3px;
-    line-height:1.35;
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture{
-    margin-top:clamp(7px,1svh,12px);
-    padding-top:clamp(6px,.8svh,10px);
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture h3{
-    margin-bottom:clamp(3px,.4svh,5px);
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture p{
-    margin-bottom:.35em;
-    font-size:clamp(14px,1.9cqi,18px);
-    line-height:1.45;
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture__ref{
-    margin-top:.13em;
-    line-height:1.25;
-  }
+/* P2 / Central Red Sea folio. Replaces the old left-water/right-copy
+   split and all obsolete maquette positioning. OS palette/type remain. */
+body[data-ws-scope="p2"] .church-editorial{
+ position:absolute;inset:0;z-index:42;
+ display:flex;align-items:center;justify-content:center;
+ pointer-events:none;visibility:hidden;
 }
-@media(max-width:700px){
-  /* There is no separate water half on phone: keep the Sunday text readable
-     instead of overlaying the content with a floating decoration. */
-  body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial{
-    grid-template-columns:minmax(0,1fr);
-    grid-template-rows:minmax(0,1fr);
-  }
-  body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__visual{
-    display:none;
-  }
-  body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__copy{
-    grid-column:1;
-    grid-row:1;
-    width:100%;
-    min-width:0;
-    overflow-y:auto;
-  }
+body[data-ws-scope="p2"] .church-editorial__visual{display:none}
+body[data-ws-scope="p2"] .church-editorial__copy{
+ position:relative;grid-column:auto;box-sizing:border-box;
+ display:flex;flex-direction:column;justify-content:flex-start;gap:0;
+ flex:0 0 auto;width:min(80vw,1040px);height:min(94svh,950px);
+ min-width:0;min-height:0;
+ padding:clamp(13px,1.8svh,23px) clamp(17px,2.2vw,36px) clamp(9px,1.5svh,19px);
+ overflow-y:auto;overflow-x:hidden;overscroll-behavior:auto;
+ scrollbar-gutter:stable;pointer-events:none;
+ container:p2-paper / inline-size;
+ background:var(--paper);color:var(--ink);
+ border:1px solid color-mix(in srgb,var(--ink) 12%,transparent);
+ box-shadow:none;
 }
-
-/* Editorial text fit: redistribute the long ministry and next-Sunday details
-   across the FULL paper width instead of the narrow fourth grid track. */
-@media(min-width:701px){
-  body[data-ws-scope="p2"] .sunday-schedule .worship-ministry,
-  body[data-ws-scope="p2"] .sunday-schedule .worship-next,
-  body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place{
-    display:grid;
-    grid-template-columns:minmax(95px,24%) minmax(0,1fr);
-    column-gap:clamp(12px,2cqi,22px);
-    align-items:start;
-    padding:0;
-    margin-bottom:clamp(2px,.4svh,5px);
-  }
-  body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>span,
-  body[data-ws-scope="p2"] .sunday-schedule .worship-next>span,
-  body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>span{
-    grid-column:1;
-    grid-row:1;
-    align-self:start;
-    margin:0;
-  }
-  body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>p,
-  body[data-ws-scope="p2"] .sunday-schedule .worship-next>p,
-  body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>p{
-    grid-column:2;
-    grid-row:1;
-    align-self:start;
-    margin:0;
-    line-height:1.3;
-    min-width:0;
-  }
-  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row{
-    --p2-grid:[number] minmax(18px,4fr) [time] minmax(102px,18fr) [heading] minmax(0,36fr) [details] minmax(0,42fr) [end];
-    --p2-gap:clamp(7px,1.1cqi,13px);
-    padding-block:clamp(3px,.52svh,5px);
-  }
-  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row time{
-    font-size:clamp(12px,1.8cqi,16px);
-  }
-  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row strong{
-    font-size:clamp(16px,2.2cqi,20px);
-    line-height:1.2;
-  }
-  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row p{
-    font-size:clamp(13px,1.85cqi,16px);
-    line-height:1.3;
-  }
-  /* All quotations remain visible; the first verse and its reference
-     occupy the left column, the second the right, and the final verse
-     uses the full folio measure below. */
-  body[data-ws-scope="p2"] .schedule-theme-scripture{
-    display:grid;
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-    column-gap:clamp(16px,2cqi,30px);
-    row-gap:clamp(3px,.45svh,6px);
-    align-items:start;
-    margin-top:clamp(5px,.7svh,9px);
-    padding-top:clamp(5px,.65svh,9px);
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture h3{
-    grid-column:1/-1;
-    grid-row:1;
-    margin:0 0 2px;
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture>p{
-    margin:0;
-    max-width:none;
-    font-size:clamp(13px,1.75cqi,17px);
-    line-height:1.36;
-    text-align:left;
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture__lead{
-    grid-column:1;grid-row:2;
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture>p.schedule-theme-scripture__ref{
-    grid-column:1;grid-row:3;
-    font-size:clamp(12px,1.5cqi,14px);
-    text-align:left;
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture>p:nth-of-type(3){
-    grid-column:2;grid-row:2/span 2;
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture>p:nth-of-type(4){
-    grid-column:2;grid-row:4;
-    text-align:left;
-    align-self:center;
-  }
+body[data-ws-scope="p2"] .church-editorial__copy>small{
+ position:static;display:block;flex:none;margin:0 0 clamp(4px,.6svh,9px);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group{
+ display:flex;flex-direction:column;gap:clamp(3px,.4svh,7px);
+ width:100%;min-width:0;max-width:none;margin:0;flex:0 0 auto;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-church-logo{
+ width:min(64%,470px);align-self:center;margin:0 auto;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-church-english{
+ margin:0;line-height:1.1;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-church-address{
+ margin:0 0 clamp(4px,.55svh,9px);line-height:1.15;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-schedule-source{
+ width:100%;min-width:0;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule__top{
+ display:flex;justify-content:space-between;gap:12px;
+ border-top:1px solid color-mix(in srgb,var(--ink) 36%,transparent);
+ padding:clamp(4px,.65svh,7px) 0;margin:0;
+ font-size:clamp(11px,1.3cqi,13px);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule h3{
+ margin:clamp(3px,.5svh,7px) 0;
+ font-size:clamp(23px,2.6cqi,31px);line-height:1.1;
+ font-weight:var(--ws-weight-zh-air);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule h3 span{
+ margin-top:3px;font-size:clamp(11px,1.35cqi,13px);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-ministry{
+ display:grid;grid-template-columns:minmax(84px,14%) minmax(0,1fr);
+ gap:clamp(10px,1.5cqi,18px);
+ margin:clamp(4px,.55svh,8px) 0;
+ font-size:clamp(12px,1.48cqi,14px);line-height:1.35;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-ministry>span,
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-ministry>p{
+ grid-column:auto;grid-row:auto;margin:0;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program{
+ counter-reset:worship;width:100%;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row{
+ --p2-grid:[number] 25px [time] minmax(92px,15%) [heading] minmax(185px,30%) [details] minmax(0,1fr) [end];
+ --p2-gap:clamp(8px,1.2cqi,16px);
+ position:relative;display:grid;grid-template-columns:var(--p2-grid);
+ column-gap:var(--p2-gap);align-items:center;min-height:0;
+ padding:clamp(3px,.42svh,6px) 0;
+ border-bottom:1px solid color-mix(in srgb,var(--ink) 18%,transparent);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row::before{
+ grid-column:number;grid-row:1;
+ font:400 clamp(11px,1.25cqi,13px)/1.3 var(--ws-type-display-en);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row time{
+ grid-column:time;grid-row:1;white-space:nowrap;
+ font:400 clamp(12px,1.4cqi,14px)/1.25 var(--ws-type-display-en);
+ font-variant-numeric:tabular-nums;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row>div{display:contents}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row strong{
+ position:static;inset:auto;transform:none;
+ grid-column:heading;grid-row:1;
+ display:block;width:auto;max-width:none;min-width:0;
+ white-space:normal;text-align:left;
+ color:var(--ws-ink);font-family:var(--ws-type-display-zh);
+ font-size:clamp(15px,1.95cqi,19px);
+ font-weight:var(--ws-weight-zh-standard);line-height:1.22;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row p{
+ position:static;grid-column:details;grid-row:1;
+ margin:0;max-width:100%;min-width:0;
+ text-align:left;overflow-wrap:break-word;
+ font-size:clamp(12px,1.5cqi,15px);line-height:1.32;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-next,
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .sunday-schedule__place{
+ display:grid;grid-template-columns:minmax(106px,17%) minmax(0,1fr);
+ column-gap:clamp(9px,1.5cqi,18px);
+ margin:clamp(3px,.45svh,6px) 0 0;padding:0;
+ font-size:clamp(12px,1.5cqi,14px);line-height:1.3;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-next>span,
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-next>p,
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .sunday-schedule__place>span,
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .sunday-schedule__place>p{
+ grid-column:auto;grid-row:auto;margin:0;min-width:0;max-width:100%;text-align:left;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture{
+ display:grid;grid-template-columns:minmax(0,.8fr) repeat(2,minmax(0,1fr));
+ gap:clamp(3px,.42svh,6px) clamp(13px,2cqi,25px);
+ align-items:start;min-width:0;width:100%;
+ padding:clamp(7px,1svh,12px) 0 0;
+ margin:clamp(6px,.8svh,11px) 0 0;
+ border-top:1px solid color-mix(in srgb,var(--ink) 27%,transparent);
+ text-align:left;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture h3{
+ grid-column:1/-1;grid-row:1;margin:0 0 3px;
+ font:var(--ws-weight-zh-standard) clamp(16px,1.95cqi,20px)/1.25 var(--ws-type-display-zh);
+ text-align:left;color:var(--ws-first-light);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p{
+ margin:0;max-width:none;
+ font-family:var(--ws-type-reading-zh);
+ font-size:clamp(12px,1.52cqi,15px);line-height:1.4;
+ font-weight:var(--ws-weight-zh-standard);
+ text-align:left;text-wrap:pretty;overflow-wrap:normal;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p.schedule-theme-scripture__lead{
+ grid-column:1;grid-row:2;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p.schedule-theme-scripture__ref{
+ grid-column:1;grid-row:3;margin-top:0;
+ font-family:var(--ws-type-reading-zh);font-size:clamp(11px,1.25cqi,13px);text-align:left;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p:nth-of-type(3){
+ grid-column:2;grid-row:2/span 2;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p:nth-of-type(4){
+ grid-column:3;grid-row:2/span 2;align-self:start;text-align:left;
+}
+body[data-ws-scope="p2"] .church-editorial__copy > .church-schedule-maquette{
+ position:relative;inset:auto;left:auto;bottom:auto;
+ z-index:1;display:block;align-self:center;flex:0 0 auto;
+ width:min(100%,720px);height:clamp(186px,24svh,265px);
+ min-width:0;margin:clamp(4px,.7svh,10px) auto 0;
+ overflow:hidden;background:transparent;border:0;isolation:isolate;pointer-events:none;
+}
+body[data-ws-scope="p2"] .church-editorial__copy > .church-schedule-maquette::before{content:none}
+body[data-ws-scope="p2"] .church-editorial__copy .church-editorial__maquette{
+ position:absolute;inset:0;width:100%;height:100%;
+ display:block;border:0;margin:0;padding:0;
+ background:transparent;pointer-events:none;
+ mix-blend-mode:normal;-webkit-mask-image:none;mask-image:none;
+}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__copy{
+ pointer-events:auto;overflow-y:auto;overscroll-behavior:auto;
+}
+body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editorial__copy{
+ pointer-events:none;overflow-y:hidden;
+}
+body[data-ws-scope="p2"] .water-door--left{display:block;clip-path:inset(0 50% 0 0)}
+body[data-ws-scope="p2"] .water-door--right{clip-path:inset(0 0 0 50%)}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .ocean-rise,
+body[data-ws-scope="p2"] .showcase[data-p2-phase="red-sea"] .ocean-rise{
+ background:color-mix(in srgb,var(--ws-water) 8%,var(--paper));
+}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index{
+ right:calc((100vw - min(80vw,1040px))/2 + 18px);
+ bottom:clamp(20px,3svh,33px);
+}
+@media (min-width:701px) and (max-width:1120px){
+ body[data-ws-scope="p2"] .church-editorial__copy{padding-inline:clamp(15px,2vw,25px)}
+ body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row{
+  --p2-grid:[number] 23px [time] 96px [heading] minmax(163px,29%) [details] minmax(0,1fr) [end];
+  --p2-gap:9px;
+ }
+}
+@media (min-width:701px) and (max-height:720px){
+ body[data-ws-scope="p2"] .church-editorial__copy > .church-schedule-maquette{
+  height:clamp(152px,20svh,205px);
+ }
+}
+@media (max-width:700px){
+ body[data-ws-scope="p2"] .church-editorial{display:flex;align-items:center}
+ body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__copy,
+ body[data-ws-scope="p2"] .church-editorial__copy{
+  position:relative;flex:0 0 auto;grid-column:auto;grid-row:auto;
+  width:calc(100vw - 24px);height:calc(100svh - 24px);
+  padding:clamp(14px,4vw,20px);
+  overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .schedule-church-logo{width:min(94%,450px)}
+ body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row{
+  --p2-grid:[number] 23px [time] 94px [heading] minmax(0,1fr) [end];
+  --p2-gap:8px;row-gap:3px;align-items:start;padding-block:9px;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row strong{
+  grid-column:heading;grid-row:1;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row p{
+  grid-column:heading;grid-row:2;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p:nth-of-type(4){
+  grid-column:1/-1;grid-row:4;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy > .church-schedule-maquette{
+  width:100%;height:clamp(175px,26svh,250px);margin-bottom:20px;
+ }
+ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index{right:24px;bottom:17px}
+}
+@media (max-width:420px){
+ body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row{
+  --p2-grid:[number] 23px [time] minmax(0,1fr) [end];
+  --p2-gap:8px;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row time{
+  grid-column:time;grid-row:1;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row strong{
+  grid-column:time;grid-row:2;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row p{
+  grid-column:time;grid-row:3;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture{
+  grid-template-columns:minmax(0,1fr);
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p.schedule-theme-scripture__lead{
+  grid-column:1;grid-row:2;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p.schedule-theme-scripture__ref{
+  grid-column:1;grid-row:3;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p:nth-of-type(3){
+  grid-column:1;grid-row:4;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p:nth-of-type(4){
+  grid-column:1;grid-row:5;
+ }
 }
