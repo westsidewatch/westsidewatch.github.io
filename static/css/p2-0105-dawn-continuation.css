@@ -378,21 +378,5 @@
 .dawn-world__page,.dawn-world__art,.dawn-world__edition,.dawn-twins,.dawn-twins__square,.dawn-twins__square--verse{border:0!important;outline-color:var(--ws-harvest)}
 .dawn-twins__square::before,.dawn-twins__square::after{content:none!important;display:none!important}
 
-/* R14 / visual-correction: remove objectionable ochre horizontal blocks and image veils. */
-.dawn-world__edition{position:absolute!important;left:0!important;right:auto!important;bottom:0!important;width:auto!important;max-width:min(92%,540px)!important;min-height:0!important;padding:12px 18px!important;background:rgba(20,19,17,.84)!important;background-image:none!important;box-shadow:none!important;border:0!important;}
-.dawn-world__rubric{letter-spacing:.16em!important}.dawn-world__edition strong{font-size:clamp(15px,1.45vw,25px)!important}.dawn-world__edition span:last-child{font-size:clamp(10px,.85vw,13px)!important}
-.dawn-twins{width:min(56vw,700px)!important;height:auto!important;min-height:0!important;display:flex!important;align-items:stretch!important;background:transparent!important;border:0!important;overflow:visible!important;gap:12px!important;box-shadow:none!important;}
-.dawn-twins__square,.dawn-twins__square--title,.dawn-twins__square--verse{flex:1 1 0!important;min-width:0!important;border:0!important;background:rgba(25,27,27,.82)!important;color:var(--ws-paper)!important;padding:clamp(12px,2vw,25px)!important;backdrop-filter:blur(9px);box-shadow:none!important;}
-.dawn-twins__square--verse{background:rgba(250,249,245,.91)!important;color:var(--ws-ink)!important;}
-@media(max-width:600px){.dawn-twins{width:88vw!important;gap:5px!important}.dawn-twins__square{padding:9px!important}.dawn-world__edition{max-width:94%!important;padding:9px 10px!important}.dawn-world__edition strong{font-size:12px!important}}
-
-/* R15 · No color panels over exhibition images. */
-/* Photographs and illustrated plates remain unobstructed edge to edge. */
-.dawn-world__edition{display:none!important;background:none!important;background-image:none!important;visibility:hidden!important;}
-.dawn-world__art,.dawn-world__page,.dawn-world{background:#f8f7f3!important;}
-/* Masthead remains readable without an ochre, dark, cream or translucent horizontal rectangle. */
-.dawn-twins{background:none!important;background-image:none!important;border:0!important;box-shadow:none!important;filter:none!important;gap:clamp(10px,1.6vw,24px)!important;}
-.dawn-twins__square,.dawn-twins__square--title,.dawn-twins__square--verse{background:none!important;background-color:transparent!important;background-image:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important;border:0!important;outline:0!important;text-shadow:0 2px 12px rgba(0,0,0,.72),0 1px 3px rgba(0,0,0,.9)!important;color:#fff!important;}
-.dawn-twins__square *{color:#fff!important;text-shadow:0 2px 12px rgba(0,0,0,.72),0 1px 3px rgba(0,0,0,.9)!important;}
-.dawn-twins::before,.dawn-twins::after,.dawn-twins__square::before,.dawn-twins__square::after{content:none!important;display:none!important;}
-@media(max-width:600px){.dawn-world__edition{display:none!important}.dawn-twins__square{background:transparent!important}}
+/* R16: only suppress the unwanted image-bottom caption rectangle; original central two-square masthead intact. */
+.dawn-world__edition{display:none!important}
