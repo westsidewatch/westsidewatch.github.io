@@ -740,7 +740,7 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__co
 /* P2 scene 02: MERSI-inspired continuous lateral mask handoff.
    The left/right Church spread remains intact underneath; one scroll clock
    reveals a three-column magazine spread, with opposing vertical panel motion. */
-body[data-ws-scope="p2"] .showcase{height:640svh}
+body[data-ws-scope="p2"] .showcase{height:760svh}
 body[data-ws-scope="p2"] .p2-magazine{position:absolute;inset:0;z-index:65;visibility:hidden;overflow:hidden;pointer-events:none;background:var(--paper);clip-path:inset(0 100% 0 0);color:var(--ink)}
 body[data-ws-scope="p2"] .p2-magazine__grid{height:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
 body[data-ws-scope="p2"] .p2-magazine__panel{min-width:0;min-height:0;overflow:hidden;padding:clamp(20px,3vw,56px);display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid currentColor;transform:translate3d(0,var(--magazine-shift-up, -13svh),0)}
@@ -1036,7 +1036,7 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index{
 body[data-ws-scope="p2"] .church-editorial__copy{
   display:grid;
   grid-template-columns:minmax(0,1fr);
-  grid-template-rows:minmax(0,24fr) minmax(0,43fr) minmax(0,33fr);
+  grid-template-rows:minmax(0,21fr) minmax(0,34fr) minmax(0,17fr) minmax(0,28fr);
   row-gap:clamp(3px,.55svh,8px);
   justify-items:stretch;
   align-content:stretch;
@@ -1113,49 +1113,42 @@ body[data-ws-scope="p2"] .church-editorial__copy > .schedule-content-group{
   display:flex;flex-direction:column;
   gap:clamp(5px,.7svh,10px);
 }
-body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group > .schedule-theme-scripture{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  column-gap:clamp(12px,2cqi,22px);
-  row-gap:clamp(3px,.55svh,7px);
-  width:100%;min-width:0;flex:0 0 auto;
-  margin:clamp(5px,.6svh,9px) 0 0;
-  padding:clamp(8px,1svh,12px) 0 clamp(6px,.8svh,12px);
-  border-top:1px solid color-mix(in srgb,var(--ink) 25%,transparent);
-  text-align:left;
+/* The three complete Bible passages are a separate, always-visible reading
+   strip. Left: Ephesians and Thessalonians; right: longer Philippians. */
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-theme-scripture{
+ grid-column:1;grid-row:3;min-width:0;min-height:0;max-height:100%;
+ display:flex;flex-direction:column;margin:0;padding:clamp(5px,.55svh,9px) 0 0;
+ border-top:1px solid color-mix(in srgb,var(--ink) 24%,transparent);
+ overflow:hidden;background:transparent;
 }
-body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group > .schedule-theme-scripture h3{
-  grid-column:1/-1;grid-row:1;
-  margin:0 0 2px;
-  text-align:left;
-  color:var(--ws-first-light);
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-theme-scripture h3{
+ flex:none;margin:0 0 clamp(3px,.45svh,6px);
+ color:var(--ws-first-light);text-align:left;
+ font:var(--ws-weight-zh-standard) clamp(17px,1.9cqi,21px)/1.2 var(--ws-type-display-zh);
 }
-body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group > .schedule-theme-scripture > p{
-  width:100%;min-width:0;max-width:none;
-  margin:0;
-  font-family:var(--ws-type-reading-zh);
-  font-size:clamp(13px,1.65cqi,16px);
-  line-height:1.5;
-  text-align:left;
-  overflow-wrap:normal;
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-theme-scripture .church-folio__scripture-grid{
+ display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
+ column-gap:clamp(15px,2.1cqi,27px);
+ min-width:0;min-height:0;flex:1 1 auto;
+ overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;overscroll-behavior:auto;
 }
-body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group > .schedule-theme-scripture > p.schedule-theme-scripture__lead{
-  grid-column:1;grid-row:2;
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-theme-scripture .church-folio__scripture-pair,
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-theme-scripture .church-folio__scripture-final{
+ min-width:0;display:flex;flex-direction:column;justify-content:flex-start;
+ gap:clamp(3px,.38svh,6px);
 }
-body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group > .schedule-theme-scripture > p.schedule-theme-scripture__ref{
-  grid-column:1;grid-row:3;
-  margin:0;
-  font-size:clamp(11px,1.2cqi,13px);
-  text-align:left;
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-theme-scripture p{
+ width:100%;max-width:none;min-width:0;margin:0;padding:0;
+ font:var(--ws-weight-zh-standard) clamp(12px,1.4cqi,15px)/1.38 var(--ws-type-reading-zh);
+ text-align:left;text-wrap:pretty;overflow-wrap:normal;
 }
-body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group > .schedule-theme-scripture > p:nth-of-type(3){
-  grid-column:2;grid-row:2;
-}
-body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group > .schedule-theme-scripture > p:nth-of-type(4){
-  grid-column:2;grid-row:3;
+body[data-ws-scope="p2"] .church-editorial__copy > .schedule-theme-scripture .schedule-theme-scripture__ref{
+ display:block;margin:2px 0 0;
+ font:italic var(--ws-weight-zh-air) clamp(10px,1.2cqi,13px)/1.2 var(--ws-type-reading-zh);
+ letter-spacing:.02em;text-align:left;color:var(--ink);
 }
 body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__bottom{
-  grid-column:1;grid-row:3;
+  grid-column:1;grid-row:4;
   position:relative;
   display:block;
   min-width:0;min-height:0;
@@ -1199,7 +1192,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
 }
 @media(max-height:720px) and (min-width:701px){
   body[data-ws-scope="p2"] .church-editorial__copy{
-    grid-template-rows:minmax(0,23fr) minmax(0,45fr) minmax(0,32fr);
+    grid-template-rows:minmax(0,21fr) minmax(0,34fr) minmax(0,17fr) minmax(0,28fr);
   }
 }
 @media(max-width:700px){
@@ -1207,7 +1200,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
   body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__copy{
     display:grid;
     grid-template-columns:minmax(0,1fr);
-    grid-template-rows:minmax(0,24fr) minmax(0,45fr) minmax(0,31fr);
+    grid-template-rows:minmax(0,19fr) minmax(0,35fr) minmax(0,22fr) minmax(0,24fr);
     width:calc(100vw - 24px);
     height:calc(100svh - 24px);
     overflow:hidden;
@@ -1218,7 +1211,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
 }
 @media(max-width:480px){
   body[data-ws-scope="p2"] .church-editorial__copy{
-    grid-template-rows:minmax(0,24fr) minmax(0,45fr) minmax(0,31fr);
+    grid-template-rows:minmax(0,19fr) minmax(0,35fr) minmax(0,22fr) minmax(0,24fr);
     padding-inline:clamp(12px,3vw,17px);
   }
   body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-english{
@@ -1271,4 +1264,39 @@ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom > .church
   background:transparent;
   border:0;
   box-shadow:none;
+}
+
+
+/* Issue marker is set inside the UPPER masthead, not across the bottom
+   paper/blue-water join and not on top of the animated model. */
+body[data-ws-scope="p2"] .showcase[data-p2-phase="red-sea"] .index,
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index,
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church-to-magazine"] .index{
+ position:absolute;
+ top:calc(3svh + clamp(9px,1.1svh,14px));bottom:auto;
+ right:calc((100vw - min(80vw,1040px))/2 + clamp(16px,2vw,30px));
+ display:flex;align-items:center;
+ gap:clamp(8px,1.1vw,17px);max-width:min(58vw,410px);
+ font:400 clamp(9px,.92vw,12px)/1.2 var(--ws-type-display-en);
+ color:var(--ink);letter-spacing:.08em;white-space:nowrap;z-index:90;
+}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index a,
+body[data-ws-scope="p2"] .showcase[data-p2-phase="red-sea"] .index a{
+ font-size:inherit;
+}
+@media(max-width:700px){
+ body[data-ws-scope="p2"] .showcase[data-p2-phase="red-sea"] .index,
+ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index,
+ body[data-ws-scope="p2"] .showcase[data-p2-phase="church-to-magazine"] .index{
+  top:calc(3svh + 8px);right:clamp(17px,4vw,25px);
+  font-size:9px;gap:7px;
+ }
+}
+@media(max-width:480px){
+ body[data-ws-scope="p2"] .church-editorial__copy > .schedule-theme-scripture .church-folio__scripture-grid{
+  grid-template-columns:minmax(0,1fr);gap:clamp(5px,.7svh,9px);
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy > .schedule-theme-scripture p{
+  font-size:clamp(11px,3vw,13px);line-height:1.35;
+ }
 }
