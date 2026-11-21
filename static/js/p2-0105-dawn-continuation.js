@@ -314,6 +314,9 @@
   const visual=imageFor(work,source);
   setDetailImage(visual);
   const sourceUrl=safeHttp(work.sourceUrl||work.source?.url||source?.source?.url||visual?.workSource||visual?.source);
+  const sourceHint=$('#dawn-book-source-hint');
+  sourceHint.hidden=!sourceUrl;
+  detailSource.target='_blank';detailSource.rel='noopener noreferrer';
   if(sourceUrl){detailSource.href=sourceUrl;detailSource.hidden=false}else{detailSource.hidden=true;detailSource.removeAttribute('href')}
   appendReaderText('正在檢查本站可閱讀的內容…');
   second.scrollTo({top:detail.offsetTop,behavior:'instant'});
@@ -330,7 +333,7 @@
      detailText.append(unit);
     });
    }else{
-    appendReaderText(sourceUrl?'本站尚未收錄此書的完整正文。可從下方來源查閱原書；書局頁面會保留，方便繼續選書。':'本站目前保留此書的書目資料；可閱讀的正文與原書連結尚待核實。');
+    appendReaderText(sourceUrl?'本站尚未收錄此書的完整正文。可從下方來源閱讀原書。':'本站目前保留此書的書目資料；可閱讀的正文與原書連結尚待核實。');
    }
   }catch{
    if(ticket!==detailTicket)return;
