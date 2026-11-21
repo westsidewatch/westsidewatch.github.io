@@ -1109,3 +1109,112 @@ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom > .church
   grid-column:1;grid-row:5;
  }
 }
+
+
+/* P2 2026-11-21 / Visible white church model: FIXED LOWER EDITORIAL ROW.
+   Previous folio scrolled the model out below the long worship copy.
+   The worship programme scrolls internally; scriptures and the active
+   3D church model stay within the actual visible paper field.
+   Do not change the Red Sea opening or the existing GLB animation. */
+body[data-ws-scope="p2"] .church-editorial__copy{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:auto minmax(0,1fr) clamp(232px,34svh,310px);
+  row-gap:clamp(5px,.65svh,10px);
+  align-content:stretch;
+  overflow:hidden;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group{
+  grid-column:1;grid-row:2;
+  min-height:0;
+  max-height:100%;
+  align-self:stretch;
+  margin:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-gutter:stable;
+  overscroll-behavior:contain;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom{
+  grid-column:1;grid-row:3;
+  align-self:stretch;
+  height:100%;
+  min-height:0;
+  max-height:100%;
+  margin:0;
+  padding:clamp(7px,.8svh,11px) 0 0;
+  border-top:1px solid color-mix(in srgb,var(--ink) 21%,transparent);
+  grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
+  overflow:hidden;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture{
+  min-height:0;
+  align-self:start;
+  padding:0;
+  border:0;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom > .church-schedule-maquette{
+  position:relative;
+  display:block;
+  visibility:visible;
+  align-self:center;
+  justify-self:stretch;
+  width:100%;
+  height:100%;
+  max-height:100%;
+  min-width:0;
+  min-height:0;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom > .church-schedule-maquette .church-editorial__maquette{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  border:0;
+  opacity:1;
+}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__copy,
+body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editorial__copy{
+  overflow:hidden;
+}
+@media(max-width:900px){
+  body[data-ws-scope="p2"] .church-editorial__copy{
+    grid-template-rows:auto minmax(0,1fr) clamp(220px,32svh,295px);
+  }
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:clamp(10px,1.4cqi,18px);
+  }
+}
+@media(max-width:700px){
+  body[data-ws-scope="p2"] .church-editorial__copy,
+  body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__copy{
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr) clamp(185px,25svh,230px);
+    overflow:hidden;
+  }
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  }
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture{
+    max-height:100%;
+    overflow-y:auto;
+  }
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom > .church-schedule-maquette{
+    width:100%;height:100%;
+    min-width:0;margin:0;
+  }
+}
+@media(max-width:420px){
+  body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom{
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:minmax(0,1fr) minmax(115px,.9fr);
+  }
+  body[data-ws-scope="p2"] .church-editorial__copy{
+    grid-template-rows:auto minmax(0,1fr) clamp(245px,35svh,310px);
+  }
+}
