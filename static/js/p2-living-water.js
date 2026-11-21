@@ -127,7 +127,7 @@ document.addEventListener('click',event=>{
   if(target.closest('a[href]')&&!target.closest(
     '.church-folio__identity-link,.church-folio__english-link,.church-folio__model-entry'
   ))return;
-  const url=new URL('/p2/church-tour.html',location.origin);
+  const url=new URL('https://living-water-west-3d-viewer.chenjingyu1948302.chatgpt.site/');
   event.preventDefault();
   // A user-activated top-level navigation, even when P2 lives in its
   // original homepage iframe; fallback to this frame if top is restricted.
