@@ -265,3 +265,15 @@
  .dawn-twins__ref{font-size:8px}
  .dawn-spread{top:calc(var(--dawn-square-top) + var(--dawn-square) + 12px);left:9px;right:9px;bottom:12px;grid-template-columns:minmax(0,1.4fr) minmax(85px,.85fr);gap:8px}
 }
+
+/* R10 · MERSI-centered first impression: the two horizontal squares share
+   one centered anchor. Scroll moves their GROUP, not the two squares apart. */
+.dawn-twins{
+ left:50%;top:50%;transform:translate(-50%,-50%);
+ grid-template-columns:repeat(2,var(--dawn-square));grid-template-rows:var(--dawn-square);
+}
+.dawn-spread{left:clamp(16px,3vw,52px);right:clamp(16px,3vw,52px)}
+@media(max-width:600px){
+ .dawn-twins{left:50%;top:50%;transform:translate(-50%,-50%)}
+ .dawn-spread{left:9px;right:9px}
+}
