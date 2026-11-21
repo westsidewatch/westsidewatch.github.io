@@ -116,7 +116,7 @@
  function resetEntry(){if(rafId)cancelAnimationFrame(rafId);rafId=0;entryClock=entryProgress=entryTarget=0;catalogue.hidden=true;wall.hidden=false;second.scrollTop=0;schedule()}
  function animateEntry(target){if(rafId)cancelAnimationFrame(rafId);entryTarget=target;
   const from=entryProgress,start=performance.now(),duration=target?7600:0;
-  if(!duration||matchMedia('(prefers-reduced-motion: reduce)').matches){entryClock=entryProgress=target;schedule();if(target)loadCatalogue();return;}
+  if(!duration||matchMedia('(prefers-reduced-motion: reduce)').matches){entryClock=entryProgress=target;schedule();if(target){loadCatalogue();loadWallCovers();}return;}
   const tick=now=>{entryProgress=mix(from,target,clamp((now-start)/duration));entryClock=entryProgress;schedule();
    if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target){loadCatalogue();loadWallCovers();}}};
   rafId=requestAnimationFrame(tick);
