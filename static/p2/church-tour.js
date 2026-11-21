@@ -115,9 +115,7 @@ const finishes = {
     color: 0xe6c58c, emissive: 0xb27d38, emissiveIntensity: 0.47,
     roughness: 0.34, metalness: 0.38
   }),
-  leaves: new MeshStandardMaterial({
-    color: 0x707f62, roughness: 1, side: DoubleSide
-  }),
+  leaves: new MeshStandardMaterial({ color: 0x707f62, roughness: 1, side: DoubleSide }),
   earth: new MeshStandardMaterial({ color: 0x81927c, roughness: 1 }),
   metal: new MeshStandardMaterial({ color: 0x696e69, roughness: 0.49, metalness: 0.66 }),
   ivory: new MeshStandardMaterial({ color: 0xf2f1eb, roughness: 0.7 }),
@@ -129,8 +127,14 @@ const finishes = {
 function modelName(value) {
   return String(value).toLowerCase().replace(/[_\s·.–—]+/g, " ").trim();
 }
-function chooseFinish(name) {
+function chooseFinish(name, sourceMaterial) {
   const n = modelName(name);
+  // Restore the verified Blender/GLB source finishes for the original walls,
+  // windows, roofs and the pure-white south entry. Never recolor the
+  // approved architecture using invented grey/green palette values.
+  if (/maple cc0/.test(n)) return sourceMaterial;
+  if (/wall|roof|ceiling|facade|façade|entry lintel|pier|tall single white pivot door|entrance wall|glass|glazing|window/i.test(n))
+    return sourceMaterial?.clone?.() ?? finishes.plaster;
   // SOUTH CROSS WALL consists of four SOLID quadrants surrounding a void.
   // Never make those large wall solids emissive gold.
   if (/south cross wall|solid quadrant/.test(n)) return finishes.plaster;
@@ -221,6 +225,54 @@ function addNativeLandscape(building) {
   }
 }
 
+// Original red maple is NOT one green material: GLB material 15 = twig bark,
+// 16 = rough living bark, 17/18/19 = foliage. The source mesh materials remain
+// authoritative. Only the foliage changes season; trunk and twigs never do.
+const seasonalLeaves = new Map();
+const originalStructuralMaterials = new Map();
+const mapleAutumn = {r:0.56,g:0.18,b:0.15}; // documented Blender V24 burgundy
+function registerMapleSource(mesh) {
+  const n=modelName(mesh.name);
+  if(!/maple cc0/.test(n)) return false;
+  // Every bark, twig, root, spreading bough and trunk keeps the imported
+  // CC0 material with no foliage tint.
+  if(!/connected crown|foliage/.test(n)) return true;
+  const material=mesh.material?.clone?.()??mesh.material;
+  mesh.material=material;
+  if(material?.color)seasonalLeaves.set(material,material.color.clone());
+  material.side=DoubleSide;
+  return true;
+}
+// Four seasons follow the original camera narrative, never page scroll.
+// Spring/summer = source CC0 green leaf materials; autumn = original V24
+// burgundy leaf color; winter = a darker shade of the same burgundy,
+// retaining the red canopy instead of fading to green or bare twigs.
+function updateMapleSeason(t,duration) {
+  const x=Math.min(1,Math.max(0,t/duration));
+  const autumn=Math.min(1,Math.max(0,(x-.48)/.16));
+  const winter=Math.min(1,Math.max(0,(x-.73)/.16));
+  const smooth=v=>v*v*(3-2*v);
+  const a=smooth(autumn),w=smooth(winter);
+  for(const [material,source] of seasonalLeaves) {
+    const c=material.color;
+    c.copy(source);
+    c.r+=(mapleAutumn.r-source.r)*a;
+    c.g+=(mapleAutumn.g-source.g)*a;
+    c.b+=(mapleAutumn.b-source.b)*a;
+    c.r+=(mapleAutumn.r*.60-c.r)*w;
+    c.g+=(mapleAutumn.g*.46-c.g)*w;
+    c.b+=(mapleAutumn.b*.52-c.b)*w;
+  }
+  // Winter snow is applied to the original roof surfaces, not a new roof.
+  const snow=Math.min(1,Math.max(0,(x-.77)/.14));
+  for(const [mat,original] of originalStructuralMaterials) {
+    mat.color.copy(original);
+    mat.color.r+=(1-mat.color.r)*snow*.35;
+    mat.color.g+=(1-mat.color.g)*snow*.35;
+    mat.color.b+=(1-mat.color.b)*snow*.35;
+  }
+}
+
 async function loadArchitecture() {
   if (typeof DecompressionStream !== "function") {
     throw new Error("Compressed GLB transport is unsupported");
@@ -246,7 +298,15 @@ async function loadArchitecture() {
       object.visible = false;
       return;
     }
-    object.material = chooseFinish(object.name);
+    const originalMaterial=object.material;
+    if (registerMapleSource(object)) {
+      object.castShadow = true;
+      object.receiveShadow = true;
+      return;
+    }
+    object.material = chooseFinish(object.name, originalMaterial);
+    if (/^roof/i.test(modelName(object.name)) && object.material?.color)
+      originalStructuralMaterials.set(object.material,object.material.color.clone());
     object.castShadow = object.material !== finishes.glazing && object.material !== finishes.leaves;
     object.receiveShadow = true;
     if (object.material === finishes.glazing) object.renderOrder = 2;
