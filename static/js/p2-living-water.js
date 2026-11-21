@@ -12,7 +12,7 @@ let raf=0,externalProgress=0,hasExternalProgress=embedded,displayVh=null,sceneVh
 function render(now=performance.now()){
  raf=0;
  const distance=embedded?0:clamp(-root.getBoundingClientRect().top/Math.max(1,innerHeight),0,5.4);
- const target=churchPreview&&!embedded?2.34:hasExternalProgress?embeddedScene(externalProgress):distance<=1.8?.1+distance*(.4/1.8):.5+(distance-1.8);
+ const target=churchPreview&&!embedded?2.37:hasExternalProgress?embeddedScene(externalProgress):distance<=1.8?.1+distance*(.4/1.8):.5+(distance-1.8);
  // Scroll position is the only choreography clock: no catch-up or timed easing.
  displayVh=target;
  const rect=embedded?null:root.getBoundingClientRect();
