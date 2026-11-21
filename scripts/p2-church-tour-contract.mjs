@@ -25,7 +25,18 @@ assert(script.includes("south cross wall|solid quadrant"), "The cross is a wall 
 assert(script.includes("surfaceMaps.stone"), "Architectural materials must remain textured");
 
 assert(script.includes("loadArchitecture()"), "Native GLB loading required");
-assert((script.match(/at:\s*[0-9]+,\s*p:/g) || []).length >= 8, "Multiple indoor camera stations required");
+assert((script.match(/at:\\s*[0-9]+,\\s*p:/g) || []).length >= 22,
+  "Full original walk through sanctuary, cafe, terraces and final aerial required");
+assert(script.includes("staffSanctuaryHinge.attach(mesh(\\\"SANCTUARY STAFF DOOR\\\")"),
+  "Do not omit the true south sanctuary staff exit");
+assert(script.includes("northCourtSlider.position.x"),
+  "Courtyard north official passage must open");
+assert(script.includes("updateMapleSeason(t,duration)"),
+  "Japanese maple foliage must transition with the seasons");
+assert(script.includes("registerMapleSource(object)"),
+  "Real CC0 maple bark cannot be replaced by foliage colors");
+assert(script.includes("daylightChapters") && script.includes("solar=Math.max(0,Math.sin(angle))"),
+  "Daily sunlight loops must be continuous through scene changes");
 for (const file of [
   "static/p2-maquette/model-v34.0.part",
   "static/p2-maquette/model-v34.1.part",
