@@ -1,0 +1,87 @@
+{
+  "schema": "dawn.p2.curated-exhibition.v1",
+  "id": "jerusalem-3000",
+  "title": "耶路撒冷三千年",
+  "subtitle": "JERUSALEM · 3000 YEARS",
+  "description": "從朝聖馬賽克與早期印刷圖，到復原圖、測繪與歷史檔案。此為已核對的首批圖像，尚非十二本書的完整選書。",
+  "curationStatus": "in-progress",
+  "sourceCollection": "/dawn-library/collections/jerusalem-3000/maps/",
+  "display": {
+    "mode": "mersi-counterflow",
+    "left": "up",
+    "right": "down",
+    "centralTitle": "DAWN LIBRARY"
+  },
+  "items": [
+    {
+      "id": "jerusalem-map-1",
+      "title": "Madaba Mosaic Map",
+      "caption": "馬達巴馬賽克 · 六世紀朝聖圖像",
+      "kind": "MOSAIC · PILGRIMAGE",
+      "year": "6C",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Madaba%20Mosaic%20Map%20depicting%20Jerusalem%20and%20the%20Dead%20Sea%20Church%20of%20St%20George.jpg?width=1800",
+        "alt": "Madaba Mosaic Map · 馬達巴馬賽克 · 六世紀朝聖圖像",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Madaba%20Mosaic%20Map%20depicting%20Jerusalem%20and%20the%20Dead%20Sea%20Church%20of%20St%20George.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/"
+    },
+    {
+      "id": "jerusalem-map-2",
+      "title": "Breydenbach · Jerusalem",
+      "caption": "早期印刷朝聖城市圖",
+      "kind": "EARLY PRINT · PILGRIMAGE",
+      "year": "1486",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Civitas%20Iherusalem.jpg?width=1800",
+        "alt": "Breydenbach · Jerusalem · 早期印刷朝聖城市圖",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Civitas%20Iherusalem.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/"
+    },
+    {
+      "id": "jerusalem-map-3",
+      "title": "Van Adrichem · Ierusalem",
+      "caption": "基督時代耶路撒冷歷史復原圖",
+      "kind": "HISTORICAL RECONSTRUCTION",
+      "year": "1590",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Christian%20van%20Adrichem%201590%20map%20Ierusalem%2C%20et%20suburbia%20eius%2C%20sicut%20tempre%20Christi%20floruit%2C%20cum%20locis%2C%20in%20quibus%20Christ%20passus%20est%20qu%C3%A6%20religiose%20%C3%A0%20Christianis%20observata%2C%20eti%C3%A3%20n%C5%A9%20Venerationi%20habentur.jpg?width=1800",
+        "alt": "Van Adrichem · Ierusalem · 基督時代耶路撒冷歷史復原圖",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Christian%20van%20Adrichem%201590%20map%20Ierusalem%2C%20et%20suburbia%20eius%2C%20sicut%20tempre%20Christi%20floruit%2C%20cum%20locis%2C%20in%20quibus%20Christ%20passus%20est%20qu%C3%A6%20religiose%20%C3%A0%20Christianis%20observata%2C%20eti%C3%A3%20n%C5%A9%20Venerationi%20habentur.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/"
+    },
+    {
+      "id": "jerusalem-map-4",
+      "title": "Wilson · Ordnance Survey",
+      "caption": "威爾遜實地測繪 · 十九世紀",
+      "kind": "ARCHAEOLOGY · SURVEY",
+      "year": "1865",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/1865%20Ordnance%20Survey%20of%20Jerusalem%20Old%20City%20full%20map.jpg?width=1800",
+        "alt": "Wilson · Ordnance Survey · 威爾遜實地測繪 · 十九世紀",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/1865%20Ordnance%20Survey%20of%20Jerusalem%20Old%20City%20full%20map.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/"
+    },
+    {
+      "id": "jerusalem-map-5",
+      "title": "Survey of Palestine",
+      "caption": "英國託管時期的城市測量圖",
+      "kind": "HISTORICAL CARTOGRAPHY",
+      "year": "1937",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Jerusalem%20-%20Compiled%2C%20drawn%20%26%20printed%20under%20the%20direction%20of%20F.J.%20Salmon%2C%20Commissioner%20for%20Lands%20%26%20Surveys%2C%20Palestine.jpg?width=1800",
+        "alt": "Survey of Palestine · 英國託管時期的城市測量圖",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Jerusalem%20-%20Compiled%2C%20drawn%20%26%20printed%20under%20the%20direction%20of%20F.J.%20Salmon%2C%20Commissioner%20for%20Lands%20%26%20Surveys%2C%20Palestine.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/"
+    }
+  ]
+}
