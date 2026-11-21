@@ -194,7 +194,7 @@
   const base=Math.max(0,d-27.65);
   for(const side of imageSides){
    const scenes=gospelScenes[side.key];if(!scenes.length)continue;
-   const s=base*(side.key==='left'?1.18:.94)+(side.key==='right'?.42:0);
+   const s=base*(side.key==='left'?1.18:1.12)+(side.key==='right'?.42:0);
    const step=Math.floor(Math.max(0,s)),fraction=ease(s-Math.floor(s));
    const i=step%scenes.length,ni=(i+1)%scenes.length;
    if(side.index!==i){
