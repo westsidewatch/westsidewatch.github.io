@@ -1036,7 +1036,7 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index{
 body[data-ws-scope="p2"] .church-editorial__copy{
   display:grid;
   grid-template-columns:minmax(0,1fr);
-  grid-template-rows:minmax(0,21fr) minmax(0,34fr) minmax(0,17fr) minmax(0,28fr);
+  grid-template-rows:minmax(0,24fr) minmax(0,34fr) minmax(0,17fr) minmax(0,25fr);
   row-gap:clamp(3px,.55svh,8px);
   justify-items:stretch;
   align-content:stretch;
@@ -1057,10 +1057,11 @@ body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity{
   display:grid;
   grid-template-columns:minmax(0,1fr);
   grid-template-rows:auto minmax(0,1fr) auto auto;
+  row-gap:clamp(5px,.8svh,10px);
   justify-items:center;
   align-content:stretch;
   min-width:0;min-height:0;
-  padding:clamp(4px,.7svh,9px) 0 clamp(8px,1svh,12px);
+  padding:clamp(5px,.8svh,10px) 0 clamp(13px,1.75svh,20px);
   border-bottom:1px solid color-mix(in srgb,var(--ink) 28%,transparent);
 }
 body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity > small{
@@ -1081,7 +1082,7 @@ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedu
   width:min(96%,920px);
   aspect-ratio:1800/193;
   height:auto;
-  margin:0 0 clamp(4px,.8svh,9px);
+  margin:0 0 clamp(7px,.85svh,11px);
   background:var(--ws-first-light);
   -webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
   mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
@@ -1091,13 +1092,14 @@ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedu
   width:100%;
   margin:0;
   text-align:center;
-  font:400 var(--ws-type-scale-title-md)/var(--ws-type-leading-title) var(--ws-type-display-en);
+  font:400 var(--ws-type-scale-title-md)/1.2 var(--ws-type-display-en);
   font-synthesis:none;
 }
 body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-address{
   grid-column:1;grid-row:4;
   width:100%;
-  margin:clamp(3px,.4svh,6px) 0 0;
+  margin:clamp(7px,.95svh,12px) 0 0;
+  padding:0 0 2px;
   text-align:center;
   font:italic 400 var(--ws-type-scale-meta)/var(--ws-type-leading-ui) var(--ws-type-display-en);
   font-synthesis:none;
@@ -1199,7 +1201,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
 }
 @media(max-height:720px) and (min-width:701px){
   body[data-ws-scope="p2"] .church-editorial__copy{
-    grid-template-rows:minmax(0,21fr) minmax(0,34fr) minmax(0,17fr) minmax(0,28fr);
+    grid-template-rows:minmax(0,24fr) minmax(0,34fr) minmax(0,17fr) minmax(0,25fr);
   }
 }
 @media(max-width:700px){
@@ -1207,7 +1209,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
   body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__copy{
     display:grid;
     grid-template-columns:minmax(0,1fr);
-    grid-template-rows:minmax(0,19fr) minmax(0,35fr) minmax(0,22fr) minmax(0,24fr);
+    grid-template-rows:minmax(0,23fr) minmax(0,35fr) minmax(0,21fr) minmax(0,21fr);
     width:calc(100vw - 24px);
     height:100svh;
     overflow:hidden;
@@ -1218,7 +1220,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
 }
 @media(max-width:480px){
   body[data-ws-scope="p2"] .church-editorial__copy{
-    grid-template-rows:minmax(0,19fr) minmax(0,35fr) minmax(0,22fr) minmax(0,24fr);
+    grid-template-rows:minmax(0,23fr) minmax(0,35fr) minmax(0,21fr) minmax(0,21fr);
     padding-inline:clamp(12px,3vw,17px);
   }
   body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-english{
