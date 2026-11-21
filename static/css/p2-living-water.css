@@ -1059,7 +1059,7 @@ body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity{
   /* The first row alone absorbs extra height. The Chinese/English/address
      trio below is a tightly controlled, consecutive stack. */
   grid-template-rows:minmax(0,1fr) auto auto auto;
-  row-gap:clamp(9px,1.12svh,13px);
+  row-gap:clamp(8px,.9svh,10px);
   justify-items:center;
   align-content:stretch;
   min-width:0;min-height:0;
@@ -1084,7 +1084,7 @@ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedu
   align-self:end;
   display:block;
   flex:none;
-  width:min(96%,920px);
+  width:min(90%,760px);
   aspect-ratio:1800/193;
   height:auto;
   margin:0;
@@ -1100,7 +1100,7 @@ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedu
   padding:0;
   text-align:center;
   white-space:normal;
-  font:400 var(--ws-type-scale-title-md)/1.2 var(--ws-type-display-en);
+  font:400 var(--ws-type-scale-title-sm)/1.2 var(--ws-type-display-en);
   font-synthesis:none;
 }
 body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-address{
