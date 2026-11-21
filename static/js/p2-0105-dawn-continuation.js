@@ -185,8 +185,8 @@
  for(const side of imageSides){
   // Hide any broken remote asset rather than displaying a missing-image icon.
   for(const img of [side.current,side.next]){
-   img.addEventListener('error',()=>{img.style.opacity='0';});
-   img.addEventListener('load',()=>{img.style.removeProperty('opacity');});
+   img.addEventListener('error',()=>{img.style.opacity='0';schedule();});
+   img.addEventListener('load',()=>{img.style.removeProperty('opacity');schedule();});
   }
  }
  void loadExhibition();
@@ -209,22 +209,34 @@
     side.next.alt=scenes[ni].title+' — '+scenes[ni].caption;
     side.nextIndex=ni;
    }
-   // True counterflow: LEFT slides UP, RIGHT slides DOWN; no 3D page flip.
+   // Never expose the papyrus canvas while a remote image is missing or loading.
+   // A one-image fallback must fill the whole half-screen, with correct attribution.
    const left=side.key==='left';
-   const currentPct=(fraction*100).toFixed(2);
-   const incomingPct=((1-fraction)*100).toFixed(2);
-   side.current.style.clipPath=left
-    ?`inset(0 0 ${currentPct}% 0)`
-    :`inset(${currentPct}% 0 0 0)`;
-   side.next.style.clipPath=left
-    ?`inset(${incomingPct}% 0 0 0)`
-    :`inset(0 0 ${incomingPct}% 0)`;
-   // Keep both image surfaces flush to the stage. Motion comes from complementary
-   // clipping masks; translating clipped images previously exposed a 12%-high
-   // papyrus/ochre strip between consecutive plates.
+   const currentReady=side.current.complete&&side.current.naturalWidth>0;
+   const nextReady=side.next.complete&&side.next.naturalWidth>0;
+   let shown;
+   if(currentReady&&nextReady){
+    const currentPct=(fraction*100).toFixed(2);
+    const incomingPct=((1-fraction)*100).toFixed(2);
+    side.current.style.clipPath=left
+     ?`inset(0 0 ${currentPct}% 0)`
+     :`inset(${currentPct}% 0 0 0)`;
+    side.next.style.clipPath=left
+     ?`inset(${incomingPct}% 0 0 0)`
+     :`inset(0 0 ${incomingPct}% 0)`;
+    shown=fraction>.5?scenes[ni]:scenes[i];
+   }else if(currentReady){
+    side.current.style.clipPath='none';side.next.style.clipPath='inset(0 0 100% 0)';
+    shown=scenes[i];
+   }else if(nextReady){
+    side.current.style.clipPath='inset(0 0 100% 0)';side.next.style.clipPath='none';
+    shown=scenes[ni];
+   }else{
+    side.current.style.clipPath='none';side.next.style.clipPath='inset(0 0 100% 0)';
+    shown=scenes[i];
+   }
    side.current.style.transform='none';
    side.next.style.transform='none';
-   const shown=fraction>.5?scenes[ni]:scenes[i];
    if(side.node.href!==shown.href){
     side.node.href=shown.href;
     side.node.setAttribute('aria-label','查看 '+shown.title+' · 原始書籍或館藏');
