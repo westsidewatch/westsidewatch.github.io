@@ -377,9 +377,11 @@ const daylightChapters = [
   [132,176], [176,223], [223,251]
 ];
 function daylightAt(t) {
-  const c=daylightChapters.find(([start,end])=>t>=start&&t<end)
-       ??daylightChapters[daylightChapters.length-1];
-  return Math.max(0,Math.min(1,(t-c[0])/(c[1]-c[0])));
+  // V4.1: approximately TWELVE seconds per full day's sunlight, repeated
+  // continuously while the camera moves through every major interior scene.
+  // The phase is periodic: the next day begins at the same solar angle.
+  const DAY_SECONDS=12;
+  return ((t / DAY_SECONDS + .065) % 1 + 1) % 1;
 }
 function updateDaylight(t,duration) {
   const phase=daylightAt(t);
