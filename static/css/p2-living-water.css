@@ -797,7 +797,8 @@ body[data-ws-scope="p2"] .church-editorial > .church-schedule-maquette{
   pointer-events:none;
 }
 body[data-ws-scope="p2"] .church-schedule-maquette::before{
-  content:"";
+  /* Suppress the opaque fallback thumbnail so no grey rectangle reaches paper. */
+  content:none;
   position:absolute;
   inset:0;
   display:block;
