@@ -868,3 +868,8 @@
  #dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{padding:52px 8px 14px!important}
  #dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{height:clamp(165px,49vw,215px)!important}
 }
+
+/* R33 · Reader continuity: source link is optional, not a page escape. */
+#dawn-second .dawn-book-detail__return-hint{font:200 clamp(12px,.85vw,14px)/1.6 var(--ws-type-display-zh);max-width:42ch;color:var(--ws-ink);opacity:.72;margin:7px 0 0}
+#dawn-second .dawn-book-detail__return-hint[hidden]{display:none}
+#dawn-second .dawn-book-detail__back:focus-visible,#dawn-second .dawn-book-detail__source:focus-visible{outline:2px solid var(--ws-harvest);outline-offset:4px}
