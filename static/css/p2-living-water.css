@@ -770,9 +770,10 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church-to-magazine"] .church-e
  body[data-ws-scope="p2"] .p2-magazine__panel{transform:none}
 }
 
-/* P2 Sunday: the architectural growth model sits in the LOWER-LEFT of
-   the RIGHT-HAND paper folio, adjacent to the final theme verse.
-   The left-hand engraved-water plate stays completely unobstructed. */
+/* The growing architectural maquette is pinned to the lower-left corner
+   of the RIGHT page (x = 50% of the spread + inner paper margin).
+   It must not be a scrolling child of the scripture. The left plate remains
+   exclusively for the original water engraving. */
 body[data-ws-scope="p2"] .church-editorial__visual{
   position:relative;
   min-width:0;
@@ -781,14 +782,14 @@ body[data-ws-scope="p2"] .church-editorial__visual{
   background:transparent;
   pointer-events:none;
 }
-body[data-ws-scope="p2"] .church-editorial__copy .church-schedule-maquette{
-  position:relative;
-  z-index:1;
-  display:block;
-  width:100%;
-  max-width:260px;
-  height:clamp(145px,20svh,190px);
-  min-width:0;
+body[data-ws-scope="p2"] .church-editorial > .church-schedule-maquette{
+  position:absolute;
+  left:calc(50% + clamp(18px,2.25vw,38px));
+  bottom:clamp(14px,2.2svh,26px);
+  z-index:3;
+  width:clamp(165px,18vw,228px);
+  height:clamp(116px,16svh,156px);
+  max-width:calc(50% - 70px);
   margin:0;
   overflow:hidden;
   background:var(--paper);
@@ -808,9 +809,7 @@ body[data-ws-scope="p2"] .church-schedule-maquette::before{
   transition:opacity .42s ease;
   pointer-events:none;
 }
-body[data-ws-scope="p2"] .church-schedule-maquette.maquette-geometry-ready::before{
-  opacity:0;
-}
+body[data-ws-scope="p2"] .church-schedule-maquette.maquette-geometry-ready::before{opacity:0}
 body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
   position:absolute;
   inset:0;
@@ -827,11 +826,8 @@ body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
   mask-image:radial-gradient(ellipse 76% 75% at 50% 50%,#000 66%,transparent 100%);
 }
 @media(max-width:700px){
-  body[data-ws-scope="p2"] .church-editorial__copy .church-schedule-maquette{
-    width:min(100%,280px);
-    height:clamp(150px,42vw,205px);
-    margin-top:14px;
-  }
+  /* A single-column phone page has no facing left folio to preserve. */
+  body[data-ws-scope="p2"] .church-editorial > .church-schedule-maquette{display:none}
 }
 
 /* Reclaim the ~200px formerly occupied by the right-panel image and keep
@@ -1005,10 +1001,5 @@ body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
     grid-column:2;grid-row:4;
     text-align:left;
     align-self:center;
-  }
-  body[data-ws-scope="p2"] .schedule-theme-scripture>.church-schedule-maquette{
-    grid-column:1;grid-row:4;
-    justify-self:start;
-    align-self:end;
   }
 }
