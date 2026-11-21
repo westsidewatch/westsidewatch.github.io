@@ -181,48 +181,38 @@ body.p2Embedded.p2OliveSpread .plate.inverse .cornerCitation{
 }
 </style>
 <style>
-/* R24 · Canonical 05 palette. Read existing P2 section 05: Dawn Library paper, ink, harvest ink.
-   No warm-gold or midnight blue fill. Original typeforme and glyph data remain unchanged. */
+/* P2 05 — CONSOLIDATED DAWN LETTERPRESS (embedded only).
+   Preserves original passage, engraving algorithm and 05 color role;
+   replaces contradictory compact R23 and oversize R32 layouts. */
 body.p2Embedded.p2DawnSpread{background:transparent!important;color:#252525}
-body.p2Embedded.p2DawnSpread .shell,body.p2Embedded.p2DawnSpread .work{background:transparent!important}
-body.p2Embedded.p2DawnSpread .pair{gap:clamp(12px,2vw,30px)!important}
-body.p2Embedded.p2DawnSpread .impression{min-width:0!important}
-body.p2Embedded.p2DawnSpread .plate:not(.inverse){background:#FAF9F5!important;color:#252525!important;border:1px solid #B8944A!important}
+body.p2Embedded.p2DawnSpread .shell,
+body.p2Embedded.p2DawnSpread .work{
+ width:100%!important;max-width:710px!important;margin:0 auto!important;
+ overflow:visible!important;padding:0!important;background:transparent!important;
+}
+body.p2Embedded.p2DawnSpread .pair{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ width:100%!important;align-items:start!important;justify-content:center!important;
+ gap:clamp(10px,2.5vw,24px)!important;
+}
+body.p2Embedded.p2DawnSpread .impression{
+ width:100%!important;min-width:0!important;max-width:none!important;flex:initial!important;
+}
+body.p2Embedded.p2DawnSpread .plate{
+ width:100%!important;max-width:none!important;aspect-ratio:1/1!important;
+ box-sizing:border-box!important;overflow:hidden!important;
+}
+body.p2Embedded.p2DawnSpread .plate:not(.inverse){
+ background:#FAF9F5!important;color:#252525!important;border:1px solid #B8944A!important;
+}
 body.p2Embedded.p2DawnSpread .plate:not(.inverse) .piece.zh{color:#252525!important}
 body.p2Embedded.p2DawnSpread .plate:not(.inverse) .piece.en,
 body.p2Embedded.p2DawnSpread .plate:not(.inverse) .cornerCitation{color:#B8944A!important}
-body.p2Embedded.p2DawnSpread .plate.inverse{background:#B8944A!important;color:#252525!important;border:0!important}
+body.p2Embedded.p2DawnSpread .plate.inverse{
+ background:#B8944A!important;color:#252525!important;border:0!important;
+}
 body.p2Embedded.p2DawnSpread .plate.inverse .piece,
 body.p2Embedded.p2DawnSpread .plate.inverse .cornerCitation{color:#252525!important}
-body.p2Embedded.p2DawnSpread .plate.inverse .piece.zh{color:#252525!important}
-@media(max-width:780px){body.p2Embedded.p2DawnSpread .work{padding:0!important}}
-</style>
-<style>
-/* R23 scoped compact 05 impression: existing live forme, unchanged typography content. */
-body.p2Embedded.p2DawnSpread .work{width:100%!important;max-width:900px!important;margin:0 auto!important;padding:0!important}
-body.p2Embedded.p2DawnSpread .pair{display:flex!important;justify-content:center!important;gap:clamp(12px,2vw,24px)!important;align-items:start!important}
-body.p2Embedded.p2DawnSpread .impression{flex:0 1 245px!important;max-width:min(40vw,245px)!important;width:min(40vw,245px)!important}
-body.p2Embedded.p2DawnSpread .plate{width:100%!important;aspect-ratio:1!important}
-@media(max-width:720px){body.p2Embedded.p2DawnSpread .impression{flex:0 1 38vw!important;width:38vw!important;max-width:190px!important}}
-</style>
-<style>
-/* R32 · Scripture Studio P2 05: restore true 1:1 printable squares. The host has enough space for two legible 1:1 plates; preserve the
-   editorial 2-face direction, exact KJV and type selection. */
-body.p2Embedded.p2DawnSpread .shell,
-body.p2Embedded.p2DawnSpread .work{max-width:710px!important;width:100%!important;margin:0 auto!important;overflow:visible!important;padding:0!important}
-body.p2Embedded.p2DawnSpread .pair{
- display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
- gap:clamp(10px,2.5vw,24px)!important;justify-content:center!important;
- align-items:start!important;width:100%!important;
-}
-body.p2Embedded.p2DawnSpread .impression{
- width:100%!important;max-width:none!important;min-width:0!important;
- flex:initial!important;
-}
-body.p2Embedded.p2DawnSpread .plate{
- box-sizing:border-box!important;width:100%!important;max-width:none!important;
- aspect-ratio:1/1!important;overflow:hidden!important;
-}
 body.p2Embedded.p2DawnSpread .plate .cornerCitation{
  font-size:clamp(13px,2.6cqw,24px)!important;
 }
@@ -231,6 +221,8 @@ body.p2Embedded.p2DawnSpread .plate .cornerCitation{
  body.p2Embedded.p2DawnSpread .plate .cornerCitation{font-size:clamp(10px,2.5cqw,16px)!important}
 }
 </style>
+
+
 </head>
 <body>
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
