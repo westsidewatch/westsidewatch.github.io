@@ -312,7 +312,7 @@
   finally{loading=false;more.disabled=currentPage>=index.pageCount;prevButton.disabled=currentPage<=1;}}
  // Genuine cover images from Dawn's existing storefront, never assigned to a different book.
  let coverLookup=null,coverLookupLoading=null;
- function normalizeTitle(s){return String(s||'').toLocaleLowerCase().normalize('NFKC').replace(/[^\\p{L}\\p{N}]+/gu,' ').trim();}
+ function normalizeTitle(s){return String(s||'').toLocaleLowerCase().normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu,' ').trim();}
  async function loadCatalogueCoverLookup(){
   if(coverLookup)return coverLookup;
   if(coverLookupLoading)return coverLookupLoading;
