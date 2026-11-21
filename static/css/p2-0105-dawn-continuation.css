@@ -391,3 +391,56 @@
 #dawn-realm #dawn-twins .dawn-twins__verse-zh{font-size:clamp(12px,1.5svh,17px)!important;}
 #dawn-realm #dawn-twins .dawn-twins__verse-en{font-size:clamp(11px,1.3svh,15px)!important;}
 @media(max-width:600px){#dawn-realm{--dawn-square:clamp(125px,40vw,155px)}#dawn-realm #dawn-twins>.dawn-twins__square{padding:9px!important}}
+
+/* R19 · Second-layer editorial reconstruction; no fullscreen color transition.
+   Reuse the approved Scripture Studio 05 motherform without replicating its type. */
+.dawn-handoff{background:transparent!important}
+.dawn-second{background:#f8f7f3!important}
+.dawn-second__press--motherform{
+ position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ grid-template-rows:auto;gap:clamp(12px,2vw,30px);
+ width:min(100%,1440px);min-height:0;max-width:1440px;
+ margin:0 auto;padding:clamp(32px,4vw,64px) clamp(16px,3vw,44px);
+ align-items:start;overflow:visible;
+}
+.dawn-second__motherform{
+ grid-area:1/1/2/3;display:block;width:100%;height:auto;
+ aspect-ratio:2.06/1;border:0;background:transparent;z-index:2;
+}
+.dawn-press-landing{grid-row:1;align-self:start;aspect-ratio:1;background:transparent;opacity:0;pointer-events:none;z-index:0}
+.dawn-press-landing--zh{grid-column:1}.dawn-press-landing--en{grid-column:2}
+.dawn-reading-room{background:#f8f7f3!important;color:#292924!important;border-top:1px solid #bcb9ad!important}
+.dawn-reading-room .dawn-wall__folio{display:flex;justify-content:space-between;align-items:center;border:0!important;padding:0 0 20px;margin-bottom:clamp(40px,6vw,90px);color:#77766c!important;letter-spacing:.12em}
+.dawn-reading-room__heading{display:flex;align-items:end;justify-content:space-between;gap:24px;padding-bottom:clamp(22px,3vw,44px);border-bottom:1px solid #bcb9ad}
+.dawn-reading-room__heading h2{font:200 clamp(44px,6vw,110px)/1.05 var(--ws-type-display-zh);margin:8px 0 0}
+.dawn-reading-room__eyebrow{font:400 11px/1.2 var(--ws-type-display-en);letter-spacing:.17em;color:#77766c}
+.dawn-reading-room__heading p{max-width:27ch;margin:0 0 5px;font:200 clamp(13px,1.15vw,18px)/1.6 var(--ws-type-display-zh);color:#747269}
+.dawn-reading-room .dawn-wall__grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0!important;grid-auto-flow:row;border-bottom:1px solid #bcb9ad}
+.dawn-reading-room .dawn-wall__tile{animation:none!important;aspect-ratio:auto!important;min-height:0!important;border:0!important;border-bottom:1px solid #c9c7bf!important;border-radius:0!important;outline:0!important;background:transparent!important;color:#292924!important;padding:clamp(22px,2.2vw,38px) clamp(12px,1.4vw,23px)!important;text-align:left;transition:background-color .25s,color .25s!important}
+.dawn-reading-room .dawn-wall__tile:hover,.dawn-reading-room .dawn-wall__tile:focus-visible{background:#eae8df!important;color:#292924!important}
+.dawn-reading-room .dawn-wall__tile--portal{grid-column:span 4!important;grid-row:auto!important;min-height:clamp(240px,28vw,420px)!important;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid #c9c7bf!important}
+.dawn-reading-room .dawn-wall__tile--portal:last-of-type{border-right:0!important}
+.dawn-reading-room .dawn-wall__tile--portal strong{font:900 clamp(32px,3.5vw,66px)/1.1 var(--ws-type-display-zh)!important;letter-spacing:0!important;margin:auto 0 6px!important}
+.dawn-reading-room .dawn-wall__tile--portal em{font:400 clamp(14px,1.45vw,24px)/1.15 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;font-style:normal!important;margin:0!important}
+.dawn-reading-room .dawn-wall__tile small{font:400 10px/1.3 var(--ws-type-display-en);letter-spacing:.13em;color:#878479}
+.dawn-reading-room__link{font:200 12px/1.4 var(--ws-type-display-zh);color:#65645d;margin-top:clamp(30px,4vw,60px)}
+.dawn-reading-room .dawn-wall__tile--record{grid-column:span 3!important;grid-row:auto!important;min-height:195px!important;border-right:1px solid #c9c7bf!important;gap:15px!important;cursor:pointer!important}
+.dawn-reading-room .dawn-wall__tile--record strong{font:400 clamp(19px,1.5vw,27px)/1.18 var(--ws-type-display-en)!important;letter-spacing:-.02em!important;-webkit-line-clamp:4}
+.dawn-reading-room .dawn-wall__tile--record em{font:italic 400 12px/1.4 var(--ws-type-display-en)!important;white-space:normal!important}
+.dawn-reading-room .dawn-wall__tail{padding:28px 0 0!important;color:#77766c!important;border-top:0!important}
+.dawn-reading-room .dawn-wall__tail button{border:0!important;border-bottom:1px solid #292924!important;padding:10px 0!important;background:transparent!important;color:#292924!important}
+.dawn-reading-room .dawn-wall__tail button:hover{background:transparent!important}
+@media(max-width:800px){
+ .dawn-second__motherform{aspect-ratio:1.1/1}
+ .dawn-second__press--motherform{padding:20px 12px}
+ .dawn-reading-room__heading{display:block}
+ .dawn-reading-room__heading p{margin-top:20px}
+ .dawn-reading-room .dawn-wall__tile--portal{grid-column:span 6!important;min-height:290px!important}
+ .dawn-reading-room .dawn-wall__tile--record{grid-column:span 6!important}
+}
+@media(max-width:560px){
+ .dawn-second__motherform{aspect-ratio:0.59/1}
+ .dawn-reading-room .dawn-wall__tile--portal{grid-column:span 12!important;min-height:245px!important;border-right:0!important}
+ .dawn-reading-room .dawn-wall__tile--record{grid-column:span 12!important}
+ .dawn-reading-room .dawn-wall__folio{display:block}
+}
