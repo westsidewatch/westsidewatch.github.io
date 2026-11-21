@@ -52,6 +52,22 @@
  const harvest=palette[4],gold=osColor('--ws-morning-gold','#d2bc69'),paper=osColor('--ws-paper','#faf9f5'),papyrus=osColor('--ws-papyrus','#eee4c9');
  function hexMix(a,b,t){return '#'+[1,3,5].map(i=>Math.round(mix(parseInt(a.slice(i,i+2),16),parseInt(b.slice(i,i+2),16),clamp(t))).toString(16).padStart(2,'0')).join('')}
  function sevenInk(p){const t=clamp((p-.22)/.62)*6,i=Math.min(5,Math.floor(t));return hexMix(palette[i],palette[i+1],t-i)}
+ // Sample the *visible* twin masthead immediately before entry. This is a visual
+ // handoff, not a separately designed color scheme.
+ function computedHex(raw,fallback){
+  const match=String(raw||'').match(/^rgba?\(\s*(\d+)[,\s]+(\d+)[,\s]+(\d+)/i);
+  if(match)return '#'+match.slice(1,4).map(n=>Math.min(255,Number(n)).toString(16).padStart(2,'0')).join('');
+  if(/^#[\da-f]{6}$/i.test(raw))return raw.toLowerCase();
+  return fallback;
+ }
+ function currentTwinColors(){
+  return squares.map((square,i)=>{
+   const style=getComputedStyle(square);
+   return {background:computedHex(style.backgroundColor,i?papyrus:harvest),
+    ink:computedHex(style.color,i?osColor('--ws-ink','#252525'):paper)};
+  });
+ }
+ let startTwinColors=currentTwinColors();
  const ns='http://www.w3.org/2000/svg';
  function svg(name,attrs={}){const e=document.createElementNS(ns,name);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);return e}
  function textNode(group,str,x,y,size,color){const n=svg('text',{x,y,'font-size':size,fill:color,'font-family':'Bodoni Moda SC,Georgia,serif'});n.textContent=str;group.append(n);return n}
@@ -59,8 +75,21 @@
  const clip=svg('clipPath',{id:'p205-v9-clip'}),aperture=svg('rect',{x:800,y:0,width:0,height:108});clip.append(aperture);defs.append(clip);
  const sheetGroup=svg('g');kinetic.append(sheetGroup);
  // Full-screen sevenfold rects removed by editorial direction.
- const banner=svg('g',{'clip-path':'url(#p205-v9-clip)'}),topRule=svg('path',{d:'M0 1H1600',stroke:gold,'stroke-width':1,fill:'none'}),bottomRule=svg('path',{d:'M0 107H1600',stroke:gold,'stroke-width':1,fill:'none'});
- const letters=svg('g');banner.append(topRule,bottomRule,letters);kinetic.append(banner);
+ const banner=svg('g',{'clip-path':'url(#p205-v9-clip)'});
+ // The first frame is literally the twin squares' own pigments. During the
+ // ribbon expansion the two fields remain divided at the same 50% seam.
+ const bannerFieldLeft=svg('rect',{x:0,y:0,width:800,height:108,fill:startTwinColors[0].background});
+ const bannerFieldRight=svg('rect',{x:800,y:0,width:800,height:108,fill:startTwinColors[1].background});
+ const topRule=svg('path',{d:'M0 1H1600',stroke:startTwinColors[0].ink,'stroke-width':1,fill:'none'});
+ const bottomRule=svg('path',{d:'M0 107H1600',stroke:startTwinColors[0].ink,'stroke-width':1,fill:'none'});
+ const leftHalfClip=svg('clipPath',{id:'p205-banner-left'}),rightHalfClip=svg('clipPath',{id:'p205-banner-right'});
+ leftHalfClip.append(svg('rect',{x:0,y:0,width:800,height:108}));
+ rightHalfClip.append(svg('rect',{x:800,y:0,width:800,height:108}));
+ defs.append(leftHalfClip,rightHalfClip);
+ const letters=svg('g',{'clip-path':'url(#p205-banner-left)'});
+ const lettersRight=svg('g',{'clip-path':'url(#p205-banner-right)'});
+ banner.append(bannerFieldLeft,bannerFieldRight,topRule,bottomRule,letters,lettersRight);
+ kinetic.append(banner);
  const seals=[0,1].map(i=>{
   const g=svg('g'),shell=svg('rect',{width:500,height:500,fill:i?papyrus:harvest,stroke:gold,'stroke-width':2});g.append(shell);
   const initial=svg('g');textNode(initial,i?'JOHN 8:32':'DAWN LIBRARY',25,56,22,i?harvest:paper);
@@ -76,7 +105,7 @@
  fetch('/images/westside-watch-lettering-v9-clean-kern.svg').then(r=>{if(!r.ok)throw Error('V9 lettering not available');return r.text()}).then(xml=>{
   const doc=new DOMParser().parseFromString(xml,'image/svg+xml');const paths=[...doc.querySelectorAll('path[data-letter]')];
   if(paths.length!==13||paths.map(n=>n.getAttribute('data-letter')).join('')!=='WESTSIDEWATCH')throw Error('Original V9 glyph mismatch');
-  paths.forEach(n=>letters.append(document.importNode(n,true)));glyphReady=true;stage.dataset.p205Wordmark='v9-final';
+  paths.forEach(n=>{letters.append(document.importNode(n,true));lettersRight.append(document.importNode(n,true));});glyphReady=true;stage.dataset.p205Wordmark='v9-final';
  }).catch(e=>{console.error(e);stage.dataset.p205Wordmark='unavailable'});
  function paintHandoff(){const p=entryProgress,complete=p>=.99999;stage.dataset.p205Handoff=p.toFixed(4);
   twins.setAttribute('aria-expanded',String(complete));
@@ -94,7 +123,16 @@
   banner.setAttribute('transform',`translate(${bx} ${by}) scale(${scale})`);
   const opened=ease((p-.045)/.28),retire=ease((p-.56)/.15);
   aperture.setAttribute('x',800*(1-opened+retire*opened));aperture.setAttribute('width',1600*opened*(1-retire));
-  const ink=hexMix(gold,sevenInk(p),ease((p-.07)/.13));letters.setAttribute('fill',ink);topRule.setAttribute('stroke',ink);bottomRule.setAttribute('stroke',ink);banner.setAttribute('opacity',String(1-ease((p-.59)/.13)));
+  // No first-frame flash: hold the exact two original masthead colors until
+  // the banner is open. Only then begin the sevenfold palette transition.
+  const colorShift=ease((p-.34)/.24),ink=sevenInk(p);
+  bannerFieldLeft.setAttribute('fill',hexMix(startTwinColors[0].background,ink,colorShift));
+  bannerFieldRight.setAttribute('fill',hexMix(startTwinColors[1].background,ink,colorShift));
+  letters.setAttribute('fill',hexMix(startTwinColors[0].ink,ink,colorShift));
+  lettersRight.setAttribute('fill',hexMix(startTwinColors[1].ink,ink,colorShift));
+  topRule.setAttribute('stroke',hexMix(startTwinColors[0].ink,ink,colorShift));
+  bottomRule.setAttribute('stroke',hexMix(startTwinColors[1].ink,ink,colorShift));
+  banner.setAttribute('opacity',String(1-ease((p-.59)/.13)));
   const source=squares.map(node=>node.getBoundingClientRect());const target=plates.map(node=>node.getBoundingClientRect());
   const lift=ease((p-.015)/.17),cross=ease((p-.18)/.34),land=ease((p-.58)/.15),capHeight=100*scale;
   seals.forEach((seal,i)=>{
@@ -105,16 +143,26 @@
    const cx=mix(mix(sourceX,stationX,cross),endX,land),cy=mix(mix(sourceY,stationY,lift),endY,land);
    seal.g.setAttribute('transform',`translate(${cx-sz/2} ${cy-sz/2}) scale(${sz/500})`);
    seal.g.setAttribute('opacity',String(1-ease((p-.76)/.14)));
-   const currentSealInk=hexMix(i?papyrus:harvest,sevenInk(p),ease((p-.14)/.66));
-   seal.shell.setAttribute('fill',currentSealInk);
-   seal.shell.setAttribute('stroke',ink);
-   seal.initial.querySelectorAll('text').forEach(n=>n.setAttribute('fill',hexMix(i?harvest:paper,paper,ease((p-.14)/.66))));
+   const original=startTwinColors[i];
+   const sealTransition=ease((p-.34)/.34);
+   seal.shell.setAttribute('fill',hexMix(original.background,sevenInk(p),sealTransition));
+   seal.shell.setAttribute('stroke',hexMix(original.background,ink,colorShift));
+   seal.initial.querySelectorAll('text').forEach(n=>n.setAttribute('fill',hexMix(original.ink,paper,sealTransition)));
    seal.initial.setAttribute('opacity',1-ease((p-.13)/.18));seal.copy.setAttribute('opacity',ease((p-.57)/.12)*(1-ease((p-.74)/.14)));
    // The two real second-layer plates are the physical targets: no last-frame jump.
   });
  }
  function resetEntry(){if(rafId)cancelAnimationFrame(rafId);rafId=0;entryClock=entryProgress=entryTarget=0;catalogue.hidden=true;wall.hidden=false;second.scrollTop=0;schedule()}
- function animateEntry(target){if(rafId)cancelAnimationFrame(rafId);entryTarget=target;
+ function animateEntry(target){
+  if(rafId)cancelAnimationFrame(rafId);
+  if(target&&entryProgress<.001){
+   startTwinColors=currentTwinColors();
+   for(let i=0;i<2;i++){
+    seals[i].shell.setAttribute('fill',startTwinColors[i].background);
+    seals[i].initial.querySelectorAll('text').forEach(n=>n.setAttribute('fill',startTwinColors[i].ink));
+   }
+  }
+  entryTarget=target;
   const from=entryProgress,start=performance.now(),duration=target?7600:0;
   if(!duration||matchMedia('(prefers-reduced-motion: reduce)').matches){entryClock=entryProgress=target;schedule();if(target){loadCatalogue();loadWallCovers();}return;}
   const tick=now=>{entryProgress=mix(from,target,clamp((now-start)/duration));entryClock=entryProgress;schedule();
