@@ -1,5 +1,5 @@
 'use strict';
-/** PARADISO — self-contained, static GitHub-hosted cinema. No external player pages. */
+/** CRISPS — self-contained, static GitHub-hosted cinema. No external player pages. */
 const CATEGORIES = ['全部作品','基督福音劇集','美英劇集','韓日劇集','經典電影','我的收藏'];
 const STORAGE_KEYS = { favorites:'paradiso:v1:favorites', custom:'paradiso:v1:custom', progress:'paradiso:v1:progress' };
 const $ = (id) => document.getElementById(id);
@@ -45,7 +45,9 @@ function drawCards(){
   $('empty-results').hidden=filtered.length!==0;
   filtered.forEach((item,index)=>{
     const card=make('article','film-card');const poster=make('button',`poster ${['nativity','passion','general'].includes(item.posterStyle)?item.posterStyle:'custom'}`);poster.type='button';poster.setAttribute('aria-label',`播放《${item.title}》`);
-    poster.append(make('span','poster-circle'),make('span','poster-top',item.type==='series'?'SERIES / PARADISO':'FULL FEATURE / PARADISO'),make('span','poster-title',item.posterHeadline||item.originalTitle||item.title),make('span','poster-numeral',`Nº ${String(index+1).padStart(3,'0')} · ${item.year||'—'}`),make('span','play-circle','▶'));
+    const posterImageUrl = (()=>{try{const u=new URL(item.sourcePage);if(u.hostname==='archive.org'){const id=u.pathname.split('/').filter(Boolean)[1];return id ? 'https://archive.org/services/img/'+encodeURIComponent(id) : null;}return null;}catch{return null;}})();
+    if(posterImageUrl){const im=make('img','poster-image');im.src=posterImageUrl;im.alt='';im.loading='lazy';im.decoding='async';im.onerror=()=>im.remove();poster.append(im);}
+    poster.append(make('span','poster-circle'),make('span','poster-top',item.type==='series'?'SERIES / CRISPS':'FULL FEATURE / CRISPS'),make('span','poster-title',item.posterHeadline||item.originalTitle||item.title),make('span','poster-numeral',`Nº ${String(index+1).padStart(3,'0')} · ${item.year||'—'}`),make('span','play-circle','▶'));
     poster.addEventListener('click',()=>openPlayer(item));
     const info=make('div','film-info');info.append(make('div','film-meta',`${item.category}  /  ${item.year||'年份未註明'}  /  ${item.type==='series'?item.episodes.length+'集':item.runtime+' MIN'}`));
     const titleRow=make('div','film-name-row');titleRow.append(make('h3','film-name',item.title));
@@ -120,7 +122,7 @@ const player=$('cinema-video');
 player.addEventListener('loadedmetadata',()=>{status(`已連接影片 · ${Number.isFinite(player.duration)?Math.round(player.duration/60)+' 分鐘':'正在讀取時長'}`);
   const saved=state.progress[resumeKey()];if(Number.isFinite(saved)&&saved>15&&Number.isFinite(player.duration)&&saved<player.duration-20){try{player.currentTime=saved;}catch{}}
 });
-player.addEventListener('playing',()=>status('正在播放 · PARADISO 站內播放器'));
+player.addEventListener('playing',()=>status('正在播放 · CRISPS 站內播放器'));
 player.addEventListener('waiting',()=>status('正在緩衝影片…'));
 player.addEventListener('error',()=>{if(state.current&&player.getAttribute('src'))moveToNextSource('媒體連接或格式失敗');});
 player.addEventListener('ended',()=>{status('放映結束。');if(state.current&&state.episode+1<state.current.episodes.length)status('本集播放完畢 · 可以播放下一集。');});
