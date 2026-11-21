@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f2ec">
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="CRISPS 薯片：基督福音劇集、電影與經典影像的獨立放映室。">
+  <title>薯片 · Cinema Reale｜原片庫</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#collection">跳至影片列表</a>
+<div class="marquee" aria-hidden="true"><span>CRISPS &nbsp; / &nbsp; CINEMA · ARCHIVE &nbsp; / &nbsp; 薯片 &nbsp; / &nbsp; CRISPS &nbsp; / &nbsp; CINEMA · ARCHIVE</span></div>
+<header class="site-header frame">
+  <a class="wordmark" href="./" aria-label="薯片首頁"><span class="mark-emblem" aria-hidden="true">P</span><span>薯片 <small>CINEMA REALE · FILM ARCHIVE</small></span></a>
+  <nav class="header-actions" aria-label="主要選單">
+    <a class="nav-link" href="#collection">片庫</a>
+    <button class="nav-link" id="favorites-nav" type="button">收藏片單 <span id="favorite-count">0</span></button>
+    <button class="manage-button" id="manage-open" type="button"><span aria-hidden="true">＋</span> 加入個人片源</button>
+  </nav>
+</header>
+<main>
+  <section class="hero frame" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">THE CINEMA ARCHIVE · EST. 2026</p>
+      <h1 id="hero-title">Cinema,<br><em>reale.</em></h1>
+      <p class="hero-sub">每一部故事，都值得完整地看完。</p>
+      <p class="hero-description">不使用外部影片站的播放器。只有真正的作品、直接的播放來源，和屬於自己的觀影時間。</p>
+      <div class="hero-actions"><a class="primary-action" href="#collection">探索片庫 <span aria-hidden="true">↗</span></a><button class="outline-action" id="hero-watch" type="button">播放本期選片 <span aria-hidden="true">▶</span></button></div>
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="projector-halo"></div><div class="film-strip film-strip-top"><i></i><i></i><i></i><i></i><i></i></div><div class="art-center"><span class="art-overline">FEATURED SCREENING</span><span class="art-title">CRISPS<br>CINEMA</span><span class="art-edition">AN EDITORIAL FILM COLLECTION</span></div><div class="film-strip film-strip-bottom"><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="hero-footer"><span>01 / THE COLLECTION</span><span>CURATED. NOT AUTOMATIC.</span><span>SCROLL TO EXPLORE ↓</span></div>
+  </section>
+  <section class="catalog-section frame" id="collection" aria-labelledby="collection-title">
+    <div class="section-topline"><span class="eyebrow">THE LIBRARY / 影片典藏</span><span id="total-label">正在載入片庫…</span></div>
+    <div class="section-heading"><h2 id="collection-title">放映片單<span class="heading-period">.</span></h2><p>收錄值得完整欣賞的正式作品，從福音影像到世界經典。</p></div>
+    <div class="tools">
+      <div class="tab-scroll"><div class="tabs" id="category-tabs" role="group" aria-label="影片分類"></div></div>
+      <label class="search-label"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m15.5 15.5 5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><input id="search" type="search" placeholder="搜尋片名、英文名、年份…" autocomplete="off" aria-label="搜尋影片"></label>
+    </div>
+    <div class="results-head"><span id="results-count">尚無資料</span><span>FULL-LENGTH FEATURES · TRUE SOURCES</span></div>
+    <div id="film-grid" class="film-grid" aria-live="polite"></div>
+    <div id="empty-results" class="empty-results" hidden><h3>這一欄尚未收錄作品</h3><p>在另一個分類探索更多值得欣賞的電影與劇集。</p><button id="clear-filter" type="button">查看全部作品 ↗</button></div>
+  </section>
+  <section class="closing frame" aria-label="放映準則"><div class="closing-asterisk">✳</div><div><p class="eyebrow">THE CRISPS STANDARD</p><h2>真正的影片，<br>而不是一串連結。</h2></div><p>收錄真實完整的作品，尊重來源與創作者。由福音故事到經典影史，打造安靜而純粹的觀影空間。</p></section>
+</main>
+<footer class="site-footer frame"><div>CRISPS <span>薯片</span></div><p>Made for the love of cinema. · 2026</p><a href="#hero-title">回到頂部 ↑</a></footer>
+<div class="modal" id="player-modal" role="dialog" aria-modal="true" aria-label="影片播放器" hidden>
+  <div class="modal-backdrop" data-close-player="true"></div>
+  <div class="player-shell"><div class="player-head"><div><span class="player-head-label">NOW SCREENING</span><h2 id="player-title">影片名稱</h2><p id="player-subtitle"></p></div><button class="icon-button" id="player-close" type="button" aria-label="關閉播放器">×</button></div>
+    <div class="player-content"><div class="screen-col"><div class="video-wrap"><video id="cinema-video" controls playsinline preload="metadata" controlsList="nodownload" aria-label="CRISPS 站內播放器"></video><div class="video-watermark" aria-hidden="true">P / CRISPS</div></div><div id="player-status" class="player-status" role="status">正在準備放映…</div><div class="player-toolbar"><button type="button" id="previous-episode">← 上一集</button><button type="button" id="next-episode">下一集 →</button><button type="button" id="retry-source">重新連接</button></div><p class="playback-caution">若影片載入失敗，可開啟原始典藏頁查看來源。</p></div><aside class="episode-col"><h3>播放目錄 <span id="episode-count"></span></h3><div id="episode-list" class="episode-list"></div><div class="source-details"><span class="eyebrow">THE SOURCE</span><p id="source-name">原始典藏來源</p><a id="original-link" target="_blank" rel="noopener noreferrer" href="https://commons.wikimedia.org/">查看典藏來源 ↗</a></div></aside></div>
+  </div>
+</div>
+<div class="modal" id="manage-modal" role="dialog" aria-modal="true" aria-labelledby="manage-title" hidden>
+  <div class="modal-backdrop" data-close-manage="true"></div><section class="manage-shell"><div class="manage-head"><p class="eyebrow">YOUR OWN COLLECTION</p><button class="icon-button" id="manage-close" type="button" aria-label="關閉">×</button></div><h2 id="manage-title">加入個人片源<span class="heading-period">.</span></h2><p>這裡只保存在你目前瀏覽器的本機資料中，不會把地址提交到公開 GitHub 片庫。僅添加有權觀看及使用的播放來源。</p>
+   <form id="import-form"><label>片名<input name="title" required maxlength="100" placeholder="例如：完整影集名稱"></label><div class="form-row"><label>類別<select name="category"><option>基督福音劇集</option><option>美英劇集</option><option>韓日劇集</option><option>經典電影</option></select></label><label>發行年份<input name="year" type="number" min="1895" max="2100" placeholder="2026"></label></div><label>集數與播放地址 <small>每行：集數名稱 | HTTPS 影片地址（m3u8、mp4 或 webm）</small><textarea name="episodes" rows="5" required placeholder="第01集 | https://example.org/ep01.m3u8&#10;第02集 | https://example.org/ep02.m3u8"></textarea></label><div id="import-error" class="form-error" role="alert"></div><button class="primary-action" type="submit">存入我的本機片庫 ↗</button></form>
+  </section>
+</div>
+</body></html>
