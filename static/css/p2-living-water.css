@@ -770,96 +770,72 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church-to-magazine"] .church-e
  body[data-ws-scope="p2"] .p2-magazine__panel{transform:none}
 }
 
-/* Church growth white maquette — silent, frameless ornament in the
-   pre-existing left editorial pane. The Sunday programme stays untouched. */
+/* Right-page architectural study: a silent illustration IN the Sunday
+   programme, never in the left water-engraving pane. Keep the printed
+   programme fully legible and the original Red Sea/ocean animation untouched. */
 body[data-ws-scope="p2"] .church-editorial__visual{
-  position:relative;
-  min-width:0;
-  min-height:0;
-  overflow:hidden;
   background:transparent;
   pointer-events:none;
 }
-body[data-ws-scope="p2"] .church-editorial__maquette{
+body[data-ws-scope="p2"] .church-schedule-maquette{
+  position:relative;
+  display:block;
+  flex:none;
+  width:min(100%,460px);
+  height:clamp(150px,22svh,228px);
+  margin:clamp(5px,.9vh,12px) auto clamp(8px,1.25vh,16px);
+  overflow:hidden;
+  background:transparent;
+  pointer-events:none;
+  isolation:isolate;
+}
+body[data-ws-scope="p2"] .church-schedule-maquette::before{
+  content:"";
+  display:block;
+  position:absolute;
+  inset:0;
+  background:url("/p2-maquette/maquette-fallback.webp") center/contain no-repeat;
+  opacity:.82;
+  transition:opacity .42s ease;
+  pointer-events:none;
+}
+body[data-ws-scope="p2"] .church-schedule-maquette.maquette-geometry-ready::before{
+  opacity:0;
+}
+body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
   position:absolute;
   inset:0;
   display:block;
   width:100%;
   height:100%;
   border:0;
+  padding:0;
+  margin:0;
   background:transparent;
   pointer-events:none;
-}
-
-
-/* P2 Sunday growth: keep the architectural ornament visible beside the
-   actual programme on every viewport. Earlier mobile reading CSS had hidden it. */
-body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__visual{
-  display:block;
-  visibility:visible;
-}
-@media (max-width:700px){
-  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial{
-    display:grid;
-    grid-template-columns:minmax(0,1fr);
-    grid-template-rows:clamp(190px,32svh,310px) minmax(0,1fr);
-  }
-  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__visual{
-    display:block;
-    grid-column:1;
-    grid-row:1;
-    min-width:0;
-    min-height:0;
-    overflow:hidden;
-  }
-  body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__copy{
-    grid-column:1;
-    grid-row:2;
-    min-height:0;
-    overflow-y:auto;
-  }
-}
-
-/* The Sunday scene's own pose is authoritative, not Magazine's phase label. */
-body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__visual{
-  display:block;
-  visibility:visible;
+  transform:scale(1.15);
+  transform-origin:50% 50%;
 }
 @media(max-width:700px){
+  /* Keep the mobile Sunday page readable. The model stays WITH its text,
+     not in a separate left half and never as a full-screen blank panel. */
   body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial{
-    display:grid;
     grid-template-columns:minmax(0,1fr);
-    grid-template-rows:clamp(190px,32svh,310px) minmax(0,1fr);
+    grid-template-rows:minmax(0,1fr);
   }
   body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__visual{
-    display:block;
-    grid-column:1;
-    grid-row:1;
-    min-width:0;
-    min-height:0;
-    overflow:hidden;
+    display:none;
   }
   body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__copy{
     grid-column:1;
-    grid-row:2;
-    min-height:0;
+    grid-row:1;
+    width:100%;
+    min-width:0;
     overflow-y:auto;
   }
+  body[data-ws-scope="p2"] .church-schedule-maquette{
+    width:min(100%,390px);
+    height:clamp(145px,22svh,205px);
+    margin-block:6px 12px;
+  }
 }
-
-/* A silent white-model preview remains under the WebGL iframe during loading.
-   Once the genuine mesh is ready, reveal only the live growing architecture. */
-body[data-ws-scope="p2"] .church-editorial__visual::before{
- content:"";
- position:absolute;
- inset:0;
- display:block;
- background:url('/p2-maquette/maquette-fallback.webp') center/contain no-repeat;
- opacity:.84;
- transition:opacity .42s ease;
- pointer-events:none;
-}
-body[data-ws-scope="p2"] .church-editorial__visual.maquette-geometry-ready::before{
- opacity:0;
-}
-body[data-ws-scope="p2"] .church-editorial__maquette{z-index:1}

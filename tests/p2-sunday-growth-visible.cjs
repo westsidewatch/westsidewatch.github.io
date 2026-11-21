@@ -5,7 +5,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
 (async()=>{
- const browser=await chromium.launch({headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-webgl']});
  try{
   fs.mkdirSync('artifacts/p2-sunday-growth',{recursive:true});
   for(const screen of [{name:'desktop',width:1440,height:900},{name:'phone',width:390,height:844}]){
@@ -27,19 +27,27 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
     const stage=document.querySelector('.showcase');
     const programme=document.querySelector('.church-schedule-source');
     const visual=document.querySelector('.church-editorial__visual');
+    const copy=document.querySelector('.church-editorial__copy');
+    const figure=document.querySelector('.church-schedule-maquette');
     const frame=document.querySelector('.church-editorial__maquette');
+    const ocean=document.querySelector('.ocean-rise #upper');
     const rect=e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}};
     return {phase:stage.dataset.p2Phase,modelActive:stage.classList.contains('p2-church-model-visible'),programme:!!programme,
-      visualDisplay:getComputedStyle(visual).display,
-      visual:rect(visual),frame:rect(frame),frameSrc:frame.src,
+      leftHasNoModel:!visual.contains(frame),rightContainsModel:copy.contains(frame),
+      leftWaterEngravingPreserved:!!ocean,
+      visual:rect(visual),right:rect(copy),figure:rect(figure),frame:rect(frame),frameSrc:frame.src,
       scheduleDisplay:getComputedStyle(programme).display};
    });
    assert.equal(result.modelActive,true,screen.name+' not displaying the Church visual');
    assert.equal(result.programme,true,screen.name+' missing Sunday programme');
-   assert.notEqual(result.visualDisplay,'none',screen.name+' hides the architectural model');
-   assert.ok(result.visual.width>180&&result.visual.height>170,screen.name+' architectural model collapsed');
-   assert.ok(result.frame.width>180&&result.frame.height>170,screen.name+' iframe collapsed');
-   console.log(screen.name,'SUNDAY_MODEL_VISIBLE',JSON.stringify(result));
+   assert.equal(result.leftHasNoModel,true,screen.name+' model wrongly placed over the LEFT water engraving');
+   assert.equal(result.leftWaterEngravingPreserved,true,screen.name+' water engraving was removed');
+   assert.equal(result.rightContainsModel,true,screen.name+' maquette not in RIGHT Sunday programme');
+   assert.ok(result.figure.width>180&&result.figure.height>140,screen.name+' illustration collapsed');
+   assert.ok(result.frame.width>180&&result.frame.height>140,screen.name+' model iframe collapsed');
+   assert.ok(result.figure.x>=result.right.x-2,screen.name+' model begins to left of right programme');
+   assert.ok(result.figure.x+result.figure.width<=result.right.x+result.right.width+2,screen.name+' model exceeds right programme');
+   console.log(screen.name,'SUNDAY_MODEL_ON_RIGHT',JSON.stringify(result));
    await page.close();
   }
   // Verify the real homepage P2, which nests 04 → 01–03 → Church, not just
@@ -56,14 +64,18 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
     const m=o?.getElementById('p2-0103-original')?.contentDocument||o;
     const inner=m?.getElementById('proof-original')?.contentDocument;
     const stage=inner?.querySelector('.showcase');
-    const visual=inner?.querySelector('.church-editorial__visual');
-    const model=inner?.querySelector('.church-editorial__maquette');
+    const water=inner?.querySelector('.ocean-rise #upper');
+    const right=inner?.querySelector('.church-editorial__copy');
+    const figure=right?.querySelector('.church-schedule-maquette');
+    const left=inner?.querySelector('.church-editorial__visual');
+    const model=figure?.querySelector('.church-editorial__maquette');
     return stage?.classList.contains('p2-church-model-visible')&&
-      visual&&inner.defaultView.getComputedStyle(visual).display!=='none'&&
-      visual.getBoundingClientRect().width>200&&
+      !!water&&!!right&&!!left&&!left.contains(model)&&
+      figure?.getBoundingClientRect().width>180&&
+      right.contains(model)&&
       model?.getAttribute('src')?.includes('/p2-maquette/index.html');
   },{timeout:45000});
-  console.log('HOMEPAGE_REAL_P2_SUNDAY_MODEL_VISIBLE');
+  console.log('HOMEPAGE_REAL_P2_SUNDAY_MODEL_ON_RIGHT');
   await home.close();
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
