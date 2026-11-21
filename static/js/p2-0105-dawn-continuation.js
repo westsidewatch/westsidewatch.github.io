@@ -4,7 +4,7 @@
    P2 returns never replay the flag. All animation states are deterministic. */
 (()=>{'use strict';
  const $=s=>document.querySelector(s),track=$('#p205-track'),stage=$('#p205-stage');
- const prior=$('#p205-prior'),realm=$('#dawn-realm'),halves=[...document.querySelectorAll('.dawn-realm__half')];
+ const prior=$('#p205-prior'),realm=$('#dawn-realm'),halves=[...document.querySelectorAll('.dawn-realm__half')],folio=$('#dawn-folio'),spine=$('#dawn-spine');
  const twins=$('#dawn-twins'),squares=[...twins.querySelectorAll('.dawn-twins__square')];
  const spread=$('#dawn-spread'),windowFrame=$('#dawn-book-window'),book=$('#dawn-book'),cover=$('#dawn-book-cover');
  const hint=$('#dawn-enter-hint'),handoff=$('#dawn-handoff'),second=$('#dawn-second'),returnButton=$('#dawn-return');
@@ -21,20 +21,30 @@
 
   // THE ORIGINAL 01–04 FILES REMAIN UNMODIFIED AND BEHIND THEIR OWN STAGE.
   prior.contentWindow?.postMessage({type:'westside-p2-home-pose',distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),active:d<27.3},location.origin);
-  const start=ease((d-26.23)/.86),come=ease((d-26.72)/.72),leaf=ease((d-27.35)/1.35),open=ease((d-28.48)/1.24);
-  realm.style.visibility=start>.001?'visible':'hidden';
+  // Independent chapter identity: the entire new folio unfolds first.
+  // A fixed scroll location restores identical geometry in either direction.
+  const fold=ease((d-26.19)/1.35);
+  const start=ease((d-26.30)/1.21);
+  const come=ease((d-27.37)/.64);
+  const leaf=ease((d-27.93)/.86);
+  const open=ease((d-28.66)/1.11);
+  realm.style.visibility=fold>.001?'visible':'hidden';
+  folio.style.transform=`rotateY(${(-88*(1-fold)).toFixed(2)}deg)`;
+  spine.style.opacity=String(ease((fold-.04)/.18));
   realm.inert=!come||p>.001;realm.setAttribute('aria-hidden',!come||p>.001?'true':'false');
-  realm.style.pointerEvents=come>.7&&p<.001?'auto':'none';
+  realm.style.pointerEvents=come>.98&&p<.001?'auto':'none';
   halves[0].style.clipPath=`inset(${(100*(1-start)).toFixed(2)}% 0 0 0)`;
   halves[1].style.clipPath=`inset(0 0 ${(100*(1-start)).toFixed(2)}% 0)`;
-  twins.style.visibility=come>.001?'visible':'hidden';twins.style.opacity=String(come*(1-ease((p-.01)/.16)));
-  twins.style.transform=`translateY(${((1-come)*-30).toFixed(2)}px)`;
-  spread.style.visibility=come>.001?'visible':'hidden';spread.style.opacity=String(come);
+  twins.style.visibility=come>.75?'visible':'hidden';twins.style.opacity=String(1-ease((p-.01)/.16));
+  twins.style.transform='none';
+  spread.style.visibility=come>.001?'visible':'hidden';
+  spread.style.opacity='1';
+  spread.style.clipPath=`inset(0 ${(100*(1-come)).toFixed(2)}% 0 0)`;
   windowFrame.style.clipPath=`inset(0 ${(100*(1-leaf)).toFixed(2)}% 0 0)`;
   book.style.transform=`translateX(${((1-leaf)*125).toFixed(2)}%) scale(${(0.78+.22*leaf).toFixed(3)})`;
   cover.style.transform=`rotateY(${(-168*open).toFixed(2)}deg)`;
-  hint.style.visibility=d>=28.2&&p<.001?'visible':'hidden';
-  stage.dataset.p205Scene=d<26.23?'04-protected':d<27.44?'05-two-square-masthead':d<28.48?'05-book-entry':d<29.72?'05-opening-pages':'05-reading-world';
+  hint.style.visibility=d>=29.45&&p<.001?'visible':'hidden';
+  stage.dataset.p205Scene=d<26.19?'04-protected':d<27.54?'05-folio-unfold':d<28.66?'05-quarter-window':d<29.77?'05-page-turn':'05-reading-world';
   paintHandoff();
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
@@ -130,7 +140,7 @@
    if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target)loadCatalogue();}};
   rafId=requestAnimationFrame(tick);
  }
- twins.addEventListener('click',()=>{if(progress()<27.18||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
+ twins.addEventListener('click',()=>{if(progress()<28.12||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
  returnButton.addEventListener('click',()=>{resetEntry();schedule()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&entryProgress>.001)resetEntry()});
 
