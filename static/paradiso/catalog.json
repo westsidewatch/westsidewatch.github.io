@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "updated": "2026-11-21",
-  "policy": "Only complete, genuine films from identified rights-cleared public collections. Exclude samples, trailers, unverified commercial aggregators, and clips. Runtime playback/ad checks remain distinct from file existence.",
+  "policy": "Only complete genuine movies or full episodes with identified source pages. Source-file existence is not full decode, ad-free, or browser playback verification. Never count candidates as verified playback.",
   "titles": [
     {
       "id": "manger-cross-1912",
@@ -14,17 +14,29 @@
       "runtime": 71,
       "language": "英語字幕／默片",
       "summary": "1912 年攝於巴勒斯坦實景的基督生平電影，從耶穌降生、呼召門徒到最後晚餐與受難。完整影片，非預告片。",
-      "genre": ["福音", "聖經電影", "經典"],
+      "genre": [
+        "福音",
+        "聖經電影",
+        "經典"
+      ],
       "posterStyle": "nativity",
       "posterHeadline": "FROM THE MANGER / TO THE CROSS",
       "rights": "Wikimedia Commons 公開典藏；公開領域標記請依來源頁及所在地法規核對",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:From_the_Manger_to_the_Cross_(1912).webm",
       "mediaEvidence": "Wikimedia Commons lists a 1:10:35 complete WebM file; playback not yet certified on this deployment.",
-      "episodes": [{
-        "number": 1,
-        "label": "完整電影 · 70 分鐘",
-        "sources": [{ "name": "Wikimedia Commons · 原始影片", "format": "webm", "url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/From_the_Manger_to_the_Cross_%281912%29.webm" }]
-      }]
+      "episodes": [
+        {
+          "number": 1,
+          "label": "完整電影 · 70 分鐘",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/From_the_Manger_to_the_Cross_%281912%29.webm"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "passion-of-christ-1903",
@@ -37,17 +49,29 @@
       "runtime": 44,
       "language": "默片",
       "summary": "百年前的彩色著色聖經影片，分幕描繪報喜、耶穌生平、受難與復活。來源典藏影片長 43 分 55 秒。",
-      "genre": ["福音", "聖經電影", "電影史"],
+      "genre": [
+        "福音",
+        "聖經電影",
+        "電影史"
+      ],
       "posterStyle": "passion",
       "posterHeadline": "VIE ET PASSION / DU CHRIST",
       "rights": "Wikimedia Commons · Public Domain Mark 1.0",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:Vie_et_Passion_du_Christ_(1903).webm",
       "mediaEvidence": "Wikimedia Commons lists a 43:55 complete WebM file; playback not yet certified on this deployment.",
-      "episodes": [{
-        "number": 1,
-        "label": "完整電影 · 44 分鐘",
-        "sources": [{ "name": "Wikimedia Commons · 原始影片", "format": "webm", "url": "https://upload.wikimedia.org/wikipedia/commons/5/53/Vie_et_Passion_du_Christ_%281903%29.webm" }]
-      }]
+      "episodes": [
+        {
+          "number": 1,
+          "label": "完整電影 · 44 分鐘",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/5/53/Vie_et_Passion_du_Christ_%281903%29.webm"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "the-general-1926",
@@ -60,17 +84,448 @@
       "runtime": 76,
       "language": "默片",
       "summary": "巴斯特·基頓主演的經典長篇喜劇，以美國南北戰爭為背景，結合實拍火車追逐與精準默片表演。",
-      "genre": ["經典", "喜劇", "動作"],
+      "genre": [
+        "經典",
+        "喜劇",
+        "動作"
+      ],
       "posterStyle": "general",
       "posterHeadline": "THE GENERAL",
       "rights": "Wikimedia Commons 公開典藏；公開領域標記請依來源頁及所在地法規核對",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:The_General_(1926).webm",
       "mediaEvidence": "Wikimedia Commons lists a 1:15:52 complete WebM file; playback not yet certified on this deployment.",
-      "episodes": [{
-        "number": 1,
-        "label": "完整電影 · 76 分鐘",
-        "sources": [{ "name": "Wikimedia Commons · 原始影片", "format": "webm", "url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/The_General_%281926%29.webm" }]
-      }]
+      "episodes": [
+        {
+          "number": 1,
+          "label": "完整電影 · 76 分鐘",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/The_General_%281926%29.webm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "the-living-christ-1951",
+      "title": "永活基督",
+      "originalTitle": "The Living Christ Series",
+      "type": "series",
+      "category": "基督福音劇集",
+      "year": 1951,
+      "country": "美國",
+      "runtime": 360,
+      "language": "英語",
+      "summary": "1951 年 Cathedral Films 製作的耶穌生平十二集福音劇集，從降生、受洗、呼召門徒直到受難與復活。全部十二集均為正式劇集，不是片段或測試影片。",
+      "genre": [
+        "基督生平",
+        "福音",
+        "電視劇集"
+      ],
+      "posterStyle": "nativity",
+      "posterHeadline": "THE LIVING CHRIST",
+      "rights": "Internet Archive 項目標示 Public Domain；以原始典藏為準",
+      "sourcePage": "https://archive.org/details/TheLivingChristSeries",
+      "mediaEvidence": "Internet Archive 列出全部 12 集可獨立播放的 MPEG4 檔案；尚待 GitHub Pages 實際全片播放驗收。",
+      "episodes": [
+        {
+          "number": 1,
+          "label": "第 01 集 · 聖夜／基督降生",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.01-HolyNight_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "label": "第 02 集 · 逃往埃及",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.02-EscapetoEgypt_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "label": "第 03 集 · 童年與受洗",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.03-BoyhoodandBaptism_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "label": "第 04 集 · 曠野的人",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.04-MenoftheWilderness_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "label": "第 05 集 · 信心的挑戰",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.05-ChallengeofFaith_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "label": "第 06 集 · 門徒之道",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.06-Discipleship_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "label": "第 07 集 · 重返拿撒勒",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.07-ReturntoNazareth_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "label": "第 08 集 · 衝突",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.08-Conflict_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "label": "第 09 集 · 施洗約翰的命運",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.09-FateofJohntheBaptist_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "label": "第 10 集 · 退隱與抉擇",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.10-RetreatandDecision_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "label": "第 11 集 · 得勝與挫敗",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.11-TriumphandDefeat_512kb.mp4"
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "label": "第 12 集 · 十字架與復活",
+          "sources": [
+            {
+              "name": "Internet Archive · MPEG4 原片",
+              "format": "mp4",
+              "url": "https://archive.org/download/TheLivingChristSeries/chpt.12-CrucifixionandResurrection_512kb.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "king-of-kings-1927",
+      "title": "萬王之王",
+      "originalTitle": "The King of Kings",
+      "year": 1927,
+      "country": "美國",
+      "runtime": 157,
+      "category": "基督福音劇集",
+      "summary": "塞西爾·B·戴米爾執導的耶穌受難與復活史詩默片，館藏原始版本長約 2 小時 37 分鐘。",
+      "genre": [
+        "福音",
+        "聖經電影",
+        "史詩"
+      ],
+      "posterStyle": "passion",
+      "type": "film",
+      "language": "默片",
+      "posterHeadline": "THE KING OF KINGS",
+      "rights": "Wikimedia Commons 公開領域典藏；以來源頁標示及所在地法規為準",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_King_of_Kings_(1927).webm",
+      "mediaEvidence": "Wikimedia Commons 展示完整 157 分鐘影片檔案；公開網站的全片播放待驗收。",
+      "episodes": [
+        {
+          "number": 1,
+          "label": "完整電影 · 157 分鐘",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/e/eb/The_King_of_Kings_(1927).webm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ten-commandments-1923",
+      "title": "十誡（1923）",
+      "originalTitle": "The Ten Commandments",
+      "year": 1923,
+      "country": "美國",
+      "runtime": 136,
+      "category": "基督福音劇集",
+      "summary": "戴米爾的《十誡》1923 年完整版本，包括出埃及敘事和現代道德寓言。館藏片長約 2 小時 16 分。",
+      "genre": [
+        "聖經",
+        "史詩",
+        "經典"
+      ],
+      "posterStyle": "nativity",
+      "type": "film",
+      "language": "默片",
+      "posterHeadline": "THE TEN COMMANDMENTS",
+      "rights": "Wikimedia Commons 公開領域典藏；以來源頁標示及所在地法規為準",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Ten_Commandments_(1923).webm",
+      "mediaEvidence": "Wikimedia Commons 展示完整 136 分鐘影片檔案；公開網站的全片播放待驗收。",
+      "episodes": [
+        {
+          "number": 1,
+          "label": "完整電影 · 136 分鐘",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/The_Ten_Commandments_(1923).webm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quo-vadis-1913",
+      "title": "主往何處去",
+      "originalTitle": "Quo Vadis?",
+      "year": 1913,
+      "country": "義大利",
+      "runtime": 102,
+      "category": "基督福音劇集",
+      "summary": "1913 年義大利歷史史詩，呈現尼祿時代羅馬與早期基督徒的故事，完整影片長 1 小時 41 分。",
+      "genre": [
+        "早期教會",
+        "基督教歷史",
+        "史詩"
+      ],
+      "posterStyle": "passion",
+      "type": "film",
+      "language": "默片",
+      "posterHeadline": "QUO VADIS?",
+      "rights": "Wikimedia Commons 公開領域典藏；以來源頁標示及所在地法規為準",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Quo_vadis_(1913).webm",
+      "mediaEvidence": "Wikimedia Commons 展示完整 102 分鐘影片檔案；公開網站的全片播放待驗收。",
+      "episodes": [
+        {
+          "number": 1,
+          "label": "完整電影 · 102 分鐘",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Quo_vadis_(1913).webm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nosferatu-1922",
+      "title": "吸血鬼諾斯費拉圖",
+      "originalTitle": "Nosferatu",
+      "year": 1922,
+      "country": "德國",
+      "runtime": 84,
+      "category": "經典電影",
+      "summary": "茂瑙執導的德國表現主義經典長片，英語字卡版本長 84 分鐘。",
+      "genre": [
+        "經典",
+        "恐怖",
+        "電影史"
+      ],
+      "posterStyle": "general",
+      "type": "film",
+      "language": "默片",
+      "posterHeadline": "NOSFERATU",
+      "rights": "Wikimedia Commons 公開領域典藏；以來源頁標示及所在地法規為準",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Nosferatu_(1922,_English_titles_1947).webm",
+      "mediaEvidence": "Wikimedia Commons 展示完整 84 分鐘影片檔案；公開網站的全片播放待驗收。",
+      "episodes": [
+        {
+          "number": 1,
+          "label": "完整電影 · 84 分鐘",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/0/02/Nosferatu_(1922%2C_English_titles_1947).webm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "perils-of-pauline-1914",
+      "title": "寶蓮歷險記（連續影片）",
+      "originalTitle": "The Perils of Pauline",
+      "type": "series",
+      "category": "經典電影",
+      "year": 1914,
+      "country": "美國",
+      "runtime": 0,
+      "language": "默片",
+      "summary": "1914 年的正式分章連續劇電影，珍珠·懷特主演；典藏站可見第 1 至第 9 章共九段正式分集。不是預告片或示範影片。",
+      "genre": [
+        "連續劇",
+        "冒險",
+        "默片"
+      ],
+      "posterStyle": "general",
+      "posterHeadline": "THE PERILS OF PAULINE",
+      "rights": "Wikimedia Commons 個別章節公開領域標示，請依來源頁核對",
+      "sourcePage": "https://commons.wikimedia.org/wiki/Category:The_Perils_of_Pauline_(1914_serial)",
+      "mediaEvidence": "Wikimedia Commons 系列目錄逐項列出九章，且每章含真實影片與分別顯示的片長。尚未完成前端全章播放驗收。",
+      "episodes": [
+        {
+          "number": 1,
+          "label": "第 01 章",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始章節影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Perils_of_Pauline_Episode_1_(1914).webm"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "label": "第 02 章",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始章節影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/0/08/THE_PERILS_OF_PAULINE_(1914)_-_ch.2_Pearl_White_2.webm"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "label": "第 03 章",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始章節影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/THE_PERILS_OF_PAULINE_(1914)_-_ch.3_Pearl_White.webm"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "label": "第 04 章",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始章節影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/THE_PERILS_OF_PAULINE_(1914)_-_ch.4_Pearl_White.webm"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "label": "第 05 章",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始章節影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/2/2b/THE_PERILS_OF_PAULINE_(1914)_-_ch.5_Pearl_White.webm"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "label": "第 06 章",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始章節影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/THE_PERILS_OF_PAULINE_(1914)_-_ch.6_Pearl_White.webm"
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "label": "第 07 章",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始章節影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/THE_PERILS_OF_PAULINE_(1914)_-_ch.7_Pearl_White.webm"
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "label": "第 08 章",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始章節影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/THE_PERILS_OF_PAULINE_(1914)_-_ch.8_Pearl_White.webm"
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "label": "第 09 章",
+          "sources": [
+            {
+              "name": "Wikimedia Commons · 原始章節影片",
+              "format": "webm",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/THE_PERILS_OF_PAULINE_(1914)_-_ch.9_Pearl_White.webm"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
