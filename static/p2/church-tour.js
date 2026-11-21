@@ -25,7 +25,9 @@ renderer.outputColorSpace = SRGBColorSpace;
 renderer.toneMapping = ACESFilmicToneMapping;
 renderer.toneMappingExposure = 0.94;
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = PCFSoftShadowMap;
+// PCFSoft ignores shadow.radius: use standard PCF with a measured
+// filter width for real penumbra, as specified by Three.js LightShadow.
+renderer.shadowMap.type = 1; // Three.js PCFShadowMap
 renderer.setClearColor(0xd7d8cf, 1);
 
 // Perspective projection, using the locally bundled Three.js camera.
@@ -53,11 +55,11 @@ sun.target.position.set(9, 0, -8);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, {
-  left: -23, right: 23, top: 23, bottom: -23, near: 0.1, far: 85
+  left: -19, right: 19, top: 19, bottom: -19, near: 0.1, far: 85
 });
 sun.shadow.normalBias = 0.015;
 sun.shadow.bias = -0.0002;
-sun.shadow.radius = 5;
+sun.shadow.radius = 3.25;
 scene.add(sun, sun.target);
 const ambientFill = new DirectionalLight(0xddeaff, 0.44);
 ambientFill.position.set(19, 12, -24);
@@ -218,10 +220,15 @@ function connectArchitecturalDoors(building) {
   // still moves the ORIGINAL architectural door geometry.
   const oldHandles = [];
   building.traverse(object => {
-    if (object.isMesh && /^(entry|door) handle/i.test(modelName(object.name)))
+    if (object.isMesh && /handle|knob|door pull|pull bar|door lever|latch/i.test(modelName(object.name)))
       oldHandles.push(object);
   });
-  for (const object of oldHandles) object.visible = false;
+  for (const object of oldHandles) {
+    object.visible = false;
+    object.castShadow = false;
+  }
+  // A retired stand-alone handle must never float in the scene or cast a
+  // disconnected shadow; only the door-local replacement is rendered.
   const handleMetal = new MeshStandardMaterial({
     color: 0x777d80, metalness: 0.7, roughness: 0.32
   });
@@ -252,6 +259,12 @@ function connectArchitecturalDoors(building) {
     else lever.position.x -= .024;
     lever.name = 'Attached handle lever - ' + label;
     door.add(plate, lever);
+    // Face-local validation: all handle anchors are derived solely from the
+    // same door geometry bounding box, never from scene/world coordinates.
+    if (isCrosswise && Math.abs(plate.position.z-bounds.max.z)>.10)
+      throw new Error("Handle offset outside door leaf: " + label);
+    if (!isCrosswise && Math.abs(plate.position.x-bounds.min.x)>.10)
+      throw new Error("Handle offset outside door leaf: " + label);
   }
   addDoorLocalHandle(southDoor, "south entry");
   addDoorLocalHandle(northPublicDoor, "north public");
@@ -495,11 +508,18 @@ function updateDaylight(t,duration) {
   // Prevent a constant hard shaft of light remaining through the night.
   sanctuaryLight.intensity=.10+.16*daylight;
   // Daylight changes; the wall PBR base colors remain from the original GLB.
-  ambientFill.color.setRGB(.79+.06*winter,.86+.045*winter,.93+.04*winter);
+  // Colour temperature follows the time of day, not arbitrary flashing:
+  // cool twilight -> neutral daylight -> muted warm sunset.
+  const dusk=1-daylight;
+  skyFill.color.setRGB(.81+.11*daylight,.86+.10*daylight,1);
+  skyFill.groundColor.setRGB(.68+.09*daylight,.67+.10*daylight,.65+.11*daylight);
+  ambientFill.color.setRGB(.71+.13*daylight,.80+.10*daylight,.93+.04*daylight);
   ambientFill.intensity=.26+.31*daylight;
-  bounceFill.intensity=.20+.16*daylight;
-  skyFill.intensity=1.05+.25*daylight;
-  renderer.toneMappingExposure=.91+.11*daylight;
+  bounceFill.intensity=.15+.24*daylight;
+  bounceFill.color.setRGB(1,.86+.10*daylight,.77+.19*daylight);
+  skyFill.intensity=1.10+.26*daylight;
+  // Gentle exposure adaptation preserves wall relief and the white chapel.
+  renderer.toneMappingExposure=.89+.10*daylight;
   updateMapleSeason(t,duration);
 }
 
