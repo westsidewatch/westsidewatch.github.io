@@ -1486,3 +1486,53 @@ body[data-ws-scope="p2"] .church-folio__model-entry:focus-visible{
   outline:2px solid var(--ws-first-light);
   outline-offset:3px;
 }
+
+
+/* R13: restore click hit-testing across the entire P2 church surface,
+   including the homepage iframe. The gold artwork's interactive surface is
+   the whole visible logo box, NOT an empty anchor masked inside a heading. */
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] > .stage .church-editorial{
+  pointer-events:auto;
+}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-editorial__copy{
+  pointer-events:auto;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity > .church-folio__identity-link{
+  position:relative;
+  inset:auto;
+  grid-column:1;
+  grid-row:2;
+  z-index:4;
+  justify-self:center;
+  align-self:end;
+  display:block;
+  width:min(90%,760px);
+  height:auto;
+  aspect-ratio:1800/193;
+  min-width:0;
+  margin:0;
+  padding:0;
+  background:transparent;
+  cursor:pointer;
+  pointer-events:auto;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity > .church-folio__identity-link > .schedule-church-logo{
+  display:block;
+  position:relative;
+  inset:auto;
+  grid-column:auto;
+  grid-row:auto;
+  width:100%;
+  height:100%;
+  aspect-ratio:1800/193;
+  margin:0;
+  padding:0;
+  background:var(--ws-first-light);
+  -webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+  mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+  pointer-events:none;
+}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-folio__english-link,
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .church-folio__model-entry{
+  pointer-events:auto;
+}
