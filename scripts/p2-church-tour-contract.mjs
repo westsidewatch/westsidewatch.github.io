@@ -44,7 +44,7 @@ for (const file of [
   "static/p2-maquette/assets/GLTFLoader-j388d5bW.js"
 ]) assert(existsSync(file), "Missing local asset: " + file);
 assert(folio.match(/\/p2\/church-tour\.html/g)?.length >= 3, "Both first-layer church names and model must link to native tour");
-assert(interaction.includes("new URL('/p2/church-tour.html?scene=20261121-architecture-r3', window.location.href)"), "Iframe click must produce a resolved local URL");
+assert(interaction.includes("new URL('/p2/church-tour.html?scene=20261121-source-maple-fullday-r4', window.location.href)"), "Iframe click must produce a resolved local URL");
 assert(firstLayer.includes("p2-BIwqVfIr.js"), "First-layer growth model remains untouched");
 const syntax = script.replace(/import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?/m, "");
 new Script(syntax, { filename: "church-tour.js" });
