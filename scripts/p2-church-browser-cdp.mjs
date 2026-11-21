@@ -1,6 +1,9 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
 // Zero-dependency Chrome DevTools Protocol visual audit.
 // Launch Chrome headless on remote-debugging-port=9222 with a local static server.
 // This audit requires a real WebGL scene; a loading/failed screenshot is a failure.
+const proofDir = 'artifacts/p2-church-visual-qa';
+mkdirSync(proofDir, { recursive: true });
 const sleep = n => new Promise(resolve => setTimeout(resolve, n));
 let tabs;
 for(let attempt=0;attempt<110;attempt++){
@@ -81,7 +84,9 @@ try{
       format:'jpeg',quality:57,captureBeyondViewport:false,fromSurface:true
     });
     if(!shot.data)throw Error('Missing screenshot '+frame);
-    console.log('P2_FRAME_'+frame+'_JPG64='+shot.data);
+    const filename = `${proofDir}/frame-${String(frame).padStart(3,'0')}.jpg`;
+    writeFileSync(filename, Buffer.from(shot.data, 'base64'));
+    console.log('P2_FRAME_PROOF='+filename);
   }
 }finally{
   ws.close();
