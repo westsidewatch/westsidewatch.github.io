@@ -506,11 +506,11 @@
 /* R22 · P2 05 second-layer OS chromatic architecture.
    Color starts at the authentic letterpress; no opaque ochre image bars.
    The first-layer stage and its horizontal twin masthead are untouched. */
-#dawn-second.dawn-second{background:var(--ws-paper)!important;color:var(--ws-ink)!important;scrollbar-color:var(--ws-crimson) var(--ws-paper)}
+#dawn-second.dawn-second{background:var(--ws-paper)!important;color:var(--ws-ink)!important;scrollbar-color:var(--ws-harvest) var(--ws-paper)}
 #dawn-second .dawn-second__press--motherform{
  width:100%!important;max-width:none!important;
  background:var(--ws-night)!important;
- border-bottom:1px solid var(--ws-crimson);
+ border-bottom:1px solid var(--ws-harvest);
  padding:clamp(72px,7svh,110px) clamp(18px,5vw,88px) clamp(36px,6vw,86px)!important;
 }
 #dawn-second .dawn-second__motherform{max-width:1320px;justify-self:center;align-self:start;background:transparent!important;border:0}
@@ -538,19 +538,19 @@
 }
 #dawn-second .dawn-reading-room{background:var(--ws-paper)!important;border-top:0!important}
 #dawn-second .dawn-reading-room__heading{border-color:var(--ws-water)!important}
-#dawn-second .dawn-reading-room__eyebrow{color:var(--ws-crimson)!important}
+#dawn-second .dawn-reading-room__eyebrow{color:var(--ws-harvest)!important}
 #dawn-second .dawn-reading-room__heading h2{color:var(--ws-night)!important}
-#dawn-second .dawn-wall__folio{color:var(--ws-crimson)!important}
+#dawn-second .dawn-wall__folio{color:var(--ws-harvest)!important}
 #dawn-second .dawn-reading-room .dawn-wall__tail{color:var(--ws-water)!important}
-#dawn-second .dawn-reading-room .dawn-wall__tail button{color:var(--ws-night)!important;border-bottom-color:var(--ws-crimson)!important}
+#dawn-second .dawn-reading-room .dawn-wall__tail button{color:var(--ws-night)!important;border-bottom-color:var(--ws-harvest)!important}
 #dawn-second .dawn-feature--stars .dawn-feature__editorial{background:linear-gradient(180deg,rgba(16,42,67,.60),transparent 33%,rgba(41,68,49,.88) 100%)}
 #dawn-second .dawn-feature--curation .dawn-feature__editorial{background:linear-gradient(180deg,rgba(16,42,67,.46),transparent 34%,rgba(92,37,49,.90) 100%)}
 #dawn-second .dawn-feature--spectrum .dawn-feature__editorial{background:linear-gradient(180deg,rgba(16,42,67,.46),transparent 31%,rgba(30,77,103,.91) 100%)}
 #dawn-second .dawn-feature--stars .dawn-feature__open{border-color:var(--ws-olive)!important}
-#dawn-second .dawn-feature--curation .dawn-feature__open{border-color:var(--ws-crimson)!important}
+#dawn-second .dawn-feature--curation .dawn-feature__open{border-color:var(--ws-harvest)!important}
 #dawn-second .dawn-feature--spectrum .dawn-feature__open{border-color:var(--ws-water)!important}
 #dawn-second .dawn-catalogue{background:var(--ws-paper)!important;border-top:1px solid var(--ws-water)!important}
-#dawn-second .dawn-catalogue__back{background:transparent!important;color:var(--ws-night)!important;border:0!important;border-bottom:1px solid var(--ws-crimson)!important;padding:8px 0!important}
+#dawn-second .dawn-catalogue__back{background:transparent!important;color:var(--ws-night)!important;border:0!important;border-bottom:1px solid var(--ws-harvest)!important;padding:8px 0!important}
 @media(max-width:650px){
  #dawn-second .dawn-second__return{gap:6px;margin-right:14px!important}
  #dawn-second .dawn-second__return-en{display:none}
@@ -559,13 +559,13 @@
 }
 
 /* R22b: navigation is ink on paper, not a filled button or floating dark block. */
-#dawn-second .dawn-second__return{color:var(--ws-night)!important;background:transparent!important;border-bottom:1px solid var(--ws-crimson)!important;isolation:isolate}
+#dawn-second .dawn-second__return{color:var(--ws-night)!important;background:transparent!important;border-bottom:1px solid var(--ws-harvest)!important;isolation:isolate}
 #dawn-second .dawn-second__return::before{content:none!important;display:none!important}
-#dawn-second .dawn-second__return-en{color:var(--ws-crimson)!important}
-#dawn-second .dawn-second__return:hover{color:var(--ws-crimson)!important}
+#dawn-second .dawn-second__return-en{color:var(--ws-harvest)!important}
+#dawn-second .dawn-second__return:hover{color:var(--ws-harvest)!important}
 
 /* R23 — Editorial Manual §1 / Design OS: book=harvest role, paper as field.
-   No parallel blue/crimson color system. Only 05 second layer. */
+   No parallel cross-chapter color system. Only 05 second layer. */
 #dawn-second.dawn-second{--dawn-accent:var(--ws-harvest);--dawn-paper:var(--ws-paper);
  background:var(--ws-paper)!important;color:var(--ws-ink)!important;
 }
@@ -662,30 +662,30 @@
  #dawn-second .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography{opacity:1}
 }
 
-/* R24 · Correct R23: OS scope ≠ full-page harvest fill.
-   P2 05 Scripture Studio's actual chapter palette is paper / ink / crimson.
+/* R24 · Correct R23: OS book identity is not a flat harvest fill.
+   P2 05 display uses the Dawn Library's material identity, not Cinema crimson.
    Harvest stays only as an understated book-material identity, not a field. */
-#dawn-second.dawn-second{--dawn-paper:var(--ws-paper);--dawn-ink:var(--ws-ink);--dawn-scripture:var(--ws-crimson);background:var(--ws-paper)!important;color:var(--ws-ink)!important}
-#dawn-second .dawn-second__press--motherform{background:var(--ws-paper)!important;border-bottom:1px solid color-mix(in srgb,var(--ws-crimson) 35%,transparent)!important}
+#dawn-second.dawn-second{--dawn-paper:var(--ws-paper);--dawn-ink:var(--ws-ink);--dawn-scripture:var(--ws-harvest);background:var(--ws-paper)!important;color:var(--ws-ink)!important}
+#dawn-second .dawn-second__press--motherform{background:var(--ws-paper)!important;border-bottom:1px solid color-mix(in srgb,var(--ws-harvest) 35%,transparent)!important}
 #dawn-second .dawn-reading-room{background:var(--ws-paper)!important}
 #dawn-second .dawn-reading-room__eyebrow,
 #dawn-second .dawn-reading-room .dawn-wall__folio,
 #dawn-second .dawn-catalogue__heading span,
-#dawn-second .dawn-catalogue__cover-typography>small{color:var(--ws-crimson)!important}
-#dawn-second .dawn-reading-room__heading{border-bottom-color:var(--ws-crimson)!important}
+#dawn-second .dawn-catalogue__cover-typography>small{color:var(--ws-harvest)!important}
+#dawn-second .dawn-reading-room__heading{border-bottom-color:var(--ws-harvest)!important}
 #dawn-second .dawn-reading-room__heading h2{color:var(--ws-ink)!important}
-#dawn-second .dawn-second__return{color:var(--ws-ink)!important;border-bottom-color:var(--ws-crimson)!important}
-#dawn-second .dawn-second__return-en{color:var(--ws-crimson)!important}
+#dawn-second .dawn-second__return{color:var(--ws-ink)!important;border-bottom-color:var(--ws-harvest)!important}
+#dawn-second .dawn-second__return-en{color:var(--ws-harvest)!important}
 #dawn-second .dawn-reading-room .dawn-wall__tail{color:var(--ws-ink)!important}
 #dawn-second .dawn-reading-room .dawn-wall__tail button,
 #dawn-second .dawn-catalogue__back,
-#dawn-second .dawn-catalogue__more button{border-bottom-color:var(--ws-crimson)!important}
+#dawn-second .dawn-catalogue__more button{border-bottom-color:var(--ws-harvest)!important}
 #dawn-second .dawn-catalogue__heading,
 #dawn-second .dawn-catalogue__nav,
-#dawn-second .dawn-catalogue__nav input{border-color:var(--ws-crimson)!important}
-#dawn-second .dawn-catalogue{background:var(--ws-paper)!important;border-top-color:var(--ws-crimson)!important}
-#dawn-second .dawn-catalogue__cover-card--unresolved{background:var(--ws-paper)!important;border:1px solid color-mix(in srgb,var(--ws-crimson) 32%,transparent)!important}
-#dawn-second .dawn-catalogue__cover-card--unresolved:hover{background:color-mix(in srgb,var(--ws-crimson) 4%,var(--ws-paper))!important}
+#dawn-second .dawn-catalogue__nav input{border-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue{background:var(--ws-paper)!important;border-top-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__cover-card--unresolved{background:var(--ws-paper)!important;border:1px solid color-mix(in srgb,var(--ws-harvest) 32%,transparent)!important}
+#dawn-second .dawn-catalogue__cover-card--unresolved:hover{background:color-mix(in srgb,var(--ws-harvest) 4%,var(--ws-paper))!important}
 #dawn-second .dawn-feature__editorial{background:linear-gradient(180deg,rgba(37,37,37,.34),transparent 38%,rgba(37,37,37,.7) 100%)!important}
 #dawn-second .dawn-feature__open{border-top-color:var(--ws-paper)!important}
 
