@@ -207,3 +207,27 @@
 .dawn-spread__editorial h2{font-family:var(--ws-type-display-zh);font-weight:200;letter-spacing:.025em;line-height:1.32;font-size:clamp(24px,2.25vw,38px)}
 .dawn-enter-hint{font-family:var(--ws-type-display-zh)}
 @media(max-width:600px){.dawn-spread__editorial h2{font-size:clamp(17px,4.3vw,24px)}}
+
+/* R8 · A full editorial folio unfolds into the stage, rather than a card sliding in.
+   The 01–04 iframe stays untouched behind the full-height hinged leaf. */
+.dawn-realm{perspective:1800px;transform-style:preserve-3d}
+.dawn-realm__half{background:var(--ws-papyrus)}
+.dawn-folio{position:absolute;inset:0;z-index:1;transform-origin:0 50%;transform-style:preserve-3d;backface-visibility:hidden;will-change:transform;pointer-events:none}
+.dawn-folio__leaf{position:absolute;inset:0;overflow:hidden;background:var(--ws-paper);box-shadow:20px 0 38px rgba(37,37,37,.13),inset 0 0 0 1px color-mix(in srgb,var(--ws-harvest) 35%,transparent)}
+.dawn-folio__leaf::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(37,37,37,.24),rgba(37,37,37,.025) 3.5%,transparent 13%,transparent 85%,rgba(184,148,74,.09));pointer-events:none}
+.dawn-folio__edge{position:absolute;left:0;top:0;bottom:0;width:clamp(8px,1.3vw,21px);background:linear-gradient(90deg,var(--ws-harvest),var(--ws-papyrus) 45%,var(--ws-paper) 90%);border-right:1px solid var(--ws-harvest)}
+.dawn-folio__grain{position:absolute;inset:4.5% 4.5% 4.5% 5%;border:1px solid color-mix(in srgb,var(--ws-harvest) 48%,transparent);background:repeating-linear-gradient(0deg,transparent 0 34px,color-mix(in srgb,var(--ws-harvest) 12%,transparent) 34px 35px);opacity:.7}
+.dawn-folio__imprint{position:absolute;right:5.5%;bottom:6%;width:min(18vw,230px);height:1px;background:var(--ws-harvest);box-shadow:0 9px 0 color-mix(in srgb,var(--ws-harvest) 35%,transparent),0 18px 0 color-mix(in srgb,var(--ws-harvest) 20%,transparent)}
+.dawn-folio__spine{position:absolute;z-index:2;left:0;top:0;bottom:0;width:clamp(7px,.85vw,15px);background:linear-gradient(90deg,var(--ws-harvest),var(--ws-papyrus));box-shadow:3px 0 11px rgba(37,37,37,.14);opacity:0;pointer-events:none}
+.dawn-realm__half--left,.dawn-realm__half--right{background:var(--ws-papyrus)}
+/* Book window is a quarter-space architectural aperture within the open folio. */
+.dawn-spread__window{border-color:var(--ws-harvest);background:var(--ws-paper);box-shadow:inset 0 0 0 clamp(5px,.55vw,12px) var(--ws-papyrus)}
+.dawn-spread__hatch{inset:6%;opacity:.12}
+.dawn-spread__editorial{border-top-color:var(--ws-harvest);border-bottom-color:var(--ws-harvest)}
+.dawn-twins{z-index:5}.dawn-spread{z-index:4}.dawn-enter-hint{z-index:6}
+@media(max-width:600px){
+ .dawn-folio__grain{inset:3.5% 4%;background-size:auto}
+ .dawn-folio__imprint{width:25vw}
+ .dawn-spread__window{box-shadow:inset 0 0 0 5px var(--ws-papyrus)}
+}
+@media(prefers-reduced-motion:reduce){.dawn-folio{will-change:auto}}
