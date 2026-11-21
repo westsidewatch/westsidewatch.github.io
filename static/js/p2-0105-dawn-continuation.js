@@ -118,7 +118,7 @@
   const from=entryProgress,start=performance.now(),duration=target?7600:0;
   if(!duration||matchMedia('(prefers-reduced-motion: reduce)').matches){entryClock=entryProgress=target;schedule();if(target)loadCatalogue();return;}
   const tick=now=>{entryProgress=mix(from,target,clamp((now-start)/duration));entryClock=entryProgress;schedule();
-   if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target)loadCatalogue();}};
+   if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target){loadCatalogue();loadWallCovers();}}};
   rafId=requestAnimationFrame(tick);
  }
  twins.addEventListener('click',()=>{if(progress()<27.96||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
@@ -255,25 +255,59 @@
  wallGrid.addEventListener('click',e=>{
   const tile=e.target.closest('button');if(!tile)return;
   if(tile.dataset.dawnPortal)openCollection(tile.dataset.dawnPortal);
+  else if(tile.dataset.workUrl){window.open(tile.dataset.workUrl,'_blank','noopener,noreferrer');}
   else if(tile.dataset.workTitle)openCollection('書籍',tile.dataset.workTitle);
  });
- function renderWall(records){
-  if(wallGrid.dataset.loaded==='true')return;
-  const fragment=document.createDocumentFragment();
-  records.slice(0,18).forEach((work,i)=>{
-   const tile=document.createElement('button'),num=document.createElement('small'),title=document.createElement('strong'),creator=document.createElement('em');
-   tile.type='button';tile.className='dawn-wall__tile dawn-wall__tile--record';tile.style.setProperty('--tile-index',i);
-   tile.dataset.workTitle=work.title||'';tile.setAttribute('aria-label',`${work.title||'Untitled'}；展開館藏索引`);
-   num.textContent=String(i+1).padStart(3,'0');title.textContent=work.title||'Untitled';creator.textContent=work.creator||'作者未詳';
-   tile.append(num,title,creator);fragment.append(tile);
-  });
-  wallGrid.append(fragment);wallGrid.dataset.loaded='true';
+ // Square sleeves use the real, existing Dawn storefront cover URLs.
+ // Never substitute invented "vinyl art" or text-only pseudo-covers.
+ async function loadWallCovers(){
+  if(wallGrid.dataset.loaded==='true'||wallGrid.dataset.loading==='true')return;
+  wallGrid.dataset.loading='true';
+  try{
+   const response=await fetch('/dawn-library/storefront.json');
+   if(!response.ok)throw Error('Storefront covers '+response.status);
+   const storefront=await response.json();
+   const shelves=Array.isArray(storefront.shelves)?storefront.shelves:[];
+   const curated=[];
+   // Draw from separate existing source shelves, so visual styles are less repetitive.
+   const shelfA=shelves.find(s=>s.id==='standard-ebooks-new');
+   const otherShelves=shelves.filter(s=>s!==shelfA);
+   const primary=(shelfA?.items||[]).filter(w=>w.cover?.url&&w.source?.url);
+   primary.slice(0,12).forEach(w=>curated.push(w));
+   for(const shelf of otherShelves){
+    const sample=(shelf.items||[]).filter(w=>w.cover?.url&&w.source?.url);
+    for(const w of sample){
+     if(curated.length>=18)break;
+     if(!curated.some(v=>v.title===w.title))curated.push(w);
+    }
+    if(curated.length>=18)break;
+   }
+   const frag=document.createDocumentFragment();
+   curated.forEach((work,i)=>{
+    const tile=document.createElement('button');
+    tile.type='button';tile.className='dawn-wall__tile dawn-wall__tile--record dawn-cover';
+    tile.dataset.workTitle=work.title||'';
+    tile.dataset.workUrl=work.source.url;
+    tile.setAttribute('aria-label',`開啟原書：${work.title||'Untitled'}，${work.author||'作者未詳'}`);
+    const sleeve=document.createElement('span');sleeve.className='dawn-cover__sleeve';
+    const img=document.createElement('img');
+    img.src=work.cover.url;img.alt=`原書封面：${work.title||'Untitled'}`;
+    img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';
+    img.addEventListener('error',()=>{tile.classList.add('dawn-cover--missing');sleeve.hidden=true;});
+    sleeve.append(img);
+    const meta=document.createElement('span');meta.className='dawn-cover__meta';
+    const title=document.createElement('strong');title.textContent=work.title||'Untitled';
+    const author=document.createElement('em');author.textContent=work.author||'作者未詳';
+    meta.append(title,author);tile.append(sleeve,meta);frag.append(tile);
+   });
+   wallGrid.append(frag);wallGrid.dataset.loaded='true';
+  }catch(err){console.error('[Dawn covers]',err);wallGrid.dataset.loading='error';}
  }
  async function loadCatalogue(){if(!index){try{const r=await fetch('/dawn-library/catalogue/index.json');if(!r.ok)throw Error('Catalogue index unavailable');index=await r.json();total.textContent=Number(index.count).toLocaleString('en-CA');}catch(e){pageStatus.textContent='館藏暫時未能載入';console.error(e);return;}}if(!currentPage)await showPage(1);}
  async function showPage(page){if(loading||!index||page<1||page>index.pageCount)return;loading=true;more.disabled=true;prevButton.disabled=true;
   try{if(!cache.has(page)){const file=index.pages[page-1],r=await fetch('/dawn-library/catalogue/'+file);if(!r.ok)throw Error('Missing catalogue page '+page);
    const data=await r.json();cache.set(page,data.works||[]);}
-   currentPage=page;loaded=cache.get(page);search.value='';renderWorks();if(page===1)renderWall(loaded);}
+   currentPage=page;loaded=cache.get(page);search.value='';renderWorks();if(page===1)loadWallCovers();}
   catch(e){pageStatus.textContent='館藏載入中斷，請重試';console.error(e)}
   finally{loading=false;more.disabled=currentPage>=index.pageCount;prevButton.disabled=currentPage<=1;}}
  function renderWorks(){const needle=search.value.trim().toLocaleLowerCase(),matches=loaded.filter(w=>!needle||[w.title,w.creator,String(w.date||'')].some(v=>String(v||'').toLocaleLowerCase().includes(needle)));
