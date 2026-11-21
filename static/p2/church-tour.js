@@ -20,10 +20,10 @@ const scene = new Scene();
 const renderer = new WebGLRenderer({
   canvas, antialias: true, powerPreference: "high-performance", alpha: false
 });
-renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.7));
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
 renderer.outputColorSpace = SRGBColorSpace;
 renderer.toneMapping = ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.98;
+renderer.toneMappingExposure = 0.94;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = PCFSoftShadowMap;
 renderer.setClearColor(0xd7d8cf, 1);
@@ -43,8 +43,8 @@ function resize() {
 window.addEventListener("resize", resize, { passive: true });
 resize();
 
-scene.add(new HemisphereLight(0xdde8ed, 0x958374, 1.65));
-const sun = new DirectionalLight(0xffeccb, 2.65);
+scene.add(new HemisphereLight(0xf3f5f8, 0xa4a5a2, 1.9));
+const sun = new DirectionalLight(0xfff0db, 1.7);
 sun.position.set(4, 21, 10);
 sun.target.position.set(9, 0, -8);
 sun.castShadow = true;
@@ -52,13 +52,13 @@ sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, {
   left: -29, right: 29, top: 29, bottom: -29, near: 0.1, far: 85
 });
-sun.shadow.normalBias = 0.025;
-sun.shadow.radius = 3;
+sun.shadow.normalBias = 0.035;
+sun.shadow.radius = 5;
 scene.add(sun, sun.target);
-const ambientFill = new DirectionalLight(0xc8dce7, 0.87);
+const ambientFill = new DirectionalLight(0xe9efff, 0.6);
 ambientFill.position.set(19, 12, -24);
 scene.add(ambientFill);
-const sanctuaryLight = new DirectionalLight(0xffe3b1, 1.4);
+const sanctuaryLight = new DirectionalLight(0xfff0db, 0.52);
 sanctuaryLight.position.set(15.5, 5.1, -1.3);
 sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
@@ -127,35 +127,29 @@ const finishes = {
 function modelName(value) {
   return String(value).toLowerCase().replace(/[_\s·.–—]+/g, " ").trim();
 }
+// Architectural paint: the approved building is white on both sides.
+// Preserve independent translucent glazing and the original maple bark/leaves.
+const whiteArchitecture = new MeshStandardMaterial({
+  color:0xf5f5f1, roughness:0.91, metalness:0, side:DoubleSide,
+  polygonOffset:true, polygonOffsetFactor:1, polygonOffsetUnits:1
+});
+const whiteFloor = new MeshStandardMaterial({
+  color:0xebebe7, roughness:0.94, metalness:0, side:DoubleSide,
+  polygonOffset:true, polygonOffsetFactor:1, polygonOffsetUnits:1
+});
 function chooseFinish(name, sourceMaterial) {
-  const n = modelName(name);
-  // Restore the verified Blender/GLB source finishes for the original walls,
-  // windows, roofs and the pure-white south entry. Never recolor the
-  // approved architecture using invented grey/green palette values.
+  const n=modelName(name);
   if (/maple cc0/.test(n)) return sourceMaterial;
-  if (/wall|roof|ceiling|facade|façade|entry lintel|pier|tall single white pivot door|entrance wall|glass|glazing|window/i.test(n))
-    return sourceMaterial?.clone?.() ?? finishes.plaster;
-  // SOUTH CROSS WALL consists of four SOLID quadrants surrounding a void.
-  // Never make those large wall solids emissive gold.
-  if (/south cross wall|solid quadrant/.test(n)) return finishes.plaster;
-  if (/cross|crucifix/.test(n)) return finishes.cross;
-  if (/glass|glazing|window pane|glazed/.test(n)) return finishes.glazing;
-  if (/mullion|window frame|metal frame|railing|handrail/.test(n)) return finishes.mullion;
-  if (/roof|skylight surround|roof edge/.test(n)) return finishes.roof;
-  if (/pew|pulpit|lectern|table|chair|cafe|bookcase|counter/.test(n)) return finishes.pew;
-  if (/tall single white pivot door/.test(n)) return finishes.ivory;
-  if (/entrance.*door|door.*entrance|door leaf|door panel/.test(n)) return finishes.joinery;
-  if (/door|jamb|threshold|lintel/.test(n)) return finishes.ivory;
-  if (/maple|tree|foliage|leaf|shrub|plant/.test(n)) return finishes.leaves;
-  if (/ground|grass|soil|site vegetation/.test(n)) return finishes.earth;
-  if (/board|plinth|base slab|foundation plate/.test(n)) return finishes.ground;
-  if (/courtyard|terrace|step|stair|landing|promenade/.test(n)) return finishes.courtyard;
-  if (/floor|paving|tile/.test(n)) return finishes.floor;
-  if (/wood|timber|slat|beam/.test(n)) return finishes.timber;
-  if (/column|support|metalwork/.test(n)) return finishes.metal;
-  if (/outer wall|external wall|perimeter|stone/.test(n)) return finishes.masonry;
-  if (/wall|partition|facade|façade|screen|ceiling/.test(n)) return finishes.plaster;
-  return finishes.paleStone;
+  if (/glass|glazing|glazed|window pane|skylight/i.test(n)) {
+    const m=finishes.glazing.clone();
+    m.polygonOffset=true; m.polygonOffsetFactor=-1; m.polygonOffsetUnits=-1;
+    return m;
+  }
+  if (/mullion|window frame|metal frame|railing|handrail/i.test(n)) return finishes.mullion;
+  if (/leaf|foliage|shrub|plant|grass|soil/i.test(n)) return finishes.earth;
+  if (/floor|paving|tile|courtyard|terrace|step|stair|landing|promenade|piazza|plaza|forum|cafe|coffee/i.test(n))
+    return whiteFloor;
+  return whiteArchitecture;
 }
 
 // Surrounding ground is separate from the first-layer "white model" base.
@@ -164,10 +158,7 @@ grounds.rotation.x = -Math.PI / 2;
 grounds.position.set(9, -0.42, -9);
 grounds.receiveShadow = true;
 scene.add(grounds);
-const approach = new Mesh(new BoxGeometry(2.6, 0.046, 13), finishes.courtyard);
-approach.position.set(9, -0.17, 7.25);
-approach.receiveShadow = true;
-scene.add(approach);
+// Removed the artificial overlaid entrance slab: it conflicted with the original GLB paving.
 
 // Physical architectural doors: pivot and slide ORIGINAL GLB meshes.
 // The former build incorrectly placed a fake short door in front of the
@@ -207,25 +198,8 @@ function connectArchitecturalDoors(building) {
 // The complete model includes the original realistic CC0 Japanese maple.
 // Re-use its geometry beyond the entrance as a landscaping entourage.
 function addNativeLandscape(building) {
-  let maple=null;
-  building.traverse(object=>{
-    if(!maple&&modelName(object.name).startsWith("maple root"))maple=object;
-  });
-  if(!maple)return;
-  const sites=[
-    [-4.2,-15.5,1.12,.1],[-4.5,-7.5,.91,1.22],
-    [1.6,-22.3,1.04,2.1],[11,-22.1,1.14,.6],
-    [21.7,-20.3,1.06,2.7],[22.3,-9.4,.95,1.6],
-    [1.9,5.5,.79,3.2],[19.9,5.3,.84,.25]
-  ];
-  for(const [x,z,scale,turn] of sites){
-    const tree=maple.clone(true);
-    scene.add(tree);
-    tree.position.set(x,-.35,z);
-    tree.rotation.y=turn;
-    tree.scale.multiplyScalar(scale);
-    tree.traverse(node=>{if(node.isMesh){node.castShadow=true;node.receiveShadow=true;}});
-  }
+  // No extra perimeter trees. Keep the original courtyard maple from the GLB.
+  // Nothing is cloned across the exterior or pasted onto the architecture.
 }
 
 // Source GLB material IDs: 15 fine twig bark, 16 rough living bark,
@@ -451,11 +425,11 @@ function updateDaylight(t,duration) {
     1.0-.08*morningEvening-.09*winter,
     .98-.21*morningEvening+.015*winter
   );
-  sun.intensity=Math.max(0.03,.12+3.4*daylight-.33*winter);
+  sun.intensity=Math.max(0.06,.25+1.7*daylight-.18*winter);
   // Daylight changes; the wall PBR base colors remain from the original GLB.
   ambientFill.color.setRGB(.79+.06*winter,.86+.045*winter,.93+.04*winter);
-  ambientFill.intensity=.28+.7*daylight;
-  renderer.toneMappingExposure=.74+.25*daylight;
+  ambientFill.intensity=.50+.38*daylight;
+  renderer.toneMappingExposure=.85+.13*daylight;
   updateMapleSeason(t,duration);
 }
 
