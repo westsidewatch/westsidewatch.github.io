@@ -5,3 +5,63 @@
 html.embed,html:has(body.embed){background:transparent}
 body.embed{background:transparent}
 .embed .scene-grid{display:none}
+
+
+/* P2 CHURCH / LEVEL TWO
+   Pure 3D camera viewport. No UI, labels, editorial text or annotation.
+   The original full viewer and the P2 decorative iframe remain unchanged. */
+html.tour,body.tour{
+  width:100%;
+  height:100%;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  margin:0;
+  padding:0;
+  background:#d9dddc;
+}
+body.tour .assembly-layout{
+  display:block;
+  position:relative;
+  width:100%;
+  height:100dvh;
+  min-height:0;
+  max-width:none;
+  margin:0;
+  padding:0;
+}
+body.tour .model-frame{
+  position:relative;
+  width:100%;
+  height:100%;
+  min-height:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  overflow:hidden;
+  background:#d9dddc;
+}
+body.tour .assembly-heading,
+body.tour .timeline-panel,
+body.tour .scene-grid,
+body.tour .scene-glow,
+body.tour .model-marker,
+body.tour .model-corner,
+body.tour .model-loading,
+body.tour .embed-caption{
+  display:none!important;
+}
+body.tour #assembly-canvas{
+  display:block;
+  width:100%;
+  height:100%;
+  touch-action:none;
+  cursor:grab;
+}
+body.tour #assembly-canvas:active{cursor:grabbing}
+body.tour .model-fallback{
+  background-color:#d9dddc;
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+}
