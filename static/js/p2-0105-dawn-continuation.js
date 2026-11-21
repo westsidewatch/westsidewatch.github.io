@@ -668,6 +668,20 @@
   pageStatus.textContent='第 '+currentPage+' / '+index.pageCount+' 頁 · '+matches.length+' 筆 · 全部 '+Number(index.count).toLocaleString('en-CA')+' 筆';
  }
  more.addEventListener('click',()=>showPage(currentPage+1));prevButton.addEventListener('click',()=>showPage(currentPage-1));search.addEventListener('input',renderWorks);
- const initial=Number(new URLSearchParams(location.search).get('d')??26.1);
- requestAnimationFrame(()=>requestAnimationFrame(()=>jump(Number.isFinite(initial)?initial:26.1)));
+ const previewParams=new URLSearchParams(location.search);
+ const requestedLayer=previewParams.get('layer');
+ const initial=Number(previewParams.get('d')??26.1);
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{
+  // Direct review URL: enter the actual second/third reading layer without
+  // asking the reviewer to discover the long scroll + 7.6s click gesture.
+  // Normal P2 interaction and reversible V9 motion remain unchanged.
+  const direct=requestedLayer==='second'||requestedLayer==='catalogue';
+  jump(direct?Math.max(28.4,Number.isFinite(initial)?initial:28.4):(Number.isFinite(initial)?initial:26.1));
+  if(direct){
+   entryProgress=entryClock=entryTarget=1;
+   void loadWallCovers();
+   schedule();
+   if(requestedLayer==='catalogue')openCollection();
+  }
+ }));
 })();
