@@ -317,3 +317,15 @@
  .dawn-twins{top:55%;box-shadow:0 4px 18px rgba(37,37,37,.15)}
 }
 @media(prefers-reduced-motion:reduce){.dawn-world__page,.dawn-world__art img{transition:none;will-change:auto}}
+
+/* Existing owned Christian imagery enriches the reading field but is not
+   represented as an illustration extracted from the linked Open Library book. */
+.dawn-world__art::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url('/images/home-opening-engraving.jpg');background-size:cover;background-position:center;opacity:.19;filter:sepia(.65) contrast(1.07)}
+.dawn-world__page--right .dawn-world__art::before{background-image:url('/images/temple-stone-light.png');opacity:.29}
+.dawn-world__art img{position:relative;z-index:1;max-width:82%;max-height:87%;width:auto;height:auto;object-fit:contain;box-shadow:12px 17px 28px rgba(37,37,37,.19)}
+.dawn-world__art::after{content:"";position:absolute;inset:8%;pointer-events:none;border:1px solid color-mix(in srgb,var(--ws-harvest) 45%,transparent)}
+.dawn-world__page[data-world="temple"] .dawn-world__art::before{background-image:url('/images/temple-stone-light.png')}
+.dawn-world__page[data-world="jerusalem"] .dawn-world__art::before{background-image:url('/images/jerusalem-wall.png')}
+.dawn-world__page[data-world="engraving"] .dawn-world__art::before{background-image:url('/images/home-opening-engraving.jpg')}
+.dawn-world__page[data-world="scripture"] .dawn-world__art::before{background-image:url('/images/p2-emmaus-fullfield-engraving-v15.svg')}
+@media(max-width:600px){.dawn-world__art img{max-width:90%;max-height:86%}}
