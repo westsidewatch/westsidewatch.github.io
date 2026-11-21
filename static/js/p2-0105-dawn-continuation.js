@@ -6,7 +6,7 @@
  const $=s=>document.querySelector(s),track=$('#p205-track'),stage=$('#p205-stage');
  const prior=$('#p205-prior'),realm=$('#dawn-realm'),halves=[...document.querySelectorAll('.dawn-realm__half')],folio=$('#dawn-folio'),spine=$('#dawn-spine');
  const twins=$('#dawn-twins'),squares=[...twins.querySelectorAll('.dawn-twins__square')];
- const spread=$('#dawn-spread'),windowFrame=$('#dawn-book-window'),book=$('#dawn-book'),cover=$('#dawn-book-cover');
+ const spread=$('#dawn-spread'),windowFrame=$('#dawn-book-window'),book=$('#dawn-book'),cover=$('#dawn-book-cover'),world=$('#dawn-world');
  const hint=$('#dawn-enter-hint'),handoff=$('#dawn-handoff'),second=$('#dawn-second'),returnButton=$('#dawn-return');
  const plates=[$('#dawn-plate-zh'),$('#dawn-plate-en')];
  const search=$('#dawn-search'),works=$('#dawn-works');
@@ -30,28 +30,25 @@
   const open=ease((d-28.66)/1.11);
   realm.style.visibility=fold>.001?'visible':'hidden';
   folio.style.transform=`rotateY(${(-88*(1-fold)).toFixed(2)}deg)`;
+  world.style.opacity=String(ease((d-26.38)/.83));
+  world.style.pointerEvents=come>.97&&p<.001?'auto':'none';
   spine.style.opacity=String(ease((fold-.04)/.18));
   realm.inert=!come||p>.001;realm.setAttribute('aria-hidden',!come||p>.001?'true':'false');
   realm.style.pointerEvents=come>.98&&p<.001?'auto':'none';
   halves[0].style.clipPath=`inset(${(100*(1-start)).toFixed(2)}% 0 0 0)`;
   halves[1].style.clipPath=`inset(0 0 ${(100*(1-start)).toFixed(2)}% 0)`;
-  // MERSI-style identity: centered pair enters as the sole focal object,
-  // then rises together to make room for the book and editorial spread.
-  const settle=ease((d-28.03)/.68);
-  const pairHeight=twins.offsetHeight;
-  const cap=parseFloat(getComputedStyle(realm).getPropertyValue('--dawn-square-top'))||24;
-  const shift=Math.max(0,(stage.clientHeight-pairHeight)/2-cap)*settle;
+  // The two centered title squares are the stable binding of the Gospel book.
   twins.style.visibility=come>.75?'visible':'hidden';
   twins.style.opacity=String(1-ease((p-.01)/.16));
-  twins.style.transform=`translate(-50%,-50%) translateY(${(-shift).toFixed(2)}px)`;
-  const editorial=ease((d-28.12)/.61);
+  twins.style.transform='translate(-50%,-50%)';
+  const editorial=0;
   spread.style.visibility=editorial>.001?'visible':'hidden';
   spread.style.opacity=String(editorial);
   spread.style.clipPath=`inset(0 ${(100*(1-editorial)).toFixed(2)}% 0 0)`;
   windowFrame.style.clipPath=`inset(0 ${(100*(1-leaf)).toFixed(2)}% 0 0)`;
   book.style.transform=`translateX(${((1-leaf)*125).toFixed(2)}%) scale(${(0.78+.22*leaf).toFixed(3)})`;
   cover.style.transform=`rotateY(${(-168*open).toFixed(2)}deg)`;
-  hint.style.visibility=d>=29.45&&p<.001?'visible':'hidden';
+  hint.style.visibility='hidden';
   stage.dataset.p205Scene=d<26.19?'04-protected':d<27.54?'05-folio-unfold':d<28.66?'05-quarter-window':d<29.77?'05-page-turn':'05-reading-world';
   paintHandoff();
  }
@@ -148,9 +145,94 @@
    if(Math.abs(entryProgress-target)>.0001)rafId=requestAnimationFrame(tick);else{rafId=0;if(target)loadCatalogue();}};
   rafId=requestAnimationFrame(tick);
  }
- twins.addEventListener('click',()=>{if(progress()<28.12||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
+ twins.addEventListener('click',()=>{if(progress()<27.96||entryProgress>.001)return;if(!glyphReady){console.warn('V9 original lettering still loading');return;}animateEntry(1)});
  returnButton.addEventListener('click',()=>{resetEntry();schedule()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&entryProgress>.001)resetEntry()});
+
+ // A real illustrated-reading world on each facing folio leaf.
+ // Curated from the repository's existing cover-preview Open Library holdings.
+ // Each page owns one real work ID; destination updates with the visible cover.
+ const gospelLeaves={
+  left:[
+   {id:'OL100679W',title:"The Children's Atlas of the Bible",caption:'聖經地理與歷史',cover:9600327},
+   {id:'OL101993W',title:'The Gospel according to John',caption:'約翰福音',cover:124022},
+   {id:'OL1005006W',title:'Jesus Christ liberator',caption:'耶穌基督',cover:680922},
+   {id:'OL102027W',title:'The Essential Jesus',caption:'基督生平',cover:3870881},
+   {id:'OL10099843W',title:'Reading Biblical Narrative',caption:'聖經敘事',cover:12859271},
+   {id:'OL102017W',title:'The Gospel of eternal life',caption:'永生福音',cover:9305284}
+  ],
+  right:[
+   {id:'OL10128466W',title:'Jerusalem Crown',caption:'耶路撒冷與經文',cover:13505898},
+   {id:'OL10077333W',title:'Christianity in Modern China',caption:'中國教會歷史',cover:3337951},
+   {id:'OL10010026W',title:'Language of the Heart: How to Read the Bible',caption:'聖經閱讀',cover:3158621},
+   {id:'OL1004971W',title:'Praying With Jesus And Mary',caption:'禱告與默想',cover:1915401},
+   {id:'OL102029W',title:'The Historical Jesus',caption:'福音歷史',cover:4940356},
+   {id:'OL10016417W',title:'Jewish Pesach and the Origins of the Christian Easter',caption:'逾越節與復活',cover:3168093}
+  ]
+ };
+ const folioSide=['left','right'].map((key,i)=>({
+   key,anchor:$('#dawn-page-'+key),img:$('#dawn-image-'+key),
+   title:$('#dawn-title-'+key),author:$('#dawn-author-'+key),index:0,busy:false,
+   lastTurn:performance.now()+i*3800
+ }));
+ const bookImage=(book,size='L')=>`https://covers.openlibrary.org/b/id/${book.cover}-${size}.jpg?default=false`;
+ const bookDestination=book=>`https://openlibrary.org/works/${book.id}`;
+ function preloadBook(book){return new Promise(resolve=>{
+   const img=new Image();let triedMedium=false;
+   img.onload=()=>resolve(img.src);
+   img.onerror=()=>{if(!triedMedium){triedMedium=true;img.src=bookImage(book,'M');}else resolve(null)};
+   img.src=bookImage(book);
+ });}
+ async function turnFolio(side){
+  if(side.busy||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  side.busy=true;
+  let nextIndex=side.index,nextBook,cover;
+  for(let attempt=0;attempt<gospelLeaves[side.key].length-1;attempt++){
+   nextIndex=(nextIndex+1)%gospelLeaves[side.key].length;
+   nextBook=gospelLeaves[side.key][nextIndex];
+   cover=await preloadBook(nextBook);
+   if(cover)break;
+  }
+  if(!cover){side.busy=false;return;}
+  try{
+   const direction=side.key==='left'?1:-1;
+   const first=side.anchor.animate(
+    [{transform:'rotateY(0deg)'},{transform:`rotateY(${direction*79}deg)`}],
+    {duration:880,easing:'cubic-bezier(.62,.05,.4,1)',fill:'forwards'});
+   await first.finished;
+   // Change the real book and the navigation together, at the page-turn midpoint.
+   side.img.src=cover;
+   side.img.alt=nextBook.title+' 書封';
+   side.anchor.href=bookDestination(nextBook);
+   side.anchor.setAttribute('aria-label','開啟 '+nextBook.title);
+   side.title.textContent=nextBook.title;
+   side.author.textContent=nextBook.caption;
+   side.index=nextIndex;
+   first.cancel();
+   const second=side.anchor.animate(
+    [{transform:`rotateY(${direction*-76}deg)`},{transform:'rotateY(0deg)'}],
+    {duration:1040,easing:'cubic-bezier(.18,.8,.28,1)',fill:'none'});
+   await second.finished;
+  }catch(e){ /* Cancelled motion must not break the user's reading. */ }
+  finally{side.busy=false;side.lastTurn=performance.now();}
+ }
+ let motionInterval=0;
+ function maybeTurnPages(){
+  if(document.hidden||entryProgress>.001||progress()<27.9||
+     matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  for(const side of folioSide){
+   if(side.anchor.matches(':hover,:focus-within'))continue;
+   if(performance.now()-side.lastTurn>(side.key==='left'?6100:8200))void turnFolio(side);
+  }
+ }
+ motionInterval=setInterval(maybeTurnPages,550);
+ document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden)folioSide.forEach(side=>side.lastTurn=performance.now());
+ });
+ folioSide.forEach(side=>{
+  side.anchor.addEventListener('pointerenter',()=>side.lastTurn=performance.now());
+  side.anchor.addEventListener('focusin',()=>side.lastTurn=performance.now());
+ });
 
  // Actual Dawn Library catalogue: 21,047 records / 85 paged JSON files.
  // Fetch one page on demand. Never download the whole corpus on first paint.
