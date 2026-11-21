@@ -86,7 +86,9 @@ function drawScene(vh,now){
  magazine.style.setProperty('--magazine-shift-third',(-9*(1-magazineProgress)).toFixed(3)+'svh');
  magazine.setAttribute('aria-hidden',magazineProgress>=.999?'false':'true');
  }
- church.style.pointerEvents=magazineProgress>0?'none':'';
+ // The central church is interactive only after its paper is fully opened.
+ // For the magazine takeover, all church hit targets are disabled again.
+ church.style.pointerEvents=showChurch&&vh>=2.37&&magazineProgress===0?'auto':'none';
  root.dataset.p2Phase=vh<.65?'identity':vh<1.72?'ocean-rise':vh<2.37?'red-sea':magazineProgress>=.999?'magazine':magazineProgress>0?'church-to-magazine':'church';
  // One scroll clock controls church construction and its reversible growth.
  // The completed model is held before the separate Magazine curtain may enter.
@@ -108,5 +110,33 @@ addEventListener('message',e=>{if(!embedded||e.source!==window.parent||e.origin!
  const next=embeddedScene(externalProgress);
  if(next!==sceneVh){displayVh=next;drawScene(next,performance.now());sceneVh=next}
  schedule()});
+
+/* R13: Delegated navigation survives masked logo art and live WebGL embed.
+   Native anchors target _top; this fallback also handles clicks on the
+   visible label/model region if a transparent decorative element is hit. */
+document.addEventListener('click',event=>{
+  if(event.defaultPrevented||root.dataset.p2Phase!=='church')return;
+  const target=event.target;
+  if(!(target instanceof Element))return;
+  const hit=target.closest(
+    '.church-folio__identity-link,.church-folio__english-link,'+
+    '.church-folio__model-entry,.schedule-church-logo,.schedule-church-english,'+
+    '.church-folio__bottom'
+  );
+  if(!hit||!hit.closest('.church-editorial__copy'))return;
+  if(target.closest('a[href]')&&!target.closest(
+    '.church-folio__identity-link,.church-folio__english-link,.church-folio__model-entry'
+  ))return;
+  const url=new URL('/p2/church-tour.html',location.origin);
+  event.preventDefault();
+  // A user-activated top-level navigation, even when P2 lives in its
+  // original homepage iframe; fallback to this frame if top is restricted.
+  try{
+    window.top.location.assign(url.href);
+  }catch(_){
+    location.assign(url.href);
+  }
+},true);
+
 render();
 })();
