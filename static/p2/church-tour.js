@@ -58,7 +58,7 @@ scene.add(sun, sun.target);
 const ambientFill = new DirectionalLight(0xe9efff, 0.6);
 ambientFill.position.set(19, 12, -24);
 scene.add(ambientFill);
-const sanctuaryLight = new DirectionalLight(0xfff0db, 0.52);
+const sanctuaryLight = new DirectionalLight(0xfff0db, 0.40);
 sanctuaryLight.position.set(15.5, 5.1, -1.3);
 sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
@@ -153,11 +153,20 @@ function chooseFinish(name, sourceMaterial) {
 }
 
 // Surrounding ground is separate from the first-layer "white model" base.
-const grounds = new Mesh(new PlaneGeometry(240, 240), finishes.ground);
-grounds.rotation.x = -Math.PI / 2;
-grounds.position.set(9, -0.42, -9);
-grounds.receiveShadow = true;
-scene.add(grounds);
+// EXTERIOR ONLY: a single 240m ground plane previously covered the
+// -2.10m C-shaped sunken forum and concealed its original GLB treads.
+// Four strips leave the 18x18m architectural footprint completely open.
+const siteGround = [
+  [-51,-9,102,240], [69,-9,102,240],
+  [9,51,18,102], [9,-69,18,102]
+];
+for(const [x,z,width,depth] of siteGround){
+  const ground=new Mesh(new PlaneGeometry(width,depth), finishes.ground);
+  ground.rotation.x=-Math.PI/2;
+  ground.position.set(x,-0.42,z);
+  ground.receiveShadow=true;
+  scene.add(ground);
+}
 // Removed the artificial overlaid entrance slab: it conflicted with the original GLB paving.
 
 // Physical architectural doors: pivot and slide ORIGINAL GLB meshes.
@@ -191,6 +200,19 @@ function connectArchitecturalDoors(building) {
   eastChapelSlider.attach(mesh("C EAST CHAPEL large sliding glass door"));
   rearSanctuaryHinge.attach(mesh("SANCTUARY MAIN PUBLIC DOOR"));
   staffSanctuaryHinge.attach(mesh("SANCTUARY STAFF DOOR"));
+  // Hardware belongs to the SAME moving leaf, not the static wall.
+  // Blender V23 explicitly names these real hardware nodes.
+  const attachHardware=(group,prefix)=>{
+    let count=0;
+    building.traverse(object=>{
+      if(object.isMesh && modelName(object.name).startsWith(modelName(prefix))){
+        group.attach(object);count++;
+      }
+    });
+    return count;
+  };
+  attachHardware(rearSanctuaryHinge,"ENTRY HANDLE NORTH PUBLIC");
+  attachHardware(staffSanctuaryHinge,"ENTRY HANDLE SOUTH STAFF");
   northCourtSlider.attach(mesh("A NORTH COURT double-wide glass door"));
   doorsAttached = true;
 }
@@ -411,7 +433,7 @@ function updateDaylight(t,duration) {
   // prevents the previously rejected bright sunlight teleport.
   const angle=phase*Math.PI*2;
   const solar=Math.max(0,Math.sin(angle));
-  const daylight=Math.pow(solar,.64);
+  const daylight=solar*solar*(3-2*solar);
   const season=Math.min(1,Math.max(0,t/duration));
   // Sun moves SOUTH from screen left to screen right while it is up;
   // its return happens below the horizon during night.
@@ -425,11 +447,13 @@ function updateDaylight(t,duration) {
     1.0-.08*morningEvening-.09*winter,
     .98-.21*morningEvening+.015*winter
   );
-  sun.intensity=Math.max(0.06,.25+1.7*daylight-.18*winter);
+  sun.intensity=Math.max(0.03,.12+1.75*daylight-.14*winter);
+  // Prevent a constant hard shaft of light remaining through the night.
+  sanctuaryLight.intensity=.17+.28*daylight;
   // Daylight changes; the wall PBR base colors remain from the original GLB.
   ambientFill.color.setRGB(.79+.06*winter,.86+.045*winter,.93+.04*winter);
   ambientFill.intensity=.50+.38*daylight;
-  renderer.toneMappingExposure=.85+.13*daylight;
+  renderer.toneMappingExposure=.90+.09*daylight;
   updateMapleSeason(t,duration);
 }
 
