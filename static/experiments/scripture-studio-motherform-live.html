@@ -865,7 +865,7 @@ for(const [id,mode] of [['plateZh','vertical'],['plateEn','horizontal']]){
 }
 renderP2Palette();
 $('plateZh').classList.toggle('experimental',!!stage.provisional&&!document.body.classList.contains('p2Embedded'));
-$('plateEn').classList.toggle('experimental',!!stage.provisional);
+$('plateEn').classList.toggle('experimental',!!stage.provisional&&!document.body.classList.contains('p2Embedded'));
 $('squareStudyStatus').textContent='版面：'+$('artDirection').selectedOptions[0].text+' · '+(stage.provisional?'V18 語義斷點為研究候選；構圖仍待 H4/H6 與實際字型驗收，不可正式匯出':'初步構圖驗收；仍需完成印刷與跨經文檢驗');
 $('plateZh').classList.toggle('showGuides',showGuides);$('plateEn').classList.toggle('showGuides',showGuides);
 const allZh=[...$('formeZh').querySelectorAll('.column>.piece.zh')].map(n=>n.dataset.original).join(''),allEn=[...$('formeZh').querySelectorAll('.column>.piece.en')].map(n=>n.dataset.original).join('');const printedEn=[...$('formeZh').querySelectorAll('.column>.piece.en')].map(n=>n.textContent).join('');const exact=allZh===zhExact&&allEn===enExact&&printedEn===enDisplay;
