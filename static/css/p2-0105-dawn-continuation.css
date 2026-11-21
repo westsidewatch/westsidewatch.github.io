@@ -693,3 +693,68 @@
 #dawn-second .dawn-reading-room{padding-top:clamp(14px,2vw,30px)!important}
 #dawn-second .dawn-reading-room .dawn-wall__tail{justify-content:flex-end!important}
 #dawn-second .dawn-catalogue__heading p:empty{display:none!important}
+
+/* R26 · Authentic Dawn Library chromatic field, copied by semantic role from
+   OS .sites-section-dawn-library. This is the bookstore's SURFACE grammar,
+   not the P2 05 scripture stamp palette and not a solid harvest backdrop.
+   Keep the square covers, navigation and original scripture composition. */
+#dawn-second[data-ws-scope="dawn-library"]{
+ --ws-branch:var(--ws-harvest);
+ --ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 13%,var(--ws-paper));
+ --ws-branch-raised:color-mix(in oklab,var(--ws-harvest) 20%,var(--ws-paper));
+ --ws-branch-rule:color-mix(in oklab,var(--ws-harvest) 38%,transparent);
+ --ws-material:color-mix(in oklab,var(--ws-harvest) 9%,var(--ws-paper));
+ --ws-engraving:color-mix(in oklab,var(--ws-harvest) 52%,#4b3822);
+ background:var(--ws-branch-surface)!important;color:var(--ws-ink)!important;
+ scrollbar-color:var(--ws-harvest) var(--ws-branch-surface)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{
+ background:var(--ws-branch-surface)!important;
+ border-bottom:1px solid var(--ws-branch-rule)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue{
+ background:var(--ws-branch-surface)!important;color:var(--ws-ink)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room__eyebrow,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-wall__folio,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__heading span,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__cover-typography>small{
+ color:var(--ws-ink)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__return,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__back,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room .dawn-wall__tail button,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__more button{
+ color:var(--ws-ink)!important;border-bottom-color:var(--ws-branch-rule)!important;
+ background:transparent!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__return-en{color:var(--ws-ink)!important}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__return:hover,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__back:hover{color:var(--ws-harvest)!important}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room__heading,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__heading,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__nav,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__nav input{
+ border-color:var(--ws-branch-rule)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room__heading h2{color:var(--ws-ink)!important}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-wall__grid--curated>.dawn-feature{
+ background:var(--ws-branch-raised)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-cover__sleeve,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-wall__tile.dawn-cover,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__cover-card--unresolved{
+ background:var(--ws-branch-raised)!important;
+ border-color:var(--ws-branch-rule)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-feature__editorial{
+ background:linear-gradient(180deg,rgba(37,37,37,.40),transparent 38%,rgba(37,37,37,.74) 100%)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-feature__open{border-top-color:var(--ws-paper)!important}
+@media(max-width:760px){
+ #dawn-second[data-ws-scope="dawn-library"]{
+ --ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 3%,var(--ws-paper));
+ }
+}
