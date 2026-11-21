@@ -3,8 +3,8 @@
   "id": "jerusalem-3000",
   "title": "耶路撒冷三千年",
   "subtitle": "JERUSALEM · 3000 YEARS",
-  "description": "十二本原書選定。十一幅已定位到來源作品的圖像；一部建築考古圖集原版內頁仍須建立可靠直連。外部圖像需再做真實瀏覽器載入與權利驗收。",
-  "curationStatus": "12-books-selected-11-authentic-visual-assets",
+  "description": "十二部實際出版物，每部對應一幅可追溯的原書圖版、攝影原作或館藏影像。遠端圖片載入與重用授權、桌面手機視覺和反向動效尚待實際瀏覽器驗收。",
+  "curationStatus": "12-books-selected-12-source-matched-illustrations-browser-QA-pending",
   "sourceCollection": "/dawn-library/collections/jerusalem-3000/maps/",
   "display": {
     "mode": "mersi-counterflow",
@@ -146,11 +146,16 @@
       "creator": "Ermete Pierotti",
       "year": "1864",
       "kind": "ARCHAEOLOGICAL PLATES",
-      "caption": "聖殿及城牆測繪、建築剖面與考古圖版",
+      "caption": "金門西側建築圖版 · 原書第 XIX 圖",
       "sourceWork": "https://www.gutenberg.org/ebooks/44241",
       "curationMedium": "architectural-plates",
-      "imageStatus": "image-asset-pending",
-      "media": null,
+      "imageStatus": "source-matched-period-plate-external-browser-load-unchecked",
+      "media": {
+        "src": "https://world4.eu/wp-content/uploads/2021/08/gate-western-view.jpg",
+        "source": "https://world4.eu/golden-gate/",
+        "alt": "Ermete Pierotti, Jerusalem Explored, Plate XIX — Western view of the Golden Gate",
+        "type": "image"
+      },
       "destination": "https://www.gutenberg.org/ebooks/44241"
     },
     {
