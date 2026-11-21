@@ -6,11 +6,11 @@
  */
 import {
   t as Group, l as MeshStandardMaterial, M as Mesh,
-  y as BoxGeometry, u as CylinderGeometry, p as Vector3,
+  y as BoxGeometry, p as Vector3,
   G as GLTFLoader, W as WebGLRenderer, S as SRGBColorSpace,
   A as ACESFilmicToneMapping, P as PCFSoftShadowMap,
   a as Scene, H as HemisphereLight, D as DirectionalLight,
-  b as PlaneGeometry, N as OrthographicCamera, d as DoubleSide
+  b as PlaneGeometry, o as PerspectiveCamera, d as DoubleSide
 } from "../p2-maquette/assets/GLTFLoader-j388d5bW.js";
 
 const canvas = document.querySelector("#church-canvas");
@@ -30,16 +30,14 @@ renderer.setClearColor(0xd7d8cf, 1);
 // Perspective projection, using the locally bundled Three.js camera.
 // Projection is explicitly recalculated on resize rather than depending
 // on the maquette's orthographic-camera settings.
-const camera = new OrthographicCamera(-1, 1, 1, -1, 0.07, 220);
+const camera = new PerspectiveCamera(59, 1, 0.055, 170);
 function resize() {
   const width = Math.max(1, window.innerWidth);
   const height = Math.max(1, window.innerHeight);
   renderer.setSize(width, height, false);
-  const near = camera.near, far = camera.far;
-  const vfov = (innerWidth < 650 ? 66 : 58) * Math.PI / 180;
-  const top = near * Math.tan(vfov / 2), right = top * (width / height);
-  camera.projectionMatrix.makePerspective(-right, right, top, -top, near, far);
-  camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
+  camera.aspect = width / height;
+  camera.fov = width < 650 ? 70 : 59;
+  camera.updateProjectionMatrix();
 }
 window.addEventListener("resize", resize, { passive: true });
 resize();
@@ -65,17 +63,17 @@ sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
 
 const finishes = {
-  masonry: new MeshStandardMaterial({ color: 0xd3c5b0, roughness: 0.89 }),
-  paleStone: new MeshStandardMaterial({ color: 0xe9dfcc, roughness: 0.85 }),
-  plaster: new MeshStandardMaterial({ color: 0xe4d9c7, roughness: 0.94 }),
-  floor: new MeshStandardMaterial({ color: 0xb8a28a, roughness: 0.86 }),
-  courtyard: new MeshStandardMaterial({ color: 0xc6bba5, roughness: 0.9 }),
-  roof: new MeshStandardMaterial({ color: 0x5d655f, roughness: 0.83, metalness: 0.06 }),
+  masonry: new MeshStandardMaterial({ color: 0xcad0c8, roughness: 0.89 }),
+  paleStone: new MeshStandardMaterial({ color: 0xe3e5dc, roughness: 0.85 }),
+  plaster: new MeshStandardMaterial({ color: 0xe9eae5, roughness: 0.94 }),
+  floor: new MeshStandardMaterial({ color: 0xcac2b5, roughness: 0.86 }),
+  courtyard: new MeshStandardMaterial({ color: 0xd0cec2, roughness: 0.9 }),
+  roof: new MeshStandardMaterial({ color: 0xc4c9c2, roughness: 0.83, metalness: 0.04, side: DoubleSide }),
   glazing: new MeshStandardMaterial({
-    color: 0xa2c1c0, roughness: 0.14, metalness: 0.17,
-    transparent: true, opacity: 0.28, depthWrite: false, side: DoubleSide
+    color: 0xc3d6d7, roughness: 0.14, metalness: 0.17,
+    transparent: true, opacity: 0.22, depthWrite: false, side: DoubleSide
   }),
-  mullion: new MeshStandardMaterial({ color: 0x625e51, roughness: 0.49, metalness: 0.52 }),
+  mullion: new MeshStandardMaterial({ color: 0x707772, roughness: 0.49, metalness: 0.52 }),
   timber: new MeshStandardMaterial({ color: 0x927254, roughness: 0.75 }),
   joinery: new MeshStandardMaterial({ color: 0x765943, roughness: 0.71 }),
   pew: new MeshStandardMaterial({ color: 0x79593f, roughness: 0.69 }),
@@ -88,17 +86,21 @@ const finishes = {
   }),
   earth: new MeshStandardMaterial({ color: 0x81927c, roughness: 1 }),
   metal: new MeshStandardMaterial({ color: 0x696e69, roughness: 0.49, metalness: 0.66 }),
-  ivory: new MeshStandardMaterial({ color: 0xe4ddd1, roughness: 0.7 }),
-  ground: new MeshStandardMaterial({ color: 0xb4b2a7, roughness: 1 })
+  ivory: new MeshStandardMaterial({ color: 0xf2f1eb, roughness: 0.7 }),
+  ground: new MeshStandardMaterial({ color: 0xc5c8c0, roughness: 1 })
 };
 
 function chooseFinish(name) {
   const n = name.toLowerCase();
+  // SOUTH CROSS WALL consists of four SOLID quadrants surrounding a void.
+  // Never make those large wall solids emissive gold.
+  if (/south cross wall|solid quadrant/.test(n)) return finishes.plaster;
   if (/cross|crucifix/.test(n)) return finishes.cross;
   if (/glass|glazing|window pane|glazed/.test(n)) return finishes.glazing;
   if (/mullion|window frame|metal frame|railing|handrail/.test(n)) return finishes.mullion;
   if (/roof|skylight surround|roof edge/.test(n)) return finishes.roof;
   if (/pew|pulpit|lectern|table|chair|cafe|bookcase|counter/.test(n)) return finishes.pew;
+  if (/tall single white pivot door/.test(n)) return finishes.ivory;
   if (/entrance.*door|door.*entrance|door leaf|door panel/.test(n)) return finishes.joinery;
   if (/door|jamb|threshold|lintel/.test(n)) return finishes.ivory;
   if (/maple|tree|foliage|leaf|shrub|plant/.test(n)) return finishes.leaves;
@@ -124,37 +126,36 @@ approach.position.set(9, -0.17, 7.25);
 approach.receiveShadow = true;
 scene.add(approach);
 
-// A separate articulated real-space entry leaf, never a fake screen wipe.
-// The leaf pivots from its actual south-side door jamb into the building.
+// Physical architectural doors: pivot and slide ORIGINAL GLB meshes.
+// The former build incorrectly placed a fake short door in front of the
+// intact 4.2-metre south entrance, creating conflicting geometry.
 const entranceHinge = new Group();
-entranceHinge.position.set(8.16, 0.02, 0.23);
-const leaf = new Mesh(new BoxGeometry(1.72, 2.65, 0.095), finishes.ivory);
-leaf.position.set(0.86, 1.335, 0);
-leaf.castShadow = true;
-leaf.receiveShadow = true;
-entranceHinge.add(leaf);
-const doorGlass = new Mesh(new BoxGeometry(0.78, 1.38, 0.102), finishes.glazing);
-doorGlass.position.set(0.85, 1.66, 0);
-entranceHinge.add(doorGlass);
-const handle = new Mesh(new BoxGeometry(0.035, 0.3, 0.055), finishes.mullion);
-handle.position.set(1.53, 1.17, 0.085);
-entranceHinge.add(handle);
-const exteriorSill = new Mesh(new BoxGeometry(1.83, 0.065, 0.32), finishes.floor);
-exteriorSill.position.set(9.04, 0.022, 0.23);
-scene.add(exteriorSill, entranceHinge);
+entranceHinge.position.set(8.16, 0, 0);
+const innerSouthSlider = new Group();
+const eastChapelSlider = new Group();
+const rearSanctuaryHinge = new Group();
+rearSanctuaryHinge.position.set(12, 0, -15.25);
+const northCourtSlider = new Group();
+let doorsAttached = false;
 
-function hideOriginalSouthLeaf(root) {
-  root.updateMatrixWorld(true);
-  root.traverse(object => {
-    if (!object.isMesh || !/door/i.test(object.name)) return;
-    if (!/leaf|panel|entrance|south/i.test(object.name)) return;
-    if (!object.geometry.boundingBox) object.geometry.computeBoundingBox();
-    const center = object.geometry.boundingBox.getCenter(new Vector3());
-    object.localToWorld(center);
-    if (Math.abs(center.x - 9) < 2.3 && Math.abs(center.z) < 1.35) {
-      object.visible = false;
-    }
-  });
+function connectArchitecturalDoors(building) {
+  const mesh = name => {
+    let result = null;
+    building.traverse(object => {
+      if (!result && object.isMesh && object.name.startsWith(name)) result = object;
+    });
+    if (!result) throw new Error("GLB missing original building door: " + name);
+    return result;
+  };
+  scene.add(entranceHinge, innerSouthSlider, eastChapelSlider,
+            rearSanctuaryHinge, northCourtSlider);
+  scene.updateMatrixWorld(true);
+  entranceHinge.attach(mesh("TALL SINGLE WHITE PIVOT DOOR"));
+  innerSouthSlider.attach(mesh("D SOUTH COURT inner glass vestibule door"));
+  eastChapelSlider.attach(mesh("C EAST CHAPEL large sliding glass door"));
+  rearSanctuaryHinge.attach(mesh("SANCTUARY MAIN PUBLIC DOOR"));
+  northCourtSlider.attach(mesh("A NORTH COURT double-wide glass door"));
+  doorsAttached = true;
 }
 
 async function loadArchitecture() {
@@ -178,30 +179,41 @@ async function loadArchitecture() {
   const building = gltf.scene;
   building.traverse(object => {
     if (!object.isMesh) return;
+    if (/^Model frame|study silhouette|construction guide|debug marker/i.test(object.name)) {
+      object.visible = false;
+      return;
+    }
     object.material = chooseFinish(object.name);
     object.castShadow = object.material !== finishes.glazing && object.material !== finishes.leaves;
     object.receiveShadow = true;
     if (object.material === finishes.glazing) object.renderOrder = 2;
   });
-  hideOriginalSouthLeaf(building);
   scene.add(building);
+  connectArchitecturalDoors(building);
 }
 
 // The touring camera belongs to the actual 3D world, not the exterior
 // maquette orbit camera. All positions are metres in GLB scene coordinates.
+// Coordinate-verified route, following the actual openings.
+// Entrance x8.16..10.54 z0; south inner glass z-6;
+// courtyard x6..12 z-6..-12; east sliding door x12 z-7.5..-10.5;
+// rear sanctuary door x12 z-15.25..-14.15; north court glass z-12.
 const route = [
-  { at: 0,  p: [13.7, 5.3, 14.4], look: [9.0, 2.6, -0.1] },
-  { at: 6,  p: [10.6, 2.6, 7.4], look: [9.0, 2.0, 0.0] },
-  { at: 12, p: [9.0, 1.76, 3.15], look: [9.0, 1.7, -3.8] },
-  { at: 19, p: [9.0, 1.76, -2.15], look: [9.0, 1.8, -9.1] },
-  { at: 28, p: [9.0, 1.81, -8.9], look: [11.5, 2.2, -10.1] },
-  { at: 37, p: [12.55, 1.75, -9.1], look: [15.0, 2.1, -9.8] },
-  { at: 45, p: [15.4, 1.80, -10.7], look: [15.1, 2.7, -1.1] },
-  { at: 54, p: [13.1, 1.89, -9.5], look: [9.0, 2.1, -10.7] },
-  { at: 62, p: [5.9, 1.82, -11.7], look: [2.2, 0.6, -15.1] },
-  { at: 70, p: [4.4, 2.55, -14.1], look: [6.5, 1.7, -9.0] },
-  { at: 80, p: [9.0, 1.84, -8.2], look: [9.0, 2.0, -2.5] },
-  { at: 92, p: [9.0, 1.77, -3.3], look: [9.0, 2.0, 0.8] }
+  { at: 0, p: [10.5, 2.20, 11.2], look: [9.35, 3.1, 0] },
+  { at: 6, p: [9.35, 1.85, 5.0], look: [9.35, 2.4, 0] },
+  { at: 11, p: [9.35, 1.82, 1.4], look: [9.35, 1.9, -4] },
+  { at: 15, p: [9.35, 1.82, -1.6], look: [9.35, 1.83, -6.2] },
+  { at: 20, p: [9.00, 1.82, -4.8], look: [9.00, 2.1, -8] },
+  { at: 26, p: [9.00, 1.82, -8.9], look: [9.00, 2.8, -11.4] },
+  { at: 31, p: [9.00, 1.82, -8.9], look: [12.7, 2.3, -8.9] },
+  { at: 37, p: [11.6, 1.82, -9.0], look: [15.0, 2.1, -9.0] },
+  { at: 42, p: [14.2, 1.82, -9.1], look: [15.0, 2.2, -4.0] },
+  { at: 52, p: [15.0, 1.82, -9.1], look: [15.0, 3.8, -0.1] },
+  { at: 60, p: [14.2, 1.82, -10.2], look: [12.1, 1.9, -14.8] },
+  { at: 68, p: [12.5, 1.82, -14.7], look: [11.4, 1.85, -14.7] },
+  { at: 74, p: [11.6, 1.82, -14.6], look: [9.3, 1.7, -13.5] },
+  { at: 81, p: [9.1, 1.83, -13.5], look: [9.0, 1.9, -10] },
+  { at: 89, p: [9.0, 1.82, -9.0], look: [9.0, 2.0, -5.3] }
 ];
 
 function clamp01(t) { return Math.min(1, Math.max(0, t)); }
@@ -248,7 +260,12 @@ function animate(now) {
   if (!prefersReducedMotion) elapsed += dt;
   const duration = route[route.length - 1].at;
   // Brief pause at the last view; return to exterior on the next cycle.
-  const t = prefersReducedMotion ? 43 : (elapsed % (duration + 5));
+  // A deterministic visual QA position, without adding any on-screen text.
+  const params = new URLSearchParams(location.search);
+  const proof = params.get("proofFrame");
+  const t = proof !== null && Number.isFinite(Number(proof))
+    ? Math.min(duration, Math.max(0, Number(proof)))
+    : (prefersReducedMotion ? 42 : elapsed % (duration + 6));
   const sample = positionAlongRoute(t);
   camera.position.set(sample.p[0], sample.p[1], sample.p[2]);
   lookAtVector.set(sample.look[0], sample.look[1], sample.look[2]);
@@ -260,7 +277,13 @@ function animate(now) {
     yawOffset *= Math.pow(0.89, dt * 60);
     pitchOffset *= Math.pow(0.89, dt * 60);
   }
-  entranceHinge.rotation.y = ease((t - 7.4) / 5.2) * 1.47;
+  if (doorsAttached) {
+    entranceHinge.rotation.y = 1.5 * ease((t - 6) / 6.5);
+    innerSouthSlider.position.x = -2.14 * ease((t - 14) / 5);
+    eastChapelSlider.position.z = 3.16 * ease((t - 30) / 6);
+    rearSanctuaryHinge.rotation.y = 1.43 * ease((t - 58) / 8);
+    northCourtSlider.position.x = 2.15 * ease((t - 76) / 7);
+  }
   renderer.render(scene, camera);
 }
 
