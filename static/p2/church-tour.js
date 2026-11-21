@@ -377,23 +377,30 @@ function daylightAt(t) {
 }
 function updateDaylight(t,duration) {
   const phase=daylightAt(t);
-  const solar=Math.sin(Math.PI*phase);
+  // Each chapter runs a full sunrise-day-sunset-night cycle. A circular
+  // solar trajectory makes the boundary 23:59 -> 00:00 continuous and
+  // prevents the previously rejected bright sunlight teleport.
+  const angle=phase*Math.PI*2;
+  const solar=Math.max(0,Math.sin(angle));
+  const daylight=Math.pow(solar,.64);
   const season=Math.min(1,Math.max(0,t/duration));
-  // The south-wall cross sunlight travels from left to right as specified.
-  sun.position.set(-14+48*phase, 2.5+25*Math.max(0,solar), 25);
+  // Sun moves SOUTH from screen left to screen right while it is up;
+  // its return happens below the horizon during night.
+  sun.position.set(9-25*Math.cos(angle),1.3+25*Math.sin(angle),25);
   sun.target.position.set(15,2.7,-5);
   sun.target.updateMatrixWorld();
   const winter=Math.max(0,Math.min(1,(season-.73)/.16));
-  const morningEvening=Math.pow(1-solar,1.55);
+  const morningEvening=1-solar;
   sun.color.setRGB(
     1.0-.21*winter,
     1.0-.08*morningEvening-.09*winter,
     .98-.21*morningEvening+.015*winter
   );
-  sun.intensity=1.7+1.8*solar-(winter*.45);
-  // Winter has cool ambient blue-grey shadows, not blue/green walls.
+  sun.intensity=Math.max(0.03,.12+3.4*daylight-.33*winter);
+  // Daylight changes; the wall PBR base colors remain from the original GLB.
   ambientFill.color.setRGB(.79+.06*winter,.86+.045*winter,.93+.04*winter);
-  renderer.toneMappingExposure=.88+.13*solar;
+  ambientFill.intensity=.28+.7*daylight;
+  renderer.toneMappingExposure=.74+.25*daylight;
   updateMapleSeason(t,duration);
 }
 
