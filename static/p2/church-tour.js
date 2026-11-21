@@ -308,11 +308,17 @@ async function loadArchitecture() {
       return;
     }
     object.material = chooseFinish(object.name, originalMaterial);
-    if (/^roof/i.test(modelName(object.name)) && object.material?.color)
+    const part = modelName(object.name);
+    if (/^roof/i.test(part) && object.material?.color)
       originalStructuralMaterials.set(object.material,object.material.color.clone());
-    object.castShadow = object.material !== finishes.glazing && object.material !== finishes.leaves;
+    const isGlazing = /glass|glazing|glazed|window pane/.test(part);
+    if (isGlazing) {
+      object.material.transparent = true;
+      object.material.depthWrite = false;
+      object.renderOrder = 2;
+    }
+    object.castShadow = !isGlazing && object.material !== finishes.leaves;
     object.receiveShadow = true;
-    if (object.material === finishes.glazing) object.renderOrder = 2;
   });
   scene.add(building);
   addNativeLandscape(building);
