@@ -128,7 +128,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for file in index.html styles.css app.js catalog.json; do
+          for file in index.html styles.css app.js catalog.json health.html; do
             test -s "static/shupian/$file"
           done
           mkdir -p public/shupian
@@ -173,7 +173,8 @@ jobs:
             html="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/?verify=${GITHUB_SHA}" || true)"
             js="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/app.js?verify=${GITHUB_SHA}" || true)"
             json="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/catalog.json?verify=${GITHUB_SHA}" || true)"
-            if [[ "${html}" == *'film-grid'* && "${html}" == *'cinema-video'* && "${js}" == *'function drawCards'* && "${json}" == *'異能研究所'* ]]; then
+            health="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/health.html?verify=${GITHUB_SHA}" || true)"
+            if [[ "${html}" == *'film-grid'* && "${html}" == *'cinema-video'* && "${js}" == *'function drawCards'* && "${json}" == *'異能研究所'* && "${health}" == *'RELEASE HEALTH'* ]]; then
               echo "Published Shupian cinema verified: ${base}/shupian/ at ${GITHUB_SHA}"
               exit 0
             fi
