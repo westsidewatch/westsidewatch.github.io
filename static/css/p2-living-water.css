@@ -1036,7 +1036,7 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index{
 body[data-ws-scope="p2"] .church-editorial__copy{
   display:grid;
   grid-template-columns:minmax(0,1fr);
-  grid-template-rows:minmax(0,24fr) minmax(0,34fr) minmax(0,17fr) minmax(0,25fr);
+  grid-template-rows:minmax(0,25fr) minmax(0,34fr) minmax(0,17fr) minmax(0,24fr);
   row-gap:clamp(3px,.55svh,8px);
   justify-items:stretch;
   align-content:stretch;
@@ -1211,7 +1211,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
 }
 @media(max-height:720px) and (min-width:701px){
   body[data-ws-scope="p2"] .church-editorial__copy{
-    grid-template-rows:minmax(0,24fr) minmax(0,34fr) minmax(0,17fr) minmax(0,25fr);
+    grid-template-rows:minmax(0,25fr) minmax(0,34fr) minmax(0,17fr) minmax(0,24fr);
   }
 }
 @media(max-width:700px){
