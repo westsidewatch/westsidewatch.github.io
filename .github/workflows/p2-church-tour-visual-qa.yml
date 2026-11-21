@@ -29,19 +29,14 @@ jobs:
               --enable-webgl --ignore-gpu-blocklist \
               --enable-unsafe-swiftshader --use-gl=angle --use-angle=swiftshader \
               --disable-background-timer-throttling --virtual-time-budget=12000 \
-              --window-size=1200,760 --hide-scrollbars \
+              --window-size=900,600 --hide-scrollbars \
               --screenshot="/tmp/p2-frame-$frame.png" \
               "http://127.0.0.1:8765/p2/church-tour.html?proofFrame=$frame" \
               >/tmp/p2-chrome-$frame.log 2>&1 || true
             test -s "/tmp/p2-frame-$frame.png"
-            if command -v convert >/dev/null 2>&1; then
-              convert "/tmp/p2-frame-$frame.png" -resize 760x -strip -quality 57 "/tmp/p2-frame-$frame.jpg"
-            else
-              ffmpeg -hide_banner -loglevel error -y -i "/tmp/p2-frame-$frame.png" -vf scale=760:-2 -q:v 11 "/tmp/p2-frame-$frame.jpg"
-            fi
-            bytes=$(wc -c < "/tmp/p2-frame-$frame.jpg")
-            echo "Proof $frame JPEG bytes: $bytes"
-            if [ "$bytes" -gt 160000 ]; then echo "Proof image too large"; exit 1; fi
-            echo "P2_FRAME_${frame}_BASE64=$(base64 -w0 "/tmp/p2-frame-$frame.jpg")"
+            bytes=$(wc -c < "/tmp/p2-frame-$frame.png")
+            echo "Proof $frame PNG bytes: $bytes"
+            if [ "$bytes" -gt 1300000 ]; then echo "Proof image too large"; exit 1; fi
+            echo "P2_FRAME_${frame}_PNG64=$(base64 -w0 "/tmp/p2-frame-$frame.png")"
             grep -Ei "WebGL.*(error|disabled)|Uncaught|GLB missing|model load failed|shader error|failed to fetch" /tmp/p2-chrome-$frame.log | head -10 || true
           done
