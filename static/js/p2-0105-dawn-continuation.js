@@ -42,13 +42,13 @@
  addEventListener('resize',schedule,{passive:true});prior.addEventListener('load',schedule);
 
  // These are the seven exact Design OS color roles already used by Olive 04.
- const token=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-crimson','--ws-daylight-mauve'];
+ const token=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-harvest','--ws-daylight-mauve'];
  const osStyle=getComputedStyle(document.documentElement);
  const sampler=document.createElement('canvas');sampler.width=sampler.height=1;
  const ctx=sampler.getContext('2d',{willReadFrequently:true});
  function osColor(name,fallback){const raw=osStyle.getPropertyValue(name).trim();if(/^#[\da-f]{6}$/i.test(raw))return raw.toLowerCase();
   if(raw&&ctx&&window.CSS?.supports('color',raw)){ctx.clearRect(0,0,1,1);ctx.fillStyle=raw;ctx.fillRect(0,0,1,1);const data=ctx.getImageData(0,0,1,1).data;if(data[3]===255)return '#'+[...data].slice(0,3).map(v=>v.toString(16).padStart(2,'0')).join('');}return fallback;}
- const palette=token.map((t,i)=>osColor(t,['#5b8fa8','#a2872a','#cebd74','#738a5a','#b8944a','#a14d57','#b085ab'][i]));
+ const palette=token.map((t,i)=>osColor(t,['#5b8fa8','#a2872a','#cebd74','#738a5a','#b8944a','#b8944a','#b085ab'][i]));
  const harvest=palette[4],gold=osColor('--ws-morning-gold','#d2bc69'),paper=osColor('--ws-paper','#faf9f5'),papyrus=osColor('--ws-papyrus','#eee4c9');
  function hexMix(a,b,t){return '#'+[1,3,5].map(i=>Math.round(mix(parseInt(a.slice(i,i+2),16),parseInt(b.slice(i,i+2),16),clamp(t))).toString(16).padStart(2,'0')).join('')}
  function sevenInk(p){const t=clamp((p-.22)/.62)*6,i=Math.min(5,Math.floor(t));return hexMix(palette[i],palette[i+1],t-i)}
