@@ -204,11 +204,14 @@ function connectArchitecturalDoors(building) {
   scene.add(entranceHinge, innerSouthSlider, eastChapelSlider,
             rearSanctuaryHinge, staffSanctuaryHinge, northCourtSlider);
   scene.updateMatrixWorld(true);
-  entranceHinge.attach(mesh("TALL SINGLE WHITE PIVOT DOOR"));
+  const southDoor = mesh("TALL SINGLE WHITE PIVOT DOOR");
+  const northPublicDoor = mesh("SANCTUARY MAIN PUBLIC DOOR");
+  const southStaffDoor = mesh("SANCTUARY STAFF DOOR");
+  entranceHinge.attach(southDoor);
   innerSouthSlider.attach(mesh("D SOUTH COURT inner glass vestibule door"));
   eastChapelSlider.attach(mesh("C EAST CHAPEL large sliding glass door"));
-  rearSanctuaryHinge.attach(mesh("SANCTUARY MAIN PUBLIC DOOR"));
-  staffSanctuaryHinge.attach(mesh("SANCTUARY STAFF DOOR"));
+  rearSanctuaryHinge.attach(northPublicDoor);
+  staffSanctuaryHinge.attach(southStaffDoor);
   // The GLB handles were baked as independent world-coordinate meshes.
   // Merely attaching them to the hinge kept their old floating offsets.
   // Replace just those small handles with door-local hardware; the hinge
@@ -250,9 +253,9 @@ function connectArchitecturalDoors(building) {
     lever.name = 'Attached handle lever - ' + label;
     door.add(plate, lever);
   }
-  addDoorLocalHandle(mesh("TALL SINGLE WHITE PIVOT DOOR"), "south entry");
-  addDoorLocalHandle(mesh("SANCTUARY MAIN PUBLIC DOOR"), "north public");
-  addDoorLocalHandle(mesh("SANCTUARY STAFF DOOR"), "south staff");
+  addDoorLocalHandle(southDoor, "south entry");
+  addDoorLocalHandle(northPublicDoor, "north public");
+  addDoorLocalHandle(southStaffDoor, "south staff");
   northCourtSlider.attach(mesh("A NORTH COURT double-wide glass door"));
   doorsAttached = true;
 }
