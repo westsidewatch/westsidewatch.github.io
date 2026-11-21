@@ -307,16 +307,54 @@
  async function showPage(page){if(loading||!index||page<1||page>index.pageCount)return;loading=true;more.disabled=true;prevButton.disabled=true;
   try{if(!cache.has(page)){const file=index.pages[page-1],r=await fetch('/dawn-library/catalogue/'+file);if(!r.ok)throw Error('Missing catalogue page '+page);
    const data=await r.json();cache.set(page,data.works||[]);}
-   currentPage=page;loaded=cache.get(page);search.value='';renderWorks();if(page===1)loadWallCovers();}
+   currentPage=page;loaded=cache.get(page);search.value='';await loadCatalogueCoverLookup();renderWorks();if(page===1)loadWallCovers();}
   catch(e){pageStatus.textContent='館藏載入中斷，請重試';console.error(e)}
   finally{loading=false;more.disabled=currentPage>=index.pageCount;prevButton.disabled=currentPage<=1;}}
- function renderWorks(){const needle=search.value.trim().toLocaleLowerCase(),matches=loaded.filter(w=>!needle||[w.title,w.creator,String(w.date||'')].some(v=>String(v||'').toLocaleLowerCase().includes(needle)));
-  const fragment=document.createDocumentFragment();matches.forEach((work,i)=>{
-   const li=document.createElement('li'),num=document.createElement('span'),title=document.createElement('h3'),creator=document.createElement('p'),date=document.createElement('span');
-   num.className='work-number';num.textContent=String((currentPage-1)*index.pageSize+loaded.indexOf(work)+1).padStart(4,'0');
-   title.textContent=work.title||'Untitled';creator.className='work-creator';creator.textContent=work.creator||'作者未詳';
-   date.className='work-date';date.textContent=work.date?String(work.date):'HISTORICAL EDITION';li.append(num,title,creator,date);fragment.append(li);
-  });works.replaceChildren(fragment);pageStatus.textContent=`第 ${currentPage} / ${index.pageCount} 頁 · ${matches.length} 筆 · 全部 ${Number(index.count).toLocaleString('en-CA')} 筆`;
+ // Genuine cover images from Dawn's existing storefront, never assigned to a different book.
+ let coverLookup=null,coverLookupLoading=null;
+ function normalizeTitle(s){return String(s||'').toLocaleLowerCase().normalize('NFKC').replace(/[^\\p{L}\\p{N}]+/gu,' ').trim();}
+ async function loadCatalogueCoverLookup(){
+  if(coverLookup)return coverLookup;
+  if(coverLookupLoading)return coverLookupLoading;
+  coverLookupLoading=(async()=>{
+   const map=new Map();
+   try{
+    const response=await fetch('/dawn-library/storefront.json');
+    if(!response.ok)throw Error('Storefront unavailable');
+    const data=await response.json();
+    for(const shelf of (data.shelves||[]))for(const work of (shelf.items||[])){
+     if(work.title&&work.cover?.url&&work.source?.url)map.set(normalizeTitle(work.title),work);
+    }
+   }catch(error){console.warn('[Dawn catalogue covers]',error);}
+   coverLookup=map;return map;
+  })();
+  return coverLookupLoading;
+ }
+ function renderWorks(){
+  const needle=search.value.trim().toLocaleLowerCase();
+  const matches=loaded.filter(w=>!needle||[w.title,w.creator,String(w.date||'')].some(v=>String(v||'').toLocaleLowerCase().includes(needle)));
+  const frag=document.createDocumentFragment();
+  matches.forEach((work,i)=>{
+   const li=document.createElement('li');
+   li.className='dawn-catalogue__sleeve';
+   const source=coverLookup?.get(normalizeTitle(work.title));
+   const card=document.createElement(source?.source?.url?'a':'div');
+   card.className='dawn-catalogue__cover-card'+(source?.cover?.url?' dawn-catalogue__cover-card--image':' dawn-catalogue__cover-card--unresolved');
+   if(source?.source?.url){card.href=source.source.url;card.target='_blank';card.rel='noopener noreferrer';card.setAttribute('aria-label','閱讀原書：'+work.title);}
+   if(source?.cover?.url){
+    const img=document.createElement('img');img.src=source.cover.url;img.alt='原書封面：'+work.title;img.loading='lazy';img.decoding='async';
+    img.addEventListener('error',()=>{img.remove();card.classList.remove('dawn-catalogue__cover-card--image');card.classList.add('dawn-catalogue__cover-card--unresolved');});
+    card.append(img);
+   }
+   const text=document.createElement('div');text.className='dawn-catalogue__cover-typography';
+   const folio=document.createElement('small');folio.textContent='DAWN LIBRARY / '+String((currentPage-1)*index.pageSize+loaded.indexOf(work)+1).padStart(5,'0');
+   const title=document.createElement('strong');title.textContent=work.title||'UNTITLED';
+   const creator=document.createElement('span');creator.textContent=work.creator||'作者未詳';
+   const footer=document.createElement('small');footer.textContent=work.date?String(work.date)+' · CATALOGUE':'CATALOGUE · COVER UNRESOLVED';
+   text.append(folio,title,creator,footer);card.append(text);li.append(card);frag.append(li);
+  });
+  works.replaceChildren(frag);
+  pageStatus.textContent='第 '+currentPage+' / '+index.pageCount+' 頁 · '+matches.length+' 筆 · 全部 '+Number(index.count).toLocaleString('en-CA')+' 筆';
  }
  more.addEventListener('click',()=>showPage(currentPage+1));prevButton.addEventListener('click',()=>showPage(currentPage-1));search.addEventListener('input',renderWorks);
  const initial=Number(new URLSearchParams(location.search).get('d')??26.1);
