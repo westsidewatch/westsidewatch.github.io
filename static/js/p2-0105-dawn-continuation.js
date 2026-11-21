@@ -350,7 +350,45 @@
   detailImage.src=visual.url;
   detailCaption.textContent=visual.kind==='illustration'?'書內圖版 · '+(visual.credit||'原作'):'';
  }
- function appendReaderText(message){const p=document.createElement('p');p.textContent=message;detailText.append(p)}
+ // Visitor-facing book presentation is literary editorial copy, never a status report.
+ const CATEGORY_ZH={
+  'bible':'聖經與信仰','church':'教會歷史','ancient':'歷史與考古',
+  'philosophy':'哲學與思想','biography':'傳記與生命'
+ };
+ function briefFor(work,source){
+  const summary=[work.introductionZh,work.descriptionZh,work.summaryZh,work.captionZh,work.caption,
+   work.description?.zhHant,work.description?.zh,work.description,source?.introductionZh]
+   .find(value=>typeof value==='string'&&/[一-龥]/u.test(value.trim())&&value.trim().length>=8);
+  if(summary)return summary.trim();
+  const title=String(work.title||'').trim(),author=String(work.creator||work.author||(work.authors||[]).join('、')||'').trim();
+  const date=work.date?String(work.date):'';
+  const subject=CATEGORY_ZH[work.editorialTopic]||work.classification?.labelZh||work.subjectZh||'';
+  const statements=[];
+  if(author&&date)statements.push('《'+title+'》為'+author+'的作品，出版年代記為'+date+'年。');
+  else if(author)statements.push('《'+title+'》為'+author+'的作品。');
+  else if(date)statements.push('《'+title+'》的出版年代記為'+date+'年。');
+  if(subject)statements.push('本書收於「'+subject+'」主題，適合從相關作品與歷史脈絡展開閱讀。');
+  if(!statements.length)statements.push('《'+title+'》收錄於黎明書局，可由作品題名進一步閱讀並探索相關著作。');
+  return statements.join('');
+ }
+ function drawBookIntroduction(work,source){
+  detailText.replaceChildren();
+  const lead=document.createElement('div');lead.className='dawn-book-detail__introduction';lead.lang='zh-Hant';
+  const heading=document.createElement('h3');heading.textContent='作品簡介';
+  const p=document.createElement('p');p.textContent=briefFor(work,source);
+  lead.append(heading,p);detailText.append(lead);
+ }
+ function appendReadingExtract(pack){
+  const excerpt=document.createElement('section');excerpt.className='dawn-book-detail__extract';
+  const heading=document.createElement('h3');heading.textContent='原文與繁中試讀';excerpt.append(heading);
+  for(const segment of pack.segments){
+   const unit=document.createElement('div');unit.className='dawn-book-detail__paragraph';
+   if(segment.source){const p=document.createElement('p');p.lang=pack.sourceLanguage||'en';p.textContent=segment.source;unit.append(p)}
+   if(segment.translation){const p=document.createElement('p');p.lang='zh-Hant';p.textContent=segment.translation;unit.append(p)}
+   excerpt.append(unit);
+  }
+  detailText.append(excerpt);
+ }
  async function openBook(work,from){
   if(!work?.title)return;
   const ticket=++detailTicket;
@@ -358,7 +396,6 @@
   wall.hidden=true;catalogue.hidden=true;detail.hidden=false;
   detailTitle.textContent=work.title;detailAuthor.textContent=work.creator||work.author||'';
   detailEdition.textContent=work.date?String(work.date):'';
-  detailText.replaceChildren();
   const source=coverLookup?.get(normalizeTitle(work.title));
   const visual=imageFor(work,source);
   setDetailImage(visual);
@@ -367,27 +404,15 @@
   sourceHint.hidden=!sourceUrl;
   detailSource.target='_blank';detailSource.rel='noopener noreferrer';
   if(sourceUrl){detailSource.href=sourceUrl;detailSource.hidden=false}else{detailSource.hidden=true;detailSource.removeAttribute('href')}
-  appendReaderText('正在檢查本站可閱讀的內容…');
+  drawBookIntroduction(work,source);
   second.scrollTo({top:detail.offsetTop,behavior:'instant'});
+  // Optional source-backed trial text appears only when genuinely present.
   try{
    const reader=await import('/js/dawn-reading-resolver.mjs');
    const pack=await reader.localReadingPack(work.workId||work.id);
    if(ticket!==detailTicket)return;
-   detailText.replaceChildren();
-   if(pack?.segments?.length){
-    pack.segments.forEach(segment=>{
-     const unit=document.createElement('div');unit.className='dawn-book-detail__paragraph';
-     if(segment.source){const p=document.createElement('p');p.lang=pack.sourceLanguage||'en';p.textContent=segment.source;unit.append(p)}
-     if(segment.translation){const p=document.createElement('p');p.lang='zh-Hant';p.textContent=segment.translation;unit.append(p)}
-     detailText.append(unit);
-    });
-   }else{
-    appendReaderText(sourceUrl?'本站尚未收錄此書的完整正文。可從下方來源閱讀原書。':'本站目前保留此書的書目資料；可閱讀的正文與原書連結尚待核實。');
-   }
-  }catch{
-   if(ticket!==detailTicket)return;
-   detailText.replaceChildren();appendReaderText('本站的閱讀內容暫時無法載入。');
-  }
+   if(pack?.segments?.length)appendReadingExtract(pack);
+  }catch(error){console.debug('[Dawn editorial reading pack]',error)}
  }
  function closeBook(){
   if(detail.hidden)return;
@@ -464,7 +489,7 @@
    }else if(kind==='策展集'){
     const response=await fetch(config.source);if(!response.ok)throw Error('Exhibition missing');
     const data=await response.json();
-    for(const item of data.items||[])list.push({title:item.title,creator:item.creator,date:item.year,curationMedium:item.curationMedium,illustration:{url:item.media?.src,alt:item.media?.alt,source:item.media?.source,credit:item.creator},sourceUrl:item.sourceWork||item.destination});
+    for(const item of data.items||[])list.push({title:item.title,creator:item.creator,date:item.year,curationMedium:item.curationMedium,captionZh:item.caption,illustration:{url:item.media?.src,alt:item.media?.alt,source:item.media?.source,credit:item.creator},sourceUrl:item.sourceWork||item.destination});
    }else if(kind==='光譜'){
     const response=await fetch(config.source);if(!response.ok)throw Error('Disciplinary shelves missing');
     const data=await response.json(),byId=new Map();
