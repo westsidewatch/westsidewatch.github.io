@@ -1,0 +1,31 @@
+name: P2 Virtual Church Contract
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'static/p2/church-tour.html'
+      - 'static/p2/church-tour.js'
+      - 'static/p2/living-water.html'
+      - 'static/js/p2-living-water.js'
+      - 'static/p2-maquette/**'
+      - 'scripts/p2-church-tour-contract.mjs'
+      - '.github/workflows/p2-church-tour-contract.yml'
+  pull_request:
+    paths:
+      - 'static/p2/church-tour.html'
+      - 'static/p2/church-tour.js'
+      - 'static/p2/living-water.html'
+      - 'static/js/p2-living-water.js'
+      - 'static/p2-maquette/**'
+      - 'scripts/p2-church-tour-contract.mjs'
+      - '.github/workflows/p2-church-tour-contract.yml'
+permissions:
+  contents: read
+jobs:
+  church-tour-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify GitHub-hosted virtual church, 3D assets and P2 entrances
+        run: node scripts/p2-church-tour-contract.mjs
