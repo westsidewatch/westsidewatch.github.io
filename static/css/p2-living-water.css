@@ -770,9 +770,9 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church-to-magazine"] .church-e
  body[data-ws-scope="p2"] .p2-magazine__panel{transform:none}
 }
 
-/* P2 Sunday: the architectural growth model ornaments the free LOWER-LEFT
-   portion of the original engraved-water field. No replacement of the
-   ocean/water/doors. Right-hand programme is all text again. */
+/* P2 Sunday: the architectural growth model sits in the LOWER-LEFT of
+   the RIGHT-HAND paper folio, adjacent to the final theme verse.
+   The left-hand engraved-water plate stays completely unobstructed. */
 body[data-ws-scope="p2"] .church-editorial__visual{
   position:relative;
   min-width:0;
@@ -781,17 +781,17 @@ body[data-ws-scope="p2"] .church-editorial__visual{
   background:transparent;
   pointer-events:none;
 }
-body[data-ws-scope="p2"] .church-editorial__visual .church-schedule-maquette{
-  position:absolute;
-  bottom:clamp(24px,4.2svh,52px);
-  left:clamp(22px,5.2%,55px);
+body[data-ws-scope="p2"] .church-editorial__copy .church-schedule-maquette{
+  position:relative;
   z-index:1;
   display:block;
-  width:min(75%,460px);
-  height:clamp(170px,27svh,258px);
+  width:100%;
+  max-width:260px;
+  height:clamp(145px,20svh,190px);
+  min-width:0;
   margin:0;
   overflow:hidden;
-  background:transparent;
+  background:var(--paper);
   isolation:isolate;
   pointer-events:none;
 }
@@ -825,6 +825,13 @@ body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
   mix-blend-mode:multiply;
   -webkit-mask-image:radial-gradient(ellipse 76% 75% at 50% 50%,#000 66%,transparent 100%);
   mask-image:radial-gradient(ellipse 76% 75% at 50% 50%,#000 66%,transparent 100%);
+}
+@media(max-width:700px){
+  body[data-ws-scope="p2"] .church-editorial__copy .church-schedule-maquette{
+    width:min(100%,280px);
+    height:clamp(150px,42vw,205px);
+    margin-top:14px;
+  }
 }
 
 /* Reclaim the ~200px formerly occupied by the right-panel image and keep
@@ -995,7 +1002,13 @@ body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
     grid-column:2;grid-row:2/span 2;
   }
   body[data-ws-scope="p2"] .schedule-theme-scripture>p:nth-of-type(4){
-    grid-column:1/-1;grid-row:4;
-    text-align:center;
+    grid-column:2;grid-row:4;
+    text-align:left;
+    align-self:center;
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture>.church-schedule-maquette{
+    grid-column:1;grid-row:4;
+    justify-self:start;
+    align-self:end;
   }
 }
