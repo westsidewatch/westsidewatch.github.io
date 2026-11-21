@@ -13,8 +13,8 @@
  const church=root.querySelector('.church-editorial');
  const churchIndex=root.querySelector('.index');
  const embedded=document.documentElement.dataset.p2Embedded==='true';
- const handoffVh=2.37; // the approved Red Sea / church door is fully open
- const finalVh=embedded?4:5.2; // standalone also grants a full editorial scroll passage
+ const handoffVh=3.36; // church GLB reaches completion at 3.08; only then may Vol.00 enter
+ const finalVh=5.18; // both embedded and standalone complete after the construction hold
  const clamp=n=>Math.min(1,Math.max(0,n));
  const easing=n=>{n=clamp(n);return n*n*(3-2*n)};
  // The background is the SAME six-clip moving film used by the homepage.
