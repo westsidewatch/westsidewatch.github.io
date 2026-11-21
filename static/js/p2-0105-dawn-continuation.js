@@ -154,20 +154,20 @@
  // Each page owns one real work ID; destination updates with the visible cover.
  const gospelLeaves={
   left:[
-   {id:'OL100679W',title:"The Children's Atlas of the Bible",caption:'聖經地理與歷史',cover:9600327},
-   {id:'OL101993W',title:'The Gospel according to John',caption:'約翰福音',cover:124022},
-   {id:'OL1005006W',title:'Jesus Christ liberator',caption:'耶穌基督',cover:680922},
-   {id:'OL102027W',title:'The Essential Jesus',caption:'基督生平',cover:3870881},
-   {id:'OL10099843W',title:'Reading Biblical Narrative',caption:'聖經敘事',cover:12859271},
-   {id:'OL102017W',title:'The Gospel of eternal life',caption:'永生福音',cover:9305284}
+   {id:'OL100679W',title:"The Children's Atlas of the Bible",caption:'聖經地理與歷史',cover:9600327,world:'engraving'},
+   {id:'OL101993W',title:'The Gospel according to John',caption:'約翰福音',cover:124022,world:'scripture'},
+   {id:'OL1005006W',title:'Jesus Christ liberator',caption:'耶穌基督',cover:680922,world:'engraving'},
+   {id:'OL102027W',title:'The Essential Jesus',caption:'基督生平',cover:3870881,world:'temple'},
+   {id:'OL10099843W',title:'Reading Biblical Narrative',caption:'聖經敘事',cover:12859271,world:'scripture'},
+   {id:'OL102017W',title:'The Gospel of eternal life',caption:'永生福音',cover:9305284,world:'engraving'}
   ],
   right:[
-   {id:'OL10128466W',title:'Jerusalem Crown',caption:'耶路撒冷與經文',cover:13505898},
-   {id:'OL10077333W',title:'Christianity in Modern China',caption:'中國教會歷史',cover:3337951},
-   {id:'OL10010026W',title:'Language of the Heart: How to Read the Bible',caption:'聖經閱讀',cover:3158621},
-   {id:'OL1004971W',title:'Praying With Jesus And Mary',caption:'禱告與默想',cover:1915401},
-   {id:'OL102029W',title:'The Historical Jesus',caption:'福音歷史',cover:4940356},
-   {id:'OL10016417W',title:'Jewish Pesach and the Origins of the Christian Easter',caption:'逾越節與復活',cover:3168093}
+   {id:'OL10128466W',title:'Jerusalem Crown',caption:'耶路撒冷與經文',cover:13505898,world:'jerusalem'},
+   {id:'OL10077333W',title:'Christianity in Modern China',caption:'中國教會歷史',cover:3337951,world:'temple'},
+   {id:'OL10010026W',title:'Language of the Heart: How to Read the Bible',caption:'聖經閱讀',cover:3158621,world:'scripture'},
+   {id:'OL1004971W',title:'Praying With Jesus And Mary',caption:'禱告與默想',cover:1915401,world:'engraving'},
+   {id:'OL102029W',title:'The Historical Jesus',caption:'福音歷史',cover:4940356,world:'temple'},
+   {id:'OL10016417W',title:'Jewish Pesach and the Origins of the Christian Easter',caption:'逾越節與復活',cover:3168093,world:'jerusalem'}
   ]
  };
  const folioSide=['left','right'].map((key,i)=>({
@@ -203,6 +203,7 @@
    // Change the real book and the navigation together, at the page-turn midpoint.
    side.img.src=cover;
    side.img.alt=nextBook.title+' 書封';
+   side.anchor.dataset.world=nextBook.world;
    side.anchor.href=bookDestination(nextBook);
    side.anchor.setAttribute('aria-label','開啟 '+nextBook.title);
    side.title.textContent=nextBook.title;
@@ -216,6 +217,8 @@
   }catch(e){ /* Cancelled motion must not break the user's reading. */ }
   finally{side.busy=false;side.lastTurn=performance.now();}
  }
+ folioSide[0].anchor.dataset.world='engraving';
+ folioSide[1].anchor.dataset.world='jerusalem';
  let motionInterval=0;
  function maybeTurnPages(){
   if(document.hidden||entryProgress>.001||progress()<27.9||
