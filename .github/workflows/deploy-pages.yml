@@ -124,6 +124,30 @@ jobs:
           grep -q 'id="cover-books"' public/one/index.html
           grep -q 'one-app.js' public/one/index.html
           echo "ONE canonical 66-book application staged at /one/"
+      - name: Stage and verify Shupian cinema archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in index.html styles.css app.js catalog.json; do
+            test -s "static/shupian/$file"
+          done
+          mkdir -p public/shupian
+          cp -a static/shupian/. public/shupian/
+          for file in index.html styles.css app.js catalog.json; do
+            cmp "static/shupian/$file" "public/shupian/$file"
+          done
+          grep -q 'film-grid' public/shupian/index.html
+          grep -q 'cinema-video' public/shupian/index.html
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('public/shupian/catalog.json').read_text())
+          titles=data['titles']
+          assert len(titles) >= 16, 'Shupian title inventory regressed'
+          assert sum(len(x['episodes']) for x in titles) >= 90, 'Shupian historical records regressed'
+          assert any('異能研究所' in x['title'] for x in titles), 'Historical Institute records missing'
+          print('Shupian Pages artifact verified: catalog, player, styles and historical episodes')
+          PY
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -139,6 +163,26 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify published Shupian cinema archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="${{ steps.deployment.outputs.page_url }}"
+          base="${base%/}"
+          for attempt in $(seq 1 12); do
+            html="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/?verify=${GITHUB_SHA}" || true)"
+            js="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/app.js?verify=${GITHUB_SHA}" || true)"
+            json="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/catalog.json?verify=${GITHUB_SHA}" || true)"
+            if [[ "${html}" == *'film-grid'* && "${html}" == *'cinema-video'* && "${js}" == *'function drawCards'* && "${json}" == *'異能研究所'* ]]; then
+              echo "Published Shupian cinema verified: ${base}/shupian/ at ${GITHUB_SHA}"
+              exit 0
+            fi
+            echo "Shupian live verification not yet passing (attempt ${attempt}/12)"
+            sleep 15
+          done
+          echo "::error::Shupian cinema or its archive absent from live GitHub Pages"
+          exit 1
+
       - name: Verify published Olive Mountain
         shell: bash
         run: |
