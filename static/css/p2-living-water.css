@@ -1025,3 +1025,87 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index{
   grid-column:1;grid-row:5;
  }
 }
+
+
+/* Central folio lower field: scripture and architecture share one
+   editorial baseline. This prevents the model being pushed below 850px. */
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom{
+ display:grid;
+ grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
+ column-gap:clamp(15px,2.2cqi,26px);
+ align-items:end;
+ width:100%;
+ min-width:0;
+ margin-top:clamp(6px,.8svh,12px);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture{
+ display:grid;
+ grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+ align-self:start;
+ width:100%;min-width:0;
+ margin:0;padding:clamp(7px,.8svh,10px) 0 0;
+ column-gap:clamp(9px,1.3cqi,17px);row-gap:clamp(3px,.4svh,6px);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture h3{
+ grid-column:1/-1;grid-row:1;margin-bottom:3px;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture>p{
+ font-size:clamp(12px,1.45cqi,14px);
+ line-height:1.38;
+ min-width:0;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture>p.schedule-theme-scripture__lead{
+ grid-column:1;grid-row:2;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture>p.schedule-theme-scripture__ref{
+ grid-column:1;grid-row:3;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture>p:nth-of-type(3){
+ grid-column:2;grid-row:2;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture>p:nth-of-type(4){
+ grid-column:2;grid-row:3;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom > .church-schedule-maquette{
+ position:relative;inset:auto;left:auto;bottom:auto;
+ width:100%;height:clamp(210px,30svh,285px);
+ min-width:0;min-height:0;
+ display:block;align-self:end;
+ margin:0;padding:0;border:0;
+ overflow:hidden;background:transparent;
+ isolation:isolate;pointer-events:none;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom > .church-schedule-maquette::before{
+ content:none;
+}
+@media(max-width:900px){
+ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom{
+  grid-template-columns:minmax(0,1fr);
+  gap:clamp(12px,2svh,20px);
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom > .church-schedule-maquette{
+  width:min(100%,620px);
+  height:clamp(205px,28svh,270px);
+  justify-self:center;
+ }
+}
+@media(max-width:420px){
+ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture{
+  grid-template-columns:minmax(0,1fr);
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture>p.schedule-theme-scripture__lead{
+  grid-column:1;grid-row:2;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture>p.schedule-theme-scripture__ref{
+  grid-column:1;grid-row:3;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture>p:nth-of-type(3){
+  grid-column:1;grid-row:4;
+ }
+ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom .schedule-theme-scripture>p:nth-of-type(4){
+  grid-column:1;grid-row:5;
+ }
+}
