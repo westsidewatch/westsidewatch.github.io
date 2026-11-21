@@ -28,6 +28,8 @@
   realm.style.pointerEvents=settled>.98&&p<.001?'auto':'none';
   world.style.opacity=String(appear);
   twins.style.visibility=settled>.02?'visible':'hidden';
+   // Keep the original paired masthead rendered above the image stage.
+   squares.forEach(square=>{square.style.visibility='visible';square.style.opacity='1';});
   twins.style.opacity=String(settled*(1-ease((p-.01)/.16)));
   twins.style.transform='translate(-50%,-50%)';
   paintWorld(d);
