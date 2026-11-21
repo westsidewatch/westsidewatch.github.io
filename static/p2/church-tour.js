@@ -203,13 +203,13 @@ function connectArchitecturalDoors(building) {
   // Hardware belongs to the SAME moving leaf, not the static wall.
   // Blender V23 explicitly names these real hardware nodes.
   const attachHardware=(group,prefix)=>{
-    let count=0;
+    const hardware=[];
     building.traverse(object=>{
-      if(object.isMesh && modelName(object.name).startsWith(modelName(prefix))){
-        group.attach(object);count++;
-      }
+      if(object.isMesh && modelName(object.name).startsWith(modelName(prefix)))
+        hardware.push(object);
     });
-    return count;
+    for(const object of hardware) group.attach(object);
+    return hardware.length;
   };
   attachHardware(rearSanctuaryHinge,"ENTRY HANDLE NORTH PUBLIC");
   attachHardware(staffSanctuaryHinge,"ENTRY HANDLE SOUTH STAFF");
