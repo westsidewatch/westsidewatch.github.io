@@ -143,6 +143,9 @@
  function animateEntry(target){
   if(rafId)cancelAnimationFrame(rafId);
   if(target&&entryProgress<.001){
+   // Reading metadata is small and can load while the first-layer motion runs.
+   // Full-catalogue search remains deferred until the visitor asks for it.
+   void loadFeaturedIntroductions().catch(()=>{});
    startTwinColors=currentTwinColors();
    for(let i=0;i<2;i++){
     seals[i].shell.setAttribute('fill',startTwinColors[i].background);
@@ -342,6 +345,13 @@
   'bible':'聖經與信仰','church':'教會歷史','ancient':'歷史與考古',
   'philosophy':'哲學與思想','biography':'傳記與生命'
  };
+ let featuredIntroductions=null;
+ async function loadFeaturedIntroductions(){
+  if(featuredIntroductions)return featuredIntroductions;
+  const response=await fetch('/dawn-library/p2-featured-introductions.json');
+  if(!response.ok)throw Error('Dawn reading essays unavailable');
+  featuredIntroductions=await response.json();return featuredIntroductions;
+ }
  let bookIntroductionIndex=null;
  async function getBookIntroductionIndex(){
   if(bookIntroductionIndex)return bookIntroductionIndex;
@@ -395,6 +405,15 @@
   detailSource.target='_blank';detailSource.rel='noopener noreferrer';
   if(sourceUrl){detailSource.href=sourceUrl;detailSource.hidden=false}else{detailSource.hidden=true;detailSource.removeAttribute('href')}
   drawBookIntroduction(work,source);
+  // Featured editions receive source-grounded editorial introductions; the
+  // figure and bibliography remain stable while the essay data is fetched.
+  if(!introductionParagraphs(work,source).length){
+   loadFeaturedIntroductions().then(index=>{
+    if(ticket!==detailTicket)return;
+    const paragraphs=index.items?.[work.title]||[];
+    if(paragraphs.length)drawBookIntroduction({...work,editorialParagraphs:paragraphs},source);
+   }).catch(error=>console.debug('[Dawn edited essays]',error));
+  }
   second.scrollTo({top:detail.offsetTop,behavior:'instant'});
   // Optional source-backed trial text appears only when genuinely present.
   try{
@@ -417,7 +436,9 @@
  function openCollection(origin='館藏總索引',title=''){
   if(!detail.hidden)closeBook();
   wall.hidden=true;catalogue.hidden=false;activePortal=origin==='館藏總索引'?'all':origin;
-  catalogueFocus.textContent=activePortal==='all'?'全部館藏':origin;
+  catalogueFocus.textContent=activePortal==='all'?'':origin;
+  const catalogueTitle=$('#dawn-catalogue-title');
+  if(catalogueTitle)catalogueTitle.textContent=activePortal==='all'?'全部館藏':origin;
   renderChannelIntroduction(activePortal);
   second.scrollTo({top:catalogue.offsetTop,behavior:'instant'});
   const ticket=++portalTicket;
