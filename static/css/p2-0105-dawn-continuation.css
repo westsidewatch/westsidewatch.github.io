@@ -839,3 +839,32 @@
  #dawn-second .dawn-feature__art,#dawn-second .dawn-feature__editorial{inset:8px!important}
  #dawn-second .dawn-catalogue__topics{gap:7px 14px}
 }
+
+/* R32 · Scripture typesetting proof: a two-plate composition, sized for reading.
+   The parent is the print forme's carrier, never an empty 900px billboard. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{
+ box-sizing:border-box!important;display:flex!important;align-items:center!important;
+ justify-content:center!important;min-height:0!important;height:auto!important;
+ max-width:none!important;width:100%!important;margin:0!important;
+ padding:clamp(42px,5vw,72px) clamp(15px,3.5vw,58px) clamp(22px,3.5vw,44px)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{
+ display:block!important;flex:0 1 710px!important;
+ width:min(100%,710px)!important;max-width:710px!important;
+ height:clamp(295px,31vw,355px)!important;min-height:0!important;
+ aspect-ratio:auto!important;margin:0 auto!important;
+ border:0!important;overflow:hidden!important;
+}
+@media(max-width:760px){
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{
+  padding:58px 12px 22px!important;
+ }
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{
+  flex-basis:100%!important;width:100%!important;
+  height:clamp(180px,47vw,310px)!important;
+ }
+}
+@media(max-width:440px){
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{padding:52px 8px 14px!important}
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{height:clamp(165px,49vw,215px)!important}
+}
