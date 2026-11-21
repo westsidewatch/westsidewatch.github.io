@@ -502,3 +502,58 @@
  .dawn-reading-room .dawn-feature__titles em{font-size:clamp(16px,4vw,22px)!important}
 }
 @media(prefers-reduced-motion:reduce){.dawn-feature__cover{transition:none}}
+
+/* R22 · P2 05 second-layer OS chromatic architecture.
+   Color starts at the authentic letterpress; no opaque ochre image bars.
+   The first-layer stage and its horizontal twin masthead are untouched. */
+#dawn-second.dawn-second{background:var(--ws-paper)!important;color:var(--ws-ink)!important;scrollbar-color:var(--ws-crimson) var(--ws-paper)}
+#dawn-second .dawn-second__press--motherform{
+ width:100%!important;max-width:none!important;
+ background:var(--ws-night)!important;
+ border-bottom:1px solid var(--ws-crimson);
+ padding:clamp(72px,7svh,110px) clamp(18px,5vw,88px) clamp(36px,6vw,86px)!important;
+}
+#dawn-second .dawn-second__motherform{max-width:1320px;justify-self:center;align-self:start;background:transparent!important;border:0}
+#dawn-second .dawn-second__return{
+ position:sticky!important;top:0;z-index:30!important;
+ width:max-content;max-width:calc(100% - 32px);
+ margin:0 clamp(16px,5vw,88px) -1px auto!important;
+ padding:clamp(13px,2svh,18px) 0 9px!important;
+ display:inline-flex!important;align-items:center;gap:10px;
+ background:transparent!important;color:var(--ws-paper)!important;
+ border:0!important;border-bottom:1px solid var(--ws-morning-gold)!important;
+ box-shadow:none!important;border-radius:0!important;
+ font:200 clamp(12px,.9vw,15px)/1.25 var(--ws-type-display-zh)!important;
+ cursor:pointer;letter-spacing:.025em;outline-offset:4px;
+}
+#dawn-second .dawn-second__return::before{
+ content:"";position:fixed;top:0;left:0;right:0;
+ height:clamp(42px,5svh,64px);z-index:-1;background:var(--ws-night);pointer-events:none;
+}
+#dawn-second .dawn-second__return:hover{color:var(--ws-morning-gold)!important}
+#dawn-second .dawn-second__return:focus-visible{outline:2px solid var(--ws-morning-gold)!important}
+#dawn-second .dawn-second__return-en{
+ font:400 clamp(9px,.68vw,11px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.09em;color:var(--ws-morning-gold);
+}
+#dawn-second .dawn-reading-room{background:var(--ws-paper)!important;border-top:0!important}
+#dawn-second .dawn-reading-room__heading{border-color:var(--ws-water)!important}
+#dawn-second .dawn-reading-room__eyebrow{color:var(--ws-crimson)!important}
+#dawn-second .dawn-reading-room__heading h2{color:var(--ws-night)!important}
+#dawn-second .dawn-wall__folio{color:var(--ws-crimson)!important}
+#dawn-second .dawn-reading-room .dawn-wall__tail{color:var(--ws-water)!important}
+#dawn-second .dawn-reading-room .dawn-wall__tail button{color:var(--ws-night)!important;border-bottom-color:var(--ws-crimson)!important}
+#dawn-second .dawn-feature--stars .dawn-feature__editorial{background:linear-gradient(180deg,rgba(16,42,67,.60),transparent 33%,rgba(41,68,49,.88) 100%)}
+#dawn-second .dawn-feature--curation .dawn-feature__editorial{background:linear-gradient(180deg,rgba(16,42,67,.46),transparent 34%,rgba(92,37,49,.90) 100%)}
+#dawn-second .dawn-feature--spectrum .dawn-feature__editorial{background:linear-gradient(180deg,rgba(16,42,67,.46),transparent 31%,rgba(30,77,103,.91) 100%)}
+#dawn-second .dawn-feature--stars .dawn-feature__open{border-color:var(--ws-olive)!important}
+#dawn-second .dawn-feature--curation .dawn-feature__open{border-color:var(--ws-crimson)!important}
+#dawn-second .dawn-feature--spectrum .dawn-feature__open{border-color:var(--ws-water)!important}
+#dawn-second .dawn-catalogue{background:var(--ws-paper)!important;border-top:1px solid var(--ws-water)!important}
+#dawn-second .dawn-catalogue__back{background:transparent!important;color:var(--ws-night)!important;border:0!important;border-bottom:1px solid var(--ws-crimson)!important;padding:8px 0!important}
+@media(max-width:650px){
+ #dawn-second .dawn-second__return{gap:6px;margin-right:14px!important}
+ #dawn-second .dawn-second__return-en{display:none}
+ #dawn-second .dawn-second__press--motherform{padding:68px 8px 24px!important}
+ #dawn-second .dawn-second__motherform{aspect-ratio:1.9/1!important;min-height:0}
+}
