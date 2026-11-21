@@ -688,3 +688,8 @@
 #dawn-second .dawn-catalogue__cover-card--unresolved:hover{background:color-mix(in srgb,var(--ws-crimson) 4%,var(--ws-paper))!important}
 #dawn-second .dawn-feature__editorial{background:linear-gradient(180deg,rgba(37,37,37,.34),transparent 38%,rgba(37,37,37,.7) 100%)!important}
 #dawn-second .dawn-feature__open{border-top-color:var(--ws-paper)!important}
+
+/* R25: public wall begins with real collection sleeves; no design-explanation caption. */
+#dawn-second .dawn-reading-room{padding-top:clamp(14px,2vw,30px)!important}
+#dawn-second .dawn-reading-room .dawn-wall__tail{justify-content:flex-end!important}
+#dawn-second .dawn-catalogue__heading p:empty{display:none!important}
