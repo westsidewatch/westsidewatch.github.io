@@ -1,0 +1,122 @@
+{
+  "schema": "dawn.p2.editorial-channels.v1",
+  "policy": {
+    "classification": "editorial-first",
+    "canonicalAuthority": "Dawn Library",
+    "noWholeCatalogueForNamedChannel": true,
+    "sourceWorkMatching": true
+  },
+  "channels": {
+    "三晨星": {
+      "kind": "editorial-three-book-recommendations",
+      "title": "三晨星",
+      "description": "精選三部作品",
+      "source": "/dawn-library/surfaces/dawn-launch.json",
+      "topics": [
+        {
+          "id": "selected",
+          "label": "三晨星",
+          "workIds": [
+            "dawn:4593510aa84997c1f216",
+            "dawn:ed658c4fb3d760571121",
+            "OL32143159W"
+          ]
+        }
+      ]
+    },
+    "策展集": {
+      "kind": "work-based-exhibitions",
+      "title": "策展集",
+      "source": "/dawn-library/p2-exhibitions/jerusalem-3000.json",
+      "topics": [
+        {
+          "id": "all",
+          "label": "耶路撒冷三千年",
+          "mediums": []
+        },
+        {
+          "id": "early-print",
+          "label": "版畫與古籍",
+          "mediums": [
+            "woodcut",
+            "engraving",
+            "illuminated-manuscript",
+            "illuminated-print",
+            "archaeological-plates",
+            "temple-reconstruction"
+          ]
+        },
+        {
+          "id": "places",
+          "label": "城市與考古",
+          "mediums": [
+            "byzantine-mosaic",
+            "archaeological-model",
+            "scripture-manuscript"
+          ]
+        },
+        {
+          "id": "photography",
+          "label": "攝影與紀錄",
+          "mediums": [
+            "early-photography",
+            "photography",
+            "colour-photography",
+            "hand-coloured-photography",
+            "aerial-photography",
+            "photographic-travelogue",
+            "photographic-book"
+          ]
+        }
+      ],
+      "note": "Exhibit works retain their recorded image-to-source link. A themed exhibit is not the general catalogue."
+    },
+    "光譜": {
+      "kind": "disciplinary-reading",
+      "title": "光譜",
+      "source": "/dawn-library/surfaces/dawn-storefront.json",
+      "topics": [
+        {
+          "id": "bible",
+          "label": "聖經與信仰",
+          "shelves": [
+            "gutenberg-bible-christianity",
+            "internet-archive-原版古籍-聖經歷史與地理"
+          ]
+        },
+        {
+          "id": "church",
+          "label": "教會歷史",
+          "shelves": [
+            "gutenberg-early-church-fathers",
+            "internet-archive-原版古籍-教會歷史"
+          ]
+        },
+        {
+          "id": "ancient",
+          "label": "歷史與考古",
+          "shelves": [
+            "gutenberg-jewish-history-josephus",
+            "gutenberg-ancient-history-archaeology"
+          ]
+        },
+        {
+          "id": "philosophy",
+          "label": "哲學與思想",
+          "shelves": [
+            "gutenberg-philosophy-classics"
+          ]
+        },
+        {
+          "id": "biography",
+          "label": "傳記與生命",
+          "shelves": [
+            "gutenberg-biography-memoir"
+          ]
+        }
+      ],
+      "selectionPerShelf": 8,
+      "note": "Initial editorial taxonomy based on the already labeled shelves; records retain canonical work IDs."
+    }
+  }
+}
