@@ -557,3 +557,9 @@
  #dawn-second .dawn-second__press--motherform{padding:68px 8px 24px!important}
  #dawn-second .dawn-second__motherform{aspect-ratio:1.9/1!important;min-height:0}
 }
+
+/* R22b: navigation is ink on paper, not a filled button or floating dark block. */
+#dawn-second .dawn-second__return{color:var(--ws-night)!important;background:transparent!important;border-bottom:1px solid var(--ws-crimson)!important;isolation:isolate}
+#dawn-second .dawn-second__return::before{content:none!important;display:none!important}
+#dawn-second .dawn-second__return-en{color:var(--ws-crimson)!important}
+#dawn-second .dawn-second__return:hover{color:var(--ws-crimson)!important}
