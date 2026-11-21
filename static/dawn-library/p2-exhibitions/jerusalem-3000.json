@@ -3,8 +3,8 @@
   "id": "jerusalem-3000",
   "title": "耶路撒冷三千年",
   "subtitle": "JERUSALEM · 3000 YEARS",
-  "description": "十二部各具視覺語言的原始出版物選書。只有原書圖版位置已確認的作品可進入 P2 展示；其餘須取得可檢驗內頁與授權才可發佈。",
-  "curationStatus": "12-books-selected-7-asset-paths",
+  "description": "十二本原書選定。十一幅已定位到來源作品的圖像；一部建築考古圖集原版內頁仍須建立可靠直連。外部圖像需再做真實瀏覽器載入與權利驗收。",
+  "curationStatus": "12-books-selected-11-authentic-visual-assets",
   "sourceCollection": "/dawn-library/collections/jerusalem-3000/maps/",
   "display": {
     "mode": "mersi-counterflow",
@@ -41,8 +41,13 @@
       "caption": "中世紀手抄本中的聖殿與耶路撒冷想像",
       "sourceWork": "https://www.loc.gov/item/2021667600/",
       "curationMedium": "illuminated-manuscript",
-      "imageStatus": "image-asset-pending",
-      "media": null,
+      "imageStatus": "identified-work-image-external-browser-load-unchecked",
+      "media": {
+        "src": "https://www.wga.hu/art/f/fouquet/other/2jewish1.jpg",
+        "source": "https://www.wga.hu/html_m/f/fouquet/other/2jewish1.html",
+        "alt": "Jean Fouquet, The Taking of Jerusalem — illuminated miniature in Jewish Antiquities",
+        "type": "image"
+      },
       "destination": "https://www.loc.gov/item/2021667600/"
     },
     {
@@ -54,8 +59,13 @@
       "caption": "彩飾刻版的文字與神學藝術世界（藝術寓言，非城市史圖）",
       "sourceWork": "https://www.loc.gov/item/48038103/",
       "curationMedium": "illuminated-print",
-      "imageStatus": "image-asset-pending",
-      "media": null,
+      "imageStatus": "identified-work-image-external-browser-load-unchecked",
+      "media": {
+        "src": "https://www.getty.edu/art/exhibitions/blake/images/gm_379056EX1.jpg",
+        "source": "https://www.getty.edu/art/exhibitions/blake/index.html",
+        "alt": "William Blake, Jerusalem: The Emanation of the Giant Albion, plate 100",
+        "type": "image"
+      },
       "destination": "https://www.loc.gov/item/48038103/"
     },
     {
@@ -103,8 +113,13 @@
       "caption": "古城建築早期蛋白相紙攝影圖版",
       "sourceWork": "https://www.loc.gov/item/2001695436/",
       "curationMedium": "albumen-photography",
-      "imageStatus": "image-asset-pending",
-      "media": null,
+      "imageStatus": "identified-work-image-external-browser-load-unchecked",
+      "media": {
+        "src": "https://images.metmuseum.org/CRDImages/ph/original/DP131346.jpg",
+        "source": "https://www.metmuseum.org/art/collection/search/287019",
+        "alt": "Auguste Salzmann, Jérusalem: Mosquée d’Omar, côté ouest, 1854",
+        "type": "image"
+      },
       "destination": "https://www.loc.gov/item/2001695436/"
     },
     {
@@ -116,8 +131,13 @@
       "caption": "聖地遠景與聖殿山的攝影書插頁",
       "sourceWork": "https://www.loc.gov/item/97502739/",
       "curationMedium": "photographic-print",
-      "imageStatus": "image-asset-pending",
-      "media": null,
+      "imageStatus": "identified-work-image-external-browser-load-unchecked",
+      "media": {
+        "src": "https://images.metmuseum.org/CRDImages/ph/original/DP116346.jpg",
+        "source": "https://www.metmuseum.org/art/collection/search/271102",
+        "alt": "Francis Frith, The Mosque of Omar, Jerusalem, 1857",
+        "type": "image"
+      },
       "destination": "https://www.loc.gov/item/97502739/"
     },
     {
