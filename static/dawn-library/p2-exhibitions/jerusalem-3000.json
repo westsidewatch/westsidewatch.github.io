@@ -3,16 +3,17 @@
   "id": "jerusalem-3000",
   "title": "耶路撒冷三千年",
   "subtitle": "JERUSALEM · 3000 YEARS",
-  "description": "十二部實際出版物，每部對應一幅可追溯的原書圖版、攝影原作或館藏影像。遠端圖片載入與重用授權、桌面手機視覺和反向動效尚待實際瀏覽器驗收。",
-  "curationStatus": "12-books-selected-12-source-matched-illustrations-browser-QA-pending",
+  "description": "十二件不同視覺世界的真實館藏作品：六部歷史出版物，並列六項可追溯的聖經文物、馬賽克、重建模型與現代攝影。非書籍作品不冒稱原書。圖片及授權需逐幅瀏覽器驗收。",
+  "curationStatus": "12-differentiated-works-source-pages-identified-runtime-qa-pending",
   "sourceCollection": "/dawn-library/collections/jerusalem-3000/maps/",
   "display": {
     "mode": "mersi-counterflow",
     "left": "up",
     "right": "down",
-    "centralTitle": "DAWN LIBRARY"
+    "centralTitle": "DAWN LIBRARY",
+    "visualPolicy": "no-ochre-bars-no-image-overlays; self-contained text outside image"
   },
-  "bookSelectionCount": 12,
+  "bookSelectionCount": 6,
   "items": [
     {
       "id": "breydenbach-1486",
@@ -33,6 +34,25 @@
       "destination": "https://www.loc.gov/item/2021667084/"
     },
     {
+      "id": "madaba-mosaic",
+      "title": "The Madaba Map · Jerusalem Detail",
+      "creator": "Byzantine mosaicists · St George's Church",
+      "year": "6th century",
+      "kind": "BYZANTINE MOSAIC",
+      "caption": "六世紀馬賽克以城市鳥瞰與石製文字刻畫耶路撒冷",
+      "sourceWork": "https://commons.wikimedia.org/wiki/File:Madaba_Jerusalem_Mosaic.jpg",
+      "curationMedium": "byzantine-mosaic",
+      "imageStatus": "commons-file-identified-browser-load-pending",
+      "licenseNote": "Consult Commons file for attribution and reuse",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Madaba%20Jerusalem%20Mosaic.jpg?width=1600",
+        "source": "https://commons.wikimedia.org/wiki/File:Madaba_Jerusalem_Mosaic.jpg",
+        "alt": "The Madaba Map · Jerusalem Detail — 六世紀馬賽克以城市鳥瞰與石製文字刻畫耶路撒冷",
+        "type": "image"
+      },
+      "destination": "https://commons.wikimedia.org/wiki/File:Madaba_Jerusalem_Mosaic.jpg"
+    },
+    {
       "id": "jewish-antiquities-1465",
       "title": "Jewish Antiquities",
       "creator": "Flavius Josephus · illuminated edition",
@@ -51,40 +71,23 @@
       "destination": "https://www.loc.gov/item/2021667600/"
     },
     {
-      "id": "blake-jerusalem",
-      "title": "Jerusalem: The Emanation of the Giant Albion",
-      "creator": "William Blake",
-      "year": "1804–1832",
-      "kind": "VISIONARY PRINT · POETRY",
-      "caption": "彩飾刻版的文字與神學藝術世界（藝術寓言，非城市史圖）",
-      "sourceWork": "https://www.loc.gov/item/48038103/",
-      "curationMedium": "illuminated-print",
-      "imageStatus": "identified-work-image-external-browser-load-unchecked",
+      "id": "great-isaiah-scroll",
+      "title": "Great Isaiah Scroll · 1QIsaᵃ",
+      "creator": "Qumran manuscript · Israel Museum",
+      "year": "c. 2nd century BCE",
+      "kind": "SCRIPTURE MANUSCRIPT",
+      "caption": "以賽亞書古卷：經文的材質、行列、時間本身成為圖像",
+      "sourceWork": "https://commons.wikimedia.org/wiki/File:Great_Isaiah_Scroll.jpg",
+      "curationMedium": "scripture-manuscript",
+      "imageStatus": "commons-file-identified-browser-load-pending",
+      "licenseNote": "Commons marks the photographic reproduction as public domain",
       "media": {
-        "src": "https://www.getty.edu/art/exhibitions/blake/images/gm_379056EX1.jpg",
-        "source": "https://www.getty.edu/art/exhibitions/blake/index.html",
-        "alt": "William Blake, Jerusalem: The Emanation of the Giant Albion, plate 100",
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Great%20Isaiah%20Scroll.jpg?width=1600",
+        "source": "https://commons.wikimedia.org/wiki/File:Great_Isaiah_Scroll.jpg",
+        "alt": "Great Isaiah Scroll · 1QIsaᵃ — 以賽亞書古卷：經文的材質、行列、時間本身成為圖像",
         "type": "image"
       },
-      "destination": "https://www.loc.gov/item/48038103/"
-    },
-    {
-      "id": "dore-bible",
-      "title": "The Doré Bible Gallery",
-      "creator": "Gustave Doré",
-      "year": "1890",
-      "kind": "BIBLICAL ENGRAVING",
-      "caption": "聖經故事敘事雕版畫",
-      "sourceWork": "https://www.loc.gov/item/10002262/",
-      "curationMedium": "engraving",
-      "imageStatus": "remote-image-needs-browser-check",
-      "media": {
-        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Gustave%20Dor%C3%A9%20-%20Crucifixion%20of%20Jesus.jpg?width=1600",
-        "source": "https://www.loc.gov/item/10002262/",
-        "alt": "The Doré Bible Gallery — 聖經故事敘事雕版畫",
-        "type": "image"
-      },
-      "destination": "https://www.loc.gov/item/10002262/"
+      "destination": "https://commons.wikimedia.org/wiki/File:Great_Isaiah_Scroll.jpg"
     },
     {
       "id": "roberts-holy-land",
@@ -105,6 +108,25 @@
       "destination": "https://www.loc.gov/item/2002717464/"
     },
     {
+      "id": "temple-model",
+      "title": "Jerusalem in the Second Temple Period · Model",
+      "creator": "Israel Museum · Yair Haklai photograph",
+      "year": "modern photograph",
+      "kind": "ARCHAEOLOGICAL MODEL",
+      "caption": "立體重建攝影取代十九世紀重複的線描建築",
+      "sourceWork": "https://commons.wikimedia.org/wiki/File:Model_of_Jerusalem_in_the_Late_Second_Temple_Period-Israel_Museum.jpg",
+      "curationMedium": "archaeological-model",
+      "imageStatus": "commons-file-identified-browser-load-pending",
+      "licenseNote": "Consult Commons image license and attribution",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Model%20of%20Jerusalem%20in%20the%20Late%20Second%20Temple%20Period-Israel%20Museum.jpg?width=1600",
+        "source": "https://commons.wikimedia.org/wiki/File:Model_of_Jerusalem_in_the_Late_Second_Temple_Period-Israel_Museum.jpg",
+        "alt": "Jerusalem in the Second Temple Period · Model — 立體重建攝影取代十九世紀重複的線描建築",
+        "type": "image"
+      },
+      "destination": "https://commons.wikimedia.org/wiki/File:Model_of_Jerusalem_in_the_Late_Second_Temple_Period-Israel_Museum.jpg"
+    },
+    {
       "id": "salzmann-jerusalem",
       "title": "Jérusalem: Étude et reproduction photographique des monuments",
       "creator": "Auguste Salzmann",
@@ -123,22 +145,23 @@
       "destination": "https://www.loc.gov/item/2001695436/"
     },
     {
-      "id": "frith-sinai-palestine",
-      "title": "Sinai and Palestine",
-      "creator": "Francis Frith",
-      "year": "1862",
-      "kind": "PHOTOGRAPHIC TRAVELOGUE",
-      "caption": "聖地遠景與聖殿山的攝影書插頁",
-      "sourceWork": "https://www.loc.gov/item/97502739/",
-      "curationMedium": "photographic-print",
-      "imageStatus": "identified-work-image-external-browser-load-unchecked",
+      "id": "sepulchre-interior",
+      "title": "Inside the Church of the Holy Sepulchre",
+      "creator": "Contemporary architectural photograph",
+      "year": "2012",
+      "kind": "CONTEMPORARY INTERIOR",
+      "caption": "圓頂、光線與石質空間，與黑白蝕刻形成鮮明對比",
+      "sourceWork": "https://commons.wikimedia.org/wiki/File:Inside_The_Church_of_The_Holy_Sepulchre.jpg",
+      "curationMedium": "contemporary-interior",
+      "imageStatus": "commons-file-identified-browser-load-pending",
+      "licenseNote": "Consult Commons image license and attribution",
       "media": {
-        "src": "https://images.metmuseum.org/CRDImages/ph/original/DP116346.jpg",
-        "source": "https://www.metmuseum.org/art/collection/search/271102",
-        "alt": "Francis Frith, The Mosque of Omar, Jerusalem, 1857",
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Inside%20The%20Church%20of%20The%20Holy%20Sepulchre.jpg?width=1600",
+        "source": "https://commons.wikimedia.org/wiki/File:Inside_The_Church_of_The_Holy_Sepulchre.jpg",
+        "alt": "Inside the Church of the Holy Sepulchre — 圓頂、光線與石質空間，與黑白蝕刻形成鮮明對比",
         "type": "image"
       },
-      "destination": "https://www.loc.gov/item/97502739/"
+      "destination": "https://commons.wikimedia.org/wiki/File:Inside_The_Church_of_The_Holy_Sepulchre.jpg"
     },
     {
       "id": "pierotti-explored",
@@ -159,76 +182,61 @@
       "destination": "https://www.gutenberg.org/ebooks/44241"
     },
     {
-      "id": "conder-city",
-      "title": "The City of Jerusalem",
-      "creator": "Claude Reignier Conder",
-      "year": "1909",
-      "kind": "TEMPLE RECONSTRUCTION",
-      "caption": "希律聖殿建築模型 · 原書卷首插圖",
-      "sourceWork": "https://www.gutenberg.org/ebooks/70537",
-      "curationMedium": "architectural-model",
-      "imageStatus": "source-path-known-not-live-tested",
+      "id": "old-city-color",
+      "title": "Old City of Jerusalem",
+      "creator": "Contemporary city photograph",
+      "year": "2020",
+      "kind": "COLOUR PHOTOGRAPHY",
+      "caption": "現代高解析街區與天際線：讓當下的耶路撒冷進場",
+      "sourceWork": "https://commons.wikimedia.org/wiki/File:Old_City_Jerusalem.jpg",
+      "curationMedium": "colour-photography",
+      "imageStatus": "commons-file-identified-browser-load-pending",
+      "licenseNote": "Consult Commons image license and attribution",
       "media": {
-        "src": "https://www.gutenberg.org/files/70537/70537-h/images/i_001.jpg",
-        "source": "https://www.gutenberg.org/ebooks/70537",
-        "alt": "The City of Jerusalem — 希律聖殿建築模型 · 原書卷首插圖",
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Old%20City%20Jerusalem.jpg?width=1600",
+        "source": "https://commons.wikimedia.org/wiki/File:Old_City_Jerusalem.jpg",
+        "alt": "Old City of Jerusalem — 現代高解析街區與天際線：讓當下的耶路撒冷進場",
         "type": "image"
       },
-      "destination": "https://www.gutenberg.org/ebooks/70537"
+      "destination": "https://commons.wikimedia.org/wiki/File:Old_City_Jerusalem.jpg"
     },
     {
-      "id": "besant-herod-saladin",
-      "title": "Jerusalem, the City of Herod and Saladin",
-      "creator": "Walter Besant · Edward Henry Palmer",
-      "year": "1871",
-      "kind": "HISTORY · PHOTOGRAPHY",
-      "caption": "圓頂清真寺的歷史照片作為原書卷首",
-      "sourceWork": "https://www.gutenberg.org/ebooks/60319",
-      "curationMedium": "historic-photography",
-      "imageStatus": "source-path-known-not-live-tested",
+      "id": "dore-bible",
+      "title": "The Doré Bible Gallery",
+      "creator": "Gustave Doré",
+      "year": "1890",
+      "kind": "BIBLICAL ENGRAVING",
+      "caption": "聖經故事敘事雕版畫",
+      "sourceWork": "https://www.loc.gov/item/10002262/",
+      "curationMedium": "engraving",
+      "imageStatus": "remote-image-needs-browser-check",
       "media": {
-        "src": "https://www.gutenberg.org/files/60319/60319-h/images/frontis.jpg",
-        "source": "https://www.gutenberg.org/ebooks/60319",
-        "alt": "Jerusalem, the City of Herod and Saladin — 圓頂清真寺的歷史照片作為原書卷首",
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Gustave%20Dor%C3%A9%20-%20Crucifixion%20of%20Jesus.jpg?width=1600",
+        "source": "https://www.loc.gov/item/10002262/",
+        "alt": "The Doré Bible Gallery — 聖經故事敘事雕版畫",
         "type": "image"
       },
-      "destination": "https://www.gutenberg.org/ebooks/60319"
+      "destination": "https://www.loc.gov/item/10002262/"
     },
     {
-      "id": "manning-holy-fields",
-      "title": "Those Holy Fields: Palestine Illustrated by Pen and Pencil",
-      "creator": "Samuel Manning",
-      "year": "1873–1874",
-      "kind": "LANDSCAPE · ENGRAVING",
-      "caption": "從橄欖山觀看耶路撒冷 · 原書第93頁插圖",
-      "sourceWork": "https://www.gutenberg.org/ebooks/51452",
-      "curationMedium": "engraved-landscape",
-      "imageStatus": "source-path-confirmed-not-live-tested",
+      "id": "jerusalem-aerial",
+      "title": "Jerusalem — Old City Aerial View",
+      "creator": "Contemporary aerial photographer",
+      "year": "2011",
+      "kind": "AERIAL PHOTOGRAPHY",
+      "caption": "空中攝影以地形和城市格網呈現完全不同的尺度",
+      "sourceWork": "https://commons.wikimedia.org/wiki/File:Jerusalem-_Old_City_(5720199730).jpg",
+      "curationMedium": "aerial-photography",
+      "imageStatus": "commons-file-identified-browser-load-pending",
+      "licenseNote": "Consult Commons image license and attribution",
       "media": {
-        "src": "https://www.gutenberg.org/files/51452/51452-h/images/i_093.jpg",
-        "source": "https://www.gutenberg.org/files/51452/51452-h/51452-h.htm",
-        "alt": "Jerusalem from the Mount of Olives — engraving inside Those Holy Fields",
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Jerusalem-%20Old%20City%20(5720199730).jpg?width=1600",
+        "source": "https://commons.wikimedia.org/wiki/File:Jerusalem-_Old_City_(5720199730).jpg",
+        "alt": "Jerusalem — Old City Aerial View — 空中攝影以地形和城市格網呈現完全不同的尺度",
         "type": "image"
       },
-      "destination": "https://www.gutenberg.org/ebooks/51452"
-    },
-    {
-      "id": "american-colony-album",
-      "title": "Hand-colored Photographs of Jerusalem and Palestine",
-      "creator": "American Colony Photo Department",
-      "year": "1919",
-      "kind": "HAND-COLOURED PHOTO ALBUM",
-      "caption": "彩色歷史攝影集：古城、人物、朝聖者與城市生活",
-      "sourceWork": "https://www.loc.gov/item/2007682813/",
-      "curationMedium": "hand-coloured-photography",
-      "imageStatus": "source-path-in-LOC-record-not-live-tested",
-      "media": {
-        "src": "https://tile.loc.gov/storage-services/service/pnp/ds/03100/03108v.jpg",
-        "source": "https://www.loc.gov/item/2007682813/",
-        "alt": "Hand-colored Photographs of Jerusalem and Palestine — 彩色歷史攝影集：古城、人物、朝聖者與城市生活",
-        "type": "image"
-      },
-      "destination": "https://www.loc.gov/item/2007682813/"
+      "destination": "https://commons.wikimedia.org/wiki/File:Jerusalem-_Old_City_(5720199730).jpg"
     }
-  ]
+  ],
+  "visualWorkCount": 12
 }
