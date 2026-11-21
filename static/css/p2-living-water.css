@@ -782,7 +782,7 @@ body[data-ws-scope="p2"] .church-editorial__visual{display:none}
 body[data-ws-scope="p2"] .church-editorial__copy{
  position:relative;grid-column:auto;box-sizing:border-box;
  display:flex;flex-direction:column;justify-content:flex-start;gap:0;
- flex:0 0 auto;width:min(80vw,1040px);height:min(94svh,950px);
+ flex:0 0 auto;width:min(80vw,1040px);height:94svh;max-height:none;
  min-width:0;min-height:0;
  padding:clamp(13px,1.8svh,23px) clamp(17px,2.2vw,36px) clamp(9px,1.5svh,19px);
  overflow-y:auto;overflow-x:hidden;overscroll-behavior:auto;
@@ -1028,19 +1028,29 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .index{
 
 
 
-/* P2 2026-11-21 / Three-act central folio:
-   Upper paper = church identity, middle = worship programme + scriptures,
-   lower paper = full-width growing GLB architectural model.
-   The original Red Sea / water / magazine scroll timelines are unchanged. */
+/* P2 2026-11-21 / R6 ART DIRECTION — visible paper, not a framed card.
+   Full-height upper church identity, middle liturgy and original scriptures,
+   lower full-width GLB construction. One continuous softly darkening paper
+   catches the near-white architectural model without a separate grey rectangle.
+   The original Red Sea / magazine transition scripts are unchanged. */
 body[data-ws-scope="p2"] .church-editorial__copy{
   display:grid;
   grid-template-columns:minmax(0,1fr);
-  grid-template-rows:clamp(145px,22svh,185px) minmax(0,1fr) clamp(206px,30svh,268px);
-  row-gap:clamp(5px,.75svh,11px);
+  grid-template-rows:minmax(0,24fr) minmax(0,43fr) minmax(0,33fr);
+  row-gap:clamp(3px,.55svh,8px);
   justify-items:stretch;
   align-content:stretch;
   overflow:hidden;
-  padding:clamp(12px,1.5svh,18px) clamp(16px,2vw,30px) clamp(10px,1.3svh,16px);
+  height:94svh;
+  max-height:none;
+  padding:clamp(10px,1.3svh,17px) clamp(16px,2vw,30px) clamp(9px,1.2svh,15px);
+  border:0;
+  box-shadow:none;
+  background:linear-gradient(180deg,
+    var(--paper) 0%,
+    var(--paper) 42%,
+    color-mix(in srgb,var(--paper) 92%,var(--ws-water,#5b8fa8) 8%) 63%,
+    color-mix(in srgb,var(--paper) 77%,var(--ws-water,#5b8fa8) 23%) 100%);
 }
 body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity{
   grid-column:1;grid-row:1;
@@ -1050,7 +1060,7 @@ body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity{
   justify-items:center;
   align-content:stretch;
   min-width:0;min-height:0;
-  padding:clamp(4px,.8svh,10px) 0 clamp(9px,1.1svh,14px);
+  padding:clamp(4px,.7svh,9px) 0 clamp(8px,1svh,12px);
   border-bottom:1px solid color-mix(in srgb,var(--ink) 28%,transparent);
 }
 body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity > small{
@@ -1064,10 +1074,10 @@ body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity > sma
 body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-logo{
   grid-column:1;grid-row:2;
   justify-self:center;
-  align-self:end;
+  align-self:center;
   display:block;
   flex:none;
-  width:min(94%,560px);
+  width:min(96%,920px);
   aspect-ratio:1800/193;
   height:auto;
   margin:0 0 clamp(4px,.8svh,9px);
@@ -1080,14 +1090,14 @@ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedu
   width:100%;
   margin:0;
   text-align:center;
-  font:400 clamp(19px,2.4cqi,26px)/1.12 var(--ws-type-display-en);
+  font:400 clamp(23px,3cqi,35px)/1.12 var(--ws-type-display-en);
 }
 body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-address{
   grid-column:1;grid-row:4;
   width:100%;
   margin:clamp(3px,.4svh,6px) 0 0;
   text-align:center;
-  font:italic 400 clamp(10px,1.2cqi,12px)/1.25 var(--ws-type-display-en);
+  font:italic 400 clamp(12px,1.4cqi,15px)/1.25 var(--ws-type-display-en);
 }
 body[data-ws-scope="p2"] .church-editorial__copy > .schedule-content-group{
   grid-column:1;grid-row:2;
@@ -1151,7 +1161,7 @@ body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__bottom{
   min-width:0;min-height:0;
   width:100%;height:100%;
   margin:0;
-  border-top:1px solid color-mix(in srgb,var(--ink) 14%,transparent);
+  border-top:0;
   overflow:hidden;
   background:transparent;
 }
@@ -1189,7 +1199,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
 }
 @media(max-height:720px) and (min-width:701px){
   body[data-ws-scope="p2"] .church-editorial__copy{
-    grid-template-rows:clamp(115px,21svh,150px) minmax(0,1fr) clamp(160px,29svh,210px);
+    grid-template-rows:minmax(0,23fr) minmax(0,45fr) minmax(0,32fr);
   }
 }
 @media(max-width:700px){
@@ -1197,7 +1207,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
   body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial__copy{
     display:grid;
     grid-template-columns:minmax(0,1fr);
-    grid-template-rows:clamp(120px,20svh,165px) minmax(0,1fr) clamp(155px,25svh,220px);
+    grid-template-rows:minmax(0,24fr) minmax(0,45fr) minmax(0,31fr);
     width:calc(100vw - 24px);
     height:calc(100svh - 24px);
     overflow:hidden;
@@ -1208,7 +1218,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
 }
 @media(max-width:480px){
   body[data-ws-scope="p2"] .church-editorial__copy{
-    grid-template-rows:clamp(114px,20svh,150px) minmax(0,1fr) clamp(130px,23svh,190px);
+    grid-template-rows:minmax(0,24fr) minmax(0,45fr) minmax(0,31fr);
     padding-inline:clamp(12px,3vw,17px);
   }
   body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-english{
@@ -1229,4 +1239,36 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
   body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group > .schedule-theme-scripture > p:nth-of-type(4){
     grid-column:1;grid-row:5;
   }
+}
+
+
+/* R6: OS-aligned readable middle; no new text or changes in programme order. */
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule h3{
+  font-size:clamp(25px,2.8cqi,35px);
+  line-height:1.12;
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row{
+  padding-block:clamp(3px,.38svh,6px);
+  --p2-gap:clamp(8px,1.1cqi,16px);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row time{
+  font-size:clamp(13px,1.5cqi,17px);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row strong{
+  font-size:clamp(16px,1.8cqi,21px);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule .worship-program .worship-row p{
+  font-size:clamp(13px,1.55cqi,17px);
+}
+body[data-ws-scope="p2"] .church-editorial__copy .schedule-content-group > .schedule-theme-scripture > p{
+  font-size:clamp(13px,1.58cqi,16px);
+  line-height:1.45;
+}
+/* The gradient belongs to the whole folio; no opaque block or frosted card
+   behind the moving white GLB, and no redundant border around the model. */
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom,
+body[data-ws-scope="p2"] .church-editorial__copy .church-folio__bottom > .church-schedule-maquette{
+  background:transparent;
+  border:0;
+  box-shadow:none;
 }
