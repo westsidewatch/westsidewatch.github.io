@@ -18,6 +18,12 @@ assert(!/location\.replace|http-equiv=["']refresh/.test(html), "No redirect in t
 assert(/<canvas\b/.test(html), "Tour owns its own WebGL canvas");
 assert(!/<h[1-6]\b|<p\b|<button\b|<aside\b/i.test(html), "No visible UI or engineering labels");
 assert(script.includes("entranceHinge.rotation.y"), "A real scene door must open");
+assert(script.includes("entranceHinge.attach(mesh(\"TALL SINGLE WHITE PIVOT DOOR\")"), "The original tall GLB entrance must be the moving door");
+assert(!script.includes("const leaf = new Mesh"), "Do not introduce a short fake entrance leaf");
+assert(script.includes("new PerspectiveCamera("), "Use an actual perspective camera");
+assert(script.includes("south cross wall|solid quadrant"), "The cross is a wall aperture, not luminous solid quadrants");
+assert(script.includes("surfaceMaps.stone"), "Architectural materials must remain textured");
+
 assert(script.includes("loadArchitecture()"), "Native GLB loading required");
 assert((script.match(/at:\s*[0-9]+,\s*p:/g) || []).length >= 8, "Multiple indoor camera stations required");
 for (const file of [
@@ -27,7 +33,7 @@ for (const file of [
   "static/p2-maquette/assets/GLTFLoader-j388d5bW.js"
 ]) assert(existsSync(file), "Missing local asset: " + file);
 assert(folio.match(/\/p2\/church-tour\.html/g)?.length >= 3, "Both first-layer church names and model must link to native tour");
-assert(interaction.includes("new URL('/p2/church-tour.html', window.location.href)"), "Iframe click must produce a resolved local URL");
+assert(interaction.includes("new URL('/p2/church-tour.html?scene=20261121-architecture-r3', window.location.href)"), "Iframe click must produce a resolved local URL");
 assert(firstLayer.includes("p2-BIwqVfIr.js"), "First-layer growth model remains untouched");
 const syntax = script.replace(/import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?/m, "");
 new Script(syntax, { filename: "church-tour.js" });
