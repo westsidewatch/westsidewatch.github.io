@@ -354,6 +354,7 @@
   second.scrollTo({top:catalogue.offsetTop,behavior:'instant'});
   const ticket=++portalTicket;
   if(activePortal==='all'){
+   portalTopics?.remove();portalTopics=null;editorialWorks=[];
    search.disabled=false;search.value=title||'';
    loadCatalogue();
    if(currentPage)renderWorks();
@@ -365,46 +366,72 @@
    showPortalCollection(activePortal,ticket);
   }
  }
+ let editorialManifest=null,activeTopic='all',editorialWorks=[],portalTopics=null;
+ async function loadEditorialChannels(){
+  if(editorialManifest)return editorialManifest;
+  const response=await fetch('/dawn-library/p2-editorial-channels.json');
+  if(!response.ok)throw Error('Collection index unavailable');
+  editorialManifest=await response.json();return editorialManifest;
+ }
+ function editorialTabBar(kind,topics){
+  portalTopics?.remove();portalTopics=null;
+  if(!Array.isArray(topics)||topics.length<2)return;
+  const bar=document.createElement('nav');bar.className='dawn-catalogue__topics';bar.setAttribute('aria-label',kind+'分類');
+  topics.forEach((t,i)=>{
+   const button=document.createElement('button');button.type='button';button.textContent=t.label;
+   button.setAttribute('aria-pressed',String(i===0));button.dataset.topic=t.id;
+   button.addEventListener('click',()=>{
+    activeTopic=t.id;
+    bar.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+    renderPortalWorks(editorialWorks.filter(w=>topicMatches(kind,w,t)),kind);
+   });
+   bar.append(button);
+  });
+  works.before(bar);portalTopics=bar;activeTopic=topics[0].id;
+ }
+ function topicMatches(kind,work,topic){
+  if(topic.id==='all'||kind==='三晨星')return true;
+  if(kind==='光譜')return work.editorialTopic===topic.id;
+  if(kind==='策展集')return topic.mediums.some(m=>{
+   const medium=String(work.curationMedium||'').toLowerCase();
+   return medium===m||medium.includes(m);
+  });
+  return true;
+ }
  async function showPortalCollection(kind,ticket){
   const list=[];
   try{
+   const config=(await loadEditorialChannels()).channels[kind];if(!config)throw Error('Editorial channel unavailable');
    if(kind==='三晨星'){
-    const response=await fetch('/dawn-library/surfaces/dawn-launch.json');
-    if(!response.ok)throw Error('Morning selections not found');
-    const manifest=await response.json();
-    const ids=(manifest.items||[]).map(x=>x.workId).filter(Boolean);
+    const response=await fetch(config.source);if(!response.ok)throw Error('Morning selection missing');
+    const data=await response.json();
+    const ids=(data.items||[]).map(x=>x.workId).filter(Boolean);
     const lib=await import('/dawn-library/product/library-system.mjs');
     const matched=await lib.dawnLibrary.works(ids);
-    ids.forEach(id=>{const w=matched.get(id);if(w)list.push({title:w.title,creator:(w.authors||[]).join(' · '),workId:w.workId,cover:w.cover,sourceUrl:w.sourceUrl||null,authorityIds:w.authorityIds,edition:w.edition})});
+    ids.forEach(id=>{const w=matched.get(id);if(w)list.push({title:w.title,creator:(w.authors||[]).join(' · '),workId:w.workId,cover:w.cover,authorityIds:w.authorityIds,edition:w.edition})});
    }else if(kind==='策展集'){
-    const response=await fetch('/dawn-library/p2-exhibitions/jerusalem-3000.json');
-    if(!response.ok)throw Error('Exhibition not found');
+    const response=await fetch(config.source);if(!response.ok)throw Error('Exhibition missing');
     const data=await response.json();
-    (data.items||[]).forEach(x=>{
-     list.push({title:x.title,creator:x.creator,date:x.year,illustration:{url:x.media?.src,alt:x.media?.alt,source:x.media?.source,credit:x.creator},sourceUrl:x.sourceWork||x.destination});
-    });
+    for(const item of data.items||[])list.push({title:item.title,creator:item.creator,date:item.year,curationMedium:item.curationMedium,illustration:{url:item.media?.src,alt:item.media?.alt,source:item.media?.source,credit:item.creator},sourceUrl:item.sourceWork||item.destination});
    }else if(kind==='光譜'){
-    const response=await fetch('/dawn-library/surfaces/dawn-storefront.json');
-    if(!response.ok)throw Error('Library shelves unavailable');
-    const data=await response.json();
-    const ids=[];
-    const selected=['gutenberg-philosophy-classics','gutenberg-early-church-fathers','gutenberg-ancient-history-archaeology','gutenberg-biography-memoir'];
-    for(const key of selected){
-     const shelf=(data.shelves||[]).find(x=>x.id===key);
-     (shelf?.items||[]).slice(0,6).forEach(x=>{if(x.workId&&!ids.includes(x.workId))ids.push(x.workId)});
+    const response=await fetch(config.source);if(!response.ok)throw Error('Disciplinary shelves missing');
+    const data=await response.json(),byId=new Map();
+    for(const topic of config.topics)for(const id of topic.shelves||[]){
+     const shelf=(data.shelves||[]).find(x=>x.id===id);
+     (shelf?.items||[]).slice(0,config.selectionPerShelf||8).forEach(x=>{
+      if(x.workId&&!byId.has(x.workId))byId.set(x.workId,topic.id);
+     });
     }
     const lib=await import('/dawn-library/product/library-system.mjs');
-    const matched=await lib.dawnLibrary.works(ids);
-    ids.forEach(id=>{const w=matched.get(id);if(w)list.push({title:w.title,creator:(w.authors||[]).join(' · '),workId:w.workId,cover:w.cover,sourceUrl:w.sourceUrl||null,authorityIds:w.authorityIds,edition:w.edition})});
+    const matches=await lib.dawnLibrary.works([...byId.keys()]);
+    byId.forEach((topic,id)=>{const w=matches.get(id);if(w)list.push({title:w.title,creator:(w.authors||[]).join(' · '),workId:w.workId,cover:w.cover,authorityIds:w.authorityIds,edition:w.edition,editorialTopic:topic})});
    }
    await Promise.all([loadCatalogueCoverLookup(),loadVisualLookup()]);
    if(ticket!==portalTicket||activePortal!==kind)return;
-   renderPortalWorks(list,kind);
-  }catch(err){
-   if(ticket!==portalTicket)return;
-   console.warn('[Dawn selected collection]',err);
-   pageStatus.textContent='館藏暫時無法載入。';
-  }
+   editorialWorks=list;
+   editorialTabBar(kind,config.topics);
+   renderPortalWorks(list.filter(w=>topicMatches(kind,w,config.topics?.[0]||{id:'all'})),kind);
+  }catch(err){if(ticket!==portalTicket)return;console.warn('[Dawn editorial channels]',err);pageStatus.textContent='館藏暫時無法載入。'}
  }
  function renderPortalWorks(items,kind){
   const frag=document.createDocumentFragment();
@@ -416,8 +443,7 @@
    card.className='dawn-catalogue__cover-card'+(art?' dawn-catalogue__cover-card--image':' dawn-catalogue__cover-card--unresolved');
    card.setAttribute('aria-label','閱讀：'+work.title);
    if(art){
-    const img=document.createElement('img');img.loading='lazy';img.decoding='async';
-    img.src=art.url;img.alt=art.alt||work.title;
+    const img=document.createElement('img');img.loading='lazy';img.decoding='async';img.src=art.url;img.alt=art.alt||work.title;
     img.onerror=()=>{img.remove();card.classList.remove('dawn-catalogue__cover-card--image');card.classList.add('dawn-catalogue__cover-card--unresolved')};
     card.append(img);
    }
@@ -431,9 +457,9 @@
    li.append(card);frag.append(li);
   });
   works.replaceChildren(frag);
-  pageStatus.textContent=items.length?String(items.length)+' 部作品':'目前沒有可顯示的作品。';
+  pageStatus.textContent=items.length?String(items.length)+' 部作品':'本分類目前沒有可顯示的作品。';
  }
- function closeCollection(){++portalTicket;activePortal='all';search.disabled=false;if(!detail.hidden)closeBook();catalogue.hidden=true;wall.hidden=false;search.value='';second.scrollTo({top:wall.offsetTop,behavior:'instant'})}
+ function closeCollection(){++portalTicket;activePortal='all';portalTopics?.remove();portalTopics=null;editorialWorks=[];search.disabled=false;if(!detail.hidden)closeBook();catalogue.hidden=true;wall.hidden=false;search.value='';second.scrollTo({top:wall.offsetTop,behavior:'instant'})}
  openCatalogue.addEventListener('click',()=>openCollection());
  closeCatalogue.addEventListener('click',closeCollection);
  wallGrid.addEventListener('click',e=>{
