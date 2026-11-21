@@ -380,3 +380,14 @@
 
 /* R16: only suppress the unwanted image-bottom caption rectangle; original central two-square masthead intact. */
 .dawn-world__edition{display:none!important}
+
+/* R17 · P2 05 original two-square masthead: restore actual opaque plates, dimensions and central alignment. */
+#dawn-realm #dawn-twins{position:absolute!important;z-index:20!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;display:grid!important;grid-template-columns:repeat(2,var(--dawn-square))!important;grid-template-rows:var(--dawn-square)!important;width:calc(2 * var(--dawn-square))!important;height:var(--dawn-square)!important;min-width:0!important;min-height:0!important;gap:0!important;padding:0!important;margin:0!important;overflow:visible!important;background:transparent!important;border:0!important;filter:none!important;box-shadow:none!important;isolation:isolate!important;}
+#dawn-realm #dawn-twins>.dawn-twins__square{position:relative!important;display:flex!important;flex-direction:column!important;justify-content:center!important;flex:0 0 var(--dawn-square)!important;width:var(--dawn-square)!important;height:var(--dawn-square)!important;min-width:0!important;min-height:0!important;box-sizing:border-box!important;overflow:hidden!important;opacity:1!important;visibility:visible!important;filter:none!important;backdrop-filter:none!important;box-shadow:none!important;padding:clamp(10px,1.35svh,18px)!important;}
+#dawn-realm #dawn-twins>.dawn-twins__square--title{background-color:var(--ws-harvest,#b8944a)!important;background-image:none!important;color:var(--ws-paper,#faf9f5)!important;}
+#dawn-realm #dawn-twins>.dawn-twins__square--verse{background-color:var(--ws-paper,#faf9f5)!important;background-image:none!important;color:var(--ws-ink,#252525)!important;}
+#dawn-realm #dawn-twins .dawn-twins__en{font-size:clamp(23px,2.65svh,32px)!important;white-space:normal!important;overflow-wrap:normal!important;line-height:1.02!important;}
+#dawn-realm #dawn-twins .dawn-twins__zh{font-size:clamp(16px,1.9svh,23px)!important;}
+#dawn-realm #dawn-twins .dawn-twins__verse-zh{font-size:clamp(12px,1.5svh,17px)!important;}
+#dawn-realm #dawn-twins .dawn-twins__verse-en{font-size:clamp(11px,1.3svh,15px)!important;}
+@media(max-width:600px){#dawn-realm{--dawn-square:clamp(125px,40vw,155px)}#dawn-realm #dawn-twins>.dawn-twins__square{padding:9px!important}}
