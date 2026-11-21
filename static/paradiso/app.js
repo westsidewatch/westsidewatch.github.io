@@ -46,7 +46,14 @@ function drawCards(){
   filtered.forEach((item,index)=>{
     const card=make('article','film-card');const poster=make('button',`poster ${['nativity','passion','general'].includes(item.posterStyle)?item.posterStyle:'custom'}`);poster.type='button';poster.setAttribute('aria-label',`播放《${item.title}》`);
     const posterImageUrl = (()=>{try{const u=new URL(item.sourcePage);if(u.hostname==='archive.org'){const id=u.pathname.split('/').filter(Boolean)[1];return id ? 'https://archive.org/services/img/'+encodeURIComponent(id) : null;}return null;}catch{return null;}})();
-    if(posterImageUrl){const im=make('img','poster-image');im.src=posterImageUrl;im.alt='';im.loading='lazy';im.decoding='async';im.onerror=()=>im.remove();poster.append(im);}
+    const addPosterImage=url=>{if(!url)return;const im=make('img','poster-image');im.src=url;im.alt='';im.loading='lazy';im.decoding='async';im.onerror=()=>im.remove();poster.prepend(im);};
+    if(posterImageUrl){addPosterImage(posterImageUrl);}
+    else if(item.sourcePage && /commons\\.wikimedia\\.org\\/wiki\\/File:/i.test(item.sourcePage)){
+      try{const title=decodeURIComponent(new URL(item.sourcePage).pathname.split('/wiki/')[1]).replaceAll('_',' ');
+        const api=new URL('https://commons.wikimedia.org/w/api.php');api.search=new URLSearchParams({action:'query',format:'json',origin:'*',prop:'imageinfo',iiprop:'url',iiurlwidth:'640',titles:title}).toString();
+        fetch(api).then(r=>r.ok?r.json():null).then(data=>{const pages=Object.values(data?.query?.pages||{});const img=pages[0]?.imageinfo?.[0];if(img?.thumburl||img?.url)addPosterImage(img.thumburl||img.url);}).catch(()=>{});
+      }catch{}
+    }
     poster.append(make('span','poster-circle'),make('span','poster-top',item.type==='series'?'SERIES / CRISPS':'FULL FEATURE / CRISPS'),make('span','poster-title',item.posterHeadline||item.originalTitle||item.title),make('span','poster-numeral',`Nº ${String(index+1).padStart(3,'0')} · ${item.year||'—'}`),make('span','play-circle','▶'));
     poster.addEventListener('click',()=>openPlayer(item));
     const info=make('div','film-info');info.append(make('div','film-meta',`${item.category}  /  ${item.year||'年份未註明'}  /  ${item.type==='series'?item.episodes.length+'集':item.runtime+' MIN'}`));
