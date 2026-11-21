@@ -19,7 +19,9 @@ Every approved 黎明書局「策展集」 may use the same P2 viewer and be dir
 - Keyboard, source links, image failures, reduced motion, screen width and touch/scroll review are release gates.
 
 ## Example and limitation
-`jerusalem-3000.json` currently contains a **first verified set of five maps** already in the site's existing `/dawn-library/collections/jerusalem-3000/maps/` reader. These are not twelve separate books. Twelve visually differentiated source-verified books/plates (photography, portraits, archaeology, art, manuscript, architecture and historical images) remain a **separate editorial curation acceptance gate**. Never promote the five-map data-bridge exercise as completion of the twelve-work exhibit.
+`jerusalem-3000.json` now identifies **twelve distinct source publications** spanning an illuminated manuscript, pilgrimage woodcut, theological engravings, architectural archaeology, historic photographs, and colour lithographs. This replaces the rejected five-map mockup and the unrelated twelve-scene stopgap.
+
+**Selection is not image acceptance.** Entries with `media:null` are real books that still need their genuine interior plate located and checked. The generic P2 loader only projects entries with an actual media URL; **do not announce twelve images in production until all twelve are verified**. Other entries with `media` also carry `imageStatus`; some remote images are not yet browser-tested.
 
 ## Acceptance
 Verify all linked source images actually load and match their named work, rights/attribution, corresponding reader deep links, desktop/mobile and reverse-scroll behavior in the browser. Successful CI is not a visual acceptance.
