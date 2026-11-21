@@ -31,7 +31,7 @@ function stop(){
 }
 function mark(message){status.textContent=message}
 function nextSource(token,reason){
-  if(token!==playbackToken)return;
+  if(token!==playbackToken||sourceIndex>=chosenSources.length)return;
   if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}
   if(hls){hls.destroy();hls=null}
   sourceIndex++;
