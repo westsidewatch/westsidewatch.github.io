@@ -66,3 +66,18 @@ for (const [name,p] of samples){
  p.every((v,j)=>v>=a.box.min[j]-.16&&v<=a.box.max[j]+.16)).map(a=>a.name);
  console.log(JSON.stringify({name,point:p,collisions:collisions.slice(0,12),count:collisions.length}));
 }
+
+console.log('## CC0 maple material and hierarchy audit');
+for(let id=0;id<json.nodes.length;id++){
+ const n=json.nodes[id];
+ const name=n.name||'';
+ if(/maple|leaves|foliage|trunk|branch|tree|twig|stem|bark/i.test(name)){
+ const m=n.mesh===undefined?null:json.meshes[n.mesh];
+ console.log(JSON.stringify({id,name,children:n.children?.length||0,mesh:n.mesh,
+ mats:m?.primitives?.map(p=>({material:p.material,name:json.materials?.[p.material]?.name,base:json.materials?.[p.material]?.pbrMetallicRoughness?.baseColorFactor}))}));
+ }
+}
+console.log('## Relevant route geometry for west/south interior, terraces and upper floors');
+for(const item of ledger.filter(x=>/V19 INDOOR|V19 NORTH|V05|V26 ROUTE|STAIR|terrace|landing|cafe|forum|SOUTH-TO-WEST|south foyer|WEST MID/i.test(x.name)).slice(0,115)){
+ console.log(JSON.stringify({name:item.name,min:fmt(item.box.min),max:fmt(item.box.max)}));
+}
