@@ -21,7 +21,7 @@ Every approved 黎明書局「策展集」 may use the same P2 viewer and be dir
 ## Example and limitation
 `jerusalem-3000.json` now identifies **twelve distinct source publications** spanning an illuminated manuscript, pilgrimage woodcut, theological engravings, architectural archaeology, historic photographs, and colour lithographs. This replaces the rejected five-map mockup and the unrelated twelve-scene stopgap.
 
-**Selection is not image acceptance.** Entries with `media:null` are real books that still need their genuine interior plate located and checked. The generic P2 loader only projects entries with an actual media URL; **do not announce twelve images in production until all twelve are verified**. Other entries with `media` also carry `imageStatus`; some remote images are not yet browser-tested.
+**Selection is not visual acceptance.** Twelve distinct books now each have a source-matched interior illustration, artistic plate, or photographic original URL in the manifest. The generic P2 loader can project all twelve. Remote image availability, legal reproduction rights, mobile cropping, source-work identity and live browser transitions still require verification; **do not announce production-ready visuals until those gates pass**.
 
 ## Acceptance
 Verify all linked source images actually load and match their named work, rights/attribution, corresponding reader deep links, desktop/mobile and reverse-scroll behavior in the browser. Successful CI is not a visual acceptance.
