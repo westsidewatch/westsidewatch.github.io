@@ -231,6 +231,7 @@
    side.next.style.transform='none';
    if(side.node.href!==shown.href){
     side.node.href=shown.href;
+    side.node.target='_blank';side.node.rel='noopener noreferrer';
     side.node.setAttribute('aria-label','查看 '+shown.title+' · 原始書籍或館藏');
    }
    side.title.textContent=shown.title;
