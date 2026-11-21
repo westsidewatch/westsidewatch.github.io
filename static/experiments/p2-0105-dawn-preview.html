@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>黎明書局 · Westside Watch</title>
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-0105-dawn-continuation.css?v=r28-remove-red-kinetic">
+<link rel="stylesheet" href="/css/p2-0105-dawn-continuation.css?v=r29-native-books-20261121">
 </head>
 <body data-ws-scope="p2">
 <main class="p205-track" id="p205-track" aria-label="Westside Watch 連續閱讀">
@@ -116,9 +116,28 @@
     <ol class="dawn-catalogue__works dawn-catalogue__works--sleeves" id="dawn-works" aria-live="polite"></ol>
     <div class="dawn-catalogue__more"><button type="button" id="dawn-prev">上一頁</button><button type="button" id="dawn-more">下一頁館藏</button><output id="dawn-page-status" aria-live="polite"></output></div>
    </section>
+   <section class="dawn-book-detail" id="dawn-book-detail" aria-labelledby="dawn-book-title" hidden>
+    <div class="dawn-book-detail__nav">
+     <button type="button" id="dawn-book-back" class="dawn-book-detail__back">← 返回館藏</button>
+     <span>DAWN LIBRARY</span>
+    </div>
+    <div class="dawn-book-detail__body">
+     <figure class="dawn-book-detail__visual" id="dawn-book-visual">
+      <img id="dawn-book-image" alt="" hidden>
+      <figcaption id="dawn-book-image-caption"></figcaption>
+     </figure>
+     <article class="dawn-book-detail__reading">
+      <p class="dawn-book-detail__edition" id="dawn-book-edition"></p>
+      <h2 id="dawn-book-title"></h2>
+      <p id="dawn-book-author" class="dawn-book-detail__author"></p>
+      <div class="dawn-book-detail__text" id="dawn-book-text" aria-live="polite"></div>
+      <a id="dawn-book-source" class="dawn-book-detail__source" target="_blank" rel="noopener noreferrer" hidden>查閱原書來源（新分頁） ↗</a>
+     </article>
+    </div>
+   </section>
   </section>
  </div>
 </main>
-<script src="/js/p2-0105-dawn-continuation.js?v=r28-remove-red-kinetic"></script>
+<script src="/js/p2-0105-dawn-continuation.js?v=r29-native-books-20261121"></script>
 </body>
 </html>
