@@ -8,7 +8,7 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-webgl']});
  try{
   fs.mkdirSync('artifacts/p2-sunday-growth',{recursive:true});
-  for(const screen of [{name:'desktop',width:1440,height:900},{name:'phone',width:390,height:844}]){
+  for(const screen of [{name:'desktop',width:1440,height:900},{name:'reference-screenshot',width:1158,height:850},{name:'phone',width:390,height:844}]){
    const page=await browser.newPage({viewport:{width:screen.width,height:screen.height},deviceScaleFactor:1});
    const pageErrors=[];
    page.on('pageerror',e=>pageErrors.push(String(e)));
@@ -31,23 +31,42 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
     const figure=document.querySelector('.church-schedule-maquette');
     const frame=document.querySelector('.church-editorial__maquette');
     const ocean=document.querySelector('.ocean-rise #upper');
-    const rect=e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}};
+    const lastVerse=document.querySelector('.schedule-theme-scripture p:last-child');
+    const themeTitle=document.querySelector('.schedule-theme-scripture h3');
+    const rect=e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,bottom:r.bottom,right:r.right}};
     return {phase:stage.dataset.p2Phase,modelActive:stage.classList.contains('p2-church-model-visible'),programme:!!programme,
-      leftHasNoModel:!visual.contains(frame),rightContainsModel:copy.contains(frame),
-      leftWaterEngravingPreserved:!!ocean,
+      leftContainsModel:visual.contains(frame),rightHasNoModel:!copy.contains(frame),
+      leftWaterEngravingPreserved:!!ocean, 
+      originalSundayRows:document.querySelectorAll('.worship-row').length,
+      allThreeScriptures:!!lastVerse&&!!themeTitle&&
+        document.querySelector('.schedule-theme-scripture').textContent.includes('以弗所書 5:20')&&
+        document.querySelector('.schedule-theme-scripture').textContent.includes('帖撒羅尼迦前書 5:16–18')&&
+        document.querySelector('.schedule-theme-scripture').textContent.includes('腓立比書 4:6–7'),
       visual:rect(visual),right:rect(copy),figure:rect(figure),frame:rect(frame),frameSrc:frame.src,
+      finalVerse:rect(lastVerse),themeTitle:rect(themeTitle), 
+      copyScrollHeight:copy.scrollHeight,copyClientHeight:copy.clientHeight,
       scheduleDisplay:getComputedStyle(programme).display};
    });
+   console.log('P2_FULL_LAYOUT_METRICS',screen.name,JSON.stringify(result));
    assert.equal(result.modelActive,true,screen.name+' not displaying the Church visual');
    assert.equal(result.programme,true,screen.name+' missing Sunday programme');
-   assert.equal(result.leftHasNoModel,true,screen.name+' model wrongly placed over the LEFT water engraving');
-   assert.equal(result.leftWaterEngravingPreserved,true,screen.name+' water engraving was removed');
-   assert.equal(result.rightContainsModel,true,screen.name+' maquette not in RIGHT Sunday programme');
-   assert.ok(result.figure.width>180&&result.figure.height>140,screen.name+' illustration collapsed');
-   assert.ok(result.frame.width>180&&result.frame.height>140,screen.name+' model iframe collapsed');
-   assert.ok(result.figure.x>=result.right.x-2,screen.name+' model begins to left of right programme');
-   assert.ok(result.figure.x+result.figure.width<=result.right.x+result.right.width+2,screen.name+' model exceeds right programme');
-   console.log(screen.name,'SUNDAY_MODEL_ON_RIGHT',JSON.stringify(result));
+   assert.equal(result.leftContainsModel,true,screen.name+' model absent from LEFT water-engraving pane');
+   assert.equal(result.rightHasNoModel,true,screen.name+' model still consumes RIGHT programme space');
+   assert.equal(result.leftWaterEngravingPreserved,true,screen.name+' water engraving removed');
+   assert.equal(result.originalSundayRows,7,screen.name+' lost Sunday worship rows');
+   assert.equal(result.allThreeScriptures,true,screen.name+' lost a scripture quotation');
+   if(screen.width>700){
+     assert.ok(result.figure.width>180&&result.figure.height>150,screen.name+' model illustration collapsed');
+     assert.ok(result.figure.x>=result.visual.x-2&&result.figure.right<=result.visual.right+2,screen.name+' not inside left water field');
+     assert.ok(result.figure.y>=result.visual.y+result.visual.height*.55,screen.name+' model is not LOWER-LEFT');
+     assert.ok(result.figure.bottom<=result.visual.bottom-10,screen.name+' model clips out of left field');
+     assert.ok(result.finalVerse.bottom<=result.right.bottom+2,screen.name+' final scripture clipped at bottom');
+     assert.ok(result.copyScrollHeight<=result.copyClientHeight+3,screen.name+' programme still requires internal scrolling at full desktop height');
+   }else{
+     // On phone, the single reading column scrolls; no model may cover text.
+     assert.equal(result.visual.width,0,'phone must prioritize Sunday reading');
+   }
+   console.log(screen.name,'SUNDAY_MODEL_LOWER_LEFT_ALL_SCRIPTURES',JSON.stringify(result));
    await page.close();
   }
   // Verify the real homepage P2, which nests 04 → 01–03 → Church, not just
@@ -66,16 +85,17 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
     const stage=inner?.querySelector('.showcase');
     const water=inner?.querySelector('.ocean-rise #upper');
     const right=inner?.querySelector('.church-editorial__copy');
-    const figure=right?.querySelector('.church-schedule-maquette');
     const left=inner?.querySelector('.church-editorial__visual');
+    const figure=left?.querySelector('.church-schedule-maquette');
     const model=figure?.querySelector('.church-editorial__maquette');
+    const last=right?.querySelector('.schedule-theme-scripture p:last-child');
     return stage?.classList.contains('p2-church-model-visible')&&
-      !!water&&!!right&&!!left&&!left.contains(model)&&
-      figure?.getBoundingClientRect().width>180&&
-      right.contains(model)&&
+      !!water&&!!right&&!!left&&left.contains(model)&&!right.contains(model)&&
+      figure?.getBoundingClientRect().y>left.getBoundingClientRect().height*.55&&
+      !!last&&last.getBoundingClientRect().bottom<=right.getBoundingClientRect().bottom+3&&
       model?.getAttribute('src')?.includes('/p2-maquette/index.html');
   },{timeout:45000});
-  console.log('HOMEPAGE_REAL_P2_SUNDAY_MODEL_ON_RIGHT');
+  console.log('HOMEPAGE_P2_MODEL_LOWER_LEFT_TEXT_VISIBLE');
   await home.close();
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});

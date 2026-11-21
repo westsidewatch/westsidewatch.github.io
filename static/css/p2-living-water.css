@@ -770,32 +770,41 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="church-to-magazine"] .church-e
  body[data-ws-scope="p2"] .p2-magazine__panel{transform:none}
 }
 
-/* Right-page architectural study: a silent illustration IN the Sunday
-   programme, never in the left water-engraving pane. Keep the printed
-   programme fully legible and the original Red Sea/ocean animation untouched. */
+/* P2 Sunday: the architectural growth model ornaments the free LOWER-LEFT
+   portion of the original engraved-water field. No replacement of the
+   ocean/water/doors. Right-hand programme is all text again. */
 body[data-ws-scope="p2"] .church-editorial__visual{
-  background:transparent;
-  pointer-events:none;
-}
-body[data-ws-scope="p2"] .church-schedule-maquette{
   position:relative;
-  display:block;
-  flex:none;
-  width:min(100%,460px);
-  height:clamp(150px,22svh,228px);
-  margin:clamp(5px,.9vh,12px) auto clamp(8px,1.25vh,16px);
+  min-width:0;
+  min-height:0;
   overflow:hidden;
   background:transparent;
   pointer-events:none;
+}
+body[data-ws-scope="p2"] .church-editorial__visual .church-schedule-maquette{
+  position:absolute;
+  bottom:clamp(24px,4.2svh,52px);
+  left:clamp(22px,5.2%,55px);
+  z-index:1;
+  display:block;
+  width:min(75%,460px);
+  height:clamp(170px,27svh,258px);
+  margin:0;
+  overflow:hidden;
+  background:transparent;
   isolation:isolate;
+  pointer-events:none;
 }
 body[data-ws-scope="p2"] .church-schedule-maquette::before{
   content:"";
-  display:block;
   position:absolute;
   inset:0;
-  background:url("/p2-maquette/maquette-fallback.webp") center/contain no-repeat;
-  opacity:.82;
+  display:block;
+  background:url("/p2-maquette/maquette-fallback.webp") center / contain no-repeat;
+  opacity:.72;
+  mix-blend-mode:multiply;
+  -webkit-mask-image:radial-gradient(ellipse 70% 65% at 50% 52%,#000 70%,transparent 100%);
+  mask-image:radial-gradient(ellipse 70% 65% at 50% 52%,#000 70%,transparent 100%);
   transition:opacity .42s ease;
   pointer-events:none;
 }
@@ -809,16 +818,84 @@ body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
   width:100%;
   height:100%;
   border:0;
-  padding:0;
   margin:0;
+  padding:0;
   background:transparent;
   pointer-events:none;
-  transform:scale(1.15);
-  transform-origin:50% 50%;
+  mix-blend-mode:multiply;
+  -webkit-mask-image:radial-gradient(ellipse 76% 75% at 50% 50%,#000 66%,transparent 100%);
+  mask-image:radial-gradient(ellipse 76% 75% at 50% 50%,#000 66%,transparent 100%);
+}
+
+/* Reclaim the ~200px formerly occupied by the right-panel image and keep
+   every original Sunday row and all three scripture quotations intact.
+   Compact spacing, not disappearing or truncating words. */
+@media(min-width:701px){
+  body[data-ws-scope="p2"] .church-editorial__copy{
+    padding:clamp(12px,1.65svh,21px) clamp(18px,2.25vw,38px)
+      clamp(12px,1.6svh,21px);
+    scrollbar-gutter:stable;
+    overflow-y:auto;
+  }
+  body[data-ws-scope="p2"] .church-editorial__copy>small{
+    margin-bottom:clamp(5px,.8svh,9px);
+  }
+  body[data-ws-scope="p2"] .schedule-content-group{
+    gap:clamp(2px,.35svh,5px);
+    margin-block:0;
+  }
+  body[data-ws-scope="p2"] .schedule-church-address{
+    margin-bottom:clamp(3px,.5svh,6px);
+  }
+  body[data-ws-scope="p2"] .sunday-schedule__top{
+    padding-block:clamp(3px,.5svh,6px);
+  }
+  body[data-ws-scope="p2"] .sunday-schedule h3{
+    margin:clamp(3px,.55svh,7px) 0;
+    line-height:1.04;
+  }
+  body[data-ws-scope="p2"] .worship-ministry{
+    margin-bottom:clamp(3px,.55svh,7px);
+    line-height:1.35;
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row{
+    padding-block:clamp(4px,.65svh,7px);
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row strong{
+    line-height:1.2;
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row p{
+    line-height:1.35;
+  }
+  body[data-ws-scope="p2"] .worship-next{
+    margin-top:clamp(3px,.55svh,7px);
+  }
+  body[data-ws-scope="p2"] .worship-next p,
+  body[data-ws-scope="p2"] .sunday-schedule__place p{
+    margin-top:2px;
+    margin-bottom:3px;
+    line-height:1.35;
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture{
+    margin-top:clamp(7px,1svh,12px);
+    padding-top:clamp(6px,.8svh,10px);
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture h3{
+    margin-bottom:clamp(3px,.4svh,5px);
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture p{
+    margin-bottom:.35em;
+    font-size:clamp(14px,1.9cqi,18px);
+    line-height:1.45;
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture__ref{
+    margin-top:.13em;
+    line-height:1.25;
+  }
 }
 @media(max-width:700px){
-  /* Keep the mobile Sunday page readable. The model stays WITH its text,
-     not in a separate left half and never as a full-screen blank panel. */
+  /* There is no separate water half on phone: keep the Sunday text readable
+     instead of overlaying the content with a floating decoration. */
   body[data-ws-scope="p2"] .showcase.p2-church-model-visible .church-editorial{
     grid-template-columns:minmax(0,1fr);
     grid-template-rows:minmax(0,1fr);
@@ -833,9 +910,92 @@ body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
     min-width:0;
     overflow-y:auto;
   }
-  body[data-ws-scope="p2"] .church-schedule-maquette{
-    width:min(100%,390px);
-    height:clamp(145px,22svh,205px);
-    margin-block:6px 12px;
+}
+
+/* Editorial text fit: redistribute the long ministry and next-Sunday details
+   across the FULL paper width instead of the narrow fourth grid track. */
+@media(min-width:701px){
+  body[data-ws-scope="p2"] .sunday-schedule .worship-ministry,
+  body[data-ws-scope="p2"] .sunday-schedule .worship-next,
+  body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place{
+    display:grid;
+    grid-template-columns:minmax(95px,24%) minmax(0,1fr);
+    column-gap:clamp(12px,2cqi,22px);
+    align-items:start;
+    padding:0;
+    margin-bottom:clamp(2px,.4svh,5px);
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>span,
+  body[data-ws-scope="p2"] .sunday-schedule .worship-next>span,
+  body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>span{
+    grid-column:1;
+    grid-row:1;
+    align-self:start;
+    margin:0;
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-ministry>p,
+  body[data-ws-scope="p2"] .sunday-schedule .worship-next>p,
+  body[data-ws-scope="p2"] .sunday-schedule .sunday-schedule__place>p{
+    grid-column:2;
+    grid-row:1;
+    align-self:start;
+    margin:0;
+    line-height:1.3;
+    min-width:0;
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row{
+    --p2-grid:[number] minmax(18px,4fr) [time] minmax(102px,18fr) [heading] minmax(0,36fr) [details] minmax(0,42fr) [end];
+    --p2-gap:clamp(7px,1.1cqi,13px);
+    padding-block:clamp(3px,.52svh,5px);
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row time{
+    font-size:clamp(12px,1.8cqi,16px);
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row strong{
+    font-size:clamp(16px,2.2cqi,20px);
+    line-height:1.2;
+  }
+  body[data-ws-scope="p2"] .sunday-schedule .worship-program .worship-row p{
+    font-size:clamp(13px,1.85cqi,16px);
+    line-height:1.3;
+  }
+  /* All quotations remain visible; the first verse and its reference
+     occupy the left column, the second the right, and the final verse
+     uses the full folio measure below. */
+  body[data-ws-scope="p2"] .schedule-theme-scripture{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:clamp(16px,2cqi,30px);
+    row-gap:clamp(3px,.45svh,6px);
+    align-items:start;
+    margin-top:clamp(5px,.7svh,9px);
+    padding-top:clamp(5px,.65svh,9px);
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture h3{
+    grid-column:1/-1;
+    grid-row:1;
+    margin:0 0 2px;
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture>p{
+    margin:0;
+    max-width:none;
+    font-size:clamp(13px,1.75cqi,17px);
+    line-height:1.36;
+    text-align:left;
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture__lead{
+    grid-column:1;grid-row:2;
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture>p.schedule-theme-scripture__ref{
+    grid-column:1;grid-row:3;
+    font-size:clamp(12px,1.5cqi,14px);
+    text-align:left;
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture>p:nth-of-type(3){
+    grid-column:2;grid-row:2/span 2;
+  }
+  body[data-ws-scope="p2"] .schedule-theme-scripture>p:nth-of-type(4){
+    grid-column:1/-1;grid-row:4;
+    text-align:center;
   }
 }
