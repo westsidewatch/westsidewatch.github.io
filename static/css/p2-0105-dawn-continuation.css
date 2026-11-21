@@ -563,3 +563,101 @@
 #dawn-second .dawn-second__return::before{content:none!important;display:none!important}
 #dawn-second .dawn-second__return-en{color:var(--ws-crimson)!important}
 #dawn-second .dawn-second__return:hover{color:var(--ws-crimson)!important}
+
+/* R23 — Editorial Manual §1 / Design OS: book=harvest role, paper as field.
+   No parallel blue/crimson color system. Only 05 second layer. */
+#dawn-second.dawn-second{--dawn-accent:var(--ws-harvest);--dawn-paper:var(--ws-paper);
+ background:var(--ws-paper)!important;color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-second__press--motherform{
+ display:flex!important;justify-content:center!important;align-items:flex-start!important;
+ min-height:0!important;height:auto!important;
+ background:color-mix(in srgb,var(--ws-harvest) 7%,var(--ws-paper))!important;
+ border-bottom:1px solid color-mix(in srgb,var(--ws-harvest) 40%,transparent)!important;
+ padding:clamp(46px,5svh,68px) clamp(12px,3vw,44px) clamp(12px,2svh,24px)!important;
+}
+#dawn-second .dawn-second__motherform{
+ flex:0 1 900px!important;display:block!important;max-width:900px!important;
+ width:100%!important;height:clamp(185px,25vw,290px)!important;aspect-ratio:auto!important;
+ margin:0 auto!important;
+}
+#dawn-second .dawn-press-landing{display:none!important}
+#dawn-second .dawn-second__return{
+ color:var(--ws-ink)!important;border-bottom-color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-second__return-en{color:color-mix(in srgb,var(--ws-harvest) 65%,var(--ws-ink))!important}
+#dawn-second .dawn-second__return:hover{color:var(--ws-harvest)!important}
+#dawn-second .dawn-reading-room{background:var(--ws-paper)!important}
+#dawn-second .dawn-reading-room__heading{border-bottom-color:var(--ws-harvest)!important}
+#dawn-second .dawn-reading-room__heading h2{color:var(--ws-ink)!important}
+#dawn-second .dawn-reading-room__eyebrow,#dawn-second .dawn-wall__folio{color:var(--ws-harvest)!important}
+#dawn-second .dawn-reading-room .dawn-wall__tail{color:var(--ws-harvest)!important}
+#dawn-second .dawn-reading-room .dawn-wall__tail button{border-bottom-color:var(--ws-harvest)!important;color:var(--ws-ink)!important}
+#dawn-second .dawn-feature--stars .dawn-feature__editorial,
+#dawn-second .dawn-feature--curation .dawn-feature__editorial,
+#dawn-second .dawn-feature--spectrum .dawn-feature__editorial{
+ background:linear-gradient(180deg,rgba(37,37,37,.48),transparent 35%,rgba(37,37,37,.87) 100%)!important;
+}
+#dawn-second .dawn-feature__open{border-color:var(--ws-paper)!important}
+#dawn-second .dawn-catalogue{background:var(--ws-paper)!important;border-top-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__back{border-bottom-color:var(--ws-harvest)!important;color:var(--ws-ink)!important}
+#dawn-second .dawn-catalogue__nav{border-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__nav input{border-bottom-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__heading{border-bottom-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__heading span{color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__more button{background:transparent!important;border:0!important;border-bottom:1px solid var(--ws-harvest)!important;color:var(--ws-ink)!important;padding:8px 0!important}
+#dawn-second .dawn-catalogue__more button:hover{color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__works--sleeves{
+ display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ gap:clamp(7px,1vw,18px)!important;list-style:none!important;
+ padding:clamp(18px,2vw,32px) 0!important;margin:0!important;
+}
+#dawn-second .dawn-catalogue__works--sleeves>.dawn-catalogue__sleeve{
+ display:block!important;min-width:0!important;width:100%!important;aspect-ratio:1!important;
+ padding:0!important;margin:0!important;border:0!important;overflow:hidden!important;
+}
+#dawn-second .dawn-catalogue__cover-card{
+ display:flex;position:relative;width:100%;height:100%;aspect-ratio:1;overflow:hidden;
+ text-decoration:none!important;color:var(--ws-ink)!important;
+ background:color-mix(in srgb,var(--ws-harvest) 7%,var(--ws-paper));
+ border:1px solid color-mix(in srgb,var(--ws-harvest) 37%,transparent)!important;
+ box-sizing:border-box;
+}
+#dawn-second .dawn-catalogue__cover-card--image{background:var(--ws-paper)!important}
+#dawn-second .dawn-catalogue__cover-card>img{
+ display:block!important;position:absolute;inset:0;width:100%;height:100%;
+ object-fit:contain!important;object-position:center!important;
+}
+#dawn-second .dawn-catalogue__cover-typography{
+ display:flex;flex-direction:column;justify-content:space-between;gap:5px;
+ width:100%;min-width:0;overflow:hidden;padding:clamp(8px,1.2vw,19px);position:relative;z-index:1;
+}
+#dawn-second .dawn-catalogue__cover-typography>small{
+ font:400 clamp(7px,.61vw,11px)/1.3 var(--ws-type-display-en);
+ letter-spacing:.09em;color:var(--ws-harvest);
+}
+#dawn-second .dawn-catalogue__cover-typography>strong{
+ font:400 clamp(12px,1.08vw,21px)/1.12 var(--ws-type-display-en)!important;
+ letter-spacing:-.025em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;
+ overflow-wrap:anywhere;
+}
+#dawn-second .dawn-catalogue__cover-typography>span{
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+ font:200 clamp(10px,.72vw,13px)/1.2 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography{
+ opacity:0;background:linear-gradient(0deg,rgba(37,37,37,.88),transparent);
+ color:var(--ws-paper);transition:opacity .24s;
+}
+#dawn-second .dawn-catalogue__cover-card--image:hover .dawn-catalogue__cover-typography,
+#dawn-second .dawn-catalogue__cover-card--image:focus-visible .dawn-catalogue__cover-typography{opacity:1}
+#dawn-second .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography>*{color:var(--ws-paper)!important}
+@media(max-width:1180px){#dawn-second .dawn-catalogue__works--sleeves{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:720px){#dawn-second .dawn-catalogue__works--sleeves{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #dawn-second .dawn-second__motherform{height:clamp(165px,33vw,240px)!important}
+ #dawn-second .dawn-second__press--motherform{padding-top:50px!important}
+ #dawn-second .dawn-catalogue__cover-typography>strong{font-size:clamp(11px,3vw,19px)!important}
+ #dawn-second .dawn-catalogue__cover-typography>span{font-size:clamp(10px,2.6vw,13px)!important}
+ #dawn-second .dawn-catalogue__cover-typography>small{font-size:9px!important}
+ #dawn-second .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography{opacity:1}
+}
