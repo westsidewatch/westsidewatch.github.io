@@ -3,12 +3,12 @@
 // This audit requires a real WebGL scene; a loading/failed screenshot is a failure.
 const sleep = n => new Promise(resolve => setTimeout(resolve, n));
 let tabs;
-for(let attempt=0;attempt<35;attempt++){
+for(let attempt=0;attempt<110;attempt++){
   try{
     const res=await fetch('http://127.0.0.1:9222/json/list');
     if(res.ok){tabs=await res.json();if(tabs.some(x=>x.type==='page'))break;}
   }catch{}
-  await sleep(350);
+  await sleep(450);
 }
 const tab=tabs?.find(x=>x.type==='page');
 if(!tab?.webSocketDebuggerUrl)throw Error('Chrome debug page unavailable');
