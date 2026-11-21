@@ -921,7 +921,7 @@ body[data-ws-scope="p2"] .church-editorial__copy .schedule-theme-scripture>p:nth
 body[data-ws-scope="p2"] .church-editorial__copy > .church-schedule-maquette{
  position:relative;inset:auto;left:auto;bottom:auto;
  z-index:1;display:block;align-self:center;flex:0 0 auto;
- width:min(100%,720px);height:clamp(186px,24svh,265px);
+ width:min(100%,720px);height:clamp(220px,31svh,300px);
  min-width:0;margin:clamp(4px,.7svh,10px) auto 0;
  overflow:hidden;background:transparent;border:0;isolation:isolate;pointer-events:none;
 }
@@ -939,6 +939,10 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
  pointer-events:none;overflow-y:hidden;
 }
 body[data-ws-scope="p2"] .water-door--left{display:block;clip-path:inset(0 50% 0 0)}
+body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .water-door,
+body[data-ws-scope="p2"] .showcase[data-p2-phase="red-sea"] .water-door{
+ background:color-mix(in srgb,var(--ws-water) 8%,var(--paper));
+}
 body[data-ws-scope="p2"] .water-door--right{clip-path:inset(0 0 0 50%)}
 body[data-ws-scope="p2"] .showcase[data-p2-phase="church"] .ocean-rise,
 body[data-ws-scope="p2"] .showcase[data-p2-phase="red-sea"] .ocean-rise{
