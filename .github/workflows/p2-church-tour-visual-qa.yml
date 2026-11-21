@@ -5,6 +5,7 @@ on:
     paths:
       - 'static/p2/church-tour.html'
       - 'static/p2/church-tour.js'
+      - 'scripts/p2-church-browser-cdp.mjs'
       - '.github/workflows/p2-church-tour-visual-qa.yml'
   workflow_dispatch:
 permissions:
@@ -12,31 +13,22 @@ permissions:
 jobs:
   proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 7
     steps:
       - uses: actions/checkout@v4
-      - name: Render browser proof of actual 3D entrance and interior
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Browser-prove architectural geometry and moving camera
         shell: bash
         run: |
           set -euo pipefail
           python3 -m http.server 8765 --directory static >/tmp/p2-server.log 2>&1 &
-          sleep 2
           CHROME=$(command -v google-chrome || command -v chromium || true)
-          if [ -z "$CHROME" ]; then echo "No Chromium executable"; exit 1; fi
-          for frame in 0 26 52; do
-            echo "Rendering virtual church camera station $frame"
-            timeout 65 "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage \
-              --enable-webgl --ignore-gpu-blocklist \
-              --enable-unsafe-swiftshader --use-gl=angle --use-angle=swiftshader \
-              --disable-background-timer-throttling --virtual-time-budget=12000 \
-              --window-size=900,600 --hide-scrollbars \
-              --screenshot="/tmp/p2-frame-$frame.png" \
-              "http://127.0.0.1:8765/p2/church-tour.html?proofFrame=$frame" \
-              >/tmp/p2-chrome-$frame.log 2>&1 || true
-            test -s "/tmp/p2-frame-$frame.png"
-            bytes=$(wc -c < "/tmp/p2-frame-$frame.png")
-            echo "Proof $frame PNG bytes: $bytes"
-            if [ "$bytes" -gt 1300000 ]; then echo "Proof image too large"; exit 1; fi
-            echo "P2_FRAME_${frame}_PNG64=$(base64 -w0 "/tmp/p2-frame-$frame.png")"
-            grep -Ei "WebGL.*(error|disabled)|Uncaught|GLB missing|model load failed|shader error|failed to fetch" /tmp/p2-chrome-$frame.log | head -10 || true
-          done
+          if [ -z "$CHROME" ]; then echo "No Chromium available"; exit 1; fi
+          "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage \
+            --enable-webgl --ignore-gpu-blocklist --enable-unsafe-swiftshader \
+            --use-gl=angle --use-angle=swiftshader --no-first-run \
+            --remote-debugging-port=9222 --user-data-dir=/tmp/p2-chrome-cdp \
+            --window-size=900,600 about:blank >/tmp/p2-chrome.log 2>&1 &
+          node scripts/p2-church-browser-cdp.mjs
