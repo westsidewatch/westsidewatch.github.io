@@ -135,20 +135,45 @@
  // MERSI grammar: the scroll position directly sets slide and clip geometry.
  // No page rotation, clock-based slideshow, fictional book-cover art, or central seam.
  const commons=name=>'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(name)+'?width=1200';
- const gospelScenes={
-  left:[
-   {image:commons('Gustave Doré - Crucifixion of Jesus.jpg'),title:'The Crucifixion',caption:'Gustave Doré · The Holy Bible · 1866',kind:'BIBLICAL ENGRAVING',href:'https://commons.wikimedia.org/wiki/File:Gustave_Dor%C3%A9_-_Crucifixion_of_Jesus.jpg'},
-   {image:commons('Jésus guérit les malades, par Gustave Doré.jpg'),title:'Jesus Heals the Sick',caption:'Gustave Doré · The Holy Bible · 1866',kind:'BIBLICAL ENGRAVING',href:'https://commons.wikimedia.org/wiki/File:J%C3%A9sus_gu%C3%A9rit_les_malades,_par_Gustave_Dor%C3%A9.jpg'},
-   {image:commons('The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598368358).jpg'),title:'Jesus and the Woman of Samaria',caption:'The Bible Panorama · 1891 · 書內插圖',kind:'GOSPEL · ILLUSTRATION',href:'https://archive.org/details/biblepanoramaorh00fost'},
-   {image:commons('The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598534357).jpg'),title:'The Road to Emmaus',caption:'The Bible Panorama · 1891 · 書內插圖',kind:'GOSPEL · ILLUSTRATION',href:'https://archive.org/details/biblepanoramaorh00fost'}
-  ],
-  right:[
-   {image:'https://cdn.loc.gov/service/pnp/ppmsca/02600/02693v.jpg',title:'The Holy Sepulchre',caption:'Jerusalem · 1890–1900 · 聖地攝影',kind:'HOLY LAND · PHOTOGRAPHY',href:'https://www.loc.gov/pictures/item/2002725004/'},
-   {image:'https://cdn.loc.gov/service/pnp/ppmsc/05900/05910v.jpg',title:'Tiberias, Holy Land',caption:'提比哩亞 · 聖地歷史攝影',kind:'HOLY LAND · PHOTOGRAPHY',href:'https://www.loc.gov/pictures/item/2001699273/'},
-   {image:commons('The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598369549).jpg'),title:'Entry into Jerusalem',caption:'The Bible Panorama · 1891 · 書內插圖',kind:'GOSPEL · ILLUSTRATION',href:'https://archive.org/details/biblepanoramaorh00fost'},
-   {image:'https://cdn.loc.gov/service/pnp/ppmsca/02600/02669v.jpg',title:'The Street Called Straight',caption:'Damascus · 1890–1900 · 聖地攝影',kind:'HOLY LAND · PHOTOGRAPHY',href:'https://www.loc.gov/pictures/item/2002724979/'}
-  ]
- };
+ // Registry-driven P2 presentation: any curated collection may publish a
+ // verified image manifest. P2 is a shared surface, not a hard-coded exhibit.
+ let activeCollection='jerusalem-3000';
+ let gospelScenes={left:[],right:[]};
+ function validExhibitionItem(item){
+  if(!item||!item.title||!item.media?.src||!item.media?.source||!item.destination)return false;
+  const media=item.media.src,source=item.media.source;
+  const validMedia=media.startsWith('/')||media.startsWith('https://');
+  return validMedia&&(source.startsWith('/')||source.startsWith('https://')) &&
+   (item.destination.startsWith('/')||item.destination.startsWith('https://'));
+ }
+ async function loadExhibition(){
+  try{
+   const registryResponse=await fetch('/dawn-library/p2-exhibitions/index.json');
+   if(!registryResponse.ok)throw Error('P2 exhibitions index '+registryResponse.status);
+   const registry=await registryResponse.json();
+   const requested=new URLSearchParams(location.search).get('collection')||registry.defaultId;
+   const selected=(registry.collections||[]).find(e=>e.id===requested);
+   if(!selected||!selected.manifest?.startsWith('/dawn-library/p2-exhibitions/'))throw Error('Exhibition not registered');
+   const response=await fetch(selected.manifest);
+   if(!response.ok)throw Error('Exhibition data '+response.status);
+   const exhibition=await response.json();
+   if(exhibition.schema!=='dawn.p2.curated-exhibition.v1'||exhibition.id!==selected.id||!Array.isArray(exhibition.items))throw Error('Invalid exhibition manifest');
+   const items=exhibition.items.filter(validExhibitionItem).map(item=>({
+    image:item.media.src,title:item.title,caption:item.caption||'',kind:item.kind||'',
+    href:item.destination,source:item.media.source,workId:item.workId||''
+   }));
+   if(items.length<2)throw Error('Exhibition has too few verified image items');
+   // Counterflow: alternate collection plates across both independently
+   // moving visual channels. Pages always lead back to admitted collection.
+   gospelScenes={left:items.filter((_,i)=>i%2===0),right:items.filter((_,i)=>i%2===1)};
+   activeCollection=exhibition.id;
+   world.dataset.exhibition=exhibition.id;
+   stage.dataset.p205CuratedCollection=exhibition.id;
+   // Reset image indices so on-screen media cannot be mislabeled.
+   imageSides.forEach(side=>{side.index=-1;side.nextIndex=-1;});
+   schedule();
+  }catch(e){console.error('[Dawn P2 exhibition]',e);world.dataset.exhibition='unavailable';}
+ }
  const imageSides=['left','right'].map((key)=>{
   const node=$('#dawn-page-'+key),art=$('#dawn-art-'+key),current=$('#dawn-image-'+key);
   const next=document.createElement('img');next.className='dawn-world__incoming';
@@ -162,12 +187,14 @@
    img.addEventListener('load',()=>{img.style.removeProperty('opacity');});
   }
  }
+ void loadExhibition();
  function paintWorld(d){
   // Two independently staggered visual strips, with scroll-owned MERSI-like
   // sliding masks. Motion stops on stationary scroll and reverses precisely.
   const base=Math.max(0,d-27.65);
   for(const side of imageSides){
-   const scenes=gospelScenes[side.key],s=base*(side.key==='left'?1.18:.94)+(side.key==='right'?.43:0);
+   const scenes=gospelScenes[side.key];if(!scenes.length)continue;
+   const s=base*(side.key==='left'?1.18:.94)+(side.key==='right'?.42:0);
    const step=Math.floor(Math.max(0,s)),fraction=ease(s-Math.floor(s));
    const i=step%scenes.length,ni=(i+1)%scenes.length;
    if(side.index!==i){
@@ -180,12 +207,18 @@
     side.next.alt=scenes[ni].title+' — '+scenes[ni].caption;
     side.nextIndex=ni;
    }
-   const currentPct=(fraction*102).toFixed(2);
-   const incomingPct=(100-fraction*100).toFixed(2);
-   side.current.style.clipPath=`inset(0 0 ${currentPct}% 0)`;
-   side.next.style.clipPath=`inset(${incomingPct}% 0 0 0)`;
-   side.current.style.transform=`translate3d(0,${(-fraction*12).toFixed(2)}%,0)`;
-   side.next.style.transform=`translate3d(0,${((1-fraction)*12).toFixed(2)}%,0)`;
+   // True counterflow: LEFT slides UP, RIGHT slides DOWN; no 3D page flip.
+   const left=side.key==='left';
+   const currentPct=(fraction*100).toFixed(2);
+   const incomingPct=((1-fraction)*100).toFixed(2);
+   side.current.style.clipPath=left
+    ?`inset(0 0 ${currentPct}% 0)`
+    :`inset(${currentPct}% 0 0 0)`;
+   side.next.style.clipPath=left
+    ?`inset(${incomingPct}% 0 0 0)`
+    :`inset(0 0 ${incomingPct}% 0)`;
+   side.current.style.transform=`translate3d(0,${((left?-1:1)*fraction*12).toFixed(2)}%,0)`;
+   side.next.style.transform=`translate3d(0,${((left?1:-1)*(1-fraction)*12).toFixed(2)}%,0)`;
    const shown=fraction>.5?scenes[ni]:scenes[i];
    if(side.node.href!==shown.href){
     side.node.href=shown.href;
