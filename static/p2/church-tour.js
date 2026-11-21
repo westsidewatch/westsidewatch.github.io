@@ -178,6 +178,8 @@ const innerSouthSlider = new Group();
 const eastChapelSlider = new Group();
 const rearSanctuaryHinge = new Group();
 rearSanctuaryHinge.position.set(12, 0, -15.25);
+const staffSanctuaryHinge = new Group();
+staffSanctuaryHinge.position.set(12, 0, -2.65);
 const northCourtSlider = new Group();
 let doorsAttached = false;
 
@@ -191,12 +193,13 @@ function connectArchitecturalDoors(building) {
     return result;
   };
   scene.add(entranceHinge, innerSouthSlider, eastChapelSlider,
-            rearSanctuaryHinge, northCourtSlider);
+            rearSanctuaryHinge, staffSanctuaryHinge, northCourtSlider);
   scene.updateMatrixWorld(true);
   entranceHinge.attach(mesh("TALL SINGLE WHITE PIVOT DOOR"));
   innerSouthSlider.attach(mesh("D SOUTH COURT inner glass vestibule door"));
   eastChapelSlider.attach(mesh("C EAST CHAPEL large sliding glass door"));
   rearSanctuaryHinge.attach(mesh("SANCTUARY MAIN PUBLIC DOOR"));
+  staffSanctuaryHinge.attach(mesh("SANCTUARY STAFF DOOR"));
   northCourtSlider.attach(mesh("A NORTH COURT double-wide glass door"));
   doorsAttached = true;
 }
@@ -322,23 +325,77 @@ async function loadArchitecture() {
 // Entrance x8.16..10.54 z0; south inner glass z-6;
 // courtyard x6..12 z-6..-12; east sliding door x12 z-7.5..-10.5;
 // rear sanctuary door x12 z-15.25..-14.15; north court glass z-12.
+// Restored from the user's approved Nov 20 2026 actual walking itinerary:
+// SOUTH full facade -> tall door -> vestibule -> courtyard -> NORTH court
+// glass -> north chapel public rear entrance -> walk from chapel REAR toward
+// SOUTH cross and pulpit -> SOUTH staff door -> SOUTH foyer -> WEST cafe ->
+// C-shaped sunken congregational terraces -> NORTH -> V26 upper stairs ->
+// THIRD-floor gallery overlooking central court and red maple ->
+// RISING SKY panorama. Not the improvised east-glass shortcut of R1.
+// Eye heights follow the source GLB actual inhabited floors (metres).
+// Segment durations are reconstructed because original Sites front-end
+// timing source is not recoverable; route order is original user-approved.
 const route = [
-  { at: 0, p: [15.0, 7.5, 14.5], look: [9.35, 3.2, -2.5] },
-  { at: 6, p: [9.35, 1.85, 5.0], look: [9.35, 2.4, 0] },
-  { at: 11, p: [9.35, 1.82, 1.4], look: [9.35, 1.9, -4] },
-  { at: 15, p: [9.35, 1.82, -1.6], look: [9.35, 1.83, -6.2] },
-  { at: 20, p: [9.00, 1.82, -4.8], look: [9.00, 2.1, -8] },
-  { at: 26, p: [9.75, 1.85, -8.1], look: [7.65, 1.75, -10.4] },
-  { at: 31, p: [9.3, 1.82, -8.7], look: [12.7, 1.95, -8.9] },
-  { at: 37, p: [11.6, 1.82, -9.0], look: [15.0, 2.1, -9.0] },
-  { at: 42, p: [14.2, 1.82, -9.1], look: [15.0, 2.2, -4.0] },
-  { at: 52, p: [15.0, 1.88, -13.5], look: [15.0, 3.0, -0.1] },
-  { at: 60, p: [14.2, 1.82, -13.9], look: [12.1, 1.9, -14.8] },
-  { at: 68, p: [12.5, 1.82, -14.7], look: [11.4, 1.85, -14.7] },
-  { at: 74, p: [11.6, 1.82, -14.6], look: [9.3, 1.7, -13.5] },
-  { at: 81, p: [9.1, 1.83, -13.5], look: [9.0, 1.9, -10] },
-  { at: 89, p: [9.0, 1.82, -9.0], look: [9.0, 2.0, -5.3] }
+  { at:  0, p:[16.0,7.1,20.0], look:[9.0,3.5,-2.8] },     // full front
+  { at: 12, p:[9.4,2.0,8.0],   look:[9.35,2.3,0.0] },     // approach
+  { at: 22, p:[9.4,1.76,1.0],  look:[9.35,1.8,-5.4] },    // south opening
+  { at: 31, p:[9.0,1.76,-4.8], look:[9.0,1.85,-8.9] },    // vestibule
+  { at: 40, p:[9.0,1.78,-8.9], look:[7.4,2.3,-10.3] },    // courtyard maple
+  { at: 47, p:[9.0,1.76,-11.25],look:[9.0,1.8,-13.2] },  // north court glass
+  { at: 55, p:[9.1,1.77,-13.0],look:[11.6,1.7,-14.7] },  // level route
+  { at: 63, p:[11.45,1.76,-14.7],look:[14.4,1.7,-14.7] },// north public door
+  { at: 73, p:[13.4,1.77,-14.7],look:[15.0,2.0,-6.4] },  // sanctuary rear
+  { at: 84, p:[15.0,1.78,-10.6],look:[15.0,2.4,-0.15] }, // aisle, cross
+  { at: 95, p:[15.0,1.76,-5.2],look:[15.0,3.65,-0.1] }, // pulpit/cross light
+  { at:103, p:[13.25,1.76,-2.14],look:[12.0,1.8,-2.14]},// south staff door
+  { at:111, p:[10.7,1.76,-2.14],look:[7.2,1.7,-4.4] },   // south hall
+  { at:122, p:[6.6,1.76,-4.5],look:[4.8,0.6,-6.0] },    // south->west opening
+  { at:132, p:[5.0,1.45,-5.9],look:[3.1,0.0,-7.6] },    // broad descent
+  { at:143, p:[3.5,0.35,-7.8],look:[1.2,-0.3,-9.7] },   // -1.50 piazza
+  { at:154, p:[2.1,-0.38,-9.7],look:[1.0,-0.5,-8.2] },  // -2.10 cafe
+  { at:165, p:[3.0,0.08,-11.5],look:[5.0,0.1,-13.3] },  // C-shaped return
+  { at:176, p:[4.6,1.1,-14.65],look:[6.2,2.2,-16.0]},  // north terraces
+  { at:187, p:[6.0,2.7,-15.7],look:[8.5,3.0,-16.5] },  // north mid
+  { at:199, p:[8.3,3.9,-16.9],look:[10.8,4.6,-16.8]},  // upper staircase
+  { at:211, p:[11.05,5.05,-16.0],look:[8.5,1.9,-9.1]}, // third-floor overlook
+  { at:223, p:[10.5,5.0,-15.35],look:[7.5,1.75,-9.4]}, // red maple reveal
+  { at:236, p:[9.0,12.4,-9.0],look:[9.0,1.8,-9.0]},   // rising sky
+  { at:251, p:[20.0,25.0,18.0],look:[9.0,2.6,-9.0]}   // entire complex
 ];
+
+// The original scenes each played their own sunrise-to-sunset time lapse.
+// Keep a discrete light-day per location rather than jumping from winter
+// morning to afternoon at the north sanctuary door.
+const daylightChapters = [
+  [0,31], [31,63], [63,103], [103,132],
+  [132,176], [176,223], [223,251]
+];
+function daylightAt(t) {
+  const c=daylightChapters.find(([start,end])=>t>=start&&t<end)
+       ??daylightChapters[daylightChapters.length-1];
+  return Math.max(0,Math.min(1,(t-c[0])/(c[1]-c[0])));
+}
+function updateDaylight(t,duration) {
+  const phase=daylightAt(t);
+  const solar=Math.sin(Math.PI*phase);
+  const season=Math.min(1,Math.max(0,t/duration));
+  // The south-wall cross sunlight travels from left to right as specified.
+  sun.position.set(-14+48*phase, 2.5+25*Math.max(0,solar), 25);
+  sun.target.position.set(15,2.7,-5);
+  sun.target.updateMatrixWorld();
+  const winter=Math.max(0,Math.min(1,(season-.73)/.16));
+  const morningEvening=Math.pow(1-solar,1.55);
+  sun.color.setRGB(
+    1.0-.21*winter,
+    1.0-.08*morningEvening-.09*winter,
+    .98-.21*morningEvening+.015*winter
+  );
+  sun.intensity=1.7+1.8*solar-(winter*.45);
+  // Winter has cool ambient blue-grey shadows, not blue/green walls.
+  ambientFill.color.setRGB(.79+.06*winter,.86+.045*winter,.93+.04*winter);
+  renderer.toneMappingExposure=.88+.13*solar;
+  updateMapleSeason(t,duration);
+}
 
 function clamp01(t) { return Math.min(1, Math.max(0, t)); }
 function ease(t) {
@@ -383,13 +440,15 @@ function animate(now) {
   previousFrame = now;
   if (!prefersReducedMotion) elapsed += dt;
   const duration = route[route.length - 1].at;
-  // Brief pause at the last view; return to exterior on the next cycle.
+  // Do not reset early: perform the entire route, including the third level
+  // and the final aerial, before restarting after a short panoramic hold.
   // A deterministic visual QA position, without adding any on-screen text.
   const params = new URLSearchParams(location.search);
   const proof = params.get("proofFrame");
   const t = proof !== null && Number.isFinite(Number(proof))
     ? Math.min(duration, Math.max(0, Number(proof)))
-    : (prefersReducedMotion ? 42 : elapsed % (duration + 6));
+    : (prefersReducedMotion ? duration : elapsed % (duration + 10));
+  updateDaylight(t,duration);
   const sample = positionAlongRoute(t);
   camera.position.set(sample.p[0], sample.p[1], sample.p[2]);
   lookAtVector.set(sample.look[0], sample.look[1], sample.look[2]);
@@ -402,11 +461,14 @@ function animate(now) {
     pitchOffset *= Math.pow(0.89, dt * 60);
   }
   if (doorsAttached) {
-    entranceHinge.rotation.y = 1.5 * ease((t - 6) / 6.5);
-    innerSouthSlider.position.x = -2.14 * ease((t - 14) / 5);
-    eastChapelSlider.position.z = 3.16 * ease((t - 30) / 6);
-    rearSanctuaryHinge.rotation.y = 1.43 * ease((t - 58) / 8);
-    northCourtSlider.position.x = 2.15 * ease((t - 76) / 7);
+    entranceHinge.rotation.y = 1.5 * ease((t - 11) / 8);
+    innerSouthSlider.position.x = -2.14 * ease((t - 24) / 6);
+    // The east courtyard event entrance stays closed: approved entry
+    // to the chapel is via the NORTH PUBLIC rear west-facing door.
+    eastChapelSlider.position.z = 0;
+    northCourtSlider.position.x = 2.15 * ease((t - 41) / 5);
+    rearSanctuaryHinge.rotation.y = 1.43 * ease((t - 56) / 6);
+    staffSanctuaryHinge.rotation.y = -1.4 * ease((t - 95) / 7);
   }
   renderer.render(scene, camera);
 }
