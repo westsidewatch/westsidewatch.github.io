@@ -373,3 +373,7 @@
  .dawn-twins{left:50%;top:50%}
 }
 @media(prefers-reduced-motion:reduce){.dawn-world__art img,.dawn-world__art img.dawn-world__incoming{will-change:auto}}
+
+/* No decorative strokes anywhere on the public 05 image stage. */
+.dawn-world__page,.dawn-world__art,.dawn-world__edition,.dawn-twins,.dawn-twins__square,.dawn-twins__square--verse{border:0!important;outline-color:var(--ws-harvest)}
+.dawn-twins__square::before,.dawn-twins__square::after{content:none!important;display:none!important}
