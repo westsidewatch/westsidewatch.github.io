@@ -244,7 +244,7 @@
  let index=null,currentPage=0,loading=false,loaded=[],cache=new Map();
  function openCollection(origin='館藏總索引',title=''){
   wall.hidden=true;catalogue.hidden=false;
-  catalogueFocus.textContent=origin==='館藏總索引'?'館藏 · 歷史書籍與信仰資源':`從「${origin}」探索館藏`;
+  catalogueFocus.textContent=origin==='館藏總索引'?'':origin;
   if(title&&currentPage){search.value=title;renderWorks()}else if(currentPage){search.value='';renderWorks()}
   second.scrollTo({top:catalogue.offsetTop,behavior:'instant'});
   loadCatalogue();
@@ -347,10 +347,10 @@
     card.append(img);
    }
    const text=document.createElement('div');text.className='dawn-catalogue__cover-typography';
-   const folio=document.createElement('small');folio.textContent='DAWN LIBRARY / '+String((currentPage-1)*index.pageSize+loaded.indexOf(work)+1).padStart(5,'0');
+   const folio=document.createElement('small');folio.textContent=String((currentPage-1)*index.pageSize+loaded.indexOf(work)+1).padStart(5,'0');
    const title=document.createElement('strong');title.textContent=work.title||'UNTITLED';
    const creator=document.createElement('span');creator.textContent=work.creator||'作者未詳';
-   const footer=document.createElement('small');footer.textContent=work.date?String(work.date)+' · CATALOGUE':'CATALOGUE · COVER UNRESOLVED';
+   const footer=document.createElement('small');footer.textContent=work.date?String(work.date):'';
    text.append(folio,title,creator,footer);card.append(text);li.append(card);frag.append(li);
   });
   works.replaceChildren(frag);
