@@ -1300,3 +1300,10 @@ body[data-ws-scope="p2"] .showcase[data-p2-phase="red-sea"] .index a{
   font-size:clamp(11px,3vw,13px);line-height:1.35;
  }
 }
+
+/* Embedded P2 receives its scene progress from the parent page.
+   Its stage must remain one viewport tall even though the standalone
+   scene now has a longer scroll runway for building construction. */
+html[data-p2-embedded="true"] body[data-ws-scope="p2"] .showcase{
+  height:100svh;
+}
