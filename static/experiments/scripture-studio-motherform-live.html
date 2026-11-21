@@ -179,7 +179,22 @@ body.p2Embedded.p2OliveSpread .plate.inverse .cornerCitation{
  .plate.experimental:after{display:none}
  .plateTitle{font-size:10pt}
 }
-</style></head>
+</style>
+<style>
+/* R22 · P2 05 embedded Scripture Studio color adapter: no type or text changes. */
+body.p2Embedded.p2DawnSpread{background:transparent!important;color:#FAF9F5}
+body.p2Embedded.p2DawnSpread .shell,body.p2Embedded.p2DawnSpread .work{background:transparent!important}
+body.p2Embedded.p2DawnSpread .pair{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:clamp(12px,2vw,30px)!important}
+body.p2Embedded.p2DawnSpread .impression{min-width:0!important}
+body.p2Embedded.p2DawnSpread .plate:not(.inverse){background:#FAF9F5!important;color:#252525!important;border:1px solid #A14D57!important}
+body.p2Embedded.p2DawnSpread .plate:not(.inverse) .piece.zh{color:#252525!important}
+body.p2Embedded.p2DawnSpread .plate:not(.inverse) .piece.en,body.p2Embedded.p2DawnSpread .plate:not(.inverse) .cornerCitation{color:#A14D57!important}
+body.p2Embedded.p2DawnSpread .plate.inverse{background:#102A43!important;color:#FAF9F5!important;border:1px solid #D2BC69!important}
+body.p2Embedded.p2DawnSpread .plate.inverse .piece,body.p2Embedded.p2DawnSpread .plate.inverse .cornerCitation{color:#FAF9F5!important}
+body.p2Embedded.p2DawnSpread .plate.inverse .piece.zh{color:#D2BC69!important}
+@media(max-width:780px){body.p2Embedded.p2DawnSpread .pair{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.p2Embedded.p2DawnSpread .work{padding:0!important}}
+</style>
+</head>
 <body>
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
 <div class="shell"><aside>
@@ -930,6 +945,7 @@ const themeFromUrl=(p2Params.get('theme')||'').toUpperCase();
 if(toolThemes.some(x=>x.id===themeFromUrl&&!x.pending)){activeTheme=themeFromUrl;activeP2=null}
 if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
 if(p2Params.get('layout')==='olive-spread'&&p2Params.get('embed')==='1'&&activeP2==='04')document.body.classList.add('p2OliveSpread');
+if(p2Params.get('layout')==='dawn-spread'&&p2Params.get('embed')==='1'&&activeP2==='05')document.body.classList.add('p2DawnSpread');
 addEventListener('message',event=>{
  if(event.origin!==location.origin)return;
  const data=event.data;
