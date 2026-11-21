@@ -784,12 +784,12 @@ body[data-ws-scope="p2"] .church-editorial__visual{
 }
 body[data-ws-scope="p2"] .church-editorial > .church-schedule-maquette{
   position:absolute;
-  left:calc(50% + clamp(18px,2.25vw,38px));
-  bottom:clamp(14px,2.2svh,26px);
+  left:calc(50% + clamp(14px,2vw,28px));
+  bottom:clamp(28px,5.8svh,62px);
   z-index:3;
-  width:clamp(165px,18vw,228px);
-  height:clamp(116px,16svh,156px);
-  max-width:calc(50% - 70px);
+  width:min(37vw,430px);
+  height:clamp(195px,29svh,275px);
+  max-width:calc(50% - 48px);
   margin:0;
   overflow:hidden;
   background:var(--paper);
@@ -824,6 +824,14 @@ body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
   mix-blend-mode:multiply;
   -webkit-mask-image:radial-gradient(ellipse 76% 75% at 50% 50%,#000 66%,transparent 100%);
   mask-image:radial-gradient(ellipse 76% 75% at 50% 50%,#000 66%,transparent 100%);
+}
+@media(min-width:701px) and (max-height:780px){
+  /* Keep the decorative building clear of long scripture at short heights. */
+  body[data-ws-scope="p2"] .church-editorial > .church-schedule-maquette{
+    width:min(29vw,340px);
+    height:clamp(135px,22svh,180px);
+    bottom:clamp(15px,3svh,26px);
+  }
 }
 @media(max-width:700px){
   /* A single-column phone page has no facing left folio to preserve. */
