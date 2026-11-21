@@ -231,3 +231,37 @@
  .dawn-spread__window{box-shadow:inset 0 0 0 5px var(--ws-papyrus)}
 }
 @media(prefers-reduced-motion:reduce){.dawn-folio{will-change:auto}}
+
+/* R9 / Dawn Library's own P2 identity: TWO adjacent 1:1 squares, horizontal,
+   distinct from Olive Mountain's vertically stacked pair. */
+.dawn-realm{--dawn-square:clamp(152px,min(18vw,25svh),218px);--dawn-square-top:clamp(22px,4svh,45px);--dawn-square-left:clamp(16px,2.6vw,46px)}
+.dawn-twins{
+ left:var(--dawn-square-left);top:var(--dawn-square-top);
+ width:calc(var(--dawn-square)*2);height:var(--dawn-square);
+ display:grid;grid-template-columns:repeat(2,minmax(0,var(--dawn-square)));grid-template-rows:var(--dawn-square);
+ gap:0;transform:none;
+}
+.dawn-twins__square{width:var(--dawn-square);height:var(--dawn-square);min-width:0;min-height:0;padding:clamp(10px,1.35svh,18px)}
+.dawn-twins__square--verse{border-top:1px solid var(--ws-morning-gold);border-left:0}
+.dawn-twins__en{font-size:clamp(23px,2.65svh,32px);line-height:1.02}
+.dawn-twins__zh{font-size:clamp(16px,1.9svh,23px)}
+.dawn-twins__verse-zh{font-size:clamp(12px,1.5svh,17px)}
+.dawn-twins__verse-en{font-size:clamp(11px,1.3svh,15px)}
+.dawn-twins__ref{font-size:clamp(8px,.85svh,10px)}
+.dawn-spread{
+ top:calc(var(--dawn-square-top) + var(--dawn-square) + clamp(12px,2.5svh,24px));
+ left:var(--dawn-square-left);right:var(--dawn-square-left);
+ bottom:clamp(18px,3svh,36px);
+ grid-template-columns:minmax(0,1.5fr) minmax(180px,1fr)
+}
+@media(max-width:600px){
+ .dawn-realm{--dawn-square:clamp(132px,43vw,172px);--dawn-square-top:20px;--dawn-square-left:9px}
+ .dawn-twins{width:calc(var(--dawn-square)*2);height:var(--dawn-square);top:var(--dawn-square-top);left:var(--dawn-square-left);grid-template-columns:repeat(2,var(--dawn-square));grid-template-rows:var(--dawn-square)}
+ .dawn-twins__square{width:var(--dawn-square);height:var(--dawn-square);padding:9px;gap:4px}
+ .dawn-twins__en{font-size:clamp(18px,5.1vw,24px)}
+ .dawn-twins__zh{font-size:clamp(15px,4vw,18px)}
+ .dawn-twins__verse-zh{font-size:clamp(11px,3.05vw,13px)}
+ .dawn-twins__verse-en{font-size:clamp(10px,2.8vw,12px)}
+ .dawn-twins__ref{font-size:8px}
+ .dawn-spread{top:calc(var(--dawn-square-top) + var(--dawn-square) + 12px);left:9px;right:9px;bottom:12px;grid-template-columns:minmax(0,1.4fr) minmax(85px,.85fr);gap:8px}
+}
