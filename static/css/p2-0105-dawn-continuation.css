@@ -788,3 +788,54 @@
 #dawn-second .dawn-book-detail__source{display:inline-block;margin-top:25px;color:var(--ws-ink);border-bottom:1px solid var(--ws-harvest);padding:8px 0;text-decoration:none;font:200 15px/1.4 var(--ws-type-display-zh)}
 #dawn-second .dawn-book-detail__source[hidden]{display:none}
 @media(max-width:720px){#dawn-second .dawn-book-detail__body{grid-template-columns:1fr;gap:18px}#dawn-second .dawn-book-detail__visual{max-width:520px}}
+
+/* R31: Three visibly authored 2x2 jacket sleeves, inside the genuine
+   Dawn Library print/material palette. No cinema crimson or other realms. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-wall__grid--curated>.dawn-feature{
+ position:relative!important;box-sizing:border-box!important;
+ border:clamp(5px,.65vw,11px) solid var(--ws-paper)!important;
+ outline:clamp(2px,.19vw,4px) solid var(--ws-engraving)!important;
+ outline-offset:-1px!important;
+ box-shadow:inset 0 0 0 1px var(--ws-harvest),0 9px 24px rgba(37,37,37,.15)!important;
+ background:var(--ws-branch-raised)!important;
+}
+#dawn-second .dawn-feature__art{
+ inset:clamp(5px,.7vw,12px)!important;
+ border:1px solid color-mix(in oklab,var(--ws-paper) 58%,var(--ws-harvest))!important;
+}
+#dawn-second .dawn-feature__editorial{
+ inset:clamp(5px,.7vw,12px)!important;
+ background:linear-gradient(180deg,rgba(27,26,21,.25),transparent 31%,rgba(27,26,21,.86) 100%)!important;
+}
+#dawn-second .dawn-feature__editorial:before{
+ content:"";position:absolute;left:clamp(14px,2vw,28px);right:clamp(14px,2vw,28px);
+ top:clamp(12px,1.4vw,22px);height:2px;
+ background:var(--ws-paper);opacity:.85;
+}
+#dawn-second .dawn-feature--stars{outline-color:var(--ws-harvest)!important;border-color:var(--ws-paper)!important}
+#dawn-second .dawn-feature--curation{outline-color:var(--ws-engraving)!important;border-color:var(--ws-branch-raised)!important}
+#dawn-second .dawn-feature--spectrum{outline-color:var(--ws-ink)!important;border-color:var(--ws-paper)!important}
+#dawn-second .dawn-feature--stars .dawn-feature__art{filter:sepia(.12)}
+#dawn-second .dawn-feature--curation .dawn-feature__art{filter:sepia(.23)}
+#dawn-second .dawn-feature--spectrum .dawn-feature__art{filter:grayscale(.25) sepia(.16)}
+#dawn-second .dawn-feature:focus-visible{outline:4px solid var(--ws-ink)!important;outline-offset:3px!important}
+#dawn-second .dawn-feature:hover{box-shadow:inset 0 0 0 1px var(--ws-harvest),0 14px 32px rgba(37,37,37,.23)!important}
+#dawn-second .dawn-catalogue__topics{
+ display:flex;flex-wrap:wrap;gap:clamp(10px,1.2vw,24px);
+ padding:clamp(14px,2vw,24px) 0;
+ border-bottom:1px solid var(--ws-branch-rule);
+}
+#dawn-second .dawn-catalogue__topics button{
+ appearance:none;border:0;border-bottom:1px solid transparent;
+ background:transparent;color:var(--ws-ink);
+ padding:9px 1px;font:200 clamp(13px,1vw,17px)/1.4 var(--ws-type-display-zh);
+ cursor:pointer;letter-spacing:.015em;
+}
+#dawn-second .dawn-catalogue__topics button[aria-pressed="true"]{border-bottom:2px solid var(--ws-harvest);font-weight:600}
+#dawn-second .dawn-catalogue__topics button:hover{color:var(--ws-engraving)}
+#dawn-second .dawn-catalogue__topics button:focus-visible{outline:2px solid var(--ws-harvest);outline-offset:3px}
+@media(max-width:650px){
+ #dawn-second .dawn-wall__grid--curated>.dawn-feature{border-width:8px!important;outline-width:2px!important}
+ #dawn-second .dawn-feature__art,#dawn-second .dawn-feature__editorial{inset:8px!important}
+ #dawn-second .dawn-catalogue__topics{gap:7px 14px}
+}
