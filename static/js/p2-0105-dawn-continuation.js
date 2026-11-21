@@ -217,8 +217,11 @@
    side.next.style.clipPath=left
     ?`inset(${incomingPct}% 0 0 0)`
     :`inset(0 0 ${incomingPct}% 0)`;
-   side.current.style.transform=`translate3d(0,${((left?-1:1)*fraction*12).toFixed(2)}%,0)`;
-   side.next.style.transform=`translate3d(0,${((left?1:-1)*(1-fraction)*12).toFixed(2)}%,0)`;
+   // Keep both image surfaces flush to the stage. Motion comes from complementary
+   // clipping masks; translating clipped images previously exposed a 12%-high
+   // papyrus/ochre strip between consecutive plates.
+   side.current.style.transform='none';
+   side.next.style.transform='none';
    const shown=fraction>.5?scenes[ni]:scenes[i];
    if(side.node.href!==shown.href){
     side.node.href=shown.href;
