@@ -8,7 +8,7 @@
  const twins=$('#dawn-twins'),squares=[...twins.querySelectorAll('.dawn-twins__square')];
  const world=$('#dawn-world');
  const handoff=$('#dawn-handoff'),second=$('#dawn-second'),returnButton=$('#dawn-return');
- const plates=[$('#dawn-plate-zh'),$('#dawn-plate-en')];
+ const scriptureFrame=$('.dawn-second__motherform');
  const search=$('#dawn-search'),works=$('#dawn-works');
  const more=$('#dawn-more'),prevButton=$('#dawn-prev'),pageStatus=$('#dawn-page-status'),total=$('#dawn-total');
  const wall=$('#dawn-wall'),wallGrid=$('#dawn-wall-grid'),catalogue=$('#dawn-catalogue'),catalogueFocus=$('#dawn-catalogue-focus');
@@ -98,8 +98,10 @@
  }).catch(e=>{console.error(e);stage.dataset.p205Wordmark='unavailable'});
  function paintHandoff(){const p=entryProgress,complete=p>=.99999;stage.dataset.p205Handoff=p.toFixed(4);
   twins.setAttribute('aria-expanded',String(complete));
-  handoff.style.visibility=p>.001&&p<.65?'visible':'hidden';
-  second.style.visibility=p>.67?'visible':'hidden';
+  handoff.style.visibility=p>.001&&p<.63?'visible':'hidden';
+  // Reveal the reading page as the retained V9 handoff leaves, not after an
+  // otherwise empty intermediate frame.
+  second.style.visibility=p>.61?'visible':'hidden';
   second.style.clipPath='none';
   second.inert=!complete;second.setAttribute('aria-hidden',complete?'false':'true');
   second.style.pointerEvents=complete?'auto':'none';
@@ -121,7 +123,18 @@
   topRule.setAttribute('stroke',hexMix(startTwinColors[0].ink,sevenInk(p),shift));
   bottomRule.setAttribute('stroke',hexMix(startTwinColors[1].ink,sevenInk(p),shift));
   banner.setAttribute('opacity',String(1-ease((p-.56)/.08)));
-  const source=squares.map(node=>node.getBoundingClientRect());const target=plates.map(node=>node.getBoundingClientRect());
+  const source=squares.map(node=>node.getBoundingClientRect());
+  // Measure the actual embedded scripture field. The old invisible landing
+  // divs were display:none and yielded zero-width, zero-height destinations.
+  const frame=scriptureFrame.getBoundingClientRect();
+  const gap=Math.min(24,Math.max(10,frame.width*.025));
+  const targetSide=Math.max(1,Math.min((frame.width-gap)/2,frame.height*.96));
+  const insetX=(frame.width-(2*targetSide+gap))/2;
+  const target=[0,1].map(i=>({
+   left:frame.left+insetX+i*(targetSide+gap),
+   top:frame.top+(frame.height-targetSide)/2,
+   width:targetSide,height:targetSide
+  }));
   const lift=ease((p-.015)/.17),cross=ease((p-.18)/.34),land=ease((p-.58)/.15),capHeight=100*scale;
   seals.forEach((seal,i)=>{
    const src=source[i],dst=target[i],s0=src.width,sz=mix(mix(s0,capHeight,lift),dst.width,land);
@@ -146,6 +159,9 @@
    // Reading metadata is small and can load while the first-layer motion runs.
    // Full-catalogue search remains deferred until the visitor asks for it.
    void loadFeaturedIntroductions().catch(()=>{});
+   // Mount existing jacket artwork before the reader reaches the second layer.
+   // It never waits for the 7.6s transition to finish.
+   void loadWallCovers();
    startTwinColors=currentTwinColors();
    for(let i=0;i<2;i++){
     seals[i].shell.setAttribute('fill',startTwinColors[i].background);
