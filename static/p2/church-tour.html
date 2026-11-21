@@ -2,12 +2,27 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="refresh" content="0;url=https://living-water-west-3d-viewer.chenjingyu1948302.chatgpt.site/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#d6d2c8">
 <meta name="robots" content="noindex">
-<title>Living Water West</title>
-<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#d9dddc}</style>
-<script>location.replace("https://living-water-west-3d-viewer.chenjingyu1948302.chatgpt.site/");</script>
+<title>Living Water West — Architectural Walkthrough</title>
+<style>
+:root{color-scheme:light}*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#d6d2c8}
+body{font-family:system-ui,sans-serif}
+main{position:fixed;inset:0;overflow:hidden;background:radial-gradient(ellipse at 55% 20%,#e9e8df 0%,#d6d2c8 62%,#b4b2ab 100%)}
+canvas{display:block;width:100%;height:100%;touch-action:none;outline:none}
+#scene-cover{position:absolute;inset:0;pointer-events:none;opacity:1;background:radial-gradient(ellipse at 52% 27%,#e8e8df 0%,#d4d4cc 72%,#c4c3bc 100%);transition:opacity 1.4s ease}
+body.ready #scene-cover{opacity:0}
+body.failed #scene-cover{background:linear-gradient(115deg,#c3bdb0,#e0dacb)}
+@media(prefers-reduced-motion:reduce){#scene-cover{transition:none}}
+</style>
 </head>
-<body></body>
+<body>
+<main aria-label="Living Water West virtual church">
+<canvas id="church-canvas" aria-label="活水堂西區虛擬教會三維空間導覽"></canvas>
+<div id="scene-cover" aria-hidden="true"></div>
+</main>
+<script type="module" src="/p2/church-tour.js?v=20261121-github-tour-r1"></script>
+</body>
 </html>
