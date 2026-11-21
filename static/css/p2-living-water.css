@@ -802,7 +802,7 @@ body[data-ws-scope="p2"] .church-schedule-maquette::before{
   inset:0;
   display:block;
   background:url("/p2-maquette/maquette-fallback.webp") center / contain no-repeat;
-  opacity:.72;
+  opacity:.25;
   mix-blend-mode:multiply;
   -webkit-mask-image:radial-gradient(ellipse 70% 65% at 50% 52%,#000 70%,transparent 100%);
   mask-image:radial-gradient(ellipse 70% 65% at 50% 52%,#000 70%,transparent 100%);
@@ -821,9 +821,9 @@ body[data-ws-scope="p2"] .church-schedule-maquette .church-editorial__maquette{
   padding:0;
   background:transparent;
   pointer-events:none;
-  mix-blend-mode:multiply;
-  -webkit-mask-image:radial-gradient(ellipse 76% 75% at 50% 50%,#000 66%,transparent 100%);
-  mask-image:radial-gradient(ellipse 76% 75% at 50% 50%,#000 66%,transparent 100%);
+  mix-blend-mode:normal;
+  -webkit-mask-image:none;
+  mask-image:none;
 }
 @media(min-width:701px) and (max-height:780px){
   /* Keep the decorative building clear of long scripture at short heights. */
