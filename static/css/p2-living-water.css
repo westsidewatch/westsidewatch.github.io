@@ -1209,7 +1209,7 @@ body[data-ws-scope="p2"] .showcase:not([data-p2-phase="church"]) .church-editori
     grid-template-columns:minmax(0,1fr);
     grid-template-rows:minmax(0,19fr) minmax(0,35fr) minmax(0,22fr) minmax(0,24fr);
     width:calc(100vw - 24px);
-    height:calc(100svh - 24px);
+    height:100svh;
     overflow:hidden;
   }
   body[data-ws-scope="p2"] .church-editorial__copy .church-folio__identity .schedule-church-logo{
