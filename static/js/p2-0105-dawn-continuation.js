@@ -58,7 +58,7 @@
  const kinetic=svg('svg',{'aria-hidden':'true'}),defs=svg('defs');kinetic.append(defs);
  const clip=svg('clipPath',{id:'p205-v9-clip'}),aperture=svg('rect',{x:800,y:0,width:0,height:108});clip.append(aperture);defs.append(clip);
  const sheetGroup=svg('g');kinetic.append(sheetGroup);
- const sheets=palette.map(color=>{const rect=svg('rect',{x:0,y:0,width:1,height:0,fill:color});sheetGroup.append(rect);return rect});
+ // Full-screen sevenfold rects removed by editorial direction.
  const banner=svg('g',{'clip-path':'url(#p205-v9-clip)'}),topRule=svg('path',{d:'M0 1H1600',stroke:gold,'stroke-width':1,fill:'none'}),bottomRule=svg('path',{d:'M0 107H1600',stroke:gold,'stroke-width':1,fill:'none'});
  const letters=svg('g');banner.append(topRule,bottomRule,letters);kinetic.append(banner);
  const seals=[0,1].map(i=>{
@@ -88,16 +88,8 @@
   if(p<=.001)return;
   const bounds=stage.getBoundingClientRect(),w=bounds.width,h=bounds.height;
   kinetic.setAttribute('viewBox',`0 0 ${w} ${h}`);
-  // Seven full-bleed sheets: each occupies the COMPLETE stage, not the banner.
-  // Staggered vertical sweeps overlap with no exposed margin at any screen ratio.
-  sheets.forEach((sheet,i)=>{
-   const arrive=ease((p-.34-i*.033)/.19);
-   const depart=ease((p-.72-i*.018)/.17);
-   sheet.setAttribute('x',0);
-   sheet.setAttribute('y',(-h*(1-arrive)+h*depart).toFixed(2));
-   sheet.setAttribute('width',w);
-   sheet.setAttribute('height',h);
-  });
+  // No full-screen sevenfold sheets. Only the original V9 lettering and two
+  // 1:1 scripture carriers animate; no color field covers the exhibition.
   const bw=w*.9,scale=bw/1600,bh=108*scale,bx=(w-bw)/2,by=Math.max(25,Math.min(h*.27,twins.getBoundingClientRect().bottom-bounds.top+14));
   banner.setAttribute('transform',`translate(${bx} ${by}) scale(${scale})`);
   const opened=ease((p-.045)/.28),retire=ease((p-.56)/.15);
