@@ -10,7 +10,8 @@ import {
   G as GLTFLoader, W as WebGLRenderer, S as SRGBColorSpace,
   A as ACESFilmicToneMapping, P as PCFSoftShadowMap,
   a as Scene, H as HemisphereLight, D as DirectionalLight,
-  b as PlaneGeometry, o as PerspectiveCamera, d as DoubleSide
+  b as PlaneGeometry, o as PerspectiveCamera, d as DoubleSide,
+  e as CanvasTexture
 } from "../p2-maquette/assets/GLTFLoader-j388d5bW.js";
 
 const canvas = document.querySelector("#church-canvas");
@@ -62,21 +63,54 @@ sanctuaryLight.position.set(15.5, 5.1, -1.3);
 sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
 
+// Stable procedural finishes stored as source code in GitHub; no CDN assets.
+function createSurface(kind) {
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = 256;
+  const context = canvas.getContext("2d");
+  const image = context.createImageData(256, 256);
+  const d = image.data;
+  for (let y=0;y<256;y++) for(let x=0;x<256;x++){
+    const j=(y*256+x)*4;
+    const hash=Math.sin((x+2)*127.1+(y+11)*311.7)*43758.5453;
+    const noise=hash-Math.floor(hash)-.5;
+    const vein=Math.sin(y*.27+Math.sin(x*.031)*5)*.5;
+    const scatter=Math.sin(x*.14+y*.17)*Math.cos(y*.22);
+    const value=kind==="wood"?225+vein*18+noise*12:
+                kind==="stone"?235+scatter*5+noise*11:241+scatter*3+noise*8;
+    d[j]=value;
+    d[j+1]=value-(kind==="wood"?11:0);
+    d[j+2]=value-(kind==="wood"?23:2);
+    d[j+3]=255;
+  }
+  context.putImageData(image,0,0);
+  const texture=new CanvasTexture(canvas);
+  texture.colorSpace=SRGBColorSpace;
+  texture.wrapS=texture.wrapT=1000; // THREE.RepeatWrapping
+  texture.repeat.set(kind==="wood"?2:3,kind==="wood"?2:3);
+  texture.anisotropy=4;
+  return texture;
+}
+const surfaceMaps={
+  stone:createSurface("stone"),plaster:createSurface("plaster"),
+  wood:createSurface("wood")
+};
+
 const finishes = {
-  masonry: new MeshStandardMaterial({ color: 0xcad0c8, roughness: 0.89 }),
-  paleStone: new MeshStandardMaterial({ color: 0xe3e5dc, roughness: 0.85 }),
-  plaster: new MeshStandardMaterial({ color: 0xe9eae5, roughness: 0.94 }),
-  floor: new MeshStandardMaterial({ color: 0xcac2b5, roughness: 0.86 }),
-  courtyard: new MeshStandardMaterial({ color: 0xd0cec2, roughness: 0.9 }),
-  roof: new MeshStandardMaterial({ color: 0xc4c9c2, roughness: 0.83, metalness: 0.04, side: DoubleSide }),
+  masonry: new MeshStandardMaterial({ map: surfaceMaps.stone, bumpMap: surfaceMaps.stone, bumpScale: 0.018, color: 0xcad0c8, roughness: 0.89 }),
+  paleStone: new MeshStandardMaterial({ map: surfaceMaps.stone, bumpMap: surfaceMaps.stone, bumpScale: 0.014, color: 0xe3e5dc, roughness: 0.85 }),
+  plaster: new MeshStandardMaterial({ map: surfaceMaps.plaster, bumpMap: surfaceMaps.plaster, bumpScale: 0.012, color: 0xe9eae5, roughness: 0.94 }),
+  floor: new MeshStandardMaterial({ map: surfaceMaps.stone, bumpMap: surfaceMaps.stone, bumpScale: 0.012, color: 0xcac2b5, roughness: 0.86 }),
+  courtyard: new MeshStandardMaterial({ map: surfaceMaps.stone, bumpMap: surfaceMaps.stone, bumpScale: 0.016, color: 0xd0cec2, roughness: 0.9 }),
+  roof: new MeshStandardMaterial({ map: surfaceMaps.stone, color: 0xc4c9c2, roughness: 0.83, metalness: 0.04, side: DoubleSide }),
   glazing: new MeshStandardMaterial({
     color: 0xc3d6d7, roughness: 0.14, metalness: 0.17,
     transparent: true, opacity: 0.22, depthWrite: false, side: DoubleSide
   }),
   mullion: new MeshStandardMaterial({ color: 0x707772, roughness: 0.49, metalness: 0.52 }),
-  timber: new MeshStandardMaterial({ color: 0x927254, roughness: 0.75 }),
-  joinery: new MeshStandardMaterial({ color: 0x765943, roughness: 0.71 }),
-  pew: new MeshStandardMaterial({ color: 0x79593f, roughness: 0.69 }),
+  timber: new MeshStandardMaterial({ map: surfaceMaps.wood, color: 0x927254, roughness: 0.75 }),
+  joinery: new MeshStandardMaterial({ map: surfaceMaps.wood, color: 0x765943, roughness: 0.71 }),
+  pew: new MeshStandardMaterial({ map: surfaceMaps.wood, color: 0x79593f, roughness: 0.69 }),
   cross: new MeshStandardMaterial({
     color: 0xe6c58c, emissive: 0xb27d38, emissiveIntensity: 0.47,
     roughness: 0.34, metalness: 0.38
@@ -163,6 +197,30 @@ function connectArchitecturalDoors(building) {
   doorsAttached = true;
 }
 
+// The complete model includes the original realistic CC0 Japanese maple.
+// Re-use its geometry beyond the entrance as a landscaping entourage.
+function addNativeLandscape(building) {
+  let maple=null;
+  building.traverse(object=>{
+    if(!maple&&modelName(object.name).startsWith("maple root"))maple=object;
+  });
+  if(!maple)return;
+  const sites=[
+    [-4.2,-15.5,1.12,.1],[-4.5,-7.5,.91,1.22],
+    [1.6,-22.3,1.04,2.1],[11,-22.1,1.14,.6],
+    [21.7,-20.3,1.06,2.7],[22.3,-9.4,.95,1.6],
+    [1.9,5.5,.79,3.2],[19.9,5.3,.84,.25]
+  ];
+  for(const [x,z,scale,turn] of sites){
+    const tree=maple.clone(true);
+    scene.add(tree);
+    tree.position.set(x,-.35,z);
+    tree.rotation.y=turn;
+    tree.scale.multiplyScalar(scale);
+    tree.traverse(node=>{if(node.isMesh){node.castShadow=true;node.receiveShadow=true;}});
+  }
+}
+
 async function loadArchitecture() {
   if (typeof DecompressionStream !== "function") {
     throw new Error("Compressed GLB transport is unsupported");
@@ -194,6 +252,7 @@ async function loadArchitecture() {
     if (object.material === finishes.glazing) object.renderOrder = 2;
   });
   scene.add(building);
+  addNativeLandscape(building);
   connectArchitecturalDoors(building);
 }
 
