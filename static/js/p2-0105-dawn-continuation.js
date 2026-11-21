@@ -137,8 +137,8 @@
  const commons=name=>'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(name)+'?width=1200';
  const gospelScenes={
   left:[
-   {image:'/images/home-opening-engraving.jpg',title:'The Doré Bible Gallery',caption:'聖經雕版畫 · 1890',kind:'SCRIPTURE · ENGRAVING',href:'https://www.loc.gov/item/10002262/'},
    {image:commons('Gustave Doré - Crucifixion of Jesus.jpg'),title:'The Crucifixion',caption:'Gustave Doré · The Holy Bible · 1866',kind:'BIBLICAL ENGRAVING',href:'https://commons.wikimedia.org/wiki/File:Gustave_Dor%C3%A9_-_Crucifixion_of_Jesus.jpg'},
+   {image:commons('Jésus guérit les malades, par Gustave Doré.jpg'),title:'Jesus Heals the Sick',caption:'Gustave Doré · The Holy Bible · 1866',kind:'BIBLICAL ENGRAVING',href:'https://commons.wikimedia.org/wiki/File:J%C3%A9sus_gu%C3%A9rit_les_malades,_par_Gustave_Dor%C3%A9.jpg'},
    {image:commons('The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598368358).jpg'),title:'Jesus and the Woman of Samaria',caption:'The Bible Panorama · 1891 · 書內插圖',kind:'GOSPEL · ILLUSTRATION',href:'https://archive.org/details/biblepanoramaorh00fost'},
    {image:commons('The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598534357).jpg'),title:'The Road to Emmaus',caption:'The Bible Panorama · 1891 · 書內插圖',kind:'GOSPEL · ILLUSTRATION',href:'https://archive.org/details/biblepanoramaorh00fost'}
   ],
