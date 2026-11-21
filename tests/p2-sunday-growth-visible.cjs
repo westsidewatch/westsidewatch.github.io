@@ -8,7 +8,7 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-webgl']});
  try{
   fs.mkdirSync('artifacts/p2-sunday-growth',{recursive:true});
-  for(const screen of [{name:'desktop',width:1440,height:900},{name:'phone',width:390,height:844}]){
+  for(const screen of [{name:'desktop',width:1440,height:900},{name:'reference-screenshot',width:1158,height:850},{name:'phone',width:390,height:844}]){
    const page=await browser.newPage({viewport:{width:screen.width,height:screen.height},deviceScaleFactor:1});
    const pageErrors=[];
    page.on('pageerror',e=>pageErrors.push(String(e)));
