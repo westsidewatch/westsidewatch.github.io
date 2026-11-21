@@ -1,0 +1,202 @@
+{
+  "schema": "dawn.p2.curated-exhibition.v1",
+  "id": "jerusalem-3000",
+  "title": "耶路撒冷三千年",
+  "subtitle": "JERUSALEM · 3000 YEARS",
+  "description": "十二個不同來源的耶路撒冷史料視覺場景，跨越馬賽克、古地圖、歷史復原、考古測繪、石版畫、攝影和彩色印刷。此為十二景策展工程母本，並非十二本獨立書籍的最終選書。",
+  "curationStatus": "12-visual-scenes-provisional",
+  "sourceCollection": "/dawn-library/collections/jerusalem-3000/maps/",
+  "display": {
+    "mode": "mersi-counterflow",
+    "left": "up",
+    "right": "down",
+    "centralTitle": "DAWN LIBRARY"
+  },
+  "items": [
+    {
+      "id": "jerusalem-map-1",
+      "title": "Madaba Mosaic Map",
+      "caption": "馬達巴馬賽克 · 六世紀朝聖圖像",
+      "kind": "MOSAIC · PILGRIMAGE",
+      "year": "6C",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Madaba%20Mosaic%20Map%20depicting%20Jerusalem%20and%20the%20Dead%20Sea%20Church%20of%20St%20George.jpg?width=1800",
+        "alt": "Madaba Mosaic Map · 馬達巴馬賽克 · 六世紀朝聖圖像",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Madaba%20Mosaic%20Map%20depicting%20Jerusalem%20and%20the%20Dead%20Sea%20Church%20of%20St%20George.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=0"
+    },
+    {
+      "id": "jerusalem-map-2",
+      "title": "Breydenbach · Jerusalem",
+      "caption": "早期印刷朝聖城市圖",
+      "kind": "EARLY PRINT · PILGRIMAGE",
+      "year": "1486",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Civitas%20Iherusalem.jpg?width=1800",
+        "alt": "Breydenbach · Jerusalem · 早期印刷朝聖城市圖",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Civitas%20Iherusalem.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=1"
+    },
+    {
+      "id": "jerusalem-map-3",
+      "title": "Van Adrichem · Ierusalem",
+      "caption": "基督時代耶路撒冷歷史復原圖",
+      "kind": "HISTORICAL RECONSTRUCTION",
+      "year": "1590",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Christian%20van%20Adrichem%201590%20map%20Ierusalem%2C%20et%20suburbia%20eius%2C%20sicut%20tempre%20Christi%20floruit%2C%20cum%20locis%2C%20in%20quibus%20Christ%20passus%20est%20qu%C3%A6%20religiose%20%C3%A0%20Christianis%20observata%2C%20eti%C3%A3%20n%C5%A9%20Venerationi%20habentur.jpg?width=1800",
+        "alt": "Van Adrichem · Ierusalem · 基督時代耶路撒冷歷史復原圖",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Christian%20van%20Adrichem%201590%20map%20Ierusalem%2C%20et%20suburbia%20eius%2C%20sicut%20tempre%20Christi%20floruit%2C%20cum%20locis%2C%20in%20quibus%20Christ%20passus%20est%20qu%C3%A6%20religiose%20%C3%A0%20Christianis%20observata%2C%20eti%C3%A3%20n%C5%A9%20Venerationi%20habentur.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=2"
+    },
+    {
+      "id": "jerusalem-map-4",
+      "title": "Wilson · Ordnance Survey",
+      "caption": "威爾遜實地測繪 · 十九世紀",
+      "kind": "ARCHAEOLOGY · SURVEY",
+      "year": "1865",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/1865%20Ordnance%20Survey%20of%20Jerusalem%20Old%20City%20full%20map.jpg?width=1800",
+        "alt": "Wilson · Ordnance Survey · 威爾遜實地測繪 · 十九世紀",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/1865%20Ordnance%20Survey%20of%20Jerusalem%20Old%20City%20full%20map.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=3"
+    },
+    {
+      "id": "jerusalem-map-5",
+      "title": "Survey of Palestine",
+      "caption": "英國託管時期的城市測量圖",
+      "kind": "HISTORICAL CARTOGRAPHY",
+      "year": "1937",
+      "media": {
+        "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Jerusalem%20-%20Compiled%2C%20drawn%20%26%20printed%20under%20the%20direction%20of%20F.J.%20Salmon%2C%20Commissioner%20for%20Lands%20%26%20Surveys%2C%20Palestine.jpg?width=1800",
+        "alt": "Survey of Palestine · 英國託管時期的城市測量圖",
+        "type": "image",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Jerusalem%20-%20Compiled%2C%20drawn%20%26%20printed%20under%20the%20direction%20of%20F.J.%20Salmon%2C%20Commissioner%20for%20Lands%20%26%20Surveys%2C%20Palestine.jpg"
+      },
+      "destination": "/dawn-library/collections/jerusalem-3000/maps/?map=4"
+    },
+    {
+      "id": "roberts-jerusalem",
+      "title": "Jerusalem — David Roberts",
+      "caption": "1839 城市彩色石版畫 · 《The Holy Land》內頁",
+      "kind": "LITHOGRAPH · ART",
+      "year": "1839",
+      "media": {
+        "src": "https://tile.loc.gov/storage-services/service/pnp/ds/04500/04515v.jpg",
+        "source": "https://www.loc.gov/item/2002717464/",
+        "alt": "David Roberts Jerusalem colour lithograph",
+        "type": "image"
+      },
+      "destination": "https://www.loc.gov/item/2002717464/",
+      "sourceWork": "The Holy Land, Syria, Idumea, Arabia, Egypt and Nubia",
+      "curationMedium": "book-interior"
+    },
+    {
+      "id": "olive-panorama",
+      "title": "Jerusalem from the Mount of Olives",
+      "caption": "橄欖山眺望聖城 · 早期銀鹽攝影",
+      "kind": "HISTORIC PHOTOGRAPHY",
+      "year": "1900–1940",
+      "media": {
+        "src": "https://cdn.loc.gov/service/pnp/ppmsca/18900/18904v.jpg",
+        "source": "https://www.loc.gov/item/2008676384/",
+        "alt": "Early photographic panorama of Jerusalem from Mount of Olives",
+        "type": "image"
+      },
+      "destination": "https://www.loc.gov/item/2008676384/",
+      "sourceWork": "Photographic print, Library of Congress",
+      "curationMedium": "photography"
+    },
+    {
+      "id": "south-jerusalem",
+      "title": "Old City and the Temple Mount",
+      "caption": "舊城與聖殿山 · 城市建築攝影",
+      "kind": "ARCHITECTURE · PHOTOGRAPHY",
+      "year": "1900–1940",
+      "media": {
+        "src": "https://tile.loc.gov/storage-services/service/pnp/ppmsca/18900/18902v.jpg",
+        "source": "https://www.loc.gov/item/2008676374/",
+        "alt": "Jerusalem city walls, Dome of the Rock, al-Aqsa in historical photograph",
+        "type": "image"
+      },
+      "destination": "https://www.loc.gov/item/2008676374/",
+      "sourceWork": "Photographic print, Library of Congress",
+      "curationMedium": "photography"
+    },
+    {
+      "id": "american-colony-view",
+      "title": "Jerusalem — American Colony",
+      "caption": "美國殖民地攝影隊 · 城市歷史照片",
+      "kind": "URBAN HISTORY · PHOTO",
+      "year": "1898–1946",
+      "media": {
+        "src": "https://cdn.loc.gov/service/pnp/matpc/04800/04899v.jpg",
+        "source": "https://www.loc.gov/item/2019697309/",
+        "alt": "Historic Jerusalem photograph from the Matson/American Colony collection",
+        "type": "image"
+      },
+      "destination": "https://www.loc.gov/item/2019697309/",
+      "sourceWork": "American Colony / Matson Photograph Collection",
+      "curationMedium": "photography"
+    },
+    {
+      "id": "jerusalem-matson",
+      "title": "Jerusalem — Historic City",
+      "caption": "近代耶路撒冷 · 城市街景檔案",
+      "kind": "DOCUMENTARY · PHOTO",
+      "year": "1898–1946",
+      "media": {
+        "src": "https://cdn.loc.gov/service/pnp/matpc/04800/04868v.jpg",
+        "source": "https://www.loc.gov/item/2019697344/",
+        "alt": "Historic Jerusalem streetscape in the Matson collection",
+        "type": "image"
+      },
+      "destination": "https://www.loc.gov/item/2019697344/",
+      "sourceWork": "Matson Photograph Collection",
+      "curationMedium": "photography"
+    },
+    {
+      "id": "holy-sepulchre-photo",
+      "title": "Church of the Holy Sepulchre",
+      "caption": "聖墓教堂 · 朝聖與建築攝影",
+      "kind": "PILGRIMAGE · ARCHITECTURE",
+      "year": "1890–1900",
+      "media": {
+        "src": "https://cdn.loc.gov/service/pnp/ppmsca/02600/02693v.jpg",
+        "source": "https://www.loc.gov/item/2002725004/",
+        "alt": "Holy Sepulchre historical photochrom in Jerusalem",
+        "type": "image"
+      },
+      "destination": "https://www.loc.gov/item/2002725004/",
+      "sourceWork": "Views of the Holy Land, photochrom collection",
+      "curationMedium": "photography"
+    },
+    {
+      "id": "historic-jerusalem-art",
+      "title": "Jerusalem in Color",
+      "caption": "十九世紀聖城 · 彩色印刷攝影",
+      "kind": "PHOTOCHROM · COLOR",
+      "year": "1890–1900",
+      "media": {
+        "src": "https://cdn.loc.gov/service/pnp/ppmsca/02700/02705v.jpg",
+        "source": "https://www.loc.gov/item/2002725017/",
+        "alt": "Photochrom view of Jerusalem from Mount of Olives",
+        "type": "image"
+      },
+      "destination": "https://www.loc.gov/item/2002725017/",
+      "sourceWork": "Views of the Holy Land",
+      "curationMedium": "photochrom"
+    }
+  ],
+  "presentationCount": 12,
+  "bookSelectionCount": 0,
+  "rightsStatus": "source-page-rights-review-required"
+}

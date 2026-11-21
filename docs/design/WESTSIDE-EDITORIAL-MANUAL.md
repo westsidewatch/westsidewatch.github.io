@@ -185,6 +185,10 @@ These files remain archived intact; they do not operate as independent OS author
 - [Editorial Web Maturity Study](../../dore-design/knowledge-lab/research/editorial-web-maturity-study-20260901.md)
 - [Camera and Attention Grammar](../../dore-design/DORE-EXPLORATION-CAMERA-ATTENTION-GRAMMAR-2026-09-09.md)
 
+### 黎明書局策展集 → P2 展示規範（2026-11-21）
+
+策展集出版時可附有 P2 視覺展示清單，交由黎明書局既有 P2 05 舞台以左右相反方向的 MERSI 裁切／平移瀏覽。中央橫排雙方塊通往章節第二層，左右圖像通往具體作品。P2 動效與策展資料分離，不可為每個策展集複製一套動畫；圖像必須與原書、原攝影、原歷史作品準確對應。詳細資料契約、發布路徑、授權／驗收條件見 [DAWN-P2-EXHIBITION-CONTRACT.md](DAWN-P2-EXHIBITION-CONTRACT.md)。目前「耶路撒冷三千年」已建立五張地圖接入樣本，十二本差異化視覺書籍尚未完成，不能宣稱已驗收。
+
 ## 9. 多雷探索 / Doré Exploration — 固定工作指令
 
 > **權威與用途：** 本節是「多雷探索」在編輯與視覺工程中的就地操作入口，依據 [`MASTER_SITE_ARCHITECTURE.md` §9](../MASTER_SITE_ARCHITECTURE.md)。正式定義仍以該架構文件為準；此處不建立第二套 Design OS、產品或工具。
