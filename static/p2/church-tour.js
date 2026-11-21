@@ -228,47 +228,79 @@ function addNativeLandscape(building) {
   }
 }
 
-// Original red maple is NOT one green material: GLB material 15 = twig bark,
-// 16 = rough living bark, 17/18/19 = foliage. The source mesh materials remain
-// authoritative. Only the foliage changes season; trunk and twigs never do.
+// Source GLB material IDs: 15 fine twig bark, 16 rough living bark,
+// 17/18/19 red Japanese maple foliage. Preserve imported trunk/root/twig
+// materials as-is; recolor *only the foliage image* across four seasons.
 const seasonalLeaves = new Map();
 const originalStructuralMaterials = new Map();
-const mapleAutumn = {r:0.56,g:0.18,b:0.15}; // documented Blender V24 burgundy
+const mapleAutumn = {r:0.56,g:0.18,b:0.15}; // V24 source burgundy, not guessed
 function registerMapleSource(mesh) {
   const n=modelName(mesh.name);
   if(!/maple cc0/.test(n)) return false;
-  // Every bark, twig, root, spreading bough and trunk keeps the imported
-  // CC0 material with no foliage tint.
-  if(!/connected crown|foliage/.test(n)) return true;
-  const material=mesh.material?.clone?.()??mesh.material;
+  if(!/connected crown|foliage/.test(n)) return true; // bark: untouched
+  const material=mesh.material.clone();
   mesh.material=material;
-  if(material?.color)seasonalLeaves.set(material,material.color.clone());
   material.side=DoubleSide;
+  const record={material,source:material.color.clone(),lastBucket:-1,sourceImage:null};
+  // The CC0 tree is RED in its original texture. To recover the previously
+  // approved green spring/summer canopy, tint its own leaf texture by hue
+  // rotation, not the bark and not a newly invented solid green material.
+  const originalMap=material.map;
+  const image=originalMap?.image;
+  if(image?.width&&image?.height){
+    const paint=document.createElement("canvas");
+    paint.width=Math.max(16,Math.min(image.width,512));
+    paint.height=Math.max(16,Math.min(image.height,512));
+    const ctx=paint.getContext("2d");
+    const newMap=new CanvasTexture(paint);
+    newMap.colorSpace=originalMap.colorSpace;
+    newMap.flipY=originalMap.flipY;
+    newMap.wrapS=originalMap.wrapS;
+    newMap.wrapT=originalMap.wrapT;
+    newMap.repeat.copy(originalMap.repeat);
+    newMap.offset.copy(originalMap.offset);
+    newMap.rotation=originalMap.rotation;
+    newMap.anisotropy=originalMap.anisotropy;
+    record.ctx=ctx;record.sourceImage=image;record.map=newMap;
+    material.map=newMap;
+    material.color.setRGB(1,1,1);
+    material.needsUpdate=true;
+  }
+  seasonalLeaves.set(material,record);
   return true;
 }
-// Four seasons follow the original camera narrative, never page scroll.
-// Spring/summer = source CC0 green leaf materials; autumn = original V24
-// burgundy leaf color; winter = a darker shade of the same burgundy,
-// retaining the red canopy instead of fading to green or bare twigs.
+function seasonalSmooth(x) {x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);}
 function updateMapleSeason(t,duration) {
   const x=Math.min(1,Math.max(0,t/duration));
-  const autumn=Math.min(1,Math.max(0,(x-.48)/.16));
-  const winter=Math.min(1,Math.max(0,(x-.73)/.16));
-  const smooth=v=>v*v*(3-2*v);
-  const a=smooth(autumn),w=smooth(winter);
-  for(const [material,source] of seasonalLeaves) {
-    const c=material.color;
-    c.copy(source);
-    c.r+=(mapleAutumn.r-source.r)*a;
-    c.g+=(mapleAutumn.g-source.g)*a;
-    c.b+=(mapleAutumn.b-source.b)*a;
-    c.r+=(mapleAutumn.r*.60-c.r)*w;
-    c.g+=(mapleAutumn.g*.46-c.g)*w;
-    c.b+=(mapleAutumn.b*.52-c.b)*w;
+  // Distinct seasons remain bound to the real walking camera. Preserve
+  // all original leaf image detail and foliage transparency through tint.
+  const summer=seasonalSmooth((x-.18)/.22);
+  const autumn=seasonalSmooth((x-.48)/.16);
+  const winter=seasonalSmooth((x-.73)/.16);
+  const hueRotate=(118-14*summer)*(1-autumn);  // original red -> green
+  const brightness=1-.46*winter;                // winter deep red
+  const bucket=Math.round(hueRotate*4)+"_"+Math.round(brightness*100);
+  for(const record of seasonalLeaves.values()) {
+    const {material,source,ctx,sourceImage,map}=record;
+    if(ctx && sourceImage && map){
+      if(record.lastBucket===bucket)continue;
+      record.lastBucket=bucket;
+      ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+      ctx.filter="hue-rotate("+hueRotate.toFixed(2)+"deg) brightness("+brightness.toFixed(3)+")";
+      ctx.drawImage(sourceImage,0,0,ctx.canvas.width,ctx.canvas.height);
+      ctx.filter="none";
+      map.needsUpdate=true;
+    }else{
+      // Fallback for leaf material without an imported image.
+      const color=source.clone();
+      const hsl={h:0,s:0,l:0};color.getHSL(hsl);
+      color.setHSL((hsl.h+hueRotate/360)%1,hsl.s,hsl.l*brightness);
+      material.color.copy(color);
+    }
   }
-  // Winter snow is applied to the original roof surfaces, not a new roof.
-  const snow=Math.min(1,Math.max(0,(x-.77)/.14));
-  for(const [mat,original] of originalStructuralMaterials) {
+  // Snowfall lightens only the original roof material, not its geometry.
+  const snow=seasonalSmooth((x-.77)/.14);
+  for(const [mat,original] of originalStructuralMaterials){
     mat.color.copy(original);
     mat.color.r+=(1-mat.color.r)*snow*.35;
     mat.color.g+=(1-mat.color.g)*snow*.35;
