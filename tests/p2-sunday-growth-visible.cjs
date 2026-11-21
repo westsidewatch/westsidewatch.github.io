@@ -47,6 +47,7 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
       copyScrollHeight:copy.scrollHeight,copyClientHeight:copy.clientHeight,
       scheduleDisplay:getComputedStyle(programme).display};
    });
+   console.log('P2_FULL_LAYOUT_METRICS',screen.name,JSON.stringify(result));
    assert.equal(result.modelActive,true,screen.name+' not displaying the Church visual');
    assert.equal(result.programme,true,screen.name+' missing Sunday programme');
    assert.equal(result.leftContainsModel,true,screen.name+' model absent from LEFT water-engraving pane');
