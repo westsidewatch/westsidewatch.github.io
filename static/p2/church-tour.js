@@ -233,6 +233,14 @@ function addNativeLandscape(building) {
 // materials as-is; recolor *only the foliage image* across four seasons.
 const seasonalLeaves = new Map();
 const originalStructuralMaterials = new Map();
+// Original GLB architecture stays untouched; seasonal snow affects only the
+// separate exterior ground and landscape soil, never bark or stone walls.
+const winterGroundColor = new MeshStandardMaterial({color:0xe5e6e1}).color;
+const winterSoilColor = new MeshStandardMaterial({color:0xd9dbd5}).color;
+const seasonalGroundColors = new Map([
+  [finishes.ground, finishes.ground.color.clone()],
+  [finishes.earth, finishes.earth.color.clone()]
+]);
 const mapleAutumn = {r:0.56,g:0.18,b:0.15}; // V24 source burgundy, not guessed
 function registerMapleSource(mesh) {
   const n=modelName(mesh.name);
@@ -298,8 +306,15 @@ function updateMapleSeason(t,duration) {
       material.color.copy(color);
     }
   }
-  // Snowfall lightens only the original roof material, not its geometry.
+  // The approved winter tour includes visible snow on exterior ground.
+  // Do not recolor the original building or tree bark: ground and soil are
+  // independent materials, so the autumn-to-winter transition remains gradual.
   const snow=seasonalSmooth((x-.77)/.14);
+  for(const [mat,original] of seasonalGroundColors){
+    mat.color.copy(original).lerp(
+      mat===finishes.ground ? winterGroundColor : winterSoilColor, snow
+    );
+  }
   for(const [mat,original] of originalStructuralMaterials){
     mat.color.copy(original);
     mat.color.r+=(1-mat.color.r)*snow*.35;
