@@ -1444,3 +1444,45 @@ body[data-ws-scope="p2"] .church-editorial__copy .church-folio__meeting-meta > .
     grid-column:1;grid-row:2;
   }
 }
+
+
+/* P2 01 → church second layer: only two invitation surfaces.
+   The original engraved gold church name and live 3D white model remain
+   visually identical. No visible CTA button, label or decorative overlay. */
+body[data-ws-scope="p2"] .church-folio__identity .schedule-church-logo{
+  position:relative;
+}
+body[data-ws-scope="p2"] .church-folio__identity .church-folio__identity-link{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  display:block;
+  width:100%;
+  height:100%;
+  cursor:pointer;
+  background:transparent;
+}
+body[data-ws-scope="p2"] .church-folio__identity .church-folio__english-link{
+  color:inherit;
+  font:inherit;
+  text-decoration:none;
+  cursor:pointer;
+}
+body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__bottom{
+  position:relative;
+}
+body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__bottom > .church-folio__model-entry{
+  position:absolute;
+  inset:0;
+  z-index:8;
+  display:block;
+  background:transparent;
+  pointer-events:auto;
+  cursor:pointer;
+}
+body[data-ws-scope="p2"] .church-folio__identity-link:focus-visible,
+body[data-ws-scope="p2"] .church-folio__english-link:focus-visible,
+body[data-ws-scope="p2"] .church-folio__model-entry:focus-visible{
+  outline:2px solid var(--ws-first-light);
+  outline-offset:3px;
+}
