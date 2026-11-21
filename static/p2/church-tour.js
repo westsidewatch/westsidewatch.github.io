@@ -22,7 +22,7 @@ const renderer = new WebGLRenderer({
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.7));
 renderer.outputColorSpace = SRGBColorSpace;
 renderer.toneMapping = ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.27;
+renderer.toneMappingExposure = 0.98;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = PCFSoftShadowMap;
 renderer.setClearColor(0xd7d8cf, 1);
@@ -42,8 +42,8 @@ function resize() {
 window.addEventListener("resize", resize, { passive: true });
 resize();
 
-scene.add(new HemisphereLight(0xdde8ed, 0x958374, 2.25));
-const sun = new DirectionalLight(0xffeccb, 3.4);
+scene.add(new HemisphereLight(0xdde8ed, 0x958374, 1.65));
+const sun = new DirectionalLight(0xffeccb, 2.65);
 sun.position.set(4, 21, 10);
 sun.target.position.set(9, 0, -8);
 sun.castShadow = true;
@@ -54,10 +54,10 @@ Object.assign(sun.shadow.camera, {
 sun.shadow.normalBias = 0.025;
 sun.shadow.radius = 3;
 scene.add(sun, sun.target);
-const ambientFill = new DirectionalLight(0xc8dce7, 1.1);
+const ambientFill = new DirectionalLight(0xc8dce7, 0.87);
 ambientFill.position.set(19, 12, -24);
 scene.add(ambientFill);
-const sanctuaryLight = new DirectionalLight(0xffe3b1, 1.8);
+const sanctuaryLight = new DirectionalLight(0xffe3b1, 1.4);
 sanctuaryLight.position.set(15.5, 5.1, -1.3);
 sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
@@ -204,17 +204,17 @@ async function loadArchitecture() {
 // courtyard x6..12 z-6..-12; east sliding door x12 z-7.5..-10.5;
 // rear sanctuary door x12 z-15.25..-14.15; north court glass z-12.
 const route = [
-  { at: 0, p: [10.5, 2.20, 11.2], look: [9.35, 3.1, 0] },
+  { at: 0, p: [15.0, 7.5, 14.5], look: [9.35, 3.2, -2.5] },
   { at: 6, p: [9.35, 1.85, 5.0], look: [9.35, 2.4, 0] },
   { at: 11, p: [9.35, 1.82, 1.4], look: [9.35, 1.9, -4] },
   { at: 15, p: [9.35, 1.82, -1.6], look: [9.35, 1.83, -6.2] },
   { at: 20, p: [9.00, 1.82, -4.8], look: [9.00, 2.1, -8] },
-  { at: 26, p: [9.00, 1.82, -8.9], look: [9.00, 2.8, -11.4] },
-  { at: 31, p: [9.00, 1.82, -8.9], look: [12.7, 2.3, -8.9] },
+  { at: 26, p: [9.75, 1.85, -8.1], look: [7.65, 1.75, -10.4] },
+  { at: 31, p: [9.3, 1.82, -8.7], look: [12.7, 1.95, -8.9] },
   { at: 37, p: [11.6, 1.82, -9.0], look: [15.0, 2.1, -9.0] },
   { at: 42, p: [14.2, 1.82, -9.1], look: [15.0, 2.2, -4.0] },
-  { at: 52, p: [15.0, 1.82, -9.1], look: [15.0, 3.8, -0.1] },
-  { at: 60, p: [14.2, 1.82, -10.2], look: [12.1, 1.9, -14.8] },
+  { at: 52, p: [15.0, 1.88, -13.5], look: [15.0, 3.0, -0.1] },
+  { at: 60, p: [14.2, 1.82, -13.9], look: [12.1, 1.9, -14.8] },
   { at: 68, p: [12.5, 1.82, -14.7], look: [11.4, 1.85, -14.7] },
   { at: 74, p: [11.6, 1.82, -14.6], look: [9.3, 1.7, -13.5] },
   { at: 81, p: [9.1, 1.83, -13.5], look: [9.0, 1.9, -10] },
