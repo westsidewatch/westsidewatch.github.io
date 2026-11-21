@@ -37,15 +37,7 @@ jobs:
             if command -v convert >/dev/null 2>&1; then
               convert "/tmp/p2-frame-$frame.png" -resize 760x -strip -quality 57 "/tmp/p2-frame-$frame.jpg"
             else
-              python3 -m pip install pillow -q --break-system-packages
-              FRAME="$frame" python3 - <<'PY'
-import os
-from PIL import Image
-f=os.environ['FRAME']
-im=Image.open('/tmp/p2-frame-'+f+'.png').convert('RGB')
-im.thumbnail((760,760))
-im.save('/tmp/p2-frame-'+f+'.jpg',quality=57,optimize=True)
-PY
+              ffmpeg -hide_banner -loglevel error -y -i "/tmp/p2-frame-$frame.png" -vf scale=760:-2 -q:v 11 "/tmp/p2-frame-$frame.jpg"
             fi
             bytes=$(wc -c < "/tmp/p2-frame-$frame.jpg")
             echo "Proof $frame JPEG bytes: $bytes"
