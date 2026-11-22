@@ -460,11 +460,13 @@
   const ticket=++portalTicket;
   if(activePortal==='all'){
    portalTopics?.remove();portalTopics=null;editorialWorks=[];
-   void renderCatalogueClassification();
+   // The vinyl classification is the complete-collection landing.
+   // The unclassified historical page set remains a navigable sub-collection.
+   setFullRecordIndexVisible(false);
    search.disabled=false;search.value=title||'';
-   loadCatalogue();
-   if(currentPage)renderWorks();
+   void renderCatalogueClassification();
   }else{
+   setFullRecordIndexVisible(true);
    const classification=$('#dawn-classification');if(classification)classification.hidden=true;
    search.disabled=true;search.value='';
    prevButton.disabled=true;more.disabled=true;
@@ -539,6 +541,10 @@
   const region=$('#dawn-classification'),tree=$('#dawn-classification-tree');
   if(!region||!tree)return;
   region.hidden=false;
+  if(classificationPromise){
+   if(classificationTree&&chineseLibrary)displayClassificationRoots();
+   return classificationPromise;
+  }
   if(!classificationPromise){
    classificationPromise=(async()=>{
     const [classificationResponse,chineseResponse]=await Promise.all([
@@ -581,6 +587,24 @@
   const edge=document.createElement('span');edge.className='dawn-classification__edge';edge.setAttribute('aria-hidden','true');
   tile.append(disc,number,title,edge);tile.addEventListener('click',action);return tile;
  }
+ function setFullRecordIndexVisible(visible){
+  // A sub-shelf reached through the classification wall, never a parallel
+  // "全部館藏" destination. The underlying 21,047 indexed works are intact.
+  $('#dawn-catalogue .dawn-catalogue__nav').hidden=!visible;
+  works.hidden=!visible;
+  $('#dawn-catalogue .dawn-catalogue__more').hidden=!visible;
+ }
+ function displayFullRecordIndex(){
+  if(activePortal!=='all')return;
+  ++classificationTicket;
+  classificationCrumbs([{label:'全部書目',action:displayFullRecordIndex}]);
+  classificationFacets(true);
+  const tree=classificationWall();tree.hidden=true;
+  setFullRecordIndexVisible(true);
+  if(currentPage)renderWorks();
+  else void loadCatalogue();
+  $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
+ }
  function classificationWall(){
   const tree=$('#dawn-classification-tree');tree.replaceChildren();
   tree.className='dawn-catalogue__classification-tree dawn-classification__wall';
@@ -600,11 +624,13 @@
   if(!classificationTree||!chineseLibrary)return;
   ++classificationTicket;
   classificationCrumbs([]);classificationFacets(true);
+  setFullRecordIndexVisible(false);
   const wall=classificationWall();
   for(const [i,group] of (classificationTree.roots||[]).entries()){
    wall.append(classificationSleeve(group.label,String(group.children.length).padStart(2,'0')+' 個子類',()=>displayClassificationGroup(group),i%2?'olive':'harvest'));
   }
   wall.append(classificationSleeve('中文圖書',String(chineseLibrary.count||chineseLibrary.works?.length||0)+' 部藏書',displayChineseGroups,'chinese'));
+  wall.append(classificationSleeve('全部書目','依年代與作者查閱',displayFullRecordIndex,'harvest'));
  }
  function displayClassificationGroup(group){
   if(!group)return;
