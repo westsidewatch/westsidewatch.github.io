@@ -32,7 +32,7 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
     };
     return {
       nav:grab('.dawn-second__global-nav'),
-      returnEn:grab('.dawn-second__return .dawn-second__nav-en'),
+      returnMark:grab('.dawn-second__return .dawn-second__return-mark'),
       returnZh:grab('.dawn-second__return .dawn-second__nav-zh'),
       collectionEn:grab('.dawn-second__all-works .dawn-second__nav-en'),
       collectionZh:grab('.dawn-second__all-works .dawn-second__nav-zh'),
@@ -78,11 +78,11 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
       harvested:getComputedStyle(document.querySelector('#dawn-second')).getPropertyValue('--ws-harvest').trim(),
       duplicateHeading:document.querySelectorAll('#dawn-room-heading, .dawn-reading-room__masthead').length,
       scripturePlates:document.querySelectorAll('.dawn-second__motherform').length,
-      returnNavText:document.querySelector('.dawn-second__return .dawn-second__nav-en').textContent.trim()
+      returnNavText:document.querySelector('.dawn-second__return .dawn-second__nav-zh').textContent.trim(),
+      returnButton:grab('.dawn-second__return')
     };
    });
-   for(const [id,en,zh] of [['return',result.returnEn,result.returnZh],
-      ['collection',result.collectionEn,result.collectionZh]]){
+   for(const [id,en,zh] of [['collection',result.collectionEn,result.collectionZh]]){
      assert(en.size>zh.size*1.25,device+': '+id+' English is not larger than Chinese');
      assert(/Bodoni/i.test(en.font),device+': '+id+' English family is not OS Bodoni: '+en.font);
      assert(/Chiron/i.test(zh.font),device+': '+id+' Chinese family is not OS Chiron: '+zh.font);
@@ -102,7 +102,11 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
      device+': loaded source cards hide their title or print it in white on paper');
    assert.equal(result.duplicateHeading,0,device+': L2 repeats the brand outside scripture plate');
    assert.equal(result.scripturePlates,1,device+': original scripture plate missing');
-   assert.equal(result.returnNavText,'RETURN',device+': navigation repeats Dawn brand');
+   assert.equal(result.returnNavText,'返回',device+': back affordance label changed');
+   assert(result.returnZh.size<=14.5,device+': back button enlarged into a section title');
+   assert(result.returnMark.size<=21,device+': back arrow enlarged into a headline');
+   assert(result.returnButton.width<115,device+': back control occupies headline-sized width');
+   assert(result.returnButton.height<58,device+': back control occupies excessive height');
    assert.equal(result.editorialPanels.length,3,device+': three editorial departments absent');
    assert.deepEqual(result.editorialPanels.map(p=>p.identity),['三晨星','策展集','光譜']);
    const harvestRGB=await page.evaluate(()=>{
