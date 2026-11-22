@@ -1,0 +1,31 @@
+name: 数片 Legacy Engine Recovery Tests
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/shupian_recovery/**"
+      - ".github/workflows/shupian-recovery-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-engine-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Restore PARADISO core (unit tests)
+        run: python3 -m unittest discover -s scripts/shupian_recovery -p "test_*.py" -v
+      - name: Confirm official catalog is not automatically populated
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('static/shupian/catalog.json').read_text())
+          assert any(x['id']=='the-institute-historical' for x in d['titles'])
+          assert all(x['id'] not in ('the-general-1926','manger-cross-1912') for x in d['titles'])
+          print('Public catalog preserved; no discovery result auto-published')
+          PY
