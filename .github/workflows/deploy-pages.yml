@@ -149,7 +149,7 @@ jobs:
           banned={'manger-cross-1912','passion-of-christ-1903','the-general-1926','the-living-christ-1951','king-of-kings-1927','ten-commandments-1923','quo-vadis-1913','nosferatu-1922','perils-of-pauline-1914','beverly-hillbillies-1962','bonanza-1960','charade-1963','night-living-dead-1968','dementia-13-1963','terror-1963','the-kid-1921','sherlock-jr-1924','phantom-opera-1925','trip-to-the-moon-1902'}
           assert all(x['id'] not in banned for x in titles), 'Banned filler classics returned'
           institute=next(x for x in titles if x['id']=='the-institute-historical')
-          assert institute.get('posterUrl','').startswith('https://www.classification.gov.au/'), 'Institute real key art regressed'
+          assert institute.get('posterUrl','').startswith('https://stephenking.com/images/television/'), 'Institute official key art regressed'
           assert len(institute['episodes']) == 10, 'Institute episode records missing'
           assert 'youtube' not in str(titles).lower(), 'YouTube media is prohibited'
           front=Path('public/shupian/index.html').read_text()
