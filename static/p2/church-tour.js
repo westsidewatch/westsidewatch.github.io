@@ -214,61 +214,15 @@ function connectArchitecturalDoors(building) {
   eastChapelSlider.attach(mesh("C EAST CHAPEL large sliding glass door"));
   rearSanctuaryHinge.attach(northPublicDoor);
   staffSanctuaryHinge.attach(southStaffDoor);
-  // The GLB handles were baked as independent world-coordinate meshes.
-  // Merely attaching them to the hinge kept their old floating offsets.
-  // Replace just those small handles with door-local hardware; the hinge
-  // still moves the ORIGINAL architectural door geometry.
-  const oldHandles = [];
+  // No door handles are displayed: original floating GLB hardware and
+  // earlier generated white handles are both suppressed. The original
+  // door leaves remain attached to their hinges and continue to open.
   building.traverse(object => {
-    if (object.isMesh && /handle|knob|door pull|pull bar|door lever|latch/i.test(modelName(object.name)))
-      oldHandles.push(object);
+    if (object.isMesh && /handle|knob|door pull|pull bar|door lever|latch|attached handle/i.test(modelName(object.name))) {
+      object.visible = false;
+      object.castShadow = false;
+    }
   });
-  for (const object of oldHandles) {
-    object.visible = false;
-    object.castShadow = false;
-  }
-  // A retired stand-alone handle must never float in the scene or cast a
-  // disconnected shadow; only the door-local replacement is rendered.
-  const handleMetal = new MeshStandardMaterial({
-    color: 0x777d80, metalness: 0.7, roughness: 0.32
-  });
-  function addDoorLocalHandle(door, label) {
-    if (!door.geometry?.boundingBox) door.geometry?.computeBoundingBox();
-    const bounds = door.geometry?.boundingBox;
-    if (!bounds) return;
-    const extent = new Vector3().subVectors(bounds.max, bounds.min);
-    const height = bounds.min.y + Math.min(1.05, extent.y * .46);
-    const isCrosswise = extent.x > extent.z;
-    // Place the plate on the visible face. Compute everything in DOOR-local
-    // coordinates: opening never changes the handle-to-leaf relationship.
-    const center = isCrosswise
-      ? new Vector3(bounds.max.x - Math.min(.23, extent.x*.18), height, bounds.max.z + .042)
-      : new Vector3(bounds.min.x - .042, height, bounds.max.z - Math.min(.23, extent.z*.18));
-    const plate = new Mesh(
-      new BoxGeometry(isCrosswise?.085:.026, .115, isCrosswise?.026:.085),
-      handleMetal
-    );
-    plate.position.copy(center);
-    plate.name = 'Attached handle plate - ' + label;
-    const lever = new Mesh(
-      new BoxGeometry(isCrosswise?.19:.036, .027, isCrosswise?.037:.19),
-      handleMetal
-    );
-    lever.position.copy(center);
-    if (isCrosswise) lever.position.z += .024;
-    else lever.position.x -= .024;
-    lever.name = 'Attached handle lever - ' + label;
-    door.add(plate, lever);
-    // Face-local validation: all handle anchors are derived solely from the
-    // same door geometry bounding box, never from scene/world coordinates.
-    if (isCrosswise && Math.abs(plate.position.z-bounds.max.z)>.10)
-      throw new Error("Handle offset outside door leaf: " + label);
-    if (!isCrosswise && Math.abs(plate.position.x-bounds.min.x)>.10)
-      throw new Error("Handle offset outside door leaf: " + label);
-  }
-  addDoorLocalHandle(southDoor, "south entry");
-  addDoorLocalHandle(northPublicDoor, "north public");
-  addDoorLocalHandle(southStaffDoor, "south staff");
   northCourtSlider.attach(mesh("A NORTH COURT double-wide glass door"));
   doorsAttached = true;
 }
