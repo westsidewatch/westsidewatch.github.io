@@ -66,6 +66,13 @@ fs.mkdirSync(dir,{recursive:true});
   await page.locator('#dawn-primary-chinese').click();
   await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-results .dawn-contemporary__book').length===11,
    null,{timeout:20000});
+  await page.waitForFunction(()=>{
+    const cards=[...document.querySelectorAll('#dawn-classification-results .dawn-contemporary__book')];
+    return cards.length===9&&cards.every(card=>{
+     const img=card.querySelector('img.dawn-contemporary__tile-cover');
+     return card.classList.contains('dawn-contemporary__book--pictured')&&img?.complete&&img.naturalWidth>120;
+    });
+   },null,{timeout:30000});
   const visualProof=await cards.evaluateAll(items=>items.map(card=>{
    const art=card.querySelector('.dawn-contemporary__art');
    const paper=art?.querySelector('.dawn-contemporary__folio');
@@ -114,8 +121,8 @@ fs.mkdirSync(dir,{recursive:true});
   // The first page must display real publisher jackets rather than a complete
   // wall of colored labels. Strict full-coverage remains a release requirement
   // once each official source image is verified.
-  assert(rendered.length>=Math.min(6,configured.length),
-   device+': publisher jackets missing; source URLs or CSS must be repaired');
+  assert.equal(configured.length,9,device+': each displayed free title must have its exact publisher jacket');
+  assert.equal(rendered.length,9,device+': all nine actual source images must fill their tiles');
   const headingText=await page.locator('#dawn-classification-results .dawn-classification__result-heading').innerText();
   assert(headingText.includes('認識作者與作品')&&headingText.includes('出版方'),
    device+': book introduction must explain the reader journey');
