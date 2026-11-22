@@ -48,7 +48,7 @@ function positionAfterRow(grid,tile){
 }
 function previewContents(book,onRead){
  const content=make('div','dawn-expander__content');
- const eyebrow=make('div','dawn-expander__eyebrow','DAWN LIBRARY · BOOK PREVIEW');
+ const eyebrow=make('div','dawn-expander__eyebrow',book.discoveryOnly?'書籍介紹':'選書預覽');
  const figure=make('button','dawn-expander__book');
  figure.type='button';figure.setAttribute('aria-label','打開書籍：'+(book.title||'未標題作品'));
  const image=coverFor(book);
@@ -89,13 +89,13 @@ function previewContents(book,onRead){
     reading=false;
     if(enter&&enter.isConnected){
      enter.disabled=false;
-     enter.textContent='前往出版方查看此書';
+     enter.textContent='前往出版方了解本書';
     }
    }
   }catch(error){
    console.error('[Dawn book reading]',error);
    reading=false;
-   if(enter){enter.disabled=false;enter.textContent=book.discoveryOnly?'前往出版方查看此書':'打開此書 · 查看閱讀資訊'}
+   if(enter){enter.disabled=false;enter.textContent=book.discoveryOnly?'前往出版方了解本書':'打開此書 · 查看閱讀資訊'}
   }
  }
  figure.addEventListener('click',()=>void confirmReader());
@@ -107,21 +107,21 @@ function previewContents(book,onRead){
  if(book.date||book.edition?.publishDate){
   meta.append(make('p','dawn-expander__edition',String(book.date||book.edition.publishDate)));
  }
- if(book.workId)meta.append(make('p','dawn-expander__identity','WORK ID · '+book.workId));
+ // Internal Work identity remains in source metadata; never printed to readers.
  if(book.editorialParagraphs?.length){
   meta.append(make('p','dawn-expander__description',String(book.editorialParagraphs[0])));
  }else if(typeof book.descriptionZh==='string'&&book.descriptionZh.trim()){
   meta.append(make('p','dawn-expander__description',book.descriptionZh));
  }else meta.append(make('p','dawn-expander__description',
-  '請先查看這本作品的原書資訊與版本線索，再決定是否進一步閱讀。'));
+  '認識這本作品與作者，探索更多相關閱讀。'));
  const actions=make('div','dawn-expander__actions');
- enter=make('button','dawn-expander__read',book.discoveryOnly?'前往出版方查看此書':'打開此書 · 查看閱讀資訊');
+ enter=make('button','dawn-expander__read',book.discoveryOnly?'前往出版方了解本書':'打開此書 · 查看閱讀資訊');
  enter.type='button';enter.addEventListener('click',()=>void confirmReader());
  actions.append(enter);
  // External reading is an explicit SECOND act only, and only if a sourced URL exists.
  const url=safeUrl(book.sourceUrl||book.source?.url);
  if(url){
-  const link=make('a','dawn-expander__source','前往原書來源 ↗');
+  const link=make('a','dawn-expander__source',book.discoveryOnly?'出版方介紹 ↗':'查看原書 ↗');
   link.href=url;link.target='_blank';link.rel='noopener noreferrer';actions.append(link);
  }
  meta.append(actions);
