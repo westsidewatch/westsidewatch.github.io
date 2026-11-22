@@ -1082,8 +1082,27 @@
     folioSubject.textContent=String(candidate.category||'信仰閱讀').split('／').slice(-1)[0];
     folioFoot.append(folioAuthor,folioSubject);
     substitute.append(rubric,printedTitle,folioFoot);art.append(substitute);
-    // The first view is an editorial type square, never the physical jacket.
-    // Only Codrops in-row expansion reveals this exact book's sourced cover.
+    // Original publisher cover fills the *entire square* at rest. Clicking
+    // reveals the SAME book's complete, uncropped cover in the in-row preview.
+    // If publisher artwork is unavailable, retain readable exact-book text,
+    // never a blank white tile or the cover of a different book.
+    const jacket=safeHttp(candidate.coverUrl);
+    if(jacket){
+     const img=document.createElement('img');
+     img.className='dawn-contemporary__tile-cover';
+     img.alt='《'+candidate.title+'》封面';
+     img.loading='eager';img.decoding='async';img.referrerPolicy='no-referrer';
+     img.addEventListener('load',()=>{
+      if(img.naturalWidth>120&&img.naturalHeight>120)
+       card.classList.add('dawn-contemporary__book--pictured');
+      else img.remove();
+     });
+     img.addEventListener('error',()=>{
+      card.classList.remove('dawn-contemporary__book--pictured');
+      img.remove();
+     });
+     art.append(img);img.src=jacket;
+    }
     const copy=document.createElement('span');copy.className='dawn-contemporary__metadata';
     const kind=document.createElement('small');
     kind.textContent=candidate.translation==='Chinese translation'?'中文譯作':'當代中文著作';
