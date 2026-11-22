@@ -61,7 +61,7 @@ try{
   // Load and decompress the architectural GLB ONCE. The tour's own animation
   // loop reads proofFrame from location.search on every frame; stepping the
   // URL with replaceState requires no reloading or lost WebGL state.
-  const frames=[143,154,165,132,9,20,22,40,61,64,89,94,103,110,150,174,204,223,250];
+  const frames=[143,154,165,132,9,20,22,40,61,64,89,94,103,110,150,174,204,223,236,241,246,248,251];
   await send('Page.navigate',{
     url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frames[0]
   });
@@ -147,6 +147,16 @@ try{
     if(!Number.isFinite(clock.airStrength)||clock.airStrength>0.166
        || !Number.isFinite(clock.exposure)||clock.exposure<0.70||clock.exposure>1.05)
       throw Error('Cross optical energy/exposure out of calibrated range '+frame+' '+JSON.stringify(clock));
+    if(frame>=236){
+      const finale=await evaluate('window.__churchFinaleAudit');
+      console.log('P2_OUTWARD_CROSS_FINALE_'+frame+'='+JSON.stringify(finale));
+      if(!state.crossLight?.outwardFinale||!finale||!finale.skyGradient
+         || finale.direction!=='inside-to-outside')
+        throw Error('Finale lacks inside-out cross illumination at '+frame+' '+JSON.stringify(finale));
+      if(frame===251&&(finale.twilight<.99||finale.crossCore<.35
+        || finale.interiorLamp<9||finale.exteriorLamp<10||finale.outwardBeam<.105))
+        throw Error('Final dusk cross must glow from home into the world '+JSON.stringify(finale));
+    }
     console.log('P2_CROSS_LIGHT_FRAME_'+frame+'='+JSON.stringify(clock));
     if([132,143,154,165].includes(frame)){
       const near=await evaluate('window.__churchMeshProbe?.(450,300,110)');
@@ -162,6 +172,12 @@ try{
       format:'jpeg',quality:57,captureBeyondViewport:false,fromSurface:true
     });
     if(!shot.data)throw Error('Missing screenshot '+frame);
+    if(frame===251){
+      const proof=await send('Page.captureScreenshot',{
+        format:'jpeg',quality:37,captureBeyondViewport:false,fromSurface:true
+      });
+      console.log('P2_FINAL_CROSS_IMAGE_BASE64='+proof.data);
+    }
     const filename = `${proofDir}/frame-${String(frame).padStart(3,'0')}.jpg`;
     writeFileSync(filename, Buffer.from(shot.data, 'base64'));
     console.log('P2_FRAME_PROOF='+filename);
