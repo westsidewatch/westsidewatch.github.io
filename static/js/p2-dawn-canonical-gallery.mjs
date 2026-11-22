@@ -54,7 +54,7 @@ export async function show(args,requested=0){
   args.status.textContent='館藏資料暫時無法載入，請稍後重試。';
  }finally{busy=false}
 }
-export function render({container,status,prev,next,search,openBook}){
+export function render({container,status,prev,next,search,openBook,previewBook}){
  if(!root)return;
  const needle=search.value.trim().toLocaleLowerCase();
  const matchingSearch=needle&&searchTerm===needle&&Array.isArray(searchResults);
@@ -73,13 +73,11 @@ export function render({container,status,prev,next,search,openBook}){
   const card=document.createElement('button');card.type='button';
   card.className='dawn-catalogue__cover-card'+(visual?' dawn-catalogue__cover-card--image':' dawn-catalogue__cover-card--unresolved');
   card.setAttribute('aria-label','查看 '+book.title);
-  card.addEventListener('click',async()=>{
-   try{
-    readPointers ||= await fetch('/dawn-library/reading-pointer-map.json').then(r=>r.ok?r.json():null);
-    const reading=(readPointers?.items||[]).find(row=>row.workId===record.workId);
-    if(reading?.sourceUrl)book.sourceUrl=reading.sourceUrl;
-   }catch{}
-   openBook(book,'catalogue');
+  card.addEventListener('click',()=>{
+   // Preview immediately in the grid. No navigation and no network wait
+   // during the first selection; the reader explicitly enters afterwards.
+   if(previewBook)previewBook(container,li,book);
+   else openBook(book,'catalogue');
   });
   if(visual){
    const image=document.createElement('img');image.src=imgUrl;
