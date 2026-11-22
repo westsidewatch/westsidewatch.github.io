@@ -460,10 +460,12 @@
   const ticket=++portalTicket;
   if(activePortal==='all'){
    portalTopics?.remove();portalTopics=null;editorialWorks=[];
+   void renderCatalogueClassification();
    search.disabled=false;search.value=title||'';
    loadCatalogue();
    if(currentPage)renderWorks();
   }else{
+   const classification=$('#dawn-classification');if(classification)classification.hidden=true;
    search.disabled=true;search.value='';
    prevButton.disabled=true;more.disabled=true;
    works.replaceChildren();
@@ -492,6 +494,43 @@
   if(channel==='all'){portalIntro.hidden=true;return}
   for(const text of channelCopy[channel]||[]){const p=document.createElement('p');p.textContent=text;portalIntro.append(p)}
   portalIntro.hidden=!portalIntro.childElementCount;
+ }
+ let classificationPromise=null,selectedCentury='';
+ const centuryLabel={ '15c':'十五世紀','16c':'十六世紀','17c':'十七世紀','18c':'十八世紀','19c':'十九世紀' };
+ const facetLabel={author:'作者',language:'語言',period:'時代','bible-book':'聖經書卷',tradition:'傳統','resource-type':'資源類型','reading-level':'閱讀程度','original-publication-era':'原始出版年代'};
+ async function renderCatalogueClassification(){
+  const region=$('#dawn-classification'),tree=$('#dawn-classification-tree'),facets=$('#dawn-classification-facets');
+  if(!region||!tree||!facets)return;
+  region.hidden=false;
+  if(tree.dataset.ready==='true')return;
+  if(classificationPromise)return classificationPromise;
+  classificationPromise=(async()=>{
+   const response=await fetch('/dawn-library/classification.json');
+   if(!response.ok)throw Error('Classification index unavailable');
+   const taxonomy=await response.json();
+   // This is the admitted Dawn knowledge-map authority, not a newly
+   // invented or automatically inferred subject assignment for 21k Works.
+   for(const group of taxonomy.roots||[]){
+    const details=document.createElement('details');details.className='dawn-classification__group';
+    const summary=document.createElement('summary');
+    const head=document.createElement('strong');head.textContent=group.label;
+    const count=document.createElement('small');count.textContent=String((group.children||[]).length).padStart(2,'0')+' 個子類';
+    summary.append(head,count);details.append(summary);
+    const ul=document.createElement('ul');
+    for(const child of group.children||[]){
+     const li=document.createElement('li');li.textContent=child.label;li.dataset.taxonomyId=child.id;ul.append(li);
+    }
+    details.append(ul);tree.append(details);
+   }
+   const title=document.createElement('p');title.className='dawn-classification__facet-label';title.textContent='館藏著錄維度';
+   const tags=document.createElement('div');tags.className='dawn-classification__facet-tags';
+   for(const facet of taxonomy.facets||[]){const span=document.createElement('span');span.textContent=facetLabel[facet]||facet;tags.append(span)}
+   const notice=document.createElement('p');notice.className='dawn-classification__scope';
+   notice.textContent='知識分類與書目清單分別依照館藏原始資料呈現。尚未建立逐冊分類關聯的條目，不會被擅自歸入某一學科。';
+   facets.append(title,tags,notice);
+   tree.dataset.ready='true';
+  })().catch(error=>{classificationPromise=null;console.warn('[Dawn classification]',error)});
+  return classificationPromise;
  }
  let editorialManifest=null,activeTopic='all',editorialWorks=[],portalTopics=null;
  async function loadEditorialChannels(){
@@ -632,7 +671,7 @@
    wallGrid.append(frag);wallGrid.dataset.loaded='true';
   }catch(err){console.error('[Dawn covers]',err);wallGrid.dataset.loading='error'}
  }
- async function loadCatalogue(){if(!index){try{const r=await fetch('/dawn-library/catalogue/index.json');if(!r.ok)throw Error('Catalogue index unavailable');index=await r.json();total.textContent=Number(index.count).toLocaleString('en-CA')}catch(e){pageStatus.textContent='館藏暫時未能載入';console.error(e);return}}if(!currentPage)await showPage(1)}
+ async function loadCatalogue(){if(!index){try{const r=await fetch('/dawn-library/catalogue/index.json');if(!r.ok)throw Error('Catalogue index unavailable');index=await r.json();total.textContent=Number(index.count).toLocaleString('en-CA');renderCatalogueCenturyFacet(index)}catch(e){pageStatus.textContent='館藏暫時未能載入';console.error(e);return}}if(!currentPage)await showPage(1)}
  async function showPage(page){if(activePortal!=='all'||loading||!index||page<1||page>index.pageCount)return;loading=true;more.disabled=true;prevButton.disabled=true;
   try{if(!cache.has(page)){const file=index.pages[page-1],r=await fetch('/dawn-library/catalogue/'+file);if(!r.ok)throw Error('Missing catalogue page '+page);
    const data=await r.json();cache.set(page,data.works||[])}
@@ -640,10 +679,21 @@
   }catch(e){pageStatus.textContent='館藏載入中斷，請重試';console.error(e)}
   finally{loading=false;more.disabled=currentPage>=index.pageCount;prevButton.disabled=currentPage<=1}
  }
+ function renderCatalogueCenturyFacet(catalogueIndex){
+  const facets=$('#dawn-classification-facets');if(!facets||facets.querySelector('#dawn-century-filter'))return;
+  const label=document.createElement('label');label.className='dawn-classification__century-label';label.textContent='目前書目頁的年代';
+  const select=document.createElement('select');select.id='dawn-century-filter';
+  const all=document.createElement('option');all.value='';all.textContent='全部年代';select.append(all);
+  for(const [key,value] of Object.entries(catalogueIndex.facets?.centuries||{})){
+   const option=document.createElement('option');option.value=key;option.textContent=(centuryLabel[key]||key)+' · '+Number(value).toLocaleString('en-CA');select.append(option);
+  }
+  select.addEventListener('change',()=>{selectedCentury=select.value;renderWorks()});
+  label.append(select);facets.append(label);
+ }
  function renderWorks(){
   if(activePortal!=='all')return;
   const needle=search.value.trim().toLocaleLowerCase();
-  const matches=loaded.filter(w=>!needle||[w.title,w.creator,String(w.date||'')].some(v=>String(v||'').toLocaleLowerCase().includes(needle)));
+  const matches=loaded.filter(w=>(!selectedCentury||w.century===selectedCentury)&&(!needle||[w.title,w.creator,String(w.date||'')].some(v=>String(v||'').toLocaleLowerCase().includes(needle))));
   const frag=document.createDocumentFragment();
   matches.forEach(work=>{
    const li=document.createElement('li');li.className='dawn-catalogue__sleeve';
@@ -665,7 +715,7 @@
    text.append(folio,title,creator,footer);card.append(text);li.append(card);frag.append(li);
   });
   works.replaceChildren(frag);
-  pageStatus.textContent='第 '+currentPage+' / '+index.pageCount+' 頁 · '+matches.length+' 筆 · 全部 '+Number(index.count).toLocaleString('en-CA')+' 筆';
+  pageStatus.textContent='第 '+currentPage+' / '+index.pageCount+' 頁 · 本頁符合 '+matches.length+' 筆 · 館藏索引共 '+Number(index.count).toLocaleString('en-CA')+' 筆';
  }
  more.addEventListener('click',()=>showPage(currentPage+1));prevButton.addEventListener('click',()=>showPage(currentPage-1));search.addEventListener('input',renderWorks);
  const previewParams=new URLSearchParams(location.search);
