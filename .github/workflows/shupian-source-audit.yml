@@ -22,7 +22,7 @@ jobs:
       - name: Install media probe
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - name: Probe recorded HLS masters and sample segments
-        run: python3 scripts/shupian_source_audit.py --limit 17 --output shupian-audit-report.json
+        run: python3 scripts/shupian_source_audit.py --limit 40 --output shupian-audit-report.json
       - name: Preserve per-source report (not a playback approval)
         if: always()
         uses: actions/upload-artifact@v4
