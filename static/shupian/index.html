@@ -244,7 +244,7 @@ document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListe
    const stamp=d.observed_at_utc?new Date(d.observed_at_utc).toLocaleString('zh-Hant'):'尚未完成首次網路實測';
    observed.textContent='查詢：'+(d.queries||[]).join('、')+' · 實測時間：'+stamp+'。搜尋結果仍須經過去廣告、實播及網站驗收。';
    metrics.replaceChildren();
-   for(const [title,value] of [['來源查詢',n(d.provider_queries_attempted)],['搜尋命中',n(d.works_found)],['媒體候選',n(d.unique_media_candidates)],['HLS 解析／分段抽檢',n(d.manifests_parsed)+' / '+n(d.segment_sample_pass)]]){
+   for(const [title,value] of [['來源查詢',n(d.provider_queries_attempted)],['搜尋命中',n(d.works_found)],['媒體候選',n(d.unique_media_candidates)],['HLS／分段／替代來源',n(d.manifests_parsed)+' / '+n(d.segment_sample_pass)+' / '+n(d.alternative_candidates_audited)]]){
      const cell=document.createElement('div'),b=document.createElement('b'),span=document.createElement('span');
      b.textContent=title;span.textContent=value;cell.append(b,span);metrics.append(cell);
    }
@@ -260,7 +260,23 @@ document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListe
        const state=document.createElement('span');
        const manifest=item.manifest==='parsed'?'HLS 清單已解析':(item.manifest==='failed'?'HLS 清單失敗':'未解析');
        const segments=item.segment_sample==='pass'?'首中尾片段簽名抽檢通過':(item.segment_sample==='failed'?'片段抽檢失敗':'未完成片段抽檢');
-       state.textContent=(item.provider||'來源待確認')+' / '+manifest+' / '+segments+' / 未證明全片無廣告';
+       const urlStates={
+         same_exact_url:'同一網址重測',
+         same_path_changed_url:'同路徑但網址參數已變',
+         different_url:'媒體網址已變',
+         no_comparable_baseline:'首次建立 URL 指紋'
+       };
+       const errorStates={
+         http_404_missing_or_masked:'404：來源未找到或被隱藏',
+         http_access_restricted:'403／401：存取受限',
+         http_rate_limited:'429：請求受限',
+         http_temporary_server_error:'5xx：來源伺服器暫時異常',
+         network_error:'網路故障',
+         parse_or_validation_error:'資料格式或解析異常'
+       };
+       const continuity=urlStates[item.url_comparison]||'尚無網址身份證據';
+       const issue=errorStates[item.failure_class]||'';
+       state.textContent=(item.provider||'來源待確認')+' / '+continuity+' / '+manifest+' / '+segments+(issue?' / '+issue:'')+' / 未證明全片無廣告';
        cell.append(title,state);
        episodeResults.append(cell);
      }
@@ -275,7 +291,10 @@ document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListe
      v.textContent=label+'：'+(display[status]||status);stages.append(v);
    }
    const failures=Number(d.provider_queries_failed||0);
-   errors.textContent=failures?'來源查詢失敗 '+failures+' 次；沒有將網路失敗誤作無片源。':'本輪尚無可公開確認的乾淨可播放來源。';
+   const known=Number(d.same_exact_url_count||0),changed=Number(d.changed_url_count||0);
+   errors.textContent='來源查詢失敗 '+failures+' 次。已確認相同網址 '+known+
+     ' 條、網址已變 '+changed+' 條、媒體 404 '+Number(d.http_404_count||0)+
+     ' 條。沒有把 404 或清單解析成功當作全片可播證據。';
  }catch(err){
    observed.textContent='實測記錄暫時無法讀取：'+String(err.message).slice(0,80);
  }
