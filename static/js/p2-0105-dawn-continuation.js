@@ -607,6 +607,7 @@
  }
  function classificationWall(){
   const tree=$('#dawn-classification-tree');tree.replaceChildren();
+  tree.hidden=false;
   tree.className='dawn-catalogue__classification-tree dawn-classification__wall';
   const panel=$('#dawn-classification-results');panel.hidden=true;panel.replaceChildren();
   return tree;
