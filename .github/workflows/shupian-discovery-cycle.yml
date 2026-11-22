@@ -1,0 +1,63 @@
+name: PARADISO full-cycle source discovery
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/shupian_recovery/discover_sources.py'
+      - 'scripts/shupian_recovery/source_providers.json'
+      - 'scripts/shupian_recovery/test_discover_sources.py'
+      - '.github/workflows/shupian-discovery-cycle.yml'
+permissions:
+  contents: write
+jobs:
+  source-discovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit regression (including original recovered core)
+        run: python3 -m unittest discover -s scripts/shupian_recovery -p 'test_*.py' -v
+      - name: Live search for new titles, NOT The Institute
+        id: discovery
+        continue-on-error: true
+        run: |
+          python3 scripts/shupian_recovery/discover_sources.py \
+            --keywords '黑鏡' '神探夏洛克' \
+            --max-audits 12 \
+            --report static/shupian/recovery/engine-live-round.json
+      - name: Verify report schema and no fake catalog admission
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('static/shupian/recovery/engine-live-round.json')
+          assert path.is_file(), 'No live round evidence report produced'
+          data=json.loads(path.read_text())
+          assert data['completion']=='NOT_COMPLETED'
+          assert data['stages']['playback']=='not-tested-in-browser'
+          assert all('url' not in a for a in data['audits'])
+          print('Real provider searches attempted:',data['provider_queries_attempted'])
+          print('Provider failures:',data['provider_queries_failed'])
+          print('Unique media candidates:',data['unique_media_candidates'])
+          print('Manifest inspections passed:',data['manifests_parsed'])
+          PY
+      - name: Commit sanitized evidence to website (not playback approval)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/shupian/recovery/engine-live-round.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data(shupian): publish live source discovery and validation evidence'
+            git push
+          fi
+      - name: Preserve full technical report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shupian-engine-source-round
+          path: static/shupian/recovery/engine-live-round.json
+          if-no-files-found: warn
