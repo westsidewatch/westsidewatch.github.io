@@ -36,6 +36,8 @@ jobs:
                   browser=await p.chromium.launch(headless=True,args=["--autoplay-policy=no-user-gesture-required"])
                   page=await browser.new_page()
                   network=[]
+                  console_errors=[]
+                  page.on("console",lambda msg:console_errors.append(msg.text[:180]) if msg.type=="error" else None)
                   from urllib.parse import urlsplit
                   def safe_record(kind,url,detail):
                       if ".m3u8" in url.lower() or ".ts" in url.lower() or "hls.min.js" in url.lower():
@@ -56,11 +58,23 @@ jobs:
                       result["video"]=state
                       result["player_status"]=(await page.locator("#status").inner_text())[:300]
                       result["media_network"]=network[:25]
+                      result["console_errors"]=console_errors[:10]
                       result["status"]="PASS" if result["first_frame"] and result["time_advanced"] else "FAIL"
                   except Exception as e:
                       result["status"]="ERROR"
                       result["error"]=type(e).__name__+": "+str(e)[:180]
                   finally:
+                      try:
+                          import sys
+                          sys.path.insert(0,"scripts/shupian_recovery")
+                          from changzhang_browser_probe import check_playback
+                          catalog=json.loads(Path("static/shupian/catalog.json").read_text())
+                          sample=next((s["url"] for w in catalog["titles"] for ep in w["episodes"] for s in ep.get("sources",[]) if s.get("url","").startswith("https://")),None)
+                          if sample:
+                              isolated=await check_playback(browser,sample,timeout_ms=16000)
+                              result["isolated_comparison"]={k:v for k,v in isolated.items() if k in ("status","source_host","metadata_loaded","first_frame","time_advanced","error")}
+                      except Exception as exc:
+                          result["isolated_error"]=str(exc)[:140]
                       await browser.close()
               Path("shupian-browser-acceptance.json").write_text(json.dumps(result,ensure_ascii=False,indent=2))
               print(json.dumps(result,ensure_ascii=False))
