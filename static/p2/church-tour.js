@@ -564,6 +564,7 @@ const eliminatedHeadHazards=[];
 const cameraSafetyReport={samples:0,corrected:0,penetrations:0,forwardOcclusions:0,headroomHazards:0,objects:[]};
 const forumPathTimes=()=>Array.from({length:111},(_,i)=>121+i*.5);
 const isCForumTime=t=>t>=121&&t<=178;
+const isInteriorClearanceTime=t=>t>=103&&t<=232;
 function meshWorldBox(mesh){
   if(!mesh.geometry?.boundingBox)mesh.geometry?.computeBoundingBox();
   if(!mesh.geometry?.boundingBox)return null;
@@ -605,14 +606,18 @@ function buildCameraSafetyBoxes(building){
   building.traverse(mesh=>{
     if(!mesh.isMesh||!mesh.visible)return;
     const n=modelName(mesh.name);
-    if(!/(wall|partition|panel|soffit|fascia|column|post|support|screen|balustrade|railing|glass|mullion|door|beam|parapet|ledge|lintel|landing|terrace|slab)/i.test(n)
+    if(!/(wall|partition|panel|soffit|fascia|column|post|support|screen|balustrade|railing|glass|mullion|door|beam|parapet|ledge|lintel|landing|terrace|slab|roof|ceiling|floor)/i.test(n)
        ||/(?:foliage|maple|tree|ground|sky|ghost cutaway)/i.test(n))return;
     const box=meshWorldBox(mesh);if(!box)return;
-    if(box.max.x < -1||box.min.x>13||box.max.z<-19||box.min.z>-2)return;
+    if(box.max.x < -1||box.min.x>18||box.max.z<-19||box.min.z>1)return;
     // Protect camera from bounded solid surfaces only, not large
     // ring-shaped forum geometry whose box contains empty air.
     const dx=box.max.x-box.min.x,dz=box.max.z-box.min.z;
-    if(dx>7||dz>7)return;
+    const h=box.max.y-box.min.y;
+    // Large ring-shaped floor envelopes have empty centers: do not use
+    // their AABBs as collision solids. Thin bounded roof/floor panels are safe.
+    if((dx>7||dz>7)&&h>.20)return;
+    if(dx>15||dz>15)return;
     forumSafetyBoxes.push({name:mesh.name,box});
   });
 }
@@ -657,6 +662,56 @@ function safeCameraInForum(point,target){
     names:[...best.penetrations,...best.occlusions].map(o=>o.name).slice(0,7)};
 }
 
+// Resolve actual Z-fighting instead of pushing *all* white architecture
+// with the same polygon offset. Only suppress coincident, large, opaque
+// planar sheets that occupy the same world plane.
+const sheetRepair={compared:0,removed:[],kept:0};
+function removeCoplanarDuplicateSheets(building){
+  const panels=[];
+  building.updateMatrixWorld(true);
+  building.traverse(mesh=>{
+    if(!mesh.isMesh||!mesh.visible||!mesh.geometry)return;
+    const name=modelName(mesh.name);
+    if(/glass|glazing|window|mullion|door|handle|pull|tree|maple|stair|tread|railing|handrail|cross|plant|leaf/i.test(name))return;
+    const b=meshWorldBox(mesh);if(!b)return;
+    const sz=b.getSize(new Vector3()),dims=[sz.x,sz.y,sz.z];
+    const axis=dims.indexOf(Math.min(...dims));
+    const other=[0,1,2].filter(i=>i!==axis);
+    if(dims[axis]>.065||dims[other[0]]*dims[other[1]]<1.8)return;
+    const plane=(b.min.getComponent(axis)+b.max.getComponent(axis))*.5;
+    panels.push({mesh,b,dims,axis,plane,other,
+      surfaceArea:dims[other[0]]*dims[other[1]]});
+  });
+  panels.sort((a,b)=>b.surfaceArea-a.surfaceArea);
+  const planeBuckets=new Map();
+  for(const a of panels){
+    const key=a.axis+':'+Math.round(a.plane/.018);
+    // Adjacent bucket keys catch planes near a rounding boundary.
+    let duplicate=null;
+    for(const j of [-1,0,1]){
+      const members=planeBuckets.get(a.axis+':'+(Math.round(a.plane/.018)+j))||[];
+      for(const b of members){
+        if(Math.abs(a.plane-b.plane)>.025)continue;
+        const [u,v]=a.other;
+        const overlapU=Math.max(0,Math.min(a.b.max.getComponent(u),b.b.max.getComponent(u))
+          -Math.max(a.b.min.getComponent(u),b.b.min.getComponent(u)));
+        const overlapV=Math.max(0,Math.min(a.b.max.getComponent(v),b.b.max.getComponent(v))
+          -Math.max(a.b.min.getComponent(v),b.b.min.getComponent(v)));
+        if(overlapU*overlapV/a.surfaceArea>.985){duplicate=b;break;}
+      }
+      if(duplicate)break;
+    }
+    sheetRepair.compared++;
+    if(duplicate){
+      a.mesh.visible=false;a.mesh.castShadow=false;
+      sheetRepair.removed.push({hidden:a.mesh.name,under:duplicate.mesh.name});
+    }else{
+      if(!planeBuckets.has(key))planeBuckets.set(key,[]);
+      planeBuckets.get(key).push(a);
+      sheetRepair.kept++;
+    }
+  }
+}
 function cleanOpenPublicSpaces(building){
   building.updateMatrixWorld(true);
   building.traverse(object=>{
@@ -666,8 +721,10 @@ function cleanOpenPublicSpaces(building){
       ghostRoofMeshes.push(object);
       return;
     }
-    const conceptualOverhead =
-      /^(?:v19 west mid .*occupied|v19 west mid .*principal|v13 west mid .*curved solid room.edge fascia|v11 nw north room|v11 nw curved outer gallery|v12 nw west receiving terrace|v12 west outer gallery)/i;
+    // Earlier wide regex cut away inhabited gallery floors, creating the
+    // apparent giant pit and leaving individual stair treads floating.
+    // Only the original narrow low soffit is a nonstructural obstruction.
+    const conceptualOverhead=/^v13 west mid .*curved solid room.edge fascia/i;
     // Selected conceptual mid-level plates created low hanging ceilings across
     // the open C forum. Remove these only, never V19 terrace steps or V13 high.
     const routesidePost=/^v11 support post.*(?:northwest gallery inner|west mid public edge|north mid public edge)/i;
@@ -722,8 +779,10 @@ async function loadArchitecture() {
     object.receiveShadow = true;
   });
   cleanOpenPublicSpaces(building);
+  removeCoplanarDuplicateSheets(building);
   removeHeadHeightHazards(building);
   buildCameraSafetyBoxes(building);
+  window.__churchSurfaceAudit=sheetRepair;
   scene.add(building);
   const sweptClearance=forumPathTimes().map(t=>{
     const step=positionAlongRoute(t);
@@ -1037,7 +1096,7 @@ function animate(now,forcedTime=null) {
   const sample = positionAlongRoute(t);
   lookAtVector.set(sample.look[0],sample.look[1],sample.look[2]);
   camera.position.set(sample.p[0],sample.p[1],sample.p[2]);
-  if(isCForumTime(t)){
+  if(isInteriorClearanceTime(t)){
     const safe=safeCameraInForum(camera.position,lookAtVector);
     camera.position.copy(safe.position);
     cameraSafetyReport.samples++;
@@ -1048,11 +1107,11 @@ function animate(now,forcedTime=null) {
   }
   window.__churchSafetyAudit={
     at:t,headHazardsRemoved:eliminatedHeadHazards.length,
-    cameraPenetrations:isCForumTime(t)?cameraSafetyReport.penetrations:0,
-    forwardOcclusions:isCForumTime(t)?cameraSafetyReport.forwardOcclusions:0,
+    cameraPenetrations:isInteriorClearanceTime(t)?cameraSafetyReport.penetrations:0,
+    forwardOcclusions:isInteriorClearanceTime(t)?cameraSafetyReport.forwardOcclusions:0,
     cameraPosition:[camera.position.x,camera.position.y,camera.position.z].map(v=>+v.toFixed(3)),
-    corrected:isCForumTime(t)?cameraSafetyReport.corrected:0,
-    collidingObjects:isCForumTime(t)?cameraSafetyReport.objects:[],
+    corrected:isInteriorClearanceTime(t)?cameraSafetyReport.corrected:0,
+    collidingObjects:isInteriorClearanceTime(t)?cameraSafetyReport.objects:[],
     boxes:forumSafetyBoxes.length
   };
   const distance = camera.position.distanceTo(lookAtVector);
