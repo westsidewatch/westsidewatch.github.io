@@ -90,6 +90,21 @@ class DiscoveryTests(unittest.TestCase):
         self.assertTrue(out["ok"])
         self.assertEqual(out["signature"], "mpeg-ts")
 
+    def test_manifest_success_clears_contradictory_http_failure(self):
+        providers=[{"id":"sample","api":"https://sample.example.com/vod"}]
+        def fetch(_):
+            return {"list":[{"vod_name":"新片","vod_play_url":"E1$https://media.example.com/a.m3u8"}]}
+        def probe(_):
+            return {"format":"m3u8","manifest":"parsed",
+                    "error":"HTTPError: HTTP Error 404: Not Found",
+                    "failure_class":"http_404_missing_or_masked",
+                    "ad_cues":"none-detected","playback":"not-tested","clean":"not-certified"}
+        report=scan(["新片"],providers,fetcher=fetch,probe=probe,workers=1,max_audits=1)
+        self.assertEqual(report["manifests_parsed"],1)
+        self.assertEqual(report["http_404_count"],0)
+        self.assertNotIn("error",report["audits"][0])
+        self.assertNotIn("failure_class",report["audits"][0])
+
     def test_url_identity_changes_without_leaking_signed_url(self):
         a="https://media.example.com/film/master.m3u8?token=one"
         b="https://media.example.com/film/master.m3u8?token=two"
