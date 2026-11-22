@@ -45,3 +45,23 @@
 - https://github.com/weber87na/mvffm-redirect-guard
 - https://www.mvffm.net/drama/420952/ （本次目標，遠端擷取失敗）
 - https://github.com/westsidewatch/westsidewatch.github.io/blob/main/docs/shupian/ENGINE-REGRESSION-FORENSICS-2026-11-22.md
+
+
+## 2026-11-22 回到最初網站的「反向工具完整性審計」
+
+**唯一指定的起始觀測頁：** `https://www.mvffm.net/drama/420952/`。原始網站鑑識／廣告追蹤不能被其他劇集、一般片源關鍵字或 Scrapling/Firecrawl 工具名稱取代。
+
+重新逐檔核對外部舊工程 `weber87na/mvffm-redirect-guard`：
+- `manifest.json` 使用 Chrome MV3、`document_start`、MAIN／ISOLATED worlds、`webNavigation` 與 `declarativeNetRequest`。
+- `page-guard.js` 具可執行的 `window.addEventListener('mousedown', ...)` 特徵分析、`shown_at` 監聽器略過、`window.open` 攔截、站外連結／Navigate API 防護，而非僅對 HTML 做文字搜尋。
+- `background.js` 經 `webNavigation.onCreatedNavigationTarget` 判定第三方 iframe 發起的新分頁，並可按狀態啟用／停用網路規則。
+- `rules.json` 僅阻止由 mvffm 起始的**站外頂層導覽**，不全面阻斷 `sub_frame` 或 `media`，因此避免以去廣告為由毀掉影片播放。
+- `state-bridge.js` 管理 MAIN 與擴充功能儲存狀態同步。
+
+**當前工程核對：** `scripts/shupian_recovery/media_ad_origin.py` 是離線 HTML／HAR／HLS 判定器，**沒有瀏覽器事件注入、沒有實際窗口／iframe 監測、沒有分頁導航生命週期追蹤**。原統一採集路徑 `tools/dore-exploration/dore_acquire.py` 在目前主分支指定路徑也是 404。原 mvffm 擴充功能存在外部 GitHub 倉庫，但**沒有證據證明它曾經已集成在 PARADISO 主線**，所以精確說法是「關鍵動態逆向能力在 PARADISO 缺失」，不是「外部擴充功能原始碼已被刪除」。
+
+**本次已修復的一部分：** 新增 `scripts/shupian_recovery/mvffm_live_reverse.py`，用 Playwright `add_init_script` 在目標頁面執行前注入**只觀測、不阻擋媒體**的事件追蹤，蒐集 `mousedown`、`shown_at` 讀寫、`window.open`、臨時 iframe、彈窗／導航、媒體資源路徑與 JS 錯誤，輸出經過 URL query 脫敏的 JSON。支援明確指定播放按鈕選擇器時再做點擊對照。新增 `test_mvffm_live_reverse.py` 檢查此能力不可再次退化。另有 `.github/workflows/shupian-mvffm-reverse.yml` 用 GitHub Runner 做只觀測的實際頁面測試並保存 artifact。
+
+**未修復／尚未證明：** PARADISO 並未直接引入外部 MV3 擴充功能的四層防護，也尚未通過頁面「允許彈窗／防護後播放」的 A/B 驗證。指定頁面目前從 web 讀取顯示 DisabledError，本地容器 DNS 也無法解析 mvffm.net，**不能聲稱已成功執行當前網頁的實際逆向或確認賭場廣告來源**。需核對 CI artifacts 的現場事件、再比對影片播放器與 HLS，經過四關到網站交付方可結案。
+
+**防回退硬規則：** 任何「反向爬蟲／去廣告工具恢復」宣稱都必須有 `site URL → browser event instrumentation → navigation/popup/request graph → media-vs-site attribution → playback verification → site delivery` 的逐項證據。僅有 MacCMS API 索引、靜態分析、歷史 README、Scrapling／Firecrawl 名稱均不可替代原網站動態逆向。
