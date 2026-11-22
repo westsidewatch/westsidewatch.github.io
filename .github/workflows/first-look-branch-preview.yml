@@ -13,6 +13,7 @@ on:
       - 'tests/p2-vol00-preview.cjs'
       - 'tests/p2-dawn-personal-integration.cjs'
       - 'tests/p2-dawn-expanding-preview.cjs'
+      - 'tests/p2-dawn-os-visual-hierarchy.cjs'
       - '.github/workflows/first-look-branch-preview.yml'
   workflow_dispatch:
 
@@ -61,6 +62,22 @@ jobs:
             --commit-message="First Look isolated preview"
           echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
           echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify Dawn P2 Design OS hierarchy in Chromium (desktop + phone)
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/dawn-os-browser.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-os-visual-hierarchy.cjs
+      - name: Save Dawn OS hierarchy visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-dawn-os-visual-hierarchy
+          path: artifacts/p2-dawn-os-repair/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Verify Dawn vinyl catalogue and Chinese deep navigation in Chromium
         continue-on-error: true
         run: |
