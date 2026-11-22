@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/shupian_recovery/mvffm_live_reverse.py'
       - 'scripts/shupian_recovery/test_mvffm_live_reverse.py'
+      - 'scripts/shupian_recovery/mvffm_browser_smoke.py'
       - '.github/workflows/shupian-mvffm-reverse.yml'
 permissions:
   contents: read
@@ -24,6 +25,8 @@ jobs:
         run: |
           python3 -m pip install playwright
           python3 -m playwright install --with-deps chromium
+      - name: Browser smoke test against a locally stubbed mvffm page
+        run: python3 scripts/shupian_recovery/mvffm_browser_smoke.py
       - name: Reverse-observe original page without triggering advertising clicks
         continue-on-error: true
         run: |
