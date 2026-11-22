@@ -31,6 +31,27 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
        display:st.display,position:st.position}
     };
     return {
+      typeRoles:(()=>{
+       // Test the stylesheet with the exact second-layer selector contexts;
+       // some roles appear only after a user opens book detail or personal.
+       const host=document.querySelector('#dawn-second');
+       const roles=[
+        {id:'subject',markup:'<div class="dawn-classification__sleeve"><strong>聖經</strong></div>',selector:'strong'},
+        {id:'resultTitle',markup:'<div class="dawn-classification__result-heading"><h4>教會歷史</h4></div>',selector:'h4'},
+        {id:'personalTitle',markup:'<div class="dawn-personal__head"><h2>我的書房</h2></div>',selector:'h2'},
+        {id:'catalogueTitle',markup:'<div class="dawn-catalogue__classification-head"><h3>神學</h3></div>',selector:'h3'},
+        {id:'body',markup:'<div class="dawn-book-detail__text">這是正文的標準閱讀角色。</div>',selector:'.dawn-book-detail__text'},
+        {id:'description',markup:'<div class="dawn-expander__description">這是正文說明。</div>',selector:'.dawn-expander__description'}
+       ];
+       return roles.map(role=>{
+        const holder=document.createElement('div');holder.innerHTML=role.markup;
+        host.append(holder);
+        const cs=getComputedStyle(holder.querySelector(role.selector));
+        const result={id:role.id,font:cs.fontFamily,weight:parseInt(cs.fontWeight,10),
+          size:parseFloat(cs.fontSize),lineHeight:parseFloat(cs.lineHeight)};
+        holder.remove();return result;
+       });
+      })(),
       nav:grab('.dawn-second__global-nav'),
       returnMark:grab('.dawn-second__return .dawn-second__return-mark'),
       returnZh:grab('.dawn-second__return .dawn-second__nav-zh'),
@@ -87,6 +108,18 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
      assert(/Bodoni/i.test(en.font),device+': '+id+' English family is not OS Bodoni: '+en.font);
      assert(/Chiron/i.test(zh.font),device+': '+id+' Chinese family is not OS Chiron: '+zh.font);
      assert.equal(zh.weight,200,device+': '+id+' Chinese helper is not 200');
+   }
+   for(const role of result.typeRoles){
+    if(['body','description'].includes(role.id)){
+      assert(/Noto Serif TC/i.test(role.font),
+        device+': '+role.id+' must use the OS long-form Noto Serif TC role, got '+role.font);
+      assert.equal(role.weight,400,device+': '+role.id+' must be normal OS reading weight 400');
+      assert(role.lineHeight/role.size>1.7,device+': '+role.id+' needs the OS reading line-height');
+    }else{
+      assert(/Chiron/i.test(role.font),
+        device+': '+role.id+' must use Chiron display family, got '+role.font);
+      assert.equal(role.weight,200,device+': '+role.id+' is a secondary title, never 900');
+    }
    }
    assert(result.featureEn.size>result.featureZh.size*1.18,
     device+': editorial cover portal still uses oversized Chinese and tiny English');
