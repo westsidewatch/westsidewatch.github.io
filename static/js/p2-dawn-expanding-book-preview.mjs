@@ -80,8 +80,18 @@ function previewContents(book,onRead){
   if(reading)return;
   reading=true;
   if(enter){enter.disabled=true;enter.textContent=book.discoveryOnly?'正在開啟出版方…':'正在開啟書籍…'}
-  try{await onRead(book,'catalogue')}
-  catch(error){
+  try{
+   await onRead(book,'catalogue');
+   // External publisher visits open a new tab, while Dawn stays mounted.
+   // Never leave the preview permanently disabled as "opening publisher".
+   if(book.discoveryOnly){
+    reading=false;
+    if(enter&&enter.isConnected){
+     enter.disabled=false;
+     enter.textContent='前往出版方查看此書';
+    }
+   }
+  }catch(error){
    console.error('[Dawn book reading]',error);
    reading=false;
    if(enter){enter.disabled=false;enter.textContent=book.discoveryOnly?'前往出版方查看此書':'打開此書 · 查看閱讀資訊'}
@@ -90,6 +100,7 @@ function previewContents(book,onRead){
  figure.addEventListener('click',()=>void confirmReader());
  const meta=make('div','dawn-expander__metadata');
  const title=make('h3','dawn-expander__title',book.title||'原書書名待核對');
+ if(/[\u3400-\u9fff]/.test(book.title||''))title.classList.add('dawn-expander__title--zh');
  const author=make('p','dawn-expander__author',asAuthor(book));
  meta.append(eyebrow,title,author);
  if(book.date||book.edition?.publishDate){
