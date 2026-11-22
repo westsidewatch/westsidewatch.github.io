@@ -1900,3 +1900,56 @@
   font-size:clamp(17px,5vw,24px)!important;
  }
 }
+
+
+/* R59: source images can be pale or slow. All works must remain identifiable
+   at rest, not only on hover. Never infer an image from a neighbouring work. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover{
+ position:relative!important;
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta{
+ position:absolute!important;inset:auto 0 0!important;z-index:3!important;
+ display:flex!important;flex-direction:column!important;justify-content:flex-end!important;
+ gap:clamp(4px,.45vw,8px)!important;
+ min-height:clamp(65px,6vw,112px)!important;
+ padding:clamp(13px,1.1vw,21px)!important;
+ background:var(--ws-paper)!important;
+ color:var(--ws-ink)!important;
+ opacity:1!important;transform:none!important;pointer-events:none!important;
+ border-top:1px solid var(--ws-branch-rule)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta strong{
+ display:block!important;max-height:3.6em!important;
+ color:var(--ws-ink)!important;
+ font:400 clamp(14px,1.25vw,23px)/1.13 var(--ws-type-display-en)!important;
+ overflow-wrap:anywhere!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta em{
+ color:var(--ws-harvest)!important;
+ font:italic 400 clamp(11px,.82vw,15px)/1.3 var(--ws-type-display-en)!important;
+ white-space:normal!important;text-overflow:clip!important;overflow:visible!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--pending .dawn-cover__meta,
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--missing .dawn-cover__meta{
+ inset:0!important;min-height:100%!important;
+ padding:clamp(13px,1.5vw,26px)!important;
+ border-top:0!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--pending .dawn-cover__meta strong,
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--missing .dawn-cover__meta strong{
+ max-height:5.4em!important;
+ font-size:clamp(19px,1.65vw,32px)!important;
+ line-height:1.12!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover:focus-visible{
+ outline:2px solid var(--ws-harvest)!important;outline-offset:3px!important;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta strong{
+  font-size:clamp(16px,4.2vw,23px)!important;
+ }
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta{
+  min-height:75px!important;padding:10px!important;
+ }
+}
