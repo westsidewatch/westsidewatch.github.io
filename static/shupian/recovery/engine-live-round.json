@@ -1,0 +1,27 @@
+{
+  "schema": 2,
+  "observed_at_utc": null,
+  "queries": [
+    "黑鏡",
+    "神探夏洛克"
+  ],
+  "providers_requested": 6,
+  "provider_queries_attempted": 0,
+  "provider_queries_failed": 0,
+  "works_found": 0,
+  "unique_media_candidates": 0,
+  "hls_candidates": 0,
+  "manifests_parsed": 0,
+  "suspected_ad_cues": 0,
+  "audited": 0,
+  "errors": [],
+  "audits": [],
+  "stages": {
+    "discovery": "not-started",
+    "ad_quality": "not-started",
+    "playback": "not-tested-in-browser",
+    "website": "awaiting-live-provider-report"
+  },
+  "completion": "NOT_COMPLETED",
+  "limitations": "Pending live GitHub Actions run. No playback or ad-free source verified and no catalog changes."
+}
