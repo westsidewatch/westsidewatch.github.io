@@ -17,6 +17,8 @@ from urllib.parse import quote, urljoin, urlparse
 from urllib.request import Request, urlopen, build_opener, HTTPRedirectHandler
 
 from legacy_engine_core import VerificationError, validate_public_url, parse_hls
+from source_lifecycle import (url_fingerprint, episode_key, equivalent_episode,
+                              source_evidence, failure_class, sanitized_error)
 
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = Path(__file__).with_name("source_providers.json")
@@ -131,12 +133,14 @@ def source_probe(candidate, fetcher=fetch_manifest, segment_fetcher=probe_segmen
                     checks.append({"position": i, **segment_fetcher(segs[i])})
                 except Exception as subexc:
                     checks.append({"position": i, "ok": False,
-                                   "error": (type(subexc).__name__ + ": " + str(subexc))[:160]})
+                                   "error": sanitized_error(type(subexc).__name__ + ": " + str(subexc)),
+                                   "failure_class": failure_class(subexc)})
             entry["segment_checks"] = checks
             entry["segment_sample"] = "pass" if all(x["ok"] for x in checks) else "failed"
     except Exception as exc:
         entry["manifest"] = "failed"
-        entry["error"] = (type(exc).__name__ + ": " + str(exc))[:180]
+        entry["error"] = sanitized_error(type(exc).__name__ + ": " + str(exc))
+        entry["failure_class"] = failure_class(exc)
     return entry
 
 def title_matches(title, keyword):
@@ -173,7 +177,9 @@ def normalize_results(raw, keyword, provider_id):
     return normalized
 
 def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
-         per_provider_limit=25, max_audits=12, workers=4, focus=None):
+         per_provider_limit=25, max_audits=12, workers=4, focus=None,
+         previous_audits=None, previous_observed_at=None):
+    previous_audits = previous_audits or {}
     tasks = [(p, kw) for p in providers if p.get("enabled", True) for kw in keywords]
     records, errors = [], []
     def one(p, kw):
@@ -190,7 +196,8 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
             try:
                 records.extend(future.result())
             except Exception as exc:
-                errors.append({"provider": provider, "query": kw, "error": (type(exc).__name__ + ": " + str(exc))[:180]})
+                errors.append({"provider": provider, "query": kw, "error": sanitized_error(type(exc).__name__ + ": " + str(exc)),
+                               "failure_class": failure_class(exc)})
     records.sort(key=lambda x: (x["query"], x["title"], x["provider"]))
     candidates = []
     distinct = set()
@@ -212,19 +219,30 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
                 selected.append(pools[key].pop(0))
             if len(selected) >= max_audits:
                 break
+    # When repeating a scan, check the exact previous provider+episode first,
+    # then alternate providers for that same title and episode. Do not lose URL
+    # identity: matched title/episode alone is not proof of the same address.
+    focus = focus or set()
     if focus:
-        # Rescan the exact same provider/title/episode combinations that passed
-        # manifest parsing in the preceding run. Preserve batch order otherwise.
-        def focus_key(c):
-            key = (c["provider"], c["title"], c["episode"])
-            return (0 if key in focus else 1, c["query"], c["provider"])
-        selected = sorted(candidates, key=focus_key)[:max(0, max_audits)]
+        def priority(c):
+            k = (c["provider"], c["title"], c["episode"])
+            exact = k in focus
+            alternate = any(equivalent_episode(c["title"], c["episode"], t, ep)
+                            and c["provider"] != p for p, t, ep in focus)
+            return (0 if exact else 1 if alternate else 2,
+                    c["query"], c["provider"], c["episode"])
+        selected = sorted(candidates, key=priority)[:max(0, max_audits)]
     audits = []
     for candidate in selected:
+        key = episode_key(candidate["provider"], candidate["title"], candidate["episode"])
+        prior = previous_audits.get(key)
+        evidence = source_evidence(candidate, prior)
+        if prior and previous_observed_at:
+            evidence["previous_observed_at_utc"] = previous_observed_at
         detail = probe(candidate)
-        # Never write the discovered raw media URL to the public website report.
+        # Public report contains fingerprints, never raw media URLs.
         audits.append({"title": candidate["title"], "episode": candidate["episode"],
-                       "provider": candidate["provider"], **detail})
+                       "provider": candidate["provider"], **evidence, **detail})
     return {
         "schema": 2, "observed_at_utc": datetime.now(timezone.utc).isoformat(),
         "queries": keywords, "providers_requested": len(providers),
@@ -236,6 +254,15 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
         "segment_sample_pass": sum(a.get("segment_sample") == "pass" for a in audits),
         "suspected_ad_cues": sum(a["ad_cues"] == "suspected" for a in audits),
         "audited": len(audits), "errors": errors, "audits": audits,
+        "same_exact_url_count": sum(a["url_comparison"] == "same_exact_url" for a in audits),
+        "changed_url_count": sum(a["url_comparison"] in ("same_path_changed_url","different_url") for a in audits),
+        "missing_baseline_count": sum(a["url_comparison"] == "no_comparable_baseline" for a in audits),
+        "http_404_count": sum(a.get("failure_class") == "http_404_missing_or_masked" for a in audits),
+        "alternative_candidates_audited": sum(
+            (a["provider"], a["title"], a["episode"]) not in focus
+            and any(equivalent_episode(a["title"], a["episode"], t, ep)
+                    and a["provider"] != p for p, t, ep in focus)
+            for a in audits),
         "stages": {"discovery": "attempted", "ad_quality": "manifest-only",
                    "playback": "not-tested-in-browser", "website": "report-only"},
         "completion": "NOT_COMPLETED",
@@ -254,13 +281,19 @@ def main(argv=None):
     args = parser.parse_args(argv)
     providers = json.loads(args.providers.read_text(encoding="utf-8"))
     focus = set()
+    previous_audits = {}
+    previous_time = None
     if args.rescan_previous and args.report.is_file():
         previous = json.loads(args.report.read_text(encoding="utf-8"))
-        focus = {(a["provider"], a["title"], a["episode"]) for a in previous.get("audits", [])
-                 if a.get("manifest") == "parsed"}
+        previous_time = previous.get("observed_at_utc")
+        previous_audits = {episode_key(a["provider"], a["title"], a["episode"]): a
+                           for a in previous.get("audits", [])}
+        # Include prior failures: a 404 must not prevent a new alternative check.
+        focus = {(a["provider"], a["title"], a["episode"]) for a in previous.get("audits", [])}
     result = scan(args.keywords, providers, max_audits=args.max_audits,
-                  workers=args.workers, focus=focus)
-    result["rescan_previous_parsed_count"] = len(focus)
+                  workers=args.workers, focus=focus, previous_audits=previous_audits,
+                  previous_observed_at=previous_time)
+    result["rescan_previous_count"] = len(focus)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: result[k] for k in ("provider_queries_attempted", "provider_queries_failed", "works_found", "unique_media_candidates", "manifests_parsed", "completion")}, ensure_ascii=False))
