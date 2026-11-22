@@ -73,6 +73,6 @@ for (const file of [
 assert(folio.match(/\/p2\/church-tour\.html/g)?.length >= 3, "Both first-layer church names and model must link to native tour");
 assert(interaction.includes("new URL('/p2/church-tour.html?scene=20261121-source-maple-fullday-r4', window.location.href)"), "Iframe click must produce a resolved local URL");
 assert(firstLayer.includes("p2-BIwqVfIr.js"), "First-layer growth model remains untouched");
-const syntax = script.replace(/import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?/m, "");
+const syntax = script.replace(/import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?/gm, "");
 new Script(syntax, { filename: "church-tour.js" });
 console.log("P2 native virtual church: source, structural and depth contracts passed");
