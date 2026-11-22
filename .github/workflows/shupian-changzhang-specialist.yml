@@ -9,6 +9,9 @@ on:
       - 'scripts/shupian_recovery/changzhang_status_export.py'
       - 'scripts/shupian_recovery/changzhang_browser_probe.py'
       - '.github/workflows/shupian-changzhang-specialist.yml'
+concurrency:
+  group: shupian-changzhang-specialist
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:
@@ -57,6 +60,7 @@ jobs:
         if: always()
         run: |
           if test -f static/shupian/recovery/changzhang-round-status.json; then
+            python3 -m json.tool static/shupian/recovery/changzhang-round-status.json >/dev/null
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add static/shupian/recovery/changzhang-round-status.json
@@ -74,6 +78,7 @@ jobs:
             git worktree add /tmp/shupian-published origin/gh-pages
             mkdir -p /tmp/shupian-published/shupian/recovery
             cp static/shupian/recovery/changzhang-round-status.json /tmp/shupian-published/shupian/recovery/changzhang-round-status.json
+            python3 -m json.tool /tmp/shupian-published/shupian/recovery/changzhang-round-status.json >/dev/null
             cd /tmp/shupian-published
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
