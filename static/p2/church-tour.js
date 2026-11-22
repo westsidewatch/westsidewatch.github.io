@@ -142,21 +142,32 @@ const crossAirMaterial=new ShaderMaterial({
     uniform vec3 uTint;
     float gaussian(float x,float r){return exp(-pow(x/r,2.0));}
     void main(){
+      // vUv.y=0 is the REAL CROSS, vUv.y=1 reaches the floor.
+      // A beam spreads as it travels and its energy attenuates with depth.
       vec2 p=vUv-.5;
-      float core=gaussian(p.x,.18)*gaussian(p.y,.31);
-      float air=gaussian(p.x,.31)*gaussian(p.y,.39);
-      float border=smoothstep(0.0,.16,vUv.x)*smoothstep(0.0,.16,1.0-vUv.x)
-                 *smoothstep(0.0,.17,vUv.y)*smoothstep(0.0,.17,1.0-vUv.y);
-      float motes=1.0+.055*sin(vUv.x*23.0+uTime*.09)*sin(vUv.y*19.0-uTime*.07);
-      float density=(.37*core+.63*air)*border*motes;
+      float spread=.115+.20*vUv.y;
+      float core=gaussian(p.x,spread*.60);
+      float halo=gaussian(p.x,spread*1.55);
+      float axial=smoothstep(.01,.14,vUv.y)
+                  *(1.0-smoothstep(.74,1.0,vUv.y))*exp(-1.08*vUv.y);
+      float side=smoothstep(0.0,.12,vUv.x)*smoothstep(0.0,.12,1.0-vUv.x);
+      float motes=1.0+.045*sin(vUv.x*19.0+uTime*.07)*sin(vUv.y*17.0-uTime*.06);
+      float density=(.37*core+.63*halo)*axial*side*motes;
       gl_FragColor=vec4(uTint,density*uLight);
     }`
 });
-const crossAirVolumes=[];
-for(const [turn,shift,z] of [[.92,-.12,-4.05],[-.92,.13,-4.4],[.38,0,-4.2]]){
-  const ray=new Mesh(new PlaneGeometry(6.5,3.8),crossAirMaterial);
-  ray.rotation.y=turn;ray.position.set(15+shift,2.18,z);ray.renderOrder=3;
-  ray.name="Cross analytic air-scattering shaft";scene.add(ray);crossAirVolumes.push(ray);
+const crossAirVolumes=[],crossRayAngles=[0,1.05,-1.05];
+const crossRayOrigin=new Vector3(crossAperture.x,crossAperture.y,crossAperture.z-.25);
+const crossRayTarget=new Vector3(),crossRayDirection=new Vector3();
+const crossRayUnit=new Vector3(),crossRayMidpoint=new Vector3();
+const localBeamAxis=new Vector3(0,1,0);
+for(const turn of crossRayAngles){
+  // Geometry's local +Y maps from actual cross to actual sunlit floor point.
+  const ray=new Mesh(new PlaneGeometry(4.2,10),crossAirMaterial);
+  ray.renderOrder=3;
+  ray.name="Cross sun-tracked volumetric scattering";
+  ray.userData.rotationalSlice=turn;
+  scene.add(ray);crossAirVolumes.push(ray);
 }
 // Two actual PBR light sources, using the same locally bundled Three.js.
 // Key: broad cone following sunlight from the genuine aperture toward pews.
@@ -175,7 +186,7 @@ scene.add(crossWallBounce,crossWallBounce.target);
 window.__churchLightAudit={
   aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,
   crossCenter:[crossAperture.x,crossAperture.y,crossAperture.z],
-  bounceSources:2,volumeShader:true,version:"R16"
+  bounceSources:2,volumeShader:true,beamTracksSun:true,version:"R17"
 };
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
@@ -623,12 +634,20 @@ function updateDaylight(t,duration) {
   crossWallBounce.intensity=9*sunlight;
   crossWallBounce.position.set(crossFloorLight.position.x,.24,crossFloorLight.position.z);
   crossWallBounce.target.updateMatrixWorld();
-  crossAirMaterial.uniforms.uLight.value=.008+.18*sunlight;
-  crossAirMaterial.uniforms.uTime.value=t;
-  for(let i=0;i<crossAirVolumes.length;i++){
-    const ray=crossAirVolumes[i];
-    ray.position.x=15+[-.12,.13,0][i]+.12*Math.cos(angle);
+  // Reorient all atmosphere slices to the true solar path, not fixed cards.
+  crossRayTarget.set(crossFloorLight.position.x,.16,crossFloorLight.position.z);
+  crossRayDirection.subVectors(crossRayTarget,crossRayOrigin);
+  const beamLength=crossRayDirection.length();
+  crossRayUnit.copy(crossRayDirection).normalize();
+  crossRayMidpoint.copy(crossRayOrigin).addScaledVector(crossRayDirection,.5);
+  for(const ray of crossAirVolumes){
+    ray.position.copy(crossRayMidpoint);
+    ray.quaternion.setFromUnitVectors(localBeamAxis,crossRayUnit);
+    ray.rotateY(ray.userData.rotationalSlice);
+    ray.scale.y=beamLength/10;
   }
+  crossAirMaterial.uniforms.uLight.value=.008+.22*sunlight;
+  crossAirMaterial.uniforms.uTime.value=t;
   // Daylight changes; the wall PBR base colors remain from the original GLB.
   // Colour temperature follows the time of day, not arbitrary flashing:
   // cool twilight -> neutral daylight -> muted warm sunset.
@@ -706,7 +725,9 @@ function animate(now,forcedTime=null) {
     floorOpacity:crossFloorLight.material.opacity,
     floorPosition:[crossFloorLight.position.x,crossFloorLight.position.y,crossFloorLight.position.z],
     portalIntensity:crossPortalKey.intensity,
-    reflectedIntensity:crossWallBounce.intensity
+    reflectedIntensity:crossWallBounce.intensity,
+    beamAlignment:localBeamAxis.clone()
+      .applyQuaternion(crossAirVolumes[0].quaternion).dot(crossRayUnit)
   };
   const sample = positionAlongRoute(t);
   camera.position.set(sample.p[0], sample.p[1], sample.p[2]);
