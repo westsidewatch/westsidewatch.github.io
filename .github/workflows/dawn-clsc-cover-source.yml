@@ -8,13 +8,16 @@ on:
       - '.github/workflows/dawn-clsc-cover-source.yml'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          persist-credentials: true
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -25,8 +28,18 @@ jobs:
           python-version: '3.12'
       - name: Install scanned-title-page renderer
         run: pip install --quiet pymupdf pillow requests
-      - name: Pilot genuine source images from Yale CLSC PDFs
-        run: python scripts/dawn-clsc-cover-builder.py --limit 3
+      - name: Render exact Yale original cover pages for all 46 CLSC Works
+        run: python scripts/dawn-clsc-cover-builder.py --write-collection --strict
+      - name: Publish verified Chinese original-page images to isolated PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'work/p2-05-integration-repair-20261121'
+        run: |
+          git config user.name "westsidewatch-cover-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add static/dawn-library/chinese-collection.json static/dawn-library/chinese-facsimile-covers/
+          if ! git diff --cached --quiet; then
+            git commit -m "assets(dawn): add 46 source-identified Yale Chinese archival cover scans"
+            git push origin HEAD:${{ github.head_ref }}
+          fi
       - name: Preserve provenance evidence
         if: always()
         uses: actions/upload-artifact@v4
