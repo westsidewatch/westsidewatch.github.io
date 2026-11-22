@@ -2424,3 +2424,39 @@
   font-size:clamp(12px,3.2vw,16px)!important;
  }
 }
+
+
+/* R76 · Editorial type square first. A physical book appears ONLY after
+   selection opens the original Codrops expanding-preview panel.
+   The actual sourced jacket is rendered by that panel, never by the tile. */
+#dawn-second .dawn-contemporary__book .dawn-contemporary__art{
+ aspect-ratio:1/1!important;
+ height:auto!important;
+ background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__book .dawn-contemporary__folio{
+ display:grid!important;
+ grid-template-rows:auto 1fr auto!important;
+ opacity:1!important;
+ visibility:visible!important;
+ z-index:5!important;
+ background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__book .dawn-contemporary__folio>strong{
+ font:200 clamp(22px,2.25vw,43px)/1.22 var(--ws-type-display-zh)!important;
+ text-align:center!important;
+}
+#dawn-second .dawn-contemporary__book.dawn-book-selected .dawn-contemporary__folio{
+ color:var(--ws-ink)!important;
+}
+/* Selection transfers the reader's attention to an expanding real-book
+   presentation, while the original square remains the navigation anchor. */
+#dawn-second .dawn-contemporary__book.dawn-book-selected{
+ outline:2px solid var(--ws-ink)!important;
+ outline-offset:-2px!important;
+}
+@media(max-width:530px){
+ #dawn-second .dawn-contemporary__book .dawn-contemporary__folio>strong{
+  font-size:clamp(18px,5.1vw,29px)!important;
+ }
+}
