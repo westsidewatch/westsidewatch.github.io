@@ -33,7 +33,7 @@ renderer.setClearColor(0xd7d8cf, 1);
 // Perspective projection, using the locally bundled Three.js camera.
 // Projection is explicitly recalculated on resize rather than depending
 // on the maquette's orthographic-camera settings.
-const camera = new PerspectiveCamera(59, 1, 0.055, 170);
+const camera = new PerspectiveCamera(59, 1, 0.16, 125);
 function resize() {
   const width = Math.max(1, window.innerWidth);
   const height = Math.max(1, window.innerHeight);
@@ -351,11 +351,12 @@ function modelName(value) {
 // Preserve independent translucent glazing and the original maple bark/leaves.
 const whiteArchitecture = new MeshStandardMaterial({
   color:0xf5f5f1, roughness:0.91, metalness:0, side:DoubleSide,
-  polygonOffset:true, polygonOffsetFactor:0.5, polygonOffsetUnits:1
+  // Never displace every load-bearing wall in depth just to hide overlapping sheets.
+  polygonOffset:false
 });
 const whiteFloor = new MeshStandardMaterial({
   color:0xebebe7, roughness:0.94, metalness:0, side:DoubleSide,
-  polygonOffset:true, polygonOffsetFactor:1.8, polygonOffsetUnits:1
+  polygonOffset:false
 });
 function chooseFinish(name, sourceMaterial) {
   const n=modelName(name);
@@ -363,7 +364,9 @@ function chooseFinish(name, sourceMaterial) {
   if (/glass|glazing|glazed|window pane|skylight/i.test(n)) {
     const m=finishes.glazing.clone();
     m.forceSinglePass=true;
-    m.polygonOffset=true; m.polygonOffsetFactor=-1; m.polygonOffsetUnits=-1;
+    // Glazing is single-pass and depthWrite:false: global negative offsets
+    // cause nearby solid panels to switch depth order as the camera moves.
+    m.polygonOffset=false;
     return m;
   }
   if (/mullion|window frame|metal frame|railing|handrail/i.test(n)) return finishes.mullion;
@@ -580,7 +583,7 @@ function overlapsWalkColumn(box,p,radius=.72){
 // visually forming loose fragments. Use their ORIGINAL GLB coordinates to
 // add two narrow structural stringers just beneath their undersides.
 // Preserve treads, landings and the open usable space under the staircase.
-const upperStairAudit={treads:0,stringers:0,source:"V26_ROUTE_03",centers:[]};
+const upperStairAudit={treads:0,stringers:0,risers:0,source:"V26_ROUTE_03",centers:[]};
 function connectUpperStairTreads(building){
   const steps=[];
   building.updateMatrixWorld(true);
@@ -619,6 +622,26 @@ function connectUpperStairTreads(building){
     building.add(beam);
     upperStairAudit.stringers++;
   }
+  // Connect the actual GLB treads with small vertical risers. A pair of
+  // thin stringers alone still leaves eight visually floating cubes.
+  // Dimensions derive from neighboring GLB tread bounds; never span the
+  // courtyard or invent a new upper-floor plate.
+  for(let i=1;i<steps.length;i++){
+    const lower=steps[i-1].b,upper=steps[i].b;
+    const rise=upper.max.y-lower.max.y;
+    const depthZ=upper.max.z-upper.min.z;
+    if(rise<.07||rise>.55||depthZ<.35)continue;
+    const riser=new Mesh(
+      new BoxGeometry(.075,rise+.04,Math.max(.25,depthZ-.10)),whiteArchitecture
+    );
+    riser.name="V26 upper ascent fitted vertical stair riser";
+    riser.position.set(upper.min.x+.038,lower.max.y+rise/2,
+      (upper.min.z+upper.max.z)/2);
+    riser.castShadow=true;
+    riser.receiveShadow=true;
+    building.add(riser);
+    upperStairAudit.risers++;
+  }
 }
 
 function removeHeadHeightHazards(building){
@@ -630,11 +653,15 @@ function removeHeadHeightHazards(building){
   building.traverse(mesh=>{
     if(!mesh.isMesh||!mesh.visible)return;
     const n=modelName(mesh.name);
-    if(!/(?:soffit|fascia|room|gallery|mid|cantilever|overhang|bridge|slab|balcony|project|landing|terrace|beam)/i.test(n)
-      ||/(?:tread|stair|step|skylight|glass|door|railing|handrail|roof|floor|paving|maple|tree|column|foundation)/i.test(n))return;
+    // Removing an entire room, landing, floor or gallery because one
+    // CAMERA sample touches its AABB makes genuine giant holes.
+    // Only a small, explicitly nonstructural low soffit may be culled.
+    if(!/(?:soffit|fascia|overhang)/i.test(n)
+      ||/(?:room|gallery|landing|terrace|slab|bridge|beam|tread|stair|step|glass|door|railing|handrail|roof|floor|paving|maple|tree|column|foundation)/i.test(n))return;
     const box=meshWorldBox(mesh);if(!box)return;
     const thickness=box.max.y-box.min.y;
-    if(thickness>1.15)return; // full walls and inhabited rooms are not fake soffits
+    if(thickness>1.15 || box.max.x-box.min.x>3.4 || box.max.z-box.min.z>3.4)return;
+    // Large connected structures must be routed around, never erased.
     const headStrike=samples.find(v=>overlapsWalkColumn(box,v.p,.85)
       &&box.min.y>=v.p[1]-.30
       &&box.min.y<=v.p[1]+.62
@@ -712,7 +739,30 @@ function safeCameraInForum(point,target){
 // Resolve actual Z-fighting instead of pushing *all* white architecture
 // with the same polygon offset. Only suppress coincident, large, opaque
 // planar sheets that occupy the same world plane.
-const sheetRepair={compared:0,removed:[],kept:0,glassSinglePass:true,planeThreshold:.24};
+const sheetRepair={compared:0,removed:[],kept:0,glassSinglePass:true,planeThreshold:.24,
+  coplanarTolerance:.002,exactOnly:true};
+function sameDrawSurface(a,b){
+  // Bounds alone are NOT a safe duplicate test: a filled wall and a wall
+  // with a window can share identical AABBs but are different surfaces.
+  const ga=a.mesh.geometry,gb=b.mesh.geometry;
+  const pa=ga?.attributes?.position,pb=gb?.attributes?.position;
+  if(!pa||!pb||pa.count!==pb.count||pa.count<3)return false;
+  if((ga.index?.count||0)!==(gb.index?.count||0))return false;
+  if(Math.abs(a.plane-b.plane)>.002)return false;
+  for(const ax of ["x","y","z"]){
+    if(Math.abs(a.b.min[ax]-b.b.min[ax])>.002
+       ||Math.abs(a.b.max[ax]-b.b.max[ax])>.002)return false;
+  }
+  const va=new Vector3(),vb=new Vector3();
+  // Require exact matching world vertices including winding/order.
+  // When uncertain, KEEP both pieces rather than destroy the church.
+  for(let i=0;i<pa.count;i++){
+    va.set(pa.getX(i),pa.getY(i),pa.getZ(i)).applyMatrix4(a.mesh.matrixWorld);
+    vb.set(pb.getX(i),pb.getY(i),pb.getZ(i)).applyMatrix4(b.mesh.matrixWorld);
+    if(va.distanceToSquared(vb)>4e-6)return false;
+  }
+  return true;
+}
 function removeCoplanarDuplicateSheets(building){
   const panels=[];
   building.updateMatrixWorld(true);
@@ -741,13 +791,15 @@ function removeCoplanarDuplicateSheets(building){
     for(const j of [-1,0,1]){
       const members=planeBuckets.get(group+':'+a.axis+':'+(Math.round(a.plane/.018)+j))||[];
       for(const b of members){
-        if(Math.abs(a.plane-b.plane)>.025)continue;
+        if(Math.abs(a.plane-b.plane)>.002)continue;
         const [u,v]=a.other;
         const overlapU=Math.max(0,Math.min(a.b.max.getComponent(u),b.b.max.getComponent(u))
           -Math.max(a.b.min.getComponent(u),b.b.min.getComponent(u)));
         const overlapV=Math.max(0,Math.min(a.b.max.getComponent(v),b.b.max.getComponent(v))
           -Math.max(a.b.min.getComponent(v),b.b.min.getComponent(v)));
-        if(overlapU*overlapV/a.surfaceArea>.985){duplicate=b;break;}
+        if(overlapU*overlapV/a.surfaceArea>.999 && sameDrawSurface(a,b)){
+          duplicate=b;break;
+        }
       }
       if(duplicate)break;
     }
@@ -775,10 +827,10 @@ function cleanOpenPublicSpaces(building){
     // apparent giant pit and leaving individual stair treads floating.
     // Only the original narrow low soffit is a nonstructural obstruction.
     const conceptualOverhead=/^v13 west mid .*curved solid room.edge fascia/i;
-    // Selected conceptual mid-level plates created low hanging ceilings across
-    // the open C forum. Remove these only, never V19 terrace steps or V13 high.
-    const routesidePost=/^v11 support post.*(?:northwest gallery inner|west mid public edge|north mid public edge)/i;
-    if(conceptualOverhead.test(n)||routesidePost.test(n)){
+    // DO NOT delete original support posts to get a clear camera frame.
+    // They belong to the architecture and their absence creates detached
+    // galleries and apparent pits. Handle clearance with the route instead.
+    if(conceptualOverhead.test(n)){
       object.visible=false;object.castShadow=false;removedObstructions.push(object.name);
     }
   });
