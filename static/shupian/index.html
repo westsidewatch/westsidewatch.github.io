@@ -126,61 +126,105 @@ function addImage(el,url,backupArticle,backupUrl){
   img.src=url;
   el.prepend(img);
 }
-let playbackToken=0, sourceTimer=null, chosenSources=[], sourceIndex=0;
-function stop(){
-  playbackToken++;
-  if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}
-  if(hls){hls.destroy();hls=null}
+let playbackToken=0, sourceTimer=null, chosenSources=[], sourceIndex=0, sourceAttempt=0;
+let hlsLoader=null;
+function clearWatchdog(){if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}}
+function disposeMedia(){
+  clearWatchdog();
+  if(hls){const instance=hls;hls=null;instance.destroy()}
   video.pause();video.removeAttribute('src');video.load();
 }
+function stop(){playbackToken++;sourceAttempt++;disposeMedia()}
 function mark(message){status.textContent=message}
-function nextSource(token,reason){
-  if(token!==playbackToken||sourceIndex>=chosenSources.length)return;
-  if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}
-  if(hls){hls.destroy();hls=null}
+function nextSource(token,attempt,reason){
+  if(token!==playbackToken||attempt!==sourceAttempt||sourceIndex>=chosenSources.length)return;
+  sourceAttempt++;
+  disposeMedia();
   sourceIndex++;
-  if(sourceIndex<chosenSources.length){mark('來源 '+sourceIndex+' 無法播放，改試另一個來源…');trySource(token);return}
-  mark('目前沒有可以確認載入的影片來源（'+reason+'）。可使用下方「查看原始典藏來源」查看來源。此片未通過即時播放驗收。');
+  if(sourceIndex<chosenSources.length){
+    mark('此來源播放失敗（'+reason+'），正在測試其他已收錄來源…');
+    trySource(token);return;
+  }
+  mark('此集目前沒有可播放的已收錄來源：'+reason+'。媒體清單或抽樣成功不代表瀏覽器能播放。');
+}
+function ensureHls(){
+  if(window.Hls)return Promise.resolve(window.Hls);
+  if(hlsLoader)return hlsLoader;
+  hlsLoader=new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/hls.js@1.6.13/dist/hls.min.js';
+    s.async=true;
+    s.onload=()=>window.Hls?resolve(window.Hls):reject(new Error('HLS 元件無法初始化'));
+    s.onerror=()=>reject(new Error('HLS 元件網路載入失敗'));
+    document.head.append(s);
+  }).catch(err=>{hlsLoader=null;throw err});
+  return hlsLoader;
+}
+function hlsFailureMessage(data){
+  const d=String(data?.details||'').toLowerCase();
+  if(d.includes('manifest')||d.includes('fragload')||d.includes('level'))return 'HLS 清單／影片片段請求失敗（可能是來源失效或瀏覽器 CORS 限制）';
+  if(d.includes('buffer')||data?.type==='mediaError')return '影片解碼或緩衝失敗';
+  return 'HLS 網路或媒體失敗';
 }
 async function trySource(token){
   if(token!==playbackToken)return;
-  const src=chosenSources[sourceIndex];
-  if(!src)return;
-  if(sourceTimer)clearTimeout(sourceTimer);
-  video.pause();video.removeAttribute('src');video.load();
-  const fail=(reason)=>nextSource(token,reason);
-  mark('連接第 '+(sourceIndex+1)+' / '+chosenSources.length+' 個影片來源…');
-  sourceTimer=setTimeout(()=>fail('影片載入逾時'),18000);
-  const url=src.url;
-  const fmt=String(src.format||'').toLowerCase();
+  const src=chosenSources[sourceIndex];if(!src)return;
+  const attempt=++sourceAttempt;
+  disposeMedia();
+  const fail=reason=>nextSource(token,attempt,reason);
+  mark('正在連接來源 '+(sourceIndex+1)+' / '+chosenSources.length+'…');
+  sourceTimer=setTimeout(()=>fail('載入逾時（24 秒）'),24000);
+  const url=src.url,fmt=String(src.format||'').toLowerCase();
   if(fmt==='ogv'||fmt==='ogg'){
     if(!video.canPlayType('video/ogg')){fail('瀏覽器不支援 Ogg/Theora');return}
   }
-  if(fmt==='m3u8'||url.toLowerCase().includes('.m3u8')){
-    if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=url;video.load();return}
+  if(fmt==='m3u8'||/\\.m3u8(?:$|[?#])/i.test(url)){
+    if(video.canPlayType('application/vnd.apple.mpegurl')){
+      video.src=url;video.load();return;
+    }
     try{
-      if(!window.Hls){await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/hls.js@1.6.13/dist/hls.min.js';s.onload=res;s.onerror=rej;document.head.append(s)})}
-      if(token!==playbackToken)return;
-      if(!window.Hls?.isSupported()){fail('瀏覽器不支援 HLS');return}
-      hls=new Hls({enableWorker:true});
-      hls.on(Hls.Events.ERROR,(_,data)=>{if(data.fatal)fail('HLS '+data.type)});
-      hls.loadSource(url);hls.attachMedia(video);
-    }catch{fail('HLS 元件載入失敗')}
-  }else{video.src=url;video.load()}
+      const Hls=await ensureHls();
+      if(token!==playbackToken||attempt!==sourceAttempt)return;
+      if(!Hls.isSupported()){fail('此瀏覽器無法解碼 HLS');return}
+      const instance=new Hls({enableWorker:true,maxBufferLength:30});
+      hls=instance;
+      instance.on(Hls.Events.ERROR,(_,data)=>{
+        if(data.fatal)fail(hlsFailureMessage(data));
+      });
+      instance.on(Hls.Events.MEDIA_ATTACHED,()=>{
+        if(token===playbackToken&&attempt===sourceAttempt)instance.loadSource(url);
+      });
+      instance.attachMedia(video);
+    }catch(err){fail(err.message||'HLS 初始化失敗')}
+  }else{
+    video.src=url;video.load();
+  }
 }
-async function connect(ep){
+function connect(ep){
   stop();const token=playbackToken;
   chosenSources=media(ep);sourceIndex=0;
-  if(!chosenSources.length){mark(active?.restorationStatus?'此作品為歷史片庫恢復線索；尚未找回可在站內播放的來源。':'歷史驗收紀錄保留；這一集的舊播放地址尚未找回。');return}
+  if(!chosenSources.length){
+    mark('這一集目前沒有保存可用的直接媒體地址。歷史抽檢紀錄不代表當前能播放。');return;
+  }
   trySource(token);
 }
 video.addEventListener('loadedmetadata',()=>{
-  if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}
-  const duration=Number.isFinite(video.duration)?Math.round(video.duration/60)+' 分鐘':'時間長度待確認';
-  mark('已成功讀取影片中繼資料 · '+duration+'。請點播放；完整影片尚需實際觀看驗收。')
+  clearWatchdog();
+  const duration=Number.isFinite(video.duration)?Math.round(video.duration/60)+' 分鐘':'時長未知';
+  mark('已讀取影片資訊（'+duration+'）。請按播放器上的播放鍵。尚未完成實播驗收。');
 });
-video.addEventListener('playing',()=>{if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}mark('影片正在播放 · 已通過本次起播檢查，未代表全片驗收。')});
-video.addEventListener('error',()=>{if(chosenSources.length)nextSource(playbackToken,'媒體解碼或網路錯誤')});
+video.addEventListener('playing',()=>{
+  clearWatchdog();mark('影片正在播放 · 目前起播成功，完整播放尚未驗證。');
+});
+video.addEventListener('waiting',()=>{
+  if(chosenSources.length&&video.readyState<3)mark('影片正在緩衝；如持續失敗將回報媒體錯誤。');
+});
+video.addEventListener('error',()=>{
+  if(chosenSources.length&&sourceAttempt>0&&video.error){
+    const reason=video.error.code===4?'瀏覽器不支援影片格式或來源無法載入':'媒體解碼或網路錯誤';
+    nextSource(playbackToken,sourceAttempt,reason);
+  }
+});
 function choose(i){episodeIndex=i;const ep=active.episodes[i];document.querySelectorAll('#episodes button').forEach((b,j)=>b.setAttribute('aria-pressed',String(i===j)));connect(ep)}
 function open(w){active=w;document.getElementById('player-title').textContent=w.title+(w.restorationStatus?' · 來源恢復中':'');document.getElementById('source').href=w.sourcePage||'#';const e=document.getElementById('episodes');e.replaceChildren();w.episodes.forEach((ep,i)=>{const b=document.createElement('button');b.textContent=ep.label||'第 '+(i+1)+' 集';b.setAttribute('aria-pressed','false');b.onclick=()=>choose(i);e.append(b)});dialog.showModal();choose(w.episodes.findIndex(ep=>media(ep).length)>-1?w.episodes.findIndex(ep=>media(ep).length):0)}
 document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListener('close',stop);document.querySelectorAll('[data-category]').forEach(b=>b.onclick=()=>{filter=b.dataset.category;document.querySelectorAll('[data-category]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render()});query.oninput=render;render();
