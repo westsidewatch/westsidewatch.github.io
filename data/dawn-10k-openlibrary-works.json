@@ -28,13 +28,13 @@
     ]
   },
   "metrics": {
-    "works": 65327,
-    "existingWorks": 65267,
-    "newWorks": 60,
+    "works": 65328,
+    "existingWorks": 65327,
+    "newWorks": 1,
     "chineseMatchedWorksAdded": 0,
-    "englishMatchedWorksAdded": 60,
-    "requests": 46,
-    "scannedRecords": 3823
+    "englishMatchedWorksAdded": 1,
+    "requests": 47,
+    "scannedRecords": 3923
   },
   "items": [
     {
@@ -1632625,6 +1632625,32 @@
       "coverId": 6902576,
       "workPointer": "https://openlibrary.org/works/OL99259W",
       "editionPointer": "https://openlibrary.org/books/OL22355886M",
+      "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL9935829W",
+      "title": "Joshua",
+      "authors": [
+        "Ken Fleming"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2006,
+      "authorityIds": {
+        "openLibraryWork": "OL9935829W",
+        "isbn": "9781593870577",
+        "oclc": "70830731",
+        "lccn": "2006297551"
+      },
+      "preferredEdition": "OL12432444M",
+      "coverId": 2960091,
+      "workPointer": "https://openlibrary.org/works/OL9935829W",
+      "editionPointer": "https://openlibrary.org/books/OL12432444M",
       "matchedSubject": "Bible",
       "provider": "Open Library",
       "contentDownloaded": false,
