@@ -694,7 +694,13 @@ function positionAlongRoute(seconds) {
   };
 }
 
-let elapsed = 0, previousFrame = 0, isVisible = !document.hidden;
+// Optional preview entry point for inspecting a finished chapter in motion.
+// Does not affect the default door-to-courtyard-to-chapel-to-gallery itinerary.
+const entryParams=new URLSearchParams(location.search);
+const requestedStart=entryParams.get("startAt");
+const startSeconds=requestedStart!==null&&Number.isFinite(Number(requestedStart))
+  ?Math.min(route[route.length-1].at,Math.max(0,Number(requestedStart))):0;
+let elapsed = startSeconds, previousFrame = 0, isVisible = !document.hidden;
 let pointerDown = false, pointerX = 0, pointerY = 0;
 let yawOffset = 0, pitchOffset = 0;
 canvas.addEventListener("pointerdown", event => {
