@@ -301,7 +301,7 @@
  const p2BookCache=new Map();
  function normalizeTitle(s){return String(s||'').toLocaleLowerCase().normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu,' ').trim();}
  function shelvesOf(data){return Array.isArray(data)?data:Array.isArray(data?.shelves)?data.shelves:[];}
- function safeHttp(url){try{const a=new URL(url,location.origin);return /^https?:$/.test(a.protocol)?a.href:null}catch{return null}}
+ function safeHttp(url){if(typeof url!=='string'||!url.trim())return null;try{const a=new URL(url,location.origin);return /^https?:$/.test(a.protocol)?a.href:null}catch{return null}}
  async function loadCatalogueCoverLookup(){
   if(coverLookup)return coverLookup;
   if(coverLookupLoading)return coverLookupLoading;
@@ -769,6 +769,18 @@
   const art=document.createElement('span');art.className='dawn-classification__art';art.setAttribute('aria-hidden','true');
   // When source books have no verified jacket, a typographic *category*
   // composition quotes the original titles, not fabricated work covers.
+  const exactCover=works.find(work=>work?.workId?.startsWith('dawn:zh:')&&
+    safeHttp(work?.cover?.url));
+  if(exactCover){
+   const coverUrl=safeHttp(exactCover.cover.url);
+   const image=document.createElement('img');
+   image.alt='';
+   image.loading='lazy';image.decoding='async';
+   image.addEventListener('load',()=>{if(tile.isConnected)tile.classList.add('dawn-classification__sleeve--pictured')});
+   image.addEventListener('error',()=>image.remove());
+   image.src=coverUrl;
+   art.append(image);
+  }
   const entries=works.filter(Boolean).slice(0,3);
   if(entries.length){
    const folio=document.createElement('span');folio.className='dawn-classification__folio';
@@ -996,23 +1008,10 @@
  }
  function displayChineseLeaf(key,domain){
   ++classificationTicket;
-  void Promise.all([loadCatalogueCoverLookup(),loadVisualLookup()]).then(()=> {
-   const grid=$('#dawn-classification-results .dawn-classification__book-wall');
-   if(grid&&!$('#dawn-classification-results').hidden){
-    grid.querySelectorAll('.dawn-classification__book').forEach((tile,i)=>{
-     const work=(chineseLibrary.works||[]).filter(w=>w.classification?.label===domain)[i];
-     if(!work||tile.querySelector('img'))return;
-     const lookup=coverLookup?.get(normalizeTitle(work.work.title));
-     const visual=imageFor({title:work.work.title},lookup);
-     if(visual?.url){
-      const img=document.createElement('img');img.src=visual.url;img.alt='原書圖像：'+work.work.title;
-      img.loading='lazy';img.decoding='async';
-      tile.querySelector('.dawn-classification__book-art')?.append(img);
-     }
-    });
-   }
-  }).catch(()=>{});
-
+  // The only valid Chinese cover is the image tied to this exact Work ID.
+  // It is now a source-identified scanned title/cover page from the
+  // original Yale CLSC PDF (or Gutenberg's original listed image).
+  // Never use an unrelated same-title catalogue jacket.
   const works=(chineseLibrary.works||[]).filter(w=>w.classification?.label===domain);
   const books=works.map(w=>({
    title:w.work.title,creator:w.work.creator||'',workId:w.workId,date:w.edition?.year||'',
