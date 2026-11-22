@@ -95,3 +95,26 @@ P2 的 `p2-dawn-canonical-gallery.mjs` 已改為 `{shardIndex,indexInsideActualI
 歷代 `living/wall-*.json` 分片已有 `workRefs[].classification.roots/leaves`，無須以英文書名模糊搜索代替學科 membership。P2 已新增 `p2-dawn-living-membership.mjs`，按原 root 的 21 分片查詢 Work ID，交由原 Resource Fabric 解出作品信息；字串關鍵字假分類路徑已從 P2 子分類頁移除。這是**原工程能力接通**，不是新增 authority。
 
 已進行 V8 模擬驗證：子分類包含、同 Work ID 去重、限量、取消與不調 keyword 路徑通過；未做完整實站與圖像 QA，不可聲稱整個館藏分類已逐冊編輯核對完畢。
+
+## 2026-11-22 下一關：21+21+407 分片完整性檢查施工
+
+已新增 **只讀、無新 catalog** 驗證器 `scripts/audit-dawn-library-shards.cjs`，按既有三個 root manifest 依序檢驗：
+
+- Canonical：21 shards 的實際 Work ID、總量、重複 ID、與 meta count、sha256。
+- Living：21 shards 的 Work ID 是否真存在於 canonical、root/leaf 分類是否合法、筆數、重複 ID。
+- Cover Preview：407 shards 的 Work ID 是否對應 canonical、重複 ID、manifest / shard / items 三種數量差異、圖像指標／placeholder 統計。
+- 已建立獨立受限 Actions 流程 `.github/workflows/dawn-library-shard-integrity.yml`，產出 `dawn-integrity-report.json` artifact；不動原資料。source hash mismatch 以 warning 留證，canonical ID 結構錯誤則阻斷。
+
+**已實際讀回並核對：**
+
+| 已驗證分片 | Manifest count | Shard `count` | 實際 items | 結論 |
+|---|---:|---:|---:|---|
+| cover 000001 | 500 | 463 | 463 | root 宣告漂移 -37 |
+| cover 000002 | 500 | 500 | 499 | root 與 shard count 都與 items 不符 |
+| cover 000003 | 500 | 500 | 498 | 漂移 -2 |
+| cover 000010 | 500 | 500 | 498 | 漂移 -2 |
+| cover 000407 | 448 | 448 | 425 | 漂移 -23 |
+
+Living 末尾 `wall-000021.json` 原始 `workRefs` 數為 **3448**，其 `bible.new-testament` 葉標引 **519** 筆。用真實分片執行新 P2 adapter，以 `limit=8` 抽樣的 Work IDs 與原始標引完全相符（8/8）；仍不是全 21 分片 E2E。
+
+**重要界限：** 本輪尚未取得 Actions 完整報告或實際瀏覽器截圖。不可把已查的五個封面分片外推成 407 個分片的完整統計；不能由 `cover.src` 存在推斷遠端網址可開啟、版權或封面與版本真正一致。直到 GitHub Actions 產出報告前，Gate G1/G2/G3 仍未「完成」。
