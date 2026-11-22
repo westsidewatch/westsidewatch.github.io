@@ -20,8 +20,43 @@ let filter='all',active=null,episodeIndex=0,hls=null;
 const media=ep=>(ep?.sources||[]).filter(s=>{try{const u=new URL(s.url);return u.protocol==='https:' && /\.(m3u8|mp4|webm|ogv|ogg)$/i.test(u.pathname)}catch{return false}});
 const countSources=work=>work.episodes.filter(e=>media(e).length).length;
 function render(){grid.replaceChildren();const q=query.value.toLocaleLowerCase().trim();const matches=works.filter(w=>w.availability!=='official_external_only'&&(filter==='all'||filter==='history'&&w.historicalVerification||filter==='film'&&w.type==='film'||filter==='series'&&w.type==='series')&&[w.title,w.originalTitle,w.year].join(' ').toLocaleLowerCase().includes(q));document.getElementById('totals').textContent=matches.length+' TITLES · '+matches.reduce((n,w)=>n+countSources(w),0)+' SOURCE UNITS';document.getElementById('empty').hidden=matches.length>0;for(const w of matches){const c=document.createElement('article');c.className='card';const btn=document.createElement('button');btn.type='button';btn.className='poster';btn.setAttribute('aria-label','選擇 '+w.title);const lbl=document.createElement('span');lbl.className='label';lbl.textContent=w.type==='series'?'SERIES / 典藏':'FILM / 典藏';const heading=document.createElement('span');heading.className='posterheading';heading.textContent=w.posterHeadline||w.originalTitle||w.title;const play=document.createElement('span');play.className='play';play.textContent=w.availability==='official_external_only'?'資料':'▶';btn.append(lbl,heading,play);btn.onclick=()=>w.availability==='official_external_only'?void 0:open(w);btn.disabled=w.availability==='official_external_only';const h=document.createElement('div');h.className='meta';const name=document.createElement('h3');name.textContent=w.title;const en=document.createElement('div');en.className='en';en.textContent=w.originalTitle||'';const sub=document.createElement('div');sub.className='sub';sub.textContent=w.availability==='official_external_only'?'官方觀看：'+w.officialPlatform+' · 不提供站內播放':w.historicalVerification?'歷史抽樣通過 · '+countSources(w)+' 個已找回來源':countSources(w)+' 個來源單元 · '+(w.year||'');h.append(name,en,sub);const a=document.createElement('a');a.href=w.sourcePage||'#';a.textContent=w.availability==='official_external_only'?'前往 '+w.officialPlatform+' 觀看 ↗':'來源資料 ↗';a.target='_blank';a.rel='noopener noreferrer';h.append(a);c.append(btn,h);grid.append(c);setPoster(w,btn)}}
-function setPoster(w,btn){if(w.posterUrl){addImage(btn,w.posterUrl);return}try{const u=new URL(w.sourcePage);if(u.hostname==='archive.org'){const id=u.pathname.split('/').filter(Boolean)[1];if(id)addImage(btn,'https://archive.org/services/img/'+encodeURIComponent(id));}}catch{}}
-function addImage(el,url){const img=document.createElement('img');img.alt='';img.loading='lazy';img.referrerPolicy='no-referrer';img.src=url;img.onload=()=>el.classList.add('hasimage');img.onerror=()=>img.remove();el.prepend(img)}
+const commonsImages=new Map();
+function commonsThumbnail(file){
+  const key=String(file||'').trim();
+  if(!key)return Promise.resolve(null);
+  if(commonsImages.has(key))return commonsImages.get(key);
+  const endpoint='https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url&iiurlwidth=540&titles='+encodeURIComponent('File:'+key);
+  const request=fetch(endpoint,{mode:'cors',credentials:'omit'}).then(r=>{if(!r.ok)throw Error('Commons image API '+r.status);return r.json()}).then(data=>{
+    const pages=Object.values(data.query?.pages||{});
+    const info=pages[0]?.imageinfo?.[0];
+    const url=info?.thumburl||info?.url;
+    return typeof url==='string'&&url.startsWith('https://')?url:null;
+  }).catch(()=>null);
+  commonsImages.set(key,request);
+  return request;
+}
+function setPoster(w,btn){
+  if(w.posterUrl&&/^https:\/\//.test(w.posterUrl)){addImage(btn,w.posterUrl);return}
+  try{
+    const source=new URL(w.sourcePage||'');
+    if(source.hostname==='archive.org'){
+      const id=source.pathname.split('/').filter(Boolean)[1];
+      if(id){addImage(btn,'https://archive.org/services/img/'+encodeURIComponent(id));return}
+    }
+    if(source.hostname==='commons.wikimedia.org'&&source.pathname.includes('/wiki/File:')){
+      commonsThumbnail(decodeURIComponent(source.pathname.split('/wiki/File:')[1])).then(url=>{if(url&&btn.isConnected)addImage(btn,url)});
+      return;
+    }
+  }catch{}
+  const mediaUrl=w.episodes?.flatMap(e=>e.sources||[]).find(item=>item.url&&item.url.includes('upload.wikimedia.org/'))?.url;
+  if(mediaUrl){
+    try{
+      const filename=decodeURIComponent(new URL(mediaUrl).pathname.split('/').pop());
+      commonsThumbnail(filename).then(url=>{if(url&&btn.isConnected)addImage(btn,url)});
+    }catch{}
+  }
+}
+function addImage(el,url){const img=document.createElement('img');img.alt='影片典藏畫面';img.loading='lazy';img.referrerPolicy='no-referrer';img.src=url;img.onload=()=>{if(img.naturalWidth>0)el.classList.add('hasimage')};img.onerror=()=>img.remove();el.prepend(img)}
 let playbackToken=0, sourceTimer=null, chosenSources=[], sourceIndex=0;
 function stop(){
   playbackToken++;
@@ -52,7 +87,7 @@ async function trySource(token){
   if(fmt==='ogv'||fmt==='ogg'){
     if(!video.canPlayType('video/ogg')){fail('瀏覽器不支援 Ogg/Theora');return}
   }
-  if(fmt==='m3u8'||/\\.m3u8(?:$|[?#])/i.test(url)){
+  if(fmt==='m3u8'||url.toLowerCase().includes('.m3u8')){
     if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=url;video.load();return}
     try{
       if(!window.Hls){await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/hls.js@1.6.13/dist/hls.min.js';s.onload=res;s.onerror=rej;document.head.append(s)})}
