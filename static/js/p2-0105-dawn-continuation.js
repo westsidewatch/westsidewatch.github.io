@@ -571,8 +571,6 @@
      container.append(button);
     }
     departmentGrid.replaceChildren(container);
-    const count=$('#dawn-hall-workcount');
-    if(count)count.textContent=Number(living.canonicalWorkCount).toLocaleString('en-CA');
     departmentStatus.textContent='';
     departmentsMounted=true;
    }catch(error){
