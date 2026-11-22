@@ -85,7 +85,8 @@ try{
           hardware:window.__churchHardwareAudit||null,
           crossLight:window.__churchLightAudit||null,
           spatial:window.__churchSpatialAudit||null,
-          surface:window.__churchSurfaceAudit||null
+          surface:window.__churchSurfaceAudit||null,
+          upperStair:window.__churchUpperStairAudit||null
         })`);
       }catch{continue;}
       if(state?.className==='ready')break;
@@ -105,6 +106,8 @@ try{
       throw Error('Spatial clearance mesh cleanup absent: '+JSON.stringify(state.spatial));
     if(frame>=40&&frame<=223&&state.spatial.ghostRoofVisible!==0)
       throw Error('Ghost roof still obscures inhabited spaces at frame '+frame);
+    if(!state.upperStair||state.upperStair.treads<8||state.upperStair.stringers!==2)
+      throw Error('Original eight-step ascent lacks connected supporting structure '+JSON.stringify(state.upperStair));
     if(!state.hardware.removed?.some(name=>/moving.pull/i.test(name)))
       throw Error('Known V33 moving_pull geometry was not removed from live GLB scene: '+JSON.stringify(state.hardware));
     if(!state.crossLight?.aperture || !state.crossLight?.floor || state.crossLight.sheets!==3 || !state.crossLight.additive)
