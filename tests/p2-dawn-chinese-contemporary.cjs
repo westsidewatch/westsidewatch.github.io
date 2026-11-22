@@ -11,6 +11,11 @@ assert.equal(manifest.schema,'dawn.library.chinese-contemporary-discovery.v1');
 assert.equal(manifest.status,'editorial-source-discovery-not-canonical-admission');
 assert.equal(manifest.candidates.length,11);
 assert.equal(manifest.candidates.filter(c=>c.translation==='Chinese translation').length,8);
+const eligible=manifest.candidates.filter(c=>['verified-free-download','verified-free-subscription','verified-free-reading'].includes(c.freeReading?.status));
+assert.equal(eligible.length,9,'reader-facing discovery may show only confirmed free books');
+assert.equal(eligible.filter(c=>c.translation==='Chinese translation').length,6);
+assert.equal(manifest.candidates.filter(c=>c.freeReading?.status==='not-verified').length,2,
+ 'unconfirmed free-access editions stay in research, not the reader-facing library');
 assert.equal(ancient.works.length,47,'do not mutate 47 original Chinese Works');
 assert.equal(manifest.audit.candidateCount,manifest.candidates.length);
 const ids=new Set();
@@ -40,8 +45,12 @@ fs.mkdirSync(dir,{recursive:true});
   // Chinese library must open on contemporary literature, not the older
   // 47 archival works. No extra click should be needed to reach new books.
   const cards=page.locator('#dawn-classification-results .dawn-contemporary__book');
-  await page.waitForFunction(()=>document.querySelectorAll('.dawn-contemporary__book').length===11,null,{timeout:25000});
-  assert.equal(await cards.count(),11,device+': catalog source discovery cards missing');
+  await page.waitForFunction(()=>document.querySelectorAll('.dawn-contemporary__book').length===9,null,{timeout:25000});
+  assert.equal(await cards.count(),9,device+': catalog source discovery cards missing');
+  const titles=await cards.evaluateAll(items=>items.map(x=>x.querySelector('.dawn-contemporary__metadata strong')?.textContent));
+  assert(!titles.includes('認識協同書的神學')&&!titles.some(t=>t?.startsWith('協同書：')),
+   device+': free-reading-unverified publication incorrectly offered as available book');
+  assert(eligible.every(c=>titles.includes(c.title)),device+': a verified free book is missing');
   assert.equal(await page.locator('#dawn-classification-results .dawn-contemporary__archive-entry').count(),1,
    device+': early Chinese archival section has no secondary access');
   await page.locator('#dawn-classification-results .dawn-contemporary__archive-entry').click();
@@ -163,7 +172,7 @@ fs.mkdirSync(dir,{recursive:true});
   assert.equal(page.url(),originalUrl,device+': current Dawn collection should remain open');
   await page.screenshot({path:path.join(dir,device+'-translation-expanded-preview.png')});
   assert.equal(errors.length,0,device+': JS exceptions: '+errors.join('; '));
-  console.log('MODERN_CHINESE_SOURCE_QA',device,'11_BOOKS_8_TRANSLATIONS_TWO_STEP_NAV_PASS');
+  console.log('MODERN_CHINESE_SOURCE_QA',device,'9_FREE_BOOKS_6_TRANSLATIONS_TWO_STEP_NAV_PASS');
   await page.close();
  }
  }finally{await browser.close()}
