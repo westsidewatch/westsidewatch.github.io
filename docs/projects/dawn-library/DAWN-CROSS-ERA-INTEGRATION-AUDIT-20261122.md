@@ -89,3 +89,9 @@ P2 的 `p2-dawn-canonical-gallery.mjs` 已改為 `{shardIndex,indexInsideActualI
 
 比對 `storefront.json` 已發現「精品書架」有一般科幻和小說，例如 *A Fighting Man of Mars*、*Confessions of Zeno*。之前 P2 三大入口把這些放在「光譜」，不符合原分類及福音閱讀定位。P2 新 `p2-dawn-editorial-art.mjs` 先依 `dawn-launch.json`、`p2-editorial-channels.json`、`p2-exhibitions/jerusalem-3000.json` 調取對應作品／有來源圖版，找不到時使用原書名排版，而不是借別書圖像。需做逐張實際圖片、權利與讀者文案驗收。
 
+
+## 2026-11-22 P2 第二層：恢復 Living 真實逐書分類接線
+
+歷代 `living/wall-*.json` 分片已有 `workRefs[].classification.roots/leaves`，無須以英文書名模糊搜索代替學科 membership。P2 已新增 `p2-dawn-living-membership.mjs`，按原 root 的 21 分片查詢 Work ID，交由原 Resource Fabric 解出作品信息；字串關鍵字假分類路徑已從 P2 子分類頁移除。這是**原工程能力接通**，不是新增 authority。
+
+已進行 V8 模擬驗證：子分類包含、同 Work ID 去重、限量、取消與不調 keyword 路徑通過；未做完整實站與圖像 QA，不可聲稱整個館藏分類已逐冊編輯核對完畢。
