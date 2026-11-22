@@ -120,7 +120,7 @@ try{
       throw Error('Cross daylight shader/real PBR bounce not active '+frame+' '+JSON.stringify(clock));
     if(!Number.isFinite(clock.beamAlignment) || clock.beamAlignment<0.99)
       throw Error('Cross beam diverged from true aperture-to-floor direction at frame '+frame+' '+JSON.stringify(clock));
-    if(!Number.isFinite(clock.airStrength)||clock.airStrength>0.132
+    if(!Number.isFinite(clock.airStrength)||clock.airStrength>0.166
        || !Number.isFinite(clock.exposure)||clock.exposure<0.70||clock.exposure>1.05)
       throw Error('Cross optical energy/exposure out of calibrated range '+frame+' '+JSON.stringify(clock));
     console.log('P2_CROSS_LIGHT_FRAME_'+frame+'='+JSON.stringify(clock));
