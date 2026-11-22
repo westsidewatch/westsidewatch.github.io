@@ -3,7 +3,7 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from discover_sources import clean_url, parse_groups, normalize_results, scan, source_probe
+from discover_sources import clean_url, parse_groups, normalize_results, scan, source_probe, title_matches
 from legacy_engine_core import VerificationError
 
 class DiscoveryTests(unittest.TestCase):
@@ -43,6 +43,18 @@ class DiscoveryTests(unittest.TestCase):
         self.assertEqual(report["manifests_parsed"],2)
         self.assertEqual(report["completion"],"NOT_COMPLETED")
         self.assertFalse(any("url" in x for x in report["audits"]))
+
+    def test_wrong_sherlock_titles_are_excluded(self):
+        self.assertFalse(title_matches("夏洛克与女儿", "神探夏洛克"))
+        self.assertFalse(title_matches("女神探夏洛克", "神探夏洛克"))
+        self.assertTrue(title_matches("神探夏洛克 第一季", "神探夏洛克"))
+        self.assertTrue(title_matches("黑镜 第一季", "黑鏡"))
+        self.assertFalse(title_matches("黑鏡幕後花絮", "黑鏡"))
+
+    def test_chinese_filename_percent_encoded(self):
+        url = clean_url("https://media.example.com/第01集/index.m3u8")
+        self.assertIn("%E7%AC%AC", url)
+        self.assertTrue(url.endswith("index.m3u8"))
 
     def test_ad_marker_is_not_certified_clean(self):
         def fake_manifest(_):
