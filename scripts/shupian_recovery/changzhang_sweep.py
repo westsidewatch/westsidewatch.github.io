@@ -17,6 +17,7 @@ from source_discovery import network_fetch, play_groups
 from four_category_round import BUCKETS, classification_evidence
 
 API = "https://api.changzhang.tv/api.php/provide/vod/"
+M3U8_API = "https://api.changzhang.tv/api.php/provide/vod/from/changzhangm3u8/"
 ROOT = Path(__file__).resolve().parent
 GOSPEL_WORDS = ("福音", "基督", "耶稣", "圣经", "耶穌", "聖經", "Jesus", "Christian", "Bible")
 CATEGORY_NEEDLES = {
@@ -26,8 +27,8 @@ CATEGORY_NEEDLES = {
     "gospel_media": ("福音", "基督", "宗教", "圣经", "聖經"),
 }
 
-def endpoint(**params):
-    return API + "?" + urlencode(params)
+def endpoint(*, base=API, **params):
+    return base + "?" + urlencode(params)
 
 def category_tree(classes, category):
     """Return provider-native type IDs including descendants, never guessed IDs."""
@@ -130,6 +131,33 @@ def scan(*, fetch=network_fetch, probe=None, max_pages=5, page_size=20,
                 detail[str(row["vod_id"])] = row
         if sleep:time.sleep(sleep)
     report["details_received"] = len(detail)
+    # The official provider offers a separate M3U8-only collection. If the
+    # comprehensive endpoint returns web-player groups only, retry those IDs
+    # against that canonical HLS collection without discarding original data.
+    missing_media = [ident for ident,row in detail.items() if not play_groups(row)]
+    report["hls_detail_fallback_requested"] = len(missing_media)
+    report["hls_detail_fallback_recovered"] = 0
+    for start in range(0,len(missing_media),detail_batch):
+        ids = missing_media[start:start+detail_batch]
+        try:
+            payload = fetch(endpoint(base=M3U8_API,ac="detail",ids=",".join(ids)))
+            rows = payload.get("list",[]) if isinstance(payload,dict) else []
+            if not isinstance(rows,list):
+                raise ValueError("Malformed M3U8-only API list")
+            for row in rows:
+                if not isinstance(row,dict) or row.get("vod_id") is None:
+                    continue
+                ident=str(row["vod_id"])
+                if ident in detail and play_groups(row):
+                    # Preserve the combined endpoint's editorial metadata.
+                    old = detail[ident]
+                    detail[ident] = {**old,
+                                     "vod_play_from":row.get("vod_play_from"),
+                                     "vod_play_url":row.get("vod_play_url")}
+                    report["hls_detail_fallback_recovered"] += 1
+        except Exception as exc:
+            report["errors"].append({"stage":"m3u8-only-fallback",
+                                     "batch":start, "error":str(exc)[:220]})
     candidates = []
     for ident, row in detail.items():
         groups = play_groups(row)
