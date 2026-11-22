@@ -73,6 +73,11 @@ fs.mkdirSync(dir,{recursive:true});
   assert.equal(page.url(),originalUrl,device+': first click must not navigate');
   assert(!(await page.locator('#dawn-book-detail').isVisible()),device+': candidate must not open internal canonical reader');
   assert.equal(await preview.locator('.dawn-expander__read').innerText(),'前往出版方查看此書');
+  const titleOS=await preview.locator('.dawn-expander__title').evaluate(el=>({
+   font:getComputedStyle(el).fontFamily,weight:getComputedStyle(el).fontWeight
+  }));
+  assert(/Chiron/i.test(titleOS.font)&&titleOS.weight==='200',
+   device+': Chinese book preview must use light OS Chiron title, got '+JSON.stringify(titleOS));
   const previewVisual=await preview.evaluate(el=>{
    const cover=el.querySelector('.dawn-expander__book');
    const image=cover?.querySelector('img');
