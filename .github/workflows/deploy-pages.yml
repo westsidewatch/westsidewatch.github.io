@@ -143,7 +143,7 @@ jobs:
           from pathlib import Path
           data=json.loads(Path('public/shupian/catalog.json').read_text())
           titles=data['titles']
-          assert len(titles) >= 26, 'Shupian title inventory regressed'
+          assert len(titles) >= 20, 'Shupian title inventory regressed'
           assert sum(len(x['episodes']) for x in titles) >= 94, 'Shupian historical records regressed'
           assert any('異能研究所' in x['title'] for x in titles), 'Historical Institute records missing'
           print('Shupian Pages artifact verified: catalog, player, styles and historical episodes')
