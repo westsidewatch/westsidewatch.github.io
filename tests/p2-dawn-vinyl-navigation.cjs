@@ -31,6 +31,7 @@ fs.mkdirSync(out,{recursive:true});
    await page.locator('#dawn-book-expanding-preview .dawn-expander__read').waitFor();
    assert(!(await page.locator('#dawn-book-detail').isVisible()),name+': first click must only preview the book');
    await page.locator('#dawn-book-expanding-preview .dawn-expander__read').click();
+   await page.locator('#dawn-book-detail').waitFor({state:'visible',timeout:20000});
    assert(await page.locator('#dawn-book-detail').isVisible(),name+': preview reader action did not open');
    assert((await page.locator('#dawn-book-title').innerText()).length>0,name+': book title missing');
    await page.locator('#dawn-book-back').click();
