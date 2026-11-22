@@ -44,7 +44,14 @@ fs.mkdirSync(out,{recursive:true});
     {waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length>=2,
     null,{timeout:35000});
-   await page.waitForTimeout(750);
+   // The first category previously went blank because Gutenberg's remote
+   // cover was chosen over real local Yale scans belonging to that category.
+   await page.waitForFunction(()=>{
+    const tile=document.querySelector('#dawn-classification-tree button.dawn-classification__sleeve');
+    const img=tile?.querySelector('img');
+    return Boolean(img?.complete&&img.naturalWidth>100&&
+      img.currentSrc.includes('/chinese-facsimile-covers/'));
+   },null,{timeout:15000});
    const categories=page.locator('#dawn-classification-tree button.dawn-classification__sleeve');
    await page.screenshot({path:path.join(out,name+'-chinese-category-cover-wall.png')});
    await categories.nth(1).click();
