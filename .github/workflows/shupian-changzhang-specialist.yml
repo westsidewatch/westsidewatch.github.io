@@ -75,27 +75,9 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add static/shupian/recovery/changzhang-round-status.json
             if ! git diff --cached --quiet; then
-              git commit -m "data(shupian): publish Changzhang experiment stage status [skip ci]"
+              git commit -m "data(shupian): publish Changzhang experiment stage status"
               git pull --rebase origin main
               git push origin HEAD:main
-            fi
-          fi
-      - name: Sync safe stage status to published gh-pages cinema
-        if: always()
-        run: |
-          if test -f static/shupian/recovery/changzhang-round-status.json; then
-            git fetch origin gh-pages
-            git worktree add /tmp/shupian-published origin/gh-pages
-            mkdir -p /tmp/shupian-published/shupian/recovery
-            cp static/shupian/recovery/changzhang-round-status.json /tmp/shupian-published/shupian/recovery/changzhang-round-status.json
-            python3 -m json.tool /tmp/shupian-published/shupian/recovery/changzhang-round-status.json >/dev/null
-            cd /tmp/shupian-published
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add shupian/recovery/changzhang-round-status.json
-            if ! git diff --cached --quiet; then
-              git commit -m "data(shupian): sync Changzhang evidence to published cinema"
-              git push origin HEAD:gh-pages
             fi
           fi
       - name: Preserve real API, catalog, manifest, segment, and failure evidence
