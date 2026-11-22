@@ -141,6 +141,11 @@ def source_probe(candidate, fetcher=fetch_manifest, segment_fetcher=probe_segmen
         entry["manifest"] = "failed"
         entry["error"] = sanitized_error(type(exc).__name__ + ": " + str(exc))
         entry["failure_class"] = failure_class(exc)
+    # A parsed manifest and a manifest HTTP failure are mutually exclusive.
+    # Segment failure details belong to segment_checks, not top-level manifest.
+    if entry["manifest"] == "parsed":
+        entry.pop("error", None)
+        entry.pop("failure_class", None)
     return entry
 
 def title_matches(title, keyword):
@@ -240,6 +245,8 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
         if prior and previous_observed_at:
             evidence["previous_observed_at_utc"] = previous_observed_at
         detail = probe(candidate)
+        if detail.get("manifest") == "parsed":
+            detail = {k: v for k, v in detail.items() if k not in ("error", "failure_class")}
         # Public report contains fingerprints, never raw media URLs.
         audits.append({"title": candidate["title"], "episode": candidate["episode"],
                        "provider": candidate["provider"], **evidence, **detail})
