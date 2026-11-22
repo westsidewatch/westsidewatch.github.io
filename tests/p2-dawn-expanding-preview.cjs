@@ -60,6 +60,10 @@ const url='http://127.0.0.1:4173/experiments/p2-0105-dawn-preview.html';
   await page.locator('#dawn-classification-tree button.dawn-classification__sleeve').first().click();
   await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-results .dawn-classification__book').length>=2,null,{timeout:45000});
   await page.locator('#dawn-classification-results .dawn-classification__book').first().click();
+  // The shared preview is loaded through a lazy ESM import on first use.
+  // Await the actual expanded region instead of racing its first frame.
+  await page.locator('#dawn-classification-results .dawn-expander')
+   .waitFor({state:'visible',timeout:15000});
   assert(await page.locator('#dawn-classification-results .dawn-expander').isVisible(),'Living classified books missing in-row preview');
   assert(!(await page.locator('#dawn-book-detail').isVisible()),'Living thumbnail must not navigate');
   await page.locator('#dawn-classification-results .dawn-expander__read').click();
