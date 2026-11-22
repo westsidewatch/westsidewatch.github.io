@@ -71,3 +71,9 @@ P2 01–04 不動 → 05 第一層 V9（保留） → 05 第二層
 - 對有 canonical Work ID 的單書卡與詳細頁，不再透過書名匹配其他書籍的封面或圖版。僅接受該 Work 資料的直接封面/圖像指標，缺圖保持文字排版。
 - 新增 `tests/p2-dawn-living-membership.cjs`；使用同等 mock Living root/shards 的 V8 執行測試驗證分類、Work ID 去重、36 上限的樣本模式、取消過期請求、禁止舊 keyword 路徑。主腳本與 adapter 靜態語法解析 PASS。
 - **限制：** mock 測試不等於 Cloudflare 的真實 browser E2E；全 21 分片的數據品質、總量、封面與操作仍未通過實站逐件檢驗，PR 保留 Draft。
+
+## 全量資料驗收與封面差異修復（2026-11-22）
+
+GitHub Actions [run #45001795311](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45001795311) 已實際跑完 449 個分片：Canonical 203448/21、Living 203448/21、封面實有 202428/407。Canon/Living 重複 ID 0、sha256 差異 0；封面 335 個 manifest count/sha256 漂移、對 Canonical 少 1020 Work ID，無重複 Work ID。圖像指標 200417，無圖 2011，未逐 URL 測試。
+
+現行 `scripts/audit-dawn-library-shards.cjs` v2 會產生 `coverReconciliation` 的逐 Work 和逐 shard 對賬清單，供原 Admission/Build pipeline 修復。P2 不能為求畫面整齊擅自改寫館藏權威或封面來源。
