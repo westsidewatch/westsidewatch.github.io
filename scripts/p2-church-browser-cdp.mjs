@@ -61,7 +61,7 @@ try{
   // Load and decompress the architectural GLB ONCE. The tour's own animation
   // loop reads proofFrame from location.search on every frame; stepping the
   // URL with replaceState requires no reloading or lost WebGL state.
-  const frames=[143,154,165,132,9,20,22,40,61,64,89,94,103,110,150,174,204,223,236,241,246,248,251];
+  const frames=[187,194,199,204,211,216,223,27,31,40,55,64,110,121,132,143,154,165,174,9,20,22,89,94,103,236,241,246,248,251];
   await send('Page.navigate',{
     url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frames[0]
   });
@@ -84,7 +84,8 @@ try{
           error:window.__tourError||null,
           hardware:window.__churchHardwareAudit||null,
           crossLight:window.__churchLightAudit||null,
-          spatial:window.__churchSpatialAudit||null
+          spatial:window.__churchSpatialAudit||null,
+          surface:window.__churchSurfaceAudit||null
         })`);
       }catch{continue;}
       if(state?.className==='ready')break;
@@ -100,7 +101,7 @@ try{
     if(state?.className!=='ready')throw Error('Church GLB not ready in browser '+frame+' '+JSON.stringify(state)+' '+errors.join('; '));
     if(!state.hardware || !Array.isArray(state.hardware.remaining) || state.hardware.remaining.length)
       throw Error('Door hardware still present at frame '+frame+' '+JSON.stringify(state.hardware));
-    if(!state.spatial || state.spatial.removed<3 || state.spatial.ghostRoofs<2)
+    if(!state.spatial || state.spatial.ghostRoofs<2 || !state.surface || state.surface.compared<5)
       throw Error('Spatial clearance mesh cleanup absent: '+JSON.stringify(state.spatial));
     if(frame>=40&&frame<=223&&state.spatial.ghostRoofVisible!==0)
       throw Error('Ghost roof still obscures inhabited spaces at frame '+frame);
@@ -127,6 +128,18 @@ try{
     }
     if(!clock||Math.abs(clock.at-frame)>0.01)
       throw Error('Actual rendered camera/time did not advance to proof frame '+frame+' '+JSON.stringify(clock));
+    if((frame>=187&&frame<=223)||(frame>=22&&frame<=64)){
+      const safety=await evaluate('window.__churchSafetyAudit');
+      console.log('P2_UPPER_ENTRANCE_CAMERA_'+frame+'='+JSON.stringify(safety));
+      if(!safety || safety.at!==frame)
+        throw Error('Collision telemetry missing in entrance/stairs at '+frame);
+      if(frame>=187 && (safety.cameraPenetrations||safety.forwardOcclusions))
+        throw Error('Upper stair camera still intersects geometry at '+frame+' '+JSON.stringify(safety));
+    }
+    if([27,31,187,194,199,204,211,216,223].includes(frame)){
+      const near=await evaluate('window.__churchMeshProbe?.(450,300,180)');
+      console.log('P2_UNFINISHED_REGION_MESH_'+frame+'='+JSON.stringify(near));
+    }
     if(frame>=132&&frame<=176){
       const safety=await evaluate('window.__churchSafetyAudit');
       const route=await evaluate('window.__churchRouteClearanceAudit');
