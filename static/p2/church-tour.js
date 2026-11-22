@@ -282,9 +282,11 @@ function chooseFinish(name, sourceMaterial) {
 // EXTERIOR ONLY: a single 240m ground plane previously covered the
 // -2.10m C-shaped sunken forum and concealed its original GLB treads.
 // Four strips leave the 18x18m architectural footprint completely open.
+// Stop the 240m ground strips from cutting the high-angle skyline.
+// Limit terrain to a modest perimeter around the real 18m church.
 const siteGround = [
-  [-51,-9,102,240], [69,-9,102,240],
-  [9,51,18,102], [9,-69,18,102]
+  [-6,-9,12,54], [24,-9,12,54],
+  [9,9,18,18], [9,-27,18,18]
 ];
 for(const [x,z,width,depth] of siteGround){
   const ground=new Mesh(new PlaneGeometry(width,depth), finishes.ground);
@@ -459,6 +461,31 @@ function updateMapleSeason(t,duration) {
   }
 }
 
+// Preserve doors, true stair treads, walls and the third-level overlook.
+// The original concept GLB also contained room-study slabs and ghost roof
+// panels which are NOT walkable head-clearance-safe in the sunken forum.
+const ghostRoofMeshes=[];
+const removedObstructions=[];
+function cleanOpenPublicSpaces(building){
+  building.updateMatrixWorld(true);
+  building.traverse(object=>{
+    if(!object.isMesh)return;
+    const n=modelName(object.name);
+    if(/roof (north|west).*ghost.cutaway/i.test(n)){
+      ghostRoofMeshes.push(object);
+      return;
+    }
+    const conceptualOverhead =
+      /^(?:v19 west mid .*occupied|v19 west mid .*principal|v13 west mid .*curved solid room.edge fascia|v11 nw north room|v11 nw curved outer gallery|v12 nw west receiving terrace|v12 west outer gallery)/i;
+    // Selected conceptual mid-level plates created low hanging ceilings across
+    // the open C forum. Remove these only, never V19 terrace steps or V13 high.
+    const routesidePost=/^v11 support post.*(?:northwest gallery inner|west mid public edge|north mid public edge)/i;
+    if(conceptualOverhead.test(n)||routesidePost.test(n)){
+      object.visible=false;object.castShadow=false;removedObstructions.push(object.name);
+    }
+  });
+}
+
 async function loadArchitecture() {
   if (typeof DecompressionStream !== "function") {
     throw new Error("Compressed GLB transport is unsupported");
@@ -503,6 +530,7 @@ async function loadArchitecture() {
     object.castShadow = !isGlazing && object.material !== finishes.leaves;
     object.receiveShadow = true;
   });
+  cleanOpenPublicSpaces(building);
   scene.add(building);
 
   // Read-only screen-space diagnostics: identify any unlabeled GLB component
@@ -750,6 +778,15 @@ function animate(now,forcedTime=null) {
     exposure:renderer.toneMappingExposure,
     beamAlignment:localBeamAxis.clone()
       .applyQuaternion(crossAirVolumes[0].quaternion).dot(crossRayUnit)
+  };
+  // Remove ghost-cutaway roof panels from ALL inhabited/terraced chapters;
+  // keep the actual east/south roof and full exterior profile intact.
+  for(const roof of ghostRoofMeshes) roof.visible = t<20 || t>232;
+  window.__churchSpatialAudit={
+    removed:removedObstructions.length,
+    names:removedObstructions,
+    ghostRoofs:ghostRoofMeshes.length,
+    ghostRoofVisible:ghostRoofMeshes.filter(x=>x.visible).length
   };
   const sample = positionAlongRoute(t);
   camera.position.set(sample.p[0], sample.p[1], sample.p[2]);
