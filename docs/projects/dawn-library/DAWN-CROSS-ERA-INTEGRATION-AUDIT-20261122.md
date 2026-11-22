@@ -78,3 +78,14 @@
 - **不假造字幕與譯本**：原文／繁中／雙語切換只能使用已物化的來源和可信翻譯，頁面若缺席則明確標示，不把 UI contract 視為正文完成。
 - **出圖來源**：封面原書→同一 Work 來源扉頁／插圖→透明的無圖 metadata 排版；不可使用跨作品借圖和黑色假封面。
 - **多雷探索觸發點**：真實需用但原技術缺少的原生轉場、IIIF zoom、圖像位址穩定性或海量索引渲染；先復用原 runtime，外來技術須核查開源授權／負擔／維護，再做隔離 Chromium 實驗。
+
+## 2026-11-22 新增：封面分片數量與出版過濾漂移（來源實測）
+
+驗證 `cover-preview/root.json` 與實際分片：第一分片 manifest 500，資料實有 463；第二分片 manifest 500，實際 items 499；第三分片 498；第十分片 498。這表示部分 manifest count/offset **不再準確反映範圍過濾後可展示的 Work 數量**。不能直接拿 203,448 除以 500 當公開有效封面數，也不能在縮短的分片中以舊 offset 切片，否則漏書、斷頁。
+
+P2 的 `p2-dawn-canonical-gallery.mjs` 已改為 `{shardIndex,indexInsideActualItems}` cursor，依 `data.items.length` 循序跨分片，60 張一頁；讀者的總數標示為「主書目」而不是「已全部核實的可讀書」。**原始 root / shard 零改動**；完整清點與重建各 shard sha256/count 的計畫需在專門的 canonical admission 流程進行，不得由 P2 覆寫權威來源。查核作為未解決資料一致性問題留在 Gate F。
+
+## 來源圖像錯配阻斷
+
+比對 `storefront.json` 已發現「精品書架」有一般科幻和小說，例如 *A Fighting Man of Mars*、*Confessions of Zeno*。之前 P2 三大入口把這些放在「光譜」，不符合原分類及福音閱讀定位。P2 新 `p2-dawn-editorial-art.mjs` 先依 `dawn-launch.json`、`p2-editorial-channels.json`、`p2-exhibitions/jerusalem-3000.json` 調取對應作品／有來源圖版，找不到時使用原書名排版，而不是借別書圖像。需做逐張實際圖片、權利與讀者文案驗收。
+
