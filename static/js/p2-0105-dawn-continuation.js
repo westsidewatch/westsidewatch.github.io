@@ -452,6 +452,7 @@
  function openCollection(origin='館藏總索引',title=''){
   if(!detail.hidden)closeBook();
   wall.hidden=true;catalogue.hidden=false;activePortal=origin==='館藏總索引'?'all':origin;
+  catalogue.dataset.view=activePortal==='all'?'index':'editorial';
   catalogueFocus.textContent=activePortal==='all'?'':origin;
   const catalogueTitle=$('#dawn-catalogue-title');
   if(catalogueTitle)catalogueTitle.textContent=activePortal==='all'?'全部館藏':origin;
