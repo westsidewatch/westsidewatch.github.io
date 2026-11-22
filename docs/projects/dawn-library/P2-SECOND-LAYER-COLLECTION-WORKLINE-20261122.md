@@ -106,3 +106,12 @@ GitHub Actions [run #45001795311](https://github.com/westsidewatch/westsidewatch
 - Cloudflare 隔離部署流程 [run 45005646644](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45005646644) 的 Hugo build/Cloudflare deploy steps SUCCESS，Chomium 原館藏回歸結果需另核對。預覽部署分支 `pr-1411`；預覽入口 `/experiments/p2-0105-dawn-preview.html?layer=second&d=28.4`。
 
 **不可宣稱：** 完整視覺得獎驗收、所有 203448 本的封面與閱讀權限、410 候選分片正式部署、正式主站合併；均未完成。
+
+
+## R61｜第二、三層不得重複版塊大刊頭
+
+**不可違反的既定層級**：版塊的獨立大刊頭只在 P2 第一層出現一次；進入 P2 第二、第三層後，版塊身份由最先出現的「經文方塊／鉛字母版」承接。不得在閱讀室、館藏、書籍詳情、導航或其他子層再次設置巨大的「黎明書局／DAWN LIBRARY／THE READING ROOM」版塊刊頭。這個規範已被此前工程多次確認，R57 重複刊頭屬實際設計回歸缺陷，R61 已從 HTML 實際刪除，不是單純隱藏。
+
+三個編輯欄目 **三晨星／策展集／光譜** 應在原同一館藏牆作為一組完整的同級入口呈現：三卡同 OS `--ws-harvest: #b8944a` 收穫黃色底版，同等結構、同等版式，Bodoni Moda SC 英文主標大、Chiron Hei HK WS 200 中文次標小，現有真實書籍圖像位於黃底內窗。桌面三欄同排；小螢幕有序折行；不得使用三種互不相干的淡色紙板或大面積黑底。
+
+變更檔案：`static/experiments/p2-0105-dawn-preview.html`、`static/css/p2-0105-dawn-integrated.css`、`static/js/p2-0105-dawn-continuation.js`；驗收 `tests/p2-dawn-os-visual-hierarchy.cjs` 與 `tests/p2-dawn-reading-hall.cjs` 已同步修改。保留原經文母版 iframe、三欄目真實資料、Living 7×42 分類、原 Codrops 展開書籍與 V9 轉場。正式主站未合併，仍只在隔離 PR #1411 驗收。
