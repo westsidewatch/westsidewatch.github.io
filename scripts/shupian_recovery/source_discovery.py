@@ -144,7 +144,7 @@ def search(providers, queries=(), pages=3, limit=30, discover=False, fetch=netwo
                                     if str(candidate.get("vod_id") or "") == record_id:
                                         groups = play_groups(candidate)
                                         if groups:
-                                            record = candidate
+                                            record = {**record, **{k: v for k, v in candidate.items() if v is not None}}
                                             hydrated += 1
                                         break
                             except Exception as exc:
