@@ -2,24 +2,24 @@
   "schema": 1,
   "source": "Changzhang",
   "origin": "https://changzhang.tv/help/app",
-  "observed_at_utc": "2026-11-22",
-  "scan_status": "LIVE_RESULT_NOT_YET_VERIFIED",
+  "observed_at_utc": "2026-11-22T10:20:57.893876+00:00",
+  "scan_status": "DISCOVERY_COMPLETE_UNVERIFIED",
   "history": {
     "date": "2026-11-20",
     "tested_titles": 12,
     "segment_sample_pass": 10
   },
   "today": {
-    "catalog_candidates": null,
-    "media_candidates": null,
-    "unique_hls": null,
-    "hls_sampled": 0,
-    "hls_sample_pass": 0,
-    "failure_count": null
+    "catalog_candidates": 1244,
+    "media_candidates": 834,
+    "unique_hls": 4553,
+    "hls_sampled": 12,
+    "hls_sample_pass": 9,
+    "failure_count": 0
   },
   "stages": {
-    "discovery": "NETWORK_BLOCKED_IN_LOCAL_ENVIRONMENT",
-    "ad_quality": "NOT_TESTED",
+    "discovery": "PARTIAL",
+    "ad_quality": "SAMPLED_NOT_CERTIFIED",
     "playback": "NOT_TESTED",
     "website": "DIAGNOSTIC_ONLY"
   },
@@ -29,33 +29,28 @@
     {
       "key": "latest_us_uk_series",
       "label": "最新美劇／英劇",
-      "catalog_ids": null,
-      "media_matches": null
+      "catalog_ids": 100,
+      "media_matches": 55
     },
     {
       "key": "japanese_anime",
       "label": "日本動漫",
-      "catalog_ids": null,
-      "media_matches": null
+      "catalog_ids": 100,
+      "media_matches": 70
     },
     {
       "key": "classic_films",
       "label": "經典電影",
-      "catalog_ids": null,
-      "media_matches": null
+      "catalog_ids": 1000,
+      "media_matches": 90
     },
     {
       "key": "gospel_media",
       "label": "福音影視",
-      "catalog_ids": null,
-      "media_matches": null
+      "catalog_ids": 46,
+      "media_matches": 35
     }
   ],
-  "errors": [
-    {
-      "stage": "local-network",
-      "reason": "This execution container cannot resolve api.changzhang.tv; not a source-zero result."
-    }
-  ],
-  "warning": "This is an unverified baseline; a fresh GitHub Actions result will replace it if and when the external scan executes."
+  "errors": [],
+  "warning": "A source is not certified ad-free or playable until actual playback, ad review and website acceptance."
 }
