@@ -415,12 +415,19 @@
       "sourceUrl": "https://tc.9marks.org/book/why-trust-the-bible-cht",
       "sourceKind": "publisher-book-detail",
       "access": "free official publisher ebook download for personal use only; no republication",
-      "coverUrl": null,
+      "coverUrl": "https://9marks-static.oss-cn-hongkong.aliyuncs.com/wp/2020/02/WhyTrusttheBible.CHT_.cover_.png?x-oss-process=image%2Fresize%2Cw_700",
       "admission": "candidate-only",
       "freeReading": {
         "status": "verified-free-download",
         "evidenceUrl": "https://tc.9marks.org/book/why-trust-the-bible-cht",
         "notes": "Official site provides a free EPUB download for personal reading"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://tc.9marks.org/book/why-trust-the-bible-cht",
+        "identityMatch": "exact Traditional Chinese work from 9Marks book page",
+        "rights": "external publisher image reference, no local reproduction",
+        "availability": "requires runtime load verification"
       }
     }
   ],
@@ -433,7 +440,7 @@
     "freeReadingConfirmed": 9,
     "freeReadingNotVerified": 2,
     "admissionRule": "Only works with publisher-verified free reading/download or free subscription are exposed in library; unverified and paid sources remain internal and unlisted",
-    "coverUrlCount": 8,
+    "coverUrlCount": 9,
     "eligibleFreeCount": 9
   }
 }
