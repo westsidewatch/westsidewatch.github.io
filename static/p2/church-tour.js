@@ -74,7 +74,12 @@ sanctuaryLight.position.set(15.5, 5.1, -1.3);
 sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
 
-/* CROSS LIGHT R12: feathered aperture, cross-shaped floor reflection, subtle atmospheric bounce. */
+/* CROSS LIGHT R14: original Blender V23 South Cross wall coordinates.
+ * Real aperture is centered at x=15, height=3.65m with a 0.23m slit.
+ * Earlier variants placed a second fake cross ~1.07m BELOW the true opening.
+ * Keep the real aperture unchanged and apply only aligned soft light.
+ */
+const crossAperture={x:15,y:3.65,z:-.19,height:7.3,width:6.0};
 function crossLightMask(kind){
   const size=384, canvas=document.createElement("canvas");canvas.width=canvas.height=size;
   const ctx=canvas.getContext("2d"),img=ctx.createImageData(size,size);
@@ -103,11 +108,14 @@ function luminousSurface(mask,opacity,glow){
     blending:2 // THREE.AdditiveBlending; physically light adds, never greys white walls
   });
 }
-const apertureGlow=new Mesh(new PlaneGeometry(4.2,4.9),luminousSurface(crossLightMask("cross"),.24,.96));
-apertureGlow.position.set(15,2.58,-.24);apertureGlow.name="Cross aperture diffuse radiance";
+const apertureGlow=new Mesh(
+  new PlaneGeometry(crossAperture.width+0.35,crossAperture.height+0.25),
+  luminousSurface(crossLightMask("cross"),.20,.95)
+);
+apertureGlow.position.set(crossAperture.x,crossAperture.y,crossAperture.z);apertureGlow.name="Cross aperture diffuse radiance";
 apertureGlow.renderOrder=3;scene.add(apertureGlow);
-const crossFloorLight=new Mesh(new PlaneGeometry(3.6,8.7),luminousSurface(crossLightMask("floor"),.30,.92));
-crossFloorLight.rotation.x=-Math.PI/2;crossFloorLight.position.set(15,.072,-4.7);
+const crossFloorLight=new Mesh(new PlaneGeometry(4.2,9.4),luminousSurface(crossLightMask("floor"),.28,.82));
+crossFloorLight.rotation.x=-Math.PI/2;crossFloorLight.position.set(15,.085,-5.0);
 crossFloorLight.name="Sanctuary sunlight floor bounce";crossFloorLight.renderOrder=3;
 scene.add(crossFloorLight);
 const crossAirVolumes=[];
@@ -116,7 +124,11 @@ for(const [turn,shift,z] of [[.92,-.12,-4.05],[-.92,.13,-4.4],[.38,0,-4.2]]){
   ray.rotation.y=turn;ray.position.set(15+shift,1.82,z);ray.renderOrder=3;
   ray.name="Cross soft atmospheric bounce";scene.add(ray);crossAirVolumes.push(ray);
 }
-window.__churchLightAudit={aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,version:"R13"};
+window.__churchLightAudit={
+  aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,
+  crossCenter:[crossAperture.x,crossAperture.y,crossAperture.z],
+  version:"R14"
+};
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
 function createSurface(kind) {
@@ -545,10 +557,16 @@ function updateDaylight(t,duration) {
   // Prevent a constant hard shaft of light remaining through the night.
   sanctuaryLight.intensity=.10+.22*daylight;
   const sunlight=daylight*daylight*(3-2*daylight);
-  apertureGlow.material.opacity=.075+.40*sunlight;
-  crossFloorLight.material.opacity=.095+.38*sunlight;
-  crossFloorLight.position.x=15+.38*Math.cos(angle);
-  crossFloorLight.position.z=-4.7+.30*Math.sin(angle*.55);
+  // Project the cross from its REAL height to the inhabited floor:
+  // high summer sun -> near altar; low sun -> elongated toward rear pews.
+  const solarFall=Math.max(9.8,25*solar-1.4);
+  const groundTravel=Math.min(9.7,Math.max(3.2,crossAperture.y*30/solarFall));
+  apertureGlow.material.opacity=.060+.35*sunlight;
+  crossFloorLight.material.opacity=.08+.40*sunlight;
+  crossFloorLight.position.z=-groundTravel;
+  crossFloorLight.position.x=crossAperture.x+
+    Math.max(-1.2,Math.min(1.2,crossAperture.y*(6+25*Math.cos(angle))/solarFall));
+  crossFloorLight.scale.set(.86+groundTravel*.025, .80+groundTravel*.045,1);
   for(let i=0;i<crossAirVolumes.length;i++){
     const ray=crossAirVolumes[i];
     ray.material.opacity=.004+.026*sunlight;
