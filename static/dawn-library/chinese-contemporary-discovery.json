@@ -5,7 +5,7 @@
   "scope": "Modern Chinese Christian works and translated classics; publisher-owned and institution-owned sources",
   "rightsPolicy": {
     "copyright": "No fulltext or cover mirroring without explicit authorization or documented reuse terms.",
-    "reading": "External source/publisher page is the authorized reading/acquisition route; free-subscription is not unrestricted download.",
+    "reading": "Free reading or free downloads only, including free subscriptions if publisher explicitly labels them free. Paid or unverified books are not reader-facing.",
     "workIdentity": "Discovery candidate IDs are not canonical Dawn Work IDs. Promotion requires Work identity, edition, rights, cover provenance, reading access."
   },
   "sources": [
@@ -117,6 +117,11 @@
         "identityMatch": "exact publisher product page image",
         "availability": "image link discovered but HTTP body and embedding not yet tested",
         "rights": "publisher-owned; display as external linked preview only; do not copy to repository"
+      },
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E4%B8%80%E5%80%8B%E7%B0%A1%E5%96%AE%E7%9A%84%E7%A5%88%E7%A6%B1%E6%96%B9%E6%B3%95-%E7%B5%A6%E7%90%86%E9%AB%AE%E5%B8%AB%E5%BD%BC%E5%BE%97%E7%9A%84%E4%BF%A1/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
       }
     },
     {
@@ -144,6 +149,11 @@
         "identityMatch": "exact publisher product page image",
         "availability": "image link discovered but HTTP body and embedding not yet tested",
         "rights": "publisher-owned; display as external linked preview only; do not copy to repository"
+      },
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E4%B8%8D%E4%BD%8F%E7%A6%B1%E5%91%8A/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
       }
     },
     {
@@ -164,7 +174,12 @@
       "sourceKind": "publisher-book-detail",
       "access": "publisher listing; sample/license must be checked",
       "coverUrl": null,
-      "admission": "candidate-only"
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "not-verified",
+        "evidenceUrl": "https://lutheranchinese.org/2026/04/17/getting-in-to-the-theology-of-concord-a-study-of-the-book-of-concord-2022/",
+        "notes": "Publisher bibliographic listing or excerpt; free complete reading/download not verified"
+      }
     },
     {
       "candidateId": "dawn:discovery:zh:2026:concordia-chinese-2021",
@@ -184,7 +199,12 @@
       "sourceKind": "publisher-book-detail",
       "access": "publisher sample available; full book not presumed licensed for repost",
       "coverUrl": null,
-      "admission": "candidate-only"
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "not-verified",
+        "evidenceUrl": "https://lutheranchinese.org/2026/04/03/the-book-of-concord-2021/",
+        "notes": "Publisher bibliographic listing or excerpt; free complete reading/download not verified"
+      }
     },
     {
       "candidateId": "dawn:discovery:zh:2026:tang-anthropology",
@@ -211,6 +231,11 @@
         "identityMatch": "exact publisher product page image",
         "availability": "image link discovered but HTTP body and embedding not yet tested",
         "rights": "publisher-owned; display as external linked preview only; do not copy to repository"
+      },
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E7%B3%BB%E7%B5%B1%E7%A5%9E%E5%AD%B8%E5%8F%A2%E6%9B%B807-%E5%87%A1%E4%BA%BA%E8%AB%96/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
       }
     },
     {
@@ -238,6 +263,11 @@
         "identityMatch": "exact publisher product page image",
         "availability": "image link discovered but HTTP body and embedding not yet tested",
         "rights": "publisher-owned; display as external linked preview only; do not copy to repository"
+      },
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E7%A5%9E%E6%81%A9%E5%85%AD%E8%A8%98/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
       }
     },
     {
@@ -258,7 +288,12 @@
       "sourceKind": "publisher-book-detail",
       "access": "free-subscription-on-publisher; reuse rights unknown",
       "coverUrl": null,
-      "admission": "candidate-only"
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E5%B8%AB%E6%AF%8D%E6%89%8B%E8%A8%98-%E6%9D%8E%E5%90%B3%E6%83%A0%E5%86%B0/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
+      }
     },
     {
       "candidateId": "dawn:discovery:zh:2026:dever-great-commission",
@@ -278,7 +313,12 @@
       "sourceKind": "publisher-book-detail",
       "access": "free publisher ePub link, personal reading only; copyright prohibits rehosting",
       "coverUrl": null,
-      "admission": "candidate-only"
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-download",
+        "evidenceUrl": "https://tc.9marks.org/book/understanding-the-great-commission-cht",
+        "notes": "Official site provides a free EPUB download for personal reading"
+      }
     },
     {
       "candidateId": "dawn:discovery:zh:2026:helm-preaching",
@@ -298,7 +338,12 @@
       "sourceKind": "publisher-book-detail",
       "access": "free publisher ePub; personal reading only, no mirrored copy",
       "coverUrl": null,
-      "admission": "candidate-only"
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-download",
+        "evidenceUrl": "https://tc.9marks.org/book/expositional-preaching-cht",
+        "notes": "Official site provides a free EPUB download for personal reading"
+      }
     },
     {
       "candidateId": "dawn:discovery:zh:2026:anyabwile-member",
@@ -318,7 +363,12 @@
       "sourceKind": "publisher-book-detail",
       "access": "free official publisher ebook or download, personal use only; no reproduction",
       "coverUrl": null,
-      "admission": "candidate-only"
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-download",
+        "evidenceUrl": "https://tc.9marks.org/book/what-is-a-healthy-church-member-cht",
+        "notes": "Official site provides a free EPUB download for personal reading"
+      }
     },
     {
       "candidateId": "dawn:discovery:zh:2026:gilbert-trust-bible",
@@ -338,7 +388,12 @@
       "sourceKind": "publisher-book-detail",
       "access": "free official publisher ebook download for personal use only; no republication",
       "coverUrl": null,
-      "admission": "candidate-only"
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-download",
+        "evidenceUrl": "https://tc.9marks.org/book/why-trust-the-bible-cht",
+        "notes": "Official site provides a free EPUB download for personal reading"
+      }
     }
   ],
   "audit": {
@@ -346,6 +401,9 @@
     "translationCount": 8,
     "originalCount": 3,
     "proof": "Official/publisher title listings linked above; no full text or cover copied",
-    "validatedAt": "2026-11-22"
+    "validatedAt": "2026-11-22",
+    "freeReadingConfirmed": 9,
+    "freeReadingNotVerified": 2,
+    "admissionRule": "Only works with publisher-verified free reading/download or free subscription are exposed in library; unverified and paid sources remain internal and unlisted"
   }
 }
