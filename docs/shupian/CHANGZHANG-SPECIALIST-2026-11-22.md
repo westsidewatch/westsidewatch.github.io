@@ -48,3 +48,36 @@
 - 專項測試：`scripts/shupian_recovery/test_changzhang_sweep.py`
 - CI：`.github/workflows/shupian-changzhang-specialist.yml`
 - 2026-11-20 原始證據：`paradiso-sweep-evidence-2026-11-20.tar.gz` 的 `sweep.json` 和 `REPORT.md`（用戶檔案，未隨意公開分發）
+
+## 2026-11-22 第二輪同站四關施工：實際變更與阻塞
+
+**本輪目標固定：廠長 Changzhang，四個內容桶同時搜尋。** 不能以某部劇、舊《The Institute》或別站代替。本輪必須依 ① 搜尋 → ② 去廣告／品質 → ③ 播放驗證 → ④ 正式網站落地，且每關要有當次證據。
+
+### 第①關——廠長原生搜尋
+
+- 原始 `paradiso_engine_v1.zip` 單元測試已在本地執行：10/10 通過。**只證明原始程序離線回歸**。
+- 專項掃描器 `scripts/shupian_recovery/changzhang_sweep.py` 已接廠長分類樹、逐類分頁、批量詳情及 M3U8 地址去重。
+- 新增 **廠長 M3U8 專用接口二次查詢** `https://api.changzhang.tv/api.php/provide/vod/from/changzhangm3u8/`：當綜合詳情只有網頁播放組或未含可識別媒體地址時，用同一作品 ID 查專用來源；不刪除既有作品資料。新增 `test_hls_only_endpoint_recovers_missing_combined_stream` 的回歸測試。
+- 本地 `https://api.changzhang.tv/api.php/provide/vod/?ac=list&pg=1` 仍因 `NameResolutionError` 失敗；對 `https://github.com` 的 DNS 也失敗。這是**當前容器連線障礙**，不等於廠長無片源。
+- GitHub runner 專項 Workflow 有推送觸發和 artifact 上傳，但**目前無可讀取的最新運行結果**；不能聲稱已取得新的廠長片目／M3U8。
+
+### 第②關——廣告與來源品質
+
+- `scripts/shupian_source_audit.py` 已加入 `ad_manifest_signals()`，區分 HLS cue／DATERANGE／SCTE 等標記、可疑廣告分段名稱，以及單純三位置 HTTP bytes 成功；未見標記不等於無廣告。
+- 新增 `test_hls_ad_signals.py`，分開測試 manifest ad cues、廣告路徑、未見標記但不應宣稱乾淨。
+- 新版廠長的**當次 HLS 來源仍未擷取成功**，所以廣告判定無當次實測證據；絕不以 2026-11-20 歷史數據取代。
+
+### 第③關——播放器與實際視頻
+
+- 原網站播放器已有 HLS.js／Safari native HLS 及播放狀態處理，未擅自修改已存在的片庫。
+- **目前未取得廠長來源的當次首幀、跳轉、連續播放或全片廣告結果**；第③關未通過。不得把單元測試或 HTTP 分段抽樣算成實際播放。
+
+### 第④關——「数片」網頁落地
+
+- 已在 `main/static/shupian/index.html` **和真正發布的 `gh-pages/shupian/index.html`** 增加同一個克制的廠長實驗狀態區，包含四類別及四關結果。沒有驗證的新來源不會變成可播放卡片。
+- `main/static/shupian/recovery/changzhang-round-status.json` 與 `gh-pages/shupian/recovery/changzhang-round-status.json` 均已建立，記錄**2026-11-20 歷史 10/12 基準**與「本輪結果未取得」。新 `changzhang_status_export.py` 將 runner 原始掃描 JSON 轉成匿名化、無原始媒體地址的實驗摘要。
+- `.github/workflows/shupian-changzhang-specialist.yml` 已增加**自動同步安全摘要至 main 和 gh-pages**，保留詳細結果只在 Actions artifacts；後續實際執行時可更新網站驗收資訊，但不能提前聲稱跑通。
+- 本次已直接檢查兩個分支的摘要 JSON，狀態均仍是 `LIVE_RESULT_NOT_YET_VERIFIED`。**網站的實驗狀態呈現已寫入發布分支，不等於站內影片已驗收或 CDN 實際播放成功。**
+
+**當次結論：四關尚未閉環，不得標記「完成」。** 已落地的是診斷／搜尋算法與網站證據面板；缺的是可連外環境的真實廠長 JSON、HLS 與媒體播放結果。下輪應從取得 GitHub Actions 實際運行日誌／artifact 著手，直接排除 runner 連線、程式 API 格式及 HLS 失敗根因，不要重新製作網站或遺失已修復的掃描器。
+
