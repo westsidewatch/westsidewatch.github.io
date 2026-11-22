@@ -49,6 +49,38 @@ def bucket_queries(key: str, year: int | None = None, extras=()):
         terms.extend(variants(value))
     return list(dict.fromkeys(terms))
 
+def classification_evidence(candidate, bucket, year):
+    """Classify by record metadata, not by the search words used to find it.
+
+    Insufficient metadata is explicitly UNKNOWN rather than a false positive.
+    """
+    title = str(candidate.get("title") or "").lower()
+    typ = str(candidate.get("type_name") or "").lower()
+    kind = str(candidate.get("class") or "").lower()
+    area = str(candidate.get("area") or "").lower()
+    blob = " ".join((title, typ, kind, area))
+    try:
+        release_year = int(str(candidate.get("year") or "")[:4])
+    except (ValueError, TypeError):
+        release_year = None
+    def has(*words):
+        return any(w in blob for w in words)
+    if bucket == "latest_us_uk_series":
+        category = has("欧美剧", "美剧", "英剧", "美国剧", "英国剧", "us tv", "british tv")
+        recent = release_year is not None and year - 1 <= release_year <= year
+        return "MATCH" if category and recent else "UNKNOWN" if category and release_year is None else "NO_MATCH"
+    if bucket == "japanese_anime":
+        anime = has("动漫", "动画", "anime", "番剧", "アニメ")
+        japan = has("日本", "日韩", "japan", "jp")
+        return "MATCH" if anime and japan else "UNKNOWN" if anime and not area else "NO_MATCH"
+    if bucket == "classic_films":
+        film = has("电影", "劇情片", "剧情片", "film", "movie", "动作片", "喜剧片", "战争片")
+        return "MATCH" if film and release_year is not None and release_year <= 2000 else "UNKNOWN" if film and release_year is None else "NO_MATCH"
+    if bucket == "gospel_media":
+        gospel = has("基督", "福音", "聖經", "圣经", "耶稣", "耶穌", "christian", "gospel", "bible", "jesus")
+        return "MATCH" if gospel else "UNKNOWN"
+    raise KeyError(bucket)
+
 def round_scan(providers, *, year=None, pages=2, limit=30, fetch=None, extras=None, query_budget=None):
     """Run ALL four category sweeps, regardless of failures in other buckets."""
     if not providers:
@@ -58,11 +90,27 @@ def round_scan(providers, *, year=None, pages=2, limit=30, fetch=None, extras=No
               "warning": "Candidates have not yet passed ad-filter, decode, browser playback, or website publication."}
     # Each category queries the same broad catalog pages. Avoid redundant requests.
     cache = {}
+    host_failures = {}
     upstream = fetch if fetch is not None else network_fetch
     def memo_fetch(url):
+        from urllib.parse import urlsplit
+        hostname = urlsplit(url).hostname or ""
+        if hostname in host_failures:
+            raise OSError("HOST_UNREACHABLE: " + host_failures[hostname])
         if url not in cache:
-            cache[url] = upstream(url)
-        return cache[url]
+            try:
+                cache[url] = (True, upstream(url))
+            except Exception as exc:
+                message = str(exc)[:220]
+                cache[url] = (False, message)
+                # A DNS failure is infrastructural: do not issue 200 requests
+                # against a hostname that cannot be resolved.
+                if any(s in message.lower() for s in ("name resolution", "getaddrinfo", "gaierror", "temporary failure in name resolution")):
+                    host_failures[hostname] = message
+        success, result = cache[url]
+        if not success:
+            raise OSError(result)
+        return result
     for key, cfg in BUCKETS.items():
         queries = bucket_queries(key, year=output["year"],
                                  extras=(extras or {}).get(key, ()))
@@ -71,8 +119,12 @@ def round_scan(providers, *, year=None, pages=2, limit=30, fetch=None, extras=No
         opts = dict(pages=pages, limit=limit, discover=True)
         opts["fetch"] = memo_fetch
         result = search(providers, queries, **opts)
+        for candidate in result["candidates"]:
+            candidate["category_evidence"] = classification_evidence(candidate, key, output["year"])
         output["categories"][key] = {
             "label": cfg["label"], "queries": queries,
+            "matched_count": sum(c["category_evidence"] == "MATCH" for c in result["candidates"]),
+            "unclassified_count": sum(c["category_evidence"] == "UNKNOWN" for c in result["candidates"]),
             "provider_count": len(providers), "probe_count": len(result["probes"]),
             "error_count": len(result["errors"]),
             "candidate_count": len(result["candidates"]),
@@ -82,6 +134,8 @@ def round_scan(providers, *, year=None, pages=2, limit=30, fetch=None, extras=No
         }
     output["totals"] = {
         "categories": len(output["categories"]),
+        "unique_candidates": len({(c["provider"], str(c["id"] or c["title"])) for b in output["categories"].values() for c in b["candidates"]}),
+        "category_matches": sum(b["matched_count"] for b in output["categories"].values()),
         "probes": sum(v["probe_count"] for v in output["categories"].values()),
         "candidates": sum(v["candidate_count"] for v in output["categories"].values()),
         "errors": sum(v["error_count"] for v in output["categories"].values()),
