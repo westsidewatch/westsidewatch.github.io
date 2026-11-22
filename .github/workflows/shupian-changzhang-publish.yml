@@ -1,0 +1,47 @@
+name: Publish verified Changzhang diagnostics to cinema
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'static/shupian/recovery/changzhang-round-status.json'
+      - '.github/workflows/shupian-changzhang-publish.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: shupian-changzhang-status-publisher
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 1
+      - name: Read canonical source of truth from main and validate JSON
+        run: |
+          git fetch --depth=1 origin main
+          mkdir -p shupian/recovery
+          git show FETCH_HEAD:static/shupian/recovery/changzhang-round-status.json > /tmp/changzhang-round-status.json
+          python3 -m json.tool /tmp/changzhang-round-status.json >/dev/null
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('/tmp/changzhang-round-status.json').read_text())
+          assert data['source']=='Changzhang'
+          assert data['schema']==1
+          assert isinstance(data.get('stages'),dict)
+          assert 'today' in data
+          print('Validated canonical four-stage Changzhang status')
+          PY
+          cp /tmp/changzhang-round-status.json shupian/recovery/changzhang-round-status.json
+      - name: Commit validated status to published cinema branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add shupian/recovery/changzhang-round-status.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data(shupian): sync validated Changzhang experiment status"
+            git push origin HEAD:gh-pages
+          fi
