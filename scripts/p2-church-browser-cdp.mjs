@@ -85,7 +85,7 @@ try{
       throw Error('Door hardware still present at frame '+frame+' '+JSON.stringify(state.hardware));
     if(!state.hardware.removed?.some(name=>/moving.pull/i.test(name)))
       throw Error('Known V33 moving_pull geometry was not removed from live GLB scene: '+JSON.stringify(state.hardware));
-    if(!state.crossLight?.aperture || !state.crossLight?.floor || state.crossLight.sheets!==3)
+    if(!state.crossLight?.aperture || !state.crossLight?.floor || state.crossLight.sheets!==3 || !state.crossLight.additive)
       throw Error('Cross illumination incomplete at frame '+frame);
 
     await sleep(700);
