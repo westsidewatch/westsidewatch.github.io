@@ -1,0 +1,32 @@
+name: PARADISO four-category discovery live experiment
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/shupian-four-category-discovery.yml'
+permissions:
+  contents: read
+jobs:
+  discovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run all four categories with limited query budget
+        continue-on-error: true
+        run: |
+          python3 scripts/shupian_recovery/four_category_round.py \
+            --pages 1 --limit 5 --query-budget 2 --request-timeout 6 \
+            --output shupian-four-category-discovery.json
+      - name: Preserve complete evidence (not public playback approval)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shupian-four-category-discovery
+          path: shupian-four-category-discovery.json
+          if-no-files-found: warn
