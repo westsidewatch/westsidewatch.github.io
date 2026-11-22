@@ -21,13 +21,13 @@ jobs:
           python-version: '3.12'
       - name: Unit regression (including original recovered core)
         run: python3 -m unittest discover -s scripts/shupian_recovery -p 'test_*.py' -v
-      - name: Live search for new titles, NOT The Institute
+      - name: Repeat source scan for Black Mirror and Sherlock HLS segments
         id: discovery
         continue-on-error: true
         run: |
           python3 scripts/shupian_recovery/discover_sources.py \
             --keywords '黑鏡' '神探夏洛克' \
-            --max-audits 12 \
+            --max-audits 24 \
             --report static/shupian/recovery/engine-live-round.json
       - name: Verify report schema and no fake catalog admission
         run: |
@@ -44,6 +44,7 @@ jobs:
           print('Provider failures:',data['provider_queries_failed'])
           print('Unique media candidates:',data['unique_media_candidates'])
           print('Manifest inspections passed:',data['manifests_parsed'])
+          print('Start/middle/end segment checks passed:',data.get('segment_sample_pass',0))
           PY
       - name: Commit sanitized evidence to website (not playback approval)
         run: |
