@@ -1038,3 +1038,9 @@
  #dawn-second .dawn-classification__result-heading p{margin-top:12px}
  #dawn-second .dawn-classification__book-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 }
+
+/* The catalogue landing is the vinyl classification wall. The old 85-page
+   bibliographic catalogue is accessed through its own "全部書目" jacket only. */
+#dawn-second .dawn-catalogue__nav[hidden],
+#dawn-second .dawn-catalogue__works[hidden],
+#dawn-second .dawn-catalogue__more[hidden]{display:none!important}
