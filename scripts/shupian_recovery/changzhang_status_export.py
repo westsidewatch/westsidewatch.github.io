@@ -16,20 +16,21 @@ def public_report(scan):
     candidates=scan.get("candidates", [])
     hls_checks=scan.get("media_samples", [])
     good_hls=sum(x.get("result",{}).get("status")=="segment-bytes-sampled" for x in hls_checks)
+    ad_suspects=sum(bool(x.get("result",{}).get("ad_signals",{}).get("suspected")) for x in hls_checks)
     status=str(scan.get("status") or "NOT_RUN")
     catalog=scan.get("unique_catalog_ids",0)
     media=scan.get("unique_hls_urls",0)
     # A three-point segment probe does not certify ad-free playback or allow rehosting.
-    progress = {"discovery":"PARTIAL" if media else "BLOCKED",
-                "ad_quality":"SAMPLED_NOT_CERTIFIED" if hls_checks else "NOT_TESTED",
+    progress = {"discovery":("PARTIAL" if media else "BLOCKED" if status in ("INFRASTRUCTURE_OR_API_FAILURE","PARTIAL_WITH_ERRORS") else "NO_MEDIA_FOUND"),
+                "ad_quality":("AD_CUES_SUSPECTED" if ad_suspects else "SAMPLED_NOT_CERTIFIED" if hls_checks else "NOT_TESTED"),
                 "playback":"NOT_TESTED",
                 "website":"DIAGNOSTIC_ONLY"}
     summary={
         "schema":1, "source":"Changzhang", "origin":"https://changzhang.tv/help/app",
         "observed_at_utc":datetime.now(timezone.utc).isoformat(),
         "scan_status":status, "history":{"date":"2026-11-20","tested_titles":12,"segment_sample_pass":10},
-        "today":{"catalog_candidates":catalog,"media_candidates":scan.get("media_candidate_titles",0),
-                 "unique_hls":media,"hls_sampled":len(hls_checks),"hls_sample_pass":good_hls,
+        "today":{"catalog_candidates":(None if status=="INFRASTRUCTURE_OR_API_FAILURE" else catalog),"media_candidates":(None if status=="INFRASTRUCTURE_OR_API_FAILURE" else scan.get("media_candidate_titles",0)),
+                 "unique_hls":(None if status=="INFRASTRUCTURE_OR_API_FAILURE" else media),"hls_sampled":len(hls_checks),"hls_sample_pass":good_hls,"manifest_ad_suspects":ad_suspects,
                  "failure_count":len(scan.get("errors",[]))},
         "stages":progress,"fully_verified_clean":0,"published_playable_sources":0,
         "categories":[{"key":k,"label":label,"catalog_ids":buckets.get(k,{}).get("candidate_ids",0),
