@@ -26,35 +26,37 @@
 </style>
 </head><body>
 <header><div class="logo">数<b>片</b></div><div class="upper">CINEMA REALE / FILM ARCHIVE</div></header>
-<section class="hero"><div class="upper accent">CINEMA · ARCHIVE · 2026</div><h1>Cinema<br><em>reale.</em></h1><p>恢復中的電影與劇集片庫。已找回的歷史驗收、未恢復的片源分開顯示；尚無播放來源的作品不會假裝可播。</p></section>
-<nav><div class="tabs"><button data-category="all" aria-pressed="true">全部作品</button><button data-category="film" aria-pressed="false">電影</button><button data-category="series" aria-pressed="false">劇集</button><button data-category="history" aria-pressed="false">歷史驗收</button></div><input id="search" type="search" placeholder="搜尋片名 / Search" aria-label="搜尋作品"></nav>
-<main><div class="head"><h2>Selected works <i>/</i> 片庫</h2><span id="totals" class="upper">1 TITLE</span></div><div id="grid" class="grid"></div><div id="empty" class="empty" hidden>沒有符合搜尋條件的作品。</div><section class="czh-audit" aria-labelledby="czh-title"><div class="czh-kicker">CHANGZHANG / ENGINE EXPERIMENT</div><h2 id="czh-title">廠長片源 · 實驗驗收</h2><p id="czh-summary" role="status" aria-live="polite">正在讀取實測紀錄；沒有通過驗證的來源不會顯示成可播放。</p><div class="czh-categories" id="czh-categories"></div><div class="czh-steps" id="czh-steps"></div><a href="https://github.com/westsidewatch/westsidewatch.github.io/actions/workflows/shupian-changzhang-specialist.yml" target="_blank" rel="noopener noreferrer">查看本輪實驗與原始證據 ↗</a></section><section class="czh-audit" aria-labelledby="engine-title"><div class="czh-kicker">PARADISO / SOURCE ENGINE</div><h2 id="engine-title">本輪片源搜尋 · 實測</h2><p id="engine-observed">正在讀取搜尋及驗證紀錄。</p><div class="czh-categories" id="engine-metrics"></div><div id="engine-episode-results" class="engine-results" aria-label="逐集 HLS 與分段檢查結果"></div><div class="czh-steps" id="engine-stages"></div><p id="engine-errors"></p><a href="https://github.com/westsidewatch/westsidewatch.github.io/actions/workflows/shupian-discovery-cycle.yml" target="_blank" rel="noopener noreferrer">查看自動搜尋任務與測試證據 ↗</a></section></main>
-<footer>数片 / CINEMA REALE — 已記錄來源不等於即時播放驗收。資料來源保留於各作品內。</footer>
-<dialog id="player"><div class="playerhead"><div><div class="upper accent">NOW SCREENING</div><h2 id="player-title">影片</h2></div><button id="close" aria-label="關閉">×</button></div><div class="playerbody"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><p id="status" role="status" aria-live="polite"></p><p><a id="source" target="_blank" rel="noopener noreferrer">查看原始典藏來源 ↗</a></p></div><aside class="episodebar"><div class="upper">EPISODE INDEX</div><div id="episodes"></div></aside></div></dialog>
-<script id="catalog" type="application/json">[{"id":"the-institute-historical","title":"靈異特工局／異能研究所","originalTitle":"The Institute","type":"series","category":"美英劇集","year":2025,"country":"美國","language":"英語","summary":"歷史舊庫恢復：第一季8集、第二季此前播出2集，曾完成108處M3U8分段解碼抽樣驗收。僅第一季第1集的舊來源地址已找回；其他9集的舊地址仍待恢復，不代表驗收被撤銷。","genre":["美劇","懸疑","科幻"],"posterStyle":"custom","posterHeadline":"THE INSTITUTE","historicalVerification":"2026-11-21前已完成抽樣驗收：S1E1 54處，其餘9集各6處；抽樣畫面未見賭場廣告。不是全片逐秒審核。","episodes":[{"number":1,"label":"第一季 第01集","sources":[{"name":"舊庫 M3U8 · 歷史已抽樣驗收（目前可用性未複測）","format":"m3u8","url":"https://svip.czzyplay.com/play/37420/e1/index.m3u8"}],"historicalVerification":"historical-sampled-pass"},{"number":2,"label":"第一季 第02集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":3,"label":"第一季 第03集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":4,"label":"第一季 第04集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":5,"label":"第一季 第05集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":6,"label":"第一季 第06集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":7,"label":"第一季 第07集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":8,"label":"第一季 第08集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":9,"label":"第二季 第01集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":10,"label":"第二季 第02集","sources":[],"historicalVerification":"historical-sampled-pass"}],"posterUrl":"https://stephenking.com/images/television/institute.jpg","posterAttribution":"Stephen King official website, The Institute MGM+ promotional artwork","posterSourcePage":"https://stephenking.com/new-releases/index.html","posterFallback":"editorial","sourcePage":"https://www.classification.gov.au/titles/institute-season-1","rightsStatus":"Official media and poster references verified; old HLS URL is historical source evidence, not public rebroadcast permission.","availability":"historical-source-recovery","posterRights":"Promotional imagery; usage subject to original rightsholders.","posterFallbackUrl":"https://www.classification.gov.au/sites/default/files/styles/poster_desktop_2x/public/posters/7JXZdWifaa6wL0XLRi0GJOlOA8y.jpg?itok=szoDJu43"},{"id":"black-mirror-s1-restoration","title":"黑鏡 第一季","originalTitle":"Black Mirror","type":"series","category":"美英劇集","year":2011,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Black Mirror","posterWikiTitle":"Black Mirror","posterSourcePage":"https://en.wikipedia.org/wiki/Black_Mirror","sourcePage":"https://en.wikipedia.org/wiki/Black_Mirror","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"第一季 第01集","sources":[],"verification":"missing-original-media-source"},{"number":2,"label":"第一季 第02集","sources":[],"verification":"missing-original-media-source"},{"number":3,"label":"第一季 第03集","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://image.tmdb.org/t/p/w500/o9RsvM05A4lxnqDjEQxubzEqE9v.jpg","posterAttribution":"TMDb Black Mirror season 1 artwork","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"sherlock-s1-restoration","title":"神探夏洛克 第一季","originalTitle":"Sherlock","type":"series","category":"美英劇集","year":2010,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Sherlock","posterWikiTitle":"Sherlock (TV series)","posterSourcePage":"https://en.wikipedia.org/wiki/Sherlock_(TV_series)","sourcePage":"https://en.wikipedia.org/wiki/Sherlock_(TV_series)","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"第一季 第01集","sources":[],"verification":"missing-original-media-source"},{"number":2,"label":"第一季 第02集","sources":[],"verification":"missing-original-media-source"},{"number":3,"label":"第一季 第03集","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://img-s1.onedio.com/id-697dfc4d5cabfdd88094222c/rev-0/w-900/h-1350/f-jpg/s-07cbbaf4bce111ab8f49afeda112407cac5561ec.jpg","posterAttribution":"Onedio Sherlock series promotional artwork","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"spirited-away-restoration","title":"千與千尋","originalTitle":"Spirited Away","type":"film","category":"經典電影","year":2001,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Spirited Away","posterWikiTitle":"Spirited Away","posterSourcePage":"https://en.wikipedia.org/wiki/Spirited_Away","sourcePage":"https://en.wikipedia.org/wiki/Spirited_Away","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://ogre.natalie.mu/media/news/eiga/2021/1127/ghibli_202111_07.jpg?imdensity=1&imwidth=750","posterAttribution":"Natalie Studio Ghibli Japanese poster","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"inception-restoration","title":"盜夢空間","originalTitle":"Inception","type":"film","category":"經典電影","year":2010,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Inception","posterWikiTitle":"Inception","posterSourcePage":"https://en.wikipedia.org/wiki/Inception","sourcePage":"https://en.wikipedia.org/wiki/Inception","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://artofthemovies.co.uk/cdn/shop/files/inception_advance_SD18120_B-731214_920c5dfe-8d66-47c7-af74-11b98a83ebbf.jpg?v=1737545739","posterAttribution":"Art of the Movies Inception one-sheet","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"shawshank-restoration","title":"刺激1995","originalTitle":"The Shawshank Redemption","type":"film","category":"經典電影","year":1994,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"The Shawshank Redemption","posterWikiTitle":"The Shawshank Redemption","posterSourcePage":"https://en.wikipedia.org/wiki/The_Shawshank_Redemption","sourcePage":"https://en.wikipedia.org/wiki/The_Shawshank_Redemption","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://cdns.klimg.com/kapanlagi.com/p/theshawshankredemptionnn.jpeg","posterAttribution":"Kapanlagi Shawshank promotional poster","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"forrest-gump-restoration","title":"阿甘正傳","originalTitle":"Forrest Gump","type":"film","category":"經典電影","year":1994,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Forrest Gump","posterWikiTitle":"Forrest Gump","posterSourcePage":"https://en.wikipedia.org/wiki/Forrest_Gump","sourcePage":"https://en.wikipedia.org/wiki/Forrest_Gump","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://artofthemovies.co.uk/cdn/shop/files/forrest_gump_advance_EB17826_B.jpg?v=1717512372&width=2048","posterAttribution":"Art of the Movies Forrest Gump one-sheet","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"matrix-restoration","title":"駭客任務","originalTitle":"The Matrix","type":"film","category":"經典電影","year":1999,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"The Matrix","posterWikiTitle":"The Matrix","posterSourcePage":"https://en.wikipedia.org/wiki/The_Matrix","sourcePage":"https://en.wikipedia.org/wiki/The_Matrix","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://images.squarespace-cdn.com/content/v1/5ef39ba2909bf936034233da/1593037171146-7C6NKU2VV4QK6TS3CBUO/TheMatrix.jpg","posterAttribution":"Century City Entertainment The Matrix poster","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"pulp-fiction-restoration","title":"黑色追緝令","originalTitle":"Pulp Fiction","type":"film","category":"經典電影","year":1994,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Pulp Fiction","posterWikiTitle":"Pulp Fiction","posterSourcePage":"https://en.wikipedia.org/wiki/Pulp_Fiction","sourcePage":"https://en.wikipedia.org/wiki/Pulp_Fiction","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://static.posters.cz/image/1300/affiches-et-posters/pulp-fiction-i101220.jpg","posterAttribution":"Europosters Pulp Fiction one-sheet","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"titanic-restoration","title":"鐵達尼號","originalTitle":"Titanic","type":"film","category":"經典電影","year":1997,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Titanic","posterWikiTitle":"Titanic (1997 film)","posterSourcePage":"https://en.wikipedia.org/wiki/Titanic_(1997_film)","sourcePage":"https://en.wikipedia.org/wiki/Titanic_(1997_film)","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://cdn.prod.website-files.com/5b7ee9ed1bd1a90c738feda2/67d09f8002993a2b3aa6bb76_s-l1200.jpg","posterAttribution":"Manship Theatre Titanic theatrical poster","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"schindlers-list-restoration","title":"辛德勒的名單","originalTitle":"Schindler's List","type":"film","category":"經典電影","year":1993,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Schindler's List","posterWikiTitle":"Schindler's List","posterSourcePage":"https://en.wikipedia.org/wiki/Schindler%27s_List","sourcePage":"https://en.wikipedia.org/wiki/Schindler%27s_List","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://images.affiches-et-posters.com/albums/3/4600/4600-affiche-du-film-la-liste-de-schindler.jpg","posterAttribution":"Affiches-et-Posters Schindler's List poster","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"cinema-paradiso-restoration","title":"新天堂樂園","originalTitle":"Cinema Paradiso","type":"film","category":"經典電影","year":1988,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Cinema Paradiso","posterWikiTitle":"Cinema Paradiso","posterSourcePage":"https://en.wikipedia.org/wiki/Cinema_Paradiso","sourcePage":"https://en.wikipedia.org/wiki/Cinema_Paradiso","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://www.cinema.de/sites/default/files/styles/schema_org/public/sync/img.tvspielfilm.de/7b/c4/18/545a09c2e4b0f17a8318c47b.jpeg?itok=Oy14XxeG","posterAttribution":"Cinema.de Cinema Paradiso artwork","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"interstellar-restoration","title":"星際效應","originalTitle":"Interstellar","type":"film","category":"經典電影","year":2014,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"Interstellar","posterWikiTitle":"Interstellar (film)","posterSourcePage":"https://en.wikipedia.org/wiki/Interstellar_(film)","sourcePage":"https://en.wikipedia.org/wiki/Interstellar_(film)","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://assets.gadgets360cdn.com/pricee/assets/product/202304/Interstellar_1681104281.jpg","posterAttribution":"Gadgets360 Interstellar theatrical poster","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"},{"id":"truman-show-restoration","title":"楚門的世界","originalTitle":"The Truman Show","type":"film","category":"經典電影","year":1998,"summary":"歷史工程對話曾提及的作品，原始網站目錄身份和實際播放來源仍待恢復。此卡保留恢復線索，不代表已完成播放驗收。","posterHeadline":"The Truman Show","posterWikiTitle":"The Truman Show","posterSourcePage":"https://en.wikipedia.org/wiki/The_Truman_Show","sourcePage":"https://en.wikipedia.org/wiki/The_Truman_Show","restorationStatus":"historical-discussion-lead","availability":"media-source-not-recovered","historicalVerification":null,"sourceEvidence":"曾在先前對話的片庫清單中出現；尚未從原 v26 庫存或 M3U8 清單獨立驗證。","episodes":[{"number":1,"label":"正片","sources":[],"verification":"missing-original-media-source"}],"posterUrl":"https://static.cinemagia.ro/img/db/movie/00/27/63/the-truman-show-637593l.jpg","posterAttribution":"CineMagia The Truman Show poster","posterDelivery":"direct promotional artwork URL; requires runtime HTTP/onload validation"}]</script>
+<section class="hero"><div class="upper accent">CINEMA · ARCHIVE · 2026</div><h1>Cinema<br><em>reale.</em></h1><p>光影之間，留給每部電影自己的時刻。</p></section>
+<nav><div class="tabs"><button data-category="all" aria-pressed="true">全部作品</button><button data-category="film" aria-pressed="false">電影</button><button data-category="series" aria-pressed="false">劇集</button></div><input id="search" type="search" placeholder="搜尋片名 / Search" aria-label="搜尋作品"></nav>
+<main><div class="head"><h2>Selected works <i>/</i> 片庫</h2><span id="totals" class="upper">0 TITLES</span></div><div id="grid" class="grid"></div><div id="empty" class="empty" hidden>目前暫無放映。</div></main>
+<footer>数片 / CINEMA REALE — 光影典藏。</footer>
+<dialog id="player"><div class="playerhead"><div><div class="upper accent">CINEMA REALE</div><h2 id="player-title">影片</h2></div><button id="close" aria-label="關閉">×</button></div><div class="playerbody"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><p id="status" role="status" aria-live="polite"></p><p><a id="source" target="_blank" rel="noopener noreferrer">影片資訊 ↗</a></p></div><aside class="episodebar"><div class="upper">選集</div><div id="episodes"></div></aside></div></dialog>
+<script id="catalog" type="application/json">[]</script>
 <script>
 'use strict';
-const works=JSON.parse(document.getElementById('catalog').textContent);
+const candidates=JSON.parse(document.getElementById('catalog').textContent);
 const grid=document.getElementById('grid'),query=document.getElementById('search'),dialog=document.getElementById('player'),video=document.getElementById('video'),status=document.getElementById('status');
 let filter='all',active=null,episodeIndex=0,hls=null;
-const media=ep=>(ep?.sources||[]).filter(s=>{try{const u=new URL(s.url);return u.protocol==='https:' && /\.(m3u8|mp4|webm|ogv|ogg)$/i.test(u.pathname)}catch{return false}});
+const EXPIRES_AFTER=24*60*60*1000;
+const sourceFailures=new Set();
+// The catalog is fail-closed: allow a source only with recent browser playback evidence.
+function media(ep){
+  return (ep?.sources||[]).filter(s=>{
+    try{
+      const u=new URL(s.url);
+      const proof=s.playbackVerification;
+      const timestamp=Date.parse(proof?.observedAt||'');
+      const age=Date.now()-timestamp;
+      return u.protocol==='https:' && /\\.(m3u8|mp4|webm|ogv|ogg)$/i.test(u.pathname)
+        && proof?.status==='passed' && proof.videoStarted===true
+        && proof.seekSucceeded===true && Number.isFinite(timestamp)
+        && age>=0 && age<=EXPIRES_AFTER && !sourceFailures.has(s.url);
+    }catch{return false}
+  });
+}
+const works=candidates.filter(w=>(w.episodes||[]).some(e=>media(e).length));
 const countSources=work=>work.episodes.filter(e=>media(e).length).length;
-function render(){grid.replaceChildren();grid.classList.remove('single');const q=query.value.toLocaleLowerCase().trim();const matches=works.filter(w=>(filter==='all'||filter==='history'&&w.historicalVerification||filter==='film'&&w.type==='film'||filter==='series'&&w.type==='series')&&[w.title,w.originalTitle,w.year].join(' ').toLocaleLowerCase().includes(q));document.getElementById('totals').textContent=matches.length+' TITLES · '+matches.reduce((n,w)=>n+countSources(w),0)+' SOURCE UNITS';document.getElementById('empty').hidden=matches.length>0;for(const w of matches){const c=document.createElement('article');c.className='card';if(w.restorationStatus)c.dataset.restoration='pending';const btn=document.createElement('button');btn.type='button';btn.className='poster';btn.title=w.restorationStatus?'查看片目資料（尚無站內播放來源）':'查看劇集與歷史來源狀態';btn.setAttribute('aria-label','選擇 '+w.title);const lbl=document.createElement('span');lbl.className='label';lbl.textContent=w.restorationStatus?(w.type==='series'?'SERIES / 片目恢復':'FILM / 片目恢復'):(w.type==='series'?'SERIES / 典藏':'FILM / 典藏');const heading=document.createElement('span');heading.className='posterheading';heading.textContent=w.posterHeadline||w.originalTitle||w.title;const play=document.createElement('span');play.className='play';play.textContent=w.restorationStatus?'片源未恢復':countSources(w)?'▶':'片源未恢復';btn.append(lbl,heading,play);btn.onclick=()=>open(w);const h=document.createElement('div');h.className='meta';const name=document.createElement('h3');name.textContent=w.title;const en=document.createElement('div');en.className='en';en.textContent=w.originalTitle||'';const sub=document.createElement('div');sub.className='sub';sub.textContent=w.historicalVerification?'歷史抽樣驗收 · '+countSources(w)+' 條已找回舊來源':countSources(w)?countSources(w)+' 條來源待複驗':'原片源待恢復 · '+(w.year||'');h.append(name,en,sub);const a=document.createElement('a');a.href=w.sourcePage||'#';a.textContent=w.restorationStatus?'作品檔案 ↗':'來源資料 ↗';a.target='_blank';a.rel='noopener noreferrer';h.append(a);c.append(btn,h);grid.append(c);setPoster(w,btn)}
-if(matches.length===1){
-  grid.classList.add('single');
-  const w=matches[0];
-  const aside=document.createElement('aside');aside.className='feature-detail';
-  const kicker=document.createElement('div');kicker.className='feature-kicker';kicker.textContent='FROM THE RECOVERED ARCHIVE / 2025';
-  const name=document.createElement('h3');name.textContent=w.originalTitle||w.title;
-  const meta=document.createElement('div');meta.className='feature-meta';
-  for(const part of [w.year+' · '+(w.country||''),'10 集歷史記錄','1 條舊片源地址已找回']){const span=document.createElement('span');span.textContent=part;meta.append(span)}
-  const summary=document.createElement('p');summary.textContent='改編自史蒂芬・金同名小說的超自然懸疑劇集。原有的逐集抽樣驗收記錄仍然保留，但片源尚未全部找回。';
-  const note=document.createElement('p');note.className='feature-note';note.textContent='目前只找回第一季第一集的舊播放地址；其餘九集需要恢復。歷史抽樣不等於現在能完整播放。';
-  const btn=document.createElement('button');btn.type='button';btn.textContent='查看劇集與來源狀態';btn.onclick=()=>open(w);
-  aside.append(kicker,name,meta,summary,note,btn);
-  grid.append(aside);
-}
-}
+function render(){grid.replaceChildren();grid.classList.remove('single');const q=query.value.toLocaleLowerCase().trim();const matches=works.filter(w=>(w.episodes||[]).some(e=>media(e).length)&&(filter==='all'||filter==='film'&&w.type==='film'||filter==='series'&&w.type==='series')&&[w.title,w.originalTitle,w.year].join(' ').toLocaleLowerCase().includes(q));document.getElementById('totals').textContent=matches.length+' TITLES';document.getElementById('empty').hidden=matches.length>0;document.getElementById('empty').textContent=q?'沒有符合搜尋條件的作品。':'目前暫無放映。';for(const w of matches){const c=document.createElement('article');c.className='card';if(w.restorationStatus)c.dataset.restoration='pending';const btn=document.createElement('button');btn.type='button';btn.className='poster';btn.title='欣賞 '+w.title;btn.setAttribute('aria-label','選擇 '+w.title);const lbl=document.createElement('span');lbl.className='label';lbl.textContent=w.type==='series'?'SERIES':'FILM';const heading=document.createElement('span');heading.className='posterheading';heading.textContent=w.posterHeadline||w.originalTitle||w.title;const play=document.createElement('span');play.className='play';play.textContent='▶';btn.append(lbl,heading,play);btn.onclick=()=>open(w);const h=document.createElement('div');h.className='meta';const name=document.createElement('h3');name.textContent=w.title;const en=document.createElement('div');en.className='en';en.textContent=w.originalTitle||'';const sub=document.createElement('div');sub.className='sub';sub.textContent=[w.year,w.country].filter(Boolean).join(' · ');h.append(name,en,sub);const a=document.createElement('a');a.href=w.sourcePage||'#';a.textContent='影片介紹';a.target='_blank';a.rel='noopener noreferrer';h.append(a);c.append(btn,h);grid.append(c);setPoster(w,btn)}
 const commonsImages=new Map();
 function commonsThumbnail(file){
   const key=String(file||'').trim();
@@ -139,13 +141,16 @@ function mark(message){status.textContent=message}
 function nextSource(token,attempt,reason){
   if(token!==playbackToken||attempt!==sourceAttempt||sourceIndex>=chosenSources.length)return;
   sourceAttempt++;
+  const bad=chosenSources[sourceIndex];
+  if(bad?.url)sourceFailures.add(bad.url);
   disposeMedia();
   sourceIndex++;
+  render();
   if(sourceIndex<chosenSources.length){
-    mark('此來源播放失敗（'+reason+'），正在測試其他已收錄來源…');
+    mark('放映中斷，正在嘗試其他播放線路…');
     trySource(token);return;
   }
-  mark('此集目前沒有可播放的已收錄來源：'+reason+'。媒體清單或抽樣成功不代表瀏覽器能播放。');
+  mark('暫時無法放映這一集。');
 }
 function ensureHls(){
   if(window.Hls)return Promise.resolve(window.Hls);
@@ -172,7 +177,7 @@ async function trySource(token){
   const attempt=++sourceAttempt;
   disposeMedia();
   const fail=reason=>nextSource(token,attempt,reason);
-  mark('正在連接來源 '+(sourceIndex+1)+' / '+chosenSources.length+'…');
+  mark('正在準備放映…');
   sourceTimer=setTimeout(()=>fail('載入逾時（24 秒）'),24000);
   const url=src.url,fmt=String(src.format||'').toLowerCase();
   if(fmt==='ogv'||fmt==='ogg'){
@@ -215,20 +220,20 @@ function connect(ep){
   stop();const token=playbackToken;
   chosenSources=media(ep);sourceIndex=0;
   if(!chosenSources.length){
-    mark('這一集目前沒有保存可用的直接媒體地址。歷史抽檢紀錄不代表當前能播放。');return;
+    mark('這一集暫時無法放映。');return;
   }
   trySource(token);
 }
 video.addEventListener('loadedmetadata',()=>{
   clearWatchdog();
   const duration=Number.isFinite(video.duration)?Math.round(video.duration/60)+' 分鐘':'時長未知';
-  mark('已讀取影片資訊（'+duration+'）。請按播放器上的播放鍵。尚未完成實播驗收。');
+  mark('影片長度：'+duration+'。按播放鍵開始。');
 });
 video.addEventListener('playing',()=>{
-  clearWatchdog();mark('影片正在播放 · 目前起播成功，完整播放尚未驗證。');
+  clearWatchdog();mark('正在放映');
 });
 video.addEventListener('waiting',()=>{
-  if(chosenSources.length&&video.readyState<3)mark('影片正在緩衝；如持續失敗將回報媒體錯誤。');
+  if(chosenSources.length&&video.readyState<3)mark('稍候，畫面正在緩衝…');
 });
 video.addEventListener('error',()=>{
   if(chosenSources.length&&sourceAttempt>0&&video.error){
@@ -237,132 +242,22 @@ video.addEventListener('error',()=>{
   }
 });
 function choose(i){episodeIndex=i;const ep=active.episodes[i];document.querySelectorAll('#episodes button').forEach((b,j)=>b.setAttribute('aria-pressed',String(i===j)));connect(ep)}
-function open(w){active=w;document.getElementById('player-title').textContent=w.title+(w.restorationStatus?' · 來源恢復中':'');document.getElementById('source').href=w.sourcePage||'#';const e=document.getElementById('episodes');e.replaceChildren();w.episodes.forEach((ep,i)=>{const b=document.createElement('button');b.textContent=ep.label||'第 '+(i+1)+' 集';b.setAttribute('aria-pressed','false');b.onclick=()=>choose(i);e.append(b)});dialog.showModal();choose(w.episodes.findIndex(ep=>media(ep).length)>-1?w.episodes.findIndex(ep=>media(ep).length):0)}
+function open(w){
+  const episodes=(w.episodes||[]).filter(ep=>media(ep).length);
+  if(!episodes.length){render();return}
+  active={...w,episodes};
+  document.getElementById('player-title').textContent=w.title;
+  document.getElementById('source').href=w.sourcePage||'#';
+  const e=document.getElementById('episodes');e.replaceChildren();
+  episodes.forEach((ep,i)=>{
+    const b=document.createElement('button');
+    b.textContent=ep.label||'第 '+(i+1)+' 集';
+    b.setAttribute('aria-pressed','false');
+    b.onclick=()=>choose(i);
+    e.append(b);
+  });
+  dialog.showModal();choose(0)
+}
 document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListener('close',stop);document.querySelectorAll('[data-category]').forEach(b=>b.onclick=()=>{filter=b.dataset.category;document.querySelectorAll('[data-category]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render()});query.oninput=render;render();
-</script>
-<script>
-/* Cinema evidence display: no source publication and no automatic playback. */
-(async function showChangzhangExperiment(){
- const summary=document.getElementById('czh-summary');
- const categories=document.getElementById('czh-categories');
- const steps=document.getElementById('czh-steps');
- if(!summary||!categories||!steps)return;
- try {
-  const response=await fetch('recovery/changzhang-round-status.json',{cache:'no-store'});
-  if(!response.ok)throw Error('HTTP '+response.status);
-  const d=await response.json();
-  const n=d.today||{}, history=d.history||{}, c=d.categories||[];
-  const found=(v)=>Number.isInteger(v)?String(v):'未核實';
-  const ts=d.observed_at_utc||'日期待確認';
-  summary.textContent='歷史基準 '+history.segment_sample_pass+'/'+history.tested_titles+
-    ' 通過分段抽樣；本輪候選 '+found(n.media_candidates)+' 部、M3U8 '+found(n.unique_hls)+
-    ' 條、抽樣通過 '+found(n.hls_sample_pass)+'。紀錄：'+ts+'。全片乾淨與站內實播：未通過驗收。';
-  categories.replaceChildren();
-  for(const item of c){
-   const cell=document.createElement('div');
-   const title=document.createElement('b');title.textContent=item.label||'類別';
-   const note=document.createElement('span');note.textContent='片目 '+found(item.catalog_ids)+' · 已匹配 '+found(item.media_matches);
-   cell.append(title,note);categories.append(cell);
-  }
-  const stages=d.stages||{};
-  const stateNames={
-   PARTIAL:'已找到候選，待核實', BLOCKED:'受阻', NO_MEDIA_FOUND:'本輪未找到',
-   NETWORK_BLOCKED_IN_LOCAL_ENVIRONMENT:'本地網路受阻',
-   AD_CUES_SUSPECTED:'發現疑似廣告標記',
-   SAMPLED_NOT_CERTIFIED:'已抽樣，尚未證明無廣告',
-   NOT_TESTED:'未實測',
-   FIRST_FRAME_ONLY:'首幀抽樣成功，未完成播放',
-   TIME_ADVANCED_SAMPLED_NOT_CERTIFIED:'播放時間前進，尚未全片驗收',
-   ATTEMPTED_NO_PLAYBACK:'已嘗試，未成功起播',
-   DIAGNOSTIC_ONLY:'已呈現實驗紀錄，未通過播放驗收'
-  };
-  steps.replaceChildren();
-  for(const [label,key] of [['① 搜尋','discovery'],['② 去廣告','ad_quality'],['③ 播放','playback'],['④ 網站','website']]){
-   const span=document.createElement('span');span.textContent=label+'：'+(stateNames[stages[key]]||'未驗收');steps.append(span);
-  }
- }catch(err){summary.textContent='無法取得廠長專項實驗紀錄（'+String(err.message).slice(0,80)+'）。不代表片源為零。';}
-})();
-</script>
-<script>
-/* Fresh source-discovery evidence; never implies that unverified media is playable. */
-(async function showEngineRound(){
- const observed=document.getElementById('engine-observed');
- const metrics=document.getElementById('engine-metrics');
- const stages=document.getElementById('engine-stages');
- const errors=document.getElementById('engine-errors');
- if(!observed||!metrics||!stages||!errors)return;
- try{
-   const response=await fetch('recovery/engine-live-round.json',{cache:'no-store'});
-   if(!response.ok)throw Error('HTTP '+response.status);
-   const d=await response.json();
-   const n=x=>Number.isFinite(x)?String(x):'尚未測得';
-   const stamp=d.observed_at_utc?new Date(d.observed_at_utc).toLocaleString('zh-Hant'):'尚未完成首次網路實測';
-   observed.textContent='查詢：'+(d.queries||[]).join('、')+' · 實測時間：'+stamp+'。搜尋結果仍須經過去廣告、實播及網站驗收。';
-   metrics.replaceChildren();
-   for(const [title,value] of [['來源查詢',n(d.provider_queries_attempted)],['搜尋命中',n(d.works_found)],['媒體候選',n(d.unique_media_candidates)],['HLS／分段／替代來源',n(d.manifests_parsed)+' / '+n(d.segment_sample_pass)+' / '+n(d.alternative_candidates_audited)]]){
-     const cell=document.createElement('div'),b=document.createElement('b'),span=document.createElement('span');
-     b.textContent=title;span.textContent=value;cell.append(b,span);metrics.append(cell);
-   }
-   const episodeResults=document.getElementById('engine-episode-results');
-   if(episodeResults){
-     episodeResults.replaceChildren();
-     const records=(d.audits||[]);
-     for(const item of records){
-       const cell=document.createElement('div');
-       cell.className='engine-result';
-       const title=document.createElement('strong');
-       title.textContent=(item.title||'未命名')+' · '+(item.episode||'完整影片');
-       const state=document.createElement('span');
-       const manifest=item.manifest==='parsed'?'HLS 清單已解析':(item.manifest==='failed'?'HLS 清單失敗':'未解析');
-       const segments=item.segment_sample==='pass'?'首中尾片段簽名抽檢通過':(item.segment_sample==='failed'?'片段抽檢失敗':'未完成片段抽檢');
-       const urlStates={
-         same_exact_url:'同一網址重測',
-         same_path_changed_url:'同路徑但網址參數已變',
-         different_url:'媒體網址已變',
-         no_comparable_baseline:'首次建立 URL 指紋'
-       };
-       const errorStates={
-         http_404_missing_or_masked:'404：來源未找到或被隱藏',
-         http_access_restricted:'403／401：存取受限',
-         http_rate_limited:'429：請求受限',
-         http_temporary_server_error:'5xx：來源伺服器暫時異常',
-         network_error:'網路故障',
-         parse_or_validation_error:'資料格式或解析異常'
-       };
-       const continuity=urlStates[item.url_comparison]||'尚無網址身份證據';
-       const issue=errorStates[item.failure_class]||'';
-       const stateNames={recovered:'恢復可讀',regressed:'本輪轉為失效',
-         stable_healthy:'連續可讀',stable_failure:'連續失敗',
-         new_observation:'首次品質觀察'};
-       const trend=stateNames[item.status_transition]||'尚未建立跨輪趨勢';
-       const quality=Number.isFinite(item.sample_reliability)
-          ?' / 抽檢可靠性 '+Math.round(100*item.sample_reliability)+'%':'';
-       state.textContent=(item.provider||'來源待確認')+' / '+continuity+
-          ' / '+trend+quality+' / '+manifest+' / '+segments+
-          (issue?' / '+issue:'')+' / 未證明全片無廣告';
-       cell.append(title,state);
-       episodeResults.append(cell);
-     }
-   }
-   stages.replaceChildren();
-   const labels=[['① 搜尋','discovery'],['② 去廣告','ad_quality'],['③ 播放','playback'],['④ 網站落地','website']];
-   const display={'not-started':'待執行','attempted':'已發起查詢','manifest-only':'僅完成媒體清單初檢',
-      'not-tested-in-browser':'尚未實播','awaiting-live-provider-report':'待網路結果',
-      'report-only':'已顯示實驗記錄，尚未完成整合'};
-   for(const [label,key] of labels){
-     const v=document.createElement('span');const status=d.stages?.[key]||'not-started';
-     v.textContent=label+'：'+(display[status]||status);stages.append(v);
-   }
-   const failures=Number(d.provider_queries_failed||0);
-   const known=Number(d.same_exact_url_count||0),changed=Number(d.changed_url_count||0);
-   errors.textContent='來源查詢失敗 '+failures+' 次。相同網址 '+known+
-     ' 條、變更網址 '+changed+' 條、恢復 '+Number(d.recovered_count||0)+
-     ' 條、退化 '+Number(d.regressed_count||0)+
-     ' 條、404 '+Number(d.http_404_count||0)+
-     ' 條。可靠性百分比僅指已執行分段抽檢的歷史比例，不代表全片可播或無廣告。';
- }catch(err){
-   observed.textContent='實測記錄暫時無法讀取：'+String(err.message).slice(0,80);
- }
-})();
 </script>
 </body></html>
