@@ -1144,7 +1144,11 @@
   if(tile.dataset.dawnPortal)openCollection(tile.dataset.dawnPortal);
   else if(tile.dataset.workTitle){
    const source=coverLookup?.get(normalizeTitle(tile.dataset.workTitle));
-   openBook({...source,title:source?.title||tile.dataset.workTitle,creator:source?.author||'',sourceUrl:source?.source?.url},'wall');
+   selectBookPreview(wallGrid,tile,{
+    ...source,title:source?.title||tile.dataset.workTitle,
+    creator:source?.author||'',workId:source?.workId||tile.dataset.workId||'',
+    sourceUrl:source?.source?.url
+   });
   }
  });
  async function loadWallCovers(){
@@ -1169,7 +1173,8 @@
    const frag=document.createDocumentFragment();
    curated.forEach(work=>{
     const tile=document.createElement('button');tile.type='button';tile.className='dawn-wall__tile dawn-wall__tile--record dawn-cover';
-    tile.dataset.workTitle=work.title;tile.setAttribute('aria-label','閱讀：'+work.title);
+    tile.dataset.workTitle=work.title;if(work.workId)tile.dataset.workId=work.workId;
+    tile.setAttribute('aria-label','預覽：'+work.title);
     const sleeve=document.createElement('span');sleeve.className='dawn-cover__sleeve';
     const img=document.createElement('img');img.src=work.cover.url;img.alt='原書封面：'+work.title;img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';
     img.addEventListener('error',()=>{tile.classList.add('dawn-cover--missing');sleeve.hidden=true});sleeve.append(img);
