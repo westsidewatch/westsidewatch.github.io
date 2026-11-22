@@ -61,7 +61,7 @@ try{
   // Load and decompress the architectural GLB ONCE. The tour's own animation
   // loop reads proofFrame from location.search on every frame; stepping the
   // URL with replaceState requires no reloading or lost WebGL state.
-  const frames=[187,194,199,204,211,216,223,27,31,40,55,64,110,121,132,143,154,165,174,9,20,22,89,94,103,236,241,246,248,251];
+  const frames=[187,194,199,204,205,211,216,223,27,31,40,55,64,110,121,132,143,154,165,174,9,20,22,89,94,103,236,241,246,248,251];
   await send('Page.navigate',{
     url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frames[0]
   });
@@ -138,6 +138,8 @@ try{
         throw Error('Collision telemetry missing in entrance/stairs at '+frame);
       if(frame>=187 && (safety.cameraPenetrations||safety.forwardOcclusions))
         throw Error('Upper stair camera still intersects geometry at '+frame+' '+JSON.stringify(safety));
+      if([187,199].includes(frame) && safety.cameraPosition?.[2]>-16.55)
+        throw Error('Camera left the original north stair aisle into low overhang '+frame+' '+JSON.stringify(safety));
     }
     if([27,31,187,194,199,204,211,216,223].includes(frame)){
       const near=await evaluate('window.__churchMeshProbe?.(450,300,180)');
