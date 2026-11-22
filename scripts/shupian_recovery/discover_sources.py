@@ -13,7 +13,7 @@ from pathlib import Path
 import re
 import sys
 from urllib.parse import quote, urljoin, urlparse
-from urllib.request import Request, urlopen
+from urllib.request import Request, urlopen, build_opener, HTTPRedirectHandler
 
 from legacy_engine_core import VerificationError, validate_public_url, parse_hls
 
@@ -23,6 +23,12 @@ REPORT = ROOT / "static/shupian/recovery/engine-live-round.json"
 MEDIA_RE = re.compile(r"\.(?:m3u8|mp4|mpd)(?:$|[?#])", re.I)
 AD_RE = re.compile(r"(?:^|[/._-])(?:ads?|commercial|preroll|promo)(?:[/._-]|$)", re.I)
 ALLOWED_MEDIA = {"m3u8", "mp4", "mpd"}
+
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise VerificationError("Redirect refused; do not fetch unapproved destination")
+
+SAFE_OPENER = build_opener(NoRedirect()).open
 
 def clean_url(value):
     value = str(value or "").strip()
@@ -58,7 +64,7 @@ def parse_groups(payload):
             output.append({"origin": origin, "episodes": episodes})
     return output
 
-def fetch_json(url, timeout=12, max_bytes=1800000, opener=urlopen):
+def fetch_json(url, timeout=12, max_bytes=1800000, opener=SAFE_OPENER):
     validate_public_url(url)
     request = Request(url, headers={"Accept": "application/json", "User-Agent": "PARADISO-Research/2.0"})
     with opener(request, timeout=timeout) as response:
@@ -69,7 +75,7 @@ def fetch_json(url, timeout=12, max_bytes=1800000, opener=urlopen):
             raise VerificationError("Provider response too large")
     return json.loads(data.decode("utf-8-sig"))
 
-def fetch_manifest(url, timeout=12, opener=urlopen):
+def fetch_manifest(url, timeout=12, opener=SAFE_OPENER):
     validate_public_url(url)
     request = Request(url, headers={"Accept": "application/vnd.apple.mpegurl", "User-Agent": "PARADISO-Research/2.0"})
     with opener(request, timeout=timeout) as response:
