@@ -40,7 +40,25 @@ fs.mkdirSync(out,{recursive:true});
   for(const [name,width,height] of [['desktop',1440,900],['phone',390,844]]){
    const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
-   await page.goto(base+'/experiments/p2-0105-dawn-preview.html?layer=catalogue&category=zh&d=28.4&v=r66-real-chinese-covers',
+   // Regression from user screenshot: the *primary seven-subject* wall
+   // appeared almost entirely blank although the underlying books had covers.
+   await page.goto(base+'/experiments/p2-0105-dawn-preview.html?layer=catalogue&d=28.4&v=r68-category-preload',
+    {waitUntil:'domcontentloaded',timeout:45000});
+   await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length>=9,
+    null,{timeout:35000});
+   await page.waitForFunction(()=>{
+    const cards=[...document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve')];
+    return cards.filter(c=>c.querySelector('img')?.naturalWidth>120).length>=7;
+   },null,{timeout:25000});
+   const roots=await page.locator('#dawn-classification-tree button.dawn-classification__sleeve')
+    .evaluateAll(cards=>cards.map(c=>({label:c.querySelector('strong')?.textContent,
+      group:c.dataset.coverGroup,loaded:!!c.querySelector('img')?.naturalWidth,
+      source:c.querySelector('img')?.getAttribute('src')})));
+   assert(roots.filter(c=>c.loaded).length>=7,
+    name+': primary category wall still looks empty: '+JSON.stringify(roots));
+   console.log('PRIMARY_CATEGORY_COVER_QA',name,JSON.stringify(roots));
+   await page.screenshot({path:path.join(out,name+'-primary-category-cover-wall.png')});
+   await page.goto(base+'/experiments/p2-0105-dawn-preview.html?layer=catalogue&category=zh&d=28.4&v=r68-category-preload',
     {waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length>=2,
     null,{timeout:35000});
