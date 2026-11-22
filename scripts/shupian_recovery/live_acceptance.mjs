@@ -45,10 +45,11 @@ try {
     const inline = await page.locator('script#catalog').textContent();
     let works = [];
     try { works=JSON.parse(inline||'[]'); } catch (e) {check(false,'valid_embedded_catalog',{error:String(e)});}
-    check(works.length >= 1, 'catalog_nonempty',{count:works.length});
+    check(works.length >= 14, 'restored_multititle_catalog',{count:works.length});
     check(works.some(x => x.id === 'the-institute-historical'), 'original_institute_present');
     check(works.every(x => !denied.some(b => x.title?.includes(b))), 'catalog_no_filler');
     check(!JSON.stringify(works).toLowerCase().includes('youtube'), 'no_youtube_sources');
+    check(works.filter(x=>x.type==='film').length>=11&&works.filter(x=>x.type==='series').length>=3,'restored_films_and_series_present');
     if (cards >= 1) {
       try {
         await page.locator('#grid article.card button.poster').first().click();
@@ -89,7 +90,7 @@ try {
     check(!!mobileRes&&mobileRes.status()===200,'mobile_html_200',{status:mobileRes?.status()});
     await mobilePage.waitForTimeout(1500);
     check(await mobilePage.locator('#grid article.card').count()>0,'mobile_cards_rendered');
-    check(await mobilePage.locator('#grid aside.feature-detail').count()===1,'mobile_feature_details_visible');
+    check(await mobilePage.locator('#grid aside.feature-detail').count()===(await mobilePage.locator('#grid article.card').count()===1?1:0),'mobile_feature_layout_adapts_to_inventory');
     const overflow = await mobilePage.evaluate(()=>document.documentElement.scrollWidth > innerWidth+2);
     check(!overflow,'no_mobile_horizontal_overflow');
     await mobilePage.screenshot({path:out+'/mobile.png',fullPage:true});
