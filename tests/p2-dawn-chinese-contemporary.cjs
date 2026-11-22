@@ -37,12 +37,26 @@ fs.mkdirSync(dir,{recursive:true});
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto('http://127.0.0.1:4173/experiments/p2-0105-dawn-preview.html?layer=catalogue&category=zh&v=r69-modern-chinese',
    {waitUntil:'domcontentloaded',timeout:45000});
-  const contemporary=page.locator('#dawn-classification-tree button.dawn-classification__sleeve--contemporary');
-  await contemporary.waitFor({state:'visible',timeout:35000});
-  await contemporary.click();
+  // Chinese library must open on contemporary literature, not the older
+  // 47 archival works. No extra click should be needed to reach new books.
   const cards=page.locator('#dawn-classification-results .dawn-contemporary__book');
   await page.waitForFunction(()=>document.querySelectorAll('.dawn-contemporary__book').length===11,null,{timeout:25000});
   assert.equal(await cards.count(),11,device+': catalog source discovery cards missing');
+  assert.equal(await page.locator('#dawn-classification-results .dawn-contemporary__archive-entry').count(),1,
+   device+': early Chinese archival section has no secondary access');
+  await page.locator('#dawn-classification-results .dawn-contemporary__archive-entry').click();
+  const archiveTiles=page.locator('#dawn-classification-tree button.dawn-classification__sleeve--historical-zh');
+  await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve--historical-zh').length>1,
+   null,{timeout:15000});
+  assert((await archiveTiles.count())>1,device+': early Chinese works were removed rather than moved below contemporary');
+  const tileOrder=await page.locator('#dawn-classification-tree button.dawn-classification__sleeve')
+    .evaluateAll(tiles=>tiles.map(t=>({label:t.querySelector('strong')?.textContent,
+      modern:t.classList.contains('dawn-classification__sleeve--contemporary')})));
+  assert(tileOrder[0]?.modern,device+': contemporary Chinese shelf must precede all early Chinese classes');
+  await page.screenshot({path:path.join(dir,device+'-modern-first-archive-second.png')});
+  await page.locator('#dawn-primary-chinese').click();
+  await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-results .dawn-contemporary__book').length===11,
+   null,{timeout:20000});
   const visualProof=await cards.evaluateAll(items=>items.map(card=>{
    const art=card.querySelector('.dawn-contemporary__art');
    const paper=art?.querySelector('.dawn-contemporary__folio');
