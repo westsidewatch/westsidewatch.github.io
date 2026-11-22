@@ -103,10 +103,14 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
    assert.equal(result.duplicateHeading,0,device+': L2 repeats the brand outside scripture plate');
    assert.equal(result.scripturePlates,1,device+': original scripture plate missing');
    assert.equal(result.returnNavText,'返回',device+': back affordance label changed');
-   assert(result.returnZh.size<=14.5,device+': back button enlarged into a section title');
+   assert(result.returnZh.size>=14&&result.returnZh.size<=18,device+': back Chinese must use readable OS UI scale, not a headline or tiny caption');
    assert(result.returnMark.size<=21,device+': back arrow enlarged into a headline');
    assert(result.returnButton.width<115,device+': back control occupies headline-sized width');
    assert(result.returnButton.height<58,device+': back control occupies excessive height');
+   for(const [label,zh] of [['back',result.returnZh],['collection',result.collectionZh]]){
+    assert(zh.size>=14&&zh.size<=18,device+': '+label+' Chinese is not OS UI size');
+    assert.equal(zh.weight,200,device+': '+label+' Chinese is not Chiron air');
+   }
    assert.equal(result.editorialPanels.length,3,device+': three editorial departments absent');
    assert.deepEqual(result.editorialPanels.map(p=>p.identity),['三晨星','策展集','光譜']);
    const harvestRGB=await page.evaluate(()=>{
