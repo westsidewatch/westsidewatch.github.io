@@ -173,7 +173,7 @@ def normalize_results(raw, keyword, provider_id):
     return normalized
 
 def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
-         per_provider_limit=25, max_audits=12, workers=4):
+         per_provider_limit=25, max_audits=12, workers=4, focus=None):
     tasks = [(p, kw) for p in providers if p.get("enabled", True) for kw in keywords]
     records, errors = [], []
     def one(p, kw):
@@ -212,6 +212,13 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
                 selected.append(pools[key].pop(0))
             if len(selected) >= max_audits:
                 break
+    if focus:
+        # Rescan the exact same provider/title/episode combinations that passed
+        # manifest parsing in the preceding run. Preserve batch order otherwise.
+        def focus_key(c):
+            key = (c["provider"], c["title"], c["episode"])
+            return (0 if key in focus else 1, c["query"], c["provider"])
+        selected = sorted(candidates, key=focus_key)[:max(0, max_audits)]
     audits = []
     for candidate in selected:
         detail = probe(candidate)
@@ -242,9 +249,18 @@ def main(argv=None):
     parser.add_argument("--report", type=Path, default=REPORT)
     parser.add_argument("--max-audits", type=int, default=12)
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--rescan-previous", action="store_true",
+                        help="Reprobe previously parsed exact title/episode/provider candidates")
     args = parser.parse_args(argv)
     providers = json.loads(args.providers.read_text(encoding="utf-8"))
-    result = scan(args.keywords, providers, max_audits=args.max_audits, workers=args.workers)
+    focus = set()
+    if args.rescan_previous and args.report.is_file():
+        previous = json.loads(args.report.read_text(encoding="utf-8"))
+        focus = {(a["provider"], a["title"], a["episode"]) for a in previous.get("audits", [])
+                 if a.get("manifest") == "parsed"}
+    result = scan(args.keywords, providers, max_audits=args.max_audits,
+                  workers=args.workers, focus=focus)
+    result["rescan_previous_parsed_count"] = len(focus)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: result[k] for k in ("provider_queries_attempted", "provider_queries_failed", "works_found", "unique_media_candidates", "manifests_parsed", "completion")}, ensure_ascii=False))
