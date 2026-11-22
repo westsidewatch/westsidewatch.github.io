@@ -2267,3 +2267,14 @@
 #dawn-second .dawn-expander__book--ready .dawn-expander__book-paper{
  display:none!important;
 }
+
+
+/* R71 · Source-linked modern Chinese preview: maintain OS's Chiron 200 title
+   rather than an accidental heavy fallback of the English Bodoni heading. */
+#dawn-second .dawn-expander__title--zh{
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:200!important;
+ line-height:1.18!important;
+ font-synthesis:none!important;
+ letter-spacing:0!important;
+}
