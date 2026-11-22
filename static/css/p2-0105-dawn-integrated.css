@@ -2119,3 +2119,40 @@
   opacity:1!important;
  }
 }
+
+
+/* R65 · OS role contract. Never equate 200-weight headings with body prose:
+   - zh display / classifications / metadata: Chiron Hei HK WS 200
+   - zh continuous reading: Noto Serif TC 400, reading scale and leading
+   - scripture square's authorised main title: preserved, not flattened
+   These selectors target actual paragraphs, NOT every Chinese element. */
+#dawn-second .dawn-catalogue__introduction p,
+#dawn-second .dawn-expander__description,
+#dawn-second .dawn-classification__result-heading p,
+#dawn-second .dawn-reading-room__departments-intro p{
+ font-family:var(--ws-type-reading-zh)!important;
+ font-size:var(--ws-type-scale-reading)!important;
+ font-weight:400!important;
+ line-height:var(--ws-type-leading-reading)!important;
+ font-synthesis:none!important;
+}
+#dawn-second .dawn-book-detail__text{
+ font-family:var(--ws-type-reading-zh)!important;
+ font-size:var(--ws-type-scale-reading)!important;
+ font-weight:400!important;
+ line-height:var(--ws-type-leading-reading)!important;
+ font-synthesis:none!important;
+}
+/* Editorial hierarchy stays airy even if a legacy strong or card default
+   would otherwise reintroduce a 700/900 font after page transitions. */
+#dawn-second .dawn-classification__sleeve strong,
+#dawn-second .dawn-classification__folio-line--lead,
+#dawn-second .dawn-catalogue__classification-head h3,
+#dawn-second .dawn-classification__result-heading h4,
+#dawn-second .dawn-personal__head h2,
+#dawn-second .dawn-personal__group h3,
+#dawn-second .dawn-classification__breadcrumbs strong{
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:200!important;
+ font-synthesis:none!important;
+}
