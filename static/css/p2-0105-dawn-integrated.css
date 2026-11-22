@@ -2061,3 +2061,27 @@
   grid-row:auto / span 2!important;
  }
 }
+
+
+/* R63 · Back is a utility control, NEVER a second section heading. */
+#dawn-second .dawn-second__global-nav .dawn-second__return{
+ display:inline-flex!important;flex-direction:row!important;
+ justify-content:flex-start!important;align-items:center!important;
+ align-self:center!important;gap:9px!important;
+ padding:8px 2px!important;
+ width:max-content!important;min-height:36px!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return-mark{
+ font:400 clamp(16px,1.35vw,20px)/1 var(--ws-type-display-en)!important;
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-zh{
+ display:inline!important;opacity:.75!important;
+ font:200 clamp(12px,.85vw,14px)/1.5 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return:hover .dawn-second__nav-zh,
+#dawn-second .dawn-second__global-nav .dawn-second__return:focus-visible .dawn-second__nav-zh{
+ color:var(--ws-harvest)!important;opacity:1!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return:after{content:none!important;}
