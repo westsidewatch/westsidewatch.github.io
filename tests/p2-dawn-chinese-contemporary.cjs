@@ -62,17 +62,26 @@ fs.mkdirSync(dir,{recursive:true});
      device+': blank pale card rather than harvest title folio: '+proof.title);
    }
   }
-  assert(await page.locator('#dawn-classification-results .dawn-classification__result-heading')
-   .innerText().then(x=>x.includes('尚未獲本站全文轉載授權')),
-   device+': missing source rights notice');
+  const headingText=await page.locator('#dawn-classification-results .dawn-classification__result-heading').innerText();
+  assert(headingText.includes('認識作者與作品')&&headingText.includes('出版方'),
+   device+': book introduction must explain the reader journey');
+  const forbidden=/已核對|未獲本站|全文轉載|沒有複製|受版權保護|候選書|SOURCE EDITION|WORK ID|內部驗收|測試版|QA|Draft|PR #|commit/i;
+  const publicIntroduction=await page.locator('#dawn-classification-results').innerText();
+  assert(!forbidden.test(publicIntroduction),
+   device+': internal provenance or rights-management text leaked into library: '+publicIntroduction.slice(0,550));
   await page.screenshot({path:path.join(dir,device+'-modern-chinese-source-wall.png')});
   const originalUrl=page.url();
   await cards.first().click();
   const preview=page.locator('#dawn-book-expanding-preview');
   await preview.waitFor({state:'visible',timeout:15000});
   assert.equal(page.url(),originalUrl,device+': first click must not navigate');
+  const visiblePreview=await preview.innerText();
+  assert(!forbidden.test(visiblePreview),
+   device+': preview contains prohibited technical or licensing narration: '+visiblePreview.slice(0,400));
+  assert(visiblePreview.includes('出版方')&&visiblePreview.includes('介紹'),
+   device+': preview fails to introduce the reader to the publisher's work');
   assert(!(await page.locator('#dawn-book-detail').isVisible()),device+': candidate must not open internal canonical reader');
-  assert.equal(await preview.locator('.dawn-expander__read').innerText(),'前往出版方查看此書');
+  assert.equal(await preview.locator('.dawn-expander__read').innerText(),'前往出版方了解本書');
   const titleOS=await preview.locator('.dawn-expander__title').evaluate(el=>({
    font:getComputedStyle(el).fontFamily,weight:getComputedStyle(el).fontWeight
   }));
@@ -115,7 +124,7 @@ fs.mkdirSync(dir,{recursive:true});
   assert.equal(destination,manifest.candidates[1].sourceUrl,
    device+': explicit second action not directed to publisher page');
   await page.waitForFunction(()=>!document.querySelector('#dawn-book-expanding-preview .dawn-expander__read')?.disabled,null,{timeout:5000});
-  assert.equal(await preview.locator('.dawn-expander__read').innerText(),'前往出版方查看此書',device+': publisher link should reset after opening a tab');
+  assert.equal(await preview.locator('.dawn-expander__read').innerText(),'前往出版方了解本書',device+': publisher link should reset after opening a tab');
   assert.equal(page.url(),originalUrl,device+': current Dawn collection should remain open');
   await page.screenshot({path:path.join(dir,device+'-translation-expanded-preview.png')});
   assert.equal(errors.length,0,device+': JS exceptions: '+errors.join('; '));
