@@ -796,6 +796,7 @@
  }
  let canonicalMode=false,canonicalGallery=null;
  const canonicalOptions=()=>({container:works,total,status:pageStatus,prev:prevButton,next:more,search,openBook,
+  previewBook:(grid,tile,book)=>selectBookPreview(grid,tile,book),
   expectedWorkCount:classificationTree?.canonicalWorkCount});
  async function showCanonical(offset=0){
   try{
