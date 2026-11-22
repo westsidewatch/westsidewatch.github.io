@@ -88,6 +88,7 @@ try{
           spatial:window.__churchSpatialAudit||null,
           surface:window.__churchSurfaceAudit||null,
           upperStair:window.__churchUpperStairAudit||null,
+          northDoorSteps:window.__churchNorthDoorStepAudit||null,
           topology:window.__churchTopologyAudit||null,
           doorCollision:window.__churchDoorCollisionAudit||null,
           depth:window.__churchDepthLayerAudit||null
@@ -112,6 +113,12 @@ try{
       throw Error('Ghost roof still obscures inhabited spaces at frame '+frame);
     if(!state.upperStair||state.upperStair.treads<8||state.upperStair.stringers!==2)
       throw Error('Original eight-step ascent lacks connected supporting structure '+JSON.stringify(state.upperStair));
+    if(!state.northDoorSteps||state.northDoorSteps.treads!==3||
+       state.northDoorSteps.supports!==3||!state.northDoorSteps.unchangedOriginals||
+       Math.abs(state.northDoorSteps.baseHeight)>.015||
+       state.northDoorSteps.gapsClosed?.length!==3||
+       state.northDoorSteps.heights?.some((h,i)=>Math.abs(h-.35*(i+1))>.035))
+      throw Error('North public sanctuary door still has unsupported terrace slabs '+JSON.stringify(state.northDoorSteps));
     if(!state.topology||!state.topology.physicalUnion||
        state.topology.materialOffsets!==false||
        state.topology.sourceBoxCount<65||

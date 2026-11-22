@@ -28,6 +28,10 @@ assert(script.includes("const crossAperture={x:15,y:3.65") &&
        script.includes('crossLightMask("cross")'),
   "Light must align to the actual 3.65m high cross opening");
 assert(script.includes("surfaceMaps.stone"), "Architectural material registry must remain intact");
+assert(script.includes("supportNorthDoorTerraces(building)") &&
+       script.includes("northDoorStepAudit.gapsClosed.push") &&
+       script.includes("V26 north public door original terrace physical stair support"),
+  "Original north public entrance treads must have actual continuous solid supports");
 assert(script.includes("upperStairAudit.risers++") &&
        script.includes("V26 upper ascent fitted vertical stair riser"),
   "Upper stair treads must have connected fitted risers, not eight floating boxes");

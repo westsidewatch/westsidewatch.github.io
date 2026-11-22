@@ -663,6 +663,51 @@ function connectUpperStairTreads(building){
   }
 }
 
+// R36: original shallow north-public-door terraces were three 15 cm slabs
+// suspended 20/55/90 cm above the GLB datum, not complete stairs.
+// Restore their physical underneath without changing the tread footprints.
+const northDoorStepAudit={source:"V26_ROUTE_01",treads:0,supports:0,
+  baseHeight:null,heights:[],gapsClosed:[],unchangedOriginals:true};
+function supportNorthDoorTerraces(building){
+  const treads=[],landings=[];
+  building.updateMatrixWorld(true);
+  building.traverse(mesh=>{
+    if(!mesh.isMesh||!mesh.visible)return;
+    const n=modelName(mesh.name),b=meshWorldBox(mesh);
+    if(!b)return;
+    if(/^v26 route 01 .*wide terrace [123]/.test(n))treads.push({mesh,b});
+    if(/^v26 route 00 .*sanctuary.level north landing/.test(n))landings.push({mesh,b});
+  });
+  treads.sort((a,b)=>b.b.max.x-a.b.max.x);
+  if(treads.length!==3||landings.length!==1)
+    throw Error("North sanctuary stairs require exactly three original GLB treads and ground landing");
+  const floor=landings[0].b.max.y;
+  if(Math.abs(floor)>.015)throw Error("North public door landing is not at GLB ±0 datum");
+  northDoorStepAudit.treads=treads.length;
+  northDoorStepAudit.baseHeight=+floor.toFixed(3);
+  for(let i=0;i<treads.length;i++){
+    const b=treads[i].b;
+    const width=b.max.x-b.min.x,depth=b.max.z-b.min.z;
+    const gap=b.min.y-floor,rise=b.max.y-floor;
+    const previous=i?treads[i-1].b.max.y:floor;
+    if(width<1.4||width>1.7||depth<.60||depth>.75||gap<.16||
+       gap>1.0||Math.abs(rise-previous-.35)>.035)
+      throw Error("GLB north entrance tread dimensions changed: no invented support");
+    // Meets bottom face exactly: no intersecting/concurrent top surfaces.
+    // Slight side inset prevents coplanar face fighting with original slab.
+    const support=new Mesh(new BoxGeometry(width-.002,gap,depth-.002),whiteArchitecture);
+    support.name="V26 north public door original terrace physical stair support "+(i+1);
+    support.position.set((b.min.x+b.max.x)/2,(floor+b.min.y)/2,
+      (b.min.z+b.max.z)/2);
+    support.castShadow=true;
+    support.receiveShadow=true;
+    building.add(support);
+    northDoorStepAudit.supports++;
+    northDoorStepAudit.heights.push(+rise.toFixed(3));
+    northDoorStepAudit.gapsClosed.push(+gap.toFixed(3));
+  }
+}
+
 function removeHeadHeightHazards(building){
   // Check REAL BIM/GLB bounds against every half-second of the LOWER
   // forum descent. A low horizontal projection into the walking corridor
@@ -922,6 +967,10 @@ async function loadArchitecture() {
   window.__churchTopologyAudit=consolidateIntersectingOpaqueCuboids(building,{
     whiteArchitecture,whiteFloor,modelName,meshWorldBox
   });
+  // Adjacent thin slabs have no volumetric overlap for CSG to eliminate;
+  // bridge the three original under-slab voids with matching solid supports.
+  supportNorthDoorTerraces(building);
+  window.__churchNorthDoorStepAudit=northDoorStepAudit;
   window.__churchSurfaceAudit=sheetRepair;
   window.__churchDepthLayerAudit={
     source:"R34 exposed exterior mesh union",
