@@ -79,7 +79,7 @@ fs.mkdirSync(dir,{recursive:true});
   assert(!forbidden.test(visiblePreview),
    device+': preview contains prohibited technical or licensing narration: '+visiblePreview.slice(0,400));
   assert(visiblePreview.includes('出版方')&&visiblePreview.includes('介紹'),
-   device+': preview fails to introduce the reader to the publisher's work');
+   device+': book preview lacks publisher-facing introduction');
   assert(!(await page.locator('#dawn-book-detail').isVisible()),device+': candidate must not open internal canonical reader');
   assert.equal(await preview.locator('.dawn-expander__read').innerText(),'前往出版方了解本書');
   const titleOS=await preview.locator('.dawn-expander__title').evaluate(el=>({
