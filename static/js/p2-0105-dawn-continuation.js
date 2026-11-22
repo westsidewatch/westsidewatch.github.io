@@ -701,9 +701,21 @@
  function classifiedBookCard(book){
   const item=document.createElement('button');item.type='button';item.className='dawn-classification__book';
   const cover=document.createElement('span');cover.className='dawn-classification__book-art';
-  if(book.cover?.url&&/^https:\/\//.test(book.cover.url)){
-   const img=document.createElement('img');img.src=book.cover.url;img.alt='原書封面：'+book.title;img.loading='lazy';img.decoding='async';
-   img.onerror=()=>{img.remove()};cover.append(img);
+  // A visual must belong to this *specific* work; never substitute an
+  // unrelated book's cover or an imaginary engraving.
+  const indexed=coverLookup?.get(normalizeTitle(book.title));
+  const visual=imageFor(book,indexed);
+  const candidate=visual?.url;
+  if(candidate){
+   const img=document.createElement('img');img.src=candidate;
+   img.alt=visual.kind==='illustration'?'原作內頁圖版：'+book.title:'原書封面：'+book.title;
+   img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';
+   img.onerror=()=>{
+    const fallback=visualLookup?.get(normalizeTitle(book.title));
+    if(fallback?.verified&&fallback.url!==candidate)img.src=fallback.url;
+    else img.remove();
+   };
+   cover.append(img);
   }
   const text=document.createElement('span');text.className='dawn-classification__book-meta';
   const name=document.createElement('strong');name.textContent=book.title;
@@ -722,6 +734,8 @@
   intro.append(heading,detail);panel.append(intro);
   if(books.length){
    const gallery=document.createElement('div');gallery.className='dawn-classification__book-wall';
+   // The existing source-backed cover/illustration catalogues are fetched
+   // before the book wall is composed. Unknown covers stay honest on paper.
    for(const book of books.slice(0,36))gallery.append(classifiedBookCard(book));
    panel.append(gallery);
   }else{
@@ -743,7 +757,7 @@
   try{
    const {resourceSearch}=await import('/js/resource-fabric-client.mjs');
    const query=taxonomyQueries[child.id]||child.label;
-   const found=await resourceSearch(query);
+   const [found]=await Promise.all([resourceSearch(query),loadCatalogueCoverLookup(),loadVisualLookup()]);
    if(ticket!==classificationTicket)return;
    const entries=found.slice(0,36).map(work=>({
     workId:work.workId,title:work.title,creator:(work.authors||[]).join(' · '),
@@ -790,6 +804,23 @@
  }
  function displayChineseLeaf(key,domain){
   ++classificationTicket;
+  void Promise.all([loadCatalogueCoverLookup(),loadVisualLookup()]).then(()=> {
+   const grid=$('#dawn-classification-results .dawn-classification__book-wall');
+   if(grid&&!$('#dawn-classification-results').hidden){
+    grid.querySelectorAll('.dawn-classification__book').forEach((tile,i)=>{
+     const work=(chineseLibrary.works||[]).filter(w=>w.classification?.label===domain)[i];
+     if(!work||tile.querySelector('img'))return;
+     const lookup=coverLookup?.get(normalizeTitle(work.work.title));
+     const visual=imageFor({title:work.work.title},lookup);
+     if(visual?.url){
+      const img=document.createElement('img');img.src=visual.url;img.alt='原書圖像：'+work.work.title;
+      img.loading='lazy';img.decoding='async';
+      tile.querySelector('.dawn-classification__book-art')?.append(img);
+     }
+    });
+   }
+  }).catch(()=>{});
+
   const works=(chineseLibrary.works||[]).filter(w=>w.classification?.label===domain);
   const books=works.map(w=>({
    title:w.work.title,creator:w.work.creator||'',workId:w.workId,date:w.edition?.year||'',
