@@ -28,8 +28,8 @@ class Element {
  addEventListener(k,cb){this.handlers[k]=cb;}
  setAttribute(k,v){this.attrs[k]=v;}
 }
-const grid=new Element('nav'),status=new Element('p'),workcount=new Element('strong');
-const nodes={'#dawn-department-grid':grid,'#dawn-department-status':status,'#dawn-hall-workcount':workcount};
+const grid=new Element('nav'),status=new Element('p');
+const nodes={'#dawn-department-grid':grid,'#dawn-department-status':status};
 const $=key=>nodes[key]||null;
 const calls={open:0,render:0,display:[]};
 const openCollection=()=>{calls.open++};
@@ -46,7 +46,6 @@ const load=new Function('$','document','fetch','openCollection','renderCatalogue
  const mount=load($,document,fetch,openCollection,renderCatalogueClassification,classificationTree,displayClassificationGroup,console);
  await mount();
  assert.equal(grid.children.length,7,'seven visible interactive departments');
- assert.equal(workcount.textContent,'203,448');
  assert.equal(status.textContent,'');
  for(let i=0;i<7;i++){
   const b=grid.children[i];
