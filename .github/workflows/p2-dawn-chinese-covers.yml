@@ -3,6 +3,9 @@ on:
   pull_request:
     paths:
       - 'tests/p2-dawn-chinese-covers.cjs'
+      - 'tests/p2-dawn-chinese-contemporary.cjs'
+      - 'static/dawn-library/chinese-contemporary-discovery.json'
+      - 'static/js/p2-dawn-expanding-book-preview.mjs'
       - 'static/dawn-library/chinese-collection.json'
       - 'static/dawn-library/chinese-facsimile-covers/**'
       - 'static/js/p2-0105-dawn-continuation.js'
@@ -29,10 +32,13 @@ jobs:
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
           node tests/p2-dawn-chinese-covers.cjs
+          node tests/p2-dawn-chinese-contemporary.cjs
       - name: Preserve desktop and mobile authentic book-wall screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: dawn-chinese-47-cover-browser-proofs
-          path: artifacts/p2-dawn-chinese-covers/
+          path: |
+            artifacts/p2-dawn-chinese-covers/
+            artifacts/p2-dawn-modern-chinese/
           if-no-files-found: warn
