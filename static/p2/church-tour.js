@@ -672,7 +672,9 @@ function supportNorthDoorTerraces(building){
   const treads=[],landings=[];
   building.updateMatrixWorld(true);
   building.traverse(mesh=>{
-    if(!mesh.isMesh||!mesh.visible)return;
+    // R35 CSG hides source meshes when it emits a physical union shell.
+    // Their unmodified world geometry still supplies the true survey datum.
+    if(!mesh.isMesh)return;
     const n=modelName(mesh.name),b=meshWorldBox(mesh);
     if(!b)return;
     if(/^v26 route 01 .*wide terrace [123]/.test(n))treads.push({mesh,b});
