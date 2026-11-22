@@ -171,3 +171,17 @@ GitHub Actions [run #45001795311](https://github.com/westsidewatch/westsidewatch
 R73 修改 JS 原始輸出而不是 CSS 隱藏：中文現代館藏版頭改為讀者閱讀邀請，單書預覽根據原始資料的主題和出版方給出中性引介；英文欄目紙牌 `DAWN · SOURCE EDITION` 改成 `CHINESE TRANSLATIONS / CHINESE BOOKS`；共用 Codrops 預覽模組去除內部 `WORK ID`、`原書書名待核對` 等不必要的讀者文案，出版方入口改為「前往出版方了解本書」。原有具體作品來源頁、原 Work IDs、兩步互動和出版方權利資料不變。
 
 `tests/p2-dawn-chinese-contemporary.cjs` 新增真實瀏覽器顯示文案的禁止字串核驗，防止「已核對／未獲本站／沒有複製／受版權保護／SOURCE EDITION／WORK ID／QA／PR／commit」再進讀者介面；仍驗證第一次點書不轉跳、第二次點選出版社入口才離站。不可在讀者介面硬塞內部法律或工程說明。
+
+
+## R74｜中文館藏當代優先、早期文獻後置
+
+**已確定的中文館藏策展順序**：黎明書局中文書籍以當代中文原著及中文譯作為**入口和首頁主視覺**。先讓讀者看見當代的神學、講道、教會生活、禱告與靈修出版物，再於後段進入早期中文基督教文獻與古籍。此前先展示 47 部早期館藏、把 11 部當代著作放到分類最後的次序是錯誤的，不能以古籍封面已補齊來合理化。
+
+R74 正式修正原 `static/js/p2-0105-dawn-continuation.js`：
+- 點擊 `#dawn-primary-chinese`、開啟 `?category=zh` 或 `?category=zh-modern` 都先進入當代中文與譯作的實際書影牆。
+- 讀者在當代書牆後方可選「閱讀早期中文古籍 · 47 部」，才回到原分類頁。中文分類頁依序排列當代入口、再是原四十七冊所屬歷史分類；不刪除或重排 canonical Work IDs。
+- 原舊分類之直接驗收路徑為 `?category=zh-archive`，保留原 Yale 中文古籍／封面驗收；既有 46 張本地原書掃描、1 本 Gutenberg 書、真正出版方來源資料全部保留。
+- 首層中文分類圖塊以「中文圖書／當代著作與譯本」進入當代書牆，而不是先用 47 部古籍定義中文書局；頂部主導航移除只代表古籍數量的「47 部」，避免向讀者造成錯誤館藏印象。
+- Codrops 選書預覽、逐冊來源出版方導流、OS 中英字重、收穫黃識別不改動。
+
+新瀏覽器 `tests/p2-dawn-chinese-contemporary.cjs` 必須驗證：中文入口不需額外點擊即顯示當代書牆；11 部書源與八部譯作現存；前後章次正確、原古籍完整保留，點擊主導航可由古籍返回當代。早期封面驗收 `tests/p2-dawn-chinese-covers.cjs` 經明確 `zh-archive` 路徑驗證。工程未合併主站，仍留於 Draft PR #1411。
