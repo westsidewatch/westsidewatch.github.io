@@ -54,3 +54,5 @@ class DiscoveryTests(unittest.TestCase):
 
 if __name__=="__main__":
     unittest.main()
+
+# Trigger full-cycle CI on main after workflow registration.
