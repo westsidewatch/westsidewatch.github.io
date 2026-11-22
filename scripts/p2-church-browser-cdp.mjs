@@ -4,6 +4,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 // This audit requires a real WebGL scene; a loading/failed screenshot is a failure.
 const proofDir = 'artifacts/p2-church-visual-qa';
 const doorOnly=process.env.P2_CHURCH_DOOR_ONLY==='1';
+const northOnly=process.env.P2_CHURCH_NORTH_ONLY==='1';
 mkdirSync(proofDir, { recursive: true });
 const sleep = n => new Promise(resolve => setTimeout(resolve, n));
 let tabs;
@@ -62,7 +63,7 @@ try{
   // Load and decompress the architectural GLB ONCE. The tour's own animation
   // loop reads proofFrame from location.search on every frame; stepping the
   // URL with replaceState requires no reloading or lost WebGL state.
-  const frames=doorOnly?[103,106,108,110]:[187,194,199,202,204,205,211,216,223,27,31,40,55,64,110,121,132,143,154,165,174,9,20,22,89,94,103,236,241,246,248,251];
+  const frames=northOnly?[55,59,62,63,64,67,73]:doorOnly?[103,106,108,110]:[187,194,199,202,204,205,211,216,223,27,31,40,55,64,110,121,132,143,154,165,174,9,20,22,89,94,103,236,241,246,248,251];
   await send('Page.navigate',{
     url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frames[0]
   });
@@ -277,7 +278,7 @@ try{
   if(reverse)throw Error('South exit went backwards '+reverse+' times');
   // Save a handful of actual rendered frames independently of the
   // 101-position CPU route proof, not 101 slow duplicate screen captures.
-  if(!doorOnly){
+  if(!doorOnly&&!northOnly){
     for(const t of [103,106.1,108,110]){
       await evaluate("window.__churchRenderProofFrame("+t+")");
       const img=await send('Page.captureScreenshot',{
@@ -294,7 +295,7 @@ try{
     backwardFrames:reverse,doorFrames,actualWebGLDoorShots:true
   }));
 
-  if(!doorOnly){
+  if(!doorOnly&&!northOnly){
   // Prove the public chapter URL starts *in the sanctuary* but continues
   // the original animation normally. No proofFrame freeze on this request.
   await send('Page.navigate',{
