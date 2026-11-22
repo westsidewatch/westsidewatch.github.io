@@ -6,6 +6,7 @@ on:
       - 'static/dawn-library/living/**'
       - 'static/dawn-library/cover-preview/**'
       - 'scripts/audit-dawn-library-shards.cjs'
+      - 'scripts/stage-dawn-cover-reconciliation.cjs'
       - '.github/workflows/dawn-library-shard-integrity.yml'
   workflow_dispatch:
 permissions:
@@ -21,10 +22,19 @@ jobs:
           node-version: '22'
       - name: Audit original Dawn data (21 canonical + 21 Living + 407 cover shards)
         run: node scripts/audit-dawn-library-shards.cjs --json dawn-integrity-report.json
+      - name: Stage canonical-sourced cover repair (never writes existing assets)
+        run: node scripts/stage-dawn-cover-reconciliation.cjs --out dawn-cover-stage
       - name: Preserve integrity evidence even on detected defects
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: dawn-library-integrity-report
           path: dawn-integrity-report.json
+          if-no-files-found: warn
+      - name: Preserve candidate repair for review (not deployed)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-cover-staged-reconciliation
+          path: dawn-cover-stage/
           if-no-files-found: warn
