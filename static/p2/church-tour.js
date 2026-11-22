@@ -466,6 +466,104 @@ function updateMapleSeason(t,duration) {
 // panels which are NOT walkable head-clearance-safe in the sunken forum.
 const ghostRoofMeshes=[];
 const removedObstructions=[];
+const forumSafetyBoxes=[];
+const eliminatedHeadHazards=[];
+const cameraSafetyReport={samples:0,corrected:0,penetrations:0,forwardOcclusions:0,headroomHazards:0,objects:[]};
+const forumPathTimes=()=>Array.from({length:111},(_,i)=>121+i*.5);
+const isCForumTime=t=>t>=121&&t<=178;
+function meshWorldBox(mesh){
+  if(!mesh.geometry?.boundingBox)mesh.geometry?.computeBoundingBox();
+  if(!mesh.geometry?.boundingBox)return null;
+  return mesh.geometry.boundingBox.clone().applyMatrix4(mesh.matrixWorld);
+}
+function overlapsWalkColumn(box,p,radius=.72){
+  return box.min.x<=p[0]+radius&&box.max.x>=p[0]-radius
+    &&box.min.z<=p[2]+radius&&box.max.z>=p[2]-radius;
+}
+function removeHeadHeightHazards(building){
+  // Check REAL BIM/GLB bounds against every half-second of the LOWER
+  // forum descent. A low horizontal projection into the walking corridor
+  // is removed, instead of merely steering the camera through its mesh.
+  const samples=forumPathTimes().map(t=>positionAlongRoute(t));
+  building.updateMatrixWorld(true);
+  building.traverse(mesh=>{
+    if(!mesh.isMesh||!mesh.visible)return;
+    const n=modelName(mesh.name);
+    if(!/(?:soffit|fascia|room|gallery|mid|cantilever|overhang|bridge|slab|balcony|project|landing|terrace|beam)/i.test(n)
+      ||/(?:tread|stair|step|skylight|glass|door|railing|handrail|roof|floor|paving|maple|tree|column|foundation)/i.test(n))return;
+    const box=meshWorldBox(mesh);if(!box)return;
+    const thickness=box.max.y-box.min.y;
+    if(thickness>1.15)return; // full walls and inhabited rooms are not fake soffits
+    const headStrike=samples.find(v=>overlapsWalkColumn(box,v.p,.85)
+      &&box.min.y>=v.p[1]-.30
+      &&box.min.y<=v.p[1]+.62
+      &&box.max.y>=v.p[1]+.17);
+    if(!headStrike)return;
+    mesh.visible=false;mesh.castShadow=false;
+    eliminatedHeadHazards.push({name:mesh.name,
+      min:[box.min.x,box.min.y,box.min.z].map(v=>+v.toFixed(2)),
+      max:[box.max.x,box.max.y,box.max.z].map(v=>+v.toFixed(2))});
+  });
+}
+function buildCameraSafetyBoxes(building){
+  // AABB broad phase only; omit large curved envelopes to avoid treating
+  // their empty interior as solid. Ground and actual stair treads remain.
+  building.updateMatrixWorld(true);
+  building.traverse(mesh=>{
+    if(!mesh.isMesh||!mesh.visible)return;
+    const n=modelName(mesh.name);
+    if(!/(wall|partition|panel|soffit|fascia|column|post|support|screen|balustrade|railing|glass|mullion|door|beam|parapet|ledge|lintel|landing|terrace|slab)/i.test(n)
+       ||/(?:foliage|maple|tree|ground|sky|ghost cutaway)/i.test(n))return;
+    const box=meshWorldBox(mesh);if(!box)return;
+    if(box.max.x < -1||box.min.x>13||box.max.z<-19||box.min.z>-2)return;
+    // Protect camera from bounded solid surfaces only, not large
+    // ring-shaped forum geometry whose box contains empty air.
+    const dx=box.max.x-box.min.x,dz=box.max.z-box.min.z;
+    if(dx>7||dz>7)return;
+    forumSafetyBoxes.push({name:mesh.name,box});
+  });
+}
+function eyeInBox(p,b,r=.18){
+  return p.x>b.min.x-r&&p.x<b.max.x+r&&p.y>b.min.y-r
+    &&p.y<b.max.y+r&&p.z>b.min.z-r&&p.z<b.max.z+r;
+}
+function rayBoxNear(p,dir,b,reach){
+  let entry=0,exit=reach;
+  for(const ax of ["x","y","z"]){
+    const speed=dir[ax];
+    if(Math.abs(speed)<1e-7){
+      if(p[ax]<b.min[ax]-.13||p[ax]>b.max[ax]+.13)return false;
+      continue;
+    }
+    const a=(b.min[ax]-.13-p[ax])/speed;
+    const z=(b.max[ax]+.13-p[ax])/speed;
+    entry=Math.max(entry,Math.min(a,z));
+    exit=Math.min(exit,Math.max(a,z));
+    if(exit<entry)return false;
+  }
+  return exit>=0&&entry<reach;
+}
+const eyeSafetyDirection=new Vector3(),eyeSafetyScratch=new Vector3();
+function safeCameraInForum(point,target){
+  if(!forumSafetyBoxes.length)return {position:point,blocked:0,occluded:0,correction:0};
+  eyeSafetyDirection.subVectors(target,point).normalize();
+  const offsets=[[0,0,0],[-.36,0,0],[.36,0,0],[0,0,-.36],[0,0,.36],
+     [-.62,0,-.4],[.62,0,-.4],[-.62,0,.4],[.62,0,.4],
+     [-.95,0,0],[.95,0,0],[0,.38,0]];
+  let best=null;
+  for(const [dx,dy,dz] of offsets){
+    const candidate=eyeSafetyScratch.set(point.x+dx,point.y+dy,point.z+dz);
+    const penetrations=forumSafetyBoxes.filter(o=>eyeInBox(candidate,o.box));
+    const occlusions=forumSafetyBoxes.filter(o=>rayBoxNear(candidate,eyeSafetyDirection,o.box,1.15));
+    const cost=Math.hypot(dx,dy,dz)+penetrations.length*12+occlusions.length*3;
+    if(!best||cost<best.cost)best={position:candidate.clone(),cost,penetrations,occlusions,correction:Math.hypot(dx,dy,dz)};
+    if(!penetrations.length&&!occlusions.length)break;
+  }
+  return {position:best.position,blocked:best.penetrations.length,
+    occluded:best.occlusions.length,correction:best.correction,
+    names:[...best.penetrations,...best.occlusions].map(o=>o.name).slice(0,7)};
+}
+
 function cleanOpenPublicSpaces(building){
   building.updateMatrixWorld(true);
   building.traverse(object=>{
@@ -531,7 +629,13 @@ async function loadArchitecture() {
     object.receiveShadow = true;
   });
   cleanOpenPublicSpaces(building);
+  removeHeadHeightHazards(building);
+  buildCameraSafetyBoxes(building);
   scene.add(building);
+  window.__churchRouteClearanceAudit={
+    headHazardsRemoved:eliminatedHeadHazards,
+    collisionBoxes:forumSafetyBoxes.length
+  };
 
   // Read-only screen-space diagnostics: identify any unlabeled GLB component
   // visible where a floating handle was reported. No on-screen UI or overlay.
@@ -789,8 +893,26 @@ function animate(now,forcedTime=null) {
     ghostRoofVisible:ghostRoofMeshes.filter(x=>x.visible).length
   };
   const sample = positionAlongRoute(t);
-  camera.position.set(sample.p[0], sample.p[1], sample.p[2]);
-  lookAtVector.set(sample.look[0], sample.look[1], sample.look[2]);
+  lookAtVector.set(sample.look[0],sample.look[1],sample.look[2]);
+  camera.position.set(sample.p[0],sample.p[1],sample.p[2]);
+  if(isCForumTime(t)){
+    const safe=safeCameraInForum(camera.position,lookAtVector);
+    camera.position.copy(safe.position);
+    cameraSafetyReport.samples++;
+    if(safe.correction>.001)cameraSafetyReport.corrected++;
+    cameraSafetyReport.penetrations=safe.blocked;
+    cameraSafetyReport.forwardOcclusions=safe.occluded;
+    cameraSafetyReport.objects=safe.names||[];
+  }
+  window.__churchSafetyAudit={
+    at:t,headHazardsRemoved:eliminatedHeadHazards.length,
+    cameraPenetrations:isCForumTime(t)?cameraSafetyReport.penetrations:0,
+    forwardOcclusions:isCForumTime(t)?cameraSafetyReport.forwardOcclusions:0,
+    cameraPosition:[camera.position.x,camera.position.y,camera.position.z].map(v=>+v.toFixed(3)),
+    corrected:isCForumTime(t)?cameraSafetyReport.corrected:0,
+    collidingObjects:isCForumTime(t)?cameraSafetyReport.objects:[],
+    boxes:forumSafetyBoxes.length
+  };
   const distance = camera.position.distanceTo(lookAtVector);
   lookAtVector.x += Math.sin(yawOffset) * Math.min(7, distance * 0.6);
   lookAtVector.y -= pitchOffset * Math.min(5, distance * 0.5);
