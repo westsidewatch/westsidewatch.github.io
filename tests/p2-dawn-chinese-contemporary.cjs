@@ -9,8 +9,8 @@ const manifest=JSON.parse(fs.readFileSync('static/dawn-library/chinese-contempor
 const ancient=JSON.parse(fs.readFileSync('static/dawn-library/chinese-collection.json','utf8'));
 assert.equal(manifest.schema,'dawn.library.chinese-contemporary-discovery.v1');
 assert.equal(manifest.status,'editorial-source-discovery-not-canonical-admission');
-assert.equal(manifest.candidates.length,7);
-assert.equal(manifest.candidates.filter(c=>c.translation==='Chinese translation').length,4);
+assert.equal(manifest.candidates.length,11);
+assert.equal(manifest.candidates.filter(c=>c.translation==='Chinese translation').length,8);
 assert.equal(ancient.works.length,47,'do not mutate 47 original Chinese Works');
 assert.equal(manifest.audit.candidateCount,manifest.candidates.length);
 const ids=new Set();
@@ -41,8 +41,8 @@ fs.mkdirSync(dir,{recursive:true});
   await contemporary.waitFor({state:'visible',timeout:35000});
   await contemporary.click();
   const cards=page.locator('#dawn-classification-results .dawn-contemporary__book');
-  await page.waitForFunction(()=>document.querySelectorAll('.dawn-contemporary__book').length===7,null,{timeout:25000});
-  assert.equal(await cards.count(),7,device+': catalog source discovery cards missing');
+  await page.waitForFunction(()=>document.querySelectorAll('.dawn-contemporary__book').length===11,null,{timeout:25000});
+  assert.equal(await cards.count(),11,device+': catalog source discovery cards missing');
   assert(await page.locator('#dawn-classification-results .dawn-classification__result-heading')
    .innerText().then(x=>x.includes('尚未獲本站全文轉載授權')),
    device+': missing source rights notice');
@@ -74,7 +74,7 @@ fs.mkdirSync(dir,{recursive:true});
   assert.equal(page.url(),originalUrl,device+': current Dawn collection should remain open');
   await page.screenshot({path:path.join(dir,device+'-translation-expanded-preview.png')});
   assert.equal(errors.length,0,device+': JS exceptions: '+errors.join('; '));
-  console.log('MODERN_CHINESE_SOURCE_QA',device,'7_BOOKS_4_TRANSLATIONS_TWO_STEP_NAV_PASS');
+  console.log('MODERN_CHINESE_SOURCE_QA',device,'11_BOOKS_8_TRANSLATIONS_TWO_STEP_NAV_PASS');
   await page.close();
  }
  }finally{await browser.close()}
