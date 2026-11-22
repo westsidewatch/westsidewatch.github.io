@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "site": "数片",
+  "source_id": "changzhang",
+  "kind": "upstream-discovery-registry",
+  "checked_on": "2026-11-22",
+  "relation": {
+    "known_stream": "https://svip.czzyplay.com/play/37420/e1/index.m3u8",
+    "associated_catalog": "https://changzhang.tv/",
+    "catalog_api_documentation": "https://changzhang.tv/help/app",
+    "catalog_api_documented": "https://api.changzhang.tv/api.php/provide/vod/",
+    "verification": "Shared playback host and platform API conventions are documented; the exact relationship of item 37420 to a particular provider catalog record has not been verified via API.",
+    "limitations": [
+      "No direct connectivity to upstream API from current execution environment",
+      "Catalog presence does not establish licensing, accessibility, or actual decoding",
+      "No discovered entries promoted into the public player",
+      "Do not collect sources behind DRM, access controls, or user accounts"
+    ]
+  },
+  "discovered": [
+    {
+      "title": "实习医生格蕾 第23季",
+      "year": 2026,
+      "genre": "欧美剧",
+      "sourcePage": "https://changzhang.tv/?t=202",
+      "evidence": "Catalog listing (2026-10-31 index)"
+    },
+    {
+      "title": "高地迷踪 第二季",
+      "year": 2026,
+      "genre": "悬疑／犯罪／欧美剧",
+      "sourcePage": "https://changzhang.tv/video/610",
+      "evidence": "Upstream series detail"
+    },
+    {
+      "title": "神探默多克 第二十季",
+      "year": 2026,
+      "genre": "悬疑／犯罪／欧美剧",
+      "sourcePage": "https://changzhang.tv/video/148292",
+      "evidence": "Upstream series detail"
+    },
+    {
+      "title": "哈德森与雷克斯 第九季",
+      "year": 2026,
+      "genre": "悬疑／犯罪／欧美剧",
+      "sourcePage": "https://changzhang.tv/video/876",
+      "evidence": "Upstream series detail"
+    },
+    {
+      "title": "黑鸽 第二季",
+      "year": 2026,
+      "genre": "动作／惊悚／欧美剧",
+      "sourcePage": "https://changzhang.tv/video/148513",
+      "evidence": "Upstream series detail"
+    },
+    {
+      "title": "中央情报局 第二季",
+      "year": 2026,
+      "genre": "欧美剧",
+      "sourcePage": "https://changzhang.tv/video/436",
+      "evidence": "Upstream series detail"
+    },
+    {
+      "title": "小丑回魂：德里故事",
+      "year": 2026,
+      "genre": "恐怖／奇幻／欧美剧",
+      "sourcePage": "https://changzhang.tv/video/148403",
+      "evidence": "Upstream series detail"
+    }
+  ],
+  "catalog_eligibility": "discovery-only",
+  "publishing_authorization": "unconfirmed"
+}
