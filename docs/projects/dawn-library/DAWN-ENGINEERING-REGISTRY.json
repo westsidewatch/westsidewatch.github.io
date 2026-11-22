@@ -294,9 +294,38 @@
             "countDriftShards": 335,
             "missingVsCanonical": 1020
           }
+        },
+        "v2Run": {
+          "id": 45001956068,
+          "url": "https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45001956068",
+          "artifactId": 14746081666,
+          "status": "WARN",
+          "errors": 0,
+          "missingWorkIdsCount": 1020,
+          "corrections": 335
         }
       },
-      "next": "Retrieve v2 artifact with missing Work IDs and exact per-shard differences; resolve via canonical admission pipeline; then test remote images/rights and browser"
+      "next": "Use v2 exact Work IDs and corrections to review source-generated repair candidate; report available"
+    },
+    {
+      "id": "dawn-cover-reconciliation-stage",
+      "kind": "staged-canonical-repair",
+      "source": "scripts/stage-dawn-cover-reconciliation.cjs",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "staging-ci-verified-not-deployed",
+      "evidence": {
+        "runId": 45003268137,
+        "runUrl": "https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45003268137",
+        "artifactId": 14746433995,
+        "canonicalWorks": 203448,
+        "originalPreviewRows": 202428,
+        "missingWorks": 1020,
+        "newShards": 3,
+        "proposedShards": 410,
+        "proposedTotal": 203448,
+        "declaredImagesForMissing": 0
+      },
+      "next": "Promote only after checking staged root/shard hash, same-Work images, full cursor boundary, Cloudflare visual QA; keep original 407 source files"
     }
   ],
   "auditGates": [
