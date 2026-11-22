@@ -1876,3 +1876,27 @@
   font-size:clamp(17px,4.2vw,24px)!important;
  }
 }
+
+
+/* Undo the old Personal Dawn counter-pill selector leaking into the new
+   two-line navigation label. Only the numeric counter remains a counter. */
+#dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-en,
+#dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-zh{
+ width:auto!important;min-width:0!important;height:auto!important;
+ background:transparent!important;border:0!important;border-radius:0!important;
+ padding:0!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-en{
+ font:400 clamp(21px,2.25vw,39px)/.98 var(--ws-type-display-en-sc)!important;
+ letter-spacing:-.025em!important;
+}
+@media(max-width:850px){
+ #dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-en{
+  font-size:clamp(16px,2.4vw,23px)!important;
+ }
+}
+@media(max-width:600px){
+ #dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-en{
+  font-size:clamp(17px,5vw,24px)!important;
+ }
+}
