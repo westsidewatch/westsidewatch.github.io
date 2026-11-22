@@ -87,6 +87,12 @@ try{
       throw Error('Cross illumination incomplete at frame '+frame);
 
     await sleep(700);
+    if(frame===103){
+      const upper=await evaluate('window.__churchMeshProbe?.(495,230,140)');
+      const lower=await evaluate('window.__churchMeshProbe?.(310,510,100)');
+      console.log('P2_SUSPENDED_HARDWARE_UPPER_103='+JSON.stringify(upper));
+      console.log('P2_SUSPENDED_HARDWARE_LOWER_103='+JSON.stringify(lower));
+    }
     const shot=await send('Page.captureScreenshot',{
       format:'jpeg',quality:57,captureBeyondViewport:false,fromSurface:true
     });
