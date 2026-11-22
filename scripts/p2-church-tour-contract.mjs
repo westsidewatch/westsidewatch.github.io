@@ -23,8 +23,20 @@ assert(script.includes('const southDoor = mesh("TALL SINGLE WHITE PIVOT DOOR")')
   "The original tall GLB entrance must be the moving door");
 assert(!script.includes("const leaf = new Mesh"), "Do not introduce a short fake entrance leaf");
 assert(script.includes("new PerspectiveCamera("), "Use an actual perspective camera");
-assert(script.includes("south cross wall|solid quadrant"), "The cross is a wall aperture, not luminous solid quadrants");
-assert(script.includes("surfaceMaps.stone"), "Architectural materials must remain textured");
+assert(script.includes("const crossAperture={x:15,y:3.65") &&
+       script.includes('crossLightMask("cross")'),
+  "Light must align to the actual 3.65m high cross opening");
+assert(script.includes("surfaceMaps.stone"), "Architectural material registry must remain intact");
+assert(script.includes("upperStairAudit.risers++") &&
+       script.includes("V26 upper ascent fitted vertical stair riser"),
+  "Upper stair treads must have connected fitted risers, not eight floating boxes");
+assert(script.includes("sameDrawSurface(a,b)") &&
+       script.includes("coplanarTolerance:.002,exactOnly:true"),
+  "Never remove architectural panels based only on matching bounding boxes");
+assert(!script.includes("routesidePost.test(n)"),
+  "Original gallery support posts must not be hidden for camera clearance");
+assert(script.includes("new PerspectiveCamera(59, 1, 0.16, 125)"),
+  "Maintain precision-safe near and far planes for architectural depth");
 
 assert(script.includes("loadArchitecture()"), "Native GLB loading required");
 assert((script.match(/at:\s*[0-9]+,\s*p:/g) || []).length >= 22,
@@ -51,4 +63,4 @@ assert(interaction.includes("new URL('/p2/church-tour.html?scene=20261121-source
 assert(firstLayer.includes("p2-BIwqVfIr.js"), "First-layer growth model remains untouched");
 const syntax = script.replace(/import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?/m, "");
 new Script(syntax, { filename: "church-tour.js" });
-console.log("P2 native virtual church: 12 contract checks passed");
+console.log("P2 native virtual church: source, structural and depth contracts passed");
