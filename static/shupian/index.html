@@ -237,7 +237,7 @@ document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListe
    const stamp=d.observed_at_utc?new Date(d.observed_at_utc).toLocaleString('zh-Hant'):'尚未完成首次網路實測';
    observed.textContent='查詢：'+(d.queries||[]).join('、')+' · 實測時間：'+stamp+'。搜尋結果仍須經過去廣告、實播及網站驗收。';
    metrics.replaceChildren();
-   for(const [title,value] of [['來源查詢',n(d.provider_queries_attempted)],['搜尋命中',n(d.works_found)],['媒體候選',n(d.unique_media_candidates)],['HLS 解析',n(d.manifests_parsed)]]){
+   for(const [title,value] of [['來源查詢',n(d.provider_queries_attempted)],['搜尋命中',n(d.works_found)],['媒體候選',n(d.unique_media_candidates)],['HLS 解析／分段抽檢',n(d.manifests_parsed)+' / '+n(d.segment_sample_pass)]]){
      const cell=document.createElement('div'),b=document.createElement('b'),span=document.createElement('span');
      b.textContent=title;span.textContent=value;cell.append(b,span);metrics.append(cell);
    }
