@@ -1170,7 +1170,7 @@
  }
  more.addEventListener('click',()=>canonicalMode?void showCanonical(canonicalGallery?.nextOffset()||0):void showPage(currentPage+1));
  prevButton.addEventListener('click',()=>canonicalMode?void showCanonical(canonicalGallery?.prevOffset()||0):void showPage(currentPage-1));
- search.addEventListener('input',()=>canonicalMode?canonicalGallery?.render(canonicalOptions()):renderWorks());
+ search.addEventListener('input',()=>canonicalMode?void canonicalGallery?.searchCatalogue(canonicalOptions()):renderWorks());
  // Resume using the same Work ID. No new catalog, shadow Work or fabricated
  // edition is created by the personal library interface.
  window.addEventListener('dawn:p2:resume-book',async event=>{
