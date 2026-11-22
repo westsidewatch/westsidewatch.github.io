@@ -111,6 +111,26 @@ class DiscoveryTests(unittest.TestCase):
         self.assertEqual(report["regressed_count"],0)
         self.assertLess(a["sample_reliability"],1.0)
 
+    def test_parsed_manifest_with_failed_segments_is_not_healthy(self):
+        providers=[{"id":"source","api":"https://api.example.com/vod"}]
+        def fetch(_):
+            return {"list":[{"vod_name":"新片","vod_play_url":"E1$https://media.example.com/a.m3u8"}]}
+        key=episode_key("source","新片","E1")
+        prior={"manifest":"parsed","segment_sample":"pass",
+               "health_checks":2,"health_pass":2}
+        def broken_segments(_):
+            return {"format":"m3u8","manifest":"parsed","segment_sample":"failed",
+                    "ad_cues":"none-detected","playback":"not-tested","clean":"not-certified"}
+        result=scan(["新片"],providers,fetcher=fetch,probe=broken_segments,
+                    workers=1,max_audits=1,previous_audits={key:prior})
+        audit=result["audits"][0]
+        self.assertEqual(audit["manifest"],"parsed")
+        self.assertEqual(result["manifests_parsed"],1)
+        self.assertEqual(result["segment_sample_pass"],0)
+        self.assertEqual(audit["status_transition"],"regressed")
+        self.assertEqual((audit["health_checks"],audit["health_pass"]),(3,2))
+        self.assertEqual(result["stable_healthy_count"],0)
+
     def test_manifest_success_clears_contradictory_http_failure(self):
         providers=[{"id":"sample","api":"https://sample.example.com/vod"}]
         def fetch(_):
