@@ -1161,12 +1161,35 @@
    if(!response.ok)throw Error('Storefront covers '+response.status);
    const storefront=await response.json();
    const shelves=shelvesOf(storefront);
-   const curated=[],primary=(shelves.find(s=>String(s.title||'').includes('Standard Ebooks'))?.items||[]).filter(w=>w.cover?.url&&w.source?.url);
-   primary.slice(0,12).forEach(w=>curated.push(w));
-   for(const shelf of shelves){
-    for(const w of shelf.items||[]){
+   // Dawn is a Gospel library, not a generic English-fiction storefront.
+   // The opening 18 work tiles must represent the original sourced Biblical
+   // history/geography and church history holdings, not Standard Ebooks first.
+   const editorialShelves=[
+    shelves.find(s=>s.id==='internet-archive-原版古籍-聖經歷史與地理'),
+    shelves.find(s=>s.id==='internet-archive-原版古籍-教會歷史')
+   ].filter(Boolean);
+   const curated=[],seenTitles=new Set();
+   const addWork=w=>{
+    if(!w?.title||!w.cover?.url||!w.source?.url)return;
+    const id=String(w.workId||w.title);
+    if(seenTitles.has(id))return;
+    seenTitles.add(id);curated.push(w);
+   };
+   // Alternate original historical book sources so no discipline monopolizes
+   // the wall; keep user-visible visual rhythm without fabricated covers.
+   const maxRows=Math.max(0,...editorialShelves.map(s=>s.items?.length||0));
+   for(let row=0;row<maxRows&&curated.length<18;row++){
+    for(const shelf of editorialShelves){
+     const work=shelf.items?.[row];if(work)addWork(work);
      if(curated.length>=18)break;
-     if(w.cover?.url&&w.source?.url&&!curated.some(v=>v.title===w.title))curated.push(w);
+    }
+   }
+   // The original library remains searchable. Only the opening editorial
+   // selection changes, and only if a priority shelf has insufficient Works.
+   for(const shelf of shelves){
+    for(const work of shelf.items||[]){
+     if(curated.length>=18)break;
+     addWork(work);
     }
     if(curated.length>=18)break;
    }
