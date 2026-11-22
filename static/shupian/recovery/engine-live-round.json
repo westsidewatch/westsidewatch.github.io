@@ -1,27 +1,171 @@
 {
   "schema": 2,
-  "observed_at_utc": null,
+  "observed_at_utc": "2026-11-22T14:25:30.247300+00:00",
   "queries": [
     "黑鏡",
     "神探夏洛克"
   ],
   "providers_requested": 6,
-  "provider_queries_attempted": 0,
-  "provider_queries_failed": 0,
-  "works_found": 0,
-  "unique_media_candidates": 0,
-  "hls_candidates": 0,
+  "provider_queries_attempted": 12,
+  "provider_queries_failed": 2,
+  "works_found": 93,
+  "unique_media_candidates": 315,
+  "hls_candidates": 315,
   "manifests_parsed": 0,
   "suspected_ad_cues": 0,
-  "audited": 0,
-  "errors": [],
-  "audits": [],
+  "audited": 12,
+  "errors": [
+    {
+      "provider": "diyi",
+      "query": "神探夏洛克",
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "provider": "diyi",
+      "query": "黑鏡",
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    }
+  ],
+  "audits": [
+    {
+      "title": "夏洛克与女儿",
+      "episode": "第01集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
+    },
+    {
+      "title": "夏洛克与女儿",
+      "episode": "第02集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
+    },
+    {
+      "title": "夏洛克与女儿",
+      "episode": "第03集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
+    },
+    {
+      "title": "夏洛克与女儿",
+      "episode": "第04集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
+    },
+    {
+      "title": "夏洛克与女儿",
+      "episode": "第05集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
+    },
+    {
+      "title": "夏洛克与女儿",
+      "episode": "第06集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
+    },
+    {
+      "title": "夏洛克与女儿",
+      "episode": "第07集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
+    },
+    {
+      "title": "夏洛克与女儿",
+      "episode": "第08集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
+    },
+    {
+      "title": "女神探夏洛克",
+      "episode": "第1集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "title": "女神探夏洛克",
+      "episode": "第2集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "title": "女神探夏洛克",
+      "episode": "第3集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "title": "女神探夏洛克",
+      "episode": "第4集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    }
+  ],
   "stages": {
-    "discovery": "not-started",
-    "ad_quality": "not-started",
+    "discovery": "attempted",
+    "ad_quality": "manifest-only",
     "playback": "not-tested-in-browser",
-    "website": "awaiting-live-provider-report"
+    "website": "report-only"
   },
   "completion": "NOT_COMPLETED",
-  "limitations": "Pending live GitHub Actions run. No playback or ad-free source verified and no catalog changes."
+  "limitations": "Manifest parsing cannot certify ads, playback, correct content or rights. No auto-import."
 }
