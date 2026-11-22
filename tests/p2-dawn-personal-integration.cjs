@@ -49,7 +49,7 @@ const base='http://127.0.0.1:4173';
   }
   const page=await browser.newPage();
   await page.goto(base+'/experiments/p2-0105-dawn-preview.html?layer=catalogue&d=28.4',{waitUntil:'domcontentloaded',timeout:45000});
-  await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree .dawn-classification__sleeve').length===9,null,{timeout:35000});
+  await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree .dawn-classification__sleeve').length===10,null,{timeout:35000});
   const tile=await page.locator('#dawn-classification-tree .dawn-classification__sleeve').first().innerText();
   assert(tile.includes('27,692'), 'did not use original Dawn Living Library count for 聖經: '+tile);
   console.log('PERSONAL_DAWN','LIVING_LIBRARY_AUTHORITATIVE_TAXONOMY_PASS');
