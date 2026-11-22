@@ -96,44 +96,89 @@ def network_fetch(url, timeout=15):
         return json.loads(blob.decode("utf-8-sig"))
 
 def search(providers, queries=(), pages=3, limit=30, discover=False, fetch=network_fetch):
-    """Fan-out: all providers x all fuzzy variants x bounded pages, full diagnostics."""
+    """Search every provider/page and hydrate list-only records via ac=detail.
+
+    Native MacCMS ac=list normally omits vod_play_url. Search is a two-stage
+    process: discover catalog IDs, then retrieve each matching detail record.
+    Providers may return full details from search; those avoid extra requests.
+    """
     if not queries and not discover:
         raise ValueError("Provide queries or --discover")
     found, errors, probes = {}, [], []
+    details_seen = set()
     for provider in providers:
-        for query in (tuple(queries) + (("",) if discover else ())) :
-            for page in range(1, max(1,pages)+1):
-                params = {"ac":"detail" if query else "list","pg":page}
-                if query: params["wd"] = query
-                url = provider["api"] + ("&" if "?" in provider["api"] else "?") + urllib.parse.urlencode(params)
-                status={"provider":provider["id"],"query":query or "(broad)","page":page}
+        for query in (tuple(queries) + (("",) if discover else ())):
+            for page in range(1, max(1, pages) + 1):
+                params = {"ac": "detail" if query else "list", "pg": page}
+                if query:
+                    params["wd"] = query
+                base = provider["api"]
+                url = base + ("&" if "?" in base else "?") + urllib.parse.urlencode(params)
+                status = {"provider": provider["id"], "query": query or "(broad)", "page": page}
                 try:
-                    payload=fetch(url)
-                    records=payload.get("list",[]) if isinstance(payload,dict) else []
-                    if not isinstance(records,list): raise ValueError("Malformed list")
-                    status["records"]=len(records)
-                    for record in records[:max(1,limit)]:
-                        if not isinstance(record,dict): continue
-                        groups=play_groups(record)
-                        if not groups: continue
-                        title=str(record.get("vod_name") or "").strip()
-                        key=(provider["id"],str(record.get("vod_id") or title))
-                        if key in found: continue
-                        found[key]={"provider":provider["id"],"title":title,
-                                    "id":record.get("vod_id"),
-                                    "score":similarity(title,queries) if queries else None,
-                                    "groups":groups, "discovery_query":query or "(broad)",
-                                    "status":"UNVERIFIED_CANDIDATE"}
+                    payload = fetch(url)
+                    records = payload.get("list", []) if isinstance(payload, dict) else []
+                    if not isinstance(records, list):
+                        raise ValueError("Malformed list")
+                    status["records"] = len(records)
+                    hydrated = 0
+                    for record in records[:max(1, limit)]:
+                        if not isinstance(record, dict):
+                            continue
+                        record_id = str(record.get("vod_id") or "").strip()
+                        title = str(record.get("vod_name") or "").strip()
+                        key = (provider["id"], record_id or title)
+                        if key in found:
+                            continue
+                        groups = play_groups(record)
+                        if not groups and record_id and key not in details_seen:
+                            details_seen.add(key)
+                            detail_url = base + ("&" if "?" in base else "?") + urllib.parse.urlencode(
+                                {"ac": "detail", "ids": record_id})
+                            try:
+                                detail_payload = fetch(detail_url)
+                                detailed = detail_payload.get("list", []) if isinstance(detail_payload, dict) else []
+                                if not isinstance(detailed, list):
+                                    raise ValueError("Malformed detail list")
+                                for candidate in detailed:
+                                    if str(candidate.get("vod_id") or "") == record_id:
+                                        groups = play_groups(candidate)
+                                        if groups:
+                                            record = candidate
+                                            hydrated += 1
+                                        break
+                            except Exception as exc:
+                                errors.append({"provider": provider["id"], "query": query or "(broad)",
+                                               "page": page, "id": record_id, "stage": "detail",
+                                               "error": str(exc)[:220]})
+                        if not groups:
+                            continue
+                        found[key] = {
+                            "provider": provider["id"], "title": str(record.get("vod_name") or title),
+                            "id": record.get("vod_id"),
+                            "type_name": record.get("type_name"),
+                            "year": record.get("vod_year"),
+                            "area": record.get("vod_area"),
+                            "class": record.get("vod_class"),
+                            "score": similarity(str(record.get("vod_name") or title), queries) if queries else None,
+                            "groups": groups, "discovery_query": query or "(broad)",
+                            "status": "UNVERIFIED_CANDIDATE",
+                        }
+                    status["detail_hydrated"] = hydrated
                 except Exception as exc:
-                    status["error"]=str(exc)[:220]
+                    status["error"] = str(exc)[:220]
+                    status["stage"] = "list-or-search"
                     errors.append(status)
                 probes.append(status)
-                # Do not mistake zero results at one provider for absence elsewhere.
-    return {"schema":2,"strategy":"all-providers/all-query-variants/all-pages",
-            "queries":list(queries),"discover":bool(discover),"probes":probes,
-            "errors":errors,"candidates":sorted(found.values(),
-            key=lambda x:(x["score"] if x["score"] is not None else 0),reverse=True),
-            "warning":"Metadata candidates are not proof of ad-free, correct media, playback or redistribution rights"}
+                # Never treat one provider's empty response as global absence.
+    return {
+        "schema": 3, "strategy": "all-providers/all-query-variants/all-pages/list-to-detail-hydration",
+        "queries": list(queries), "discover": bool(discover), "probes": probes,
+        "errors": errors, "candidates": sorted(
+            found.values(), key=lambda x: (x["score"] if x["score"] is not None else 0),
+            reverse=True),
+        "warning": "Metadata candidates do not certify correct content, ad-free playback or rights",
+    }
 
 def main(argv=None):
     p=argparse.ArgumentParser(description="Batch broad and fuzzy source research")
