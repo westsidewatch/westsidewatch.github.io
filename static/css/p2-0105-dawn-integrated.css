@@ -2085,3 +2085,37 @@
  color:var(--ws-harvest)!important;opacity:1!important;
 }
 #dawn-second .dawn-second__global-nav .dawn-second__return:after{content:none!important;}
+
+
+/* R64 / Navigation Chinese: OS UI size, Chiron 200. 'Air' is a weight,
+   not illegible microscopic text. Keep bilingual hierarchy through scale,
+   contrast and placement, never opacity tricks. */
+#dawn-second .dawn-second__global-nav .dawn-second__nav-zh{
+ font-family:var(--ws-type-display-zh)!important;
+ font-size:var(--ws-type-scale-ui)!important;
+ line-height:var(--ws-type-leading-ui)!important;
+ font-weight:200!important;
+ letter-spacing:0!important;
+ color:var(--ws-ink)!important;
+ opacity:1!important;
+ text-wrap:balance;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-zh{
+ font-family:var(--ws-type-display-zh)!important;
+ font-size:var(--ws-type-scale-ui)!important;
+ line-height:var(--ws-type-leading-ui)!important;
+ font-weight:200!important;
+ color:var(--ws-ink)!important;
+ opacity:1!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__nav-zh > span{
+ color:var(--ws-ink)!important;opacity:.82!important;
+ font-size:inherit!important;
+}
+@media(max-width:600px){
+ #dawn-second .dawn-second__global-nav .dawn-second__nav-zh,
+ #dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-zh{
+  font-size:var(--ws-type-scale-ui)!important;
+  opacity:1!important;
+ }
+}
