@@ -242,8 +242,8 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
         # without checking the same failed eight forever.
         def old_priority(c):
             prior = previous_audits.get(episode_key(c["provider"], c["title"], c["episode"]), {})
-            return (0 if prior.get("segment_sample") == "pass" else 1,
-                    prior.get("health_checks", 0),
+            return (prior.get("health_checks", 0),
+                    0 if prior.get("segment_sample") == "pass" else 1,
                     c["query"], c["provider"], c["episode"])
         old.sort(key=old_priority)
         old_budget = max(1, max_audits // 2)
@@ -261,19 +261,20 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
         key = episode_key(candidate["provider"], candidate["title"], candidate["episode"])
         prior = previous_audits.get(key)
         evidence = source_evidence(candidate, prior)
-        if prior and previous_observed_at:
-            evidence["previous_observed_at_utc"] = previous_observed_at
+        if prior:
+            evidence["previous_observed_at_utc"] = prior.get("observed_at_utc") or previous_observed_at
         detail = probe(candidate)
         if detail.get("manifest") == "parsed":
             detail = {k: v for k, v in detail.items() if k not in ("error", "failure_class")}
         # A readable playlist is not a healthy stream when media probes failed.
         # Keep playlist parsing metrics separate from sampled media health.
-        previous_status = prior.get("manifest") if prior else None
+        same_identity = evidence["url_comparison"] == "same_exact_url"
+        previous_status = prior.get("manifest") if prior and same_identity else None
         current_status = detail.get("manifest")
         current_healthy = (current_status == "parsed" and
                            detail.get("segment_sample") == "pass")
         previous_healthy = (previous_status == "parsed" and
-                            prior.get("segment_sample") == "pass") if prior else False
+                            prior.get("segment_sample") == "pass") if prior and same_identity else False
         if previous_status not in ("parsed", "failed"):
             transition = "new_observation"
         elif previous_healthy and not current_healthy:
@@ -284,8 +285,8 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
             transition = "stable_healthy"
         else:
             transition = "stable_failure"
-        old_health = prior.get("health_checks", 0) if prior else 0
-        old_pass = prior.get("health_pass", 0) if prior else 0
+        old_health = prior.get("health_checks", 0) if prior and same_identity else 0
+        old_pass = prior.get("health_pass", 0) if prior and same_identity else 0
         try:
             old_health = max(0, min(int(old_health), 10000))
             old_pass = max(0, min(int(old_pass), old_health))
@@ -316,6 +317,7 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
             }
     for record in audits:
         identity = episode_key(record["provider"], record["title"], record["episode"])
+        tracked.pop(identity, None)
         tracked[identity] = {k: record[k] for k in allowed if k in record}
         tracked[identity]["observed_at_utc"] = observed_at
     return {
