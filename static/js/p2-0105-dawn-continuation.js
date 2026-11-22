@@ -549,6 +549,16 @@
     classificationTree=await classificationResponse.json();
     chineseLibrary=await chineseResponse.json();
     displayClassificationRoots();
+    // Direct edition review URL, while keeping normal navigation unchanged.
+    const category=new URLSearchParams(location.search).get('category');
+    if(category==='zh')displayChineseGroups();
+    else if(category){
+     const group=(classificationTree.roots||[]).find(item=>item.id===category||item.children?.some(child=>child.id===category));
+     if(group){
+      if(group.id===category)displayClassificationGroup(group);
+      else void displayClassificationLeaf(group,group.children.find(child=>child.id===category));
+     }
+    }
    })().catch(error=>{classificationPromise=null;console.error('[Dawn index]',error)});
   }
   return classificationPromise;
