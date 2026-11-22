@@ -1,0 +1,47 @@
+name: 数片 — Published Browser Acceptance
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "static/shupian/**"
+      - "scripts/shupian_recovery/live_acceptance.mjs"
+      - ".github/workflows/shupian-live-acceptance.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: shupian-live-acceptance
+  cancel-in-progress: true
+
+jobs:
+  published-desktop-and-mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright for real browser acceptance
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Check actual public cinema release
+        env:
+          SHUPIAN_SITE_URL: https://westsidewatch.github.io/shupian/
+          SHUPIAN_PROOF_DIR: artifacts/shupian-live-proof
+        run: node scripts/shupian_recovery/live_acceptance.mjs
+      - name: Preserve desktop, mobile and JSON evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shupian-public-browser-evidence
+          path: artifacts/shupian-live-proof/
+          if-no-files-found: warn
+          retention-days: 30
