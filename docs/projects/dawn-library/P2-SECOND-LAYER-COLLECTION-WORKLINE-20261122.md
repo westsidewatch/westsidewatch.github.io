@@ -209,3 +209,10 @@ R78 原始工程修改：
 - `tests/p2-dawn-chinese-contemporary.cjs`：由舊「禁止在方塊中出現圖片」反轉為實際 computed style、九張圖的 naturalWidth 和方塊占幅驗收，並驗證展開的完整同書封面與出版方二段式導覽。
 
 **不混淆三種驗收**：九個來源可下載（HTTP）不等於九張圖實際在網站展示；最後仍以 Chromium 桌面、手機與 Cloudflare 部署實際頁面為準。正式主站不合併，P2 V9 和其他版塊不修改。不得聲稱整站獲獎標準已通過。
+
+
+### R78 實際瀏覽器驗收結果（9／9）
+
+2026-11-22 GitHub Actions [#45070980489](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45070980489) **SUCCESS**，Chromium 桌面 1440×900 與手機 390×844 證實：當代中文**9／9** 真實出版方圖像已載入且 `naturalWidth>120`；每張滿版覆蓋 1:1 方塊的 computed `object-fit:cover`、封面圖片 bounding box ≥ 卡片寬高；在卡片點擊展開時仍以**同一本書的來源 URL** 展示完整封面，改選下一本沒有跳轉，出版方需第二次明確點選才開啟。46 本 Yale CLSC 原始古籍掃描 SHA-256 與本地 HTTP 200 亦一併通過。保存的 Chromium 截圖 artifact [#14773131864](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45070980489/artifacts/14773131864) 包含 `desktop-modern-chinese-source-wall.png`、`desktop-translation-expanded-preview.png`、`phone-modern-chinese-source-wall.png`、`phone-translation-expanded-preview.png`，以及原版中文、七學科壁的測試截圖。
+
+外部來源獨立測試 [#45070552679](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45070552679) **9／9** 官方封面皆 HTTP 200 且 MIME 真實圖片，沒有用未知書的封面。隔離 Cloudflare [#45070980439](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45070980439) **部署成功**，但同流程整體仍因 Design OS 字體/導航 gate 失敗，沒有正式站合併；**封面子系統通過不等於 P2 所有驗收通過。**
