@@ -49,7 +49,7 @@
       "kind": "subject-projection",
       "source": "static/dawn-library/living/root.json",
       "status": "content-verified",
-      "next": "verify per-work classification membership"
+      "next": "P2 42 leaf routes now use workRefs[].classification.leaves; audit real shard counts, coverage and browser behavior"
     },
     {
       "id": "cover",
@@ -209,6 +209,20 @@
       "branch": "work/p2-05-integration-repair-20261121",
       "status": "content-planned",
       "next": "Second layer second pass: real category membership instead of lexical search; visual and interaction QA"
+    },
+    {
+      "id": "p2-living-membership",
+      "kind": "original-living-adapter",
+      "source": "static/js/p2-dawn-living-membership.mjs",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "integrated-static-validated",
+      "evidence": {
+        "adapterCommit": "d1c574f8d69391b6d3e88fe0b2fc60f953dcca6c",
+        "wiringCommit": "d36d4ed13996e676ae1e7e543971162767ca01b6",
+        "test": "mocked V8 runtime PASS",
+        "browser": "NOT VERIFIED"
+      },
+      "next": "Cloudflare desktop/mobile browser test, true 21 shard membership verification, class page returns"
     }
   ],
   "auditGates": [
