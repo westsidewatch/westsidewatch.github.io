@@ -83,7 +83,8 @@ try{
           glb:window.__tourStatus||null,
           error:window.__tourError||null,
           hardware:window.__churchHardwareAudit||null,
-          crossLight:window.__churchLightAudit||null
+          crossLight:window.__churchLightAudit||null,
+          spatial:window.__churchSpatialAudit||null
         })`);
       }catch{continue;}
       if(state?.className==='ready')break;
@@ -93,6 +94,10 @@ try{
     if(state?.className!=='ready')throw Error('Church GLB not ready in browser '+frame+' '+JSON.stringify(state)+' '+errors.join('; '));
     if(!state.hardware || !Array.isArray(state.hardware.remaining) || state.hardware.remaining.length)
       throw Error('Door hardware still present at frame '+frame+' '+JSON.stringify(state.hardware));
+    if(!state.spatial || state.spatial.removed<4 || state.spatial.ghostRoofs<2)
+      throw Error('Spatial clearance mesh cleanup absent: '+JSON.stringify(state.spatial));
+    if(frame>=40&&frame<=223&&state.spatial.ghostRoofVisible!==0)
+      throw Error('Ghost roof still obscures inhabited spaces at frame '+frame);
     if(!state.hardware.removed?.some(name=>/moving.pull/i.test(name)))
       throw Error('Known V33 moving_pull geometry was not removed from live GLB scene: '+JSON.stringify(state.hardware));
     if(!state.crossLight?.aperture || !state.crossLight?.floor || state.crossLight.sheets!==3 || !state.crossLight.additive)
