@@ -1,0 +1,30 @@
+name: Dawn Library shard integrity (read-only)
+on:
+  pull_request:
+    paths:
+      - 'static/dawn-library/canonical/**'
+      - 'static/dawn-library/living/**'
+      - 'static/dawn-library/cover-preview/**'
+      - 'scripts/audit-dawn-library-shards.cjs'
+      - '.github/workflows/dawn-library-shard-integrity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit original Dawn data (21 canonical + 21 Living + 407 cover shards)
+        run: node scripts/audit-dawn-library-shards.cjs --json dawn-integrity-report.json
+      - name: Preserve integrity evidence even on detected defects
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-library-integrity-report
+          path: dawn-integrity-report.json
+          if-no-files-found: warn
