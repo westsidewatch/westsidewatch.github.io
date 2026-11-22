@@ -85,11 +85,12 @@ def network_fetch(url, timeout=15):
     from legacy_engine_core import validate_public_url
     validate_public_url(url)
     req = urllib.request.Request(url, headers={"User-Agent":UA,"Accept":"application/json"})
-    opener = urllib.request.build_opener(urllib.request.HTTPHandler,urllib.request.HTTPSHandler)
+    class NoRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, headers, newurl):
+            raise ValueError("Unexpected source API redirect: " + str(code))
+    opener = urllib.request.build_opener(NoRedirect)
     with opener.open(req, timeout=timeout) as response:
-        # Redirect targets are revalidated before reading by disallowing redirects.
-        final = response.geturl()
-        validate_public_url(final)
+        validate_public_url(response.geturl())
         blob = response.read(MAX_BYTES+1)
         if len(blob) > MAX_BYTES:
             raise ValueError("API response too large")
