@@ -999,7 +999,7 @@
   const wall=classificationWall();const works=chineseGroups().get(key)||[];
   const subgroups=new Map();
   for(const w of works){const domain=String(w.classification?.label||key);if(!subgroups.has(domain))subgroups.set(domain,[]);subgroups.get(domain).push(w)}
-  for(const [i,[domain,items]] of subgroups.entries()){
+  for(const [i,[domain,items]] of [...subgroups.entries()].entries()){
    const subtitle=domain.split('/').map(chineseName).join(' · ');
    wall.append(classificationSleeve(subtitle,String(items.length)+' 部',()=>displayChineseLeaf(key,domain),i%3===0?'chinese':'olive','zh:'+domain,items));
   }
