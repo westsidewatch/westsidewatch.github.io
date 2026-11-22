@@ -2278,3 +2278,26 @@
  font-synthesis:none!important;
  letter-spacing:0!important;
 }
+
+
+/* R72 · A contemporary publisher-only record may not have a reusable jacket.
+   Render a full harvest-colored editorial folio, never a white blank page. */
+#dawn-second .dawn-expander__book--discovery.dawn-expander__book--paper{
+ background:var(--ws-harvest)!important;
+ border-color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-expander__book--discovery.dawn-expander__book--paper .dawn-expander__book-paper{
+ display:flex!important;
+ background:var(--ws-harvest)!important;
+ border-color:var(--ws-ink)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-expander__book--discovery.dawn-expander__book--paper .dawn-expander__book-paper small{
+ color:var(--ws-ink)!important;opacity:.75!important;
+}
+#dawn-second .dawn-expander__book--discovery.dawn-expander__book--paper .dawn-expander__book-paper strong{
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:200!important;
+ letter-spacing:0!important;
+ line-height:1.18!important;
+}
