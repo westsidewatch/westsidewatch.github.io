@@ -2321,3 +2321,106 @@
 #dawn-second .dawn-classification__sleeve--historical-zh{
  opacity:1!important;
 }
+
+
+/* R75 · Every contemporary book tile is fully composed. A source cover
+   remains legible and uncropped; a no-cover edition is an intentional
+   full-bleed harvest-yellow typographic cover, never a mostly empty slab. */
+#dawn-second .dawn-contemporary__art{
+ isolation:isolate!important;
+ height:auto!important;
+ aspect-ratio:3/4!important;
+ background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__folio{
+ inset:0!important;
+ z-index:2!important;
+ display:grid!important;
+ grid-template-rows:auto minmax(0,1fr) auto!important;
+ align-items:stretch!important;
+ padding:clamp(15px,1.7vw,31px)!important;
+ gap:clamp(10px,1.3vw,20px)!important;
+ background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__folio>small{
+ display:block!important;
+ font:400 clamp(11px,.82vw,14px)/1.35 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:.035em!important;
+}
+#dawn-second .dawn-contemporary__folio>strong{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ width:100%!important;
+ text-align:center!important;
+ font:200 clamp(25px,2.35vw,48px)/1.28 var(--ws-type-display-zh)!important;
+ font-synthesis:none!important;
+ overflow-wrap:anywhere!important;
+}
+#dawn-second .dawn-contemporary__folio-foot{
+ display:flex!important;
+ justify-content:space-between!important;
+ align-items:flex-end!important;
+ gap:12px!important;
+ width:100%!important;
+ padding-top:clamp(9px,1vw,17px)!important;
+ border-top:1px solid var(--ws-ink)!important;
+ font:200 clamp(13px,1vw,18px)/1.42 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-contemporary__folio-foot small{
+ font:200 clamp(11px,.85vw,14px)/1.5 var(--ws-type-display-zh)!important;
+ text-align:right!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-contemporary__art>img:not(.dawn-contemporary__cover-backdrop){
+ z-index:4!important;
+ width:100%!important;height:100%!important;
+ object-fit:contain!important;
+ background:transparent!important;
+ filter:drop-shadow(0 5px 9px rgba(35,30,20,.22));
+}
+#dawn-second .dawn-contemporary__art>.dawn-contemporary__cover-backdrop{
+ position:absolute!important;inset:-12%!important;
+ z-index:3!important;
+ width:124%!important;height:124%!important;
+ object-fit:cover!important;
+ filter:blur(20px) saturate(.8)!important;
+ transform:scale(1.03)!important;
+ opacity:0!important;
+ background:var(--ws-harvest)!important;
+ pointer-events:none!important;
+}
+#dawn-second .dawn-contemporary__book--pictured .dawn-contemporary__art>.dawn-contemporary__cover-backdrop{
+ opacity:.45!important;
+}
+#dawn-second .dawn-contemporary__book--pictured .dawn-contemporary__folio{
+ opacity:0!important;
+}
+#dawn-second .dawn-contemporary__metadata{
+ min-height:0!important;
+}
+@media(max-width:950px){
+ #dawn-second .dawn-contemporary__folio>strong{
+  font-size:clamp(24px,4vw,42px)!important;
+ }
+}
+@media(max-width:530px){
+ #dawn-second .dawn-contemporary__art{
+  height:auto!important;
+  aspect-ratio:3/4!important;
+ }
+ #dawn-second .dawn-contemporary__folio{
+  padding:clamp(10px,3.5vw,17px)!important;
+  gap:8px!important;
+ }
+ #dawn-second .dawn-contemporary__folio>strong{
+  font-size:clamp(19px,5.1vw,32px)!important;
+ }
+ #dawn-second .dawn-contemporary__folio-foot{
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:5px!important;
+  font-size:clamp(12px,3.2vw,16px)!important;
+ }
+}
