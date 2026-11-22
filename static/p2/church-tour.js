@@ -183,10 +183,84 @@ crossWallBounce.position.set(15,.24,-5.0);
 crossWallBounce.target.position.set(15,2.4,-1.45);
 crossWallBounce.castShadow=false;
 scene.add(crossWallBounce,crossWallBounce.target);
+// R23 FINALE: Light FROM the Lord's house, through the REAL SOUTH CROSS,
+// toward the arriving viewer. Independent of the inward daytime sun.
+const finaleInteriorLamp=new SpotLight(0xffddb1,0,13,.78,.89,2);
+finaleInteriorLamp.position.set(15,3.35,-1.9);
+finaleInteriorLamp.target.position.set(15,3.65,.6);
+finaleInteriorLamp.castShadow=false;
+scene.add(finaleInteriorLamp,finaleInteriorLamp.target);
+const finaleExteriorLamp=new SpotLight(0xffc98f,0,14,.68,.9,2);
+finaleExteriorLamp.position.set(15,3.65,.15);
+finaleExteriorLamp.target.position.set(15,2.8,7.2);
+finaleExteriorLamp.castShadow=false;
+scene.add(finaleExteriorLamp,finaleExteriorLamp.target);
+// Cross aperture backing is slightly behind the opening; the very faint
+// exterior scattering plane is just outside the south facade.
+const finaleCrossCore=new Mesh(
+  new PlaneGeometry(6.35,7.55),
+  luminousSurface(crossLightMask("cross"),0,1.12)
+);
+finaleCrossCore.position.set(15,3.65,-.26);
+finaleCrossCore.renderOrder=3;finaleCrossCore.name="Cross interior tungsten luminance";
+scene.add(finaleCrossCore);
+const finaleCrossHalo=new Mesh(
+  new PlaneGeometry(6.35,7.55),
+  luminousSurface(crossLightMask("cross"),0,.58)
+);
+finaleCrossHalo.position.set(15,3.65,.075);
+finaleCrossHalo.renderOrder=4;finaleCrossHalo.name="Cross exterior feathered glow";
+scene.add(finaleCrossHalo);
+const finaleAirMaterial=crossAirMaterial.clone();
+finaleAirMaterial.uniforms.uTint.value.set(1,.78,.55);
+const finaleRays=[];
+const finaleOrigin=new Vector3(15,3.65,.19);
+const finaleTarget=new Vector3(15,2.65,8.6);
+const finaleDirection=new Vector3().subVectors(finaleTarget,finaleOrigin);
+const finaleAxis=new Vector3().copy(finaleDirection).normalize();
+for(const turn of [0,1.08,-1.08]){
+  const ray=new Mesh(new PlaneGeometry(4.1,10),finaleAirMaterial);
+  ray.position.copy(finaleOrigin).addScaledVector(finaleDirection,.5);
+  ray.quaternion.setFromUnitVectors(localBeamAxis,finaleAxis);
+  ray.rotateY(turn);
+  ray.scale.y=finaleDirection.length()/10;
+  ray.name="Cross outward evening scattering";ray.renderOrder=3;
+  scene.add(ray);finaleRays.push(ray);
+}
+// A tiny SRGB procedural twilight gradient, not a black night or an
+// imported HDRI. Updated only in the final transition, preserving old scenes.
+const finalSkyCanvas=document.createElement("canvas");
+finalSkyCanvas.width=8;finalSkyCanvas.height=192;
+const finalSkyContext=finalSkyCanvas.getContext("2d");
+const finalSkyTexture=new CanvasTexture(finalSkyCanvas);
+finalSkyTexture.colorSpace=SRGBColorSpace;
+let lastSkySample=-1;
+const oldSky=[215,216,207];
+function eveningSky(t){
+  const blend=ease((t-232)/16);
+  if(t<232){scene.background=null;return blend;}
+  scene.background=finalSkyTexture;
+  const sample=Math.floor(blend*150);
+  if(sample!==lastSkySample){
+    const lerp=(a,b)=>Math.round(a+(b-a)*blend);
+    const grad=finalSkyContext.createLinearGradient(0,0,0,192);
+    const endColors=[[70,84,108],[111,122,139],[172,160,151]];
+    const mixColor=c=>"rgb("+c.map((value,i)=>lerp(oldSky[i],value)).join(",")+")";
+    grad.addColorStop(0,mixColor(endColors[0]));
+    grad.addColorStop(.6,mixColor(endColors[1]));
+    grad.addColorStop(1,mixColor(endColors[2]));
+    finalSkyContext.fillStyle=grad;
+    finalSkyContext.fillRect(0,0,8,192);
+    finalSkyTexture.needsUpdate=true;lastSkySample=sample;
+  }
+  return blend;
+}
+window.__churchFinaleAudit={active:false,twilight:0,crossCore:0,interiorLamp:0,exteriorLamp:0,outwardBeam:0};
 window.__churchLightAudit={
   aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,
   crossCenter:[crossAperture.x,crossAperture.y,crossAperture.z],
-  bounceSources:2,volumeShader:true,beamTracksSun:true,adaptiveExposure:true,version:"R20"
+  bounceSources:2,volumeShader:true,beamTracksSun:true,adaptiveExposure:true,
+  outwardFinale:true,version:"R23"
 };
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
@@ -715,7 +789,8 @@ const route = [
   { at:211, p:[10.9,5.04,-13.8],look:[8.0,1.65,-9.3]}, // third-floor overlook
   { at:223, p:[10.65,5.03,-13.0],look:[7.65,1.30,-9.65]}, // red maple reveal
   { at:236, p:[9.0,12.4,-9.0],look:[9.0,1.8,-9.0]},   // rising sky
-  { at:251, p:[20.0,25.0,18.0],look:[9.0,2.6,-9.0]}   // entire complex
+  { at:246, p:[18.0,9.4,21.0],look:[13.8,3.5,-2.9]}, // turn toward true south cross
+  { at:251, p:[18.0,9.4,21.0],look:[13.8,3.5,-2.9]}  // still finale: warm hope shines out
 ];
 
 // The original scenes each played their own sunrise-to-sunset time lapse.
@@ -817,6 +892,40 @@ function updateDaylight(t,duration) {
   );
   const lensNear=Math.max(0,Math.min(1,(10-lensDistance)/6));
   renderer.toneMappingExposure=(.86+.11*daylight)*(1-.16*lensNear*sunlight);
+  // Final dusk: day gently fades, then a warm light from INSIDE the house
+  // awakens the real cross opening, carrying a soft beam outward.
+  const twilight=eveningSky(t);
+  const lit=ease((t-239)/9);
+  if(twilight>0){
+    sun.intensity*=1-.88*twilight;
+    skyFill.intensity*=1-.57*twilight;
+    ambientFill.intensity*=1-.45*twilight;
+    bounceFill.intensity*=1-.30*twilight;
+    // A white facade stays legible against first-night blue, not black.
+    renderer.toneMappingExposure*=1-.07*twilight;
+    // Daytime sunlight entering the cross ends before the final outward glow.
+    apertureGlow.material.opacity*=1-twilight;
+    crossFloorLight.material.opacity*=1-twilight;
+    crossPortalKey.intensity*=1-twilight;
+    crossWallBounce.intensity*=1-twilight;
+    crossAirMaterial.uniforms.uLight.value*=1-twilight;
+  }
+  finaleInteriorLamp.intensity=9.5*lit;
+  finaleExteriorLamp.intensity=11*lit;
+  finaleCrossCore.material.opacity=.39*lit;
+  finaleCrossHalo.material.opacity=.12*lit;
+  finaleAirMaterial.uniforms.uLight.value=.115*lit;
+  finaleAirMaterial.uniforms.uTime.value=t;
+  window.__churchFinaleAudit={
+    active:t>=232,twilight:+twilight.toFixed(4),
+    crossCore:finaleCrossCore.material.opacity,
+    interiorLamp:finaleInteriorLamp.intensity,
+    exteriorLamp:finaleExteriorLamp.intensity,
+    outwardBeam:finaleAirMaterial.uniforms.uLight.value,
+    skyGradient:scene.background===finalSkyTexture,
+    direction:"inside-to-outside",
+    mode:"first-dark-evening"
+  };
   updateMapleSeason(t,duration);
 }
 
@@ -878,7 +987,7 @@ function animate(now,forcedTime=null) {
     ? Math.min(duration,Math.max(0,forcedTime))
     : proof!==null && Number.isFinite(Number(proof))
       ? Math.min(duration,Math.max(0,Number(proof)))
-      : (prefersReducedMotion ? duration : elapsed % (duration + 10));
+      : (prefersReducedMotion ? duration : Math.min(duration,elapsed % (duration + 20)));
   updateDaylight(t,duration);
   window.__churchFrameAudit={
     at:t,daylight:daylightAt(t),
