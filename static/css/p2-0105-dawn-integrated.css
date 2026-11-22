@@ -1771,3 +1771,108 @@
  #dawn-second .dawn-reading-room__departments-intro h3,
  #dawn-second .dawn-reading-room__departments-intro p{grid-column:1!important}
 }
+
+
+/* R58 / Editorial visual QA: no inverse bilingual hierarchy in the actual
+   editorial portals, and no blank squares when remote cover URLs fail.
+   Preserve original image identity; fallback is only real printed metadata. */
+#dawn-second .dawn-reading-room .dawn-feature__titles{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ gap:clamp(6px,.9vw,14px)!important;
+}
+#dawn-second .dawn-reading-room .dawn-feature__titles em{
+ order:0!important;display:block!important;
+ font:400 clamp(23px,2.65vw,44px)/1.04 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ font-style:normal!important;letter-spacing:-.035em!important;
+ color:var(--ws-ink)!important;overflow-wrap:break-word!important;
+}
+#dawn-second .dawn-reading-room .dawn-feature__titles strong{
+ order:1!important;display:block!important;
+ font:200 clamp(17px,1.45vw,26px)/1.25 var(--ws-type-display-zh)!important;
+ color:var(--ws-harvest)!important;
+ letter-spacing:0!important;
+}
+#dawn-second .dawn-feature__editorial{
+ grid-template-columns:minmax(0,1fr)!important;
+ padding:clamp(12px,1.6vw,26px)!important;
+}
+#dawn-second .dawn-feature__open{
+ grid-column:1!important;justify-self:end!important;
+ margin-top:clamp(8px,.9vw,16px)!important;
+ font:400 clamp(13px,1.1vw,17px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+}
+#dawn-second .dawn-feature__plate-title{
+ font:400 clamp(15px,1.3vw,23px)/1.3 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ color:var(--ws-ink)!important;
+}
+/* No disappearing records. Pending and missing works are editorial sheets,
+   NOT blank swatches and NOT counterfeit covers. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--missing,
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--pending{
+ display:flex!important;flex-direction:column!important;justify-content:flex-end!important;
+ background:var(--ws-paper)!important;
+ border:1px solid var(--ws-branch-rule)!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta,
+#dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta{
+ position:absolute!important;inset:0!important;z-index:2!important;
+ display:flex!important;flex-direction:column!important;
+ justify-content:flex-end!important;gap:clamp(8px,.8vw,14px)!important;
+ padding:clamp(12px,1.3vw,24px)!important;
+ opacity:1!important;transform:none!important;
+ color:var(--ws-ink)!important;
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta:before,
+#dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta:before{
+ content:'DAWN / WORK';position:absolute;top:clamp(12px,1vw,19px);left:clamp(12px,1.3vw,24px);
+ font:400 var(--ws-type-scale-meta)/1.2 var(--ws-type-display-en-sc)!important;
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta strong,
+#dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta strong{
+ max-height:none!important;
+ font:400 clamp(19px,1.65vw,29px)/1.12 var(--ws-type-display-en)!important;
+ color:var(--ws-ink)!important;
+ overflow-wrap:anywhere!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta em,
+#dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta em{
+ font:italic 400 clamp(12px,.95vw,17px)/1.35 var(--ws-type-display-en)!important;
+ color:var(--ws-harvest)!important;
+ white-space:normal!important;overflow:visible!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--ready .dawn-cover__meta{
+ /* The original hover image-caption grammar resumes only for real images. */
+ opacity:0;
+}
+#dawn-second .dawn-reading-room .dawn-cover--ready:hover .dawn-cover__meta,
+#dawn-second .dawn-reading-room .dawn-cover--ready:focus-visible .dawn-cover__meta{
+ opacity:1;
+}
+#dawn-second .dawn-classification__result-heading h4{
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:200!important;
+}
+/* R57 must not distort the original Scripture Studio motherform geometry.
+   Reuse the previously working OS carrier values, not an improvised crop. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{
+ padding:clamp(42px,5vw,72px) clamp(15px,3.5vw,58px)
+ clamp(22px,3.5vw,44px)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{
+ flex:0 1 710px!important;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-room .dawn-feature__titles em{
+  font-size:clamp(27px,6.6vw,42px)!important;
+ }
+ #dawn-second .dawn-reading-room .dawn-feature__titles strong{
+  font-size:clamp(17px,4vw,25px)!important;
+ }
+ #dawn-second .dawn-feature__editorial{padding:16px!important}
+ #dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta strong,
+ #dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta strong{
+  font-size:clamp(17px,4.2vw,24px)!important;
+ }
+}
