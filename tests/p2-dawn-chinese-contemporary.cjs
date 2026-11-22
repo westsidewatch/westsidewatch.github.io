@@ -105,6 +105,8 @@ fs.mkdirSync(dir,{recursive:true});
   const destination=await page.evaluate(()=>window.__lastPublisher);
   assert.equal(destination,manifest.candidates[1].sourceUrl,
    device+': explicit second action not directed to publisher page');
+  await page.waitForFunction(()=>!document.querySelector('#dawn-book-expanding-preview .dawn-expander__read')?.disabled,null,{timeout:5000});
+  assert.equal(await preview.locator('.dawn-expander__read').innerText(),'前往出版方查看此書',device+': publisher link should reset after opening a tab');
   assert.equal(page.url(),originalUrl,device+': current Dawn collection should remain open');
   await page.screenshot({path:path.join(dir,device+'-translation-expanded-preview.png')});
   assert.equal(errors.length,0,device+': JS exceptions: '+errors.join('; '));
