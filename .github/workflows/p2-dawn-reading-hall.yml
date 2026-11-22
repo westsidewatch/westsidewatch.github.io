@@ -1,0 +1,27 @@
+name: P2 Dawn Reading Hall (isolated)
+on:
+  pull_request:
+    paths:
+      - 'static/experiments/p2-0105-dawn-preview.html'
+      - 'static/js/p2-0105-dawn-continuation.js'
+      - 'static/css/p2-0105-dawn-integrated.css'
+      - 'static/js/p2-dawn-living-membership.mjs'
+      - 'static/dawn-library/living/root.json'
+      - 'tests/p2-dawn-reading-hall.cjs'
+      - '.github/workflows/p2-dawn-reading-hall.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reading-hall:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Seven Living roots / 42 children / real navigation
+        run: node tests/p2-dawn-reading-hall.cjs
+      - name: Original living Work membership
+        run: node tests/p2-dawn-living-membership.cjs
