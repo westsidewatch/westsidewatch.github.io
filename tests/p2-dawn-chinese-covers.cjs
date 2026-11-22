@@ -62,12 +62,12 @@ fs.mkdirSync(out,{recursive:true});
     {waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length>=2,
     null,{timeout:35000});
-   // The first category previously went blank because Gutenberg's remote
-   // cover was chosen over real local Yale scans belonging to that category.
+   // Some early categories contain only the source Gutenberg book; never
+   // demand a Yale image on a book that is not in the Yale CLSC collection.
+   // The first priority is contemporary; historical shelves remain available.
    await page.waitForFunction(()=>{
-    const tile=document.querySelector('#dawn-classification-tree button.dawn-classification__sleeve');
-    const img=tile?.querySelector('img');
-    return Boolean(img?.complete&&img.naturalWidth>100&&
+    const images=[...document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve img')];
+    return images.some(img=>img.complete&&img.naturalWidth>100&&
       img.currentSrc.includes('/chinese-facsimile-covers/'));
    },null,{timeout:15000});
    const categories=page.locator('#dawn-classification-tree button.dawn-classification__sleeve');
