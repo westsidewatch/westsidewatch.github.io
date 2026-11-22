@@ -26,7 +26,8 @@ def public_report(scan, playback=None):
     # A three-point segment probe does not certify ad-free playback or allow rehosting.
     progress = {"discovery":("PARTIAL" if media else "BLOCKED" if status in ("INFRASTRUCTURE_OR_API_FAILURE","PARTIAL_WITH_ERRORS") else "NO_MEDIA_FOUND"),
                 "ad_quality":("AD_CUES_SUSPECTED" if ad_suspects else "SAMPLED_NOT_CERTIFIED" if hls_checks else "NOT_TESTED"),
-                "playback":("TIME_ADVANCED_SAMPLED_NOT_CERTIFIED" if time_progress else
+                "playback":("BROWSER_TOOL_FAILURE" if (playback or {}).get("status")=="BROWSER_TOOL_FAILURE" else
+                            "TIME_ADVANCED_SAMPLED_NOT_CERTIFIED" if time_progress else
                             "FIRST_FRAME_ONLY" if first_frames else
                             "ATTEMPTED_NO_PLAYBACK" if browser_samples else "NOT_TESTED"),
                 "website":"DIAGNOSTIC_ONLY"}
