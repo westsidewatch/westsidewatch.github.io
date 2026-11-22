@@ -150,11 +150,13 @@ try{
     if(frame>=236){
       const finale=await evaluate('window.__churchFinaleAudit');
       console.log('P2_OUTWARD_CROSS_FINALE_'+frame+'='+JSON.stringify(finale));
+      if(!state.crossLight?.facadeWarmth)throw Error('Exterior warm facade reflection missing');
       if(!state.crossLight?.outwardFinale||!finale||!finale.skyGradient
          || finale.direction!=='inside-to-outside')
         throw Error('Finale lacks inside-out cross illumination at '+frame+' '+JSON.stringify(finale));
       if(frame===251&&(finale.twilight<.99||finale.crossCore<.35
-        || finale.interiorLamp<9||finale.exteriorLamp<10||finale.outwardBeam<.105))
+        || finale.interiorLamp<11||finale.exteriorLamp<10||finale.outwardBeam<.14
+        || finale.facadeBounce<18||finale.groundPool<.22))
         throw Error('Final dusk cross must glow from home into the world '+JSON.stringify(finale));
     }
     console.log('P2_CROSS_LIGHT_FRAME_'+frame+'='+JSON.stringify(clock));
