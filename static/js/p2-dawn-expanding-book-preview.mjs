@@ -72,7 +72,7 @@ function previewContents(book,onRead){
  }
  const paper=make('span','dawn-expander__book-paper');
  paper.append(make('small','','DAWN LIBRARY'),
-  make('strong','',book.title||'原書書名待核對'));
+  make('strong','',book.title||'書籍介紹'));
  figure.append(paper);
  // Explicit reader entry is the second action, after choosing a cover.
  // The original canonical reading-pointer resolver can be asynchronous.
@@ -100,7 +100,7 @@ function previewContents(book,onRead){
  }
  figure.addEventListener('click',()=>void confirmReader());
  const meta=make('div','dawn-expander__metadata');
- const title=make('h3','dawn-expander__title',book.title||'原書書名待核對');
+ const title=make('h3','dawn-expander__title',book.title||'書籍介紹');
  if(/[\u3400-\u9fff]/.test(book.title||''))title.classList.add('dawn-expander__title--zh');
  const author=make('p','dawn-expander__author',asAuthor(book));
  meta.append(eyebrow,title,author);
