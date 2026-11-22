@@ -17,6 +17,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Diagnose per-provider DNS and MacCMS list/detail health
+        continue-on-error: true
+        run: |
+          python3 scripts/shupian_recovery/engine_health.py \
+            --output shupian-engine-health.json
       - name: Run all four categories with limited query budget
         continue-on-error: true
         run: |
@@ -28,5 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shupian-four-category-discovery
-          path: shupian-four-category-discovery.json
+          path: |
+            shupian-four-category-discovery.json
+            shupian-engine-health.json
           if-no-files-found: warn
