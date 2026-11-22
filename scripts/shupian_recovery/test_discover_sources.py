@@ -5,6 +5,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from discover_sources import clean_url, parse_groups, normalize_results, scan, source_probe, title_matches, probe_segment
 from legacy_engine_core import VerificationError
+from source_lifecycle import (url_fingerprint, path_fingerprint, episode_key,
+                              source_evidence, failure_class, sanitized_error)
+from urllib.error import HTTPError
 
 class DiscoveryTests(unittest.TestCase):
     def test_multigroup_episode_recovery_and_dedup(self):
@@ -86,6 +89,53 @@ class DiscoveryTests(unittest.TestCase):
                             opener=lambda request, timeout: Response())
         self.assertTrue(out["ok"])
         self.assertEqual(out["signature"], "mpeg-ts")
+
+    def test_url_identity_changes_without_leaking_signed_url(self):
+        a="https://media.example.com/film/master.m3u8?token=one"
+        b="https://media.example.com/film/master.m3u8?token=two"
+        self.assertNotEqual(url_fingerprint(a),url_fingerprint(b))
+        self.assertEqual(path_fingerprint(a),path_fingerprint(b))
+        result=source_evidence({"url":b},{"source_fingerprint":url_fingerprint(a),
+                                          "source_path_fingerprint":path_fingerprint(a)})
+        self.assertEqual(result["url_comparison"],"same_path_changed_url")
+        self.assertNotIn("token",str(result))
+        self.assertEqual(source_evidence({"url":b})["url_comparison"],"no_comparable_baseline")
+
+    def test_http_failure_classification_and_error_redaction(self):
+        def error(code): return HTTPError("https://host.example.com/a.m3u8?secret=abc",
+                                         code,"failure",{},None)
+        self.assertEqual(failure_class(error(404)),"http_404_missing_or_masked")
+        self.assertEqual(failure_class(error(403)),"http_access_restricted")
+        self.assertEqual(failure_class(error(503)),"http_temporary_server_error")
+        self.assertNotIn("secret=abc",sanitized_error(str(error(403))))
+
+    def test_failing_source_is_retained_and_alternate_audited(self):
+        providers=[{"id":"a","api":"https://a.example.com/vod"},
+                   {"id":"b","api":"https://b.example.com/vod"}]
+        def fetch(url):
+            provider="a" if "a.example" in url else "b"
+            return {"list":[{"vod_name":"新片 第一季",
+                              "vod_play_url":"第01集$https://media.example.com/"+provider+".m3u8"}]}
+        calls=[]
+        def probe(candidate):
+            calls.append(candidate["provider"])
+            if candidate["provider"]=="a":
+                return {"format":"m3u8","manifest":"failed","failure_class":"http_404_missing_or_masked",
+                        "ad_cues":"unknown","clean":"not-certified","playback":"not-tested"}
+            return {"format":"m3u8","manifest":"parsed","ad_cues":"none-detected",
+                    "clean":"not-certified","playback":"not-tested"}
+        focus={("a","新片 第一季","第01集")}
+        prev={episode_key("a","新片 第一季","第01集"):
+              {"manifest":"failed","source_fingerprint":"deadbeef",
+               "source_path_fingerprint":"deadbeef"}}
+        result=scan(["新片"],providers,fetcher=fetch,probe=probe,max_audits=2,
+                    workers=1,focus=focus,previous_audits=prev)
+        self.assertEqual(calls,["a","b"])
+        self.assertEqual(result["alternative_candidates_audited"],1)
+        self.assertEqual(result["http_404_count"],1)
+        self.assertEqual(result["manifests_parsed"],1)
+        self.assertEqual(result["audits"][0]["url_comparison"],"different_url")
+        self.assertTrue(all("url" not in x for x in result["audits"]))
 
     def test_ad_marker_is_not_certified_clean(self):
         def fake_manifest(_):
