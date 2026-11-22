@@ -18,7 +18,9 @@ assert(!/location\.replace|http-equiv=["']refresh/.test(html), "No redirect in t
 assert(/<canvas\b/.test(html), "Tour owns its own WebGL canvas");
 assert(!/<h[1-6]\b|<p\b|<button\b|<aside\b/i.test(html), "No visible UI or engineering labels");
 assert(script.includes("entranceHinge.rotation.y"), "A real scene door must open");
-assert(script.includes("entranceHinge.attach(mesh(\"TALL SINGLE WHITE PIVOT DOOR\")"), "The original tall GLB entrance must be the moving door");
+assert(script.includes('const southDoor = mesh("TALL SINGLE WHITE PIVOT DOOR")') &&
+       script.includes("entranceHinge.attach(southDoor)"),
+  "The original tall GLB entrance must be the moving door");
 assert(!script.includes("const leaf = new Mesh"), "Do not introduce a short fake entrance leaf");
 assert(script.includes("new PerspectiveCamera("), "Use an actual perspective camera");
 assert(script.includes("south cross wall|solid quadrant"), "The cross is a wall aperture, not luminous solid quadrants");
@@ -27,7 +29,8 @@ assert(script.includes("surfaceMaps.stone"), "Architectural materials must remai
 assert(script.includes("loadArchitecture()"), "Native GLB loading required");
 assert((script.match(/at:\s*[0-9]+,\s*p:/g) || []).length >= 22,
   "Full original walk through sanctuary, cafe, terraces and final aerial required");
-assert(script.includes("staffSanctuaryHinge.attach(mesh(\"SANCTUARY STAFF DOOR\")"),
+assert(script.includes('const southStaffDoor = mesh("SANCTUARY STAFF DOOR")') &&
+       script.includes("staffSanctuaryHinge.attach(southStaffDoor)"),
   "Do not omit the true south sanctuary staff exit");
 assert(script.includes("northCourtSlider.position.x"),
   "Courtyard north official passage must open");
