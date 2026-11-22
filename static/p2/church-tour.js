@@ -214,15 +214,30 @@ function connectArchitecturalDoors(building) {
   eastChapelSlider.attach(mesh("C EAST CHAPEL large sliding glass door"));
   rearSanctuaryHinge.attach(northPublicDoor);
   staffSanctuaryHinge.attach(southStaffDoor);
-  // No door handles are displayed: original floating GLB hardware and
-  // earlier generated white handles are both suppressed. The original
-  // door leaves remain attached to their hinges and continue to open.
-  building.traverse(object => {
-    if (object.isMesh && /handle|knob|door pull|pull bar|door lever|latch|attached handle/i.test(modelName(object.name))) {
-      object.visible = false;
-      object.castShadow = false;
-    }
+  // Critical: the original door leaves have already been reparented to
+  // scene-level hinge Groups. Traversing `building` now misses those meshes.
+  // Purge from the ENTIRE scene after reparenting. Remove hardware geometry,
+  // do not merely hide a parent which may later be reused or cloned.
+  const handles = [];
+  scene.traverse(object => {
+    if (object !== scene && /handle|knob|door pull|pull bar|door lever|latch|lockset|attached handle/i.test(modelName(object.name)))
+      handles.push(object);
   });
+  for (const object of handles) {
+    object.visible = false;
+    object.castShadow = false;
+    object.parent?.remove(object);
+  }
+  const remaining = [];
+  scene.traverse(object => {
+    if (object.isMesh && object.visible && /handle|knob|door pull|pull bar|door lever|latch|lockset|attached handle/i.test(modelName(object.name)))
+      remaining.push(object.name);
+  });
+  window.__churchHardwareAudit = {
+    removed: handles.map(object => object.name),
+    remaining
+  };
+  if (remaining.length) throw new Error("Door hardware still visible: " + remaining.join(", "));
   northCourtSlider.attach(mesh("A NORTH COURT double-wide glass door"));
   doorsAttached = true;
 }
