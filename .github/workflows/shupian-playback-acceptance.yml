@@ -35,6 +35,13 @@ jobs:
               async with async_playwright() as p:
                   browser=await p.chromium.launch(headless=True,args=["--autoplay-policy=no-user-gesture-required"])
                   page=await browser.new_page()
+                  network=[]
+                  from urllib.parse import urlsplit
+                  def safe_record(kind,url,detail):
+                      if ".m3u8" in url.lower() or ".ts" in url.lower() or "hls.min.js" in url.lower():
+                          network.append({"event":kind,"host":urlsplit(url).hostname,"detail":detail})
+                  page.on("response",lambda resp:safe_record("response",resp.url,resp.status))
+                  page.on("requestfailed",lambda req:safe_record("requestfailed",req.url,req.failure))
                   try:
                       response=await page.goto(result["page"]+"?browser-acceptance=1",wait_until="domcontentloaded",timeout=30000)
                       result["page_http"]=response.status if response else None
@@ -48,6 +55,7 @@ jobs:
                           if result["time_advanced"]:break
                       result["video"]=state
                       result["player_status"]=(await page.locator("#status").inner_text())[:300]
+                      result["media_network"]=network[:25]
                       result["status"]="PASS" if result["first_frame"] and result["time_advanced"] else "FAIL"
                   except Exception as e:
                       result["status"]="ERROR"
