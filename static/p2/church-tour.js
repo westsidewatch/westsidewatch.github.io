@@ -1013,9 +1013,9 @@ const route = [
   // the courtyard *before* the upper floor enters the foreground.
   { at:187, p:[6.0,2.7,-16.84],look:[8.6,2.10,-16.78]},  // original stair tread sequence
   { at:194, p:[7.435,3.449,-16.84],look:[9.75,2.9,-16.47]}, // landing over tread center
-  { at:199, p:[8.3,3.90,-16.84],look:[10.45,3.6,-16.18]},  // avoid x12 solid wall
-  { at:202, p:[9.3,4.35,-16.71],look:[8.15,4.05,-13.20]},  // turn toward upper court early
-  { at:205, p:[10.15,4.78,-16.52],look:[8.0,3.7,-10.20]}, // lift gaze above near floor
+  { at:199, p:[8.3,3.90,-16.84],look:[8.80,4.60,-13.70]}, // turn from the x12 solid wall toward daylight court
+  { at:202, p:[9.3,4.35,-16.71],look:[8.15,5.10,-12.40]}, // raise lens above top-floor slab toward court glazing
+  { at:205, p:[10.15,4.78,-16.52],look:[8.0,4.65,-10.20]}, // nearly level sightline, not downward into floor
   { at:211, p:[10.9,5.04,-13.8],look:[8.0,2.90,-9.30]},  // middle-height maple framing
   { at:223, p:[10.65,5.03,-13.0],look:[7.65,2.45,-9.65]}, // natural courtyard reveal
   { at:236, p:[9.0,12.4,-9.0],look:[9.0,1.8,-9.0]},   // rising sky
