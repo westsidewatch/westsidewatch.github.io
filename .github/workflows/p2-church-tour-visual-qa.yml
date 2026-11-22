@@ -14,7 +14,9 @@ permissions:
 jobs:
   proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 12
+    # Full 32-scene GPU / SwiftShader storyboard takes over seven minutes;
+    # the independent door-only job covers the 101-position regression fast.
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
