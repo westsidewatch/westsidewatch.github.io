@@ -2301,3 +2301,23 @@
  letter-spacing:0!important;
  line-height:1.18!important;
 }
+
+
+/* R74 · Chinese editorial sequence: contemporary front shelf and
+   historic works only after readers reach the archival chapter. */
+#dawn-second .dawn-contemporary__archive-entry{
+ display:block!important;width:100%!important;margin:clamp(14px,2vw,34px) 0 0!important;
+ padding:clamp(18px,2vw,32px) 0!important;
+ background:none!important;color:var(--ws-ink)!important;
+ border:0!important;border-top:1px solid var(--ws-harvest)!important;
+ border-bottom:1px solid var(--ws-harvest)!important;
+ font:200 clamp(16px,1.5vw,25px)/1.4 var(--ws-type-display-zh)!important;
+ text-align:left!important;cursor:pointer!important;
+}
+#dawn-second .dawn-contemporary__archive-entry:hover,
+#dawn-second .dawn-contemporary__archive-entry:focus-visible{
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-classification__sleeve--historical-zh{
+ opacity:1!important;
+}
