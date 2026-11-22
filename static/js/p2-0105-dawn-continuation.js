@@ -672,7 +672,11 @@
    const selected=(candidates.length?candidates:items)[Math.floor(Math.random()*(candidates.length||items.length))];
    const image=new Image();image.alt='';image.decoding='async';image.loading='lazy';image.referrerPolicy='no-referrer';
    image.onload=()=>{
-    if(tile.isConnected&&tile.dataset.coverGroup===key)art.replaceChildren(image);
+    if(tile.isConnected&&tile.dataset.coverGroup===key){
+     art.querySelector('img')?.remove();
+     art.prepend(image);
+     tile.classList.add('dawn-classification__sleeve--pictured');
+    }
    };
    image.src=selected.url;
   }
@@ -684,11 +688,24 @@
    if(!document.hidden&&!catalogue.hidden&&activePortal==='all')refreshCategoryCovers();
   },6500);
  }
- function classificationSleeve(label,meta,action,style='',coverGroup='all'){
+ function classificationSleeve(label,meta,action,style='',coverGroup='all',works=[]){
   const tile=document.createElement('button');tile.type='button';
   tile.className='dawn-classification__sleeve'+(style?' dawn-classification__sleeve--'+style:'');
   tile.dataset.coverGroup=coverGroup;
   const art=document.createElement('span');art.className='dawn-classification__art';art.setAttribute('aria-hidden','true');
+  // When source books have no verified jacket, a typographic *category*
+  // composition quotes the original titles, not fabricated work covers.
+  const entries=works.filter(Boolean).slice(0,3);
+  if(entries.length){
+   const folio=document.createElement('span');folio.className='dawn-classification__folio';
+   for(const [i,work] of entries.entries()){
+    const line=document.createElement('span');line.className='dawn-classification__folio-line';
+    line.textContent=String(work.work?.title||work.title||'').trim();
+    if(i===0)line.classList.add('dawn-classification__folio-line--lead');
+    folio.append(line);
+   }
+   art.append(folio);
+  }
   const number=document.createElement('small');number.className='dawn-classification__index';number.textContent=meta||'';
   const title=document.createElement('strong');title.textContent=label;
   const edge=document.createElement('span');edge.className='dawn-classification__edge';edge.setAttribute('aria-hidden','true');
@@ -851,7 +868,7 @@
   classificationCrumbs([{label:'中文圖書',action:displayChineseGroups}]);
   const wall=classificationWall();
   for(const [i,[key,items]] of [...chineseGroups()].entries())
-   wall.append(classificationSleeve(chineseName(key),String(items.length)+' 部',()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest','zh:'+key));
+   wall.append(classificationSleeve(chineseName(key),String(items.length)+' 部',()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest','zh:'+key,items));
   refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
  }
@@ -864,7 +881,7 @@
   for(const w of works){const domain=String(w.classification?.label||key);if(!subgroups.has(domain))subgroups.set(domain,[]);subgroups.get(domain).push(w)}
   for(const [i,[domain,items]] of subgroups.entries()){
    const subtitle=domain.split('/').map(chineseName).join(' · ');
-   wall.append(classificationSleeve(subtitle,String(items.length)+' 部',()=>displayChineseLeaf(key,domain),i%3===0?'chinese':'olive','zh:'+domain));
+   wall.append(classificationSleeve(subtitle,String(items.length)+' 部',()=>displayChineseLeaf(key,domain),i%3===0?'chinese':'olive','zh:'+domain,items));
   }
   refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
