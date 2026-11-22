@@ -27,7 +27,6 @@ jobs:
         run: python3 -m unittest discover -s scripts/shupian_recovery -p 'test_*.py' -v
       - name: Repeat source scan for Black Mirror and Sherlock HLS segments
         id: discovery
-        continue-on-error: true
         run: |
           python3 scripts/shupian_recovery/discover_sources.py \
             --keywords '黑鏡' '神探夏洛克' \
@@ -36,14 +35,22 @@ jobs:
       - name: Verify report schema and no fake catalog admission
         run: |
           python3 - <<'PY'
-          import json
+          import json, os
+          from datetime import datetime, timezone
           from pathlib import Path
           path=Path('static/shupian/recovery/engine-live-round.json')
           assert path.is_file(), 'No live round evidence report produced'
           data=json.loads(path.read_text())
+          assert data['run_id'] == os.environ['GITHUB_RUN_ID'], 'Stale report from another workflow'
+          observed=datetime.fromisoformat(data['observed_at_utc'].replace('Z', '+00:00'))
+          freshness=(datetime.now(timezone.utc)-observed).total_seconds()
+          assert -120 <= freshness < 600, 'Report is not fresh'
+          assert data['schema'] >= 3, 'Old report schema'
           assert data['completion']=='NOT_COMPLETED'
           assert data['stages']['playback']=='not-tested-in-browser'
           assert all('url' not in a for a in data['audits'])
+          assert all('url' not in a for a in data['tracked_sources'])
+          assert len(data['tracked_sources']) >= len(data['audits'])
           assert all(not (a.get('manifest') == 'parsed' and a.get('failure_class'))
                      for a in data['audits']), 'Manifest success must not carry an HTTP failure'
           print('Real provider searches attempted:',data['provider_queries_attempted'])
@@ -54,6 +61,7 @@ jobs:
           print('Changed URL identity:',data.get('changed_url_count'))
           print('404 media errors:',data.get('http_404_count'))
           print('Alternate episodes probed:',data.get('alternative_candidates_audited'))
+          print('New candidate audits:',data.get('new_candidates_audited'))
           print('Start/middle/end segment checks passed:',data.get('segment_sample_pass',0))
           PY
       - name: Commit sanitized evidence to website (not playback approval)
