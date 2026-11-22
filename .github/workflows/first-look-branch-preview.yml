@@ -18,7 +18,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: first-look-preview-${{ github.event.pull_request.number || github.ref_name }}
+  group: dawn-p205-preview-r47-${{ github.event.pull_request.number || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
