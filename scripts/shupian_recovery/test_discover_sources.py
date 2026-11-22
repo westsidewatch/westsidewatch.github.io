@@ -44,6 +44,21 @@ class DiscoveryTests(unittest.TestCase):
         self.assertEqual(report["completion"],"NOT_COMPLETED")
         self.assertFalse(any("url" in x for x in report["audits"]))
 
+    def test_targeted_rescan_prefers_previous_episode(self):
+        providers=[{"id":"sample","api":"https://api.example.com/vod"}]
+        def fake_fetch(_):
+            return {"list":[{"vod_name":"新片","vod_play_url":
+                "E1$https://media.example.com/one.m3u8#E2$https://media.example.com/two.m3u8"}]}
+        collected=[]
+        def fake_probe(candidate):
+            collected.append(candidate["episode"])
+            return {"format":"m3u8","manifest":"parsed","ad_cues":"none-detected",
+                    "playback":"not-tested","clean":"not-certified"}
+        report=scan(["新片"],providers,fetcher=fake_fetch,probe=fake_probe,
+                    max_audits=1,focus={("sample","新片","E2")},workers=1)
+        self.assertEqual(collected,["E2"])
+        self.assertEqual(report["audited"],1)
+
     def test_wrong_sherlock_titles_are_excluded(self):
         self.assertFalse(title_matches("夏洛克与女儿", "神探夏洛克"))
         self.assertFalse(title_matches("女神探夏洛克", "神探夏洛克"))
