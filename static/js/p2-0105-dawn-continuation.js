@@ -979,9 +979,7 @@
     limit:36,isCurrent:()=>ticket===classificationTicket
    });
    if(ticket!==classificationTicket||!found)return;
-   const description='依 Dawn Living Library 原始逐書分類關聯選取 · '+
-    '展示 '+found.books.length+' 部作品'+
-    (found.sampleComplete?' · 已讀取全部分類分片':' · 目前為分類樣本');
+   const description='本分類目前展示 '+found.books.length+' 部作品。';
    displayClassificationBooks(child.label,found.books,trail,description,()=>displayClassificationGroup(group));
   }catch(err){
    if(ticket!==classificationTicket)return;
