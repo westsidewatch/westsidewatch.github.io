@@ -1066,8 +1066,13 @@
     if(safeHttp(candidate.coverUrl)){
      const image=document.createElement('img');image.src=safeHttp(candidate.coverUrl);
      image.alt='出版方所列書封：'+candidate.title;
-     image.loading='lazy';image.decoding='async';image.referrerPolicy='no-referrer';
-     image.addEventListener('load',()=>{card.classList.add('dawn-contemporary__book--pictured')});
+     // External publishers can block/slow thumbnails. Do not let an
+     // unready white image mask the verified title-paper underneath it.
+     image.loading='eager';image.decoding='async';image.referrerPolicy='no-referrer';
+     image.addEventListener('load',()=>{
+      if(image.naturalWidth>100)card.classList.add('dawn-contemporary__book--pictured');
+      else image.remove();
+     });
      image.addEventListener('error',()=>image.remove());
      art.append(image);
     }
