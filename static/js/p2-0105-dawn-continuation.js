@@ -1007,8 +1007,98 @@
   const wall=classificationWall();
   for(const [i,[key,items]] of [...chineseGroups()].entries())
    wall.append(classificationSleeve(chineseName(key),String(items.length)+' 部',()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest','zh:'+key,items));
+  // Research shelf: catalogue candidates and verified translations are NOT
+  // inserted into original 47 canonical Chinese works or the 203,448 index.
+  const newShelf=classificationSleeve('當代中文與譯作','7 部出版方來源',()=>void displayContemporaryChinese(),
+    'harvest','zh:contemporary');
+  newShelf.classList.add('dawn-classification__sleeve--contemporary');
+  const art=newShelf.querySelector('.dawn-classification__art');
+  if(art){
+   const folio=document.createElement('span');folio.className='dawn-classification__folio';
+   const en=document.createElement('span');en.className='dawn-classification__folio-line';
+   en.textContent='MODERN CHINESE / TRANSLATIONS';
+   const zh=document.createElement('span');zh.className='dawn-classification__folio-line dawn-classification__folio-line--lead';
+   zh.textContent='新書與中文譯本';
+   folio.append(en,zh);art.append(folio);
+  }
+  wall.append(newShelf);
   refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
+ }
+ async function displayContemporaryChinese(){
+  const ticket=++classificationTicket;
+  classificationFacets(false);
+  classificationCrumbs([
+   {label:'中文圖書',action:displayChineseGroups},
+   {label:'當代中文與譯作',action:()=>void displayContemporaryChinese()}
+  ]);
+  const wall=classificationWall();wall.hidden=true;
+  const panel=$('#dawn-classification-results');panel.hidden=false;
+  const intro=document.createElement('div');intro.className='dawn-classification__result-heading';
+  const heading=document.createElement('h4');heading.textContent='當代中文與譯作';
+  const sub=document.createElement('p');
+  sub.textContent='已核對的出版方書目與譯本線索；尚未獲本站全文轉載授權。選書後在原頁展開，確定有興趣再前往出版方。';
+  intro.append(heading,sub);panel.append(intro);
+  const waiting=document.createElement('p');waiting.className='dawn-classification__empty';
+  waiting.textContent='正在讀取已核實出版方書目…';panel.append(waiting);
+  try{
+   const response=await fetch('/dawn-library/chinese-contemporary-discovery.json');
+   if(!response.ok)throw Error('Contemporary catalogue HTTP '+response.status);
+   const manifest=await response.json();
+   if(ticket!==classificationTicket)return;
+   if(manifest.schema!=='dawn.library.chinese-contemporary-discovery.v1'||
+      manifest.status!=='editorial-source-discovery-not-canonical-admission'||
+      !Array.isArray(manifest.candidates))
+    throw Error('Chinese source-discovery authority mismatch');
+   waiting.remove();
+   const gallery=document.createElement('div');gallery.className='dawn-contemporary__grid';
+   for(const candidate of manifest.candidates){
+    const url=safeHttp(candidate.sourceUrl);
+    if(!url||!candidate.title||!candidate.author)continue;
+    const card=document.createElement('button');card.type='button';
+    card.className='dawn-contemporary__book';
+    card.setAttribute('aria-label','預覽來源書目：'+candidate.title);
+    const art=document.createElement('span');art.className='dawn-contemporary__art';
+    const substitute=document.createElement('span');substitute.className='dawn-contemporary__folio';
+    const rubric=document.createElement('small');rubric.textContent='DAWN · SOURCE EDITION';
+    const printedTitle=document.createElement('strong');printedTitle.textContent=candidate.title;
+    substitute.append(rubric,printedTitle);art.append(substitute);
+    if(safeHttp(candidate.coverUrl)){
+     const image=document.createElement('img');image.src=safeHttp(candidate.coverUrl);
+     image.alt='出版方所列書封：'+candidate.title;
+     image.loading='lazy';image.decoding='async';image.referrerPolicy='no-referrer';
+     image.addEventListener('load',()=>{card.classList.add('dawn-contemporary__book--pictured')});
+     image.addEventListener('error',()=>image.remove());
+     art.append(image);
+    }
+    const copy=document.createElement('span');copy.className='dawn-contemporary__metadata';
+    const kind=document.createElement('small');
+    kind.textContent=candidate.translation==='Chinese translation'?'中文譯作':'當代中文著作';
+    const title=document.createElement('strong');title.textContent=candidate.title;
+    const author=document.createElement('span');author.textContent=candidate.author;
+    const provenance=document.createElement('small');provenance.textContent='出版方 · '+candidate.publisher;
+    copy.append(kind,title,author,provenance);card.append(art,copy);
+    const book={
+     title:candidate.title,creator:candidate.author,workId:null,
+     cover:{url:safeHttp(candidate.coverUrl)},sourceUrl:url,
+     descriptionZh:candidate.translation==='Chinese translation'
+      ? '已核對中文譯作與出版方書目。本站沒有複製受版權保護的中文譯文。'
+      : '已核對當代中文著作與出版方書目。本站沒有複製受版權保護的全文。',
+     discoveryOnly:true
+    };
+    card.addEventListener('click',()=>selectBookPreview(gallery,card,book,
+     ()=>window.open(url,'_blank','noopener,noreferrer')));
+    gallery.append(card);
+   }
+   panel.append(gallery);
+   const back=classificationBackButton('返回中文書目分類',displayChineseGroups);
+   panel.append(back);
+   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
+  }catch(error){
+   if(ticket!==classificationTicket)return;
+   console.error('[Dawn contemporary Chinese discovery]',error);
+   waiting.textContent='當代中文書源暫時無法載入，原有中文古籍仍可正常瀏覽。';
+  }
  }
  function displayChineseSubgroups(key){
   ++classificationTicket;classificationFacets(false);
