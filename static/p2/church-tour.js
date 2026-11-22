@@ -74,6 +74,15 @@ sanctuaryLight.position.set(15.5, 5.1, -1.3);
 sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
 
+// R31: physically bounded stair lighting, not a screen-space fake glow.
+// Every stair tread is original GLB; illuminate the flight in night chapters
+// while preserving the requested continuous day-night and seasonal cycles.
+const upperStairFill=new SpotLight(0xfff3df,0,10.5,0.94,0.84,2);
+upperStairFill.position.set(8.45,5.15,-16.81);
+upperStairFill.target.position.set(8.7,2.5,-16.82);
+upperStairFill.castShadow=false;
+scene.add(upperStairFill,upperStairFill.target);
+
 /* CROSS LIGHT R14: original Blender V23 South Cross wall coordinates.
  * Real aperture is centered at x=15, height=3.65m with a 0.23m slit.
  * Earlier variants placed a second fake cross ~1.07m BELOW the true opening.
@@ -966,16 +975,18 @@ const route = [
   { at:143, p:[3.5,0.35,-7.8],look:[3.9,-0.25,-10.1] },   // -1.50 piazza
   { at:154, p:[2.6,-0.38,-9.7],look:[4.9,-0.25,-11.3] },  // -2.10 cafe
   { at:165, p:[3.5,0.08,-11.5],look:[5.9,0.45,-13.6] },  // C-shaped return
-  { at:176, p:[4.6,1.1,-14.65],look:[6.2,2.2,-16.0]},  // north terraces
-  // The V26 staircase follows z=-16.82. Its occupied third-floor
-  // slab begins at z=-16.05: keep the visitor NORTH of that soffit while
-  // climbing instead of passing through the low floor/ceiling cavity.
-  { at:187, p:[6.0,2.7,-16.84],look:[8.5,2.68,-16.83]}, // keep stair treads in view, not soffit
-  { at:199, p:[8.3,3.90,-16.84],look:[10.7,3.78,-16.84]},// level sightline, no ceiling stare
-  { at:202, p:[9.3,4.35,-16.71],look:[9.5,4.2,-15.6]},  // turn before crossing upper threshold
-  { at:205, p:[10.15,4.78,-16.52],look:[8.0,2.4,-9.4]},// atrium visible before upper room
-  { at:211, p:[10.9,5.04,-13.8],look:[8.0,1.65,-9.3]}, // continuous courtyard reveal
-  { at:223, p:[10.65,5.03,-13.0],look:[7.65,1.30,-9.65]}, // red maple reveal
+  { at:176, p:[4.6,1.1,-14.65],look:[6.25,1.2,-16.50]}, // frame the actual stair foot
+  // R31: original GLB eight treads x5.9..11.5, z=-17.47..-16.17,
+  // y1.36..3.55; occupied third-level slab z>=-16.05.
+  // Look at the treads, not the solid x12 chapel wall. Turn toward
+  // the courtyard *before* the upper floor enters the foreground.
+  { at:187, p:[6.0,2.7,-16.84],look:[8.6,2.10,-16.78]},  // original stair tread sequence
+  { at:194, p:[7.435,3.449,-16.84],look:[9.75,2.9,-16.47]}, // landing over tread center
+  { at:199, p:[8.3,3.90,-16.84],look:[10.45,3.6,-16.18]},  // avoid x12 solid wall
+  { at:202, p:[9.3,4.35,-16.71],look:[8.15,4.05,-13.20]},  // turn toward upper court early
+  { at:205, p:[10.15,4.78,-16.52],look:[8.0,3.7,-10.20]}, // lift gaze above near floor
+  { at:211, p:[10.9,5.04,-13.8],look:[8.0,2.90,-9.30]},  // middle-height maple framing
+  { at:223, p:[10.65,5.03,-13.0],look:[7.65,2.45,-9.65]}, // natural courtyard reveal
   { at:236, p:[9.0,12.4,-9.0],look:[9.0,1.8,-9.0]},   // rising sky
   { at:246, p:[18.2,6.8,17.7],look:[13.8,3.35,-2.6]},// more intimate front vista
   { at:251, p:[18.2,6.8,17.7],look:[13.8,3.35,-2.6]} // same stable dusk cross finale
@@ -1004,6 +1015,14 @@ function updateDaylight(t,duration) {
   const solar=Math.max(0,Math.sin(angle));
   // A smooth day-to-night irradiance curve, with a soft low-sun shoulder.
   const daylight=solar*solar*(3-2*solar);
+  const stairChapter=ease((t-166)/15)*(1-ease((t-208)/13));
+  upperStairFill.intensity=stairChapter*(4.0+20.0*(1-daylight));
+  window.__churchUpperStairLightAudit={
+    active:stairChapter>0.01,
+    level:+upperStairFill.intensity.toFixed(3),
+    mode:"source-geometry-pbr-fill",
+    notOverlay:true
+  };
   const season=Math.min(1,Math.max(0,t/duration));
   // Sun moves SOUTH from screen left to screen right while it is up;
   // its return happens below the horizon during night.
