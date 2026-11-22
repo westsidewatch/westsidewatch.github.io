@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "observed_at_utc": "2026-11-22T14:47:57.112458+00:00",
+  "observed_at_utc": "2026-11-22T14:48:23.402317+00:00",
   "queries": [
     "黑鏡",
     "神探夏洛克"
@@ -11,20 +11,20 @@
   "works_found": 33,
   "unique_media_candidates": 126,
   "hls_candidates": 126,
-  "manifests_parsed": 4,
-  "segment_sample_pass": 4,
+  "manifests_parsed": 2,
+  "segment_sample_pass": 2,
   "suspected_ad_cues": 0,
-  "audited": 4,
+  "audited": 16,
   "errors": [
     {
       "provider": "diyi",
-      "query": "黑鏡",
+      "query": "神探夏洛克",
       "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
       "failure_class": "parse_or_validation_error"
     },
     {
       "provider": "diyi",
-      "query": "神探夏洛克",
+      "query": "黑鏡",
       "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
       "failure_class": "parse_or_validation_error"
     }
@@ -44,36 +44,8 @@
       "ad_cues": "none-detected",
       "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "segment_count": 1307,
-      "duration_sec": 5220.4,
-      "encrypted": false,
-      "segment_checks": [
-        {
-          "position": 0,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 653,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 1306,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        }
-      ],
-      "segment_sample": "pass"
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
     },
     {
       "title": "神探夏洛克  第二季",
@@ -89,36 +61,8 @@
       "ad_cues": "none-detected",
       "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "segment_count": 1344,
-      "duration_sec": 5373.0,
-      "encrypted": false,
-      "segment_checks": [
-        {
-          "position": 0,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 672,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 1343,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        }
-      ],
-      "segment_sample": "pass"
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
     },
     {
       "title": "黑镜 第一季",
@@ -134,36 +78,8 @@
       "ad_cues": "none-detected",
       "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "segment_count": 683,
-      "duration_sec": 2726.04,
-      "encrypted": false,
-      "segment_checks": [
-        {
-          "position": 0,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 341,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 682,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        }
-      ],
-      "segment_sample": "pass"
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
     },
     {
       "title": "黑镜 第一季",
@@ -179,8 +95,59 @@
       "ad_cues": "none-detected",
       "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "segment_count": 949,
-      "duration_sec": 3792.28,
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
+    },
+    {
+      "title": "神探夏洛克第二季",
+      "episode": "第01集",
+      "provider": "baofeng",
+      "source_fingerprint": "7115c98375eb888ce4723793",
+      "source_path_fingerprint": "7115c98375eb888ce4723793",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
+    },
+    {
+      "title": "神探夏洛克第二季",
+      "episode": "第02集",
+      "provider": "baofeng",
+      "source_fingerprint": "a6d230e572ff244c7ac5b855",
+      "source_path_fingerprint": "a6d230e572ff244c7ac5b855",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
+    },
+    {
+      "title": "神探夏洛克 第二季",
+      "episode": "第01集",
+      "provider": "changzhang",
+      "source_fingerprint": "8651a9548df1d1d93f247274",
+      "source_path_fingerprint": "8651a9548df1d1d93f247274",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
+      "clean": "not-certified",
+      "segment_count": 1334,
+      "duration_sec": 5334.56,
       "encrypted": false,
       "segment_checks": [
         {
@@ -192,7 +159,7 @@
           "content_type": "video/mp2t"
         },
         {
-          "position": 474,
+          "position": 667,
           "ok": true,
           "http": 206,
           "signature": "mpeg-ts",
@@ -200,7 +167,7 @@
           "content_type": "video/mp2t"
         },
         {
-          "position": 948,
+          "position": 1333,
           "ok": true,
           "http": 206,
           "signature": "mpeg-ts",
@@ -209,13 +176,194 @@
         }
       ],
       "segment_sample": "pass"
+    },
+    {
+      "title": "神探夏洛克 第二季",
+      "episode": "第02集",
+      "provider": "changzhang",
+      "source_fingerprint": "4972276c51f7613aadec3c2f",
+      "source_path_fingerprint": "4972276c51f7613aadec3c2f",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
+      "clean": "not-certified",
+      "segment_count": 1326,
+      "duration_sec": 5303.12,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 663,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 1325,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass"
+    },
+    {
+      "title": "神探夏洛克第二季",
+      "episode": "第01集",
+      "provider": "feifan",
+      "source_fingerprint": "5643c7d9dba4f918f64dbb89",
+      "source_path_fingerprint": "5643c7d9dba4f918f64dbb89",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 403: Forbidden",
+      "failure_class": "http_access_restricted"
+    },
+    {
+      "title": "神探夏洛克第二季",
+      "episode": "第02集",
+      "provider": "feifan",
+      "source_fingerprint": "9b7c4266033bb0632f219175",
+      "source_path_fingerprint": "9b7c4266033bb0632f219175",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 403: Forbidden",
+      "failure_class": "http_access_restricted"
+    },
+    {
+      "title": "黑镜第一季",
+      "episode": "第01集",
+      "provider": "baofeng",
+      "source_fingerprint": "00aeec242a6d45c7ce6ca446",
+      "source_path_fingerprint": "00aeec242a6d45c7ce6ca446",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
+    },
+    {
+      "title": "黑镜第一季",
+      "episode": "第02集",
+      "provider": "baofeng",
+      "source_fingerprint": "be9f9bd6819276f431fb1d79",
+      "source_path_fingerprint": "be9f9bd6819276f431fb1d79",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
+    },
+    {
+      "title": "神探夏洛克第一季",
+      "episode": "第01集",
+      "provider": "baofeng",
+      "source_fingerprint": "cdfa973c21de6602a5544b7e",
+      "source_path_fingerprint": "cdfa973c21de6602a5544b7e",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
+    },
+    {
+      "title": "神探夏洛克第三季",
+      "episode": "第01集",
+      "provider": "baofeng",
+      "source_fingerprint": "1f934cc39da5fa4239aac564",
+      "source_path_fingerprint": "1f934cc39da5fa4239aac564",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
+    },
+    {
+      "title": "神探夏洛克第四季",
+      "episode": "第01集",
+      "provider": "baofeng",
+      "source_fingerprint": "1a458dd6368fd3dd58b78aa2",
+      "source_path_fingerprint": "1a458dd6368fd3dd58b78aa2",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
+    },
+    {
+      "title": "神探夏洛克第一季",
+      "episode": "第02集",
+      "provider": "baofeng",
+      "source_fingerprint": "5a7f4216bb36724f2a67c36d",
+      "source_path_fingerprint": "5a7f4216bb36724f2a67c36d",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "unknown",
+      "previous_observed_at_utc": null,
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked"
     }
   ],
   "same_exact_url_count": 0,
   "changed_url_count": 0,
-  "missing_baseline_count": 4,
-  "http_404_count": 0,
-  "alternative_candidates_audited": 0,
+  "missing_baseline_count": 16,
+  "http_404_count": 12,
+  "alternative_candidates_audited": 8,
   "stages": {
     "discovery": "attempted",
     "ad_quality": "manifest-only",
