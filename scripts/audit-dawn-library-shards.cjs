@@ -16,6 +16,7 @@ const errors=[],warnings=[],stats={
  covers:{shards:0,records:0,withImage:0,placeholder:0,duplicateIds:0,hashMismatches:0,declaredCountDrift:0}
 };
 const seen={canonical:new Set(),living:new Set(),covers:new Set()};
+const coverRepairPlan=[];
 function read(rel){
  const absolute=path.resolve(base,rel);
  if(!absolute.startsWith(base+path.sep))throw Error('Path escapes Dawn root: '+rel);
@@ -102,6 +103,11 @@ function scanCovers(rootCanonical){
     stats.covers.declaredCountDrift++;
     warnings.push(where+': manifest count '+meta.count+' but actual '+rows.length);
    }
+   if(meta.count!==rows.length||meta.sha256!==sha256||value.count!==rows.length){
+    coverRepairPlan.push({href:meta.href,manifestOffset:meta.offset,
+      manifestCount:meta.count,shardDeclaredCount:value.count,
+      actualCount:rows.length,manifestSha256:meta.sha256,actualSha256:sha256});
+   }
    // Historic filtered preview shards may have stale internal counts. It is
    // a source discrepancy to report, not reason to block the entire audit.
    check(value.count===rows.length,where+': self count '+value.count+' differs from '+rows.length,false);
@@ -124,8 +130,12 @@ function main(){
  const canonical=scanCanonical();
  scanLiving(canonical);
  scanCovers(canonical);
- const report={schema:'dawn.library.integrity-report.v1',
+ const missingCoverWorkIds=[...seen.canonical].filter(id=>!seen.covers.has(id));
+ stats.covers.missingCanonicalWorks=missingCoverWorkIds.length;
+ const report={schema:'dawn.library.integrity-report.v2',
   rootWorkCount:canonical.workCount,stats,errors,warnings,
+  coverReconciliation:{missingCanonicalWorkIds:missingCoverWorkIds,shardCorrections:coverRepairPlan,
+   authority:'canonical Work IDs; source data unchanged',action:'review/rebuild via existing admission pipeline'},
   status:errors.length?'FAIL':warnings.length?'WARN':'PASS',
   note:'File/hash and Work ID audit only; cannot establish remote image HTTP/rights/legibility.'};
  const i=process.argv.indexOf('--json');
