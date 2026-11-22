@@ -247,9 +247,35 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
         detail = probe(candidate)
         if detail.get("manifest") == "parsed":
             detail = {k: v for k, v in detail.items() if k not in ("error", "failure_class")}
+        previous_status = prior.get("manifest") if prior else None
+        current_status = detail.get("manifest")
+        if previous_status not in ("parsed", "failed"):
+            transition = "new_observation"
+        elif previous_status == "parsed" and current_status != "parsed":
+            transition = "regressed"
+        elif previous_status != "parsed" and current_status == "parsed":
+            transition = "recovered"
+        elif previous_status == "parsed":
+            transition = "stable_healthy"
+        else:
+            transition = "stable_failure"
+        old_health = prior.get("health_checks", 0) if prior else 0
+        old_pass = prior.get("health_pass", 0) if prior else 0
+        try:
+            old_health = max(0, min(int(old_health), 10000))
+            old_pass = max(0, min(int(old_pass), old_health))
+        except (ValueError, TypeError):
+            old_health, old_pass = 0, 0
+        health_checks = old_health + 1
+        health_pass = old_pass + int(current_status == "parsed" and detail.get("segment_sample") == "pass")
+        # Bayesian-smoothed sampling score; not a guarantee of video playback.
+        quality = round((health_pass + 1) / (health_checks + 2), 4)
         # Public report contains fingerprints, never raw media URLs.
         audits.append({"title": candidate["title"], "episode": candidate["episode"],
-                       "provider": candidate["provider"], **evidence, **detail})
+                       "provider": candidate["provider"], **evidence, **detail,
+                       "status_transition": transition,
+                       "health_checks": health_checks, "health_pass": health_pass,
+                       "sample_reliability": quality})
     return {
         "schema": 2, "observed_at_utc": datetime.now(timezone.utc).isoformat(),
         "queries": keywords, "providers_requested": len(providers),
@@ -265,6 +291,9 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
         "changed_url_count": sum(a["url_comparison"] in ("same_path_changed_url","different_url") for a in audits),
         "missing_baseline_count": sum(a["url_comparison"] == "no_comparable_baseline" for a in audits),
         "http_404_count": sum(a.get("failure_class") == "http_404_missing_or_masked" for a in audits),
+        "recovered_count": sum(a["status_transition"] == "recovered" for a in audits),
+        "regressed_count": sum(a["status_transition"] == "regressed" for a in audits),
+        "stable_healthy_count": sum(a["status_transition"] == "stable_healthy" for a in audits),
         "alternative_candidates_audited": sum(
             (a["provider"], a["title"], a["episode"]) not in focus
             and any(equivalent_episode(a["title"], a["episode"], t, ep)
