@@ -769,16 +769,31 @@
   const art=document.createElement('span');art.className='dawn-classification__art';art.setAttribute('aria-hidden','true');
   // When source books have no verified jacket, a typographic *category*
   // composition quotes the original titles, not fabricated work covers.
-  const exactCover=works.find(work=>work?.workId?.startsWith('dawn:zh:')&&
-    safeHttp(work?.cover?.url));
-  if(exactCover){
-   const coverUrl=safeHttp(exactCover.cover.url);
+  const sourcedCovers=works
+   .filter(work=>work?.workId?.startsWith('dawn:zh:')&&safeHttp(work?.cover?.url))
+   // For a *category* (never an individual Work), use another book from this
+   // same category if the selected remote jacket cannot load. Local Yale
+   // facsimiles are reliable first-choice source images.
+   .sort((a,b)=>Number(Boolean(b.cover.url.startsWith('/dawn-library/chinese-facsimile-covers/')))-
+     Number(Boolean(a.cover.url.startsWith('/dawn-library/chinese-facsimile-covers/'))));
+  if(sourcedCovers.length){
    const image=document.createElement('img');
    image.alt='';
    image.loading='lazy';image.decoding='async';
-   image.addEventListener('load',()=>{if(tile.isConnected)tile.classList.add('dawn-classification__sleeve--pictured')});
-   image.addEventListener('error',()=>image.remove());
-   image.src=coverUrl;
+   let candidate=0;
+   image.addEventListener('load',()=>{
+    if(tile.isConnected)tile.classList.add('dawn-classification__sleeve--pictured');
+   });
+   image.addEventListener('error',()=>{
+    candidate++;
+    if(candidate<sourcedCovers.length){
+     image.src=safeHttp(sourcedCovers[candidate].cover.url);
+    }else{
+     image.remove();
+     tile.classList.remove('dawn-classification__sleeve--pictured');
+    }
+   });
+   image.src=safeHttp(sourcedCovers[0].cover.url);
    art.append(image);
   }
   const entries=works.filter(Boolean).slice(0,3);
