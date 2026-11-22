@@ -1,5 +1,15 @@
 # Westside Design OS — Editorial Manual
 
+
+## 数片工程第一條｜核心引擎優先（全體代理必須遵守）
+
+**本工程的目的，是製作「搜尋去廣告的片源引擎」。視頻網站只是檢驗引擎是否好用的實驗結果；所有工作都圍繞核心引擎。**
+
+**強制次序：** 搜尋來源與逐集解析 → 廣告識別／過濾與品質檢驗 → 真正播放測試 → 數片網站展示及端到端驗收。片單、海報、頁面數量、部署提交和報告不能代替核心引擎的工作成果。**不得擅自停用搜尋、解析或去廣告的核心模組。** 未驗證的候選來源不得冒充可播放。其他版塊及 OS 規範不因此改動。
+
+本條為数片／PARADISO 工程的最高目的及驗收準則；完整定義、實施細節及事故教訓見 [数片恢復工程第一條](../shupian/RECOVERY-2026-11-22.md#第一條工程目的與最高優先級不可更改)。
+
+
 Status: **operational chapter of the single Westside Design OS**, not a parallel visual authority.  
 Audience: Church, First Look, Journal, Olive Mountain, ONE, Dawn Library, Cinema, Search, tools, and Doré Design agents.  
 Source of truth: [WESTSIDE-DESIGN-OS.md](WESTSIDE-DESIGN-OS.md) → `design-system/tokens/westside.tokens.json` → `static/css/westside-design-os.css` → approved `data-ws-scope` overrides.
