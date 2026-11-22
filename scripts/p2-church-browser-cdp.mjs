@@ -83,6 +83,8 @@ try{
     if(state?.className!=='ready')throw Error('Church GLB not ready in browser '+frame+' '+JSON.stringify(state)+' '+errors.join('; '));
     if(!state.hardware || !Array.isArray(state.hardware.remaining) || state.hardware.remaining.length)
       throw Error('Door hardware still present at frame '+frame+' '+JSON.stringify(state.hardware));
+    if(!state.hardware.removed?.some(name=>/moving.pull/i.test(name)))
+      throw Error('Known V33 moving_pull geometry was not removed from live GLB scene: '+JSON.stringify(state.hardware));
     if(!state.crossLight?.aperture || !state.crossLight?.floor || state.crossLight.sheets!==3)
       throw Error('Cross illumination incomplete at frame '+frame);
 
