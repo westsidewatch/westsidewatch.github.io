@@ -5,6 +5,7 @@ on:
     paths:
       - 'static/p2/church-tour.html'
       - 'static/p2/church-tour.js'
+      - 'static/p2/church-geometry-union.js'
       - 'scripts/p2-church-browser-cdp.mjs'
       - '.github/workflows/p2-church-tour-visual-qa.yml'
   workflow_dispatch:

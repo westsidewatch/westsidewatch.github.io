@@ -6,6 +6,7 @@ import { Script } from "node:vm";
 const read = p => readFileSync(p, "utf8");
 const html = read("static/p2/church-tour.html");
 const script = read("static/p2/church-tour.js");
+const physicalUnion = read("static/p2/church-geometry-union.js");
 const folio = read("static/p2/living-water.html");
 const interaction = read("static/js/p2-living-water.js");
 const firstLayer = read("static/p2-maquette/index.html");
@@ -35,6 +36,16 @@ assert(script.includes("sameDrawSurface(a,b)") &&
   "Never remove architectural panels based only on matching bounding boxes");
 assert(!script.includes("routesidePost.test(n)"),
   "Original gallery support posts must not be hidden for camera clearance");
+assert(script.includes("consolidateIntersectingOpaqueCuboids(building,") &&
+       physicalUnion.includes("Architectural volume changed during union") &&
+       physicalUnion.includes("physicalUnion:true"),
+  "Actual GLB overlap must be resolved using volume-conserving mesh union");
+assert(!script.includes("stableCoplanarRenderTier") &&
+       !script.includes("localDepthBiasAudit"),
+  "No architectural surface Z-offset workarounds allowed");
+assert(script.includes("excludedAnimatedCollisionLeaves.push(mesh.name)") &&
+       script.includes("window.__churchDoorCollisionAudit"),
+  "Opened door leaves must be excluded from static collision AABBs");
 assert(script.includes("new PerspectiveCamera(59, 1, 0.16, 125)"),
   "Maintain precision-safe near and far planes for architectural depth");
 
@@ -53,6 +64,7 @@ assert(script.includes("registerMapleSource(object)"),
 assert(script.includes("daylightChapters") && script.includes("solar=Math.max(0,Math.sin(angle))"),
   "Daily sunlight loops must be continuous through scene changes");
 for (const file of [
+  "static/p2/church-geometry-union.js",
   "static/p2-maquette/model-v34.0.part",
   "static/p2-maquette/model-v34.1.part",
   "static/p2-maquette/model-v34.2.part",

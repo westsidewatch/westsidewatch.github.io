@@ -86,7 +86,10 @@ try{
           crossLight:window.__churchLightAudit||null,
           spatial:window.__churchSpatialAudit||null,
           surface:window.__churchSurfaceAudit||null,
-          upperStair:window.__churchUpperStairAudit||null
+          upperStair:window.__churchUpperStairAudit||null,
+          topology:window.__churchTopologyAudit||null,
+          doorCollision:window.__churchDoorCollisionAudit||null,
+          depth:window.__churchDepthLayerAudit||null
         })`);
       }catch{continue;}
       if(state?.className==='ready')break;
@@ -108,6 +111,18 @@ try{
       throw Error('Ghost roof still obscures inhabited spaces at frame '+frame);
     if(!state.upperStair||state.upperStair.treads<8||state.upperStair.stringers!==2)
       throw Error('Original eight-step ascent lacks connected supporting structure '+JSON.stringify(state.upperStair));
+    if(!state.topology||!state.topology.physicalUnion||
+       state.topology.materialOffsets!==false||
+       state.topology.sourceBoxCount<65||
+       state.topology.componentCount<5||
+       state.topology.mergedSourceCount<40||
+       state.topology.originalOverlappingPairs<40)
+      throw Error('GLB intersecting solids are not physically unioned: '+JSON.stringify(state.topology));
+    if(!state.depth||state.depth.materialOffsets!==false||state.depth.count!==0)
+      throw Error('Legacy polygon-offset painting is still active: '+JSON.stringify(state.depth));
+    if(!state.doorCollision||state.doorCollision.excludedAnimatedLeaves?.length<6||
+       state.doorCollision.staleStaticLeaves?.length)
+      throw Error('Opened doors still leave stale static collision boxes: '+JSON.stringify(state.doorCollision));
     if(!state.hardware.removed?.some(name=>/moving.pull/i.test(name)))
       throw Error('Known V33 moving_pull geometry was not removed from live GLB scene: '+JSON.stringify(state.hardware));
     if(!state.crossLight?.aperture || !state.crossLight?.floor || state.crossLight.sheets!==3 || !state.crossLight.additive)
@@ -230,6 +245,43 @@ try{
     writeFileSync(filename, Buffer.from(shot.data, 'base64'));
     console.log('P2_FRAME_PROOF='+filename);
   }
+
+  // The former 106.1s frame jumped backward 1.29 metres because an open
+  // door still had its closed-state collision box. Measure 101 actual frames.
+  let prior=null,maxStep=0,reverse=0,doorFrames=0;
+  for(let i=0;i<=100;i++){
+    const t=+(102+i*.1).toFixed(3);
+    const shotAudit=await evaluate("(()=>{window.__churchRenderProofFrame("+t+");return window.__churchSafetyAudit;})()");
+    if(!shotAudit||Math.abs(shotAudit.at-t)>.002)
+      throw Error('Door micro-sweep frame did not render: '+t);
+    const p=shotAudit.cameraPosition;
+    if(!p||p.length!==3||!p.every(Number.isFinite))
+      throw Error('South door camera position missing at '+t);
+    if(prior){
+      const delta=Math.hypot(...p.map((v,j)=>v-prior[j]));
+      maxStep=Math.max(maxStep,delta);
+      if(delta>.14)throw Error('South door camera snapped '+delta.toFixed(3)+'m at '+t);
+      if(t>=103&&t<=111&&p[0]>prior[0]+.01)reverse++;
+    }
+    if(shotAudit.cameraPenetrations||shotAudit.forwardOcclusions)
+      throw Error('South door corridor blocked at '+t+': '+JSON.stringify(shotAudit));
+    if([103,105.5,106,106.1,107,108,110].some(v=>Math.abs(v-t)<.001)){
+      const image=await send('Page.captureScreenshot',{
+        format:'jpeg',quality:63,captureBeyondViewport:false,fromSurface:true
+      });
+      if(!image.data)throw Error('South doorway screenshot missing '+t);
+      writeFileSync(proofDir+'/south-exit-'+String(t).replace('.','_')+'.jpg',
+        Buffer.from(image.data,'base64'));
+      doorFrames++;
+    }
+    prior=p;
+  }
+  if(reverse)throw Error('South doorway went backwards in '+reverse+' frames');
+  console.log('P2_SOUTH_DOOR_EXIT_SWEEP='+JSON.stringify({
+    from:102,to:112,samples:101,maxStep:+maxStep.toFixed(4),
+    backwardFrames:reverse,doorFrames
+  }));
+
   // Prove the public chapter URL starts *in the sanctuary* but continues
   // the original animation normally. No proofFrame freeze on this request.
   await send('Page.navigate',{
