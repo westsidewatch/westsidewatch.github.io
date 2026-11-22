@@ -8,6 +8,8 @@
  */
 const matchesMotion=()=>!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 const safeUrl=url=>{
+ // Undefined is not a URL: new URL(undefined, origin) would fabricate /undefined.
+ if(typeof url!=='string'||!url.trim())return null;
  try{const x=new URL(url,location.origin);return /^https?:$/.test(x.protocol)?x.href:null}
  catch{return null}
 };
