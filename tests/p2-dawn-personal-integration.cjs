@@ -24,6 +24,7 @@ const base='http://127.0.0.1:4173';
    await page.locator('#dawn-classification-results .dawn-classification__book').first().click();
    await page.locator('#dawn-book-expanding-preview .dawn-expander__read').waitFor();
    await page.locator('#dawn-book-expanding-preview .dawn-expander__read').click();
+   await page.locator('#dawn-book-detail').waitFor({state:'visible',timeout:20000});
    const bookmark=page.locator('#dawn-book-bookmark');
    assert(await bookmark.isEnabled(),kind+': canonical Chinese Work rejected by Library Card');
    await bookmark.click();
