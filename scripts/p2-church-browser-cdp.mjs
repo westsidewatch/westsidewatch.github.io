@@ -105,6 +105,8 @@ try{
       throw Error('Volumetric cross shaft GLSL renderer missing '+frame);
     if(!state.crossLight?.beamTracksSun)
       throw Error('Volumetric light must track the sunlit floor impact: '+frame);
+    if(!state.crossLight?.adaptiveExposure)
+      throw Error('Cross highlight exposure compensation missing at frame '+frame);
 
     await sleep(300);
     let clock=await evaluate('window.__churchFrameAudit');
@@ -118,6 +120,9 @@ try{
       throw Error('Cross daylight shader/real PBR bounce not active '+frame+' '+JSON.stringify(clock));
     if(!Number.isFinite(clock.beamAlignment) || clock.beamAlignment<0.99)
       throw Error('Cross beam diverged from true aperture-to-floor direction at frame '+frame+' '+JSON.stringify(clock));
+    if(!Number.isFinite(clock.airStrength)||clock.airStrength>0.132
+       || !Number.isFinite(clock.exposure)||clock.exposure<0.70||clock.exposure>1.05)
+      throw Error('Cross optical energy/exposure out of calibrated range '+frame+' '+JSON.stringify(clock));
     console.log('P2_CROSS_LIGHT_FRAME_'+frame+'='+JSON.stringify(clock));
     if(frame===103){
       const upper=await evaluate('window.__churchMeshProbe?.(495,230,140)');
