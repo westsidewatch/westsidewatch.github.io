@@ -207,7 +207,7 @@ def main(argv=None):
     spec.loader.exec_module(audit)
     report=scan(max_pages=args.max_pages,page_size=args.page_size,
                 detail_batch=args.detail_batch,probe_count=args.probe_count,
-                probe=audit.audit_one if args.probe_count else None,
+                probe=(lambda url: audit.audit_one("Changzhang benchmark", url)) if args.probe_count else None,
                 sleep=args.sleep)
     Path(args.output).write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(json.dumps({
