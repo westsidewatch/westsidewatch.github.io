@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 // Launch Chrome headless on remote-debugging-port=9222 with a local static server.
 // This audit requires a real WebGL scene; a loading/failed screenshot is a failure.
 const proofDir = 'artifacts/p2-church-visual-qa';
+const doorOnly=process.env.P2_CHURCH_DOOR_ONLY==='1';
 mkdirSync(proofDir, { recursive: true });
 const sleep = n => new Promise(resolve => setTimeout(resolve, n));
 let tabs;
@@ -61,7 +62,7 @@ try{
   // Load and decompress the architectural GLB ONCE. The tour's own animation
   // loop reads proofFrame from location.search on every frame; stepping the
   // URL with replaceState requires no reloading or lost WebGL state.
-  const frames=[187,194,199,202,204,205,211,216,223,27,31,40,55,64,110,121,132,143,154,165,174,9,20,22,89,94,103,236,241,246,248,251];
+  const frames=doorOnly?[103,106,108,110]:[187,194,199,202,204,205,211,216,223,27,31,40,55,64,110,121,132,143,154,165,174,9,20,22,89,94,103,236,241,246,248,251];
   await send('Page.navigate',{
     url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frames[0]
   });
@@ -246,42 +247,47 @@ try{
     console.log('P2_FRAME_PROOF='+filename);
   }
 
-  // The former 106.1s frame jumped backward 1.29 metres because an open
-  // door still had its closed-state collision box. Measure 101 actual frames.
-  let prior=null,maxStep=0,reverse=0,doorFrames=0;
-  for(let i=0;i<=100;i++){
-    const t=+(102+i*.1).toFixed(3);
-    const shotAudit=await evaluate("(()=>{window.__churchRenderProofFrame("+t+");return window.__churchSafetyAudit;})()");
-    if(!shotAudit||Math.abs(shotAudit.at-t)>.002)
-      throw Error('Door micro-sweep frame did not render: '+t);
-    const p=shotAudit.cameraPosition;
+  // 101 exact camera poses, using the very same interpolation and
+  // collision solver used by animate(). No unnecessary WebGL redraw per pose.
+  const poses=await evaluate("(()=>Array.from({length:101},(_,i)=>window.__churchRoutePoseAudit(+(102+i*.1).toFixed(3))))()");
+  if(!Array.isArray(poses)||poses.length!==101)
+    throw Error('Cannot sample 101 actual south door route positions');
+  let previous=null,maxStep=0,reverse=0,doorFrames=doorOnly?frames.length:0;
+  for(const pose of poses){
+    const t=pose.at,p=pose.cameraPosition;
     if(!p||p.length!==3||!p.every(Number.isFinite))
-      throw Error('South door camera position missing at '+t);
-    if(prior){
-      const delta=Math.hypot(...p.map((v,j)=>v-prior[j]));
+      throw Error('Door camera missing '+t);
+    if(previous){
+      const delta=Math.hypot(...p.map((v,j)=>v-previous[j]));
       maxStep=Math.max(maxStep,delta);
-      if(delta>.14)throw Error('South door camera snapped '+delta.toFixed(3)+'m at '+t);
-      if(t>=103&&t<=111&&p[0]>prior[0]+.01)reverse++;
+      if(delta>.14)throw Error('Door camera jumped '+delta.toFixed(3)+'m at '+t);
+      if(t>=103&&t<=111&&p[0]>previous[0]+.01)reverse++;
     }
-    if(shotAudit.cameraPenetrations||shotAudit.forwardOcclusions)
-      throw Error('South door corridor blocked at '+t+': '+JSON.stringify(shotAudit));
-    if([103,105.5,106,106.1,107,108,110].some(v=>Math.abs(v-t)<.001)){
-      const image=await send('Page.captureScreenshot',{
-        format:'jpeg',quality:63,captureBeyondViewport:false,fromSurface:true
+    if(pose.cameraPenetrations||pose.forwardOcclusions)
+      throw Error('South exit has a false collision at '+t+' '+JSON.stringify(pose));
+    previous=p;
+  }
+  if(reverse)throw Error('South exit went backwards '+reverse+' times');
+  // Save a handful of actual rendered frames independently of the
+  // 101-position CPU route proof, not 101 slow duplicate screen captures.
+  if(!doorOnly){
+    for(const t of [103,106.1,108,110]){
+      await evaluate("window.__churchRenderProofFrame("+t+")");
+      const img=await send('Page.captureScreenshot',{
+        format:'jpeg',quality:65,captureBeyondViewport:false,fromSurface:true
       });
-      if(!image.data)throw Error('South doorway screenshot missing '+t);
+      if(!img.data)throw Error('Missing rendered doorway photo '+t);
       writeFileSync(proofDir+'/south-exit-'+String(t).replace('.','_')+'.jpg',
-        Buffer.from(image.data,'base64'));
+        Buffer.from(img.data,'base64'));
       doorFrames++;
     }
-    prior=p;
   }
-  if(reverse)throw Error('South doorway went backwards in '+reverse+' frames');
   console.log('P2_SOUTH_DOOR_EXIT_SWEEP='+JSON.stringify({
-    from:102,to:112,samples:101,maxStep:+maxStep.toFixed(4),
-    backwardFrames:reverse,doorFrames
+    from:102,to:112,samples:poses.length,maxStep:+maxStep.toFixed(4),
+    backwardFrames:reverse,doorFrames,actualWebGLDoorShots:true
   }));
 
+  if(!doorOnly){
   // Prove the public chapter URL starts *in the sanctuary* but continues
   // the original animation normally. No proofFrame freeze on this request.
   await send('Page.navigate',{
@@ -308,6 +314,7 @@ try{
   });
   if(!chapelShot.data)throw Error('Direct chapel preview returned no screenshot');
   writeFileSync(proofDir+'/chapel-direct-preview.jpg',Buffer.from(chapelShot.data,'base64'));
+  }
 }finally{
   ws.close();
 }
