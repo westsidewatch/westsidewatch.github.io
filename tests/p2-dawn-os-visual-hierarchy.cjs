@@ -43,6 +43,18 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
        sheet.remove();return value;
       })(),
       personalLabelBackground:getComputedStyle(document.querySelector('.dawn-second__personal>.dawn-second__nav-en')).backgroundColor,
+      loadedCoverCSS:(()=>{
+       const cover=document.createElement('button');
+       cover.className='dawn-wall__tile dawn-cover dawn-cover--ready';
+       cover.style.cssText='position:absolute;width:210px;height:210px;visibility:hidden';
+       const meta=document.createElement('span');meta.className='dawn-cover__meta';
+       const title=document.createElement('strong');title.textContent='A genuine title';
+       meta.append(title);cover.append(meta);
+       document.querySelector('#dawn-wall-grid').append(cover);
+       const cs=getComputedStyle(meta),ts=getComputedStyle(title);
+       const value={opacity:cs.opacity,color:ts.color,font:ts.fontFamily};
+       cover.remove();return value;
+      })(),
       mastEn:grab('#dawn-room-heading > span'),
       mastZh:grab('#dawn-room-heading > strong'),
       lead:grab('.dawn-reading-room__lead'),
@@ -69,6 +81,9 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
      device+': old personal counter pill behind English navigation text');
    assert(result.missingCoverCSS.tileDisplay!=='none'&&result.missingCoverCSS.opacity==='1',
      device+': missing jackets still disappear or become blank grid swatches');
+   assert(result.loadedCoverCSS.opacity==='1'&&
+     !['rgb(255, 255, 255)','white'].includes(result.loadedCoverCSS.color),
+     device+': loaded source cards hide their title or print it in white on paper');
    assert(result.mastEn.size>result.mastZh.size*1.28,
     device+': English masthead is not dominant');
    assert(result.mastEn.font.includes('Bodoni'),device+': main masthead missing Bodoni');
