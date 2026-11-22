@@ -1,0 +1,40 @@
+name: PARADISO mvffm reverse-browser regression
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/shupian_recovery/mvffm_live_reverse.py'
+      - 'scripts/shupian_recovery/test_mvffm_live_reverse.py'
+      - '.github/workflows/shupian-mvffm-reverse.yml'
+permissions:
+  contents: read
+jobs:
+  mvffm-reverse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run reverse-tool regression before browsing
+        run: python3 -m unittest discover -s scripts/shupian_recovery -p 'test_mvffm_live_reverse.py' -v
+      - name: Install browser instrumentation dependencies
+        run: |
+          python3 -m pip install playwright
+          python3 -m playwright install --with-deps chromium
+      - name: Reverse-observe original page without triggering advertising clicks
+        continue-on-error: true
+        run: |
+          python3 scripts/shupian_recovery/mvffm_live_reverse.py \
+            --url https://www.mvffm.net/drama/420952/ \
+            --observe-ms 5000 \
+            --output mvffm-live-reverse.json
+      - name: Preserve browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mvffm-live-reverse-evidence
+          path: mvffm-live-reverse.json
+          if-no-files-found: warn
