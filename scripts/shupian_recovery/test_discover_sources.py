@@ -90,6 +90,27 @@ class DiscoveryTests(unittest.TestCase):
         self.assertTrue(out["ok"])
         self.assertEqual(out["signature"], "mpeg-ts")
 
+    def test_health_tracks_recovery_and_regression(self):
+        providers=[{"id":"source","api":"https://api.example.com/vod"}]
+        def fetch(_):
+            return {"list":[{"vod_name":"新片","vod_play_url":"E1$https://media.example.com/a.m3u8"}]}
+        from source_lifecycle import url_fingerprint, path_fingerprint
+        prior={"manifest":"failed","source_fingerprint":url_fingerprint("https://media.example.com/a.m3u8"),
+               "source_path_fingerprint":path_fingerprint("https://media.example.com/a.m3u8"),
+               "health_checks":3,"health_pass":1}
+        def good(_):
+            return {"manifest":"parsed","segment_sample":"pass","ad_cues":"none-detected",
+                    "format":"m3u8","playback":"requires-in-site-browser-test","clean":"not-certified"}
+        report=scan(["新片"],providers,fetcher=fetch,probe=good,workers=1,
+                    previous_audits={episode_key("source","新片","E1"):prior})
+        a=report["audits"][0]
+        self.assertEqual(a["url_comparison"],"same_exact_url")
+        self.assertEqual(a["status_transition"],"recovered")
+        self.assertEqual((a["health_checks"],a["health_pass"]),(4,2))
+        self.assertEqual(report["recovered_count"],1)
+        self.assertEqual(report["regressed_count"],0)
+        self.assertLess(a["sample_reliability"],1.0)
+
     def test_manifest_success_clears_contradictory_http_failure(self):
         providers=[{"id":"sample","api":"https://sample.example.com/vod"}]
         def fetch(_):
