@@ -224,19 +224,38 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
                 selected.append(pools[key].pop(0))
             if len(selected) >= max_audits:
                 break
-    # When repeating a scan, check the exact previous provider+episode first,
-    # then alternate providers for that same title and episode. Do not lose URL
-    # identity: matched title/episode alone is not proof of the same address.
+    # Reserve discovery capacity even when the previous scan fills the whole
+    # budget. Previously every old URL took priority and alternatives starved.
     focus = focus or set()
-    if focus:
-        def priority(c):
-            k = (c["provider"], c["title"], c["episode"])
-            exact = k in focus
-            alternate = any(equivalent_episode(c["title"], c["episode"], t, ep)
-                            and c["provider"] != p for p, t, ep in focus)
-            return (0 if exact else 1 if alternate else 2,
+    if focus and max_audits:
+        old, alternate, fresh = [], [], []
+        for candidate in candidates:
+            k = (candidate["provider"], candidate["title"], candidate["episode"])
+            if k in focus:
+                old.append(candidate)
+            elif any(equivalent_episode(candidate["title"], candidate["episode"], t, ep)
+                     and candidate["provider"] != p for p, t, ep in focus):
+                alternate.append(candidate)
+            else:
+                fresh.append(candidate)
+        # Rotate old checks by observed count; preserve known-good candidates
+        # without checking the same failed eight forever.
+        def old_priority(c):
+            prior = previous_audits.get(episode_key(c["provider"], c["title"], c["episode"]), {})
+            return (0 if prior.get("segment_sample") == "pass" else 1,
+                    prior.get("health_checks", 0),
                     c["query"], c["provider"], c["episode"])
-        selected = sorted(candidates, key=priority)[:max(0, max_audits)]
+        old.sort(key=old_priority)
+        old_budget = max(1, max_audits // 2)
+        selected = old[:old_budget]
+        discovery = alternate + fresh
+        free = max_audits - len(selected)
+        selected += discovery[:free]
+        # Use otherwise idle capacity for continued old-source monitoring.
+        if len(selected) < max_audits:
+            selected += old[old_budget:old_budget + max_audits - len(selected)]
+        if len(selected) < max_audits:
+            selected += discovery[free:free + max_audits - len(selected)]
     audits = []
     for candidate in selected:
         key = episode_key(candidate["provider"], candidate["title"], candidate["episode"])
@@ -282,8 +301,29 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
                        "status_transition": transition,
                        "health_checks": health_checks, "health_pass": health_pass,
                        "sample_reliability": quality})
+    observed_at = datetime.now(timezone.utc).isoformat()
+    # Keep unselected records in a bounded, public-safe index. Otherwise
+    # half the prior fingerprints disappear every time the budget rotates.
+    allowed = ("provider", "title", "episode", "source_fingerprint",
+               "source_path_fingerprint", "manifest", "segment_sample",
+               "health_checks", "health_pass", "sample_reliability",
+               "observed_at_utc")
+    tracked = {}
+    for record in previous_audits.values():
+        if all(record.get(k) for k in ("provider", "title", "episode")):
+            tracked[episode_key(record["provider"], record["title"], record["episode"])] = {
+                k: record[k] for k in allowed if k in record
+            }
+    for record in audits:
+        identity = episode_key(record["provider"], record["title"], record["episode"])
+        tracked[identity] = {k: record[k] for k in allowed if k in record}
+        tracked[identity]["observed_at_utc"] = observed_at
     return {
-        "schema": 2, "observed_at_utc": datetime.now(timezone.utc).isoformat(),
+        "schema": 3, "observed_at_utc": observed_at,
+        "tracked_sources": list(tracked.values())[-512:],
+        "new_candidates_audited": sum(
+            (c["provider"], c["title"], c["episode"]) not in focus
+            for c in selected),
         "queries": keywords, "providers_requested": len(providers),
         "provider_queries_attempted": len(tasks),
         "provider_queries_failed": len(errors),
@@ -328,14 +368,17 @@ def main(argv=None):
     if args.rescan_previous and args.report.is_file():
         previous = json.loads(args.report.read_text(encoding="utf-8"))
         previous_time = previous.get("observed_at_utc")
+        # Use the persistent index when available, not only the last audited
+        # subset. Fallback preserves backward compatibility with schema 2.
+        baseline = previous.get("tracked_sources") or previous.get("audits", [])
         previous_audits = {episode_key(a["provider"], a["title"], a["episode"]): a
-                           for a in previous.get("audits", [])}
-        # Include prior failures: a 404 must not prevent a new alternative check.
-        focus = {(a["provider"], a["title"], a["episode"]) for a in previous.get("audits", [])}
+                           for a in baseline}
+        focus = {(a["provider"], a["title"], a["episode"]) for a in baseline}
     result = scan(args.keywords, providers, max_audits=args.max_audits,
                   workers=args.workers, focus=focus, previous_audits=previous_audits,
                   previous_observed_at=previous_time)
     result["rescan_previous_count"] = len(focus)
+    result["run_id"] = __import__("os").environ.get("GITHUB_RUN_ID")
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: result[k] for k in ("provider_queries_attempted", "provider_queries_failed", "works_found", "unique_media_candidates", "manifests_parsed", "completion")}, ensure_ascii=False))
