@@ -43,6 +43,25 @@ fs.mkdirSync(dir,{recursive:true});
   const cards=page.locator('#dawn-classification-results .dawn-contemporary__book');
   await page.waitForFunction(()=>document.querySelectorAll('.dawn-contemporary__book').length===11,null,{timeout:25000});
   assert.equal(await cards.count(),11,device+': catalog source discovery cards missing');
+  const visualProof=await cards.evaluateAll(items=>items.map(card=>{
+   const art=card.querySelector('.dawn-contemporary__art');
+   const paper=art?.querySelector('.dawn-contemporary__folio');
+   const img=art?.querySelector('img');
+   return {title:paper?.querySelector('strong')?.textContent,
+    pictured:card.classList.contains('dawn-contemporary__book--pictured'),
+    paperColor:paper?getComputedStyle(paper).color:'',
+    artBackground:art?getComputedStyle(art).backgroundColor:'',
+    imageOpacity:img?parseFloat(getComputedStyle(img).opacity):null};
+  }));
+  for(const proof of visualProof){
+   assert(proof.title?.length>1,device+': modern cover fallback has no real title');
+   if(!proof.pictured){
+    assert(proof.imageOpacity===null||proof.imageOpacity===0,
+     device+': pending publisher image is masking source title: '+proof.title);
+    assert(proof.artBackground!=='rgb(255, 255, 255)'&&proof.artBackground!=='rgb(247, 245, 237)',
+     device+': blank pale card rather than harvest title folio: '+proof.title);
+   }
+  }
   assert(await page.locator('#dawn-classification-results .dawn-classification__result-heading')
    .innerText().then(x=>x.includes('尚未獲本站全文轉載授權')),
    device+': missing source rights notice');
@@ -54,6 +73,16 @@ fs.mkdirSync(dir,{recursive:true});
   assert.equal(page.url(),originalUrl,device+': first click must not navigate');
   assert(!(await page.locator('#dawn-book-detail').isVisible()),device+': candidate must not open internal canonical reader');
   assert.equal(await preview.locator('.dawn-expander__read').innerText(),'前往出版方查看此書');
+  const previewVisual=await preview.evaluate(el=>{
+   const cover=el.querySelector('.dawn-expander__book');
+   const image=cover?.querySelector('img');
+   const paper=cover?.querySelector('.dawn-expander__book-paper');
+   return {ready:cover?.classList.contains('dawn-expander__book--ready'),
+    paper:getComputedStyle(paper).display,
+    imageOpacity:image?parseFloat(getComputedStyle(image).opacity):null};
+  });
+  assert(previewVisual.ready||previewVisual.paper!=='none',
+   device+': newly expanded preview has a blank white image while loading');
   const firstTitle=await preview.locator('.dawn-expander__title').innerText();
   await cards.nth(1).click();
   await page.waitForFunction(old=>document.querySelector('#dawn-book-expanding-preview .dawn-expander__title')?.textContent!==old,
