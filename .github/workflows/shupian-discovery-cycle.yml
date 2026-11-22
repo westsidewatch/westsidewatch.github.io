@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/shupian_recovery/discover_sources.py'
+      - 'scripts/shupian_recovery/source_lifecycle.py'
       - 'scripts/shupian_recovery/source_providers.json'
       - 'scripts/shupian_recovery/test_discover_sources.py'
       - '.github/workflows/shupian-discovery-cycle.yml'
@@ -27,7 +28,7 @@ jobs:
         run: |
           python3 scripts/shupian_recovery/discover_sources.py \
             --keywords '黑鏡' '神探夏洛克' \
-            --max-audits 4 --rescan-previous \
+            --max-audits 16 --rescan-previous \
             --report static/shupian/recovery/engine-live-round.json
       - name: Verify report schema and no fake catalog admission
         run: |
@@ -44,6 +45,10 @@ jobs:
           print('Provider failures:',data['provider_queries_failed'])
           print('Unique media candidates:',data['unique_media_candidates'])
           print('Manifest inspections passed:',data['manifests_parsed'])
+          print('Exact URL continuity:',data.get('same_exact_url_count'))
+          print('Changed URL identity:',data.get('changed_url_count'))
+          print('404 media errors:',data.get('http_404_count'))
+          print('Alternate episodes probed:',data.get('alternative_candidates_audited'))
           print('Start/middle/end segment checks passed:',data.get('segment_sample_pass',0))
           PY
       - name: Commit sanitized evidence to website (not playback approval)
