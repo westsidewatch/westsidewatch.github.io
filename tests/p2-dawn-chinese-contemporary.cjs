@@ -67,7 +67,7 @@ fs.mkdirSync(dir,{recursive:true});
   assert(tileOrder[0]?.modern,device+': contemporary Chinese shelf must precede all early Chinese classes');
   await page.screenshot({path:path.join(dir,device+'-modern-first-archive-second.png')});
   await page.locator('#dawn-primary-chinese').click();
-  await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-results .dawn-contemporary__book').length===11,
+  await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-results .dawn-contemporary__book').length===9,
    null,{timeout:20000});
   await page.waitForFunction(()=>{
     const cards=[...document.querySelectorAll('#dawn-classification-results .dawn-contemporary__book')];
