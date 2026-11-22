@@ -8,10 +8,11 @@ const css=fs.readFileSync(path.join(ROOT,'css/p2-0105-dawn-integrated.css'),'utf
 const living=JSON.parse(fs.readFileSync(path.join(ROOT,'dawn-library/living/root.json'),'utf8'));
 assert.equal(living.classification.roots.length,7);
 assert.equal(living.classification.roots.reduce((n,r)=>n+r.children.length,0),42);
-for(const id of ['dawn-reading-room__masthead','dawn-room-heading','dawn-department-grid','dawn-open-catalogue','dawn-wall-grid']){
+for(const id of ['dawn-second__press--motherform','dawn-department-grid','dawn-open-catalogue','dawn-wall-grid']){
  assert(html.includes(id), 'Missing hall HTML '+id);
 }
 assert.equal((html.match(/data-dawn-portal=/g)||[]).length,3,'preserve original three portals');
+assert(!html.includes('dawn-room-heading')&&!html.includes('dawn-reading-room__masthead'),'No duplicate L2 brand heading; scripture plates own section identity');
 assert(js.includes("if(tile.dataset.dawnPortal)openCollection(tile.dataset.dawnPortal)"));
 assert(js.includes('livingSubjectBooks(child.id'),'reuse verified canonical Living category leaves');
 assert(css.includes('var(--ws-harvest)')&&css.includes('var(--ws-paper)'),'OS tokens must be used');
