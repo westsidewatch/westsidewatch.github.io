@@ -99,7 +99,8 @@ function luminousSurface(mask,opacity,glow){
   return new MeshStandardMaterial({
     color:0x080806,emissive:0xffe9c9,emissiveIntensity:glow,
     alphaMap:mask,transparent:true,opacity,roughness:1,
-    metalness:0,depthWrite:false,depthTest:true,side:DoubleSide
+    metalness:0,depthWrite:false,depthTest:true,side:DoubleSide,
+    blending:2 // THREE.AdditiveBlending; physically light adds, never greys white walls
   });
 }
 const apertureGlow=new Mesh(new PlaneGeometry(4.2,4.9),luminousSurface(crossLightMask("cross"),.24,.96));
@@ -115,7 +116,7 @@ for(const [turn,shift,z] of [[.92,-.12,-4.05],[-.92,.13,-4.4],[.38,0,-4.2]]){
   ray.rotation.y=turn;ray.position.set(15+shift,1.82,z);ray.renderOrder=3;
   ray.name="Cross soft atmospheric bounce";scene.add(ray);crossAirVolumes.push(ray);
 }
-window.__churchLightAudit={aperture:true,floor:true,sheets:crossAirVolumes.length,version:"R12"};
+window.__churchLightAudit={aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,version:"R13"};
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
 function createSurface(kind) {
@@ -544,13 +545,13 @@ function updateDaylight(t,duration) {
   // Prevent a constant hard shaft of light remaining through the night.
   sanctuaryLight.intensity=.10+.22*daylight;
   const sunlight=daylight*daylight*(3-2*daylight);
-  apertureGlow.material.opacity=.065+.34*sunlight;
-  crossFloorLight.material.opacity=.075+.39*sunlight;
+  apertureGlow.material.opacity=.075+.40*sunlight;
+  crossFloorLight.material.opacity=.095+.38*sunlight;
   crossFloorLight.position.x=15+.38*Math.cos(angle);
   crossFloorLight.position.z=-4.7+.30*Math.sin(angle*.55);
   for(let i=0;i<crossAirVolumes.length;i++){
     const ray=crossAirVolumes[i];
-    ray.material.opacity=.006+.046*sunlight;
+    ray.material.opacity=.004+.026*sunlight;
     ray.position.x=15+[-.12,.13,0][i]+.09*Math.cos(angle);
   }
   // Daylight changes; the wall PBR base colors remain from the original GLB.
