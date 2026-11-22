@@ -444,26 +444,98 @@
 @media(max-width:1100px){.dawn-reading-room .dawn-wall__grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
 @media(max-width:650px){.dawn-reading-room .dawn-wall__grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.dawn-reading-room .dawn-cover__meta{opacity:1;transform:none;padding:24px 8px 7px}.dawn-reading-room .dawn-wall__tile--portal strong{font-size:clamp(22px,6vw,32px)!important}}
 
-/* R21: Three curated feature sleeves embedded within the same 1:1 cover grid.
-   This layout does not modify the 05 first stage, type motherform or its handoff. */
-.dawn-reading-room .dawn-wall__grid--curated{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-auto-flow:row dense!important;gap:clamp(8px,1vw,18px)!important;align-items:start!important}
-.dawn-reading-room .dawn-wall__grid--curated>.dawn-feature{position:relative!important;display:block!important;grid-column:span 2!important;grid-row:span 2!important;width:100%!important;height:100%!important;min-height:0!important;aspect-ratio:1!important;padding:0!important;border:0!important;outline:0!important;border-radius:0!important;background:var(--ws-paper)!important;box-shadow:none!important;overflow:hidden!important;isolation:isolate}
+/* P2 05 — Doré study: Rijksmuseum image authority × Pell Mell editorial rhythm.
+   2x2 portal chapters use their existing traced covers; the image field ends
+   before the title strip. No overlapping frames, outline, crimson tint or
+   fake collage effect. Do not change the image wall or scroll controller. */
+.dawn-reading-room .dawn-wall__grid--curated{
+ display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ grid-auto-flow:row dense!important;gap:clamp(8px,1vw,18px)!important;align-items:start!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature{
+ position:relative!important;display:flex!important;flex-direction:column!important;
+ grid-column:span 2!important;grid-row:span 2!important;box-sizing:border-box!important;
+ width:100%!important;height:100%!important;min-height:0!important;aspect-ratio:1!important;
+ border:0!important;outline:0!important;outline-offset:0!important;border-radius:0!important;
+ padding:0!important;margin:0!important;box-shadow:none!important;
+ background:var(--ws-paper)!important;overflow:hidden!important;
+ isolation:isolate;text-align:left;
+}
 .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1){grid-column:1 / span 2!important;grid-row:1 / span 2!important}
 .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2){grid-column:4 / span 2!important;grid-row:2 / span 2!important}
 .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){grid-column:1 / span 2!important;grid-row:4 / span 2!important}
-.dawn-feature__art{position:absolute;inset:0;z-index:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;background:var(--ws-paper);overflow:hidden}
-.dawn-feature__cover{width:100%;height:100%;min-height:100%;display:block;object-fit:cover;object-position:center;filter:none;opacity:1;transform:scale(1.01);transition:transform .7s ease,filter .5s ease}
-.dawn-feature__cover--2{filter:none}
-.dawn-feature__cover--3{filter:none}
-.dawn-feature:hover .dawn-feature__cover,.dawn-feature:focus-visible .dawn-feature__cover{transform:scale(1.035);filter:none}
-.dawn-feature__editorial{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:clamp(12px,1.2vw,23px);background:none!important;color:var(--ws-ink)!important;text-align:left;pointer-events:none}
-.dawn-reading-room .dawn-feature__editorial small{position:absolute;top:clamp(12px,1.2vw,23px);left:clamp(12px,1.2vw,23px);padding:8px 10px;background:var(--ws-paper);font:400 clamp(9px,.72vw,11px)/1.3 var(--ws-type-display-en)!important;color:var(--ws-ink)!important;letter-spacing:.09em!important}
-.dawn-feature__titles{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(4px,.55vw,9px);margin:0;padding:clamp(12px,1.5vw,25px) clamp(15px,1.6vw,28px) clamp(9px,1vw,18px);background:var(--ws-paper);max-width:min(92%,380px)}
-.dawn-reading-room .dawn-feature__titles strong{font:900 clamp(29px,3.6vw,67px)/1.05 var(--ws-type-display-zh)!important;color:var(--ws-ink)!important;letter-spacing:0!important;margin:0!important}
-.dawn-reading-room .dawn-feature__titles em{font:400 clamp(11px,1vw,17px)/1.22 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;color:var(--ws-ink)!important;font-style:normal!important;letter-spacing:.02em}
-.dawn-feature__open{display:flex;align-self:flex-start;justify-content:space-between;gap:10px;border:0!important;background:var(--ws-paper);color:var(--ws-ink);padding:0 clamp(15px,1.6vw,28px) clamp(10px,1vw,17px);font:400 clamp(9px,.75vw,12px)/1.4 var(--ws-type-display-en);letter-spacing:.08em;min-width:min(92%,380px);max-width:92%;box-sizing:border-box}
-.dawn-reading-room .dawn-wall__grid--curated>.dawn-cover{grid-column:span 1!important;grid-row:span 1!important;aspect-ratio:1!important}
-.dawn-reading-room .dawn-cover__sleeve{background:#ebeae5}
+#dawn-second .dawn-feature__art{
+ position:relative!important;inset:auto!important;z-index:0!important;
+ display:grid!important;grid-template-columns:1.55fr 1fr!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;
+ width:100%!important;min-height:0!important;flex:1 1 0!important;
+ gap:clamp(3px,.38vw,6px)!important;
+ padding:0!important;border:0!important;background:var(--ws-paper)!important;
+ overflow:hidden!important;filter:none!important;
+}
+#dawn-second .dawn-feature__cover{
+ display:block!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
+ object-fit:cover!important;object-position:center!important;opacity:1!important;
+ filter:none!important;transform:none!important;
+ transition:transform .65s cubic-bezier(.2,.75,.2,1)!important;
+}
+#dawn-second .dawn-feature__cover--1{grid-column:1!important;grid-row:1 / span 2!important}
+#dawn-second .dawn-feature__cover--2{grid-column:2!important;grid-row:1!important}
+#dawn-second .dawn-feature__cover--3{grid-column:2!important;grid-row:2!important}
+#dawn-second .dawn-feature:hover .dawn-feature__cover,
+#dawn-second .dawn-feature:focus-visible .dawn-feature__cover{
+ transform:scale(1.025)!important;filter:none!important
+}
+#dawn-second .dawn-feature__editorial{
+ position:relative!important;inset:auto!important;z-index:1!important;
+ flex:0 0 auto!important;box-sizing:border-box!important;
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ align-items:end!important;gap:3px clamp(10px,1vw,18px)!important;
+ width:100%!important;min-width:0!important;
+ padding:clamp(13px,1.45vw,25px) clamp(14px,1.5vw,27px)!important;
+ background:var(--ws-paper)!important;color:var(--ws-ink)!important;
+ box-shadow:none!important;border:0!important;pointer-events:none!important;
+}
+#dawn-second .dawn-feature__editorial:before,
+#dawn-second .dawn-feature__editorial:after{content:none!important;display:none!important}
+#dawn-second .dawn-reading-room .dawn-feature__editorial>small{
+ position:static!important;grid-column:1 / -1!important;display:block!important;
+ width:auto!important;margin:0 0 5px!important;padding:0!important;
+ background:transparent!important;border:0!important;
+ color:var(--ws-harvest)!important;
+ font:400 clamp(9px,.72vw,12px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:.11em!important;
+}
+#dawn-second .dawn-feature__titles{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ gap:clamp(3px,.4vw,8px)!important;
+ min-width:0!important;max-width:none!important;
+ margin:0!important;padding:0!important;
+ background:transparent!important;
+}
+#dawn-second .dawn-reading-room .dawn-feature__titles strong{
+ margin:0!important;color:var(--ws-ink)!important;
+ font:900 clamp(28px,2.6vw,47px)/1.08 var(--ws-type-display-zh)!important;
+ letter-spacing:0!important;
+}
+#dawn-second .dawn-reading-room .dawn-feature__titles em{
+ color:var(--ws-ink)!important;
+ font:400 clamp(10px,.93vw,15px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:.015em!important;font-style:normal!important;
+}
+#dawn-second .dawn-feature__open{
+ display:flex!important;align-items:center!important;justify-content:flex-end!important;
+ align-self:end!important;min-width:0!important;max-width:none!important;
+ width:auto!important;margin:0!important;padding:0!important;
+ background:transparent!important;border:0!important;color:var(--ws-ink)!important;
+ font:400 clamp(9px,.8vw,12px)/1.3 var(--ws-type-display-en)!important;
+ white-space:nowrap!important;letter-spacing:.045em!important;
+}
+#dawn-second .dawn-feature:focus-visible{
+ outline:2px solid var(--ws-ink)!important;outline-offset:3px!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover{
+ grid-column:span 1!important;grid-row:span 1!important;aspect-ratio:1!important;
+}
 @media(max-width:1100px){
  .dawn-reading-room .dawn-wall__grid--curated{grid-template-columns:repeat(4,minmax(0,1fr))!important}
  .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1){grid-column:1 / span 2!important;grid-row:1 / span 2!important}
@@ -474,14 +546,14 @@
  .dawn-reading-room .dawn-wall__grid--curated{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-flow:row!important;gap:8px!important}
  .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1),
  .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2),
- .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){grid-column:1 / span 2!important;grid-row:auto / span 2!important}
- .dawn-feature__editorial{padding:clamp(20px,5vw,34px)}
- .dawn-reading-room .dawn-feature__titles strong{font-size:clamp(40px,11vw,64px)!important}
- .dawn-reading-room .dawn-feature__titles em{font-size:clamp(16px,4vw,22px)!important}
+ .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+  grid-column:1 / span 2!important;grid-row:auto / span 2!important
+ }
+ #dawn-second .dawn-feature__editorial{padding:12px 14px!important}
+ #dawn-second .dawn-reading-room .dawn-feature__titles strong{font-size:clamp(29px,8vw,43px)!important}
+ #dawn-second .dawn-reading-room .dawn-feature__titles em{font-size:clamp(10px,2.8vw,15px)!important}
 }
-@media(prefers-reduced-motion:reduce){.dawn-feature__cover{transition:none}}
-
-
+@media(prefers-reduced-motion:reduce){#dawn-second .dawn-feature__cover{transition:none!important}}
 /* R23 — Editorial Manual §1 / Design OS: book=harvest role, paper as field.
    No parallel cross-chapter color system. Only 05 second layer. */
 #dawn-second.dawn-second{--dawn-accent:var(--ws-harvest);--dawn-paper:var(--ws-paper);
@@ -511,11 +583,6 @@
 #dawn-second .dawn-reading-room__eyebrow,#dawn-second .dawn-wall__folio{color:var(--ws-harvest)!important}
 #dawn-second .dawn-reading-room .dawn-wall__tail{color:var(--ws-harvest)!important}
 #dawn-second .dawn-reading-room .dawn-wall__tail button{border-bottom-color:var(--ws-harvest)!important;color:var(--ws-ink)!important}
-#dawn-second .dawn-feature--stars .dawn-feature__editorial,
-#dawn-second .dawn-feature--curation .dawn-feature__editorial,
-#dawn-second .dawn-feature--spectrum .dawn-feature__editorial{
- background:linear-gradient(180deg,rgba(37,37,37,.48),transparent 35%,rgba(37,37,37,.87) 100%)!important;
-}
 #dawn-second .dawn-feature__open{border-color:var(--ws-paper)!important}
 #dawn-second .dawn-catalogue{background:var(--ws-paper)!important;border-top-color:var(--ws-harvest)!important}
 #dawn-second .dawn-catalogue__back{border-bottom-color:var(--ws-harvest)!important;color:var(--ws-ink)!important}
@@ -690,8 +757,6 @@
 #dawn-second .dawn-catalogue__topics button:hover{color:var(--ws-engraving)}
 #dawn-second .dawn-catalogue__topics button:focus-visible{outline:2px solid var(--ws-harvest);outline-offset:3px}
 @media(max-width:650px){
- #dawn-second .dawn-wall__grid--curated>.dawn-feature{border-width:8px!important;outline-width:2px!important}
- #dawn-second .dawn-feature__art,#dawn-second .dawn-feature__editorial{inset:8px!important}
  #dawn-second .dawn-catalogue__topics{gap:7px 14px}
 }
 
