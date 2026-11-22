@@ -233,7 +233,7 @@
       "source": "scripts/audit-dawn-library-shards.cjs",
       "workflow": ".github/workflows/dawn-library-shard-integrity.yml",
       "branch": "work/p2-05-integration-repair-20261121",
-      "status": "integrated-partial-source-verified",
+      "status": "full-ci-verified-with-warnings",
       "evidence": {
         "sampledCovers": {
           "000001": {
@@ -267,9 +267,36 @@
           "newTestamentLeaf": 519,
           "adapterMatching": 8
         },
-        "fullWorkflowRun": "NOT VERIFIED"
+        "fullWorkflowRun": "v1 verified WARN 0 errors; v2 expanded reconciliation re-run pending",
+        "runId": 45001795311,
+        "runUrl": "https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45001795311",
+        "baseline": {
+          "canonical": {
+            "shards": 21,
+            "records": 203448,
+            "duplicateIds": 0,
+            "shaMismatches": 0
+          },
+          "living": {
+            "shards": 21,
+            "records": 203448,
+            "classified": 54883,
+            "duplicateIds": 0,
+            "shaMismatches": 0
+          },
+          "covers": {
+            "shards": 407,
+            "records": 202428,
+            "withImage": 200417,
+            "placeholder": 2011,
+            "duplicateIds": 0,
+            "hashMismatches": 335,
+            "countDriftShards": 335,
+            "missingVsCanonical": 1020
+          }
+        }
       },
-      "next": "Obtain and inspect complete 21 canonical +21 Living +407 cover audit report, then verify URL/rights and browser"
+      "next": "Retrieve v2 artifact with missing Work IDs and exact per-shard differences; resolve via canonical admission pipeline; then test remote images/rights and browser"
     }
   ],
   "auditGates": [
