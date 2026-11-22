@@ -153,3 +153,10 @@ GitHub Actions [run #45001795311](https://github.com/westsidewatch/westsidewatch
 **原 P2 第二層交互接入：** 在 `displayChineseGroups()` 保留所有原中文分類與 47 部數量，另增獨立的「當代中文與譯作」來源欄目；選書第一次點擊採用原 Codrops in-grid expander，不轉跳，第二次明確點擊「前往出版方查看此書」才訪問官方頁面。候選書籍與 canonical Works 分開處理，不允許直接計入讀者 Personal Dawn 的既有 Work 身份；未授權全文不複製入本站。用 `tests/p2-dawn-chinese-contemporary.cjs` 驗證 7 部／4 譯作／不改 47、來源身份與雙步交互，CI `.github/workflows/p2-dawn-chinese-covers.yml`。
 
 本輪另外修復原七大學科封面牆空白源頭：`refreshCategoryCovers()` 用 detached `new Image()` 加 `loading='lazy'`，載入事件可能永不觸發；改為提前以 eager 載入再插入。此錯誤與新增中文譯作無關但必須共同驗收。
+
+
+**R69 補充發現：真正可合法外部閱讀的新譯作來源**
+- `Frame-Poythress / P&R China`：出版社計畫逐年推出 450–500 部簡體中文譯作，現有「牧者／家庭／學生」分系列及官方下載入口。版權條款允許在其他網頁放置**連到官方頁或官方 PDF** 的連結，嚴禁將 PDF 上傳別站，亦不可編改；故 Dawn 只收錄書目及官方來源連結，絕不把其 PDF／封面拷入本站（https://frame-poythress.org/chinese-zw/）。
+- `9Marks 繁體書庫`：已找到 4 部具體可核對的中文譯作與出版方獨立書頁：《認識大使命》（Mark Dever）、《解經式講道》（David Helm）、《健康的教會成員》（Thabiti Anyabwile）、《為何相信聖經》（Greg Gilbert）。有官方 ePub／下載入口，但明確僅供個人閱讀，禁轉載到其他網站；只做 Dawn 外部查找、預覽、再確認出版方來源之二步操作。
+- `澳洲中信 CCMA`：文字事工網頁公開至少 7 部中文 PDF 作品與 2026 年的繁簡《中信月刊》，可在官方站直接閱讀。先列為官方可讀書源；如需任何全文鏡像與封面再利用，仍須檢查其授權。
+- 因此此次來源資料集增為 **9 個來源通路／11 部逐冊候選，其中 8 部已確認屬中文譯作、3 部當代中文原著**。不要把「P&R 目標 450–500 部」當成已驗證出版數，也不要把九標誌的免費個人下載誤判為網站可重製授權。
