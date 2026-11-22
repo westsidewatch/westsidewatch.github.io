@@ -74,6 +74,50 @@ sanctuaryLight.position.set(15.5, 5.1, -1.3);
 sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
 
+/* CROSS APERTURE LIGHT / reconstructed atmospheric daylight, local only. */
+function crossLightMask(kind){
+  const cv=document.createElement("canvas");cv.width=cv.height=256;
+  const ctx=cv.getContext("2d"),data=ctx.createImageData(256,256);
+  const gaussian=(v,s)=>Math.exp(-v*v/(s*s));
+  for(let y=0;y<256;y++)for(let x=0;x<256;x++){
+    const dx=(x+.5)/256-.5,dy=(y+.5)/256-.5;
+    let a;
+    if(kind==="cross"){
+      const v=gaussian(dx,.075)*gaussian(dy,.46);
+      const h=gaussian(dy,.065)*gaussian(dx,.44);
+      a=.62*Math.max(v,h)+.38*gaussian(dx,.30)*gaussian(dy,.36);
+    }else if(kind==="floor")a=gaussian(dx,.32)*gaussian(dy-.09,.40);
+    else a=gaussian(dx-.04,.37)*gaussian(dy,.33);
+    const k=(y*256+x)*4,p=Math.round(255*Math.min(1,a));
+    data.data[k]=p;data.data[k+1]=p;data.data[k+2]=p;data.data[k+3]=255;
+  }
+  ctx.putImageData(data,0,0);return new CanvasTexture(cv);
+}
+function luminousSurface(mask,opacity,glow){
+  return new MeshStandardMaterial({
+    color:0x10100f,emissive:0xffebcc,emissiveIntensity:glow,
+    alphaMap:mask,roughness:1,metalness:0,
+    transparent:true,opacity,depthWrite:false,side:DoubleSide
+  });
+}
+const apertureGlow=new Mesh(new PlaneGeometry(4.7,5.2),luminousSurface(crossLightMask("cross"),.30,1.0));
+apertureGlow.position.set(15,2.63,-.26);
+apertureGlow.name="Cross aperture diffuse radiance";
+apertureGlow.renderOrder=3;scene.add(apertureGlow);
+const crossFloorLight=new Mesh(new PlaneGeometry(3.8,9),luminousSurface(crossLightMask("floor"),.32,.85));
+crossFloorLight.name="Sanctuary sunlight floor bounce";
+crossFloorLight.rotation.x=-Math.PI/2;crossFloorLight.position.set(15,.052,-4.8);
+crossFloorLight.renderOrder=3;scene.add(crossFloorLight);
+const crossAirVolumes=[];
+for(const [turn,shift] of [[.92,-.15],[-.92,.15],[.38,0]]){
+  const ray=new Mesh(new PlaneGeometry(7,3.45),luminousSurface(crossLightMask("air"),.062,.66));
+  ray.rotation.y=turn;ray.position.set(15+shift,1.82,-4.15);
+  ray.renderOrder=3;ray.name="Cross soft atmospheric bounce";
+  scene.add(ray);crossAirVolumes.push(ray);
+}
+window.__churchLightAudit={aperture:true,floor:true,sheets:crossAirVolumes.length};
+
+
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
 function createSurface(kind) {
   const canvas = document.createElement("canvas");
@@ -448,7 +492,7 @@ function daylightAt(t) {
   // V4.1: approximately TWELVE seconds per full day's sunlight, repeated
   // continuously while the camera moves through every major interior scene.
   // The phase is periodic: the next day begins at the same solar angle.
-  const DAY_SECONDS=12;
+  const DAY_SECONDS=22;
   return ((t / DAY_SECONDS + .065) % 1 + 1) % 1;
 }
 function updateDaylight(t,duration) {
@@ -475,7 +519,11 @@ function updateDaylight(t,duration) {
   );
   sun.intensity=Math.max(0.035, .08+1.65*daylight-.10*winter);
   // Prevent a constant hard shaft of light remaining through the night.
-  sanctuaryLight.intensity=.10+.16*daylight;
+  sanctuaryLight.intensity=.12+.36*daylight;
+  apertureGlow.material.opacity=.095+.32*daylight;
+  crossFloorLight.material.opacity=.085+.34*daylight;
+  crossFloorLight.position.x=15+.28*Math.cos(angle);
+  for(const ray of crossAirVolumes)ray.material.opacity=.014+.075*daylight;
   // Daylight changes; the wall PBR base colors remain from the original GLB.
   // Colour temperature follows the time of day, not arbitrary flashing:
   // cool twilight -> neutral daylight -> muted warm sunset.
