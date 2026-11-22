@@ -133,6 +133,10 @@ try{
       console.log('P2_FORUM_HEADROOM_'+frame+'='+JSON.stringify({safety,route}));
       if(!safety||safety.at!==frame||safety.boxes<1||!route)
         throw Error('No live mesh collision checks at frame '+frame);
+      if(route.sampledFrames!==111||route.blockedFrames?.length)
+        throw Error('Full C-forum camera sweep has blocked frames: '+JSON.stringify(route));
+      if(route.maxCameraDisplacement>0.95)
+        throw Error('Camera would need an unsafe corrective jump '+JSON.stringify(route));
       if(safety.cameraPenetrations||safety.forwardOcclusions)
         throw Error('Camera cuts into/looks through a near solid at frame '+frame+' '+JSON.stringify(safety));
     }
