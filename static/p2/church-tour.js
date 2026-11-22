@@ -1192,6 +1192,25 @@ function positionAlongRoute(seconds) {
   };
 }
 
+// Exactly the SAME route interpolation and collision solver as the live
+// camera, without issuing 101 expensive WebGL draws in the safety micro-sweep.
+// This reproduces each sampled physical eye position deterministically.
+window.__churchRoutePoseAudit=seconds=>{
+  const t=Math.max(0,Math.min(route[route.length-1].at,Number(seconds)));
+  const step=positionAlongRoute(t);
+  const p=new Vector3(...step.p),target=new Vector3(...step.look);
+  const solved=isInteriorClearanceTime(t)
+    ?safeCameraInForum(p,target)
+    :{position:p,blocked:0,occluded:0,correction:0};
+  return {at:t,
+    cameraPosition:[solved.position.x,solved.position.y,solved.position.z]
+      .map(v=>+v.toFixed(3)),
+    cameraPenetrations:solved.blocked||0,
+    forwardOcclusions:solved.occluded||0,
+    correction:solved.correction||0,
+    collidingObjects:solved.names||[]};
+};
+
 // Optional preview entry point for inspecting a finished chapter in motion.
 // Does not affect the default door-to-courtyard-to-chapel-to-gallery itinerary.
 const entryParams=new URLSearchParams(location.search);
