@@ -49,6 +49,15 @@ try {
     check(works.some(x => x.id === 'the-institute-historical'), 'original_institute_present');
     check(works.every(x => !denied.some(b => x.title?.includes(b))), 'catalog_no_filler');
     check(!JSON.stringify(works).toLowerCase().includes('youtube'), 'no_youtube_sources');
+    if (cards >= 1) {
+      try {
+        await page.locator('#grid article.card button.poster').first().click();
+        check(await page.locator('dialog#player').evaluate(el => el.open), 'player_dialog_opens');
+        const episodes = await page.locator('#episodes button').count();
+        check(episodes === 10, 'historical_episode_index_restored', {episodes});
+        await page.locator('#close').click();
+      } catch (error) { check(false, 'player_episode_navigation', {error:String(error)}); }
+    }
     const poster = page.locator('#grid article.card img').first();
     let posterLoaded = false, src = null;
     try {
