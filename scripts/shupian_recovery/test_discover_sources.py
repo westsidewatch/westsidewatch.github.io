@@ -3,7 +3,7 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from discover_sources import clean_url, parse_groups, normalize_results, scan, source_probe, title_matches
+from discover_sources import clean_url, parse_groups, normalize_results, scan, source_probe, title_matches, probe_segment
 from legacy_engine_core import VerificationError
 
 class DiscoveryTests(unittest.TestCase):
@@ -55,6 +55,22 @@ class DiscoveryTests(unittest.TestCase):
         url = clean_url("https://media.example.com/第01集/index.m3u8")
         self.assertIn("%E7%AC%AC", url)
         self.assertTrue(url.endswith("index.m3u8"))
+
+    def test_segment_media_signatures_without_network(self):
+        class Response:
+            status = 206
+            headers = {"Content-Type": "video/mp2t"}
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self, limit):
+                packet = bytearray(376)
+                packet[0] = 0x47
+                packet[188] = 0x47
+                return bytes(packet)
+        out = probe_segment("https://media.example.com/part.ts",
+                            opener=lambda request, timeout: Response())
+        self.assertTrue(out["ok"])
+        self.assertEqual(out["signature"], "mpeg-ts")
 
     def test_ad_marker_is_not_certified_clean(self):
         def fake_manifest(_):
