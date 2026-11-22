@@ -15,6 +15,14 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
     {waitUntil:'domcontentloaded',timeout:45000});
    await page.locator('#dawn-second .dawn-reading-room__masthead').waitFor({state:'visible',timeout:20000});
    await page.evaluate(()=>document.fonts.ready);
+   await page.waitForFunction(()=>document.querySelectorAll('#dawn-wall-grid button.dawn-cover').length>=12,
+    null,{timeout:35000});
+   const openingTitles=await page.locator('#dawn-wall-grid button.dawn-cover')
+    .evaluateAll(tiles=>tiles.slice(0,4).map(tile=>tile.dataset.workTitle));
+   assert(!openingTitles.some(title=>/Confessions of Zeno|The Duke of York’s Steps|A Fighting Man of Mars/.test(title)),
+    device+': generic fiction unexpectedly dominates gospel library entrance');
+   assert(openingTitles.some(title=>/Bible|history|church/i.test(title)),
+    device+': no source-backed Biblical or church-history Works in opening selection');
    const result=await page.evaluate(()=>{
     const grab=s=>{const el=document.querySelector(s);if(!el)throw Error('Missing '+s);
       const st=getComputedStyle(el),r=el.getBoundingClientRect();
