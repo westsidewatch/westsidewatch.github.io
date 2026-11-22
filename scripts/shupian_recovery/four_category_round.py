@@ -9,7 +9,7 @@ import argparse
 from datetime import datetime, timezone
 import json
 from pathlib import Path
-from source_discovery import search, variants
+from source_discovery import search, variants, network_fetch
 
 ROOT = Path(__file__).resolve().parent
 
@@ -56,12 +56,18 @@ def round_scan(providers, *, year=None, pages=2, limit=30, fetch=None, extras=No
     output = {"schema": 1, "purpose": "four-category-dynamic-fuzzy-source-discovery",
               "year": year or datetime.now(timezone.utc).year, "categories": {},
               "warning": "Candidates have not yet passed ad-filter, decode, browser playback, or website publication."}
+    # Each category queries the same broad catalog pages. Avoid redundant requests.
+    cache = {}
+    upstream = fetch if fetch is not None else network_fetch
+    def memo_fetch(url):
+        if url not in cache:
+            cache[url] = upstream(url)
+        return cache[url]
     for key, cfg in BUCKETS.items():
         queries = bucket_queries(key, year=output["year"],
                                  extras=(extras or {}).get(key, ()))
         opts = dict(pages=pages, limit=limit, discover=True)
-        if fetch is not None:
-            opts["fetch"] = fetch
+        opts["fetch"] = memo_fetch
         result = search(providers, queries, **opts)
         output["categories"][key] = {
             "label": cfg["label"], "queries": queries,
