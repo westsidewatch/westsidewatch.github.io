@@ -5,35 +5,51 @@
  */
 import {dawnLibrary} from '/dawn-library/product/library-system.mjs';
 let root=null,offset=0,rows=[],busy=false,readPointers=null;
+let pageStarts=[{shard:0,index:0}],pageNumber=0,nextStart=null,hasFollowing=false;
 const pageSize=60;
 const safe=url=>{
  try{const u=new URL(url,location.origin);return /^https?:$/.test(u.protocol)?u.href:null}catch{return null}
 };
-export async function show({container,total,status,prev,next,search,openBook,expectedWorkCount},requested=0){
+const options=({container,total,status,prev,next,search,openBook,expectedWorkCount})=>
+ ({container,total,status,prev,next,search,openBook,expectedWorkCount});
+export async function show(args,requested=0){
  if(busy)return;
  busy=true;
  try{
   root ||= await dawnLibrary.coverPreviewRoot();
-  if(root.workCount!==expectedWorkCount||root.shardCount!==root.shards.length)
+  if(root.workCount!==args.expectedWorkCount||root.shardCount!==root.shards.length)
    throw Error('Dawn canonical versus cover-preview identity mismatch');
-  offset=Math.max(0,Math.min(requested,root.workCount-1));
+  if(requested===0){pageNumber=0;pageStarts=[{shard:0,index:0}]}
+  else if(requested==='next'&&nextStart){
+   pageNumber++;pageStarts[pageNumber]={...nextStart};pageStarts.length=pageNumber+1;
+  }else if(requested==='previous'&&pageNumber>0)pageNumber--;
+  const start=pageStarts[pageNumber];
+  if(!start)throw Error('Dawn page cursor unavailable');
+  let cursor={...start};
   rows=[];
-  while(rows.length<pageSize&&offset+rows.length<root.workCount){
-   const at=offset+rows.length;
-   const shard=root.shards.find(s=>at>=s.offset&&at<s.offset+s.count);
-   if(!shard)throw Error('Dawn cover shard is missing for '+at);
-   const data=await dawnLibrary.coverPreviewShard(shard.href);
+  // Some legacy cover-preview shard counts/offsets precede source-scope
+  // exclusions. Only actual member rows may advance this cursor.
+  // NEVER index into a shortened shard using the stale manifest offset.
+  while(rows.length<pageSize&&cursor.shard<root.shards.length){
+   const meta=root.shards[cursor.shard];
+   const data=await dawnLibrary.coverPreviewShard(meta.href);
    if(data.schema!=='dawn.library.cover-preview-shard.v1'||!Array.isArray(data.items))
-    throw Error('Invalid Dawn cover shard');
-   const batch=data.items.slice(at-shard.offset,at-shard.offset+pageSize-rows.length);
-   if(!batch.length)throw Error('Dawn cover shard has no rows');
+    throw Error('Dawn cover-preview source contract invalid');
+   if(cursor.index>=data.items.length){cursor.shard++;cursor.index=0;continue}
+   const batch=data.items.slice(cursor.index,cursor.index+(pageSize-rows.length));
+   if(!batch.length){cursor.shard++;cursor.index=0;continue}
    rows.push(...batch);
+   cursor.index+=batch.length;
+   if(cursor.index>=data.items.length){cursor.shard++;cursor.index=0}
   }
-  total.textContent=root.workCount.toLocaleString('en-CA');
-  render({container,status,prev,next,search,openBook});
+  nextStart=cursor.shard<root.shards.length?{...cursor}:null;
+  hasFollowing=Boolean(nextStart);
+  offset=pageNumber*pageSize;
+  args.total.textContent=root.workCount.toLocaleString('en-CA');
+  render(args);
  }catch(e){
   console.error('[Dawn canonical cover projection]',e);
-  status.textContent='館藏資料暫時無法載入，請稍後重試。';
+  args.status.textContent='館藏資料暫時無法載入，請稍後重試。';
  }finally{busy=false}
 }
 export function render({container,status,prev,next,search,openBook}){
@@ -75,8 +91,8 @@ export function render({container,status,prev,next,search,openBook}){
   text.append(number,name,creator);card.append(text);li.append(card);frag.append(li);
  }
  container.replaceChildren(frag);
- status.textContent=(offset+1).toLocaleString('en-CA')+'–'+Math.min(offset+rows.length,root.workCount).toLocaleString('en-CA')+' / '+root.workCount.toLocaleString('en-CA')+' 部館藏作品';
- prev.disabled=offset===0;next.disabled=offset+rows.length>=root.workCount;
+ status.textContent='第 '+(pageNumber+1)+' 頁 · 本頁 '+rows.length+' 部作品 · 主書目 '+root.workCount.toLocaleString('en-CA')+' 筆';
+ prev.disabled=pageNumber===0;next.disabled=!hasFollowing;
 }
-export const nextOffset=()=>offset+pageSize;
-export const prevOffset=()=>Math.max(0,offset-pageSize);
+export const nextOffset=()=> 'next';
+export const prevOffset=()=> 'previous';
