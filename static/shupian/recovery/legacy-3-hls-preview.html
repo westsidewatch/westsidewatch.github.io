@@ -1,0 +1,35 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数片 · 舊片源試播校驗</title>
+<style>body{background:#111;color:#eee;font-family:system-ui,-apple-system,sans-serif;margin:0;padding:4vw;max-width:1000px}header{display:flex;align-items:baseline;gap:20px;border-bottom:1px solid #444;margin-bottom:2rem}h1{font-size:clamp(42px,8vw,100px);letter-spacing:-.07em;margin:.2em 0}small{color:#aaa}b{color:#d21f26}video{width:100%;max-height:65vh;background:#000}button{border:1px solid #555;border-radius:0;background:transparent;color:#fff;padding:12px 18px;cursor:pointer;margin:7px 7px 7px 0;text-align:left}button[aria-pressed=true]{border-color:#d21f26;color:#fff}#status{color:#bbb;margin:12px 0 30px}p{line-height:1.5}</style>
+</head><body><header><h1>数片</h1><small>片源試播</small></header>
+<p><b>候選來源，尚未正式收錄。</b> 恢復自舊有驗收頁。三條播放清單在先前測試中各有七個抽樣時間點可解碼（歷史紀錄）。是否能在目前網路環境播放、是否含有其他位置的廣告，仍須驗證。</p>
+<div id="choices"></div><p id="status" aria-live="polite">選擇作品試播。</p><video id="screen" controls playsinline preload="none"></video>
+<script>
+const candidates = [{"id": 148776, "title": "萤火虫的出嫁", "episode": "第01集", "url": "https://svip.czzyplay.com/play/148776/e1/index.m3u8", "frames": 7, "status": "七處取樣畫面已解碼；整集及廣告尚未完成驗收"}, {"id": 618, "title": "药屋少女的呢喃第三季", "episode": "第01集", "url": "https://svip.czzyplay.com/play/618/e1/index.m3u8", "frames": 7, "status": "七處取樣畫面已解碼；整集及廣告尚未完成驗收"}, {"id": 100142, "title": "音乐缘计划3", "episode": "第20261030期", "url": "https://vod.ffzy-bofang.com/20261030/4384_12e59a33/index.m3u8", "frames": 7, "status": "七處取樣畫面已解碼；整集及廣告尚未完成驗收"}];
+const video = document.getElementById('screen'), status = document.getElementById('status'), buttons = document.getElementById('choices');
+let player = null;
+const setStatus = text => {status.textContent=text;};
+let hlsScript;
+function ensureHls(){
+ if(window.Hls) return Promise.resolve();
+ if(hlsScript) return hlsScript;
+ hlsScript=new Promise((resolve,reject)=>{
+  const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/hls.js@1.6.13/dist/hls.min.js';
+  s.onload=()=>window.Hls?resolve():reject(new Error('播放器載入不完整'));
+  s.onerror=()=>reject(new Error('無法載入 HLS.js 播放程式'));document.head.appendChild(s);
+ });return hlsScript;
+}
+async function playOne(item,index){
+ [...buttons.children].forEach((b,j)=>b.setAttribute('aria-pressed',String(j===index)));
+ if(player){player.destroy();player=null;} video.pause();video.removeAttribute('src');video.load();
+ setStatus(item.title+'：正在連線片源…');
+ try {
+  if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=item.url;video.load();}
+  else {await ensureHls();player=new Hls({enableWorker:true});player.on(Hls.Events.ERROR,(evt,data)=>{
+    if(data.fatal) setStatus(item.title+'：播放失敗（'+(data.details||'未知原因')+'）。候選來源可能已失效或不允許跨站播放。');
+   });player.loadSource(item.url);player.attachMedia(video);}
+  setStatus(item.title+'：已載入播放地址；等待影片資料（不代表已通過廣告驗收）。');
+ }catch(err){setStatus(item.title+'：'+err.message);}
+}
+candidates.forEach((item,index)=>{const b=document.createElement('button');b.textContent=item.title+' · '+item.episode;b.setAttribute('aria-pressed','false');b.onclick=()=>playOne(item,index);buttons.appendChild(b)});
+</script></body></html>
