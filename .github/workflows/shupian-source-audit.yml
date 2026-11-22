@@ -1,0 +1,32 @@
+name: Shupian source checks (non-blocking)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'static/shupian/recovery/**'
+      - 'static/shupian/catalog.json'
+      - 'scripts/shupian_source_audit.py'
+      - '.github/workflows/shupian-source-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install media probe
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Probe recorded HLS masters and sample segments
+        run: python3 scripts/shupian_source_audit.py --limit 17 --output shupian-audit-report.json
+      - name: Preserve per-source report (not a playback approval)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shupian-source-audit
+          path: shupian-audit-report.json
+          if-no-files-found: warn
