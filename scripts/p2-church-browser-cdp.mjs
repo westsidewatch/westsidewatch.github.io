@@ -61,7 +61,7 @@ try{
   // Load and decompress the architectural GLB ONCE. The tour's own animation
   // loop reads proofFrame from location.search on every frame; stepping the
   // URL with replaceState requires no reloading or lost WebGL state.
-  const frames=[9,20,22,40,61,64,89,94,103,110,150,174,204,223,250];
+  const frames=[143,154,165,132,9,20,22,40,61,64,89,94,103,110,150,174,204,223,250];
   await send('Page.navigate',{
     url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frames[0]
   });
@@ -129,6 +129,10 @@ try{
        || !Number.isFinite(clock.exposure)||clock.exposure<0.70||clock.exposure>1.05)
       throw Error('Cross optical energy/exposure out of calibrated range '+frame+' '+JSON.stringify(clock));
     console.log('P2_CROSS_LIGHT_FRAME_'+frame+'='+JSON.stringify(clock));
+    if([132,143,154,165].includes(frame)){
+      const near=await evaluate('window.__churchMeshProbe?.(450,300,110)');
+      console.log('P2_C_FORUM_CAMERA_PROBE_'+frame+'='+JSON.stringify(near));
+    }
     if(frame===103){
       const upper=await evaluate('window.__churchMeshProbe?.(495,230,140)');
       const lower=await evaluate('window.__churchMeshProbe?.(310,510,100)');
