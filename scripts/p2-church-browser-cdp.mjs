@@ -103,6 +103,8 @@ try{
       throw Error('Cross light must illuminate actual surfaces with two real PBR light sources, not only planes: '+JSON.stringify(state.crossLight));
     if(!state.crossLight?.volumeShader)
       throw Error('Volumetric cross shaft GLSL renderer missing '+frame);
+    if(!state.crossLight?.beamTracksSun)
+      throw Error('Volumetric light must track the sunlit floor impact: '+frame);
 
     await sleep(300);
     let clock=await evaluate('window.__churchFrameAudit');
@@ -114,6 +116,8 @@ try{
       throw Error('Actual rendered camera/time did not advance to proof frame '+frame+' '+JSON.stringify(clock));
     if(Math.abs(clock.crossHeight-3.65)>0.001 || !Number.isFinite(clock.portalIntensity))
       throw Error('Cross daylight shader/real PBR bounce not active '+frame+' '+JSON.stringify(clock));
+    if(!Number.isFinite(clock.beamAlignment) || clock.beamAlignment<0.99)
+      throw Error('Cross beam diverged from true aperture-to-floor direction at frame '+frame+' '+JSON.stringify(clock));
     console.log('P2_CROSS_LIGHT_FRAME_'+frame+'='+JSON.stringify(clock));
     if(frame===103){
       const upper=await evaluate('window.__churchMeshProbe?.(495,230,140)');
