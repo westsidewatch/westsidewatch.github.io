@@ -48,7 +48,16 @@ fs.mkdirSync(out,{recursive:true});
    const categories=page.locator('#dawn-classification-tree button.dawn-classification__sleeve');
    await page.screenshot({path:path.join(out,name+'-chinese-category-cover-wall.png')});
    await categories.nth(1).click();
-   await page.locator('#dawn-classification-tree button.dawn-classification__sleeve').first().click();
+   await page.waitForTimeout(250);
+   const state=await page.evaluate(()=>({
+    breadcrumb:document.querySelector('#dawn-classification-path')?.innerText,
+    treeCount:document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length,
+    treeHidden:document.querySelector('#dawn-classification-tree')?.hidden,
+    resultHidden:document.querySelector('#dawn-classification-results')?.hidden
+   }));
+   console.log('CHINESE_GROUP_STATE',name,JSON.stringify(state),JSON.stringify(errors));
+   await page.screenshot({path:path.join(out,name+'-after-group-selection.png')});
+   await page.locator('#dawn-classification-tree button.dawn-classification__sleeve').first().click({timeout:8000});
    await page.waitForFunction(()=>!document.querySelector('#dawn-classification-results').hidden,
     null,{timeout:20000});
    const covers=page.locator('#dawn-classification-results .dawn-classification__book-art img');
