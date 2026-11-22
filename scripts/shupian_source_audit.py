@@ -104,17 +104,29 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--candidates", default="static/shupian/recovery/hls-candidates-16.json")
     parser.add_argument("--catalog", default="static/shupian/catalog.json")
+    parser.add_argument("--legacy-discovery", default="static/shupian/recovery/legacy-12-hls-candidates.json")
     parser.add_argument("--output", default="shupian-audit-report.json")
-    parser.add_argument("--limit", type=int, default=17)
+    parser.add_argument("--limit", type=int, default=40)
     args = parser.parse_args()
     candidates = json.loads(Path(args.candidates).read_text())
     works = json.loads(Path(args.catalog).read_text())["titles"]
     jobs = [(x["title"], x["hls_master_url"]) for x in candidates["candidates"]]
+    # Restore the historically discovered catalog to the technical audit queue.
+    # Discovery and technical checks do not require "public catalog approved".
+    legacy_path = Path(args.legacy_discovery)
+    if legacy_path.is_file():
+        legacy = json.loads(legacy_path.read_text())
+        for item in legacy.get("discovered", []):
+            url = item.get("m3u8")
+            if url and url.startswith("https://"):
+                jobs.append((item.get("title", "historical candidate") + " / " + item.get("episode", ""), url))
     for work in works:
         for episode in work.get("episodes", []):
             for source in episode.get("sources", []):
                 if source.get("format") == "m3u8" and source.get("url"):
                     jobs.append((work["title"] + " / " + episode.get("label", ""), source["url"]))
+    # Deduplicate before auditing; preserve first source provenance.
+    jobs = list(dict(((url, (name, url)) for name, url in jobs)).values())
     jobs = jobs[:max(0, min(args.limit, 100))]
     records = []
     for i, (name, url) in enumerate(jobs, 1):
