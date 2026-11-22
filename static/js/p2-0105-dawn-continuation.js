@@ -892,7 +892,7 @@
   for(const [i,group] of (classificationTree.roots||[]).entries()){
    wall.append(classificationSleeve(group.label,Number(group.workCount||0).toLocaleString('en-CA')+' 部作品',()=>displayClassificationGroup(group),i%2?'olive':'harvest',group.id));
   }
-  wall.append(classificationSleeve('中文圖書',String(chineseLibrary.count||chineseLibrary.works?.length||0)+' 部藏書',displayChineseGroups,'chinese','zh'));
+  wall.append(classificationSleeve('中文圖書','當代著作與譯本',()=>void displayContemporaryChinese(),'harvest','zh:contemporary'));
   wall.append(classificationSleeve('全部書目','按作品閱覽',displayFullRecordIndex,'harvest','all'));
   wall.append(classificationSleeve('歷史古籍','原始書目',displayHistoricalIndex,'olive','church-history'));
   refreshCategoryCovers(true);
