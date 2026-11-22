@@ -151,13 +151,17 @@ def scan(*, fetch=network_fetch, probe=None, max_pages=5, page_size=20,
     report["unique_hls_urls"] = len({e["url"] for c in candidates for g in c["groups"]
                                      for e in g["episodes"] if e["format"]=="m3u8"})
     seen = set()
+    sampled_titles = set()
     if probe is not None:
         for c in candidates:
             for g in c["groups"]:
                 for ep in g["episodes"]:
-                    if ep["format"]!="m3u8" or ep["url"] in seen:
+                    # Match the original 2026-11-20 benchmark: one first episode
+                    # per distinct title, not 12 episodes from a single title.
+                    if ep["format"]!="m3u8" or ep["url"] in seen or c["id"] in sampled_titles:
                         continue
                     seen.add(ep["url"])
+                    sampled_titles.add(c["id"])
                     if len(report["media_samples"]) >= probe_count:
                         break
                     try:
@@ -178,7 +182,7 @@ def scan(*, fetch=network_fetch, probe=None, max_pages=5, page_size=20,
         "current_segment_probe_pass":sum(
             v["result"].get("status")=="segment-bytes-sampled"
             for v in report["media_samples"]),
-        "comparable":len(report["media_samples"])>=12,
+        "comparable":len(sampled_titles)>=12,
         "note":"Historical 10/12 is only comparable after at least 12 equivalent first-episode 3-point probes."
     }
     return report
