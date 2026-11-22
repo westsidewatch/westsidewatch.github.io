@@ -186,7 +186,7 @@ scene.add(crossWallBounce,crossWallBounce.target);
 window.__churchLightAudit={
   aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,
   crossCenter:[crossAperture.x,crossAperture.y,crossAperture.z],
-  bounceSources:2,volumeShader:true,beamTracksSun:true,adaptiveExposure:true,version:"R18"
+  bounceSources:2,volumeShader:true,beamTracksSun:true,adaptiveExposure:true,version:"R20"
 };
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
@@ -646,9 +646,11 @@ function updateDaylight(t,duration) {
     ray.rotateY(ray.userData.rotationalSlice);
     ray.scale.y=beamLength/10;
   }
-  crossAirMaterial.uniforms.uLight.value=.006+.125*sunlight;
+  // Preserve the near-field exposure headroom from R18 while restoring
+  // the gentle honey-gold scattering lost after the highlight correction.
+  crossAirMaterial.uniforms.uLight.value=.006+.159*sunlight;
   crossAirMaterial.uniforms.uTint.value.set(
-    1,.80+.13*daylight,.67+.25*daylight
+    1,.78+.12*daylight,.62+.20*daylight
   );
   crossAirMaterial.uniforms.uTime.value=t;
   // Daylight changes; the wall PBR base colors remain from the original GLB.
