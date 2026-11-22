@@ -116,8 +116,11 @@ try{
       throw Error('Original eight-step ascent lacks connected supporting structure '+JSON.stringify(state.upperStair));
     if(!state.northDoorSteps||state.northDoorSteps.treads!==3||
        state.northDoorSteps.supports!==3||!state.northDoorSteps.unchangedOriginals||
-       Math.abs(state.northDoorSteps.baseHeight)>.015||
+       Math.abs(state.northDoorSteps.baseHeight+1.5)>.015||
+       Math.abs(state.northDoorSteps.landingHeight)>.015||
        state.northDoorSteps.gapsClosed?.length!==3||
+       state.northDoorSteps.foundationGapsClosed?.length!==3||
+       state.northDoorSteps.foundationGapsClosed.some((h,i)=>Math.abs(h-(1.7+i*.35))>.035)||
        state.northDoorSteps.heights?.some((h,i)=>Math.abs(h-.35*(i+1))>.035))
       throw Error('North public sanctuary door still has unsupported terrace slabs '+JSON.stringify(state.northDoorSteps));
     if(!state.topology||!state.topology.physicalUnion||

@@ -667,9 +667,10 @@ function connectUpperStairTreads(building){
 // suspended 20/55/90 cm above the GLB datum, not complete stairs.
 // Restore their physical underneath without changing the tread footprints.
 const northDoorStepAudit={source:"V26_ROUTE_01",treads:0,supports:0,
-  baseHeight:null,heights:[],gapsClosed:[],unchangedOriginals:true};
+  baseHeight:null,landingHeight:null,heights:[],gapsClosed:[],
+  foundationGapsClosed:[],unchangedOriginals:true};
 function supportNorthDoorTerraces(building){
-  const treads=[],landings=[];
+  const treads=[],landings=[],foundations=[];
   building.updateMatrixWorld(true);
   building.traverse(mesh=>{
     // R35 CSG hides source meshes when it emits a physical union shell.
@@ -679,34 +680,46 @@ function supportNorthDoorTerraces(building){
     if(!b)return;
     if(/^v26 route 01 .*wide terrace [123]/.test(n))treads.push({mesh,b});
     if(/^v26 route 00 .*sanctuary.level north landing/.test(n))landings.push({mesh,b});
+    if(/^north wing lower social floor/.test(n))foundations.push({mesh,b});
   });
   treads.sort((a,b)=>b.b.max.x-a.b.max.x);
-  if(treads.length!==3||landings.length!==1)
-    throw Error("North sanctuary stairs require exactly three original GLB treads and ground landing");
-  const floor=landings[0].b.max.y;
-  if(Math.abs(floor)>.015)throw Error("North public door landing is not at GLB ±0 datum");
+  if(treads.length!==3||landings.length!==1||foundations.length!==1)
+    throw Error("North sanctuary staircase requires original GLB treads, landing and lower wing foundation");
+  const landing=landings[0].b.max.y;
+  const lower=foundations[0].b;
+  const foundation=lower.max.y;
+  if(Math.abs(landing)>.015||Math.abs(foundation+1.50)>.015)
+    throw Error("North door original lower foundation and public landing have unexpected elevations");
   northDoorStepAudit.treads=treads.length;
-  northDoorStepAudit.baseHeight=+floor.toFixed(3);
+  northDoorStepAudit.baseHeight=+foundation.toFixed(3);
+  northDoorStepAudit.landingHeight=+landing.toFixed(3);
   for(let i=0;i<treads.length;i++){
     const b=treads[i].b;
     const width=b.max.x-b.min.x,depth=b.max.z-b.min.z;
-    const gap=b.min.y-floor,rise=b.max.y-floor;
-    const previous=i?treads[i-1].b.max.y:floor;
-    if(width<1.4||width>1.7||depth<.60||depth>.75||gap<.16||
-       gap>1.0||Math.abs(rise-previous-.35)>.035)
-      throw Error("GLB north entrance tread dimensions changed: no invented support");
-    // Meets bottom face exactly: no intersecting/concurrent top surfaces.
-    // Slight side inset prevents coplanar face fighting with original slab.
-    const support=new Mesh(new BoxGeometry(width-.002,gap,depth-.002),whiteArchitecture);
+    const visibleGap=b.min.y-landing;
+    const supportHeight=b.min.y-foundation;
+    const rise=b.max.y-landing;
+    const previous=i?treads[i-1].b.max.y:landing;
+    if(width<1.4||width>1.7||depth<.60||depth>.75||
+       visibleGap<.16||visibleGap>1.0||supportHeight<1.6||
+       supportHeight>2.5||Math.abs(rise-previous-.35)>.035||
+       b.min.x<lower.min.x||b.max.x>lower.max.x||
+       b.min.z<lower.min.z||b.max.z>lower.max.z)
+      throw Error("North door foundation cannot physically support this original GLB tread");
+    // R36 ±0-only support still hovered 1.5m above the REAL lower wing
+    // floor; ground the entire stepped masonry mass at source y=-1.50.
+    // Each support meets an original tread underside without volume overlap.
+    const support=new Mesh(new BoxGeometry(width-.002,supportHeight,depth-.002),whiteArchitecture);
     support.name="V26 north public door original terrace physical stair support "+(i+1);
-    support.position.set((b.min.x+b.max.x)/2,(floor+b.min.y)/2,
+    support.position.set((b.min.x+b.max.x)/2,(foundation+b.min.y)/2,
       (b.min.z+b.max.z)/2);
     support.castShadow=true;
     support.receiveShadow=true;
     building.add(support);
     northDoorStepAudit.supports++;
     northDoorStepAudit.heights.push(+rise.toFixed(3));
-    northDoorStepAudit.gapsClosed.push(+gap.toFixed(3));
+    northDoorStepAudit.gapsClosed.push(+visibleGap.toFixed(3));
+    northDoorStepAudit.foundationGapsClosed.push(+supportHeight.toFixed(3));
   }
 }
 
