@@ -13,7 +13,7 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
    const errors=[];page.on('pageerror',error=>errors.push(error.message));
    await page.goto('http://127.0.0.1:4173/experiments/p2-0105-dawn-preview.html?layer=second&d=28.4&v=os-r57',
     {waitUntil:'domcontentloaded',timeout:45000});
-   await page.locator('#dawn-second .dawn-reading-room__masthead').waitFor({state:'visible',timeout:20000});
+   await page.locator('#dawn-second .dawn-wall__grid--curated').waitFor({state:'visible',timeout:20000});
    await page.evaluate(()=>document.fonts.ready);
    await page.waitForFunction(()=>document.querySelectorAll('#dawn-wall-grid button.dawn-cover').length>=12,
     null,{timeout:35000});
@@ -63,14 +63,19 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
        const value={opacity:cs.opacity,color:ts.color,font:ts.fontFamily};
        cover.remove();return value;
       })(),
-      mastEn:grab('#dawn-room-heading > span'),
-      mastZh:grab('#dawn-room-heading > strong'),
-      lead:grab('.dawn-reading-room__lead'),
       gallery:grab('#dawn-wall-grid'),
       source:grab('#dawn-second'),
       departmentZh:grab('.dawn-reading-room__departments-intro h3 > strong'),
       departmentEn:grab('.dawn-reading-room__departments-intro h3 > span'),
-      mast:grab('.dawn-reading-room__masthead')
+      editorialPanels:[...document.querySelectorAll('#dawn-wall-grid > .dawn-feature')].map(element=>({
+        background:getComputedStyle(element).backgroundColor,
+        identity:element.dataset.dawnPortal,
+        title:getComputedStyle(element.querySelector('.dawn-feature__editorial')).backgroundColor
+      })),
+      harvested:getComputedStyle(document.querySelector('#dawn-second')).getPropertyValue('--ws-harvest').trim(),
+      duplicateHeading:document.querySelectorAll('#dawn-room-heading, .dawn-reading-room__masthead').length,
+      scripturePlates:document.querySelectorAll('.dawn-second__motherform').length,
+      returnNavText:document.querySelector('.dawn-second__return .dawn-second__nav-en').textContent.trim()
     };
    });
    for(const [id,en,zh] of [['return',result.returnEn,result.returnZh],
@@ -92,28 +97,34 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
    assert(result.loadedCoverCSS.opacity==='1'&&
      !['rgb(255, 255, 255)','white'].includes(result.loadedCoverCSS.color),
      device+': loaded source cards hide their title or print it in white on paper');
-   assert(result.mastEn.size>result.mastZh.size*1.28,
-    device+': English masthead is not dominant');
-   assert(result.mastEn.font.includes('Bodoni'),device+': main masthead missing Bodoni');
-   assert(result.mastZh.font.includes('Chiron'),device+': Chinese masthead missing Chiron');
-   assert.equal(result.mastZh.weight,900,device+': principal Chinese title must preserve anchor weight');
-   assert.equal(result.lead.weight,200,device+': prose must be Chinese air weight');
+   assert.equal(result.duplicateHeading,0,device+': L2 repeats the brand outside scripture plate');
+   assert.equal(result.scripturePlates,1,device+': original scripture plate missing');
+   assert.equal(result.returnNavText,'RETURN',device+': navigation repeats Dawn brand');
+   assert.equal(result.editorialPanels.length,3,device+': three editorial departments absent');
+   assert.deepEqual(result.editorialPanels.map(p=>p.identity),['三晨星','策展集','光譜']);
+   const harvestRGB=await page.evaluate(()=>{
+    const marker=document.createElement('span');marker.style.background='var(--ws-harvest)';
+    document.querySelector('#dawn-second').append(marker);
+    const color=getComputedStyle(marker).backgroundColor;marker.remove();return color;
+   });
+   for(const card of result.editorialPanels){
+    assert.equal(card.background,harvestRGB,device+': '+card.identity+' portal background is not OS harvest');
+    assert.equal(card.title,harvestRGB,device+': '+card.identity+' title panel is not OS harvest');
+   }
    assert.equal(result.departmentZh.weight,200,device+': secondary Chinese heading must be air');
    assert(result.departmentEn.size>result.departmentZh.size,device+': department heading scale reversed');
    assert(result.nav.height<180,device+': navigation behaves like a giant toolbar');
    assert(result.nav.position!=='fixed',device+': toolbar stuck over composition');
    assert(result.gallery.width>width*.65,device+': gallery contracted off canvas');
    assert(result.gallery.height>120,device+': source image wall collapsed');
-   assert(result.mast.height<480,device+': oversized empty header carrier');
    const overWidth=await page.evaluate(()=>document.querySelector('#dawn-second').scrollWidth-document.querySelector('#dawn-second').clientWidth);
    assert(overWidth<18,device+': horizontal overflow '+overWidth);
    await page.screenshot({path:path.join(out,device+'-os-navigation-masthead.png'),fullPage:false});
    await page.locator('#dawn-wall-grid').scrollIntoViewIfNeeded();
    await page.screenshot({path:path.join(out,device+'-os-original-gallery.png'),fullPage:false});
    assert.equal(errors.length,0,device+': runtime errors '+errors.join('; '));
-   console.log('DAWN_OS',device,'NAV_EN_GT_ZH_CHIRON_200_BODONI_MASTHEAD_GALLERY_PASS',
-    JSON.stringify({navHeight:result.nav.height,mastHeight:result.mast.height,
-      en:result.mastEn.size,zh:result.mastZh.size,overflow:overWidth}));
+   console.log('DAWN_OS',device,'NO_DUPLICATE_BRAND_THREE_HARVEST_PORTALS_GALLERY_PASS',
+    JSON.stringify({navHeight:result.nav.height,harvest:harvestRGB,columns:result.editorialPanels.length,overflow:overWidth}));
    await page.close();
   }
  }finally{await browser.close()}
