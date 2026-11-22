@@ -192,6 +192,34 @@ try{
       format:'jpeg',quality:57,captureBeyondViewport:false,fromSurface:true
     });
     if(!shot.data)throw Error('Missing screenshot '+frame);
+    // Image-space QA, not another source-code assertion. R29/R30 falsely
+    // passed even while the nocturnal stair rendered as a featureless grey
+    // slab (measured image contrast 4.5 at 194s, versus 33.7 after R31).
+    if([174,187,194,199,202,205].includes(frame)){
+      const probe=`(async()=>{
+        const image=new Image();
+        image.src='data:image/jpeg;base64,${shot.data}';
+        await image.decode();
+        const c=document.createElement('canvas');
+        c.width=128;c.height=80;
+        const g=c.getContext('2d',{willReadFrequently:true});
+        g.drawImage(image,0,0,128,80);
+        const a=g.getImageData(0,0,128,80).data;
+        let sum=0,sq=0;
+        for(let i=0;i<a.length;i+=4){
+          const lum=(a[i]+a[i+1]+a[i+2])/3;
+          sum+=lum;sq+=lum*lum;
+        }
+        const mean=sum/(128*80);
+        return {mean:+mean.toFixed(2),
+          contrast:+Math.sqrt(Math.max(0,sq/(128*80)-mean*mean)).toFixed(2)};
+      })()`;
+      const visual=await evaluate(probe);
+      console.log('P2_IMAGE_CONTRAST_'+frame+'='+JSON.stringify(visual));
+      if([187,194].includes(frame)&&visual.contrast<20)
+        throw Error('Stair is rendered as an unreadable flat wall at '+frame+
+          's: '+JSON.stringify(visual));
+    }
     if(frame===251){
       const proof=await send('Page.captureScreenshot',{
         format:'jpeg',quality:37,captureBeyondViewport:false,fromSurface:true
