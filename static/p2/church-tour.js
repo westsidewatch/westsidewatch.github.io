@@ -716,7 +716,7 @@ function supportNorthDoorTerraces(building){
      publicDeck.min.x<10.10||publicDeck.max.x>12.06||
      publicDeck.min.z< -15.34||publicDeck.max.z> -13.16||
      firstLanding.min.z< -15.96||
-     firstLanding.max.z< -15.06)
+     firstLanding.max.z> -15.06)
     throw Error("North public bridge's original GLB massing changed");
   for(let i=0;i<landingBodies.length;i++){
     const part=landingBodies[i],width=part.hi[0]-part.lo[0],
