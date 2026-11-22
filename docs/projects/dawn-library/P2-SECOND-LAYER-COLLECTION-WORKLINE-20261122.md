@@ -63,3 +63,11 @@ P2 01–04 不動 → 05 第一層 V9（保留） → 05 第二層
 - 用全文未物化的 UI 契約宣稱「已實現完整雙語閱讀」。
 - 用一串 hardcoded keyword 取代真正的 Living semantic subject membership。
 - 因為某次 CI PASS 就宣稱第二層完工或放行 PR。
+
+## 2026-11-22 第二輪實際修復：Living subject membership
+
+- 新增 `static/js/p2-dawn-living-membership.mjs`，從原 `living/root.json` 的 `shards[].href` 逐片讀取 `living/wall-*.json`，以每筆 `workRefs[].classification.leaves` 查詢真正屬於所選子分類的 canonical Work ID，再由原 `resourceWorks(ids)` 解析單書書目。最多展示 36 筆，並在頁面說明屬分類樣本或已讀完整分片。
+- `static/js/p2-0105-dawn-continuation.js` 的 `displayClassificationLeaf` 不再調用 `resourceSearch(英文關鍵字)` 充當正式分類；刪除 42 組 `taxonomyQueries`。分類與收藏、閱讀入口均保留原導航。
+- 對有 canonical Work ID 的單書卡與詳細頁，不再透過書名匹配其他書籍的封面或圖版。僅接受該 Work 資料的直接封面/圖像指標，缺圖保持文字排版。
+- 新增 `tests/p2-dawn-living-membership.cjs`；使用同等 mock Living root/shards 的 V8 執行測試驗證分類、Work ID 去重、36 上限的樣本模式、取消過期請求、禁止舊 keyword 路徑。主腳本與 adapter 靜態語法解析 PASS。
+- **限制：** mock 測試不等於 Cloudflare 的真實 browser E2E；全 21 分片的數據品質、總量、封面與操作仍未通過實站逐件檢驗，PR 保留 Draft。
