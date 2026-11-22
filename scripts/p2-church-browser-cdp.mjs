@@ -58,7 +58,7 @@ async function evaluate(expression){
   return r.result?.value;
 }
 try{
-  for(const frame of [9,40,64,89,110,150,174,204,223,250]){
+  for(const frame of [9,20,22,40,61,64,89,94,103,110,150,174,204,223,250]){
     errors.length=0;
     await send('Page.navigate',{
       url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frame
@@ -71,7 +71,9 @@ try{
           className:document.body?.className||null,
           hasCanvas:!!document.querySelector('#church-canvas'),
           glb:window.__tourStatus||null,
-          error:window.__tourError||null
+          error:window.__tourError||null,
+          hardware:window.__churchHardwareAudit||null,
+          crossLight:window.__churchLightAudit||null
         })`);
       }catch{continue;}
       if(state?.className==='ready')break;
@@ -79,6 +81,11 @@ try{
     }
     console.log('P2_BROWSER_FRAME_'+frame+'='+JSON.stringify({state,errors:errors.slice(0,7)}));
     if(state?.className!=='ready')throw Error('Church GLB not ready in browser '+frame+' '+JSON.stringify(state)+' '+errors.join('; '));
+    if(!state.hardware || !Array.isArray(state.hardware.remaining) || state.hardware.remaining.length)
+      throw Error('Door hardware still present at frame '+frame+' '+JSON.stringify(state.hardware));
+    if(!state.crossLight?.aperture || !state.crossLight?.floor || state.crossLight.sheets!==3)
+      throw Error('Cross illumination incomplete at frame '+frame);
+
     await sleep(700);
     const shot=await send('Page.captureScreenshot',{
       format:'jpeg',quality:57,captureBeyondViewport:false,fromSurface:true
