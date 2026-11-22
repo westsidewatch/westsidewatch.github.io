@@ -16,21 +16,25 @@ ROOT = Path(__file__).resolve().parent
 BUCKETS = {
     "latest_us_uk_series": {
         "label": "最新美劇／英劇",
+        "type_hints": ["欧美剧", "歐美劇", "美剧", "英剧", "欧美"],
         "seeds": ["美剧", "英剧", "欧美剧", "美国电视剧", "英国电视剧", "US TV", "British TV"],
         "year_terms": ["美剧", "英剧", "欧美剧"],
     },
     "japanese_anime": {
         "label": "日本動漫",
+        "type_hints": ["日韩动漫", "日本动漫", "动漫", "動畫", "动漫片"],
         "seeds": ["日本动漫", "日漫", "日本动画", "番剧", "Anime", "新番"],
         "year_terms": ["日本动漫", "新番"],
     },
     "classic_films": {
         "label": "經典電影",
+        "type_hints": ["电影", "電影", "剧情片", "劇情片"],
         "seeds": ["经典电影", "經典電影", "经典影片", "影史经典", "Classic film", "Cinema classics"],
         "year_terms": [],
     },
     "gospel_media": {
         "label": "福音影視",
+        "type_hints": ["福音", "基督", "宗教", "圣经", "聖經"],
         "seeds": ["福音电影", "基督教电影", "圣经电影", "福音影视", "耶稣电影", "Christian film", "Bible film"],
         "year_terms": [],
     },
@@ -116,7 +120,7 @@ def round_scan(providers, *, year=None, pages=2, limit=30, fetch=None, extras=No
                                  extras=(extras or {}).get(key, ()))
         if query_budget is not None:
             queries = queries[:max(1, query_budget)]
-        opts = dict(pages=pages, limit=limit, discover=True)
+        opts = dict(pages=pages, limit=limit, discover=True, type_hints=cfg["type_hints"])
         opts["fetch"] = memo_fetch
         result = search(providers, queries, **opts)
         for candidate in result["candidates"]:
