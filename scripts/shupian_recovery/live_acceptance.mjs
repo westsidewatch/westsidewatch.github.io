@@ -50,6 +50,7 @@ try {
     check(works.every(x => !denied.some(b => x.title?.includes(b))), 'catalog_no_filler');
     check(!JSON.stringify(works).toLowerCase().includes('youtube'), 'no_youtube_sources');
     check(works.filter(x=>x.type==='film').length>=11&&works.filter(x=>x.type==='series').length>=3,'restored_films_and_series_present');
+    check(works.every(x=>typeof x.posterUrl==='string'&&x.posterUrl.startsWith('https://')),'every_work_has_explicit_poster_url');
     if (cards >= 1) {
       try {
         await page.locator('#grid article.card button.poster').first().click();
@@ -70,7 +71,29 @@ try {
       src=await poster.getAttribute('src');
       posterLoaded=true;
     } catch (e) {src=await poster.getAttribute('src').catch(()=>null);}
-    check(posterLoaded,'real_poster_rendered',{src});
+    check(posterLoaded,'first_real_poster_rendered',{src});
+    const posterResults=[];
+    const cardsAll=page.locator('#grid article.card');
+    for(let i=0;i<await cardsAll.count();i++){
+      const card=cardsAll.nth(i);
+      await card.scrollIntoViewIfNeeded();
+      const info=await card.evaluate(async element=>{
+        const image=element.querySelector('img');
+        if(!image)return {ok:false,reason:'no poster element',name:element.querySelector('h3')?.textContent||''};
+        if(!image.complete)await new Promise(resolve=>{
+          const done=()=>resolve();
+          image.addEventListener('load',done,{once:true});
+          image.addEventListener('error',done,{once:true});
+          setTimeout(done,8500);
+        });
+        return {ok:image.complete&&image.naturalWidth>0,width:image.naturalWidth,url:image.currentSrc||image.src,name:element.querySelector('h3')?.textContent||''};
+      });
+      posterResults.push(info);
+    }
+    check(posterResults.every(x=>x.ok),'all_public_posters_visually_decode',{
+      total:posterResults.length,decoded:posterResults.filter(x=>x.ok).length,
+      failed:posterResults.filter(x=>!x.ok)
+    });
     let remote = null;
     try {
       const res = await context.request.get(new URL('catalog.json',base).href,{timeout:15000});
