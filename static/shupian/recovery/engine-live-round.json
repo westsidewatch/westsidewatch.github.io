@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "observed_at_utc": "2026-11-22T14:39:50.299128+00:00",
+  "observed_at_utc": "2026-11-22T14:47:57.112458+00:00",
   "queries": [
     "黑鏡",
     "神探夏洛克"
@@ -11,20 +11,22 @@
   "works_found": 33,
   "unique_media_candidates": 126,
   "hls_candidates": 126,
-  "manifests_parsed": 0,
-  "segment_sample_pass": 0,
+  "manifests_parsed": 4,
+  "segment_sample_pass": 4,
   "suspected_ad_cues": 0,
   "audited": 4,
   "errors": [
     {
       "provider": "diyi",
-      "query": "神探夏洛克",
-      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+      "query": "黑鏡",
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+      "failure_class": "parse_or_validation_error"
     },
     {
       "provider": "diyi",
-      "query": "黑鏡",
-      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+      "query": "神探夏洛克",
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+      "failure_class": "parse_or_validation_error"
     }
   ],
   "audits": [
@@ -32,47 +34,188 @@
       "title": "神探夏洛克  第二季",
       "episode": "第01集",
       "provider": "liangzi",
+      "source_fingerprint": "5216deb695ab47b11f47a5c1",
+      "source_path_fingerprint": "5216deb695ab47b11f47a5c1",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "failed",
+      "previous_observed_at_utc": "2026-11-22T14:39:50.299128+00:00",
       "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found"
+      "segment_count": 1307,
+      "duration_sec": 5220.4,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 653,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 1306,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass"
     },
     {
       "title": "神探夏洛克  第二季",
       "episode": "第02集",
       "provider": "liangzi",
+      "source_fingerprint": "8910504546d05d27cd05d809",
+      "source_path_fingerprint": "8910504546d05d27cd05d809",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "failed",
+      "previous_observed_at_utc": "2026-11-22T14:39:50.299128+00:00",
       "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found"
+      "segment_count": 1344,
+      "duration_sec": 5373.0,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 672,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 1343,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass"
     },
     {
       "title": "黑镜 第一季",
       "episode": "第01集",
       "provider": "liangzi",
+      "source_fingerprint": "a5fbe7a44c5d71f17021920f",
+      "source_path_fingerprint": "a5fbe7a44c5d71f17021920f",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "failed",
+      "previous_observed_at_utc": "2026-11-22T14:39:50.299128+00:00",
       "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found"
+      "segment_count": 683,
+      "duration_sec": 2726.04,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 341,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 682,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass"
     },
     {
       "title": "黑镜 第一季",
       "episode": "第02集",
       "provider": "liangzi",
+      "source_fingerprint": "1eae08061df309152021876c",
+      "source_path_fingerprint": "1eae08061df309152021876c",
+      "url_comparison": "no_comparable_baseline",
+      "previous_manifest": "failed",
+      "previous_observed_at_utc": "2026-11-22T14:39:50.299128+00:00",
       "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found"
+      "segment_count": 949,
+      "duration_sec": 3792.28,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 474,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 948,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass"
     }
   ],
+  "same_exact_url_count": 0,
+  "changed_url_count": 0,
+  "missing_baseline_count": 4,
+  "http_404_count": 0,
+  "alternative_candidates_audited": 0,
   "stages": {
     "discovery": "attempted",
     "ad_quality": "manifest-only",
@@ -81,5 +224,5 @@
   },
   "completion": "NOT_COMPLETED",
   "limitations": "Manifest parsing cannot certify ads, playback, correct content or rights. No auto-import.",
-  "rescan_previous_parsed_count": 4
+  "rescan_previous_count": 4
 }
