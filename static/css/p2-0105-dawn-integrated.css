@@ -1259,3 +1259,40 @@
 @media(max-width:480px){
  #dawn-second .dawn-personal__entries{grid-template-columns:1fr}
 }
+
+
+/* Work-identity-matched editorial picture plates. If the source image is
+   missing, display the real original title—never somebody else's cover. */
+#dawn-second .dawn-feature__art>.dawn-feature__plate{
+ position:relative;display:flex;align-items:flex-end;justify-content:flex-start;
+ min-width:0;min-height:0;overflow:hidden;
+ background:color-mix(in srgb,var(--ws-olive) 11%,var(--ws-paper));
+ padding:clamp(9px,1.1vw,19px);
+}
+#dawn-second .dawn-feature__art>.dawn-feature__plate:nth-child(2){
+ background:color-mix(in srgb,var(--ws-harvest) 12%,var(--ws-paper));
+}
+#dawn-second .dawn-feature__art>.dawn-feature__plate:nth-child(3){
+ background:color-mix(in srgb,var(--ws-olive) 6%,var(--ws-paper));
+}
+#dawn-second .dawn-feature__plate .dawn-feature__cover{
+ position:absolute;inset:0;display:block;width:100%;height:100%;
+ object-fit:cover;object-position:center;transition:transform .65s ease;
+}
+#dawn-second .dawn-feature:hover .dawn-feature__plate .dawn-feature__cover{
+ transform:scale(1.025);
+}
+#dawn-second .dawn-feature__plate-title{
+ position:relative;z-index:1;display:block;max-width:100%;
+ font:400 clamp(11px,1.13vw,20px)/1.25 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ overflow-wrap:anywhere;color:var(--ws-ink);
+}
+#dawn-second .dawn-feature__plate--loaded .dawn-feature__plate-title{
+ visibility:hidden;
+}
+@media(max-width:680px){
+ #dawn-second .dawn-feature__plate-title{font-size:clamp(11px,3.6vw,18px)}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-feature__plate .dawn-feature__cover{transition:none!important}
+}
