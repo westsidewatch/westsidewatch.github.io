@@ -646,6 +646,9 @@
  function displayFullRecordIndex(){
   if(activePortal!=='all')return;
   ++classificationTicket;
+  $('#dawn-primary-categories')?.removeAttribute('aria-current');
+  $('#dawn-primary-chinese')?.removeAttribute('aria-current');
+  $('#dawn-primary-records')?.setAttribute('aria-current','page');
   classificationCrumbs([{label:'全部書目',action:displayFullRecordIndex}]);
   classificationFacets(true);
   const tree=classificationWall();tree.hidden=true;
@@ -673,6 +676,9 @@
  function displayClassificationRoots(){
   if(!classificationTree||!chineseLibrary)return;
   ++classificationTicket;
+  $('#dawn-primary-categories')?.setAttribute('aria-current','page');
+  $('#dawn-primary-chinese')?.removeAttribute('aria-current');
+  $('#dawn-primary-records')?.removeAttribute('aria-current');
   classificationCrumbs([]);classificationFacets(true);
   setFullRecordIndexVisible(false);
   const wall=classificationWall();startCategoryCoverMotion();
@@ -781,6 +787,9 @@
  function displayChineseGroups(){
   if(!chineseLibrary)return;
   ++classificationTicket;classificationFacets(false);
+  $('#dawn-primary-categories')?.removeAttribute('aria-current');
+  $('#dawn-primary-chinese')?.setAttribute('aria-current','page');
+  $('#dawn-primary-records')?.removeAttribute('aria-current');
   classificationCrumbs([{label:'中文圖書',action:displayChineseGroups}]);
   const wall=classificationWall();
   for(const [i,[key,items]] of [...chineseGroups()].entries())
@@ -930,6 +939,16 @@
  openCatalogue.addEventListener('click',()=>openCollection());
  openCatalogueTop?.addEventListener('click',()=>openCollection());
  closeCatalogue.addEventListener('click',closeCollection);
+ // Catalogue editorial masthead is actual reader navigation, not a decoration.
+ $('#dawn-primary-categories')?.addEventListener('click',()=>{if(activePortal==='all')displayClassificationRoots();else openCollection()});
+ $('#dawn-primary-chinese')?.addEventListener('click',()=>{
+  if(activePortal!=='all')openCollection();
+  void renderCatalogueClassification().then(()=>displayChineseGroups());
+ });
+ $('#dawn-primary-records')?.addEventListener('click',()=>{
+  if(activePortal!=='all')openCollection();
+  void renderCatalogueClassification().then(()=>displayFullRecordIndex());
+ });
  wallGrid.addEventListener('click',e=>{
   const tile=e.target.closest('button');if(!tile)return;
   if(tile.dataset.dawnPortal)openCollection(tile.dataset.dawnPortal);
