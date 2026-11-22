@@ -141,7 +141,7 @@ try{
   // Prove the public chapter URL starts *in the sanctuary* but continues
   // the original animation normally. No proofFrame freeze on this request.
   await send('Page.navigate',{
-    url:'http://127.0.0.1:8765/p2/church-tour.html?startAt=81'
+    url:'http://127.0.0.1:8765/p2/church-tour.html?startAt=89'
   });
   let chapelReady=false;
   for(let retry=0;retry<110;retry++){
@@ -154,8 +154,10 @@ try{
   if(!chapelReady)throw Error('Direct 3D sanctuary preview did not load');
   await sleep(700);
   const chapelClock=await evaluate('window.__churchFrameAudit');
-  if(!chapelClock || chapelClock.at<81 || chapelClock.at>86)
+  if(!chapelClock || chapelClock.at<89 || chapelClock.at>94)
     throw Error('Sanctuary preview did not start at chapter 81: '+JSON.stringify(chapelClock));
+  if(!Number.isFinite(chapelClock.portalIntensity) || chapelClock.portalIntensity<1)
+    throw Error('Direct sanctuary preview must begin with illuminated cross, not at night: '+JSON.stringify(chapelClock));
   console.log('P2_DIRECT_CHAPEL_PREVIEW='+JSON.stringify(chapelClock));
   const chapelShot=await send('Page.captureScreenshot',{
     format:'jpeg',quality:65,captureBeyondViewport:false,fromSurface:true
