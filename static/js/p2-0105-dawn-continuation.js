@@ -1064,6 +1064,9 @@
    waiting.remove();
    const gallery=document.createElement('div');gallery.className='dawn-contemporary__grid';
    for(const candidate of manifest.candidates){
+    // The existing Dawn 203k collection is free to read. Never introduce a
+    // paid or unverified reading source into the reader-facing shelf.
+    if(!['verified-free-download','verified-free-subscription','verified-free-reading'].includes(candidate.freeReading?.status))continue;
     const url=safeHttp(candidate.sourceUrl);
     if(!url||!candidate.title||!candidate.author)continue;
     const card=document.createElement('button');card.type='button';
