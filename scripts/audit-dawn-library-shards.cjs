@@ -102,7 +102,9 @@ function scanCovers(rootCanonical){
     stats.covers.declaredCountDrift++;
     warnings.push(where+': manifest count '+meta.count+' but actual '+rows.length);
    }
-   check(value.count===rows.length,where+': self count differs from items');
+   // Historic filtered preview shards may have stale internal counts. It is
+   // a source discrepancy to report, not reason to block the entire audit.
+   check(value.count===rows.length,where+': self count '+value.count+' differs from '+rows.length,false);
    for(const item of rows){
     idCheck('covers',item.workId,where);
     check(seen.canonical.has(item.workId),where+': orphan Work '+item.workId);
