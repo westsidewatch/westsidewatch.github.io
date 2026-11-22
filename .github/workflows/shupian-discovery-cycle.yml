@@ -27,7 +27,7 @@ jobs:
         run: |
           python3 scripts/shupian_recovery/discover_sources.py \
             --keywords '黑鏡' '神探夏洛克' \
-            --max-audits 24 \
+            --max-audits 4 --rescan-previous \
             --report static/shupian/recovery/engine-live-round.json
       - name: Verify report schema and no fake catalog admission
         run: |
