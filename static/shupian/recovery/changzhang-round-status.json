@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "source": "Changzhang",
+  "origin": "https://changzhang.tv/help/app",
+  "observed_at_utc": "2026-11-22",
+  "scan_status": "LIVE_RESULT_NOT_YET_VERIFIED",
+  "history": {
+    "date": "2026-11-20",
+    "tested_titles": 12,
+    "segment_sample_pass": 10
+  },
+  "today": {
+    "catalog_candidates": null,
+    "media_candidates": null,
+    "unique_hls": null,
+    "hls_sampled": 0,
+    "hls_sample_pass": 0,
+    "failure_count": null
+  },
+  "stages": {
+    "discovery": "NETWORK_BLOCKED_IN_LOCAL_ENVIRONMENT",
+    "ad_quality": "NOT_TESTED",
+    "playback": "NOT_TESTED",
+    "website": "DIAGNOSTIC_ONLY"
+  },
+  "fully_verified_clean": 0,
+  "published_playable_sources": 0,
+  "categories": [
+    {
+      "key": "latest_us_uk_series",
+      "label": "最新美劇／英劇",
+      "catalog_ids": null,
+      "media_matches": null
+    },
+    {
+      "key": "japanese_anime",
+      "label": "日本動漫",
+      "catalog_ids": null,
+      "media_matches": null
+    },
+    {
+      "key": "classic_films",
+      "label": "經典電影",
+      "catalog_ids": null,
+      "media_matches": null
+    },
+    {
+      "key": "gospel_media",
+      "label": "福音影視",
+      "catalog_ids": null,
+      "media_matches": null
+    }
+  ],
+  "errors": [
+    {
+      "stage": "local-network",
+      "reason": "This execution container cannot resolve api.changzhang.tv; not a source-zero result."
+    }
+  ],
+  "warning": "This is an unverified baseline; a fresh GitHub Actions result will replace it if and when the external scan executes."
+}
