@@ -628,7 +628,8 @@
     displayClassificationRoots();
     // Direct edition review URL, while keeping normal navigation unchanged.
     const category=new URLSearchParams(location.search).get('category');
-    if(category==='zh')displayChineseGroups();
+    if(category==='zh'||category==='zh-modern')void displayContemporaryChinese();
+    else if(category==='zh-archive')displayChineseGroups();
     else if(category){
      const group=(classificationTree.roots||[]).find(item=>item.id===category||item.children?.some(child=>child.id===category));
      if(group){
@@ -1003,8 +1004,8 @@
   $('#dawn-primary-records')?.removeAttribute('aria-current');
   classificationCrumbs([{label:'中文圖書',action:displayChineseGroups}]);
   const wall=classificationWall();
-  for(const [i,[key,items]] of [...chineseGroups()].entries())
-   wall.append(classificationSleeve(chineseName(key),String(items.length)+' 部',()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest','zh:'+key,items));
+  // Contemporary Chinese comes first in the editorial order. Historical
+  // Chinese originals remain accessible as archival shelves beneath it.
   // Research shelf: catalogue candidates and verified translations are NOT
   // inserted into original 47 canonical Chinese works or the 203,448 index.
   const newShelf=classificationSleeve('當代中文與譯作','新書與中文譯作',()=>void displayContemporaryChinese(),
@@ -1020,12 +1021,24 @@
    folio.append(en,zh);art.append(folio);
   }
   wall.append(newShelf);
+  for(const [i,[key,items]] of [...chineseGroups()].entries()){
+   const legacy=classificationSleeve(chineseName(key),String(items.length)+' 部早期文獻',
+    ()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest','zh:'+key,items);
+   legacy.classList.add('dawn-classification__sleeve--historical-zh');
+   wall.append(legacy);
+  }
   refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
  }
  async function displayContemporaryChinese(){
   const ticket=++classificationTicket;
   classificationFacets(false);
+  canonicalMode=false;
+  $('#dawn-primary-categories')?.removeAttribute('aria-current');
+  $('#dawn-primary-chinese')?.setAttribute('aria-current','page');
+  $('#dawn-primary-records')?.removeAttribute('aria-current');
+  $('#dawn-primary-historical')?.removeAttribute('aria-current');
+  setFullRecordIndexVisible(false);
   classificationCrumbs([
    {label:'中文圖書',action:displayChineseGroups},
    {label:'當代中文與譯作',action:()=>void displayContemporaryChinese()}
@@ -1093,8 +1106,9 @@
     gallery.append(card);
    }
    panel.append(gallery);
-   const back=classificationBackButton('返回中文書目分類',displayChineseGroups);
-   panel.append(back);
+   const archive=classificationBackButton('閱讀早期中文古籍 · 47 部',displayChineseGroups);
+   archive.classList.add('dawn-contemporary__archive-entry');
+   panel.append(archive);
    $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
   }catch(error){
    if(ticket!==classificationTicket)return;
@@ -1236,7 +1250,7 @@
  $('#dawn-primary-categories')?.addEventListener('click',()=>{if(activePortal==='all')displayClassificationRoots();else openCollection()});
  $('#dawn-primary-chinese')?.addEventListener('click',()=>{
   if(activePortal!=='all')openCollection();
-  void renderCatalogueClassification().then(()=>displayChineseGroups());
+  void renderCatalogueClassification().then(()=>void displayContemporaryChinese());
  });
  $('#dawn-primary-records')?.addEventListener('click',()=>{
   if(activePortal!=='all')openCollection();
