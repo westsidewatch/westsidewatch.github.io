@@ -915,9 +915,13 @@ const route = [
   { at:154, p:[2.6,-0.38,-9.7],look:[4.9,-0.25,-11.3] },  // -2.10 cafe
   { at:165, p:[3.5,0.08,-11.5],look:[5.9,0.45,-13.6] },  // C-shaped return
   { at:176, p:[4.6,1.1,-14.65],look:[6.2,2.2,-16.0]},  // north terraces
-  { at:187, p:[6.0,2.7,-15.7],look:[8.5,3.0,-16.5] },  // north mid
-  { at:199, p:[8.3,3.9,-16.9],look:[10.8,4.6,-16.8]},  // upper staircase
-  { at:211, p:[10.9,5.04,-13.8],look:[8.0,1.65,-9.3]}, // third-floor overlook
+  // The V26 staircase follows z=-16.82. Its occupied third-floor
+  // slab begins at z=-16.05: keep the visitor NORTH of that soffit while
+  // climbing instead of passing through the low floor/ceiling cavity.
+  { at:187, p:[6.0,2.7,-16.84],look:[8.5,3.15,-16.83]},  // foot of stair, clear corridor
+  { at:199, p:[8.3,3.90,-16.84],look:[10.7,4.40,-16.84]}, // climb above the original treads
+  { at:205, p:[10.15,4.78,-16.52],look:[11.0,4.75,-14.6]},// rotate onto occupied upper floor
+  { at:211, p:[10.9,5.04,-13.8],look:[8.0,1.65,-9.3]},  // controlled courtyard reveal
   { at:223, p:[10.65,5.03,-13.0],look:[7.65,1.30,-9.65]}, // red maple reveal
   { at:236, p:[9.0,12.4,-9.0],look:[9.0,1.8,-9.0]},   // rising sky
   { at:246, p:[18.2,6.8,17.7],look:[13.8,3.35,-2.6]},// more intimate front vista
