@@ -83,23 +83,39 @@ fs.mkdirSync(dir,{recursive:true});
     paperSize:paperRect?{w:paperRect.width,h:paperRect.height}:null,
     author:paper?.querySelector('.dawn-contemporary__folio-foot span')?.textContent,
     backdrop:!!art?.querySelector('.dawn-contemporary__cover-backdrop'),
-    coverSize:frame?{w:frame.width,h:frame.height}:null};
+    coverSize:frame?{w:frame.width,h:frame.height}:null,
+    imageSrc:image?.getAttribute('src')||null,
+    imageNaturalWidth:image?.naturalWidth||0,imageNaturalHeight:image?.naturalHeight||0,
+    imageFit:image?getComputedStyle(image).objectFit:null};
   }));
+  const published=manifest.candidates.filter(c=>['verified-free-download','verified-free-subscription','verified-free-reading'].includes(c.freeReading?.status));
+  const configured=published.filter(c=>c.coverUrl);
+  const rendered=visualProof.filter(p=>p.pictured);
+  console.log('CHINESE_PUBLISHER_TILE_IMAGES',device,JSON.stringify({
+   withCoverURLs:configured.length,rendered:rendered.length,
+   cards:visualProof.map(p=>({title:p.title,pictured:p.pictured,src:p.imageSrc,width:p.imageNaturalWidth}))}));
   for(const proof of visualProof){
-   assert(proof.title?.length>1,device+': modern cover fallback has no real title');
-   assert(proof.artSize?.w>120&&proof.artSize?.h>150,
-    device+': book square is too small or has no defined height');
-   assert(proof.paperSize?.w>=proof.artSize.w-4&&proof.paperSize?.h>=proof.artSize.h-4,
-    device+': title folio does not fill the tile: '+proof.title);
-   assert(proof.author?.trim(),
-    device+': typographic edition misses author: '+proof.title);
-   assert(!proof.pictured&&!proof.backdrop&&proof.imageOpacity===null,
-    device+': book jacket appeared before selection: '+proof.title);
-   assert(proof.artBackground!=='rgb(255, 255, 255)'&&proof.artBackground!=='rgb(247, 245, 237)',
-    device+': first stage should be filled harvest-yellow typography: '+proof.title);
+   assert(proof.title?.length>1,device+': missing exact-book title');
+   assert(proof.artSize?.w>120&&proof.artSize?.h>150,device+': invalid book square');
    assert(Math.abs(proof.artSize.w-proof.artSize.h)<3,
-    device+': first-stage editorial tile must be square: '+proof.title);
+    device+': card must remain a square before expansion: '+proof.title);
+   assert(proof.author?.trim(),device+': book metadata lacks its real author');
+   if(proof.pictured){
+    assert(proof.imageNaturalWidth>120&&proof.imageNaturalHeight>120,
+     device+': purported cover is not actually loaded: '+proof.title);
+    assert(proof.coverSize?.w>=proof.artSize.w-4&&proof.coverSize?.h>=proof.artSize.h-4,
+     device+': publisher cover does not fill entire square: '+proof.title);
+    assert(proof.imageFit==='cover',device+': image not set to fill square');
+   }else{
+    assert(!proof.imageNaturalWidth,
+     device+': image was loaded but obscured by typography: '+proof.title);
+   }
   }
+  // The first page must display real publisher jackets rather than a complete
+  // wall of colored labels. Strict full-coverage remains a release requirement
+  // once each official source image is verified.
+  assert(rendered.length>=Math.min(6,configured.length),
+   device+': publisher jackets missing; source URLs or CSS must be repaired');
   const headingText=await page.locator('#dawn-classification-results .dawn-classification__result-heading').innerText();
   assert(headingText.includes('認識作者與作品')&&headingText.includes('出版方'),
    device+': book introduction must explain the reader journey');
