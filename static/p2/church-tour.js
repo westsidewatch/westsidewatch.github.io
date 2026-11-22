@@ -195,12 +195,30 @@ finaleExteriorLamp.position.set(15,3.65,.15);
 finaleExteriorLamp.target.position.set(15,2.8,7.2);
 finaleExteriorLamp.castShadow=false;
 scene.add(finaleExteriorLamp,finaleExteriorLamp.target);
+// Warm light reflected by the actual WHITE FACADE: without this real
+// PBR wash the cross looked like a harsh, isolated white neon sticker.
+const finaleFacadeBounce=new SpotLight(0xffc58e,0,12,1.02,.92,2);
+finaleFacadeBounce.position.set(15.1,3.55,4.4);
+finaleFacadeBounce.target.position.set(15.0,3.25,-.12);
+finaleFacadeBounce.castShadow=false;
+scene.add(finaleFacadeBounce,finaleFacadeBounce.target);
+const finaleGroundPool=new Mesh(
+  new PlaneGeometry(7.8,8.6),
+  luminousSurface(crossLightMask("air"),0,.93)
+);
+finaleGroundPool.material.emissive.setHex(0xffba78);
+finaleGroundPool.rotation.x=-Math.PI/2;
+finaleGroundPool.position.set(15,-.379,4.0);
+finaleGroundPool.renderOrder=3;
+finaleGroundPool.name="Exterior crosslight pool beyond the threshold";
+scene.add(finaleGroundPool);
 // Cross aperture backing is slightly behind the opening; the very faint
 // exterior scattering plane is just outside the south facade.
 const finaleCrossCore=new Mesh(
   new PlaneGeometry(6.35,7.55),
   luminousSurface(crossLightMask("cross"),0,1.12)
 );
+finaleCrossCore.material.emissive.setHex(0xffd4a0);
 finaleCrossCore.position.set(15,3.65,-.26);
 finaleCrossCore.renderOrder=3;finaleCrossCore.name="Cross interior tungsten luminance";
 scene.add(finaleCrossCore);
@@ -208,11 +226,12 @@ const finaleCrossHalo=new Mesh(
   new PlaneGeometry(6.35,7.55),
   luminousSurface(crossLightMask("cross"),0,.58)
 );
+finaleCrossHalo.material.emissive.setHex(0xffbb81);
 finaleCrossHalo.position.set(15,3.65,.075);
 finaleCrossHalo.renderOrder=4;finaleCrossHalo.name="Cross exterior feathered glow";
 scene.add(finaleCrossHalo);
 const finaleAirMaterial=crossAirMaterial.clone();
-finaleAirMaterial.uniforms.uTint.value.set(1,.78,.55);
+finaleAirMaterial.uniforms.uTint.value.set(1,.70,.44);
 const finaleRays=[];
 const finaleOrigin=new Vector3(15,3.65,.19);
 const finaleTarget=new Vector3(15,2.65,8.6);
@@ -260,7 +279,7 @@ window.__churchLightAudit={
   aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,
   crossCenter:[crossAperture.x,crossAperture.y,crossAperture.z],
   bounceSources:2,volumeShader:true,beamTracksSun:true,adaptiveExposure:true,
-  outwardFinale:true,version:"R23"
+  outwardFinale:true,facadeWarmth:true,version:"R24"
 };
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
@@ -789,8 +808,8 @@ const route = [
   { at:211, p:[10.9,5.04,-13.8],look:[8.0,1.65,-9.3]}, // third-floor overlook
   { at:223, p:[10.65,5.03,-13.0],look:[7.65,1.30,-9.65]}, // red maple reveal
   { at:236, p:[9.0,12.4,-9.0],look:[9.0,1.8,-9.0]},   // rising sky
-  { at:246, p:[18.0,9.4,21.0],look:[13.8,3.5,-2.9]}, // turn toward true south cross
-  { at:251, p:[18.0,9.4,21.0],look:[13.8,3.5,-2.9]}  // still finale: warm hope shines out
+  { at:246, p:[18.2,6.8,17.7],look:[13.8,3.35,-2.6]},// more intimate front vista
+  { at:251, p:[18.2,6.8,17.7],look:[13.8,3.35,-2.6]} // same stable dusk cross finale
 ];
 
 // The original scenes each played their own sunrise-to-sunset time lapse.
@@ -902,7 +921,7 @@ function updateDaylight(t,duration) {
     ambientFill.intensity*=1-.45*twilight;
     bounceFill.intensity*=1-.30*twilight;
     // A white facade stays legible against first-night blue, not black.
-    renderer.toneMappingExposure*=1-.07*twilight;
+    renderer.toneMappingExposure*=1+.035*twilight;
     // Daytime sunlight entering the cross ends before the final outward glow.
     apertureGlow.material.opacity*=1-twilight;
     crossFloorLight.material.opacity*=1-twilight;
@@ -910,17 +929,21 @@ function updateDaylight(t,duration) {
     crossWallBounce.intensity*=1-twilight;
     crossAirMaterial.uniforms.uLight.value*=1-twilight;
   }
-  finaleInteriorLamp.intensity=9.5*lit;
+  finaleInteriorLamp.intensity=12*lit;
   finaleExteriorLamp.intensity=11*lit;
-  finaleCrossCore.material.opacity=.39*lit;
-  finaleCrossHalo.material.opacity=.12*lit;
-  finaleAirMaterial.uniforms.uLight.value=.115*lit;
+  finaleFacadeBounce.intensity=19*lit;
+  finaleCrossCore.material.opacity=.36*lit;
+  finaleCrossHalo.material.opacity=.20*lit;
+  finaleGroundPool.material.opacity=.24*lit;
+  finaleAirMaterial.uniforms.uLight.value=.15*lit;
   finaleAirMaterial.uniforms.uTime.value=t;
   window.__churchFinaleAudit={
     active:t>=232,twilight:+twilight.toFixed(4),
     crossCore:finaleCrossCore.material.opacity,
     interiorLamp:finaleInteriorLamp.intensity,
     exteriorLamp:finaleExteriorLamp.intensity,
+    facadeBounce:finaleFacadeBounce.intensity,
+    groundPool:finaleGroundPool.material.opacity,
     outwardBeam:finaleAirMaterial.uniforms.uLight.value,
     skyGradient:scene.background===finalSkyTexture,
     direction:"inside-to-outside",
