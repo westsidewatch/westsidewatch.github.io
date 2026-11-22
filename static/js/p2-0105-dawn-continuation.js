@@ -495,42 +495,221 @@
   for(const text of channelCopy[channel]||[]){const p=document.createElement('p');p.textContent=text;portalIntro.append(p)}
   portalIntro.hidden=!portalIntro.childElementCount;
  }
- let classificationPromise=null,selectedCentury='';
- const centuryLabel={ '15c':'十五世紀','16c':'十六世紀','17c':'十七世紀','18c':'十八世紀','19c':'十九世紀' };
+ let classificationPromise=null,selectedCentury='',classificationTree=null,chineseLibrary=null,classificationTicket=0;
+ const centuryLabel={'15c':'十五世紀','16c':'十六世紀','17c':'十七世紀','18c':'十八世紀','19c':'十九世紀'};
  const facetLabel={author:'作者',language:'語言',period:'時代','bible-book':'聖經書卷',tradition:'傳統','resource-type':'資源類型','reading-level':'閱讀程度','original-publication-era':'原始出版年代'};
+ const taxonomyQueries={
+  'bible.text':'Biblical text','bible.translation':'Bible translation','bible.old-testament':'Old Testament',
+  'bible.new-testament':'New Testament','bible.book-study':'Bible commentary',
+  'exegesis.commentary':'Commentary','exegesis.hermeneutics':'Hermeneutics',
+  'exegesis.reference':'Bible dictionary','exegesis.biblical-theology':'Biblical theology',
+  'theology.systematic':'Systematic theology','theology.trinity':'Trinity',
+  'theology.christology':'Christ','theology.salvation':'Salvation',
+  'theology.spirit':'Holy Spirit','theology.church':'Church','theology.eschatology':'Revelation',
+  'biblical-world.jewish':'Jewish','biblical-world.second-temple':'Jerusalem',
+  'biblical-world.archaeology':'Archaeology','biblical-world.geography':'Holy Land',
+  'biblical-world.languages':'Hebrew','biblical-world.ane':'Ancient Near East',
+  'church-history.early':'Early Church','church-history.fathers':'Church Fathers',
+  'church-history.medieval':'Medieval Church','church-history.reformation':'Reformation',
+  'church-history.puritan':'Puritan','church-history.revival':'Revival',
+  'church-history.missions':'Mission',
+  'christian-life.prayer':'Prayer','christian-life.devotion':'Devotion',
+  'christian-life.discipleship':'Discipleship','christian-life.holiness':'Holiness',
+  'christian-life.suffering':'Suffering','christian-life.family':'Christian Family',
+  'christian-life.pastoral-care':'Pastoral',
+  'ministry.preaching':'Preaching','ministry.teaching':'Teaching',
+  'ministry.worship':'Worship','ministry.mission':'Missions',
+  'ministry.pastoral':'Pastoral','ministry.governance':'Church Government'
+ };
+ const ChineseCategoryLabel={
+  'biography':'傳記','testimony':'見證','spiritual formation':'靈命塑造',
+  'Christian ethics':'基督教倫理','Christian life':'基督徒生活','prayer':'禱告',
+  'theology':'神學','church history':'教會歷史','church life':'教會生活',
+  'church practice':'教會實踐','literature':'文學','religion':'宗教',
+  'homiletics':'講道','social ethics':'社會倫理','social thought':'社會思想',
+  'Christian thought':'基督教思想','Christian literature':'基督教文學',
+  'Christian introduction':'基督教入門','Christian social thought':'基督教社會思想',
+  'discernment':'分辨','ethics':'倫理','culture':'文化',
+  'human studies':'人文研究','institutional history':'機構史',
+  'health':'健康','religious education':'宗教教育','youth':'青年',
+  'apologetics':'護教'
+ };
+ function chineseName(key){return ChineseCategoryLabel[key]||key}
  async function renderCatalogueClassification(){
-  const region=$('#dawn-classification'),tree=$('#dawn-classification-tree'),facets=$('#dawn-classification-facets');
-  if(!region||!tree||!facets)return;
+  const region=$('#dawn-classification'),tree=$('#dawn-classification-tree');
+  if(!region||!tree)return;
   region.hidden=false;
-  if(tree.dataset.ready==='true')return;
-  if(classificationPromise)return classificationPromise;
-  classificationPromise=(async()=>{
-   const response=await fetch('/dawn-library/classification.json');
-   if(!response.ok)throw Error('Classification index unavailable');
-   const taxonomy=await response.json();
-   // This is the admitted Dawn knowledge-map authority, not a newly
-   // invented or automatically inferred subject assignment for 21k Works.
-   for(const group of taxonomy.roots||[]){
-    const details=document.createElement('details');details.className='dawn-classification__group';
-    const summary=document.createElement('summary');
-    const head=document.createElement('strong');head.textContent=group.label;
-    const count=document.createElement('small');count.textContent=String((group.children||[]).length).padStart(2,'0')+' 個子類';
-    summary.append(head,count);details.append(summary);
-    const ul=document.createElement('ul');
-    for(const child of group.children||[]){
-     const li=document.createElement('li');li.textContent=child.label;li.dataset.taxonomyId=child.id;ul.append(li);
-    }
-    details.append(ul);tree.append(details);
-   }
-   const title=document.createElement('p');title.className='dawn-classification__facet-label';title.textContent='館藏著錄維度';
-   const tags=document.createElement('div');tags.className='dawn-classification__facet-tags';
-   for(const facet of taxonomy.facets||[]){const span=document.createElement('span');span.textContent=facetLabel[facet]||facet;tags.append(span)}
-   const notice=document.createElement('p');notice.className='dawn-classification__scope';
-   notice.textContent='知識分類與書目清單分別依照館藏原始資料呈現。尚未建立逐冊分類關聯的條目，不會被擅自歸入某一學科。';
-   facets.append(title,tags,notice);
-   tree.dataset.ready='true';
-  })().catch(error=>{classificationPromise=null;console.warn('[Dawn classification]',error)});
+  if(!classificationPromise){
+   classificationPromise=(async()=>{
+    const [classificationResponse,chineseResponse]=await Promise.all([
+     fetch('/dawn-library/classification.json'),
+     fetch('/dawn-library/chinese-collection.json')
+    ]);
+    if(!classificationResponse.ok||!chineseResponse.ok)throw Error('Dawn classification sources unavailable');
+    classificationTree=await classificationResponse.json();
+    chineseLibrary=await chineseResponse.json();
+    displayClassificationRoots();
+   })().catch(error=>{classificationPromise=null;console.error('[Dawn index]',error)});
+  }
   return classificationPromise;
+ }
+ function classificationCrumbs(crumbs){
+  const nav=$('#dawn-classification-path');nav.replaceChildren();
+  const path=[{label:'全部分類',action:displayClassificationRoots},...crumbs];
+  path.forEach((part,i)=>{
+   if(i){const sep=document.createElement('span');sep.textContent='/';sep.setAttribute('aria-hidden','true');nav.append(sep)}
+   if(i===path.length-1){const current=document.createElement('strong');current.textContent=part.label;current.setAttribute('aria-current','page');nav.append(current)}
+   else{const link=document.createElement('button');link.type='button';link.textContent=part.label;link.addEventListener('click',part.action);nav.append(link)}
+  });
+ }
+ function classificationSleeve(label,meta,action,style=''){
+  const tile=document.createElement('button');tile.type='button';
+  tile.className='dawn-classification__sleeve'+(style?' dawn-classification__sleeve--'+style:'');
+  const disc=document.createElement('span');disc.className='dawn-classification__vinyl';disc.setAttribute('aria-hidden','true');
+  const number=document.createElement('small');number.className='dawn-classification__index';number.textContent=meta||'';
+  const title=document.createElement('strong');title.textContent=label;
+  const edge=document.createElement('span');edge.className='dawn-classification__edge';edge.setAttribute('aria-hidden','true');
+  tile.append(disc,number,title,edge);tile.addEventListener('click',action);return tile;
+ }
+ function classificationWall(){
+  const tree=$('#dawn-classification-tree');tree.replaceChildren();
+  tree.className='dawn-catalogue__classification-tree dawn-classification__wall';
+  const panel=$('#dawn-classification-results');panel.hidden=true;panel.replaceChildren();
+  return tree;
+ }
+ function classificationFacets(show){
+  const facets=$('#dawn-classification-facets');
+  facets.hidden=!show;
+  if(!show||facets.dataset.ready==='true')return;
+  const title=document.createElement('p');title.className='dawn-classification__facet-label';title.textContent='館藏檢索維度';
+  const tags=document.createElement('div');tags.className='dawn-classification__facet-tags';
+  for(const item of classificationTree.facets||[]){const span=document.createElement('span');span.textContent=facetLabel[item]||item;tags.append(span)}
+  facets.prepend(title,tags);facets.dataset.ready='true';
+ }
+ function displayClassificationRoots(){
+  if(!classificationTree||!chineseLibrary)return;
+  ++classificationTicket;
+  classificationCrumbs([]);classificationFacets(true);
+  const wall=classificationWall();
+  for(const [i,group] of (classificationTree.roots||[]).entries()){
+   wall.append(classificationSleeve(group.label,String(group.children.length).padStart(2,'0')+' 個子類',()=>displayClassificationGroup(group),i%2?'olive':'harvest'));
+  }
+  wall.append(classificationSleeve('中文圖書',String(chineseLibrary.count||chineseLibrary.works?.length||0)+' 部藏書',displayChineseGroups,'chinese'));
+ }
+ function displayClassificationGroup(group){
+  if(!group)return;
+  ++classificationTicket;classificationFacets(false);
+  classificationCrumbs([{label:group.label,action:()=>displayClassificationGroup(group)}]);
+  const wall=classificationWall();
+  for(const [i,child] of (group.children||[]).entries()){
+   wall.append(classificationSleeve(child.label,String(i+1).padStart(2,'0'),()=>void displayClassificationLeaf(group,child),i%3===0?'olive':'harvest'));
+  }
+  $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
+ }
+ function classificationBackButton(text,handler){
+  const button=document.createElement('button');button.type='button';
+  button.className='dawn-classification__continue';button.textContent=text;button.addEventListener('click',handler);return button;
+ }
+ function classifiedBookCard(book){
+  const item=document.createElement('button');item.type='button';item.className='dawn-classification__book';
+  const cover=document.createElement('span');cover.className='dawn-classification__book-art';
+  if(book.cover?.url&&/^https:\/\//.test(book.cover.url)){
+   const img=document.createElement('img');img.src=book.cover.url;img.alt='原書封面：'+book.title;img.loading='lazy';img.decoding='async';
+   img.onerror=()=>{img.remove()};cover.append(img);
+  }
+  const text=document.createElement('span');text.className='dawn-classification__book-meta';
+  const name=document.createElement('strong');name.textContent=book.title;
+  const author=document.createElement('small');author.textContent=book.creator||'';
+  text.append(name,author);item.append(cover,text);
+  item.addEventListener('click',()=>openBook(book,'catalogue'));
+  return item;
+ }
+ function displayClassificationBooks(title,books,trail,subtitle,returnAction){
+  classificationFacets(false);classificationCrumbs(trail);
+  const wall=classificationWall();wall.hidden=true;
+  const panel=$('#dawn-classification-results');panel.hidden=false;
+  const intro=document.createElement('div');intro.className='dawn-classification__result-heading';
+  const heading=document.createElement('h4');heading.textContent=title;
+  const detail=document.createElement('p');detail.textContent=subtitle;
+  intro.append(heading,detail);panel.append(intro);
+  if(books.length){
+   const gallery=document.createElement('div');gallery.className='dawn-classification__book-wall';
+   for(const book of books.slice(0,36))gallery.append(classifiedBookCard(book));
+   panel.append(gallery);
+  }else{
+   const empty=document.createElement('p');empty.className='dawn-classification__empty';
+   empty.textContent='暫無對應的已核實書目。';panel.append(empty);
+  }
+  const actions=document.createElement('nav');actions.className='dawn-classification__actions';
+  actions.append(classificationBackButton('返回上層分類',returnAction));
+  actions.append(classificationBackButton('瀏覽全部館藏',()=>{displayClassificationRoots();$('#dawn-search').focus()}));
+  panel.append(actions);$('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
+ }
+ async function displayClassificationLeaf(group,child){
+  const ticket=++classificationTicket;
+  const trail=[{label:group.label,action:()=>displayClassificationGroup(group)},{label:child.label,action:()=>void displayClassificationLeaf(group,child)}];
+  classificationFacets(false);classificationCrumbs(trail);
+  const wall=classificationWall();wall.hidden=true;
+  const panel=$('#dawn-classification-results');panel.hidden=false;
+  const waiting=document.createElement('p');waiting.className='dawn-classification__empty';waiting.textContent='正在查找相關書名…';panel.append(waiting);
+  try{
+   const {resourceSearch}=await import('/js/resource-fabric-client.mjs');
+   const query=taxonomyQueries[child.id]||child.label;
+   const found=await resourceSearch(query);
+   if(ticket!==classificationTicket)return;
+   const entries=found.slice(0,36).map(work=>({
+    workId:work.workId,title:work.title,creator:(work.authors||[]).join(' · '),
+    cover:work.cover,authorityIds:work.authorityIds,edition:work.edition
+   }));
+   displayClassificationBooks(child.label,entries,trail,'相關書名檢索 · '+query+'。書名檢索不等同於完成逐冊學科標引。',()=>displayClassificationGroup(group));
+  }catch(err){
+   if(ticket!==classificationTicket)return;
+   displayClassificationBooks(child.label,[],trail,'目前無法取得相關書名。',()=>displayClassificationGroup(group));
+  }
+ }
+ function chineseGroups(){
+  const map=new Map();
+  for(const work of chineseLibrary?.works||[]){
+   const first=String(work.classification?.label||'未分類').split('/')[0].trim();
+   if(!map.has(first))map.set(first,[]);
+   map.get(first).push(work);
+  }
+  return map;
+ }
+ function displayChineseGroups(){
+  if(!chineseLibrary)return;
+  ++classificationTicket;classificationFacets(false);
+  classificationCrumbs([{label:'中文圖書',action:displayChineseGroups}]);
+  const wall=classificationWall();
+  for(const [i,[key,items]] of [...chineseGroups()].entries())
+   wall.append(classificationSleeve(chineseName(key),String(items.length)+' 部',()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest'));
+  $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
+ }
+ function displayChineseSubgroups(key){
+  ++classificationTicket;classificationFacets(false);
+  const trail=[{label:'中文圖書',action:displayChineseGroups},{label:chineseName(key),action:()=>displayChineseSubgroups(key)}];
+  classificationCrumbs(trail);
+  const wall=classificationWall();const works=chineseGroups().get(key)||[];
+  const subgroups=new Map();
+  for(const w of works){const domain=String(w.classification?.label||key);if(!subgroups.has(domain))subgroups.set(domain,[]);subgroups.get(domain).push(w)}
+  for(const [i,[domain,items]] of subgroups.entries()){
+   const subtitle=domain.split('/').map(chineseName).join(' · ');
+   wall.append(classificationSleeve(subtitle,String(items.length)+' 部',()=>displayChineseLeaf(key,domain),i%3===0?'chinese':'olive'));
+  }
+  $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
+ }
+ function displayChineseLeaf(key,domain){
+  ++classificationTicket;
+  const works=(chineseLibrary.works||[]).filter(w=>w.classification?.label===domain);
+  const books=works.map(w=>({
+   title:w.work.title,creator:w.work.creator||'',workId:w.workId,date:w.edition?.year||'',
+   cover:{url:w.cover?.url||null},sourceUrl:w.access?.url||w.source?.catalogUrl,
+   source:{url:w.access?.url||w.source?.catalogUrl}
+  }));
+  const trail=[{label:'中文圖書',action:displayChineseGroups},{label:chineseName(key),action:()=>displayChineseSubgroups(key)},
+   {label:domain.split('/').map(chineseName).join(' · '),action:()=>displayChineseLeaf(key,domain)}];
+  displayClassificationBooks(domain.split('/').map(chineseName).join(' · '),books,trail,
+   String(books.length)+' 部中文圖書 · 按書局原有分類著錄',()=>displayChineseSubgroups(key));
  }
  let editorialManifest=null,activeTopic='all',editorialWorks=[],portalTopics=null;
  async function loadEditorialChannels(){
