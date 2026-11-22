@@ -1,0 +1,29 @@
+name: Dawn CLSC authentic Chinese cover source
+on:
+  pull_request:
+    paths:
+      - 'scripts/dawn-clsc-source-audit.cjs'
+      - 'scripts/dawn-clsc-cover-builder.cjs'
+      - 'static/dawn-library/chinese-collection.json'
+      - '.github/workflows/dawn-clsc-cover-source.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect real Yale/HKBU CLSC PDF links and identifiers
+        run: node scripts/dawn-clsc-source-audit.cjs
+      - name: Preserve provenance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-clsc-source-provenance
+          path: artifacts/dawn-clsc/
+          if-no-files-found: warn
