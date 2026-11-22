@@ -1314,7 +1314,7 @@
 #dawn-second .dawn-reading-room__masthead h2{
  display:flex;flex-wrap:wrap;align-items:baseline;gap:.2em .55em;
  margin:0 0 clamp(16px,2vw,32px);
- font:900 clamp(42px,6vw,108px)/1.08 var(--ws-type-display-zh);
+ font:200 clamp(42px,6vw,108px)/1.08 var(--ws-type-display-zh);
  color:var(--ws-ink);
 }
 #dawn-second .dawn-reading-room__masthead h2 span{
@@ -1649,7 +1649,7 @@
  display:block!important;
  font-family:var(--ws-type-display-zh)!important;
  font-size:clamp(28px,2.8vw,48px)!important;line-height:1.15!important;
- font-weight:900!important;letter-spacing:0!important;
+ font-weight:200!important;letter-spacing:0!important;
  color:var(--ws-harvest)!important;
 }
 #dawn-second .dawn-reading-room__lead{
