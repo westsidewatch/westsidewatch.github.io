@@ -576,6 +576,51 @@ function overlapsWalkColumn(box,p,radius=.72){
   return box.min.x<=p[0]+radius&&box.max.x>=p[0]-radius
     &&box.min.z<=p[2]+radius&&box.max.z>=p[2]-radius;
 }
+// R27: The eight V26 upper-ascent treads were isolated individual cubes,
+// visually forming loose fragments. Use their ORIGINAL GLB coordinates to
+// add two narrow structural stringers just beneath their undersides.
+// Preserve treads, landings and the open usable space under the staircase.
+const upperStairAudit={treads:0,stringers:0,source:"V26_ROUTE_03",centers:[]};
+function connectUpperStairTreads(building){
+  const steps=[];
+  building.updateMatrixWorld(true);
+  building.traverse(mesh=>{
+    if(!mesh.isMesh||!mesh.visible)return;
+    if(!/^v26 route 03 .*inhabited upper ascent/i.test(modelName(mesh.name)))return;
+    const b=meshWorldBox(mesh);if(b)steps.push({mesh,b});
+  });
+  steps.sort((a,b)=>a.b.min.x-b.b.min.x);
+  upperStairAudit.treads=steps.length;
+  upperStairAudit.centers=steps.map(x=>([
+    +(x.b.min.x+x.b.max.x).toFixed(2)/2,
+    +(x.b.min.y+x.b.max.y).toFixed(2)/2
+  ]));
+  if(steps.length<6)return;
+  const first=steps[0].b,last=steps[steps.length-1].b;
+  const x0=(first.min.x+first.max.x)/2;
+  const x1=(last.min.x+last.max.x)/2;
+  const rise=(last.min.y-first.min.y)/(x1-x0);
+  const baseX=x0-.28,topX=x1+.28;
+  const baseY=first.min.y-.075-rise*.28;
+  const topY=last.min.y-.075+rise*.28;
+  const length=Math.hypot(topX-baseX,topY-baseY);
+  const depth=(first.max.z-first.min.z);
+  const zCenter=(first.min.z+first.max.z)/2;
+  const angle=Math.atan2(topY-baseY,topX-baseX);
+  const beamMaterial=whiteArchitecture;
+  for(const zSide of [-1,1]){
+    const beam=new Mesh(new BoxGeometry(length,.15,.105),beamMaterial);
+    beam.name="V26 continuous upper stair structural side stringer";
+    beam.position.set((baseX+topX)/2,(baseY+topY)/2,
+      zCenter+zSide*(depth/2-.09));
+    beam.rotation.z=angle;
+    beam.castShadow=true;
+    beam.receiveShadow=true;
+    building.add(beam);
+    upperStairAudit.stringers++;
+  }
+}
+
 function removeHeadHeightHazards(building){
   // Check REAL BIM/GLB bounds against every half-second of the LOWER
   // forum descent. A low horizontal projection into the walking corridor
@@ -786,9 +831,11 @@ async function loadArchitecture() {
   });
   cleanOpenPublicSpaces(building);
   removeCoplanarDuplicateSheets(building);
+  connectUpperStairTreads(building);
   removeHeadHeightHazards(building);
   buildCameraSafetyBoxes(building);
   window.__churchSurfaceAudit=sheetRepair;
+  window.__churchUpperStairAudit=upperStairAudit;
   scene.add(building);
   const sweptClearance=forumPathTimes().map(t=>{
     const step=positionAlongRoute(t);
