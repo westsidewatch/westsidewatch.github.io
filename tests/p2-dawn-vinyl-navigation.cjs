@@ -43,6 +43,15 @@ fs.mkdirSync(out,{recursive:true});
   await journey.locator('#dawn-open-catalogue-top').click();
   await journey.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length===9,null,{timeout:35000});
   assert(await journey.locator('#dawn-classification').isVisible(),'normal nav did not open vinyl classification');
+  // Dynamic jackets must use genuine sourced images, never black record art.
+  await journey.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree .dawn-classification__art img').length>=1,null,{timeout:30000});
+  const jacket=await journey.locator('#dawn-classification-tree .dawn-classification__sleeve').first().evaluate(el=>({
+   background:getComputedStyle(el).backgroundColor,
+   image:!!el.querySelector('.dawn-classification__art img'),
+   disc:!!el.querySelector('.dawn-classification__vinyl')
+  }));
+  assert(jacket.image&&!jacket.disc,'category still renders a manufactured vinyl disc');
+
   assert(!(await journey.locator('#dawn-catalogue .dawn-catalogue__nav').isVisible()),'old search page appears before vinyl wall');
   assert(!(await journey.locator('#dawn-works').isVisible()),'old flat results appear at the landing');
   await journey.screenshot({path:path.join(out,'desktop-normal-entry-vinyl.png'),fullPage:false});
