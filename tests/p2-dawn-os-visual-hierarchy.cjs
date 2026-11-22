@@ -29,6 +29,20 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
       collectionEn:grab('.dawn-second__all-works .dawn-second__nav-en'),
       collectionZh:grab('.dawn-second__all-works .dawn-second__nav-zh'),
       personalEn:grab('.dawn-second__personal .dawn-second__nav-en'),
+      featureEn:grab('#dawn-wall-grid .dawn-feature__titles em'),
+      featureZh:grab('#dawn-wall-grid .dawn-feature__titles strong'),
+      missingCoverCSS:(()=>{
+       const sheet=document.createElement('button');
+       sheet.className='dawn-cover dawn-cover--missing';
+       sheet.innerHTML='<span class="dawn-cover__meta"><strong>Real source title</strong></span>';
+       sheet.style.cssText='position:absolute;width:210px;height:210px;visibility:hidden';
+       document.querySelector('#dawn-wall-grid').append(sheet);
+       const meta=sheet.querySelector('.dawn-cover__meta');
+       const value={tileDisplay:getComputedStyle(sheet).display,opacity:getComputedStyle(meta).opacity,
+        copy:getComputedStyle(meta).color};
+       sheet.remove();return value;
+      })(),
+      personalLabelBackground:getComputedStyle(document.querySelector('.dawn-second__personal>.dawn-second__nav-en')).backgroundColor,
       mastEn:grab('#dawn-room-heading > span'),
       mastZh:grab('#dawn-room-heading > strong'),
       lead:grab('.dawn-reading-room__lead'),
@@ -46,6 +60,15 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
      assert(/Chiron/i.test(zh.font),device+': '+id+' Chinese family is not OS Chiron: '+zh.font);
      assert.equal(zh.weight,200,device+': '+id+' Chinese helper is not 200');
    }
+   assert(result.featureEn.size>result.featureZh.size*1.18,
+    device+': editorial cover portal still uses oversized Chinese and tiny English');
+   assert.equal(result.featureZh.weight,200,
+    device+': three feature portal Chinese labels must be 200');
+   assert(result.personalLabelBackground==='rgba(0, 0, 0, 0)'||
+     result.personalLabelBackground==='transparent',
+     device+': old personal counter pill behind English navigation text');
+   assert(result.missingCoverCSS.tileDisplay!=='none'&&result.missingCoverCSS.opacity==='1',
+     device+': missing jackets still disappear or become blank grid swatches');
    assert(result.mastEn.size>result.mastZh.size*1.28,
     device+': English masthead is not dominant');
    assert(result.mastEn.font.includes('Bodoni'),device+': main masthead missing Bodoni');
