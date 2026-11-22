@@ -2243,3 +2243,27 @@
  #dawn-second .dawn-contemporary__metadata{padding:11px!important}
  #dawn-second .dawn-contemporary__metadata>strong{font-size:clamp(16px,4vw,23px)!important}
 }
+
+
+/* R70 · Pending external artwork may NEVER render as white blank sheets.
+   Only a fully loaded source-declared picture may conceal the gold title folio. */
+#dawn-second .dawn-contemporary__art>img{
+ opacity:0!important;
+ pointer-events:none!important;
+ transition:opacity .25s ease!important;
+}
+#dawn-second .dawn-contemporary__book--pictured .dawn-contemporary__art>img{
+ opacity:1!important;
+}
+#dawn-second .dawn-contemporary__book:not(.dawn-contemporary__book--pictured) .dawn-contemporary__folio{
+ opacity:1!important;z-index:1!important;
+}
+#dawn-second .dawn-expander__book .dawn-expander__book-image{
+ opacity:0!important;
+}
+#dawn-second .dawn-expander__book--ready .dawn-expander__book-image{
+ opacity:1!important;
+}
+#dawn-second .dawn-expander__book--ready .dawn-expander__book-paper{
+ display:none!important;
+}
