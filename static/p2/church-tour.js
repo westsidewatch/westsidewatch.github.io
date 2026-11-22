@@ -571,6 +571,21 @@ function updateMapleSeason(t,duration) {
 // Preserve doors, true stair treads, walls and the third-level overlook.
 // The original concept GLB also contained room-study slabs and ghost roof
 // panels which are NOT walkable head-clearance-safe in the sunken forum.
+// R32: source-GLB panel overlap pairs were measured in the 241-node
+// geometry ledger. Never hide whole walls or floors to solve Z-fighting;
+// give the redundant painted face a tiny render-depth priority instead.
+// This affects only the listed original pieces, never the maple or glass.
+const localDepthBiasAudit=[];
+function stableCoplanarRenderTier(name){
+  const n=modelName(name);
+  if(/^v11 support .*west high outer room structural enclosure/.test(n))return -3;
+  if(/^v11 support .*north high outer room structural enclosure/.test(n))return -3;
+  if(/^v11 support .*west mid exterior structural enclosure/.test(n))return -1;
+  if(/^south entry east boundary (?:solid|staff doorway header)/.test(n))return -2;
+  if(/^v29 south entry .*receiving fl/.test(n))return -2;
+  if(/^v18 level route .*courtyard north door eastward flush deck/.test(n))return -2;
+  return 0;
+}
 const ghostRoofMeshes=[];
 const removedObstructions=[];
 const forumSafetyBoxes=[];
@@ -881,6 +896,16 @@ async function loadArchitecture() {
     if (/^roof/i.test(part) && object.material?.color)
       originalStructuralMaterials.set(object.material,object.material.color.clone());
     const isGlazing = /glass|glazing|glazed|window pane/.test(part);
+    const tier=!isGlazing ? stableCoplanarRenderTier(part) : 0;
+    if(tier){
+      // Clone per source mesh: no scene-wide polygon offset and no deletion.
+      const stable=object.material.clone();
+      stable.polygonOffset=true;
+      stable.polygonOffsetFactor=tier;
+      stable.polygonOffsetUnits=tier;
+      object.material=stable;
+      localDepthBiasAudit.push({name:object.name,tier});
+    }
     if (isGlazing) {
       object.material.transparent = true;
       object.material.depthWrite = false;
@@ -896,6 +921,12 @@ async function loadArchitecture() {
   removeHeadHeightHazards(building);
   buildCameraSafetyBoxes(building);
   window.__churchSurfaceAudit=sheetRepair;
+  window.__churchDepthLayerAudit={
+    source:"R31 original GLB coplanar survey",
+    preservedOriginalMeshes:true,
+    count:localDepthBiasAudit.length,
+    panels:localDepthBiasAudit
+  };
   window.__churchUpperStairAudit=upperStairAudit;
   scene.add(building);
   const sweptClearance=forumPathTimes().map(t=>{
