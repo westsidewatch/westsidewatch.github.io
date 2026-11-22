@@ -61,14 +61,34 @@ fs.mkdirSync(dir,{recursive:true});
    const art=card.querySelector('.dawn-contemporary__art');
    const paper=art?.querySelector('.dawn-contemporary__folio');
    const img=art?.querySelector('img');
+   const artRect=art?.getBoundingClientRect();
+   const paperRect=paper?.getBoundingClientRect();
+   const image=art?.querySelector('img:not(.dawn-contemporary__cover-backdrop)');
+   const frame=image?.getBoundingClientRect();
    return {title:paper?.querySelector('strong')?.textContent,
     pictured:card.classList.contains('dawn-contemporary__book--pictured'),
     paperColor:paper?getComputedStyle(paper).color:'',
     artBackground:art?getComputedStyle(art).backgroundColor:'',
-    imageOpacity:img?parseFloat(getComputedStyle(img).opacity):null};
+    imageOpacity:image?parseFloat(getComputedStyle(image).opacity):null,
+    artSize:artRect?{w:artRect.width,h:artRect.height}:null,
+    paperSize:paperRect?{w:paperRect.width,h:paperRect.height}:null,
+    author:paper?.querySelector('.dawn-contemporary__folio-foot span')?.textContent,
+    backdrop:!!art?.querySelector('.dawn-contemporary__cover-backdrop'),
+    coverSize:frame?{w:frame.width,h:frame.height}:null};
   }));
   for(const proof of visualProof){
    assert(proof.title?.length>1,device+': modern cover fallback has no real title');
+   assert(proof.artSize?.w>120&&proof.artSize?.h>150,
+    device+': book square is too small or has no defined height');
+   assert(proof.paperSize?.w>=proof.artSize.w-4&&proof.paperSize?.h>=proof.artSize.h-4,
+    device+': title folio does not fill the tile: '+proof.title);
+   assert(proof.author?.trim(),
+    device+': typographic edition misses author: '+proof.title);
+   if(proof.pictured){
+    assert(proof.backdrop,device+': source jacket is not backed by same-image full-bleed field');
+    assert(proof.coverSize?.w>=proof.artSize.w-4,
+     device+': source cover image does not occupy full tile frame');
+   }
    if(!proof.pictured){
     assert(proof.imageOpacity===null||proof.imageOpacity===0,
      device+': pending publisher image is masking source title: '+proof.title);
