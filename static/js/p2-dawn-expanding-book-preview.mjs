@@ -55,6 +55,7 @@ function previewContents(book,onRead){
  // A blank white "pending book cover" is never an acceptable preview.
  // Keep the exact title in paper while a publisher image is still loading.
  figure.classList.add('dawn-expander__book--paper');
+ if(book.discoveryOnly)figure.classList.add('dawn-expander__book--discovery');
  if(image){
   const img=make('img','dawn-expander__book-image');
   img.alt='此作品圖像：'+(book.title||'');
