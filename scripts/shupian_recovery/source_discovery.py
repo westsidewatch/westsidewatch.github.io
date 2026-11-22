@@ -101,7 +101,7 @@ def search(providers, queries=(), pages=3, limit=30, discover=False, fetch=netwo
         raise ValueError("Provide queries or --discover")
     found, errors, probes = {}, [], []
     for provider in providers:
-        for query in (queries or ("",)):
+        for query in (tuple(queries) + (("",) if discover else ())) :
             for page in range(1, max(1,pages)+1):
                 params = {"ac":"detail" if query else "list","pg":page}
                 if query: params["wd"] = query
