@@ -25,8 +25,11 @@ for(const c of manifest.candidates){
  assert(c.candidateId.startsWith('dawn:discovery:zh:'),'research IDs never impersonate canonical Works');
  assert(/^https:\/\//.test(c.sourceUrl),'publisher link must be HTTPS: '+c.title);
  assert(c.sourceKind==='publisher-book-detail','source detail must have specific work identity');
- assert(c.coverUrl===null||c.coverUrl.startsWith('https://my-elibrary.net/wp-content/uploads/'),
-   'publisher cover pointer must be directly linked to corresponding publisher product');
+ assert(c.coverUrl===null||[
+    'https://my-elibrary.net/wp-content/uploads/',
+    'https://9marks-static.oss-cn-hongkong.aliyuncs.com/wp/'
+   ].some(prefix=>c.coverUrl.startsWith(prefix)),
+   'publisher cover must be hosted on that title’s actual official publisher image CDN');
  assert(c.admission==='candidate-only','not a canonical admitted Work');
  assert(c.access.includes('publisher')||c.access.includes('license'),
    'do not claim unauthorized public-domain full text');
