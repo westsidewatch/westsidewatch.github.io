@@ -3,7 +3,7 @@ on:
   pull_request:
     paths:
       - 'scripts/dawn-clsc-source-audit.cjs'
-      - 'scripts/dawn-clsc-cover-builder.cjs'
+      - 'scripts/dawn-clsc-cover-builder.py'
       - 'static/dawn-library/chinese-collection.json'
       - '.github/workflows/dawn-clsc-cover-source.yml'
   workflow_dispatch:
@@ -20,10 +20,19 @@ jobs:
           node-version: '22'
       - name: Inspect real Yale/HKBU CLSC PDF links and identifiers
         run: node scripts/dawn-clsc-source-audit.cjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scanned-title-page renderer
+        run: pip install --quiet pymupdf pillow requests
+      - name: Pilot genuine source images from Yale CLSC PDFs
+        run: python scripts/dawn-clsc-cover-builder.py --limit 3
       - name: Preserve provenance evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: dawn-clsc-source-provenance
-          path: artifacts/dawn-clsc/
+          path: |
+            artifacts/dawn-clsc/
+            static/dawn-library/chinese-facsimile-covers/
           if-no-files-found: warn
