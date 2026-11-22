@@ -1,0 +1,74 @@
+/* Dawn P2 05 Design OS browser acceptance, not token-stub grep.
+ * Run against the built static site on http://127.0.0.1:4173.
+ */
+'use strict';
+const {chromium}=require('playwright'),assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path');
+const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
+(async()=>{
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+ try{
+  for(const [device,width,height] of [['desktop',1440,900],['phone',390,844]]){
+   const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+   const errors=[];page.on('pageerror',error=>errors.push(error.message));
+   await page.goto('http://127.0.0.1:4173/experiments/p2-0105-dawn-preview.html?layer=second&d=28.4&v=os-r57',
+    {waitUntil:'domcontentloaded',timeout:45000});
+   await page.locator('#dawn-second .dawn-reading-room__masthead').waitFor({state:'visible',timeout:20000});
+   await page.evaluate(()=>document.fonts.ready);
+   const result=await page.evaluate(()=>{
+    const grab=s=>{const el=document.querySelector(s);if(!el)throw Error('Missing '+s);
+      const st=getComputedStyle(el),r=el.getBoundingClientRect();
+      return {font:st.fontFamily,size:parseFloat(st.fontSize),weight:parseInt(st.fontWeight,10),
+       x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height,
+       display:st.display,position:st.position}
+    };
+    return {
+      nav:grab('.dawn-second__global-nav'),
+      returnEn:grab('.dawn-second__return .dawn-second__nav-en'),
+      returnZh:grab('.dawn-second__return .dawn-second__nav-zh'),
+      collectionEn:grab('.dawn-second__all-works .dawn-second__nav-en'),
+      collectionZh:grab('.dawn-second__all-works .dawn-second__nav-zh'),
+      personalEn:grab('.dawn-second__personal .dawn-second__nav-en'),
+      mastEn:grab('#dawn-room-heading > span'),
+      mastZh:grab('#dawn-room-heading > strong'),
+      lead:grab('.dawn-reading-room__lead'),
+      gallery:grab('#dawn-wall-grid'),
+      source:grab('#dawn-second'),
+      departmentZh:grab('.dawn-reading-room__departments-intro h3 > strong'),
+      departmentEn:grab('.dawn-reading-room__departments-intro h3 > span'),
+      mast:grab('.dawn-reading-room__masthead')
+    };
+   });
+   for(const [id,en,zh] of [['return',result.returnEn,result.returnZh],
+      ['collection',result.collectionEn,result.collectionZh]]){
+     assert(en.size>zh.size*1.25,device+': '+id+' English is not larger than Chinese');
+     assert(/Bodoni/i.test(en.font),device+': '+id+' English family is not OS Bodoni: '+en.font);
+     assert(/Chiron/i.test(zh.font),device+': '+id+' Chinese family is not OS Chiron: '+zh.font);
+     assert.equal(zh.weight,200,device+': '+id+' Chinese helper is not 200');
+   }
+   assert(result.mastEn.size>result.mastZh.size*1.28,
+    device+': English masthead is not dominant');
+   assert(result.mastEn.font.includes('Bodoni'),device+': main masthead missing Bodoni');
+   assert(result.mastZh.font.includes('Chiron'),device+': Chinese masthead missing Chiron');
+   assert.equal(result.mastZh.weight,900,device+': principal Chinese title must preserve anchor weight');
+   assert.equal(result.lead.weight,200,device+': prose must be Chinese air weight');
+   assert.equal(result.departmentZh.weight,200,device+': secondary Chinese heading must be air');
+   assert(result.departmentEn.size>result.departmentZh.size,device+': department heading scale reversed');
+   assert(result.nav.height<180,device+': navigation behaves like a giant toolbar');
+   assert(result.nav.position!=='fixed',device+': toolbar stuck over composition');
+   assert(result.gallery.width>width*.65,device+': gallery contracted off canvas');
+   assert(result.gallery.height>120,device+': source image wall collapsed');
+   assert(result.mast.height<480,device+': oversized empty header carrier');
+   const overWidth=await page.evaluate(()=>document.querySelector('#dawn-second').scrollWidth-document.querySelector('#dawn-second').clientWidth);
+   assert(overWidth<18,device+': horizontal overflow '+overWidth);
+   await page.screenshot({path:path.join(out,device+'-os-navigation-masthead.png'),fullPage:false});
+   await page.locator('#dawn-wall-grid').scrollIntoViewIfNeeded();
+   await page.screenshot({path:path.join(out,device+'-os-original-gallery.png'),fullPage:false});
+   assert.equal(errors.length,0,device+': runtime errors '+errors.join('; '));
+   console.log('DAWN_OS',device,'NAV_EN_GT_ZH_CHIRON_200_BODONI_MASTHEAD_GALLERY_PASS',
+    JSON.stringify({navHeight:result.nav.height,mastHeight:result.mast.height,
+      en:result.mastEn.size,zh:result.mastZh.size,overflow:overWidth}));
+   await page.close();
+  }
+ }finally{await browser.close()}
+})().catch(err=>{console.error(err);process.exitCode=1});
