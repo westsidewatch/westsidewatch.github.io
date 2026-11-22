@@ -70,7 +70,10 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
       editorialPanels:[...document.querySelectorAll('#dawn-wall-grid > .dawn-feature')].map(element=>({
         background:getComputedStyle(element).backgroundColor,
         identity:element.dataset.dawnPortal,
-        title:getComputedStyle(element.querySelector('.dawn-feature__editorial')).backgroundColor
+        title:getComputedStyle(element.querySelector('.dawn-feature__editorial')).backgroundColor,
+        x:element.getBoundingClientRect().left,
+        y:element.getBoundingClientRect().top,
+        width:element.getBoundingClientRect().width
       })),
       harvested:getComputedStyle(document.querySelector('#dawn-second')).getPropertyValue('--ws-harvest').trim(),
       duplicateHeading:document.querySelectorAll('#dawn-room-heading, .dawn-reading-room__masthead').length,
@@ -110,6 +113,13 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
    for(const card of result.editorialPanels){
     assert.equal(card.background,harvestRGB,device+': '+card.identity+' portal background is not OS harvest');
     assert.equal(card.title,harvestRGB,device+': '+card.identity+' title panel is not OS harvest');
+   }
+   if(width>1100){
+    assert(result.editorialPanels.every(p=>Math.abs(p.y-result.editorialPanels[0].y)<5),
+      device+': three editorial entry points do not share a single opening row');
+    assert(result.editorialPanels[0].x<result.editorialPanels[1].x&&
+      result.editorialPanels[1].x<result.editorialPanels[2].x,
+      device+': three sections not laid out in editorial reading order');
    }
    assert.equal(result.departmentZh.weight,200,device+': secondary Chinese heading must be air');
    assert(result.departmentEn.size>result.departmentZh.size,device+': department heading scale reversed');
