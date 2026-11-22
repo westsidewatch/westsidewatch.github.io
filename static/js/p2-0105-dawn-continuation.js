@@ -464,13 +464,13 @@
  detailBack.addEventListener('click',closeBook);
  // Cover click reveals a book; a reader explicitly enters from the preview.
  let bookPreviewModule=null,bookPreviewTicket=0;
- async function selectBookPreview(grid,tile,book){
+ async function selectBookPreview(grid,tile,book,confirmReading=openBook){
   if(!grid||!tile||!book?.title)return;
   const ticket=++bookPreviewTicket;
   try{
    bookPreviewModule ||= await import('/js/p2-dawn-expanding-book-preview.mjs');
    if(ticket!==bookPreviewTicket||!tile.isConnected)return;
-   bookPreviewModule.expandBookPreview({grid,tile,book,onRead:openBook});
+   bookPreviewModule.expandBookPreview({grid,tile,book,onRead:confirmReading});
   }catch(error){console.error('[Dawn expanding book preview]',error)}
  }
  function clearBookPreview(){++bookPreviewTicket;bookPreviewModule?.dismissBookPreview()}
@@ -796,7 +796,7 @@
  }
  let canonicalMode=false,canonicalGallery=null;
  const canonicalOptions=()=>({container:works,total,status:pageStatus,prev:prevButton,next:more,search,openBook,
-  previewBook:(grid,tile,book)=>selectBookPreview(grid,tile,book),
+  previewBook:(grid,tile,book,confirmReading)=>selectBookPreview(grid,tile,book,confirmReading),
   expectedWorkCount:classificationTree?.canonicalWorkCount});
  async function showCanonical(offset=0){
   try{
