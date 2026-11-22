@@ -264,7 +264,7 @@ function connectArchitecturalDoors(building) {
   // do not merely hide a parent which may later be reused or cloned.
   const handles = [];
   scene.traverse(object => {
-    if (object !== scene && /handle|knob|door pull|pull bar|door lever|latch|lockset|attached handle/i.test(modelName(object.name)))
+    if (object !== scene && /handle|knob|pull|lever|latch|lockset|grip|hardware|fitting/i.test(modelName(object.name)))
       handles.push(object);
   });
   for (const object of handles) {
@@ -274,7 +274,7 @@ function connectArchitecturalDoors(building) {
   }
   const remaining = [];
   scene.traverse(object => {
-    if (object.isMesh && object.visible && /handle|knob|door pull|pull bar|door lever|latch|lockset|attached handle/i.test(modelName(object.name)))
+    if (object.isMesh && object.visible && /handle|knob|pull|lever|latch|lockset|grip|hardware|fitting/i.test(modelName(object.name)))
       remaining.push(object.name);
   });
   window.__churchHardwareAudit = {
