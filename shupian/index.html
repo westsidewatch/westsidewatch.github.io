@@ -1,61 +1,118 @@
 <!doctype html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f7f2ec">
-  <meta name="robots" content="index,follow">
-  <meta name="description" content="CRISPS 薯片：基督福音劇集、電影與經典影像的獨立放映室。">
-  <title>薯片 · Cinema Reale｜原片庫</title>
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./app.js" defer></script>
-</head>
-<body>
-<a class="skip" href="#collection">跳至影片列表</a>
-<div class="marquee" aria-hidden="true"><span>CRISPS &nbsp; / &nbsp; CINEMA · ARCHIVE &nbsp; / &nbsp; 薯片 &nbsp; / &nbsp; CRISPS &nbsp; / &nbsp; CINEMA · ARCHIVE</span></div>
-<header class="site-header frame">
-  <a class="wordmark" href="./" aria-label="薯片首頁"><span class="mark-emblem" aria-hidden="true">P</span><span>薯片 <small>CINEMA REALE · FILM ARCHIVE</small></span></a>
-  <nav class="header-actions" aria-label="主要選單">
-    <a class="nav-link" href="#collection">片庫</a>
-    <button class="nav-link" id="favorites-nav" type="button">收藏片單 <span id="favorite-count">0</span></button>
-    <button class="manage-button" id="manage-open" type="button"><span aria-hidden="true">＋</span> 加入個人片源</button>
-  </nav>
-</header>
-<main>
-  <section class="hero frame" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <p class="eyebrow">THE CINEMA ARCHIVE · EST. 2026</p>
-      <h1 id="hero-title">Cinema,<br><em>reale.</em></h1>
-      <p class="hero-sub">每一部故事，都值得完整地看完。</p>
-      <p class="hero-description">不使用外部影片站的播放器。只有真正的作品、直接的播放來源，和屬於自己的觀影時間。</p>
-      <div class="hero-actions"><a class="primary-action" href="#collection">探索片庫 <span aria-hidden="true">↗</span></a><button class="outline-action" id="hero-watch" type="button">播放本期選片 <span aria-hidden="true">▶</span></button></div>
-    </div>
-    <div class="hero-art" aria-hidden="true"><div class="projector-halo"></div><div class="film-strip film-strip-top"><i></i><i></i><i></i><i></i><i></i></div><div class="art-center"><span class="art-overline">FEATURED SCREENING</span><span class="art-title">CRISPS<br>CINEMA</span><span class="art-edition">AN EDITORIAL FILM COLLECTION</span></div><div class="film-strip film-strip-bottom"><i></i><i></i><i></i><i></i><i></i></div></div>
-    <div class="hero-footer"><span>01 / THE COLLECTION</span><span>CURATED. NOT AUTOMATIC.</span><span>SCROLL TO EXPLORE ↓</span></div>
-  </section>
-  <section class="catalog-section frame" id="collection" aria-labelledby="collection-title">
-    <div class="section-topline"><span class="eyebrow">THE LIBRARY / 影片典藏</span><span id="total-label">正在載入片庫…</span></div>
-    <div class="section-heading"><h2 id="collection-title">放映片單<span class="heading-period">.</span></h2><p>收錄值得完整欣賞的正式作品，從福音影像到世界經典。</p></div>
-    <div class="tools">
-      <div class="tab-scroll"><div class="tabs" id="category-tabs" role="group" aria-label="影片分類"></div></div>
-      <label class="search-label"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m15.5 15.5 5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><input id="search" type="search" placeholder="搜尋片名、英文名、年份…" autocomplete="off" aria-label="搜尋影片"></label>
-    </div>
-    <div class="results-head"><span id="results-count">尚無資料</span><span>FULL-LENGTH FEATURES · TRUE SOURCES</span></div>
-    <div id="film-grid" class="film-grid" aria-live="polite"></div>
-    <div id="empty-results" class="empty-results" hidden><h3>這一欄尚未收錄作品</h3><p>在另一個分類探索更多值得欣賞的電影與劇集。</p><button id="clear-filter" type="button">查看全部作品 ↗</button></div>
-  </section>
-  <section class="closing frame" aria-label="放映準則"><div class="closing-asterisk">✳</div><div><p class="eyebrow">THE CRISPS STANDARD</p><h2>真正的影片，<br>而不是一串連結。</h2></div><p>收錄真實完整的作品，尊重來源與創作者。由福音故事到經典影史，打造安靜而純粹的觀影空間。</p></section>
-</main>
-<footer class="site-footer frame"><div>CRISPS <span>薯片</span></div><p>Made for the love of cinema. · 2026</p><a href="#hero-title">回到頂部 ↑</a></footer>
-<div class="modal" id="player-modal" role="dialog" aria-modal="true" aria-label="影片播放器" hidden>
-  <div class="modal-backdrop" data-close-player="true"></div>
-  <div class="player-shell"><div class="player-head"><div><span class="player-head-label">NOW SCREENING</span><h2 id="player-title">影片名稱</h2><p id="player-subtitle"></p></div><button class="icon-button" id="player-close" type="button" aria-label="關閉播放器">×</button></div>
-    <div class="player-content"><div class="screen-col"><div class="video-wrap"><video id="cinema-video" controls playsinline preload="metadata" controlsList="nodownload" aria-label="CRISPS 站內播放器"></video><div class="video-watermark" aria-hidden="true">P / CRISPS</div></div><div id="player-status" class="player-status" role="status">正在準備放映…</div><div class="player-toolbar"><button type="button" id="previous-episode">← 上一集</button><button type="button" id="next-episode">下一集 →</button><button type="button" id="retry-source">重新連接</button></div><p class="playback-caution">若影片載入失敗，可開啟原始典藏頁查看來源。</p></div><aside class="episode-col"><h3>播放目錄 <span id="episode-count"></span></h3><div id="episode-list" class="episode-list"></div><div class="source-details"><span class="eyebrow">THE SOURCE</span><p id="source-name">原始典藏來源</p><a id="original-link" target="_blank" rel="noopener noreferrer" href="https://commons.wikimedia.org/">查看典藏來源 ↗</a></div></aside></div>
-  </div>
-</div>
-<div class="modal" id="manage-modal" role="dialog" aria-modal="true" aria-labelledby="manage-title" hidden>
-  <div class="modal-backdrop" data-close-manage="true"></div><section class="manage-shell"><div class="manage-head"><p class="eyebrow">YOUR OWN COLLECTION</p><button class="icon-button" id="manage-close" type="button" aria-label="關閉">×</button></div><h2 id="manage-title">加入個人片源<span class="heading-period">.</span></h2><p>這裡只保存在你目前瀏覽器的本機資料中，不會把地址提交到公開 GitHub 片庫。僅添加有權觀看及使用的播放來源。</p>
-   <form id="import-form"><label>片名<input name="title" required maxlength="100" placeholder="例如：完整影集名稱"></label><div class="form-row"><label>類別<select name="category"><option>基督福音劇集</option><option>美英劇集</option><option>韓日劇集</option><option>經典電影</option></select></label><label>發行年份<input name="year" type="number" min="1895" max="2100" placeholder="2026"></label></div><label>集數與播放地址 <small>每行：集數名稱 | HTTPS 影片地址（m3u8、mp4 或 webm）</small><textarea name="episodes" rows="5" required placeholder="第01集 | https://example.org/ep01.m3u8&#10;第02集 | https://example.org/ep02.m3u8"></textarea></label><div id="import-error" class="form-error" role="alert"></div><button class="primary-action" type="submit">存入我的本機片庫 ↗</button></form>
-  </section>
-</div>
-</body></html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4f1eb"><title>数片 · Cinema Reale</title>
+<meta name="description" content="数片｜中英雙語電影與劇集典藏。">
+<style>
+:root{--paper:#f4f1eb;--ink:#262420;--red:#b93430;--mute:#76726c;--line:#d3cec5}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang TC","Noto Sans CJK TC",sans-serif}a{color:inherit}button,input{font:inherit}button{cursor:pointer}header{padding:20px max(22px,4vw);border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;gap:20px;align-items:center}.logo{font-size:31px;font-weight:900;letter-spacing:-.12em}.logo b{color:var(--red)}.upper{font:600 10px/1.5 Arial,sans-serif;letter-spacing:.2em}.hero{padding:65px max(22px,4vw) 55px;border-bottom:1px solid var(--ink)}.hero h1{font:normal clamp(58px,12vw,165px)/.92 Georgia,serif;letter-spacing:-.075em;margin:20px 0 25px}.hero em{color:var(--red)}.hero p{max-width:640px;color:var(--mute);font-size:15px}.accent{color:var(--red)}nav{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding:15px max(22px,4vw);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.tabs{display:flex;gap:15px;flex-wrap:wrap}.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:7px 1px;color:var(--mute);font-size:12px;font-weight:600}.tabs button[aria-pressed=true]{color:var(--red);border-bottom-color:var(--red)}input{border:0;border-bottom:1px solid var(--ink);padding:8px;background:none;min-width:180px;max-width:100%;outline:none}main{padding:35px max(22px,4vw) 110px}.head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:12px;margin-bottom:25px;gap:12px}.head h2{font:normal clamp(24px,4vw,39px) Georgia,serif;margin:0}.head h2 i{color:var(--red)}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:32px 17px}.card{min-width:0}.poster{position:relative;aspect-ratio:2/3;background:#d9d5cd;width:100%;border:0;display:flex;text-align:left;justify-content:flex-end;flex-direction:column;padding:15px;color:var(--ink);overflow:hidden}.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}.poster span{position:relative;z-index:2}.poster .posterheading{font:normal clamp(18px,2.3vw,31px)/1.17 Georgia,"PingFang TC",serif;overflow-wrap:anywhere}.poster .label{position:absolute;top:12px;left:13px;color:var(--red);font:700 10px Arial,sans-serif;letter-spacing:.12em}.poster.hasimage .posterheading{display:none}.poster.hasimage .label{background:var(--paper);padding:5px 7px}.poster .play{position:absolute;bottom:11px;right:11px;background:var(--red);color:white;padding:5px 10px}.meta h3{margin:10px 0 3px;font-size:17px;font-weight:700}.en{color:var(--mute);font:italic 12px Georgia,serif;min-height:17px}.sub{font-size:11px;color:var(--mute);margin-top:9px}.card a{color:var(--red);font-size:12px}.card a:hover{text-decoration:none}.empty{padding:50px;border:1px solid var(--line)}footer{border-top:1px solid var(--ink);padding:22px max(22px,4vw);color:var(--mute);font-size:11px}dialog{border:0;padding:0;background:var(--paper);color:var(--ink);max-width:min(1100px,96vw);width:100%;max-height:94vh;overflow:auto}dialog::backdrop{background:#100f0fda}.playerhead{padding:16px 22px;display:flex;justify-content:space-between;align-items:center;gap:15px}.playerhead h2{margin:0;font-size:22px}.playerhead button{font-size:25px;border:0;background:none}.playerbody{display:grid;grid-template-columns:1fr 250px}.screen{padding:20px}.screen video{width:100%;aspect-ratio:16/9;background:#111}.screen p{font-size:12px}.episodebar{padding:20px;border-left:1px solid var(--line);max-height:65vh;overflow:auto}.episodebar button{display:block;width:100%;text-align:left;margin:5px 0;background:#fff9;border:1px solid var(--line);padding:10px;font-size:12px}.episodebar button[aria-pressed=true]{border-color:var(--red);color:var(--red)}.episodebar button:disabled{opacity:.55;cursor:default}@media(max-width:1000px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:27px 12px}.hero{padding-top:44px}.playerbody{grid-template-columns:1fr}.episodebar{border-left:0;border-top:1px solid var(--line)}.poster .posterheading{font-size:22px}}
+</style></head><body>
+<header><div class="logo">数<b>片</b></div><div class="upper">CINEMA REALE / FILM ARCHIVE</div></header>
+<section class="hero"><div class="upper accent">CINEMA · ARCHIVE · 2026</div><h1>Cinema<br><em>reale.</em></h1><p>電影與劇集的完整典藏。歷史播放驗收會保留其原始狀態；本頁不把曾驗收等同於現在逐秒播放成功。</p></section>
+<nav><div class="tabs"><button data-category="all" aria-pressed="true">全部作品</button><button data-category="film" aria-pressed="false">電影</button><button data-category="series" aria-pressed="false">劇集</button><button data-category="history" aria-pressed="false">歷史驗收</button></div><input id="search" type="search" placeholder="搜尋片名 / Search" aria-label="搜尋作品"></nav>
+<main><div class="head"><h2>Selected works <i>/</i> 片庫</h2><span id="totals" class="upper">1 TITLE</span></div><div id="grid" class="grid"></div><div id="empty" class="empty" hidden>沒有符合搜尋條件的作品。</div></main>
+<footer>数片 / CINEMA REALE — 已記錄來源不等於即時播放驗收。資料來源保留於各作品內。</footer>
+<dialog id="player"><div class="playerhead"><div><div class="upper accent">NOW SCREENING</div><h2 id="player-title">影片</h2></div><button id="close" aria-label="關閉">×</button></div><div class="playerbody"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><p id="status" role="status" aria-live="polite"></p><p><a id="source" target="_blank" rel="noopener noreferrer">查看原始典藏來源 ↗</a></p></div><aside class="episodebar"><div class="upper">EPISODE INDEX</div><div id="episodes"></div></aside></div></dialog>
+<script id="catalog" type="application/json">[{"id":"the-institute-historical","title":"靈異特工局／異能研究所","originalTitle":"The Institute","type":"series","category":"美英劇集","year":2025,"country":"美國","language":"英語","summary":"歷史舊庫恢復：第一季8集、第二季此前播出2集，曾完成108處M3U8分段解碼抽樣驗收。僅第一季第1集的舊來源地址已找回；其他9集的舊地址仍待恢復，不代表驗收被撤銷。","genre":["美劇","懸疑","科幻"],"posterStyle":"custom","posterHeadline":"THE INSTITUTE","historicalVerification":"2026-11-21前已完成抽樣驗收：S1E1 54處，其餘9集各6處；抽樣畫面未見賭場廣告。不是全片逐秒審核。","episodes":[{"number":1,"label":"第一季 第01集","sources":[{"name":"舊庫 M3U8 · 歷史已抽樣驗收（目前可用性未複測）","format":"m3u8","url":"https://svip.czzyplay.com/play/37420/e1/index.m3u8"}],"historicalVerification":"historical-sampled-pass"},{"number":2,"label":"第一季 第02集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":3,"label":"第一季 第03集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":4,"label":"第一季 第04集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":5,"label":"第一季 第05集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":6,"label":"第一季 第06集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":7,"label":"第一季 第07集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":8,"label":"第一季 第08集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":9,"label":"第二季 第01集","sources":[],"historicalVerification":"historical-sampled-pass"},{"number":10,"label":"第二季 第02集","sources":[],"historicalVerification":"historical-sampled-pass"}]}]</script>
+<script>
+'use strict';
+const works=JSON.parse(document.getElementById('catalog').textContent);
+const grid=document.getElementById('grid'),query=document.getElementById('search'),dialog=document.getElementById('player'),video=document.getElementById('video'),status=document.getElementById('status');
+let filter='all',active=null,episodeIndex=0,hls=null;
+const media=ep=>(ep?.sources||[]).filter(s=>{try{const u=new URL(s.url);return u.protocol==='https:' && /\.(m3u8|mp4|webm|ogv|ogg)$/i.test(u.pathname)}catch{return false}});
+const countSources=work=>work.episodes.filter(e=>media(e).length).length;
+function render(){grid.replaceChildren();const q=query.value.toLocaleLowerCase().trim();const matches=works.filter(w=>(filter==='all'||filter==='history'&&w.historicalVerification||filter==='film'&&w.type==='film'||filter==='series'&&w.type==='series')&&[w.title,w.originalTitle,w.year].join(' ').toLocaleLowerCase().includes(q));document.getElementById('totals').textContent=matches.length+' TITLES · '+matches.reduce((n,w)=>n+countSources(w),0)+' SOURCE UNITS';document.getElementById('empty').hidden=matches.length>0;for(const w of matches){const c=document.createElement('article');c.className='card';const btn=document.createElement('button');btn.type='button';btn.className='poster';btn.setAttribute('aria-label','選擇 '+w.title);const lbl=document.createElement('span');lbl.className='label';lbl.textContent=w.type==='series'?'SERIES / 典藏':'FILM / 典藏';const heading=document.createElement('span');heading.className='posterheading';heading.textContent=w.posterHeadline||w.originalTitle||w.title;const play=document.createElement('span');play.className='play';play.textContent='▶';btn.append(lbl,heading,play);btn.onclick=()=>open(w);const h=document.createElement('div');h.className='meta';const name=document.createElement('h3');name.textContent=w.title;const en=document.createElement('div');en.className='en';en.textContent=w.originalTitle||'';const sub=document.createElement('div');sub.className='sub';sub.textContent=w.historicalVerification?'歷史抽樣通過 · '+countSources(w)+' 個已找回來源':countSources(w)+' 個來源單元 · '+(w.year||'');h.append(name,en,sub);const a=document.createElement('a');a.href=w.sourcePage||'#';a.textContent='來源資料 ↗';a.target='_blank';a.rel='noopener noreferrer';h.append(a);c.append(btn,h);grid.append(c);setPoster(w,btn)}}
+const commonsImages=new Map();
+function commonsThumbnail(file){
+  const key=String(file||'').trim();
+  if(!key)return Promise.resolve(null);
+  if(commonsImages.has(key))return commonsImages.get(key);
+  const endpoint='https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url&iiurlwidth=540&titles='+encodeURIComponent('File:'+key);
+  const request=fetch(endpoint,{mode:'cors',credentials:'omit'}).then(r=>{if(!r.ok)throw Error('Commons image API '+r.status);return r.json()}).then(data=>{
+    const pages=Object.values(data.query?.pages||{});
+    const info=pages[0]?.imageinfo?.[0];
+    const url=info?.thumburl||info?.url;
+    return typeof url==='string'&&url.startsWith('https://')?url:null;
+  }).catch(()=>null);
+  commonsImages.set(key,request);
+  return request;
+}
+function setPoster(w,btn){
+  if(w.posterUrl&&/^https:\/\//.test(w.posterUrl)){addImage(btn,w.posterUrl);return}
+  try{
+    const source=new URL(w.sourcePage||'');
+    if(source.hostname==='archive.org'){
+      const id=source.pathname.split('/').filter(Boolean)[1];
+      if(id){addImage(btn,'https://archive.org/services/img/'+encodeURIComponent(id));return}
+    }
+    if(source.hostname==='commons.wikimedia.org'&&source.pathname.includes('/wiki/File:')){
+      commonsThumbnail(decodeURIComponent(source.pathname.split('/wiki/File:')[1])).then(url=>{if(url&&btn.isConnected)addImage(btn,url)});
+      return;
+    }
+  }catch{}
+  const mediaUrl=w.episodes?.flatMap(e=>e.sources||[]).find(item=>item.url&&item.url.includes('upload.wikimedia.org/'))?.url;
+  if(mediaUrl){
+    try{
+      const filename=decodeURIComponent(new URL(mediaUrl).pathname.split('/').pop());
+      commonsThumbnail(filename).then(url=>{if(url&&btn.isConnected)addImage(btn,url)});
+    }catch{}
+  }
+}
+function addImage(el,url){const img=document.createElement('img');img.alt='影片典藏畫面';img.loading='lazy';img.referrerPolicy='no-referrer';img.src=url;img.onload=()=>{if(img.naturalWidth>0)el.classList.add('hasimage')};img.onerror=()=>img.remove();el.prepend(img)}
+let playbackToken=0, sourceTimer=null, chosenSources=[], sourceIndex=0;
+function stop(){
+  playbackToken++;
+  if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}
+  if(hls){hls.destroy();hls=null}
+  video.pause();video.removeAttribute('src');video.load();
+}
+function mark(message){status.textContent=message}
+function nextSource(token,reason){
+  if(token!==playbackToken||sourceIndex>=chosenSources.length)return;
+  if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}
+  if(hls){hls.destroy();hls=null}
+  sourceIndex++;
+  if(sourceIndex<chosenSources.length){mark('來源 '+sourceIndex+' 無法播放，改試另一個來源…');trySource(token);return}
+  mark('目前沒有可以確認載入的影片來源（'+reason+'）。可使用下方「查看原始典藏來源」查看來源。此片未通過即時播放驗收。');
+}
+async function trySource(token){
+  if(token!==playbackToken)return;
+  const src=chosenSources[sourceIndex];
+  if(!src)return;
+  if(sourceTimer)clearTimeout(sourceTimer);
+  video.pause();video.removeAttribute('src');video.load();
+  const fail=(reason)=>nextSource(token,reason);
+  mark('連接第 '+(sourceIndex+1)+' / '+chosenSources.length+' 個影片來源…');
+  sourceTimer=setTimeout(()=>fail('影片載入逾時'),18000);
+  const url=src.url;
+  const fmt=String(src.format||'').toLowerCase();
+  if(fmt==='ogv'||fmt==='ogg'){
+    if(!video.canPlayType('video/ogg')){fail('瀏覽器不支援 Ogg/Theora');return}
+  }
+  if(fmt==='m3u8'||url.toLowerCase().includes('.m3u8')){
+    if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=url;video.load();return}
+    try{
+      if(!window.Hls){await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/hls.js@1.6.13/dist/hls.min.js';s.onload=res;s.onerror=rej;document.head.append(s)})}
+      if(token!==playbackToken)return;
+      if(!window.Hls?.isSupported()){fail('瀏覽器不支援 HLS');return}
+      hls=new Hls({enableWorker:true});
+      hls.on(Hls.Events.ERROR,(_,data)=>{if(data.fatal)fail('HLS '+data.type)});
+      hls.loadSource(url);hls.attachMedia(video);
+    }catch{fail('HLS 元件載入失敗')}
+  }else{video.src=url;video.load()}
+}
+async function connect(ep){
+  stop();const token=playbackToken;
+  chosenSources=media(ep);sourceIndex=0;
+  if(!chosenSources.length){mark('歷史驗收紀錄保留；這一集的舊播放地址尚未找回。');return}
+  trySource(token);
+}
+video.addEventListener('loadedmetadata',()=>{
+  if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}
+  const duration=Number.isFinite(video.duration)?Math.round(video.duration/60)+' 分鐘':'時間長度待確認';
+  mark('已成功讀取影片中繼資料 · '+duration+'。請點播放；完整影片尚需實際觀看驗收。')
+});
+video.addEventListener('playing',()=>{if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}mark('影片正在播放 · 已通過本次起播檢查，未代表全片驗收。')});
+video.addEventListener('error',()=>{if(chosenSources.length)nextSource(playbackToken,'媒體解碼或網路錯誤')});
+function choose(i){episodeIndex=i;const ep=active.episodes[i];document.querySelectorAll('#episodes button').forEach((b,j)=>b.setAttribute('aria-pressed',String(i===j)));connect(ep)}
+function open(w){active=w;document.getElementById('player-title').textContent=w.title;document.getElementById('source').href=w.sourcePage||'#';const e=document.getElementById('episodes');e.replaceChildren();w.episodes.forEach((ep,i)=>{const b=document.createElement('button');b.textContent=ep.label||'第 '+(i+1)+' 集';b.setAttribute('aria-pressed','false');b.onclick=()=>choose(i);e.append(b)});dialog.showModal();choose(w.episodes.findIndex(ep=>media(ep).length)>-1?w.episodes.findIndex(ep=>media(ep).length):0)}
+document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListener('close',stop);document.querySelectorAll('[data-category]').forEach(b=>b.onclick=()=>{filter=b.dataset.category;document.querySelectorAll('[data-category]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render()});query.oninput=render;render();
+</script></body></html>
