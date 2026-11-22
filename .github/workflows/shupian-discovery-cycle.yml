@@ -53,7 +53,7 @@ jobs:
           git add static/shupian/recovery/engine-live-round.json
           if ! git diff --cached --quiet; then
             git commit -m 'data(shupian): publish live source discovery and validation evidence'
-            git push
+            git push || (git pull --rebase -X theirs origin main && git push)
           fi
       - name: Preserve full technical report
         if: always()
