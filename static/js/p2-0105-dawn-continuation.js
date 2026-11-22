@@ -1073,7 +1073,12 @@
     const substitute=document.createElement('span');substitute.className='dawn-contemporary__folio';
     const rubric=document.createElement('small');rubric.textContent=candidate.translation==='Chinese translation'?'CHINESE TRANSLATIONS':'CHINESE BOOKS';
     const printedTitle=document.createElement('strong');printedTitle.textContent=candidate.title;
-    substitute.append(rubric,printedTitle);art.append(substitute);
+    const folioFoot=document.createElement('span');folioFoot.className='dawn-contemporary__folio-foot';
+    const folioAuthor=document.createElement('span');folioAuthor.textContent=candidate.author;
+    const folioSubject=document.createElement('small');
+    folioSubject.textContent=String(candidate.category||'信仰閱讀').split('／').slice(-1)[0];
+    folioFoot.append(folioAuthor,folioSubject);
+    substitute.append(rubric,printedTitle,folioFoot);art.append(substitute);
     if(safeHttp(candidate.coverUrl)){
      const image=document.createElement('img');image.src=safeHttp(candidate.coverUrl);
      image.alt='出版方所列書封：'+candidate.title;
@@ -1081,8 +1086,17 @@
      // unready white image mask the verified title-paper underneath it.
      image.loading='eager';image.decoding='async';image.referrerPolicy='no-referrer';
      image.addEventListener('load',()=>{
-      if(image.naturalWidth>100)card.classList.add('dawn-contemporary__book--pictured');
-      else image.remove();
+      if(image.naturalWidth>100){
+       // Two views of this SAME, verified source image: the soft full-bleed
+       // backdrop fills the tile while the sharp original remains uncropped.
+       // Never substitute another book's jacket.
+       const backdrop=image.cloneNode(false);
+       backdrop.className='dawn-contemporary__cover-backdrop';
+       backdrop.setAttribute('aria-hidden','true');
+       backdrop.alt='';backdrop.loading='eager';
+       art.insertBefore(backdrop,image);
+       card.classList.add('dawn-contemporary__book--pictured');
+      }else image.remove();
      });
      image.addEventListener('error',()=>image.remove());
      art.append(image);
