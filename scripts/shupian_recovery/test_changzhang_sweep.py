@@ -64,6 +64,31 @@ class ChangzhangSweepTests(unittest.TestCase):
         self.assertEqual(result["categories"]["japanese_anime"]["metadata_matches"],1)
         self.assertEqual(result["categories"]["classic_films"]["metadata_matches"],2)
         self.assertEqual(result["categories"]["gospel_media"]["metadata_matches"],1)
+    def test_hls_only_endpoint_recovers_missing_combined_stream(self):
+        urls = []
+        def source(url):
+            urls.append(url)
+            if "/from/changzhangm3u8/" in url:
+                q=parse_qs(urlsplit(url).query)
+                if "ids" in q:
+                    return {"list":[{"vod_id":100,"vod_play_from":"changzhangm3u8",
+                                     "vod_play_url":"第1集$https://media.example/100/ep1.m3u8"}]}
+            q=parse_qs(urlsplit(url).query)
+            if "ids" in q:
+                rows=mock_fetch(url)["list"]
+                for x in rows:
+                    if x["vod_id"]==100:
+                        x["vod_play_from"]="web"
+                        x["vod_play_url"]="第1集$https://watch.example/embed?id=100"
+                return {"list":rows}
+            return mock_fetch(url)
+        result=scan(fetch=source,max_pages=1,page_size=20,
+                    detail_batch=2,probe_count=0,current_year=2026)
+        self.assertEqual(result["hls_detail_fallback_requested"],1)
+        self.assertEqual(result["hls_detail_fallback_recovered"],1)
+        self.assertEqual(result["media_candidate_titles"],5)
+        self.assertTrue(any("/from/changzhangm3u8/" in u for u in urls))
+
     def test_probe_is_one_episode_per_distinct_title(self):
         seen=[]
         def fake_probe(url):
