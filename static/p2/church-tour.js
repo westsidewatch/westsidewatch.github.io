@@ -632,9 +632,19 @@ async function loadArchitecture() {
   removeHeadHeightHazards(building);
   buildCameraSafetyBoxes(building);
   scene.add(building);
+  const sweptClearance=forumPathTimes().map(t=>{
+    const step=positionAlongRoute(t);
+    const safe=safeCameraInForum(new Vector3(...step.p),new Vector3(...step.look));
+    return {t,blocked:safe.blocked,occluded:safe.occluded,
+      displacement:+safe.correction.toFixed(3),names:safe.names||[]};
+  });
   window.__churchRouteClearanceAudit={
     headHazardsRemoved:eliminatedHeadHazards,
-    collisionBoxes:forumSafetyBoxes.length
+    collisionBoxes:forumSafetyBoxes.length,
+    sampledFrames:sweptClearance.length,
+    blockedFrames:sweptClearance.filter(x=>x.blocked>0||x.occluded>0),
+    maxCameraDisplacement:Math.max(...sweptClearance.map(x=>x.displacement)),
+    correctedSamples:sweptClearance.filter(x=>x.displacement>.001).length
   };
 
   // Read-only screen-space diagnostics: identify any unlabeled GLB component
