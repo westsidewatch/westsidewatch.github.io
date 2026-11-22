@@ -69,54 +69,53 @@ scene.add(ambientFill);
 const bounceFill = new DirectionalLight(0xffead7, 0.28);
 bounceFill.position.set(-13, 8, 12);
 scene.add(bounceFill);
-const sanctuaryLight = new DirectionalLight(0xfff1e4, 0.22);
+const sanctuaryLight = new DirectionalLight(0xfff1e4, 0.12);
 sanctuaryLight.position.set(15.5, 5.1, -1.3);
 sanctuaryLight.target.position.set(15, 1.4, -10);
 scene.add(sanctuaryLight, sanctuaryLight.target);
 
-/* CROSS APERTURE LIGHT / reconstructed atmospheric daylight, local only. */
+/* CROSS LIGHT R12: feathered aperture, cross-shaped floor reflection, subtle atmospheric bounce. */
 function crossLightMask(kind){
-  const cv=document.createElement("canvas");cv.width=cv.height=256;
-  const ctx=cv.getContext("2d"),data=ctx.createImageData(256,256);
-  const gaussian=(v,s)=>Math.exp(-v*v/(s*s));
-  for(let y=0;y<256;y++)for(let x=0;x<256;x++){
-    const dx=(x+.5)/256-.5,dy=(y+.5)/256-.5;
+  const size=384, canvas=document.createElement("canvas");canvas.width=canvas.height=size;
+  const ctx=canvas.getContext("2d"),img=ctx.createImageData(size,size);
+  const g=(v,r)=>Math.exp(-Math.pow(v/r,2));
+  for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+    const u=(x+.5)/size-.5,v=(y+.5)/size-.5;
     let a;
     if(kind==="cross"){
-      const v=gaussian(dx,.075)*gaussian(dy,.46);
-      const h=gaussian(dy,.065)*gaussian(dx,.44);
-      a=.62*Math.max(v,h)+.38*gaussian(dx,.30)*gaussian(dy,.36);
-    }else if(kind==="floor")a=gaussian(dx,.32)*gaussian(dy-.09,.40);
-    else a=gaussian(dx-.04,.37)*gaussian(dy,.33);
-    const k=(y*256+x)*4,p=Math.round(255*Math.min(1,a));
-    data.data[k]=p;data.data[k+1]=p;data.data[k+2]=p;data.data[k+3]=255;
+      a=.48*Math.max(g(u,.047)*g(v,.43),g(v,.045)*g(u,.40))
+        +.26*g(u,.115)*g(v,.17)+.26*g(u,.245)*g(v,.32);
+    }else if(kind==="floor"){
+      a=.42*g(u,.085)*g(v-.03,.47)+.27*g(v+.06,.086)*g(u,.37)
+        +.31*g(u,.30)*g(v,.40);
+    }else a=.52*g(u-.025,.20)*g(v,.26)+.48*g(u,.34)*g(v,.34);
+    const n=(y*size+x)*4,k=Math.round(255*Math.min(1,a));
+    img.data[n]=img.data[n+1]=img.data[n+2]=k;img.data[n+3]=255;
   }
-  ctx.putImageData(data,0,0);return new CanvasTexture(cv);
+  ctx.putImageData(img,0,0);
+  return new CanvasTexture(canvas);
 }
 function luminousSurface(mask,opacity,glow){
   return new MeshStandardMaterial({
-    color:0x10100f,emissive:0xffebcc,emissiveIntensity:glow,
-    alphaMap:mask,roughness:1,metalness:0,
-    transparent:true,opacity,depthWrite:false,side:DoubleSide
+    color:0x080806,emissive:0xffe9c9,emissiveIntensity:glow,
+    alphaMap:mask,transparent:true,opacity,roughness:1,
+    metalness:0,depthWrite:false,depthTest:true,side:DoubleSide
   });
 }
-const apertureGlow=new Mesh(new PlaneGeometry(4.7,5.2),luminousSurface(crossLightMask("cross"),.30,1.0));
-apertureGlow.position.set(15,2.63,-.26);
-apertureGlow.name="Cross aperture diffuse radiance";
+const apertureGlow=new Mesh(new PlaneGeometry(4.2,4.9),luminousSurface(crossLightMask("cross"),.24,.96));
+apertureGlow.position.set(15,2.58,-.24);apertureGlow.name="Cross aperture diffuse radiance";
 apertureGlow.renderOrder=3;scene.add(apertureGlow);
-const crossFloorLight=new Mesh(new PlaneGeometry(3.8,9),luminousSurface(crossLightMask("floor"),.32,.85));
-crossFloorLight.name="Sanctuary sunlight floor bounce";
-crossFloorLight.rotation.x=-Math.PI/2;crossFloorLight.position.set(15,.052,-4.8);
-crossFloorLight.renderOrder=3;scene.add(crossFloorLight);
+const crossFloorLight=new Mesh(new PlaneGeometry(3.6,8.7),luminousSurface(crossLightMask("floor"),.30,.92));
+crossFloorLight.rotation.x=-Math.PI/2;crossFloorLight.position.set(15,.072,-4.7);
+crossFloorLight.name="Sanctuary sunlight floor bounce";crossFloorLight.renderOrder=3;
+scene.add(crossFloorLight);
 const crossAirVolumes=[];
-for(const [turn,shift] of [[.92,-.15],[-.92,.15],[.38,0]]){
-  const ray=new Mesh(new PlaneGeometry(7,3.45),luminousSurface(crossLightMask("air"),.062,.66));
-  ray.rotation.y=turn;ray.position.set(15+shift,1.82,-4.15);
-  ray.renderOrder=3;ray.name="Cross soft atmospheric bounce";
-  scene.add(ray);crossAirVolumes.push(ray);
+for(const [turn,shift,z] of [[.92,-.12,-4.05],[-.92,.13,-4.4],[.38,0,-4.2]]){
+  const ray=new Mesh(new PlaneGeometry(6.4,3.15),luminousSurface(crossLightMask("air"),.027,.43));
+  ray.rotation.y=turn;ray.position.set(15+shift,1.82,z);ray.renderOrder=3;
+  ray.name="Cross soft atmospheric bounce";scene.add(ray);crossAirVolumes.push(ray);
 }
-window.__churchLightAudit={aperture:true,floor:true,sheets:crossAirVolumes.length};
-
+window.__churchLightAudit={aperture:true,floor:true,sheets:crossAirVolumes.length,version:"R12"};
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
 function createSurface(kind) {
@@ -543,11 +542,17 @@ function updateDaylight(t,duration) {
   );
   sun.intensity=Math.max(0.035, .08+1.65*daylight-.10*winter);
   // Prevent a constant hard shaft of light remaining through the night.
-  sanctuaryLight.intensity=.12+.36*daylight;
-  apertureGlow.material.opacity=.095+.32*daylight;
-  crossFloorLight.material.opacity=.085+.34*daylight;
-  crossFloorLight.position.x=15+.28*Math.cos(angle);
-  for(const ray of crossAirVolumes)ray.material.opacity=.014+.075*daylight;
+  sanctuaryLight.intensity=.10+.22*daylight;
+  const sunlight=daylight*daylight*(3-2*daylight);
+  apertureGlow.material.opacity=.065+.34*sunlight;
+  crossFloorLight.material.opacity=.075+.39*sunlight;
+  crossFloorLight.position.x=15+.38*Math.cos(angle);
+  crossFloorLight.position.z=-4.7+.30*Math.sin(angle*.55);
+  for(let i=0;i<crossAirVolumes.length;i++){
+    const ray=crossAirVolumes[i];
+    ray.material.opacity=.006+.046*sunlight;
+    ray.position.x=15+[-.12,.13,0][i]+.09*Math.cos(angle);
+  }
   // Daylight changes; the wall PBR base colors remain from the original GLB.
   // Colour temperature follows the time of day, not arbitrary flashing:
   // cool twilight -> neutral daylight -> muted warm sunset.
@@ -555,12 +560,12 @@ function updateDaylight(t,duration) {
   skyFill.color.setRGB(.81+.11*daylight,.86+.10*daylight,1);
   skyFill.groundColor.setRGB(.68+.09*daylight,.67+.10*daylight,.65+.11*daylight);
   ambientFill.color.setRGB(.71+.13*daylight,.80+.10*daylight,.93+.04*daylight);
-  ambientFill.intensity=.26+.31*daylight;
-  bounceFill.intensity=.15+.24*daylight;
+  ambientFill.intensity=.24+.28*daylight;
+  bounceFill.intensity=.18+.22*daylight;
   bounceFill.color.setRGB(1,.86+.10*daylight,.77+.19*daylight);
-  skyFill.intensity=1.10+.26*daylight;
+  skyFill.intensity=1.05+.22*daylight;
   // Gentle exposure adaptation preserves wall relief and the white chapel.
-  renderer.toneMappingExposure=.89+.10*daylight;
+  renderer.toneMappingExposure=.87+.11*daylight;
   updateMapleSeason(t,duration);
 }
 
