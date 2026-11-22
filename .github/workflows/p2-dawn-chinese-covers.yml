@@ -1,0 +1,38 @@
+name: P2 Chinese 47 Original Cover Acceptance
+on:
+  pull_request:
+    paths:
+      - 'tests/p2-dawn-chinese-covers.cjs'
+      - 'static/dawn-library/chinese-collection.json'
+      - 'static/dawn-library/chinese-facsimile-covers/**'
+      - 'static/js/p2-0105-dawn-continuation.js'
+      - '.github/workflows/p2-dawn-chinese-covers.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  authentic-chinese-covers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated real Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+      - name: Validate all 46 source-image SHA256 and visual Chinese book walls
+        run: |
+          python3 -m http.server 4173 --directory static >/tmp/dawn-zh-cover-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-chinese-covers.cjs
+      - name: Preserve desktop and mobile authentic book-wall screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-chinese-47-cover-browser-proofs
+          path: artifacts/p2-dawn-chinese-covers/
+          if-no-files-found: warn
