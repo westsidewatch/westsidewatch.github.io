@@ -95,6 +95,8 @@ def main():
     parser.add_argument("--limit",type=int,default=0)
     parser.add_argument("--write-collection",action="store_true")
     parser.add_argument("--strict",action="store_true")
+    parser.add_argument("--reuse-provenance",type=str,default="")
+
     args=parser.parse_args()
     collection=json.loads(COLLECTION.read_text(encoding="utf-8"))
     works=[x for x in collection["works"] if x.get("source",{}).get("provider")=="Christian Literature Society for China Collection"]
@@ -111,19 +113,38 @@ def main():
         "rendered":[],"failed":[],"unmatched":[],"ambiguous":[],"notProcessed":[]}
     OUT_DIR.mkdir(parents=True,exist_ok=True)
     by_id={}
+    reused={}
+    if args.reuse_provenance:
+        old=json.loads(Path(args.reuse_provenance).read_text(encoding="utf-8"))
+        for entry in old.get("rendered",[]):
+            candidate=OUT_DIR/Path(entry["localCover"]).name
+            if candidate.is_file() and sha256(candidate.read_bytes())==entry["imageSha256"]:
+                reused[entry["workId"]]=entry
+            else:
+                raise ValueError("Missing or tampered source image from prior artifact: "+entry["workId"])
     for k,work in enumerate(works):
         title=work["work"]["title"]
         identity=work["workId"]
         if args.limit and k>=args.limit:
             audit["notProcessed"].append(identity)
             continue
+        if identity in reused:
+            info=reused[identity]
+            audit["rendered"].append(info)
+            by_id[identity]=info
+            print("COVER_REUSED",identity,title,flush=True)
+            continue
         matches=by_title.get(title,[])
+        year=int(work.get("edition",{}).get("year") or 0)
+        if len(matches)>1 and year:
+            same_year=[item for item in matches if item["year"]==str(year)]
+            if len(same_year)==1:
+                matches=same_year
         if len(matches)!=1:
             audit["unmatched" if not matches else "ambiguous"].append({"workId":identity,"title":title,
-              "candidateCount":len(matches)})
+              "candidateCount":len(matches),"catalogueYear":year})
             continue
         record=matches[0]
-        year=int(work.get("edition",{}).get("year") or 0)
         if record["year"].isdigit() and len(record["year"])==4 and abs(int(record["year"])-year)>1:
             audit["ambiguous"].append({"workId":identity,"title":title,"reason":"source year mismatch",
                                       "sourceYear":record["year"],"catalogueYear":year})
