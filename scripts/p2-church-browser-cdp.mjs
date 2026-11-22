@@ -89,6 +89,8 @@ try{
       throw Error('Cross illumination incomplete at frame '+frame);
     if(Math.abs((state.crossLight?.crossCenter?.[1]??0)-3.65)>.001)
       throw Error('Cross illumination not aligned to the original 3.65m aperture at frame '+frame);
+    if(state.crossLight?.bounceSources!==2)
+      throw Error('Cross light must illuminate actual surfaces with two real PBR light sources, not only planes: '+JSON.stringify(state.crossLight));
 
     await sleep(700);
     if(frame===103){
