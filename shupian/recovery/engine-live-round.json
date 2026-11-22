@@ -1,0 +1,85 @@
+{
+  "schema": 2,
+  "observed_at_utc": "2026-11-22T14:39:50.299128+00:00",
+  "queries": [
+    "黑鏡",
+    "神探夏洛克"
+  ],
+  "providers_requested": 6,
+  "provider_queries_attempted": 12,
+  "provider_queries_failed": 2,
+  "works_found": 33,
+  "unique_media_candidates": 126,
+  "hls_candidates": 126,
+  "manifests_parsed": 0,
+  "segment_sample_pass": 0,
+  "suspected_ad_cues": 0,
+  "audited": 4,
+  "errors": [
+    {
+      "provider": "diyi",
+      "query": "神探夏洛克",
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "provider": "diyi",
+      "query": "黑鏡",
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    }
+  ],
+  "audits": [
+    {
+      "title": "神探夏洛克  第二季",
+      "episode": "第01集",
+      "provider": "liangzi",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "title": "神探夏洛克  第二季",
+      "episode": "第02集",
+      "provider": "liangzi",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "title": "黑镜 第一季",
+      "episode": "第01集",
+      "provider": "liangzi",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "title": "黑镜 第一季",
+      "episode": "第02集",
+      "provider": "liangzi",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    }
+  ],
+  "stages": {
+    "discovery": "attempted",
+    "ad_quality": "manifest-only",
+    "playback": "not-tested-in-browser",
+    "website": "report-only"
+  },
+  "completion": "NOT_COMPLETED",
+  "limitations": "Manifest parsing cannot certify ads, playback, correct content or rights. No auto-import.",
+  "rescan_previous_parsed_count": 4
+}
