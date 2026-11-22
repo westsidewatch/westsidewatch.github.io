@@ -2,8 +2,8 @@
   "schema": 1,
   "source": "Changzhang",
   "origin": "https://changzhang.tv/help/app",
-  "observed_at_utc": "2026-11-22T10:24:19.769266+00:00",
-  "scan_status": "DISCOVERY_COMPLETE_UNVERIFIED",
+  "observed_at_utc": "2026-11-22T10:30:25.207658+00:00",
+  "scan_status": "PARTIAL_WITH_ERRORS",
   "history": {
     "date": "2026-11-20",
     "tested_titles": 12,
@@ -11,20 +11,20 @@
   },
   "today": {
     "catalog_candidates": 1244,
-    "media_candidates": 834,
-    "unique_hls": 4553,
+    "media_candidates": 814,
+    "unique_hls": 4461,
     "hls_sampled": 12,
     "hls_sample_pass": 9,
     "manifest_ad_suspects": 0,
-    "failure_count": 0,
-    "browser_samples": 0,
-    "first_frame_pass": 0,
-    "time_progress_pass": 0
+    "failure_count": 1,
+    "browser_samples": 3,
+    "first_frame_pass": 3,
+    "time_progress_pass": 3
   },
   "stages": {
     "discovery": "PARTIAL",
     "ad_quality": "SAMPLED_NOT_CERTIFIED",
-    "playback": "NOT_TESTED",
+    "playback": "TIME_ADVANCED_SAMPLED_NOT_CERTIFIED",
     "website": "DIAGNOSTIC_ONLY"
   },
   "fully_verified_clean": 0,
@@ -52,9 +52,14 @@
       "key": "gospel_media",
       "label": "福音影視",
       "catalog_ids": 46,
-      "media_matches": 35
+      "media_matches": 15
     }
   ],
-  "errors": [],
+  "errors": [
+    {
+      "stage": "batch-detail-1200",
+      "reason": "The read operation timed out"
+    }
+  ],
   "warning": "A source is not certified ad-free or playable until actual playback, ad review and website acceptance."
 }
