@@ -68,8 +68,10 @@ try{
   for(let index=0;index<frames.length;index++){
     const frame=frames[index];
     errors.length=0;
-    if(index>0)
+    if(index>0){
       await evaluate("history.replaceState(null,'','?proofFrame="+frame+"')");
+      await evaluate("window.__churchRenderProofFrame("+frame+")");
+    }
 
     let state=null;
     for(let retry=0;retry<100;retry++){
@@ -100,8 +102,12 @@ try{
     if(state.crossLight?.bounceSources!==2)
       throw Error('Cross light must illuminate actual surfaces with two real PBR light sources, not only planes: '+JSON.stringify(state.crossLight));
 
-    await sleep(450);
-    const clock=await evaluate('window.__churchFrameAudit');
+    await sleep(300);
+    let clock=await evaluate('window.__churchFrameAudit');
+    if(clock?.at!==frame){
+      await evaluate("window.__churchRenderProofFrame("+frame+")");
+      clock=await evaluate('window.__churchFrameAudit');
+    }
     if(!clock||Math.abs(clock.at-frame)>0.01)
       throw Error('Actual rendered camera/time did not advance to proof frame '+frame+' '+JSON.stringify(clock));
     if(Math.abs(clock.crossHeight-3.65)>0.001 || !Number.isFinite(clock.portalIntensity))
