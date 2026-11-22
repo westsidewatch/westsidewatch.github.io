@@ -1,0 +1,38 @@
+name: Shupian Changzhang specialist source experiment
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/shupian_recovery/changzhang_sweep.py'
+      - 'scripts/shupian_recovery/test_changzhang_sweep.py'
+      - '.github/workflows/shupian-changzhang-specialist.yml'
+permissions:
+  contents: read
+jobs:
+  changzhang-specialist:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check original and new engine regressions
+        run: python3 -m unittest discover -s scripts/shupian_recovery -p 'test_*.py' -v
+      - name: Install media analyzer
+        run: sudo apt-get update -qq && sudo apt-get install -qq -y ffmpeg
+      - name: Scan native Changzhang categories across four content groups
+        continue-on-error: true
+        run: |
+          python3 scripts/shupian_recovery/changzhang_sweep.py \
+            --max-pages 5 --page-size 20 --detail-batch 30 \
+            --probe-count 12 --sleep 0.15 \
+            --output shupian-changzhang-specialist.json
+      - name: Preserve real API, catalog, manifest, segment, and failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shupian-changzhang-specialist
+          path: shupian-changzhang-specialist.json
+          if-no-files-found: warn
