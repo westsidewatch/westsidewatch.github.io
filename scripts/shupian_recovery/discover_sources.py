@@ -247,15 +247,21 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
         detail = probe(candidate)
         if detail.get("manifest") == "parsed":
             detail = {k: v for k, v in detail.items() if k not in ("error", "failure_class")}
+        # A readable playlist is not a healthy stream when media probes failed.
+        # Keep playlist parsing metrics separate from sampled media health.
         previous_status = prior.get("manifest") if prior else None
         current_status = detail.get("manifest")
+        current_healthy = (current_status == "parsed" and
+                           detail.get("segment_sample") == "pass")
+        previous_healthy = (previous_status == "parsed" and
+                            prior.get("segment_sample") == "pass") if prior else False
         if previous_status not in ("parsed", "failed"):
             transition = "new_observation"
-        elif previous_status == "parsed" and current_status != "parsed":
+        elif previous_healthy and not current_healthy:
             transition = "regressed"
-        elif previous_status != "parsed" and current_status == "parsed":
+        elif not previous_healthy and current_healthy:
             transition = "recovered"
-        elif previous_status == "parsed":
+        elif current_healthy:
             transition = "stable_healthy"
         else:
             transition = "stable_failure"
@@ -267,7 +273,7 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
         except (ValueError, TypeError):
             old_health, old_pass = 0, 0
         health_checks = old_health + 1
-        health_pass = old_pass + int(current_status == "parsed" and detail.get("segment_sample") == "pass")
+        health_pass = old_pass + int(current_healthy)
         # Bayesian-smoothed sampling score; not a guarantee of video playback.
         quality = round((health_pass + 1) / (health_checks + 2), 4)
         # Public report contains fingerprints, never raw media URLs.
