@@ -186,7 +186,7 @@ scene.add(crossWallBounce,crossWallBounce.target);
 window.__churchLightAudit={
   aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,
   crossCenter:[crossAperture.x,crossAperture.y,crossAperture.z],
-  bounceSources:2,volumeShader:true,beamTracksSun:true,version:"R17"
+  bounceSources:2,volumeShader:true,beamTracksSun:true,adaptiveExposure:true,version:"R18"
 };
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
@@ -628,7 +628,7 @@ function updateDaylight(t,duration) {
   crossFloorLight.scale.set(.86+groundTravel*.025, .80+groundTravel*.045,1);
   // Real surfaces now catch a moving warm cone and reflected floor light,
   // instead of relying entirely on alpha-blended decorative cards.
-  crossPortalKey.intensity=24*sunlight;
+  crossPortalKey.intensity=21*sunlight;
   crossPortalKey.target.position.set(crossFloorLight.position.x,.04,crossFloorLight.position.z);
   crossPortalKey.target.updateMatrixWorld();
   crossWallBounce.intensity=9*sunlight;
@@ -646,7 +646,10 @@ function updateDaylight(t,duration) {
     ray.rotateY(ray.userData.rotationalSlice);
     ray.scale.y=beamLength/10;
   }
-  crossAirMaterial.uniforms.uLight.value=.008+.22*sunlight;
+  crossAirMaterial.uniforms.uLight.value=.006+.125*sunlight;
+  crossAirMaterial.uniforms.uTint.value.set(
+    1,.80+.13*daylight,.67+.25*daylight
+  );
   crossAirMaterial.uniforms.uTime.value=t;
   // Daylight changes; the wall PBR base colors remain from the original GLB.
   // Colour temperature follows the time of day, not arbitrary flashing:
@@ -660,7 +663,16 @@ function updateDaylight(t,duration) {
   bounceFill.color.setRGB(1,.86+.10*daylight,.77+.19*daylight);
   skyFill.intensity=.86+.20*daylight;
   // Gentle exposure adaptation preserves wall relief and the white chapel.
-  renderer.toneMappingExposure=.86+.11*daylight;
+  // Lens-like approach compensation: close chapel views keep detail in the
+  // true slit and scattered light; walls remain their original white PBR.
+  const cp=positionAlongRoute(t).p;
+  const lensDistance=Math.hypot(
+    cp[0]-crossAperture.x,
+    cp[1]-crossAperture.y,
+    cp[2]-crossAperture.z
+  );
+  const lensNear=Math.max(0,Math.min(1,(10-lensDistance)/6));
+  renderer.toneMappingExposure=(.86+.11*daylight)*(1-.16*lensNear*sunlight);
   updateMapleSeason(t,duration);
 }
 
@@ -726,6 +738,8 @@ function animate(now,forcedTime=null) {
     floorPosition:[crossFloorLight.position.x,crossFloorLight.position.y,crossFloorLight.position.z],
     portalIntensity:crossPortalKey.intensity,
     reflectedIntensity:crossWallBounce.intensity,
+    airStrength:crossAirMaterial.uniforms.uLight.value,
+    exposure:renderer.toneMappingExposure,
     beamAlignment:localBeamAxis.clone()
       .applyQuaternion(crossAirVolumes[0].quaternion).dot(crossRayUnit)
   };
