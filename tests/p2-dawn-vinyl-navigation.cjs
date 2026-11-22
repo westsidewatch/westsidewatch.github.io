@@ -75,6 +75,20 @@ fs.mkdirSync(out,{recursive:true});
   await journey.locator('#dawn-classification-tree button.dawn-classification__sleeve').nth(8).click();
   await journey.waitForFunction(()=>document.querySelector('#dawn-works')?.children.length>0,null,{timeout:35000});
   assert(await journey.locator('#dawn-works').isVisible(),'canonical works shelf not accessible');
+  const firstBook=await journey.locator('#dawn-works button.dawn-catalogue__cover-card').first().getAttribute('aria-label');
+  const visited=new Set();
+  for(let n=0;n<8;n++){
+   const first=await journey.locator('#dawn-works button.dawn-catalogue__cover-card').first().getAttribute('aria-label');
+   assert(first&&!visited.has(first),'scope-filtered shard pagination duplicated first Work at step '+n);
+   visited.add(first);
+   await journey.locator('#dawn-more').click();
+   await journey.waitForFunction(num=>document.querySelector('#dawn-page-status')?.textContent?.includes('第 '+num+' 頁'),n+2,{timeout:25000});
+  }
+  assert(await journey.locator('#dawn-page-status').innerText().then(t=>t.includes('第 9 頁')),'canonical paging did not cross shortened first shard');
+  await journey.locator('#dawn-prev').click();
+  await journey.waitForFunction(()=>document.querySelector('#dawn-page-status')?.textContent?.includes('第 8 頁'),null,{timeout:25000});
+  console.log('DAWN_CANONICAL', 'ACTUAL_SHARD_CURSOR_NEXT_PREVIOUS_PASS');
+
   assert(await journey.locator('#dawn-page-status').innerText().then(s=>s.includes('203,448')),'all-works view still uses the wrong 21k index');
   assert(await journey.locator('#dawn-classification-path').innerText().then(s=>s.includes('全部書目')),'bibliographic breadcrumb missing');
   await journey.locator('#dawn-classification-path button').first().click();
