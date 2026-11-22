@@ -1,0 +1,68 @@
+name: Shupian real browser playback acceptance
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/shupian-playback-acceptance.yml'
+      - 'static/shupian/index.html'
+      - 'static/shupian/catalog.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-playback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Chromium browser test
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Test actual deployed cinema against first published media source
+        run: |
+          python - <<'PY'
+          import asyncio,json
+          from pathlib import Path
+          from playwright.async_api import async_playwright
+          async def main():
+              result={"page":"https://westsidewatch.github.io/shupian/",
+                      "first_frame":False,"time_advanced":False,"browser":"Chromium",
+                      "status":"NOT_TESTED"}
+              async with async_playwright() as p:
+                  browser=await p.chromium.launch(headless=True,args=["--autoplay-policy=no-user-gesture-required"])
+                  page=await browser.new_page()
+                  try:
+                      response=await page.goto(result["page"]+"?browser-acceptance=1",wait_until="domcontentloaded",timeout=30000)
+                      result["page_http"]=response.status if response else None
+                      await page.locator("#grid .poster").first.click(timeout=10000)
+                      await page.locator("#video").evaluate("(v) => {v.muted=true;v.play().catch(()=>{});}")
+                      for _ in range(30):
+                          await page.wait_for_timeout(1000)
+                          state=await page.locator("#video").evaluate("(v) => ({readyState:v.readyState, currentTime:v.currentTime, errorCode:v.error?.code||null})")
+                          result["first_frame"]|=state["readyState"]>=2
+                          result["time_advanced"]|=state["currentTime"]>0.8
+                          if result["time_advanced"]:break
+                      result["video"]=state
+                      result["player_status"]=(await page.locator("#status").inner_text())[:300]
+                      result["status"]="PASS" if result["first_frame"] and result["time_advanced"] else "FAIL"
+                  except Exception as e:
+                      result["status"]="ERROR"
+                      result["error"]=type(e).__name__+": "+str(e)[:180]
+                  finally:
+                      await browser.close()
+              Path("shupian-browser-acceptance.json").write_text(json.dumps(result,ensure_ascii=False,indent=2))
+              print(json.dumps(result,ensure_ascii=False))
+              if result["status"]!="PASS":
+                  raise SystemExit("Live site browser playback not verified")
+          asyncio.run(main())
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shupian-browser-acceptance
+          path: shupian-browser-acceptance.json
+          if-no-files-found: warn
