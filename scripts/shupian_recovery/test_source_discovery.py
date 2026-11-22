@@ -51,6 +51,35 @@ class BroadDiscovery(unittest.TestCase):
         self.assertEqual(len(report["probes"]),6)
         self.assertEqual(len(report["candidates"]),6)
 
+    def test_uses_provider_specific_type_id_and_hydrates_detail(self):
+        observed = []
+        def typed_api(url):
+            observed.append(url)
+            args = parse_qs(urlsplit(url).query)
+            if args.get("ids"):
+                return {"list": [{"vod_id": args["ids"][0],
+                                   "vod_name": "New Japanese Anime",
+                                   "vod_play_from": "hls",
+                                   "vod_play_url": "第1集$https://media.example/one.m3u8"}]}
+            if args.get("t") == ["37"]:
+                return {"list": [{"vod_id": "anime-1",
+                                   "vod_name": "New Japanese Anime",
+                                   "type_name": "日韩动漫",
+                                   "vod_year": "2026"}]}
+            if args.get("wd"):
+                return {"list": []}
+            return {"class": [{"type_id": 10, "type_name": "欧美剧"},
+                              {"type_id": 37, "type_name": "日韩动漫"}],
+                    "list": []}
+        report = search(PROVIDERS[:1], pages=1, discover=True,
+                        type_hints=["日韩动漫"], fetch=typed_api)
+        self.assertTrue(any("t=37" in url for url in observed))
+        self.assertEqual(len(report["candidates"]), 1)
+        self.assertEqual(report["candidates"][0]["discovery_type_id"], "37")
+        self.assertEqual(report["candidates"][0]["year"], "2026")
+        self.assertEqual(report["candidates"][0]["groups"][0]["episodes"][0]["format"], "m3u8")
+        self.assertFalse(report["errors"])
+
     def test_provider_failure_does_not_abort_other_providers(self):
         def sometimes_fail(url):
             if "provider-one" in url: raise OSError("simulated outage")
