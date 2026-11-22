@@ -582,54 +582,112 @@
  // cover pointers and documented exhibition plates. Never draw a mock disc,
  // apply a random book's picture as the image of a different work, or use
  // solid dark placeholders.
- let categoryCovers=[],categoryCoverPromise=null,categoryMotionTimer=0;
- function getCategoryCovers(){
+ // Source-backed category jackets. Each classification only rotates covers
+ // actually associated with that subject; never mix an unrelated shelf.
+ const categoryCoverPools=new Map(),categoryQueries=new Map(),categorySearches=new Map();
+ let categoryCoverPromise=null,categoryMotionTimer=0;
+ const sourceGroups={
+  bible:/bible|scripture|testament|gospel|psalm/i,
+  exegesis:/commentary|exegesis|interpre|hermeneutic|biblical/i,
+  theology:/theolog|doctrine|christ|god|spirit|trinity/i,
+  'biblical-world':/bible|biblical|jew|israel|jerusalem|temple|atlas|antiquit|holy land/i,
+  'church-history':/church|ecclesia|christian|histor|communion/i,
+  'christian-life':/prayer|devotion|spiritual|christian|faith|discipleship/i,
+  ministry:/ministry|preach|pastor|church|education|mission|worship/i
+ };
+ const categoryRoot=id=>{
+  if(!id)return 'all';
+  if(id==='zh'||id.startsWith('zh:'))return id;
+  if(id==='all')return id;
+  return String(id).split('.')[0];
+ };
+ async function getCategoryCovers(){
   if(categoryCoverPromise)return categoryCoverPromise;
   categoryCoverPromise=(async()=>{
-   const covers=[],seen=new Set();
-   const add=(url,title)=>{const src=safeHttp(url);if(!src||seen.has(src))return;seen.add(src);covers.push({url:src,title:title||''})};
+   const all=[],seen=new Set(),fromShelf=[];
+   const add=(key,url,title)=>{
+    const src=safeHttp(url);if(!src)return;
+    if(!categoryCoverPools.has(key))categoryCoverPools.set(key,[]);
+    const pool=categoryCoverPools.get(key);
+    if(!pool.some(i=>i.url===src))pool.push({url:src,title:title||''});
+    if(!seen.has(src)){seen.add(src);all.push({url:src,title:title||''})}
+   };
    try{
-    const data=await(await fetch('/dawn-library/storefront.json')).json();
-    for(const shelf of shelvesOf(data))for(const work of shelf.items||[])if(work.source?.url)add(work.cover?.url,work.title);
-   }catch(e){console.warn('[Dawn category jacket covers]',e)}
+    const response=await fetch('/dawn-library/storefront.json');
+    if(response.ok){
+     const data=await response.json();
+     for(const shelf of shelvesOf(data))for(const work of shelf.items||[]){
+      if(!work.source?.url||!safeHttp(work.cover?.url))continue;
+      const name=String(work.title||'');
+      add('all',work.cover.url,name);
+      for(const [id,test] of Object.entries(sourceGroups))if(test.test(name))add(id,work.cover.url,name);
+      // The two curatorial shelves are explicit source-proven subject routes.
+      if(/聖經歷史與地理/.test(shelf.title||''))add('biblical-world',work.cover.url,name);
+      if(/教會歷史/.test(shelf.title||''))add('church-history',work.cover.url,name);
+     }
+    }
+   }catch(e){console.warn('[Dawn sourced jacket pool]',e)}
    try{
-    const registry=await(await fetch('/dawn-library/p2-exhibitions/jerusalem-3000.json')).json();
-    for(const work of registry.items||[])if(work.media?.source)add(work.media?.src,work.title);
-   }catch(e){console.warn('[Dawn exhibition images]',e)}
+    const response=await fetch('/dawn-library/chinese-collection.json');
+    if(response.ok){
+     const chinese=chineseLibrary||await response.json();
+     for(const work of chinese.works||[]){
+      const image=work.cover?.url;
+      const title=work.work?.title||'';
+      if(!safeHttp(image))continue;
+      add('zh',image,title);
+      const classification=String(work.classification?.label||'');
+      const group=classification.split('/')[0];
+      add('zh:'+group,image,title);
+      add('zh:'+classification,image,title);
+      add('all',image,title);
+     }
+    }
+   }catch(e){console.warn('[Dawn Chinese sourced jackets]',e)}
+   // An exhibition image belongs to a verified exhibition, not to every
+   // theology or church-history category.
    try{
-    const chinese=chineseLibrary||await(await fetch('/dawn-library/chinese-collection.json')).json();
-    for(const work of chinese.works||[])add(work.cover?.url,work.work?.title);
-   }catch(e){console.warn('[Dawn Chinese covers]',e)}
-   categoryCovers=covers;
+    const response=await fetch('/dawn-library/p2-exhibitions/jerusalem-3000.json');
+    if(response.ok){
+     const data=await response.json();
+     for(const work of data.items||[])if(safeHttp(work.media?.source)&&safeHttp(work.media?.src))
+      add('biblical-world',work.media.src,work.title);
+    }
+   }catch(e){console.warn('[Dawn exhibition jackets]',e)}
    refreshCategoryCovers(true);
-   return covers;
+   return all;
   })();
   return categoryCoverPromise;
  }
  function refreshCategoryCovers(initial=false){
-  if(!categoryCovers.length)return;
   const tiles=[...document.querySelectorAll('#dawn-classification-tree .dawn-classification__sleeve')];
-  const offset=initial?0:Math.floor(Math.random()*categoryCovers.length);
-  for(const [i,tile] of tiles.entries()){
-   if(!initial&&Math.random()>.43)continue;
+  for(const tile of tiles){
+   if(!initial&&(tile.matches(':hover,:focus-visible')||Math.random()>.3))continue;
+   const key=tile.dataset.coverGroup||'all';
+   const items=categoryCoverPools.get(key)||[];
+   if(!items.length)continue; // Never use somebody else's cover.
    const art=tile.querySelector('.dawn-classification__art');if(!art)continue;
-   const item=categoryCovers[(i*7+offset)%categoryCovers.length];
-   const image=new Image();image.alt='';image.decoding='async';image.loading='lazy';
-   image.onload=()=>{if(!tile.isConnected)return;art.replaceChildren(image)};
-   image.src=item.url;
+   const prior=art.querySelector('img')?.src;
+   const candidates=items.filter(item=>item.url!==prior);
+   const selected=(candidates.length?candidates:items)[Math.floor(Math.random()*(candidates.length||items.length))];
+   const image=new Image();image.alt='';image.decoding='async';image.loading='lazy';image.referrerPolicy='no-referrer';
+   image.onload=()=>{
+    if(tile.isConnected&&tile.dataset.coverGroup===key)art.replaceChildren(image);
+   };
+   image.src=selected.url;
   }
  }
  function startCategoryCoverMotion(){
   void getCategoryCovers();
-  if(categoryMotionTimer)return;
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(categoryMotionTimer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   categoryMotionTimer=setInterval(()=>{
    if(!document.hidden&&!catalogue.hidden&&activePortal==='all')refreshCategoryCovers();
-  },5500);
+  },6500);
  }
- function classificationSleeve(label,meta,action,style=''){
+ function classificationSleeve(label,meta,action,style='',coverGroup='all'){
   const tile=document.createElement('button');tile.type='button';
   tile.className='dawn-classification__sleeve'+(style?' dawn-classification__sleeve--'+style:'');
+  tile.dataset.coverGroup=coverGroup;
   const art=document.createElement('span');art.className='dawn-classification__art';art.setAttribute('aria-hidden','true');
   const number=document.createElement('small');number.className='dawn-classification__index';number.textContent=meta||'';
   const title=document.createElement('strong');title.textContent=label;
@@ -683,10 +741,10 @@
   setFullRecordIndexVisible(false);
   const wall=classificationWall();startCategoryCoverMotion();
   for(const [i,group] of (classificationTree.roots||[]).entries()){
-   wall.append(classificationSleeve(group.label,String(group.children.length).padStart(2,'0')+' 個子類',()=>displayClassificationGroup(group),i%2?'olive':'harvest'));
+   wall.append(classificationSleeve(group.label,String(group.children.length).padStart(2,'0')+' 個子類',()=>displayClassificationGroup(group),i%2?'olive':'harvest',group.id));
   }
-  wall.append(classificationSleeve('中文圖書',String(chineseLibrary.count||chineseLibrary.works?.length||0)+' 部藏書',displayChineseGroups,'chinese'));
-  wall.append(classificationSleeve('全部書目','依年代與作者查閱',displayFullRecordIndex,'harvest'));
+  wall.append(classificationSleeve('中文圖書',String(chineseLibrary.count||chineseLibrary.works?.length||0)+' 部藏書',displayChineseGroups,'chinese','zh'));
+  wall.append(classificationSleeve('全部書目','依年代與作者查閱',displayFullRecordIndex,'harvest','all'));
   refreshCategoryCovers(true);
  }
  function displayClassificationGroup(group){
@@ -695,7 +753,7 @@
   classificationCrumbs([{label:group.label,action:()=>displayClassificationGroup(group)}]);
   const wall=classificationWall();
   for(const [i,child] of (group.children||[]).entries()){
-   wall.append(classificationSleeve(child.label,String(i+1).padStart(2,'0'),()=>void displayClassificationLeaf(group,child),i%3===0?'olive':'harvest'));
+   wall.append(classificationSleeve(child.label,String(i+1).padStart(2,'0'),()=>void displayClassificationLeaf(group,child),i%3===0?'olive':'harvest',group.id));
   }
   refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
@@ -793,7 +851,7 @@
   classificationCrumbs([{label:'中文圖書',action:displayChineseGroups}]);
   const wall=classificationWall();
   for(const [i,[key,items]] of [...chineseGroups()].entries())
-   wall.append(classificationSleeve(chineseName(key),String(items.length)+' 部',()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest'));
+   wall.append(classificationSleeve(chineseName(key),String(items.length)+' 部',()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest','zh:'+key));
   refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
  }
@@ -806,7 +864,7 @@
   for(const w of works){const domain=String(w.classification?.label||key);if(!subgroups.has(domain))subgroups.set(domain,[]);subgroups.get(domain).push(w)}
   for(const [i,[domain,items]] of subgroups.entries()){
    const subtitle=domain.split('/').map(chineseName).join(' · ');
-   wall.append(classificationSleeve(subtitle,String(items.length)+' 部',()=>displayChineseLeaf(key,domain),i%3===0?'chinese':'olive'));
+   wall.append(classificationSleeve(subtitle,String(items.length)+' 部',()=>displayChineseLeaf(key,domain),i%3===0?'chinese':'olive','zh:'+domain));
   }
   refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
