@@ -861,7 +861,7 @@
  padding:clamp(24px,3.5vw,58px) 0 clamp(26px,4vw,70px);
 }
 #dawn-second .dawn-catalogue__classification[hidden],
-#dawn-second .dawn-classification__wall[hidden],
+#dawn-second .dawn-catalogue__classification-tree.dawn-classification__wall[hidden],
 #dawn-second .dawn-classification__results[hidden],
 #dawn-second .dawn-catalogue__facets[hidden]{display:none!important}
 #dawn-second .dawn-catalogue__classification-head{
