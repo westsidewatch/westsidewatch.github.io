@@ -88,6 +88,15 @@ fs.mkdirSync(dir,{recursive:true});
   });
   assert(previewVisual.ready||previewVisual.paper!=='none',
    device+': newly expanded preview has a blank white image while loading');
+  const folioColor=await preview.locator('.dawn-expander__book').evaluate(el=>({
+   pictured:el.classList.contains('dawn-expander__book--ready'),
+   background:getComputedStyle(el).backgroundColor,
+   paper:getComputedStyle(el.querySelector('.dawn-expander__book-paper')).backgroundColor
+  }));
+  if(!folioColor.pictured){
+   assert(folioColor.background!=='rgb(255, 255, 255)'&&folioColor.paper!=='rgb(255, 255, 255)',
+    device+': translated-work fallback was a huge white empty sheet');
+  }
   const firstTitle=await preview.locator('.dawn-expander__title').innerText();
   await cards.nth(1).click();
   await page.waitForFunction(old=>document.querySelector('#dawn-book-expanding-preview .dawn-expander__title')?.textContent!==old,
