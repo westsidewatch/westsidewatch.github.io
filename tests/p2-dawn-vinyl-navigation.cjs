@@ -36,9 +36,28 @@ fs.mkdirSync(out,{recursive:true});
    console.log('DAWN_VINYL',name,'CHINESE_CATEGORY_BOOK_RETURN_PASS',bookCount);
    await page.close();
   }
+  // User journey, not a special catalogue URL: the real "全部館藏"
+  // action must replace the former flat list with the vinyl wall.
+  const journey=await browser.newPage({viewport:{width:1440,height:900}});
+  await journey.goto(base+'?layer=second&d=28.4&v=qa-vinyl',{waitUntil:'domcontentloaded',timeout:45000});
+  await journey.locator('#dawn-open-catalogue-top').click();
+  await journey.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length===9,null,{timeout:35000});
+  assert(await journey.locator('#dawn-classification').isVisible(),'normal nav did not open vinyl classification');
+  assert(!(await journey.locator('#dawn-catalogue .dawn-catalogue__nav').isVisible()),'old search page appears before vinyl wall');
+  assert(!(await journey.locator('#dawn-works').isVisible()),'old flat results appear at the landing');
+  await journey.screenshot({path:path.join(out,'desktop-normal-entry-vinyl.png'),fullPage:false});
+  await journey.locator('#dawn-classification-tree button.dawn-classification__sleeve').last().click();
+  await journey.waitForFunction(()=>document.querySelector('#dawn-works')?.children.length>0,null,{timeout:35000});
+  assert(await journey.locator('#dawn-works').isVisible(),'bibliographic sub-shelf not accessible');
+  assert(await journey.locator('#dawn-classification-path').innerText().then(s=>s.includes('全部書目')),'bibliographic breadcrumb missing');
+  await journey.locator('#dawn-classification-path button').first().click();
+  assert(!(await journey.locator('#dawn-works').isVisible()),'flat list not hidden after return');
+  assert(await journey.locator('#dawn-classification-tree button').count()===9,'vinyl landing not restored');
+  console.log('DAWN_VINYL','NORMAL_ALL_COLLECTION_ENTRY_AND_BIBLIOGRAPHY_RETURN_PASS');
+  await journey.close();
   const page=await browser.newPage({viewport:{width:1440,height:900}});
   await page.goto(base+'?layer=catalogue&d=28.4&v=qa-vinyl',{waitUntil:'domcontentloaded',timeout:45000});
-  await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length===8,null,{timeout:35000});
+  await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length===9,null,{timeout:35000});
   await page.locator('#dawn-classification-tree button.dawn-classification__sleeve').first().click();
   const subCount=await page.locator('#dawn-classification-tree button.dawn-classification__sleeve').count();
   assert(subCount>=4,'Bible root did not open subcategories');
