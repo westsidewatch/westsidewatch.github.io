@@ -9,7 +9,7 @@ import {
   y as BoxGeometry, p as Vector3,
   G as GLTFLoader, W as WebGLRenderer, S as SRGBColorSpace,
   A as ACESFilmicToneMapping, P as PCFSoftShadowMap,
-  a as Scene, H as HemisphereLight, D as DirectionalLight, f as SpotLight,
+  a as Scene, H as HemisphereLight, D as DirectionalLight, f as SpotLight, c as ShaderMaterial,
   b as PlaneGeometry, o as PerspectiveCamera, d as DoubleSide,
   e as CanvasTexture
 } from "../p2-maquette/assets/GLTFLoader-j388d5bW.js";
@@ -118,11 +118,45 @@ const crossFloorLight=new Mesh(new PlaneGeometry(4.2,9.4),luminousSurface(crossL
 crossFloorLight.rotation.x=-Math.PI/2;crossFloorLight.position.set(15,.085,-5.0);
 crossFloorLight.name="Sanctuary sunlight floor bounce";crossFloorLight.renderOrder=3;
 scene.add(crossFloorLight);
+// Analytic scattering, not three opaque transparent light cards. The
+// fragment mask decays to zero at every boundary; soft procedural dust moves
+// slowly without image-sequence flicker or third-party heavy postprocessing.
+const crossAirMaterial=new ShaderMaterial({
+  transparent:true,depthWrite:false,depthTest:true,blending:2,side:DoubleSide,
+  uniforms:{
+    uLight:{value:0},
+    uTime:{value:0},
+    uTint:{value:new Vector3(1.0,.81,.64)}
+  },
+  vertexShader:`
+    varying vec2 vUv;
+    void main(){
+      vUv=uv;
+      gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);
+    }`,
+  fragmentShader:`
+    precision highp float;
+    varying vec2 vUv;
+    uniform float uLight;
+    uniform float uTime;
+    uniform vec3 uTint;
+    float gaussian(float x,float r){return exp(-pow(x/r,2.0));}
+    void main(){
+      vec2 p=vUv-.5;
+      float core=gaussian(p.x,.18)*gaussian(p.y,.31);
+      float air=gaussian(p.x,.31)*gaussian(p.y,.39);
+      float border=smoothstep(0.0,.16,vUv.x)*smoothstep(0.0,.16,1.0-vUv.x)
+                 *smoothstep(0.0,.17,vUv.y)*smoothstep(0.0,.17,1.0-vUv.y);
+      float motes=1.0+.055*sin(vUv.x*23.0+uTime*.09)*sin(vUv.y*19.0-uTime*.07);
+      float density=(.37*core+.63*air)*border*motes;
+      gl_FragColor=vec4(uTint,density*uLight);
+    }`
+});
 const crossAirVolumes=[];
 for(const [turn,shift,z] of [[.92,-.12,-4.05],[-.92,.13,-4.4],[.38,0,-4.2]]){
-  const ray=new Mesh(new PlaneGeometry(6.4,3.15),luminousSurface(crossLightMask("air"),.027,.43));
-  ray.rotation.y=turn;ray.position.set(15+shift,1.82,z);ray.renderOrder=3;
-  ray.name="Cross soft atmospheric bounce";scene.add(ray);crossAirVolumes.push(ray);
+  const ray=new Mesh(new PlaneGeometry(6.5,3.8),crossAirMaterial);
+  ray.rotation.y=turn;ray.position.set(15+shift,2.18,z);ray.renderOrder=3;
+  ray.name="Cross analytic air-scattering shaft";scene.add(ray);crossAirVolumes.push(ray);
 }
 // Two actual PBR light sources, using the same locally bundled Three.js.
 // Key: broad cone following sunlight from the genuine aperture toward pews.
@@ -141,7 +175,7 @@ scene.add(crossWallBounce,crossWallBounce.target);
 window.__churchLightAudit={
   aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,
   crossCenter:[crossAperture.x,crossAperture.y,crossAperture.z],
-  bounceSources:2,version:"R15"
+  bounceSources:2,volumeShader:true,version:"R16"
 };
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
@@ -575,7 +609,7 @@ function updateDaylight(t,duration) {
   // high summer sun -> near altar; low sun -> elongated toward rear pews.
   const solarFall=Math.max(9.8,25*solar-1.4);
   const groundTravel=Math.min(9.7,Math.max(3.2,crossAperture.y*30/solarFall));
-  apertureGlow.material.opacity=.060+.35*sunlight;
+  apertureGlow.material.opacity=.040+.21*sunlight;
   crossFloorLight.material.opacity=.08+.40*sunlight;
   crossFloorLight.position.z=-groundTravel;
   crossFloorLight.position.x=crossAperture.x+
@@ -589,10 +623,11 @@ function updateDaylight(t,duration) {
   crossWallBounce.intensity=9*sunlight;
   crossWallBounce.position.set(crossFloorLight.position.x,.24,crossFloorLight.position.z);
   crossWallBounce.target.updateMatrixWorld();
+  crossAirMaterial.uniforms.uLight.value=.008+.18*sunlight;
+  crossAirMaterial.uniforms.uTime.value=t;
   for(let i=0;i<crossAirVolumes.length;i++){
     const ray=crossAirVolumes[i];
-    ray.material.opacity=.004+.026*sunlight;
-    ray.position.x=15+[-.12,.13,0][i]+.09*Math.cos(angle);
+    ray.position.x=15+[-.12,.13,0][i]+.12*Math.cos(angle);
   }
   // Daylight changes; the wall PBR base colors remain from the original GLB.
   // Colour temperature follows the time of day, not arbitrary flashing:
@@ -601,12 +636,12 @@ function updateDaylight(t,duration) {
   skyFill.color.setRGB(.81+.11*daylight,.86+.10*daylight,1);
   skyFill.groundColor.setRGB(.68+.09*daylight,.67+.10*daylight,.65+.11*daylight);
   ambientFill.color.setRGB(.71+.13*daylight,.80+.10*daylight,.93+.04*daylight);
-  ambientFill.intensity=.24+.28*daylight;
+  ambientFill.intensity=.19+.25*daylight;
   bounceFill.intensity=.18+.22*daylight;
   bounceFill.color.setRGB(1,.86+.10*daylight,.77+.19*daylight);
-  skyFill.intensity=1.05+.22*daylight;
+  skyFill.intensity=.86+.20*daylight;
   // Gentle exposure adaptation preserves wall relief and the white chapel.
-  renderer.toneMappingExposure=.87+.11*daylight;
+  renderer.toneMappingExposure=.86+.11*daylight;
   updateMapleSeason(t,duration);
 }
 
