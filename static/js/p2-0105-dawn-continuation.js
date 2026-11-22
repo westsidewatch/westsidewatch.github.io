@@ -298,6 +298,7 @@
  const detail=$('#dawn-book-detail'),detailBack=$('#dawn-book-back'),detailTitle=$('#dawn-book-title'),detailAuthor=$('#dawn-book-author'),detailEdition=$('#dawn-book-edition'),detailImage=$('#dawn-book-image'),detailCaption=$('#dawn-book-image-caption'),detailVisual=$('#dawn-book-visual'),detailText=$('#dawn-book-text'),detailSource=$('#dawn-book-source');
  let index=null,currentPage=0,loading=false,loaded=[],cache=new Map();
  let coverLookup=null,coverLookupLoading=null,visualLookup=null,visualLookupLoading=null,activeBook=null,returnTo='wall',returnScroll=0,detailTicket=0;
+ const p2BookCache=new Map();
  function normalizeTitle(s){return String(s||'').toLocaleLowerCase().normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu,' ').trim();}
  function shelvesOf(data){return Array.isArray(data)?data:Array.isArray(data?.shelves)?data.shelves:[];}
  function safeHttp(url){try{const a=new URL(url,location.origin);return /^https?:$/.test(a.protocol)?a.href:null}catch{return null}}
@@ -411,6 +412,13 @@
   returnTo=from||(!catalogue.hidden?'catalogue':'wall');returnScroll=second.scrollTop;activeBook=work;
   wall.hidden=true;catalogue.hidden=true;detail.hidden=false;
   detailTitle.textContent=work.title;detailAuthor.textContent=work.creator||work.author||'';
+  const actualWorkId=String(work.workId||work.id||'');
+  if(/^(?:OL\d+W|dawn:[\w:-]+)$/.test(actualWorkId)){
+   p2BookCache.set(actualWorkId,work);
+  }
+  window.dispatchEvent(new CustomEvent('dawn:p2:work-opened',{detail:{
+   workId:actualWorkId,title:work.title,creator:work.creator||work.author||''
+  }}));
   detailEdition.textContent=work.date?String(work.date):'';
   const source=coverLookup?.get(normalizeTitle(work.title));
   const visual=imageFor(work,source);
@@ -548,13 +556,27 @@
   }
   if(!classificationPromise){
    classificationPromise=(async()=>{
-    const [classificationResponse,chineseResponse]=await Promise.all([
+    const [classificationResponse,chineseResponse,livingResponse]=await Promise.all([
      fetch('/dawn-library/classification.json'),
-     fetch('/dawn-library/chinese-collection.json')
+     fetch('/dawn-library/chinese-collection.json'),
+     fetch('/dawn-library/living/root.json')
     ]);
-    if(!classificationResponse.ok||!chineseResponse.ok)throw Error('Dawn classification sources unavailable');
-    classificationTree=await classificationResponse.json();
-    chineseLibrary=await chineseResponse.json();
+    if(!classificationResponse.ok||!chineseResponse.ok||!livingResponse.ok)throw Error('Dawn authoritative classification sources unavailable');
+    const [historical,zh,living]=await Promise.all([
+     classificationResponse.json(),chineseResponse.json(),livingResponse.json()
+    ]);
+    if(living.identityAuthority!=='Dawn'||living.admissionAuthority!==false||
+       living.projectionOnly!==true||!Array.isArray(living.classification?.roots)){
+     throw Error('Dawn Living classification identity boundary violated');
+    }
+    // Canonical knowledge-map memberships and counts are the authoritative
+    // projection. Older classification.json contributes facet names only.
+    classificationTree={
+     ...historical,roots:living.classification.roots,
+     canonicalWorkCount:living.canonicalWorkCount,
+     source:'Dawn Living',sourceShardCount:living.shardCount
+    };
+    chineseLibrary=zh;
     displayClassificationRoots();
     // Direct edition review URL, while keeping normal navigation unchanged.
     const category=new URLSearchParams(location.search).get('category');
@@ -572,6 +594,9 @@
  }
  function classificationCrumbs(crumbs){
   const nav=$('#dawn-classification-path');nav.replaceChildren();
+  window.dispatchEvent(new CustomEvent('dawn:p2:navigation',{detail:{
+   route:['館藏',...crumbs.map(x=>x.label)].join(' / ')
+  }}));
   const path=[{label:'全部分類',action:displayClassificationRoots},...crumbs];
   path.forEach((part,i)=>{
    if(i){const sep=document.createElement('span');sep.textContent='/';sep.setAttribute('aria-hidden','true');nav.append(sep)}
@@ -759,7 +784,7 @@
   setFullRecordIndexVisible(false);
   const wall=classificationWall();startCategoryCoverMotion();
   for(const [i,group] of (classificationTree.roots||[]).entries()){
-   wall.append(classificationSleeve(group.label,String(group.children.length).padStart(2,'0')+' 個子類',()=>displayClassificationGroup(group),i%2?'olive':'harvest',group.id));
+   wall.append(classificationSleeve(group.label,Number(group.workCount||0).toLocaleString('en-CA')+' 部作品',()=>displayClassificationGroup(group),i%2?'olive':'harvest',group.id));
   }
   wall.append(classificationSleeve('中文圖書',String(chineseLibrary.count||chineseLibrary.works?.length||0)+' 部藏書',displayChineseGroups,'chinese','zh'));
   wall.append(classificationSleeve('全部書目','依年代與作者查閱',displayFullRecordIndex,'harvest','all'));
@@ -771,7 +796,7 @@
   classificationCrumbs([{label:group.label,action:()=>displayClassificationGroup(group)}]);
   const wall=classificationWall();
   for(const [i,child] of (group.children||[]).entries()){
-   wall.append(classificationSleeve(child.label,String(i+1).padStart(2,'0'),()=>void displayClassificationLeaf(group,child),i%3===0?'olive':'harvest',group.id));
+   wall.append(classificationSleeve(child.label,Number(child.workCount||0).toLocaleString('en-CA')+' 部作品',()=>void displayClassificationLeaf(group,child),i%3===0?'olive':'harvest',group.id));
   }
   refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
@@ -1113,6 +1138,22 @@
   pageStatus.textContent='第 '+currentPage+' / '+index.pageCount+' 頁 · 本頁符合 '+matches.length+' 筆 · 館藏索引共 '+Number(index.count).toLocaleString('en-CA')+' 筆';
  }
  more.addEventListener('click',()=>showPage(currentPage+1));prevButton.addEventListener('click',()=>showPage(currentPage-1));search.addEventListener('input',renderWorks);
+ // Resume using the same Work ID. No new catalog, shadow Work or fabricated
+ // edition is created by the personal library interface.
+ window.addEventListener('dawn:p2:resume-book',async event=>{
+  const id=String(event.detail?.workId||'');
+  if(!/^(?:OL\d+W|dawn:[\w:-]+)$/.test(id))return;
+  const inSession=p2BookCache.get(id);
+  if(inSession){openBook(inSession,'catalogue');return}
+  try{
+   const {resourceWork}=await import('/js/resource-fabric-client.mjs');
+   const work=await resourceWork(id);
+   if(work?.title){openBook({...work,creator:work.creator||(work.authors||[]).join(' · ')},'catalogue');return}
+  }catch(error){console.warn('[Dawn personal resume]',error)}
+  // Never fabricate a book or claim a source is readable if identity failed.
+  openCollection();
+  pageStatus.textContent='該作品仍保存於個人書房，但此閱讀頁暫時無法解析原始資料。';
+ });
  const previewParams=new URLSearchParams(location.search);
  const requestedLayer=previewParams.get('layer');
  const initial=Number(previewParams.get('d')??26.1);
