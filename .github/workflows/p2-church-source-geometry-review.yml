@@ -1,0 +1,45 @@
+name: P2 Church Geometry Review Bundle
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/p2-church-source-geometry-review.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify complete native GLB and scene controller
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in static/p2/church-tour.html static/p2/church-tour.js \
+            static/p2-maquette/model-v34.0.part \
+            static/p2-maquette/model-v34.1.part \
+            static/p2-maquette/model-v34.2.part \
+            static/p2-maquette/assets/GLTFLoader-j388d5bW.js \
+            scripts/p2-church-geometry-audit.mjs \
+            scripts/p2-church-browser-cdp.mjs; do
+            test -s "$f" || exit 1
+          done
+          node scripts/p2-church-geometry-audit.mjs > /tmp/church-geometry-ledger.txt
+          mkdir -p artifacts/p2-geometry-review
+          cp /tmp/church-geometry-ledger.txt artifacts/p2-geometry-review/geometry-ledger.txt
+      - name: Package exact deployed sources for reproducible local face-level analysis
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-church-source-geometry-review
+          path: |
+            static/p2/church-tour.html
+            static/p2/church-tour.js
+            static/p2-maquette/model-v34.0.part
+            static/p2-maquette/model-v34.1.part
+            static/p2-maquette/model-v34.2.part
+            static/p2-maquette/assets/GLTFLoader-j388d5bW.js
+            scripts/p2-church-geometry-audit.mjs
+            scripts/p2-church-browser-cdp.mjs
+            artifacts/p2-geometry-review/geometry-ledger.txt
+          retention-days: 7
