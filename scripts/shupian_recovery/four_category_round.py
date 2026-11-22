@@ -49,7 +49,7 @@ def bucket_queries(key: str, year: int | None = None, extras=()):
         terms.extend(variants(value))
     return list(dict.fromkeys(terms))
 
-def round_scan(providers, *, year=None, pages=2, limit=30, fetch=None, extras=None):
+def round_scan(providers, *, year=None, pages=2, limit=30, fetch=None, extras=None, query_budget=None):
     """Run ALL four category sweeps, regardless of failures in other buckets."""
     if not providers:
         raise ValueError("At least one provider is required")
@@ -66,6 +66,8 @@ def round_scan(providers, *, year=None, pages=2, limit=30, fetch=None, extras=No
     for key, cfg in BUCKETS.items():
         queries = bucket_queries(key, year=output["year"],
                                  extras=(extras or {}).get(key, ()))
+        if query_budget is not None:
+            queries = queries[:max(1, query_budget)]
         opts = dict(pages=pages, limit=limit, discover=True)
         opts["fetch"] = memo_fetch
         result = search(providers, queries, **opts)
@@ -92,12 +94,17 @@ def main(argv=None):
     p.add_argument("--pages", type=int, default=2)
     p.add_argument("--limit", type=int, default=30)
     p.add_argument("--year", type=int)
+    p.add_argument("--query-budget", type=int, help="Max fuzzy terms per bucket; broad scan still always runs")
+    p.add_argument("--request-timeout", type=float, default=6)
     p.add_argument("--output", default="shupian-four-category-discovery.json")
     args = p.parse_args(argv)
     if not 1 <= args.pages <= 20 or not 1 <= args.limit <= 100:
         p.error("pages must be 1..20 and limit 1..100")
     providers = json.loads(Path(args.providers).read_text(encoding="utf-8"))
-    result = round_scan(providers, year=args.year, pages=args.pages, limit=args.limit)
+    def live_fetch(url):
+        return network_fetch(url, timeout=args.request_timeout)
+    result = round_scan(providers, year=args.year, pages=args.pages, limit=args.limit,
+                        fetch=live_fetch, query_budget=args.query_budget)
     Path(args.output).write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"output": args.output, **result["totals"]}, ensure_ascii=False))
     return 2 if result["totals"]["errors"] else 0
