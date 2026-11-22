@@ -9,7 +9,7 @@ import {
   y as BoxGeometry, p as Vector3,
   G as GLTFLoader, W as WebGLRenderer, S as SRGBColorSpace,
   A as ACESFilmicToneMapping, P as PCFSoftShadowMap,
-  a as Scene, H as HemisphereLight, D as DirectionalLight,
+  a as Scene, H as HemisphereLight, D as DirectionalLight, f as SpotLight,
   b as PlaneGeometry, o as PerspectiveCamera, d as DoubleSide,
   e as CanvasTexture
 } from "../p2-maquette/assets/GLTFLoader-j388d5bW.js";
@@ -124,10 +124,24 @@ for(const [turn,shift,z] of [[.92,-.12,-4.05],[-.92,.13,-4.4],[.38,0,-4.2]]){
   ray.rotation.y=turn;ray.position.set(15+shift,1.82,z);ray.renderOrder=3;
   ray.name="Cross soft atmospheric bounce";scene.add(ray);crossAirVolumes.push(ray);
 }
+// Two actual PBR light sources, using the same locally bundled Three.js.
+// Key: broad cone following sunlight from the genuine aperture toward pews.
+// Bounce: reflected warmth from the floor returns to plaster and altar.
+// Both are shadowless; the real directional sun keeps its geometric shadows.
+const crossPortalKey=new SpotLight(0xffe8c8,0,14,0.76,0.88,2);
+crossPortalKey.position.set(crossAperture.x,crossAperture.y,crossAperture.z-.24);
+crossPortalKey.target.position.set(15,0,-5.0);
+crossPortalKey.castShadow=false;
+scene.add(crossPortalKey,crossPortalKey.target);
+const crossWallBounce=new SpotLight(0xfff2e2,0,10,0.89,0.94,2);
+crossWallBounce.position.set(15,.24,-5.0);
+crossWallBounce.target.position.set(15,2.4,-1.45);
+crossWallBounce.castShadow=false;
+scene.add(crossWallBounce,crossWallBounce.target);
 window.__churchLightAudit={
   aperture:true,floor:true,sheets:crossAirVolumes.length,additive:true,
   crossCenter:[crossAperture.x,crossAperture.y,crossAperture.z],
-  version:"R14"
+  bounceSources:2,version:"R15"
 };
 
 // Stable procedural finishes stored as source code in GitHub; no CDN assets.
@@ -567,6 +581,14 @@ function updateDaylight(t,duration) {
   crossFloorLight.position.x=crossAperture.x+
     Math.max(-1.2,Math.min(1.2,crossAperture.y*(6+25*Math.cos(angle))/solarFall));
   crossFloorLight.scale.set(.86+groundTravel*.025, .80+groundTravel*.045,1);
+  // Real surfaces now catch a moving warm cone and reflected floor light,
+  // instead of relying entirely on alpha-blended decorative cards.
+  crossPortalKey.intensity=24*sunlight;
+  crossPortalKey.target.position.set(crossFloorLight.position.x,.04,crossFloorLight.position.z);
+  crossPortalKey.target.updateMatrixWorld();
+  crossWallBounce.intensity=9*sunlight;
+  crossWallBounce.position.set(crossFloorLight.position.x,.24,crossFloorLight.position.z);
+  crossWallBounce.target.updateMatrixWorld();
   for(let i=0;i<crossAirVolumes.length;i++){
     const ray=crossAirVolumes[i];
     ray.material.opacity=.004+.026*sunlight;
