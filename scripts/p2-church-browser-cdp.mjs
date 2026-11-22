@@ -101,6 +101,8 @@ try{
       throw Error('Cross illumination not aligned to the original 3.65m aperture at frame '+frame);
     if(state.crossLight?.bounceSources!==2)
       throw Error('Cross light must illuminate actual surfaces with two real PBR light sources, not only planes: '+JSON.stringify(state.crossLight));
+    if(!state.crossLight?.volumeShader)
+      throw Error('Volumetric cross shaft GLSL renderer missing '+frame);
 
     await sleep(300);
     let clock=await evaluate('window.__churchFrameAudit');
