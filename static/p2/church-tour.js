@@ -662,6 +662,15 @@ function animate(now) {
     ? Math.min(duration, Math.max(0, Number(proof)))
     : (prefersReducedMotion ? duration : elapsed % (duration + 10));
   updateDaylight(t,duration);
+  window.__churchFrameAudit={
+    at:t,daylight:daylightAt(t),
+    crossHeight:crossAperture.y,
+    apertureOpacity:apertureGlow.material.opacity,
+    floorOpacity:crossFloorLight.material.opacity,
+    floorPosition:[crossFloorLight.position.x,crossFloorLight.position.y,crossFloorLight.position.z],
+    portalIntensity:crossPortalKey.intensity,
+    reflectedIntensity:crossWallBounce.intensity
+  };
   const sample = positionAlongRoute(t);
   camera.position.set(sample.p[0], sample.p[1], sample.p[2]);
   lookAtVector.set(sample.look[0], sample.look[1], sample.look[2]);
