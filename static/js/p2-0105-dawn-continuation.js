@@ -1037,10 +1037,10 @@
   const intro=document.createElement('div');intro.className='dawn-classification__result-heading';
   const heading=document.createElement('h4');heading.textContent='當代中文與譯作';
   const sub=document.createElement('p');
-  sub.textContent='已核對的出版方書目與譯本線索；尚未獲本站全文轉載授權。選書後在原頁展開，確定有興趣再前往出版方。';
+  sub.textContent='從禱告、神學到教會生活，探索當代中文著作與經典譯本。點選一本感興趣的書，認識作者與作品，並由出版方繼續閱讀。';
   intro.append(heading,sub);panel.append(intro);
   const waiting=document.createElement('p');waiting.className='dawn-classification__empty';
-  waiting.textContent='正在讀取已核實出版方書目…';panel.append(waiting);
+  waiting.textContent='正在整理書架…';panel.append(waiting);
   try{
    const response=await fetch('/dawn-library/chinese-contemporary-discovery.json');
    if(!response.ok)throw Error('Contemporary catalogue HTTP '+response.status);
@@ -1057,10 +1057,10 @@
     if(!url||!candidate.title||!candidate.author)continue;
     const card=document.createElement('button');card.type='button';
     card.className='dawn-contemporary__book';
-    card.setAttribute('aria-label','預覽來源書目：'+candidate.title);
+    card.setAttribute('aria-label','認識這本書：'+candidate.title);
     const art=document.createElement('span');art.className='dawn-contemporary__art';
     const substitute=document.createElement('span');substitute.className='dawn-contemporary__folio';
-    const rubric=document.createElement('small');rubric.textContent='DAWN · SOURCE EDITION';
+    const rubric=document.createElement('small');rubric.textContent=candidate.translation==='Chinese translation'?'CHINESE TRANSLATIONS':'CHINESE BOOKS';
     const printedTitle=document.createElement('strong');printedTitle.textContent=candidate.title;
     substitute.append(rubric,printedTitle);art.append(substitute);
     if(safeHttp(candidate.coverUrl)){
@@ -1086,9 +1086,8 @@
     const book={
      title:candidate.title,creator:candidate.author,workId:null,
      cover:{url:safeHttp(candidate.coverUrl)},sourceUrl:url,
-     descriptionZh:candidate.translation==='Chinese translation'
-      ? '已核對中文譯作與出版方書目。本站沒有複製受版權保護的中文譯文。'
-      : '已核對當代中文著作與出版方書目。本站沒有複製受版權保護的全文。',
+     descriptionZh:(candidate.translation==='Chinese translation'?'這部中文譯作':'這部中文著作')+
+      '涉及「'+String(candidate.category||'信仰閱讀').split('／').slice(-1)[0]+'」主題。歡迎透過'+candidate.publisher+'了解作品介紹及閱讀方式。',
      discoveryOnly:true
     };
     card.addEventListener('click',()=>selectBookPreview(gallery,card,book,
