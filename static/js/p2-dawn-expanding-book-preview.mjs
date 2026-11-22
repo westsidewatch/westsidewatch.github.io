@@ -101,9 +101,10 @@ export function expandBookPreview({grid,tile,book,onRead}){
  selected=tile;selectedBook=book;selectedContainer=grid;openReading=onRead;
  tile.classList.add('dawn-book-selected');
  tile.setAttribute('aria-expanded','true');
+ tile.setAttribute('aria-controls','dawn-book-expanding-preview');
  if(!samePanel){
   panel?.remove();
-  panel=make('div','dawn-expander');
+  panel=make(grid.tagName==='OL'?'li':'div','dawn-expander');
   panel.setAttribute('role','region');
   panel.setAttribute('aria-label','館藏選書預覽');
   panel.id='dawn-book-expanding-preview';
@@ -116,6 +117,9 @@ export function expandBookPreview({grid,tile,book,onRead}){
  // The expander occupies the *whole* CSS grid row immediately after the
  // selected thumbnail row. Rows shift downward instead of overlaying covers.
  positionAfterRow(grid,tile);
+ const gridBox=grid.getBoundingClientRect(),tileBox=tile.getBoundingClientRect();
+ if(gridBox.width)panel.style.setProperty('--dawn-preview-pointer',
+  (((tileBox.left+tileBox.right)/2-gridBox.left)/gridBox.width*100).toFixed(2)+'%');
  const old=panel.querySelector('.dawn-expander__content');
  const fresh=previewContents(book,onRead);
  if(old&&matchesMotion()){
