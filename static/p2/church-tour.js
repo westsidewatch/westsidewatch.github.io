@@ -324,7 +324,8 @@ const finishes = {
   roof: new MeshStandardMaterial({ map: surfaceMaps.stone, color: 0xc4c9c2, roughness: 0.83, metalness: 0.04, side: DoubleSide }),
   glazing: new MeshStandardMaterial({
     color: 0xc3d6d7, roughness: 0.14, metalness: 0.17,
-    transparent: true, opacity: 0.22, depthWrite: false, side: DoubleSide
+    transparent: true, opacity: 0.22, depthWrite: false, side: DoubleSide,
+    forceSinglePass: true
   }),
   mullion: new MeshStandardMaterial({ color: 0x707772, roughness: 0.49, metalness: 0.52 }),
   timber: new MeshStandardMaterial({ map: surfaceMaps.wood, color: 0x927254, roughness: 0.75 }),
@@ -350,17 +351,18 @@ function modelName(value) {
 // Preserve independent translucent glazing and the original maple bark/leaves.
 const whiteArchitecture = new MeshStandardMaterial({
   color:0xf5f5f1, roughness:0.91, metalness:0, side:DoubleSide,
-  polygonOffset:true, polygonOffsetFactor:1, polygonOffsetUnits:1
+  polygonOffset:true, polygonOffsetFactor:0.5, polygonOffsetUnits:1
 });
 const whiteFloor = new MeshStandardMaterial({
   color:0xebebe7, roughness:0.94, metalness:0, side:DoubleSide,
-  polygonOffset:true, polygonOffsetFactor:1, polygonOffsetUnits:1
+  polygonOffset:true, polygonOffsetFactor:1.8, polygonOffsetUnits:1
 });
 function chooseFinish(name, sourceMaterial) {
   const n=modelName(name);
   if (/maple cc0/.test(n)) return sourceMaterial;
   if (/glass|glazing|glazed|window pane|skylight/i.test(n)) {
     const m=finishes.glazing.clone();
+    m.forceSinglePass=true;
     m.polygonOffset=true; m.polygonOffsetFactor=-1; m.polygonOffsetUnits=-1;
     return m;
   }
@@ -665,19 +667,21 @@ function safeCameraInForum(point,target){
 // Resolve actual Z-fighting instead of pushing *all* white architecture
 // with the same polygon offset. Only suppress coincident, large, opaque
 // planar sheets that occupy the same world plane.
-const sheetRepair={compared:0,removed:[],kept:0};
+const sheetRepair={compared:0,removed:[],kept:0,glassSinglePass:true,planeThreshold:.24};
 function removeCoplanarDuplicateSheets(building){
   const panels=[];
   building.updateMatrixWorld(true);
   building.traverse(mesh=>{
     if(!mesh.isMesh||!mesh.visible||!mesh.geometry)return;
     const name=modelName(mesh.name);
-    if(/glass|glazing|window|mullion|door|handle|pull|tree|maple|stair|tread|railing|handrail|cross|plant|leaf/i.test(name))return;
+    // Include overlapping *glass panels* in the double-sheet test; they
+    // are otherwise liable to sort in opposite orders while the camera moves.
+    if(/mullion|door|handle|pull|tree|maple|stair|tread|railing|handrail|cross|plant|leaf/i.test(name))return;
     const b=meshWorldBox(mesh);if(!b)return;
     const sz=b.getSize(new Vector3()),dims=[sz.x,sz.y,sz.z];
     const axis=dims.indexOf(Math.min(...dims));
     const other=[0,1,2].filter(i=>i!==axis);
-    if(dims[axis]>.065||dims[other[0]]*dims[other[1]]<1.8)return;
+    if(dims[axis]>.24||dims[other[0]]*dims[other[1]]<1.8)return;
     const plane=(b.min.getComponent(axis)+b.max.getComponent(axis))*.5;
     panels.push({mesh,b,dims,axis,plane,other,
       surfaceArea:dims[other[0]]*dims[other[1]]});
@@ -685,11 +689,12 @@ function removeCoplanarDuplicateSheets(building){
   panels.sort((a,b)=>b.surfaceArea-a.surfaceArea);
   const planeBuckets=new Map();
   for(const a of panels){
-    const key=a.axis+':'+Math.round(a.plane/.018);
+    const group=/(glass|glazing|window pane|skylight)/i.test(modelName(a.mesh.name))?'glass':'opaque';
+    const key=group+':'+a.axis+':'+Math.round(a.plane/.018);
     // Adjacent bucket keys catch planes near a rounding boundary.
     let duplicate=null;
     for(const j of [-1,0,1]){
-      const members=planeBuckets.get(a.axis+':'+(Math.round(a.plane/.018)+j))||[];
+      const members=planeBuckets.get(group+':'+a.axis+':'+(Math.round(a.plane/.018)+j))||[];
       for(const b of members){
         if(Math.abs(a.plane-b.plane)>.025)continue;
         const [u,v]=a.other;
@@ -773,6 +778,7 @@ async function loadArchitecture() {
     if (isGlazing) {
       object.material.transparent = true;
       object.material.depthWrite = false;
+      object.material.forceSinglePass=true;
       object.renderOrder = 2;
     }
     object.castShadow = !isGlazing && object.material !== finishes.leaves;
