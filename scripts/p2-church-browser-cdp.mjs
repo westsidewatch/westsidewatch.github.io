@@ -127,6 +127,15 @@ try{
     }
     if(!clock||Math.abs(clock.at-frame)>0.01)
       throw Error('Actual rendered camera/time did not advance to proof frame '+frame+' '+JSON.stringify(clock));
+    if(frame>=132&&frame<=176){
+      const safety=await evaluate('window.__churchSafetyAudit');
+      const route=await evaluate('window.__churchRouteClearanceAudit');
+      console.log('P2_FORUM_HEADROOM_'+frame+'='+JSON.stringify({safety,route}));
+      if(!safety||safety.at!==frame||safety.boxes<1||!route)
+        throw Error('No live mesh collision checks at frame '+frame);
+      if(safety.cameraPenetrations||safety.forwardOcclusions)
+        throw Error('Camera cuts into/looks through a near solid at frame '+frame+' '+JSON.stringify(safety));
+    }
     if(Math.abs(clock.crossHeight-3.65)>0.001 || !Number.isFinite(clock.portalIntensity))
       throw Error('Cross daylight shader/real PBR bounce not active '+frame+' '+JSON.stringify(clock));
     if(!Number.isFinite(clock.beamAlignment) || clock.beamAlignment<0.99)
