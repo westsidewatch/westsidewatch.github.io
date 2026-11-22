@@ -135,3 +135,21 @@ GitHub Actions [run #45001795311](https://github.com/westsidewatch/westsidewatch
 - `static/js/p2-0105-dawn-continuation.js` 接通中文單書卡與分類封面，禁止單書使用同名異版替代。修復先前 `for (const [i,[domain,items]] of subgroups.entries())` 的錯誤解構（導致 `domain.split is not a function` 和整面書牆清空），調整為 `[...subgroups.entries()].entries()`。分類卡首圖遇外站來源失敗時，可從 **本分類內其他已核實作品的原掃描** 選擇下一張，不會把其他類別封面混入該類，也不會改動單書的封面身份。
 - 真實 **R67** Chromium [中文 47 原書封面 gate #45034357332](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45034357332) **SUCCESS**。檢查 46 本地 WebP 存在、HTTP 200、SHA-256 與各 Work provenance 一致、桌面與手機中文入口、子分類和單書圖片載入；證據 [browser artifact #14759140640](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45034357332/artifacts/14759140640)。
 - [Cloudflare R67 隔離預覽](https://pr-1411.westsidewatch-github-io.pages.dev/experiments/p2-0105-dawn-preview.html?layer=catalogue&category=zh&d=28.4&v=r67) 已部署；獨立首頁 OS 視覺 gate 尚有失敗，**不可因此宣告整個 P2 已完成／可合併**。剩下 Gutenberg 單一外站封面 URL 的可用性並未獲本地 46-WebP 雜湊 gate 確認。
+
+
+## R69｜當代中文與中文譯作擴源研究
+
+2026-11-22 新增**正式來源發現資料集** `static/dawn-library/chinese-contemporary-discovery.json`，六個可追溯出版者/圖書館/研究入口，首輪核對七部現代中文書目（四部中文譯作、三部中文原創），每部有候選識別 `dawn:discovery:zh:*`、作者、中文及原文資訊（能核對才填）、來源出版社、具體作品頁、書目／閱讀狀態、版權與取用限制。七部僅屬 **source discovery**，未更改原 47 部中文 Canonical Works，亦未納入 203,448 Work Count。
+
+**翻譯與來源：**
+- 馬丁路德《一個簡單的祈禱方法－給理髮師彼得的信》，基督教電子書圖書館（繁中）。書號 TC01004，ISBN 9780645448535。
+- 慕安德烈《不住禱告》，同館繁中譯本，書號 TC01027，ISBN 9781923383005。
+- Robert Preus《認識協同書的神學》，李明知／魯思豪譯，中華福音道路德會，2022。
+- 《協同書：基督教信義宗信仰告白，信徒版》，闞小玲譯，路德傳產基金會 2021，ISBN 9789869640336。
+- 中文著作：唐佑之《系統神學叢書07－凡人論》、聶錦勳《神恩六記》、李吳惠冰《師母手記》，各具出版者書籍詳頁。
+
+主要後續入口：`chinachristianbooks.org`（中文翻譯改教經典）、`bible.org/chinese/t`（CNET 中文譯經與研究資料：版權限制明示）、GETS 神學院開放館藏導航、信義宗神學院中文電子資源。資訊有些屬外部出版社訂閱或圖書館權限，不代表本站有權重製全文及封面。原始已證實的 publisher cover URLs 有四筆，但仍須以瀏覽器 HTTP 載入與授權分別查核。不要為缺封面的候選書偽造別種書封。
+
+**原 P2 第二層交互接入：** 在 `displayChineseGroups()` 保留所有原中文分類與 47 部數量，另增獨立的「當代中文與譯作」來源欄目；選書第一次點擊採用原 Codrops in-grid expander，不轉跳，第二次明確點擊「前往出版方查看此書」才訪問官方頁面。候選書籍與 canonical Works 分開處理，不允許直接計入讀者 Personal Dawn 的既有 Work 身份；未授權全文不複製入本站。用 `tests/p2-dawn-chinese-contemporary.cjs` 驗證 7 部／4 譯作／不改 47、來源身份與雙步交互，CI `.github/workflows/p2-dawn-chinese-covers.yml`。
+
+本輪另外修復原七大學科封面牆空白源頭：`refreshCategoryCovers()` 用 detached `new Image()` 加 `loading='lazy'`，載入事件可能永不觸發；改為提前以 eager 載入再插入。此錯誤與新增中文譯作無關但必須共同驗收。
