@@ -18,7 +18,8 @@ fs.mkdirSync(out,{recursive:true});
     const x=document.querySelector('#dawn-classification-tree');
     return x&&x.querySelectorAll('button.dawn-classification__sleeve').length>0;
    },null,{timeout:35000});
-   assert(await classification.isVisible(),name+': category panel hidden');
+   assert(await page.locator('#dawn-primary-chinese').isVisible(),name+': visible Chinese top navigation missing');
+  assert(await classification.isVisible(),name+': category panel hidden');
    assert(await page.locator('#dawn-classification-path').innerText().then(s=>s.includes('中文圖書')),name+': Chinese entrance missing');
    await page.locator('#dawn-classification-tree button.dawn-classification__sleeve').first().click();
    await page.locator('#dawn-classification-tree button.dawn-classification__sleeve').first().click();
@@ -40,6 +41,22 @@ fs.mkdirSync(out,{recursive:true});
   // action must replace the former flat list with the vinyl wall.
   const journey=await browser.newPage({viewport:{width:1440,height:900}});
   await journey.goto(base+'?layer=second&d=28.4&v=qa-vinyl',{waitUntil:'domcontentloaded',timeout:45000});
+  // An ordinary second-layer entrance must preserve the approved 2x2
+  // image hierarchy without decorative outlines, gold frames or dark washes.
+  const editorial=journey.locator('.dawn-feature').first();
+  await editorial.scrollIntoViewIfNeeded();
+  const design=await editorial.evaluate(el=>{
+   const art=el.querySelector('.dawn-feature__art');
+   const copy=el.querySelector('.dawn-feature__editorial');
+   return {border:getComputedStyle(el).borderTopWidth,outline:getComputedStyle(el).outlineStyle,
+    imageBorder:getComputedStyle(art).borderTopWidth,
+    captionBackground:getComputedStyle(copy).backgroundColor,
+    copies:art.querySelectorAll('img').length};
+  });
+  assert(design.border==='0px'&&design.outline==='none'&&design.imageBorder==='0px',
+    'curated entrance still has an ornamental frame '+JSON.stringify(design));
+  assert(design.copies===3,'curated feature does not preserve its three real source covers');
+  await journey.screenshot({path:path.join(out,'desktop-dore-editorial-portals.png'),fullPage:false});
   await journey.locator('#dawn-open-catalogue-top').click();
   await journey.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length===9,null,{timeout:35000});
   assert(await journey.locator('#dawn-classification').isVisible(),'normal nav did not open vinyl classification');
@@ -62,6 +79,13 @@ fs.mkdirSync(out,{recursive:true});
   await journey.locator('#dawn-classification-path button').first().click();
   assert(!(await journey.locator('#dawn-works').isVisible()),'flat list not hidden after return');
   assert(await journey.locator('#dawn-classification-tree button').count()===9,'vinyl landing not restored');
+  await journey.locator('#dawn-primary-chinese').click();
+  await journey.waitForFunction(()=>document.querySelector('#dawn-classification-path')?.textContent?.includes('中文圖書'),null,{timeout:20000});
+  assert(await journey.locator('#dawn-primary-chinese').getAttribute('aria-current')==='page','Chinese top-level route not selected');
+  assert(await journey.locator('#dawn-classification-tree button.dawn-classification__sleeve').count()>0,'Chinese category wall hidden');
+  await journey.screenshot({path:path.join(out,'desktop-chinese-top-nav.png'),fullPage:false});
+  await journey.locator('#dawn-primary-categories').click();
+  assert(await journey.locator('#dawn-classification-tree button.dawn-classification__sleeve').count()===9,'category roots did not return from Chinese nav');
   console.log('DAWN_VINYL','NORMAL_ALL_COLLECTION_ENTRY_AND_BIBLIOGRAPHY_RETURN_PASS');
   await journey.close();
   const page=await browser.newPage({viewport:{width:1440,height:900}});
