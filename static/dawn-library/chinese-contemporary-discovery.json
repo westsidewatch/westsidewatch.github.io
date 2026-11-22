@@ -287,12 +287,19 @@
       "sourceUrl": "https://my-elibrary.net/product/%E5%B8%AB%E6%AF%8D%E6%89%8B%E8%A8%98-%E6%9D%8E%E5%90%B3%E6%83%A0%E5%86%B0/",
       "sourceKind": "publisher-book-detail",
       "access": "free-subscription-on-publisher; reuse rights unknown",
-      "coverUrl": null,
+      "coverUrl": "https://my-elibrary.net/wp-content/uploads/2024/02/600x850_E1003_%E5%B8%AB%E6%AF%8D%E6%89%8B%E8%A8%98-%E2%80%93-%E6%9D%8E%E5%90%B3%E6%83%A0%E5%86%B0-450x638.jpg",
       "admission": "candidate-only",
       "freeReading": {
         "status": "verified-free-subscription",
         "evidenceUrl": "https://my-elibrary.net/product/%E5%B8%AB%E6%AF%8D%E6%89%8B%E8%A8%98-%E6%9D%8E%E5%90%B3%E6%83%A0%E5%86%B0/",
         "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://my-elibrary.net/product/%E5%B8%AB%E6%AF%8D%E6%89%8B%E8%A8%98-%E6%9D%8E%E5%90%B3%E6%83%A0%E5%86%B0/",
+        "identityMatch": "same work original publisher image link",
+        "rights": "external presentation only; no file copied to Dawn",
+        "availability": "requires runtime load verification"
       }
     },
     {
@@ -312,12 +319,19 @@
       "sourceUrl": "https://tc.9marks.org/book/understanding-the-great-commission-cht",
       "sourceKind": "publisher-book-detail",
       "access": "free publisher ePub link, personal reading only; copyright prohibits rehosting",
-      "coverUrl": null,
+      "coverUrl": "https://9marks-static.oss-cn-hongkong.aliyuncs.com/wp/2021/12/UnderstandingtheGreatCommission.CHT_.cover_.png?x-oss-process=image%2Fresize%2Cw_700",
       "admission": "candidate-only",
       "freeReading": {
         "status": "verified-free-download",
         "evidenceUrl": "https://tc.9marks.org/book/understanding-the-great-commission-cht",
         "notes": "Official site provides a free EPUB download for personal reading"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://tc.9marks.org/book/understanding-the-great-commission-cht",
+        "identityMatch": "same work original publisher image link",
+        "rights": "external presentation only; no file copied to Dawn",
+        "availability": "requires runtime load verification"
       }
     },
     {
@@ -337,12 +351,19 @@
       "sourceUrl": "https://tc.9marks.org/book/expositional-preaching-cht",
       "sourceKind": "publisher-book-detail",
       "access": "free publisher ePub; personal reading only, no mirrored copy",
-      "coverUrl": null,
+      "coverUrl": "https://9marks-static.oss-cn-hongkong.aliyuncs.com/wp/2026/06/expositional-preaching-cht.png?x-oss-process=image%2Fresize%2Cw_700",
       "admission": "candidate-only",
       "freeReading": {
         "status": "verified-free-download",
         "evidenceUrl": "https://tc.9marks.org/book/expositional-preaching-cht",
         "notes": "Official site provides a free EPUB download for personal reading"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://tc.9marks.org/book/expositional-preaching-cht",
+        "identityMatch": "same work original publisher image link",
+        "rights": "external presentation only; no file copied to Dawn",
+        "availability": "requires runtime load verification"
       }
     },
     {
@@ -362,12 +383,19 @@
       "sourceUrl": "https://tc.9marks.org/book/what-is-a-healthy-church-member-cht",
       "sourceKind": "publisher-book-detail",
       "access": "free official publisher ebook or download, personal use only; no reproduction",
-      "coverUrl": null,
+      "coverUrl": "https://9marks-static.oss-cn-hongkong.aliyuncs.com/wp/2025/08/healthy-church-member-cht.png?x-oss-process=image%2Fresize%2Cw_700",
       "admission": "candidate-only",
       "freeReading": {
         "status": "verified-free-download",
         "evidenceUrl": "https://tc.9marks.org/book/what-is-a-healthy-church-member-cht",
         "notes": "Official site provides a free EPUB download for personal reading"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://tc.9marks.org/book/what-is-a-healthy-church-member-cht",
+        "identityMatch": "same work original publisher image link",
+        "rights": "external presentation only; no file copied to Dawn",
+        "availability": "requires runtime load verification"
       }
     },
     {
@@ -404,6 +432,8 @@
     "validatedAt": "2026-11-22",
     "freeReadingConfirmed": 9,
     "freeReadingNotVerified": 2,
-    "admissionRule": "Only works with publisher-verified free reading/download or free subscription are exposed in library; unverified and paid sources remain internal and unlisted"
+    "admissionRule": "Only works with publisher-verified free reading/download or free subscription are exposed in library; unverified and paid sources remain internal and unlisted",
+    "coverUrlCount": 8,
+    "eligibleFreeCount": 9
   }
 }
