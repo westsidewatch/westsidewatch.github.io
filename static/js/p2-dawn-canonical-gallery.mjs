@@ -74,10 +74,19 @@ export function render({container,status,prev,next,search,openBook,previewBook})
   card.className='dawn-catalogue__cover-card'+(visual?' dawn-catalogue__cover-card--image':' dawn-catalogue__cover-card--unresolved');
   card.setAttribute('aria-label','查看 '+book.title);
   card.addEventListener('click',()=>{
-   // Preview immediately in the grid. No navigation and no network wait
-   // during the first selection; the reader explicitly enters afterwards.
-   if(previewBook)previewBook(container,li,book);
-   else openBook(book,'catalogue');
+   // Thumbnail selection is immediate; resolve the original reader pointer
+   // only when the reader explicitly enters from the expanded preview.
+   const confirmReading=async selected=>{
+    try{
+     readPointers ||= await fetch('/dawn-library/reading-pointer-map.json')
+      .then(response=>response.ok?response.json():null);
+     const reading=(readPointers?.items||[]).find(row=>row.workId===selected.workId);
+     if(reading?.sourceUrl)selected.sourceUrl=reading.sourceUrl;
+    }catch(error){console.warn('[Dawn reading pointer]',error)}
+    openBook(selected,'catalogue');
+   };
+   if(previewBook)previewBook(container,li,book,confirmReading);
+   else void confirmReading(book);
   });
   if(visual){
    const image=document.createElement('img');image.src=imgUrl;
