@@ -1,46 +1,37 @@
 {
   "schema": 2,
-  "observed_at_utc": "2026-11-22T14:27:59.636968+00:00",
+  "observed_at_utc": "2026-11-22T14:39:50.299128+00:00",
   "queries": [
     "黑鏡",
     "神探夏洛克"
   ],
   "providers_requested": 6,
   "provider_queries_attempted": 12,
-  "provider_queries_failed": 4,
-  "works_found": 29,
-  "unique_media_candidates": 113,
-  "hls_candidates": 113,
-  "manifests_parsed": 4,
+  "provider_queries_failed": 2,
+  "works_found": 33,
+  "unique_media_candidates": 126,
+  "hls_candidates": 126,
+  "manifests_parsed": 0,
+  "segment_sample_pass": 0,
   "suspected_ad_cues": 0,
-  "audited": 12,
+  "audited": 4,
   "errors": [
     {
-      "provider": "changzhang",
-      "query": "黑鏡",
-      "error": "HTTPError: HTTP Error 502: Bad Gateway"
-    },
-    {
-      "provider": "changzhang",
-      "query": "神探夏洛克",
-      "error": "HTTPError: HTTP Error 502: Bad Gateway"
-    },
-    {
       "provider": "diyi",
-      "query": "黑鏡",
+      "query": "神探夏洛克",
       "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
     },
     {
       "provider": "diyi",
-      "query": "神探夏洛克",
+      "query": "黑鏡",
       "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
     }
   ],
   "audits": [
     {
-      "title": "神探夏洛克 第三季",
-      "episode": "第1集",
-      "provider": "baofeng",
+      "title": "神探夏洛克  第二季",
+      "episode": "第01集",
+      "provider": "liangzi",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
@@ -49,33 +40,9 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "title": "神探夏洛克第一季",
-      "episode": "第01集",
-      "provider": "feifan",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 403: Forbidden"
-    },
-    {
       "title": "神探夏洛克  第二季",
-      "episode": "第01集",
+      "episode": "第02集",
       "provider": "liangzi",
-      "format": "m3u8",
-      "manifest": "parsed",
-      "ad_cues": "none-detected",
-      "playback": "requires-in-site-browser-test",
-      "clean": "not-certified",
-      "segment_count": 1307,
-      "duration_sec": 5220.4,
-      "encrypted": false
-    },
-    {
-      "title": "黑镜第一季",
-      "episode": "第01集",
-      "provider": "baofeng",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
@@ -88,54 +55,6 @@
       "episode": "第01集",
       "provider": "liangzi",
       "format": "m3u8",
-      "manifest": "parsed",
-      "ad_cues": "none-detected",
-      "playback": "requires-in-site-browser-test",
-      "clean": "not-certified",
-      "segment_count": 683,
-      "duration_sec": 2726.04,
-      "encrypted": false
-    },
-    {
-      "title": "神探夏洛克 第三季",
-      "episode": "第2集",
-      "provider": "baofeng",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found"
-    },
-    {
-      "title": "神探夏洛克第一季",
-      "episode": "第02集",
-      "provider": "feifan",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 403: Forbidden"
-    },
-    {
-      "title": "神探夏洛克  第二季",
-      "episode": "第02集",
-      "provider": "liangzi",
-      "format": "m3u8",
-      "manifest": "parsed",
-      "ad_cues": "none-detected",
-      "playback": "requires-in-site-browser-test",
-      "clean": "not-certified",
-      "segment_count": 1344,
-      "duration_sec": 5373.0,
-      "encrypted": false
-    },
-    {
-      "title": "黑镜第一季",
-      "episode": "第02集",
-      "provider": "baofeng",
-      "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
@@ -147,35 +66,11 @@
       "episode": "第02集",
       "provider": "liangzi",
       "format": "m3u8",
-      "manifest": "parsed",
-      "ad_cues": "none-detected",
-      "playback": "requires-in-site-browser-test",
-      "clean": "not-certified",
-      "segment_count": 949,
-      "duration_sec": 3792.28,
-      "encrypted": false
-    },
-    {
-      "title": "神探夏洛克 第三季",
-      "episode": "第3集",
-      "provider": "baofeng",
-      "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 404: Not Found"
-    },
-    {
-      "title": "神探夏洛克第一季",
-      "episode": "第03集",
-      "provider": "feifan",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 403: Forbidden"
     }
   ],
   "stages": {
@@ -185,5 +80,6 @@
     "website": "report-only"
   },
   "completion": "NOT_COMPLETED",
-  "limitations": "Manifest parsing cannot certify ads, playback, correct content or rights. No auto-import."
+  "limitations": "Manifest parsing cannot certify ads, playback, correct content or rights. No auto-import.",
+  "rescan_previous_parsed_count": 4
 }
