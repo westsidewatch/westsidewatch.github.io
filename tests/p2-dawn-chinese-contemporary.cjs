@@ -84,17 +84,12 @@ fs.mkdirSync(dir,{recursive:true});
     device+': title folio does not fill the tile: '+proof.title);
    assert(proof.author?.trim(),
     device+': typographic edition misses author: '+proof.title);
-   if(proof.pictured){
-    assert(proof.backdrop,device+': source jacket is not backed by same-image full-bleed field');
-    assert(proof.coverSize?.w>=proof.artSize.w-4,
-     device+': source cover image does not occupy full tile frame');
-   }
-   if(!proof.pictured){
-    assert(proof.imageOpacity===null||proof.imageOpacity===0,
-     device+': pending publisher image is masking source title: '+proof.title);
-    assert(proof.artBackground!=='rgb(255, 255, 255)'&&proof.artBackground!=='rgb(247, 245, 237)',
-     device+': blank pale card rather than harvest title folio: '+proof.title);
-   }
+   assert(!proof.pictured&&!proof.backdrop&&proof.imageOpacity===null,
+    device+': book jacket appeared before selection: '+proof.title);
+   assert(proof.artBackground!=='rgb(255, 255, 255)'&&proof.artBackground!=='rgb(247, 245, 237)',
+    device+': first stage should be filled harvest-yellow typography: '+proof.title);
+   assert(Math.abs(proof.artSize.w-proof.artSize.h)<3,
+    device+': first-stage editorial tile must be square: '+proof.title);
   }
   const headingText=await page.locator('#dawn-classification-results .dawn-classification__result-heading').innerText();
   assert(headingText.includes('認識作者與作品')&&headingText.includes('出版方'),
@@ -108,6 +103,12 @@ fs.mkdirSync(dir,{recursive:true});
   await cards.first().click();
   const preview=page.locator('#dawn-book-expanding-preview');
   await preview.waitFor({state:'visible',timeout:15000});
+  const coverAfterSelection=preview.locator('.dawn-expander__book-image');
+  if(manifest.candidates[0].coverUrl){
+   await coverAfterSelection.waitFor({state:'attached',timeout:10000});
+   assert.equal(await coverAfterSelection.getAttribute('src'),manifest.candidates[0].coverUrl,
+    device+': expansion failed to reveal the actual selected book jacket');
+  }
   assert.equal(page.url(),originalUrl,device+': first click must not navigate');
   const visiblePreview=await preview.innerText();
   assert(!forbidden.test(visiblePreview),
