@@ -455,7 +455,7 @@
   catalogue.dataset.view=activePortal==='all'?'index':'editorial';
   catalogueFocus.textContent=activePortal==='all'?'':origin;
   const catalogueTitle=$('#dawn-catalogue-title');
-  if(catalogueTitle)catalogueTitle.textContent=activePortal==='all'?'全部館藏':origin;
+  if(catalogueTitle)catalogueTitle.textContent=activePortal==='all'?'':origin;
   renderChannelIntroduction(activePortal);
   second.scrollTo({top:catalogue.offsetTop,behavior:'instant'});
   const ticket=++portalTicket;
