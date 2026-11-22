@@ -1,0 +1,44 @@
+name: P2 Church South Door 101-Frame Motion QA
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'static/p2/church-tour.js'
+      - 'static/p2/church-geometry-union.js'
+      - 'scripts/p2-church-browser-cdp.mjs'
+      - '.github/workflows/p2-church-south-door-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  south-door:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Browser-prove original GLB and 101 no-recoil south-exit positions
+        env:
+          P2_CHURCH_DOOR_ONLY: '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 --directory static >/tmp/p2-door-http.log 2>&1 &
+          CHROME=$(command -v google-chrome || command -v chromium || true)
+          test -n "$CHROME"
+          "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage \
+            --enable-webgl --ignore-gpu-blocklist --enable-unsafe-swiftshader \
+            --use-gl=angle --use-angle=swiftshader --no-first-run \
+            --remote-debugging-port=9222 --user-data-dir=/tmp/p2-door-cdp \
+            --window-size=900,600 about:blank >/tmp/p2-door-chrome.log 2>&1 &
+          node scripts/p2-church-browser-cdp.mjs
+      - name: Upload actual south-door WebGL frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-church-r35-south-door-webgl-proof
+          path: artifacts/p2-church-visual-qa/
+          if-no-files-found: warn
+          retention-days: 14
