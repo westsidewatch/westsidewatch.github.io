@@ -1009,7 +1009,7 @@
    wall.append(classificationSleeve(chineseName(key),String(items.length)+' 部',()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest','zh:'+key,items));
   // Research shelf: catalogue candidates and verified translations are NOT
   // inserted into original 47 canonical Chinese works or the 203,448 index.
-  const newShelf=classificationSleeve('當代中文與譯作','7 部出版方來源',()=>void displayContemporaryChinese(),
+  const newShelf=classificationSleeve('當代中文與譯作','新書與中文譯作',()=>void displayContemporaryChinese(),
     'harvest','zh:contemporary');
   newShelf.classList.add('dawn-classification__sleeve--contemporary');
   const art=newShelf.querySelector('.dawn-classification__art');
