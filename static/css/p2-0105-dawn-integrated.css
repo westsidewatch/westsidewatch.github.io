@@ -1953,3 +1953,73 @@
   min-height:75px!important;padding:10px!important;
  }
 }
+
+
+/* R61 · Section identity is carried ONLY by the two scripture type formes
+   above this layer. Never resurrect a second DAWN / READING ROOM masthead.
+   Three editorial departments share the actual OS harvest yellow (#b8944a),
+   not three faint unrelated portal backgrounds. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room{
+ padding-top:clamp(16px,2.4vw,36px)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature{
+ background:var(--ws-harvest)!important;
+ border:1px solid var(--ws-harvest)!important;
+ color:var(--ws-ink)!important;
+ padding:clamp(9px,1.1vw,18px)!important;
+ box-shadow:none!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__art{
+ background:var(--ws-harvest)!important;
+ gap:clamp(3px,.4vw,7px)!important;
+ flex:1 1 auto!important;
+ min-height:0!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__plate{
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__editorial{
+ background:var(--ws-harvest)!important;
+ color:var(--ws-ink)!important;
+ padding:clamp(14px,1.6vw,28px) clamp(8px,1vw,18px)!important;
+ border:0!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__editorial>small{
+ color:var(--ws-ink)!important;
+ opacity:.74!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__titles em{
+ font:400 clamp(23px,2.65vw,44px)/1.05 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__titles strong{
+ font:200 clamp(17px,1.45vw,26px)/1.25 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__open{
+ color:var(--ws-ink)!important;
+ border-top:1px solid color-mix(in srgb,var(--ws-ink) 48%,transparent)!important;
+ padding-top:clamp(9px,.8vw,14px)!important;
+ width:100%!important;
+ justify-content:flex-end!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:hover,
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:focus-visible{
+ outline:2px solid var(--ws-ink)!important;
+ outline-offset:3px!important;
+}
+/* Do not use a giant secondary brand label in navigation either. */
+#dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-en{
+ font-size:clamp(21px,2.25vw,39px)!important;
+ letter-spacing:-.025em!important;
+}
+@media(max-width:850px){
+ #dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-en{
+  font-size:clamp(16px,2.4vw,23px)!important;
+ }
+}
+@media(max-width:600px){
+ #dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-en{
+  font-size:clamp(17px,5vw,24px)!important;
+ }
+}
