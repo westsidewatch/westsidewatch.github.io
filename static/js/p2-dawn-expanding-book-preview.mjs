@@ -63,7 +63,21 @@ function previewContents(book,onRead){
  paper.append(make('small','','DAWN LIBRARY'),
   make('strong','',book.title||'原書書名待核對'));
  figure.append(paper);
- figure.addEventListener('click',()=>onRead(book,'catalogue'));
+ // Explicit reader entry is the second action, after choosing a cover.
+ // The original canonical reading-pointer resolver can be asynchronous.
+ let reading=false,enter;
+ async function confirmReader(){
+  if(reading)return;
+  reading=true;
+  if(enter){enter.disabled=true;enter.textContent='正在開啟書籍…'}
+  try{await onRead(book,'catalogue')}
+  catch(error){
+   console.error('[Dawn book reading]',error);
+   reading=false;
+   if(enter){enter.disabled=false;enter.textContent='打開此書 · 查看閱讀資訊'}
+  }
+ }
+ figure.addEventListener('click',()=>void confirmReader());
  const meta=make('div','dawn-expander__metadata');
  const title=make('h3','dawn-expander__title',book.title||'原書書名待核對');
  const author=make('p','dawn-expander__author',asAuthor(book));
@@ -79,8 +93,8 @@ function previewContents(book,onRead){
  }else meta.append(make('p','dawn-expander__description',
   '請先查看這本作品的原書資訊與版本線索，再決定是否進一步閱讀。'));
  const actions=make('div','dawn-expander__actions');
- const enter=make('button','dawn-expander__read','打開此書 · 查看閱讀資訊');
- enter.type='button';enter.addEventListener('click',()=>onRead(book,'catalogue'));
+ enter=make('button','dawn-expander__read','打開此書 · 查看閱讀資訊');
+ enter.type='button';enter.addEventListener('click',()=>void confirmReader());
  actions.append(enter);
  // External reading is an explicit SECOND act only, and only if a sourced URL exists.
  const url=safeUrl(book.sourceUrl||book.source?.url);
