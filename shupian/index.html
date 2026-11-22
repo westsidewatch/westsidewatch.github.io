@@ -203,9 +203,20 @@ document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListe
    cell.append(title,note);categories.append(cell);
   }
   const stages=d.stages||{};
+  const stateNames={
+   PARTIAL:'已找到候選，待核實', BLOCKED:'受阻', NO_MEDIA_FOUND:'本輪未找到',
+   NETWORK_BLOCKED_IN_LOCAL_ENVIRONMENT:'本地網路受阻',
+   AD_CUES_SUSPECTED:'發現疑似廣告標記',
+   SAMPLED_NOT_CERTIFIED:'已抽樣，尚未證明無廣告',
+   NOT_TESTED:'未實測',
+   FIRST_FRAME_ONLY:'首幀抽樣成功，未完成播放',
+   TIME_ADVANCED_SAMPLED_NOT_CERTIFIED:'播放時間前進，尚未全片驗收',
+   ATTEMPTED_NO_PLAYBACK:'已嘗試，未成功起播',
+   DIAGNOSTIC_ONLY:'已呈現實驗紀錄，未通過播放驗收'
+  };
   steps.replaceChildren();
   for(const [label,key] of [['① 搜尋','discovery'],['② 去廣告','ad_quality'],['③ 播放','playback'],['④ 網站','website']]){
-   const span=document.createElement('span');span.textContent=label+'：'+(stages[key]||'未驗收');steps.append(span);
+   const span=document.createElement('span');span.textContent=label+'：'+(stateNames[stages[key]]||'未驗收');steps.append(span);
   }
  }catch(err){summary.textContent='無法取得廠長專項實驗紀錄（'+String(err.message).slice(0,80)+'）。不代表片源為零。';}
 })();
