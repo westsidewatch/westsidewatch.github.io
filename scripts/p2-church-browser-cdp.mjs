@@ -61,7 +61,7 @@ try{
   // Load and decompress the architectural GLB ONCE. The tour's own animation
   // loop reads proofFrame from location.search on every frame; stepping the
   // URL with replaceState requires no reloading or lost WebGL state.
-  const frames=[187,194,199,204,205,211,216,223,27,31,40,55,64,110,121,132,143,154,165,174,9,20,22,89,94,103,236,241,246,248,251];
+  const frames=[187,194,199,202,204,205,211,216,223,27,31,40,55,64,110,121,132,143,154,165,174,9,20,22,89,94,103,236,241,246,248,251];
   await send('Page.navigate',{
     url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frames[0]
   });
