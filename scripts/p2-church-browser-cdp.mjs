@@ -87,6 +87,8 @@ try{
       throw Error('Known V33 moving_pull geometry was not removed from live GLB scene: '+JSON.stringify(state.hardware));
     if(!state.crossLight?.aperture || !state.crossLight?.floor || state.crossLight.sheets!==3 || !state.crossLight.additive)
       throw Error('Cross illumination incomplete at frame '+frame);
+    if(Math.abs((state.crossLight?.crossCenter?.[1]??0)-3.65)>.001)
+      throw Error('Cross illumination not aligned to the original 3.65m aperture at frame '+frame);
 
     await sleep(700);
     if(frame===103){
