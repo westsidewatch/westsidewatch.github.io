@@ -2,11 +2,7 @@
   "schema": 1,
   "source": "Changzhang",
   "origin": "https://changzhang.tv/help/app",
-<<<<<<< HEAD
   "observed_at_utc": "2026-11-22T10:24:19.769266+00:00",
-=======
-  "observed_at_utc": "2026-11-22T10:25:16.784789+00:00",
->>>>>>> c283376 (data(shupian): publish Changzhang experiment stage status [skip ci])
   "scan_status": "DISCOVERY_COMPLETE_UNVERIFIED",
   "history": {
     "date": "2026-11-20",
@@ -21,20 +17,14 @@
     "hls_sample_pass": 9,
     "manifest_ad_suspects": 0,
     "failure_count": 0,
-<<<<<<< HEAD
     "browser_samples": 0,
     "first_frame_pass": 0,
     "time_progress_pass": 0
-=======
-    "browser_samples": 3,
-    "first_frame_pass": 3,
-    "time_progress_pass": 3
->>>>>>> c283376 (data(shupian): publish Changzhang experiment stage status [skip ci])
   },
   "stages": {
     "discovery": "PARTIAL",
     "ad_quality": "SAMPLED_NOT_CERTIFIED",
-    "playback": "TIME_ADVANCED_SAMPLED_NOT_CERTIFIED",
+    "playback": "NOT_TESTED",
     "website": "DIAGNOSTIC_ONLY"
   },
   "fully_verified_clean": 0,
