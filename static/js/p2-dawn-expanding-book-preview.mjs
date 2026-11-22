@@ -1,0 +1,149 @@
+/**
+ * P2 Dawn · Codrops Thumbnail Grid Expanding Preview interaction grammar.
+ * One preview panel follows the selected row; adjacent selection morphs inside
+ * the same panel. No dependency, no invented bibliography, no source navigation
+ * on initial thumbnail click. Editorial reading remains the original openBook.
+ *
+ * Reference: https://tympanus.net/Tutorials/ThumbnailGridExpandingPreview/
+ */
+const matchesMotion=()=>!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+const safeUrl=url=>{
+ try{const x=new URL(url,location.origin);return /^https?:$/.test(x.protocol)?x.href:null}
+ catch{return null}
+};
+const make=(tag,className,content)=>{
+ const el=document.createElement(tag);el.className=className;
+ if(content!==undefined)el.textContent=String(content);
+ return el;
+};
+const asAuthor=book=>book.creator||book.author||
+ (Array.isArray(book.authors)?book.authors.join(' · '):'')||'作者未詳';
+const coverFor=book=>{
+ // Explicitly same-work illustration; never use a title-based image match.
+ const source=book.illustration?.url||book.cover?.url||book.cover?.src;
+ return safeUrl(source);
+};
+function directChildren(grid){
+ return [...grid.children].filter(el=>el!==panel&&el.matches?.('li,button'));
+}
+let panel=null,selected=null,selectedBook=null,selectedContainer=null,openReading=null,revision=0;
+let switchTimer=0;
+function closePanel(){
+ revision++;clearTimeout(switchTimer);
+ selected?.classList.remove('dawn-book-selected');
+ selected?.setAttribute('aria-expanded','false');
+ selected=null;selectedBook=null;selectedContainer=null;openReading=null;
+ panel?.remove();panel=null;
+}
+export function dismissBookPreview(){closePanel()}
+function positionAfterRow(grid,tile){
+ const siblings=directChildren(grid);
+ let index=siblings.indexOf(tile);
+ if(index<0)return;
+ const rowY=tile.getBoundingClientRect().top;
+ while(index+1<siblings.length&&Math.abs(siblings[index+1].getBoundingClientRect().top-rowY)<5)index++;
+ siblings[index].after(panel);
+}
+function previewContents(book,onRead){
+ const content=make('div','dawn-expander__content');
+ const eyebrow=make('div','dawn-expander__eyebrow','DAWN LIBRARY · BOOK PREVIEW');
+ const figure=make('button','dawn-expander__book');
+ figure.type='button';figure.setAttribute('aria-label','打開書籍：'+(book.title||'未標題作品'));
+ const image=coverFor(book);
+ if(image){
+  const img=make('img','dawn-expander__book-image');
+  img.src=image;img.alt='此作品圖像：'+(book.title||'');
+  img.loading='lazy';img.decoding='async';
+  img.addEventListener('error',()=>{img.remove();figure.classList.add('dawn-expander__book--paper')});
+  figure.append(img);
+ }else figure.classList.add('dawn-expander__book--paper');
+ const paper=make('span','dawn-expander__book-paper');
+ paper.append(make('small','','DAWN LIBRARY'),
+  make('strong','',book.title||'原書書名待核對'));
+ figure.append(paper);
+ figure.addEventListener('click',()=>onRead(book,'catalogue'));
+ const meta=make('div','dawn-expander__metadata');
+ const title=make('h3','dawn-expander__title',book.title||'原書書名待核對');
+ const author=make('p','dawn-expander__author',asAuthor(book));
+ meta.append(eyebrow,title,author);
+ if(book.date||book.edition?.publishDate){
+  meta.append(make('p','dawn-expander__edition',String(book.date||book.edition.publishDate)));
+ }
+ if(book.workId)meta.append(make('p','dawn-expander__identity','WORK ID · '+book.workId));
+ if(book.editorialParagraphs?.length){
+  meta.append(make('p','dawn-expander__description',String(book.editorialParagraphs[0])));
+ }else if(typeof book.descriptionZh==='string'&&book.descriptionZh.trim()){
+  meta.append(make('p','dawn-expander__description',book.descriptionZh));
+ }else meta.append(make('p','dawn-expander__description',
+  '請先查看這本作品的原書資訊與版本線索，再決定是否進一步閱讀。'));
+ const actions=make('div','dawn-expander__actions');
+ const enter=make('button','dawn-expander__read','打開此書 · 查看閱讀資訊');
+ enter.type='button';enter.addEventListener('click',()=>onRead(book,'catalogue'));
+ actions.append(enter);
+ // External reading is an explicit SECOND act only, and only if a sourced URL exists.
+ const url=safeUrl(book.sourceUrl||book.source?.url);
+ if(url){
+  const link=make('a','dawn-expander__source','前往原書來源 ↗');
+  link.href=url;link.target='_blank';link.rel='noopener noreferrer';actions.append(link);
+ }
+ meta.append(actions);
+ content.append(figure,meta);
+ return content;
+}
+export function expandBookPreview({grid,tile,book,onRead}){
+ if(!grid||!tile||!book||typeof onRead!=='function')return;
+ if(selected===tile&&panel?.isConnected){closePanel();return}
+ const samePanel=Boolean(panel&&selectedContainer===grid&&panel.isConnected);
+ const token=++revision;
+ clearTimeout(switchTimer);
+ selected?.classList.remove('dawn-book-selected');
+ selected?.setAttribute('aria-expanded','false');
+ selected=tile;selectedBook=book;selectedContainer=grid;openReading=onRead;
+ tile.classList.add('dawn-book-selected');
+ tile.setAttribute('aria-expanded','true');
+ if(!samePanel){
+  panel?.remove();
+  panel=make('div','dawn-expander');
+  panel.setAttribute('role','region');
+  panel.setAttribute('aria-label','館藏選書預覽');
+  panel.id='dawn-book-expanding-preview';
+  const close=make('button','dawn-expander__close','關閉預覽 ×');
+  close.type='button';close.addEventListener('click',closePanel);
+  panel.append(close);
+ }else{
+  panel.classList.remove('dawn-expander--switching');
+ }
+ // The expander occupies the *whole* CSS grid row immediately after the
+ // selected thumbnail row. Rows shift downward instead of overlaying covers.
+ positionAfterRow(grid,tile);
+ const old=panel.querySelector('.dawn-expander__content');
+ const fresh=previewContents(book,onRead);
+ if(old&&matchesMotion()){
+  panel.classList.add('dawn-expander--switching');
+  old.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-12px)'}],
+   {duration:140,fill:'forwards',easing:'ease-in'});
+  switchTimer=setTimeout(()=>{
+   if(revision!==token||!panel?.isConnected)return;
+   old.remove();panel.append(fresh);
+   fresh.animate([{opacity:0,transform:'translateY(16px)'},{opacity:1,transform:'translateY(0)'}],
+    {duration:320,fill:'both',easing:'cubic-bezier(.2,.75,.2,1)'});
+   panel.classList.remove('dawn-expander--switching');
+  },145);
+ }else{
+  old?.remove();panel.append(fresh);
+  if(matchesMotion())panel.animate([{opacity:.6,clipPath:'inset(0 0 100% 0)'},{opacity:1,clipPath:'inset(0 0 0 0)'}],
+   {duration:460,easing:'cubic-bezier(.2,.75,.2,1)'});
+ }
+ // Never force document/page navigation. In P2, scroll the inner reading
+ // surface to the preview so the catalog remains visible on either side.
+ const view=grid.closest('.dawn-second')||grid.closest('[id="dawn-second"]');
+ if(view)requestAnimationFrame(()=>{
+  if(revision!==token)return;
+  const panelTop=panel.getBoundingClientRect().top;
+  const surfaceTop=view.getBoundingClientRect().top;
+  const target=view.scrollTop+panelTop-surfaceTop-80;
+  view.scrollTo({top:Math.max(0,target),behavior:matchesMotion()?'smooth':'instant'});
+ });
+}
+export const previewSelection=()=>({workId:selectedBook?.workId||null,
+ title:selectedBook?.title||null,expanded:Boolean(panel?.isConnected)});
