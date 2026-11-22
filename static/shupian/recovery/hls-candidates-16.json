@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "project": "SHUPIAN / PARADISO legacy source recovery",
+  "recovered_at": "2026-11-21",
+  "status": "quarantined-unverified",
+  "public_catalog_eligible": false,
+  "source_file": "PARADISO_16_full_open_films_HLS.json",
+  "provenance": "User Library record recovered; master-playlist existence was previously logged; no segment/decode/browser validation established",
+  "validation_required": [
+    "M3U8 HTTP success and format",
+    "resolve variant and segment URIs",
+    "segment HTTP range request",
+    "ffprobe playable codecs and duration where feasible",
+    "browser media playback and scrub checkpoints",
+    "rights and provenance review"
+  ],
+  "candidates": [
+    {
+      "title": "Agent 327: Operation Barbershop",
+      "year": 2017,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Agent.327.Operation.Barbershop.(2017)/Agent.327.Operation.Barbershop.(2017).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 4.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Big Buck Bunny",
+      "year": 2008,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Big.Buck.Bunny.(2008)/Big.Buck.Bunny.(2008).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 3.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Caminandes: Gran Dillama",
+      "year": 2013,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Caminandes.Gran.Dillama.(2013)/Caminandes.Gran.Dillama.(2013).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 3.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Caminandes: Llama Drama",
+      "year": 2013,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Caminandes.Llama.Drama.(2013)/Caminandes.Llama.Drama.(2013).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 3.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Caminandes: Llamigos",
+      "year": 2016,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Caminandes.Llamigos.(2016)/Caminandes.Llamigos.(2016).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 3.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Charge",
+      "year": 2022,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Charge.(2022)/Charge.(2022).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 4.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Coffee Run",
+      "year": 2020,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Coffee.Run.(2020)/Coffee.Run.(2020).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 4.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Cosmos Laundromat",
+      "year": 2015,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Cosmos.Laundromat.(2015)/Cosmos.Laundromat.(2015).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 3.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Elephants Dream",
+      "year": 2006,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Elephants.Dream.(2006)/Elephants.Dream.(2006).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 2.5",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Glass Half",
+      "year": 2015,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Glass.Half.(2015)/Glass.Half.(2015).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 3.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "HERO",
+      "year": 2018,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/HERO.(2018)/HERO.(2018).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 4.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Sintel",
+      "year": 2010,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Sintel.(2010)/Sintel.(2010).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 3.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Spring",
+      "year": 2019,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Spring.(2019)/Spring.(2019).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 4.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Tears of Steel",
+      "year": 2012,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Tears.of.Steel.(2012)/Tears.of.Steel.(2012).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 3.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "The Daily Dweebs",
+      "year": 2017,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/The.Daily.Dweebs.(2017)/The.Daily.Dweebs.(2017).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 4.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    },
+    {
+      "title": "Wing It!",
+      "year": 2023,
+      "type": "complete short/open film",
+      "hls_master_url": "https://raw.githubusercontent.com/NoMercy-Entertainment/nomercy-media/master/Films/Wing.It.(2023)/Wing.It.(2023).NoMercy.m3u8",
+      "license_declared_by_repository": "CC BY 4.0",
+      "credit_required": true,
+      "provenance": "https://github.com/NoMercy-Entertainment/nomercy-media",
+      "verification": "master M3U8 file confirmed in public GitHub repository tree; segment availability, full decode and frame-ad check not completed this run",
+      "approved_for_public_catalog": false
+    }
+  ]
+}
