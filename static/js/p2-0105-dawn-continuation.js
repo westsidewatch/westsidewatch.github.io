@@ -515,6 +515,59 @@
  let classificationPromise=null,selectedCentury='',classificationTree=null,chineseLibrary=null,classificationTicket=0;
  const centuryLabel={'15c':'十五世紀','16c':'十六世紀','17c':'十七世紀','18c':'十八世紀','19c':'十九世紀'};
  const facetLabel={author:'作者',language:'語言',period:'時代','bible-book':'聖經書卷',tradition:'傳統','resource-type':'資源類型','reading-level':'閱讀程度','original-publication-era':'原始出版年代'};
+ // P2 Reading Room: original Living 7-root taxonomy, never a parallel index.
+ const departmentGrid=$('#dawn-department-grid'),departmentStatus=$('#dawn-department-status');
+ let departmentsPromise=null,departmentsMounted=false;
+ async function mountReadingDepartments(){
+  if(!departmentGrid||departmentsMounted)return;
+  if(departmentsPromise)return departmentsPromise;
+  departmentsPromise=(async()=>{
+   try{
+    const response=await fetch('/dawn-library/living/root.json');
+    if(!response.ok)throw Error('Living root HTTP '+response.status);
+    const living=await response.json();
+    if(living.schema!=='dawn.library.living-root.v1'||
+       living.identityAuthority!=='Dawn'||living.projectionOnly!==true||
+       living.admissionAuthority!==false||!Array.isArray(living.classification?.roots))
+       throw Error('Dawn subject authority contract invalid');
+    if(living.classification.roots.length!==7)throw Error('Unexpected subject root count');
+    const container=document.createDocumentFragment();
+    for(const [i,root] of living.classification.roots.entries()){
+     if(!root.id||!root.label||!Array.isArray(root.children))throw Error('Invalid Living subject');
+     const button=document.createElement('button');button.type='button';
+     button.className='dawn-reading-room__department';
+     button.dataset.subjectId=root.id;
+     button.setAttribute('aria-label','進入'+root.label+'學科，'+Number(root.workCount||0).toLocaleString('en-CA')+'部作品');
+     const number=document.createElement('span');number.className='dawn-reading-room__department-number';
+     number.textContent=String(i+1).padStart(2,'0');
+     const name=document.createElement('strong');name.textContent=root.label;
+     const count=document.createElement('small');count.textContent=Number(root.workCount||0).toLocaleString('en-CA')+' 部作品';
+     const arrow=document.createElement('span');arrow.className='dawn-reading-room__department-arrow';
+     arrow.textContent='↗';arrow.setAttribute('aria-hidden','true');
+     button.append(number,name,count,arrow);
+     button.addEventListener('click',()=>{
+      // Reuse the existing classification wall and return path.
+      openCollection();
+      void renderCatalogueClassification().then(()=>{
+       const group=classificationTree?.roots?.find(x=>x.id===root.id);
+       if(group)displayClassificationGroup(group);
+       else if(departmentStatus)departmentStatus.textContent='此學科暫時無法開啟。';
+      });
+     });
+     container.append(button);
+    }
+    departmentGrid.replaceChildren(container);
+    const count=$('#dawn-hall-workcount');
+    if(count)count.textContent=Number(living.canonicalWorkCount).toLocaleString('en-CA');
+    departmentStatus.textContent='';
+    departmentsMounted=true;
+   }catch(error){
+    console.error('[Dawn subject hall]',error);
+    departmentStatus.textContent='學科資料暫時未能載入，可使用下方「全部館藏」進入原館藏分類。';
+   }
+  })().finally(()=>{departmentsPromise=null});
+  return departmentsPromise;
+ }
  const ChineseCategoryLabel={
   'biography':'傳記','testimony':'見證','spiritual formation':'靈命塑造',
   'Christian ethics':'基督教倫理','Christian life':'基督徒生活','prayer':'禱告',
@@ -1078,6 +1131,7 @@
   }
  });
  async function loadWallCovers(){
+  void mountReadingDepartments();
   if(wallGrid.dataset.loaded==='true'||wallGrid.dataset.loading==='true')return;
   wallGrid.dataset.loading='true';
   try{
