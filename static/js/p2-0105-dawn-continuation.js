@@ -578,14 +578,63 @@
    else{const link=document.createElement('button');link.type='button';link.textContent=part.label;link.addEventListener('click',part.action);nav.append(link)}
   });
  }
+ // Category jackets are a continuously changing wall of *real* Dawn-owned
+ // cover pointers and documented exhibition plates. Never draw a mock disc,
+ // apply a random book's picture as the image of a different work, or use
+ // solid dark placeholders.
+ let categoryCovers=[],categoryCoverPromise=null,categoryMotionTimer=0;
+ function getCategoryCovers(){
+  if(categoryCoverPromise)return categoryCoverPromise;
+  categoryCoverPromise=(async()=>{
+   const covers=[],seen=new Set();
+   const add=(url,title)=>{const src=safeHttp(url);if(!src||seen.has(src))return;seen.add(src);covers.push({url:src,title:title||''})};
+   try{
+    const data=await(await fetch('/dawn-library/storefront.json')).json();
+    for(const shelf of shelvesOf(data))for(const work of shelf.items||[])if(work.source?.url)add(work.cover?.url,work.title);
+   }catch(e){console.warn('[Dawn category jacket covers]',e)}
+   try{
+    const registry=await(await fetch('/dawn-library/p2-exhibitions/jerusalem-3000.json')).json();
+    for(const work of registry.items||[])if(work.media?.source)add(work.media?.src,work.title);
+   }catch(e){console.warn('[Dawn exhibition images]',e)}
+   try{
+    const chinese=chineseLibrary||await(await fetch('/dawn-library/chinese-collection.json')).json();
+    for(const work of chinese.works||[])add(work.cover?.url,work.work?.title);
+   }catch(e){console.warn('[Dawn Chinese covers]',e)}
+   categoryCovers=covers;
+   refreshCategoryCovers(true);
+   return covers;
+  })();
+  return categoryCoverPromise;
+ }
+ function refreshCategoryCovers(initial=false){
+  if(!categoryCovers.length)return;
+  const tiles=[...document.querySelectorAll('#dawn-classification-tree .dawn-classification__sleeve')];
+  const offset=initial?0:Math.floor(Math.random()*categoryCovers.length);
+  for(const [i,tile] of tiles.entries()){
+   if(!initial&&Math.random()>.43)continue;
+   const art=tile.querySelector('.dawn-classification__art');if(!art)continue;
+   const item=categoryCovers[(i*7+offset)%categoryCovers.length];
+   const image=new Image();image.alt='';image.decoding='async';image.loading='lazy';
+   image.onload=()=>{if(!tile.isConnected)return;art.replaceChildren(image)};
+   image.src=item.url;
+  }
+ }
+ function startCategoryCoverMotion(){
+  void getCategoryCovers();
+  if(categoryMotionTimer)return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  categoryMotionTimer=setInterval(()=>{
+   if(!document.hidden&&!catalogue.hidden&&activePortal==='all')refreshCategoryCovers();
+  },5500);
+ }
  function classificationSleeve(label,meta,action,style=''){
   const tile=document.createElement('button');tile.type='button';
   tile.className='dawn-classification__sleeve'+(style?' dawn-classification__sleeve--'+style:'');
-  const disc=document.createElement('span');disc.className='dawn-classification__vinyl';disc.setAttribute('aria-hidden','true');
+  const art=document.createElement('span');art.className='dawn-classification__art';art.setAttribute('aria-hidden','true');
   const number=document.createElement('small');number.className='dawn-classification__index';number.textContent=meta||'';
   const title=document.createElement('strong');title.textContent=label;
   const edge=document.createElement('span');edge.className='dawn-classification__edge';edge.setAttribute('aria-hidden','true');
-  tile.append(disc,number,title,edge);tile.addEventListener('click',action);return tile;
+  tile.append(art,number,title,edge);tile.addEventListener('click',action);return tile;
  }
  function setFullRecordIndexVisible(visible){
   // A sub-shelf reached through the classification wall, never a parallel
@@ -626,12 +675,13 @@
   ++classificationTicket;
   classificationCrumbs([]);classificationFacets(true);
   setFullRecordIndexVisible(false);
-  const wall=classificationWall();
+  const wall=classificationWall();startCategoryCoverMotion();
   for(const [i,group] of (classificationTree.roots||[]).entries()){
    wall.append(classificationSleeve(group.label,String(group.children.length).padStart(2,'0')+' 個子類',()=>displayClassificationGroup(group),i%2?'olive':'harvest'));
   }
   wall.append(classificationSleeve('中文圖書',String(chineseLibrary.count||chineseLibrary.works?.length||0)+' 部藏書',displayChineseGroups,'chinese'));
   wall.append(classificationSleeve('全部書目','依年代與作者查閱',displayFullRecordIndex,'harvest'));
+  refreshCategoryCovers(true);
  }
  function displayClassificationGroup(group){
   if(!group)return;
@@ -641,6 +691,7 @@
   for(const [i,child] of (group.children||[]).entries()){
    wall.append(classificationSleeve(child.label,String(i+1).padStart(2,'0'),()=>void displayClassificationLeaf(group,child),i%3===0?'olive':'harvest'));
   }
+  refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
  }
  function classificationBackButton(text,handler){
@@ -720,6 +771,7 @@
   const wall=classificationWall();
   for(const [i,[key,items]] of [...chineseGroups()].entries())
    wall.append(classificationSleeve(chineseName(key),String(items.length)+' 部',()=>displayChineseSubgroups(key),i%3===0?'chinese':'harvest'));
+  refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
  }
  function displayChineseSubgroups(key){
@@ -733,6 +785,7 @@
    const subtitle=domain.split('/').map(chineseName).join(' · ');
    wall.append(classificationSleeve(subtitle,String(items.length)+' 部',()=>displayChineseLeaf(key,domain),i%3===0?'chinese':'olive'));
   }
+  refreshCategoryCovers(true);
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
  }
  function displayChineseLeaf(key,domain){
