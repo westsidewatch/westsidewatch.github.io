@@ -11,6 +11,7 @@ on:
       - 'layouts/partials/watch-home-editorial.html'
       - 'tests/p2-church-magazine-handoff.cjs'
       - 'tests/p2-vol00-preview.cjs'
+      - 'tests/p2-dawn-personal-integration.cjs'
       - '.github/workflows/first-look-branch-preview.yml'
   workflow_dispatch:
 
@@ -68,6 +69,21 @@ jobs:
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
           node tests/p2-dawn-vinyl-navigation.cjs
+      - name: Verify original Personal Dawn integrated reader state in Chromium
+        continue-on-error: true
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/p2-dawn-personal-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-personal-integration.cjs
+      - name: Save Personal Dawn integration browser proofs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-dawn-personal-integration
+          path: artifacts/p2-dawn-personal/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Save Dawn vinyl navigation browser proofs
         if: always()
         uses: actions/upload-artifact@v4
