@@ -88,3 +88,27 @@ for(const item of ledger.filter(o=>o.box && o.box.max[0]>5.3 && o.box.min[0]<12.
     o.box.max[1]>=3.3 && o.box.min[1]<=5.1)){
  console.log(JSON.stringify({name:item.name,min:fmt(item.box.min),max:fmt(item.box.max)}));
 }
+
+console.log('## R31 coplanar facade and wall sheet pair audit (diagnostic only)');
+const sheets=ledger.filter(o=>o.box).map(o=>{
+ const sz=o.box.max.map((v,i)=>v-o.box.min[i]),axis=sz.indexOf(Math.min(...sz));
+ const other=[0,1,2].filter(i=>i!==axis),area=sz[other[0]]*sz[other[1]];
+ return {...o,axis,other,area,plane:(o.box.min[axis]+o.box.max[axis])/2,
+   thickness:sz[axis]};
+}).filter(o=>o.thickness<=.24 && o.area>=1.8);
+const suspected=[];
+for(let i=0;i<sheets.length;i++)for(let j=i+1;j<sheets.length;j++){
+ const a=sheets[i],b=sheets[j];
+ if(a.axis!==b.axis||Math.abs(a.plane-b.plane)>.03)continue;
+ const [u,v]=a.other;
+ const overlap= [u,v].map(axis=>Math.max(0,
+   Math.min(a.box.max[axis],b.box.max[axis])-Math.max(a.box.min[axis],b.box.min[axis])));
+ const area=overlap[0]*overlap[1];
+ if(area<1.5||area/Math.min(a.area,b.area)<.64)continue;
+ suspected.push({a:a.name,b:b.name,axis:a.axis,
+   delta:+Math.abs(a.plane-b.plane).toFixed(4),
+   area:+area.toFixed(2),fraction:+(area/Math.min(a.area,b.area)).toFixed(3)});
+}
+suspected.sort((a,b)=>b.area-a.area);
+console.log('Pairs:',suspected.length);
+for(const item of suspected.slice(0,100))console.log('COPLANAR_PAIR='+JSON.stringify(item));
