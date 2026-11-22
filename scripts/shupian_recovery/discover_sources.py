@@ -87,7 +87,25 @@ def fetch_manifest(url, timeout=12, opener=SAFE_OPENER):
             raise VerificationError("Playlist too large")
     return parse_hls(payload.decode("utf-8-sig", errors="replace"), url)
 
-def source_probe(candidate, fetcher=fetch_manifest):
+def probe_segment(url, timeout=10, max_bytes=4096, opener=SAFE_OPENER):
+    """Small bounded bytes probe, no full-media download or public distribution."""
+    validate_public_url(url)
+    request = Request(url, headers={
+        "Range": "bytes=0-" + str(max_bytes - 1),
+        "User-Agent": "PARADISO-Research/2.0"
+    })
+    with opener(request, timeout=timeout) as response:
+        data = response.read(max_bytes)
+        status = response.status
+        media_type = response.headers.get("Content-Type", "")
+    ts = len(data) >= 189 and data[0] == 0x47 and data[188] == 0x47
+    fmp4 = b"ftyp" in data[:32] or b"moof" in data[:32]
+    html = b"<html" in data[:300].lower() or b"<!doctype" in data[:300].lower()
+    return {"ok": bool((ts or fmp4) and not html), "http": status,
+            "signature": "mpeg-ts" if ts else ("fmp4" if fmp4 else "unrecognized"),
+            "sample_bytes": len(data), "content_type": media_type[:80]}
+
+def source_probe(candidate, fetcher=fetch_manifest, segment_fetcher=probe_segment):
     """HLS manifest inspection: *never* declares a film ad-free or playable."""
     url = candidate["url"]
     entry = {"format": candidate["format"], "manifest": "not-tested",
@@ -105,6 +123,17 @@ def source_probe(candidate, fetcher=fetch_manifest):
         entry["ad_cues"] = "suspected" if parsed["ad_markers"] or AD_RE.search(url) else "none-detected"
         entry["encrypted"] = bool(parsed["encryption"])
         entry["playback"] = "requires-in-site-browser-test"
+        if parsed["segments"] and not parsed["encryption"] and not parsed["ad_markers"]:
+            segs = parsed["segments"]
+            checks = []
+            for i in sorted(set([0, len(segs) // 2, len(segs) - 1])):
+                try:
+                    checks.append({"position": i, **segment_fetcher(segs[i])})
+                except Exception as subexc:
+                    checks.append({"position": i, "ok": False,
+                                   "error": (type(subexc).__name__ + ": " + str(subexc))[:160]})
+            entry["segment_checks"] = checks
+            entry["segment_sample"] = "pass" if all(x["ok"] for x in checks) else "failed"
     except Exception as exc:
         entry["manifest"] = "failed"
         entry["error"] = (type(exc).__name__ + ": " + str(exc))[:180]
@@ -197,6 +226,7 @@ def scan(keywords, providers, fetcher=fetch_json, probe=source_probe,
         "works_found": len(records), "unique_media_candidates": len(candidates),
         "hls_candidates": sum(x["format"] == "m3u8" for x in candidates),
         "manifests_parsed": sum(a["manifest"] == "parsed" for a in audits),
+        "segment_sample_pass": sum(a.get("segment_sample") == "pass" for a in audits),
         "suspected_ad_cues": sum(a["ad_cues"] == "suspected" for a in audits),
         "audited": len(audits), "errors": errors, "audits": audits,
         "stages": {"discovery": "attempted", "ad_quality": "manifest-only",
