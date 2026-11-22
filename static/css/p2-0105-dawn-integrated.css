@@ -2023,3 +2023,41 @@
   font-size:clamp(17px,5vw,24px)!important;
  }
 }
+
+
+/* R61 editorial architecture: the three harvest departments are one coherent
+   section opening, rather than three scattered unrelated picture squares. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated{
+ grid-auto-flow:row!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1),
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2),
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+ grid-row:1 / span 2!important;
+ aspect-ratio:1!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1){
+ grid-column:1 / span 2!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2){
+ grid-column:3 / span 2!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+ grid-column:5 / span 2!important;
+}
+@media(max-width:1100px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1),
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2),
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+  grid-column:1 / -1!important;
+  grid-row:auto / span 2!important;
+ }
+}
+@media(min-width:651px) and (max-width:1100px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1),
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2),
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+  grid-column:span 2!important;
+  grid-row:auto / span 2!important;
+ }
+}
