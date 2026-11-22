@@ -2,7 +2,7 @@
   "schema": 1,
   "source": "Changzhang",
   "origin": "https://changzhang.tv/help/app",
-  "observed_at_utc": "2026-11-22T10:20:57.893876+00:00",
+  "observed_at_utc": "2026-11-22T10:24:19.769266+00:00",
   "scan_status": "DISCOVERY_COMPLETE_UNVERIFIED",
   "history": {
     "date": "2026-11-20",
@@ -15,7 +15,11 @@
     "unique_hls": 4553,
     "hls_sampled": 12,
     "hls_sample_pass": 9,
-    "failure_count": 0
+    "manifest_ad_suspects": 0,
+    "failure_count": 0,
+    "browser_samples": 0,
+    "first_frame_pass": 0,
+    "time_progress_pass": 0
   },
   "stages": {
     "discovery": "PARTIAL",
