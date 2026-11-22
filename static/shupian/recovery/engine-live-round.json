@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "observed_at_utc": "2026-11-22T14:51:41.371938+00:00",
+  "observed_at_utc": "2026-11-22T14:52:46.962035+00:00",
   "queries": [
     "黑鏡",
     "神探夏洛克"
@@ -11,8 +11,8 @@
   "works_found": 33,
   "unique_media_candidates": 126,
   "hls_candidates": 126,
-  "manifests_parsed": 2,
-  "segment_sample_pass": 2,
+  "manifests_parsed": 6,
+  "segment_sample_pass": 5,
   "suspected_ad_cues": 0,
   "audited": 16,
   "errors": [
@@ -310,12 +310,40 @@
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked",
-      "status_transition": "regressed",
+      "segment_count": 1307,
+      "duration_sec": 5220.4,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 653,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 1306,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass",
+      "status_transition": "stable_healthy",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333
+      "health_pass": 1,
+      "sample_reliability": 0.6667
     },
     {
       "title": "神探夏洛克  第二季",
@@ -331,9 +359,35 @@
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked",
-      "status_transition": "regressed",
+      "segment_count": 1344,
+      "duration_sec": 5373.0,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": false,
+          "error": "TimeoutError: The read operation timed out",
+          "failure_class": "network_error"
+        },
+        {
+          "position": 672,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 1343,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "failed",
+      "status_transition": "stable_healthy",
       "health_checks": 1,
       "health_pass": 0,
       "sample_reliability": 0.3333
@@ -394,12 +448,40 @@
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked",
-      "status_transition": "regressed",
+      "segment_count": 683,
+      "duration_sec": 2726.04,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 341,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 682,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass",
+      "status_transition": "stable_healthy",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333
+      "health_pass": 1,
+      "sample_reliability": 0.6667
     },
     {
       "title": "黑镜 第一季",
@@ -415,21 +497,49 @@
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked",
-      "status_transition": "regressed",
+      "segment_count": 949,
+      "duration_sec": 3792.28,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 474,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 948,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass",
+      "status_transition": "stable_healthy",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333
+      "health_pass": 1,
+      "sample_reliability": 0.6667
     }
   ],
   "same_exact_url_count": 16,
   "changed_url_count": 0,
   "missing_baseline_count": 0,
-  "http_404_count": 12,
+  "http_404_count": 8,
   "recovered_count": 0,
-  "regressed_count": 4,
-  "stable_healthy_count": 2,
+  "regressed_count": 0,
+  "stable_healthy_count": 6,
   "alternative_candidates_audited": 0,
   "stages": {
     "discovery": "attempted",
