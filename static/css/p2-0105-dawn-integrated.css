@@ -884,6 +884,36 @@
 }
 
 
+/* Dawn Library: functional top-level catalogue navigation.
+   A visible Chinese path from the normal "全部館藏" entrance, not a hidden
+   category buried after seven sleeves. No black-gold palette or faux frames. */
+#dawn-second .dawn-catalogue__primary-nav{
+ display:flex;align-items:center;flex-wrap:wrap;gap:clamp(14px,2vw,38px);
+ padding:clamp(17px,2vw,29px) 0;
+ margin-top:clamp(12px,1.5vw,26px);
+ border-bottom:1px solid var(--ws-branch-rule);
+}
+#dawn-second .dawn-catalogue__primary-nav button{
+ appearance:none;display:inline-flex;align-items:baseline;gap:7px;
+ padding:5px 0 9px;border:0;border-bottom:2px solid transparent;
+ background:transparent;color:var(--ws-ink);cursor:pointer;
+ font:400 clamp(18px,1.75vw,31px)/1.2 var(--ws-type-display-zh);
+ white-space:nowrap;text-align:left;
+}
+#dawn-second .dawn-catalogue__primary-nav button span{
+ font:400 clamp(10px,.8vw,14px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ color:var(--ws-harvest);
+}
+#dawn-second .dawn-catalogue__primary-nav button[aria-current="page"]{
+ border-bottom-color:var(--ws-harvest);
+}
+#dawn-second .dawn-catalogue__primary-nav button:hover{color:var(--ws-harvest)}
+#dawn-second .dawn-catalogue__primary-nav button:focus-visible{outline:2px solid var(--ws-ink);outline-offset:3px}
+@media(max-width:600px){
+ #dawn-second .dawn-catalogue__primary-nav{gap:12px 20px}
+ #dawn-second .dawn-catalogue__primary-nav button{font-size:clamp(16px,4.5vw,22px)}
+}
+
 /* Dawn Library — vinyl jacket grammar extends through the classification path.
    Single source of category work identity remains classification.json and
    chinese-collection.json; never synthesize an unverified category membership. */
