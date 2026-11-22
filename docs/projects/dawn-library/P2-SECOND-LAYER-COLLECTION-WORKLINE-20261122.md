@@ -194,3 +194,18 @@ R74 正式修正原 `static/js/p2-0105-dawn-continuation.js`：
 R76 原始工程：`static/js/p2-0105-dawn-continuation.js` 移除當代分類書牆的提前封面載入；真實封面 URL 原值繼續交給 `static/js/p2-dawn-expanding-book-preview.mjs`，展開後才顯示。CSS `static/css/p2-0105-dawn-integrated.css` 固定書牆方塊 1:1 的 OS 收穫黃文字構圖；展開時保留原真實封面比例，不裁書封、也不混用封面。原有 47 部古籍的數位掃描書目及前後主次、11 部當代來源均不變。
 
 驗收：`tests/p2-dawn-chinese-contemporary.cjs` 逐卡檢查方塊 **沒有 img／沒有錯書封、收穫黃、尺寸為正方形、完整書名與作者**；點選後在 `#dawn-book-expanding-preview` 檢查真實同書封面 URL，繼續驗證出版社入口只在明確第二次操作才觸發。GitHub [中文封面與新譯作瀏覽器驗收 #45067968015](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45067968015) **SUCCESS**，桌面與手機截圖已存檔。隔離 Cloudflare 預覽已部署；全域 P2 Design OS gate 另有失敗，因此不宣稱整站完成、不合併主站。
+
+
+## R78｜真實封面填滿當代中文方塊
+
+本輪承認此前 R76 的關鍵錯誤：使用者明確要求 **「方塊內就是封面圖，封面必須填滿方塊」**，而非「收穫黃色塊填滿、點開才出現封面」。先前錯做成無圖片的文字方塊。R78 已**重新在原工程**修正：中文當代書牆每塊 1:1 卡片用與本書正確對應的出版方原始封面圖片以 `object-fit:cover` **滿版顯示**；只有點開 Codrops 原位展開後，才看到完整、不裁切的原書書封、書名、介紹及出版社導流。第一段是滿版圖像、第二段是完整書籍，不應再顛倒。
+
+來源不可互換：九部符合原書局免費閱讀標準的當代中文作品，完整找到 **9/9 官方出版方的相同作品封面 URL**；四部 9Marks 繁中作品（《認識大使命》《解經式講道》《健康的教會成員》《為何相信聖經》）引用其官方圖像 CDN；其餘五部基督教電子書圖書館作品使用同一本書的公開商品圖。封面不下載到本站、不鏡像，不拿英文／不同版封面冒充，逐筆儲存 `coverProvenance`（出版方 URL、同書對應關係、外部使用說明）。發現九個圖片連結的 HTTP 200 且返回 MIME image/jpeg 或 image/png 的探測程序：`scripts/dawn-chinese-cover-audit.cjs`；GitHub [publisher jacket audit #45070552679](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45070552679) 全 **9/9** URL 來源確認。
+
+R78 原始工程修改：
+- `static/dawn-library/chinese-contemporary-discovery.json`：九部都有同書來源封面。
+- `static/js/p2-0105-dawn-continuation.js`：只以該作品自己的封面填滿縮圖；源圖片失效才退回可讀的同書原創標籤，且不會顯示空白、猜圖或誤植別本封面。
+- `static/css/p2-0105-dawn-integrated.css`：現代書牆 square 1:1、`object-fit:cover` 佔滿，僅在展開區 `object-fit:contain` 完整顯示。
+- `tests/p2-dawn-chinese-contemporary.cjs`：由舊「禁止在方塊中出現圖片」反轉為實際 computed style、九張圖的 naturalWidth 和方塊占幅驗收，並驗證展開的完整同書封面與出版方二段式導覽。
+
+**不混淆三種驗收**：九個來源可下載（HTTP）不等於九張圖實際在網站展示；最後仍以 Chromium 桌面、手機與 Cloudflare 部署實際頁面為準。正式主站不合併，P2 V9 和其他版塊不修改。不得聲稱整站獲獎標準已通過。
