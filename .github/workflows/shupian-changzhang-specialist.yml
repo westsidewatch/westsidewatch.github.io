@@ -35,6 +35,7 @@ jobs:
             --probe-count 12 --sleep 0.15 \
             --output shupian-changzhang-specialist.json
       - name: Install Chromium HLS playback test environment
+        continue-on-error: true
         run: |
           python3 -m pip install playwright
           python3 -m playwright install --with-deps chromium
@@ -42,10 +43,19 @@ jobs:
         continue-on-error: true
         run: |
           if test -f shupian-changzhang-specialist.json; then
-            python3 scripts/shupian_recovery/changzhang_browser_probe.py \
+            if ! python3 scripts/shupian_recovery/changzhang_browser_probe.py \
               --scan shupian-changzhang-specialist.json \
               --limit 3 --timeout-ms 20000 \
-              --output shupian-changzhang-playback.json
+              --output shupian-changzhang-playback.json; then
+              python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('shupian-changzhang-playback.json')
+          if not p.exists():
+              p.write_text(json.dumps({'schema':1,'status':'BROWSER_TOOL_FAILURE',
+                 'samples':[],'error':'Browser probe exited without results; inspect CI step logs.'})+'\n')
+          PY
+            fi
           fi
       - name: Export browser-readable four-stage status
         if: always()
