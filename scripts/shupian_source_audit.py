@@ -7,6 +7,7 @@ full-episode integrity, absence of advertising, or content licensing.
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -41,6 +42,17 @@ def lines_from_playlist(url):
         raise ValueError("Not a recognized M3U8 playlist")
     return [line.strip() for line in text.splitlines() if line.strip()], code, mime
 
+AD_PLAYLIST_TAG = re.compile(r'^#EXT-X-(?:CUE-OUT|CUE-IN|DATERANGE|SCTE35|OATCLS-SCTE35|ASSET)(?=[:\\s-]|$)', re.I)
+AD_FILENAME = re.compile(r'(?:^|[/_.-])(?:ad|ads|advert|commercial|preroll|promo)(?:[/_.-]|$)', re.I)
+
+def ad_manifest_signals(lines):
+    """Collect suspected cues without asserting clean playback when none exist."""
+    cues=[str(line)[:240] for line in lines if AD_PLAYLIST_TAG.search(line)]
+    urls=[str(line)[:240] for line in lines if not line.startswith('#') and AD_FILENAME.search(line)]
+    return {"markers":cues[:50],"segment_path_suspects":urls[:50],
+            "suspected":bool(cues or urls),
+            "warning":"No cues does not prove video frames are advertisement-free"}
+
 def audit_one(name, url):
     result = {"title": name, "url": url, "status": "error", "sampled_segments": [], "limitations": "Not complete video decode, full-episode verification, rights approval or browser playback"}
     try:
@@ -48,6 +60,7 @@ def audit_one(name, url):
         result["manifest_http"] = code
         result["manifest_content_type"] = mime
         result["playlist_is_master"] = any("#EXT-X-STREAM-INF" in line for line in lines)
+        initial_ad = ad_manifest_signals(lines)
         if any(line.startswith("#EXT-X-KEY:") and "METHOD=NONE" not in line for line in lines):
             result["status"] = "encrypted-or-keyed"
             return result
@@ -63,6 +76,12 @@ def audit_one(name, url):
         if any(line.startswith("#EXT-X-KEY:") and "METHOD=NONE" not in line for line in lines):
             result["status"] = "encrypted-or-keyed"
             return result
+        result["ad_signals"] = ad_manifest_signals(lines)
+        if initial_ad["suspected"]:
+            result["ad_signals"]["master_markers"] = initial_ad["markers"]
+            result["ad_signals"]["suspected"] = True
+        result["ad_status"] = ("SUSPECTED_MANIFEST" if result["ad_signals"]["suspected"]
+                               else "NOT_DETECTED_IN_MANIFEST")
         segments = [urllib.parse.urljoin(url, value) for value in lines if not value.startswith("#")]
         result["segments_in_manifest"] = len(segments)
         if not segments:
