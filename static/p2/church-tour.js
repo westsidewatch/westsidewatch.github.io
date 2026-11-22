@@ -668,9 +668,10 @@ function connectUpperStairTreads(building){
 // Restore their physical underneath without changing the tread footprints.
 const northDoorStepAudit={source:"V26_ROUTE_01",treads:0,supports:0,
   baseHeight:null,landingHeight:null,heights:[],gapsClosed:[],
-  foundationGapsClosed:[],unchangedOriginals:true};
+  foundationGapsClosed:[],landingSupports:0,
+  landingFoundationGapsClosed:[],unchangedOriginals:true};
 function supportNorthDoorTerraces(building){
-  const treads=[],landings=[],foundations=[];
+  const treads=[],landings=[],foundations=[],publicDecks=[];
   building.updateMatrixWorld(true);
   building.traverse(mesh=>{
     // R35 CSG hides source meshes when it emits a physical union shell.
@@ -680,11 +681,14 @@ function supportNorthDoorTerraces(building){
     if(!b)return;
     if(/^v26 route 01 .*wide terrace [123]/.test(n))treads.push({mesh,b});
     if(/^v26 route 00 .*sanctuary.level north landing/.test(n))landings.push({mesh,b});
+    if(/^v18 level route .*northward continuation to chapel rear door/.test(n))
+      publicDecks.push({mesh,b});
     if(/^north wing lower social floor/.test(n))foundations.push({mesh,b});
   });
   treads.sort((a,b)=>b.b.max.x-a.b.max.x);
-  if(treads.length!==3||landings.length!==1||foundations.length!==1)
-    throw Error("North sanctuary staircase requires original GLB treads, landing and lower wing foundation");
+  if(treads.length!==3||landings.length!==1||foundations.length!==1||
+     publicDecks.length!==1)
+    throw Error("North sanctuary staircase requires original GLB treads, both landings and lower wing foundation");
   const landing=landings[0].b.max.y;
   const lower=foundations[0].b;
   const foundation=lower.max.y;
@@ -693,6 +697,44 @@ function supportNorthDoorTerraces(building){
   northDoorStepAudit.treads=treads.length;
   northDoorStepAudit.baseHeight=+foundation.toFixed(3);
   northDoorStepAudit.landingHeight=+landing.toFixed(3);
+  // R38: the public north doorway is also an ungrounded ±0 bridge,
+  // not just the three stair treads. At the actual 55s camera shot its
+  // V18 horizontal deck occupies the visible foreground gap. Physically
+  // anchor the two original connected deck footprints to the lower floor;
+  // subtract their intersecting portion to avoid duplicating render faces.
+  const publicDeck=publicDecks[0].b;
+  const firstLanding=landings[0].b;
+  const landingBodies=[
+    {lo:[publicDeck.min.x,publicDeck.min.z],
+      hi:[publicDeck.max.x,publicDeck.max.z],top:publicDeck.min.y},
+    {lo:[firstLanding.min.x,firstLanding.min.z],
+      hi:[firstLanding.max.x,Math.min(firstLanding.max.z,publicDeck.min.z)],
+      top:firstLanding.min.y}
+  ];
+  if(Math.abs(publicDeck.max.y-landing)>.02||
+     Math.abs(firstLanding.max.y-landing)>.02||
+     publicDeck.min.x<10.10||publicDeck.max.x>12.06||
+     publicDeck.min.z< -15.34||publicDeck.max.z> -13.16||
+     firstLanding.min.z< -15.96||
+     firstLanding.max.z< -15.06)
+    throw Error("North public bridge's original GLB massing changed");
+  for(let i=0;i<landingBodies.length;i++){
+    const part=landingBodies[i],width=part.hi[0]-part.lo[0],
+      depth=part.hi[1]-part.lo[1],rise=part.top-foundation;
+    if(width<.8||depth<.58||rise<1.3||rise>1.4)
+      throw Error("Public north bridge support cannot reach the original lower floor");
+    // Distinct nonoverlapping footprints. Insets prevent adjoining side
+    // panels from creating more coplanar Z-fighting.
+    const support=new Mesh(new BoxGeometry(width-.002,rise,depth-.002),whiteArchitecture);
+    support.name="V18 north sanctuary public landing grounded solid support "+(i+1);
+    support.position.set((part.lo[0]+part.hi[0])/2,
+      (foundation+part.top)/2,(part.lo[1]+part.hi[1])/2);
+    support.castShadow=true;
+    support.receiveShadow=true;
+    building.add(support);
+    northDoorStepAudit.landingSupports++;
+    northDoorStepAudit.landingFoundationGapsClosed.push(+rise.toFixed(3));
+  }
   for(let i=0;i<treads.length;i++){
     const b=treads[i].b;
     const width=b.max.x-b.min.x,depth=b.max.z-b.min.z;

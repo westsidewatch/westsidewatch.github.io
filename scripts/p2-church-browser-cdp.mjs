@@ -115,7 +115,11 @@ try{
     if(!state.upperStair||state.upperStair.treads<8||state.upperStair.stringers!==2)
       throw Error('Original eight-step ascent lacks connected supporting structure '+JSON.stringify(state.upperStair));
     if(!state.northDoorSteps||state.northDoorSteps.treads!==3||
-       state.northDoorSteps.supports!==3||!state.northDoorSteps.unchangedOriginals||
+       state.northDoorSteps.supports!==3||
+       state.northDoorSteps.landingSupports!==2||
+       state.northDoorSteps.landingFoundationGapsClosed?.length!==2||
+       state.northDoorSteps.landingFoundationGapsClosed.some(h=>Math.abs(h-1.35)>.03)||
+       !state.northDoorSteps.unchangedOriginals||
        Math.abs(state.northDoorSteps.baseHeight+1.5)>.015||
        Math.abs(state.northDoorSteps.landingHeight)>.015||
        state.northDoorSteps.gapsClosed?.length!==3||
