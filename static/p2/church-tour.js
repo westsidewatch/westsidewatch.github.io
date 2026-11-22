@@ -13,6 +13,7 @@ import {
   b as PlaneGeometry, o as PerspectiveCamera, d as DoubleSide,
   e as CanvasTexture
 } from "../p2-maquette/assets/GLTFLoader-j388d5bW.js";
+import {consolidateIntersectingOpaqueCuboids} from "./church-geometry-union.js";
 
 const canvas = document.querySelector("#church-canvas");
 const prefersReducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -370,6 +371,9 @@ const whiteFloor = new MeshStandardMaterial({
 function chooseFinish(name, sourceMaterial) {
   const n=modelName(name);
   if (/maple cc0/.test(n)) return sourceMaterial;
+  // Blender/GLB truncates this floor node's name to "receiving fl".
+  // It is a horizontal floor plate, not a vertical architectural wall.
+  if (/^v29 south entry .*receiving fl/.test(n)) return whiteFloor;
   if (/glass|glazing|glazed|window pane|skylight/i.test(n)) {
     const m=finishes.glazing.clone();
     m.forceSinglePass=true;
@@ -571,24 +575,12 @@ function updateMapleSeason(t,duration) {
 // Preserve doors, true stair treads, walls and the third-level overlook.
 // The original concept GLB also contained room-study slabs and ghost roof
 // panels which are NOT walkable head-clearance-safe in the sunken forum.
-// R32: source-GLB panel overlap pairs were measured in the 241-node
-// geometry ledger. Never hide whole walls or floors to solve Z-fighting;
-// give the redundant painted face a tiny render-depth priority instead.
-// This affects only the listed original pieces, never the maple or glass.
-const localDepthBiasAudit=[];
-function stableCoplanarRenderTier(name){
-  const n=modelName(name);
-  if(/^v11 support .*west high outer room structural enclosure/.test(n))return -3;
-  if(/^v11 support .*north high outer room structural enclosure/.test(n))return -3;
-  if(/^v11 support .*west mid exterior structural enclosure/.test(n))return -1;
-  if(/^south entry east boundary (?:solid|staff doorway header)/.test(n))return -2;
-  if(/^v29 south entry .*receiving fl/.test(n))return -2;
-  if(/^v18 level route .*courtyard north door eastward flush deck/.test(n))return -2;
-  return 0;
-}
+// R34: physically union overlapping GLB boxes; no painted depth bias
+// or hiding entire load-bearing walls to disguise Z-fighting.
 const ghostRoofMeshes=[];
 const removedObstructions=[];
 const forumSafetyBoxes=[];
+const excludedAnimatedCollisionLeaves=[];
 const eliminatedHeadHazards=[];
 const cameraSafetyReport={samples:0,corrected:0,penetrations:0,forwardOcclusions:0,headroomHazards:0,objects:[]};
 const forumPathTimes=()=>Array.from({length:111},(_,i)=>121+i*.5);
@@ -704,6 +696,13 @@ function buildCameraSafetyBoxes(building){
   building.traverse(mesh=>{
     if(!mesh.isMesh||!mesh.visible)return;
     const n=modelName(mesh.name);
+    // The former detector still used the CLOSED door's AABB even when its
+    // mesh had pivoted fully open. At t=106s it snapped the camera 1.29m
+    // backwards. Static boxes must NEVER contain animated door leaves.
+    if(/^(?:sanctuary staff door|sanctuary main public door|tall single white pivot door|d south court inner glass vestibule door|c east chapel large sliding glass door|a north court double-wide glass door)\b/.test(n)){
+      excludedAnimatedCollisionLeaves.push(mesh.name);
+      return;
+    }
     if(!/(wall|partition|panel|soffit|fascia|column|post|support|screen|balustrade|railing|glass|mullion|door|beam|parapet|ledge|lintel|landing|terrace|slab|roof|ceiling|floor)/i.test(n)
        ||/(?:foliage|maple|tree|ground|sky|ghost cutaway)/i.test(n))return;
     const box=meshWorldBox(mesh);if(!box)return;
@@ -896,16 +895,6 @@ async function loadArchitecture() {
     if (/^roof/i.test(part) && object.material?.color)
       originalStructuralMaterials.set(object.material,object.material.color.clone());
     const isGlazing = /glass|glazing|glazed|window pane/.test(part);
-    const tier=!isGlazing ? stableCoplanarRenderTier(part) : 0;
-    if(tier){
-      // Clone per source mesh: no scene-wide polygon offset and no deletion.
-      const stable=object.material.clone();
-      stable.polygonOffset=true;
-      stable.polygonOffsetFactor=tier;
-      stable.polygonOffsetUnits=tier;
-      object.material=stable;
-      localDepthBiasAudit.push({name:object.name,tier});
-    }
     if (isGlazing) {
       object.material.transparent = true;
       object.material.depthWrite = false;
@@ -919,13 +908,24 @@ async function loadArchitecture() {
   removeCoplanarDuplicateSheets(building);
   connectUpperStairTreads(building);
   removeHeadHeightHazards(building);
+  // Build static collision boxes from the original GLB *before* the opaque
+  // source boxes are replaced by their watertight physical union.
+  // This preserves room-by-room collision precision across the C-shaped floor.
   buildCameraSafetyBoxes(building);
+  window.__churchDoorCollisionAudit={
+    excludedAnimatedLeaves:excludedAnimatedCollisionLeaves,
+    staleStaticLeaves:forumSafetyBoxes.filter(o=>/^(?:sanctuary staff door|sanctuary main public door|tall single white pivot door|d south court inner glass vestibule door|c east chapel large sliding glass door|a north court double-wide glass door)/i.test(modelName(o.name))).map(o=>o.name)
+  };
+  window.__churchTopologyAudit=consolidateIntersectingOpaqueCuboids(building,{
+    whiteArchitecture,whiteFloor,modelName,meshWorldBox
+  });
   window.__churchSurfaceAudit=sheetRepair;
   window.__churchDepthLayerAudit={
-    source:"R31 original GLB coplanar survey",
+    source:"R34 exposed exterior mesh union",
     preservedOriginalMeshes:true,
-    count:localDepthBiasAudit.length,
-    panels:localDepthBiasAudit
+    count:0,
+    panels:[],
+    materialOffsets:false
   };
   window.__churchUpperStairAudit=upperStairAudit;
   scene.add(building);
