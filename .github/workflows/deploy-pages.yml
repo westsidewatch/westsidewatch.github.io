@@ -142,10 +142,10 @@ jobs:
           const fs = require('node:fs');
           const vm = require('node:vm');
           const html = fs.readFileSync('public/shupian/index.html','utf8');
-          const scripts = [...html.matchAll(/<script(\\s[^>]*)?>([\\s\\S]*?)<\\/script>/g)];
+          const scripts = [...html.matchAll(/<script(\s[^>]*)?>([\s\S]*?)<\/script>/g)];
           let executable = 0;
           for (const [,attrs='',code] of scripts) {
-            if (/type=["']application\\/json["']/.test(attrs)) continue;
+            if (/type=["']application\/json["']/.test(attrs)) continue;
             new vm.Script(code, {filename:'public/shupian/index.html'});
             executable++;
           }
