@@ -433,6 +433,30 @@ async function loadArchitecture() {
     object.receiveShadow = true;
   });
   scene.add(building);
+
+  // Read-only screen-space diagnostics: identify any unlabeled GLB component
+  // visible where a floating handle was reported. No on-screen UI or overlay.
+  window.__churchMeshProbe = (screenX,screenY,rad=100)=>{
+    const found=[];
+    scene.updateMatrixWorld(true);
+    scene.traverse(object=>{
+      if(!object.isMesh || !object.visible || !object.geometry) return;
+      if(!object.geometry.boundingBox) object.geometry.computeBoundingBox();
+      const b=object.geometry.boundingBox;
+      if(!b)return;
+      const world=b.getCenter(new Vector3()).applyMatrix4(object.matrixWorld);
+      const clip=world.clone().project(camera);
+      const px=(clip.x+1)*450,py=(1-clip.y)*300;
+      const distance=Math.hypot(px-screenX,py-screenY);
+      if(distance>rad || clip.z>1 || clip.z< -1)return;
+      const sz=b.getSize(new Vector3());
+      found.push({name:object.name,px:Math.round(px),py:Math.round(py),
+        distance:Math.round(distance),world:[world.x,world.y,world.z].map(v=>+v.toFixed(3)),
+        localSize:[sz.x,sz.y,sz.z].map(v=>+v.toFixed(3)),
+        material:object.material?.name||null});
+    });
+    return found.sort((a,b)=>a.distance-b.distance).slice(0,60);
+  };
   addNativeLandscape(building);
   connectArchitecturalDoors(building);
 }
