@@ -1,20 +1,30 @@
 {
   "schema": 2,
-  "observed_at_utc": "2026-11-22T14:26:11.481268+00:00",
+  "observed_at_utc": "2026-11-22T14:27:59.636968+00:00",
   "queries": [
     "黑鏡",
     "神探夏洛克"
   ],
   "providers_requested": 6,
   "provider_queries_attempted": 12,
-  "provider_queries_failed": 2,
-  "works_found": 93,
-  "unique_media_candidates": 315,
-  "hls_candidates": 315,
-  "manifests_parsed": 0,
+  "provider_queries_failed": 4,
+  "works_found": 29,
+  "unique_media_candidates": 113,
+  "hls_candidates": 113,
+  "manifests_parsed": 4,
   "suspected_ad_cues": 0,
   "audited": 12,
   "errors": [
+    {
+      "provider": "changzhang",
+      "query": "黑鏡",
+      "error": "HTTPError: HTTP Error 502: Bad Gateway"
+    },
+    {
+      "provider": "changzhang",
+      "query": "神探夏洛克",
+      "error": "HTTPError: HTTP Error 502: Bad Gateway"
+    },
     {
       "provider": "diyi",
       "query": "黑鏡",
@@ -28,95 +38,7 @@
   ],
   "audits": [
     {
-      "title": "夏洛克与女儿",
-      "episode": "第01集",
-      "provider": "baofeng",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
-    },
-    {
-      "title": "夏洛克与女儿",
-      "episode": "第02集",
-      "provider": "baofeng",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
-    },
-    {
-      "title": "夏洛克与女儿",
-      "episode": "第03集",
-      "provider": "baofeng",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
-    },
-    {
-      "title": "夏洛克与女儿",
-      "episode": "第04集",
-      "provider": "baofeng",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
-    },
-    {
-      "title": "夏洛克与女儿",
-      "episode": "第05集",
-      "provider": "baofeng",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
-    },
-    {
-      "title": "夏洛克与女儿",
-      "episode": "第06集",
-      "provider": "baofeng",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
-    },
-    {
-      "title": "夏洛克与女儿",
-      "episode": "第07集",
-      "provider": "baofeng",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
-    },
-    {
-      "title": "夏洛克与女儿",
-      "episode": "第08集",
-      "provider": "baofeng",
-      "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
-      "clean": "not-certified",
-      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u7b2c' in position 26: ordinal not in range(128)"
-    },
-    {
-      "title": "女神探夏洛克",
+      "title": "神探夏洛克 第三季",
       "episode": "第1集",
       "provider": "baofeng",
       "format": "m3u8",
@@ -127,7 +49,55 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "title": "女神探夏洛克",
+      "title": "神探夏洛克第一季",
+      "episode": "第01集",
+      "provider": "feifan",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "title": "神探夏洛克  第二季",
+      "episode": "第01集",
+      "provider": "liangzi",
+      "format": "m3u8",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
+      "clean": "not-certified",
+      "segment_count": 1307,
+      "duration_sec": 5220.4,
+      "encrypted": false
+    },
+    {
+      "title": "黑镜第一季",
+      "episode": "第01集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "title": "黑镜 第一季",
+      "episode": "第01集",
+      "provider": "liangzi",
+      "format": "m3u8",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
+      "clean": "not-certified",
+      "segment_count": 683,
+      "duration_sec": 2726.04,
+      "encrypted": false
+    },
+    {
+      "title": "神探夏洛克 第三季",
       "episode": "第2集",
       "provider": "baofeng",
       "format": "m3u8",
@@ -138,7 +108,55 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "title": "女神探夏洛克",
+      "title": "神探夏洛克第一季",
+      "episode": "第02集",
+      "provider": "feifan",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "title": "神探夏洛克  第二季",
+      "episode": "第02集",
+      "provider": "liangzi",
+      "format": "m3u8",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
+      "clean": "not-certified",
+      "segment_count": 1344,
+      "duration_sec": 5373.0,
+      "encrypted": false
+    },
+    {
+      "title": "黑镜第一季",
+      "episode": "第02集",
+      "provider": "baofeng",
+      "format": "m3u8",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
+      "clean": "not-certified",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "title": "黑镜 第一季",
+      "episode": "第02集",
+      "provider": "liangzi",
+      "format": "m3u8",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
+      "clean": "not-certified",
+      "segment_count": 949,
+      "duration_sec": 3792.28,
+      "encrypted": false
+    },
+    {
+      "title": "神探夏洛克 第三季",
       "episode": "第3集",
       "provider": "baofeng",
       "format": "m3u8",
@@ -149,15 +167,15 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "title": "女神探夏洛克",
-      "episode": "第4集",
-      "provider": "baofeng",
+      "title": "神探夏洛克第一季",
+      "episode": "第03集",
+      "provider": "feifan",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found"
+      "error": "HTTPError: HTTP Error 403: Forbidden"
     }
   ],
   "stages": {
