@@ -115,3 +115,13 @@ GitHub Actions [run #45001795311](https://github.com/westsidewatch/westsidewatch
 三個編輯欄目 **三晨星／策展集／光譜** 應在原同一館藏牆作為一組完整的同級入口呈現：三卡同 OS `--ws-harvest: #b8944a` 收穫黃色底版，同等結構、同等版式，Bodoni Moda SC 英文主標大、Chiron Hei HK WS 200 中文次標小，現有真實書籍圖像位於黃底內窗。桌面三欄同排；小螢幕有序折行；不得使用三種互不相干的淡色紙板或大面積黑底。
 
 變更檔案：`static/experiments/p2-0105-dawn-preview.html`、`static/css/p2-0105-dawn-integrated.css`、`static/js/p2-0105-dawn-continuation.js`；驗收 `tests/p2-dawn-os-visual-hierarchy.cjs` 與 `tests/p2-dawn-reading-hall.cjs` 已同步修改。保留原經文母版 iframe、三欄目真實資料、Living 7×42 分類、原 Codrops 展開書籍與 V9 轉場。正式主站未合併，仍只在隔離 PR #1411 驗收。
+
+
+## R65｜OS 正文與展示中文字重分離
+
+本次排版回歸缺陷：不應將「所有中文極細」誤解為「中文正文也 Chiron 200」。**原 OS 有明確的語義字體角色，不得互換。**
+
+- 分類、欄目副標、卡片名稱、按鈕與導航：`--ws-type-display-zh` = Chiron Hei HK WS；展示性中文輕量角色 `--ws-weight-zh-air:200`，不得把 `900/bold` 當一般分類或個人書房標題。
+- 連續閱讀正文：`--ws-type-reading-zh` = Noto Serif TC；標準字重 `400`；`--ws-type-scale-reading` 和 `--ws-type-leading-reading:1.82`。正文不應被覆蓋成 Chiron 200，也不得降到極小的 micro/meta 字級。
+- 原已核實的經文方塊是特殊主視覺，其原版中文 900 重獨立保留，不受此修正污染；第二、三層不額外製作版塊大刊頭。
+- R65 已修改第二層分類卡/標題、個人書房標題的 900 殘留；只對指定正文段落設置 Noto Serif 400；修改 `tests/p2-dawn-os-visual-hierarchy.cjs` 以真實瀏覽器 computed style 分別驗證展示 200 / 閱讀 400。P2 01–04、原經文 SVG/iframe、原館藏資料保持不動。
