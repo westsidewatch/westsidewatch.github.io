@@ -1172,12 +1172,25 @@
    }
    const frag=document.createDocumentFragment();
    curated.forEach(work=>{
-    const tile=document.createElement('button');tile.type='button';tile.className='dawn-wall__tile dawn-wall__tile--record dawn-cover';
+    const tile=document.createElement('button');tile.type='button';
+    tile.className='dawn-wall__tile dawn-wall__tile--record dawn-cover dawn-cover--pending';
     tile.dataset.workTitle=work.title;if(work.workId)tile.dataset.workId=work.workId;
     tile.setAttribute('aria-label','預覽：'+work.title);
     const sleeve=document.createElement('span');sleeve.className='dawn-cover__sleeve';
-    const img=document.createElement('img');img.src=work.cover.url;img.alt='原書封面：'+work.title;img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';
-    img.addEventListener('error',()=>{tile.classList.add('dawn-cover--missing');sleeve.hidden=true});sleeve.append(img);
+    const img=document.createElement('img');img.alt='原書封面：'+work.title;
+    img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';
+    img.addEventListener('load',()=>{
+     tile.classList.remove('dawn-cover--pending','dawn-cover--missing');
+     tile.classList.add('dawn-cover--ready');
+    });
+    img.addEventListener('error',()=>{
+     tile.classList.remove('dawn-cover--pending','dawn-cover--ready');
+     tile.classList.add('dawn-cover--missing');
+     sleeve.hidden=true;
+    });
+    // Pending/error states retain the actual bibliographic typography.
+    // No missing work may become a blank tile or an invented jacket.
+    img.src=work.cover.url;sleeve.append(img);
     const meta=document.createElement('span');meta.className='dawn-cover__meta';
     const title=document.createElement('strong');title.textContent=work.title;
     const author=document.createElement('em');author.textContent=work.author||'';
