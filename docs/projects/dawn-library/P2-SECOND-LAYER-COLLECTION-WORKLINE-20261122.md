@@ -92,3 +92,17 @@ GitHub Actions [run #45001795311](https://github.com/westsidewatch/westsidewatch
 - 候選 1,020 筆刻意不宣稱有真封面（`dawn-placeholder`）。這是「身份與館藏容量的修復候選」，不是「完成圖像修復」。
 
 **出版門檻**：目前 artifact 尚未被複製進 PR 的對外靜態根，也未接入 P2 runtime；必須先驗證每個候選 shard 與新 root 的 checksum、跨 410 分片瀏覽邊界、全文/圖像來源，以及 Cloudflare desktop/mobile，才允許在隔離分支受控發布。不得自動合併 main。
+
+## 2026-11-22 正式視覺施工｜P2 第二層原閱讀室（不是平行新大廳）
+
+重新核實現行 P2 05 源碼後發現，原版三晨星／策展集／光譜**已由** `openCollection(kind)`、`showPortalCollection(kind)`、`renderPortalWorks()` 接線，並有 `p2-dawn-editorial-art.mjs` 的真實作品圖像。故否決在已存在的 `#dawn-wall` 外再創立平行 `p2-dawn-collection-hall.mjs`；不採用任何 `console.log` 空操作入口。
+
+**本輪實際提交：**
+- `static/experiments/p2-0105-dawn-preview.html`：在原 `#dawn-wall` 內新增閱讀室編輯刊頭、Canonical Work 數量、七大學科導航（`#dawn-department-grid`）。原三大型編輯入口／真實 2×2 圖像／個人書房未刪。
+- `static/js/p2-0105-dawn-continuation.js`：從原 `living/root.json` 讀入七根分類；各學科點擊原 `openCollection()`，等待原 `renderCatalogueClassification()` 後調用 `displayClassificationGroup()`，可以繼續進 42 子類與已驗證的 `livingSubjectBooks(child.id)`。保留 V9 與返回路徑。
+- `static/css/p2-0105-dawn-integrated.css`：新增 OS 紙色／金色／中文字體/英文字體規範下的閱讀室與 7 格字體牆，桌面 4 欄、平板/手機 2 欄，不覆寫原三大型編輯卡排布。
+- `tests/p2-dawn-reading-hall.cjs`：以真實 Living root 驗證 7 根/42 葉、原三入口保留，模擬 7 次點擊均路由到原分類；`.github/workflows/p2-dawn-reading-hall.yml` 使其成為 PR gate。
+- 測試 [GitHub Actions 45005646658](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45005646658) **SUCCESS**；原 Living subject membership 測試同時成功。
+- Cloudflare 隔離部署流程 [run 45005646644](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45005646644) 的 Hugo build/Cloudflare deploy steps SUCCESS，Chomium 原館藏回歸結果需另核對。預覽部署分支 `pr-1411`；預覽入口 `/experiments/p2-0105-dawn-preview.html?layer=second&d=28.4`。
+
+**不可宣稱：** 完整視覺得獎驗收、所有 203448 本的封面與閱讀權限、410 候選分片正式部署、正式主站合併；均未完成。
