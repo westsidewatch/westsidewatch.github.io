@@ -185,3 +185,12 @@ R74 正式修正原 `static/js/p2-0105-dawn-continuation.js`：
 - Codrops 選書預覽、逐冊來源出版方導流、OS 中英字重、收穫黃識別不改動。
 
 新瀏覽器 `tests/p2-dawn-chinese-contemporary.cjs` 必須驗證：中文入口不需額外點擊即顯示當代書牆；11 部書源與八部譯作現存；前後章次正確、原古籍完整保留，點擊主導航可由古籍返回當代。早期封面驗收 `tests/p2-dawn-chinese-covers.cjs` 經明確 `zh-archive` 路徑驗證。工程未合併主站，仍留於 Draft PR #1411。
+
+
+## R76｜字體方塊 → 書籍封面展開
+
+正式採用的兩段式視覺語法：**當代中文書牆首先全部採用收穫黃的完整字體方塊（中文 Chiron Hei HK WS 200；原書名、作者、主題與英文欄目填滿方塊）。點選方塊，才在同頁原 Codrops 展開區顯示這本書的真實封面、作者、介紹及出版方入口。** 這個先抽象／再實體化的視覺對照是有意設計，不得再提前把封面塞入第一層方塊。切換另一方塊沿用展開區原有的動效；第一次點擊不外跳，第二次讀者明確選擇才前往出版方。
+
+R76 原始工程：`static/js/p2-0105-dawn-continuation.js` 移除當代分類書牆的提前封面載入；真實封面 URL 原值繼續交給 `static/js/p2-dawn-expanding-book-preview.mjs`，展開後才顯示。CSS `static/css/p2-0105-dawn-integrated.css` 固定書牆方塊 1:1 的 OS 收穫黃文字構圖；展開時保留原真實封面比例，不裁書封、也不混用封面。原有 47 部古籍的數位掃描書目及前後主次、11 部當代來源均不變。
+
+驗收：`tests/p2-dawn-chinese-contemporary.cjs` 逐卡檢查方塊 **沒有 img／沒有錯書封、收穫黃、尺寸為正方形、完整書名與作者**；點選後在 `#dawn-book-expanding-preview` 檢查真實同書封面 URL，繼續驗證出版社入口只在明確第二次操作才觸發。GitHub [中文封面與新譯作瀏覽器驗收 #45067968015](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45067968015) **SUCCESS**，桌面與手機截圖已存檔。隔離 Cloudflare 預覽已部署；全域 P2 Design OS gate 另有失敗，因此不宣稱整站完成、不合併主站。
