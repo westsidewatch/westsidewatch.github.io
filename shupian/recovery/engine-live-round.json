@@ -1,6 +1,6 @@
 {
   "schema": 3,
-  "observed_at_utc": "2026-11-22T21:07:03.210368+00:00",
+  "observed_at_utc": "2026-11-22T21:07:58.097018+00:00",
   "tracked_sources": [
     {
       "provider": "baofeng",
@@ -12,7 +12,7 @@
       "health_checks": 3,
       "health_pass": 0,
       "sample_reliability": 0.2,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "baofeng",
@@ -24,7 +24,7 @@
       "health_checks": 3,
       "health_pass": 0,
       "sample_reliability": 0.2,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "baofeng",
@@ -36,7 +36,7 @@
       "health_checks": 3,
       "health_pass": 0,
       "sample_reliability": 0.2,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "baofeng",
@@ -48,7 +48,7 @@
       "health_checks": 3,
       "health_pass": 0,
       "sample_reliability": 0.2,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "baofeng",
@@ -60,7 +60,7 @@
       "health_checks": 3,
       "health_pass": 0,
       "sample_reliability": 0.2,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "baofeng",
@@ -72,7 +72,7 @@
       "health_checks": 3,
       "health_pass": 0,
       "sample_reliability": 0.2,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "changzhang",
@@ -85,7 +85,7 @@
       "health_checks": 3,
       "health_pass": 3,
       "sample_reliability": 0.8,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "changzhang",
@@ -98,7 +98,7 @@
       "health_checks": 3,
       "health_pass": 3,
       "sample_reliability": 0.8,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "feifan",
@@ -199,7 +199,7 @@
       "health_checks": 1,
       "health_pass": 1,
       "sample_reliability": 0.6667,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "changzhang",
@@ -212,7 +212,7 @@
       "health_checks": 1,
       "health_pass": 1,
       "sample_reliability": 0.6667,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "liangzi",
@@ -220,11 +220,12 @@
       "episode": "第01集",
       "source_fingerprint": "9db7f7d4b09013abe912ed93",
       "source_path_fingerprint": "9db7f7d4b09013abe912ed93",
-      "manifest": "failed",
+      "manifest": "parsed",
+      "segment_sample": "pass",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "health_pass": 1,
+      "sample_reliability": 0.6667,
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "liangzi",
@@ -232,11 +233,12 @@
       "episode": "第02集",
       "source_fingerprint": "a0a2a57f5ea4787c4d3afa42",
       "source_path_fingerprint": "a0a2a57f5ea4787c4d3afa42",
-      "manifest": "failed",
+      "manifest": "parsed",
+      "segment_sample": "pass",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "health_pass": 1,
+      "sample_reliability": 0.6667,
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "changzhang",
@@ -249,7 +251,7 @@
       "health_checks": 1,
       "health_pass": 1,
       "sample_reliability": 0.6667,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "liangzi",
@@ -257,11 +259,12 @@
       "episode": "第01集",
       "source_fingerprint": "7fa62a6278270088104e8e83",
       "source_path_fingerprint": "7fa62a6278270088104e8e83",
-      "manifest": "failed",
+      "manifest": "parsed",
+      "segment_sample": "pass",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "health_pass": 1,
+      "sample_reliability": 0.6667,
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "changzhang",
@@ -274,7 +277,7 @@
       "health_checks": 1,
       "health_pass": 1,
       "sample_reliability": 0.6667,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     },
     {
       "provider": "liangzi",
@@ -282,11 +285,12 @@
       "episode": "第01集",
       "source_fingerprint": "607515a73d892742d76b9a9c",
       "source_path_fingerprint": "607515a73d892742d76b9a9c",
-      "manifest": "failed",
+      "manifest": "parsed",
+      "segment_sample": "pass",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333,
-      "observed_at_utc": "2026-11-22T21:07:03.210368+00:00"
+      "health_pass": 1,
+      "sample_reliability": 0.6667,
+      "observed_at_utc": "2026-11-22T21:07:58.097018+00:00"
     }
   ],
   "new_candidates_audited": 8,
@@ -300,8 +304,8 @@
   "works_found": 33,
   "unique_media_candidates": 126,
   "hls_candidates": 126,
-  "manifests_parsed": 6,
-  "segment_sample_pass": 6,
+  "manifests_parsed": 10,
+  "segment_sample_pass": 10,
   "suspected_ad_cues": 0,
   "audited": 16,
   "errors": [
@@ -651,16 +655,44 @@
       "previous_manifest": "unknown",
       "previous_observed_at_utc": null,
       "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked",
+      "segment_count": 1342,
+      "duration_sec": 5361.28,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 671,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 1341,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass",
       "status_transition": "new_observation",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333
+      "health_pass": 1,
+      "sample_reliability": 0.6667
     },
     {
       "title": "神探夏洛克 第一季",
@@ -672,16 +704,44 @@
       "previous_manifest": "unknown",
       "previous_observed_at_utc": null,
       "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked",
+      "segment_count": 1345,
+      "duration_sec": 5383.51,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 672,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 1344,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass",
       "status_transition": "new_observation",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333
+      "health_pass": 1,
+      "sample_reliability": 0.6667
     },
     {
       "title": "神探夏洛克 第三季",
@@ -742,16 +802,44 @@
       "previous_manifest": "unknown",
       "previous_observed_at_utc": null,
       "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked",
+      "segment_count": 1314,
+      "duration_sec": 5247.68,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 657,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 1313,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass",
       "status_transition": "new_observation",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333
+      "health_pass": 1,
+      "sample_reliability": 0.6667
     },
     {
       "title": "神探夏洛克 第四季",
@@ -812,22 +900,50 @@
       "previous_manifest": "unknown",
       "previous_observed_at_utc": null,
       "format": "m3u8",
-      "manifest": "failed",
-      "ad_cues": "unknown",
-      "playback": "not-tested",
+      "manifest": "parsed",
+      "ad_cues": "none-detected",
+      "playback": "requires-in-site-browser-test",
       "clean": "not-certified",
-      "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked",
+      "segment_count": 1347,
+      "duration_sec": 5378.44,
+      "encrypted": false,
+      "segment_checks": [
+        {
+          "position": 0,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 673,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        },
+        {
+          "position": 1346,
+          "ok": true,
+          "http": 206,
+          "signature": "mpeg-ts",
+          "sample_bytes": 4096,
+          "content_type": "video/mp2t"
+        }
+      ],
+      "segment_sample": "pass",
       "status_transition": "new_observation",
       "health_checks": 1,
-      "health_pass": 0,
-      "sample_reliability": 0.3333
+      "health_pass": 1,
+      "sample_reliability": 0.6667
     }
   ],
   "same_exact_url_count": 8,
   "changed_url_count": 0,
   "missing_baseline_count": 8,
-  "http_404_count": 10,
+  "http_404_count": 6,
   "recovered_count": 0,
   "regressed_count": 0,
   "stable_healthy_count": 2,
@@ -841,5 +957,5 @@
   "completion": "NOT_COMPLETED",
   "limitations": "Manifest parsing cannot certify ads, playback, correct content or rights. No auto-import.",
   "rescan_previous_count": 16,
-  "run_id": "45070185010"
+  "run_id": "45070216640"
 }
