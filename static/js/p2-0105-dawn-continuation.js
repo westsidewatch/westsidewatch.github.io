@@ -1079,28 +1079,8 @@
     folioSubject.textContent=String(candidate.category||'信仰閱讀').split('／').slice(-1)[0];
     folioFoot.append(folioAuthor,folioSubject);
     substitute.append(rubric,printedTitle,folioFoot);art.append(substitute);
-    if(safeHttp(candidate.coverUrl)){
-     const image=document.createElement('img');image.src=safeHttp(candidate.coverUrl);
-     image.alt='出版方所列書封：'+candidate.title;
-     // External publishers can block/slow thumbnails. Do not let an
-     // unready white image mask the verified title-paper underneath it.
-     image.loading='eager';image.decoding='async';image.referrerPolicy='no-referrer';
-     image.addEventListener('load',()=>{
-      if(image.naturalWidth>100){
-       // Two views of this SAME, verified source image: the soft full-bleed
-       // backdrop fills the tile while the sharp original remains uncropped.
-       // Never substitute another book's jacket.
-       const backdrop=image.cloneNode(false);
-       backdrop.className='dawn-contemporary__cover-backdrop';
-       backdrop.setAttribute('aria-hidden','true');
-       backdrop.alt='';backdrop.loading='eager';
-       art.insertBefore(backdrop,image);
-       card.classList.add('dawn-contemporary__book--pictured');
-      }else image.remove();
-     });
-     image.addEventListener('error',()=>image.remove());
-     art.append(image);
-    }
+    // The first view is an editorial type square, never the physical jacket.
+    // Only Codrops in-row expansion reveals this exact book's sourced cover.
     const copy=document.createElement('span');copy.className='dawn-contemporary__metadata';
     const kind=document.createElement('small');
     kind.textContent=candidate.translation==='Chinese translation'?'中文譯作':'當代中文著作';
