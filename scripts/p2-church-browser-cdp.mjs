@@ -90,6 +90,12 @@ try{
       if(state?.className==='ready')break;
       if(state?.className==='failed')throw Error('Architecture failed '+JSON.stringify(state)+' '+errors.join('; '));
     }
+    // The ready class is set before the first RAF; force the requested 3D
+    // frame before reading any per-frame spatial/lighting telemetry.
+    if(state?.className==='ready' && !state.spatial){
+      await evaluate("window.__churchRenderProofFrame("+frame+")");
+      state.spatial=await evaluate('window.__churchSpatialAudit');
+    }
     console.log('P2_BROWSER_FRAME_'+frame+'='+JSON.stringify({state,errors:errors.slice(0,7)}));
     if(state?.className!=='ready')throw Error('Church GLB not ready in browser '+frame+' '+JSON.stringify(state)+' '+errors.join('; '));
     if(!state.hardware || !Array.isArray(state.hardware.remaining) || state.hardware.remaining.length)
