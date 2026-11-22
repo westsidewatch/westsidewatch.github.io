@@ -146,6 +146,11 @@ jobs:
           assert len(titles) == 1, 'Shupian public inventory must exclude filler old films'
           assert sum(len(x['episodes']) for x in titles) >= 10, 'Institute historical episode records regressed'
           assert any('異能研究所' in x['title'] for x in titles), 'Historical Institute records missing'
+          assert not any(x['id'] != 'the-institute-historical' for x in titles), 'Filler works returned to 数片 catalog'
+          front=Path('public/shupian/index.html').read_text()
+          assert '將軍號' not in front and '活死人之夜' not in front and '從馬槽到十字架' not in front, 'Legacy filler leaked into HTML'
+          legacy=Path('public/paradiso/index.html').read_text()
+          assert 'location.replace' in legacy and '/shupian/' in legacy, 'Legacy cinema still serves old catalog'
           print('Shupian Pages artifact verified: catalog, player, styles and historical episodes')
           PY
       - name: Upload Pages artifact
@@ -174,7 +179,7 @@ jobs:
             js="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/app.js?verify=${GITHUB_SHA}" || true)"
             json="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/catalog.json?verify=${GITHUB_SHA}" || true)"
             health="$(curl --fail --location --silent --show-error --max-time 20 "${base}/shupian/health.html?verify=${GITHUB_SHA}" || true)"
-            if [[ "${html}" == *'id="grid"'* && "${html}" == *'id="video"'* && "${html}" == *'id="catalog"'* && "${json}" == *'異能研究所'* && "${health}" == *'RELEASE HEALTH'* ]]; then
+            if [[ "${html}" == *'id="grid"'* && "${html}" == *'id="video"'* && "${html}" == *'id="catalog"'* && "${json}" == *'異能研究所'* && "${json}" != *'將軍號'* && "${html}" != *'將軍號'* && "${health}" == *'RELEASE HEALTH'* ]]; then
               echo "Published Shupian cinema verified: ${base}/shupian/ at ${GITHUB_SHA}"
               exit 0
             fi
