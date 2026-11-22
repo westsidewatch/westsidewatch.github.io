@@ -744,7 +744,10 @@
    const prior=art.querySelector('img')?.src;
    const candidates=items.filter(item=>item.url!==prior);
    const selected=(candidates.length?candidates:items)[Math.floor(Math.random()*(candidates.length||items.length))];
-   const image=new Image();image.alt='';image.decoding='async';image.loading='lazy';image.referrerPolicy='no-referrer';
+   // Preload category jacket BEFORE attaching it: a detached img marked
+   // loading="lazy" may never start its request, so its onload never fires
+   // and the entire category wall stays empty despite verified cover assets.
+   const image=new Image();image.alt='';image.decoding='async';image.loading='eager';image.referrerPolicy='no-referrer';
    image.onload=()=>{
     if(tile.isConnected&&tile.dataset.coverGroup===key){
      art.querySelector('img')?.remove();
