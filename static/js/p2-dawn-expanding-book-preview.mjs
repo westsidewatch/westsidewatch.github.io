@@ -52,13 +52,23 @@ function previewContents(book,onRead){
  const figure=make('button','dawn-expander__book');
  figure.type='button';figure.setAttribute('aria-label','打開書籍：'+(book.title||'未標題作品'));
  const image=coverFor(book);
+ // A blank white "pending book cover" is never an acceptable preview.
+ // Keep the exact title in paper while a publisher image is still loading.
+ figure.classList.add('dawn-expander__book--paper');
  if(image){
   const img=make('img','dawn-expander__book-image');
-  img.src=image;img.alt='此作品圖像：'+(book.title||'');
-  img.loading='lazy';img.decoding='async';
-  img.addEventListener('error',()=>{img.remove();figure.classList.add('dawn-expander__book--paper')});
+  img.alt='此作品圖像：'+(book.title||'');
+  img.loading='eager';img.decoding='async';
+  img.addEventListener('load',()=>{
+   if(img.naturalWidth>100){
+    figure.classList.add('dawn-expander__book--ready');
+    figure.classList.remove('dawn-expander__book--paper');
+   }else img.remove();
+  });
+  img.addEventListener('error',()=>img.remove());
+  img.src=image;
   figure.append(img);
- }else figure.classList.add('dawn-expander__book--paper');
+ }
  const paper=make('span','dawn-expander__book-paper');
  paper.append(make('small','','DAWN LIBRARY'),
   make('strong','',book.title||'原書書名待核對'));
