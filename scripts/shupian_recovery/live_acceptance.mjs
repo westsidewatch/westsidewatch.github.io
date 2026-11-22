@@ -38,6 +38,8 @@ try {
     check(title.includes('数片'), 'correct_live_site_title', {title});
     const cards = await page.locator('#grid article.card').count();
     check(cards >= 1, 'rendered_cards', {cards});
+    check(await page.locator('#grid aside.feature-detail').count() === (cards === 1 ? 1 : 0),
+      'one_title_editorial_layout_renders');
     const body = await page.locator('body').innerText();
     check(!denied.some(x => body.includes(x)), 'no_filler_classics_visible');
     const inline = await page.locator('script#catalog').textContent();
@@ -78,6 +80,7 @@ try {
     check(!!mobileRes&&mobileRes.status()===200,'mobile_html_200',{status:mobileRes?.status()});
     await mobilePage.waitForTimeout(1500);
     check(await mobilePage.locator('#grid article.card').count()>0,'mobile_cards_rendered');
+    check(await mobilePage.locator('#grid aside.feature-detail').count()===1,'mobile_feature_details_visible');
     const overflow = await mobilePage.evaluate(()=>document.documentElement.scrollWidth > innerWidth+2);
     check(!overflow,'no_mobile_horizontal_overflow');
     await mobilePage.screenshot({path:out+'/mobile.png',fullPage:true});
