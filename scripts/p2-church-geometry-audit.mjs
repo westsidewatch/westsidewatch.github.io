@@ -81,3 +81,10 @@ console.log('## Relevant route geometry for west/south interior, terraces and up
 for(const item of ledger.filter(x=>/V19 INDOOR|V19 NORTH|V05|V26 ROUTE|STAIR|terrace|landing|cafe|forum|SOUTH-TO-WEST|south foyer|WEST MID/i.test(x.name)).slice(0,115)){
  console.log(JSON.stringify({name:item.name,min:fmt(item.box.min),max:fmt(item.box.max)}));
 }
+
+console.log('## R30 upper-gallery floor support survey (north side, y=3.3..5.1)');
+for(const item of ledger.filter(o=>o.box && o.box.max[0]>5.3 && o.box.min[0]<12.1 &&
+    o.box.max[2]>-18.1 && o.box.min[2]<-11.5 &&
+    o.box.max[1]>=3.3 && o.box.min[1]<=5.1)){
+ console.log(JSON.stringify({name:item.name,min:fmt(item.box.min),max:fmt(item.box.max)}));
+}
