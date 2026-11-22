@@ -72,7 +72,10 @@ fs.mkdirSync(out,{recursive:true});
    },null,{timeout:15000});
    const categories=page.locator('#dawn-classification-tree button.dawn-classification__sleeve');
    await page.screenshot({path:path.join(out,name+'-chinese-category-cover-wall.png')});
-   await categories.nth(1).click();
+   // The first archival class is biography, whose earliest leaf contains the
+   // single Gutenberg source. Select the next class (spiritual formation),
+   // which actually contains the original Yale title-page scans.
+   await page.locator('#dawn-classification-tree button.dawn-classification__sleeve--historical-zh').nth(1).click();
    await page.waitForTimeout(250);
    const state=await page.evaluate(()=>({
     breadcrumb:document.querySelector('#dawn-classification-path')?.innerText,
