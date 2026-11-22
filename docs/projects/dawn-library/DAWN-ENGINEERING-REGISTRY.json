@@ -42,21 +42,24 @@
       "kind": "work-identity",
       "source": "static/dawn-library/canonical/root.json",
       "status": "content-verified",
-      "next": "audit all 21 shard hashes/unique IDs"
+      "next": "Full root/shard/identity report script added; await Actions artifact and browser HTTP/rights check",
+      "auditScript": "scripts/audit-dawn-library-shards.cjs"
     },
     {
       "id": "living",
       "kind": "subject-projection",
       "source": "static/dawn-library/living/root.json",
       "status": "content-verified",
-      "next": "P2 42 leaf routes now use workRefs[].classification.leaves; audit real shard counts, coverage and browser behavior"
+      "next": "Full root/shard/identity report script added; await Actions artifact and browser HTTP/rights check",
+      "auditScript": "scripts/audit-dawn-library-shards.cjs"
     },
     {
       "id": "cover",
       "kind": "image-projection",
       "source": "static/dawn-library/cover-preview/root.json",
       "status": "located",
-      "next": "audit 407 shard count drift, URL, rights, same-work images"
+      "next": "Full root/shard/identity report script added; await Actions artifact and browser HTTP/rights check",
+      "auditScript": "scripts/audit-dawn-library-shards.cjs"
     },
     {
       "id": "cover-authority",
@@ -223,6 +226,50 @@
         "browser": "NOT VERIFIED"
       },
       "next": "Cloudflare desktop/mobile browser test, true 21 shard membership verification, class page returns"
+    },
+    {
+      "id": "dawn-shard-integrity-audit",
+      "kind": "read-only-quality-gate",
+      "source": "scripts/audit-dawn-library-shards.cjs",
+      "workflow": ".github/workflows/dawn-library-shard-integrity.yml",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "integrated-partial-source-verified",
+      "evidence": {
+        "sampledCovers": {
+          "000001": {
+            "manifest": 500,
+            "shard": 463,
+            "items": 463
+          },
+          "000002": {
+            "manifest": 500,
+            "shard": 500,
+            "items": 499
+          },
+          "000003": {
+            "manifest": 500,
+            "shard": 500,
+            "items": 498
+          },
+          "000010": {
+            "manifest": 500,
+            "shard": 500,
+            "items": 498
+          },
+          "000407": {
+            "manifest": 448,
+            "shard": 448,
+            "items": 425
+          }
+        },
+        "livingShard21": {
+          "workRefs": 3448,
+          "newTestamentLeaf": 519,
+          "adapterMatching": 8
+        },
+        "fullWorkflowRun": "NOT VERIFIED"
+      },
+      "next": "Obtain and inspect complete 21 canonical +21 Living +407 cover audit report, then verify URL/rights and browser"
     }
   ],
   "auditGates": [
