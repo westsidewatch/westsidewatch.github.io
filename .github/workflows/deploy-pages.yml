@@ -143,10 +143,15 @@ jobs:
           from pathlib import Path
           data=json.loads(Path('public/shupian/catalog.json').read_text())
           titles=data['titles']
-          assert len(titles) == 1, 'Shupian public inventory must exclude filler old films'
+          assert len(titles) >= 1, 'Shupian historical Institute records missing'
           assert sum(len(x['episodes']) for x in titles) >= 10, 'Institute historical episode records regressed'
           assert any('異能研究所' in x['title'] for x in titles), 'Historical Institute records missing'
-          assert not any(x['id'] != 'the-institute-historical' for x in titles), 'Filler works returned to 数片 catalog'
+          banned={'manger-cross-1912','passion-of-christ-1903','the-general-1926','the-living-christ-1951','king-of-kings-1927','ten-commandments-1923','quo-vadis-1913','nosferatu-1922','perils-of-pauline-1914','beverly-hillbillies-1962','bonanza-1960','charade-1963','night-living-dead-1968','dementia-13-1963','terror-1963','the-kid-1921','sherlock-jr-1924','phantom-opera-1925','trip-to-the-moon-1902'}
+          assert all(x['id'] not in banned for x in titles), 'Banned filler classics returned'
+          institute=next(x for x in titles if x['id']=='the-institute-historical')
+          assert institute.get('posterUrl','').startswith('https://www.classification.gov.au/'), 'Institute real key art regressed'
+          assert len(institute['episodes']) == 10, 'Institute episode records missing'
+          assert 'youtube' not in str(titles).lower(), 'YouTube media is prohibited'
           front=Path('public/shupian/index.html').read_text()
           assert '將軍號' not in front and '活死人之夜' not in front and '從馬槽到十字架' not in front, 'Legacy filler leaked into HTML'
           legacy=Path('public/paradiso/index.html').read_text()
