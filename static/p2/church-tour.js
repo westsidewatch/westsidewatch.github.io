@@ -374,6 +374,9 @@ function chooseFinish(name, sourceMaterial) {
   // Blender/GLB truncates this floor node's name to "receiving fl".
   // It is a horizontal floor plate, not a vertical architectural wall.
   if (/^v29 south entry .*receiving fl/.test(n)) return whiteFloor;
+  // Source V18 LEVEL ROUTE pieces are horizontal floor decks. Keep their
+  // north-promenade overlapping surfaces in the SAME physical union group.
+  if (/^v18 level route /.test(n)) return whiteFloor;
   if (/glass|glazing|glazed|window pane|skylight/i.test(n)) {
     const m=finishes.glazing.clone();
     m.forceSinglePass=true;
