@@ -342,8 +342,11 @@
  }
  function imageFor(work,storefront){
   if(work?.illustration?.url&&safeHttp(work.illustration.url))return {...work.illustration,url:safeHttp(work.illustration.url),kind:'illustration'};
-  const cover=safeHttp(work?.cover?.url||storefront?.cover?.url);
-  if(cover)return {url:cover,alt:'封面：'+(work.title||''),kind:'cover',source:safeHttp(storefront?.source?.url||work.sourceUrl)};
+  const identified=/^(?:OL\d+W|dawn:[\w:-]+)$/.test(String(work?.workId||''));
+  // A canonical Work cannot inherit a generic same-title storefront cover.
+  const cover=safeHttp(work?.cover?.url||(identified?null:storefront?.cover?.url));
+  if(cover)return {url:cover,alt:'封面：'+(work.title||''),kind:'cover',
+    source:safeHttp(identified?work?.sourceUrl:(storefront?.source?.url||work.sourceUrl))};
   // For identified canonical Works, a title-only match is not a verified
   // image identity, even if its generic visual metadata says verified.
   if(/^(?:OL\\d+W|dawn:[\\w:-]+)$/.test(String(work?.workId||'')))return null;
