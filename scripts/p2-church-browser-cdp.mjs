@@ -58,11 +58,19 @@ async function evaluate(expression){
   return r.result?.value;
 }
 try{
-  for(const frame of [9,20,22,40,61,64,89,94,103,110,150,174,204,223,250]){
+  // Load and decompress the architectural GLB ONCE. The tour's own animation
+  // loop reads proofFrame from location.search on every frame; stepping the
+  // URL with replaceState requires no reloading or lost WebGL state.
+  const frames=[9,20,22,40,61,64,89,94,103,110,150,174,204,223,250];
+  await send('Page.navigate',{
+    url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frames[0]
+  });
+  for(let index=0;index<frames.length;index++){
+    const frame=frames[index];
     errors.length=0;
-    await send('Page.navigate',{
-      url:'http://127.0.0.1:8765/p2/church-tour.html?proofFrame='+frame
-    });
+    if(index>0)
+      await evaluate("history.replaceState(null,'','?proofFrame="+frame+"')");
+
     let state=null;
     for(let retry=0;retry<100;retry++){
       await sleep(220);
@@ -92,7 +100,13 @@ try{
     if(state.crossLight?.bounceSources!==2)
       throw Error('Cross light must illuminate actual surfaces with two real PBR light sources, not only planes: '+JSON.stringify(state.crossLight));
 
-    await sleep(700);
+    await sleep(450);
+    const clock=await evaluate('window.__churchFrameAudit');
+    if(!clock||Math.abs(clock.at-frame)>0.01)
+      throw Error('Actual rendered camera/time did not advance to proof frame '+frame+' '+JSON.stringify(clock));
+    if(Math.abs(clock.crossHeight-3.65)>0.001 || !Number.isFinite(clock.portalIntensity))
+      throw Error('Cross daylight shader/real PBR bounce not active '+frame+' '+JSON.stringify(clock));
+    console.log('P2_CROSS_LIGHT_FRAME_'+frame+'='+JSON.stringify(clock));
     if(frame===103){
       const upper=await evaluate('window.__churchMeshProbe?.(495,230,140)');
       const lower=await evaluate('window.__churchMeshProbe?.(310,510,100)');
